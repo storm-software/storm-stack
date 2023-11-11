@@ -1,0 +1,5 @@
+project:
+  name: storm-stack
+  tz: America/New_York
+  adrFolder: ./docs/decisions
+  packages: []
