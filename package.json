@@ -1,5 +1,5 @@
 {
-  "name": "@storm-stack/source",
+  "name": "@storm-software/storm-stack",
   "version": "0.0.0",
   "private": true,
   "description": "⚡ The storm-stack monorepo contains utility applications, tools, and various libraries to create modern and scalable web applications.",
@@ -84,16 +84,16 @@
     "@semantic-release/github": "^9.2.3",
     "@semantic-release/npm": "^11.0.1",
     "@semantic-release/release-notes-generator": "^12.1.0",
-    "@storm-software/git-tools": "^1.2.19",
-    "@storm-software/linting-tools": "^1.3.10",
-    "@storm-software/testing-tools": "^1.1.8",
-    "@storm-software/workspace-tools": "1.5.29",
+    "@storm-software/git-tools": "latest",
+    "@storm-software/linting-tools": "latest",
+    "@storm-software/testing-tools": "latest",
+    "@storm-software/workspace-tools": "latest",
     "@swc-node/register": "^1.6.8",
     "@swc/cli": "^0.1.62",
     "@swc/core": "^1.3.96",
     "@swc/helpers": "^0.5.3",
     "@types/jest": "^29.5.8",
-    "@types/node": "20.8.10",
+    "@types/node": "20.9.0",
     "@types/react": "^18.2.37",
     "@types/react-dom": "^18.2.15",
     "eslint": "^8.53.0",
@@ -126,6 +126,11 @@
       "lint",
       "format"
     ]
+  },
+  "pnpm": {
+    "override": {
+      "@storm-software/utilities": "workspace:*"
+    }
   },
   "triggerEmptyDevReleaseByIncrementingThisNumber": 0
 }

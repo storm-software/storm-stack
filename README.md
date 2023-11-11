@@ -6,9 +6,9 @@
 
 <br />
 <h1>Storm Stack</h1>
-⚡ The storm-stack monorepo contains utility applications, tools, and various libraries to create modern and scalable web applications.
+⚡ The <b>Storm Stack<b> monorepo contains utility applications, tools, and various libraries to create modern and scalable web applications.
 <br /><br />
-⚡<b>Storm Workspaces</b> are built using <a href="https://nx.dev/" target="_blank">Nx</a>, a set of extensible dev tools for monorepos, which helps you develop like Google, Facebook, and Microsoft. Building on top of Nx, the Open System provides a set of tools and patterns that help you scale your monorepo to many teams while keeping the codebase maintainable.
+⚡ <b>Storm Workspaces</b> are built using <a href="https://nx.dev/" target="_blank">Nx</a>, a set of extensible dev tools for monorepos, which helps you develop like Google, Facebook, and Microsoft. Building on top of Nx, the Open System provides a set of tools and patterns that help you scale your monorepo to many teams while keeping the codebase maintainable.
 
 <h3 align="center">💻 Visit <a href="https://stormsoftware.org" target="_blank">stormsoftware.org</a> to stay up to date with this developer</h3><br />
 
@@ -98,7 +98,7 @@ Run `pnpm serve` for a dev server. Navigate to <http://localhost:4200/>. The app
 
 In StormStack, ⚡ _acidic_ refers to a collection of applications and libraries that are used to build server-side code from a user-defined model. This functionality all lives in the Storm monorepo's `tools` directory (/tools/acidic).
 
-<div align="center"><img src="https://pub-e71cff0f90204755bc910518d63cacf8.r2.dev/storm-generate.bg.png" width="800px" /></div>
+<div align="center"><img src="https://pub-761b436209f44a4d886487c917806c08.r2.dev/acidic-generate-flow.png" width="800px" /></div>
 <br />
 
 More information can be found in the [📓 Documentation](https://acidicjs.com/docs).

@@ -1,11 +1,14 @@
 {
   "$schema": "https://json.schemastore.org/tsconfig",
   "extends": "@storm-software/linting-tools/tsconfig/tsconfig.root.json",
-  "display": "Storm Software - Storm-Stack",
+  "display": "Storm Software - Storm Stack",
   "compilerOptions": {
     "rootDir": ".",
     "baseUrl": ".",
-    "paths": {}
+    "paths": {
+      "@storm-software/utilities": ["packages/utilities/src/index.ts"],
+      "@storm-software/utilities/*": ["packages/utilities/src/*"]
+    }
   },
   "references": []
 }

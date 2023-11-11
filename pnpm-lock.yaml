@@ -11,19 +11,19 @@ importers:
         specifier: ^2.1.3
         version: 2.1.3(supports-color@9.4.0)
       "@nx/devkit":
-        specifier: ^17.0.3
+        specifier: ^17.1.1
         version: 17.1.1(nx@17.0.3)
       "@nx/eslint":
-        specifier: ^17.0.3
+        specifier: ^17.1.1
         version: 17.1.1(@swc-node/register@1.6.8)(@swc/core@1.3.96)(@types/node@20.8.10)(eslint@8.53.0)(nx@17.0.3)(verdaccio@5.27.0)
       "@nx/eslint-plugin":
-        specifier: ^17.0.3
+        specifier: ^17.1.1
         version: 17.1.1(@swc-node/register@1.6.8)(@swc/core@1.3.96)(@types/node@20.8.10)(@typescript-eslint/parser@6.10.0)(eslint@8.53.0)(nx@17.0.3)(typescript@5.2.2)(verdaccio@5.27.0)
       "@nx/jest":
-        specifier: ^17.0.3
+        specifier: ^17.1.1
         version: 17.1.1(@swc-node/register@1.6.8)(@swc/core@1.3.96)(@types/node@20.8.10)(nx@17.0.3)(ts-node@10.9.1)(typescript@5.2.2)(verdaccio@5.27.0)
       "@nx/js":
-        specifier: ^17.0.3
+        specifier: ^17.1.1
         version: 17.1.1(@swc-node/register@1.6.8)(@swc/core@1.3.96)(@types/node@20.8.10)(nx@17.0.3)(typescript@5.2.2)(verdaccio@5.27.0)
       "@nx/workspace":
         specifier: 17.0.3
@@ -41,7 +41,7 @@ importers:
         specifier: ^10.0.1
         version: 10.0.1(semantic-release@22.0.7)
       "@semantic-release/github":
-        specifier: ^9.2.2
+        specifier: ^9.2.3
         version: 9.2.3(semantic-release@22.0.7)
       "@semantic-release/npm":
         specifier: ^11.0.1
@@ -50,17 +50,17 @@ importers:
         specifier: ^12.1.0
         version: 12.1.0(semantic-release@22.0.7)
       "@storm-software/git-tools":
-        specifier: ^1.2.4
+        specifier: latest
         version: 1.2.19(@swc-node/register@1.6.8)(@swc/core@1.3.96)(typescript@5.2.2)
       "@storm-software/linting-tools":
-        specifier: ^1.3.5
+        specifier: latest
         version: 1.3.10
       "@storm-software/testing-tools":
-        specifier: ^1.1.4
+        specifier: latest
         version: 1.1.8(@swc-node/register@1.6.8)(@swc/core@1.3.96)(@types/node@20.8.10)(nx@17.0.3)(ts-node@10.9.1)(typescript@5.2.2)(verdaccio@5.27.0)
       "@storm-software/workspace-tools":
-        specifier: 1.5.29
-        version: 1.5.29(nx@17.0.3)(tsup@7.2.0)
+        specifier: latest
+        version: 1.5.32(nx@17.0.3)(tsup@7.2.0)
       "@swc-node/register":
         specifier: ^1.6.8
         version: 1.6.8(@swc/core@1.3.96)(typescript@5.2.2)
@@ -101,7 +101,7 @@ importers:
         specifier: ^29.7.0
         version: 29.7.0
       lint-staged:
-        specifier: ^15.0.2
+        specifier: ^15.1.0
         version: 15.1.0
       log4brains:
         specifier: ^1.0.1
@@ -5217,10 +5217,10 @@ packages:
       - verdaccio
     dev: false
 
-  /@storm-software/workspace-tools@1.5.29(nx@17.0.3)(tsup@7.2.0):
+  /@storm-software/workspace-tools@1.5.32(nx@17.0.3)(tsup@7.2.0):
     resolution:
       {
-        integrity: sha512-5fgHZwIFDmGv5LU/zdnJxf8uJ7a+ZSEvmSgbctzKLcmrw29g8Nvh19xkgCBTWEN8XS4sTBK4eZvQBSY69nw7nQ==
+        integrity: sha512-7dkzZrksLDt859KrWnCXk1NPk49tHDb90Rauz84lJHivsWzN6IP2/8jgKwIiZoiefZV4DKQHxbfv7G9DUaeiBw==
       }
     peerDependencies:
       tsup: 7.2.0

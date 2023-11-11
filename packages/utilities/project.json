@@ -1,0 +1,38 @@
+{
+  "name": "utilities",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "library",
+  "sourceRoot": "packages/utilities/src",
+  "targets": {
+    "build": {
+      "executor": "@storm-software/workspace-tools:tsup",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/packages/utilities",
+        "main": "packages/utilities/src/index.ts",
+        "tsConfig": "packages/utilities/tsconfig.json",
+        "project": "packages/utilities/package.json",
+        "defaultConfiguration": "production",
+        "configurations": {
+          "production": {
+            "debug": false
+          },
+          "development": {
+            "debug": true
+          }
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": [
+          "packages/utilities/**/*.ts",
+          "packages/utilities/package.json"
+        ]
+      }
+    },
+    "test": {}
+  }
+}
