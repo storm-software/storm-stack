@@ -1,0 +1,29 @@
+{
+  "name": "unique-identifier",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "library",
+  "sourceRoot": "packages/unique-identifier/src",
+  "targets": {
+    "build": {
+      "executor": "@storm-software/workspace-tools:tsup",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/packages/unique-identifier",
+        "main": "packages/unique-identifier/src/index.ts",
+        "tsConfig": "packages/unique-identifier/tsconfig.json",
+        "project": "packages/unique-identifier/package.json",
+        "defaultConfiguration": "production",
+        "configurations": {
+          "production": {
+            "debug": false
+          },
+          "development": {
+            "debug": true
+          }
+        }
+      }
+    },
+    "lint": {},
+    "test": {}
+  }
+}

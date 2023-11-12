@@ -60,7 +60,7 @@ importers:
         version: 1.1.8(@swc-node/register@1.6.8)(@swc/core@1.3.96)(@types/node@20.9.0)(nx@17.0.3)(ts-node@10.9.1)(typescript@5.2.2)(verdaccio@5.27.0)
       "@storm-software/workspace-tools":
         specifier: latest
-        version: 1.5.32(nx@17.0.3)(tsup@7.2.0)
+        version: 1.6.1(nx@17.0.3)(tsup@7.2.0)
       "@swc-node/register":
         specifier: ^1.6.8
         version: 1.6.8(@swc/core@1.3.96)(typescript@5.2.2)
@@ -139,6 +139,34 @@ importers:
       verdaccio:
         specifier: ^5.27.0
         version: 5.27.0(typanion@3.14.0)
+
+  packages/date-time:
+    devDependencies:
+      "@storm-software/testing-tools":
+        specifier: latest
+        version: 1.1.8(@swc-node/register@1.6.8)(@swc/core@1.3.96)(@types/node@20.9.0)(nx@17.0.3)(ts-node@10.9.1)(typescript@5.2.2)(verdaccio@5.27.0)
+      "@storm-software/workspace-tools":
+        specifier: latest
+        version: 1.5.32(nx@17.0.3)(tsup@7.2.0)
+      "@types/node":
+        specifier: 20.9.0
+        version: 20.9.0
+
+  packages/unique-identifier:
+    dependencies:
+      "@noble/hashes":
+        specifier: ^1.3.2
+        version: 1.3.2
+    devDependencies:
+      "@storm-software/testing-tools":
+        specifier: latest
+        version: 1.1.8(@swc-node/register@1.6.8)(@swc/core@1.3.96)(@types/node@20.9.0)(nx@17.0.3)(ts-node@10.9.1)(typescript@5.2.2)(verdaccio@5.27.0)
+      "@storm-software/workspace-tools":
+        specifier: latest
+        version: 1.5.32(nx@17.0.3)(tsup@7.2.0)
+      "@types/node":
+        specifier: 20.9.0
+        version: 20.9.0
 
   packages/utilities:
     devDependencies:
@@ -1718,7 +1746,7 @@ packages:
     dependencies:
       "@commitlint/format": 18.4.0
       "@commitlint/lint": 18.1.0
-      "@commitlint/load": 18.4.0(typescript@5.2.2)
+      "@commitlint/load": 18.4.1(typescript@5.2.2)
       "@commitlint/read": 18.4.0
       "@commitlint/types": 18.1.0
       execa: 5.1.1
@@ -1809,10 +1837,10 @@ packages:
       "@commitlint/types": 18.1.0
     dev: false
 
-  /@commitlint/load@18.4.0(typescript@5.2.2):
+  /@commitlint/load@18.4.1(typescript@5.2.2):
     resolution:
       {
-        integrity: sha512-7unGl1HGRNMgWrUPmj8OFkJyuNUMb6xA1i53/OAFKd9l+U3C4WTfoJe3t/TUz8vKZLCaDcWWR/b2cw5HveBBFg==
+        integrity: sha512-o/plBiPJQgbSq/4ipDpsq4HCmURjBAEjr1EO/p2falr3VhwV0WGXTvb8NlihgI8xtSyO6lHvtycrE535GMLQbA==
       }
     engines: { node: ">=v18" }
     dependencies:
@@ -3560,6 +3588,14 @@ packages:
       react-refresh: 0.8.3
     dev: false
 
+  /@noble/hashes@1.3.2:
+    resolution:
+      {
+        integrity: sha512-MVC8EAQp7MvEcm30KWENFjgR+Mkmf+D189XJTkFIlwohU5hcBbn1ZkKq7KVTi2Hme3PMGF390DaL52beVrIihQ==
+      }
+    engines: { node: ">= 16" }
+    dev: false
+
   /@nodelib/fs.scandir@2.1.5:
     resolution:
       {
@@ -5058,6 +5094,26 @@ packages:
       tsup: 7.2.0(@swc/core@1.3.96)(postcss@8.2.13)(ts-node@10.9.1)(typescript@5.2.2)
     transitivePeerDependencies:
       - nx
+    dev: true
+
+  /@storm-software/workspace-tools@1.6.1(nx@17.0.3)(tsup@7.2.0):
+    resolution:
+      {
+        integrity: sha512-jQd1Fr79qeyN3vSZM6jRwSxgCHUuwVmpFVLevaf65W8Os7o5W1wMCxNG2w+gyIi5Uy2staN/nhj0CgIMB9aLJg==
+      }
+    peerDependencies:
+      tsup: 7.2.0
+    peerDependenciesMeta:
+      tsup:
+        optional: true
+    dependencies:
+      "@nx/devkit": 17.0.3(nx@17.0.3)
+      esbuild-plugin-file-path-extensions: 1.0.0
+      tslib: 2.6.2
+      tsup: 7.2.0(@swc/core@1.3.96)(postcss@8.2.13)(ts-node@10.9.1)(typescript@5.2.2)
+    transitivePeerDependencies:
+      - nx
+    dev: false
 
   /@swc-node/core@1.10.6(@swc/core@1.3.96):
     resolution:

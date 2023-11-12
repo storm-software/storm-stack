@@ -129,7 +129,8 @@
   },
   "pnpm": {
     "override": {
-      "@storm-software/utilities": "workspace:*"
+      "@storm-software/utilities": "workspace:*",
+      "@storm-software/unique-identifier": "workspace:*"
     }
   },
   "triggerEmptyDevReleaseByIncrementingThisNumber": 0
