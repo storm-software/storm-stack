@@ -104,19 +104,16 @@ function fingerprint(
 }
 
 /**
- * Generate a random UUID
- *
- * @remarks
- * This helper function is a wrapper around the `crypto.randomUUID` function. You can find more information about this type of identifier in this {@link https://en.wikipedia.org/wiki/Universally_unique_identifier article}
+ * Generate a random CUID
  *
  * @example
  * ```typescript
  *
- * // Generate a random UUID
- * const id = uuid();
+ * // Generate a random CUID
+ * const id = cuid();
  * ```
  *
- * @returns A random UUID string
+ * @returns A random CUID string
  */
 export function cuid(): string {
   // If we're lucky, the `.toString(36)` calls may reduce hashing rounds

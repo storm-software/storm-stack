@@ -1,6 +1,33 @@
 {
   "name": "@storm-software/unique-identifier",
+  "version": "0.0.1",
   "private": false,
+  "description": "This package provides a simple way to generate various types of unique identifiers.",
+  "keywords": [
+    "storm",
+    "storm-ops",
+    "stormstack",
+    "storm-stack",
+    "sullivanpj",
+    "open-system",
+    "monorepo"
+  ],
+  "homepage": "https://stormsoftware.org",
+  "bugs": {
+    "url": "https://github.com/storm-software/storm-ops/issues",
+    "email": "support@stormsoftware.org"
+  },
+  "repository": {
+    "type": "github",
+    "url": "https://github.com/storm-software/storm-ops.git",
+    "directory": "packages/unique-identifier"
+  },
+  "license": "Apache License 2.0",
+  "author": {
+    "name": "Storm Software",
+    "email": "contact@stormsoftware.org",
+    "url": "https://stormsoftware.org"
+  },
   "sideEffects": false,
   "type": "module",
   "exports": {
@@ -27,8 +54,7 @@
   },
   "devDependencies": {
     "@storm-software/testing-tools": "latest",
-    "@storm-software/workspace-tools": "latest",
-    "@types/node": "20.9.0"
+    "@storm-software/workspace-tools": "latest"
   },
   "publishConfig": {
     "access": "public"

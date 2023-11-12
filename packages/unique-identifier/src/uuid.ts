@@ -1,3 +1,15 @@
+// We use WebCrypto aka globalThis.crypto, which exists in browsers and node.js 16+.
+// See utils.ts for details.
+// The file will throw on node.js 14 and earlier.
+import * as nodeCrypto from "node:crypto";
+
+export const WebCrypto: nodeCrypto.webcrypto.Crypto | undefined =
+  nodeCrypto && typeof nodeCrypto === "object" && "webcrypto" in nodeCrypto
+    ? (nodeCrypto.webcrypto as any)
+    : globalThis.crypto
+    ? globalThis.crypto
+    : undefined;
+
 /**
  * Generate a random UUID
  *
@@ -14,5 +26,9 @@
  * @returns A random UUID string
  */
 export function uuid(): string {
-  return crypto.randomUUID();
+  if (!WebCrypto) {
+    throw new Error("Crypto is not available to generate uuid");
+  }
+
+  return WebCrypto.randomUUID();
 }
