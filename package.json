@@ -131,7 +131,8 @@
     "override": {
       "@storm-software/utilities": "workspace:*",
       "@storm-software/unique-identifier": "workspace:*",
-      "@storm-software/date-time": "workspace:*"
+      "@storm-software/date-time": "workspace:*",
+      "@storm-software/errors": "workspace:*"
     }
   },
   "triggerEmptyDevReleaseByIncrementingThisNumber": 0

@@ -1,6 +1,33 @@
 {
   "name": "@storm-software/utilities",
+  "version": "0.0.1",
   "private": false,
+  "description": "This package includes various base utility class and various functions to assist in the development process.",
+  "keywords": [
+    "storm",
+    "storm-ops",
+    "stormstack",
+    "storm-stack",
+    "sullivanpj",
+    "open-system",
+    "monorepo"
+  ],
+  "homepage": "https://stormsoftware.org",
+  "bugs": {
+    "url": "https://github.com/storm-software/storm-stack/issues",
+    "email": "support@stormsoftware.org"
+  },
+  "repository": {
+    "type": "github",
+    "url": "https://github.com/storm-software/storm-stack.git",
+    "directory": "packages/utilities"
+  },
+  "license": "Apache License 2.0",
+  "author": {
+    "name": "Storm Software",
+    "email": "contact@stormsoftware.org",
+    "url": "https://stormsoftware.org"
+  },
   "sideEffects": false,
   "type": "module",
   "exports": {
@@ -27,7 +54,7 @@
     "build",
     "src"
   ],
-  "devDependencies": {
+  "dependencies": {
     "@storm-software/testing-tools": "latest",
     "@storm-software/workspace-tools": "latest",
     "@types/node": "20.9.0"

@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Temporal } from "@js-temporal/polyfill";
-import "@js-temporal/polyfill/shim";
 import { isBigInt } from "@storm-software/utilities/type-checks/is-bigint";
 import { isDate } from "@storm-software/utilities/type-checks/is-date";
 import { isNumber } from "@storm-software/utilities/type-checks/is-number";
