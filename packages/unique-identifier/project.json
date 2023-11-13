@@ -9,7 +9,6 @@
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/packages/unique-identifier",
-        "main": "packages/unique-identifier/src/index.ts",
         "tsConfig": "packages/unique-identifier/tsconfig.json",
         "project": "packages/unique-identifier/package.json",
         "defaultConfiguration": "production",

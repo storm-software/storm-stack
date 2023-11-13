@@ -9,7 +9,6 @@
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/packages/utilities",
-        "main": "packages/utilities/src/index.ts",
         "tsConfig": "packages/utilities/tsconfig.json",
         "project": "packages/utilities/package.json",
         "defaultConfiguration": "production",

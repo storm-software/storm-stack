@@ -3,7 +3,7 @@
 // The file will throw on node.js 14 and earlier.
 import * as NodeCrypto from "node:crypto";
 
-export const WebCrypto: NodeCrypto.webcrypto.Crypto | undefined =
+export const Crypto: NodeCrypto.webcrypto.Crypto | undefined =
   NodeCrypto && typeof NodeCrypto === "object" && "webcrypto" in NodeCrypto
     ? (NodeCrypto.webcrypto as any)
     : globalThis.crypto
@@ -19,9 +19,9 @@ export const WebCrypto: NodeCrypto.webcrypto.Crypto | undefined =
  * @returns The WebCrypto object
  */
 export const getWebCrypto = () => {
-  if (!WebCrypto) {
+  if (!Crypto) {
     throw new Error("Crypto is not available");
   }
 
-  return WebCrypto;
+  return Crypto;
 };

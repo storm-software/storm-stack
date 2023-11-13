@@ -3,7 +3,7 @@
 // The file will throw on node.js 14 and earlier.
 import * as nodeCrypto from "node:crypto";
 
-export const WebCrypto: nodeCrypto.webcrypto.Crypto | undefined =
+export const Crypto: nodeCrypto.webcrypto.Crypto | undefined =
   nodeCrypto && typeof nodeCrypto === "object" && "webcrypto" in nodeCrypto
     ? (nodeCrypto.webcrypto as any)
     : globalThis.crypto
@@ -26,9 +26,9 @@ export const WebCrypto: nodeCrypto.webcrypto.Crypto | undefined =
  * @returns A random UUID string
  */
 export function uuid(): string {
-  if (!WebCrypto) {
+  if (!Crypto) {
     throw new Error("Crypto is not available to generate uuid");
   }
 
-  return WebCrypto.randomUUID();
+  return Crypto.randomUUID();
 }
