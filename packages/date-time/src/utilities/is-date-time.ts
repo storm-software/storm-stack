@@ -1,7 +1,7 @@
 import { isDate } from "@storm-software/utilities/type-checks/is-date";
 import { isSet } from "@storm-software/utilities/type-checks/is-set";
 import { isSetString } from "@storm-software/utilities/type-checks/is-set-string";
-import { DateTime } from "./date-time";
+import { DateTime } from "../date-time";
 
 /**
  * Type-check to determine if `obj` is a `DateTime` object

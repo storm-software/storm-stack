@@ -3,24 +3,42 @@ import { Temporal } from "@js-temporal/polyfill";
 import { isBigInt } from "@storm-software/utilities/type-checks/is-bigint";
 import { isDate } from "@storm-software/utilities/type-checks/is-date";
 import { isNumber } from "@storm-software/utilities/type-checks/is-number";
-import { isDateTime } from "./is-date-time";
+import { isDateTime } from "./utilities/is-date-time";
+import { validateDateTime } from "./utilities/validate-date-time";
+
+export type DateTimeOptions = {
+  /**
+   * The time zone to use. If not specified, the default time zone for the runtime is used.
+   */
+  timeZone?: Temporal.TimeZoneLike;
+
+  /**
+   * The calendar to use. If not specified, the default calendar for the runtime is used.
+   */
+  calendar?: Temporal.CalendarLike;
+
+  /**
+   * If false, the current date and time is defaulted when undefined or null is passed. If true, the current date and time is not defaulted.
+   *
+   * @default false
+   */
+  skipDefaulting?: boolean;
+};
+
+export type DateTimeInput =
+  | DateTime
+  | Temporal.Instant
+  | Date
+  | string
+  | number
+  | bigint
+  | null
+  | undefined;
 
 /**
  * A wrapper of the and Date class
  */
 export class DateTime extends Date {
-  /**
-   * Conditional function to determine if `obj` is a valid `DateTime` object (i.e. the inner date value is set to a valid date and/or time)
-   *
-   * `isValid` is a function that takes an object of type `any` and returns a boolean
-   *
-   * @param obj - any - the object to check
-   * @returns A function that returns a boolean.
-   */
-  public static isValid(obj: unknown): obj is DateTime {
-    return isDateTime(obj);
-  }
-
   /**
    * The current function returns a new DateTime object with the current date and time
    * @returns A new instance of DateTime with the current date and time.
@@ -38,19 +56,8 @@ export class DateTime extends Date {
   }
 
   public static create = (
-    dateTime:
-      | DateTime
-      | Temporal.Instant
-      | Date
-      | string
-      | number
-      | bigint
-      | null
-      | undefined = DateTime.current(),
-    options?: {
-      timeZone?: Temporal.TimeZoneLike;
-      calendar?: Temporal.CalendarLike;
-    }
+    dateTime?: DateTimeInput,
+    options?: DateTimeOptions
   ) =>
     new DateTime(dateTime, {
       timeZone:
@@ -62,26 +69,18 @@ export class DateTime extends Date {
   #instant: Temporal.Instant;
   #zonedDateTime: Temporal.ZonedDateTime;
 
-  protected constructor(
-    dateTime:
-      | DateTime
-      | Temporal.Instant
-      | Date
-      | string
-      | number
-      | bigint
-      | null
-      | undefined = DateTime.current(),
-    {
-      timeZone,
-      calendar
-    }: {
-      timeZone: Temporal.TimeZoneLike;
-      calendar?: Temporal.CalendarLike;
-    } = { timeZone: Temporal.Now.timeZoneId() }
-  ) {
-    const instant = dateTime
-      ? isDateTime(dateTime)
+  #input: DateTimeInput;
+  #options: DateTimeOptions;
+
+  protected constructor(dateTime?: DateTimeInput, options?: DateTimeOptions) {
+    const input = dateTime;
+    if (!dateTime && !options?.skipDefaulting) {
+      dateTime = Temporal.Now.instant();
+    }
+
+    const instant = !dateTime
+      ? undefined
+      : isDateTime(dateTime)
         ? dateTime.instant
         : Temporal.Instant.from(
             isDate(dateTime)
@@ -89,18 +88,27 @@ export class DateTime extends Date {
               : isNumber(dateTime) || isBigInt(dateTime)
                 ? new Date(Number(dateTime)).toISOString()
                 : dateTime
-          )
-      : Temporal.Now.instant();
+          );
 
-    super(Number(instant.epochMilliseconds));
+    super(instant ? Number(instant.epochMilliseconds) : "MISSING_DATE");
+    if (instant && this.validate(dateTime, options)) {
+      this.#instant = instant;
 
-    this.#instant = instant;
-    this.#zonedDateTime = calendar
-      ? this.#instant.toZonedDateTime({
-          timeZone,
-          calendar
-        })
-      : this.#instant.toZonedDateTimeISO(timeZone);
+      const timeZone = options?.timeZone
+        ? options?.timeZone
+        : process.env.TZ
+          ? process.env.TZ
+          : Temporal.Now.timeZoneId();
+      this.#zonedDateTime = options?.calendar
+        ? this.#instant.toZonedDateTime({
+            timeZone,
+            calendar: options.calendar
+          })
+        : this.#instant.toZonedDateTimeISO(timeZone);
+    }
+
+    this.#input = input;
+    this.#options = options ?? {};
   }
 
   /**
@@ -136,6 +144,34 @@ export class DateTime extends Date {
    */
   public get timeZoneId(): string {
     return this.#zonedDateTime.timeZoneId;
+  }
+
+  /**
+   * An accessor that returns the `isValid` boolean of the DateTime object
+   */
+  public get isValid(): boolean {
+    return this.validate(this.#zonedDateTime.epochMilliseconds, this.#options);
+  }
+
+  /**
+   * Returns the input value used to create the DateTime object
+   */
+  public get input(): DateTimeInput {
+    return this.#input;
+  }
+
+  /**
+   * Returns the options used to create the DateTime object
+   */
+  public get options(): DateTimeOptions {
+    return this.#options;
+  }
+
+  protected validate(
+    dateTime?: DateTimeInput,
+    options?: DateTimeOptions
+  ): boolean {
+    return validateDateTime(dateTime, options);
   }
 
   /**
