@@ -26,7 +26,7 @@ export type DateTimeOptions = {
 };
 
 export type DateTimeInput =
-  | DateTime
+  | StormDateTime
   | Temporal.Instant
   | Date
   | string
@@ -38,28 +38,28 @@ export type DateTimeInput =
 /**
  * A wrapper of the and Date class
  */
-export class DateTime extends Date {
+export class StormDateTime extends Date {
   /**
    * The current function returns a new DateTime object with the current date and time
    * @returns A new instance of DateTime with the current date and time.
    */
   public static override now(): number {
-    return DateTime.current().epochMilliseconds;
+    return StormDateTime.current().epochMilliseconds;
   }
 
   /**
    * The current function returns a new DateTime object with the current date and time
    * @returns A new instance of DateTime with the current date and time.
    */
-  public static current(): DateTime {
-    return DateTime.create(Temporal.Now.instant());
+  public static current(): StormDateTime {
+    return StormDateTime.create(Temporal.Now.instant());
   }
 
   public static create = (
     dateTime?: DateTimeInput,
     options?: DateTimeOptions
   ) =>
-    new DateTime(dateTime, {
+    new StormDateTime(dateTime, {
       timeZone:
         (isDateTime(dateTime) ? dateTime.timeZoneId : options?.timeZone) ??
         Temporal.Now.timeZoneId(),
@@ -126,10 +126,24 @@ export class DateTime extends Date {
   }
 
   /**
+   * An accessor that sets the `Temporal.Instant` object of the DateTime object
+   */
+  protected set instant(_instant: Temporal.Instant) {
+    this.#instant = _instant;
+  }
+
+  /**
    * An accessor that returns the `Temporal.ZonedDateTime` object of the DateTime object
    */
   public get zonedDateTime(): Temporal.ZonedDateTime {
     return this.#zonedDateTime;
+  }
+
+  /**
+   * An accessor that sets the `Temporal.ZonedDateTime` object of the DateTime object
+   */
+  protected set zonedDateTime(_zonedDateTime: Temporal.ZonedDateTime) {
+    this.#zonedDateTime = _zonedDateTime;
   }
 
   /**
@@ -167,6 +181,13 @@ export class DateTime extends Date {
     return this.#options;
   }
 
+  /**
+   * Validate the input date value
+   *
+   * @param dateTime - The date value to validate
+   * @param options - The options to use
+   * @returns A boolean representing whether the value is a valid *date-time*
+   */
   protected validate(
     dateTime?: DateTimeInput,
     options?: DateTimeOptions
@@ -614,8 +635,8 @@ export class DateTime extends Date {
    *
    * @returns A PlainDate object.
    */
-  public getPlainDate(): DateTime {
-    return DateTime.create(
+  public getPlainDate(): StormDateTime {
+    return StormDateTime.create(
       this.#zonedDateTime.toPlainDate().toZonedDateTime({
         timeZone: Temporal.Now.timeZoneId(),
         plainTime: undefined
@@ -632,8 +653,8 @@ export class DateTime extends Date {
    *
    * @returns A PlainTime object.
    */
-  public getPlainTime(): DateTime {
-    return DateTime.create(
+  public getPlainTime(): StormDateTime {
+    return StormDateTime.create(
       this.#zonedDateTime.toPlainTime().toZonedDateTime({
         timeZone: Temporal.Now.timeZoneId(),
         plainDate: Temporal.PlainDate.from({
@@ -656,7 +677,7 @@ export class DateTime extends Date {
    * @returns A duration object.
    */
   public getDuration(
-    dateTimeTo: DateTime = DateTime.current()
+    dateTimeTo: StormDateTime = StormDateTime.current()
   ): Temporal.Duration {
     return this.#instant.since(dateTimeTo.instant);
   }

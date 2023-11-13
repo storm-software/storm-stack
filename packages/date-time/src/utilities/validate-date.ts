@@ -2,7 +2,7 @@ import { isBigInt } from "@storm-software/utilities/type-checks/is-bigint";
 import { isDate } from "@storm-software/utilities/type-checks/is-date";
 import { isNumber } from "@storm-software/utilities/type-checks/is-number";
 import { RFC_3339_DATE_REGEX } from "../constants";
-import { DateTime, DateTimeInput, DateTimeOptions } from "../date-time";
+import { DateTimeInput, DateTimeOptions, StormDateTime } from "../date-time";
 import { isDateTime } from "./is-date-time";
 import { isInstant } from "./is-instant";
 
@@ -44,7 +44,7 @@ export function validateDate(
     return false;
   }
 
-  const createdDateTime = DateTime.create(value, options);
+  const createdDateTime = StormDateTime.create(value, options);
   switch (createdDateTime.zonedDateTime.month) {
     case 1:
     case 3:

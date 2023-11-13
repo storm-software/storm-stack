@@ -1,6 +1,6 @@
 import { Temporal } from "@js-temporal/polyfill";
 import { EMPTY_STRING } from "@storm-software/utilities";
-import { DateTime } from "../date-time";
+import { StormDateTime } from "../date-time";
 
 /**
  * Format a date time field into ISO format
@@ -10,7 +10,7 @@ import { DateTime } from "../date-time";
  * @returns The formatted date time
  */
 export const formatDateTimeISO = (
-  dateTime?: DateTime | null,
+  dateTime?: StormDateTime | null,
   options: Partial<
     Temporal.ToStringPrecisionOptions & Temporal.ShowCalendarOption
   > = { smallestUnit: "milliseconds" }

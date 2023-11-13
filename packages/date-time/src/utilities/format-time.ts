@@ -1,5 +1,5 @@
 import { Temporal } from "@js-temporal/polyfill";
-import { DateTime } from "../date-time";
+import { StormDateTime } from "../date-time";
 
 /**
  * Format a time field
@@ -8,7 +8,7 @@ import { DateTime } from "../date-time";
  * @returns The formatted time string
  */
 export const formatTime = (
-  dateTime: DateTime = DateTime.current(),
+  dateTime: StormDateTime = StormDateTime.current(),
   options: Partial<
     Temporal.ToStringPrecisionOptions & Temporal.ShowCalendarOption
   > = { smallestUnit: "milliseconds" }

@@ -1,7 +1,7 @@
 import { isDate } from "@storm-software/utilities/type-checks/is-date";
 import { isSet } from "@storm-software/utilities/type-checks/is-set";
 import { isSetString } from "@storm-software/utilities/type-checks/is-set-string";
-import { DateTime } from "../date-time";
+import { StormDateTime } from "../date-time";
 
 /**
  * Type-check to determine if `obj` is a `DateTime` object
@@ -12,11 +12,11 @@ import { DateTime } from "../date-time";
  * @param obj - the object to check
  * @returns The function isDateTime is returning a boolean value.
  */
-export function isDateTime(obj: unknown): obj is DateTime {
+export function isDateTime(obj: unknown): obj is StormDateTime {
   return (
     isDate(obj) &&
-    isSet((obj as unknown as DateTime)?.instant) &&
-    isSet((obj as unknown as DateTime)?.zonedDateTime) &&
-    isSetString((obj as unknown as DateTime)?.timeZoneId)
+    isSet((obj as unknown as StormDateTime)?.instant) &&
+    isSet((obj as unknown as StormDateTime)?.zonedDateTime) &&
+    isSetString((obj as unknown as StormDateTime)?.timeZoneId)
   );
 }
