@@ -130,7 +130,8 @@
   "pnpm": {
     "override": {
       "@storm-software/utilities": "workspace:*",
-      "@storm-software/unique-identifier": "workspace:*"
+      "@storm-software/unique-identifier": "workspace:*",
+      "@storm-software/date-time": "workspace:*"
     }
   },
   "triggerEmptyDevReleaseByIncrementingThisNumber": 0

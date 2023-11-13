@@ -1,0 +1,29 @@
+{
+  "name": "date-time",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "library",
+  "sourceRoot": "packages/date-time/src",
+  "targets": {
+    "build": {
+      "executor": "@storm-software/workspace-tools:tsup",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/packages/date-time",
+        "main": "packages/date-time/src/index.ts",
+        "tsConfig": "packages/date-time/tsconfig.json",
+        "project": "packages/date-time/package.json",
+        "defaultConfiguration": "production",
+        "configurations": {
+          "production": {
+            "debug": false
+          },
+          "development": {
+            "debug": true
+          }
+        }
+      }
+    },
+    "lint": {},
+    "test": {}
+  }
+}

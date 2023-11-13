@@ -1,14 +1,11 @@
-// We use WebCrypto aka globalThis.crypto, which exists in browsers and node.js 16+.
-// See utils.ts for details.
-// The file will throw on node.js 14 and earlier.
-import * as NodeCrypto from "node:crypto";
+import { isObject } from "@storm-software/utilities/type-checks/is-object";
 
-export const Crypto: NodeCrypto.webcrypto.Crypto | undefined =
-  NodeCrypto && typeof NodeCrypto === "object" && "webcrypto" in NodeCrypto
-    ? (NodeCrypto.webcrypto as any)
-    : globalThis.crypto
+const WebCrypto: Crypto | undefined =
+  globalThis.crypto && isObject(typeof globalThis.crypto)
     ? globalThis.crypto
     : undefined;
+
+export const Crypto = WebCrypto;
 
 /**
  * Get the WebCrypto object
@@ -19,9 +16,9 @@ export const Crypto: NodeCrypto.webcrypto.Crypto | undefined =
  * @returns The WebCrypto object
  */
 export const getWebCrypto = () => {
-  if (!Crypto) {
+  if (!WebCrypto) {
     throw new Error("Crypto is not available");
   }
 
-  return Crypto;
+  return WebCrypto;
 };
