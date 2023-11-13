@@ -17,7 +17,7 @@ const globalObject = (Obj => {
   return global;
 })(Object.prototype);
 
-export default function typeDetect(obj: unknown): string {
+export function typeDetect(obj: unknown): string {
   // NOTE: isBuffer must execute before type-detect,
   // because type-detect returns 'Uint8Array'.
   if (isBuffer(obj)) {

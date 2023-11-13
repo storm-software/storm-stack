@@ -26,7 +26,9 @@ This package is part of the <b>⚡storm-stack</b> monorepo. The storm-stack pack
 
 <!-- END header -->
 
-# utilities
+# Storm Serialization Package
+
+This package contains the serialization logic for the Storm project. It is responsible for serializing and deserializing the data that is sent between the client and the server. The code serialization logic is handled by the [SuperJson](https://github.com/blitz-js/superjson) library.
 
 <!-- START doctoc -->
 <!-- END doctoc -->
@@ -41,15 +43,15 @@ This project is built using [Nx](https://nx.dev). As a result, many of the usual
 
 ### Building
 
-Run `nx build utilities` to build the library.
+Run `nx build serialization` to build the library.
 
 ### Running unit tests
 
-Run `nx test utilities` to execute the unit tests via [Jest](https://jestjs.io).
+Run `nx test serialization` to execute the unit tests via [Jest](https://jestjs.io).
 
 ### Linting
 
-Run `nx lint utilities` to run [ESLint](https://eslint.org/) on the package.
+Run `nx lint serialization` to run [ESLint](https://eslint.org/) on the package.
 
 <!-- START footer -->
 <!-- prettier-ignore-start -->

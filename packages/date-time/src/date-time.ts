@@ -87,8 +87,8 @@ export class DateTime extends Date {
             isDate(dateTime)
               ? dateTime.toUTCString()
               : isNumber(dateTime) || isBigInt(dateTime)
-              ? new Date(Number(dateTime)).toISOString()
-              : dateTime
+                ? new Date(Number(dateTime)).toISOString()
+                : dateTime
           )
       : Temporal.Now.instant();
 
@@ -136,6 +136,132 @@ export class DateTime extends Date {
    */
   public get timeZoneId(): string {
     return this.#zonedDateTime.timeZoneId;
+  }
+
+  /**
+   * Returns the stored time value in milliseconds since midnight, January 1, 1970 UTC.
+   */
+  public override getTime(): number {
+    return this.epochMilliseconds;
+  }
+
+  /**
+   *  Gets the year, using local time.
+   */
+  public override getFullYear(): number {
+    return this.#zonedDateTime.year;
+  }
+
+  /**
+   *  Gets the year using Universal Coordinated Time (UTC).
+   */
+  public override getUTCFullYear(): number {
+    return this.#instant.toZonedDateTimeISO("UTC").year;
+  }
+
+  /**
+   *  Gets the month, using local time.
+   */
+  public override getMonth(): number {
+    return this.#zonedDateTime.month;
+  }
+
+  /**
+   *  Gets the month of a Date object using Universal Coordinated Time (UTC).
+   */
+  public override getUTCMonth(): number {
+    return this.#instant.toZonedDateTimeISO("UTC").month;
+  }
+
+  /**
+   *  Gets the day-of-the-month, using local time.
+   */
+  public override getDate(): number {
+    return this.#zonedDateTime.day;
+  }
+
+  /**
+   *  Gets the day-of-the-month, using Universal Coordinated Time (UTC).
+   */
+  public override getUTCDate(): number {
+    return this.#instant.toZonedDateTimeISO("UTC").day;
+  }
+
+  /**
+   *  Gets the day of the week, using local time.
+   */
+  public override getDay(): number {
+    return this.#zonedDateTime.dayOfWeek;
+  }
+
+  /**
+   *  Gets the day of the week using Universal Coordinated Time (UTC).
+   */
+  public override getUTCDay(): number {
+    return this.#instant.toZonedDateTimeISO("UTC").dayOfWeek;
+  }
+
+  /**
+   *  Gets the hours in a date, using local time.
+   */
+  public override getHours(): number {
+    return this.#zonedDateTime.hour;
+  }
+
+  /**
+   *  Gets the hours value in a Date object using Universal Coordinated Time (UTC).
+   */
+  public override getUTCHours(): number {
+    return this.#instant.toZonedDateTimeISO("UTC").hour;
+  }
+
+  /**
+   *  Gets the minutes of a Date object, using local time.
+   */
+  public override getMinutes(): number {
+    return this.#zonedDateTime.minute;
+  }
+
+  /**
+   *  Gets the minutes of a Date object using Universal Coordinated Time (UTC).
+   */
+  public override getUTCMinutes(): number {
+    return this.#instant.toZonedDateTimeISO("UTC").minute;
+  }
+
+  /**
+   *  Gets the seconds of a Date object, using local time.
+   */
+  public override getSeconds(): number {
+    return this.#zonedDateTime.second;
+  }
+
+  /**
+   *  Gets the seconds of a Date object using Universal Coordinated Time (UTC).
+   */
+  public override getUTCSeconds(): number {
+    return this.#instant.toZonedDateTimeISO("UTC").second;
+  }
+
+  /**
+   *  Gets the milliseconds of a Date, using local time.
+   */
+  public override getMilliseconds(): number {
+    return this.#zonedDateTime.millisecond;
+  }
+
+  /**
+   *  Gets the milliseconds of a Date object using Universal Coordinated Time (UTC).
+   */
+  public override getUTCMilliseconds(): number {
+    return this.#instant.toZonedDateTimeISO("UTC").millisecond;
+  }
+
+  /**
+   *  Gets the difference in minutes between the time on the local computer and Universal Coordinated Time (UTC).
+   */
+  public override getTimezoneOffset(): number {
+    return this.#zonedDateTime.offsetNanoseconds / 1000000;
   }
 
   /**

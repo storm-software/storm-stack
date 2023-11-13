@@ -17,12 +17,12 @@ export const EMPTY_OBJECT = {} as const;
 export type AnyCase<T extends IndexType> = string extends T
   ? string
   : T extends `${infer F1}${infer F2}${infer R}`
-  ? `${Uppercase<F1> | Lowercase<F1>}${
-      | Uppercase<F2>
-      | Lowercase<F2>}${AnyCase<R>}`
-  : T extends `${infer F}${infer R}`
-  ? `${Uppercase<F> | Lowercase<F>}${AnyCase<R>}`
-  : typeof EMPTY_STRING;
+    ? `${Uppercase<F1> | Lowercase<F1>}${
+        | Uppercase<F2>
+        | Lowercase<F2>}${AnyCase<R>}`
+    : T extends `${infer F}${infer R}`
+      ? `${Uppercase<F> | Lowercase<F>}${AnyCase<R>}`
+      : typeof EMPTY_STRING;
 
 export type Newable<T> = new (...args: never[]) => T;
 
@@ -133,8 +133,8 @@ export type Filter<KeyType, ExcludeType> = IsEqual<
 > extends true
   ? never
   : KeyType extends ExcludeType
-  ? never
-  : KeyType;
+    ? never
+    : KeyType;
 
 type ExceptOptions = {
   /**
@@ -242,4 +242,20 @@ export interface ISequenced {
    * The sequence number (version, or event counter, etc.) of the record
    */
   sequence: number;
+}
+
+export interface ITyped {
+  /**
+   * The type of the record
+   */
+  __typename: string;
+}
+
+export interface TypedCheckedClass<T> {
+  /**
+   * Run type check on the given value
+   * @param value - The value to check
+   * @returns True if the value is of the type of the class
+   */
+  isTypeOf: (data: any) => data is T;
 }

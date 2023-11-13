@@ -1,0 +1,37 @@
+{
+  "name": "serialization",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "library",
+  "sourceRoot": "packages/serialization/src",
+  "targets": {
+    "build": {
+      "executor": "@storm-software/workspace-tools:tsup",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/packages/serialization",
+        "tsConfig": "packages/serialization/tsconfig.json",
+        "project": "packages/serialization/package.json",
+        "defaultConfiguration": "production",
+        "configurations": {
+          "production": {
+            "debug": false
+          },
+          "development": {
+            "debug": true
+          }
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": [
+          "packages/serialization/**/*.ts",
+          "packages/serialization/package.json"
+        ]
+      }
+    },
+    "test": {}
+  }
+}
