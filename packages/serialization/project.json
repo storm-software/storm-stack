@@ -12,6 +12,8 @@
         "tsConfig": "packages/serialization/tsconfig.json",
         "project": "packages/serialization/package.json",
         "defaultConfiguration": "production",
+        "bundle": false,
+        "platform": "node",
         "configurations": {
           "production": {
             "debug": false

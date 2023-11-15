@@ -1,12 +1,8 @@
 {
-  "composite": true,
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
     "outDir": "../../dist/out-tsc",
-    "strict": false,
-    "target": "esnext",
-    "module": "esnext",
-    "lib": ["esnext", "dom", "dom.iterable"]
+    "noEmit": true
   },
   "files": [],
   "include": ["src/**/*.ts", "src/**/*.js", "bin/**/*"],

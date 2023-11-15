@@ -1,5 +1,5 @@
 import { Collection } from "../types";
-import typeDetect from "./type-detect";
+import { typeDetect } from "./type-detect";
 
 const COLLECTION_TYPE_SET = new Set([
   "Arguments",

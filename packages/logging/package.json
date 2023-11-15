@@ -1,0 +1,73 @@
+{
+  "name": "@storm-software/logging",
+  "version": "0.0.1",
+  "private": false,
+  "description": "⚡ The storm-stack monorepo contains utility applications, tools, and various libraries to create modern and scalable web applications.",
+  "keywords": [
+    "storm-stack",
+    "storm-software",
+    "storm",
+    "stormstack",
+    "storm-ops",
+    "acidic",
+    "acidic-lang",
+    "acidic-model",
+    "impact",
+    "nextjs",
+    "prisma",
+    "zenstack",
+    "hasura",
+    "strapi",
+    "graphql",
+    "sullivanpj",
+    "monorepo"
+  ],
+  "homepage": "https://stormsoftware.org",
+  "bugs": {
+    "url": "https://stormsoftware.org/support",
+    "email": "support@stormsoftware.org"
+  },
+  "repository": {
+    "type": "github",
+    "url": "https://github.com/storm-software/storm-stack.git",
+    "directory": "packages/logging"
+  },
+  "license": "Apache License 2.0",
+  "author": {
+    "name": "Storm Software",
+    "email": "contact@stormsoftware.org",
+    "url": "https://stormsoftware.org"
+  },
+  "sideEffects": false,
+  "type": "module",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./build/modern/index.d.ts",
+        "default": "./build/modern/index.js"
+      },
+      "require": {
+        "types": "./build/modern/index.d.cts",
+        "default": "./build/modern/index.cjs"
+      }
+    },
+    "./package.json": "./package.json"
+  },
+  "main": "build/legacy/index.cjs",
+  "module": "build/legacy/index.js",
+  "types": "build/legacy/index.d.ts",
+  "files": [
+    "../../dist/packages/logging/src"
+  ],
+  "dependencies": {
+    "chalk": "^5.3.0"
+  },
+  "devDependencies": {
+    "@storm-software/testing-tools": "latest",
+    "@storm-software/workspace-tools": "latest",
+    "@types/node": "20.9.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

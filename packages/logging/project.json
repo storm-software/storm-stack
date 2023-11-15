@@ -1,0 +1,28 @@
+{
+  "name": "logging",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "library",
+  "sourceRoot": "packages/logging/src",
+  "targets": {
+    "build": {
+      "executor": "@storm-software/workspace-tools:tsup",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/packages/logging",
+        "tsConfig": "packages/logging/tsconfig.json",
+        "project": "packages/logging/package.json",
+        "defaultConfiguration": "production",
+        "configurations": {
+          "production": {
+            "debug": false
+          },
+          "development": {
+            "debug": true
+          }
+        }
+      }
+    },
+    "lint": {},
+    "test": {}
+  }
+}

@@ -5,12 +5,13 @@
   "compilerOptions": {
     "rootDir": ".",
     "baseUrl": ".",
-    "experimentalDecorators": false,
     "paths": {
       "@storm-software/date-time": ["packages/date-time/src/index.ts"],
       "@storm-software/date-time/*": ["packages/date-time/src/*"],
       "@storm-software/errors": ["packages/errors/src/index.ts"],
       "@storm-software/errors/*": ["packages/errors/src/*"],
+      "@storm-software/logging": ["packages/logging/src/index.ts"],
+      "@storm-software/logging/*": ["packages/logging/src/*"],
       "@storm-software/serialization": ["packages/serialization/src/index.ts"],
       "@storm-software/serialization/*": ["packages/serialization/src/*"],
       "@storm-software/unique-identifier": [
