@@ -10,7 +10,7 @@ import { StormDateTime } from "../date-time";
  * @returns The formatted date time
  */
 export const formatDateTime = (
-  dateTime?: StormDateTime | null,
+  dateTime: StormDateTime = StormDateTime.current(),
   options: Partial<
     Temporal.ToStringPrecisionOptions & Temporal.ShowCalendarOption
   > = { smallestUnit: "milliseconds" }

@@ -12,14 +12,14 @@
         "main": "packages/date-time/src/index.ts",
         "tsConfig": "packages/date-time/tsconfig.json",
         "project": "packages/date-time/package.json",
-        "defaultConfiguration": "production",
-        "configurations": {
-          "production": {
-            "debug": false
-          },
-          "development": {
-            "debug": true
-          }
+        "defaultConfiguration": "production"
+      },
+      "configurations": {
+        "production": {
+          "debug": false
+        },
+        "development": {
+          "debug": true
         }
       }
     },

@@ -1,12 +1,21 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Temporal } from "@js-temporal/polyfill";
+import { Serializable } from "@storm-software/serialization/serializable";
 import { DateTimeInput, DateTimeOptions, StormDateTime } from "./date-time";
 import { validateTime } from "./utilities";
 import { isDateTime } from "./utilities/is-date-time";
+import {
+  deserializeStormTime,
+  serializeStormTime
+} from "./utilities/serialization";
 
 /**
  * A wrapper of the and Date class
  */
+@Serializable({
+  serialize: serializeStormTime,
+  deserialize: deserializeStormTime
+})
 export class StormTime extends StormDateTime {
   /**
    * The current function returns a new DateTime object with the current date and time
@@ -35,7 +44,7 @@ export class StormTime extends StormDateTime {
       calendar: isDateTime(dateTime) ? dateTime.calendarId : options?.calendar
     });
 
-  protected constructor(dateTime?: DateTimeInput, options?: DateTimeOptions) {
+  public constructor(dateTime?: DateTimeInput, options?: DateTimeOptions) {
     super(dateTime, options);
 
     this.instant = this.instant

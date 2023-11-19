@@ -1,9 +1,14 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Temporal } from "@js-temporal/polyfill";
+import { Serializable } from "@storm-software/serialization";
 import { isBigInt } from "@storm-software/utilities/type-checks/is-bigint";
 import { isDate } from "@storm-software/utilities/type-checks/is-date";
 import { isNumber } from "@storm-software/utilities/type-checks/is-number";
 import { isDateTime } from "./utilities/is-date-time";
+import {
+  deserializeStormDateTime,
+  serializeStormDateTime
+} from "./utilities/serialization";
 import { validateDateTime } from "./utilities/validate-date-time";
 
 export type DateTimeOptions = {
@@ -38,6 +43,10 @@ export type DateTimeInput =
 /**
  * A wrapper of the and Date class
  */
+@Serializable({
+  serialize: serializeStormDateTime,
+  deserialize: deserializeStormDateTime
+})
 export class StormDateTime extends Date {
   /**
    * The current function returns a new DateTime object with the current date and time
@@ -72,7 +81,7 @@ export class StormDateTime extends Date {
   #input: DateTimeInput;
   #options: DateTimeOptions;
 
-  protected constructor(dateTime?: DateTimeInput, options?: DateTimeOptions) {
+  public constructor(dateTime?: DateTimeInput, options?: DateTimeOptions) {
     const input = dateTime;
     if (!dateTime && !options?.skipDefaulting) {
       dateTime = Temporal.Now.instant();
@@ -84,7 +93,7 @@ export class StormDateTime extends Date {
         ? dateTime.instant
         : Temporal.Instant.from(
             isDate(dateTime)
-              ? dateTime.toUTCString()
+              ? dateTime.toJSON()
               : isNumber(dateTime) || isBigInt(dateTime)
                 ? new Date(Number(dateTime)).toISOString()
                 : dateTime

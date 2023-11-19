@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "private": false,
   "description": "A package used to support serializing and deserializing data sent between the client and the server.",
+  "type": "module",
   "dependencies": {
     "qs": "^6.11.2",
     "superjson": "^2.2.1"

@@ -1,55 +1,133 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { JsonObject, Serializable } from "@storm-software/serialization";
-import { EMPTY_STRING, NEWLINE_STRING } from "@storm-software/utilities";
+import { Serializable } from "@storm-software/serialization";
+import {
+  EMPTY_STRING,
+  Indexable,
+  NEWLINE_STRING,
+  isObject
+} from "@storm-software/utilities";
 import StackTracey from "stacktracey";
 import { ErrorCode } from "./errors";
+import { isStormError } from "./utilities";
+import {
+  deserializeStormError,
+  serializeStormError
+} from "./utilities/serialization";
 
 export interface StormErrorOptions {
   name?: string;
   message?: string;
-  cause?: any;
+  cause?: unknown;
   stack?: string;
   data?: any;
-  innerError?: StormError;
 }
 
 /**
- * A wrapper of the and Error class
+ * Creates a new StormError instance
+ *
+ * @param cause - The cause of the error
+ * @returns The newly created StormError
  */
-@Serializable()
+export function createStormError<TCode extends string = string>({
+  code,
+  name,
+  message,
+  cause,
+  stack,
+  data
+}: StormErrorOptions & { code: TCode }): StormError<TCode> {
+  if (isStormError(cause)) {
+    return cause;
+  }
+
+  if (cause instanceof Error && cause.name === "StormError") {
+    return cause as StormError<TCode>;
+  }
+
+  const stormError = new StormError<TCode>(code, {
+    name,
+    message,
+    cause,
+    stack,
+    data
+  });
+
+  // Inherit stack from error
+  if (cause instanceof Error && cause.stack) {
+    stormError.stack = cause.stack;
+  }
+
+  return stormError;
+}
+
+/**
+ * Gets the cause of an unknown error and returns it as a StormError
+ *
+ * @param cause - The cause of the error in an unknown type
+ * @returns The cause of the error in a StormError object or undefined
+ */
+function getCauseFromUnknown(cause: unknown): StormError | undefined {
+  if (isStormError(cause)) {
+    return cause;
+  }
+
+  const type = typeof cause;
+  if (type === "undefined" || type === "function" || cause === null) {
+    return undefined;
+  }
+
+  // Primitive types just get wrapped in an error
+  if (type !== "object") {
+    return new StormError(ErrorCode.internal_server_error, {
+      message: String(cause)
+    });
+  }
+
+  // If it's an object, we'll create a synthetic error
+  if (isObject(cause)) {
+    const err = new StormError(ErrorCode.unknown_cause, {});
+    for (const key in cause) {
+      (err as Indexable)[key] = (cause as Indexable)[key];
+    }
+    return err;
+  }
+
+  return undefined;
+}
+
+/**
+ * A wrapper around the base JavaScript Error class to be used by Storm Software
+ */
+@Serializable({
+  serialize: serializeStormError,
+  deserialize: deserializeStormError
+})
 export class StormError<TCode extends string = string> extends Error {
   __proto__ = Error;
 
   public code!: TCode;
+  public override cause?: StormError;
   public data?: any;
-  public innerError?: StormError;
 
   #stack?: string;
 
-  public constructor() {
-    super();
-
-    Object.setPrototypeOf(this, StormError.prototype);
-  }
-
-  public static create<TCode extends string = string>(
+  public constructor(
     code: TCode,
-    { name, message, cause, stack, data, innerError }: StormErrorOptions = {
-      name: "Storm Error",
+    { name, message, cause, stack, data }: StormErrorOptions = {
+      name: "StormError",
       message: "An error occurred during processing"
     }
   ) {
-    const error = new StormError();
+    super(message, { cause });
 
-    error.code = code;
-    error.message ??= message ?? EMPTY_STRING;
-    error.name ??= name ? name : "Storm Error";
-    stack && (error.stack = stack);
-    error.cause = cause;
-    error.data = data;
-    error.innerError = innerError;
+    this.code = code;
+    this.message ??= message ?? EMPTY_STRING;
+    this.name ??= name ? name : "StormError";
+    this.#stack ??= stack ? stack : super.stack;
+    this.cause = getCauseFromUnknown(cause);
+    this.data = data;
 
-    return error;
+    Object.setPrototypeOf(this, StormError.prototype);
   }
 
   /**
@@ -59,9 +137,7 @@ export class StormError<TCode extends string = string> extends Error {
    */
   public override get stack(): string {
     return this.#stack
-      ? `Stack Trace: ${NEWLINE_STRING}${new StackTracey(this.#stack)
-          .withSources()
-          .asTable()}`
+      ? NEWLINE_STRING + new StackTracey(this.#stack).withSources().asTable()
       : EMPTY_STRING;
   }
 
@@ -77,7 +153,7 @@ export class StormError<TCode extends string = string> extends Error {
    *
    * @returns The display error message string
    */
-  public get display(): string {
+  public get displayMessage(): string {
     return this.message
       ? `${
           this.name ? (this.code ? this.name + " " : this.name) : EMPTY_STRING
@@ -97,28 +173,6 @@ export class StormError<TCode extends string = string> extends Error {
    * @returns The error message and stack trace string
    */
   public override toString(): string {
-    return `${this.display} ${NEWLINE_STRING}Stack Trace: ${NEWLINE_STRING}${this.stack}`;
-  }
-
-  public serialize(): JsonObject {
-    return {
-      code: this.code,
-      message: this.message,
-      stack: this.stack,
-      data: this.data,
-      innerError: this.innerError?.serialize()
-    };
-  }
-
-  public deserialize(json: JsonObject) {
-    json?.code && (this.code = json.code as TCode);
-    json?.message && (this.message = json.message as string);
-    json?.stack && (this.#stack = json.stack as string);
-    json?.data && (this.data = json.data);
-
-    if (json?.innerError) {
-      this.innerError = StormError.create(ErrorCode.processing_error);
-      this.innerError.deserialize(json.innerError as JsonObject);
-    }
+    return `${this.displayMessage} ${NEWLINE_STRING}Stack Trace: ${NEWLINE_STRING}${this.stack}`;
   }
 }

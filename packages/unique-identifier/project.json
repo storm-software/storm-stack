@@ -11,14 +11,14 @@
         "outputPath": "dist/packages/unique-identifier",
         "tsConfig": "packages/unique-identifier/tsconfig.json",
         "project": "packages/unique-identifier/package.json",
-        "defaultConfiguration": "production",
-        "configurations": {
-          "production": {
-            "debug": false
-          },
-          "development": {
-            "debug": true
-          }
+        "defaultConfiguration": "production"
+      },
+      "configurations": {
+        "production": {
+          "debug": false
+        },
+        "development": {
+          "debug": true
         }
       }
     },

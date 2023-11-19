@@ -13,7 +13,9 @@ export type ErrorCode =
   | "invalid_request"
   | "type_error"
   | "processing_error"
-  | "user_not_logged_in";
+  | "internal_server_error"
+  | "user_not_logged_in"
+  | "unknown_cause";
 export const ErrorCode = {
   success: "success" as ErrorCode,
   missing_issue_code: "missing_issue_code" as ErrorCode,
@@ -30,5 +32,6 @@ export const ErrorCode = {
   type_error: "type_error" as ErrorCode,
   processing_error: "processing_error" as ErrorCode,
   internal_server_error: "internal_server_error" as ErrorCode,
-  user_not_logged_in: "user_not_logged_in" as ErrorCode
+  user_not_logged_in: "user_not_logged_in" as ErrorCode,
+  unknown_cause: "unknown_cause" as ErrorCode
 };

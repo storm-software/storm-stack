@@ -1,20 +1,43 @@
 import {
+  ClassTypeCheckable,
   ITyped,
-  TypedCheckedClass,
   isFunction
 } from "@storm-software/utilities";
 import { register } from "./json-parser";
-import { ClassMetadata, JsonValue, SerializableClass } from "./types";
+import {
+  ClassSerializable,
+  DeserializeFunct,
+  JsonValue,
+  SerializationFunct,
+  SerializationMetadata
+} from "./types";
 
-export const Serializable = (
-  options: {
-    name?: string;
-  } = {}
-) => {
+export const Serializable = <TData = any>(options: {
+  /**
+   * The type and/or name of the record
+   */
+  name?: string;
+
+  /**
+   * Serialize the class to a JSON object or string
+   *
+   * @param data - The data object to serialize
+   * @returns The serialized JSON object
+   */
+  serialize: SerializationFunct<TData>;
+
+  /**
+   * Deserialize the class from a JSON object or string
+   *
+   * @param json - The JSON object to deserialize from
+   * @returns The deserialized data
+   */
+  deserialize: DeserializeFunct<TData>;
+}) => {
   const decorator = <
-    TClass extends new (...args: any) => any = new (...args: any) => any
+    TClass extends new (...args: any) => any = new (...args: any) => TData
   >(
-    target: any,
+    target: TClass,
     context: ClassDecoratorContext<TClass>
   ) => {
     const name = options.name
@@ -23,16 +46,11 @@ export const Serializable = (
         ? context.name
         : target.name;
 
-    let isTypeOf!: TypedCheckedClass<SerializableClass>["isTypeOf"];
-    if (
-      isFunction(
-        (target.prototype as TypedCheckedClass<SerializableClass>)?.isTypeOf
-      )
-    ) {
-      isTypeOf = (target.prototype as TypedCheckedClass<SerializableClass>)
-        .isTypeOf;
+    let isTypeOf!: ClassTypeCheckable<TData>["isTypeOf"];
+    if (isFunction((target.prototype as ClassTypeCheckable<TData>)?.isTypeOf)) {
+      isTypeOf = (target.prototype as ClassTypeCheckable<TData>).isTypeOf;
     } else {
-      isTypeOf = (value: any): value is SerializableClass =>
+      isTypeOf = (value: any): value is TData =>
         value instanceof target || value?.__typename === name;
     }
 
@@ -47,31 +65,18 @@ export const Serializable = (
       }
 
       context.metadata[name] = {
+        ...options,
         name,
-        serialize: this.prototype.serialize,
-        deserialize: this.prototype.deserialize,
+        __typename: name,
         isTypeOf
-      } as ClassMetadata<SerializableClass>;
+      } as SerializationMetadata<TData>;
 
-      register(
-        name,
-        (data: SerializableClass) => data.serialize(),
-        (json: JsonValue) => {
-          const deserialized = new this();
-          deserialized.deserialize(json);
-
-          return deserialized;
-        },
-        isTypeOf
-      );
+      register(name, options.serialize, options.deserialize, isTypeOf);
     });
 
     return class
       extends target
-      implements
-        SerializableClass,
-        TypedCheckedClass<SerializableClass>,
-        ITyped
+      implements ClassSerializable<TData>, ClassTypeCheckable<TData>, ITyped
     {
       /**
        * The name of the class's type
@@ -80,30 +85,32 @@ export const Serializable = (
 
       /**
        * Serialize the class to a JSON object
+       *
+       * @returns The data object to serialize
        */
-      public serialize(): JsonValue {
+      public serialize = (): JsonValue => {
         return (
-          context.metadata[name] as ClassMetadata<SerializableClass>
-        )?.serialize.call(this);
-      }
+          context.metadata[name] as SerializationMetadata<TData>
+        )?.serialize(this as unknown as TData);
+      };
 
       /**
        * Deserialize the class from a JSON object
        *
        * @param json - The JSON object to deserialize from
        */
-      public deserialize(json: JsonValue) {
-        (
-          context.metadata[name] as ClassMetadata<SerializableClass>
-        )?.deserialize.call(this, json);
-      }
+      public deserialize = (json: JsonValue) => {
+        (context.metadata[name] as SerializationMetadata<TData>)?.deserialize(
+          json
+        );
+      };
 
       /**
        * Run type check on the given value
        * @param value - The value to check
        * @returns True if the value is of the type of the class
        */
-      public isTypeOf(value: any): value is SerializableClass {
+      public isTypeOf(value: any): value is TData {
         return isTypeOf(value);
       }
     };

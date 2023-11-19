@@ -1,4 +1,5 @@
 import { Temporal } from "@js-temporal/polyfill";
+import { StormDate } from "../date";
 import { StormDateTime } from "../date-time";
 
 /**
@@ -8,8 +9,8 @@ import { StormDateTime } from "../date-time";
  * @returns The formatted date
  */
 export const formatDate = (
-  dateTime: StormDateTime = StormDateTime.current(),
+  dateTime: StormDateTime = StormDate.current(),
   options: Partial<
     Temporal.ToStringPrecisionOptions & Temporal.ShowCalendarOption
-  > = { smallestUnit: "milliseconds" }
+  > = { smallestUnit: "minute" }
 ): string => dateTime.zonedDateTime.toPlainDate().toString(options);

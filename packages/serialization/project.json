@@ -12,28 +12,19 @@
         "tsConfig": "packages/serialization/tsconfig.json",
         "project": "packages/serialization/package.json",
         "defaultConfiguration": "production",
-        "bundle": false,
-        "platform": "node",
-        "configurations": {
-          "production": {
-            "debug": false
-          },
-          "development": {
-            "debug": true
-          }
+        "debug": false,
+        "verbose": true
+      },
+      "configurations": {
+        "production": {
+          "debug": false
+        },
+        "development": {
+          "debug": true
         }
       }
     },
-    "lint": {
-      "executor": "@nx/eslint:lint",
-      "outputs": ["{options.outputFile}"],
-      "options": {
-        "lintFilePatterns": [
-          "packages/serialization/**/*.ts",
-          "packages/serialization/package.json"
-        ]
-      }
-    },
+    "lint": {},
     "test": {}
   }
 }

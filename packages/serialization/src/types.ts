@@ -1,4 +1,4 @@
-import { TypedCheckedClass } from "@storm-software/utilities/types";
+import { ClassTypeCheckable, ITyped } from "@storm-software/utilities/types";
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 export type PrimitiveJsonValue = string | number | boolean | undefined | null;
@@ -79,18 +79,78 @@ export interface IJsonParser {
   ) => void;
 }
 
-export interface SerializableClass {
+/**
+ * A function that can serialize a certain type of data
+ *
+ * @param data - The data object to serialize
+ * @returns The serialized JSON object
+ */
+export type SerializationFunct<
+  TData = any,
+  TJsonValue extends JsonValue = JsonValue
+> = (data: TData) => TJsonValue;
+
+/**
+ * A function that can deserialize a certain type of data
+ *
+ * @param json - The JSON object to deserialize from
+ * @returns The deserialized data
+ */
+export type DeserializeFunct<
+  TData = any,
+  TJsonValue extends JsonValue = JsonValue
+> = (json: TJsonValue) => TData | null;
+
+/**
+ * A class that can be serialized and deserialized
+ */
+export interface DataTransformer<
+  TData,
+  TJsonValue extends JsonValue = JsonValue
+> {
   /**
    * Serialize the class to a JSON object
+   *
+   * @param data - The data object to serialize
+   * @returns The serialized JSON object
    */
-  serialize(): JsonValue;
+  serialize: SerializationFunct<TData, TJsonValue>;
+
+  /**
+   * Deserialize the class from a JSON object
+   *
+   * @param json - The JSON object to deserialize from
+   * @returns The deserialized data
+   */
+  deserialize: DeserializeFunct<TData, TJsonValue>;
+}
+
+/**
+ * A class that can be serialized and deserialized
+ */
+export interface ClassSerializable<
+  TData,
+  TJsonValue extends JsonValue = JsonValue
+> {
+  /**
+   * Serialize the class to a JSON object
+   *
+   * @returns The data object to serialize
+   */
+  serialize: () => TJsonValue;
 
   /**
    * Deserialize the class from a JSON object
    *
    * @param json - The JSON object to deserialize from
    */
-  deserialize(json: JsonValue): void;
+  deserialize: (json: TJsonValue) => void;
 }
 
-export type ClassMetadata<T> = SerializableClass & TypedCheckedClass<T>;
+export type SerializableType<T> = ClassSerializable<T> &
+  ClassTypeCheckable<T> &
+  ITyped &
+  T;
+
+export type SerializationMetadata<T> = DataTransformer<T> &
+  ClassTypeCheckable<T>;

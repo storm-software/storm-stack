@@ -11,27 +11,18 @@
         "outputPath": "dist/packages/utilities",
         "tsConfig": "packages/utilities/tsconfig.json",
         "project": "packages/utilities/package.json",
-        "defaultConfiguration": "production",
-        "configurations": {
-          "production": {
-            "debug": false
-          },
-          "development": {
-            "debug": true
-          }
+        "defaultConfiguration": "production"
+      },
+      "configurations": {
+        "production": {
+          "debug": false
+        },
+        "development": {
+          "debug": true
         }
       }
     },
-    "lint": {
-      "executor": "@nx/eslint:lint",
-      "outputs": ["{options.outputFile}"],
-      "options": {
-        "lintFilePatterns": [
-          "packages/utilities/**/*.ts",
-          "packages/utilities/package.json"
-        ]
-      }
-    },
+    "lint": {},
     "test": {}
   }
 }
