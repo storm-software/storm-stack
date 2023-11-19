@@ -6,6 +6,8 @@
     "rootDir": ".",
     "baseUrl": ".",
     "paths": {
+      "@storm-software/config": ["packages/config/src/index.ts"],
+      "@storm-software/config/*": ["packages/config/src/*"],
       "@storm-software/date-time": ["packages/date-time/src/index.ts"],
       "@storm-software/date-time/*": ["packages/date-time/src/*"],
       "@storm-software/errors": ["packages/errors/src/index.ts"],
