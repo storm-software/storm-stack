@@ -23,6 +23,7 @@ export * from "./is-react-element";
 export * from "./is-ref";
 export * from "./is-select-option";
 export * from "./is-set";
+export * from "./is-set-object";
 export * from "./is-set-string";
 export * from "./is-string";
 export * from "./is-symbol";

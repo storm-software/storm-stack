@@ -63,7 +63,7 @@ export type Collection =
  *
  * @category Type
  */
-export type BaseType =
+export type Primitive =
   | null
   | undefined
   | string
@@ -72,7 +72,7 @@ export type BaseType =
   | symbol
   | bigint;
 
-export type LiteralUnion<T extends U, U extends BaseType> =
+export type LiteralUnion<T extends U, U extends Primitive> =
   | T
   | (U & {
       _?: never;
@@ -251,11 +251,11 @@ export interface ITyped {
   __typename: string;
 }
 
-export interface TypedCheckedClass<T> {
+export interface ClassTypeCheckable<T> extends ITyped {
   /**
    * Run type check on the given value
    * @param value - The value to check
    * @returns True if the value is of the type of the class
    */
-  isTypeOf: (data: any) => data is T;
+  isTypeOf: (value: unknown) => value is T;
 }
