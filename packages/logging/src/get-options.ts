@@ -1,7 +1,4 @@
-import {
-  getConfigModule,
-  getStormConfig
-} from "@storm-software/config/get-config";
+import { StormConfig } from "@storm-software/config/types";
 import { formatDateTime } from "@storm-software/date-time";
 import { isStormError } from "@storm-software/errors";
 import { isRuntimeServer } from "@storm-software/utilities/helper-fns/is-runtime-server";
@@ -10,9 +7,8 @@ import { isSetString } from "@storm-software/utilities/type-checks/is-set-string
 import { tmpdir } from "os";
 import { join } from "path";
 import { DestinationStream, LoggerOptions as PinoLoggerOptions } from "pino";
-import * as z from "zod";
-import { LoggingConfigSchema } from "./schema";
 import { createFileTransport } from "./transports/file-transport";
+import { LoggingConfig } from "./types";
 
 export type LoggerOptions = {
   options: PinoLoggerOptions;
@@ -30,17 +26,11 @@ export type GetOptionsResult = {
  * @param projectName - The name of the project to get the options for
  * @returns The options for the logger
  */
-export const getOptions = async (
+export const getOptions = (
+  workspaceConfig: StormConfig,
+  loggingConfig: LoggingConfig,
   projectName?: string
-): Promise<GetOptionsResult> => {
-  const workspaceConfig = await getStormConfig();
-
-  const loggingConfig =
-    (await getConfigModule<z.infer<typeof LoggingConfigSchema>>(
-      LoggingConfigSchema,
-      "logging",
-      projectName
-    )) ?? {};
+): GetOptionsResult => {
   if (!isSetString(loggingConfig.path)) {
     loggingConfig.path = join(tmpdir(), "storm", "logs");
   }
@@ -82,7 +72,7 @@ export const getOptions = async (
   };
 
   const consoleOptions: PinoLoggerOptions = {
-    name: `${projectName} - Console`,
+    name: projectName ? projectName : workspaceConfig.name,
     ...baseOptions,
     msgPrefix: "⚡️",
     transport: {
@@ -130,7 +120,7 @@ export const getOptions = async (
     );
 
     fileOptions = {
-      name: `${projectName} - Log File`,
+      name: projectName ? projectName : workspaceConfig.name,
       ...baseOptions,
       transport: {
         target: "pino-pretty",
@@ -143,6 +133,7 @@ export const getOptions = async (
           timestampKey: "time",
           messageFormat: `
 ***********************************************
+Name: ${projectName ? projectName : workspaceConfig.name}
 Timestamp: {time}
 Log Level: {levelLabel} {if pid}
 Process ID: {pid}{end}{if req.url}

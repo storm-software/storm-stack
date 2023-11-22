@@ -1,4 +1,6 @@
 import { MaybePromise } from "@storm-software/utilities";
+import * as z from "zod";
+import { LoggingConfigSchema } from "./schema";
 
 export interface IStormLog {
   /**
@@ -80,3 +82,5 @@ interface LogFunction {
   (obj: unknown, msg?: string, ...args: any[]): void;
   (msg: string, ...args: any[]): void;
 }
+
+export type LoggingConfig = z.infer<typeof LoggingConfigSchema>;

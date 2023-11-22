@@ -114,7 +114,7 @@ export const getProjectConfigEnv = async (
   return result;
 };
 
-export const getStormConfig = async (): Promise<StormConfig | undefined> => {
+export const getStormConfig = async (): Promise<StormConfig> => {
   if (_static_cache) {
     return _static_cache;
   }
