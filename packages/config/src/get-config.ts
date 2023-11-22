@@ -1,130 +1,152 @@
 import { Schema, wrap } from "@decs/typeschema";
 import { deepMerge } from "@storm-software/utilities/helper-fns/deep-merge";
-import { isSetObject } from "@storm-software/utilities/type-checks/is-set-object";
-import { DeepPartial } from "@storm-software/utilities/types";
-import { CosmiconfigResult, cosmiconfig } from "cosmiconfig";
-import { getDefaultConfig } from "./default-config";
+import { camelCase, constantCase } from "@storm-software/utilities/string-fns";
+import { isSetString } from "@storm-software/utilities/type-checks";
 import {
   ProjectConfig,
   StormConfig,
-  ThemeConfig,
+  wrapped_ProjectConfig,
   wrapped_StormConfig
 } from "./types";
 
-const _config_cache = new WeakMap<WeakKey, StormConfig>();
+const _env_cache = new Map<string, Record<string, any>>();
+const _module_cache = new WeakMap<
+  { packageName?: string; moduleName: string },
+  any
+>();
 let _static_cache: StormConfig | undefined = undefined;
 
-const getConfigFileName = (
-  fileName: string
-): Promise<CosmiconfigResult | undefined> =>
-  cosmiconfig(fileName, { cache: true }).search();
+const getConfigModuleEnv = <
+  TConfig extends Record<string, any> = Record<string, any>
+>(
+  config: Partial<StormConfig>,
+  moduleName: string,
+  projectName?: string
+): TConfig | undefined => {
+  const prefix = `STORM${
+    projectName ? `_${constantCase(projectName)}` : ""
+  }_MODULE_${constantCase(moduleName)}_`;
 
-const getStaticConfig = async (): Promise<StormConfig | undefined> => {
-  if (_static_cache) {
-    return _static_cache as StormConfig;
+  return Object.keys(process.env)
+    .filter(key => key.startsWith(prefix))
+    .reduce(
+      (ret: Record<string, any>, key: string) => {
+        const name = camelCase(key.replace(prefix, ""));
+        isSetString(name) && (ret[name] = process.env[key]);
+
+        return ret;
+      },
+      config.modules?.[moduleName] ?? {}
+    ) as TConfig;
+};
+
+export const getPackageConfigEnv = (
+  config: Partial<StormConfig>,
+  packageName?: string
+): Record<string, any> => {
+  const prefix = `STORM_${
+    constantCase(packageName) ? `PROJECT_${constantCase(packageName)}_` : ""
+  }`;
+  let packageConfig: Record<string, any> = {
+    name: process.env[`${prefix}NAME`] ?? packageName,
+    namespace: process.env[`${prefix}NAMESPACE`] ?? config.namespace,
+    owner: process.env[`${prefix}OWNER`] ?? config.owner,
+    worker: process.env[`${prefix}WORKER`] ?? config.worker,
+    organization: process.env[`${prefix}ORGANIZATION`] ?? config.organization,
+    license: process.env[`${prefix}LICENSE`] ?? config.license,
+    homepage: process.env[`${prefix}HOMEPAGE`] ?? config.homepage,
+    configFile: process.env[`${prefix}CONFIG_FILE`] ?? config.configFile,
+    runtimeVersion:
+      process.env[`${prefix}RUNTIME_VERSION`] ?? config.runtimeVersion,
+    runtimeDirectory:
+      process.env[`${prefix}RUNTIME_DIRECTORY`] ?? config.runtimeDirectory,
+    environment:
+      process.env[`${prefix}ENVIRONMENT`] ??
+      process.env.NODE_ENV ??
+      config.environment,
+    colors: {
+      primary: process.env[`${prefix}COLORS_PRIMARY`] ?? config.colors?.primary,
+      background:
+        process.env[`${prefix}COLORS_BACKGROUND`] ?? config.colors?.background,
+      success: process.env[`${prefix}COLORS_SUCCESS`] ?? config.colors?.success,
+      info: process.env[`${prefix}COLORS_INFO`] ?? config.colors?.info,
+      warning: process.env[`${prefix}COLORS_WARNING`] ?? config.colors?.warning,
+      error: process.env[`${prefix}COLORS_ERROR`] ?? config.colors?.error
+    },
+    repository: process.env[`${prefix}REPOSITORY`] ?? config.repository,
+    branch: process.env[`${prefix}BRANCH`] ?? config.branch,
+    preMajor: process.env[`${prefix}PRE_MAJOR`] ?? config.preMajor,
+    modules: config.modules
+  };
+
+  const serializedConfig = process.env[`${prefix}CONFIGURATION`];
+  if (serializedConfig) {
+    packageConfig = deepMerge(packageConfig, JSON.parse(serializedConfig));
   }
 
-  let configFile = await getConfigFileName("storm");
-  if (!configFile || configFile.isEmpty) {
-    configFile = await getConfigFileName("storm-software");
-    if (!configFile || configFile.isEmpty) {
-      configFile = await getConfigFileName("storm-stack");
-      if (!configFile || configFile.isEmpty) {
-        configFile = await getConfigFileName("storm-cloud");
-        if (!configFile || configFile.isEmpty) {
-          configFile = await getConfigFileName("acidic");
-          if (!configFile || configFile.isEmpty) {
-            configFile = await getConfigFileName("acid");
-          }
-        }
-      }
-    }
+  const modulePrefix = `STORM_${prefix}MODULE_`;
+  return Object.keys(process.env)
+    .filter(key => key.startsWith(modulePrefix))
+    .reduce((ret: Record<string, any>, key: string) => {
+      const module = camelCase(
+        key.substring(prefix.length, key.indexOf("_", prefix.length))
+      );
+      isSetString(module) &&
+        (ret.modules[module] = getConfigModuleEnv(config, module));
+
+      return ret;
+    }, packageConfig);
+};
+
+export const getProjectConfigEnv = async (
+  config: Partial<StormConfig>,
+  projectName: string
+): Promise<ProjectConfig> => {
+  if (_env_cache.has(projectName)) {
+    return _env_cache.get(projectName) as ProjectConfig;
   }
 
-  if (!isSetObject(configFile) || configFile.isEmpty || !configFile.filepath) {
-    console.warn(
-      "No Storm config file found in the current workspace. Please ensure this is the expected behavior - you can add a `storm.config.js` file to the root of your workspace if it is not."
-    );
-    return undefined;
-  }
-
-  let result: StormConfig | undefined = undefined;
-
-  const defaultConfig = await getDefaultConfig();
-  if (defaultConfig) {
-    result = deepMerge(
-      defaultConfig,
-      await wrapped_StormConfig.parse(
-        (await wrapped_StormConfig.parse(
-          configFile.config
-        )) as Partial<StormConfig>
-      )
-    );
-  }
-
-  result && (result.configFilepath = configFile.filepath);
-  _static_cache = result;
+  const result = await wrapped_ProjectConfig.parse(
+    getPackageConfigEnv(config, projectName)
+  );
+  _env_cache.set(projectName, result);
 
   return result;
 };
 
-/**
- * Get the config for the current Storm workspace
- *
- * @param defaultConfig - The default config to apply under the current workspace config
- * @returns The config for the current Storm workspace
- */
-export const getStormConfig = async <TConfig extends StormConfig = StormConfig>(
-  defaultConfig?: DeepPartial<TConfig>
-): Promise<TConfig> => {
-  const cacheKey = defaultConfig ?? {};
-  if (_config_cache.has(cacheKey)) {
-    return _config_cache.get(cacheKey) as TConfig;
+export const getStormConfig = async (): Promise<StormConfig | undefined> => {
+  if (_static_cache) {
+    return _static_cache;
   }
 
-  const config: StormConfig = deepMerge(await getStaticConfig(), defaultConfig);
-  const validateResult = (await wrapped_StormConfig.validate(
-    config
-  )) as unknown as {
-    success: boolean;
-    issues: string[];
-  };
-  if (validateResult?.success === false) {
-    throw new Error(
-      `The following issues occurred while initializing the Storm configuration: \n${validateResult.issues.join(
-        "\n"
-      )}`
-    );
-  }
+  let config = getPackageConfigEnv({});
 
-  _config_cache.set(cacheKey, config);
-  return config as TConfig;
-};
+  const prefix = "STORM_PROJECT_";
+  const projects = await Promise.all(
+    Object.keys(process.env)
+      .filter(key => key.startsWith(prefix))
+      .map((key: string) =>
+        getProjectConfigEnv(
+          config,
+          camelCase(
+            key.substring(prefix.length, key.indexOf("_", prefix.length))
+          ) as string
+        )
+      )
+  );
 
-/**
- * Get the config for a specific Storm project
- *
- * @param projectName - The name of the project
- * @param options - The options for the project config
- * @returns The config for the specified Storm project. If the project does not exist, `undefined` is returned.
- */
-export const getProjectConfig = async <
-  TConfig extends ProjectConfig = ProjectConfig
->(
-  projectName: string,
-  options: {
-    defaultConfig?: DeepPartial<TConfig>;
-  } = {}
-): Promise<TConfig | undefined> => {
-  const result = await getStormConfig<StormConfig>({
-    workspace: {
-      projects: {
-        [projectName]: options.defaultConfig
-      }
-    }
-  });
+  config.projects = projects.reduce(
+    (ret: Record<string, ProjectConfig>, project: ProjectConfig) => {
+      ret[project.name] = project;
+      return ret;
+    },
+    {}
+  );
 
-  return result.workspace.projects[projectName] as TConfig;
+  const result = await wrapped_StormConfig.parse(config);
+  _static_cache = result;
+
+  return result;
 };
 
 /**
@@ -135,36 +157,25 @@ export const getProjectConfig = async <
  * @returns The config for the specified Storm config module. If the module does not exist, `undefined` is returned.
  */
 export const getConfigModule = async <TModule = any>(
+  schema: Schema,
   moduleName: string,
-  options: {
-    defaultConfig?: DeepPartial<TModule>;
-    schema?: Schema;
-  } = {}
-): Promise<TModule | undefined> => {
-  let result = await getStormConfig({
-    workspace: {
-      modules: {
-        [moduleName]: options?.defaultConfig
-      }
-    }
-  });
-
-  if (options.schema) {
-    const schema = wrap(options.schema);
-    return (await schema.parse(
-      result.workspace.modules[moduleName]
-    )) as TModule;
+  projectName?: string
+): Promise<TModule> => {
+  const module_cache_key = { projectName, moduleName };
+  if (_module_cache.has(module_cache_key)) {
+    return _module_cache.get(module_cache_key) as TModule;
   }
 
-  return result.workspace.modules[moduleName] as TModule;
-};
-
-export const getTheme = async (
-  projectName?: string
-): Promise<ThemeConfig | undefined> => {
   let result = await getStormConfig();
 
-  return projectName && result.workspace.projects[projectName]?.theme
-    ? result.workspace.projects[projectName]?.theme
-    : result.workspace.theme;
+  let module = projectName
+    ? result?.projects?.[projectName]?.modules?.[moduleName]
+    : result?.modules?.[moduleName];
+  if (schema) {
+    const wrapped = wrap(schema);
+    module = (await wrapped.parse(module)) as TModule;
+  }
+
+  _module_cache.set(module_cache_key, module);
+  return module;
 };

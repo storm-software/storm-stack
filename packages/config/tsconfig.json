@@ -2,7 +2,7 @@
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
     "outDir": "../../dist/out-tsc",
-    "noEmit": true
+    "noEmit": false
   },
   "files": [],
   "include": ["src/**/*.ts", "src/**/*.js", "bin/**/*"],
