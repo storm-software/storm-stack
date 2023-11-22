@@ -99,7 +99,7 @@ export type SerializationFunct<
 export type DeserializeFunct<
   TData = any,
   TJsonValue extends JsonValue = JsonValue
-> = (json: TJsonValue) => TData | null;
+> = (json: TJsonValue) => TData;
 
 /**
  * A class that can be serialized and deserialized

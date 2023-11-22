@@ -1,6 +1,6 @@
 import { MaybePromise } from "@storm-software/utilities";
 
-export interface ILogger {
+export interface IStormLog {
   /**
    * Write a success message to the logs.
    *
@@ -72,4 +72,11 @@ export interface ILogger {
    * @returns Either a promise that resolves to void or void.
    */
   log: (...message: any[]) => MaybePromise<void>;
+}
+
+interface LogFunction {
+  /* tslint:disable:no-unnecessary-generics */
+  <T extends object>(obj: T, msg?: string, ...args: any[]): void;
+  (obj: unknown, msg?: string, ...args: any[]): void;
+  (msg: string, ...args: any[]): void;
 }

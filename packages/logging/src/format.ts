@@ -1,17 +1,16 @@
-import { StormDateTime, formatDateTime } from "@storm-stack/date-time";
-import { isStormError } from "@storm-stack/errors";
-import { JsonParser } from "@storm-stack/serialization";
+import { StormDateTime, formatDateTime } from "@storm-software/date-time";
+import { isStormError } from "@storm-software/errors";
+import { stringify } from "@storm-software/serialization";
 import {
   EMPTY_STRING,
   NEWLINE_STRING,
-  isBaseType,
   isEmpty,
   isError,
   isObject,
-  isProduction,
+  isPrimitive,
   isSetString,
   isString
-} from "@storm-stack/utilities";
+} from "@storm-software/utilities";
 
 export type FormatLogOptions = {
   newLine?: boolean;
@@ -39,7 +38,7 @@ export const formatLogMessage = (
   }
 ): string => {
   return `${options.newLine ? NEWLINE_STRING : ""}${
-    (!isProduction() && options.timestamp !== false) || options.timestamp
+    options.timestamp !== false
       ? (isSetString(options.timestamp)
           ? options.timestamp
           : `Timestamp: ${formatLogTimestamp()}`) + NEWLINE_STRING
@@ -55,7 +54,8 @@ export const formatLogMessage = (
       : formatLogMessageLine(message)
   }${options.postfix ? options.postfix : EMPTY_STRING}${
     options.stacktrace !== false &&
-    (!isProduction() || (isSetString(options.stacktrace) && options.stacktrace))
+    isSetString(options.stacktrace) &&
+    options.stacktrace
       ? NEWLINE_STRING + options.stacktrace
       : EMPTY_STRING
   }${options.newLineAfter ? NEWLINE_STRING : EMPTY_STRING}`;
@@ -79,8 +79,8 @@ export const formatLogMessageLine = (message: unknown): string =>
       }, "")
     : isEmpty(message)
       ? "<Empty>"
-      : !isBaseType(message) && !isObject(message) && !isError(message)
-        ? JsonParser.stringify(message)
+      : !isPrimitive(message) && !isObject(message) && !isError(message)
+        ? stringify(message)
         : isError(message)
           ? (message as Error)?.name && (message as Error)?.message
             ? `${(message as Error)?.name}: ${(message as Error)?.message}`
@@ -90,7 +90,7 @@ export const formatLogMessageLine = (message: unknown): string =>
                 ? (message as Error)?.message
                 : "<Error>"
           : !isString(message)
-            ? JsonParser.stringify(message)
+            ? stringify(message)
             : (message as string);
 
 /**
@@ -109,7 +109,7 @@ export const formatLogError = (
   postfix?: string
 ): string => {
   return formatLogMessage(
-    isStormError(error) ? error.display : `${error.name}: ${error.message}`,
+    isStormError(error) ? error.print : `${error.name}: ${error.message}`,
     {
       newLine,
       newLineAfter,
@@ -129,11 +129,10 @@ export const formatLogError = (
 export const formatLogTimestamp = (
   dateTime: StormDateTime = StormDateTime.current()
 ): string => {
-  return formatDateTime(
-    dateTime,
-    { smallestUnit: "milliseconds", calendarName: "never" },
-    "UTC"
-  );
+  return formatDateTime(dateTime, {
+    smallestUnit: "milliseconds",
+    calendarName: "never"
+  });
 };
 
 /*export const formatStacktrace = (

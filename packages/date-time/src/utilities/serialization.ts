@@ -20,10 +20,10 @@ export function serializeStormDateTime(dateTime: StormDateTime): string {
  * @param utcString - The dateTime to deserialize
  * @returns The deserialized dateTime
  */
-export function deserializeStormDateTime(
-  utcString: JsonValue
-): StormDateTime | null {
-  return isSetString(utcString) ? StormDateTime.create(utcString) : null;
+export function deserializeStormDateTime(utcString: JsonValue): StormDateTime {
+  return isSetString(utcString)
+    ? StormDateTime.create(utcString)
+    : StormDateTime.create();
 }
 
 /**
@@ -42,8 +42,10 @@ export function serializeStormDate(date: StormDate): string {
  * @param utcString - The date to deserialize
  * @returns The deserialized date
  */
-export function deserializeStormDate(utcString: JsonValue): StormDate | null {
-  return isSetString(utcString) ? StormDate.create(utcString) : null;
+export function deserializeStormDate(utcString: JsonValue): StormDate {
+  return isSetString(utcString)
+    ? StormDate.create(utcString)
+    : StormDate.create();
 }
 
 /**
@@ -62,6 +64,8 @@ export function serializeStormTime(date: StormTime): string {
  * @param utcString - The time to deserialize
  * @returns The deserialized time
  */
-export function deserializeStormTime(utcString: JsonValue): StormTime | null {
-  return isSetString(utcString) ? StormTime.create(utcString) : null;
+export function deserializeStormTime(utcString: JsonValue): StormTime {
+  return isSetString(utcString)
+    ? StormTime.create(utcString)
+    : StormTime.create();
 }

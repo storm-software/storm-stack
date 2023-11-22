@@ -25,7 +25,7 @@ export function serializeStormError(error: StormError): JsonValue {
  * @param error - The error to deserialize
  * @returns The deserialized error
  */
-export function deserializeStormError(json: JsonValue): StormError | null {
+export function deserializeStormError(json: JsonValue): StormError {
   if (isSetObject(json)) {
     const { code, message, stack, data, cause } = json as JsonObject;
 
@@ -46,5 +46,7 @@ export function deserializeStormError(json: JsonValue): StormError | null {
     return error;
   }
 
-  return null;
+  return new StormError(ErrorCode.internal_server_error, {
+    message: "Could not read server response"
+  });
 }

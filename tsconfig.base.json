@@ -26,5 +26,5 @@
       "@storm-software/utilities/*": ["packages/utilities/src/*"]
     }
   },
-  "references": []
+  "exclude": ["node_modules", "tmp"]
 }

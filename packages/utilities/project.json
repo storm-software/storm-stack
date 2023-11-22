@@ -11,7 +11,28 @@
         "outputPath": "dist/packages/utilities",
         "tsConfig": "packages/utilities/tsconfig.json",
         "project": "packages/utilities/package.json",
-        "defaultConfiguration": "production"
+        "defaultConfiguration": "production",
+        "verbose": true
+      },
+      "configurations": {
+        "production": {
+          "debug": false
+        },
+        "development": {
+          "debug": true
+        }
+      }
+    },
+    "build-tsc": {
+      "executor": "@nx/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "main": "packages/utilities/src/index.ts",
+        "outputPath": "dist/packages/utilities-tsc",
+        "tsConfig": "packages/utilities/tsconfig.json",
+        "project": "packages/utilities/package.json",
+        "defaultConfiguration": "production",
+        "verbose": true
       },
       "configurations": {
         "production": {

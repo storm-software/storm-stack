@@ -10,7 +10,9 @@ import {
 import { validateDate } from "./utilities/validate-date";
 
 /**
- * A wrapper of the and Date class
+ * A wrapper of the and Date class used by Storm Software to provide Date-Time values
+ *
+ * @decorator `@Serializable()`
  */
 @Serializable({
   serialize: serializeStormDate,

@@ -97,6 +97,8 @@ function getCauseFromUnknown(cause: unknown): StormError | undefined {
 
 /**
  * A wrapper around the base JavaScript Error class to be used by Storm Software
+ *
+ * @decorator `@Serializable()`
  */
 @Serializable({
   serialize: serializeStormError,
@@ -122,16 +124,21 @@ export class StormError<TCode extends string = string> extends Error {
 
     this.code = code;
     this.message ??= message ?? EMPTY_STRING;
-    this.name ??= name ? name : "StormError";
-    this.#stack ??= stack ? stack : super.stack;
+    this.name ??= name ? name : this.constructor.name;
     this.cause = getCauseFromUnknown(cause);
     this.data = data;
+
+    if (typeof Error.captureStackTrace === "function") {
+      Error.captureStackTrace(this, this.constructor);
+    } else {
+      this.#stack ??= stack ? stack : new Error(message).stack;
+    }
 
     Object.setPrototypeOf(this, StormError.prototype);
   }
 
   /**
-   * Prints the stack trace
+   * Prints a displayable, formatted the stack trace
    *
    * @returns The stack trace string
    */
@@ -149,11 +156,20 @@ export class StormError<TCode extends string = string> extends Error {
   }
 
   /**
+   * The unformatted stack trace
+   *
+   * @returns The stack trace string
+   */
+  public get originalStack(): string {
+    return super.stack ? super.stack : this.stack;
+  }
+
+  /**
    * Prints the display error message string
    *
    * @returns The display error message string
    */
-  public get displayMessage(): string {
+  public print(): string {
     return this.message
       ? `${
           this.name ? (this.code ? this.name + " " : this.name) : EMPTY_STRING
@@ -173,6 +189,6 @@ export class StormError<TCode extends string = string> extends Error {
    * @returns The error message and stack trace string
    */
   public override toString(): string {
-    return `${this.displayMessage} ${NEWLINE_STRING}Stack Trace: ${NEWLINE_STRING}${this.stack}`;
+    return `${this.print} ${NEWLINE_STRING}Stack Trace: ${NEWLINE_STRING}${this.stack}`;
   }
 }

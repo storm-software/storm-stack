@@ -10,7 +10,9 @@ import {
 } from "./utilities/serialization";
 
 /**
- * A wrapper of the and Date class
+ * A wrapper of the and Date class used by Storm Software to provide Date-Time values
+ *
+ * @decorator `@Serializable()`
  */
 @Serializable({
   serialize: serializeStormTime,
@@ -33,15 +35,22 @@ export class StormTime extends StormDateTime {
     return StormTime.create(Temporal.Now.instant());
   }
 
+  /**
+   * Creates a new instance of DateTime from a string with a specified format.
+   *
+   * @param time - The input value used to determine the current time
+   * @param options - The options to use
+   * @returns A new instance of StormTime with the time provided in the time parameter.
+   */
   public static override create = (
-    dateTime?: DateTimeInput,
+    time?: DateTimeInput,
     options?: DateTimeOptions
   ) =>
-    new StormTime(dateTime, {
+    new StormTime(time, {
       timeZone:
-        (isDateTime(dateTime) ? dateTime.timeZoneId : options?.timeZone) ??
+        (isDateTime(time) ? time.timeZoneId : options?.timeZone) ??
         Temporal.Now.timeZoneId(),
-      calendar: isDateTime(dateTime) ? dateTime.calendarId : options?.calendar
+      calendar: isDateTime(time) ? time.calendarId : options?.calendar
     });
 
   public constructor(dateTime?: DateTimeInput, options?: DateTimeOptions) {

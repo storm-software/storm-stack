@@ -11,18 +11,19 @@
         "outputPath": "dist/packages/logging",
         "tsConfig": "packages/logging/tsconfig.json",
         "project": "packages/logging/package.json",
-        "defaultConfiguration": "production",
-        "configurations": {
-          "production": {
-            "debug": false
-          },
-          "development": {
-            "debug": true
-          }
+        "defaultConfiguration": "production"
+      },
+      "configurations": {
+        "production": {
+          "debug": false
+        },
+        "development": {
+          "debug": true
         }
       }
     },
     "lint": {},
     "test": {}
-  }
+  },
+  "tags": ["scope:logging", "type:lib", "lang:ts"]
 }
