@@ -1,3 +1,4 @@
+import { EMPTY_STRING } from "../types";
 import { upperCaseFirst } from "./upper-case-first";
 
 /**
@@ -18,7 +19,10 @@ export const snakeCase = (
 
   const parts =
     input
-      ?.replace(/([A-Z])+/g, upperCaseFirst)
+      ?.replace(
+        /([A-Z])+/g,
+        (input?: string) => upperCaseFirst(input) ?? EMPTY_STRING
+      )
       .split(/(?=[A-Z])|[\.\-\s_]/)
       .map((x: string) => x.toLowerCase()) ?? [];
   if (parts.length === 0) return "";

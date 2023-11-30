@@ -9,15 +9,6 @@
     "directory": "packages/utilities"
   },
   "type": "module",
-  "browser": {
-    "node:crypto": false,
-    "./crypto": "./src/crypto/web-crypto.js"
-  },
-  "dependencies": {
-    "@storm-software/testing-tools": "latest",
-    "@storm-software/workspace-tools": "latest",
-    "@types/node": "20.9.0"
-  },
   "publishConfig": {
     "access": "public"
   }

@@ -31,6 +31,35 @@ This package is part of the <b>⚡storm-stack</b> monorepo. The storm-stack pack
 
 This package provides a simple way to generate various types of unique identifiers. It is designed to be used in a browser or NodeJS environment.
 
+<!-- START doctoc -->
+<!-- END doctoc -->
+
+## Installing
+
+Using [pnpm](http://pnpm.io):
+
+```bash
+pnpm add -D @storm-software/unique-identifier
+```
+
+<details>
+  <summary>Using npm</summary>
+
+```bash
+npm install -D @storm-software/unique-identifier
+```
+
+</details>
+
+<details>
+  <summary>Using yarn</summary>
+
+```bash
+yarn add -D @storm-software/unique-identifier
+```
+
+</details>
+
 ## Available Identifiers
 
 This package includes generator functions for the following type of identifiers:

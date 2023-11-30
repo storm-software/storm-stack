@@ -1,0 +1,14 @@
+{
+  "executors": {
+    "ts-build": {
+      "implementation": "./src/executors/ts-build/executor",
+      "schema": "./src/executors/ts-build/schema.json",
+      "description": "Run a build on the TypeScript project using base tsup executor"
+    },
+    "ts-server-build": {
+      "implementation": "./src/executors/ts-server-build/executor",
+      "schema": "./src/executors/ts-server-build/schema.json",
+      "description": "Run the build process for a TypeScript server-side package"
+    }
+  }
+}

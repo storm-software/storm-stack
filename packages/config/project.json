@@ -18,6 +18,13 @@
           "fp-ts/Either",
           "@effect/schema",
           "@deepkit/type"
+        ],
+        "assets": [
+          {
+            "glob": "packages/config",
+            "input": "schema.json",
+            "output": "."
+          }
         ]
       },
       "configurations": {

@@ -117,8 +117,7 @@ export const PackageConfigSchema = z
       ),
     colors: ColorConfigSchema.describe(
       "Storm theme config values used for styling various package elements"
-    ),
-    modules: z.record(z.any()).describe("Configuration of each used extension")
+    )
   })
   .describe(
     "Storm base schema used to represent a package's config (either workspace or project) "
@@ -144,13 +143,75 @@ export const ProjectConfigSchema = PackageConfigSchema.extend({
   tags: z
     .array(z.string().trim().toLowerCase())
     .default([])
-    .describe("Various config tags associated with the repository")
+    .describe("Various config tags associated with the repository"),
+  modules: z.record(z.any()).describe("Configuration of each used extension")
 }).describe("Storm Project-level config");
 
 /**
- * Full Storm Workspace config values used during various dev-ops processes
+ * Storm theme color config values used for styling various workspace elements
  */
-export const StormConfigSchema = PackageConfigSchema.extend({
+export const WorkspaceSchema = z
+  .object({
+    env: z
+      .enum(["development", "staging", "production"])
+      .default("development")
+      .describe("The current runtime environment of the package"),
+    ci: z
+      .boolean()
+      .default(false)
+      .describe(
+        "An indicator specifying if the current environment is a CI environment"
+      ),
+    repository: z
+      .string()
+      .trim()
+      .url()
+      .describe("The repo URL of the workspace (i.e. GitHub)"),
+    workspaceRoot: z
+      .string()
+      .trim()
+      .describe("The root directory of the workspace"),
+    branch: z
+      .string()
+      .trim()
+      .default("main")
+      .describe("The branch of the workspace"),
+    organization: z
+      .string()
+      .trim()
+      .default("storm-software")
+      .describe("The organization of the workspace"),
+    timezone: z
+      .string()
+      .trim()
+      .default("America/New_York")
+      .describe("The default timezone of the workspace"),
+    locale: z
+      .string()
+      .trim()
+      .default("en-US")
+      .describe("The default locale of the workspace")
+  })
+  .describe("Colors used for various workspace elements");
+
+const ConfigFileWorkspaceSchema = WorkspaceSchema.extend({
+  projects: z
+    .record(ProjectConfigSchema.describe("Config for a specific Storm project"))
+    .describe("Config for each Storm project")
+}).describe(
+  "The values set in the Storm config file. This file is expected to be named `storm.config.js` and be located in the root of the workspace"
+);
+
+/**
+ * Full Storm config file values used during various dev-ops processes
+ */
+export const ConfigFileSchema = PackageConfigSchema.merge(
+  ConfigFileWorkspaceSchema
+).describe(
+  "The values set in the Storm config file. This file is expected to be named `storm.config.js` and be located in the root of the workspace"
+);
+
+const StormConfigWorkspaceSchema = WorkspaceSchema.extend({
   configFile: z
     .string()
     .trim()
@@ -167,38 +228,16 @@ export const StormConfigSchema = PackageConfigSchema.extend({
     )
     .default("0.0.1")
     .describe("The global version of the Storm runtime"),
-  environment: z
-    .enum(["development", "staging", "production"])
-    .default("development")
-    .describe("The current runtime environment of the package"),
-  ci: z
-    .boolean()
-    .default(false)
-    .describe(
-      "An indicator specifying if the current environment is a CI environment"
-    ),
-  repository: z
-    .string()
-    .trim()
-    .url()
-    .describe("The repo URL of the workspace (i.e. GitHub)"),
-  workspaceRoot: z
-    .string()
-    .trim()
-    .describe("The root directory of the workspace"),
-  branch: z
-    .string()
-    .trim()
-    .default("main")
-    .describe("The branch of the workspace"),
-  organization: z
-    .string()
-    .trim()
-    .default("storm-software")
-    .describe("The organization of the workspace"),
-  projects: z
-    .record(ProjectConfigSchema.describe("Config for a specific Storm project"))
-    .describe("Config for each Storm project")
+  modules: z.record(z.any()).describe("Configuration of each used extension")
 }).describe(
+  "The values set in the Storm config file. This file is expected to be named `storm.config.js` and be located in the root of the workspace"
+);
+
+/**
+ * Full Storm Workspace config values used during various dev-ops processes
+ */
+export const StormConfigSchema = ProjectConfigSchema.merge(
+  StormConfigWorkspaceSchema
+).describe(
   "Storm Workspace config values used during various dev-ops processes. This type is a combination of the StormPackageConfig and StormProject types. It represents the config of the entire monorepo."
 );

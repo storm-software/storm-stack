@@ -1,0 +1,19 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "extends": "../../../../../node_modules/@storm-software/workspace-tools/src/executors/tsup/schema.json",
+  "version": 2,
+  "title": "TypeScript Build",
+  "description": "Run a build on the TypeScript project using base tsup executor",
+  "type": "object",
+  "properties": {
+    "transports": {
+      "type": "array",
+      "description": "",
+      "items": {
+        "type": "string"
+      },
+      "default": ["pino-pretty"]
+    }
+  },
+  "required": []
+}

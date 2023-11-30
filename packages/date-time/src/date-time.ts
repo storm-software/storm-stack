@@ -11,6 +11,9 @@ import {
 } from "./utilities/serialization";
 import { validateDateTime } from "./utilities/validate-date-time";
 
+/**
+ * The options to use when creating a new DateTime object
+ */
 export type DateTimeOptions = {
   /**
    * The time zone to use. If not specified, the default time zone for the runtime is used.
@@ -30,6 +33,9 @@ export type DateTimeOptions = {
   skipDefaulting?: boolean;
 };
 
+/**
+ * The input types that can be used to create a DateTime object
+ */
 export type DateTimeInput =
   | StormDateTime
   | Temporal.Instant
@@ -51,21 +57,28 @@ export type DateTimeInput =
 })
 export class StormDateTime extends Date {
   /**
-   * The current function returns a new DateTime object with the current date and time
-   * @returns A new instance of DateTime with the current date and time.
+   * The current function returns a new StormDateTime object with the current date and time
+   * @returns A new instance of StormDateTime with the current date and time.
    */
   public static override now(): number {
     return StormDateTime.current().epochMilliseconds;
   }
 
   /**
-   * The current function returns a new DateTime object with the current date and time
-   * @returns A new instance of DateTime with the current date and time.
+   * The current function returns a new StormDateTime object with the current date and time
+   * @returns A new instance of StormDateTime with the current date and time.
    */
   public static current(): StormDateTime {
     return StormDateTime.create(Temporal.Now.instant());
   }
 
+  /**
+   * Creates a new instance of StormDateTime from a string with a specified format.
+   *
+   * @param dateTime - The input value used to determine the current date and time
+   * @param options - The options to use when creating the StormDateTime object
+   * @returns A new instance of StormDateTime with the current date and time.
+   */
   public static create = (
     dateTime?: DateTimeInput,
     options?: DateTimeOptions
@@ -77,10 +90,24 @@ export class StormDateTime extends Date {
       calendar: isDateTime(dateTime) ? dateTime.calendarId : options?.calendar
     });
 
+  /**
+   * A private accessor that stores the `Temporal.Instant` object of the DateTime object
+   */
   #instant: Temporal.Instant;
+
+  /**
+   * A private accessor that stores the `Temporal.ZonedDateTime` object of the DateTime object
+   */
   #zonedDateTime: Temporal.ZonedDateTime;
 
+  /**
+   * A private accessor that stores the input value used to create the DateTime object
+   */
   #input: DateTimeInput;
+
+  /**
+   * A private accessor that stores the options used to create the DateTime object
+   */
   #options: DateTimeOptions;
 
   public constructor(dateTime?: DateTimeInput, options?: DateTimeOptions) {
@@ -687,9 +714,21 @@ export class StormDateTime extends Date {
    * @param dateTimeTo - DateTime = DateTime.current
    * @returns A duration object.
    */
-  public getDuration(
+  public since(
     dateTimeTo: StormDateTime = StormDateTime.current()
   ): Temporal.Duration {
     return this.#instant.since(dateTimeTo.instant);
+  }
+
+  /**
+   * It returns the duration between two date times.
+   *
+   * @param dateTimeTo - DateTime = DateTime.current
+   * @returns A duration object.
+   */
+  public getDuration(
+    dateTimeTo: StormDateTime = StormDateTime.current()
+  ): Temporal.Duration {
+    return this.instant.since(dateTimeTo.instant);
   }
 }

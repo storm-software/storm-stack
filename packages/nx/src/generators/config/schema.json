@@ -1,0 +1,14 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "$id": "Config",
+  "title": "Configuration Schema",
+  "type": "object",
+  "properties": {
+    "outputFile": {
+      "type": "string",
+      "description": "The output file for the workspace configuration",
+      "default": "{workspaceRoot}/packages/config/schema.json"
+    }
+  },
+  "required": ["outputFile"]
+}

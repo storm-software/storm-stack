@@ -4,15 +4,8 @@
   "private": false,
   "description": "This package includes a DateTime class, various utility functions for working with dates and times, and a number of formatting options.",
   "dependencies": {
-    "@js-temporal/polyfill": "^0.4.4"
-  },
-  "devDependencies": {
-    "@storm-software/testing-tools": "latest",
-    "@storm-software/workspace-tools": "latest"
-  },
-  "peerDependencies": {
-    "@storm-software/testing-tools": "latest",
-    "@storm-software/workspace-tools": "latest"
+    "@js-temporal/polyfill": "^0.4.4",
+    "@storm-software/errors": "0.0.1"
   },
   "publishConfig": {
     "access": "public"

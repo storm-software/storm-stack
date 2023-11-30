@@ -1,0 +1,10 @@
+{
+  "generators": {
+    "config": {
+      "factory": "./src/generators/config/generator",
+      "schema": "./src/generators/config/schema.json",
+      "description": "Generate the schema used to describe the Storm configuration",
+      "hidden": true
+    }
+  }
+}

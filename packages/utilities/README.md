@@ -29,8 +29,36 @@ This package is part of the <b>⚡storm-stack</b> monorepo. The storm-stack pack
 
 # Storm Utilities Package
 
+This package contains various utilities functions that serve a wide range of purposes. These utilities are used by other packages in the storm-stack monorepo and any other projects that could benefit from their functionality.
+
 <!-- START doctoc -->
 <!-- END doctoc -->
+
+## Installing
+
+Using [pnpm](http://pnpm.io):
+
+```bash
+pnpm add -D @storm-software/utilities
+```
+
+<details>
+  <summary>Using npm</summary>
+
+```bash
+npm install -D @storm-software/utilities
+```
+
+</details>
+
+<details>
+  <summary>Using yarn</summary>
+
+```bash
+yarn add -D @storm-software/utilities
+```
+
+</details>
 
 ## Reduced Package Size
 

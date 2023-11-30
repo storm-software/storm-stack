@@ -66,14 +66,14 @@ export function createStormError<TCode extends string = string>({
  * @param cause - The cause of the error in an unknown type
  * @returns The cause of the error in a StormError object or undefined
  */
-function getCauseFromUnknown(cause: unknown): StormError | undefined {
+export function getCauseFromUnknown(cause: unknown): StormError {
   if (isStormError(cause)) {
     return cause;
   }
 
   const type = typeof cause;
   if (type === "undefined" || type === "function" || cause === null) {
-    return undefined;
+    return createStormError({ code: ErrorCode.internal_server_error, cause });
   }
 
   // Primitive types just get wrapped in an error
@@ -92,7 +92,7 @@ function getCauseFromUnknown(cause: unknown): StormError | undefined {
     return err;
   }
 
-  return undefined;
+  return createStormError({ code: ErrorCode.internal_server_error, cause });
 }
 
 /**
@@ -107,10 +107,24 @@ function getCauseFromUnknown(cause: unknown): StormError | undefined {
 export class StormError<TCode extends string = string> extends Error {
   __proto__ = Error;
 
+  /**
+   * The error code
+   */
   public code!: TCode;
+
+  /**
+   * The cause of the error
+   */
   public override cause?: StormError;
+
+  /**
+   * Additional data to be passed with the error
+   */
   public data?: any;
 
+  /**
+   * The stack trace
+   */
   #stack?: string;
 
   public constructor(

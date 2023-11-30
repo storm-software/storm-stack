@@ -2,8 +2,13 @@ import { deepMerge } from "@storm-software/utilities/helper-fns/deep-merge";
 import { isSetObject } from "@storm-software/utilities/type-checks/is-set-object";
 import { DeepPartial } from "@storm-software/utilities/types";
 import { CosmiconfigResult, cosmiconfig } from "cosmiconfig";
-import { getDefaultConfig } from "./default-config";
-import { StormConfig, wrapped_StormConfig } from "./types";
+import {
+  ConfigFile,
+  StormConfig,
+  wrapped_ConfigFile,
+  wrapped_StormConfig
+} from "./types";
+import { getDefaultConfigFile } from "./utilities/default-config";
 
 const _config_cache = new WeakMap<WeakKey, StormConfig>();
 let _static_cache: StormConfig | undefined = undefined;
@@ -13,45 +18,60 @@ const getConfigFileName = (
 ): Promise<CosmiconfigResult | undefined> =>
   cosmiconfig(fileName, { cache: true }).search();
 
-const getStaticConfig = async (): Promise<StormConfig | undefined> => {
+const getStaticConfig = async (
+  projectName?: string
+): Promise<StormConfig | undefined> => {
   if (_static_cache) {
     return _static_cache as StormConfig;
   }
 
-  let configFile = await getConfigFileName("storm");
-  if (!configFile || configFile.isEmpty) {
-    configFile = await getConfigFileName("storm-software");
-    if (!configFile || configFile.isEmpty) {
-      configFile = await getConfigFileName("storm-stack");
-      if (!configFile || configFile.isEmpty) {
-        configFile = await getConfigFileName("storm-cloud");
-        if (!configFile || configFile.isEmpty) {
-          configFile = await getConfigFileName("acidic");
-          if (!configFile || configFile.isEmpty) {
-            configFile = await getConfigFileName("acid");
+  let cosmiconfigResult = await getConfigFileName("storm");
+  if (!cosmiconfigResult || cosmiconfigResult.isEmpty) {
+    cosmiconfigResult = await getConfigFileName("storm-software");
+    if (!cosmiconfigResult || cosmiconfigResult.isEmpty) {
+      cosmiconfigResult = await getConfigFileName("storm-stack");
+      if (!cosmiconfigResult || cosmiconfigResult.isEmpty) {
+        cosmiconfigResult = await getConfigFileName("storm-cloud");
+        if (!cosmiconfigResult || cosmiconfigResult.isEmpty) {
+          cosmiconfigResult = await getConfigFileName("acidic");
+          if (!cosmiconfigResult || cosmiconfigResult.isEmpty) {
+            cosmiconfigResult = await getConfigFileName("acid");
           }
         }
       }
     }
   }
 
-  if (!isSetObject(configFile) || configFile.isEmpty || !configFile.filepath) {
+  if (
+    !isSetObject(cosmiconfigResult) ||
+    cosmiconfigResult.isEmpty ||
+    !cosmiconfigResult.filepath
+  ) {
     console.warn(
       "No Storm config file found in the current workspace. Please ensure this is the expected behavior - you can add a `storm.config.js` file to the root of your workspace if it is not."
     );
     return undefined;
   }
 
-  let result: StormConfig | undefined = undefined;
+  let configFile: ConfigFile | undefined = undefined;
 
-  const defaultConfig = await getDefaultConfig();
+  const defaultConfig = await getDefaultConfigFile();
   if (defaultConfig) {
-    result = await wrapped_StormConfig.parse(
-      deepMerge(configFile.config, defaultConfig)
+    configFile = await wrapped_ConfigFile.parse(
+      deepMerge(cosmiconfigResult.config, defaultConfig)
     );
   }
 
-  result && (result.configFile = configFile.filepath);
+  let result!: StormConfig;
+  if (projectName && configFile?.projects?.[projectName]) {
+    const projectConfig = configFile.projects[projectName];
+    result = deepMerge(projectConfig, configFile);
+  }
+
+  cosmiconfigResult.filepath &&
+    (result.configFile = cosmiconfigResult.filepath);
+  result.runtimeVersion = "0.0.1";
+
   _static_cache = result;
 
   return result;
@@ -66,9 +86,10 @@ const getStaticConfig = async (): Promise<StormConfig | undefined> => {
 export const loadStormConfig = async <
   TConfig extends StormConfig = StormConfig
 >(
+  projectName?: string,
   defaultConfig?: DeepPartial<TConfig>
 ): Promise<TConfig> => {
-  const cacheKey = defaultConfig ?? {};
+  const cacheKey = [projectName, defaultConfig ?? {}];
   if (_config_cache.has(cacheKey)) {
     return _config_cache.get(cacheKey) as TConfig;
   }

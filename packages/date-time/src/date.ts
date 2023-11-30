@@ -35,15 +35,22 @@ export class StormDate extends StormDateTime {
     return StormDate.create(Temporal.Now.instant());
   }
 
+  /**
+   * Creates a new StormDate object with the given date and time
+   *
+   * @param date - The date to use
+   * @param options - The options to use
+   * @returns A new instance of DateTime with the given date and time.
+   */
   public static override create = (
-    dateTime?: DateTimeInput,
+    date?: DateTimeInput,
     options?: DateTimeOptions
   ) =>
-    new StormDate(dateTime, {
+    new StormDate(date, {
       timeZone:
-        (isDateTime(dateTime) ? dateTime.timeZoneId : options?.timeZone) ??
+        (isDateTime(date) ? date.timeZoneId : options?.timeZone) ??
         Temporal.Now.timeZoneId(),
-      calendar: isDateTime(dateTime) ? dateTime.calendarId : options?.calendar
+      calendar: isDateTime(date) ? date.calendarId : options?.calendar
     });
 
   public constructor(dateTime?: DateTimeInput, options?: DateTimeOptions) {
@@ -154,7 +161,7 @@ export class StormDate extends StormDateTime {
    * @returns A duration object.
    */
   public override getDuration(
-    dateTimeTo: StormDate = StormDate.current()
+    dateTimeTo: StormDateTime = StormDate.current()
   ): Temporal.Duration {
     return this.instant.since(dateTimeTo.instant);
   }

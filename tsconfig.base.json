@@ -14,6 +14,7 @@
       "@storm-software/errors/*": ["packages/errors/src/*"],
       "@storm-software/logging": ["packages/logging/src/index.ts"],
       "@storm-software/logging/*": ["packages/logging/src/*"],
+      "@storm-software/nx": ["packages/nx/src/index.ts"],
       "@storm-software/serialization": ["packages/serialization/src/index.ts"],
       "@storm-software/serialization/*": ["packages/serialization/src/*"],
       "@storm-software/unique-identifier": [
@@ -26,5 +27,6 @@
       "@storm-software/utilities/*": ["packages/utilities/src/*"]
     }
   },
+  "include": ["global.d.ts"],
   "exclude": ["node_modules", "tmp"]
 }

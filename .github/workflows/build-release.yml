@@ -57,6 +57,9 @@ jobs:
       - name: Build repository packages
         run: pnpm nx run-many -t build --parallel=5
 
+      - name: Generate configuration schema
+        run: pnpm nx g @storm-software/nx:config --outputPath=packages/config/schema.json
+
       - name: Run Linters
         run: pnpm lint
 

@@ -8,10 +8,10 @@ import { findWorkspaceRoot } from "nx/src/utils/find-workspace-root.js";
 import { join } from "path";
 import {
   ColorConfig,
+  ConfigFileInput,
   PackageConfigInput,
-  ProjectConfigInput,
-  StormConfigInput
-} from "./types";
+  ProjectConfigInput
+} from "../types";
 export { readProjectsConfigurationFromProjectGraph } from "@nx/devkit";
 
 /**
@@ -38,8 +38,7 @@ export const DefaultStormPackageConfig: Omit<PackageConfigInput, "name"> = {
   owner: "@storm-software/development",
   worker: "stormie-bot",
   runtimeDirectory: "./node_modules/.storm",
-  colors: deepCopy(DefaultStormColorConfig),
-  modules: {}
+  colors: deepCopy(DefaultStormColorConfig)
 };
 
 /**
@@ -52,10 +51,11 @@ export const DefaultStormProjectConfig: Omit<
   ...deepCopy(DefaultStormPackageConfig),
   version: "0.0.1",
   tags: [],
-  projectType: "library"
+  projectType: "library",
+  modules: {}
 };
 
-export const getDefaultConfig = async (): Promise<StormConfigInput> => {
+export const getDefaultConfigFile = async (): Promise<ConfigFileInput> => {
   let name = "storm-workspace";
   let namespace = "storm-software";
   let repository = "https://github.com/storm-software/storm-stack";
@@ -79,7 +79,7 @@ export const getDefaultConfig = async (): Promise<StormConfigInput> => {
     }
   }
 
-  const result: StormConfigInput = {
+  const result: ConfigFileInput = {
     ...deepCopy(DefaultStormPackageConfig),
     workspaceRoot,
     name,
@@ -87,12 +87,12 @@ export const getDefaultConfig = async (): Promise<StormConfigInput> => {
     repository,
     license,
     homepage,
-    runtimeVersion: "0.0.1",
-    environment: "production",
+    timezone: "America/New_York",
+    locale: "en-US",
+    env: "production",
     branch: "main",
     organization: "storm-software",
-    projects: {},
-    configFile: null
+    projects: {}
   };
 
   const projectGraph = await buildProjectGraphWithoutDaemon();

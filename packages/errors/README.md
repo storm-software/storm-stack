@@ -27,12 +27,38 @@ This package is part of the <b>⚡storm-stack</b> monorepo. The storm-stack pack
 
 <!-- END header -->
 
-# Storm Date-Time Package
+# Storm Errors Package
 
-This package provides a simple to use DateTime object. It includes various utility functions for working with dates and times, as well as a number of formatting options. It is designed to be used in a browser or NodeJS environment.
+This package provides a wrapper for the JavaScript `Error` object and a simple way to create custom errors through error code strings that can be used throughout your application.
 
 <!-- START doctoc -->
 <!-- END doctoc -->
+
+## Installing
+
+Using [pnpm](http://pnpm.io):
+
+```bash
+pnpm add -D @storm-software/errors
+```
+
+<details>
+  <summary>Using npm</summary>
+
+```bash
+npm install -D @storm-software/errors
+```
+
+</details>
+
+<details>
+  <summary>Using yarn</summary>
+
+```bash
+yarn add -D @storm-software/errors
+```
+
+</details>
 
 ## Reduced Package Size
 

@@ -27,10 +27,36 @@ This package is part of the <b>⚡storm-stack</b> monorepo. The storm-stack pack
 
 <!-- END header -->
 
-# config
+# Storm Configuration Package
 
 <!-- START doctoc -->
 <!-- END doctoc -->
+
+## Installing
+
+Using [pnpm](http://pnpm.io):
+
+```bash
+pnpm add -D @storm-software/config
+```
+
+<details>
+  <summary>Using npm</summary>
+
+```bash
+npm install -D @storm-software/config
+```
+
+</details>
+
+<details>
+  <summary>Using yarn</summary>
+
+```bash
+yarn add -D @storm-software/config
+```
+
+</details>
 
 ## Reduced Package Size
 

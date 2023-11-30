@@ -9,8 +9,6 @@
     "superjson": "^2.2.1"
   },
   "devDependencies": {
-    "@storm-software/testing-tools": "latest",
-    "@storm-software/workspace-tools": "latest",
     "@types/node": "20.9.0",
     "@types/qs": "^6.9.10"
   },
