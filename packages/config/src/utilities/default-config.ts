@@ -1,4 +1,3 @@
-import { deepCopy } from "@storm-software/utilities/helper-fns/deep-copy";
 import { existsSync, readFileSync } from "fs";
 import {
   buildProjectGraphWithoutDaemon,
@@ -10,9 +9,12 @@ import {
   ColorConfig,
   ConfigFileInput,
   PackageConfigInput,
-  ProjectConfigInput
+  ProjectConfigInput,
+  StormConfig
 } from "../types";
 export { readProjectsConfigurationFromProjectGraph } from "@nx/devkit";
+
+let _static_cache: ConfigFileInput | undefined = undefined;
 
 /**
  * Storm theme config values used for styling various workspace elements
@@ -38,7 +40,7 @@ export const DefaultStormPackageConfig: Omit<PackageConfigInput, "name"> = {
   owner: "@storm-software/development",
   worker: "stormie-bot",
   runtimeDirectory: "./node_modules/.storm",
-  colors: deepCopy(DefaultStormColorConfig)
+  colors: { ...DefaultStormColorConfig }
 };
 
 /**
@@ -48,7 +50,7 @@ export const DefaultStormProjectConfig: Omit<
   ProjectConfigInput,
   "name" | "root"
 > = {
-  ...deepCopy(DefaultStormPackageConfig),
+  ...DefaultStormPackageConfig,
   version: "0.0.1",
   tags: [],
   projectType: "library",
@@ -80,7 +82,7 @@ export const getDefaultConfigFile = async (): Promise<ConfigFileInput> => {
   }
 
   const result: ConfigFileInput = {
-    ...deepCopy(DefaultStormPackageConfig),
+    ...DefaultStormPackageConfig,
     workspaceRoot,
     name,
     namespace,
@@ -125,7 +127,7 @@ export const getDefaultConfigFile = async (): Promise<ConfigFileInput> => {
       }
 
       result.projects[name] = {
-        ...deepCopy(DefaultStormProjectConfig),
+        ...DefaultStormProjectConfig,
         name,
         root: projectConfig.root,
         projectType: projectConfig.projectType
@@ -141,4 +143,39 @@ export const getDefaultConfigFile = async (): Promise<ConfigFileInput> => {
   });
 
   return result;
+};
+
+export const getDefaultConfig = (): StormConfig => {
+  let name = "storm-workspace";
+  let namespace = "storm-software";
+  let repository = "https://github.com/storm-software/storm-stack";
+  let version = "0.0.1";
+
+  let license = DefaultStormPackageConfig.license;
+  let homepage = DefaultStormPackageConfig.homepage;
+
+  const workspaceRoot = findWorkspaceRoot(process.cwd())?.dir ?? process.cwd();
+  return {
+    ...(DefaultStormPackageConfig as Required<PackageConfigInput>),
+    colors: { ...DefaultStormColorConfig },
+    workspaceRoot,
+    root: workspaceRoot,
+    version,
+    projectType: "library",
+    tags: [],
+    name,
+    namespace,
+    repository,
+    license: license ?? DefaultStormPackageConfig.license!,
+    homepage: homepage ?? DefaultStormPackageConfig.homepage!,
+    timezone: "America/New_York",
+    locale: "en-US",
+    env: "production",
+    branch: "main",
+    organization: "storm-software",
+    modules: {},
+    ci: true,
+    configFile: join(workspaceRoot, "storm.config.js"),
+    runtimeVersion: "1.0.0"
+  };
 };

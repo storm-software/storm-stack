@@ -2,10 +2,11 @@
   "name": "errors",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "projectType": "library",
+  "root": "packages/errors",
   "sourceRoot": "packages/errors/src",
   "targets": {
     "build": {
-      "executor": "@storm-software/workspace-tools:tsup",
+      "executor": "@storm-software/nx:ts-build",
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/packages/errors",

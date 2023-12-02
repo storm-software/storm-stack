@@ -1,11 +1,6 @@
 import { Tree } from "@nx/devkit";
-import { StormConfig, setEnv } from "@storm-software/config";
-import { StormTime } from "@storm-software/date-time";
-import { StormError } from "@storm-software/errors";
-import { StormLog } from "@storm-software/logging";
-import { stringify } from "@storm-software/serialization/json-parser";
-import { MaybePromise, isError } from "@storm-software/utilities";
-import { NxErrorCode } from "../errors";
+import { StormConfig } from "@storm-software/config/types";
+import { setEnv } from "@storm-software/config/utilities/set-env";
 
 export interface BaseGeneratorSchema extends Record<string, any> {
   main?: string;
@@ -29,7 +24,10 @@ export const withRunGenerator =
       options: TGeneratorSchema,
       config?: StormConfig
     ) =>
-      | MaybePromise<BaseGeneratorResult | null | undefined>
+      | Promise<BaseGeneratorResult | null | undefined>
+      | BaseGeneratorResult
+      | null
+      | undefined
       | null
       | undefined,
     generatorOptions: BaseGeneratorOptions = { skipReadingConfig: false }
@@ -38,45 +36,52 @@ export const withRunGenerator =
     tree: Tree,
     options: TGeneratorSchema
   ): Promise<{ success: boolean }> => {
-    const startTime = StormTime.current();
+    const startTime = Date.now();
 
     try {
-      StormLog.info(`⚡ Running the ${name} generator...`);
-      StormLog.debug(`⚙️ Generator schema options: \n${stringify(options)}`);
+      console.info(`⚡ Running the ${name} generator...`);
+      console.debug("⚙️ Generator schema options: \n", options);
 
-      let config: StormConfig | undefined;
+      let config: any | undefined;
       if (!generatorOptions.skipReadingConfig) {
         config = await setEnv();
 
-        StormLog.debug(`Loaded Storm config into env:
+        console.debug(`Loaded Storm config into env:
 ${Object.keys(process.env)
   .map(key => ` - ${key}=${process.env[key]}`)
   .join("\n")}`);
       }
 
       const result = await generatorFn(tree, options, config);
-      if (isError(result?.error)) {
-        throw new StormError(NxErrorCode.generator_failure, {
-          message: `The ${name} generator failed to run`,
+      if (
+        result?.error &&
+        (result?.error as Error)?.message &&
+        typeof (result?.error as Error)?.message === "string" &&
+        (result?.error as Error)?.name &&
+        typeof (result?.error as Error)?.name === "string"
+      ) {
+        throw new Error(`The ${name} generator failed to run`, {
           cause: result!.error
         });
       }
 
-      StormLog.success(
-        `🎉 Successfully completed running the ${name} generator!`
-      );
+      console.info(`🎉 Successfully completed running the ${name} generator!`);
 
       return {
         success: true
       };
     } catch (error) {
-      StormLog.error(`❌ An error occurred while running the generator`);
-      StormLog.fatal(error);
+      console.error(`❌ An error occurred while running the generator`);
+      console.error(error);
 
       return {
         success: false
       };
     } finally {
-      StormLog.stopwatch(startTime, name);
+      console.info(
+        `⏱️ The${name ? ` ${name}` : ""} generator took ${
+          Date.now() - startTime
+        }ms to complete`
+      );
     }
   };

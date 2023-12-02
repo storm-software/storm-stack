@@ -1,7 +1,21 @@
 {
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
-    "module": "commonjs"
+    "module": "commonjs",
+    "target": "esnext",
+    "moduleResolution": "node",
+    "strict": false,
+    "noImplicitAny": false,
+    "sourceMap": false,
+    "noUnusedLocals": false,
+    "noImplicitReturns": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "resolveJsonModule": true,
+    "noImplicitOverride": false,
+    "declaration": false,
+    "declarationMap": false
   },
   "files": [],
   "include": [],

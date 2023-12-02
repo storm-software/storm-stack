@@ -2,10 +2,11 @@
   "name": "serialization",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "projectType": "library",
+  "root": "packages/serialization",
   "sourceRoot": "packages/serialization/src",
   "targets": {
     "build": {
-      "executor": "@storm-software/workspace-tools:tsup",
+      "executor": "@storm-software/nx:ts-build",
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/packages/serialization",

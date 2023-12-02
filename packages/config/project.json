@@ -2,6 +2,7 @@
   "name": "config",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "projectType": "library",
+  "root": "packages/config",
   "sourceRoot": "packages/config/src",
   "targets": {
     "build": {
@@ -12,11 +13,13 @@
         "tsConfig": "packages/config/tsconfig.json",
         "project": "packages/config/package.json",
         "defaultConfiguration": "production",
+        "platform": "node",
         "external": [
           "valibot",
           "ow",
           "fp-ts/Either",
           "@effect/schema",
+          "@effect/data",
           "@deepkit/type"
         ],
         "assets": [

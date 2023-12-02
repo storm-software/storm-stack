@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/schema",
-  "$id": "Config",
+  "$id": "config",
   "title": "Configuration Schema",
   "type": "object",
   "properties": {

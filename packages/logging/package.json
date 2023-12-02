@@ -10,7 +10,6 @@
   },
   "type": "module",
   "dependencies": {
-    "@decs/typeschema": "^0.12.1",
     "chalk": "^5.3.0",
     "pino": "^8.16.2",
     "pino-loki": "^2.1.3",

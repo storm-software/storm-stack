@@ -1,7 +1,3 @@
-import { stringify } from "@storm-software/serialization/json-parser";
-import { flattenObject } from "@storm-software/utilities/helper-fns/flatten-object";
-import { constantCase } from "@storm-software/utilities/string-fns/constant-case";
-import { DeepPartial } from "@storm-software/utilities/types";
 import { loadStormConfig } from "../load-config";
 import { StormConfig } from "../types";
 
@@ -13,12 +9,12 @@ import { StormConfig } from "../types";
  */
 export const setEnv = async <TConfig extends StormConfig = StormConfig>(
   projectName?: string,
-  defaultConfig?: DeepPartial<TConfig>
+  defaultConfig?: Partial<TConfig>
 ): Promise<TConfig> => {
   const config = await loadStormConfig<TConfig>(projectName, defaultConfig);
 
-  const env = flattenObject(config, "STORM", constantCase);
-  process.env.STORM_CONFIG ??= stringify(config);
+  const env = flattenConfigProperties(config, "STORM");
+  process.env.STORM_CONFIG ??= JSON.stringify(config);
 
   for (const key of Object.keys(env)) {
     process.env[key] ??= env[key];
@@ -36,4 +32,18 @@ export const setEnv = async <TConfig extends StormConfig = StormConfig>(
   process.env.LOCALE ??= process.env.STORM_LOCALE;
 
   return config;
+};
+
+const flattenConfigProperties = (obj: any, prefix = "") => {
+  const flattened: any = {};
+
+  Object.keys(obj).forEach(key => {
+    if (obj[key] && Object.keys(obj[key]).length > 0) {
+      Object.assign(flattened, flattenConfigProperties(obj[key], prefix));
+    } else {
+      flattened[`${prefix}_${key}`.toUpperCase()] = obj[key];
+    }
+  });
+
+  return flattened;
 };

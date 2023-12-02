@@ -1,6 +1,7 @@
 {
   "$schema": "http://json-schema.org/schema",
   "extends": "../../../../../node_modules/@storm-software/workspace-tools/src/executors/tsup/schema.json",
+  "$id": "ts-build",
   "version": 2,
   "title": "TypeScript Build",
   "description": "Run a build on the TypeScript project using base tsup executor",

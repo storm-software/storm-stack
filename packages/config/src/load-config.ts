@@ -1,6 +1,3 @@
-import { deepMerge } from "@storm-software/utilities/helper-fns/deep-merge";
-import { isSetObject } from "@storm-software/utilities/type-checks/is-set-object";
-import { DeepPartial } from "@storm-software/utilities/types";
 import { CosmiconfigResult, cosmiconfig } from "cosmiconfig";
 import {
   ConfigFile,
@@ -43,7 +40,8 @@ const getStaticConfig = async (
   }
 
   if (
-    !isSetObject(cosmiconfigResult) ||
+    !cosmiconfigResult ||
+    Object.keys(cosmiconfigResult).length === 0 ||
     cosmiconfigResult.isEmpty ||
     !cosmiconfigResult.filepath
   ) {
@@ -58,22 +56,21 @@ const getStaticConfig = async (
   const defaultConfig = await getDefaultConfigFile();
   if (defaultConfig) {
     configFile = await wrapped_ConfigFile.parse(
-      deepMerge(cosmiconfigResult.config, defaultConfig)
+      Object.assign(cosmiconfigResult.config, defaultConfig)
     );
   }
 
   let result!: StormConfig;
-  if (projectName && configFile?.projects?.[projectName]) {
-    const projectConfig = configFile.projects[projectName];
-    result = deepMerge(projectConfig, configFile);
-  }
-
   cosmiconfigResult.filepath &&
     (result.configFile = cosmiconfigResult.filepath);
   result.runtimeVersion = "0.0.1";
 
-  _static_cache = result;
+  if (projectName && configFile?.projects?.[projectName]) {
+    const projectConfig = configFile.projects[projectName];
+    result = Object.assign(projectConfig!, configFile, result) as StormConfig;
+  }
 
+  _static_cache = result;
   return result;
 };
 
@@ -87,14 +84,17 @@ export const loadStormConfig = async <
   TConfig extends StormConfig = StormConfig
 >(
   projectName?: string,
-  defaultConfig?: DeepPartial<TConfig>
+  defaultConfig?: Partial<TConfig>
 ): Promise<TConfig> => {
   const cacheKey = [projectName, defaultConfig ?? {}];
   if (_config_cache.has(cacheKey)) {
     return _config_cache.get(cacheKey) as TConfig;
   }
 
-  const config: StormConfig = deepMerge(await getStaticConfig(), defaultConfig);
+  const config: StormConfig = Object.assign(
+    (await getStaticConfig()) ?? ({} as TConfig),
+    defaultConfig
+  );
   const validateResult = (await wrapped_StormConfig.validate(
     config
   )) as unknown as {

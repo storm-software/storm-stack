@@ -1,6 +1,7 @@
 {
   "name": "nx",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "root": "packages/nx",
   "sourceRoot": "packages/nx/src",
   "projectType": "library",
   "targets": {
@@ -11,19 +12,18 @@
         "outputPath": "dist/packages/nx",
         "tsConfig": "packages/nx/tsconfig.lib.json",
         "project": "packages/nx/package.json",
-        "main": "packages/nx/index.ts",
+        "main": "packages/nx/src/index.ts",
         "additionalEntryPoints": [
           "packages/nx/src/executors/ts-build/executor.ts",
           "packages/nx/src/executors/ts-server-build/executor.ts",
           "packages/nx/src/generators/config/generator.ts"
         ],
-        "platform": "node",
         "deleteOutputPath": true,
+        "platform": "node",
         "bundle": true,
-        "thirdParty": true,
-        "skipTypeCheck": true,
-        "metafile": true,
+        "sourcemap": true,
         "minify": false,
+        "skipTypeCheck": true,
         "format": ["cjs"],
         "esbuildOptions": {
           "outExtension": {
@@ -31,23 +31,15 @@
           }
         },
         "external": [
-          "@angular-devkit/core",
-          "@angular-devkit/architect",
-          "@angular-devkit/schematics",
+          "@storm-software/config",
           "@swc/wasm",
           "esbuild",
           "prettier",
-          "nx",
-          "valibot",
-          "ow",
-          "fp-ts/Either",
-          "@effect/schema",
-          "@effect/data",
-          "@deepkit/type"
+          "nx"
         ],
         "assets": [
           {
-            "input": "./packages/nx",
+            "input": "packages/nx",
             "glob": "*.md",
             "output": "/"
           },
@@ -57,37 +49,37 @@
             "output": "/"
           },
           {
-            "input": "./packages/nx/src",
+            "input": "packages/nx/src",
             "glob": "**/!(*.ts)",
             "output": "./src"
           },
           {
-            "input": "./packages/nx/src",
+            "input": "packages/nx/src",
             "glob": "**/*.d.ts",
             "output": "./src"
           },
           {
-            "input": "./packages/nx",
+            "input": "packages/nx",
             "glob": "generators.json",
             "output": "."
           },
           {
-            "input": "./packages/nx",
+            "input": "packages/nx",
             "glob": "executors.json",
             "output": "."
           },
           {
-            "input": "./packages/nx",
+            "input": "packages/nx",
             "glob": "**/schema.json",
             "output": "."
           },
           {
-            "input": "./packages/nx",
+            "input": "packages/nx",
             "glob": "**/files/**/{*.*,*}",
             "output": "."
           },
           {
-            "input": "./packages/nx/assets",
+            "input": "packages/nx/assets",
             "glob": "**/*.*",
             "output": "./assets"
           }

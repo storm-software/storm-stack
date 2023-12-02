@@ -6,6 +6,5 @@
   },
   "files": [],
   "include": ["src/**/*.ts", "src/**/*.js", "bin/**/*"],
-  "exclude": ["jest.config.ts", "src/**/*.spec.ts", "src/**/*.test.ts"],
-  "composite": true
+  "exclude": ["jest.config.ts", "src/**/*.spec.ts", "src/**/*.test.ts"]
 }

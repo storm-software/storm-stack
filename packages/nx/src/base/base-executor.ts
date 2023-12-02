@@ -1,12 +1,10 @@
 import { ExecutorContext } from "@nx/devkit";
-import { StormConfig, setEnv } from "@storm-software/config";
-import { StormTime } from "@storm-software/date-time";
-import { StormError } from "@storm-software/errors";
-import { StormLog } from "@storm-software/logging";
+import type { StormConfig } from "@storm-software/config/types";
+import { setEnv } from "@storm-software/config/utilities/set-env";
+import { StormTime } from "@storm-software/date-time/storm-time";
+import { StormLog } from "@storm-software/logging/storm-log";
 import { stringify } from "@storm-software/serialization/json-parser";
-import { MaybePromise, isError } from "@storm-software/utilities";
 import { applyWorkspaceTokens } from "@storm-software/workspace-tools";
-import { NxErrorCode } from "../errors";
 
 export interface BaseExecutorSchema extends Record<string, any> {
   main?: string;
@@ -29,7 +27,11 @@ export const withRunExecutor =
       options: TExecutorSchema,
       context: ExecutorContext,
       config?: StormConfig
-    ) => MaybePromise<BaseExecutorResult | null | undefined> | null | undefined,
+    ) =>
+      | Promise<BaseExecutorResult | null | undefined>
+      | BaseExecutorResult
+      | null
+      | undefined,
     executorOptions: BaseExecutorOptions = { skipReadingConfig: false }
   ) =>
   async (
@@ -62,9 +64,14 @@ ${Object.keys(process.env)
       }
 
       const result = await executorFn(tokenized, context, config);
-      if (isError(result?.error)) {
-        throw new StormError(NxErrorCode.executor_failure, {
-          message: `The ${name} executor failed to run`,
+      if (
+        result?.error &&
+        (result?.error as Error)?.message &&
+        typeof (result?.error as Error)?.message === "string" &&
+        (result?.error as Error)?.name &&
+        typeof (result?.error as Error)?.name === "string"
+      ) {
+        throw new Error(`The ${name} executor failed to run`, {
           cause: result!.error
         });
       }
@@ -84,6 +91,6 @@ ${Object.keys(process.env)
         success: false
       };
     } finally {
-      StormLog.stopwatch(name, startTime);
+      StormLog.stopwatch(startTime, name);
     }
   };

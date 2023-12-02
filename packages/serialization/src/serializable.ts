@@ -8,8 +8,7 @@ import {
   ClassSerializable,
   DeserializeFunct,
   JsonValue,
-  SerializationFunct,
-  SerializationMetadata
+  SerializationFunct
 } from "./types";
 
 export const Serializable = <TData = any>(options: {
@@ -37,14 +36,9 @@ export const Serializable = <TData = any>(options: {
   const decorator = <
     TClass extends new (...args: any) => any = new (...args: any) => TData
   >(
-    target: TClass,
-    context: ClassDecoratorContext<TClass>
+    target: TClass
   ) => {
-    const name = options.name
-      ? options.name
-      : context.name
-        ? context.name
-        : target.name;
+    const name = options.name ? options.name : target.name;
 
     let isTypeOf!: ClassTypeCheckable<TData>["isTypeOf"];
     if (isFunction((target.prototype as ClassTypeCheckable<TData>)?.isTypeOf)) {
@@ -54,26 +48,7 @@ export const Serializable = <TData = any>(options: {
         value instanceof target || value?.__typename === name;
     }
 
-    context.addInitializer(function (this: TClass) {
-      if (
-        !isFunction(this.prototype.serialize) ||
-        !isFunction(this.prototype.deserialize)
-      ) {
-        throw new Error(
-          `The class ${name} must implement the serialize and deserialize methods`
-        );
-      }
-
-      context.metadata[name] = {
-        ...options,
-        name,
-        __typename: name,
-        isTypeOf
-      } as SerializationMetadata<TData>;
-
-      register(name, options.serialize, options.deserialize, isTypeOf);
-    });
-
+    register(name, options.serialize, options.deserialize, isTypeOf);
     return class
       extends target
       implements ClassSerializable<TData>, ClassTypeCheckable<TData>, ITyped
@@ -89,9 +64,7 @@ export const Serializable = <TData = any>(options: {
        * @returns The data object to serialize
        */
       public serialize = (): JsonValue => {
-        return (
-          context.metadata[name] as SerializationMetadata<TData>
-        )?.serialize(this as unknown as TData);
+        return options.serialize(this as unknown as TData);
       };
 
       /**
@@ -100,9 +73,7 @@ export const Serializable = <TData = any>(options: {
        * @param json - The JSON object to deserialize from
        */
       public deserialize = (json: JsonValue) => {
-        (context.metadata[name] as SerializationMetadata<TData>)?.deserialize(
-          json
-        );
+        options.deserialize(json);
       };
 
       /**

@@ -1,8 +1,8 @@
 import { JsonValue } from "@storm-software/serialization/types";
 import { isSetString } from "@storm-software/utilities";
-import { StormDate } from "../date";
-import { StormDateTime } from "../date-time";
-import { StormTime } from "../time";
+import { StormDate } from "../storm-date";
+import { StormDateTime } from "../storm-date-time";
+import { StormTime } from "../storm-time";
 
 /**
  * Serializes a StormDateTime into a string

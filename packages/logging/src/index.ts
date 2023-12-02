@@ -1,4 +1,4 @@
 export * from "./composition";
-export * from "./log";
+export * from "./storm-log";
 export * from "./types";
 export * from "./utilities";

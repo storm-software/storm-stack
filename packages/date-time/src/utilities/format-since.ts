@@ -1,11 +1,12 @@
 import { Temporal } from "@js-temporal/polyfill";
 import { StormError } from "@storm-software/errors";
-import { StormDate } from "../date";
-import { StormDateTime } from "../date-time";
 import { DateTimeErrorCode } from "../errors";
+import { StormDate } from "../storm-date";
+import { StormDateTime } from "../storm-date-time";
 import { isDateTime } from "./is-date-time";
 
-const pluralize = (word, count) => (count === 1 ? word : `${word}s`);
+const pluralize = (word: string, count: number) =>
+  count === 1 ? word : `${word}s`;
 const SECOND_ROUNDING_EPSILON = 0.000_000_1;
 
 const parseMilliseconds = (milliseconds: number) => {

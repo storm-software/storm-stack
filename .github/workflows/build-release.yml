@@ -54,11 +54,14 @@ jobs:
           echo "BASE: ${{ env.NX_BASE }}"
           echo "HEAD: ${{ env.NX_HEAD }}"
 
-      - name: Build repository packages
-        run: pnpm nx run-many -t build --parallel=5
+      - name: Build Nx package
+        run: pnpm nx run nx:build
 
       - name: Generate configuration schema
         run: pnpm nx g @storm-software/nx:config --outputPath=packages/config/schema.json
+
+      - name: Build repository packages
+        run: pnpm nx run-many -t build --parallel=5
 
       - name: Run Linters
         run: pnpm lint

@@ -1,6 +1,4 @@
 import { ExecutorContext } from "@nx/devkit";
-import { StormConfig } from "@storm-software/config";
-import { titleCase } from "@storm-software/utilities";
 import { tsupExecutor } from "@storm-software/workspace-tools";
 import esbuildPluginPino from "esbuild-plugin-pino";
 import { withRunExecutor } from "../../base/base-executor";
@@ -10,7 +8,7 @@ import { TsBuildExecutorSchema } from "./schema";
 export const tsBuildExecutorFn = async (
   options: TsBuildExecutorSchema,
   context: ExecutorContext,
-  config?: StormConfig
+  config?: any
 ) => {
   options.plugins ??= [];
   options.transports ??= ["pino-pretty"];
@@ -26,7 +24,18 @@ export const tsBuildExecutorFn = async (
   return tsupExecutor(
     {
       ...options,
-      banner: getFileBanner(titleCase(context.projectName ?? "TypeScript")!),
+      banner: getFileBanner(
+        context.projectName
+          ? context.projectName
+              .split(/(?=[A-Z])|[\.\-\s_]/)
+              .map(s => s.trim())
+              .filter(s => !!s)
+              .map(s =>
+                s ? s.toUpperCase()[0] + s.toLowerCase().slice(1) : ""
+              )
+              .join(" ")
+          : "TypeScript"
+      ),
       define: {
         ...options.define,
         "__STORM_CONFIG": config

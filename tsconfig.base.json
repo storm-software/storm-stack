@@ -15,6 +15,7 @@
       "@storm-software/logging": ["packages/logging/src/index.ts"],
       "@storm-software/logging/*": ["packages/logging/src/*"],
       "@storm-software/nx": ["packages/nx/src/index.ts"],
+      "@storm-software/nx/*": ["packages/nx/src/*"],
       "@storm-software/serialization": ["packages/serialization/src/index.ts"],
       "@storm-software/serialization/*": ["packages/serialization/src/*"],
       "@storm-software/unique-identifier": [
