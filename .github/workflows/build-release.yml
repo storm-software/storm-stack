@@ -54,8 +54,8 @@ jobs:
           echo "BASE: ${{ env.NX_BASE }}"
           echo "HEAD: ${{ env.NX_HEAD }}"
 
-      - name: Generate configuration schema
-        run: pnpm nx g @storm-software/workspace-tools:config-schema --outputPath=config.schema.json
+      #- name: Generate configuration schema
+      #  run: pnpm nx g @storm-software/workspace-tools:config-schema --outputPath=config.schema.json
 
       - name: Build repository packages
         run: pnpm nx run-many -t build --parallel=5
