@@ -1,4 +1,4 @@
-import { MaybePromise } from "@storm-software/utilities";
+import { MaybePromise } from "@storm-stack/utilities";
 import * as z from "zod";
 import { LoggingConfigSchema } from "./schema";
 

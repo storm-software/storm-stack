@@ -39,14 +39,14 @@ This package provides a simple to use DateTime object. It includes various utili
 Using [pnpm](http://pnpm.io):
 
 ```bash
-pnpm add -D @storm-software/date-time
+pnpm add -D @storm-stack/date-time
 ```
 
 <details>
   <summary>Using npm</summary>
 
 ```bash
-npm install -D @storm-software/date-time
+npm install -D @storm-stack/date-time
 ```
 
 </details>
@@ -55,7 +55,7 @@ npm install -D @storm-software/date-time
   <summary>Using yarn</summary>
 
 ```bash
-yarn add -D @storm-software/date-time
+yarn add -D @storm-stack/date-time
 ```
 
 </details>

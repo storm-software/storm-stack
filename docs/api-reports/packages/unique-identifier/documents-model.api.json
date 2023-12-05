@@ -1,7 +1,7 @@
 {
   "metadata": {
     "toolPackage": "@microsoft/api-extractor",
-    "toolVersion": "7.38.3",
+    "toolVersion": "7.38.4",
     "schemaVersion": 1011,
     "oldestForwardsCompatibleVersion": 1001,
     "tsdocConfig": {
@@ -161,20 +161,20 @@
     }
   },
   "kind": "Package",
-  "canonicalReference": "@storm-software/unique-identifier!",
+  "canonicalReference": "@storm-stack/unique-identifier!",
   "docComment": "",
-  "name": "@storm-software/unique-identifier",
+  "name": "@storm-stack/unique-identifier",
   "preserveMemberOrder": false,
   "members": [
     {
       "kind": "EntryPoint",
-      "canonicalReference": "@storm-software/unique-identifier!",
+      "canonicalReference": "@storm-stack/unique-identifier!",
       "name": "",
       "preserveMemberOrder": false,
       "members": [
         {
           "kind": "Variable",
-          "canonicalReference": "@storm-software/unique-identifier!Crypto_2:var",
+          "canonicalReference": "@storm-stack/unique-identifier!Crypto_2:var",
           "docComment": "",
           "excerptTokens": [
             {
@@ -202,7 +202,7 @@
         },
         {
           "kind": "Function",
-          "canonicalReference": "@storm-software/unique-identifier!cuid:function(1)",
+          "canonicalReference": "@storm-stack/unique-identifier!cuid:function(1)",
           "docComment": "/**\n * Generate a random CUID\n *\n * @returns A random CUID string\n *\n * @example\n * ```typescript\n *\n * // Generate a random CUID\n * const id = cuid();\n * ```\n *\n */\n",
           "excerptTokens": [
             {
@@ -230,7 +230,7 @@
         },
         {
           "kind": "Interface",
-          "canonicalReference": "@storm-software/unique-identifier!DeconstructedSnowflake:interface",
+          "canonicalReference": "@storm-stack/unique-identifier!DeconstructedSnowflake:interface",
           "docComment": "/**\n * A deconstructed snowflake and the details around it's creation.\n */\n",
           "excerptTokens": [
             {
@@ -245,7 +245,7 @@
           "members": [
             {
               "kind": "PropertySignature",
-              "canonicalReference": "@storm-software/unique-identifier!DeconstructedSnowflake#binary:member",
+              "canonicalReference": "@storm-stack/unique-identifier!DeconstructedSnowflake#binary:member",
               "docComment": "/**\n * The 64Bit snowflake binary string\n */\n",
               "excerptTokens": [
                 {
@@ -272,7 +272,7 @@
             },
             {
               "kind": "PropertySignature",
-              "canonicalReference": "@storm-software/unique-identifier!DeconstructedSnowflake#sequence:member",
+              "canonicalReference": "@storm-stack/unique-identifier!DeconstructedSnowflake#sequence:member",
               "docComment": "/**\n * The increment of this snowflake\n */\n",
               "excerptTokens": [
                 {
@@ -299,7 +299,7 @@
             },
             {
               "kind": "PropertySignature",
-              "canonicalReference": "@storm-software/unique-identifier!DeconstructedSnowflake#shard_id:member",
+              "canonicalReference": "@storm-stack/unique-identifier!DeconstructedSnowflake#shard_id:member",
               "docComment": "/**\n * The shard_id used when generating\n */\n",
               "excerptTokens": [
                 {
@@ -326,7 +326,7 @@
             },
             {
               "kind": "PropertySignature",
-              "canonicalReference": "@storm-software/unique-identifier!DeconstructedSnowflake#snowflake:member",
+              "canonicalReference": "@storm-stack/unique-identifier!DeconstructedSnowflake#snowflake:member",
               "docComment": "/**\n * Snowflake deconstructed from\n */\n",
               "excerptTokens": [
                 {
@@ -336,7 +336,7 @@
                 {
                   "kind": "Reference",
                   "text": "SnowflakeResolvable",
-                  "canonicalReference": "@storm-software/unique-identifier!SnowflakeResolvable:type"
+                  "canonicalReference": "@storm-stack/unique-identifier!SnowflakeResolvable:type"
                 },
                 {
                   "kind": "Content",
@@ -354,7 +354,7 @@
             },
             {
               "kind": "PropertySignature",
-              "canonicalReference": "@storm-software/unique-identifier!DeconstructedSnowflake#timestamp:member",
+              "canonicalReference": "@storm-stack/unique-identifier!DeconstructedSnowflake#timestamp:member",
               "docComment": "/**\n * The timestamp the snowflake was generated\n */\n",
               "excerptTokens": [
                 {
@@ -384,7 +384,7 @@
         },
         {
           "kind": "Function",
-          "canonicalReference": "@storm-software/unique-identifier!deconstructSnowflake:function(1)",
+          "canonicalReference": "@storm-stack/unique-identifier!deconstructSnowflake:function(1)",
           "docComment": "/**\n * Deconstruct a snowflake to its values using the `epoch`.\n *\n * @param snowflake - Snowflake to deconstruct\n *\n * @returns Either the DeconstructedSnowflake object\n */\n",
           "excerptTokens": [
             {
@@ -394,7 +394,7 @@
             {
               "kind": "Reference",
               "text": "SnowflakeResolvable",
-              "canonicalReference": "@storm-software/unique-identifier!SnowflakeResolvable:type"
+              "canonicalReference": "@storm-stack/unique-identifier!SnowflakeResolvable:type"
             },
             {
               "kind": "Content",
@@ -403,7 +403,7 @@
             {
               "kind": "Reference",
               "text": "DeconstructedSnowflake",
-              "canonicalReference": "@storm-software/unique-identifier!DeconstructedSnowflake:interface"
+              "canonicalReference": "@storm-stack/unique-identifier!DeconstructedSnowflake:interface"
             },
             {
               "kind": "Content",
@@ -431,7 +431,7 @@
         },
         {
           "kind": "Interface",
-          "canonicalReference": "@storm-software/unique-identifier!ISnowflakeGeneratorOptions:interface",
+          "canonicalReference": "@storm-stack/unique-identifier!ISnowflakeGeneratorOptions:interface",
           "docComment": "/**\n * Options passed to the `generate` function to create a snowflake identifier.\n */\n",
           "excerptTokens": [
             {
@@ -446,7 +446,7 @@
           "members": [
             {
               "kind": "PropertySignature",
-              "canonicalReference": "@storm-software/unique-identifier!ISnowflakeGeneratorOptions#epoch:member",
+              "canonicalReference": "@storm-stack/unique-identifier!ISnowflakeGeneratorOptions#epoch:member",
               "docComment": "/**\n * The epoch to use for the snowflake.\n *\n * @remarks\n *\n * This is the time in milliseconds since 1 January 1970 00:00:00 UTC.\n *\n * @default 1420070400000 (Date.UTC(1970, 0, 1).valueOf())\n */\n",
               "excerptTokens": [
                 {
@@ -473,7 +473,7 @@
             },
             {
               "kind": "PropertySignature",
-              "canonicalReference": "@storm-software/unique-identifier!ISnowflakeGeneratorOptions#shardId:member",
+              "canonicalReference": "@storm-stack/unique-identifier!ISnowflakeGeneratorOptions#shardId:member",
               "docComment": "/**\n * The id of the shard running this generator.\n *\n * @default 1\n */\n",
               "excerptTokens": [
                 {
@@ -500,7 +500,7 @@
             },
             {
               "kind": "PropertySignature",
-              "canonicalReference": "@storm-software/unique-identifier!ISnowflakeGeneratorOptions#timestamp:member",
+              "canonicalReference": "@storm-stack/unique-identifier!ISnowflakeGeneratorOptions#timestamp:member",
               "docComment": "/**\n * The current timestamp to use for the snowflake.\n *\n * @default Date.now()\n */\n",
               "excerptTokens": [
                 {
@@ -535,7 +535,7 @@
         },
         {
           "kind": "Function",
-          "canonicalReference": "@storm-software/unique-identifier!isValidSnowflake:function(1)",
+          "canonicalReference": "@storm-stack/unique-identifier!isValidSnowflake:function(1)",
           "docComment": "/**\n * Check if a snowflake string Id is valid.\n *\n * @param snowflake - Snowflake to check\n *\n * @returns Whether the snowflake is valid\n */\n",
           "excerptTokens": [
             {
@@ -580,7 +580,7 @@
         },
         {
           "kind": "Variable",
-          "canonicalReference": "@storm-software/unique-identifier!randomInteger:var",
+          "canonicalReference": "@storm-stack/unique-identifier!randomInteger:var",
           "docComment": "/**\n * Generate a random integer\n *\n * @param maximum - The maximum value (inclusive)\n *\n * @param minimum - The minimum value (inclusive)\n *\n * @returns A random integer\n */\n",
           "excerptTokens": [
             {
@@ -603,7 +603,7 @@
         },
         {
           "kind": "Variable",
-          "canonicalReference": "@storm-software/unique-identifier!randomLetter:var",
+          "canonicalReference": "@storm-stack/unique-identifier!randomLetter:var",
           "docComment": "/**\n * Generate a random letter\n *\n * @param random - The random number generator\n *\n * @returns A random letter\n */\n",
           "excerptTokens": [
             {
@@ -626,7 +626,7 @@
         },
         {
           "kind": "Function",
-          "canonicalReference": "@storm-software/unique-identifier!snowflake:function(1)",
+          "canonicalReference": "@storm-stack/unique-identifier!snowflake:function(1)",
           "docComment": "/**\n * Generate a snowflake identifier.\n *\n * @remarks\n *\n * Snowflakes are 64-bit unsigned integers that are roughly time-ordered.\n *\n * @param timestamp - The timestamp to use\n *\n * @param shardId - The shard id to use\n *\n * @returns A snowflake\n *\n * @example\n * ```typescript\n *\n * // Generate a snowflake with the default options\n * const id1 = snowflake();\n *\n * // Generate a snowflake with a custom shard id\n * const id2 = snowflake({ shardId: 2 });\n *\n * // Generate a snowflake with a custom shard id and timestamp\n * const id3 = snowflake({ shardId: 3, timestamp: new Date(\"2021-01-01\") });\n *\n * ```\n *\n */\n",
           "excerptTokens": [
             {
@@ -636,7 +636,7 @@
             {
               "kind": "Reference",
               "text": "ISnowflakeGeneratorOptions",
-              "canonicalReference": "@storm-software/unique-identifier!ISnowflakeGeneratorOptions:interface"
+              "canonicalReference": "@storm-stack/unique-identifier!ISnowflakeGeneratorOptions:interface"
             },
             {
               "kind": "Content",
@@ -672,7 +672,7 @@
         },
         {
           "kind": "TypeAlias",
-          "canonicalReference": "@storm-software/unique-identifier!SnowflakeResolvable:type",
+          "canonicalReference": "@storm-stack/unique-identifier!SnowflakeResolvable:type",
           "docComment": "/**\n * Resolvable value types for a valid Snowflake: * string * number * bigint\n *\n * @type {SnowflakeResolvable}\n */\n",
           "excerptTokens": [
             {
@@ -698,7 +698,7 @@
         },
         {
           "kind": "Function",
-          "canonicalReference": "@storm-software/unique-identifier!uuid:function(1)",
+          "canonicalReference": "@storm-stack/unique-identifier!uuid:function(1)",
           "docComment": "/**\n * Generate a random UUID\n *\n * @remarks\n *\n * This helper function is a wrapper around the `crypto.randomUUID` function. You can find more information about this type of identifier in this {@link https://en.wikipedia.org/wiki/Universally_unique_identifier article}\n *\n * @returns A random UUID string\n *\n * @example\n * ```typescript\n *\n * // Generate a random UUID\n * const id = uuid();\n * ```\n *\n */\n",
           "excerptTokens": [
             {

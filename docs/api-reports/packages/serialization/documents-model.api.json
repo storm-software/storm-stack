@@ -1,7 +1,7 @@
 {
   "metadata": {
     "toolPackage": "@microsoft/api-extractor",
-    "toolVersion": "7.38.3",
+    "toolVersion": "7.38.4",
     "schemaVersion": 1011,
     "oldestForwardsCompatibleVersion": 1001,
     "tsdocConfig": {
@@ -161,20 +161,20 @@
     }
   },
   "kind": "Package",
-  "canonicalReference": "@storm-software/serialization!",
+  "canonicalReference": "@storm-stack/serialization!",
   "docComment": "",
-  "name": "@storm-software/serialization",
+  "name": "@storm-stack/serialization",
   "preserveMemberOrder": false,
   "members": [
     {
       "kind": "EntryPoint",
-      "canonicalReference": "@storm-software/serialization!",
+      "canonicalReference": "@storm-stack/serialization!",
       "name": "",
       "preserveMemberOrder": false,
       "members": [
         {
           "kind": "TypeAlias",
-          "canonicalReference": "@storm-software/serialization!Class:type",
+          "canonicalReference": "@storm-stack/serialization!Class:type",
           "docComment": "",
           "excerptTokens": [
             {
@@ -200,7 +200,7 @@
         },
         {
           "kind": "TypeAlias",
-          "canonicalReference": "@storm-software/serialization!ClassInstance:type",
+          "canonicalReference": "@storm-stack/serialization!ClassInstance:type",
           "docComment": "",
           "excerptTokens": [
             {
@@ -226,7 +226,7 @@
         },
         {
           "kind": "Interface",
-          "canonicalReference": "@storm-software/serialization!ClassSerializable:interface",
+          "canonicalReference": "@storm-stack/serialization!ClassSerializable:interface",
           "docComment": "/**\n * A class that can be serialized and deserialized\n */\n",
           "excerptTokens": [
             {
@@ -236,7 +236,7 @@
             {
               "kind": "Reference",
               "text": "JsonValue",
-              "canonicalReference": "@storm-software/serialization!JsonValue:type"
+              "canonicalReference": "@storm-stack/serialization!JsonValue:type"
             },
             {
               "kind": "Content",
@@ -245,7 +245,7 @@
             {
               "kind": "Reference",
               "text": "JsonValue",
-              "canonicalReference": "@storm-software/serialization!JsonValue:type"
+              "canonicalReference": "@storm-stack/serialization!JsonValue:type"
             },
             {
               "kind": "Content",
@@ -283,7 +283,7 @@
           "members": [
             {
               "kind": "PropertySignature",
-              "canonicalReference": "@storm-software/serialization!ClassSerializable#deserialize:member",
+              "canonicalReference": "@storm-stack/serialization!ClassSerializable#deserialize:member",
               "docComment": "/**\n * Deserialize the class from a JSON object\n *\n * @param json - The JSON object to deserialize from\n */\n",
               "excerptTokens": [
                 {
@@ -310,7 +310,7 @@
             },
             {
               "kind": "PropertySignature",
-              "canonicalReference": "@storm-software/serialization!ClassSerializable#serialize:member",
+              "canonicalReference": "@storm-stack/serialization!ClassSerializable#serialize:member",
               "docComment": "/**\n * Serialize the class to a JSON object\n *\n * @returns The data object to serialize\n */\n",
               "excerptTokens": [
                 {
@@ -340,7 +340,7 @@
         },
         {
           "kind": "TypeAlias",
-          "canonicalReference": "@storm-software/serialization!ClassTypeAnnotation:type",
+          "canonicalReference": "@storm-stack/serialization!ClassTypeAnnotation:type",
           "docComment": "",
           "excerptTokens": [
             {
@@ -366,7 +366,7 @@
         },
         {
           "kind": "TypeAlias",
-          "canonicalReference": "@storm-software/serialization!CompositeTypeAnnotation:type",
+          "canonicalReference": "@storm-stack/serialization!CompositeTypeAnnotation:type",
           "docComment": "",
           "excerptTokens": [
             {
@@ -376,7 +376,7 @@
             {
               "kind": "Reference",
               "text": "TypedArrayAnnotation",
-              "canonicalReference": "@storm-software/serialization!TypedArrayAnnotation:type"
+              "canonicalReference": "@storm-stack/serialization!TypedArrayAnnotation:type"
             },
             {
               "kind": "Content",
@@ -385,7 +385,7 @@
             {
               "kind": "Reference",
               "text": "ClassTypeAnnotation",
-              "canonicalReference": "@storm-software/serialization!ClassTypeAnnotation:type"
+              "canonicalReference": "@storm-stack/serialization!ClassTypeAnnotation:type"
             },
             {
               "kind": "Content",
@@ -394,7 +394,7 @@
             {
               "kind": "Reference",
               "text": "SymbolTypeAnnotation",
-              "canonicalReference": "@storm-software/serialization!SymbolTypeAnnotation:type"
+              "canonicalReference": "@storm-stack/serialization!SymbolTypeAnnotation:type"
             },
             {
               "kind": "Content",
@@ -403,7 +403,7 @@
             {
               "kind": "Reference",
               "text": "CustomTypeAnnotation",
-              "canonicalReference": "@storm-software/serialization!CustomTypeAnnotation:type"
+              "canonicalReference": "@storm-stack/serialization!CustomTypeAnnotation:type"
             },
             {
               "kind": "Content",
@@ -420,7 +420,7 @@
         },
         {
           "kind": "TypeAlias",
-          "canonicalReference": "@storm-software/serialization!CustomTypeAnnotation:type",
+          "canonicalReference": "@storm-stack/serialization!CustomTypeAnnotation:type",
           "docComment": "",
           "excerptTokens": [
             {
@@ -446,7 +446,7 @@
         },
         {
           "kind": "Interface",
-          "canonicalReference": "@storm-software/serialization!DataTransformer:interface",
+          "canonicalReference": "@storm-stack/serialization!DataTransformer:interface",
           "docComment": "/**\n * A class that can be serialized and deserialized\n */\n",
           "excerptTokens": [
             {
@@ -456,7 +456,7 @@
             {
               "kind": "Reference",
               "text": "JsonValue",
-              "canonicalReference": "@storm-software/serialization!JsonValue:type"
+              "canonicalReference": "@storm-stack/serialization!JsonValue:type"
             },
             {
               "kind": "Content",
@@ -465,7 +465,7 @@
             {
               "kind": "Reference",
               "text": "JsonValue",
-              "canonicalReference": "@storm-software/serialization!JsonValue:type"
+              "canonicalReference": "@storm-stack/serialization!JsonValue:type"
             },
             {
               "kind": "Content",
@@ -503,7 +503,7 @@
           "members": [
             {
               "kind": "PropertySignature",
-              "canonicalReference": "@storm-software/serialization!DataTransformer#deserialize:member",
+              "canonicalReference": "@storm-stack/serialization!DataTransformer#deserialize:member",
               "docComment": "/**\n * Deserialize the class from a JSON object\n *\n * @param json - The JSON object to deserialize from\n *\n * @returns The deserialized data\n */\n",
               "excerptTokens": [
                 {
@@ -513,7 +513,7 @@
                 {
                   "kind": "Reference",
                   "text": "DeserializeFunct",
-                  "canonicalReference": "@storm-software/serialization!DeserializeFunct:type"
+                  "canonicalReference": "@storm-stack/serialization!DeserializeFunct:type"
                 },
                 {
                   "kind": "Content",
@@ -535,7 +535,7 @@
             },
             {
               "kind": "PropertySignature",
-              "canonicalReference": "@storm-software/serialization!DataTransformer#serialize:member",
+              "canonicalReference": "@storm-stack/serialization!DataTransformer#serialize:member",
               "docComment": "/**\n * Serialize the class to a JSON object\n *\n * @param data - The data object to serialize\n *\n * @returns The serialized JSON object\n */\n",
               "excerptTokens": [
                 {
@@ -545,7 +545,7 @@
                 {
                   "kind": "Reference",
                   "text": "SerializationFunct",
-                  "canonicalReference": "@storm-software/serialization!SerializationFunct:type"
+                  "canonicalReference": "@storm-stack/serialization!SerializationFunct:type"
                 },
                 {
                   "kind": "Content",
@@ -570,7 +570,7 @@
         },
         {
           "kind": "Function",
-          "canonicalReference": "@storm-software/serialization!deserialize:function(1)",
+          "canonicalReference": "@storm-stack/serialization!deserialize:function(1)",
           "docComment": "/**\n * Deserialize the given value with superjson using the given metadata\n */\n",
           "excerptTokens": [
             {
@@ -588,7 +588,7 @@
             {
               "kind": "Reference",
               "text": "JsonParserResult",
-              "canonicalReference": "@storm-software/serialization!JsonParserResult:interface"
+              "canonicalReference": "@storm-stack/serialization!JsonParserResult:interface"
             },
             {
               "kind": "Content",
@@ -637,7 +637,7 @@
         },
         {
           "kind": "TypeAlias",
-          "canonicalReference": "@storm-software/serialization!DeserializeFunct:type",
+          "canonicalReference": "@storm-stack/serialization!DeserializeFunct:type",
           "docComment": "/**\n * A function that can deserialize a certain type of data\n *\n * @param json - The JSON object to deserialize from\n *\n * @returns The deserialized data\n */\n",
           "excerptTokens": [
             {
@@ -655,7 +655,7 @@
             {
               "kind": "Reference",
               "text": "JsonValue",
-              "canonicalReference": "@storm-software/serialization!JsonValue:type"
+              "canonicalReference": "@storm-stack/serialization!JsonValue:type"
             },
             {
               "kind": "Content",
@@ -664,7 +664,7 @@
             {
               "kind": "Reference",
               "text": "JsonValue",
-              "canonicalReference": "@storm-software/serialization!JsonValue:type"
+              "canonicalReference": "@storm-stack/serialization!JsonValue:type"
             },
             {
               "kind": "Content",
@@ -713,7 +713,7 @@
         },
         {
           "kind": "Interface",
-          "canonicalReference": "@storm-software/serialization!IJsonParser:interface",
+          "canonicalReference": "@storm-stack/serialization!IJsonParser:interface",
           "docComment": "",
           "excerptTokens": [
             {
@@ -728,7 +728,7 @@
           "members": [
             {
               "kind": "PropertySignature",
-              "canonicalReference": "@storm-software/serialization!IJsonParser#deserialize:member",
+              "canonicalReference": "@storm-stack/serialization!IJsonParser#deserialize:member",
               "docComment": "",
               "excerptTokens": [
                 {
@@ -742,7 +742,7 @@
                 {
                   "kind": "Reference",
                   "text": "JsonParserResult",
-                  "canonicalReference": "@storm-software/serialization!JsonParserResult:interface"
+                  "canonicalReference": "@storm-stack/serialization!JsonParserResult:interface"
                 },
                 {
                   "kind": "Content",
@@ -764,7 +764,7 @@
             },
             {
               "kind": "PropertySignature",
-              "canonicalReference": "@storm-software/serialization!IJsonParser#parse:member",
+              "canonicalReference": "@storm-stack/serialization!IJsonParser#parse:member",
               "docComment": "",
               "excerptTokens": [
                 {
@@ -791,7 +791,7 @@
             },
             {
               "kind": "PropertySignature",
-              "canonicalReference": "@storm-software/serialization!IJsonParser#register:member",
+              "canonicalReference": "@storm-stack/serialization!IJsonParser#register:member",
               "docComment": "",
               "excerptTokens": [
                 {
@@ -805,7 +805,7 @@
                 {
                   "kind": "Reference",
                   "text": "JsonValue",
-                  "canonicalReference": "@storm-software/serialization!JsonValue:type"
+                  "canonicalReference": "@storm-stack/serialization!JsonValue:type"
                 },
                 {
                   "kind": "Content",
@@ -814,7 +814,7 @@
                 {
                   "kind": "Reference",
                   "text": "JsonValue",
-                  "canonicalReference": "@storm-software/serialization!JsonValue:type"
+                  "canonicalReference": "@storm-stack/serialization!JsonValue:type"
                 },
                 {
                   "kind": "Content",
@@ -823,7 +823,7 @@
                 {
                   "kind": "Reference",
                   "text": "JsonValue",
-                  "canonicalReference": "@storm-software/serialization!JsonValue:type"
+                  "canonicalReference": "@storm-stack/serialization!JsonValue:type"
                 },
                 {
                   "kind": "Content",
@@ -832,7 +832,7 @@
                 {
                   "kind": "Reference",
                   "text": "data",
-                  "canonicalReference": "@storm-software/serialization!~data"
+                  "canonicalReference": "@storm-stack/serialization!~data"
                 },
                 {
                   "kind": "Content",
@@ -854,7 +854,7 @@
             },
             {
               "kind": "PropertySignature",
-              "canonicalReference": "@storm-software/serialization!IJsonParser#serialize:member",
+              "canonicalReference": "@storm-stack/serialization!IJsonParser#serialize:member",
               "docComment": "",
               "excerptTokens": [
                 {
@@ -868,7 +868,7 @@
                 {
                   "kind": "Reference",
                   "text": "JsonValue",
-                  "canonicalReference": "@storm-software/serialization!JsonValue:type"
+                  "canonicalReference": "@storm-stack/serialization!JsonValue:type"
                 },
                 {
                   "kind": "Content",
@@ -877,7 +877,7 @@
                 {
                   "kind": "Reference",
                   "text": "JsonParserResult",
-                  "canonicalReference": "@storm-software/serialization!JsonParserResult:interface"
+                  "canonicalReference": "@storm-stack/serialization!JsonParserResult:interface"
                 },
                 {
                   "kind": "Content",
@@ -895,7 +895,7 @@
             },
             {
               "kind": "PropertySignature",
-              "canonicalReference": "@storm-software/serialization!IJsonParser#stringify:member",
+              "canonicalReference": "@storm-stack/serialization!IJsonParser#stringify:member",
               "docComment": "",
               "excerptTokens": [
                 {
@@ -925,7 +925,7 @@
         },
         {
           "kind": "TypeAlias",
-          "canonicalReference": "@storm-software/serialization!InnerNode:type",
+          "canonicalReference": "@storm-stack/serialization!InnerNode:type",
           "docComment": "",
           "excerptTokens": [
             {
@@ -948,7 +948,7 @@
             {
               "kind": "Reference",
               "text": "Tree",
-              "canonicalReference": "@storm-software/serialization!Tree:type"
+              "canonicalReference": "@storm-stack/serialization!Tree:type"
             },
             {
               "kind": "Content",
@@ -982,7 +982,7 @@
         },
         {
           "kind": "Interface",
-          "canonicalReference": "@storm-software/serialization!JsonArray:interface",
+          "canonicalReference": "@storm-stack/serialization!JsonArray:interface",
           "docComment": "",
           "excerptTokens": [
             {
@@ -1001,7 +1001,7 @@
             {
               "kind": "Reference",
               "text": "JsonValue",
-              "canonicalReference": "@storm-software/serialization!JsonValue:type"
+              "canonicalReference": "@storm-stack/serialization!JsonValue:type"
             },
             {
               "kind": "Content",
@@ -1026,7 +1026,7 @@
         },
         {
           "kind": "Interface",
-          "canonicalReference": "@storm-software/serialization!JsonObject:interface",
+          "canonicalReference": "@storm-stack/serialization!JsonObject:interface",
           "docComment": "",
           "excerptTokens": [
             {
@@ -1041,7 +1041,7 @@
           "members": [
             {
               "kind": "IndexSignature",
-              "canonicalReference": "@storm-software/serialization!JsonObject:index(1)",
+              "canonicalReference": "@storm-stack/serialization!JsonObject:index(1)",
               "docComment": "",
               "excerptTokens": [
                 {
@@ -1059,7 +1059,7 @@
                 {
                   "kind": "Reference",
                   "text": "JsonValue",
-                  "canonicalReference": "@storm-software/serialization!JsonValue:type"
+                  "canonicalReference": "@storm-stack/serialization!JsonValue:type"
                 },
                 {
                   "kind": "Content",
@@ -1089,7 +1089,7 @@
         },
         {
           "kind": "Interface",
-          "canonicalReference": "@storm-software/serialization!JsonParserResult:interface",
+          "canonicalReference": "@storm-stack/serialization!JsonParserResult:interface",
           "docComment": "",
           "excerptTokens": [
             {
@@ -1104,7 +1104,7 @@
           "members": [
             {
               "kind": "PropertySignature",
-              "canonicalReference": "@storm-software/serialization!JsonParserResult#json:member",
+              "canonicalReference": "@storm-stack/serialization!JsonParserResult#json:member",
               "docComment": "",
               "excerptTokens": [
                 {
@@ -1114,7 +1114,7 @@
                 {
                   "kind": "Reference",
                   "text": "JsonValue",
-                  "canonicalReference": "@storm-software/serialization!JsonValue:type"
+                  "canonicalReference": "@storm-stack/serialization!JsonValue:type"
                 },
                 {
                   "kind": "Content",
@@ -1132,7 +1132,7 @@
             },
             {
               "kind": "PropertySignature",
-              "canonicalReference": "@storm-software/serialization!JsonParserResult#meta:member",
+              "canonicalReference": "@storm-stack/serialization!JsonParserResult#meta:member",
               "docComment": "",
               "excerptTokens": [
                 {
@@ -1146,7 +1146,7 @@
                 {
                   "kind": "Reference",
                   "text": "Tree",
-                  "canonicalReference": "@storm-software/serialization!Tree:type"
+                  "canonicalReference": "@storm-stack/serialization!Tree:type"
                 },
                 {
                   "kind": "Content",
@@ -1155,7 +1155,7 @@
                 {
                   "kind": "Reference",
                   "text": "TypeAnnotation",
-                  "canonicalReference": "@storm-software/serialization!TypeAnnotation:type"
+                  "canonicalReference": "@storm-stack/serialization!TypeAnnotation:type"
                 },
                 {
                   "kind": "Content",
@@ -1173,7 +1173,7 @@
                 {
                   "kind": "Reference",
                   "text": "Tree",
-                  "canonicalReference": "@storm-software/serialization!Tree:type"
+                  "canonicalReference": "@storm-stack/serialization!Tree:type"
                 },
                 {
                   "kind": "Content",
@@ -1182,7 +1182,7 @@
                 {
                   "kind": "Reference",
                   "text": "TypeAnnotation",
-                  "canonicalReference": "@storm-software/serialization!TypeAnnotation:type"
+                  "canonicalReference": "@storm-stack/serialization!TypeAnnotation:type"
                 },
                 {
                   "kind": "Content",
@@ -1225,7 +1225,7 @@
         },
         {
           "kind": "TypeAlias",
-          "canonicalReference": "@storm-software/serialization!JsonValue:type",
+          "canonicalReference": "@storm-stack/serialization!JsonValue:type",
           "docComment": "",
           "excerptTokens": [
             {
@@ -1235,7 +1235,7 @@
             {
               "kind": "Reference",
               "text": "PrimitiveJsonValue",
-              "canonicalReference": "@storm-software/serialization!PrimitiveJsonValue:type"
+              "canonicalReference": "@storm-stack/serialization!PrimitiveJsonValue:type"
             },
             {
               "kind": "Content",
@@ -1244,7 +1244,7 @@
             {
               "kind": "Reference",
               "text": "JsonArray",
-              "canonicalReference": "@storm-software/serialization!JsonArray:interface"
+              "canonicalReference": "@storm-stack/serialization!JsonArray:interface"
             },
             {
               "kind": "Content",
@@ -1253,7 +1253,7 @@
             {
               "kind": "Reference",
               "text": "JsonObject",
-              "canonicalReference": "@storm-software/serialization!JsonObject:interface"
+              "canonicalReference": "@storm-stack/serialization!JsonObject:interface"
             },
             {
               "kind": "Content",
@@ -1270,7 +1270,7 @@
         },
         {
           "kind": "TypeAlias",
-          "canonicalReference": "@storm-software/serialization!Leaf:type",
+          "canonicalReference": "@storm-stack/serialization!Leaf:type",
           "docComment": "",
           "excerptTokens": [
             {
@@ -1309,7 +1309,7 @@
         },
         {
           "kind": "TypeAlias",
-          "canonicalReference": "@storm-software/serialization!LeafTypeAnnotation:type",
+          "canonicalReference": "@storm-stack/serialization!LeafTypeAnnotation:type",
           "docComment": "",
           "excerptTokens": [
             {
@@ -1319,7 +1319,7 @@
             {
               "kind": "Reference",
               "text": "PrimitiveTypeAnnotation",
-              "canonicalReference": "@storm-software/serialization!PrimitiveTypeAnnotation:type"
+              "canonicalReference": "@storm-stack/serialization!PrimitiveTypeAnnotation:type"
             },
             {
               "kind": "Content",
@@ -1340,7 +1340,7 @@
         },
         {
           "kind": "Function",
-          "canonicalReference": "@storm-software/serialization!parse:function(1)",
+          "canonicalReference": "@storm-stack/serialization!parse:function(1)",
           "docComment": "/**\n * Parse the given value with superjson using the given metadata\n */\n",
           "excerptTokens": [
             {
@@ -1406,7 +1406,7 @@
         },
         {
           "kind": "Function",
-          "canonicalReference": "@storm-software/serialization!parseQueryParam:function(1)",
+          "canonicalReference": "@storm-stack/serialization!parseQueryParam:function(1)",
           "docComment": "/**\n * Parse the given value with qs using the given metadata\n */\n",
           "excerptTokens": [
             {
@@ -1497,7 +1497,7 @@
         },
         {
           "kind": "TypeAlias",
-          "canonicalReference": "@storm-software/serialization!PrimitiveJsonValue:type",
+          "canonicalReference": "@storm-stack/serialization!PrimitiveJsonValue:type",
           "docComment": "",
           "excerptTokens": [
             {
@@ -1523,7 +1523,7 @@
         },
         {
           "kind": "TypeAlias",
-          "canonicalReference": "@storm-software/serialization!PrimitiveTypeAnnotation:type",
+          "canonicalReference": "@storm-stack/serialization!PrimitiveTypeAnnotation:type",
           "docComment": "",
           "excerptTokens": [
             {
@@ -1549,7 +1549,7 @@
         },
         {
           "kind": "Function",
-          "canonicalReference": "@storm-software/serialization!register:function(1)",
+          "canonicalReference": "@storm-stack/serialization!register:function(1)",
           "docComment": "",
           "excerptTokens": [
             {
@@ -1567,7 +1567,7 @@
             {
               "kind": "Reference",
               "text": "JsonValue",
-              "canonicalReference": "@storm-software/serialization!JsonValue:type"
+              "canonicalReference": "@storm-stack/serialization!JsonValue:type"
             },
             {
               "kind": "Content",
@@ -1576,7 +1576,7 @@
             {
               "kind": "Reference",
               "text": "JsonValue",
-              "canonicalReference": "@storm-software/serialization!JsonValue:type"
+              "canonicalReference": "@storm-stack/serialization!JsonValue:type"
             },
             {
               "kind": "Content",
@@ -1613,7 +1613,7 @@
             {
               "kind": "Reference",
               "text": "data",
-              "canonicalReference": "@storm-software/serialization!~data"
+              "canonicalReference": "@storm-stack/serialization!~data"
             },
             {
               "kind": "Content",
@@ -1701,7 +1701,7 @@
         },
         {
           "kind": "Variable",
-          "canonicalReference": "@storm-software/serialization!Serializable:var",
+          "canonicalReference": "@storm-stack/serialization!Serializable:var",
           "docComment": "",
           "excerptTokens": [
             {
@@ -1715,7 +1715,7 @@
             {
               "kind": "Reference",
               "text": "SerializationFunct",
-              "canonicalReference": "@storm-software/serialization!SerializationFunct:type"
+              "canonicalReference": "@storm-stack/serialization!SerializationFunct:type"
             },
             {
               "kind": "Content",
@@ -1724,25 +1724,16 @@
             {
               "kind": "Reference",
               "text": "DeserializeFunct",
-              "canonicalReference": "@storm-software/serialization!DeserializeFunct:type"
+              "canonicalReference": "@storm-stack/serialization!DeserializeFunct:type"
             },
             {
               "kind": "Content",
-              "text": "<TData>;\n}) => <TClass extends new (...args: any) => any = new (...args: any) => TData>(target: TClass, context: "
-            },
-            {
-              "kind": "Reference",
-              "text": "ClassDecoratorContext",
-              "canonicalReference": "!ClassDecoratorContext:interface"
-            },
-            {
-              "kind": "Content",
-              "text": "<TClass>) => {\n    new (...args: any): {\n        [x: string]: any;\n        __typename: string;\n        serialize: () => "
+              "text": "<TData>;\n}) => <TClass extends new (...args: any) => any = new (...args: any) => TData>(target: TClass) => {\n    new (...args: any): {\n        [x: string]: any;\n        __typename: string;\n        serialize: () => "
             },
             {
               "kind": "Reference",
               "text": "JsonValue",
-              "canonicalReference": "@storm-software/serialization!JsonValue:type"
+              "canonicalReference": "@storm-stack/serialization!JsonValue:type"
             },
             {
               "kind": "Content",
@@ -1751,7 +1742,7 @@
             {
               "kind": "Reference",
               "text": "JsonValue",
-              "canonicalReference": "@storm-software/serialization!JsonValue:type"
+              "canonicalReference": "@storm-stack/serialization!JsonValue:type"
             },
             {
               "kind": "Content",
@@ -1760,7 +1751,7 @@
             {
               "kind": "Reference",
               "text": "value",
-              "canonicalReference": "@storm-software/serialization!~value"
+              "canonicalReference": "@storm-stack/serialization!~value"
             },
             {
               "kind": "Content",
@@ -1773,12 +1764,12 @@
           "name": "Serializable",
           "variableTypeTokenRange": {
             "startIndex": 1,
-            "endIndex": 14
+            "endIndex": 12
           }
         },
         {
           "kind": "TypeAlias",
-          "canonicalReference": "@storm-software/serialization!SerializableJsonValue:type",
+          "canonicalReference": "@storm-stack/serialization!SerializableJsonValue:type",
           "docComment": "",
           "excerptTokens": [
             {
@@ -1806,7 +1797,7 @@
             {
               "kind": "Reference",
               "text": "JsonValue",
-              "canonicalReference": "@storm-software/serialization!JsonValue:type"
+              "canonicalReference": "@storm-stack/serialization!JsonValue:type"
             },
             {
               "kind": "Content",
@@ -1824,7 +1815,7 @@
             {
               "kind": "Reference",
               "text": "JsonValue",
-              "canonicalReference": "@storm-software/serialization!JsonValue:type"
+              "canonicalReference": "@storm-stack/serialization!JsonValue:type"
             },
             {
               "kind": "Content",
@@ -1833,7 +1824,7 @@
             {
               "kind": "Reference",
               "text": "JsonValue",
-              "canonicalReference": "@storm-software/serialization!JsonValue:type"
+              "canonicalReference": "@storm-stack/serialization!JsonValue:type"
             },
             {
               "kind": "Content",
@@ -1851,7 +1842,7 @@
             {
               "kind": "Reference",
               "text": "ClassInstance",
-              "canonicalReference": "@storm-software/serialization!ClassInstance:type"
+              "canonicalReference": "@storm-stack/serialization!ClassInstance:type"
             },
             {
               "kind": "Content",
@@ -1877,7 +1868,7 @@
         },
         {
           "kind": "TypeAlias",
-          "canonicalReference": "@storm-software/serialization!SerializableType:type",
+          "canonicalReference": "@storm-stack/serialization!SerializableType:type",
           "docComment": "",
           "excerptTokens": [
             {
@@ -1887,7 +1878,7 @@
             {
               "kind": "Reference",
               "text": "ClassSerializable",
-              "canonicalReference": "@storm-software/serialization!ClassSerializable:interface"
+              "canonicalReference": "@storm-stack/serialization!ClassSerializable:interface"
             },
             {
               "kind": "Content",
@@ -1896,7 +1887,7 @@
             {
               "kind": "Reference",
               "text": "ClassTypeCheckable",
-              "canonicalReference": "@storm-software/serialization!~ClassTypeCheckable:interface"
+              "canonicalReference": "@storm-stack/serialization!~ClassTypeCheckable:interface"
             },
             {
               "kind": "Content",
@@ -1905,7 +1896,7 @@
             {
               "kind": "Reference",
               "text": "ITyped",
-              "canonicalReference": "@storm-software/serialization!~ITyped:interface"
+              "canonicalReference": "@storm-stack/serialization!~ITyped:interface"
             },
             {
               "kind": "Content",
@@ -1939,7 +1930,7 @@
         },
         {
           "kind": "TypeAlias",
-          "canonicalReference": "@storm-software/serialization!SerializationFunct:type",
+          "canonicalReference": "@storm-stack/serialization!SerializationFunct:type",
           "docComment": "/**\n * A function that can serialize a certain type of data\n *\n * @param data - The data object to serialize\n *\n * @returns The serialized JSON object\n */\n",
           "excerptTokens": [
             {
@@ -1957,7 +1948,7 @@
             {
               "kind": "Reference",
               "text": "JsonValue",
-              "canonicalReference": "@storm-software/serialization!JsonValue:type"
+              "canonicalReference": "@storm-stack/serialization!JsonValue:type"
             },
             {
               "kind": "Content",
@@ -1966,7 +1957,7 @@
             {
               "kind": "Reference",
               "text": "JsonValue",
-              "canonicalReference": "@storm-software/serialization!JsonValue:type"
+              "canonicalReference": "@storm-stack/serialization!JsonValue:type"
             },
             {
               "kind": "Content",
@@ -2015,7 +2006,7 @@
         },
         {
           "kind": "TypeAlias",
-          "canonicalReference": "@storm-software/serialization!SerializationMetadata:type",
+          "canonicalReference": "@storm-stack/serialization!SerializationMetadata:type",
           "docComment": "",
           "excerptTokens": [
             {
@@ -2025,7 +2016,7 @@
             {
               "kind": "Reference",
               "text": "DataTransformer",
-              "canonicalReference": "@storm-software/serialization!DataTransformer:interface"
+              "canonicalReference": "@storm-stack/serialization!DataTransformer:interface"
             },
             {
               "kind": "Content",
@@ -2034,7 +2025,7 @@
             {
               "kind": "Reference",
               "text": "ClassTypeCheckable",
-              "canonicalReference": "@storm-software/serialization!~ClassTypeCheckable:interface"
+              "canonicalReference": "@storm-stack/serialization!~ClassTypeCheckable:interface"
             },
             {
               "kind": "Content",
@@ -2068,7 +2059,7 @@
         },
         {
           "kind": "Function",
-          "canonicalReference": "@storm-software/serialization!serialize:function(1)",
+          "canonicalReference": "@storm-stack/serialization!serialize:function(1)",
           "docComment": "/**\n * Serialize the given value with superjson\n */\n",
           "excerptTokens": [
             {
@@ -2078,7 +2069,7 @@
             {
               "kind": "Reference",
               "text": "JsonValue",
-              "canonicalReference": "@storm-software/serialization!JsonValue:type"
+              "canonicalReference": "@storm-stack/serialization!JsonValue:type"
             },
             {
               "kind": "Content",
@@ -2087,7 +2078,7 @@
             {
               "kind": "Reference",
               "text": "JsonParserResult",
-              "canonicalReference": "@storm-software/serialization!JsonParserResult:interface"
+              "canonicalReference": "@storm-stack/serialization!JsonParserResult:interface"
             },
             {
               "kind": "Content",
@@ -2115,7 +2106,7 @@
         },
         {
           "kind": "TypeAlias",
-          "canonicalReference": "@storm-software/serialization!SimpleTypeAnnotation:type",
+          "canonicalReference": "@storm-stack/serialization!SimpleTypeAnnotation:type",
           "docComment": "",
           "excerptTokens": [
             {
@@ -2125,7 +2116,7 @@
             {
               "kind": "Reference",
               "text": "LeafTypeAnnotation",
-              "canonicalReference": "@storm-software/serialization!LeafTypeAnnotation:type"
+              "canonicalReference": "@storm-stack/serialization!LeafTypeAnnotation:type"
             },
             {
               "kind": "Content",
@@ -2146,7 +2137,7 @@
         },
         {
           "kind": "Function",
-          "canonicalReference": "@storm-software/serialization!stringify:function(1)",
+          "canonicalReference": "@storm-stack/serialization!stringify:function(1)",
           "docComment": "/**\n * Stringify the given value with superjson\n */\n",
           "excerptTokens": [
             {
@@ -2191,7 +2182,7 @@
         },
         {
           "kind": "Function",
-          "canonicalReference": "@storm-software/serialization!stringifyQueryParam:function(1)",
+          "canonicalReference": "@storm-stack/serialization!stringifyQueryParam:function(1)",
           "docComment": "/**\n * Stringify the given value with qs\n */\n",
           "excerptTokens": [
             {
@@ -2201,7 +2192,7 @@
             {
               "kind": "Reference",
               "text": "JsonValue",
-              "canonicalReference": "@storm-software/serialization!JsonValue:type"
+              "canonicalReference": "@storm-stack/serialization!JsonValue:type"
             },
             {
               "kind": "Content",
@@ -2271,7 +2262,7 @@
         },
         {
           "kind": "TypeAlias",
-          "canonicalReference": "@storm-software/serialization!SymbolTypeAnnotation:type",
+          "canonicalReference": "@storm-stack/serialization!SymbolTypeAnnotation:type",
           "docComment": "",
           "excerptTokens": [
             {
@@ -2297,7 +2288,7 @@
         },
         {
           "kind": "TypeAlias",
-          "canonicalReference": "@storm-software/serialization!Tree:type",
+          "canonicalReference": "@storm-stack/serialization!Tree:type",
           "docComment": "",
           "excerptTokens": [
             {
@@ -2307,7 +2298,7 @@
             {
               "kind": "Reference",
               "text": "InnerNode",
-              "canonicalReference": "@storm-software/serialization!InnerNode:type"
+              "canonicalReference": "@storm-stack/serialization!InnerNode:type"
             },
             {
               "kind": "Content",
@@ -2316,7 +2307,7 @@
             {
               "kind": "Reference",
               "text": "Leaf",
-              "canonicalReference": "@storm-software/serialization!Leaf:type"
+              "canonicalReference": "@storm-stack/serialization!Leaf:type"
             },
             {
               "kind": "Content",
@@ -2350,7 +2341,7 @@
         },
         {
           "kind": "TypeAlias",
-          "canonicalReference": "@storm-software/serialization!TypeAnnotation:type",
+          "canonicalReference": "@storm-stack/serialization!TypeAnnotation:type",
           "docComment": "",
           "excerptTokens": [
             {
@@ -2360,7 +2351,7 @@
             {
               "kind": "Reference",
               "text": "SimpleTypeAnnotation",
-              "canonicalReference": "@storm-software/serialization!SimpleTypeAnnotation:type"
+              "canonicalReference": "@storm-stack/serialization!SimpleTypeAnnotation:type"
             },
             {
               "kind": "Content",
@@ -2369,7 +2360,7 @@
             {
               "kind": "Reference",
               "text": "CompositeTypeAnnotation",
-              "canonicalReference": "@storm-software/serialization!CompositeTypeAnnotation:type"
+              "canonicalReference": "@storm-stack/serialization!CompositeTypeAnnotation:type"
             },
             {
               "kind": "Content",
@@ -2386,7 +2377,7 @@
         },
         {
           "kind": "TypeAlias",
-          "canonicalReference": "@storm-software/serialization!TypedArrayAnnotation:type",
+          "canonicalReference": "@storm-stack/serialization!TypedArrayAnnotation:type",
           "docComment": "",
           "excerptTokens": [
             {

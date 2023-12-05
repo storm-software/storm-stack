@@ -1,5 +1,5 @@
 {
-  "name": "@storm-software/errors",
+  "name": "@storm-stack/errors",
   "version": "0.0.1",
   "private": false,
   "description": "This package includes a base error class and various utility functions for working with errors.",

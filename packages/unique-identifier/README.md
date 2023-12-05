@@ -39,14 +39,14 @@ This package provides a simple way to generate various types of unique identifie
 Using [pnpm](http://pnpm.io):
 
 ```bash
-pnpm add -D @storm-software/unique-identifier
+pnpm add -D @storm-stack/unique-identifier
 ```
 
 <details>
   <summary>Using npm</summary>
 
 ```bash
-npm install -D @storm-software/unique-identifier
+npm install -D @storm-stack/unique-identifier
 ```
 
 </details>
@@ -55,7 +55,7 @@ npm install -D @storm-software/unique-identifier
   <summary>Using yarn</summary>
 
 ```bash
-yarn add -D @storm-software/unique-identifier
+yarn add -D @storm-stack/unique-identifier
 ```
 
 </details>

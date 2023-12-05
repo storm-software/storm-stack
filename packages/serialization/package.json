@@ -1,5 +1,5 @@
 {
-  "name": "@storm-software/serialization",
+  "name": "@storm-stack/serialization",
   "version": "0.0.1",
   "private": false,
   "description": "A package used to support serializing and deserializing data sent between the client and the server.",

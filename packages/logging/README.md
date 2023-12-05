@@ -39,14 +39,14 @@ This package is part of the <b>⚡storm-stack</b> monorepo. The storm-stack pack
 Using [pnpm](http://pnpm.io):
 
 ```bash
-pnpm add -D @storm-software/logging
+pnpm add -D @storm-stack/logging
 ```
 
 <details>
   <summary>Using npm</summary>
 
 ```bash
-npm install -D @storm-software/logging
+npm install -D @storm-stack/logging
 ```
 
 </details>
@@ -55,7 +55,7 @@ npm install -D @storm-software/logging
   <summary>Using yarn</summary>
 
 ```bash
-yarn add -D @storm-software/logging
+yarn add -D @storm-stack/logging
 ```
 
 </details>

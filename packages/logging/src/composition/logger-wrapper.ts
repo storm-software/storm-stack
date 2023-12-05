@@ -1,5 +1,5 @@
-import { getCauseFromUnknown } from "@storm-software/errors";
-import { MaybePromise, isSet, isSetString } from "@storm-software/utilities";
+import { getCauseFromUnknown } from "@storm-stack/errors";
+import { MaybePromise, isSet, isSetString } from "@storm-stack/utilities";
 import { ILogger, ILoggerWrapper, LoggingConfig } from "../types";
 
 /**

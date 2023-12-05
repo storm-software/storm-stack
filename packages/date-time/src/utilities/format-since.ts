@@ -1,5 +1,5 @@
 import { Temporal } from "@js-temporal/polyfill";
-import { StormError } from "@storm-software/errors";
+import { StormError } from "@storm-stack/errors";
 import { DateTimeErrorCode } from "../errors";
 import { StormDate } from "../storm-date";
 import { StormDateTime } from "../storm-date-time";
@@ -133,7 +133,7 @@ export const formatSince = (
   }
 
   const result: string[] = [];
-  const floorDecimals = (value, decimalDigits) => {
+  const floorDecimals = (value: number, decimalDigits: number) => {
     const flooredInterimValue = Math.floor(
       value * 10 ** decimalDigits + SECOND_ROUNDING_EPSILON
     );

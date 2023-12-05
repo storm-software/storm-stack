@@ -1,4 +1,4 @@
-import { ClassTypeCheckable, ITyped } from "@storm-software/utilities/types";
+import { ClassTypeCheckable, ITyped } from "@storm-stack/utilities/types";
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 export type PrimitiveJsonValue = string | number | boolean | undefined | null;

@@ -1,5 +1,5 @@
 {
-  "name": "@storm-software/unique-identifier",
+  "name": "@storm-stack/unique-identifier",
   "version": "0.0.1",
   "private": false,
   "description": "This package provides a simple way to generate various types of unique identifiers.",

@@ -1,11 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Serializable } from "@storm-software/serialization";
+import { Serializable } from "@storm-stack/serialization";
 import {
   EMPTY_STRING,
   Indexable,
   NEWLINE_STRING,
   isObject
-} from "@storm-software/utilities";
+} from "@storm-stack/utilities";
 import StackTracey from "stacktracey";
 import { ErrorCode } from "./errors";
 import { isStormError } from "./utilities";

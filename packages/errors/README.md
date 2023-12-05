@@ -39,14 +39,14 @@ This package provides a wrapper for the JavaScript `Error` object and a simple w
 Using [pnpm](http://pnpm.io):
 
 ```bash
-pnpm add -D @storm-software/errors
+pnpm add -D @storm-stack/errors
 ```
 
 <details>
   <summary>Using npm</summary>
 
 ```bash
-npm install -D @storm-software/errors
+npm install -D @storm-stack/errors
 ```
 
 </details>
@@ -55,7 +55,7 @@ npm install -D @storm-software/errors
   <summary>Using yarn</summary>
 
 ```bash
-yarn add -D @storm-software/errors
+yarn add -D @storm-stack/errors
 ```
 
 </details>

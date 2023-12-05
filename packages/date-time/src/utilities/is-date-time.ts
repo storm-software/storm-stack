@@ -1,6 +1,6 @@
-import { isDate } from "@storm-software/utilities/type-checks/is-date";
-import { isSet } from "@storm-software/utilities/type-checks/is-set";
-import { isSetString } from "@storm-software/utilities/type-checks/is-set-string";
+import { isDate } from "@storm-stack/utilities/type-checks/is-date";
+import { isSet } from "@storm-stack/utilities/type-checks/is-set";
+import { isSetString } from "@storm-stack/utilities/type-checks/is-set-string";
 import { StormDateTime } from "../storm-date-time";
 
 /**

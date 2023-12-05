@@ -3,7 +3,6 @@
   "composite": true,
   "compilerOptions": {
     "outDir": "../../dist/out-tsc",
-    "strict": false,
     "noEmit": true
   },
   "files": [],

@@ -39,14 +39,14 @@ This package contains various utilities functions that serve a wide range of pur
 Using [pnpm](http://pnpm.io):
 
 ```bash
-pnpm add -D @storm-software/utilities
+pnpm add -D @storm-stack/utilities
 ```
 
 <details>
   <summary>Using npm</summary>
 
 ```bash
-npm install -D @storm-software/utilities
+npm install -D @storm-stack/utilities
 ```
 
 </details>
@@ -55,7 +55,7 @@ npm install -D @storm-software/utilities
   <summary>Using yarn</summary>
 
 ```bash
-yarn add -D @storm-software/utilities
+yarn add -D @storm-stack/utilities
 ```
 
 </details>

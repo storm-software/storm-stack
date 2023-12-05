@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { isString, isTyped } from "@storm-software/utilities";
+import { isString, isTyped } from "@storm-stack/utilities";
 import { parse, stringify } from "qs";
 import { JsonValue } from "./types";
 

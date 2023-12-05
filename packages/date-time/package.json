@@ -1,11 +1,10 @@
 {
-  "name": "@storm-software/date-time",
+  "name": "@storm-stack/date-time",
   "version": "0.0.1",
   "private": false,
   "description": "This package includes a DateTime class, various utility functions for working with dates and times, and a number of formatting options.",
   "dependencies": {
-    "@js-temporal/polyfill": "^0.4.4",
-    "@storm-software/errors": "0.0.1"
+    "@js-temporal/polyfill": "^0.4.4"
   },
   "publishConfig": {
     "access": "public"

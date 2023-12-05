@@ -1,4 +1,4 @@
-import { isObject } from "@storm-software/utilities/type-checks/is-object";
+import { isObject } from "@storm-stack/utilities/type-checks/is-object";
 
 const WebCrypto: Crypto | undefined =
   globalThis.crypto && isObject(typeof globalThis.crypto)

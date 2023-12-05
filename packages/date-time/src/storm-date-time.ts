@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Temporal } from "@js-temporal/polyfill";
-import { Serializable } from "@storm-software/serialization";
-import { isBigInt } from "@storm-software/utilities/type-checks/is-bigint";
-import { isDate } from "@storm-software/utilities/type-checks/is-date";
-import { isNumber } from "@storm-software/utilities/type-checks/is-number";
+import { Serializable } from "@storm-stack/serialization";
+import { isBigInt } from "@storm-stack/utilities/type-checks/is-bigint";
+import { isDate } from "@storm-stack/utilities/type-checks/is-date";
+import { isNumber } from "@storm-stack/utilities/type-checks/is-number";
 import { isDateTime } from "./utilities/is-date-time";
 import {
   deserializeStormDateTime,
@@ -14,7 +14,7 @@ import { validateDateTime } from "./utilities/validate-date-time";
 /**
  * The options to use when creating a new DateTime object
  */
-export type DateTimeOptions = {
+export interface DateTimeOptions {
   /**
    * The time zone to use. If not specified, the default time zone for the runtime is used.
    */
@@ -31,7 +31,7 @@ export type DateTimeOptions = {
    * @default false
    */
   skipDefaulting?: boolean;
-};
+}
 
 /**
  * The input types that can be used to create a DateTime object
@@ -86,6 +86,7 @@ export class StormDateTime extends Date {
     new StormDateTime(dateTime, {
       timeZone:
         (isDateTime(dateTime) ? dateTime.timeZoneId : options?.timeZone) ??
+        process.env.STORM_TIMEZONE ??
         Temporal.Now.timeZoneId(),
       calendar: isDateTime(dateTime) ? dateTime.calendarId : options?.calendar
     });
@@ -93,12 +94,14 @@ export class StormDateTime extends Date {
   /**
    * A private accessor that stores the `Temporal.Instant` object of the DateTime object
    */
-  #instant: Temporal.Instant;
+  #instant: Temporal.Instant = Temporal.Now.instant();
 
   /**
    * A private accessor that stores the `Temporal.ZonedDateTime` object of the DateTime object
    */
-  #zonedDateTime: Temporal.ZonedDateTime;
+  #zonedDateTime: Temporal.ZonedDateTime = Temporal.Now.zonedDateTime(
+    process.env.STORM_TIMEZONE ?? Temporal.Now.timeZoneId()
+  );
 
   /**
    * A private accessor that stores the input value used to create the DateTime object

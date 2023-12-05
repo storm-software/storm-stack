@@ -6,7 +6,7 @@
   "sourceRoot": "packages/unique-identifier/src",
   "targets": {
     "build": {
-      "executor": "@storm-software/nx:ts-build",
+      "executor": "@storm-software/workspace-tools:tsup-neutral",
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/packages/unique-identifier",

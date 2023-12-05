@@ -39,14 +39,14 @@ This package contains the serialization logic for the Storm project. It is respo
 Using [pnpm](http://pnpm.io):
 
 ```bash
-pnpm add -D @storm-software/serialization
+pnpm add -D @storm-stack/serialization
 ```
 
 <details>
   <summary>Using npm</summary>
 
 ```bash
-npm install -D @storm-software/serialization
+npm install -D @storm-stack/serialization
 ```
 
 </details>
@@ -55,7 +55,7 @@ npm install -D @storm-software/serialization
   <summary>Using yarn</summary>
 
 ```bash
-yarn add -D @storm-software/serialization
+yarn add -D @storm-stack/serialization
 ```
 
 </details>

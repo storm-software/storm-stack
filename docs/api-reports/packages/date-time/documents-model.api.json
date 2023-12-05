@@ -161,20 +161,20 @@
     }
   },
   "kind": "Package",
-  "canonicalReference": "@storm-stack/errors!",
+  "canonicalReference": "@storm-stack/date-time!",
   "docComment": "",
-  "name": "@storm-stack/errors",
+  "name": "@storm-stack/date-time",
   "preserveMemberOrder": false,
   "members": [
     {
       "kind": "EntryPoint",
-      "canonicalReference": "@storm-stack/errors!",
+      "canonicalReference": "@storm-stack/date-time!",
       "name": "",
       "preserveMemberOrder": false,
       "members": [
         {
           "kind": "TypeAlias",
-          "canonicalReference": "@storm-stack/errors!DateTimeErrorCode:type",
+          "canonicalReference": "@storm-stack/date-time!DateTimeErrorCode:type",
           "docComment": "",
           "excerptTokens": [
             {
@@ -184,7 +184,7 @@
             {
               "kind": "Reference",
               "text": "ErrorCode",
-              "canonicalReference": "@storm-stack/errors!~ErrorCode:type"
+              "canonicalReference": "@storm-stack/date-time!~ErrorCode:type"
             },
             {
               "kind": "Content",
@@ -205,7 +205,7 @@
         },
         {
           "kind": "Variable",
-          "canonicalReference": "@storm-stack/errors!DateTimeErrorCode:var",
+          "canonicalReference": "@storm-stack/date-time!DateTimeErrorCode:var",
           "docComment": "",
           "excerptTokens": [
             {
@@ -219,7 +219,7 @@
             {
               "kind": "Reference",
               "text": "DateTimeErrorCode",
-              "canonicalReference": "@storm-stack/errors!DateTimeErrorCode:type"
+              "canonicalReference": "@storm-stack/date-time!DateTimeErrorCode:type"
             },
             {
               "kind": "Content",
@@ -228,7 +228,7 @@
             {
               "kind": "Reference",
               "text": "DateTimeErrorCode",
-              "canonicalReference": "@storm-stack/errors!DateTimeErrorCode:type"
+              "canonicalReference": "@storm-stack/date-time!DateTimeErrorCode:type"
             },
             {
               "kind": "Content",
@@ -237,7 +237,7 @@
             {
               "kind": "Reference",
               "text": "DateTimeErrorCode",
-              "canonicalReference": "@storm-stack/errors!DateTimeErrorCode:type"
+              "canonicalReference": "@storm-stack/date-time!DateTimeErrorCode:type"
             },
             {
               "kind": "Content",
@@ -246,7 +246,7 @@
             {
               "kind": "Reference",
               "text": "ErrorCode",
-              "canonicalReference": "@storm-stack/errors!~ErrorCode:type"
+              "canonicalReference": "@storm-stack/date-time!~ErrorCode:type"
             },
             {
               "kind": "Content",
@@ -255,7 +255,7 @@
             {
               "kind": "Reference",
               "text": "ErrorCode",
-              "canonicalReference": "@storm-stack/errors!~ErrorCode:type"
+              "canonicalReference": "@storm-stack/date-time!~ErrorCode:type"
             },
             {
               "kind": "Content",
@@ -264,7 +264,7 @@
             {
               "kind": "Reference",
               "text": "ErrorCode",
-              "canonicalReference": "@storm-stack/errors!~ErrorCode:type"
+              "canonicalReference": "@storm-stack/date-time!~ErrorCode:type"
             },
             {
               "kind": "Content",
@@ -273,7 +273,7 @@
             {
               "kind": "Reference",
               "text": "ErrorCode",
-              "canonicalReference": "@storm-stack/errors!~ErrorCode:type"
+              "canonicalReference": "@storm-stack/date-time!~ErrorCode:type"
             },
             {
               "kind": "Content",
@@ -282,7 +282,7 @@
             {
               "kind": "Reference",
               "text": "ErrorCode",
-              "canonicalReference": "@storm-stack/errors!~ErrorCode:type"
+              "canonicalReference": "@storm-stack/date-time!~ErrorCode:type"
             },
             {
               "kind": "Content",
@@ -291,7 +291,7 @@
             {
               "kind": "Reference",
               "text": "ErrorCode",
-              "canonicalReference": "@storm-stack/errors!~ErrorCode:type"
+              "canonicalReference": "@storm-stack/date-time!~ErrorCode:type"
             },
             {
               "kind": "Content",
@@ -300,7 +300,7 @@
             {
               "kind": "Reference",
               "text": "ErrorCode",
-              "canonicalReference": "@storm-stack/errors!~ErrorCode:type"
+              "canonicalReference": "@storm-stack/date-time!~ErrorCode:type"
             },
             {
               "kind": "Content",
@@ -309,7 +309,7 @@
             {
               "kind": "Reference",
               "text": "ErrorCode",
-              "canonicalReference": "@storm-stack/errors!~ErrorCode:type"
+              "canonicalReference": "@storm-stack/date-time!~ErrorCode:type"
             },
             {
               "kind": "Content",
@@ -318,7 +318,7 @@
             {
               "kind": "Reference",
               "text": "ErrorCode",
-              "canonicalReference": "@storm-stack/errors!~ErrorCode:type"
+              "canonicalReference": "@storm-stack/date-time!~ErrorCode:type"
             },
             {
               "kind": "Content",
@@ -327,7 +327,7 @@
             {
               "kind": "Reference",
               "text": "ErrorCode",
-              "canonicalReference": "@storm-stack/errors!~ErrorCode:type"
+              "canonicalReference": "@storm-stack/date-time!~ErrorCode:type"
             },
             {
               "kind": "Content",
@@ -336,7 +336,7 @@
             {
               "kind": "Reference",
               "text": "ErrorCode",
-              "canonicalReference": "@storm-stack/errors!~ErrorCode:type"
+              "canonicalReference": "@storm-stack/date-time!~ErrorCode:type"
             },
             {
               "kind": "Content",
@@ -345,7 +345,7 @@
             {
               "kind": "Reference",
               "text": "ErrorCode",
-              "canonicalReference": "@storm-stack/errors!~ErrorCode:type"
+              "canonicalReference": "@storm-stack/date-time!~ErrorCode:type"
             },
             {
               "kind": "Content",
@@ -354,7 +354,7 @@
             {
               "kind": "Reference",
               "text": "ErrorCode",
-              "canonicalReference": "@storm-stack/errors!~ErrorCode:type"
+              "canonicalReference": "@storm-stack/date-time!~ErrorCode:type"
             },
             {
               "kind": "Content",
@@ -363,7 +363,7 @@
             {
               "kind": "Reference",
               "text": "ErrorCode",
-              "canonicalReference": "@storm-stack/errors!~ErrorCode:type"
+              "canonicalReference": "@storm-stack/date-time!~ErrorCode:type"
             },
             {
               "kind": "Content",
@@ -372,7 +372,7 @@
             {
               "kind": "Reference",
               "text": "ErrorCode",
-              "canonicalReference": "@storm-stack/errors!~ErrorCode:type"
+              "canonicalReference": "@storm-stack/date-time!~ErrorCode:type"
             },
             {
               "kind": "Content",
@@ -381,7 +381,7 @@
             {
               "kind": "Reference",
               "text": "ErrorCode",
-              "canonicalReference": "@storm-stack/errors!~ErrorCode:type"
+              "canonicalReference": "@storm-stack/date-time!~ErrorCode:type"
             },
             {
               "kind": "Content",
@@ -390,7 +390,7 @@
             {
               "kind": "Reference",
               "text": "ErrorCode",
-              "canonicalReference": "@storm-stack/errors!~ErrorCode:type"
+              "canonicalReference": "@storm-stack/date-time!~ErrorCode:type"
             },
             {
               "kind": "Content",
@@ -408,7 +408,7 @@
         },
         {
           "kind": "TypeAlias",
-          "canonicalReference": "@storm-stack/errors!DateTimeInput:type",
+          "canonicalReference": "@storm-stack/date-time!DateTimeInput:type",
           "docComment": "/**\n * The input types that can be used to create a DateTime object\n */\n",
           "excerptTokens": [
             {
@@ -418,7 +418,7 @@
             {
               "kind": "Reference",
               "text": "StormDateTime",
-              "canonicalReference": "@storm-stack/errors!StormDateTime:class"
+              "canonicalReference": "@storm-stack/date-time!StormDateTime:class"
             },
             {
               "kind": "Content",
@@ -457,7 +457,7 @@
         },
         {
           "kind": "Interface",
-          "canonicalReference": "@storm-stack/errors!DateTimeOptions:interface",
+          "canonicalReference": "@storm-stack/date-time!DateTimeOptions:interface",
           "docComment": "/**\n * The options to use when creating a new DateTime object\n */\n",
           "excerptTokens": [
             {
@@ -472,7 +472,7 @@
           "members": [
             {
               "kind": "PropertySignature",
-              "canonicalReference": "@storm-stack/errors!DateTimeOptions#calendar:member",
+              "canonicalReference": "@storm-stack/date-time!DateTimeOptions#calendar:member",
               "docComment": "/**\n * The calendar to use. If not specified, the default calendar for the runtime is used.\n */\n",
               "excerptTokens": [
                 {
@@ -500,7 +500,7 @@
             },
             {
               "kind": "PropertySignature",
-              "canonicalReference": "@storm-stack/errors!DateTimeOptions#skipDefaulting:member",
+              "canonicalReference": "@storm-stack/date-time!DateTimeOptions#skipDefaulting:member",
               "docComment": "/**\n * If false, the current date and time is defaulted when undefined or null is passed. If true, the current date and time is not defaulted.\n *\n * @default false\n */\n",
               "excerptTokens": [
                 {
@@ -527,7 +527,7 @@
             },
             {
               "kind": "PropertySignature",
-              "canonicalReference": "@storm-stack/errors!DateTimeOptions#timeZone:member",
+              "canonicalReference": "@storm-stack/date-time!DateTimeOptions#timeZone:member",
               "docComment": "/**\n * The time zone to use. If not specified, the default time zone for the runtime is used.\n */\n",
               "excerptTokens": [
                 {
@@ -558,7 +558,7 @@
         },
         {
           "kind": "Function",
-          "canonicalReference": "@storm-stack/errors!deserializeStormDate:function(1)",
+          "canonicalReference": "@storm-stack/date-time!deserializeStormDate:function(1)",
           "docComment": "/**\n * Deserializes a string into a StormDate\n *\n * @param utcString - The date to deserialize\n *\n * @returns The deserialized date\n */\n",
           "excerptTokens": [
             {
@@ -568,7 +568,7 @@
             {
               "kind": "Reference",
               "text": "JsonValue",
-              "canonicalReference": "@storm-stack/errors!~JsonValue:type"
+              "canonicalReference": "@storm-stack/date-time!~JsonValue:type"
             },
             {
               "kind": "Content",
@@ -577,7 +577,7 @@
             {
               "kind": "Reference",
               "text": "StormDate",
-              "canonicalReference": "@storm-stack/errors!StormDate:class"
+              "canonicalReference": "@storm-stack/date-time!StormDate:class"
             },
             {
               "kind": "Content",
@@ -605,7 +605,7 @@
         },
         {
           "kind": "Function",
-          "canonicalReference": "@storm-stack/errors!deserializeStormDateTime:function(1)",
+          "canonicalReference": "@storm-stack/date-time!deserializeStormDateTime:function(1)",
           "docComment": "/**\n * Deserializes a string into a StormDateTime\n *\n * @param utcString - The dateTime to deserialize\n *\n * @returns The deserialized dateTime\n */\n",
           "excerptTokens": [
             {
@@ -615,7 +615,7 @@
             {
               "kind": "Reference",
               "text": "JsonValue",
-              "canonicalReference": "@storm-stack/errors!~JsonValue:type"
+              "canonicalReference": "@storm-stack/date-time!~JsonValue:type"
             },
             {
               "kind": "Content",
@@ -624,7 +624,7 @@
             {
               "kind": "Reference",
               "text": "StormDateTime",
-              "canonicalReference": "@storm-stack/errors!StormDateTime:class"
+              "canonicalReference": "@storm-stack/date-time!StormDateTime:class"
             },
             {
               "kind": "Content",
@@ -652,7 +652,7 @@
         },
         {
           "kind": "Function",
-          "canonicalReference": "@storm-stack/errors!deserializeStormTime:function(1)",
+          "canonicalReference": "@storm-stack/date-time!deserializeStormTime:function(1)",
           "docComment": "/**\n * Deserializes a string into a StormTime\n *\n * @param utcString - The time to deserialize\n *\n * @returns The deserialized time\n */\n",
           "excerptTokens": [
             {
@@ -662,7 +662,7 @@
             {
               "kind": "Reference",
               "text": "JsonValue",
-              "canonicalReference": "@storm-stack/errors!~JsonValue:type"
+              "canonicalReference": "@storm-stack/date-time!~JsonValue:type"
             },
             {
               "kind": "Content",
@@ -671,7 +671,7 @@
             {
               "kind": "Reference",
               "text": "StormTime",
-              "canonicalReference": "@storm-stack/errors!StormTime:class"
+              "canonicalReference": "@storm-stack/date-time!StormTime:class"
             },
             {
               "kind": "Content",
@@ -699,7 +699,7 @@
         },
         {
           "kind": "Variable",
-          "canonicalReference": "@storm-stack/errors!formatDate:var",
+          "canonicalReference": "@storm-stack/date-time!formatDate:var",
           "docComment": "/**\n * Format a date field\n *\n * @param dateTime - The date time to format\n *\n * @returns The formatted date\n */\n",
           "excerptTokens": [
             {
@@ -713,7 +713,7 @@
             {
               "kind": "Reference",
               "text": "StormDateTime",
-              "canonicalReference": "@storm-stack/errors!StormDateTime:class"
+              "canonicalReference": "@storm-stack/date-time!StormDateTime:class"
             },
             {
               "kind": "Content",
@@ -758,7 +758,7 @@
         },
         {
           "kind": "Variable",
-          "canonicalReference": "@storm-stack/errors!formatDateTime:var",
+          "canonicalReference": "@storm-stack/date-time!formatDateTime:var",
           "docComment": "/**\n * Format a date time field\n *\n * @param dateTime - The date time to format\n *\n * @param options - The options to use\n *\n * @returns The formatted date time\n */\n",
           "excerptTokens": [
             {
@@ -772,7 +772,7 @@
             {
               "kind": "Reference",
               "text": "StormDateTime",
-              "canonicalReference": "@storm-stack/errors!StormDateTime:class"
+              "canonicalReference": "@storm-stack/date-time!StormDateTime:class"
             },
             {
               "kind": "Content",
@@ -817,7 +817,7 @@
         },
         {
           "kind": "Variable",
-          "canonicalReference": "@storm-stack/errors!formatDateTimeISO:var",
+          "canonicalReference": "@storm-stack/date-time!formatDateTimeISO:var",
           "docComment": "/**\n * Format a date time field into ISO format\n *\n * @param dateTime - The date time to format\n *\n * @param options - The options to use\n *\n * @returns The formatted date time\n */\n",
           "excerptTokens": [
             {
@@ -831,7 +831,7 @@
             {
               "kind": "Reference",
               "text": "StormDateTime",
-              "canonicalReference": "@storm-stack/errors!StormDateTime:class"
+              "canonicalReference": "@storm-stack/date-time!StormDateTime:class"
             },
             {
               "kind": "Content",
@@ -876,7 +876,7 @@
         },
         {
           "kind": "Variable",
-          "canonicalReference": "@storm-stack/errors!formatSince:var",
+          "canonicalReference": "@storm-stack/date-time!formatSince:var",
           "docComment": "/**\n * Formats a duration or a date-time since another date-time.\n *\n * @remarks\n *\n * An example output when the options.verbose is true: 4 days 3 hours 2 minutes 1 second 0 milliseconds\n *\n * An example output when the options.verbose is false: 4d 3h 2m 1s 0ms\n *\n * @param dateTimeOrDuration - The date-time or duration to format\n *\n * @param dateTimeTo - The date-time to format since\n *\n * @param options - The options to use\n *\n * @returns The formatted time since\n */\n",
           "excerptTokens": [
             {
@@ -890,7 +890,7 @@
             {
               "kind": "Reference",
               "text": "StormDateTime",
-              "canonicalReference": "@storm-stack/errors!StormDateTime:class"
+              "canonicalReference": "@storm-stack/date-time!StormDateTime:class"
             },
             {
               "kind": "Content",
@@ -908,7 +908,7 @@
             {
               "kind": "Reference",
               "text": "StormDateTime",
-              "canonicalReference": "@storm-stack/errors!StormDateTime:class"
+              "canonicalReference": "@storm-stack/date-time!StormDateTime:class"
             },
             {
               "kind": "Content",
@@ -917,7 +917,7 @@
             {
               "kind": "Reference",
               "text": "FormatSinceOptions",
-              "canonicalReference": "@storm-stack/errors!FormatSinceOptions:type"
+              "canonicalReference": "@storm-stack/date-time!FormatSinceOptions:type"
             },
             {
               "kind": "Content",
@@ -935,7 +935,7 @@
         },
         {
           "kind": "TypeAlias",
-          "canonicalReference": "@storm-stack/errors!FormatSinceOptions:type",
+          "canonicalReference": "@storm-stack/date-time!FormatSinceOptions:type",
           "docComment": "/**\n * Options for the `formatSince` method\n */\n",
           "excerptTokens": [
             {
@@ -961,7 +961,7 @@
         },
         {
           "kind": "Variable",
-          "canonicalReference": "@storm-stack/errors!formatTime:var",
+          "canonicalReference": "@storm-stack/date-time!formatTime:var",
           "docComment": "/**\n * Format a time field\n *\n * @param dateTime - The date time to format\n *\n * @returns The formatted time string\n */\n",
           "excerptTokens": [
             {
@@ -975,7 +975,7 @@
             {
               "kind": "Reference",
               "text": "StormDateTime",
-              "canonicalReference": "@storm-stack/errors!StormDateTime:class"
+              "canonicalReference": "@storm-stack/date-time!StormDateTime:class"
             },
             {
               "kind": "Content",
@@ -1020,7 +1020,7 @@
         },
         {
           "kind": "Function",
-          "canonicalReference": "@storm-stack/errors!isDateTime:function(1)",
+          "canonicalReference": "@storm-stack/date-time!isDateTime:function(1)",
           "docComment": "/**\n * Type-check to determine if `obj` is a `DateTime` object\n *\n * `isDateTime` returns true if the object passed to it has a `_symbol` property that is equal to `DATE_TIME_SYMBOL`\n *\n * @param obj - the object to check\n *\n * @returns The function isDateTime is returning a boolean value.\n */\n",
           "excerptTokens": [
             {
@@ -1038,7 +1038,7 @@
             {
               "kind": "Reference",
               "text": "obj",
-              "canonicalReference": "@storm-stack/errors!~obj"
+              "canonicalReference": "@storm-stack/date-time!~obj"
             },
             {
               "kind": "Content",
@@ -1047,7 +1047,7 @@
             {
               "kind": "Reference",
               "text": "StormDateTime",
-              "canonicalReference": "@storm-stack/errors!StormDateTime:class"
+              "canonicalReference": "@storm-stack/date-time!StormDateTime:class"
             },
             {
               "kind": "Content",
@@ -1075,7 +1075,7 @@
         },
         {
           "kind": "Function",
-          "canonicalReference": "@storm-stack/errors!isInstant:function(1)",
+          "canonicalReference": "@storm-stack/date-time!isInstant:function(1)",
           "docComment": "/**\n * Type-check to determine if `value` is a `Temporal.Instant` object\n *\n * @param value - The value to check\n *\n * @returns The function isInstant is returning a boolean value.\n */\n",
           "excerptTokens": [
             {
@@ -1093,7 +1093,7 @@
             {
               "kind": "Reference",
               "text": "value",
-              "canonicalReference": "@storm-stack/errors!~value"
+              "canonicalReference": "@storm-stack/date-time!~value"
             },
             {
               "kind": "Content",
@@ -1130,7 +1130,7 @@
         },
         {
           "kind": "Variable",
-          "canonicalReference": "@storm-stack/errors!RFC_3339_DATE_REGEX:var",
+          "canonicalReference": "@storm-stack/date-time!RFC_3339_DATE_REGEX:var",
           "docComment": "",
           "excerptTokens": [
             {
@@ -1154,7 +1154,7 @@
         },
         {
           "kind": "Variable",
-          "canonicalReference": "@storm-stack/errors!RFC_3339_DATETIME_REGEX:var",
+          "canonicalReference": "@storm-stack/date-time!RFC_3339_DATETIME_REGEX:var",
           "docComment": "",
           "excerptTokens": [
             {
@@ -1178,7 +1178,7 @@
         },
         {
           "kind": "Variable",
-          "canonicalReference": "@storm-stack/errors!RFC_3339_TIME_REGEX:var",
+          "canonicalReference": "@storm-stack/date-time!RFC_3339_TIME_REGEX:var",
           "docComment": "",
           "excerptTokens": [
             {
@@ -1202,7 +1202,7 @@
         },
         {
           "kind": "Function",
-          "canonicalReference": "@storm-stack/errors!serializeStormDate:function(1)",
+          "canonicalReference": "@storm-stack/date-time!serializeStormDate:function(1)",
           "docComment": "/**\n * Serializes a StormDate into a string\n *\n * @param date - The date to serialize\n *\n * @returns The serialized date\n */\n",
           "excerptTokens": [
             {
@@ -1212,7 +1212,7 @@
             {
               "kind": "Reference",
               "text": "StormDate",
-              "canonicalReference": "@storm-stack/errors!StormDate:class"
+              "canonicalReference": "@storm-stack/date-time!StormDate:class"
             },
             {
               "kind": "Content",
@@ -1248,7 +1248,7 @@
         },
         {
           "kind": "Function",
-          "canonicalReference": "@storm-stack/errors!serializeStormDateTime:function(1)",
+          "canonicalReference": "@storm-stack/date-time!serializeStormDateTime:function(1)",
           "docComment": "/**\n * Serializes a StormDateTime into a string\n *\n * @param dateTime - The dateTime to serialize\n *\n * @returns The serialized dateTime\n */\n",
           "excerptTokens": [
             {
@@ -1258,7 +1258,7 @@
             {
               "kind": "Reference",
               "text": "StormDateTime",
-              "canonicalReference": "@storm-stack/errors!StormDateTime:class"
+              "canonicalReference": "@storm-stack/date-time!StormDateTime:class"
             },
             {
               "kind": "Content",
@@ -1294,7 +1294,7 @@
         },
         {
           "kind": "Function",
-          "canonicalReference": "@storm-stack/errors!serializeStormTime:function(1)",
+          "canonicalReference": "@storm-stack/date-time!serializeStormTime:function(1)",
           "docComment": "/**\n * Serializes a StormTime into a string\n *\n * @param date - The time to serialize\n *\n * @returns The serialized time\n */\n",
           "excerptTokens": [
             {
@@ -1304,7 +1304,7 @@
             {
               "kind": "Reference",
               "text": "StormTime",
-              "canonicalReference": "@storm-stack/errors!StormTime:class"
+              "canonicalReference": "@storm-stack/date-time!StormTime:class"
             },
             {
               "kind": "Content",
@@ -1340,7 +1340,7 @@
         },
         {
           "kind": "Class",
-          "canonicalReference": "@storm-stack/errors!StormDate:class",
+          "canonicalReference": "@storm-stack/date-time!StormDate:class",
           "docComment": "/**\n * A wrapper of the and Date class used by Storm Software to provide Date-Time values\n *\n * @decorator\n *\n * `@Serializable()`\n */\n",
           "excerptTokens": [
             {
@@ -1350,7 +1350,7 @@
             {
               "kind": "Reference",
               "text": "StormDateTime",
-              "canonicalReference": "@storm-stack/errors!StormDateTime:class"
+              "canonicalReference": "@storm-stack/date-time!StormDateTime:class"
             },
             {
               "kind": "Content",
@@ -1365,7 +1365,7 @@
           "members": [
             {
               "kind": "Constructor",
-              "canonicalReference": "@storm-stack/errors!StormDate:constructor(1)",
+              "canonicalReference": "@storm-stack/date-time!StormDate:constructor(1)",
               "docComment": "/**\n * Constructs a new instance of the `StormDate` class\n */\n",
               "excerptTokens": [
                 {
@@ -1375,7 +1375,7 @@
                 {
                   "kind": "Reference",
                   "text": "DateTimeInput",
-                  "canonicalReference": "@storm-stack/errors!DateTimeInput:type"
+                  "canonicalReference": "@storm-stack/date-time!DateTimeInput:type"
                 },
                 {
                   "kind": "Content",
@@ -1384,7 +1384,7 @@
                 {
                   "kind": "Reference",
                   "text": "DateTimeOptions",
-                  "canonicalReference": "@storm-stack/errors!DateTimeOptions:interface"
+                  "canonicalReference": "@storm-stack/date-time!DateTimeOptions:interface"
                 },
                 {
                   "kind": "Content",
@@ -1415,7 +1415,7 @@
             },
             {
               "kind": "Property",
-              "canonicalReference": "@storm-stack/errors!StormDate.create:member",
+              "canonicalReference": "@storm-stack/date-time!StormDate.create:member",
               "docComment": "/**\n * Creates a new StormDate object with the given date and time\n *\n * @param date - The date to use\n *\n * @param options - The options to use\n *\n * @returns A new instance of DateTime with the given date and time.\n */\n",
               "excerptTokens": [
                 {
@@ -1429,7 +1429,7 @@
                 {
                   "kind": "Reference",
                   "text": "DateTimeInput",
-                  "canonicalReference": "@storm-stack/errors!DateTimeInput:type"
+                  "canonicalReference": "@storm-stack/date-time!DateTimeInput:type"
                 },
                 {
                   "kind": "Content",
@@ -1438,7 +1438,7 @@
                 {
                   "kind": "Reference",
                   "text": "DateTimeOptions",
-                  "canonicalReference": "@storm-stack/errors!DateTimeOptions:interface"
+                  "canonicalReference": "@storm-stack/date-time!DateTimeOptions:interface"
                 },
                 {
                   "kind": "Content",
@@ -1447,7 +1447,7 @@
                 {
                   "kind": "Reference",
                   "text": "StormDate",
-                  "canonicalReference": "@storm-stack/errors!StormDate:class"
+                  "canonicalReference": "@storm-stack/date-time!StormDate:class"
                 },
                 {
                   "kind": "Content",
@@ -1468,7 +1468,7 @@
             },
             {
               "kind": "Method",
-              "canonicalReference": "@storm-stack/errors!StormDate.current:member(1)",
+              "canonicalReference": "@storm-stack/date-time!StormDate.current:member(1)",
               "docComment": "/**\n * The current function returns a new DateTime object with the current date and time\n *\n * @returns A new instance of DateTime with the current date and time.\n */\n",
               "excerptTokens": [
                 {
@@ -1478,7 +1478,7 @@
                 {
                   "kind": "Reference",
                   "text": "StormDate",
-                  "canonicalReference": "@storm-stack/errors!StormDate:class"
+                  "canonicalReference": "@storm-stack/date-time!StormDate:class"
                 },
                 {
                   "kind": "Content",
@@ -1500,7 +1500,7 @@
             },
             {
               "kind": "Method",
-              "canonicalReference": "@storm-stack/errors!StormDate#getDuration:member(1)",
+              "canonicalReference": "@storm-stack/date-time!StormDate#getDuration:member(1)",
               "docComment": "/**\n * It returns the duration between two dates.\n *\n * @param dateTimeTo - DateTime = DateTime.current\n *\n * @returns A duration object.\n */\n",
               "excerptTokens": [
                 {
@@ -1510,7 +1510,7 @@
                 {
                   "kind": "Reference",
                   "text": "StormDateTime",
-                  "canonicalReference": "@storm-stack/errors!StormDateTime:class"
+                  "canonicalReference": "@storm-stack/date-time!StormDateTime:class"
                 },
                 {
                   "kind": "Content",
@@ -1550,7 +1550,7 @@
             },
             {
               "kind": "Method",
-              "canonicalReference": "@storm-stack/errors!StormDate#getHours:member(1)",
+              "canonicalReference": "@storm-stack/date-time!StormDate#getHours:member(1)",
               "docComment": "/**\n * Gets the hours in a date, using local time.\n */\n",
               "excerptTokens": [
                 {
@@ -1581,7 +1581,7 @@
             },
             {
               "kind": "Method",
-              "canonicalReference": "@storm-stack/errors!StormDate#getMilliseconds:member(1)",
+              "canonicalReference": "@storm-stack/date-time!StormDate#getMilliseconds:member(1)",
               "docComment": "/**\n * Gets the milliseconds of a Date, using local time.\n */\n",
               "excerptTokens": [
                 {
@@ -1612,7 +1612,7 @@
             },
             {
               "kind": "Method",
-              "canonicalReference": "@storm-stack/errors!StormDate#getMinutes:member(1)",
+              "canonicalReference": "@storm-stack/date-time!StormDate#getMinutes:member(1)",
               "docComment": "/**\n * Gets the minutes of a Date object, using local time.\n */\n",
               "excerptTokens": [
                 {
@@ -1643,7 +1643,7 @@
             },
             {
               "kind": "Method",
-              "canonicalReference": "@storm-stack/errors!StormDate#getSeconds:member(1)",
+              "canonicalReference": "@storm-stack/date-time!StormDate#getSeconds:member(1)",
               "docComment": "/**\n * Gets the seconds of a Date object, using local time.\n */\n",
               "excerptTokens": [
                 {
@@ -1674,7 +1674,7 @@
             },
             {
               "kind": "Method",
-              "canonicalReference": "@storm-stack/errors!StormDate#getTimezoneOffset:member(1)",
+              "canonicalReference": "@storm-stack/date-time!StormDate#getTimezoneOffset:member(1)",
               "docComment": "/**\n * Gets the difference in minutes between the time on the local computer and Universal Coordinated Time (UTC).\n */\n",
               "excerptTokens": [
                 {
@@ -1705,7 +1705,7 @@
             },
             {
               "kind": "Method",
-              "canonicalReference": "@storm-stack/errors!StormDate#getUTCHours:member(1)",
+              "canonicalReference": "@storm-stack/date-time!StormDate#getUTCHours:member(1)",
               "docComment": "/**\n * Gets the hours value in a Date object using Universal Coordinated Time (UTC).\n */\n",
               "excerptTokens": [
                 {
@@ -1736,7 +1736,7 @@
             },
             {
               "kind": "Method",
-              "canonicalReference": "@storm-stack/errors!StormDate#getUTCMilliseconds:member(1)",
+              "canonicalReference": "@storm-stack/date-time!StormDate#getUTCMilliseconds:member(1)",
               "docComment": "/**\n * Gets the milliseconds of a Date object using Universal Coordinated Time (UTC).\n */\n",
               "excerptTokens": [
                 {
@@ -1767,7 +1767,7 @@
             },
             {
               "kind": "Method",
-              "canonicalReference": "@storm-stack/errors!StormDate#getUTCMinutes:member(1)",
+              "canonicalReference": "@storm-stack/date-time!StormDate#getUTCMinutes:member(1)",
               "docComment": "/**\n * Gets the minutes of a Date object using Universal Coordinated Time (UTC).\n */\n",
               "excerptTokens": [
                 {
@@ -1798,7 +1798,7 @@
             },
             {
               "kind": "Method",
-              "canonicalReference": "@storm-stack/errors!StormDate#getUTCSeconds:member(1)",
+              "canonicalReference": "@storm-stack/date-time!StormDate#getUTCSeconds:member(1)",
               "docComment": "/**\n * Gets the seconds of a Date object using Universal Coordinated Time (UTC).\n */\n",
               "excerptTokens": [
                 {
@@ -1829,7 +1829,7 @@
             },
             {
               "kind": "Method",
-              "canonicalReference": "@storm-stack/errors!StormDate.now:member(1)",
+              "canonicalReference": "@storm-stack/date-time!StormDate.now:member(1)",
               "docComment": "/**\n * The current function returns a new DateTime object with the current date and time\n *\n * @returns A new instance of DateTime with the current date and time.\n */\n",
               "excerptTokens": [
                 {
@@ -1860,7 +1860,7 @@
             },
             {
               "kind": "Method",
-              "canonicalReference": "@storm-stack/errors!StormDate#validate:member(1)",
+              "canonicalReference": "@storm-stack/date-time!StormDate#validate:member(1)",
               "docComment": "/**\n * Validate the input date value\n *\n * @param dateTime - The date value to validate\n *\n * @param options - The options to use\n *\n * @returns A boolean representing whether the value is a valid *date-time*\n */\n",
               "excerptTokens": [
                 {
@@ -1870,7 +1870,7 @@
                 {
                   "kind": "Reference",
                   "text": "DateTimeInput",
-                  "canonicalReference": "@storm-stack/errors!DateTimeInput:type"
+                  "canonicalReference": "@storm-stack/date-time!DateTimeInput:type"
                 },
                 {
                   "kind": "Content",
@@ -1879,7 +1879,7 @@
                 {
                   "kind": "Reference",
                   "text": "DateTimeOptions",
-                  "canonicalReference": "@storm-stack/errors!DateTimeOptions:interface"
+                  "canonicalReference": "@storm-stack/date-time!DateTimeOptions:interface"
                 },
                 {
                   "kind": "Content",
@@ -1933,7 +1933,7 @@
         },
         {
           "kind": "Class",
-          "canonicalReference": "@storm-stack/errors!StormDateTime:class",
+          "canonicalReference": "@storm-stack/date-time!StormDateTime:class",
           "docComment": "/**\n * A wrapper of the and Date class used by Storm Software to provide Date-Time values\n *\n * @decorator\n *\n * `@Serializable()`\n */\n",
           "excerptTokens": [
             {
@@ -1958,7 +1958,7 @@
           "members": [
             {
               "kind": "Constructor",
-              "canonicalReference": "@storm-stack/errors!StormDateTime:constructor(1)",
+              "canonicalReference": "@storm-stack/date-time!StormDateTime:constructor(1)",
               "docComment": "/**\n * Constructs a new instance of the `StormDateTime` class\n */\n",
               "excerptTokens": [
                 {
@@ -1968,7 +1968,7 @@
                 {
                   "kind": "Reference",
                   "text": "DateTimeInput",
-                  "canonicalReference": "@storm-stack/errors!DateTimeInput:type"
+                  "canonicalReference": "@storm-stack/date-time!DateTimeInput:type"
                 },
                 {
                   "kind": "Content",
@@ -1977,7 +1977,7 @@
                 {
                   "kind": "Reference",
                   "text": "DateTimeOptions",
-                  "canonicalReference": "@storm-stack/errors!DateTimeOptions:interface"
+                  "canonicalReference": "@storm-stack/date-time!DateTimeOptions:interface"
                 },
                 {
                   "kind": "Content",
@@ -2008,7 +2008,7 @@
             },
             {
               "kind": "Property",
-              "canonicalReference": "@storm-stack/errors!StormDateTime#calendarId:member",
+              "canonicalReference": "@storm-stack/date-time!StormDateTime#calendarId:member",
               "docComment": "/**\n * An accessor that returns the `calendarId` string of the DateTime object\n */\n",
               "excerptTokens": [
                 {
@@ -2038,7 +2038,7 @@
             },
             {
               "kind": "Property",
-              "canonicalReference": "@storm-stack/errors!StormDateTime.create:member",
+              "canonicalReference": "@storm-stack/date-time!StormDateTime.create:member",
               "docComment": "/**\n * Creates a new instance of StormDateTime from a string with a specified format.\n *\n * @param dateTime - The input value used to determine the current date and time\n *\n * @param options - The options to use when creating the StormDateTime object\n *\n * @returns A new instance of StormDateTime with the current date and time.\n */\n",
               "excerptTokens": [
                 {
@@ -2052,7 +2052,7 @@
                 {
                   "kind": "Reference",
                   "text": "DateTimeInput",
-                  "canonicalReference": "@storm-stack/errors!DateTimeInput:type"
+                  "canonicalReference": "@storm-stack/date-time!DateTimeInput:type"
                 },
                 {
                   "kind": "Content",
@@ -2061,7 +2061,7 @@
                 {
                   "kind": "Reference",
                   "text": "DateTimeOptions",
-                  "canonicalReference": "@storm-stack/errors!DateTimeOptions:interface"
+                  "canonicalReference": "@storm-stack/date-time!DateTimeOptions:interface"
                 },
                 {
                   "kind": "Content",
@@ -2070,7 +2070,7 @@
                 {
                   "kind": "Reference",
                   "text": "StormDateTime",
-                  "canonicalReference": "@storm-stack/errors!StormDateTime:class"
+                  "canonicalReference": "@storm-stack/date-time!StormDateTime:class"
                 },
                 {
                   "kind": "Content",
@@ -2091,7 +2091,7 @@
             },
             {
               "kind": "Method",
-              "canonicalReference": "@storm-stack/errors!StormDateTime.current:member(1)",
+              "canonicalReference": "@storm-stack/date-time!StormDateTime.current:member(1)",
               "docComment": "/**\n * The current function returns a new StormDateTime object with the current date and time\n *\n * @returns A new instance of StormDateTime with the current date and time.\n */\n",
               "excerptTokens": [
                 {
@@ -2101,7 +2101,7 @@
                 {
                   "kind": "Reference",
                   "text": "StormDateTime",
-                  "canonicalReference": "@storm-stack/errors!StormDateTime:class"
+                  "canonicalReference": "@storm-stack/date-time!StormDateTime:class"
                 },
                 {
                   "kind": "Content",
@@ -2123,7 +2123,7 @@
             },
             {
               "kind": "Property",
-              "canonicalReference": "@storm-stack/errors!StormDateTime#epochMilliseconds:member",
+              "canonicalReference": "@storm-stack/date-time!StormDateTime#epochMilliseconds:member",
               "docComment": "/**\n * An accessor that returns the epoch milliseconds of the DateTime object\n */\n",
               "excerptTokens": [
                 {
@@ -2153,7 +2153,7 @@
             },
             {
               "kind": "Method",
-              "canonicalReference": "@storm-stack/errors!StormDateTime#getDate:member(1)",
+              "canonicalReference": "@storm-stack/date-time!StormDateTime#getDate:member(1)",
               "docComment": "/**\n * Gets the day-of-the-month, using local time.\n */\n",
               "excerptTokens": [
                 {
@@ -2184,7 +2184,7 @@
             },
             {
               "kind": "Method",
-              "canonicalReference": "@storm-stack/errors!StormDateTime#getDay:member(1)",
+              "canonicalReference": "@storm-stack/date-time!StormDateTime#getDay:member(1)",
               "docComment": "/**\n * Gets the day of the week, using local time.\n */\n",
               "excerptTokens": [
                 {
@@ -2215,7 +2215,7 @@
             },
             {
               "kind": "Method",
-              "canonicalReference": "@storm-stack/errors!StormDateTime#getDuration:member(1)",
+              "canonicalReference": "@storm-stack/date-time!StormDateTime#getDuration:member(1)",
               "docComment": "/**\n * It returns the duration between two date times.\n *\n * @param dateTimeTo - DateTime = DateTime.current\n *\n * @returns A duration object.\n */\n",
               "excerptTokens": [
                 {
@@ -2225,7 +2225,7 @@
                 {
                   "kind": "Reference",
                   "text": "StormDateTime",
-                  "canonicalReference": "@storm-stack/errors!StormDateTime:class"
+                  "canonicalReference": "@storm-stack/date-time!StormDateTime:class"
                 },
                 {
                   "kind": "Content",
@@ -2265,7 +2265,7 @@
             },
             {
               "kind": "Method",
-              "canonicalReference": "@storm-stack/errors!StormDateTime#getFullYear:member(1)",
+              "canonicalReference": "@storm-stack/date-time!StormDateTime#getFullYear:member(1)",
               "docComment": "/**\n * Gets the year, using local time.\n */\n",
               "excerptTokens": [
                 {
@@ -2296,7 +2296,7 @@
             },
             {
               "kind": "Method",
-              "canonicalReference": "@storm-stack/errors!StormDateTime#getHours:member(1)",
+              "canonicalReference": "@storm-stack/date-time!StormDateTime#getHours:member(1)",
               "docComment": "/**\n * Gets the hours in a date, using local time.\n */\n",
               "excerptTokens": [
                 {
@@ -2327,7 +2327,7 @@
             },
             {
               "kind": "Method",
-              "canonicalReference": "@storm-stack/errors!StormDateTime#getMilliseconds:member(1)",
+              "canonicalReference": "@storm-stack/date-time!StormDateTime#getMilliseconds:member(1)",
               "docComment": "/**\n * Gets the milliseconds of a Date, using local time.\n */\n",
               "excerptTokens": [
                 {
@@ -2358,7 +2358,7 @@
             },
             {
               "kind": "Method",
-              "canonicalReference": "@storm-stack/errors!StormDateTime#getMinutes:member(1)",
+              "canonicalReference": "@storm-stack/date-time!StormDateTime#getMinutes:member(1)",
               "docComment": "/**\n * Gets the minutes of a Date object, using local time.\n */\n",
               "excerptTokens": [
                 {
@@ -2389,7 +2389,7 @@
             },
             {
               "kind": "Method",
-              "canonicalReference": "@storm-stack/errors!StormDateTime#getMonth:member(1)",
+              "canonicalReference": "@storm-stack/date-time!StormDateTime#getMonth:member(1)",
               "docComment": "/**\n * Gets the month, using local time.\n */\n",
               "excerptTokens": [
                 {
@@ -2420,7 +2420,7 @@
             },
             {
               "kind": "Method",
-              "canonicalReference": "@storm-stack/errors!StormDateTime#getPlainDate:member(1)",
+              "canonicalReference": "@storm-stack/date-time!StormDateTime#getPlainDate:member(1)",
               "docComment": "/**\n * It returns a plain date object from a DateTime object\n *\n * @returns A PlainDate object.\n */\n",
               "excerptTokens": [
                 {
@@ -2430,7 +2430,7 @@
                 {
                   "kind": "Reference",
                   "text": "StormDateTime",
-                  "canonicalReference": "@storm-stack/errors!StormDateTime:class"
+                  "canonicalReference": "@storm-stack/date-time!StormDateTime:class"
                 },
                 {
                   "kind": "Content",
@@ -2452,7 +2452,7 @@
             },
             {
               "kind": "Method",
-              "canonicalReference": "@storm-stack/errors!StormDateTime#getPlainTime:member(1)",
+              "canonicalReference": "@storm-stack/date-time!StormDateTime#getPlainTime:member(1)",
               "docComment": "/**\n * `getPlainTime` returns a `PlainTime` object from a `DateTime` object\n *\n * @returns A PlainTime object.\n */\n",
               "excerptTokens": [
                 {
@@ -2462,7 +2462,7 @@
                 {
                   "kind": "Reference",
                   "text": "StormDateTime",
-                  "canonicalReference": "@storm-stack/errors!StormDateTime:class"
+                  "canonicalReference": "@storm-stack/date-time!StormDateTime:class"
                 },
                 {
                   "kind": "Content",
@@ -2484,7 +2484,7 @@
             },
             {
               "kind": "Method",
-              "canonicalReference": "@storm-stack/errors!StormDateTime#getSeconds:member(1)",
+              "canonicalReference": "@storm-stack/date-time!StormDateTime#getSeconds:member(1)",
               "docComment": "/**\n * Gets the seconds of a Date object, using local time.\n */\n",
               "excerptTokens": [
                 {
@@ -2515,7 +2515,7 @@
             },
             {
               "kind": "Method",
-              "canonicalReference": "@storm-stack/errors!StormDateTime#getTime:member(1)",
+              "canonicalReference": "@storm-stack/date-time!StormDateTime#getTime:member(1)",
               "docComment": "/**\n * Returns the stored time value in milliseconds since midnight, January 1, 1970 UTC.\n */\n",
               "excerptTokens": [
                 {
@@ -2546,7 +2546,7 @@
             },
             {
               "kind": "Method",
-              "canonicalReference": "@storm-stack/errors!StormDateTime#getTimezoneOffset:member(1)",
+              "canonicalReference": "@storm-stack/date-time!StormDateTime#getTimezoneOffset:member(1)",
               "docComment": "/**\n * Gets the difference in minutes between the time on the local computer and Universal Coordinated Time (UTC).\n */\n",
               "excerptTokens": [
                 {
@@ -2577,7 +2577,7 @@
             },
             {
               "kind": "Method",
-              "canonicalReference": "@storm-stack/errors!StormDateTime#getUTCDate:member(1)",
+              "canonicalReference": "@storm-stack/date-time!StormDateTime#getUTCDate:member(1)",
               "docComment": "/**\n * Gets the day-of-the-month, using Universal Coordinated Time (UTC).\n */\n",
               "excerptTokens": [
                 {
@@ -2608,7 +2608,7 @@
             },
             {
               "kind": "Method",
-              "canonicalReference": "@storm-stack/errors!StormDateTime#getUTCDay:member(1)",
+              "canonicalReference": "@storm-stack/date-time!StormDateTime#getUTCDay:member(1)",
               "docComment": "/**\n * Gets the day of the week using Universal Coordinated Time (UTC).\n */\n",
               "excerptTokens": [
                 {
@@ -2639,7 +2639,7 @@
             },
             {
               "kind": "Method",
-              "canonicalReference": "@storm-stack/errors!StormDateTime#getUTCFullYear:member(1)",
+              "canonicalReference": "@storm-stack/date-time!StormDateTime#getUTCFullYear:member(1)",
               "docComment": "/**\n * Gets the year using Universal Coordinated Time (UTC).\n */\n",
               "excerptTokens": [
                 {
@@ -2670,7 +2670,7 @@
             },
             {
               "kind": "Method",
-              "canonicalReference": "@storm-stack/errors!StormDateTime#getUTCHours:member(1)",
+              "canonicalReference": "@storm-stack/date-time!StormDateTime#getUTCHours:member(1)",
               "docComment": "/**\n * Gets the hours value in a Date object using Universal Coordinated Time (UTC).\n */\n",
               "excerptTokens": [
                 {
@@ -2701,7 +2701,7 @@
             },
             {
               "kind": "Method",
-              "canonicalReference": "@storm-stack/errors!StormDateTime#getUTCMilliseconds:member(1)",
+              "canonicalReference": "@storm-stack/date-time!StormDateTime#getUTCMilliseconds:member(1)",
               "docComment": "/**\n * Gets the milliseconds of a Date object using Universal Coordinated Time (UTC).\n */\n",
               "excerptTokens": [
                 {
@@ -2732,7 +2732,7 @@
             },
             {
               "kind": "Method",
-              "canonicalReference": "@storm-stack/errors!StormDateTime#getUTCMinutes:member(1)",
+              "canonicalReference": "@storm-stack/date-time!StormDateTime#getUTCMinutes:member(1)",
               "docComment": "/**\n * Gets the minutes of a Date object using Universal Coordinated Time (UTC).\n */\n",
               "excerptTokens": [
                 {
@@ -2763,7 +2763,7 @@
             },
             {
               "kind": "Method",
-              "canonicalReference": "@storm-stack/errors!StormDateTime#getUTCMonth:member(1)",
+              "canonicalReference": "@storm-stack/date-time!StormDateTime#getUTCMonth:member(1)",
               "docComment": "/**\n * Gets the month of a Date object using Universal Coordinated Time (UTC).\n */\n",
               "excerptTokens": [
                 {
@@ -2794,7 +2794,7 @@
             },
             {
               "kind": "Method",
-              "canonicalReference": "@storm-stack/errors!StormDateTime#getUTCSeconds:member(1)",
+              "canonicalReference": "@storm-stack/date-time!StormDateTime#getUTCSeconds:member(1)",
               "docComment": "/**\n * Gets the seconds of a Date object using Universal Coordinated Time (UTC).\n */\n",
               "excerptTokens": [
                 {
@@ -2825,7 +2825,7 @@
             },
             {
               "kind": "Property",
-              "canonicalReference": "@storm-stack/errors!StormDateTime#input:member",
+              "canonicalReference": "@storm-stack/date-time!StormDateTime#input:member",
               "docComment": "/**\n * Returns the input value used to create the DateTime object\n */\n",
               "excerptTokens": [
                 {
@@ -2835,7 +2835,7 @@
                 {
                   "kind": "Reference",
                   "text": "DateTimeInput",
-                  "canonicalReference": "@storm-stack/errors!DateTimeInput:type"
+                  "canonicalReference": "@storm-stack/date-time!DateTimeInput:type"
                 },
                 {
                   "kind": "Content",
@@ -2856,7 +2856,7 @@
             },
             {
               "kind": "Property",
-              "canonicalReference": "@storm-stack/errors!StormDateTime#instant:member",
+              "canonicalReference": "@storm-stack/date-time!StormDateTime#instant:member",
               "docComment": "/**\n * An accessor that returns the `Temporal.Instant` object of the DateTime object\n */\n",
               "excerptTokens": [
                 {
@@ -2896,7 +2896,7 @@
             },
             {
               "kind": "Property",
-              "canonicalReference": "@storm-stack/errors!StormDateTime#isValid:member",
+              "canonicalReference": "@storm-stack/date-time!StormDateTime#isValid:member",
               "docComment": "/**\n * An accessor that returns the `isValid` boolean of the DateTime object\n */\n",
               "excerptTokens": [
                 {
@@ -2926,7 +2926,7 @@
             },
             {
               "kind": "Method",
-              "canonicalReference": "@storm-stack/errors!StormDateTime.now:member(1)",
+              "canonicalReference": "@storm-stack/date-time!StormDateTime.now:member(1)",
               "docComment": "/**\n * The current function returns a new StormDateTime object with the current date and time\n *\n * @returns A new instance of StormDateTime with the current date and time.\n */\n",
               "excerptTokens": [
                 {
@@ -2957,7 +2957,7 @@
             },
             {
               "kind": "Property",
-              "canonicalReference": "@storm-stack/errors!StormDateTime#options:member",
+              "canonicalReference": "@storm-stack/date-time!StormDateTime#options:member",
               "docComment": "/**\n * Returns the options used to create the DateTime object\n */\n",
               "excerptTokens": [
                 {
@@ -2967,7 +2967,7 @@
                 {
                   "kind": "Reference",
                   "text": "DateTimeOptions",
-                  "canonicalReference": "@storm-stack/errors!DateTimeOptions:interface"
+                  "canonicalReference": "@storm-stack/date-time!DateTimeOptions:interface"
                 },
                 {
                   "kind": "Content",
@@ -2988,7 +2988,7 @@
             },
             {
               "kind": "Method",
-              "canonicalReference": "@storm-stack/errors!StormDateTime#setDate:member(1)",
+              "canonicalReference": "@storm-stack/date-time!StormDateTime#setDate:member(1)",
               "docComment": "/**\n * Sets the numeric day-of-the-month value of the Date object using local time.\n *\n * @param day - A numeric value equal to the day of the month.\n */\n",
               "excerptTokens": [
                 {
@@ -3036,7 +3036,7 @@
             },
             {
               "kind": "Method",
-              "canonicalReference": "@storm-stack/errors!StormDateTime#setFullYear:member(1)",
+              "canonicalReference": "@storm-stack/date-time!StormDateTime#setFullYear:member(1)",
               "docComment": "/**\n * Sets the year of the Date object using local time.\n *\n * @param year - A numeric value for the year.\n *\n * @param month - A zero-based numeric value for the month (0 for January, 11 for December). Must be specified if numDate is specified.\n *\n * @param day - A numeric value equal for the day of the month.\n */\n",
               "excerptTokens": [
                 {
@@ -3116,7 +3116,7 @@
             },
             {
               "kind": "Method",
-              "canonicalReference": "@storm-stack/errors!StormDateTime#setHours:member(1)",
+              "canonicalReference": "@storm-stack/date-time!StormDateTime#setHours:member(1)",
               "docComment": "/**\n * Sets the hour value in the Date object using local time.\n *\n * @param hour - A numeric value equal to the hours value.\n *\n * @param minute - A numeric value equal to the minutes value.\n *\n * @param second - A numeric value equal to the seconds value.\n *\n * @param millisecond - A numeric value equal to the milliseconds value.\n */\n",
               "excerptTokens": [
                 {
@@ -3212,7 +3212,7 @@
             },
             {
               "kind": "Method",
-              "canonicalReference": "@storm-stack/errors!StormDateTime#setMilliseconds:member(1)",
+              "canonicalReference": "@storm-stack/date-time!StormDateTime#setMilliseconds:member(1)",
               "docComment": "/**\n * Sets the milliseconds value in the Date object using local time.\n *\n * @param millisecond - A numeric value equal to the millisecond value.\n */\n",
               "excerptTokens": [
                 {
@@ -3260,7 +3260,7 @@
             },
             {
               "kind": "Method",
-              "canonicalReference": "@storm-stack/errors!StormDateTime#setMinutes:member(1)",
+              "canonicalReference": "@storm-stack/date-time!StormDateTime#setMinutes:member(1)",
               "docComment": "/**\n * Sets the minutes value in the Date object using local time.\n *\n * @param minute - A numeric value equal to the minutes value.\n *\n * @param second - A numeric value equal to the seconds value.\n *\n * @param millisecond - A numeric value equal to the milliseconds value.\n */\n",
               "excerptTokens": [
                 {
@@ -3340,7 +3340,7 @@
             },
             {
               "kind": "Method",
-              "canonicalReference": "@storm-stack/errors!StormDateTime#setMonth:member(1)",
+              "canonicalReference": "@storm-stack/date-time!StormDateTime#setMonth:member(1)",
               "docComment": "/**\n * Sets the month value in the Date object using local time.\n *\n * @param month - A numeric value equal to the month. The value for January is 0, and other month values follow consecutively.\n *\n * @param day - A numeric value representing the day of the month. If this value is not supplied, the value from a call to the getDate method is used.\n */\n",
               "excerptTokens": [
                 {
@@ -3404,7 +3404,7 @@
             },
             {
               "kind": "Method",
-              "canonicalReference": "@storm-stack/errors!StormDateTime#setSeconds:member(1)",
+              "canonicalReference": "@storm-stack/date-time!StormDateTime#setSeconds:member(1)",
               "docComment": "/**\n * Sets the seconds value in the Date object using local time.\n *\n * @param second - A numeric value equal to the seconds value.\n *\n * @param millisecond - A numeric value equal to the milliseconds value.\n */\n",
               "excerptTokens": [
                 {
@@ -3468,7 +3468,7 @@
             },
             {
               "kind": "Method",
-              "canonicalReference": "@storm-stack/errors!StormDateTime#setTime:member(1)",
+              "canonicalReference": "@storm-stack/date-time!StormDateTime#setTime:member(1)",
               "docComment": "/**\n * Sets the date and time value in the Date object.\n *\n * @param time - A numeric value representing the number of elapsed milliseconds since midnight, January 1, 1970 GMT.\n */\n",
               "excerptTokens": [
                 {
@@ -3516,7 +3516,7 @@
             },
             {
               "kind": "Method",
-              "canonicalReference": "@storm-stack/errors!StormDateTime#setUTCDate:member(1)",
+              "canonicalReference": "@storm-stack/date-time!StormDateTime#setUTCDate:member(1)",
               "docComment": "/**\n * Sets the numeric day of the month in the Date object using Universal Coordinated Time (UTC).\n *\n * @param day - A numeric value equal to the day of the month.\n */\n",
               "excerptTokens": [
                 {
@@ -3564,7 +3564,7 @@
             },
             {
               "kind": "Method",
-              "canonicalReference": "@storm-stack/errors!StormDateTime#setUTCFullYear:member(1)",
+              "canonicalReference": "@storm-stack/date-time!StormDateTime#setUTCFullYear:member(1)",
               "docComment": "/**\n * Sets the year value in the Date object using Universal Coordinated Time (UTC).\n *\n * @param year - A numeric value equal to the year.\n *\n * @param month - A numeric value equal to the month. The value for January is 0, and other month values follow consecutively. Must be supplied if numDate is supplied.\n *\n * @param day - A numeric value equal to the day of the month.\n */\n",
               "excerptTokens": [
                 {
@@ -3644,7 +3644,7 @@
             },
             {
               "kind": "Method",
-              "canonicalReference": "@storm-stack/errors!StormDateTime#setUTCHours:member(1)",
+              "canonicalReference": "@storm-stack/date-time!StormDateTime#setUTCHours:member(1)",
               "docComment": "/**\n * Sets the hours value in the Date object using Universal Coordinated Time (UTC).\n *\n * @param hour - A numeric value equal to the hours value.\n *\n * @param minute - A numeric value equal to the minutes value.\n *\n * @param second - A numeric value equal to the seconds value.\n *\n * @param millisecond - A numeric value equal to the milliseconds value.\n */\n",
               "excerptTokens": [
                 {
@@ -3740,7 +3740,7 @@
             },
             {
               "kind": "Method",
-              "canonicalReference": "@storm-stack/errors!StormDateTime#setUTCMilliseconds:member(1)",
+              "canonicalReference": "@storm-stack/date-time!StormDateTime#setUTCMilliseconds:member(1)",
               "docComment": "/**\n * Sets the milliseconds value in the Date object using Universal Coordinated Time (UTC).\n *\n * @param millisecond - A numeric value equal to the millisecond value.\n */\n",
               "excerptTokens": [
                 {
@@ -3788,7 +3788,7 @@
             },
             {
               "kind": "Method",
-              "canonicalReference": "@storm-stack/errors!StormDateTime#setUTCMinutes:member(1)",
+              "canonicalReference": "@storm-stack/date-time!StormDateTime#setUTCMinutes:member(1)",
               "docComment": "/**\n * Sets the minutes value in the Date object using Universal Coordinated Time (UTC).\n *\n * @param minute - A numeric value equal to the minutes value.\n *\n * @param second - A numeric value equal to the seconds value.\n *\n * @param millisecond - A numeric value equal to the milliseconds value.\n */\n",
               "excerptTokens": [
                 {
@@ -3868,7 +3868,7 @@
             },
             {
               "kind": "Method",
-              "canonicalReference": "@storm-stack/errors!StormDateTime#setUTCMonth:member(1)",
+              "canonicalReference": "@storm-stack/date-time!StormDateTime#setUTCMonth:member(1)",
               "docComment": "/**\n * Sets the month value in the Date object using Universal Coordinated Time (UTC).\n *\n * @param month - A numeric value equal to the month. The value for January is 0, and other month values follow consecutively.\n *\n * @param day - A numeric value representing the day of the month. If it is not supplied, the value from a call to the getUTCDate method is used.\n */\n",
               "excerptTokens": [
                 {
@@ -3932,7 +3932,7 @@
             },
             {
               "kind": "Method",
-              "canonicalReference": "@storm-stack/errors!StormDateTime#setUTCSeconds:member(1)",
+              "canonicalReference": "@storm-stack/date-time!StormDateTime#setUTCSeconds:member(1)",
               "docComment": "/**\n * Sets the seconds value in the Date object using Universal Coordinated Time (UTC).\n *\n * @param second - A numeric value equal to the seconds value.\n *\n * @param millisecond - A numeric value equal to the milliseconds value.\n */\n",
               "excerptTokens": [
                 {
@@ -3996,7 +3996,7 @@
             },
             {
               "kind": "Method",
-              "canonicalReference": "@storm-stack/errors!StormDateTime#since:member(1)",
+              "canonicalReference": "@storm-stack/date-time!StormDateTime#since:member(1)",
               "docComment": "/**\n * It returns the duration between two dates.\n *\n * @param dateTimeTo - DateTime = DateTime.current\n *\n * @returns A duration object.\n */\n",
               "excerptTokens": [
                 {
@@ -4006,7 +4006,7 @@
                 {
                   "kind": "Reference",
                   "text": "StormDateTime",
-                  "canonicalReference": "@storm-stack/errors!StormDateTime:class"
+                  "canonicalReference": "@storm-stack/date-time!StormDateTime:class"
                 },
                 {
                   "kind": "Content",
@@ -4046,7 +4046,7 @@
             },
             {
               "kind": "Property",
-              "canonicalReference": "@storm-stack/errors!StormDateTime#timeZoneId:member",
+              "canonicalReference": "@storm-stack/date-time!StormDateTime#timeZoneId:member",
               "docComment": "/**\n * An accessor that returns the `timeZoneId` string of the DateTime object\n */\n",
               "excerptTokens": [
                 {
@@ -4076,7 +4076,7 @@
             },
             {
               "kind": "Method",
-              "canonicalReference": "@storm-stack/errors!StormDateTime#validate:member(1)",
+              "canonicalReference": "@storm-stack/date-time!StormDateTime#validate:member(1)",
               "docComment": "/**\n * Validate the input date value\n *\n * @param dateTime - The date value to validate\n *\n * @param options - The options to use\n *\n * @returns A boolean representing whether the value is a valid *date-time*\n */\n",
               "excerptTokens": [
                 {
@@ -4086,7 +4086,7 @@
                 {
                   "kind": "Reference",
                   "text": "DateTimeInput",
-                  "canonicalReference": "@storm-stack/errors!DateTimeInput:type"
+                  "canonicalReference": "@storm-stack/date-time!DateTimeInput:type"
                 },
                 {
                   "kind": "Content",
@@ -4095,7 +4095,7 @@
                 {
                   "kind": "Reference",
                   "text": "DateTimeOptions",
-                  "canonicalReference": "@storm-stack/errors!DateTimeOptions:interface"
+                  "canonicalReference": "@storm-stack/date-time!DateTimeOptions:interface"
                 },
                 {
                   "kind": "Content",
@@ -4142,7 +4142,7 @@
             },
             {
               "kind": "Property",
-              "canonicalReference": "@storm-stack/errors!StormDateTime#zonedDateTime:member",
+              "canonicalReference": "@storm-stack/date-time!StormDateTime#zonedDateTime:member",
               "docComment": "/**\n * An accessor that returns the `Temporal.ZonedDateTime` object of the DateTime object\n */\n",
               "excerptTokens": [
                 {
@@ -4189,7 +4189,7 @@
         },
         {
           "kind": "Class",
-          "canonicalReference": "@storm-stack/errors!StormTime:class",
+          "canonicalReference": "@storm-stack/date-time!StormTime:class",
           "docComment": "/**\n * A wrapper of the and Date class used by Storm Software to provide Date-Time values\n *\n * @decorator\n *\n * `@Serializable()`\n */\n",
           "excerptTokens": [
             {
@@ -4199,7 +4199,7 @@
             {
               "kind": "Reference",
               "text": "StormDateTime",
-              "canonicalReference": "@storm-stack/errors!StormDateTime:class"
+              "canonicalReference": "@storm-stack/date-time!StormDateTime:class"
             },
             {
               "kind": "Content",
@@ -4214,7 +4214,7 @@
           "members": [
             {
               "kind": "Constructor",
-              "canonicalReference": "@storm-stack/errors!StormTime:constructor(1)",
+              "canonicalReference": "@storm-stack/date-time!StormTime:constructor(1)",
               "docComment": "/**\n * Constructs a new instance of the `StormTime` class\n */\n",
               "excerptTokens": [
                 {
@@ -4224,7 +4224,7 @@
                 {
                   "kind": "Reference",
                   "text": "DateTimeInput",
-                  "canonicalReference": "@storm-stack/errors!DateTimeInput:type"
+                  "canonicalReference": "@storm-stack/date-time!DateTimeInput:type"
                 },
                 {
                   "kind": "Content",
@@ -4233,7 +4233,7 @@
                 {
                   "kind": "Reference",
                   "text": "DateTimeOptions",
-                  "canonicalReference": "@storm-stack/errors!DateTimeOptions:interface"
+                  "canonicalReference": "@storm-stack/date-time!DateTimeOptions:interface"
                 },
                 {
                   "kind": "Content",
@@ -4264,7 +4264,7 @@
             },
             {
               "kind": "Property",
-              "canonicalReference": "@storm-stack/errors!StormTime.create:member",
+              "canonicalReference": "@storm-stack/date-time!StormTime.create:member",
               "docComment": "/**\n * Creates a new instance of DateTime from a string with a specified format.\n *\n * @param time - The input value used to determine the current time\n *\n * @param options - The options to use\n *\n * @returns A new instance of StormTime with the time provided in the time parameter.\n */\n",
               "excerptTokens": [
                 {
@@ -4278,7 +4278,7 @@
                 {
                   "kind": "Reference",
                   "text": "DateTimeInput",
-                  "canonicalReference": "@storm-stack/errors!DateTimeInput:type"
+                  "canonicalReference": "@storm-stack/date-time!DateTimeInput:type"
                 },
                 {
                   "kind": "Content",
@@ -4287,7 +4287,7 @@
                 {
                   "kind": "Reference",
                   "text": "DateTimeOptions",
-                  "canonicalReference": "@storm-stack/errors!DateTimeOptions:interface"
+                  "canonicalReference": "@storm-stack/date-time!DateTimeOptions:interface"
                 },
                 {
                   "kind": "Content",
@@ -4296,7 +4296,7 @@
                 {
                   "kind": "Reference",
                   "text": "StormTime",
-                  "canonicalReference": "@storm-stack/errors!StormTime:class"
+                  "canonicalReference": "@storm-stack/date-time!StormTime:class"
                 },
                 {
                   "kind": "Content",
@@ -4317,7 +4317,7 @@
             },
             {
               "kind": "Method",
-              "canonicalReference": "@storm-stack/errors!StormTime.current:member(1)",
+              "canonicalReference": "@storm-stack/date-time!StormTime.current:member(1)",
               "docComment": "/**\n * The current function returns a new DateTime object with the current date and time\n *\n * @returns A new instance of DateTime with the current date and time.\n */\n",
               "excerptTokens": [
                 {
@@ -4327,7 +4327,7 @@
                 {
                   "kind": "Reference",
                   "text": "StormTime",
-                  "canonicalReference": "@storm-stack/errors!StormTime:class"
+                  "canonicalReference": "@storm-stack/date-time!StormTime:class"
                 },
                 {
                   "kind": "Content",
@@ -4349,7 +4349,7 @@
             },
             {
               "kind": "Method",
-              "canonicalReference": "@storm-stack/errors!StormTime#getDate:member(1)",
+              "canonicalReference": "@storm-stack/date-time!StormTime#getDate:member(1)",
               "docComment": "/**\n * Gets the day-of-the-month, using local time.\n */\n",
               "excerptTokens": [
                 {
@@ -4380,7 +4380,7 @@
             },
             {
               "kind": "Method",
-              "canonicalReference": "@storm-stack/errors!StormTime#getDay:member(1)",
+              "canonicalReference": "@storm-stack/date-time!StormTime#getDay:member(1)",
               "docComment": "/**\n * Gets the day of the week, using local time.\n */\n",
               "excerptTokens": [
                 {
@@ -4411,7 +4411,7 @@
             },
             {
               "kind": "Method",
-              "canonicalReference": "@storm-stack/errors!StormTime#getDuration:member(1)",
+              "canonicalReference": "@storm-stack/date-time!StormTime#getDuration:member(1)",
               "docComment": "/**\n * It returns the duration between two dates.\n *\n * @param dateTimeTo - DateTime = DateTime.current\n *\n * @returns A duration object.\n */\n",
               "excerptTokens": [
                 {
@@ -4421,7 +4421,7 @@
                 {
                   "kind": "Reference",
                   "text": "StormTime",
-                  "canonicalReference": "@storm-stack/errors!StormTime:class"
+                  "canonicalReference": "@storm-stack/date-time!StormTime:class"
                 },
                 {
                   "kind": "Content",
@@ -4461,7 +4461,7 @@
             },
             {
               "kind": "Method",
-              "canonicalReference": "@storm-stack/errors!StormTime#getFullYear:member(1)",
+              "canonicalReference": "@storm-stack/date-time!StormTime#getFullYear:member(1)",
               "docComment": "/**\n * Gets the year, using local time.\n */\n",
               "excerptTokens": [
                 {
@@ -4492,7 +4492,7 @@
             },
             {
               "kind": "Method",
-              "canonicalReference": "@storm-stack/errors!StormTime#getMonth:member(1)",
+              "canonicalReference": "@storm-stack/date-time!StormTime#getMonth:member(1)",
               "docComment": "/**\n * Gets the month, using local time.\n */\n",
               "excerptTokens": [
                 {
@@ -4523,7 +4523,7 @@
             },
             {
               "kind": "Method",
-              "canonicalReference": "@storm-stack/errors!StormTime#getUTCDate:member(1)",
+              "canonicalReference": "@storm-stack/date-time!StormTime#getUTCDate:member(1)",
               "docComment": "/**\n * Gets the day-of-the-month, using Universal Coordinated Time (UTC).\n */\n",
               "excerptTokens": [
                 {
@@ -4554,7 +4554,7 @@
             },
             {
               "kind": "Method",
-              "canonicalReference": "@storm-stack/errors!StormTime#getUTCDay:member(1)",
+              "canonicalReference": "@storm-stack/date-time!StormTime#getUTCDay:member(1)",
               "docComment": "/**\n * Gets the day of the week using Universal Coordinated Time (UTC).\n */\n",
               "excerptTokens": [
                 {
@@ -4585,7 +4585,7 @@
             },
             {
               "kind": "Method",
-              "canonicalReference": "@storm-stack/errors!StormTime#getUTCFullYear:member(1)",
+              "canonicalReference": "@storm-stack/date-time!StormTime#getUTCFullYear:member(1)",
               "docComment": "/**\n * Gets the year using Universal Coordinated Time (UTC).\n */\n",
               "excerptTokens": [
                 {
@@ -4616,7 +4616,7 @@
             },
             {
               "kind": "Method",
-              "canonicalReference": "@storm-stack/errors!StormTime#getUTCMonth:member(1)",
+              "canonicalReference": "@storm-stack/date-time!StormTime#getUTCMonth:member(1)",
               "docComment": "/**\n * Gets the month of a Date object using Universal Coordinated Time (UTC).\n */\n",
               "excerptTokens": [
                 {
@@ -4647,7 +4647,7 @@
             },
             {
               "kind": "Method",
-              "canonicalReference": "@storm-stack/errors!StormTime.now:member(1)",
+              "canonicalReference": "@storm-stack/date-time!StormTime.now:member(1)",
               "docComment": "/**\n * The current function returns a new DateTime object with the current date and time\n *\n * @returns A new instance of DateTime with the current date and time.\n */\n",
               "excerptTokens": [
                 {
@@ -4678,7 +4678,7 @@
             },
             {
               "kind": "Method",
-              "canonicalReference": "@storm-stack/errors!StormTime#validate:member(1)",
+              "canonicalReference": "@storm-stack/date-time!StormTime#validate:member(1)",
               "docComment": "/**\n * Validate the input time value\n *\n * @param dateTime - The date value to validate\n *\n * @param options - The options to use\n *\n * @returns A boolean representing whether the value is a valid *date-time*\n */\n",
               "excerptTokens": [
                 {
@@ -4688,7 +4688,7 @@
                 {
                   "kind": "Reference",
                   "text": "DateTimeInput",
-                  "canonicalReference": "@storm-stack/errors!DateTimeInput:type"
+                  "canonicalReference": "@storm-stack/date-time!DateTimeInput:type"
                 },
                 {
                   "kind": "Content",
@@ -4697,7 +4697,7 @@
                 {
                   "kind": "Reference",
                   "text": "DateTimeOptions",
-                  "canonicalReference": "@storm-stack/errors!DateTimeOptions:interface"
+                  "canonicalReference": "@storm-stack/date-time!DateTimeOptions:interface"
                 },
                 {
                   "kind": "Content",
@@ -4751,7 +4751,7 @@
         },
         {
           "kind": "Function",
-          "canonicalReference": "@storm-stack/errors!validateDate:function(1)",
+          "canonicalReference": "@storm-stack/date-time!validateDate:function(1)",
           "docComment": "",
           "excerptTokens": [
             {
@@ -4761,7 +4761,7 @@
             {
               "kind": "Reference",
               "text": "DateTimeInput",
-              "canonicalReference": "@storm-stack/errors!DateTimeInput:type"
+              "canonicalReference": "@storm-stack/date-time!DateTimeInput:type"
             },
             {
               "kind": "Content",
@@ -4770,7 +4770,7 @@
             {
               "kind": "Reference",
               "text": "DateTimeOptions",
-              "canonicalReference": "@storm-stack/errors!DateTimeOptions:interface"
+              "canonicalReference": "@storm-stack/date-time!DateTimeOptions:interface"
             },
             {
               "kind": "Content",
@@ -4814,7 +4814,7 @@
         },
         {
           "kind": "Function",
-          "canonicalReference": "@storm-stack/errors!validateDateTime:function(1)",
+          "canonicalReference": "@storm-stack/date-time!validateDateTime:function(1)",
           "docComment": "/**\n * Type-check to determine if `value` is a valid *date-time*\n *\n * @param value - The value to check\n *\n * @param options - The options to use\n *\n * @returns A boolean representing whether the value is a valid *date-time*\n */\n",
           "excerptTokens": [
             {
@@ -4824,7 +4824,7 @@
             {
               "kind": "Reference",
               "text": "DateTimeInput",
-              "canonicalReference": "@storm-stack/errors!DateTimeInput:type"
+              "canonicalReference": "@storm-stack/date-time!DateTimeInput:type"
             },
             {
               "kind": "Content",
@@ -4833,7 +4833,7 @@
             {
               "kind": "Reference",
               "text": "DateTimeOptions",
-              "canonicalReference": "@storm-stack/errors!DateTimeOptions:interface"
+              "canonicalReference": "@storm-stack/date-time!DateTimeOptions:interface"
             },
             {
               "kind": "Content",
@@ -4877,7 +4877,7 @@
         },
         {
           "kind": "Function",
-          "canonicalReference": "@storm-stack/errors!validateTime:function(1)",
+          "canonicalReference": "@storm-stack/date-time!validateTime:function(1)",
           "docComment": "",
           "excerptTokens": [
             {
@@ -4887,7 +4887,7 @@
             {
               "kind": "Reference",
               "text": "DateTimeInput",
-              "canonicalReference": "@storm-stack/errors!DateTimeInput:type"
+              "canonicalReference": "@storm-stack/date-time!DateTimeInput:type"
             },
             {
               "kind": "Content",
@@ -4896,7 +4896,7 @@
             {
               "kind": "Reference",
               "text": "DateTimeOptions",
-              "canonicalReference": "@storm-stack/errors!DateTimeOptions:interface"
+              "canonicalReference": "@storm-stack/date-time!DateTimeOptions:interface"
             },
             {
               "kind": "Content",

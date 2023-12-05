@@ -1,11 +1,21 @@
-import { getStormConfig } from "@storm-software/config/get-config";
-import { StormConfig } from "@storm-software/config/types";
-import { StormTime, formatSince } from "@storm-software/date-time";
-import { getCauseFromUnknown } from "@storm-software/errors";
+import { StormConfig, createStormConfig } from "@storm-software/config-tools";
+import { StormTime, formatSince } from "@storm-stack/date-time";
+import { getCauseFromUnknown } from "@storm-stack/errors";
 import pino from "pino";
 import { LoggerWrapper } from "./composition/logger-wrapper";
+import { LoggingConfigSchema } from "./schema";
 import { ILogger, ILoggerWrapper, IStormLog, LoggingConfig } from "./types";
+import {
+  LogLevel,
+  LogLevelLabel,
+  getLogLevel
+} from "./utilities/get-log-level";
 import { getTransports } from "./utilities/get-transports";
+
+type GetLoggersResult = pino.BaseLogger & {
+  logLevel: LogLevel;
+  logLevelLabel: LogLevelLabel;
+};
 
 /**
  * The default logger class.
@@ -14,17 +24,28 @@ import { getTransports } from "./utilities/get-transports";
  * This logger writes to the console.
  */
 export class StormLog implements IStormLog {
-  private static baseLogger: pino.BaseLogger;
+  private static logger: pino.BaseLogger;
+  private static logLevel: LogLevel;
+  private static logLevelLabel: LogLevelLabel;
 
-  private static getLoggers = async (): Promise<pino.BaseLogger> => {
-    if (!StormLog.baseLogger) {
-      let config = await getStormConfig();
-      StormLog.baseLogger = StormLog.initialize(
+  private static getLoggers = async (): Promise<GetLoggersResult> => {
+    if (!StormLog.logger) {
+      let config = await createStormConfig<"logging", LoggingConfig>(
+        "logging",
+        LoggingConfigSchema
+      );
+      StormLog.logger = StormLog.initialize(
         config as StormConfig<"logging", LoggingConfig>
       );
+      StormLog.logLevel = getLogLevel(config.logLevel);
+      StormLog.logLevelLabel = config.logLevel;
     }
 
-    return StormLog.baseLogger;
+    return {
+      ...StormLog.logger,
+      logLevel: StormLog.logLevel,
+      logLevelLabel: StormLog.logLevelLabel
+    };
   };
 
   /**
@@ -52,8 +73,10 @@ export class StormLog implements IStormLog {
 
   #config: StormConfig<"logging", LoggingConfig>;
   #name: string;
-  #baseLogger: pino.BaseLogger;
-  #loggers: ILoggerWrapper[];
+  #logger: pino.BaseLogger;
+  #additionalLoggers: ILoggerWrapper[];
+  #logLevel: LogLevel;
+  #logLevelLabel: LogLevelLabel;
 
   #processes: Map<string, StormTime> = new Map();
 
@@ -63,15 +86,19 @@ export class StormLog implements IStormLog {
    */
   private constructor(
     config: StormConfig<"logging", LoggingConfig>,
-    loggers: ILoggerWrapper[] = [],
+    additionalLoggers: ILoggerWrapper[] = [],
     name?: string
   ) {
     const logger = StormLog.initialize(config, name);
 
     this.#config = config;
     this.#name = name ? name : config.name;
-    this.#baseLogger = logger;
-    this.#loggers = loggers;
+
+    this.#logger = logger;
+    this.#additionalLoggers = additionalLoggers;
+
+    this.#logLevel = getLogLevel(config.logLevel);
+    this.#logLevelLabel = config.logLevel;
   }
 
   /**
@@ -82,7 +109,8 @@ export class StormLog implements IStormLog {
    */
   public static success(message: any) {
     this.getLoggers().then(logger => {
-      logger.info({ msg: message, level: "success" });
+      StormLog.logLevel >= LogLevel.INFO &&
+        logger.info({ msg: message, level: "success" });
     });
   }
 
@@ -96,7 +124,8 @@ export class StormLog implements IStormLog {
     const error = getCauseFromUnknown(message);
 
     this.getLoggers().then(logger => {
-      logger.fatal({ error, level: "fatal" });
+      StormLog.logLevel >= LogLevel.FATAL &&
+        logger.fatal({ error, level: "fatal" });
     });
   }
 
@@ -110,7 +139,8 @@ export class StormLog implements IStormLog {
     const error = getCauseFromUnknown(message);
 
     this.getLoggers().then(logger => {
-      logger.error({ error, level: "error" });
+      StormLog.logLevel >= LogLevel.ERROR &&
+        logger.error({ error, level: "error" });
     });
   }
 
@@ -124,7 +154,8 @@ export class StormLog implements IStormLog {
     const error = getCauseFromUnknown(message);
 
     this.getLoggers().then(logger => {
-      logger.error({ error, level: "exception" });
+      StormLog.logLevel >= LogLevel.ERROR &&
+        logger.error({ error, level: "exception" });
     });
   }
 
@@ -136,7 +167,7 @@ export class StormLog implements IStormLog {
    */
   public static warn(message: any) {
     this.getLoggers().then(logger => {
-      logger.warn(message);
+      StormLog.logLevel >= LogLevel.WARN && logger.warn(message);
     });
   }
 
@@ -148,7 +179,7 @@ export class StormLog implements IStormLog {
    */
   public static info(message: any) {
     this.getLoggers().then(logger => {
-      logger.info(message);
+      StormLog.logLevel >= LogLevel.INFO && logger.info(message);
     });
   }
 
@@ -160,7 +191,7 @@ export class StormLog implements IStormLog {
    */
   public static debug(message: any) {
     this.getLoggers().then(logger => {
-      logger.debug(message);
+      StormLog.logLevel >= LogLevel.DEBUG && logger.debug(message);
     });
   }
 
@@ -172,7 +203,7 @@ export class StormLog implements IStormLog {
    */
   public static trace(message: any) {
     this.getLoggers().then(logger => {
-      logger.trace(message);
+      StormLog.logLevel >= LogLevel.TRACE && logger.trace(message);
     });
   }
 
@@ -184,7 +215,7 @@ export class StormLog implements IStormLog {
    */
   public static log(message: any) {
     this.getLoggers().then(logger => {
-      logger.info(message);
+      StormLog.logLevel >= LogLevel.INFO && logger.info(message);
     });
   }
 
@@ -195,11 +226,12 @@ export class StormLog implements IStormLog {
    */
   public static stopwatch(startTime: StormTime, name?: string) {
     this.getLoggers().then(logger => {
-      logger.info(
-        `⏱️ The${name ? ` ${name}` : ""} process took ${formatSince(
-          startTime.since()
-        )} to complete`
-      );
+      StormLog.logLevel >= LogLevel.INFO &&
+        logger.info(
+          `⏱️  The${name ? ` ${name}` : ""} process took ${formatSince(
+            startTime.since()
+          )} to complete`
+        );
     });
   }
 
@@ -210,8 +242,12 @@ export class StormLog implements IStormLog {
    * @returns Either a promise that resolves to void or void.
    */
   public success(message: any) {
-    this.#baseLogger.info({ msg: message, level: "success" });
-    Promise.all(this.#loggers.map(logger => logger.success(message)));
+    if (this.#logLevel >= LogLevel.INFO) {
+      this.#logger.info({ msg: message, level: "success" });
+      Promise.all(
+        this.#additionalLoggers.map(logger => logger.success(message))
+      );
+    }
   }
 
   /**
@@ -221,10 +257,12 @@ export class StormLog implements IStormLog {
    * @returns Either a promise that resolves to void or void.
    */
   public fatal(message: any) {
-    const error = getCauseFromUnknown(message);
+    if (this.#logLevel >= LogLevel.FATAL) {
+      const error = getCauseFromUnknown(message);
 
-    this.#baseLogger.fatal({ error, level: "fatal" });
-    Promise.all(this.#loggers.map(logger => logger.fatal(error)));
+      this.#logger.fatal({ error, level: "fatal" });
+      Promise.all(this.#additionalLoggers.map(logger => logger.fatal(error)));
+    }
   }
 
   /**
@@ -234,10 +272,12 @@ export class StormLog implements IStormLog {
    * @returns Either a promise that resolves to void or void.
    */
   public error(message: any) {
-    const error = getCauseFromUnknown(message);
+    if (this.#logLevel >= LogLevel.ERROR) {
+      const error = getCauseFromUnknown(message);
 
-    this.#baseLogger.error({ error, level: "error" });
-    Promise.all(this.#loggers.map(logger => logger.error(error)));
+      this.#logger.error({ error, level: "error" });
+      Promise.all(this.#additionalLoggers.map(logger => logger.error(error)));
+    }
   }
 
   /**
@@ -247,10 +287,14 @@ export class StormLog implements IStormLog {
    * @returns Either a promise that resolves to void or void.
    */
   public exception(message: any) {
-    const error = getCauseFromUnknown(message);
+    if (this.#logLevel >= LogLevel.ERROR) {
+      const error = getCauseFromUnknown(message);
 
-    this.#baseLogger.error({ error, level: "exception" });
-    Promise.all(this.#loggers.map(logger => logger.exception(error)));
+      this.#logger.error({ error, level: "exception" });
+      Promise.all(
+        this.#additionalLoggers.map(logger => logger.exception(error))
+      );
+    }
   }
 
   /**
@@ -260,8 +304,10 @@ export class StormLog implements IStormLog {
    * @returns Either a promise that resolves to void or void.
    */
   public warn(message: any) {
-    this.#baseLogger.warn(message);
-    Promise.all(this.#loggers.map(logger => logger.warn(message)));
+    if (this.#logLevel >= LogLevel.WARN) {
+      this.#logger.warn(message);
+      Promise.all(this.#additionalLoggers.map(logger => logger.warn(message)));
+    }
   }
 
   /**
@@ -271,8 +317,10 @@ export class StormLog implements IStormLog {
    * @returns Either a promise that resolves to void or void.
    */
   public info(message: any) {
-    this.#baseLogger.info(message);
-    Promise.all(this.#loggers.map(logger => logger.info(message)));
+    if (this.#logLevel >= LogLevel.INFO) {
+      this.#logger.info(message);
+      Promise.all(this.#additionalLoggers.map(logger => logger.info(message)));
+    }
   }
 
   /**
@@ -282,8 +330,10 @@ export class StormLog implements IStormLog {
    * @returns Either a promise that resolves to void or void.
    */
   public debug(message: any) {
-    this.#baseLogger.debug(message);
-    Promise.all(this.#loggers.map(logger => logger.debug(message)));
+    if (this.#logLevel >= LogLevel.DEBUG) {
+      this.#logger.debug(message);
+      Promise.all(this.#additionalLoggers.map(logger => logger.debug(message)));
+    }
   }
 
   /**
@@ -293,8 +343,10 @@ export class StormLog implements IStormLog {
    * @returns Either a promise that resolves to void or void.
    */
   public trace(message: any) {
-    this.#baseLogger.trace(message);
-    Promise.all(this.#loggers.map(logger => logger.trace(message)));
+    if (this.#logLevel >= LogLevel.TRACE) {
+      this.#logger.trace(message);
+      Promise.all(this.#additionalLoggers.map(logger => logger.trace(message)));
+    }
   }
 
   /**
@@ -304,8 +356,10 @@ export class StormLog implements IStormLog {
    * @returns Either a promise that resolves to void or void.
    */
   public log(message: any) {
-    this.#baseLogger.info(message);
-    Promise.all(this.#loggers.map(logger => logger.log(message)));
+    if (this.#logLevel >= LogLevel.INFO) {
+      this.#logger.info(message);
+      Promise.all(this.#additionalLoggers.map(logger => logger.log(message)));
+    }
   }
 
   /**
@@ -314,7 +368,9 @@ export class StormLog implements IStormLog {
    * @param name - The name of the process
    */
   public start(name: string) {
-    this.#processes.set(name, StormTime.current());
+    if (this.#logLevel >= LogLevel.INFO) {
+      this.#processes.set(name, StormTime.current());
+    }
   }
 
   /**
@@ -324,6 +380,10 @@ export class StormLog implements IStormLog {
    * @param startTime - The start time of the process
    */
   public stopwatch(name?: string, startTime?: StormTime) {
+    if (this.#logLevel < LogLevel.INFO) {
+      return;
+    }
+
     if (!name && !startTime) {
       this.warn("No name or start time was provided to the stopwatch method");
       return;
@@ -342,8 +402,8 @@ export class StormLog implements IStormLog {
       startTime!.since()
     )} to complete`;
 
-    this.#baseLogger.info(`⏱️ ${message}`);
-    Promise.all(this.#loggers.map(logger => logger.info(message)));
+    this.#logger.info(`⏱️  ${message}`);
+    Promise.all(this.#additionalLoggers.map(logger => logger.info(message)));
 
     if (name && this.#processes.has(name)) {
       this.#processes.delete(name);
@@ -357,7 +417,7 @@ export class StormLog implements IStormLog {
    */
   public addWrappedLogger(wrapper: ILoggerWrapper) {
     if (wrapper) {
-      this.#loggers.push(wrapper);
+      this.#additionalLoggers.push(wrapper);
     }
   }
 

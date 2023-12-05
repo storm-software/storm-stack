@@ -1,4 +1,4 @@
-import { isBigInt, isDate, isNumber } from "@storm-software/utilities";
+import { isBigInt, isDate, isNumber } from "@storm-stack/utilities";
 import { RFC_3339_TIME_REGEX } from "../constants";
 import { DateTimeInput, DateTimeOptions } from "../storm-date-time";
 import { isDateTime } from "./is-date-time";

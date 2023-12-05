@@ -1,5 +1,5 @@
 {
-  "name": "@storm-software/utilities",
+  "name": "@storm-stack/utilities",
   "version": "0.0.1",
   "private": false,
   "description": "This package includes various base utility class and various functions to assist in the development process.",

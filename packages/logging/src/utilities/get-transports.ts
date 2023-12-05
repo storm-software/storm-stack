@@ -1,10 +1,12 @@
-import { StormConfig } from "@storm-software/config/types";
-import { formatDate, formatDateTime } from "@storm-software/date-time";
-import { isStormError } from "@storm-software/errors";
-import { isRuntimeServer } from "@storm-software/utilities/helper-fns/is-runtime-server";
-import { titleCase } from "@storm-software/utilities/string-fns/title-case";
-import { isSetString } from "@storm-software/utilities/type-checks/is-set-string";
-import { EMPTY_STRING } from "@storm-software/utilities/types";
+import { StormConfig } from "@storm-software/config-tools";
+import { formatDate, formatDateTime } from "@storm-stack/date-time";
+import { isStormError } from "@storm-stack/errors";
+import {
+  EMPTY_STRING,
+  isRuntimeServer,
+  isSetString,
+  titleCase
+} from "@storm-stack/utilities";
 import chalk from "chalk";
 import { tmpdir } from "os";
 import { join } from "path";
@@ -14,6 +16,7 @@ import pino, {
   TransportTargetOptions
 } from "pino";
 import { LoggingConfig } from "../types";
+import { LogLevel, getLogLevel } from "./get-log-level";
 
 export type LoggerOptions = {
   options: PinoLoggerOptions;
@@ -31,19 +34,18 @@ export const getTransports = (
   config: StormConfig<"logging", LoggingConfig>,
   name?: string
 ) => {
-  let logPath = config.modules.logging.path;
+  let logPath = config.extensions.logging.path;
   if (!isSetString(logPath)) {
     logPath = join(tmpdir(), "storm", "logs");
   }
 
-  config.modules.logging.level ??=
-    config?.env === "production" ? "error" : "debug";
-  config.modules.logging.stacktrace ??=
+  config.logLevel ??= config?.env === "production" ? "error" : "debug";
+  config.extensions.logging.stacktrace ??=
     config?.env === "production" ? false : true;
 
   const baseOptions: PinoLoggerOptions = {
-    enabled: config.modules.logging.level !== "silent",
-    level: config.modules.logging.level,
+    enabled: getLogLevel(config.logLevel) > LogLevel.SILENT,
+    level: config.logLevel,
     messageKey: "msg",
     errorKey: "error",
     timestamp: () => formatDateTime(),
@@ -68,7 +70,7 @@ export const getTransports = (
               : object
     },
     browser: {
-      disabled: config.modules.logging.level === "silent"
+      disabled: getLogLevel(config.logLevel) === LogLevel.SILENT
     }
   };
 
@@ -82,7 +84,7 @@ export const getTransports = (
         colorize: true,
         colorizeObjects: true,
         errorLikeObjectKeys: ["err", "error", "exception"],
-        minimumLevel: config.modules.logging.level,
+        minimumLevel: config.logLevel,
         messageKey: "msg",
         errorKey: "error",
         timestampKey: "time",
@@ -111,7 +113,7 @@ export const getTransports = (
       options: {
         ...baseOptions,
         errorLikeObjectKeys: ["err", "error", "exception"],
-        minimumLevel: config.modules.logging.level,
+        minimumLevel: config.logLevel,
         messageKey: "msg",
         errorKey: "error",
         timestampKey: "time",
@@ -143,8 +145,8 @@ Message: {msg}
                 logPath,
                 formatDate().replaceAll("/", "-").replaceAll(" ", "-"),
                 `${
-                  config.modules.logging.fileName
-                    ? config.modules.logging.fileName + "-"
+                  config.extensions.logging.fileName
+                    ? config.extensions.logging.fileName + "-"
                     : EMPTY_STRING
                 }${formatDateTime()
                   .replaceAll("/", "-")
@@ -152,7 +154,7 @@ Message: {msg}
                   .replaceAll(
                     ":",
                     "-"
-                  )}.${config.modules.logging.fileExtension.replaceAll(
+                  )}.${config.extensions.logging.fileExtension.replaceAll(
                   ".",
                   EMPTY_STRING
                 )}}`
@@ -172,8 +174,8 @@ Message: {msg}
                 logPath,
                 formatDate().replaceAll("/", "-").replaceAll(" ", "-"),
                 `${
-                  config.modules.logging.fileName
-                    ? config.modules.logging.fileName + "-"
+                  config.extensions.logging.fileName
+                    ? config.extensions.logging.fileName + "-"
                     : EMPTY_STRING
                 }-error-${formatDateTime()
                   .replaceAll("/", "-")
@@ -181,7 +183,7 @@ Message: {msg}
                   .replaceAll(
                     ":",
                     "-"
-                  )}.${config.modules.logging.fileExtension.replaceAll(
+                  )}.${config.extensions.logging.fileExtension.replaceAll(
                   ".",
                   EMPTY_STRING
                 )}}`
@@ -195,19 +197,19 @@ Message: {msg}
     );
 
     if (
-      config.modules.logging.loki?.host &&
-      config.modules.logging.loki?.username &&
-      config.modules.logging.loki?.password
+      config.extensions.logging.loki?.host &&
+      config.extensions.logging.loki?.username &&
+      config.extensions.logging.loki?.password
     ) {
       transports.push({
         target: "pino-loki",
         options: {
           batching: true,
           interval: 5,
-          host: config.modules.logging.loki?.host,
+          host: config.extensions.logging.loki?.host,
           basicAuth: {
-            username: config.modules.logging.loki?.username,
-            password: config.modules.logging.loki?.password
+            username: config.extensions.logging.loki?.username,
+            password: config.extensions.logging.loki?.password
           }
         }
       });

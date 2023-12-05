@@ -1,11 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Temporal } from "@js-temporal/polyfill";
-import { Serializable } from "@storm-software/serialization/serializable";
-import {
-  DateTimeInput,
-  DateTimeOptions,
-  StormDateTime
-} from "./storm-date-time";
+import { Serializable } from "@storm-stack/serialization/serializable";
+import type { DateTimeInput, DateTimeOptions } from "./storm-date-time";
+import { StormDateTime } from "./storm-date-time";
 import { isDateTime } from "./utilities/is-date-time";
 import {
   deserializeStormDate,

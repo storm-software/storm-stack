@@ -37,6 +37,7 @@ export const LoggingConfigSchema = z
     fileName: z
       .string()
       .trim()
+      .optional()
       .default("storm")
       .describe("The prefix to use for log files"),
     fileExtension: z
@@ -49,12 +50,6 @@ export const LoggingConfigSchema = z
       .trim()
       .optional()
       .describe("The directory to write log files out to"),
-    level: z
-      .enum(["silent", "fatal", "error", "warn", "info", "debug", "trace"])
-      .optional()
-      .describe(
-        "The log level used to filter out lower priority log messages. If not provided, this is defaulted using the `environment` config value (if `environment` is set to `production` then `level` is `error`, else `level` is `debug`)."
-      ),
     loki: LokiConfigSchema.optional().describe("The Loki config to use")
   })
   .describe(

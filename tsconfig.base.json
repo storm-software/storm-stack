@@ -6,26 +6,20 @@
     "rootDir": ".",
     "baseUrl": ".",
     "paths": {
-      "@storm-software/config": ["packages/config/src/index.ts"],
-      "@storm-software/config/*": ["packages/config/src/*"],
-      "@storm-software/date-time": ["packages/date-time/src/index.ts"],
-      "@storm-software/date-time/*": ["packages/date-time/src/*"],
-      "@storm-software/errors": ["packages/errors/src/index.ts"],
-      "@storm-software/errors/*": ["packages/errors/src/*"],
-      "@storm-software/logging": ["packages/logging/src/index.ts"],
-      "@storm-software/logging/*": ["packages/logging/src/*"],
-      "@storm-software/nx": ["packages/nx/src/index.ts"],
-      "@storm-software/nx/*": ["packages/nx/src/*"],
-      "@storm-software/serialization": ["packages/serialization/src/index.ts"],
-      "@storm-software/serialization/*": ["packages/serialization/src/*"],
-      "@storm-software/unique-identifier": [
+      "@storm-stack/date-time": ["packages/date-time/src/index.ts"],
+      "@storm-stack/date-time/*": ["packages/date-time/src/*"],
+      "@storm-stack/errors": ["packages/errors/src/index.ts"],
+      "@storm-stack/errors/*": ["packages/errors/src/*"],
+      "@storm-stack/logging": ["packages/logging/src/index.ts"],
+      "@storm-stack/logging/*": ["packages/logging/src/*"],
+      "@storm-stack/serialization": ["packages/serialization/src/index.ts"],
+      "@storm-stack/serialization/*": ["packages/serialization/src/*"],
+      "@storm-stack/unique-identifier": [
         "packages/unique-identifier/src/index.ts"
       ],
-      "@storm-software/unique-identifier/*": [
-        "packages/unique-identifier/src/*"
-      ],
-      "@storm-software/utilities": ["packages/utilities/src/index.ts"],
-      "@storm-software/utilities/*": ["packages/utilities/src/*"]
+      "@storm-stack/unique-identifier/*": ["packages/unique-identifier/src/*"],
+      "@storm-stack/utilities": ["packages/utilities/src/index.ts"],
+      "@storm-stack/utilities/*": ["packages/utilities/src/*"]
     }
   },
   "include": ["global.d.ts"],

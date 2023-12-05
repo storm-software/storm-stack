@@ -13,6 +13,9 @@
   "reviewers": ["@sullivanpj"],
   "rebaseWhen": "conflicted",
   "rangeStrategy": "pin",
+  "prConcurrentLimit": 0,
+  "prHourlyLimit": 3,
+  "baseBranches": ["main"],
   "automerge": true,
   "major": {
     "automerge": false

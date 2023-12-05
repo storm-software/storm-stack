@@ -1,7 +1,7 @@
 {
   "metadata": {
     "toolPackage": "@microsoft/api-extractor",
-    "toolVersion": "7.38.3",
+    "toolVersion": "7.38.4",
     "schemaVersion": 1011,
     "oldestForwardsCompatibleVersion": 1001,
     "tsdocConfig": {
@@ -161,20 +161,20 @@
     }
   },
   "kind": "Package",
-  "canonicalReference": "@storm-software/utilities!",
+  "canonicalReference": "@storm-stack/utilities!",
   "docComment": "",
-  "name": "@storm-software/utilities",
+  "name": "@storm-stack/utilities",
   "preserveMemberOrder": false,
   "members": [
     {
       "kind": "EntryPoint",
-      "canonicalReference": "@storm-software/utilities!",
+      "canonicalReference": "@storm-stack/utilities!",
       "name": "",
       "preserveMemberOrder": false,
       "members": [
         {
           "kind": "Variable",
-          "canonicalReference": "@storm-software/utilities!$NestedValue:var",
+          "canonicalReference": "@storm-stack/utilities!$NestedValue:var",
           "docComment": "",
           "excerptTokens": [
             {
@@ -197,7 +197,7 @@
         },
         {
           "kind": "Interface",
-          "canonicalReference": "@storm-software/utilities!Abstract:interface",
+          "canonicalReference": "@storm-stack/utilities!Abstract:interface",
           "docComment": "",
           "excerptTokens": [
             {
@@ -225,7 +225,7 @@
           "members": [
             {
               "kind": "PropertySignature",
-              "canonicalReference": "@storm-software/utilities!Abstract#prototype:member",
+              "canonicalReference": "@storm-stack/utilities!Abstract#prototype:member",
               "docComment": "",
               "excerptTokens": [
                 {
@@ -255,7 +255,7 @@
         },
         {
           "kind": "TypeAlias",
-          "canonicalReference": "@storm-software/utilities!AnyCase:type",
+          "canonicalReference": "@storm-stack/utilities!AnyCase:type",
           "docComment": "",
           "excerptTokens": [
             {
@@ -265,7 +265,7 @@
             {
               "kind": "Reference",
               "text": "IndexType",
-              "canonicalReference": "@storm-software/utilities!IndexType:type"
+              "canonicalReference": "@storm-stack/utilities!IndexType:type"
             },
             {
               "kind": "Content",
@@ -314,7 +314,7 @@
             {
               "kind": "Reference",
               "text": "AnyCase",
-              "canonicalReference": "@storm-software/utilities!AnyCase:type"
+              "canonicalReference": "@storm-stack/utilities!AnyCase:type"
             },
             {
               "kind": "Content",
@@ -341,7 +341,7 @@
             {
               "kind": "Reference",
               "text": "AnyCase",
-              "canonicalReference": "@storm-software/utilities!AnyCase:type"
+              "canonicalReference": "@storm-stack/utilities!AnyCase:type"
             },
             {
               "kind": "Content",
@@ -350,7 +350,7 @@
             {
               "kind": "Reference",
               "text": "EMPTY_STRING",
-              "canonicalReference": "@storm-software/utilities!EMPTY_STRING:var"
+              "canonicalReference": "@storm-stack/utilities!EMPTY_STRING:var"
             },
             {
               "kind": "Content",
@@ -380,7 +380,7 @@
         },
         {
           "kind": "TypeAlias",
-          "canonicalReference": "@storm-software/utilities!ArrayElement:type",
+          "canonicalReference": "@storm-stack/utilities!ArrayElement:type",
           "docComment": "",
           "excerptTokens": [
             {
@@ -427,7 +427,7 @@
         },
         {
           "kind": "TypeAlias",
-          "canonicalReference": "@storm-software/utilities!BrowserNativeObject:type",
+          "canonicalReference": "@storm-stack/utilities!BrowserNativeObject:type",
           "docComment": "",
           "excerptTokens": [
             {
@@ -472,7 +472,7 @@
         },
         {
           "kind": "Variable",
-          "canonicalReference": "@storm-software/utilities!camelCase:var",
+          "canonicalReference": "@storm-stack/utilities!camelCase:var",
           "docComment": "/**\n * Convert the input string to camel case.\n *\n * @remarks\n *\n * \"thisIsAnExample\"\n *\n * @param input - The input string.\n *\n * @returns The camel-cased string.\n */\n",
           "excerptTokens": [
             {
@@ -495,7 +495,7 @@
         },
         {
           "kind": "Interface",
-          "canonicalReference": "@storm-software/utilities!ClassTypeCheckable:interface",
+          "canonicalReference": "@storm-stack/utilities!ClassTypeCheckable:interface",
           "docComment": "",
           "excerptTokens": [
             {
@@ -505,7 +505,7 @@
             {
               "kind": "Reference",
               "text": "ITyped",
-              "canonicalReference": "@storm-software/utilities!ITyped:interface"
+              "canonicalReference": "@storm-stack/utilities!ITyped:interface"
             },
             {
               "kind": "Content",
@@ -532,7 +532,7 @@
           "members": [
             {
               "kind": "PropertySignature",
-              "canonicalReference": "@storm-software/utilities!ClassTypeCheckable#isTypeOf:member",
+              "canonicalReference": "@storm-stack/utilities!ClassTypeCheckable#isTypeOf:member",
               "docComment": "/**\n * Run type check on the given value\n *\n * @param value - The value to check\n *\n * @returns True if the value is of the type of the class\n */\n",
               "excerptTokens": [
                 {
@@ -546,7 +546,7 @@
                 {
                   "kind": "Reference",
                   "text": "value",
-                  "canonicalReference": "@storm-software/utilities!~value"
+                  "canonicalReference": "@storm-stack/utilities!~value"
                 },
                 {
                   "kind": "Content",
@@ -576,7 +576,7 @@
         },
         {
           "kind": "Interface",
-          "canonicalReference": "@storm-software/utilities!Clonable:interface",
+          "canonicalReference": "@storm-stack/utilities!Clonable:interface",
           "docComment": "",
           "excerptTokens": [
             {
@@ -604,7 +604,7 @@
           "members": [
             {
               "kind": "MethodSignature",
-              "canonicalReference": "@storm-software/utilities!Clonable#clone:member(1)",
+              "canonicalReference": "@storm-stack/utilities!Clonable#clone:member(1)",
               "docComment": "",
               "excerptTokens": [
                 {
@@ -635,7 +635,7 @@
         },
         {
           "kind": "TypeAlias",
-          "canonicalReference": "@storm-software/utilities!Collection:type",
+          "canonicalReference": "@storm-stack/utilities!Collection:type",
           "docComment": "",
           "excerptTokens": [
             {
@@ -702,7 +702,7 @@
         },
         {
           "kind": "Variable",
-          "canonicalReference": "@storm-software/utilities!constantCase:var",
+          "canonicalReference": "@storm-stack/utilities!constantCase:var",
           "docComment": "/**\n * Convert the input string to constant case.\n *\n * @remarks\n *\n * \"THIS_IS_AN_EXAMPLE\"\n *\n * @param input - The input string.\n *\n * @returns The constant-cased string.\n */\n",
           "excerptTokens": [
             {
@@ -725,7 +725,7 @@
         },
         {
           "kind": "Function",
-          "canonicalReference": "@storm-software/utilities!copy:function(1)",
+          "canonicalReference": "@storm-stack/utilities!copy:function(1)",
           "docComment": "/**\n * copy value with customizer function\n *\n * @private\n *\n * @param value - \n *\n * @param type - \n */\n",
           "excerptTokens": [
             {
@@ -802,7 +802,7 @@
         },
         {
           "kind": "Variable",
-          "canonicalReference": "@storm-software/utilities!Crypto_2:var",
+          "canonicalReference": "@storm-stack/utilities!Crypto_2:var",
           "docComment": "",
           "excerptTokens": [
             {
@@ -830,7 +830,7 @@
         },
         {
           "kind": "Function",
-          "canonicalReference": "@storm-software/utilities!deepCopy:function(1)",
+          "canonicalReference": "@storm-stack/utilities!deepCopy:function(1)",
           "docComment": "/**\n * Deep copy an object/array/value\n *\n * @param value - The value to copy\n *\n * @param options - The options\n */\n",
           "excerptTokens": [
             {
@@ -904,7 +904,7 @@
         },
         {
           "kind": "Variable",
-          "canonicalReference": "@storm-software/utilities!deepMerge:var",
+          "canonicalReference": "@storm-stack/utilities!deepMerge:var",
           "docComment": "/**\n * Deep merge two objects\n *\n * @param target - The target object\n *\n * @param source - The source object\n *\n * @param options - The options object\n *\n * @returns The merged object\n */\n",
           "excerptTokens": [
             {
@@ -936,7 +936,7 @@
         },
         {
           "kind": "TypeAlias",
-          "canonicalReference": "@storm-software/utilities!DeepPartial:type",
+          "canonicalReference": "@storm-stack/utilities!DeepPartial:type",
           "docComment": "",
           "excerptTokens": [
             {
@@ -950,7 +950,7 @@
             {
               "kind": "Reference",
               "text": "BrowserNativeObject",
-              "canonicalReference": "@storm-software/utilities!BrowserNativeObject:type"
+              "canonicalReference": "@storm-stack/utilities!BrowserNativeObject:type"
             },
             {
               "kind": "Content",
@@ -959,7 +959,7 @@
             {
               "kind": "Reference",
               "text": "NestedValue",
-              "canonicalReference": "@storm-software/utilities!NestedValue:type"
+              "canonicalReference": "@storm-stack/utilities!NestedValue:type"
             },
             {
               "kind": "Content",
@@ -968,7 +968,7 @@
             {
               "kind": "Reference",
               "text": "DeepPartial",
-              "canonicalReference": "@storm-software/utilities!DeepPartial:type"
+              "canonicalReference": "@storm-stack/utilities!DeepPartial:type"
             },
             {
               "kind": "Content",
@@ -1002,7 +1002,7 @@
         },
         {
           "kind": "Variable",
-          "canonicalReference": "@storm-software/utilities!EMPTY_OBJECT:var",
+          "canonicalReference": "@storm-stack/utilities!EMPTY_OBJECT:var",
           "docComment": "",
           "excerptTokens": [
             {
@@ -1025,7 +1025,7 @@
         },
         {
           "kind": "Variable",
-          "canonicalReference": "@storm-software/utilities!EMPTY_STRING:var",
+          "canonicalReference": "@storm-stack/utilities!EMPTY_STRING:var",
           "docComment": "",
           "excerptTokens": [
             {
@@ -1048,7 +1048,7 @@
         },
         {
           "kind": "TypeAlias",
-          "canonicalReference": "@storm-software/utilities!EmptyObject:type",
+          "canonicalReference": "@storm-stack/utilities!EmptyObject:type",
           "docComment": "",
           "excerptTokens": [
             {
@@ -1074,7 +1074,7 @@
         },
         {
           "kind": "TypeAlias",
-          "canonicalReference": "@storm-software/utilities!Except:type",
+          "canonicalReference": "@storm-stack/utilities!Except:type",
           "docComment": "/**\n * Create a type from an object type without certain keys.\n *\n * @remarks\n *\n * This type was proposed to the TypeScript team, which declined it, saying they prefer that libraries implement stricter versions of the built-in types ([microsoft/TypeScript#30825](https://github.com/microsoft/TypeScript/issues/30825#issuecomment-523668235)).  @category Object\n */\n",
           "excerptTokens": [
             {
@@ -1092,7 +1092,7 @@
             {
               "kind": "Reference",
               "text": "ExceptOptions",
-              "canonicalReference": "@storm-software/utilities!~ExceptOptions:type"
+              "canonicalReference": "@storm-stack/utilities!~ExceptOptions:type"
             },
             {
               "kind": "Content",
@@ -1113,7 +1113,7 @@
             {
               "kind": "Reference",
               "text": "Filter",
-              "canonicalReference": "@storm-software/utilities!Filter:type"
+              "canonicalReference": "@storm-stack/utilities!Filter:type"
             },
             {
               "kind": "Content",
@@ -1187,7 +1187,7 @@
         },
         {
           "kind": "TypeAlias",
-          "canonicalReference": "@storm-software/utilities!Filter:type",
+          "canonicalReference": "@storm-stack/utilities!Filter:type",
           "docComment": "",
           "excerptTokens": [
             {
@@ -1197,7 +1197,7 @@
             {
               "kind": "Reference",
               "text": "IsEqual",
-              "canonicalReference": "@storm-software/utilities!IsEqual:type"
+              "canonicalReference": "@storm-stack/utilities!IsEqual:type"
             },
             {
               "kind": "Content",
@@ -1242,7 +1242,7 @@
         },
         {
           "kind": "Variable",
-          "canonicalReference": "@storm-software/utilities!flattenObject:var",
+          "canonicalReference": "@storm-stack/utilities!flattenObject:var",
           "docComment": "/**\n * Flatten an object.\n *\n * @param obj - The object to flatten.\n *\n * @param prefix - The prefix to use.\n *\n * @param keyStringFn - The function to use to convert the key to a string.\n *\n * @returns The flattened object.\n */\n",
           "excerptTokens": [
             {
@@ -1265,7 +1265,7 @@
         },
         {
           "kind": "Variable",
-          "canonicalReference": "@storm-software/utilities!getObjectTag:var",
+          "canonicalReference": "@storm-stack/utilities!getObjectTag:var",
           "docComment": "/**\n * Gets the `toStringTag` of `obj`.\n *\n * @param value - The obj to query.\n *\n * @returns Returns the `toStringTag`.\n */\n",
           "excerptTokens": [
             {
@@ -1288,7 +1288,7 @@
         },
         {
           "kind": "Variable",
-          "canonicalReference": "@storm-software/utilities!getWebCrypto:var",
+          "canonicalReference": "@storm-stack/utilities!getWebCrypto:var",
           "docComment": "/**\n * Get the WebCrypto object\n *\n * @remarks\n *\n * This helper function is used to get the WebCrypto object. If the object is not available, an error will be thrown.\n *\n * @returns The WebCrypto object\n */\n",
           "excerptTokens": [
             {
@@ -1316,7 +1316,7 @@
         },
         {
           "kind": "Interface",
-          "canonicalReference": "@storm-software/utilities!IIdentity:interface",
+          "canonicalReference": "@storm-stack/utilities!IIdentity:interface",
           "docComment": "",
           "excerptTokens": [
             {
@@ -1352,7 +1352,7 @@
           "members": [
             {
               "kind": "PropertySignature",
-              "canonicalReference": "@storm-software/utilities!IIdentity#id:member",
+              "canonicalReference": "@storm-stack/utilities!IIdentity#id:member",
               "docComment": "",
               "excerptTokens": [
                 {
@@ -1382,7 +1382,7 @@
         },
         {
           "kind": "TypeAlias",
-          "canonicalReference": "@storm-software/utilities!Indexable:type",
+          "canonicalReference": "@storm-stack/utilities!Indexable:type",
           "docComment": "/**\n * The declaration of a ***dictionary-type*** object\n */\n",
           "excerptTokens": [
             {
@@ -1396,7 +1396,7 @@
             {
               "kind": "Reference",
               "text": "IndexType",
-              "canonicalReference": "@storm-software/utilities!IndexType:type"
+              "canonicalReference": "@storm-stack/utilities!IndexType:type"
             },
             {
               "kind": "Content",
@@ -1417,7 +1417,7 @@
         },
         {
           "kind": "TypeAlias",
-          "canonicalReference": "@storm-software/utilities!IndexType:type",
+          "canonicalReference": "@storm-stack/utilities!IndexType:type",
           "docComment": "/**\n * The valid types of the index for an `Indexable` type object\n */\n",
           "excerptTokens": [
             {
@@ -1443,7 +1443,7 @@
         },
         {
           "kind": "Variable",
-          "canonicalReference": "@storm-software/utilities!isArrayLike:var",
+          "canonicalReference": "@storm-stack/utilities!isArrayLike:var",
           "docComment": "/**\n * Check if the provided value's type is \"array-like\"\n *\n * @param value - The value to type check\n *\n * @returns An indicator specifying if the object provided is \"array-like\"\n */\n",
           "excerptTokens": [
             {
@@ -1466,7 +1466,7 @@
         },
         {
           "kind": "Variable",
-          "canonicalReference": "@storm-software/utilities!isAsyncIterable:var",
+          "canonicalReference": "@storm-stack/utilities!isAsyncIterable:var",
           "docComment": "/**\n * Check if the provided value's type is `AsyncIterable`\n *\n * @param value - The value to type check\n *\n * @returns An indicator specifying if the object provided is `AsyncIterable`\n */\n",
           "excerptTokens": [
             {
@@ -1480,7 +1480,7 @@
             {
               "kind": "Reference",
               "text": "value",
-              "canonicalReference": "@storm-software/utilities!~value"
+              "canonicalReference": "@storm-stack/utilities!~value"
             },
             {
               "kind": "Content",
@@ -1507,7 +1507,7 @@
         },
         {
           "kind": "Variable",
-          "canonicalReference": "@storm-software/utilities!isBigInt:var",
+          "canonicalReference": "@storm-stack/utilities!isBigInt:var",
           "docComment": "/**\n * Checks if `value` is classified as a `bigint` object.\n *\n * @param value - The obj to check.\n *\n * @returns Returns `true` if `value` is a bigint object, else `false`.\n *\n * @example\n * ```typescript\n * isDate(37n)\n * // => true\n *\n * isBigInt(37)\n * // => false\n * ```\n *\n */\n",
           "excerptTokens": [
             {
@@ -1521,7 +1521,7 @@
             {
               "kind": "Reference",
               "text": "value",
-              "canonicalReference": "@storm-software/utilities!~value"
+              "canonicalReference": "@storm-stack/utilities!~value"
             },
             {
               "kind": "Content",
@@ -1539,7 +1539,7 @@
         },
         {
           "kind": "Variable",
-          "canonicalReference": "@storm-software/utilities!isBoolean:var",
+          "canonicalReference": "@storm-stack/utilities!isBoolean:var",
           "docComment": "/**\n * Check if the provided value's type is `boolean`\n *\n * @param value - The value to type check\n *\n * @returns An indicator specifying if the value provided is of type `boolean`\n */\n",
           "excerptTokens": [
             {
@@ -1553,7 +1553,7 @@
             {
               "kind": "Reference",
               "text": "value",
-              "canonicalReference": "@storm-software/utilities!~value"
+              "canonicalReference": "@storm-stack/utilities!~value"
             },
             {
               "kind": "Content",
@@ -1571,7 +1571,7 @@
         },
         {
           "kind": "Variable",
-          "canonicalReference": "@storm-software/utilities!isBuffer:var",
+          "canonicalReference": "@storm-stack/utilities!isBuffer:var",
           "docComment": "/**\n * Check if the provided value's type is `Buffer`\n */\n",
           "excerptTokens": [
             {
@@ -1599,7 +1599,7 @@
         },
         {
           "kind": "Variable",
-          "canonicalReference": "@storm-software/utilities!isBufferExists:var",
+          "canonicalReference": "@storm-stack/utilities!isBufferExists:var",
           "docComment": "",
           "excerptTokens": [
             {
@@ -1622,7 +1622,7 @@
         },
         {
           "kind": "Function",
-          "canonicalReference": "@storm-software/utilities!isCollection:function(1)",
+          "canonicalReference": "@storm-stack/utilities!isCollection:function(1)",
           "docComment": "/**\n * Check if the provided value's type is `Collection`\n *\n * @param value - The value to type check\n *\n * @returns An indicator specifying if the value provided is of type `Collection`\n */\n",
           "excerptTokens": [
             {
@@ -1640,7 +1640,7 @@
             {
               "kind": "Reference",
               "text": "value",
-              "canonicalReference": "@storm-software/utilities!~value"
+              "canonicalReference": "@storm-stack/utilities!~value"
             },
             {
               "kind": "Content",
@@ -1649,7 +1649,7 @@
             {
               "kind": "Reference",
               "text": "Collection",
-              "canonicalReference": "@storm-software/utilities!Collection:type"
+              "canonicalReference": "@storm-stack/utilities!Collection:type"
             },
             {
               "kind": "Content",
@@ -1677,7 +1677,7 @@
         },
         {
           "kind": "Variable",
-          "canonicalReference": "@storm-software/utilities!isDate:var",
+          "canonicalReference": "@storm-stack/utilities!isDate:var",
           "docComment": "/**\n * Checks if `value` is classified as a `Date` object.\n *\n * @param value - The value to check.\n *\n * @returns Returns `true` if `obj` is a date object, else `false`.\n *\n * @example\n * ```typescript\n * isDate(new Date)\n * // => true\n *\n * isDate('Mon April 23 2012')\n * // => false\n * ```\n *\n */\n",
           "excerptTokens": [
             {
@@ -1691,7 +1691,7 @@
             {
               "kind": "Reference",
               "text": "value",
-              "canonicalReference": "@storm-software/utilities!~value"
+              "canonicalReference": "@storm-stack/utilities!~value"
             },
             {
               "kind": "Content",
@@ -1714,7 +1714,7 @@
         },
         {
           "kind": "Variable",
-          "canonicalReference": "@storm-software/utilities!isEmpty:var",
+          "canonicalReference": "@storm-stack/utilities!isEmpty:var",
           "docComment": "/**\n * Check if the provided value's type is `null` or `undefined`\n *\n * @param value - The value to type check\n *\n * @returns An indicator specifying if the value provided is of type `null` or `undefined`\n */\n",
           "excerptTokens": [
             {
@@ -1737,7 +1737,7 @@
         },
         {
           "kind": "Variable",
-          "canonicalReference": "@storm-software/utilities!isEmptyObject:var",
+          "canonicalReference": "@storm-stack/utilities!isEmptyObject:var",
           "docComment": "/**\n * Check if the provided value's type is `{}`\n *\n * @param value - The value to type check\n *\n * @returns An indicator specifying if the value provided is of type `{}`\n */\n",
           "excerptTokens": [
             {
@@ -1751,7 +1751,7 @@
             {
               "kind": "Reference",
               "text": "value",
-              "canonicalReference": "@storm-software/utilities!~value"
+              "canonicalReference": "@storm-stack/utilities!~value"
             },
             {
               "kind": "Content",
@@ -1769,7 +1769,7 @@
         },
         {
           "kind": "Variable",
-          "canonicalReference": "@storm-software/utilities!isEmptyOrEmptyObject:var",
+          "canonicalReference": "@storm-stack/utilities!isEmptyOrEmptyObject:var",
           "docComment": "/**\n * Check if the provided value's type is `null` or `undefined` or `{}`\n *\n * @param value - The value to type check\n *\n * @returns An indicator specifying if the value provided is of type `null` or `undefined` or `{}`\n */\n",
           "excerptTokens": [
             {
@@ -1792,7 +1792,7 @@
         },
         {
           "kind": "Variable",
-          "canonicalReference": "@storm-software/utilities!isEmptyString:var",
+          "canonicalReference": "@storm-stack/utilities!isEmptyString:var",
           "docComment": "/**\n * Determine if the type is string and is empty\n *\n * @param value - The value to type check\n *\n * @returns An indicator specifying if the value provided is of type `\"\"`\n */\n",
           "excerptTokens": [
             {
@@ -1806,7 +1806,7 @@
             {
               "kind": "Reference",
               "text": "value",
-              "canonicalReference": "@storm-software/utilities!~value"
+              "canonicalReference": "@storm-stack/utilities!~value"
             },
             {
               "kind": "Content",
@@ -1824,7 +1824,7 @@
         },
         {
           "kind": "TypeAlias",
-          "canonicalReference": "@storm-software/utilities!IsEqual:type",
+          "canonicalReference": "@storm-stack/utilities!IsEqual:type",
           "docComment": "/**\n * Returns a boolean for whether the two given types are equal.\n *\n * @remarks\n *\n * Use-cases: If you want to make a conditional branch based on the result of a comparison of two types.  @link https://github.com/microsoft/TypeScript/issues/27024#issuecomment-421529650  @link https://stackoverflow.com/questions/68961864/how-does-the-equals-work-in-typescript/68963796#68963796  @category Type Guard  @category Utilities\n */\n",
           "excerptTokens": [
             {
@@ -1874,7 +1874,7 @@
         },
         {
           "kind": "Interface",
-          "canonicalReference": "@storm-software/utilities!ISequenced:interface",
+          "canonicalReference": "@storm-stack/utilities!ISequenced:interface",
           "docComment": "",
           "excerptTokens": [
             {
@@ -1889,7 +1889,7 @@
           "members": [
             {
               "kind": "PropertySignature",
-              "canonicalReference": "@storm-software/utilities!ISequenced#sequence:member",
+              "canonicalReference": "@storm-stack/utilities!ISequenced#sequence:member",
               "docComment": "/**\n * The sequence number (version, or event counter, etc.) of the record\n */\n",
               "excerptTokens": [
                 {
@@ -1919,7 +1919,7 @@
         },
         {
           "kind": "Variable",
-          "canonicalReference": "@storm-software/utilities!isError:var",
+          "canonicalReference": "@storm-stack/utilities!isError:var",
           "docComment": "/**\n * Checks if `obj` is an `Error`, `EvalError`, `RangeError`, `ReferenceError`, `SyntaxError`, `TypeError`, or `URIError` object.\n *\n * @param obj - The obj to check.\n *\n * @returns Returns `true` if `obj` is an error object, else `false`.\n *\n * @example\n * ```typescript\n * isError(new Error)\n * // => true\n *\n * isError(Error)\n * // => false\n * ```\n *\n */\n",
           "excerptTokens": [
             {
@@ -1933,7 +1933,7 @@
             {
               "kind": "Reference",
               "text": "obj",
-              "canonicalReference": "@storm-software/utilities!~obj"
+              "canonicalReference": "@storm-stack/utilities!~obj"
             },
             {
               "kind": "Content",
@@ -1956,7 +1956,7 @@
         },
         {
           "kind": "Variable",
-          "canonicalReference": "@storm-software/utilities!isFloat:var",
+          "canonicalReference": "@storm-stack/utilities!isFloat:var",
           "docComment": "/**\n * Check if the provided value's type is a float\n *\n * @param value - The value to type check\n *\n * @returns An indicator specifying if the value provided is of type `number` and is a float\n */\n",
           "excerptTokens": [
             {
@@ -1970,7 +1970,7 @@
             {
               "kind": "Reference",
               "text": "value",
-              "canonicalReference": "@storm-software/utilities!~value"
+              "canonicalReference": "@storm-stack/utilities!~value"
             },
             {
               "kind": "Content",
@@ -1988,7 +1988,7 @@
         },
         {
           "kind": "Variable",
-          "canonicalReference": "@storm-software/utilities!isFunction:var",
+          "canonicalReference": "@storm-stack/utilities!isFunction:var",
           "docComment": "/**\n * Check if the provided value's type is `Function`\n *\n * @param value - The value to type check\n *\n * @returns An indicator specifying if the value provided is of type `Function`\n */\n",
           "excerptTokens": [
             {
@@ -2002,7 +2002,7 @@
             {
               "kind": "Reference",
               "text": "value",
-              "canonicalReference": "@storm-software/utilities!~value"
+              "canonicalReference": "@storm-stack/utilities!~value"
             },
             {
               "kind": "Content",
@@ -2020,7 +2020,7 @@
         },
         {
           "kind": "Variable",
-          "canonicalReference": "@storm-software/utilities!isInt:var",
+          "canonicalReference": "@storm-stack/utilities!isInt:var",
           "docComment": "/**\n * Check if the provided value's type is an integer\n *\n * @param value - The value to type check\n *\n * @returns An indicator specifying if the value provided is of type `number` and is an integer\n */\n",
           "excerptTokens": [
             {
@@ -2034,7 +2034,7 @@
             {
               "kind": "Reference",
               "text": "value",
-              "canonicalReference": "@storm-software/utilities!~value"
+              "canonicalReference": "@storm-stack/utilities!~value"
             },
             {
               "kind": "Content",
@@ -2052,7 +2052,7 @@
         },
         {
           "kind": "Variable",
-          "canonicalReference": "@storm-software/utilities!isMergeableObject:var",
+          "canonicalReference": "@storm-stack/utilities!isMergeableObject:var",
           "docComment": "",
           "excerptTokens": [
             {
@@ -2075,7 +2075,7 @@
         },
         {
           "kind": "Variable",
-          "canonicalReference": "@storm-software/utilities!isNonNullObject:var",
+          "canonicalReference": "@storm-stack/utilities!isNonNullObject:var",
           "docComment": "/**\n * Check if the provided value's type is `Object` and is not `null` or `undefined`\n *\n * @param value - The value to type check\n *\n * @returns An indicator specifying if the value provided is of type `Object` and is not `null` or `undefined`\n */\n",
           "excerptTokens": [
             {
@@ -2089,7 +2089,7 @@
             {
               "kind": "Reference",
               "text": "value",
-              "canonicalReference": "@storm-software/utilities!~value"
+              "canonicalReference": "@storm-stack/utilities!~value"
             },
             {
               "kind": "Content",
@@ -2107,7 +2107,7 @@
         },
         {
           "kind": "Variable",
-          "canonicalReference": "@storm-software/utilities!isNotEmpty:var",
+          "canonicalReference": "@storm-stack/utilities!isNotEmpty:var",
           "docComment": "/**\n * The inverse of the `isEmptyObject` function\n *\n * @param value - The value to type check\n *\n * @returns An indicator specifying if the value provided is **NOT** of type `null` or `undefined` or `{}`\n */\n",
           "excerptTokens": [
             {
@@ -2121,7 +2121,7 @@
             {
               "kind": "Reference",
               "text": "value",
-              "canonicalReference": "@storm-software/utilities!~value"
+              "canonicalReference": "@storm-stack/utilities!~value"
             },
             {
               "kind": "Content",
@@ -2139,7 +2139,7 @@
         },
         {
           "kind": "Variable",
-          "canonicalReference": "@storm-software/utilities!isNull:var",
+          "canonicalReference": "@storm-stack/utilities!isNull:var",
           "docComment": "/**\n * Check if the provided value's type is `null`\n *\n * @param value - The value to type check\n *\n * @returns An indicator specifying if the value provided is of type `null`\n */\n",
           "excerptTokens": [
             {
@@ -2153,7 +2153,7 @@
             {
               "kind": "Reference",
               "text": "value",
-              "canonicalReference": "@storm-software/utilities!~value"
+              "canonicalReference": "@storm-stack/utilities!~value"
             },
             {
               "kind": "Content",
@@ -2171,7 +2171,7 @@
         },
         {
           "kind": "Variable",
-          "canonicalReference": "@storm-software/utilities!isNumber:var",
+          "canonicalReference": "@storm-stack/utilities!isNumber:var",
           "docComment": "/**\n * Check if the provided value's type is `number`\n *\n * @param value - The value to type check\n *\n * @returns An indicator specifying if the value provided is of type `number`\n */\n",
           "excerptTokens": [
             {
@@ -2185,7 +2185,7 @@
             {
               "kind": "Reference",
               "text": "value",
-              "canonicalReference": "@storm-software/utilities!~value"
+              "canonicalReference": "@storm-stack/utilities!~value"
             },
             {
               "kind": "Content",
@@ -2203,7 +2203,7 @@
         },
         {
           "kind": "Variable",
-          "canonicalReference": "@storm-software/utilities!isObject:var",
+          "canonicalReference": "@storm-stack/utilities!isObject:var",
           "docComment": "/**\n * Check if the provided value's type is `Object`\n *\n * @param value - The value to type check\n *\n * @returns An indicator specifying if the value provided is of type `Object`\n */\n",
           "excerptTokens": [
             {
@@ -2217,7 +2217,7 @@
             {
               "kind": "Reference",
               "text": "value",
-              "canonicalReference": "@storm-software/utilities!~value"
+              "canonicalReference": "@storm-stack/utilities!~value"
             },
             {
               "kind": "Content",
@@ -2235,7 +2235,7 @@
         },
         {
           "kind": "Variable",
-          "canonicalReference": "@storm-software/utilities!isObjectLike:var",
+          "canonicalReference": "@storm-stack/utilities!isObjectLike:var",
           "docComment": "/**\n * Checks if `value` is object-like. A value is object-like if it's not `null` and has a `typeof` result of \"object\".\n *\n * @param value - The value to check.\n *\n * @returns Returns `true` if `value` is object-like, else `false`.\n *\n * @example\n * ```typescript\n * isObjectLike({})\n * // => true\n *\n * isObjectLike([1, 2, 3])\n * // => true\n *\n * isObjectLike(Function)\n * // => false\n *\n * isObjectLike(null)\n * // => false\n * ```\n *\n */\n",
           "excerptTokens": [
             {
@@ -2258,7 +2258,7 @@
         },
         {
           "kind": "Variable",
-          "canonicalReference": "@storm-software/utilities!isPlainObject:var",
+          "canonicalReference": "@storm-stack/utilities!isPlainObject:var",
           "docComment": "/**\n * Checks if `obj` is a plain object, that is, an object created by the `Object` constructor or one with a `[[Prototype]]` of `null`.\n *\n * @param obj - The value to check.\n *\n * @returns Returns `true` if `obj` is a plain object, else `false`.\n *\n * @example\n * ```typescript\n * function Foo() {\n *   this.a = 1\n * }\n *\n * isPlainObject(new Foo)\n * // => false\n *\n * isPlainObject([1, 2, 3])\n * // => false\n *\n * isPlainObject({ 'x': 0, 'y': 0 })\n * // => true\n *\n * isPlainObject(Object.create(null))\n * // => true\n * ```\n *\n */\n",
           "excerptTokens": [
             {
@@ -2281,7 +2281,7 @@
         },
         {
           "kind": "Variable",
-          "canonicalReference": "@storm-software/utilities!isPrimitive:var",
+          "canonicalReference": "@storm-stack/utilities!isPrimitive:var",
           "docComment": "/**\n * Check if the provided value's type is a built-in primitive\n *\n * @remarks\n *\n * The full list of primitive types includes: * `number` * `string` * `boolean` * `symbol` * `bigint` * `undefined` * `null`\n *\n * @param obj - The value to type check\n *\n * @returns An indicator specifying if the value provided is a built-in primitive\n */\n",
           "excerptTokens": [
             {
@@ -2304,7 +2304,7 @@
         },
         {
           "kind": "Variable",
-          "canonicalReference": "@storm-software/utilities!isPromise:var",
+          "canonicalReference": "@storm-stack/utilities!isPromise:var",
           "docComment": "/**\n * Check if the provided value's type is a promise\n *\n * @param value - The value to type check\n *\n * @returns An indicator specifying if the object provided is of type a promise\n */\n",
           "excerptTokens": [
             {
@@ -2318,7 +2318,7 @@
             {
               "kind": "Reference",
               "text": "value",
-              "canonicalReference": "@storm-software/utilities!~value"
+              "canonicalReference": "@storm-stack/utilities!~value"
             },
             {
               "kind": "Content",
@@ -2345,7 +2345,7 @@
         },
         {
           "kind": "Variable",
-          "canonicalReference": "@storm-software/utilities!isReactElement:var",
+          "canonicalReference": "@storm-stack/utilities!isReactElement:var",
           "docComment": "/**\n * Check if the provided value is a {@link https://github.com/facebook/react/blob/b5ac963fb791d1298e7f396236383bc955f916c1/src/isomorphic/classic/element/ReactElement.js#L21-L25 React Element}.\n *\n * @param value - The value to type check\n *\n * @returns An indicator specifying if the value provided is of type {@link https://github.com/facebook/react/blob/b5ac963fb791d1298e7f396236383bc955f916c1/src/isomorphic/classic/element/ReactElement.js#L21-L25 React Element}\n */\n",
           "excerptTokens": [
             {
@@ -2368,7 +2368,7 @@
         },
         {
           "kind": "Variable",
-          "canonicalReference": "@storm-software/utilities!isRef:var",
+          "canonicalReference": "@storm-stack/utilities!isRef:var",
           "docComment": "/**\n * Check if the provided value's type is a ref\n *\n * @param value - The value to type check\n *\n * @returns An indicator specifying if the object provided is of type ref\n */\n",
           "excerptTokens": [
             {
@@ -2382,7 +2382,7 @@
             {
               "kind": "Reference",
               "text": "value",
-              "canonicalReference": "@storm-software/utilities!~value"
+              "canonicalReference": "@storm-stack/utilities!~value"
             },
             {
               "kind": "Content",
@@ -2391,7 +2391,7 @@
             {
               "kind": "Reference",
               "text": "RefObject",
-              "canonicalReference": "@storm-software/utilities!RefObject:interface"
+              "canonicalReference": "@storm-stack/utilities!RefObject:interface"
             },
             {
               "kind": "Content",
@@ -2409,7 +2409,7 @@
         },
         {
           "kind": "Variable",
-          "canonicalReference": "@storm-software/utilities!isRuntimeClient:var",
+          "canonicalReference": "@storm-stack/utilities!isRuntimeClient:var",
           "docComment": "/**\n * The function checks if the code is running in the browser (and not on the server).\n */\n",
           "excerptTokens": [
             {
@@ -2432,7 +2432,7 @@
         },
         {
           "kind": "Variable",
-          "canonicalReference": "@storm-software/utilities!isRuntimeServer:var",
+          "canonicalReference": "@storm-stack/utilities!isRuntimeServer:var",
           "docComment": "/**\n * The function checks if the code is running on the server (and not in the browser).\n */\n",
           "excerptTokens": [
             {
@@ -2455,7 +2455,7 @@
         },
         {
           "kind": "Variable",
-          "canonicalReference": "@storm-software/utilities!isSelectOption:var",
+          "canonicalReference": "@storm-stack/utilities!isSelectOption:var",
           "docComment": "/**\n * Check if the provided value's type is SelectOption\n *\n * @param value - The value to type check\n *\n * @returns An indicator specifying if the object provided is of type SelectOption\n */\n",
           "excerptTokens": [
             {
@@ -2469,7 +2469,7 @@
             {
               "kind": "Reference",
               "text": "value",
-              "canonicalReference": "@storm-software/utilities!~value"
+              "canonicalReference": "@storm-stack/utilities!~value"
             },
             {
               "kind": "Content",
@@ -2478,7 +2478,7 @@
             {
               "kind": "Reference",
               "text": "SelectOption",
-              "canonicalReference": "@storm-software/utilities!SelectOption:interface"
+              "canonicalReference": "@storm-stack/utilities!SelectOption:interface"
             }
           ],
           "fileUrlPath": "packages/utilities/src/type-checks/is-select-option.ts",
@@ -2492,7 +2492,7 @@
         },
         {
           "kind": "Variable",
-          "canonicalReference": "@storm-software/utilities!isSet:var",
+          "canonicalReference": "@storm-stack/utilities!isSet:var",
           "docComment": "/**\n * The inverse of the `isEmpty` function\n *\n * @param value - The value to type check\n *\n * @returns An indicator specifying if the value provided is **NOT** of type `null` or `undefined`\n */\n",
           "excerptTokens": [
             {
@@ -2506,7 +2506,7 @@
             {
               "kind": "Reference",
               "text": "value",
-              "canonicalReference": "@storm-software/utilities!~value"
+              "canonicalReference": "@storm-stack/utilities!~value"
             },
             {
               "kind": "Content",
@@ -2524,7 +2524,7 @@
         },
         {
           "kind": "Variable",
-          "canonicalReference": "@storm-software/utilities!isSetObject:var",
+          "canonicalReference": "@storm-stack/utilities!isSetObject:var",
           "docComment": "/**\n * Check if the provided value's type is NOT `null` nor `undefined` nor `{}`\n *\n * @param value - The value to type check\n *\n * @returns An indicator specifying if the value provided is NOT `null` nor `undefined` nor `{}`\n */\n",
           "excerptTokens": [
             {
@@ -2538,7 +2538,7 @@
             {
               "kind": "Reference",
               "text": "value",
-              "canonicalReference": "@storm-software/utilities!~value"
+              "canonicalReference": "@storm-stack/utilities!~value"
             },
             {
               "kind": "Content",
@@ -2556,7 +2556,7 @@
         },
         {
           "kind": "Variable",
-          "canonicalReference": "@storm-software/utilities!isSetString:var",
+          "canonicalReference": "@storm-stack/utilities!isSetString:var",
           "docComment": "/**\n * Determine if the type is string and is not empty (length greater than zero)\n *\n * @param value - The value to type check\n *\n * @returns An indicator specifying if the value provided is of type `string` and length greater than zero\n */\n",
           "excerptTokens": [
             {
@@ -2570,7 +2570,7 @@
             {
               "kind": "Reference",
               "text": "value",
-              "canonicalReference": "@storm-software/utilities!~value"
+              "canonicalReference": "@storm-stack/utilities!~value"
             },
             {
               "kind": "Content",
@@ -2588,7 +2588,7 @@
         },
         {
           "kind": "Variable",
-          "canonicalReference": "@storm-software/utilities!isString:var",
+          "canonicalReference": "@storm-stack/utilities!isString:var",
           "docComment": "/**\n * Determine if the type is string\n *\n * @param value - The value to type check\n *\n * @returns An indicator specifying if the value provided is of type `string`\n */\n",
           "excerptTokens": [
             {
@@ -2602,7 +2602,7 @@
             {
               "kind": "Reference",
               "text": "value",
-              "canonicalReference": "@storm-software/utilities!~value"
+              "canonicalReference": "@storm-stack/utilities!~value"
             },
             {
               "kind": "Content",
@@ -2620,7 +2620,7 @@
         },
         {
           "kind": "Variable",
-          "canonicalReference": "@storm-software/utilities!isSymbol:var",
+          "canonicalReference": "@storm-stack/utilities!isSymbol:var",
           "docComment": "/**\n * Check if the provided value's type is `Symbol`\n *\n * @param value - The value to type check\n *\n * @returns An indicator specifying if the value provided is of type `Symbol`\n */\n",
           "excerptTokens": [
             {
@@ -2634,7 +2634,7 @@
             {
               "kind": "Reference",
               "text": "value",
-              "canonicalReference": "@storm-software/utilities!~value"
+              "canonicalReference": "@storm-stack/utilities!~value"
             },
             {
               "kind": "Content",
@@ -2652,7 +2652,7 @@
         },
         {
           "kind": "Variable",
-          "canonicalReference": "@storm-software/utilities!isTyped:var",
+          "canonicalReference": "@storm-stack/utilities!isTyped:var",
           "docComment": "/**\n * Check if the provided value has a `__typename` property\n *\n * @param value - The value to type check\n *\n * @returns An indicator specifying if the value provided has a `__typename` property\n */\n",
           "excerptTokens": [
             {
@@ -2666,7 +2666,7 @@
             {
               "kind": "Reference",
               "text": "value",
-              "canonicalReference": "@storm-software/utilities!~value"
+              "canonicalReference": "@storm-stack/utilities!~value"
             },
             {
               "kind": "Content",
@@ -2675,7 +2675,7 @@
             {
               "kind": "Reference",
               "text": "ITyped",
-              "canonicalReference": "@storm-software/utilities!ITyped:interface"
+              "canonicalReference": "@storm-stack/utilities!ITyped:interface"
             }
           ],
           "fileUrlPath": "packages/utilities/src/type-checks/is-typed.ts",
@@ -2689,7 +2689,7 @@
         },
         {
           "kind": "Variable",
-          "canonicalReference": "@storm-software/utilities!isUndefined:var",
+          "canonicalReference": "@storm-stack/utilities!isUndefined:var",
           "docComment": "/**\n * Check if the provided value's type is `undefined`\n *\n * @param value - The value to type check\n *\n * @returns An indicator specifying if the value provided is of type `undefined`\n */\n",
           "excerptTokens": [
             {
@@ -2712,7 +2712,7 @@
         },
         {
           "kind": "Interface",
-          "canonicalReference": "@storm-software/utilities!ITyped:interface",
+          "canonicalReference": "@storm-stack/utilities!ITyped:interface",
           "docComment": "",
           "excerptTokens": [
             {
@@ -2727,7 +2727,7 @@
           "members": [
             {
               "kind": "PropertySignature",
-              "canonicalReference": "@storm-software/utilities!ITyped#__typename:member",
+              "canonicalReference": "@storm-stack/utilities!ITyped#__typename:member",
               "docComment": "/**\n * The type of the record\n */\n",
               "excerptTokens": [
                 {
@@ -2757,7 +2757,7 @@
         },
         {
           "kind": "Interface",
-          "canonicalReference": "@storm-software/utilities!IVersioned:interface",
+          "canonicalReference": "@storm-stack/utilities!IVersioned:interface",
           "docComment": "",
           "excerptTokens": [
             {
@@ -2772,7 +2772,7 @@
           "members": [
             {
               "kind": "PropertySignature",
-              "canonicalReference": "@storm-software/utilities!IVersioned#version:member",
+              "canonicalReference": "@storm-stack/utilities!IVersioned#version:member",
               "docComment": "",
               "excerptTokens": [
                 {
@@ -2802,7 +2802,7 @@
         },
         {
           "kind": "Variable",
-          "canonicalReference": "@storm-software/utilities!kebabCase:var",
+          "canonicalReference": "@storm-stack/utilities!kebabCase:var",
           "docComment": "/**\n * Convert the input string to kebab case.\n *\n * @remarks\n *\n * \"this-is-an-example\"\n *\n * @param input - The input string.\n *\n * @returns The kebab-cased string.\n */\n",
           "excerptTokens": [
             {
@@ -2825,7 +2825,7 @@
         },
         {
           "kind": "TypeAlias",
-          "canonicalReference": "@storm-software/utilities!LiteralUnion:type",
+          "canonicalReference": "@storm-stack/utilities!LiteralUnion:type",
           "docComment": "",
           "excerptTokens": [
             {
@@ -2843,7 +2843,7 @@
             {
               "kind": "Reference",
               "text": "Primitive",
-              "canonicalReference": "@storm-software/utilities!Primitive:type"
+              "canonicalReference": "@storm-stack/utilities!Primitive:type"
             },
             {
               "kind": "Content",
@@ -2892,7 +2892,7 @@
         },
         {
           "kind": "Variable",
-          "canonicalReference": "@storm-software/utilities!lowerCaseFirst:var",
+          "canonicalReference": "@storm-stack/utilities!lowerCaseFirst:var",
           "docComment": "/**\n * Lower case the first character of an input string.\n *\n * @remarks\n *\n * \"tHISISANEXAMPLE\"\n *\n * @param input - The input string.\n *\n * @returns The lower-cased string.\n */\n",
           "excerptTokens": [
             {
@@ -2915,7 +2915,7 @@
         },
         {
           "kind": "TypeAlias",
-          "canonicalReference": "@storm-software/utilities!MaybePromise:type",
+          "canonicalReference": "@storm-stack/utilities!MaybePromise:type",
           "docComment": "",
           "excerptTokens": [
             {
@@ -2963,7 +2963,7 @@
         },
         {
           "kind": "TypeAlias",
-          "canonicalReference": "@storm-software/utilities!NestedValue:type",
+          "canonicalReference": "@storm-stack/utilities!NestedValue:type",
           "docComment": "",
           "excerptTokens": [
             {
@@ -2993,7 +2993,7 @@
             {
               "kind": "Reference",
               "text": "$NestedValue",
-              "canonicalReference": "@storm-software/utilities!$NestedValue:var"
+              "canonicalReference": "@storm-stack/utilities!$NestedValue:var"
             },
             {
               "kind": "Content",
@@ -3027,7 +3027,7 @@
         },
         {
           "kind": "TypeAlias",
-          "canonicalReference": "@storm-software/utilities!Newable:type",
+          "canonicalReference": "@storm-stack/utilities!Newable:type",
           "docComment": "",
           "excerptTokens": [
             {
@@ -3066,7 +3066,7 @@
         },
         {
           "kind": "Variable",
-          "canonicalReference": "@storm-software/utilities!NEWLINE_STRING:var",
+          "canonicalReference": "@storm-stack/utilities!NEWLINE_STRING:var",
           "docComment": "",
           "excerptTokens": [
             {
@@ -3089,7 +3089,7 @@
         },
         {
           "kind": "TypeAlias",
-          "canonicalReference": "@storm-software/utilities!NonUndefined:type",
+          "canonicalReference": "@storm-stack/utilities!NonUndefined:type",
           "docComment": "",
           "excerptTokens": [
             {
@@ -3128,7 +3128,7 @@
         },
         {
           "kind": "Variable",
-          "canonicalReference": "@storm-software/utilities!noop:var",
+          "canonicalReference": "@storm-stack/utilities!noop:var",
           "docComment": "/**\n * A no op, or no-op, function for no operation\n *\n * @remarks\n *\n * Please see {@link https://dev.to/praneshpsg239/noop-in-javascript-478h this article} for more information.\n *\n * @param params - An optional parameter passed to the function. It can be anything (but is not used in any way)\n */\n",
           "excerptTokens": [
             {
@@ -3151,7 +3151,7 @@
         },
         {
           "kind": "Variable",
-          "canonicalReference": "@storm-software/utilities!pascalCase:var",
+          "canonicalReference": "@storm-stack/utilities!pascalCase:var",
           "docComment": "/**\n * Convert the input string to pascal case.\n *\n * @remarks\n *\n * \"ThisIsAnExample\"\n *\n * @param input - The input string.\n *\n * @returns The pascal-cased string.\n */\n",
           "excerptTokens": [
             {
@@ -3174,7 +3174,7 @@
         },
         {
           "kind": "Variable",
-          "canonicalReference": "@storm-software/utilities!periodSplit:var",
+          "canonicalReference": "@storm-stack/utilities!periodSplit:var",
           "docComment": "/**\n * Make all characters lowercase and add a period in between each word\n *\n * @remarks\n *\n * \"this.is.an.example\"\n *\n * @param input - The input string.\n *\n * @returns The period-split string.\n */\n",
           "excerptTokens": [
             {
@@ -3197,7 +3197,7 @@
         },
         {
           "kind": "TypeAlias",
-          "canonicalReference": "@storm-software/utilities!Primitive:type",
+          "canonicalReference": "@storm-stack/utilities!Primitive:type",
           "docComment": "/**\n * Matches any [primitive value](https://developer.mozilla.org/en-US/docs/Glossary/Primitive).\n *\n * @category Type\n */\n",
           "excerptTokens": [
             {
@@ -3223,7 +3223,7 @@
         },
         {
           "kind": "Variable",
-          "canonicalReference": "@storm-software/utilities!propertyExists:var",
+          "canonicalReference": "@storm-stack/utilities!propertyExists:var",
           "docComment": "/**\n * Check if the provided object has the provided property\n *\n * @param object - The object to check\n *\n * @param propertyKey - The property to check\n *\n * @returns An indicator specifying if the object has the provided property\n */\n",
           "excerptTokens": [
             {
@@ -3255,7 +3255,7 @@
         },
         {
           "kind": "Variable",
-          "canonicalReference": "@storm-software/utilities!propertyUnsafe:var",
+          "canonicalReference": "@storm-stack/utilities!propertyUnsafe:var",
           "docComment": "/**\n * Check if the provided object has the provided property and if it's safe to merge\n *\n * @param object - The object to check\n *\n * @param propertyKey - The property to check\n *\n * @returns An indicator specifying if the object has the provided property and if it's safe to merge\n */\n",
           "excerptTokens": [
             {
@@ -3287,7 +3287,7 @@
         },
         {
           "kind": "TypeAlias",
-          "canonicalReference": "@storm-software/utilities!ReducerFunction:type",
+          "canonicalReference": "@storm-stack/utilities!ReducerFunction:type",
           "docComment": "",
           "excerptTokens": [
             {
@@ -3337,7 +3337,7 @@
         },
         {
           "kind": "Interface",
-          "canonicalReference": "@storm-software/utilities!RefObject:interface",
+          "canonicalReference": "@storm-stack/utilities!RefObject:interface",
           "docComment": "",
           "excerptTokens": [
             {
@@ -3365,7 +3365,7 @@
           "members": [
             {
               "kind": "PropertySignature",
-              "canonicalReference": "@storm-software/utilities!RefObject#current:member",
+              "canonicalReference": "@storm-stack/utilities!RefObject#current:member",
               "docComment": "",
               "excerptTokens": [
                 {
@@ -3395,7 +3395,7 @@
         },
         {
           "kind": "TypeAlias",
-          "canonicalReference": "@storm-software/utilities!RequiredKeysOf:type",
+          "canonicalReference": "@storm-stack/utilities!RequiredKeysOf:type",
           "docComment": "/**\n * Extract all required keys from the given type.\n *\n * @remarks\n *\n * This is useful when you want to create a new type that contains different type values for the required keys only or use the list of keys for validation purposes, etc...  @category Utilities\n */\n",
           "excerptTokens": [
             {
@@ -3456,7 +3456,7 @@
         },
         {
           "kind": "TypeAlias",
-          "canonicalReference": "@storm-software/utilities!Rollback:type",
+          "canonicalReference": "@storm-stack/utilities!Rollback:type",
           "docComment": "",
           "excerptTokens": [
             {
@@ -3487,7 +3487,7 @@
         },
         {
           "kind": "Interface",
-          "canonicalReference": "@storm-software/utilities!SelectOption:interface",
+          "canonicalReference": "@storm-stack/utilities!SelectOption:interface",
           "docComment": "",
           "excerptTokens": [
             {
@@ -3502,7 +3502,7 @@
           "members": [
             {
               "kind": "PropertySignature",
-              "canonicalReference": "@storm-software/utilities!SelectOption#disabled:member",
+              "canonicalReference": "@storm-stack/utilities!SelectOption#disabled:member",
               "docComment": "/**\n * Is the option value valid for selection in the dropdown\n */\n",
               "excerptTokens": [
                 {
@@ -3529,7 +3529,7 @@
             },
             {
               "kind": "PropertySignature",
-              "canonicalReference": "@storm-software/utilities!SelectOption#name:member",
+              "canonicalReference": "@storm-stack/utilities!SelectOption#name:member",
               "docComment": "/**\n * The string value to display in the field\n */\n",
               "excerptTokens": [
                 {
@@ -3556,7 +3556,7 @@
             },
             {
               "kind": "PropertySignature",
-              "canonicalReference": "@storm-software/utilities!SelectOption#selected:member",
+              "canonicalReference": "@storm-stack/utilities!SelectOption#selected:member",
               "docComment": "/**\n * Sets or retrieves whether the option in the list box is the default item.\n */\n",
               "excerptTokens": [
                 {
@@ -3583,7 +3583,7 @@
             },
             {
               "kind": "PropertySignature",
-              "canonicalReference": "@storm-software/utilities!SelectOption#value:member",
+              "canonicalReference": "@storm-stack/utilities!SelectOption#value:member",
               "docComment": "/**\n * The value stored behind the scenes when selected\n */\n",
               "excerptTokens": [
                 {
@@ -3613,7 +3613,7 @@
         },
         {
           "kind": "TypeAlias",
-          "canonicalReference": "@storm-software/utilities!SetRequired:type",
+          "canonicalReference": "@storm-stack/utilities!SetRequired:type",
           "docComment": "/**\n * Create a type that makes the given keys required. The remaining keys are kept as is. The sister of the `SetOptional` type.\n *\n * @remarks\n *\n * Use-case: You want to define a single model where the only thing that changes is whether or not some of the keys are required.  @category Object\n */\n",
           "excerptTokens": [
             {
@@ -3635,7 +3635,7 @@
             {
               "kind": "Reference",
               "text": "Simplify",
-              "canonicalReference": "@storm-software/utilities!Simplify:type"
+              "canonicalReference": "@storm-stack/utilities!Simplify:type"
             },
             {
               "kind": "Content",
@@ -3644,7 +3644,7 @@
             {
               "kind": "Reference",
               "text": "Except",
-              "canonicalReference": "@storm-software/utilities!Except:type"
+              "canonicalReference": "@storm-stack/utilities!Except:type"
             },
             {
               "kind": "Content",
@@ -3707,7 +3707,7 @@
         },
         {
           "kind": "Variable",
-          "canonicalReference": "@storm-software/utilities!sha256:var",
+          "canonicalReference": "@storm-stack/utilities!sha256:var",
           "docComment": "",
           "excerptTokens": [
             {
@@ -3739,7 +3739,7 @@
         },
         {
           "kind": "TypeAlias",
-          "canonicalReference": "@storm-software/utilities!Simplify:type",
+          "canonicalReference": "@storm-stack/utilities!Simplify:type",
           "docComment": "/**\n * Useful to flatten the type output to improve type hints shown in editors. And also to transform an interface into a type to aide with assignability.\n *\n * @remarks\n *\n * If the type definition must be an interface (perhaps it was defined in a third-party npm package), then the `value` can be defined as `const value: Simplify<SomeInterface> = ...`. Then `value` will be assignable to the `fn` argument. Or the `value` can be cast as `Simplify<SomeInterface>` if you can't re-declare the `value`.  @link https://github.com/microsoft/TypeScript/issues/15300  @category Object\n */\n",
           "excerptTokens": [
             {
@@ -3778,7 +3778,7 @@
         },
         {
           "kind": "Variable",
-          "canonicalReference": "@storm-software/utilities!snakeCase:var",
+          "canonicalReference": "@storm-stack/utilities!snakeCase:var",
           "docComment": "/**\n * Convert the input string to snake case.\n *\n * @remarks\n *\n * \"this_is_an_example\"\n *\n * @param input - The input string.\n *\n * @param options - Options to control the behavior of the function.\n *\n * @returns The snake-cased string.\n */\n",
           "excerptTokens": [
             {
@@ -3801,7 +3801,7 @@
         },
         {
           "kind": "Variable",
-          "canonicalReference": "@storm-software/utilities!titleCase:var",
+          "canonicalReference": "@storm-stack/utilities!titleCase:var",
           "docComment": "/**\n * Convert the input string to title case.\n *\n * @remarks\n *\n * \"This Is An Example\"\n *\n * @param input - The input string.\n *\n * @returns The title cased string.\n */\n",
           "excerptTokens": [
             {
@@ -3824,7 +3824,7 @@
         },
         {
           "kind": "Variable",
-          "canonicalReference": "@storm-software/utilities!TYPE_ARGUMENTS:var",
+          "canonicalReference": "@storm-stack/utilities!TYPE_ARGUMENTS:var",
           "docComment": "",
           "excerptTokens": [
             {
@@ -3851,7 +3851,7 @@
         },
         {
           "kind": "Variable",
-          "canonicalReference": "@storm-software/utilities!TYPE_ARRAY:var",
+          "canonicalReference": "@storm-stack/utilities!TYPE_ARRAY:var",
           "docComment": "",
           "excerptTokens": [
             {
@@ -3878,7 +3878,7 @@
         },
         {
           "kind": "Variable",
-          "canonicalReference": "@storm-software/utilities!TYPE_MAP:var",
+          "canonicalReference": "@storm-stack/utilities!TYPE_MAP:var",
           "docComment": "",
           "excerptTokens": [
             {
@@ -3905,7 +3905,7 @@
         },
         {
           "kind": "Variable",
-          "canonicalReference": "@storm-software/utilities!TYPE_OBJECT:var",
+          "canonicalReference": "@storm-stack/utilities!TYPE_OBJECT:var",
           "docComment": "",
           "excerptTokens": [
             {
@@ -3932,7 +3932,7 @@
         },
         {
           "kind": "Variable",
-          "canonicalReference": "@storm-software/utilities!TYPE_SET:var",
+          "canonicalReference": "@storm-stack/utilities!TYPE_SET:var",
           "docComment": "",
           "excerptTokens": [
             {
@@ -3959,7 +3959,7 @@
         },
         {
           "kind": "Function",
-          "canonicalReference": "@storm-software/utilities!typeDetect:function(1)",
+          "canonicalReference": "@storm-stack/utilities!typeDetect:function(1)",
           "docComment": "",
           "excerptTokens": [
             {
@@ -4004,7 +4004,7 @@
         },
         {
           "kind": "Variable",
-          "canonicalReference": "@storm-software/utilities!upperCaseFirst:var",
+          "canonicalReference": "@storm-stack/utilities!upperCaseFirst:var",
           "docComment": "/**\n * Upper case the first character of an input string.\n *\n * @remarks\n *\n * \"Thisisanexample\"\n *\n * @param input - The input string.\n *\n * @returns The capitalized string.\n */\n",
           "excerptTokens": [
             {

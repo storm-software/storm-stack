@@ -6,13 +6,14 @@
   "sourceRoot": "packages/logging/src",
   "targets": {
     "build": {
-      "executor": "@storm-software/nx:ts-build",
+      "executor": "@storm-software/workspace-tools:tsup-node",
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/packages/logging",
         "tsConfig": "packages/logging/tsconfig.json",
         "project": "packages/logging/package.json",
-        "defaultConfiguration": "production"
+        "defaultConfiguration": "production",
+        "platform": "node"
       },
       "configurations": {
         "production": {

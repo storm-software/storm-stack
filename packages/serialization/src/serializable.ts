@@ -1,8 +1,4 @@
-import {
-  ClassTypeCheckable,
-  ITyped,
-  isFunction
-} from "@storm-software/utilities";
+import { ClassTypeCheckable, ITyped, isFunction } from "@storm-stack/utilities";
 import { register } from "./json-parser";
 import {
   ClassSerializable,
