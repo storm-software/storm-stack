@@ -5,6 +5,12 @@ settings:
   excludeLinksFromLockfile: false
 
 overrides:
+  "@storm-stack/utilities": workspace:*
+  "@storm-stack/unique-identifier": workspace:*
+  "@storm-stack/date-time": workspace:*
+  "@storm-stack/errors": workspace:*
+  "@storm-stack/serialization": workspace:*
+  "@storm-stack/logging": workspace:*
   "@storm-stack/file-system": workspace:*
 
 importers:
@@ -97,6 +103,9 @@ importers:
       eslint:
         specifier: ^8.55.0
         version: 8.55.0
+      husky:
+        specifier: ^8.0.3
+        version: 8.0.3
       jest:
         specifier: ^29.7.0
         version: 29.7.0(@types/node@20.9.0)(ts-node@10.9.1)
@@ -142,10 +151,6 @@ importers:
       verdaccio:
         specifier: ^5.27.1
         version: 5.27.1(typanion@3.14.0)
-    devDependencies:
-      husky:
-        specifier: ^8.0.3
-        version: 8.0.3
 
   packages/date-time:
     dependencies:
@@ -171,6 +176,9 @@ importers:
         specifier: ^7.5.4
         version: 7.5.4
     devDependencies:
+      "@types/node":
+        specifier: 20.9.0
+        version: 20.9.0
       "@types/semver":
         specifier: ^7.5.6
         version: 7.5.6
@@ -13716,7 +13724,7 @@ packages:
       }
     engines: { node: ">=14" }
     hasBin: true
-    dev: true
+    dev: false
 
   /hyphenate-style-name@1.0.4:
     resolution:
