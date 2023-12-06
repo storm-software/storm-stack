@@ -224,6 +224,11 @@ export const LokiConfigSchema: z.ZodObject<
 class StormLog implements IStormLog {
   addLogger(logger: ILogger): void;
   addWrappedLogger(wrapper: ILoggerWrapper): void;
+  static create(
+    config: StormConfig<"logging", LoggingConfig>,
+    name?: string,
+    additionalLoggers?: ILoggerWrapper[]
+  ): StormLog;
   static debug(message: any): void;
   debug(message: any): void;
   static error(message: any): void;

@@ -51,7 +51,7 @@ const counter = Math.floor(Math.random() * INITIAL_COUNT_MAX) + sequence;
  * @param input - String to hash
  * @returns The hashed string
  */
-function hash(input = ""): string {
+export function hash(input = ""): string {
   // Drop the first character because it will bias the histogram
   // to the left.
   return bufToBigInt(sha3_512(input)).toString(CUID_LARGE_LENGTH).slice(1);
@@ -91,8 +91,8 @@ function fingerprint(
       typeof global !== "undefined"
         ? global
         : typeof window !== "undefined"
-        ? window
-        : {}
+          ? window
+          : {}
   }
 ) {
   const globals = Object.keys(options.globalObj).toString();

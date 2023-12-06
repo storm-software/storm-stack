@@ -2512,6 +2512,106 @@
             },
             {
               "kind": "Method",
+              "canonicalReference": "@storm-stack/logging!StormLog.create:member(1)",
+              "docComment": "/**\n * Create a new instance of the logger\n *\n * @param config - The Storm config\n *\n * @param name - The name of the project to initialized the loggers for\n *\n * @param additionalLoggers - Additional loggers to use\n *\n * @returns The initialized logger\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "static create(config: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "StormConfig",
+                  "canonicalReference": "@storm-software/config-tools!StormConfig:type"
+                },
+                {
+                  "kind": "Content",
+                  "text": "<\"logging\", "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "LoggingConfig",
+                  "canonicalReference": "@storm-stack/logging!LoggingConfig:type"
+                },
+                {
+                  "kind": "Content",
+                  "text": ">"
+                },
+                {
+                  "kind": "Content",
+                  "text": ", name?: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "string"
+                },
+                {
+                  "kind": "Content",
+                  "text": ", additionalLoggers?: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "ILoggerWrapper",
+                  "canonicalReference": "@storm-stack/logging!ILoggerWrapper:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": "[]"
+                },
+                {
+                  "kind": "Content",
+                  "text": "): "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "StormLog",
+                  "canonicalReference": "@storm-stack/logging!StormLog:class"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isStatic": true,
+              "returnTypeTokenRange": {
+                "startIndex": 11,
+                "endIndex": 12
+              },
+              "releaseTag": "Public",
+              "isProtected": false,
+              "overloadIndex": 1,
+              "parameters": [
+                {
+                  "parameterName": "config",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 1,
+                    "endIndex": 5
+                  },
+                  "isOptional": false
+                },
+                {
+                  "parameterName": "name",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 6,
+                    "endIndex": 7
+                  },
+                  "isOptional": true
+                },
+                {
+                  "parameterName": "additionalLoggers",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 8,
+                    "endIndex": 10
+                  },
+                  "isOptional": true
+                }
+              ],
+              "isOptional": false,
+              "isAbstract": false,
+              "name": "create"
+            },
+            {
+              "kind": "Method",
               "canonicalReference": "@storm-stack/logging!StormLog#debug:member(1)",
               "docComment": "/**\n * Write a debug message to the logs.\n *\n * @param message - The message to be printed.\n *\n * @returns Either a promise that resolves to void or void.\n */\n",
               "excerptTokens": [
