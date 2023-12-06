@@ -1,4 +1,4 @@
-import { sha3_512 } from "@noble/hashes/sha3";
+import { hash } from "./hash";
 import { randomLetter } from "./random";
 
 /**
@@ -12,28 +12,6 @@ const INITIAL_COUNT_MAX = 476782367;
 const CUID_LARGE_LENGTH = 36;
 
 /**
- * Transform a Uint8Array into a BigInt.
- *
- * @remarks
- * Adapted from https://github.com/juanelas/bigint-conversion
- * MIT License Copyright (c) 2018 Juan Hernández Serrano
- *
- * @param buf - Buffer to transform
- * @returns A BigInt value
- */
-function bufToBigInt(buf: Uint8Array): BigInt {
-  let bits = 8n;
-
-  let value = 0n;
-  for (const i of buf.values()) {
-    const bi = BigInt(i);
-    value = (value << bits) + bi;
-  }
-
-  return value;
-}
-
-/**
  * The sequence of the current running generator.
  *
  * @default 1
@@ -44,18 +22,6 @@ const sequence = 1;
  * The counter used to help prevent collisions.
  */
 const counter = Math.floor(Math.random() * INITIAL_COUNT_MAX) + sequence;
-
-/**
- * Create a hash from a string.
- *
- * @param input - String to hash
- * @returns The hashed string
- */
-export function hash(input = ""): string {
-  // Drop the first character because it will bias the histogram
-  // to the left.
-  return bufToBigInt(sha3_512(input)).toString(CUID_LARGE_LENGTH).slice(1);
-}
 
 /**
  * Generate a random letter

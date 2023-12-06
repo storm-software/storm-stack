@@ -31,6 +31,11 @@ export { deconstructSnowflake };
 export { deconstructSnowflake as deconstructSnowflake_alias_1 };
 
 // @public
+function hash(input?: string | object): string;
+export { hash };
+export { hash as hash_alias_1 };
+
+// @public
 interface ISnowflakeGeneratorOptions {
   epoch: number;
   shardId: number;

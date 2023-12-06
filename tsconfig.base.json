@@ -10,6 +10,8 @@
       "@storm-stack/date-time/*": ["packages/date-time/src/*"],
       "@storm-stack/errors": ["packages/errors/src/index.ts"],
       "@storm-stack/errors/*": ["packages/errors/src/*"],
+      "@storm-stack/file-system": ["packages/file-system/src/index.ts"],
+      "@storm-stack/file-system/*": ["packages/file-system/src/*"],
       "@storm-stack/logging": ["packages/logging/src/index.ts"],
       "@storm-stack/logging/*": ["packages/logging/src/*"],
       "@storm-stack/serialization": ["packages/serialization/src/index.ts"],

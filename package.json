@@ -133,13 +133,14 @@
     ]
   },
   "pnpm": {
-    "override": {
+    "overrides": {
       "@storm-stack/utilities": "workspace:*",
       "@storm-stack/unique-identifier": "workspace:*",
       "@storm-stack/date-time": "workspace:*",
       "@storm-stack/errors": "workspace:*",
       "@storm-stack/serialization": "workspace:*",
-      "@storm-stack/logging": "workspace:*"
+      "@storm-stack/logging": "workspace:*",
+      "@storm-stack/file-system": "workspace:*"
     }
   },
   "triggerEmptyDevReleaseByIncrementingThisNumber": 0

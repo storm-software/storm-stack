@@ -6,7 +6,7 @@
  */
 export const isFunction = (
   value: unknown
-): value is (params?: unknown) => unknown => {
+): value is ((params?: unknown) => unknown) & Function => {
   try {
     return (
       value instanceof Function ||

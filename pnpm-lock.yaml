@@ -4,6 +4,9 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
+overrides:
+  "@storm-stack/file-system": workspace:*
+
 importers:
   .:
     dependencies:
@@ -94,9 +97,6 @@ importers:
       eslint:
         specifier: ^8.55.0
         version: 8.55.0
-      husky:
-        specifier: ^8.0.3
-        version: 8.0.3
       jest:
         specifier: ^29.7.0
         version: 29.7.0(@types/node@20.9.0)(ts-node@10.9.1)
@@ -142,6 +142,10 @@ importers:
       verdaccio:
         specifier: ^5.27.1
         version: 5.27.1(typanion@3.14.0)
+    devDependencies:
+      husky:
+        specifier: ^8.0.3
+        version: 8.0.3
 
   packages/date-time:
     dependencies:
@@ -160,6 +164,16 @@ importers:
       stacktracey:
         specifier: ^2.1.8
         version: 2.1.8
+
+  packages/file-system:
+    dependencies:
+      semver:
+        specifier: ^7.5.4
+        version: 7.5.4
+    devDependencies:
+      "@types/semver":
+        specifier: ^7.5.6
+        version: 7.5.6
 
   packages/logging:
     dependencies:
@@ -6728,7 +6742,6 @@ packages:
       {
         integrity: sha512-dn1l8LaMea/IjDoHNd9J52uBbInB796CDffS6VdIxvqYCPSG0V0DzHp76GpaWnlhg88uYyPbXCDIowa86ybd5A==
       }
-    dev: false
 
   /@types/stack-utils@2.0.3:
     resolution:
@@ -8487,7 +8500,7 @@ packages:
         integrity: sha512-qwVpFEHNfhYJIzNRBvd2C1kyo6jz3ZSMPyyuR47OPdiKWlbYnZNyDWuyR175qDnAJLiCo5fBBqPb3RiXgWlkOQ==
       }
     dependencies:
-      semver: 7.5.3
+      semver: 7.5.4
     dev: false
 
   /bundle-name@3.0.0:
@@ -13703,7 +13716,7 @@ packages:
       }
     engines: { node: ">=14" }
     hasBin: true
-    dev: false
+    dev: true
 
   /hyphenate-style-name@1.0.4:
     resolution:
@@ -15372,7 +15385,7 @@ packages:
       acorn: 8.11.2
       eslint-visitor-keys: 3.4.3
       espree: 9.6.1
-      semver: 7.5.3
+      semver: 7.5.4
     dev: false
 
   /jsonc-parser@3.2.0:
@@ -18880,7 +18893,7 @@ packages:
     dependencies:
       hosted-git-info: 7.0.1
       proc-log: 3.0.0
-      semver: 7.5.3
+      semver: 7.5.4
       validate-npm-package-name: 5.0.0
     dev: false
 
