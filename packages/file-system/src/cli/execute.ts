@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { StormLog } from "@storm-stack/logging";
+import { stringify } from "@storm-stack/serialization";
 import { isEmptyObject } from "@storm-stack/utilities/type-checks";
 import {
   ExecOptions,
@@ -7,7 +8,7 @@ import {
   execSync as extExecSync
 } from "child_process";
 import { Readable } from "node:stream";
-import { promisify } from "util";
+import { promisify } from "node:util";
 
 export const execute = (
   command: string,
@@ -18,8 +19,8 @@ export const execute = (
   try {
     StormLog.info(
       `Executing command: "${command}"${
-        !isEmptyObject(options) ? `, options: ${JSON.stringify(options)}` : ""
-      }${!isEmptyObject(env) ? `, env: ${JSON.stringify(env)}` : ""}${
+        !isEmptyObject(options) ? `, options: ${stringify(options)}` : ""
+      }${!isEmptyObject(env) ? `, env: ${stringify(env)}` : ""}${
         !stdio ? `, stdio: ${stdio}` : ""
       }`
     );

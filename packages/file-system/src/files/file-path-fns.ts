@@ -1,4 +1,4 @@
-import { dirname, isAbsolute, join, parse, sep } from "node:path";
+import { dirname, isAbsolute, join, parse, relative, sep } from "node:path";
 import { getWorkspaceRoot } from "./get-workspace-root";
 
 /**
@@ -27,25 +27,54 @@ export function findFilePath(filePath: string): string {
 }
 
 /**
+ * Check if a file path has a file name.
+ *
+ * @param filePath - The file path to process
+ * @returns An indicator specifying if the file path has a file name
+ */
+export function hasFileName(filePath: string): boolean {
+  return !!findFileName(filePath);
+}
+
+/**
+ * Check if a file path has a file path.
+ *
+ * @param filePath - The file path to process
+ * @returns An indicator specifying if the file path has a file path
+ */
+export function hasFilePath(filePath: string): boolean {
+  return !!findFilePath(filePath);
+}
+
+/**
  * Resolve the file path to an absolute path.
  *
  * @param filePath - The file path to process
  * @param basePath - The base path to use when resolving the file path
  * @returns The resolved file path
  */
-export function resolvePath(filePath: string, basePath?: string) {
+export function resolvePath(
+  filePath: string,
+  basePath: string = getWorkspaceRoot()
+) {
   if (isAbsolute(filePath)) {
     return filePath;
   } else if (basePath) {
     return join(dirname(basePath), filePath);
   } else {
-    const workspaceRoot = getWorkspaceRoot();
-    if (workspaceRoot) {
-      return join(workspaceRoot, filePath);
-    }
-
     return join(process.cwd(), filePath);
   }
+}
+
+/**
+ * Find the file path relative to the workspace root path.
+ *
+ * @param filePath - The file path to process
+ * @param basePath - The base path to use when resolving the file path
+ * @returns The resolved file path
+ */
+export function relativeToWorkspaceRoot(filePath: string) {
+  return relative(filePath, getWorkspaceRoot());
 }
 
 /**

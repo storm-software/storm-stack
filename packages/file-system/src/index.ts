@@ -8,5 +8,6 @@
  */
 
 export * from "./cli";
+export * from "./errors";
 export * from "./files";
 export * from "./package-management";

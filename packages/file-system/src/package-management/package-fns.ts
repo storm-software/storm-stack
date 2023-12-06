@@ -1,6 +1,7 @@
-import fs from "fs";
-import path from "path";
+import { basename, resolve } from "path";
 import { execute } from "../cli/execute";
+import { exists } from "../files/exists";
+import { joinPaths } from "../files/join-paths";
 
 export type PackageManagers = "npm" | "yarn" | "pnpm" | "bun";
 export const PackageManagers = {
@@ -14,10 +15,10 @@ function findUp(names: string[], cwd: string): string | undefined {
   let dir = cwd;
   // eslint-disable-next-line no-constant-condition
   while (true) {
-    const target = names.find(name => fs.existsSync(path.join(dir, name)));
+    const target = names.find(name => exists(joinPaths(dir, name)));
     if (target) return target;
 
-    const up = path.resolve(dir, "..");
+    const up = resolve(dir, "..");
     if (up === dir) return undefined; // it'll fail anyway
     dir = up;
   }
@@ -34,7 +35,7 @@ function getPackageManager(projectPath = "."): PackageManagers {
     return "pnpm";
   }
 
-  switch (path.basename(lockFile)) {
+  switch (basename(lockFile)) {
     case "yarn.lock":
       return "yarn";
     case "pnpm-lock.yaml":
@@ -102,7 +103,7 @@ export function ensurePackage(
   projectPath = ".",
   exactVersion = false
 ) {
-  const resolvePath = path.resolve(projectPath);
+  const resolvePath = resolve(projectPath);
   try {
     require.resolve(pkg, { paths: [resolvePath] });
   } catch (err) {
