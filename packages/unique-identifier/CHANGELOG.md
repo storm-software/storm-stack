@@ -1,3 +1,10 @@
+## [1.0.1](https://github.com/storm-software/storm-stack/compare/unique-identifier-v1.0.0...unique-identifier-v1.0.1) (2023-12-06)
+
+
+### Bug Fixes
+
+* **unique-identifier:** Ensure the `hash` function is exported from package ([426030a](https://github.com/storm-software/storm-stack/commit/426030a37f4ac27f5239380c4ccc7f4665a474ed))
+
 # [1.0.0](https://github.com/storm-software/storm-stack/compare/...unique-identifier-v1.0.0) (2023-12-05)
 
 
