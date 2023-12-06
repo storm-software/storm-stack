@@ -85,9 +85,9 @@ export class StormLog implements IStormLog {
    * construction calls with the `new` operator.
    */
   private constructor(
-    config: StormConfig<"logging", LoggingConfig>,
-    additionalLoggers: ILoggerWrapper[] = [],
-    name?: string
+    config: StormConfig,
+    name?: string,
+    additionalLoggers: ILoggerWrapper[] = []
   ) {
     const logger = StormLog.initialize(config, name);
 
@@ -99,6 +99,22 @@ export class StormLog implements IStormLog {
 
     this.#logLevel = getLogLevel(config.logLevel);
     this.#logLevelLabel = config.logLevel;
+  }
+
+  /**
+   * Create a new instance of the logger
+   *
+   * @param config - The Storm config
+   * @param name - The name of the project to initialized the loggers for
+   * @param additionalLoggers - Additional loggers to use
+   * @returns The initialized logger
+   */
+  public static create(
+    config: StormConfig<"logging", LoggingConfig>,
+    name?: string,
+    additionalLoggers: ILoggerWrapper[] = []
+  ) {
+    return new StormLog(config, name, additionalLoggers);
   }
 
   /**
