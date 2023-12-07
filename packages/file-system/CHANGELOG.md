@@ -1,3 +1,10 @@
+# [1.1.0](https://github.com/storm-software/storm-stack/compare/file-system-v1.0.0...file-system-v1.1.0) (2023-12-07)
+
+
+### Features
+
+* **file-system:** Added various new utility functions to handle file paths and read/write ([64c0e92](https://github.com/storm-software/storm-stack/commit/64c0e927c66317c31357cfbe2d3e03ff23b99ae7))
+
 # [1.0.0](https://github.com/storm-software/storm-stack/compare/...file-system-v1.0.0) (2023-12-06)
 
 
