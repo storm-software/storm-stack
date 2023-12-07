@@ -1,3 +1,10 @@
+## [1.1.1](https://github.com/storm-software/storm-stack/compare/serialization-v1.1.0...serialization-v1.1.1) (2023-12-07)
+
+
+### Bug Fixes
+
+* **errors:** Resolved issue with package.json properties ([54ce205](https://github.com/storm-software/storm-stack/commit/54ce2055e69954b9b3b9dd882292587840cc1b57))
+
 # [1.1.0](https://github.com/storm-software/storm-stack/compare/serialization-v1.0.0...serialization-v1.1.0) (2023-12-06)
 
 
