@@ -95,6 +95,42 @@ export { exists };
 export { exists as exists_alias_1 };
 export { exists as exists_alias_2 };
 
+// @public (undocumented)
+type FileSystemErrorCode =
+  | ErrorCode
+  | "invalid_file_path"
+  | "invalid_file_content"
+  | "file_does_not_exist"
+  | "file_write_failure";
+
+// @public (undocumented)
+const FileSystemErrorCode: {
+  invalid_file_path: FileSystemErrorCode;
+  invalid_file_content: FileSystemErrorCode;
+  file_does_not_exist: FileSystemErrorCode;
+  file_write_failure: FileSystemErrorCode;
+  file_read_failure: FileSystemErrorCode;
+  success: ErrorCode;
+  missing_issue_code: ErrorCode;
+  invalid_config: ErrorCode;
+  failed_to_load_file: ErrorCode;
+  missing_context: ErrorCode;
+  record_not_found: ErrorCode;
+  required_field_missing: ErrorCode;
+  database_query_error: ErrorCode;
+  model_validation_error: ErrorCode;
+  field_validation_error: ErrorCode;
+  invalid_parameter: ErrorCode;
+  invalid_request: ErrorCode;
+  type_error: ErrorCode;
+  processing_error: ErrorCode;
+  internal_server_error: ErrorCode;
+  user_not_logged_in: ErrorCode;
+  unknown_cause: ErrorCode;
+};
+export { FileSystemErrorCode };
+export { FileSystemErrorCode as FileSystemErrorCode_alias_1 };
+
 // @public
 function findFileName(filePath: string): string;
 export { findFileName };
@@ -116,6 +152,18 @@ export { getWorkspaceRoot };
 export { getWorkspaceRoot as getWorkspaceRoot_alias_1 };
 export { getWorkspaceRoot as getWorkspaceRoot_alias_2 };
 
+// @public
+function hasFileName(filePath: string): boolean;
+export { hasFileName };
+export { hasFileName as hasFileName_alias_1 };
+export { hasFileName as hasFileName_alias_2 };
+
+// @public
+function hasFilePath(filePath: string): boolean;
+export { hasFilePath };
+export { hasFilePath as hasFilePath_alias_1 };
+export { hasFilePath as hasFilePath_alias_2 };
+
 // @public (undocumented)
 function installPackage(
   pkg: string,
@@ -134,6 +182,12 @@ const isRelativeVersionKeyword: (val: string) => val is ReleaseType;
 export { isRelativeVersionKeyword };
 export { isRelativeVersionKeyword as isRelativeVersionKeyword_alias_1 };
 export { isRelativeVersionKeyword as isRelativeVersionKeyword_alias_2 };
+
+// @public
+const joinPaths: (...paths: string[]) => string;
+export { joinPaths };
+export { joinPaths as joinPaths_alias_1 };
+export { joinPaths as joinPaths_alias_2 };
 
 // @public (undocumented)
 type PackageManagers = "npm" | "yarn" | "pnpm" | "bun";
@@ -156,6 +210,24 @@ export { parseVersion as parseVersion_alias_1 };
 export { parseVersion as parseVersion_alias_2 };
 
 // @public
+const readFile: (filePath: string) => string;
+export { readFile };
+export { readFile as readFile_alias_1 };
+export { readFile as readFile_alias_2 };
+
+// @public
+const readFileAsync: (filePath: string) => Promise<string>;
+export { readFileAsync };
+export { readFileAsync as readFileAsync_alias_1 };
+export { readFileAsync as readFileAsync_alias_2 };
+
+// @public
+function relativeToWorkspaceRoot(filePath: string): string;
+export { relativeToWorkspaceRoot };
+export { relativeToWorkspaceRoot as relativeToWorkspaceRoot_alias_1 };
+export { relativeToWorkspaceRoot as relativeToWorkspaceRoot_alias_2 };
+
+// @public
 function renameFile(filePath: string, newFileName: string): string;
 export { renameFile };
 export { renameFile as renameFile_alias_1 };
@@ -166,6 +238,27 @@ function resolvePath(filePath: string, basePath?: string): string;
 export { resolvePath };
 export { resolvePath as resolvePath_alias_1 };
 export { resolvePath as resolvePath_alias_2 };
+
+// @public (undocumented)
+export class S3Bucket {
+  constructor(name: string);
+  // (undocumented)
+  get(): string;
+  // (undocumented)
+  name: string;
+}
+
+// @public
+const writeFile: (filePath: string, content: any) => void;
+export { writeFile };
+export { writeFile as writeFile_alias_1 };
+export { writeFile as writeFile_alias_2 };
+
+// @public
+const writeFileAsync: (filePath: string, content: any) => Promise<void>;
+export { writeFileAsync };
+export { writeFileAsync as writeFileAsync_alias_1 };
+export { writeFileAsync as writeFileAsync_alias_2 };
 
 // (No @packageDocumentation comment for this package)
 ```

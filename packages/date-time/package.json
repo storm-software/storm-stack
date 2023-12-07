@@ -3,6 +3,12 @@
   "version": "1.1.0",
   "private": false,
   "description": "This package includes a DateTime class, various utility functions for working with dates and times, and a number of formatting options.",
+  "repository": {
+    "type": "github",
+    "url": "https://github.com/storm-software/storm-stack.git",
+    "directory": "packages/date-time"
+  },
+  "type": "module",
   "dependencies": {
     "@js-temporal/polyfill": "^0.4.4"
   },

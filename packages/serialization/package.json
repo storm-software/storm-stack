@@ -3,6 +3,11 @@
   "version": "1.1.0",
   "private": false,
   "description": "A package used to support serializing and deserializing data sent between the client and the server.",
+  "repository": {
+    "type": "github",
+    "url": "https://github.com/storm-software/storm-stack.git",
+    "directory": "packages/serialization"
+  },
   "type": "module",
   "dependencies": {
     "qs": "^6.11.2",
