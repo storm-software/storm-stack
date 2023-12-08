@@ -1285,6 +1285,52 @@
         },
         {
           "kind": "Variable",
+          "canonicalReference": "@storm-stack/file-system!isDirectory:var",
+          "docComment": "/**\n * Check if the given path is a directory\n *\n * @param path - The location to check\n *\n * @param additionalPath - An optional additional path to add to the start of the path\n *\n * @returns An indicator specifying if the file is a directory\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "isDirectory: "
+            },
+            {
+              "kind": "Content",
+              "text": "(path: string, additionalPath?: string) => boolean"
+            }
+          ],
+          "fileUrlPath": "packages/file-system/src/files/is-file.ts",
+          "isReadonly": true,
+          "releaseTag": "Public",
+          "name": "isDirectory",
+          "variableTypeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 2
+          }
+        },
+        {
+          "kind": "Variable",
+          "canonicalReference": "@storm-stack/file-system!isFile:var",
+          "docComment": "/**\n * Check if the given path is a file\n *\n * @param path - The location to check\n *\n * @param additionalPath - An optional additional path to add to the start of the path\n *\n * @returns An indicator specifying if the file is a file\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "isFile: "
+            },
+            {
+              "kind": "Content",
+              "text": "(path: string, additionalPath?: string) => boolean"
+            }
+          ],
+          "fileUrlPath": "packages/file-system/src/files/is-file.ts",
+          "isReadonly": true,
+          "releaseTag": "Public",
+          "name": "isFile",
+          "variableTypeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 2
+          }
+        },
+        {
+          "kind": "Variable",
           "canonicalReference": "@storm-stack/file-system!isRelativeVersionKeyword:var",
           "docComment": "",
           "excerptTokens": [
@@ -1672,118 +1718,6 @@
             }
           ],
           "name": "resolvePath"
-        },
-        {
-          "kind": "Class",
-          "canonicalReference": "@storm-stack/file-system!S3Bucket:class",
-          "docComment": "",
-          "excerptTokens": [
-            {
-              "kind": "Content",
-              "text": "export declare class S3Bucket "
-            }
-          ],
-          "fileUrlPath": "packages/file-system/src/s3-bucket/s3-bucket.ts",
-          "releaseTag": "Public",
-          "isAbstract": false,
-          "name": "S3Bucket",
-          "preserveMemberOrder": false,
-          "members": [
-            {
-              "kind": "Constructor",
-              "canonicalReference": "@storm-stack/file-system!S3Bucket:constructor(1)",
-              "docComment": "/**\n * Constructs a new instance of the `S3Bucket` class\n */\n",
-              "excerptTokens": [
-                {
-                  "kind": "Content",
-                  "text": "constructor(name: "
-                },
-                {
-                  "kind": "Content",
-                  "text": "string"
-                },
-                {
-                  "kind": "Content",
-                  "text": ");"
-                }
-              ],
-              "releaseTag": "Public",
-              "isProtected": false,
-              "overloadIndex": 1,
-              "parameters": [
-                {
-                  "parameterName": "name",
-                  "parameterTypeTokenRange": {
-                    "startIndex": 1,
-                    "endIndex": 2
-                  },
-                  "isOptional": false
-                }
-              ]
-            },
-            {
-              "kind": "Method",
-              "canonicalReference": "@storm-stack/file-system!S3Bucket#get:member(1)",
-              "docComment": "",
-              "excerptTokens": [
-                {
-                  "kind": "Content",
-                  "text": "get(): "
-                },
-                {
-                  "kind": "Content",
-                  "text": "string"
-                },
-                {
-                  "kind": "Content",
-                  "text": ";"
-                }
-              ],
-              "isStatic": false,
-              "returnTypeTokenRange": {
-                "startIndex": 1,
-                "endIndex": 2
-              },
-              "releaseTag": "Public",
-              "isProtected": false,
-              "overloadIndex": 1,
-              "parameters": [],
-              "isOptional": false,
-              "isAbstract": false,
-              "name": "get"
-            },
-            {
-              "kind": "Property",
-              "canonicalReference": "@storm-stack/file-system!S3Bucket#name:member",
-              "docComment": "",
-              "excerptTokens": [
-                {
-                  "kind": "Content",
-                  "text": "name: "
-                },
-                {
-                  "kind": "Content",
-                  "text": "string"
-                },
-                {
-                  "kind": "Content",
-                  "text": ";"
-                }
-              ],
-              "isReadonly": false,
-              "isOptional": false,
-              "releaseTag": "Public",
-              "name": "name",
-              "propertyTypeTokenRange": {
-                "startIndex": 1,
-                "endIndex": 2
-              },
-              "isStatic": false,
-              "isProtected": false,
-              "isAbstract": false
-            }
-          ],
-          "implementsTokenRanges": []
         },
         {
           "kind": "Variable",

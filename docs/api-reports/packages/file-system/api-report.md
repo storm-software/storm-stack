@@ -177,6 +177,18 @@ export { installPackage };
 export { installPackage as installPackage_alias_1 };
 export { installPackage as installPackage_alias_2 };
 
+// @public
+const isDirectory: (path: string, additionalPath?: string) => boolean;
+export { isDirectory };
+export { isDirectory as isDirectory_alias_1 };
+export { isDirectory as isDirectory_alias_2 };
+
+// @public
+const isFile: (path: string, additionalPath?: string) => boolean;
+export { isFile };
+export { isFile as isFile_alias_1 };
+export { isFile as isFile_alias_2 };
+
 // @public (undocumented)
 const isRelativeVersionKeyword: (val: string) => val is ReleaseType;
 export { isRelativeVersionKeyword };
@@ -238,15 +250,6 @@ function resolvePath(filePath: string, basePath?: string): string;
 export { resolvePath };
 export { resolvePath as resolvePath_alias_1 };
 export { resolvePath as resolvePath_alias_2 };
-
-// @public (undocumented)
-export class S3Bucket {
-  constructor(name: string);
-  // (undocumented)
-  get(): string;
-  // (undocumented)
-  name: string;
-}
 
 // @public
 const writeFile: (filePath: string, content: any) => void;
