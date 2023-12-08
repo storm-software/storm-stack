@@ -1,3 +1,10 @@
+# [1.2.0](https://github.com/storm-software/storm-stack/compare/file-system-v1.1.0...file-system-v1.2.0) (2023-12-08)
+
+
+### Features
+
+* **file-system:** Added `isFile` and `isDirectory` utility functions ([9f17804](https://github.com/storm-software/storm-stack/commit/9f17804cc77e57300e59cc4918d694635e74eed9))
+
 # [1.1.0](https://github.com/storm-software/storm-stack/compare/file-system-v1.0.0...file-system-v1.1.0) (2023-12-07)
 
 
