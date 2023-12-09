@@ -1,3 +1,11 @@
+## [1.4.1](https://github.com/storm-software/storm-stack/compare/file-system-v1.4.0...file-system-v1.4.1) (2023-12-09)
+
+
+### Bug Fixes
+
+* **file-system:** Resolved issue with bad file imports ([716b412](https://github.com/storm-software/storm-stack/commit/716b412c192e42ef4c45a95e0e5acd73cae913e6))
+* **monorepo:** Regenerated the pnpm-lock file ([d9c4beb](https://github.com/storm-software/storm-stack/commit/d9c4beb728cc14768676f99b89394c93c50bf7fb))
+
 # [1.4.0](https://github.com/storm-software/storm-stack/compare/file-system-v1.3.0...file-system-v1.4.0) (2023-12-09)
 
 ### Bug Fixes
