@@ -1,3 +1,16 @@
+# [1.2.0](https://github.com/storm-software/storm-stack/compare/utilities-v1.1.1...utilities-v1.2.0) (2023-12-09)
+
+
+### Bug Fixes
+
+* **monorepo:** Regenerated the pnpm-lock file ([d64b250](https://github.com/storm-software/storm-stack/commit/d64b2504201a323b6424d5e4ce61e1ec9b2d6f51))
+* **monorepo:** Regenerated the pnpm-lock file ([8385d79](https://github.com/storm-software/storm-stack/commit/8385d7920354801bacf3ba98127ef11918b9a6a7))
+
+
+### Features
+
+* **cli:** Added the `cli` package ([6312c04](https://github.com/storm-software/storm-stack/commit/6312c0491c20c2cc1d8f0d610ac217a614a87c80))
+
 ## [1.1.1](https://github.com/storm-software/storm-stack/compare/utilities-v1.1.0...utilities-v1.1.1) (2023-12-09)
 
 
