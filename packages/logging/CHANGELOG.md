@@ -1,3 +1,16 @@
+# [1.2.0](https://github.com/storm-software/storm-stack/compare/logging-v1.1.0...logging-v1.2.0) (2023-12-09)
+
+
+### Bug Fixes
+
+* **monorepo:** Regenerate pnpm-lock file ([76454e5](https://github.com/storm-software/storm-stack/commit/76454e5b7dc30e6d5be84c891bdd2297a0da4b2d))
+* **unique-identifier:** Updated `hash` method to accept string or object args ([3a94db4](https://github.com/storm-software/storm-stack/commit/3a94db4b49653554cce65a3d6d9ac7b317b39904))
+
+
+### Features
+
+* **logging:** Update `stopwatch` logging to include nested processes ([b1f9c85](https://github.com/storm-software/storm-stack/commit/b1f9c85285e8f485e16c19b88f69c1c3e9d0fcb3))
+
 # [1.1.0](https://github.com/storm-software/storm-stack/compare/logging-v1.0.1...logging-v1.1.0) (2023-12-06)
 
 
