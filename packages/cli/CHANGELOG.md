@@ -1,3 +1,10 @@
+## [1.0.1](https://github.com/storm-software/storm-stack/compare/cli-v1.0.0...cli-v1.0.1) (2023-12-09)
+
+
+### Bug Fixes
+
+* **cli:** Updated `private` fields to be `false` in package.json ([73dc250](https://github.com/storm-software/storm-stack/commit/73dc2500fd4fe4379e5eaa2b100318ebc4c6b9e6))
+
 # [1.0.0](https://github.com/storm-software/storm-stack/compare/...cli-v1.0.0) (2023-12-09)
 
 ### Bug Fixes
