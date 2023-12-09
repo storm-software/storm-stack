@@ -1,9 +1,20 @@
-# [1.3.0](https://github.com/storm-software/storm-stack/compare/file-system-v1.2.1...file-system-v1.3.0) (2023-12-09)
+# [1.4.0](https://github.com/storm-software/storm-stack/compare/file-system-v1.3.0...file-system-v1.4.0) (2023-12-09)
+
+
+### Bug Fixes
+
+* **monorepo:** Regenerated the pnpm-lock file ([d64b250](https://github.com/storm-software/storm-stack/commit/d64b2504201a323b6424d5e4ce61e1ec9b2d6f51))
 
 
 ### Features
 
-* **file-system:** Added the `findFileExtension` method ([16b5963](https://github.com/storm-software/storm-stack/commit/16b5963ec1c9695eb102e955afd6a5201717d00b))
+* **cli:** Added the `cli` package ([6312c04](https://github.com/storm-software/storm-stack/commit/6312c0491c20c2cc1d8f0d610ac217a614a87c80))
+
+# [1.3.0](https://github.com/storm-software/storm-stack/compare/file-system-v1.2.1...file-system-v1.3.0) (2023-12-09)
+
+### Features
+
+- **file-system:** Added the `findFileExtension` method ([16b5963](https://github.com/storm-software/storm-stack/commit/16b5963ec1c9695eb102e955afd6a5201717d00b))
 
 ## [1.2.1](https://github.com/storm-software/storm-stack/compare/file-system-v1.2.0...file-system-v1.2.1) (2023-12-09)
 
