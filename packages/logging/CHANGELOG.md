@@ -1,3 +1,15 @@
+# [1.3.0](https://github.com/storm-software/storm-stack/compare/logging-v1.2.0...logging-v1.3.0) (2023-12-09)
+
+
+### Bug Fixes
+
+* **monorepo:** Regenerated the pnpm-lock file ([d64b250](https://github.com/storm-software/storm-stack/commit/d64b2504201a323b6424d5e4ce61e1ec9b2d6f51))
+
+
+### Features
+
+* **cli:** Added the `cli` package ([6312c04](https://github.com/storm-software/storm-stack/commit/6312c0491c20c2cc1d8f0d610ac217a614a87c80))
+
 # [1.2.0](https://github.com/storm-software/storm-stack/compare/logging-v1.1.0...logging-v1.2.0) (2023-12-09)
 
 
