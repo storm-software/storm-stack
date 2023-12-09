@@ -34,7 +34,7 @@ function bufToBigInt(buf: Uint8Array): BigInt {
  * @param input - String to hash
  * @returns The hashed string
  */
-export function hash(input: string | object = ""): string {
+export function hash(input: string | object): string {
   return isString(input) ? hashString(input) : hashObject(input);
 }
 
