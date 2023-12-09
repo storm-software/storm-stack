@@ -1,3 +1,11 @@
+## [1.1.2](https://github.com/storm-software/storm-stack/compare/unique-identifier-v1.1.1...unique-identifier-v1.1.2) (2023-12-09)
+
+
+### Bug Fixes
+
+* **monorepo:** Regenerate pnpm-lock file ([76454e5](https://github.com/storm-software/storm-stack/commit/76454e5b7dc30e6d5be84c891bdd2297a0da4b2d))
+* **unique-identifier:** Updated `hash` method to accept string or object args ([3a94db4](https://github.com/storm-software/storm-stack/commit/3a94db4b49653554cce65a3d6d9ac7b317b39904))
+
 ## [1.1.1](https://github.com/storm-software/storm-stack/compare/unique-identifier-v1.1.0...unique-identifier-v1.1.1) (2023-12-07)
 
 
