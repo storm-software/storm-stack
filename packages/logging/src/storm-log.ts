@@ -78,7 +78,7 @@ export class StormLog implements IStormLog {
   #logLevel: LogLevel;
   #logLevelLabel: LogLevelLabel;
 
-  #processes: Map<string, StormTime> = new Map();
+  #processes: Array<{ name: string; startedAt: StormTime }> = [];
 
   /**
    * The Singleton's constructor should always be private to prevent direct
@@ -385,7 +385,8 @@ export class StormLog implements IStormLog {
    */
   public start(name: string) {
     if (this.#logLevel >= LogLevel.INFO) {
-      this.#processes.set(name, StormTime.current());
+      this.#processes.push({ name, startedAt: StormTime.current() });
+      this.#logger.info(`▶️  Starting process: ${this.#processes.join(" > ")}`);
     }
   }
 
@@ -404,25 +405,42 @@ export class StormLog implements IStormLog {
       this.warn("No name or start time was provided to the stopwatch method");
       return;
     }
-    if (!startTime && !this.#processes.has(name!)) {
+    if (!startTime && !this.#processes.some(item => item.name === name)) {
       this.warn(
         `No start time was provided and the ${name} process was never started`
       );
       return;
     }
-    if (name && this.#processes.has(name)) {
-      startTime = this.#processes.get(name);
+    if (name && this.#processes.some(item => item.name === name)) {
+      startTime = this.#processes.find(item => item.name === name)?.startedAt;
     }
 
-    const message = `The ${name ? ` ${name}` : ""} process took ${formatSince(
-      startTime!.since()
-    )} to complete`;
+    let process = name;
+    if (
+      this.#processes.length > 0 &&
+      process &&
+      this.#processes.some(item => item.name === process)
+    ) {
+      process = this.#processes
+        .slice(
+          0,
+          this.#processes.findIndex(item => item.name === process)
+        )
+        .join(" > ");
+    }
 
-    this.#logger.info(`⏱️  ${message}`);
+    const message = `${
+      process ? `Completed process: ${process}` : "The process has completed"
+    } \n\n⏱️  Process took ${formatSince(startTime!.since())} to complete`;
+
+    this.#logger.info(message);
     Promise.all(this.#additionalLoggers.map(logger => logger.info(message)));
 
-    if (name && this.#processes.has(name)) {
-      this.#processes.delete(name);
+    if (name && this.#processes.some(item => item.name === name)) {
+      const index = this.#processes.findLastIndex(item => item.name === name);
+      if (index) {
+        this.#processes.splice(index, 1);
+      }
     }
   }
 
