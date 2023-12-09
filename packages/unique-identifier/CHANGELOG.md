@@ -1,29 +1,35 @@
-## [1.1.2](https://github.com/storm-software/storm-stack/compare/unique-identifier-v1.1.1...unique-identifier-v1.1.2) (2023-12-09)
-
-
-### Bug Fixes
-
-* **monorepo:** Regenerate pnpm-lock file ([76454e5](https://github.com/storm-software/storm-stack/commit/76454e5b7dc30e6d5be84c891bdd2297a0da4b2d))
-* **unique-identifier:** Updated `hash` method to accept string or object args ([3a94db4](https://github.com/storm-software/storm-stack/commit/3a94db4b49653554cce65a3d6d9ac7b317b39904))
-
-## [1.1.1](https://github.com/storm-software/storm-stack/compare/unique-identifier-v1.1.0...unique-identifier-v1.1.1) (2023-12-07)
-
+# [1.2.0](https://github.com/storm-software/storm-stack/compare/unique-identifier-v1.1.2...unique-identifier-v1.2.0) (2023-12-09)
 
 ### Bug Fixes
 
-* **errors:** Resolved issue with package.json properties ([54ce205](https://github.com/storm-software/storm-stack/commit/54ce2055e69954b9b3b9dd882292587840cc1b57))
-
-# [1.1.0](https://github.com/storm-software/storm-stack/compare/unique-identifier-v1.0.1...unique-identifier-v1.1.0) (2023-12-06)
-
-
-### Bug Fixes
-
-* **monorepo:** Regenerated the pnpm-lock file ([6b20acb](https://github.com/storm-software/storm-stack/commit/6b20acb321f784ea31a1a731592c1e3426d14be1))
-
+- **monorepo:** Regenerated the pnpm-lock file ([d64b250](https://github.com/storm-software/storm-stack/commit/d64b2504201a323b6424d5e4ce61e1ec9b2d6f51))
 
 ### Features
 
-* **file-system:** Added a new package to support manipulation of files and package management ([dc2b9d9](https://github.com/storm-software/storm-stack/commit/dc2b9d9c492428bdaf47fb2d3b3bd2056805db99))
+- **cli:** Added the `cli` package ([6312c04](https://github.com/storm-software/storm-stack/commit/6312c0491c20c2cc1d8f0d610ac217a614a87c80))
+
+## [1.1.2](https://github.com/storm-software/storm-stack/compare/unique-identifier-v1.1.1...unique-identifier-v1.1.2) (2023-12-09)
+
+### Bug Fixes
+
+- **monorepo:** Regenerate pnpm-lock file ([76454e5](https://github.com/storm-software/storm-stack/commit/76454e5b7dc30e6d5be84c891bdd2297a0da4b2d))
+- **unique-identifier:** Updated `hash` method to accept string or object args ([3a94db4](https://github.com/storm-software/storm-stack/commit/3a94db4b49653554cce65a3d6d9ac7b317b39904))
+
+## [1.1.1](https://github.com/storm-software/storm-stack/compare/unique-identifier-v1.1.0...unique-identifier-v1.1.1) (2023-12-07)
+
+### Bug Fixes
+
+- **errors:** Resolved issue with package.json properties ([54ce205](https://github.com/storm-software/storm-stack/commit/54ce2055e69954b9b3b9dd882292587840cc1b57))
+
+# [1.1.0](https://github.com/storm-software/storm-stack/compare/unique-identifier-v1.0.1...unique-identifier-v1.1.0) (2023-12-06)
+
+### Bug Fixes
+
+- **monorepo:** Regenerated the pnpm-lock file ([6b20acb](https://github.com/storm-software/storm-stack/commit/6b20acb321f784ea31a1a731592c1e3426d14be1))
+
+### Features
+
+- **file-system:** Added a new package to support manipulation of files and package management ([dc2b9d9](https://github.com/storm-software/storm-stack/commit/dc2b9d9c492428bdaf47fb2d3b3bd2056805db99))
 
 ## [1.0.1](https://github.com/storm-software/storm-stack/compare/unique-identifier-v1.0.0...unique-identifier-v1.0.1) (2023-12-06)
 
