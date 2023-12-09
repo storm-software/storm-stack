@@ -20,22 +20,22 @@ importers:
         specifier: ^2.1.4
         version: 2.1.4(supports-color@9.4.0)
       "@nx/devkit":
-        specifier: ^17.1.3
+        specifier: ^17.2.0
         version: 17.2.0(nx@17.0.3)
       "@nx/eslint":
-        specifier: ^17.1.3
+        specifier: ^17.2.0
         version: 17.2.0(@swc-node/register@1.6.8)(@swc/core@1.3.100)(@types/node@20.9.0)(eslint@8.55.0)(nx@17.0.3)(verdaccio@5.29.0)
       "@nx/eslint-plugin":
-        specifier: ^17.1.3
+        specifier: ^17.2.0
         version: 17.2.0(@swc-node/register@1.6.8)(@swc/core@1.3.100)(@types/node@20.9.0)(@typescript-eslint/parser@6.13.2)(eslint@8.55.0)(nx@17.0.3)(typescript@5.3.3)(verdaccio@5.29.0)
       "@nx/jest":
         specifier: 17.1.3
         version: 17.1.3(@swc-node/register@1.6.8)(@swc/core@1.3.100)(@types/node@20.9.0)(nx@17.0.3)(ts-node@10.9.2)(typescript@5.3.3)(verdaccio@5.29.0)
       "@nx/js":
-        specifier: ^17.1.3
+        specifier: ^17.2.0
         version: 17.2.0(@swc-node/register@1.6.8)(@swc/core@1.3.100)(@types/node@20.9.0)(nx@17.0.3)(typescript@5.3.3)(verdaccio@5.29.0)
       "@nx/plugin":
-        specifier: ^17.1.3
+        specifier: ^17.2.0
         version: 17.2.0(@swc-node/register@1.6.8)(@swc/core@1.3.100)(@types/node@20.9.0)(eslint@8.55.0)(nx@17.0.3)(ts-node@10.9.2)(typescript@5.3.3)(verdaccio@5.29.0)
       "@nx/workspace":
         specifier: 17.0.3
@@ -53,10 +53,10 @@ importers:
         specifier: ^10.0.1
         version: 10.0.1(semantic-release@22.0.10)
       "@semantic-release/github":
-        specifier: ^9.2.4
+        specifier: ^9.2.5
         version: 9.2.5(semantic-release@22.0.10)
       "@semantic-release/npm":
-        specifier: ^11.0.1
+        specifier: ^11.0.2
         version: 11.0.2(semantic-release@22.0.10)
       "@semantic-release/release-notes-generator":
         specifier: ^12.1.0
@@ -89,7 +89,7 @@ importers:
         specifier: ^0.5.3
         version: 0.5.3
       "@types/jest":
-        specifier: ^29.5.10
+        specifier: ^29.5.11
         version: 29.5.11
       "@types/node":
         specifier: 20.9.0
@@ -134,22 +134,22 @@ importers:
         specifier: ^5.0.0
         version: 5.0.0(prettier@3.1.0)
       terser:
-        specifier: ^5.25.0
+        specifier: ^5.26.0
         version: 5.26.0
       ts-jest:
         specifier: ^29.1.1
         version: 29.1.1(@babel/core@7.23.5)(esbuild@0.19.8)(jest@29.7.0)(typescript@5.3.3)
       ts-node:
-        specifier: ^10.9.1
+        specifier: ^10.9.2
         version: 10.9.2(@swc/core@1.3.100)(@types/node@20.9.0)(typescript@5.3.3)
       tslib:
         specifier: ^2.6.2
         version: 2.6.2
       typescript:
-        specifier: ~5.3.2
+        specifier: ~5.3.3
         version: 5.3.3
       verdaccio:
-        specifier: ^5.27.1
+        specifier: ^5.29.0
         version: 5.29.0(typanion@3.14.0)
 
   packages/date-time:
@@ -1990,7 +1990,7 @@ packages:
     engines: { node: ">=v18" }
     dependencies:
       "@commitlint/types": 18.4.3
-      chalk: 4.1.0
+      chalk: 4.1.2
     dev: false
 
   /@commitlint/is-ignored@18.4.3:
@@ -2029,7 +2029,7 @@ packages:
       "@commitlint/resolve-extends": 18.4.3
       "@commitlint/types": 18.4.3
       "@types/node": 18.19.3
-      chalk: 4.1.0
+      chalk: 4.1.2
       cosmiconfig: 8.3.6(typescript@5.3.3)
       cosmiconfig-typescript-loader: 5.0.0(@types/node@18.19.3)(cosmiconfig@8.3.6)(typescript@5.3.3)
       lodash.isplainobject: 4.0.6
@@ -2128,7 +2128,7 @@ packages:
       }
     engines: { node: ">=v18" }
     dependencies:
-      chalk: 4.1.0
+      chalk: 4.1.2
     dev: false
 
   /@commitlint/types@18.4.3:
@@ -2138,7 +2138,7 @@ packages:
       }
     engines: { node: ">=v18" }
     dependencies:
-      chalk: 4.1.0
+      chalk: 4.1.2
     dev: false
 
   /@cspell/cspell-bundled-dicts@7.3.9:
@@ -8898,7 +8898,7 @@ packages:
         integrity: sha512-qwVpFEHNfhYJIzNRBvd2C1kyo6jz3ZSMPyyuR47OPdiKWlbYnZNyDWuyR175qDnAJLiCo5fBBqPb3RiXgWlkOQ==
       }
     dependencies:
-      semver: 7.5.3
+      semver: 7.5.4
     dev: false
 
   /bundle-name@3.0.0:
@@ -10695,7 +10695,7 @@ packages:
         integrity: sha512-VMX6krHDqOgKByapwEar1w+P7aj8YIeH1DiRfOOrnLcgR7a0CEI0NvrvV2FSAzkhkHIsGBV59xwsgOook8TIxg==
       }
     dependencies:
-      chalk: 4.1.0
+      chalk: 4.1.2
       fast-glob: 3.3.2
     optionalDependencies:
       esbuild: 0.8.57
@@ -13139,7 +13139,7 @@ packages:
       fs.realpath: 1.0.0
       inflight: 1.0.6
       inherits: 2.0.4
-      minimatch: 3.0.5
+      minimatch: 3.1.2
       once: 1.4.0
       path-is-absolute: 1.0.1
     dev: false
@@ -15747,7 +15747,7 @@ packages:
       acorn: 8.11.2
       eslint-visitor-keys: 3.4.3
       espree: 9.6.1
-      semver: 7.5.3
+      semver: 7.5.4
     dev: false
 
   /jsonc-parser@3.2.0:
@@ -19255,7 +19255,7 @@ packages:
     dependencies:
       hosted-git-info: 7.0.1
       proc-log: 3.0.0
-      semver: 7.5.3
+      semver: 7.5.4
       validate-npm-package-name: 5.0.0
     dev: false
 
@@ -19789,7 +19789,7 @@ packages:
     engines: { node: ">=10" }
     dependencies:
       bl: 4.1.0
-      chalk: 4.1.0
+      chalk: 4.1.2
       cli-cursor: 3.1.0
       cli-spinners: 2.9.2
       is-interactive: 1.0.0
