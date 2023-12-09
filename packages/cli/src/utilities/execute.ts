@@ -10,6 +10,15 @@ import {
 import { Readable } from "node:stream";
 import { promisify } from "node:util";
 
+/**
+ * Execute a command.
+ *
+ * @param command - The command to execute
+ * @param options - The options to use when executing the command
+ * @param env - The environment variables to use when executing the command
+ * @param stdio - The stdio options to use when executing the command
+ * @returns The result of the command
+ */
 export const execute = (
   command: string,
   options: ExecOptions = {},
@@ -42,6 +51,15 @@ export const execute = (
   }
 };
 
+/**
+ * Execute a command asynchronously.
+ *
+ * @param command - The command to execute
+ * @param options - The options to use when executing the command
+ * @param env - The environment variables to use when executing the command
+ * @param stdio - The stdio options to use when executing the command
+ * @returns The result of the command
+ */
 export const executeAsync = async (
   command: string,
   options?: ExecOptions,

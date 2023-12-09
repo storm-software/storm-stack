@@ -12,6 +12,7 @@ overrides:
   "@storm-stack/serialization": workspace:*
   "@storm-stack/logging": workspace:*
   "@storm-stack/file-system": workspace:*
+  "@storm-stack/cli": workspace:*
 
 importers:
   .:
@@ -151,6 +152,24 @@ importers:
       verdaccio:
         specifier: ^5.29.0
         version: 5.29.0(typanion@3.14.0)
+
+  packages/cli:
+    dependencies:
+      "@storm-software/config-tools":
+        specifier: ^1.2.14
+        version: 1.2.14(typescript@5.3.3)
+      chalk:
+        specifier: ^5.3.0
+        version: 5.3.0
+      commander:
+        specifier: ^11.1.0
+        version: 11.1.0
+      console-table-printer:
+        specifier: ^2.11.2
+        version: 2.11.2
+      ora:
+        specifier: ^7.0.1
+        version: 7.0.1
 
   packages/date-time:
     dependencies:
@@ -4469,7 +4488,7 @@ packages:
       "@nrwl/esbuild": 17.0.3(@swc-node/register@1.6.8)(@swc/core@1.3.100)(@types/node@20.9.0)(esbuild@0.19.8)(nx@17.0.3)(typescript@5.3.3)(verdaccio@5.29.0)
       "@nx/devkit": 17.0.3(nx@17.0.3)
       "@nx/js": 17.0.3(@swc-node/register@1.6.8)(@swc/core@1.3.100)(@types/node@20.9.0)(nx@17.0.3)(typescript@5.3.3)(verdaccio@5.29.0)
-      chalk: 4.1.0
+      chalk: 4.1.2
       esbuild: 0.19.8
       fast-glob: 3.2.7
       fs-extra: 11.2.0
@@ -6179,6 +6198,18 @@ packages:
     resolution:
       {
         integrity: sha512-6VVIgJMPHdea10TxrcppTuCTjE1VmSM3pgdfjsIyR2MGxqXF2d2gGJqH5ycUQE5gwYD0TYsU9Sr5KBhoI4Xmdw==
+      }
+    dependencies:
+      cosmiconfig: 9.0.0(typescript@5.3.3)
+      zod: 3.22.4
+    transitivePeerDependencies:
+      - typescript
+    dev: false
+
+  /@storm-software/config-tools@1.2.14(typescript@5.3.3):
+    resolution:
+      {
+        integrity: sha512-Pozk1IHYZCeVhXYP5uVgpzDmoduyJVZthShWY09jd4aAHvon9aUwT7scMuGcIClWVzWI9oCmE/R7zT+yHVS2xg==
       }
     dependencies:
       cosmiconfig: 9.0.0(typescript@5.3.3)
@@ -8543,6 +8574,17 @@ packages:
       readable-stream: 3.6.2
     dev: false
 
+  /bl@5.1.0:
+    resolution:
+      {
+        integrity: sha512-tv1ZJHLfTDnXE6tMHv73YgSJaWR2AFuPwMntBe7XL/GBFHnT0CLnsHMogfk5+GzCDC5ZWarSCYaIGATZt9dNsQ==
+      }
+    dependencies:
+      buffer: 6.0.3
+      inherits: 2.0.4
+      readable-stream: 3.6.2
+    dev: false
+
   /blob@0.0.5:
     resolution:
       {
@@ -9865,6 +9907,15 @@ packages:
       {
         integrity: sha512-ZMkYO/LkF17QvCPqM0gxw8yUzigAOZOSWSHg91FH6orS7vcEj5dVZTidN2fQ14yBSdg97RqhSNwLUXInd52OTA==
       }
+    dev: false
+
+  /console-table-printer@2.11.2:
+    resolution:
+      {
+        integrity: sha512-uuUHie0sfPP542TKGzPFal0W1wo1beuKAqIZdaavcONx8OoqdnJRKjkinbRTOta4FaCa1RcIL+7mMJWX3pQGVg==
+      }
+    dependencies:
+      simple-wcswidth: 1.0.1
     dev: false
 
   /constants-browserify@1.0.0:
@@ -14597,6 +14648,14 @@ packages:
     engines: { node: ">=8" }
     dev: false
 
+  /is-interactive@2.0.0:
+    resolution:
+      {
+        integrity: sha512-qP1vozQRI+BMOPcjFzrjXuQvdak2pHNUMZoeG2eRbiSqyvbEf/wQtEOTOX1guk6E3t36RkaqiSt8A/6YElNxLQ==
+      }
+    engines: { node: ">=12" }
+    dev: false
+
   /is-nan@1.3.2:
     resolution:
       {
@@ -16393,6 +16452,17 @@ packages:
     dependencies:
       chalk: 4.1.2
       is-unicode-supported: 0.1.0
+    dev: false
+
+  /log-symbols@5.1.0:
+    resolution:
+      {
+        integrity: sha512-l0x2DvrW294C9uDCoQe1VSU4gf529FkSZ6leBl4TiqZH/e+0R7hSfHQBNut2mNygDgHwvYHfFLn6Oxb3VWj2rA==
+      }
+    engines: { node: ">=12" }
+    dependencies:
+      chalk: 5.3.0
+      is-unicode-supported: 1.3.0
     dev: false
 
   /log-update@6.0.0:
@@ -19799,6 +19869,24 @@ packages:
       wcwidth: 1.0.1
     dev: false
 
+  /ora@7.0.1:
+    resolution:
+      {
+        integrity: sha512-0TUxTiFJWv+JnjWm4o9yvuskpEJLXTcng8MJuKd+SzAzp2o+OP3HWqNhB4OdJRt1Vsd9/mR0oyaEYlOnL7XIRw==
+      }
+    engines: { node: ">=16" }
+    dependencies:
+      chalk: 5.3.0
+      cli-cursor: 4.0.0
+      cli-spinners: 2.9.2
+      is-interactive: 2.0.0
+      is-unicode-supported: 1.3.0
+      log-symbols: 5.1.0
+      stdin-discarder: 0.1.0
+      string-width: 6.1.0
+      strip-ansi: 7.1.0
+    dev: false
+
   /os-browserify@0.3.0:
     resolution:
       {
@@ -22739,6 +22827,13 @@ packages:
       - supports-color
     dev: false
 
+  /simple-wcswidth@1.0.1:
+    resolution:
+      {
+        integrity: sha512-xMO/8eNREtaROt7tJvWJqHBDTMFN4eiQ5I4JRMuilwfnFcV5W9u7RUkueNkdw0jPqGMX36iCywelS5yilTuOxg==
+      }
+    dev: false
+
   /sirv@1.0.19:
     resolution:
       {
@@ -23243,6 +23338,16 @@ packages:
         integrity: sha512-RwNA9Z/7PrK06rYLIzFMlaF+l73iwpzsqRIFgbMLbTcLD6cOao82TaWefPXQvB2fOC4AjuYSEndS7N/mTCbkdQ==
       }
     engines: { node: ">= 0.8" }
+    dev: false
+
+  /stdin-discarder@0.1.0:
+    resolution:
+      {
+        integrity: sha512-xhV7w8S+bUwlPTb4bAOUQhv8/cSS5offJuX8GQGq32ONF0ZtDWKfkdomM3HMRA+LhX6um/FZ0COqlwsjD53LeQ==
+      }
+    engines: { node: ^12.20.0 || ^14.13.1 || >=16.0.0 }
+    dependencies:
+      bl: 5.1.0
     dev: false
 
   /steno@0.4.4:

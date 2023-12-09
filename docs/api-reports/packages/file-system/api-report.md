@@ -132,6 +132,12 @@ export { FileSystemErrorCode };
 export { FileSystemErrorCode as FileSystemErrorCode_alias_1 };
 
 // @public
+function findFileExtension(filePath: string): string;
+export { findFileExtension };
+export { findFileExtension as findFileExtension_alias_1 };
+export { findFileExtension as findFileExtension_alias_2 };
+
+// @public
 function findFileName(filePath: string): string;
 export { findFileName };
 export { findFileName as findFileName_alias_1 };

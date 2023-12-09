@@ -140,7 +140,8 @@
       "@storm-stack/errors": "workspace:*",
       "@storm-stack/serialization": "workspace:*",
       "@storm-stack/logging": "workspace:*",
-      "@storm-stack/file-system": "workspace:*"
+      "@storm-stack/file-system": "workspace:*",
+      "@storm-stack/cli": "workspace:*"
     }
   },
   "triggerEmptyDevReleaseByIncrementingThisNumber": 0

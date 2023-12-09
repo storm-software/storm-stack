@@ -1,3 +1,9 @@
+/**
+ * Create CLI options from an object.
+ *
+ * @param obj - The object to create CLI options from
+ * @returns The CLI options
+ */
 export function createCliOptions(
   obj: Record<string, string | number | boolean>
 ): string[] {
@@ -13,6 +19,12 @@ export function createCliOptions(
   );
 }
 
+/**
+ * Create CLI options from an object and join them into a string.
+ *
+ * @param obj - The object to create CLI options from
+ * @returns The CLI options as a string
+ */
 export function createCliOptionsString(
   obj: Record<string, string | number | boolean>
 ): string {

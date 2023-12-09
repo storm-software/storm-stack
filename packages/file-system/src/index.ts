@@ -7,7 +7,7 @@
  * @packageDocumentation
  */
 
-export * from "./cli";
+export * from "../../cli/src/utilities";
 export * from "./errors";
 export * from "./files";
 export * from "./package-management";
