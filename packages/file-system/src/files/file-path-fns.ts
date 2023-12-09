@@ -1,5 +1,7 @@
-import { dirname, isAbsolute, join, parse, relative, sep } from "node:path";
+import { EMPTY_STRING } from "@storm-stack/utilities";
+import { dirname, isAbsolute, parse, relative, sep } from "node:path";
 import { getWorkspaceRoot } from "./get-workspace-root";
+import { joinPaths } from "./join-paths";
 
 /**
  * Find the file name from a file path.
@@ -24,6 +26,21 @@ export function findFileName(filePath: string): string {
  */
 export function findFilePath(filePath: string): string {
   return filePath.replace(findFileName(filePath), "");
+}
+
+/**
+ * Find the file extension from a file path.
+ *
+ * @param filePath - The file path to process
+ * @returns The file extension
+ */
+export function findFileExtension(filePath: string): string {
+  const splits = findFileName(filePath)?.split(".");
+  if (splits && Array.isArray(splits) && splits.length > 0) {
+    splits.pop();
+  }
+
+  return splits.join(".") ?? EMPTY_STRING;
 }
 
 /**
@@ -60,9 +77,9 @@ export function resolvePath(
   if (isAbsolute(filePath)) {
     return filePath;
   } else if (basePath) {
-    return join(dirname(basePath), filePath);
+    return joinPaths(dirname(basePath), filePath);
   } else {
-    return join(process.cwd(), filePath);
+    return joinPaths(process.cwd(), filePath);
   }
 }
 
@@ -86,7 +103,7 @@ export function relativeToWorkspaceRoot(filePath: string) {
  */
 export function renameFile(filePath: string, newFileName: string): string {
   const file = parse(filePath);
-  return join(
+  return joinPaths(
     file.dir,
     newFileName.includes(".") ? newFileName : newFileName + file.ext
   );
