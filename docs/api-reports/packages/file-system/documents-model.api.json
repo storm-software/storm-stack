@@ -248,7 +248,7 @@
         {
           "kind": "Function",
           "canonicalReference": "@storm-stack/file-system!createCliOptions:function(1)",
-          "docComment": "",
+          "docComment": "/**\n * Create CLI options from an object.\n *\n * @param obj - The object to create CLI options from\n *\n * @returns The CLI options\n */\n",
           "excerptTokens": [
             {
               "kind": "Content",
@@ -276,7 +276,7 @@
               "text": ";"
             }
           ],
-          "fileUrlPath": "packages/file-system/src/cli/create-cli-options.ts",
+          "fileUrlPath": "packages/cli/src/utilities/create-cli-options.ts",
           "returnTypeTokenRange": {
             "startIndex": 4,
             "endIndex": 5
@@ -298,7 +298,7 @@
         {
           "kind": "Function",
           "canonicalReference": "@storm-stack/file-system!createCliOptionsString:function(1)",
-          "docComment": "",
+          "docComment": "/**\n * Create CLI options from an object and join them into a string.\n *\n * @param obj - The object to create CLI options from\n *\n * @returns The CLI options as a string\n */\n",
           "excerptTokens": [
             {
               "kind": "Content",
@@ -326,7 +326,7 @@
               "text": ";"
             }
           ],
-          "fileUrlPath": "packages/file-system/src/cli/create-cli-options.ts",
+          "fileUrlPath": "packages/cli/src/utilities/create-cli-options.ts",
           "returnTypeTokenRange": {
             "startIndex": 4,
             "endIndex": 5
@@ -501,7 +501,7 @@
         {
           "kind": "Variable",
           "canonicalReference": "@storm-stack/file-system!execute:var",
-          "docComment": "",
+          "docComment": "/**\n * Execute a command.\n *\n * @param command - The command to execute\n *\n * @param options - The options to use when executing the command\n *\n * @param env - The environment variables to use when executing the command\n *\n * @param stdio - The stdio options to use when executing the command\n *\n * @returns The result of the command\n */\n",
           "excerptTokens": [
             {
               "kind": "Content",
@@ -557,7 +557,7 @@
               "text": " | undefined"
             }
           ],
-          "fileUrlPath": "packages/file-system/src/cli/execute.ts",
+          "fileUrlPath": "packages/cli/src/utilities/execute.ts",
           "isReadonly": true,
           "releaseTag": "Public",
           "name": "execute",
@@ -569,7 +569,7 @@
         {
           "kind": "Variable",
           "canonicalReference": "@storm-stack/file-system!executeAsync:var",
-          "docComment": "",
+          "docComment": "/**\n * Execute a command asynchronously.\n *\n * @param command - The command to execute\n *\n * @param options - The options to use when executing the command\n *\n * @param env - The environment variables to use when executing the command\n *\n * @param stdio - The stdio options to use when executing the command\n *\n * @returns The result of the command\n */\n",
           "excerptTokens": [
             {
               "kind": "Content",
@@ -625,7 +625,7 @@
               "text": " | undefined>"
             }
           ],
-          "fileUrlPath": "packages/file-system/src/cli/execute.ts",
+          "fileUrlPath": "packages/cli/src/utilities/execute.ts",
           "isReadonly": true,
           "releaseTag": "Public",
           "name": "executeAsync",

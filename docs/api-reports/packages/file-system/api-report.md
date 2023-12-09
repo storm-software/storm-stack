@@ -28,21 +28,15 @@ export { copyFiles };
 export { copyFiles as copyFiles_alias_1 };
 export { copyFiles as copyFiles_alias_2 };
 
-// @public (undocumented)
-function createCliOptions(
+// @public
+export function createCliOptions(
   obj: Record<string, string | number | boolean>
 ): string[];
-export { createCliOptions };
-export { createCliOptions as createCliOptions_alias_1 };
-export { createCliOptions as createCliOptions_alias_2 };
 
-// @public (undocumented)
-function createCliOptionsString(
+// @public
+export function createCliOptionsString(
   obj: Record<string, string | number | boolean>
 ): string;
-export { createCliOptionsString };
-export { createCliOptionsString as createCliOptionsString_alias_1 };
-export { createCliOptionsString as createCliOptionsString_alias_2 };
 
 // @public (undocumented)
 const deriveNewSemverVersion: (
@@ -67,27 +61,21 @@ export { ensurePackage };
 export { ensurePackage as ensurePackage_alias_1 };
 export { ensurePackage as ensurePackage_alias_2 };
 
-// @public (undocumented)
-const execute: (
+// @public
+export const execute: (
   command: string,
   options?: ExecOptions,
   env?: Record<string, string>,
   stdio?: StdioOptions
 ) => string | Buffer | Readable | undefined;
-export { execute };
-export { execute as execute_alias_1 };
-export { execute as execute_alias_2 };
 
-// @public (undocumented)
-const executeAsync: (
+// @public
+export const executeAsync: (
   command: string,
   options?: ExecOptions,
   env?: Record<string, string>,
   stdio?: StdioOptions
 ) => Promise<string | Buffer | undefined>;
-export { executeAsync };
-export { executeAsync as executeAsync_alias_1 };
-export { executeAsync as executeAsync_alias_2 };
 
 // @public
 const exists: (filePath: string) => boolean;
