@@ -1,9 +1,16 @@
-## [1.0.1](https://github.com/storm-software/storm-stack/compare/cli-v1.0.0...cli-v1.0.1) (2023-12-09)
+## [1.0.2](https://github.com/storm-software/storm-stack/compare/cli-v1.0.1...cli-v1.0.2) (2023-12-09)
 
 
 ### Bug Fixes
 
-* **cli:** Updated `private` fields to be `false` in package.json ([73dc250](https://github.com/storm-software/storm-stack/commit/73dc2500fd4fe4379e5eaa2b100318ebc4c6b9e6))
+* **file-system:** Resolved issue with bad file imports ([716b412](https://github.com/storm-software/storm-stack/commit/716b412c192e42ef4c45a95e0e5acd73cae913e6))
+* **monorepo:** Regenerated the pnpm-lock file ([d9c4beb](https://github.com/storm-software/storm-stack/commit/d9c4beb728cc14768676f99b89394c93c50bf7fb))
+
+## [1.0.1](https://github.com/storm-software/storm-stack/compare/cli-v1.0.0...cli-v1.0.1) (2023-12-09)
+
+### Bug Fixes
+
+- **cli:** Updated `private` fields to be `false` in package.json ([73dc250](https://github.com/storm-software/storm-stack/commit/73dc2500fd4fe4379e5eaa2b100318ebc4c6b9e6))
 
 # [1.0.0](https://github.com/storm-software/storm-stack/compare/...cli-v1.0.0) (2023-12-09)
 
