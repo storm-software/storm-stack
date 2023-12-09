@@ -25,16 +25,7 @@
         }
       }
     },
-    "lint": {
-      "executor": "@nx/eslint:lint",
-      "outputs": ["{options.outputFile}"],
-      "options": {
-        "lintFilePatterns": [
-          "packages/file-system/**/*.ts",
-          "packages/file-system/package.json"
-        ]
-      }
-    },
+    "lint": {},
     "test": {}
   }
 }

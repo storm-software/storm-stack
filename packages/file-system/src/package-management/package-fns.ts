@@ -1,5 +1,5 @@
+import { execute } from "@storm-stack/cli";
 import { basename, resolve } from "path";
-import { execute } from "../../../cli/src/utilities/execute";
 import { exists } from "../files/exists";
 import { joinPaths } from "../files/join-paths";
 

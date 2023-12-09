@@ -64,19 +64,19 @@ importers:
         version: 12.1.0(semantic-release@22.0.10)
       "@storm-software/config-tools":
         specifier: latest
-        version: 1.2.13(typescript@5.3.3)
+        version: 1.3.0(typescript@5.3.3)
       "@storm-software/git-tools":
         specifier: latest
-        version: 1.14.8(@swc-node/register@1.6.8)(@swc/core@1.3.100)(typescript@5.3.3)
+        version: 1.15.0(@swc-node/register@1.6.8)(@swc/core@1.3.100)(typescript@5.3.3)
       "@storm-software/linting-tools":
         specifier: latest
-        version: 1.15.10
+        version: 1.16.0
       "@storm-software/testing-tools":
         specifier: latest
-        version: 1.12.10(@swc-node/register@1.6.8)(@swc/core@1.3.100)(@types/node@20.9.0)(nx@17.0.3)(ts-node@10.9.2)(typescript@5.3.3)(verdaccio@5.29.0)
+        version: 1.13.0(@swc-node/register@1.6.8)(@swc/core@1.3.100)(@types/node@20.9.0)(nx@17.0.3)(ts-node@10.9.2)(typescript@5.3.3)(verdaccio@5.29.0)
       "@storm-software/workspace-tools":
         specifier: latest
-        version: 1.23.0(@swc-node/register@1.6.8)(@swc/core@1.3.100)(@types/node@20.9.0)(esbuild@0.19.8)(nx@17.0.3)(postcss@8.2.13)(ts-node@10.9.2)(typescript@5.3.3)(verdaccio@5.29.0)
+        version: 1.24.0(@swc-node/register@1.6.8)(@swc/core@1.3.100)(@types/node@20.9.0)(esbuild@0.19.8)(nx@17.0.3)(postcss@8.2.13)(ts-node@10.9.2)(typescript@5.3.3)(verdaccio@5.29.0)
       "@swc-node/register":
         specifier: ^1.6.8
         version: 1.6.8(@swc/core@1.3.100)(typescript@5.3.3)
@@ -97,7 +97,7 @@ importers:
         version: 20.9.0
       "@types/react":
         specifier: ^18.2.42
-        version: 18.2.42
+        version: 18.2.43
       "@types/react-dom":
         specifier: ^18.2.17
         version: 18.2.17
@@ -121,7 +121,7 @@ importers:
         version: 15.2.0
       log4brains:
         specifier: ^1.0.1
-        version: 1.0.1(@types/react@18.2.42)(typescript@5.3.3)
+        version: 1.0.1(@types/react@18.2.43)(typescript@5.3.3)
       nx:
         specifier: 17.0.3
         version: 17.0.3(@swc-node/register@1.6.8)(@swc/core@1.3.100)
@@ -2009,7 +2009,7 @@ packages:
     engines: { node: ">=v18" }
     dependencies:
       "@commitlint/types": 18.4.3
-      chalk: 4.1.2
+      chalk: 4.1.0
     dev: false
 
   /@commitlint/is-ignored@18.4.3:
@@ -2048,7 +2048,7 @@ packages:
       "@commitlint/resolve-extends": 18.4.3
       "@commitlint/types": 18.4.3
       "@types/node": 18.19.3
-      chalk: 4.1.2
+      chalk: 4.1.0
       cosmiconfig: 8.3.6(typescript@5.3.3)
       cosmiconfig-typescript-loader: 5.0.0(@types/node@18.19.3)(cosmiconfig@8.3.6)(typescript@5.3.3)
       lodash.isplainobject: 4.0.6
@@ -2147,7 +2147,7 @@ packages:
       }
     engines: { node: ">=v18" }
     dependencies:
-      chalk: 4.1.2
+      chalk: 4.1.0
     dev: false
 
   /@commitlint/types@18.4.3:
@@ -2157,7 +2157,7 @@ packages:
       }
     engines: { node: ">=v18" }
     dependencies:
-      chalk: 4.1.2
+      chalk: 4.1.0
     dev: false
 
   /@cspell/cspell-bundled-dicts@7.3.9:
@@ -3545,7 +3545,7 @@ packages:
       yaml: 1.10.2
     dev: false
 
-  /@log4brains/web@1.0.1(@types/react@18.2.42)(typescript@5.3.3):
+  /@log4brains/web@1.0.1(@types/react@18.2.43)(typescript@5.3.3):
     resolution:
       {
         integrity: sha512-r0+9jotWDxZmUr+AnIf42xn9vJOxxpMM+5qy2gwsRrcbtd7CCqhYR0aM28x3X2U9qKy7rLkfIcBOLYTbblkQpg==
@@ -3554,9 +3554,9 @@ packages:
     dependencies:
       "@log4brains/cli-common": 1.0.0
       "@log4brains/core": 1.0.0
-      "@material-ui/core": 4.12.4(@types/react@18.2.42)(react-dom@17.0.2)(react@17.0.2)
-      "@material-ui/icons": 4.11.3(@material-ui/core@4.12.4)(@types/react@18.2.42)(react-dom@17.0.2)(react@17.0.2)
-      "@material-ui/lab": 4.0.0-alpha.61(@material-ui/core@4.12.4)(@types/react@18.2.42)(react-dom@17.0.2)(react@17.0.2)
+      "@material-ui/core": 4.12.4(@types/react@18.2.43)(react-dom@17.0.2)(react@17.0.2)
+      "@material-ui/icons": 4.11.3(@material-ui/core@4.12.4)(@types/react@18.2.43)(react-dom@17.0.2)(react@17.0.2)
+      "@material-ui/lab": 4.0.0-alpha.61(@material-ui/core@4.12.4)(@types/react@18.2.43)(react-dom@17.0.2)(react@17.0.2)
       "@next/bundle-analyzer": 10.2.3(bufferutil@4.0.8)(utf-8-validate@5.0.10)
       babel-plugin-import: 1.13.8
       badge-maker: 3.3.1
@@ -3648,7 +3648,7 @@ packages:
       read-yaml-file: 1.1.0
     dev: false
 
-  /@material-ui/core@4.12.4(@types/react@18.2.42)(react-dom@17.0.2)(react@17.0.2):
+  /@material-ui/core@4.12.4(@types/react@18.2.43)(react-dom@17.0.2)(react@17.0.2):
     resolution:
       {
         integrity: sha512-tr7xekNlM9LjA6pagJmL8QCgZXaubWUwkJnoYcMKd4gw/t4XiyvnTkjdGrUVicyB2BsdaAv1tvow45bPM4sSwQ==
@@ -3664,11 +3664,11 @@ packages:
         optional: true
     dependencies:
       "@babel/runtime": 7.23.5
-      "@material-ui/styles": 4.11.5(@types/react@18.2.42)(react-dom@17.0.2)(react@17.0.2)
-      "@material-ui/system": 4.12.2(@types/react@18.2.42)(react-dom@17.0.2)(react@17.0.2)
-      "@material-ui/types": 5.1.0(@types/react@18.2.42)
+      "@material-ui/styles": 4.11.5(@types/react@18.2.43)(react-dom@17.0.2)(react@17.0.2)
+      "@material-ui/system": 4.12.2(@types/react@18.2.43)(react-dom@17.0.2)(react@17.0.2)
+      "@material-ui/types": 5.1.0(@types/react@18.2.43)
       "@material-ui/utils": 4.11.3(react-dom@17.0.2)(react@17.0.2)
-      "@types/react": 18.2.42
+      "@types/react": 18.2.43
       "@types/react-transition-group": 4.4.10
       clsx: 1.2.1
       hoist-non-react-statics: 3.3.2
@@ -3680,7 +3680,7 @@ packages:
       react-transition-group: 4.4.5(react-dom@17.0.2)(react@17.0.2)
     dev: false
 
-  /@material-ui/icons@4.11.3(@material-ui/core@4.12.4)(@types/react@18.2.42)(react-dom@17.0.2)(react@17.0.2):
+  /@material-ui/icons@4.11.3(@material-ui/core@4.12.4)(@types/react@18.2.43)(react-dom@17.0.2)(react@17.0.2):
     resolution:
       {
         integrity: sha512-IKHlyx6LDh8n19vzwH5RtHIOHl9Tu90aAAxcbWME6kp4dmvODM3UvOHJeMIDzUbd4muuJKHmlNoBN+mDY4XkBA==
@@ -3696,13 +3696,13 @@ packages:
         optional: true
     dependencies:
       "@babel/runtime": 7.23.5
-      "@material-ui/core": 4.12.4(@types/react@18.2.42)(react-dom@17.0.2)(react@17.0.2)
-      "@types/react": 18.2.42
+      "@material-ui/core": 4.12.4(@types/react@18.2.43)(react-dom@17.0.2)(react@17.0.2)
+      "@types/react": 18.2.43
       react: 17.0.2
       react-dom: 17.0.2(react@17.0.2)
     dev: false
 
-  /@material-ui/lab@4.0.0-alpha.61(@material-ui/core@4.12.4)(@types/react@18.2.42)(react-dom@17.0.2)(react@17.0.2):
+  /@material-ui/lab@4.0.0-alpha.61(@material-ui/core@4.12.4)(@types/react@18.2.43)(react-dom@17.0.2)(react@17.0.2):
     resolution:
       {
         integrity: sha512-rSzm+XKiNUjKegj8bzt5+pygZeckNLOr+IjykH8sYdVk7dE9y2ZuUSofiMV2bJk3qU+JHwexmw+q0RyNZB9ugg==
@@ -3719,9 +3719,9 @@ packages:
         optional: true
     dependencies:
       "@babel/runtime": 7.23.5
-      "@material-ui/core": 4.12.4(@types/react@18.2.42)(react-dom@17.0.2)(react@17.0.2)
+      "@material-ui/core": 4.12.4(@types/react@18.2.43)(react-dom@17.0.2)(react@17.0.2)
       "@material-ui/utils": 4.11.3(react-dom@17.0.2)(react@17.0.2)
-      "@types/react": 18.2.42
+      "@types/react": 18.2.43
       clsx: 1.2.1
       prop-types: 15.8.1
       react: 17.0.2
@@ -3729,7 +3729,7 @@ packages:
       react-is: 17.0.2
     dev: false
 
-  /@material-ui/styles@4.11.5(@types/react@18.2.42)(react-dom@17.0.2)(react@17.0.2):
+  /@material-ui/styles@4.11.5(@types/react@18.2.43)(react-dom@17.0.2)(react@17.0.2):
     resolution:
       {
         integrity: sha512-o/41ot5JJiUsIETME9wVLAJrmIWL3j0R0Bj2kCOLbSfqEkKf0fmaPt+5vtblUh5eXr2S+J/8J3DaCb10+CzPGA==
@@ -3746,9 +3746,9 @@ packages:
     dependencies:
       "@babel/runtime": 7.23.5
       "@emotion/hash": 0.8.0
-      "@material-ui/types": 5.1.0(@types/react@18.2.42)
+      "@material-ui/types": 5.1.0(@types/react@18.2.43)
       "@material-ui/utils": 4.11.3(react-dom@17.0.2)(react@17.0.2)
-      "@types/react": 18.2.42
+      "@types/react": 18.2.43
       clsx: 1.2.1
       csstype: 2.6.21
       hoist-non-react-statics: 3.3.2
@@ -3765,7 +3765,7 @@ packages:
       react-dom: 17.0.2(react@17.0.2)
     dev: false
 
-  /@material-ui/system@4.12.2(@types/react@18.2.42)(react-dom@17.0.2)(react@17.0.2):
+  /@material-ui/system@4.12.2(@types/react@18.2.43)(react-dom@17.0.2)(react@17.0.2):
     resolution:
       {
         integrity: sha512-6CSKu2MtmiJgcCGf6nBQpM8fLkuB9F55EKfbdTC80NND5wpTmKzwdhLYLH3zL4cLlK0gVaaltW7/wMuyTnN0Lw==
@@ -3781,14 +3781,14 @@ packages:
     dependencies:
       "@babel/runtime": 7.23.5
       "@material-ui/utils": 4.11.3(react-dom@17.0.2)(react@17.0.2)
-      "@types/react": 18.2.42
+      "@types/react": 18.2.43
       csstype: 2.6.21
       prop-types: 15.8.1
       react: 17.0.2
       react-dom: 17.0.2(react@17.0.2)
     dev: false
 
-  /@material-ui/types@5.1.0(@types/react@18.2.42):
+  /@material-ui/types@5.1.0(@types/react@18.2.43):
     resolution:
       {
         integrity: sha512-7cqRjrY50b8QzRSYyhSpx4WRw2YuO0KKIGQEVk5J8uoz2BanawykgZGoWEqKm7pVIbzFDN0SpPcVV4IhOFkl8A==
@@ -3799,7 +3799,7 @@ packages:
       "@types/react":
         optional: true
     dependencies:
-      "@types/react": 18.2.42
+      "@types/react": 18.2.43
     dev: false
 
   /@material-ui/utils@4.11.3(react-dom@17.0.2)(react@17.0.2):
@@ -4488,7 +4488,7 @@ packages:
       "@nrwl/esbuild": 17.0.3(@swc-node/register@1.6.8)(@swc/core@1.3.100)(@types/node@20.9.0)(esbuild@0.19.8)(nx@17.0.3)(typescript@5.3.3)(verdaccio@5.29.0)
       "@nx/devkit": 17.0.3(nx@17.0.3)
       "@nx/js": 17.0.3(@swc-node/register@1.6.8)(@swc/core@1.3.100)(@types/node@20.9.0)(nx@17.0.3)(typescript@5.3.3)(verdaccio@5.29.0)
-      chalk: 4.1.2
+      chalk: 4.1.0
       esbuild: 0.19.8
       fast-glob: 3.2.7
       fs-extra: 11.2.0
@@ -6194,18 +6194,6 @@ packages:
       - typescript
     dev: false
 
-  /@storm-software/config-tools@1.2.13(typescript@5.3.3):
-    resolution:
-      {
-        integrity: sha512-6VVIgJMPHdea10TxrcppTuCTjE1VmSM3pgdfjsIyR2MGxqXF2d2gGJqH5ycUQE5gwYD0TYsU9Sr5KBhoI4Xmdw==
-      }
-    dependencies:
-      cosmiconfig: 9.0.0(typescript@5.3.3)
-      zod: 3.22.4
-    transitivePeerDependencies:
-      - typescript
-    dev: false
-
   /@storm-software/config-tools@1.2.14(typescript@5.3.3):
     resolution:
       {
@@ -6218,10 +6206,22 @@ packages:
       - typescript
     dev: false
 
-  /@storm-software/git-tools@1.14.8(@swc-node/register@1.6.8)(@swc/core@1.3.100)(typescript@5.3.3):
+  /@storm-software/config-tools@1.3.0(typescript@5.3.3):
     resolution:
       {
-        integrity: sha512-teVm0q+YH3XROXN0+NfUzyQ7L8ops/hSH3AXFfcV9jmbVfXdnvUMmE9d3yKVTnKfPrTZ/MxYCYnTo07cn/dxQA==
+        integrity: sha512-v7bYqzv9+8sq03RnVGKp+yFSX3bRrIHmy29AtXaBFQDLP2ztC8txtVdBXxUxqodwVCcWp33wHkC2ev2JvfTEMA==
+      }
+    dependencies:
+      cosmiconfig: 9.0.0(typescript@5.3.3)
+      zod: 3.22.4
+    transitivePeerDependencies:
+      - typescript
+    dev: false
+
+  /@storm-software/git-tools@1.15.0(@swc-node/register@1.6.8)(@swc/core@1.3.100)(typescript@5.3.3):
+    resolution:
+      {
+        integrity: sha512-220ZT8XefygMvos5/BAdhfAHsFgp45oYvyVtstlstcfGtWfzyMfW47UQS6lXagUPHvzAOFN2ZzOiEnlprE3MKw==
       }
     hasBin: true
     dependencies:
@@ -6256,10 +6256,10 @@ packages:
       - typescript
     dev: false
 
-  /@storm-software/linting-tools@1.15.10:
+  /@storm-software/linting-tools@1.16.0:
     resolution:
       {
-        integrity: sha512-rYyN4/xB6CZYujwlMnvwprTWnm34NOkTHg2mLuxEcV9GKhJJlQyHJPDGyOpl27gfCTBqEHoYyNx83yoiyCFACQ==
+        integrity: sha512-uauk/EzxhktZMvvzQzIyao5UHTitN5mm+p5H5mzoDMpmJcl1GeupPxlY9QDDdV545ScefIiDl6SpgBbxzSuJfA==
       }
     hasBin: true
     dependencies:
@@ -6366,10 +6366,10 @@ packages:
       - verdaccio
     dev: false
 
-  /@storm-software/testing-tools@1.12.10(@swc-node/register@1.6.8)(@swc/core@1.3.100)(@types/node@20.9.0)(nx@17.0.3)(ts-node@10.9.2)(typescript@5.3.3)(verdaccio@5.29.0):
+  /@storm-software/testing-tools@1.13.0(@swc-node/register@1.6.8)(@swc/core@1.3.100)(@types/node@20.9.0)(nx@17.0.3)(ts-node@10.9.2)(typescript@5.3.3)(verdaccio@5.29.0):
     resolution:
       {
-        integrity: sha512-6J2vUFa6A2moYEwNRK4cDOZEuyeZe4nH0wdhBLG0Iy7NryCEcJqQABG7JV/hV5F0WzCfXosfHpcI40z2XqMn5w==
+        integrity: sha512-kmTk7P834/hjk1PoOlH3MElmVorV2jMcXwvFCtjJYWgp2GC7QFSXWY/kiFbjcdXZyGxwBy6flbxvi9IYMba34A==
       }
     dependencies:
       "@nx/jest": 17.0.3(@swc-node/register@1.6.8)(@swc/core@1.3.100)(@types/node@20.9.0)(nx@17.0.3)(ts-node@10.9.2)(typescript@5.3.3)(verdaccio@5.29.0)
@@ -6389,10 +6389,10 @@ packages:
       - verdaccio
     dev: false
 
-  /@storm-software/workspace-tools@1.23.0(@swc-node/register@1.6.8)(@swc/core@1.3.100)(@types/node@20.9.0)(esbuild@0.19.8)(nx@17.0.3)(postcss@8.2.13)(ts-node@10.9.2)(typescript@5.3.3)(verdaccio@5.29.0):
+  /@storm-software/workspace-tools@1.24.0(@swc-node/register@1.6.8)(@swc/core@1.3.100)(@types/node@20.9.0)(esbuild@0.19.8)(nx@17.0.3)(postcss@8.2.13)(ts-node@10.9.2)(typescript@5.3.3)(verdaccio@5.29.0):
     resolution:
       {
-        integrity: sha512-QiD4OnuxsDkNbYGIsQAbcfP2V7JZQ8ubZDwnlwHLp1qY4zQMTk1dhmCzVPgJnnRA0+ghJ2nQ4eamtqsrwzSmXw==
+        integrity: sha512-KuEynfTuOgnBFrYIOqHbV8dD5Hc1q9wK6mXkTIzi919EaAIA5t/Zd5SorVPDwW63dX375zT06vyrOPmt/iEIIg==
       }
     dependencies:
       "@anatine/esbuild-decorators": 0.2.19(esbuild@0.19.8)
@@ -6403,6 +6403,7 @@ packages:
       chalk: 4.1.0
       decky: 1.1.1
       esbuild-plugin-environment: 0.3.0(esbuild@0.19.8)
+      esbuild-plugin-handlebars: 1.0.2
       esbuild-plugin-pino: 2.1.0(esbuild@0.19.8)
       fs-extra: 11.2.0
       glob: 10.3.10
@@ -7120,7 +7121,7 @@ packages:
         integrity: sha512-rvrT/M7Df5eykWFxn6MYt5Pem/Dbyc1N8Y0S9Mrkw2WFCRiqUgw9P7ul2NpwsXCSM1DVdENzdG9J5SreqfAIWg==
       }
     dependencies:
-      "@types/react": 18.2.42
+      "@types/react": 18.2.43
     dev: false
 
   /@types/react-transition-group@4.4.10:
@@ -7129,13 +7130,13 @@ packages:
         integrity: sha512-hT/+s0VQs2ojCX823m60m5f0sL5idt9SO6Tj6Dg+rdphGPIeJbJ6CxvBYkgkGKrYeDjvIpKTR38UzmtHJOGW3Q==
       }
     dependencies:
-      "@types/react": 18.2.42
+      "@types/react": 18.2.43
     dev: false
 
-  /@types/react@18.2.42:
+  /@types/react@18.2.43:
     resolution:
       {
-        integrity: sha512-c1zEr96MjakLYus/wPnuWDo1/zErfdU9rNsIGmE+NV71nx88FG9Ttgo5dqorXTu/LImX2f63WBP986gJkMPNbA==
+        integrity: sha512-nvOV01ZdBdd/KW6FahSbcNplt2jCJfyWdTos61RYHV+FVv5L/g9AOX1bmbVcWcLFL8+KHQfh1zVIQrud6ihyQA==
       }
     dependencies:
       "@types/prop-types": 15.7.11
@@ -10746,7 +10747,7 @@ packages:
         integrity: sha512-VMX6krHDqOgKByapwEar1w+P7aj8YIeH1DiRfOOrnLcgR7a0CEI0NvrvV2FSAzkhkHIsGBV59xwsgOook8TIxg==
       }
     dependencies:
-      chalk: 4.1.2
+      chalk: 4.1.0
       fast-glob: 3.3.2
     optionalDependencies:
       esbuild: 0.8.57
@@ -11694,6 +11695,15 @@ packages:
         integrity: sha512-v5LpSkml+CbsC0+xAaETEGDECdvKp1wKkD4aXMdI4zLjXP0EYfK4GjGhphumt4N+kjR3A8Q+DIkpgxX1XTqO4Q==
       }
     engines: { node: ">=v14.0.0", npm: ">=7.0.0" }
+    dev: false
+
+  /esbuild-plugin-handlebars@1.0.2:
+    resolution:
+      {
+        integrity: sha512-2U45b8AZV0UdLrdlB5q0siV7J2FfJUeoMb+8qxTpeOmrOna09aox+YRfxUlFWS+OzK3ZDiPdvYnFzuE+YQ2hmw==
+      }
+    dependencies:
+      handlebars: 4.7.8
     dev: false
 
   /esbuild-plugin-pino@2.1.0(esbuild@0.19.8):
@@ -13190,7 +13200,7 @@ packages:
       fs.realpath: 1.0.0
       inflight: 1.0.6
       inherits: 2.0.4
-      minimatch: 3.1.2
+      minimatch: 3.0.5
       once: 1.4.0
       path-is-absolute: 1.0.1
     dev: false
@@ -15806,7 +15816,7 @@ packages:
       acorn: 8.11.2
       eslint-visitor-keys: 3.4.3
       espree: 9.6.1
-      semver: 7.5.4
+      semver: 7.5.3
     dev: false
 
   /jsonc-parser@3.2.0:
@@ -16479,7 +16489,7 @@ packages:
       wrap-ansi: 9.0.0
     dev: false
 
-  /log4brains@1.0.1(@types/react@18.2.42)(typescript@5.3.3):
+  /log4brains@1.0.1(@types/react@18.2.43)(typescript@5.3.3):
     resolution:
       {
         integrity: sha512-An53wosvY1rjRX14XaI0432LMj1aRIdavDlOriVBk1d0SGnziQW5KAfBR9bmat7dh1R3evPjNYSqugwUCb9p3w==
@@ -16490,7 +16500,7 @@ packages:
       "@log4brains/cli": 1.0.0
       "@log4brains/cli-common": 1.0.0
       "@log4brains/init": 1.0.0
-      "@log4brains/web": 1.0.1(@types/react@18.2.42)(typescript@5.3.3)
+      "@log4brains/web": 1.0.1(@types/react@18.2.43)(typescript@5.3.3)
       chalk: 4.1.2
       commander: 6.2.1
       esm: 3.2.25
@@ -19325,7 +19335,7 @@ packages:
     dependencies:
       hosted-git-info: 7.0.1
       proc-log: 3.0.0
-      semver: 7.5.4
+      semver: 7.5.3
       validate-npm-package-name: 5.0.0
     dev: false
 
@@ -19859,7 +19869,7 @@ packages:
     engines: { node: ">=10" }
     dependencies:
       bl: 4.1.0
-      chalk: 4.1.2
+      chalk: 4.1.0
       cli-cursor: 3.1.0
       cli-spinners: 2.9.2
       is-interactive: 1.0.0
