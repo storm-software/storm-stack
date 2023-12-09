@@ -1,3 +1,11 @@
+## [1.2.1](https://github.com/storm-software/storm-stack/compare/utilities-v1.2.0...utilities-v1.2.1) (2023-12-09)
+
+
+### Bug Fixes
+
+* **file-system:** Resolved issue with bad file imports ([716b412](https://github.com/storm-software/storm-stack/commit/716b412c192e42ef4c45a95e0e5acd73cae913e6))
+* **monorepo:** Regenerated the pnpm-lock file ([d9c4beb](https://github.com/storm-software/storm-stack/commit/d9c4beb728cc14768676f99b89394c93c50bf7fb))
+
 # [1.2.0](https://github.com/storm-software/storm-stack/compare/utilities-v1.1.1...utilities-v1.2.0) (2023-12-09)
 
 ### Bug Fixes
