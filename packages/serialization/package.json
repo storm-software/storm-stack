@@ -14,7 +14,7 @@
     "superjson": "2.2.1"
   },
   "devDependencies": {
-    "@types/node": "20.9.0",
+    "@types/node": "20.9.5",
     "@types/qs": "^6.9.10"
   },
   "publishConfig": {
