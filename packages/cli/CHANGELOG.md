@@ -1,11 +1,19 @@
-## [1.0.3](https://github.com/storm-software/storm-stack/compare/cli-v1.0.2...cli-v1.0.3) (2023-12-11)
+## [1.0.4](https://github.com/storm-software/storm-stack/compare/cli-v1.0.3...cli-v1.0.4) (2023-12-11)
 
 
 ### Bug Fixes
 
-* **cli:** Resolved typing error with `cli` package ([d67cb8a](https://github.com/storm-software/storm-stack/commit/d67cb8ad652d6fe81e0d199e77e788b9d21ef4e8))
-* **deps:** pin dependencies ([#2](https://github.com/storm-software/storm-stack/issues/2)) ([07d6782](https://github.com/storm-software/storm-stack/commit/07d6782c3ca03e071a72c249a1d5e377405919bb))
-* **deps:** update patch prod dependencies ([#6](https://github.com/storm-software/storm-stack/issues/6)) ([01d9585](https://github.com/storm-software/storm-stack/commit/01d95856f77270d9bd7f0b5e3558df38b27b482e))
+* **cli:** Resolved issues with `cli` package build ([3a0c051](https://github.com/storm-software/storm-stack/commit/3a0c0512c35f4ab8189fb97e4224f76b1f2141f8))
+* **logging:** Update logging to resolve type build issue ([4d1c25b](https://github.com/storm-software/storm-stack/commit/4d1c25babe3cfe7336857eaf8ce55c9a613fb6fa))
+* **monorepo:** Resolved pnpm-lock for monorepo ([83d3ac5](https://github.com/storm-software/storm-stack/commit/83d3ac5416ae82724dedf04af10d68b4fad3dcee))
+
+## [1.0.3](https://github.com/storm-software/storm-stack/compare/cli-v1.0.2...cli-v1.0.3) (2023-12-11)
+
+### Bug Fixes
+
+- **cli:** Resolved typing error with `cli` package ([d67cb8a](https://github.com/storm-software/storm-stack/commit/d67cb8ad652d6fe81e0d199e77e788b9d21ef4e8))
+- **deps:** pin dependencies ([#2](https://github.com/storm-software/storm-stack/issues/2)) ([07d6782](https://github.com/storm-software/storm-stack/commit/07d6782c3ca03e071a72c249a1d5e377405919bb))
+- **deps:** update patch prod dependencies ([#6](https://github.com/storm-software/storm-stack/issues/6)) ([01d9585](https://github.com/storm-software/storm-stack/commit/01d95856f77270d9bd7f0b5e3558df38b27b482e))
 
 ## [1.0.2](https://github.com/storm-software/storm-stack/compare/cli-v1.0.1...cli-v1.0.2) (2023-12-09)
 
