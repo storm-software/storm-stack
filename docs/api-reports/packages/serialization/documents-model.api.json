@@ -173,77 +173,101 @@
       "preserveMemberOrder": false,
       "members": [
         {
-          "kind": "Function",
-          "canonicalReference": "@storm-stack/serialization!createStormError:function(1)",
-          "docComment": "/**\n * Creates a new StormError instance\n *\n * @param cause - The cause of the error\n *\n * @returns The newly created StormError\n */\n",
+          "kind": "TypeAlias",
+          "canonicalReference": "@storm-stack/serialization!Class:type",
+          "docComment": "",
           "excerptTokens": [
             {
               "kind": "Content",
-              "text": "export declare function createStormError<TCode extends "
+              "text": "export type Class = "
             },
             {
               "kind": "Content",
-              "text": "string"
-            },
-            {
-              "kind": "Content",
-              "text": " = "
-            },
-            {
-              "kind": "Content",
-              "text": "string"
-            },
-            {
-              "kind": "Content",
-              "text": ">({ code, name, message, cause, stack, data }: "
-            },
-            {
-              "kind": "Reference",
-              "text": "StormErrorOptions",
-              "canonicalReference": "@storm-stack/serialization!StormErrorOptions:interface"
-            },
-            {
-              "kind": "Content",
-              "text": " & {\n    code: TCode;\n}"
-            },
-            {
-              "kind": "Content",
-              "text": "): "
-            },
-            {
-              "kind": "Reference",
-              "text": "StormError",
-              "canonicalReference": "@storm-stack/serialization!StormError:class"
-            },
-            {
-              "kind": "Content",
-              "text": "<TCode>"
+              "text": "{\n    new (...args: any[]): any;\n}"
             },
             {
               "kind": "Content",
               "text": ";"
             }
           ],
-          "fileUrlPath": "packages/errors/src/storm-error.ts",
-          "returnTypeTokenRange": {
-            "startIndex": 8,
-            "endIndex": 10
-          },
+          "fileUrlPath": "packages/serialization/src/types.ts",
           "releaseTag": "Public",
-          "overloadIndex": 1,
-          "parameters": [
+          "name": "Class",
+          "typeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 2
+          }
+        },
+        {
+          "kind": "TypeAlias",
+          "canonicalReference": "@storm-stack/serialization!ClassInstance:type",
+          "docComment": "",
+          "excerptTokens": [
             {
-              "parameterName": "{ code, name, message, cause, stack, data }",
-              "parameterTypeTokenRange": {
-                "startIndex": 5,
-                "endIndex": 7
-              },
-              "isOptional": false
+              "kind": "Content",
+              "text": "export type ClassInstance = "
+            },
+            {
+              "kind": "Content",
+              "text": "any"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
             }
           ],
+          "fileUrlPath": "packages/serialization/src/types.ts",
+          "releaseTag": "Public",
+          "name": "ClassInstance",
+          "typeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 2
+          }
+        },
+        {
+          "kind": "Interface",
+          "canonicalReference": "@storm-stack/serialization!ClassSerializable:interface",
+          "docComment": "/**\n * A class that can be serialized and deserialized\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export interface ClassSerializable<TData, TJsonValue extends "
+            },
+            {
+              "kind": "Reference",
+              "text": "JsonValue",
+              "canonicalReference": "@storm-stack/serialization!JsonValue:type"
+            },
+            {
+              "kind": "Content",
+              "text": " = "
+            },
+            {
+              "kind": "Reference",
+              "text": "JsonValue",
+              "canonicalReference": "@storm-stack/serialization!JsonValue:type"
+            },
+            {
+              "kind": "Content",
+              "text": "> "
+            }
+          ],
+          "fileUrlPath": "packages/serialization/src/types.ts",
+          "releaseTag": "Public",
           "typeParameters": [
             {
-              "typeParameterName": "TCode",
+              "typeParameterName": "TData",
+              "constraintTokenRange": {
+                "startIndex": 0,
+                "endIndex": 0
+              },
+              "defaultTypeTokenRange": {
+                "startIndex": 0,
+                "endIndex": 0
+              }
+            },
+            {
+              "typeParameterName": "TJsonValue",
               "constraintTokenRange": {
                 "startIndex": 1,
                 "endIndex": 2
@@ -254,21 +278,1798 @@
               }
             }
           ],
-          "name": "createStormError"
+          "name": "ClassSerializable",
+          "preserveMemberOrder": false,
+          "members": [
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "@storm-stack/serialization!ClassSerializable#deserialize:member",
+              "docComment": "/**\n * Deserialize the class from a JSON object\n *\n * @param json - The JSON object to deserialize from\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "deserialize: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "(json: TJsonValue) => void"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isReadonly": false,
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "deserialize",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "@storm-stack/serialization!ClassSerializable#serialize:member",
+              "docComment": "/**\n * Serialize the class to a JSON object\n *\n * @returns The data object to serialize\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "serialize: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "() => TJsonValue"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isReadonly": false,
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "serialize",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            }
+          ],
+          "extendsTokenRanges": []
         },
         {
-          "kind": "Function",
-          "canonicalReference": "@storm-stack/serialization!deserializeStormError:function(1)",
-          "docComment": "/**\n * Deserializes a JSON object into a StormError\n *\n * @param error - The error to deserialize\n *\n * @returns The deserialized error\n */\n",
+          "kind": "TypeAlias",
+          "canonicalReference": "@storm-stack/serialization!ClassTypeAnnotation:type",
+          "docComment": "",
           "excerptTokens": [
             {
               "kind": "Content",
-              "text": "export declare function deserializeStormError(json: "
+              "text": "export type ClassTypeAnnotation = "
+            },
+            {
+              "kind": "Content",
+              "text": "[\"class\", string]"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "fileUrlPath": "packages/serialization/src/types.ts",
+          "releaseTag": "Public",
+          "name": "ClassTypeAnnotation",
+          "typeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 2
+          }
+        },
+        {
+          "kind": "TypeAlias",
+          "canonicalReference": "@storm-stack/serialization!CompositeTypeAnnotation:type",
+          "docComment": "",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export type CompositeTypeAnnotation = "
+            },
+            {
+              "kind": "Reference",
+              "text": "TypedArrayAnnotation",
+              "canonicalReference": "@storm-stack/serialization!TypedArrayAnnotation:type"
+            },
+            {
+              "kind": "Content",
+              "text": " | "
+            },
+            {
+              "kind": "Reference",
+              "text": "ClassTypeAnnotation",
+              "canonicalReference": "@storm-stack/serialization!ClassTypeAnnotation:type"
+            },
+            {
+              "kind": "Content",
+              "text": " | "
+            },
+            {
+              "kind": "Reference",
+              "text": "SymbolTypeAnnotation",
+              "canonicalReference": "@storm-stack/serialization!SymbolTypeAnnotation:type"
+            },
+            {
+              "kind": "Content",
+              "text": " | "
+            },
+            {
+              "kind": "Reference",
+              "text": "CustomTypeAnnotation",
+              "canonicalReference": "@storm-stack/serialization!CustomTypeAnnotation:type"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "fileUrlPath": "packages/serialization/src/types.ts",
+          "releaseTag": "Public",
+          "name": "CompositeTypeAnnotation",
+          "typeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 8
+          }
+        },
+        {
+          "kind": "TypeAlias",
+          "canonicalReference": "@storm-stack/serialization!CustomTypeAnnotation:type",
+          "docComment": "",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export type CustomTypeAnnotation = "
+            },
+            {
+              "kind": "Content",
+              "text": "[\"custom\", string]"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "fileUrlPath": "packages/serialization/src/types.ts",
+          "releaseTag": "Public",
+          "name": "CustomTypeAnnotation",
+          "typeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 2
+          }
+        },
+        {
+          "kind": "Interface",
+          "canonicalReference": "@storm-stack/serialization!DataTransformer:interface",
+          "docComment": "/**\n * A class that can be serialized and deserialized\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export interface DataTransformer<TData, TJsonValue extends "
             },
             {
               "kind": "Reference",
               "text": "JsonValue",
-              "canonicalReference": "@storm-stack/serialization!~JsonValue:type"
+              "canonicalReference": "@storm-stack/serialization!JsonValue:type"
+            },
+            {
+              "kind": "Content",
+              "text": " = "
+            },
+            {
+              "kind": "Reference",
+              "text": "JsonValue",
+              "canonicalReference": "@storm-stack/serialization!JsonValue:type"
+            },
+            {
+              "kind": "Content",
+              "text": "> "
+            }
+          ],
+          "fileUrlPath": "packages/serialization/src/types.ts",
+          "releaseTag": "Public",
+          "typeParameters": [
+            {
+              "typeParameterName": "TData",
+              "constraintTokenRange": {
+                "startIndex": 0,
+                "endIndex": 0
+              },
+              "defaultTypeTokenRange": {
+                "startIndex": 0,
+                "endIndex": 0
+              }
+            },
+            {
+              "typeParameterName": "TJsonValue",
+              "constraintTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "defaultTypeTokenRange": {
+                "startIndex": 3,
+                "endIndex": 4
+              }
+            }
+          ],
+          "name": "DataTransformer",
+          "preserveMemberOrder": false,
+          "members": [
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "@storm-stack/serialization!DataTransformer#deserialize:member",
+              "docComment": "/**\n * Deserialize the class from a JSON object\n *\n * @param json - The JSON object to deserialize from\n *\n * @returns The deserialized data\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "deserialize: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "DeserializeFunct",
+                  "canonicalReference": "@storm-stack/serialization!DeserializeFunct:type"
+                },
+                {
+                  "kind": "Content",
+                  "text": "<TData, TJsonValue>"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isReadonly": false,
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "deserialize",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 3
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "@storm-stack/serialization!DataTransformer#serialize:member",
+              "docComment": "/**\n * Serialize the class to a JSON object\n *\n * @param data - The data object to serialize\n *\n * @returns The serialized JSON object\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "serialize: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "SerializationFunct",
+                  "canonicalReference": "@storm-stack/serialization!SerializationFunct:type"
+                },
+                {
+                  "kind": "Content",
+                  "text": "<TData, TJsonValue>"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isReadonly": false,
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "serialize",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 3
+              }
+            }
+          ],
+          "extendsTokenRanges": []
+        },
+        {
+          "kind": "Function",
+          "canonicalReference": "@storm-stack/serialization!deserialize:function(1)",
+          "docComment": "/**\n * Deserialize the given value with superjson using the given metadata\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export declare function deserialize<TData = "
+            },
+            {
+              "kind": "Content",
+              "text": "unknown"
+            },
+            {
+              "kind": "Content",
+              "text": ">(payload: "
+            },
+            {
+              "kind": "Reference",
+              "text": "JsonParserResult",
+              "canonicalReference": "@storm-stack/serialization!JsonParserResult:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "): "
+            },
+            {
+              "kind": "Content",
+              "text": "TData"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "fileUrlPath": "packages/serialization/src/json-parser.ts",
+          "returnTypeTokenRange": {
+            "startIndex": 5,
+            "endIndex": 6
+          },
+          "releaseTag": "Public",
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "payload",
+              "parameterTypeTokenRange": {
+                "startIndex": 3,
+                "endIndex": 4
+              },
+              "isOptional": false
+            }
+          ],
+          "typeParameters": [
+            {
+              "typeParameterName": "TData",
+              "constraintTokenRange": {
+                "startIndex": 0,
+                "endIndex": 0
+              },
+              "defaultTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            }
+          ],
+          "name": "deserialize"
+        },
+        {
+          "kind": "TypeAlias",
+          "canonicalReference": "@storm-stack/serialization!DeserializeFunct:type",
+          "docComment": "/**\n * A function that can deserialize a certain type of data\n *\n * @param json - The JSON object to deserialize from\n *\n * @returns The deserialized data\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export type DeserializeFunct<TData = "
+            },
+            {
+              "kind": "Content",
+              "text": "any"
+            },
+            {
+              "kind": "Content",
+              "text": ", TJsonValue extends "
+            },
+            {
+              "kind": "Reference",
+              "text": "JsonValue",
+              "canonicalReference": "@storm-stack/serialization!JsonValue:type"
+            },
+            {
+              "kind": "Content",
+              "text": " = "
+            },
+            {
+              "kind": "Reference",
+              "text": "JsonValue",
+              "canonicalReference": "@storm-stack/serialization!JsonValue:type"
+            },
+            {
+              "kind": "Content",
+              "text": "> = "
+            },
+            {
+              "kind": "Content",
+              "text": "(json: TJsonValue) => TData"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "fileUrlPath": "packages/serialization/src/types.ts",
+          "releaseTag": "Public",
+          "name": "DeserializeFunct",
+          "typeParameters": [
+            {
+              "typeParameterName": "TData",
+              "constraintTokenRange": {
+                "startIndex": 0,
+                "endIndex": 0
+              },
+              "defaultTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "typeParameterName": "TJsonValue",
+              "constraintTokenRange": {
+                "startIndex": 3,
+                "endIndex": 4
+              },
+              "defaultTypeTokenRange": {
+                "startIndex": 5,
+                "endIndex": 6
+              }
+            }
+          ],
+          "typeTokenRange": {
+            "startIndex": 7,
+            "endIndex": 8
+          }
+        },
+        {
+          "kind": "Interface",
+          "canonicalReference": "@storm-stack/serialization!IJsonParser:interface",
+          "docComment": "",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export interface IJsonParser "
+            }
+          ],
+          "fileUrlPath": "packages/serialization/src/types.ts",
+          "releaseTag": "Public",
+          "name": "IJsonParser",
+          "preserveMemberOrder": false,
+          "members": [
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "@storm-stack/serialization!IJsonParser#deserialize:member",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "deserialize: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "<TData = any>(payload: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "JsonParserResult",
+                  "canonicalReference": "@storm-stack/serialization!JsonParserResult:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": ") => TData"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isReadonly": false,
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "deserialize",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 4
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "@storm-stack/serialization!IJsonParser#parse:member",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "parse: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "<TData = any>(strData: string) => TData"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isReadonly": false,
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "parse",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "@storm-stack/serialization!IJsonParser#register:member",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "register: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "<TData = any, TJsonValue extends "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "JsonValue",
+                  "canonicalReference": "@storm-stack/serialization!JsonValue:type"
+                },
+                {
+                  "kind": "Content",
+                  "text": " = "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "JsonValue",
+                  "canonicalReference": "@storm-stack/serialization!JsonValue:type"
+                },
+                {
+                  "kind": "Content",
+                  "text": ">(name: string, serialize: (object: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "JsonValue",
+                  "canonicalReference": "@storm-stack/serialization!JsonValue:type"
+                },
+                {
+                  "kind": "Content",
+                  "text": ") => TJsonValue, deserialize: (payload: TJsonValue) => TData, isApplicable: (data: any) => "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "data",
+                  "canonicalReference": "@storm-stack/serialization!~data"
+                },
+                {
+                  "kind": "Content",
+                  "text": " is TData) => void"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isReadonly": false,
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "register",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 10
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "@storm-stack/serialization!IJsonParser#serialize:member",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "serialize: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "(object: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "JsonValue",
+                  "canonicalReference": "@storm-stack/serialization!JsonValue:type"
+                },
+                {
+                  "kind": "Content",
+                  "text": ") => "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "JsonParserResult",
+                  "canonicalReference": "@storm-stack/serialization!JsonParserResult:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isReadonly": false,
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "serialize",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 5
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "@storm-stack/serialization!IJsonParser#stringify:member",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "stringify: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "<TData = any>(data: TData) => string"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isReadonly": false,
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "stringify",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            }
+          ],
+          "extendsTokenRanges": []
+        },
+        {
+          "kind": "TypeAlias",
+          "canonicalReference": "@storm-stack/serialization!InnerNode:type",
+          "docComment": "",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export type InnerNode<T> = "
+            },
+            {
+              "kind": "Content",
+              "text": "[T, "
+            },
+            {
+              "kind": "Reference",
+              "text": "Record",
+              "canonicalReference": "!Record:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<string, "
+            },
+            {
+              "kind": "Reference",
+              "text": "Tree",
+              "canonicalReference": "@storm-stack/serialization!Tree:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<T>>]"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "fileUrlPath": "packages/serialization/src/types.ts",
+          "releaseTag": "Public",
+          "name": "InnerNode",
+          "typeParameters": [
+            {
+              "typeParameterName": "T",
+              "constraintTokenRange": {
+                "startIndex": 0,
+                "endIndex": 0
+              },
+              "defaultTypeTokenRange": {
+                "startIndex": 0,
+                "endIndex": 0
+              }
+            }
+          ],
+          "typeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 6
+          }
+        },
+        {
+          "kind": "Interface",
+          "canonicalReference": "@storm-stack/serialization!JsonArray:interface",
+          "docComment": "",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export interface JsonArray extends "
+            },
+            {
+              "kind": "Reference",
+              "text": "Array",
+              "canonicalReference": "!Array:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "<"
+            },
+            {
+              "kind": "Reference",
+              "text": "JsonValue",
+              "canonicalReference": "@storm-stack/serialization!JsonValue:type"
+            },
+            {
+              "kind": "Content",
+              "text": ">"
+            },
+            {
+              "kind": "Content",
+              "text": " "
+            }
+          ],
+          "fileUrlPath": "packages/serialization/src/types.ts",
+          "releaseTag": "Public",
+          "name": "JsonArray",
+          "preserveMemberOrder": false,
+          "members": [],
+          "extendsTokenRanges": [
+            {
+              "startIndex": 1,
+              "endIndex": 5
+            }
+          ]
+        },
+        {
+          "kind": "Interface",
+          "canonicalReference": "@storm-stack/serialization!JsonObject:interface",
+          "docComment": "",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export interface JsonObject "
+            }
+          ],
+          "fileUrlPath": "packages/serialization/src/types.ts",
+          "releaseTag": "Public",
+          "name": "JsonObject",
+          "preserveMemberOrder": false,
+          "members": [
+            {
+              "kind": "IndexSignature",
+              "canonicalReference": "@storm-stack/serialization!JsonObject:index(1)",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "[key: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "string"
+                },
+                {
+                  "kind": "Content",
+                  "text": "]: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "JsonValue",
+                  "canonicalReference": "@storm-stack/serialization!JsonValue:type"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isReadonly": false,
+              "returnTypeTokenRange": {
+                "startIndex": 3,
+                "endIndex": 4
+              },
+              "releaseTag": "Public",
+              "overloadIndex": 1,
+              "parameters": [
+                {
+                  "parameterName": "key",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 1,
+                    "endIndex": 2
+                  },
+                  "isOptional": false
+                }
+              ]
+            }
+          ],
+          "extendsTokenRanges": []
+        },
+        {
+          "kind": "Interface",
+          "canonicalReference": "@storm-stack/serialization!JsonParserResult:interface",
+          "docComment": "",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export interface JsonParserResult "
+            }
+          ],
+          "fileUrlPath": "packages/serialization/src/types.ts",
+          "releaseTag": "Public",
+          "name": "JsonParserResult",
+          "preserveMemberOrder": false,
+          "members": [
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "@storm-stack/serialization!JsonParserResult#json:member",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "json: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "JsonValue",
+                  "canonicalReference": "@storm-stack/serialization!JsonValue:type"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isReadonly": false,
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "json",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "@storm-stack/serialization!JsonParserResult#meta:member",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "meta?: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "{\n        values?: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "Tree",
+                  "canonicalReference": "@storm-stack/serialization!Tree:type"
+                },
+                {
+                  "kind": "Content",
+                  "text": "<"
+                },
+                {
+                  "kind": "Reference",
+                  "text": "TypeAnnotation",
+                  "canonicalReference": "@storm-stack/serialization!TypeAnnotation:type"
+                },
+                {
+                  "kind": "Content",
+                  "text": "> | "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "Record",
+                  "canonicalReference": "!Record:type"
+                },
+                {
+                  "kind": "Content",
+                  "text": "<string, "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "Tree",
+                  "canonicalReference": "@storm-stack/serialization!Tree:type"
+                },
+                {
+                  "kind": "Content",
+                  "text": "<"
+                },
+                {
+                  "kind": "Reference",
+                  "text": "TypeAnnotation",
+                  "canonicalReference": "@storm-stack/serialization!TypeAnnotation:type"
+                },
+                {
+                  "kind": "Content",
+                  "text": ">> | undefined;\n        referentialEqualities?: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "Record",
+                  "canonicalReference": "!Record:type"
+                },
+                {
+                  "kind": "Content",
+                  "text": "<string, string[]> | [string[]] | [string[], "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "Record",
+                  "canonicalReference": "!Record:type"
+                },
+                {
+                  "kind": "Content",
+                  "text": "<string, string[]>];\n    }"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isReadonly": false,
+              "isOptional": true,
+              "releaseTag": "Public",
+              "name": "meta",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 16
+              }
+            }
+          ],
+          "extendsTokenRanges": []
+        },
+        {
+          "kind": "TypeAlias",
+          "canonicalReference": "@storm-stack/serialization!JsonValue:type",
+          "docComment": "",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export type JsonValue = "
+            },
+            {
+              "kind": "Reference",
+              "text": "PrimitiveJsonValue",
+              "canonicalReference": "@storm-stack/serialization!PrimitiveJsonValue:type"
+            },
+            {
+              "kind": "Content",
+              "text": " | "
+            },
+            {
+              "kind": "Reference",
+              "text": "JsonArray",
+              "canonicalReference": "@storm-stack/serialization!JsonArray:interface"
+            },
+            {
+              "kind": "Content",
+              "text": " | "
+            },
+            {
+              "kind": "Reference",
+              "text": "JsonObject",
+              "canonicalReference": "@storm-stack/serialization!JsonObject:interface"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "fileUrlPath": "packages/serialization/src/types.ts",
+          "releaseTag": "Public",
+          "name": "JsonValue",
+          "typeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 6
+          }
+        },
+        {
+          "kind": "TypeAlias",
+          "canonicalReference": "@storm-stack/serialization!Leaf:type",
+          "docComment": "",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export type Leaf<T> = "
+            },
+            {
+              "kind": "Content",
+              "text": "[T]"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "fileUrlPath": "packages/serialization/src/types.ts",
+          "releaseTag": "Public",
+          "name": "Leaf",
+          "typeParameters": [
+            {
+              "typeParameterName": "T",
+              "constraintTokenRange": {
+                "startIndex": 0,
+                "endIndex": 0
+              },
+              "defaultTypeTokenRange": {
+                "startIndex": 0,
+                "endIndex": 0
+              }
+            }
+          ],
+          "typeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 2
+          }
+        },
+        {
+          "kind": "TypeAlias",
+          "canonicalReference": "@storm-stack/serialization!LeafTypeAnnotation:type",
+          "docComment": "",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export type LeafTypeAnnotation = "
+            },
+            {
+              "kind": "Reference",
+              "text": "PrimitiveTypeAnnotation",
+              "canonicalReference": "@storm-stack/serialization!PrimitiveTypeAnnotation:type"
+            },
+            {
+              "kind": "Content",
+              "text": " | \"regexp\" | \"Date\" | \"Error\" | \"URL\""
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "fileUrlPath": "packages/serialization/src/types.ts",
+          "releaseTag": "Public",
+          "name": "LeafTypeAnnotation",
+          "typeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 3
+          }
+        },
+        {
+          "kind": "Function",
+          "canonicalReference": "@storm-stack/serialization!parse:function(1)",
+          "docComment": "/**\n * Parse the given value with superjson using the given metadata\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export declare function parse<TData = "
+            },
+            {
+              "kind": "Content",
+              "text": "unknown"
+            },
+            {
+              "kind": "Content",
+              "text": ">(strData: "
+            },
+            {
+              "kind": "Content",
+              "text": "string"
+            },
+            {
+              "kind": "Content",
+              "text": "): "
+            },
+            {
+              "kind": "Content",
+              "text": "TData"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "fileUrlPath": "packages/serialization/src/json-parser.ts",
+          "returnTypeTokenRange": {
+            "startIndex": 5,
+            "endIndex": 6
+          },
+          "releaseTag": "Public",
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "strData",
+              "parameterTypeTokenRange": {
+                "startIndex": 3,
+                "endIndex": 4
+              },
+              "isOptional": false
+            }
+          ],
+          "typeParameters": [
+            {
+              "typeParameterName": "TData",
+              "constraintTokenRange": {
+                "startIndex": 0,
+                "endIndex": 0
+              },
+              "defaultTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            }
+          ],
+          "name": "parse"
+        },
+        {
+          "kind": "Function",
+          "canonicalReference": "@storm-stack/serialization!parseQueryParam:function(1)",
+          "docComment": "/**\n * Parse the given value with qs using the given metadata\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export declare function parseQueryParam<TData = "
+            },
+            {
+              "kind": "Content",
+              "text": "unknown"
+            },
+            {
+              "kind": "Content",
+              "text": ">(strData: "
+            },
+            {
+              "kind": "Content",
+              "text": "string"
+            },
+            {
+              "kind": "Content",
+              "text": ", options?: "
+            },
+            {
+              "kind": "Content",
+              "text": "{\n    comma?: boolean | undefined;\n    delimiter?: string | "
+            },
+            {
+              "kind": "Reference",
+              "text": "RegExp",
+              "canonicalReference": "!RegExp:interface"
+            },
+            {
+              "kind": "Content",
+              "text": " | undefined;\n    depth?: number | false | undefined;\n    arrayLimit?: number | undefined;\n    parseArrays?: boolean | undefined;\n    allowDots?: boolean | undefined;\n    plainObjects?: boolean | undefined;\n    allowPrototypes?: boolean | undefined;\n    parameterLimit?: number | undefined;\n    strictNullHandling?: boolean | undefined;\n    ignoreQueryPrefix?: boolean | undefined;\n    charset?: \"utf-8\" | \"iso-8859-1\" | undefined;\n    charsetSentinel?: boolean | undefined;\n    interpretNumericEntities?: boolean | undefined;\n}"
+            },
+            {
+              "kind": "Content",
+              "text": "): "
+            },
+            {
+              "kind": "Content",
+              "text": "TData"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "fileUrlPath": "packages/serialization/src/query-params-parser.ts",
+          "returnTypeTokenRange": {
+            "startIndex": 9,
+            "endIndex": 10
+          },
+          "releaseTag": "Public",
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "strData",
+              "parameterTypeTokenRange": {
+                "startIndex": 3,
+                "endIndex": 4
+              },
+              "isOptional": false
+            },
+            {
+              "parameterName": "options",
+              "parameterTypeTokenRange": {
+                "startIndex": 5,
+                "endIndex": 8
+              },
+              "isOptional": true
+            }
+          ],
+          "typeParameters": [
+            {
+              "typeParameterName": "TData",
+              "constraintTokenRange": {
+                "startIndex": 0,
+                "endIndex": 0
+              },
+              "defaultTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            }
+          ],
+          "name": "parseQueryParam"
+        },
+        {
+          "kind": "TypeAlias",
+          "canonicalReference": "@storm-stack/serialization!PrimitiveJsonValue:type",
+          "docComment": "",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export type PrimitiveJsonValue = "
+            },
+            {
+              "kind": "Content",
+              "text": "string | number | boolean | undefined | null"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "fileUrlPath": "packages/serialization/src/types.ts",
+          "releaseTag": "Public",
+          "name": "PrimitiveJsonValue",
+          "typeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 2
+          }
+        },
+        {
+          "kind": "TypeAlias",
+          "canonicalReference": "@storm-stack/serialization!PrimitiveTypeAnnotation:type",
+          "docComment": "",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export type PrimitiveTypeAnnotation = "
+            },
+            {
+              "kind": "Content",
+              "text": "\"number\" | \"undefined\" | \"bigint\""
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "fileUrlPath": "packages/serialization/src/types.ts",
+          "releaseTag": "Public",
+          "name": "PrimitiveTypeAnnotation",
+          "typeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 2
+          }
+        },
+        {
+          "kind": "Function",
+          "canonicalReference": "@storm-stack/serialization!register:function(1)",
+          "docComment": "",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export declare function register<TData = "
+            },
+            {
+              "kind": "Content",
+              "text": "any"
+            },
+            {
+              "kind": "Content",
+              "text": ", TJsonObject extends "
+            },
+            {
+              "kind": "Reference",
+              "text": "JsonValue",
+              "canonicalReference": "@storm-stack/serialization!JsonValue:type"
+            },
+            {
+              "kind": "Content",
+              "text": " = "
+            },
+            {
+              "kind": "Reference",
+              "text": "JsonValue",
+              "canonicalReference": "@storm-stack/serialization!JsonValue:type"
+            },
+            {
+              "kind": "Content",
+              "text": ">(name: "
+            },
+            {
+              "kind": "Content",
+              "text": "string"
+            },
+            {
+              "kind": "Content",
+              "text": ", serialize: "
+            },
+            {
+              "kind": "Content",
+              "text": "(data: TData) => TJsonObject"
+            },
+            {
+              "kind": "Content",
+              "text": ", deserialize: "
+            },
+            {
+              "kind": "Content",
+              "text": "(json: TJsonObject) => TData"
+            },
+            {
+              "kind": "Content",
+              "text": ", isApplicable: "
+            },
+            {
+              "kind": "Content",
+              "text": "(data: any) => "
+            },
+            {
+              "kind": "Reference",
+              "text": "data",
+              "canonicalReference": "@storm-stack/serialization!~data"
+            },
+            {
+              "kind": "Content",
+              "text": " is TData"
+            },
+            {
+              "kind": "Content",
+              "text": "): "
+            },
+            {
+              "kind": "Content",
+              "text": "void"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "fileUrlPath": "packages/serialization/src/json-parser.ts",
+          "returnTypeTokenRange": {
+            "startIndex": 17,
+            "endIndex": 18
+          },
+          "releaseTag": "Public",
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "name",
+              "parameterTypeTokenRange": {
+                "startIndex": 7,
+                "endIndex": 8
+              },
+              "isOptional": false
+            },
+            {
+              "parameterName": "serialize",
+              "parameterTypeTokenRange": {
+                "startIndex": 9,
+                "endIndex": 10
+              },
+              "isOptional": false
+            },
+            {
+              "parameterName": "deserialize",
+              "parameterTypeTokenRange": {
+                "startIndex": 11,
+                "endIndex": 12
+              },
+              "isOptional": false
+            },
+            {
+              "parameterName": "isApplicable",
+              "parameterTypeTokenRange": {
+                "startIndex": 13,
+                "endIndex": 16
+              },
+              "isOptional": false
+            }
+          ],
+          "typeParameters": [
+            {
+              "typeParameterName": "TData",
+              "constraintTokenRange": {
+                "startIndex": 0,
+                "endIndex": 0
+              },
+              "defaultTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "typeParameterName": "TJsonObject",
+              "constraintTokenRange": {
+                "startIndex": 3,
+                "endIndex": 4
+              },
+              "defaultTypeTokenRange": {
+                "startIndex": 5,
+                "endIndex": 6
+              }
+            }
+          ],
+          "name": "register"
+        },
+        {
+          "kind": "Variable",
+          "canonicalReference": "@storm-stack/serialization!Serializable:var",
+          "docComment": "",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "Serializable: "
+            },
+            {
+              "kind": "Content",
+              "text": "<TData = any>(options: {\n    name?: string | undefined;\n    serialize: "
+            },
+            {
+              "kind": "Reference",
+              "text": "SerializationFunct",
+              "canonicalReference": "@storm-stack/serialization!SerializationFunct:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<TData>;\n    deserialize: "
+            },
+            {
+              "kind": "Reference",
+              "text": "DeserializeFunct",
+              "canonicalReference": "@storm-stack/serialization!DeserializeFunct:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<TData>;\n}) => <TClass extends new (...args: any) => any = new (...args: any) => TData>(target: TClass) => {\n    new (...args: any): {\n        [x: string]: any;\n        __typename: string;\n        serialize: () => "
+            },
+            {
+              "kind": "Reference",
+              "text": "JsonValue",
+              "canonicalReference": "@storm-stack/serialization!JsonValue:type"
+            },
+            {
+              "kind": "Content",
+              "text": ";\n        deserialize: (json: "
+            },
+            {
+              "kind": "Reference",
+              "text": "JsonValue",
+              "canonicalReference": "@storm-stack/serialization!JsonValue:type"
+            },
+            {
+              "kind": "Content",
+              "text": ") => void;\n        isTypeOf(value: any): "
+            },
+            {
+              "kind": "Reference",
+              "text": "value",
+              "canonicalReference": "@storm-stack/serialization!~value"
+            },
+            {
+              "kind": "Content",
+              "text": " is TData;\n    };\n} & TClass"
+            }
+          ],
+          "fileUrlPath": "packages/serialization/src/serializable.ts",
+          "isReadonly": true,
+          "releaseTag": "Public",
+          "name": "Serializable",
+          "variableTypeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 12
+          }
+        },
+        {
+          "kind": "TypeAlias",
+          "canonicalReference": "@storm-stack/serialization!SerializableJsonValue:type",
+          "docComment": "",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export type SerializableJsonValue = "
+            },
+            {
+              "kind": "Reference",
+              "text": "Symbol",
+              "canonicalReference": "!Symbol:interface"
+            },
+            {
+              "kind": "Content",
+              "text": " | "
+            },
+            {
+              "kind": "Reference",
+              "text": "Set",
+              "canonicalReference": "!Set:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "<"
+            },
+            {
+              "kind": "Reference",
+              "text": "JsonValue",
+              "canonicalReference": "@storm-stack/serialization!JsonValue:type"
+            },
+            {
+              "kind": "Content",
+              "text": "> | "
+            },
+            {
+              "kind": "Reference",
+              "text": "Map",
+              "canonicalReference": "!Map:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "<"
+            },
+            {
+              "kind": "Reference",
+              "text": "JsonValue",
+              "canonicalReference": "@storm-stack/serialization!JsonValue:type"
+            },
+            {
+              "kind": "Content",
+              "text": ", "
+            },
+            {
+              "kind": "Reference",
+              "text": "JsonValue",
+              "canonicalReference": "@storm-stack/serialization!JsonValue:type"
+            },
+            {
+              "kind": "Content",
+              "text": "> | undefined | bigint | "
+            },
+            {
+              "kind": "Reference",
+              "text": "Date",
+              "canonicalReference": "!Date:interface"
+            },
+            {
+              "kind": "Content",
+              "text": " | "
+            },
+            {
+              "kind": "Reference",
+              "text": "ClassInstance",
+              "canonicalReference": "@storm-stack/serialization!ClassInstance:type"
+            },
+            {
+              "kind": "Content",
+              "text": " | "
+            },
+            {
+              "kind": "Reference",
+              "text": "RegExp",
+              "canonicalReference": "!RegExp:interface"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "fileUrlPath": "packages/serialization/src/types.ts",
+          "releaseTag": "Public",
+          "name": "SerializableJsonValue",
+          "typeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 18
+          }
+        },
+        {
+          "kind": "TypeAlias",
+          "canonicalReference": "@storm-stack/serialization!SerializableType:type",
+          "docComment": "",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export type SerializableType<T> = "
+            },
+            {
+              "kind": "Reference",
+              "text": "ClassSerializable",
+              "canonicalReference": "@storm-stack/serialization!ClassSerializable:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "<T> & "
+            },
+            {
+              "kind": "Reference",
+              "text": "ClassTypeCheckable",
+              "canonicalReference": "@storm-stack/serialization!~ClassTypeCheckable:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "<T> & "
+            },
+            {
+              "kind": "Reference",
+              "text": "ITyped",
+              "canonicalReference": "@storm-stack/serialization!~ITyped:interface"
+            },
+            {
+              "kind": "Content",
+              "text": " & T"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "fileUrlPath": "packages/serialization/src/types.ts",
+          "releaseTag": "Public",
+          "name": "SerializableType",
+          "typeParameters": [
+            {
+              "typeParameterName": "T",
+              "constraintTokenRange": {
+                "startIndex": 0,
+                "endIndex": 0
+              },
+              "defaultTypeTokenRange": {
+                "startIndex": 0,
+                "endIndex": 0
+              }
+            }
+          ],
+          "typeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 7
+          }
+        },
+        {
+          "kind": "TypeAlias",
+          "canonicalReference": "@storm-stack/serialization!SerializationFunct:type",
+          "docComment": "/**\n * A function that can serialize a certain type of data\n *\n * @param data - The data object to serialize\n *\n * @returns The serialized JSON object\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export type SerializationFunct<TData = "
+            },
+            {
+              "kind": "Content",
+              "text": "any"
+            },
+            {
+              "kind": "Content",
+              "text": ", TJsonValue extends "
+            },
+            {
+              "kind": "Reference",
+              "text": "JsonValue",
+              "canonicalReference": "@storm-stack/serialization!JsonValue:type"
+            },
+            {
+              "kind": "Content",
+              "text": " = "
+            },
+            {
+              "kind": "Reference",
+              "text": "JsonValue",
+              "canonicalReference": "@storm-stack/serialization!JsonValue:type"
+            },
+            {
+              "kind": "Content",
+              "text": "> = "
+            },
+            {
+              "kind": "Content",
+              "text": "(data: TData) => TJsonValue"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "fileUrlPath": "packages/serialization/src/types.ts",
+          "releaseTag": "Public",
+          "name": "SerializationFunct",
+          "typeParameters": [
+            {
+              "typeParameterName": "TData",
+              "constraintTokenRange": {
+                "startIndex": 0,
+                "endIndex": 0
+              },
+              "defaultTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "typeParameterName": "TJsonValue",
+              "constraintTokenRange": {
+                "startIndex": 3,
+                "endIndex": 4
+              },
+              "defaultTypeTokenRange": {
+                "startIndex": 5,
+                "endIndex": 6
+              }
+            }
+          ],
+          "typeTokenRange": {
+            "startIndex": 7,
+            "endIndex": 8
+          }
+        },
+        {
+          "kind": "TypeAlias",
+          "canonicalReference": "@storm-stack/serialization!SerializationMetadata:type",
+          "docComment": "",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export type SerializationMetadata<T> = "
+            },
+            {
+              "kind": "Reference",
+              "text": "DataTransformer",
+              "canonicalReference": "@storm-stack/serialization!DataTransformer:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "<T> & "
+            },
+            {
+              "kind": "Reference",
+              "text": "ClassTypeCheckable",
+              "canonicalReference": "@storm-stack/serialization!~ClassTypeCheckable:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "<T>"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "fileUrlPath": "packages/serialization/src/types.ts",
+          "releaseTag": "Public",
+          "name": "SerializationMetadata",
+          "typeParameters": [
+            {
+              "typeParameterName": "T",
+              "constraintTokenRange": {
+                "startIndex": 0,
+                "endIndex": 0
+              },
+              "defaultTypeTokenRange": {
+                "startIndex": 0,
+                "endIndex": 0
+              }
+            }
+          ],
+          "typeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 5
+          }
+        },
+        {
+          "kind": "Function",
+          "canonicalReference": "@storm-stack/serialization!serialize:function(1)",
+          "docComment": "/**\n * Serialize the given value with superjson\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export declare function serialize(object: "
+            },
+            {
+              "kind": "Reference",
+              "text": "JsonValue",
+              "canonicalReference": "@storm-stack/serialization!JsonValue:type"
             },
             {
               "kind": "Content",
@@ -276,15 +2077,91 @@
             },
             {
               "kind": "Reference",
-              "text": "StormError",
-              "canonicalReference": "@storm-stack/serialization!StormError:class"
+              "text": "JsonParserResult",
+              "canonicalReference": "@storm-stack/serialization!JsonParserResult:interface"
             },
             {
               "kind": "Content",
               "text": ";"
             }
           ],
-          "fileUrlPath": "packages/errors/src/utilities/serialization.ts",
+          "fileUrlPath": "packages/serialization/src/json-parser.ts",
+          "returnTypeTokenRange": {
+            "startIndex": 3,
+            "endIndex": 4
+          },
+          "releaseTag": "Public",
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "object",
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "isOptional": false
+            }
+          ],
+          "name": "serialize"
+        },
+        {
+          "kind": "TypeAlias",
+          "canonicalReference": "@storm-stack/serialization!SimpleTypeAnnotation:type",
+          "docComment": "",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export type SimpleTypeAnnotation = "
+            },
+            {
+              "kind": "Reference",
+              "text": "LeafTypeAnnotation",
+              "canonicalReference": "@storm-stack/serialization!LeafTypeAnnotation:type"
+            },
+            {
+              "kind": "Content",
+              "text": " | \"map\" | \"set\""
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "fileUrlPath": "packages/serialization/src/types.ts",
+          "releaseTag": "Public",
+          "name": "SimpleTypeAnnotation",
+          "typeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 3
+          }
+        },
+        {
+          "kind": "Function",
+          "canonicalReference": "@storm-stack/serialization!stringify:function(1)",
+          "docComment": "/**\n * Stringify the given value with superjson\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export declare function stringify(json: "
+            },
+            {
+              "kind": "Content",
+              "text": "any"
+            },
+            {
+              "kind": "Content",
+              "text": "): "
+            },
+            {
+              "kind": "Content",
+              "text": "string"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "fileUrlPath": "packages/serialization/src/json-parser.ts",
           "returnTypeTokenRange": {
             "startIndex": 3,
             "endIndex": 4
@@ -301,897 +2178,228 @@
               "isOptional": false
             }
           ],
-          "name": "deserializeStormError"
+          "name": "stringify"
         },
         {
-          "kind": "TypeAlias",
-          "canonicalReference": "@storm-stack/serialization!ErrorCode:type",
-          "docComment": "",
+          "kind": "Function",
+          "canonicalReference": "@storm-stack/serialization!stringifyQueryParam:function(1)",
+          "docComment": "/**\n * Stringify the given value with qs\n */\n",
           "excerptTokens": [
             {
               "kind": "Content",
-              "text": "export type ErrorCode = "
+              "text": "export declare function stringifyQueryParam(json: "
+            },
+            {
+              "kind": "Reference",
+              "text": "JsonValue",
+              "canonicalReference": "@storm-stack/serialization!JsonValue:type"
             },
             {
               "kind": "Content",
-              "text": "\"success\" | \"missing_issue_code\" | \"invalid_config\" | \"failed_to_load_file\" | \"missing_context\" | \"record_not_found\" | \"required_field_missing\" | \"database_query_error\" | \"model_validation_error\" | \"field_validation_error\" | \"invalid_parameter\" | \"invalid_request\" | \"type_error\" | \"processing_error\" | \"internal_server_error\" | \"user_not_logged_in\" | \"unknown_cause\""
+              "text": ", options?: "
+            },
+            {
+              "kind": "Content",
+              "text": "{\n    delimiter?: string | undefined;\n    strictNullHandling?: boolean | undefined;\n    skipNulls?: boolean | undefined;\n    encode?: boolean | undefined;\n    filter?: "
+            },
+            {
+              "kind": "Reference",
+              "text": "Array",
+              "canonicalReference": "!Array:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "<string | number> | ((prefix: string, value: any) => any) | undefined;\n    arrayFormat?: \"indices\" | \"brackets\" | \"repeat\" | \"comma\" | undefined;\n    indices?: boolean | undefined;\n    sort?: ((a: any, b: any) => number) | undefined;\n    serializeDate?: ((d: "
+            },
+            {
+              "kind": "Reference",
+              "text": "Date",
+              "canonicalReference": "!Date:interface"
+            },
+            {
+              "kind": "Content",
+              "text": ") => string) | undefined;\n    format?: \"RFC1738\" | \"RFC3986\" | undefined;\n    encodeValuesOnly?: boolean | undefined;\n    addQueryPrefix?: boolean | undefined;\n    charset?: \"utf-8\" | \"iso-8859-1\" | undefined;\n    allowDots?: boolean | undefined;\n    charsetSentinel?: boolean | undefined;\n}"
+            },
+            {
+              "kind": "Content",
+              "text": "): "
+            },
+            {
+              "kind": "Content",
+              "text": "string"
             },
             {
               "kind": "Content",
               "text": ";"
             }
           ],
-          "fileUrlPath": "packages/errors/src/errors.ts",
+          "fileUrlPath": "packages/serialization/src/query-params-parser.ts",
+          "returnTypeTokenRange": {
+            "startIndex": 9,
+            "endIndex": 10
+          },
           "releaseTag": "Public",
-          "name": "ErrorCode",
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "json",
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "isOptional": false
+            },
+            {
+              "parameterName": "options",
+              "parameterTypeTokenRange": {
+                "startIndex": 3,
+                "endIndex": 8
+              },
+              "isOptional": true
+            }
+          ],
+          "name": "stringifyQueryParam"
+        },
+        {
+          "kind": "TypeAlias",
+          "canonicalReference": "@storm-stack/serialization!SymbolTypeAnnotation:type",
+          "docComment": "",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export type SymbolTypeAnnotation = "
+            },
+            {
+              "kind": "Content",
+              "text": "[\"symbol\", string]"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "fileUrlPath": "packages/serialization/src/types.ts",
+          "releaseTag": "Public",
+          "name": "SymbolTypeAnnotation",
           "typeTokenRange": {
             "startIndex": 1,
             "endIndex": 2
           }
         },
         {
-          "kind": "Variable",
-          "canonicalReference": "@storm-stack/serialization!ErrorCode:var",
+          "kind": "TypeAlias",
+          "canonicalReference": "@storm-stack/serialization!Tree:type",
           "docComment": "",
           "excerptTokens": [
             {
               "kind": "Content",
-              "text": "ErrorCode: "
-            },
-            {
-              "kind": "Content",
-              "text": "{\n    success: "
+              "text": "export type Tree<T> = "
             },
             {
               "kind": "Reference",
-              "text": "ErrorCode",
-              "canonicalReference": "@storm-stack/serialization!ErrorCode:type"
+              "text": "InnerNode",
+              "canonicalReference": "@storm-stack/serialization!InnerNode:type"
             },
             {
               "kind": "Content",
-              "text": ";\n    missing_issue_code: "
+              "text": "<T> | "
             },
             {
               "kind": "Reference",
-              "text": "ErrorCode",
-              "canonicalReference": "@storm-stack/serialization!ErrorCode:type"
+              "text": "Leaf",
+              "canonicalReference": "@storm-stack/serialization!Leaf:type"
             },
             {
               "kind": "Content",
-              "text": ";\n    invalid_config: "
-            },
-            {
-              "kind": "Reference",
-              "text": "ErrorCode",
-              "canonicalReference": "@storm-stack/serialization!ErrorCode:type"
+              "text": "<T>"
             },
             {
               "kind": "Content",
-              "text": ";\n    failed_to_load_file: "
-            },
-            {
-              "kind": "Reference",
-              "text": "ErrorCode",
-              "canonicalReference": "@storm-stack/serialization!ErrorCode:type"
-            },
-            {
-              "kind": "Content",
-              "text": ";\n    missing_context: "
-            },
-            {
-              "kind": "Reference",
-              "text": "ErrorCode",
-              "canonicalReference": "@storm-stack/serialization!ErrorCode:type"
-            },
-            {
-              "kind": "Content",
-              "text": ";\n    record_not_found: "
-            },
-            {
-              "kind": "Reference",
-              "text": "ErrorCode",
-              "canonicalReference": "@storm-stack/serialization!ErrorCode:type"
-            },
-            {
-              "kind": "Content",
-              "text": ";\n    required_field_missing: "
-            },
-            {
-              "kind": "Reference",
-              "text": "ErrorCode",
-              "canonicalReference": "@storm-stack/serialization!ErrorCode:type"
-            },
-            {
-              "kind": "Content",
-              "text": ";\n    database_query_error: "
-            },
-            {
-              "kind": "Reference",
-              "text": "ErrorCode",
-              "canonicalReference": "@storm-stack/serialization!ErrorCode:type"
-            },
-            {
-              "kind": "Content",
-              "text": ";\n    model_validation_error: "
-            },
-            {
-              "kind": "Reference",
-              "text": "ErrorCode",
-              "canonicalReference": "@storm-stack/serialization!ErrorCode:type"
-            },
-            {
-              "kind": "Content",
-              "text": ";\n    field_validation_error: "
-            },
-            {
-              "kind": "Reference",
-              "text": "ErrorCode",
-              "canonicalReference": "@storm-stack/serialization!ErrorCode:type"
-            },
-            {
-              "kind": "Content",
-              "text": ";\n    invalid_parameter: "
-            },
-            {
-              "kind": "Reference",
-              "text": "ErrorCode",
-              "canonicalReference": "@storm-stack/serialization!ErrorCode:type"
-            },
-            {
-              "kind": "Content",
-              "text": ";\n    invalid_request: "
-            },
-            {
-              "kind": "Reference",
-              "text": "ErrorCode",
-              "canonicalReference": "@storm-stack/serialization!ErrorCode:type"
-            },
-            {
-              "kind": "Content",
-              "text": ";\n    type_error: "
-            },
-            {
-              "kind": "Reference",
-              "text": "ErrorCode",
-              "canonicalReference": "@storm-stack/serialization!ErrorCode:type"
-            },
-            {
-              "kind": "Content",
-              "text": ";\n    processing_error: "
-            },
-            {
-              "kind": "Reference",
-              "text": "ErrorCode",
-              "canonicalReference": "@storm-stack/serialization!ErrorCode:type"
-            },
-            {
-              "kind": "Content",
-              "text": ";\n    internal_server_error: "
-            },
-            {
-              "kind": "Reference",
-              "text": "ErrorCode",
-              "canonicalReference": "@storm-stack/serialization!ErrorCode:type"
-            },
-            {
-              "kind": "Content",
-              "text": ";\n    user_not_logged_in: "
-            },
-            {
-              "kind": "Reference",
-              "text": "ErrorCode",
-              "canonicalReference": "@storm-stack/serialization!ErrorCode:type"
-            },
-            {
-              "kind": "Content",
-              "text": ";\n    unknown_cause: "
-            },
-            {
-              "kind": "Reference",
-              "text": "ErrorCode",
-              "canonicalReference": "@storm-stack/serialization!ErrorCode:type"
-            },
-            {
-              "kind": "Content",
-              "text": ";\n}"
+              "text": ";"
             }
           ],
-          "fileUrlPath": "packages/errors/src/errors.ts",
-          "isReadonly": true,
+          "fileUrlPath": "packages/serialization/src/types.ts",
           "releaseTag": "Public",
-          "name": "ErrorCode",
-          "variableTypeTokenRange": {
+          "name": "Tree",
+          "typeParameters": [
+            {
+              "typeParameterName": "T",
+              "constraintTokenRange": {
+                "startIndex": 0,
+                "endIndex": 0
+              },
+              "defaultTypeTokenRange": {
+                "startIndex": 0,
+                "endIndex": 0
+              }
+            }
+          ],
+          "typeTokenRange": {
             "startIndex": 1,
-            "endIndex": 36
+            "endIndex": 5
           }
         },
         {
-          "kind": "Function",
-          "canonicalReference": "@storm-stack/serialization!getCauseFromUnknown:function(1)",
-          "docComment": "/**\n * Gets the cause of an unknown error and returns it as a StormError\n *\n * @param cause - The cause of the error in an unknown type\n *\n * @returns The cause of the error in a StormError object or undefined\n */\n",
-          "excerptTokens": [
-            {
-              "kind": "Content",
-              "text": "export declare function getCauseFromUnknown(cause: "
-            },
-            {
-              "kind": "Content",
-              "text": "unknown"
-            },
-            {
-              "kind": "Content",
-              "text": "): "
-            },
-            {
-              "kind": "Reference",
-              "text": "StormError",
-              "canonicalReference": "@storm-stack/serialization!StormError:class"
-            },
-            {
-              "kind": "Content",
-              "text": ";"
-            }
-          ],
-          "fileUrlPath": "packages/errors/src/storm-error.ts",
-          "returnTypeTokenRange": {
-            "startIndex": 3,
-            "endIndex": 4
-          },
-          "releaseTag": "Public",
-          "overloadIndex": 1,
-          "parameters": [
-            {
-              "parameterName": "cause",
-              "parameterTypeTokenRange": {
-                "startIndex": 1,
-                "endIndex": 2
-              },
-              "isOptional": false
-            }
-          ],
-          "name": "getCauseFromUnknown"
-        },
-        {
-          "kind": "Function",
-          "canonicalReference": "@storm-stack/serialization!isStormError:function(1)",
-          "docComment": "/**\n * Type-check to determine if `obj` is a `StormError` object\n *\n * @param value - the object to check\n *\n * @returns The function isStormError is returning a boolean value.\n */\n",
-          "excerptTokens": [
-            {
-              "kind": "Content",
-              "text": "export declare function isStormError<TCode extends "
-            },
-            {
-              "kind": "Content",
-              "text": "string"
-            },
-            {
-              "kind": "Content",
-              "text": " = "
-            },
-            {
-              "kind": "Content",
-              "text": "any"
-            },
-            {
-              "kind": "Content",
-              "text": ">(value: "
-            },
-            {
-              "kind": "Content",
-              "text": "unknown"
-            },
-            {
-              "kind": "Content",
-              "text": "): "
-            },
-            {
-              "kind": "Reference",
-              "text": "value",
-              "canonicalReference": "@storm-stack/serialization!~value"
-            },
-            {
-              "kind": "Content",
-              "text": " is "
-            },
-            {
-              "kind": "Reference",
-              "text": "StormError",
-              "canonicalReference": "@storm-stack/serialization!StormError:class"
-            },
-            {
-              "kind": "Content",
-              "text": "<TCode>"
-            },
-            {
-              "kind": "Content",
-              "text": ";"
-            }
-          ],
-          "fileUrlPath": "packages/errors/src/utilities/is-storm-error.ts",
-          "returnTypeTokenRange": {
-            "startIndex": 7,
-            "endIndex": 11
-          },
-          "releaseTag": "Public",
-          "overloadIndex": 1,
-          "parameters": [
-            {
-              "parameterName": "value",
-              "parameterTypeTokenRange": {
-                "startIndex": 5,
-                "endIndex": 6
-              },
-              "isOptional": false
-            }
-          ],
-          "typeParameters": [
-            {
-              "typeParameterName": "TCode",
-              "constraintTokenRange": {
-                "startIndex": 1,
-                "endIndex": 2
-              },
-              "defaultTypeTokenRange": {
-                "startIndex": 3,
-                "endIndex": 4
-              }
-            }
-          ],
-          "name": "isStormError"
-        },
-        {
-          "kind": "Function",
-          "canonicalReference": "@storm-stack/serialization!serializeStormError:function(1)",
-          "docComment": "/**\n * Serializes a StormError into a JSON object\n *\n * @param error - The error to serialize\n *\n * @returns The serialized error\n */\n",
-          "excerptTokens": [
-            {
-              "kind": "Content",
-              "text": "export declare function serializeStormError(error: "
-            },
-            {
-              "kind": "Reference",
-              "text": "StormError",
-              "canonicalReference": "@storm-stack/serialization!StormError:class"
-            },
-            {
-              "kind": "Content",
-              "text": "): "
-            },
-            {
-              "kind": "Reference",
-              "text": "JsonValue",
-              "canonicalReference": "@storm-stack/serialization!~JsonValue:type"
-            },
-            {
-              "kind": "Content",
-              "text": ";"
-            }
-          ],
-          "fileUrlPath": "packages/errors/src/utilities/serialization.ts",
-          "returnTypeTokenRange": {
-            "startIndex": 3,
-            "endIndex": 4
-          },
-          "releaseTag": "Public",
-          "overloadIndex": 1,
-          "parameters": [
-            {
-              "parameterName": "error",
-              "parameterTypeTokenRange": {
-                "startIndex": 1,
-                "endIndex": 2
-              },
-              "isOptional": false
-            }
-          ],
-          "name": "serializeStormError"
-        },
-        {
-          "kind": "Class",
-          "canonicalReference": "@storm-stack/serialization!StormError:class",
-          "docComment": "/**\n * A wrapper around the base JavaScript Error class to be used by Storm Software\n *\n * @decorator\n *\n * `@Serializable()`\n */\n",
-          "excerptTokens": [
-            {
-              "kind": "Content",
-              "text": "export declare class StormError<TCode extends "
-            },
-            {
-              "kind": "Content",
-              "text": "string"
-            },
-            {
-              "kind": "Content",
-              "text": " = "
-            },
-            {
-              "kind": "Content",
-              "text": "string"
-            },
-            {
-              "kind": "Content",
-              "text": "> extends "
-            },
-            {
-              "kind": "Reference",
-              "text": "Error",
-              "canonicalReference": "!Error:interface"
-            },
-            {
-              "kind": "Content",
-              "text": " "
-            }
-          ],
-          "fileUrlPath": "packages/errors/src/storm-error.ts",
-          "releaseTag": "Public",
-          "typeParameters": [
-            {
-              "typeParameterName": "TCode",
-              "constraintTokenRange": {
-                "startIndex": 1,
-                "endIndex": 2
-              },
-              "defaultTypeTokenRange": {
-                "startIndex": 3,
-                "endIndex": 4
-              }
-            }
-          ],
-          "isAbstract": false,
-          "name": "StormError",
-          "preserveMemberOrder": false,
-          "members": [
-            {
-              "kind": "Property",
-              "canonicalReference": "@storm-stack/serialization!StormError#__proto__:member",
-              "docComment": "",
-              "excerptTokens": [
-                {
-                  "kind": "Content",
-                  "text": "__proto__: "
-                },
-                {
-                  "kind": "Reference",
-                  "text": "ErrorConstructor",
-                  "canonicalReference": "!ErrorConstructor:interface"
-                },
-                {
-                  "kind": "Content",
-                  "text": ";"
-                }
-              ],
-              "isReadonly": false,
-              "isOptional": false,
-              "releaseTag": "Public",
-              "name": "__proto__",
-              "propertyTypeTokenRange": {
-                "startIndex": 1,
-                "endIndex": 2
-              },
-              "isStatic": false,
-              "isProtected": false,
-              "isAbstract": false
-            },
-            {
-              "kind": "Constructor",
-              "canonicalReference": "@storm-stack/serialization!StormError:constructor(1)",
-              "docComment": "/**\n * Constructs a new instance of the `StormError` class\n */\n",
-              "excerptTokens": [
-                {
-                  "kind": "Content",
-                  "text": "constructor(code: "
-                },
-                {
-                  "kind": "Content",
-                  "text": "TCode"
-                },
-                {
-                  "kind": "Content",
-                  "text": ", { name, message, cause, stack, data }?: "
-                },
-                {
-                  "kind": "Reference",
-                  "text": "StormErrorOptions",
-                  "canonicalReference": "@storm-stack/serialization!StormErrorOptions:interface"
-                },
-                {
-                  "kind": "Content",
-                  "text": ");"
-                }
-              ],
-              "releaseTag": "Public",
-              "isProtected": false,
-              "overloadIndex": 1,
-              "parameters": [
-                {
-                  "parameterName": "code",
-                  "parameterTypeTokenRange": {
-                    "startIndex": 1,
-                    "endIndex": 2
-                  },
-                  "isOptional": false
-                },
-                {
-                  "parameterName": "{ name, message, cause, stack, data }",
-                  "parameterTypeTokenRange": {
-                    "startIndex": 3,
-                    "endIndex": 4
-                  },
-                  "isOptional": true
-                }
-              ]
-            },
-            {
-              "kind": "Property",
-              "canonicalReference": "@storm-stack/serialization!StormError#cause:member",
-              "docComment": "/**\n * The cause of the error\n */\n",
-              "excerptTokens": [
-                {
-                  "kind": "Content",
-                  "text": "cause?: "
-                },
-                {
-                  "kind": "Reference",
-                  "text": "StormError",
-                  "canonicalReference": "@storm-stack/serialization!StormError:class"
-                },
-                {
-                  "kind": "Content",
-                  "text": ";"
-                }
-              ],
-              "isReadonly": false,
-              "isOptional": true,
-              "releaseTag": "Public",
-              "name": "cause",
-              "propertyTypeTokenRange": {
-                "startIndex": 1,
-                "endIndex": 2
-              },
-              "isStatic": false,
-              "isProtected": false,
-              "isAbstract": false
-            },
-            {
-              "kind": "Property",
-              "canonicalReference": "@storm-stack/serialization!StormError#code:member",
-              "docComment": "/**\n * The error code\n */\n",
-              "excerptTokens": [
-                {
-                  "kind": "Content",
-                  "text": "code: "
-                },
-                {
-                  "kind": "Content",
-                  "text": "TCode"
-                },
-                {
-                  "kind": "Content",
-                  "text": ";"
-                }
-              ],
-              "isReadonly": false,
-              "isOptional": false,
-              "releaseTag": "Public",
-              "name": "code",
-              "propertyTypeTokenRange": {
-                "startIndex": 1,
-                "endIndex": 2
-              },
-              "isStatic": false,
-              "isProtected": false,
-              "isAbstract": false
-            },
-            {
-              "kind": "Property",
-              "canonicalReference": "@storm-stack/serialization!StormError#data:member",
-              "docComment": "/**\n * Additional data to be passed with the error\n */\n",
-              "excerptTokens": [
-                {
-                  "kind": "Content",
-                  "text": "data?: "
-                },
-                {
-                  "kind": "Content",
-                  "text": "any"
-                },
-                {
-                  "kind": "Content",
-                  "text": ";"
-                }
-              ],
-              "isReadonly": false,
-              "isOptional": true,
-              "releaseTag": "Public",
-              "name": "data",
-              "propertyTypeTokenRange": {
-                "startIndex": 1,
-                "endIndex": 2
-              },
-              "isStatic": false,
-              "isProtected": false,
-              "isAbstract": false
-            },
-            {
-              "kind": "Property",
-              "canonicalReference": "@storm-stack/serialization!StormError#originalStack:member",
-              "docComment": "/**\n * The unformatted stack trace\n *\n * @returns The stack trace string\n */\n",
-              "excerptTokens": [
-                {
-                  "kind": "Content",
-                  "text": "get originalStack(): "
-                },
-                {
-                  "kind": "Content",
-                  "text": "string"
-                },
-                {
-                  "kind": "Content",
-                  "text": ";"
-                }
-              ],
-              "isReadonly": true,
-              "isOptional": false,
-              "releaseTag": "Public",
-              "name": "originalStack",
-              "propertyTypeTokenRange": {
-                "startIndex": 1,
-                "endIndex": 2
-              },
-              "isStatic": false,
-              "isProtected": false,
-              "isAbstract": false
-            },
-            {
-              "kind": "Method",
-              "canonicalReference": "@storm-stack/serialization!StormError#print:member(1)",
-              "docComment": "/**\n * Prints the display error message string\n *\n * @returns The display error message string\n */\n",
-              "excerptTokens": [
-                {
-                  "kind": "Content",
-                  "text": "print(): "
-                },
-                {
-                  "kind": "Content",
-                  "text": "string"
-                },
-                {
-                  "kind": "Content",
-                  "text": ";"
-                }
-              ],
-              "isStatic": false,
-              "returnTypeTokenRange": {
-                "startIndex": 1,
-                "endIndex": 2
-              },
-              "releaseTag": "Public",
-              "isProtected": false,
-              "overloadIndex": 1,
-              "parameters": [],
-              "isOptional": false,
-              "isAbstract": false,
-              "name": "print"
-            },
-            {
-              "kind": "Property",
-              "canonicalReference": "@storm-stack/serialization!StormError#stack:member",
-              "docComment": "/**\n * Prints a displayable, formatted the stack trace\n *\n * @returns The stack trace string\n */\n",
-              "excerptTokens": [
-                {
-                  "kind": "Content",
-                  "text": "get stack(): "
-                },
-                {
-                  "kind": "Content",
-                  "text": "string"
-                },
-                {
-                  "kind": "Content",
-                  "text": ";\n\nset stack(_stack: string);"
-                }
-              ],
-              "isReadonly": false,
-              "isOptional": false,
-              "releaseTag": "Public",
-              "name": "stack",
-              "propertyTypeTokenRange": {
-                "startIndex": 1,
-                "endIndex": 2
-              },
-              "isStatic": false,
-              "isProtected": false,
-              "isAbstract": false
-            },
-            {
-              "kind": "Method",
-              "canonicalReference": "@storm-stack/serialization!StormError#toString:member(1)",
-              "docComment": "/**\n * Prints the error message and stack trace\n *\n * @returns The error message and stack trace string\n */\n",
-              "excerptTokens": [
-                {
-                  "kind": "Content",
-                  "text": "toString(): "
-                },
-                {
-                  "kind": "Content",
-                  "text": "string"
-                },
-                {
-                  "kind": "Content",
-                  "text": ";"
-                }
-              ],
-              "isStatic": false,
-              "returnTypeTokenRange": {
-                "startIndex": 1,
-                "endIndex": 2
-              },
-              "releaseTag": "Public",
-              "isProtected": false,
-              "overloadIndex": 1,
-              "parameters": [],
-              "isOptional": false,
-              "isAbstract": false,
-              "name": "toString"
-            }
-          ],
-          "extendsTokenRange": {
-            "startIndex": 5,
-            "endIndex": 6
-          },
-          "implementsTokenRanges": []
-        },
-        {
-          "kind": "Interface",
-          "canonicalReference": "@storm-stack/serialization!StormErrorOptions:interface",
+          "kind": "TypeAlias",
+          "canonicalReference": "@storm-stack/serialization!TypeAnnotation:type",
           "docComment": "",
           "excerptTokens": [
             {
               "kind": "Content",
-              "text": "export interface StormErrorOptions "
+              "text": "export type TypeAnnotation = "
+            },
+            {
+              "kind": "Reference",
+              "text": "SimpleTypeAnnotation",
+              "canonicalReference": "@storm-stack/serialization!SimpleTypeAnnotation:type"
+            },
+            {
+              "kind": "Content",
+              "text": " | "
+            },
+            {
+              "kind": "Reference",
+              "text": "CompositeTypeAnnotation",
+              "canonicalReference": "@storm-stack/serialization!CompositeTypeAnnotation:type"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
             }
           ],
-          "fileUrlPath": "packages/errors/src/storm-error.ts",
+          "fileUrlPath": "packages/serialization/src/types.ts",
           "releaseTag": "Public",
-          "name": "StormErrorOptions",
-          "preserveMemberOrder": false,
-          "members": [
+          "name": "TypeAnnotation",
+          "typeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 4
+          }
+        },
+        {
+          "kind": "TypeAlias",
+          "canonicalReference": "@storm-stack/serialization!TypedArrayAnnotation:type",
+          "docComment": "",
+          "excerptTokens": [
             {
-              "kind": "PropertySignature",
-              "canonicalReference": "@storm-stack/serialization!StormErrorOptions#cause:member",
-              "docComment": "",
-              "excerptTokens": [
-                {
-                  "kind": "Content",
-                  "text": "cause?: "
-                },
-                {
-                  "kind": "Content",
-                  "text": "unknown"
-                },
-                {
-                  "kind": "Content",
-                  "text": ";"
-                }
-              ],
-              "isReadonly": false,
-              "isOptional": true,
-              "releaseTag": "Public",
-              "name": "cause",
-              "propertyTypeTokenRange": {
-                "startIndex": 1,
-                "endIndex": 2
-              }
+              "kind": "Content",
+              "text": "export type TypedArrayAnnotation = "
             },
             {
-              "kind": "PropertySignature",
-              "canonicalReference": "@storm-stack/serialization!StormErrorOptions#data:member",
-              "docComment": "",
-              "excerptTokens": [
-                {
-                  "kind": "Content",
-                  "text": "data?: "
-                },
-                {
-                  "kind": "Content",
-                  "text": "any"
-                },
-                {
-                  "kind": "Content",
-                  "text": ";"
-                }
-              ],
-              "isReadonly": false,
-              "isOptional": true,
-              "releaseTag": "Public",
-              "name": "data",
-              "propertyTypeTokenRange": {
-                "startIndex": 1,
-                "endIndex": 2
-              }
+              "kind": "Content",
+              "text": "[\"typed-array\", string]"
             },
             {
-              "kind": "PropertySignature",
-              "canonicalReference": "@storm-stack/serialization!StormErrorOptions#message:member",
-              "docComment": "",
-              "excerptTokens": [
-                {
-                  "kind": "Content",
-                  "text": "message?: "
-                },
-                {
-                  "kind": "Content",
-                  "text": "string"
-                },
-                {
-                  "kind": "Content",
-                  "text": ";"
-                }
-              ],
-              "isReadonly": false,
-              "isOptional": true,
-              "releaseTag": "Public",
-              "name": "message",
-              "propertyTypeTokenRange": {
-                "startIndex": 1,
-                "endIndex": 2
-              }
-            },
-            {
-              "kind": "PropertySignature",
-              "canonicalReference": "@storm-stack/serialization!StormErrorOptions#name:member",
-              "docComment": "",
-              "excerptTokens": [
-                {
-                  "kind": "Content",
-                  "text": "name?: "
-                },
-                {
-                  "kind": "Content",
-                  "text": "string"
-                },
-                {
-                  "kind": "Content",
-                  "text": ";"
-                }
-              ],
-              "isReadonly": false,
-              "isOptional": true,
-              "releaseTag": "Public",
-              "name": "name",
-              "propertyTypeTokenRange": {
-                "startIndex": 1,
-                "endIndex": 2
-              }
-            },
-            {
-              "kind": "PropertySignature",
-              "canonicalReference": "@storm-stack/serialization!StormErrorOptions#stack:member",
-              "docComment": "",
-              "excerptTokens": [
-                {
-                  "kind": "Content",
-                  "text": "stack?: "
-                },
-                {
-                  "kind": "Content",
-                  "text": "string"
-                },
-                {
-                  "kind": "Content",
-                  "text": ";"
-                }
-              ],
-              "isReadonly": false,
-              "isOptional": true,
-              "releaseTag": "Public",
-              "name": "stack",
-              "propertyTypeTokenRange": {
-                "startIndex": 1,
-                "endIndex": 2
-              }
+              "kind": "Content",
+              "text": ";"
             }
           ],
-          "extendsTokenRanges": []
+          "fileUrlPath": "packages/serialization/src/types.ts",
+          "releaseTag": "Public",
+          "name": "TypedArrayAnnotation",
+          "typeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 2
+          }
         }
       ]
     }

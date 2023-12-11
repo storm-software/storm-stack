@@ -6,11 +6,8 @@
 /// <reference types="node" />
 
 import { CopySyncOptions } from "node:fs";
-import { ExecOptions } from "child_process";
-import { Readable } from "node:stream";
 import { ReleaseType } from "semver";
 import { semverClassesSemver } from "semver/classes/semver";
-import { StdioOptions } from "child_process";
 
 // @public
 const copyFile: (file: string, dest: string) => string | Buffer | undefined;
@@ -27,16 +24,6 @@ const copyFiles: (
 export { copyFiles };
 export { copyFiles as copyFiles_alias_1 };
 export { copyFiles as copyFiles_alias_2 };
-
-// @public
-export function createCliOptions(
-  obj: Record<string, string | number | boolean>
-): string[];
-
-// @public
-export function createCliOptionsString(
-  obj: Record<string, string | number | boolean>
-): string;
 
 // @public (undocumented)
 const deriveNewSemverVersion: (
@@ -60,22 +47,6 @@ function ensurePackage(
 export { ensurePackage };
 export { ensurePackage as ensurePackage_alias_1 };
 export { ensurePackage as ensurePackage_alias_2 };
-
-// @public
-export const execute: (
-  command: string,
-  options?: ExecOptions,
-  env?: Record<string, string>,
-  stdio?: StdioOptions
-) => string | Buffer | Readable | undefined;
-
-// @public
-export const executeAsync: (
-  command: string,
-  options?: ExecOptions,
-  env?: Record<string, string>,
-  stdio?: StdioOptions
-) => Promise<string | Buffer | undefined>;
 
 // @public
 const exists: (filePath: string) => boolean;

@@ -2,10 +2,11 @@
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
     "outDir": "../../dist/out-tsc",
+    "strict": false,
     "noEmit": true
   },
   "files": [],
-  "include": ["src/**/*.ts", "src/**/*.js", "bin/**/*"],
+  "include": ["src/**/*.ts", "src/**/*.js"],
   "exclude": ["jest.config.ts", "src/**/*.spec.ts", "src/**/*.test.ts"],
   "composite": true
 }

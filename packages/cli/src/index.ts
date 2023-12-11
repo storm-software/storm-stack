@@ -8,6 +8,5 @@
  */
 
 export * from "./program";
-export * from "./program/shutdown";
 export * from "./types";
 export * from "./utilities";

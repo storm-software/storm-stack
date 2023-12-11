@@ -1,5 +1,5 @@
-import { createStormConfig } from "@storm-software/config-tools";
-import { getCauseFromUnknown } from "@storm-stack/errors/storm-error";
+import { StormConfig, createStormConfig } from "@storm-software/config-tools";
+import { getCauseFromUnknown } from "@storm-stack/errors";
 import { StormLog } from "@storm-stack/logging";
 import { EMPTY_STRING, NEWLINE_STRING } from "@storm-stack/utilities";
 import chalk from "chalk";
@@ -58,8 +58,8 @@ const createCLIOption = (cliOption: CLIOption): Option => {
   return option;
 };
 
-export const createCLIProgram = async (cliConfig: CLIConfig): Promise<void> => {
-  const config = createStormConfig();
+export async function createCLIProgram(cliConfig: CLIConfig): Promise<void> {
+  const config: StormConfig = createStormConfig();
   const logger = StormLog.create(config);
 
   try {
@@ -83,7 +83,7 @@ export const createCLIProgram = async (cliConfig: CLIConfig): Promise<void> => {
 
       program.version("v1.0.0", "-v --version", "display CLI version");
       program
-        .description(`${chalk.bold.blue("⚡")} ${cliConfig.description}`)
+        .description(`⚡ ${cliConfig.description}`)
         .showHelpAfterError()
         .showSuggestionAfterError();
 
@@ -159,7 +159,6 @@ export const createCLIProgram = async (cliConfig: CLIConfig): Promise<void> => {
         });
 
       await program.parseAsync(process.argv);
-
       shutdown();
     } catch (innerError) {
       logger.fatal(innerError);
@@ -169,4 +168,4 @@ export const createCLIProgram = async (cliConfig: CLIConfig): Promise<void> => {
     logger.fatal(error);
     process.exit(1);
   }
-};
+}

@@ -1,0 +1,4944 @@
+{
+  "metadata": {
+    "toolPackage": "@microsoft/api-extractor",
+    "toolVersion": "7.38.5",
+    "schemaVersion": 1011,
+    "oldestForwardsCompatibleVersion": 1001,
+    "tsdocConfig": {
+      "$schema": "https://developer.microsoft.com/json-schemas/tsdoc/v0/tsdoc.schema.json",
+      "noStandardTags": true,
+      "tagDefinitions": [
+        {
+          "tagName": "@alpha",
+          "syntaxKind": "modifier"
+        },
+        {
+          "tagName": "@beta",
+          "syntaxKind": "modifier"
+        },
+        {
+          "tagName": "@defaultValue",
+          "syntaxKind": "block"
+        },
+        {
+          "tagName": "@decorator",
+          "syntaxKind": "block",
+          "allowMultiple": true
+        },
+        {
+          "tagName": "@deprecated",
+          "syntaxKind": "block"
+        },
+        {
+          "tagName": "@eventProperty",
+          "syntaxKind": "modifier"
+        },
+        {
+          "tagName": "@example",
+          "syntaxKind": "block",
+          "allowMultiple": true
+        },
+        {
+          "tagName": "@experimental",
+          "syntaxKind": "modifier"
+        },
+        {
+          "tagName": "@inheritDoc",
+          "syntaxKind": "inline"
+        },
+        {
+          "tagName": "@internal",
+          "syntaxKind": "modifier"
+        },
+        {
+          "tagName": "@label",
+          "syntaxKind": "inline"
+        },
+        {
+          "tagName": "@link",
+          "syntaxKind": "inline",
+          "allowMultiple": true
+        },
+        {
+          "tagName": "@override",
+          "syntaxKind": "modifier"
+        },
+        {
+          "tagName": "@packageDocumentation",
+          "syntaxKind": "modifier"
+        },
+        {
+          "tagName": "@param",
+          "syntaxKind": "block",
+          "allowMultiple": true
+        },
+        {
+          "tagName": "@privateRemarks",
+          "syntaxKind": "block"
+        },
+        {
+          "tagName": "@public",
+          "syntaxKind": "modifier"
+        },
+        {
+          "tagName": "@readonly",
+          "syntaxKind": "modifier"
+        },
+        {
+          "tagName": "@remarks",
+          "syntaxKind": "block"
+        },
+        {
+          "tagName": "@returns",
+          "syntaxKind": "block"
+        },
+        {
+          "tagName": "@sealed",
+          "syntaxKind": "modifier"
+        },
+        {
+          "tagName": "@see",
+          "syntaxKind": "block"
+        },
+        {
+          "tagName": "@throws",
+          "syntaxKind": "block",
+          "allowMultiple": true
+        },
+        {
+          "tagName": "@typeParam",
+          "syntaxKind": "block",
+          "allowMultiple": true
+        },
+        {
+          "tagName": "@virtual",
+          "syntaxKind": "modifier"
+        },
+        {
+          "tagName": "@betaDocumentation",
+          "syntaxKind": "modifier"
+        },
+        {
+          "tagName": "@internalRemarks",
+          "syntaxKind": "block"
+        },
+        {
+          "tagName": "@preapproved",
+          "syntaxKind": "modifier"
+        }
+      ],
+      "supportForTags": {
+        "@alpha": true,
+        "@beta": true,
+        "@defaultValue": true,
+        "@decorator": true,
+        "@deprecated": true,
+        "@eventProperty": true,
+        "@example": true,
+        "@experimental": true,
+        "@inheritDoc": true,
+        "@internal": true,
+        "@label": true,
+        "@link": true,
+        "@override": true,
+        "@packageDocumentation": true,
+        "@param": true,
+        "@privateRemarks": true,
+        "@public": true,
+        "@readonly": true,
+        "@remarks": true,
+        "@returns": true,
+        "@sealed": true,
+        "@see": true,
+        "@throws": true,
+        "@typeParam": true,
+        "@virtual": true,
+        "@betaDocumentation": true,
+        "@internalRemarks": true,
+        "@preapproved": true
+      },
+      "reportUnsupportedHtmlElements": false
+    }
+  },
+  "kind": "Package",
+  "canonicalReference": "@storm-stack/cli!",
+  "docComment": "",
+  "name": "@storm-stack/cli",
+  "preserveMemberOrder": false,
+  "members": [
+    {
+      "kind": "EntryPoint",
+      "canonicalReference": "@storm-stack/cli!",
+      "name": "",
+      "preserveMemberOrder": false,
+      "members": [
+        {
+          "kind": "TypeAlias",
+          "canonicalReference": "@storm-stack/cli!DateTimeErrorCode:type",
+          "docComment": "",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export type DateTimeErrorCode = "
+            },
+            {
+              "kind": "Reference",
+              "text": "ErrorCode",
+              "canonicalReference": "@storm-stack/cli!~ErrorCode:type"
+            },
+            {
+              "kind": "Content",
+              "text": " | \"datetime_create_failure\" | \"ms_format\" | \"formatting_failure\""
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "fileUrlPath": "packages/date-time/src/errors.ts",
+          "releaseTag": "Public",
+          "name": "DateTimeErrorCode",
+          "typeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 3
+          }
+        },
+        {
+          "kind": "Variable",
+          "canonicalReference": "@storm-stack/cli!DateTimeErrorCode:var",
+          "docComment": "",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "DateTimeErrorCode: "
+            },
+            {
+              "kind": "Content",
+              "text": "{\n    datetime_create_failure: "
+            },
+            {
+              "kind": "Reference",
+              "text": "DateTimeErrorCode",
+              "canonicalReference": "@storm-stack/cli!DateTimeErrorCode:type"
+            },
+            {
+              "kind": "Content",
+              "text": ";\n    ms_format: "
+            },
+            {
+              "kind": "Reference",
+              "text": "DateTimeErrorCode",
+              "canonicalReference": "@storm-stack/cli!DateTimeErrorCode:type"
+            },
+            {
+              "kind": "Content",
+              "text": ";\n    formatting_failure: "
+            },
+            {
+              "kind": "Reference",
+              "text": "DateTimeErrorCode",
+              "canonicalReference": "@storm-stack/cli!DateTimeErrorCode:type"
+            },
+            {
+              "kind": "Content",
+              "text": ";\n    success: "
+            },
+            {
+              "kind": "Reference",
+              "text": "ErrorCode",
+              "canonicalReference": "@storm-stack/cli!~ErrorCode:type"
+            },
+            {
+              "kind": "Content",
+              "text": ";\n    missing_issue_code: "
+            },
+            {
+              "kind": "Reference",
+              "text": "ErrorCode",
+              "canonicalReference": "@storm-stack/cli!~ErrorCode:type"
+            },
+            {
+              "kind": "Content",
+              "text": ";\n    invalid_config: "
+            },
+            {
+              "kind": "Reference",
+              "text": "ErrorCode",
+              "canonicalReference": "@storm-stack/cli!~ErrorCode:type"
+            },
+            {
+              "kind": "Content",
+              "text": ";\n    failed_to_load_file: "
+            },
+            {
+              "kind": "Reference",
+              "text": "ErrorCode",
+              "canonicalReference": "@storm-stack/cli!~ErrorCode:type"
+            },
+            {
+              "kind": "Content",
+              "text": ";\n    missing_context: "
+            },
+            {
+              "kind": "Reference",
+              "text": "ErrorCode",
+              "canonicalReference": "@storm-stack/cli!~ErrorCode:type"
+            },
+            {
+              "kind": "Content",
+              "text": ";\n    record_not_found: "
+            },
+            {
+              "kind": "Reference",
+              "text": "ErrorCode",
+              "canonicalReference": "@storm-stack/cli!~ErrorCode:type"
+            },
+            {
+              "kind": "Content",
+              "text": ";\n    required_field_missing: "
+            },
+            {
+              "kind": "Reference",
+              "text": "ErrorCode",
+              "canonicalReference": "@storm-stack/cli!~ErrorCode:type"
+            },
+            {
+              "kind": "Content",
+              "text": ";\n    database_query_error: "
+            },
+            {
+              "kind": "Reference",
+              "text": "ErrorCode",
+              "canonicalReference": "@storm-stack/cli!~ErrorCode:type"
+            },
+            {
+              "kind": "Content",
+              "text": ";\n    model_validation_error: "
+            },
+            {
+              "kind": "Reference",
+              "text": "ErrorCode",
+              "canonicalReference": "@storm-stack/cli!~ErrorCode:type"
+            },
+            {
+              "kind": "Content",
+              "text": ";\n    field_validation_error: "
+            },
+            {
+              "kind": "Reference",
+              "text": "ErrorCode",
+              "canonicalReference": "@storm-stack/cli!~ErrorCode:type"
+            },
+            {
+              "kind": "Content",
+              "text": ";\n    invalid_parameter: "
+            },
+            {
+              "kind": "Reference",
+              "text": "ErrorCode",
+              "canonicalReference": "@storm-stack/cli!~ErrorCode:type"
+            },
+            {
+              "kind": "Content",
+              "text": ";\n    invalid_request: "
+            },
+            {
+              "kind": "Reference",
+              "text": "ErrorCode",
+              "canonicalReference": "@storm-stack/cli!~ErrorCode:type"
+            },
+            {
+              "kind": "Content",
+              "text": ";\n    type_error: "
+            },
+            {
+              "kind": "Reference",
+              "text": "ErrorCode",
+              "canonicalReference": "@storm-stack/cli!~ErrorCode:type"
+            },
+            {
+              "kind": "Content",
+              "text": ";\n    processing_error: "
+            },
+            {
+              "kind": "Reference",
+              "text": "ErrorCode",
+              "canonicalReference": "@storm-stack/cli!~ErrorCode:type"
+            },
+            {
+              "kind": "Content",
+              "text": ";\n    internal_server_error: "
+            },
+            {
+              "kind": "Reference",
+              "text": "ErrorCode",
+              "canonicalReference": "@storm-stack/cli!~ErrorCode:type"
+            },
+            {
+              "kind": "Content",
+              "text": ";\n    user_not_logged_in: "
+            },
+            {
+              "kind": "Reference",
+              "text": "ErrorCode",
+              "canonicalReference": "@storm-stack/cli!~ErrorCode:type"
+            },
+            {
+              "kind": "Content",
+              "text": ";\n    unknown_cause: "
+            },
+            {
+              "kind": "Reference",
+              "text": "ErrorCode",
+              "canonicalReference": "@storm-stack/cli!~ErrorCode:type"
+            },
+            {
+              "kind": "Content",
+              "text": ";\n}"
+            }
+          ],
+          "fileUrlPath": "packages/date-time/src/errors.ts",
+          "isReadonly": true,
+          "releaseTag": "Public",
+          "name": "DateTimeErrorCode",
+          "variableTypeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 42
+          }
+        },
+        {
+          "kind": "TypeAlias",
+          "canonicalReference": "@storm-stack/cli!DateTimeInput:type",
+          "docComment": "/**\n * The input types that can be used to create a DateTime object\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export type DateTimeInput = "
+            },
+            {
+              "kind": "Reference",
+              "text": "StormDateTime",
+              "canonicalReference": "@storm-stack/cli!StormDateTime:class"
+            },
+            {
+              "kind": "Content",
+              "text": " | "
+            },
+            {
+              "kind": "Reference",
+              "text": "Temporal.Instant",
+              "canonicalReference": "!Temporal.Instant:type"
+            },
+            {
+              "kind": "Content",
+              "text": " | "
+            },
+            {
+              "kind": "Reference",
+              "text": "Date",
+              "canonicalReference": "!Date:interface"
+            },
+            {
+              "kind": "Content",
+              "text": " | string | number | bigint | null | undefined"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "fileUrlPath": "packages/date-time/src/storm-date-time.ts",
+          "releaseTag": "Public",
+          "name": "DateTimeInput",
+          "typeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 7
+          }
+        },
+        {
+          "kind": "Interface",
+          "canonicalReference": "@storm-stack/cli!DateTimeOptions:interface",
+          "docComment": "/**\n * The options to use when creating a new DateTime object\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export interface DateTimeOptions "
+            }
+          ],
+          "fileUrlPath": "packages/date-time/src/storm-date-time.ts",
+          "releaseTag": "Public",
+          "name": "DateTimeOptions",
+          "preserveMemberOrder": false,
+          "members": [
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "@storm-stack/cli!DateTimeOptions#calendar:member",
+              "docComment": "/**\n * The calendar to use. If not specified, the default calendar for the runtime is used.\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "calendar?: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "Temporal.CalendarLike",
+                  "canonicalReference": "!Temporal.CalendarLike:type"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isReadonly": false,
+              "isOptional": true,
+              "releaseTag": "Public",
+              "name": "calendar",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "@storm-stack/cli!DateTimeOptions#skipDefaulting:member",
+              "docComment": "/**\n * If false, the current date and time is defaulted when undefined or null is passed. If true, the current date and time is not defaulted.\n *\n * @default false\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "skipDefaulting?: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "boolean"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isReadonly": false,
+              "isOptional": true,
+              "releaseTag": "Public",
+              "name": "skipDefaulting",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "@storm-stack/cli!DateTimeOptions#timeZone:member",
+              "docComment": "/**\n * The time zone to use. If not specified, the default time zone for the runtime is used.\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "timeZone?: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "Temporal.TimeZoneLike",
+                  "canonicalReference": "!Temporal.TimeZoneLike:type"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isReadonly": false,
+              "isOptional": true,
+              "releaseTag": "Public",
+              "name": "timeZone",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            }
+          ],
+          "extendsTokenRanges": []
+        },
+        {
+          "kind": "Function",
+          "canonicalReference": "@storm-stack/cli!deserializeStormDate:function(1)",
+          "docComment": "/**\n * Deserializes a string into a StormDate\n *\n * @param utcString - The date to deserialize\n *\n * @returns The deserialized date\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export declare function deserializeStormDate(utcString: "
+            },
+            {
+              "kind": "Reference",
+              "text": "JsonValue",
+              "canonicalReference": "@storm-stack/cli!~JsonValue:type"
+            },
+            {
+              "kind": "Content",
+              "text": "): "
+            },
+            {
+              "kind": "Reference",
+              "text": "StormDate",
+              "canonicalReference": "@storm-stack/cli!StormDate:class"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "fileUrlPath": "packages/date-time/src/utilities/serialization.ts",
+          "returnTypeTokenRange": {
+            "startIndex": 3,
+            "endIndex": 4
+          },
+          "releaseTag": "Public",
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "utcString",
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "isOptional": false
+            }
+          ],
+          "name": "deserializeStormDate"
+        },
+        {
+          "kind": "Function",
+          "canonicalReference": "@storm-stack/cli!deserializeStormDateTime:function(1)",
+          "docComment": "/**\n * Deserializes a string into a StormDateTime\n *\n * @param utcString - The dateTime to deserialize\n *\n * @returns The deserialized dateTime\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export declare function deserializeStormDateTime(utcString: "
+            },
+            {
+              "kind": "Reference",
+              "text": "JsonValue",
+              "canonicalReference": "@storm-stack/cli!~JsonValue:type"
+            },
+            {
+              "kind": "Content",
+              "text": "): "
+            },
+            {
+              "kind": "Reference",
+              "text": "StormDateTime",
+              "canonicalReference": "@storm-stack/cli!StormDateTime:class"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "fileUrlPath": "packages/date-time/src/utilities/serialization.ts",
+          "returnTypeTokenRange": {
+            "startIndex": 3,
+            "endIndex": 4
+          },
+          "releaseTag": "Public",
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "utcString",
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "isOptional": false
+            }
+          ],
+          "name": "deserializeStormDateTime"
+        },
+        {
+          "kind": "Function",
+          "canonicalReference": "@storm-stack/cli!deserializeStormTime:function(1)",
+          "docComment": "/**\n * Deserializes a string into a StormTime\n *\n * @param utcString - The time to deserialize\n *\n * @returns The deserialized time\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export declare function deserializeStormTime(utcString: "
+            },
+            {
+              "kind": "Reference",
+              "text": "JsonValue",
+              "canonicalReference": "@storm-stack/cli!~JsonValue:type"
+            },
+            {
+              "kind": "Content",
+              "text": "): "
+            },
+            {
+              "kind": "Reference",
+              "text": "StormTime",
+              "canonicalReference": "@storm-stack/cli!StormTime:class"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "fileUrlPath": "packages/date-time/src/utilities/serialization.ts",
+          "returnTypeTokenRange": {
+            "startIndex": 3,
+            "endIndex": 4
+          },
+          "releaseTag": "Public",
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "utcString",
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "isOptional": false
+            }
+          ],
+          "name": "deserializeStormTime"
+        },
+        {
+          "kind": "Variable",
+          "canonicalReference": "@storm-stack/cli!formatDate:var",
+          "docComment": "/**\n * Format a date field\n *\n * @param dateTime - The date time to format\n *\n * @returns The formatted date\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "formatDate: "
+            },
+            {
+              "kind": "Content",
+              "text": "(dateTime?: "
+            },
+            {
+              "kind": "Reference",
+              "text": "StormDateTime",
+              "canonicalReference": "@storm-stack/cli!StormDateTime:class"
+            },
+            {
+              "kind": "Content",
+              "text": ", options?: "
+            },
+            {
+              "kind": "Reference",
+              "text": "Partial",
+              "canonicalReference": "!Partial:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<"
+            },
+            {
+              "kind": "Reference",
+              "text": "Temporal.ToStringPrecisionOptions",
+              "canonicalReference": "!Temporal.ToStringPrecisionOptions:type"
+            },
+            {
+              "kind": "Content",
+              "text": " & "
+            },
+            {
+              "kind": "Reference",
+              "text": "Temporal.ShowCalendarOption",
+              "canonicalReference": "!Temporal.ShowCalendarOption:type"
+            },
+            {
+              "kind": "Content",
+              "text": ">) => string"
+            }
+          ],
+          "fileUrlPath": "packages/date-time/src/utilities/format-date.ts",
+          "isReadonly": true,
+          "releaseTag": "Public",
+          "name": "formatDate",
+          "variableTypeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 10
+          }
+        },
+        {
+          "kind": "Variable",
+          "canonicalReference": "@storm-stack/cli!formatDateTime:var",
+          "docComment": "/**\n * Format a date time field\n *\n * @param dateTime - The date time to format\n *\n * @param options - The options to use\n *\n * @returns The formatted date time\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "formatDateTime: "
+            },
+            {
+              "kind": "Content",
+              "text": "(dateTime?: "
+            },
+            {
+              "kind": "Reference",
+              "text": "StormDateTime",
+              "canonicalReference": "@storm-stack/cli!StormDateTime:class"
+            },
+            {
+              "kind": "Content",
+              "text": ", options?: "
+            },
+            {
+              "kind": "Reference",
+              "text": "Partial",
+              "canonicalReference": "!Partial:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<"
+            },
+            {
+              "kind": "Reference",
+              "text": "Temporal.ToStringPrecisionOptions",
+              "canonicalReference": "!Temporal.ToStringPrecisionOptions:type"
+            },
+            {
+              "kind": "Content",
+              "text": " & "
+            },
+            {
+              "kind": "Reference",
+              "text": "Temporal.ShowCalendarOption",
+              "canonicalReference": "!Temporal.ShowCalendarOption:type"
+            },
+            {
+              "kind": "Content",
+              "text": ">) => string"
+            }
+          ],
+          "fileUrlPath": "packages/date-time/src/utilities/format-date-time.ts",
+          "isReadonly": true,
+          "releaseTag": "Public",
+          "name": "formatDateTime",
+          "variableTypeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 10
+          }
+        },
+        {
+          "kind": "Variable",
+          "canonicalReference": "@storm-stack/cli!formatDateTimeISO:var",
+          "docComment": "/**\n * Format a date time field into ISO format\n *\n * @param dateTime - The date time to format\n *\n * @param options - The options to use\n *\n * @returns The formatted date time\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "formatDateTimeISO: "
+            },
+            {
+              "kind": "Content",
+              "text": "(dateTime?: "
+            },
+            {
+              "kind": "Reference",
+              "text": "StormDateTime",
+              "canonicalReference": "@storm-stack/cli!StormDateTime:class"
+            },
+            {
+              "kind": "Content",
+              "text": " | null, options?: "
+            },
+            {
+              "kind": "Reference",
+              "text": "Partial",
+              "canonicalReference": "!Partial:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<"
+            },
+            {
+              "kind": "Reference",
+              "text": "Temporal.ToStringPrecisionOptions",
+              "canonicalReference": "!Temporal.ToStringPrecisionOptions:type"
+            },
+            {
+              "kind": "Content",
+              "text": " & "
+            },
+            {
+              "kind": "Reference",
+              "text": "Temporal.ShowCalendarOption",
+              "canonicalReference": "!Temporal.ShowCalendarOption:type"
+            },
+            {
+              "kind": "Content",
+              "text": ">) => string"
+            }
+          ],
+          "fileUrlPath": "packages/date-time/src/utilities/format-date-time-iso.ts",
+          "isReadonly": true,
+          "releaseTag": "Public",
+          "name": "formatDateTimeISO",
+          "variableTypeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 10
+          }
+        },
+        {
+          "kind": "Variable",
+          "canonicalReference": "@storm-stack/cli!formatSince:var",
+          "docComment": "/**\n * Formats a duration or a date-time since another date-time.\n *\n * @remarks\n *\n * An example output when the options.verbose is true: 4 days 3 hours 2 minutes 1 second 0 milliseconds\n *\n * An example output when the options.verbose is false: 4d 3h 2m 1s 0ms\n *\n * @param dateTimeOrDuration - The date-time or duration to format\n *\n * @param dateTimeTo - The date-time to format since\n *\n * @param options - The options to use\n *\n * @returns The formatted time since\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "formatSince: "
+            },
+            {
+              "kind": "Content",
+              "text": "(dateTimeOrDuration: "
+            },
+            {
+              "kind": "Reference",
+              "text": "StormDateTime",
+              "canonicalReference": "@storm-stack/cli!StormDateTime:class"
+            },
+            {
+              "kind": "Content",
+              "text": " | "
+            },
+            {
+              "kind": "Reference",
+              "text": "Temporal.Duration",
+              "canonicalReference": "!Temporal.Duration:type"
+            },
+            {
+              "kind": "Content",
+              "text": ", dateTimeTo?: "
+            },
+            {
+              "kind": "Reference",
+              "text": "StormDateTime",
+              "canonicalReference": "@storm-stack/cli!StormDateTime:class"
+            },
+            {
+              "kind": "Content",
+              "text": ", options?: "
+            },
+            {
+              "kind": "Reference",
+              "text": "FormatSinceOptions",
+              "canonicalReference": "@storm-stack/cli!FormatSinceOptions:type"
+            },
+            {
+              "kind": "Content",
+              "text": ") => string"
+            }
+          ],
+          "fileUrlPath": "packages/date-time/src/utilities/format-since.ts",
+          "isReadonly": true,
+          "releaseTag": "Public",
+          "name": "formatSince",
+          "variableTypeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 10
+          }
+        },
+        {
+          "kind": "TypeAlias",
+          "canonicalReference": "@storm-stack/cli!FormatSinceOptions:type",
+          "docComment": "/**\n * Options for the `formatSince` method\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export type FormatSinceOptions = "
+            },
+            {
+              "kind": "Content",
+              "text": "{\n    colonNotation?: boolean;\n    compact?: boolean;\n    formatSubMilliseconds?: boolean;\n    keepDecimalsOnWholeSeconds?: boolean;\n    millisecondsDecimalDigits?: number;\n    secondsDecimalDigits?: number;\n    separateMilliseconds?: boolean;\n    unitCount?: number;\n    verbose?: boolean;\n}"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "fileUrlPath": "packages/date-time/src/utilities/format-since.ts",
+          "releaseTag": "Public",
+          "name": "FormatSinceOptions",
+          "typeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 2
+          }
+        },
+        {
+          "kind": "Variable",
+          "canonicalReference": "@storm-stack/cli!formatTime:var",
+          "docComment": "/**\n * Format a time field\n *\n * @param dateTime - The date time to format\n *\n * @returns The formatted time string\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "formatTime: "
+            },
+            {
+              "kind": "Content",
+              "text": "(dateTime?: "
+            },
+            {
+              "kind": "Reference",
+              "text": "StormDateTime",
+              "canonicalReference": "@storm-stack/cli!StormDateTime:class"
+            },
+            {
+              "kind": "Content",
+              "text": ", options?: "
+            },
+            {
+              "kind": "Reference",
+              "text": "Partial",
+              "canonicalReference": "!Partial:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<"
+            },
+            {
+              "kind": "Reference",
+              "text": "Temporal.ToStringPrecisionOptions",
+              "canonicalReference": "!Temporal.ToStringPrecisionOptions:type"
+            },
+            {
+              "kind": "Content",
+              "text": " & "
+            },
+            {
+              "kind": "Reference",
+              "text": "Temporal.ShowCalendarOption",
+              "canonicalReference": "!Temporal.ShowCalendarOption:type"
+            },
+            {
+              "kind": "Content",
+              "text": ">) => string"
+            }
+          ],
+          "fileUrlPath": "packages/date-time/src/utilities/format-time.ts",
+          "isReadonly": true,
+          "releaseTag": "Public",
+          "name": "formatTime",
+          "variableTypeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 10
+          }
+        },
+        {
+          "kind": "Function",
+          "canonicalReference": "@storm-stack/cli!isDateTime:function(1)",
+          "docComment": "/**\n * Type-check to determine if `obj` is a `DateTime` object\n *\n * `isDateTime` returns true if the object passed to it has a `_symbol` property that is equal to `DATE_TIME_SYMBOL`\n *\n * @param obj - the object to check\n *\n * @returns The function isDateTime is returning a boolean value.\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export declare function isDateTime(obj: "
+            },
+            {
+              "kind": "Content",
+              "text": "unknown"
+            },
+            {
+              "kind": "Content",
+              "text": "): "
+            },
+            {
+              "kind": "Reference",
+              "text": "obj",
+              "canonicalReference": "@storm-stack/cli!~obj"
+            },
+            {
+              "kind": "Content",
+              "text": " is "
+            },
+            {
+              "kind": "Reference",
+              "text": "StormDateTime",
+              "canonicalReference": "@storm-stack/cli!StormDateTime:class"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "fileUrlPath": "packages/date-time/src/utilities/is-date-time.ts",
+          "returnTypeTokenRange": {
+            "startIndex": 3,
+            "endIndex": 6
+          },
+          "releaseTag": "Public",
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "obj",
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "isOptional": false
+            }
+          ],
+          "name": "isDateTime"
+        },
+        {
+          "kind": "Function",
+          "canonicalReference": "@storm-stack/cli!isInstant:function(1)",
+          "docComment": "/**\n * Type-check to determine if `value` is a `Temporal.Instant` object\n *\n * @param value - The value to check\n *\n * @returns The function isInstant is returning a boolean value.\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export declare function isInstant(value: "
+            },
+            {
+              "kind": "Content",
+              "text": "unknown"
+            },
+            {
+              "kind": "Content",
+              "text": "): "
+            },
+            {
+              "kind": "Reference",
+              "text": "value",
+              "canonicalReference": "@storm-stack/cli!~value"
+            },
+            {
+              "kind": "Content",
+              "text": " is "
+            },
+            {
+              "kind": "Reference",
+              "text": "Temporal.Instant",
+              "canonicalReference": "!Temporal.Instant:type"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "fileUrlPath": "packages/date-time/src/utilities/is-instant.ts",
+          "returnTypeTokenRange": {
+            "startIndex": 3,
+            "endIndex": 6
+          },
+          "releaseTag": "Public",
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "value",
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "isOptional": false
+            }
+          ],
+          "name": "isInstant"
+        },
+        {
+          "kind": "Variable",
+          "canonicalReference": "@storm-stack/cli!RFC_3339_DATE_REGEX:var",
+          "docComment": "",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "RFC_3339_DATE_REGEX: "
+            },
+            {
+              "kind": "Reference",
+              "text": "RegExp",
+              "canonicalReference": "!RegExp:interface"
+            }
+          ],
+          "fileUrlPath": "packages/date-time/src/constants.ts",
+          "isReadonly": true,
+          "releaseTag": "Public",
+          "name": "RFC_3339_DATE_REGEX",
+          "variableTypeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 2
+          }
+        },
+        {
+          "kind": "Variable",
+          "canonicalReference": "@storm-stack/cli!RFC_3339_DATETIME_REGEX:var",
+          "docComment": "",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "RFC_3339_DATETIME_REGEX: "
+            },
+            {
+              "kind": "Reference",
+              "text": "RegExp",
+              "canonicalReference": "!RegExp:interface"
+            }
+          ],
+          "fileUrlPath": "packages/date-time/src/constants.ts",
+          "isReadonly": true,
+          "releaseTag": "Public",
+          "name": "RFC_3339_DATETIME_REGEX",
+          "variableTypeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 2
+          }
+        },
+        {
+          "kind": "Variable",
+          "canonicalReference": "@storm-stack/cli!RFC_3339_TIME_REGEX:var",
+          "docComment": "",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "RFC_3339_TIME_REGEX: "
+            },
+            {
+              "kind": "Reference",
+              "text": "RegExp",
+              "canonicalReference": "!RegExp:interface"
+            }
+          ],
+          "fileUrlPath": "packages/date-time/src/constants.ts",
+          "isReadonly": true,
+          "releaseTag": "Public",
+          "name": "RFC_3339_TIME_REGEX",
+          "variableTypeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 2
+          }
+        },
+        {
+          "kind": "Function",
+          "canonicalReference": "@storm-stack/cli!serializeStormDate:function(1)",
+          "docComment": "/**\n * Serializes a StormDate into a string\n *\n * @param date - The date to serialize\n *\n * @returns The serialized date\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export declare function serializeStormDate(date: "
+            },
+            {
+              "kind": "Reference",
+              "text": "StormDate",
+              "canonicalReference": "@storm-stack/cli!StormDate:class"
+            },
+            {
+              "kind": "Content",
+              "text": "): "
+            },
+            {
+              "kind": "Content",
+              "text": "string"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "fileUrlPath": "packages/date-time/src/utilities/serialization.ts",
+          "returnTypeTokenRange": {
+            "startIndex": 3,
+            "endIndex": 4
+          },
+          "releaseTag": "Public",
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "date",
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "isOptional": false
+            }
+          ],
+          "name": "serializeStormDate"
+        },
+        {
+          "kind": "Function",
+          "canonicalReference": "@storm-stack/cli!serializeStormDateTime:function(1)",
+          "docComment": "/**\n * Serializes a StormDateTime into a string\n *\n * @param dateTime - The dateTime to serialize\n *\n * @returns The serialized dateTime\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export declare function serializeStormDateTime(dateTime: "
+            },
+            {
+              "kind": "Reference",
+              "text": "StormDateTime",
+              "canonicalReference": "@storm-stack/cli!StormDateTime:class"
+            },
+            {
+              "kind": "Content",
+              "text": "): "
+            },
+            {
+              "kind": "Content",
+              "text": "string"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "fileUrlPath": "packages/date-time/src/utilities/serialization.ts",
+          "returnTypeTokenRange": {
+            "startIndex": 3,
+            "endIndex": 4
+          },
+          "releaseTag": "Public",
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "dateTime",
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "isOptional": false
+            }
+          ],
+          "name": "serializeStormDateTime"
+        },
+        {
+          "kind": "Function",
+          "canonicalReference": "@storm-stack/cli!serializeStormTime:function(1)",
+          "docComment": "/**\n * Serializes a StormTime into a string\n *\n * @param date - The time to serialize\n *\n * @returns The serialized time\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export declare function serializeStormTime(date: "
+            },
+            {
+              "kind": "Reference",
+              "text": "StormTime",
+              "canonicalReference": "@storm-stack/cli!StormTime:class"
+            },
+            {
+              "kind": "Content",
+              "text": "): "
+            },
+            {
+              "kind": "Content",
+              "text": "string"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "fileUrlPath": "packages/date-time/src/utilities/serialization.ts",
+          "returnTypeTokenRange": {
+            "startIndex": 3,
+            "endIndex": 4
+          },
+          "releaseTag": "Public",
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "date",
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "isOptional": false
+            }
+          ],
+          "name": "serializeStormTime"
+        },
+        {
+          "kind": "Class",
+          "canonicalReference": "@storm-stack/cli!StormDate:class",
+          "docComment": "/**\n * A wrapper of the and Date class used by Storm Software to provide Date-Time values\n *\n * @decorator\n *\n * `@Serializable()`\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export declare class StormDate extends "
+            },
+            {
+              "kind": "Reference",
+              "text": "StormDateTime",
+              "canonicalReference": "@storm-stack/cli!StormDateTime:class"
+            },
+            {
+              "kind": "Content",
+              "text": " "
+            }
+          ],
+          "fileUrlPath": "packages/date-time/src/storm-date.ts",
+          "releaseTag": "Public",
+          "isAbstract": false,
+          "name": "StormDate",
+          "preserveMemberOrder": false,
+          "members": [
+            {
+              "kind": "Constructor",
+              "canonicalReference": "@storm-stack/cli!StormDate:constructor(1)",
+              "docComment": "/**\n * Constructs a new instance of the `StormDate` class\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "constructor(dateTime?: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "DateTimeInput",
+                  "canonicalReference": "@storm-stack/cli!DateTimeInput:type"
+                },
+                {
+                  "kind": "Content",
+                  "text": ", options?: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "DateTimeOptions",
+                  "canonicalReference": "@storm-stack/cli!DateTimeOptions:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": ");"
+                }
+              ],
+              "releaseTag": "Public",
+              "isProtected": false,
+              "overloadIndex": 1,
+              "parameters": [
+                {
+                  "parameterName": "dateTime",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 1,
+                    "endIndex": 2
+                  },
+                  "isOptional": true
+                },
+                {
+                  "parameterName": "options",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 3,
+                    "endIndex": 4
+                  },
+                  "isOptional": true
+                }
+              ]
+            },
+            {
+              "kind": "Property",
+              "canonicalReference": "@storm-stack/cli!StormDate.create:member",
+              "docComment": "/**\n * Creates a new StormDate object with the given date and time\n *\n * @param date - The date to use\n *\n * @param options - The options to use\n *\n * @returns A new instance of DateTime with the given date and time.\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "static create: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "(date?: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "DateTimeInput",
+                  "canonicalReference": "@storm-stack/cli!DateTimeInput:type"
+                },
+                {
+                  "kind": "Content",
+                  "text": ", options?: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "DateTimeOptions",
+                  "canonicalReference": "@storm-stack/cli!DateTimeOptions:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": ") => "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "StormDate",
+                  "canonicalReference": "@storm-stack/cli!StormDate:class"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isReadonly": false,
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "create",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 7
+              },
+              "isStatic": true,
+              "isProtected": false,
+              "isAbstract": false
+            },
+            {
+              "kind": "Method",
+              "canonicalReference": "@storm-stack/cli!StormDate.current:member(1)",
+              "docComment": "/**\n * The current function returns a new DateTime object with the current date and time\n *\n * @returns A new instance of DateTime with the current date and time.\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "static current(): "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "StormDate",
+                  "canonicalReference": "@storm-stack/cli!StormDate:class"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isStatic": true,
+              "returnTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "releaseTag": "Public",
+              "isProtected": false,
+              "overloadIndex": 1,
+              "parameters": [],
+              "isOptional": false,
+              "isAbstract": false,
+              "name": "current"
+            },
+            {
+              "kind": "Method",
+              "canonicalReference": "@storm-stack/cli!StormDate#getDuration:member(1)",
+              "docComment": "/**\n * It returns the duration between two dates.\n *\n * @param dateTimeTo - DateTime = DateTime.current\n *\n * @returns A duration object.\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "getDuration(dateTimeTo?: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "StormDateTime",
+                  "canonicalReference": "@storm-stack/cli!StormDateTime:class"
+                },
+                {
+                  "kind": "Content",
+                  "text": "): "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "Temporal.Duration",
+                  "canonicalReference": "!Temporal.Duration:type"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isStatic": false,
+              "returnTypeTokenRange": {
+                "startIndex": 3,
+                "endIndex": 4
+              },
+              "releaseTag": "Public",
+              "isProtected": false,
+              "overloadIndex": 1,
+              "parameters": [
+                {
+                  "parameterName": "dateTimeTo",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 1,
+                    "endIndex": 2
+                  },
+                  "isOptional": true
+                }
+              ],
+              "isOptional": false,
+              "isAbstract": false,
+              "name": "getDuration"
+            },
+            {
+              "kind": "Method",
+              "canonicalReference": "@storm-stack/cli!StormDate#getHours:member(1)",
+              "docComment": "/**\n * Gets the hours in a date, using local time.\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "getHours(): "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isStatic": false,
+              "returnTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "releaseTag": "Public",
+              "isProtected": false,
+              "overloadIndex": 1,
+              "parameters": [],
+              "isOptional": false,
+              "isAbstract": false,
+              "name": "getHours"
+            },
+            {
+              "kind": "Method",
+              "canonicalReference": "@storm-stack/cli!StormDate#getMilliseconds:member(1)",
+              "docComment": "/**\n * Gets the milliseconds of a Date, using local time.\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "getMilliseconds(): "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isStatic": false,
+              "returnTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "releaseTag": "Public",
+              "isProtected": false,
+              "overloadIndex": 1,
+              "parameters": [],
+              "isOptional": false,
+              "isAbstract": false,
+              "name": "getMilliseconds"
+            },
+            {
+              "kind": "Method",
+              "canonicalReference": "@storm-stack/cli!StormDate#getMinutes:member(1)",
+              "docComment": "/**\n * Gets the minutes of a Date object, using local time.\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "getMinutes(): "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isStatic": false,
+              "returnTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "releaseTag": "Public",
+              "isProtected": false,
+              "overloadIndex": 1,
+              "parameters": [],
+              "isOptional": false,
+              "isAbstract": false,
+              "name": "getMinutes"
+            },
+            {
+              "kind": "Method",
+              "canonicalReference": "@storm-stack/cli!StormDate#getSeconds:member(1)",
+              "docComment": "/**\n * Gets the seconds of a Date object, using local time.\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "getSeconds(): "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isStatic": false,
+              "returnTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "releaseTag": "Public",
+              "isProtected": false,
+              "overloadIndex": 1,
+              "parameters": [],
+              "isOptional": false,
+              "isAbstract": false,
+              "name": "getSeconds"
+            },
+            {
+              "kind": "Method",
+              "canonicalReference": "@storm-stack/cli!StormDate#getTimezoneOffset:member(1)",
+              "docComment": "/**\n * Gets the difference in minutes between the time on the local computer and Universal Coordinated Time (UTC).\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "getTimezoneOffset(): "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isStatic": false,
+              "returnTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "releaseTag": "Public",
+              "isProtected": false,
+              "overloadIndex": 1,
+              "parameters": [],
+              "isOptional": false,
+              "isAbstract": false,
+              "name": "getTimezoneOffset"
+            },
+            {
+              "kind": "Method",
+              "canonicalReference": "@storm-stack/cli!StormDate#getUTCHours:member(1)",
+              "docComment": "/**\n * Gets the hours value in a Date object using Universal Coordinated Time (UTC).\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "getUTCHours(): "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isStatic": false,
+              "returnTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "releaseTag": "Public",
+              "isProtected": false,
+              "overloadIndex": 1,
+              "parameters": [],
+              "isOptional": false,
+              "isAbstract": false,
+              "name": "getUTCHours"
+            },
+            {
+              "kind": "Method",
+              "canonicalReference": "@storm-stack/cli!StormDate#getUTCMilliseconds:member(1)",
+              "docComment": "/**\n * Gets the milliseconds of a Date object using Universal Coordinated Time (UTC).\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "getUTCMilliseconds(): "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isStatic": false,
+              "returnTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "releaseTag": "Public",
+              "isProtected": false,
+              "overloadIndex": 1,
+              "parameters": [],
+              "isOptional": false,
+              "isAbstract": false,
+              "name": "getUTCMilliseconds"
+            },
+            {
+              "kind": "Method",
+              "canonicalReference": "@storm-stack/cli!StormDate#getUTCMinutes:member(1)",
+              "docComment": "/**\n * Gets the minutes of a Date object using Universal Coordinated Time (UTC).\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "getUTCMinutes(): "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isStatic": false,
+              "returnTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "releaseTag": "Public",
+              "isProtected": false,
+              "overloadIndex": 1,
+              "parameters": [],
+              "isOptional": false,
+              "isAbstract": false,
+              "name": "getUTCMinutes"
+            },
+            {
+              "kind": "Method",
+              "canonicalReference": "@storm-stack/cli!StormDate#getUTCSeconds:member(1)",
+              "docComment": "/**\n * Gets the seconds of a Date object using Universal Coordinated Time (UTC).\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "getUTCSeconds(): "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isStatic": false,
+              "returnTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "releaseTag": "Public",
+              "isProtected": false,
+              "overloadIndex": 1,
+              "parameters": [],
+              "isOptional": false,
+              "isAbstract": false,
+              "name": "getUTCSeconds"
+            },
+            {
+              "kind": "Method",
+              "canonicalReference": "@storm-stack/cli!StormDate.now:member(1)",
+              "docComment": "/**\n * The current function returns a new DateTime object with the current date and time\n *\n * @returns A new instance of DateTime with the current date and time.\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "static now(): "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isStatic": true,
+              "returnTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "releaseTag": "Public",
+              "isProtected": false,
+              "overloadIndex": 1,
+              "parameters": [],
+              "isOptional": false,
+              "isAbstract": false,
+              "name": "now"
+            },
+            {
+              "kind": "Method",
+              "canonicalReference": "@storm-stack/cli!StormDate#validate:member(1)",
+              "docComment": "/**\n * Validate the input date value\n *\n * @param dateTime - The date value to validate\n *\n * @param options - The options to use\n *\n * @returns A boolean representing whether the value is a valid *date-time*\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "protected validate(dateTime?: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "DateTimeInput",
+                  "canonicalReference": "@storm-stack/cli!DateTimeInput:type"
+                },
+                {
+                  "kind": "Content",
+                  "text": ", options?: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "DateTimeOptions",
+                  "canonicalReference": "@storm-stack/cli!DateTimeOptions:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": "): "
+                },
+                {
+                  "kind": "Content",
+                  "text": "boolean"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isStatic": false,
+              "returnTypeTokenRange": {
+                "startIndex": 5,
+                "endIndex": 6
+              },
+              "releaseTag": "Public",
+              "isProtected": true,
+              "overloadIndex": 1,
+              "parameters": [
+                {
+                  "parameterName": "dateTime",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 1,
+                    "endIndex": 2
+                  },
+                  "isOptional": true
+                },
+                {
+                  "parameterName": "options",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 3,
+                    "endIndex": 4
+                  },
+                  "isOptional": true
+                }
+              ],
+              "isOptional": false,
+              "isAbstract": false,
+              "name": "validate"
+            }
+          ],
+          "extendsTokenRange": {
+            "startIndex": 1,
+            "endIndex": 2
+          },
+          "implementsTokenRanges": []
+        },
+        {
+          "kind": "Class",
+          "canonicalReference": "@storm-stack/cli!StormDateTime:class",
+          "docComment": "/**\n * A wrapper of the and Date class used by Storm Software to provide Date-Time values\n *\n * @decorator\n *\n * `@Serializable()`\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export declare class StormDateTime extends "
+            },
+            {
+              "kind": "Reference",
+              "text": "Date",
+              "canonicalReference": "!Date:interface"
+            },
+            {
+              "kind": "Content",
+              "text": " "
+            }
+          ],
+          "fileUrlPath": "packages/date-time/src/storm-date-time.ts",
+          "releaseTag": "Public",
+          "isAbstract": false,
+          "name": "StormDateTime",
+          "preserveMemberOrder": false,
+          "members": [
+            {
+              "kind": "Constructor",
+              "canonicalReference": "@storm-stack/cli!StormDateTime:constructor(1)",
+              "docComment": "/**\n * Constructs a new instance of the `StormDateTime` class\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "constructor(dateTime?: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "DateTimeInput",
+                  "canonicalReference": "@storm-stack/cli!DateTimeInput:type"
+                },
+                {
+                  "kind": "Content",
+                  "text": ", options?: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "DateTimeOptions",
+                  "canonicalReference": "@storm-stack/cli!DateTimeOptions:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": ");"
+                }
+              ],
+              "releaseTag": "Public",
+              "isProtected": false,
+              "overloadIndex": 1,
+              "parameters": [
+                {
+                  "parameterName": "dateTime",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 1,
+                    "endIndex": 2
+                  },
+                  "isOptional": true
+                },
+                {
+                  "parameterName": "options",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 3,
+                    "endIndex": 4
+                  },
+                  "isOptional": true
+                }
+              ]
+            },
+            {
+              "kind": "Property",
+              "canonicalReference": "@storm-stack/cli!StormDateTime#calendarId:member",
+              "docComment": "/**\n * An accessor that returns the `calendarId` string of the DateTime object\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "get calendarId(): "
+                },
+                {
+                  "kind": "Content",
+                  "text": "string"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isReadonly": true,
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "calendarId",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "isStatic": false,
+              "isProtected": false,
+              "isAbstract": false
+            },
+            {
+              "kind": "Property",
+              "canonicalReference": "@storm-stack/cli!StormDateTime.create:member",
+              "docComment": "/**\n * Creates a new instance of StormDateTime from a string with a specified format.\n *\n * @param dateTime - The input value used to determine the current date and time\n *\n * @param options - The options to use when creating the StormDateTime object\n *\n * @returns A new instance of StormDateTime with the current date and time.\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "static create: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "(dateTime?: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "DateTimeInput",
+                  "canonicalReference": "@storm-stack/cli!DateTimeInput:type"
+                },
+                {
+                  "kind": "Content",
+                  "text": ", options?: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "DateTimeOptions",
+                  "canonicalReference": "@storm-stack/cli!DateTimeOptions:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": ") => "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "StormDateTime",
+                  "canonicalReference": "@storm-stack/cli!StormDateTime:class"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isReadonly": false,
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "create",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 7
+              },
+              "isStatic": true,
+              "isProtected": false,
+              "isAbstract": false
+            },
+            {
+              "kind": "Method",
+              "canonicalReference": "@storm-stack/cli!StormDateTime.current:member(1)",
+              "docComment": "/**\n * The current function returns a new StormDateTime object with the current date and time\n *\n * @returns A new instance of StormDateTime with the current date and time.\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "static current(): "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "StormDateTime",
+                  "canonicalReference": "@storm-stack/cli!StormDateTime:class"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isStatic": true,
+              "returnTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "releaseTag": "Public",
+              "isProtected": false,
+              "overloadIndex": 1,
+              "parameters": [],
+              "isOptional": false,
+              "isAbstract": false,
+              "name": "current"
+            },
+            {
+              "kind": "Property",
+              "canonicalReference": "@storm-stack/cli!StormDateTime#epochMilliseconds:member",
+              "docComment": "/**\n * An accessor that returns the epoch milliseconds of the DateTime object\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "get epochMilliseconds(): "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isReadonly": true,
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "epochMilliseconds",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "isStatic": false,
+              "isProtected": false,
+              "isAbstract": false
+            },
+            {
+              "kind": "Method",
+              "canonicalReference": "@storm-stack/cli!StormDateTime#getDate:member(1)",
+              "docComment": "/**\n * Gets the day-of-the-month, using local time.\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "getDate(): "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isStatic": false,
+              "returnTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "releaseTag": "Public",
+              "isProtected": false,
+              "overloadIndex": 1,
+              "parameters": [],
+              "isOptional": false,
+              "isAbstract": false,
+              "name": "getDate"
+            },
+            {
+              "kind": "Method",
+              "canonicalReference": "@storm-stack/cli!StormDateTime#getDay:member(1)",
+              "docComment": "/**\n * Gets the day of the week, using local time.\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "getDay(): "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isStatic": false,
+              "returnTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "releaseTag": "Public",
+              "isProtected": false,
+              "overloadIndex": 1,
+              "parameters": [],
+              "isOptional": false,
+              "isAbstract": false,
+              "name": "getDay"
+            },
+            {
+              "kind": "Method",
+              "canonicalReference": "@storm-stack/cli!StormDateTime#getDuration:member(1)",
+              "docComment": "/**\n * It returns the duration between two date times.\n *\n * @param dateTimeTo - DateTime = DateTime.current\n *\n * @returns A duration object.\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "getDuration(dateTimeTo?: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "StormDateTime",
+                  "canonicalReference": "@storm-stack/cli!StormDateTime:class"
+                },
+                {
+                  "kind": "Content",
+                  "text": "): "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "Temporal.Duration",
+                  "canonicalReference": "!Temporal.Duration:type"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isStatic": false,
+              "returnTypeTokenRange": {
+                "startIndex": 3,
+                "endIndex": 4
+              },
+              "releaseTag": "Public",
+              "isProtected": false,
+              "overloadIndex": 1,
+              "parameters": [
+                {
+                  "parameterName": "dateTimeTo",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 1,
+                    "endIndex": 2
+                  },
+                  "isOptional": true
+                }
+              ],
+              "isOptional": false,
+              "isAbstract": false,
+              "name": "getDuration"
+            },
+            {
+              "kind": "Method",
+              "canonicalReference": "@storm-stack/cli!StormDateTime#getFullYear:member(1)",
+              "docComment": "/**\n * Gets the year, using local time.\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "getFullYear(): "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isStatic": false,
+              "returnTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "releaseTag": "Public",
+              "isProtected": false,
+              "overloadIndex": 1,
+              "parameters": [],
+              "isOptional": false,
+              "isAbstract": false,
+              "name": "getFullYear"
+            },
+            {
+              "kind": "Method",
+              "canonicalReference": "@storm-stack/cli!StormDateTime#getHours:member(1)",
+              "docComment": "/**\n * Gets the hours in a date, using local time.\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "getHours(): "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isStatic": false,
+              "returnTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "releaseTag": "Public",
+              "isProtected": false,
+              "overloadIndex": 1,
+              "parameters": [],
+              "isOptional": false,
+              "isAbstract": false,
+              "name": "getHours"
+            },
+            {
+              "kind": "Method",
+              "canonicalReference": "@storm-stack/cli!StormDateTime#getMilliseconds:member(1)",
+              "docComment": "/**\n * Gets the milliseconds of a Date, using local time.\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "getMilliseconds(): "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isStatic": false,
+              "returnTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "releaseTag": "Public",
+              "isProtected": false,
+              "overloadIndex": 1,
+              "parameters": [],
+              "isOptional": false,
+              "isAbstract": false,
+              "name": "getMilliseconds"
+            },
+            {
+              "kind": "Method",
+              "canonicalReference": "@storm-stack/cli!StormDateTime#getMinutes:member(1)",
+              "docComment": "/**\n * Gets the minutes of a Date object, using local time.\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "getMinutes(): "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isStatic": false,
+              "returnTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "releaseTag": "Public",
+              "isProtected": false,
+              "overloadIndex": 1,
+              "parameters": [],
+              "isOptional": false,
+              "isAbstract": false,
+              "name": "getMinutes"
+            },
+            {
+              "kind": "Method",
+              "canonicalReference": "@storm-stack/cli!StormDateTime#getMonth:member(1)",
+              "docComment": "/**\n * Gets the month, using local time.\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "getMonth(): "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isStatic": false,
+              "returnTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "releaseTag": "Public",
+              "isProtected": false,
+              "overloadIndex": 1,
+              "parameters": [],
+              "isOptional": false,
+              "isAbstract": false,
+              "name": "getMonth"
+            },
+            {
+              "kind": "Method",
+              "canonicalReference": "@storm-stack/cli!StormDateTime#getPlainDate:member(1)",
+              "docComment": "/**\n * It returns a plain date object from a DateTime object\n *\n * @returns A PlainDate object.\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "getPlainDate(): "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "StormDateTime",
+                  "canonicalReference": "@storm-stack/cli!StormDateTime:class"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isStatic": false,
+              "returnTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "releaseTag": "Public",
+              "isProtected": false,
+              "overloadIndex": 1,
+              "parameters": [],
+              "isOptional": false,
+              "isAbstract": false,
+              "name": "getPlainDate"
+            },
+            {
+              "kind": "Method",
+              "canonicalReference": "@storm-stack/cli!StormDateTime#getPlainTime:member(1)",
+              "docComment": "/**\n * `getPlainTime` returns a `PlainTime` object from a `DateTime` object\n *\n * @returns A PlainTime object.\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "getPlainTime(): "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "StormDateTime",
+                  "canonicalReference": "@storm-stack/cli!StormDateTime:class"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isStatic": false,
+              "returnTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "releaseTag": "Public",
+              "isProtected": false,
+              "overloadIndex": 1,
+              "parameters": [],
+              "isOptional": false,
+              "isAbstract": false,
+              "name": "getPlainTime"
+            },
+            {
+              "kind": "Method",
+              "canonicalReference": "@storm-stack/cli!StormDateTime#getSeconds:member(1)",
+              "docComment": "/**\n * Gets the seconds of a Date object, using local time.\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "getSeconds(): "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isStatic": false,
+              "returnTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "releaseTag": "Public",
+              "isProtected": false,
+              "overloadIndex": 1,
+              "parameters": [],
+              "isOptional": false,
+              "isAbstract": false,
+              "name": "getSeconds"
+            },
+            {
+              "kind": "Method",
+              "canonicalReference": "@storm-stack/cli!StormDateTime#getTime:member(1)",
+              "docComment": "/**\n * Returns the stored time value in milliseconds since midnight, January 1, 1970 UTC.\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "getTime(): "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isStatic": false,
+              "returnTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "releaseTag": "Public",
+              "isProtected": false,
+              "overloadIndex": 1,
+              "parameters": [],
+              "isOptional": false,
+              "isAbstract": false,
+              "name": "getTime"
+            },
+            {
+              "kind": "Method",
+              "canonicalReference": "@storm-stack/cli!StormDateTime#getTimezoneOffset:member(1)",
+              "docComment": "/**\n * Gets the difference in minutes between the time on the local computer and Universal Coordinated Time (UTC).\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "getTimezoneOffset(): "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isStatic": false,
+              "returnTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "releaseTag": "Public",
+              "isProtected": false,
+              "overloadIndex": 1,
+              "parameters": [],
+              "isOptional": false,
+              "isAbstract": false,
+              "name": "getTimezoneOffset"
+            },
+            {
+              "kind": "Method",
+              "canonicalReference": "@storm-stack/cli!StormDateTime#getUTCDate:member(1)",
+              "docComment": "/**\n * Gets the day-of-the-month, using Universal Coordinated Time (UTC).\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "getUTCDate(): "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isStatic": false,
+              "returnTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "releaseTag": "Public",
+              "isProtected": false,
+              "overloadIndex": 1,
+              "parameters": [],
+              "isOptional": false,
+              "isAbstract": false,
+              "name": "getUTCDate"
+            },
+            {
+              "kind": "Method",
+              "canonicalReference": "@storm-stack/cli!StormDateTime#getUTCDay:member(1)",
+              "docComment": "/**\n * Gets the day of the week using Universal Coordinated Time (UTC).\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "getUTCDay(): "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isStatic": false,
+              "returnTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "releaseTag": "Public",
+              "isProtected": false,
+              "overloadIndex": 1,
+              "parameters": [],
+              "isOptional": false,
+              "isAbstract": false,
+              "name": "getUTCDay"
+            },
+            {
+              "kind": "Method",
+              "canonicalReference": "@storm-stack/cli!StormDateTime#getUTCFullYear:member(1)",
+              "docComment": "/**\n * Gets the year using Universal Coordinated Time (UTC).\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "getUTCFullYear(): "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isStatic": false,
+              "returnTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "releaseTag": "Public",
+              "isProtected": false,
+              "overloadIndex": 1,
+              "parameters": [],
+              "isOptional": false,
+              "isAbstract": false,
+              "name": "getUTCFullYear"
+            },
+            {
+              "kind": "Method",
+              "canonicalReference": "@storm-stack/cli!StormDateTime#getUTCHours:member(1)",
+              "docComment": "/**\n * Gets the hours value in a Date object using Universal Coordinated Time (UTC).\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "getUTCHours(): "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isStatic": false,
+              "returnTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "releaseTag": "Public",
+              "isProtected": false,
+              "overloadIndex": 1,
+              "parameters": [],
+              "isOptional": false,
+              "isAbstract": false,
+              "name": "getUTCHours"
+            },
+            {
+              "kind": "Method",
+              "canonicalReference": "@storm-stack/cli!StormDateTime#getUTCMilliseconds:member(1)",
+              "docComment": "/**\n * Gets the milliseconds of a Date object using Universal Coordinated Time (UTC).\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "getUTCMilliseconds(): "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isStatic": false,
+              "returnTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "releaseTag": "Public",
+              "isProtected": false,
+              "overloadIndex": 1,
+              "parameters": [],
+              "isOptional": false,
+              "isAbstract": false,
+              "name": "getUTCMilliseconds"
+            },
+            {
+              "kind": "Method",
+              "canonicalReference": "@storm-stack/cli!StormDateTime#getUTCMinutes:member(1)",
+              "docComment": "/**\n * Gets the minutes of a Date object using Universal Coordinated Time (UTC).\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "getUTCMinutes(): "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isStatic": false,
+              "returnTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "releaseTag": "Public",
+              "isProtected": false,
+              "overloadIndex": 1,
+              "parameters": [],
+              "isOptional": false,
+              "isAbstract": false,
+              "name": "getUTCMinutes"
+            },
+            {
+              "kind": "Method",
+              "canonicalReference": "@storm-stack/cli!StormDateTime#getUTCMonth:member(1)",
+              "docComment": "/**\n * Gets the month of a Date object using Universal Coordinated Time (UTC).\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "getUTCMonth(): "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isStatic": false,
+              "returnTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "releaseTag": "Public",
+              "isProtected": false,
+              "overloadIndex": 1,
+              "parameters": [],
+              "isOptional": false,
+              "isAbstract": false,
+              "name": "getUTCMonth"
+            },
+            {
+              "kind": "Method",
+              "canonicalReference": "@storm-stack/cli!StormDateTime#getUTCSeconds:member(1)",
+              "docComment": "/**\n * Gets the seconds of a Date object using Universal Coordinated Time (UTC).\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "getUTCSeconds(): "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isStatic": false,
+              "returnTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "releaseTag": "Public",
+              "isProtected": false,
+              "overloadIndex": 1,
+              "parameters": [],
+              "isOptional": false,
+              "isAbstract": false,
+              "name": "getUTCSeconds"
+            },
+            {
+              "kind": "Property",
+              "canonicalReference": "@storm-stack/cli!StormDateTime#input:member",
+              "docComment": "/**\n * Returns the input value used to create the DateTime object\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "get input(): "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "DateTimeInput",
+                  "canonicalReference": "@storm-stack/cli!DateTimeInput:type"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isReadonly": true,
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "input",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "isStatic": false,
+              "isProtected": false,
+              "isAbstract": false
+            },
+            {
+              "kind": "Property",
+              "canonicalReference": "@storm-stack/cli!StormDateTime#instant:member",
+              "docComment": "/**\n * An accessor that returns the `Temporal.Instant` object of the DateTime object\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "get instant(): "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "Temporal.Instant",
+                  "canonicalReference": "!Temporal.Instant:type"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";\n\nprotected set instant(_instant: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "Temporal.Instant",
+                  "canonicalReference": "!Temporal.Instant:type"
+                },
+                {
+                  "kind": "Content",
+                  "text": ");"
+                }
+              ],
+              "isReadonly": false,
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "instant",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "isStatic": false,
+              "isProtected": false,
+              "isAbstract": false
+            },
+            {
+              "kind": "Property",
+              "canonicalReference": "@storm-stack/cli!StormDateTime#isValid:member",
+              "docComment": "/**\n * An accessor that returns the `isValid` boolean of the DateTime object\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "get isValid(): "
+                },
+                {
+                  "kind": "Content",
+                  "text": "boolean"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isReadonly": true,
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "isValid",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "isStatic": false,
+              "isProtected": false,
+              "isAbstract": false
+            },
+            {
+              "kind": "Method",
+              "canonicalReference": "@storm-stack/cli!StormDateTime.now:member(1)",
+              "docComment": "/**\n * The current function returns a new StormDateTime object with the current date and time\n *\n * @returns A new instance of StormDateTime with the current date and time.\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "static now(): "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isStatic": true,
+              "returnTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "releaseTag": "Public",
+              "isProtected": false,
+              "overloadIndex": 1,
+              "parameters": [],
+              "isOptional": false,
+              "isAbstract": false,
+              "name": "now"
+            },
+            {
+              "kind": "Property",
+              "canonicalReference": "@storm-stack/cli!StormDateTime#options:member",
+              "docComment": "/**\n * Returns the options used to create the DateTime object\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "get options(): "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "DateTimeOptions",
+                  "canonicalReference": "@storm-stack/cli!DateTimeOptions:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isReadonly": true,
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "options",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "isStatic": false,
+              "isProtected": false,
+              "isAbstract": false
+            },
+            {
+              "kind": "Method",
+              "canonicalReference": "@storm-stack/cli!StormDateTime#setDate:member(1)",
+              "docComment": "/**\n * Sets the numeric day-of-the-month value of the Date object using local time.\n *\n * @param day - A numeric value equal to the day of the month.\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "setDate(day: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": "): "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isStatic": false,
+              "returnTypeTokenRange": {
+                "startIndex": 3,
+                "endIndex": 4
+              },
+              "releaseTag": "Public",
+              "isProtected": false,
+              "overloadIndex": 1,
+              "parameters": [
+                {
+                  "parameterName": "day",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 1,
+                    "endIndex": 2
+                  },
+                  "isOptional": false
+                }
+              ],
+              "isOptional": false,
+              "isAbstract": false,
+              "name": "setDate"
+            },
+            {
+              "kind": "Method",
+              "canonicalReference": "@storm-stack/cli!StormDateTime#setFullYear:member(1)",
+              "docComment": "/**\n * Sets the year of the Date object using local time.\n *\n * @param year - A numeric value for the year.\n *\n * @param month - A zero-based numeric value for the month (0 for January, 11 for December). Must be specified if numDate is specified.\n *\n * @param day - A numeric value equal for the day of the month.\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "setFullYear(year: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": ", month?: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": ", day?: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": "): "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isStatic": false,
+              "returnTypeTokenRange": {
+                "startIndex": 7,
+                "endIndex": 8
+              },
+              "releaseTag": "Public",
+              "isProtected": false,
+              "overloadIndex": 1,
+              "parameters": [
+                {
+                  "parameterName": "year",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 1,
+                    "endIndex": 2
+                  },
+                  "isOptional": false
+                },
+                {
+                  "parameterName": "month",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 3,
+                    "endIndex": 4
+                  },
+                  "isOptional": true
+                },
+                {
+                  "parameterName": "day",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 5,
+                    "endIndex": 6
+                  },
+                  "isOptional": true
+                }
+              ],
+              "isOptional": false,
+              "isAbstract": false,
+              "name": "setFullYear"
+            },
+            {
+              "kind": "Method",
+              "canonicalReference": "@storm-stack/cli!StormDateTime#setHours:member(1)",
+              "docComment": "/**\n * Sets the hour value in the Date object using local time.\n *\n * @param hour - A numeric value equal to the hours value.\n *\n * @param minute - A numeric value equal to the minutes value.\n *\n * @param second - A numeric value equal to the seconds value.\n *\n * @param millisecond - A numeric value equal to the milliseconds value.\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "setHours(hour: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": ", minute: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": ", second?: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": ", millisecond?: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": "): "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isStatic": false,
+              "returnTypeTokenRange": {
+                "startIndex": 9,
+                "endIndex": 10
+              },
+              "releaseTag": "Public",
+              "isProtected": false,
+              "overloadIndex": 1,
+              "parameters": [
+                {
+                  "parameterName": "hour",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 1,
+                    "endIndex": 2
+                  },
+                  "isOptional": false
+                },
+                {
+                  "parameterName": "minute",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 3,
+                    "endIndex": 4
+                  },
+                  "isOptional": false
+                },
+                {
+                  "parameterName": "second",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 5,
+                    "endIndex": 6
+                  },
+                  "isOptional": true
+                },
+                {
+                  "parameterName": "millisecond",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 7,
+                    "endIndex": 8
+                  },
+                  "isOptional": true
+                }
+              ],
+              "isOptional": false,
+              "isAbstract": false,
+              "name": "setHours"
+            },
+            {
+              "kind": "Method",
+              "canonicalReference": "@storm-stack/cli!StormDateTime#setMilliseconds:member(1)",
+              "docComment": "/**\n * Sets the milliseconds value in the Date object using local time.\n *\n * @param millisecond - A numeric value equal to the millisecond value.\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "setMilliseconds(millisecond: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": "): "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isStatic": false,
+              "returnTypeTokenRange": {
+                "startIndex": 3,
+                "endIndex": 4
+              },
+              "releaseTag": "Public",
+              "isProtected": false,
+              "overloadIndex": 1,
+              "parameters": [
+                {
+                  "parameterName": "millisecond",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 1,
+                    "endIndex": 2
+                  },
+                  "isOptional": false
+                }
+              ],
+              "isOptional": false,
+              "isAbstract": false,
+              "name": "setMilliseconds"
+            },
+            {
+              "kind": "Method",
+              "canonicalReference": "@storm-stack/cli!StormDateTime#setMinutes:member(1)",
+              "docComment": "/**\n * Sets the minutes value in the Date object using local time.\n *\n * @param minute - A numeric value equal to the minutes value.\n *\n * @param second - A numeric value equal to the seconds value.\n *\n * @param millisecond - A numeric value equal to the milliseconds value.\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "setMinutes(minute: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": ", second?: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": ", millisecond?: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": "): "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isStatic": false,
+              "returnTypeTokenRange": {
+                "startIndex": 7,
+                "endIndex": 8
+              },
+              "releaseTag": "Public",
+              "isProtected": false,
+              "overloadIndex": 1,
+              "parameters": [
+                {
+                  "parameterName": "minute",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 1,
+                    "endIndex": 2
+                  },
+                  "isOptional": false
+                },
+                {
+                  "parameterName": "second",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 3,
+                    "endIndex": 4
+                  },
+                  "isOptional": true
+                },
+                {
+                  "parameterName": "millisecond",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 5,
+                    "endIndex": 6
+                  },
+                  "isOptional": true
+                }
+              ],
+              "isOptional": false,
+              "isAbstract": false,
+              "name": "setMinutes"
+            },
+            {
+              "kind": "Method",
+              "canonicalReference": "@storm-stack/cli!StormDateTime#setMonth:member(1)",
+              "docComment": "/**\n * Sets the month value in the Date object using local time.\n *\n * @param month - A numeric value equal to the month. The value for January is 0, and other month values follow consecutively.\n *\n * @param day - A numeric value representing the day of the month. If this value is not supplied, the value from a call to the getDate method is used.\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "setMonth(month: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": ", day?: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": "): "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isStatic": false,
+              "returnTypeTokenRange": {
+                "startIndex": 5,
+                "endIndex": 6
+              },
+              "releaseTag": "Public",
+              "isProtected": false,
+              "overloadIndex": 1,
+              "parameters": [
+                {
+                  "parameterName": "month",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 1,
+                    "endIndex": 2
+                  },
+                  "isOptional": false
+                },
+                {
+                  "parameterName": "day",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 3,
+                    "endIndex": 4
+                  },
+                  "isOptional": true
+                }
+              ],
+              "isOptional": false,
+              "isAbstract": false,
+              "name": "setMonth"
+            },
+            {
+              "kind": "Method",
+              "canonicalReference": "@storm-stack/cli!StormDateTime#setSeconds:member(1)",
+              "docComment": "/**\n * Sets the seconds value in the Date object using local time.\n *\n * @param second - A numeric value equal to the seconds value.\n *\n * @param millisecond - A numeric value equal to the milliseconds value.\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "setSeconds(second: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": ", millisecond?: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": "): "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isStatic": false,
+              "returnTypeTokenRange": {
+                "startIndex": 5,
+                "endIndex": 6
+              },
+              "releaseTag": "Public",
+              "isProtected": false,
+              "overloadIndex": 1,
+              "parameters": [
+                {
+                  "parameterName": "second",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 1,
+                    "endIndex": 2
+                  },
+                  "isOptional": false
+                },
+                {
+                  "parameterName": "millisecond",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 3,
+                    "endIndex": 4
+                  },
+                  "isOptional": true
+                }
+              ],
+              "isOptional": false,
+              "isAbstract": false,
+              "name": "setSeconds"
+            },
+            {
+              "kind": "Method",
+              "canonicalReference": "@storm-stack/cli!StormDateTime#setTime:member(1)",
+              "docComment": "/**\n * Sets the date and time value in the Date object.\n *\n * @param time - A numeric value representing the number of elapsed milliseconds since midnight, January 1, 1970 GMT.\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "setTime(time: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": "): "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isStatic": false,
+              "returnTypeTokenRange": {
+                "startIndex": 3,
+                "endIndex": 4
+              },
+              "releaseTag": "Public",
+              "isProtected": false,
+              "overloadIndex": 1,
+              "parameters": [
+                {
+                  "parameterName": "time",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 1,
+                    "endIndex": 2
+                  },
+                  "isOptional": false
+                }
+              ],
+              "isOptional": false,
+              "isAbstract": false,
+              "name": "setTime"
+            },
+            {
+              "kind": "Method",
+              "canonicalReference": "@storm-stack/cli!StormDateTime#setUTCDate:member(1)",
+              "docComment": "/**\n * Sets the numeric day of the month in the Date object using Universal Coordinated Time (UTC).\n *\n * @param day - A numeric value equal to the day of the month.\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "setUTCDate(day: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": "): "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isStatic": false,
+              "returnTypeTokenRange": {
+                "startIndex": 3,
+                "endIndex": 4
+              },
+              "releaseTag": "Public",
+              "isProtected": false,
+              "overloadIndex": 1,
+              "parameters": [
+                {
+                  "parameterName": "day",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 1,
+                    "endIndex": 2
+                  },
+                  "isOptional": false
+                }
+              ],
+              "isOptional": false,
+              "isAbstract": false,
+              "name": "setUTCDate"
+            },
+            {
+              "kind": "Method",
+              "canonicalReference": "@storm-stack/cli!StormDateTime#setUTCFullYear:member(1)",
+              "docComment": "/**\n * Sets the year value in the Date object using Universal Coordinated Time (UTC).\n *\n * @param year - A numeric value equal to the year.\n *\n * @param month - A numeric value equal to the month. The value for January is 0, and other month values follow consecutively. Must be supplied if numDate is supplied.\n *\n * @param day - A numeric value equal to the day of the month.\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "setUTCFullYear(year: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": ", month?: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": ", day?: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": "): "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isStatic": false,
+              "returnTypeTokenRange": {
+                "startIndex": 7,
+                "endIndex": 8
+              },
+              "releaseTag": "Public",
+              "isProtected": false,
+              "overloadIndex": 1,
+              "parameters": [
+                {
+                  "parameterName": "year",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 1,
+                    "endIndex": 2
+                  },
+                  "isOptional": false
+                },
+                {
+                  "parameterName": "month",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 3,
+                    "endIndex": 4
+                  },
+                  "isOptional": true
+                },
+                {
+                  "parameterName": "day",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 5,
+                    "endIndex": 6
+                  },
+                  "isOptional": true
+                }
+              ],
+              "isOptional": false,
+              "isAbstract": false,
+              "name": "setUTCFullYear"
+            },
+            {
+              "kind": "Method",
+              "canonicalReference": "@storm-stack/cli!StormDateTime#setUTCHours:member(1)",
+              "docComment": "/**\n * Sets the hours value in the Date object using Universal Coordinated Time (UTC).\n *\n * @param hour - A numeric value equal to the hours value.\n *\n * @param minute - A numeric value equal to the minutes value.\n *\n * @param second - A numeric value equal to the seconds value.\n *\n * @param millisecond - A numeric value equal to the milliseconds value.\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "setUTCHours(hour: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": ", minute: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": ", second?: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": ", millisecond?: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": "): "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isStatic": false,
+              "returnTypeTokenRange": {
+                "startIndex": 9,
+                "endIndex": 10
+              },
+              "releaseTag": "Public",
+              "isProtected": false,
+              "overloadIndex": 1,
+              "parameters": [
+                {
+                  "parameterName": "hour",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 1,
+                    "endIndex": 2
+                  },
+                  "isOptional": false
+                },
+                {
+                  "parameterName": "minute",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 3,
+                    "endIndex": 4
+                  },
+                  "isOptional": false
+                },
+                {
+                  "parameterName": "second",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 5,
+                    "endIndex": 6
+                  },
+                  "isOptional": true
+                },
+                {
+                  "parameterName": "millisecond",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 7,
+                    "endIndex": 8
+                  },
+                  "isOptional": true
+                }
+              ],
+              "isOptional": false,
+              "isAbstract": false,
+              "name": "setUTCHours"
+            },
+            {
+              "kind": "Method",
+              "canonicalReference": "@storm-stack/cli!StormDateTime#setUTCMilliseconds:member(1)",
+              "docComment": "/**\n * Sets the milliseconds value in the Date object using Universal Coordinated Time (UTC).\n *\n * @param millisecond - A numeric value equal to the millisecond value.\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "setUTCMilliseconds(millisecond: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": "): "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isStatic": false,
+              "returnTypeTokenRange": {
+                "startIndex": 3,
+                "endIndex": 4
+              },
+              "releaseTag": "Public",
+              "isProtected": false,
+              "overloadIndex": 1,
+              "parameters": [
+                {
+                  "parameterName": "millisecond",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 1,
+                    "endIndex": 2
+                  },
+                  "isOptional": false
+                }
+              ],
+              "isOptional": false,
+              "isAbstract": false,
+              "name": "setUTCMilliseconds"
+            },
+            {
+              "kind": "Method",
+              "canonicalReference": "@storm-stack/cli!StormDateTime#setUTCMinutes:member(1)",
+              "docComment": "/**\n * Sets the minutes value in the Date object using Universal Coordinated Time (UTC).\n *\n * @param minute - A numeric value equal to the minutes value.\n *\n * @param second - A numeric value equal to the seconds value.\n *\n * @param millisecond - A numeric value equal to the milliseconds value.\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "setUTCMinutes(minute: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": ", second?: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": ", millisecond?: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": "): "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isStatic": false,
+              "returnTypeTokenRange": {
+                "startIndex": 7,
+                "endIndex": 8
+              },
+              "releaseTag": "Public",
+              "isProtected": false,
+              "overloadIndex": 1,
+              "parameters": [
+                {
+                  "parameterName": "minute",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 1,
+                    "endIndex": 2
+                  },
+                  "isOptional": false
+                },
+                {
+                  "parameterName": "second",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 3,
+                    "endIndex": 4
+                  },
+                  "isOptional": true
+                },
+                {
+                  "parameterName": "millisecond",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 5,
+                    "endIndex": 6
+                  },
+                  "isOptional": true
+                }
+              ],
+              "isOptional": false,
+              "isAbstract": false,
+              "name": "setUTCMinutes"
+            },
+            {
+              "kind": "Method",
+              "canonicalReference": "@storm-stack/cli!StormDateTime#setUTCMonth:member(1)",
+              "docComment": "/**\n * Sets the month value in the Date object using Universal Coordinated Time (UTC).\n *\n * @param month - A numeric value equal to the month. The value for January is 0, and other month values follow consecutively.\n *\n * @param day - A numeric value representing the day of the month. If it is not supplied, the value from a call to the getUTCDate method is used.\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "setUTCMonth(month: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": ", day?: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": "): "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isStatic": false,
+              "returnTypeTokenRange": {
+                "startIndex": 5,
+                "endIndex": 6
+              },
+              "releaseTag": "Public",
+              "isProtected": false,
+              "overloadIndex": 1,
+              "parameters": [
+                {
+                  "parameterName": "month",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 1,
+                    "endIndex": 2
+                  },
+                  "isOptional": false
+                },
+                {
+                  "parameterName": "day",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 3,
+                    "endIndex": 4
+                  },
+                  "isOptional": true
+                }
+              ],
+              "isOptional": false,
+              "isAbstract": false,
+              "name": "setUTCMonth"
+            },
+            {
+              "kind": "Method",
+              "canonicalReference": "@storm-stack/cli!StormDateTime#setUTCSeconds:member(1)",
+              "docComment": "/**\n * Sets the seconds value in the Date object using Universal Coordinated Time (UTC).\n *\n * @param second - A numeric value equal to the seconds value.\n *\n * @param millisecond - A numeric value equal to the milliseconds value.\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "setUTCSeconds(second: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": ", millisecond?: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": "): "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isStatic": false,
+              "returnTypeTokenRange": {
+                "startIndex": 5,
+                "endIndex": 6
+              },
+              "releaseTag": "Public",
+              "isProtected": false,
+              "overloadIndex": 1,
+              "parameters": [
+                {
+                  "parameterName": "second",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 1,
+                    "endIndex": 2
+                  },
+                  "isOptional": false
+                },
+                {
+                  "parameterName": "millisecond",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 3,
+                    "endIndex": 4
+                  },
+                  "isOptional": true
+                }
+              ],
+              "isOptional": false,
+              "isAbstract": false,
+              "name": "setUTCSeconds"
+            },
+            {
+              "kind": "Method",
+              "canonicalReference": "@storm-stack/cli!StormDateTime#since:member(1)",
+              "docComment": "/**\n * It returns the duration between two dates.\n *\n * @param dateTimeTo - DateTime = DateTime.current\n *\n * @returns A duration object.\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "since(dateTimeTo?: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "StormDateTime",
+                  "canonicalReference": "@storm-stack/cli!StormDateTime:class"
+                },
+                {
+                  "kind": "Content",
+                  "text": "): "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "Temporal.Duration",
+                  "canonicalReference": "!Temporal.Duration:type"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isStatic": false,
+              "returnTypeTokenRange": {
+                "startIndex": 3,
+                "endIndex": 4
+              },
+              "releaseTag": "Public",
+              "isProtected": false,
+              "overloadIndex": 1,
+              "parameters": [
+                {
+                  "parameterName": "dateTimeTo",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 1,
+                    "endIndex": 2
+                  },
+                  "isOptional": true
+                }
+              ],
+              "isOptional": false,
+              "isAbstract": false,
+              "name": "since"
+            },
+            {
+              "kind": "Property",
+              "canonicalReference": "@storm-stack/cli!StormDateTime#timeZoneId:member",
+              "docComment": "/**\n * An accessor that returns the `timeZoneId` string of the DateTime object\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "get timeZoneId(): "
+                },
+                {
+                  "kind": "Content",
+                  "text": "string"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isReadonly": true,
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "timeZoneId",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "isStatic": false,
+              "isProtected": false,
+              "isAbstract": false
+            },
+            {
+              "kind": "Method",
+              "canonicalReference": "@storm-stack/cli!StormDateTime#validate:member(1)",
+              "docComment": "/**\n * Validate the input date value\n *\n * @param dateTime - The date value to validate\n *\n * @param options - The options to use\n *\n * @returns A boolean representing whether the value is a valid *date-time*\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "protected validate(dateTime?: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "DateTimeInput",
+                  "canonicalReference": "@storm-stack/cli!DateTimeInput:type"
+                },
+                {
+                  "kind": "Content",
+                  "text": ", options?: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "DateTimeOptions",
+                  "canonicalReference": "@storm-stack/cli!DateTimeOptions:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": "): "
+                },
+                {
+                  "kind": "Content",
+                  "text": "boolean"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isStatic": false,
+              "returnTypeTokenRange": {
+                "startIndex": 5,
+                "endIndex": 6
+              },
+              "releaseTag": "Public",
+              "isProtected": true,
+              "overloadIndex": 1,
+              "parameters": [
+                {
+                  "parameterName": "dateTime",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 1,
+                    "endIndex": 2
+                  },
+                  "isOptional": true
+                },
+                {
+                  "parameterName": "options",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 3,
+                    "endIndex": 4
+                  },
+                  "isOptional": true
+                }
+              ],
+              "isOptional": false,
+              "isAbstract": false,
+              "name": "validate"
+            },
+            {
+              "kind": "Property",
+              "canonicalReference": "@storm-stack/cli!StormDateTime#zonedDateTime:member",
+              "docComment": "/**\n * An accessor that returns the `Temporal.ZonedDateTime` object of the DateTime object\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "get zonedDateTime(): "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "Temporal.ZonedDateTime",
+                  "canonicalReference": "!Temporal.ZonedDateTime:type"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";\n\nprotected set zonedDateTime(_zonedDateTime: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "Temporal.ZonedDateTime",
+                  "canonicalReference": "!Temporal.ZonedDateTime:type"
+                },
+                {
+                  "kind": "Content",
+                  "text": ");"
+                }
+              ],
+              "isReadonly": false,
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "zonedDateTime",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "isStatic": false,
+              "isProtected": false,
+              "isAbstract": false
+            }
+          ],
+          "extendsTokenRange": {
+            "startIndex": 1,
+            "endIndex": 2
+          },
+          "implementsTokenRanges": []
+        },
+        {
+          "kind": "Class",
+          "canonicalReference": "@storm-stack/cli!StormTime:class",
+          "docComment": "/**\n * A wrapper of the and Date class used by Storm Software to provide Date-Time values\n *\n * @decorator\n *\n * `@Serializable()`\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export declare class StormTime extends "
+            },
+            {
+              "kind": "Reference",
+              "text": "StormDateTime",
+              "canonicalReference": "@storm-stack/cli!StormDateTime:class"
+            },
+            {
+              "kind": "Content",
+              "text": " "
+            }
+          ],
+          "fileUrlPath": "packages/date-time/src/storm-time.ts",
+          "releaseTag": "Public",
+          "isAbstract": false,
+          "name": "StormTime",
+          "preserveMemberOrder": false,
+          "members": [
+            {
+              "kind": "Constructor",
+              "canonicalReference": "@storm-stack/cli!StormTime:constructor(1)",
+              "docComment": "/**\n * Constructs a new instance of the `StormTime` class\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "constructor(dateTime?: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "DateTimeInput",
+                  "canonicalReference": "@storm-stack/cli!DateTimeInput:type"
+                },
+                {
+                  "kind": "Content",
+                  "text": ", options?: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "DateTimeOptions",
+                  "canonicalReference": "@storm-stack/cli!DateTimeOptions:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": ");"
+                }
+              ],
+              "releaseTag": "Public",
+              "isProtected": false,
+              "overloadIndex": 1,
+              "parameters": [
+                {
+                  "parameterName": "dateTime",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 1,
+                    "endIndex": 2
+                  },
+                  "isOptional": true
+                },
+                {
+                  "parameterName": "options",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 3,
+                    "endIndex": 4
+                  },
+                  "isOptional": true
+                }
+              ]
+            },
+            {
+              "kind": "Property",
+              "canonicalReference": "@storm-stack/cli!StormTime.create:member",
+              "docComment": "/**\n * Creates a new instance of DateTime from a string with a specified format.\n *\n * @param time - The input value used to determine the current time\n *\n * @param options - The options to use\n *\n * @returns A new instance of StormTime with the time provided in the time parameter.\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "static create: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "(time?: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "DateTimeInput",
+                  "canonicalReference": "@storm-stack/cli!DateTimeInput:type"
+                },
+                {
+                  "kind": "Content",
+                  "text": ", options?: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "DateTimeOptions",
+                  "canonicalReference": "@storm-stack/cli!DateTimeOptions:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": ") => "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "StormTime",
+                  "canonicalReference": "@storm-stack/cli!StormTime:class"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isReadonly": false,
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "create",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 7
+              },
+              "isStatic": true,
+              "isProtected": false,
+              "isAbstract": false
+            },
+            {
+              "kind": "Method",
+              "canonicalReference": "@storm-stack/cli!StormTime.current:member(1)",
+              "docComment": "/**\n * The current function returns a new DateTime object with the current date and time\n *\n * @returns A new instance of DateTime with the current date and time.\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "static current(): "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "StormTime",
+                  "canonicalReference": "@storm-stack/cli!StormTime:class"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isStatic": true,
+              "returnTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "releaseTag": "Public",
+              "isProtected": false,
+              "overloadIndex": 1,
+              "parameters": [],
+              "isOptional": false,
+              "isAbstract": false,
+              "name": "current"
+            },
+            {
+              "kind": "Method",
+              "canonicalReference": "@storm-stack/cli!StormTime#getDate:member(1)",
+              "docComment": "/**\n * Gets the day-of-the-month, using local time.\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "getDate(): "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isStatic": false,
+              "returnTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "releaseTag": "Public",
+              "isProtected": false,
+              "overloadIndex": 1,
+              "parameters": [],
+              "isOptional": false,
+              "isAbstract": false,
+              "name": "getDate"
+            },
+            {
+              "kind": "Method",
+              "canonicalReference": "@storm-stack/cli!StormTime#getDay:member(1)",
+              "docComment": "/**\n * Gets the day of the week, using local time.\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "getDay(): "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isStatic": false,
+              "returnTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "releaseTag": "Public",
+              "isProtected": false,
+              "overloadIndex": 1,
+              "parameters": [],
+              "isOptional": false,
+              "isAbstract": false,
+              "name": "getDay"
+            },
+            {
+              "kind": "Method",
+              "canonicalReference": "@storm-stack/cli!StormTime#getDuration:member(1)",
+              "docComment": "/**\n * It returns the duration between two dates.\n *\n * @param dateTimeTo - DateTime = DateTime.current\n *\n * @returns A duration object.\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "getDuration(dateTimeTo?: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "StormTime",
+                  "canonicalReference": "@storm-stack/cli!StormTime:class"
+                },
+                {
+                  "kind": "Content",
+                  "text": "): "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "Temporal.Duration",
+                  "canonicalReference": "!Temporal.Duration:type"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isStatic": false,
+              "returnTypeTokenRange": {
+                "startIndex": 3,
+                "endIndex": 4
+              },
+              "releaseTag": "Public",
+              "isProtected": false,
+              "overloadIndex": 1,
+              "parameters": [
+                {
+                  "parameterName": "dateTimeTo",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 1,
+                    "endIndex": 2
+                  },
+                  "isOptional": true
+                }
+              ],
+              "isOptional": false,
+              "isAbstract": false,
+              "name": "getDuration"
+            },
+            {
+              "kind": "Method",
+              "canonicalReference": "@storm-stack/cli!StormTime#getFullYear:member(1)",
+              "docComment": "/**\n * Gets the year, using local time.\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "getFullYear(): "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isStatic": false,
+              "returnTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "releaseTag": "Public",
+              "isProtected": false,
+              "overloadIndex": 1,
+              "parameters": [],
+              "isOptional": false,
+              "isAbstract": false,
+              "name": "getFullYear"
+            },
+            {
+              "kind": "Method",
+              "canonicalReference": "@storm-stack/cli!StormTime#getMonth:member(1)",
+              "docComment": "/**\n * Gets the month, using local time.\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "getMonth(): "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isStatic": false,
+              "returnTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "releaseTag": "Public",
+              "isProtected": false,
+              "overloadIndex": 1,
+              "parameters": [],
+              "isOptional": false,
+              "isAbstract": false,
+              "name": "getMonth"
+            },
+            {
+              "kind": "Method",
+              "canonicalReference": "@storm-stack/cli!StormTime#getUTCDate:member(1)",
+              "docComment": "/**\n * Gets the day-of-the-month, using Universal Coordinated Time (UTC).\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "getUTCDate(): "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isStatic": false,
+              "returnTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "releaseTag": "Public",
+              "isProtected": false,
+              "overloadIndex": 1,
+              "parameters": [],
+              "isOptional": false,
+              "isAbstract": false,
+              "name": "getUTCDate"
+            },
+            {
+              "kind": "Method",
+              "canonicalReference": "@storm-stack/cli!StormTime#getUTCDay:member(1)",
+              "docComment": "/**\n * Gets the day of the week using Universal Coordinated Time (UTC).\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "getUTCDay(): "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isStatic": false,
+              "returnTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "releaseTag": "Public",
+              "isProtected": false,
+              "overloadIndex": 1,
+              "parameters": [],
+              "isOptional": false,
+              "isAbstract": false,
+              "name": "getUTCDay"
+            },
+            {
+              "kind": "Method",
+              "canonicalReference": "@storm-stack/cli!StormTime#getUTCFullYear:member(1)",
+              "docComment": "/**\n * Gets the year using Universal Coordinated Time (UTC).\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "getUTCFullYear(): "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isStatic": false,
+              "returnTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "releaseTag": "Public",
+              "isProtected": false,
+              "overloadIndex": 1,
+              "parameters": [],
+              "isOptional": false,
+              "isAbstract": false,
+              "name": "getUTCFullYear"
+            },
+            {
+              "kind": "Method",
+              "canonicalReference": "@storm-stack/cli!StormTime#getUTCMonth:member(1)",
+              "docComment": "/**\n * Gets the month of a Date object using Universal Coordinated Time (UTC).\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "getUTCMonth(): "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isStatic": false,
+              "returnTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "releaseTag": "Public",
+              "isProtected": false,
+              "overloadIndex": 1,
+              "parameters": [],
+              "isOptional": false,
+              "isAbstract": false,
+              "name": "getUTCMonth"
+            },
+            {
+              "kind": "Method",
+              "canonicalReference": "@storm-stack/cli!StormTime.now:member(1)",
+              "docComment": "/**\n * The current function returns a new DateTime object with the current date and time\n *\n * @returns A new instance of DateTime with the current date and time.\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "static now(): "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isStatic": true,
+              "returnTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "releaseTag": "Public",
+              "isProtected": false,
+              "overloadIndex": 1,
+              "parameters": [],
+              "isOptional": false,
+              "isAbstract": false,
+              "name": "now"
+            },
+            {
+              "kind": "Method",
+              "canonicalReference": "@storm-stack/cli!StormTime#validate:member(1)",
+              "docComment": "/**\n * Validate the input time value\n *\n * @param dateTime - The date value to validate\n *\n * @param options - The options to use\n *\n * @returns A boolean representing whether the value is a valid *date-time*\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "protected validate(dateTime?: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "DateTimeInput",
+                  "canonicalReference": "@storm-stack/cli!DateTimeInput:type"
+                },
+                {
+                  "kind": "Content",
+                  "text": ", options?: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "DateTimeOptions",
+                  "canonicalReference": "@storm-stack/cli!DateTimeOptions:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": "): "
+                },
+                {
+                  "kind": "Content",
+                  "text": "boolean"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isStatic": false,
+              "returnTypeTokenRange": {
+                "startIndex": 5,
+                "endIndex": 6
+              },
+              "releaseTag": "Public",
+              "isProtected": true,
+              "overloadIndex": 1,
+              "parameters": [
+                {
+                  "parameterName": "dateTime",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 1,
+                    "endIndex": 2
+                  },
+                  "isOptional": true
+                },
+                {
+                  "parameterName": "options",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 3,
+                    "endIndex": 4
+                  },
+                  "isOptional": true
+                }
+              ],
+              "isOptional": false,
+              "isAbstract": false,
+              "name": "validate"
+            }
+          ],
+          "extendsTokenRange": {
+            "startIndex": 1,
+            "endIndex": 2
+          },
+          "implementsTokenRanges": []
+        },
+        {
+          "kind": "Function",
+          "canonicalReference": "@storm-stack/cli!validateDate:function(1)",
+          "docComment": "",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export declare function validateDate(value: "
+            },
+            {
+              "kind": "Reference",
+              "text": "DateTimeInput",
+              "canonicalReference": "@storm-stack/cli!DateTimeInput:type"
+            },
+            {
+              "kind": "Content",
+              "text": ", options?: "
+            },
+            {
+              "kind": "Reference",
+              "text": "DateTimeOptions",
+              "canonicalReference": "@storm-stack/cli!DateTimeOptions:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "): "
+            },
+            {
+              "kind": "Content",
+              "text": "boolean"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "fileUrlPath": "packages/date-time/src/utilities/validate-date.ts",
+          "returnTypeTokenRange": {
+            "startIndex": 5,
+            "endIndex": 6
+          },
+          "releaseTag": "Public",
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "value",
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "isOptional": false
+            },
+            {
+              "parameterName": "options",
+              "parameterTypeTokenRange": {
+                "startIndex": 3,
+                "endIndex": 4
+              },
+              "isOptional": true
+            }
+          ],
+          "name": "validateDate"
+        },
+        {
+          "kind": "Function",
+          "canonicalReference": "@storm-stack/cli!validateDateTime:function(1)",
+          "docComment": "/**\n * Type-check to determine if `value` is a valid *date-time*\n *\n * @param value - The value to check\n *\n * @param options - The options to use\n *\n * @returns A boolean representing whether the value is a valid *date-time*\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export declare function validateDateTime(value: "
+            },
+            {
+              "kind": "Reference",
+              "text": "DateTimeInput",
+              "canonicalReference": "@storm-stack/cli!DateTimeInput:type"
+            },
+            {
+              "kind": "Content",
+              "text": ", options?: "
+            },
+            {
+              "kind": "Reference",
+              "text": "DateTimeOptions",
+              "canonicalReference": "@storm-stack/cli!DateTimeOptions:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "): "
+            },
+            {
+              "kind": "Content",
+              "text": "boolean"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "fileUrlPath": "packages/date-time/src/utilities/validate-date-time.ts",
+          "returnTypeTokenRange": {
+            "startIndex": 5,
+            "endIndex": 6
+          },
+          "releaseTag": "Public",
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "value",
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "isOptional": false
+            },
+            {
+              "parameterName": "options",
+              "parameterTypeTokenRange": {
+                "startIndex": 3,
+                "endIndex": 4
+              },
+              "isOptional": true
+            }
+          ],
+          "name": "validateDateTime"
+        },
+        {
+          "kind": "Function",
+          "canonicalReference": "@storm-stack/cli!validateTime:function(1)",
+          "docComment": "",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export declare function validateTime(value?: "
+            },
+            {
+              "kind": "Reference",
+              "text": "DateTimeInput",
+              "canonicalReference": "@storm-stack/cli!DateTimeInput:type"
+            },
+            {
+              "kind": "Content",
+              "text": ", options?: "
+            },
+            {
+              "kind": "Reference",
+              "text": "DateTimeOptions",
+              "canonicalReference": "@storm-stack/cli!DateTimeOptions:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "): "
+            },
+            {
+              "kind": "Content",
+              "text": "boolean"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "fileUrlPath": "packages/date-time/src/utilities/validate-time.ts",
+          "returnTypeTokenRange": {
+            "startIndex": 5,
+            "endIndex": 6
+          },
+          "releaseTag": "Public",
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "value",
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "isOptional": true
+            },
+            {
+              "parameterName": "options",
+              "parameterTypeTokenRange": {
+                "startIndex": 3,
+                "endIndex": 4
+              },
+              "isOptional": true
+            }
+          ],
+          "name": "validateTime"
+        }
+      ]
+    }
+  ]
+}

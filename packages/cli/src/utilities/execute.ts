@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { StormLog } from "@storm-stack/logging";
 import { stringify } from "@storm-stack/serialization";
-import { isEmptyObject } from "@storm-stack/utilities/type-checks";
+import { isEmptyObject } from "@storm-stack/utilities";
 import {
   ExecOptions,
   StdioOptions,
@@ -34,10 +34,9 @@ export const execute = (
       }`
     );
 
-    const mergedEnv = { ...process.env, ...env };
     return extExecSync(command, {
       encoding: "utf-8",
-      env: mergedEnv,
+      env: { ...process.env, ...env },
       stdio,
       ...options
     });

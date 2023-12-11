@@ -8,23 +8,10 @@
       "executor": "@storm-software/workspace-tools:tsup-node",
       "outputs": ["{options.outputPath}"],
       "options": {
-        "entry": "packages/cli/src/index.ts",
         "outputPath": "dist/packages/cli",
         "tsConfig": "packages/cli/tsconfig.json",
         "project": "packages/cli/package.json",
         "defaultConfiguration": "production",
-        "assets": [
-          {
-            "input": "packages/cli",
-            "glob": "*.md",
-            "output": "/"
-          },
-          {
-            "input": "",
-            "glob": "LICENSE",
-            "output": "/"
-          }
-        ],
         "platform": "node"
       },
       "configurations": {
