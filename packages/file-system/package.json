@@ -10,11 +10,11 @@
   },
   "type": "module",
   "dependencies": {
-    "semver": "^7.5.4"
+    "semver": "7.5.4"
   },
   "devDependencies": {
-    "@types/node": "20.9.0",
-    "@types/semver": "^7.5.6"
+    "@types/node": "20.10.4",
+    "@types/semver": "7.5.6"
   },
   "publishConfig": {
     "access": "public"

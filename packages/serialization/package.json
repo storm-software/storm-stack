@@ -10,12 +10,12 @@
   },
   "type": "module",
   "dependencies": {
-    "qs": "^6.11.2",
-    "superjson": "^2.2.1"
+    "qs": "6.11.2",
+    "superjson": "2.2.1"
   },
   "devDependencies": {
-    "@types/node": "20.9.0",
-    "@types/qs": "^6.9.10"
+    "@types/node": "20.10.4",
+    "@types/qs": "6.9.10"
   },
   "publishConfig": {
     "access": "public"
