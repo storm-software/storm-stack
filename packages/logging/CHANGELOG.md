@@ -1,10 +1,17 @@
-## [1.3.1](https://github.com/storm-software/storm-stack/compare/logging-v1.3.0...logging-v1.3.1) (2023-12-09)
+## [1.3.2](https://github.com/storm-software/storm-stack/compare/logging-v1.3.1...logging-v1.3.2) (2023-12-11)
 
 
 ### Bug Fixes
 
-* **file-system:** Resolved issue with bad file imports ([716b412](https://github.com/storm-software/storm-stack/commit/716b412c192e42ef4c45a95e0e5acd73cae913e6))
-* **monorepo:** Regenerated the pnpm-lock file ([d9c4beb](https://github.com/storm-software/storm-stack/commit/d9c4beb728cc14768676f99b89394c93c50bf7fb))
+* **deps:** pin dependencies ([#2](https://github.com/storm-software/storm-stack/issues/2)) ([07d6782](https://github.com/storm-software/storm-stack/commit/07d6782c3ca03e071a72c249a1d5e377405919bb))
+* **deps:** update patch prod dependencies ([#6](https://github.com/storm-software/storm-stack/issues/6)) ([01d9585](https://github.com/storm-software/storm-stack/commit/01d95856f77270d9bd7f0b5e3558df38b27b482e))
+
+## [1.3.1](https://github.com/storm-software/storm-stack/compare/logging-v1.3.0...logging-v1.3.1) (2023-12-09)
+
+### Bug Fixes
+
+- **file-system:** Resolved issue with bad file imports ([716b412](https://github.com/storm-software/storm-stack/commit/716b412c192e42ef4c45a95e0e5acd73cae913e6))
+- **monorepo:** Regenerated the pnpm-lock file ([d9c4beb](https://github.com/storm-software/storm-stack/commit/d9c4beb728cc14768676f99b89394c93c50bf7fb))
 
 # [1.3.0](https://github.com/storm-software/storm-stack/compare/logging-v1.2.0...logging-v1.3.0) (2023-12-09)
 
