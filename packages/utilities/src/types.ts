@@ -10,9 +10,9 @@ export type Indexable = {
   [index: IndexType]: any;
 };
 
-export const EMPTY_STRING = "" as const;
-export const NEWLINE_STRING = "\r\n" as const;
-export const EMPTY_OBJECT = {} as const;
+export const EMPTY_STRING = "";
+export const NEWLINE_STRING = "\r\n";
+export const EMPTY_OBJECT = {};
 
 export type AnyCase<T extends IndexType> = string extends T
   ? string

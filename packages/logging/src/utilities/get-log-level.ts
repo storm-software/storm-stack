@@ -7,7 +7,7 @@ export const LogLevel = {
   INFO: 40 as LogLevel,
   DEBUG: 60 as LogLevel,
   TRACE: 70 as LogLevel
-} as const;
+};
 
 export type LogLevelLabel =
   | "silent"
@@ -25,7 +25,7 @@ export const LogLevelLabel = {
   INFO: "info" as LogLevelLabel,
   DEBUG: "debug" as LogLevelLabel,
   TRACE: "trace" as LogLevelLabel
-} as const;
+};
 
 /**
  * Convert the log level label to a log level

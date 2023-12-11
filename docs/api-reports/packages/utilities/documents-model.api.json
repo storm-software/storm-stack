@@ -1030,7 +1030,7 @@
           "excerptTokens": [
             {
               "kind": "Content",
-              "text": "EMPTY_STRING: "
+              "text": "EMPTY_STRING = "
             },
             {
               "kind": "Content",
@@ -1038,12 +1038,16 @@
             }
           ],
           "fileUrlPath": "packages/utilities/src/types.ts",
+          "initializerTokenRange": {
+            "startIndex": 1,
+            "endIndex": 2
+          },
           "isReadonly": true,
           "releaseTag": "Public",
           "name": "EMPTY_STRING",
           "variableTypeTokenRange": {
-            "startIndex": 1,
-            "endIndex": 2
+            "startIndex": 0,
+            "endIndex": 0
           }
         },
         {
@@ -3076,7 +3080,7 @@
           "excerptTokens": [
             {
               "kind": "Content",
-              "text": "NEWLINE_STRING: "
+              "text": "NEWLINE_STRING = "
             },
             {
               "kind": "Content",
@@ -3084,12 +3088,16 @@
             }
           ],
           "fileUrlPath": "packages/utilities/src/types.ts",
+          "initializerTokenRange": {
+            "startIndex": 1,
+            "endIndex": 2
+          },
           "isReadonly": true,
           "releaseTag": "Public",
           "name": "NEWLINE_STRING",
           "variableTypeTokenRange": {
-            "startIndex": 1,
-            "endIndex": 2
+            "startIndex": 0,
+            "endIndex": 0
           }
         },
         {
