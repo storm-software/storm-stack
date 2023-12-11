@@ -87,7 +87,9 @@ export const createCLIProgram = async (cliConfig: CLIConfig): Promise<void> => {
         .showHelpAfterError()
         .showSuggestionAfterError();
 
-      createCLICommand(program);
+      cliConfig.commands.forEach(command => {
+        program.addCommand(createCLICommand(command));
+      });
 
       program
         .addHelpCommand("help [cmd]", "display help for [cmd]")
