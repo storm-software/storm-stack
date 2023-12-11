@@ -120,7 +120,7 @@
     "typescript": "5.3.3",
     "verdaccio": "5.29.0"
   },
-  "packageManager": "pnpm@8.10.2",
+  "packageManager": "pnpm@8.10.5",
   "engines": {
     "node": ">=18.17.1",
     "pnpm": ">=8.10.2"
