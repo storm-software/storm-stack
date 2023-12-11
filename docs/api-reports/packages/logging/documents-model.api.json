@@ -2127,7 +2127,7 @@
             },
             {
               "kind": "Content",
-              "text": "{\n    readonly SILENT: "
+              "text": "{\n    SILENT: "
             },
             {
               "kind": "Reference",
@@ -2136,7 +2136,7 @@
             },
             {
               "kind": "Content",
-              "text": ";\n    readonly FATAL: "
+              "text": ";\n    FATAL: "
             },
             {
               "kind": "Reference",
@@ -2145,7 +2145,7 @@
             },
             {
               "kind": "Content",
-              "text": ";\n    readonly ERROR: "
+              "text": ";\n    ERROR: "
             },
             {
               "kind": "Reference",
@@ -2154,7 +2154,7 @@
             },
             {
               "kind": "Content",
-              "text": ";\n    readonly WARN: "
+              "text": ";\n    WARN: "
             },
             {
               "kind": "Reference",
@@ -2163,7 +2163,7 @@
             },
             {
               "kind": "Content",
-              "text": ";\n    readonly INFO: "
+              "text": ";\n    INFO: "
             },
             {
               "kind": "Reference",
@@ -2172,7 +2172,7 @@
             },
             {
               "kind": "Content",
-              "text": ";\n    readonly DEBUG: "
+              "text": ";\n    DEBUG: "
             },
             {
               "kind": "Reference",
@@ -2181,7 +2181,7 @@
             },
             {
               "kind": "Content",
-              "text": ";\n    readonly TRACE: "
+              "text": ";\n    TRACE: "
             },
             {
               "kind": "Reference",
@@ -2239,7 +2239,7 @@
             },
             {
               "kind": "Content",
-              "text": "{\n    readonly SILENT: "
+              "text": "{\n    SILENT: "
             },
             {
               "kind": "Reference",
@@ -2248,7 +2248,7 @@
             },
             {
               "kind": "Content",
-              "text": ";\n    readonly FATAL: "
+              "text": ";\n    FATAL: "
             },
             {
               "kind": "Reference",
@@ -2257,7 +2257,7 @@
             },
             {
               "kind": "Content",
-              "text": ";\n    readonly ERROR: "
+              "text": ";\n    ERROR: "
             },
             {
               "kind": "Reference",
@@ -2266,7 +2266,7 @@
             },
             {
               "kind": "Content",
-              "text": ";\n    readonly WARN: "
+              "text": ";\n    WARN: "
             },
             {
               "kind": "Reference",
@@ -2275,7 +2275,7 @@
             },
             {
               "kind": "Content",
-              "text": ";\n    readonly INFO: "
+              "text": ";\n    INFO: "
             },
             {
               "kind": "Reference",
@@ -2284,7 +2284,7 @@
             },
             {
               "kind": "Content",
-              "text": ";\n    readonly DEBUG: "
+              "text": ";\n    DEBUG: "
             },
             {
               "kind": "Reference",
@@ -2293,7 +2293,7 @@
             },
             {
               "kind": "Content",
-              "text": ";\n    readonly TRACE: "
+              "text": ";\n    TRACE: "
             },
             {
               "kind": "Reference",

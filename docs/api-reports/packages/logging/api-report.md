@@ -169,13 +169,13 @@ export type LogLevel = 0 | 10 | 20 | 30 | 40 | 60 | 70;
 
 // @public (undocumented)
 export const LogLevel: {
-  readonly SILENT: LogLevel;
-  readonly FATAL: LogLevel;
-  readonly ERROR: LogLevel;
-  readonly WARN: LogLevel;
-  readonly INFO: LogLevel;
-  readonly DEBUG: LogLevel;
-  readonly TRACE: LogLevel;
+  SILENT: LogLevel;
+  FATAL: LogLevel;
+  ERROR: LogLevel;
+  WARN: LogLevel;
+  INFO: LogLevel;
+  DEBUG: LogLevel;
+  TRACE: LogLevel;
 };
 
 // @public (undocumented)
@@ -190,13 +190,13 @@ export type LogLevelLabel =
 
 // @public (undocumented)
 export const LogLevelLabel: {
-  readonly SILENT: LogLevelLabel;
-  readonly FATAL: LogLevelLabel;
-  readonly ERROR: LogLevelLabel;
-  readonly WARN: LogLevelLabel;
-  readonly INFO: LogLevelLabel;
-  readonly DEBUG: LogLevelLabel;
-  readonly TRACE: LogLevelLabel;
+  SILENT: LogLevelLabel;
+  FATAL: LogLevelLabel;
+  ERROR: LogLevelLabel;
+  WARN: LogLevelLabel;
+  INFO: LogLevelLabel;
+  DEBUG: LogLevelLabel;
+  TRACE: LogLevelLabel;
 };
 
 // @public

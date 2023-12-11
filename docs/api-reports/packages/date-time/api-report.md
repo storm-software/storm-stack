@@ -128,7 +128,7 @@ export { EMPTY_OBJECT };
 export { EMPTY_OBJECT as EMPTY_OBJECT_alias_1 };
 
 // @public (undocumented)
-const EMPTY_STRING: "";
+const EMPTY_STRING = "";
 export { EMPTY_STRING };
 export { EMPTY_STRING as EMPTY_STRING_alias_1 };
 
@@ -505,7 +505,7 @@ export { Newable };
 export { Newable as Newable_alias_1 };
 
 // @public (undocumented)
-const NEWLINE_STRING: "\r\n";
+const NEWLINE_STRING = "\r\n";
 export { NEWLINE_STRING };
 export { NEWLINE_STRING as NEWLINE_STRING_alias_1 };
 
