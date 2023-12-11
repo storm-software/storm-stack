@@ -11,10 +11,10 @@
   "type": "module",
   "dependencies": {
     "@storm-software/config-tools": "latest",
-    "chalk": "^5.3.0",
-    "commander": "^11.1.0",
-    "console-table-printer": "^2.11.2",
-    "ora": "^7.0.1"
+    "chalk": "5.3.0",
+    "commander": "11.1.0",
+    "console-table-printer": "2.11.2",
+    "ora": "7.0.1"
   },
   "publishConfig": {
     "access": "public"

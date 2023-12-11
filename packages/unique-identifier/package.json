@@ -10,7 +10,7 @@
   },
   "type": "module",
   "dependencies": {
-    "@noble/hashes": "^1.3.2"
+    "@noble/hashes": "1.3.2"
   },
   "publishConfig": {
     "access": "public"
