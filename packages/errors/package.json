@@ -12,7 +12,7 @@
   "dependencies": {
     "@storm-software/testing-tools": "latest",
     "@storm-software/workspace-tools": "latest",
-    "stacktracey": "^2.1.8"
+    "stacktracey": "2.1.8"
   },
   "publishConfig": {
     "access": "public"

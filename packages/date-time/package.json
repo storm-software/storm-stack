@@ -10,7 +10,7 @@
   },
   "type": "module",
   "dependencies": {
-    "@js-temporal/polyfill": "^0.4.4"
+    "@js-temporal/polyfill": "0.4.4"
   },
   "publishConfig": {
     "access": "public"

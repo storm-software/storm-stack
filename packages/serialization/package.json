@@ -10,8 +10,8 @@
   },
   "type": "module",
   "dependencies": {
-    "qs": "^6.11.2",
-    "superjson": "^2.2.1"
+    "qs": "6.11.2",
+    "superjson": "2.2.1"
   },
   "devDependencies": {
     "@types/node": "20.9.0",
