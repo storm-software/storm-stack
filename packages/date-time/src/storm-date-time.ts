@@ -52,6 +52,7 @@ export type DateTimeInput =
  * @decorator `@Serializable()`
  */
 @Serializable({
+  name: "StormDateTime",
   serialize: serializeStormDateTime,
   deserialize: deserializeStormDateTime
 })

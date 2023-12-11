@@ -16,6 +16,7 @@ import {
  * @decorator `@Serializable()`
  */
 @Serializable({
+  name: "StormTime",
   serialize: serializeStormTime,
   deserialize: deserializeStormTime
 })

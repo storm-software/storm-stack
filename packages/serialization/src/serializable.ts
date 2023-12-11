@@ -34,7 +34,7 @@ export const Serializable = <TData = any>(options: {
   >(
     target: TClass
   ) => {
-    const name = options.name ? options.name : target.name;
+    const name = options.name ? options.name : target?.name;
 
     let isTypeOf!: ClassTypeCheckable<TData>["isTypeOf"];
     if (isFunction((target.prototype as ClassTypeCheckable<TData>)?.isTypeOf)) {
