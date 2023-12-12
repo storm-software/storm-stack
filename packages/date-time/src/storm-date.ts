@@ -16,7 +16,6 @@ import { validateDate } from "./utilities/validate-date";
  * @decorator `@Serializable()`
  */
 @Serializable({
-  name: "StormDate",
   serialize: serializeStormDate,
   deserialize: deserializeStormDate
 })

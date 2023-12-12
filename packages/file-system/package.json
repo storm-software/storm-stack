@@ -13,8 +13,20 @@
     "semver": "7.5.4"
   },
   "devDependencies": {
+    "@storm-stack/cli": "*",
+    "@storm-stack/errors": "*",
+    "@storm-stack/logging": "*",
+    "@storm-stack/serialization": "*",
+    "@storm-stack/utilities": "*",
     "@types/node": "^20.10.4",
     "@types/semver": "7.5.6"
+  },
+  "peerDependencies": {
+    "@storm-stack/cli": "workspace:*",
+    "@storm-stack/errors": "workspace:*",
+    "@storm-stack/logging": "workspace:*",
+    "@storm-stack/serialization": "workspace:*",
+    "@storm-stack/utilities": "workspace:*"
   },
   "publishConfig": {
     "access": "public"

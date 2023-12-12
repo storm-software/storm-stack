@@ -1,5 +1,5 @@
 import { JsonValue } from "@storm-stack/serialization/types";
-import { isSetString } from "@storm-stack/utilities";
+import { isSetString } from "@storm-stack/utilities/type-checks/is-set-string";
 import { StormDate } from "../storm-date";
 import { StormDateTime } from "../storm-date-time";
 import { StormTime } from "../storm-time";

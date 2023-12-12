@@ -190,7 +190,7 @@ export { register as register_alias_1 };
 
 // @public (undocumented)
 const Serializable: <TData = any>(options: {
-  name: string;
+  name?: string | undefined;
   serialize: SerializationFunct<TData>;
   deserialize: DeserializeFunct<TData>;
 }) => <TClass extends new (...args: any) => any = new (...args: any) => TData>(

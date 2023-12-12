@@ -16,7 +16,15 @@
     "console-table-printer": "2.11.2"
   },
   "devDependencies": {
+    "@storm-stack/logging": "*",
+    "@storm-stack/serialization": "*",
+    "@storm-stack/utilities": "*",
     "@types/node": "^20.10.4"
+  },
+  "peerDependencies": {
+    "@storm-stack/logging": "workspace:*",
+    "@storm-stack/serialization": "workspace:*",
+    "@storm-stack/utilities": "workspace:*"
   },
   "publishConfig": {
     "access": "public"

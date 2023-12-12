@@ -101,7 +101,6 @@ export function getCauseFromUnknown(cause: unknown): StormError {
  * @decorator `@Serializable()`
  */
 @Serializable({
-  name: "StormError",
   serialize: serializeStormError,
   deserialize: deserializeStormError
 })

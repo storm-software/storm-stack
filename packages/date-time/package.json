@@ -12,6 +12,16 @@
   "dependencies": {
     "@js-temporal/polyfill": "0.4.4"
   },
+  "devDependencies": {
+    "@storm-stack/errors": "*",
+    "@storm-stack/serialization": "*",
+    "@storm-stack/utilities": "*"
+  },
+  "peerDependencies": {
+    "@storm-stack/errors": "workspace:*",
+    "@storm-stack/serialization": "workspace:*",
+    "@storm-stack/utilities": "workspace:*"
+  },
   "publishConfig": {
     "access": "public"
   }

@@ -1,5 +1,5 @@
 import { Temporal } from "@js-temporal/polyfill";
-import { EMPTY_STRING } from "@storm-stack/utilities";
+import { EMPTY_STRING } from "@storm-stack/utilities/types";
 import { StormDateTime } from "../storm-date-time";
 
 /**

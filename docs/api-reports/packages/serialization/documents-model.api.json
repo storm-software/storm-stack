@@ -1710,7 +1710,7 @@
             },
             {
               "kind": "Content",
-              "text": "<TData = any>(options: {\n    name: string;\n    serialize: "
+              "text": "<TData = any>(options: {\n    name?: string | undefined;\n    serialize: "
             },
             {
               "kind": "Reference",

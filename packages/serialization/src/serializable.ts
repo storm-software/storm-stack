@@ -11,7 +11,7 @@ export const Serializable = <TData = any>(options: {
   /**
    * The type and/or name of the record
    */
-  name: string;
+  name?: string;
 
   /**
    * Serialize the class to a JSON object or string
@@ -34,17 +34,17 @@ export const Serializable = <TData = any>(options: {
   >(
     target: TClass
   ) => {
+    const name = options.name ? options.name : target.name;
+
     let isTypeOf!: ClassTypeCheckable<TData>["isTypeOf"];
-    if (
-      isFunction((target?.prototype as ClassTypeCheckable<TData>)?.isTypeOf)
-    ) {
-      isTypeOf = (target?.prototype as ClassTypeCheckable<TData>).isTypeOf;
+    if (isFunction((target.prototype as ClassTypeCheckable<TData>)?.isTypeOf)) {
+      isTypeOf = (target.prototype as ClassTypeCheckable<TData>).isTypeOf;
     } else {
       isTypeOf = (value: any): value is TData =>
         value instanceof target || value?.__typename === name;
     }
 
-    register(options.name, options.serialize, options.deserialize, isTypeOf);
+    register(name, options.serialize, options.deserialize, isTypeOf);
     return class
       extends target
       implements ClassSerializable<TData>, ClassTypeCheckable<TData>, ITyped
@@ -52,7 +52,7 @@ export const Serializable = <TData = any>(options: {
       /**
        * The name of the class's type
        */
-      public __typename = options.name;
+      public __typename = name;
 
       /**
        * Serialize the class to a JSON object

@@ -18,7 +18,17 @@
     "zod": "3.22.4"
   },
   "devDependencies": {
+    "@storm-stack/date-time": "*",
+    "@storm-stack/errors": "*",
+    "@storm-stack/logging": "*",
+    "@storm-stack/utilities": "*",
     "@types/node": "^20.10.4"
+  },
+  "peerDependencies": {
+    "@storm-stack/date-time": "workspace:*",
+    "@storm-stack/errors": "workspace:*",
+    "@storm-stack/logging": "workspace:*",
+    "@storm-stack/utilities": "workspace:*"
   },
   "publishConfig": {
     "access": "public"

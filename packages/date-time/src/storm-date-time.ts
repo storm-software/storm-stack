@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Temporal } from "@js-temporal/polyfill";
 import { Serializable } from "@storm-stack/serialization";
 import { isBigInt } from "@storm-stack/utilities/type-checks/is-bigint";
@@ -52,7 +51,6 @@ export type DateTimeInput =
  * @decorator `@Serializable()`
  */
 @Serializable({
-  name: "StormDateTime",
   serialize: serializeStormDateTime,
   deserialize: deserializeStormDateTime
 })
