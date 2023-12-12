@@ -27,5 +27,12 @@
     },
     "lint": {},
     "test": {}
-  }
+  },
+  "implicitDependencies": [
+    "cli",
+    "utilities",
+    "logging",
+    "errors",
+    "serialization"
+  ]
 }

@@ -28,5 +28,6 @@
     "test": {}
   },
   "tags": ["scope:logging", "type:lib", "lang:ts"],
+  "implicitDependencies": ["utilities", "date-time", "errors", "serialization"],
   "config": "packages/logging/src/schema.ts"
 }

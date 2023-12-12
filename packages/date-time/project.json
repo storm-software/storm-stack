@@ -26,5 +26,6 @@
     },
     "lint": {},
     "test": {}
-  }
+  },
+  "implicitDependencies": ["errors", "utilities", "serialization"]
 }

@@ -14,14 +14,6 @@
     "@storm-software/workspace-tools": "latest",
     "stacktracey": "2.1.8"
   },
-  "devDependencies": {
-    "@storm-stack/serialization": "*",
-    "@storm-stack/utilities": "*"
-  },
-  "peerDependencies": {
-    "@storm-stack/serialization": "workspace:*",
-    "@storm-stack/utilities": "workspace:*"
-  },
   "publishConfig": {
     "access": "public"
   }

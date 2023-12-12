@@ -14,12 +14,8 @@
     "superjson": "2.2.1"
   },
   "devDependencies": {
-    "@storm-stack/utilities": "*",
     "@types/node": "^20.10.4",
     "@types/qs": "6.9.10"
-  },
-  "peerDependencies": {
-    "@storm-stack/utilities": "workspace:*"
   },
   "publishConfig": {
     "access": "public"
