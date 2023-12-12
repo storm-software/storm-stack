@@ -1,18 +1,23 @@
-## [1.0.6](https://github.com/storm-software/storm-stack/compare/cli-v1.0.5...cli-v1.0.6) (2023-12-12)
+## [1.0.7](https://github.com/storm-software/storm-stack/compare/cli-v1.0.6...cli-v1.0.7) (2023-12-12)
 
 
 ### Bug Fixes
 
-* **monorepo:** Regenerate the pnpm-lock file ([dec47e4](https://github.com/storm-software/storm-stack/commit/dec47e45a0bd0dc396fa1324da0eb26db455cab1))
-* **monorepo:** Resolve inter-repo dependencies issues ([750b10a](https://github.com/storm-software/storm-stack/commit/750b10a820adeead631e32d2e0d9a9660a0d7660))
-* **serialization:** Marked the `name` parameter of the `Serializable` decorator as required ([9f458e4](https://github.com/storm-software/storm-stack/commit/9f458e43028643998da4d27ba9aaa6cf35e8b79e))
+* **cli:** Upgrade packages to use `implicitDependencies` for references ([8c8f670](https://github.com/storm-software/storm-stack/commit/8c8f6706f2b4b29991fdd4c6fb5501360835dfcd))
+
+## [1.0.6](https://github.com/storm-software/storm-stack/compare/cli-v1.0.5...cli-v1.0.6) (2023-12-12)
+
+### Bug Fixes
+
+- **monorepo:** Regenerate the pnpm-lock file ([dec47e4](https://github.com/storm-software/storm-stack/commit/dec47e45a0bd0dc396fa1324da0eb26db455cab1))
+- **monorepo:** Resolve inter-repo dependencies issues ([750b10a](https://github.com/storm-software/storm-stack/commit/750b10a820adeead631e32d2e0d9a9660a0d7660))
+- **serialization:** Marked the `name` parameter of the `Serializable` decorator as required ([9f458e4](https://github.com/storm-software/storm-stack/commit/9f458e43028643998da4d27ba9aaa6cf35e8b79e))
 
 ## [1.0.5](https://github.com/storm-software/storm-stack/compare/cli-v1.0.4...cli-v1.0.5) (2023-12-12)
 
-
 ### Bug Fixes
 
-* **date-time:** Resolved issue with setting name field in decorator ([6ec9f78](https://github.com/storm-software/storm-stack/commit/6ec9f78230d52195258b666afdbcd2c82dc8adf0))
+- **date-time:** Resolved issue with setting name field in decorator ([6ec9f78](https://github.com/storm-software/storm-stack/commit/6ec9f78230d52195258b666afdbcd2c82dc8adf0))
 
 ## [1.0.4](https://github.com/storm-software/storm-stack/compare/cli-v1.0.3...cli-v1.0.4) (2023-12-11)
 
