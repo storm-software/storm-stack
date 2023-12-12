@@ -1,3 +1,10 @@
+## [1.2.5](https://github.com/storm-software/storm-stack/compare/utilities-v1.2.4...utilities-v1.2.5) (2023-12-12)
+
+
+### Bug Fixes
+
+* **monorepo:** Regenerate the pnpm-lock file ([dec47e4](https://github.com/storm-software/storm-stack/commit/dec47e45a0bd0dc396fa1324da0eb26db455cab1))
+
 ## [1.2.4](https://github.com/storm-software/storm-stack/compare/utilities-v1.2.3...utilities-v1.2.4) (2023-12-12)
 
 
