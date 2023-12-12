@@ -1,9 +1,15 @@
-## [1.4.6](https://github.com/storm-software/storm-stack/compare/file-system-v1.4.5...file-system-v1.4.6) (2023-12-12)
+## [1.4.7](https://github.com/storm-software/storm-stack/compare/file-system-v1.4.6...file-system-v1.4.7) (2023-12-12)
 
 
 ### Bug Fixes
 
-* **cli:** Upgrade packages to use `implicitDependencies` for references ([8c8f670](https://github.com/storm-software/storm-stack/commit/8c8f6706f2b4b29991fdd4c6fb5501360835dfcd))
+* **utilities:** Update the build executor version ([b44cb26](https://github.com/storm-software/storm-stack/commit/b44cb26480a760c1fdb1db6e3811e07703efc179))
+
+## [1.4.6](https://github.com/storm-software/storm-stack/compare/file-system-v1.4.5...file-system-v1.4.6) (2023-12-12)
+
+### Bug Fixes
+
+- **cli:** Upgrade packages to use `implicitDependencies` for references ([8c8f670](https://github.com/storm-software/storm-stack/commit/8c8f6706f2b4b29991fdd4c6fb5501360835dfcd))
 
 ## [1.4.5](https://github.com/storm-software/storm-stack/compare/file-system-v1.4.4...file-system-v1.4.5) (2023-12-12)
 
