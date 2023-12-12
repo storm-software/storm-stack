@@ -1,9 +1,15 @@
-## [1.2.4](https://github.com/storm-software/storm-stack/compare/serialization-v1.2.3...serialization-v1.2.4) (2023-12-12)
+## [1.2.5](https://github.com/storm-software/storm-stack/compare/serialization-v1.2.4...serialization-v1.2.5) (2023-12-12)
 
 
 ### Bug Fixes
 
-* **date-time:** Resolved issue with setting name field in decorator ([6ec9f78](https://github.com/storm-software/storm-stack/commit/6ec9f78230d52195258b666afdbcd2c82dc8adf0))
+* **serialization:** Marked the `name` parameter of the `Serializable` decorator as required ([9f458e4](https://github.com/storm-software/storm-stack/commit/9f458e43028643998da4d27ba9aaa6cf35e8b79e))
+
+## [1.2.4](https://github.com/storm-software/storm-stack/compare/serialization-v1.2.3...serialization-v1.2.4) (2023-12-12)
+
+### Bug Fixes
+
+- **date-time:** Resolved issue with setting name field in decorator ([6ec9f78](https://github.com/storm-software/storm-stack/commit/6ec9f78230d52195258b666afdbcd2c82dc8adf0))
 
 ## [1.2.3](https://github.com/storm-software/storm-stack/compare/serialization-v1.2.2...serialization-v1.2.3) (2023-12-11)
 
