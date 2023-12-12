@@ -16,12 +16,10 @@
       },
       "configurations": {
         "production": {
-          "debug": false,
-          "verbose": false
+          "debug": false
         },
         "development": {
-          "debug": true,
-          "verbose": true
+          "debug": true
         }
       }
     },
