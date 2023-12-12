@@ -1,11 +1,17 @@
-## [1.2.3](https://github.com/storm-software/storm-stack/compare/utilities-v1.2.2...utilities-v1.2.3) (2023-12-11)
+## [1.2.4](https://github.com/storm-software/storm-stack/compare/utilities-v1.2.3...utilities-v1.2.4) (2023-12-12)
 
 
 ### Bug Fixes
 
-* **cli:** Resolved issues with `cli` package build ([3a0c051](https://github.com/storm-software/storm-stack/commit/3a0c0512c35f4ab8189fb97e4224f76b1f2141f8))
-* **logging:** Update logging to resolve type build issue ([4d1c25b](https://github.com/storm-software/storm-stack/commit/4d1c25babe3cfe7336857eaf8ce55c9a613fb6fa))
-* **monorepo:** Resolved pnpm-lock for monorepo ([83d3ac5](https://github.com/storm-software/storm-stack/commit/83d3ac5416ae82724dedf04af10d68b4fad3dcee))
+* **date-time:** Resolved issue with setting name field in decorator ([6ec9f78](https://github.com/storm-software/storm-stack/commit/6ec9f78230d52195258b666afdbcd2c82dc8adf0))
+
+## [1.2.3](https://github.com/storm-software/storm-stack/compare/utilities-v1.2.2...utilities-v1.2.3) (2023-12-11)
+
+### Bug Fixes
+
+- **cli:** Resolved issues with `cli` package build ([3a0c051](https://github.com/storm-software/storm-stack/commit/3a0c0512c35f4ab8189fb97e4224f76b1f2141f8))
+- **logging:** Update logging to resolve type build issue ([4d1c25b](https://github.com/storm-software/storm-stack/commit/4d1c25babe3cfe7336857eaf8ce55c9a613fb6fa))
+- **monorepo:** Resolved pnpm-lock for monorepo ([83d3ac5](https://github.com/storm-software/storm-stack/commit/83d3ac5416ae82724dedf04af10d68b4fad3dcee))
 
 ## [1.2.2](https://github.com/storm-software/storm-stack/compare/utilities-v1.2.1...utilities-v1.2.2) (2023-12-11)
 
