@@ -1,10 +1,16 @@
-## [1.2.6](https://github.com/storm-software/storm-stack/compare/errors-v1.2.5...errors-v1.2.6) (2023-12-12)
+## [1.2.7](https://github.com/storm-software/storm-stack/compare/errors-v1.2.6...errors-v1.2.7) (2023-12-12)
 
 
 ### Bug Fixes
 
-* **monorepo:** Regenerate the pnpm-lock file ([dec47e4](https://github.com/storm-software/storm-stack/commit/dec47e45a0bd0dc396fa1324da0eb26db455cab1))
-* **monorepo:** Resolve inter-repo dependencies issues ([750b10a](https://github.com/storm-software/storm-stack/commit/750b10a820adeead631e32d2e0d9a9660a0d7660))
+* **cli:** Upgrade packages to use `implicitDependencies` for references ([8c8f670](https://github.com/storm-software/storm-stack/commit/8c8f6706f2b4b29991fdd4c6fb5501360835dfcd))
+
+## [1.2.6](https://github.com/storm-software/storm-stack/compare/errors-v1.2.5...errors-v1.2.6) (2023-12-12)
+
+### Bug Fixes
+
+- **monorepo:** Regenerate the pnpm-lock file ([dec47e4](https://github.com/storm-software/storm-stack/commit/dec47e45a0bd0dc396fa1324da0eb26db455cab1))
+- **monorepo:** Resolve inter-repo dependencies issues ([750b10a](https://github.com/storm-software/storm-stack/commit/750b10a820adeead631e32d2e0d9a9660a0d7660))
 
 ## [1.2.5](https://github.com/storm-software/storm-stack/compare/errors-v1.2.4...errors-v1.2.5) (2023-12-12)
 
