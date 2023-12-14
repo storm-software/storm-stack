@@ -1,9 +1,16 @@
-## [1.2.7](https://github.com/storm-software/storm-stack/compare/date-time-v1.2.6...date-time-v1.2.7) (2023-12-12)
+## [1.2.8](https://github.com/storm-software/storm-stack/compare/date-time-v1.2.7...date-time-v1.2.8) (2023-12-14)
 
 
 ### Bug Fixes
 
-* **utilities:** Update the build executor version ([b44cb26](https://github.com/storm-software/storm-stack/commit/b44cb26480a760c1fdb1db6e3811e07703efc179))
+* **cli:** Regenerated the pnpm-lock file ([aebd07b](https://github.com/storm-software/storm-stack/commit/aebd07b9b14806b757095a8b520b058d89e30e13))
+* **file-system:** Resolved build issues ([8c83d7d](https://github.com/storm-software/storm-stack/commit/8c83d7d0b484d9655ca5144c1b900a68a391bd81))
+
+## [1.2.7](https://github.com/storm-software/storm-stack/compare/date-time-v1.2.6...date-time-v1.2.7) (2023-12-12)
+
+### Bug Fixes
+
+- **utilities:** Update the build executor version ([b44cb26](https://github.com/storm-software/storm-stack/commit/b44cb26480a760c1fdb1db6e3811e07703efc179))
 
 ## [1.2.6](https://github.com/storm-software/storm-stack/compare/date-time-v1.2.5...date-time-v1.2.6) (2023-12-12)
 
