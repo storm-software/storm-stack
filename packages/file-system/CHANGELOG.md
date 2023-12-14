@@ -1,10 +1,16 @@
-## [1.4.8](https://github.com/storm-software/storm-stack/compare/file-system-v1.4.7...file-system-v1.4.8) (2023-12-14)
+## [1.4.9](https://github.com/storm-software/storm-stack/compare/file-system-v1.4.8...file-system-v1.4.9) (2023-12-14)
 
 
 ### Bug Fixes
 
-* **cli:** Regenerated the pnpm-lock file ([aebd07b](https://github.com/storm-software/storm-stack/commit/aebd07b9b14806b757095a8b520b058d89e30e13))
-* **file-system:** Resolved build issues ([8c83d7d](https://github.com/storm-software/storm-stack/commit/8c83d7d0b484d9655ca5144c1b900a68a391bd81))
+* **file-system:** Removed the unused http header module ([170dba7](https://github.com/storm-software/storm-stack/commit/170dba773d01c7b8062704ed45c1869f0618ca89))
+
+## [1.4.8](https://github.com/storm-software/storm-stack/compare/file-system-v1.4.7...file-system-v1.4.8) (2023-12-14)
+
+### Bug Fixes
+
+- **cli:** Regenerated the pnpm-lock file ([aebd07b](https://github.com/storm-software/storm-stack/commit/aebd07b9b14806b757095a8b520b058d89e30e13))
+- **file-system:** Resolved build issues ([8c83d7d](https://github.com/storm-software/storm-stack/commit/8c83d7d0b484d9655ca5144c1b900a68a391bd81))
 
 ## [1.4.7](https://github.com/storm-software/storm-stack/compare/file-system-v1.4.6...file-system-v1.4.7) (2023-12-12)
 
