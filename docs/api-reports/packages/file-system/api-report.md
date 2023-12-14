@@ -108,9 +108,6 @@ export { findFilePath };
 export { findFilePath as findFilePath_alias_1 };
 export { findFilePath as findFilePath_alias_2 };
 
-// @public
-export const forwardedHeaders: (request: Request) => Record<string, string>;
-
 // @public (undocumented)
 const getWorkspaceRoot: () => any;
 export { getWorkspaceRoot };

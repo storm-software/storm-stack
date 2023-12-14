@@ -810,47 +810,6 @@
         },
         {
           "kind": "Variable",
-          "canonicalReference": "@storm-stack/file-system!forwardedHeaders:var",
-          "docComment": "/**\n * Returns the headers that should be forwarded from the ClientRequest as headers in the next request sent to the node\n *\n * @param request - A Request\n *\n * @returns A record with the headers where keys are the names and values are the header values\n */\n",
-          "excerptTokens": [
-            {
-              "kind": "Content",
-              "text": "forwardedHeaders: "
-            },
-            {
-              "kind": "Content",
-              "text": "(request: "
-            },
-            {
-              "kind": "Reference",
-              "text": "Request",
-              "canonicalReference": "!Request:interface"
-            },
-            {
-              "kind": "Content",
-              "text": ") => "
-            },
-            {
-              "kind": "Reference",
-              "text": "Record",
-              "canonicalReference": "!Record:type"
-            },
-            {
-              "kind": "Content",
-              "text": "<string, string>"
-            }
-          ],
-          "fileUrlPath": "packages/file-system/src/http-fns.ts",
-          "isReadonly": true,
-          "releaseTag": "Public",
-          "name": "forwardedHeaders",
-          "variableTypeTokenRange": {
-            "startIndex": 1,
-            "endIndex": 6
-          }
-        },
-        {
-          "kind": "Variable",
           "canonicalReference": "@storm-stack/file-system!getWorkspaceRoot:var",
           "docComment": "",
           "excerptTokens": [
