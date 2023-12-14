@@ -202,21 +202,6 @@ importers:
         specifier: 7.5.4
         version: 7.5.4
     devDependencies:
-      "@storm-stack/cli":
-        specifier: workspace:*
-        version: link:../cli
-      "@storm-stack/errors":
-        specifier: workspace:*
-        version: link:../errors
-      "@storm-stack/logging":
-        specifier: workspace:*
-        version: link:../logging
-      "@storm-stack/serialization":
-        specifier: workspace:*
-        version: link:../serialization
-      "@storm-stack/utilities":
-        specifier: workspace:*
-        version: link:../utilities
       "@types/node":
         specifier: ^20.10.4
         version: 20.10.4
