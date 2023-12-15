@@ -1,4 +1,4 @@
-import { ErrorCode } from "@storm-stack/errors/errors";
+import { ErrorCode } from "@storm-stack/errors";
 
 export type DateTimeErrorCode =
   | ErrorCode

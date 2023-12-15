@@ -1,5 +1,5 @@
 import { sha3_512 } from "@noble/hashes/sha3";
-import { isSet, isString } from "@storm-stack/utilities/type-checks";
+import { isSet, isString } from "@storm-stack/utilities";
 
 /**
  * Default radix for the BigInt.toString() method.

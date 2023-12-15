@@ -1,8 +1,6 @@
 import { Temporal } from "@js-temporal/polyfill";
 import { Serializable } from "@storm-stack/serialization";
-import { isBigInt } from "@storm-stack/utilities/type-checks/is-bigint";
-import { isDate } from "@storm-stack/utilities/type-checks/is-date";
-import { isNumber } from "@storm-stack/utilities/type-checks/is-number";
+import { isBigInt, isDate, isNumber } from "@storm-stack/utilities";
 import { isDateTime } from "./utilities/is-date-time";
 import {
   deserializeStormDateTime,

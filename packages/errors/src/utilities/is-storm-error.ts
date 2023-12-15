@@ -1,5 +1,4 @@
-import { isError } from "@storm-stack/utilities/type-checks/is-error";
-import { isSetString } from "@storm-stack/utilities/type-checks/is-set-string";
+import { isError, isSetString } from "@storm-stack/utilities";
 import { StormError } from "../storm-error";
 
 /**

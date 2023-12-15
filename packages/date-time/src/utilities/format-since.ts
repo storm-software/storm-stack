@@ -1,5 +1,5 @@
 import { Temporal } from "@js-temporal/polyfill";
-import { StormError } from "@storm-stack/errors/storm-error";
+import { StormError } from "@storm-stack/errors";
 import { DateTimeErrorCode } from "../errors";
 import { StormDate } from "../storm-date";
 import { StormDateTime } from "../storm-date-time";

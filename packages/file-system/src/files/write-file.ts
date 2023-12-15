@@ -1,5 +1,5 @@
 import { StormError } from "@storm-stack/errors";
-import { stringify } from "@storm-stack/serialization/json-parser";
+import { stringify } from "@storm-stack/serialization";
 import { writeFile as writeFileFs, writeFileSync } from "fs";
 import { promisify } from "node:util";
 import { FileSystemErrorCode } from "../errors";
