@@ -1,9 +1,15 @@
-## [1.4.11](https://github.com/storm-software/storm-stack/compare/file-system-v1.4.10...file-system-v1.4.11) (2023-12-15)
+## [1.4.12](https://github.com/storm-software/storm-stack/compare/file-system-v1.4.11...file-system-v1.4.12) (2023-12-15)
 
 
 ### Bug Fixes
 
-* **utilities:** Upgraded build utilities ([f0b9bbf](https://github.com/storm-software/storm-stack/commit/f0b9bbf215aa2967b84bd2b5e7c35f4b6f967092))
+* **utilities:** Fixed the library import paths ([0edfed0](https://github.com/storm-software/storm-stack/commit/0edfed0de50250eb450de950ceec6218d22e4460))
+
+## [1.4.11](https://github.com/storm-software/storm-stack/compare/file-system-v1.4.10...file-system-v1.4.11) (2023-12-15)
+
+### Bug Fixes
+
+- **utilities:** Upgraded build utilities ([f0b9bbf](https://github.com/storm-software/storm-stack/commit/f0b9bbf215aa2967b84bd2b5e7c35f4b6f967092))
 
 ## [1.4.10](https://github.com/storm-software/storm-stack/compare/file-system-v1.4.9...file-system-v1.4.10) (2023-12-14)
 
