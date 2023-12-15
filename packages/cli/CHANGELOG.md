@@ -1,3 +1,10 @@
+## [1.0.10](https://github.com/storm-software/storm-stack/compare/cli-v1.0.9...cli-v1.0.10) (2023-12-14)
+
+
+### Bug Fixes
+
+* **utilities:** Upgrade build package to resolve nested paths on non-windows systems ([7c31ed4](https://github.com/storm-software/storm-stack/commit/7c31ed49491e799843f2262a15642388bf1badbd))
+
 ## [1.0.9](https://github.com/storm-software/storm-stack/compare/cli-v1.0.8...cli-v1.0.9) (2023-12-14)
 
 

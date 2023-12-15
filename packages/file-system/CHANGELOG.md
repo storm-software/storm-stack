@@ -1,9 +1,15 @@
-## [1.4.9](https://github.com/storm-software/storm-stack/compare/file-system-v1.4.8...file-system-v1.4.9) (2023-12-14)
+## [1.4.10](https://github.com/storm-software/storm-stack/compare/file-system-v1.4.9...file-system-v1.4.10) (2023-12-14)
 
 
 ### Bug Fixes
 
-* **file-system:** Removed the unused http header module ([170dba7](https://github.com/storm-software/storm-stack/commit/170dba773d01c7b8062704ed45c1869f0618ca89))
+* **utilities:** Upgrade build package to resolve nested paths on non-windows systems ([7c31ed4](https://github.com/storm-software/storm-stack/commit/7c31ed49491e799843f2262a15642388bf1badbd))
+
+## [1.4.9](https://github.com/storm-software/storm-stack/compare/file-system-v1.4.8...file-system-v1.4.9) (2023-12-14)
+
+### Bug Fixes
+
+- **file-system:** Removed the unused http header module ([170dba7](https://github.com/storm-software/storm-stack/commit/170dba773d01c7b8062704ed45c1869f0618ca89))
 
 ## [1.4.8](https://github.com/storm-software/storm-stack/compare/file-system-v1.4.7...file-system-v1.4.8) (2023-12-14)
 

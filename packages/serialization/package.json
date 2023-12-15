@@ -1,6 +1,6 @@
 {
   "name": "@storm-stack/serialization",
-  "version": "1.2.9",
+  "version": "1.2.10",
   "private": false,
   "description": "A package used to support serializing and deserializing data sent between the client and the server.",
   "repository": {

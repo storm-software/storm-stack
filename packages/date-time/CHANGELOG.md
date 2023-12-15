@@ -1,3 +1,10 @@
+## [1.2.9](https://github.com/storm-software/storm-stack/compare/date-time-v1.2.8...date-time-v1.2.9) (2023-12-14)
+
+
+### Bug Fixes
+
+* **utilities:** Upgrade build package to resolve nested paths on non-windows systems ([7c31ed4](https://github.com/storm-software/storm-stack/commit/7c31ed49491e799843f2262a15642388bf1badbd))
+
 ## [1.2.8](https://github.com/storm-software/storm-stack/compare/date-time-v1.2.7...date-time-v1.2.8) (2023-12-14)
 
 
