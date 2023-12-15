@@ -1,9 +1,15 @@
-## [1.2.10](https://github.com/storm-software/storm-stack/compare/date-time-v1.2.9...date-time-v1.2.10) (2023-12-15)
+## [1.2.11](https://github.com/storm-software/storm-stack/compare/date-time-v1.2.10...date-time-v1.2.11) (2023-12-15)
 
 
 ### Bug Fixes
 
-* **utilities:** Upgraded build utilities ([f0b9bbf](https://github.com/storm-software/storm-stack/commit/f0b9bbf215aa2967b84bd2b5e7c35f4b6f967092))
+* **utilities:** Fixed the library import paths ([0edfed0](https://github.com/storm-software/storm-stack/commit/0edfed0de50250eb450de950ceec6218d22e4460))
+
+## [1.2.10](https://github.com/storm-software/storm-stack/compare/date-time-v1.2.9...date-time-v1.2.10) (2023-12-15)
+
+### Bug Fixes
+
+- **utilities:** Upgraded build utilities ([f0b9bbf](https://github.com/storm-software/storm-stack/commit/f0b9bbf215aa2967b84bd2b5e7c35f4b6f967092))
 
 ## [1.2.9](https://github.com/storm-software/storm-stack/compare/date-time-v1.2.8...date-time-v1.2.9) (2023-12-14)
 
