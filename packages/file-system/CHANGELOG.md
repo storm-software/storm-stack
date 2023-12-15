@@ -1,9 +1,15 @@
-## [1.4.10](https://github.com/storm-software/storm-stack/compare/file-system-v1.4.9...file-system-v1.4.10) (2023-12-14)
+## [1.4.11](https://github.com/storm-software/storm-stack/compare/file-system-v1.4.10...file-system-v1.4.11) (2023-12-15)
 
 
 ### Bug Fixes
 
-* **utilities:** Upgrade build package to resolve nested paths on non-windows systems ([7c31ed4](https://github.com/storm-software/storm-stack/commit/7c31ed49491e799843f2262a15642388bf1badbd))
+* **utilities:** Upgraded build utilities ([f0b9bbf](https://github.com/storm-software/storm-stack/commit/f0b9bbf215aa2967b84bd2b5e7c35f4b6f967092))
+
+## [1.4.10](https://github.com/storm-software/storm-stack/compare/file-system-v1.4.9...file-system-v1.4.10) (2023-12-14)
+
+### Bug Fixes
+
+- **utilities:** Upgrade build package to resolve nested paths on non-windows systems ([7c31ed4](https://github.com/storm-software/storm-stack/commit/7c31ed49491e799843f2262a15642388bf1badbd))
 
 ## [1.4.9](https://github.com/storm-software/storm-stack/compare/file-system-v1.4.8...file-system-v1.4.9) (2023-12-14)
 

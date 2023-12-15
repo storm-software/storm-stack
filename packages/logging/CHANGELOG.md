@@ -1,17 +1,22 @@
-## [1.3.9](https://github.com/storm-software/storm-stack/compare/logging-v1.3.8...logging-v1.3.9) (2023-12-14)
+## [1.3.10](https://github.com/storm-software/storm-stack/compare/logging-v1.3.9...logging-v1.3.10) (2023-12-15)
 
 
 ### Bug Fixes
 
-* **utilities:** Upgrade build package to resolve nested paths on non-windows systems ([7c31ed4](https://github.com/storm-software/storm-stack/commit/7c31ed49491e799843f2262a15642388bf1badbd))
+* **utilities:** Upgraded build utilities ([f0b9bbf](https://github.com/storm-software/storm-stack/commit/f0b9bbf215aa2967b84bd2b5e7c35f4b6f967092))
+
+## [1.3.9](https://github.com/storm-software/storm-stack/compare/logging-v1.3.8...logging-v1.3.9) (2023-12-14)
+
+### Bug Fixes
+
+- **utilities:** Upgrade build package to resolve nested paths on non-windows systems ([7c31ed4](https://github.com/storm-software/storm-stack/commit/7c31ed49491e799843f2262a15642388bf1badbd))
 
 ## [1.3.8](https://github.com/storm-software/storm-stack/compare/logging-v1.3.7...logging-v1.3.8) (2023-12-14)
 
-
 ### Bug Fixes
 
-* **cli:** Regenerated the pnpm-lock file ([aebd07b](https://github.com/storm-software/storm-stack/commit/aebd07b9b14806b757095a8b520b058d89e30e13))
-* **file-system:** Resolved build issues ([8c83d7d](https://github.com/storm-software/storm-stack/commit/8c83d7d0b484d9655ca5144c1b900a68a391bd81))
+- **cli:** Regenerated the pnpm-lock file ([aebd07b](https://github.com/storm-software/storm-stack/commit/aebd07b9b14806b757095a8b520b058d89e30e13))
+- **file-system:** Resolved build issues ([8c83d7d](https://github.com/storm-software/storm-stack/commit/8c83d7d0b484d9655ca5144c1b900a68a391bd81))
 
 ## [1.3.7](https://github.com/storm-software/storm-stack/compare/logging-v1.3.6...logging-v1.3.7) (2023-12-12)
 
