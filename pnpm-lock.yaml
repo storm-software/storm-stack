@@ -73,7 +73,7 @@ importers:
         version: 1.5.0(typescript@5.3.3)
       "@storm-software/git-tools":
         specifier: latest
-        version: 1.17.0(@swc-node/register@1.6.8)(@swc/core@1.3.100)(typescript@5.3.3)
+        version: 1.17.1(@swc-node/register@1.6.8)(@swc/core@1.3.100)(typescript@5.3.3)
       "@storm-software/linting-tools":
         specifier: latest
         version: 1.18.0
@@ -82,7 +82,7 @@ importers:
         version: 1.15.0(@swc-node/register@1.6.8)(@swc/core@1.3.100)(@types/node@20.10.4)(nx@17.2.1)(ts-node@10.9.2)(typescript@5.3.3)(verdaccio@5.29.0)
       "@storm-software/workspace-tools":
         specifier: latest
-        version: 1.31.0(@swc-node/register@1.6.8)(@swc/core@1.3.100)(@types/node@20.10.4)(esbuild@0.19.9)(nx@17.2.1)(postcss@8.2.13)(ts-node@10.9.2)(typescript@5.3.3)(verdaccio@5.29.0)
+        version: 1.31.1(@swc-node/register@1.6.8)(@swc/core@1.3.100)(@types/node@20.10.4)(esbuild@0.19.9)(nx@17.2.1)(postcss@8.2.13)(ts-node@10.9.2)(typescript@5.3.3)(verdaccio@5.29.0)
       "@swc-node/register":
         specifier: 1.6.8
         version: 1.6.8(@swc/core@1.3.100)(typescript@5.3.3)
@@ -6804,10 +6804,10 @@ packages:
       - typescript
     dev: false
 
-  /@storm-software/git-tools@1.17.0(@swc-node/register@1.6.8)(@swc/core@1.3.100)(typescript@5.3.3):
+  /@storm-software/git-tools@1.17.1(@swc-node/register@1.6.8)(@swc/core@1.3.100)(typescript@5.3.3):
     resolution:
       {
-        integrity: sha512-gymWRKTti/2Je/MsHjE64fnUjMFNovMvUtmzqrz0UQuBGViG96tQCg7776xr0nlJu35hG488qP6dofjS4CB12A==
+        integrity: sha512-H7SZp/VoOfMBE3uJS0Kr5uGCneg7so+cg9dbGcBNGO3Acjs4A/cirLZh0LpKBmYlNdUdDsVMzxRkqtMVzWlW9A==
       }
     hasBin: true
     dependencies:
@@ -6975,10 +6975,10 @@ packages:
       - verdaccio
     dev: false
 
-  /@storm-software/workspace-tools@1.31.0(@swc-node/register@1.6.8)(@swc/core@1.3.100)(@types/node@20.10.4)(esbuild@0.19.9)(nx@17.2.1)(postcss@8.2.13)(ts-node@10.9.2)(typescript@5.3.3)(verdaccio@5.29.0):
+  /@storm-software/workspace-tools@1.31.1(@swc-node/register@1.6.8)(@swc/core@1.3.100)(@types/node@20.10.4)(esbuild@0.19.9)(nx@17.2.1)(postcss@8.2.13)(ts-node@10.9.2)(typescript@5.3.3)(verdaccio@5.29.0):
     resolution:
       {
-        integrity: sha512-YY7lDBEdp+1FrTxQwo1tlaR/Y7kP2rq0V943ch2ug/Ucb3siLyQRELtxcNjD0d9kRTMWK3Qt6C51IHRSoDmS7A==
+        integrity: sha512-yurz0TdemOb/KVr+5dugNxMQaPMidd8SHv0m37WQhBD7ru8fP8RE/O4/VjlzOyP6zhhRxL0iePPqV9hTelpBOw==
       }
     dependencies:
       "@anatine/esbuild-decorators": 0.2.19(esbuild@0.19.9)
@@ -7628,15 +7628,15 @@ packages:
     dependencies:
       "@babel/parser": 7.23.6
       "@babel/types": 7.23.6
-      "@types/babel__generator": 7.6.7
+      "@types/babel__generator": 7.6.8
       "@types/babel__template": 7.4.4
       "@types/babel__traverse": 7.20.4
     dev: false
 
-  /@types/babel__generator@7.6.7:
+  /@types/babel__generator@7.6.8:
     resolution:
       {
-        integrity: sha512-6Sfsq+EaaLrw4RmdFWE9Onp63TOUue71AWb4Gpa6JxzgTYtimbM086WnYTy2U67AofR++QKCo08ZP6pwx8YFHQ==
+        integrity: sha512-ASsj+tpEDsEiFr1arWrlN6V3mdfjRMZt6LtK/Vp/kreFLnr5QH5+DhvD5nINYZXzwJvXeGq+05iUXcAzVrqWtw==
       }
     dependencies:
       "@babel/types": 7.23.6
@@ -9858,7 +9858,7 @@ packages:
     hasBin: true
     dependencies:
       caniuse-lite: 1.0.30001570
-      electron-to-chromium: 1.4.613
+      electron-to-chromium: 1.4.614
       node-releases: 2.0.14
       update-browserslist-db: 1.0.13(browserslist@4.22.2)
     dev: false
@@ -12646,13 +12646,6 @@ packages:
     hasBin: true
     dependencies:
       jake: 10.8.7
-    dev: false
-
-  /electron-to-chromium@1.4.613:
-    resolution:
-      {
-        integrity: sha512-r4x5+FowKG6q+/Wj0W9nidx7QO31BJwmR2uEo+Qh3YLGQ8SbBAFuDFpTxzly/I2gsbrFwBuIjrMp423L3O5U3w==
-      }
     dev: false
 
   /electron-to-chromium@1.4.614:
