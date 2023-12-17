@@ -25,7 +25,7 @@ export class StormTime extends StormDateTime {
    * @returns A new instance of DateTime with the current date and time.
    */
   public static override now(): number {
-    return StormDateTime.current().epochMilliseconds;
+    return StormTime.current().epochMilliseconds;
   }
 
   /**
@@ -57,7 +57,7 @@ export class StormTime extends StormDateTime {
   public constructor(dateTime?: DateTimeInput, options?: DateTimeOptions) {
     super(dateTime, options);
 
-    this.instant = this.instant
+    this.instant = super.instant
       .toZonedDateTimeISO("UTC")
       .with({
         year: 1970,
@@ -65,7 +65,7 @@ export class StormTime extends StormDateTime {
         day: 1
       })
       .toInstant();
-    this.zonedDateTime = this.zonedDateTime.with({
+    this.zonedDateTime = super.zonedDateTime.with({
       year: 1970,
       month: 1,
       day: 1

@@ -57,7 +57,7 @@ export class StormDate extends StormDateTime {
   public constructor(dateTime?: DateTimeInput, options?: DateTimeOptions) {
     super(dateTime, options);
 
-    this.instant = this.instant
+    this.instant = super.instant
       .toZonedDateTimeISO("UTC")
       .with({
         hour: 0,
@@ -68,7 +68,7 @@ export class StormDate extends StormDateTime {
         nanosecond: 0
       })
       .toInstant();
-    this.zonedDateTime = this.zonedDateTime.with({
+    this.zonedDateTime = super.zonedDateTime.with({
       hour: 0,
       minute: 0,
       second: 0,

@@ -65,7 +65,7 @@
     "preinstall": "npx -y only-allow pnpm",
     "install:csb": "corepack enable && pnpm install --frozen-lockfile",
     "lint": "pnpm storm-lint all --skip-cspell",
-    "local-registry": "nx local-registry @storm-software/storm-stack",
+    "local-registry": "nx local-registry @storm-stack/monorepo",
     "nx": "nx",
     "prepare": "pnpm add husky -w && pnpm husky install",
     "readme-gen": "pnpm storm-git readme-gen --templates=\"docs/readme-templates\"",
