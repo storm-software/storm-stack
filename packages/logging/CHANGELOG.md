@@ -1,3 +1,12 @@
+## [1.3.12](https://github.com/storm-software/storm-stack/compare/logging-v1.3.11...logging-v1.3.12) (2023-12-17)
+
+
+### Bug Fixes
+
+* **date-time:** Resolved issue with references in constructors ([8bae7b0](https://github.com/storm-software/storm-stack/commit/8bae7b002e144f06b3b24a008712045da17d25d6))
+* **date-time:** Upgrade monorepo storm dependencies ([214ecb1](https://github.com/storm-software/storm-stack/commit/214ecb1e3227faac1371242fc3581c22467fae1a))
+* **utilities:** Upgrade the storm-ops packages to latest ([b031630](https://github.com/storm-software/storm-stack/commit/b031630f68ef02d72b64c050553d9db06842b47e))
+
 ## [1.3.11](https://github.com/storm-software/storm-stack/compare/logging-v1.3.10...logging-v1.3.11) (2023-12-15)
 
 
