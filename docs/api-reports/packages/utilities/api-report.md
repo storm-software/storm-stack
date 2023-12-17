@@ -257,6 +257,12 @@ export { isDate as isDate_alias_1 };
 export { isDate as isDate_alias_2 };
 
 // @public
+const isDevelopment: () => boolean;
+export { isDevelopment };
+export { isDevelopment as isDevelopment_alias_1 };
+export { isDevelopment as isDevelopment_alias_2 };
+
+// @public
 const isEmpty: (value: unknown) => boolean;
 export { isEmpty };
 export { isEmpty as isEmpty_alias_1 };
@@ -329,6 +335,12 @@ export { isMergeableObject as isMergeableObject_alias_1 };
 export { isMergeableObject as isMergeableObject_alias_2 };
 
 // @public
+const isMode: (mode: string) => boolean;
+export { isMode };
+export { isMode as isMode_alias_1 };
+export { isMode as isMode_alias_2 };
+
+// @public
 export const isNonNullObject: (value: any) => value is object;
 
 // @public
@@ -372,6 +384,12 @@ const isPrimitive: (value: unknown) => boolean;
 export { isPrimitive };
 export { isPrimitive as isPrimitive_alias_1 };
 export { isPrimitive as isPrimitive_alias_2 };
+
+// @public
+const isProduction: () => boolean;
+export { isProduction };
+export { isProduction as isProduction_alias_1 };
+export { isProduction as isProduction_alias_2 };
 
 // @public
 const isPromise: (value: unknown) => value is Promise<unknown>;

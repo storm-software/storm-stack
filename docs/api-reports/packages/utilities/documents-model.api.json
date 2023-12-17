@@ -1718,6 +1718,29 @@
         },
         {
           "kind": "Variable",
+          "canonicalReference": "@storm-stack/utilities!isDevelopment:var",
+          "docComment": "/**\n * The function checks if the code is **NOT** running in production.\n *\n * @remarks\n *\n * **Please note:** This function does **not** check if the mode equals 'development' specifically.\n *\n * To check for the 'development' mode specifically, run:\n * ```typescript\n * const isDevelopmentSpecifically = isMode(\"development\");\n * ```\n *\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "isDevelopment: "
+            },
+            {
+              "kind": "Content",
+              "text": "() => boolean"
+            }
+          ],
+          "fileUrlPath": "packages/utilities/src/helper-fns/is-production.ts",
+          "isReadonly": true,
+          "releaseTag": "Public",
+          "name": "isDevelopment",
+          "variableTypeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 2
+          }
+        },
+        {
+          "kind": "Variable",
           "canonicalReference": "@storm-stack/utilities!isEmpty:var",
           "docComment": "/**\n * Check if the provided value's type is `null` or `undefined`\n *\n * @param value - The value to type check\n *\n * @returns An indicator specifying if the value provided is of type `null` or `undefined`\n */\n",
           "excerptTokens": [
@@ -2084,6 +2107,29 @@
         },
         {
           "kind": "Variable",
+          "canonicalReference": "@storm-stack/utilities!isMode:var",
+          "docComment": "/**\n * Check the current runtime mode of the process\n *\n * @param mode - The mode to check the current process's mode against\n *\n * @returns An indicator specifying if the current runtime matches the `mode` parameter\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "isMode: "
+            },
+            {
+              "kind": "Content",
+              "text": "(mode: string) => boolean"
+            }
+          ],
+          "fileUrlPath": "packages/utilities/src/helper-fns/is-production.ts",
+          "isReadonly": true,
+          "releaseTag": "Public",
+          "name": "isMode",
+          "variableTypeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 2
+          }
+        },
+        {
+          "kind": "Variable",
           "canonicalReference": "@storm-stack/utilities!isNonNullObject:var",
           "docComment": "/**\n * Check if the provided value's type is `Object` and is not `null` or `undefined`\n *\n * @param value - The value to type check\n *\n * @returns An indicator specifying if the value provided is of type `Object` and is not `null` or `undefined`\n */\n",
           "excerptTokens": [
@@ -2306,6 +2352,29 @@
           "isReadonly": true,
           "releaseTag": "Public",
           "name": "isPrimitive",
+          "variableTypeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 2
+          }
+        },
+        {
+          "kind": "Variable",
+          "canonicalReference": "@storm-stack/utilities!isProduction:var",
+          "docComment": "/**\n * The function checks if the code is running in production.\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "isProduction: "
+            },
+            {
+              "kind": "Content",
+              "text": "() => boolean"
+            }
+          ],
+          "fileUrlPath": "packages/utilities/src/helper-fns/is-production.ts",
+          "isReadonly": true,
+          "releaseTag": "Public",
+          "name": "isProduction",
           "variableTypeTokenRange": {
             "startIndex": 1,
             "endIndex": 2

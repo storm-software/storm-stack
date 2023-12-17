@@ -57,7 +57,8 @@ export class StormTime extends StormDateTime {
   public constructor(dateTime?: DateTimeInput, options?: DateTimeOptions) {
     super(dateTime, options);
 
-    this.instant = super.instant
+    const stormDateTime = StormDateTime.create(dateTime, options);
+    this.instant = stormDateTime.instant
       .toZonedDateTimeISO("UTC")
       .with({
         year: 1970,
@@ -65,7 +66,7 @@ export class StormTime extends StormDateTime {
         day: 1
       })
       .toInstant();
-    this.zonedDateTime = super.zonedDateTime.with({
+    this.zonedDateTime = stormDateTime.zonedDateTime.with({
       year: 1970,
       month: 1,
       day: 1

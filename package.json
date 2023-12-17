@@ -122,6 +122,9 @@
     "typescript": "5.3.3",
     "verdaccio": "5.29.0"
   },
+  "peerDependencies": {
+    "husky": "8.0.3"
+  },
   "packageManager": "pnpm@8.10.5",
   "engines": {
     "node": ">=18.17.1",
@@ -143,7 +146,8 @@
       "@storm-stack/serialization": "workspace:*",
       "@storm-stack/logging": "workspace:*",
       "@storm-stack/file-system": "workspace:*",
-      "@storm-stack/cli": "workspace:*"
+      "@storm-stack/cli": "workspace:*",
+      "@storm-stack/jotai": "workspace:*"
     }
   },
   "triggerEmptyDevReleaseByIncrementingThisNumber": 0
