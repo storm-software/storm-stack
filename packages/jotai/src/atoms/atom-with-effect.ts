@@ -4,6 +4,12 @@ import { setAtomPrivate } from "../utilities/set-atom-debug";
 
 type CleanupFn = () => void;
 
+/**
+ * Creates an atom that runs an effect function when mounted and unmounts.
+ *
+ * @param effectFn - The effect function to run
+ * @returns An atom that runs an effect function when mounted and unmounts.
+ */
 export function atomEffect(
   effectFn: (get: Getter, set: Setter) => void | CleanupFn
 ) {
