@@ -1,10 +1,16 @@
-# [1.3.0](https://github.com/storm-software/storm-stack/compare/errors-v1.2.13...errors-v1.3.0) (2023-12-17)
+## [1.3.1](https://github.com/storm-software/storm-stack/compare/errors-v1.3.0...errors-v1.3.1) (2023-12-17)
 
+
+### Bug Fixes
+
+* **date-time:** Upgrade to latest version of storm-ops ([e09478d](https://github.com/storm-software/storm-stack/commit/e09478da0e62fe34f3ab339448043c4b7293bd73))
+
+# [1.3.0](https://github.com/storm-software/storm-stack/compare/errors-v1.2.13...errors-v1.3.0) (2023-12-17)
 
 ### Features
 
-* **jotai:** Added `atomWithWebStorage` and `atomWithBroadcast` atom creators ([4124c6c](https://github.com/storm-software/storm-stack/commit/4124c6c76dd932491e1e043ee5e7759467b48e2e))
-* **jotai:** Added `jotai` extension package ([03aa93d](https://github.com/storm-software/storm-stack/commit/03aa93d9bcd4b8d576deb1f210994a9c231d5388))
+- **jotai:** Added `atomWithWebStorage` and `atomWithBroadcast` atom creators ([4124c6c](https://github.com/storm-software/storm-stack/commit/4124c6c76dd932491e1e043ee5e7759467b48e2e))
+- **jotai:** Added `jotai` extension package ([03aa93d](https://github.com/storm-software/storm-stack/commit/03aa93d9bcd4b8d576deb1f210994a9c231d5388))
 
 ## [1.2.13](https://github.com/storm-software/storm-stack/compare/errors-v1.2.12...errors-v1.2.13) (2023-12-17)
 
