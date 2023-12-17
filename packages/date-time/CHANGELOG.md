@@ -1,18 +1,24 @@
-## [1.2.12](https://github.com/storm-software/storm-stack/compare/date-time-v1.2.11...date-time-v1.2.12) (2023-12-17)
+# [1.3.0](https://github.com/storm-software/storm-stack/compare/date-time-v1.2.12...date-time-v1.3.0) (2023-12-17)
 
+
+### Features
+
+* **jotai:** Added `atomWithWebStorage` and `atomWithBroadcast` atom creators ([4124c6c](https://github.com/storm-software/storm-stack/commit/4124c6c76dd932491e1e043ee5e7759467b48e2e))
+* **jotai:** Added `jotai` extension package ([03aa93d](https://github.com/storm-software/storm-stack/commit/03aa93d9bcd4b8d576deb1f210994a9c231d5388))
+
+## [1.2.12](https://github.com/storm-software/storm-stack/compare/date-time-v1.2.11...date-time-v1.2.12) (2023-12-17)
 
 ### Bug Fixes
 
-* **date-time:** Resolved issue with references in constructors ([8bae7b0](https://github.com/storm-software/storm-stack/commit/8bae7b002e144f06b3b24a008712045da17d25d6))
-* **date-time:** Upgrade monorepo storm dependencies ([214ecb1](https://github.com/storm-software/storm-stack/commit/214ecb1e3227faac1371242fc3581c22467fae1a))
-* **utilities:** Upgrade the storm-ops packages to latest ([b031630](https://github.com/storm-software/storm-stack/commit/b031630f68ef02d72b64c050553d9db06842b47e))
+- **date-time:** Resolved issue with references in constructors ([8bae7b0](https://github.com/storm-software/storm-stack/commit/8bae7b002e144f06b3b24a008712045da17d25d6))
+- **date-time:** Upgrade monorepo storm dependencies ([214ecb1](https://github.com/storm-software/storm-stack/commit/214ecb1e3227faac1371242fc3581c22467fae1a))
+- **utilities:** Upgrade the storm-ops packages to latest ([b031630](https://github.com/storm-software/storm-stack/commit/b031630f68ef02d72b64c050553d9db06842b47e))
 
 ## [1.2.11](https://github.com/storm-software/storm-stack/compare/date-time-v1.2.10...date-time-v1.2.11) (2023-12-15)
 
-
 ### Bug Fixes
 
-* **utilities:** Fixed the library import paths ([0edfed0](https://github.com/storm-software/storm-stack/commit/0edfed0de50250eb450de950ceec6218d22e4460))
+- **utilities:** Fixed the library import paths ([0edfed0](https://github.com/storm-software/storm-stack/commit/0edfed0de50250eb450de950ceec6218d22e4460))
 
 ## [1.2.10](https://github.com/storm-software/storm-stack/compare/date-time-v1.2.9...date-time-v1.2.10) (2023-12-15)
 
