@@ -83,7 +83,7 @@ importers:
         version: 1.15.0(@swc-node/register@1.6.8)(@swc/core@1.3.100)(@types/node@20.10.4)(nx@17.2.1)(ts-node@10.9.2)(typescript@5.3.3)(verdaccio@5.29.0)
       "@storm-software/workspace-tools":
         specifier: latest
-        version: 1.31.1(@swc-node/register@1.6.8)(@swc/core@1.3.100)(@types/node@20.10.4)(esbuild@0.19.9)(nx@17.2.1)(postcss@8.2.13)(ts-node@10.9.2)(typescript@5.3.3)(verdaccio@5.29.0)
+        version: 1.31.3(@swc-node/register@1.6.8)(@swc/core@1.3.100)(@types/node@20.10.4)(esbuild@0.19.9)(nx@17.2.1)(postcss@8.2.13)(ts-node@10.9.2)(typescript@5.3.3)(verdaccio@5.29.0)
       "@swc-node/register":
         specifier: 1.6.8
         version: 1.6.8(@swc/core@1.3.100)(typescript@5.3.3)
@@ -6562,7 +6562,7 @@ packages:
       https-proxy-agent: 7.0.2
       issue-parser: 6.0.0
       lodash-es: 4.17.21
-      mime: 4.0.0
+      mime: 4.0.1
       p-filter: 3.0.0
       semantic-release: 22.0.12(typescript@5.3.3)
       url-join: 5.0.0
@@ -6592,7 +6592,7 @@ packages:
       https-proxy-agent: 7.0.2
       issue-parser: 6.0.0
       lodash-es: 4.17.21
-      mime: 4.0.0
+      mime: 4.0.1
       p-filter: 3.0.0
       semantic-release: 22.0.7(typescript@5.3.3)
       url-join: 5.0.0
@@ -6985,10 +6985,10 @@ packages:
       - verdaccio
     dev: false
 
-  /@storm-software/workspace-tools@1.31.1(@swc-node/register@1.6.8)(@swc/core@1.3.100)(@types/node@20.10.4)(esbuild@0.19.9)(nx@17.2.1)(postcss@8.2.13)(ts-node@10.9.2)(typescript@5.3.3)(verdaccio@5.29.0):
+  /@storm-software/workspace-tools@1.31.3(@swc-node/register@1.6.8)(@swc/core@1.3.100)(@types/node@20.10.4)(esbuild@0.19.9)(nx@17.2.1)(postcss@8.2.13)(ts-node@10.9.2)(typescript@5.3.3)(verdaccio@5.29.0):
     resolution:
       {
-        integrity: sha512-yurz0TdemOb/KVr+5dugNxMQaPMidd8SHv0m37WQhBD7ru8fP8RE/O4/VjlzOyP6zhhRxL0iePPqV9hTelpBOw==
+        integrity: sha512-vxnbCktkXvuzaBafx4HfCmgiR8htxujcVBeGVhLSMMqNCqb8ln1U8Ylu9npeNHd+T8Sasg64d7P0zJwkv2CHIA==
       }
     dependencies:
       "@anatine/esbuild-decorators": 0.2.19(esbuild@0.19.9)
@@ -20052,10 +20052,10 @@ packages:
     hasBin: true
     dev: false
 
-  /mime@4.0.0:
+  /mime@4.0.1:
     resolution:
       {
-        integrity: sha512-pzhgdeqU5pJ9t5WK9m4RT4GgGWqYJylxUf62Yb9datXRwdcw5MjiD1BYI5evF8AgTXN9gtKX3CFLvCUL5fAhEA==
+        integrity: sha512-5lZ5tyrIfliMXzFtkYyekWbtRXObT9OWa8IwQ5uxTBDHucNNwniRqo0yInflj+iYi5CBa6qxadGzGarDfuEOxA==
       }
     engines: { node: ">=16" }
     hasBin: true

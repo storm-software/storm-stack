@@ -398,6 +398,12 @@ export { isPromise as isPromise_alias_1 };
 export { isPromise as isPromise_alias_2 };
 
 // @public
+const isPromiseLike: (value: unknown) => value is PromiseLike<unknown>;
+export { isPromiseLike };
+export { isPromiseLike as isPromiseLike_alias_1 };
+export { isPromiseLike as isPromiseLike_alias_2 };
+
+// @public
 const isReactElement: (value: any) => boolean;
 export { isReactElement };
 export { isReactElement as isReactElement_alias_1 };
