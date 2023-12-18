@@ -64,19 +64,16 @@ export { DateTimeOptions as DateTimeOptions_alias_1 };
 function deserializeStormDate(utcString: JsonValue): StormDate;
 export { deserializeStormDate };
 export { deserializeStormDate as deserializeStormDate_alias_1 };
-export { deserializeStormDate as deserializeStormDate_alias_2 };
 
 // @public
 function deserializeStormDateTime(utcString: JsonValue): StormDateTime;
 export { deserializeStormDateTime };
 export { deserializeStormDateTime as deserializeStormDateTime_alias_1 };
-export { deserializeStormDateTime as deserializeStormDateTime_alias_2 };
 
 // @public
 function deserializeStormTime(utcString: JsonValue): StormTime;
 export { deserializeStormTime };
 export { deserializeStormTime as deserializeStormTime_alias_1 };
-export { deserializeStormTime as deserializeStormTime_alias_2 };
 
 // @public
 const formatDate: (
@@ -179,19 +176,16 @@ export { RFC_3339_TIME_REGEX as RFC_3339_TIME_REGEX_alias_1 };
 function serializeStormDate(date: StormDate): string;
 export { serializeStormDate };
 export { serializeStormDate as serializeStormDate_alias_1 };
-export { serializeStormDate as serializeStormDate_alias_2 };
 
 // @public
 function serializeStormDateTime(dateTime: StormDateTime): string;
 export { serializeStormDateTime };
 export { serializeStormDateTime as serializeStormDateTime_alias_1 };
-export { serializeStormDateTime as serializeStormDateTime_alias_2 };
 
 // @public
 function serializeStormTime(date: StormTime): string;
 export { serializeStormTime };
 export { serializeStormTime as serializeStormTime_alias_1 };
-export { serializeStormTime as serializeStormTime_alias_2 };
 
 // @public
 class StormDate extends StormDateTime {
@@ -209,10 +203,7 @@ class StormDate extends StormDateTime {
   getUTCMinutes(): number;
   getUTCSeconds(): number;
   static now(): number;
-  protected validate(
-    dateTime?: DateTimeInput,
-    options?: DateTimeOptions
-  ): boolean;
+  protected validate(value?: DateTimeInput, options?: DateTimeOptions): boolean;
 }
 export { StormDate };
 export { StormDate as StormDate_alias_1 };
@@ -251,6 +242,7 @@ class StormDateTime extends Date {
   get input(): DateTimeInput;
   get instant(): Temporal.Instant;
   protected set instant(_instant: Temporal.Instant);
+  static isDateTime(obj: unknown): obj is StormDateTime;
   get isValid(): boolean;
   static now(): number;
   get options(): DateTimeOptions;
@@ -281,10 +273,7 @@ class StormDateTime extends Date {
   setUTCSeconds(second: number, millisecond?: number): number;
   since(dateTimeTo?: StormDateTime): Temporal.Duration;
   get timeZoneId(): string;
-  protected validate(
-    dateTime?: DateTimeInput,
-    options?: DateTimeOptions
-  ): boolean;
+  protected validate(value?: DateTimeInput, options?: DateTimeOptions): boolean;
   get zonedDateTime(): Temporal.ZonedDateTime;
   protected set zonedDateTime(_zonedDateTime: Temporal.ZonedDateTime);
 }
@@ -306,10 +295,7 @@ class StormTime extends StormDateTime {
   getUTCFullYear(): number;
   getUTCMonth(): number;
   static now(): number;
-  protected validate(
-    dateTime?: DateTimeInput,
-    options?: DateTimeOptions
-  ): boolean;
+  protected validate(value?: DateTimeInput, options?: DateTimeOptions): boolean;
 }
 export { StormTime };
 export { StormTime as StormTime_alias_1 };

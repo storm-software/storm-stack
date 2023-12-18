@@ -584,7 +584,7 @@
               "text": ";"
             }
           ],
-          "fileUrlPath": "packages/date-time/src/utilities/serialization.ts",
+          "fileUrlPath": "packages/date-time/src/storm-date.ts",
           "returnTypeTokenRange": {
             "startIndex": 3,
             "endIndex": 4
@@ -631,7 +631,7 @@
               "text": ";"
             }
           ],
-          "fileUrlPath": "packages/date-time/src/utilities/serialization.ts",
+          "fileUrlPath": "packages/date-time/src/storm-date-time.ts",
           "returnTypeTokenRange": {
             "startIndex": 3,
             "endIndex": 4
@@ -678,7 +678,7 @@
               "text": ";"
             }
           ],
-          "fileUrlPath": "packages/date-time/src/utilities/serialization.ts",
+          "fileUrlPath": "packages/date-time/src/storm-time.ts",
           "returnTypeTokenRange": {
             "startIndex": 3,
             "endIndex": 4
@@ -1227,7 +1227,7 @@
               "text": ";"
             }
           ],
-          "fileUrlPath": "packages/date-time/src/utilities/serialization.ts",
+          "fileUrlPath": "packages/date-time/src/storm-date.ts",
           "returnTypeTokenRange": {
             "startIndex": 3,
             "endIndex": 4
@@ -1273,7 +1273,7 @@
               "text": ";"
             }
           ],
-          "fileUrlPath": "packages/date-time/src/utilities/serialization.ts",
+          "fileUrlPath": "packages/date-time/src/storm-date-time.ts",
           "returnTypeTokenRange": {
             "startIndex": 3,
             "endIndex": 4
@@ -1319,7 +1319,7 @@
               "text": ";"
             }
           ],
-          "fileUrlPath": "packages/date-time/src/utilities/serialization.ts",
+          "fileUrlPath": "packages/date-time/src/storm-time.ts",
           "returnTypeTokenRange": {
             "startIndex": 3,
             "endIndex": 4
@@ -1865,7 +1865,7 @@
               "excerptTokens": [
                 {
                   "kind": "Content",
-                  "text": "protected validate(dateTime?: "
+                  "text": "protected validate(value?: "
                 },
                 {
                   "kind": "Reference",
@@ -1904,7 +1904,7 @@
               "overloadIndex": 1,
               "parameters": [
                 {
-                  "parameterName": "dateTime",
+                  "parameterName": "value",
                   "parameterTypeTokenRange": {
                     "startIndex": 1,
                     "endIndex": 2
@@ -2893,6 +2893,64 @@
               "isStatic": false,
               "isProtected": false,
               "isAbstract": false
+            },
+            {
+              "kind": "Method",
+              "canonicalReference": "@storm-stack/date-time!StormDateTime.isDateTime:member(1)",
+              "docComment": "/**\n * Type-check to determine if `obj` is a `DateTime` object\n *\n * `isDateTime` returns true if the object passed to it has a `_symbol` property that is equal to `DATE_TIME_SYMBOL`\n *\n * @param obj - the object to check\n *\n * @returns The function isDateTime is returning a boolean value.\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "static isDateTime(obj: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "unknown"
+                },
+                {
+                  "kind": "Content",
+                  "text": "): "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "obj",
+                  "canonicalReference": "@storm-stack/date-time!~obj"
+                },
+                {
+                  "kind": "Content",
+                  "text": " is "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "StormDateTime",
+                  "canonicalReference": "@storm-stack/date-time!StormDateTime:class"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isStatic": true,
+              "returnTypeTokenRange": {
+                "startIndex": 3,
+                "endIndex": 6
+              },
+              "releaseTag": "Public",
+              "isProtected": false,
+              "overloadIndex": 1,
+              "parameters": [
+                {
+                  "parameterName": "obj",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 1,
+                    "endIndex": 2
+                  },
+                  "isOptional": false
+                }
+              ],
+              "isOptional": false,
+              "isAbstract": false,
+              "name": "isDateTime"
             },
             {
               "kind": "Property",
@@ -4081,7 +4139,7 @@
               "excerptTokens": [
                 {
                   "kind": "Content",
-                  "text": "protected validate(dateTime?: "
+                  "text": "protected validate(value?: "
                 },
                 {
                   "kind": "Reference",
@@ -4120,7 +4178,7 @@
               "overloadIndex": 1,
               "parameters": [
                 {
-                  "parameterName": "dateTime",
+                  "parameterName": "value",
                   "parameterTypeTokenRange": {
                     "startIndex": 1,
                     "endIndex": 2
@@ -4683,7 +4741,7 @@
               "excerptTokens": [
                 {
                   "kind": "Content",
-                  "text": "protected validate(dateTime?: "
+                  "text": "protected validate(value?: "
                 },
                 {
                   "kind": "Reference",
@@ -4722,7 +4780,7 @@
               "overloadIndex": 1,
               "parameters": [
                 {
-                  "parameterName": "dateTime",
+                  "parameterName": "value",
                   "parameterTypeTokenRange": {
                     "startIndex": 1,
                     "endIndex": 2

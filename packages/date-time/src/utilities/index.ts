@@ -5,7 +5,6 @@ export * from "./format-since";
 export * from "./format-time";
 export * from "./is-date-time";
 export * from "./is-instant";
-export * from "./serialization";
 export * from "./validate-date";
 export * from "./validate-date-time";
 export * from "./validate-time";
