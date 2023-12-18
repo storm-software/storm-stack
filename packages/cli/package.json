@@ -16,7 +16,7 @@
     "console-table-printer": "2.11.2"
   },
   "devDependencies": {
-    "@types/node": "^20.10.4"
+    "@types/node": "^20.10.5"
   },
   "publishConfig": {
     "access": "public"

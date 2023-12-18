@@ -1,14 +1,38 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Temporal } from "@js-temporal/polyfill";
-import { Serializable } from "@storm-stack/serialization";
+import { JsonValue, Serializable } from "@storm-stack/serialization";
+import {
+  isBigInt,
+  isDate,
+  isNumber,
+  isSetString
+} from "@storm-stack/utilities";
+import { RFC_3339_DATE_REGEX } from "./constants";
 import type { DateTimeInput, DateTimeOptions } from "./storm-date-time";
 import { StormDateTime } from "./storm-date-time";
-import { isDateTime } from "./utilities/is-date-time";
-import {
-  deserializeStormDate,
-  serializeStormDate
-} from "./utilities/serialization";
-import { validateDate } from "./utilities/validate-date";
+import { isInstant } from "./utilities/is-instant";
+
+/**
+ * Serializes a StormDate into a string
+ *
+ * @param date - The date to serialize
+ * @returns The serialized date
+ */
+export function serializeStormDate(date: StormDate): string {
+  return date.instant.toJSON();
+}
+
+/**
+ * Deserializes a string into a StormDate
+ *
+ * @param utcString - The date to deserialize
+ * @returns The deserialized date
+ */
+export function deserializeStormDate(utcString: JsonValue): StormDate {
+  return isSetString(utcString)
+    ? StormDate.create(utcString)
+    : StormDate.create();
+}
 
 /**
  * A wrapper of the and Date class used by Storm Software to provide Date-Time values
@@ -49,9 +73,12 @@ export class StormDate extends StormDateTime {
   ) =>
     new StormDate(date, {
       timeZone:
-        (isDateTime(date) ? date.timeZoneId : options?.timeZone) ??
-        Temporal.Now.timeZoneId(),
-      calendar: isDateTime(date) ? date.calendarId : options?.calendar
+        (StormDateTime.isDateTime(date)
+          ? date.timeZoneId
+          : options?.timeZone) ?? Temporal.Now.timeZoneId(),
+      calendar: StormDateTime.isDateTime(date)
+        ? date.calendarId
+        : options?.calendar
     });
 
   public constructor(dateTime?: DateTimeInput, options?: DateTimeOptions) {
@@ -87,10 +114,69 @@ export class StormDate extends StormDateTime {
    * @returns A boolean representing whether the value is a valid *date-time*
    */
   protected override validate(
-    dateTime?: DateTimeInput,
+    value?: DateTimeInput,
     options?: DateTimeOptions
   ): boolean {
-    return validateDate(dateTime, options);
+    if (StormDateTime.isDateTime(value)) {
+      return value.isValid;
+    }
+    if (isInstant(value)) {
+      return !!value.epochMilliseconds;
+    }
+
+    let datetime: string | undefined;
+    if (isDate(value) || isNumber(value) || isBigInt(value)) {
+      let date!: Date;
+      if (isNumber(value) || isBigInt(value)) {
+        date = new Date(Number(value));
+      } else {
+        date = value;
+      }
+
+      if (isNaN(date.getTime())) {
+        return false;
+      }
+
+      datetime = date.toUTCString();
+    } else {
+      datetime =
+        value === null || value === void 0 ? void 0 : value.toUpperCase();
+    }
+
+    if (!datetime) {
+      return false;
+    }
+
+    if (!RFC_3339_DATE_REGEX.test(datetime)) {
+      return false;
+    }
+
+    const createdDateTime = StormDateTime.create(value, options);
+    switch (createdDateTime.zonedDateTime.month) {
+      case 1:
+      case 3:
+      case 5:
+      case 7:
+      case 8:
+      case 10:
+      case 12:
+        return createdDateTime.zonedDateTime.day > 31;
+
+      case 2:
+        return (
+          createdDateTime.zonedDateTime.day >
+          (createdDateTime.zonedDateTime.inLeapYear ? 29 : 28)
+        );
+
+      case 4:
+      case 6:
+      case 9:
+      case 11:
+        return createdDateTime.zonedDateTime.day > 30;
+
+      default:
+        return true;
+    }
   }
 
   /**

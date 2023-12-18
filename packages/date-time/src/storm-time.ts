@@ -1,14 +1,38 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Temporal } from "@js-temporal/polyfill";
-import { Serializable } from "@storm-stack/serialization";
+import { JsonValue, Serializable } from "@storm-stack/serialization";
+import {
+  isBigInt,
+  isDate,
+  isNumber,
+  isSetString
+} from "@storm-stack/utilities";
+import { RFC_3339_TIME_REGEX } from "./constants";
 import type { DateTimeInput, DateTimeOptions } from "./storm-date-time";
 import { StormDateTime } from "./storm-date-time";
-import { validateTime } from "./utilities";
-import { isDateTime } from "./utilities/is-date-time";
-import {
-  deserializeStormTime,
-  serializeStormTime
-} from "./utilities/serialization";
+import { isInstant } from "./utilities";
+
+/**
+ * Serializes a StormTime into a string
+ *
+ * @param date - The time to serialize
+ * @returns The serialized time
+ */
+export function serializeStormTime(date: StormTime): string {
+  return date.instant.toJSON();
+}
+
+/**
+ * Deserializes a string into a StormTime
+ *
+ * @param utcString - The time to deserialize
+ * @returns The deserialized time
+ */
+export function deserializeStormTime(utcString: JsonValue): StormTime {
+  return isSetString(utcString)
+    ? StormTime.create(utcString)
+    : StormTime.create();
+}
 
 /**
  * A wrapper of the and Date class used by Storm Software to provide Date-Time values
@@ -49,9 +73,12 @@ export class StormTime extends StormDateTime {
   ) =>
     new StormTime(time, {
       timeZone:
-        (isDateTime(time) ? time.timeZoneId : options?.timeZone) ??
-        Temporal.Now.timeZoneId(),
-      calendar: isDateTime(time) ? time.calendarId : options?.calendar
+        (StormDateTime.isDateTime(time)
+          ? time.timeZoneId
+          : options?.timeZone) ?? Temporal.Now.timeZoneId(),
+      calendar: StormDateTime.isDateTime(time)
+        ? time.calendarId
+        : options?.calendar
     });
 
   public constructor(dateTime?: DateTimeInput, options?: DateTimeOptions) {
@@ -81,10 +108,40 @@ export class StormTime extends StormDateTime {
    * @returns A boolean representing whether the value is a valid *date-time*
    */
   protected override validate(
-    dateTime?: DateTimeInput,
+    value?: DateTimeInput,
     options?: DateTimeOptions
   ): boolean {
-    return validateTime(dateTime, options);
+    if (StormDateTime.isDateTime(value)) {
+      return value.isValid;
+    }
+    if (isInstant(value)) {
+      return !!value.epochMilliseconds;
+    }
+
+    let datetime: string | undefined;
+    if (isDate(value) || isNumber(value) || isBigInt(value)) {
+      let date!: Date;
+      if (isNumber(value) || isBigInt(value)) {
+        date = new Date(Number(value));
+      } else {
+        date = value;
+      }
+
+      if (isNaN(date.getTime())) {
+        return false;
+      }
+
+      datetime = date.toUTCString();
+    } else {
+      datetime =
+        value === null || value === void 0 ? void 0 : value.toUpperCase();
+    }
+
+    if (!datetime) {
+      return false;
+    }
+
+    return RFC_3339_TIME_REGEX.test(datetime);
   }
 
   /**

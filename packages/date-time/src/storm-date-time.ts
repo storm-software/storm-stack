@@ -1,12 +1,14 @@
 import { Temporal } from "@js-temporal/polyfill";
-import { Serializable } from "@storm-stack/serialization";
-import { isBigInt, isDate, isNumber } from "@storm-stack/utilities";
-import { isDateTime } from "./utilities/is-date-time";
+import { JsonValue, Serializable } from "@storm-stack/serialization";
 import {
-  deserializeStormDateTime,
-  serializeStormDateTime
-} from "./utilities/serialization";
-import { validateDateTime } from "./utilities/validate-date-time";
+  isBigInt,
+  isDate,
+  isNumber,
+  isSet,
+  isSetString
+} from "@storm-stack/utilities";
+import { RFC_3339_DATETIME_REGEX } from "./constants";
+import { isInstant } from "./utilities/is-instant";
 
 /**
  * The options to use when creating a new DateTime object
@@ -44,6 +46,28 @@ export type DateTimeInput =
   | undefined;
 
 /**
+ * Serializes a StormDateTime into a string
+ *
+ * @param dateTime - The dateTime to serialize
+ * @returns The serialized dateTime
+ */
+export function serializeStormDateTime(dateTime: StormDateTime): string {
+  return dateTime.instant.toJSON();
+}
+
+/**
+ * Deserializes a string into a StormDateTime
+ *
+ * @param utcString - The dateTime to deserialize
+ * @returns The deserialized dateTime
+ */
+export function deserializeStormDateTime(utcString: JsonValue): StormDateTime {
+  return isSetString(utcString)
+    ? StormDateTime.create(utcString)
+    : StormDateTime.create();
+}
+
+/**
  * A wrapper of the and Date class used by Storm Software to provide Date-Time values
  *
  * @decorator `@Serializable()`
@@ -53,6 +77,24 @@ export type DateTimeInput =
   deserialize: deserializeStormDateTime
 })
 export class StormDateTime extends Date {
+  /**
+   * Type-check to determine if `obj` is a `DateTime` object
+   *
+   * `isDateTime` returns true if the object passed to it has a `_symbol` property that is equal to
+   * `DATE_TIME_SYMBOL`
+   *
+   * @param obj - the object to check
+   * @returns The function isDateTime is returning a boolean value.
+   */
+  public static isDateTime(obj: unknown): obj is StormDateTime {
+    return (
+      isDate(obj) &&
+      isSet((obj as unknown as StormDateTime)?.instant) &&
+      isSet((obj as unknown as StormDateTime)?.zonedDateTime) &&
+      isSetString((obj as unknown as StormDateTime)?.timeZoneId)
+    );
+  }
+
   /**
    * The current function returns a new StormDateTime object with the current date and time
    * @returns A new instance of StormDateTime with the current date and time.
@@ -82,10 +124,14 @@ export class StormDateTime extends Date {
   ) =>
     new StormDateTime(dateTime, {
       timeZone:
-        (isDateTime(dateTime) ? dateTime.timeZoneId : options?.timeZone) ??
+        (StormDateTime.isDateTime(dateTime)
+          ? dateTime.timeZoneId
+          : options?.timeZone) ??
         process.env.STORM_TIMEZONE ??
         Temporal.Now.timeZoneId(),
-      calendar: isDateTime(dateTime) ? dateTime.calendarId : options?.calendar
+      calendar: StormDateTime.isDateTime(dateTime)
+        ? dateTime.calendarId
+        : options?.calendar
     });
 
   /**
@@ -118,7 +164,7 @@ export class StormDateTime extends Date {
 
     const instant = !dateTime
       ? undefined
-      : isDateTime(dateTime)
+      : StormDateTime.isDateTime(dateTime)
         ? dateTime.instant
         : Temporal.Instant.from(
             isDate(dateTime)
@@ -227,10 +273,50 @@ export class StormDateTime extends Date {
    * @returns A boolean representing whether the value is a valid *date-time*
    */
   protected validate(
-    dateTime?: DateTimeInput,
+    value?: DateTimeInput,
     options?: DateTimeOptions
   ): boolean {
-    return validateDateTime(dateTime, options);
+    if (StormDateTime.isDateTime(value)) {
+      return value.isValid;
+    }
+    if (isInstant(value)) {
+      return !!value.epochMilliseconds;
+    }
+
+    let datetime: string | undefined;
+    if (isDate(value) || isNumber(value) || isBigInt(value)) {
+      let date!: Date;
+      if (isNumber(value) || isBigInt(value)) {
+        date = new Date(Number(value));
+      } else {
+        date = value;
+      }
+
+      if (isNaN(date.getTime())) {
+        return false;
+      }
+
+      datetime = date.toUTCString();
+    } else {
+      datetime =
+        value === null || value === void 0 ? void 0 : value.toUpperCase();
+    }
+
+    if (!datetime) {
+      return false;
+    }
+
+    // Validate the structure of the date-string
+    if (!RFC_3339_DATETIME_REGEX.test(datetime)) {
+      return false;
+    }
+
+    // Check if it is a correct date using the javascript Date parse() method.
+    if (!Date.parse(datetime)) {
+      return false;
+    }
+
+    return true;
   }
 
   /**
