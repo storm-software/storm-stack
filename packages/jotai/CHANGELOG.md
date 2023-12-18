@@ -1,9 +1,15 @@
-## [1.0.1](https://github.com/storm-software/storm-stack/compare/jotai-v1.0.0...jotai-v1.0.1) (2023-12-17)
+## [1.0.2](https://github.com/storm-software/storm-stack/compare/jotai-v1.0.1...jotai-v1.0.2) (2023-12-18)
 
 
 ### Bug Fixes
 
-* **date-time:** Upgrade to latest version of storm-ops ([e09478d](https://github.com/storm-software/storm-stack/commit/e09478da0e62fe34f3ab339448043c4b7293bd73))
+* **utilities:** Update storm build tools ([1909eaa](https://github.com/storm-software/storm-stack/commit/1909eaabb206cceab19ae7ab7103ed75047cf6db))
+
+## [1.0.1](https://github.com/storm-software/storm-stack/compare/jotai-v1.0.0...jotai-v1.0.1) (2023-12-17)
+
+### Bug Fixes
+
+- **date-time:** Upgrade to latest version of storm-ops ([e09478d](https://github.com/storm-software/storm-stack/commit/e09478da0e62fe34f3ab339448043c4b7293bd73))
 
 # [1.0.0](https://github.com/storm-software/storm-stack/compare/...jotai-v1.0.0) (2023-12-17)
 
