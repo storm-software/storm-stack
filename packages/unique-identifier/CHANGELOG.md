@@ -1,9 +1,15 @@
-## [1.3.1](https://github.com/storm-software/storm-stack/compare/unique-identifier-v1.3.0...unique-identifier-v1.3.1) (2023-12-17)
+## [1.3.2](https://github.com/storm-software/storm-stack/compare/unique-identifier-v1.3.1...unique-identifier-v1.3.2) (2023-12-18)
 
 
 ### Bug Fixes
 
-* **date-time:** Upgrade to latest version of storm-ops ([e09478d](https://github.com/storm-software/storm-stack/commit/e09478da0e62fe34f3ab339448043c4b7293bd73))
+* **utilities:** Update storm build tools ([1909eaa](https://github.com/storm-software/storm-stack/commit/1909eaabb206cceab19ae7ab7103ed75047cf6db))
+
+## [1.3.1](https://github.com/storm-software/storm-stack/compare/unique-identifier-v1.3.0...unique-identifier-v1.3.1) (2023-12-17)
+
+### Bug Fixes
+
+- **date-time:** Upgrade to latest version of storm-ops ([e09478d](https://github.com/storm-software/storm-stack/commit/e09478da0e62fe34f3ab339448043c4b7293bd73))
 
 # [1.3.0](https://github.com/storm-software/storm-stack/compare/unique-identifier-v1.2.12...unique-identifier-v1.3.0) (2023-12-17)
 
