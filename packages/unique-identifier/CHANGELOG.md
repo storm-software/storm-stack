@@ -1,3 +1,10 @@
+## [1.3.3](https://github.com/storm-software/storm-stack/compare/unique-identifier-v1.3.2...unique-identifier-v1.3.3) (2023-12-18)
+
+
+### Bug Fixes
+
+* **unique-identifier:** Resolved issue with bad import path ([dfeb682](https://github.com/storm-software/storm-stack/commit/dfeb682767c6fa4f893f6fafc351df4624f8fce1))
+
 ## [1.3.2](https://github.com/storm-software/storm-stack/compare/unique-identifier-v1.3.1...unique-identifier-v1.3.2) (2023-12-18)
 
 
