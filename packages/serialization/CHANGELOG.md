@@ -1,9 +1,16 @@
-## [1.3.1](https://github.com/storm-software/storm-stack/compare/serialization-v1.3.0...serialization-v1.3.1) (2023-12-17)
+## [1.3.2](https://github.com/storm-software/storm-stack/compare/serialization-v1.3.1...serialization-v1.3.2) (2023-12-18)
 
 
 ### Bug Fixes
 
-* **date-time:** Upgrade to latest version of storm-ops ([e09478d](https://github.com/storm-software/storm-stack/commit/e09478da0e62fe34f3ab339448043c4b7293bd73))
+* **date-time:** Resolved issue with circular references in data-time package ([1836e0f](https://github.com/storm-software/storm-stack/commit/1836e0fcb2b07165baa4a2e280a353d863bdb7e1))
+* **utilities:** Update storm build tools ([1909eaa](https://github.com/storm-software/storm-stack/commit/1909eaabb206cceab19ae7ab7103ed75047cf6db))
+
+## [1.3.1](https://github.com/storm-software/storm-stack/compare/serialization-v1.3.0...serialization-v1.3.1) (2023-12-17)
+
+### Bug Fixes
+
+- **date-time:** Upgrade to latest version of storm-ops ([e09478d](https://github.com/storm-software/storm-stack/commit/e09478da0e62fe34f3ab339448043c4b7293bd73))
 
 # [1.3.0](https://github.com/storm-software/storm-stack/compare/serialization-v1.2.13...serialization-v1.3.0) (2023-12-17)
 
