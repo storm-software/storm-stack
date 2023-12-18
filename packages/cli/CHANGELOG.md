@@ -1,10 +1,16 @@
-## [1.1.2](https://github.com/storm-software/storm-stack/compare/cli-v1.1.1...cli-v1.1.2) (2023-12-18)
+## [1.1.3](https://github.com/storm-software/storm-stack/compare/cli-v1.1.2...cli-v1.1.3) (2023-12-18)
 
 
 ### Bug Fixes
 
-* **date-time:** Resolved issue with circular references in data-time package ([1836e0f](https://github.com/storm-software/storm-stack/commit/1836e0fcb2b07165baa4a2e280a353d863bdb7e1))
-* **utilities:** Update storm build tools ([1909eaa](https://github.com/storm-software/storm-stack/commit/1909eaabb206cceab19ae7ab7103ed75047cf6db))
+* **date-time:** Resolved build issues ([bcf2dba](https://github.com/storm-software/storm-stack/commit/bcf2dbaa21dff4c2a752a75245baad3eeb3c185d))
+
+## [1.1.2](https://github.com/storm-software/storm-stack/compare/cli-v1.1.1...cli-v1.1.2) (2023-12-18)
+
+### Bug Fixes
+
+- **date-time:** Resolved issue with circular references in data-time package ([1836e0f](https://github.com/storm-software/storm-stack/commit/1836e0fcb2b07165baa4a2e280a353d863bdb7e1))
+- **utilities:** Update storm build tools ([1909eaa](https://github.com/storm-software/storm-stack/commit/1909eaabb206cceab19ae7ab7103ed75047cf6db))
 
 ## [1.1.1](https://github.com/storm-software/storm-stack/compare/cli-v1.1.0...cli-v1.1.1) (2023-12-17)
 
