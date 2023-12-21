@@ -1,3 +1,10 @@
+## [1.5.4](https://github.com/storm-software/storm-stack/compare/file-system-v1.5.3...file-system-v1.5.4) (2023-12-21)
+
+
+### Bug Fixes
+
+* **errors:** Resolve stack overflow error ([9416a1a](https://github.com/storm-software/storm-stack/commit/9416a1a148113afdd72c0ae39603b1377d3fef73))
+
 ## [1.5.3](https://github.com/storm-software/storm-stack/compare/file-system-v1.5.2...file-system-v1.5.3) (2023-12-18)
 
 
