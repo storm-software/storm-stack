@@ -73,7 +73,9 @@ export function getCauseFromUnknown(cause: unknown): StormError {
 
   const type = typeof cause;
   if (type === "undefined" || type === "function" || cause === null) {
-    return createStormError({ code: ErrorCode.internal_server_error, cause });
+    return new StormError(ErrorCode.internal_server_error, {
+      cause
+    });
   }
 
   // Primitive types just get wrapped in an error
@@ -92,7 +94,7 @@ export function getCauseFromUnknown(cause: unknown): StormError {
     return err;
   }
 
-  return createStormError({ code: ErrorCode.internal_server_error, cause });
+  return new StormError(ErrorCode.internal_server_error, { cause });
 }
 
 /**
@@ -139,7 +141,6 @@ export class StormError<TCode extends string = string> extends Error {
     this.code = code;
     this.message ??= message ?? EMPTY_STRING;
     this.name ??= name ? name : this.constructor.name;
-    this.cause = getCauseFromUnknown(cause);
     this.data = data;
 
     if (typeof Error.captureStackTrace === "function") {
