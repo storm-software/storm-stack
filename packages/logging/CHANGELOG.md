@@ -1,3 +1,10 @@
+## [1.4.4](https://github.com/storm-software/storm-stack/compare/logging-v1.4.3...logging-v1.4.4) (2023-12-21)
+
+
+### Bug Fixes
+
+* **errors:** Resolve stack overflow error ([9416a1a](https://github.com/storm-software/storm-stack/commit/9416a1a148113afdd72c0ae39603b1377d3fef73))
+
 ## [1.4.3](https://github.com/storm-software/storm-stack/compare/logging-v1.4.2...logging-v1.4.3) (2023-12-18)
 
 

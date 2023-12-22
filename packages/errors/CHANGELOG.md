@@ -1,3 +1,10 @@
+## [1.3.3](https://github.com/storm-software/storm-stack/compare/errors-v1.3.2...errors-v1.3.3) (2023-12-21)
+
+
+### Bug Fixes
+
+* **errors:** Resolve stack overflow error ([9416a1a](https://github.com/storm-software/storm-stack/commit/9416a1a148113afdd72c0ae39603b1377d3fef73))
+
 ## [1.3.2](https://github.com/storm-software/storm-stack/compare/errors-v1.3.1...errors-v1.3.2) (2023-12-18)
 
 
