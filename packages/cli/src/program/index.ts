@@ -5,6 +5,7 @@ import { EMPTY_STRING, NEWLINE_STRING } from "@storm-stack/utilities";
 import chalk from "chalk";
 import { AddHelpTextContext, Argument, Command, Option } from "commander";
 import { Table } from "console-table-printer";
+import { text } from "figlet";
 import { CLIArgument, CLICommand, CLIConfig, CLIOption } from "../types";
 import { registerShutdown } from "./shutdown";
 
@@ -63,10 +64,60 @@ export async function createCLIProgram(cliConfig: CLIConfig): Promise<void> {
   const logger = StormLog.create(config);
 
   try {
-    logger.info(`Starting ${cliConfig.name ?? "Storm CLI Application"}`);
-    logger.start(cliConfig.name ?? "Storm CLI Application");
+    if (cliConfig.banner?.hide !== true) {
+      text(
+        cliConfig.banner?.name ?? cliConfig.name ?? config.name ?? "Storm CLI",
+        cliConfig.banner?.options ?? {
+          font: cliConfig.banner?.font ?? "Larry 3D"
+        },
+        function (err, data) {
+          if (err) {
+            return;
+          }
 
-    const program = new Command(cliConfig.name ?? "Storm CLI Application");
+          console.log(chalk.hex(config.colors.primary)(data));
+        }
+      );
+
+      if (cliConfig.by?.hide !== true) {
+        text(
+          `by ${cliConfig.by?.name ?? config.organization ?? "Storm"}`,
+          cliConfig.banner?.options ?? { font: cliConfig.by?.font ?? "Doom" },
+          function (err, data) {
+            if (err) {
+              return;
+            }
+
+            console.log(chalk.hex(config.colors.primary)(data));
+          }
+        );
+      }
+    }
+
+    logger.info(`⚡ Starting the ${cliConfig.name ?? "Storm CLI"} application`);
+    logger.info(
+      `\nWebsite: ${
+        cliConfig.homepageUrl ?? config.homepage
+      } \nDocumentation: ${
+        cliConfig.documentationUrl ?? config.homepage.endsWith("/")
+          ? `${config.homepage}docs`
+          : `${config.homepage}/docs`
+      } \nRepository: ${cliConfig.repositoryUrl ?? config.repository} \n`
+    );
+    logger.info(
+      `\n This software is distributed under the ${
+        cliConfig.license ?? config.license
+      } license. \nFor more information, please visit ${
+        cliConfig.licenseUrl ??
+        cliConfig.documentationUrl ??
+        config.homepage.endsWith("/")
+          ? `${config.homepage}license`
+          : `${config.homepage}/license`
+      } \n`
+    );
+
+    logger.start(cliConfig.name ?? "Storm CLI Application");
+    const program = new Command(cliConfig.name ?? "Storm CLI");
     const shutdown = registerShutdown({
       logger,
       onShutdown: () => {

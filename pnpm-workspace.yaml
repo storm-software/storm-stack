@@ -1,4 +1,5 @@
 packages:
   - "tools/**"
   - "packages/**"
+  - "frontend/**"
   - "docs/**"

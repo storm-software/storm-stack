@@ -13,9 +13,11 @@
     "@storm-software/config-tools": "latest",
     "chalk": "5.3.0",
     "commander": "11.1.0",
-    "console-table-printer": "2.11.2"
+    "console-table-printer": "2.11.2",
+    "figlet": "^1.7.0"
   },
   "devDependencies": {
+    "@types/figlet": "^1.5.8",
     "@types/node": "^20.10.5"
   },
   "publishConfig": {
