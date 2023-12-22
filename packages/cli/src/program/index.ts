@@ -1,7 +1,11 @@
 import { StormConfig, createStormConfig } from "@storm-software/config-tools";
 import { getCauseFromUnknown } from "@storm-stack/errors";
 import { StormLog } from "@storm-stack/logging";
-import { EMPTY_STRING, NEWLINE_STRING } from "@storm-stack/utilities";
+import {
+  EMPTY_STRING,
+  NEWLINE_STRING,
+  titleCase
+} from "@storm-stack/utilities";
 import chalk from "chalk";
 import { AddHelpTextContext, Argument, Command, Option } from "commander";
 import { Table } from "console-table-printer";
@@ -94,29 +98,31 @@ export async function createCLIProgram(cliConfig: CLIConfig): Promise<void> {
       }
     }
 
-    logger.info(`⚡ Starting the ${cliConfig.name ?? "Storm CLI"} application`);
     logger.info(
-      `\nWebsite: ${
-        cliConfig.homepageUrl ?? config.homepage
-      } \nDocumentation: ${
-        cliConfig.documentationUrl ?? config.homepage.endsWith("/")
-          ? `${config.homepage}docs`
-          : `${config.homepage}/docs`
-      } \nRepository: ${cliConfig.repositoryUrl ?? config.repository} \n`
-    );
-    logger.info(
-      `\n This software is distributed under the ${
-        cliConfig.license ?? config.license
-      } license. \nFor more information, please visit ${
-        cliConfig.licenseUrl ??
-        cliConfig.documentationUrl ??
-        config.homepage.endsWith("/")
-          ? `${config.homepage}license`
-          : `${config.homepage}/license`
-      } \n`
+      `⚡ Starting the ${titleCase(cliConfig.name) ?? "Storm CLI"} application`
     );
 
-    logger.start(cliConfig.name ?? "Storm CLI Application");
+    const urlDisplay = `\nWebsite: ${
+      cliConfig.homepageUrl ?? config.homepage
+    } \nDocumentation: ${
+      cliConfig.documentationUrl ?? config.homepage.endsWith("/")
+        ? `${config.homepage}docs`
+        : `${config.homepage}/docs`
+    } \nRepository: ${cliConfig.repositoryUrl ?? config.repository} \n`;
+    const licenseDisplay = `\n This software is distributed under the ${
+      cliConfig.license ?? config.license
+    } license. \nFor more information, please visit ${
+      cliConfig.licenseUrl ??
+      cliConfig.documentationUrl ??
+      config.homepage.endsWith("/")
+        ? `${config.homepage}license`
+        : `${config.homepage}/license`
+    } \n`;
+
+    logger.debug(urlDisplay);
+    logger.info(licenseDisplay);
+
+    logger.start(titleCase(cliConfig.name) ?? "Storm CLI Application");
     const program = new Command(cliConfig.name ?? "Storm CLI");
     const shutdown = registerShutdown({
       logger,
@@ -143,11 +149,20 @@ export async function createCLIProgram(cliConfig: CLIConfig): Promise<void> {
       });
 
       program
-        .addHelpCommand("help [cmd]", "display help for [cmd]")
-        .addHelpText("beforeAll", "Welcome to Storm CLI Application!")
+        .addHelpCommand("help [cmd]", "Display help for [cmd]")
+        .addHelpText(
+          "beforeAll",
+          `Welcome to the ${
+            titleCase(cliConfig.name) ?? "Storm CLI"
+          } application! \n${
+            cliConfig.description
+          } \n${urlDisplay} \n${licenseDisplay}`
+        )
         .addHelpText(
           "afterAll",
-          "For more information, please visit <https://storm-software.org>"
+          `For more information, please visit <${
+            cliConfig.homepageUrl ?? config.homepage
+          }>`
         )
         .addHelpText("before", (context: AddHelpTextContext) => {
           return cliConfig.commands
