@@ -10,7 +10,11 @@ import { StormDateTime } from "../storm-date-time";
  */
 export const formatDate = (
   dateTime: StormDateTime = StormDate.current(),
-  options: Partial<
-    Temporal.ToStringPrecisionOptions & Temporal.ShowCalendarOption
-  > = { smallestUnit: "minute" }
+  options: Partial<Temporal.ZonedDateTimeToStringOptions> = {
+    smallestUnit: "minute",
+    roundingMode: "ceil",
+    calendarName: "never",
+    timeZoneName: "never",
+    offset: "never"
+  }
 ): string => dateTime.zonedDateTime.toPlainDate().toString(options);

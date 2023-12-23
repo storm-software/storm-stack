@@ -11,9 +11,13 @@ import { StormDateTime } from "../storm-date-time";
  */
 export const formatDateTimeISO = (
   dateTime?: StormDateTime | null,
-  options: Partial<
-    Temporal.ToStringPrecisionOptions & Temporal.ShowCalendarOption
-  > = { smallestUnit: "milliseconds" }
+  options: Partial<Temporal.ZonedDateTimeToStringOptions> = {
+    smallestUnit: "milliseconds",
+    roundingMode: "ceil",
+    calendarName: "never",
+    timeZoneName: "never",
+    offset: "never"
+  }
 ): string =>
   dateTime
     ? `${dateTime.instant
