@@ -1,9 +1,15 @@
-## [1.5.5](https://github.com/storm-software/storm-stack/compare/logging-v1.5.4...logging-v1.5.5) (2023-12-23)
+## [1.5.6](https://github.com/storm-software/storm-stack/compare/logging-v1.5.5...logging-v1.5.6) (2023-12-23)
 
 
 ### Bug Fixes
 
-* **date-time:** Resolve issue with format date display ([fde4545](https://github.com/storm-software/storm-stack/commit/fde4545dd80e3b9f254de22ddf1d1d3e2dc00fe8))
+* **logging:** Added `mkdir` option to create logging directory ([df62ea7](https://github.com/storm-software/storm-stack/commit/df62ea7bc9f541ba4d72fb10b4296b430086c433))
+
+## [1.5.5](https://github.com/storm-software/storm-stack/compare/logging-v1.5.4...logging-v1.5.5) (2023-12-23)
+
+### Bug Fixes
+
+- **date-time:** Resolve issue with format date display ([fde4545](https://github.com/storm-software/storm-stack/commit/fde4545dd80e3b9f254de22ddf1d1d3e2dc00fe8))
 
 ## [1.5.4](https://github.com/storm-software/storm-stack/compare/logging-v1.5.3...logging-v1.5.4) (2023-12-23)
 
