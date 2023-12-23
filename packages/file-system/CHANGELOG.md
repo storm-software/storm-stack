@@ -1,17 +1,22 @@
-# [1.6.0](https://github.com/storm-software/storm-stack/compare/file-system-v1.5.4...file-system-v1.6.0) (2023-12-23)
+## [1.6.1](https://github.com/storm-software/storm-stack/compare/file-system-v1.6.0...file-system-v1.6.1) (2023-12-23)
 
 
 ### Bug Fixes
 
-* **cli:** Updated the display in CLI applications ([71b4a7d](https://github.com/storm-software/storm-stack/commit/71b4a7dd84478e5e82e89541b804c02978cfad59))
-* **errors:** Resolved issue with error printing ([5205570](https://github.com/storm-software/storm-stack/commit/52055702bf4f8c7adb6bb8589a92e77c4016b425))
+* **logging:** Ensure errors are not thrown with missing config ([ade49ac](https://github.com/storm-software/storm-stack/commit/ade49acae4f2c203b571f8ef8dc8e6ef0ebb024f))
 
+# [1.6.0](https://github.com/storm-software/storm-stack/compare/file-system-v1.5.4...file-system-v1.6.0) (2023-12-23)
+
+### Bug Fixes
+
+- **cli:** Updated the display in CLI applications ([71b4a7d](https://github.com/storm-software/storm-stack/commit/71b4a7dd84478e5e82e89541b804c02978cfad59))
+- **errors:** Resolved issue with error printing ([5205570](https://github.com/storm-software/storm-stack/commit/52055702bf4f8c7adb6bb8589a92e77c4016b425))
 
 ### Features
 
-* **cli:** Added `title` option to CLI application config ([272deb0](https://github.com/storm-software/storm-stack/commit/272deb011ca6ce42a9fbac3711022bd72c0b1845))
-* **errors:** Added `cause` to the error print out string ([2d3e72f](https://github.com/storm-software/storm-stack/commit/2d3e72f530756f9a834593c41423cc5e76b60755))
-* **frontend-components:** Initial checkin of UI components library ([bd6a49b](https://github.com/storm-software/storm-stack/commit/bd6a49b0c75b7397cc7ed9f8e50c17e21aba17f3))
+- **cli:** Added `title` option to CLI application config ([272deb0](https://github.com/storm-software/storm-stack/commit/272deb011ca6ce42a9fbac3711022bd72c0b1845))
+- **errors:** Added `cause` to the error print out string ([2d3e72f](https://github.com/storm-software/storm-stack/commit/2d3e72f530756f9a834593c41423cc5e76b60755))
+- **frontend-components:** Initial checkin of UI components library ([bd6a49b](https://github.com/storm-software/storm-stack/commit/bd6a49b0c75b7397cc7ed9f8e50c17e21aba17f3))
 
 ## [1.5.4](https://github.com/storm-software/storm-stack/compare/file-system-v1.5.3...file-system-v1.5.4) (2023-12-21)
 

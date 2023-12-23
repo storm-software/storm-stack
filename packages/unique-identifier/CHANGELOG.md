@@ -1,24 +1,28 @@
-# [1.4.0](https://github.com/storm-software/storm-stack/compare/unique-identifier-v1.3.3...unique-identifier-v1.4.0) (2023-12-23)
+## [1.4.1](https://github.com/storm-software/storm-stack/compare/unique-identifier-v1.4.0...unique-identifier-v1.4.1) (2023-12-23)
 
+
+### Bug Fixes
+
+* **logging:** Ensure errors are not thrown with missing config ([ade49ac](https://github.com/storm-software/storm-stack/commit/ade49acae4f2c203b571f8ef8dc8e6ef0ebb024f))
+
+# [1.4.0](https://github.com/storm-software/storm-stack/compare/unique-identifier-v1.3.3...unique-identifier-v1.4.0) (2023-12-23)
 
 ### Features
 
-* **cli:** Added `title` option to CLI application config ([272deb0](https://github.com/storm-software/storm-stack/commit/272deb011ca6ce42a9fbac3711022bd72c0b1845))
-* **frontend-components:** Initial checkin of UI components library ([bd6a49b](https://github.com/storm-software/storm-stack/commit/bd6a49b0c75b7397cc7ed9f8e50c17e21aba17f3))
+- **cli:** Added `title` option to CLI application config ([272deb0](https://github.com/storm-software/storm-stack/commit/272deb011ca6ce42a9fbac3711022bd72c0b1845))
+- **frontend-components:** Initial checkin of UI components library ([bd6a49b](https://github.com/storm-software/storm-stack/commit/bd6a49b0c75b7397cc7ed9f8e50c17e21aba17f3))
 
 ## [1.3.3](https://github.com/storm-software/storm-stack/compare/unique-identifier-v1.3.2...unique-identifier-v1.3.3) (2023-12-18)
 
-
 ### Bug Fixes
 
-* **unique-identifier:** Resolved issue with bad import path ([dfeb682](https://github.com/storm-software/storm-stack/commit/dfeb682767c6fa4f893f6fafc351df4624f8fce1))
+- **unique-identifier:** Resolved issue with bad import path ([dfeb682](https://github.com/storm-software/storm-stack/commit/dfeb682767c6fa4f893f6fafc351df4624f8fce1))
 
 ## [1.3.2](https://github.com/storm-software/storm-stack/compare/unique-identifier-v1.3.1...unique-identifier-v1.3.2) (2023-12-18)
 
-
 ### Bug Fixes
 
-* **utilities:** Update storm build tools ([1909eaa](https://github.com/storm-software/storm-stack/commit/1909eaabb206cceab19ae7ab7103ed75047cf6db))
+- **utilities:** Update storm build tools ([1909eaa](https://github.com/storm-software/storm-stack/commit/1909eaabb206cceab19ae7ab7103ed75047cf6db))
 
 ## [1.3.1](https://github.com/storm-software/storm-stack/compare/unique-identifier-v1.3.0...unique-identifier-v1.3.1) (2023-12-17)
 
