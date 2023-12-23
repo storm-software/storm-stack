@@ -186,8 +186,8 @@ Message: {msg}
                 logPath,
                 formatDate().replaceAll("/", "-").replaceAll(" ", "-"),
                 `${
-                  config.extensions.logging.fileName
-                    ? config.extensions.logging.fileName + "-"
+                  loggingConfig.fileName
+                    ? loggingConfig.fileName + "-"
                     : EMPTY_STRING
                 }error-${formatDateTime()
                   .replaceAll("/", "-")
