@@ -139,7 +139,7 @@ export class StormError<TCode extends string = string> extends Error {
     super(message, { cause });
 
     this.code = code;
-    this.message ??= message ?? EMPTY_STRING;
+    this.message ??= message ? message : "An error occurred during processing";
     this.name ??= name ? name : this.constructor.name;
     this.data = data;
 
