@@ -158,20 +158,21 @@ Message: {msg}
                 logPath,
                 formatDate().replaceAll("/", "-").replaceAll(" ", "-"),
                 `${
-                  loggingConfig.fileName
-                    ? loggingConfig.fileName + "-"
-                    : EMPTY_STRING
+                  (loggingConfig.fileName ? loggingConfig.fileName : "storm") +
+                  "-"
                 }${formatDateTime()
                   .replaceAll("/", "-")
                   .replaceAll(" ", "-")
-                  .replaceAll(":", "-")}.${
+                  .replaceAll(":", "-")
+                  .replaceAll(".", "-")}.${
                   loggingConfig.fileExtension
                     ? loggingConfig.fileExtension.replaceAll(".", EMPTY_STRING)
                     : "log"
                 }}`
               ),
               minLength: 4096,
-              sync: false
+              sync: false,
+              mkdir: true
             })
           }
         },
@@ -188,17 +189,19 @@ Message: {msg}
                   config.extensions.logging.fileName
                     ? config.extensions.logging.fileName + "-"
                     : EMPTY_STRING
-                }-error-${formatDateTime()
+                }error-${formatDateTime()
                   .replaceAll("/", "-")
                   .replaceAll(" ", "-")
-                  .replaceAll(":", "-")}.${
+                  .replaceAll(":", "-")
+                  .replaceAll(".", "-")}.${
                   loggingConfig.fileExtension
                     ? loggingConfig.fileExtension.replaceAll(".", EMPTY_STRING)
                     : "log"
                 }}`
               ),
               minLength: 4096,
-              sync: false
+              sync: false,
+              mkdir: true
             })
           }
         }

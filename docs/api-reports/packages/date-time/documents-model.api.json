@@ -730,17 +730,8 @@
             },
             {
               "kind": "Reference",
-              "text": "Temporal.ToStringPrecisionOptions",
-              "canonicalReference": "!Temporal.ToStringPrecisionOptions:type"
-            },
-            {
-              "kind": "Content",
-              "text": " & "
-            },
-            {
-              "kind": "Reference",
-              "text": "Temporal.ShowCalendarOption",
-              "canonicalReference": "!Temporal.ShowCalendarOption:type"
+              "text": "Temporal.ZonedDateTimeToStringOptions",
+              "canonicalReference": "!Temporal.ZonedDateTimeToStringOptions:type"
             },
             {
               "kind": "Content",
@@ -753,7 +744,7 @@
           "name": "formatDate",
           "variableTypeTokenRange": {
             "startIndex": 1,
-            "endIndex": 10
+            "endIndex": 8
           }
         },
         {
@@ -789,17 +780,8 @@
             },
             {
               "kind": "Reference",
-              "text": "Temporal.ToStringPrecisionOptions",
-              "canonicalReference": "!Temporal.ToStringPrecisionOptions:type"
-            },
-            {
-              "kind": "Content",
-              "text": " & "
-            },
-            {
-              "kind": "Reference",
-              "text": "Temporal.ShowCalendarOption",
-              "canonicalReference": "!Temporal.ShowCalendarOption:type"
+              "text": "Temporal.ZonedDateTimeToStringOptions",
+              "canonicalReference": "!Temporal.ZonedDateTimeToStringOptions:type"
             },
             {
               "kind": "Content",
@@ -812,7 +794,7 @@
           "name": "formatDateTime",
           "variableTypeTokenRange": {
             "startIndex": 1,
-            "endIndex": 10
+            "endIndex": 8
           }
         },
         {
@@ -848,17 +830,8 @@
             },
             {
               "kind": "Reference",
-              "text": "Temporal.ToStringPrecisionOptions",
-              "canonicalReference": "!Temporal.ToStringPrecisionOptions:type"
-            },
-            {
-              "kind": "Content",
-              "text": " & "
-            },
-            {
-              "kind": "Reference",
-              "text": "Temporal.ShowCalendarOption",
-              "canonicalReference": "!Temporal.ShowCalendarOption:type"
+              "text": "Temporal.ZonedDateTimeToStringOptions",
+              "canonicalReference": "!Temporal.ZonedDateTimeToStringOptions:type"
             },
             {
               "kind": "Content",
@@ -871,7 +844,7 @@
           "name": "formatDateTimeISO",
           "variableTypeTokenRange": {
             "startIndex": 1,
-            "endIndex": 10
+            "endIndex": 8
           }
         },
         {
@@ -992,17 +965,8 @@
             },
             {
               "kind": "Reference",
-              "text": "Temporal.ToStringPrecisionOptions",
-              "canonicalReference": "!Temporal.ToStringPrecisionOptions:type"
-            },
-            {
-              "kind": "Content",
-              "text": " & "
-            },
-            {
-              "kind": "Reference",
-              "text": "Temporal.ShowCalendarOption",
-              "canonicalReference": "!Temporal.ShowCalendarOption:type"
+              "text": "Temporal.ZonedDateTimeToStringOptions",
+              "canonicalReference": "!Temporal.ZonedDateTimeToStringOptions:type"
             },
             {
               "kind": "Content",
@@ -1015,7 +979,7 @@
           "name": "formatTime",
           "variableTypeTokenRange": {
             "startIndex": 1,
-            "endIndex": 10
+            "endIndex": 8
           }
         },
         {

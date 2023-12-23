@@ -78,9 +78,7 @@ export { deserializeStormTime as deserializeStormTime_alias_1 };
 // @public
 const formatDate: (
   dateTime?: StormDateTime,
-  options?: Partial<
-    Temporal.ToStringPrecisionOptions & Temporal.ShowCalendarOption
-  >
+  options?: Partial<Temporal.ZonedDateTimeToStringOptions>
 ) => string;
 export { formatDate };
 export { formatDate as formatDate_alias_1 };
@@ -89,9 +87,7 @@ export { formatDate as formatDate_alias_2 };
 // @public
 const formatDateTime: (
   dateTime?: StormDateTime,
-  options?: Partial<
-    Temporal.ToStringPrecisionOptions & Temporal.ShowCalendarOption
-  >
+  options?: Partial<Temporal.ZonedDateTimeToStringOptions>
 ) => string;
 export { formatDateTime };
 export { formatDateTime as formatDateTime_alias_1 };
@@ -100,9 +96,7 @@ export { formatDateTime as formatDateTime_alias_2 };
 // @public
 const formatDateTimeISO: (
   dateTime?: StormDateTime | null,
-  options?: Partial<
-    Temporal.ToStringPrecisionOptions & Temporal.ShowCalendarOption
-  >
+  options?: Partial<Temporal.ZonedDateTimeToStringOptions>
 ) => string;
 export { formatDateTimeISO };
 export { formatDateTimeISO as formatDateTimeISO_alias_1 };
@@ -137,9 +131,7 @@ export { FormatSinceOptions as FormatSinceOptions_alias_2 };
 // @public
 const formatTime: (
   dateTime?: StormDateTime,
-  options?: Partial<
-    Temporal.ToStringPrecisionOptions & Temporal.ShowCalendarOption
-  >
+  options?: Partial<Temporal.ZonedDateTimeToStringOptions>
 ) => string;
 export { formatTime };
 export { formatTime as formatTime_alias_1 };
