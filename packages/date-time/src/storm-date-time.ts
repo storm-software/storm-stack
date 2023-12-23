@@ -131,7 +131,8 @@ export class StormDateTime extends Date {
         Temporal.Now.timeZoneId(),
       calendar: StormDateTime.isDateTime(dateTime)
         ? dateTime.calendarId
-        : options?.calendar
+        : options?.calendar ??
+          new Intl.DateTimeFormat().resolvedOptions().calendar
     });
 
   /**
@@ -143,6 +144,7 @@ export class StormDateTime extends Date {
    * A private accessor that stores the `Temporal.ZonedDateTime` object of the DateTime object
    */
   #zonedDateTime: Temporal.ZonedDateTime = Temporal.Now.zonedDateTime(
+    new Intl.DateTimeFormat().resolvedOptions().calendar,
     process.env.STORM_TIMEZONE ?? Temporal.Now.timeZoneId()
   );
 
