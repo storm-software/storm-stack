@@ -1,17 +1,29 @@
-## [1.3.3](https://github.com/storm-software/storm-stack/compare/errors-v1.3.2...errors-v1.3.3) (2023-12-21)
+# [1.4.0](https://github.com/storm-software/storm-stack/compare/errors-v1.3.3...errors-v1.4.0) (2023-12-23)
 
 
 ### Bug Fixes
 
-* **errors:** Resolve stack overflow error ([9416a1a](https://github.com/storm-software/storm-stack/commit/9416a1a148113afdd72c0ae39603b1377d3fef73))
+* **errors:** Resolved issue with error printing ([5205570](https://github.com/storm-software/storm-stack/commit/52055702bf4f8c7adb6bb8589a92e77c4016b425))
+
+
+### Features
+
+* **cli:** Added `title` option to CLI application config ([272deb0](https://github.com/storm-software/storm-stack/commit/272deb011ca6ce42a9fbac3711022bd72c0b1845))
+* **errors:** Added `cause` to the error print out string ([2d3e72f](https://github.com/storm-software/storm-stack/commit/2d3e72f530756f9a834593c41423cc5e76b60755))
+* **frontend-components:** Initial checkin of UI components library ([bd6a49b](https://github.com/storm-software/storm-stack/commit/bd6a49b0c75b7397cc7ed9f8e50c17e21aba17f3))
+
+## [1.3.3](https://github.com/storm-software/storm-stack/compare/errors-v1.3.2...errors-v1.3.3) (2023-12-21)
+
+### Bug Fixes
+
+- **errors:** Resolve stack overflow error ([9416a1a](https://github.com/storm-software/storm-stack/commit/9416a1a148113afdd72c0ae39603b1377d3fef73))
 
 ## [1.3.2](https://github.com/storm-software/storm-stack/compare/errors-v1.3.1...errors-v1.3.2) (2023-12-18)
 
-
 ### Bug Fixes
 
-* **date-time:** Resolved issue with circular references in data-time package ([1836e0f](https://github.com/storm-software/storm-stack/commit/1836e0fcb2b07165baa4a2e280a353d863bdb7e1))
-* **utilities:** Update storm build tools ([1909eaa](https://github.com/storm-software/storm-stack/commit/1909eaabb206cceab19ae7ab7103ed75047cf6db))
+- **date-time:** Resolved issue with circular references in data-time package ([1836e0f](https://github.com/storm-software/storm-stack/commit/1836e0fcb2b07165baa4a2e280a353d863bdb7e1))
+- **utilities:** Update storm build tools ([1909eaa](https://github.com/storm-software/storm-stack/commit/1909eaabb206cceab19ae7ab7103ed75047cf6db))
 
 ## [1.3.1](https://github.com/storm-software/storm-stack/compare/errors-v1.3.0...errors-v1.3.1) (2023-12-17)
 
