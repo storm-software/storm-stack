@@ -1,3 +1,10 @@
+## [1.4.6](https://github.com/storm-software/storm-stack/compare/date-time-v1.4.5...date-time-v1.4.6) (2023-12-23)
+
+
+### Bug Fixes
+
+* **logging:** Resolve issue in log file paths ([ae3ea95](https://github.com/storm-software/storm-stack/commit/ae3ea95cee37d0491086a3d3c93a697e87457d55))
+
 ## [1.4.5](https://github.com/storm-software/storm-stack/compare/date-time-v1.4.4...date-time-v1.4.5) (2023-12-23)
 
 
