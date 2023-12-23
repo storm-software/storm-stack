@@ -1,9 +1,15 @@
-## [1.6.5](https://github.com/storm-software/storm-stack/compare/file-system-v1.6.4...file-system-v1.6.5) (2023-12-23)
+## [1.6.6](https://github.com/storm-software/storm-stack/compare/file-system-v1.6.5...file-system-v1.6.6) (2023-12-23)
 
 
 ### Bug Fixes
 
-* **date-time:** Resolve issue with format date display ([fde4545](https://github.com/storm-software/storm-stack/commit/fde4545dd80e3b9f254de22ddf1d1d3e2dc00fe8))
+* **logging:** Added `mkdir` option to create logging directory ([df62ea7](https://github.com/storm-software/storm-stack/commit/df62ea7bc9f541ba4d72fb10b4296b430086c433))
+
+## [1.6.5](https://github.com/storm-software/storm-stack/compare/file-system-v1.6.4...file-system-v1.6.5) (2023-12-23)
+
+### Bug Fixes
+
+- **date-time:** Resolve issue with format date display ([fde4545](https://github.com/storm-software/storm-stack/commit/fde4545dd80e3b9f254de22ddf1d1d3e2dc00fe8))
 
 ## [1.6.4](https://github.com/storm-software/storm-stack/compare/file-system-v1.6.3...file-system-v1.6.4) (2023-12-23)
 
