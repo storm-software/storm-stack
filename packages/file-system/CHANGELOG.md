@@ -1,10 +1,16 @@
-## [1.6.9](https://github.com/storm-software/storm-stack/compare/file-system-v1.6.8...file-system-v1.6.9) (2023-12-23)
+## [1.6.10](https://github.com/storm-software/storm-stack/compare/file-system-v1.6.9...file-system-v1.6.10) (2023-12-23)
 
 
 ### Bug Fixes
 
-* **logging:** Add `pino-pretty` programatically ([68968aa](https://github.com/storm-software/storm-stack/commit/68968aa0220cc868b2f9ebfabf67076becde305c))
-* **logging:** Resolve issue in log file paths ([ae3ea95](https://github.com/storm-software/storm-stack/commit/ae3ea95cee37d0491086a3d3c93a697e87457d55))
+* **logging:** Resolved issue with timestamp population ([83e5911](https://github.com/storm-software/storm-stack/commit/83e5911decc98d17ac0272a61caf83b2256a8016))
+
+## [1.6.9](https://github.com/storm-software/storm-stack/compare/file-system-v1.6.8...file-system-v1.6.9) (2023-12-23)
+
+### Bug Fixes
+
+- **logging:** Add `pino-pretty` programatically ([68968aa](https://github.com/storm-software/storm-stack/commit/68968aa0220cc868b2f9ebfabf67076becde305c))
+- **logging:** Resolve issue in log file paths ([ae3ea95](https://github.com/storm-software/storm-stack/commit/ae3ea95cee37d0491086a3d3c93a697e87457d55))
 
 ## [1.6.8](https://github.com/storm-software/storm-stack/compare/file-system-v1.6.7...file-system-v1.6.8) (2023-12-23)
 
