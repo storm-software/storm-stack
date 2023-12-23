@@ -1,16 +1,28 @@
-## [1.4.4](https://github.com/storm-software/storm-stack/compare/logging-v1.4.3...logging-v1.4.4) (2023-12-21)
+# [1.5.0](https://github.com/storm-software/storm-stack/compare/logging-v1.4.4...logging-v1.5.0) (2023-12-23)
 
 
 ### Bug Fixes
 
-* **errors:** Resolve stack overflow error ([9416a1a](https://github.com/storm-software/storm-stack/commit/9416a1a148113afdd72c0ae39603b1377d3fef73))
+* **errors:** Resolved issue with error printing ([5205570](https://github.com/storm-software/storm-stack/commit/52055702bf4f8c7adb6bb8589a92e77c4016b425))
+
+
+### Features
+
+* **cli:** Added `title` option to CLI application config ([272deb0](https://github.com/storm-software/storm-stack/commit/272deb011ca6ce42a9fbac3711022bd72c0b1845))
+* **errors:** Added `cause` to the error print out string ([2d3e72f](https://github.com/storm-software/storm-stack/commit/2d3e72f530756f9a834593c41423cc5e76b60755))
+* **frontend-components:** Initial checkin of UI components library ([bd6a49b](https://github.com/storm-software/storm-stack/commit/bd6a49b0c75b7397cc7ed9f8e50c17e21aba17f3))
+
+## [1.4.4](https://github.com/storm-software/storm-stack/compare/logging-v1.4.3...logging-v1.4.4) (2023-12-21)
+
+### Bug Fixes
+
+- **errors:** Resolve stack overflow error ([9416a1a](https://github.com/storm-software/storm-stack/commit/9416a1a148113afdd72c0ae39603b1377d3fef73))
 
 ## [1.4.3](https://github.com/storm-software/storm-stack/compare/logging-v1.4.2...logging-v1.4.3) (2023-12-18)
 
-
 ### Bug Fixes
 
-* **date-time:** Resolved build issues ([bcf2dba](https://github.com/storm-software/storm-stack/commit/bcf2dbaa21dff4c2a752a75245baad3eeb3c185d))
+- **date-time:** Resolved build issues ([bcf2dba](https://github.com/storm-software/storm-stack/commit/bcf2dbaa21dff4c2a752a75245baad3eeb3c185d))
 
 ## [1.4.2](https://github.com/storm-software/storm-stack/compare/logging-v1.4.1...logging-v1.4.2) (2023-12-18)
 
