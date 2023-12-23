@@ -194,7 +194,14 @@ export class StormError<TCode extends string = string> extends Error {
               ? `(${this.code})`
               : this.code
             : EMPTY_STRING
-        }${this.code || this.name ? ": " : EMPTY_STRING}${this.message}`
+        }${this.code || this.name ? ": " : EMPTY_STRING}${this.message}${
+          this.cause
+            ? NEWLINE_STRING +
+              `Cause: ${
+                isStormError(this.cause) ? this.cause.print() : this.cause
+              }`
+            : EMPTY_STRING
+        }`
       : EMPTY_STRING;
   }
 
