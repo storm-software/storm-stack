@@ -1,9 +1,15 @@
-## [1.2.2](https://github.com/storm-software/storm-stack/compare/cli-v1.2.1...cli-v1.2.2) (2023-12-23)
+## [1.2.3](https://github.com/storm-software/storm-stack/compare/cli-v1.2.2...cli-v1.2.3) (2023-12-23)
 
 
 ### Bug Fixes
 
-* **logging:** Handle missing colors config ([8e11719](https://github.com/storm-software/storm-stack/commit/8e1171986306094b678d13960a60bde74211aa23))
+* **logging:** Added type check for undefined color config ([c58876c](https://github.com/storm-software/storm-stack/commit/c58876c4b8f8d16c2e27482f904e30f872cc8aaa))
+
+## [1.2.2](https://github.com/storm-software/storm-stack/compare/cli-v1.2.1...cli-v1.2.2) (2023-12-23)
+
+### Bug Fixes
+
+- **logging:** Handle missing colors config ([8e11719](https://github.com/storm-software/storm-stack/commit/8e1171986306094b678d13960a60bde74211aa23))
 
 ## [1.2.1](https://github.com/storm-software/storm-stack/compare/cli-v1.2.0...cli-v1.2.1) (2023-12-23)
 
