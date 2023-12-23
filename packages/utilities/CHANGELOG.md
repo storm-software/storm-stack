@@ -1,3 +1,10 @@
+## [1.4.2](https://github.com/storm-software/storm-stack/compare/utilities-v1.4.1...utilities-v1.4.2) (2023-12-23)
+
+
+### Bug Fixes
+
+* **logging:** Added type check for undefined color config ([c58876c](https://github.com/storm-software/storm-stack/commit/c58876c4b8f8d16c2e27482f904e30f872cc8aaa))
+
 ## [1.4.1](https://github.com/storm-software/storm-stack/compare/utilities-v1.4.0...utilities-v1.4.1) (2023-12-23)
 
 
