@@ -1,3 +1,11 @@
+# [1.1.0](https://github.com/storm-software/storm-stack/compare/jotai-v1.0.2...jotai-v1.1.0) (2023-12-23)
+
+
+### Features
+
+* **cli:** Added `title` option to CLI application config ([272deb0](https://github.com/storm-software/storm-stack/commit/272deb011ca6ce42a9fbac3711022bd72c0b1845))
+* **frontend-components:** Initial checkin of UI components library ([bd6a49b](https://github.com/storm-software/storm-stack/commit/bd6a49b0c75b7397cc7ed9f8e50c17e21aba17f3))
+
 ## [1.0.2](https://github.com/storm-software/storm-stack/compare/jotai-v1.0.1...jotai-v1.0.2) (2023-12-18)
 
 
