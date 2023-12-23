@@ -1,9 +1,15 @@
-## [1.2.6](https://github.com/storm-software/storm-stack/compare/cli-v1.2.5...cli-v1.2.6) (2023-12-23)
+## [1.2.7](https://github.com/storm-software/storm-stack/compare/cli-v1.2.6...cli-v1.2.7) (2023-12-23)
 
 
 ### Bug Fixes
 
-* **logging:** Added `mkdir` option to create logging directory ([df62ea7](https://github.com/storm-software/storm-stack/commit/df62ea7bc9f541ba4d72fb10b4296b430086c433))
+* **logging:** Resolve object ref error ([1a5986b](https://github.com/storm-software/storm-stack/commit/1a5986b9452bdd11f21dd404d9357d9841f2af8d))
+
+## [1.2.6](https://github.com/storm-software/storm-stack/compare/cli-v1.2.5...cli-v1.2.6) (2023-12-23)
+
+### Bug Fixes
+
+- **logging:** Added `mkdir` option to create logging directory ([df62ea7](https://github.com/storm-software/storm-stack/commit/df62ea7bc9f541ba4d72fb10b4296b430086c433))
 
 ## [1.2.5](https://github.com/storm-software/storm-stack/compare/cli-v1.2.4...cli-v1.2.5) (2023-12-23)
 
