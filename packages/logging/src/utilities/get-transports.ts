@@ -75,7 +75,7 @@ export const getTransports = (
     }
   };
 
-  const transports: TransportTargetOptions[] = [
+  let transports: TransportTargetOptions[] = [
     {
       target: "pino-pretty",
       options: {
@@ -93,7 +93,14 @@ export const getTransports = (
           "[{time}] {levelLabel} ({if pid}{pid} - {end}{req.url}: {msg}",
         singleLine: false,
         hideObject: false,
-        customColors: {
+        customColors: {}
+      }
+    }
+  ];
+  if (config.colors) {
+    transports = transports.map(transport => {
+      if (transport.options) {
+        transport.options.customColors = {
           exception: config.colors.error,
           err: config.colors.error,
           error: config.colors.error,
@@ -104,10 +111,12 @@ export const getTransports = (
           trace: config.colors.primary,
           "req.url": config.colors.primary,
           success: config.colors.success
-        }
+        };
       }
-    }
-  ];
+
+      return transport;
+    });
+  }
 
   if (isRuntimeServer()) {
     const pinoServerOptions = {
