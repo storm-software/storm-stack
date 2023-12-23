@@ -4,6 +4,7 @@
 
 ```ts
 import { DestinationStream } from "pino";
+import { Logger } from "pino";
 import { LoggerOptions as LoggerOptions_2 } from "pino";
 import { StormConfig } from "@storm-software/config-tools";
 import { Temporal } from "@js-temporal/polyfill";
@@ -19,7 +20,7 @@ export const getLogLevelLabel: (logLevel: number) => LogLevelLabel;
 const getTransports: (
   config: StormConfig<"logging", LoggingConfig>,
   name?: string
-) => any;
+) => Logger<any>;
 export { getTransports };
 export { getTransports as getTransports_alias_1 };
 export { getTransports as getTransports_alias_2 };

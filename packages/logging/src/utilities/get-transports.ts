@@ -15,7 +15,7 @@ import pino, {
   LoggerOptions as PinoLoggerOptions,
   TransportTargetOptions
 } from "pino";
-import "pino-pretty";
+import pretty from "pino-pretty";
 import { LoggingConfig } from "../types";
 import { LogLevel, getLogLevel } from "./get-log-level";
 
@@ -76,50 +76,40 @@ export const getTransports = (
     }
   };
 
-  let transports: TransportTargetOptions[] = [
-    {
-      target: "pino-pretty",
-      options: {
-        ...baseOptions,
-        msgPrefix: "STORM",
-        destination: 1, // 1 = stdout
-        colorize: true,
-        colorizeObjects: true,
-        errorLikeObjectKeys: ["err", "error", "exception"],
-        minimumLevel: config.logLevel,
-        messageKey: "msg",
-        errorKey: "error",
-        timestampKey: "time",
-        messageFormat:
-          "[{time}] {levelLabel} ({if pid}{pid} - {end}{req.url}: {msg}",
-        singleLine: false,
-        hideObject: false,
-        customColors: {}
-      }
-    }
-  ];
-  if (config.colors) {
-    transports = transports.map(transport => {
-      if (transport.options) {
-        transport.options.customColors = {
-          exception: config.colors.error,
-          err: config.colors.error,
-          error: config.colors.error,
-          fatal: config.colors.fatal,
-          warn: config.colors.warning,
-          info: config.colors.info,
-          debug: config.colors.primary,
-          trace: config.colors.primary,
-          "req.url": config.colors.primary,
-          success: config.colors.success
-        };
-        transport.options.msgPrefix = chalk.bold.hex(config.colors.primary)(
-          "STORM"
-        );
-      }
+  let transports: TransportTargetOptions[] = [];
 
-      return transport;
-    });
+  const prettyOptions = {
+    ...baseOptions,
+    msgPrefix: "STORM",
+    destination: 1, // 1 = stdout
+    colorize: true,
+    colorizeObjects: true,
+    errorLikeObjectKeys: ["err", "error", "exception"],
+    minimumLevel: config.logLevel,
+    messageKey: "msg",
+    errorKey: "error",
+    timestampKey: "time",
+    messageFormat:
+      "[{time}] {levelLabel} ({if pid}{pid} - {end}{req.url}: {msg}",
+    singleLine: false,
+    hideObject: false,
+    customColors: {}
+  };
+
+  if (config.colors) {
+    prettyOptions.customColors = {
+      exception: config.colors.error,
+      err: config.colors.error,
+      error: config.colors.error,
+      fatal: config.colors.fatal,
+      warn: config.colors.warning,
+      info: config.colors.info,
+      debug: config.colors.primary,
+      trace: config.colors.primary,
+      "req.url": config.colors.primary,
+      success: config.colors.success
+    };
+    prettyOptions.msgPrefix = chalk.bold.hex(config.colors.primary)("STORM");
   }
 
   if (isRuntimeServer()) {
@@ -169,11 +159,12 @@ Message: {msg}
                   loggingConfig.fileExtension
                     ? loggingConfig.fileExtension.replaceAll(".", EMPTY_STRING)
                     : "log"
-                }}`
+                }`
               ),
               minLength: 4096,
               sync: false,
-              mkdir: true
+              mkdir: true,
+              append: true
             })
           }
         },
@@ -198,11 +189,12 @@ Message: {msg}
                   loggingConfig.fileExtension
                     ? loggingConfig.fileExtension.replaceAll(".", EMPTY_STRING)
                     : "log"
-                }}`
+                }`
               ),
               minLength: 4096,
               sync: false,
-              mkdir: true
+              mkdir: true,
+              append: true
             })
           }
         }
@@ -229,7 +221,10 @@ Message: {msg}
     }
   }
 
-  return pino.transport({
-    targets: transports
-  });
+  return pino(
+    pino.transport({
+      targets: transports
+    }),
+    pretty(prettyOptions)
+  );
 };

@@ -257,7 +257,7 @@
             },
             {
               "kind": "Content",
-              "text": ">, name?: string) => any"
+              "text": ">, name?: string) => import(\"pino\").Logger<any>"
             }
           ],
           "fileUrlPath": "packages/logging/src/utilities/get-transports.ts",

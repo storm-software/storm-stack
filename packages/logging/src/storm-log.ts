@@ -59,13 +59,7 @@ export class StormLog implements IStormLog {
     config: StormConfig<"logging", LoggingConfig>,
     name?: string
   ): pino.BaseLogger => {
-    let pinoLogger!: pino.BaseLogger;
-
-    const transports = getTransports(config, name);
-    if (transports) {
-      pinoLogger = pino(transports);
-    }
-
+    const pinoLogger: pino.BaseLogger = getTransports(config, name);
     pinoLogger.debug("The Storm log has ben initialized");
 
     return pinoLogger;
