@@ -1,16 +1,21 @@
-## [1.4.2](https://github.com/storm-software/storm-stack/compare/serialization-v1.4.1...serialization-v1.4.2) (2023-12-23)
+## [1.4.3](https://github.com/storm-software/storm-stack/compare/serialization-v1.4.2...serialization-v1.4.3) (2023-12-23)
 
 
 ### Bug Fixes
 
-* **logging:** Added type check for undefined color config ([c58876c](https://github.com/storm-software/storm-stack/commit/c58876c4b8f8d16c2e27482f904e30f872cc8aaa))
+* **date-time:** Resolved issues with temporal calendar ([5039d03](https://github.com/storm-software/storm-stack/commit/5039d03ed8a2b0fcc8ed93c56006cd956517afd8))
+
+## [1.4.2](https://github.com/storm-software/storm-stack/compare/serialization-v1.4.1...serialization-v1.4.2) (2023-12-23)
+
+### Bug Fixes
+
+- **logging:** Added type check for undefined color config ([c58876c](https://github.com/storm-software/storm-stack/commit/c58876c4b8f8d16c2e27482f904e30f872cc8aaa))
 
 ## [1.4.1](https://github.com/storm-software/storm-stack/compare/serialization-v1.4.0...serialization-v1.4.1) (2023-12-23)
 
-
 ### Bug Fixes
 
-* **logging:** Ensure errors are not thrown with missing config ([ade49ac](https://github.com/storm-software/storm-stack/commit/ade49acae4f2c203b571f8ef8dc8e6ef0ebb024f))
+- **logging:** Ensure errors are not thrown with missing config ([ade49ac](https://github.com/storm-software/storm-stack/commit/ade49acae4f2c203b571f8ef8dc8e6ef0ebb024f))
 
 # [1.4.0](https://github.com/storm-software/storm-stack/compare/serialization-v1.3.2...serialization-v1.4.0) (2023-12-23)
 
