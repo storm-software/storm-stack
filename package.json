@@ -147,7 +147,8 @@
       "@storm-stack/logging": "workspace:*",
       "@storm-stack/file-system": "workspace:*",
       "@storm-stack/cli": "workspace:*",
-      "@storm-stack/jotai": "workspace:*"
+      "@storm-stack/jotai": "workspace:*",
+      "@storm-stack/frontend-components": "workspace:*"
     }
   },
   "triggerEmptyDevReleaseByIncrementingThisNumber": 0

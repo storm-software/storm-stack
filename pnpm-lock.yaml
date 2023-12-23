@@ -197,7 +197,13 @@ importers:
       console-table-printer:
         specifier: 2.11.2
         version: 2.11.2
+      figlet:
+        specifier: ^1.7.0
+        version: 1.7.0
     devDependencies:
+      "@types/figlet":
+        specifier: ^1.5.8
+        version: 1.5.8
       "@types/node":
         specifier: ^20.10.5
         version: 20.10.5
@@ -9951,6 +9957,13 @@ packages:
       }
     dev: false
 
+  /@types/figlet@1.5.8:
+    resolution:
+      {
+        integrity: sha512-G22AUvy4Tl95XLE7jmUM8s8mKcoz+Hr+Xm9W90gJsppJq9f9tHvOGkrpn4gRX0q/cLtBdNkWtWCKDg2UDZoZvQ==
+      }
+    dev: true
+
   /@types/fs-extra@9.0.13:
     resolution:
       {
@@ -16374,6 +16387,15 @@ packages:
       ua-parser-js: 1.0.37
     transitivePeerDependencies:
       - encoding
+    dev: false
+
+  /figlet@1.7.0:
+    resolution:
+      {
+        integrity: sha512-gO8l3wvqo0V7wEFLXPbkX83b7MVjRrk1oRLfYlZXol8nEpb/ON9pcKLI4qpBv5YtOTfrINtqb7b40iYY2FTWFg==
+      }
+    engines: { node: ">= 0.4.0" }
+    hasBin: true
     dev: false
 
   /figures@2.0.0:

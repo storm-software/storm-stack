@@ -110,6 +110,11 @@ export class StormError<TCode extends string = string> extends Error {
   __proto__ = Error;
 
   /**
+   * The stack trace
+   */
+  #stack?: string;
+
+  /**
    * The error code
    */
   public code!: TCode;
@@ -123,11 +128,6 @@ export class StormError<TCode extends string = string> extends Error {
    * Additional data to be passed with the error
    */
   public data?: any;
-
-  /**
-   * The stack trace
-   */
-  #stack?: string;
 
   public constructor(
     code: TCode,

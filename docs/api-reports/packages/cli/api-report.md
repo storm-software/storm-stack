@@ -7,6 +7,8 @@
 
 import { Command } from "commander";
 import { ExecOptions } from "child_process";
+import { Fonts } from "figlet";
+import { Options } from "figlet";
 import pino from "pino";
 import { Readable } from "node:stream";
 import { StdioOptions } from "child_process";
@@ -47,15 +49,29 @@ export { CLICommand as CLICommand_alias_1 };
 // @public (undocumented)
 interface CLIConfig {
   // (undocumented)
+  banner?: CLITitle;
+  // (undocumented)
+  by?: CLITitle;
+  // (undocumented)
   commands: CLICommand[];
   // (undocumented)
   description: string;
+  // (undocumented)
+  documentationUrl?: string;
+  // (undocumented)
+  homepageUrl?: string;
+  // (undocumented)
+  license?: string;
+  // (undocumented)
+  licenseUrl?: string;
   // (undocumented)
   name: string;
   // (undocumented)
   postAction: (command: Command) => MaybePromise<void>;
   // (undocumented)
   preAction: (command: Command) => MaybePromise<void>;
+  // (undocumented)
+  repositoryUrl?: string;
 }
 export { CLIConfig };
 export { CLIConfig as CLIConfig_alias_1 };
@@ -83,6 +99,20 @@ interface CLIOptionDefault {
 }
 export { CLIOptionDefault };
 export { CLIOptionDefault as CLIOptionDefault_alias_1 };
+
+// @public (undocumented)
+interface CLITitle {
+  // (undocumented)
+  font?: Fonts;
+  // (undocumented)
+  hide?: boolean;
+  // (undocumented)
+  name?: string;
+  // (undocumented)
+  options?: Options;
+}
+export { CLITitle };
+export { CLITitle as CLITitle_alias_1 };
 
 // @public
 function createCliOptions(
