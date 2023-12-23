@@ -34,14 +34,15 @@ export const getTransports = (
   config: StormConfig<"logging", LoggingConfig>,
   name?: string
 ) => {
-  let logPath = config.extensions.logging.path;
+  const loggingConfig = config.extensions?.logging ?? {};
+
+  let logPath = loggingConfig.path;
   if (!isSetString(logPath)) {
     logPath = join(tmpdir(), "storm", "logs");
   }
 
-  config.logLevel ??= config?.env === "production" ? "error" : "debug";
-  config.extensions.logging.stacktrace ??=
-    config?.env === "production" ? false : true;
+  config.logLevel ??= config.env === "production" ? "error" : "debug";
+  loggingConfig.stacktrace ??= config?.env === "production" ? false : true;
 
   const baseOptions: PinoLoggerOptions = {
     enabled: getLogLevel(config.logLevel) > LogLevel.SILENT,
@@ -145,19 +146,17 @@ Message: {msg}
                 logPath,
                 formatDate().replaceAll("/", "-").replaceAll(" ", "-"),
                 `${
-                  config.extensions.logging.fileName
-                    ? config.extensions.logging.fileName + "-"
+                  loggingConfig.fileName
+                    ? loggingConfig.fileName + "-"
                     : EMPTY_STRING
                 }${formatDateTime()
                   .replaceAll("/", "-")
                   .replaceAll(" ", "-")
-                  .replaceAll(
-                    ":",
-                    "-"
-                  )}.${config.extensions.logging.fileExtension.replaceAll(
-                  ".",
-                  EMPTY_STRING
-                )}}`
+                  .replaceAll(":", "-")}.${
+                  loggingConfig.fileExtension
+                    ? loggingConfig.fileExtension.replaceAll(".", EMPTY_STRING)
+                    : "log"
+                }}`
               ),
               minLength: 4096,
               sync: false
@@ -180,13 +179,11 @@ Message: {msg}
                 }-error-${formatDateTime()
                   .replaceAll("/", "-")
                   .replaceAll(" ", "-")
-                  .replaceAll(
-                    ":",
-                    "-"
-                  )}.${config.extensions.logging.fileExtension.replaceAll(
-                  ".",
-                  EMPTY_STRING
-                )}}`
+                  .replaceAll(":", "-")}.${
+                  loggingConfig.fileExtension
+                    ? loggingConfig.fileExtension.replaceAll(".", EMPTY_STRING)
+                    : "log"
+                }}`
               ),
               minLength: 4096,
               sync: false
@@ -197,19 +194,19 @@ Message: {msg}
     );
 
     if (
-      config.extensions.logging.loki?.host &&
-      config.extensions.logging.loki?.username &&
-      config.extensions.logging.loki?.password
+      loggingConfig.loki?.host &&
+      loggingConfig.loki?.username &&
+      loggingConfig.loki?.password
     ) {
       transports.push({
         target: "pino-loki",
         options: {
           batching: true,
           interval: 5,
-          host: config.extensions.logging.loki?.host,
+          host: loggingConfig.loki?.host,
           basicAuth: {
-            username: config.extensions.logging.loki?.username,
-            password: config.extensions.logging.loki?.password
+            username: loggingConfig.loki?.username,
+            password: loggingConfig.loki?.password
           }
         }
       });
