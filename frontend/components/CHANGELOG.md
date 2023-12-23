@@ -1,3 +1,10 @@
+## [1.0.1](https://github.com/storm-software/storm-stack/compare/frontend-components-v1.0.0...frontend-components-v1.0.1) (2023-12-23)
+
+
+### Bug Fixes
+
+* **logging:** Added type check for undefined color config ([c58876c](https://github.com/storm-software/storm-stack/commit/c58876c4b8f8d16c2e27482f904e30f872cc8aaa))
+
 # [1.0.0](https://github.com/storm-software/storm-stack/compare/...frontend-components-v1.0.0) (2023-12-23)
 
 
