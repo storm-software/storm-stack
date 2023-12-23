@@ -1,18 +1,23 @@
-# [1.4.0](https://github.com/storm-software/storm-stack/compare/serialization-v1.3.2...serialization-v1.4.0) (2023-12-23)
-
-
-### Features
-
-* **cli:** Added `title` option to CLI application config ([272deb0](https://github.com/storm-software/storm-stack/commit/272deb011ca6ce42a9fbac3711022bd72c0b1845))
-* **frontend-components:** Initial checkin of UI components library ([bd6a49b](https://github.com/storm-software/storm-stack/commit/bd6a49b0c75b7397cc7ed9f8e50c17e21aba17f3))
-
-## [1.3.2](https://github.com/storm-software/storm-stack/compare/serialization-v1.3.1...serialization-v1.3.2) (2023-12-18)
+## [1.4.1](https://github.com/storm-software/storm-stack/compare/serialization-v1.4.0...serialization-v1.4.1) (2023-12-23)
 
 
 ### Bug Fixes
 
-* **date-time:** Resolved issue with circular references in data-time package ([1836e0f](https://github.com/storm-software/storm-stack/commit/1836e0fcb2b07165baa4a2e280a353d863bdb7e1))
-* **utilities:** Update storm build tools ([1909eaa](https://github.com/storm-software/storm-stack/commit/1909eaabb206cceab19ae7ab7103ed75047cf6db))
+* **logging:** Ensure errors are not thrown with missing config ([ade49ac](https://github.com/storm-software/storm-stack/commit/ade49acae4f2c203b571f8ef8dc8e6ef0ebb024f))
+
+# [1.4.0](https://github.com/storm-software/storm-stack/compare/serialization-v1.3.2...serialization-v1.4.0) (2023-12-23)
+
+### Features
+
+- **cli:** Added `title` option to CLI application config ([272deb0](https://github.com/storm-software/storm-stack/commit/272deb011ca6ce42a9fbac3711022bd72c0b1845))
+- **frontend-components:** Initial checkin of UI components library ([bd6a49b](https://github.com/storm-software/storm-stack/commit/bd6a49b0c75b7397cc7ed9f8e50c17e21aba17f3))
+
+## [1.3.2](https://github.com/storm-software/storm-stack/compare/serialization-v1.3.1...serialization-v1.3.2) (2023-12-18)
+
+### Bug Fixes
+
+- **date-time:** Resolved issue with circular references in data-time package ([1836e0f](https://github.com/storm-software/storm-stack/commit/1836e0fcb2b07165baa4a2e280a353d863bdb7e1))
+- **utilities:** Update storm build tools ([1909eaa](https://github.com/storm-software/storm-stack/commit/1909eaabb206cceab19ae7ab7103ed75047cf6db))
 
 ## [1.3.1](https://github.com/storm-software/storm-stack/compare/serialization-v1.3.0...serialization-v1.3.1) (2023-12-17)
 
