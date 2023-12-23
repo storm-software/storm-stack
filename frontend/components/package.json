@@ -1,6 +1,6 @@
 {
   "name": "@storm-stack/frontend-components",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "private": false,
   "description": "⚡ The storm-stack monorepo contains utility applications, tools, and various libraries to create modern and scalable web applications.",
   "repository": {

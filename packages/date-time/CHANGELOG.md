@@ -1,9 +1,15 @@
-## [1.4.3](https://github.com/storm-software/storm-stack/compare/date-time-v1.4.2...date-time-v1.4.3) (2023-12-23)
+## [1.4.4](https://github.com/storm-software/storm-stack/compare/date-time-v1.4.3...date-time-v1.4.4) (2023-12-23)
 
 
 ### Bug Fixes
 
-* **date-time:** Resolved issues with temporal calendar ([5039d03](https://github.com/storm-software/storm-stack/commit/5039d03ed8a2b0fcc8ed93c56006cd956517afd8))
+* **date-time:** Resolve issue with format date display ([fde4545](https://github.com/storm-software/storm-stack/commit/fde4545dd80e3b9f254de22ddf1d1d3e2dc00fe8))
+
+## [1.4.3](https://github.com/storm-software/storm-stack/compare/date-time-v1.4.2...date-time-v1.4.3) (2023-12-23)
+
+### Bug Fixes
+
+- **date-time:** Resolved issues with temporal calendar ([5039d03](https://github.com/storm-software/storm-stack/commit/5039d03ed8a2b0fcc8ed93c56006cd956517afd8))
 
 ## [1.4.2](https://github.com/storm-software/storm-stack/compare/date-time-v1.4.1...date-time-v1.4.2) (2023-12-23)
 

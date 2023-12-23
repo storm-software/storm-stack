@@ -1,9 +1,15 @@
-## [1.5.4](https://github.com/storm-software/storm-stack/compare/logging-v1.5.3...logging-v1.5.4) (2023-12-23)
+## [1.5.5](https://github.com/storm-software/storm-stack/compare/logging-v1.5.4...logging-v1.5.5) (2023-12-23)
 
 
 ### Bug Fixes
 
-* **date-time:** Resolved issues with temporal calendar ([5039d03](https://github.com/storm-software/storm-stack/commit/5039d03ed8a2b0fcc8ed93c56006cd956517afd8))
+* **date-time:** Resolve issue with format date display ([fde4545](https://github.com/storm-software/storm-stack/commit/fde4545dd80e3b9f254de22ddf1d1d3e2dc00fe8))
+
+## [1.5.4](https://github.com/storm-software/storm-stack/compare/logging-v1.5.3...logging-v1.5.4) (2023-12-23)
+
+### Bug Fixes
+
+- **date-time:** Resolved issues with temporal calendar ([5039d03](https://github.com/storm-software/storm-stack/commit/5039d03ed8a2b0fcc8ed93c56006cd956517afd8))
 
 ## [1.5.3](https://github.com/storm-software/storm-stack/compare/logging-v1.5.2...logging-v1.5.3) (2023-12-23)
 

@@ -1,3 +1,10 @@
+## [1.0.2](https://github.com/storm-software/storm-stack/compare/frontend-components-v1.0.1...frontend-components-v1.0.2) (2023-12-23)
+
+
+### Bug Fixes
+
+* **date-time:** Resolve issue with format date display ([fde4545](https://github.com/storm-software/storm-stack/commit/fde4545dd80e3b9f254de22ddf1d1d3e2dc00fe8))
+
 ## [1.0.1](https://github.com/storm-software/storm-stack/compare/frontend-components-v1.0.0...frontend-components-v1.0.1) (2023-12-23)
 
 
