@@ -1,9 +1,15 @@
-## [1.5.2](https://github.com/storm-software/storm-stack/compare/logging-v1.5.1...logging-v1.5.2) (2023-12-23)
+## [1.5.3](https://github.com/storm-software/storm-stack/compare/logging-v1.5.2...logging-v1.5.3) (2023-12-23)
 
 
 ### Bug Fixes
 
-* **logging:** Handle missing colors config ([8e11719](https://github.com/storm-software/storm-stack/commit/8e1171986306094b678d13960a60bde74211aa23))
+* **logging:** Added type check for undefined color config ([c58876c](https://github.com/storm-software/storm-stack/commit/c58876c4b8f8d16c2e27482f904e30f872cc8aaa))
+
+## [1.5.2](https://github.com/storm-software/storm-stack/compare/logging-v1.5.1...logging-v1.5.2) (2023-12-23)
+
+### Bug Fixes
+
+- **logging:** Handle missing colors config ([8e11719](https://github.com/storm-software/storm-stack/commit/8e1171986306094b678d13960a60bde74211aa23))
 
 ## [1.5.1](https://github.com/storm-software/storm-stack/compare/logging-v1.5.0...logging-v1.5.1) (2023-12-23)
 
