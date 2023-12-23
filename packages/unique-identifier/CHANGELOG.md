@@ -1,3 +1,10 @@
+## [1.4.4](https://github.com/storm-software/storm-stack/compare/unique-identifier-v1.4.3...unique-identifier-v1.4.4) (2023-12-23)
+
+
+### Bug Fixes
+
+* **logging:** Added `mkdir` option to create logging directory ([df62ea7](https://github.com/storm-software/storm-stack/commit/df62ea7bc9f541ba4d72fb10b4296b430086c433))
+
 ## [1.4.3](https://github.com/storm-software/storm-stack/compare/unique-identifier-v1.4.2...unique-identifier-v1.4.3) (2023-12-23)
 
 
