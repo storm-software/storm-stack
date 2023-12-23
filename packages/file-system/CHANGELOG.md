@@ -1,9 +1,15 @@
-## [1.6.7](https://github.com/storm-software/storm-stack/compare/file-system-v1.6.6...file-system-v1.6.7) (2023-12-23)
+## [1.6.8](https://github.com/storm-software/storm-stack/compare/file-system-v1.6.7...file-system-v1.6.8) (2023-12-23)
 
 
 ### Bug Fixes
 
-* **logging:** Resolve object ref error ([1a5986b](https://github.com/storm-software/storm-stack/commit/1a5986b9452bdd11f21dd404d9357d9841f2af8d))
+* **logging:** Force import of `pino-pretty` ([7de2377](https://github.com/storm-software/storm-stack/commit/7de23778332d4c3407aa50c6e2168cae04dda40f))
+
+## [1.6.7](https://github.com/storm-software/storm-stack/compare/file-system-v1.6.6...file-system-v1.6.7) (2023-12-23)
+
+### Bug Fixes
+
+- **logging:** Resolve object ref error ([1a5986b](https://github.com/storm-software/storm-stack/commit/1a5986b9452bdd11f21dd404d9357d9841f2af8d))
 
 ## [1.6.6](https://github.com/storm-software/storm-stack/compare/file-system-v1.6.5...file-system-v1.6.6) (2023-12-23)
 
