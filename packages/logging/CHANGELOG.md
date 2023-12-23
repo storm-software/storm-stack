@@ -1,9 +1,16 @@
-## [1.5.8](https://github.com/storm-software/storm-stack/compare/logging-v1.5.7...logging-v1.5.8) (2023-12-23)
+## [1.5.9](https://github.com/storm-software/storm-stack/compare/logging-v1.5.8...logging-v1.5.9) (2023-12-23)
 
 
 ### Bug Fixes
 
-* **logging:** Force import of `pino-pretty` ([7de2377](https://github.com/storm-software/storm-stack/commit/7de23778332d4c3407aa50c6e2168cae04dda40f))
+* **logging:** Add `pino-pretty` programatically ([68968aa](https://github.com/storm-software/storm-stack/commit/68968aa0220cc868b2f9ebfabf67076becde305c))
+* **logging:** Resolve issue in log file paths ([ae3ea95](https://github.com/storm-software/storm-stack/commit/ae3ea95cee37d0491086a3d3c93a697e87457d55))
+
+## [1.5.8](https://github.com/storm-software/storm-stack/compare/logging-v1.5.7...logging-v1.5.8) (2023-12-23)
+
+### Bug Fixes
+
+- **logging:** Force import of `pino-pretty` ([7de2377](https://github.com/storm-software/storm-stack/commit/7de23778332d4c3407aa50c6e2168cae04dda40f))
 
 ## [1.5.7](https://github.com/storm-software/storm-stack/compare/logging-v1.5.6...logging-v1.5.7) (2023-12-23)
 
