@@ -1,9 +1,15 @@
-## [1.2.3](https://github.com/storm-software/storm-stack/compare/cli-v1.2.2...cli-v1.2.3) (2023-12-23)
+## [1.2.4](https://github.com/storm-software/storm-stack/compare/cli-v1.2.3...cli-v1.2.4) (2023-12-23)
 
 
 ### Bug Fixes
 
-* **logging:** Added type check for undefined color config ([c58876c](https://github.com/storm-software/storm-stack/commit/c58876c4b8f8d16c2e27482f904e30f872cc8aaa))
+* **date-time:** Resolved issues with temporal calendar ([5039d03](https://github.com/storm-software/storm-stack/commit/5039d03ed8a2b0fcc8ed93c56006cd956517afd8))
+
+## [1.2.3](https://github.com/storm-software/storm-stack/compare/cli-v1.2.2...cli-v1.2.3) (2023-12-23)
+
+### Bug Fixes
+
+- **logging:** Added type check for undefined color config ([c58876c](https://github.com/storm-software/storm-stack/commit/c58876c4b8f8d16c2e27482f904e30f872cc8aaa))
 
 ## [1.2.2](https://github.com/storm-software/storm-stack/compare/cli-v1.2.1...cli-v1.2.2) (2023-12-23)
 
