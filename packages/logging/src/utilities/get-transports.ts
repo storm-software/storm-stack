@@ -1,5 +1,9 @@
 import { StormConfig } from "@storm-software/config-tools";
-import { formatDate, formatDateTime } from "@storm-stack/date-time";
+import {
+  StormDateTime,
+  formatDate,
+  formatDateTime
+} from "@storm-stack/date-time";
 import { isStormError } from "@storm-stack/errors";
 import {
   EMPTY_STRING,
@@ -50,7 +54,14 @@ export const getTransports = (
     level: config.logLevel,
     messageKey: "msg",
     errorKey: "error",
-    timestamp: () => formatDateTime(),
+    timestamp: () =>
+      formatDateTime(StormDateTime.current(), {
+        smallestUnit: "millisecond",
+        roundingMode: "ceil",
+        calendarName: "never",
+        timeZoneName: "never",
+        offset: "never"
+      }),
     formatters: {
       level: (label: string, number: number) => {
         const level = titleCase(label);
@@ -151,7 +162,13 @@ Message: {msg}
                 `${
                   (loggingConfig.fileName ? loggingConfig.fileName : "storm") +
                   "-"
-                }${formatDateTime()
+                }${formatDateTime(StormDateTime.current(), {
+                  smallestUnit: "second",
+                  roundingMode: "ceil",
+                  calendarName: "never",
+                  timeZoneName: "never",
+                  offset: "never"
+                })
                   .replaceAll("/", "-")
                   .replaceAll(" ", "-")
                   .replaceAll(":", "-")
@@ -181,7 +198,13 @@ Message: {msg}
                   loggingConfig.fileName
                     ? loggingConfig.fileName + "-"
                     : EMPTY_STRING
-                }error-${formatDateTime()
+                }error-${formatDateTime(StormDateTime.current(), {
+                  smallestUnit: "second",
+                  roundingMode: "ceil",
+                  calendarName: "never",
+                  timeZoneName: "never",
+                  offset: "never"
+                })
                   .replaceAll("/", "-")
                   .replaceAll(" ", "-")
                   .replaceAll(":", "-")

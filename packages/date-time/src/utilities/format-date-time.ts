@@ -12,7 +12,7 @@ import { StormDateTime } from "../storm-date-time";
 export const formatDateTime = (
   dateTime: StormDateTime = StormDateTime.current(),
   options: Partial<Temporal.ZonedDateTimeToStringOptions> = {
-    smallestUnit: "milliseconds",
+    smallestUnit: "millisecond",
     roundingMode: "ceil",
     calendarName: "never",
     timeZoneName: "never",
