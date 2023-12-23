@@ -1,9 +1,15 @@
-## [1.5.7](https://github.com/storm-software/storm-stack/compare/logging-v1.5.6...logging-v1.5.7) (2023-12-23)
+## [1.5.8](https://github.com/storm-software/storm-stack/compare/logging-v1.5.7...logging-v1.5.8) (2023-12-23)
 
 
 ### Bug Fixes
 
-* **logging:** Resolve object ref error ([1a5986b](https://github.com/storm-software/storm-stack/commit/1a5986b9452bdd11f21dd404d9357d9841f2af8d))
+* **logging:** Force import of `pino-pretty` ([7de2377](https://github.com/storm-software/storm-stack/commit/7de23778332d4c3407aa50c6e2168cae04dda40f))
+
+## [1.5.7](https://github.com/storm-software/storm-stack/compare/logging-v1.5.6...logging-v1.5.7) (2023-12-23)
+
+### Bug Fixes
+
+- **logging:** Resolve object ref error ([1a5986b](https://github.com/storm-software/storm-stack/commit/1a5986b9452bdd11f21dd404d9357d9841f2af8d))
 
 ## [1.5.6](https://github.com/storm-software/storm-stack/compare/logging-v1.5.5...logging-v1.5.6) (2023-12-23)
 
