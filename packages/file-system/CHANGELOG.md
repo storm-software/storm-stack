@@ -1,9 +1,15 @@
-## [1.6.1](https://github.com/storm-software/storm-stack/compare/file-system-v1.6.0...file-system-v1.6.1) (2023-12-23)
+## [1.6.2](https://github.com/storm-software/storm-stack/compare/file-system-v1.6.1...file-system-v1.6.2) (2023-12-23)
 
 
 ### Bug Fixes
 
-* **logging:** Ensure errors are not thrown with missing config ([ade49ac](https://github.com/storm-software/storm-stack/commit/ade49acae4f2c203b571f8ef8dc8e6ef0ebb024f))
+* **logging:** Handle missing colors config ([8e11719](https://github.com/storm-software/storm-stack/commit/8e1171986306094b678d13960a60bde74211aa23))
+
+## [1.6.1](https://github.com/storm-software/storm-stack/compare/file-system-v1.6.0...file-system-v1.6.1) (2023-12-23)
+
+### Bug Fixes
+
+- **logging:** Ensure errors are not thrown with missing config ([ade49ac](https://github.com/storm-software/storm-stack/commit/ade49acae4f2c203b571f8ef8dc8e6ef0ebb024f))
 
 # [1.6.0](https://github.com/storm-software/storm-stack/compare/file-system-v1.5.4...file-system-v1.6.0) (2023-12-23)
 
