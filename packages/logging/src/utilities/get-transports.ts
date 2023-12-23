@@ -80,7 +80,7 @@ export const getTransports = (
       target: "pino-pretty",
       options: {
         ...baseOptions,
-        msgPrefix: chalk.bold.hex(config.colors.primary)("STORM"),
+        msgPrefix: "STORM",
         destination: 1, // 1 = stdout
         colorize: true,
         colorizeObjects: true,
@@ -112,6 +112,9 @@ export const getTransports = (
           "req.url": config.colors.primary,
           success: config.colors.success
         };
+        transport.options.msgPrefix = chalk.bold.hex(config.colors.primary)(
+          "STORM"
+        );
       }
 
       return transport;

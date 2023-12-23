@@ -72,19 +72,19 @@ importers:
         version: 12.1.0(semantic-release@22.0.12)
       "@storm-software/config-tools":
         specifier: latest
-        version: 1.5.0(typescript@5.3.3)
+        version: 1.9.2(typescript@5.3.3)
       "@storm-software/git-tools":
         specifier: latest
-        version: 1.17.1(@swc-node/register@1.6.8)(@swc/core@1.3.100)(typescript@5.3.3)
+        version: 1.18.0(@swc-node/register@1.6.8)(@swc/core@1.3.100)(typescript@5.3.3)
       "@storm-software/linting-tools":
         specifier: latest
-        version: 1.18.0
+        version: 1.20.0
       "@storm-software/testing-tools":
         specifier: latest
-        version: 1.15.0(@swc-node/register@1.6.8)(@swc/core@1.3.100)(@types/node@20.10.5)(nx@17.2.1)(ts-node@10.9.2)(typescript@5.3.3)(verdaccio@5.29.0)
+        version: 1.16.0(@swc-node/register@1.6.8)(@swc/core@1.3.100)(@types/node@20.10.5)(nx@17.2.1)(ts-node@10.9.2)(typescript@5.3.3)(verdaccio@5.29.0)
       "@storm-software/workspace-tools":
         specifier: latest
-        version: 1.31.3(@swc-node/register@1.6.8)(@swc/core@1.3.100)(@types/node@20.10.5)(esbuild@0.19.9)(nx@17.2.1)(postcss@8.2.13)(ts-node@10.9.2)(typescript@5.3.3)(verdaccio@5.29.0)
+        version: 1.35.2(@swc-node/register@1.6.8)(@swc/core@1.3.100)(@types/node@20.10.5)(esbuild@0.19.9)(nx@17.2.1)(postcss@8.2.13)(ts-node@10.9.2)(typescript@5.3.3)(verdaccio@5.29.0)
       "@swc-node/register":
         specifier: 1.6.8
         version: 1.6.8(@swc/core@1.3.100)(typescript@5.3.3)
@@ -187,7 +187,7 @@ importers:
     dependencies:
       "@storm-software/config-tools":
         specifier: latest
-        version: 1.2.14(typescript@5.3.3)
+        version: 1.9.2(typescript@5.3.3)
       chalk:
         specifier: 5.3.0
         version: 5.3.0
@@ -218,10 +218,10 @@ importers:
     dependencies:
       "@storm-software/testing-tools":
         specifier: latest
-        version: 1.1.12(@swc-node/register@1.6.8)(@swc/core@1.3.100)(@types/node@20.10.5)(nx@17.2.1)(ts-node@10.9.2)(typescript@5.3.3)(verdaccio@5.29.0)
+        version: 1.16.0(@swc-node/register@1.6.8)(@swc/core@1.3.100)(@types/node@20.10.5)(nx@17.2.1)(ts-node@10.9.2)(typescript@5.3.3)(verdaccio@5.29.0)
       "@storm-software/workspace-tools":
         specifier: latest
-        version: 1.6.18(@swc-node/register@1.6.8)(@swc/core@1.3.100)(@types/node@20.10.5)(esbuild@0.19.9)(nx@17.2.1)(typescript@5.3.3)(verdaccio@5.29.0)
+        version: 1.35.2(@swc-node/register@1.6.8)(@swc/core@1.3.100)(@types/node@20.10.5)(esbuild@0.19.9)(nx@17.2.1)(postcss@8.2.13)(ts-node@10.9.2)(typescript@5.3.3)(verdaccio@5.29.0)
       stacktracey:
         specifier: 2.1.8
         version: 2.1.8
@@ -252,7 +252,7 @@ importers:
     dependencies:
       "@storm-software/config-tools":
         specifier: latest
-        version: 1.2.11(typescript@5.3.3)
+        version: 1.9.2(typescript@5.3.3)
       chalk:
         specifier: 5.3.0
         version: 5.3.0
@@ -2306,7 +2306,7 @@ packages:
       "@commitlint/lint": 18.1.0
       "@commitlint/load": 18.4.3(typescript@5.3.3)
       "@commitlint/read": 18.4.3
-      "@commitlint/types": 18.1.0
+      "@commitlint/types": 18.4.3
       execa: 5.1.1
       lodash.isfunction: 3.0.9
       resolve-from: 5.0.0
@@ -2368,7 +2368,7 @@ packages:
     engines: { node: ">=v18" }
     dependencies:
       "@commitlint/types": 18.4.3
-      chalk: 4.1.0
+      chalk: 4.1.2
     dev: false
 
   /@commitlint/is-ignored@18.4.3:
@@ -2392,7 +2392,7 @@ packages:
       "@commitlint/is-ignored": 18.4.3
       "@commitlint/parse": 18.4.3
       "@commitlint/rules": 18.4.3
-      "@commitlint/types": 18.1.0
+      "@commitlint/types": 18.4.3
     dev: false
 
   /@commitlint/load@18.4.3(typescript@5.3.3):
@@ -2407,7 +2407,7 @@ packages:
       "@commitlint/resolve-extends": 18.4.3
       "@commitlint/types": 18.4.3
       "@types/node": 18.19.3
-      chalk: 4.1.0
+      chalk: 4.1.2
       cosmiconfig: 8.3.6(typescript@5.3.3)
       cosmiconfig-typescript-loader: 5.0.0(@types/node@18.19.3)(cosmiconfig@8.3.6)(typescript@5.3.3)
       lodash.isplainobject: 4.0.6
@@ -2506,7 +2506,7 @@ packages:
       }
     engines: { node: ">=v18" }
     dependencies:
-      chalk: 4.1.0
+      chalk: 4.1.2
     dev: false
 
   /@commitlint/types@18.4.3:
@@ -2516,7 +2516,7 @@ packages:
       }
     engines: { node: ">=v18" }
     dependencies:
-      chalk: 4.1.0
+      chalk: 4.1.2
     dev: false
 
   /@cspell/cspell-bundled-dicts@7.3.9:
@@ -5160,7 +5160,7 @@ packages:
       "@nrwl/esbuild": 17.0.3(@swc-node/register@1.6.8)(@swc/core@1.3.100)(@types/node@20.10.5)(esbuild@0.19.9)(nx@17.2.1)(typescript@5.3.3)(verdaccio@5.29.0)
       "@nx/devkit": 17.0.3(nx@17.2.1)
       "@nx/js": 17.0.3(@swc-node/register@1.6.8)(@swc/core@1.3.100)(@types/node@20.10.5)(nx@17.2.1)(typescript@5.3.3)(verdaccio@5.29.0)
-      chalk: 4.1.0
+      chalk: 4.1.2
       esbuild: 0.19.9
       fast-glob: 3.2.7
       fs-extra: 11.2.0
@@ -7530,46 +7530,24 @@ packages:
       "@sinonjs/commons": 3.0.0
     dev: false
 
-  /@storm-software/config-tools@1.2.11(typescript@5.3.3):
+  /@storm-software/config-tools@1.9.2(typescript@5.3.3):
     resolution:
       {
-        integrity: sha512-l2tHC8mUofiwPbECUUPx8HVEuJKRuRKoliir1c6m4EiNptKh2fjXHkRlKtPpdAZvKsO1pyVT9GsfzSLpew2zng==
+        integrity: sha512-7FpQNT4Ejumc8542toTEEpNP99eIlWsJeWtrr6I685bu2dQFUYtXu5icIaDCokDpQ6Mz9xTgwWXu18rkHgHNcw==
       }
     dependencies:
       cosmiconfig: 9.0.0(typescript@5.3.3)
+      find-up: 7.0.0
+      locate-path: 7.2.0
       zod: 3.22.4
     transitivePeerDependencies:
       - typescript
     dev: false
 
-  /@storm-software/config-tools@1.2.14(typescript@5.3.3):
+  /@storm-software/git-tools@1.18.0(@swc-node/register@1.6.8)(@swc/core@1.3.100)(typescript@5.3.3):
     resolution:
       {
-        integrity: sha512-Pozk1IHYZCeVhXYP5uVgpzDmoduyJVZthShWY09jd4aAHvon9aUwT7scMuGcIClWVzWI9oCmE/R7zT+yHVS2xg==
-      }
-    dependencies:
-      cosmiconfig: 9.0.0(typescript@5.3.3)
-      zod: 3.22.4
-    transitivePeerDependencies:
-      - typescript
-    dev: false
-
-  /@storm-software/config-tools@1.5.0(typescript@5.3.3):
-    resolution:
-      {
-        integrity: sha512-Nb/6A7GpCGMbQnyb1gXwlwTnRAto0iEg2nfEF72dsWHpYAcWdkKPTRXzhPqlrTdnXsbZauFsNhqiFNJejjQRNw==
-      }
-    dependencies:
-      cosmiconfig: 9.0.0(typescript@5.3.3)
-      zod: 3.22.4
-    transitivePeerDependencies:
-      - typescript
-    dev: false
-
-  /@storm-software/git-tools@1.17.1(@swc-node/register@1.6.8)(@swc/core@1.3.100)(typescript@5.3.3):
-    resolution:
-      {
-        integrity: sha512-H7SZp/VoOfMBE3uJS0Kr5uGCneg7so+cg9dbGcBNGO3Acjs4A/cirLZh0LpKBmYlNdUdDsVMzxRkqtMVzWlW9A==
+        integrity: sha512-/fafR5xDTGEejOMoe5Xeqzrs/nHiPvoigJqQP3/yhTCdHPNPvEslF9Ic8utizMaLpwohhGisuaDsolbjZsudkQ==
       }
     hasBin: true
     dependencies:
@@ -7604,10 +7582,10 @@ packages:
       - typescript
     dev: false
 
-  /@storm-software/linting-tools@1.18.0:
+  /@storm-software/linting-tools@1.20.0:
     resolution:
       {
-        integrity: sha512-qiDV2xm7qdGxsYWxfIhI5K3sGh7YYWzs63tNIguRWZp8VE269pgKzZef52bYZ7gNMzIwyfGBBPKnDB8pkWvFQA==
+        integrity: sha512-FmXzDtLgwBj/xM6lPH4pm870+CeAZAqaFrE5TRPuSo31O1UYbjsafHhmIi9RnHJ1mO06ijiv63cd1XzDH22oow==
       }
     hasBin: true
     dependencies:
@@ -7691,10 +7669,10 @@ packages:
       - encoding
     dev: false
 
-  /@storm-software/testing-tools@1.1.12(@swc-node/register@1.6.8)(@swc/core@1.3.100)(@types/node@20.10.5)(nx@17.2.1)(ts-node@10.9.2)(typescript@5.3.3)(verdaccio@5.29.0):
+  /@storm-software/testing-tools@1.16.0(@swc-node/register@1.6.8)(@swc/core@1.3.100)(@types/node@20.10.5)(nx@17.2.1)(ts-node@10.9.2)(typescript@5.3.3)(verdaccio@5.29.0):
     resolution:
       {
-        integrity: sha512-J/nllgXi+Y35CFMgF3+E+JgbHOjRFOBt4Lxoth1T2Z4uAIsNX5fUWprggYxq306M2qE8NgBBC6RwIpng+602qw==
+        integrity: sha512-aIuYhYPfoRryc2PQk4aGCM5jCQ2QsCLapxNvmheogVZP6fL2FwqNhEnMndW87pFAiCiyatrfuLrKgkT9q36MsA==
       }
     dependencies:
       "@nx/jest": 17.0.3(@swc-node/register@1.6.8)(@swc/core@1.3.100)(@types/node@20.10.5)(nx@17.2.1)(ts-node@10.9.2)(typescript@5.3.3)(verdaccio@5.29.0)
@@ -7714,33 +7692,10 @@ packages:
       - verdaccio
     dev: false
 
-  /@storm-software/testing-tools@1.15.0(@swc-node/register@1.6.8)(@swc/core@1.3.100)(@types/node@20.10.5)(nx@17.2.1)(ts-node@10.9.2)(typescript@5.3.3)(verdaccio@5.29.0):
+  /@storm-software/workspace-tools@1.35.2(@swc-node/register@1.6.8)(@swc/core@1.3.100)(@types/node@20.10.5)(esbuild@0.19.9)(nx@17.2.1)(postcss@8.2.13)(ts-node@10.9.2)(typescript@5.3.3)(verdaccio@5.29.0):
     resolution:
       {
-        integrity: sha512-C7ZkL6RICT0FKTRdrkDkFuXZ1/V7hujBQm0UVTap97LWVn87vR/DjT77RkZ3NPZGav+wvxeHRmh5dPMkfnNnUg==
-      }
-    dependencies:
-      "@nx/jest": 17.0.3(@swc-node/register@1.6.8)(@swc/core@1.3.100)(@types/node@20.10.5)(nx@17.2.1)(ts-node@10.9.2)(typescript@5.3.3)(verdaccio@5.29.0)
-    transitivePeerDependencies:
-      - "@babel/traverse"
-      - "@swc-node/register"
-      - "@swc/core"
-      - "@swc/wasm"
-      - "@types/node"
-      - babel-plugin-macros
-      - debug
-      - node-notifier
-      - nx
-      - supports-color
-      - ts-node
-      - typescript
-      - verdaccio
-    dev: false
-
-  /@storm-software/workspace-tools@1.31.3(@swc-node/register@1.6.8)(@swc/core@1.3.100)(@types/node@20.10.5)(esbuild@0.19.9)(nx@17.2.1)(postcss@8.2.13)(ts-node@10.9.2)(typescript@5.3.3)(verdaccio@5.29.0):
-    resolution:
-      {
-        integrity: sha512-vxnbCktkXvuzaBafx4HfCmgiR8htxujcVBeGVhLSMMqNCqb8ln1U8Ylu9npeNHd+T8Sasg64d7P0zJwkv2CHIA==
+        integrity: sha512-UeCJYEJ8HlUpKIEyYlWvl2w0ROHVV69s2kXX0l9Ech8LCC4gUbjJDRIXvwOMCbxkdfLr7Yx9X4phtXFrDabdoQ==
       }
     dependencies:
       "@anatine/esbuild-decorators": 0.2.19(esbuild@0.19.9)
@@ -7778,36 +7733,6 @@ packages:
       - postcss
       - supports-color
       - ts-node
-      - typescript
-      - verdaccio
-    dev: false
-
-  /@storm-software/workspace-tools@1.6.18(@swc-node/register@1.6.8)(@swc/core@1.3.100)(@types/node@20.10.5)(esbuild@0.19.9)(nx@17.2.1)(typescript@5.3.3)(verdaccio@5.29.0):
-    resolution:
-      {
-        integrity: sha512-5GMAUD6j+GwfkNTUR1PJXrAUoYThTaYOQ0qDmaUWu8KR7IiYAZqiG/lVH2TddHTJhv6zu0YPr7ET3e92w5d5zg==
-      }
-    peerDependencies:
-      tsup: 7.2.0
-    peerDependenciesMeta:
-      tsup:
-        optional: true
-    dependencies:
-      "@nx/devkit": 17.0.3(nx@17.2.1)
-      "@nx/esbuild": 17.0.3(@swc-node/register@1.6.8)(@swc/core@1.3.100)(@types/node@20.10.5)(esbuild@0.19.9)(nx@17.2.1)(typescript@5.3.3)(verdaccio@5.29.0)
-      esbuild-plugin-file-path-extensions: 1.0.0
-      fs-extra: 11.1.1
-      tslib: 2.6.2
-    transitivePeerDependencies:
-      - "@babel/traverse"
-      - "@swc-node/register"
-      - "@swc/core"
-      - "@swc/wasm"
-      - "@types/node"
-      - debug
-      - esbuild
-      - nx
-      - supports-color
       - typescript
       - verdaccio
     dev: false
@@ -12378,7 +12303,7 @@ packages:
         integrity: sha512-qwVpFEHNfhYJIzNRBvd2C1kyo6jz3ZSMPyyuR47OPdiKWlbYnZNyDWuyR175qDnAJLiCo5fBBqPb3RiXgWlkOQ==
       }
     dependencies:
-      semver: 7.5.3
+      semver: 7.5.4
     dev: false
 
   /bundle-name@3.0.0:
@@ -14500,7 +14425,7 @@ packages:
         integrity: sha512-VMX6krHDqOgKByapwEar1w+P7aj8YIeH1DiRfOOrnLcgR7a0CEI0NvrvV2FSAzkhkHIsGBV59xwsgOook8TIxg==
       }
     dependencies:
-      chalk: 4.1.0
+      chalk: 4.1.2
       fast-glob: 3.3.2
     optionalDependencies:
       esbuild: 0.8.57
@@ -15554,14 +15479,6 @@ packages:
     dependencies:
       esbuild: 0.19.9
       esbuild-plugin-define: 0.4.0(esbuild@0.19.9)
-    dev: false
-
-  /esbuild-plugin-file-path-extensions@1.0.0:
-    resolution:
-      {
-        integrity: sha512-v5LpSkml+CbsC0+xAaETEGDECdvKp1wKkD4aXMdI4zLjXP0EYfK4GjGhphumt4N+kjR3A8Q+DIkpgxX1XTqO4Q==
-      }
-    engines: { node: ">=v14.0.0", npm: ">=7.0.0" }
     dev: false
 
   /esbuild-plugin-handlebars@1.0.2:
@@ -16652,6 +16569,18 @@ packages:
       path-exists: 5.0.0
     dev: false
 
+  /find-up@7.0.0:
+    resolution:
+      {
+        integrity: sha512-YyZM99iHrqLKjmt4LJDj58KI+fYyufRLBSYcqycxf//KpBk9FoewoGX0450m9nB44qrZnovzC2oeP5hUibxc/g==
+      }
+    engines: { node: ">=18" }
+    dependencies:
+      locate-path: 7.2.0
+      path-exists: 5.0.0
+      unicorn-magic: 0.1.0
+    dev: false
+
   /find-value@1.0.12:
     resolution:
       {
@@ -16837,18 +16766,6 @@ packages:
         integrity: sha512-oRXApq54ETRj4eMiFzGnHWGy+zo5raudjuxN0b8H7s/RU2oW0Wvsx9O0ACRN/kRq9E8Vu/ReskGB5o3ji+FzHQ==
       }
     engines: { node: ">=12" }
-    dependencies:
-      graceful-fs: 4.2.11
-      jsonfile: 6.1.0
-      universalify: 2.0.1
-    dev: false
-
-  /fs-extra@11.1.1:
-    resolution:
-      {
-        integrity: sha512-MGIE4HOvQCeUCzmlHs0vXpih4ysz4wg9qiSAu6cd42lVwPbTM1TjV7RusoyQqMmk/95gdQZX72u+YW+c3eEpFQ==
-      }
-    engines: { node: ">=14.14" }
     dependencies:
       graceful-fs: 4.2.11
       jsonfile: 6.1.0
@@ -17232,7 +17149,7 @@ packages:
       fs.realpath: 1.0.0
       inflight: 1.0.6
       inherits: 2.0.4
-      minimatch: 3.0.5
+      minimatch: 3.1.2
       once: 1.4.0
       path-is-absolute: 1.0.1
     dev: false
@@ -20088,7 +20005,7 @@ packages:
       acorn: 8.11.2
       eslint-visitor-keys: 3.4.3
       espree: 9.6.1
-      semver: 7.5.3
+      semver: 7.5.4
     dev: false
 
   /jsonc-parser@3.2.0:
@@ -24025,7 +23942,7 @@ packages:
     dependencies:
       hosted-git-info: 7.0.1
       proc-log: 3.0.0
-      semver: 7.5.3
+      semver: 7.5.4
       validate-npm-package-name: 5.0.0
     dev: false
 
@@ -24194,7 +24111,7 @@ packages:
       "@yarnpkg/parsers": 3.0.0-rc.46
       "@zkochan/js-yaml": 0.0.6
       axios: 1.6.2
-      chalk: 4.1.0
+      chalk: 4.1.2
       cli-cursor: 3.1.0
       cli-spinners: 2.6.1
       cliui: 8.0.1
@@ -24600,7 +24517,7 @@ packages:
     engines: { node: ">=10" }
     dependencies:
       bl: 4.1.0
-      chalk: 4.1.0
+      chalk: 4.1.2
       cli-cursor: 3.1.0
       cli-spinners: 2.9.2
       is-interactive: 1.0.0
@@ -28969,7 +28886,7 @@ packages:
     engines: { node: ">=12.0.0" }
     hasBin: true
     dependencies:
-      chalk: 4.1.0
+      chalk: 4.1.2
       change-case: 4.1.2
       commander: 8.3.0
       fs-extra: 10.1.0
