@@ -1,3 +1,10 @@
+## [1.1.4](https://github.com/storm-software/storm-stack/compare/jotai-v1.1.3...jotai-v1.1.4) (2023-12-23)
+
+
+### Bug Fixes
+
+* **logging:** Added `mkdir` option to create logging directory ([df62ea7](https://github.com/storm-software/storm-stack/commit/df62ea7bc9f541ba4d72fb10b4296b430086c433))
+
 ## [1.1.3](https://github.com/storm-software/storm-stack/compare/jotai-v1.1.2...jotai-v1.1.3) (2023-12-23)
 
 
