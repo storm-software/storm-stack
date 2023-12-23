@@ -15,6 +15,7 @@ import pino, {
   LoggerOptions as PinoLoggerOptions,
   TransportTargetOptions
 } from "pino";
+import "pino-pretty";
 import { LoggingConfig } from "../types";
 import { LogLevel, getLogLevel } from "./get-log-level";
 
