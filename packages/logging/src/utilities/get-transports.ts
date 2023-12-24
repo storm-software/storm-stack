@@ -4,12 +4,10 @@ import {
   formatDate,
   formatDateTime
 } from "@storm-stack/date-time";
-import { isStormError } from "@storm-stack/errors";
 import {
   EMPTY_STRING,
   isRuntimeServer,
-  isSetString,
-  titleCase
+  isSetString
 } from "@storm-stack/utilities";
 import chalk from "chalk";
 import { tmpdir } from "os";
@@ -54,7 +52,7 @@ export const getTransports = (
     level: config.logLevel,
     messageKey: "msg",
     errorKey: "error",
-    formatters: {
+    /*formatters: {
       level: (label: string, number: number) => {
         const level = titleCase(label);
 
@@ -73,7 +71,7 @@ export const getTransports = (
             : isStormError(object.exception)
               ? { ...object, error: object.exception.print() }
               : object
-    },
+    },*/
     browser: {
       disabled: getLogLevel(config.logLevel) === LogLevel.SILENT
     }
