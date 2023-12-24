@@ -1,3 +1,15 @@
+# [1.2.0](https://github.com/storm-software/storm-stack/compare/jotai-v1.1.4...jotai-v1.2.0) (2023-12-24)
+
+
+### Bug Fixes
+
+* **monorepo:** Regenerate pnpm lock file ([17ce885](https://github.com/storm-software/storm-stack/commit/17ce885cf5e5241124628fec5ecd5378449c7a42))
+
+
+### Features
+
+* **docs-website:** Added initial code for documentation website ([6dbcaa7](https://github.com/storm-software/storm-stack/commit/6dbcaa76e2568dadf4454e630e7ad7fab2158bed))
+
 ## [1.1.4](https://github.com/storm-software/storm-stack/compare/jotai-v1.1.3...jotai-v1.1.4) (2023-12-23)
 
 
