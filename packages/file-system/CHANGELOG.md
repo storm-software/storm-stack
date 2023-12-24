@@ -1,14 +1,19 @@
-# [1.7.0](https://github.com/storm-software/storm-stack/compare/file-system-v1.6.10...file-system-v1.7.0) (2023-12-24)
+## [1.7.1](https://github.com/storm-software/storm-stack/compare/file-system-v1.7.0...file-system-v1.7.1) (2023-12-24)
 
 
 ### Bug Fixes
 
-* **monorepo:** Regenerate pnpm lock file ([17ce885](https://github.com/storm-software/storm-stack/commit/17ce885cf5e5241124628fec5ecd5378449c7a42))
+* **logging:** Remove unserializable methods from logger options ([f93f7ec](https://github.com/storm-software/storm-stack/commit/f93f7ec4bbb3b69fcf5d3e8732db73428f4bd877))
 
+# [1.7.0](https://github.com/storm-software/storm-stack/compare/file-system-v1.6.10...file-system-v1.7.0) (2023-12-24)
+
+### Bug Fixes
+
+- **monorepo:** Regenerate pnpm lock file ([17ce885](https://github.com/storm-software/storm-stack/commit/17ce885cf5e5241124628fec5ecd5378449c7a42))
 
 ### Features
 
-* **docs-website:** Added initial code for documentation website ([6dbcaa7](https://github.com/storm-software/storm-stack/commit/6dbcaa76e2568dadf4454e630e7ad7fab2158bed))
+- **docs-website:** Added initial code for documentation website ([6dbcaa7](https://github.com/storm-software/storm-stack/commit/6dbcaa76e2568dadf4454e630e7ad7fab2158bed))
 
 ## [1.6.10](https://github.com/storm-software/storm-stack/compare/file-system-v1.6.9...file-system-v1.6.10) (2023-12-23)
 

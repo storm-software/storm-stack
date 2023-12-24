@@ -1,14 +1,19 @@
-# [1.6.0](https://github.com/storm-software/storm-stack/compare/logging-v1.5.10...logging-v1.6.0) (2023-12-24)
+## [1.6.1](https://github.com/storm-software/storm-stack/compare/logging-v1.6.0...logging-v1.6.1) (2023-12-24)
 
 
 ### Bug Fixes
 
-* **monorepo:** Regenerate pnpm lock file ([17ce885](https://github.com/storm-software/storm-stack/commit/17ce885cf5e5241124628fec5ecd5378449c7a42))
+* **logging:** Remove unserializable methods from logger options ([f93f7ec](https://github.com/storm-software/storm-stack/commit/f93f7ec4bbb3b69fcf5d3e8732db73428f4bd877))
 
+# [1.6.0](https://github.com/storm-software/storm-stack/compare/logging-v1.5.10...logging-v1.6.0) (2023-12-24)
+
+### Bug Fixes
+
+- **monorepo:** Regenerate pnpm lock file ([17ce885](https://github.com/storm-software/storm-stack/commit/17ce885cf5e5241124628fec5ecd5378449c7a42))
 
 ### Features
 
-* **docs-website:** Added initial code for documentation website ([6dbcaa7](https://github.com/storm-software/storm-stack/commit/6dbcaa76e2568dadf4454e630e7ad7fab2158bed))
+- **docs-website:** Added initial code for documentation website ([6dbcaa7](https://github.com/storm-software/storm-stack/commit/6dbcaa76e2568dadf4454e630e7ad7fab2158bed))
 
 ## [1.5.10](https://github.com/storm-software/storm-stack/compare/logging-v1.5.9...logging-v1.5.10) (2023-12-23)
 
