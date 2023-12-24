@@ -9,7 +9,6 @@ import {
   isRuntimeServer,
   isSetString
 } from "@storm-stack/utilities";
-import chalk from "chalk";
 import { tmpdir } from "os";
 import { join } from "path";
 import pino, {
@@ -77,7 +76,7 @@ export const getTransports = (
     }
   };
 
-  let transports: TransportTargetOptions[] = [];
+  let targets: TransportTargetOptions[] = [];
 
   const prettyOptions = {
     ...baseOptions,
@@ -110,7 +109,6 @@ export const getTransports = (
       "req.url": config.colors.primary,
       success: config.colors.success
     };
-    prettyOptions.msgPrefix = chalk.bold.hex(config.colors.primary)("STORM");
   }
 
   if (isRuntimeServer()) {
@@ -139,7 +137,7 @@ Message: {msg}
       }
     };
 
-    transports.push(
+    targets.push(
       ...[
         {
           target: "pino/file",
@@ -219,7 +217,7 @@ Message: {msg}
       loggingConfig.loki?.username &&
       loggingConfig.loki?.password
     ) {
-      transports.push({
+      targets.push({
         target: "pino-loki",
         options: {
           batching: true,
@@ -236,7 +234,7 @@ Message: {msg}
 
   return pino(
     pino.transport({
-      targets: transports
+      targets
     }),
     pretty(prettyOptions)
   );
