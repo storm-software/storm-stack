@@ -1,9 +1,15 @@
-## [1.6.1](https://github.com/storm-software/storm-stack/compare/logging-v1.6.0...logging-v1.6.1) (2023-12-24)
+## [1.6.2](https://github.com/storm-software/storm-stack/compare/logging-v1.6.1...logging-v1.6.2) (2023-12-24)
 
 
 ### Bug Fixes
 
-* **logging:** Remove unserializable methods from logger options ([f93f7ec](https://github.com/storm-software/storm-stack/commit/f93f7ec4bbb3b69fcf5d3e8732db73428f4bd877))
+* **logging:** Resolved extra field on log options ([6824e7f](https://github.com/storm-software/storm-stack/commit/6824e7f875e4645b80e1da72c22eab48ffe34024))
+
+## [1.6.1](https://github.com/storm-software/storm-stack/compare/logging-v1.6.0...logging-v1.6.1) (2023-12-24)
+
+### Bug Fixes
+
+- **logging:** Remove unserializable methods from logger options ([f93f7ec](https://github.com/storm-software/storm-stack/commit/f93f7ec4bbb3b69fcf5d3e8732db73428f4bd877))
 
 # [1.6.0](https://github.com/storm-software/storm-stack/compare/logging-v1.5.10...logging-v1.6.0) (2023-12-24)
 
