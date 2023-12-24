@@ -1,9 +1,15 @@
-## [1.7.1](https://github.com/storm-software/storm-stack/compare/file-system-v1.7.0...file-system-v1.7.1) (2023-12-24)
+## [1.7.2](https://github.com/storm-software/storm-stack/compare/file-system-v1.7.1...file-system-v1.7.2) (2023-12-24)
 
 
 ### Bug Fixes
 
-* **logging:** Remove unserializable methods from logger options ([f93f7ec](https://github.com/storm-software/storm-stack/commit/f93f7ec4bbb3b69fcf5d3e8732db73428f4bd877))
+* **logging:** Resolved extra field on log options ([6824e7f](https://github.com/storm-software/storm-stack/commit/6824e7f875e4645b80e1da72c22eab48ffe34024))
+
+## [1.7.1](https://github.com/storm-software/storm-stack/compare/file-system-v1.7.0...file-system-v1.7.1) (2023-12-24)
+
+### Bug Fixes
+
+- **logging:** Remove unserializable methods from logger options ([f93f7ec](https://github.com/storm-software/storm-stack/commit/f93f7ec4bbb3b69fcf5d3e8732db73428f4bd877))
 
 # [1.7.0](https://github.com/storm-software/storm-stack/compare/file-system-v1.6.10...file-system-v1.7.0) (2023-12-24)
 
