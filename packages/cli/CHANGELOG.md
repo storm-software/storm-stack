@@ -1,9 +1,20 @@
-## [1.2.10](https://github.com/storm-software/storm-stack/compare/cli-v1.2.9...cli-v1.2.10) (2023-12-23)
+# [1.3.0](https://github.com/storm-software/storm-stack/compare/cli-v1.2.10...cli-v1.3.0) (2023-12-24)
 
 
 ### Bug Fixes
 
-* **logging:** Resolved issue with timestamp population ([83e5911](https://github.com/storm-software/storm-stack/commit/83e5911decc98d17ac0272a61caf83b2256a8016))
+* **monorepo:** Regenerate pnpm lock file ([17ce885](https://github.com/storm-software/storm-stack/commit/17ce885cf5e5241124628fec5ecd5378449c7a42))
+
+
+### Features
+
+* **docs-website:** Added initial code for documentation website ([6dbcaa7](https://github.com/storm-software/storm-stack/commit/6dbcaa76e2568dadf4454e630e7ad7fab2158bed))
+
+## [1.2.10](https://github.com/storm-software/storm-stack/compare/cli-v1.2.9...cli-v1.2.10) (2023-12-23)
+
+### Bug Fixes
+
+- **logging:** Resolved issue with timestamp population ([83e5911](https://github.com/storm-software/storm-stack/commit/83e5911decc98d17ac0272a61caf83b2256a8016))
 
 ## [1.2.9](https://github.com/storm-software/storm-stack/compare/cli-v1.2.8...cli-v1.2.9) (2023-12-23)
 
