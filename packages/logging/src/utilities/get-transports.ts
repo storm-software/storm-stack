@@ -119,14 +119,6 @@ export const getTransports = (
     const pinoServerOptions = {
       options: {
         ...baseOptions,
-        timestamp: () =>
-          formatDateTime(StormDateTime.current(), {
-            smallestUnit: "millisecond",
-            roundingMode: "ceil",
-            calendarName: "never",
-            timeZoneName: "never",
-            offset: "never"
-          }),
         errorLikeObjectKeys: ["err", "error", "exception"],
         minimumLevel: config.logLevel,
         messageKey: "msg",

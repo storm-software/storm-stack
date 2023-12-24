@@ -1,0 +1,59 @@
+{
+  "name": "docs-website",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "docs/website",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nx/next:build",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "experimentalAppOnly": true,
+      "options": {
+        "outputPath": "dist/docs/website"
+      },
+      "configurations": {
+        "development": {
+          "outputPath": "docs/website"
+        },
+        "production": {}
+      }
+    },
+    "serve": {
+      "executor": "@nx/next:server",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "docs-website:build",
+        "dev": true
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "docs-website:build:development",
+          "dev": true
+        },
+        "production": {
+          "buildTarget": "docs-website:build:production",
+          "dev": false
+        }
+      }
+    },
+    "export": {
+      "executor": "@nx/next:export",
+      "options": {
+        "buildTarget": "docs-website:build:production"
+      }
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "docs/website/jest.config.ts"
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"]
+    }
+  },
+  "tags": []
+}
