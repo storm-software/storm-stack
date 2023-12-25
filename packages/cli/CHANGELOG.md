@@ -1,9 +1,15 @@
-## [1.3.2](https://github.com/storm-software/storm-stack/compare/cli-v1.3.1...cli-v1.3.2) (2023-12-24)
+## [1.3.3](https://github.com/storm-software/storm-stack/compare/cli-v1.3.2...cli-v1.3.3) (2023-12-25)
 
 
 ### Bug Fixes
 
-* **logging:** Resolved extra field on log options ([6824e7f](https://github.com/storm-software/storm-stack/commit/6824e7f875e4645b80e1da72c22eab48ffe34024))
+* **date-time:** Enhance the logic in the constructor to create instant variable ([567d1bf](https://github.com/storm-software/storm-stack/commit/567d1bf3515c23d00c1ce1f4f0f1bbf3618124f4))
+
+## [1.3.2](https://github.com/storm-software/storm-stack/compare/cli-v1.3.1...cli-v1.3.2) (2023-12-24)
+
+### Bug Fixes
+
+- **logging:** Resolved extra field on log options ([6824e7f](https://github.com/storm-software/storm-stack/commit/6824e7f875e4645b80e1da72c22eab48ffe34024))
 
 ## [1.3.1](https://github.com/storm-software/storm-stack/compare/cli-v1.3.0...cli-v1.3.1) (2023-12-24)
 

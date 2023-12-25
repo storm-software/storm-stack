@@ -1,3 +1,10 @@
+## [1.5.1](https://github.com/storm-software/storm-stack/compare/date-time-v1.5.0...date-time-v1.5.1) (2023-12-25)
+
+
+### Bug Fixes
+
+* **date-time:** Enhance the logic in the constructor to create instant variable ([567d1bf](https://github.com/storm-software/storm-stack/commit/567d1bf3515c23d00c1ce1f4f0f1bbf3618124f4))
+
 # [1.5.0](https://github.com/storm-software/storm-stack/compare/date-time-v1.4.6...date-time-v1.5.0) (2023-12-24)
 
 
