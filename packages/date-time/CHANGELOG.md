@@ -1,35 +1,37 @@
-## [1.5.1](https://github.com/storm-software/storm-stack/compare/date-time-v1.5.0...date-time-v1.5.1) (2023-12-25)
+## [1.5.2](https://github.com/storm-software/storm-stack/compare/date-time-v1.5.1...date-time-v1.5.2) (2023-12-25)
 
 
 ### Bug Fixes
 
-* **date-time:** Enhance the logic in the constructor to create instant variable ([567d1bf](https://github.com/storm-software/storm-stack/commit/567d1bf3515c23d00c1ce1f4f0f1bbf3618124f4))
+* **utilities:** Enhanced the logic in the `isObject` utility function ([0e27903](https://github.com/storm-software/storm-stack/commit/0e27903df21c14c350ceb3005187953736bf7580))
+
+## [1.5.1](https://github.com/storm-software/storm-stack/compare/date-time-v1.5.0...date-time-v1.5.1) (2023-12-25)
+
+### Bug Fixes
+
+- **date-time:** Enhance the logic in the constructor to create instant variable ([567d1bf](https://github.com/storm-software/storm-stack/commit/567d1bf3515c23d00c1ce1f4f0f1bbf3618124f4))
 
 # [1.5.0](https://github.com/storm-software/storm-stack/compare/date-time-v1.4.6...date-time-v1.5.0) (2023-12-24)
 
-
 ### Bug Fixes
 
-* **monorepo:** Regenerate pnpm lock file ([17ce885](https://github.com/storm-software/storm-stack/commit/17ce885cf5e5241124628fec5ecd5378449c7a42))
-
+- **monorepo:** Regenerate pnpm lock file ([17ce885](https://github.com/storm-software/storm-stack/commit/17ce885cf5e5241124628fec5ecd5378449c7a42))
 
 ### Features
 
-* **docs-website:** Added initial code for documentation website ([6dbcaa7](https://github.com/storm-software/storm-stack/commit/6dbcaa76e2568dadf4454e630e7ad7fab2158bed))
+- **docs-website:** Added initial code for documentation website ([6dbcaa7](https://github.com/storm-software/storm-stack/commit/6dbcaa76e2568dadf4454e630e7ad7fab2158bed))
 
 ## [1.4.6](https://github.com/storm-software/storm-stack/compare/date-time-v1.4.5...date-time-v1.4.6) (2023-12-23)
 
-
 ### Bug Fixes
 
-* **logging:** Resolve issue in log file paths ([ae3ea95](https://github.com/storm-software/storm-stack/commit/ae3ea95cee37d0491086a3d3c93a697e87457d55))
+- **logging:** Resolve issue in log file paths ([ae3ea95](https://github.com/storm-software/storm-stack/commit/ae3ea95cee37d0491086a3d3c93a697e87457d55))
 
 ## [1.4.5](https://github.com/storm-software/storm-stack/compare/date-time-v1.4.4...date-time-v1.4.5) (2023-12-23)
 
-
 ### Bug Fixes
 
-* **logging:** Added `mkdir` option to create logging directory ([df62ea7](https://github.com/storm-software/storm-stack/commit/df62ea7bc9f541ba4d72fb10b4296b430086c433))
+- **logging:** Added `mkdir` option to create logging directory ([df62ea7](https://github.com/storm-software/storm-stack/commit/df62ea7bc9f541ba4d72fb10b4296b430086c433))
 
 ## [1.4.4](https://github.com/storm-software/storm-stack/compare/date-time-v1.4.3...date-time-v1.4.4) (2023-12-23)
 
