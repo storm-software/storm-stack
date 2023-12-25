@@ -4,6 +4,7 @@ import {
   isBigInt,
   isDate,
   isNumber,
+  isObject,
   isSet,
   isSetString
 } from "@storm-stack/utilities";
@@ -171,9 +172,11 @@ export class StormDateTime extends Date {
         : Temporal.Instant.from(
             isDate(dateTime)
               ? dateTime.toJSON()
-              : isNumber(dateTime) || isBigInt(dateTime)
-                ? new Date(Number(dateTime)).toISOString()
-                : dateTime
+              : isObject(dateTime) && "epochMilliseconds" in dateTime
+                ? new Date(Number(dateTime.epochMilliseconds)).toISOString()
+                : isNumber(dateTime) || isBigInt(dateTime)
+                  ? new Date(Number(dateTime)).toISOString()
+                  : dateTime
           );
 
     super(instant ? Number(instant.epochMilliseconds) : "MISSING_DATE");
