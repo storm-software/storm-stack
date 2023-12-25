@@ -1,9 +1,15 @@
-## [1.6.3](https://github.com/storm-software/storm-stack/compare/logging-v1.6.2...logging-v1.6.3) (2023-12-25)
+## [1.6.4](https://github.com/storm-software/storm-stack/compare/logging-v1.6.3...logging-v1.6.4) (2023-12-25)
 
 
 ### Bug Fixes
 
-* **date-time:** Enhance the logic in the constructor to create instant variable ([567d1bf](https://github.com/storm-software/storm-stack/commit/567d1bf3515c23d00c1ce1f4f0f1bbf3618124f4))
+* **utilities:** Enhanced the logic in the `isObject` utility function ([0e27903](https://github.com/storm-software/storm-stack/commit/0e27903df21c14c350ceb3005187953736bf7580))
+
+## [1.6.3](https://github.com/storm-software/storm-stack/compare/logging-v1.6.2...logging-v1.6.3) (2023-12-25)
+
+### Bug Fixes
+
+- **date-time:** Enhance the logic in the constructor to create instant variable ([567d1bf](https://github.com/storm-software/storm-stack/commit/567d1bf3515c23d00c1ce1f4f0f1bbf3618124f4))
 
 ## [1.6.2](https://github.com/storm-software/storm-stack/compare/logging-v1.6.1...logging-v1.6.2) (2023-12-24)
 
