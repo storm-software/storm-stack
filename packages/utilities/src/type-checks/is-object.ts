@@ -8,7 +8,11 @@ import { isPlainObject } from "./is-plain-object";
  */
 export const isObject = (value: unknown): value is object => {
   try {
-    return (!!value && value.constructor === Object) || isPlainObject(value);
+    return (
+      typeof value === "object" ||
+      (!!value && value.constructor === Object) ||
+      isPlainObject(value)
+    );
   } catch (e) {
     return false;
   }
