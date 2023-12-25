@@ -1,3 +1,10 @@
+## [1.5.1](https://github.com/storm-software/storm-stack/compare/utilities-v1.5.0...utilities-v1.5.1) (2023-12-25)
+
+
+### Bug Fixes
+
+* **utilities:** Enhanced the logic in the `isObject` utility function ([0e27903](https://github.com/storm-software/storm-stack/commit/0e27903df21c14c350ceb3005187953736bf7580))
+
 # [1.5.0](https://github.com/storm-software/storm-stack/compare/utilities-v1.4.4...utilities-v1.5.0) (2023-12-24)
 
 
