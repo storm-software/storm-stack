@@ -1,14 +1,5 @@
 import { StormConfig } from "@storm-software/config-tools";
-import {
-  StormDateTime,
-  formatDate,
-  formatDateTime
-} from "@storm-stack/date-time";
-import {
-  EMPTY_STRING,
-  isRuntimeServer,
-  isSetString
-} from "@storm-stack/utilities";
+import { isSetString } from "@storm-stack/utilities";
 import { tmpdir } from "os";
 import { join } from "path";
 import pino, {
@@ -111,7 +102,7 @@ export const getTransports = (
     };
   }
 
-  if (isRuntimeServer()) {
+  /* if (isRuntimeServer()) {
     const pinoServerOptions = {
       options: {
         ...baseOptions,
@@ -137,7 +128,7 @@ Message: {msg}
       }
     };
 
-    targets.push(
+   targets.push(
       ...[
         {
           target: "pino/file",
@@ -237,5 +228,7 @@ Message: {msg}
       targets
     }),
     pretty(prettyOptions)
-  );
+  );*/
+
+  return pino(pretty());
 };
