@@ -1,9 +1,15 @@
-## [1.3.4](https://github.com/storm-software/storm-stack/compare/cli-v1.3.3...cli-v1.3.4) (2023-12-25)
+## [1.3.5](https://github.com/storm-software/storm-stack/compare/cli-v1.3.4...cli-v1.3.5) (2023-12-26)
 
 
 ### Bug Fixes
 
-* **utilities:** Enhanced the logic in the `isObject` utility function ([0e27903](https://github.com/storm-software/storm-stack/commit/0e27903df21c14c350ceb3005187953736bf7580))
+* **logging:** Temporarily remove the config for logging ([b557ed8](https://github.com/storm-software/storm-stack/commit/b557ed8062911905eb9cd74eb251413d4ae58d4b))
+
+## [1.3.4](https://github.com/storm-software/storm-stack/compare/cli-v1.3.3...cli-v1.3.4) (2023-12-25)
+
+### Bug Fixes
+
+- **utilities:** Enhanced the logic in the `isObject` utility function ([0e27903](https://github.com/storm-software/storm-stack/commit/0e27903df21c14c350ceb3005187953736bf7580))
 
 ## [1.3.3](https://github.com/storm-software/storm-stack/compare/cli-v1.3.2...cli-v1.3.3) (2023-12-25)
 
