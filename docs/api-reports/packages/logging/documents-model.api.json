@@ -257,7 +257,16 @@
             },
             {
               "kind": "Content",
-              "text": ">, name?: string) => import(\"pino\").Logger<any>"
+              "text": ">, name?: string) => import(\"pino\").Logger<"
+            },
+            {
+              "kind": "Reference",
+              "text": "pretty.PrettyStream",
+              "canonicalReference": "!pretty.PrettyStream:type"
+            },
+            {
+              "kind": "Content",
+              "text": ">"
             }
           ],
           "fileUrlPath": "packages/logging/src/utilities/get-transports.ts",
@@ -266,7 +275,7 @@
           "name": "getTransports",
           "variableTypeTokenRange": {
             "startIndex": 1,
-            "endIndex": 6
+            "endIndex": 8
           }
         },
         {

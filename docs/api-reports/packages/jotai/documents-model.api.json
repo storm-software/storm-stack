@@ -241,6 +241,242 @@
           "name": "atomEffect"
         },
         {
+          "kind": "TypeAlias",
+          "canonicalReference": "@storm-stack/jotai!AtomRecord:type",
+          "docComment": "",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export type AtomRecord<O> = "
+            },
+            {
+              "kind": "Content",
+              "text": "{\n    [K in keyof O]: "
+            },
+            {
+              "kind": "Reference",
+              "text": "Atom",
+              "canonicalReference": "!unknown"
+            },
+            {
+              "kind": "Content",
+              "text": "<O[K]>;\n}"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "fileUrlPath": "packages/jotai/src/utilities/create-atom-store.ts",
+          "releaseTag": "Public",
+          "name": "AtomRecord",
+          "typeParameters": [
+            {
+              "typeParameterName": "O",
+              "constraintTokenRange": {
+                "startIndex": 0,
+                "endIndex": 0
+              },
+              "defaultTypeTokenRange": {
+                "startIndex": 0,
+                "endIndex": 0
+              }
+            }
+          ],
+          "typeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 4
+          }
+        },
+        {
+          "kind": "TypeAlias",
+          "canonicalReference": "@storm-stack/jotai!AtomStoreApi:type",
+          "docComment": "",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export type AtomStoreApi<T extends "
+            },
+            {
+              "kind": "Content",
+              "text": "object"
+            },
+            {
+              "kind": "Content",
+              "text": ", E extends "
+            },
+            {
+              "kind": "Reference",
+              "text": "AtomRecord",
+              "canonicalReference": "@storm-stack/jotai!AtomRecord:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<object>"
+            },
+            {
+              "kind": "Content",
+              "text": ", N extends "
+            },
+            {
+              "kind": "Content",
+              "text": "string"
+            },
+            {
+              "kind": "Content",
+              "text": " = "
+            },
+            {
+              "kind": "Content",
+              "text": "\"\""
+            },
+            {
+              "kind": "Content",
+              "text": "> = "
+            },
+            {
+              "kind": "Content",
+              "text": "{\n    name: N;\n} & {\n    [key in keyof "
+            },
+            {
+              "kind": "Reference",
+              "text": "Record",
+              "canonicalReference": "!Record:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<"
+            },
+            {
+              "kind": "Reference",
+              "text": "NameProvider",
+              "canonicalReference": "@storm-stack/jotai!~NameProvider:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<N>, object>]: "
+            },
+            {
+              "kind": "Reference",
+              "text": "FC",
+              "canonicalReference": "@types/react!React.FC:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<"
+            },
+            {
+              "kind": "Reference",
+              "text": "ProviderProps",
+              "canonicalReference": "@storm-stack/jotai!ProviderProps:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<T>>;\n} & {\n    [key in keyof "
+            },
+            {
+              "kind": "Reference",
+              "text": "Record",
+              "canonicalReference": "!Record:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<"
+            },
+            {
+              "kind": "Reference",
+              "text": "NameStore",
+              "canonicalReference": "@storm-stack/jotai!~NameStore:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<N>, object>]: "
+            },
+            {
+              "kind": "Reference",
+              "text": "StoreApi",
+              "canonicalReference": "@storm-stack/jotai!StoreApi:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<T, E, N>;\n} & {\n    [key in keyof "
+            },
+            {
+              "kind": "Reference",
+              "text": "Record",
+              "canonicalReference": "!Record:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<"
+            },
+            {
+              "kind": "Reference",
+              "text": "UseNameStore",
+              "canonicalReference": "@storm-stack/jotai!~UseNameStore:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<N>, object>]: "
+            },
+            {
+              "kind": "Reference",
+              "text": "UseStoreApi",
+              "canonicalReference": "@storm-stack/jotai!UseStoreApi:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<T, E>;\n}"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "fileUrlPath": "packages/jotai/src/utilities/create-atom-store.ts",
+          "releaseTag": "Public",
+          "name": "AtomStoreApi",
+          "typeParameters": [
+            {
+              "typeParameterName": "T",
+              "constraintTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "defaultTypeTokenRange": {
+                "startIndex": 0,
+                "endIndex": 0
+              }
+            },
+            {
+              "typeParameterName": "E",
+              "constraintTokenRange": {
+                "startIndex": 3,
+                "endIndex": 5
+              },
+              "defaultTypeTokenRange": {
+                "startIndex": 0,
+                "endIndex": 0
+              }
+            },
+            {
+              "typeParameterName": "N",
+              "constraintTokenRange": {
+                "startIndex": 6,
+                "endIndex": 7
+              },
+              "defaultTypeTokenRange": {
+                "startIndex": 8,
+                "endIndex": 9
+              }
+            }
+          ],
+          "typeTokenRange": {
+            "startIndex": 10,
+            "endIndex": 31
+          }
+        },
+        {
           "kind": "Function",
           "canonicalReference": "@storm-stack/jotai!atomWithBroadcast:function(1)",
           "docComment": "/**\n * Creates an atom that broadcasts its value to other tabs/windows using the BroadcastChannel API.\n *\n * @param key - The key to use for the BroadcastChannel\n *\n * @param initialValue - The initial value of the atom\n *\n * @returns An atom that broadcasts its value to other tabs/windows using the BroadcastChannel API.\n */\n",
@@ -464,6 +700,348 @@
           "name": "atomWithWebStorage"
         },
         {
+          "kind": "Variable",
+          "canonicalReference": "@storm-stack/jotai!atomWithWrapper:var",
+          "docComment": "/**\n * Create an atom with a wrapper that allows functions as values.\n *\n * @remarks\n *\n * Jotai atoms don't allow functions as values by default. This function is a drop-in replacement for `atom` that wraps functions in an object while leaving non-functions unchanged. The wrapper object should be completely invisible to consumers of the atom.\n *\n * @param initialValue - The initial value of the atom\n *\n * @returns An atom with a wrapper that allows functions as values.\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "atomWithWrapper: "
+            },
+            {
+              "kind": "Content",
+              "text": "<TValue>(initialValue: TValue) => "
+            },
+            {
+              "kind": "Reference",
+              "text": "WritableAtom",
+              "canonicalReference": "!unknown"
+            },
+            {
+              "kind": "Content",
+              "text": "<TValue, [TValue], void>"
+            }
+          ],
+          "fileUrlPath": "packages/jotai/src/atoms/atom-with-wrapper.ts",
+          "isReadonly": true,
+          "releaseTag": "Public",
+          "name": "atomWithWrapper",
+          "variableTypeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 4
+          }
+        },
+        {
+          "kind": "Variable",
+          "canonicalReference": "@storm-stack/jotai!createAtomProvider:var",
+          "docComment": "/**\n * Creates a generic provider for a jotai store. - `initialValues`: Initial values for the store. - `props`: Dynamic values for the store.\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "createAtomProvider: "
+            },
+            {
+              "kind": "Content",
+              "text": "<T extends object, N extends string = \"\">(storeScope: N, atoms: "
+            },
+            {
+              "kind": "Reference",
+              "text": "SimpleWritableAtomRecord",
+              "canonicalReference": "@storm-stack/jotai!SimpleWritableAtomRecord:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<T>, options?: {\n    effect?: "
+            },
+            {
+              "kind": "Reference",
+              "text": "FC",
+              "canonicalReference": "@types/react!React.FC:type"
+            },
+            {
+              "kind": "Content",
+              "text": ";\n}) => ({ store, scope, children, resetKey, ...props }: "
+            },
+            {
+              "kind": "Reference",
+              "text": "ProviderProps",
+              "canonicalReference": "@storm-stack/jotai!ProviderProps:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<T>) => import(\"react/jsx-runtime\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "JSX.Element",
+              "canonicalReference": "@types/react!JSX.Element:interface"
+            }
+          ],
+          "fileUrlPath": "packages/jotai/src/utilities/create-atom-provider.tsx",
+          "isReadonly": true,
+          "releaseTag": "Public",
+          "name": "createAtomProvider",
+          "variableTypeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 9
+          }
+        },
+        {
+          "kind": "Variable",
+          "canonicalReference": "@storm-stack/jotai!createAtomStore:var",
+          "docComment": "/**\n * Create an atom store from an initial value.\n *\n * @remarks\n *\n * Each property will have a getter and setter.\n *\n * @param initialState - The initial state of the store\n *\n * @param options - The options for the store\n *\n * @returns The store and the store hook\n *\n * @example\n *\n * const { exampleStore, useExampleStore } = createAtomStore({ count: 1, say: 'hello' }, { name: 'example' as const }) const { exampleStore, useExampleStore } = createAtomStore({ count: 1, say: 'hello' }, { name: 'example' as const }) const [count, setCount] = useExampleStore().use.count() const say = useExampleStore().get.say() const setSay = useExampleStore().set.say() setSay('world') const countAtom = exampleStore.atom.count\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "createAtomStore: "
+            },
+            {
+              "kind": "Content",
+              "text": "<T extends object, E extends object, N extends string = \"\">(initialState: T, { name, "
+            },
+            {
+              "kind": "Reference",
+              "text": "delay",
+              "canonicalReference": "@storm-stack/jotai!CreateAtomStoreOptions#delay"
+            },
+            {
+              "kind": "Content",
+              "text": ": delayRoot, effect, extend }: "
+            },
+            {
+              "kind": "Reference",
+              "text": "CreateAtomStoreOptions",
+              "canonicalReference": "@storm-stack/jotai!CreateAtomStoreOptions:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "<T, E, N>) => "
+            },
+            {
+              "kind": "Reference",
+              "text": "AtomStoreApi",
+              "canonicalReference": "@storm-stack/jotai!AtomStoreApi:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<T, E, N>"
+            }
+          ],
+          "fileUrlPath": "packages/jotai/src/utilities/create-atom-store.ts",
+          "isReadonly": true,
+          "releaseTag": "Public",
+          "name": "createAtomStore",
+          "variableTypeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 8
+          }
+        },
+        {
+          "kind": "Interface",
+          "canonicalReference": "@storm-stack/jotai!CreateAtomStoreOptions:interface",
+          "docComment": "",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export interface CreateAtomStoreOptions<T extends "
+            },
+            {
+              "kind": "Content",
+              "text": "object"
+            },
+            {
+              "kind": "Content",
+              "text": ", E extends "
+            },
+            {
+              "kind": "Reference",
+              "text": "AtomRecord",
+              "canonicalReference": "@storm-stack/jotai!AtomRecord:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<object>"
+            },
+            {
+              "kind": "Content",
+              "text": ", N extends "
+            },
+            {
+              "kind": "Content",
+              "text": "string"
+            },
+            {
+              "kind": "Content",
+              "text": "> "
+            }
+          ],
+          "fileUrlPath": "packages/jotai/src/utilities/create-atom-store.ts",
+          "releaseTag": "Public",
+          "typeParameters": [
+            {
+              "typeParameterName": "T",
+              "constraintTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "defaultTypeTokenRange": {
+                "startIndex": 0,
+                "endIndex": 0
+              }
+            },
+            {
+              "typeParameterName": "E",
+              "constraintTokenRange": {
+                "startIndex": 3,
+                "endIndex": 5
+              },
+              "defaultTypeTokenRange": {
+                "startIndex": 0,
+                "endIndex": 0
+              }
+            },
+            {
+              "typeParameterName": "N",
+              "constraintTokenRange": {
+                "startIndex": 6,
+                "endIndex": 7
+              },
+              "defaultTypeTokenRange": {
+                "startIndex": 0,
+                "endIndex": 0
+              }
+            }
+          ],
+          "name": "CreateAtomStoreOptions",
+          "preserveMemberOrder": false,
+          "members": [
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "@storm-stack/jotai!CreateAtomStoreOptions#delay:member",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "delay?: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "UseAtomOptions",
+                  "canonicalReference": "@storm-stack/jotai!UseAtomOptions:type"
+                },
+                {
+                  "kind": "Content",
+                  "text": "[\"delay\"]"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isReadonly": false,
+              "isOptional": true,
+              "releaseTag": "Public",
+              "name": "delay",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 3
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "@storm-stack/jotai!CreateAtomStoreOptions#effect:member",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "effect?: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "FC",
+                  "canonicalReference": "@types/react!React.FC:type"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isReadonly": false,
+              "isOptional": true,
+              "releaseTag": "Public",
+              "name": "effect",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "@storm-stack/jotai!CreateAtomStoreOptions#extend:member",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "extend?: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "(atomsWithoutExtend: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "StoreAtomsWithoutExtend",
+                  "canonicalReference": "@storm-stack/jotai!~StoreAtomsWithoutExtend:type"
+                },
+                {
+                  "kind": "Content",
+                  "text": "<T>) => E"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isReadonly": false,
+              "isOptional": true,
+              "releaseTag": "Public",
+              "name": "extend",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 4
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "@storm-stack/jotai!CreateAtomStoreOptions#name:member",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "name: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "N"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isReadonly": false,
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "name",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            }
+          ],
+          "extendsTokenRanges": []
+        },
+        {
           "kind": "Function",
           "canonicalReference": "@storm-stack/jotai!createWebStorage:function(1)",
           "docComment": "",
@@ -555,6 +1133,253 @@
         },
         {
           "kind": "Variable",
+          "canonicalReference": "@storm-stack/jotai!HydrateAtoms:var",
+          "docComment": "",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "HydrateAtoms: "
+            },
+            {
+              "kind": "Content",
+              "text": "<T extends object>({ initialValues, children, store, atoms, ...props }: "
+            },
+            {
+              "kind": "Reference",
+              "text": "Omit",
+              "canonicalReference": "!Omit:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<"
+            },
+            {
+              "kind": "Reference",
+              "text": "ProviderProps",
+              "canonicalReference": "@storm-stack/jotai!ProviderProps:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<T>, \"scope\"> & {\n    atoms: "
+            },
+            {
+              "kind": "Reference",
+              "text": "SimpleWritableAtomRecord",
+              "canonicalReference": "@storm-stack/jotai!SimpleWritableAtomRecord:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<T>;\n}) => import(\"react/jsx-runtime\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "JSX.Element",
+              "canonicalReference": "@types/react!JSX.Element:interface"
+            }
+          ],
+          "fileUrlPath": "packages/jotai/src/utilities/create-atom-provider.tsx",
+          "isReadonly": true,
+          "releaseTag": "Public",
+          "name": "HydrateAtoms",
+          "variableTypeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 9
+          }
+        },
+        {
+          "kind": "Variable",
+          "canonicalReference": "@storm-stack/jotai!isAtom:var",
+          "docComment": "",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "isAtom: "
+            },
+            {
+              "kind": "Content",
+              "text": "<TValue = any>(value: unknown) => "
+            },
+            {
+              "kind": "Reference",
+              "text": "value",
+              "canonicalReference": "@storm-stack/jotai!~value"
+            },
+            {
+              "kind": "Content",
+              "text": " is "
+            },
+            {
+              "kind": "Reference",
+              "text": "Atom",
+              "canonicalReference": "!unknown"
+            },
+            {
+              "kind": "Content",
+              "text": "<TValue>"
+            }
+          ],
+          "fileUrlPath": "packages/jotai/src/utilities/is-atom.ts",
+          "isReadonly": true,
+          "releaseTag": "Public",
+          "name": "isAtom",
+          "variableTypeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 6
+          }
+        },
+        {
+          "kind": "Variable",
+          "canonicalReference": "@storm-stack/jotai!isWritableAtom:var",
+          "docComment": "",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "isWritableAtom: "
+            },
+            {
+              "kind": "Content",
+              "text": "<TValue = any, TArgs extends unknown[] = unknown[], TResult = any>(value: unknown) => "
+            },
+            {
+              "kind": "Reference",
+              "text": "value",
+              "canonicalReference": "@storm-stack/jotai!~value"
+            },
+            {
+              "kind": "Content",
+              "text": " is "
+            },
+            {
+              "kind": "Reference",
+              "text": "WritableAtom",
+              "canonicalReference": "!unknown"
+            },
+            {
+              "kind": "Content",
+              "text": "<TValue, TArgs, TResult>"
+            }
+          ],
+          "fileUrlPath": "packages/jotai/src/utilities/is-atom.ts",
+          "isReadonly": true,
+          "releaseTag": "Public",
+          "name": "isWritableAtom",
+          "variableTypeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 6
+          }
+        },
+        {
+          "kind": "TypeAlias",
+          "canonicalReference": "@storm-stack/jotai!JotaiStore:type",
+          "docComment": "",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export type JotaiStore = "
+            },
+            {
+              "kind": "Reference",
+              "text": "ReturnType",
+              "canonicalReference": "!ReturnType:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<typeof "
+            },
+            {
+              "kind": "Reference",
+              "text": "createStore",
+              "canonicalReference": "!unknown:member"
+            },
+            {
+              "kind": "Content",
+              "text": ">"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "fileUrlPath": "packages/jotai/src/utilities/create-atom-store.ts",
+          "releaseTag": "Public",
+          "name": "JotaiStore",
+          "typeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 5
+          }
+        },
+        {
+          "kind": "TypeAlias",
+          "canonicalReference": "@storm-stack/jotai!ProviderProps:type",
+          "docComment": "",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export type ProviderProps<T extends "
+            },
+            {
+              "kind": "Content",
+              "text": "object"
+            },
+            {
+              "kind": "Content",
+              "text": "> = "
+            },
+            {
+              "kind": "Reference",
+              "text": "AtomProviderProps",
+              "canonicalReference": "@storm-stack/jotai!~AtomProviderProps:type"
+            },
+            {
+              "kind": "Content",
+              "text": " & "
+            },
+            {
+              "kind": "Reference",
+              "text": "Partial",
+              "canonicalReference": "!Partial:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<T> & {\n    scope?: string;\n    initialValues?: "
+            },
+            {
+              "kind": "Reference",
+              "text": "Partial",
+              "canonicalReference": "!Partial:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<T>;\n    resetKey?: any;\n}"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "fileUrlPath": "packages/jotai/src/utilities/create-atom-provider.tsx",
+          "releaseTag": "Public",
+          "name": "ProviderProps",
+          "typeParameters": [
+            {
+              "typeParameterName": "T",
+              "constraintTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "defaultTypeTokenRange": {
+                "startIndex": 0,
+                "endIndex": 0
+              }
+            }
+          ],
+          "typeTokenRange": {
+            "startIndex": 3,
+            "endIndex": 9
+          }
+        },
+        {
+          "kind": "Variable",
           "canonicalReference": "@storm-stack/jotai!setAtomDebugLabel:var",
           "docComment": "/**\n * Add a debug label to the Jotai Atom\n *\n * @param atom - The atom to apply the debug label to\n *\n * @param label - The label to apply to the atom\n */\n",
           "excerptTokens": [
@@ -615,6 +1440,415 @@
           "variableTypeTokenRange": {
             "startIndex": 1,
             "endIndex": 4
+          }
+        },
+        {
+          "kind": "TypeAlias",
+          "canonicalReference": "@storm-stack/jotai!SimpleWritableAtom:type",
+          "docComment": "",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export type SimpleWritableAtom<T> = "
+            },
+            {
+              "kind": "Reference",
+              "text": "WritableAtom",
+              "canonicalReference": "!unknown"
+            },
+            {
+              "kind": "Content",
+              "text": "<T, [T], void>"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "fileUrlPath": "packages/jotai/src/utilities/create-atom-store.ts",
+          "releaseTag": "Public",
+          "name": "SimpleWritableAtom",
+          "typeParameters": [
+            {
+              "typeParameterName": "T",
+              "constraintTokenRange": {
+                "startIndex": 0,
+                "endIndex": 0
+              },
+              "defaultTypeTokenRange": {
+                "startIndex": 0,
+                "endIndex": 0
+              }
+            }
+          ],
+          "typeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 3
+          }
+        },
+        {
+          "kind": "TypeAlias",
+          "canonicalReference": "@storm-stack/jotai!SimpleWritableAtomRecord:type",
+          "docComment": "",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export type SimpleWritableAtomRecord<T> = "
+            },
+            {
+              "kind": "Content",
+              "text": "{\n    [K in keyof T]: "
+            },
+            {
+              "kind": "Reference",
+              "text": "SimpleWritableAtom",
+              "canonicalReference": "@storm-stack/jotai!SimpleWritableAtom:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<T[K]>;\n}"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "fileUrlPath": "packages/jotai/src/utilities/create-atom-store.ts",
+          "releaseTag": "Public",
+          "name": "SimpleWritableAtomRecord",
+          "typeParameters": [
+            {
+              "typeParameterName": "T",
+              "constraintTokenRange": {
+                "startIndex": 0,
+                "endIndex": 0
+              },
+              "defaultTypeTokenRange": {
+                "startIndex": 0,
+                "endIndex": 0
+              }
+            }
+          ],
+          "typeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 4
+          }
+        },
+        {
+          "kind": "TypeAlias",
+          "canonicalReference": "@storm-stack/jotai!StoreApi:type",
+          "docComment": "",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export type StoreApi<T extends "
+            },
+            {
+              "kind": "Content",
+              "text": "object"
+            },
+            {
+              "kind": "Content",
+              "text": ", E extends "
+            },
+            {
+              "kind": "Reference",
+              "text": "AtomRecord",
+              "canonicalReference": "@storm-stack/jotai!AtomRecord:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<object>"
+            },
+            {
+              "kind": "Content",
+              "text": ", N extends "
+            },
+            {
+              "kind": "Content",
+              "text": "string"
+            },
+            {
+              "kind": "Content",
+              "text": " = "
+            },
+            {
+              "kind": "Content",
+              "text": "\"\""
+            },
+            {
+              "kind": "Content",
+              "text": "> = "
+            },
+            {
+              "kind": "Content",
+              "text": "{\n    atom: "
+            },
+            {
+              "kind": "Reference",
+              "text": "StoreAtoms",
+              "canonicalReference": "@storm-stack/jotai!~StoreAtoms:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<T, E>;\n    name: N;\n}"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "fileUrlPath": "packages/jotai/src/utilities/create-atom-store.ts",
+          "releaseTag": "Public",
+          "name": "StoreApi",
+          "typeParameters": [
+            {
+              "typeParameterName": "T",
+              "constraintTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "defaultTypeTokenRange": {
+                "startIndex": 0,
+                "endIndex": 0
+              }
+            },
+            {
+              "typeParameterName": "E",
+              "constraintTokenRange": {
+                "startIndex": 3,
+                "endIndex": 5
+              },
+              "defaultTypeTokenRange": {
+                "startIndex": 0,
+                "endIndex": 0
+              }
+            },
+            {
+              "typeParameterName": "N",
+              "constraintTokenRange": {
+                "startIndex": 6,
+                "endIndex": 7
+              },
+              "defaultTypeTokenRange": {
+                "startIndex": 8,
+                "endIndex": 9
+              }
+            }
+          ],
+          "typeTokenRange": {
+            "startIndex": 10,
+            "endIndex": 13
+          }
+        },
+        {
+          "kind": "TypeAlias",
+          "canonicalReference": "@storm-stack/jotai!UseAtomOptions:type",
+          "docComment": "",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export type UseAtomOptions = "
+            },
+            {
+              "kind": "Content",
+              "text": "{\n    scope?: string;\n    store?: "
+            },
+            {
+              "kind": "Reference",
+              "text": "JotaiStore",
+              "canonicalReference": "@storm-stack/jotai!JotaiStore:type"
+            },
+            {
+              "kind": "Content",
+              "text": ";\n    delay?: number;\n}"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "fileUrlPath": "packages/jotai/src/utilities/create-atom-store.ts",
+          "releaseTag": "Public",
+          "name": "UseAtomOptions",
+          "typeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 4
+          }
+        },
+        {
+          "kind": "Variable",
+          "canonicalReference": "@storm-stack/jotai!useAtomStore:var",
+          "docComment": "/**\n * Tries to find a store in each of the following places, in order: 1. The store context, matching the store name and scope 2. The store context, matching the store name and 'provider' scope 3. Otherwise, return undefined\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "useAtomStore: "
+            },
+            {
+              "kind": "Content",
+              "text": "(storeName: string, scope?: string, warnIfUndefined?: boolean) => "
+            },
+            {
+              "kind": "Reference",
+              "text": "JotaiStore",
+              "canonicalReference": "@storm-stack/jotai!JotaiStore:type"
+            },
+            {
+              "kind": "Content",
+              "text": " | undefined"
+            }
+          ],
+          "fileUrlPath": "packages/jotai/src/utilities/create-atom-provider.tsx",
+          "isReadonly": true,
+          "releaseTag": "Public",
+          "name": "useAtomStore",
+          "variableTypeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 4
+          }
+        },
+        {
+          "kind": "TypeAlias",
+          "canonicalReference": "@storm-stack/jotai!UseHydrateAtoms:type",
+          "docComment": "",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export type UseHydrateAtoms<T> = "
+            },
+            {
+              "kind": "Content",
+              "text": "(initialValues: "
+            },
+            {
+              "kind": "Reference",
+              "text": "Partial",
+              "canonicalReference": "!Partial:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<"
+            },
+            {
+              "kind": "Reference",
+              "text": "Record",
+              "canonicalReference": "!Record:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<keyof T, any>>, options?: "
+            },
+            {
+              "kind": "Reference",
+              "text": "Parameters",
+              "canonicalReference": "!Parameters:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<typeof "
+            },
+            {
+              "kind": "Reference",
+              "text": "useHydrateAtoms",
+              "canonicalReference": "!unknown:member"
+            },
+            {
+              "kind": "Content",
+              "text": ">[1]) => void"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "fileUrlPath": "packages/jotai/src/utilities/create-atom-store.ts",
+          "releaseTag": "Public",
+          "name": "UseHydrateAtoms",
+          "typeParameters": [
+            {
+              "typeParameterName": "T",
+              "constraintTokenRange": {
+                "startIndex": 0,
+                "endIndex": 0
+              },
+              "defaultTypeTokenRange": {
+                "startIndex": 0,
+                "endIndex": 0
+              }
+            }
+          ],
+          "typeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 10
+          }
+        },
+        {
+          "kind": "Variable",
+          "canonicalReference": "@storm-stack/jotai!useHydrateStore:var",
+          "docComment": "/**\n * Hydrate atoms with initial values for SSR.\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "useHydrateStore: "
+            },
+            {
+              "kind": "Content",
+              "text": "(atoms: "
+            },
+            {
+              "kind": "Reference",
+              "text": "SimpleWritableAtomRecord",
+              "canonicalReference": "@storm-stack/jotai!SimpleWritableAtomRecord:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<any>, initialValues: "
+            },
+            {
+              "kind": "Reference",
+              "text": "Parameters",
+              "canonicalReference": "!Parameters:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<"
+            },
+            {
+              "kind": "Reference",
+              "text": "UseHydrateAtoms",
+              "canonicalReference": "@storm-stack/jotai!UseHydrateAtoms:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<any>>[0], options?: "
+            },
+            {
+              "kind": "Reference",
+              "text": "Parameters",
+              "canonicalReference": "!Parameters:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<"
+            },
+            {
+              "kind": "Reference",
+              "text": "UseHydrateAtoms",
+              "canonicalReference": "@storm-stack/jotai!UseHydrateAtoms:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<any>>[1]) => void"
+            }
+          ],
+          "fileUrlPath": "packages/jotai/src/hooks/use-hydrate-store.ts",
+          "isReadonly": true,
+          "releaseTag": "Public",
+          "name": "useHydrateStore",
+          "variableTypeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 12
           }
         },
         {
@@ -683,6 +1917,280 @@
             }
           ],
           "name": "usePrepareAtoms"
+        },
+        {
+          "kind": "TypeAlias",
+          "canonicalReference": "@storm-stack/jotai!UseStoreApi:type",
+          "docComment": "",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export type UseStoreApi<T, E> = "
+            },
+            {
+              "kind": "Content",
+              "text": "(options?: "
+            },
+            {
+              "kind": "Reference",
+              "text": "UseAtomOptionsOrScope",
+              "canonicalReference": "@storm-stack/jotai!~UseAtomOptionsOrScope:type"
+            },
+            {
+              "kind": "Content",
+              "text": ") => {\n    get: "
+            },
+            {
+              "kind": "Reference",
+              "text": "GetRecord",
+              "canonicalReference": "@storm-stack/jotai!~GetRecord:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<"
+            },
+            {
+              "kind": "Reference",
+              "text": "StoreAtoms",
+              "canonicalReference": "@storm-stack/jotai!~StoreAtoms:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<T, E>> & {\n        atom: "
+            },
+            {
+              "kind": "Reference",
+              "text": "GetAtomFn",
+              "canonicalReference": "@storm-stack/jotai!~GetAtomFn:type"
+            },
+            {
+              "kind": "Content",
+              "text": ";\n    };\n    set: "
+            },
+            {
+              "kind": "Reference",
+              "text": "SetRecord",
+              "canonicalReference": "@storm-stack/jotai!~SetRecord:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<"
+            },
+            {
+              "kind": "Reference",
+              "text": "WritableStoreAtoms",
+              "canonicalReference": "@storm-stack/jotai!~WritableStoreAtoms:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<T, E>> & {\n        atom: "
+            },
+            {
+              "kind": "Reference",
+              "text": "SetAtomFn",
+              "canonicalReference": "@storm-stack/jotai!~SetAtomFn:type"
+            },
+            {
+              "kind": "Content",
+              "text": ";\n    };\n    use: "
+            },
+            {
+              "kind": "Reference",
+              "text": "UseRecord",
+              "canonicalReference": "@storm-stack/jotai!~UseRecord:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<"
+            },
+            {
+              "kind": "Reference",
+              "text": "WritableStoreAtoms",
+              "canonicalReference": "@storm-stack/jotai!~WritableStoreAtoms:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<T, E>> & {\n        atom: "
+            },
+            {
+              "kind": "Reference",
+              "text": "UseAtomFn",
+              "canonicalReference": "@storm-stack/jotai!~UseAtomFn:type"
+            },
+            {
+              "kind": "Content",
+              "text": ";\n    };\n    store: (options?: "
+            },
+            {
+              "kind": "Reference",
+              "text": "UseAtomOptionsOrScope",
+              "canonicalReference": "@storm-stack/jotai!~UseAtomOptionsOrScope:type"
+            },
+            {
+              "kind": "Content",
+              "text": ") => "
+            },
+            {
+              "kind": "Reference",
+              "text": "JotaiStore",
+              "canonicalReference": "@storm-stack/jotai!JotaiStore:type"
+            },
+            {
+              "kind": "Content",
+              "text": " | undefined;\n}"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "fileUrlPath": "packages/jotai/src/utilities/create-atom-store.ts",
+          "releaseTag": "Public",
+          "name": "UseStoreApi",
+          "typeParameters": [
+            {
+              "typeParameterName": "T",
+              "constraintTokenRange": {
+                "startIndex": 0,
+                "endIndex": 0
+              },
+              "defaultTypeTokenRange": {
+                "startIndex": 0,
+                "endIndex": 0
+              }
+            },
+            {
+              "typeParameterName": "E",
+              "constraintTokenRange": {
+                "startIndex": 0,
+                "endIndex": 0
+              },
+              "defaultTypeTokenRange": {
+                "startIndex": 0,
+                "endIndex": 0
+              }
+            }
+          ],
+          "typeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 26
+          }
+        },
+        {
+          "kind": "TypeAlias",
+          "canonicalReference": "@storm-stack/jotai!UseSyncAtoms:type",
+          "docComment": "",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export type UseSyncAtoms<T> = "
+            },
+            {
+              "kind": "Content",
+              "text": "(values: "
+            },
+            {
+              "kind": "Reference",
+              "text": "Partial",
+              "canonicalReference": "!Partial:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<"
+            },
+            {
+              "kind": "Reference",
+              "text": "Record",
+              "canonicalReference": "!Record:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<keyof T, any>>, options?: {\n    store?: "
+            },
+            {
+              "kind": "Reference",
+              "text": "JotaiStore",
+              "canonicalReference": "@storm-stack/jotai!JotaiStore:type"
+            },
+            {
+              "kind": "Content",
+              "text": ";\n}) => void"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "fileUrlPath": "packages/jotai/src/utilities/create-atom-store.ts",
+          "releaseTag": "Public",
+          "name": "UseSyncAtoms",
+          "typeParameters": [
+            {
+              "typeParameterName": "T",
+              "constraintTokenRange": {
+                "startIndex": 0,
+                "endIndex": 0
+              },
+              "defaultTypeTokenRange": {
+                "startIndex": 0,
+                "endIndex": 0
+              }
+            }
+          ],
+          "typeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 8
+          }
+        },
+        {
+          "kind": "Variable",
+          "canonicalReference": "@storm-stack/jotai!useSyncStore:var",
+          "docComment": "/**\n * Update atoms with new values on changes.\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "useSyncStore: "
+            },
+            {
+              "kind": "Content",
+              "text": "(atoms: "
+            },
+            {
+              "kind": "Reference",
+              "text": "SimpleWritableAtomRecord",
+              "canonicalReference": "@storm-stack/jotai!SimpleWritableAtomRecord:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<any>, values: any, { store }?: "
+            },
+            {
+              "kind": "Reference",
+              "text": "Parameters",
+              "canonicalReference": "!Parameters:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<"
+            },
+            {
+              "kind": "Reference",
+              "text": "UseSyncAtoms",
+              "canonicalReference": "@storm-stack/jotai!UseSyncAtoms:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<any>>[1]) => void"
+            }
+          ],
+          "fileUrlPath": "packages/jotai/src/hooks/use-sync-store.ts",
+          "isReadonly": true,
+          "releaseTag": "Public",
+          "name": "useSyncStore",
+          "variableTypeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 8
+          }
         }
       ]
     }

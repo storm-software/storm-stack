@@ -171,7 +171,62 @@
       "canonicalReference": "@storm-stack/frontend-components!",
       "name": "",
       "preserveMemberOrder": false,
-      "members": []
+      "members": [
+        {
+          "kind": "TypeAlias",
+          "canonicalReference": "@storm-stack/frontend-components!Conf:type",
+          "docComment": "",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export type Conf = "
+            },
+            {
+              "kind": "Content",
+              "text": "typeof "
+            },
+            {
+              "kind": "Reference",
+              "text": "config",
+              "canonicalReference": "@storm-stack/frontend-components!config:var"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "fileUrlPath": "frontend/components/src/global.ts",
+          "releaseTag": "Public",
+          "name": "Conf",
+          "typeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 3
+          }
+        },
+        {
+          "kind": "Variable",
+          "canonicalReference": "@storm-stack/frontend-components!config:var",
+          "docComment": "",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "config: "
+            },
+            {
+              "kind": "Content",
+              "text": "any"
+            }
+          ],
+          "fileUrlPath": "frontend/components/src/tamagui.config.ts",
+          "isReadonly": true,
+          "releaseTag": "Public",
+          "name": "config",
+          "variableTypeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 2
+          }
+        }
+      ]
     }
   ]
 }

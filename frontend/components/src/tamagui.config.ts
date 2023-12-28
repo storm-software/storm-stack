@@ -4,8 +4,6 @@ import { shorthands } from "@tamagui/shorthands";
 import { themes, tokens } from "@tamagui/themes";
 import { createTamagui } from "tamagui";
 
-import { animations } from "./animations";
-
 const headingFont = createInterFont({
   size: {
     6: 15
@@ -51,9 +49,8 @@ const bodyFont = createInterFont(
   }
 );
 
-export const config = createTamagui({
+export const config: any = createTamagui({
   defaultFont: "body",
-  animations,
   shouldAddPrefersColorThemes: true,
   themeClassNameOnRoot: true,
   shorthands,

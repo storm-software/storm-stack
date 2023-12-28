@@ -6,13 +6,20 @@
 import { AsyncStorage } from "jotai/vanilla/utils/atomWithStorage";
 import { AsyncStringStorage } from "jotai/vanilla/utils/atomWithStorage";
 import { Atom } from "jotai/vanilla";
+import { Atom as Atom_2 } from "jotai";
+import { ComponentProps } from "react";
+import type { createStore } from "jotai/vanilla";
+import { FC } from "react";
 import type { Getter } from "jotai/vanilla";
+import { JSX as JSX_2 } from "react/jsx-runtime";
 import { PrimitiveAtom } from "jotai/vanilla";
+import { Provider } from "jotai";
 import { SetStateAction } from "react";
 import type { Setter } from "jotai/vanilla";
 import { SyncStorage } from "jotai/vanilla/utils/atomWithStorage";
 import { SyncStringStorage } from "jotai/vanilla/utils/atomWithStorage";
 import { useAtomValue } from "jotai/react";
+import { useHydrateAtoms } from "jotai/utils";
 import { WritableAtom } from "jotai/vanilla";
 import { WritableAtom as WritableAtom_2 } from "jotai";
 
@@ -23,6 +30,32 @@ function atomEffect(
 export { atomEffect };
 export { atomEffect as atomEffect_alias_1 };
 export { atomEffect as atomEffect_alias_2 };
+
+// @public (undocumented)
+type AtomRecord<O> = {
+  [K in keyof O]: Atom<O[K]>;
+};
+export { AtomRecord };
+export { AtomRecord as AtomRecord_alias_1 };
+export { AtomRecord as AtomRecord_alias_2 };
+
+// @public (undocumented)
+type AtomStoreApi<
+  T extends object,
+  E extends AtomRecord<object>,
+  N extends string = ""
+> = {
+  name: N;
+} & {
+  [key in keyof Record<NameProvider<N>, object>]: FC<ProviderProps<T>>;
+} & {
+  [key in keyof Record<NameStore<N>, object>]: StoreApi<T, E, N>;
+} & {
+  [key in keyof Record<UseNameStore<N>, object>]: UseStoreApi<T, E>;
+};
+export { AtomStoreApi };
+export { AtomStoreApi as AtomStoreApi_alias_1 };
+export { AtomStoreApi as AtomStoreApi_alias_2 };
 
 // @public
 function atomWithBroadcast<TValue>(
@@ -51,6 +84,64 @@ export { atomWithWebStorage };
 export { atomWithWebStorage as atomWithWebStorage_alias_1 };
 export { atomWithWebStorage as atomWithWebStorage_alias_2 };
 
+// @public
+const atomWithWrapper: <TValue>(
+  initialValue: TValue
+) => WritableAtom<TValue, [TValue], void>;
+export { atomWithWrapper };
+export { atomWithWrapper as atomWithWrapper_alias_1 };
+export { atomWithWrapper as atomWithWrapper_alias_2 };
+
+// @public
+const createAtomProvider: <T extends object, N extends string = "">(
+  storeScope: N,
+  atoms: SimpleWritableAtomRecord<T>,
+  options?: {
+    effect?: FC;
+  }
+) => ({
+  store,
+  scope,
+  children,
+  resetKey,
+  ...props
+}: ProviderProps<T>) => JSX_2.Element;
+export { createAtomProvider };
+export { createAtomProvider as createAtomProvider_alias_1 };
+export { createAtomProvider as createAtomProvider_alias_2 };
+
+// @public
+const createAtomStore: <
+  T extends object,
+  E extends object,
+  N extends string = ""
+>(
+  initialState: T,
+  { name, delay: delayRoot, effect, extend }: CreateAtomStoreOptions<T, E, N>
+) => AtomStoreApi<T, E, N>;
+export { createAtomStore };
+export { createAtomStore as createAtomStore_alias_1 };
+export { createAtomStore as createAtomStore_alias_2 };
+
+// @public (undocumented)
+interface CreateAtomStoreOptions<
+  T extends object,
+  E extends AtomRecord<object>,
+  N extends string
+> {
+  // (undocumented)
+  delay?: UseAtomOptions["delay"];
+  // (undocumented)
+  effect?: FC;
+  // (undocumented)
+  extend?: (atomsWithoutExtend: StoreAtomsWithoutExtend<T>) => E;
+  // (undocumented)
+  name: N;
+}
+export { CreateAtomStoreOptions };
+export { CreateAtomStoreOptions as CreateAtomStoreOptions_alias_1 };
+export { CreateAtomStoreOptions as CreateAtomStoreOptions_alias_2 };
+
 // @public (undocumented)
 function createWebStorage<TValue>(
   getStringStorage: () => AsyncStringStorage | SyncStringStorage | undefined
@@ -58,6 +149,49 @@ function createWebStorage<TValue>(
 export { createWebStorage };
 export { createWebStorage as createWebStorage_alias_1 };
 export { createWebStorage as createWebStorage_alias_2 };
+
+// @public (undocumented)
+const HydrateAtoms: <T extends object>({
+  initialValues,
+  children,
+  store,
+  atoms,
+  ...props
+}: Omit<ProviderProps<T>, "scope"> & {
+  atoms: SimpleWritableAtomRecord<T>;
+}) => JSX_2.Element;
+export { HydrateAtoms };
+export { HydrateAtoms as HydrateAtoms_alias_1 };
+export { HydrateAtoms as HydrateAtoms_alias_2 };
+
+// @public (undocumented)
+export const isAtom: <TValue = any>(value: unknown) => value is Atom_2<TValue>;
+
+// @public (undocumented)
+export const isWritableAtom: <
+  TValue = any,
+  TArgs extends unknown[] = unknown[],
+  TResult = any
+>(
+  value: unknown
+) => value is WritableAtom_2<TValue, TArgs, TResult>;
+
+// @public (undocumented)
+type JotaiStore = ReturnType<typeof createStore>;
+export { JotaiStore };
+export { JotaiStore as JotaiStore_alias_1 };
+export { JotaiStore as JotaiStore_alias_2 };
+
+// @public (undocumented)
+type ProviderProps<T extends object> = AtomProviderProps &
+  Partial<T> & {
+    scope?: string;
+    initialValues?: Partial<T>;
+    resetKey?: any;
+  };
+export { ProviderProps };
+export { ProviderProps as ProviderProps_alias_1 };
+export { ProviderProps as ProviderProps_alias_2 };
 
 // @public
 const setAtomDebugLabel: (atom: Atom<unknown>, label: string) => void;
@@ -72,10 +206,114 @@ export { setAtomPrivate as setAtomPrivate_alias_1 };
 export { setAtomPrivate as setAtomPrivate_alias_2 };
 
 // @public (undocumented)
+type SimpleWritableAtom<T> = WritableAtom<T, [T], void>;
+export { SimpleWritableAtom };
+export { SimpleWritableAtom as SimpleWritableAtom_alias_1 };
+export { SimpleWritableAtom as SimpleWritableAtom_alias_2 };
+
+// @public (undocumented)
+type SimpleWritableAtomRecord<T> = {
+  [K in keyof T]: SimpleWritableAtom<T[K]>;
+};
+export { SimpleWritableAtomRecord };
+export { SimpleWritableAtomRecord as SimpleWritableAtomRecord_alias_1 };
+export { SimpleWritableAtomRecord as SimpleWritableAtomRecord_alias_2 };
+
+// @public (undocumented)
+type StoreApi<
+  T extends object,
+  E extends AtomRecord<object>,
+  N extends string = ""
+> = {
+  atom: StoreAtoms<T, E>;
+  name: N;
+};
+export { StoreApi };
+export { StoreApi as StoreApi_alias_1 };
+export { StoreApi as StoreApi_alias_2 };
+
+// @public (undocumented)
+type UseAtomOptions = {
+  scope?: string;
+  store?: JotaiStore;
+  delay?: number;
+};
+export { UseAtomOptions };
+export { UseAtomOptions as UseAtomOptions_alias_1 };
+export { UseAtomOptions as UseAtomOptions_alias_2 };
+
+// @public
+const useAtomStore: (
+  storeName: string,
+  scope?: string,
+  warnIfUndefined?: boolean
+) => JotaiStore | undefined;
+export { useAtomStore };
+export { useAtomStore as useAtomStore_alias_1 };
+export { useAtomStore as useAtomStore_alias_2 };
+
+// @public (undocumented)
+type UseHydrateAtoms<T> = (
+  initialValues: Partial<Record<keyof T, any>>,
+  options?: Parameters<typeof useHydrateAtoms>[1]
+) => void;
+export { UseHydrateAtoms };
+export { UseHydrateAtoms as UseHydrateAtoms_alias_1 };
+export { UseHydrateAtoms as UseHydrateAtoms_alias_2 };
+
+// @public
+const useHydrateStore: (
+  atoms: SimpleWritableAtomRecord<any>,
+  initialValues: Parameters<UseHydrateAtoms<any>>[0],
+  options?: Parameters<UseHydrateAtoms<any>>[1]
+) => void;
+export { useHydrateStore };
+export { useHydrateStore as useHydrateStore_alias_1 };
+export { useHydrateStore as useHydrateStore_alias_2 };
+
+// @public (undocumented)
 function usePrepareAtoms(atoms: Atom<unknown>[], options?: Options): void;
 export { usePrepareAtoms };
 export { usePrepareAtoms as usePrepareAtoms_alias_1 };
 export { usePrepareAtoms as usePrepareAtoms_alias_2 };
+
+// @public (undocumented)
+type UseStoreApi<T, E> = (options?: UseAtomOptionsOrScope) => {
+  get: GetRecord<StoreAtoms<T, E>> & {
+    atom: GetAtomFn;
+  };
+  set: SetRecord<WritableStoreAtoms<T, E>> & {
+    atom: SetAtomFn;
+  };
+  use: UseRecord<WritableStoreAtoms<T, E>> & {
+    atom: UseAtomFn;
+  };
+  store: (options?: UseAtomOptionsOrScope) => JotaiStore | undefined;
+};
+export { UseStoreApi };
+export { UseStoreApi as UseStoreApi_alias_1 };
+export { UseStoreApi as UseStoreApi_alias_2 };
+
+// @public (undocumented)
+type UseSyncAtoms<T> = (
+  values: Partial<Record<keyof T, any>>,
+  options?: {
+    store?: JotaiStore;
+  }
+) => void;
+export { UseSyncAtoms };
+export { UseSyncAtoms as UseSyncAtoms_alias_1 };
+export { UseSyncAtoms as UseSyncAtoms_alias_2 };
+
+// @public
+const useSyncStore: (
+  atoms: SimpleWritableAtomRecord<any>,
+  values: any,
+  { store }?: Parameters<UseSyncAtoms<any>>[1]
+) => void;
+export { useSyncStore };
+export { useSyncStore as useSyncStore_alias_1 };
+export { useSyncStore as useSyncStore_alias_2 };
 
 // (No @packageDocumentation comment for this package)
 ```

@@ -17,7 +17,21 @@
     "tamagui": "^1.79.13"
   },
   "devDependencies": {
-    "@tamagui/build": "^1.79.13"
+    "@tamagui/build": "^1.79.13",
+    "react-dom": "18.2.0",
+    "react-native": "^0.73.1"
+  },
+  "peerDependencies": {
+    "react-dom": "^18.2.0",
+    "react-native": "^0.73.1"
+  },
+  "peerDependenciesMeta": {
+    "react-dom": {
+      "optional": true
+    },
+    "react-native": {
+      "optional": true
+    }
   },
   "publishConfig": {
     "access": "public"
