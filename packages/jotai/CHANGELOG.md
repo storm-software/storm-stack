@@ -1,3 +1,15 @@
+# [1.3.0](https://github.com/storm-software/storm-stack/compare/jotai-v1.2.0...jotai-v1.3.0) (2023-12-28)
+
+
+### Bug Fixes
+
+* **jotai:** Regenerated pnpm lock file ([9c2fbf6](https://github.com/storm-software/storm-stack/commit/9c2fbf6939eb226ee6d5b92864e65b74f2ec33ff))
+
+
+### Features
+
+* **jotai:** Added `createAtomStore` functionality ([9031b61](https://github.com/storm-software/storm-stack/commit/9031b61d811724a5361c98bd6da1c375799cf612))
+
 # [1.2.0](https://github.com/storm-software/storm-stack/compare/jotai-v1.1.4...jotai-v1.2.0) (2023-12-24)
 
 
