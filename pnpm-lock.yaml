@@ -143,9 +143,6 @@ importers:
       eslint-plugin-react-hooks:
         specifier: 4.6.0
         version: 4.6.0(eslint@8.55.0)
-      husky:
-        specifier: 8.0.3
-        version: 8.0.3
       jest:
         specifier: 29.7.0
         version: 29.7.0(@types/node@20.10.5)(ts-node@10.9.2)
@@ -197,6 +194,10 @@ importers:
       verdaccio:
         specifier: 5.29.0
         version: 5.29.0(typanion@3.14.0)
+    devDependencies:
+      husky:
+        specifier: 8.0.3
+        version: 8.0.3
 
   docs/website:
     dependencies:
@@ -315,6 +316,9 @@ importers:
       react:
         specifier: ^18.2.0
         version: 18.2.0
+      react-dom:
+        specifier: 18.2.0
+        version: 18.2.0(react@18.2.0)
 
   packages/logging:
     dependencies:
@@ -19465,7 +19469,7 @@ packages:
       }
     engines: { node: ">=14" }
     hasBin: true
-    dev: false
+    dev: true
 
   /hyphenate-style-name@1.0.4:
     resolution:
@@ -27729,7 +27733,6 @@ packages:
       loose-envify: 1.4.0
       react: 18.2.0
       scheduler: 0.23.0
-    dev: false
 
   /react-freeze@1.0.3(react@18.2.0):
     resolution:
@@ -29198,7 +29201,6 @@ packages:
       }
     dependencies:
       loose-envify: 1.4.0
-    dev: false
 
   /scheduler@0.24.0-canary-efb381bbf-20230505:
     resolution:
