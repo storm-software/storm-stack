@@ -1,9 +1,20 @@
-## [1.3.5](https://github.com/storm-software/storm-stack/compare/cli-v1.3.4...cli-v1.3.5) (2023-12-26)
+# [1.4.0](https://github.com/storm-software/storm-stack/compare/cli-v1.3.5...cli-v1.4.0) (2023-12-28)
 
 
 ### Bug Fixes
 
-* **logging:** Temporarily remove the config for logging ([b557ed8](https://github.com/storm-software/storm-stack/commit/b557ed8062911905eb9cd74eb251413d4ae58d4b))
+* **jotai:** Regenerated pnpm lock file ([9c2fbf6](https://github.com/storm-software/storm-stack/commit/9c2fbf6939eb226ee6d5b92864e65b74f2ec33ff))
+
+
+### Features
+
+* **jotai:** Added `createAtomStore` functionality ([9031b61](https://github.com/storm-software/storm-stack/commit/9031b61d811724a5361c98bd6da1c375799cf612))
+
+## [1.3.5](https://github.com/storm-software/storm-stack/compare/cli-v1.3.4...cli-v1.3.5) (2023-12-26)
+
+### Bug Fixes
+
+- **logging:** Temporarily remove the config for logging ([b557ed8](https://github.com/storm-software/storm-stack/commit/b557ed8062911905eb9cd74eb251413d4ae58d4b))
 
 ## [1.3.4](https://github.com/storm-software/storm-stack/compare/cli-v1.3.3...cli-v1.3.4) (2023-12-25)
 
