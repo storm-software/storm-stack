@@ -5,17 +5,22 @@
 ```ts
 import { AsyncStorage } from "jotai/vanilla/utils/atomWithStorage";
 import { AsyncStringStorage } from "jotai/vanilla/utils/atomWithStorage";
-import { Atom } from "jotai/vanilla";
-import { Atom as Atom_2 } from "jotai";
+import { Atom } from "jotai";
+import { Atom as Atom_2 } from "jotai/vanilla";
 import { ComponentProps } from "react";
 import type { createStore } from "jotai/vanilla";
 import { FC } from "react";
-import type { Getter } from "jotai/vanilla";
+import { Getter } from "jotai/vanilla";
+import { Getter as Getter_2 } from "jotai";
 import { JSX as JSX_2 } from "react/jsx-runtime";
-import { PrimitiveAtom } from "jotai/vanilla";
+import { PrimitiveAtom } from "jotai";
+import { PrimitiveAtom as PrimitiveAtom_2 } from "jotai/vanilla";
 import { Provider } from "jotai";
-import { SetStateAction } from "react";
-import type { Setter } from "jotai/vanilla";
+import { default as React_2 } from "react";
+import { SetStateAction } from "jotai";
+import { SetStateAction as SetStateAction_2 } from "jotai/vanilla";
+import { SetStateAction as SetStateAction_3 } from "react";
+import { Setter } from "jotai/vanilla";
 import { SyncStorage } from "jotai/vanilla/utils/atomWithStorage";
 import { SyncStringStorage } from "jotai/vanilla/utils/atomWithStorage";
 import { useAtomValue } from "jotai/react";
@@ -26,14 +31,14 @@ import { WritableAtom as WritableAtom_2 } from "jotai";
 // @public
 function atomEffect(
   effectFn: (get: Getter, set: Setter) => void | CleanupFn
-): Atom<void>;
+): Atom_2<void>;
 export { atomEffect };
 export { atomEffect as atomEffect_alias_1 };
 export { atomEffect as atomEffect_alias_2 };
 
 // @public (undocumented)
 type AtomRecord<O> = {
-  [K in keyof O]: Atom<O[K]>;
+  [K in keyof O]: Atom_2<O[K]>;
 };
 export { AtomRecord };
 export { AtomRecord as AtomRecord_alias_1 };
@@ -47,7 +52,7 @@ type AtomStoreApi<
 > = {
   name: N;
 } & {
-  [key in keyof Record<NameProvider<N>, object>]: FC<ProviderProps<T>>;
+  [key in keyof Record<NameProvider<N>, object>]: React_2.FC<ProviderProps<T>>;
 } & {
   [key in keyof Record<NameStore<N>, object>]: StoreApi<T, E, N>;
 } & {
@@ -66,20 +71,90 @@ export { atomWithBroadcast };
 export { atomWithBroadcast as atomWithBroadcast_alias_1 };
 export { atomWithBroadcast as atomWithBroadcast_alias_2 };
 
+// @public (undocumented)
+function atomWithCompare<Value>(
+  initialValue: Value,
+  areEqual: (prev: Value, next: Value) => boolean
+): WritableAtom_2<Value, [Value], void>;
+export { atomWithCompare };
+export { atomWithCompare as atomWithCompare_alias_1 };
+export { atomWithCompare as atomWithCompare_alias_2 };
+
+// @public (undocumented)
+function atomWithDebounce<TValue>(
+  initialValue: TValue,
+  delayMilliseconds?: number,
+  shouldDebounceOnReset?: boolean
+): {
+  currentValueAtom: Atom<TValue>;
+  isDebouncingAtom: PrimitiveAtom<boolean> & {
+    init: boolean;
+  };
+  clearTimeoutAtom: WritableAtom_2<null, [_arg: unknown], void> & {
+    init: null;
+  };
+  debouncedValueAtom: WritableAtom_2<
+    TValue,
+    [update: SetStateAction<TValue>],
+    void
+  > & {
+    init: TValue;
+  };
+};
+export { atomWithDebounce };
+export { atomWithDebounce as atomWithDebounce_alias_1 };
+export { atomWithDebounce as atomWithDebounce_alias_2 };
+
 // @public
-const atomWithPending: <Value>() => PrimitiveAtom<Value> & {
+function atomWithListeners<TValue>(
+  initial: TValue | WritableAtom<TValue, any, any>
+): readonly [
+  WritableAtom<TValue, [arg: SetStateAction_2<TValue>], void>,
+  (callback: Callback<TValue>) => void
+];
+export { atomWithListeners };
+export { atomWithListeners as atomWithListeners_alias_1 };
+export { atomWithListeners as atomWithListeners_alias_2 };
+
+// @public
+const atomWithPending: <Value>() => PrimitiveAtom_2<Value> & {
   init: Value;
 };
 export { atomWithPending };
 export { atomWithPending as atomWithPending_alias_1 };
 export { atomWithPending as atomWithPending_alias_2 };
 
+// @public (undocumented)
+function atomWithRefresh<TValue>(
+  fn: (get: Getter_2) => TValue
+): WritableAtom_2<TValue, [], void>;
+export { atomWithRefresh };
+export { atomWithRefresh as atomWithRefresh_alias_1 };
+export { atomWithRefresh as atomWithRefresh_alias_2 };
+
+// @public (undocumented)
+const atomWithRefreshAndDefault: <TValue extends unknown>(
+  refreshAtom: PrimitiveAtom<number>,
+  getDefault: (get: Getter_2) => TValue
+) => WritableAtom_2<TValue, [update: TValue], void>;
+export { atomWithRefreshAndDefault };
+export { atomWithRefreshAndDefault as atomWithRefreshAndDefault_alias_1 };
+export { atomWithRefreshAndDefault as atomWithRefreshAndDefault_alias_2 };
+
+// @public (undocumented)
+function atomWithToggle(
+  initialValue?: boolean
+): WritableAtom_2<boolean, [boolean | undefined], void>;
+export { atomWithToggle };
+export { atomWithToggle as atomWithToggle_alias_1 };
+export { atomWithToggle as atomWithToggle_alias_2 };
+
 // @public
 function atomWithWebStorage<TValue = unknown>(
   key: string,
   initialValue: TValue,
   webStorage?: SyncStorage<TValue> | AsyncStorage<TValue>
-): WritableAtom_2<TValue, [SetStateAction<TValue>], void>;
+): WritableAtom_2<TValue, [SetStateAction_3<TValue>], void>;
 export { atomWithWebStorage };
 export { atomWithWebStorage as atomWithWebStorage_alias_1 };
 export { atomWithWebStorage as atomWithWebStorage_alias_2 };
@@ -91,6 +166,17 @@ const atomWithWrapper: <TValue>(
 export { atomWithWrapper };
 export { atomWithWrapper as atomWithWrapper_alias_1 };
 export { atomWithWrapper as atomWithWrapper_alias_2 };
+
+// @public (undocumented)
+type Callback<Value> = (
+  get: Getter,
+  set: Setter,
+  newVal: Value,
+  prevVal: Value
+) => void;
+export { Callback };
+export { Callback as Callback_alias_1 };
+export { Callback as Callback_alias_2 };
 
 // @public
 const createAtomProvider: <T extends object, N extends string = "">(
@@ -132,7 +218,7 @@ interface CreateAtomStoreOptions<
   // (undocumented)
   delay?: UseAtomOptions["delay"];
   // (undocumented)
-  effect?: FC;
+  effect?: React_2.FC;
   // (undocumented)
   extend?: (atomsWithoutExtend: StoreAtomsWithoutExtend<T>) => E;
   // (undocumented)
@@ -151,6 +237,30 @@ export { createWebStorage as createWebStorage_alias_1 };
 export { createWebStorage as createWebStorage_alias_2 };
 
 // @public (undocumented)
+type FilterWritableAtoms<T> = {
+  [K in keyof T]-?: T[K] extends WritableAtom<any, any, any> ? T[K] : never;
+};
+export { FilterWritableAtoms };
+export { FilterWritableAtoms as FilterWritableAtoms_alias_1 };
+export { FilterWritableAtoms as FilterWritableAtoms_alias_2 };
+
+// @public (undocumented)
+type GetAtomFn = <V>(atom: Atom_2<V>, options?: UseAtomOptionsOrScope) => V;
+export { GetAtomFn };
+export { GetAtomFn as GetAtomFn_alias_1 };
+export { GetAtomFn as GetAtomFn_alias_2 };
+
+// @public (undocumented)
+type GetRecord<O> = {
+  [K in keyof O]: O[K] extends Atom_2<infer V>
+    ? (options?: UseAtomOptionsOrScope) => V
+    : never;
+};
+export { GetRecord };
+export { GetRecord as GetRecord_alias_1 };
+export { GetRecord as GetRecord_alias_2 };
+
+// @public (undocumented)
 const HydrateAtoms: <T extends object>({
   initialValues,
   children,
@@ -165,7 +275,7 @@ export { HydrateAtoms as HydrateAtoms_alias_1 };
 export { HydrateAtoms as HydrateAtoms_alias_2 };
 
 // @public (undocumented)
-export const isAtom: <TValue = any>(value: unknown) => value is Atom_2<TValue>;
+export const isAtom: <TValue = any>(value: unknown) => value is Atom<TValue>;
 
 // @public (undocumented)
 export const isWritableAtom: <
@@ -194,16 +304,35 @@ export { ProviderProps as ProviderProps_alias_1 };
 export { ProviderProps as ProviderProps_alias_2 };
 
 // @public
-const setAtomDebugLabel: (atom: Atom<unknown>, label: string) => void;
+const setAtomDebugLabel: (atom: Atom_2<unknown>, label: string) => void;
 export { setAtomDebugLabel };
 export { setAtomDebugLabel as setAtomDebugLabel_alias_1 };
 export { setAtomDebugLabel as setAtomDebugLabel_alias_2 };
 
+// @public (undocumented)
+type SetAtomFn = <V, A extends unknown[], R>(
+  atom: WritableAtom<V, A, R>,
+  options?: UseAtomOptionsOrScope
+) => (...args: A) => R;
+export { SetAtomFn };
+export { SetAtomFn as SetAtomFn_alias_1 };
+export { SetAtomFn as SetAtomFn_alias_2 };
+
 // @public
-const setAtomPrivate: (atom: Atom<unknown>) => void;
+const setAtomPrivate: (atom: Atom_2<unknown>) => void;
 export { setAtomPrivate };
 export { setAtomPrivate as setAtomPrivate_alias_1 };
 export { setAtomPrivate as setAtomPrivate_alias_2 };
+
+// @public (undocumented)
+type SetRecord<O> = {
+  [K in keyof O]: O[K] extends WritableAtom<infer _V, infer A, infer R>
+    ? (options?: UseAtomOptionsOrScope) => (...args: A) => R
+    : never;
+};
+export { SetRecord };
+export { SetRecord as SetRecord_alias_1 };
+export { SetRecord as SetRecord_alias_2 };
 
 // @public (undocumented)
 type SimpleWritableAtom<T> = WritableAtom<T, [T], void>;
@@ -233,6 +362,29 @@ export { StoreApi as StoreApi_alias_1 };
 export { StoreApi as StoreApi_alias_2 };
 
 // @public (undocumented)
+type StoreAtoms<T, E> = StoreAtomsWithoutExtend<T> & E;
+export { StoreAtoms };
+export { StoreAtoms as StoreAtoms_alias_1 };
+export { StoreAtoms as StoreAtoms_alias_2 };
+
+// @public (undocumented)
+type StoreAtomsWithoutExtend<T> = {
+  [K in keyof T]: T[K] extends Atom_2<any> ? T[K] : SimpleWritableAtom<T[K]>;
+};
+export { StoreAtomsWithoutExtend };
+export { StoreAtomsWithoutExtend as StoreAtomsWithoutExtend_alias_1 };
+export { StoreAtomsWithoutExtend as StoreAtomsWithoutExtend_alias_2 };
+
+// @public (undocumented)
+type UseAtomFn = <V, A extends unknown[], R>(
+  atom: WritableAtom<V, A, R>,
+  options?: UseAtomOptionsOrScope
+) => [V, (...args: A) => R];
+export { UseAtomFn };
+export { UseAtomFn as UseAtomFn_alias_1 };
+export { UseAtomFn as UseAtomFn_alias_2 };
+
+// @public (undocumented)
 type UseAtomOptions = {
   scope?: string;
   store?: JotaiStore;
@@ -241,6 +393,12 @@ type UseAtomOptions = {
 export { UseAtomOptions };
 export { UseAtomOptions as UseAtomOptions_alias_1 };
 export { UseAtomOptions as UseAtomOptions_alias_2 };
+
+// @public (undocumented)
+type UseAtomOptionsOrScope = UseAtomOptions | string;
+export { UseAtomOptionsOrScope };
+export { UseAtomOptionsOrScope as UseAtomOptionsOrScope_alias_1 };
+export { UseAtomOptionsOrScope as UseAtomOptionsOrScope_alias_2 };
 
 // @public
 const useAtomStore: (
@@ -272,10 +430,20 @@ export { useHydrateStore as useHydrateStore_alias_1 };
 export { useHydrateStore as useHydrateStore_alias_2 };
 
 // @public (undocumented)
-function usePrepareAtoms(atoms: Atom<unknown>[], options?: Options): void;
+function usePrepareAtoms(atoms: Atom_2<unknown>[], options?: Options): void;
 export { usePrepareAtoms };
 export { usePrepareAtoms as usePrepareAtoms_alias_1 };
 export { usePrepareAtoms as usePrepareAtoms_alias_2 };
+
+// @public (undocumented)
+type UseRecord<O> = {
+  [K in keyof O]: O[K] extends WritableAtom<infer V, infer A, infer R>
+    ? (options?: UseAtomOptionsOrScope) => [V, (...args: A) => R]
+    : never;
+};
+export { UseRecord };
+export { UseRecord as UseRecord_alias_1 };
+export { UseRecord as UseRecord_alias_2 };
 
 // @public (undocumented)
 type UseStoreApi<T, E> = (options?: UseAtomOptionsOrScope) => {
@@ -314,6 +482,12 @@ const useSyncStore: (
 export { useSyncStore };
 export { useSyncStore as useSyncStore_alias_1 };
 export { useSyncStore as useSyncStore_alias_2 };
+
+// @public (undocumented)
+type WritableStoreAtoms<T, E> = FilterWritableAtoms<StoreAtoms<T, E>>;
+export { WritableStoreAtoms };
+export { WritableStoreAtoms as WritableStoreAtoms_alias_1 };
+export { WritableStoreAtoms as WritableStoreAtoms_alias_2 };
 
 // (No @packageDocumentation comment for this package)
 ```

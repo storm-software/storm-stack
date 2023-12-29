@@ -2,7 +2,7 @@ import { upperCaseFirst } from "@storm-stack/utilities";
 import { useAtom, useAtomValue, useSetAtom } from "jotai";
 import { useHydrateAtoms } from "jotai/utils";
 import type { Atom, WritableAtom, createStore } from "jotai/vanilla";
-import type { FC } from "react";
+import React from "react";
 import { atomWithWrapper } from "../atoms/atom-with-wrapper";
 import type { ProviderProps } from "./create-atom-provider";
 import { createAtomProvider, useAtomStore } from "./create-atom-provider";
@@ -110,7 +110,7 @@ export type AtomStoreApi<
 > = {
   name: N;
 } & {
-  [key in keyof Record<NameProvider<N>, object>]: FC<ProviderProps<T>>;
+  [key in keyof Record<NameProvider<N>, object>]: React.FC<ProviderProps<T>>;
 } & {
   [key in keyof Record<NameStore<N>, object>]: StoreApi<T, E, N>;
 } & {
@@ -143,7 +143,7 @@ export interface CreateAtomStoreOptions<
 > {
   name: N;
   delay?: UseAtomOptions["delay"];
-  effect?: FC;
+  effect?: React.FC;
   extend?: (atomsWithoutExtend: StoreAtomsWithoutExtend<T>) => E;
 }
 
@@ -269,7 +269,7 @@ export const createAtomStore = <
     }
   }
 
-  const Provider: FC<ProviderProps<T>> = createAtomProvider(
+  const Provider: React.FC<ProviderProps<T>> = createAtomProvider(
     name,
     writableAtomsWithoutExtend,
     { effect }
