@@ -1,40 +1,41 @@
-# [1.3.0](https://github.com/storm-software/storm-stack/compare/jotai-v1.2.0...jotai-v1.3.0) (2023-12-28)
-
-
-### Bug Fixes
-
-* **jotai:** Regenerated pnpm lock file ([9c2fbf6](https://github.com/storm-software/storm-stack/commit/9c2fbf6939eb226ee6d5b92864e65b74f2ec33ff))
+# [1.4.0](https://github.com/storm-software/storm-stack/compare/jotai-v1.3.0...jotai-v1.4.0) (2023-12-29)
 
 
 ### Features
 
-* **jotai:** Added `createAtomStore` functionality ([9031b61](https://github.com/storm-software/storm-stack/commit/9031b61d811724a5361c98bd6da1c375799cf612))
+* **jotai:** Added multiple new atom creators ([1f7f3f8](https://github.com/storm-software/storm-stack/commit/1f7f3f8778114bef2b02ea764d1a6e804800fa0d))
+
+# [1.3.0](https://github.com/storm-software/storm-stack/compare/jotai-v1.2.0...jotai-v1.3.0) (2023-12-28)
+
+### Bug Fixes
+
+- **jotai:** Regenerated pnpm lock file ([9c2fbf6](https://github.com/storm-software/storm-stack/commit/9c2fbf6939eb226ee6d5b92864e65b74f2ec33ff))
+
+### Features
+
+- **jotai:** Added `createAtomStore` functionality ([9031b61](https://github.com/storm-software/storm-stack/commit/9031b61d811724a5361c98bd6da1c375799cf612))
 
 # [1.2.0](https://github.com/storm-software/storm-stack/compare/jotai-v1.1.4...jotai-v1.2.0) (2023-12-24)
 
-
 ### Bug Fixes
 
-* **monorepo:** Regenerate pnpm lock file ([17ce885](https://github.com/storm-software/storm-stack/commit/17ce885cf5e5241124628fec5ecd5378449c7a42))
-
+- **monorepo:** Regenerate pnpm lock file ([17ce885](https://github.com/storm-software/storm-stack/commit/17ce885cf5e5241124628fec5ecd5378449c7a42))
 
 ### Features
 
-* **docs-website:** Added initial code for documentation website ([6dbcaa7](https://github.com/storm-software/storm-stack/commit/6dbcaa76e2568dadf4454e630e7ad7fab2158bed))
+- **docs-website:** Added initial code for documentation website ([6dbcaa7](https://github.com/storm-software/storm-stack/commit/6dbcaa76e2568dadf4454e630e7ad7fab2158bed))
 
 ## [1.1.4](https://github.com/storm-software/storm-stack/compare/jotai-v1.1.3...jotai-v1.1.4) (2023-12-23)
 
-
 ### Bug Fixes
 
-* **logging:** Added `mkdir` option to create logging directory ([df62ea7](https://github.com/storm-software/storm-stack/commit/df62ea7bc9f541ba4d72fb10b4296b430086c433))
+- **logging:** Added `mkdir` option to create logging directory ([df62ea7](https://github.com/storm-software/storm-stack/commit/df62ea7bc9f541ba4d72fb10b4296b430086c433))
 
 ## [1.1.3](https://github.com/storm-software/storm-stack/compare/jotai-v1.1.2...jotai-v1.1.3) (2023-12-23)
 
-
 ### Bug Fixes
 
-* **date-time:** Resolved issues with temporal calendar ([5039d03](https://github.com/storm-software/storm-stack/commit/5039d03ed8a2b0fcc8ed93c56006cd956517afd8))
+- **date-time:** Resolved issues with temporal calendar ([5039d03](https://github.com/storm-software/storm-stack/commit/5039d03ed8a2b0fcc8ed93c56006cd956517afd8))
 
 ## [1.1.2](https://github.com/storm-software/storm-stack/compare/jotai-v1.1.1...jotai-v1.1.2) (2023-12-23)
 
