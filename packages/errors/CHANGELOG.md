@@ -1,3 +1,15 @@
+# [1.6.0](https://github.com/storm-software/storm-stack/compare/errors-v1.5.1...errors-v1.6.0) (2023-12-28)
+
+
+### Bug Fixes
+
+* **jotai:** Regenerated pnpm lock file ([9c2fbf6](https://github.com/storm-software/storm-stack/commit/9c2fbf6939eb226ee6d5b92864e65b74f2ec33ff))
+
+
+### Features
+
+* **jotai:** Added `createAtomStore` functionality ([9031b61](https://github.com/storm-software/storm-stack/commit/9031b61d811724a5361c98bd6da1c375799cf612))
+
 ## [1.5.1](https://github.com/storm-software/storm-stack/compare/errors-v1.5.0...errors-v1.5.1) (2023-12-25)
 
 
