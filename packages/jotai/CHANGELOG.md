@@ -1,9 +1,15 @@
-## [1.4.1](https://github.com/storm-software/storm-stack/compare/jotai-v1.4.0...jotai-v1.4.1) (2023-12-29)
+## [1.4.2](https://github.com/storm-software/storm-stack/compare/jotai-v1.4.1...jotai-v1.4.2) (2023-12-29)
 
 
 ### Bug Fixes
 
-* **jotai:** Exported previously internal atom store types ([d2f64e1](https://github.com/storm-software/storm-stack/commit/d2f64e15ca40aabde1aa78f7cb3fcf953aa3b5ee))
+* **jotai:** Marked react react-dom as external dependencies ([78e2abb](https://github.com/storm-software/storm-stack/commit/78e2abb982b251b722678dec3bac80822929a6d5))
+
+## [1.4.1](https://github.com/storm-software/storm-stack/compare/jotai-v1.4.0...jotai-v1.4.1) (2023-12-29)
+
+### Bug Fixes
+
+- **jotai:** Exported previously internal atom store types ([d2f64e1](https://github.com/storm-software/storm-stack/commit/d2f64e15ca40aabde1aa78f7cb3fcf953aa3b5ee))
 
 # [1.4.0](https://github.com/storm-software/storm-stack/compare/jotai-v1.3.0...jotai-v1.4.0) (2023-12-29)
 
