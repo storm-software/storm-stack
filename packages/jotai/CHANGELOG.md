@@ -1,9 +1,15 @@
-# [1.4.0](https://github.com/storm-software/storm-stack/compare/jotai-v1.3.0...jotai-v1.4.0) (2023-12-29)
+## [1.4.1](https://github.com/storm-software/storm-stack/compare/jotai-v1.4.0...jotai-v1.4.1) (2023-12-29)
 
+
+### Bug Fixes
+
+* **jotai:** Exported previously internal atom store types ([d2f64e1](https://github.com/storm-software/storm-stack/commit/d2f64e15ca40aabde1aa78f7cb3fcf953aa3b5ee))
+
+# [1.4.0](https://github.com/storm-software/storm-stack/compare/jotai-v1.3.0...jotai-v1.4.0) (2023-12-29)
 
 ### Features
 
-* **jotai:** Added multiple new atom creators ([1f7f3f8](https://github.com/storm-software/storm-stack/commit/1f7f3f8778114bef2b02ea764d1a6e804800fa0d))
+- **jotai:** Added multiple new atom creators ([1f7f3f8](https://github.com/storm-software/storm-stack/commit/1f7f3f8778114bef2b02ea764d1a6e804800fa0d))
 
 # [1.3.0](https://github.com/storm-software/storm-stack/compare/jotai-v1.2.0...jotai-v1.3.0) (2023-12-28)
 
