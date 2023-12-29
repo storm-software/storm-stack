@@ -1,3 +1,10 @@
+## [1.4.1](https://github.com/storm-software/storm-stack/compare/cli-v1.4.0...cli-v1.4.1) (2023-12-29)
+
+
+### Bug Fixes
+
+* **logging:** Resolved issue with empty config values ([1b8e905](https://github.com/storm-software/storm-stack/commit/1b8e905c0600b8d17db110d363aad22143443982))
+
 # [1.4.0](https://github.com/storm-software/storm-stack/compare/cli-v1.3.5...cli-v1.4.0) (2023-12-28)
 
 
