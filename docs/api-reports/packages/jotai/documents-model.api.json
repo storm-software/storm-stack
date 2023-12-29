@@ -1237,7 +1237,7 @@
             },
             {
               "kind": "Reference",
-              "text": "FC",
+              "text": "React.FC",
               "canonicalReference": "@types/react!React.FC:type"
             },
             {

@@ -9,7 +9,6 @@ import { Atom } from "jotai";
 import { Atom as Atom_2 } from "jotai/vanilla";
 import { ComponentProps } from "react";
 import type { createStore } from "jotai/vanilla";
-import { FC } from "react";
 import { Getter } from "jotai/vanilla";
 import { Getter as Getter_2 } from "jotai";
 import { JSX as JSX_2 } from "react/jsx-runtime";
@@ -183,7 +182,7 @@ const createAtomProvider: <T extends object, N extends string = "">(
   storeScope: N,
   atoms: SimpleWritableAtomRecord<T>,
   options?: {
-    effect?: FC;
+    effect?: React_2.FC;
   }
 ) => ({
   store,

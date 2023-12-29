@@ -1,9 +1,7 @@
 import { Provider as AtomProvider } from "jotai";
 import { createStore } from "jotai/vanilla";
-import {
+import React, {
   ComponentProps,
-  createContext,
-  FC,
   useContext,
   useEffect,
   useMemo,
@@ -23,7 +21,9 @@ const getFullyQualifiedScope = (storeName: string, scope: string) => {
  * to reference any provider belonging to the store, regardless of scope.
  */
 const PROVIDER_SCOPE = "provider";
-const AtomStoreContext = createContext<Map<string, JotaiStore>>(new Map());
+const AtomStoreContext = React.createContext<Map<string, JotaiStore>>(
+  new Map()
+);
 
 /**
  * Tries to find a store in each of the following places, in order:
@@ -84,7 +84,7 @@ export const HydrateAtoms = <T extends object>({
 export const createAtomProvider = <T extends object, N extends string = "">(
   storeScope: N,
   atoms: SimpleWritableAtomRecord<T>,
-  options: { effect?: FC } = {}
+  options: { effect?: React.FC } = {}
 ) => {
   const Effect = options.effect;
 

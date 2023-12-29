@@ -50,5 +50,7 @@
       }
     },
     "test": {}
-  }
+  },
+  "tags": [],
+  "implicitDependencies": ["utilities", "serialization"]
 }

@@ -3,15 +3,20 @@
   "compilerOptions": {
     "outDir": "../../dist/out-tsc",
     "jsx": "react-jsx",
-    "noEmit": true
+    "noEmit": true,
+    "types": [
+      "@nx/react/typings/cssmodule.d.ts",
+      "@nx/react/typings/image.d.ts",
+      "node"
+    ]
   },
   "files": [],
   "include": [
     "src/**/*.ts",
+    "src/**/*.tsx",
     "src/**/*.js",
-    "bin/**/*",
-    "src/utilities/create-atom-provider.tsx"
+    "src/**/*.jsx",
+    "bin/**/*"
   ],
-  "exclude": ["jest.config.ts", "src/**/*.spec.ts", "src/**/*.test.ts"],
-  "composite": true
+  "exclude": ["jest.config.ts", "src/**/*.spec.ts", "src/**/*.test.ts"]
 }
