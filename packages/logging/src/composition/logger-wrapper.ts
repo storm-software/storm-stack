@@ -29,7 +29,7 @@ export class LoggerWrapper implements ILoggerWrapper {
   private constructor(logger: ILogger, config: LoggingConfig, name?: string) {
     this.#logger = logger;
     this.#name = name;
-    this.#config = config;
+    this.#config = config ?? { stacktrace: true };
   }
 
   /**

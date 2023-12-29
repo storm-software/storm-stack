@@ -6,7 +6,6 @@
 import { DestinationStream } from "pino";
 import { Logger } from "pino";
 import { LoggerOptions as LoggerOptions_2 } from "pino";
-import pretty from "pino-pretty";
 import { StormConfig } from "@storm-software/config-tools";
 import { Temporal } from "@js-temporal/polyfill";
 import * as z from "zod";
@@ -21,7 +20,7 @@ export const getLogLevelLabel: (logLevel: number) => LogLevelLabel;
 const getTransports: (
   config: StormConfig<"logging", LoggingConfig>,
   name?: string
-) => Logger<pretty.PrettyStream>;
+) => Logger<any>;
 export { getTransports };
 export { getTransports as getTransports_alias_1 };
 export { getTransports as getTransports_alias_2 };
