@@ -1,9 +1,15 @@
-## [1.4.2](https://github.com/storm-software/storm-stack/compare/jotai-v1.4.1...jotai-v1.4.2) (2023-12-29)
+## [1.4.3](https://github.com/storm-software/storm-stack/compare/jotai-v1.4.2...jotai-v1.4.3) (2023-12-29)
 
 
 ### Bug Fixes
 
-* **jotai:** Marked react react-dom as external dependencies ([78e2abb](https://github.com/storm-software/storm-stack/commit/78e2abb982b251b722678dec3bac80822929a6d5))
+* **jotai:** Resolved issues with dependency configuration ([7bfdb17](https://github.com/storm-software/storm-stack/commit/7bfdb175e48c2b8f9e8e1533ab060b0abc0aed56))
+
+## [1.4.2](https://github.com/storm-software/storm-stack/compare/jotai-v1.4.1...jotai-v1.4.2) (2023-12-29)
+
+### Bug Fixes
+
+- **jotai:** Marked react react-dom as external dependencies ([78e2abb](https://github.com/storm-software/storm-stack/commit/78e2abb982b251b722678dec3bac80822929a6d5))
 
 ## [1.4.1](https://github.com/storm-software/storm-stack/compare/jotai-v1.4.0...jotai-v1.4.1) (2023-12-29)
 
