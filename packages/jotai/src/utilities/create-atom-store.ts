@@ -16,37 +16,37 @@ export type UseAtomOptions = {
   delay?: number;
 };
 
-type UseAtomOptionsOrScope = UseAtomOptions | string;
+export type UseAtomOptionsOrScope = UseAtomOptions | string;
 
-type GetRecord<O> = {
+export type GetRecord<O> = {
   [K in keyof O]: O[K] extends Atom<infer V>
     ? (options?: UseAtomOptionsOrScope) => V
     : never;
 };
 
-type SetRecord<O> = {
+export type SetRecord<O> = {
   [K in keyof O]: O[K] extends WritableAtom<infer _V, infer A, infer R>
     ? (options?: UseAtomOptionsOrScope) => (...args: A) => R
     : never;
 };
 
-type UseRecord<O> = {
+export type UseRecord<O> = {
   [K in keyof O]: O[K] extends WritableAtom<infer V, infer A, infer R>
     ? (options?: UseAtomOptionsOrScope) => [V, (...args: A) => R]
     : never;
 };
 
-type StoreAtomsWithoutExtend<T> = {
+export type StoreAtomsWithoutExtend<T> = {
   [K in keyof T]: T[K] extends Atom<any> ? T[K] : SimpleWritableAtom<T[K]>;
 };
 
-type StoreAtoms<T, E> = StoreAtomsWithoutExtend<T> & E;
+export type StoreAtoms<T, E> = StoreAtomsWithoutExtend<T> & E;
 
-type FilterWritableAtoms<T> = {
+export type FilterWritableAtoms<T> = {
   [K in keyof T]-?: T[K] extends WritableAtom<any, any, any> ? T[K] : never;
 };
 
-type WritableStoreAtoms<T, E> = FilterWritableAtoms<StoreAtoms<T, E>>;
+export type WritableStoreAtoms<T, E> = FilterWritableAtoms<StoreAtoms<T, E>>;
 
 export type SimpleWritableAtom<T> = WritableAtom<T, [T], void>;
 
@@ -81,14 +81,17 @@ export type StoreApi<
   name: N;
 };
 
-type GetAtomFn = <V>(atom: Atom<V>, options?: UseAtomOptionsOrScope) => V;
+export type GetAtomFn = <V>(
+  atom: Atom<V>,
+  options?: UseAtomOptionsOrScope
+) => V;
 
-type SetAtomFn = <V, A extends unknown[], R>(
+export type SetAtomFn = <V, A extends unknown[], R>(
   atom: WritableAtom<V, A, R>,
   options?: UseAtomOptionsOrScope
 ) => (...args: A) => R;
 
-type UseAtomFn = <V, A extends unknown[], R>(
+export type UseAtomFn = <V, A extends unknown[], R>(
   atom: WritableAtom<V, A, R>,
   options?: UseAtomOptionsOrScope
 ) => [V, (...args: A) => R];
