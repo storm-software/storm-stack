@@ -204,7 +204,7 @@
             },
             {
               "kind": "Content",
-              "text": " & {\n    code: TCode;\n}"
+              "text": " & {\n    code?: TCode;\n}"
             },
             {
               "kind": "Content",
@@ -224,7 +224,7 @@
               "text": ";"
             }
           ],
-          "fileUrlPath": "packages/errors/src/storm-error.ts",
+          "fileUrlPath": "packages/errors/src/utilities/create-storm-error.ts",
           "returnTypeTokenRange": {
             "startIndex": 8,
             "endIndex": 10
@@ -532,7 +532,7 @@
               "text": ";"
             }
           ],
-          "fileUrlPath": "packages/errors/src/storm-error.ts",
+          "fileUrlPath": "packages/errors/src/utilities/get-cause-from-unknown.ts",
           "returnTypeTokenRange": {
             "startIndex": 3,
             "endIndex": 4
@@ -827,7 +827,7 @@
               "excerptTokens": [
                 {
                   "kind": "Content",
-                  "text": "cause?: "
+                  "text": "get cause(): "
                 },
                 {
                   "kind": "Reference",
@@ -836,16 +836,20 @@
                 },
                 {
                   "kind": "Content",
-                  "text": ";"
+                  "text": " | undefined"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";\n\nset cause(_cause: unknown);"
                 }
               ],
               "isReadonly": false,
-              "isOptional": true,
+              "isOptional": false,
               "releaseTag": "Public",
               "name": "cause",
               "propertyTypeTokenRange": {
                 "startIndex": 1,
-                "endIndex": 2
+                "endIndex": 3
               },
               "isStatic": false,
               "isProtected": false,
@@ -880,6 +884,55 @@
               "isStatic": false,
               "isProtected": false,
               "isAbstract": false
+            },
+            {
+              "kind": "Method",
+              "canonicalReference": "@storm-stack/errors!StormError.create:member(1)",
+              "docComment": "/**\n * Creates a new StormError instance\n *\n * @param error - The error to create\n *\n * @returns The newly created StormError\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "static create(error?: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "unknown"
+                },
+                {
+                  "kind": "Content",
+                  "text": "): "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "StormError",
+                  "canonicalReference": "@storm-stack/errors!StormError:class"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isStatic": true,
+              "returnTypeTokenRange": {
+                "startIndex": 3,
+                "endIndex": 4
+              },
+              "releaseTag": "Public",
+              "isProtected": false,
+              "overloadIndex": 1,
+              "parameters": [
+                {
+                  "parameterName": "error",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 1,
+                    "endIndex": 2
+                  },
+                  "isOptional": true
+                }
+              ],
+              "isOptional": false,
+              "isAbstract": false,
+              "name": "create"
             },
             {
               "kind": "Property",
@@ -1009,7 +1062,15 @@
               "excerptTokens": [
                 {
                   "kind": "Content",
-                  "text": "toString(): "
+                  "text": "toString(stacktrace?: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "boolean"
+                },
+                {
+                  "kind": "Content",
+                  "text": "): "
                 },
                 {
                   "kind": "Content",
@@ -1022,13 +1083,22 @@
               ],
               "isStatic": false,
               "returnTypeTokenRange": {
-                "startIndex": 1,
-                "endIndex": 2
+                "startIndex": 3,
+                "endIndex": 4
               },
               "releaseTag": "Public",
               "isProtected": false,
               "overloadIndex": 1,
-              "parameters": [],
+              "parameters": [
+                {
+                  "parameterName": "stacktrace",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 1,
+                    "endIndex": 2
+                  },
+                  "isOptional": true
+                }
+              ],
               "isOptional": false,
               "isAbstract": false,
               "name": "toString"

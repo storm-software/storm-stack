@@ -197,6 +197,9 @@ importers:
       verdaccio:
         specifier: 5.29.0
         version: 5.29.0(typanion@3.14.0)
+      wireit:
+        specifier: ^0.14.1
+        version: 0.14.1
 
   docs/website:
     dependencies:
@@ -26998,6 +27001,17 @@ packages:
       object-assign: 4.1.1
       react-is: 16.13.1
 
+  /proper-lockfile@4.1.2:
+    resolution:
+      {
+        integrity: sha512-TjNPblN4BwAWMXU8s9AEz4JmQxnD1NNL7bNOY/AKUzyamc379FWASUhc/K1pL2noVb+XmZKLL68cjzLsiOAMaA==
+      }
+    dependencies:
+      graceful-fs: 4.2.11
+      retry: 0.12.0
+      signal-exit: 3.0.7
+    dev: false
+
   /property-expr@2.0.6:
     resolution:
       {
@@ -28606,6 +28620,14 @@ packages:
       quotation: 2.0.3
       unist-util-position: 5.0.0
       vfile: 6.0.1
+    dev: false
+
+  /retry@0.12.0:
+    resolution:
+      {
+        integrity: sha512-9LkiTwjUh6rT555DtE9rTX+BKByPfrMzEAtnlEtdEwr3Nkffwiihqe2bWADg+OQRjt9gl6ICdmB/ZFDCGAtSow==
+      }
+    engines: { node: ">= 4" }
     dev: false
 
   /reusify@1.0.4:
@@ -33164,6 +33186,21 @@ packages:
       {
         integrity: sha512-CC1bOL87PIWSBhDcTrdeLo6eGT7mCFtrg0uIJtqJUFyK+eJnzl8A1niH56uu7KMa5XFrtiV+AQuHO3n7DsHnLQ==
       }
+    dev: false
+
+  /wireit@0.14.1:
+    resolution:
+      {
+        integrity: sha512-q5sixPM/vKQEpyaub6J9QoHAFAF9g4zBdnjoYelH9/RLAekcUf3x1dmFLACGZ6nYjqehCsTlXC1irmzU7znPhA==
+      }
+    engines: { node: ">=14.14.0" }
+    hasBin: true
+    dependencies:
+      braces: 3.0.2
+      chokidar: 3.5.3
+      fast-glob: 3.3.2
+      jsonc-parser: 3.2.0
+      proper-lockfile: 4.1.2
     dev: false
 
   /word-wrap@1.2.5:

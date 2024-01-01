@@ -102,22 +102,11 @@ export const getPinoLogger = (
       "[{time}] {levelLabel} ({if pid}{pid} - {end}{req.url}: {msg}",
     singleLine: false,
     hideObject: false,
-    customColors: {}
+    customColors: ""
   };
 
   if (config.colors) {
-    prettyOptions.customColors = {
-      exception: config.colors.error,
-      err: config.colors.error,
-      error: config.colors.error,
-      fatal: config.colors.fatal,
-      warn: config.colors.warning,
-      info: config.colors.info,
-      debug: config.colors.primary,
-      trace: config.colors.primary,
-      "req.url": config.colors.primary,
-      success: config.colors.success
-    };
+    prettyOptions.customColors = `exception:${config.colors.error},err:${config.colors.error},error:${config.colors.error},fatal:${config.colors.fatal},warn:${config.colors.warning},info:${config.colors.info},debug:${config.colors.primary},trace:${config.colors.primary},req.url:${config.colors.primary},success:${config.colors.success}`;
   }
 
   let streams: Array<pino.DestinationStream | pino.StreamEntry<pino.Level>> = [
