@@ -1,9 +1,15 @@
-## [1.9.1](https://github.com/storm-software/storm-stack/compare/file-system-v1.9.0...file-system-v1.9.1) (2024-01-01)
+## [1.9.2](https://github.com/storm-software/storm-stack/compare/file-system-v1.9.1...file-system-v1.9.2) (2024-01-01)
 
 
 ### Bug Fixes
 
-* **logging:** Resolved serialization issue with pino options ([81221f4](https://github.com/storm-software/storm-stack/commit/81221f443f20e721306f67f0a8cc5182d1b024a7))
+* **logging:** Resolved transport issues with file loggers ([a45288b](https://github.com/storm-software/storm-stack/commit/a45288b9e4b8d17b8981d347cc504a584a69b6ff))
+
+## [1.9.1](https://github.com/storm-software/storm-stack/compare/file-system-v1.9.0...file-system-v1.9.1) (2024-01-01)
+
+### Bug Fixes
+
+- **logging:** Resolved serialization issue with pino options ([81221f4](https://github.com/storm-software/storm-stack/commit/81221f443f20e721306f67f0a8cc5182d1b024a7))
 
 # [1.9.0](https://github.com/storm-software/storm-stack/compare/file-system-v1.8.2...file-system-v1.9.0) (2024-01-01)
 
