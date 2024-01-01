@@ -1,9 +1,15 @@
-## [1.4.2](https://github.com/storm-software/storm-stack/compare/cli-v1.4.1...cli-v1.4.2) (2024-01-01)
+# [1.5.0](https://github.com/storm-software/storm-stack/compare/cli-v1.4.2...cli-v1.5.0) (2024-01-01)
 
+
+### Features
+
+* **logging:** Added WireIt scripts to the repository ([658bada](https://github.com/storm-software/storm-stack/commit/658badae819f6e0cba6f78cba0ff2dad961686be))
+
+## [1.4.2](https://github.com/storm-software/storm-stack/compare/cli-v1.4.1...cli-v1.4.2) (2024-01-01)
 
 ### Bug Fixes
 
-* **logging:** Resolved issues with creation of extra Pino transports ([cf88fc1](https://github.com/storm-software/storm-stack/commit/cf88fc19f6426660a9b6630603ce46e1c0d855bc))
+- **logging:** Resolved issues with creation of extra Pino transports ([cf88fc1](https://github.com/storm-software/storm-stack/commit/cf88fc19f6426660a9b6630603ce46e1c0d855bc))
 
 ## [1.4.1](https://github.com/storm-software/storm-stack/compare/cli-v1.4.0...cli-v1.4.1) (2023-12-29)
 
