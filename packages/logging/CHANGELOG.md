@@ -1,9 +1,15 @@
-# [1.8.0](https://github.com/storm-software/storm-stack/compare/logging-v1.7.2...logging-v1.8.0) (2024-01-01)
+## [1.8.1](https://github.com/storm-software/storm-stack/compare/logging-v1.8.0...logging-v1.8.1) (2024-01-01)
 
+
+### Bug Fixes
+
+* **logging:** Resolved serialization issue with pino options ([81221f4](https://github.com/storm-software/storm-stack/commit/81221f443f20e721306f67f0a8cc5182d1b024a7))
+
+# [1.8.0](https://github.com/storm-software/storm-stack/compare/logging-v1.7.2...logging-v1.8.0) (2024-01-01)
 
 ### Features
 
-* **logging:** Added WireIt scripts to the repository ([658bada](https://github.com/storm-software/storm-stack/commit/658badae819f6e0cba6f78cba0ff2dad961686be))
+- **logging:** Added WireIt scripts to the repository ([658bada](https://github.com/storm-software/storm-stack/commit/658badae819f6e0cba6f78cba0ff2dad961686be))
 
 ## [1.7.2](https://github.com/storm-software/storm-stack/compare/logging-v1.7.1...logging-v1.7.2) (2024-01-01)
 
