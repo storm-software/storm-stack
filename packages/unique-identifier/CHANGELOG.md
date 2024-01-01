@@ -1,54 +1,53 @@
-## [1.6.1](https://github.com/storm-software/storm-stack/compare/unique-identifier-v1.6.0...unique-identifier-v1.6.1) (2024-01-01)
+# [1.7.0](https://github.com/storm-software/storm-stack/compare/unique-identifier-v1.6.1...unique-identifier-v1.7.0) (2024-01-01)
 
+
+### Features
+
+* **logging:** Added WireIt scripts to the repository ([658bada](https://github.com/storm-software/storm-stack/commit/658badae819f6e0cba6f78cba0ff2dad961686be))
+
+## [1.6.1](https://github.com/storm-software/storm-stack/compare/unique-identifier-v1.6.0...unique-identifier-v1.6.1) (2024-01-01)
 
 ### Bug Fixes
 
-* **logging:** Resolved issues with creation of extra Pino transports ([cf88fc1](https://github.com/storm-software/storm-stack/commit/cf88fc19f6426660a9b6630603ce46e1c0d855bc))
+- **logging:** Resolved issues with creation of extra Pino transports ([cf88fc1](https://github.com/storm-software/storm-stack/commit/cf88fc19f6426660a9b6630603ce46e1c0d855bc))
 
 # [1.6.0](https://github.com/storm-software/storm-stack/compare/unique-identifier-v1.5.1...unique-identifier-v1.6.0) (2023-12-28)
 
-
 ### Bug Fixes
 
-* **jotai:** Regenerated pnpm lock file ([9c2fbf6](https://github.com/storm-software/storm-stack/commit/9c2fbf6939eb226ee6d5b92864e65b74f2ec33ff))
-
+- **jotai:** Regenerated pnpm lock file ([9c2fbf6](https://github.com/storm-software/storm-stack/commit/9c2fbf6939eb226ee6d5b92864e65b74f2ec33ff))
 
 ### Features
 
-* **jotai:** Added `createAtomStore` functionality ([9031b61](https://github.com/storm-software/storm-stack/commit/9031b61d811724a5361c98bd6da1c375799cf612))
+- **jotai:** Added `createAtomStore` functionality ([9031b61](https://github.com/storm-software/storm-stack/commit/9031b61d811724a5361c98bd6da1c375799cf612))
 
 ## [1.5.1](https://github.com/storm-software/storm-stack/compare/unique-identifier-v1.5.0...unique-identifier-v1.5.1) (2023-12-25)
 
-
 ### Bug Fixes
 
-* **utilities:** Enhanced the logic in the `isObject` utility function ([0e27903](https://github.com/storm-software/storm-stack/commit/0e27903df21c14c350ceb3005187953736bf7580))
+- **utilities:** Enhanced the logic in the `isObject` utility function ([0e27903](https://github.com/storm-software/storm-stack/commit/0e27903df21c14c350ceb3005187953736bf7580))
 
 # [1.5.0](https://github.com/storm-software/storm-stack/compare/unique-identifier-v1.4.4...unique-identifier-v1.5.0) (2023-12-24)
 
-
 ### Bug Fixes
 
-* **monorepo:** Regenerate pnpm lock file ([17ce885](https://github.com/storm-software/storm-stack/commit/17ce885cf5e5241124628fec5ecd5378449c7a42))
-
+- **monorepo:** Regenerate pnpm lock file ([17ce885](https://github.com/storm-software/storm-stack/commit/17ce885cf5e5241124628fec5ecd5378449c7a42))
 
 ### Features
 
-* **docs-website:** Added initial code for documentation website ([6dbcaa7](https://github.com/storm-software/storm-stack/commit/6dbcaa76e2568dadf4454e630e7ad7fab2158bed))
+- **docs-website:** Added initial code for documentation website ([6dbcaa7](https://github.com/storm-software/storm-stack/commit/6dbcaa76e2568dadf4454e630e7ad7fab2158bed))
 
 ## [1.4.4](https://github.com/storm-software/storm-stack/compare/unique-identifier-v1.4.3...unique-identifier-v1.4.4) (2023-12-23)
 
-
 ### Bug Fixes
 
-* **logging:** Added `mkdir` option to create logging directory ([df62ea7](https://github.com/storm-software/storm-stack/commit/df62ea7bc9f541ba4d72fb10b4296b430086c433))
+- **logging:** Added `mkdir` option to create logging directory ([df62ea7](https://github.com/storm-software/storm-stack/commit/df62ea7bc9f541ba4d72fb10b4296b430086c433))
 
 ## [1.4.3](https://github.com/storm-software/storm-stack/compare/unique-identifier-v1.4.2...unique-identifier-v1.4.3) (2023-12-23)
 
-
 ### Bug Fixes
 
-* **date-time:** Resolved issues with temporal calendar ([5039d03](https://github.com/storm-software/storm-stack/commit/5039d03ed8a2b0fcc8ed93c56006cd956517afd8))
+- **date-time:** Resolved issues with temporal calendar ([5039d03](https://github.com/storm-software/storm-stack/commit/5039d03ed8a2b0fcc8ed93c56006cd956517afd8))
 
 ## [1.4.2](https://github.com/storm-software/storm-stack/compare/unique-identifier-v1.4.1...unique-identifier-v1.4.2) (2023-12-23)
 
