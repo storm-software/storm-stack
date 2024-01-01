@@ -1,21 +1,25 @@
-## [1.8.1](https://github.com/storm-software/storm-stack/compare/file-system-v1.8.0...file-system-v1.8.1) (2023-12-29)
+## [1.8.2](https://github.com/storm-software/storm-stack/compare/file-system-v1.8.1...file-system-v1.8.2) (2024-01-01)
 
 
 ### Bug Fixes
 
-* **logging:** Resolved issue with empty config values ([1b8e905](https://github.com/storm-software/storm-stack/commit/1b8e905c0600b8d17db110d363aad22143443982))
+* **logging:** Resolved issues with creation of extra Pino transports ([cf88fc1](https://github.com/storm-software/storm-stack/commit/cf88fc19f6426660a9b6630603ce46e1c0d855bc))
+
+## [1.8.1](https://github.com/storm-software/storm-stack/compare/file-system-v1.8.0...file-system-v1.8.1) (2023-12-29)
+
+### Bug Fixes
+
+- **logging:** Resolved issue with empty config values ([1b8e905](https://github.com/storm-software/storm-stack/commit/1b8e905c0600b8d17db110d363aad22143443982))
 
 # [1.8.0](https://github.com/storm-software/storm-stack/compare/file-system-v1.7.5...file-system-v1.8.0) (2023-12-28)
 
-
 ### Bug Fixes
 
-* **jotai:** Regenerated pnpm lock file ([9c2fbf6](https://github.com/storm-software/storm-stack/commit/9c2fbf6939eb226ee6d5b92864e65b74f2ec33ff))
-
+- **jotai:** Regenerated pnpm lock file ([9c2fbf6](https://github.com/storm-software/storm-stack/commit/9c2fbf6939eb226ee6d5b92864e65b74f2ec33ff))
 
 ### Features
 
-* **jotai:** Added `createAtomStore` functionality ([9031b61](https://github.com/storm-software/storm-stack/commit/9031b61d811724a5361c98bd6da1c375799cf612))
+- **jotai:** Added `createAtomStore` functionality ([9031b61](https://github.com/storm-software/storm-stack/commit/9031b61d811724a5361c98bd6da1c375799cf612))
 
 ## [1.7.5](https://github.com/storm-software/storm-stack/compare/file-system-v1.7.4...file-system-v1.7.5) (2023-12-26)
 
