@@ -1,3 +1,10 @@
+## [1.1.1](https://github.com/storm-software/storm-stack/compare/docs-website-v1.1.0...docs-website-v1.1.1) (2024-01-01)
+
+
+### Bug Fixes
+
+* **logging:** Resolved issues with creation of extra Pino transports ([cf88fc1](https://github.com/storm-software/storm-stack/commit/cf88fc19f6426660a9b6630603ce46e1c0d855bc))
+
 # [1.1.0](https://github.com/storm-software/storm-stack/compare/docs-website-v1.0.0...docs-website-v1.1.0) (2023-12-28)
 
 
