@@ -1,3 +1,10 @@
+## [1.7.1](https://github.com/storm-software/storm-stack/compare/logging-v1.7.0...logging-v1.7.1) (2023-12-29)
+
+
+### Bug Fixes
+
+* **logging:** Resolved issue with empty config values ([1b8e905](https://github.com/storm-software/storm-stack/commit/1b8e905c0600b8d17db110d363aad22143443982))
+
 # [1.7.0](https://github.com/storm-software/storm-stack/compare/logging-v1.6.5...logging-v1.7.0) (2023-12-28)
 
 
