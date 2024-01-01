@@ -1,14 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Serializable } from "@storm-stack/serialization";
-import {
-  EMPTY_STRING,
-  Indexable,
-  NEWLINE_STRING,
-  isObject
-} from "@storm-stack/utilities";
+import { EMPTY_STRING, NEWLINE_STRING } from "@storm-stack/utilities";
 import StackTracey from "stacktracey";
-import { ErrorCode } from "./errors";
-import { isStormError } from "./utilities";
+import { getCauseFromUnknown, isStormError } from "./utilities";
 import {
   deserializeStormError,
   serializeStormError
@@ -20,81 +14,6 @@ export interface StormErrorOptions {
   cause?: unknown;
   stack?: string;
   data?: any;
-}
-
-/**
- * Creates a new StormError instance
- *
- * @param cause - The cause of the error
- * @returns The newly created StormError
- */
-export function createStormError<TCode extends string = string>({
-  code,
-  name,
-  message,
-  cause,
-  stack,
-  data
-}: StormErrorOptions & { code: TCode }): StormError<TCode> {
-  if (isStormError(cause)) {
-    return cause;
-  }
-
-  if (cause instanceof Error && cause.name === "StormError") {
-    return cause as StormError<TCode>;
-  }
-
-  const stormError = new StormError<TCode>(code, {
-    name,
-    message,
-    cause,
-    stack,
-    data
-  });
-
-  // Inherit stack from error
-  if (cause instanceof Error && cause.stack) {
-    stormError.stack = cause.stack;
-  }
-
-  return stormError;
-}
-
-/**
- * Gets the cause of an unknown error and returns it as a StormError
- *
- * @param cause - The cause of the error in an unknown type
- * @returns The cause of the error in a StormError object or undefined
- */
-export function getCauseFromUnknown(cause: unknown): StormError {
-  if (isStormError(cause)) {
-    return cause;
-  }
-
-  const type = typeof cause;
-  if (type === "undefined" || type === "function" || cause === null) {
-    return new StormError(ErrorCode.internal_server_error, {
-      cause
-    });
-  }
-
-  // Primitive types just get wrapped in an error
-  if (type !== "object") {
-    return new StormError(ErrorCode.internal_server_error, {
-      message: String(cause)
-    });
-  }
-
-  // If it's an object, we'll create a synthetic error
-  if (isObject(cause)) {
-    const err = new StormError(ErrorCode.unknown_cause, {});
-    for (const key in cause) {
-      (err as Indexable)[key] = (cause as Indexable)[key];
-    }
-    return err;
-  }
-
-  return new StormError(ErrorCode.internal_server_error, { cause });
 }
 
 /**
@@ -115,19 +34,29 @@ export class StormError<TCode extends string = string> extends Error {
   #stack?: string;
 
   /**
+   * The inner error
+   */
+  #cause?: StormError;
+
+  /**
    * The error code
    */
   public code!: TCode;
 
   /**
-   * The cause of the error
-   */
-  public override cause?: StormError;
-
-  /**
    * Additional data to be passed with the error
    */
   public data?: any;
+
+  /**
+   * Creates a new StormError instance
+   *
+   * @param error - The error to create
+   * @returns The newly created StormError
+   */
+  public static create(error?: unknown): StormError {
+    return getCauseFromUnknown(error);
+  }
 
   public constructor(
     code: TCode,
@@ -150,6 +79,20 @@ export class StormError<TCode extends string = string> extends Error {
     }
 
     Object.setPrototypeOf(this, StormError.prototype);
+  }
+
+  /**
+   * The cause of the error
+   */
+  public override get cause(): StormError | undefined {
+    return this.#cause;
+  }
+
+  /**
+   * The cause of the error
+   */
+  public override set cause(_cause: unknown) {
+    this.#cause = getCauseFromUnknown(_cause);
   }
 
   /**
@@ -210,7 +153,12 @@ export class StormError<TCode extends string = string> extends Error {
    *
    * @returns The error message and stack trace string
    */
-  public override toString(): string {
-    return `${this.print} ${NEWLINE_STRING}Stack Trace: ${NEWLINE_STRING}${this.stack}`;
+  public override toString(stacktrace?: boolean): string {
+    return (
+      this.print() +
+      (stacktrace !== false
+        ? ` ${NEWLINE_STRING}Stack Trace: ${NEWLINE_STRING}${this.stack}`
+        : "")
+    );
   }
 }

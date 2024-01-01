@@ -76,19 +76,19 @@ importers:
         version: 12.1.0(semantic-release@22.0.12)
       "@storm-software/config-tools":
         specifier: latest
-        version: 1.9.2(typescript@5.3.3)
+        version: 1.9.4(typescript@5.3.3)
       "@storm-software/git-tools":
         specifier: latest
-        version: 1.18.1(@swc-node/register@1.6.8)(@swc/core@1.3.100)(typescript@5.3.3)
+        version: 1.18.3(@swc-node/register@1.6.8)(@swc/core@1.3.100)(typescript@5.3.3)
       "@storm-software/linting-tools":
         specifier: latest
-        version: 1.20.0
+        version: 1.20.1(prettier@3.1.1)
       "@storm-software/testing-tools":
         specifier: latest
-        version: 1.16.0(@swc-node/register@1.6.8)(@swc/core@1.3.100)(@types/node@20.10.5)(nx@17.2.7)(ts-node@10.9.2)(typescript@5.3.3)(verdaccio@5.29.0)
+        version: 1.16.1(@swc-node/register@1.6.8)(@swc/core@1.3.100)(@types/node@20.10.5)(nx@17.2.7)(ts-node@10.9.2)(typescript@5.3.3)(verdaccio@5.29.0)
       "@storm-software/workspace-tools":
         specifier: latest
-        version: 1.35.2(@swc-node/register@1.6.8)(@swc/core@1.3.100)(@types/node@20.10.5)(esbuild@0.19.9)(nx@17.2.7)(postcss@8.2.13)(ts-node@10.9.2)(typescript@5.3.3)(verdaccio@5.29.0)
+        version: 1.35.5(@swc-node/register@1.6.8)(@swc/core@1.3.100)(@types/node@20.10.5)(esbuild@0.19.9)(nx@17.2.7)(postcss@8.2.13)(ts-node@10.9.2)(typescript@5.3.3)(verdaccio@5.29.0)
       "@swc-node/register":
         specifier: 1.6.8
         version: 1.6.8(@swc/core@1.3.100)(typescript@5.3.3)
@@ -261,7 +261,7 @@ importers:
     dependencies:
       "@storm-software/config-tools":
         specifier: latest
-        version: 1.9.2(typescript@5.3.3)
+        version: 1.9.4(typescript@5.3.3)
       chalk:
         specifier: 5.3.0
         version: 5.3.0
@@ -292,10 +292,10 @@ importers:
     dependencies:
       "@storm-software/testing-tools":
         specifier: latest
-        version: 1.16.0(@swc-node/register@1.6.8)(@swc/core@1.3.100)(@types/node@20.10.5)(nx@17.2.7)(ts-node@10.9.2)(typescript@5.3.3)(verdaccio@5.29.0)
+        version: 1.16.1(@swc-node/register@1.6.8)(@swc/core@1.3.100)(@types/node@20.10.5)(nx@17.2.7)(ts-node@10.9.2)(typescript@5.3.3)(verdaccio@5.29.0)
       "@storm-software/workspace-tools":
         specifier: latest
-        version: 1.35.2(@swc-node/register@1.6.8)(@swc/core@1.3.100)(@types/node@20.10.5)(esbuild@0.19.9)(nx@17.2.7)(postcss@8.2.13)(ts-node@10.9.2)(typescript@5.3.3)(verdaccio@5.29.0)
+        version: 1.35.5(@swc-node/register@1.6.8)(@swc/core@1.3.100)(@types/node@20.10.5)(esbuild@0.19.9)(nx@17.2.7)(postcss@8.2.13)(ts-node@10.9.2)(typescript@5.3.3)(verdaccio@5.29.0)
       stacktracey:
         specifier: 2.1.8
         version: 2.1.8
@@ -335,7 +335,7 @@ importers:
     dependencies:
       "@storm-software/config-tools":
         specifier: latest
-        version: 1.9.2(typescript@5.3.3)
+        version: 1.9.4(typescript@5.3.3)
       chalk:
         specifier: 5.3.0
         version: 5.3.0
@@ -348,6 +348,9 @@ importers:
       pino-pretty:
         specifier: 10.2.3
         version: 10.2.3
+      pino-std-serializers:
+        specifier: ^6.2.2
+        version: 6.2.2
       zod:
         specifier: 3.22.4
         version: 3.22.4
@@ -7602,10 +7605,10 @@ packages:
     dependencies:
       "@sinonjs/commons": 3.0.0
 
-  /@storm-software/config-tools@1.9.2(typescript@5.3.3):
+  /@storm-software/config-tools@1.9.4(typescript@5.3.3):
     resolution:
       {
-        integrity: sha512-7FpQNT4Ejumc8542toTEEpNP99eIlWsJeWtrr6I685bu2dQFUYtXu5icIaDCokDpQ6Mz9xTgwWXu18rkHgHNcw==
+        integrity: sha512-yADgkH5+qt2+vF/2OWOp0XC4APB8uTEb4BeDLHIWY0MqrN4ojLOiHxPI9KDyZRco34DKjsJAaZTZ0zMHOKY8uA==
       }
     dependencies:
       cosmiconfig: 9.0.0(typescript@5.3.3)
@@ -7616,10 +7619,10 @@ packages:
       - typescript
     dev: false
 
-  /@storm-software/git-tools@1.18.1(@swc-node/register@1.6.8)(@swc/core@1.3.100)(typescript@5.3.3):
+  /@storm-software/git-tools@1.18.3(@swc-node/register@1.6.8)(@swc/core@1.3.100)(typescript@5.3.3):
     resolution:
       {
-        integrity: sha512-zQqswRmM6C/iV9Ru/yIykBI0qz35XpZksMryXworfhAUSKM0ik0VHU1Uqg24QTaP8Lr3JgC8YaFh3mgkrKnW1w==
+        integrity: sha512-Bx2yF0NGnM33qkjkopX8wbbK8w0bZsSKVq1zsdM2Npt5oip36smGXBE4wUGw7BmhtWUsBt6LD30TjF3vkGsvtw==
       }
     hasBin: true
     dependencies:
@@ -7654,10 +7657,10 @@ packages:
       - typescript
     dev: false
 
-  /@storm-software/linting-tools@1.20.0:
+  /@storm-software/linting-tools@1.20.1(prettier@3.1.1):
     resolution:
       {
-        integrity: sha512-FmXzDtLgwBj/xM6lPH4pm870+CeAZAqaFrE5TRPuSo31O1UYbjsafHhmIi9RnHJ1mO06ijiv63cd1XzDH22oow==
+        integrity: sha512-36G89uyjls0/YD2OXlmAkVi7pD+147bfblFPnL9I2vn8U9jpaWx5fy/xwzmkjLBr+HK/RRrMyC0XifMw/AbQvA==
       }
     hasBin: true
     dependencies:
@@ -7721,6 +7724,7 @@ packages:
       dpdm: 3.14.0
       eslint: 8.53.0(supports-color@9.4.0)
       p-limit: 4.0.0
+      prettier-plugin-tailwindcss: 0.5.10(prettier@3.1.1)
       rehype-parse: 9.0.0
       rehype-retext: 4.0.0
       remark-frontmatter: 5.0.0(supports-color@9.4.0)
@@ -7738,13 +7742,28 @@ packages:
       unified-engine: 11.1.1(supports-color@9.4.0)
       vfile-reporter: 8.1.0
     transitivePeerDependencies:
+      - "@ianvs/prettier-plugin-sort-imports"
+      - "@prettier/plugin-pug"
+      - "@shopify/prettier-plugin-liquid"
+      - "@trivago/prettier-plugin-sort-imports"
       - encoding
+      - prettier
+      - prettier-plugin-astro
+      - prettier-plugin-css-order
+      - prettier-plugin-import-sort
+      - prettier-plugin-jsdoc
+      - prettier-plugin-marko
+      - prettier-plugin-organize-attributes
+      - prettier-plugin-organize-imports
+      - prettier-plugin-style-order
+      - prettier-plugin-svelte
+      - prettier-plugin-twig-melody
     dev: false
 
-  /@storm-software/testing-tools@1.16.0(@swc-node/register@1.6.8)(@swc/core@1.3.100)(@types/node@20.10.5)(nx@17.2.7)(ts-node@10.9.2)(typescript@5.3.3)(verdaccio@5.29.0):
+  /@storm-software/testing-tools@1.16.1(@swc-node/register@1.6.8)(@swc/core@1.3.100)(@types/node@20.10.5)(nx@17.2.7)(ts-node@10.9.2)(typescript@5.3.3)(verdaccio@5.29.0):
     resolution:
       {
-        integrity: sha512-aIuYhYPfoRryc2PQk4aGCM5jCQ2QsCLapxNvmheogVZP6fL2FwqNhEnMndW87pFAiCiyatrfuLrKgkT9q36MsA==
+        integrity: sha512-zYKNtUPXyUiJI7aUp14sQ4KBvonfM6LX56jlzytCywbMEtny7cWknUJGu5O5Ek3BSIeimGVeH8dSY85ISvXRDQ==
       }
     dependencies:
       "@nx/jest": 17.0.3(@swc-node/register@1.6.8)(@swc/core@1.3.100)(@types/node@20.10.5)(nx@17.2.7)(ts-node@10.9.2)(typescript@5.3.3)(verdaccio@5.29.0)
@@ -7764,10 +7783,10 @@ packages:
       - verdaccio
     dev: false
 
-  /@storm-software/workspace-tools@1.35.2(@swc-node/register@1.6.8)(@swc/core@1.3.100)(@types/node@20.10.5)(esbuild@0.19.9)(nx@17.2.7)(postcss@8.2.13)(ts-node@10.9.2)(typescript@5.3.3)(verdaccio@5.29.0):
+  /@storm-software/workspace-tools@1.35.5(@swc-node/register@1.6.8)(@swc/core@1.3.100)(@types/node@20.10.5)(esbuild@0.19.9)(nx@17.2.7)(postcss@8.2.13)(ts-node@10.9.2)(typescript@5.3.3)(verdaccio@5.29.0):
     resolution:
       {
-        integrity: sha512-UeCJYEJ8HlUpKIEyYlWvl2w0ROHVV69s2kXX0l9Ech8LCC4gUbjJDRIXvwOMCbxkdfLr7Yx9X4phtXFrDabdoQ==
+        integrity: sha512-uGp3Q7IfsXF3o4wuQcY6MR+l7UeSLw/jhiOIKYD/njWffLfz1aXUHiThvxyKfwViTWQCkkEJrAfRSR4c8GPIgg==
       }
     dependencies:
       "@anatine/esbuild-decorators": 0.2.19(esbuild@0.19.9)
@@ -26754,6 +26773,61 @@ packages:
       prettier: ">=2 || >=3"
     dependencies:
       "@prisma/prisma-schema-wasm": 4.17.0-26.6b0aef69b7cdfc787f822ecd7cdc76d5f1991584
+      prettier: 3.1.1
+    dev: false
+
+  /prettier-plugin-tailwindcss@0.5.10(prettier@3.1.1):
+    resolution:
+      {
+        integrity: sha512-9UGSejqFxGG6brYjFfTYlJ8zs4L/lvZg1AngFfaC5Fs1otSskASv5IWKmjPu5MlABQUtTKtMArKyYr/hWpXSUg==
+      }
+    engines: { node: ">=14.21.3" }
+    peerDependencies:
+      "@ianvs/prettier-plugin-sort-imports": "*"
+      "@prettier/plugin-pug": "*"
+      "@shopify/prettier-plugin-liquid": "*"
+      "@trivago/prettier-plugin-sort-imports": "*"
+      prettier: ^3.0
+      prettier-plugin-astro: "*"
+      prettier-plugin-css-order: "*"
+      prettier-plugin-import-sort: "*"
+      prettier-plugin-jsdoc: "*"
+      prettier-plugin-marko: "*"
+      prettier-plugin-organize-attributes: "*"
+      prettier-plugin-organize-imports: "*"
+      prettier-plugin-style-order: "*"
+      prettier-plugin-svelte: "*"
+      prettier-plugin-twig-melody: "*"
+    peerDependenciesMeta:
+      "@ianvs/prettier-plugin-sort-imports":
+        optional: true
+      "@prettier/plugin-pug":
+        optional: true
+      "@shopify/prettier-plugin-liquid":
+        optional: true
+      "@trivago/prettier-plugin-sort-imports":
+        optional: true
+      prettier-plugin-astro:
+        optional: true
+      prettier-plugin-css-order:
+        optional: true
+      prettier-plugin-import-sort:
+        optional: true
+      prettier-plugin-jsdoc:
+        optional: true
+      prettier-plugin-marko:
+        optional: true
+      prettier-plugin-organize-attributes:
+        optional: true
+      prettier-plugin-organize-imports:
+        optional: true
+      prettier-plugin-style-order:
+        optional: true
+      prettier-plugin-svelte:
+        optional: true
+      prettier-plugin-twig-melody:
+        optional: true
+    dependencies:
       prettier: 3.1.1
     dev: false
 

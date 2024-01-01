@@ -12,10 +12,11 @@ function createStormError<TCode extends string = string>({
   stack,
   data
 }: StormErrorOptions & {
-  code: TCode;
+  code?: TCode;
 }): StormError<TCode>;
 export { createStormError };
 export { createStormError as createStormError_alias_1 };
+export { createStormError as createStormError_alias_2 };
 
 // @public
 function deserializeStormError(json: JsonValue): StormError;
@@ -70,6 +71,7 @@ export { ErrorCode as ErrorCode_alias_1 };
 function getCauseFromUnknown(cause: unknown): StormError;
 export { getCauseFromUnknown };
 export { getCauseFromUnknown as getCauseFromUnknown_alias_1 };
+export { getCauseFromUnknown as getCauseFromUnknown_alias_2 };
 
 // @public
 function isStormError<TCode extends string = any>(
@@ -93,14 +95,16 @@ class StormError<TCode extends string = string> extends Error {
   );
   // (undocumented)
   __proto__: ErrorConstructor;
-  cause?: StormError;
+  get cause(): StormError | undefined;
+  set cause(_cause: unknown);
   code: TCode;
+  static create(error?: unknown): StormError;
   data?: any;
   get originalStack(): string;
   print(): string;
   get stack(): string;
   set stack(_stack: string);
-  toString(): string;
+  toString(stacktrace?: boolean): string;
 }
 export { StormError };
 export { StormError as StormError_alias_1 };

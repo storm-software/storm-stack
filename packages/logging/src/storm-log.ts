@@ -10,7 +10,7 @@ import {
   LogLevelLabel,
   getLogLevel
 } from "./utilities/get-log-level";
-import { getTransports } from "./utilities/get-transports";
+import { getPinoLogger } from "./utilities/pino-logger";
 
 type GetLoggersResult = pino.BaseLogger & {
   logLevel: LogLevel;
@@ -59,7 +59,7 @@ export class StormLog implements IStormLog {
     config: StormConfig<"logging", LoggingConfig>,
     name?: string
   ): pino.BaseLogger => {
-    const pinoLogger: pino.BaseLogger = getTransports(config, name);
+    const pinoLogger: pino.BaseLogger = getPinoLogger(config, name);
     pinoLogger.debug("The Storm log has ben initialized");
 
     return pinoLogger;

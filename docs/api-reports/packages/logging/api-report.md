@@ -6,24 +6,34 @@
 import { DestinationStream } from "pino";
 import { Logger } from "pino";
 import { LoggerOptions as LoggerOptions_2 } from "pino";
+import { SerializerFn } from "pino";
 import { StormConfig } from "@storm-software/config-tools";
 import { Temporal } from "@js-temporal/polyfill";
 import * as z from "zod";
 
-// @public
-export const getLogLevel: (label: string) => LogLevel;
+// @public (undocumented)
+export const createErrorSerializer: SerializerFn;
 
 // @public
-export const getLogLevelLabel: (logLevel: number) => LogLevelLabel;
+const getLogLevel: (label: string) => LogLevel;
+export { getLogLevel };
+export { getLogLevel as getLogLevel_alias_1 };
+export { getLogLevel as getLogLevel_alias_2 };
 
 // @public
-const getTransports: (
+const getLogLevelLabel: (logLevel: number) => LogLevelLabel;
+export { getLogLevelLabel };
+export { getLogLevelLabel as getLogLevelLabel_alias_1 };
+export { getLogLevelLabel as getLogLevelLabel_alias_2 };
+
+// @public
+const getPinoLogger: (
   config: StormConfig<"logging", LoggingConfig>,
   name?: string
-) => Logger<any>;
-export { getTransports };
-export { getTransports as getTransports_alias_1 };
-export { getTransports as getTransports_alias_2 };
+) => Logger<LoggerOptions_2>;
+export { getPinoLogger };
+export { getPinoLogger as getPinoLogger_alias_1 };
+export { getPinoLogger as getPinoLogger_alias_2 };
 
 // @public (undocumented)
 interface ILogger {
@@ -166,10 +176,10 @@ export const LoggingConfigSchema: z.ZodObject<
 >;
 
 // @public (undocumented)
-export type LogLevel = 0 | 10 | 20 | 30 | 40 | 60 | 70;
+type LogLevel = 0 | 10 | 20 | 30 | 40 | 60 | 70;
 
 // @public (undocumented)
-export const LogLevel: {
+const LogLevel: {
   SILENT: LogLevel;
   FATAL: LogLevel;
   ERROR: LogLevel;
@@ -178,9 +188,12 @@ export const LogLevel: {
   DEBUG: LogLevel;
   TRACE: LogLevel;
 };
+export { LogLevel };
+export { LogLevel as LogLevel_alias_1 };
+export { LogLevel as LogLevel_alias_2 };
 
 // @public (undocumented)
-export type LogLevelLabel =
+type LogLevelLabel =
   | "silent"
   | "fatal"
   | "error"
@@ -190,7 +203,7 @@ export type LogLevelLabel =
   | "trace";
 
 // @public (undocumented)
-export const LogLevelLabel: {
+const LogLevelLabel: {
   SILENT: LogLevelLabel;
   FATAL: LogLevelLabel;
   ERROR: LogLevelLabel;
@@ -199,6 +212,9 @@ export const LogLevelLabel: {
   DEBUG: LogLevelLabel;
   TRACE: LogLevelLabel;
 };
+export { LogLevelLabel };
+export { LogLevelLabel as LogLevelLabel_alias_1 };
+export { LogLevelLabel as LogLevelLabel_alias_2 };
 
 // @public
 export const LokiConfigSchema: z.ZodObject<
