@@ -1,9 +1,15 @@
-# [1.5.0](https://github.com/storm-software/storm-stack/compare/cli-v1.4.2...cli-v1.5.0) (2024-01-01)
+## [1.5.1](https://github.com/storm-software/storm-stack/compare/cli-v1.5.0...cli-v1.5.1) (2024-01-01)
 
+
+### Bug Fixes
+
+* **logging:** Resolved serialization issue with pino options ([81221f4](https://github.com/storm-software/storm-stack/commit/81221f443f20e721306f67f0a8cc5182d1b024a7))
+
+# [1.5.0](https://github.com/storm-software/storm-stack/compare/cli-v1.4.2...cli-v1.5.0) (2024-01-01)
 
 ### Features
 
-* **logging:** Added WireIt scripts to the repository ([658bada](https://github.com/storm-software/storm-stack/commit/658badae819f6e0cba6f78cba0ff2dad961686be))
+- **logging:** Added WireIt scripts to the repository ([658bada](https://github.com/storm-software/storm-stack/commit/658badae819f6e0cba6f78cba0ff2dad961686be))
 
 ## [1.4.2](https://github.com/storm-software/storm-stack/compare/cli-v1.4.1...cli-v1.4.2) (2024-01-01)
 
