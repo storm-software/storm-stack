@@ -1,16 +1,21 @@
-## [1.4.4](https://github.com/storm-software/storm-stack/compare/jotai-v1.4.3...jotai-v1.4.4) (2024-01-01)
+# [1.5.0](https://github.com/storm-software/storm-stack/compare/jotai-v1.4.4...jotai-v1.5.0) (2024-01-01)
 
+
+### Features
+
+* **logging:** Added WireIt scripts to the repository ([658bada](https://github.com/storm-software/storm-stack/commit/658badae819f6e0cba6f78cba0ff2dad961686be))
+
+## [1.4.4](https://github.com/storm-software/storm-stack/compare/jotai-v1.4.3...jotai-v1.4.4) (2024-01-01)
 
 ### Bug Fixes
 
-* **logging:** Resolved issues with creation of extra Pino transports ([cf88fc1](https://github.com/storm-software/storm-stack/commit/cf88fc19f6426660a9b6630603ce46e1c0d855bc))
+- **logging:** Resolved issues with creation of extra Pino transports ([cf88fc1](https://github.com/storm-software/storm-stack/commit/cf88fc19f6426660a9b6630603ce46e1c0d855bc))
 
 ## [1.4.3](https://github.com/storm-software/storm-stack/compare/jotai-v1.4.2...jotai-v1.4.3) (2023-12-29)
 
-
 ### Bug Fixes
 
-* **jotai:** Resolved issues with dependency configuration ([7bfdb17](https://github.com/storm-software/storm-stack/commit/7bfdb175e48c2b8f9e8e1533ab060b0abc0aed56))
+- **jotai:** Resolved issues with dependency configuration ([7bfdb17](https://github.com/storm-software/storm-stack/commit/7bfdb175e48c2b8f9e8e1533ab060b0abc0aed56))
 
 ## [1.4.2](https://github.com/storm-software/storm-stack/compare/jotai-v1.4.1...jotai-v1.4.2) (2023-12-29)
 
