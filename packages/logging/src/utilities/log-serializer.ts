@@ -1,11 +1,11 @@
 import { StormError, getCauseFromUnknown } from "@storm-stack/errors";
 import { JsonObject, serialize } from "@storm-stack/serialization";
 import { EMPTY_STRING } from "@storm-stack/utilities";
-import { SerializerFn } from "pino";
 import { errWithCause } from "pino-std-serializers";
 
-export const createErrorSerializer: SerializerFn =
-  (stacktrace?: boolean) => (err: Error) => {
+export const createErrorSerializer =
+  (stacktrace?: boolean): ((err: Error) => Record<string, any>) =>
+  (err: Error) => {
     try {
       const stormError = getCauseFromUnknown(err);
       if (stacktrace === false) {
