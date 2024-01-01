@@ -1,3 +1,10 @@
+## [1.6.1](https://github.com/storm-software/storm-stack/compare/serialization-v1.6.0...serialization-v1.6.1) (2024-01-01)
+
+
+### Bug Fixes
+
+* **logging:** Resolved issues with creation of extra Pino transports ([cf88fc1](https://github.com/storm-software/storm-stack/commit/cf88fc19f6426660a9b6630603ce46e1c0d855bc))
+
 # [1.6.0](https://github.com/storm-software/storm-stack/compare/serialization-v1.5.1...serialization-v1.6.0) (2023-12-28)
 
 
