@@ -1,28 +1,31 @@
-## [1.6.1](https://github.com/storm-software/storm-stack/compare/date-time-v1.6.0...date-time-v1.6.1) (2024-01-01)
-
-
-### Bug Fixes
-
-* **logging:** Resolved issues with creation of extra Pino transports ([cf88fc1](https://github.com/storm-software/storm-stack/commit/cf88fc19f6426660a9b6630603ce46e1c0d855bc))
-
-# [1.6.0](https://github.com/storm-software/storm-stack/compare/date-time-v1.5.2...date-time-v1.6.0) (2023-12-28)
-
-
-### Bug Fixes
-
-* **jotai:** Regenerated pnpm lock file ([9c2fbf6](https://github.com/storm-software/storm-stack/commit/9c2fbf6939eb226ee6d5b92864e65b74f2ec33ff))
+# [1.7.0](https://github.com/storm-software/storm-stack/compare/date-time-v1.6.1...date-time-v1.7.0) (2024-01-01)
 
 
 ### Features
 
-* **jotai:** Added `createAtomStore` functionality ([9031b61](https://github.com/storm-software/storm-stack/commit/9031b61d811724a5361c98bd6da1c375799cf612))
+* **logging:** Added WireIt scripts to the repository ([658bada](https://github.com/storm-software/storm-stack/commit/658badae819f6e0cba6f78cba0ff2dad961686be))
 
-## [1.5.2](https://github.com/storm-software/storm-stack/compare/date-time-v1.5.1...date-time-v1.5.2) (2023-12-25)
-
+## [1.6.1](https://github.com/storm-software/storm-stack/compare/date-time-v1.6.0...date-time-v1.6.1) (2024-01-01)
 
 ### Bug Fixes
 
-* **utilities:** Enhanced the logic in the `isObject` utility function ([0e27903](https://github.com/storm-software/storm-stack/commit/0e27903df21c14c350ceb3005187953736bf7580))
+- **logging:** Resolved issues with creation of extra Pino transports ([cf88fc1](https://github.com/storm-software/storm-stack/commit/cf88fc19f6426660a9b6630603ce46e1c0d855bc))
+
+# [1.6.0](https://github.com/storm-software/storm-stack/compare/date-time-v1.5.2...date-time-v1.6.0) (2023-12-28)
+
+### Bug Fixes
+
+- **jotai:** Regenerated pnpm lock file ([9c2fbf6](https://github.com/storm-software/storm-stack/commit/9c2fbf6939eb226ee6d5b92864e65b74f2ec33ff))
+
+### Features
+
+- **jotai:** Added `createAtomStore` functionality ([9031b61](https://github.com/storm-software/storm-stack/commit/9031b61d811724a5361c98bd6da1c375799cf612))
+
+## [1.5.2](https://github.com/storm-software/storm-stack/compare/date-time-v1.5.1...date-time-v1.5.2) (2023-12-25)
+
+### Bug Fixes
+
+- **utilities:** Enhanced the logic in the `isObject` utility function ([0e27903](https://github.com/storm-software/storm-stack/commit/0e27903df21c14c350ceb3005187953736bf7580))
 
 ## [1.5.1](https://github.com/storm-software/storm-stack/compare/date-time-v1.5.0...date-time-v1.5.1) (2023-12-25)
 
