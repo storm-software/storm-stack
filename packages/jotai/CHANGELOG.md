@@ -1,3 +1,10 @@
+## [1.4.4](https://github.com/storm-software/storm-stack/compare/jotai-v1.4.3...jotai-v1.4.4) (2024-01-01)
+
+
+### Bug Fixes
+
+* **logging:** Resolved issues with creation of extra Pino transports ([cf88fc1](https://github.com/storm-software/storm-stack/commit/cf88fc19f6426660a9b6630603ce46e1c0d855bc))
+
 ## [1.4.3](https://github.com/storm-software/storm-stack/compare/jotai-v1.4.2...jotai-v1.4.3) (2023-12-29)
 
 
