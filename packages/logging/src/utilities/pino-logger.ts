@@ -17,7 +17,7 @@ import pino, {
   DestinationStream,
   LoggerOptions as PinoLoggerOptions
 } from "pino";
-import pretty from "pino-pretty";
+import pretty, { PrettyOptions } from "pino-pretty";
 import { LoggingConfig } from "../types";
 import { LogLevel, getLogLevel } from "./get-log-level";
 import { createErrorSerializer } from "./log-serializer";
@@ -87,22 +87,26 @@ export const getPinoLogger = (
     }
   };
 
-  const prettyOptions = {
-    ...baseOptions,
-    msgPrefix: "STORM",
+  const prettyOptions: PrettyOptions = {
     destination: 1, // 1 = stdout
     colorize: true,
     colorizeObjects: true,
     errorLikeObjectKeys: ["err", "error", "exception"],
     minimumLevel: config.logLevel,
     messageKey: "msg",
-    errorKey: "error",
     timestampKey: "time",
-    messageFormat:
-      "[{time}] {levelLabel} ({if pid}{pid} - {end}{req.url}: {msg}",
+    messageFormat: `
+***********************************************
+Name: ${name ? name : config.name}
+Timestamp: {time}
+Log Level: {levelLabel} {if pid}
+Process ID: {pid}{end}{if req.url}
+Request URL: {req.url}{end}
+Message: {msg}
+***********************************************
+    `,
     singleLine: false,
-    hideObject: false,
-    customColors: ""
+    hideObject: false
   };
 
   if (config.colors) {
@@ -116,7 +120,6 @@ export const getPinoLogger = (
   if (isRuntimeServer()) {
     const pinoServerOptions = {
       options: {
-        ...baseOptions,
         errorLikeObjectKeys: ["err", "error", "exception"],
         minimumLevel: config.logLevel,
         messageKey: "msg",
