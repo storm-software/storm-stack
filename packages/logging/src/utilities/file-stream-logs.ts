@@ -23,46 +23,47 @@ export const createFileStreamLogs = (
 ): Array<pino.DestinationStream | pino.StreamEntry<pino.Level>> => {
   const loggingConfig = config.extensions?.logging ?? {};
 
-  let logPath = loggingConfig.path;
-  if (!isSetString(logPath)) {
-    logPath = join(tmpdir(), "storm", "logs");
-  }
-
   let streams: Array<pino.DestinationStream | pino.StreamEntry<pino.Level>> =
     [];
 
-  streams.push({
-    level: "debug",
-    stream: pino.destination({
-      dest: join(
-        logPath,
-        formatDate().replaceAll("/", "-").replaceAll(" ", "-"),
-        `${
-          (loggingConfig.fileName ? loggingConfig.fileName : "storm") + "-"
-        }${formatDateTime(StormDateTime.current(), {
-          smallestUnit: "second",
-          roundingMode: "ceil",
-          calendarName: "never",
-          timeZoneName: "never",
-          offset: "never"
-        })
-          .replaceAll("/", "-")
-          .replaceAll(" ", "-")
-          .replaceAll(":", "-")
-          .replaceAll(".", "-")}.${
-          loggingConfig.fileExtension
-            ? loggingConfig.fileExtension.replaceAll(".", EMPTY_STRING)
-            : "log"
-        }`
-      ),
-      minLength: 4096,
-      sync: false,
-      mkdir: true,
-      append: true
-    })
-  });
+  if (!loggingConfig.fileLoggingDisabled) {
+    let logPath = loggingConfig.path;
+    if (!isSetString(logPath)) {
+      logPath = join(tmpdir(), "storm", "logs");
+    }
 
-  /*streams.push({
+    streams.push({
+      level: "debug",
+      stream: pino.destination({
+        dest: join(
+          logPath,
+          formatDate().replaceAll("/", "-").replaceAll(" ", "-"),
+          `${
+            (loggingConfig.fileName ? loggingConfig.fileName : "storm") + "-"
+          }${formatDateTime(StormDateTime.current(), {
+            smallestUnit: "second",
+            roundingMode: "ceil",
+            calendarName: "never",
+            timeZoneName: "never",
+            offset: "never"
+          })
+            .replaceAll("/", "-")
+            .replaceAll(" ", "-")
+            .replaceAll(":", "-")
+            .replaceAll(".", "-")}.${
+            loggingConfig.fileExtension
+              ? loggingConfig.fileExtension.replaceAll(".", EMPTY_STRING)
+              : "log"
+          }`
+        ),
+        minLength: 4096,
+        sync: false,
+        mkdir: true,
+        append: true
+      })
+    });
+
+    /*streams.push({
     level: "error",
     stream: createWriteStream(
       join(
@@ -88,6 +89,7 @@ export const createFileStreamLogs = (
       )
     )
   });*/
+  }
 
   if (
     loggingConfig.loki?.host &&

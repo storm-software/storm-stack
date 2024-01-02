@@ -34,6 +34,10 @@ export const LoggingConfigSchema = z
       .describe(
         "An indicator specifying if stack traces should be logged on errors"
       ),
+    fileLoggingDisabled: z
+      .boolean()
+      .default(false)
+      .describe("Should file logging be disabled"),
     fileName: z
       .string()
       .trim()
