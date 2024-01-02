@@ -2644,7 +2644,7 @@
         {
           "kind": "Variable",
           "canonicalReference": "@storm-stack/utilities!isSetObject:var",
-          "docComment": "/**\n * Check if the provided value's type is NOT `null` nor `undefined` nor `{}`\n *\n * @param value - The value to type check\n *\n * @returns An indicator specifying if the value provided is NOT `null` nor `undefined` nor `{}`\n */\n",
+          "docComment": "/**\n * Check if the provided value's type is an object with some fields set\n *\n * @param value - The value to type check\n *\n * @returns An indicator specifying if the value provided is an object with some fields se\n */\n",
           "excerptTokens": [
             {
               "kind": "Content",

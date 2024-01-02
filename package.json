@@ -167,10 +167,15 @@
   },
   "triggerEmptyDevReleaseByIncrementingThisNumber": 0,
   "wireit": {
+    "lint": {
+      "command": "pnpm storm-lint all --skip-cspell",
+      "dependencies": [
+        "build"
+      ]
+    },
     "build": {
       "command": "nx affected -t build --parallel=5",
       "dependencies": [
-        "clean",
         "build:tools"
       ]
     },
