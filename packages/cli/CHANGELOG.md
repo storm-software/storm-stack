@@ -1,9 +1,15 @@
-## [1.5.3](https://github.com/storm-software/storm-stack/compare/cli-v1.5.2...cli-v1.5.3) (2024-01-02)
+# [1.6.0](https://github.com/storm-software/storm-stack/compare/cli-v1.5.3...cli-v1.6.0) (2024-01-02)
 
+
+### Features
+
+* **logging:** Added the `fileLoggingDisabled` configuration option ([c868c10](https://github.com/storm-software/storm-stack/commit/c868c10dc57ace70476b554755604d97fc096d5d))
+
+## [1.5.3](https://github.com/storm-software/storm-stack/compare/cli-v1.5.2...cli-v1.5.3) (2024-01-02)
 
 ### Bug Fixes
 
-* **logging:** Updated logger to use destinations instead of pure fs streams ([27e670b](https://github.com/storm-software/storm-stack/commit/27e670be242b8d78e5a20a728c62907110e49cb8))
+- **logging:** Updated logger to use destinations instead of pure fs streams ([27e670b](https://github.com/storm-software/storm-stack/commit/27e670be242b8d78e5a20a728c62907110e49cb8))
 
 ## [1.5.2](https://github.com/storm-software/storm-stack/compare/cli-v1.5.1...cli-v1.5.2) (2024-01-01)
 
