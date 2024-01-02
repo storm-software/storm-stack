@@ -1,9 +1,15 @@
-# [1.10.0](https://github.com/storm-software/storm-stack/compare/file-system-v1.9.3...file-system-v1.10.0) (2024-01-02)
+## [1.10.1](https://github.com/storm-software/storm-stack/compare/file-system-v1.10.0...file-system-v1.10.1) (2024-01-02)
 
+
+### Bug Fixes
+
+* **utilities:** Resolved issue with `isSetObject` passing invalid types ([a6c1dcf](https://github.com/storm-software/storm-stack/commit/a6c1dcf8253e3058275f72152b80720aa2d5f0b6))
+
+# [1.10.0](https://github.com/storm-software/storm-stack/compare/file-system-v1.9.3...file-system-v1.10.0) (2024-01-02)
 
 ### Features
 
-* **logging:** Added the `fileLoggingDisabled` configuration option ([c868c10](https://github.com/storm-software/storm-stack/commit/c868c10dc57ace70476b554755604d97fc096d5d))
+- **logging:** Added the `fileLoggingDisabled` configuration option ([c868c10](https://github.com/storm-software/storm-stack/commit/c868c10dc57ace70476b554755604d97fc096d5d))
 
 ## [1.9.3](https://github.com/storm-software/storm-stack/compare/file-system-v1.9.2...file-system-v1.9.3) (2024-01-02)
 
