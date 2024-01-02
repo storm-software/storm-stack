@@ -2070,6 +2070,24 @@
             },
             {
               "kind": "Content",
+              "text": ">;\n    fileLoggingDisabled: "
+            },
+            {
+              "kind": "Reference",
+              "text": "z.ZodDefault",
+              "canonicalReference": "!z.ZodDefault:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<"
+            },
+            {
+              "kind": "Reference",
+              "text": "z.ZodBoolean",
+              "canonicalReference": "!z.ZodBoolean:type"
+            },
+            {
+              "kind": "Content",
               "text": ">;\n    fileName: "
             },
             {
@@ -2205,7 +2223,7 @@
             },
             {
               "kind": "Content",
-              "text": ", {\n    fileName: string;\n    fileExtension: string;\n    stacktrace?: boolean | undefined;\n    path?: string | undefined;\n    loki?: {\n        host: string;\n        username: string;\n        password: string;\n    } | undefined;\n}, {\n    stacktrace?: boolean | undefined;\n    fileName?: string | undefined;\n    fileExtension?: string | undefined;\n    path?: string | undefined;\n    loki?: {\n        username: string;\n        password: string;\n        host?: string | undefined;\n    } | undefined;\n}>"
+              "text": ", {\n    fileLoggingDisabled: boolean;\n    fileName: string;\n    fileExtension: string;\n    stacktrace?: boolean | undefined;\n    path?: string | undefined;\n    loki?: {\n        host: string;\n        username: string;\n        password: string;\n    } | undefined;\n}, {\n    stacktrace?: boolean | undefined;\n    fileLoggingDisabled?: boolean | undefined;\n    fileName?: string | undefined;\n    fileExtension?: string | undefined;\n    path?: string | undefined;\n    loki?: {\n        username: string;\n        password: string;\n        host?: string | undefined;\n    } | undefined;\n}>"
             }
           ],
           "fileUrlPath": "packages/logging/src/schema.ts",
@@ -2214,7 +2232,7 @@
           "name": "LoggingConfigSchema",
           "variableTypeTokenRange": {
             "startIndex": 1,
-            "endIndex": 37
+            "endIndex": 41
           }
         },
         {

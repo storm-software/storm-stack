@@ -127,6 +127,7 @@ export { LoggingConfig as LoggingConfig_alias_1 };
 export const LoggingConfigSchema: z.ZodObject<
   {
     stacktrace: z.ZodOptional<z.ZodBoolean>;
+    fileLoggingDisabled: z.ZodDefault<z.ZodBoolean>;
     fileName: z.ZodDefault<z.ZodOptional<z.ZodString>>;
     fileExtension: z.ZodDefault<z.ZodString>;
     path: z.ZodOptional<z.ZodString>;
@@ -155,6 +156,7 @@ export const LoggingConfigSchema: z.ZodObject<
   "strip",
   z.ZodTypeAny,
   {
+    fileLoggingDisabled: boolean;
     fileName: string;
     fileExtension: string;
     stacktrace?: boolean | undefined;
@@ -169,6 +171,7 @@ export const LoggingConfigSchema: z.ZodObject<
   },
   {
     stacktrace?: boolean | undefined;
+    fileLoggingDisabled?: boolean | undefined;
     fileName?: string | undefined;
     fileExtension?: string | undefined;
     path?: string | undefined;

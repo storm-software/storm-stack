@@ -1,4 +1,5 @@
 import { isEmptyOrEmptyObject } from "./is-empty-object";
+import { isObject } from "./is-object";
 
 /**
  * Check if the provided value's type is NOT `null` nor `undefined` nor `{}`
@@ -8,7 +9,11 @@ import { isEmptyOrEmptyObject } from "./is-empty-object";
  */
 export const isSetObject = (value: unknown): value is NonNullable<object> => {
   try {
-    return isEmptyOrEmptyObject(value);
+    return (
+      !isEmptyOrEmptyObject(value) &&
+      isObject(value) &&
+      Object.keys(value).length > 0
+    );
   } catch (e) {
     return true;
   }
