@@ -1,9 +1,15 @@
-## [1.8.1](https://github.com/storm-software/storm-stack/compare/logging-v1.8.0...logging-v1.8.1) (2024-01-01)
+## [1.8.2](https://github.com/storm-software/storm-stack/compare/logging-v1.8.1...logging-v1.8.2) (2024-01-01)
 
 
 ### Bug Fixes
 
-* **logging:** Resolved serialization issue with pino options ([81221f4](https://github.com/storm-software/storm-stack/commit/81221f443f20e721306f67f0a8cc5182d1b024a7))
+* **logging:** Resolved transport issues with file loggers ([a45288b](https://github.com/storm-software/storm-stack/commit/a45288b9e4b8d17b8981d347cc504a584a69b6ff))
+
+## [1.8.1](https://github.com/storm-software/storm-stack/compare/logging-v1.8.0...logging-v1.8.1) (2024-01-01)
+
+### Bug Fixes
+
+- **logging:** Resolved serialization issue with pino options ([81221f4](https://github.com/storm-software/storm-stack/commit/81221f443f20e721306f67f0a8cc5182d1b024a7))
 
 # [1.8.0](https://github.com/storm-software/storm-stack/compare/logging-v1.7.2...logging-v1.8.0) (2024-01-01)
 
