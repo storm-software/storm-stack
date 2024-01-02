@@ -1,9 +1,15 @@
-## [1.5.2](https://github.com/storm-software/storm-stack/compare/cli-v1.5.1...cli-v1.5.2) (2024-01-01)
+## [1.5.3](https://github.com/storm-software/storm-stack/compare/cli-v1.5.2...cli-v1.5.3) (2024-01-02)
 
 
 ### Bug Fixes
 
-* **logging:** Resolved transport issues with file loggers ([a45288b](https://github.com/storm-software/storm-stack/commit/a45288b9e4b8d17b8981d347cc504a584a69b6ff))
+* **logging:** Updated logger to use destinations instead of pure fs streams ([27e670b](https://github.com/storm-software/storm-stack/commit/27e670be242b8d78e5a20a728c62907110e49cb8))
+
+## [1.5.2](https://github.com/storm-software/storm-stack/compare/cli-v1.5.1...cli-v1.5.2) (2024-01-01)
+
+### Bug Fixes
+
+- **logging:** Resolved transport issues with file loggers ([a45288b](https://github.com/storm-software/storm-stack/commit/a45288b9e4b8d17b8981d347cc504a584a69b6ff))
 
 ## [1.5.1](https://github.com/storm-software/storm-stack/compare/cli-v1.5.0...cli-v1.5.1) (2024-01-01)
 

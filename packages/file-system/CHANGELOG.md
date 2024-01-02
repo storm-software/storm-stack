@@ -1,9 +1,15 @@
-## [1.9.2](https://github.com/storm-software/storm-stack/compare/file-system-v1.9.1...file-system-v1.9.2) (2024-01-01)
+## [1.9.3](https://github.com/storm-software/storm-stack/compare/file-system-v1.9.2...file-system-v1.9.3) (2024-01-02)
 
 
 ### Bug Fixes
 
-* **logging:** Resolved transport issues with file loggers ([a45288b](https://github.com/storm-software/storm-stack/commit/a45288b9e4b8d17b8981d347cc504a584a69b6ff))
+* **logging:** Updated logger to use destinations instead of pure fs streams ([27e670b](https://github.com/storm-software/storm-stack/commit/27e670be242b8d78e5a20a728c62907110e49cb8))
+
+## [1.9.2](https://github.com/storm-software/storm-stack/compare/file-system-v1.9.1...file-system-v1.9.2) (2024-01-01)
+
+### Bug Fixes
+
+- **logging:** Resolved transport issues with file loggers ([a45288b](https://github.com/storm-software/storm-stack/commit/a45288b9e4b8d17b8981d347cc504a584a69b6ff))
 
 ## [1.9.1](https://github.com/storm-software/storm-stack/compare/file-system-v1.9.0...file-system-v1.9.1) (2024-01-01)
 
