@@ -1,3 +1,10 @@
+## [1.5.1](https://github.com/storm-software/storm-stack/compare/jotai-v1.5.0...jotai-v1.5.1) (2024-01-02)
+
+
+### Bug Fixes
+
+* **utilities:** Resolved issue with `isSetObject` passing invalid types ([a6c1dcf](https://github.com/storm-software/storm-stack/commit/a6c1dcf8253e3058275f72152b80720aa2d5f0b6))
+
 # [1.5.0](https://github.com/storm-software/storm-stack/compare/jotai-v1.4.4...jotai-v1.5.0) (2024-01-01)
 
 
