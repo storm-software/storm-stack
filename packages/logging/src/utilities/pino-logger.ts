@@ -103,8 +103,8 @@ Message: {msg}
   ];
 
   if (isRuntimeServer()) {
-    streams.push(...createFileStreamLogs(config, name));
+    streams.push(...createFileStreamLogs(config));
   }
 
-  return pino(baseOptions, pino.multistream(streams));
+  return pino(baseOptions, pino.multistream(streams, { dedupe: false }));
 };

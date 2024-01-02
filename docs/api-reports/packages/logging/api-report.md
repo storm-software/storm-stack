@@ -6,13 +6,20 @@
 import { DestinationStream } from "pino";
 import { Logger } from "pino";
 import { LoggerOptions as LoggerOptions_2 } from "pino";
-import { SerializerFn } from "pino";
+import pino from "pino";
 import { StormConfig } from "@storm-software/config-tools";
 import { Temporal } from "@js-temporal/polyfill";
 import * as z from "zod";
 
 // @public (undocumented)
-export const createErrorSerializer: SerializerFn;
+export const createErrorSerializer: (
+  stacktrace?: boolean
+) => (err: Error) => Record<string, any>;
+
+// @public
+export const createFileStreamLogs: (
+  config: StormConfig<"logging", LoggingConfig>
+) => Array<pino.DestinationStream | pino.StreamEntry<pino.Level>>;
 
 // @public
 const getLogLevel: (label: string) => LogLevel;

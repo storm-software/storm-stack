@@ -5,7 +5,6 @@ import {
   formatDateTime
 } from "@storm-stack/date-time";
 import { EMPTY_STRING, isSetString } from "@storm-stack/utilities";
-import { createWriteStream } from "fs";
 import { tmpdir } from "os";
 import { join } from "path";
 import pino from "pino";
@@ -20,8 +19,7 @@ import { LoggingConfig } from "../types";
  * @returns The options for the logger
  */
 export const createFileStreamLogs = (
-  config: StormConfig<"logging", LoggingConfig>,
-  name?: string
+  config: StormConfig<"logging", LoggingConfig>
 ): Array<pino.DestinationStream | pino.StreamEntry<pino.Level>> => {
   const loggingConfig = config.extensions?.logging ?? {};
 
@@ -35,8 +33,8 @@ export const createFileStreamLogs = (
 
   streams.push({
     level: "debug",
-    stream: createWriteStream(
-      join(
+    stream: pino.destination({
+      dest: join(
         logPath,
         formatDate().replaceAll("/", "-").replaceAll(" ", "-"),
         `${
@@ -56,10 +54,15 @@ export const createFileStreamLogs = (
             ? loggingConfig.fileExtension.replaceAll(".", EMPTY_STRING)
             : "log"
         }`
-      )
-    )
+      ),
+      minLength: 4096,
+      sync: false,
+      mkdir: true,
+      append: true
+    })
   });
-  streams.push({
+
+  /*streams.push({
     level: "error",
     stream: createWriteStream(
       join(
@@ -84,7 +87,7 @@ export const createFileStreamLogs = (
         }`
       )
     )
-  });
+  });*/
 
   if (
     loggingConfig.loki?.host &&
@@ -92,6 +95,7 @@ export const createFileStreamLogs = (
     loggingConfig.loki?.password
   ) {
     streams.push({
+      level: "info",
       stream: pinoLoki({
         batching: true,
         interval: 5,
