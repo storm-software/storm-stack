@@ -1,9 +1,15 @@
-# [1.9.0](https://github.com/storm-software/storm-stack/compare/logging-v1.8.3...logging-v1.9.0) (2024-01-02)
+## [1.9.1](https://github.com/storm-software/storm-stack/compare/logging-v1.9.0...logging-v1.9.1) (2024-01-02)
 
+
+### Bug Fixes
+
+* **utilities:** Resolved issue with `isSetObject` passing invalid types ([a6c1dcf](https://github.com/storm-software/storm-stack/commit/a6c1dcf8253e3058275f72152b80720aa2d5f0b6))
+
+# [1.9.0](https://github.com/storm-software/storm-stack/compare/logging-v1.8.3...logging-v1.9.0) (2024-01-02)
 
 ### Features
 
-* **logging:** Added the `fileLoggingDisabled` configuration option ([c868c10](https://github.com/storm-software/storm-stack/commit/c868c10dc57ace70476b554755604d97fc096d5d))
+- **logging:** Added the `fileLoggingDisabled` configuration option ([c868c10](https://github.com/storm-software/storm-stack/commit/c868c10dc57ace70476b554755604d97fc096d5d))
 
 ## [1.8.3](https://github.com/storm-software/storm-stack/compare/logging-v1.8.2...logging-v1.8.3) (2024-01-02)
 
