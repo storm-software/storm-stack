@@ -1,9 +1,15 @@
-# [1.6.0](https://github.com/storm-software/storm-stack/compare/cli-v1.5.3...cli-v1.6.0) (2024-01-02)
+## [1.6.1](https://github.com/storm-software/storm-stack/compare/cli-v1.6.0...cli-v1.6.1) (2024-01-02)
 
+
+### Bug Fixes
+
+* **utilities:** Resolved issue with `isSetObject` passing invalid types ([a6c1dcf](https://github.com/storm-software/storm-stack/commit/a6c1dcf8253e3058275f72152b80720aa2d5f0b6))
+
+# [1.6.0](https://github.com/storm-software/storm-stack/compare/cli-v1.5.3...cli-v1.6.0) (2024-01-02)
 
 ### Features
 
-* **logging:** Added the `fileLoggingDisabled` configuration option ([c868c10](https://github.com/storm-software/storm-stack/commit/c868c10dc57ace70476b554755604d97fc096d5d))
+- **logging:** Added the `fileLoggingDisabled` configuration option ([c868c10](https://github.com/storm-software/storm-stack/commit/c868c10dc57ace70476b554755604d97fc096d5d))
 
 ## [1.5.3](https://github.com/storm-software/storm-stack/compare/cli-v1.5.2...cli-v1.5.3) (2024-01-02)
 
