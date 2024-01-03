@@ -1,9 +1,15 @@
-## [1.7.2](https://github.com/storm-software/storm-stack/compare/utilities-v1.7.1...utilities-v1.7.2) (2024-01-02)
+# [1.8.0](https://github.com/storm-software/storm-stack/compare/utilities-v1.7.2...utilities-v1.8.0) (2024-01-03)
 
+
+### Features
+
+* **utilities:** Added the `isEqual` utility function ([a2b77e9](https://github.com/storm-software/storm-stack/commit/a2b77e9252156657e031ab13338aeda916735fad))
+
+## [1.7.2](https://github.com/storm-software/storm-stack/compare/utilities-v1.7.1...utilities-v1.7.2) (2024-01-02)
 
 ### Bug Fixes
 
-* **jotai:** Resolved issue with `isAtom` type-checkers ([28ddcbe](https://github.com/storm-software/storm-stack/commit/28ddcbedcc36df5435402fdb8407c3c319a2bfbf))
+- **jotai:** Resolved issue with `isAtom` type-checkers ([28ddcbe](https://github.com/storm-software/storm-stack/commit/28ddcbedcc36df5435402fdb8407c3c319a2bfbf))
 
 ## [1.7.1](https://github.com/storm-software/storm-stack/compare/utilities-v1.7.0...utilities-v1.7.1) (2024-01-02)
 
