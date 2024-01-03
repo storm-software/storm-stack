@@ -1,9 +1,15 @@
-## [1.6.1](https://github.com/storm-software/storm-stack/compare/cli-v1.6.0...cli-v1.6.1) (2024-01-02)
+## [1.6.2](https://github.com/storm-software/storm-stack/compare/cli-v1.6.1...cli-v1.6.2) (2024-01-02)
 
 
 ### Bug Fixes
 
-* **utilities:** Resolved issue with `isSetObject` passing invalid types ([a6c1dcf](https://github.com/storm-software/storm-stack/commit/a6c1dcf8253e3058275f72152b80720aa2d5f0b6))
+* **jotai:** Resolved issue with `isAtom` type-checkers ([28ddcbe](https://github.com/storm-software/storm-stack/commit/28ddcbedcc36df5435402fdb8407c3c319a2bfbf))
+
+## [1.6.1](https://github.com/storm-software/storm-stack/compare/cli-v1.6.0...cli-v1.6.1) (2024-01-02)
+
+### Bug Fixes
+
+- **utilities:** Resolved issue with `isSetObject` passing invalid types ([a6c1dcf](https://github.com/storm-software/storm-stack/commit/a6c1dcf8253e3058275f72152b80720aa2d5f0b6))
 
 # [1.6.0](https://github.com/storm-software/storm-stack/compare/cli-v1.5.3...cli-v1.6.0) (2024-01-02)
 

@@ -1,16 +1,21 @@
-## [1.7.1](https://github.com/storm-software/storm-stack/compare/unique-identifier-v1.7.0...unique-identifier-v1.7.1) (2024-01-02)
+## [1.7.2](https://github.com/storm-software/storm-stack/compare/unique-identifier-v1.7.1...unique-identifier-v1.7.2) (2024-01-02)
 
 
 ### Bug Fixes
 
-* **utilities:** Resolved issue with `isSetObject` passing invalid types ([a6c1dcf](https://github.com/storm-software/storm-stack/commit/a6c1dcf8253e3058275f72152b80720aa2d5f0b6))
+* **jotai:** Resolved issue with `isAtom` type-checkers ([28ddcbe](https://github.com/storm-software/storm-stack/commit/28ddcbedcc36df5435402fdb8407c3c319a2bfbf))
+
+## [1.7.1](https://github.com/storm-software/storm-stack/compare/unique-identifier-v1.7.0...unique-identifier-v1.7.1) (2024-01-02)
+
+### Bug Fixes
+
+- **utilities:** Resolved issue with `isSetObject` passing invalid types ([a6c1dcf](https://github.com/storm-software/storm-stack/commit/a6c1dcf8253e3058275f72152b80720aa2d5f0b6))
 
 # [1.7.0](https://github.com/storm-software/storm-stack/compare/unique-identifier-v1.6.1...unique-identifier-v1.7.0) (2024-01-01)
 
-
 ### Features
 
-* **logging:** Added WireIt scripts to the repository ([658bada](https://github.com/storm-software/storm-stack/commit/658badae819f6e0cba6f78cba0ff2dad961686be))
+- **logging:** Added WireIt scripts to the repository ([658bada](https://github.com/storm-software/storm-stack/commit/658badae819f6e0cba6f78cba0ff2dad961686be))
 
 ## [1.6.1](https://github.com/storm-software/storm-stack/compare/unique-identifier-v1.6.0...unique-identifier-v1.6.1) (2024-01-01)
 
