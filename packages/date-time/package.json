@@ -1,6 +1,6 @@
 {
   "name": "@storm-stack/date-time",
-  "version": "1.8.0",
+  "version": "1.9.0",
   "private": false,
   "description": "This package includes a DateTime class, various utility functions for working with dates and times, and a number of formatting options.",
   "repository": {
