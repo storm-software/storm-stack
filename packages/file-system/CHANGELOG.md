@@ -1,9 +1,15 @@
-# [1.11.0](https://github.com/storm-software/storm-stack/compare/file-system-v1.10.2...file-system-v1.11.0) (2024-01-03)
+# [1.12.0](https://github.com/storm-software/storm-stack/compare/file-system-v1.11.0...file-system-v1.12.0) (2024-01-04)
 
 
 ### Features
 
-* **utilities:** Added the `isEqual` utility function ([a2b77e9](https://github.com/storm-software/storm-stack/commit/a2b77e9252156657e031ab13338aeda916735fad))
+* **serialization:** Update the serialization helpers to use singleton class ([326970f](https://github.com/storm-software/storm-stack/commit/326970f21be294c382d68b3395562b7d0ae6d8d7))
+
+# [1.11.0](https://github.com/storm-software/storm-stack/compare/file-system-v1.10.2...file-system-v1.11.0) (2024-01-03)
+
+### Features
+
+- **utilities:** Added the `isEqual` utility function ([a2b77e9](https://github.com/storm-software/storm-stack/commit/a2b77e9252156657e031ab13338aeda916735fad))
 
 ## [1.10.2](https://github.com/storm-software/storm-stack/compare/file-system-v1.10.1...file-system-v1.10.2) (2024-01-02)
 
