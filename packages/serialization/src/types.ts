@@ -137,7 +137,7 @@ export interface ClassSerializable<
    *
    * @returns The data object to serialize
    */
-  serialize: () => TJsonValue;
+  serialize: () => JsonParserResult;
 
   /**
    * Deserialize the class from a JSON object

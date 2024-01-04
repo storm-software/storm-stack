@@ -3,10 +3,6 @@ import { Serializable } from "@storm-stack/serialization";
 import { EMPTY_STRING, NEWLINE_STRING } from "@storm-stack/utilities";
 import StackTracey from "stacktracey";
 import { getCauseFromUnknown, isStormError } from "./utilities";
-import {
-  deserializeStormError,
-  serializeStormError
-} from "./utilities/serialization";
 
 export interface StormErrorOptions {
   name?: string;
@@ -21,10 +17,7 @@ export interface StormErrorOptions {
  *
  * @decorator `@Serializable()`
  */
-@Serializable({
-  serialize: serializeStormError,
-  deserialize: deserializeStormError
-})
+@Serializable()
 export class StormError<TCode extends string = string> extends Error {
   __proto__ = Error;
 

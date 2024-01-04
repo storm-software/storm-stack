@@ -39,10 +39,7 @@ export function deserializeStormTime(utcString: JsonValue): StormTime {
  *
  * @decorator `@Serializable()`
  */
-@Serializable({
-  serialize: serializeStormTime,
-  deserialize: deserializeStormTime
-})
+@Serializable()
 export class StormTime extends StormDateTime {
   /**
    * The current function returns a new DateTime object with the current date and time

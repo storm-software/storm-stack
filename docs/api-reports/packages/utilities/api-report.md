@@ -296,6 +296,12 @@ export { IsEqual };
 export { IsEqual as IsEqual_alias_1 };
 
 // @public (undocumented)
+function isEqual(a: any, b: any): boolean;
+export { isEqual };
+export { isEqual as isEqual_alias_1 };
+export { isEqual as isEqual_alias_2 };
+
+// @public (undocumented)
 interface ISequenced {
   sequence: number;
 }
