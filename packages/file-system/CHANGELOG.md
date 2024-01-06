@@ -1,9 +1,15 @@
-# [1.12.0](https://github.com/storm-software/storm-stack/compare/file-system-v1.11.0...file-system-v1.12.0) (2024-01-04)
+## [1.12.1](https://github.com/storm-software/storm-stack/compare/file-system-v1.12.0...file-system-v1.12.1) (2024-01-06)
 
+
+### Bug Fixes
+
+* **serialization:** Resolved parser issues ([03af0df](https://github.com/storm-software/storm-stack/commit/03af0dff94041e7fa40c2852c32c1eb24399cc7b))
+
+# [1.12.0](https://github.com/storm-software/storm-stack/compare/file-system-v1.11.0...file-system-v1.12.0) (2024-01-04)
 
 ### Features
 
-* **serialization:** Update the serialization helpers to use singleton class ([326970f](https://github.com/storm-software/storm-stack/commit/326970f21be294c382d68b3395562b7d0ae6d8d7))
+- **serialization:** Update the serialization helpers to use singleton class ([326970f](https://github.com/storm-software/storm-stack/commit/326970f21be294c382d68b3395562b7d0ae6d8d7))
 
 # [1.11.0](https://github.com/storm-software/storm-stack/compare/file-system-v1.10.2...file-system-v1.11.0) (2024-01-03)
 
