@@ -1,4 +1,4 @@
-import { parse, stringify } from "@storm-stack/serialization";
+import { StormParser } from "@storm-stack/serialization";
 import { isRuntimeServer } from "@storm-stack/utilities";
 import { atom } from "jotai/vanilla";
 import { setAtomPrivate } from "../utilities/set-atom-debug";
@@ -33,13 +33,13 @@ export function atomWithBroadcast<TValue>(key: string, initialValue: TValue) {
       set(baseAtom, update.value);
 
       if (!update.isEvent && !isRuntimeServer() && channel) {
-        channel.postMessage(stringify(get(baseAtom)));
+        channel.postMessage(StormParser.stringify(get(baseAtom)));
       }
     }
   );
   broadcastAtom.onMount = setAtom => {
     const listener = (event: MessageEvent<any>) => {
-      setAtom({ isEvent: true, value: parse(event.data) });
+      setAtom({ isEvent: true, value: StormParser.parse(event.data) });
     };
     listeners.add(listener);
     return () => {

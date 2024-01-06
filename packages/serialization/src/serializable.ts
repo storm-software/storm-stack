@@ -1,5 +1,5 @@
 import { ClassTypeCheckable, ITyped, isFunction } from "@storm-stack/utilities";
-import { StormParser } from "./json-parser";
+import { StormParser } from "./storm-parser";
 import { ClassSerializable, JsonParserResult, JsonValue } from "./types";
 
 export const Serializable = <TData = any>(options?: {
@@ -99,7 +99,7 @@ export const Serializable = <TData = any>(options?: {
        * @param strObject - A stringified version of the class instance
        * @returns An instance of the class converted from the provided string
        */
-      public parse = (strObject: string): typeof this => {
+      public parse = (strObject: string): TData => {
         return StormParser.parse(strObject);
       };
 

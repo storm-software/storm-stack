@@ -1,5 +1,5 @@
 import { StormError } from "@storm-stack/errors";
-import { stringify } from "@storm-stack/serialization";
+import { StormParser } from "@storm-stack/serialization";
 import { writeFile as writeFileFs, writeFileSync } from "fs";
 import { promisify } from "node:util";
 import { FileSystemErrorCode } from "../errors";
@@ -22,7 +22,7 @@ export const writeFile = (filePath: string, content: any): void => {
       });
     }
 
-    writeFileSync(filePath, stringify(content));
+    writeFileSync(filePath, StormParser.stringify(content));
   } catch (e) {
     throw new StormError(FileSystemErrorCode.file_write_failure, {
       message: "An error occurred writing data to file",

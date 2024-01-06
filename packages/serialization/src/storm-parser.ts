@@ -34,14 +34,14 @@ function _register<TData = any, TJsonObject extends JsonValue = JsonValue>(
  * This class uses the {@link https://github.com/blitz-js/superjson | SuperJSON} library
  */
 export class StormParser extends SuperJSON {
-  static #instance: StormParser;
+  private static _instance: StormParser;
 
   public static get instance(): StormParser {
-    if (!this.#instance) {
-      this.#instance = new StormParser();
+    if (!StormParser._instance) {
+      StormParser._instance = new StormParser();
     }
 
-    return this.#instance;
+    return StormParser._instance;
   }
 
   /**
@@ -134,9 +134,9 @@ export class StormParser extends SuperJSON {
   }
 }
 
-export const registerClass = StormParser.registerClass;
+/*export const registerClass = StormParser.registerClass;
 export const register = StormParser.register;
 export const deserialize = StormParser.deserialize;
 export const serialize = StormParser.serialize;
 export const parse = StormParser.parse;
-export const stringify = StormParser.stringify;
+export const stringify = StormParser.stringify;*/

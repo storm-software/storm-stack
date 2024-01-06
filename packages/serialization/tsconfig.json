@@ -1,8 +1,8 @@
 {
-  "composite": true,
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
-    "outDir": "../../dist/out-tsc"
+    "outDir": "../../dist/out-tsc",
+    "noEmit": true
   },
   "files": [],
   "include": ["src/**/*.ts", "src/**/*.js"],

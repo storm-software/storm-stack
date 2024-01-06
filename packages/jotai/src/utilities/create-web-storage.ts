@@ -1,4 +1,4 @@
-import { stringify } from "@storm-stack/serialization";
+import { StormParser } from "@storm-stack/serialization";
 import { isPromiseLike } from "@storm-stack/utilities";
 import {
   AsyncStorage,
@@ -35,7 +35,7 @@ export function createWebStorage<TValue>(
       return parse(strValue);
     },
     setItem: (key, newValue) =>
-      getStringStorage()?.setItem(key, stringify(newValue)),
+      getStringStorage()?.setItem(key, StormParser.stringify(newValue)),
     removeItem: key => getStringStorage()?.removeItem(key)
   };
 

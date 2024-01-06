@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { StormLog } from "@storm-stack/logging";
-import { stringify } from "@storm-stack/serialization";
+import { StormParser } from "@storm-stack/serialization";
 import { isEmptyObject } from "@storm-stack/utilities";
 import {
   ExecOptions,
@@ -28,8 +28,10 @@ export const execute = (
   try {
     StormLog.info(
       `Executing command: "${command}"${
-        !isEmptyObject(options) ? `, options: ${stringify(options)}` : ""
-      }${!isEmptyObject(env) ? `, env: ${stringify(env)}` : ""}${
+        !isEmptyObject(options)
+          ? `, options: ${StormParser.stringify(options)}`
+          : ""
+      }${!isEmptyObject(env) ? `, env: ${StormParser.stringify(env)}` : ""}${
         !stdio ? `, stdio: ${stdio}` : ""
       }`
     );
