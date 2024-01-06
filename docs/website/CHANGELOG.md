@@ -1,3 +1,10 @@
+## [1.2.1](https://github.com/storm-software/storm-stack/compare/docs-website-v1.2.0...docs-website-v1.2.1) (2024-01-06)
+
+
+### Bug Fixes
+
+* **serialization:** Resolved parser issues ([03af0df](https://github.com/storm-software/storm-stack/commit/03af0dff94041e7fa40c2852c32c1eb24399cc7b))
+
 # [1.2.0](https://github.com/storm-software/storm-stack/compare/docs-website-v1.1.1...docs-website-v1.2.0) (2024-01-01)
 
 
