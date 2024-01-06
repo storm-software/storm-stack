@@ -1,9 +1,15 @@
-# [1.9.0](https://github.com/storm-software/storm-stack/compare/errors-v1.8.0...errors-v1.9.0) (2024-01-04)
+## [1.9.1](https://github.com/storm-software/storm-stack/compare/errors-v1.9.0...errors-v1.9.1) (2024-01-06)
 
+
+### Bug Fixes
+
+* **serialization:** Resolved parser issues ([03af0df](https://github.com/storm-software/storm-stack/commit/03af0dff94041e7fa40c2852c32c1eb24399cc7b))
+
+# [1.9.0](https://github.com/storm-software/storm-stack/compare/errors-v1.8.0...errors-v1.9.0) (2024-01-04)
 
 ### Features
 
-* **serialization:** Update the serialization helpers to use singleton class ([326970f](https://github.com/storm-software/storm-stack/commit/326970f21be294c382d68b3395562b7d0ae6d8d7))
+- **serialization:** Update the serialization helpers to use singleton class ([326970f](https://github.com/storm-software/storm-stack/commit/326970f21be294c382d68b3395562b7d0ae6d8d7))
 
 # [1.8.0](https://github.com/storm-software/storm-stack/compare/errors-v1.7.2...errors-v1.8.0) (2024-01-03)
 
