@@ -1,3 +1,10 @@
+## [1.8.1](https://github.com/storm-software/storm-stack/compare/utilities-v1.8.0...utilities-v1.8.1) (2024-01-06)
+
+
+### Bug Fixes
+
+* **serialization:** Resolved parser issues ([03af0df](https://github.com/storm-software/storm-stack/commit/03af0dff94041e7fa40c2852c32c1eb24399cc7b))
+
 # [1.8.0](https://github.com/storm-software/storm-stack/compare/utilities-v1.7.2...utilities-v1.8.0) (2024-01-03)
 
 
