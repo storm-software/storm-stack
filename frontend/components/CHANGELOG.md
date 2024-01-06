@@ -1,3 +1,10 @@
+## [1.3.1](https://github.com/storm-software/storm-stack/compare/frontend-components-v1.3.0...frontend-components-v1.3.1) (2024-01-06)
+
+
+### Bug Fixes
+
+* **serialization:** Resolved parser issues ([03af0df](https://github.com/storm-software/storm-stack/commit/03af0dff94041e7fa40c2852c32c1eb24399cc7b))
+
 # [1.3.0](https://github.com/storm-software/storm-stack/compare/frontend-components-v1.2.1...frontend-components-v1.3.0) (2024-01-01)
 
 
