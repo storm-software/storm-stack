@@ -1,9 +1,15 @@
-## [1.7.1](https://github.com/storm-software/storm-stack/compare/jotai-v1.7.0...jotai-v1.7.1) (2024-01-06)
+# [1.8.0](https://github.com/storm-software/storm-stack/compare/jotai-v1.7.1...jotai-v1.8.0) (2024-01-07)
 
+
+### Features
+
+* **utilities:** Added base `Factory` class and some update lodash function implementations ([cb3f844](https://github.com/storm-software/storm-stack/commit/cb3f844e839a00086d414ae746088e18a402e2a6))
+
+## [1.7.1](https://github.com/storm-software/storm-stack/compare/jotai-v1.7.0...jotai-v1.7.1) (2024-01-06)
 
 ### Bug Fixes
 
-* **serialization:** Resolved parser issues ([03af0df](https://github.com/storm-software/storm-stack/commit/03af0dff94041e7fa40c2852c32c1eb24399cc7b))
+- **serialization:** Resolved parser issues ([03af0df](https://github.com/storm-software/storm-stack/commit/03af0dff94041e7fa40c2852c32c1eb24399cc7b))
 
 # [1.7.0](https://github.com/storm-software/storm-stack/compare/jotai-v1.6.0...jotai-v1.7.0) (2024-01-04)
 
