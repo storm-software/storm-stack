@@ -1,3 +1,10 @@
+# [1.4.0](https://github.com/storm-software/storm-stack/compare/frontend-components-v1.3.1...frontend-components-v1.4.0) (2024-01-07)
+
+
+### Features
+
+* **frontend-table:** Initial checkin of table data management package ([3742ec7](https://github.com/storm-software/storm-stack/commit/3742ec754eba4b62ca1a9f331a4843e20daaef32))
+
 ## [1.3.1](https://github.com/storm-software/storm-stack/compare/frontend-components-v1.3.0...frontend-components-v1.3.1) (2024-01-06)
 
 
