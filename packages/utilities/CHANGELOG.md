@@ -1,16 +1,21 @@
-## [1.8.1](https://github.com/storm-software/storm-stack/compare/utilities-v1.8.0...utilities-v1.8.1) (2024-01-06)
-
-
-### Bug Fixes
-
-* **serialization:** Resolved parser issues ([03af0df](https://github.com/storm-software/storm-stack/commit/03af0dff94041e7fa40c2852c32c1eb24399cc7b))
-
-# [1.8.0](https://github.com/storm-software/storm-stack/compare/utilities-v1.7.2...utilities-v1.8.0) (2024-01-03)
+# [1.9.0](https://github.com/storm-software/storm-stack/compare/utilities-v1.8.1...utilities-v1.9.0) (2024-01-07)
 
 
 ### Features
 
-* **utilities:** Added the `isEqual` utility function ([a2b77e9](https://github.com/storm-software/storm-stack/commit/a2b77e9252156657e031ab13338aeda916735fad))
+* **utilities:** Added base `Factory` class and some update lodash function implementations ([cb3f844](https://github.com/storm-software/storm-stack/commit/cb3f844e839a00086d414ae746088e18a402e2a6))
+
+## [1.8.1](https://github.com/storm-software/storm-stack/compare/utilities-v1.8.0...utilities-v1.8.1) (2024-01-06)
+
+### Bug Fixes
+
+- **serialization:** Resolved parser issues ([03af0df](https://github.com/storm-software/storm-stack/commit/03af0dff94041e7fa40c2852c32c1eb24399cc7b))
+
+# [1.8.0](https://github.com/storm-software/storm-stack/compare/utilities-v1.7.2...utilities-v1.8.0) (2024-01-03)
+
+### Features
+
+- **utilities:** Added the `isEqual` utility function ([a2b77e9](https://github.com/storm-software/storm-stack/commit/a2b77e9252156657e031ab13338aeda916735fad))
 
 ## [1.7.2](https://github.com/storm-software/storm-stack/compare/utilities-v1.7.1...utilities-v1.7.2) (2024-01-02)
 
