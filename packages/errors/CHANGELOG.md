@@ -1,9 +1,15 @@
-# [1.10.0](https://github.com/storm-software/storm-stack/compare/errors-v1.9.1...errors-v1.10.0) (2024-01-07)
+# [1.11.0](https://github.com/storm-software/storm-stack/compare/errors-v1.10.0...errors-v1.11.0) (2024-01-07)
 
 
 ### Features
 
-* **utilities:** Added base `Factory` class and some update lodash function implementations ([cb3f844](https://github.com/storm-software/storm-stack/commit/cb3f844e839a00086d414ae746088e18a402e2a6))
+* **frontend-table:** Initial checkin of table data management package ([3742ec7](https://github.com/storm-software/storm-stack/commit/3742ec754eba4b62ca1a9f331a4843e20daaef32))
+
+# [1.10.0](https://github.com/storm-software/storm-stack/compare/errors-v1.9.1...errors-v1.10.0) (2024-01-07)
+
+### Features
+
+- **utilities:** Added base `Factory` class and some update lodash function implementations ([cb3f844](https://github.com/storm-software/storm-stack/commit/cb3f844e839a00086d414ae746088e18a402e2a6))
 
 ## [1.9.1](https://github.com/storm-software/storm-stack/compare/errors-v1.9.0...errors-v1.9.1) (2024-01-06)
 
