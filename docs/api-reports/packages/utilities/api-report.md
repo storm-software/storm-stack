@@ -29,6 +29,12 @@ type AnyCase<T extends IndexType> = string extends T
 export { AnyCase };
 export { AnyCase as AnyCase_alias_1 };
 
+// @public
+function argIdentity(value: any): any;
+export { argIdentity };
+export { argIdentity as argIdentity_alias_1 };
+export { argIdentity as argIdentity_alias_2 };
+
 // @public (undocumented)
 type ArrayElement<ArrayType extends readonly unknown[]> =
   ArrayType extends readonly (infer ElementType)[] ? ElementType : never;
@@ -157,6 +163,16 @@ type Except<
 export { Except };
 export { Except as Except_alias_1 };
 
+// @public
+class Factory {
+  static create<TClass = any>(context: any): any;
+  protected static getClass<TClass = any>(
+    context: any
+  ): new (...argArray: any[]) => TClass;
+}
+export { Factory };
+export { Factory as Factory_alias_1 };
+
 // @public (undocumented)
 type Filter<KeyType, ExcludeType> = IsEqual<KeyType, ExcludeType> extends true
   ? never
@@ -181,6 +197,12 @@ const getObjectTag: (value: unknown) => string;
 export { getObjectTag };
 export { getObjectTag as getObjectTag_alias_1 };
 export { getObjectTag as getObjectTag_alias_2 };
+
+// @public
+const getUnique: <T = any>(arr: T[]) => T[];
+export { getUnique };
+export { getUnique as getUnique_alias_1 };
+export { getUnique as getUnique_alias_2 };
 
 // @public
 const getWebCrypto: () => Crypto;

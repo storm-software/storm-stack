@@ -17,6 +17,8 @@
       "@storm-stack/file-system/*": ["packages/file-system/src/*"],
       "@storm-stack/frontend-components": ["frontend/components/src/index.ts"],
       "@storm-stack/frontend-components/*": ["frontend/components/src/*"],
+      "@storm-stack/frontend-table": ["frontend/table/src/index.ts"],
+      "@storm-stack/frontend-table/*": ["frontend/table/src/*"],
       "@storm-stack/jotai": ["packages/jotai/src/index.ts"],
       "@storm-stack/jotai/*": ["packages/jotai/src/*"],
       "@storm-stack/logging": ["packages/logging/src/index.ts"],
