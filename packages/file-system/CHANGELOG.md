@@ -1,9 +1,15 @@
-# [1.13.0](https://github.com/storm-software/storm-stack/compare/file-system-v1.12.1...file-system-v1.13.0) (2024-01-07)
+# [1.14.0](https://github.com/storm-software/storm-stack/compare/file-system-v1.13.0...file-system-v1.14.0) (2024-01-07)
 
 
 ### Features
 
-* **utilities:** Added base `Factory` class and some update lodash function implementations ([cb3f844](https://github.com/storm-software/storm-stack/commit/cb3f844e839a00086d414ae746088e18a402e2a6))
+* **frontend-table:** Initial checkin of table data management package ([3742ec7](https://github.com/storm-software/storm-stack/commit/3742ec754eba4b62ca1a9f331a4843e20daaef32))
+
+# [1.13.0](https://github.com/storm-software/storm-stack/compare/file-system-v1.12.1...file-system-v1.13.0) (2024-01-07)
+
+### Features
+
+- **utilities:** Added base `Factory` class and some update lodash function implementations ([cb3f844](https://github.com/storm-software/storm-stack/commit/cb3f844e839a00086d414ae746088e18a402e2a6))
 
 ## [1.12.1](https://github.com/storm-software/storm-stack/compare/file-system-v1.12.0...file-system-v1.12.1) (2024-01-06)
 
