@@ -1,9 +1,15 @@
-## [1.8.1](https://github.com/storm-software/storm-stack/compare/cli-v1.8.0...cli-v1.8.1) (2024-01-06)
+# [1.9.0](https://github.com/storm-software/storm-stack/compare/cli-v1.8.1...cli-v1.9.0) (2024-01-07)
 
+
+### Features
+
+* **utilities:** Added base `Factory` class and some update lodash function implementations ([cb3f844](https://github.com/storm-software/storm-stack/commit/cb3f844e839a00086d414ae746088e18a402e2a6))
+
+## [1.8.1](https://github.com/storm-software/storm-stack/compare/cli-v1.8.0...cli-v1.8.1) (2024-01-06)
 
 ### Bug Fixes
 
-* **serialization:** Resolved parser issues ([03af0df](https://github.com/storm-software/storm-stack/commit/03af0dff94041e7fa40c2852c32c1eb24399cc7b))
+- **serialization:** Resolved parser issues ([03af0df](https://github.com/storm-software/storm-stack/commit/03af0dff94041e7fa40c2852c32c1eb24399cc7b))
 
 # [1.8.0](https://github.com/storm-software/storm-stack/compare/cli-v1.7.0...cli-v1.8.0) (2024-01-04)
 
