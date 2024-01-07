@@ -1,3 +1,10 @@
+# [1.3.0](https://github.com/storm-software/storm-stack/compare/docs-website-v1.2.1...docs-website-v1.3.0) (2024-01-07)
+
+
+### Features
+
+* **frontend-table:** Initial checkin of table data management package ([3742ec7](https://github.com/storm-software/storm-stack/commit/3742ec754eba4b62ca1a9f331a4843e20daaef32))
+
 ## [1.2.1](https://github.com/storm-software/storm-stack/compare/docs-website-v1.2.0...docs-website-v1.2.1) (2024-01-06)
 
 
