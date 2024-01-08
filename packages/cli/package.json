@@ -14,7 +14,7 @@
     "chalk": "5.3.0",
     "commander": "11.1.0",
     "console-table-printer": "2.11.2",
-    "figlet": "^1.7.0"
+    "figlet": "1.7.0"
   },
   "devDependencies": {
     "@types/figlet": "^1.5.8",
