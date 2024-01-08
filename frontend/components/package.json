@@ -10,11 +10,11 @@
   },
   "type": "module",
   "dependencies": {
-    "@tamagui/font-inter": "^1.79.17",
-    "@tamagui/react-native-media-driver": "^1.79.17",
-    "@tamagui/shorthands": "^1.79.17",
-    "@tamagui/themes": "^1.79.17",
-    "tamagui": "^1.79.13"
+    "@tamagui/font-inter": "1.79.17",
+    "@tamagui/react-native-media-driver": "1.79.17",
+    "@tamagui/shorthands": "1.79.17",
+    "@tamagui/themes": "1.79.17",
+    "tamagui": "1.79.13"
   },
   "devDependencies": {
     "@tamagui/build": "^1.79.13",

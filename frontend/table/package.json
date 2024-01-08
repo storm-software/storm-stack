@@ -10,7 +10,7 @@
   },
   "type": "module",
   "dependencies": {
-    "@tanstack/react-table": "^8.11.3"
+    "@tanstack/react-table": "8.11.3"
   },
   "devDependencies": {
     "react": "^18.2.0",
