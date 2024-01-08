@@ -17,7 +17,7 @@
     "tamagui": "^1.79.13"
   },
   "devDependencies": {
-    "@tamagui/build": "^1.79.13",
+    "@tamagui/build": "^1.79.17",
     "react-dom": "18.2.0",
     "react-native": "^0.73.1"
   },
