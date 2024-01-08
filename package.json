@@ -74,7 +74,7 @@
   },
   "prettier": "@storm-software/linting-tools/prettier/config.json",
   "dependencies": {
-    "@eslint/eslintrc": "2.1.4",
+    "@eslint/eslintrc": "3.0.0",
     "@nx/cypress": "17.2.8",
     "@nx/devkit": "17.2.8",
     "@nx/eslint": "17.2.8",
