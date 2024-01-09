@@ -1793,6 +1793,70 @@
             },
             {
               "kind": "Method",
+              "canonicalReference": "@storm-stack/date-time!StormDate.maximum:member(1)",
+              "docComment": "/**\n * The maximum function returns a new StormDateTime object with the maximum date and time\n *\n * @returns A new instance of StormDateTime with the maximum date and time.\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "static maximum(): "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "StormDate",
+                  "canonicalReference": "@storm-stack/date-time!StormDate:class"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isStatic": true,
+              "returnTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "releaseTag": "Public",
+              "isProtected": false,
+              "overloadIndex": 1,
+              "parameters": [],
+              "isOptional": false,
+              "isAbstract": false,
+              "name": "maximum"
+            },
+            {
+              "kind": "Method",
+              "canonicalReference": "@storm-stack/date-time!StormDate.minimum:member(1)",
+              "docComment": "/**\n * The maximum function returns a new StormDateTime object with the maximum date and time\n *\n * @returns A new instance of StormDateTime with the maximum date and time.\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "static minimum(): "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "StormDate",
+                  "canonicalReference": "@storm-stack/date-time!StormDate:class"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isStatic": true,
+              "returnTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "releaseTag": "Public",
+              "isProtected": false,
+              "overloadIndex": 1,
+              "parameters": [],
+              "isOptional": false,
+              "isAbstract": false,
+              "name": "minimum"
+            },
+            {
+              "kind": "Method",
               "canonicalReference": "@storm-stack/date-time!StormDate.now:member(1)",
               "docComment": "/**\n * The current function returns a new DateTime object with the current date and time\n *\n * @returns A new instance of DateTime with the current date and time.\n */\n",
               "excerptTokens": [
@@ -2945,6 +3009,70 @@
               "isStatic": false,
               "isProtected": false,
               "isAbstract": false
+            },
+            {
+              "kind": "Method",
+              "canonicalReference": "@storm-stack/date-time!StormDateTime.maximum:member(1)",
+              "docComment": "/**\n * The maximum function returns a new StormDateTime object with the maximum date and time\n *\n * @returns A new instance of StormDateTime with the maximum date and time.\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "static maximum(): "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "StormDateTime",
+                  "canonicalReference": "@storm-stack/date-time!StormDateTime:class"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isStatic": true,
+              "returnTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "releaseTag": "Public",
+              "isProtected": false,
+              "overloadIndex": 1,
+              "parameters": [],
+              "isOptional": false,
+              "isAbstract": false,
+              "name": "maximum"
+            },
+            {
+              "kind": "Method",
+              "canonicalReference": "@storm-stack/date-time!StormDateTime.minimum:member(1)",
+              "docComment": "/**\n * The maximum function returns a new StormDateTime object with the maximum date and time\n *\n * @returns A new instance of StormDateTime with the maximum date and time.\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "static minimum(): "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "StormDateTime",
+                  "canonicalReference": "@storm-stack/date-time!StormDateTime:class"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isStatic": true,
+              "returnTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "releaseTag": "Public",
+              "isProtected": false,
+              "overloadIndex": 1,
+              "parameters": [],
+              "isOptional": false,
+              "isAbstract": false,
+              "name": "minimum"
             },
             {
               "kind": "Method",

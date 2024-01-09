@@ -145,6 +145,9 @@ importers:
       eslint-plugin-react-hooks:
         specifier: 4.6.0
         version: 4.6.0(eslint@8.55.0)
+      husky:
+        specifier: 8.0.3
+        version: 8.0.3
       jest:
         specifier: 29.7.0
         version: 29.7.0(@types/node@20.10.5)(ts-node@10.9.2)
@@ -199,10 +202,6 @@ importers:
       wireit:
         specifier: ^0.14.1
         version: 0.14.1
-    devDependencies:
-      husky:
-        specifier: 8.0.3
-        version: 8.0.3
 
   docs/website:
     dependencies:
@@ -393,6 +392,9 @@ importers:
       "@types/md5":
         specifier: ^2.3.5
         version: 2.3.5
+      "@types/toposort":
+        specifier: ^2.0.7
+        version: 2.0.7
 
   packages/serialization:
     dependencies:
@@ -10399,6 +10401,13 @@ packages:
       }
     dev: false
 
+  /@types/toposort@2.0.7:
+    resolution:
+      {
+        integrity: sha512-sQNk65vbC36+UixCkcky+dCr7MlflHcVILg1FVGqlUntsLFv9xd9ToWIVko/gTuin+cVe16t+2YubEFkhnSuPQ==
+      }
+    dev: true
+
   /@types/tough-cookie@4.0.5:
     resolution:
       {
@@ -19279,7 +19288,7 @@ packages:
       }
     engines: { node: ">=14" }
     hasBin: true
-    dev: true
+    dev: false
 
   /hyphenate-style-name@1.0.4:
     resolution:
