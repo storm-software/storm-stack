@@ -1,9 +1,15 @@
-## [1.0.1](https://github.com/storm-software/storm-stack/compare/plugin-system-v1.0.0...plugin-system-v1.0.1) (2024-01-09)
+## [1.0.2](https://github.com/storm-software/storm-stack/compare/plugin-system-v1.0.1...plugin-system-v1.0.2) (2024-01-09)
 
 
 ### Bug Fixes
 
-* **plugin-system:** Update package to be publishable ([87dcf0f](https://github.com/storm-software/storm-stack/commit/87dcf0f14115faf9ea50d1d0439aeb11cbc81d9e))
+* **plugin-system:** Updated signature of `execute` function to include context object ([e94d162](https://github.com/storm-software/storm-stack/commit/e94d162c7c4f5749bd939cf891ad6411fe65eccb))
+
+## [1.0.1](https://github.com/storm-software/storm-stack/compare/plugin-system-v1.0.0...plugin-system-v1.0.1) (2024-01-09)
+
+### Bug Fixes
+
+- **plugin-system:** Update package to be publishable ([87dcf0f](https://github.com/storm-software/storm-stack/commit/87dcf0f14115faf9ea50d1d0439aeb11cbc81d9e))
 
 # [1.0.0](https://github.com/storm-software/storm-stack/compare/...plugin-system-v1.0.0) (2024-01-09)
 
