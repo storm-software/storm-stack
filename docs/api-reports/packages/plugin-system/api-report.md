@@ -164,8 +164,8 @@ class PluginManager<
   // (undocumented)
   invokeHook: (
     name: string,
-    handler: (context: TContext) => Promise<TContext> | TContext,
-    context: TContext
+    context: TContext,
+    handler?: ((context: TContext) => Promise<TContext> | TContext) | undefined
   ) => Promise<TContext>;
   // (undocumented)
   register: (provider: string) => Promise<PluginDefinition>;

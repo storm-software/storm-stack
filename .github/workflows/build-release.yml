@@ -57,6 +57,9 @@ jobs:
       #- name: Generate configuration schema
       #  run: pnpm nx g @storm-software/workspace-tools:config-schema --outputPath=config.schema.json
 
+      - name: Add permissions to husky hooks
+        run: chmod a=rwx .husky/pre-push .husky/pre-commit .husky/post-merge .husky/post-commit .husky/post-checkout
+
       - name: Build repository packages
         run: pnpm nx run-many -t build --parallel=5
 

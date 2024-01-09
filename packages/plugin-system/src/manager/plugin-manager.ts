@@ -207,8 +207,8 @@ export class PluginManager<
 
   public invokeHook = async (
     name: string,
-    handler: (context: TContext) => Promise<TContext> | TContext,
-    context: TContext
+    context: TContext,
+    handler?: (context: TContext) => Promise<TContext> | TContext
   ): Promise<TContext> => {
     let listeners = [] as PluginHookFn<TContext>[];
     if (this.#hooks.has(name)) {
@@ -271,7 +271,10 @@ export class PluginManager<
       }
     }
 
-    nextContext = await Promise.resolve(handler(nextContext));
+    if (handler) {
+      nextContext = await Promise.resolve(handler(nextContext));
+    }
+
     for (const callback of callbacks) {
       nextContext = await Promise.resolve(callback(nextContext));
     }

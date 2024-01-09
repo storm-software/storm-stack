@@ -2123,7 +2123,7 @@
                 },
                 {
                   "kind": "Content",
-                  "text": "(name: string, handler: (context: TContext) => "
+                  "text": "(name: string, context: TContext, handler?: ((context: TContext) => "
                 },
                 {
                   "kind": "Reference",
@@ -2132,7 +2132,7 @@
                 },
                 {
                   "kind": "Content",
-                  "text": "<TContext> | TContext, context: TContext) => "
+                  "text": "<TContext> | TContext) | undefined) => "
                 },
                 {
                   "kind": "Reference",
