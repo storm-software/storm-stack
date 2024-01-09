@@ -1,23 +1,32 @@
-# [1.3.0](https://github.com/storm-software/storm-stack/compare/docs-website-v1.2.1...docs-website-v1.3.0) (2024-01-07)
-
-
-### Features
-
-* **frontend-table:** Initial checkin of table data management package ([3742ec7](https://github.com/storm-software/storm-stack/commit/3742ec754eba4b62ca1a9f331a4843e20daaef32))
-
-## [1.2.1](https://github.com/storm-software/storm-stack/compare/docs-website-v1.2.0...docs-website-v1.2.1) (2024-01-06)
+# [1.4.0](https://github.com/storm-software/storm-stack/compare/docs-website-v1.3.0...docs-website-v1.4.0) (2024-01-09)
 
 
 ### Bug Fixes
 
-* **serialization:** Resolved parser issues ([03af0df](https://github.com/storm-software/storm-stack/commit/03af0dff94041e7fa40c2852c32c1eb24399cc7b))
-
-# [1.2.0](https://github.com/storm-software/storm-stack/compare/docs-website-v1.1.1...docs-website-v1.2.0) (2024-01-01)
+* **plugin-system:** Regenerate pnpm-lock file ([e0f91dd](https://github.com/storm-software/storm-stack/commit/e0f91dde43cd88626f37414e148145289f32b53c))
 
 
 ### Features
 
-* **logging:** Added WireIt scripts to the repository ([658bada](https://github.com/storm-software/storm-stack/commit/658badae819f6e0cba6f78cba0ff2dad961686be))
+* **plugin-system:** Added a new package to support plugin-driven applications ([081bd2c](https://github.com/storm-software/storm-stack/commit/081bd2cff25f336a21128c4a989401e99e601d83))
+
+# [1.3.0](https://github.com/storm-software/storm-stack/compare/docs-website-v1.2.1...docs-website-v1.3.0) (2024-01-07)
+
+### Features
+
+- **frontend-table:** Initial checkin of table data management package ([3742ec7](https://github.com/storm-software/storm-stack/commit/3742ec754eba4b62ca1a9f331a4843e20daaef32))
+
+## [1.2.1](https://github.com/storm-software/storm-stack/compare/docs-website-v1.2.0...docs-website-v1.2.1) (2024-01-06)
+
+### Bug Fixes
+
+- **serialization:** Resolved parser issues ([03af0df](https://github.com/storm-software/storm-stack/commit/03af0dff94041e7fa40c2852c32c1eb24399cc7b))
+
+# [1.2.0](https://github.com/storm-software/storm-stack/compare/docs-website-v1.1.1...docs-website-v1.2.0) (2024-01-01)
+
+### Features
+
+- **logging:** Added WireIt scripts to the repository ([658bada](https://github.com/storm-software/storm-stack/commit/658badae819f6e0cba6f78cba0ff2dad961686be))
 
 ## [1.1.1](https://github.com/storm-software/storm-stack/compare/docs-website-v1.1.0...docs-website-v1.1.1) (2024-01-01)
 
