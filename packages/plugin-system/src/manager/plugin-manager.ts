@@ -232,7 +232,7 @@ export class PluginManager<
 
       const edges = hooks.reduce(
         (
-          ret: string[][],
+          ret: [string, string][],
           hook: {
             provider: string;
             listener: PluginHookFn<TContext>;

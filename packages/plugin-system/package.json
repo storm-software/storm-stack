@@ -1,7 +1,7 @@
 {
   "name": "@storm-stack/plugin-system",
   "version": "1.0.0",
-  "private": true,
+  "private": false,
   "description": "A library used to create and manage a plugin-styled architecture in a TypeScript application.",
   "repository": {
     "type": "github",
