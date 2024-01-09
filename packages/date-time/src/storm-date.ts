@@ -58,6 +58,24 @@ export class StormDate extends StormDateTime {
   }
 
   /**
+   * The maximum function returns a new StormDateTime object with the maximum date and time
+   *
+   * @returns A new instance of StormDateTime with the maximum date and time.
+   */
+  public static override minimum(): StormDate {
+    return StormDate.create(new Date(-8640000000000000));
+  }
+
+  /**
+   * The maximum function returns a new StormDateTime object with the maximum date and time
+   *
+   * @returns A new instance of StormDateTime with the maximum date and time.
+   */
+  public static override maximum(): StormDate {
+    return StormDate.create(new Date(8640000000000000));
+  }
+
+  /**
    * Creates a new StormDate object with the given date and time
    *
    * @param date - The date to use

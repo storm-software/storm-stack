@@ -163,7 +163,8 @@
       "@storm-stack/jotai": "workspace:*",
       "@storm-stack/frontend-components": "workspace:*",
       "@storm-stack/docs-website": "workspace:*",
-      "@storm-stack/frontend-table": "workspace:*"
+      "@storm-stack/frontend-table": "workspace:*",
+      "@storm-stack/plugin-system": "workspace:*"
     }
   },
   "triggerEmptyDevReleaseByIncrementingThisNumber": 0,

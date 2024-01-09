@@ -44,6 +44,27 @@ export function findFileExtension(filePath: string): string {
 }
 
 /**
+ * Find the folder containing the file.
+ *
+ * @remarks
+ * Example: `C:\Users\user\Documents\file.txt` would return `Documents`
+ *
+ * @param filePath - The file path to process
+ * @returns The file path
+ */
+export function findContainingFolder(filePath: string): string {
+  let folderPath = findFilePath(filePath);
+  if (
+    folderPath.lastIndexOf("\\") === folderPath.length - 1 ||
+    folderPath.lastIndexOf("/") === folderPath.length - 1
+  ) {
+    folderPath = folderPath.substring(0, folderPath.length - 1);
+  }
+
+  return folderPath.split("\\").pop() ?? EMPTY_STRING;
+}
+
+/**
  * Check if a file path has a file name.
  *
  * @param filePath - The file path to process

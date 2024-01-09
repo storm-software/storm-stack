@@ -17,6 +17,7 @@ overrides:
   "@storm-stack/frontend-components": workspace:*
   "@storm-stack/docs-website": workspace:*
   "@storm-stack/frontend-table": workspace:*
+  "@storm-stack/plugin-system": workspace:*
 
 importers:
   .:
@@ -144,9 +145,6 @@ importers:
       eslint-plugin-react-hooks:
         specifier: 4.6.0
         version: 4.6.0(eslint@8.55.0)
-      husky:
-        specifier: 8.0.3
-        version: 8.0.3
       jest:
         specifier: 29.7.0
         version: 29.7.0(@types/node@20.10.5)(ts-node@10.9.2)
@@ -201,6 +199,10 @@ importers:
       wireit:
         specifier: ^0.14.1
         version: 0.14.1
+    devDependencies:
+      husky:
+        specifier: 8.0.3
+        version: 8.0.3
 
   docs/website:
     dependencies:
@@ -375,6 +377,22 @@ importers:
       "@types/node":
         specifier: ^20.10.5
         version: 20.10.5
+
+  packages/plugin-system:
+    dependencies:
+      glob:
+        specifier: ^10.3.10
+        version: 10.3.10
+      md5:
+        specifier: ^2.3.0
+        version: 2.3.0
+      toposort:
+        specifier: ^2.0.2
+        version: 2.0.2
+    devDependencies:
+      "@types/md5":
+        specifier: ^2.3.5
+        version: 2.3.5
 
   packages/serialization:
     dependencies:
@@ -10191,6 +10209,13 @@ packages:
       }
     dev: false
 
+  /@types/md5@2.3.5:
+    resolution:
+      {
+        integrity: sha512-/i42wjYNgE6wf0j2bcTX6kuowmdL/6PE4IVitMpm2eYKBUuYCprdcWVK+xEF0gcV6ufMCRhtxmReGfc6hIK7Jw==
+      }
+    dev: true
+
   /@types/mdast@3.0.15:
     resolution:
       {
@@ -13197,6 +13222,13 @@ packages:
       }
     dev: false
 
+  /charenc@0.0.2:
+    resolution:
+      {
+        integrity: sha512-yrLQ/yVUFXkzg7EDQsPieE/53+0RlaWTs+wBrvW36cyilJ2SaDWfl4Yj7MtLTXleV9uEKefbAGUPv2/iWSooRA==
+      }
+    dev: false
+
   /check-dependency-version-consistency@4.1.0:
     resolution:
       {
@@ -14342,6 +14374,13 @@ packages:
       path-key: 3.1.1
       shebang-command: 2.0.0
       which: 2.0.2
+
+  /crypt@0.0.2:
+    resolution:
+      {
+        integrity: sha512-mCxBlsHFYh9C+HVpiEacem8FEBnMXgU9gy4zmNC+SXAZNB/1idgp/aulFJ4FgCi7GPEVbfyng092GqL2k2rmow==
+      }
+    dev: false
 
   /crypto-browserify@3.12.0:
     resolution:
@@ -19240,7 +19279,7 @@ packages:
       }
     engines: { node: ">=14" }
     hasBin: true
-    dev: false
+    dev: true
 
   /hyphenate-style-name@1.0.4:
     resolution:
@@ -19663,6 +19702,13 @@ packages:
     dependencies:
       call-bind: 1.0.5
       has-tostringtag: 1.0.0
+    dev: false
+
+  /is-buffer@1.1.6:
+    resolution:
+      {
+        integrity: sha512-NcdALwpXkTm5Zvvbk7owOUSvVvBKDgKP5/ewfXEznmQFfs4ZRmanOeKBTjRVjka3QFoN6XJ+9F3USqfHqTaU5w==
+      }
     dev: false
 
   /is-buffer@2.0.5:
@@ -22320,6 +22366,17 @@ packages:
       hash-base: 3.1.0
       inherits: 2.0.4
       safe-buffer: 5.2.1
+    dev: false
+
+  /md5@2.3.0:
+    resolution:
+      {
+        integrity: sha512-T1GITYmFaKuO91vxyoQMFETst+O71VUPEU3ze5GNzDm0OWdP8v1ziTaAEPUr/3kLsY3Sftgz242A1SetQiDL7g==
+      }
+    dependencies:
+      charenc: 0.0.2
+      crypt: 0.0.2
+      is-buffer: 1.1.6
     dev: false
 
   /mdast-comment-marker@2.1.2(supports-color@9.4.0):

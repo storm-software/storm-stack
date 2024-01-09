@@ -95,6 +95,7 @@ export class StormDateTime extends Date {
 
   /**
    * The current function returns a new StormDateTime object with the current date and time
+   *
    * @returns A new instance of StormDateTime with the current date and time.
    */
   public static override now(): number {
@@ -103,10 +104,29 @@ export class StormDateTime extends Date {
 
   /**
    * The current function returns a new StormDateTime object with the current date and time
+   *
    * @returns A new instance of StormDateTime with the current date and time.
    */
   public static current(): StormDateTime {
     return StormDateTime.create(Temporal.Now.instant());
+  }
+
+  /**
+   * The maximum function returns a new StormDateTime object with the maximum date and time
+   *
+   * @returns A new instance of StormDateTime with the maximum date and time.
+   */
+  public static minimum(): StormDateTime {
+    return StormDateTime.create(new Date(-8640000000000000));
+  }
+
+  /**
+   * The maximum function returns a new StormDateTime object with the maximum date and time
+   *
+   * @returns A new instance of StormDateTime with the maximum date and time.
+   */
+  public static maximum(): StormDateTime {
+    return StormDateTime.create(new Date(8640000000000000));
   }
 
   /**
