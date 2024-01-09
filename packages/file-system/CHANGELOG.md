@@ -1,9 +1,20 @@
-# [1.14.0](https://github.com/storm-software/storm-stack/compare/file-system-v1.13.0...file-system-v1.14.0) (2024-01-07)
+# [1.15.0](https://github.com/storm-software/storm-stack/compare/file-system-v1.14.0...file-system-v1.15.0) (2024-01-09)
+
+
+### Bug Fixes
+
+* **plugin-system:** Regenerate pnpm-lock file ([e0f91dd](https://github.com/storm-software/storm-stack/commit/e0f91dde43cd88626f37414e148145289f32b53c))
 
 
 ### Features
 
-* **frontend-table:** Initial checkin of table data management package ([3742ec7](https://github.com/storm-software/storm-stack/commit/3742ec754eba4b62ca1a9f331a4843e20daaef32))
+* **plugin-system:** Added a new package to support plugin-driven applications ([081bd2c](https://github.com/storm-software/storm-stack/commit/081bd2cff25f336a21128c4a989401e99e601d83))
+
+# [1.14.0](https://github.com/storm-software/storm-stack/compare/file-system-v1.13.0...file-system-v1.14.0) (2024-01-07)
+
+### Features
+
+- **frontend-table:** Initial checkin of table data management package ([3742ec7](https://github.com/storm-software/storm-stack/commit/3742ec754eba4b62ca1a9f331a4843e20daaef32))
 
 # [1.13.0](https://github.com/storm-software/storm-stack/compare/file-system-v1.12.1...file-system-v1.13.0) (2024-01-07)
 
