@@ -125,7 +125,7 @@ export class PluginManager<
       definition.loader ?? this.#config.defaultLoader
     );
 
-    const module = await loader.loadModule(definition);
+    const module = await loader.load(definition);
     if (!isSetObject(module)) {
       throw new StormError(PluginSystemErrorCode.plugin_loading_failure, {
         message: `The plugin "${provider}" did not return an object after loading.`
@@ -155,6 +155,7 @@ export class PluginManager<
 
   public execute = async (
     provider: string,
+    context: TContext,
     options: Record<string, any> = {},
     executionDateTime: StormDateTime = StormDateTime.current()
   ): Promise<Record<string, Error | null>> => {
@@ -175,7 +176,7 @@ export class PluginManager<
 
     const dependenciesResults = await Promise.all(
       instance.definition.dependencies.map(dependency =>
-        this.execute(dependency, options, executionDateTime)
+        this.execute(dependency, context, options, executionDateTime)
       )
     );
 
@@ -196,7 +197,7 @@ export class PluginManager<
     );
 
     try {
-      instance.loader.execute(instance, options);
+      instance.loader.execute(instance, context, options);
     } catch (e) {
       result[provider] = StormError.create(e);
     }

@@ -17,10 +17,11 @@ export abstract class PluginLoader<
 {
   public abstract execute: (
     instance: PluginInstance<TContext, TPluginModule>,
+    context: TContext,
     options: Record<string, any>
   ) => Promise<void>;
 
-  public loadModule = async (
+  public load = async (
     definition: PluginDefinition
   ): Promise<TPluginModule> => {
     const module = await import(definition.provider);

@@ -106,17 +106,18 @@ export type PluginHookFn<TContext = any> = (
 ) => MaybePromise<TContext | ((params: TContext) => MaybePromise<TContext>)>;
 
 export interface IPluginModule<TContext = any> {
-  hooks?: Record<string, PluginHookFn<TContext>>;
+  hooks?: Record<any, PluginHookFn<TContext>>;
 }
 
 export interface IPluginLoader<
   TContext = any,
   TPluginModule extends IPluginModule<TContext> = any
 > {
-  loadModule: (definition: PluginDefinition) => Promise<TPluginModule>;
+  load: (definition: PluginDefinition) => Promise<TPluginModule>;
   isValid: (module: TPluginModule) => boolean;
   execute: (
     instance: PluginInstance,
+    context: TContext,
     options: Record<string, any>
   ) => Promise<void>;
 }

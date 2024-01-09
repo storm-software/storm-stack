@@ -174,84 +174,33 @@
       "members": [
         {
           "kind": "Interface",
-          "canonicalReference": "@storm-stack/plugin-system!DefinitionFileContents:interface",
-          "docComment": "",
-          "excerptTokens": [
-            {
-              "kind": "Content",
-              "text": "export interface DefinitionFileContents "
-            }
-          ],
-          "fileUrlPath": "packages/plugin-system/src/types.ts",
-          "releaseTag": "Public",
-          "name": "DefinitionFileContents",
-          "preserveMemberOrder": false,
-          "members": [
-            {
-              "kind": "PropertySignature",
-              "canonicalReference": "@storm-stack/plugin-system!DefinitionFileContents#content:member",
-              "docComment": "",
-              "excerptTokens": [
-                {
-                  "kind": "Content",
-                  "text": "content: "
-                },
-                {
-                  "kind": "Content",
-                  "text": "string"
-                },
-                {
-                  "kind": "Content",
-                  "text": ";"
-                }
-              ],
-              "isReadonly": false,
-              "isOptional": false,
-              "releaseTag": "Public",
-              "name": "content",
-              "propertyTypeTokenRange": {
-                "startIndex": 1,
-                "endIndex": 2
-              }
-            },
-            {
-              "kind": "PropertySignature",
-              "canonicalReference": "@storm-stack/plugin-system!DefinitionFileContents#filePath:member",
-              "docComment": "",
-              "excerptTokens": [
-                {
-                  "kind": "Content",
-                  "text": "filePath: "
-                },
-                {
-                  "kind": "Content",
-                  "text": "string"
-                },
-                {
-                  "kind": "Content",
-                  "text": ";"
-                }
-              ],
-              "isReadonly": false,
-              "isOptional": false,
-              "releaseTag": "Public",
-              "name": "filePath",
-              "propertyTypeTokenRange": {
-                "startIndex": 1,
-                "endIndex": 2
-              }
-            }
-          ],
-          "extendsTokenRanges": []
-        },
-        {
-          "kind": "Interface",
           "canonicalReference": "@storm-stack/plugin-system!IPluginLoader:interface",
           "docComment": "",
           "excerptTokens": [
             {
               "kind": "Content",
-              "text": "export interface IPluginLoader<TPluginModule = "
+              "text": "export interface IPluginLoader<TContext = "
+            },
+            {
+              "kind": "Content",
+              "text": "any"
+            },
+            {
+              "kind": "Content",
+              "text": ", TPluginModule extends "
+            },
+            {
+              "kind": "Reference",
+              "text": "IPluginModule",
+              "canonicalReference": "@storm-stack/plugin-system!IPluginModule:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "<TContext>"
+            },
+            {
+              "kind": "Content",
+              "text": " = "
             },
             {
               "kind": "Content",
@@ -266,7 +215,7 @@
           "releaseTag": "Public",
           "typeParameters": [
             {
-              "typeParameterName": "TPluginModule",
+              "typeParameterName": "TContext",
               "constraintTokenRange": {
                 "startIndex": 0,
                 "endIndex": 0
@@ -274,6 +223,17 @@
               "defaultTypeTokenRange": {
                 "startIndex": 1,
                 "endIndex": 2
+              }
+            },
+            {
+              "typeParameterName": "TPluginModule",
+              "constraintTokenRange": {
+                "startIndex": 3,
+                "endIndex": 5
+              },
+              "defaultTypeTokenRange": {
+                "startIndex": 6,
+                "endIndex": 7
               }
             }
           ],
@@ -300,7 +260,7 @@
                 },
                 {
                   "kind": "Content",
-                  "text": ", options: "
+                  "text": ", context: TContext, options: "
                 },
                 {
                   "kind": "Reference",
@@ -416,11 +376,64 @@
           "excerptTokens": [
             {
               "kind": "Content",
-              "text": "export interface IPluginManager "
+              "text": "export interface IPluginManager<TContext = "
+            },
+            {
+              "kind": "Content",
+              "text": "any"
+            },
+            {
+              "kind": "Content",
+              "text": ", TPluginModule extends "
+            },
+            {
+              "kind": "Reference",
+              "text": "IPluginModule",
+              "canonicalReference": "@storm-stack/plugin-system!IPluginModule:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "<TContext>"
+            },
+            {
+              "kind": "Content",
+              "text": " = "
+            },
+            {
+              "kind": "Content",
+              "text": "any"
+            },
+            {
+              "kind": "Content",
+              "text": "> "
             }
           ],
           "fileUrlPath": "packages/plugin-system/src/types.ts",
           "releaseTag": "Public",
+          "typeParameters": [
+            {
+              "typeParameterName": "TContext",
+              "constraintTokenRange": {
+                "startIndex": 0,
+                "endIndex": 0
+              },
+              "defaultTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "typeParameterName": "TPluginModule",
+              "constraintTokenRange": {
+                "startIndex": 3,
+                "endIndex": 5
+              },
+              "defaultTypeTokenRange": {
+                "startIndex": 6,
+                "endIndex": 7
+              }
+            }
+          ],
           "name": "IPluginManager",
           "preserveMemberOrder": false,
           "members": [
@@ -605,12 +618,12 @@
         },
         {
           "kind": "Interface",
-          "canonicalReference": "@storm-stack/plugin-system!PluginDefinition:interface",
+          "canonicalReference": "@storm-stack/plugin-system!IPluginModule:interface",
           "docComment": "",
           "excerptTokens": [
             {
               "kind": "Content",
-              "text": "export interface PluginDefinition<TPluginOptions = "
+              "text": "export interface IPluginModule<TContext = "
             },
             {
               "kind": "Content",
@@ -625,7 +638,7 @@
           "releaseTag": "Public",
           "typeParameters": [
             {
-              "typeParameterName": "TPluginOptions",
+              "typeParameterName": "TContext",
               "constraintTokenRange": {
                 "startIndex": 0,
                 "endIndex": 0
@@ -636,6 +649,65 @@
               }
             }
           ],
+          "name": "IPluginModule",
+          "preserveMemberOrder": false,
+          "members": [
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "@storm-stack/plugin-system!IPluginModule#hooks:member",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "hooks?: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "Record",
+                  "canonicalReference": "!Record:type"
+                },
+                {
+                  "kind": "Content",
+                  "text": "<any, "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "PluginHookFn",
+                  "canonicalReference": "@storm-stack/plugin-system!PluginHookFn:type"
+                },
+                {
+                  "kind": "Content",
+                  "text": "<TContext>>"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isReadonly": false,
+              "isOptional": true,
+              "releaseTag": "Public",
+              "name": "hooks",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 5
+              }
+            }
+          ],
+          "extendsTokenRanges": []
+        },
+        {
+          "kind": "Interface",
+          "canonicalReference": "@storm-stack/plugin-system!PluginDefinition:interface",
+          "docComment": "",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export interface PluginDefinition "
+            }
+          ],
+          "fileUrlPath": "packages/plugin-system/src/types.ts",
+          "releaseTag": "Public",
           "name": "PluginDefinition",
           "preserveMemberOrder": false,
           "members": [
@@ -777,7 +849,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "@storm-stack/plugin-system!PluginDefinition#loader:member",
-              "docComment": "/**\n * The path to the plugin's module loader.\n *\n * @default \"@storm-stack/plugin-system/loader\"\n */\n",
+              "docComment": "/**\n * The path to the plugin's module loader.\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -839,7 +911,7 @@
                 },
                 {
                   "kind": "Content",
-                  "text": "TPluginOptions"
+                  "text": "any"
                 },
                 {
                   "kind": "Content",
@@ -1043,13 +1115,13 @@
           }
         },
         {
-          "kind": "Interface",
-          "canonicalReference": "@storm-stack/plugin-system!PluginInstance:interface",
+          "kind": "TypeAlias",
+          "canonicalReference": "@storm-stack/plugin-system!PluginHookFn:type",
           "docComment": "",
           "excerptTokens": [
             {
               "kind": "Content",
-              "text": "export interface PluginInstance<TPluginModule = "
+              "text": "export type PluginHookFn<TContext = "
             },
             {
               "kind": "Content",
@@ -1057,7 +1129,85 @@
             },
             {
               "kind": "Content",
-              "text": ", TPluginOptions = "
+              "text": "> = "
+            },
+            {
+              "kind": "Content",
+              "text": "(params: TContext) => "
+            },
+            {
+              "kind": "Reference",
+              "text": "MaybePromise",
+              "canonicalReference": "@storm-stack/plugin-system!~MaybePromise:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<TContext | ((params: TContext) => "
+            },
+            {
+              "kind": "Reference",
+              "text": "MaybePromise",
+              "canonicalReference": "@storm-stack/plugin-system!~MaybePromise:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<TContext>)>"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "fileUrlPath": "packages/plugin-system/src/types.ts",
+          "releaseTag": "Public",
+          "name": "PluginHookFn",
+          "typeParameters": [
+            {
+              "typeParameterName": "TContext",
+              "constraintTokenRange": {
+                "startIndex": 0,
+                "endIndex": 0
+              },
+              "defaultTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            }
+          ],
+          "typeTokenRange": {
+            "startIndex": 3,
+            "endIndex": 8
+          }
+        },
+        {
+          "kind": "Interface",
+          "canonicalReference": "@storm-stack/plugin-system!PluginInstance:interface",
+          "docComment": "",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export interface PluginInstance<TContext = "
+            },
+            {
+              "kind": "Content",
+              "text": "any"
+            },
+            {
+              "kind": "Content",
+              "text": ", TPluginModule extends "
+            },
+            {
+              "kind": "Reference",
+              "text": "IPluginModule",
+              "canonicalReference": "@storm-stack/plugin-system!IPluginModule:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "<TContext>"
+            },
+            {
+              "kind": "Content",
+              "text": " = "
             },
             {
               "kind": "Content",
@@ -1072,7 +1222,7 @@
           "releaseTag": "Public",
           "typeParameters": [
             {
-              "typeParameterName": "TPluginModule",
+              "typeParameterName": "TContext",
               "constraintTokenRange": {
                 "startIndex": 0,
                 "endIndex": 0
@@ -1083,14 +1233,14 @@
               }
             },
             {
-              "typeParameterName": "TPluginOptions",
+              "typeParameterName": "TPluginModule",
               "constraintTokenRange": {
-                "startIndex": 0,
-                "endIndex": 0
+                "startIndex": 3,
+                "endIndex": 5
               },
               "defaultTypeTokenRange": {
-                "startIndex": 3,
-                "endIndex": 4
+                "startIndex": 6,
+                "endIndex": 7
               }
             }
           ],
@@ -1113,10 +1263,6 @@
                 },
                 {
                   "kind": "Content",
-                  "text": "<TPluginOptions>"
-                },
-                {
-                  "kind": "Content",
                   "text": ";"
                 }
               ],
@@ -1126,7 +1272,7 @@
               "name": "definition",
               "propertyTypeTokenRange": {
                 "startIndex": 1,
-                "endIndex": 3
+                "endIndex": 2
               }
             },
             {
@@ -1173,7 +1319,7 @@
                 },
                 {
                   "kind": "Content",
-                  "text": "<TPluginModule>"
+                  "text": "<TContext, TPluginModule>"
                 },
                 {
                   "kind": "Content",
@@ -1227,7 +1373,7 @@
                 },
                 {
                   "kind": "Content",
-                  "text": "TPluginOptions"
+                  "text": "any"
                 },
                 {
                   "kind": "Content",
@@ -1253,7 +1399,28 @@
           "excerptTokens": [
             {
               "kind": "Content",
-              "text": "export declare abstract class PluginLoader<TPluginModule = "
+              "text": "export declare abstract class PluginLoader<TContext = "
+            },
+            {
+              "kind": "Content",
+              "text": "any"
+            },
+            {
+              "kind": "Content",
+              "text": ", TPluginModule extends "
+            },
+            {
+              "kind": "Reference",
+              "text": "IPluginModule",
+              "canonicalReference": "@storm-stack/plugin-system!IPluginModule:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "<TContext>"
+            },
+            {
+              "kind": "Content",
+              "text": " = "
             },
             {
               "kind": "Content",
@@ -1270,7 +1437,7 @@
             },
             {
               "kind": "Content",
-              "text": "<TPluginModule>"
+              "text": "<TContext, TPluginModule>"
             },
             {
               "kind": "Content",
@@ -1281,7 +1448,7 @@
           "releaseTag": "Public",
           "typeParameters": [
             {
-              "typeParameterName": "TPluginModule",
+              "typeParameterName": "TContext",
               "constraintTokenRange": {
                 "startIndex": 0,
                 "endIndex": 0
@@ -1289,6 +1456,17 @@
               "defaultTypeTokenRange": {
                 "startIndex": 1,
                 "endIndex": 2
+              }
+            },
+            {
+              "typeParameterName": "TPluginModule",
+              "constraintTokenRange": {
+                "startIndex": 3,
+                "endIndex": 5
+              },
+              "defaultTypeTokenRange": {
+                "startIndex": 6,
+                "endIndex": 7
               }
             }
           ],
@@ -1316,7 +1494,7 @@
                 },
                 {
                   "kind": "Content",
-                  "text": "<any, any>, options: "
+                  "text": "<TContext, TPluginModule>, context: TContext, options: "
                 },
                 {
                   "kind": "Reference",
@@ -1403,7 +1581,7 @@
                 },
                 {
                   "kind": "Content",
-                  "text": "<any>) => "
+                  "text": ") => "
                 },
                 {
                   "kind": "Reference",
@@ -1434,8 +1612,8 @@
           ],
           "implementsTokenRanges": [
             {
-              "startIndex": 3,
-              "endIndex": 5
+              "startIndex": 8,
+              "endIndex": 10
             }
           ]
         },
@@ -1446,11 +1624,64 @@
           "excerptTokens": [
             {
               "kind": "Content",
-              "text": "export declare class PluginManager "
+              "text": "export declare class PluginManager<TContext = "
+            },
+            {
+              "kind": "Content",
+              "text": "any"
+            },
+            {
+              "kind": "Content",
+              "text": ", TPluginModule extends "
+            },
+            {
+              "kind": "Reference",
+              "text": "IPluginModule",
+              "canonicalReference": "@storm-stack/plugin-system!IPluginModule:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "<TContext>"
+            },
+            {
+              "kind": "Content",
+              "text": " = "
+            },
+            {
+              "kind": "Content",
+              "text": "any"
+            },
+            {
+              "kind": "Content",
+              "text": "> "
             }
           ],
           "fileUrlPath": "packages/plugin-system/src/manager/plugin-manager.ts",
           "releaseTag": "Public",
+          "typeParameters": [
+            {
+              "typeParameterName": "TContext",
+              "constraintTokenRange": {
+                "startIndex": 0,
+                "endIndex": 0
+              },
+              "defaultTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "typeParameterName": "TPluginModule",
+              "constraintTokenRange": {
+                "startIndex": 3,
+                "endIndex": 5
+              },
+              "defaultTypeTokenRange": {
+                "startIndex": 6,
+                "endIndex": 7
+              }
+            }
+          ],
           "isAbstract": false,
           "name": "PluginManager",
           "preserveMemberOrder": false,
@@ -1466,7 +1697,16 @@
                 },
                 {
                   "kind": "Content",
-                  "text": "(logger: "
+                  "text": "<TContext_1 = any, TPluginModule_1 extends "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "IPluginModule",
+                  "canonicalReference": "@storm-stack/plugin-system!IPluginModule:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": "<TContext_1> = any>(logger: "
                 },
                 {
                   "kind": "Reference",
@@ -1529,7 +1769,7 @@
                 },
                 {
                   "kind": "Content",
-                  "text": ">"
+                  "text": "<TContext_1, TPluginModule_1>>"
                 },
                 {
                   "kind": "Content",
@@ -1542,7 +1782,7 @@
               "name": "create",
               "propertyTypeTokenRange": {
                 "startIndex": 1,
-                "endIndex": 16
+                "endIndex": 18
               },
               "isStatic": true,
               "isProtected": false,
@@ -1586,7 +1826,7 @@
                 },
                 {
                   "kind": "Content",
-                  "text": "<any>>>"
+                  "text": ">>"
                 },
                 {
                   "kind": "Content",
@@ -1616,7 +1856,7 @@
                 },
                 {
                   "kind": "Content",
-                  "text": "(provider: string, options?: "
+                  "text": "(provider: string, context: TContext, options?: "
                 },
                 {
                   "kind": "Reference",
@@ -1705,7 +1945,7 @@
                 },
                 {
                   "kind": "Content",
-                  "text": ">"
+                  "text": "<TContext, TPluginModule>>"
                 },
                 {
                   "kind": "Content",
@@ -1750,7 +1990,7 @@
                 },
                 {
                   "kind": "Content",
-                  "text": "<any>>"
+                  "text": ">"
                 },
                 {
                   "kind": "Content",
@@ -1795,7 +2035,7 @@
                 },
                 {
                   "kind": "Content",
-                  "text": ">"
+                  "text": "<TContext, TPluginModule>>"
                 },
                 {
                   "kind": "Content",
@@ -1853,7 +2093,7 @@
                 },
                 {
                   "kind": "Content",
-                  "text": ">"
+                  "text": "<TContext, TPluginModule>>"
                 },
                 {
                   "kind": "Content",
@@ -1867,6 +2107,54 @@
               "propertyTypeTokenRange": {
                 "startIndex": 1,
                 "endIndex": 8
+              },
+              "isStatic": false,
+              "isProtected": false,
+              "isAbstract": false
+            },
+            {
+              "kind": "Property",
+              "canonicalReference": "@storm-stack/plugin-system!PluginManager#invokeHook:member",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "invokeHook: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "(name: string, handler: (context: TContext) => "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "Promise",
+                  "canonicalReference": "!Promise:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": "<TContext> | TContext, context: TContext) => "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "Promise",
+                  "canonicalReference": "!Promise:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": "<TContext>"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isReadonly": false,
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "invokeHook",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 6
               },
               "isStatic": false,
               "isProtected": false,
@@ -1941,7 +2229,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "@storm-stack/plugin-system!PluginManagerConfig#defaultLoader:member",
-              "docComment": "/**\n * The path to the plugin's module loader.\n *\n * @default \"@storm-stack/plugin-system/loader\"\n */\n",
+              "docComment": "/**\n * The path to the plugin's module loader.\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",

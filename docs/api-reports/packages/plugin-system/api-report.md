@@ -9,20 +9,14 @@ import { Temporal } from "@js-temporal/polyfill";
 import * as z from "zod";
 
 // @public (undocumented)
-interface DefinitionFileContents {
-  // (undocumented)
-  content: string;
-  // (undocumented)
-  filePath: string;
-}
-export { DefinitionFileContents };
-export { DefinitionFileContents as DefinitionFileContents_alias_1 };
-
-// @public (undocumented)
-interface IPluginLoader<TPluginModule = any> {
+interface IPluginLoader<
+  TContext = any,
+  TPluginModule extends IPluginModule<TContext> = any
+> {
   // (undocumented)
   execute: (
     instance: PluginInstance,
+    context: TContext,
     options: Record<string, any>
   ) => Promise<void>;
   // (undocumented)
@@ -34,7 +28,10 @@ export { IPluginLoader };
 export { IPluginLoader as IPluginLoader_alias_1 };
 
 // @public (undocumented)
-interface IPluginManager {
+interface IPluginManager<
+  TContext = any,
+  TPluginModule extends IPluginModule<TContext> = any
+> {
   discover(): Promise<Set<PluginDefinition>>;
   instantiate(
     provider: string,
@@ -46,7 +43,15 @@ export { IPluginManager };
 export { IPluginManager as IPluginManager_alias_1 };
 
 // @public (undocumented)
-interface PluginDefinition<TPluginOptions = any> {
+interface IPluginModule<TContext = any> {
+  // (undocumented)
+  hooks?: Record<any, PluginHookFn<TContext>>;
+}
+export { IPluginModule };
+export { IPluginModule as IPluginModule_alias_1 };
+
+// @public (undocumented)
+interface PluginDefinition {
   configPath?: string;
   dependencies: string[];
   description?: string;
@@ -54,7 +59,7 @@ interface PluginDefinition<TPluginOptions = any> {
   imagePath?: string;
   loader: string;
   name: string;
-  options: TPluginOptions;
+  options: any;
   packagePath: string;
   provider: string;
   tags: string[];
@@ -76,66 +81,92 @@ export { PluginDiscoveryMode };
 export { PluginDiscoveryMode as PluginDiscoveryMode_alias_1 };
 
 // @public (undocumented)
-interface PluginInstance<TPluginModule = any, TPluginOptions = any> {
+type PluginHookFn<TContext = any> = (
+  params: TContext
+) => MaybePromise<TContext | ((params: TContext) => MaybePromise<TContext>)>;
+export { PluginHookFn };
+export { PluginHookFn as PluginHookFn_alias_1 };
+
+// @public (undocumented)
+interface PluginInstance<
+  TContext = any,
+  TPluginModule extends IPluginModule<TContext> = any
+> {
   // (undocumented)
-  definition: PluginDefinition<TPluginOptions>;
+  definition: PluginDefinition;
   // (undocumented)
   executionDateTime: StormDateTime;
   // (undocumented)
-  loader: IPluginLoader<TPluginModule>;
+  loader: IPluginLoader<TContext, TPluginModule>;
   // (undocumented)
   module: TPluginModule;
   // (undocumented)
-  options: TPluginOptions;
+  options: any;
 }
 export { PluginInstance };
 export { PluginInstance as PluginInstance_alias_1 };
 
 // @public
-abstract class PluginLoader<TPluginModule = any>
-  implements IPluginLoader<TPluginModule>
+abstract class PluginLoader<
+  TContext = any,
+  TPluginModule extends IPluginModule<TContext> = any
+> implements IPluginLoader<TContext, TPluginModule>
 {
   // (undocumented)
   abstract execute: (
-    instance: PluginInstance<any, any>,
+    instance: PluginInstance<TContext, TPluginModule>,
+    context: TContext,
     options: Record<string, any>
   ) => Promise<void>;
   // (undocumented)
   isValid: (module: TPluginModule) => boolean;
   // (undocumented)
-  load: (definition: PluginDefinition<any>) => Promise<TPluginModule>;
+  load: (definition: PluginDefinition) => Promise<TPluginModule>;
 }
 export { PluginLoader };
 export { PluginLoader as PluginLoader_alias_1 };
 export { PluginLoader as PluginLoader_alias_2 };
 
 // @public
-class PluginManager {
+class PluginManager<
+  TContext = any,
+  TPluginModule extends IPluginModule<TContext> = any
+> {
   // (undocumented)
-  static create: (
+  static create: <
+    TContext_1 = any,
+    TPluginModule_1 extends IPluginModule<TContext_1> = any
+  >(
     logger: StormLog,
     config: Omit<Partial<PluginManagerConfig>, "defaultLoader"> &
       PluginManagerConfig["defaultLoader"]
-  ) => Promise<PluginManager>;
+  ) => Promise<PluginManager<TContext_1, TPluginModule_1>>;
   // (undocumented)
-  discover: () => Promise<Map<string, PluginDefinition<any>>>;
+  discover: () => Promise<Map<string, PluginDefinition>>;
   // (undocumented)
   execute: (
     provider: string,
+    context: TContext,
     options?: Record<string, any>,
     executionDateTime?: StormDateTime
   ) => Promise<Record<string, Error | null>>;
   // (undocumented)
-  getLoaders(): Map<string, IPluginLoader>;
+  getLoaders(): Map<string, IPluginLoader<TContext, TPluginModule>>;
   // (undocumented)
-  getRegistry(): Map<string, PluginDefinition<any>>;
+  getRegistry(): Map<string, PluginDefinition>;
   // (undocumented)
-  getStore(): Map<string, PluginInstance>;
+  getStore(): Map<string, PluginInstance<TContext, TPluginModule>>;
   // (undocumented)
   instantiate: (
     provider: string,
     options?: Record<string, any>
-  ) => Promise<PluginInstance>;
+  ) => Promise<PluginInstance<TContext, TPluginModule>>;
+  // (undocumented)
+  invokeHook: (
+    name: string,
+    handler: (context: TContext) => Promise<TContext> | TContext,
+    context: TContext
+  ) => Promise<TContext>;
   // (undocumented)
   register: (provider: string) => Promise<PluginDefinition>;
 }
