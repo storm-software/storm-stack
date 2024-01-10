@@ -125,20 +125,13 @@ export class PluginManager<
       definition.loader ?? this.#config.defaultLoader
     );
 
-    const module = await loader.load(definition);
-    if (!isSetObject(module)) {
+    instance = await loader.load(definition, options);
+    if (!isSetObject(instance)) {
       throw new StormError(PluginSystemErrorCode.plugin_loading_failure, {
         message: `The plugin "${provider}" did not return an object after loading.`
       });
     }
 
-    instance = {
-      loader,
-      definition,
-      module,
-      options,
-      executionDateTime: StormDateTime.minimum()
-    };
     this.#store.set(
       this.getCacheId(instance.definition.provider, options),
       instance

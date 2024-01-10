@@ -113,7 +113,10 @@ export interface IPluginLoader<
   TContext = any,
   TPluginModule extends IPluginModule<TContext> = any
 > {
-  load: (definition: PluginDefinition) => Promise<TPluginModule>;
+  load: (
+    definition: PluginDefinition,
+    options: Record<string, any>
+  ) => Promise<PluginInstance<TContext, TPluginModule>>;
   isValid: (module: TPluginModule) => boolean;
   execute: (
     instance: PluginInstance,

@@ -1,3 +1,4 @@
+import { StormDateTime } from "@storm-stack/date-time";
 import { StormError } from "@storm-stack/errors";
 import { PluginSystemErrorCode } from "../errors";
 import type {
@@ -22,8 +23,9 @@ export abstract class PluginLoader<
   ) => Promise<void>;
 
   public load = async (
-    definition: PluginDefinition
-  ): Promise<TPluginModule> => {
+    definition: PluginDefinition,
+    options: Record<string, any> = {}
+  ): Promise<PluginInstance<TContext, TPluginModule>> => {
     const module = await import(definition.provider);
     if (!this.isValid(module)) {
       throw new StormError(PluginSystemErrorCode.plugin_loading_failure, {
@@ -31,7 +33,7 @@ export abstract class PluginLoader<
       });
     }
 
-    return module;
+    return this.instantiate(definition, module, options);
   };
 
   public isValid = (module: TPluginModule): boolean => {
@@ -40,5 +42,21 @@ export abstract class PluginLoader<
     }
 
     return true;
+  };
+
+  protected instantiate = (
+    definition: PluginDefinition,
+    module: TPluginModule,
+    options: Record<string, any> = {}
+  ): PluginInstance<TContext, TPluginModule> => {
+    const instance = {
+      loader: this,
+      definition,
+      module,
+      options,
+      executionDateTime: StormDateTime.minimum()
+    };
+
+    return instance;
   };
 }
