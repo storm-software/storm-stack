@@ -1,6 +1,6 @@
 {
   "name": "@storm-stack/jotai",
-  "version": "1.10.0",
+  "version": "1.10.1",
   "private": false,
   "description": "⚡ The storm-stack monorepo contains utility applications, tools, and various libraries to create modern and scalable web applications.",
   "repository": {
