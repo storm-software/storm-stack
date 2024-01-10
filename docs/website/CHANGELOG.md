@@ -1,3 +1,10 @@
+## [1.4.1](https://github.com/storm-software/storm-stack/compare/docs-website-v1.4.0...docs-website-v1.4.1) (2024-01-10)
+
+
+### Bug Fixes
+
+* **plugin-system:** Resolved issue with `hooks` property on `PluginModule` ([931cf9d](https://github.com/storm-software/storm-stack/commit/931cf9d7ab79107706f47ae57263431b1153e468))
+
 # [1.4.0](https://github.com/storm-software/storm-stack/compare/docs-website-v1.3.0...docs-website-v1.4.0) (2024-01-09)
 
 
