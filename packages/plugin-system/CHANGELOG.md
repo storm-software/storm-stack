@@ -1,9 +1,15 @@
-# [1.1.0](https://github.com/storm-software/storm-stack/compare/plugin-system-v1.0.3...plugin-system-v1.1.0) (2024-01-10)
+## [1.1.1](https://github.com/storm-software/storm-stack/compare/plugin-system-v1.1.0...plugin-system-v1.1.1) (2024-01-10)
 
+
+### Bug Fixes
+
+* **plugin-system:** Resolved issue with `hooks` property on `PluginModule` ([931cf9d](https://github.com/storm-software/storm-stack/commit/931cf9d7ab79107706f47ae57263431b1153e468))
+
+# [1.1.0](https://github.com/storm-software/storm-stack/compare/plugin-system-v1.0.3...plugin-system-v1.1.0) (2024-01-10)
 
 ### Features
 
-* **plugin-system:** Enhance the `PluginLoader` to fully instantiate the plugin ([4a077ab](https://github.com/storm-software/storm-stack/commit/4a077ab1492a60e7e8eb44ec9388474d05d0c2f3))
+- **plugin-system:** Enhance the `PluginLoader` to fully instantiate the plugin ([4a077ab](https://github.com/storm-software/storm-stack/commit/4a077ab1492a60e7e8eb44ec9388474d05d0c2f3))
 
 ## [1.0.3](https://github.com/storm-software/storm-stack/compare/plugin-system-v1.0.2...plugin-system-v1.0.3) (2024-01-10)
 
