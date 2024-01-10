@@ -1,17 +1,22 @@
-## [1.0.3](https://github.com/storm-software/storm-stack/compare/plugin-system-v1.0.2...plugin-system-v1.0.3) (2024-01-10)
+# [1.1.0](https://github.com/storm-software/storm-stack/compare/plugin-system-v1.0.3...plugin-system-v1.1.0) (2024-01-10)
 
+
+### Features
+
+* **plugin-system:** Enhance the `PluginLoader` to fully instantiate the plugin ([4a077ab](https://github.com/storm-software/storm-stack/commit/4a077ab1492a60e7e8eb44ec9388474d05d0c2f3))
+
+## [1.0.3](https://github.com/storm-software/storm-stack/compare/plugin-system-v1.0.2...plugin-system-v1.0.3) (2024-01-10)
 
 ### Bug Fixes
 
-* **plugin-system:** Clean up typescript config ([00f587b](https://github.com/storm-software/storm-stack/commit/00f587b6323ddbd6dc46673fe1b5980bc5941e39))
-* **plugin-system:** Update `invokeHook` method signature ([f94ee01](https://github.com/storm-software/storm-stack/commit/f94ee01086f11d5d0f49ac016c5fa037b46d16ac))
+- **plugin-system:** Clean up typescript config ([00f587b](https://github.com/storm-software/storm-stack/commit/00f587b6323ddbd6dc46673fe1b5980bc5941e39))
+- **plugin-system:** Update `invokeHook` method signature ([f94ee01](https://github.com/storm-software/storm-stack/commit/f94ee01086f11d5d0f49ac016c5fa037b46d16ac))
 
 ## [1.0.2](https://github.com/storm-software/storm-stack/compare/plugin-system-v1.0.1...plugin-system-v1.0.2) (2024-01-09)
 
-
 ### Bug Fixes
 
-* **plugin-system:** Updated signature of `execute` function to include context object ([e94d162](https://github.com/storm-software/storm-stack/commit/e94d162c7c4f5749bd939cf891ad6411fe65eccb))
+- **plugin-system:** Updated signature of `execute` function to include context object ([e94d162](https://github.com/storm-software/storm-stack/commit/e94d162c7c4f5749bd939cf891ad6411fe65eccb))
 
 ## [1.0.1](https://github.com/storm-software/storm-stack/compare/plugin-system-v1.0.0...plugin-system-v1.0.1) (2024-01-09)
 
