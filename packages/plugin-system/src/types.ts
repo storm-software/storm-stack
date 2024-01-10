@@ -101,14 +101,23 @@ export interface PluginDefinition {
   loader: string;
 }
 
+/**
+ * A function that can be used to hook into the plugin system.
+ */
 export type PluginHookFn<TContext = any> = (
   params: TContext
 ) => MaybePromise<TContext | ((params: TContext) => MaybePromise<TContext>)>;
 
+/**
+ * A plugin module that can be loaded by the plugin system.
+ */
 export interface IPluginModule<TContext = any> {
   hooks?: Record<any, PluginHookFn<TContext>>;
 }
 
+/**
+ * A plugin loader that can be used to load a plugin module.
+ */
 export interface IPluginLoader<
   TContext = any,
   TPluginModule extends IPluginModule<TContext> = any
@@ -125,6 +134,9 @@ export interface IPluginLoader<
   ) => Promise<void>;
 }
 
+/**
+ * An instance of a plugin that has been loaded by the plugin system.
+ */
 export interface PluginInstance<
   TContext = any,
   TPluginModule extends IPluginModule<TContext> = any
@@ -136,6 +148,9 @@ export interface PluginInstance<
   executionDateTime: StormDateTime;
 }
 
+/**
+ * A plugin manager that can be used to manage plugins.
+ */
 export interface IPluginManager<
   TContext = any,
   TPluginModule extends IPluginModule<TContext> = any

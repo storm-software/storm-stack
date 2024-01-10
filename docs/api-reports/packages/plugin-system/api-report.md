@@ -8,7 +8,7 @@ import { StormConfig } from "@storm-software/config-tools";
 import { Temporal } from "@js-temporal/polyfill";
 import * as z from "zod";
 
-// @public (undocumented)
+// @public
 interface IPluginLoader<
   TContext = any,
   TPluginModule extends IPluginModule<TContext> = any
@@ -22,12 +22,15 @@ interface IPluginLoader<
   // (undocumented)
   isValid: (module: TPluginModule) => boolean;
   // (undocumented)
-  load: (definition: PluginDefinition) => Promise<TPluginModule>;
+  load: (
+    definition: PluginDefinition,
+    options: Record<string, any>
+  ) => Promise<PluginInstance<TContext, TPluginModule>>;
 }
 export { IPluginLoader };
 export { IPluginLoader as IPluginLoader_alias_1 };
 
-// @public (undocumented)
+// @public
 interface IPluginManager<
   TContext = any,
   TPluginModule extends IPluginModule<TContext> = any
@@ -42,7 +45,7 @@ interface IPluginManager<
 export { IPluginManager };
 export { IPluginManager as IPluginManager_alias_1 };
 
-// @public (undocumented)
+// @public
 interface IPluginModule<TContext = any> {
   // (undocumented)
   hooks?: Record<any, PluginHookFn<TContext>>;
@@ -80,14 +83,14 @@ const PluginDiscoveryMode: {
 export { PluginDiscoveryMode };
 export { PluginDiscoveryMode as PluginDiscoveryMode_alias_1 };
 
-// @public (undocumented)
+// @public
 type PluginHookFn<TContext = any> = (
   params: TContext
 ) => MaybePromise<TContext | ((params: TContext) => MaybePromise<TContext>)>;
 export { PluginHookFn };
 export { PluginHookFn as PluginHookFn_alias_1 };
 
-// @public (undocumented)
+// @public
 interface PluginInstance<
   TContext = any,
   TPluginModule extends IPluginModule<TContext> = any
@@ -119,9 +122,18 @@ abstract class PluginLoader<
     options: Record<string, any>
   ) => Promise<void>;
   // (undocumented)
+  protected instantiate: (
+    definition: PluginDefinition,
+    module: TPluginModule,
+    options?: Record<string, any>
+  ) => PluginInstance<TContext, TPluginModule>;
+  // (undocumented)
   isValid: (module: TPluginModule) => boolean;
   // (undocumented)
-  load: (definition: PluginDefinition) => Promise<TPluginModule>;
+  load: (
+    definition: PluginDefinition,
+    options?: Record<string, any>
+  ) => Promise<PluginInstance<TContext, TPluginModule>>;
 }
 export { PluginLoader };
 export { PluginLoader as PluginLoader_alias_1 };

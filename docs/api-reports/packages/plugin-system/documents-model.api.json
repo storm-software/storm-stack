@@ -175,7 +175,7 @@
         {
           "kind": "Interface",
           "canonicalReference": "@storm-stack/plugin-system!IPluginLoader:interface",
-          "docComment": "",
+          "docComment": "/**\n * A plugin loader that can be used to load a plugin module.\n */\n",
           "excerptTokens": [
             {
               "kind": "Content",
@@ -341,7 +341,16 @@
                 },
                 {
                   "kind": "Content",
-                  "text": ") => "
+                  "text": ", options: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "Record",
+                  "canonicalReference": "!Record:type"
+                },
+                {
+                  "kind": "Content",
+                  "text": "<string, any>) => "
                 },
                 {
                   "kind": "Reference",
@@ -350,7 +359,16 @@
                 },
                 {
                   "kind": "Content",
-                  "text": "<TPluginModule>"
+                  "text": "<"
+                },
+                {
+                  "kind": "Reference",
+                  "text": "PluginInstance",
+                  "canonicalReference": "@storm-stack/plugin-system!PluginInstance:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": "<TContext, TPluginModule>>"
                 },
                 {
                   "kind": "Content",
@@ -363,7 +381,7 @@
               "name": "load",
               "propertyTypeTokenRange": {
                 "startIndex": 1,
-                "endIndex": 6
+                "endIndex": 10
               }
             }
           ],
@@ -372,7 +390,7 @@
         {
           "kind": "Interface",
           "canonicalReference": "@storm-stack/plugin-system!IPluginManager:interface",
-          "docComment": "",
+          "docComment": "/**\n * A plugin manager that can be used to manage plugins.\n */\n",
           "excerptTokens": [
             {
               "kind": "Content",
@@ -619,7 +637,7 @@
         {
           "kind": "Interface",
           "canonicalReference": "@storm-stack/plugin-system!IPluginModule:interface",
-          "docComment": "",
+          "docComment": "/**\n * A plugin module that can be loaded by the plugin system.\n */\n",
           "excerptTokens": [
             {
               "kind": "Content",
@@ -1117,7 +1135,7 @@
         {
           "kind": "TypeAlias",
           "canonicalReference": "@storm-stack/plugin-system!PluginHookFn:type",
-          "docComment": "",
+          "docComment": "/**\n * A function that can be used to hook into the plugin system.\n */\n",
           "excerptTokens": [
             {
               "kind": "Content",
@@ -1182,7 +1200,7 @@
         {
           "kind": "Interface",
           "canonicalReference": "@storm-stack/plugin-system!PluginInstance:interface",
-          "docComment": "",
+          "docComment": "/**\n * An instance of a plugin that has been loaded by the plugin system.\n */\n",
           "excerptTokens": [
             {
               "kind": "Content",
@@ -1533,6 +1551,63 @@
             },
             {
               "kind": "Property",
+              "canonicalReference": "@storm-stack/plugin-system!PluginLoader#instantiate:member",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "protected instantiate: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "(definition: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "PluginDefinition",
+                  "canonicalReference": "@storm-stack/plugin-system!PluginDefinition:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": ", module: TPluginModule, options?: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "Record",
+                  "canonicalReference": "!Record:type"
+                },
+                {
+                  "kind": "Content",
+                  "text": "<string, any>) => "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "PluginInstance",
+                  "canonicalReference": "@storm-stack/plugin-system!PluginInstance:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": "<TContext, TPluginModule>"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isReadonly": false,
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "instantiate",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 8
+              },
+              "isStatic": false,
+              "isProtected": true,
+              "isAbstract": false
+            },
+            {
+              "kind": "Property",
               "canonicalReference": "@storm-stack/plugin-system!PluginLoader#isValid:member",
               "docComment": "",
               "excerptTokens": [
@@ -1581,7 +1656,16 @@
                 },
                 {
                   "kind": "Content",
-                  "text": ") => "
+                  "text": ", options?: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "Record",
+                  "canonicalReference": "!Record:type"
+                },
+                {
+                  "kind": "Content",
+                  "text": "<string, any>) => "
                 },
                 {
                   "kind": "Reference",
@@ -1590,7 +1674,16 @@
                 },
                 {
                   "kind": "Content",
-                  "text": "<TPluginModule>"
+                  "text": "<"
+                },
+                {
+                  "kind": "Reference",
+                  "text": "PluginInstance",
+                  "canonicalReference": "@storm-stack/plugin-system!PluginInstance:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": "<TContext, TPluginModule>>"
                 },
                 {
                   "kind": "Content",
@@ -1603,7 +1696,7 @@
               "name": "load",
               "propertyTypeTokenRange": {
                 "startIndex": 1,
-                "endIndex": 6
+                "endIndex": 10
               },
               "isStatic": false,
               "isProtected": false,
