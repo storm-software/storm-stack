@@ -1,3 +1,11 @@
+## [1.0.3](https://github.com/storm-software/storm-stack/compare/plugin-system-v1.0.2...plugin-system-v1.0.3) (2024-01-10)
+
+
+### Bug Fixes
+
+* **plugin-system:** Clean up typescript config ([00f587b](https://github.com/storm-software/storm-stack/commit/00f587b6323ddbd6dc46673fe1b5980bc5941e39))
+* **plugin-system:** Update `invokeHook` method signature ([f94ee01](https://github.com/storm-software/storm-stack/commit/f94ee01086f11d5d0f49ac016c5fa037b46d16ac))
+
 ## [1.0.2](https://github.com/storm-software/storm-stack/compare/plugin-system-v1.0.1...plugin-system-v1.0.2) (2024-01-09)
 
 
