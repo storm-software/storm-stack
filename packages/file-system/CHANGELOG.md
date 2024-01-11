@@ -1,3 +1,10 @@
+## [1.15.2](https://github.com/storm-software/storm-stack/compare/file-system-v1.15.1...file-system-v1.15.2) (2024-01-11)
+
+
+### Bug Fixes
+
+* **date-time:** Update private variables/methods naming strategy ([416305b](https://github.com/storm-software/storm-stack/commit/416305b81fd5d1ee564409013ef8f41bd5d8ad70))
+
 ## [1.15.1](https://github.com/storm-software/storm-stack/compare/file-system-v1.15.0...file-system-v1.15.1) (2024-01-10)
 
 
