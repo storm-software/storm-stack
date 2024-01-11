@@ -33,7 +33,7 @@ export abstract class PluginLoader<
       });
     }
 
-    return this.instantiate(definition, module, options);
+    return this.instantiate(definition, module, definition.provider, options);
   };
 
   public isValid = (module: TPluginModule): boolean => {
@@ -47,6 +47,7 @@ export abstract class PluginLoader<
   protected instantiate = (
     definition: PluginDefinition,
     module: TPluginModule,
+    resolvedPath: string,
     options: Record<string, any> = {}
   ): PluginInstance<TContext, TPluginModule> => {
     const instance = {
@@ -54,6 +55,7 @@ export abstract class PluginLoader<
       definition,
       module,
       options,
+      resolvedPath,
       executionDateTime: StormDateTime.minimum()
     };
 

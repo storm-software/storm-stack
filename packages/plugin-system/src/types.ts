@@ -145,6 +145,7 @@ export interface PluginInstance<
   definition: PluginDefinition;
   module: TPluginModule;
   options: any;
+  resolvedPath: string;
   executionDateTime: StormDateTime;
 }
 
