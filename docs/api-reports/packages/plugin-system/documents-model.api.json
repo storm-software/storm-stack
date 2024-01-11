@@ -2014,6 +2014,54 @@
               "isAbstract": false
             },
             {
+              "kind": "Property",
+              "canonicalReference": "@storm-stack/plugin-system!PluginManager#getInstance:member",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "getInstance: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "(provider: string, options?: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "Record",
+                  "canonicalReference": "!Record:type"
+                },
+                {
+                  "kind": "Content",
+                  "text": "<string, any>) => "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "PluginInstance",
+                  "canonicalReference": "@storm-stack/plugin-system!PluginInstance:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": "<TContext, TPluginModule> | undefined"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isReadonly": false,
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "getInstance",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 6
+              },
+              "isStatic": false,
+              "isProtected": false,
+              "isAbstract": false
+            },
+            {
               "kind": "Method",
               "canonicalReference": "@storm-stack/plugin-system!PluginManager#getLoaders:member(1)",
               "docComment": "",

@@ -24,12 +24,12 @@ export class StormError<TCode extends string = string> extends Error {
   /**
    * The stack trace
    */
-  #stack?: string;
+  private _stack?: string;
 
   /**
    * The inner error
    */
-  #cause?: StormError;
+  private _cause?: StormError;
 
   /**
    * The error code
@@ -68,7 +68,7 @@ export class StormError<TCode extends string = string> extends Error {
     if (typeof Error.captureStackTrace === "function") {
       Error.captureStackTrace(this, this.constructor);
     } else {
-      this.#stack ??= stack ? stack : new Error(message).stack;
+      this._stack ??= stack ? stack : new Error(message).stack;
     }
 
     Object.setPrototypeOf(this, StormError.prototype);
@@ -78,14 +78,14 @@ export class StormError<TCode extends string = string> extends Error {
    * The cause of the error
    */
   public override get cause(): StormError | undefined {
-    return this.#cause;
+    return this._cause;
   }
 
   /**
    * The cause of the error
    */
   public override set cause(_cause: unknown) {
-    this.#cause = getCauseFromUnknown(_cause);
+    this._cause = getCauseFromUnknown(_cause);
   }
 
   /**
@@ -94,8 +94,8 @@ export class StormError<TCode extends string = string> extends Error {
    * @returns The stack trace string
    */
   public override get stack(): string {
-    return this.#stack
-      ? NEWLINE_STRING + new StackTracey(this.#stack).withSources().asTable()
+    return this._stack
+      ? NEWLINE_STRING + new StackTracey(this._stack).withSources().asTable()
       : EMPTY_STRING;
   }
 
@@ -103,7 +103,7 @@ export class StormError<TCode extends string = string> extends Error {
    * Store the stack trace
    */
   public override set stack(_stack: string) {
-    this.#stack = _stack;
+    this._stack = _stack;
   }
 
   /**

@@ -42,14 +42,14 @@ export class PluginManager<
   TContext = any,
   TPluginModule extends IPluginModule<TContext> = any
 > {
-  #config: PluginManagerConfig;
-  #hasDiscovered: boolean = false;
+  private _config: PluginManagerConfig;
+  private _hasDiscovered: boolean = false;
 
-  #registry: Map<string, PluginDefinition>;
-  #store: Map<string, PluginInstance<TContext, TPluginModule>>;
-  #hooks: Map<string, PluginHookFn<TContext>[]>;
-  #loaders: Map<string, IPluginLoader<TContext, TPluginModule>>;
-  #logger: StormLog;
+  private _registry: Map<string, PluginDefinition>;
+  private _store: Map<string, PluginInstance<TContext, TPluginModule>>;
+  private _hooks: Map<string, PluginHookFn<TContext>[]>;
+  private _loaders: Map<string, IPluginLoader<TContext, TPluginModule>>;
+  private _logger: StormLog;
 
   public static create = async <
     TContext = any,
@@ -63,8 +63,8 @@ export class PluginManager<
       logger,
       config
     );
-    await pluginManager.getLoader(pluginManager.#config.defaultLoader);
-    if (pluginManager.#config.discoveryMode === PluginDiscoveryMode.AUTO) {
+    await pluginManager._getLoader(pluginManager._config.defaultLoader);
+    if (pluginManager._config.discoveryMode === PluginDiscoveryMode.AUTO) {
       await pluginManager.discover();
     }
 
@@ -87,35 +87,35 @@ export class PluginManager<
       useNodeModules: true,
       discoveryMode: PluginDiscoveryMode.FALLBACK
     };
-    this.#config = deepMerge(defaults, config);
-    this.#logger = logger;
+    this._config = deepMerge(defaults, config);
+    this._logger = logger;
 
-    this.#registry = new Map<string, PluginDefinition>();
-    this.#store = new Map<string, PluginInstance<TContext, TPluginModule>>();
-    this.#hooks = new Map<string, PluginHookFn<TContext>[]>();
-    this.#loaders = new Map<string, IPluginLoader<TContext, TPluginModule>>();
+    this._registry = new Map<string, PluginDefinition>();
+    this._store = new Map<string, PluginInstance<TContext, TPluginModule>>();
+    this._hooks = new Map<string, PluginHookFn<TContext>[]>();
+    this._loaders = new Map<string, IPluginLoader<TContext, TPluginModule>>();
   }
 
   public discover = async (): Promise<Map<string, PluginDefinition>> => {
-    if (this.#hasDiscovered) {
-      return Promise.resolve(this.#registry);
+    if (this._hasDiscovered) {
+      return Promise.resolve(this._registry);
     }
 
-    const fileGlob = this.globExpression();
-    this.#logger.info(`Discovering plugins using glob ${fileGlob}`);
+    const fileGlob = this._globExpression();
+    this._logger.info(`Discovering plugins using glob ${fileGlob}`);
 
     const paths = await glob(fileGlob);
     await Promise.all(paths.map(this.register) ?? []);
 
-    this.#hasDiscovered = true;
-    return this.#registry;
+    this._hasDiscovered = true;
+    return this._registry;
   };
 
   public getInstance = (
     provider: string,
     options: Record<string, any> = {}
   ): PluginInstance<TContext, TPluginModule> | undefined => {
-    return this.#store.get(this.getCacheId(provider, options));
+    return this._store.get(this._getCacheId(provider, options));
   };
 
   public instantiate = async (
@@ -128,8 +128,8 @@ export class PluginManager<
     }
 
     let definition: PluginDefinition = await this.register(provider);
-    const loader = await this.getLoader(
-      definition.loader ?? this.#config.defaultLoader
+    const loader = await this._getLoader(
+      definition.loader ?? this._config.defaultLoader
     );
 
     instance = await loader.load(definition, options);
@@ -139,8 +139,8 @@ export class PluginManager<
       });
     }
 
-    this.#store.set(
-      this.getCacheId(instance.definition.provider, options),
+    this._store.set(
+      this._getCacheId(instance.definition.provider, options),
       instance
     );
 
@@ -172,7 +172,7 @@ export class PluginManager<
     }
 
     instance.executionDateTime = executionDateTime;
-    this.#store.set(this.getCacheId(provider, options), instance);
+    this._store.set(this._getCacheId(provider, options), instance);
 
     const dependenciesResults = await Promise.all(
       instance.definition.dependencies.map(dependency =>
@@ -211,17 +211,17 @@ export class PluginManager<
     handler?: (context: TContext) => Promise<TContext> | TContext
   ): Promise<TContext> => {
     let listeners = [] as PluginHookFn<TContext>[];
-    if (this.#hooks.has(name)) {
-      listeners = this.#hooks.get(name)!;
+    if (this._hooks.has(name)) {
+      listeners = this._hooks.get(name)!;
     } else {
       const hooks = [] as Array<{
         provider: string;
         listener: PluginHookFn<TContext>;
         dependencies: string[];
       }>;
-      for (const [provider, value] of this.#store.entries()) {
+      for (const [provider, value] of this._store.entries()) {
         if (value.module.hooks && value.module.hooks?.[name]) {
-          const plugin = this.#store.get(provider);
+          const plugin = this._store.get(provider);
 
           hooks.push({
             provider,
@@ -283,30 +283,30 @@ export class PluginManager<
   };
 
   public register = async (provider: string): Promise<PluginDefinition> => {
-    let definition = this.#registry.get(provider);
+    let definition = this._registry.get(provider);
     if (definition) {
       return definition;
     }
 
-    definition = await this.getDefinition(provider);
+    definition = await this._getDefinition(provider);
     if (
       !definition &&
-      (this.#config.discoveryMode === PluginDiscoveryMode.AUTO ||
-        this.#config.discoveryMode === PluginDiscoveryMode.FALLBACK)
+      (this._config.discoveryMode === PluginDiscoveryMode.AUTO ||
+        this._config.discoveryMode === PluginDiscoveryMode.FALLBACK)
     ) {
       await this.discover();
-      if (this.#registry.has(provider)) {
-        definition = this.#registry.get(provider);
+      if (this._registry.has(provider)) {
+        definition = this._registry.get(provider);
       }
     }
 
     if (!definition) {
       throw new StormError(PluginSystemErrorCode.plugin_not_found, {
         message: `Could not find plugin provider ${provider}. \nDiscovered plugins: ${Object.keys(
-          this.#registry
+          this._registry
         )
           .map(key => {
-            const found = this.#registry.get(key);
+            const found = this._registry.get(key);
 
             return `${found?.name} v${found?.version} - ${found?.configPath}`;
           })
@@ -314,22 +314,22 @@ export class PluginManager<
       });
     }
 
-    this.#registry.set(provider, definition);
+    this._registry.set(provider, definition);
     await Promise.all(definition.dependencies.map(this.register));
 
     return definition;
   };
 
   public getRegistry(): Map<string, PluginDefinition> {
-    return this.#registry;
+    return this._registry;
   }
 
   public getLoaders(): Map<string, IPluginLoader<TContext, TPluginModule>> {
-    return this.#loaders;
+    return this._loaders;
   }
 
   public getStore(): Map<string, PluginInstance<TContext, TPluginModule>> {
-    return this.#store;
+    return this._store;
   }
 
   /**
@@ -339,7 +339,7 @@ export class PluginManager<
    * @param options - The options for the plugin.
    * @returns The cache ID.
    */
-  private getCacheId(provider: string, options: any): string {
+  private _getCacheId(provider: string, options: any): string {
     return md5(`${provider}::${StormParser.stringify(options)}`);
   }
 
@@ -348,10 +348,10 @@ export class PluginManager<
    *
    * @returns The globbing expression.
    */
-  private globExpression(): string {
-    return this.#config.useNodeModules
-      ? `${this.#config.rootPath}/**/${PLUGIN_CONFIG_JSON}`
-      : `${this.#config.rootPath}/!(node_modules)/**/${PLUGIN_CONFIG_JSON}`;
+  private _globExpression(): string {
+    return this._config.useNodeModules
+      ? `${this._config.rootPath}/**/${PLUGIN_CONFIG_JSON}`
+      : `${this._config.rootPath}/!(node_modules)/**/${PLUGIN_CONFIG_JSON}`;
   }
 
   /**
@@ -360,18 +360,18 @@ export class PluginManager<
    * @param loader - The loader module to retrieve.
    * @returns The loader module.
    */
-  private getLoader = async (
+  private _getLoader = async (
     loader: string
   ): Promise<IPluginLoader<TContext, TPluginModule>> => {
-    if (this.#loaders.has(loader)) {
-      return this.#loaders.get(loader)!;
+    if (this._loaders.has(loader)) {
+      return this._loaders.get(loader)!;
     }
 
     let module!: IPluginLoader<TContext, TPluginModule>;
     try {
       module = await import(loader);
     } catch (origError) {
-      this.#logger.error(
+      this._logger.error(
         `Unable to initialize loader module ${loader}: ${origError}`
       );
 
@@ -383,14 +383,14 @@ export class PluginManager<
     }
 
     if (!module) {
-      this.#logger.error(`Plugin provider ${loader} cannot be found`);
+      this._logger.error(`Plugin provider ${loader} cannot be found`);
 
       throw new StormError(PluginSystemErrorCode.module_not_found, {
         message: `Plugin provider ${loader} cannot be found`
       });
     }
 
-    this.#loaders.set(loader, module);
+    this._loaders.set(loader, module);
     return module;
   };
 
@@ -400,7 +400,7 @@ export class PluginManager<
    * @param configPath - The path to the plugin configuration file.
    * @returns The plugin definition.
    */
-  private getDefinition = async (
+  private _getDefinition = async (
     configPath: string
   ): Promise<PluginDefinition | undefined> => {
     let packagePath;
@@ -481,7 +481,7 @@ export class PluginManager<
       imagePath,
       options,
       tags,
-      loader: configJson.loader ?? this.#config.defaultLoader
+      loader: configJson.loader ?? this._config.defaultLoader
     };
   };
 }

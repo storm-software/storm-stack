@@ -163,6 +163,11 @@ class PluginManager<
     executionDateTime?: StormDateTime
   ) => Promise<Record<string, Error | null>>;
   // (undocumented)
+  getInstance: (
+    provider: string,
+    options?: Record<string, any>
+  ) => PluginInstance<TContext, TPluginModule> | undefined;
+  // (undocumented)
   getLoaders(): Map<string, IPluginLoader<TContext, TPluginModule>>;
   // (undocumented)
   getRegistry(): Map<string, PluginDefinition>;
