@@ -1,3 +1,4 @@
+import { StormTime } from "@storm-stack/date-time";
 import { MaybePromise } from "@storm-stack/utilities";
 import * as z from "zod";
 import { LoggingConfigSchema } from "./schema";
@@ -74,6 +75,21 @@ export interface IStormLog {
    * @returns Either a promise that resolves to void or void.
    */
   log: (...message: any[]) => MaybePromise<void>;
+
+  /**
+   * Start a process
+   *
+   * @param name - The name of the process
+   */
+  start: (name: string) => MaybePromise<void>;
+
+  /**
+   * Write an message to the logs specifying how long it took to complete a process
+   *
+   * @param name - The name of the process
+   * @param startTime - The start time of the process
+   */
+  stopwatch: (name?: string, startTime?: StormTime) => MaybePromise<void>;
 }
 
 export interface ILogger {

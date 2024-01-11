@@ -6,7 +6,7 @@ import {
   findFilePath,
   joinPaths
 } from "@storm-stack/file-system";
-import { StormLog } from "@storm-stack/logging";
+import { IStormLog } from "@storm-stack/logging";
 import { StormParser } from "@storm-stack/serialization";
 import {
   EMPTY_STRING,
@@ -49,15 +49,15 @@ export class PluginManager<
   private _store: Map<string, PluginInstance<TContext, TPluginModule>>;
   private _hooks: Map<string, PluginHookFn<TContext>[]>;
   private _loaders: Map<string, IPluginLoader<TContext, TPluginModule>>;
-  private _logger: StormLog;
+  private _logger: IStormLog;
 
   public static create = async <
     TContext = any,
     TPluginModule extends IPluginModule<TContext> = any
   >(
-    logger: StormLog,
+    logger: IStormLog,
     config: Omit<Partial<PluginManagerConfig>, "defaultLoader"> &
-      PluginManagerConfig["defaultLoader"]
+      Pick<PluginManagerConfig, "defaultLoader">
   ): Promise<PluginManager<TContext, TPluginModule>> => {
     const pluginManager = new PluginManager<TContext, TPluginModule>(
       logger,
@@ -78,9 +78,9 @@ export class PluginManager<
    * @param logger - The logger to use.
    */
   private constructor(
-    logger: StormLog,
+    logger: IStormLog,
     config: Omit<Partial<PluginManagerConfig>, "defaultLoader"> &
-      PluginManagerConfig["defaultLoader"]
+      Pick<PluginManagerConfig, "defaultLoader">
   ) {
     const defaults: Partial<PluginManagerConfig> = {
       rootPath: process.env.STORM_WORKSPACE_ROOT || process.cwd() || ".",

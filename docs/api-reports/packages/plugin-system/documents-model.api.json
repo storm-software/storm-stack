@@ -1840,8 +1840,8 @@
                 },
                 {
                   "kind": "Reference",
-                  "text": "StormLog",
-                  "canonicalReference": "@storm-stack/plugin-system!~StormLog:class"
+                  "text": "IStormLog",
+                  "canonicalReference": "@storm-stack/plugin-system!~IStormLog:interface"
                 },
                 {
                   "kind": "Content",
@@ -1876,12 +1876,21 @@
                 },
                 {
                   "kind": "Reference",
+                  "text": "Pick",
+                  "canonicalReference": "!Pick:type"
+                },
+                {
+                  "kind": "Content",
+                  "text": "<"
+                },
+                {
+                  "kind": "Reference",
                   "text": "PluginManagerConfig",
                   "canonicalReference": "@storm-stack/plugin-system!PluginManagerConfig:interface"
                 },
                 {
                   "kind": "Content",
-                  "text": "[\"defaultLoader\"]) => "
+                  "text": ", \"defaultLoader\">) => "
                 },
                 {
                   "kind": "Reference",
@@ -1912,7 +1921,7 @@
               "name": "create",
               "propertyTypeTokenRange": {
                 "startIndex": 1,
-                "endIndex": 18
+                "endIndex": 20
               },
               "isStatic": true,
               "isProtected": false,
