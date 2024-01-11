@@ -1,9 +1,15 @@
-## [1.1.1](https://github.com/storm-software/storm-stack/compare/plugin-system-v1.1.0...plugin-system-v1.1.1) (2024-01-10)
+# [1.2.0](https://github.com/storm-software/storm-stack/compare/plugin-system-v1.1.1...plugin-system-v1.2.0) (2024-01-11)
 
+
+### Features
+
+* **plugin-system:** Added the `getInstance` method to the `PluginManager` class ([d6a229e](https://github.com/storm-software/storm-stack/commit/d6a229efd6274bba75c82996b2513eb3b7081969))
+
+## [1.1.1](https://github.com/storm-software/storm-stack/compare/plugin-system-v1.1.0...plugin-system-v1.1.1) (2024-01-10)
 
 ### Bug Fixes
 
-* **plugin-system:** Resolved issue with `hooks` property on `PluginModule` ([931cf9d](https://github.com/storm-software/storm-stack/commit/931cf9d7ab79107706f47ae57263431b1153e468))
+- **plugin-system:** Resolved issue with `hooks` property on `PluginModule` ([931cf9d](https://github.com/storm-software/storm-stack/commit/931cf9d7ab79107706f47ae57263431b1153e468))
 
 # [1.1.0](https://github.com/storm-software/storm-stack/compare/plugin-system-v1.0.3...plugin-system-v1.1.0) (2024-01-10)
 
