@@ -1,9 +1,15 @@
-## [1.2.2](https://github.com/storm-software/storm-stack/compare/plugin-system-v1.2.1...plugin-system-v1.2.2) (2024-01-11)
+## [1.2.3](https://github.com/storm-software/storm-stack/compare/plugin-system-v1.2.2...plugin-system-v1.2.3) (2024-01-11)
 
 
 ### Bug Fixes
 
-* **plugin-system:** Resolve type issues with plugin modules ([2267f3c](https://github.com/storm-software/storm-stack/commit/2267f3cd4bfb6bbc2e9ede3d1582690490cb515b))
+* **plugin-system:** Resolved various type issues around logger ([0e1e8c6](https://github.com/storm-software/storm-stack/commit/0e1e8c677eca755a154417c3a129d5e5af8831ea))
+
+## [1.2.2](https://github.com/storm-software/storm-stack/compare/plugin-system-v1.2.1...plugin-system-v1.2.2) (2024-01-11)
+
+### Bug Fixes
+
+- **plugin-system:** Resolve type issues with plugin modules ([2267f3c](https://github.com/storm-software/storm-stack/commit/2267f3cd4bfb6bbc2e9ede3d1582690490cb515b))
 
 ## [1.2.1](https://github.com/storm-software/storm-stack/compare/plugin-system-v1.2.0...plugin-system-v1.2.1) (2024-01-11)
 
