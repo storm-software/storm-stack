@@ -1,3 +1,10 @@
+## [1.15.3](https://github.com/storm-software/storm-stack/compare/file-system-v1.15.2...file-system-v1.15.3) (2024-01-11)
+
+
+### Bug Fixes
+
+* **plugin-system:** Resolved various type issues around logger ([0e1e8c6](https://github.com/storm-software/storm-stack/commit/0e1e8c677eca755a154417c3a129d5e5af8831ea))
+
 ## [1.15.2](https://github.com/storm-software/storm-stack/compare/file-system-v1.15.1...file-system-v1.15.2) (2024-01-11)
 
 
