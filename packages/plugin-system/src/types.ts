@@ -112,7 +112,7 @@ export type PluginHookFn<TContext = any> = (
  * A plugin module that can be loaded by the plugin system.
  */
 export interface IPluginModule<TContext = any> {
-  hooks?: Record<any, PluginHookFn<TContext>>;
+  hooks?: Record<string, PluginHookFn<TContext>>;
 }
 
 /**
@@ -120,7 +120,7 @@ export interface IPluginModule<TContext = any> {
  */
 export interface IPluginLoader<
   TContext = any,
-  TPluginModule extends IPluginModule<TContext> = any
+  TPluginModule extends IPluginModule<TContext> = IPluginModule<TContext>
 > {
   load: (
     definition: PluginDefinition,

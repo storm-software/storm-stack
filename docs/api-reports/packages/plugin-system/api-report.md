@@ -11,7 +11,7 @@ import * as z from "zod";
 // @public
 interface IPluginLoader<
   TContext = any,
-  TPluginModule extends IPluginModule<TContext> = any
+  TPluginModule extends IPluginModule<TContext> = IPluginModule<TContext>
 > {
   // (undocumented)
   execute: (
@@ -48,7 +48,7 @@ export { IPluginManager as IPluginManager_alias_1 };
 // @public
 interface IPluginModule<TContext = any> {
   // (undocumented)
-  hooks?: Record<any, PluginHookFn<TContext>>;
+  hooks?: Record<string, PluginHookFn<TContext>>;
 }
 export { IPluginModule };
 export { IPluginModule as IPluginModule_alias_1 };
@@ -105,6 +105,8 @@ interface PluginInstance<
   module: TPluginModule;
   // (undocumented)
   options: any;
+  // (undocumented)
+  resolvedPath: string;
 }
 export { PluginInstance };
 export { PluginInstance as PluginInstance_alias_1 };
@@ -112,7 +114,7 @@ export { PluginInstance as PluginInstance_alias_1 };
 // @public
 abstract class PluginLoader<
   TContext = any,
-  TPluginModule extends IPluginModule<TContext> = any
+  TPluginModule extends IPluginModule<TContext> = IPluginModule<TContext>
 > implements IPluginLoader<TContext, TPluginModule>
 {
   // (undocumented)
@@ -125,6 +127,7 @@ abstract class PluginLoader<
   protected instantiate: (
     definition: PluginDefinition,
     module: TPluginModule,
+    resolvedPath: string,
     options?: Record<string, any>
   ) => PluginInstance<TContext, TPluginModule>;
   // (undocumented)

@@ -13,7 +13,7 @@ import type {
  */
 export abstract class PluginLoader<
   TContext = any,
-  TPluginModule extends IPluginModule<TContext> = any
+  TPluginModule extends IPluginModule<TContext> = IPluginModule<TContext>
 > implements IPluginLoader<TContext, TPluginModule>
 {
   public abstract execute: (

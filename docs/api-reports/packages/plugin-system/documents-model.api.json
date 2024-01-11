@@ -203,8 +203,13 @@
               "text": " = "
             },
             {
+              "kind": "Reference",
+              "text": "IPluginModule",
+              "canonicalReference": "@storm-stack/plugin-system!IPluginModule:interface"
+            },
+            {
               "kind": "Content",
-              "text": "any"
+              "text": "<TContext>"
             },
             {
               "kind": "Content",
@@ -233,7 +238,7 @@
               },
               "defaultTypeTokenRange": {
                 "startIndex": 6,
-                "endIndex": 7
+                "endIndex": 8
               }
             }
           ],
@@ -686,7 +691,7 @@
                 },
                 {
                   "kind": "Content",
-                  "text": "<any, "
+                  "text": "<string, "
                 },
                 {
                   "kind": "Reference",
@@ -1406,6 +1411,33 @@
                 "startIndex": 1,
                 "endIndex": 2
               }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "@storm-stack/plugin-system!PluginInstance#resolvedPath:member",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "resolvedPath: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "string"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isReadonly": false,
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "resolvedPath",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
             }
           ],
           "extendsTokenRanges": []
@@ -1441,8 +1473,13 @@
               "text": " = "
             },
             {
+              "kind": "Reference",
+              "text": "IPluginModule",
+              "canonicalReference": "@storm-stack/plugin-system!IPluginModule:interface"
+            },
+            {
               "kind": "Content",
-              "text": "any"
+              "text": "<TContext>"
             },
             {
               "kind": "Content",
@@ -1484,7 +1521,7 @@
               },
               "defaultTypeTokenRange": {
                 "startIndex": 6,
-                "endIndex": 7
+                "endIndex": 8
               }
             }
           ],
@@ -1569,7 +1606,7 @@
                 },
                 {
                   "kind": "Content",
-                  "text": ", module: TPluginModule, options?: "
+                  "text": ", module: TPluginModule, resolvedPath: string, options?: "
                 },
                 {
                   "kind": "Reference",
@@ -1705,8 +1742,8 @@
           ],
           "implementsTokenRanges": [
             {
-              "startIndex": 8,
-              "endIndex": 10
+              "startIndex": 9,
+              "endIndex": 11
             }
           ]
         },
