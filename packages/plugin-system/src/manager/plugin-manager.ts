@@ -111,11 +111,18 @@ export class PluginManager<
     return this.#registry;
   };
 
+  public getInstance = (
+    provider: string,
+    options: Record<string, any> = {}
+  ): PluginInstance<TContext, TPluginModule> | undefined => {
+    return this.#store.get(this.getCacheId(provider, options));
+  };
+
   public instantiate = async (
     provider: string,
     options: Record<string, any> = {}
   ): Promise<PluginInstance<TContext, TPluginModule>> => {
-    let instance = this.#store.get(this.getCacheId(provider, options));
+    let instance = this.getInstance(provider, options);
     if (instance) {
       return Promise.resolve(instance);
     }
