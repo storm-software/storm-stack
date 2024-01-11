@@ -1,10 +1,16 @@
-## [1.2.1](https://github.com/storm-software/storm-stack/compare/plugin-system-v1.2.0...plugin-system-v1.2.1) (2024-01-11)
+## [1.2.2](https://github.com/storm-software/storm-stack/compare/plugin-system-v1.2.1...plugin-system-v1.2.2) (2024-01-11)
 
 
 ### Bug Fixes
 
-* **date-time:** Update private variables/methods naming strategy ([416305b](https://github.com/storm-software/storm-stack/commit/416305b81fd5d1ee564409013ef8f41bd5d8ad70))
-* **plugin-system:** Added `resolvedPath` plugin instance object ([a381c56](https://github.com/storm-software/storm-stack/commit/a381c5673fd657a1c516cf73025bc1ba87ab5370))
+* **plugin-system:** Resolve type issues with plugin modules ([2267f3c](https://github.com/storm-software/storm-stack/commit/2267f3cd4bfb6bbc2e9ede3d1582690490cb515b))
+
+## [1.2.1](https://github.com/storm-software/storm-stack/compare/plugin-system-v1.2.0...plugin-system-v1.2.1) (2024-01-11)
+
+### Bug Fixes
+
+- **date-time:** Update private variables/methods naming strategy ([416305b](https://github.com/storm-software/storm-stack/commit/416305b81fd5d1ee564409013ef8f41bd5d8ad70))
+- **plugin-system:** Added `resolvedPath` plugin instance object ([a381c56](https://github.com/storm-software/storm-stack/commit/a381c5673fd657a1c516cf73025bc1ba87ab5370))
 
 # [1.2.0](https://github.com/storm-software/storm-stack/compare/plugin-system-v1.1.1...plugin-system-v1.2.0) (2024-01-11)
 
