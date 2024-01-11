@@ -1,3 +1,10 @@
+## [1.12.2](https://github.com/storm-software/storm-stack/compare/date-time-v1.12.1...date-time-v1.12.2) (2024-01-11)
+
+
+### Bug Fixes
+
+* **date-time:** Update private variables/methods naming strategy ([416305b](https://github.com/storm-software/storm-stack/commit/416305b81fd5d1ee564409013ef8f41bd5d8ad70))
+
 ## [1.12.1](https://github.com/storm-software/storm-stack/compare/date-time-v1.12.0...date-time-v1.12.1) (2024-01-10)
 
 
