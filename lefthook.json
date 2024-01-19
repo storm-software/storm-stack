@@ -1,0 +1,7 @@
+{
+	"remote": {
+		"git_url": "git@github.com:storm-software/storm-ops",
+		"ref": "refs/heads/main",
+		"config": "packages/git-tools/src/lefthook/lefthook.yml"
+	}
+}

@@ -9,9 +9,9 @@ import { joinPaths } from "./join-paths";
  * @returns An indicator specifying if the file is a file
  */
 export const isFile = (path: string, additionalPath?: string): boolean => {
-  return !!lstatSync(
-    additionalPath ? joinPaths(additionalPath, path) : path
-  )?.isFile();
+	return !!lstatSync(
+		additionalPath ? joinPaths(additionalPath, path) : path,
+	)?.isFile();
 };
 
 /**
@@ -22,7 +22,7 @@ export const isFile = (path: string, additionalPath?: string): boolean => {
  * @returns An indicator specifying if the file is a directory
  */
 export const isDirectory = (path: string, additionalPath?: string): boolean => {
-  return !!lstatSync(
-    additionalPath ? joinPaths(additionalPath, path) : path
-  ).isDirectory();
+	return !!lstatSync(
+		additionalPath ? joinPaths(additionalPath, path) : path,
+	).isDirectory();
 };

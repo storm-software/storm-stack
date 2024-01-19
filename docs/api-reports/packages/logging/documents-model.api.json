@@ -1340,6 +1340,87 @@
             },
             {
               "kind": "PropertySignature",
+              "canonicalReference": "@storm-stack/logging!IStormLog#start:member",
+              "docComment": "/**\n * Start a process\n *\n * @param name - The name of the process\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "start: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "(name: string) => "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "MaybePromise",
+                  "canonicalReference": "@storm-stack/logging!~MaybePromise:type"
+                },
+                {
+                  "kind": "Content",
+                  "text": "<void>"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isReadonly": false,
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "start",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 4
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "@storm-stack/logging!IStormLog#stopwatch:member",
+              "docComment": "/**\n * Write an message to the logs specifying how long it took to complete a process\n *\n * @param name - The name of the process\n *\n * @param startTime - The start time of the process\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "stopwatch: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "(name?: string, startTime?: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "StormTime",
+                  "canonicalReference": "@storm-stack/logging!~StormTime:class"
+                },
+                {
+                  "kind": "Content",
+                  "text": ") => "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "MaybePromise",
+                  "canonicalReference": "@storm-stack/logging!~MaybePromise:type"
+                },
+                {
+                  "kind": "Content",
+                  "text": "<void>"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isReadonly": false,
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "stopwatch",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 6
+              }
+            },
+            {
+              "kind": "PropertySignature",
               "canonicalReference": "@storm-stack/logging!IStormLog#success:member",
               "docComment": "/**\n * Write a success message to the logs.\n *\n * @param message - The message to print.\n *\n * @returns Either a promise that resolves to void or void.\n */\n",
               "excerptTokens": [

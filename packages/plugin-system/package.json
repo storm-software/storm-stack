@@ -12,6 +12,7 @@
   "dependencies": {
     "glob": "^10.3.10",
     "md5": "^2.3.0",
+    "oxc-resolver": "^0.0.3",
     "toposort": "^2.0.2"
   },
   "devDependencies": {

@@ -11,3 +11,4 @@ export * from "./errors";
 export * from "./loader";
 export * from "./manager";
 export * from "./types";
+export * from "./utilities";

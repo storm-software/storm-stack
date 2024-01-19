@@ -80,6 +80,8 @@ interface IStormLog {
   fatal: (...message: any[]) => MaybePromise<void>;
   info: (...message: any[]) => MaybePromise<void>;
   log: (...message: any[]) => MaybePromise<void>;
+  start: (name: string) => MaybePromise<void>;
+  stopwatch: (name?: string, startTime?: StormTime) => MaybePromise<void>;
   success: (...message: any[]) => MaybePromise<void>;
   trace: (...message: any[]) => MaybePromise<void>;
   warn: (...message: any[]) => MaybePromise<void>;

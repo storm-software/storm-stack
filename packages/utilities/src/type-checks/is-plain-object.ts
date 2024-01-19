@@ -52,7 +52,7 @@ export const isObjectLike = (obj: unknown) => {
  * @returns Returns `true` if `obj` is a plain object, else `false`.
  */
 export const isPlainObject = (obj: unknown) => {
-  if (!isObjectLike(obj) || getObjectTag(obj) != "[object Object]") {
+  if (!isObjectLike(obj) || getObjectTag(obj) !== "[object Object]") {
     return false;
   }
   if (Object.getPrototypeOf(obj) === null) {
