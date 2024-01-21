@@ -70,19 +70,19 @@ importers:
         version: 17.2.8(@swc-node/register@1.6.8)(@swc/core@1.3.100)
       '@storm-software/config-tools':
         specifier: latest
-        version: 1.20.2(typescript@5.3.3)
+        version: 1.20.3(typescript@5.3.3)
       '@storm-software/git-tools':
         specifier: latest
-        version: 1.29.2(@nx/devkit@17.2.8)(nx@17.2.8)(typescript@5.3.3)
+        version: 1.29.3(@nx/devkit@17.2.8)(nx@17.2.8)(typescript@5.3.3)
       '@storm-software/linting-tools':
         specifier: latest
-        version: 1.31.2(prettier@3.1.1)
+        version: 1.31.3(prettier@3.1.1)
       '@storm-software/testing-tools':
         specifier: latest
-        version: 1.26.2(@swc-node/register@1.6.8)(@swc/core@1.3.100)(@types/node@20.10.5)(nx@17.2.8)(ts-node@10.9.2)(typescript@5.3.3)(verdaccio@5.29.0)
+        version: 1.26.3(@swc-node/register@1.6.8)(@swc/core@1.3.100)(@types/node@20.10.5)(nx@17.2.8)(ts-node@10.9.2)(typescript@5.3.3)(verdaccio@5.29.0)
       '@storm-software/workspace-tools':
         specifier: latest
-        version: 1.49.2(@swc-node/register@1.6.8)(@swc/core@1.3.100)(@types/node@20.10.5)(esbuild@0.19.9)(nx@17.2.8)(ts-node@10.9.2)(typescript@5.3.3)(verdaccio@5.29.0)
+        version: 1.49.3(@swc-node/register@1.6.8)(@swc/core@1.3.100)(@types/node@20.10.5)(esbuild@0.19.9)(nx@17.2.8)(ts-node@10.9.2)(typescript@5.3.3)(verdaccio@5.29.0)
       '@swc-node/register':
         specifier: 1.6.8
         version: 1.6.8(@swc/core@1.3.100)(typescript@5.3.3)
@@ -232,7 +232,7 @@ importers:
     dependencies:
       '@storm-software/config-tools':
         specifier: latest
-        version: 1.20.2(typescript@5.3.3)
+        version: 1.20.3(typescript@5.3.3)
       chalk:
         specifier: 5.3.0
         version: 5.3.0
@@ -263,10 +263,10 @@ importers:
     dependencies:
       '@storm-software/testing-tools':
         specifier: latest
-        version: 1.26.2(@swc-node/register@1.6.8)(@swc/core@1.3.100)(@types/node@20.10.5)(nx@17.2.8)(ts-node@10.9.2)(typescript@5.3.3)(verdaccio@5.29.0)
+        version: 1.26.3(@swc-node/register@1.6.8)(@swc/core@1.3.100)(@types/node@20.10.5)(nx@17.2.8)(ts-node@10.9.2)(typescript@5.3.3)(verdaccio@5.29.0)
       '@storm-software/workspace-tools':
         specifier: latest
-        version: 1.49.2(@swc-node/register@1.6.8)(@swc/core@1.3.100)(@types/node@20.10.5)(esbuild@0.19.9)(nx@17.2.8)(ts-node@10.9.2)(typescript@5.3.3)(verdaccio@5.29.0)
+        version: 1.49.3(@swc-node/register@1.6.8)(@swc/core@1.3.100)(@types/node@20.10.5)(esbuild@0.19.9)(nx@17.2.8)(ts-node@10.9.2)(typescript@5.3.3)(verdaccio@5.29.0)
       stacktracey:
         specifier: 2.1.8
         version: 2.1.8
@@ -306,7 +306,7 @@ importers:
     dependencies:
       '@storm-software/config-tools':
         specifier: latest
-        version: 1.20.2(typescript@5.3.3)
+        version: 1.20.3(typescript@5.3.3)
       chalk:
         specifier: 5.3.0
         version: 5.3.0
@@ -5444,8 +5444,8 @@ packages:
       - utf-8-validate
     dev: false
 
-  /@storm-software/config-tools@1.20.2(typescript@5.3.3):
-    resolution: {integrity: sha512-clpXPyoGceumcLCQXKKHJpqjAPnd60PLt/ikS4DNPF0DRMC9b6O1ygtfJGsypaJun2x00kn4RKRjP/pW+T29Nw==}
+  /@storm-software/config-tools@1.20.3(typescript@5.3.3):
+    resolution: {integrity: sha512-CqDceVYB93K/2Ne1OK0iA7+4g5pXASW7Pax2a5zSkVAZ2vWujP7AjTocIdYoNb9xAHGd+Pa9dm9w6oX/DgZMsg==}
     dependencies:
       chalk: 4.1.0
       cosmiconfig: 9.0.0(typescript@5.3.3)
@@ -5457,8 +5457,8 @@ packages:
       - typescript
     dev: false
 
-  /@storm-software/git-tools@1.29.2(@nx/devkit@17.2.8)(nx@17.2.8)(typescript@5.3.3):
-    resolution: {integrity: sha512-RyfRhCPuvqvFRI3HSjOvDlTPdpNGjU1YqUQkEyg6MrM5HgX57LX3QWvYAeWiv0SL0YaKvlnjRaitNpFoSWnCKQ==}
+  /@storm-software/git-tools@1.29.3(@nx/devkit@17.2.8)(nx@17.2.8)(typescript@5.3.3):
+    resolution: {integrity: sha512-1Mf7xUJWUB+p7Uvankha8PHcuYpRhnaDkfaLQtiiwQMMRgWj/dCFXkJ1DTNZZD3S6Cw8wDtNj3tmpn7ieDEyyQ==}
     hasBin: true
     peerDependencies:
       '@nx/devkit': '>=17.2.8'
@@ -5492,8 +5492,8 @@ packages:
       - typescript
     dev: false
 
-  /@storm-software/linting-tools@1.31.2(prettier@3.1.1):
-    resolution: {integrity: sha512-giaHMv25hdL/ZGLFAthhQk66hKm+YB2aYbgw3qm1Wo2XYoorhg5ZwlkKHyLfgXMFstVp0C0xluK8F2HncMIvxg==}
+  /@storm-software/linting-tools@1.31.3(prettier@3.1.1):
+    resolution: {integrity: sha512-2VDgHEoctnMQ+lzqybyu66FyOIAhfFqJbgpBI80zlKQomNVvvv5JFF4LU2YJeGzaw7IY6J19cOtGb1mo/9knvg==}
     hasBin: true
     dependencies:
       '@cspell/dict-ada': 4.0.2
@@ -5597,8 +5597,8 @@ packages:
       - utf-8-validate
     dev: false
 
-  /@storm-software/testing-tools@1.26.2(@swc-node/register@1.6.8)(@swc/core@1.3.100)(@types/node@20.10.5)(nx@17.2.8)(ts-node@10.9.2)(typescript@5.3.3)(verdaccio@5.29.0):
-    resolution: {integrity: sha512-uViRvbNTTQzC6eAJyHx+ZHQj6kTsIZ8DnGjL4CXRGSseenEe/CTQKbqYIKYXu6kwLSDTnygu6bQZ+VN80dOwdQ==}
+  /@storm-software/testing-tools@1.26.3(@swc-node/register@1.6.8)(@swc/core@1.3.100)(@types/node@20.10.5)(nx@17.2.8)(ts-node@10.9.2)(typescript@5.3.3)(verdaccio@5.29.0):
+    resolution: {integrity: sha512-cC1tNyAW0NsJgvuiGiRZKwZT0zmsL5ita4H+g8tR7qtjqkdgA2kChOLf4190yR1EchtKtJa+Az8sbDqME3v/GQ==}
     dependencies:
       '@nx/jest': 17.2.8(@swc-node/register@1.6.8)(@swc/core@1.3.100)(@types/node@20.10.5)(nx@17.2.8)(ts-node@10.9.2)(typescript@5.3.3)(verdaccio@5.29.0)
     transitivePeerDependencies:
@@ -5617,8 +5617,8 @@ packages:
       - verdaccio
     dev: false
 
-  /@storm-software/workspace-tools@1.49.2(@swc-node/register@1.6.8)(@swc/core@1.3.100)(@types/node@20.10.5)(esbuild@0.19.9)(nx@17.2.8)(ts-node@10.9.2)(typescript@5.3.3)(verdaccio@5.29.0):
-    resolution: {integrity: sha512-SyxYOUax6IJdZEQyBk5qf3Hjl+W72N9b/NK7uFeCwV3y4Kc9SN+cDLKeky//K3DzbtfnA4PjXYWGy5AXpO8quA==}
+  /@storm-software/workspace-tools@1.49.3(@swc-node/register@1.6.8)(@swc/core@1.3.100)(@types/node@20.10.5)(esbuild@0.19.9)(nx@17.2.8)(ts-node@10.9.2)(typescript@5.3.3)(verdaccio@5.29.0):
+    resolution: {integrity: sha512-7Sn7TzLWB5yHG4GEI98UlcGINjmreobFFRg2CoHn8mAKYhM+ygt7IZFb7qkYF4Eaeu1nX6WmkMA0OhYTxa9hBQ==}
     dependencies:
       '@anatine/esbuild-decorators': 0.2.19(esbuild@0.19.9)
       '@microsoft/api-extractor': 7.38.5(@types/node@20.10.5)
