@@ -1,15 +1,20 @@
-# [1.15.0](https://github.com/storm-software/storm-stack/compare/logging-v1.14.3...logging-v1.15.0) (2024-01-21)
+## [1.15.1](https://github.com/storm-software/storm-stack/compare/logging-v1.15.0...logging-v1.15.1) (2024-01-21)
 
 
 ### Bug Fixes
 
-* **monorepo:** Resolved issues with `extends` option in lefthook config ([e468b55](https://github.com/storm-software/storm-stack/commit/e468b55df5958b80fd6cf7707780e4461797c797))
-* **unique-identifier:** Fixes for the plugin system errors ([e256acb](https://github.com/storm-software/storm-stack/commit/e256acb4069633b6e3d3f8239fa24edc5c992e1a))
+* **plugin-system:** Fix linting issues and dependabot warnings ([02e630c](https://github.com/storm-software/storm-stack/commit/02e630cc537e86897e48a3e3c3372b38aa673bb1))
 
+# [1.15.0](https://github.com/storm-software/storm-stack/compare/logging-v1.14.3...logging-v1.15.0) (2024-01-21)
+
+### Bug Fixes
+
+-   **monorepo:** Resolved issues with `extends` option in lefthook config ([e468b55](https://github.com/storm-software/storm-stack/commit/e468b55df5958b80fd6cf7707780e4461797c797))
+-   **unique-identifier:** Fixes for the plugin system errors ([e256acb](https://github.com/storm-software/storm-stack/commit/e256acb4069633b6e3d3f8239fa24edc5c992e1a))
 
 ### Features
 
-* **plugin-system:** Upgraded Nx and enhanced the `PluginLoader` resolver ([aed9c64](https://github.com/storm-software/storm-stack/commit/aed9c64b53a408ce8b7f0d38052bdab4e3ce3072))
+-   **plugin-system:** Upgraded Nx and enhanced the `PluginLoader` resolver ([aed9c64](https://github.com/storm-software/storm-stack/commit/aed9c64b53a408ce8b7f0d38052bdab4e3ce3072))
 
 ## [1.14.3](https://github.com/storm-software/storm-stack/compare/logging-v1.14.2...logging-v1.14.3) (2024-01-11)
 
