@@ -128,13 +128,12 @@
   },
   "namespace": "@storm-stack",
   "nx": {
-    "includedScripts": [
-      "lint",
-      "format"
-    ]
+    "includedScripts": ["lint", "format"]
   },
   "pnpm": {
     "overrides": {
+      "loader-utils": ">=1.4.2",
+      "simple-git": ">=3.16.0",
       "@storm-stack/utilities": "workspace:*",
       "@storm-stack/unique-identifier": "workspace:*",
       "@storm-stack/date-time": "workspace:*",
