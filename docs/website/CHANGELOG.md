@@ -1,9 +1,15 @@
-## [1.5.2](https://github.com/storm-software/storm-stack/compare/docs-website-v1.5.1...docs-website-v1.5.2) (2024-01-21)
+## [1.5.3](https://github.com/storm-software/storm-stack/compare/docs-website-v1.5.2...docs-website-v1.5.3) (2024-01-21)
 
 
 ### Bug Fixes
 
-* **monorepo:** Removal of unused favicons ([acd8341](https://github.com/storm-software/storm-stack/commit/acd834127ffbae44761746f4cfbd89dd40c28966))
+* **plugin-system:** Resolve linting issues ([0a27ea0](https://github.com/storm-software/storm-stack/commit/0a27ea018d1f8974e6eafd200d846a22d9f1a72f))
+
+## [1.5.2](https://github.com/storm-software/storm-stack/compare/docs-website-v1.5.1...docs-website-v1.5.2) (2024-01-21)
+
+### Bug Fixes
+
+-   **monorepo:** Removal of unused favicons ([acd8341](https://github.com/storm-software/storm-stack/commit/acd834127ffbae44761746f4cfbd89dd40c28966))
 
 ## [1.5.1](https://github.com/storm-software/storm-stack/compare/docs-website-v1.5.0...docs-website-v1.5.1) (2024-01-21)
 
