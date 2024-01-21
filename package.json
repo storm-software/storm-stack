@@ -84,13 +84,6 @@
     "@nx/plugin": "17.2.8",
     "@nx/react": "17.2.8",
     "@nx/workspace": "17.2.8",
-    "@semantic-release/changelog": "6.0.3",
-    "@semantic-release/commit-analyzer": "11.1.0",
-    "@semantic-release/exec": "6.0.3",
-    "@semantic-release/git": "10.0.1",
-    "@semantic-release/github": "9.2.5",
-    "@semantic-release/npm": "11.0.2",
-    "@semantic-release/release-notes-generator": "12.1.0",
     "@storm-software/config-tools": "latest",
     "@storm-software/git-tools": "latest",
     "@storm-software/linting-tools": "latest",
@@ -128,7 +121,10 @@
   },
   "namespace": "@storm-stack",
   "nx": {
-    "includedScripts": ["lint", "format"]
+    "includedScripts": [
+      "lint",
+      "format"
+    ]
   },
   "pnpm": {
     "overrides": {

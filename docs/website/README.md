@@ -16,7 +16,7 @@ This package is part of the <b>⚡storm-stack</b> monorepo. The storm-stack pack
 
 <h3 align="center">💻 Visit <a href="https://stormsoftware.org" target="_blank">stormsoftware.org</a> to stay up to date with this developer</h3><br />
 
-[![Version](https://img.shields.io/badge/version-1.5.0-1fb2a6.svg?style=for-the-badge&color=1fb2a6)](https://prettier.io/)&nbsp;
+[![Version](https://img.shields.io/badge/version-1.5.2-1fb2a6.svg?style=for-the-badge&color=1fb2a6)](https://prettier.io/)&nbsp;
 [![Nx](https://img.shields.io/badge/Nx-17.0.2-lightgrey?style=for-the-badge&logo=nx&logoWidth=20&&color=1fb2a6)](http://nx.dev/)&nbsp;[![NextJs](https://img.shields.io/badge/Next.js-14.0.2-lightgrey?style=for-the-badge&logo=nextdotjs&logoWidth=20&color=1fb2a6)](https://nextjs.org/)&nbsp;[![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg?style=for-the-badge&logo=commitlint&color=1fb2a6)](http://commitizen.github.io/cz-cli/)&nbsp;![Semantic-Release](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg?style=for-the-badge&color=1fb2a6)&nbsp;[![documented with docusaurus](https://img.shields.io/badge/documented_with-docusaurus-success.svg?style=for-the-badge&logo=readthedocs&color=1fb2a6)](https://docusaurus.io/)&nbsp;![GitHub Workflow Status (with event)](https://img.shields.io/github/actions/workflow/status/storm-software/storm-ops/cr.yml?style=for-the-badge&logo=github-actions&color=1fb2a6)
 
 > [!IMPORTANT]
@@ -36,16 +36,16 @@ This package is part of the <b>⚡storm-stack</b> monorepo. The storm-stack pack
 
 The following are some of the features/publishable code that are included in this repository:
 
--   Transport/protocol/backend agnostic data fetching (REST, GraphQL, promises, whatever!)
--   Auto Caching + Refetching (stale-while-revalidate, Window Refocus, Polling/Realtime)
--   Parallel + Dependent Queries
--   Mutations + Reactive Query Refetching
--   Multi-layer Cache + Automatic Garbage Collection
--   Paginated + Cursor-based Queries
--   Load-More + Infinite Scroll Queries w/ Scroll Recovery
--   Request Cancellation
--   React Suspense + Fetch-As-You-Render Query Prefetching
--   Dedicated Devtools
+- Transport/protocol/backend agnostic data fetching (REST, GraphQL, promises, whatever!)
+- Auto Caching + Refetching (stale-while-revalidate, Window Refocus, Polling/Realtime)
+- Parallel + Dependent Queries
+- Mutations + Reactive Query Refetching
+- Multi-layer Cache + Automatic Garbage Collection
+- Paginated + Cursor-based Queries
+- Load-More + Infinite Scroll Queries w/ Scroll Recovery
+- Request Cancellation
+- React Suspense + Fetch-As-You-Render Query Prefetching
+- Dedicated Devtools
 
 ## Tech Stack
 
@@ -93,16 +93,16 @@ If you run into any issues while trying to run any of the above steps, please re
 
 Some of the plug-ins used by this repository are:
 
--   [@nx/next](https://nx.dev/packages/next)
--   [@nx/react](https://nx.dev/packages/react)
--   [@nx/lint](https://nx.dev/linter/overview)
--   [@nx/js](https://nx.dev/js/overview)
--   [@nx/node](https://nodejs.org)
--   [@nx/web](https://nx.dev/web/overview)
--   [@nx/storybook](https://nx.dev/storybook/overview-react)
--   [@nx/cypress](https://nx.dev/packages/cypress)
--   [@nx/jest](https://nx.dev/packages/jest)
--   And more...
+- [@nx/next](https://nx.dev/packages/next)
+- [@nx/react](https://nx.dev/packages/react)
+- [@nx/lint](https://nx.dev/linter/overview)
+- [@nx/js](https://nx.dev/js/overview)
+- [@nx/node](https://nodejs.org)
+- [@nx/web](https://nx.dev/web/overview)
+- [@nx/storybook](https://nx.dev/storybook/overview-react)
+- [@nx/cypress](https://nx.dev/packages/cypress)
+- [@nx/jest](https://nx.dev/packages/jest)
+- And more...
 
 ## Generate an Application
 
@@ -165,10 +165,10 @@ Visit [Nx Cloud](https://nx.app/) to learn more.
 
 See the [open issues](https://github.com/storm-software/storm-stack/issues) for a list of proposed features (and known issues).
 
--   [Top Feature Requests](https://github.com/storm-software/storm-stack/issues?q=label%3Aenhancement+is%3Aopen+sort%3Areactions-%2B1-desc) (Add your votes using the 👍 reaction)
--   [Top Bugs](https://github.com/storm-software/storm-stack/issues?q=is%3Aissue+is%3Aopen+label%3Abug+sort%3Areactions-%2B1-desc) (Add your votes using the 👍 reaction)
--   [Newest Bugs](https://github.com/storm-software/storm-stack/issues?q=is%3Aopen+is%3Aissue+label%3Abug)
-    <br /><br />
+- [Top Feature Requests](https://github.com/storm-software/storm-stack/issues?q=label%3Aenhancement+is%3Aopen+sort%3Areactions-%2B1-desc) (Add your votes using the 👍 reaction)
+- [Top Bugs](https://github.com/storm-software/storm-stack/issues?q=is%3Aissue+is%3Aopen+label%3Abug+sort%3Areactions-%2B1-desc) (Add your votes using the 👍 reaction)
+- [Newest Bugs](https://github.com/storm-software/storm-stack/issues?q=is%3Aopen+is%3Aissue+label%3Abug)
+  <br /><br />
 
 # Contributing
 
@@ -176,10 +176,10 @@ First off, thanks for taking the time to contribute! Contributions are what make
 
 Please try to create bug reports that are:
 
--   _Reproducible._ Include steps to reproduce the problem.
--   _Specific._ Include as much detail as possible: which version, what environment, etc.
--   _Unique._ Do not duplicate existing opened issues.
--   _Scoped to a Single Bug._ One bug per report.
+- _Reproducible._ Include steps to reproduce the problem.
+- _Specific._ Include as much detail as possible: which version, what environment, etc.
+- _Unique._ Do not duplicate existing opened issues.
+- _Scoped to a Single Bug._ One bug per report.
 
 Please adhere to this project's [code of conduct](.github/CODE_OF_CONDUCT.md).
 
@@ -190,9 +190,9 @@ You can use [markdownlint-cli](https://github.com/storm-software/storm-stack/mar
 
 Reach out to the maintainer at one of the following places:
 
--   [Contact](https://stormsoftware.org/contact)
--   [GitHub discussions](https://github.com/storm-software/storm-stack/discussions)
--   <contact@stormsoftware.org>
+- [Contact](https://stormsoftware.org/contact)
+- [GitHub discussions](https://github.com/storm-software/storm-stack/discussions)
+- <contact@stormsoftware.org>
 
 # License
 
