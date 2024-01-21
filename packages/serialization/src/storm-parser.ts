@@ -2,7 +2,7 @@
 // import { Decimal } from "decimal.js";
 import { isObject, isString } from "@storm-stack/utilities";
 import SuperJSON from "superjson";
-import { Class, JsonParserResult, JsonValue } from "./types";
+import type { Class, JsonParserResult, JsonValue } from "./types";
 
 function _register<TData = any, TJsonObject extends JsonValue = JsonValue>(
   name: string,
@@ -15,17 +15,6 @@ function _register<TData = any, TJsonObject extends JsonValue = JsonValue>(
     name
   );
 }
-
-/*register(
-  "Decimal",
-  (value: Decimal) => value.toJSON(),
-  (strValue: string) => new Decimal(strValue),
-  (value: any): value is Decimal => Decimal.isDecimal(value)
-);*/
-
-// register("DateTime", DateTime.toString, DateTime.create, isDateTime);
-
-// register("StormError", StormError.stringify, StormError.parse, isStormError);
 
 /**
  * A static JSON parser class used by Storm Software to serialize and deserialize JSON
@@ -47,9 +36,7 @@ export class StormParser extends SuperJSON {
   /**
    * Deserialize the given value with superjson using the given metadata
    */
-  public static override deserialize<TData = unknown>(
-    payload: JsonParserResult
-  ): TData {
+  public static override deserialize<TData = unknown>(payload: JsonParserResult): TData {
     return StormParser.instance.deserialize(payload);
   }
 
@@ -82,10 +69,7 @@ export class StormParser extends SuperJSON {
    * @param deserialize - The function to deserialize the schema
    * @param isApplicable - The function to check if the schema is applicable
    */
-  public static register<
-    TData = any,
-    TJsonObject extends JsonValue = JsonValue
-  >(
+  public static register<TData = any, TJsonObject extends JsonValue = JsonValue>(
     name: string,
     serialize: (data: TData) => TJsonObject,
     deserialize: (json: TJsonObject) => TData,
@@ -113,10 +97,7 @@ export class StormParser extends SuperJSON {
           ? options?.identifier
           : classConstructor.name,
       allowProps:
-        options &&
-        isObject(options) &&
-        options?.allowProps &&
-        Array.isArray(options.allowProps)
+        options && isObject(options) && options?.allowProps && Array.isArray(options.allowProps)
           ? options.allowProps
           : ["__typename"]
     });
@@ -127,8 +108,8 @@ export class StormParser extends SuperJSON {
 
     _register<Buffer, string>(
       "Bytes",
-      v => v.toString("base64"),
-      v => Buffer.from(v, "base64"),
+      (v) => v.toString("base64"),
+      (v) => Buffer.from(v, "base64"),
       (v): v is Buffer => Buffer.isBuffer(v)
     );
   }

@@ -107,7 +107,7 @@ abstract class PluginLoader<TContext = any, TPluginModule extends IPluginModule<
     // (undocumented)
     load: (definition: PluginDefinition, options?: Record<string, any>) => Promise<PluginInstance<TContext, TPluginModule>>;
     // (undocumented)
-    protected resolve: (definition: PluginDefinition, options?: Record<string, any>) => Promise<any>;
+    protected resolve: (definition: PluginDefinition, _?: Record<string, any>) => Promise<any>;
     // (undocumented)
     protected resolver: ResolverFactory;
     // (undocumented)

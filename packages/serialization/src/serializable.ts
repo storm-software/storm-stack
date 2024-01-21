@@ -1,6 +1,6 @@
-import { ClassTypeCheckable, ITyped, isFunction } from "@storm-stack/utilities";
+import { type ClassTypeCheckable, type ITyped, isFunction } from "@storm-stack/utilities";
 import { StormParser } from "./storm-parser";
-import { ClassSerializable, JsonParserResult, JsonValue } from "./types";
+import type { ClassSerializable, JsonParserResult, JsonValue } from "./types";
 
 export const Serializable = <TData = any>(options?: {
   /**
@@ -8,9 +8,7 @@ export const Serializable = <TData = any>(options?: {
    */
   identifier?: string;
 }) => {
-  const decorator = <
-    TClass extends new (...args: any) => any = new (...args: any) => TData
-  >(
+  const decorator = <TClass extends new (..._args: any) => any = new (..._args: any) => TData>(
     target: TClass
   ) => {
     const identifier = options?.identifier ? options?.identifier : target.name;

@@ -1,4 +1,4 @@
-import { ClassTypeCheckable, ITyped } from "@storm-stack/utilities";
+import type { ClassTypeCheckable, ITyped } from "@storm-stack/utilities";
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 export type PrimitiveJsonValue = string | number | boolean | undefined | null;
@@ -18,7 +18,7 @@ export interface JsonObject {
 export type ClassInstance = any;
 
 export type SerializableJsonValue =
-  | Symbol
+  | symbol
   | Set<JsonValue>
   | Map<JsonValue, JsonValue>
   | undefined
@@ -32,12 +32,7 @@ export type Leaf<T> = [T];
 export type InnerNode<T> = [T, Record<string, Tree<T>>];
 
 export type PrimitiveTypeAnnotation = "number" | "undefined" | "bigint";
-export type LeafTypeAnnotation =
-  | PrimitiveTypeAnnotation
-  | "regexp"
-  | "Date"
-  | "Error"
-  | "URL";
+export type LeafTypeAnnotation = PrimitiveTypeAnnotation | "regexp" | "Date" | "Error" | "URL";
 
 export type TypedArrayAnnotation = ["typed-array", string];
 export type ClassTypeAnnotation = ["class", string];
@@ -54,10 +49,7 @@ export type TypeAnnotation = SimpleTypeAnnotation | CompositeTypeAnnotation;
 export interface JsonParserResult {
   json: JsonValue;
   meta?: {
-    values?:
-      | Tree<TypeAnnotation>
-      | Record<string, Tree<TypeAnnotation>>
-      | undefined;
+    values?: Tree<TypeAnnotation> | Record<string, Tree<TypeAnnotation>> | undefined;
     referentialEqualities?:
       | Record<string, string[]>
       | [string[]]
@@ -85,10 +77,9 @@ export interface IJsonParser {
  * @param data - The data object to serialize
  * @returns The serialized JSON object
  */
-export type SerializationFunct<
-  TData = any,
-  TJsonValue extends JsonValue = JsonValue
-> = (data: TData) => TJsonValue;
+export type SerializationFunct<TData = any, TJsonValue extends JsonValue = JsonValue> = (
+  data: TData
+) => TJsonValue;
 
 /**
  * A function that can deserialize a certain type of data
@@ -96,18 +87,14 @@ export type SerializationFunct<
  * @param json - The JSON object to deserialize from
  * @returns The deserialized data
  */
-export type DeserializeFunct<
-  TData = any,
-  TJsonValue extends JsonValue = JsonValue
-> = (json: TJsonValue) => TData;
+export type DeserializeFunct<TData = any, TJsonValue extends JsonValue = JsonValue> = (
+  json: TJsonValue
+) => TData;
 
 /**
  * A class that can be serialized and deserialized
  */
-export interface DataTransformer<
-  TData,
-  TJsonValue extends JsonValue = JsonValue
-> {
+export interface DataTransformer<TData, TJsonValue extends JsonValue = JsonValue> {
   /**
    * Serialize the class to a JSON object
    *
@@ -128,10 +115,7 @@ export interface DataTransformer<
 /**
  * A class that can be serialized and deserialized
  */
-export interface ClassSerializable<
-  TData,
-  TJsonValue extends JsonValue = JsonValue
-> {
+export interface ClassSerializable<_TData, TJsonValue extends JsonValue = JsonValue> {
   /**
    * Serialize the class to a JSON object
    *
@@ -147,10 +131,6 @@ export interface ClassSerializable<
   deserialize: (json: TJsonValue) => void;
 }
 
-export type SerializableType<T> = ClassSerializable<T> &
-  ClassTypeCheckable<T> &
-  ITyped &
-  T;
+export type SerializableType<T> = ClassSerializable<T> & ClassTypeCheckable<T> & ITyped & T;
 
-export type SerializationMetadata<T> = DataTransformer<T> &
-  ClassTypeCheckable<T>;
+export type SerializationMetadata<T> = DataTransformer<T> & ClassTypeCheckable<T>;

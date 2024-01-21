@@ -231,7 +231,7 @@
           "excerptTokens": [
             {
               "kind": "Content",
-              "text": "export interface ClassSerializable<TData, TJsonValue extends "
+              "text": "export interface ClassSerializable<_TData, TJsonValue extends "
             },
             {
               "kind": "Reference",
@@ -256,7 +256,7 @@
           "releaseTag": "Public",
           "typeParameters": [
             {
-              "typeParameterName": "TData",
+              "typeParameterName": "_TData",
               "constraintTokenRange": {
                 "startIndex": 0,
                 "endIndex": 0
@@ -1277,97 +1277,6 @@
           }
         },
         {
-          "kind": "Function",
-          "canonicalReference": "@storm-stack/serialization!parseQueryParam:function(1)",
-          "docComment": "/**\n * Parse the given value with qs using the given metadata\n */\n",
-          "excerptTokens": [
-            {
-              "kind": "Content",
-              "text": "export declare function parseQueryParam<TData = "
-            },
-            {
-              "kind": "Content",
-              "text": "unknown"
-            },
-            {
-              "kind": "Content",
-              "text": ">(strData: "
-            },
-            {
-              "kind": "Content",
-              "text": "string"
-            },
-            {
-              "kind": "Content",
-              "text": ", options?: "
-            },
-            {
-              "kind": "Content",
-              "text": "{\n    comma?: boolean | undefined;\n    delimiter?: string | "
-            },
-            {
-              "kind": "Reference",
-              "text": "RegExp",
-              "canonicalReference": "!RegExp:interface"
-            },
-            {
-              "kind": "Content",
-              "text": " | undefined;\n    depth?: number | false | undefined;\n    arrayLimit?: number | undefined;\n    parseArrays?: boolean | undefined;\n    allowDots?: boolean | undefined;\n    plainObjects?: boolean | undefined;\n    allowPrototypes?: boolean | undefined;\n    parameterLimit?: number | undefined;\n    strictNullHandling?: boolean | undefined;\n    ignoreQueryPrefix?: boolean | undefined;\n    charset?: \"utf-8\" | \"iso-8859-1\" | undefined;\n    charsetSentinel?: boolean | undefined;\n    interpretNumericEntities?: boolean | undefined;\n}"
-            },
-            {
-              "kind": "Content",
-              "text": "): "
-            },
-            {
-              "kind": "Content",
-              "text": "TData"
-            },
-            {
-              "kind": "Content",
-              "text": ";"
-            }
-          ],
-          "fileUrlPath": "tmp/.tsup/declaration/packages/serialization/src/query-params-parser.d.ts",
-          "returnTypeTokenRange": {
-            "startIndex": 9,
-            "endIndex": 10
-          },
-          "releaseTag": "Public",
-          "overloadIndex": 1,
-          "parameters": [
-            {
-              "parameterName": "strData",
-              "parameterTypeTokenRange": {
-                "startIndex": 3,
-                "endIndex": 4
-              },
-              "isOptional": false
-            },
-            {
-              "parameterName": "options",
-              "parameterTypeTokenRange": {
-                "startIndex": 5,
-                "endIndex": 8
-              },
-              "isOptional": true
-            }
-          ],
-          "typeParameters": [
-            {
-              "typeParameterName": "TData",
-              "constraintTokenRange": {
-                "startIndex": 0,
-                "endIndex": 0
-              },
-              "defaultTypeTokenRange": {
-                "startIndex": 1,
-                "endIndex": 2
-              }
-            }
-          ],
-          "name": "parseQueryParam"
-        },
-        {
           "kind": "TypeAlias",
           "canonicalReference": "@storm-stack/serialization!PrimitiveJsonValue:type",
           "docComment": "",
@@ -1430,7 +1339,7 @@
             },
             {
               "kind": "Content",
-              "text": "<TData = any>(options?: {\n    identifier?: string;\n}) => <TClass extends new (...args: any) => any = new (...args: any) => TData>(target: TClass) => {\n    new (...args: any): {\n        [x: string]: any;\n        __typename: string;\n        serialize: () => "
+              "text": "<TData = any>(options?: {\n    identifier?: string;\n}) => <TClass extends new (..._args: any) => any = new (..._args: any) => TData>(target: TClass) => {\n    new (..._args: any): {\n        [x: string]: any;\n        __typename: string;\n        serialize: () => "
             },
             {
               "kind": "Reference",
@@ -1515,13 +1424,8 @@
               "text": "export type SerializableJsonValue = "
             },
             {
-              "kind": "Reference",
-              "text": "Symbol",
-              "canonicalReference": "!Symbol:interface"
-            },
-            {
               "kind": "Content",
-              "text": " | "
+              "text": "symbol | "
             },
             {
               "kind": "Reference",
@@ -1601,7 +1505,7 @@
           "name": "SerializableJsonValue",
           "typeTokenRange": {
             "startIndex": 1,
-            "endIndex": 18
+            "endIndex": 17
           }
         },
         {
@@ -2345,86 +2249,6 @@
             "endIndex": 2
           },
           "implementsTokenRanges": []
-        },
-        {
-          "kind": "Function",
-          "canonicalReference": "@storm-stack/serialization!stringifyQueryParam:function(1)",
-          "docComment": "/**\n * Stringify the given value with qs\n */\n",
-          "excerptTokens": [
-            {
-              "kind": "Content",
-              "text": "export declare function stringifyQueryParam(json: "
-            },
-            {
-              "kind": "Reference",
-              "text": "JsonValue",
-              "canonicalReference": "@storm-stack/serialization!JsonValue:type"
-            },
-            {
-              "kind": "Content",
-              "text": ", options?: "
-            },
-            {
-              "kind": "Content",
-              "text": "{\n    delimiter?: string | undefined;\n    strictNullHandling?: boolean | undefined;\n    skipNulls?: boolean | undefined;\n    encode?: boolean | undefined;\n    filter?: "
-            },
-            {
-              "kind": "Reference",
-              "text": "Array",
-              "canonicalReference": "!Array:interface"
-            },
-            {
-              "kind": "Content",
-              "text": "<string | number> | ((prefix: string, value: any) => any) | undefined;\n    arrayFormat?: \"indices\" | \"brackets\" | \"repeat\" | \"comma\" | undefined;\n    indices?: boolean | undefined;\n    sort?: ((a: any, b: any) => number) | undefined;\n    serializeDate?: ((d: "
-            },
-            {
-              "kind": "Reference",
-              "text": "Date",
-              "canonicalReference": "!Date:interface"
-            },
-            {
-              "kind": "Content",
-              "text": ") => string) | undefined;\n    format?: \"RFC1738\" | \"RFC3986\" | undefined;\n    encodeValuesOnly?: boolean | undefined;\n    addQueryPrefix?: boolean | undefined;\n    charset?: \"utf-8\" | \"iso-8859-1\" | undefined;\n    allowDots?: boolean | undefined;\n    charsetSentinel?: boolean | undefined;\n}"
-            },
-            {
-              "kind": "Content",
-              "text": "): "
-            },
-            {
-              "kind": "Content",
-              "text": "string"
-            },
-            {
-              "kind": "Content",
-              "text": ";"
-            }
-          ],
-          "fileUrlPath": "tmp/.tsup/declaration/packages/serialization/src/query-params-parser.d.ts",
-          "returnTypeTokenRange": {
-            "startIndex": 9,
-            "endIndex": 10
-          },
-          "releaseTag": "Public",
-          "overloadIndex": 1,
-          "parameters": [
-            {
-              "parameterName": "json",
-              "parameterTypeTokenRange": {
-                "startIndex": 1,
-                "endIndex": 2
-              },
-              "isOptional": false
-            },
-            {
-              "parameterName": "options",
-              "parameterTypeTokenRange": {
-                "startIndex": 3,
-                "endIndex": 8
-              },
-              "isOptional": true
-            }
-          ],
-          "name": "stringifyQueryParam"
         },
         {
           "kind": "TypeAlias",

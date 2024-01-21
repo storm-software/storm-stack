@@ -19,7 +19,7 @@ export { ClassInstance }
 export { ClassInstance as ClassInstance_alias_1 }
 
 // @public
-interface ClassSerializable<TData, TJsonValue extends JsonValue = JsonValue> {
+interface ClassSerializable<_TData, TJsonValue extends JsonValue = JsonValue> {
     deserialize: (json: TJsonValue) => void;
     serialize: () => JsonParserResult;
 }
@@ -117,26 +117,6 @@ type LeafTypeAnnotation = PrimitiveTypeAnnotation | "regexp" | "Date" | "Error" 
 export { LeafTypeAnnotation }
 export { LeafTypeAnnotation as LeafTypeAnnotation_alias_1 }
 
-// @public
-function parseQueryParam<TData = unknown>(strData: string, options?: {
-    comma?: boolean | undefined;
-    delimiter?: string | RegExp | undefined;
-    depth?: number | false | undefined;
-    arrayLimit?: number | undefined;
-    parseArrays?: boolean | undefined;
-    allowDots?: boolean | undefined;
-    plainObjects?: boolean | undefined;
-    allowPrototypes?: boolean | undefined;
-    parameterLimit?: number | undefined;
-    strictNullHandling?: boolean | undefined;
-    ignoreQueryPrefix?: boolean | undefined;
-    charset?: "utf-8" | "iso-8859-1" | undefined;
-    charsetSentinel?: boolean | undefined;
-    interpretNumericEntities?: boolean | undefined;
-}): TData;
-export { parseQueryParam }
-export { parseQueryParam as parseQueryParam_alias_1 }
-
 // @public (undocumented)
 type PrimitiveJsonValue = string | number | boolean | undefined | null;
 export { PrimitiveJsonValue }
@@ -150,8 +130,8 @@ export { PrimitiveTypeAnnotation as PrimitiveTypeAnnotation_alias_1 }
 // @public (undocumented)
 const Serializable: <TData = any>(options?: {
     identifier?: string;
-}) => <TClass extends new (...args: any) => any = new (...args: any) => TData>(target: TClass) => {
-    new (...args: any): {
+}) => <TClass extends new (..._args: any) => any = new (..._args: any) => TData>(target: TClass) => {
+    new (..._args: any): {
         [x: string]: any;
         __typename: string;
         serialize: () => JsonParserResult;
@@ -169,7 +149,7 @@ export { Serializable }
 export { Serializable as Serializable_alias_1 }
 
 // @public (undocumented)
-type SerializableJsonValue = Symbol | Set<JsonValue> | Map<JsonValue, JsonValue> | undefined | bigint | Date | ClassInstance | RegExp;
+type SerializableJsonValue = symbol | Set<JsonValue> | Map<JsonValue, JsonValue> | undefined | bigint | Date | ClassInstance | RegExp;
 export { SerializableJsonValue }
 export { SerializableJsonValue as SerializableJsonValue_alias_1 }
 
@@ -209,27 +189,6 @@ class StormParser extends SuperJSON {
 }
 export { StormParser }
 export { StormParser as StormParser_alias_1 }
-
-// @public
-function stringifyQueryParam(json: JsonValue, options?: {
-    delimiter?: string | undefined;
-    strictNullHandling?: boolean | undefined;
-    skipNulls?: boolean | undefined;
-    encode?: boolean | undefined;
-    filter?: Array<string | number> | ((prefix: string, value: any) => any) | undefined;
-    arrayFormat?: "indices" | "brackets" | "repeat" | "comma" | undefined;
-    indices?: boolean | undefined;
-    sort?: ((a: any, b: any) => number) | undefined;
-    serializeDate?: ((d: Date) => string) | undefined;
-    format?: "RFC1738" | "RFC3986" | undefined;
-    encodeValuesOnly?: boolean | undefined;
-    addQueryPrefix?: boolean | undefined;
-    charset?: "utf-8" | "iso-8859-1" | undefined;
-    allowDots?: boolean | undefined;
-    charsetSentinel?: boolean | undefined;
-}): string;
-export { stringifyQueryParam }
-export { stringifyQueryParam as stringifyQueryParam_alias_1 }
 
 // @public (undocumented)
 type SymbolTypeAnnotation = ["symbol", string];
