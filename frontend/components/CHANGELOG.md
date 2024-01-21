@@ -1,9 +1,15 @@
-## [1.6.1](https://github.com/storm-software/storm-stack/compare/frontend-components-v1.6.0...frontend-components-v1.6.1) (2024-01-21)
+## [1.6.2](https://github.com/storm-software/storm-stack/compare/frontend-components-v1.6.1...frontend-components-v1.6.2) (2024-01-21)
 
 
 ### Bug Fixes
 
-* **plugin-system:** Fix linting issues and dependabot warnings ([02e630c](https://github.com/storm-software/storm-stack/commit/02e630cc537e86897e48a3e3c3372b38aa673bb1))
+* **plugin-system:** Resolved build issues ([e790271](https://github.com/storm-software/storm-stack/commit/e790271a9fa23375486a6f348e1cc1665a4a8361))
+
+## [1.6.1](https://github.com/storm-software/storm-stack/compare/frontend-components-v1.6.0...frontend-components-v1.6.1) (2024-01-21)
+
+### Bug Fixes
+
+-   **plugin-system:** Fix linting issues and dependabot warnings ([02e630c](https://github.com/storm-software/storm-stack/commit/02e630cc537e86897e48a3e3c3372b38aa673bb1))
 
 # [1.6.0](https://github.com/storm-software/storm-stack/compare/frontend-components-v1.5.2...frontend-components-v1.6.0) (2024-01-21)
 
