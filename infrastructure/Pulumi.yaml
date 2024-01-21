@@ -1,3 +1,0 @@
-name: storm-stack
-runtime: nodejs
-description: A minimal AWS TypeScript Pulumi program

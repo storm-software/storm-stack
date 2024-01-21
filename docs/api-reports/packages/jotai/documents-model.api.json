@@ -221,7 +221,7 @@
               "text": ";"
             }
           ],
-          "fileUrlPath": "packages/jotai/src/atoms/atom-with-effect.ts",
+          "fileUrlPath": "tmp/.tsup/declaration/packages/jotai/src/atoms/atom-with-effect.d.ts",
           "returnTypeTokenRange": {
             "startIndex": 8,
             "endIndex": 9
@@ -267,7 +267,7 @@
               "text": ";"
             }
           ],
-          "fileUrlPath": "packages/jotai/src/utilities/create-atom-store.ts",
+          "fileUrlPath": "tmp/.tsup/declaration/packages/jotai/src/utilities/create-atom-store.d.ts",
           "releaseTag": "Public",
           "name": "AtomRecord",
           "typeParameters": [
@@ -433,7 +433,7 @@
               "text": ";"
             }
           ],
-          "fileUrlPath": "packages/jotai/src/utilities/create-atom-store.ts",
+          "fileUrlPath": "tmp/.tsup/declaration/packages/jotai/src/utilities/create-atom-store.d.ts",
           "releaseTag": "Public",
           "name": "AtomStoreApi",
           "typeParameters": [
@@ -510,7 +510,7 @@
               "text": ";"
             }
           ],
-          "fileUrlPath": "packages/jotai/src/atoms/atom-with-broadcast.ts",
+          "fileUrlPath": "tmp/.tsup/declaration/packages/jotai/src/atoms/atom-with-broadcast.d.ts",
           "returnTypeTokenRange": {
             "startIndex": 5,
             "endIndex": 6
@@ -584,7 +584,7 @@
               "text": ";"
             }
           ],
-          "fileUrlPath": "packages/jotai/src/atoms/atom-with-compare.ts",
+          "fileUrlPath": "tmp/.tsup/declaration/packages/jotai/src/atoms/atom-with-compare.d.ts",
           "returnTypeTokenRange": {
             "startIndex": 5,
             "endIndex": 6
@@ -675,7 +675,7 @@
               "text": ";"
             }
           ],
-          "fileUrlPath": "packages/jotai/src/atoms/atom-with-debounce.ts",
+          "fileUrlPath": "tmp/.tsup/declaration/packages/jotai/src/atoms/atom-with-debounce.d.ts",
           "returnTypeTokenRange": {
             "startIndex": 7,
             "endIndex": 10
@@ -785,7 +785,7 @@
               "text": ";"
             }
           ],
-          "fileUrlPath": "packages/jotai/src/atoms/atom-with-listeners.ts",
+          "fileUrlPath": "tmp/.tsup/declaration/packages/jotai/src/atoms/atom-with-listeners.d.ts",
           "returnTypeTokenRange": {
             "startIndex": 5,
             "endIndex": 12
@@ -831,7 +831,7 @@
               "text": "<Value>() => import(\"jotai/vanilla\").PrimitiveAtom<Value> & {\n    init: Value;\n}"
             }
           ],
-          "fileUrlPath": "packages/jotai/src/atoms/atom-with-pending.ts",
+          "fileUrlPath": "tmp/.tsup/declaration/packages/jotai/src/atoms/atom-with-pending.d.ts",
           "isReadonly": true,
           "releaseTag": "Public",
           "name": "atomWithPending",
@@ -875,7 +875,7 @@
               "text": ";"
             }
           ],
-          "fileUrlPath": "packages/jotai/src/atoms/atom-with-refresh.ts",
+          "fileUrlPath": "tmp/.tsup/declaration/packages/jotai/src/atoms/atom-with-refresh.d.ts",
           "returnTypeTokenRange": {
             "startIndex": 5,
             "endIndex": 6
@@ -939,7 +939,7 @@
               "text": ") => TValue) => import(\"jotai\").WritableAtom<TValue, [update: TValue], void>"
             }
           ],
-          "fileUrlPath": "packages/jotai/src/atoms/atom-with-refresh-and-default.ts",
+          "fileUrlPath": "tmp/.tsup/declaration/packages/jotai/src/atoms/atom-with-refresh-and-default.d.ts",
           "isReadonly": true,
           "releaseTag": "Public",
           "name": "atomWithRefreshAndDefault",
@@ -979,7 +979,7 @@
               "text": ";"
             }
           ],
-          "fileUrlPath": "packages/jotai/src/atoms/atom-with-toggle.ts",
+          "fileUrlPath": "tmp/.tsup/declaration/packages/jotai/src/atoms/atom-with-toggle.d.ts",
           "returnTypeTokenRange": {
             "startIndex": 3,
             "endIndex": 5
@@ -1076,7 +1076,7 @@
               "text": ";"
             }
           ],
-          "fileUrlPath": "packages/jotai/src/atoms/atom-with-web-storage.ts",
+          "fileUrlPath": "tmp/.tsup/declaration/packages/jotai/src/atoms/atom-with-web-storage.d.ts",
           "returnTypeTokenRange": {
             "startIndex": 12,
             "endIndex": 16
@@ -1147,7 +1147,7 @@
               "text": "<TValue, [TValue], void>"
             }
           ],
-          "fileUrlPath": "packages/jotai/src/atoms/atom-with-wrapper.ts",
+          "fileUrlPath": "tmp/.tsup/declaration/packages/jotai/src/atoms/atom-with-wrapper.d.ts",
           "isReadonly": true,
           "releaseTag": "Public",
           "name": "atomWithWrapper",
@@ -1192,7 +1192,7 @@
               "text": ";"
             }
           ],
-          "fileUrlPath": "packages/jotai/src/atoms/atom-with-listeners.ts",
+          "fileUrlPath": "tmp/.tsup/declaration/packages/jotai/src/atoms/atom-with-listeners.d.ts",
           "releaseTag": "Public",
           "name": "Callback",
           "typeParameters": [
@@ -1259,7 +1259,7 @@
               "canonicalReference": "@types/react!JSX.Element:interface"
             }
           ],
-          "fileUrlPath": "packages/jotai/src/utilities/create-atom-provider.tsx",
+          "fileUrlPath": "tmp/.tsup/declaration/packages/jotai/src/utilities/create-atom-provider.d.ts",
           "isReadonly": true,
           "releaseTag": "Public",
           "name": "createAtomProvider",
@@ -1309,7 +1309,7 @@
               "text": "<T, E, N>"
             }
           ],
-          "fileUrlPath": "packages/jotai/src/utilities/create-atom-store.ts",
+          "fileUrlPath": "tmp/.tsup/declaration/packages/jotai/src/utilities/create-atom-store.d.ts",
           "isReadonly": true,
           "releaseTag": "Public",
           "name": "createAtomStore",
@@ -1357,7 +1357,7 @@
               "text": "> "
             }
           ],
-          "fileUrlPath": "packages/jotai/src/utilities/create-atom-store.ts",
+          "fileUrlPath": "tmp/.tsup/declaration/packages/jotai/src/utilities/create-atom-store.d.ts",
           "releaseTag": "Public",
           "typeParameters": [
             {
@@ -1581,7 +1581,7 @@
               "text": ";"
             }
           ],
-          "fileUrlPath": "packages/jotai/src/utilities/create-web-storage.ts",
+          "fileUrlPath": "tmp/.tsup/declaration/packages/jotai/src/utilities/create-web-storage.d.ts",
           "returnTypeTokenRange": {
             "startIndex": 7,
             "endIndex": 11
@@ -1640,7 +1640,7 @@
               "text": ";"
             }
           ],
-          "fileUrlPath": "packages/jotai/src/utilities/create-atom-store.ts",
+          "fileUrlPath": "tmp/.tsup/declaration/packages/jotai/src/utilities/create-atom-store.d.ts",
           "releaseTag": "Public",
           "name": "FilterWritableAtoms",
           "typeParameters": [
@@ -1697,7 +1697,7 @@
               "text": ";"
             }
           ],
-          "fileUrlPath": "packages/jotai/src/utilities/create-atom-store.ts",
+          "fileUrlPath": "tmp/.tsup/declaration/packages/jotai/src/utilities/create-atom-store.d.ts",
           "releaseTag": "Public",
           "name": "GetAtomFn",
           "typeTokenRange": {
@@ -1741,7 +1741,7 @@
               "text": ";"
             }
           ],
-          "fileUrlPath": "packages/jotai/src/utilities/create-atom-store.ts",
+          "fileUrlPath": "tmp/.tsup/declaration/packages/jotai/src/utilities/create-atom-store.d.ts",
           "releaseTag": "Public",
           "name": "GetRecord",
           "typeParameters": [
@@ -1808,7 +1808,7 @@
               "canonicalReference": "@types/react!JSX.Element:interface"
             }
           ],
-          "fileUrlPath": "packages/jotai/src/utilities/create-atom-provider.tsx",
+          "fileUrlPath": "tmp/.tsup/declaration/packages/jotai/src/utilities/create-atom-provider.d.ts",
           "isReadonly": true,
           "releaseTag": "Public",
           "name": "HydrateAtoms",
@@ -1849,7 +1849,7 @@
               "text": "<TValue>"
             }
           ],
-          "fileUrlPath": "packages/jotai/src/utilities/is-atom.ts",
+          "fileUrlPath": "tmp/.tsup/declaration/packages/jotai/src/utilities/is-atom.d.ts",
           "isReadonly": true,
           "releaseTag": "Public",
           "name": "isAtom",
@@ -1890,7 +1890,7 @@
               "text": "<TValue, TArgs, TResult>"
             }
           ],
-          "fileUrlPath": "packages/jotai/src/utilities/is-atom.ts",
+          "fileUrlPath": "tmp/.tsup/declaration/packages/jotai/src/utilities/is-atom.d.ts",
           "isReadonly": true,
           "releaseTag": "Public",
           "name": "isWritableAtom",
@@ -1931,7 +1931,7 @@
               "text": ";"
             }
           ],
-          "fileUrlPath": "packages/jotai/src/utilities/create-atom-store.ts",
+          "fileUrlPath": "tmp/.tsup/declaration/packages/jotai/src/utilities/create-atom-store.d.ts",
           "releaseTag": "Public",
           "name": "JotaiStore",
           "typeTokenRange": {
@@ -1988,7 +1988,7 @@
               "text": ";"
             }
           ],
-          "fileUrlPath": "packages/jotai/src/utilities/create-atom-provider.tsx",
+          "fileUrlPath": "tmp/.tsup/declaration/packages/jotai/src/utilities/create-atom-provider.d.ts",
           "releaseTag": "Public",
           "name": "ProviderProps",
           "typeParameters": [
@@ -2032,7 +2032,7 @@
               "text": "<unknown>, label: string) => void"
             }
           ],
-          "fileUrlPath": "packages/jotai/src/utilities/set-atom-debug.ts",
+          "fileUrlPath": "tmp/.tsup/declaration/packages/jotai/src/utilities/set-atom-debug.d.ts",
           "isReadonly": true,
           "releaseTag": "Public",
           "name": "setAtomDebugLabel",
@@ -2077,7 +2077,7 @@
               "text": ";"
             }
           ],
-          "fileUrlPath": "packages/jotai/src/utilities/create-atom-store.ts",
+          "fileUrlPath": "tmp/.tsup/declaration/packages/jotai/src/utilities/create-atom-store.d.ts",
           "releaseTag": "Public",
           "name": "SetAtomFn",
           "typeTokenRange": {
@@ -2108,7 +2108,7 @@
               "text": "<unknown>) => void"
             }
           ],
-          "fileUrlPath": "packages/jotai/src/utilities/set-atom-debug.ts",
+          "fileUrlPath": "tmp/.tsup/declaration/packages/jotai/src/utilities/set-atom-debug.d.ts",
           "isReadonly": true,
           "releaseTag": "Public",
           "name": "setAtomPrivate",
@@ -2153,7 +2153,7 @@
               "text": ";"
             }
           ],
-          "fileUrlPath": "packages/jotai/src/utilities/create-atom-store.ts",
+          "fileUrlPath": "tmp/.tsup/declaration/packages/jotai/src/utilities/create-atom-store.d.ts",
           "releaseTag": "Public",
           "name": "SetRecord",
           "typeParameters": [
@@ -2197,7 +2197,7 @@
               "text": ";"
             }
           ],
-          "fileUrlPath": "packages/jotai/src/utilities/create-atom-store.ts",
+          "fileUrlPath": "tmp/.tsup/declaration/packages/jotai/src/utilities/create-atom-store.d.ts",
           "releaseTag": "Public",
           "name": "SimpleWritableAtom",
           "typeParameters": [
@@ -2245,7 +2245,7 @@
               "text": ";"
             }
           ],
-          "fileUrlPath": "packages/jotai/src/utilities/create-atom-store.ts",
+          "fileUrlPath": "tmp/.tsup/declaration/packages/jotai/src/utilities/create-atom-store.d.ts",
           "releaseTag": "Public",
           "name": "SimpleWritableAtomRecord",
           "typeParameters": [
@@ -2330,7 +2330,7 @@
               "text": ";"
             }
           ],
-          "fileUrlPath": "packages/jotai/src/utilities/create-atom-store.ts",
+          "fileUrlPath": "tmp/.tsup/declaration/packages/jotai/src/utilities/create-atom-store.d.ts",
           "releaseTag": "Public",
           "name": "StoreApi",
           "typeParameters": [
@@ -2396,7 +2396,7 @@
               "text": ";"
             }
           ],
-          "fileUrlPath": "packages/jotai/src/utilities/create-atom-store.ts",
+          "fileUrlPath": "tmp/.tsup/declaration/packages/jotai/src/utilities/create-atom-store.d.ts",
           "releaseTag": "Public",
           "name": "StoreAtoms",
           "typeParameters": [
@@ -2464,7 +2464,7 @@
               "text": ";"
             }
           ],
-          "fileUrlPath": "packages/jotai/src/utilities/create-atom-store.ts",
+          "fileUrlPath": "tmp/.tsup/declaration/packages/jotai/src/utilities/create-atom-store.d.ts",
           "releaseTag": "Public",
           "name": "StoreAtomsWithoutExtend",
           "typeParameters": [
@@ -2521,7 +2521,7 @@
               "text": ";"
             }
           ],
-          "fileUrlPath": "packages/jotai/src/utilities/create-atom-store.ts",
+          "fileUrlPath": "tmp/.tsup/declaration/packages/jotai/src/utilities/create-atom-store.d.ts",
           "releaseTag": "Public",
           "name": "UseAtomFn",
           "typeTokenRange": {
@@ -2556,7 +2556,7 @@
               "text": ";"
             }
           ],
-          "fileUrlPath": "packages/jotai/src/utilities/create-atom-store.ts",
+          "fileUrlPath": "tmp/.tsup/declaration/packages/jotai/src/utilities/create-atom-store.d.ts",
           "releaseTag": "Public",
           "name": "UseAtomOptions",
           "typeTokenRange": {
@@ -2587,7 +2587,7 @@
               "text": ";"
             }
           ],
-          "fileUrlPath": "packages/jotai/src/utilities/create-atom-store.ts",
+          "fileUrlPath": "tmp/.tsup/declaration/packages/jotai/src/utilities/create-atom-store.d.ts",
           "releaseTag": "Public",
           "name": "UseAtomOptionsOrScope",
           "typeTokenRange": {
@@ -2618,7 +2618,7 @@
               "text": " | undefined"
             }
           ],
-          "fileUrlPath": "packages/jotai/src/utilities/create-atom-provider.tsx",
+          "fileUrlPath": "tmp/.tsup/declaration/packages/jotai/src/utilities/create-atom-provider.d.ts",
           "isReadonly": true,
           "releaseTag": "Public",
           "name": "useAtomStore",
@@ -2681,7 +2681,7 @@
               "text": ";"
             }
           ],
-          "fileUrlPath": "packages/jotai/src/utilities/create-atom-store.ts",
+          "fileUrlPath": "tmp/.tsup/declaration/packages/jotai/src/utilities/create-atom-store.d.ts",
           "releaseTag": "Public",
           "name": "UseHydrateAtoms",
           "typeParameters": [
@@ -2761,7 +2761,7 @@
               "text": "<any>>[1]) => void"
             }
           ],
-          "fileUrlPath": "packages/jotai/src/hooks/use-hydrate-store.ts",
+          "fileUrlPath": "tmp/.tsup/declaration/packages/jotai/src/hooks/use-hydrate-store.d.ts",
           "isReadonly": true,
           "releaseTag": "Public",
           "name": "useHydrateStore",
@@ -2810,7 +2810,7 @@
               "text": ";"
             }
           ],
-          "fileUrlPath": "packages/jotai/src/hooks/use-prepare-atoms.ts",
+          "fileUrlPath": "tmp/.tsup/declaration/packages/jotai/src/hooks/use-prepare-atoms.d.ts",
           "returnTypeTokenRange": {
             "startIndex": 6,
             "endIndex": 7
@@ -2873,7 +2873,7 @@
               "text": ";"
             }
           ],
-          "fileUrlPath": "packages/jotai/src/utilities/create-atom-store.ts",
+          "fileUrlPath": "tmp/.tsup/declaration/packages/jotai/src/utilities/create-atom-store.d.ts",
           "releaseTag": "Public",
           "name": "UseRecord",
           "typeParameters": [
@@ -3020,7 +3020,7 @@
               "text": ";"
             }
           ],
-          "fileUrlPath": "packages/jotai/src/utilities/create-atom-store.ts",
+          "fileUrlPath": "tmp/.tsup/declaration/packages/jotai/src/utilities/create-atom-store.d.ts",
           "releaseTag": "Public",
           "name": "UseStoreApi",
           "typeParameters": [
@@ -3097,7 +3097,7 @@
               "text": ";"
             }
           ],
-          "fileUrlPath": "packages/jotai/src/utilities/create-atom-store.ts",
+          "fileUrlPath": "tmp/.tsup/declaration/packages/jotai/src/utilities/create-atom-store.d.ts",
           "releaseTag": "Public",
           "name": "UseSyncAtoms",
           "typeParameters": [
@@ -3159,7 +3159,7 @@
               "text": "<any>>[1]) => void"
             }
           ],
-          "fileUrlPath": "packages/jotai/src/hooks/use-sync-store.ts",
+          "fileUrlPath": "tmp/.tsup/declaration/packages/jotai/src/hooks/use-sync-store.d.ts",
           "isReadonly": true,
           "releaseTag": "Public",
           "name": "useSyncStore",
@@ -3200,7 +3200,7 @@
               "text": ";"
             }
           ],
-          "fileUrlPath": "packages/jotai/src/utilities/create-atom-store.ts",
+          "fileUrlPath": "tmp/.tsup/declaration/packages/jotai/src/utilities/create-atom-store.d.ts",
           "releaseTag": "Public",
           "name": "WritableStoreAtoms",
           "typeParameters": [

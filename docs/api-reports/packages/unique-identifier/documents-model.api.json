@@ -191,7 +191,7 @@
               "text": " | undefined"
             }
           ],
-          "fileUrlPath": "packages/unique-identifier/src/crypto.ts",
+          "fileUrlPath": "tmp/.tsup/declaration/packages/unique-identifier/src/crypto.d.ts",
           "isReadonly": true,
           "releaseTag": "Public",
           "name": "Crypto_2",
@@ -218,7 +218,7 @@
               "text": ";"
             }
           ],
-          "fileUrlPath": "packages/unique-identifier/src/cuid.ts",
+          "fileUrlPath": "tmp/.tsup/declaration/packages/unique-identifier/src/cuid.d.ts",
           "returnTypeTokenRange": {
             "startIndex": 1,
             "endIndex": 2
@@ -238,7 +238,7 @@
               "text": "export interface DeconstructedSnowflake "
             }
           ],
-          "fileUrlPath": "packages/unique-identifier/src/snowflake.ts",
+          "fileUrlPath": "tmp/.tsup/declaration/packages/unique-identifier/src/snowflake.d.ts",
           "releaseTag": "Public",
           "name": "DeconstructedSnowflake",
           "preserveMemberOrder": false,
@@ -410,7 +410,7 @@
               "text": ";"
             }
           ],
-          "fileUrlPath": "packages/unique-identifier/src/snowflake.ts",
+          "fileUrlPath": "tmp/.tsup/declaration/packages/unique-identifier/src/snowflake.d.ts",
           "returnTypeTokenRange": {
             "startIndex": 3,
             "endIndex": 4
@@ -455,7 +455,7 @@
               "text": ";"
             }
           ],
-          "fileUrlPath": "packages/unique-identifier/src/hash.ts",
+          "fileUrlPath": "tmp/.tsup/declaration/packages/unique-identifier/src/hash.d.ts",
           "returnTypeTokenRange": {
             "startIndex": 3,
             "endIndex": 4
@@ -484,7 +484,7 @@
               "text": "export interface ISnowflakeGeneratorOptions "
             }
           ],
-          "fileUrlPath": "packages/unique-identifier/src/snowflake.ts",
+          "fileUrlPath": "tmp/.tsup/declaration/packages/unique-identifier/src/snowflake.d.ts",
           "releaseTag": "Public",
           "name": "ISnowflakeGeneratorOptions",
           "preserveMemberOrder": false,
@@ -604,7 +604,7 @@
               "text": ";"
             }
           ],
-          "fileUrlPath": "packages/unique-identifier/src/snowflake.ts",
+          "fileUrlPath": "tmp/.tsup/declaration/packages/unique-identifier/src/snowflake.d.ts",
           "returnTypeTokenRange": {
             "startIndex": 3,
             "endIndex": 4
@@ -637,7 +637,7 @@
               "text": "(maximum: number, minimum?: number) => number"
             }
           ],
-          "fileUrlPath": "packages/unique-identifier/src/random.ts",
+          "fileUrlPath": "tmp/.tsup/declaration/packages/unique-identifier/src/random.d.ts",
           "isReadonly": true,
           "releaseTag": "Public",
           "name": "randomInteger",
@@ -660,7 +660,7 @@
               "text": "(random?: () => number) => string | undefined"
             }
           ],
-          "fileUrlPath": "packages/unique-identifier/src/random.ts",
+          "fileUrlPath": "tmp/.tsup/declaration/packages/unique-identifier/src/random.d.ts",
           "isReadonly": true,
           "releaseTag": "Public",
           "name": "randomLetter",
@@ -696,7 +696,7 @@
               "text": ";"
             }
           ],
-          "fileUrlPath": "packages/unique-identifier/src/snowflake.ts",
+          "fileUrlPath": "tmp/.tsup/declaration/packages/unique-identifier/src/snowflake.d.ts",
           "returnTypeTokenRange": {
             "startIndex": 3,
             "endIndex": 4
@@ -733,7 +733,7 @@
               "text": ";"
             }
           ],
-          "fileUrlPath": "packages/unique-identifier/src/snowflake.ts",
+          "fileUrlPath": "tmp/.tsup/declaration/packages/unique-identifier/src/snowflake.d.ts",
           "releaseTag": "Public",
           "name": "SnowflakeResolvable",
           "typeTokenRange": {
@@ -759,7 +759,7 @@
               "text": ";"
             }
           ],
-          "fileUrlPath": "packages/unique-identifier/src/uuid.ts",
+          "fileUrlPath": "tmp/.tsup/declaration/packages/unique-identifier/src/uuid.d.ts",
           "returnTypeTokenRange": {
             "startIndex": 1,
             "endIndex": 2

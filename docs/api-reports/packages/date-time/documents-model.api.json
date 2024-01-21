@@ -195,7 +195,7 @@
               "text": ";"
             }
           ],
-          "fileUrlPath": "packages/date-time/src/errors.ts",
+          "fileUrlPath": "tmp/.tsup/declaration/packages/date-time/src/errors.d.ts",
           "releaseTag": "Public",
           "name": "DateTimeErrorCode",
           "typeTokenRange": {
@@ -397,7 +397,7 @@
               "text": ";\n}"
             }
           ],
-          "fileUrlPath": "packages/date-time/src/errors.ts",
+          "fileUrlPath": "tmp/.tsup/declaration/packages/date-time/src/errors.d.ts",
           "isReadonly": true,
           "releaseTag": "Public",
           "name": "DateTimeErrorCode",
@@ -447,7 +447,7 @@
               "text": ";"
             }
           ],
-          "fileUrlPath": "packages/date-time/src/storm-date-time.ts",
+          "fileUrlPath": "tmp/.tsup/declaration/packages/date-time/src/storm-date-time.d.ts",
           "releaseTag": "Public",
           "name": "DateTimeInput",
           "typeTokenRange": {
@@ -465,7 +465,7 @@
               "text": "export interface DateTimeOptions "
             }
           ],
-          "fileUrlPath": "packages/date-time/src/storm-date-time.ts",
+          "fileUrlPath": "tmp/.tsup/declaration/packages/date-time/src/storm-date-time.d.ts",
           "releaseTag": "Public",
           "name": "DateTimeOptions",
           "preserveMemberOrder": false,
@@ -584,7 +584,7 @@
               "text": ";"
             }
           ],
-          "fileUrlPath": "packages/date-time/src/storm-date.ts",
+          "fileUrlPath": "tmp/.tsup/declaration/packages/date-time/src/storm-date.d.ts",
           "returnTypeTokenRange": {
             "startIndex": 3,
             "endIndex": 4
@@ -631,7 +631,7 @@
               "text": ";"
             }
           ],
-          "fileUrlPath": "packages/date-time/src/storm-date-time.ts",
+          "fileUrlPath": "tmp/.tsup/declaration/packages/date-time/src/storm-date-time.d.ts",
           "returnTypeTokenRange": {
             "startIndex": 3,
             "endIndex": 4
@@ -678,7 +678,7 @@
               "text": ";"
             }
           ],
-          "fileUrlPath": "packages/date-time/src/storm-time.ts",
+          "fileUrlPath": "tmp/.tsup/declaration/packages/date-time/src/storm-time.d.ts",
           "returnTypeTokenRange": {
             "startIndex": 3,
             "endIndex": 4
@@ -738,7 +738,7 @@
               "text": ">) => string"
             }
           ],
-          "fileUrlPath": "packages/date-time/src/utilities/format-date.ts",
+          "fileUrlPath": "tmp/.tsup/declaration/packages/date-time/src/utilities/format-date.d.ts",
           "isReadonly": true,
           "releaseTag": "Public",
           "name": "formatDate",
@@ -788,7 +788,7 @@
               "text": ">) => string"
             }
           ],
-          "fileUrlPath": "packages/date-time/src/utilities/format-date-time.ts",
+          "fileUrlPath": "tmp/.tsup/declaration/packages/date-time/src/utilities/format-date-time.d.ts",
           "isReadonly": true,
           "releaseTag": "Public",
           "name": "formatDateTime",
@@ -838,7 +838,7 @@
               "text": ">) => string"
             }
           ],
-          "fileUrlPath": "packages/date-time/src/utilities/format-date-time-iso.ts",
+          "fileUrlPath": "tmp/.tsup/declaration/packages/date-time/src/utilities/format-date-time-iso.d.ts",
           "isReadonly": true,
           "releaseTag": "Public",
           "name": "formatDateTimeISO",
@@ -897,7 +897,7 @@
               "text": ") => string"
             }
           ],
-          "fileUrlPath": "packages/date-time/src/utilities/format-since.ts",
+          "fileUrlPath": "tmp/.tsup/declaration/packages/date-time/src/utilities/format-since.d.ts",
           "isReadonly": true,
           "releaseTag": "Public",
           "name": "formatSince",
@@ -924,7 +924,7 @@
               "text": ";"
             }
           ],
-          "fileUrlPath": "packages/date-time/src/utilities/format-since.ts",
+          "fileUrlPath": "tmp/.tsup/declaration/packages/date-time/src/utilities/format-since.d.ts",
           "releaseTag": "Public",
           "name": "FormatSinceOptions",
           "typeTokenRange": {
@@ -973,7 +973,7 @@
               "text": ">) => string"
             }
           ],
-          "fileUrlPath": "packages/date-time/src/utilities/format-time.ts",
+          "fileUrlPath": "tmp/.tsup/declaration/packages/date-time/src/utilities/format-time.d.ts",
           "isReadonly": true,
           "releaseTag": "Public",
           "name": "formatTime",
@@ -1018,7 +1018,7 @@
               "text": ";"
             }
           ],
-          "fileUrlPath": "packages/date-time/src/utilities/is-date-time.ts",
+          "fileUrlPath": "tmp/.tsup/declaration/packages/date-time/src/utilities/is-date-time.d.ts",
           "returnTypeTokenRange": {
             "startIndex": 3,
             "endIndex": 6
@@ -1073,7 +1073,7 @@
               "text": ";"
             }
           ],
-          "fileUrlPath": "packages/date-time/src/utilities/is-instant.ts",
+          "fileUrlPath": "tmp/.tsup/declaration/packages/date-time/src/utilities/is-instant.d.ts",
           "returnTypeTokenRange": {
             "startIndex": 3,
             "endIndex": 6
@@ -1107,7 +1107,7 @@
               "canonicalReference": "!RegExp:interface"
             }
           ],
-          "fileUrlPath": "packages/date-time/src/constants.ts",
+          "fileUrlPath": "tmp/.tsup/declaration/packages/date-time/src/constants.d.ts",
           "isReadonly": true,
           "releaseTag": "Public",
           "name": "RFC_3339_DATE_REGEX",
@@ -1131,7 +1131,7 @@
               "canonicalReference": "!RegExp:interface"
             }
           ],
-          "fileUrlPath": "packages/date-time/src/constants.ts",
+          "fileUrlPath": "tmp/.tsup/declaration/packages/date-time/src/constants.d.ts",
           "isReadonly": true,
           "releaseTag": "Public",
           "name": "RFC_3339_DATETIME_REGEX",
@@ -1155,7 +1155,7 @@
               "canonicalReference": "!RegExp:interface"
             }
           ],
-          "fileUrlPath": "packages/date-time/src/constants.ts",
+          "fileUrlPath": "tmp/.tsup/declaration/packages/date-time/src/constants.d.ts",
           "isReadonly": true,
           "releaseTag": "Public",
           "name": "RFC_3339_TIME_REGEX",
@@ -1191,7 +1191,7 @@
               "text": ";"
             }
           ],
-          "fileUrlPath": "packages/date-time/src/storm-date.ts",
+          "fileUrlPath": "tmp/.tsup/declaration/packages/date-time/src/storm-date.d.ts",
           "returnTypeTokenRange": {
             "startIndex": 3,
             "endIndex": 4
@@ -1237,7 +1237,7 @@
               "text": ";"
             }
           ],
-          "fileUrlPath": "packages/date-time/src/storm-date-time.ts",
+          "fileUrlPath": "tmp/.tsup/declaration/packages/date-time/src/storm-date-time.d.ts",
           "returnTypeTokenRange": {
             "startIndex": 3,
             "endIndex": 4
@@ -1283,7 +1283,7 @@
               "text": ";"
             }
           ],
-          "fileUrlPath": "packages/date-time/src/storm-time.ts",
+          "fileUrlPath": "tmp/.tsup/declaration/packages/date-time/src/storm-time.d.ts",
           "returnTypeTokenRange": {
             "startIndex": 3,
             "endIndex": 4
@@ -1321,7 +1321,7 @@
               "text": " "
             }
           ],
-          "fileUrlPath": "packages/date-time/src/storm-date.ts",
+          "fileUrlPath": "tmp/.tsup/declaration/packages/date-time/src/storm-date.d.ts",
           "releaseTag": "Public",
           "isAbstract": false,
           "name": "StormDate",
@@ -1978,7 +1978,7 @@
               "text": " "
             }
           ],
-          "fileUrlPath": "packages/date-time/src/storm-date-time.ts",
+          "fileUrlPath": "tmp/.tsup/declaration/packages/date-time/src/storm-date-time.d.ts",
           "releaseTag": "Public",
           "isAbstract": false,
           "name": "StormDateTime",
@@ -4356,7 +4356,7 @@
               "text": " "
             }
           ],
-          "fileUrlPath": "packages/date-time/src/storm-time.ts",
+          "fileUrlPath": "tmp/.tsup/declaration/packages/date-time/src/storm-time.d.ts",
           "releaseTag": "Public",
           "isAbstract": false,
           "name": "StormTime",
@@ -4935,7 +4935,7 @@
               "text": ";"
             }
           ],
-          "fileUrlPath": "packages/date-time/src/utilities/validate-date.ts",
+          "fileUrlPath": "tmp/.tsup/declaration/packages/date-time/src/utilities/validate-date.d.ts",
           "returnTypeTokenRange": {
             "startIndex": 5,
             "endIndex": 6
@@ -4998,7 +4998,7 @@
               "text": ";"
             }
           ],
-          "fileUrlPath": "packages/date-time/src/utilities/validate-date-time.ts",
+          "fileUrlPath": "tmp/.tsup/declaration/packages/date-time/src/utilities/validate-date-time.d.ts",
           "returnTypeTokenRange": {
             "startIndex": 5,
             "endIndex": 6
@@ -5061,7 +5061,7 @@
               "text": ";"
             }
           ],
-          "fileUrlPath": "packages/date-time/src/utilities/validate-time.ts",
+          "fileUrlPath": "tmp/.tsup/declaration/packages/date-time/src/utilities/validate-time.d.ts",
           "returnTypeTokenRange": {
             "startIndex": 5,
             "endIndex": 6

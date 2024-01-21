@@ -13,6 +13,8 @@
         "tsConfig": "packages/plugin-system/tsconfig.json",
         "project": "packages/plugin-system/package.json",
         "defaultConfiguration": "production",
+        "skipNativeModulesPlugin": true,
+        "platform": "node",
         "assets": [
           {
             "input": "packages/plugin-system",
@@ -24,8 +26,7 @@
             "glob": "LICENSE",
             "output": "/"
           }
-        ],
-        "platform": "node"
+        ]
       },
       "configurations": {
         "production": {

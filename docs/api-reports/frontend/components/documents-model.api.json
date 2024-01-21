@@ -195,7 +195,7 @@
               "text": ";"
             }
           ],
-          "fileUrlPath": "frontend/components/src/global.ts",
+          "fileUrlPath": "tmp/.tsup/declaration/frontend/components/src/global.d.ts",
           "releaseTag": "Public",
           "name": "Conf",
           "typeTokenRange": {
@@ -217,7 +217,7 @@
               "text": "any"
             }
           ],
-          "fileUrlPath": "frontend/components/src/tamagui.config.ts",
+          "fileUrlPath": "tmp/.tsup/declaration/frontend/components/src/tamagui.config.d.ts",
           "isReadonly": true,
           "releaseTag": "Public",
           "name": "config",

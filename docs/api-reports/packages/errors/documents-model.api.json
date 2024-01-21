@@ -224,7 +224,7 @@
               "text": ";"
             }
           ],
-          "fileUrlPath": "packages/errors/src/utilities/create-storm-error.ts",
+          "fileUrlPath": "tmp/.tsup/declaration/packages/errors/src/utilities/create-storm-error.d.ts",
           "returnTypeTokenRange": {
             "startIndex": 8,
             "endIndex": 10
@@ -284,7 +284,7 @@
               "text": ";"
             }
           ],
-          "fileUrlPath": "packages/errors/src/utilities/serialization.ts",
+          "fileUrlPath": "tmp/.tsup/declaration/packages/errors/src/utilities/serialization.d.ts",
           "returnTypeTokenRange": {
             "startIndex": 3,
             "endIndex": 4
@@ -321,7 +321,7 @@
               "text": ";"
             }
           ],
-          "fileUrlPath": "packages/errors/src/errors.ts",
+          "fileUrlPath": "tmp/.tsup/declaration/packages/errors/src/errors.d.ts",
           "releaseTag": "Public",
           "name": "ErrorCode",
           "typeTokenRange": {
@@ -496,7 +496,7 @@
               "text": ";\n}"
             }
           ],
-          "fileUrlPath": "packages/errors/src/errors.ts",
+          "fileUrlPath": "tmp/.tsup/declaration/packages/errors/src/errors.d.ts",
           "isReadonly": true,
           "releaseTag": "Public",
           "name": "ErrorCode",
@@ -532,7 +532,7 @@
               "text": ";"
             }
           ],
-          "fileUrlPath": "packages/errors/src/utilities/get-cause-from-unknown.ts",
+          "fileUrlPath": "tmp/.tsup/declaration/packages/errors/src/utilities/get-cause-from-unknown.d.ts",
           "returnTypeTokenRange": {
             "startIndex": 3,
             "endIndex": 4
@@ -607,7 +607,7 @@
               "text": ";"
             }
           ],
-          "fileUrlPath": "packages/errors/src/utilities/is-storm-error.ts",
+          "fileUrlPath": "tmp/.tsup/declaration/packages/errors/src/utilities/is-storm-error.d.ts",
           "returnTypeTokenRange": {
             "startIndex": 7,
             "endIndex": 11
@@ -667,7 +667,7 @@
               "text": ";"
             }
           ],
-          "fileUrlPath": "packages/errors/src/utilities/serialization.ts",
+          "fileUrlPath": "tmp/.tsup/declaration/packages/errors/src/utilities/serialization.d.ts",
           "returnTypeTokenRange": {
             "startIndex": 3,
             "endIndex": 4
@@ -721,7 +721,7 @@
               "text": " "
             }
           ],
-          "fileUrlPath": "packages/errors/src/storm-error.ts",
+          "fileUrlPath": "tmp/.tsup/declaration/packages/errors/src/storm-error.d.ts",
           "releaseTag": "Public",
           "typeParameters": [
             {
@@ -1120,7 +1120,7 @@
               "text": "export interface StormErrorOptions "
             }
           ],
-          "fileUrlPath": "packages/errors/src/storm-error.ts",
+          "fileUrlPath": "tmp/.tsup/declaration/packages/errors/src/storm-error.d.ts",
           "releaseTag": "Public",
           "name": "StormErrorOptions",
           "preserveMemberOrder": false,

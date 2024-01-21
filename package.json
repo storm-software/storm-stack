@@ -148,8 +148,10 @@
       "@storm-stack/docs-website": "workspace:*",
       "@storm-stack/frontend-table": "workspace:*",
       "@storm-stack/plugin-system": "workspace:*"
+    },
+    "patchedDependencies": {
+      "oxc-resolver@0.1.1": "patches/oxc-resolver@0.1.1.patch"
     }
   },
   "triggerEmptyDevReleaseByIncrementingThisNumber": 0
 }
-

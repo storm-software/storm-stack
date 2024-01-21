@@ -195,7 +195,7 @@
               "text": " | undefined"
             }
           ],
-          "fileUrlPath": "packages/file-system/src/files/copy-files.ts",
+          "fileUrlPath": "tmp/.tsup/declaration/packages/file-system/src/files/copy-files.d.ts",
           "isReadonly": true,
           "releaseTag": "Public",
           "name": "copyFile",
@@ -236,7 +236,7 @@
               "text": " | undefined"
             }
           ],
-          "fileUrlPath": "packages/file-system/src/files/copy-files.ts",
+          "fileUrlPath": "tmp/.tsup/declaration/packages/file-system/src/files/copy-files.d.ts",
           "isReadonly": true,
           "releaseTag": "Public",
           "name": "copyFiles",
@@ -259,7 +259,7 @@
               "text": "(currentSemverVersion: string, semverSpecifier: string, preid?: string) => string"
             }
           ],
-          "fileUrlPath": "packages/file-system/src/package-management/semver-fns.ts",
+          "fileUrlPath": "tmp/.tsup/declaration/packages/file-system/src/package-management/semver-fns.d.ts",
           "isReadonly": true,
           "releaseTag": "Public",
           "name": "deriveNewSemverVersion",
@@ -339,7 +339,7 @@
               "text": ";"
             }
           ],
-          "fileUrlPath": "packages/file-system/src/package-management/package-fns.ts",
+          "fileUrlPath": "tmp/.tsup/declaration/packages/file-system/src/package-management/package-fns.d.ts",
           "returnTypeTokenRange": {
             "startIndex": 14,
             "endIndex": 15
@@ -412,7 +412,7 @@
               "text": "(filePath: string) => boolean"
             }
           ],
-          "fileUrlPath": "packages/file-system/src/files/exists.ts",
+          "fileUrlPath": "tmp/.tsup/declaration/packages/file-system/src/files/exists.d.ts",
           "isReadonly": true,
           "releaseTag": "Public",
           "name": "exists",
@@ -444,7 +444,7 @@
               "text": ";"
             }
           ],
-          "fileUrlPath": "packages/file-system/src/errors.ts",
+          "fileUrlPath": "tmp/.tsup/declaration/packages/file-system/src/errors.d.ts",
           "releaseTag": "Public",
           "name": "FileSystemErrorCode",
           "typeTokenRange": {
@@ -664,7 +664,7 @@
               "text": ";\n}"
             }
           ],
-          "fileUrlPath": "packages/file-system/src/errors.ts",
+          "fileUrlPath": "tmp/.tsup/declaration/packages/file-system/src/errors.d.ts",
           "isReadonly": true,
           "releaseTag": "Public",
           "name": "FileSystemErrorCode",
@@ -699,7 +699,7 @@
               "text": ";"
             }
           ],
-          "fileUrlPath": "packages/file-system/src/files/file-path-fns.ts",
+          "fileUrlPath": "tmp/.tsup/declaration/packages/file-system/src/files/file-path-fns.d.ts",
           "returnTypeTokenRange": {
             "startIndex": 3,
             "endIndex": 4
@@ -744,7 +744,7 @@
               "text": ";"
             }
           ],
-          "fileUrlPath": "packages/file-system/src/files/file-path-fns.ts",
+          "fileUrlPath": "tmp/.tsup/declaration/packages/file-system/src/files/file-path-fns.d.ts",
           "returnTypeTokenRange": {
             "startIndex": 3,
             "endIndex": 4
@@ -789,7 +789,7 @@
               "text": ";"
             }
           ],
-          "fileUrlPath": "packages/file-system/src/files/file-path-fns.ts",
+          "fileUrlPath": "tmp/.tsup/declaration/packages/file-system/src/files/file-path-fns.d.ts",
           "returnTypeTokenRange": {
             "startIndex": 3,
             "endIndex": 4
@@ -834,7 +834,7 @@
               "text": ";"
             }
           ],
-          "fileUrlPath": "packages/file-system/src/files/file-path-fns.ts",
+          "fileUrlPath": "tmp/.tsup/declaration/packages/file-system/src/files/file-path-fns.d.ts",
           "returnTypeTokenRange": {
             "startIndex": 3,
             "endIndex": 4
@@ -867,7 +867,7 @@
               "text": "() => any"
             }
           ],
-          "fileUrlPath": "packages/file-system/src/files/get-workspace-root.ts",
+          "fileUrlPath": "tmp/.tsup/declaration/packages/file-system/src/files/get-workspace-root.d.ts",
           "isReadonly": true,
           "releaseTag": "Public",
           "name": "getWorkspaceRoot",
@@ -902,7 +902,7 @@
               "text": ";"
             }
           ],
-          "fileUrlPath": "packages/file-system/src/files/file-path-fns.ts",
+          "fileUrlPath": "tmp/.tsup/declaration/packages/file-system/src/files/file-path-fns.d.ts",
           "returnTypeTokenRange": {
             "startIndex": 3,
             "endIndex": 4
@@ -947,7 +947,7 @@
               "text": ";"
             }
           ],
-          "fileUrlPath": "packages/file-system/src/files/file-path-fns.ts",
+          "fileUrlPath": "tmp/.tsup/declaration/packages/file-system/src/files/file-path-fns.d.ts",
           "returnTypeTokenRange": {
             "startIndex": 3,
             "endIndex": 4
@@ -1037,7 +1037,7 @@
               "text": ";"
             }
           ],
-          "fileUrlPath": "packages/file-system/src/package-management/package-fns.ts",
+          "fileUrlPath": "tmp/.tsup/declaration/packages/file-system/src/package-management/package-fns.d.ts",
           "returnTypeTokenRange": {
             "startIndex": 14,
             "endIndex": 15
@@ -1110,7 +1110,7 @@
               "text": "(path: string, additionalPath?: string) => boolean"
             }
           ],
-          "fileUrlPath": "packages/file-system/src/files/is-file.ts",
+          "fileUrlPath": "tmp/.tsup/declaration/packages/file-system/src/files/is-file.d.ts",
           "isReadonly": true,
           "releaseTag": "Public",
           "name": "isDirectory",
@@ -1133,7 +1133,7 @@
               "text": "(path: string, additionalPath?: string) => boolean"
             }
           ],
-          "fileUrlPath": "packages/file-system/src/files/is-file.ts",
+          "fileUrlPath": "tmp/.tsup/declaration/packages/file-system/src/files/is-file.d.ts",
           "isReadonly": true,
           "releaseTag": "Public",
           "name": "isFile",
@@ -1170,7 +1170,7 @@
               "canonicalReference": "!unknown"
             }
           ],
-          "fileUrlPath": "packages/file-system/src/package-management/semver-fns.ts",
+          "fileUrlPath": "tmp/.tsup/declaration/packages/file-system/src/package-management/semver-fns.d.ts",
           "isReadonly": true,
           "releaseTag": "Public",
           "name": "isRelativeVersionKeyword",
@@ -1193,7 +1193,7 @@
               "text": "(...paths: string[]) => string"
             }
           ],
-          "fileUrlPath": "packages/file-system/src/files/join-paths.ts",
+          "fileUrlPath": "tmp/.tsup/declaration/packages/file-system/src/files/join-paths.d.ts",
           "isReadonly": true,
           "releaseTag": "Public",
           "name": "joinPaths",
@@ -1220,7 +1220,7 @@
               "text": ";"
             }
           ],
-          "fileUrlPath": "packages/file-system/src/package-management/package-fns.ts",
+          "fileUrlPath": "tmp/.tsup/declaration/packages/file-system/src/package-management/package-fns.d.ts",
           "releaseTag": "Public",
           "name": "PackageManagers",
           "typeTokenRange": {
@@ -1278,7 +1278,7 @@
               "text": ";\n}"
             }
           ],
-          "fileUrlPath": "packages/file-system/src/package-management/package-fns.ts",
+          "fileUrlPath": "tmp/.tsup/declaration/packages/file-system/src/package-management/package-fns.d.ts",
           "isReadonly": true,
           "releaseTag": "Public",
           "name": "PackageManagers",
@@ -1301,7 +1301,7 @@
               "text": "(semver: string) => import(\"semver/classes/semver\") | null"
             }
           ],
-          "fileUrlPath": "packages/file-system/src/package-management/semver-fns.ts",
+          "fileUrlPath": "tmp/.tsup/declaration/packages/file-system/src/package-management/semver-fns.d.ts",
           "isReadonly": true,
           "releaseTag": "Public",
           "name": "parseVersion",
@@ -1324,7 +1324,7 @@
               "text": "(filePath: string) => string"
             }
           ],
-          "fileUrlPath": "packages/file-system/src/files/read-file.ts",
+          "fileUrlPath": "tmp/.tsup/declaration/packages/file-system/src/files/read-file.d.ts",
           "isReadonly": true,
           "releaseTag": "Public",
           "name": "readFile",
@@ -1356,7 +1356,7 @@
               "text": "<string>"
             }
           ],
-          "fileUrlPath": "packages/file-system/src/files/read-file.ts",
+          "fileUrlPath": "tmp/.tsup/declaration/packages/file-system/src/files/read-file.d.ts",
           "isReadonly": true,
           "releaseTag": "Public",
           "name": "readFileAsync",
@@ -1391,7 +1391,7 @@
               "text": ";"
             }
           ],
-          "fileUrlPath": "packages/file-system/src/files/file-path-fns.ts",
+          "fileUrlPath": "tmp/.tsup/declaration/packages/file-system/src/files/file-path-fns.d.ts",
           "returnTypeTokenRange": {
             "startIndex": 3,
             "endIndex": 4
@@ -1444,7 +1444,7 @@
               "text": ";"
             }
           ],
-          "fileUrlPath": "packages/file-system/src/files/file-path-fns.ts",
+          "fileUrlPath": "tmp/.tsup/declaration/packages/file-system/src/files/file-path-fns.d.ts",
           "returnTypeTokenRange": {
             "startIndex": 5,
             "endIndex": 6
@@ -1505,7 +1505,7 @@
               "text": ";"
             }
           ],
-          "fileUrlPath": "packages/file-system/src/files/file-path-fns.ts",
+          "fileUrlPath": "tmp/.tsup/declaration/packages/file-system/src/files/file-path-fns.d.ts",
           "returnTypeTokenRange": {
             "startIndex": 5,
             "endIndex": 6
@@ -1546,7 +1546,7 @@
               "text": "(filePath: string, content: any) => void"
             }
           ],
-          "fileUrlPath": "packages/file-system/src/files/write-file.ts",
+          "fileUrlPath": "tmp/.tsup/declaration/packages/file-system/src/files/write-file.d.ts",
           "isReadonly": true,
           "releaseTag": "Public",
           "name": "writeFile",
@@ -1578,7 +1578,7 @@
               "text": "<void>"
             }
           ],
-          "fileUrlPath": "packages/file-system/src/files/write-file.ts",
+          "fileUrlPath": "tmp/.tsup/declaration/packages/file-system/src/files/write-file.d.ts",
           "isReadonly": true,
           "releaseTag": "Public",
           "name": "writeFileAsync",

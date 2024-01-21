@@ -186,7 +186,7 @@
               "text": "(config: any) => import(\"@tanstack/react-table\").Table<unknown>"
             }
           ],
-          "fileUrlPath": "frontend/table/src/create-table.ts",
+          "fileUrlPath": "tmp/.tsup/declaration/frontend/table/src/create-table.d.ts",
           "isReadonly": true,
           "releaseTag": "Public",
           "name": "createTable",

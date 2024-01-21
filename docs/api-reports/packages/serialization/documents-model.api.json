@@ -190,7 +190,7 @@
               "text": ";"
             }
           ],
-          "fileUrlPath": "packages/serialization/src/types.ts",
+          "fileUrlPath": "tmp/.tsup/declaration/packages/serialization/src/types.d.ts",
           "releaseTag": "Public",
           "name": "Class",
           "typeTokenRange": {
@@ -216,7 +216,7 @@
               "text": ";"
             }
           ],
-          "fileUrlPath": "packages/serialization/src/types.ts",
+          "fileUrlPath": "tmp/.tsup/declaration/packages/serialization/src/types.d.ts",
           "releaseTag": "Public",
           "name": "ClassInstance",
           "typeTokenRange": {
@@ -252,7 +252,7 @@
               "text": "> "
             }
           ],
-          "fileUrlPath": "packages/serialization/src/types.ts",
+          "fileUrlPath": "tmp/.tsup/declaration/packages/serialization/src/types.d.ts",
           "releaseTag": "Public",
           "typeParameters": [
             {
@@ -361,7 +361,7 @@
               "text": ";"
             }
           ],
-          "fileUrlPath": "packages/serialization/src/types.ts",
+          "fileUrlPath": "tmp/.tsup/declaration/packages/serialization/src/types.d.ts",
           "releaseTag": "Public",
           "name": "ClassTypeAnnotation",
           "typeTokenRange": {
@@ -415,7 +415,7 @@
               "text": ";"
             }
           ],
-          "fileUrlPath": "packages/serialization/src/types.ts",
+          "fileUrlPath": "tmp/.tsup/declaration/packages/serialization/src/types.d.ts",
           "releaseTag": "Public",
           "name": "CompositeTypeAnnotation",
           "typeTokenRange": {
@@ -441,7 +441,7 @@
               "text": ";"
             }
           ],
-          "fileUrlPath": "packages/serialization/src/types.ts",
+          "fileUrlPath": "tmp/.tsup/declaration/packages/serialization/src/types.d.ts",
           "releaseTag": "Public",
           "name": "CustomTypeAnnotation",
           "typeTokenRange": {
@@ -477,7 +477,7 @@
               "text": "> "
             }
           ],
-          "fileUrlPath": "packages/serialization/src/types.ts",
+          "fileUrlPath": "tmp/.tsup/declaration/packages/serialization/src/types.d.ts",
           "releaseTag": "Public",
           "typeParameters": [
             {
@@ -617,7 +617,7 @@
               "text": ";"
             }
           ],
-          "fileUrlPath": "packages/serialization/src/types.ts",
+          "fileUrlPath": "tmp/.tsup/declaration/packages/serialization/src/types.d.ts",
           "releaseTag": "Public",
           "name": "DeserializeFunct",
           "typeParameters": [
@@ -659,7 +659,7 @@
               "text": "export interface IJsonParser "
             }
           ],
-          "fileUrlPath": "packages/serialization/src/types.ts",
+          "fileUrlPath": "tmp/.tsup/declaration/packages/serialization/src/types.d.ts",
           "releaseTag": "Public",
           "name": "IJsonParser",
           "preserveMemberOrder": false,
@@ -897,7 +897,7 @@
               "text": ";"
             }
           ],
-          "fileUrlPath": "packages/serialization/src/types.ts",
+          "fileUrlPath": "tmp/.tsup/declaration/packages/serialization/src/types.d.ts",
           "releaseTag": "Public",
           "name": "InnerNode",
           "typeParameters": [
@@ -950,7 +950,7 @@
               "text": " "
             }
           ],
-          "fileUrlPath": "packages/serialization/src/types.ts",
+          "fileUrlPath": "tmp/.tsup/declaration/packages/serialization/src/types.d.ts",
           "releaseTag": "Public",
           "name": "JsonArray",
           "preserveMemberOrder": false,
@@ -972,7 +972,7 @@
               "text": "export interface JsonObject "
             }
           ],
-          "fileUrlPath": "packages/serialization/src/types.ts",
+          "fileUrlPath": "tmp/.tsup/declaration/packages/serialization/src/types.d.ts",
           "releaseTag": "Public",
           "name": "JsonObject",
           "preserveMemberOrder": false,
@@ -1035,7 +1035,7 @@
               "text": "export interface JsonParserResult "
             }
           ],
-          "fileUrlPath": "packages/serialization/src/types.ts",
+          "fileUrlPath": "tmp/.tsup/declaration/packages/serialization/src/types.d.ts",
           "releaseTag": "Public",
           "name": "JsonParserResult",
           "preserveMemberOrder": false,
@@ -1198,7 +1198,7 @@
               "text": ";"
             }
           ],
-          "fileUrlPath": "packages/serialization/src/types.ts",
+          "fileUrlPath": "tmp/.tsup/declaration/packages/serialization/src/types.d.ts",
           "releaseTag": "Public",
           "name": "JsonValue",
           "typeTokenRange": {
@@ -1224,7 +1224,7 @@
               "text": ";"
             }
           ],
-          "fileUrlPath": "packages/serialization/src/types.ts",
+          "fileUrlPath": "tmp/.tsup/declaration/packages/serialization/src/types.d.ts",
           "releaseTag": "Public",
           "name": "Leaf",
           "typeParameters": [
@@ -1268,7 +1268,7 @@
               "text": ";"
             }
           ],
-          "fileUrlPath": "packages/serialization/src/types.ts",
+          "fileUrlPath": "tmp/.tsup/declaration/packages/serialization/src/types.d.ts",
           "releaseTag": "Public",
           "name": "LeafTypeAnnotation",
           "typeTokenRange": {
@@ -1327,7 +1327,7 @@
               "text": ";"
             }
           ],
-          "fileUrlPath": "packages/serialization/src/query-params-parser.ts",
+          "fileUrlPath": "tmp/.tsup/declaration/packages/serialization/src/query-params-parser.d.ts",
           "returnTypeTokenRange": {
             "startIndex": 9,
             "endIndex": 10
@@ -1385,7 +1385,7 @@
               "text": ";"
             }
           ],
-          "fileUrlPath": "packages/serialization/src/types.ts",
+          "fileUrlPath": "tmp/.tsup/declaration/packages/serialization/src/types.d.ts",
           "releaseTag": "Public",
           "name": "PrimitiveJsonValue",
           "typeTokenRange": {
@@ -1411,7 +1411,7 @@
               "text": ";"
             }
           ],
-          "fileUrlPath": "packages/serialization/src/types.ts",
+          "fileUrlPath": "tmp/.tsup/declaration/packages/serialization/src/types.d.ts",
           "releaseTag": "Public",
           "name": "PrimitiveTypeAnnotation",
           "typeTokenRange": {
@@ -1496,7 +1496,7 @@
               "text": ";\n    parse: (strObject: string) => TData;\n} & TClass"
             }
           ],
-          "fileUrlPath": "packages/serialization/src/serializable.ts",
+          "fileUrlPath": "tmp/.tsup/declaration/packages/serialization/src/serializable.d.ts",
           "isReadonly": true,
           "releaseTag": "Public",
           "name": "Serializable",
@@ -1596,7 +1596,7 @@
               "text": ";"
             }
           ],
-          "fileUrlPath": "packages/serialization/src/types.ts",
+          "fileUrlPath": "tmp/.tsup/declaration/packages/serialization/src/types.d.ts",
           "releaseTag": "Public",
           "name": "SerializableJsonValue",
           "typeTokenRange": {
@@ -1645,7 +1645,7 @@
               "text": ";"
             }
           ],
-          "fileUrlPath": "packages/serialization/src/types.ts",
+          "fileUrlPath": "tmp/.tsup/declaration/packages/serialization/src/types.d.ts",
           "releaseTag": "Public",
           "name": "SerializableType",
           "typeParameters": [
@@ -1710,7 +1710,7 @@
               "text": ";"
             }
           ],
-          "fileUrlPath": "packages/serialization/src/types.ts",
+          "fileUrlPath": "tmp/.tsup/declaration/packages/serialization/src/types.d.ts",
           "releaseTag": "Public",
           "name": "SerializationFunct",
           "typeParameters": [
@@ -1774,7 +1774,7 @@
               "text": ";"
             }
           ],
-          "fileUrlPath": "packages/serialization/src/types.ts",
+          "fileUrlPath": "tmp/.tsup/declaration/packages/serialization/src/types.d.ts",
           "releaseTag": "Public",
           "name": "SerializationMetadata",
           "typeParameters": [
@@ -1818,7 +1818,7 @@
               "text": ";"
             }
           ],
-          "fileUrlPath": "packages/serialization/src/types.ts",
+          "fileUrlPath": "tmp/.tsup/declaration/packages/serialization/src/types.d.ts",
           "releaseTag": "Public",
           "name": "SimpleTypeAnnotation",
           "typeTokenRange": {
@@ -1845,7 +1845,7 @@
               "text": " "
             }
           ],
-          "fileUrlPath": "packages/serialization/src/storm-parser.ts",
+          "fileUrlPath": "tmp/.tsup/declaration/packages/serialization/src/storm-parser.d.ts",
           "releaseTag": "Public",
           "isAbstract": false,
           "name": "StormParser",
@@ -2399,7 +2399,7 @@
               "text": ";"
             }
           ],
-          "fileUrlPath": "packages/serialization/src/query-params-parser.ts",
+          "fileUrlPath": "tmp/.tsup/declaration/packages/serialization/src/query-params-parser.d.ts",
           "returnTypeTokenRange": {
             "startIndex": 9,
             "endIndex": 10
@@ -2444,7 +2444,7 @@
               "text": ";"
             }
           ],
-          "fileUrlPath": "packages/serialization/src/types.ts",
+          "fileUrlPath": "tmp/.tsup/declaration/packages/serialization/src/types.d.ts",
           "releaseTag": "Public",
           "name": "SymbolTypeAnnotation",
           "typeTokenRange": {
@@ -2484,7 +2484,7 @@
               "text": ";"
             }
           ],
-          "fileUrlPath": "packages/serialization/src/types.ts",
+          "fileUrlPath": "tmp/.tsup/declaration/packages/serialization/src/types.d.ts",
           "releaseTag": "Public",
           "name": "Tree",
           "typeParameters": [
@@ -2533,7 +2533,7 @@
               "text": ";"
             }
           ],
-          "fileUrlPath": "packages/serialization/src/types.ts",
+          "fileUrlPath": "tmp/.tsup/declaration/packages/serialization/src/types.d.ts",
           "releaseTag": "Public",
           "name": "TypeAnnotation",
           "typeTokenRange": {
@@ -2559,7 +2559,7 @@
               "text": ";"
             }
           ],
-          "fileUrlPath": "packages/serialization/src/types.ts",
+          "fileUrlPath": "tmp/.tsup/declaration/packages/serialization/src/types.d.ts",
           "releaseTag": "Public",
           "name": "TypedArrayAnnotation",
           "typeTokenRange": {

@@ -182,7 +182,7 @@
               "text": "export interface CLIArgument "
             }
           ],
-          "fileUrlPath": "packages/cli/src/types.ts",
+          "fileUrlPath": "tmp/.tsup/declaration/packages/cli/src/types.d.ts",
           "releaseTag": "Public",
           "name": "CLIArgument",
           "preserveMemberOrder": false,
@@ -281,7 +281,7 @@
               "text": "export interface CLICommand "
             }
           ],
-          "fileUrlPath": "packages/cli/src/types.ts",
+          "fileUrlPath": "tmp/.tsup/declaration/packages/cli/src/types.d.ts",
           "releaseTag": "Public",
           "name": "CLICommand",
           "preserveMemberOrder": false,
@@ -485,7 +485,7 @@
               "text": "export interface CLIConfig "
             }
           ],
-          "fileUrlPath": "packages/cli/src/types.ts",
+          "fileUrlPath": "tmp/.tsup/declaration/packages/cli/src/types.d.ts",
           "releaseTag": "Public",
           "name": "CLIConfig",
           "preserveMemberOrder": false,
@@ -870,7 +870,7 @@
               "text": "export interface CLIOption "
             }
           ],
-          "fileUrlPath": "packages/cli/src/types.ts",
+          "fileUrlPath": "tmp/.tsup/declaration/packages/cli/src/types.d.ts",
           "releaseTag": "Public",
           "name": "CLIOption",
           "preserveMemberOrder": false,
@@ -997,7 +997,7 @@
               "text": "export interface CLIOptionDefault "
             }
           ],
-          "fileUrlPath": "packages/cli/src/types.ts",
+          "fileUrlPath": "tmp/.tsup/declaration/packages/cli/src/types.d.ts",
           "releaseTag": "Public",
           "name": "CLIOptionDefault",
           "preserveMemberOrder": false,
@@ -1069,7 +1069,7 @@
               "text": "export interface CLITitle "
             }
           ],
-          "fileUrlPath": "packages/cli/src/types.ts",
+          "fileUrlPath": "tmp/.tsup/declaration/packages/cli/src/types.d.ts",
           "releaseTag": "Public",
           "name": "CLITitle",
           "preserveMemberOrder": false,
@@ -1218,7 +1218,7 @@
               "text": ";"
             }
           ],
-          "fileUrlPath": "packages/cli/src/utilities/create-cli-options.ts",
+          "fileUrlPath": "tmp/.tsup/declaration/packages/cli/src/utilities/create-cli-options.d.ts",
           "returnTypeTokenRange": {
             "startIndex": 4,
             "endIndex": 5
@@ -1268,7 +1268,7 @@
               "text": ";"
             }
           ],
-          "fileUrlPath": "packages/cli/src/utilities/create-cli-options.ts",
+          "fileUrlPath": "tmp/.tsup/declaration/packages/cli/src/utilities/create-cli-options.d.ts",
           "returnTypeTokenRange": {
             "startIndex": 4,
             "endIndex": 5
@@ -1319,7 +1319,7 @@
               "text": ";"
             }
           ],
-          "fileUrlPath": "packages/cli/src/program/index.ts",
+          "fileUrlPath": "tmp/.tsup/declaration/packages/cli/src/program/index.d.ts",
           "returnTypeTokenRange": {
             "startIndex": 3,
             "endIndex": 5
@@ -1397,7 +1397,7 @@
               "text": " | undefined"
             }
           ],
-          "fileUrlPath": "packages/cli/src/utilities/execute.ts",
+          "fileUrlPath": "tmp/.tsup/declaration/packages/cli/src/utilities/execute.d.ts",
           "isReadonly": true,
           "releaseTag": "Public",
           "name": "execute",
@@ -1465,7 +1465,7 @@
               "text": " | undefined>"
             }
           ],
-          "fileUrlPath": "packages/cli/src/utilities/execute.ts",
+          "fileUrlPath": "tmp/.tsup/declaration/packages/cli/src/utilities/execute.d.ts",
           "isReadonly": true,
           "releaseTag": "Public",
           "name": "executeAsync",
@@ -1527,7 +1527,7 @@
               "text": ";"
             }
           ],
-          "fileUrlPath": "packages/cli/src/program/shutdown.ts",
+          "fileUrlPath": "tmp/.tsup/declaration/packages/cli/src/program/shutdown.d.ts",
           "returnTypeTokenRange": {
             "startIndex": 7,
             "endIndex": 10
