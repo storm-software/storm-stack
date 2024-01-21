@@ -1,9 +1,20 @@
-## [1.5.3](https://github.com/storm-software/storm-stack/compare/docs-website-v1.5.2...docs-website-v1.5.3) (2024-01-21)
+## 1.5.4 (2024-01-21)
 
+
+### 🩹 Fixes
+
+- **monorepo:** Update the storm-ops workspace dependencies ([faadeb6](https://github.com/storm-software/storm-stack/commit/faadeb6))
+
+
+### ❤️  Thank You
+
+- Patrick Sullivan
+
+## [1.5.3](https://github.com/storm-software/storm-stack/compare/docs-website-v1.5.2...docs-website-v1.5.3) (2024-01-21)
 
 ### Bug Fixes
 
-* **plugin-system:** Resolve linting issues ([0a27ea0](https://github.com/storm-software/storm-stack/commit/0a27ea018d1f8974e6eafd200d846a22d9f1a72f))
+-   **plugin-system:** Resolve linting issues ([0a27ea0](https://github.com/storm-software/storm-stack/commit/0a27ea018d1f8974e6eafd200d846a22d9f1a72f))
 
 ## [1.5.2](https://github.com/storm-software/storm-stack/compare/docs-website-v1.5.1...docs-website-v1.5.2) (2024-01-21)
 

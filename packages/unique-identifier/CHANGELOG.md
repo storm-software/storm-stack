@@ -1,3 +1,15 @@
+## 1.12.3 (2024-01-21)
+
+
+### 🩹 Fixes
+
+- **monorepo:** Update the storm-ops workspace dependencies ([faadeb6](https://github.com/storm-software/storm-stack/commit/faadeb6))
+
+
+### ❤️  Thank You
+
+- Patrick Sullivan
+
 ## [1.12.2](https://github.com/storm-software/storm-stack/compare/unique-identifier-v1.12.1...unique-identifier-v1.12.2) (2024-01-21)
 
 

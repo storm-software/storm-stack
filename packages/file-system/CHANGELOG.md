@@ -1,3 +1,15 @@
+## 1.16.3 (2024-01-21)
+
+
+### 🩹 Fixes
+
+- **monorepo:** Update the storm-ops workspace dependencies ([faadeb6](https://github.com/storm-software/storm-stack/commit/faadeb6))
+
+
+### ❤️  Thank You
+
+- Patrick Sullivan
+
 ## [1.16.2](https://github.com/storm-software/storm-stack/compare/file-system-v1.16.1...file-system-v1.16.2) (2024-01-21)
 
 

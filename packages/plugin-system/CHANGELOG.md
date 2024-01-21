@@ -1,16 +1,26 @@
-## [1.3.3](https://github.com/storm-software/storm-stack/compare/plugin-system-v1.3.2...plugin-system-v1.3.3) (2024-01-21)
+## 1.3.4 (2024-01-21)
 
+
+### 🩹 Fixes
+
+- **monorepo:** Update the storm-ops workspace dependencies ([faadeb6](https://github.com/storm-software/storm-stack/commit/faadeb6))
+
+
+### ❤️  Thank You
+
+- Patrick Sullivan
+
+## [1.3.3](https://github.com/storm-software/storm-stack/compare/plugin-system-v1.3.2...plugin-system-v1.3.3) (2024-01-21)
 
 ### Bug Fixes
 
-* **plugin-system:** Resolve linting issues ([0a27ea0](https://github.com/storm-software/storm-stack/commit/0a27ea018d1f8974e6eafd200d846a22d9f1a72f))
+-   **plugin-system:** Resolve linting issues ([0a27ea0](https://github.com/storm-software/storm-stack/commit/0a27ea018d1f8974e6eafd200d846a22d9f1a72f))
 
 ## [1.3.2](https://github.com/storm-software/storm-stack/compare/plugin-system-v1.3.1...plugin-system-v1.3.2) (2024-01-21)
 
-
 ### Bug Fixes
 
-* **plugin-system:** Resolved build issues ([e790271](https://github.com/storm-software/storm-stack/commit/e790271a9fa23375486a6f348e1cc1665a4a8361))
+-   **plugin-system:** Resolved build issues ([e790271](https://github.com/storm-software/storm-stack/commit/e790271a9fa23375486a6f348e1cc1665a4a8361))
 
 ## [1.3.1](https://github.com/storm-software/storm-stack/compare/plugin-system-v1.3.0...plugin-system-v1.3.1) (2024-01-21)
 
