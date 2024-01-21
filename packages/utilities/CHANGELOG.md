@@ -4,6 +4,13 @@
 ### Bug Fixes
 
 * **plugin-system:** Fix linting issues and dependabot warnings ([02e630c](https://github.com/storm-software/storm-stack/commit/02e630cc537e86897e48a3e3c3372b38aa673bb1))
+* **plugin-system:** Resolved build issues ([e790271](https://github.com/storm-software/storm-stack/commit/e790271a9fa23375486a6f348e1cc1665a4a8361))
+
+## [1.12.1](https://github.com/storm-software/storm-stack/compare/utilities-v1.12.0...utilities-v1.12.1) (2024-01-21)
+
+### Bug Fixes
+
+-   **plugin-system:** Fix linting issues and dependabot warnings ([02e630c](https://github.com/storm-software/storm-stack/commit/02e630cc537e86897e48a3e3c3372b38aa673bb1))
 
 # [1.12.0](https://github.com/storm-software/storm-stack/compare/utilities-v1.11.2...utilities-v1.12.0) (2024-01-21)
 
