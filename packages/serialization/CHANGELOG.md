@@ -1,3 +1,16 @@
+# [1.13.0](https://github.com/storm-software/storm-stack/compare/serialization-v1.12.2...serialization-v1.13.0) (2024-01-21)
+
+
+### Bug Fixes
+
+* **monorepo:** Resolved issues with `extends` option in lefthook config ([e468b55](https://github.com/storm-software/storm-stack/commit/e468b55df5958b80fd6cf7707780e4461797c797))
+* **unique-identifier:** Fixes for the plugin system errors ([e256acb](https://github.com/storm-software/storm-stack/commit/e256acb4069633b6e3d3f8239fa24edc5c992e1a))
+
+
+### Features
+
+* **plugin-system:** Upgraded Nx and enhanced the `PluginLoader` resolver ([aed9c64](https://github.com/storm-software/storm-stack/commit/aed9c64b53a408ce8b7f0d38052bdab4e3ce3072))
+
 ## [1.12.2](https://github.com/storm-software/storm-stack/compare/serialization-v1.12.1...serialization-v1.12.2) (2024-01-11)
 
 
