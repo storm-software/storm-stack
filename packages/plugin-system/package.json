@@ -10,9 +10,10 @@
   },
   "type": "module",
   "dependencies": {
+    "enhanced-resolve": "^5.15.0",
     "glob": "^10.3.10",
     "md5": "^2.3.0",
-    "oxc-resolver": "^0.1.1",
+    "pnpapi": "^0.0.0",
     "toposort": "^2.0.2"
   },
   "devDependencies": {
@@ -21,17 +22,5 @@
   },
   "publishConfig": {
     "access": "public"
-  },
-  "optionalDependencies": {
-    "@oxc-resolver/binding-darwin-arm64": "^0.1.1",
-    "@oxc-resolver/binding-darwin-x64": "^0.1.1",
-    "@oxc-resolver/binding-linux-arm-gnueabihf": "^0.1.1",
-    "@oxc-resolver/binding-linux-arm64-gnu": "^0.1.1",
-    "@oxc-resolver/binding-linux-arm64-musl": "^0.1.1",
-    "@oxc-resolver/binding-linux-x64-gnu": "^0.1.1",
-    "@oxc-resolver/binding-linux-x64-musl": "^0.1.1",
-    "@oxc-resolver/binding-wasm32-wasi": "^0.1.1",
-    "@oxc-resolver/binding-win32-arm64-msvc": "^0.1.1",
-    "@oxc-resolver/binding-win32-x64-msvc": "^0.1.1"
   }
 }

@@ -1,15 +1,7 @@
 import { readFile } from "node:fs/promises";
 import { StormDateTime } from "@storm-stack/date-time";
 import { StormError } from "@storm-stack/errors";
-import {
-  exists,
-  findContainingFolder,
-  findFileName,
-  findFilePath,
-  isDirectory,
-  isFile,
-  joinPaths
-} from "@storm-stack/file-system";
+import { exists, findContainingFolder, findFilePath, joinPaths } from "@storm-stack/file-system";
 import type { IStormLog } from "@storm-stack/logging";
 import { StormParser } from "@storm-stack/serialization";
 import {
@@ -24,7 +16,6 @@ import {
 } from "@storm-stack/utilities";
 import { glob } from "glob";
 import md5 from "md5";
-import type { ResolverFactory } from "oxc-resolver";
 import toposort from "toposort";
 import { PluginSystemErrorCode } from "../errors";
 import {
@@ -53,7 +44,7 @@ export class PluginManager<TContext = any, TPluginModule extends IPluginModule<T
   private _logger: IStormLog;
 
   private _loaders: Map<string, IPluginLoader<TContext, TPluginModule>>;
-  private _loaderResolver: ResolverFactory;
+  private _loaderResolver: (request: string) => Promise<string>;
 
   public static create = async <
     TContext = any,
@@ -97,7 +88,7 @@ export class PluginManager<TContext = any, TPluginModule extends IPluginModule<T
     this._store = new Map<string, PluginInstance<TContext, TPluginModule>>();
     this._hooks = new Map<string, PluginHookFn<TContext>[]>();
     this._loaders = new Map<string, IPluginLoader<TContext, TPluginModule>>();
-    this._loaderResolver = createResolver(this._options.tsconfig);
+    this._loaderResolver = createResolver(options.rootPath);
   }
 
   public discover = async (): Promise<Map<string, PluginDefinition>> => {
@@ -361,17 +352,14 @@ export class PluginManager<TContext = any, TPluginModule extends IPluginModule<T
 
     let module!: IPluginLoader<TContext, TPluginModule>;
     try {
-      const resolved = this._loaderResolver.sync(
-        isDirectory(loader) ? loader : findFilePath(loader),
-        isFile(loader) ? findFileName(loader) : "./index.js"
-      );
-      if (resolved.error || !resolved.path) {
+      const resolved = await this._loaderResolver(loader);
+      if (!resolved) {
         throw new StormError(PluginSystemErrorCode.module_not_found, {
-          message: resolved.error
+          message: `Cannot find plugin loader ${loader}`
         });
       }
 
-      module = await import(resolved.path);
+      module = await import(resolved);
     } catch (origError) {
       this._logger.error(`Unable to initialize loader module ${loader}: ${origError}`);
 

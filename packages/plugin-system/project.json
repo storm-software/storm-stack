@@ -15,6 +15,7 @@
         "defaultConfiguration": "production",
         "skipNativeModulesPlugin": true,
         "platform": "node",
+        "external": ["pnpapi"],
         "assets": [
           {
             "input": "packages/plugin-system",

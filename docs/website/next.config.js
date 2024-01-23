@@ -44,6 +44,7 @@ const nextConfig = {
   // https://nextjs.org/docs/app/api-reference/next-config-js/poweredByHeader
   poweredByHeader: false,
 
+  // biome-ignore lint/nursery/useAwait: <explanation>
   rewrites: async () => {
     return [
       { source: "/healthz", destination: "/api/health" },
@@ -53,6 +54,7 @@ const nextConfig = {
     ];
   },
 
+  // biome-ignore lint/nursery/useAwait: <explanation>
   redirects: async () => {
     try {
       return get("redirects");

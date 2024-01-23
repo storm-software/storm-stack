@@ -1,7 +1,5 @@
 import { StormDateTime } from "@storm-stack/date-time";
 import { StormError } from "@storm-stack/errors";
-import { findFileName, findFilePath, isDirectory, isFile } from "@storm-stack/file-system";
-import type { ResolverFactory } from "oxc-resolver";
 import { PluginSystemErrorCode } from "../errors";
 import type { IPluginLoader, IPluginModule, PluginDefinition, PluginInstance } from "../types";
 import { createResolver } from "../utilities/create-resolver";
@@ -14,7 +12,7 @@ export abstract class PluginLoader<
   TPluginModule extends IPluginModule<TContext> = IPluginModule<TContext>
 > implements IPluginLoader<TContext, TPluginModule>
 {
-  protected resolver: ResolverFactory;
+  protected resolver: (request: string) => Promise<string>;
 
   public constructor(public readonly tsconfig: string) {
     this.resolver = createResolver(tsconfig);
@@ -67,16 +65,13 @@ export abstract class PluginLoader<
   };
 
   protected resolve = async (definition: PluginDefinition, _: Record<string, any> = {}) => {
-    const resolved = this.resolver.sync(
-      isDirectory(definition.provider) ? definition.provider : findFilePath(definition.provider),
-      isFile(definition.provider) ? findFileName(definition.provider) : "./index.js"
-    );
-    if (resolved.error || !resolved.path) {
+    const resolved = await this.resolver(definition.provider);
+    if (!resolved) {
       throw new StormError(PluginSystemErrorCode.plugin_loading_failure, {
-        message: resolved.error
+        message: `Cannot find plugin ${definition.provider}`
       });
     }
 
-    return await import(resolved.path);
+    return await import(resolved);
   };
 }
