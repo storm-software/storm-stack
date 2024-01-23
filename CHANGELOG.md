@@ -1,3 +1,15 @@
+## 0.0.3 (2024-01-23)
+
+
+### 🩹 Fixes
+
+- **monorepo:** Upgrade the version to remove node typing ([bff277a](https://github.com/storm-software/storm-stack/commit/bff277a))
+
+
+### ❤️  Thank You
+
+- Patrick Sullivan
+
 ## 0.0.2 (2024-01-21)
 
 
