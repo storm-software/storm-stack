@@ -1,3 +1,15 @@
+## 1.5.7 (2024-01-23)
+
+
+### 🩹 Fixes
+
+- **plugin-system:** Updated the resolver implementation to use `enhanced-resolve` package ([bda2c10](https://github.com/storm-software/storm-stack/commit/bda2c10))
+
+
+### ❤️  Thank You
+
+- Patrick Sullivan
+
 
 
 ## 1.5.4 (2024-01-21)
