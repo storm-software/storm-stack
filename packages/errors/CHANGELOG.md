@@ -1,3 +1,15 @@
+## 1.13.5 (2024-01-23)
+
+
+### 🩹 Fixes
+
+- **errors:** Resolved issue with incorrect typings ([cd93fe2](https://github.com/storm-software/storm-stack/commit/cd93fe2))
+
+
+### ❤️  Thank You
+
+- Patrick Sullivan
+
 
 
 ## 1.13.3 (2024-01-21)

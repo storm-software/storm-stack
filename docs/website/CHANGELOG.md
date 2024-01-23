@@ -2,15 +2,13 @@
 
 ## 1.5.4 (2024-01-21)
 
-
 ### 🩹 Fixes
 
-- **monorepo:** Update the storm-ops workspace dependencies ([faadeb6](https://github.com/storm-software/storm-stack/commit/faadeb6))
+-   **monorepo:** Update the storm-ops workspace dependencies ([faadeb6](https://github.com/storm-software/storm-stack/commit/faadeb6))
 
+### ❤️ Thank You
 
-### ❤️  Thank You
-
-- Patrick Sullivan
+-   Patrick Sullivan
 
 ## [1.5.3](https://github.com/storm-software/storm-stack/compare/docs-website-v1.5.2...docs-website-v1.5.3) (2024-01-21)
 

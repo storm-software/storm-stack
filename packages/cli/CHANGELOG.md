@@ -2,22 +2,19 @@
 
 ## 1.12.3 (2024-01-21)
 
-
 ### 🩹 Fixes
 
-- **monorepo:** Update the storm-ops workspace dependencies ([faadeb6](https://github.com/storm-software/storm-stack/commit/faadeb6))
+-   **monorepo:** Update the storm-ops workspace dependencies ([faadeb6](https://github.com/storm-software/storm-stack/commit/faadeb6))
 
+### ❤️ Thank You
 
-### ❤️  Thank You
-
-- Patrick Sullivan
+-   Patrick Sullivan
 
 ## [1.12.2](https://github.com/storm-software/storm-stack/compare/cli-v1.12.1...cli-v1.12.2) (2024-01-21)
 
-
 ### Bug Fixes
 
-* **plugin-system:** Resolved build issues ([e790271](https://github.com/storm-software/storm-stack/commit/e790271a9fa23375486a6f348e1cc1665a4a8361))
+-   **plugin-system:** Resolved build issues ([e790271](https://github.com/storm-software/storm-stack/commit/e790271a9fa23375486a6f348e1cc1665a4a8361))
 
 ## [1.12.1](https://github.com/storm-software/storm-stack/compare/cli-v1.12.0...cli-v1.12.1) (2024-01-21)
 
