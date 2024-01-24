@@ -183,7 +183,7 @@
             },
             {
               "kind": "Content",
-              "text": "(rootPath?: string) => (request: string) => "
+              "text": "(rootPath?: string, tsconfig?: string) => (request: string) => "
             },
             {
               "kind": "Reference",
@@ -431,64 +431,11 @@
           "excerptTokens": [
             {
               "kind": "Content",
-              "text": "export interface IPluginManager<TContext = "
-            },
-            {
-              "kind": "Content",
-              "text": "any"
-            },
-            {
-              "kind": "Content",
-              "text": ", TPluginModule extends "
-            },
-            {
-              "kind": "Reference",
-              "text": "IPluginModule",
-              "canonicalReference": "@storm-stack/plugin-system!IPluginModule:interface"
-            },
-            {
-              "kind": "Content",
-              "text": "<TContext>"
-            },
-            {
-              "kind": "Content",
-              "text": " = "
-            },
-            {
-              "kind": "Content",
-              "text": "any"
-            },
-            {
-              "kind": "Content",
-              "text": "> "
+              "text": "export interface IPluginManager "
             }
           ],
           "fileUrlPath": "tmp/.tsup/declaration/packages/plugin-system/src/types.d.ts",
           "releaseTag": "Public",
-          "typeParameters": [
-            {
-              "typeParameterName": "TContext",
-              "constraintTokenRange": {
-                "startIndex": 0,
-                "endIndex": 0
-              },
-              "defaultTypeTokenRange": {
-                "startIndex": 1,
-                "endIndex": 2
-              }
-            },
-            {
-              "typeParameterName": "TPluginModule",
-              "constraintTokenRange": {
-                "startIndex": 3,
-                "endIndex": 5
-              },
-              "defaultTypeTokenRange": {
-                "startIndex": 6,
-                "endIndex": 7
-              }
-            }
-          ],
           "name": "IPluginManager",
           "preserveMemberOrder": false,
           "members": [
@@ -1961,10 +1908,6 @@
             },
             {
               "kind": "Content",
-              "text": "<TContext>"
-            },
-            {
-              "kind": "Content",
               "text": " = "
             },
             {
@@ -1994,11 +1937,11 @@
               "typeParameterName": "TPluginModule",
               "constraintTokenRange": {
                 "startIndex": 3,
-                "endIndex": 5
+                "endIndex": 4
               },
               "defaultTypeTokenRange": {
-                "startIndex": 6,
-                "endIndex": 7
+                "startIndex": 5,
+                "endIndex": 6
               }
             }
           ],

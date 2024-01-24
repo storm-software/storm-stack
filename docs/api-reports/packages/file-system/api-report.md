@@ -143,6 +143,26 @@ export { joinPaths }
 export { joinPaths as joinPaths_alias_1 }
 export { joinPaths as joinPaths_alias_2 }
 
+// @public
+const loadTsConfig: (dir: string, name?: string) => {
+    path: string;
+    data: any;
+    files: any[];
+} | null;
+export { loadTsConfig }
+export { loadTsConfig as loadTsConfig_alias_1 }
+export { loadTsConfig as loadTsConfig_alias_2 }
+
+// @public
+const loadTsConfigFile: (file: string) => {
+    path: string;
+    data: any;
+    files: any[];
+} | null;
+export { loadTsConfigFile }
+export { loadTsConfigFile as loadTsConfigFile_alias_1 }
+export { loadTsConfigFile as loadTsConfigFile_alias_2 }
+
 // @public (undocumented)
 type PackageManagers = "npm" | "yarn" | "pnpm" | "bun";
 

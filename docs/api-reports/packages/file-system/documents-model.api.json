@@ -1203,6 +1203,52 @@
           }
         },
         {
+          "kind": "Variable",
+          "canonicalReference": "@storm-stack/file-system!loadTsConfig:var",
+          "docComment": "/**\n * Loads a tsconfig.json file and returns the parsed JSON object.\n *\n * @param dir - The directory to start searching for the tsconfig.json file.\n *\n * @param name - The name of the tsconfig.json file.\n *\n * @returns The parsed JSON object.\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "loadTsConfig: "
+            },
+            {
+              "kind": "Content",
+              "text": "(dir: string, name?: string) => {\n    path: string;\n    data: any;\n    files: any[];\n} | null"
+            }
+          ],
+          "fileUrlPath": "tmp/.tsup/declaration/packages/file-system/src/package-management/get-tsconfig.d.ts",
+          "isReadonly": true,
+          "releaseTag": "Public",
+          "name": "loadTsConfig",
+          "variableTypeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 2
+          }
+        },
+        {
+          "kind": "Variable",
+          "canonicalReference": "@storm-stack/file-system!loadTsConfigFile:var",
+          "docComment": "/**\n * Loads a tsconfig.json file and returns the parsed JSON object.\n *\n * @param name - The name/path of the tsconfig.json file.\n *\n * @returns The parsed JSON object.\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "loadTsConfigFile: "
+            },
+            {
+              "kind": "Content",
+              "text": "(file: string) => {\n    path: string;\n    data: any;\n    files: any[];\n} | null"
+            }
+          ],
+          "fileUrlPath": "tmp/.tsup/declaration/packages/file-system/src/package-management/get-tsconfig.d.ts",
+          "isReadonly": true,
+          "releaseTag": "Public",
+          "name": "loadTsConfigFile",
+          "variableTypeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 2
+          }
+        },
+        {
           "kind": "TypeAlias",
           "canonicalReference": "@storm-stack/file-system!PackageManagers:type",
           "docComment": "",

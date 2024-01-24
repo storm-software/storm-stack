@@ -7,7 +7,7 @@
 import { Temporal } from '@js-temporal/polyfill';
 
 // @public
-const createResolver: (rootPath?: string) => (request: string) => Promise<string>;
+const createResolver: (rootPath?: string, tsconfig?: string) => (request: string) => Promise<string>;
 export { createResolver }
 export { createResolver as createResolver_alias_1 }
 export { createResolver as createResolver_alias_2 }
@@ -25,7 +25,7 @@ export { IPluginLoader }
 export { IPluginLoader as IPluginLoader_alias_1 }
 
 // @public
-interface IPluginManager<TContext = any, TPluginModule extends IPluginModule<TContext> = any> {
+interface IPluginManager {
     discover(): Promise<Set<PluginDefinition>>;
     instantiate(provider: string, options?: Record<string, any>): Promise<PluginInstance>;
     register(provider: string): boolean;
@@ -117,7 +117,7 @@ export { PluginLoader as PluginLoader_alias_1 }
 export { PluginLoader as PluginLoader_alias_2 }
 
 // @public
-class PluginManager<TContext = any, TPluginModule extends IPluginModule<TContext> = any> {
+class PluginManager<TContext = any, TPluginModule extends IPluginModule = any> {
     // (undocumented)
     static create: <TContext_1 = any, TPluginModule_1 extends IPluginModule<TContext_1> = any>(logger: IStormLog, options: Omit<Partial<PluginManagerOptions>, "defaultLoader"> & Pick<PluginManagerOptions, "defaultLoader">) => Promise<PluginManager<TContext_1, TPluginModule_1>>;
     // (undocumented)
