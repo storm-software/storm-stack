@@ -31,6 +31,13 @@ export interface PluginManagerOptions {
   useNodeModules: boolean;
 
   /**
+   * Should auto-install be used to discover plugins?
+   *
+   * @default true
+   */
+  autoInstall: boolean;
+
+  /**
    * A mode specifying how plugins should be discovered from the local filesystem.
    *
    * @remarks
@@ -136,9 +143,9 @@ export interface IPluginLoader<
     options: Record<string, any>
   ) => Promise<PluginInstance<TContext, TPluginModule>>;
   isValid: (module: TPluginModule) => boolean;
-  execute: (
-    instance: PluginInstance,
+  process: (
     context: TContext,
+    instance: PluginInstance,
     options: Record<string, any>
   ) => Promise<void>;
 }

@@ -327,9 +327,15 @@ importers:
 
   packages/plugin-system:
     dependencies:
+      '@antfu/ni':
+        specifier: ^0.21.12
+        version: 0.21.12
       enhanced-resolve:
         specifier: ^5.15.0
         version: 5.15.0
+      execa:
+        specifier: ^8.0.1
+        version: 8.0.1
       glob:
         specifier: ^10.3.10
         version: 10.3.10
@@ -394,6 +400,11 @@ packages:
       esbuild: ~0.14.29
     dependencies:
       esbuild: 0.19.9
+    dev: false
+
+  /@antfu/ni@0.21.12:
+    resolution: {integrity: sha512-2aDL3WUv8hMJb2L3r/PIQWsTLyq7RQr3v9xD16fiz6O8ys1xEyLhhTOv8gxtZvJiTzjTF5pHoArvRdesGL1DMQ==}
+    hasBin: true
     dev: false
 
   /@babel/code-frame@7.23.5:

@@ -14,13 +14,17 @@ export abstract class PluginLoader<
 {
   protected resolver: (request: string) => Promise<string>;
 
-  public constructor(public readonly tsconfig: string) {
+  public constructor(
+    public readonly rootPath?: string,
+    public readonly tsconfig?: string,
+    public readonly autoInstall?: boolean
+  ) {
     this.resolver = createResolver(tsconfig);
   }
 
-  public abstract execute: (
-    instance: PluginInstance<TContext, TPluginModule>,
+  public abstract process: (
     context: TContext,
+    instance: PluginInstance<TContext, TPluginModule>,
     options: Record<string, any>
   ) => Promise<void>;
 

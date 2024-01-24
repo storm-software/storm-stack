@@ -183,7 +183,7 @@
             },
             {
               "kind": "Content",
-              "text": "(rootPath?: string, tsconfig?: string) => (request: string) => "
+              "text": "(rootPath?: string, tsconfig?: string, autoInstall?: boolean) => (request: string) => "
             },
             {
               "kind": "Reference",
@@ -199,6 +199,79 @@
           "isReadonly": true,
           "releaseTag": "Public",
           "name": "createResolver",
+          "variableTypeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 4
+          }
+        },
+        {
+          "kind": "Variable",
+          "canonicalReference": "@storm-stack/plugin-system!execute:var",
+          "docComment": "",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "execute: "
+            },
+            {
+              "kind": "Content",
+              "text": "(command: string, rootPath: string) => "
+            },
+            {
+              "kind": "Reference",
+              "text": "Promise",
+              "canonicalReference": "!Promise:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "<"
+            },
+            {
+              "kind": "Reference",
+              "text": "ExecaReturnValue",
+              "canonicalReference": "!unknown"
+            },
+            {
+              "kind": "Content",
+              "text": "<string>>"
+            }
+          ],
+          "fileUrlPath": "tmp/.tsup/declaration/packages/plugin-system/src/utilities/run.d.ts",
+          "isReadonly": true,
+          "releaseTag": "Public",
+          "name": "execute",
+          "variableTypeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 6
+          }
+        },
+        {
+          "kind": "Variable",
+          "canonicalReference": "@storm-stack/plugin-system!install:var",
+          "docComment": "",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "install: "
+            },
+            {
+              "kind": "Content",
+              "text": "(name: string, rootPath: string) => "
+            },
+            {
+              "kind": "Reference",
+              "text": "Promise",
+              "canonicalReference": "!Promise:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "<void>"
+            }
+          ],
+          "fileUrlPath": "tmp/.tsup/declaration/packages/plugin-system/src/utilities/run.d.ts",
+          "isReadonly": true,
+          "releaseTag": "Public",
+          "name": "install",
           "variableTypeTokenRange": {
             "startIndex": 1,
             "endIndex": 4
@@ -277,60 +350,6 @@
           "name": "IPluginLoader",
           "preserveMemberOrder": false,
           "members": [
-            {
-              "kind": "PropertySignature",
-              "canonicalReference": "@storm-stack/plugin-system!IPluginLoader#execute:member",
-              "docComment": "",
-              "excerptTokens": [
-                {
-                  "kind": "Content",
-                  "text": "execute: "
-                },
-                {
-                  "kind": "Content",
-                  "text": "(instance: "
-                },
-                {
-                  "kind": "Reference",
-                  "text": "PluginInstance",
-                  "canonicalReference": "@storm-stack/plugin-system!PluginInstance:interface"
-                },
-                {
-                  "kind": "Content",
-                  "text": ", context: TContext, options: "
-                },
-                {
-                  "kind": "Reference",
-                  "text": "Record",
-                  "canonicalReference": "!Record:type"
-                },
-                {
-                  "kind": "Content",
-                  "text": "<string, any>) => "
-                },
-                {
-                  "kind": "Reference",
-                  "text": "Promise",
-                  "canonicalReference": "!Promise:interface"
-                },
-                {
-                  "kind": "Content",
-                  "text": "<void>"
-                },
-                {
-                  "kind": "Content",
-                  "text": ";"
-                }
-              ],
-              "isReadonly": false,
-              "isOptional": false,
-              "releaseTag": "Public",
-              "name": "execute",
-              "propertyTypeTokenRange": {
-                "startIndex": 1,
-                "endIndex": 8
-              }
-            },
             {
               "kind": "PropertySignature",
               "canonicalReference": "@storm-stack/plugin-system!IPluginLoader#isValid:member",
@@ -419,6 +438,60 @@
               "propertyTypeTokenRange": {
                 "startIndex": 1,
                 "endIndex": 10
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "@storm-stack/plugin-system!IPluginLoader#process:member",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "process: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "(context: TContext, instance: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "PluginInstance",
+                  "canonicalReference": "@storm-stack/plugin-system!PluginInstance:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": ", options: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "Record",
+                  "canonicalReference": "!Record:type"
+                },
+                {
+                  "kind": "Content",
+                  "text": "<string, any>) => "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "Promise",
+                  "canonicalReference": "!Promise:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": "<void>"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isReadonly": false,
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "process",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 8
               }
             }
           ],
@@ -1515,11 +1588,27 @@
               "excerptTokens": [
                 {
                   "kind": "Content",
-                  "text": "constructor(tsconfig: "
+                  "text": "constructor(rootPath?: "
                 },
                 {
                   "kind": "Content",
-                  "text": "string"
+                  "text": "string | undefined"
+                },
+                {
+                  "kind": "Content",
+                  "text": ", tsconfig?: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "string | undefined"
+                },
+                {
+                  "kind": "Content",
+                  "text": ", autoInstall?: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "boolean | undefined"
                 },
                 {
                   "kind": "Content",
@@ -1531,71 +1620,60 @@
               "overloadIndex": 1,
               "parameters": [
                 {
-                  "parameterName": "tsconfig",
+                  "parameterName": "rootPath",
                   "parameterTypeTokenRange": {
                     "startIndex": 1,
                     "endIndex": 2
                   },
-                  "isOptional": false
+                  "isOptional": true
+                },
+                {
+                  "parameterName": "tsconfig",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 3,
+                    "endIndex": 4
+                  },
+                  "isOptional": true
+                },
+                {
+                  "parameterName": "autoInstall",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 5,
+                    "endIndex": 6
+                  },
+                  "isOptional": true
                 }
               ]
             },
             {
               "kind": "Property",
-              "canonicalReference": "@storm-stack/plugin-system!PluginLoader#execute:member",
+              "canonicalReference": "@storm-stack/plugin-system!PluginLoader#autoInstall:member",
               "docComment": "",
               "excerptTokens": [
                 {
                   "kind": "Content",
-                  "text": "abstract execute: "
+                  "text": "readonly autoInstall?: "
                 },
                 {
                   "kind": "Content",
-                  "text": "(instance: "
-                },
-                {
-                  "kind": "Reference",
-                  "text": "PluginInstance",
-                  "canonicalReference": "@storm-stack/plugin-system!PluginInstance:interface"
-                },
-                {
-                  "kind": "Content",
-                  "text": "<TContext, TPluginModule>, context: TContext, options: "
-                },
-                {
-                  "kind": "Reference",
-                  "text": "Record",
-                  "canonicalReference": "!Record:type"
-                },
-                {
-                  "kind": "Content",
-                  "text": "<string, any>) => "
-                },
-                {
-                  "kind": "Reference",
-                  "text": "Promise",
-                  "canonicalReference": "!Promise:interface"
-                },
-                {
-                  "kind": "Content",
-                  "text": "<void>"
+                  "text": "boolean | undefined"
                 },
                 {
                   "kind": "Content",
                   "text": ";"
                 }
               ],
-              "isReadonly": false,
-              "isOptional": false,
+              "isReadonly": true,
+              "isOptional": true,
               "releaseTag": "Public",
-              "name": "execute",
+              "name": "autoInstall",
               "propertyTypeTokenRange": {
                 "startIndex": 1,
-                "endIndex": 8
+                "endIndex": 2
               },
               "isStatic": false,
               "isProtected": false,
-              "isAbstract": true
+              "isAbstract": false
             },
             {
               "kind": "Property",
@@ -1752,6 +1830,63 @@
             },
             {
               "kind": "Property",
+              "canonicalReference": "@storm-stack/plugin-system!PluginLoader#process:member",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "abstract process: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "(context: TContext, instance: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "PluginInstance",
+                  "canonicalReference": "@storm-stack/plugin-system!PluginInstance:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": "<TContext, TPluginModule>, options: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "Record",
+                  "canonicalReference": "!Record:type"
+                },
+                {
+                  "kind": "Content",
+                  "text": "<string, any>) => "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "Promise",
+                  "canonicalReference": "!Promise:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": "<void>"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isReadonly": false,
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "process",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 8
+              },
+              "isStatic": false,
+              "isProtected": false,
+              "isAbstract": true
+            },
+            {
+              "kind": "Property",
               "canonicalReference": "@storm-stack/plugin-system!PluginLoader#resolve:member",
               "docComment": "",
               "excerptTokens": [
@@ -1848,16 +1983,16 @@
             },
             {
               "kind": "Property",
-              "canonicalReference": "@storm-stack/plugin-system!PluginLoader#tsconfig:member",
+              "canonicalReference": "@storm-stack/plugin-system!PluginLoader#rootPath:member",
               "docComment": "",
               "excerptTokens": [
                 {
                   "kind": "Content",
-                  "text": "readonly tsconfig: "
+                  "text": "readonly rootPath?: "
                 },
                 {
                   "kind": "Content",
-                  "text": "string"
+                  "text": "string | undefined"
                 },
                 {
                   "kind": "Content",
@@ -1865,7 +2000,37 @@
                 }
               ],
               "isReadonly": true,
-              "isOptional": false,
+              "isOptional": true,
+              "releaseTag": "Public",
+              "name": "rootPath",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "isStatic": false,
+              "isProtected": false,
+              "isAbstract": false
+            },
+            {
+              "kind": "Property",
+              "canonicalReference": "@storm-stack/plugin-system!PluginLoader#tsconfig:member",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "readonly tsconfig?: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "string | undefined"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isReadonly": true,
+              "isOptional": true,
               "releaseTag": "Public",
               "name": "tsconfig",
               "propertyTypeTokenRange": {
@@ -2546,6 +2711,33 @@
           "name": "PluginManagerOptions",
           "preserveMemberOrder": false,
           "members": [
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "@storm-stack/plugin-system!PluginManagerOptions#autoInstall:member",
+              "docComment": "/**\n * Should auto-install be used to discover plugins?\n *\n * @default true\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "autoInstall: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "boolean"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isReadonly": false,
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "autoInstall",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
             {
               "kind": "PropertySignature",
               "canonicalReference": "@storm-stack/plugin-system!PluginManagerOptions#defaultLoader:member",

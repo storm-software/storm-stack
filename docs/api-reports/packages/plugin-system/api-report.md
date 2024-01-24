@@ -4,22 +4,29 @@
 
 ```ts
 
+import { ExecaReturnValue } from 'execa';
 import { Temporal } from '@js-temporal/polyfill';
 
 // @public
-const createResolver: (rootPath?: string, tsconfig?: string) => (request: string) => Promise<string>;
+const createResolver: (rootPath?: string, tsconfig?: string, autoInstall?: boolean) => (request: string) => Promise<string>;
 export { createResolver }
 export { createResolver as createResolver_alias_1 }
 export { createResolver as createResolver_alias_2 }
 
+// @public (undocumented)
+export const execute: (command: string, rootPath: string) => Promise<ExecaReturnValue<string>>;
+
+// @public (undocumented)
+export const install: (name: string, rootPath: string) => Promise<void>;
+
 // @public
 interface IPluginLoader<TContext = any, TPluginModule extends IPluginModule<TContext> = IPluginModule<TContext>> {
-    // (undocumented)
-    execute: (instance: PluginInstance, context: TContext, options: Record<string, any>) => Promise<void>;
     // (undocumented)
     isValid: (module: TPluginModule) => boolean;
     // (undocumented)
     load: (definition: PluginDefinition, options: Record<string, any>) => Promise<PluginInstance<TContext, TPluginModule>>;
+    // (undocumented)
+    process: (context: TContext, instance: PluginInstance, options: Record<string, any>) => Promise<void>;
 }
 export { IPluginLoader }
 export { IPluginLoader as IPluginLoader_alias_1 }
@@ -96,9 +103,9 @@ export { PluginInstance as PluginInstance_alias_1 }
 
 // @public
 abstract class PluginLoader<TContext = any, TPluginModule extends IPluginModule<TContext> = IPluginModule<TContext>> implements IPluginLoader<TContext, TPluginModule> {
-    constructor(tsconfig: string);
+    constructor(rootPath?: string | undefined, tsconfig?: string | undefined, autoInstall?: boolean | undefined);
     // (undocumented)
-    abstract execute: (instance: PluginInstance<TContext, TPluginModule>, context: TContext, options: Record<string, any>) => Promise<void>;
+    readonly autoInstall?: boolean | undefined;
     // (undocumented)
     protected instantiate: (definition: PluginDefinition, module: TPluginModule, resolvedPath: string, options?: Record<string, any>) => PluginInstance<TContext, TPluginModule>;
     // (undocumented)
@@ -106,11 +113,15 @@ abstract class PluginLoader<TContext = any, TPluginModule extends IPluginModule<
     // (undocumented)
     load: (definition: PluginDefinition, options?: Record<string, any>) => Promise<PluginInstance<TContext, TPluginModule>>;
     // (undocumented)
+    abstract process: (context: TContext, instance: PluginInstance<TContext, TPluginModule>, options: Record<string, any>) => Promise<void>;
+    // (undocumented)
     protected resolve: (definition: PluginDefinition, _?: Record<string, any>) => Promise<any>;
     // (undocumented)
     protected resolver: (request: string) => Promise<string>;
     // (undocumented)
-    readonly tsconfig: string;
+    readonly rootPath?: string | undefined;
+    // (undocumented)
+    readonly tsconfig?: string | undefined;
 }
 export { PluginLoader }
 export { PluginLoader as PluginLoader_alias_1 }
@@ -145,6 +156,7 @@ export { PluginManager as PluginManager_alias_2 }
 
 // @public (undocumented)
 interface PluginManagerOptions {
+    autoInstall: boolean;
     defaultLoader: string;
     discoveryMode: PluginDiscoveryMode;
     rootPath: string;

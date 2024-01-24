@@ -78,17 +78,28 @@ export class PluginManager<TContext = any, TPluginModule extends IPluginModule =
     const defaults: Partial<PluginManagerOptions> = {
       rootPath: process.env.STORM_WORKSPACE_ROOT || process.cwd() || ".",
       useNodeModules: true,
+      autoInstall: true,
       discoveryMode: PluginDiscoveryMode.FALLBACK
     };
     this._options = deepMerge(defaults, options);
-    this._options.tsconfig ??= joinPaths(this._options.rootPath, "tsconfig.json");
+
+    if (!this._options.tsconfig || !exists(this._options.tsconfig)) {
+      this._options.tsconfig = joinPaths(this._options.rootPath, "tsconfig.json");
+      if (!exists(this._options.tsconfig)) {
+        this._options.tsconfig = joinPaths(this._options.rootPath, "tsconfig.base.json");
+      }
+    }
 
     this._logger = logger;
     this._registry = new Map<string, PluginDefinition>();
     this._store = new Map<string, PluginInstance<TContext, TPluginModule>>();
     this._hooks = new Map<string, PluginHookFn<TContext>[]>();
     this._loaders = new Map<string, IPluginLoader<TContext, TPluginModule>>();
-    this._loaderResolver = createResolver(options.rootPath, this._options.tsconfig);
+    this._loaderResolver = createResolver(
+      options.rootPath,
+      this._options.tsconfig,
+      this._options.autoInstall
+    );
   }
 
   public discover = async (): Promise<Map<string, PluginDefinition>> => {
@@ -180,7 +191,7 @@ export class PluginManager<TContext = any, TPluginModule extends IPluginModule =
     );
 
     try {
-      instance.loader.execute(instance, context, options);
+      instance.loader.process(context, instance, options);
     } catch (e) {
       result[provider] = StormError.create(e);
     }
