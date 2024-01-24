@@ -46,8 +46,8 @@
     "adr-preview": "pnpm log4brains preview",
     "api-extractor": "nx g @storm-software/workspace-tools:api-extractor --outputPath 'docs/api-reference' --clean --no-interactive",
     "prebuild": "pnpm clean",
-    "build": "nx affected -t build --parallel=5",
-    "build:all": "nx run-many -t build --all --parallel=5",
+    "build": "nx affected -t build --parallel=5 --nxBail",
+    "build:all": "nx run-many -t build --all --parallel=5 --nxBail",
     "build:docs": "nx run-many -t build --projects=docs/* --parallel=5",
     "build:packages": "nx run-many -t build --projects=packages/* --parallel=5",
     "build:production": "nx run-many -t build --all --prod --parallel=5",
@@ -121,10 +121,7 @@
   },
   "namespace": "@storm-stack",
   "nx": {
-    "includedScripts": [
-      "lint",
-      "format"
-    ]
+    "includedScripts": ["lint", "format"]
   },
   "pnpm": {
     "overrides": {

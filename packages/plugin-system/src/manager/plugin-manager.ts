@@ -34,7 +34,7 @@ const PLUGIN_CONFIG_JSON = "plugin.json";
 /**
  * Discovers and instantiates plugins.
  */
-export class PluginManager<TContext = any, TPluginModule extends IPluginModule<TContext> = any> {
+export class PluginManager<TContext = any, TPluginModule extends IPluginModule = any> {
   private _options: PluginManagerOptions;
   private _hasDiscovered = false;
 
@@ -88,7 +88,7 @@ export class PluginManager<TContext = any, TPluginModule extends IPluginModule<T
     this._store = new Map<string, PluginInstance<TContext, TPluginModule>>();
     this._hooks = new Map<string, PluginHookFn<TContext>[]>();
     this._loaders = new Map<string, IPluginLoader<TContext, TPluginModule>>();
-    this._loaderResolver = createResolver(options.rootPath);
+    this._loaderResolver = createResolver(options.rootPath, this._options.tsconfig);
   }
 
   public discover = async (): Promise<Map<string, PluginDefinition>> => {
