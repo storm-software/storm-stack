@@ -1,3 +1,15 @@
+## 1.6.7 (2024-01-24)
+
+
+### 🩹 Fixes
+
+- **plugin-system:** Added tsconfig file paths to resolver handler ([56ff717](https://github.com/storm-software/storm-stack/commit/56ff717))
+
+
+### ❤️  Thank You
+
+- Patrick Sullivan
+
 
 
 
