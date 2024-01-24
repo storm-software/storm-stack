@@ -1,3 +1,15 @@
+## 1.12.0 (2024-01-24)
+
+
+### 🚀 Features
+
+- **plugin-system:** Added the `autoInstall` option to resolvers ([18c1841](https://github.com/storm-software/storm-stack/commit/18c1841))
+
+
+### ❤️  Thank You
+
+- Patrick Sullivan
+
 ## 1.11.7 (2024-01-24)
 
 
