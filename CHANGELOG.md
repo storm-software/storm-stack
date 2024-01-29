@@ -1,14 +1,14 @@
-## 0.1.3 (2024-01-29)
 
+
+## 0.1.3 (2024-01-29)
 
 ### 🩹 Fixes
 
-- **monorepo:** Added the `nx-release-publish` target to each projects json configuration ([a22385a](https://github.com/storm-software/storm-stack/commit/a22385a))
+-   **monorepo:** Added the `nx-release-publish` target to each projects json configuration ([a22385a](https://github.com/storm-software/storm-stack/commit/a22385a))
 
+### ❤️ Thank You
 
-### ❤️  Thank You
-
-- Patrick Sullivan
+-   Patrick Sullivan
 
 ## 0.1.1 (2024-01-29)
 

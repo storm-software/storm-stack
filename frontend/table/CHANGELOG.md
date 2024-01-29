@@ -1,14 +1,24 @@
-## 1.3.3 (2024-01-29)
+## 1.3.4 (2024-01-29)
 
 
 ### 🩹 Fixes
 
-- **monorepo:** Added the `nx-release-publish` target to each projects json configuration ([a22385a](https://github.com/storm-software/storm-stack/commit/a22385a))
+- **utilities:** Reformat the README markdown files ([db95426](https://github.com/storm-software/storm-stack/commit/db95426))
 
 
 ### ❤️  Thank You
 
 - Patrick Sullivan
+
+## 1.3.3 (2024-01-29)
+
+### 🩹 Fixes
+
+-   **monorepo:** Added the `nx-release-publish` target to each projects json configuration ([a22385a](https://github.com/storm-software/storm-stack/commit/a22385a))
+
+### ❤️ Thank You
+
+-   Patrick Sullivan
 
 ## 1.3.0 (2024-01-24)
 
