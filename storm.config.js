@@ -10,7 +10,7 @@ module.exports = {
   repository: "https://github.com/storm-software/storm-stack",
   timezone: "America/New_York",
   locale: "en-US",
-  logLevel: "all",
+  logLevel: "trace",
   colors: {
     primary: "#1fb2a6",
     background: "#1d232a",
