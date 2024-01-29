@@ -1,3 +1,15 @@
+## 0.1.1 (2024-01-29)
+
+
+### 🩹 Fixes
+
+- **plugin-system:** Resolved issue with instanciating the `PluginLoader` from the provided module ([778bb6d](https://github.com/storm-software/storm-stack/commit/778bb6d))
+
+
+### ❤️  Thank You
+
+- Patrick Sullivan
+
 ## 0.1.0 (2024-01-24)
 
 
