@@ -4,211 +4,74 @@
 
 ```ts
 
-import SuperJSON from 'superjson';
-
 // @public (undocumented)
-type Class = {
-    new (...args: any[]): any;
-};
-export { Class }
-export { Class as Class_alias_1 }
-
-// @public (undocumented)
-type ClassInstance = any;
-export { ClassInstance }
-export { ClassInstance as ClassInstance_alias_1 }
+const Crypto_2: Crypto | undefined;
+export { Crypto_2 as Crypto }
 
 // @public
-interface ClassSerializable<_TData, TJsonValue extends JsonValue = JsonValue> {
-    deserialize: (json: TJsonValue) => void;
-    serialize: () => JsonParserResult;
-}
-export { ClassSerializable }
-export { ClassSerializable as ClassSerializable_alias_1 }
-
-// @public (undocumented)
-type ClassTypeAnnotation = ["class", string];
-export { ClassTypeAnnotation }
-export { ClassTypeAnnotation as ClassTypeAnnotation_alias_1 }
-
-// @public (undocumented)
-type CompositeTypeAnnotation = TypedArrayAnnotation | ClassTypeAnnotation | SymbolTypeAnnotation | CustomTypeAnnotation;
-export { CompositeTypeAnnotation }
-export { CompositeTypeAnnotation as CompositeTypeAnnotation_alias_1 }
-
-// @public (undocumented)
-type CustomTypeAnnotation = ["custom", string];
-export { CustomTypeAnnotation }
-export { CustomTypeAnnotation as CustomTypeAnnotation_alias_1 }
+function cuid(): string;
+export { cuid }
+export { cuid as cuid_alias_1 }
 
 // @public
-interface DataTransformer<TData, TJsonValue extends JsonValue = JsonValue> {
-    deserialize: DeserializeFunct<TData, TJsonValue>;
-    serialize: SerializationFunct<TData, TJsonValue>;
+interface DeconstructedSnowflake {
+    binary: string;
+    sequence: number;
+    shard_id: number;
+    snowflake: SnowflakeResolvable;
+    timestamp: number;
 }
-export { DataTransformer }
-export { DataTransformer as DataTransformer_alias_1 }
+export { DeconstructedSnowflake }
+export { DeconstructedSnowflake as DeconstructedSnowflake_alias_1 }
 
 // @public
-type DeserializeFunct<TData = any, TJsonValue extends JsonValue = JsonValue> = (json: TJsonValue) => TData;
-export { DeserializeFunct }
-export { DeserializeFunct as DeserializeFunct_alias_1 }
-
-// @public (undocumented)
-interface IJsonParser {
-    // (undocumented)
-    deserialize: <TData = any>(payload: JsonParserResult) => TData;
-    // (undocumented)
-    parse: <TData = any>(strData: string) => TData;
-    // (undocumented)
-    register: <TData = any, TJsonValue extends JsonValue = JsonValue>(name: string, serialize: (object: JsonValue) => TJsonValue, deserialize: (payload: TJsonValue) => TData, isApplicable: (data: any) => data is TData) => void;
-    // (undocumented)
-    serialize: (object: JsonValue) => JsonParserResult;
-    // (undocumented)
-    stringify: <TData = any>(data: TData) => string;
-}
-export { IJsonParser }
-export { IJsonParser as IJsonParser_alias_1 }
-
-// @public (undocumented)
-type InnerNode<T> = [T, Record<string, Tree<T>>];
-export { InnerNode }
-export { InnerNode as InnerNode_alias_1 }
-
-// @public (undocumented)
-interface JsonArray extends Array<JsonValue> {
-}
-export { JsonArray }
-export { JsonArray as JsonArray_alias_1 }
-
-// @public (undocumented)
-interface JsonObject {
-    // (undocumented)
-    [key: string]: JsonValue;
-}
-export { JsonObject }
-export { JsonObject as JsonObject_alias_1 }
-
-// @public (undocumented)
-interface JsonParserResult {
-    // (undocumented)
-    json: JsonValue;
-    // (undocumented)
-    meta?: {
-        values?: Tree<TypeAnnotation> | Record<string, Tree<TypeAnnotation>> | undefined;
-        referentialEqualities?: Record<string, string[]> | [string[]] | [string[], Record<string, string[]>];
-    };
-}
-export { JsonParserResult }
-export { JsonParserResult as JsonParserResult_alias_1 }
-
-// @public (undocumented)
-type JsonValue = PrimitiveJsonValue | JsonArray | JsonObject;
-export { JsonValue }
-export { JsonValue as JsonValue_alias_1 }
-
-// @public (undocumented)
-type Leaf<T> = [T];
-export { Leaf }
-export { Leaf as Leaf_alias_1 }
-
-// @public (undocumented)
-type LeafTypeAnnotation = PrimitiveTypeAnnotation | "regexp" | "Date" | "Error" | "URL";
-export { LeafTypeAnnotation }
-export { LeafTypeAnnotation as LeafTypeAnnotation_alias_1 }
-
-// @public (undocumented)
-type PrimitiveJsonValue = string | number | boolean | undefined | null;
-export { PrimitiveJsonValue }
-export { PrimitiveJsonValue as PrimitiveJsonValue_alias_1 }
-
-// @public (undocumented)
-type PrimitiveTypeAnnotation = "number" | "undefined" | "bigint";
-export { PrimitiveTypeAnnotation }
-export { PrimitiveTypeAnnotation as PrimitiveTypeAnnotation_alias_1 }
-
-// @public (undocumented)
-const Serializable: <TData = any>(options?: {
-    identifier?: string;
-}) => <TClass extends new (..._args: any) => any = new (..._args: any) => TData>(target: TClass) => {
-    new (..._args: any): {
-        [x: string]: any;
-        __typename: string;
-        serialize: () => JsonParserResult;
-        deserialize: (json: JsonValue) => JsonParserResult;
-        stringify: () => string;
-        parse: (strObject: string) => TData;
-        isTypeOf(value: any): value is TData;
-    };
-    __typename: string;
-    isTypeOf(value: any): value is TData;
-    deserialize: (json: JsonValue) => JsonParserResult;
-    parse: (strObject: string) => TData;
-} & TClass;
-export { Serializable }
-export { Serializable as Serializable_alias_1 }
-
-// @public (undocumented)
-type SerializableJsonValue = symbol | Set<JsonValue> | Map<JsonValue, JsonValue> | undefined | bigint | Date | ClassInstance | RegExp;
-export { SerializableJsonValue }
-export { SerializableJsonValue as SerializableJsonValue_alias_1 }
-
-// @public (undocumented)
-type SerializableType<T> = ClassSerializable<T> & ClassTypeCheckable<T> & ITyped & T;
-export { SerializableType }
-export { SerializableType as SerializableType_alias_1 }
+function deconstructSnowflake(snowflake: SnowflakeResolvable): DeconstructedSnowflake;
+export { deconstructSnowflake }
+export { deconstructSnowflake as deconstructSnowflake_alias_1 }
 
 // @public
-type SerializationFunct<TData = any, TJsonValue extends JsonValue = JsonValue> = (data: TData) => TJsonValue;
-export { SerializationFunct }
-export { SerializationFunct as SerializationFunct_alias_1 }
-
-// @public (undocumented)
-type SerializationMetadata<T> = DataTransformer<T> & ClassTypeCheckable<T>;
-export { SerializationMetadata }
-export { SerializationMetadata as SerializationMetadata_alias_1 }
-
-// @public (undocumented)
-type SimpleTypeAnnotation = LeafTypeAnnotation | "map" | "set";
-export { SimpleTypeAnnotation }
-export { SimpleTypeAnnotation as SimpleTypeAnnotation_alias_1 }
+function hash(input: string | object): string;
+export { hash }
+export { hash as hash_alias_1 }
 
 // @public
-class StormParser extends SuperJSON {
-    static deserialize<TData = unknown>(payload: JsonParserResult): TData;
-    // (undocumented)
-    static get instance(): StormParser;
-    static parse<TData = unknown>(strData: string): TData;
-    static register<TData = any, TJsonObject extends JsonValue = JsonValue>(name: string, serialize: (data: TData) => TJsonObject, deserialize: (json: TJsonObject) => TData, isApplicable: (data: any) => data is TData): void;
-    static registerClass(classConstructor: Class, options?: {
-        identifier?: string;
-        allowProps?: string[];
-    } | string): void;
-    static serialize(object: JsonValue): JsonParserResult;
-    static stringify(json: any): string;
+interface ISnowflakeGeneratorOptions {
+    epoch: number;
+    shardId: number;
+    timestamp: number | Date;
 }
-export { StormParser }
-export { StormParser as StormParser_alias_1 }
+export { ISnowflakeGeneratorOptions }
+export { ISnowflakeGeneratorOptions as ISnowflakeGeneratorOptions_alias_1 }
 
-// @public (undocumented)
-type SymbolTypeAnnotation = ["symbol", string];
-export { SymbolTypeAnnotation }
-export { SymbolTypeAnnotation as SymbolTypeAnnotation_alias_1 }
+// @public
+function isValidSnowflake(snowflake: string): boolean;
+export { isValidSnowflake }
+export { isValidSnowflake as isValidSnowflake_alias_1 }
 
-// @public (undocumented)
-type Tree<T> = InnerNode<T> | Leaf<T>;
-export { Tree }
-export { Tree as Tree_alias_1 }
+// @public
+const randomInteger: (maximum: number, minimum?: number) => number;
+export { randomInteger }
+export { randomInteger as randomInteger_alias_1 }
 
-// @public (undocumented)
-type TypeAnnotation = SimpleTypeAnnotation | CompositeTypeAnnotation;
-export { TypeAnnotation }
-export { TypeAnnotation as TypeAnnotation_alias_1 }
+// @public
+const randomLetter: (random?: () => number) => string | undefined;
+export { randomLetter }
+export { randomLetter as randomLetter_alias_1 }
 
-// @public (undocumented)
-type TypedArrayAnnotation = ["typed-array", string];
-export { TypedArrayAnnotation }
-export { TypedArrayAnnotation as TypedArrayAnnotation_alias_1 }
+// @public
+function snowflake({ shardId, epoch, timestamp }?: ISnowflakeGeneratorOptions): string;
+export { snowflake }
+export { snowflake as snowflake_alias_1 }
+
+// @public
+type SnowflakeResolvable = string;
+export { SnowflakeResolvable }
+export { SnowflakeResolvable as SnowflakeResolvable_alias_1 }
+
+// @public
+function uuid(): string;
+export { uuid }
+export { uuid as uuid_alias_1 }
 
 // (No @packageDocumentation comment for this package)
 

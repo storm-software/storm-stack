@@ -1,3 +1,15 @@
+## 1.4.2 (2024-01-29)
+
+
+### 🩹 Fixes
+
+- **plugin-system:** Resolved various linting issues with workspace ([71d1541](https://github.com/storm-software/storm-stack/commit/71d1541))
+
+
+### ❤️  Thank You
+
+- Patrick Sullivan
+
 ## 1.4.1 (2024-01-29)
 
 
