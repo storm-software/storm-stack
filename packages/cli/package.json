@@ -1,6 +1,6 @@
 {
   "name": "@storm-stack/cli",
-  "version": "1.12.7",
+  "version": "1.13.0",
   "private": false,
   "description": "A collection of CLI utilities to assist in creating command line applications.",
   "repository": {
