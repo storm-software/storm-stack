@@ -1,5 +1,9 @@
-import { createTable as createReactTable } from "@tanstack/react-table";
+import {
+  type Table,
+  type TableOptionsResolved,
+  createTable as createReactTable
+} from "@tanstack/react-table";
 
-export const createTable = (config: any) => {
-  return createReactTable(config);
+export const createTable = <T>(config: TableOptionsResolved<T>): Table<T> => {
+  return createReactTable<T>(config);
 };

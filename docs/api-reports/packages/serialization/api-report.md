@@ -4,211 +4,657 @@
 
 ```ts
 
-import SuperJSON from 'superjson';
+// @public (undocumented)
+const $NestedValue: unique symbol;
+export { $NestedValue }
+export { $NestedValue as $NestedValue_alias_1 }
 
 // @public (undocumented)
-type Class = {
-    new (...args: any[]): any;
+interface Abstract<T> {
+    // (undocumented)
+    prototype: T;
+}
+export { Abstract }
+export { Abstract as Abstract_alias_1 }
+
+// @public (undocumented)
+type AnyCase<T extends IndexType> = string extends T ? string : T extends `${infer F1}${infer F2}${infer R}` ? `${Uppercase<F1> | Lowercase<F1>}${Uppercase<F2> | Lowercase<F2>}${AnyCase<R>}` : T extends `${infer F}${infer R}` ? `${Uppercase<F> | Lowercase<F>}${AnyCase<R>}` : typeof EMPTY_STRING;
+export { AnyCase }
+export { AnyCase as AnyCase_alias_1 }
+
+// @public
+function argIdentity(value: any): any;
+export { argIdentity }
+export { argIdentity as argIdentity_alias_1 }
+export { argIdentity as argIdentity_alias_2 }
+
+// @public (undocumented)
+type ArrayElement<ArrayType extends readonly unknown[]> = ArrayType extends readonly (infer ElementType)[] ? ElementType : never;
+export { ArrayElement }
+export { ArrayElement as ArrayElement_alias_1 }
+
+// @public (undocumented)
+type BrowserNativeObject = Date | FileList | File;
+export { BrowserNativeObject }
+export { BrowserNativeObject as BrowserNativeObject_alias_1 }
+
+// @public
+const camelCase: (input?: string) => string | undefined;
+export { camelCase }
+export { camelCase as camelCase_alias_1 }
+export { camelCase as camelCase_alias_2 }
+
+// @public (undocumented)
+interface ClassTypeCheckable<T> extends ITyped {
+    isTypeOf: (value: unknown) => value is T;
+}
+export { ClassTypeCheckable }
+export { ClassTypeCheckable as ClassTypeCheckable_alias_1 }
+
+// @public (undocumented)
+interface Clonable<T> {
+    // (undocumented)
+    clone(): T;
+}
+export { Clonable }
+export { Clonable as Clonable_alias_1 }
+
+// @public (undocumented)
+type Collection = IArguments | Array<unknown> | Map<unknown, unknown> | Record<string | number | symbol, unknown> | Set<unknown>;
+export { Collection }
+export { Collection as Collection_alias_1 }
+
+// @public
+const constantCase: (input?: string) => string | undefined;
+export { constantCase }
+export { constantCase as constantCase_alias_1 }
+export { constantCase as constantCase_alias_2 }
+
+// @public
+function copy(value: unknown, valueType: string, customizer?: ((value: unknown, type: string) => unknown) | null): unknown;
+export { copy }
+export { copy as copy_alias_1 }
+export { copy as copy_alias_2 }
+
+// @public (undocumented)
+const Crypto_2: Crypto | undefined;
+export { Crypto_2 as Crypto }
+export { Crypto_2 as Crypto_alias_1 }
+export { Crypto_2 as Crypto_alias_2 }
+
+// @public
+function deepCopy<T>(value: T, options?: {
+    customizer?: (value: unknown, type: string) => unknown;
+}): T;
+export { deepCopy }
+export { deepCopy as deepCopy_alias_1 }
+export { deepCopy as deepCopy_alias_2 }
+
+// @public
+const deepMerge: {
+    <X = any, Y = any, Z = X & Y>(target: X, source: Y, options?: any): Z;
+    all(array: Array<any>, options?: any): any;
 };
-export { Class }
-export { Class as Class_alias_1 }
+export { deepMerge }
+export { deepMerge as deepMerge_alias_1 }
+export { deepMerge as deepMerge_alias_2 }
 
 // @public (undocumented)
-type ClassInstance = any;
-export { ClassInstance }
-export { ClassInstance as ClassInstance_alias_1 }
+type DeepPartial<T> = T extends BrowserNativeObject | NestedValue ? T : {
+    [K in keyof T]?: DeepPartial<T[K]>;
+};
+export { DeepPartial }
+export { DeepPartial as DeepPartial_alias_1 }
+
+// @public (undocumented)
+const EMPTY_OBJECT: {};
+export { EMPTY_OBJECT }
+export { EMPTY_OBJECT as EMPTY_OBJECT_alias_1 }
+
+// @public (undocumented)
+const EMPTY_STRING = "";
+export { EMPTY_STRING }
+export { EMPTY_STRING as EMPTY_STRING_alias_1 }
+
+// @public (undocumented)
+type EmptyObject = {
+    [K in string | number]: never;
+};
+export { EmptyObject }
+export { EmptyObject as EmptyObject_alias_1 }
 
 // @public
-interface ClassSerializable<_TData, TJsonValue extends JsonValue = JsonValue> {
-    deserialize: (json: TJsonValue) => void;
-    serialize: () => JsonParserResult;
-}
-export { ClassSerializable }
-export { ClassSerializable as ClassSerializable_alias_1 }
-
-// @public (undocumented)
-type ClassTypeAnnotation = ["class", string];
-export { ClassTypeAnnotation }
-export { ClassTypeAnnotation as ClassTypeAnnotation_alias_1 }
-
-// @public (undocumented)
-type CompositeTypeAnnotation = TypedArrayAnnotation | ClassTypeAnnotation | SymbolTypeAnnotation | CustomTypeAnnotation;
-export { CompositeTypeAnnotation }
-export { CompositeTypeAnnotation as CompositeTypeAnnotation_alias_1 }
-
-// @public (undocumented)
-type CustomTypeAnnotation = ["custom", string];
-export { CustomTypeAnnotation }
-export { CustomTypeAnnotation as CustomTypeAnnotation_alias_1 }
+type Except<ObjectType, KeysType extends keyof ObjectType, Options extends ExceptOptions = {
+    requireExactProps: false;
+}> = {
+    [KeyType in keyof ObjectType as Filter<KeyType, KeysType>]: ObjectType[KeyType];
+} & (Options["requireExactProps"] extends true ? Partial<Record<KeysType, never>> : {});
+export { Except }
+export { Except as Except_alias_1 }
 
 // @public
-interface DataTransformer<TData, TJsonValue extends JsonValue = JsonValue> {
-    deserialize: DeserializeFunct<TData, TJsonValue>;
-    serialize: SerializationFunct<TData, TJsonValue>;
+class Factory {
+    static create<TClass = any>(context: any): any;
+    protected static getClass<TClass = any>(context: any): new (...argArray: any[]) => TClass;
 }
-export { DataTransformer }
-export { DataTransformer as DataTransformer_alias_1 }
+export { Factory }
+export { Factory as Factory_alias_1 }
+
+// @public (undocumented)
+type Filter<KeyType, ExcludeType> = IsEqual<KeyType, ExcludeType> extends true ? never : KeyType extends ExcludeType ? never : KeyType;
+export { Filter }
+export { Filter as Filter_alias_1 }
 
 // @public
-type DeserializeFunct<TData = any, TJsonValue extends JsonValue = JsonValue> = (json: TJsonValue) => TData;
-export { DeserializeFunct }
-export { DeserializeFunct as DeserializeFunct_alias_1 }
+const flattenObject: (obj: any, prefix?: string, keyStringFn?: (input?: string) => string | undefined) => any;
+export { flattenObject }
+export { flattenObject as flattenObject_alias_1 }
+export { flattenObject as flattenObject_alias_2 }
+
+// @public
+const getObjectTag: (value: unknown) => string;
+export { getObjectTag }
+export { getObjectTag as getObjectTag_alias_1 }
+export { getObjectTag as getObjectTag_alias_2 }
+
+// @public
+const getUnique: <T = any>(arr: T[]) => T[];
+export { getUnique }
+export { getUnique as getUnique_alias_1 }
+export { getUnique as getUnique_alias_2 }
+
+// @public
+const getWebCrypto: () => Crypto;
+export { getWebCrypto }
+export { getWebCrypto as getWebCrypto_alias_1 }
+export { getWebCrypto as getWebCrypto_alias_2 }
 
 // @public (undocumented)
-interface IJsonParser {
+interface IIdentity<T = string> {
     // (undocumented)
-    deserialize: <TData = any>(payload: JsonParserResult) => TData;
-    // (undocumented)
-    parse: <TData = any>(strData: string) => TData;
-    // (undocumented)
-    register: <TData = any, TJsonValue extends JsonValue = JsonValue>(name: string, serialize: (object: JsonValue) => TJsonValue, deserialize: (payload: TJsonValue) => TData, isApplicable: (data: any) => data is TData) => void;
-    // (undocumented)
-    serialize: (object: JsonValue) => JsonParserResult;
-    // (undocumented)
-    stringify: <TData = any>(data: TData) => string;
+    id: T;
 }
-export { IJsonParser }
-export { IJsonParser as IJsonParser_alias_1 }
+export { IIdentity }
+export { IIdentity as IIdentity_alias_1 }
+
+// @public
+type Indexable = {
+    [index: IndexType]: any;
+};
+export { Indexable }
+export { Indexable as Indexable_alias_1 }
+
+// @public
+type IndexType = string | number | symbol;
+export { IndexType }
+export { IndexType as IndexType_alias_1 }
+
+// @public
+const isArrayLike: (value: any) => boolean;
+export { isArrayLike }
+export { isArrayLike as isArrayLike_alias_1 }
+export { isArrayLike as isArrayLike_alias_2 }
+
+// @public
+const isAsyncIterable: (value: unknown) => value is AsyncIterable<unknown>;
+export { isAsyncIterable }
+export { isAsyncIterable as isAsyncIterable_alias_1 }
+export { isAsyncIterable as isAsyncIterable_alias_2 }
+
+// @public
+const isBigInt: (value: unknown) => value is bigint;
+export { isBigInt }
+export { isBigInt as isBigInt_alias_1 }
+export { isBigInt as isBigInt_alias_2 }
+
+// @public
+const isBoolean: (value: unknown) => value is boolean;
+export { isBoolean }
+export { isBoolean as isBoolean_alias_1 }
+export { isBoolean as isBoolean_alias_2 }
+
+// @public
+const isBuffer: typeof Buffer.isBuffer;
+export { isBuffer }
+export { isBuffer as isBuffer_alias_1 }
+export { isBuffer as isBuffer_alias_2 }
 
 // @public (undocumented)
-type InnerNode<T> = [T, Record<string, Tree<T>>];
-export { InnerNode }
-export { InnerNode as InnerNode_alias_1 }
+const isBufferExists: boolean;
+export { isBufferExists }
+export { isBufferExists as isBufferExists_alias_1 }
+export { isBufferExists as isBufferExists_alias_2 }
+
+// @public
+function isCollection(value: any): value is Collection;
+export { isCollection }
+export { isCollection as isCollection_alias_1 }
+export { isCollection as isCollection_alias_2 }
+
+// @public
+const isDate: (value: unknown) => value is Date;
+export { isDate }
+export { isDate as isDate_alias_1 }
+export { isDate as isDate_alias_2 }
+
+// @public
+const isDevelopment: () => boolean;
+export { isDevelopment }
+export { isDevelopment as isDevelopment_alias_1 }
+export { isDevelopment as isDevelopment_alias_2 }
+
+// @public
+const isEmpty: (value: unknown) => boolean;
+export { isEmpty }
+export { isEmpty as isEmpty_alias_1 }
+export { isEmpty as isEmpty_alias_2 }
+
+// @public
+const isEmptyObject: (value: unknown) => value is {};
+export { isEmptyObject }
+export { isEmptyObject as isEmptyObject_alias_1 }
+export { isEmptyObject as isEmptyObject_alias_2 }
+
+// @public
+const isEmptyOrEmptyObject: (value: unknown) => boolean;
+export { isEmptyOrEmptyObject }
+export { isEmptyOrEmptyObject as isEmptyOrEmptyObject_alias_1 }
+export { isEmptyOrEmptyObject as isEmptyOrEmptyObject_alias_2 }
+
+// @public
+const isEmptyString: (value: unknown) => value is string;
+export { isEmptyString }
+export { isEmptyString as isEmptyString_alias_1 }
+export { isEmptyString as isEmptyString_alias_2 }
+
+// @public
+type IsEqual<A, B> = (<G>() => G extends A ? 1 : 2) extends <G>() => G extends B ? 1 : 2 ? true : false;
+export { IsEqual }
+export { IsEqual as IsEqual_alias_1 }
 
 // @public (undocumented)
-interface JsonArray extends Array<JsonValue> {
+function isEqual(a: any, b: any): boolean;
+export { isEqual }
+export { isEqual as isEqual_alias_1 }
+export { isEqual as isEqual_alias_2 }
+
+// @public (undocumented)
+interface ISequenced {
+    sequence: number;
 }
-export { JsonArray }
-export { JsonArray as JsonArray_alias_1 }
+export { ISequenced }
+export { ISequenced as ISequenced_alias_1 }
+
+// @public
+const isError: (obj: unknown) => obj is Error;
+export { isError }
+export { isError as isError_alias_1 }
+export { isError as isError_alias_2 }
+
+// @public
+const isFloat: (value: any) => value is number;
+export { isFloat }
+export { isFloat as isFloat_alias_1 }
+export { isFloat as isFloat_alias_2 }
+
+// @public
+const isFunction: (value: unknown) => value is ((params?: unknown) => unknown) & Function;
+export { isFunction }
+export { isFunction as isFunction_alias_1 }
+export { isFunction as isFunction_alias_2 }
+
+// @public
+const isInt: (value: any) => value is number;
+export { isInt }
+export { isInt as isInt_alias_1 }
+export { isInt as isInt_alias_2 }
 
 // @public (undocumented)
-interface JsonObject {
-    // (undocumented)
-    [key: string]: JsonValue;
-}
-export { JsonObject }
-export { JsonObject as JsonObject_alias_1 }
+const isMergeableObject: (value: any) => boolean;
+export { isMergeableObject }
+export { isMergeableObject as isMergeableObject_alias_1 }
+export { isMergeableObject as isMergeableObject_alias_2 }
+
+// @public
+const isMode: (mode: string) => boolean;
+export { isMode }
+export { isMode as isMode_alias_1 }
+export { isMode as isMode_alias_2 }
+
+// @public
+export const isNonNullObject: (value: any) => value is object;
+
+// @public
+const isNotEmpty: (value: unknown) => value is {};
+export { isNotEmpty }
+export { isNotEmpty as isNotEmpty_alias_1 }
+export { isNotEmpty as isNotEmpty_alias_2 }
+
+// @public
+const isNull: (value: unknown) => value is null;
+export { isNull }
+export { isNull as isNull_alias_1 }
+export { isNull as isNull_alias_2 }
+
+// @public
+const isNumber: (value: unknown) => value is number;
+export { isNumber }
+export { isNumber as isNumber_alias_1 }
+export { isNumber as isNumber_alias_2 }
+
+// @public
+const isObject: (value: unknown) => value is object;
+export { isObject }
+export { isObject as isObject_alias_1 }
+export { isObject as isObject_alias_2 }
+
+// @public
+const isObjectLike: (obj: unknown) => boolean;
+export { isObjectLike }
+export { isObjectLike as isObjectLike_alias_1 }
+export { isObjectLike as isObjectLike_alias_2 }
+
+// @public
+const isPlainObject: (obj: unknown) => boolean;
+export { isPlainObject }
+export { isPlainObject as isPlainObject_alias_1 }
+export { isPlainObject as isPlainObject_alias_2 }
+
+// @public
+const isPrimitive: (value: unknown) => boolean;
+export { isPrimitive }
+export { isPrimitive as isPrimitive_alias_1 }
+export { isPrimitive as isPrimitive_alias_2 }
+
+// @public
+const isProduction: () => boolean;
+export { isProduction }
+export { isProduction as isProduction_alias_1 }
+export { isProduction as isProduction_alias_2 }
+
+// @public
+const isPromise: (value: unknown) => value is Promise<unknown>;
+export { isPromise }
+export { isPromise as isPromise_alias_1 }
+export { isPromise as isPromise_alias_2 }
+
+// @public
+const isPromiseLike: (value: unknown) => value is PromiseLike<unknown>;
+export { isPromiseLike }
+export { isPromiseLike as isPromiseLike_alias_1 }
+export { isPromiseLike as isPromiseLike_alias_2 }
+
+// @public
+const isReactElement: (value: any) => boolean;
+export { isReactElement }
+export { isReactElement as isReactElement_alias_1 }
+export { isReactElement as isReactElement_alias_2 }
+
+// @public
+const isRef: <TRef = unknown>(value: unknown) => value is RefObject<TRef>;
+export { isRef }
+export { isRef as isRef_alias_1 }
+export { isRef as isRef_alias_2 }
+
+// @public
+const isRuntimeClient: () => boolean;
+export { isRuntimeClient }
+export { isRuntimeClient as isRuntimeClient_alias_1 }
+export { isRuntimeClient as isRuntimeClient_alias_2 }
+
+// @public
+const isRuntimeServer: () => boolean;
+export { isRuntimeServer }
+export { isRuntimeServer as isRuntimeServer_alias_1 }
+export { isRuntimeServer as isRuntimeServer_alias_2 }
+
+// @public
+const isSelectOption: (value: unknown) => value is SelectOption;
+export { isSelectOption }
+export { isSelectOption as isSelectOption_alias_1 }
+export { isSelectOption as isSelectOption_alias_2 }
+
+// @public
+const isSet: (value: unknown) => value is {};
+export { isSet }
+export { isSet as isSet_alias_1 }
+export { isSet as isSet_alias_2 }
+
+// @public
+const isSetObject: (value: unknown) => value is object;
+export { isSetObject }
+export { isSetObject as isSetObject_alias_1 }
+export { isSetObject as isSetObject_alias_2 }
+
+// @public
+const isSetString: (value: unknown) => value is string;
+export { isSetString }
+export { isSetString as isSetString_alias_1 }
+export { isSetString as isSetString_alias_2 }
+
+// @public
+const isString: (value: unknown) => value is string;
+export { isString }
+export { isString as isString_alias_1 }
+export { isString as isString_alias_2 }
+
+// @public
+const isSymbol: (value: unknown) => value is symbol;
+export { isSymbol }
+export { isSymbol as isSymbol_alias_1 }
+export { isSymbol as isSymbol_alias_2 }
+
+// @public
+const isTyped: (value: unknown) => value is ITyped;
+export { isTyped }
+export { isTyped as isTyped_alias_1 }
+export { isTyped as isTyped_alias_2 }
+
+// @public
+const isUndefined: (value: unknown) => boolean;
+export { isUndefined }
+export { isUndefined as isUndefined_alias_1 }
+export { isUndefined as isUndefined_alias_2 }
 
 // @public (undocumented)
-interface JsonParserResult {
-    // (undocumented)
-    json: JsonValue;
-    // (undocumented)
-    meta?: {
-        values?: Tree<TypeAnnotation> | Record<string, Tree<TypeAnnotation>> | undefined;
-        referentialEqualities?: Record<string, string[]> | [string[]] | [string[], Record<string, string[]>];
-    };
-}
-export { JsonParserResult }
-export { JsonParserResult as JsonParserResult_alias_1 }
-
-// @public (undocumented)
-type JsonValue = PrimitiveJsonValue | JsonArray | JsonObject;
-export { JsonValue }
-export { JsonValue as JsonValue_alias_1 }
-
-// @public (undocumented)
-type Leaf<T> = [T];
-export { Leaf }
-export { Leaf as Leaf_alias_1 }
-
-// @public (undocumented)
-type LeafTypeAnnotation = PrimitiveTypeAnnotation | "regexp" | "Date" | "Error" | "URL";
-export { LeafTypeAnnotation }
-export { LeafTypeAnnotation as LeafTypeAnnotation_alias_1 }
-
-// @public (undocumented)
-type PrimitiveJsonValue = string | number | boolean | undefined | null;
-export { PrimitiveJsonValue }
-export { PrimitiveJsonValue as PrimitiveJsonValue_alias_1 }
-
-// @public (undocumented)
-type PrimitiveTypeAnnotation = "number" | "undefined" | "bigint";
-export { PrimitiveTypeAnnotation }
-export { PrimitiveTypeAnnotation as PrimitiveTypeAnnotation_alias_1 }
-
-// @public (undocumented)
-const Serializable: <TData = any>(options?: {
-    identifier?: string;
-}) => <TClass extends new (..._args: any) => any = new (..._args: any) => TData>(target: TClass) => {
-    new (..._args: any): {
-        [x: string]: any;
-        __typename: string;
-        serialize: () => JsonParserResult;
-        deserialize: (json: JsonValue) => JsonParserResult;
-        stringify: () => string;
-        parse: (strObject: string) => TData;
-        isTypeOf(value: any): value is TData;
-    };
+interface ITyped {
     __typename: string;
-    isTypeOf(value: any): value is TData;
-    deserialize: (json: JsonValue) => JsonParserResult;
-    parse: (strObject: string) => TData;
-} & TClass;
-export { Serializable }
-export { Serializable as Serializable_alias_1 }
-
-// @public (undocumented)
-type SerializableJsonValue = symbol | Set<JsonValue> | Map<JsonValue, JsonValue> | undefined | bigint | Date | ClassInstance | RegExp;
-export { SerializableJsonValue }
-export { SerializableJsonValue as SerializableJsonValue_alias_1 }
-
-// @public (undocumented)
-type SerializableType<T> = ClassSerializable<T> & ClassTypeCheckable<T> & ITyped & T;
-export { SerializableType }
-export { SerializableType as SerializableType_alias_1 }
-
-// @public
-type SerializationFunct<TData = any, TJsonValue extends JsonValue = JsonValue> = (data: TData) => TJsonValue;
-export { SerializationFunct }
-export { SerializationFunct as SerializationFunct_alias_1 }
-
-// @public (undocumented)
-type SerializationMetadata<T> = DataTransformer<T> & ClassTypeCheckable<T>;
-export { SerializationMetadata }
-export { SerializationMetadata as SerializationMetadata_alias_1 }
-
-// @public (undocumented)
-type SimpleTypeAnnotation = LeafTypeAnnotation | "map" | "set";
-export { SimpleTypeAnnotation }
-export { SimpleTypeAnnotation as SimpleTypeAnnotation_alias_1 }
-
-// @public
-class StormParser extends SuperJSON {
-    static deserialize<TData = unknown>(payload: JsonParserResult): TData;
-    // (undocumented)
-    static get instance(): StormParser;
-    static parse<TData = unknown>(strData: string): TData;
-    static register<TData = any, TJsonObject extends JsonValue = JsonValue>(name: string, serialize: (data: TData) => TJsonObject, deserialize: (json: TJsonObject) => TData, isApplicable: (data: any) => data is TData): void;
-    static registerClass(classConstructor: Class, options?: {
-        identifier?: string;
-        allowProps?: string[];
-    } | string): void;
-    static serialize(object: JsonValue): JsonParserResult;
-    static stringify(json: any): string;
 }
-export { StormParser }
-export { StormParser as StormParser_alias_1 }
+export { ITyped }
+export { ITyped as ITyped_alias_1 }
 
 // @public (undocumented)
-type SymbolTypeAnnotation = ["symbol", string];
-export { SymbolTypeAnnotation }
-export { SymbolTypeAnnotation as SymbolTypeAnnotation_alias_1 }
+interface IVersioned {
+    // (undocumented)
+    version: number;
+}
+export { IVersioned }
+export { IVersioned as IVersioned_alias_1 }
+
+// @public
+const kebabCase: (input?: string) => string | undefined;
+export { kebabCase }
+export { kebabCase as kebabCase_alias_1 }
+export { kebabCase as kebabCase_alias_2 }
 
 // @public (undocumented)
-type Tree<T> = InnerNode<T> | Leaf<T>;
-export { Tree }
-export { Tree as Tree_alias_1 }
+type LiteralUnion<T extends U, U extends Primitive> = T | (U & {
+    _?: never;
+});
+export { LiteralUnion }
+export { LiteralUnion as LiteralUnion_alias_1 }
+
+// @public
+const lowerCaseFirst: (input?: string) => string | undefined;
+export { lowerCaseFirst }
+export { lowerCaseFirst as lowerCaseFirst_alias_1 }
+export { lowerCaseFirst as lowerCaseFirst_alias_2 }
 
 // @public (undocumented)
-type TypeAnnotation = SimpleTypeAnnotation | CompositeTypeAnnotation;
-export { TypeAnnotation }
-export { TypeAnnotation as TypeAnnotation_alias_1 }
+type MaybePromise<T> = T | Promise<T>;
+export { MaybePromise }
+export { MaybePromise as MaybePromise_alias_1 }
 
 // @public (undocumented)
-type TypedArrayAnnotation = ["typed-array", string];
-export { TypedArrayAnnotation }
-export { TypedArrayAnnotation as TypedArrayAnnotation_alias_1 }
+type NestedValue<TValue extends object = object> = {
+    [$NestedValue]: never;
+} & TValue;
+export { NestedValue }
+export { NestedValue as NestedValue_alias_1 }
+
+// @public (undocumented)
+type Newable<T> = new (...args: never[]) => T;
+export { Newable }
+export { Newable as Newable_alias_1 }
+
+// @public (undocumented)
+const NEWLINE_STRING = "\r\n";
+export { NEWLINE_STRING }
+export { NEWLINE_STRING as NEWLINE_STRING_alias_1 }
+
+// @public (undocumented)
+type NonUndefined<T> = T extends undefined ? never : T;
+export { NonUndefined }
+export { NonUndefined as NonUndefined_alias_1 }
+
+// @public
+const noop: (params?: unknown) => void;
+export { noop }
+export { noop as noop_alias_1 }
+export { noop as noop_alias_2 }
+
+// @public
+const pascalCase: (input?: string) => string | undefined;
+export { pascalCase }
+export { pascalCase as pascalCase_alias_1 }
+export { pascalCase as pascalCase_alias_2 }
+
+// @public
+const periodSplit: (input?: string) => string | undefined;
+export { periodSplit }
+export { periodSplit as periodSplit_alias_1 }
+export { periodSplit as periodSplit_alias_2 }
+
+// @public
+type Primitive = null | undefined | string | number | boolean | symbol | bigint;
+export { Primitive }
+export { Primitive as Primitive_alias_1 }
+
+// @public
+const propertyExists: (object: any, propertyKey: PropertyKey) => boolean;
+export { propertyExists }
+export { propertyExists as propertyExists_alias_1 }
+export { propertyExists as propertyExists_alias_2 }
+
+// @public
+const propertyUnsafe: (object: any, propertyKey: PropertyKey) => boolean;
+export { propertyUnsafe }
+export { propertyUnsafe as propertyUnsafe_alias_1 }
+export { propertyUnsafe as propertyUnsafe_alias_2 }
+
+// @public (undocumented)
+type ReducerFunction<TState, TAction> = (state: TState, action: TAction) => TState;
+export { ReducerFunction }
+export { ReducerFunction as ReducerFunction_alias_1 }
+
+// @public (undocumented)
+interface RefObject<T> {
+    // (undocumented)
+    current: T;
+}
+export { RefObject }
+export { RefObject as RefObject_alias_1 }
+
+// @public
+type RequiredKeysOf<BaseType extends object> = Exclude<{
+    [Key in keyof BaseType]: BaseType extends Record<Key, BaseType[Key]> ? Key : never;
+}[keyof BaseType], undefined>;
+export { RequiredKeysOf }
+export { RequiredKeysOf as RequiredKeysOf_alias_1 }
+
+// @public (undocumented)
+type Rollback = Record<string, (initialValue: any, currentValue: any) => any>;
+export { Rollback }
+export { Rollback as Rollback_alias_1 }
+
+// @public (undocumented)
+interface SelectOption {
+    disabled: boolean;
+    name: string;
+    selected: boolean;
+    value: string;
+}
+export { SelectOption }
+export { SelectOption as SelectOption_alias_1 }
+
+// @public
+type SetRequired<BaseType, Keys extends keyof BaseType> = BaseType extends unknown ? Simplify<Except<BaseType, Keys> & Required<Pick<BaseType, Keys>>> : never;
+export { SetRequired }
+export { SetRequired as SetRequired_alias_1 }
+
+// @public (undocumented)
+const sha256: (value: string) => Promise<string>;
+export { sha256 }
+export { sha256 as sha256_alias_1 }
+export { sha256 as sha256_alias_2 }
+
+// @public
+type Simplify<T> = {
+    [KeyType in keyof T]: T[KeyType];
+} & {};
+export { Simplify }
+export { Simplify as Simplify_alias_1 }
+
+// @public
+const snakeCase: (input?: string, options?: {
+    splitOnNumber: boolean;
+}) => string | undefined;
+export { snakeCase }
+export { snakeCase as snakeCase_alias_1 }
+export { snakeCase as snakeCase_alias_2 }
+
+// @public
+const titleCase: (input?: string) => string | undefined;
+export { titleCase }
+export { titleCase as titleCase_alias_1 }
+export { titleCase as titleCase_alias_2 }
+
+// @public (undocumented)
+const TYPE_ARGUMENTS = "Arguments";
+export { TYPE_ARGUMENTS }
+export { TYPE_ARGUMENTS as TYPE_ARGUMENTS_alias_1 }
+
+// @public (undocumented)
+const TYPE_ARRAY = "Array";
+export { TYPE_ARRAY }
+export { TYPE_ARRAY as TYPE_ARRAY_alias_1 }
+
+// @public (undocumented)
+const TYPE_MAP = "Map";
+export { TYPE_MAP }
+export { TYPE_MAP as TYPE_MAP_alias_1 }
+
+// @public (undocumented)
+const TYPE_OBJECT = "Object";
+export { TYPE_OBJECT }
+export { TYPE_OBJECT as TYPE_OBJECT_alias_1 }
+
+// @public (undocumented)
+const TYPE_SET = "Set";
+export { TYPE_SET }
+export { TYPE_SET as TYPE_SET_alias_1 }
+
+// @public (undocumented)
+function typeDetect(obj: unknown): string;
+export { typeDetect }
+export { typeDetect as typeDetect_alias_1 }
+export { typeDetect as typeDetect_alias_2 }
+
+// @public
+const upperCaseFirst: (input?: string) => string | undefined;
+export { upperCaseFirst }
+export { upperCaseFirst as upperCaseFirst_alias_1 }
+export { upperCaseFirst as upperCaseFirst_alias_2 }
 
 // (No @packageDocumentation comment for this package)
 

@@ -4,179 +4,55 @@
 
 ```ts
 
-import { ExecaReturnValue } from 'execa';
-import { Temporal } from '@js-temporal/polyfill';
+/// <reference types="node" />
+
+import { CopySyncOptions } from 'node:fs';
+import { ReleaseType } from 'semver';
+import { semverClassesSemver } from 'semver/classes/semver';
 
 // @public
-const createResolver: (rootPath?: string, tsconfig?: string, autoInstall?: boolean) => (request: string) => Promise<string>;
-export { createResolver }
-export { createResolver as createResolver_alias_1 }
-export { createResolver as createResolver_alias_2 }
+export function chmodPlusX(file: string): void;
+
+// @public
+const copyFile: (file: string, dest: string) => string | Buffer | undefined;
+export { copyFile }
+export { copyFile as copyFile_alias_1 }
+export { copyFile as copyFile_alias_2 }
+
+// @public
+const copyFiles: (from: string, to: string, options?: CopySyncOptions) => string | Buffer | undefined;
+export { copyFiles }
+export { copyFiles as copyFiles_alias_1 }
+export { copyFiles as copyFiles_alias_2 }
 
 // @public (undocumented)
-export const execute: (command: string, rootPath: string) => Promise<ExecaReturnValue<string>>;
+const deriveNewSemverVersion: (currentSemverVersion: string, semverSpecifier: string, preid?: string) => string;
+export { deriveNewSemverVersion }
+export { deriveNewSemverVersion as deriveNewSemverVersion_alias_1 }
+export { deriveNewSemverVersion as deriveNewSemverVersion_alias_2 }
 
 // @public (undocumented)
-export const install: (name: string, rootPath: string) => Promise<void>;
+function ensurePackage(pkg: string, dev: boolean, pkgManager?: PackageManagers | undefined, tag?: string, projectPath?: string, exactVersion?: boolean): void;
+export { ensurePackage }
+export { ensurePackage as ensurePackage_alias_1 }
+export { ensurePackage as ensurePackage_alias_2 }
 
 // @public
-interface IPluginLoader<TContext = any, TPluginModule extends IPluginModule<TContext> = IPluginModule<TContext>> {
-    // (undocumented)
-    isValid: (module: TPluginModule) => boolean;
-    // (undocumented)
-    load: (definition: PluginDefinition, options: Record<string, any>) => Promise<PluginInstance<TContext, TPluginModule>>;
-    // (undocumented)
-    process: (context: TContext, instance: PluginInstance, options: Record<string, any>) => Promise<void>;
-}
-export { IPluginLoader }
-export { IPluginLoader as IPluginLoader_alias_1 }
-
-// @public
-interface IPluginManager {
-    discover(): Promise<Set<PluginDefinition>>;
-    instantiate(provider: string, options?: Record<string, any>): Promise<PluginInstance>;
-    register(provider: string): boolean;
-}
-export { IPluginManager }
-export { IPluginManager as IPluginManager_alias_1 }
-
-// @public
-interface IPluginModule<TContext = any> {
-    // (undocumented)
-    hooks?: Record<string, PluginHookFn<TContext>>;
-}
-export { IPluginModule }
-export { IPluginModule as IPluginModule_alias_1 }
-
-// @public
-interface PluginDefinition {
-    configPath?: string;
-    dependencies: string[];
-    description?: string;
-    id: string;
-    imagePath?: string;
-    loader: string;
-    name: string;
-    options: any;
-    packagePath: string;
-    provider: string;
-    tags: string[];
-    version: string;
-}
-export { PluginDefinition }
-export { PluginDefinition as PluginDefinition_alias_1 }
+const exists: (filePath: string) => boolean;
+export { exists }
+export { exists as exists_alias_1 }
+export { exists as exists_alias_2 }
 
 // @public (undocumented)
-type PluginDiscoveryMode = "auto" | "fallback" | "none";
+type FileSystemErrorCode = ErrorCode | "invalid_file_path" | "invalid_file_content" | "file_does_not_exist" | "file_write_failure";
 
 // @public (undocumented)
-const PluginDiscoveryMode: {
-    AUTO: PluginDiscoveryMode;
-    FALLBACK: PluginDiscoveryMode;
-    NONE: PluginDiscoveryMode;
-};
-export { PluginDiscoveryMode }
-export { PluginDiscoveryMode as PluginDiscoveryMode_alias_1 }
-
-// @public
-type PluginHookFn<TContext = any> = (params: TContext) => MaybePromise<TContext | ((params: TContext) => MaybePromise<TContext>)>;
-export { PluginHookFn }
-export { PluginHookFn as PluginHookFn_alias_1 }
-
-// @public
-interface PluginInstance<TContext = any, TPluginModule extends IPluginModule<TContext> = any> {
-    // (undocumented)
-    definition: PluginDefinition;
-    // (undocumented)
-    executionDateTime: StormDateTime;
-    // (undocumented)
-    loader: IPluginLoader<TContext, TPluginModule>;
-    // (undocumented)
-    module: TPluginModule;
-    // (undocumented)
-    options: any;
-    // (undocumented)
-    resolvedPath: string;
-}
-export { PluginInstance }
-export { PluginInstance as PluginInstance_alias_1 }
-
-// @public
-abstract class PluginLoader<TContext = any, TPluginModule extends IPluginModule<TContext> = IPluginModule<TContext>> implements IPluginLoader<TContext, TPluginModule> {
-    constructor(rootPath?: string | undefined, tsconfig?: string | undefined, autoInstall?: boolean | undefined);
-    // (undocumented)
-    readonly autoInstall?: boolean | undefined;
-    // (undocumented)
-    protected instantiate: (definition: PluginDefinition, module: TPluginModule, resolvedPath: string, options?: Record<string, any>) => PluginInstance<TContext, TPluginModule>;
-    // (undocumented)
-    isValid: (module: TPluginModule) => boolean;
-    // (undocumented)
-    load: (definition: PluginDefinition, options?: Record<string, any>) => Promise<PluginInstance<TContext, TPluginModule>>;
-    // (undocumented)
-    abstract process: (context: TContext, instance: PluginInstance<TContext, TPluginModule>, options: Record<string, any>) => Promise<void>;
-    // (undocumented)
-    protected resolve: (definition: PluginDefinition, _?: Record<string, any>) => Promise<any>;
-    // (undocumented)
-    protected resolver: (request: string) => Promise<string>;
-    // (undocumented)
-    readonly rootPath?: string | undefined;
-    // (undocumented)
-    readonly tsconfig?: string | undefined;
-}
-export { PluginLoader }
-export { PluginLoader as PluginLoader_alias_1 }
-export { PluginLoader as PluginLoader_alias_2 }
-
-// @public
-class PluginManager<TContext = any, TPluginModule extends IPluginModule = any> {
-    // (undocumented)
-    static create: <TContext_1 = any, TPluginModule_1 extends IPluginModule<TContext_1> = any>(logger: IStormLog, options: Omit<Partial<PluginManagerOptions>, "defaultLoader"> & Pick<PluginManagerOptions, "defaultLoader">) => Promise<PluginManager<TContext_1, TPluginModule_1>>;
-    // (undocumented)
-    discover: () => Promise<Map<string, PluginDefinition>>;
-    // (undocumented)
-    execute: (provider: string, context: TContext, options?: Record<string, any>, executionDateTime?: StormDateTime) => Promise<Record<string, Error | null>>;
-    // (undocumented)
-    getInstance: (provider: string, options?: Record<string, any>) => PluginInstance<TContext, TPluginModule> | undefined;
-    // (undocumented)
-    getLoaders(): Map<string, IPluginLoader<TContext, TPluginModule>>;
-    // (undocumented)
-    getRegistry(): Map<string, PluginDefinition>;
-    // (undocumented)
-    getStore(): Map<string, PluginInstance<TContext, TPluginModule>>;
-    // (undocumented)
-    instantiate: (provider: string, options?: Record<string, any>) => Promise<PluginInstance<TContext, TPluginModule>>;
-    // (undocumented)
-    invokeHook: (name: string, context: TContext, handler?: ((context: TContext) => Promise<TContext> | TContext) | undefined) => Promise<TContext>;
-    // (undocumented)
-    register: (provider: string) => Promise<PluginDefinition>;
-}
-export { PluginManager }
-export { PluginManager as PluginManager_alias_1 }
-export { PluginManager as PluginManager_alias_2 }
-
-// @public
-interface PluginManagerOptions {
-    autoInstall: boolean;
-    defaultLoader: string | {
-        provider: string;
-        loader: new (_rootPath?: string, _tsconfig?: string, _autoInstall?: boolean) => IPluginLoader<any, any>;
-    };
-    discoveryMode: PluginDiscoveryMode;
-    rootPath: string;
-    tsconfig?: string;
-    useNodeModules: boolean;
-}
-export { PluginManagerOptions }
-export { PluginManagerOptions as PluginManagerOptions_alias_1 }
-
-// @public (undocumented)
-type PluginSystemErrorCode = ErrorCode | "module_not_found" | "plugin_not_found" | "plugin_loading_failure";
-
-// @public (undocumented)
-const PluginSystemErrorCode: {
-    module_not_found: PluginSystemErrorCode;
-    plugin_not_found: PluginSystemErrorCode;
-    plugin_loading_failure: PluginSystemErrorCode;
+const FileSystemErrorCode: {
+    invalid_file_path: FileSystemErrorCode;
+    invalid_file_content: FileSystemErrorCode;
+    file_does_not_exist: FileSystemErrorCode;
+    file_write_failure: FileSystemErrorCode;
+    file_read_failure: FileSystemErrorCode;
     success: ErrorCode;
     missing_issue_code: ErrorCode;
     invalid_config: ErrorCode;
@@ -195,8 +71,170 @@ const PluginSystemErrorCode: {
     user_not_logged_in: ErrorCode;
     unknown_cause: ErrorCode;
 };
-export { PluginSystemErrorCode }
-export { PluginSystemErrorCode as PluginSystemErrorCode_alias_1 }
+export { FileSystemErrorCode }
+export { FileSystemErrorCode as FileSystemErrorCode_alias_1 }
+
+// @public
+function findContainingFolder(filePath: string): string;
+export { findContainingFolder }
+export { findContainingFolder as findContainingFolder_alias_1 }
+export { findContainingFolder as findContainingFolder_alias_2 }
+
+// @public
+function findFileExtension(filePath: string): string;
+export { findFileExtension }
+export { findFileExtension as findFileExtension_alias_1 }
+export { findFileExtension as findFileExtension_alias_2 }
+
+// @public
+function findFileName(filePath: string): string;
+export { findFileName }
+export { findFileName as findFileName_alias_1 }
+export { findFileName as findFileName_alias_2 }
+
+// @public
+function findFilePath(filePath: string): string;
+export { findFilePath }
+export { findFilePath as findFilePath_alias_1 }
+export { findFilePath as findFilePath_alias_2 }
+
+// @public (undocumented)
+const getWorkspaceRoot: () => any;
+export { getWorkspaceRoot }
+export { getWorkspaceRoot as getWorkspaceRoot_alias_1 }
+export { getWorkspaceRoot as getWorkspaceRoot_alias_2 }
+
+// @public
+function hasFileName(filePath: string): boolean;
+export { hasFileName }
+export { hasFileName as hasFileName_alias_1 }
+export { hasFileName as hasFileName_alias_2 }
+
+// @public
+function hasFilePath(filePath: string): boolean;
+export { hasFilePath }
+export { hasFilePath as hasFilePath_alias_1 }
+export { hasFilePath as hasFilePath_alias_2 }
+
+// @public (undocumented)
+function installPackage(pkg: string, dev: boolean, pkgManager?: PackageManagers | undefined, tag?: string, projectPath?: string, exactVersion?: boolean): void;
+export { installPackage }
+export { installPackage as installPackage_alias_1 }
+export { installPackage as installPackage_alias_2 }
+
+// @public
+export const isCI: () => boolean;
+
+// @public
+const isDirectory: (path: string, additionalPath?: string) => boolean;
+export { isDirectory }
+export { isDirectory as isDirectory_alias_1 }
+export { isDirectory as isDirectory_alias_2 }
+
+// @public
+const isFile: (path: string, additionalPath?: string) => boolean;
+export { isFile }
+export { isFile as isFile_alias_1 }
+export { isFile as isFile_alias_2 }
+
+// @public
+export const isInteractive: (stream?: NodeJS.ReadStream & {
+    fd: 0;
+}) => boolean;
+
+// @public (undocumented)
+const isRelativeVersionKeyword: (val: string) => val is ReleaseType;
+export { isRelativeVersionKeyword }
+export { isRelativeVersionKeyword as isRelativeVersionKeyword_alias_1 }
+export { isRelativeVersionKeyword as isRelativeVersionKeyword_alias_2 }
+
+// @public
+const joinPaths: (...paths: string[]) => string;
+export { joinPaths }
+export { joinPaths as joinPaths_alias_1 }
+export { joinPaths as joinPaths_alias_2 }
+
+// @public
+const loadTsConfig: (dir: string, name?: string) => {
+    path: string;
+    data: any;
+    files: any[];
+} | null;
+export { loadTsConfig }
+export { loadTsConfig as loadTsConfig_alias_1 }
+export { loadTsConfig as loadTsConfig_alias_2 }
+
+// @public
+const loadTsConfigFile: (file: string) => {
+    path: string;
+    data: any;
+    files: any[];
+} | null;
+export { loadTsConfigFile }
+export { loadTsConfigFile as loadTsConfigFile_alias_1 }
+export { loadTsConfigFile as loadTsConfigFile_alias_2 }
+
+// @public (undocumented)
+type PackageManagers = "npm" | "yarn" | "pnpm" | "bun";
+
+// @public (undocumented)
+const PackageManagers: {
+    NPM: PackageManagers;
+    YARN: PackageManagers;
+    PNPM: PackageManagers;
+    BUN: PackageManagers;
+};
+export { PackageManagers }
+export { PackageManagers as PackageManagers_alias_1 }
+export { PackageManagers as PackageManagers_alias_2 }
+
+// @public (undocumented)
+const parseVersion: (semver: string) => semverClassesSemver | null;
+export { parseVersion }
+export { parseVersion as parseVersion_alias_1 }
+export { parseVersion as parseVersion_alias_2 }
+
+// @public
+const readFile: (filePath: string) => string;
+export { readFile }
+export { readFile as readFile_alias_1 }
+export { readFile as readFile_alias_2 }
+
+// @public
+const readFileAsync: (filePath: string) => Promise<string>;
+export { readFileAsync }
+export { readFileAsync as readFileAsync_alias_1 }
+export { readFileAsync as readFileAsync_alias_2 }
+
+// @public
+function relativeToWorkspaceRoot(filePath: string): string;
+export { relativeToWorkspaceRoot }
+export { relativeToWorkspaceRoot as relativeToWorkspaceRoot_alias_1 }
+export { relativeToWorkspaceRoot as relativeToWorkspaceRoot_alias_2 }
+
+// @public
+function renameFile(filePath: string, newFileName: string): string;
+export { renameFile }
+export { renameFile as renameFile_alias_1 }
+export { renameFile as renameFile_alias_2 }
+
+// @public
+function resolvePath(filePath: string, basePath?: string): string;
+export { resolvePath }
+export { resolvePath as resolvePath_alias_1 }
+export { resolvePath as resolvePath_alias_2 }
+
+// @public
+const writeFile: (filePath: string, content: any) => void;
+export { writeFile }
+export { writeFile as writeFile_alias_1 }
+export { writeFile as writeFile_alias_2 }
+
+// @public
+const writeFileAsync: (filePath: string, content: any) => Promise<void>;
+export { writeFileAsync }
+export { writeFileAsync as writeFileAsync_alias_1 }
+export { writeFileAsync as writeFileAsync_alias_2 }
 
 // (No @packageDocumentation comment for this package)
 
