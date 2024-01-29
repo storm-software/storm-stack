@@ -1,75 +1,70 @@
-## 1.17.2 (2024-01-29)
+## 1.17.3 (2024-01-29)
 
 
 ### 🩹 Fixes
 
-- **plugin-system:** Resolved various linting issues with workspace ([71d1541](https://github.com/storm-software/storm-stack/commit/71d1541))
+- **monorepo:** Added the `nx-release-publish` target to each projects json configuration ([a22385a](https://github.com/storm-software/storm-stack/commit/a22385a))
 
 
 ### ❤️  Thank You
 
 - Patrick Sullivan
+
+## 1.17.2 (2024-01-29)
+
+### 🩹 Fixes
+
+-   **plugin-system:** Resolved various linting issues with workspace ([71d1541](https://github.com/storm-software/storm-stack/commit/71d1541))
+
+### ❤️ Thank You
+
+-   Patrick Sullivan
 
 ## 1.17.1 (2024-01-29)
 
-
 ### 🩹 Fixes
 
-- **plugin-system:** Resolved issue with instanciating the `PluginLoader` from the provided module ([778bb6d](https://github.com/storm-software/storm-stack/commit/778bb6d))
+-   **plugin-system:** Resolved issue with instanciating the `PluginLoader` from the provided module ([778bb6d](https://github.com/storm-software/storm-stack/commit/778bb6d))
 
+### ❤️ Thank You
 
-### ❤️  Thank You
-
-- Patrick Sullivan
+-   Patrick Sullivan
 
 ## 1.17.0 (2024-01-24)
 
-
 ### 🚀 Features
 
-- **plugin-system:** Added the `autoInstall` option to resolvers ([18c1841](https://github.com/storm-software/storm-stack/commit/18c1841))
+-   **plugin-system:** Added the `autoInstall` option to resolvers ([18c1841](https://github.com/storm-software/storm-stack/commit/18c1841))
 
+### ❤️ Thank You
 
-### ❤️  Thank You
-
-- Patrick Sullivan
+-   Patrick Sullivan
 
 ## 1.16.7 (2024-01-24)
 
-
 ### 🩹 Fixes
 
-- **plugin-system:** Added tsconfig file paths to resolver handler ([56ff717](https://github.com/storm-software/storm-stack/commit/56ff717))
+-   **plugin-system:** Added tsconfig file paths to resolver handler ([56ff717](https://github.com/storm-software/storm-stack/commit/56ff717))
 
+### ❤️ Thank You
 
-### ❤️  Thank You
-
-- Patrick Sullivan
-
-
-
-
-
-
+-   Patrick Sullivan
 
 ## 1.16.3 (2024-01-21)
 
-
 ### 🩹 Fixes
 
-- **monorepo:** Update the storm-ops workspace dependencies ([faadeb6](https://github.com/storm-software/storm-stack/commit/faadeb6))
+-   **monorepo:** Update the storm-ops workspace dependencies ([faadeb6](https://github.com/storm-software/storm-stack/commit/faadeb6))
 
+### ❤️ Thank You
 
-### ❤️  Thank You
-
-- Patrick Sullivan
+-   Patrick Sullivan
 
 ## [1.16.2](https://github.com/storm-software/storm-stack/compare/file-system-v1.16.1...file-system-v1.16.2) (2024-01-21)
 
-
 ### Bug Fixes
 
-* **plugin-system:** Resolved build issues ([e790271](https://github.com/storm-software/storm-stack/commit/e790271a9fa23375486a6f348e1cc1665a4a8361))
+-   **plugin-system:** Resolved build issues ([e790271](https://github.com/storm-software/storm-stack/commit/e790271a9fa23375486a6f348e1cc1665a4a8361))
 
 ## [1.16.1](https://github.com/storm-software/storm-stack/compare/file-system-v1.16.0...file-system-v1.16.1) (2024-01-21)
 

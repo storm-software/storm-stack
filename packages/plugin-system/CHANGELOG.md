@@ -1,78 +1,74 @@
-## 1.4.2 (2024-01-29)
+## 1.4.3 (2024-01-29)
 
 
 ### 🩹 Fixes
 
-- **plugin-system:** Resolved various linting issues with workspace ([71d1541](https://github.com/storm-software/storm-stack/commit/71d1541))
+- **monorepo:** Added the `nx-release-publish` target to each projects json configuration ([a22385a](https://github.com/storm-software/storm-stack/commit/a22385a))
 
 
 ### ❤️  Thank You
 
 - Patrick Sullivan
+
+## 1.4.2 (2024-01-29)
+
+### 🩹 Fixes
+
+-   **plugin-system:** Resolved various linting issues with workspace ([71d1541](https://github.com/storm-software/storm-stack/commit/71d1541))
+
+### ❤️ Thank You
+
+-   Patrick Sullivan
 
 ## 1.4.1 (2024-01-29)
 
-
 ### 🩹 Fixes
 
-- **plugin-system:** Resolved issue with instanciating the `PluginLoader` from the provided module ([778bb6d](https://github.com/storm-software/storm-stack/commit/778bb6d))
+-   **plugin-system:** Resolved issue with instanciating the `PluginLoader` from the provided module ([778bb6d](https://github.com/storm-software/storm-stack/commit/778bb6d))
 
+### ❤️ Thank You
 
-### ❤️  Thank You
-
-- Patrick Sullivan
+-   Patrick Sullivan
 
 ## 1.4.0 (2024-01-24)
 
-
 ### 🚀 Features
 
-- **plugin-system:** Added the `autoInstall` option to resolvers ([18c1841](https://github.com/storm-software/storm-stack/commit/18c1841))
+-   **plugin-system:** Added the `autoInstall` option to resolvers ([18c1841](https://github.com/storm-software/storm-stack/commit/18c1841))
 
+### ❤️ Thank You
 
-### ❤️  Thank You
-
-- Patrick Sullivan
+-   Patrick Sullivan
 
 ## 1.3.8 (2024-01-24)
 
-
 ### 🩹 Fixes
 
-- **plugin-system:** Added tsconfig file paths to resolver handler ([56ff717](https://github.com/storm-software/storm-stack/commit/56ff717))
+-   **plugin-system:** Added tsconfig file paths to resolver handler ([56ff717](https://github.com/storm-software/storm-stack/commit/56ff717))
 
+### ❤️ Thank You
 
-### ❤️  Thank You
-
-- Patrick Sullivan
+-   Patrick Sullivan
 
 ## 1.3.7 (2024-01-23)
 
-
 ### 🩹 Fixes
 
-- **plugin-system:** Updated the resolver implementation to use `enhanced-resolve` package ([bda2c10](https://github.com/storm-software/storm-stack/commit/bda2c10))
+-   **plugin-system:** Updated the resolver implementation to use `enhanced-resolve` package ([bda2c10](https://github.com/storm-software/storm-stack/commit/bda2c10))
 
+### ❤️ Thank You
 
-### ❤️  Thank You
-
-- Patrick Sullivan
-
-
-
-
+-   Patrick Sullivan
 
 ## 1.3.4 (2024-01-21)
 
-
 ### 🩹 Fixes
 
-- **monorepo:** Update the storm-ops workspace dependencies ([faadeb6](https://github.com/storm-software/storm-stack/commit/faadeb6))
+-   **monorepo:** Update the storm-ops workspace dependencies ([faadeb6](https://github.com/storm-software/storm-stack/commit/faadeb6))
 
+### ❤️ Thank You
 
-### ❤️  Thank You
-
-- Patrick Sullivan
+-   Patrick Sullivan
 
 ## [1.3.3](https://github.com/storm-software/storm-stack/compare/plugin-system-v1.3.2...plugin-system-v1.3.3) (2024-01-21)
 

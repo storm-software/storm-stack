@@ -1,55 +1,50 @@
+## 1.14.3 (2024-01-29)
 
 
+### 🩹 Fixes
 
+- **monorepo:** Added the `nx-release-publish` target to each projects json configuration ([a22385a](https://github.com/storm-software/storm-stack/commit/a22385a))
+
+
+### ❤️  Thank You
+
+- Patrick Sullivan
 
 ## 1.14.0 (2024-01-24)
 
-
 ### 🚀 Features
 
-- **plugin-system:** Added the `autoInstall` option to resolvers ([18c1841](https://github.com/storm-software/storm-stack/commit/18c1841))
+-   **plugin-system:** Added the `autoInstall` option to resolvers ([18c1841](https://github.com/storm-software/storm-stack/commit/18c1841))
 
+### ❤️ Thank You
 
-### ❤️  Thank You
-
-- Patrick Sullivan
+-   Patrick Sullivan
 
 ## 1.13.7 (2024-01-24)
 
-
 ### 🩹 Fixes
 
-- **plugin-system:** Added tsconfig file paths to resolver handler ([56ff717](https://github.com/storm-software/storm-stack/commit/56ff717))
+-   **plugin-system:** Added tsconfig file paths to resolver handler ([56ff717](https://github.com/storm-software/storm-stack/commit/56ff717))
 
+### ❤️ Thank You
 
-### ❤️  Thank You
-
-- Patrick Sullivan
-
-
-
-
-
-
+-   Patrick Sullivan
 
 ## 1.13.3 (2024-01-21)
 
-
 ### 🩹 Fixes
 
-- **monorepo:** Update the storm-ops workspace dependencies ([faadeb6](https://github.com/storm-software/storm-stack/commit/faadeb6))
+-   **monorepo:** Update the storm-ops workspace dependencies ([faadeb6](https://github.com/storm-software/storm-stack/commit/faadeb6))
 
+### ❤️ Thank You
 
-### ❤️  Thank You
-
-- Patrick Sullivan
+-   Patrick Sullivan
 
 ## [1.13.2](https://github.com/storm-software/storm-stack/compare/serialization-v1.13.1...serialization-v1.13.2) (2024-01-21)
 
-
 ### Bug Fixes
 
-* **plugin-system:** Resolved build issues ([e790271](https://github.com/storm-software/storm-stack/commit/e790271a9fa23375486a6f348e1cc1665a4a8361))
+-   **plugin-system:** Resolved build issues ([e790271](https://github.com/storm-software/storm-stack/commit/e790271a9fa23375486a6f348e1cc1665a4a8361))
 
 ## [1.13.1](https://github.com/storm-software/storm-stack/compare/serialization-v1.13.0...serialization-v1.13.1) (2024-01-21)
 

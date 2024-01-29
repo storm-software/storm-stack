@@ -1,44 +1,44 @@
+## 1.6.3 (2024-01-29)
 
 
+### 🩹 Fixes
 
+- **monorepo:** Added the `nx-release-publish` target to each projects json configuration ([a22385a](https://github.com/storm-software/storm-stack/commit/a22385a))
+
+
+### ❤️  Thank You
+
+- Patrick Sullivan
 
 ## 1.6.0 (2024-01-24)
 
-
 ### 🚀 Features
 
-- **plugin-system:** Added the `autoInstall` option to resolvers ([18c1841](https://github.com/storm-software/storm-stack/commit/18c1841))
+-   **plugin-system:** Added the `autoInstall` option to resolvers ([18c1841](https://github.com/storm-software/storm-stack/commit/18c1841))
 
+### ❤️ Thank You
 
-### ❤️  Thank You
-
-- Patrick Sullivan
+-   Patrick Sullivan
 
 ## 1.5.8 (2024-01-24)
 
-
 ### 🩹 Fixes
 
-- **plugin-system:** Added tsconfig file paths to resolver handler ([56ff717](https://github.com/storm-software/storm-stack/commit/56ff717))
+-   **plugin-system:** Added tsconfig file paths to resolver handler ([56ff717](https://github.com/storm-software/storm-stack/commit/56ff717))
 
+### ❤️ Thank You
 
-### ❤️  Thank You
-
-- Patrick Sullivan
+-   Patrick Sullivan
 
 ## 1.5.7 (2024-01-23)
 
-
 ### 🩹 Fixes
 
-- **plugin-system:** Updated the resolver implementation to use `enhanced-resolve` package ([bda2c10](https://github.com/storm-software/storm-stack/commit/bda2c10))
+-   **plugin-system:** Updated the resolver implementation to use `enhanced-resolve` package ([bda2c10](https://github.com/storm-software/storm-stack/commit/bda2c10))
 
+### ❤️ Thank You
 
-### ❤️  Thank You
-
-- Patrick Sullivan
-
-
+-   Patrick Sullivan
 
 ## 1.5.4 (2024-01-21)
 
