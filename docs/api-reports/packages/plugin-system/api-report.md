@@ -6,235 +6,169 @@
 
 /// <reference types="node" />
 
-import { CopySyncOptions } from 'node:fs';
-import { ReleaseType } from 'semver';
-import { semverClassesSemver } from 'semver/classes/semver';
-
-// @public
-export function chmodPlusX(file: string): void;
-
-// @public
-const copyFile: (file: string, dest: string) => string | Buffer | undefined;
-export { copyFile }
-export { copyFile as copyFile_alias_1 }
-export { copyFile as copyFile_alias_2 }
-
-// @public
-const copyFiles: (from: string, to: string, options?: CopySyncOptions) => string | Buffer | undefined;
-export { copyFiles }
-export { copyFiles as copyFiles_alias_1 }
-export { copyFiles as copyFiles_alias_2 }
+import { Command } from 'commander';
+import { ExecOptions } from 'child_process';
+import { Fonts } from 'figlet';
+import { Options } from 'figlet';
+import pino from 'pino';
+import { Readable } from 'node:stream';
+import { StdioOptions } from 'child_process';
+import { StormConfig } from '@storm-software/config-tools';
+import { Temporal } from '@js-temporal/polyfill';
+import * as z from 'zod';
 
 // @public (undocumented)
-const deriveNewSemverVersion: (currentSemverVersion: string, semverSpecifier: string, preid?: string) => string;
-export { deriveNewSemverVersion }
-export { deriveNewSemverVersion as deriveNewSemverVersion_alias_1 }
-export { deriveNewSemverVersion as deriveNewSemverVersion_alias_2 }
+interface CLIArgument {
+    // (undocumented)
+    default?: unknown | undefined;
+    // (undocumented)
+    description?: string;
+    // (undocumented)
+    flags: string;
+}
+export { CLIArgument }
+export { CLIArgument as CLIArgument_alias_1 }
 
 // @public (undocumented)
-function ensurePackage(pkg: string, dev: boolean, pkgManager?: PackageManagers | undefined, tag?: string, projectPath?: string, exactVersion?: boolean): void;
-export { ensurePackage }
-export { ensurePackage as ensurePackage_alias_1 }
-export { ensurePackage as ensurePackage_alias_2 }
-
-// @public
-const exists: (filePath: string) => boolean;
-export { exists }
-export { exists as exists_alias_1 }
-export { exists as exists_alias_2 }
-
-// @public (undocumented)
-type FileSystemErrorCode = ErrorCode | "invalid_file_path" | "invalid_file_content" | "file_does_not_exist" | "file_write_failure";
-
-// @public (undocumented)
-const FileSystemErrorCode: {
-    invalid_file_path: FileSystemErrorCode;
-    invalid_file_content: FileSystemErrorCode;
-    file_does_not_exist: FileSystemErrorCode;
-    file_write_failure: FileSystemErrorCode;
-    file_read_failure: FileSystemErrorCode;
-    success: ErrorCode;
-    missing_issue_code: ErrorCode;
-    invalid_config: ErrorCode;
-    failed_to_load_file: ErrorCode;
-    missing_context: ErrorCode;
-    record_not_found: ErrorCode;
-    required_field_missing: ErrorCode;
-    database_query_error: ErrorCode;
-    model_validation_error: ErrorCode;
-    field_validation_error: ErrorCode;
-    invalid_parameter: ErrorCode;
-    invalid_request: ErrorCode;
-    type_error: ErrorCode;
-    processing_error: ErrorCode;
-    internal_server_error: ErrorCode;
-    user_not_logged_in: ErrorCode;
-    unknown_cause: ErrorCode;
-};
-export { FileSystemErrorCode }
-export { FileSystemErrorCode as FileSystemErrorCode_alias_1 }
-
-// @public
-function findContainingFolder(filePath: string): string;
-export { findContainingFolder }
-export { findContainingFolder as findContainingFolder_alias_1 }
-export { findContainingFolder as findContainingFolder_alias_2 }
-
-// @public
-function findFileExtension(filePath: string): string;
-export { findFileExtension }
-export { findFileExtension as findFileExtension_alias_1 }
-export { findFileExtension as findFileExtension_alias_2 }
-
-// @public
-function findFileName(filePath: string): string;
-export { findFileName }
-export { findFileName as findFileName_alias_1 }
-export { findFileName as findFileName_alias_2 }
-
-// @public
-function findFilePath(filePath: string): string;
-export { findFilePath }
-export { findFilePath as findFilePath_alias_1 }
-export { findFilePath as findFilePath_alias_2 }
+interface CLICommand {
+    // (undocumented)
+    action: (...args: any[]) => MaybePromise<void>;
+    // (undocumented)
+    argument?: CLIArgument[];
+    // (undocumented)
+    commands?: CLICommand[];
+    // (undocumented)
+    description: string;
+    // (undocumented)
+    name: string;
+    // (undocumented)
+    options?: CLIOption[];
+}
+export { CLICommand }
+export { CLICommand as CLICommand_alias_1 }
 
 // @public (undocumented)
-const getWorkspaceRoot: () => any;
-export { getWorkspaceRoot }
-export { getWorkspaceRoot as getWorkspaceRoot_alias_1 }
-export { getWorkspaceRoot as getWorkspaceRoot_alias_2 }
-
-// @public
-function hasFileName(filePath: string): boolean;
-export { hasFileName }
-export { hasFileName as hasFileName_alias_1 }
-export { hasFileName as hasFileName_alias_2 }
-
-// @public
-function hasFilePath(filePath: string): boolean;
-export { hasFilePath }
-export { hasFilePath as hasFilePath_alias_1 }
-export { hasFilePath as hasFilePath_alias_2 }
+interface CLIConfig {
+    // (undocumented)
+    banner?: CLITitle;
+    // (undocumented)
+    by?: CLITitle;
+    // (undocumented)
+    commands: CLICommand[];
+    // (undocumented)
+    description: string;
+    // (undocumented)
+    documentationUrl?: string;
+    // (undocumented)
+    homepageUrl?: string;
+    // (undocumented)
+    license?: string;
+    // (undocumented)
+    licenseUrl?: string;
+    // (undocumented)
+    name: string;
+    // (undocumented)
+    postAction: (command: Command) => MaybePromise<void>;
+    // (undocumented)
+    preAction: (command: Command) => MaybePromise<void>;
+    // (undocumented)
+    repositoryUrl?: string;
+}
+export { CLIConfig }
+export { CLIConfig as CLIConfig_alias_1 }
 
 // @public (undocumented)
-function installPackage(pkg: string, dev: boolean, pkgManager?: PackageManagers | undefined, tag?: string, projectPath?: string, exactVersion?: boolean): void;
-export { installPackage }
-export { installPackage as installPackage_alias_1 }
-export { installPackage as installPackage_alias_2 }
+interface CLIOption {
+    // (undocumented)
+    choices?: string[];
+    // (undocumented)
+    default?: CLIOptionDefault;
+    // (undocumented)
+    description: string | undefined;
+    // (undocumented)
+    flags: string;
+}
+export { CLIOption }
+export { CLIOption as CLIOption_alias_1 }
+
+// @public (undocumented)
+interface CLIOptionDefault {
+    // (undocumented)
+    description?: string | undefined;
+    // (undocumented)
+    value: unknown;
+}
+export { CLIOptionDefault }
+export { CLIOptionDefault as CLIOptionDefault_alias_1 }
+
+// @public (undocumented)
+interface CLITitle {
+    // (undocumented)
+    font?: Fonts;
+    // (undocumented)
+    hide?: boolean;
+    // (undocumented)
+    name?: string;
+    // (undocumented)
+    options?: Options;
+}
+export { CLITitle }
+export { CLITitle as CLITitle_alias_1 }
 
 // @public
-export const isCI: () => boolean;
+function createCliOptions(obj: Record<string, string | number | boolean>): string[];
+export { createCliOptions }
+export { createCliOptions as createCliOptions_alias_1 }
+export { createCliOptions as createCliOptions_alias_2 }
 
 // @public
-const isDirectory: (path: string, additionalPath?: string) => boolean;
-export { isDirectory }
-export { isDirectory as isDirectory_alias_1 }
-export { isDirectory as isDirectory_alias_2 }
+function createCliOptionsString(obj: Record<string, string | number | boolean>): string;
+export { createCliOptionsString }
+export { createCliOptionsString as createCliOptionsString_alias_1 }
+export { createCliOptionsString as createCliOptionsString_alias_2 }
+
+// @public (undocumented)
+function createCLIProgram(cliConfig: CLIConfig): Promise<void>;
+export { createCLIProgram }
+export { createCLIProgram as createCLIProgram_alias_1 }
 
 // @public
-const isFile: (path: string, additionalPath?: string) => boolean;
-export { isFile }
-export { isFile as isFile_alias_1 }
-export { isFile as isFile_alias_2 }
+const execute: (command: string, options?: ExecOptions, env?: Record<string, string>, stdio?: StdioOptions) => string | Buffer | Readable | undefined;
+export { execute }
+export { execute as execute_alias_1 }
+export { execute as execute_alias_2 }
 
 // @public
-export const isInteractive: (stream?: NodeJS.ReadStream & {
+const executeAsync: (command: string, options?: ExecOptions, env?: Record<string, string>, stdio?: StdioOptions) => Promise<string | Buffer | undefined>;
+export { executeAsync }
+export { executeAsync as executeAsync_alias_1 }
+export { executeAsync as executeAsync_alias_2 }
+
+// @public
+const isCI: () => boolean;
+export { isCI }
+export { isCI as isCI_alias_1 }
+export { isCI as isCI_alias_2 }
+
+// @public
+const isInteractive: (stream?: NodeJS.ReadStream & {
     fd: 0;
 }) => boolean;
+export { isInteractive }
+export { isInteractive as isInteractive_alias_1 }
+export { isInteractive as isInteractive_alias_2 }
+
+// @public
+function link(url: string): string;
+export { link }
+export { link as link_alias_1 }
+export { link as link_alias_2 }
 
 // @public (undocumented)
-const isRelativeVersionKeyword: (val: string) => val is ReleaseType;
-export { isRelativeVersionKeyword }
-export { isRelativeVersionKeyword as isRelativeVersionKeyword_alias_1 }
-export { isRelativeVersionKeyword as isRelativeVersionKeyword_alias_2 }
-
-// @public
-const joinPaths: (...paths: string[]) => string;
-export { joinPaths }
-export { joinPaths as joinPaths_alias_1 }
-export { joinPaths as joinPaths_alias_2 }
-
-// @public
-const loadTsConfig: (dir: string, name?: string) => {
-    path: string;
-    data: any;
-    files: any[];
-} | null;
-export { loadTsConfig }
-export { loadTsConfig as loadTsConfig_alias_1 }
-export { loadTsConfig as loadTsConfig_alias_2 }
-
-// @public
-const loadTsConfigFile: (file: string) => {
-    path: string;
-    data: any;
-    files: any[];
-} | null;
-export { loadTsConfigFile }
-export { loadTsConfigFile as loadTsConfigFile_alias_1 }
-export { loadTsConfigFile as loadTsConfigFile_alias_2 }
-
-// @public (undocumented)
-type PackageManagers = "npm" | "yarn" | "pnpm" | "bun";
-
-// @public (undocumented)
-const PackageManagers: {
-    NPM: PackageManagers;
-    YARN: PackageManagers;
-    PNPM: PackageManagers;
-    BUN: PackageManagers;
-};
-export { PackageManagers }
-export { PackageManagers as PackageManagers_alias_1 }
-export { PackageManagers as PackageManagers_alias_2 }
-
-// @public (undocumented)
-const parseVersion: (semver: string) => semverClassesSemver | null;
-export { parseVersion }
-export { parseVersion as parseVersion_alias_1 }
-export { parseVersion as parseVersion_alias_2 }
-
-// @public
-const readFile: (filePath: string) => string;
-export { readFile }
-export { readFile as readFile_alias_1 }
-export { readFile as readFile_alias_2 }
-
-// @public
-const readFileAsync: (filePath: string) => Promise<string>;
-export { readFileAsync }
-export { readFileAsync as readFileAsync_alias_1 }
-export { readFileAsync as readFileAsync_alias_2 }
-
-// @public
-function relativeToWorkspaceRoot(filePath: string): string;
-export { relativeToWorkspaceRoot }
-export { relativeToWorkspaceRoot as relativeToWorkspaceRoot_alias_1 }
-export { relativeToWorkspaceRoot as relativeToWorkspaceRoot_alias_2 }
-
-// @public
-function renameFile(filePath: string, newFileName: string): string;
-export { renameFile }
-export { renameFile as renameFile_alias_1 }
-export { renameFile as renameFile_alias_2 }
-
-// @public
-function resolvePath(filePath: string, basePath?: string): string;
-export { resolvePath }
-export { resolvePath as resolvePath_alias_1 }
-export { resolvePath as resolvePath_alias_2 }
-
-// @public
-const writeFile: (filePath: string, content: any) => void;
-export { writeFile }
-export { writeFile as writeFile_alias_1 }
-export { writeFile as writeFile_alias_2 }
-
-// @public
-const writeFileAsync: (filePath: string, content: any) => Promise<void>;
-export { writeFileAsync }
-export { writeFileAsync as writeFileAsync_alias_1 }
-export { writeFileAsync as writeFileAsync_alias_2 }
+export function registerShutdown(config: {
+    logger: StormLog;
+    onShutdown(): void | MaybePromise<void>;
+}): (reason?: string) => Promise<void>;
 
 // (No @packageDocumentation comment for this package)
 
