@@ -48,7 +48,7 @@ interface IPluginModule<TContext = any> {
 export { IPluginModule }
 export { IPluginModule as IPluginModule_alias_1 }
 
-// @public (undocumented)
+// @public
 interface PluginDefinition {
     configPath?: string;
     dependencies: string[];
@@ -154,7 +154,7 @@ export { PluginManager }
 export { PluginManager as PluginManager_alias_1 }
 export { PluginManager as PluginManager_alias_2 }
 
-// @public (undocumented)
+// @public
 interface PluginManagerOptions {
     autoInstall: boolean;
     defaultLoader: string | {

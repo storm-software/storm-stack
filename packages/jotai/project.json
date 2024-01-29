@@ -39,17 +39,18 @@
         }
       }
     },
-    "lint": {
-      "executor": "@nx/eslint:lint",
-      "outputs": ["{options.outputFile}"],
+    "lint": {},
+    "test": {},
+    "nx-release-publish": {
+      "cache": false,
+      "inputs": ["default", "^production"],
+      "dependsOn": ["^build"],
+      "executor": "@storm-software/workspace-tools:npm-publish",
       "options": {
-        "lintFilePatterns": [
-          "packages/jotai/**/*.ts",
-          "{projectRoot}/package.json"
-        ]
+        "packageRoot": "dist/{projectRoot}",
+        "registry": "https://registry.npmjs.org/"
       }
-    },
-    "test": {}
+    }
   },
   "tags": [],
   "implicitDependencies": ["utilities", "serialization"]

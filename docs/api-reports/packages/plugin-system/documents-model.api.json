@@ -774,7 +774,7 @@
         {
           "kind": "Interface",
           "canonicalReference": "@storm-stack/plugin-system!PluginDefinition:interface",
-          "docComment": "",
+          "docComment": "/**\n * The definition of a plugin.\n */\n",
           "excerptTokens": [
             {
               "kind": "Content",
@@ -2699,7 +2699,7 @@
         {
           "kind": "Interface",
           "canonicalReference": "@storm-stack/plugin-system!PluginManagerOptions:interface",
-          "docComment": "",
+          "docComment": "/**\n * The options to configure the plugin manager.\n */\n",
           "excerptTokens": [
             {
               "kind": "Content",

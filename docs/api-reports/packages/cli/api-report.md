@@ -144,6 +144,26 @@ export { executeAsync }
 export { executeAsync as executeAsync_alias_1 }
 export { executeAsync as executeAsync_alias_2 }
 
+// @public
+const isCI: () => boolean;
+export { isCI }
+export { isCI as isCI_alias_1 }
+export { isCI as isCI_alias_2 }
+
+// @public
+const isInteractive: (stream?: NodeJS.ReadStream & {
+    fd: 0;
+}) => boolean;
+export { isInteractive }
+export { isInteractive as isInteractive_alias_1 }
+export { isInteractive as isInteractive_alias_2 }
+
+// @public
+function link(url: string): string;
+export { link }
+export { link as link_alias_1 }
+export { link as link_alias_2 }
+
 // @public (undocumented)
 export function registerShutdown(config: {
     logger: StormLog;
