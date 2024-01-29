@@ -1,14 +1,14 @@
-## 1.3.5 (2024-01-29)
 
+
+## 1.3.5 (2024-01-29)
 
 ### 🩹 Fixes
 
-- **monorepo:** Added workspace-tools dependency for build updates ([c16421f](https://github.com/storm-software/storm-stack/commit/c16421f))
+-   **monorepo:** Added workspace-tools dependency for build updates ([c16421f](https://github.com/storm-software/storm-stack/commit/c16421f))
 
+### ❤️ Thank You
 
-### ❤️  Thank You
-
-- Patrick Sullivan
+-   Patrick Sullivan
 
 ## 1.3.4 (2024-01-29)
 

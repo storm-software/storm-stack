@@ -1,4 +1,14 @@
+## 1.7.6 (2024-01-29)
 
+
+### 🩹 Fixes
+
+- **monorepo:** Resolved issues with storm configuration json ([d51770d](https://github.com/storm-software/storm-stack/commit/d51770d))
+
+
+### ❤️  Thank You
+
+- Patrick Sullivan
 
 ## 1.7.4 (2024-01-29)
 
