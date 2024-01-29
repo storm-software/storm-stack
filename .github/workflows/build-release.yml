@@ -30,6 +30,9 @@ jobs:
     if: github.repository == 'storm-software/storm-stack' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/next' || github.ref == 'refs/heads/alpha' || github.ref == 'refs/heads/beta')
     name: "Build & Release"
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      id-token: write
     steps:
       - uses: actions/checkout@v4
         with:
@@ -39,10 +42,12 @@ jobs:
       - name: Setup workspace
         uses: ./.github/actions/setup-workspace
 
-      - name: configure git
+      - name: Configure git
         run: |
           git config user.name "${{ env.STORM_WORKER }}"
           git config user.email "${{ env.STORM_WORKER }}@users.noreply.github.com"
+          git config lfs.allowincompletepush true
+          npm config set //registry.npmjs.org/:_authToken=$NPM_TOKEN
 
       - name: Get appropriate base and head commits for `nx affected` commands
         uses: nrwl/nx-set-shas@v4
@@ -58,7 +63,7 @@ jobs:
       #  run: pnpm nx g @storm-software/workspace-tools:config-schema --outputPath=config.schema.json
 
       - name: Build repository packages
-        run: pnpm nx run-many -t build --parallel=5
+        run: pnpm nx affected -t build --parallel=5 --base=${{ env.NX_BASE }} --head=${{ env.NX_HEAD }}
 
       - name: Run Linters
         run: pnpm lint
@@ -66,8 +71,8 @@ jobs:
       - name: Run Formatters
         run: pnpm nx format
 
-      - name: Rebuild repository packages
-        run: pnpm nx run-many -t build --parallel=5
+      - name: Build repository packages
+        run: pnpm nx affected -t build --parallel=5 --base=${{ env.NX_BASE }} --head=${{ env.NX_HEAD }}
 
       #- name: Run Tests
       #  uses: nick-fields/retry@v2.8.3
