@@ -1,14 +1,26 @@
-## 0.1.6 (2024-01-29)
+## 0.1.7 (2024-01-29)
 
 
 ### 🩹 Fixes
 
-- **monorepo:** Resolved issues with storm configuration json ([d51770d](https://github.com/storm-software/storm-stack/commit/d51770d))
+- **monorepo:** Update workspace-tools build dependency version ([efa5674](https://github.com/storm-software/storm-stack/commit/efa5674))
+
+- **monorepo:** Update workspace-tools build dependency version ([e253ca7](https://github.com/storm-software/storm-stack/commit/e253ca7))
 
 
 ### ❤️  Thank You
 
 - Patrick Sullivan
+
+## 0.1.6 (2024-01-29)
+
+### 🩹 Fixes
+
+-   **monorepo:** Resolved issues with storm configuration json ([d51770d](https://github.com/storm-software/storm-stack/commit/d51770d))
+
+### ❤️ Thank You
+
+-   Patrick Sullivan
 
 ## 0.1.5 (2024-01-29)
 
