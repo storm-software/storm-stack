@@ -1,14 +1,14 @@
-## 1.6.4 (2024-01-29)
 
+
+## 1.6.4 (2024-01-29)
 
 ### 🩹 Fixes
 
-- **utilities:** Reformat the README markdown files ([db95426](https://github.com/storm-software/storm-stack/commit/db95426))
+-   **utilities:** Reformat the README markdown files ([db95426](https://github.com/storm-software/storm-stack/commit/db95426))
 
+### ❤️ Thank You
 
-### ❤️  Thank You
-
-- Patrick Sullivan
+-   Patrick Sullivan
 
 ## 1.6.3 (2024-01-29)
 

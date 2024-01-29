@@ -1,14 +1,24 @@
-## 1.3.4 (2024-01-29)
+## 1.3.5 (2024-01-29)
 
 
 ### 🩹 Fixes
 
-- **utilities:** Reformat the README markdown files ([db95426](https://github.com/storm-software/storm-stack/commit/db95426))
+- **monorepo:** Added workspace-tools dependency for build updates ([c16421f](https://github.com/storm-software/storm-stack/commit/c16421f))
 
 
 ### ❤️  Thank You
 
 - Patrick Sullivan
+
+## 1.3.4 (2024-01-29)
+
+### 🩹 Fixes
+
+-   **utilities:** Reformat the README markdown files ([db95426](https://github.com/storm-software/storm-stack/commit/db95426))
+
+### ❤️ Thank You
+
+-   Patrick Sullivan
 
 ## 1.3.3 (2024-01-29)
 
