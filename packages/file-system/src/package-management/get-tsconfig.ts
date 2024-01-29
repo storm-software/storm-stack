@@ -2,7 +2,7 @@ import fs from "node:fs";
 import { createRequire } from "node:module";
 import path from "node:path";
 import { EMPTY_STRING } from "@storm-stack/utilities";
-import { findFileName, findFilePath } from "..";
+import { findFileName, findFilePath } from "../files/file-path-fns";
 
 const singleComment = Symbol("singleComment");
 const multiComment = Symbol("multiComment");

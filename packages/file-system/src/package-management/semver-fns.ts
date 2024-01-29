@@ -1,4 +1,4 @@
-import { RELEASE_TYPES, ReleaseType, inc, parse, valid } from "semver";
+import { RELEASE_TYPES, type ReleaseType, inc, parse, valid } from "semver";
 
 export const parseVersion = (semver: string) => parse(semver);
 
@@ -12,9 +12,7 @@ export const deriveNewSemverVersion = (
   preid?: string
 ) => {
   if (!valid(currentSemverVersion)) {
-    throw new Error(
-      `Invalid semver version "${currentSemverVersion}" provided.`
-    );
+    throw new Error(`Invalid semver version "${currentSemverVersion}" provided.`);
   }
 
   let newVersion = semverSpecifier;

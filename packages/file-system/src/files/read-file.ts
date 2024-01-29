@@ -1,6 +1,6 @@
-import { StormError } from "@storm-stack/errors";
-import { readFile as readFileFs, readFileSync } from "fs";
+import { readFile as readFileFs, readFileSync } from "node:fs";
 import { promisify } from "node:util";
+import { StormError } from "@storm-stack/errors";
 import { FileSystemErrorCode } from "../errors";
 
 /**
@@ -30,7 +30,7 @@ export const readFile = (filePath: string): string => {
  *
  * @param filePath - The file path to read to
  */
-export const readFileAsync = async (filePath: string): Promise<string> => {
+export const readFileAsync = (filePath: string): Promise<string> => {
   try {
     if (!filePath) {
       throw new StormError(FileSystemErrorCode.invalid_file_path, {

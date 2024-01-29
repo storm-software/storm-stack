@@ -9,13 +9,13 @@ export const getWorkspaceRoot = () => {
       process.env.NX_WORKSPACE_ROOT_PATH ??= config.workspaceRoot;
 
       return config.workspaceRoot;
-    } else {
-      const root = findWorkspaceRoot(process.cwd());
-      process.env.STORM_WORKSPACE_ROOT = root?.dir;
-      process.env.NX_WORKSPACE_ROOT_PATH ??= root?.dir;
-
-      return root?.dir;
     }
+
+    const root = findWorkspaceRoot(process.cwd());
+    process.env.STORM_WORKSPACE_ROOT = root?.dir;
+    process.env.NX_WORKSPACE_ROOT_PATH ??= root?.dir;
+
+    return root?.dir;
   }
 
   return process.env.STORM_WORKSPACE_ROOT;

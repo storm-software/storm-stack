@@ -1,6 +1,6 @@
+import { constants, type CopySyncOptions, copyFileSync, cpSync } from "node:fs";
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { StormLog } from "@storm-stack/logging";
-import fs, { CopySyncOptions, copyFileSync, cpSync } from "node:fs";
 
 /**
  * Copy files from one location to another
@@ -21,12 +21,10 @@ export const copyFiles = (
 
     return undefined;
   } catch (e) {
-    StormLog.error(`An error occurred copying files`);
+    StormLog.error("An error occurred copying files");
     StormLog.error(e);
 
-    return (
-      (e as any)?.message ?? "Exception occurred while processing request "
-    );
+    return (e as any)?.message ?? "Exception occurred while processing request ";
   }
 };
 
@@ -37,22 +35,17 @@ export const copyFiles = (
  * @param dest - The destination location
  * @returns An indicator specifying if the copy was successful
  */
-export const copyFile = (
-  file: string,
-  dest: string
-): string | Buffer | undefined => {
+export const copyFile = (file: string, dest: string): string | Buffer | undefined => {
   try {
     StormLog.info(`Copying file "${file}" to "${dest}"`);
 
-    copyFileSync(file, dest, fs.constants.COPYFILE_FICLONE);
+    copyFileSync(file, dest, constants.COPYFILE_FICLONE);
 
     return undefined;
   } catch (e) {
-    StormLog.error(`An error occurred copying files`);
+    StormLog.error("An error occurred copying files");
     StormLog.error(e);
 
-    return (
-      (e as any)?.message ?? "Exception occurred while processing request "
-    );
+    return (e as any)?.message ?? "Exception occurred while processing request ";
   }
 };

@@ -8,6 +8,9 @@ export const PluginDiscoveryMode = {
   NONE: "none" as PluginDiscoveryMode
 };
 
+/**
+ * The options to configure the plugin manager.
+ */
 export interface PluginManagerOptions {
   /**
    * The path to the root of the application.
@@ -64,6 +67,9 @@ export interface PluginManagerOptions {
       };
 }
 
+/**
+ * The definition of a plugin.
+ */
 export interface PluginDefinition {
   /**
    * The id of the plugin.

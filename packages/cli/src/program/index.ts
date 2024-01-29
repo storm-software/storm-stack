@@ -1,46 +1,16 @@
-import { StormConfig, createStormConfig } from "@storm-software/config-tools";
+import { type StormConfig, createStormConfig } from "@storm-software/config-tools";
 import { getCauseFromUnknown } from "@storm-stack/errors";
 import { StormLog } from "@storm-stack/logging";
-import {
-  EMPTY_STRING,
-  NEWLINE_STRING,
-  titleCase
-} from "@storm-stack/utilities";
+import { EMPTY_STRING, NEWLINE_STRING, titleCase } from "@storm-stack/utilities";
 import chalk from "chalk";
-import { AddHelpTextContext, Argument, Command, Option } from "commander";
+import { Argument, Command, Option } from "commander";
 import { Table } from "console-table-printer";
 import { text } from "figlet";
-import { CLIArgument, CLICommand, CLIConfig, CLIOption } from "../types";
+import type { CLIArgument, CLICommand, CLIConfig, CLIOption } from "../types";
 import { registerShutdown } from "./shutdown";
 
-const createCLICommand = (cliCommand: CLICommand): Command => {
-  const command = new Command(cliCommand.name);
-  command.description(cliCommand.description ?? EMPTY_STRING);
-  if (cliCommand.commands) {
-    cliCommand.commands.forEach(_cliCommand =>
-      command.addCommand(createCLICommand(_cliCommand))
-    );
-  }
-  if (cliCommand.options) {
-    cliCommand.options.forEach(_cliOption =>
-      command.addOption(createCLIOption(_cliOption))
-    );
-  }
-  if (cliCommand.argument) {
-    cliCommand.argument.forEach(_cliArgument =>
-      command.addArgument(createCLIArgument(_cliArgument))
-    );
-  }
-
-  command.action(cliCommand.action);
-  return command;
-};
-
 const createCLIArgument = (cliArgument: CLIArgument): Argument => {
-  const argument = new Argument(
-    cliArgument.flags,
-    cliArgument.description ?? EMPTY_STRING
-  );
+  const argument = new Argument(cliArgument.flags, cliArgument.description ?? EMPTY_STRING);
   if (cliArgument.default) {
     argument.default;
   }
@@ -49,10 +19,7 @@ const createCLIArgument = (cliArgument: CLIArgument): Argument => {
 };
 
 const createCLIOption = (cliOption: CLIOption): Option => {
-  const option = new Option(
-    cliOption.flags,
-    cliOption.description ?? EMPTY_STRING
-  );
+  const option = new Option(cliOption.flags, cliOption.description ?? EMPTY_STRING);
   if (cliOption.choices) {
     option.choices(cliOption.choices);
   }
@@ -61,6 +28,29 @@ const createCLIOption = (cliOption: CLIOption): Option => {
   }
 
   return option;
+};
+
+const createCLICommand = (cliCommand: CLICommand): Command => {
+  const command = new Command(cliCommand.name);
+  command.description(cliCommand.description ?? EMPTY_STRING);
+  if (cliCommand.commands) {
+    for (const _cliCommand of cliCommand.commands) {
+      command.addCommand(createCLICommand(_cliCommand));
+    }
+  }
+  if (cliCommand.options) {
+    for (const _cliOption of cliCommand.options) {
+      command.addOption(createCLIOption(_cliOption));
+    }
+  }
+  if (cliCommand.argument) {
+    for (const _cliArgument of cliCommand.argument) {
+      command.addArgument(createCLIArgument(_cliArgument));
+    }
+  }
+
+  command.action(cliCommand.action);
+  return command;
 };
 
 export async function createCLIProgram(cliConfig: CLIConfig): Promise<void> {
@@ -74,7 +64,7 @@ export async function createCLIProgram(cliConfig: CLIConfig): Promise<void> {
         cliConfig.banner?.options ?? {
           font: cliConfig.banner?.font ?? "Larry 3D"
         },
-        function (err, data) {
+        (err, data) => {
           if (err) {
             return;
           }
@@ -87,7 +77,7 @@ export async function createCLIProgram(cliConfig: CLIConfig): Promise<void> {
         text(
           `by ${cliConfig.by?.name ?? config.organization ?? "Storm"}`,
           cliConfig.banner?.options ?? { font: cliConfig.by?.font ?? "Doom" },
-          function (err, data) {
+          (err, data) => {
             if (err) {
               return;
             }
@@ -98,13 +88,9 @@ export async function createCLIProgram(cliConfig: CLIConfig): Promise<void> {
       }
     }
 
-    logger.info(
-      `⚡ Starting the ${titleCase(cliConfig.name) ?? "Storm CLI"} application`
-    );
+    logger.info(`⚡ Starting the ${titleCase(cliConfig.name) ?? "Storm CLI"} application`);
 
-    const urlDisplay = `\nWebsite: ${
-      cliConfig.homepageUrl ?? config.homepage
-    } \nDocumentation: ${
+    const urlDisplay = `\nWebsite: ${cliConfig.homepageUrl ?? config.homepage} \nDocumentation: ${
       cliConfig.documentationUrl ?? config.homepage.endsWith("/")
         ? `${config.homepage}docs`
         : `${config.homepage}/docs`
@@ -112,9 +98,7 @@ export async function createCLIProgram(cliConfig: CLIConfig): Promise<void> {
     const licenseDisplay = `\n This software is distributed under the ${
       cliConfig.license ?? config.license
     } license. \nFor more information, please visit ${
-      cliConfig.licenseUrl ??
-      cliConfig.documentationUrl ??
-      config.homepage.endsWith("/")
+      cliConfig.licenseUrl ?? cliConfig.documentationUrl ?? config.homepage.endsWith("/")
         ? `${config.homepage}license`
         : `${config.homepage}/license`
     } \n`;
@@ -144,27 +128,23 @@ export async function createCLIProgram(cliConfig: CLIConfig): Promise<void> {
         .showHelpAfterError()
         .showSuggestionAfterError();
 
-      cliConfig.commands.forEach(command => {
+      for (const command of cliConfig.commands) {
         program.addCommand(createCLICommand(command));
-      });
+      }
 
       program
         .addHelpCommand("help [cmd]", "Display help for [cmd]")
         .addHelpText(
           "beforeAll",
-          `Welcome to the ${
-            titleCase(cliConfig.name) ?? "Storm CLI"
-          } application! \n${
+          `Welcome to the ${titleCase(cliConfig.name) ?? "Storm CLI"} application! \n${
             cliConfig.description
           } \n${urlDisplay} \n${licenseDisplay}`
         )
         .addHelpText(
           "afterAll",
-          `For more information, please visit <${
-            cliConfig.homepageUrl ?? config.homepage
-          }>`
+          `For more information, please visit <${cliConfig.homepageUrl ?? config.homepage}>`
         )
-        .addHelpText("before", (context: AddHelpTextContext) => {
+        .addHelpText("before", () => {
           return cliConfig.commands
             .map((command: CLICommand) => {
               const table = new Table({
@@ -207,17 +187,19 @@ export async function createCLIProgram(cliConfig: CLIConfig): Promise<void> {
               });
 
               // add rows with color
-              command.options?.forEach(option => {
-                table.addRow(
-                  {
-                    flags: option.flags,
-                    description: option.description ?? EMPTY_STRING,
-                    options: option.choices?.join(", ") ?? EMPTY_STRING,
-                    defaultValue: option.default?.value ?? EMPTY_STRING
-                  },
-                  { color: config.colors.primary }
-                );
-              });
+              if (command.options) {
+                for (const option of command.options) {
+                  table.addRow(
+                    {
+                      flags: option.flags,
+                      description: option.description ?? EMPTY_STRING,
+                      options: option.choices?.join(", ") ?? EMPTY_STRING,
+                      defaultValue: option.default?.value ?? EMPTY_STRING
+                    },
+                    { color: config.colors.primary }
+                  );
+                }
+              }
 
               return table.render();
             })

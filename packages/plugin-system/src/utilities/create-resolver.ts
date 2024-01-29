@@ -3,7 +3,7 @@ import { StormError } from "@storm-stack/errors";
 import { joinPaths, loadTsConfigFile } from "@storm-stack/file-system";
 import { isString } from "@storm-stack/utilities";
 import { CachedInputFileSystem, ResolverFactory } from "enhanced-resolve";
-import { PluginSystemErrorCode } from "..";
+import { PluginSystemErrorCode } from "../errors";
 import { install } from "./run";
 
 /**
