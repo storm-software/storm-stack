@@ -5,7 +5,14 @@
     "noEmit": true
   },
   "files": [],
-  "include": ["src/**/*.ts", "src/**/*.js", "bin/**/*", "declarations.d.ts"],
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.js",
+    "bin/**/*",
+    "declarations.d.ts",
+    "../cli/src/utilities/is-ci.ts",
+    "../cli/src/utilities/is-interactive.ts"
+  ],
   "exclude": ["jest.config.ts", "src/**/*.spec.ts", "src/**/*.test.ts"],
   "composite": true
 }

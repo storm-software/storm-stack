@@ -2741,7 +2741,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "@storm-stack/plugin-system!PluginManagerOptions#defaultLoader:member",
-              "docComment": "/**\n * The path to the plugin's module loader.\n */\n",
+              "docComment": "/**\n * The path to the plugin's module loader or an object containing the provider string and loader instance.\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -2749,7 +2749,16 @@
                 },
                 {
                   "kind": "Content",
-                  "text": "string"
+                  "text": "string | {\n        provider: string;\n        loader: new (_rootPath?: string, _tsconfig?: string, _autoInstall?: boolean) => "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "IPluginLoader",
+                  "canonicalReference": "@storm-stack/plugin-system!IPluginLoader:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": "<any, any>;\n    }"
                 },
                 {
                   "kind": "Content",
@@ -2762,7 +2771,7 @@
               "name": "defaultLoader",
               "propertyTypeTokenRange": {
                 "startIndex": 1,
-                "endIndex": 2
+                "endIndex": 4
               }
             },
             {

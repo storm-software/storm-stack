@@ -50,9 +50,18 @@ export interface PluginManagerOptions {
   discoveryMode: PluginDiscoveryMode;
 
   /**
-   * The path to the plugin's module loader.
+   * The path to the plugin's module loader or an object containing the provider string and loader instance.
    */
-  defaultLoader: string;
+  defaultLoader:
+    | string
+    | {
+        provider: string;
+        loader: new (
+          _rootPath?: string,
+          _tsconfig?: string,
+          _autoInstall?: boolean
+        ) => IPluginLoader<any, any>;
+      };
 }
 
 export interface PluginDefinition {

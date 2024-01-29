@@ -157,7 +157,10 @@ export { PluginManager as PluginManager_alias_2 }
 // @public (undocumented)
 interface PluginManagerOptions {
     autoInstall: boolean;
-    defaultLoader: string;
+    defaultLoader: string | {
+        provider: string;
+        loader: new (_rootPath?: string, _tsconfig?: string, _autoInstall?: boolean) => IPluginLoader<any, any>;
+    };
     discoveryMode: PluginDiscoveryMode;
     rootPath: string;
     tsconfig?: string;

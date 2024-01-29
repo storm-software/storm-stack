@@ -1,5 +1,5 @@
-import { StormLog } from "@storm-stack/logging";
-import { MaybePromise } from "@storm-stack/utilities";
+import type { StormLog } from "@storm-stack/logging";
+import type { MaybePromise } from "@storm-stack/utilities";
 
 const errorTypes = ["unhandledRejection", "uncaughtException"];
 const signalTraps = ["SIGTERM", "SIGINT", "SIGUSR2"];
@@ -19,31 +19,31 @@ export function registerShutdown(config: {
     await config.onShutdown();
   }
 
-  errorTypes.map(type => {
-    process.on(type, async e => {
+  errorTypes.map((type) => {
+    process.on(type, async (e) => {
       try {
         config.logger.info(`process.on ${type}`);
         config.logger.error(e);
         await shutdown();
-        config.logger.info(`shutdown process done, exiting with code 0`);
+        config.logger.info("Shutdown process complete, exiting with code 0");
         process.exit(0);
       } catch (e) {
-        config.logger.warn(`shutdown process failed, exiting with code 1`);
+        config.logger.warn("Shutdown process failed, exiting with code 1");
         config.logger.error(e);
         process.exit(1);
       }
     });
   });
 
-  signalTraps.map(type => {
+  signalTraps.map((type) => {
     process.once(type, async () => {
       try {
         config.logger.info(`process.on ${type}`);
         await shutdown();
-        config.logger.info(`shutdown process done, exiting with code 0`);
+        config.logger.info("Shutdown process complete, exiting with code 0");
         process.exit(0);
       } catch (e) {
-        config.logger.warn(`shutdown process failed, exiting with code 1`);
+        config.logger.warn("Shutdown process failed, exiting with code 1");
         config.logger.error(e);
         process.exit(1);
       }
@@ -54,10 +54,10 @@ export function registerShutdown(config: {
     try {
       config.logger.info(`Manual shutdown ${reason ? `(${reason})` : ""}`);
       await shutdown();
-      config.logger.info(`shutdown process done, exiting with code 0`);
+      config.logger.info("Shutdown process complete, exiting with code 0");
       process.exit(0);
     } catch (e) {
-      config.logger.warn(`shutdown process failed, exiting with code 1`);
+      config.logger.warn("Shutdown process failed, exiting with code 1");
       config.logger.error(e);
       process.exit(1);
     }

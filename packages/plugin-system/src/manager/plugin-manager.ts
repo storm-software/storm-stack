@@ -11,6 +11,7 @@ import {
   isFunction,
   isSet,
   isSetObject,
+  isString,
   kebabCase,
   titleCase
 } from "@storm-stack/utilities";
@@ -355,13 +356,41 @@ export class PluginManager<TContext = any, TPluginModule extends IPluginModule =
    * @param loader - The loader module to retrieve.
    * @returns The loader module.
    */
-  private _getLoader = async (loader: string): Promise<IPluginLoader<TContext, TPluginModule>> => {
+  private _getLoader = async (
+    loader:
+      | string
+      | {
+          provider: string;
+          loader: new (
+            _rootPath?: string,
+            _tsconfig?: string,
+            _autoInstall?: boolean
+          ) => IPluginLoader<any, any>;
+        }
+  ): Promise<IPluginLoader<TContext, TPluginModule>> => {
+    if (!isString(loader)) {
+      const instance = new loader.loader(
+        this._options.rootPath,
+        this._options.tsconfig,
+        this._options.autoInstall
+      );
+      this._loaders.set(loader.provider, instance);
+
+      return instance;
+    }
+
     if (this._loaders.has(loader)) {
       // biome-ignore lint/style/noNonNullAssertion: <explanation>
       return this._loaders.get(loader)!;
     }
 
-    let module!: IPluginLoader<TContext, TPluginModule>;
+    let module!: {
+      PluginLoader: new (
+        _rootPath?: string,
+        _tsconfig?: string,
+        _autoInstall?: boolean
+      ) => IPluginLoader<any, any>;
+    };
     try {
       const resolved = await this._loaderResolver(loader);
       if (!resolved) {
@@ -387,8 +416,14 @@ export class PluginManager<TContext = any, TPluginModule extends IPluginModule =
       });
     }
 
-    this._loaders.set(loader, module);
-    return module;
+    const instance = new module.PluginLoader(
+      this._options.rootPath,
+      this._options.tsconfig,
+      this._options.autoInstall
+    );
+    this._loaders.set(loader, instance);
+
+    return instance;
   };
 
   /**
