@@ -1,16 +1,26 @@
-## 0.1.7 (2024-01-29)
+## 0.1.8 (2024-01-29)
 
 
 ### 🩹 Fixes
 
-- **monorepo:** Update workspace-tools build dependency version ([efa5674](https://github.com/storm-software/storm-stack/commit/efa5674))
-
-- **monorepo:** Update workspace-tools build dependency version ([e253ca7](https://github.com/storm-software/storm-stack/commit/e253ca7))
+- **monorepo:** Update storm-ops build version ([a98995a](https://github.com/storm-software/storm-stack/commit/a98995a))
 
 
 ### ❤️  Thank You
 
 - Patrick Sullivan
+
+## 0.1.7 (2024-01-29)
+
+### 🩹 Fixes
+
+-   **monorepo:** Update workspace-tools build dependency version ([efa5674](https://github.com/storm-software/storm-stack/commit/efa5674))
+
+-   **monorepo:** Update workspace-tools build dependency version ([e253ca7](https://github.com/storm-software/storm-stack/commit/e253ca7))
+
+### ❤️ Thank You
+
+-   Patrick Sullivan
 
 ## 0.1.6 (2024-01-29)
 
