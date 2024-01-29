@@ -1,4 +1,4 @@
-import { CreateTamaguiProps } from "tamagui";
+import type { CreateTamaguiProps } from "tamagui";
 import { config } from "./tamagui.config";
 
 export type Conf = typeof config;
