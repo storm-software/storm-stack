@@ -16,8 +16,8 @@ const DEFAULT_RADIX = 36;
  * @param buf - Buffer to transform
  * @returns A BigInt value
  */
-function bufToBigInt(buf: Uint8Array): BigInt {
-  let bits = 8n;
+function bufToBigInt(buf: Uint8Array): bigint {
+  const bits = 8n;
 
   let value = 0n;
   for (const i of buf.values()) {
@@ -44,7 +44,7 @@ export function hash(input: string | object): string {
  * @param input - String to hash
  * @returns The hashed string
  */
-function hashString(inputStr: string = ""): string {
+function hashString(inputStr = ""): string {
   // Drop the first character because it will bias the histogram
   // to the left.
   return bufToBigInt(sha3_512(inputStr)).toString(DEFAULT_RADIX).slice(1);
@@ -61,13 +61,15 @@ let counter = 0;
  */
 const hashObject = (inputObj: Record<string, any> = {}): string => {
   const type = typeof inputObj;
-  const constructor = inputObj && inputObj.constructor;
-  const isDate = constructor == Date;
+  const constructorFn = inputObj?.constructor;
+  // biome-ignore lint/suspicious/noDoubleEquals: <explanation>
+  const isDate = constructorFn == Date;
 
   let result: any;
   let index: any;
 
-  if (Object(inputObj) === inputObj && !isDate && constructor != RegExp) {
+  // biome-ignore lint/suspicious/noDoubleEquals: <explanation>
+  if (Object(inputObj) === inputObj && !isDate && constructorFn != RegExp) {
     // Object/function, not null/date/regexp. Use WeakMap to store the id first.
     // If it's already hashed, directly return the result.
     result = HASH_TABLE.get(inputObj);
@@ -78,24 +80,27 @@ const hashObject = (inputObj: Record<string, any> = {}): string => {
     // Store the hash first for circular reference detection before entering the
     // recursive `stableHash` calls.
     // For other objects like set and map, we use this id directly as the hash.
-    result = ++counter + "~";
+    result = `${++counter}~`;
     HASH_TABLE.set(inputObj, result);
 
-    if (constructor == Array) {
+    // biome-ignore lint/suspicious/noDoubleEquals: <explanation>
+    if (constructorFn == Array) {
       // Array.
       result = "@";
       for (index = 0; index < inputObj.length; index++) {
-        result += hashObject(inputObj[index]) + ",";
+        result += `${hashObject(inputObj[index])},`;
       }
       HASH_TABLE.set(inputObj, result);
     }
-    if (constructor == Object) {
+    // biome-ignore lint/suspicious/noDoubleEquals: <explanation>
+    if (constructorFn == Object) {
       // Object, sort keys.
       result = "#";
       const keys = Object.keys(inputObj).sort();
+      // biome-ignore lint/suspicious/noAssignInExpressions: <explanation>
       while (!isSet((index = keys.pop() as string))) {
         if (!isSet(inputObj[index])) {
-          result += index + ":" + hashObject(inputObj[index]) + ",";
+          result += `${index}:${hashObject(inputObj[index])},`;
         }
       }
       HASH_TABLE.set(inputObj, result);
@@ -103,11 +108,11 @@ const hashObject = (inputObj: Record<string, any> = {}): string => {
   } else {
     result = isDate
       ? inputObj.toJSON()
-      : type == "symbol"
+      : type === "symbol"
         ? inputObj.toString()
-        : type == "string"
+        : type === "string"
           ? JSON.stringify(inputObj)
-          : "" + inputObj;
+          : `${inputObj}`;
   }
 
   return result;

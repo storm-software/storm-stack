@@ -16,7 +16,7 @@ export const flattenObject = (
 ) => {
   const flattened: any = {};
 
-  Object.keys(obj).forEach(key => {
+  for (const key of Object.keys(obj)) {
     if (isSetObject(obj[key])) {
       Object.assign(flattened, flattenObject(obj[key], prefix));
     } else {
@@ -25,7 +25,7 @@ export const flattenObject = (
         flattened[prefixedKey] = obj[key];
       }
     }
-  });
+  }
 
   return flattened;
 };

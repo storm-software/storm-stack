@@ -17,14 +17,12 @@ export const EMPTY_OBJECT = {};
 export type AnyCase<T extends IndexType> = string extends T
   ? string
   : T extends `${infer F1}${infer F2}${infer R}`
-    ? `${Uppercase<F1> | Lowercase<F1>}${
-        | Uppercase<F2>
-        | Lowercase<F2>}${AnyCase<R>}`
+    ? `${Uppercase<F1> | Lowercase<F1>}${Uppercase<F2> | Lowercase<F2>}${AnyCase<R>}`
     : T extends `${infer F}${infer R}`
       ? `${Uppercase<F> | Lowercase<F>}${AnyCase<R>}`
       : typeof EMPTY_STRING;
 
-export type Newable<T> = new (...args: never[]) => T;
+export type Newable<T> = new (..._args: never[]) => T;
 
 export interface Abstract<T> {
   prototype: T;
@@ -36,10 +34,7 @@ export interface Clonable<T> {
 
 export type MaybePromise<T> = T | Promise<T>;
 
-export type ReducerFunction<TState, TAction> = (
-  state: TState,
-  action: TAction
-) => TState;
+export type ReducerFunction<TState, TAction> = (state: TState, action: TAction) => TState;
 
 export type ArrayElement<ArrayType extends readonly unknown[]> =
   ArrayType extends readonly (infer ElementType)[] ? ElementType : never;
@@ -53,7 +48,7 @@ export const TYPE_SET = "Set";
 
 export type Collection =
   | IArguments
-  | Array<unknown>
+  | unknown[]
   | Map<unknown, unknown>
   | Record<string | number | symbol, unknown>
   | Set<unknown>;
@@ -63,14 +58,7 @@ export type Collection =
  *
  * @category Type
  */
-export type Primitive =
-  | null
-  | undefined
-  | string
-  | number
-  | boolean
-  | symbol
-  | bigint;
+export type Primitive = null | undefined | string | number | boolean | symbol | bigint;
 
 export type LiteralUnion<T extends U, U extends Primitive> =
   | T
@@ -92,10 +80,7 @@ export type DeepPartial<T> = T extends BrowserNativeObject | NestedValue
       [K in keyof T]?: DeepPartial<T[K]>;
     };
 
-export type Rollback = Record<
-  string,
-  (initialValue: any, currentValue: any) => any
->;
+export type Rollback = Record<string, (initialValue: any, currentValue: any) => any>;
 
 /**
  * Extract all required keys from the given type.
@@ -105,9 +90,7 @@ export type Rollback = Record<
  */
 export type RequiredKeysOf<BaseType extends object> = Exclude<
   {
-    [Key in keyof BaseType]: BaseType extends Record<Key, BaseType[Key]>
-      ? Key
-      : never;
+    [Key in keyof BaseType]: BaseType extends Record<Key, BaseType[Key]> ? Key : never;
   }[keyof BaseType],
   undefined
 >;
@@ -121,16 +104,11 @@ export type RequiredKeysOf<BaseType extends object> = Exclude<
  * @category Type Guard
  * @category Utilities
  */
-export type IsEqual<A, B> = (<G>() => G extends A ? 1 : 2) extends <
-  G
->() => G extends B ? 1 : 2
+export type IsEqual<A, B> = (<G>() => G extends A ? 1 : 2) extends <G>() => G extends B ? 1 : 2
   ? true
   : false;
 
-export type Filter<KeyType, ExcludeType> = IsEqual<
-  KeyType,
-  ExcludeType
-> extends true
+export type Filter<KeyType, ExcludeType> = IsEqual<KeyType, ExcludeType> extends true
   ? never
   : KeyType extends ExcludeType
     ? never
@@ -160,13 +138,9 @@ export type Except<
   KeysType extends keyof ObjectType,
   Options extends ExceptOptions = { requireExactProps: false }
 > = {
-  [KeyType in keyof ObjectType as Filter<
-    KeyType,
-    KeysType
-  >]: ObjectType[KeyType];
-} & (Options["requireExactProps"] extends true
-  ? Partial<Record<KeysType, never>>
-  : {});
+  [KeyType in keyof ObjectType as Filter<KeyType, KeysType>]: ObjectType[KeyType];
+  // biome-ignore lint/complexity/noBannedTypes: <explanation>
+} & (Options["requireExactProps"] extends true ? Partial<Record<KeysType, never>> : {});
 
 /**
  * Useful to flatten the type output to improve type hints shown in editors. And also to transform an interface into a type to aide with assignability.
@@ -184,18 +158,14 @@ export type Simplify<T> = { [KeyType in keyof T]: T[KeyType] } & {};
  * @remarks Use-case: You want to define a single model where the only thing that changes is whether or not some of the keys are required.
  * @category Object
  */
-export type SetRequired<BaseType, Keys extends keyof BaseType> =
-  // `extends unknown` is always going to be the case and is used to convert any
-  // union into a [distributive conditional
-  // type](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-2-8.html#distributive-conditional-types).
-  BaseType extends unknown
-    ? Simplify<
-        // Pick just the keys that are optional from the base type.
-        Except<BaseType, Keys> &
-          // Pick the keys that should be required from the base type and make them required.
-          Required<Pick<BaseType, Keys>>
-      >
-    : never;
+export type SetRequired<BaseType, Keys extends keyof BaseType> = BaseType extends unknown // type](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-2-8.html#distributive-conditional-types). // union into a [distributive conditional // `extends unknown` is always going to be the case and is used to convert any
+  ? Simplify<
+      // Pick just the keys that are optional from the base type.
+      Except<BaseType, Keys> &
+        // Pick the keys that should be required from the base type and make them required.
+        Required<Pick<BaseType, Keys>>
+    >
+  : never;
 
 export const $NestedValue: unique symbol = Symbol("NestedValue");
 

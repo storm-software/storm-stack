@@ -33,9 +33,7 @@ function createEntropy(length = 4, random = Math.random) {
   let entropy = "";
 
   while (entropy.length < length) {
-    entropy =
-      entropy +
-      Math.floor(random() * CUID_LARGE_LENGTH).toString(CUID_LARGE_LENGTH);
+    entropy = entropy + Math.floor(random() * CUID_LARGE_LENGTH).toString(CUID_LARGE_LENGTH);
   }
   return entropy;
 }
@@ -53,12 +51,7 @@ function fingerprint(
   options: {
     globalObj?: any;
   } = {
-    globalObj:
-      typeof global !== "undefined"
-        ? global
-        : typeof window !== "undefined"
-          ? window
-          : {}
+    globalObj: typeof global !== "undefined" ? global : typeof window !== "undefined" ? window : {}
   }
 ) {
   const globals = Object.keys(options.globalObj).toString();
@@ -92,8 +85,5 @@ export function cuid(): string {
   // intended id output.
   const salt = createEntropy(length, Math.random);
 
-  return `${
-    randomLetter() +
-    hash(`${time + salt + count + fingerprint()}`).substring(1, length)
-  }`;
+  return `${randomLetter() + hash(`${time + salt + count + fingerprint()}`).substring(1, length)}`;
 }

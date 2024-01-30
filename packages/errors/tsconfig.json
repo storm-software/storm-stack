@@ -10,7 +10,7 @@
     "src/**/*.ts",
     "src/**/*.js",
     "bin/**/*",
-    "stacktracey/stacktracey.d.ts"
+    "node_modules/stacktracey/stacktracey.d.ts"
   ],
   "exclude": ["jest.config.ts", "src/**/*.spec.ts", "src/**/*.test.ts"]
 }

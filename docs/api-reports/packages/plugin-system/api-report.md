@@ -4,171 +4,199 @@
 
 ```ts
 
-/// <reference types="node" />
-
-import { Command } from 'commander';
-import { ExecOptions } from 'child_process';
-import { Fonts } from 'figlet';
-import { Options } from 'figlet';
-import pino from 'pino';
-import { Readable } from 'node:stream';
-import { StdioOptions } from 'child_process';
-import { StormConfig } from '@storm-software/config-tools';
+import { ExecaReturnValue } from 'execa';
 import { Temporal } from '@js-temporal/polyfill';
-import * as z from 'zod';
+
+// @public
+const createResolver: (rootPath?: string, tsconfig?: string, autoInstall?: boolean) => (request: string) => Promise<string>;
+export { createResolver }
+export { createResolver as createResolver_alias_1 }
+export { createResolver as createResolver_alias_2 }
 
 // @public (undocumented)
-interface CLIArgument {
+export const execute: (command: string, rootPath: string) => Promise<ExecaReturnValue<string>>;
+
+// @public (undocumented)
+export const install: (name: string, rootPath: string) => Promise<void>;
+
+// @public
+interface IPluginLoader<TContext = any, TPluginModule extends IPluginModule<TContext> = IPluginModule<TContext>> {
     // (undocumented)
-    default?: unknown | undefined;
+    isValid: (module: TPluginModule) => boolean;
     // (undocumented)
+    load: (definition: PluginDefinition, options: Record<string, any>) => Promise<PluginInstance<TContext, TPluginModule>>;
+    // (undocumented)
+    process: (context: TContext, instance: PluginInstance, options: Record<string, any>) => Promise<void>;
+}
+export { IPluginLoader }
+export { IPluginLoader as IPluginLoader_alias_1 }
+
+// @public
+interface IPluginManager {
+    discover(): Promise<Set<PluginDefinition>>;
+    instantiate(provider: string, options?: Record<string, any>): Promise<PluginInstance>;
+    register(provider: string): boolean;
+}
+export { IPluginManager }
+export { IPluginManager as IPluginManager_alias_1 }
+
+// @public
+interface IPluginModule<TContext = any> {
+    // (undocumented)
+    hooks?: Record<string, PluginHookFn<TContext>>;
+}
+export { IPluginModule }
+export { IPluginModule as IPluginModule_alias_1 }
+
+// @public
+interface PluginDefinition {
+    configPath?: string;
+    dependencies: string[];
     description?: string;
-    // (undocumented)
-    flags: string;
-}
-export { CLIArgument }
-export { CLIArgument as CLIArgument_alias_1 }
-
-// @public (undocumented)
-interface CLICommand {
-    // (undocumented)
-    action: (...args: any[]) => MaybePromise<void>;
-    // (undocumented)
-    argument?: CLIArgument[];
-    // (undocumented)
-    commands?: CLICommand[];
-    // (undocumented)
-    description: string;
-    // (undocumented)
+    id: string;
+    imagePath?: string;
+    loader: string;
     name: string;
-    // (undocumented)
-    options?: CLIOption[];
+    options: any;
+    packagePath: string;
+    provider: string;
+    tags: string[];
+    version: string;
 }
-export { CLICommand }
-export { CLICommand as CLICommand_alias_1 }
+export { PluginDefinition }
+export { PluginDefinition as PluginDefinition_alias_1 }
 
 // @public (undocumented)
-interface CLIConfig {
+type PluginDiscoveryMode = "auto" | "fallback" | "none";
+
+// @public (undocumented)
+const PluginDiscoveryMode: {
+    AUTO: PluginDiscoveryMode;
+    FALLBACK: PluginDiscoveryMode;
+    NONE: PluginDiscoveryMode;
+};
+export { PluginDiscoveryMode }
+export { PluginDiscoveryMode as PluginDiscoveryMode_alias_1 }
+
+// @public
+type PluginHookFn<TContext = any> = (params: TContext) => MaybePromise<TContext | ((params: TContext) => MaybePromise<TContext>)>;
+export { PluginHookFn }
+export { PluginHookFn as PluginHookFn_alias_1 }
+
+// @public
+interface PluginInstance<TContext = any, TPluginModule extends IPluginModule<TContext> = any> {
     // (undocumented)
-    banner?: CLITitle;
+    definition: PluginDefinition;
     // (undocumented)
-    by?: CLITitle;
+    executionDateTime: StormDateTime;
     // (undocumented)
-    commands: CLICommand[];
+    loader: IPluginLoader<TContext, TPluginModule>;
     // (undocumented)
-    description: string;
+    module: TPluginModule;
     // (undocumented)
-    documentationUrl?: string;
+    options: any;
     // (undocumented)
-    homepageUrl?: string;
-    // (undocumented)
-    license?: string;
-    // (undocumented)
-    licenseUrl?: string;
-    // (undocumented)
-    name: string;
-    // (undocumented)
-    postAction: (command: Command) => MaybePromise<void>;
-    // (undocumented)
-    preAction: (command: Command) => MaybePromise<void>;
-    // (undocumented)
-    repositoryUrl?: string;
+    resolvedPath: string;
 }
-export { CLIConfig }
-export { CLIConfig as CLIConfig_alias_1 }
+export { PluginInstance }
+export { PluginInstance as PluginInstance_alias_1 }
 
-// @public (undocumented)
-interface CLIOption {
+// @public
+abstract class PluginLoader<TContext = any, TPluginModule extends IPluginModule<TContext> = IPluginModule<TContext>> implements IPluginLoader<TContext, TPluginModule> {
+    constructor(rootPath?: string | undefined, tsconfig?: string | undefined, autoInstall?: boolean | undefined);
     // (undocumented)
-    choices?: string[];
+    readonly autoInstall?: boolean | undefined;
     // (undocumented)
-    default?: CLIOptionDefault;
+    protected instantiate: (definition: PluginDefinition, module: TPluginModule, resolvedPath: string, options?: Record<string, any>) => PluginInstance<TContext, TPluginModule>;
     // (undocumented)
-    description: string | undefined;
+    isValid: (module: TPluginModule) => boolean;
     // (undocumented)
-    flags: string;
+    load: (definition: PluginDefinition, options?: Record<string, any>) => Promise<PluginInstance<TContext, TPluginModule>>;
+    // (undocumented)
+    abstract process: (context: TContext, instance: PluginInstance<TContext, TPluginModule>, options: Record<string, any>) => Promise<void>;
+    // (undocumented)
+    protected resolve: (definition: PluginDefinition, _?: Record<string, any>) => Promise<any>;
+    // (undocumented)
+    protected resolver: (request: string) => Promise<string>;
+    // (undocumented)
+    readonly rootPath?: string | undefined;
+    // (undocumented)
+    readonly tsconfig?: string | undefined;
 }
-export { CLIOption }
-export { CLIOption as CLIOption_alias_1 }
+export { PluginLoader }
+export { PluginLoader as PluginLoader_alias_1 }
+export { PluginLoader as PluginLoader_alias_2 }
 
-// @public (undocumented)
-interface CLIOptionDefault {
+// @public
+class PluginManager<TContext = any, TPluginModule extends IPluginModule = any> {
     // (undocumented)
-    description?: string | undefined;
+    static create: <TContext_1 = any, TPluginModule_1 extends IPluginModule<TContext_1> = any>(logger: IStormLog, options: Omit<Partial<PluginManagerOptions>, "defaultLoader"> & Pick<PluginManagerOptions, "defaultLoader">) => Promise<PluginManager<TContext_1, TPluginModule_1>>;
     // (undocumented)
-    value: unknown;
+    discover: () => Promise<Map<string, PluginDefinition>>;
+    // (undocumented)
+    execute: (provider: string, context: TContext, options?: Record<string, any>, executionDateTime?: StormDateTime) => Promise<Record<string, Error | null>>;
+    // (undocumented)
+    getInstance: (provider: string, options?: Record<string, any>) => PluginInstance<TContext, TPluginModule> | undefined;
+    // (undocumented)
+    getLoaders(): Map<string, IPluginLoader<TContext, TPluginModule>>;
+    // (undocumented)
+    getRegistry(): Map<string, PluginDefinition>;
+    // (undocumented)
+    getStore(): Map<string, PluginInstance<TContext, TPluginModule>>;
+    // (undocumented)
+    instantiate: (provider: string, options?: Record<string, any>) => Promise<PluginInstance<TContext, TPluginModule>>;
+    // (undocumented)
+    invokeHook: (name: string, context: TContext, handler?: ((context: TContext) => Promise<TContext> | TContext) | undefined) => Promise<TContext>;
+    // (undocumented)
+    register: (provider: string) => Promise<PluginDefinition>;
 }
-export { CLIOptionDefault }
-export { CLIOptionDefault as CLIOptionDefault_alias_1 }
+export { PluginManager }
+export { PluginManager as PluginManager_alias_1 }
+export { PluginManager as PluginManager_alias_2 }
 
-// @public (undocumented)
-interface CLITitle {
-    // (undocumented)
-    font?: Fonts;
-    // (undocumented)
-    hide?: boolean;
-    // (undocumented)
-    name?: string;
-    // (undocumented)
-    options?: Options;
+// @public
+interface PluginManagerOptions {
+    autoInstall: boolean;
+    defaultLoader: string | {
+        provider: string;
+        loader: new (_rootPath?: string, _tsconfig?: string, _autoInstall?: boolean) => IPluginLoader<any, any>;
+    };
+    discoveryMode: PluginDiscoveryMode;
+    rootPath: string;
+    tsconfig?: string;
+    useNodeModules: boolean;
 }
-export { CLITitle }
-export { CLITitle as CLITitle_alias_1 }
-
-// @public
-function createCliOptions(obj: Record<string, string | number | boolean>): string[];
-export { createCliOptions }
-export { createCliOptions as createCliOptions_alias_1 }
-export { createCliOptions as createCliOptions_alias_2 }
-
-// @public
-function createCliOptionsString(obj: Record<string, string | number | boolean>): string;
-export { createCliOptionsString }
-export { createCliOptionsString as createCliOptionsString_alias_1 }
-export { createCliOptionsString as createCliOptionsString_alias_2 }
+export { PluginManagerOptions }
+export { PluginManagerOptions as PluginManagerOptions_alias_1 }
 
 // @public (undocumented)
-function createCLIProgram(cliConfig: CLIConfig): Promise<void>;
-export { createCLIProgram }
-export { createCLIProgram as createCLIProgram_alias_1 }
-
-// @public
-const execute: (command: string, options?: ExecOptions, env?: Record<string, string>, stdio?: StdioOptions) => string | Buffer | Readable | undefined;
-export { execute }
-export { execute as execute_alias_1 }
-export { execute as execute_alias_2 }
-
-// @public
-const executeAsync: (command: string, options?: ExecOptions, env?: Record<string, string>, stdio?: StdioOptions) => Promise<string | Buffer | undefined>;
-export { executeAsync }
-export { executeAsync as executeAsync_alias_1 }
-export { executeAsync as executeAsync_alias_2 }
-
-// @public
-const isCI: () => boolean;
-export { isCI }
-export { isCI as isCI_alias_1 }
-export { isCI as isCI_alias_2 }
-
-// @public
-const isInteractive: (stream?: NodeJS.ReadStream & {
-    fd: 0;
-}) => boolean;
-export { isInteractive }
-export { isInteractive as isInteractive_alias_1 }
-export { isInteractive as isInteractive_alias_2 }
-
-// @public
-function link(url: string): string;
-export { link }
-export { link as link_alias_1 }
-export { link as link_alias_2 }
+type PluginSystemErrorCode = ErrorCode | "module_not_found" | "plugin_not_found" | "plugin_loading_failure";
 
 // @public (undocumented)
-export function registerShutdown(config: {
-    logger: StormLog;
-    onShutdown(): void | MaybePromise<void>;
-}): (reason?: string) => Promise<void>;
+const PluginSystemErrorCode: {
+    module_not_found: PluginSystemErrorCode;
+    plugin_not_found: PluginSystemErrorCode;
+    plugin_loading_failure: PluginSystemErrorCode;
+    success: ErrorCode;
+    missing_issue_code: ErrorCode;
+    invalid_config: ErrorCode;
+    failed_to_load_file: ErrorCode;
+    missing_context: ErrorCode;
+    record_not_found: ErrorCode;
+    required_field_missing: ErrorCode;
+    database_query_error: ErrorCode;
+    model_validation_error: ErrorCode;
+    field_validation_error: ErrorCode;
+    invalid_parameter: ErrorCode;
+    invalid_request: ErrorCode;
+    type_error: ErrorCode;
+    processing_error: ErrorCode;
+    internal_server_error: ErrorCode;
+    user_not_logged_in: ErrorCode;
+    unknown_cause: ErrorCode;
+};
+export { PluginSystemErrorCode }
+export { PluginSystemErrorCode as PluginSystemErrorCode_alias_1 }
 
 // (No @packageDocumentation comment for this package)
 
