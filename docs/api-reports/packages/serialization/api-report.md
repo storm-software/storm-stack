@@ -4,98 +4,211 @@
 
 ```ts
 
-// @public
-function createStormError<TCode extends string = string>({ code, name, message, cause, stack, data }: StormErrorOptions & {
-    code?: TCode;
-}): StormError<TCode>;
-export { createStormError }
-export { createStormError as createStormError_alias_1 }
-export { createStormError as createStormError_alias_2 }
-
-// @public
-function deserializeStormError(json: JsonValue): StormError;
-export { deserializeStormError }
-export { deserializeStormError as deserializeStormError_alias_1 }
-export { deserializeStormError as deserializeStormError_alias_2 }
+import SuperJSON from 'superjson';
 
 // @public (undocumented)
-type ErrorCode = "success" | "missing_issue_code" | "invalid_config" | "failed_to_load_file" | "missing_context" | "record_not_found" | "required_field_missing" | "database_query_error" | "model_validation_error" | "field_validation_error" | "invalid_parameter" | "invalid_request" | "type_error" | "processing_error" | "internal_server_error" | "user_not_logged_in" | "unknown_cause";
-
-// @public (undocumented)
-const ErrorCode: {
-    success: ErrorCode;
-    missing_issue_code: ErrorCode;
-    invalid_config: ErrorCode;
-    failed_to_load_file: ErrorCode;
-    missing_context: ErrorCode;
-    record_not_found: ErrorCode;
-    required_field_missing: ErrorCode;
-    database_query_error: ErrorCode;
-    model_validation_error: ErrorCode;
-    field_validation_error: ErrorCode;
-    invalid_parameter: ErrorCode;
-    invalid_request: ErrorCode;
-    type_error: ErrorCode;
-    processing_error: ErrorCode;
-    internal_server_error: ErrorCode;
-    user_not_logged_in: ErrorCode;
-    unknown_cause: ErrorCode;
+type Class = {
+    new (...args: any[]): any;
 };
-export { ErrorCode }
-export { ErrorCode as ErrorCode_alias_1 }
-
-// @public
-function getCauseFromUnknown(cause: unknown): StormError;
-export { getCauseFromUnknown }
-export { getCauseFromUnknown as getCauseFromUnknown_alias_1 }
-export { getCauseFromUnknown as getCauseFromUnknown_alias_2 }
-
-// @public
-function isStormError<TCode extends string = any>(value: unknown): value is StormError<TCode>;
-export { isStormError }
-export { isStormError as isStormError_alias_1 }
-export { isStormError as isStormError_alias_2 }
-
-// @public
-function serializeStormError(error: StormError): JsonValue;
-export { serializeStormError }
-export { serializeStormError as serializeStormError_alias_1 }
-export { serializeStormError as serializeStormError_alias_2 }
-
-// @public
-class StormError<TCode extends string = string> extends Error {
-    constructor(code: TCode, { name, message, cause, stack, data }?: StormErrorOptions);
-    // (undocumented)
-    __proto__: ErrorConstructor;
-    get cause(): StormError | undefined;
-    set cause(_cause: unknown);
-    code: TCode;
-    static create(error?: unknown): StormError;
-    data?: any;
-    get originalStack(): string;
-    print(): string;
-    get stack(): string;
-    set stack(_stack: string);
-    toString(stacktrace?: boolean): string;
-}
-export { StormError }
-export { StormError as StormError_alias_1 }
+export { Class }
+export { Class as Class_alias_1 }
 
 // @public (undocumented)
-interface StormErrorOptions {
-    // (undocumented)
-    cause?: unknown;
-    // (undocumented)
-    data?: any;
-    // (undocumented)
-    message?: string;
-    // (undocumented)
-    name?: string;
-    // (undocumented)
-    stack?: string;
+type ClassInstance = any;
+export { ClassInstance }
+export { ClassInstance as ClassInstance_alias_1 }
+
+// @public
+interface ClassSerializable<_TData, TJsonValue extends JsonValue = JsonValue> {
+    deserialize: (json: TJsonValue) => void;
+    serialize: () => JsonParserResult;
 }
-export { StormErrorOptions }
-export { StormErrorOptions as StormErrorOptions_alias_1 }
+export { ClassSerializable }
+export { ClassSerializable as ClassSerializable_alias_1 }
+
+// @public (undocumented)
+type ClassTypeAnnotation = ["class", string];
+export { ClassTypeAnnotation }
+export { ClassTypeAnnotation as ClassTypeAnnotation_alias_1 }
+
+// @public (undocumented)
+type CompositeTypeAnnotation = TypedArrayAnnotation | ClassTypeAnnotation | SymbolTypeAnnotation | CustomTypeAnnotation;
+export { CompositeTypeAnnotation }
+export { CompositeTypeAnnotation as CompositeTypeAnnotation_alias_1 }
+
+// @public (undocumented)
+type CustomTypeAnnotation = ["custom", string];
+export { CustomTypeAnnotation }
+export { CustomTypeAnnotation as CustomTypeAnnotation_alias_1 }
+
+// @public
+interface DataTransformer<TData, TJsonValue extends JsonValue = JsonValue> {
+    deserialize: DeserializeFunct<TData, TJsonValue>;
+    serialize: SerializationFunct<TData, TJsonValue>;
+}
+export { DataTransformer }
+export { DataTransformer as DataTransformer_alias_1 }
+
+// @public
+type DeserializeFunct<TData = any, TJsonValue extends JsonValue = JsonValue> = (json: TJsonValue) => TData;
+export { DeserializeFunct }
+export { DeserializeFunct as DeserializeFunct_alias_1 }
+
+// @public (undocumented)
+interface IJsonParser {
+    // (undocumented)
+    deserialize: <TData = any>(payload: JsonParserResult) => TData;
+    // (undocumented)
+    parse: <TData = any>(strData: string) => TData;
+    // (undocumented)
+    register: <TData = any, TJsonValue extends JsonValue = JsonValue>(name: string, serialize: (object: JsonValue) => TJsonValue, deserialize: (payload: TJsonValue) => TData, isApplicable: (data: any) => data is TData) => void;
+    // (undocumented)
+    serialize: (object: JsonValue) => JsonParserResult;
+    // (undocumented)
+    stringify: <TData = any>(data: TData) => string;
+}
+export { IJsonParser }
+export { IJsonParser as IJsonParser_alias_1 }
+
+// @public (undocumented)
+type InnerNode<T> = [T, Record<string, Tree<T>>];
+export { InnerNode }
+export { InnerNode as InnerNode_alias_1 }
+
+// @public (undocumented)
+interface JsonArray extends Array<JsonValue> {
+}
+export { JsonArray }
+export { JsonArray as JsonArray_alias_1 }
+
+// @public (undocumented)
+interface JsonObject {
+    // (undocumented)
+    [key: string]: JsonValue;
+}
+export { JsonObject }
+export { JsonObject as JsonObject_alias_1 }
+
+// @public (undocumented)
+interface JsonParserResult {
+    // (undocumented)
+    json: JsonValue;
+    // (undocumented)
+    meta?: {
+        values?: Tree<TypeAnnotation> | Record<string, Tree<TypeAnnotation>> | undefined;
+        referentialEqualities?: Record<string, string[]> | [string[]] | [string[], Record<string, string[]>];
+    };
+}
+export { JsonParserResult }
+export { JsonParserResult as JsonParserResult_alias_1 }
+
+// @public (undocumented)
+type JsonValue = PrimitiveJsonValue | JsonArray | JsonObject;
+export { JsonValue }
+export { JsonValue as JsonValue_alias_1 }
+
+// @public (undocumented)
+type Leaf<T> = [T];
+export { Leaf }
+export { Leaf as Leaf_alias_1 }
+
+// @public (undocumented)
+type LeafTypeAnnotation = PrimitiveTypeAnnotation | "regexp" | "Date" | "Error" | "URL";
+export { LeafTypeAnnotation }
+export { LeafTypeAnnotation as LeafTypeAnnotation_alias_1 }
+
+// @public (undocumented)
+type PrimitiveJsonValue = string | number | boolean | undefined | null;
+export { PrimitiveJsonValue }
+export { PrimitiveJsonValue as PrimitiveJsonValue_alias_1 }
+
+// @public (undocumented)
+type PrimitiveTypeAnnotation = "number" | "undefined" | "bigint";
+export { PrimitiveTypeAnnotation }
+export { PrimitiveTypeAnnotation as PrimitiveTypeAnnotation_alias_1 }
+
+// @public (undocumented)
+const Serializable: <TData = any>(options?: {
+    identifier?: string;
+}) => <TClass extends new (..._args: any) => any = new (..._args: any) => TData>(target: TClass) => {
+    new (..._args: any): {
+        [x: string]: any;
+        __typename: string;
+        serialize: () => JsonParserResult;
+        deserialize: (json: JsonValue) => JsonParserResult;
+        stringify: () => string;
+        parse: (strObject: string) => TData;
+        isTypeOf(value: any): value is TData;
+    };
+    __typename: string;
+    isTypeOf(value: any): value is TData;
+    deserialize: (json: JsonValue) => JsonParserResult;
+    parse: (strObject: string) => TData;
+} & TClass;
+export { Serializable }
+export { Serializable as Serializable_alias_1 }
+
+// @public (undocumented)
+type SerializableJsonValue = symbol | Set<JsonValue> | Map<JsonValue, JsonValue> | undefined | bigint | Date | ClassInstance | RegExp;
+export { SerializableJsonValue }
+export { SerializableJsonValue as SerializableJsonValue_alias_1 }
+
+// @public (undocumented)
+type SerializableType<T> = ClassSerializable<T> & ClassTypeCheckable<T> & ITyped & T;
+export { SerializableType }
+export { SerializableType as SerializableType_alias_1 }
+
+// @public
+type SerializationFunct<TData = any, TJsonValue extends JsonValue = JsonValue> = (data: TData) => TJsonValue;
+export { SerializationFunct }
+export { SerializationFunct as SerializationFunct_alias_1 }
+
+// @public (undocumented)
+type SerializationMetadata<T> = DataTransformer<T> & ClassTypeCheckable<T>;
+export { SerializationMetadata }
+export { SerializationMetadata as SerializationMetadata_alias_1 }
+
+// @public (undocumented)
+type SimpleTypeAnnotation = LeafTypeAnnotation | "map" | "set";
+export { SimpleTypeAnnotation }
+export { SimpleTypeAnnotation as SimpleTypeAnnotation_alias_1 }
+
+// @public
+class StormParser extends SuperJSON {
+    static deserialize<TData = unknown>(payload: JsonParserResult): TData;
+    // (undocumented)
+    static get instance(): StormParser;
+    static parse<TData = unknown>(strData: string): TData;
+    static register<TData = any, TJsonObject extends JsonValue = JsonValue>(name: string, serialize: (data: TData) => TJsonObject, deserialize: (json: TJsonObject) => TData, isApplicable: (data: any) => data is TData): void;
+    static registerClass(classConstructor: Class, options?: {
+        identifier?: string;
+        allowProps?: string[];
+    } | string): void;
+    static serialize(object: JsonValue): JsonParserResult;
+    static stringify(json: any): string;
+}
+export { StormParser }
+export { StormParser as StormParser_alias_1 }
+
+// @public (undocumented)
+type SymbolTypeAnnotation = ["symbol", string];
+export { SymbolTypeAnnotation }
+export { SymbolTypeAnnotation as SymbolTypeAnnotation_alias_1 }
+
+// @public (undocumented)
+type Tree<T> = InnerNode<T> | Leaf<T>;
+export { Tree }
+export { Tree as Tree_alias_1 }
+
+// @public (undocumented)
+type TypeAnnotation = SimpleTypeAnnotation | CompositeTypeAnnotation;
+export { TypeAnnotation }
+export { TypeAnnotation as TypeAnnotation_alias_1 }
+
+// @public (undocumented)
+type TypedArrayAnnotation = ["typed-array", string];
+export { TypedArrayAnnotation }
+export { TypedArrayAnnotation as TypedArrayAnnotation_alias_1 }
 
 // (No @packageDocumentation comment for this package)
 

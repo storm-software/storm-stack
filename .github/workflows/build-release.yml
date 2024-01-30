@@ -63,7 +63,7 @@ jobs:
       #  run: pnpm nx g @storm-software/workspace-tools:config-schema --outputPath=config.schema.json
 
       - name: Build repository packages
-        run: pnpm build:all
+        run: pnpm build
 
       - name: Run Linters
         run: pnpm lint
@@ -72,7 +72,7 @@ jobs:
         run: pnpm nx format
 
       - name: Build repository packages
-        run: pnpm build:all
+        run: pnpm build
 
       #- name: Run Tests
       #  uses: nick-fields/retry@v2.8.3
