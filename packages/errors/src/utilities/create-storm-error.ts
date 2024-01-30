@@ -1,5 +1,5 @@
 import { ErrorCode } from "../errors";
-import { StormError, StormErrorOptions } from "../storm-error";
+import { StormError, type StormErrorOptions } from "../storm-error";
 import { isStormError } from "./is-storm-error";
 
 /**

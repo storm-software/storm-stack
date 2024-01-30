@@ -65,10 +65,14 @@ export class StormError<TCode extends string = string> extends Error {
     this.name ??= name ? name : this.constructor.name;
     this.data = data;
 
-    if (typeof Error.captureStackTrace === "function") {
-      Error.captureStackTrace(this, this.constructor);
+    if (stack) {
+      this._stack = stack;
     } else {
-      this._stack ??= stack ? stack : new Error(message).stack;
+      if (typeof Error.captureStackTrace === "function") {
+        Error.captureStackTrace(this, this.constructor);
+      } else {
+        this._stack = new Error(message).stack;
+      }
     }
 
     Object.setPrototypeOf(this, StormError.prototype);
