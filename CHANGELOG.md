@@ -1,14 +1,24 @@
-## 0.1.10 (2024-01-30)
+## 0.1.11 (2024-01-30)
 
 
 ### 🩹 Fixes
 
-- **monorepo:** Resolved various linting issues in the repository ([d7a878b](https://github.com/storm-software/storm-stack/commit/d7a878b))
+- **monorepo:** Updated build script usedd by build and release pipeline ([1c5a9cc](https://github.com/storm-software/storm-stack/commit/1c5a9cc))
 
 
 ### ❤️  Thank You
 
 - Patrick Sullivan
+
+## 0.1.10 (2024-01-30)
+
+### 🩹 Fixes
+
+-   **monorepo:** Resolved various linting issues in the repository ([d7a878b](https://github.com/storm-software/storm-stack/commit/d7a878b))
+
+### ❤️ Thank You
+
+-   Patrick Sullivan
 
 ## 0.1.8 (2024-01-29)
 
