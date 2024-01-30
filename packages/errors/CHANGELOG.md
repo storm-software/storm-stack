@@ -1,4 +1,14 @@
+## 1.14.9 (2024-01-30)
 
+
+### 🩹 Fixes
+
+- **errors:** Resolved data loss issue when using `Error` object to create a `StormError` ([5c8f591](https://github.com/storm-software/storm-stack/commit/5c8f591))
+
+
+### ❤️  Thank You
+
+- Patrick Sullivan
 
 ## 1.14.4 (2024-01-29)
 

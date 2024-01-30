@@ -1,14 +1,14 @@
-## 0.1.8 (2024-01-29)
 
+
+## 0.1.8 (2024-01-29)
 
 ### 🩹 Fixes
 
-- **monorepo:** Update storm-ops build version ([a98995a](https://github.com/storm-software/storm-stack/commit/a98995a))
+-   **monorepo:** Update storm-ops build version ([a98995a](https://github.com/storm-software/storm-stack/commit/a98995a))
 
+### ❤️ Thank You
 
-### ❤️  Thank You
-
-- Patrick Sullivan
+-   Patrick Sullivan
 
 ## 0.1.7 (2024-01-29)
 
