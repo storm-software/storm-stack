@@ -1,6 +1,6 @@
 {
   "name": "@storm-stack/docs-website",
-  "version": "1.6.11",
+  "version": "1.7.0",
   "private": true,
   "dependencies": {
     "@vercel/otel": "^0.3.0",

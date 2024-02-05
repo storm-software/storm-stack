@@ -1,14 +1,24 @@
-## 0.1.11 (2024-01-30)
+## 0.2.0 (2024-02-05)
 
 
-### 🩹 Fixes
+### 🚀 Features
 
-- **monorepo:** Updated build script usedd by build and release pipeline ([1c5a9cc](https://github.com/storm-software/storm-stack/commit/1c5a9cc))
+- **logging:** Added `child` function to storm logger ([fc99c2d](https://github.com/storm-software/storm-stack/commit/fc99c2d))
 
 
 ### ❤️  Thank You
 
 - Patrick Sullivan
+
+## 0.1.11 (2024-01-30)
+
+### 🩹 Fixes
+
+-   **monorepo:** Updated build script usedd by build and release pipeline ([1c5a9cc](https://github.com/storm-software/storm-stack/commit/1c5a9cc))
+
+### ❤️ Thank You
+
+-   Patrick Sullivan
 
 ## 0.1.10 (2024-01-30)
 
