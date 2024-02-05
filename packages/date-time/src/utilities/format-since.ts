@@ -1,12 +1,11 @@
-import { Temporal } from "@js-temporal/polyfill";
+import type { Temporal } from "@js-temporal/polyfill";
 import { StormError } from "@storm-stack/errors";
 import { DateTimeErrorCode } from "../errors";
 import { StormDate } from "../storm-date";
-import { StormDateTime } from "../storm-date-time";
+import type { StormDateTime } from "../storm-date-time";
 import { isDateTime } from "./is-date-time";
 
-const pluralize = (word: string, count: number) =>
-  count === 1 ? word : `${word}s`;
+const pluralize = (word: string, count: number) => (count === 1 ? word : `${word}s`);
 const SECOND_ROUNDING_EPSILON = 0.000_000_1;
 
 const parseMilliseconds = (milliseconds: number) => {
@@ -134,19 +133,12 @@ export const formatSince = (
 
   const result: string[] = [];
   const floorDecimals = (value: number, decimalDigits: number) => {
-    const flooredInterimValue = Math.floor(
-      value * 10 ** decimalDigits + SECOND_ROUNDING_EPSILON
-    );
+    const flooredInterimValue = Math.floor(value * 10 ** decimalDigits + SECOND_ROUNDING_EPSILON);
     const flooredValue = Math.round(flooredInterimValue) / 10 ** decimalDigits;
     return flooredValue.toFixed(decimalDigits);
   };
 
-  const add = (
-    value: number,
-    long: string,
-    short: string,
-    valueString?: string
-  ) => {
+  const add = (value: number, long: string, short: string, valueString?: string) => {
     if (
       (result.length === 0 || !options.colonNotation) &&
       value === 0 &&
@@ -155,24 +147,23 @@ export const formatSince = (
       return;
     }
 
-    valueString = (valueString || value || "0").toString();
-    let prefix;
-    let suffix;
+    let _valueString = (valueString || value || "0").toString();
+    let prefix: string;
+    let suffix: string;
     if (options.colonNotation) {
       prefix = result.length > 0 ? ":" : "";
       suffix = "";
-      const wholeDigits = valueString.includes(".")
-        ? valueString.split(".")[0]?.length ?? 0
-        : valueString.length;
+      const wholeDigits = _valueString.includes(".")
+        ? _valueString.split(".")[0]?.length ?? 0
+        : _valueString.length;
       const minLength = result.length > 0 ? 2 : 1;
-      valueString =
-        "0".repeat(Math.max(0, minLength - wholeDigits)) + valueString;
+      _valueString = "0".repeat(Math.max(0, minLength - wholeDigits)) + _valueString;
     } else {
       prefix = "";
-      suffix = options.verbose ? " " + pluralize(long, value) : short;
+      suffix = options.verbose ? ` ${pluralize(long, value)}` : short;
     }
 
-    result.push(prefix + valueString + suffix);
+    result.push(prefix + _valueString + suffix);
   };
 
   const parsed = parseMilliseconds(milliseconds);
@@ -194,9 +185,7 @@ export const formatSince = (
       add(parsed.nanoseconds, "nanosecond", "ns");
     } else {
       const millisecondsAndBelow =
-        parsed.milliseconds +
-        parsed.microseconds / 1000 +
-        parsed.nanoseconds / 1e6;
+        parsed.milliseconds + parsed.microseconds / 1000 + parsed.nanoseconds / 1e6;
 
       const millisecondsDecimalDigits =
         typeof options.millisecondsDecimalDigits === "number"
@@ -212,19 +201,12 @@ export const formatSince = (
         ? millisecondsAndBelow.toFixed(millisecondsDecimalDigits)
         : String(roundedMilliseconds);
 
-      add(
-        Number.parseFloat(millisecondsString),
-        "millisecond",
-        "ms",
-        millisecondsString
-      );
+      add(Number.parseFloat(millisecondsString), "millisecond", "ms", millisecondsString);
     }
   } else {
     const seconds = (milliseconds / 1000) % 60;
     const secondsDecimalDigits =
-      typeof options.secondsDecimalDigits === "number"
-        ? options.secondsDecimalDigits
-        : 1;
+      typeof options.secondsDecimalDigits === "number" ? options.secondsDecimalDigits : 1;
     const secondsFixed = floorDecimals(seconds, secondsDecimalDigits);
     const secondsString = options.keepDecimalsOnWholeSeconds
       ? secondsFixed
@@ -233,7 +215,7 @@ export const formatSince = (
   }
 
   if (result.length === 0) {
-    return "0" + (options.verbose ? " milliseconds" : "ms");
+    return `0${options.verbose ? " milliseconds" : "ms"}`;
   }
 
   if (options.compact) {

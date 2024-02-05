@@ -14,7 +14,7 @@
         "project": "packages/jotai/package.json",
         "defaultConfiguration": "production",
         "platform": "browser",
-        "external": ["react", "react-dom"],
+        "external": ["react", "react-dom", "jotai"],
         "assets": [
           {
             "input": "packages/jotai",

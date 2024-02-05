@@ -1,7 +1,7 @@
-import { StormTime } from "@storm-stack/date-time";
-import { MaybePromise } from "@storm-stack/utilities";
-import * as z from "zod";
-import { LoggingConfigSchema } from "./schema";
+import type { StormTime } from "@storm-stack/date-time";
+import type { MaybePromise } from "@storm-stack/utilities";
+import type * as z from "zod";
+import type { LoggingConfigSchema } from "./schema";
 
 export interface IStormLog {
   /**
@@ -90,6 +90,14 @@ export interface IStormLog {
    * @param startTime - The start time of the process
    */
   stopwatch: (name?: string, startTime?: StormTime) => MaybePromise<void>;
+
+  /**
+   * Create a child logger
+   *
+   * @param name - The name of the child logger
+   * @returns The child logger
+   */
+  child: (options: { name: string } & Record<string, any>) => IStormLog;
 }
 
 export interface ILogger {
@@ -238,13 +246,6 @@ export interface ILoggerWrapper {
    * @returns Either a promise that resolves to void or void.
    */
   log: (message: any) => MaybePromise<void>;
-}
-
-interface LogFunction {
-  /* tslint:disable:no-unnecessary-generics */
-  <T extends object>(obj: T, msg?: string, ...args: any[]): void;
-  (obj: unknown, msg?: string, ...args: any[]): void;
-  (msg: string, ...args: any[]): void;
 }
 
 export type LoggingConfig = z.infer<typeof LoggingConfigSchema>;

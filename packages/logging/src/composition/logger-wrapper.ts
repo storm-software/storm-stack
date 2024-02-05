@@ -1,6 +1,6 @@
 import { getCauseFromUnknown } from "@storm-stack/errors";
-import { MaybePromise, isSet, isSetString } from "@storm-stack/utilities";
-import { ILogger, ILoggerWrapper, LoggingConfig } from "../types";
+import { type MaybePromise, isSet, isSetString } from "@storm-stack/utilities";
+import type { ILogger, ILoggerWrapper, LoggingConfig } from "../types";
 
 /**
  * A wrapper for a logger class.
@@ -14,11 +14,7 @@ export class LoggerWrapper implements ILoggerWrapper {
    * @param name - The logger's name.
    * @returns The wrapped logger.
    */
-  public static wrap = (
-    logger: ILogger,
-    config: LoggingConfig,
-    name?: string
-  ): LoggerWrapper => {
+  public static wrap = (logger: ILogger, config: LoggingConfig, name?: string): LoggerWrapper => {
     return new LoggerWrapper(logger, config, name);
   };
 
@@ -39,9 +35,7 @@ export class LoggerWrapper implements ILoggerWrapper {
    * @returns Either a promise that resolves to void or void.
    */
   public success = (message: string): MaybePromise<void> => {
-    return isSet(this.#logger.success)
-      ? this.#logger.success(message)
-      : this.info(message);
+    return isSet(this.#logger.success) ? this.#logger.success(message) : this.info(message);
   };
 
   /**
@@ -53,9 +47,7 @@ export class LoggerWrapper implements ILoggerWrapper {
   public fatal = (error: string | Error): MaybePromise<void> => {
     const message = this.getErrorMessage(error);
 
-    return isSet(this.#logger.fatal)
-      ? this.#logger.fatal(message)
-      : this.error(message);
+    return isSet(this.#logger.fatal) ? this.#logger.fatal(message) : this.error(message);
   };
 
   /**
@@ -67,9 +59,7 @@ export class LoggerWrapper implements ILoggerWrapper {
   public exception = (error: string | Error): MaybePromise<void> => {
     const message = this.getErrorMessage(error);
 
-    return isSet(this.#logger.exception)
-      ? this.#logger.exception(message)
-      : this.error(message);
+    return isSet(this.#logger.exception) ? this.#logger.exception(message) : this.error(message);
   };
 
   /**
@@ -137,9 +127,7 @@ export class LoggerWrapper implements ILoggerWrapper {
    * @returns Either a promise that resolves to void or void.
    */
   public log = (message: string): MaybePromise<void> => {
-    return isSet(this.#logger.log)
-      ? this.#logger.log(message)
-      : this.info(message);
+    return isSet(this.#logger.log) ? this.#logger.log(message) : this.info(message);
   };
 
   /**

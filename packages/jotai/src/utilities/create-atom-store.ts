@@ -1,8 +1,8 @@
 import { upperCaseFirst } from "@storm-stack/utilities";
 import { useAtom, useAtomValue, useSetAtom } from "jotai";
-import { useHydrateAtoms } from "jotai/utils";
+import type { useHydrateAtoms } from "jotai/utils";
 import type { Atom, WritableAtom, createStore } from "jotai/vanilla";
-import React from "react";
+import type React from "react";
 import { atomWithWrapper } from "../atoms/atom-with-wrapper";
 import type { ProviderProps } from "./create-atom-provider";
 import { createAtomProvider, useAtomStore } from "./create-atom-provider";
@@ -19,9 +19,7 @@ export type UseAtomOptions = {
 export type UseAtomOptionsOrScope = UseAtomOptions | string;
 
 export type GetRecord<O> = {
-  [K in keyof O]: O[K] extends Atom<infer V>
-    ? (options?: UseAtomOptionsOrScope) => V
-    : never;
+  [K in keyof O]: O[K] extends Atom<infer V> ? (options?: UseAtomOptionsOrScope) => V : never;
 };
 
 export type SetRecord<O> = {
@@ -72,19 +70,12 @@ export type UseSyncAtoms<T> = (
   }
 ) => void;
 
-export type StoreApi<
-  T extends object,
-  E extends AtomRecord<object>,
-  N extends string = ""
-> = {
+export type StoreApi<T extends object, E extends AtomRecord<object>, N extends string = ""> = {
   atom: StoreAtoms<T, E>;
   name: N;
 };
 
-export type GetAtomFn = <V>(
-  atom: Atom<V>,
-  options?: UseAtomOptionsOrScope
-) => V;
+export type GetAtomFn = <V>(atom: Atom<V>, options?: UseAtomOptionsOrScope) => V;
 
 export type SetAtomFn = <V, A extends unknown[], R>(
   atom: WritableAtom<V, A, R>,
@@ -103,11 +94,7 @@ export type UseStoreApi<T, E> = (options?: UseAtomOptionsOrScope) => {
   store: (options?: UseAtomOptionsOrScope) => JotaiStore | undefined;
 };
 
-export type AtomStoreApi<
-  T extends object,
-  E extends AtomRecord<object>,
-  N extends string = ""
-> = {
+export type AtomStoreApi<T extends object, E extends AtomRecord<object>, N extends string = ""> = {
   name: N;
 } & {
   [key in keyof Record<NameProvider<N>, object>]: React.FC<ProviderProps<T>>;
@@ -117,24 +104,16 @@ export type AtomStoreApi<
   [key in keyof Record<UseNameStore<N>, object>]: UseStoreApi<T, E>;
 };
 
-const withDefaultOptions = <T extends object>(
-  fnRecord: T,
-  defaultOptions: UseAtomOptions
-): T =>
+const withDefaultOptions = <T extends object>(fnRecord: T, defaultOptions: UseAtomOptions): T =>
   Object.fromEntries(
     Object.entries(fnRecord).map(([key, fn]) => [
       key,
-      (options: UseAtomOptions = {}) =>
-        (fn as any)({ ...defaultOptions, ...options })
+      (options: UseAtomOptions = {}) => (fn as any)({ ...defaultOptions, ...options })
     ])
   ) as any;
 
-const convertScopeShorthand = (
-  optionsOrScope: UseAtomOptionsOrScope = {}
-): UseAtomOptions =>
-  typeof optionsOrScope === "string"
-    ? { scope: optionsOrScope }
-    : optionsOrScope;
+const convertScopeShorthand = (optionsOrScope: UseAtomOptionsOrScope = {}): UseAtomOptions =>
+  typeof optionsOrScope === "string" ? { scope: optionsOrScope } : optionsOrScope;
 
 export interface CreateAtomStoreOptions<
   T extends object,
@@ -177,13 +156,11 @@ export const createAtomStore = <
   type MyStoreAtoms = StoreAtoms<T, E>;
   type MyWritableStoreAtoms = WritableStoreAtoms<T, E>;
   type MyStoreAtomsWithoutExtend = StoreAtomsWithoutExtend<T>;
-  type MyWritableStoreAtomsWithoutExtend =
-    FilterWritableAtoms<MyStoreAtomsWithoutExtend>;
+  type MyWritableStoreAtomsWithoutExtend = FilterWritableAtoms<MyStoreAtomsWithoutExtend>;
 
   const providerIndex = `${upperCaseFirst(name)}Provider` as NameProvider<N>;
   const useStoreIndex = `use${upperCaseFirst(name)}Store` as UseNameStore<N>;
-  const storeIndex =
-    name.length > 0 ? `${name}Store` : ("store" as NameStore<N>);
+  const storeIndex = name.length > 0 ? `${name}Store` : ("store" as NameStore<N>);
 
   const atomsWithoutExtend = {} as MyStoreAtomsWithoutExtend;
   const writableAtomsWithoutExtend = {} as MyWritableStoreAtomsWithoutExtend;
@@ -193,16 +170,14 @@ export const createAtomStore = <
     const atomConfig: Atom<unknown> = isAtom(atomOrValue)
       ? atomOrValue
       : atomWithWrapper(atomOrValue);
-    atomsWithoutExtend[key as keyof MyStoreAtomsWithoutExtend] =
-      atomConfig as any;
+    atomsWithoutExtend[key as keyof MyStoreAtomsWithoutExtend] = atomConfig as any;
 
     const writable = "write" in atomConfig;
     atomIsWritable[key as keyof MyStoreAtoms] = writable;
 
     if (writable) {
-      writableAtomsWithoutExtend[
-        key as keyof MyWritableStoreAtomsWithoutExtend
-      ] = atomConfig as any;
+      writableAtomsWithoutExtend[key as keyof MyWritableStoreAtomsWithoutExtend] =
+        atomConfig as any;
     }
   }
 
@@ -221,29 +196,34 @@ export const createAtomStore = <
   const setAtoms = {} as SetRecord<MyWritableStoreAtoms>;
   const useAtoms = {} as UseRecord<MyWritableStoreAtoms>;
 
-  const useStore = (
-    optionsOrScope: UseAtomOptionsOrScope = {},
-    warnIfUndefined = true
-  ) => {
+  const useStore = (optionsOrScope: UseAtomOptionsOrScope = {}, warnIfUndefined = true) => {
     const { scope, store } = convertScopeShorthand(optionsOrScope);
+
+    // biome-ignore lint/correctness/useHookAtTopLevel: <explanation>
     const contextStore = useAtomStore(name, scope, warnIfUndefined);
     return store ?? contextStore;
   };
 
   const useAtomValueWithStore: GetAtomFn = (atomConfig, optionsOrScope) => {
+    // biome-ignore lint/correctness/useHookAtTopLevel: <explanation>
     const store = useStore(optionsOrScope, false);
     const { delay = delayRoot } = convertScopeShorthand(optionsOrScope);
+    // biome-ignore lint/correctness/useHookAtTopLevel: <explanation>
     return useAtomValue(atomConfig, { store, delay });
   };
 
   const useSetAtomWithStore: SetAtomFn = (atomConfig, optionsOrScope) => {
+    // biome-ignore lint/correctness/useHookAtTopLevel: <explanation>
     const store = useStore(optionsOrScope);
+    // biome-ignore lint/correctness/useHookAtTopLevel: <explanation>
     return useSetAtom(atomConfig, { store });
   };
 
   const useAtomWithStore: UseAtomFn = (atomConfig, optionsOrScope) => {
+    // biome-ignore lint/correctness/useHookAtTopLevel: <explanation>
     const store = useStore(optionsOrScope);
     const { delay = delayRoot } = convertScopeShorthand(optionsOrScope);
+    // biome-ignore lint/correctness/useHookAtTopLevel: <explanation>
     return useAtom(atomConfig, { store, delay });
   };
 
@@ -252,20 +232,17 @@ export const createAtomStore = <
     const isWritable: boolean = atomIsWritable[key as keyof MyStoreAtoms];
 
     (getAtoms as any)[key] = (optionsOrScope: UseAtomOptionsOrScope = {}) =>
+      // biome-ignore lint/correctness/useHookAtTopLevel: <explanation>
       useAtomValueWithStore(atomConfig, optionsOrScope);
 
     if (isWritable) {
       (setAtoms as any)[key] = (optionsOrScope: UseAtomOptionsOrScope = {}) =>
-        useSetAtomWithStore(
-          atomConfig as WritableAtom<any, any, any>,
-          optionsOrScope
-        );
+        // biome-ignore lint/correctness/useHookAtTopLevel: <explanation>
+        useSetAtomWithStore(atomConfig as WritableAtom<any, any, any>, optionsOrScope);
 
       (useAtoms as any)[key] = (optionsOrScope: UseAtomOptionsOrScope = {}) =>
-        useAtomWithStore(
-          atomConfig as WritableAtom<any, any, any>,
-          optionsOrScope
-        );
+        // biome-ignore lint/correctness/useHookAtTopLevel: <explanation>
+        useAtomWithStore(atomConfig as WritableAtom<any, any, any>, optionsOrScope);
     }
   }
 
@@ -284,6 +261,7 @@ export const createAtomStore = <
     get: {
       ...withDefaultOptions(getAtoms, convertScopeShorthand(defaultOptions)),
       atom: (atomConfig, options) =>
+        // biome-ignore lint/correctness/useHookAtTopLevel: <explanation>
         useAtomValueWithStore(atomConfig, {
           ...convertScopeShorthand(defaultOptions),
           ...convertScopeShorthand(options)
@@ -292,6 +270,7 @@ export const createAtomStore = <
     set: {
       ...withDefaultOptions(setAtoms, convertScopeShorthand(defaultOptions)),
       atom: (atomConfig, options) =>
+        // biome-ignore lint/correctness/useHookAtTopLevel: <explanation>
         useSetAtomWithStore(atomConfig, {
           ...convertScopeShorthand(defaultOptions),
           ...convertScopeShorthand(options)
@@ -300,12 +279,14 @@ export const createAtomStore = <
     use: {
       ...withDefaultOptions(useAtoms, convertScopeShorthand(defaultOptions)),
       atom: (atomConfig, options) =>
+        // biome-ignore lint/correctness/useHookAtTopLevel: <explanation>
         useAtomWithStore(atomConfig, {
           ...convertScopeShorthand(defaultOptions),
           ...convertScopeShorthand(options)
         })
     },
-    store: options =>
+    store: (options) =>
+      // biome-ignore lint/correctness/useHookAtTopLevel: <explanation>
       useStore({
         ...convertScopeShorthand(defaultOptions),
         ...convertScopeShorthand(options)

@@ -1,15 +1,11 @@
-import { StormConfig } from "@storm-software/config-tools";
-import {
-  StormDateTime,
-  formatDate,
-  formatDateTime
-} from "@storm-stack/date-time";
+import { tmpdir } from "node:os";
+import { join } from "node:path";
+import type { StormConfig } from "@storm-software/config-tools";
+import { StormDateTime, formatDate, formatDateTime } from "@storm-stack/date-time";
 import { EMPTY_STRING, isSetString } from "@storm-stack/utilities";
-import { tmpdir } from "os";
-import { join } from "path";
 import pino from "pino";
 import pinoLoki from "pino-loki";
-import { LoggingConfig } from "../types";
+import type { LoggingConfig } from "../types";
 
 /**
  * Get the Pino transports for the logger
@@ -23,8 +19,7 @@ export const createFileStreamLogs = (
 ): Array<pino.DestinationStream | pino.StreamEntry<pino.Level>> => {
   const loggingConfig = config.extensions?.logging ?? {};
 
-  let streams: Array<pino.DestinationStream | pino.StreamEntry<pino.Level>> =
-    [];
+  const streams: Array<pino.DestinationStream | pino.StreamEntry<pino.Level>> = [];
 
   if (!loggingConfig.fileLoggingDisabled) {
     let logPath = loggingConfig.path;
@@ -38,15 +33,16 @@ export const createFileStreamLogs = (
         dest: join(
           logPath,
           formatDate().replaceAll("/", "-").replaceAll(" ", "-"),
-          `${
-            (loggingConfig.fileName ? loggingConfig.fileName : "storm") + "-"
-          }${formatDateTime(StormDateTime.current(), {
-            smallestUnit: "second",
-            roundingMode: "ceil",
-            calendarName: "never",
-            timeZoneName: "never",
-            offset: "never"
-          })
+          `${`${loggingConfig.fileName ? loggingConfig.fileName : "storm"}-`}${formatDateTime(
+            StormDateTime.current(),
+            {
+              smallestUnit: "second",
+              roundingMode: "ceil",
+              calendarName: "never",
+              timeZoneName: "never",
+              offset: "never"
+            }
+          )
             .replaceAll("/", "-")
             .replaceAll(" ", "-")
             .replaceAll(":", "-")
@@ -91,11 +87,7 @@ export const createFileStreamLogs = (
   });*/
   }
 
-  if (
-    loggingConfig.loki?.host &&
-    loggingConfig.loki?.username &&
-    loggingConfig.loki?.password
-  ) {
+  if (loggingConfig.loki?.host && loggingConfig.loki?.username && loggingConfig.loki?.password) {
     streams.push({
       level: "info",
       stream: pinoLoki({

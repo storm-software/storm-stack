@@ -68,6 +68,9 @@ export { ILoggerWrapper as ILoggerWrapper_alias_1 }
 
 // @public (undocumented)
 interface IStormLog {
+    child: (options: {
+        name: string;
+    } & Record<string, any>) => IStormLog;
     debug: (...message: any[]) => MaybePromise<void>;
     error: (...message: any[]) => MaybePromise<void>;
     exception: (...message: any[]) => MaybePromise<void>;
@@ -212,6 +215,9 @@ export const LokiConfigSchema: z.ZodObject<{
 class StormLog implements IStormLog {
     addLogger(logger: ILogger): void;
     addWrappedLogger(wrapper: ILoggerWrapper): void;
+    child(options: {
+        name: string;
+    } & Record<string, any>): IStormLog;
     static create(config: StormConfig<"logging", LoggingConfig>, name?: string, additionalLoggers?: ILoggerWrapper[]): StormLog;
     static debug(message: any): void;
     debug(message: any): void;

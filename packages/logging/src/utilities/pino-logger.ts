@@ -1,13 +1,10 @@
-import { StormConfig } from "@storm-software/config-tools";
+import type { StormConfig } from "@storm-software/config-tools";
 import { formatDateTime } from "@storm-stack/date-time";
 import { isStormError } from "@storm-stack/errors";
 import { isRuntimeServer, titleCase } from "@storm-stack/utilities";
-import pino, {
-  DestinationStream,
-  LoggerOptions as PinoLoggerOptions
-} from "pino";
-import pretty, { PrettyOptions } from "pino-pretty";
-import { LoggingConfig } from "../types";
+import pino, { type DestinationStream, type LoggerOptions as PinoLoggerOptions } from "pino";
+import pretty, { type PrettyOptions } from "pino-pretty";
+import type { LoggingConfig } from "../types";
 import { createFileStreamLogs } from "./file-stream-logs";
 import { LogLevel, getLogLevel } from "./get-log-level";
 import { createErrorSerializer } from "./log-serializer";
@@ -24,15 +21,11 @@ export type LoggerOptions = {
  * @param name - The name of the logger to get the options for
  * @returns The options for the logger
  */
-export const getPinoLogger = (
-  config: StormConfig<"logging", LoggingConfig>,
-  name?: string
-) => {
+export const getPinoLogger = (config: StormConfig<"logging", LoggingConfig>, name?: string) => {
   const loggingConfig = config.extensions?.logging ?? {};
 
   config.logLevel ??= config.env === "production" ? "info" : "debug";
-  loggingConfig.stacktrace ??=
-    config?.env === "production" && !isRuntimeServer() ? false : true;
+  loggingConfig.stacktrace ??= config?.env === "production" && !isRuntimeServer() ? false : true;
   const errorSerializer = createErrorSerializer(loggingConfig.stacktrace);
 
   const baseOptions: PinoLoggerOptions = {
@@ -98,7 +91,7 @@ Message: {msg}
     prettyOptions.customColors = `exception:${config.colors.error},err:${config.colors.error},error:${config.colors.error},fatal:${config.colors.fatal},warn:${config.colors.warning},info:${config.colors.info},debug:${config.colors.primary},trace:${config.colors.primary},req.url:${config.colors.primary},success:${config.colors.success}`;
   }
 
-  let streams: Array<pino.DestinationStream | pino.StreamEntry<pino.Level>> = [
+  const streams: Array<pino.DestinationStream | pino.StreamEntry<pino.Level>> = [
     { stream: pretty(prettyOptions) }
   ];
 

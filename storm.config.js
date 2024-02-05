@@ -5,7 +5,6 @@ module.exports = {
   ci: true,
   owner: "@storm-software/development",
   worker: "stormie-bot",
-  workspaceRoot: "C:\\Development\\storm-stack",
   runtimeDirectory: "node_modules/.storm",
   repository: "https://github.com/storm-software/storm-stack",
   timezone: "America/New_York",
