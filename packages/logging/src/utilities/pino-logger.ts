@@ -41,16 +41,10 @@ export const getPinoLogger = (config: StormConfig<"logging", LoggingConfig>, nam
       fatal: errorSerializer
     },
     formatters: {
-      level: (label: string, number: number) => {
-        const level = titleCase(label);
-
-        return {
-          label: level,
-          level,
-          levelLabel: level,
-          number
-        };
-      },
+      level: (levelLabel: string, levelNumber: number) => ({
+        logLevel: levelNumber,
+        logLevelLabel: titleCase(levelLabel)
+      }),
       log: (object: Record<string, unknown>) =>
         isStormError(object.err)
           ? { ...object, error: object.err }
@@ -77,7 +71,7 @@ export const getPinoLogger = (config: StormConfig<"logging", LoggingConfig>, nam
 ***********************************************
 Name: ${name ? name : config.name}
 Timestamp: {time}
-Log Level: {levelLabel} {if pid}
+Log Level: {logLevelLabel} {if pid}
 Process ID: {pid}{end}{if req.url}
 Request URL: {req.url}{end}
 Message: {msg}

@@ -18,7 +18,6 @@ export const createFileStreamLogs = (
   config: StormConfig<"logging", LoggingConfig>
 ): Array<pino.DestinationStream | pino.StreamEntry<pino.Level>> => {
   const loggingConfig = config.extensions?.logging ?? {};
-
   const streams: Array<pino.DestinationStream | pino.StreamEntry<pino.Level>> = [];
 
   if (!loggingConfig.fileLoggingDisabled) {
@@ -44,9 +43,7 @@ export const createFileStreamLogs = (
             }
           )
             .replaceAll("/", "-")
-            .replaceAll(" ", "-")
-            .replaceAll(":", "-")
-            .replaceAll(".", "-")}.${
+            .replaceAll(" ", "_")}.${
             loggingConfig.fileExtension
               ? loggingConfig.fileExtension.replaceAll(".", EMPTY_STRING)
               : "log"

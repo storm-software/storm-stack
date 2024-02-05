@@ -1,8 +1,7 @@
 import type { Temporal } from "@js-temporal/polyfill";
 import { StormError } from "@storm-stack/errors";
 import { DateTimeErrorCode } from "../errors";
-import { StormDate } from "../storm-date";
-import type { StormDateTime } from "../storm-date-time";
+import { StormDateTime } from "../storm-date-time";
 import { isDateTime } from "./is-date-time";
 
 const pluralize = (word: string, count: number) => (count === 1 ? word : `${word}s`);
@@ -93,7 +92,7 @@ export type FormatSinceOptions = {
  */
 export const formatSince = (
   dateTimeOrDuration: StormDateTime | Temporal.Duration,
-  dateTimeTo: StormDateTime = StormDate.current(),
+  dateTimeTo: StormDateTime = StormDateTime.current(),
   options: FormatSinceOptions = {
     colonNotation: false,
     compact: false,
@@ -108,7 +107,7 @@ export const formatSince = (
 ): string => {
   let milliseconds!: number;
   if (isDateTime(dateTimeOrDuration)) {
-    milliseconds = dateTimeOrDuration.since(dateTimeTo).milliseconds;
+    milliseconds = dateTimeTo.since(dateTimeOrDuration).milliseconds;
   } else {
     milliseconds = dateTimeOrDuration.milliseconds;
   }

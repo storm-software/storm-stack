@@ -1,5 +1,5 @@
 import { StormError, getCauseFromUnknown } from "@storm-stack/errors";
-import { JsonObject, StormParser } from "@storm-stack/serialization";
+import { type JsonObject, StormParser } from "@storm-stack/serialization";
 import { EMPTY_STRING } from "@storm-stack/utilities";
 import { errWithCause } from "pino-std-serializers";
 

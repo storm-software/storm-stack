@@ -173,1247 +173,32 @@
       "preserveMemberOrder": false,
       "members": [
         {
-          "kind": "Function",
-          "canonicalReference": "@storm-stack/cli!atomEffect:function(1)",
-          "docComment": "/**\n * Creates an atom that runs an effect function when mounted and unmounts.\n *\n * @param effectFn - The effect function to run\n *\n * @returns An atom that runs an effect function when mounted and unmounts.\n */\n",
-          "excerptTokens": [
-            {
-              "kind": "Content",
-              "text": "export declare function atomEffect(effectFn: "
-            },
-            {
-              "kind": "Content",
-              "text": "(get: "
-            },
-            {
-              "kind": "Reference",
-              "text": "Getter",
-              "canonicalReference": "!unknown"
-            },
-            {
-              "kind": "Content",
-              "text": ", set: "
-            },
-            {
-              "kind": "Reference",
-              "text": "Setter",
-              "canonicalReference": "!unknown"
-            },
-            {
-              "kind": "Content",
-              "text": ") => void | "
-            },
-            {
-              "kind": "Reference",
-              "text": "CleanupFn",
-              "canonicalReference": "@storm-stack/cli!~CleanupFn:type"
-            },
-            {
-              "kind": "Content",
-              "text": "): "
-            },
-            {
-              "kind": "Content",
-              "text": "import(\"jotai/vanilla\").Atom<void>"
-            },
-            {
-              "kind": "Content",
-              "text": ";"
-            }
-          ],
-          "fileUrlPath": "tmp/.tsup/declaration/packages/jotai/src/atoms/atom-with-effect.d.ts",
-          "returnTypeTokenRange": {
-            "startIndex": 8,
-            "endIndex": 9
-          },
-          "releaseTag": "Public",
-          "overloadIndex": 1,
-          "parameters": [
-            {
-              "parameterName": "effectFn",
-              "parameterTypeTokenRange": {
-                "startIndex": 1,
-                "endIndex": 7
-              },
-              "isOptional": false
-            }
-          ],
-          "name": "atomEffect"
-        },
-        {
-          "kind": "TypeAlias",
-          "canonicalReference": "@storm-stack/cli!AtomRecord:type",
-          "docComment": "",
-          "excerptTokens": [
-            {
-              "kind": "Content",
-              "text": "export type AtomRecord<O> = "
-            },
-            {
-              "kind": "Content",
-              "text": "{\n    [K in keyof O]: "
-            },
-            {
-              "kind": "Reference",
-              "text": "Atom",
-              "canonicalReference": "!unknown"
-            },
-            {
-              "kind": "Content",
-              "text": "<O[K]>;\n}"
-            },
-            {
-              "kind": "Content",
-              "text": ";"
-            }
-          ],
-          "fileUrlPath": "tmp/.tsup/declaration/packages/jotai/src/utilities/create-atom-store.d.ts",
-          "releaseTag": "Public",
-          "name": "AtomRecord",
-          "typeParameters": [
-            {
-              "typeParameterName": "O",
-              "constraintTokenRange": {
-                "startIndex": 0,
-                "endIndex": 0
-              },
-              "defaultTypeTokenRange": {
-                "startIndex": 0,
-                "endIndex": 0
-              }
-            }
-          ],
-          "typeTokenRange": {
-            "startIndex": 1,
-            "endIndex": 4
-          }
-        },
-        {
-          "kind": "TypeAlias",
-          "canonicalReference": "@storm-stack/cli!AtomStoreApi:type",
-          "docComment": "",
-          "excerptTokens": [
-            {
-              "kind": "Content",
-              "text": "export type AtomStoreApi<T extends "
-            },
-            {
-              "kind": "Content",
-              "text": "object"
-            },
-            {
-              "kind": "Content",
-              "text": ", E extends "
-            },
-            {
-              "kind": "Reference",
-              "text": "AtomRecord",
-              "canonicalReference": "@storm-stack/cli!AtomRecord:type"
-            },
-            {
-              "kind": "Content",
-              "text": "<object>"
-            },
-            {
-              "kind": "Content",
-              "text": ", N extends "
-            },
-            {
-              "kind": "Content",
-              "text": "string"
-            },
-            {
-              "kind": "Content",
-              "text": " = "
-            },
-            {
-              "kind": "Content",
-              "text": "\"\""
-            },
-            {
-              "kind": "Content",
-              "text": "> = "
-            },
-            {
-              "kind": "Content",
-              "text": "{\n    name: N;\n} & {\n    [key in keyof "
-            },
-            {
-              "kind": "Reference",
-              "text": "Record",
-              "canonicalReference": "!Record:type"
-            },
-            {
-              "kind": "Content",
-              "text": "<"
-            },
-            {
-              "kind": "Reference",
-              "text": "NameProvider",
-              "canonicalReference": "@storm-stack/cli!~NameProvider:type"
-            },
-            {
-              "kind": "Content",
-              "text": "<N>, object>]: "
-            },
-            {
-              "kind": "Reference",
-              "text": "React.FC",
-              "canonicalReference": "@types/react!React.FC:type"
-            },
-            {
-              "kind": "Content",
-              "text": "<"
-            },
-            {
-              "kind": "Reference",
-              "text": "ProviderProps",
-              "canonicalReference": "@storm-stack/cli!ProviderProps:type"
-            },
-            {
-              "kind": "Content",
-              "text": "<T>>;\n} & {\n    [key in keyof "
-            },
-            {
-              "kind": "Reference",
-              "text": "Record",
-              "canonicalReference": "!Record:type"
-            },
-            {
-              "kind": "Content",
-              "text": "<"
-            },
-            {
-              "kind": "Reference",
-              "text": "NameStore",
-              "canonicalReference": "@storm-stack/cli!~NameStore:type"
-            },
-            {
-              "kind": "Content",
-              "text": "<N>, object>]: "
-            },
-            {
-              "kind": "Reference",
-              "text": "StoreApi",
-              "canonicalReference": "@storm-stack/cli!StoreApi:type"
-            },
-            {
-              "kind": "Content",
-              "text": "<T, E, N>;\n} & {\n    [key in keyof "
-            },
-            {
-              "kind": "Reference",
-              "text": "Record",
-              "canonicalReference": "!Record:type"
-            },
-            {
-              "kind": "Content",
-              "text": "<"
-            },
-            {
-              "kind": "Reference",
-              "text": "UseNameStore",
-              "canonicalReference": "@storm-stack/cli!~UseNameStore:type"
-            },
-            {
-              "kind": "Content",
-              "text": "<N>, object>]: "
-            },
-            {
-              "kind": "Reference",
-              "text": "UseStoreApi",
-              "canonicalReference": "@storm-stack/cli!UseStoreApi:type"
-            },
-            {
-              "kind": "Content",
-              "text": "<T, E>;\n}"
-            },
-            {
-              "kind": "Content",
-              "text": ";"
-            }
-          ],
-          "fileUrlPath": "tmp/.tsup/declaration/packages/jotai/src/utilities/create-atom-store.d.ts",
-          "releaseTag": "Public",
-          "name": "AtomStoreApi",
-          "typeParameters": [
-            {
-              "typeParameterName": "T",
-              "constraintTokenRange": {
-                "startIndex": 1,
-                "endIndex": 2
-              },
-              "defaultTypeTokenRange": {
-                "startIndex": 0,
-                "endIndex": 0
-              }
-            },
-            {
-              "typeParameterName": "E",
-              "constraintTokenRange": {
-                "startIndex": 3,
-                "endIndex": 5
-              },
-              "defaultTypeTokenRange": {
-                "startIndex": 0,
-                "endIndex": 0
-              }
-            },
-            {
-              "typeParameterName": "N",
-              "constraintTokenRange": {
-                "startIndex": 6,
-                "endIndex": 7
-              },
-              "defaultTypeTokenRange": {
-                "startIndex": 8,
-                "endIndex": 9
-              }
-            }
-          ],
-          "typeTokenRange": {
-            "startIndex": 10,
-            "endIndex": 31
-          }
-        },
-        {
-          "kind": "Function",
-          "canonicalReference": "@storm-stack/cli!atomWithBroadcast:function(1)",
-          "docComment": "/**\n * Creates an atom that broadcasts its value to other tabs/windows using the BroadcastChannel API.\n *\n * @param key - The key to use for the BroadcastChannel\n *\n * @param initialValue - The initial value of the atom\n *\n * @returns An atom that broadcasts its value to other tabs/windows using the BroadcastChannel API.\n */\n",
-          "excerptTokens": [
-            {
-              "kind": "Content",
-              "text": "export declare function atomWithBroadcast<TValue>(key: "
-            },
-            {
-              "kind": "Content",
-              "text": "string"
-            },
-            {
-              "kind": "Content",
-              "text": ", initialValue: "
-            },
-            {
-              "kind": "Content",
-              "text": "TValue"
-            },
-            {
-              "kind": "Content",
-              "text": "): "
-            },
-            {
-              "kind": "Content",
-              "text": "import(\"jotai/vanilla\").WritableAtom<TValue, [TValue], void>"
-            },
-            {
-              "kind": "Content",
-              "text": ";"
-            }
-          ],
-          "fileUrlPath": "tmp/.tsup/declaration/packages/jotai/src/atoms/atom-with-broadcast.d.ts",
-          "returnTypeTokenRange": {
-            "startIndex": 5,
-            "endIndex": 6
-          },
-          "releaseTag": "Public",
-          "overloadIndex": 1,
-          "parameters": [
-            {
-              "parameterName": "key",
-              "parameterTypeTokenRange": {
-                "startIndex": 1,
-                "endIndex": 2
-              },
-              "isOptional": false
-            },
-            {
-              "parameterName": "initialValue",
-              "parameterTypeTokenRange": {
-                "startIndex": 3,
-                "endIndex": 4
-              },
-              "isOptional": false
-            }
-          ],
-          "typeParameters": [
-            {
-              "typeParameterName": "TValue",
-              "constraintTokenRange": {
-                "startIndex": 0,
-                "endIndex": 0
-              },
-              "defaultTypeTokenRange": {
-                "startIndex": 0,
-                "endIndex": 0
-              }
-            }
-          ],
-          "name": "atomWithBroadcast"
-        },
-        {
-          "kind": "Function",
-          "canonicalReference": "@storm-stack/cli!atomWithCompare:function(1)",
-          "docComment": "",
-          "excerptTokens": [
-            {
-              "kind": "Content",
-              "text": "export declare function atomWithCompare<Value>(initialValue: "
-            },
-            {
-              "kind": "Content",
-              "text": "Value"
-            },
-            {
-              "kind": "Content",
-              "text": ", areEqual: "
-            },
-            {
-              "kind": "Content",
-              "text": "(prev: Value, next: Value) => boolean"
-            },
-            {
-              "kind": "Content",
-              "text": "): "
-            },
-            {
-              "kind": "Content",
-              "text": "import(\"jotai\").WritableAtom<Value, [Value], void>"
-            },
-            {
-              "kind": "Content",
-              "text": ";"
-            }
-          ],
-          "fileUrlPath": "tmp/.tsup/declaration/packages/jotai/src/atoms/atom-with-compare.d.ts",
-          "returnTypeTokenRange": {
-            "startIndex": 5,
-            "endIndex": 6
-          },
-          "releaseTag": "Public",
-          "overloadIndex": 1,
-          "parameters": [
-            {
-              "parameterName": "initialValue",
-              "parameterTypeTokenRange": {
-                "startIndex": 1,
-                "endIndex": 2
-              },
-              "isOptional": false
-            },
-            {
-              "parameterName": "areEqual",
-              "parameterTypeTokenRange": {
-                "startIndex": 3,
-                "endIndex": 4
-              },
-              "isOptional": false
-            }
-          ],
-          "typeParameters": [
-            {
-              "typeParameterName": "Value",
-              "constraintTokenRange": {
-                "startIndex": 0,
-                "endIndex": 0
-              },
-              "defaultTypeTokenRange": {
-                "startIndex": 0,
-                "endIndex": 0
-              }
-            }
-          ],
-          "name": "atomWithCompare"
-        },
-        {
-          "kind": "Function",
-          "canonicalReference": "@storm-stack/cli!atomWithDebounce:function(1)",
-          "docComment": "",
-          "excerptTokens": [
-            {
-              "kind": "Content",
-              "text": "export declare function atomWithDebounce<TValue>(initialValue: "
-            },
-            {
-              "kind": "Content",
-              "text": "TValue"
-            },
-            {
-              "kind": "Content",
-              "text": ", delayMilliseconds?: "
-            },
-            {
-              "kind": "Content",
-              "text": "number"
-            },
-            {
-              "kind": "Content",
-              "text": ", shouldDebounceOnReset?: "
-            },
-            {
-              "kind": "Content",
-              "text": "boolean"
-            },
-            {
-              "kind": "Content",
-              "text": "): "
-            },
-            {
-              "kind": "Content",
-              "text": "{\n    currentValueAtom: import(\"jotai\").Atom<TValue>;\n    isDebouncingAtom: import(\"jotai\").PrimitiveAtom<boolean> & {\n        init: boolean;\n    };\n    clearTimeoutAtom: import(\"jotai\").WritableAtom<null, [_arg: unknown], void> & {\n        init: null;\n    };\n    debouncedValueAtom: import(\"jotai\").WritableAtom<TValue, [update: "
-            },
-            {
-              "kind": "Reference",
-              "text": "SetStateAction",
-              "canonicalReference": "!unknown"
-            },
-            {
-              "kind": "Content",
-              "text": "<TValue>], void> & {\n        init: TValue;\n    };\n}"
-            },
-            {
-              "kind": "Content",
-              "text": ";"
-            }
-          ],
-          "fileUrlPath": "tmp/.tsup/declaration/packages/jotai/src/atoms/atom-with-debounce.d.ts",
-          "returnTypeTokenRange": {
-            "startIndex": 7,
-            "endIndex": 10
-          },
-          "releaseTag": "Public",
-          "overloadIndex": 1,
-          "parameters": [
-            {
-              "parameterName": "initialValue",
-              "parameterTypeTokenRange": {
-                "startIndex": 1,
-                "endIndex": 2
-              },
-              "isOptional": false
-            },
-            {
-              "parameterName": "delayMilliseconds",
-              "parameterTypeTokenRange": {
-                "startIndex": 3,
-                "endIndex": 4
-              },
-              "isOptional": true
-            },
-            {
-              "parameterName": "shouldDebounceOnReset",
-              "parameterTypeTokenRange": {
-                "startIndex": 5,
-                "endIndex": 6
-              },
-              "isOptional": true
-            }
-          ],
-          "typeParameters": [
-            {
-              "typeParameterName": "TValue",
-              "constraintTokenRange": {
-                "startIndex": 0,
-                "endIndex": 0
-              },
-              "defaultTypeTokenRange": {
-                "startIndex": 0,
-                "endIndex": 0
-              }
-            }
-          ],
-          "name": "atomWithDebounce"
-        },
-        {
-          "kind": "Function",
-          "canonicalReference": "@storm-stack/cli!atomWithListeners:function(1)",
-          "docComment": "/**\n * Creates an atom that broadcasts its value to other tabs/windows using the BroadcastChannel API.\n *\n * @param key - The key to use for the BroadcastChannel\n *\n * @param initialValue - The initial value of the atom\n *\n * @returns An atom that broadcasts its value to other tabs/windows using the BroadcastChannel API.\n */\n",
-          "excerptTokens": [
-            {
-              "kind": "Content",
-              "text": "export declare function atomWithListeners<TValue>(initial: "
-            },
-            {
-              "kind": "Content",
-              "text": "TValue | "
-            },
-            {
-              "kind": "Reference",
-              "text": "WritableAtom",
-              "canonicalReference": "!unknown"
-            },
-            {
-              "kind": "Content",
-              "text": "<TValue, any, any>"
-            },
-            {
-              "kind": "Content",
-              "text": "): "
-            },
-            {
-              "kind": "Content",
-              "text": "readonly ["
-            },
-            {
-              "kind": "Reference",
-              "text": "WritableAtom",
-              "canonicalReference": "!unknown"
-            },
-            {
-              "kind": "Content",
-              "text": "<TValue, [arg: "
-            },
-            {
-              "kind": "Reference",
-              "text": "SetStateAction",
-              "canonicalReference": "!unknown"
-            },
-            {
-              "kind": "Content",
-              "text": "<TValue>], void>, (callback: "
-            },
-            {
-              "kind": "Reference",
-              "text": "Callback",
-              "canonicalReference": "@storm-stack/cli!Callback:type"
-            },
-            {
-              "kind": "Content",
-              "text": "<TValue>) => void]"
-            },
-            {
-              "kind": "Content",
-              "text": ";"
-            }
-          ],
-          "fileUrlPath": "tmp/.tsup/declaration/packages/jotai/src/atoms/atom-with-listeners.d.ts",
-          "returnTypeTokenRange": {
-            "startIndex": 5,
-            "endIndex": 12
-          },
-          "releaseTag": "Public",
-          "overloadIndex": 1,
-          "parameters": [
-            {
-              "parameterName": "initial",
-              "parameterTypeTokenRange": {
-                "startIndex": 1,
-                "endIndex": 4
-              },
-              "isOptional": false
-            }
-          ],
-          "typeParameters": [
-            {
-              "typeParameterName": "TValue",
-              "constraintTokenRange": {
-                "startIndex": 0,
-                "endIndex": 0
-              },
-              "defaultTypeTokenRange": {
-                "startIndex": 0,
-                "endIndex": 0
-              }
-            }
-          ],
-          "name": "atomWithListeners"
-        },
-        {
-          "kind": "Variable",
-          "canonicalReference": "@storm-stack/cli!atomWithPending:var",
-          "docComment": "/**\n * Creates an atom that always returns a pending promise.\n *\n * @returns An atom that always returns a pending promise.\n */\n",
-          "excerptTokens": [
-            {
-              "kind": "Content",
-              "text": "atomWithPending: "
-            },
-            {
-              "kind": "Content",
-              "text": "<Value>() => import(\"jotai/vanilla\").PrimitiveAtom<Value> & {\n    init: Value;\n}"
-            }
-          ],
-          "fileUrlPath": "tmp/.tsup/declaration/packages/jotai/src/atoms/atom-with-pending.d.ts",
-          "isReadonly": true,
-          "releaseTag": "Public",
-          "name": "atomWithPending",
-          "variableTypeTokenRange": {
-            "startIndex": 1,
-            "endIndex": 2
-          }
-        },
-        {
-          "kind": "Function",
-          "canonicalReference": "@storm-stack/cli!atomWithRefresh:function(1)",
-          "docComment": "",
-          "excerptTokens": [
-            {
-              "kind": "Content",
-              "text": "export declare function atomWithRefresh<TValue>(fn: "
-            },
-            {
-              "kind": "Content",
-              "text": "(get: "
-            },
-            {
-              "kind": "Reference",
-              "text": "Getter",
-              "canonicalReference": "!unknown"
-            },
-            {
-              "kind": "Content",
-              "text": ") => TValue"
-            },
-            {
-              "kind": "Content",
-              "text": "): "
-            },
-            {
-              "kind": "Content",
-              "text": "import(\"jotai\").WritableAtom<TValue, [], void>"
-            },
-            {
-              "kind": "Content",
-              "text": ";"
-            }
-          ],
-          "fileUrlPath": "tmp/.tsup/declaration/packages/jotai/src/atoms/atom-with-refresh.d.ts",
-          "returnTypeTokenRange": {
-            "startIndex": 5,
-            "endIndex": 6
-          },
-          "releaseTag": "Public",
-          "overloadIndex": 1,
-          "parameters": [
-            {
-              "parameterName": "fn",
-              "parameterTypeTokenRange": {
-                "startIndex": 1,
-                "endIndex": 4
-              },
-              "isOptional": false
-            }
-          ],
-          "typeParameters": [
-            {
-              "typeParameterName": "TValue",
-              "constraintTokenRange": {
-                "startIndex": 0,
-                "endIndex": 0
-              },
-              "defaultTypeTokenRange": {
-                "startIndex": 0,
-                "endIndex": 0
-              }
-            }
-          ],
-          "name": "atomWithRefresh"
-        },
-        {
-          "kind": "Variable",
-          "canonicalReference": "@storm-stack/cli!atomWithRefreshAndDefault:var",
-          "docComment": "",
-          "excerptTokens": [
-            {
-              "kind": "Content",
-              "text": "atomWithRefreshAndDefault: "
-            },
-            {
-              "kind": "Content",
-              "text": "<TValue extends unknown>(refreshAtom: "
-            },
-            {
-              "kind": "Reference",
-              "text": "PrimitiveAtom",
-              "canonicalReference": "!unknown"
-            },
-            {
-              "kind": "Content",
-              "text": "<number>, getDefault: (get: "
-            },
-            {
-              "kind": "Reference",
-              "text": "Getter",
-              "canonicalReference": "!unknown"
-            },
-            {
-              "kind": "Content",
-              "text": ") => TValue) => import(\"jotai\").WritableAtom<TValue, [update: TValue], void>"
-            }
-          ],
-          "fileUrlPath": "tmp/.tsup/declaration/packages/jotai/src/atoms/atom-with-refresh-and-default.d.ts",
-          "isReadonly": true,
-          "releaseTag": "Public",
-          "name": "atomWithRefreshAndDefault",
-          "variableTypeTokenRange": {
-            "startIndex": 1,
-            "endIndex": 6
-          }
-        },
-        {
-          "kind": "Function",
-          "canonicalReference": "@storm-stack/cli!atomWithToggle:function(1)",
-          "docComment": "",
-          "excerptTokens": [
-            {
-              "kind": "Content",
-              "text": "export declare function atomWithToggle(initialValue?: "
-            },
-            {
-              "kind": "Content",
-              "text": "boolean"
-            },
-            {
-              "kind": "Content",
-              "text": "): "
-            },
-            {
-              "kind": "Reference",
-              "text": "WritableAtom",
-              "canonicalReference": "!unknown"
-            },
-            {
-              "kind": "Content",
-              "text": "<boolean, [boolean | undefined], void>"
-            },
-            {
-              "kind": "Content",
-              "text": ";"
-            }
-          ],
-          "fileUrlPath": "tmp/.tsup/declaration/packages/jotai/src/atoms/atom-with-toggle.d.ts",
-          "returnTypeTokenRange": {
-            "startIndex": 3,
-            "endIndex": 5
-          },
-          "releaseTag": "Public",
-          "overloadIndex": 1,
-          "parameters": [
-            {
-              "parameterName": "initialValue",
-              "parameterTypeTokenRange": {
-                "startIndex": 1,
-                "endIndex": 2
-              },
-              "isOptional": true
-            }
-          ],
-          "name": "atomWithToggle"
-        },
-        {
-          "kind": "Function",
-          "canonicalReference": "@storm-stack/cli!atomWithWebStorage:function(1)",
-          "docComment": "/**\n * Creates an atom that persists its state in external storage and sends a broadcast message to other tabs/windows when the state changes.\n *\n * @param key - The key to use for the storage\n *\n * @param initialValue - The initial value of the atom\n *\n * @param webStorage - The storage to use\n *\n * @returns An atom that persists its state in external storage and sends a broadcast message to other tabs/windows when the state changes.\n */\n",
-          "excerptTokens": [
-            {
-              "kind": "Content",
-              "text": "export declare function atomWithWebStorage<TValue = "
-            },
-            {
-              "kind": "Content",
-              "text": "unknown"
-            },
-            {
-              "kind": "Content",
-              "text": ">(key: "
-            },
-            {
-              "kind": "Content",
-              "text": "string"
-            },
-            {
-              "kind": "Content",
-              "text": ", initialValue: "
-            },
-            {
-              "kind": "Content",
-              "text": "TValue"
-            },
-            {
-              "kind": "Content",
-              "text": ", webStorage?: "
-            },
-            {
-              "kind": "Reference",
-              "text": "SyncStorage",
-              "canonicalReference": "!unknown"
-            },
-            {
-              "kind": "Content",
-              "text": "<TValue> | "
-            },
-            {
-              "kind": "Reference",
-              "text": "AsyncStorage",
-              "canonicalReference": "!unknown"
-            },
-            {
-              "kind": "Content",
-              "text": "<TValue>"
-            },
-            {
-              "kind": "Content",
-              "text": "): "
-            },
-            {
-              "kind": "Reference",
-              "text": "WritableAtom",
-              "canonicalReference": "!unknown"
-            },
-            {
-              "kind": "Content",
-              "text": "<TValue, ["
-            },
-            {
-              "kind": "Reference",
-              "text": "SetStateAction",
-              "canonicalReference": "@types/react!React.SetStateAction:type"
-            },
-            {
-              "kind": "Content",
-              "text": "<TValue>], void>"
-            },
-            {
-              "kind": "Content",
-              "text": ";"
-            }
-          ],
-          "fileUrlPath": "tmp/.tsup/declaration/packages/jotai/src/atoms/atom-with-web-storage.d.ts",
-          "returnTypeTokenRange": {
-            "startIndex": 12,
-            "endIndex": 16
-          },
-          "releaseTag": "Public",
-          "overloadIndex": 1,
-          "parameters": [
-            {
-              "parameterName": "key",
-              "parameterTypeTokenRange": {
-                "startIndex": 3,
-                "endIndex": 4
-              },
-              "isOptional": false
-            },
-            {
-              "parameterName": "initialValue",
-              "parameterTypeTokenRange": {
-                "startIndex": 5,
-                "endIndex": 6
-              },
-              "isOptional": false
-            },
-            {
-              "parameterName": "webStorage",
-              "parameterTypeTokenRange": {
-                "startIndex": 7,
-                "endIndex": 11
-              },
-              "isOptional": true
-            }
-          ],
-          "typeParameters": [
-            {
-              "typeParameterName": "TValue",
-              "constraintTokenRange": {
-                "startIndex": 0,
-                "endIndex": 0
-              },
-              "defaultTypeTokenRange": {
-                "startIndex": 1,
-                "endIndex": 2
-              }
-            }
-          ],
-          "name": "atomWithWebStorage"
-        },
-        {
-          "kind": "Variable",
-          "canonicalReference": "@storm-stack/cli!atomWithWrapper:var",
-          "docComment": "/**\n * Create an atom with a wrapper that allows functions as values.\n *\n * @remarks\n *\n * Jotai atoms don't allow functions as values by default. This function is a drop-in replacement for `atom` that wraps functions in an object while leaving non-functions unchanged. The wrapper object should be completely invisible to consumers of the atom.\n *\n * @param initialValue - The initial value of the atom\n *\n * @returns An atom with a wrapper that allows functions as values.\n */\n",
-          "excerptTokens": [
-            {
-              "kind": "Content",
-              "text": "atomWithWrapper: "
-            },
-            {
-              "kind": "Content",
-              "text": "<TValue>(initialValue: TValue) => "
-            },
-            {
-              "kind": "Reference",
-              "text": "WritableAtom",
-              "canonicalReference": "!unknown"
-            },
-            {
-              "kind": "Content",
-              "text": "<TValue, [TValue], void>"
-            }
-          ],
-          "fileUrlPath": "tmp/.tsup/declaration/packages/jotai/src/atoms/atom-with-wrapper.d.ts",
-          "isReadonly": true,
-          "releaseTag": "Public",
-          "name": "atomWithWrapper",
-          "variableTypeTokenRange": {
-            "startIndex": 1,
-            "endIndex": 4
-          }
-        },
-        {
-          "kind": "TypeAlias",
-          "canonicalReference": "@storm-stack/cli!Callback:type",
-          "docComment": "",
-          "excerptTokens": [
-            {
-              "kind": "Content",
-              "text": "export type Callback<Value> = "
-            },
-            {
-              "kind": "Content",
-              "text": "(get: "
-            },
-            {
-              "kind": "Reference",
-              "text": "Getter",
-              "canonicalReference": "!unknown"
-            },
-            {
-              "kind": "Content",
-              "text": ", set: "
-            },
-            {
-              "kind": "Reference",
-              "text": "Setter",
-              "canonicalReference": "!unknown"
-            },
-            {
-              "kind": "Content",
-              "text": ", newVal: Value, prevVal: Value) => void"
-            },
-            {
-              "kind": "Content",
-              "text": ";"
-            }
-          ],
-          "fileUrlPath": "tmp/.tsup/declaration/packages/jotai/src/atoms/atom-with-listeners.d.ts",
-          "releaseTag": "Public",
-          "name": "Callback",
-          "typeParameters": [
-            {
-              "typeParameterName": "Value",
-              "constraintTokenRange": {
-                "startIndex": 0,
-                "endIndex": 0
-              },
-              "defaultTypeTokenRange": {
-                "startIndex": 0,
-                "endIndex": 0
-              }
-            }
-          ],
-          "typeTokenRange": {
-            "startIndex": 1,
-            "endIndex": 6
-          }
-        },
-        {
-          "kind": "Variable",
-          "canonicalReference": "@storm-stack/cli!createAtomProvider:var",
-          "docComment": "/**\n * Creates a generic provider for a jotai store. - `initialValues`: Initial values for the store. - `props`: Dynamic values for the store.\n */\n",
-          "excerptTokens": [
-            {
-              "kind": "Content",
-              "text": "createAtomProvider: "
-            },
-            {
-              "kind": "Content",
-              "text": "<T extends object, N extends string = \"\">(storeScope: N, atoms: "
-            },
-            {
-              "kind": "Reference",
-              "text": "SimpleWritableAtomRecord",
-              "canonicalReference": "@storm-stack/cli!SimpleWritableAtomRecord:type"
-            },
-            {
-              "kind": "Content",
-              "text": "<T>, options?: {\n    effect?: "
-            },
-            {
-              "kind": "Reference",
-              "text": "React.FC",
-              "canonicalReference": "@types/react!React.FC:type"
-            },
-            {
-              "kind": "Content",
-              "text": ";\n}) => ({ store, scope, children, resetKey, ...props }: "
-            },
-            {
-              "kind": "Reference",
-              "text": "ProviderProps",
-              "canonicalReference": "@storm-stack/cli!ProviderProps:type"
-            },
-            {
-              "kind": "Content",
-              "text": "<T>) => import(\"react/jsx-runtime\")."
-            },
-            {
-              "kind": "Reference",
-              "text": "JSX.Element",
-              "canonicalReference": "@types/react!JSX.Element:interface"
-            }
-          ],
-          "fileUrlPath": "tmp/.tsup/declaration/packages/jotai/src/utilities/create-atom-provider.d.ts",
-          "isReadonly": true,
-          "releaseTag": "Public",
-          "name": "createAtomProvider",
-          "variableTypeTokenRange": {
-            "startIndex": 1,
-            "endIndex": 9
-          }
-        },
-        {
-          "kind": "Variable",
-          "canonicalReference": "@storm-stack/cli!createAtomStore:var",
-          "docComment": "/**\n * Create an atom store from an initial value.\n *\n * @remarks\n *\n * Each property will have a getter and setter.\n *\n * @param initialState - The initial state of the store\n *\n * @param options - The options for the store\n *\n * @returns The store and the store hook\n *\n * @example\n *\n * const { exampleStore, useExampleStore } = createAtomStore({ count: 1, say: 'hello' }, { name: 'example' as const }) const { exampleStore, useExampleStore } = createAtomStore({ count: 1, say: 'hello' }, { name: 'example' as const }) const [count, setCount] = useExampleStore().use.count() const say = useExampleStore().get.say() const setSay = useExampleStore().set.say() setSay('world') const countAtom = exampleStore.atom.count\n */\n",
-          "excerptTokens": [
-            {
-              "kind": "Content",
-              "text": "createAtomStore: "
-            },
-            {
-              "kind": "Content",
-              "text": "<T extends object, E extends object, N extends string = \"\">(initialState: T, { name, "
-            },
-            {
-              "kind": "Reference",
-              "text": "delay",
-              "canonicalReference": "@storm-stack/cli!CreateAtomStoreOptions#delay"
-            },
-            {
-              "kind": "Content",
-              "text": ": delayRoot, effect, extend }: "
-            },
-            {
-              "kind": "Reference",
-              "text": "CreateAtomStoreOptions",
-              "canonicalReference": "@storm-stack/cli!CreateAtomStoreOptions:interface"
-            },
-            {
-              "kind": "Content",
-              "text": "<T, E, N>) => "
-            },
-            {
-              "kind": "Reference",
-              "text": "AtomStoreApi",
-              "canonicalReference": "@storm-stack/cli!AtomStoreApi:type"
-            },
-            {
-              "kind": "Content",
-              "text": "<T, E, N>"
-            }
-          ],
-          "fileUrlPath": "tmp/.tsup/declaration/packages/jotai/src/utilities/create-atom-store.d.ts",
-          "isReadonly": true,
-          "releaseTag": "Public",
-          "name": "createAtomStore",
-          "variableTypeTokenRange": {
-            "startIndex": 1,
-            "endIndex": 8
-          }
-        },
-        {
           "kind": "Interface",
-          "canonicalReference": "@storm-stack/cli!CreateAtomStoreOptions:interface",
+          "canonicalReference": "@storm-stack/cli!CLIArgument:interface",
           "docComment": "",
           "excerptTokens": [
             {
               "kind": "Content",
-              "text": "export interface CreateAtomStoreOptions<T extends "
-            },
-            {
-              "kind": "Content",
-              "text": "object"
-            },
-            {
-              "kind": "Content",
-              "text": ", E extends "
-            },
-            {
-              "kind": "Reference",
-              "text": "AtomRecord",
-              "canonicalReference": "@storm-stack/cli!AtomRecord:type"
-            },
-            {
-              "kind": "Content",
-              "text": "<object>"
-            },
-            {
-              "kind": "Content",
-              "text": ", N extends "
-            },
-            {
-              "kind": "Content",
-              "text": "string"
-            },
-            {
-              "kind": "Content",
-              "text": "> "
+              "text": "export interface CLIArgument "
             }
           ],
-          "fileUrlPath": "tmp/.tsup/declaration/packages/jotai/src/utilities/create-atom-store.d.ts",
+          "fileUrlPath": "tmp/.tsup/declaration/packages/cli/src/types.d.ts",
           "releaseTag": "Public",
-          "typeParameters": [
-            {
-              "typeParameterName": "T",
-              "constraintTokenRange": {
-                "startIndex": 1,
-                "endIndex": 2
-              },
-              "defaultTypeTokenRange": {
-                "startIndex": 0,
-                "endIndex": 0
-              }
-            },
-            {
-              "typeParameterName": "E",
-              "constraintTokenRange": {
-                "startIndex": 3,
-                "endIndex": 5
-              },
-              "defaultTypeTokenRange": {
-                "startIndex": 0,
-                "endIndex": 0
-              }
-            },
-            {
-              "typeParameterName": "N",
-              "constraintTokenRange": {
-                "startIndex": 6,
-                "endIndex": 7
-              },
-              "defaultTypeTokenRange": {
-                "startIndex": 0,
-                "endIndex": 0
-              }
-            }
-          ],
-          "name": "CreateAtomStoreOptions",
+          "name": "CLIArgument",
           "preserveMemberOrder": false,
           "members": [
             {
               "kind": "PropertySignature",
-              "canonicalReference": "@storm-stack/cli!CreateAtomStoreOptions#delay:member",
+              "canonicalReference": "@storm-stack/cli!CLIArgument#default:member",
               "docComment": "",
               "excerptTokens": [
                 {
                   "kind": "Content",
-                  "text": "delay?: "
-                },
-                {
-                  "kind": "Reference",
-                  "text": "UseAtomOptions",
-                  "canonicalReference": "@storm-stack/cli!UseAtomOptions:type"
+                  "text": "default?: "
                 },
                 {
                   "kind": "Content",
-                  "text": "[\"delay\"]"
+                  "text": "unknown | undefined"
                 },
                 {
                   "kind": "Content",
@@ -1423,7 +208,147 @@
               "isReadonly": false,
               "isOptional": true,
               "releaseTag": "Public",
-              "name": "delay",
+              "name": "default",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "@storm-stack/cli!CLIArgument#description:member",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "description?: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "string"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isReadonly": false,
+              "isOptional": true,
+              "releaseTag": "Public",
+              "name": "description",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "@storm-stack/cli!CLIArgument#flags:member",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "flags: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "string"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isReadonly": false,
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "flags",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            }
+          ],
+          "extendsTokenRanges": []
+        },
+        {
+          "kind": "Interface",
+          "canonicalReference": "@storm-stack/cli!CLICommand:interface",
+          "docComment": "",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export interface CLICommand "
+            }
+          ],
+          "fileUrlPath": "tmp/.tsup/declaration/packages/cli/src/types.d.ts",
+          "releaseTag": "Public",
+          "name": "CLICommand",
+          "preserveMemberOrder": false,
+          "members": [
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "@storm-stack/cli!CLICommand#action:member",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "action: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "(...args: any[]) => "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "MaybePromise",
+                  "canonicalReference": "@storm-stack/cli!~MaybePromise:type"
+                },
+                {
+                  "kind": "Content",
+                  "text": "<void>"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isReadonly": false,
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "action",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 4
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "@storm-stack/cli!CLICommand#argument:member",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "argument?: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "CLIArgument",
+                  "canonicalReference": "@storm-stack/cli!CLIArgument:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": "[]"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isReadonly": false,
+              "isOptional": true,
+              "releaseTag": "Public",
+              "name": "argument",
               "propertyTypeTokenRange": {
                 "startIndex": 1,
                 "endIndex": 3
@@ -1431,17 +356,21 @@
             },
             {
               "kind": "PropertySignature",
-              "canonicalReference": "@storm-stack/cli!CreateAtomStoreOptions#effect:member",
+              "canonicalReference": "@storm-stack/cli!CLICommand#commands:member",
               "docComment": "",
               "excerptTokens": [
                 {
                   "kind": "Content",
-                  "text": "effect?: "
+                  "text": "commands?: "
                 },
                 {
                   "kind": "Reference",
-                  "text": "React.FC",
-                  "canonicalReference": "@types/react!React.FC:type"
+                  "text": "CLICommand",
+                  "canonicalReference": "@storm-stack/cli!CLICommand:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": "[]"
                 },
                 {
                   "kind": "Content",
@@ -1451,7 +380,34 @@
               "isReadonly": false,
               "isOptional": true,
               "releaseTag": "Public",
-              "name": "effect",
+              "name": "commands",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 3
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "@storm-stack/cli!CLICommand#description:member",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "description: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "string"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isReadonly": false,
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "description",
               "propertyTypeTokenRange": {
                 "startIndex": 1,
                 "endIndex": 2
@@ -1459,43 +415,7 @@
             },
             {
               "kind": "PropertySignature",
-              "canonicalReference": "@storm-stack/cli!CreateAtomStoreOptions#extend:member",
-              "docComment": "",
-              "excerptTokens": [
-                {
-                  "kind": "Content",
-                  "text": "extend?: "
-                },
-                {
-                  "kind": "Content",
-                  "text": "(atomsWithoutExtend: "
-                },
-                {
-                  "kind": "Reference",
-                  "text": "StoreAtomsWithoutExtend",
-                  "canonicalReference": "@storm-stack/cli!StoreAtomsWithoutExtend:type"
-                },
-                {
-                  "kind": "Content",
-                  "text": "<T>) => E"
-                },
-                {
-                  "kind": "Content",
-                  "text": ";"
-                }
-              ],
-              "isReadonly": false,
-              "isOptional": true,
-              "releaseTag": "Public",
-              "name": "extend",
-              "propertyTypeTokenRange": {
-                "startIndex": 1,
-                "endIndex": 4
-              }
-            },
-            {
-              "kind": "PropertySignature",
-              "canonicalReference": "@storm-stack/cli!CreateAtomStoreOptions#name:member",
+              "canonicalReference": "@storm-stack/cli!CLICommand#name:member",
               "docComment": "",
               "excerptTokens": [
                 {
@@ -1504,7 +424,7 @@
                 },
                 {
                   "kind": "Content",
-                  "text": "N"
+                  "text": "string"
                 },
                 {
                   "kind": "Content",
@@ -1519,782 +439,825 @@
                 "startIndex": 1,
                 "endIndex": 2
               }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "@storm-stack/cli!CLICommand#options:member",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "options?: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "CLIOption",
+                  "canonicalReference": "@storm-stack/cli!CLIOption:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": "[]"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isReadonly": false,
+              "isOptional": true,
+              "releaseTag": "Public",
+              "name": "options",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 3
+              }
+            }
+          ],
+          "extendsTokenRanges": []
+        },
+        {
+          "kind": "Interface",
+          "canonicalReference": "@storm-stack/cli!CLIConfig:interface",
+          "docComment": "",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export interface CLIConfig "
+            }
+          ],
+          "fileUrlPath": "tmp/.tsup/declaration/packages/cli/src/types.d.ts",
+          "releaseTag": "Public",
+          "name": "CLIConfig",
+          "preserveMemberOrder": false,
+          "members": [
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "@storm-stack/cli!CLIConfig#banner:member",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "banner?: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "CLITitle",
+                  "canonicalReference": "@storm-stack/cli!CLITitle:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isReadonly": false,
+              "isOptional": true,
+              "releaseTag": "Public",
+              "name": "banner",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "@storm-stack/cli!CLIConfig#by:member",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "by?: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "CLITitle",
+                  "canonicalReference": "@storm-stack/cli!CLITitle:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isReadonly": false,
+              "isOptional": true,
+              "releaseTag": "Public",
+              "name": "by",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "@storm-stack/cli!CLIConfig#commands:member",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "commands: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "CLICommand",
+                  "canonicalReference": "@storm-stack/cli!CLICommand:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": "[]"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isReadonly": false,
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "commands",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 3
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "@storm-stack/cli!CLIConfig#description:member",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "description: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "string"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isReadonly": false,
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "description",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "@storm-stack/cli!CLIConfig#documentationUrl:member",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "documentationUrl?: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "string"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isReadonly": false,
+              "isOptional": true,
+              "releaseTag": "Public",
+              "name": "documentationUrl",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "@storm-stack/cli!CLIConfig#homepageUrl:member",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "homepageUrl?: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "string"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isReadonly": false,
+              "isOptional": true,
+              "releaseTag": "Public",
+              "name": "homepageUrl",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "@storm-stack/cli!CLIConfig#license:member",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "license?: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "string"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isReadonly": false,
+              "isOptional": true,
+              "releaseTag": "Public",
+              "name": "license",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "@storm-stack/cli!CLIConfig#licenseUrl:member",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "licenseUrl?: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "string"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isReadonly": false,
+              "isOptional": true,
+              "releaseTag": "Public",
+              "name": "licenseUrl",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "@storm-stack/cli!CLIConfig#name:member",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "name: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "string"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isReadonly": false,
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "name",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "@storm-stack/cli!CLIConfig#postAction:member",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "postAction: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "(command: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "Command",
+                  "canonicalReference": "!unknown"
+                },
+                {
+                  "kind": "Content",
+                  "text": ") => "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "MaybePromise",
+                  "canonicalReference": "@storm-stack/cli!~MaybePromise:type"
+                },
+                {
+                  "kind": "Content",
+                  "text": "<void>"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isReadonly": false,
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "postAction",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 6
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "@storm-stack/cli!CLIConfig#preAction:member",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "preAction: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "(command: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "Command",
+                  "canonicalReference": "!unknown"
+                },
+                {
+                  "kind": "Content",
+                  "text": ") => "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "MaybePromise",
+                  "canonicalReference": "@storm-stack/cli!~MaybePromise:type"
+                },
+                {
+                  "kind": "Content",
+                  "text": "<void>"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isReadonly": false,
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "preAction",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 6
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "@storm-stack/cli!CLIConfig#repositoryUrl:member",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "repositoryUrl?: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "string"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isReadonly": false,
+              "isOptional": true,
+              "releaseTag": "Public",
+              "name": "repositoryUrl",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            }
+          ],
+          "extendsTokenRanges": []
+        },
+        {
+          "kind": "Interface",
+          "canonicalReference": "@storm-stack/cli!CLIOption:interface",
+          "docComment": "",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export interface CLIOption "
+            }
+          ],
+          "fileUrlPath": "tmp/.tsup/declaration/packages/cli/src/types.d.ts",
+          "releaseTag": "Public",
+          "name": "CLIOption",
+          "preserveMemberOrder": false,
+          "members": [
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "@storm-stack/cli!CLIOption#choices:member",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "choices?: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "string[]"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isReadonly": false,
+              "isOptional": true,
+              "releaseTag": "Public",
+              "name": "choices",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "@storm-stack/cli!CLIOption#default:member",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "default?: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "CLIOptionDefault",
+                  "canonicalReference": "@storm-stack/cli!CLIOptionDefault:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isReadonly": false,
+              "isOptional": true,
+              "releaseTag": "Public",
+              "name": "default",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "@storm-stack/cli!CLIOption#description:member",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "description: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "string | undefined"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isReadonly": false,
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "description",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "@storm-stack/cli!CLIOption#flags:member",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "flags: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "string"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isReadonly": false,
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "flags",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            }
+          ],
+          "extendsTokenRanges": []
+        },
+        {
+          "kind": "Interface",
+          "canonicalReference": "@storm-stack/cli!CLIOptionDefault:interface",
+          "docComment": "",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export interface CLIOptionDefault "
+            }
+          ],
+          "fileUrlPath": "tmp/.tsup/declaration/packages/cli/src/types.d.ts",
+          "releaseTag": "Public",
+          "name": "CLIOptionDefault",
+          "preserveMemberOrder": false,
+          "members": [
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "@storm-stack/cli!CLIOptionDefault#description:member",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "description?: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "string | undefined"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isReadonly": false,
+              "isOptional": true,
+              "releaseTag": "Public",
+              "name": "description",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "@storm-stack/cli!CLIOptionDefault#value:member",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "value: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "unknown"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isReadonly": false,
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "value",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            }
+          ],
+          "extendsTokenRanges": []
+        },
+        {
+          "kind": "Interface",
+          "canonicalReference": "@storm-stack/cli!CLITitle:interface",
+          "docComment": "",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export interface CLITitle "
+            }
+          ],
+          "fileUrlPath": "tmp/.tsup/declaration/packages/cli/src/types.d.ts",
+          "releaseTag": "Public",
+          "name": "CLITitle",
+          "preserveMemberOrder": false,
+          "members": [
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "@storm-stack/cli!CLITitle#font:member",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "font?: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "Fonts",
+                  "canonicalReference": "!unknown"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isReadonly": false,
+              "isOptional": true,
+              "releaseTag": "Public",
+              "name": "font",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "@storm-stack/cli!CLITitle#hide:member",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "hide?: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "boolean"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isReadonly": false,
+              "isOptional": true,
+              "releaseTag": "Public",
+              "name": "hide",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "@storm-stack/cli!CLITitle#name:member",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "name?: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "string"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isReadonly": false,
+              "isOptional": true,
+              "releaseTag": "Public",
+              "name": "name",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "@storm-stack/cli!CLITitle#options:member",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "options?: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "Options",
+                  "canonicalReference": "!unknown"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isReadonly": false,
+              "isOptional": true,
+              "releaseTag": "Public",
+              "name": "options",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
             }
           ],
           "extendsTokenRanges": []
         },
         {
           "kind": "Function",
-          "canonicalReference": "@storm-stack/cli!createWebStorage:function(1)",
-          "docComment": "",
+          "canonicalReference": "@storm-stack/cli!createCliOptions:function(1)",
+          "docComment": "/**\n * Create CLI options from an object.\n *\n * @param obj - The object to create CLI options from\n *\n * @returns The CLI options\n */\n",
           "excerptTokens": [
             {
               "kind": "Content",
-              "text": "export declare function createWebStorage<TValue>(getStringStorage: "
-            },
-            {
-              "kind": "Content",
-              "text": "() => "
+              "text": "export declare function createCliOptions(obj: "
             },
             {
               "kind": "Reference",
-              "text": "AsyncStringStorage",
-              "canonicalReference": "!unknown"
+              "text": "Record",
+              "canonicalReference": "!Record:type"
             },
             {
               "kind": "Content",
-              "text": " | "
-            },
-            {
-              "kind": "Reference",
-              "text": "SyncStringStorage",
-              "canonicalReference": "!unknown"
-            },
-            {
-              "kind": "Content",
-              "text": " | undefined"
+              "text": "<string, string | number | boolean>"
             },
             {
               "kind": "Content",
               "text": "): "
             },
             {
-              "kind": "Reference",
-              "text": "AsyncStorage",
-              "canonicalReference": "!unknown"
-            },
-            {
               "kind": "Content",
-              "text": "<TValue> | "
-            },
-            {
-              "kind": "Reference",
-              "text": "SyncStorage",
-              "canonicalReference": "!unknown"
-            },
-            {
-              "kind": "Content",
-              "text": "<TValue>"
+              "text": "string[]"
             },
             {
               "kind": "Content",
               "text": ";"
             }
           ],
-          "fileUrlPath": "tmp/.tsup/declaration/packages/jotai/src/utilities/create-web-storage.d.ts",
+          "fileUrlPath": "tmp/.tsup/declaration/packages/cli/src/utilities/create-cli-options.d.ts",
           "returnTypeTokenRange": {
-            "startIndex": 7,
-            "endIndex": 11
+            "startIndex": 4,
+            "endIndex": 5
           },
           "releaseTag": "Public",
           "overloadIndex": 1,
           "parameters": [
             {
-              "parameterName": "getStringStorage",
+              "parameterName": "obj",
               "parameterTypeTokenRange": {
                 "startIndex": 1,
-                "endIndex": 6
+                "endIndex": 3
               },
               "isOptional": false
             }
           ],
-          "typeParameters": [
-            {
-              "typeParameterName": "TValue",
-              "constraintTokenRange": {
-                "startIndex": 0,
-                "endIndex": 0
-              },
-              "defaultTypeTokenRange": {
-                "startIndex": 0,
-                "endIndex": 0
-              }
-            }
-          ],
-          "name": "createWebStorage"
+          "name": "createCliOptions"
         },
         {
-          "kind": "TypeAlias",
-          "canonicalReference": "@storm-stack/cli!FilterWritableAtoms:type",
-          "docComment": "",
+          "kind": "Function",
+          "canonicalReference": "@storm-stack/cli!createCliOptionsString:function(1)",
+          "docComment": "/**\n * Create CLI options from an object and join them into a string.\n *\n * @param obj - The object to create CLI options from\n *\n * @returns The CLI options as a string\n */\n",
           "excerptTokens": [
             {
               "kind": "Content",
-              "text": "export type FilterWritableAtoms<T> = "
-            },
-            {
-              "kind": "Content",
-              "text": "{\n    [K in keyof T]-?: T[K] extends "
+              "text": "export declare function createCliOptionsString(obj: "
             },
             {
               "kind": "Reference",
-              "text": "WritableAtom",
-              "canonicalReference": "!unknown"
+              "text": "Record",
+              "canonicalReference": "!Record:type"
             },
             {
               "kind": "Content",
-              "text": "<any, any, any> ? T[K] : never;\n}"
+              "text": "<string, string | number | boolean>"
             },
             {
               "kind": "Content",
-              "text": ";"
-            }
-          ],
-          "fileUrlPath": "tmp/.tsup/declaration/packages/jotai/src/utilities/create-atom-store.d.ts",
-          "releaseTag": "Public",
-          "name": "FilterWritableAtoms",
-          "typeParameters": [
-            {
-              "typeParameterName": "T",
-              "constraintTokenRange": {
-                "startIndex": 0,
-                "endIndex": 0
-              },
-              "defaultTypeTokenRange": {
-                "startIndex": 0,
-                "endIndex": 0
-              }
-            }
-          ],
-          "typeTokenRange": {
-            "startIndex": 1,
-            "endIndex": 4
-          }
-        },
-        {
-          "kind": "TypeAlias",
-          "canonicalReference": "@storm-stack/cli!GetAtomFn:type",
-          "docComment": "",
-          "excerptTokens": [
-            {
-              "kind": "Content",
-              "text": "export type GetAtomFn = "
-            },
-            {
-              "kind": "Content",
-              "text": "<V>(atom: "
-            },
-            {
-              "kind": "Reference",
-              "text": "Atom",
-              "canonicalReference": "!unknown"
-            },
-            {
-              "kind": "Content",
-              "text": "<V>, options?: "
-            },
-            {
-              "kind": "Reference",
-              "text": "UseAtomOptionsOrScope",
-              "canonicalReference": "@storm-stack/cli!UseAtomOptionsOrScope:type"
-            },
-            {
-              "kind": "Content",
-              "text": ") => V"
-            },
-            {
-              "kind": "Content",
-              "text": ";"
-            }
-          ],
-          "fileUrlPath": "tmp/.tsup/declaration/packages/jotai/src/utilities/create-atom-store.d.ts",
-          "releaseTag": "Public",
-          "name": "GetAtomFn",
-          "typeTokenRange": {
-            "startIndex": 1,
-            "endIndex": 6
-          }
-        },
-        {
-          "kind": "TypeAlias",
-          "canonicalReference": "@storm-stack/cli!GetRecord:type",
-          "docComment": "",
-          "excerptTokens": [
-            {
-              "kind": "Content",
-              "text": "export type GetRecord<O> = "
-            },
-            {
-              "kind": "Content",
-              "text": "{\n    [K in keyof O]: O[K] extends "
-            },
-            {
-              "kind": "Reference",
-              "text": "Atom",
-              "canonicalReference": "!unknown"
-            },
-            {
-              "kind": "Content",
-              "text": "<infer V> ? (options?: "
-            },
-            {
-              "kind": "Reference",
-              "text": "UseAtomOptionsOrScope",
-              "canonicalReference": "@storm-stack/cli!UseAtomOptionsOrScope:type"
-            },
-            {
-              "kind": "Content",
-              "text": ") => V : never;\n}"
-            },
-            {
-              "kind": "Content",
-              "text": ";"
-            }
-          ],
-          "fileUrlPath": "tmp/.tsup/declaration/packages/jotai/src/utilities/create-atom-store.d.ts",
-          "releaseTag": "Public",
-          "name": "GetRecord",
-          "typeParameters": [
-            {
-              "typeParameterName": "O",
-              "constraintTokenRange": {
-                "startIndex": 0,
-                "endIndex": 0
-              },
-              "defaultTypeTokenRange": {
-                "startIndex": 0,
-                "endIndex": 0
-              }
-            }
-          ],
-          "typeTokenRange": {
-            "startIndex": 1,
-            "endIndex": 6
-          }
-        },
-        {
-          "kind": "Variable",
-          "canonicalReference": "@storm-stack/cli!HydrateAtoms:var",
-          "docComment": "",
-          "excerptTokens": [
-            {
-              "kind": "Content",
-              "text": "HydrateAtoms: "
-            },
-            {
-              "kind": "Content",
-              "text": "<T extends object>({ initialValues, children, store, atoms, ...props }: "
-            },
-            {
-              "kind": "Reference",
-              "text": "Omit",
-              "canonicalReference": "!Omit:type"
-            },
-            {
-              "kind": "Content",
-              "text": "<"
-            },
-            {
-              "kind": "Reference",
-              "text": "ProviderProps",
-              "canonicalReference": "@storm-stack/cli!ProviderProps:type"
-            },
-            {
-              "kind": "Content",
-              "text": "<T>, \"scope\"> & {\n    atoms: "
-            },
-            {
-              "kind": "Reference",
-              "text": "SimpleWritableAtomRecord",
-              "canonicalReference": "@storm-stack/cli!SimpleWritableAtomRecord:type"
-            },
-            {
-              "kind": "Content",
-              "text": "<T>;\n}) => import(\"react/jsx-runtime\")."
-            },
-            {
-              "kind": "Reference",
-              "text": "JSX.Element",
-              "canonicalReference": "@types/react!JSX.Element:interface"
-            }
-          ],
-          "fileUrlPath": "tmp/.tsup/declaration/packages/jotai/src/utilities/create-atom-provider.d.ts",
-          "isReadonly": true,
-          "releaseTag": "Public",
-          "name": "HydrateAtoms",
-          "variableTypeTokenRange": {
-            "startIndex": 1,
-            "endIndex": 9
-          }
-        },
-        {
-          "kind": "Variable",
-          "canonicalReference": "@storm-stack/cli!isAtom:var",
-          "docComment": "",
-          "excerptTokens": [
-            {
-              "kind": "Content",
-              "text": "isAtom: "
-            },
-            {
-              "kind": "Content",
-              "text": "<TValue = any>(value: unknown) => "
-            },
-            {
-              "kind": "Reference",
-              "text": "value",
-              "canonicalReference": "@storm-stack/cli!~value"
-            },
-            {
-              "kind": "Content",
-              "text": " is "
-            },
-            {
-              "kind": "Reference",
-              "text": "Atom",
-              "canonicalReference": "!unknown"
-            },
-            {
-              "kind": "Content",
-              "text": "<TValue>"
-            }
-          ],
-          "fileUrlPath": "tmp/.tsup/declaration/packages/jotai/src/utilities/is-atom.d.ts",
-          "isReadonly": true,
-          "releaseTag": "Public",
-          "name": "isAtom",
-          "variableTypeTokenRange": {
-            "startIndex": 1,
-            "endIndex": 6
-          }
-        },
-        {
-          "kind": "Variable",
-          "canonicalReference": "@storm-stack/cli!isWritableAtom:var",
-          "docComment": "",
-          "excerptTokens": [
-            {
-              "kind": "Content",
-              "text": "isWritableAtom: "
-            },
-            {
-              "kind": "Content",
-              "text": "<TValue = any, TArgs extends unknown[] = unknown[], TResult = any>(value: unknown) => "
-            },
-            {
-              "kind": "Reference",
-              "text": "value",
-              "canonicalReference": "@storm-stack/cli!~value"
-            },
-            {
-              "kind": "Content",
-              "text": " is "
-            },
-            {
-              "kind": "Reference",
-              "text": "WritableAtom",
-              "canonicalReference": "!unknown"
-            },
-            {
-              "kind": "Content",
-              "text": "<TValue, TArgs, TResult>"
-            }
-          ],
-          "fileUrlPath": "tmp/.tsup/declaration/packages/jotai/src/utilities/is-atom.d.ts",
-          "isReadonly": true,
-          "releaseTag": "Public",
-          "name": "isWritableAtom",
-          "variableTypeTokenRange": {
-            "startIndex": 1,
-            "endIndex": 6
-          }
-        },
-        {
-          "kind": "TypeAlias",
-          "canonicalReference": "@storm-stack/cli!JotaiStore:type",
-          "docComment": "",
-          "excerptTokens": [
-            {
-              "kind": "Content",
-              "text": "export type JotaiStore = "
-            },
-            {
-              "kind": "Reference",
-              "text": "ReturnType",
-              "canonicalReference": "!ReturnType:type"
-            },
-            {
-              "kind": "Content",
-              "text": "<typeof "
-            },
-            {
-              "kind": "Reference",
-              "text": "createStore",
-              "canonicalReference": "!unknown:member"
-            },
-            {
-              "kind": "Content",
-              "text": ">"
-            },
-            {
-              "kind": "Content",
-              "text": ";"
-            }
-          ],
-          "fileUrlPath": "tmp/.tsup/declaration/packages/jotai/src/utilities/create-atom-store.d.ts",
-          "releaseTag": "Public",
-          "name": "JotaiStore",
-          "typeTokenRange": {
-            "startIndex": 1,
-            "endIndex": 5
-          }
-        },
-        {
-          "kind": "TypeAlias",
-          "canonicalReference": "@storm-stack/cli!ProviderProps:type",
-          "docComment": "",
-          "excerptTokens": [
-            {
-              "kind": "Content",
-              "text": "export type ProviderProps<T extends "
-            },
-            {
-              "kind": "Content",
-              "text": "object"
-            },
-            {
-              "kind": "Content",
-              "text": "> = "
-            },
-            {
-              "kind": "Reference",
-              "text": "AtomProviderProps",
-              "canonicalReference": "@storm-stack/cli!~AtomProviderProps:type"
-            },
-            {
-              "kind": "Content",
-              "text": " & "
-            },
-            {
-              "kind": "Reference",
-              "text": "Partial",
-              "canonicalReference": "!Partial:type"
-            },
-            {
-              "kind": "Content",
-              "text": "<T> & {\n    scope?: string;\n    initialValues?: "
-            },
-            {
-              "kind": "Reference",
-              "text": "Partial",
-              "canonicalReference": "!Partial:type"
-            },
-            {
-              "kind": "Content",
-              "text": "<T>;\n    resetKey?: any;\n}"
-            },
-            {
-              "kind": "Content",
-              "text": ";"
-            }
-          ],
-          "fileUrlPath": "tmp/.tsup/declaration/packages/jotai/src/utilities/create-atom-provider.d.ts",
-          "releaseTag": "Public",
-          "name": "ProviderProps",
-          "typeParameters": [
-            {
-              "typeParameterName": "T",
-              "constraintTokenRange": {
-                "startIndex": 1,
-                "endIndex": 2
-              },
-              "defaultTypeTokenRange": {
-                "startIndex": 0,
-                "endIndex": 0
-              }
-            }
-          ],
-          "typeTokenRange": {
-            "startIndex": 3,
-            "endIndex": 9
-          }
-        },
-        {
-          "kind": "Variable",
-          "canonicalReference": "@storm-stack/cli!setAtomDebugLabel:var",
-          "docComment": "/**\n * Add a debug label to the Jotai Atom\n *\n * @param atom - The atom to apply the debug label to\n *\n * @param label - The label to apply to the atom\n */\n",
-          "excerptTokens": [
-            {
-              "kind": "Content",
-              "text": "setAtomDebugLabel: "
-            },
-            {
-              "kind": "Content",
-              "text": "(atom: "
-            },
-            {
-              "kind": "Reference",
-              "text": "Atom",
-              "canonicalReference": "!unknown"
-            },
-            {
-              "kind": "Content",
-              "text": "<unknown>, label: string) => void"
-            }
-          ],
-          "fileUrlPath": "tmp/.tsup/declaration/packages/jotai/src/utilities/set-atom-debug.d.ts",
-          "isReadonly": true,
-          "releaseTag": "Public",
-          "name": "setAtomDebugLabel",
-          "variableTypeTokenRange": {
-            "startIndex": 1,
-            "endIndex": 4
-          }
-        },
-        {
-          "kind": "TypeAlias",
-          "canonicalReference": "@storm-stack/cli!SetAtomFn:type",
-          "docComment": "",
-          "excerptTokens": [
-            {
-              "kind": "Content",
-              "text": "export type SetAtomFn = "
-            },
-            {
-              "kind": "Content",
-              "text": "<V, A extends unknown[], R>(atom: "
-            },
-            {
-              "kind": "Reference",
-              "text": "WritableAtom",
-              "canonicalReference": "!unknown"
-            },
-            {
-              "kind": "Content",
-              "text": "<V, A, R>, options?: "
-            },
-            {
-              "kind": "Reference",
-              "text": "UseAtomOptionsOrScope",
-              "canonicalReference": "@storm-stack/cli!UseAtomOptionsOrScope:type"
-            },
-            {
-              "kind": "Content",
-              "text": ") => (...args: A) => R"
-            },
-            {
-              "kind": "Content",
-              "text": ";"
-            }
-          ],
-          "fileUrlPath": "tmp/.tsup/declaration/packages/jotai/src/utilities/create-atom-store.d.ts",
-          "releaseTag": "Public",
-          "name": "SetAtomFn",
-          "typeTokenRange": {
-            "startIndex": 1,
-            "endIndex": 6
-          }
-        },
-        {
-          "kind": "Variable",
-          "canonicalReference": "@storm-stack/cli!setAtomPrivate:var",
-          "docComment": "/**\n * Mark the atom as a *private* or internal\n *\n * @param atom - The atom to mark as private\n */\n",
-          "excerptTokens": [
-            {
-              "kind": "Content",
-              "text": "setAtomPrivate: "
-            },
-            {
-              "kind": "Content",
-              "text": "(atom: "
-            },
-            {
-              "kind": "Reference",
-              "text": "Atom",
-              "canonicalReference": "!unknown"
-            },
-            {
-              "kind": "Content",
-              "text": "<unknown>) => void"
-            }
-          ],
-          "fileUrlPath": "tmp/.tsup/declaration/packages/jotai/src/utilities/set-atom-debug.d.ts",
-          "isReadonly": true,
-          "releaseTag": "Public",
-          "name": "setAtomPrivate",
-          "variableTypeTokenRange": {
-            "startIndex": 1,
-            "endIndex": 4
-          }
-        },
-        {
-          "kind": "TypeAlias",
-          "canonicalReference": "@storm-stack/cli!SetRecord:type",
-          "docComment": "",
-          "excerptTokens": [
-            {
-              "kind": "Content",
-              "text": "export type SetRecord<O> = "
-            },
-            {
-              "kind": "Content",
-              "text": "{\n    [K in keyof O]: O[K] extends "
-            },
-            {
-              "kind": "Reference",
-              "text": "WritableAtom",
-              "canonicalReference": "!unknown"
-            },
-            {
-              "kind": "Content",
-              "text": "<infer _V, infer A, infer R> ? (options?: "
-            },
-            {
-              "kind": "Reference",
-              "text": "UseAtomOptionsOrScope",
-              "canonicalReference": "@storm-stack/cli!UseAtomOptionsOrScope:type"
-            },
-            {
-              "kind": "Content",
-              "text": ") => (...args: A) => R : never;\n}"
-            },
-            {
-              "kind": "Content",
-              "text": ";"
-            }
-          ],
-          "fileUrlPath": "tmp/.tsup/declaration/packages/jotai/src/utilities/create-atom-store.d.ts",
-          "releaseTag": "Public",
-          "name": "SetRecord",
-          "typeParameters": [
-            {
-              "typeParameterName": "O",
-              "constraintTokenRange": {
-                "startIndex": 0,
-                "endIndex": 0
-              },
-              "defaultTypeTokenRange": {
-                "startIndex": 0,
-                "endIndex": 0
-              }
-            }
-          ],
-          "typeTokenRange": {
-            "startIndex": 1,
-            "endIndex": 6
-          }
-        },
-        {
-          "kind": "TypeAlias",
-          "canonicalReference": "@storm-stack/cli!SimpleWritableAtom:type",
-          "docComment": "",
-          "excerptTokens": [
-            {
-              "kind": "Content",
-              "text": "export type SimpleWritableAtom<T> = "
-            },
-            {
-              "kind": "Reference",
-              "text": "WritableAtom",
-              "canonicalReference": "!unknown"
-            },
-            {
-              "kind": "Content",
-              "text": "<T, [T], void>"
-            },
-            {
-              "kind": "Content",
-              "text": ";"
-            }
-          ],
-          "fileUrlPath": "tmp/.tsup/declaration/packages/jotai/src/utilities/create-atom-store.d.ts",
-          "releaseTag": "Public",
-          "name": "SimpleWritableAtom",
-          "typeParameters": [
-            {
-              "typeParameterName": "T",
-              "constraintTokenRange": {
-                "startIndex": 0,
-                "endIndex": 0
-              },
-              "defaultTypeTokenRange": {
-                "startIndex": 0,
-                "endIndex": 0
-              }
-            }
-          ],
-          "typeTokenRange": {
-            "startIndex": 1,
-            "endIndex": 3
-          }
-        },
-        {
-          "kind": "TypeAlias",
-          "canonicalReference": "@storm-stack/cli!SimpleWritableAtomRecord:type",
-          "docComment": "",
-          "excerptTokens": [
-            {
-              "kind": "Content",
-              "text": "export type SimpleWritableAtomRecord<T> = "
-            },
-            {
-              "kind": "Content",
-              "text": "{\n    [K in keyof T]: "
-            },
-            {
-              "kind": "Reference",
-              "text": "SimpleWritableAtom",
-              "canonicalReference": "@storm-stack/cli!SimpleWritableAtom:type"
-            },
-            {
-              "kind": "Content",
-              "text": "<T[K]>;\n}"
-            },
-            {
-              "kind": "Content",
-              "text": ";"
-            }
-          ],
-          "fileUrlPath": "tmp/.tsup/declaration/packages/jotai/src/utilities/create-atom-store.d.ts",
-          "releaseTag": "Public",
-          "name": "SimpleWritableAtomRecord",
-          "typeParameters": [
-            {
-              "typeParameterName": "T",
-              "constraintTokenRange": {
-                "startIndex": 0,
-                "endIndex": 0
-              },
-              "defaultTypeTokenRange": {
-                "startIndex": 0,
-                "endIndex": 0
-              }
-            }
-          ],
-          "typeTokenRange": {
-            "startIndex": 1,
-            "endIndex": 4
-          }
-        },
-        {
-          "kind": "TypeAlias",
-          "canonicalReference": "@storm-stack/cli!StoreApi:type",
-          "docComment": "",
-          "excerptTokens": [
-            {
-              "kind": "Content",
-              "text": "export type StoreApi<T extends "
-            },
-            {
-              "kind": "Content",
-              "text": "object"
-            },
-            {
-              "kind": "Content",
-              "text": ", E extends "
-            },
-            {
-              "kind": "Reference",
-              "text": "AtomRecord",
-              "canonicalReference": "@storm-stack/cli!AtomRecord:type"
-            },
-            {
-              "kind": "Content",
-              "text": "<object>"
-            },
-            {
-              "kind": "Content",
-              "text": ", N extends "
+              "text": "): "
             },
             {
               "kind": "Content",
@@ -2302,352 +1265,100 @@
             },
             {
               "kind": "Content",
-              "text": " = "
-            },
+              "text": ";"
+            }
+          ],
+          "fileUrlPath": "tmp/.tsup/declaration/packages/cli/src/utilities/create-cli-options.d.ts",
+          "returnTypeTokenRange": {
+            "startIndex": 4,
+            "endIndex": 5
+          },
+          "releaseTag": "Public",
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "obj",
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 3
+              },
+              "isOptional": false
+            }
+          ],
+          "name": "createCliOptionsString"
+        },
+        {
+          "kind": "Function",
+          "canonicalReference": "@storm-stack/cli!createCLIProgram:function(1)",
+          "docComment": "",
+          "excerptTokens": [
             {
               "kind": "Content",
-              "text": "\"\""
-            },
-            {
-              "kind": "Content",
-              "text": "> = "
-            },
-            {
-              "kind": "Content",
-              "text": "{\n    atom: "
+              "text": "export declare function createCLIProgram(cliConfig: "
             },
             {
               "kind": "Reference",
-              "text": "StoreAtoms",
-              "canonicalReference": "@storm-stack/cli!StoreAtoms:type"
+              "text": "CLIConfig",
+              "canonicalReference": "@storm-stack/cli!CLIConfig:interface"
             },
             {
               "kind": "Content",
-              "text": "<T, E>;\n    name: N;\n}"
+              "text": "): "
+            },
+            {
+              "kind": "Reference",
+              "text": "Promise",
+              "canonicalReference": "!Promise:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "<void>"
             },
             {
               "kind": "Content",
               "text": ";"
             }
           ],
-          "fileUrlPath": "tmp/.tsup/declaration/packages/jotai/src/utilities/create-atom-store.d.ts",
+          "fileUrlPath": "tmp/.tsup/declaration/packages/cli/src/program/index.d.ts",
+          "returnTypeTokenRange": {
+            "startIndex": 3,
+            "endIndex": 5
+          },
           "releaseTag": "Public",
-          "name": "StoreApi",
-          "typeParameters": [
+          "overloadIndex": 1,
+          "parameters": [
             {
-              "typeParameterName": "T",
-              "constraintTokenRange": {
+              "parameterName": "cliConfig",
+              "parameterTypeTokenRange": {
                 "startIndex": 1,
                 "endIndex": 2
               },
-              "defaultTypeTokenRange": {
-                "startIndex": 0,
-                "endIndex": 0
-              }
-            },
-            {
-              "typeParameterName": "E",
-              "constraintTokenRange": {
-                "startIndex": 3,
-                "endIndex": 5
-              },
-              "defaultTypeTokenRange": {
-                "startIndex": 0,
-                "endIndex": 0
-              }
-            },
-            {
-              "typeParameterName": "N",
-              "constraintTokenRange": {
-                "startIndex": 6,
-                "endIndex": 7
-              },
-              "defaultTypeTokenRange": {
-                "startIndex": 8,
-                "endIndex": 9
-              }
+              "isOptional": false
             }
           ],
-          "typeTokenRange": {
-            "startIndex": 10,
-            "endIndex": 13
-          }
-        },
-        {
-          "kind": "TypeAlias",
-          "canonicalReference": "@storm-stack/cli!StoreAtoms:type",
-          "docComment": "",
-          "excerptTokens": [
-            {
-              "kind": "Content",
-              "text": "export type StoreAtoms<T, E> = "
-            },
-            {
-              "kind": "Reference",
-              "text": "StoreAtomsWithoutExtend",
-              "canonicalReference": "@storm-stack/cli!StoreAtomsWithoutExtend:type"
-            },
-            {
-              "kind": "Content",
-              "text": "<T> & E"
-            },
-            {
-              "kind": "Content",
-              "text": ";"
-            }
-          ],
-          "fileUrlPath": "tmp/.tsup/declaration/packages/jotai/src/utilities/create-atom-store.d.ts",
-          "releaseTag": "Public",
-          "name": "StoreAtoms",
-          "typeParameters": [
-            {
-              "typeParameterName": "T",
-              "constraintTokenRange": {
-                "startIndex": 0,
-                "endIndex": 0
-              },
-              "defaultTypeTokenRange": {
-                "startIndex": 0,
-                "endIndex": 0
-              }
-            },
-            {
-              "typeParameterName": "E",
-              "constraintTokenRange": {
-                "startIndex": 0,
-                "endIndex": 0
-              },
-              "defaultTypeTokenRange": {
-                "startIndex": 0,
-                "endIndex": 0
-              }
-            }
-          ],
-          "typeTokenRange": {
-            "startIndex": 1,
-            "endIndex": 3
-          }
-        },
-        {
-          "kind": "TypeAlias",
-          "canonicalReference": "@storm-stack/cli!StoreAtomsWithoutExtend:type",
-          "docComment": "",
-          "excerptTokens": [
-            {
-              "kind": "Content",
-              "text": "export type StoreAtomsWithoutExtend<T> = "
-            },
-            {
-              "kind": "Content",
-              "text": "{\n    [K in keyof T]: T[K] extends "
-            },
-            {
-              "kind": "Reference",
-              "text": "Atom",
-              "canonicalReference": "!unknown"
-            },
-            {
-              "kind": "Content",
-              "text": "<any> ? T[K] : "
-            },
-            {
-              "kind": "Reference",
-              "text": "SimpleWritableAtom",
-              "canonicalReference": "@storm-stack/cli!SimpleWritableAtom:type"
-            },
-            {
-              "kind": "Content",
-              "text": "<T[K]>;\n}"
-            },
-            {
-              "kind": "Content",
-              "text": ";"
-            }
-          ],
-          "fileUrlPath": "tmp/.tsup/declaration/packages/jotai/src/utilities/create-atom-store.d.ts",
-          "releaseTag": "Public",
-          "name": "StoreAtomsWithoutExtend",
-          "typeParameters": [
-            {
-              "typeParameterName": "T",
-              "constraintTokenRange": {
-                "startIndex": 0,
-                "endIndex": 0
-              },
-              "defaultTypeTokenRange": {
-                "startIndex": 0,
-                "endIndex": 0
-              }
-            }
-          ],
-          "typeTokenRange": {
-            "startIndex": 1,
-            "endIndex": 6
-          }
-        },
-        {
-          "kind": "TypeAlias",
-          "canonicalReference": "@storm-stack/cli!UseAtomFn:type",
-          "docComment": "",
-          "excerptTokens": [
-            {
-              "kind": "Content",
-              "text": "export type UseAtomFn = "
-            },
-            {
-              "kind": "Content",
-              "text": "<V, A extends unknown[], R>(atom: "
-            },
-            {
-              "kind": "Reference",
-              "text": "WritableAtom",
-              "canonicalReference": "!unknown"
-            },
-            {
-              "kind": "Content",
-              "text": "<V, A, R>, options?: "
-            },
-            {
-              "kind": "Reference",
-              "text": "UseAtomOptionsOrScope",
-              "canonicalReference": "@storm-stack/cli!UseAtomOptionsOrScope:type"
-            },
-            {
-              "kind": "Content",
-              "text": ") => [V, (...args: A) => R]"
-            },
-            {
-              "kind": "Content",
-              "text": ";"
-            }
-          ],
-          "fileUrlPath": "tmp/.tsup/declaration/packages/jotai/src/utilities/create-atom-store.d.ts",
-          "releaseTag": "Public",
-          "name": "UseAtomFn",
-          "typeTokenRange": {
-            "startIndex": 1,
-            "endIndex": 6
-          }
-        },
-        {
-          "kind": "TypeAlias",
-          "canonicalReference": "@storm-stack/cli!UseAtomOptions:type",
-          "docComment": "",
-          "excerptTokens": [
-            {
-              "kind": "Content",
-              "text": "export type UseAtomOptions = "
-            },
-            {
-              "kind": "Content",
-              "text": "{\n    scope?: string;\n    store?: "
-            },
-            {
-              "kind": "Reference",
-              "text": "JotaiStore",
-              "canonicalReference": "@storm-stack/cli!JotaiStore:type"
-            },
-            {
-              "kind": "Content",
-              "text": ";\n    delay?: number;\n}"
-            },
-            {
-              "kind": "Content",
-              "text": ";"
-            }
-          ],
-          "fileUrlPath": "tmp/.tsup/declaration/packages/jotai/src/utilities/create-atom-store.d.ts",
-          "releaseTag": "Public",
-          "name": "UseAtomOptions",
-          "typeTokenRange": {
-            "startIndex": 1,
-            "endIndex": 4
-          }
-        },
-        {
-          "kind": "TypeAlias",
-          "canonicalReference": "@storm-stack/cli!UseAtomOptionsOrScope:type",
-          "docComment": "",
-          "excerptTokens": [
-            {
-              "kind": "Content",
-              "text": "export type UseAtomOptionsOrScope = "
-            },
-            {
-              "kind": "Reference",
-              "text": "UseAtomOptions",
-              "canonicalReference": "@storm-stack/cli!UseAtomOptions:type"
-            },
-            {
-              "kind": "Content",
-              "text": " | string"
-            },
-            {
-              "kind": "Content",
-              "text": ";"
-            }
-          ],
-          "fileUrlPath": "tmp/.tsup/declaration/packages/jotai/src/utilities/create-atom-store.d.ts",
-          "releaseTag": "Public",
-          "name": "UseAtomOptionsOrScope",
-          "typeTokenRange": {
-            "startIndex": 1,
-            "endIndex": 3
-          }
+          "name": "createCLIProgram"
         },
         {
           "kind": "Variable",
-          "canonicalReference": "@storm-stack/cli!useAtomStore:var",
-          "docComment": "/**\n * Tries to find a store in each of the following places, in order: 1. The store context, matching the store name and scope 2. The store context, matching the store name and 'provider' scope 3. Otherwise, return undefined\n */\n",
+          "canonicalReference": "@storm-stack/cli!execute:var",
+          "docComment": "/**\n * Execute a command.\n *\n * @param command - The command to execute\n *\n * @param options - The options to use when executing the command\n *\n * @param env - The environment variables to use when executing the command\n *\n * @param stdio - The stdio options to use when executing the command\n *\n * @returns The result of the command\n */\n",
           "excerptTokens": [
             {
               "kind": "Content",
-              "text": "useAtomStore: "
+              "text": "execute: "
             },
             {
               "kind": "Content",
-              "text": "(storeName: string, scope?: string, warnIfUndefined?: boolean) => "
+              "text": "(command: string, options?: "
             },
             {
               "kind": "Reference",
-              "text": "JotaiStore",
-              "canonicalReference": "@storm-stack/cli!JotaiStore:type"
+              "text": "ExecOptions",
+              "canonicalReference": "!\"\\\"child_process\\\"\".ExecOptions:interface"
             },
             {
               "kind": "Content",
-              "text": " | undefined"
-            }
-          ],
-          "fileUrlPath": "tmp/.tsup/declaration/packages/jotai/src/utilities/create-atom-provider.d.ts",
-          "isReadonly": true,
-          "releaseTag": "Public",
-          "name": "useAtomStore",
-          "variableTypeTokenRange": {
-            "startIndex": 1,
-            "endIndex": 4
-          }
-        },
-        {
-          "kind": "TypeAlias",
-          "canonicalReference": "@storm-stack/cli!UseHydrateAtoms:type",
-          "docComment": "",
-          "excerptTokens": [
-            {
-              "kind": "Content",
-              "text": "export type UseHydrateAtoms<T> = "
-            },
-            {
-              "kind": "Content",
-              "text": "(initialValues: "
-            },
-            {
-              "kind": "Reference",
-              "text": "Partial",
-              "canonicalReference": "!Partial:type"
-            },
-            {
-              "kind": "Content",
-              "text": "<"
+              "text": ", env?: "
             },
             {
               "kind": "Reference",
@@ -2656,351 +1367,80 @@
             },
             {
               "kind": "Content",
-              "text": "<keyof T, any>>, options?: "
+              "text": "<string, string>, stdio?: "
             },
             {
               "kind": "Reference",
-              "text": "Parameters",
-              "canonicalReference": "!Parameters:type"
+              "text": "StdioOptions",
+              "canonicalReference": "!\"\\\"child_process\\\"\".StdioOptions:type"
             },
             {
               "kind": "Content",
-              "text": "<typeof "
+              "text": ") => string | "
             },
             {
               "kind": "Reference",
-              "text": "useHydrateAtoms",
-              "canonicalReference": "!unknown:member"
+              "text": "Buffer",
+              "canonicalReference": "!\"\\\"buffer\\\"\".__global.Buffer:interface"
             },
             {
               "kind": "Content",
-              "text": ">[1]) => void"
+              "text": " | "
+            },
+            {
+              "kind": "Reference",
+              "text": "Readable",
+              "canonicalReference": "!\"\\\"stream\\\"\".internal.Readable:class"
             },
             {
               "kind": "Content",
-              "text": ";"
+              "text": " | undefined"
             }
           ],
-          "fileUrlPath": "tmp/.tsup/declaration/packages/jotai/src/utilities/create-atom-store.d.ts",
-          "releaseTag": "Public",
-          "name": "UseHydrateAtoms",
-          "typeParameters": [
-            {
-              "typeParameterName": "T",
-              "constraintTokenRange": {
-                "startIndex": 0,
-                "endIndex": 0
-              },
-              "defaultTypeTokenRange": {
-                "startIndex": 0,
-                "endIndex": 0
-              }
-            }
-          ],
-          "typeTokenRange": {
-            "startIndex": 1,
-            "endIndex": 10
-          }
-        },
-        {
-          "kind": "Variable",
-          "canonicalReference": "@storm-stack/cli!useHydrateStore:var",
-          "docComment": "/**\n * Hydrate atoms with initial values for SSR.\n */\n",
-          "excerptTokens": [
-            {
-              "kind": "Content",
-              "text": "useHydrateStore: "
-            },
-            {
-              "kind": "Content",
-              "text": "(atoms: "
-            },
-            {
-              "kind": "Reference",
-              "text": "SimpleWritableAtomRecord",
-              "canonicalReference": "@storm-stack/cli!SimpleWritableAtomRecord:type"
-            },
-            {
-              "kind": "Content",
-              "text": "<any>, initialValues: "
-            },
-            {
-              "kind": "Reference",
-              "text": "Parameters",
-              "canonicalReference": "!Parameters:type"
-            },
-            {
-              "kind": "Content",
-              "text": "<"
-            },
-            {
-              "kind": "Reference",
-              "text": "UseHydrateAtoms",
-              "canonicalReference": "@storm-stack/cli!UseHydrateAtoms:type"
-            },
-            {
-              "kind": "Content",
-              "text": "<any>>[0], options?: "
-            },
-            {
-              "kind": "Reference",
-              "text": "Parameters",
-              "canonicalReference": "!Parameters:type"
-            },
-            {
-              "kind": "Content",
-              "text": "<"
-            },
-            {
-              "kind": "Reference",
-              "text": "UseHydrateAtoms",
-              "canonicalReference": "@storm-stack/cli!UseHydrateAtoms:type"
-            },
-            {
-              "kind": "Content",
-              "text": "<any>>[1]) => void"
-            }
-          ],
-          "fileUrlPath": "tmp/.tsup/declaration/packages/jotai/src/hooks/use-hydrate-store.d.ts",
+          "fileUrlPath": "tmp/.tsup/declaration/packages/cli/src/utilities/execute.d.ts",
           "isReadonly": true,
           "releaseTag": "Public",
-          "name": "useHydrateStore",
+          "name": "execute",
           "variableTypeTokenRange": {
             "startIndex": 1,
             "endIndex": 12
           }
         },
         {
-          "kind": "Function",
-          "canonicalReference": "@storm-stack/cli!usePrepareAtoms:function(1)",
-          "docComment": "",
+          "kind": "Variable",
+          "canonicalReference": "@storm-stack/cli!executeAsync:var",
+          "docComment": "/**\n * Execute a command asynchronously.\n *\n * @param command - The command to execute\n *\n * @param options - The options to use when executing the command\n *\n * @param env - The environment variables to use when executing the command\n *\n * @param stdio - The stdio options to use when executing the command\n *\n * @returns The result of the command\n */\n",
           "excerptTokens": [
             {
               "kind": "Content",
-              "text": "export declare function usePrepareAtoms(atoms: "
+              "text": "executeAsync: "
+            },
+            {
+              "kind": "Content",
+              "text": "(command: string, options?: "
             },
             {
               "kind": "Reference",
-              "text": "Atom",
-              "canonicalReference": "!unknown"
+              "text": "ExecOptions",
+              "canonicalReference": "!\"\\\"child_process\\\"\".ExecOptions:interface"
             },
             {
               "kind": "Content",
-              "text": "<unknown>[]"
-            },
-            {
-              "kind": "Content",
-              "text": ", options?: "
+              "text": ", env?: "
             },
             {
               "kind": "Reference",
-              "text": "Options",
-              "canonicalReference": "@storm-stack/cli!~Options:type"
+              "text": "Record",
+              "canonicalReference": "!Record:type"
             },
             {
               "kind": "Content",
-              "text": "): "
-            },
-            {
-              "kind": "Content",
-              "text": "void"
-            },
-            {
-              "kind": "Content",
-              "text": ";"
-            }
-          ],
-          "fileUrlPath": "tmp/.tsup/declaration/packages/jotai/src/hooks/use-prepare-atoms.d.ts",
-          "returnTypeTokenRange": {
-            "startIndex": 6,
-            "endIndex": 7
-          },
-          "releaseTag": "Public",
-          "overloadIndex": 1,
-          "parameters": [
-            {
-              "parameterName": "atoms",
-              "parameterTypeTokenRange": {
-                "startIndex": 1,
-                "endIndex": 3
-              },
-              "isOptional": false
-            },
-            {
-              "parameterName": "options",
-              "parameterTypeTokenRange": {
-                "startIndex": 4,
-                "endIndex": 5
-              },
-              "isOptional": true
-            }
-          ],
-          "name": "usePrepareAtoms"
-        },
-        {
-          "kind": "TypeAlias",
-          "canonicalReference": "@storm-stack/cli!UseRecord:type",
-          "docComment": "",
-          "excerptTokens": [
-            {
-              "kind": "Content",
-              "text": "export type UseRecord<O> = "
-            },
-            {
-              "kind": "Content",
-              "text": "{\n    [K in keyof O]: O[K] extends "
+              "text": "<string, string>, stdio?: "
             },
             {
               "kind": "Reference",
-              "text": "WritableAtom",
-              "canonicalReference": "!unknown"
-            },
-            {
-              "kind": "Content",
-              "text": "<infer V, infer A, infer R> ? (options?: "
-            },
-            {
-              "kind": "Reference",
-              "text": "UseAtomOptionsOrScope",
-              "canonicalReference": "@storm-stack/cli!UseAtomOptionsOrScope:type"
-            },
-            {
-              "kind": "Content",
-              "text": ") => [V, (...args: A) => R] : never;\n}"
-            },
-            {
-              "kind": "Content",
-              "text": ";"
-            }
-          ],
-          "fileUrlPath": "tmp/.tsup/declaration/packages/jotai/src/utilities/create-atom-store.d.ts",
-          "releaseTag": "Public",
-          "name": "UseRecord",
-          "typeParameters": [
-            {
-              "typeParameterName": "O",
-              "constraintTokenRange": {
-                "startIndex": 0,
-                "endIndex": 0
-              },
-              "defaultTypeTokenRange": {
-                "startIndex": 0,
-                "endIndex": 0
-              }
-            }
-          ],
-          "typeTokenRange": {
-            "startIndex": 1,
-            "endIndex": 6
-          }
-        },
-        {
-          "kind": "TypeAlias",
-          "canonicalReference": "@storm-stack/cli!UseStoreApi:type",
-          "docComment": "",
-          "excerptTokens": [
-            {
-              "kind": "Content",
-              "text": "export type UseStoreApi<T, E> = "
-            },
-            {
-              "kind": "Content",
-              "text": "(options?: "
-            },
-            {
-              "kind": "Reference",
-              "text": "UseAtomOptionsOrScope",
-              "canonicalReference": "@storm-stack/cli!UseAtomOptionsOrScope:type"
-            },
-            {
-              "kind": "Content",
-              "text": ") => {\n    get: "
-            },
-            {
-              "kind": "Reference",
-              "text": "GetRecord",
-              "canonicalReference": "@storm-stack/cli!GetRecord:type"
-            },
-            {
-              "kind": "Content",
-              "text": "<"
-            },
-            {
-              "kind": "Reference",
-              "text": "StoreAtoms",
-              "canonicalReference": "@storm-stack/cli!StoreAtoms:type"
-            },
-            {
-              "kind": "Content",
-              "text": "<T, E>> & {\n        atom: "
-            },
-            {
-              "kind": "Reference",
-              "text": "GetAtomFn",
-              "canonicalReference": "@storm-stack/cli!GetAtomFn:type"
-            },
-            {
-              "kind": "Content",
-              "text": ";\n    };\n    set: "
-            },
-            {
-              "kind": "Reference",
-              "text": "SetRecord",
-              "canonicalReference": "@storm-stack/cli!SetRecord:type"
-            },
-            {
-              "kind": "Content",
-              "text": "<"
-            },
-            {
-              "kind": "Reference",
-              "text": "WritableStoreAtoms",
-              "canonicalReference": "@storm-stack/cli!WritableStoreAtoms:type"
-            },
-            {
-              "kind": "Content",
-              "text": "<T, E>> & {\n        atom: "
-            },
-            {
-              "kind": "Reference",
-              "text": "SetAtomFn",
-              "canonicalReference": "@storm-stack/cli!SetAtomFn:type"
-            },
-            {
-              "kind": "Content",
-              "text": ";\n    };\n    use: "
-            },
-            {
-              "kind": "Reference",
-              "text": "UseRecord",
-              "canonicalReference": "@storm-stack/cli!UseRecord:type"
-            },
-            {
-              "kind": "Content",
-              "text": "<"
-            },
-            {
-              "kind": "Reference",
-              "text": "WritableStoreAtoms",
-              "canonicalReference": "@storm-stack/cli!WritableStoreAtoms:type"
-            },
-            {
-              "kind": "Content",
-              "text": "<T, E>> & {\n        atom: "
-            },
-            {
-              "kind": "Reference",
-              "text": "UseAtomFn",
-              "canonicalReference": "@storm-stack/cli!UseAtomFn:type"
-            },
-            {
-              "kind": "Content",
-              "text": ";\n    };\n    store: (options?: "
-            },
-            {
-              "kind": "Reference",
-              "text": "UseAtomOptionsOrScope",
-              "canonicalReference": "@storm-stack/cli!UseAtomOptionsOrScope:type"
+              "text": "StdioOptions",
+              "canonicalReference": "!\"\\\"child_process\\\"\".StdioOptions:type"
             },
             {
               "kind": "Content",
@@ -3008,229 +1448,203 @@
             },
             {
               "kind": "Reference",
-              "text": "JotaiStore",
-              "canonicalReference": "@storm-stack/cli!JotaiStore:type"
+              "text": "Promise",
+              "canonicalReference": "!Promise:interface"
             },
             {
               "kind": "Content",
-              "text": " | undefined;\n}"
+              "text": "<string | "
+            },
+            {
+              "kind": "Reference",
+              "text": "Buffer",
+              "canonicalReference": "!\"\\\"buffer\\\"\".__global.Buffer:interface"
             },
             {
               "kind": "Content",
-              "text": ";"
+              "text": " | undefined>"
             }
           ],
-          "fileUrlPath": "tmp/.tsup/declaration/packages/jotai/src/utilities/create-atom-store.d.ts",
+          "fileUrlPath": "tmp/.tsup/declaration/packages/cli/src/utilities/execute.d.ts",
+          "isReadonly": true,
           "releaseTag": "Public",
-          "name": "UseStoreApi",
-          "typeParameters": [
-            {
-              "typeParameterName": "T",
-              "constraintTokenRange": {
-                "startIndex": 0,
-                "endIndex": 0
-              },
-              "defaultTypeTokenRange": {
-                "startIndex": 0,
-                "endIndex": 0
-              }
-            },
-            {
-              "typeParameterName": "E",
-              "constraintTokenRange": {
-                "startIndex": 0,
-                "endIndex": 0
-              },
-              "defaultTypeTokenRange": {
-                "startIndex": 0,
-                "endIndex": 0
-              }
-            }
-          ],
-          "typeTokenRange": {
+          "name": "executeAsync",
+          "variableTypeTokenRange": {
             "startIndex": 1,
-            "endIndex": 26
-          }
-        },
-        {
-          "kind": "TypeAlias",
-          "canonicalReference": "@storm-stack/cli!UseSyncAtoms:type",
-          "docComment": "",
-          "excerptTokens": [
-            {
-              "kind": "Content",
-              "text": "export type UseSyncAtoms<T> = "
-            },
-            {
-              "kind": "Content",
-              "text": "(values: "
-            },
-            {
-              "kind": "Reference",
-              "text": "Partial",
-              "canonicalReference": "!Partial:type"
-            },
-            {
-              "kind": "Content",
-              "text": "<"
-            },
-            {
-              "kind": "Reference",
-              "text": "Record",
-              "canonicalReference": "!Record:type"
-            },
-            {
-              "kind": "Content",
-              "text": "<keyof T, any>>, options?: {\n    store?: "
-            },
-            {
-              "kind": "Reference",
-              "text": "JotaiStore",
-              "canonicalReference": "@storm-stack/cli!JotaiStore:type"
-            },
-            {
-              "kind": "Content",
-              "text": ";\n}) => void"
-            },
-            {
-              "kind": "Content",
-              "text": ";"
-            }
-          ],
-          "fileUrlPath": "tmp/.tsup/declaration/packages/jotai/src/utilities/create-atom-store.d.ts",
-          "releaseTag": "Public",
-          "name": "UseSyncAtoms",
-          "typeParameters": [
-            {
-              "typeParameterName": "T",
-              "constraintTokenRange": {
-                "startIndex": 0,
-                "endIndex": 0
-              },
-              "defaultTypeTokenRange": {
-                "startIndex": 0,
-                "endIndex": 0
-              }
-            }
-          ],
-          "typeTokenRange": {
-            "startIndex": 1,
-            "endIndex": 8
+            "endIndex": 12
           }
         },
         {
           "kind": "Variable",
-          "canonicalReference": "@storm-stack/cli!useSyncStore:var",
-          "docComment": "/**\n * Update atoms with new values on changes.\n */\n",
+          "canonicalReference": "@storm-stack/cli!isCI:var",
+          "docComment": "/**\n * Returns true if the current environment is a CI environment.\n *\n * @returns True if the current environment is a CI environment.\n */\n",
           "excerptTokens": [
             {
               "kind": "Content",
-              "text": "useSyncStore: "
+              "text": "isCI: "
             },
             {
               "kind": "Content",
-              "text": "(atoms: "
-            },
-            {
-              "kind": "Reference",
-              "text": "SimpleWritableAtomRecord",
-              "canonicalReference": "@storm-stack/cli!SimpleWritableAtomRecord:type"
-            },
-            {
-              "kind": "Content",
-              "text": "<any>, values: any, { store }?: "
-            },
-            {
-              "kind": "Reference",
-              "text": "Parameters",
-              "canonicalReference": "!Parameters:type"
-            },
-            {
-              "kind": "Content",
-              "text": "<"
-            },
-            {
-              "kind": "Reference",
-              "text": "UseSyncAtoms",
-              "canonicalReference": "@storm-stack/cli!UseSyncAtoms:type"
-            },
-            {
-              "kind": "Content",
-              "text": "<any>>[1]) => void"
+              "text": "() => boolean"
             }
           ],
-          "fileUrlPath": "tmp/.tsup/declaration/packages/jotai/src/hooks/use-sync-store.d.ts",
+          "fileUrlPath": "tmp/.tsup/declaration/packages/cli/src/utilities/is-ci.d.ts",
           "isReadonly": true,
           "releaseTag": "Public",
-          "name": "useSyncStore",
+          "name": "isCI",
           "variableTypeTokenRange": {
             "startIndex": 1,
-            "endIndex": 8
+            "endIndex": 2
           }
         },
         {
-          "kind": "TypeAlias",
-          "canonicalReference": "@storm-stack/cli!WritableStoreAtoms:type",
-          "docComment": "",
+          "kind": "Variable",
+          "canonicalReference": "@storm-stack/cli!isInteractive:var",
+          "docComment": "/**\n * Check if the current process is interactive\n *\n * @param stream - The stream to check\n *\n * @returns True if the current process is interactive\n */\n",
           "excerptTokens": [
             {
               "kind": "Content",
-              "text": "export type WritableStoreAtoms<T, E> = "
-            },
-            {
-              "kind": "Reference",
-              "text": "FilterWritableAtoms",
-              "canonicalReference": "@storm-stack/cli!FilterWritableAtoms:type"
+              "text": "isInteractive: "
             },
             {
               "kind": "Content",
-              "text": "<"
+              "text": "(stream?: "
             },
             {
               "kind": "Reference",
-              "text": "StoreAtoms",
-              "canonicalReference": "@storm-stack/cli!StoreAtoms:type"
+              "text": "NodeJS.ReadStream",
+              "canonicalReference": "!\"\\\"process\\\"\".__global.NodeJS.ReadStream:interface"
             },
             {
               "kind": "Content",
-              "text": "<T, E>>"
+              "text": " & {\n    fd: 0;\n}) => boolean"
+            }
+          ],
+          "fileUrlPath": "tmp/.tsup/declaration/packages/cli/src/utilities/is-interactive.d.ts",
+          "isReadonly": true,
+          "releaseTag": "Public",
+          "name": "isInteractive",
+          "variableTypeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 4
+          }
+        },
+        {
+          "kind": "Function",
+          "canonicalReference": "@storm-stack/cli!link:function(1)",
+          "docComment": "/**\n * Create a link to a URL in the terminal.\n *\n * @param url - The URL to link to.\n *\n * @returns A terminal link\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export declare function link(url: "
+            },
+            {
+              "kind": "Content",
+              "text": "string"
+            },
+            {
+              "kind": "Content",
+              "text": "): "
+            },
+            {
+              "kind": "Content",
+              "text": "string"
             },
             {
               "kind": "Content",
               "text": ";"
             }
           ],
-          "fileUrlPath": "tmp/.tsup/declaration/packages/jotai/src/utilities/create-atom-store.d.ts",
+          "fileUrlPath": "tmp/.tsup/declaration/packages/cli/src/utilities/cli-link.d.ts",
+          "returnTypeTokenRange": {
+            "startIndex": 3,
+            "endIndex": 4
+          },
           "releaseTag": "Public",
-          "name": "WritableStoreAtoms",
-          "typeParameters": [
+          "overloadIndex": 1,
+          "parameters": [
             {
-              "typeParameterName": "T",
-              "constraintTokenRange": {
-                "startIndex": 0,
-                "endIndex": 0
+              "parameterName": "url",
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
               },
-              "defaultTypeTokenRange": {
-                "startIndex": 0,
-                "endIndex": 0
-              }
-            },
-            {
-              "typeParameterName": "E",
-              "constraintTokenRange": {
-                "startIndex": 0,
-                "endIndex": 0
-              },
-              "defaultTypeTokenRange": {
-                "startIndex": 0,
-                "endIndex": 0
-              }
+              "isOptional": false
             }
           ],
-          "typeTokenRange": {
-            "startIndex": 1,
-            "endIndex": 5
-          }
+          "name": "link"
+        },
+        {
+          "kind": "Function",
+          "canonicalReference": "@storm-stack/cli!registerShutdown:function(1)",
+          "docComment": "",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export declare function registerShutdown(config: "
+            },
+            {
+              "kind": "Content",
+              "text": "{\n    logger: "
+            },
+            {
+              "kind": "Reference",
+              "text": "StormLog",
+              "canonicalReference": "@storm-stack/cli!~StormLog:class"
+            },
+            {
+              "kind": "Content",
+              "text": ";\n    onShutdown(): void | "
+            },
+            {
+              "kind": "Reference",
+              "text": "MaybePromise",
+              "canonicalReference": "@storm-stack/cli!~MaybePromise:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<void>;\n}"
+            },
+            {
+              "kind": "Content",
+              "text": "): "
+            },
+            {
+              "kind": "Content",
+              "text": "(reason?: string) => "
+            },
+            {
+              "kind": "Reference",
+              "text": "Promise",
+              "canonicalReference": "!Promise:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "<void>"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "fileUrlPath": "tmp/.tsup/declaration/packages/cli/src/program/shutdown.d.ts",
+          "returnTypeTokenRange": {
+            "startIndex": 7,
+            "endIndex": 10
+          },
+          "releaseTag": "Public",
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "config",
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 6
+              },
+              "isOptional": false
+            }
+          ],
+          "name": "registerShutdown"
         }
       ]
     }

@@ -1,4 +1,4 @@
-import { Temporal } from "@js-temporal/polyfill";
+import type { Temporal } from "@js-temporal/polyfill";
 import { EMPTY_STRING } from "@storm-stack/utilities";
 import { StormDateTime } from "../storm-date-time";
 
@@ -19,6 +19,4 @@ export const formatDateTime = (
     offset: "never"
   }
 ): string =>
-  dateTime
-    ? `${dateTime.zonedDateTime.toString(options).replaceAll("T", " ")}`
-    : EMPTY_STRING;
+  dateTime ? `${dateTime.zonedDateTime.toString(options).replaceAll("T", " ")}` : EMPTY_STRING;
