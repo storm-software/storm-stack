@@ -1,14 +1,14 @@
-## 1.13.0 (2024-02-05)
 
+
+## 1.13.0 (2024-02-05)
 
 ### 🚀 Features
 
-- **logging:** Added `child` function to storm logger ([fc99c2d](https://github.com/storm-software/storm-stack/commit/fc99c2d))
+-   **logging:** Added `child` function to storm logger ([fc99c2d](https://github.com/storm-software/storm-stack/commit/fc99c2d))
 
+### ❤️ Thank You
 
-### ❤️  Thank You
-
-- Patrick Sullivan
+-   Patrick Sullivan
 
 ## 1.12.4 (2024-01-29)
 

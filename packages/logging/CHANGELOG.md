@@ -1,14 +1,24 @@
-## 1.17.0 (2024-02-05)
+## 1.17.1 (2024-02-05)
 
 
-### 🚀 Features
+### 🩹 Fixes
 
-- **logging:** Added `child` function to storm logger ([fc99c2d](https://github.com/storm-software/storm-stack/commit/fc99c2d))
+- **logging:** Resolved various formatting issues around logging output ([6837c64](https://github.com/storm-software/storm-stack/commit/6837c64))
 
 
 ### ❤️  Thank You
 
 - Patrick Sullivan
+
+## 1.17.0 (2024-02-05)
+
+### 🚀 Features
+
+-   **logging:** Added `child` function to storm logger ([fc99c2d](https://github.com/storm-software/storm-stack/commit/fc99c2d))
+
+### ❤️ Thank You
+
+-   Patrick Sullivan
 
 ## 1.16.4 (2024-01-29)
 
