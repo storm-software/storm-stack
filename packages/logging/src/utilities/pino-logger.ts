@@ -1,5 +1,4 @@
 import type { StormConfig } from "@storm-software/config-tools";
-import { formatDateTime } from "@storm-stack/date-time";
 import { isStormError } from "@storm-stack/errors";
 import { isRuntimeServer, titleCase } from "@storm-stack/utilities";
 import pino, { type DestinationStream, type LoggerOptions as PinoLoggerOptions } from "pino";
@@ -33,7 +32,6 @@ export const getPinoLogger = (config: StormConfig<"logging", LoggingConfig>, nam
     level: config.logLevel,
     messageKey: "msg",
     errorKey: "error",
-    timestamp: () => formatDateTime(),
     serializers: {
       exception: errorSerializer,
       err: errorSerializer,
