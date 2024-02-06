@@ -228,9 +228,9 @@ export class StormLog implements IStormLog {
     StormLog.getLoggers().then((logger) => {
       StormLog.logLevel >= LogLevel.INFO &&
         logger.info(
-          `⏱️  The${name ? ` ${name}` : ""} process took ${formatSince(
-            startTime.since()
-          )} to complete`
+          `⏱️  The${name ? ` ${name}` : ""} process took ${formatSince(startTime.since())} to complete
+
+          `
         );
     });
   }
@@ -410,8 +410,8 @@ export class StormLog implements IStormLog {
     }
 
     const message = `${
-      process ? `Completed process: ${process}` : "The process has completed"
-    } \n\n⏱️  Process took ${_startTime ? formatSince(_startTime.since()) : "0ms"} to complete`;
+      process ? `⏱️ Completed process ${process}` : "The process has completed"
+    } in ${_startTime ? formatSince(_startTime.since()) : "0ms"}\n\n`;
 
     this.#logger.info(message);
     Promise.all(this.#additionalLoggers.map((logger) => logger.info(message)));

@@ -118,6 +118,11 @@ export const formatSince = (
     });
   }
 
+  // Adjust the milliseconds to be positive
+  if (milliseconds < 0) {
+    milliseconds *= -1;
+  }
+
   if (options.colonNotation) {
     options.compact = false;
     options.formatSubMilliseconds = false;
