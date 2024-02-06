@@ -21,7 +21,7 @@
         "metafile": true,
         "minify": false,
         "format": ["cjs"],
-        "external": ["nx", "@nx/devkit", "@angular-devkit/architect"],
+        "external": ["nx", "@angular-devkit/architect"],
         "esbuildOptions": {
           "outExtension": {
             ".js": ".js"
