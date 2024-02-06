@@ -1,14 +1,24 @@
-## 1.17.3 (2024-02-06)
+## 1.17.4 (2024-02-06)
 
 
 ### 🩹 Fixes
 
-- **logging:** Resolved invalid log file path issue ([5681c64](https://github.com/storm-software/storm-stack/commit/5681c64))
+- **logging:** Clean up the stopwatch logging formatting ([90e544a](https://github.com/storm-software/storm-stack/commit/90e544a))
 
 
 ### ❤️  Thank You
 
 - Patrick Sullivan
+
+## 1.17.3 (2024-02-06)
+
+### 🩹 Fixes
+
+-   **logging:** Resolved invalid log file path issue ([5681c64](https://github.com/storm-software/storm-stack/commit/5681c64))
+
+### ❤️ Thank You
+
+-   Patrick Sullivan
 
 ## 1.17.2 (2024-02-06)
 
