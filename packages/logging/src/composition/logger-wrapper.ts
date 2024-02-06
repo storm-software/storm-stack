@@ -19,13 +19,14 @@ export class LoggerWrapper implements ILoggerWrapper {
   };
 
   #logger: ILogger;
-  #name?: string;
-  #config: LoggingConfig;
 
-  private constructor(logger: ILogger, config: LoggingConfig, name?: string) {
+  private constructor(
+    logger: ILogger,
+    protected config: LoggingConfig,
+    protected name?: string
+  ) {
     this.#logger = logger;
-    this.#name = name;
-    this.#config = config ?? { stacktrace: true };
+    this.config = config ?? { stacktrace: true };
   }
 
   /**
@@ -144,7 +145,7 @@ export class LoggerWrapper implements ILoggerWrapper {
     const error = getCauseFromUnknown(obj);
 
     let message = error.print();
-    if (this.#config.stacktrace && isSet(error.stack)) {
+    if (this.config.stacktrace && isSet(error.stack)) {
       message += `\n${error.stack}`;
     }
 

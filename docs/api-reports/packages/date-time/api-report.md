@@ -205,7 +205,7 @@ class StormDateTime extends Date {
     getUTCSeconds(): number;
     get input(): DateTimeInput;
     get instant(): Temporal.Instant;
-    protected set instant(_instant: Temporal.Instant);
+    protected set instant(instant: Temporal.Instant);
     static isDateTime(obj: unknown): obj is StormDateTime;
     get isValid(): boolean;
     static maximum(): StormDateTime;
@@ -229,9 +229,9 @@ class StormDateTime extends Date {
     setUTCSeconds(second: number, millisecond?: number): number;
     since(dateTimeTo?: StormDateTime): Temporal.Duration;
     get timeZoneId(): string;
-    protected validate(value?: DateTimeInput, options?: DateTimeOptions): boolean;
+    protected validate(value?: DateTimeInput, _options?: DateTimeOptions): boolean;
     get zonedDateTime(): Temporal.ZonedDateTime;
-    protected set zonedDateTime(_zonedDateTime: Temporal.ZonedDateTime);
+    protected set zonedDateTime(zonedDateTime: Temporal.ZonedDateTime);
 }
 export { StormDateTime }
 export { StormDateTime as StormDateTime_alias_1 }

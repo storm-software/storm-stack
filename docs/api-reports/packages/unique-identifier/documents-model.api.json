@@ -173,34 +173,6 @@
       "preserveMemberOrder": false,
       "members": [
         {
-          "kind": "Variable",
-          "canonicalReference": "@storm-stack/unique-identifier!Crypto_2:var",
-          "docComment": "",
-          "excerptTokens": [
-            {
-              "kind": "Content",
-              "text": "Crypto: "
-            },
-            {
-              "kind": "Reference",
-              "text": "Crypto",
-              "canonicalReference": "!Crypto:interface"
-            },
-            {
-              "kind": "Content",
-              "text": " | undefined"
-            }
-          ],
-          "fileUrlPath": "tmp/.tsup/declaration/packages/unique-identifier/src/crypto.d.ts",
-          "isReadonly": true,
-          "releaseTag": "Public",
-          "name": "Crypto_2",
-          "variableTypeTokenRange": {
-            "startIndex": 1,
-            "endIndex": 3
-          }
-        },
-        {
           "kind": "Function",
           "canonicalReference": "@storm-stack/unique-identifier!cuid:function(1)",
           "docComment": "/**\n * Generate a random CUID\n *\n * @returns A random CUID string\n *\n * @example\n * ```typescript\n *\n * // Generate a random CUID\n * const id = cuid();\n * ```\n *\n */\n",
@@ -751,8 +723,13 @@
               "text": "export declare function uuid(): "
             },
             {
+              "kind": "Reference",
+              "text": "Promise",
+              "canonicalReference": "!Promise:interface"
+            },
+            {
               "kind": "Content",
-              "text": "string"
+              "text": "<string>"
             },
             {
               "kind": "Content",
@@ -762,7 +739,7 @@
           "fileUrlPath": "tmp/.tsup/declaration/packages/unique-identifier/src/uuid.d.ts",
           "returnTypeTokenRange": {
             "startIndex": 1,
-            "endIndex": 2
+            "endIndex": 3
           },
           "releaseTag": "Public",
           "overloadIndex": 1,

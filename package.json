@@ -121,10 +121,7 @@
   },
   "namespace": "@storm-stack",
   "nx": {
-    "includedScripts": [
-      "lint",
-      "format"
-    ]
+    "includedScripts": ["lint", "format"]
   },
   "pnpm": {
     "overrides": {
@@ -153,7 +150,8 @@
       "@storm-stack/frontend-components": "workspace:*",
       "@storm-stack/docs-website": "workspace:*",
       "@storm-stack/frontend-table": "workspace:*",
-      "@storm-stack/plugin-system": "workspace:*"
+      "@storm-stack/plugin-system": "workspace:*",
+      "@storm-stack/tools-nx": "workspace:*"
     }
   },
   "triggerEmptyDevReleaseByIncrementingThisNumber": 0

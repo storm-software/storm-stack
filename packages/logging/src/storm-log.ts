@@ -65,7 +65,6 @@ export class StormLog implements IStormLog {
   #logger: Logger<PinoLoggerOptions>;
   #additionalLoggers: ILoggerWrapper[];
   #logLevel: LogLevel;
-  #logLevelLabel: LogLevelLabel;
   #processes: Array<{ name: string; startedAt: StormTime }> = [];
 
   /**
@@ -86,7 +85,6 @@ export class StormLog implements IStormLog {
     this.#additionalLoggers = additionalLoggers;
 
     this.#logLevel = getLogLevel(config.logLevel);
-    this.#logLevelLabel = config.logLevel;
   }
 
   /**
@@ -228,9 +226,7 @@ export class StormLog implements IStormLog {
     StormLog.getLoggers().then((logger) => {
       StormLog.logLevel >= LogLevel.INFO &&
         logger.info(
-          `⏱️  The${name ? ` ${name}` : ""} process took ${formatSince(startTime.since())} to complete
-
-          `
+          `\n⏱️  Completed ${name ? ` ${name}` : ""} process in ${formatSince(startTime.since())}\n`
         );
     });
   }
@@ -359,14 +355,16 @@ export class StormLog implements IStormLog {
   }
 
   /**
-   * Start a process
+   * Start a logging process to track
    *
    * @param name - The name of the process
    */
   public start(name: string) {
-    if (this.#logLevel >= LogLevel.INFO) {
+    if (this.#logLevel >= LogLevel.INFO && !this.#processes.some((item) => item.name === name)) {
       this.#processes.push({ name, startedAt: StormTime.current() });
-      this.#logger.info(`▶️  Starting process: ${this.#processes.join(" ❯ ")}`);
+      this.#logger.info(
+        `▶️  Starting process ${this.#processes.map((item) => item.name).join(" ❯ ")}`
+      );
     }
   }
 
@@ -394,24 +392,20 @@ export class StormLog implements IStormLog {
       _startTime = this.#processes.find((item) => item.name === name)?.startedAt;
     }
 
-    let process = name;
-    if (
-      this.#processes.length > 0 &&
-      process &&
-      this.#processes.some((item) => item.name === process)
-    ) {
-      process = this.#processes
+    let proc = name;
+    if (this.#processes.length > 0 && proc && this.#processes.some((item) => item.name === proc)) {
+      proc = this.#processes
         .map((item) => item.name)
         .slice(
           0,
-          this.#processes.findIndex((item) => item.name === process)
+          this.#processes.findIndex((item) => item.name === proc)
         )
-        .join(" > ");
+        .join(" ❯ ");
     }
 
-    const message = `${
-      process ? `⏱️ Completed process ${process}` : "The process has completed"
-    } in ${_startTime ? formatSince(_startTime.since()) : "0ms"}\n\n`;
+    const message = `\n${proc ? `⏱️ Completed ${proc}` : "The process has completed"} in ${
+      _startTime ? formatSince(_startTime.since()) : "0ms"
+    }\n`;
 
     this.#logger.info(message);
     Promise.all(this.#additionalLoggers.map((logger) => logger.info(message)));

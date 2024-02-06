@@ -1,0 +1,37 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "$id": "tamagui",
+  "version": 2,
+  "title": "Storm-Stack Tamagui Compiler",
+  "description": "Run the [Tamagui compiler](https://tamagui.dev/docs/intro/why-a-compiler) to correctly format react components for web and mobile",
+  "type": "object",
+  "properties": {
+    "entry": {
+      "type": "string",
+      "description": "The path to the entry file, relative to project.",
+      "alias": "main",
+      "default": "{sourceRoot}/index.ts"
+    },
+    "outputPath": {
+      "type": "string",
+      "description": "The output path of the generated files.",
+      "x-completion-type": "directory",
+      "x-priority": "important",
+      "default": "dist/{projectRoot}"
+    },
+    "tsConfig": {
+      "type": "string",
+      "description": "The path to the `tsconfig.json` file.",
+      "x-completion-type": "file",
+      "x-completion-glob": "tsconfig.*.json",
+      "x-priority": "important",
+      "default": "tsconfig.json"
+    },
+    "clean": {
+      "type": "boolean",
+      "description": "Remove the output path before building.",
+      "default": true
+    },
+    "required": ["entry", "outputPath", "tsConfig"]
+  }
+}

@@ -1,0 +1,83 @@
+{
+  "name": "tools-nx",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "tools/nx/src",
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nx/esbuild:esbuild",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/tools/nx",
+        "tsConfig": "tools/nx/tsconfig.json",
+        "project": "tools/nx/package.json",
+        "main": "tools/nx/src/index.ts",
+        "additionalEntryPoints": ["tools/nx/src/executors/tamagui/executor.ts"],
+        "platform": "node",
+        "deleteOutputPath": true,
+        "bundle": true,
+        "thirdParty": true,
+        "skipTypeCheck": false,
+        "metafile": true,
+        "minify": false,
+        "format": ["cjs"],
+        "external": ["nx", "@nx/devkit", "@angular-devkit/architect"],
+        "esbuildOptions": {
+          "outExtension": {
+            ".js": ".js"
+          }
+        },
+        "assets": [
+          {
+            "input": "./tools/nx",
+            "glob": "*.md",
+            "output": "/"
+          },
+          {
+            "input": "",
+            "glob": "LICENSE",
+            "output": "/"
+          },
+          {
+            "input": "./tools/nx/src",
+            "glob": "**/!(*.ts)",
+            "output": "./src"
+          },
+          {
+            "input": "./tools/nx/src",
+            "glob": "**/*.d.ts",
+            "output": "./src"
+          },
+          {
+            "input": "./tools/nx",
+            "glob": "generators.json",
+            "output": "."
+          },
+          {
+            "input": "./tools/nx",
+            "glob": "executors.json",
+            "output": "."
+          },
+          {
+            "input": "./tools/nx",
+            "glob": "**/schema.json",
+            "output": "."
+          },
+          {
+            "input": "./tools/nx",
+            "glob": "**/files/**/{*.*,*}",
+            "output": "."
+          },
+          {
+            "input": "./tools/nx/assets",
+            "glob": "**/*.*",
+            "output": "./assets"
+          }
+        ]
+      }
+    },
+    "lint": {},
+    "test": {}
+  },
+  "tags": []
+}

@@ -71,17 +71,9 @@
       ]
     }
   ],
-
-  /******************************
-   * relay graph-ql
-   ******************************/
   "relay.autoStartCompiler": true,
   "relay.rootDirectory": "../",
   "relay.pathToConfig": "@storm-software/graphql-tools/config/relay.config.js",
-
-  /******************************
-   * VS Code Search
-   ******************************/
   "search.exclude": {
     "**/node_modules": true,
     "**/bower_components": true,
@@ -90,38 +82,18 @@
     "**/.next": true,
     "**/dist": true
   },
-
-  /******************************
-   * VS Code colorization
-   ******************************/
   "workbench.colorCustomizations": {
     "statusBar.background": "#1d232a",
     "statusBarItem.hoverBackground": "#313C47",
     "statusBar.foreground": "#1fb2a6"
   },
-
-  /******************************
-   * Peacock colorization
-   ******************************/
   "peacock.color": "#1fb2a6",
-
-  /******************************
-   * bracket pair colorization
-   ******************************/
   "editor.bracketPairColorization.enabled": true,
   "editor.guides.bracketPairs": "active",
   "editor.tabCompletion": "on",
-
-  /******************************
-   * Typescript
-   ******************************/
   "typescript.tsserver.log": "verbose",
   "typescript.tsdk": "node_modules/typescript/lib",
   "typescript.enablePromptUseWorkspaceTsdk": true,
-
-  /******************************
-   * Tailwind CSS
-   ******************************/
   "tailwindCSS.experimental.classRegex": [
     [
       "cva(?:<[^>]*>)?(([^)]*))",
@@ -129,19 +101,10 @@
       "(?:twMerge|twJoin)\\(([^\\);]*)[\\);]"
     ]
   ],
-
-  /******************************
-   * BiomeJs
-   ******************************/
   "biome.rename": true,
-
   "editor.codeActionsOnSave": {
     "quickfix.biome": "explicit"
   },
-
-  /******************************
-   * eslint / prettier
-   ******************************/
   "editor.formatOnSave": false,
   "editor.defaultFormatter": "biomejs.biome",
   "files.associations": {
@@ -149,7 +112,6 @@
     "*.acid": "acidic",
     "*.acidic": "acidic"
   },
-
   "[javascript]": {
     "editor.formatOnSave": true,
     "editor.defaultFormatter": "biomejs.biome",
@@ -194,50 +156,26 @@
     "editor.formatOnSave": true,
     "editor.defaultFormatter": "biomejs.biome"
   },
-
-  /******************************
-   * Markdown
-   ******************************/
   "[markdown]": {
     "editor.formatOnSave": true,
     "editor.formatOnPaste": true
   },
-
-  /******************************
-   * Prisma
-   ******************************/
   "[prisma]": {
     "editor.formatOnSave": true,
     "editor.defaultFormatter": "Prisma.prisma"
   },
-
-  /******************************
-   * Acidic
-   ******************************/
   "[acidic]": {
     "editor.formatOnSave": true,
     "editor.defaultFormatter": "Prisma.prisma"
   },
-
-  /******************************
-   * Handlebars
-   ******************************/
   "[handlebars]": {
     "editor.formatOnSave": false,
     "editor.defaultFormatter": "biomejs.biome"
   },
-
-  /******************************
-   * csharpier
-   ******************************/
   "[csharp]": {
     "editor.formatOnSave": true,
     "editor.defaultFormatter": "biomejs.biome"
   },
-
-  /******************************
-   * vscode-icons
-   ******************************/
   "vsicons.associations.files": [
     {
       "icon": "registry",
@@ -383,10 +321,6 @@
       "format": "svg"
     }
   ],
-
-  /******************************
-   * commitizen
-   ******************************/
   "commitizen.capitalizeWindowsDriveLetter": true,
   "commitizen.autoSync": false,
   "commitizen.showOutputChannel": "always",
@@ -396,5 +330,6 @@
       "quickfix.biome": "explicit",
       "source.sortMembers": "explicit"
     }
-  }
+  },
+  "eslint.validate": ["json"]
 }

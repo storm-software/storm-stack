@@ -4,10 +4,6 @@
 
 ```ts
 
-// @public (undocumented)
-const Crypto_2: Crypto | undefined;
-export { Crypto_2 as Crypto }
-
 // @public
 function cuid(): string;
 export { cuid }
@@ -69,7 +65,7 @@ export { SnowflakeResolvable }
 export { SnowflakeResolvable as SnowflakeResolvable_alias_1 }
 
 // @public
-function uuid(): string;
+function uuid(): Promise<string>;
 export { uuid }
 export { uuid as uuid_alias_1 }
 

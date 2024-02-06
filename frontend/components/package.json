@@ -9,6 +9,7 @@
     "directory": "frontend/components"
   },
   "type": "module",
+  "sideEffects": ["*.css"],
   "dependencies": {
     "@tamagui/font-inter": "^1.79.17",
     "@tamagui/react-native-media-driver": "^1.79.17",

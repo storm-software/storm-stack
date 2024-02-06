@@ -4,6 +4,83 @@
 
 ```ts
 
+/// <reference types="node" />
+
+import { BinaryLike } from 'crypto';
+import { BinaryToTextEncoding } from 'crypto';
+import { Certificate } from 'crypto';
+import { CheckPrimeOptions } from 'crypto';
+import { Cipher } from 'crypto';
+import { CipherCCM } from 'crypto';
+import { CipherCCMOptions } from 'crypto';
+import { CipherCCMTypes } from 'crypto';
+import { CipherGCM } from 'crypto';
+import { CipherGCMOptions } from 'crypto';
+import { CipherGCMTypes } from 'crypto';
+import { CipherInfo } from 'crypto';
+import { CipherInfoOptions } from 'crypto';
+import { CipherKey } from 'crypto';
+import { CipherOCB } from 'crypto';
+import { CipherOCBOptions } from 'crypto';
+import { CipherOCBTypes } from 'crypto';
+import { constants } from 'crypto';
+import { Decipher } from 'crypto';
+import { DecipherCCM } from 'crypto';
+import { DecipherGCM } from 'crypto';
+import { DecipherOCB } from 'crypto';
+import { DiffieHellman } from 'crypto';
+import { DiffieHellmanGroup } from 'crypto';
+import { DiffieHellmanGroupConstructor } from 'crypto';
+import { DSAKeyPairKeyObjectOptions } from 'crypto';
+import { DSAKeyPairOptions } from 'crypto';
+import { ECDH } from 'crypto';
+import { ECKeyPairKeyObjectOptions } from 'crypto';
+import { ECKeyPairOptions } from 'crypto';
+import { ED25519KeyPairKeyObjectOptions } from 'crypto';
+import { ED25519KeyPairOptions } from 'crypto';
+import { ED448KeyPairKeyObjectOptions } from 'crypto';
+import { ED448KeyPairOptions } from 'crypto';
+import { generateKeyPair } from 'crypto';
+import { GeneratePrimeOptions } from 'crypto';
+import { GeneratePrimeOptionsArrayBuffer } from 'crypto';
+import { GeneratePrimeOptionsBigInt } from 'crypto';
+import { Hash } from 'crypto';
+import { HashOptions } from 'crypto';
+import { Hmac } from 'crypto';
+import { JsonWebKeyInput } from 'crypto';
+import { KeyLike } from 'crypto';
+import { KeyObject } from 'crypto';
+import { KeyPairKeyObjectResult } from 'crypto';
+import { KeyPairSyncResult } from 'crypto';
+import { LargeNumberLike } from 'crypto';
+import { nodeCrypto } from 'node:crypto';
+import { PrivateKeyInput } from 'crypto';
+import { PublicKeyInput } from 'crypto';
+import { RandomUUIDOptions } from 'crypto';
+import { RSAKeyPairKeyObjectOptions } from 'crypto';
+import { RSAKeyPairOptions } from 'crypto';
+import { RsaPrivateKey } from 'crypto';
+import { RSAPSSKeyPairKeyObjectOptions } from 'crypto';
+import { RSAPSSKeyPairOptions } from 'crypto';
+import { RsaPublicKey } from 'crypto';
+import { ScryptOptions } from 'crypto';
+import { SecureHeapUsage } from 'crypto';
+import { Sign } from 'crypto';
+import { SignKeyObjectInput } from 'crypto';
+import { SignPrivateKeyInput } from 'crypto';
+import { TransformOptions } from 'stream';
+import { Verify } from 'crypto';
+import { VerifyJsonWebKeyInput } from 'crypto';
+import { VerifyKeyObjectInput } from 'crypto';
+import { VerifyPublicKeyInput } from 'crypto';
+import { webcrypto } from 'crypto';
+import { WritableOptions } from 'stream';
+import { X25519KeyPairKeyObjectOptions } from 'crypto';
+import { X25519KeyPairOptions } from 'crypto';
+import { X448KeyPairKeyObjectOptions } from 'crypto';
+import { X448KeyPairOptions } from 'crypto';
+import { X509Certificate } from 'crypto';
+
 // @public (undocumented)
 const $NestedValue: unique symbol;
 export { $NestedValue }
@@ -156,7 +233,155 @@ export { getUnique as getUnique_alias_1 }
 export { getUnique as getUnique_alias_2 }
 
 // @public
-const getWebCrypto: () => Crypto;
+const getWebCrypto: () => Promise<Crypto | {
+    default: nodeCrypto;
+    createHash(algorithm: string, options?: HashOptions | undefined): Hash;
+    createHmac(algorithm: string, key: KeyObject | BinaryLike, options?: TransformOptions | undefined): Hmac;
+    createCipher(algorithm: CipherCCMTypes, password: BinaryLike, options: CipherCCMOptions): CipherCCM;
+    createCipher(algorithm: CipherGCMTypes, password: BinaryLike, options?: CipherGCMOptions | undefined): CipherGCM;
+    createCipher(algorithm: string, password: BinaryLike, options?: TransformOptions | undefined): Cipher;
+    createCipheriv(algorithm: CipherCCMTypes, key: CipherKey, iv: BinaryLike, options: CipherCCMOptions): CipherCCM;
+    createCipheriv(algorithm: CipherOCBTypes, key: CipherKey, iv: BinaryLike, options: CipherOCBOptions): CipherOCB;
+    createCipheriv(algorithm: CipherGCMTypes, key: CipherKey, iv: BinaryLike, options?: CipherGCMOptions | undefined): CipherGCM;
+    createCipheriv(algorithm: string, key: CipherKey, iv: BinaryLike | null, options?: TransformOptions | undefined): Cipher;
+    createDecipher(algorithm: CipherCCMTypes, password: BinaryLike, options: CipherCCMOptions): DecipherCCM;
+    createDecipher(algorithm: CipherGCMTypes, password: BinaryLike, options?: CipherGCMOptions | undefined): DecipherGCM;
+    createDecipher(algorithm: string, password: BinaryLike, options?: TransformOptions | undefined): Decipher;
+    createDecipheriv(algorithm: CipherCCMTypes, key: CipherKey, iv: BinaryLike, options: CipherCCMOptions): DecipherCCM;
+    createDecipheriv(algorithm: CipherOCBTypes, key: CipherKey, iv: BinaryLike, options: CipherOCBOptions): DecipherOCB;
+    createDecipheriv(algorithm: CipherGCMTypes, key: CipherKey, iv: BinaryLike, options?: CipherGCMOptions | undefined): DecipherGCM;
+    createDecipheriv(algorithm: string, key: CipherKey, iv: BinaryLike | null, options?: TransformOptions | undefined): Decipher;
+    generateKey(type: "hmac" | "aes", options: {
+        length: number;
+    }, callback: (err: Error | null, key: KeyObject) => void): void;
+    generateKeySync(type: "hmac" | "aes", options: {
+        length: number;
+    }): KeyObject;
+    createPrivateKey(key: string | Buffer | PrivateKeyInput | JsonWebKeyInput): KeyObject;
+    createPublicKey(key: string | KeyObject | Buffer | JsonWebKeyInput | PublicKeyInput): KeyObject;
+    createSecretKey(key: NodeJS.ArrayBufferView): KeyObject;
+    createSecretKey(key: string, encoding: BufferEncoding): KeyObject;
+    createSign(algorithm: string, options?: WritableOptions | undefined): Sign;
+    createVerify(algorithm: string, options?: WritableOptions | undefined): Verify;
+    createDiffieHellman(primeLength: number, generator?: number | undefined): DiffieHellman;
+    createDiffieHellman(prime: ArrayBuffer | NodeJS.ArrayBufferView, generator?: number | ArrayBuffer | NodeJS.ArrayBufferView | undefined): DiffieHellman;
+    createDiffieHellman(prime: ArrayBuffer | NodeJS.ArrayBufferView, generator: string, generatorEncoding: BinaryToTextEncoding): DiffieHellman;
+    createDiffieHellman(prime: string, primeEncoding: BinaryToTextEncoding, generator?: number | ArrayBuffer | NodeJS.ArrayBufferView | undefined): DiffieHellman;
+    createDiffieHellman(prime: string, primeEncoding: BinaryToTextEncoding, generator: string, generatorEncoding: BinaryToTextEncoding): DiffieHellman;
+    getDiffieHellman(groupName: string): DiffieHellmanGroup;
+    createDiffieHellmanGroup(name: string): DiffieHellmanGroup;
+    pbkdf2(password: BinaryLike, salt: BinaryLike, iterations: number, keylen: number, digest: string, callback: (err: Error | null, derivedKey: Buffer) => void): void;
+    pbkdf2Sync(password: BinaryLike, salt: BinaryLike, iterations: number, keylen: number, digest: string): Buffer;
+    randomBytes(size: number): Buffer;
+    randomBytes(size: number, callback: (err: Error | null, buf: Buffer) => void): void;
+    pseudoRandomBytes(size: number): Buffer;
+    pseudoRandomBytes(size: number, callback: (err: Error | null, buf: Buffer) => void): void;
+    randomInt(max: number): number;
+    randomInt(min: number, max: number): number;
+    randomInt(max: number, callback: (err: Error | null, value: number) => void): void;
+    randomInt(min: number, max: number, callback: (err: Error | null, value: number) => void): void;
+    randomFillSync<T extends NodeJS.ArrayBufferView>(buffer: T, offset?: number | undefined, size?: number | undefined): T;
+    randomFill<T_1 extends NodeJS.ArrayBufferView>(buffer: T_1, callback: (err: Error | null, buf: T_1) => void): void;
+    randomFill<T_2 extends NodeJS.ArrayBufferView>(buffer: T_2, offset: number, callback: (err: Error | null, buf: T_2) => void): void;
+    randomFill<T_3 extends NodeJS.ArrayBufferView>(buffer: T_3, offset: number, size: number, callback: (err: Error | null, buf: T_3) => void): void;
+    scrypt(password: BinaryLike, salt: BinaryLike, keylen: number, callback: (err: Error | null, derivedKey: Buffer) => void): void;
+    scrypt(password: BinaryLike, salt: BinaryLike, keylen: number, options: ScryptOptions, callback: (err: Error | null, derivedKey: Buffer) => void): void;
+    scryptSync(password: BinaryLike, salt: BinaryLike, keylen: number, options?: ScryptOptions | undefined): Buffer;
+    publicEncrypt(key: RsaPublicKey | RsaPrivateKey | KeyLike, buffer: NodeJS.ArrayBufferView): Buffer;
+    publicDecrypt(key: RsaPublicKey | RsaPrivateKey | KeyLike, buffer: NodeJS.ArrayBufferView): Buffer;
+    privateDecrypt(privateKey: RsaPrivateKey | KeyLike, buffer: NodeJS.ArrayBufferView): Buffer;
+    privateEncrypt(privateKey: RsaPrivateKey | KeyLike, buffer: NodeJS.ArrayBufferView): Buffer;
+    getCiphers(): string[];
+    getCurves(): string[];
+    getFips(): 0 | 1;
+    setFips(bool: boolean): void;
+    getHashes(): string[];
+    createECDH(curveName: string): ECDH;
+    timingSafeEqual(a: NodeJS.ArrayBufferView, b: NodeJS.ArrayBufferView): boolean;
+    generateKeyPairSync(type: "rsa", options: RSAKeyPairOptions<"pem", "pem">): KeyPairSyncResult<string, string>;
+    generateKeyPairSync(type: "rsa", options: RSAKeyPairOptions<"pem", "der">): KeyPairSyncResult<string, Buffer>;
+    generateKeyPairSync(type: "rsa", options: RSAKeyPairOptions<"der", "pem">): KeyPairSyncResult<Buffer, string>;
+    generateKeyPairSync(type: "rsa", options: RSAKeyPairOptions<"der", "der">): KeyPairSyncResult<Buffer, Buffer>;
+    generateKeyPairSync(type: "rsa", options: RSAKeyPairKeyObjectOptions): KeyPairKeyObjectResult;
+    generateKeyPairSync(type: "rsa-pss", options: RSAPSSKeyPairOptions<"pem", "pem">): KeyPairSyncResult<string, string>;
+    generateKeyPairSync(type: "rsa-pss", options: RSAPSSKeyPairOptions<"pem", "der">): KeyPairSyncResult<string, Buffer>;
+    generateKeyPairSync(type: "rsa-pss", options: RSAPSSKeyPairOptions<"der", "pem">): KeyPairSyncResult<Buffer, string>;
+    generateKeyPairSync(type: "rsa-pss", options: RSAPSSKeyPairOptions<"der", "der">): KeyPairSyncResult<Buffer, Buffer>;
+    generateKeyPairSync(type: "rsa-pss", options: RSAPSSKeyPairKeyObjectOptions): KeyPairKeyObjectResult;
+    generateKeyPairSync(type: "dsa", options: DSAKeyPairOptions<"pem", "pem">): KeyPairSyncResult<string, string>;
+    generateKeyPairSync(type: "dsa", options: DSAKeyPairOptions<"pem", "der">): KeyPairSyncResult<string, Buffer>;
+    generateKeyPairSync(type: "dsa", options: DSAKeyPairOptions<"der", "pem">): KeyPairSyncResult<Buffer, string>;
+    generateKeyPairSync(type: "dsa", options: DSAKeyPairOptions<"der", "der">): KeyPairSyncResult<Buffer, Buffer>;
+    generateKeyPairSync(type: "dsa", options: DSAKeyPairKeyObjectOptions): KeyPairKeyObjectResult;
+    generateKeyPairSync(type: "ec", options: ECKeyPairOptions<"pem", "pem">): KeyPairSyncResult<string, string>;
+    generateKeyPairSync(type: "ec", options: ECKeyPairOptions<"pem", "der">): KeyPairSyncResult<string, Buffer>;
+    generateKeyPairSync(type: "ec", options: ECKeyPairOptions<"der", "pem">): KeyPairSyncResult<Buffer, string>;
+    generateKeyPairSync(type: "ec", options: ECKeyPairOptions<"der", "der">): KeyPairSyncResult<Buffer, Buffer>;
+    generateKeyPairSync(type: "ec", options: ECKeyPairKeyObjectOptions): KeyPairKeyObjectResult;
+    generateKeyPairSync(type: "ed25519", options: ED25519KeyPairOptions<"pem", "pem">): KeyPairSyncResult<string, string>;
+    generateKeyPairSync(type: "ed25519", options: ED25519KeyPairOptions<"pem", "der">): KeyPairSyncResult<string, Buffer>;
+    generateKeyPairSync(type: "ed25519", options: ED25519KeyPairOptions<"der", "pem">): KeyPairSyncResult<Buffer, string>;
+    generateKeyPairSync(type: "ed25519", options: ED25519KeyPairOptions<"der", "der">): KeyPairSyncResult<Buffer, Buffer>;
+    generateKeyPairSync(type: "ed25519", options?: ED25519KeyPairKeyObjectOptions | undefined): KeyPairKeyObjectResult;
+    generateKeyPairSync(type: "ed448", options: ED448KeyPairOptions<"pem", "pem">): KeyPairSyncResult<string, string>;
+    generateKeyPairSync(type: "ed448", options: ED448KeyPairOptions<"pem", "der">): KeyPairSyncResult<string, Buffer>;
+    generateKeyPairSync(type: "ed448", options: ED448KeyPairOptions<"der", "pem">): KeyPairSyncResult<Buffer, string>;
+    generateKeyPairSync(type: "ed448", options: ED448KeyPairOptions<"der", "der">): KeyPairSyncResult<Buffer, Buffer>;
+    generateKeyPairSync(type: "ed448", options?: ED448KeyPairKeyObjectOptions | undefined): KeyPairKeyObjectResult;
+    generateKeyPairSync(type: "x25519", options: X25519KeyPairOptions<"pem", "pem">): KeyPairSyncResult<string, string>;
+    generateKeyPairSync(type: "x25519", options: X25519KeyPairOptions<"pem", "der">): KeyPairSyncResult<string, Buffer>;
+    generateKeyPairSync(type: "x25519", options: X25519KeyPairOptions<"der", "pem">): KeyPairSyncResult<Buffer, string>;
+    generateKeyPairSync(type: "x25519", options: X25519KeyPairOptions<"der", "der">): KeyPairSyncResult<Buffer, Buffer>;
+    generateKeyPairSync(type: "x25519", options?: X25519KeyPairKeyObjectOptions | undefined): KeyPairKeyObjectResult;
+    generateKeyPairSync(type: "x448", options: X448KeyPairOptions<"pem", "pem">): KeyPairSyncResult<string, string>;
+    generateKeyPairSync(type: "x448", options: X448KeyPairOptions<"pem", "der">): KeyPairSyncResult<string, Buffer>;
+    generateKeyPairSync(type: "x448", options: X448KeyPairOptions<"der", "pem">): KeyPairSyncResult<Buffer, string>;
+    generateKeyPairSync(type: "x448", options: X448KeyPairOptions<"der", "der">): KeyPairSyncResult<Buffer, Buffer>;
+    generateKeyPairSync(type: "x448", options?: X448KeyPairKeyObjectOptions | undefined): KeyPairKeyObjectResult;
+    generateKeyPair: generateKeyPair;
+    sign(algorithm: string | null | undefined, data: NodeJS.ArrayBufferView, key: KeyLike | SignKeyObjectInput | SignPrivateKeyInput): Buffer;
+    sign(algorithm: string | null | undefined, data: NodeJS.ArrayBufferView, key: KeyLike | SignKeyObjectInput | SignPrivateKeyInput, callback: (error: Error | null, data: Buffer) => void): void;
+    verify(algorithm: string | null | undefined, data: NodeJS.ArrayBufferView, key: KeyLike | VerifyKeyObjectInput | VerifyPublicKeyInput | VerifyJsonWebKeyInput, signature: NodeJS.ArrayBufferView): boolean;
+    verify(algorithm: string | null | undefined, data: NodeJS.ArrayBufferView, key: KeyLike | VerifyKeyObjectInput | VerifyPublicKeyInput | VerifyJsonWebKeyInput, signature: NodeJS.ArrayBufferView, callback: (error: Error | null, result: boolean) => void): void;
+    diffieHellman(options: {
+        privateKey: KeyObject;
+        publicKey: KeyObject;
+    }): Buffer;
+    getCipherInfo(nameOrNid: string | number, options?: CipherInfoOptions | undefined): CipherInfo | undefined;
+    hkdf(digest: string, irm: KeyObject | BinaryLike, salt: BinaryLike, info: BinaryLike, keylen: number, callback: (err: Error | null, derivedKey: ArrayBuffer) => void): void;
+    hkdfSync(digest: string, ikm: KeyObject | BinaryLike, salt: BinaryLike, info: BinaryLike, keylen: number): ArrayBuffer;
+    secureHeapUsed(): SecureHeapUsage;
+    randomUUID(options?: RandomUUIDOptions | undefined): `${string}-${string}-${string}-${string}-${string}`;
+    generatePrime(size: number, callback: (err: Error | null, prime: ArrayBuffer) => void): void;
+    generatePrime(size: number, options: GeneratePrimeOptionsBigInt, callback: (err: Error | null, prime: bigint) => void): void;
+    generatePrime(size: number, options: GeneratePrimeOptionsArrayBuffer, callback: (err: Error | null, prime: ArrayBuffer) => void): void;
+    generatePrime(size: number, options: GeneratePrimeOptions, callback: (err: Error | null, prime: bigint | ArrayBuffer) => void): void;
+    generatePrimeSync(size: number): ArrayBuffer;
+    generatePrimeSync(size: number, options: GeneratePrimeOptionsBigInt): bigint;
+    generatePrimeSync(size: number, options: GeneratePrimeOptionsArrayBuffer): ArrayBuffer;
+    generatePrimeSync(size: number, options: GeneratePrimeOptions): bigint | ArrayBuffer;
+    checkPrime(value: LargeNumberLike, callback: (err: Error | null, result: boolean) => void): void;
+    checkPrime(value: LargeNumberLike, options: CheckPrimeOptions, callback: (err: Error | null, result: boolean) => void): void;
+    checkPrimeSync(candidate: LargeNumberLike, options?: CheckPrimeOptions | undefined): boolean;
+    setEngine(engine: string, flags?: number | undefined): void;
+    getRandomValues<T_4 extends webcrypto.BufferSource>(typedArray: T_4): T_4;
+    Certificate: Certificate;
+    constants: constants;
+    fips: boolean;
+    Hash: Hash;
+    Hmac: Hmac;
+    KeyObject: KeyObject;
+    Cipher: Cipher;
+    Decipher: Decipher;
+    Sign: Sign;
+    Verify: Verify;
+    DiffieHellman: DiffieHellman;
+    DiffieHellmanGroup: DiffieHellmanGroupConstructor;
+    ECDH: ECDH;
+    X509Certificate: X509Certificate;
+    subtle: webcrypto.SubtleCrypto;
+    webcrypto: webcrypto.Crypto;
+}>;
 export { getWebCrypto }
 export { getWebCrypto as getWebCrypto_alias_1 }
 export { getWebCrypto as getWebCrypto_alias_2 }
@@ -584,7 +809,7 @@ type SetRequired<BaseType, Keys extends keyof BaseType> = BaseType extends unkno
 export { SetRequired }
 export { SetRequired as SetRequired_alias_1 }
 
-// @public (undocumented)
+// @public
 const sha256: (value: string) => Promise<string>;
 export { sha256 }
 export { sha256 as sha256_alias_1 }

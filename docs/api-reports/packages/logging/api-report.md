@@ -4,275 +4,173 @@
 
 ```ts
 
+/// <reference types="node" />
+
+import { Command } from 'commander';
+import { ExecOptions } from 'child_process';
+import { Fonts } from 'figlet';
+import type { Logger } from 'pino';
+import type { LoggerOptions } from 'pino';
+import { Options } from 'figlet';
+import type pino from 'pino';
+import { Readable } from 'node:stream';
+import { StdioOptions } from 'child_process';
+import { StormConfig } from '@storm-software/config-tools';
 import { Temporal } from '@js-temporal/polyfill';
+import type * as z from 'zod';
 
 // @public (undocumented)
-type DateTimeErrorCode = ErrorCode | "datetime_create_failure" | "ms_format" | "formatting_failure";
-
-// @public (undocumented)
-const DateTimeErrorCode: {
-    datetime_create_failure: DateTimeErrorCode;
-    ms_format: DateTimeErrorCode;
-    formatting_failure: DateTimeErrorCode;
-    success: ErrorCode;
-    missing_issue_code: ErrorCode;
-    invalid_config: ErrorCode;
-    failed_to_load_file: ErrorCode;
-    missing_context: ErrorCode;
-    record_not_found: ErrorCode;
-    required_field_missing: ErrorCode;
-    database_query_error: ErrorCode;
-    model_validation_error: ErrorCode;
-    field_validation_error: ErrorCode;
-    invalid_parameter: ErrorCode;
-    invalid_request: ErrorCode;
-    type_error: ErrorCode;
-    processing_error: ErrorCode;
-    internal_server_error: ErrorCode;
-    user_not_logged_in: ErrorCode;
-    unknown_cause: ErrorCode;
-};
-export { DateTimeErrorCode }
-export { DateTimeErrorCode as DateTimeErrorCode_alias_1 }
-
-// @public
-type DateTimeInput = StormDateTime | Temporal.Instant | Date | string | number | bigint | null | undefined;
-export { DateTimeInput }
-export { DateTimeInput as DateTimeInput_alias_1 }
-
-// @public
-interface DateTimeOptions {
-    calendar?: Temporal.CalendarLike;
-    skipDefaulting?: boolean;
-    timeZone?: Temporal.TimeZoneLike;
+interface CLIArgument {
+    // (undocumented)
+    default?: unknown | undefined;
+    // (undocumented)
+    description?: string;
+    // (undocumented)
+    flags: string;
 }
-export { DateTimeOptions }
-export { DateTimeOptions as DateTimeOptions_alias_1 }
-
-// @public
-function deserializeStormDate(utcString: JsonValue): StormDate;
-export { deserializeStormDate }
-export { deserializeStormDate as deserializeStormDate_alias_1 }
-
-// @public
-function deserializeStormDateTime(utcString: JsonValue): StormDateTime;
-export { deserializeStormDateTime }
-export { deserializeStormDateTime as deserializeStormDateTime_alias_1 }
-
-// @public
-function deserializeStormTime(utcString: JsonValue): StormTime;
-export { deserializeStormTime }
-export { deserializeStormTime as deserializeStormTime_alias_1 }
-
-// @public
-const formatDate: (dateTime?: StormDateTime, options?: Partial<Temporal.ZonedDateTimeToStringOptions>) => string;
-export { formatDate }
-export { formatDate as formatDate_alias_1 }
-export { formatDate as formatDate_alias_2 }
-
-// @public
-const formatDateTime: (dateTime?: StormDateTime, options?: Partial<Temporal.ZonedDateTimeToStringOptions>) => string;
-export { formatDateTime }
-export { formatDateTime as formatDateTime_alias_1 }
-export { formatDateTime as formatDateTime_alias_2 }
-
-// @public
-const formatDateTimeISO: (dateTime?: StormDateTime | null, options?: Partial<Temporal.ZonedDateTimeToStringOptions>) => string;
-export { formatDateTimeISO }
-export { formatDateTimeISO as formatDateTimeISO_alias_1 }
-export { formatDateTimeISO as formatDateTimeISO_alias_2 }
-
-// @public
-const formatSince: (dateTimeOrDuration: StormDateTime | Temporal.Duration, dateTimeTo?: StormDateTime, options?: FormatSinceOptions) => string;
-export { formatSince }
-export { formatSince as formatSince_alias_1 }
-export { formatSince as formatSince_alias_2 }
-
-// @public
-type FormatSinceOptions = {
-    colonNotation?: boolean;
-    compact?: boolean;
-    formatSubMilliseconds?: boolean;
-    keepDecimalsOnWholeSeconds?: boolean;
-    millisecondsDecimalDigits?: number;
-    secondsDecimalDigits?: number;
-    separateMilliseconds?: boolean;
-    unitCount?: number;
-    verbose?: boolean;
-};
-export { FormatSinceOptions }
-export { FormatSinceOptions as FormatSinceOptions_alias_1 }
-export { FormatSinceOptions as FormatSinceOptions_alias_2 }
-
-// @public
-const formatTime: (dateTime?: StormDateTime, options?: Partial<Temporal.ZonedDateTimeToStringOptions>) => string;
-export { formatTime }
-export { formatTime as formatTime_alias_1 }
-export { formatTime as formatTime_alias_2 }
-
-// @public
-function isDateTime(obj: unknown): obj is StormDateTime;
-export { isDateTime }
-export { isDateTime as isDateTime_alias_1 }
-export { isDateTime as isDateTime_alias_2 }
-
-// @public
-function isInstant(value: unknown): value is Temporal.Instant;
-export { isInstant }
-export { isInstant as isInstant_alias_1 }
-export { isInstant as isInstant_alias_2 }
+export { CLIArgument }
+export { CLIArgument as CLIArgument_alias_1 }
 
 // @public (undocumented)
-const RFC_3339_DATE_REGEX: RegExp;
-export { RFC_3339_DATE_REGEX }
-export { RFC_3339_DATE_REGEX as RFC_3339_DATE_REGEX_alias_1 }
-
-// @public (undocumented)
-const RFC_3339_DATETIME_REGEX: RegExp;
-export { RFC_3339_DATETIME_REGEX }
-export { RFC_3339_DATETIME_REGEX as RFC_3339_DATETIME_REGEX_alias_1 }
-
-// @public (undocumented)
-const RFC_3339_TIME_REGEX: RegExp;
-export { RFC_3339_TIME_REGEX }
-export { RFC_3339_TIME_REGEX as RFC_3339_TIME_REGEX_alias_1 }
-
-// @public
-function serializeStormDate(date: StormDate): string;
-export { serializeStormDate }
-export { serializeStormDate as serializeStormDate_alias_1 }
-
-// @public
-function serializeStormDateTime(dateTime: StormDateTime): string;
-export { serializeStormDateTime }
-export { serializeStormDateTime as serializeStormDateTime_alias_1 }
-
-// @public
-function serializeStormTime(date: StormTime): string;
-export { serializeStormTime }
-export { serializeStormTime as serializeStormTime_alias_1 }
-
-// @public
-class StormDate extends StormDateTime {
-    constructor(dateTime?: DateTimeInput, options?: DateTimeOptions);
-    static create: (date?: DateTimeInput, options?: DateTimeOptions) => StormDate;
-    static current(): StormDate;
-    getDuration(dateTimeTo?: StormDateTime): Temporal.Duration;
-    getHours(): number;
-    getMilliseconds(): number;
-    getMinutes(): number;
-    getSeconds(): number;
-    getTimezoneOffset(): number;
-    getUTCHours(): number;
-    getUTCMilliseconds(): number;
-    getUTCMinutes(): number;
-    getUTCSeconds(): number;
-    static maximum(): StormDate;
-    static minimum(): StormDate;
-    static now(): number;
-    protected validate(value?: DateTimeInput, options?: DateTimeOptions): boolean;
+interface CLICommand {
+    // (undocumented)
+    action: (...args: any[]) => MaybePromise<void>;
+    // (undocumented)
+    argument?: CLIArgument[];
+    // (undocumented)
+    commands?: CLICommand[];
+    // (undocumented)
+    description: string;
+    // (undocumented)
+    name: string;
+    // (undocumented)
+    options?: CLIOption[];
 }
-export { StormDate }
-export { StormDate as StormDate_alias_1 }
-
-// @public
-class StormDateTime extends Date {
-    constructor(dateTime?: DateTimeInput, options?: DateTimeOptions);
-    get calendarId(): string;
-    static create: (dateTime?: DateTimeInput, options?: DateTimeOptions) => StormDateTime;
-    static current(): StormDateTime;
-    get epochMilliseconds(): number;
-    getDate(): number;
-    getDay(): number;
-    getDuration(dateTimeTo?: StormDateTime): Temporal.Duration;
-    getFullYear(): number;
-    getHours(): number;
-    getMilliseconds(): number;
-    getMinutes(): number;
-    getMonth(): number;
-    getPlainDate(): StormDateTime;
-    getPlainTime(): StormDateTime;
-    getSeconds(): number;
-    getTime(): number;
-    getTimezoneOffset(): number;
-    getUTCDate(): number;
-    getUTCDay(): number;
-    getUTCFullYear(): number;
-    getUTCHours(): number;
-    getUTCMilliseconds(): number;
-    getUTCMinutes(): number;
-    getUTCMonth(): number;
-    getUTCSeconds(): number;
-    get input(): DateTimeInput;
-    get instant(): Temporal.Instant;
-    protected set instant(_instant: Temporal.Instant);
-    static isDateTime(obj: unknown): obj is StormDateTime;
-    get isValid(): boolean;
-    static maximum(): StormDateTime;
-    static minimum(): StormDateTime;
-    static now(): number;
-    get options(): DateTimeOptions;
-    setDate(day: number): number;
-    setFullYear(year: number, month?: number, day?: number): number;
-    setHours(hour: number, minute: number, second?: number, millisecond?: number): number;
-    setMilliseconds(millisecond: number): number;
-    setMinutes(minute: number, second?: number, millisecond?: number): number;
-    setMonth(month: number, day?: number): number;
-    setSeconds(second: number, millisecond?: number): number;
-    setTime(time: number): number;
-    setUTCDate(day: number): number;
-    setUTCFullYear(year: number, month?: number, day?: number): number;
-    setUTCHours(hour: number, minute: number, second?: number, millisecond?: number): number;
-    setUTCMilliseconds(millisecond: number): number;
-    setUTCMinutes(minute: number, second?: number, millisecond?: number): number;
-    setUTCMonth(month: number, day?: number): number;
-    setUTCSeconds(second: number, millisecond?: number): number;
-    since(dateTimeTo?: StormDateTime): Temporal.Duration;
-    get timeZoneId(): string;
-    protected validate(value?: DateTimeInput, options?: DateTimeOptions): boolean;
-    get zonedDateTime(): Temporal.ZonedDateTime;
-    protected set zonedDateTime(_zonedDateTime: Temporal.ZonedDateTime);
-}
-export { StormDateTime }
-export { StormDateTime as StormDateTime_alias_1 }
-
-// @public
-class StormTime extends StormDateTime {
-    constructor(dateTime?: DateTimeInput, options?: DateTimeOptions);
-    static create: (time?: DateTimeInput, options?: DateTimeOptions) => StormTime;
-    static current(): StormTime;
-    getDate(): number;
-    getDay(): number;
-    getDuration(dateTimeTo?: StormTime): Temporal.Duration;
-    getFullYear(): number;
-    getMonth(): number;
-    getUTCDate(): number;
-    getUTCDay(): number;
-    getUTCFullYear(): number;
-    getUTCMonth(): number;
-    static now(): number;
-    protected validate(value?: DateTimeInput, options?: DateTimeOptions): boolean;
-}
-export { StormTime }
-export { StormTime as StormTime_alias_1 }
+export { CLICommand }
+export { CLICommand as CLICommand_alias_1 }
 
 // @public (undocumented)
-function validateDate(value: DateTimeInput, options?: DateTimeOptions): boolean;
-export { validateDate }
-export { validateDate as validateDate_alias_1 }
-export { validateDate as validateDate_alias_2 }
-
-// @public
-function validateDateTime(value: DateTimeInput, options?: DateTimeOptions): boolean;
-export { validateDateTime }
-export { validateDateTime as validateDateTime_alias_1 }
-export { validateDateTime as validateDateTime_alias_2 }
+interface CLIConfig {
+    // (undocumented)
+    banner?: CLITitle;
+    // (undocumented)
+    by?: CLITitle;
+    // (undocumented)
+    commands: CLICommand[];
+    // (undocumented)
+    description: string;
+    // (undocumented)
+    documentationUrl?: string;
+    // (undocumented)
+    homepageUrl?: string;
+    // (undocumented)
+    license?: string;
+    // (undocumented)
+    licenseUrl?: string;
+    // (undocumented)
+    name: string;
+    // (undocumented)
+    postAction: (command: Command) => MaybePromise<void>;
+    // (undocumented)
+    preAction: (command: Command) => MaybePromise<void>;
+    // (undocumented)
+    repositoryUrl?: string;
+}
+export { CLIConfig }
+export { CLIConfig as CLIConfig_alias_1 }
 
 // @public (undocumented)
-function validateTime(value?: DateTimeInput, options?: DateTimeOptions): boolean;
-export { validateTime }
-export { validateTime as validateTime_alias_1 }
-export { validateTime as validateTime_alias_2 }
+interface CLIOption {
+    // (undocumented)
+    choices?: string[];
+    // (undocumented)
+    default?: CLIOptionDefault;
+    // (undocumented)
+    description: string | undefined;
+    // (undocumented)
+    flags: string;
+}
+export { CLIOption }
+export { CLIOption as CLIOption_alias_1 }
+
+// @public (undocumented)
+interface CLIOptionDefault {
+    // (undocumented)
+    description?: string | undefined;
+    // (undocumented)
+    value: unknown;
+}
+export { CLIOptionDefault }
+export { CLIOptionDefault as CLIOptionDefault_alias_1 }
+
+// @public (undocumented)
+interface CLITitle {
+    // (undocumented)
+    font?: Fonts;
+    // (undocumented)
+    hide?: boolean;
+    // (undocumented)
+    name?: string;
+    // (undocumented)
+    options?: Options;
+}
+export { CLITitle }
+export { CLITitle as CLITitle_alias_1 }
+
+// @public
+function createCliOptions(obj: Record<string, string | number | boolean>): string[];
+export { createCliOptions }
+export { createCliOptions as createCliOptions_alias_1 }
+export { createCliOptions as createCliOptions_alias_2 }
+
+// @public
+function createCliOptionsString(obj: Record<string, string | number | boolean>): string;
+export { createCliOptionsString }
+export { createCliOptionsString as createCliOptionsString_alias_1 }
+export { createCliOptionsString as createCliOptionsString_alias_2 }
+
+// @public (undocumented)
+function createCLIProgram(cliConfig: CLIConfig): Promise<void>;
+export { createCLIProgram }
+export { createCLIProgram as createCLIProgram_alias_1 }
+
+// @public
+const execute: (command: string, options?: ExecOptions, env?: Record<string, string>, stdio?: StdioOptions) => string | Buffer | Readable | undefined;
+export { execute }
+export { execute as execute_alias_1 }
+export { execute as execute_alias_2 }
+
+// @public
+const executeAsync: (command: string, options?: ExecOptions, env?: Record<string, string>, stdio?: StdioOptions) => Promise<string | Buffer | undefined>;
+export { executeAsync }
+export { executeAsync as executeAsync_alias_1 }
+export { executeAsync as executeAsync_alias_2 }
+
+// @public
+const isCI: () => boolean;
+export { isCI }
+export { isCI as isCI_alias_1 }
+export { isCI as isCI_alias_2 }
+
+// @public
+const isInteractive: (stream?: NodeJS.ReadStream & {
+    fd: 0;
+}) => boolean;
+export { isInteractive }
+export { isInteractive as isInteractive_alias_1 }
+export { isInteractive as isInteractive_alias_2 }
+
+// @public
+function link(url: string): string;
+export { link }
+export { link as link_alias_1 }
+export { link as link_alias_2 }
+
+// @public (undocumented)
+export function registerShutdown(config: {
+    logger: StormLog;
+    onShutdown(): void | MaybePromise<void>;
+}): (reason?: string) => Promise<void>;
 
 // (No @packageDocumentation comment for this package)
 

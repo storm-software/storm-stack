@@ -1364,8 +1364,3216 @@
             },
             {
               "kind": "Reference",
+              "text": "Promise",
+              "canonicalReference": "!Promise:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "<"
+            },
+            {
+              "kind": "Reference",
               "text": "Crypto",
               "canonicalReference": "!Crypto:interface"
+            },
+            {
+              "kind": "Content",
+              "text": " | {\n    default: typeof import(\"node:crypto\");\n    createHash(algorithm: string, options?: import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "HashOptions",
+              "canonicalReference": "!\"\\\"crypto\\\"\".HashOptions:interface"
+            },
+            {
+              "kind": "Content",
+              "text": " | undefined): import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "Hash",
+              "canonicalReference": "!\"\\\"crypto\\\"\".Hash:class"
+            },
+            {
+              "kind": "Content",
+              "text": ";\n    createHmac(algorithm: string, key: import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "KeyObject",
+              "canonicalReference": "!\"\\\"crypto\\\"\".KeyObject:class"
+            },
+            {
+              "kind": "Content",
+              "text": " | import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "BinaryLike",
+              "canonicalReference": "!\"\\\"crypto\\\"\".BinaryLike:type"
+            },
+            {
+              "kind": "Content",
+              "text": ", options?: import(\"stream\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "TransformOptions",
+              "canonicalReference": "!\"\\\"stream\\\"\".internal.TransformOptions:interface"
+            },
+            {
+              "kind": "Content",
+              "text": " | undefined): import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "Hmac",
+              "canonicalReference": "!\"\\\"crypto\\\"\".Hmac:class"
+            },
+            {
+              "kind": "Content",
+              "text": ";\n    createCipher(algorithm: import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "CipherCCMTypes",
+              "canonicalReference": "!\"\\\"crypto\\\"\".CipherCCMTypes:type"
+            },
+            {
+              "kind": "Content",
+              "text": ", password: import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "BinaryLike",
+              "canonicalReference": "!\"\\\"crypto\\\"\".BinaryLike:type"
+            },
+            {
+              "kind": "Content",
+              "text": ", options: import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "CipherCCMOptions",
+              "canonicalReference": "!\"\\\"crypto\\\"\".CipherCCMOptions:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "): import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "CipherCCM",
+              "canonicalReference": "!\"\\\"crypto\\\"\".CipherCCM:interface"
+            },
+            {
+              "kind": "Content",
+              "text": ";\n    createCipher(algorithm: import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "CipherGCMTypes",
+              "canonicalReference": "!\"\\\"crypto\\\"\".CipherGCMTypes:type"
+            },
+            {
+              "kind": "Content",
+              "text": ", password: import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "BinaryLike",
+              "canonicalReference": "!\"\\\"crypto\\\"\".BinaryLike:type"
+            },
+            {
+              "kind": "Content",
+              "text": ", options?: import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "CipherGCMOptions",
+              "canonicalReference": "!\"\\\"crypto\\\"\".CipherGCMOptions:interface"
+            },
+            {
+              "kind": "Content",
+              "text": " | undefined): import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "CipherGCM",
+              "canonicalReference": "!\"\\\"crypto\\\"\".CipherGCM:interface"
+            },
+            {
+              "kind": "Content",
+              "text": ";\n    createCipher(algorithm: string, password: import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "BinaryLike",
+              "canonicalReference": "!\"\\\"crypto\\\"\".BinaryLike:type"
+            },
+            {
+              "kind": "Content",
+              "text": ", options?: import(\"stream\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "TransformOptions",
+              "canonicalReference": "!\"\\\"stream\\\"\".internal.TransformOptions:interface"
+            },
+            {
+              "kind": "Content",
+              "text": " | undefined): import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "Cipher",
+              "canonicalReference": "!\"\\\"crypto\\\"\".Cipher:class"
+            },
+            {
+              "kind": "Content",
+              "text": ";\n    createCipheriv(algorithm: import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "CipherCCMTypes",
+              "canonicalReference": "!\"\\\"crypto\\\"\".CipherCCMTypes:type"
+            },
+            {
+              "kind": "Content",
+              "text": ", key: import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "CipherKey",
+              "canonicalReference": "!\"\\\"crypto\\\"\".CipherKey:type"
+            },
+            {
+              "kind": "Content",
+              "text": ", iv: import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "BinaryLike",
+              "canonicalReference": "!\"\\\"crypto\\\"\".BinaryLike:type"
+            },
+            {
+              "kind": "Content",
+              "text": ", options: import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "CipherCCMOptions",
+              "canonicalReference": "!\"\\\"crypto\\\"\".CipherCCMOptions:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "): import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "CipherCCM",
+              "canonicalReference": "!\"\\\"crypto\\\"\".CipherCCM:interface"
+            },
+            {
+              "kind": "Content",
+              "text": ";\n    createCipheriv(algorithm: import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "CipherOCBTypes",
+              "canonicalReference": "!\"\\\"crypto\\\"\".CipherOCBTypes:type"
+            },
+            {
+              "kind": "Content",
+              "text": ", key: import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "CipherKey",
+              "canonicalReference": "!\"\\\"crypto\\\"\".CipherKey:type"
+            },
+            {
+              "kind": "Content",
+              "text": ", iv: import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "BinaryLike",
+              "canonicalReference": "!\"\\\"crypto\\\"\".BinaryLike:type"
+            },
+            {
+              "kind": "Content",
+              "text": ", options: import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "CipherOCBOptions",
+              "canonicalReference": "!\"\\\"crypto\\\"\".CipherOCBOptions:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "): import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "CipherOCB",
+              "canonicalReference": "!\"\\\"crypto\\\"\".CipherOCB:interface"
+            },
+            {
+              "kind": "Content",
+              "text": ";\n    createCipheriv(algorithm: import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "CipherGCMTypes",
+              "canonicalReference": "!\"\\\"crypto\\\"\".CipherGCMTypes:type"
+            },
+            {
+              "kind": "Content",
+              "text": ", key: import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "CipherKey",
+              "canonicalReference": "!\"\\\"crypto\\\"\".CipherKey:type"
+            },
+            {
+              "kind": "Content",
+              "text": ", iv: import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "BinaryLike",
+              "canonicalReference": "!\"\\\"crypto\\\"\".BinaryLike:type"
+            },
+            {
+              "kind": "Content",
+              "text": ", options?: import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "CipherGCMOptions",
+              "canonicalReference": "!\"\\\"crypto\\\"\".CipherGCMOptions:interface"
+            },
+            {
+              "kind": "Content",
+              "text": " | undefined): import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "CipherGCM",
+              "canonicalReference": "!\"\\\"crypto\\\"\".CipherGCM:interface"
+            },
+            {
+              "kind": "Content",
+              "text": ";\n    createCipheriv(algorithm: string, key: import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "CipherKey",
+              "canonicalReference": "!\"\\\"crypto\\\"\".CipherKey:type"
+            },
+            {
+              "kind": "Content",
+              "text": ", iv: import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "BinaryLike",
+              "canonicalReference": "!\"\\\"crypto\\\"\".BinaryLike:type"
+            },
+            {
+              "kind": "Content",
+              "text": " | null, options?: import(\"stream\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "TransformOptions",
+              "canonicalReference": "!\"\\\"stream\\\"\".internal.TransformOptions:interface"
+            },
+            {
+              "kind": "Content",
+              "text": " | undefined): import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "Cipher",
+              "canonicalReference": "!\"\\\"crypto\\\"\".Cipher:class"
+            },
+            {
+              "kind": "Content",
+              "text": ";\n    createDecipher(algorithm: import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "CipherCCMTypes",
+              "canonicalReference": "!\"\\\"crypto\\\"\".CipherCCMTypes:type"
+            },
+            {
+              "kind": "Content",
+              "text": ", password: import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "BinaryLike",
+              "canonicalReference": "!\"\\\"crypto\\\"\".BinaryLike:type"
+            },
+            {
+              "kind": "Content",
+              "text": ", options: import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "CipherCCMOptions",
+              "canonicalReference": "!\"\\\"crypto\\\"\".CipherCCMOptions:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "): import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "DecipherCCM",
+              "canonicalReference": "!\"\\\"crypto\\\"\".DecipherCCM:interface"
+            },
+            {
+              "kind": "Content",
+              "text": ";\n    createDecipher(algorithm: import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "CipherGCMTypes",
+              "canonicalReference": "!\"\\\"crypto\\\"\".CipherGCMTypes:type"
+            },
+            {
+              "kind": "Content",
+              "text": ", password: import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "BinaryLike",
+              "canonicalReference": "!\"\\\"crypto\\\"\".BinaryLike:type"
+            },
+            {
+              "kind": "Content",
+              "text": ", options?: import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "CipherGCMOptions",
+              "canonicalReference": "!\"\\\"crypto\\\"\".CipherGCMOptions:interface"
+            },
+            {
+              "kind": "Content",
+              "text": " | undefined): import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "DecipherGCM",
+              "canonicalReference": "!\"\\\"crypto\\\"\".DecipherGCM:interface"
+            },
+            {
+              "kind": "Content",
+              "text": ";\n    createDecipher(algorithm: string, password: import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "BinaryLike",
+              "canonicalReference": "!\"\\\"crypto\\\"\".BinaryLike:type"
+            },
+            {
+              "kind": "Content",
+              "text": ", options?: import(\"stream\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "TransformOptions",
+              "canonicalReference": "!\"\\\"stream\\\"\".internal.TransformOptions:interface"
+            },
+            {
+              "kind": "Content",
+              "text": " | undefined): import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "Decipher",
+              "canonicalReference": "!\"\\\"crypto\\\"\".Decipher:class"
+            },
+            {
+              "kind": "Content",
+              "text": ";\n    createDecipheriv(algorithm: import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "CipherCCMTypes",
+              "canonicalReference": "!\"\\\"crypto\\\"\".CipherCCMTypes:type"
+            },
+            {
+              "kind": "Content",
+              "text": ", key: import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "CipherKey",
+              "canonicalReference": "!\"\\\"crypto\\\"\".CipherKey:type"
+            },
+            {
+              "kind": "Content",
+              "text": ", iv: import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "BinaryLike",
+              "canonicalReference": "!\"\\\"crypto\\\"\".BinaryLike:type"
+            },
+            {
+              "kind": "Content",
+              "text": ", options: import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "CipherCCMOptions",
+              "canonicalReference": "!\"\\\"crypto\\\"\".CipherCCMOptions:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "): import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "DecipherCCM",
+              "canonicalReference": "!\"\\\"crypto\\\"\".DecipherCCM:interface"
+            },
+            {
+              "kind": "Content",
+              "text": ";\n    createDecipheriv(algorithm: import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "CipherOCBTypes",
+              "canonicalReference": "!\"\\\"crypto\\\"\".CipherOCBTypes:type"
+            },
+            {
+              "kind": "Content",
+              "text": ", key: import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "CipherKey",
+              "canonicalReference": "!\"\\\"crypto\\\"\".CipherKey:type"
+            },
+            {
+              "kind": "Content",
+              "text": ", iv: import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "BinaryLike",
+              "canonicalReference": "!\"\\\"crypto\\\"\".BinaryLike:type"
+            },
+            {
+              "kind": "Content",
+              "text": ", options: import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "CipherOCBOptions",
+              "canonicalReference": "!\"\\\"crypto\\\"\".CipherOCBOptions:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "): import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "DecipherOCB",
+              "canonicalReference": "!\"\\\"crypto\\\"\".DecipherOCB:interface"
+            },
+            {
+              "kind": "Content",
+              "text": ";\n    createDecipheriv(algorithm: import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "CipherGCMTypes",
+              "canonicalReference": "!\"\\\"crypto\\\"\".CipherGCMTypes:type"
+            },
+            {
+              "kind": "Content",
+              "text": ", key: import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "CipherKey",
+              "canonicalReference": "!\"\\\"crypto\\\"\".CipherKey:type"
+            },
+            {
+              "kind": "Content",
+              "text": ", iv: import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "BinaryLike",
+              "canonicalReference": "!\"\\\"crypto\\\"\".BinaryLike:type"
+            },
+            {
+              "kind": "Content",
+              "text": ", options?: import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "CipherGCMOptions",
+              "canonicalReference": "!\"\\\"crypto\\\"\".CipherGCMOptions:interface"
+            },
+            {
+              "kind": "Content",
+              "text": " | undefined): import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "DecipherGCM",
+              "canonicalReference": "!\"\\\"crypto\\\"\".DecipherGCM:interface"
+            },
+            {
+              "kind": "Content",
+              "text": ";\n    createDecipheriv(algorithm: string, key: import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "CipherKey",
+              "canonicalReference": "!\"\\\"crypto\\\"\".CipherKey:type"
+            },
+            {
+              "kind": "Content",
+              "text": ", iv: import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "BinaryLike",
+              "canonicalReference": "!\"\\\"crypto\\\"\".BinaryLike:type"
+            },
+            {
+              "kind": "Content",
+              "text": " | null, options?: import(\"stream\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "TransformOptions",
+              "canonicalReference": "!\"\\\"stream\\\"\".internal.TransformOptions:interface"
+            },
+            {
+              "kind": "Content",
+              "text": " | undefined): import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "Decipher",
+              "canonicalReference": "!\"\\\"crypto\\\"\".Decipher:class"
+            },
+            {
+              "kind": "Content",
+              "text": ";\n    generateKey(type: \"hmac\" | \"aes\", options: {\n        length: number;\n    }, callback: (err: "
+            },
+            {
+              "kind": "Reference",
+              "text": "Error",
+              "canonicalReference": "!Error:interface"
+            },
+            {
+              "kind": "Content",
+              "text": " | null, key: import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "KeyObject",
+              "canonicalReference": "!\"\\\"crypto\\\"\".KeyObject:class"
+            },
+            {
+              "kind": "Content",
+              "text": ") => void): void;\n    generateKeySync(type: \"hmac\" | \"aes\", options: {\n        length: number;\n    }): import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "KeyObject",
+              "canonicalReference": "!\"\\\"crypto\\\"\".KeyObject:class"
+            },
+            {
+              "kind": "Content",
+              "text": ";\n    createPrivateKey(key: string | "
+            },
+            {
+              "kind": "Reference",
+              "text": "Buffer",
+              "canonicalReference": "!\"\\\"buffer\\\"\".__global.Buffer:interface"
+            },
+            {
+              "kind": "Content",
+              "text": " | import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "PrivateKeyInput",
+              "canonicalReference": "!\"\\\"crypto\\\"\".PrivateKeyInput:interface"
+            },
+            {
+              "kind": "Content",
+              "text": " | import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "JsonWebKeyInput",
+              "canonicalReference": "!\"\\\"crypto\\\"\".JsonWebKeyInput:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "): import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "KeyObject",
+              "canonicalReference": "!\"\\\"crypto\\\"\".KeyObject:class"
+            },
+            {
+              "kind": "Content",
+              "text": ";\n    createPublicKey(key: string | import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "KeyObject",
+              "canonicalReference": "!\"\\\"crypto\\\"\".KeyObject:class"
+            },
+            {
+              "kind": "Content",
+              "text": " | "
+            },
+            {
+              "kind": "Reference",
+              "text": "Buffer",
+              "canonicalReference": "!\"\\\"buffer\\\"\".__global.Buffer:interface"
+            },
+            {
+              "kind": "Content",
+              "text": " | import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "JsonWebKeyInput",
+              "canonicalReference": "!\"\\\"crypto\\\"\".JsonWebKeyInput:interface"
+            },
+            {
+              "kind": "Content",
+              "text": " | import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "PublicKeyInput",
+              "canonicalReference": "!\"\\\"crypto\\\"\".PublicKeyInput:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "): import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "KeyObject",
+              "canonicalReference": "!\"\\\"crypto\\\"\".KeyObject:class"
+            },
+            {
+              "kind": "Content",
+              "text": ";\n    createSecretKey(key: "
+            },
+            {
+              "kind": "Reference",
+              "text": "NodeJS.ArrayBufferView",
+              "canonicalReference": "@types/node!__global.NodeJS.ArrayBufferView:type"
+            },
+            {
+              "kind": "Content",
+              "text": "): import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "KeyObject",
+              "canonicalReference": "!\"\\\"crypto\\\"\".KeyObject:class"
+            },
+            {
+              "kind": "Content",
+              "text": ";\n    createSecretKey(key: string, encoding: "
+            },
+            {
+              "kind": "Reference",
+              "text": "BufferEncoding",
+              "canonicalReference": "!\"\\\"buffer\\\"\".__global.BufferEncoding:type"
+            },
+            {
+              "kind": "Content",
+              "text": "): import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "KeyObject",
+              "canonicalReference": "!\"\\\"crypto\\\"\".KeyObject:class"
+            },
+            {
+              "kind": "Content",
+              "text": ";\n    createSign(algorithm: string, options?: import(\"stream\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "WritableOptions",
+              "canonicalReference": "!\"\\\"stream\\\"\".internal.WritableOptions:interface"
+            },
+            {
+              "kind": "Content",
+              "text": " | undefined): import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "Sign",
+              "canonicalReference": "!\"\\\"crypto\\\"\".Sign:class"
+            },
+            {
+              "kind": "Content",
+              "text": ";\n    createVerify(algorithm: string, options?: import(\"stream\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "WritableOptions",
+              "canonicalReference": "!\"\\\"stream\\\"\".internal.WritableOptions:interface"
+            },
+            {
+              "kind": "Content",
+              "text": " | undefined): import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "Verify",
+              "canonicalReference": "!\"\\\"crypto\\\"\".Verify:class"
+            },
+            {
+              "kind": "Content",
+              "text": ";\n    createDiffieHellman(primeLength: number, generator?: number | undefined): import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "DiffieHellman",
+              "canonicalReference": "!\"\\\"crypto\\\"\".DiffieHellman:class"
+            },
+            {
+              "kind": "Content",
+              "text": ";\n    createDiffieHellman(prime: "
+            },
+            {
+              "kind": "Reference",
+              "text": "ArrayBuffer",
+              "canonicalReference": "!ArrayBuffer:interface"
+            },
+            {
+              "kind": "Content",
+              "text": " | "
+            },
+            {
+              "kind": "Reference",
+              "text": "NodeJS.ArrayBufferView",
+              "canonicalReference": "@types/node!__global.NodeJS.ArrayBufferView:type"
+            },
+            {
+              "kind": "Content",
+              "text": ", generator?: number | "
+            },
+            {
+              "kind": "Reference",
+              "text": "ArrayBuffer",
+              "canonicalReference": "!ArrayBuffer:interface"
+            },
+            {
+              "kind": "Content",
+              "text": " | "
+            },
+            {
+              "kind": "Reference",
+              "text": "NodeJS.ArrayBufferView",
+              "canonicalReference": "@types/node!__global.NodeJS.ArrayBufferView:type"
+            },
+            {
+              "kind": "Content",
+              "text": " | undefined): import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "DiffieHellman",
+              "canonicalReference": "!\"\\\"crypto\\\"\".DiffieHellman:class"
+            },
+            {
+              "kind": "Content",
+              "text": ";\n    createDiffieHellman(prime: "
+            },
+            {
+              "kind": "Reference",
+              "text": "ArrayBuffer",
+              "canonicalReference": "!ArrayBuffer:interface"
+            },
+            {
+              "kind": "Content",
+              "text": " | "
+            },
+            {
+              "kind": "Reference",
+              "text": "NodeJS.ArrayBufferView",
+              "canonicalReference": "@types/node!__global.NodeJS.ArrayBufferView:type"
+            },
+            {
+              "kind": "Content",
+              "text": ", generator: string, generatorEncoding: import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "BinaryToTextEncoding",
+              "canonicalReference": "!\"\\\"crypto\\\"\".BinaryToTextEncoding:type"
+            },
+            {
+              "kind": "Content",
+              "text": "): import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "DiffieHellman",
+              "canonicalReference": "!\"\\\"crypto\\\"\".DiffieHellman:class"
+            },
+            {
+              "kind": "Content",
+              "text": ";\n    createDiffieHellman(prime: string, primeEncoding: import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "BinaryToTextEncoding",
+              "canonicalReference": "!\"\\\"crypto\\\"\".BinaryToTextEncoding:type"
+            },
+            {
+              "kind": "Content",
+              "text": ", generator?: number | "
+            },
+            {
+              "kind": "Reference",
+              "text": "ArrayBuffer",
+              "canonicalReference": "!ArrayBuffer:interface"
+            },
+            {
+              "kind": "Content",
+              "text": " | "
+            },
+            {
+              "kind": "Reference",
+              "text": "NodeJS.ArrayBufferView",
+              "canonicalReference": "@types/node!__global.NodeJS.ArrayBufferView:type"
+            },
+            {
+              "kind": "Content",
+              "text": " | undefined): import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "DiffieHellman",
+              "canonicalReference": "!\"\\\"crypto\\\"\".DiffieHellman:class"
+            },
+            {
+              "kind": "Content",
+              "text": ";\n    createDiffieHellman(prime: string, primeEncoding: import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "BinaryToTextEncoding",
+              "canonicalReference": "!\"\\\"crypto\\\"\".BinaryToTextEncoding:type"
+            },
+            {
+              "kind": "Content",
+              "text": ", generator: string, generatorEncoding: import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "BinaryToTextEncoding",
+              "canonicalReference": "!\"\\\"crypto\\\"\".BinaryToTextEncoding:type"
+            },
+            {
+              "kind": "Content",
+              "text": "): import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "DiffieHellman",
+              "canonicalReference": "!\"\\\"crypto\\\"\".DiffieHellman:class"
+            },
+            {
+              "kind": "Content",
+              "text": ";\n    getDiffieHellman(groupName: string): import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "DiffieHellmanGroup",
+              "canonicalReference": "!\"\\\"crypto\\\"\".DiffieHellmanGroup:type"
+            },
+            {
+              "kind": "Content",
+              "text": ";\n    createDiffieHellmanGroup(name: string): import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "DiffieHellmanGroup",
+              "canonicalReference": "!\"\\\"crypto\\\"\".DiffieHellmanGroup:type"
+            },
+            {
+              "kind": "Content",
+              "text": ";\n    pbkdf2(password: import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "BinaryLike",
+              "canonicalReference": "!\"\\\"crypto\\\"\".BinaryLike:type"
+            },
+            {
+              "kind": "Content",
+              "text": ", salt: import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "BinaryLike",
+              "canonicalReference": "!\"\\\"crypto\\\"\".BinaryLike:type"
+            },
+            {
+              "kind": "Content",
+              "text": ", iterations: number, keylen: number, digest: string, callback: (err: "
+            },
+            {
+              "kind": "Reference",
+              "text": "Error",
+              "canonicalReference": "!Error:interface"
+            },
+            {
+              "kind": "Content",
+              "text": " | null, derivedKey: "
+            },
+            {
+              "kind": "Reference",
+              "text": "Buffer",
+              "canonicalReference": "!\"\\\"buffer\\\"\".__global.Buffer:interface"
+            },
+            {
+              "kind": "Content",
+              "text": ") => void): void;\n    pbkdf2Sync(password: import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "BinaryLike",
+              "canonicalReference": "!\"\\\"crypto\\\"\".BinaryLike:type"
+            },
+            {
+              "kind": "Content",
+              "text": ", salt: import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "BinaryLike",
+              "canonicalReference": "!\"\\\"crypto\\\"\".BinaryLike:type"
+            },
+            {
+              "kind": "Content",
+              "text": ", iterations: number, keylen: number, digest: string): "
+            },
+            {
+              "kind": "Reference",
+              "text": "Buffer",
+              "canonicalReference": "!\"\\\"buffer\\\"\".__global.Buffer:interface"
+            },
+            {
+              "kind": "Content",
+              "text": ";\n    randomBytes(size: number): "
+            },
+            {
+              "kind": "Reference",
+              "text": "Buffer",
+              "canonicalReference": "!\"\\\"buffer\\\"\".__global.Buffer:interface"
+            },
+            {
+              "kind": "Content",
+              "text": ";\n    randomBytes(size: number, callback: (err: "
+            },
+            {
+              "kind": "Reference",
+              "text": "Error",
+              "canonicalReference": "!Error:interface"
+            },
+            {
+              "kind": "Content",
+              "text": " | null, buf: "
+            },
+            {
+              "kind": "Reference",
+              "text": "Buffer",
+              "canonicalReference": "!\"\\\"buffer\\\"\".__global.Buffer:interface"
+            },
+            {
+              "kind": "Content",
+              "text": ") => void): void;\n    pseudoRandomBytes(size: number): "
+            },
+            {
+              "kind": "Reference",
+              "text": "Buffer",
+              "canonicalReference": "!\"\\\"buffer\\\"\".__global.Buffer:interface"
+            },
+            {
+              "kind": "Content",
+              "text": ";\n    pseudoRandomBytes(size: number, callback: (err: "
+            },
+            {
+              "kind": "Reference",
+              "text": "Error",
+              "canonicalReference": "!Error:interface"
+            },
+            {
+              "kind": "Content",
+              "text": " | null, buf: "
+            },
+            {
+              "kind": "Reference",
+              "text": "Buffer",
+              "canonicalReference": "!\"\\\"buffer\\\"\".__global.Buffer:interface"
+            },
+            {
+              "kind": "Content",
+              "text": ") => void): void;\n    randomInt(max: number): number;\n    randomInt(min: number, max: number): number;\n    randomInt(max: number, callback: (err: "
+            },
+            {
+              "kind": "Reference",
+              "text": "Error",
+              "canonicalReference": "!Error:interface"
+            },
+            {
+              "kind": "Content",
+              "text": " | null, value: number) => void): void;\n    randomInt(min: number, max: number, callback: (err: "
+            },
+            {
+              "kind": "Reference",
+              "text": "Error",
+              "canonicalReference": "!Error:interface"
+            },
+            {
+              "kind": "Content",
+              "text": " | null, value: number) => void): void;\n    randomFillSync<T extends "
+            },
+            {
+              "kind": "Reference",
+              "text": "NodeJS.ArrayBufferView",
+              "canonicalReference": "@types/node!__global.NodeJS.ArrayBufferView:type"
+            },
+            {
+              "kind": "Content",
+              "text": ">(buffer: T, offset?: number | undefined, size?: number | undefined): T;\n    randomFill<T_1 extends "
+            },
+            {
+              "kind": "Reference",
+              "text": "NodeJS.ArrayBufferView",
+              "canonicalReference": "@types/node!__global.NodeJS.ArrayBufferView:type"
+            },
+            {
+              "kind": "Content",
+              "text": ">(buffer: T_1, callback: (err: "
+            },
+            {
+              "kind": "Reference",
+              "text": "Error",
+              "canonicalReference": "!Error:interface"
+            },
+            {
+              "kind": "Content",
+              "text": " | null, buf: T_1) => void): void;\n    randomFill<T_2 extends "
+            },
+            {
+              "kind": "Reference",
+              "text": "NodeJS.ArrayBufferView",
+              "canonicalReference": "@types/node!__global.NodeJS.ArrayBufferView:type"
+            },
+            {
+              "kind": "Content",
+              "text": ">(buffer: T_2, offset: number, callback: (err: "
+            },
+            {
+              "kind": "Reference",
+              "text": "Error",
+              "canonicalReference": "!Error:interface"
+            },
+            {
+              "kind": "Content",
+              "text": " | null, buf: T_2) => void): void;\n    randomFill<T_3 extends "
+            },
+            {
+              "kind": "Reference",
+              "text": "NodeJS.ArrayBufferView",
+              "canonicalReference": "@types/node!__global.NodeJS.ArrayBufferView:type"
+            },
+            {
+              "kind": "Content",
+              "text": ">(buffer: T_3, offset: number, size: number, callback: (err: "
+            },
+            {
+              "kind": "Reference",
+              "text": "Error",
+              "canonicalReference": "!Error:interface"
+            },
+            {
+              "kind": "Content",
+              "text": " | null, buf: T_3) => void): void;\n    scrypt(password: import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "BinaryLike",
+              "canonicalReference": "!\"\\\"crypto\\\"\".BinaryLike:type"
+            },
+            {
+              "kind": "Content",
+              "text": ", salt: import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "BinaryLike",
+              "canonicalReference": "!\"\\\"crypto\\\"\".BinaryLike:type"
+            },
+            {
+              "kind": "Content",
+              "text": ", keylen: number, callback: (err: "
+            },
+            {
+              "kind": "Reference",
+              "text": "Error",
+              "canonicalReference": "!Error:interface"
+            },
+            {
+              "kind": "Content",
+              "text": " | null, derivedKey: "
+            },
+            {
+              "kind": "Reference",
+              "text": "Buffer",
+              "canonicalReference": "!\"\\\"buffer\\\"\".__global.Buffer:interface"
+            },
+            {
+              "kind": "Content",
+              "text": ") => void): void;\n    scrypt(password: import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "BinaryLike",
+              "canonicalReference": "!\"\\\"crypto\\\"\".BinaryLike:type"
+            },
+            {
+              "kind": "Content",
+              "text": ", salt: import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "BinaryLike",
+              "canonicalReference": "!\"\\\"crypto\\\"\".BinaryLike:type"
+            },
+            {
+              "kind": "Content",
+              "text": ", keylen: number, options: import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "ScryptOptions",
+              "canonicalReference": "!\"\\\"crypto\\\"\".ScryptOptions:interface"
+            },
+            {
+              "kind": "Content",
+              "text": ", callback: (err: "
+            },
+            {
+              "kind": "Reference",
+              "text": "Error",
+              "canonicalReference": "!Error:interface"
+            },
+            {
+              "kind": "Content",
+              "text": " | null, derivedKey: "
+            },
+            {
+              "kind": "Reference",
+              "text": "Buffer",
+              "canonicalReference": "!\"\\\"buffer\\\"\".__global.Buffer:interface"
+            },
+            {
+              "kind": "Content",
+              "text": ") => void): void;\n    scryptSync(password: import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "BinaryLike",
+              "canonicalReference": "!\"\\\"crypto\\\"\".BinaryLike:type"
+            },
+            {
+              "kind": "Content",
+              "text": ", salt: import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "BinaryLike",
+              "canonicalReference": "!\"\\\"crypto\\\"\".BinaryLike:type"
+            },
+            {
+              "kind": "Content",
+              "text": ", keylen: number, options?: import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "ScryptOptions",
+              "canonicalReference": "!\"\\\"crypto\\\"\".ScryptOptions:interface"
+            },
+            {
+              "kind": "Content",
+              "text": " | undefined): "
+            },
+            {
+              "kind": "Reference",
+              "text": "Buffer",
+              "canonicalReference": "!\"\\\"buffer\\\"\".__global.Buffer:interface"
+            },
+            {
+              "kind": "Content",
+              "text": ";\n    publicEncrypt(key: import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "RsaPublicKey",
+              "canonicalReference": "!\"\\\"crypto\\\"\".RsaPublicKey:interface"
+            },
+            {
+              "kind": "Content",
+              "text": " | import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "RsaPrivateKey",
+              "canonicalReference": "!\"\\\"crypto\\\"\".RsaPrivateKey:interface"
+            },
+            {
+              "kind": "Content",
+              "text": " | import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "KeyLike",
+              "canonicalReference": "!\"\\\"crypto\\\"\".KeyLike:type"
+            },
+            {
+              "kind": "Content",
+              "text": ", buffer: "
+            },
+            {
+              "kind": "Reference",
+              "text": "NodeJS.ArrayBufferView",
+              "canonicalReference": "@types/node!__global.NodeJS.ArrayBufferView:type"
+            },
+            {
+              "kind": "Content",
+              "text": "): "
+            },
+            {
+              "kind": "Reference",
+              "text": "Buffer",
+              "canonicalReference": "!\"\\\"buffer\\\"\".__global.Buffer:interface"
+            },
+            {
+              "kind": "Content",
+              "text": ";\n    publicDecrypt(key: import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "RsaPublicKey",
+              "canonicalReference": "!\"\\\"crypto\\\"\".RsaPublicKey:interface"
+            },
+            {
+              "kind": "Content",
+              "text": " | import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "RsaPrivateKey",
+              "canonicalReference": "!\"\\\"crypto\\\"\".RsaPrivateKey:interface"
+            },
+            {
+              "kind": "Content",
+              "text": " | import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "KeyLike",
+              "canonicalReference": "!\"\\\"crypto\\\"\".KeyLike:type"
+            },
+            {
+              "kind": "Content",
+              "text": ", buffer: "
+            },
+            {
+              "kind": "Reference",
+              "text": "NodeJS.ArrayBufferView",
+              "canonicalReference": "@types/node!__global.NodeJS.ArrayBufferView:type"
+            },
+            {
+              "kind": "Content",
+              "text": "): "
+            },
+            {
+              "kind": "Reference",
+              "text": "Buffer",
+              "canonicalReference": "!\"\\\"buffer\\\"\".__global.Buffer:interface"
+            },
+            {
+              "kind": "Content",
+              "text": ";\n    privateDecrypt(privateKey: import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "RsaPrivateKey",
+              "canonicalReference": "!\"\\\"crypto\\\"\".RsaPrivateKey:interface"
+            },
+            {
+              "kind": "Content",
+              "text": " | import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "KeyLike",
+              "canonicalReference": "!\"\\\"crypto\\\"\".KeyLike:type"
+            },
+            {
+              "kind": "Content",
+              "text": ", buffer: "
+            },
+            {
+              "kind": "Reference",
+              "text": "NodeJS.ArrayBufferView",
+              "canonicalReference": "@types/node!__global.NodeJS.ArrayBufferView:type"
+            },
+            {
+              "kind": "Content",
+              "text": "): "
+            },
+            {
+              "kind": "Reference",
+              "text": "Buffer",
+              "canonicalReference": "!\"\\\"buffer\\\"\".__global.Buffer:interface"
+            },
+            {
+              "kind": "Content",
+              "text": ";\n    privateEncrypt(privateKey: import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "RsaPrivateKey",
+              "canonicalReference": "!\"\\\"crypto\\\"\".RsaPrivateKey:interface"
+            },
+            {
+              "kind": "Content",
+              "text": " | import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "KeyLike",
+              "canonicalReference": "!\"\\\"crypto\\\"\".KeyLike:type"
+            },
+            {
+              "kind": "Content",
+              "text": ", buffer: "
+            },
+            {
+              "kind": "Reference",
+              "text": "NodeJS.ArrayBufferView",
+              "canonicalReference": "@types/node!__global.NodeJS.ArrayBufferView:type"
+            },
+            {
+              "kind": "Content",
+              "text": "): "
+            },
+            {
+              "kind": "Reference",
+              "text": "Buffer",
+              "canonicalReference": "!\"\\\"buffer\\\"\".__global.Buffer:interface"
+            },
+            {
+              "kind": "Content",
+              "text": ";\n    getCiphers(): string[];\n    getCurves(): string[];\n    getFips(): 0 | 1;\n    setFips(bool: boolean): void;\n    getHashes(): string[];\n    createECDH(curveName: string): import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "ECDH",
+              "canonicalReference": "!\"\\\"crypto\\\"\".ECDH:class"
+            },
+            {
+              "kind": "Content",
+              "text": ";\n    timingSafeEqual(a: "
+            },
+            {
+              "kind": "Reference",
+              "text": "NodeJS.ArrayBufferView",
+              "canonicalReference": "@types/node!__global.NodeJS.ArrayBufferView:type"
+            },
+            {
+              "kind": "Content",
+              "text": ", b: "
+            },
+            {
+              "kind": "Reference",
+              "text": "NodeJS.ArrayBufferView",
+              "canonicalReference": "@types/node!__global.NodeJS.ArrayBufferView:type"
+            },
+            {
+              "kind": "Content",
+              "text": "): boolean;\n    generateKeyPairSync(type: \"rsa\", options: import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "RSAKeyPairOptions",
+              "canonicalReference": "!\"\\\"crypto\\\"\".RSAKeyPairOptions:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "<\"pem\", \"pem\">): import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "KeyPairSyncResult",
+              "canonicalReference": "!\"\\\"crypto\\\"\".KeyPairSyncResult:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "<string, string>;\n    generateKeyPairSync(type: \"rsa\", options: import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "RSAKeyPairOptions",
+              "canonicalReference": "!\"\\\"crypto\\\"\".RSAKeyPairOptions:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "<\"pem\", \"der\">): import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "KeyPairSyncResult",
+              "canonicalReference": "!\"\\\"crypto\\\"\".KeyPairSyncResult:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "<string, "
+            },
+            {
+              "kind": "Reference",
+              "text": "Buffer",
+              "canonicalReference": "!\"\\\"buffer\\\"\".__global.Buffer:interface"
+            },
+            {
+              "kind": "Content",
+              "text": ">;\n    generateKeyPairSync(type: \"rsa\", options: import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "RSAKeyPairOptions",
+              "canonicalReference": "!\"\\\"crypto\\\"\".RSAKeyPairOptions:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "<\"der\", \"pem\">): import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "KeyPairSyncResult",
+              "canonicalReference": "!\"\\\"crypto\\\"\".KeyPairSyncResult:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "<"
+            },
+            {
+              "kind": "Reference",
+              "text": "Buffer",
+              "canonicalReference": "!\"\\\"buffer\\\"\".__global.Buffer:interface"
+            },
+            {
+              "kind": "Content",
+              "text": ", string>;\n    generateKeyPairSync(type: \"rsa\", options: import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "RSAKeyPairOptions",
+              "canonicalReference": "!\"\\\"crypto\\\"\".RSAKeyPairOptions:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "<\"der\", \"der\">): import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "KeyPairSyncResult",
+              "canonicalReference": "!\"\\\"crypto\\\"\".KeyPairSyncResult:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "<"
+            },
+            {
+              "kind": "Reference",
+              "text": "Buffer",
+              "canonicalReference": "!\"\\\"buffer\\\"\".__global.Buffer:interface"
+            },
+            {
+              "kind": "Content",
+              "text": ", "
+            },
+            {
+              "kind": "Reference",
+              "text": "Buffer",
+              "canonicalReference": "!\"\\\"buffer\\\"\".__global.Buffer:interface"
+            },
+            {
+              "kind": "Content",
+              "text": ">;\n    generateKeyPairSync(type: \"rsa\", options: import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "RSAKeyPairKeyObjectOptions",
+              "canonicalReference": "!\"\\\"crypto\\\"\".RSAKeyPairKeyObjectOptions:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "): import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "KeyPairKeyObjectResult",
+              "canonicalReference": "!\"\\\"crypto\\\"\".KeyPairKeyObjectResult:interface"
+            },
+            {
+              "kind": "Content",
+              "text": ";\n    generateKeyPairSync(type: \"rsa-pss\", options: import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "RSAPSSKeyPairOptions",
+              "canonicalReference": "!\"\\\"crypto\\\"\".RSAPSSKeyPairOptions:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "<\"pem\", \"pem\">): import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "KeyPairSyncResult",
+              "canonicalReference": "!\"\\\"crypto\\\"\".KeyPairSyncResult:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "<string, string>;\n    generateKeyPairSync(type: \"rsa-pss\", options: import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "RSAPSSKeyPairOptions",
+              "canonicalReference": "!\"\\\"crypto\\\"\".RSAPSSKeyPairOptions:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "<\"pem\", \"der\">): import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "KeyPairSyncResult",
+              "canonicalReference": "!\"\\\"crypto\\\"\".KeyPairSyncResult:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "<string, "
+            },
+            {
+              "kind": "Reference",
+              "text": "Buffer",
+              "canonicalReference": "!\"\\\"buffer\\\"\".__global.Buffer:interface"
+            },
+            {
+              "kind": "Content",
+              "text": ">;\n    generateKeyPairSync(type: \"rsa-pss\", options: import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "RSAPSSKeyPairOptions",
+              "canonicalReference": "!\"\\\"crypto\\\"\".RSAPSSKeyPairOptions:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "<\"der\", \"pem\">): import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "KeyPairSyncResult",
+              "canonicalReference": "!\"\\\"crypto\\\"\".KeyPairSyncResult:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "<"
+            },
+            {
+              "kind": "Reference",
+              "text": "Buffer",
+              "canonicalReference": "!\"\\\"buffer\\\"\".__global.Buffer:interface"
+            },
+            {
+              "kind": "Content",
+              "text": ", string>;\n    generateKeyPairSync(type: \"rsa-pss\", options: import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "RSAPSSKeyPairOptions",
+              "canonicalReference": "!\"\\\"crypto\\\"\".RSAPSSKeyPairOptions:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "<\"der\", \"der\">): import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "KeyPairSyncResult",
+              "canonicalReference": "!\"\\\"crypto\\\"\".KeyPairSyncResult:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "<"
+            },
+            {
+              "kind": "Reference",
+              "text": "Buffer",
+              "canonicalReference": "!\"\\\"buffer\\\"\".__global.Buffer:interface"
+            },
+            {
+              "kind": "Content",
+              "text": ", "
+            },
+            {
+              "kind": "Reference",
+              "text": "Buffer",
+              "canonicalReference": "!\"\\\"buffer\\\"\".__global.Buffer:interface"
+            },
+            {
+              "kind": "Content",
+              "text": ">;\n    generateKeyPairSync(type: \"rsa-pss\", options: import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "RSAPSSKeyPairKeyObjectOptions",
+              "canonicalReference": "!\"\\\"crypto\\\"\".RSAPSSKeyPairKeyObjectOptions:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "): import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "KeyPairKeyObjectResult",
+              "canonicalReference": "!\"\\\"crypto\\\"\".KeyPairKeyObjectResult:interface"
+            },
+            {
+              "kind": "Content",
+              "text": ";\n    generateKeyPairSync(type: \"dsa\", options: import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "DSAKeyPairOptions",
+              "canonicalReference": "!\"\\\"crypto\\\"\".DSAKeyPairOptions:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "<\"pem\", \"pem\">): import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "KeyPairSyncResult",
+              "canonicalReference": "!\"\\\"crypto\\\"\".KeyPairSyncResult:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "<string, string>;\n    generateKeyPairSync(type: \"dsa\", options: import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "DSAKeyPairOptions",
+              "canonicalReference": "!\"\\\"crypto\\\"\".DSAKeyPairOptions:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "<\"pem\", \"der\">): import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "KeyPairSyncResult",
+              "canonicalReference": "!\"\\\"crypto\\\"\".KeyPairSyncResult:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "<string, "
+            },
+            {
+              "kind": "Reference",
+              "text": "Buffer",
+              "canonicalReference": "!\"\\\"buffer\\\"\".__global.Buffer:interface"
+            },
+            {
+              "kind": "Content",
+              "text": ">;\n    generateKeyPairSync(type: \"dsa\", options: import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "DSAKeyPairOptions",
+              "canonicalReference": "!\"\\\"crypto\\\"\".DSAKeyPairOptions:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "<\"der\", \"pem\">): import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "KeyPairSyncResult",
+              "canonicalReference": "!\"\\\"crypto\\\"\".KeyPairSyncResult:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "<"
+            },
+            {
+              "kind": "Reference",
+              "text": "Buffer",
+              "canonicalReference": "!\"\\\"buffer\\\"\".__global.Buffer:interface"
+            },
+            {
+              "kind": "Content",
+              "text": ", string>;\n    generateKeyPairSync(type: \"dsa\", options: import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "DSAKeyPairOptions",
+              "canonicalReference": "!\"\\\"crypto\\\"\".DSAKeyPairOptions:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "<\"der\", \"der\">): import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "KeyPairSyncResult",
+              "canonicalReference": "!\"\\\"crypto\\\"\".KeyPairSyncResult:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "<"
+            },
+            {
+              "kind": "Reference",
+              "text": "Buffer",
+              "canonicalReference": "!\"\\\"buffer\\\"\".__global.Buffer:interface"
+            },
+            {
+              "kind": "Content",
+              "text": ", "
+            },
+            {
+              "kind": "Reference",
+              "text": "Buffer",
+              "canonicalReference": "!\"\\\"buffer\\\"\".__global.Buffer:interface"
+            },
+            {
+              "kind": "Content",
+              "text": ">;\n    generateKeyPairSync(type: \"dsa\", options: import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "DSAKeyPairKeyObjectOptions",
+              "canonicalReference": "!\"\\\"crypto\\\"\".DSAKeyPairKeyObjectOptions:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "): import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "KeyPairKeyObjectResult",
+              "canonicalReference": "!\"\\\"crypto\\\"\".KeyPairKeyObjectResult:interface"
+            },
+            {
+              "kind": "Content",
+              "text": ";\n    generateKeyPairSync(type: \"ec\", options: import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "ECKeyPairOptions",
+              "canonicalReference": "!\"\\\"crypto\\\"\".ECKeyPairOptions:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "<\"pem\", \"pem\">): import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "KeyPairSyncResult",
+              "canonicalReference": "!\"\\\"crypto\\\"\".KeyPairSyncResult:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "<string, string>;\n    generateKeyPairSync(type: \"ec\", options: import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "ECKeyPairOptions",
+              "canonicalReference": "!\"\\\"crypto\\\"\".ECKeyPairOptions:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "<\"pem\", \"der\">): import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "KeyPairSyncResult",
+              "canonicalReference": "!\"\\\"crypto\\\"\".KeyPairSyncResult:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "<string, "
+            },
+            {
+              "kind": "Reference",
+              "text": "Buffer",
+              "canonicalReference": "!\"\\\"buffer\\\"\".__global.Buffer:interface"
+            },
+            {
+              "kind": "Content",
+              "text": ">;\n    generateKeyPairSync(type: \"ec\", options: import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "ECKeyPairOptions",
+              "canonicalReference": "!\"\\\"crypto\\\"\".ECKeyPairOptions:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "<\"der\", \"pem\">): import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "KeyPairSyncResult",
+              "canonicalReference": "!\"\\\"crypto\\\"\".KeyPairSyncResult:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "<"
+            },
+            {
+              "kind": "Reference",
+              "text": "Buffer",
+              "canonicalReference": "!\"\\\"buffer\\\"\".__global.Buffer:interface"
+            },
+            {
+              "kind": "Content",
+              "text": ", string>;\n    generateKeyPairSync(type: \"ec\", options: import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "ECKeyPairOptions",
+              "canonicalReference": "!\"\\\"crypto\\\"\".ECKeyPairOptions:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "<\"der\", \"der\">): import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "KeyPairSyncResult",
+              "canonicalReference": "!\"\\\"crypto\\\"\".KeyPairSyncResult:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "<"
+            },
+            {
+              "kind": "Reference",
+              "text": "Buffer",
+              "canonicalReference": "!\"\\\"buffer\\\"\".__global.Buffer:interface"
+            },
+            {
+              "kind": "Content",
+              "text": ", "
+            },
+            {
+              "kind": "Reference",
+              "text": "Buffer",
+              "canonicalReference": "!\"\\\"buffer\\\"\".__global.Buffer:interface"
+            },
+            {
+              "kind": "Content",
+              "text": ">;\n    generateKeyPairSync(type: \"ec\", options: import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "ECKeyPairKeyObjectOptions",
+              "canonicalReference": "!\"\\\"crypto\\\"\".ECKeyPairKeyObjectOptions:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "): import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "KeyPairKeyObjectResult",
+              "canonicalReference": "!\"\\\"crypto\\\"\".KeyPairKeyObjectResult:interface"
+            },
+            {
+              "kind": "Content",
+              "text": ";\n    generateKeyPairSync(type: \"ed25519\", options: import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "ED25519KeyPairOptions",
+              "canonicalReference": "!\"\\\"crypto\\\"\".ED25519KeyPairOptions:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "<\"pem\", \"pem\">): import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "KeyPairSyncResult",
+              "canonicalReference": "!\"\\\"crypto\\\"\".KeyPairSyncResult:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "<string, string>;\n    generateKeyPairSync(type: \"ed25519\", options: import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "ED25519KeyPairOptions",
+              "canonicalReference": "!\"\\\"crypto\\\"\".ED25519KeyPairOptions:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "<\"pem\", \"der\">): import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "KeyPairSyncResult",
+              "canonicalReference": "!\"\\\"crypto\\\"\".KeyPairSyncResult:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "<string, "
+            },
+            {
+              "kind": "Reference",
+              "text": "Buffer",
+              "canonicalReference": "!\"\\\"buffer\\\"\".__global.Buffer:interface"
+            },
+            {
+              "kind": "Content",
+              "text": ">;\n    generateKeyPairSync(type: \"ed25519\", options: import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "ED25519KeyPairOptions",
+              "canonicalReference": "!\"\\\"crypto\\\"\".ED25519KeyPairOptions:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "<\"der\", \"pem\">): import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "KeyPairSyncResult",
+              "canonicalReference": "!\"\\\"crypto\\\"\".KeyPairSyncResult:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "<"
+            },
+            {
+              "kind": "Reference",
+              "text": "Buffer",
+              "canonicalReference": "!\"\\\"buffer\\\"\".__global.Buffer:interface"
+            },
+            {
+              "kind": "Content",
+              "text": ", string>;\n    generateKeyPairSync(type: \"ed25519\", options: import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "ED25519KeyPairOptions",
+              "canonicalReference": "!\"\\\"crypto\\\"\".ED25519KeyPairOptions:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "<\"der\", \"der\">): import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "KeyPairSyncResult",
+              "canonicalReference": "!\"\\\"crypto\\\"\".KeyPairSyncResult:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "<"
+            },
+            {
+              "kind": "Reference",
+              "text": "Buffer",
+              "canonicalReference": "!\"\\\"buffer\\\"\".__global.Buffer:interface"
+            },
+            {
+              "kind": "Content",
+              "text": ", "
+            },
+            {
+              "kind": "Reference",
+              "text": "Buffer",
+              "canonicalReference": "!\"\\\"buffer\\\"\".__global.Buffer:interface"
+            },
+            {
+              "kind": "Content",
+              "text": ">;\n    generateKeyPairSync(type: \"ed25519\", options?: import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "ED25519KeyPairKeyObjectOptions",
+              "canonicalReference": "!\"\\\"crypto\\\"\".ED25519KeyPairKeyObjectOptions:interface"
+            },
+            {
+              "kind": "Content",
+              "text": " | undefined): import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "KeyPairKeyObjectResult",
+              "canonicalReference": "!\"\\\"crypto\\\"\".KeyPairKeyObjectResult:interface"
+            },
+            {
+              "kind": "Content",
+              "text": ";\n    generateKeyPairSync(type: \"ed448\", options: import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "ED448KeyPairOptions",
+              "canonicalReference": "!\"\\\"crypto\\\"\".ED448KeyPairOptions:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "<\"pem\", \"pem\">): import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "KeyPairSyncResult",
+              "canonicalReference": "!\"\\\"crypto\\\"\".KeyPairSyncResult:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "<string, string>;\n    generateKeyPairSync(type: \"ed448\", options: import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "ED448KeyPairOptions",
+              "canonicalReference": "!\"\\\"crypto\\\"\".ED448KeyPairOptions:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "<\"pem\", \"der\">): import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "KeyPairSyncResult",
+              "canonicalReference": "!\"\\\"crypto\\\"\".KeyPairSyncResult:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "<string, "
+            },
+            {
+              "kind": "Reference",
+              "text": "Buffer",
+              "canonicalReference": "!\"\\\"buffer\\\"\".__global.Buffer:interface"
+            },
+            {
+              "kind": "Content",
+              "text": ">;\n    generateKeyPairSync(type: \"ed448\", options: import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "ED448KeyPairOptions",
+              "canonicalReference": "!\"\\\"crypto\\\"\".ED448KeyPairOptions:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "<\"der\", \"pem\">): import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "KeyPairSyncResult",
+              "canonicalReference": "!\"\\\"crypto\\\"\".KeyPairSyncResult:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "<"
+            },
+            {
+              "kind": "Reference",
+              "text": "Buffer",
+              "canonicalReference": "!\"\\\"buffer\\\"\".__global.Buffer:interface"
+            },
+            {
+              "kind": "Content",
+              "text": ", string>;\n    generateKeyPairSync(type: \"ed448\", options: import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "ED448KeyPairOptions",
+              "canonicalReference": "!\"\\\"crypto\\\"\".ED448KeyPairOptions:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "<\"der\", \"der\">): import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "KeyPairSyncResult",
+              "canonicalReference": "!\"\\\"crypto\\\"\".KeyPairSyncResult:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "<"
+            },
+            {
+              "kind": "Reference",
+              "text": "Buffer",
+              "canonicalReference": "!\"\\\"buffer\\\"\".__global.Buffer:interface"
+            },
+            {
+              "kind": "Content",
+              "text": ", "
+            },
+            {
+              "kind": "Reference",
+              "text": "Buffer",
+              "canonicalReference": "!\"\\\"buffer\\\"\".__global.Buffer:interface"
+            },
+            {
+              "kind": "Content",
+              "text": ">;\n    generateKeyPairSync(type: \"ed448\", options?: import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "ED448KeyPairKeyObjectOptions",
+              "canonicalReference": "!\"\\\"crypto\\\"\".ED448KeyPairKeyObjectOptions:interface"
+            },
+            {
+              "kind": "Content",
+              "text": " | undefined): import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "KeyPairKeyObjectResult",
+              "canonicalReference": "!\"\\\"crypto\\\"\".KeyPairKeyObjectResult:interface"
+            },
+            {
+              "kind": "Content",
+              "text": ";\n    generateKeyPairSync(type: \"x25519\", options: import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "X25519KeyPairOptions",
+              "canonicalReference": "!\"\\\"crypto\\\"\".X25519KeyPairOptions:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "<\"pem\", \"pem\">): import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "KeyPairSyncResult",
+              "canonicalReference": "!\"\\\"crypto\\\"\".KeyPairSyncResult:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "<string, string>;\n    generateKeyPairSync(type: \"x25519\", options: import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "X25519KeyPairOptions",
+              "canonicalReference": "!\"\\\"crypto\\\"\".X25519KeyPairOptions:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "<\"pem\", \"der\">): import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "KeyPairSyncResult",
+              "canonicalReference": "!\"\\\"crypto\\\"\".KeyPairSyncResult:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "<string, "
+            },
+            {
+              "kind": "Reference",
+              "text": "Buffer",
+              "canonicalReference": "!\"\\\"buffer\\\"\".__global.Buffer:interface"
+            },
+            {
+              "kind": "Content",
+              "text": ">;\n    generateKeyPairSync(type: \"x25519\", options: import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "X25519KeyPairOptions",
+              "canonicalReference": "!\"\\\"crypto\\\"\".X25519KeyPairOptions:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "<\"der\", \"pem\">): import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "KeyPairSyncResult",
+              "canonicalReference": "!\"\\\"crypto\\\"\".KeyPairSyncResult:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "<"
+            },
+            {
+              "kind": "Reference",
+              "text": "Buffer",
+              "canonicalReference": "!\"\\\"buffer\\\"\".__global.Buffer:interface"
+            },
+            {
+              "kind": "Content",
+              "text": ", string>;\n    generateKeyPairSync(type: \"x25519\", options: import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "X25519KeyPairOptions",
+              "canonicalReference": "!\"\\\"crypto\\\"\".X25519KeyPairOptions:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "<\"der\", \"der\">): import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "KeyPairSyncResult",
+              "canonicalReference": "!\"\\\"crypto\\\"\".KeyPairSyncResult:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "<"
+            },
+            {
+              "kind": "Reference",
+              "text": "Buffer",
+              "canonicalReference": "!\"\\\"buffer\\\"\".__global.Buffer:interface"
+            },
+            {
+              "kind": "Content",
+              "text": ", "
+            },
+            {
+              "kind": "Reference",
+              "text": "Buffer",
+              "canonicalReference": "!\"\\\"buffer\\\"\".__global.Buffer:interface"
+            },
+            {
+              "kind": "Content",
+              "text": ">;\n    generateKeyPairSync(type: \"x25519\", options?: import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "X25519KeyPairKeyObjectOptions",
+              "canonicalReference": "!\"\\\"crypto\\\"\".X25519KeyPairKeyObjectOptions:interface"
+            },
+            {
+              "kind": "Content",
+              "text": " | undefined): import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "KeyPairKeyObjectResult",
+              "canonicalReference": "!\"\\\"crypto\\\"\".KeyPairKeyObjectResult:interface"
+            },
+            {
+              "kind": "Content",
+              "text": ";\n    generateKeyPairSync(type: \"x448\", options: import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "X448KeyPairOptions",
+              "canonicalReference": "!\"\\\"crypto\\\"\".X448KeyPairOptions:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "<\"pem\", \"pem\">): import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "KeyPairSyncResult",
+              "canonicalReference": "!\"\\\"crypto\\\"\".KeyPairSyncResult:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "<string, string>;\n    generateKeyPairSync(type: \"x448\", options: import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "X448KeyPairOptions",
+              "canonicalReference": "!\"\\\"crypto\\\"\".X448KeyPairOptions:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "<\"pem\", \"der\">): import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "KeyPairSyncResult",
+              "canonicalReference": "!\"\\\"crypto\\\"\".KeyPairSyncResult:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "<string, "
+            },
+            {
+              "kind": "Reference",
+              "text": "Buffer",
+              "canonicalReference": "!\"\\\"buffer\\\"\".__global.Buffer:interface"
+            },
+            {
+              "kind": "Content",
+              "text": ">;\n    generateKeyPairSync(type: \"x448\", options: import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "X448KeyPairOptions",
+              "canonicalReference": "!\"\\\"crypto\\\"\".X448KeyPairOptions:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "<\"der\", \"pem\">): import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "KeyPairSyncResult",
+              "canonicalReference": "!\"\\\"crypto\\\"\".KeyPairSyncResult:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "<"
+            },
+            {
+              "kind": "Reference",
+              "text": "Buffer",
+              "canonicalReference": "!\"\\\"buffer\\\"\".__global.Buffer:interface"
+            },
+            {
+              "kind": "Content",
+              "text": ", string>;\n    generateKeyPairSync(type: \"x448\", options: import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "X448KeyPairOptions",
+              "canonicalReference": "!\"\\\"crypto\\\"\".X448KeyPairOptions:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "<\"der\", \"der\">): import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "KeyPairSyncResult",
+              "canonicalReference": "!\"\\\"crypto\\\"\".KeyPairSyncResult:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "<"
+            },
+            {
+              "kind": "Reference",
+              "text": "Buffer",
+              "canonicalReference": "!\"\\\"buffer\\\"\".__global.Buffer:interface"
+            },
+            {
+              "kind": "Content",
+              "text": ", "
+            },
+            {
+              "kind": "Reference",
+              "text": "Buffer",
+              "canonicalReference": "!\"\\\"buffer\\\"\".__global.Buffer:interface"
+            },
+            {
+              "kind": "Content",
+              "text": ">;\n    generateKeyPairSync(type: \"x448\", options?: import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "X448KeyPairKeyObjectOptions",
+              "canonicalReference": "!\"\\\"crypto\\\"\".X448KeyPairKeyObjectOptions:interface"
+            },
+            {
+              "kind": "Content",
+              "text": " | undefined): import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "KeyPairKeyObjectResult",
+              "canonicalReference": "!\"\\\"crypto\\\"\".KeyPairKeyObjectResult:interface"
+            },
+            {
+              "kind": "Content",
+              "text": ";\n    generateKeyPair: typeof import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "generateKeyPair",
+              "canonicalReference": "!\"\\\"crypto\\\"\".generateKeyPair"
+            },
+            {
+              "kind": "Content",
+              "text": ";\n    sign(algorithm: string | null | undefined, data: "
+            },
+            {
+              "kind": "Reference",
+              "text": "NodeJS.ArrayBufferView",
+              "canonicalReference": "@types/node!__global.NodeJS.ArrayBufferView:type"
+            },
+            {
+              "kind": "Content",
+              "text": ", key: import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "KeyLike",
+              "canonicalReference": "!\"\\\"crypto\\\"\".KeyLike:type"
+            },
+            {
+              "kind": "Content",
+              "text": " | import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "SignKeyObjectInput",
+              "canonicalReference": "!\"\\\"crypto\\\"\".SignKeyObjectInput:interface"
+            },
+            {
+              "kind": "Content",
+              "text": " | import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "SignPrivateKeyInput",
+              "canonicalReference": "!\"\\\"crypto\\\"\".SignPrivateKeyInput:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "): "
+            },
+            {
+              "kind": "Reference",
+              "text": "Buffer",
+              "canonicalReference": "!\"\\\"buffer\\\"\".__global.Buffer:interface"
+            },
+            {
+              "kind": "Content",
+              "text": ";\n    sign(algorithm: string | null | undefined, data: "
+            },
+            {
+              "kind": "Reference",
+              "text": "NodeJS.ArrayBufferView",
+              "canonicalReference": "@types/node!__global.NodeJS.ArrayBufferView:type"
+            },
+            {
+              "kind": "Content",
+              "text": ", key: import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "KeyLike",
+              "canonicalReference": "!\"\\\"crypto\\\"\".KeyLike:type"
+            },
+            {
+              "kind": "Content",
+              "text": " | import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "SignKeyObjectInput",
+              "canonicalReference": "!\"\\\"crypto\\\"\".SignKeyObjectInput:interface"
+            },
+            {
+              "kind": "Content",
+              "text": " | import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "SignPrivateKeyInput",
+              "canonicalReference": "!\"\\\"crypto\\\"\".SignPrivateKeyInput:interface"
+            },
+            {
+              "kind": "Content",
+              "text": ", callback: (error: "
+            },
+            {
+              "kind": "Reference",
+              "text": "Error",
+              "canonicalReference": "!Error:interface"
+            },
+            {
+              "kind": "Content",
+              "text": " | null, data: "
+            },
+            {
+              "kind": "Reference",
+              "text": "Buffer",
+              "canonicalReference": "!\"\\\"buffer\\\"\".__global.Buffer:interface"
+            },
+            {
+              "kind": "Content",
+              "text": ") => void): void;\n    verify(algorithm: string | null | undefined, data: "
+            },
+            {
+              "kind": "Reference",
+              "text": "NodeJS.ArrayBufferView",
+              "canonicalReference": "@types/node!__global.NodeJS.ArrayBufferView:type"
+            },
+            {
+              "kind": "Content",
+              "text": ", key: import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "KeyLike",
+              "canonicalReference": "!\"\\\"crypto\\\"\".KeyLike:type"
+            },
+            {
+              "kind": "Content",
+              "text": " | import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "VerifyKeyObjectInput",
+              "canonicalReference": "!\"\\\"crypto\\\"\".VerifyKeyObjectInput:interface"
+            },
+            {
+              "kind": "Content",
+              "text": " | import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "VerifyPublicKeyInput",
+              "canonicalReference": "!\"\\\"crypto\\\"\".VerifyPublicKeyInput:interface"
+            },
+            {
+              "kind": "Content",
+              "text": " | import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "VerifyJsonWebKeyInput",
+              "canonicalReference": "!\"\\\"crypto\\\"\".VerifyJsonWebKeyInput:interface"
+            },
+            {
+              "kind": "Content",
+              "text": ", signature: "
+            },
+            {
+              "kind": "Reference",
+              "text": "NodeJS.ArrayBufferView",
+              "canonicalReference": "@types/node!__global.NodeJS.ArrayBufferView:type"
+            },
+            {
+              "kind": "Content",
+              "text": "): boolean;\n    verify(algorithm: string | null | undefined, data: "
+            },
+            {
+              "kind": "Reference",
+              "text": "NodeJS.ArrayBufferView",
+              "canonicalReference": "@types/node!__global.NodeJS.ArrayBufferView:type"
+            },
+            {
+              "kind": "Content",
+              "text": ", key: import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "KeyLike",
+              "canonicalReference": "!\"\\\"crypto\\\"\".KeyLike:type"
+            },
+            {
+              "kind": "Content",
+              "text": " | import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "VerifyKeyObjectInput",
+              "canonicalReference": "!\"\\\"crypto\\\"\".VerifyKeyObjectInput:interface"
+            },
+            {
+              "kind": "Content",
+              "text": " | import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "VerifyPublicKeyInput",
+              "canonicalReference": "!\"\\\"crypto\\\"\".VerifyPublicKeyInput:interface"
+            },
+            {
+              "kind": "Content",
+              "text": " | import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "VerifyJsonWebKeyInput",
+              "canonicalReference": "!\"\\\"crypto\\\"\".VerifyJsonWebKeyInput:interface"
+            },
+            {
+              "kind": "Content",
+              "text": ", signature: "
+            },
+            {
+              "kind": "Reference",
+              "text": "NodeJS.ArrayBufferView",
+              "canonicalReference": "@types/node!__global.NodeJS.ArrayBufferView:type"
+            },
+            {
+              "kind": "Content",
+              "text": ", callback: (error: "
+            },
+            {
+              "kind": "Reference",
+              "text": "Error",
+              "canonicalReference": "!Error:interface"
+            },
+            {
+              "kind": "Content",
+              "text": " | null, result: boolean) => void): void;\n    diffieHellman(options: {\n        privateKey: import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "KeyObject",
+              "canonicalReference": "!\"\\\"crypto\\\"\".KeyObject:class"
+            },
+            {
+              "kind": "Content",
+              "text": ";\n        publicKey: import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "KeyObject",
+              "canonicalReference": "!\"\\\"crypto\\\"\".KeyObject:class"
+            },
+            {
+              "kind": "Content",
+              "text": ";\n    }): "
+            },
+            {
+              "kind": "Reference",
+              "text": "Buffer",
+              "canonicalReference": "!\"\\\"buffer\\\"\".__global.Buffer:interface"
+            },
+            {
+              "kind": "Content",
+              "text": ";\n    getCipherInfo(nameOrNid: string | number, options?: import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "CipherInfoOptions",
+              "canonicalReference": "!\"\\\"crypto\\\"\".CipherInfoOptions:interface"
+            },
+            {
+              "kind": "Content",
+              "text": " | undefined): import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "CipherInfo",
+              "canonicalReference": "!\"\\\"crypto\\\"\".CipherInfo:interface"
+            },
+            {
+              "kind": "Content",
+              "text": " | undefined;\n    hkdf(digest: string, irm: import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "KeyObject",
+              "canonicalReference": "!\"\\\"crypto\\\"\".KeyObject:class"
+            },
+            {
+              "kind": "Content",
+              "text": " | import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "BinaryLike",
+              "canonicalReference": "!\"\\\"crypto\\\"\".BinaryLike:type"
+            },
+            {
+              "kind": "Content",
+              "text": ", salt: import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "BinaryLike",
+              "canonicalReference": "!\"\\\"crypto\\\"\".BinaryLike:type"
+            },
+            {
+              "kind": "Content",
+              "text": ", info: import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "BinaryLike",
+              "canonicalReference": "!\"\\\"crypto\\\"\".BinaryLike:type"
+            },
+            {
+              "kind": "Content",
+              "text": ", keylen: number, callback: (err: "
+            },
+            {
+              "kind": "Reference",
+              "text": "Error",
+              "canonicalReference": "!Error:interface"
+            },
+            {
+              "kind": "Content",
+              "text": " | null, derivedKey: "
+            },
+            {
+              "kind": "Reference",
+              "text": "ArrayBuffer",
+              "canonicalReference": "!ArrayBuffer:interface"
+            },
+            {
+              "kind": "Content",
+              "text": ") => void): void;\n    hkdfSync(digest: string, ikm: import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "KeyObject",
+              "canonicalReference": "!\"\\\"crypto\\\"\".KeyObject:class"
+            },
+            {
+              "kind": "Content",
+              "text": " | import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "BinaryLike",
+              "canonicalReference": "!\"\\\"crypto\\\"\".BinaryLike:type"
+            },
+            {
+              "kind": "Content",
+              "text": ", salt: import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "BinaryLike",
+              "canonicalReference": "!\"\\\"crypto\\\"\".BinaryLike:type"
+            },
+            {
+              "kind": "Content",
+              "text": ", info: import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "BinaryLike",
+              "canonicalReference": "!\"\\\"crypto\\\"\".BinaryLike:type"
+            },
+            {
+              "kind": "Content",
+              "text": ", keylen: number): "
+            },
+            {
+              "kind": "Reference",
+              "text": "ArrayBuffer",
+              "canonicalReference": "!ArrayBuffer:interface"
+            },
+            {
+              "kind": "Content",
+              "text": ";\n    secureHeapUsed(): import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "SecureHeapUsage",
+              "canonicalReference": "!\"\\\"crypto\\\"\".SecureHeapUsage:interface"
+            },
+            {
+              "kind": "Content",
+              "text": ";\n    randomUUID(options?: import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "RandomUUIDOptions",
+              "canonicalReference": "!\"\\\"crypto\\\"\".RandomUUIDOptions:interface"
+            },
+            {
+              "kind": "Content",
+              "text": " | undefined): `${string}-${string}-${string}-${string}-${string}`;\n    generatePrime(size: number, callback: (err: "
+            },
+            {
+              "kind": "Reference",
+              "text": "Error",
+              "canonicalReference": "!Error:interface"
+            },
+            {
+              "kind": "Content",
+              "text": " | null, prime: "
+            },
+            {
+              "kind": "Reference",
+              "text": "ArrayBuffer",
+              "canonicalReference": "!ArrayBuffer:interface"
+            },
+            {
+              "kind": "Content",
+              "text": ") => void): void;\n    generatePrime(size: number, options: import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "GeneratePrimeOptionsBigInt",
+              "canonicalReference": "!\"\\\"crypto\\\"\".GeneratePrimeOptionsBigInt:interface"
+            },
+            {
+              "kind": "Content",
+              "text": ", callback: (err: "
+            },
+            {
+              "kind": "Reference",
+              "text": "Error",
+              "canonicalReference": "!Error:interface"
+            },
+            {
+              "kind": "Content",
+              "text": " | null, prime: bigint) => void): void;\n    generatePrime(size: number, options: import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "GeneratePrimeOptionsArrayBuffer",
+              "canonicalReference": "!\"\\\"crypto\\\"\".GeneratePrimeOptionsArrayBuffer:interface"
+            },
+            {
+              "kind": "Content",
+              "text": ", callback: (err: "
+            },
+            {
+              "kind": "Reference",
+              "text": "Error",
+              "canonicalReference": "!Error:interface"
+            },
+            {
+              "kind": "Content",
+              "text": " | null, prime: "
+            },
+            {
+              "kind": "Reference",
+              "text": "ArrayBuffer",
+              "canonicalReference": "!ArrayBuffer:interface"
+            },
+            {
+              "kind": "Content",
+              "text": ") => void): void;\n    generatePrime(size: number, options: import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "GeneratePrimeOptions",
+              "canonicalReference": "!\"\\\"crypto\\\"\".GeneratePrimeOptions:interface"
+            },
+            {
+              "kind": "Content",
+              "text": ", callback: (err: "
+            },
+            {
+              "kind": "Reference",
+              "text": "Error",
+              "canonicalReference": "!Error:interface"
+            },
+            {
+              "kind": "Content",
+              "text": " | null, prime: bigint | "
+            },
+            {
+              "kind": "Reference",
+              "text": "ArrayBuffer",
+              "canonicalReference": "!ArrayBuffer:interface"
+            },
+            {
+              "kind": "Content",
+              "text": ") => void): void;\n    generatePrimeSync(size: number): "
+            },
+            {
+              "kind": "Reference",
+              "text": "ArrayBuffer",
+              "canonicalReference": "!ArrayBuffer:interface"
+            },
+            {
+              "kind": "Content",
+              "text": ";\n    generatePrimeSync(size: number, options: import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "GeneratePrimeOptionsBigInt",
+              "canonicalReference": "!\"\\\"crypto\\\"\".GeneratePrimeOptionsBigInt:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "): bigint;\n    generatePrimeSync(size: number, options: import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "GeneratePrimeOptionsArrayBuffer",
+              "canonicalReference": "!\"\\\"crypto\\\"\".GeneratePrimeOptionsArrayBuffer:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "): "
+            },
+            {
+              "kind": "Reference",
+              "text": "ArrayBuffer",
+              "canonicalReference": "!ArrayBuffer:interface"
+            },
+            {
+              "kind": "Content",
+              "text": ";\n    generatePrimeSync(size: number, options: import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "GeneratePrimeOptions",
+              "canonicalReference": "!\"\\\"crypto\\\"\".GeneratePrimeOptions:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "): bigint | "
+            },
+            {
+              "kind": "Reference",
+              "text": "ArrayBuffer",
+              "canonicalReference": "!ArrayBuffer:interface"
+            },
+            {
+              "kind": "Content",
+              "text": ";\n    checkPrime(value: import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "LargeNumberLike",
+              "canonicalReference": "!\"\\\"crypto\\\"\".LargeNumberLike:type"
+            },
+            {
+              "kind": "Content",
+              "text": ", callback: (err: "
+            },
+            {
+              "kind": "Reference",
+              "text": "Error",
+              "canonicalReference": "!Error:interface"
+            },
+            {
+              "kind": "Content",
+              "text": " | null, result: boolean) => void): void;\n    checkPrime(value: import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "LargeNumberLike",
+              "canonicalReference": "!\"\\\"crypto\\\"\".LargeNumberLike:type"
+            },
+            {
+              "kind": "Content",
+              "text": ", options: import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "CheckPrimeOptions",
+              "canonicalReference": "!\"\\\"crypto\\\"\".CheckPrimeOptions:interface"
+            },
+            {
+              "kind": "Content",
+              "text": ", callback: (err: "
+            },
+            {
+              "kind": "Reference",
+              "text": "Error",
+              "canonicalReference": "!Error:interface"
+            },
+            {
+              "kind": "Content",
+              "text": " | null, result: boolean) => void): void;\n    checkPrimeSync(candidate: import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "LargeNumberLike",
+              "canonicalReference": "!\"\\\"crypto\\\"\".LargeNumberLike:type"
+            },
+            {
+              "kind": "Content",
+              "text": ", options?: import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "CheckPrimeOptions",
+              "canonicalReference": "!\"\\\"crypto\\\"\".CheckPrimeOptions:interface"
+            },
+            {
+              "kind": "Content",
+              "text": " | undefined): boolean;\n    setEngine(engine: string, flags?: number | undefined): void;\n    getRandomValues<T_4 extends import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "webcrypto.BufferSource",
+              "canonicalReference": "!\"\\\"crypto\\\"\".webcrypto.BufferSource:type"
+            },
+            {
+              "kind": "Content",
+              "text": ">(typedArray: T_4): T_4;\n    Certificate: typeof import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "Certificate",
+              "canonicalReference": "!\"\\\"crypto\\\"\".Certificate:class"
+            },
+            {
+              "kind": "Content",
+              "text": ";\n    constants: typeof import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "constants",
+              "canonicalReference": "!\"\\\"crypto\\\"\".constants"
+            },
+            {
+              "kind": "Content",
+              "text": ";\n    fips: boolean;\n    Hash: typeof import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "Hash",
+              "canonicalReference": "!\"\\\"crypto\\\"\".Hash:class"
+            },
+            {
+              "kind": "Content",
+              "text": ";\n    Hmac: typeof import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "Hmac",
+              "canonicalReference": "!\"\\\"crypto\\\"\".Hmac:class"
+            },
+            {
+              "kind": "Content",
+              "text": ";\n    KeyObject: typeof import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "KeyObject",
+              "canonicalReference": "!\"\\\"crypto\\\"\".KeyObject:class"
+            },
+            {
+              "kind": "Content",
+              "text": ";\n    Cipher: typeof import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "Cipher",
+              "canonicalReference": "!\"\\\"crypto\\\"\".Cipher:class"
+            },
+            {
+              "kind": "Content",
+              "text": ";\n    Decipher: typeof import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "Decipher",
+              "canonicalReference": "!\"\\\"crypto\\\"\".Decipher:class"
+            },
+            {
+              "kind": "Content",
+              "text": ";\n    Sign: typeof import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "Sign",
+              "canonicalReference": "!\"\\\"crypto\\\"\".Sign:class"
+            },
+            {
+              "kind": "Content",
+              "text": ";\n    Verify: typeof import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "Verify",
+              "canonicalReference": "!\"\\\"crypto\\\"\".Verify:class"
+            },
+            {
+              "kind": "Content",
+              "text": ";\n    DiffieHellman: typeof import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "DiffieHellman",
+              "canonicalReference": "!\"\\\"crypto\\\"\".DiffieHellman:class"
+            },
+            {
+              "kind": "Content",
+              "text": ";\n    DiffieHellmanGroup: import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "DiffieHellmanGroupConstructor",
+              "canonicalReference": "!\"\\\"crypto\\\"\".DiffieHellmanGroupConstructor:interface"
+            },
+            {
+              "kind": "Content",
+              "text": ";\n    ECDH: typeof import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "ECDH",
+              "canonicalReference": "!\"\\\"crypto\\\"\".ECDH:class"
+            },
+            {
+              "kind": "Content",
+              "text": ";\n    X509Certificate: typeof import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "X509Certificate",
+              "canonicalReference": "!\"\\\"crypto\\\"\".X509Certificate:class"
+            },
+            {
+              "kind": "Content",
+              "text": ";\n    subtle: import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "webcrypto.SubtleCrypto",
+              "canonicalReference": "!\"\\\"crypto\\\"\".webcrypto.SubtleCrypto:interface"
+            },
+            {
+              "kind": "Content",
+              "text": ";\n    webcrypto: import(\"crypto\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "webcrypto.Crypto",
+              "canonicalReference": "!\"\\\"crypto\\\"\".webcrypto.Crypto:interface"
+            },
+            {
+              "kind": "Content",
+              "text": ";\n}>"
             }
           ],
           "fileUrlPath": "tmp/.tsup/declaration/packages/utilities/src/crypto/web-crypto.d.ts",
@@ -1374,7 +4582,7 @@
           "name": "getWebCrypto",
           "variableTypeTokenRange": {
             "startIndex": 1,
-            "endIndex": 3
+            "endIndex": 716
           }
         },
         {
@@ -3951,7 +7159,7 @@
         {
           "kind": "Variable",
           "canonicalReference": "@storm-stack/utilities!sha256:var",
-          "docComment": "",
+          "docComment": "/**\n * Generate a SHA-256 hash\n *\n * @remarks\n *\n * This helper function is used to generate a SHA-256 hash from a string value.\n *\n * @param value - The value to hash\n *\n * @returns A SHA-256 hash string\n */\n",
           "excerptTokens": [
             {
               "kind": "Content",
