@@ -1,14 +1,24 @@
-## 1.17.2 (2024-02-06)
+## 1.17.3 (2024-02-06)
 
 
 ### 🩹 Fixes
 
-- **logging:** Resolve timestamp formatting issue in logs ([6b63189](https://github.com/storm-software/storm-stack/commit/6b63189))
+- **logging:** Resolved invalid log file path issue ([5681c64](https://github.com/storm-software/storm-stack/commit/5681c64))
 
 
 ### ❤️  Thank You
 
 - Patrick Sullivan
+
+## 1.17.2 (2024-02-06)
+
+### 🩹 Fixes
+
+-   **logging:** Resolve timestamp formatting issue in logs ([6b63189](https://github.com/storm-software/storm-stack/commit/6b63189))
+
+### ❤️ Thank You
+
+-   Patrick Sullivan
 
 ## 1.17.1 (2024-02-05)
 
