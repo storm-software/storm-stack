@@ -4,874 +4,275 @@
 
 ```ts
 
-/// <reference types="node" />
-
-import { BinaryLike } from 'crypto';
-import { BinaryToTextEncoding } from 'crypto';
-import { Certificate } from 'crypto';
-import { CheckPrimeOptions } from 'crypto';
-import { Cipher } from 'crypto';
-import { CipherCCM } from 'crypto';
-import { CipherCCMOptions } from 'crypto';
-import { CipherCCMTypes } from 'crypto';
-import { CipherGCM } from 'crypto';
-import { CipherGCMOptions } from 'crypto';
-import { CipherGCMTypes } from 'crypto';
-import { CipherInfo } from 'crypto';
-import { CipherInfoOptions } from 'crypto';
-import { CipherKey } from 'crypto';
-import { CipherOCB } from 'crypto';
-import { CipherOCBOptions } from 'crypto';
-import { CipherOCBTypes } from 'crypto';
-import { constants } from 'crypto';
-import { Decipher } from 'crypto';
-import { DecipherCCM } from 'crypto';
-import { DecipherGCM } from 'crypto';
-import { DecipherOCB } from 'crypto';
-import { DiffieHellman } from 'crypto';
-import { DiffieHellmanGroup } from 'crypto';
-import { DiffieHellmanGroupConstructor } from 'crypto';
-import { DSAKeyPairKeyObjectOptions } from 'crypto';
-import { DSAKeyPairOptions } from 'crypto';
-import { ECDH } from 'crypto';
-import { ECKeyPairKeyObjectOptions } from 'crypto';
-import { ECKeyPairOptions } from 'crypto';
-import { ED25519KeyPairKeyObjectOptions } from 'crypto';
-import { ED25519KeyPairOptions } from 'crypto';
-import { ED448KeyPairKeyObjectOptions } from 'crypto';
-import { ED448KeyPairOptions } from 'crypto';
-import { generateKeyPair } from 'crypto';
-import { GeneratePrimeOptions } from 'crypto';
-import { GeneratePrimeOptionsArrayBuffer } from 'crypto';
-import { GeneratePrimeOptionsBigInt } from 'crypto';
-import { Hash } from 'crypto';
-import { HashOptions } from 'crypto';
-import { Hmac } from 'crypto';
-import { JsonWebKeyInput } from 'crypto';
-import { KeyLike } from 'crypto';
-import { KeyObject } from 'crypto';
-import { KeyPairKeyObjectResult } from 'crypto';
-import { KeyPairSyncResult } from 'crypto';
-import { LargeNumberLike } from 'crypto';
-import { nodeCrypto } from 'node:crypto';
-import { PrivateKeyInput } from 'crypto';
-import { PublicKeyInput } from 'crypto';
-import { RandomUUIDOptions } from 'crypto';
-import { RSAKeyPairKeyObjectOptions } from 'crypto';
-import { RSAKeyPairOptions } from 'crypto';
-import { RsaPrivateKey } from 'crypto';
-import { RSAPSSKeyPairKeyObjectOptions } from 'crypto';
-import { RSAPSSKeyPairOptions } from 'crypto';
-import { RsaPublicKey } from 'crypto';
-import { ScryptOptions } from 'crypto';
-import { SecureHeapUsage } from 'crypto';
-import { Sign } from 'crypto';
-import { SignKeyObjectInput } from 'crypto';
-import { SignPrivateKeyInput } from 'crypto';
-import { TransformOptions } from 'stream';
-import { Verify } from 'crypto';
-import { VerifyJsonWebKeyInput } from 'crypto';
-import { VerifyKeyObjectInput } from 'crypto';
-import { VerifyPublicKeyInput } from 'crypto';
-import { webcrypto } from 'crypto';
-import { WritableOptions } from 'stream';
-import { X25519KeyPairKeyObjectOptions } from 'crypto';
-import { X25519KeyPairOptions } from 'crypto';
-import { X448KeyPairKeyObjectOptions } from 'crypto';
-import { X448KeyPairOptions } from 'crypto';
-import { X509Certificate } from 'crypto';
+import { Temporal } from '@js-temporal/polyfill';
 
 // @public (undocumented)
-const $NestedValue: unique symbol;
-export { $NestedValue }
-export { $NestedValue as $NestedValue_alias_1 }
+type DateTimeErrorCode = ErrorCode | "datetime_create_failure" | "ms_format" | "formatting_failure";
 
 // @public (undocumented)
-interface Abstract<T> {
-    // (undocumented)
-    prototype: T;
-}
-export { Abstract }
-export { Abstract as Abstract_alias_1 }
-
-// @public (undocumented)
-type AnyCase<T extends IndexType> = string extends T ? string : T extends `${infer F1}${infer F2}${infer R}` ? `${Uppercase<F1> | Lowercase<F1>}${Uppercase<F2> | Lowercase<F2>}${AnyCase<R>}` : T extends `${infer F}${infer R}` ? `${Uppercase<F> | Lowercase<F>}${AnyCase<R>}` : typeof EMPTY_STRING;
-export { AnyCase }
-export { AnyCase as AnyCase_alias_1 }
-
-// @public
-function argIdentity(value: any): any;
-export { argIdentity }
-export { argIdentity as argIdentity_alias_1 }
-export { argIdentity as argIdentity_alias_2 }
-
-// @public (undocumented)
-type ArrayElement<ArrayType extends readonly unknown[]> = ArrayType extends readonly (infer ElementType)[] ? ElementType : never;
-export { ArrayElement }
-export { ArrayElement as ArrayElement_alias_1 }
-
-// @public (undocumented)
-type BrowserNativeObject = Date | FileList | File;
-export { BrowserNativeObject }
-export { BrowserNativeObject as BrowserNativeObject_alias_1 }
-
-// @public
-const camelCase: (input?: string) => string | undefined;
-export { camelCase }
-export { camelCase as camelCase_alias_1 }
-export { camelCase as camelCase_alias_2 }
-
-// @public (undocumented)
-interface ClassTypeCheckable<T> extends ITyped {
-    isTypeOf: (value: unknown) => value is T;
-}
-export { ClassTypeCheckable }
-export { ClassTypeCheckable as ClassTypeCheckable_alias_1 }
-
-// @public (undocumented)
-interface Clonable<T> {
-    // (undocumented)
-    clone(): T;
-}
-export { Clonable }
-export { Clonable as Clonable_alias_1 }
-
-// @public (undocumented)
-type Collection = IArguments | unknown[] | Map<unknown, unknown> | Record<string | number | symbol, unknown> | Set<unknown>;
-export { Collection }
-export { Collection as Collection_alias_1 }
-
-// @public
-const constantCase: (input?: string) => string | undefined;
-export { constantCase }
-export { constantCase as constantCase_alias_1 }
-export { constantCase as constantCase_alias_2 }
-
-// @public
-function copy(value: unknown, valueType: string, customizer?: ((value: unknown, type: string) => unknown) | null): unknown;
-export { copy }
-export { copy as copy_alias_1 }
-export { copy as copy_alias_2 }
-
-// @public (undocumented)
-const Crypto_2: Crypto | undefined;
-export { Crypto_2 as Crypto }
-export { Crypto_2 as Crypto_alias_1 }
-export { Crypto_2 as Crypto_alias_2 }
-
-// @public
-function deepCopy<T>(value: T, options?: {
-    customizer?: (value: unknown, type: string) => unknown;
-}): T;
-export { deepCopy }
-export { deepCopy as deepCopy_alias_1 }
-export { deepCopy as deepCopy_alias_2 }
-
-// @public
-const deepMerge: {
-    <X = any, Y = any, Z = X & Y>(target: X, source: Y, options?: any): Z;
-    all(array: Array<any>, options?: any): any;
+const DateTimeErrorCode: {
+    datetime_create_failure: DateTimeErrorCode;
+    ms_format: DateTimeErrorCode;
+    formatting_failure: DateTimeErrorCode;
+    success: ErrorCode;
+    missing_issue_code: ErrorCode;
+    invalid_config: ErrorCode;
+    failed_to_load_file: ErrorCode;
+    missing_context: ErrorCode;
+    record_not_found: ErrorCode;
+    required_field_missing: ErrorCode;
+    database_query_error: ErrorCode;
+    model_validation_error: ErrorCode;
+    field_validation_error: ErrorCode;
+    invalid_parameter: ErrorCode;
+    invalid_request: ErrorCode;
+    type_error: ErrorCode;
+    processing_error: ErrorCode;
+    internal_server_error: ErrorCode;
+    user_not_logged_in: ErrorCode;
+    unknown_cause: ErrorCode;
 };
-export { deepMerge }
-export { deepMerge as deepMerge_alias_1 }
-export { deepMerge as deepMerge_alias_2 }
+export { DateTimeErrorCode }
+export { DateTimeErrorCode as DateTimeErrorCode_alias_1 }
 
-// @public (undocumented)
-type DeepPartial<T> = T extends BrowserNativeObject | NestedValue ? T : {
-    [K in keyof T]?: DeepPartial<T[K]>;
+// @public
+type DateTimeInput = StormDateTime | Temporal.Instant | Date | string | number | bigint | null | undefined;
+export { DateTimeInput }
+export { DateTimeInput as DateTimeInput_alias_1 }
+
+// @public
+interface DateTimeOptions {
+    calendar?: Temporal.CalendarLike;
+    skipDefaulting?: boolean;
+    timeZone?: Temporal.TimeZoneLike;
+}
+export { DateTimeOptions }
+export { DateTimeOptions as DateTimeOptions_alias_1 }
+
+// @public
+function deserializeStormDate(utcString: JsonValue): StormDate;
+export { deserializeStormDate }
+export { deserializeStormDate as deserializeStormDate_alias_1 }
+
+// @public
+function deserializeStormDateTime(utcString: JsonValue): StormDateTime;
+export { deserializeStormDateTime }
+export { deserializeStormDateTime as deserializeStormDateTime_alias_1 }
+
+// @public
+function deserializeStormTime(utcString: JsonValue): StormTime;
+export { deserializeStormTime }
+export { deserializeStormTime as deserializeStormTime_alias_1 }
+
+// @public
+const formatDate: (dateTime?: StormDateTime, options?: Partial<Temporal.ZonedDateTimeToStringOptions>) => string;
+export { formatDate }
+export { formatDate as formatDate_alias_1 }
+export { formatDate as formatDate_alias_2 }
+
+// @public
+const formatDateTime: (dateTime?: StormDateTime, options?: Partial<Temporal.ZonedDateTimeToStringOptions>) => string;
+export { formatDateTime }
+export { formatDateTime as formatDateTime_alias_1 }
+export { formatDateTime as formatDateTime_alias_2 }
+
+// @public
+const formatDateTimeISO: (dateTime?: StormDateTime | null, options?: Partial<Temporal.ZonedDateTimeToStringOptions>) => string;
+export { formatDateTimeISO }
+export { formatDateTimeISO as formatDateTimeISO_alias_1 }
+export { formatDateTimeISO as formatDateTimeISO_alias_2 }
+
+// @public
+const formatSince: (dateTimeOrDuration: StormDateTime | Temporal.Duration, dateTimeTo?: StormDateTime, options?: FormatSinceOptions) => string;
+export { formatSince }
+export { formatSince as formatSince_alias_1 }
+export { formatSince as formatSince_alias_2 }
+
+// @public
+type FormatSinceOptions = {
+    colonNotation?: boolean;
+    compact?: boolean;
+    formatSubMilliseconds?: boolean;
+    keepDecimalsOnWholeSeconds?: boolean;
+    millisecondsDecimalDigits?: number;
+    secondsDecimalDigits?: number;
+    separateMilliseconds?: boolean;
+    unitCount?: number;
+    verbose?: boolean;
 };
-export { DeepPartial }
-export { DeepPartial as DeepPartial_alias_1 }
-
-// @public (undocumented)
-const EMPTY_OBJECT: {};
-export { EMPTY_OBJECT }
-export { EMPTY_OBJECT as EMPTY_OBJECT_alias_1 }
-
-// @public (undocumented)
-const EMPTY_STRING = "";
-export { EMPTY_STRING }
-export { EMPTY_STRING as EMPTY_STRING_alias_1 }
-
-// @public (undocumented)
-type EmptyObject = {
-    [K in string | number]: never;
-};
-export { EmptyObject }
-export { EmptyObject as EmptyObject_alias_1 }
+export { FormatSinceOptions }
+export { FormatSinceOptions as FormatSinceOptions_alias_1 }
+export { FormatSinceOptions as FormatSinceOptions_alias_2 }
 
 // @public
-type Except<ObjectType, KeysType extends keyof ObjectType, Options extends ExceptOptions = {
-    requireExactProps: false;
-}> = {
-    [KeyType in keyof ObjectType as Filter<KeyType, KeysType>]: ObjectType[KeyType];
-} & (Options["requireExactProps"] extends true ? Partial<Record<KeysType, never>> : {});
-export { Except }
-export { Except as Except_alias_1 }
+const formatTime: (dateTime?: StormDateTime, options?: Partial<Temporal.ZonedDateTimeToStringOptions>) => string;
+export { formatTime }
+export { formatTime as formatTime_alias_1 }
+export { formatTime as formatTime_alias_2 }
+
+// @public
+function isDateTime(obj: unknown): obj is StormDateTime;
+export { isDateTime }
+export { isDateTime as isDateTime_alias_1 }
+export { isDateTime as isDateTime_alias_2 }
+
+// @public
+function isInstant(value: unknown): value is Temporal.Instant;
+export { isInstant }
+export { isInstant as isInstant_alias_1 }
+export { isInstant as isInstant_alias_2 }
 
 // @public (undocumented)
-type Filter<KeyType, ExcludeType> = IsEqual<KeyType, ExcludeType> extends true ? never : KeyType extends ExcludeType ? never : KeyType;
-export { Filter }
-export { Filter as Filter_alias_1 }
-
-// @public
-const flattenObject: (obj: any, prefix?: string, keyStringFn?: (input?: string) => string | undefined) => any;
-export { flattenObject }
-export { flattenObject as flattenObject_alias_1 }
-export { flattenObject as flattenObject_alias_2 }
-
-// @public
-const getObjectTag: (value: unknown) => string;
-export { getObjectTag }
-export { getObjectTag as getObjectTag_alias_1 }
-export { getObjectTag as getObjectTag_alias_2 }
-
-// @public
-const getUnique: <T = any>(arr: T[]) => T[];
-export { getUnique }
-export { getUnique as getUnique_alias_1 }
-export { getUnique as getUnique_alias_2 }
-
-// @public
-const getWebCrypto: () => Promise<Crypto | {
-    default: nodeCrypto;
-    createHash(algorithm: string, options?: HashOptions | undefined): Hash;
-    createHmac(algorithm: string, key: KeyObject | BinaryLike, options?: TransformOptions | undefined): Hmac;
-    createCipher(algorithm: CipherCCMTypes, password: BinaryLike, options: CipherCCMOptions): CipherCCM;
-    createCipher(algorithm: CipherGCMTypes, password: BinaryLike, options?: CipherGCMOptions | undefined): CipherGCM;
-    createCipher(algorithm: string, password: BinaryLike, options?: TransformOptions | undefined): Cipher;
-    createCipheriv(algorithm: CipherCCMTypes, key: CipherKey, iv: BinaryLike, options: CipherCCMOptions): CipherCCM;
-    createCipheriv(algorithm: CipherOCBTypes, key: CipherKey, iv: BinaryLike, options: CipherOCBOptions): CipherOCB;
-    createCipheriv(algorithm: CipherGCMTypes, key: CipherKey, iv: BinaryLike, options?: CipherGCMOptions | undefined): CipherGCM;
-    createCipheriv(algorithm: string, key: CipherKey, iv: BinaryLike | null, options?: TransformOptions | undefined): Cipher;
-    createDecipher(algorithm: CipherCCMTypes, password: BinaryLike, options: CipherCCMOptions): DecipherCCM;
-    createDecipher(algorithm: CipherGCMTypes, password: BinaryLike, options?: CipherGCMOptions | undefined): DecipherGCM;
-    createDecipher(algorithm: string, password: BinaryLike, options?: TransformOptions | undefined): Decipher;
-    createDecipheriv(algorithm: CipherCCMTypes, key: CipherKey, iv: BinaryLike, options: CipherCCMOptions): DecipherCCM;
-    createDecipheriv(algorithm: CipherOCBTypes, key: CipherKey, iv: BinaryLike, options: CipherOCBOptions): DecipherOCB;
-    createDecipheriv(algorithm: CipherGCMTypes, key: CipherKey, iv: BinaryLike, options?: CipherGCMOptions | undefined): DecipherGCM;
-    createDecipheriv(algorithm: string, key: CipherKey, iv: BinaryLike | null, options?: TransformOptions | undefined): Decipher;
-    generateKey(type: "hmac" | "aes", options: {
-        length: number;
-    }, callback: (err: Error | null, key: KeyObject) => void): void;
-    generateKeySync(type: "hmac" | "aes", options: {
-        length: number;
-    }): KeyObject;
-    createPrivateKey(key: string | Buffer | PrivateKeyInput | JsonWebKeyInput): KeyObject;
-    createPublicKey(key: string | KeyObject | Buffer | JsonWebKeyInput | PublicKeyInput): KeyObject;
-    createSecretKey(key: NodeJS.ArrayBufferView): KeyObject;
-    createSecretKey(key: string, encoding: BufferEncoding): KeyObject;
-    createSign(algorithm: string, options?: WritableOptions | undefined): Sign;
-    createVerify(algorithm: string, options?: WritableOptions | undefined): Verify;
-    createDiffieHellman(primeLength: number, generator?: number | undefined): DiffieHellman;
-    createDiffieHellman(prime: ArrayBuffer | NodeJS.ArrayBufferView, generator?: number | ArrayBuffer | NodeJS.ArrayBufferView | undefined): DiffieHellman;
-    createDiffieHellman(prime: ArrayBuffer | NodeJS.ArrayBufferView, generator: string, generatorEncoding: BinaryToTextEncoding): DiffieHellman;
-    createDiffieHellman(prime: string, primeEncoding: BinaryToTextEncoding, generator?: number | ArrayBuffer | NodeJS.ArrayBufferView | undefined): DiffieHellman;
-    createDiffieHellman(prime: string, primeEncoding: BinaryToTextEncoding, generator: string, generatorEncoding: BinaryToTextEncoding): DiffieHellman;
-    getDiffieHellman(groupName: string): DiffieHellmanGroup;
-    createDiffieHellmanGroup(name: string): DiffieHellmanGroup;
-    pbkdf2(password: BinaryLike, salt: BinaryLike, iterations: number, keylen: number, digest: string, callback: (err: Error | null, derivedKey: Buffer) => void): void;
-    pbkdf2Sync(password: BinaryLike, salt: BinaryLike, iterations: number, keylen: number, digest: string): Buffer;
-    randomBytes(size: number): Buffer;
-    randomBytes(size: number, callback: (err: Error | null, buf: Buffer) => void): void;
-    pseudoRandomBytes(size: number): Buffer;
-    pseudoRandomBytes(size: number, callback: (err: Error | null, buf: Buffer) => void): void;
-    randomInt(max: number): number;
-    randomInt(min: number, max: number): number;
-    randomInt(max: number, callback: (err: Error | null, value: number) => void): void;
-    randomInt(min: number, max: number, callback: (err: Error | null, value: number) => void): void;
-    randomFillSync<T extends NodeJS.ArrayBufferView>(buffer: T, offset?: number | undefined, size?: number | undefined): T;
-    randomFill<T_1 extends NodeJS.ArrayBufferView>(buffer: T_1, callback: (err: Error | null, buf: T_1) => void): void;
-    randomFill<T_2 extends NodeJS.ArrayBufferView>(buffer: T_2, offset: number, callback: (err: Error | null, buf: T_2) => void): void;
-    randomFill<T_3 extends NodeJS.ArrayBufferView>(buffer: T_3, offset: number, size: number, callback: (err: Error | null, buf: T_3) => void): void;
-    scrypt(password: BinaryLike, salt: BinaryLike, keylen: number, callback: (err: Error | null, derivedKey: Buffer) => void): void;
-    scrypt(password: BinaryLike, salt: BinaryLike, keylen: number, options: ScryptOptions, callback: (err: Error | null, derivedKey: Buffer) => void): void;
-    scryptSync(password: BinaryLike, salt: BinaryLike, keylen: number, options?: ScryptOptions | undefined): Buffer;
-    publicEncrypt(key: RsaPublicKey | RsaPrivateKey | KeyLike, buffer: NodeJS.ArrayBufferView): Buffer;
-    publicDecrypt(key: RsaPublicKey | RsaPrivateKey | KeyLike, buffer: NodeJS.ArrayBufferView): Buffer;
-    privateDecrypt(privateKey: RsaPrivateKey | KeyLike, buffer: NodeJS.ArrayBufferView): Buffer;
-    privateEncrypt(privateKey: RsaPrivateKey | KeyLike, buffer: NodeJS.ArrayBufferView): Buffer;
-    getCiphers(): string[];
-    getCurves(): string[];
-    getFips(): 0 | 1;
-    setFips(bool: boolean): void;
-    getHashes(): string[];
-    createECDH(curveName: string): ECDH;
-    timingSafeEqual(a: NodeJS.ArrayBufferView, b: NodeJS.ArrayBufferView): boolean;
-    generateKeyPairSync(type: "rsa", options: RSAKeyPairOptions<"pem", "pem">): KeyPairSyncResult<string, string>;
-    generateKeyPairSync(type: "rsa", options: RSAKeyPairOptions<"pem", "der">): KeyPairSyncResult<string, Buffer>;
-    generateKeyPairSync(type: "rsa", options: RSAKeyPairOptions<"der", "pem">): KeyPairSyncResult<Buffer, string>;
-    generateKeyPairSync(type: "rsa", options: RSAKeyPairOptions<"der", "der">): KeyPairSyncResult<Buffer, Buffer>;
-    generateKeyPairSync(type: "rsa", options: RSAKeyPairKeyObjectOptions): KeyPairKeyObjectResult;
-    generateKeyPairSync(type: "rsa-pss", options: RSAPSSKeyPairOptions<"pem", "pem">): KeyPairSyncResult<string, string>;
-    generateKeyPairSync(type: "rsa-pss", options: RSAPSSKeyPairOptions<"pem", "der">): KeyPairSyncResult<string, Buffer>;
-    generateKeyPairSync(type: "rsa-pss", options: RSAPSSKeyPairOptions<"der", "pem">): KeyPairSyncResult<Buffer, string>;
-    generateKeyPairSync(type: "rsa-pss", options: RSAPSSKeyPairOptions<"der", "der">): KeyPairSyncResult<Buffer, Buffer>;
-    generateKeyPairSync(type: "rsa-pss", options: RSAPSSKeyPairKeyObjectOptions): KeyPairKeyObjectResult;
-    generateKeyPairSync(type: "dsa", options: DSAKeyPairOptions<"pem", "pem">): KeyPairSyncResult<string, string>;
-    generateKeyPairSync(type: "dsa", options: DSAKeyPairOptions<"pem", "der">): KeyPairSyncResult<string, Buffer>;
-    generateKeyPairSync(type: "dsa", options: DSAKeyPairOptions<"der", "pem">): KeyPairSyncResult<Buffer, string>;
-    generateKeyPairSync(type: "dsa", options: DSAKeyPairOptions<"der", "der">): KeyPairSyncResult<Buffer, Buffer>;
-    generateKeyPairSync(type: "dsa", options: DSAKeyPairKeyObjectOptions): KeyPairKeyObjectResult;
-    generateKeyPairSync(type: "ec", options: ECKeyPairOptions<"pem", "pem">): KeyPairSyncResult<string, string>;
-    generateKeyPairSync(type: "ec", options: ECKeyPairOptions<"pem", "der">): KeyPairSyncResult<string, Buffer>;
-    generateKeyPairSync(type: "ec", options: ECKeyPairOptions<"der", "pem">): KeyPairSyncResult<Buffer, string>;
-    generateKeyPairSync(type: "ec", options: ECKeyPairOptions<"der", "der">): KeyPairSyncResult<Buffer, Buffer>;
-    generateKeyPairSync(type: "ec", options: ECKeyPairKeyObjectOptions): KeyPairKeyObjectResult;
-    generateKeyPairSync(type: "ed25519", options: ED25519KeyPairOptions<"pem", "pem">): KeyPairSyncResult<string, string>;
-    generateKeyPairSync(type: "ed25519", options: ED25519KeyPairOptions<"pem", "der">): KeyPairSyncResult<string, Buffer>;
-    generateKeyPairSync(type: "ed25519", options: ED25519KeyPairOptions<"der", "pem">): KeyPairSyncResult<Buffer, string>;
-    generateKeyPairSync(type: "ed25519", options: ED25519KeyPairOptions<"der", "der">): KeyPairSyncResult<Buffer, Buffer>;
-    generateKeyPairSync(type: "ed25519", options?: ED25519KeyPairKeyObjectOptions | undefined): KeyPairKeyObjectResult;
-    generateKeyPairSync(type: "ed448", options: ED448KeyPairOptions<"pem", "pem">): KeyPairSyncResult<string, string>;
-    generateKeyPairSync(type: "ed448", options: ED448KeyPairOptions<"pem", "der">): KeyPairSyncResult<string, Buffer>;
-    generateKeyPairSync(type: "ed448", options: ED448KeyPairOptions<"der", "pem">): KeyPairSyncResult<Buffer, string>;
-    generateKeyPairSync(type: "ed448", options: ED448KeyPairOptions<"der", "der">): KeyPairSyncResult<Buffer, Buffer>;
-    generateKeyPairSync(type: "ed448", options?: ED448KeyPairKeyObjectOptions | undefined): KeyPairKeyObjectResult;
-    generateKeyPairSync(type: "x25519", options: X25519KeyPairOptions<"pem", "pem">): KeyPairSyncResult<string, string>;
-    generateKeyPairSync(type: "x25519", options: X25519KeyPairOptions<"pem", "der">): KeyPairSyncResult<string, Buffer>;
-    generateKeyPairSync(type: "x25519", options: X25519KeyPairOptions<"der", "pem">): KeyPairSyncResult<Buffer, string>;
-    generateKeyPairSync(type: "x25519", options: X25519KeyPairOptions<"der", "der">): KeyPairSyncResult<Buffer, Buffer>;
-    generateKeyPairSync(type: "x25519", options?: X25519KeyPairKeyObjectOptions | undefined): KeyPairKeyObjectResult;
-    generateKeyPairSync(type: "x448", options: X448KeyPairOptions<"pem", "pem">): KeyPairSyncResult<string, string>;
-    generateKeyPairSync(type: "x448", options: X448KeyPairOptions<"pem", "der">): KeyPairSyncResult<string, Buffer>;
-    generateKeyPairSync(type: "x448", options: X448KeyPairOptions<"der", "pem">): KeyPairSyncResult<Buffer, string>;
-    generateKeyPairSync(type: "x448", options: X448KeyPairOptions<"der", "der">): KeyPairSyncResult<Buffer, Buffer>;
-    generateKeyPairSync(type: "x448", options?: X448KeyPairKeyObjectOptions | undefined): KeyPairKeyObjectResult;
-    generateKeyPair: generateKeyPair;
-    sign(algorithm: string | null | undefined, data: NodeJS.ArrayBufferView, key: KeyLike | SignKeyObjectInput | SignPrivateKeyInput): Buffer;
-    sign(algorithm: string | null | undefined, data: NodeJS.ArrayBufferView, key: KeyLike | SignKeyObjectInput | SignPrivateKeyInput, callback: (error: Error | null, data: Buffer) => void): void;
-    verify(algorithm: string | null | undefined, data: NodeJS.ArrayBufferView, key: KeyLike | VerifyKeyObjectInput | VerifyPublicKeyInput | VerifyJsonWebKeyInput, signature: NodeJS.ArrayBufferView): boolean;
-    verify(algorithm: string | null | undefined, data: NodeJS.ArrayBufferView, key: KeyLike | VerifyKeyObjectInput | VerifyPublicKeyInput | VerifyJsonWebKeyInput, signature: NodeJS.ArrayBufferView, callback: (error: Error | null, result: boolean) => void): void;
-    diffieHellman(options: {
-        privateKey: KeyObject;
-        publicKey: KeyObject;
-    }): Buffer;
-    getCipherInfo(nameOrNid: string | number, options?: CipherInfoOptions | undefined): CipherInfo | undefined;
-    hkdf(digest: string, irm: KeyObject | BinaryLike, salt: BinaryLike, info: BinaryLike, keylen: number, callback: (err: Error | null, derivedKey: ArrayBuffer) => void): void;
-    hkdfSync(digest: string, ikm: KeyObject | BinaryLike, salt: BinaryLike, info: BinaryLike, keylen: number): ArrayBuffer;
-    secureHeapUsed(): SecureHeapUsage;
-    randomUUID(options?: RandomUUIDOptions | undefined): `${string}-${string}-${string}-${string}-${string}`;
-    generatePrime(size: number, callback: (err: Error | null, prime: ArrayBuffer) => void): void;
-    generatePrime(size: number, options: GeneratePrimeOptionsBigInt, callback: (err: Error | null, prime: bigint) => void): void;
-    generatePrime(size: number, options: GeneratePrimeOptionsArrayBuffer, callback: (err: Error | null, prime: ArrayBuffer) => void): void;
-    generatePrime(size: number, options: GeneratePrimeOptions, callback: (err: Error | null, prime: bigint | ArrayBuffer) => void): void;
-    generatePrimeSync(size: number): ArrayBuffer;
-    generatePrimeSync(size: number, options: GeneratePrimeOptionsBigInt): bigint;
-    generatePrimeSync(size: number, options: GeneratePrimeOptionsArrayBuffer): ArrayBuffer;
-    generatePrimeSync(size: number, options: GeneratePrimeOptions): bigint | ArrayBuffer;
-    checkPrime(value: LargeNumberLike, callback: (err: Error | null, result: boolean) => void): void;
-    checkPrime(value: LargeNumberLike, options: CheckPrimeOptions, callback: (err: Error | null, result: boolean) => void): void;
-    checkPrimeSync(candidate: LargeNumberLike, options?: CheckPrimeOptions | undefined): boolean;
-    setEngine(engine: string, flags?: number | undefined): void;
-    getRandomValues<T_4 extends webcrypto.BufferSource>(typedArray: T_4): T_4;
-    Certificate: Certificate;
-    constants: constants;
-    fips: boolean;
-    Hash: Hash;
-    Hmac: Hmac;
-    KeyObject: KeyObject;
-    Cipher: Cipher;
-    Decipher: Decipher;
-    Sign: Sign;
-    Verify: Verify;
-    DiffieHellman: DiffieHellman;
-    DiffieHellmanGroup: DiffieHellmanGroupConstructor;
-    ECDH: ECDH;
-    X509Certificate: X509Certificate;
-    subtle: webcrypto.SubtleCrypto;
-    webcrypto: webcrypto.Crypto;
-}>;
-export { getWebCrypto }
-export { getWebCrypto as getWebCrypto_alias_1 }
-export { getWebCrypto as getWebCrypto_alias_2 }
+const RFC_3339_DATE_REGEX: RegExp;
+export { RFC_3339_DATE_REGEX }
+export { RFC_3339_DATE_REGEX as RFC_3339_DATE_REGEX_alias_1 }
 
 // @public (undocumented)
-interface IIdentity<T = string> {
-    // (undocumented)
-    id: T;
+const RFC_3339_DATETIME_REGEX: RegExp;
+export { RFC_3339_DATETIME_REGEX }
+export { RFC_3339_DATETIME_REGEX as RFC_3339_DATETIME_REGEX_alias_1 }
+
+// @public (undocumented)
+const RFC_3339_TIME_REGEX: RegExp;
+export { RFC_3339_TIME_REGEX }
+export { RFC_3339_TIME_REGEX as RFC_3339_TIME_REGEX_alias_1 }
+
+// @public
+function serializeStormDate(date: StormDate): string;
+export { serializeStormDate }
+export { serializeStormDate as serializeStormDate_alias_1 }
+
+// @public
+function serializeStormDateTime(dateTime: StormDateTime): string;
+export { serializeStormDateTime }
+export { serializeStormDateTime as serializeStormDateTime_alias_1 }
+
+// @public
+function serializeStormTime(date: StormTime): string;
+export { serializeStormTime }
+export { serializeStormTime as serializeStormTime_alias_1 }
+
+// @public
+class StormDate extends StormDateTime {
+    constructor(dateTime?: DateTimeInput, options?: DateTimeOptions);
+    static create: (date?: DateTimeInput, options?: DateTimeOptions) => StormDate;
+    static current(): StormDate;
+    getDuration(dateTimeTo?: StormDateTime): Temporal.Duration;
+    getHours(): number;
+    getMilliseconds(): number;
+    getMinutes(): number;
+    getSeconds(): number;
+    getTimezoneOffset(): number;
+    getUTCHours(): number;
+    getUTCMilliseconds(): number;
+    getUTCMinutes(): number;
+    getUTCSeconds(): number;
+    static maximum(): StormDate;
+    static minimum(): StormDate;
+    static now(): number;
+    protected validate(value?: DateTimeInput, options?: DateTimeOptions): boolean;
 }
-export { IIdentity }
-export { IIdentity as IIdentity_alias_1 }
+export { StormDate }
+export { StormDate as StormDate_alias_1 }
 
 // @public
-type Indexable = {
-    [index: IndexType]: any;
-};
-export { Indexable }
-export { Indexable as Indexable_alias_1 }
-
-// @public
-type IndexType = string | number | symbol;
-export { IndexType }
-export { IndexType as IndexType_alias_1 }
-
-// @public
-const isArrayLike: (value: any) => boolean;
-export { isArrayLike }
-export { isArrayLike as isArrayLike_alias_1 }
-export { isArrayLike as isArrayLike_alias_2 }
-
-// @public
-const isAsyncIterable: (value: unknown) => value is AsyncIterable<unknown>;
-export { isAsyncIterable }
-export { isAsyncIterable as isAsyncIterable_alias_1 }
-export { isAsyncIterable as isAsyncIterable_alias_2 }
-
-// @public
-const isBigInt: (value: unknown) => value is bigint;
-export { isBigInt }
-export { isBigInt as isBigInt_alias_1 }
-export { isBigInt as isBigInt_alias_2 }
-
-// @public
-const isBoolean: (value: unknown) => value is boolean;
-export { isBoolean }
-export { isBoolean as isBoolean_alias_1 }
-export { isBoolean as isBoolean_alias_2 }
-
-// @public
-const isBuffer: typeof Buffer.isBuffer;
-export { isBuffer }
-export { isBuffer as isBuffer_alias_1 }
-export { isBuffer as isBuffer_alias_2 }
-
-// @public (undocumented)
-const isBufferExists: boolean;
-export { isBufferExists }
-export { isBufferExists as isBufferExists_alias_1 }
-export { isBufferExists as isBufferExists_alias_2 }
-
-// @public
-function isCollection(value: any): value is Collection;
-export { isCollection }
-export { isCollection as isCollection_alias_1 }
-export { isCollection as isCollection_alias_2 }
-
-// @public
-const isDate: (value: unknown) => value is Date;
-export { isDate }
-export { isDate as isDate_alias_1 }
-export { isDate as isDate_alias_2 }
-
-// @public
-const isDevelopment: () => boolean;
-export { isDevelopment }
-export { isDevelopment as isDevelopment_alias_1 }
-export { isDevelopment as isDevelopment_alias_2 }
-
-// @public
-const isEmpty: (value: unknown) => boolean;
-export { isEmpty }
-export { isEmpty as isEmpty_alias_1 }
-export { isEmpty as isEmpty_alias_2 }
-
-// @public
-const isEmptyObject: (value: unknown) => value is {};
-export { isEmptyObject }
-export { isEmptyObject as isEmptyObject_alias_1 }
-export { isEmptyObject as isEmptyObject_alias_2 }
-
-// @public
-const isEmptyOrEmptyObject: (value: unknown) => boolean;
-export { isEmptyOrEmptyObject }
-export { isEmptyOrEmptyObject as isEmptyOrEmptyObject_alias_1 }
-export { isEmptyOrEmptyObject as isEmptyOrEmptyObject_alias_2 }
-
-// @public
-const isEmptyString: (value: unknown) => value is string;
-export { isEmptyString }
-export { isEmptyString as isEmptyString_alias_1 }
-export { isEmptyString as isEmptyString_alias_2 }
-
-// @public
-type IsEqual<A, B> = (<G>() => G extends A ? 1 : 2) extends <G>() => G extends B ? 1 : 2 ? true : false;
-export { IsEqual }
-export { IsEqual as IsEqual_alias_1 }
-
-// @public (undocumented)
-function isEqual(a: any, b: any): boolean;
-export { isEqual }
-export { isEqual as isEqual_alias_1 }
-export { isEqual as isEqual_alias_2 }
-
-// @public (undocumented)
-interface ISequenced {
-    sequence: number;
+class StormDateTime extends Date {
+    constructor(dateTime?: DateTimeInput, options?: DateTimeOptions);
+    get calendarId(): string;
+    static create: (dateTime?: DateTimeInput, options?: DateTimeOptions) => StormDateTime;
+    static current(): StormDateTime;
+    get epochMilliseconds(): number;
+    getDate(): number;
+    getDay(): number;
+    getDuration(dateTimeTo?: StormDateTime): Temporal.Duration;
+    getFullYear(): number;
+    getHours(): number;
+    getMilliseconds(): number;
+    getMinutes(): number;
+    getMonth(): number;
+    getPlainDate(): StormDateTime;
+    getPlainTime(): StormDateTime;
+    getSeconds(): number;
+    getTime(): number;
+    getTimezoneOffset(): number;
+    getUTCDate(): number;
+    getUTCDay(): number;
+    getUTCFullYear(): number;
+    getUTCHours(): number;
+    getUTCMilliseconds(): number;
+    getUTCMinutes(): number;
+    getUTCMonth(): number;
+    getUTCSeconds(): number;
+    get input(): DateTimeInput;
+    get instant(): Temporal.Instant;
+    protected set instant(instant: Temporal.Instant);
+    static isDateTime(obj: unknown): obj is StormDateTime;
+    get isValid(): boolean;
+    static maximum(): StormDateTime;
+    static minimum(): StormDateTime;
+    static now(): number;
+    get options(): DateTimeOptions;
+    setDate(day: number): number;
+    setFullYear(year: number, month?: number, day?: number): number;
+    setHours(hour: number, minute: number, second?: number, millisecond?: number): number;
+    setMilliseconds(millisecond: number): number;
+    setMinutes(minute: number, second?: number, millisecond?: number): number;
+    setMonth(month: number, day?: number): number;
+    setSeconds(second: number, millisecond?: number): number;
+    setTime(time: number): number;
+    setUTCDate(day: number): number;
+    setUTCFullYear(year: number, month?: number, day?: number): number;
+    setUTCHours(hour: number, minute: number, second?: number, millisecond?: number): number;
+    setUTCMilliseconds(millisecond: number): number;
+    setUTCMinutes(minute: number, second?: number, millisecond?: number): number;
+    setUTCMonth(month: number, day?: number): number;
+    setUTCSeconds(second: number, millisecond?: number): number;
+    since(dateTimeTo?: StormDateTime): Temporal.Duration;
+    get timeZoneId(): string;
+    protected validate(value?: DateTimeInput, _options?: DateTimeOptions): boolean;
+    get zonedDateTime(): Temporal.ZonedDateTime;
+    protected set zonedDateTime(zonedDateTime: Temporal.ZonedDateTime);
 }
-export { ISequenced }
-export { ISequenced as ISequenced_alias_1 }
+export { StormDateTime }
+export { StormDateTime as StormDateTime_alias_1 }
 
 // @public
-const isError: (obj: unknown) => obj is Error;
-export { isError }
-export { isError as isError_alias_1 }
-export { isError as isError_alias_2 }
-
-// @public
-const isFloat: (value: any) => value is number;
-export { isFloat }
-export { isFloat as isFloat_alias_1 }
-export { isFloat as isFloat_alias_2 }
-
-// @public
-const isFunction: (value: unknown) => value is ((params?: unknown) => unknown) & Function;
-export { isFunction }
-export { isFunction as isFunction_alias_1 }
-export { isFunction as isFunction_alias_2 }
-
-// @public
-const isInt: (value: any) => value is number;
-export { isInt }
-export { isInt as isInt_alias_1 }
-export { isInt as isInt_alias_2 }
-
-// @public (undocumented)
-const isMergeableObject: (value: any) => boolean;
-export { isMergeableObject }
-export { isMergeableObject as isMergeableObject_alias_1 }
-export { isMergeableObject as isMergeableObject_alias_2 }
-
-// @public
-const isMode: (mode: string) => boolean;
-export { isMode }
-export { isMode as isMode_alias_1 }
-export { isMode as isMode_alias_2 }
-
-// @public
-export const isNonNullObject: (value: any) => value is object;
-
-// @public
-const isNotEmpty: (value: unknown) => value is {};
-export { isNotEmpty }
-export { isNotEmpty as isNotEmpty_alias_1 }
-export { isNotEmpty as isNotEmpty_alias_2 }
-
-// @public
-const isNull: (value: unknown) => value is null;
-export { isNull }
-export { isNull as isNull_alias_1 }
-export { isNull as isNull_alias_2 }
-
-// @public
-const isNumber: (value: unknown) => value is number;
-export { isNumber }
-export { isNumber as isNumber_alias_1 }
-export { isNumber as isNumber_alias_2 }
-
-// @public
-const isObject: (value: unknown) => value is object;
-export { isObject }
-export { isObject as isObject_alias_1 }
-export { isObject as isObject_alias_2 }
-
-// @public
-const isObjectLike: (obj: unknown) => boolean;
-export { isObjectLike }
-export { isObjectLike as isObjectLike_alias_1 }
-export { isObjectLike as isObjectLike_alias_2 }
-
-// @public
-const isPlainObject: (obj: unknown) => boolean;
-export { isPlainObject }
-export { isPlainObject as isPlainObject_alias_1 }
-export { isPlainObject as isPlainObject_alias_2 }
-
-// @public
-const isPrimitive: (value: unknown) => boolean;
-export { isPrimitive }
-export { isPrimitive as isPrimitive_alias_1 }
-export { isPrimitive as isPrimitive_alias_2 }
-
-// @public
-const isProduction: () => boolean;
-export { isProduction }
-export { isProduction as isProduction_alias_1 }
-export { isProduction as isProduction_alias_2 }
-
-// @public
-const isPromise: (value: unknown) => value is Promise<unknown>;
-export { isPromise }
-export { isPromise as isPromise_alias_1 }
-export { isPromise as isPromise_alias_2 }
-
-// @public
-const isPromiseLike: (value: unknown) => value is PromiseLike<unknown>;
-export { isPromiseLike }
-export { isPromiseLike as isPromiseLike_alias_1 }
-export { isPromiseLike as isPromiseLike_alias_2 }
-
-// @public
-const isReactElement: (value: any) => boolean;
-export { isReactElement }
-export { isReactElement as isReactElement_alias_1 }
-export { isReactElement as isReactElement_alias_2 }
-
-// @public
-const isRef: <TRef = unknown>(value: unknown) => value is RefObject<TRef>;
-export { isRef }
-export { isRef as isRef_alias_1 }
-export { isRef as isRef_alias_2 }
-
-// @public
-const isRuntimeClient: () => boolean;
-export { isRuntimeClient }
-export { isRuntimeClient as isRuntimeClient_alias_1 }
-export { isRuntimeClient as isRuntimeClient_alias_2 }
-
-// @public
-const isRuntimeServer: () => boolean;
-export { isRuntimeServer }
-export { isRuntimeServer as isRuntimeServer_alias_1 }
-export { isRuntimeServer as isRuntimeServer_alias_2 }
-
-// @public
-const isSelectOption: (value: unknown) => value is SelectOption;
-export { isSelectOption }
-export { isSelectOption as isSelectOption_alias_1 }
-export { isSelectOption as isSelectOption_alias_2 }
-
-// @public
-const isSet: (value: unknown) => value is {};
-export { isSet }
-export { isSet as isSet_alias_1 }
-export { isSet as isSet_alias_2 }
-
-// @public
-const isSetObject: (value: unknown) => value is object;
-export { isSetObject }
-export { isSetObject as isSetObject_alias_1 }
-export { isSetObject as isSetObject_alias_2 }
-
-// @public
-const isSetString: (value: unknown) => value is string;
-export { isSetString }
-export { isSetString as isSetString_alias_1 }
-export { isSetString as isSetString_alias_2 }
-
-// @public
-const isString: (value: unknown) => value is string;
-export { isString }
-export { isString as isString_alias_1 }
-export { isString as isString_alias_2 }
-
-// @public
-const isSymbol: (value: unknown) => value is symbol;
-export { isSymbol }
-export { isSymbol as isSymbol_alias_1 }
-export { isSymbol as isSymbol_alias_2 }
-
-// @public
-const isTyped: (value: unknown) => value is ITyped;
-export { isTyped }
-export { isTyped as isTyped_alias_1 }
-export { isTyped as isTyped_alias_2 }
-
-// @public
-const isUndefined: (value: unknown) => boolean;
-export { isUndefined }
-export { isUndefined as isUndefined_alias_1 }
-export { isUndefined as isUndefined_alias_2 }
-
-// @public (undocumented)
-interface ITyped {
-    __typename: string;
+class StormTime extends StormDateTime {
+    constructor(dateTime?: DateTimeInput, options?: DateTimeOptions);
+    static create: (time?: DateTimeInput, options?: DateTimeOptions) => StormTime;
+    static current(): StormTime;
+    getDate(): number;
+    getDay(): number;
+    getDuration(dateTimeTo?: StormTime): Temporal.Duration;
+    getFullYear(): number;
+    getMonth(): number;
+    getUTCDate(): number;
+    getUTCDay(): number;
+    getUTCFullYear(): number;
+    getUTCMonth(): number;
+    static now(): number;
+    protected validate(value?: DateTimeInput, options?: DateTimeOptions): boolean;
 }
-export { ITyped }
-export { ITyped as ITyped_alias_1 }
+export { StormTime }
+export { StormTime as StormTime_alias_1 }
 
 // @public (undocumented)
-interface IVersioned {
-    // (undocumented)
-    version: number;
-}
-export { IVersioned }
-export { IVersioned as IVersioned_alias_1 }
+function validateDate(value: DateTimeInput, options?: DateTimeOptions): boolean;
+export { validateDate }
+export { validateDate as validateDate_alias_1 }
+export { validateDate as validateDate_alias_2 }
 
 // @public
-const kebabCase: (input?: string) => string | undefined;
-export { kebabCase }
-export { kebabCase as kebabCase_alias_1 }
-export { kebabCase as kebabCase_alias_2 }
+function validateDateTime(value: DateTimeInput, options?: DateTimeOptions): boolean;
+export { validateDateTime }
+export { validateDateTime as validateDateTime_alias_1 }
+export { validateDateTime as validateDateTime_alias_2 }
 
 // @public (undocumented)
-type LiteralUnion<T extends U, U extends Primitive> = T | (U & {
-    _?: never;
-});
-export { LiteralUnion }
-export { LiteralUnion as LiteralUnion_alias_1 }
-
-// @public
-const lowerCaseFirst: (input?: string) => string | undefined;
-export { lowerCaseFirst }
-export { lowerCaseFirst as lowerCaseFirst_alias_1 }
-export { lowerCaseFirst as lowerCaseFirst_alias_2 }
-
-// @public (undocumented)
-type MaybePromise<T> = T | Promise<T>;
-export { MaybePromise }
-export { MaybePromise as MaybePromise_alias_1 }
-
-// @public (undocumented)
-type NestedValue<TValue extends object = object> = {
-    [$NestedValue]: never;
-} & TValue;
-export { NestedValue }
-export { NestedValue as NestedValue_alias_1 }
-
-// @public (undocumented)
-type Newable<T> = new (..._args: never[]) => T;
-export { Newable }
-export { Newable as Newable_alias_1 }
-
-// @public (undocumented)
-const NEWLINE_STRING = "\r\n";
-export { NEWLINE_STRING }
-export { NEWLINE_STRING as NEWLINE_STRING_alias_1 }
-
-// @public (undocumented)
-type NonUndefined<T> = T extends undefined ? never : T;
-export { NonUndefined }
-export { NonUndefined as NonUndefined_alias_1 }
-
-// @public
-const noop: (params?: unknown) => void;
-export { noop }
-export { noop as noop_alias_1 }
-export { noop as noop_alias_2 }
-
-// @public
-const pascalCase: (input?: string) => string | undefined;
-export { pascalCase }
-export { pascalCase as pascalCase_alias_1 }
-export { pascalCase as pascalCase_alias_2 }
-
-// @public
-const periodSplit: (input?: string) => string | undefined;
-export { periodSplit }
-export { periodSplit as periodSplit_alias_1 }
-export { periodSplit as periodSplit_alias_2 }
-
-// @public
-type Primitive = null | undefined | string | number | boolean | symbol | bigint;
-export { Primitive }
-export { Primitive as Primitive_alias_1 }
-
-// @public
-const propertyExists: (object: any, propertyKey: PropertyKey) => boolean;
-export { propertyExists }
-export { propertyExists as propertyExists_alias_1 }
-export { propertyExists as propertyExists_alias_2 }
-
-// @public
-const propertyUnsafe: (object: any, propertyKey: PropertyKey) => boolean;
-export { propertyUnsafe }
-export { propertyUnsafe as propertyUnsafe_alias_1 }
-export { propertyUnsafe as propertyUnsafe_alias_2 }
-
-// @public (undocumented)
-type ReducerFunction<TState, TAction> = (state: TState, action: TAction) => TState;
-export { ReducerFunction }
-export { ReducerFunction as ReducerFunction_alias_1 }
-
-// @public (undocumented)
-interface RefObject<T> {
-    // (undocumented)
-    current: T;
-}
-export { RefObject }
-export { RefObject as RefObject_alias_1 }
-
-// @public
-type RequiredKeysOf<BaseType extends object> = Exclude<{
-    [Key in keyof BaseType]: BaseType extends Record<Key, BaseType[Key]> ? Key : never;
-}[keyof BaseType], undefined>;
-export { RequiredKeysOf }
-export { RequiredKeysOf as RequiredKeysOf_alias_1 }
-
-// @public (undocumented)
-type Rollback = Record<string, (initialValue: any, currentValue: any) => any>;
-export { Rollback }
-export { Rollback as Rollback_alias_1 }
-
-// @public (undocumented)
-interface SelectOption {
-    disabled: boolean;
-    name: string;
-    selected: boolean;
-    value: string;
-}
-export { SelectOption }
-export { SelectOption as SelectOption_alias_1 }
-
-// @public
-type SetRequired<BaseType, Keys extends keyof BaseType> = BaseType extends unknown ? Simplify<Except<BaseType, Keys> & Required<Pick<BaseType, Keys>>> : never;
-export { SetRequired }
-export { SetRequired as SetRequired_alias_1 }
-
-// @public
-const sha256: (value: string) => Promise<string>;
-export { sha256 }
-export { sha256 as sha256_alias_1 }
-export { sha256 as sha256_alias_2 }
-
-// @public
-type Simplify<T> = {
-    [KeyType in keyof T]: T[KeyType];
-} & {};
-export { Simplify }
-export { Simplify as Simplify_alias_1 }
-
-// @public
-const snakeCase: (input?: string, options?: {
-    splitOnNumber: boolean;
-}) => string | undefined;
-export { snakeCase }
-export { snakeCase as snakeCase_alias_1 }
-export { snakeCase as snakeCase_alias_2 }
-
-// @public
-const titleCase: (input?: string) => string | undefined;
-export { titleCase }
-export { titleCase as titleCase_alias_1 }
-export { titleCase as titleCase_alias_2 }
-
-// @public (undocumented)
-const TYPE_ARGUMENTS = "Arguments";
-export { TYPE_ARGUMENTS }
-export { TYPE_ARGUMENTS as TYPE_ARGUMENTS_alias_1 }
-
-// @public (undocumented)
-const TYPE_ARRAY = "Array";
-export { TYPE_ARRAY }
-export { TYPE_ARRAY as TYPE_ARRAY_alias_1 }
-
-// @public (undocumented)
-const TYPE_MAP = "Map";
-export { TYPE_MAP }
-export { TYPE_MAP as TYPE_MAP_alias_1 }
-
-// @public (undocumented)
-const TYPE_OBJECT = "Object";
-export { TYPE_OBJECT }
-export { TYPE_OBJECT as TYPE_OBJECT_alias_1 }
-
-// @public (undocumented)
-const TYPE_SET = "Set";
-export { TYPE_SET }
-export { TYPE_SET as TYPE_SET_alias_1 }
-
-// @public (undocumented)
-function typeDetect(obj: unknown): string;
-export { typeDetect }
-export { typeDetect as typeDetect_alias_1 }
-export { typeDetect as typeDetect_alias_2 }
-
-// @public
-const upperCaseFirst: (input?: string) => string | undefined;
-export { upperCaseFirst }
-export { upperCaseFirst as upperCaseFirst_alias_1 }
-export { upperCaseFirst as upperCaseFirst_alias_2 }
+function validateTime(value?: DateTimeInput, options?: DateTimeOptions): boolean;
+export { validateTime }
+export { validateTime as validateTime_alias_1 }
+export { validateTime as validateTime_alias_2 }
 
 // (No @packageDocumentation comment for this package)
 
