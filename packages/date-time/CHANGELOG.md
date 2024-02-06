@@ -1,16 +1,14 @@
-## 1.15.4 (2024-02-06)
 
+
+## 1.15.4 (2024-02-06)
 
 ### 🩹 Fixes
 
-- **logging:** Clean up the stopwatch logging formatting ([90e544a](https://github.com/storm-software/storm-stack/commit/90e544a))
+-   **logging:** Clean up the stopwatch logging formatting ([90e544a](https://github.com/storm-software/storm-stack/commit/90e544a))
 
+### ❤️ Thank You
 
-### ❤️  Thank You
-
-- Patrick Sullivan
-
-
+-   Patrick Sullivan
 
 ## 1.15.1 (2024-02-05)
 
