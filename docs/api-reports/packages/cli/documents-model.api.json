@@ -173,1037 +173,17 @@
       "preserveMemberOrder": false,
       "members": [
         {
-          "kind": "Interface",
-          "canonicalReference": "@storm-stack/cli!CLIArgument:interface",
-          "docComment": "",
-          "excerptTokens": [
-            {
-              "kind": "Content",
-              "text": "export interface CLIArgument "
-            }
-          ],
-          "fileUrlPath": "tmp/.tsup/declaration/packages/cli/src/types.d.ts",
-          "releaseTag": "Public",
-          "name": "CLIArgument",
-          "preserveMemberOrder": false,
-          "members": [
-            {
-              "kind": "PropertySignature",
-              "canonicalReference": "@storm-stack/cli!CLIArgument#default:member",
-              "docComment": "",
-              "excerptTokens": [
-                {
-                  "kind": "Content",
-                  "text": "default?: "
-                },
-                {
-                  "kind": "Content",
-                  "text": "unknown | undefined"
-                },
-                {
-                  "kind": "Content",
-                  "text": ";"
-                }
-              ],
-              "isReadonly": false,
-              "isOptional": true,
-              "releaseTag": "Public",
-              "name": "default",
-              "propertyTypeTokenRange": {
-                "startIndex": 1,
-                "endIndex": 2
-              }
-            },
-            {
-              "kind": "PropertySignature",
-              "canonicalReference": "@storm-stack/cli!CLIArgument#description:member",
-              "docComment": "",
-              "excerptTokens": [
-                {
-                  "kind": "Content",
-                  "text": "description?: "
-                },
-                {
-                  "kind": "Content",
-                  "text": "string"
-                },
-                {
-                  "kind": "Content",
-                  "text": ";"
-                }
-              ],
-              "isReadonly": false,
-              "isOptional": true,
-              "releaseTag": "Public",
-              "name": "description",
-              "propertyTypeTokenRange": {
-                "startIndex": 1,
-                "endIndex": 2
-              }
-            },
-            {
-              "kind": "PropertySignature",
-              "canonicalReference": "@storm-stack/cli!CLIArgument#flags:member",
-              "docComment": "",
-              "excerptTokens": [
-                {
-                  "kind": "Content",
-                  "text": "flags: "
-                },
-                {
-                  "kind": "Content",
-                  "text": "string"
-                },
-                {
-                  "kind": "Content",
-                  "text": ";"
-                }
-              ],
-              "isReadonly": false,
-              "isOptional": false,
-              "releaseTag": "Public",
-              "name": "flags",
-              "propertyTypeTokenRange": {
-                "startIndex": 1,
-                "endIndex": 2
-              }
-            }
-          ],
-          "extendsTokenRanges": []
-        },
-        {
-          "kind": "Interface",
-          "canonicalReference": "@storm-stack/cli!CLICommand:interface",
-          "docComment": "",
-          "excerptTokens": [
-            {
-              "kind": "Content",
-              "text": "export interface CLICommand "
-            }
-          ],
-          "fileUrlPath": "tmp/.tsup/declaration/packages/cli/src/types.d.ts",
-          "releaseTag": "Public",
-          "name": "CLICommand",
-          "preserveMemberOrder": false,
-          "members": [
-            {
-              "kind": "PropertySignature",
-              "canonicalReference": "@storm-stack/cli!CLICommand#action:member",
-              "docComment": "",
-              "excerptTokens": [
-                {
-                  "kind": "Content",
-                  "text": "action: "
-                },
-                {
-                  "kind": "Content",
-                  "text": "(...args: any[]) => "
-                },
-                {
-                  "kind": "Reference",
-                  "text": "MaybePromise",
-                  "canonicalReference": "@storm-stack/cli!~MaybePromise:type"
-                },
-                {
-                  "kind": "Content",
-                  "text": "<void>"
-                },
-                {
-                  "kind": "Content",
-                  "text": ";"
-                }
-              ],
-              "isReadonly": false,
-              "isOptional": false,
-              "releaseTag": "Public",
-              "name": "action",
-              "propertyTypeTokenRange": {
-                "startIndex": 1,
-                "endIndex": 4
-              }
-            },
-            {
-              "kind": "PropertySignature",
-              "canonicalReference": "@storm-stack/cli!CLICommand#argument:member",
-              "docComment": "",
-              "excerptTokens": [
-                {
-                  "kind": "Content",
-                  "text": "argument?: "
-                },
-                {
-                  "kind": "Reference",
-                  "text": "CLIArgument",
-                  "canonicalReference": "@storm-stack/cli!CLIArgument:interface"
-                },
-                {
-                  "kind": "Content",
-                  "text": "[]"
-                },
-                {
-                  "kind": "Content",
-                  "text": ";"
-                }
-              ],
-              "isReadonly": false,
-              "isOptional": true,
-              "releaseTag": "Public",
-              "name": "argument",
-              "propertyTypeTokenRange": {
-                "startIndex": 1,
-                "endIndex": 3
-              }
-            },
-            {
-              "kind": "PropertySignature",
-              "canonicalReference": "@storm-stack/cli!CLICommand#commands:member",
-              "docComment": "",
-              "excerptTokens": [
-                {
-                  "kind": "Content",
-                  "text": "commands?: "
-                },
-                {
-                  "kind": "Reference",
-                  "text": "CLICommand",
-                  "canonicalReference": "@storm-stack/cli!CLICommand:interface"
-                },
-                {
-                  "kind": "Content",
-                  "text": "[]"
-                },
-                {
-                  "kind": "Content",
-                  "text": ";"
-                }
-              ],
-              "isReadonly": false,
-              "isOptional": true,
-              "releaseTag": "Public",
-              "name": "commands",
-              "propertyTypeTokenRange": {
-                "startIndex": 1,
-                "endIndex": 3
-              }
-            },
-            {
-              "kind": "PropertySignature",
-              "canonicalReference": "@storm-stack/cli!CLICommand#description:member",
-              "docComment": "",
-              "excerptTokens": [
-                {
-                  "kind": "Content",
-                  "text": "description: "
-                },
-                {
-                  "kind": "Content",
-                  "text": "string"
-                },
-                {
-                  "kind": "Content",
-                  "text": ";"
-                }
-              ],
-              "isReadonly": false,
-              "isOptional": false,
-              "releaseTag": "Public",
-              "name": "description",
-              "propertyTypeTokenRange": {
-                "startIndex": 1,
-                "endIndex": 2
-              }
-            },
-            {
-              "kind": "PropertySignature",
-              "canonicalReference": "@storm-stack/cli!CLICommand#name:member",
-              "docComment": "",
-              "excerptTokens": [
-                {
-                  "kind": "Content",
-                  "text": "name: "
-                },
-                {
-                  "kind": "Content",
-                  "text": "string"
-                },
-                {
-                  "kind": "Content",
-                  "text": ";"
-                }
-              ],
-              "isReadonly": false,
-              "isOptional": false,
-              "releaseTag": "Public",
-              "name": "name",
-              "propertyTypeTokenRange": {
-                "startIndex": 1,
-                "endIndex": 2
-              }
-            },
-            {
-              "kind": "PropertySignature",
-              "canonicalReference": "@storm-stack/cli!CLICommand#options:member",
-              "docComment": "",
-              "excerptTokens": [
-                {
-                  "kind": "Content",
-                  "text": "options?: "
-                },
-                {
-                  "kind": "Reference",
-                  "text": "CLIOption",
-                  "canonicalReference": "@storm-stack/cli!CLIOption:interface"
-                },
-                {
-                  "kind": "Content",
-                  "text": "[]"
-                },
-                {
-                  "kind": "Content",
-                  "text": ";"
-                }
-              ],
-              "isReadonly": false,
-              "isOptional": true,
-              "releaseTag": "Public",
-              "name": "options",
-              "propertyTypeTokenRange": {
-                "startIndex": 1,
-                "endIndex": 3
-              }
-            }
-          ],
-          "extendsTokenRanges": []
-        },
-        {
-          "kind": "Interface",
-          "canonicalReference": "@storm-stack/cli!CLIConfig:interface",
-          "docComment": "",
-          "excerptTokens": [
-            {
-              "kind": "Content",
-              "text": "export interface CLIConfig "
-            }
-          ],
-          "fileUrlPath": "tmp/.tsup/declaration/packages/cli/src/types.d.ts",
-          "releaseTag": "Public",
-          "name": "CLIConfig",
-          "preserveMemberOrder": false,
-          "members": [
-            {
-              "kind": "PropertySignature",
-              "canonicalReference": "@storm-stack/cli!CLIConfig#banner:member",
-              "docComment": "",
-              "excerptTokens": [
-                {
-                  "kind": "Content",
-                  "text": "banner?: "
-                },
-                {
-                  "kind": "Reference",
-                  "text": "CLITitle",
-                  "canonicalReference": "@storm-stack/cli!CLITitle:interface"
-                },
-                {
-                  "kind": "Content",
-                  "text": ";"
-                }
-              ],
-              "isReadonly": false,
-              "isOptional": true,
-              "releaseTag": "Public",
-              "name": "banner",
-              "propertyTypeTokenRange": {
-                "startIndex": 1,
-                "endIndex": 2
-              }
-            },
-            {
-              "kind": "PropertySignature",
-              "canonicalReference": "@storm-stack/cli!CLIConfig#by:member",
-              "docComment": "",
-              "excerptTokens": [
-                {
-                  "kind": "Content",
-                  "text": "by?: "
-                },
-                {
-                  "kind": "Reference",
-                  "text": "CLITitle",
-                  "canonicalReference": "@storm-stack/cli!CLITitle:interface"
-                },
-                {
-                  "kind": "Content",
-                  "text": ";"
-                }
-              ],
-              "isReadonly": false,
-              "isOptional": true,
-              "releaseTag": "Public",
-              "name": "by",
-              "propertyTypeTokenRange": {
-                "startIndex": 1,
-                "endIndex": 2
-              }
-            },
-            {
-              "kind": "PropertySignature",
-              "canonicalReference": "@storm-stack/cli!CLIConfig#commands:member",
-              "docComment": "",
-              "excerptTokens": [
-                {
-                  "kind": "Content",
-                  "text": "commands: "
-                },
-                {
-                  "kind": "Reference",
-                  "text": "CLICommand",
-                  "canonicalReference": "@storm-stack/cli!CLICommand:interface"
-                },
-                {
-                  "kind": "Content",
-                  "text": "[]"
-                },
-                {
-                  "kind": "Content",
-                  "text": ";"
-                }
-              ],
-              "isReadonly": false,
-              "isOptional": false,
-              "releaseTag": "Public",
-              "name": "commands",
-              "propertyTypeTokenRange": {
-                "startIndex": 1,
-                "endIndex": 3
-              }
-            },
-            {
-              "kind": "PropertySignature",
-              "canonicalReference": "@storm-stack/cli!CLIConfig#description:member",
-              "docComment": "",
-              "excerptTokens": [
-                {
-                  "kind": "Content",
-                  "text": "description: "
-                },
-                {
-                  "kind": "Content",
-                  "text": "string"
-                },
-                {
-                  "kind": "Content",
-                  "text": ";"
-                }
-              ],
-              "isReadonly": false,
-              "isOptional": false,
-              "releaseTag": "Public",
-              "name": "description",
-              "propertyTypeTokenRange": {
-                "startIndex": 1,
-                "endIndex": 2
-              }
-            },
-            {
-              "kind": "PropertySignature",
-              "canonicalReference": "@storm-stack/cli!CLIConfig#documentationUrl:member",
-              "docComment": "",
-              "excerptTokens": [
-                {
-                  "kind": "Content",
-                  "text": "documentationUrl?: "
-                },
-                {
-                  "kind": "Content",
-                  "text": "string"
-                },
-                {
-                  "kind": "Content",
-                  "text": ";"
-                }
-              ],
-              "isReadonly": false,
-              "isOptional": true,
-              "releaseTag": "Public",
-              "name": "documentationUrl",
-              "propertyTypeTokenRange": {
-                "startIndex": 1,
-                "endIndex": 2
-              }
-            },
-            {
-              "kind": "PropertySignature",
-              "canonicalReference": "@storm-stack/cli!CLIConfig#homepageUrl:member",
-              "docComment": "",
-              "excerptTokens": [
-                {
-                  "kind": "Content",
-                  "text": "homepageUrl?: "
-                },
-                {
-                  "kind": "Content",
-                  "text": "string"
-                },
-                {
-                  "kind": "Content",
-                  "text": ";"
-                }
-              ],
-              "isReadonly": false,
-              "isOptional": true,
-              "releaseTag": "Public",
-              "name": "homepageUrl",
-              "propertyTypeTokenRange": {
-                "startIndex": 1,
-                "endIndex": 2
-              }
-            },
-            {
-              "kind": "PropertySignature",
-              "canonicalReference": "@storm-stack/cli!CLIConfig#license:member",
-              "docComment": "",
-              "excerptTokens": [
-                {
-                  "kind": "Content",
-                  "text": "license?: "
-                },
-                {
-                  "kind": "Content",
-                  "text": "string"
-                },
-                {
-                  "kind": "Content",
-                  "text": ";"
-                }
-              ],
-              "isReadonly": false,
-              "isOptional": true,
-              "releaseTag": "Public",
-              "name": "license",
-              "propertyTypeTokenRange": {
-                "startIndex": 1,
-                "endIndex": 2
-              }
-            },
-            {
-              "kind": "PropertySignature",
-              "canonicalReference": "@storm-stack/cli!CLIConfig#licenseUrl:member",
-              "docComment": "",
-              "excerptTokens": [
-                {
-                  "kind": "Content",
-                  "text": "licenseUrl?: "
-                },
-                {
-                  "kind": "Content",
-                  "text": "string"
-                },
-                {
-                  "kind": "Content",
-                  "text": ";"
-                }
-              ],
-              "isReadonly": false,
-              "isOptional": true,
-              "releaseTag": "Public",
-              "name": "licenseUrl",
-              "propertyTypeTokenRange": {
-                "startIndex": 1,
-                "endIndex": 2
-              }
-            },
-            {
-              "kind": "PropertySignature",
-              "canonicalReference": "@storm-stack/cli!CLIConfig#name:member",
-              "docComment": "",
-              "excerptTokens": [
-                {
-                  "kind": "Content",
-                  "text": "name: "
-                },
-                {
-                  "kind": "Content",
-                  "text": "string"
-                },
-                {
-                  "kind": "Content",
-                  "text": ";"
-                }
-              ],
-              "isReadonly": false,
-              "isOptional": false,
-              "releaseTag": "Public",
-              "name": "name",
-              "propertyTypeTokenRange": {
-                "startIndex": 1,
-                "endIndex": 2
-              }
-            },
-            {
-              "kind": "PropertySignature",
-              "canonicalReference": "@storm-stack/cli!CLIConfig#postAction:member",
-              "docComment": "",
-              "excerptTokens": [
-                {
-                  "kind": "Content",
-                  "text": "postAction: "
-                },
-                {
-                  "kind": "Content",
-                  "text": "(command: "
-                },
-                {
-                  "kind": "Reference",
-                  "text": "Command",
-                  "canonicalReference": "!unknown"
-                },
-                {
-                  "kind": "Content",
-                  "text": ") => "
-                },
-                {
-                  "kind": "Reference",
-                  "text": "MaybePromise",
-                  "canonicalReference": "@storm-stack/cli!~MaybePromise:type"
-                },
-                {
-                  "kind": "Content",
-                  "text": "<void>"
-                },
-                {
-                  "kind": "Content",
-                  "text": ";"
-                }
-              ],
-              "isReadonly": false,
-              "isOptional": false,
-              "releaseTag": "Public",
-              "name": "postAction",
-              "propertyTypeTokenRange": {
-                "startIndex": 1,
-                "endIndex": 6
-              }
-            },
-            {
-              "kind": "PropertySignature",
-              "canonicalReference": "@storm-stack/cli!CLIConfig#preAction:member",
-              "docComment": "",
-              "excerptTokens": [
-                {
-                  "kind": "Content",
-                  "text": "preAction: "
-                },
-                {
-                  "kind": "Content",
-                  "text": "(command: "
-                },
-                {
-                  "kind": "Reference",
-                  "text": "Command",
-                  "canonicalReference": "!unknown"
-                },
-                {
-                  "kind": "Content",
-                  "text": ") => "
-                },
-                {
-                  "kind": "Reference",
-                  "text": "MaybePromise",
-                  "canonicalReference": "@storm-stack/cli!~MaybePromise:type"
-                },
-                {
-                  "kind": "Content",
-                  "text": "<void>"
-                },
-                {
-                  "kind": "Content",
-                  "text": ";"
-                }
-              ],
-              "isReadonly": false,
-              "isOptional": false,
-              "releaseTag": "Public",
-              "name": "preAction",
-              "propertyTypeTokenRange": {
-                "startIndex": 1,
-                "endIndex": 6
-              }
-            },
-            {
-              "kind": "PropertySignature",
-              "canonicalReference": "@storm-stack/cli!CLIConfig#repositoryUrl:member",
-              "docComment": "",
-              "excerptTokens": [
-                {
-                  "kind": "Content",
-                  "text": "repositoryUrl?: "
-                },
-                {
-                  "kind": "Content",
-                  "text": "string"
-                },
-                {
-                  "kind": "Content",
-                  "text": ";"
-                }
-              ],
-              "isReadonly": false,
-              "isOptional": true,
-              "releaseTag": "Public",
-              "name": "repositoryUrl",
-              "propertyTypeTokenRange": {
-                "startIndex": 1,
-                "endIndex": 2
-              }
-            }
-          ],
-          "extendsTokenRanges": []
-        },
-        {
-          "kind": "Interface",
-          "canonicalReference": "@storm-stack/cli!CLIOption:interface",
-          "docComment": "",
-          "excerptTokens": [
-            {
-              "kind": "Content",
-              "text": "export interface CLIOption "
-            }
-          ],
-          "fileUrlPath": "tmp/.tsup/declaration/packages/cli/src/types.d.ts",
-          "releaseTag": "Public",
-          "name": "CLIOption",
-          "preserveMemberOrder": false,
-          "members": [
-            {
-              "kind": "PropertySignature",
-              "canonicalReference": "@storm-stack/cli!CLIOption#choices:member",
-              "docComment": "",
-              "excerptTokens": [
-                {
-                  "kind": "Content",
-                  "text": "choices?: "
-                },
-                {
-                  "kind": "Content",
-                  "text": "string[]"
-                },
-                {
-                  "kind": "Content",
-                  "text": ";"
-                }
-              ],
-              "isReadonly": false,
-              "isOptional": true,
-              "releaseTag": "Public",
-              "name": "choices",
-              "propertyTypeTokenRange": {
-                "startIndex": 1,
-                "endIndex": 2
-              }
-            },
-            {
-              "kind": "PropertySignature",
-              "canonicalReference": "@storm-stack/cli!CLIOption#default:member",
-              "docComment": "",
-              "excerptTokens": [
-                {
-                  "kind": "Content",
-                  "text": "default?: "
-                },
-                {
-                  "kind": "Reference",
-                  "text": "CLIOptionDefault",
-                  "canonicalReference": "@storm-stack/cli!CLIOptionDefault:interface"
-                },
-                {
-                  "kind": "Content",
-                  "text": ";"
-                }
-              ],
-              "isReadonly": false,
-              "isOptional": true,
-              "releaseTag": "Public",
-              "name": "default",
-              "propertyTypeTokenRange": {
-                "startIndex": 1,
-                "endIndex": 2
-              }
-            },
-            {
-              "kind": "PropertySignature",
-              "canonicalReference": "@storm-stack/cli!CLIOption#description:member",
-              "docComment": "",
-              "excerptTokens": [
-                {
-                  "kind": "Content",
-                  "text": "description: "
-                },
-                {
-                  "kind": "Content",
-                  "text": "string | undefined"
-                },
-                {
-                  "kind": "Content",
-                  "text": ";"
-                }
-              ],
-              "isReadonly": false,
-              "isOptional": false,
-              "releaseTag": "Public",
-              "name": "description",
-              "propertyTypeTokenRange": {
-                "startIndex": 1,
-                "endIndex": 2
-              }
-            },
-            {
-              "kind": "PropertySignature",
-              "canonicalReference": "@storm-stack/cli!CLIOption#flags:member",
-              "docComment": "",
-              "excerptTokens": [
-                {
-                  "kind": "Content",
-                  "text": "flags: "
-                },
-                {
-                  "kind": "Content",
-                  "text": "string"
-                },
-                {
-                  "kind": "Content",
-                  "text": ";"
-                }
-              ],
-              "isReadonly": false,
-              "isOptional": false,
-              "releaseTag": "Public",
-              "name": "flags",
-              "propertyTypeTokenRange": {
-                "startIndex": 1,
-                "endIndex": 2
-              }
-            }
-          ],
-          "extendsTokenRanges": []
-        },
-        {
-          "kind": "Interface",
-          "canonicalReference": "@storm-stack/cli!CLIOptionDefault:interface",
-          "docComment": "",
-          "excerptTokens": [
-            {
-              "kind": "Content",
-              "text": "export interface CLIOptionDefault "
-            }
-          ],
-          "fileUrlPath": "tmp/.tsup/declaration/packages/cli/src/types.d.ts",
-          "releaseTag": "Public",
-          "name": "CLIOptionDefault",
-          "preserveMemberOrder": false,
-          "members": [
-            {
-              "kind": "PropertySignature",
-              "canonicalReference": "@storm-stack/cli!CLIOptionDefault#description:member",
-              "docComment": "",
-              "excerptTokens": [
-                {
-                  "kind": "Content",
-                  "text": "description?: "
-                },
-                {
-                  "kind": "Content",
-                  "text": "string | undefined"
-                },
-                {
-                  "kind": "Content",
-                  "text": ";"
-                }
-              ],
-              "isReadonly": false,
-              "isOptional": true,
-              "releaseTag": "Public",
-              "name": "description",
-              "propertyTypeTokenRange": {
-                "startIndex": 1,
-                "endIndex": 2
-              }
-            },
-            {
-              "kind": "PropertySignature",
-              "canonicalReference": "@storm-stack/cli!CLIOptionDefault#value:member",
-              "docComment": "",
-              "excerptTokens": [
-                {
-                  "kind": "Content",
-                  "text": "value: "
-                },
-                {
-                  "kind": "Content",
-                  "text": "unknown"
-                },
-                {
-                  "kind": "Content",
-                  "text": ";"
-                }
-              ],
-              "isReadonly": false,
-              "isOptional": false,
-              "releaseTag": "Public",
-              "name": "value",
-              "propertyTypeTokenRange": {
-                "startIndex": 1,
-                "endIndex": 2
-              }
-            }
-          ],
-          "extendsTokenRanges": []
-        },
-        {
-          "kind": "Interface",
-          "canonicalReference": "@storm-stack/cli!CLITitle:interface",
-          "docComment": "",
-          "excerptTokens": [
-            {
-              "kind": "Content",
-              "text": "export interface CLITitle "
-            }
-          ],
-          "fileUrlPath": "tmp/.tsup/declaration/packages/cli/src/types.d.ts",
-          "releaseTag": "Public",
-          "name": "CLITitle",
-          "preserveMemberOrder": false,
-          "members": [
-            {
-              "kind": "PropertySignature",
-              "canonicalReference": "@storm-stack/cli!CLITitle#font:member",
-              "docComment": "",
-              "excerptTokens": [
-                {
-                  "kind": "Content",
-                  "text": "font?: "
-                },
-                {
-                  "kind": "Reference",
-                  "text": "Fonts",
-                  "canonicalReference": "!unknown"
-                },
-                {
-                  "kind": "Content",
-                  "text": ";"
-                }
-              ],
-              "isReadonly": false,
-              "isOptional": true,
-              "releaseTag": "Public",
-              "name": "font",
-              "propertyTypeTokenRange": {
-                "startIndex": 1,
-                "endIndex": 2
-              }
-            },
-            {
-              "kind": "PropertySignature",
-              "canonicalReference": "@storm-stack/cli!CLITitle#hide:member",
-              "docComment": "",
-              "excerptTokens": [
-                {
-                  "kind": "Content",
-                  "text": "hide?: "
-                },
-                {
-                  "kind": "Content",
-                  "text": "boolean"
-                },
-                {
-                  "kind": "Content",
-                  "text": ";"
-                }
-              ],
-              "isReadonly": false,
-              "isOptional": true,
-              "releaseTag": "Public",
-              "name": "hide",
-              "propertyTypeTokenRange": {
-                "startIndex": 1,
-                "endIndex": 2
-              }
-            },
-            {
-              "kind": "PropertySignature",
-              "canonicalReference": "@storm-stack/cli!CLITitle#name:member",
-              "docComment": "",
-              "excerptTokens": [
-                {
-                  "kind": "Content",
-                  "text": "name?: "
-                },
-                {
-                  "kind": "Content",
-                  "text": "string"
-                },
-                {
-                  "kind": "Content",
-                  "text": ";"
-                }
-              ],
-              "isReadonly": false,
-              "isOptional": true,
-              "releaseTag": "Public",
-              "name": "name",
-              "propertyTypeTokenRange": {
-                "startIndex": 1,
-                "endIndex": 2
-              }
-            },
-            {
-              "kind": "PropertySignature",
-              "canonicalReference": "@storm-stack/cli!CLITitle#options:member",
-              "docComment": "",
-              "excerptTokens": [
-                {
-                  "kind": "Content",
-                  "text": "options?: "
-                },
-                {
-                  "kind": "Reference",
-                  "text": "Options",
-                  "canonicalReference": "!unknown"
-                },
-                {
-                  "kind": "Content",
-                  "text": ";"
-                }
-              ],
-              "isReadonly": false,
-              "isOptional": true,
-              "releaseTag": "Public",
-              "name": "options",
-              "propertyTypeTokenRange": {
-                "startIndex": 1,
-                "endIndex": 2
-              }
-            }
-          ],
-          "extendsTokenRanges": []
-        },
-        {
           "kind": "Function",
-          "canonicalReference": "@storm-stack/cli!createCliOptions:function(1)",
-          "docComment": "/**\n * Create CLI options from an object.\n *\n * @param obj - The object to create CLI options from\n *\n * @returns The CLI options\n */\n",
+          "canonicalReference": "@storm-stack/cli!chmodPlusX:function(1)",
+          "docComment": "/**\n * Adds execute permissions to a file\n *\n * @param file - The file to add execute permissions to\n */\n",
           "excerptTokens": [
             {
               "kind": "Content",
-              "text": "export declare function createCliOptions(obj: "
-            },
-            {
-              "kind": "Reference",
-              "text": "Record",
-              "canonicalReference": "!Record:type"
+              "text": "export declare function chmodPlusX(file: "
             },
             {
               "kind": "Content",
-              "text": "<string, string | number | boolean>"
+              "text": "string"
             },
             {
               "kind": "Content",
@@ -1211,49 +191,545 @@
             },
             {
               "kind": "Content",
-              "text": "string[]"
+              "text": "void"
             },
             {
               "kind": "Content",
               "text": ";"
             }
           ],
-          "fileUrlPath": "tmp/.tsup/declaration/packages/cli/src/utilities/create-cli-options.d.ts",
+          "fileUrlPath": "tmp/.tsup/declaration/packages/file-system/src/package-management/chmod.d.ts",
           "returnTypeTokenRange": {
-            "startIndex": 4,
-            "endIndex": 5
+            "startIndex": 3,
+            "endIndex": 4
           },
           "releaseTag": "Public",
           "overloadIndex": 1,
           "parameters": [
             {
-              "parameterName": "obj",
+              "parameterName": "file",
               "parameterTypeTokenRange": {
                 "startIndex": 1,
-                "endIndex": 3
+                "endIndex": 2
               },
               "isOptional": false
             }
           ],
-          "name": "createCliOptions"
+          "name": "chmodPlusX"
         },
         {
-          "kind": "Function",
-          "canonicalReference": "@storm-stack/cli!createCliOptionsString:function(1)",
-          "docComment": "/**\n * Create CLI options from an object and join them into a string.\n *\n * @param obj - The object to create CLI options from\n *\n * @returns The CLI options as a string\n */\n",
+          "kind": "Variable",
+          "canonicalReference": "@storm-stack/cli!copyFile:var",
+          "docComment": "/**\n * Copy a file from one location to another\n *\n * @param file - The file to copy\n *\n * @param dest - The destination location\n *\n * @returns An indicator specifying if the copy was successful\n */\n",
           "excerptTokens": [
             {
               "kind": "Content",
-              "text": "export declare function createCliOptionsString(obj: "
-            },
-            {
-              "kind": "Reference",
-              "text": "Record",
-              "canonicalReference": "!Record:type"
+              "text": "copyFile: "
             },
             {
               "kind": "Content",
-              "text": "<string, string | number | boolean>"
+              "text": "(file: string, dest: string) => string | "
+            },
+            {
+              "kind": "Reference",
+              "text": "Buffer",
+              "canonicalReference": "!\"\\\"buffer\\\"\".__global.Buffer:interface"
+            },
+            {
+              "kind": "Content",
+              "text": " | undefined"
+            }
+          ],
+          "fileUrlPath": "tmp/.tsup/declaration/packages/file-system/src/files/copy-files.d.ts",
+          "isReadonly": true,
+          "releaseTag": "Public",
+          "name": "copyFile",
+          "variableTypeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 4
+          }
+        },
+        {
+          "kind": "Variable",
+          "canonicalReference": "@storm-stack/cli!copyFiles:var",
+          "docComment": "/**\n * Copy files from one location to another\n *\n * @param from - The source location\n *\n * @param to - The destination location\n *\n * @param options - The copy options\n *\n * @returns An indicator specifying if the copy was successful\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "copyFiles: "
+            },
+            {
+              "kind": "Content",
+              "text": "(from: string, to: string, options?: "
+            },
+            {
+              "kind": "Reference",
+              "text": "CopySyncOptions",
+              "canonicalReference": "!\"\\\"fs\\\"\".CopySyncOptions:interface"
+            },
+            {
+              "kind": "Content",
+              "text": ") => string | "
+            },
+            {
+              "kind": "Reference",
+              "text": "Buffer",
+              "canonicalReference": "!\"\\\"buffer\\\"\".__global.Buffer:interface"
+            },
+            {
+              "kind": "Content",
+              "text": " | undefined"
+            }
+          ],
+          "fileUrlPath": "tmp/.tsup/declaration/packages/file-system/src/files/copy-files.d.ts",
+          "isReadonly": true,
+          "releaseTag": "Public",
+          "name": "copyFiles",
+          "variableTypeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 6
+          }
+        },
+        {
+          "kind": "Variable",
+          "canonicalReference": "@storm-stack/cli!deriveNewSemverVersion:var",
+          "docComment": "",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "deriveNewSemverVersion: "
+            },
+            {
+              "kind": "Content",
+              "text": "(currentSemverVersion: string, semverSpecifier: string, preid?: string) => string"
+            }
+          ],
+          "fileUrlPath": "tmp/.tsup/declaration/packages/file-system/src/package-management/semver-fns.d.ts",
+          "isReadonly": true,
+          "releaseTag": "Public",
+          "name": "deriveNewSemverVersion",
+          "variableTypeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 2
+          }
+        },
+        {
+          "kind": "Function",
+          "canonicalReference": "@storm-stack/cli!ensurePackage:function(1)",
+          "docComment": "",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export declare function ensurePackage(pkg: "
+            },
+            {
+              "kind": "Content",
+              "text": "string"
+            },
+            {
+              "kind": "Content",
+              "text": ", dev: "
+            },
+            {
+              "kind": "Content",
+              "text": "boolean"
+            },
+            {
+              "kind": "Content",
+              "text": ", pkgManager?: "
+            },
+            {
+              "kind": "Reference",
+              "text": "PackageManagers",
+              "canonicalReference": "@storm-stack/cli!PackageManagers:type"
+            },
+            {
+              "kind": "Content",
+              "text": " | undefined"
+            },
+            {
+              "kind": "Content",
+              "text": ", tag?: "
+            },
+            {
+              "kind": "Content",
+              "text": "string"
+            },
+            {
+              "kind": "Content",
+              "text": ", projectPath?: "
+            },
+            {
+              "kind": "Content",
+              "text": "string"
+            },
+            {
+              "kind": "Content",
+              "text": ", exactVersion?: "
+            },
+            {
+              "kind": "Content",
+              "text": "boolean"
+            },
+            {
+              "kind": "Content",
+              "text": "): "
+            },
+            {
+              "kind": "Content",
+              "text": "void"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "fileUrlPath": "tmp/.tsup/declaration/packages/file-system/src/package-management/package-fns.d.ts",
+          "returnTypeTokenRange": {
+            "startIndex": 14,
+            "endIndex": 15
+          },
+          "releaseTag": "Public",
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "pkg",
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "isOptional": false
+            },
+            {
+              "parameterName": "dev",
+              "parameterTypeTokenRange": {
+                "startIndex": 3,
+                "endIndex": 4
+              },
+              "isOptional": false
+            },
+            {
+              "parameterName": "pkgManager",
+              "parameterTypeTokenRange": {
+                "startIndex": 5,
+                "endIndex": 7
+              },
+              "isOptional": true
+            },
+            {
+              "parameterName": "tag",
+              "parameterTypeTokenRange": {
+                "startIndex": 8,
+                "endIndex": 9
+              },
+              "isOptional": true
+            },
+            {
+              "parameterName": "projectPath",
+              "parameterTypeTokenRange": {
+                "startIndex": 10,
+                "endIndex": 11
+              },
+              "isOptional": true
+            },
+            {
+              "parameterName": "exactVersion",
+              "parameterTypeTokenRange": {
+                "startIndex": 12,
+                "endIndex": 13
+              },
+              "isOptional": true
+            }
+          ],
+          "name": "ensurePackage"
+        },
+        {
+          "kind": "Variable",
+          "canonicalReference": "@storm-stack/cli!exists:var",
+          "docComment": "/**\n * Check if a file exists\n *\n * @param filePath - The file path to check\n *\n * @returns An indicator specifying if the file exists\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "exists: "
+            },
+            {
+              "kind": "Content",
+              "text": "(filePath: string) => boolean"
+            }
+          ],
+          "fileUrlPath": "tmp/.tsup/declaration/packages/file-system/src/files/exists.d.ts",
+          "isReadonly": true,
+          "releaseTag": "Public",
+          "name": "exists",
+          "variableTypeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 2
+          }
+        },
+        {
+          "kind": "TypeAlias",
+          "canonicalReference": "@storm-stack/cli!FileSystemErrorCode:type",
+          "docComment": "",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export type FileSystemErrorCode = "
+            },
+            {
+              "kind": "Reference",
+              "text": "ErrorCode",
+              "canonicalReference": "@storm-stack/cli!~ErrorCode:type"
+            },
+            {
+              "kind": "Content",
+              "text": " | \"invalid_file_path\" | \"invalid_file_content\" | \"file_does_not_exist\" | \"file_write_failure\""
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "fileUrlPath": "tmp/.tsup/declaration/packages/file-system/src/errors.d.ts",
+          "releaseTag": "Public",
+          "name": "FileSystemErrorCode",
+          "typeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 3
+          }
+        },
+        {
+          "kind": "Variable",
+          "canonicalReference": "@storm-stack/cli!FileSystemErrorCode:var",
+          "docComment": "",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "FileSystemErrorCode: "
+            },
+            {
+              "kind": "Content",
+              "text": "{\n    invalid_file_path: "
+            },
+            {
+              "kind": "Reference",
+              "text": "FileSystemErrorCode",
+              "canonicalReference": "@storm-stack/cli!FileSystemErrorCode:type"
+            },
+            {
+              "kind": "Content",
+              "text": ";\n    invalid_file_content: "
+            },
+            {
+              "kind": "Reference",
+              "text": "FileSystemErrorCode",
+              "canonicalReference": "@storm-stack/cli!FileSystemErrorCode:type"
+            },
+            {
+              "kind": "Content",
+              "text": ";\n    file_does_not_exist: "
+            },
+            {
+              "kind": "Reference",
+              "text": "FileSystemErrorCode",
+              "canonicalReference": "@storm-stack/cli!FileSystemErrorCode:type"
+            },
+            {
+              "kind": "Content",
+              "text": ";\n    file_write_failure: "
+            },
+            {
+              "kind": "Reference",
+              "text": "FileSystemErrorCode",
+              "canonicalReference": "@storm-stack/cli!FileSystemErrorCode:type"
+            },
+            {
+              "kind": "Content",
+              "text": ";\n    file_read_failure: "
+            },
+            {
+              "kind": "Reference",
+              "text": "FileSystemErrorCode",
+              "canonicalReference": "@storm-stack/cli!FileSystemErrorCode:type"
+            },
+            {
+              "kind": "Content",
+              "text": ";\n    success: "
+            },
+            {
+              "kind": "Reference",
+              "text": "ErrorCode",
+              "canonicalReference": "@storm-stack/cli!~ErrorCode:type"
+            },
+            {
+              "kind": "Content",
+              "text": ";\n    missing_issue_code: "
+            },
+            {
+              "kind": "Reference",
+              "text": "ErrorCode",
+              "canonicalReference": "@storm-stack/cli!~ErrorCode:type"
+            },
+            {
+              "kind": "Content",
+              "text": ";\n    invalid_config: "
+            },
+            {
+              "kind": "Reference",
+              "text": "ErrorCode",
+              "canonicalReference": "@storm-stack/cli!~ErrorCode:type"
+            },
+            {
+              "kind": "Content",
+              "text": ";\n    failed_to_load_file: "
+            },
+            {
+              "kind": "Reference",
+              "text": "ErrorCode",
+              "canonicalReference": "@storm-stack/cli!~ErrorCode:type"
+            },
+            {
+              "kind": "Content",
+              "text": ";\n    missing_context: "
+            },
+            {
+              "kind": "Reference",
+              "text": "ErrorCode",
+              "canonicalReference": "@storm-stack/cli!~ErrorCode:type"
+            },
+            {
+              "kind": "Content",
+              "text": ";\n    record_not_found: "
+            },
+            {
+              "kind": "Reference",
+              "text": "ErrorCode",
+              "canonicalReference": "@storm-stack/cli!~ErrorCode:type"
+            },
+            {
+              "kind": "Content",
+              "text": ";\n    required_field_missing: "
+            },
+            {
+              "kind": "Reference",
+              "text": "ErrorCode",
+              "canonicalReference": "@storm-stack/cli!~ErrorCode:type"
+            },
+            {
+              "kind": "Content",
+              "text": ";\n    database_query_error: "
+            },
+            {
+              "kind": "Reference",
+              "text": "ErrorCode",
+              "canonicalReference": "@storm-stack/cli!~ErrorCode:type"
+            },
+            {
+              "kind": "Content",
+              "text": ";\n    model_validation_error: "
+            },
+            {
+              "kind": "Reference",
+              "text": "ErrorCode",
+              "canonicalReference": "@storm-stack/cli!~ErrorCode:type"
+            },
+            {
+              "kind": "Content",
+              "text": ";\n    field_validation_error: "
+            },
+            {
+              "kind": "Reference",
+              "text": "ErrorCode",
+              "canonicalReference": "@storm-stack/cli!~ErrorCode:type"
+            },
+            {
+              "kind": "Content",
+              "text": ";\n    invalid_parameter: "
+            },
+            {
+              "kind": "Reference",
+              "text": "ErrorCode",
+              "canonicalReference": "@storm-stack/cli!~ErrorCode:type"
+            },
+            {
+              "kind": "Content",
+              "text": ";\n    invalid_request: "
+            },
+            {
+              "kind": "Reference",
+              "text": "ErrorCode",
+              "canonicalReference": "@storm-stack/cli!~ErrorCode:type"
+            },
+            {
+              "kind": "Content",
+              "text": ";\n    type_error: "
+            },
+            {
+              "kind": "Reference",
+              "text": "ErrorCode",
+              "canonicalReference": "@storm-stack/cli!~ErrorCode:type"
+            },
+            {
+              "kind": "Content",
+              "text": ";\n    processing_error: "
+            },
+            {
+              "kind": "Reference",
+              "text": "ErrorCode",
+              "canonicalReference": "@storm-stack/cli!~ErrorCode:type"
+            },
+            {
+              "kind": "Content",
+              "text": ";\n    internal_server_error: "
+            },
+            {
+              "kind": "Reference",
+              "text": "ErrorCode",
+              "canonicalReference": "@storm-stack/cli!~ErrorCode:type"
+            },
+            {
+              "kind": "Content",
+              "text": ";\n    user_not_logged_in: "
+            },
+            {
+              "kind": "Reference",
+              "text": "ErrorCode",
+              "canonicalReference": "@storm-stack/cli!~ErrorCode:type"
+            },
+            {
+              "kind": "Content",
+              "text": ";\n    unknown_cause: "
+            },
+            {
+              "kind": "Reference",
+              "text": "ErrorCode",
+              "canonicalReference": "@storm-stack/cli!~ErrorCode:type"
+            },
+            {
+              "kind": "Content",
+              "text": ";\n}"
+            }
+          ],
+          "fileUrlPath": "tmp/.tsup/declaration/packages/file-system/src/errors.d.ts",
+          "isReadonly": true,
+          "releaseTag": "Public",
+          "name": "FileSystemErrorCode",
+          "variableTypeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 46
+          }
+        },
+        {
+          "kind": "Function",
+          "canonicalReference": "@storm-stack/cli!findContainingFolder:function(1)",
+          "docComment": "/**\n * Find the folder containing the file.\n *\n * @remarks\n *\n * Example: `C:\\Users\\user\\Documents\\file.txt` would return `Documents`\n *\n * @param filePath - The file path to process\n *\n * @returns The file path\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export declare function findContainingFolder(filePath: "
+            },
+            {
+              "kind": "Content",
+              "text": "string"
             },
             {
               "kind": "Content",
@@ -1268,67 +744,16 @@
               "text": ";"
             }
           ],
-          "fileUrlPath": "tmp/.tsup/declaration/packages/cli/src/utilities/create-cli-options.d.ts",
-          "returnTypeTokenRange": {
-            "startIndex": 4,
-            "endIndex": 5
-          },
-          "releaseTag": "Public",
-          "overloadIndex": 1,
-          "parameters": [
-            {
-              "parameterName": "obj",
-              "parameterTypeTokenRange": {
-                "startIndex": 1,
-                "endIndex": 3
-              },
-              "isOptional": false
-            }
-          ],
-          "name": "createCliOptionsString"
-        },
-        {
-          "kind": "Function",
-          "canonicalReference": "@storm-stack/cli!createCLIProgram:function(1)",
-          "docComment": "",
-          "excerptTokens": [
-            {
-              "kind": "Content",
-              "text": "export declare function createCLIProgram(cliConfig: "
-            },
-            {
-              "kind": "Reference",
-              "text": "CLIConfig",
-              "canonicalReference": "@storm-stack/cli!CLIConfig:interface"
-            },
-            {
-              "kind": "Content",
-              "text": "): "
-            },
-            {
-              "kind": "Reference",
-              "text": "Promise",
-              "canonicalReference": "!Promise:interface"
-            },
-            {
-              "kind": "Content",
-              "text": "<void>"
-            },
-            {
-              "kind": "Content",
-              "text": ";"
-            }
-          ],
-          "fileUrlPath": "tmp/.tsup/declaration/packages/cli/src/program/index.d.ts",
+          "fileUrlPath": "tmp/.tsup/declaration/packages/file-system/src/files/file-path-fns.d.ts",
           "returnTypeTokenRange": {
             "startIndex": 3,
-            "endIndex": 5
+            "endIndex": 4
           },
           "releaseTag": "Public",
           "overloadIndex": 1,
           "parameters": [
             {
-              "parameterName": "cliConfig",
+              "parameterName": "filePath",
               "parameterTypeTokenRange": {
                 "startIndex": 1,
                 "endIndex": 2
@@ -1336,143 +761,385 @@
               "isOptional": false
             }
           ],
-          "name": "createCLIProgram"
+          "name": "findContainingFolder"
         },
         {
-          "kind": "Variable",
-          "canonicalReference": "@storm-stack/cli!execute:var",
-          "docComment": "/**\n * Execute a command.\n *\n * @param command - The command to execute\n *\n * @param options - The options to use when executing the command\n *\n * @param env - The environment variables to use when executing the command\n *\n * @param stdio - The stdio options to use when executing the command\n *\n * @returns The result of the command\n */\n",
+          "kind": "Function",
+          "canonicalReference": "@storm-stack/cli!findFileExtension:function(1)",
+          "docComment": "/**\n * Find the file extension from a file path.\n *\n * @param filePath - The file path to process\n *\n * @returns The file extension\n */\n",
           "excerptTokens": [
             {
               "kind": "Content",
-              "text": "execute: "
+              "text": "export declare function findFileExtension(filePath: "
             },
             {
               "kind": "Content",
-              "text": "(command: string, options?: "
-            },
-            {
-              "kind": "Reference",
-              "text": "ExecOptions",
-              "canonicalReference": "!\"\\\"child_process\\\"\".ExecOptions:interface"
+              "text": "string"
             },
             {
               "kind": "Content",
-              "text": ", env?: "
-            },
-            {
-              "kind": "Reference",
-              "text": "Record",
-              "canonicalReference": "!Record:type"
+              "text": "): "
             },
             {
               "kind": "Content",
-              "text": "<string, string>, stdio?: "
-            },
-            {
-              "kind": "Reference",
-              "text": "StdioOptions",
-              "canonicalReference": "!\"\\\"child_process\\\"\".StdioOptions:type"
+              "text": "string"
             },
             {
               "kind": "Content",
-              "text": ") => string | "
-            },
+              "text": ";"
+            }
+          ],
+          "fileUrlPath": "tmp/.tsup/declaration/packages/file-system/src/files/file-path-fns.d.ts",
+          "returnTypeTokenRange": {
+            "startIndex": 3,
+            "endIndex": 4
+          },
+          "releaseTag": "Public",
+          "overloadIndex": 1,
+          "parameters": [
             {
-              "kind": "Reference",
-              "text": "Buffer",
-              "canonicalReference": "!\"\\\"buffer\\\"\".__global.Buffer:interface"
+              "parameterName": "filePath",
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "isOptional": false
+            }
+          ],
+          "name": "findFileExtension"
+        },
+        {
+          "kind": "Function",
+          "canonicalReference": "@storm-stack/cli!findFileName:function(1)",
+          "docComment": "/**\n * Find the file name from a file path.\n *\n * @param filePath - The file path to process\n *\n * @returns The file name\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export declare function findFileName(filePath: "
             },
             {
               "kind": "Content",
-              "text": " | "
+              "text": "string"
+            },
+            {
+              "kind": "Content",
+              "text": "): "
+            },
+            {
+              "kind": "Content",
+              "text": "string"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "fileUrlPath": "tmp/.tsup/declaration/packages/file-system/src/files/file-path-fns.d.ts",
+          "returnTypeTokenRange": {
+            "startIndex": 3,
+            "endIndex": 4
+          },
+          "releaseTag": "Public",
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "filePath",
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "isOptional": false
+            }
+          ],
+          "name": "findFileName"
+        },
+        {
+          "kind": "Function",
+          "canonicalReference": "@storm-stack/cli!findFilePath:function(1)",
+          "docComment": "/**\n * Find the file path from a file path.\n *\n * @param filePath - The file path to process\n *\n * @returns The file path\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export declare function findFilePath(filePath: "
+            },
+            {
+              "kind": "Content",
+              "text": "string"
+            },
+            {
+              "kind": "Content",
+              "text": "): "
+            },
+            {
+              "kind": "Content",
+              "text": "string"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "fileUrlPath": "tmp/.tsup/declaration/packages/file-system/src/files/file-path-fns.d.ts",
+          "returnTypeTokenRange": {
+            "startIndex": 3,
+            "endIndex": 4
+          },
+          "releaseTag": "Public",
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "filePath",
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "isOptional": false
+            }
+          ],
+          "name": "findFilePath"
+        },
+        {
+          "kind": "Variable",
+          "canonicalReference": "@storm-stack/cli!getWorkspaceRoot:var",
+          "docComment": "",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "getWorkspaceRoot: "
+            },
+            {
+              "kind": "Content",
+              "text": "() => any"
+            }
+          ],
+          "fileUrlPath": "tmp/.tsup/declaration/packages/file-system/src/files/get-workspace-root.d.ts",
+          "isReadonly": true,
+          "releaseTag": "Public",
+          "name": "getWorkspaceRoot",
+          "variableTypeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 2
+          }
+        },
+        {
+          "kind": "Function",
+          "canonicalReference": "@storm-stack/cli!hasFileName:function(1)",
+          "docComment": "/**\n * Check if a file path has a file name.\n *\n * @param filePath - The file path to process\n *\n * @returns An indicator specifying if the file path has a file name\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export declare function hasFileName(filePath: "
+            },
+            {
+              "kind": "Content",
+              "text": "string"
+            },
+            {
+              "kind": "Content",
+              "text": "): "
+            },
+            {
+              "kind": "Content",
+              "text": "boolean"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "fileUrlPath": "tmp/.tsup/declaration/packages/file-system/src/files/file-path-fns.d.ts",
+          "returnTypeTokenRange": {
+            "startIndex": 3,
+            "endIndex": 4
+          },
+          "releaseTag": "Public",
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "filePath",
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "isOptional": false
+            }
+          ],
+          "name": "hasFileName"
+        },
+        {
+          "kind": "Function",
+          "canonicalReference": "@storm-stack/cli!hasFilePath:function(1)",
+          "docComment": "/**\n * Check if a file path has a file path.\n *\n * @param filePath - The file path to process\n *\n * @returns An indicator specifying if the file path has a file path\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export declare function hasFilePath(filePath: "
+            },
+            {
+              "kind": "Content",
+              "text": "string"
+            },
+            {
+              "kind": "Content",
+              "text": "): "
+            },
+            {
+              "kind": "Content",
+              "text": "boolean"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "fileUrlPath": "tmp/.tsup/declaration/packages/file-system/src/files/file-path-fns.d.ts",
+          "returnTypeTokenRange": {
+            "startIndex": 3,
+            "endIndex": 4
+          },
+          "releaseTag": "Public",
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "filePath",
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "isOptional": false
+            }
+          ],
+          "name": "hasFilePath"
+        },
+        {
+          "kind": "Function",
+          "canonicalReference": "@storm-stack/cli!installPackage:function(1)",
+          "docComment": "",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export declare function installPackage(pkg: "
+            },
+            {
+              "kind": "Content",
+              "text": "string"
+            },
+            {
+              "kind": "Content",
+              "text": ", dev: "
+            },
+            {
+              "kind": "Content",
+              "text": "boolean"
+            },
+            {
+              "kind": "Content",
+              "text": ", pkgManager?: "
             },
             {
               "kind": "Reference",
-              "text": "Readable",
-              "canonicalReference": "!\"\\\"stream\\\"\".internal.Readable:class"
+              "text": "PackageManagers",
+              "canonicalReference": "@storm-stack/cli!PackageManagers:type"
             },
             {
               "kind": "Content",
               "text": " | undefined"
+            },
+            {
+              "kind": "Content",
+              "text": ", tag?: "
+            },
+            {
+              "kind": "Content",
+              "text": "string"
+            },
+            {
+              "kind": "Content",
+              "text": ", projectPath?: "
+            },
+            {
+              "kind": "Content",
+              "text": "string"
+            },
+            {
+              "kind": "Content",
+              "text": ", exactVersion?: "
+            },
+            {
+              "kind": "Content",
+              "text": "boolean"
+            },
+            {
+              "kind": "Content",
+              "text": "): "
+            },
+            {
+              "kind": "Content",
+              "text": "void"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
             }
           ],
-          "fileUrlPath": "tmp/.tsup/declaration/packages/cli/src/utilities/execute.d.ts",
-          "isReadonly": true,
+          "fileUrlPath": "tmp/.tsup/declaration/packages/file-system/src/package-management/package-fns.d.ts",
+          "returnTypeTokenRange": {
+            "startIndex": 14,
+            "endIndex": 15
+          },
           "releaseTag": "Public",
-          "name": "execute",
-          "variableTypeTokenRange": {
-            "startIndex": 1,
-            "endIndex": 12
-          }
-        },
-        {
-          "kind": "Variable",
-          "canonicalReference": "@storm-stack/cli!executeAsync:var",
-          "docComment": "/**\n * Execute a command asynchronously.\n *\n * @param command - The command to execute\n *\n * @param options - The options to use when executing the command\n *\n * @param env - The environment variables to use when executing the command\n *\n * @param stdio - The stdio options to use when executing the command\n *\n * @returns The result of the command\n */\n",
-          "excerptTokens": [
+          "overloadIndex": 1,
+          "parameters": [
             {
-              "kind": "Content",
-              "text": "executeAsync: "
+              "parameterName": "pkg",
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "isOptional": false
             },
             {
-              "kind": "Content",
-              "text": "(command: string, options?: "
+              "parameterName": "dev",
+              "parameterTypeTokenRange": {
+                "startIndex": 3,
+                "endIndex": 4
+              },
+              "isOptional": false
             },
             {
-              "kind": "Reference",
-              "text": "ExecOptions",
-              "canonicalReference": "!\"\\\"child_process\\\"\".ExecOptions:interface"
+              "parameterName": "pkgManager",
+              "parameterTypeTokenRange": {
+                "startIndex": 5,
+                "endIndex": 7
+              },
+              "isOptional": true
             },
             {
-              "kind": "Content",
-              "text": ", env?: "
+              "parameterName": "tag",
+              "parameterTypeTokenRange": {
+                "startIndex": 8,
+                "endIndex": 9
+              },
+              "isOptional": true
             },
             {
-              "kind": "Reference",
-              "text": "Record",
-              "canonicalReference": "!Record:type"
+              "parameterName": "projectPath",
+              "parameterTypeTokenRange": {
+                "startIndex": 10,
+                "endIndex": 11
+              },
+              "isOptional": true
             },
             {
-              "kind": "Content",
-              "text": "<string, string>, stdio?: "
-            },
-            {
-              "kind": "Reference",
-              "text": "StdioOptions",
-              "canonicalReference": "!\"\\\"child_process\\\"\".StdioOptions:type"
-            },
-            {
-              "kind": "Content",
-              "text": ") => "
-            },
-            {
-              "kind": "Reference",
-              "text": "Promise",
-              "canonicalReference": "!Promise:interface"
-            },
-            {
-              "kind": "Content",
-              "text": "<string | "
-            },
-            {
-              "kind": "Reference",
-              "text": "Buffer",
-              "canonicalReference": "!\"\\\"buffer\\\"\".__global.Buffer:interface"
-            },
-            {
-              "kind": "Content",
-              "text": " | undefined>"
+              "parameterName": "exactVersion",
+              "parameterTypeTokenRange": {
+                "startIndex": 12,
+                "endIndex": 13
+              },
+              "isOptional": true
             }
           ],
-          "fileUrlPath": "tmp/.tsup/declaration/packages/cli/src/utilities/execute.d.ts",
-          "isReadonly": true,
-          "releaseTag": "Public",
-          "name": "executeAsync",
-          "variableTypeTokenRange": {
-            "startIndex": 1,
-            "endIndex": 12
-          }
+          "name": "installPackage"
         },
         {
           "kind": "Variable",
@@ -1492,6 +1159,52 @@
           "isReadonly": true,
           "releaseTag": "Public",
           "name": "isCI",
+          "variableTypeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 2
+          }
+        },
+        {
+          "kind": "Variable",
+          "canonicalReference": "@storm-stack/cli!isDirectory:var",
+          "docComment": "/**\n * Check if the given path is a directory\n *\n * @param path - The location to check\n *\n * @param additionalPath - An optional additional path to add to the start of the path\n *\n * @returns An indicator specifying if the file is a directory\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "isDirectory: "
+            },
+            {
+              "kind": "Content",
+              "text": "(path: string, additionalPath?: string) => boolean"
+            }
+          ],
+          "fileUrlPath": "tmp/.tsup/declaration/packages/file-system/src/files/is-file.d.ts",
+          "isReadonly": true,
+          "releaseTag": "Public",
+          "name": "isDirectory",
+          "variableTypeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 2
+          }
+        },
+        {
+          "kind": "Variable",
+          "canonicalReference": "@storm-stack/cli!isFile:var",
+          "docComment": "/**\n * Check if the given path is a file\n *\n * @param path - The location to check\n *\n * @param additionalPath - An optional additional path to add to the start of the path\n *\n * @returns An indicator specifying if the file is a file\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "isFile: "
+            },
+            {
+              "kind": "Content",
+              "text": "(path: string, additionalPath?: string) => boolean"
+            }
+          ],
+          "fileUrlPath": "tmp/.tsup/declaration/packages/file-system/src/files/is-file.d.ts",
+          "isReadonly": true,
+          "releaseTag": "Public",
+          "name": "isFile",
           "variableTypeTokenRange": {
             "startIndex": 1,
             "endIndex": 2
@@ -1530,13 +1243,282 @@
           }
         },
         {
-          "kind": "Function",
-          "canonicalReference": "@storm-stack/cli!link:function(1)",
-          "docComment": "/**\n * Create a link to a URL in the terminal.\n *\n * @param url - The URL to link to.\n *\n * @returns A terminal link\n */\n",
+          "kind": "Variable",
+          "canonicalReference": "@storm-stack/cli!isRelativeVersionKeyword:var",
+          "docComment": "",
           "excerptTokens": [
             {
               "kind": "Content",
-              "text": "export declare function link(url: "
+              "text": "isRelativeVersionKeyword: "
+            },
+            {
+              "kind": "Content",
+              "text": "(val: string) => "
+            },
+            {
+              "kind": "Reference",
+              "text": "val",
+              "canonicalReference": "@storm-stack/cli!~val"
+            },
+            {
+              "kind": "Content",
+              "text": " is "
+            },
+            {
+              "kind": "Reference",
+              "text": "ReleaseType",
+              "canonicalReference": "!unknown"
+            }
+          ],
+          "fileUrlPath": "tmp/.tsup/declaration/packages/file-system/src/package-management/semver-fns.d.ts",
+          "isReadonly": true,
+          "releaseTag": "Public",
+          "name": "isRelativeVersionKeyword",
+          "variableTypeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 5
+          }
+        },
+        {
+          "kind": "Variable",
+          "canonicalReference": "@storm-stack/cli!joinPaths:var",
+          "docComment": "/**\n * Join the given paths\n *\n * @param paths - The paths to join\n *\n * @returns The joined paths\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "joinPaths: "
+            },
+            {
+              "kind": "Content",
+              "text": "(...paths: string[]) => string"
+            }
+          ],
+          "fileUrlPath": "tmp/.tsup/declaration/packages/file-system/src/files/join-paths.d.ts",
+          "isReadonly": true,
+          "releaseTag": "Public",
+          "name": "joinPaths",
+          "variableTypeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 2
+          }
+        },
+        {
+          "kind": "Variable",
+          "canonicalReference": "@storm-stack/cli!loadTsConfig:var",
+          "docComment": "/**\n * Loads a tsconfig.json file and returns the parsed JSON object.\n *\n * @param dir - The directory to start searching for the tsconfig.json file.\n *\n * @param name - The name of the tsconfig.json file.\n *\n * @returns The parsed JSON object.\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "loadTsConfig: "
+            },
+            {
+              "kind": "Content",
+              "text": "(dir: string, name?: string) => {\n    path: string;\n    data: any;\n    files: any[];\n} | null"
+            }
+          ],
+          "fileUrlPath": "tmp/.tsup/declaration/packages/file-system/src/package-management/get-tsconfig.d.ts",
+          "isReadonly": true,
+          "releaseTag": "Public",
+          "name": "loadTsConfig",
+          "variableTypeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 2
+          }
+        },
+        {
+          "kind": "Variable",
+          "canonicalReference": "@storm-stack/cli!loadTsConfigFile:var",
+          "docComment": "/**\n * Loads a tsconfig.json file and returns the parsed JSON object.\n *\n * @param name - The name/path of the tsconfig.json file.\n *\n * @returns The parsed JSON object.\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "loadTsConfigFile: "
+            },
+            {
+              "kind": "Content",
+              "text": "(file: string) => {\n    path: string;\n    data: any;\n    files: any[];\n} | null"
+            }
+          ],
+          "fileUrlPath": "tmp/.tsup/declaration/packages/file-system/src/package-management/get-tsconfig.d.ts",
+          "isReadonly": true,
+          "releaseTag": "Public",
+          "name": "loadTsConfigFile",
+          "variableTypeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 2
+          }
+        },
+        {
+          "kind": "TypeAlias",
+          "canonicalReference": "@storm-stack/cli!PackageManagers:type",
+          "docComment": "",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export type PackageManagers = "
+            },
+            {
+              "kind": "Content",
+              "text": "\"npm\" | \"yarn\" | \"pnpm\" | \"bun\""
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "fileUrlPath": "tmp/.tsup/declaration/packages/file-system/src/package-management/package-fns.d.ts",
+          "releaseTag": "Public",
+          "name": "PackageManagers",
+          "typeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 2
+          }
+        },
+        {
+          "kind": "Variable",
+          "canonicalReference": "@storm-stack/cli!PackageManagers:var",
+          "docComment": "",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "PackageManagers: "
+            },
+            {
+              "kind": "Content",
+              "text": "{\n    NPM: "
+            },
+            {
+              "kind": "Reference",
+              "text": "PackageManagers",
+              "canonicalReference": "@storm-stack/cli!PackageManagers:type"
+            },
+            {
+              "kind": "Content",
+              "text": ";\n    YARN: "
+            },
+            {
+              "kind": "Reference",
+              "text": "PackageManagers",
+              "canonicalReference": "@storm-stack/cli!PackageManagers:type"
+            },
+            {
+              "kind": "Content",
+              "text": ";\n    PNPM: "
+            },
+            {
+              "kind": "Reference",
+              "text": "PackageManagers",
+              "canonicalReference": "@storm-stack/cli!PackageManagers:type"
+            },
+            {
+              "kind": "Content",
+              "text": ";\n    BUN: "
+            },
+            {
+              "kind": "Reference",
+              "text": "PackageManagers",
+              "canonicalReference": "@storm-stack/cli!PackageManagers:type"
+            },
+            {
+              "kind": "Content",
+              "text": ";\n}"
+            }
+          ],
+          "fileUrlPath": "tmp/.tsup/declaration/packages/file-system/src/package-management/package-fns.d.ts",
+          "isReadonly": true,
+          "releaseTag": "Public",
+          "name": "PackageManagers",
+          "variableTypeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 10
+          }
+        },
+        {
+          "kind": "Variable",
+          "canonicalReference": "@storm-stack/cli!parseVersion:var",
+          "docComment": "",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "parseVersion: "
+            },
+            {
+              "kind": "Content",
+              "text": "(semver: string) => import(\"semver/classes/semver\") | null"
+            }
+          ],
+          "fileUrlPath": "tmp/.tsup/declaration/packages/file-system/src/package-management/semver-fns.d.ts",
+          "isReadonly": true,
+          "releaseTag": "Public",
+          "name": "parseVersion",
+          "variableTypeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 2
+          }
+        },
+        {
+          "kind": "Variable",
+          "canonicalReference": "@storm-stack/cli!readFile:var",
+          "docComment": "/**\n * Read the given content to the given file path\n *\n * @param filePath - The file path to write to\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "readFile: "
+            },
+            {
+              "kind": "Content",
+              "text": "(filePath: string) => string"
+            }
+          ],
+          "fileUrlPath": "tmp/.tsup/declaration/packages/file-system/src/files/read-file.d.ts",
+          "isReadonly": true,
+          "releaseTag": "Public",
+          "name": "readFile",
+          "variableTypeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 2
+          }
+        },
+        {
+          "kind": "Variable",
+          "canonicalReference": "@storm-stack/cli!readFileAsync:var",
+          "docComment": "/**\n * Read the given content to the given file path\n *\n * @param filePath - The file path to read to\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "readFileAsync: "
+            },
+            {
+              "kind": "Content",
+              "text": "(filePath: string) => "
+            },
+            {
+              "kind": "Reference",
+              "text": "Promise",
+              "canonicalReference": "!Promise:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "<string>"
+            }
+          ],
+          "fileUrlPath": "tmp/.tsup/declaration/packages/file-system/src/files/read-file.d.ts",
+          "isReadonly": true,
+          "releaseTag": "Public",
+          "name": "readFileAsync",
+          "variableTypeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 4
+          }
+        },
+        {
+          "kind": "Function",
+          "canonicalReference": "@storm-stack/cli!relativeToWorkspaceRoot:function(1)",
+          "docComment": "/**\n * Find the file path relative to the workspace root path.\n *\n * @param filePath - The file path to process\n *\n * @param basePath - The base path to use when resolving the file path\n *\n * @returns The resolved file path\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export declare function relativeToWorkspaceRoot(filePath: "
             },
             {
               "kind": "Content",
@@ -1555,7 +1537,7 @@
               "text": ";"
             }
           ],
-          "fileUrlPath": "tmp/.tsup/declaration/packages/cli/src/utilities/cli-link.d.ts",
+          "fileUrlPath": "tmp/.tsup/declaration/packages/file-system/src/files/file-path-fns.d.ts",
           "returnTypeTokenRange": {
             "startIndex": 3,
             "endIndex": 4
@@ -1564,7 +1546,7 @@
           "overloadIndex": 1,
           "parameters": [
             {
-              "parameterName": "url",
+              "parameterName": "filePath",
               "parameterTypeTokenRange": {
                 "startIndex": 1,
                 "endIndex": 2
@@ -1572,38 +1554,28 @@
               "isOptional": false
             }
           ],
-          "name": "link"
+          "name": "relativeToWorkspaceRoot"
         },
         {
           "kind": "Function",
-          "canonicalReference": "@storm-stack/cli!registerShutdown:function(1)",
-          "docComment": "",
+          "canonicalReference": "@storm-stack/cli!renameFile:function(1)",
+          "docComment": "/**\n * Rename the file name with a new name.\n *\n * @param filePath - The current file path being processed\n *\n * @param newFileName - The updated file name being processed\n *\n * @returns The modified or unmodified file path.\n */\n",
           "excerptTokens": [
             {
               "kind": "Content",
-              "text": "export declare function registerShutdown(config: "
+              "text": "export declare function renameFile(filePath: "
             },
             {
               "kind": "Content",
-              "text": "{\n    logger: "
-            },
-            {
-              "kind": "Reference",
-              "text": "StormLog",
-              "canonicalReference": "@storm-stack/cli!~StormLog:class"
+              "text": "string"
             },
             {
               "kind": "Content",
-              "text": ";\n    onShutdown(): void | "
-            },
-            {
-              "kind": "Reference",
-              "text": "MaybePromise",
-              "canonicalReference": "@storm-stack/cli!~MaybePromise:type"
+              "text": ", newFileName: "
             },
             {
               "kind": "Content",
-              "text": "<void>;\n}"
+              "text": "string"
             },
             {
               "kind": "Content",
@@ -1611,7 +1583,136 @@
             },
             {
               "kind": "Content",
-              "text": "(reason?: string) => "
+              "text": "string"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "fileUrlPath": "tmp/.tsup/declaration/packages/file-system/src/files/file-path-fns.d.ts",
+          "returnTypeTokenRange": {
+            "startIndex": 5,
+            "endIndex": 6
+          },
+          "releaseTag": "Public",
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "filePath",
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "isOptional": false
+            },
+            {
+              "parameterName": "newFileName",
+              "parameterTypeTokenRange": {
+                "startIndex": 3,
+                "endIndex": 4
+              },
+              "isOptional": false
+            }
+          ],
+          "name": "renameFile"
+        },
+        {
+          "kind": "Function",
+          "canonicalReference": "@storm-stack/cli!resolvePath:function(1)",
+          "docComment": "/**\n * Resolve the file path to an absolute path.\n *\n * @param filePath - The file path to process\n *\n * @param basePath - The base path to use when resolving the file path\n *\n * @returns The resolved file path\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export declare function resolvePath(filePath: "
+            },
+            {
+              "kind": "Content",
+              "text": "string"
+            },
+            {
+              "kind": "Content",
+              "text": ", basePath?: "
+            },
+            {
+              "kind": "Content",
+              "text": "string"
+            },
+            {
+              "kind": "Content",
+              "text": "): "
+            },
+            {
+              "kind": "Content",
+              "text": "string"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "fileUrlPath": "tmp/.tsup/declaration/packages/file-system/src/files/file-path-fns.d.ts",
+          "returnTypeTokenRange": {
+            "startIndex": 5,
+            "endIndex": 6
+          },
+          "releaseTag": "Public",
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "filePath",
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "isOptional": false
+            },
+            {
+              "parameterName": "basePath",
+              "parameterTypeTokenRange": {
+                "startIndex": 3,
+                "endIndex": 4
+              },
+              "isOptional": true
+            }
+          ],
+          "name": "resolvePath"
+        },
+        {
+          "kind": "Variable",
+          "canonicalReference": "@storm-stack/cli!writeFile:var",
+          "docComment": "/**\n * Write the given content to the given file path\n *\n * @param filePath - The file path to write to\n *\n * @param content - The content to write to the file\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "writeFile: "
+            },
+            {
+              "kind": "Content",
+              "text": "(filePath: string, content: any) => void"
+            }
+          ],
+          "fileUrlPath": "tmp/.tsup/declaration/packages/file-system/src/files/write-file.d.ts",
+          "isReadonly": true,
+          "releaseTag": "Public",
+          "name": "writeFile",
+          "variableTypeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 2
+          }
+        },
+        {
+          "kind": "Variable",
+          "canonicalReference": "@storm-stack/cli!writeFileAsync:var",
+          "docComment": "/**\n * Read the given content to the given file path\n *\n * @param filePath - The file path to read to\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "writeFileAsync: "
+            },
+            {
+              "kind": "Content",
+              "text": "(filePath: string, content: any) => "
             },
             {
               "kind": "Reference",
@@ -1621,30 +1722,16 @@
             {
               "kind": "Content",
               "text": "<void>"
-            },
-            {
-              "kind": "Content",
-              "text": ";"
             }
           ],
-          "fileUrlPath": "tmp/.tsup/declaration/packages/cli/src/program/shutdown.d.ts",
-          "returnTypeTokenRange": {
-            "startIndex": 7,
-            "endIndex": 10
-          },
+          "fileUrlPath": "tmp/.tsup/declaration/packages/file-system/src/files/write-file.d.ts",
+          "isReadonly": true,
           "releaseTag": "Public",
-          "overloadIndex": 1,
-          "parameters": [
-            {
-              "parameterName": "config",
-              "parameterTypeTokenRange": {
-                "startIndex": 1,
-                "endIndex": 6
-              },
-              "isOptional": false
-            }
-          ],
-          "name": "registerShutdown"
+          "name": "writeFileAsync",
+          "variableTypeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 4
+          }
         }
       ]
     }

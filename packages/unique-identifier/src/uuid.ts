@@ -1,4 +1,4 @@
-import { Crypto } from "./crypto";
+import { getWebCrypto } from "@storm-stack/utilities";
 
 /**
  * Generate a random UUID
@@ -15,10 +15,11 @@ import { Crypto } from "./crypto";
  *
  * @returns A random UUID string
  */
-export function uuid(): string {
-  if (!Crypto) {
+export async function uuid(): Promise<string> {
+  const crypto = await getWebCrypto();
+  if (!crypto) {
     throw new Error("Crypto is not available to generate uuid");
   }
 
-  return Crypto.randomUUID();
+  return crypto.randomUUID();
 }
