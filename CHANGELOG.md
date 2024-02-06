@@ -1,14 +1,14 @@
-## 0.2.1 (2024-02-05)
 
+
+## 0.2.1 (2024-02-05)
 
 ### 🩹 Fixes
 
-- **logging:** Resolved various formatting issues around logging output ([6837c64](https://github.com/storm-software/storm-stack/commit/6837c64))
+-   **logging:** Resolved various formatting issues around logging output ([6837c64](https://github.com/storm-software/storm-stack/commit/6837c64))
 
+### ❤️ Thank You
 
-### ❤️  Thank You
-
-- Patrick Sullivan
+-   Patrick Sullivan
 
 ## 0.2.0 (2024-02-05)
 
