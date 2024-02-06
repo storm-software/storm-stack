@@ -43,6 +43,8 @@ export const createFileStreamLogs = (
             }
           )
             .replaceAll("/", "-")
+            .replaceAll(":", "-")
+            .replaceAll(".", "-")
             .replaceAll(" ", "_")}.${
             loggingConfig.fileExtension
               ? loggingConfig.fileExtension.replaceAll(".", EMPTY_STRING)
