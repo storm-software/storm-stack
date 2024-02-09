@@ -1,3 +1,32 @@
+## 1.0.4 (2024-02-09)
+
+
+### 🚀 Features
+
+- **monorepo:** Major redesign of project structure ([20c7a8f](https://github.com/storm-software/storm-stack/commit/20c7a8f))
+
+- **web-docs:** Update webdocs to use `fumadocs` going forward ([8344342](https://github.com/storm-software/storm-stack/commit/8344342))
+
+- **web-docs:** Added required config to support document generation ([691a97d](https://github.com/storm-software/storm-stack/commit/691a97d))
+
+
+### 🩹 Fixes
+
+- **monorepo:** Removed unused script from package.json ([95a537a](https://github.com/storm-software/storm-stack/commit/95a537a))
+
+- **web-docs:** Clean up nextjs configuration ([f94246d](https://github.com/storm-software/storm-stack/commit/f94246d))
+
+- **components:** Mark the Components package as private for now ([3d40c6e](https://github.com/storm-software/storm-stack/commit/3d40c6e))
+
+- **web-docs:** Updated the `project.json` file's `nx-release-publish` target ([871bc7b](https://github.com/storm-software/storm-stack/commit/871bc7b))
+
+- **web-docs:** Added `repository` to the app package's `package.json` files ([37705c5](https://github.com/storm-software/storm-stack/commit/37705c5))
+
+
+### ❤️  Thank You
+
+- Patrick Sullivan
+
 ## 1.0.3 (2024-02-09)
 
 
