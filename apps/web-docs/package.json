@@ -29,8 +29,5 @@
     "@opentelemetry/semantic-conventions": "^1.19.0",
     "@types/mdx": "^2.0.11",
     "@vercel/edge-config": "^0.4.1"
-  },
-  "scripts": {
-    "start": "next start"
   }
 }
