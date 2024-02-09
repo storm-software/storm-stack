@@ -4,111 +4,228 @@
 
 ```ts
 
-// @public
-function cuid(): string;
-export { cuid }
-export { cuid as cuid_alias_1 }
-
-// @public
-interface DeconstructedSnowflake {
-    binary: string;
-    sequence: number;
-    shard_id: number;
-    snowflake: SnowflakeResolvable;
-    timestamp: number;
-}
-export { DeconstructedSnowflake }
-export { DeconstructedSnowflake as DeconstructedSnowflake_alias_1 }
-
-// @public
-function deconstructSnowflake(snowflake: SnowflakeResolvable): DeconstructedSnowflake;
-export { deconstructSnowflake }
-export { deconstructSnowflake as deconstructSnowflake_alias_1 }
+import type { Logger } from 'pino';
+import type { LoggerOptions } from 'pino';
+import pino from 'pino';
+import type { StormConfig } from '@storm-software/config';
+import { Temporal } from '@js-temporal/polyfill';
 
 // @public (undocumented)
-export const default_alias: {
-    (value: string | any[] | ArrayLike<number>, namespace: string | any[] | ArrayLike<number>, buf: {
-        [x: string]: number | undefined;
-    }, offset: number): string | {
-        [x: string]: number | undefined;
-    };
-    name: string;
-    DNS: string;
-    URL: string;
+const createErrorSerializer: (stacktrace?: boolean) => (err: Error) => Record<string, any>;
+export { createErrorSerializer }
+export { createErrorSerializer as createErrorSerializer_alias_1 }
+export { createErrorSerializer as createErrorSerializer_alias_2 }
+
+// @public (undocumented)
+type GetLoggersResult = pino.BaseLogger & {
+    logLevel: LogLevel;
+    logLevelLabel: LogLevelLabel;
 };
+export { GetLoggersResult }
+export { GetLoggersResult as GetLoggersResult_alias_1 }
+
+// @public
+const getLogLevel: (label: string) => LogLevel;
+export { getLogLevel }
+export { getLogLevel as getLogLevel_alias_1 }
+export { getLogLevel as getLogLevel_alias_2 }
+
+// @public
+const getLogLevelLabel: (logLevel: number) => LogLevelLabel;
+export { getLogLevelLabel }
+export { getLogLevelLabel as getLogLevelLabel_alias_1 }
+export { getLogLevelLabel as getLogLevelLabel_alias_2 }
+
+// @public
+const getPinoOptions: (config: StormConfig, name?: string, stacktrace?: boolean) => LoggerOptions;
+export { getPinoOptions }
+export { getPinoOptions as getPinoOptions_alias_1 }
+export { getPinoOptions as getPinoOptions_alias_2 }
 
 // @public (undocumented)
-const DNS = "6ba7b810-9dad-11d1-80b4-00c04fd430c8";
-export { DNS }
-export { DNS as DNS_alias_1 }
-
-// @public
-function hash(input: string | object): string;
-export { hash }
-export { hash as hash_alias_1 }
-
-// @public
-interface ISnowflakeGeneratorOptions {
-    epoch: number;
-    shardId: number;
-    timestamp: number | Date;
+interface ILogger {
+    debug?: (message: string) => MaybePromise<void>;
+    error: (message: string) => MaybePromise<void>;
+    exception?: (message: string) => MaybePromise<void>;
+    fatal?: (message: string) => MaybePromise<void>;
+    info: (message: string) => MaybePromise<void>;
+    log?: (message: string) => MaybePromise<void>;
+    success?: (message: string) => MaybePromise<void>;
+    trace?: (message: string) => MaybePromise<void>;
+    warn: (message: string) => MaybePromise<void>;
 }
-export { ISnowflakeGeneratorOptions }
-export { ISnowflakeGeneratorOptions as ISnowflakeGeneratorOptions_alias_1 }
-
-// @public
-function isValidSnowflake(snowflake: string): boolean;
-export { isValidSnowflake }
-export { isValidSnowflake as isValidSnowflake_alias_1 }
+export { ILogger }
+export { ILogger as ILogger_alias_1 }
 
 // @public (undocumented)
-function parse(uuid: string): Uint8Array;
-export { parse }
-export { parse as parse_alias_1 }
-
-// @public
-const randomInteger: (maximum: number, minimum?: number) => number;
-export { randomInteger }
-export { randomInteger as randomInteger_alias_1 }
-
-// @public
-const randomLetter: (random?: () => number) => string | undefined;
-export { randomLetter }
-export { randomLetter as randomLetter_alias_1 }
-
-// @public
-function snowflake({ shardId, epoch, timestamp }?: ISnowflakeGeneratorOptions): string;
-export { snowflake }
-export { snowflake as snowflake_alias_1 }
-
-// @public
-type SnowflakeResolvable = string;
-export { SnowflakeResolvable }
-export { SnowflakeResolvable as SnowflakeResolvable_alias_1 }
+interface ILoggerWrapper {
+    debug: (message: any) => MaybePromise<void>;
+    error: (error: string | Error) => MaybePromise<void>;
+    exception: (error: string | Error) => MaybePromise<void>;
+    fatal: (error: string | Error) => MaybePromise<void>;
+    info: (message: any) => MaybePromise<void>;
+    log: (message: any) => MaybePromise<void>;
+    success: (message: any) => MaybePromise<void>;
+    trace: (message: any) => MaybePromise<void>;
+    warn: (message: any) => MaybePromise<void>;
+}
+export { ILoggerWrapper }
+export { ILoggerWrapper as ILoggerWrapper_alias_1 }
 
 // @public (undocumented)
-function unsafeStringify(arr: number[], offset?: number): string;
-export { unsafeStringify }
-export { unsafeStringify as unsafeStringify_alias_1 }
-
-// @public (undocumented)
-const URL_2 = "6ba7b811-9dad-11d1-80b4-00c04fd430c8";
-export { URL_2 as URL }
-export { URL_2 as URL_alias_1 }
+interface IStormLog {
+    child: (options: {
+        name: string;
+    } & Record<string, any>) => IStormLog;
+    debug: (...message: any[]) => MaybePromise<void>;
+    error: (...message: any[]) => MaybePromise<void>;
+    exception: (...message: any[]) => MaybePromise<void>;
+    fatal: (...message: any[]) => MaybePromise<void>;
+    info: (...message: any[]) => MaybePromise<void>;
+    log: (...message: any[]) => MaybePromise<void>;
+    start: (name: string) => MaybePromise<void>;
+    stopwatch: (name?: string, startTime?: StormTime) => MaybePromise<void>;
+    success: (...message: any[]) => MaybePromise<void>;
+    trace: (...message: any[]) => MaybePromise<void>;
+    warn: (...message: any[]) => MaybePromise<void>;
+}
+export { IStormLog }
+export { IStormLog as IStormLog_alias_1 }
 
 // @public
-function uuid5(name: string, version: number, hashFn: (bytes: string | number | boolean | Uint8Array | any[]) => Uint8Array): {
-    (value: string | any[] | ArrayLike<number>, namespace: string | any[] | ArrayLike<number>, buf: {
-        [x: string]: number | undefined;
-    }, offset: number): string | {
-        [x: string]: number | undefined;
-    };
-    name: string;
-    DNS: string;
-    URL: string;
+class LoggerWrapper implements ILoggerWrapper {
+    // (undocumented)
+    protected config: StormConfig;
+    debug: (message: string) => MaybePromise<void>;
+    error: (error: string | Error) => MaybePromise<void>;
+    exception: (error: string | Error) => MaybePromise<void>;
+    fatal: (error: string | Error) => MaybePromise<void>;
+    protected getErrorMessage: (obj?: string | Error | null) => string;
+    info: (message: string) => MaybePromise<void>;
+    log: (message: string) => MaybePromise<void>;
+    // (undocumented)
+    protected logger: ILogger;
+    // (undocumented)
+    protected name?: string | undefined;
+    success: (message: string) => MaybePromise<void>;
+    trace: (message: string) => MaybePromise<void>;
+    warn: (message: string) => MaybePromise<void>;
+    static wrap: (logger: ILogger, config: StormConfig, name?: string) => LoggerWrapper;
+}
+export { LoggerWrapper }
+export { LoggerWrapper as LoggerWrapper_alias_1 }
+export { LoggerWrapper as LoggerWrapper_alias_2 }
+
+// @public (undocumented)
+type LoggingErrorCode = ErrorCode | "logs_uninitialized";
+
+// @public (undocumented)
+const LoggingErrorCode: {
+    logs_uninitialized: LoggingErrorCode;
+    success: ErrorCode;
+    missing_issue_code: ErrorCode;
+    invalid_config: ErrorCode;
+    failed_to_load_file: ErrorCode;
+    missing_context: ErrorCode;
+    record_not_found: ErrorCode;
+    required_field_missing: ErrorCode;
+    database_query_error: ErrorCode;
+    model_validation_error: ErrorCode;
+    field_validation_error: ErrorCode;
+    invalid_parameter: ErrorCode;
+    invalid_request: ErrorCode;
+    type_error: ErrorCode;
+    processing_error: ErrorCode;
+    internal_server_error: ErrorCode;
+    user_not_logged_in: ErrorCode;
+    unknown_cause: ErrorCode;
 };
-export { uuid5 }
-export { uuid5 as uuid5_alias_1 }
+export { LoggingErrorCode }
+export { LoggingErrorCode as LoggingErrorCode_alias_1 }
+
+// @public (undocumented)
+type LogLevel = 0 | 10 | 20 | 30 | 40 | 60 | 70;
+
+// @public (undocumented)
+const LogLevel: {
+    SILENT: LogLevel;
+    FATAL: LogLevel;
+    ERROR: LogLevel;
+    WARN: LogLevel;
+    INFO: LogLevel;
+    DEBUG: LogLevel;
+    TRACE: LogLevel;
+};
+export { LogLevel }
+export { LogLevel as LogLevel_alias_1 }
+export { LogLevel as LogLevel_alias_2 }
+
+// @public (undocumented)
+type LogLevelLabel = "silent" | "fatal" | "error" | "warn" | "info" | "debug" | "trace";
+
+// @public (undocumented)
+const LogLevelLabel: {
+    SILENT: LogLevelLabel;
+    FATAL: LogLevelLabel;
+    ERROR: LogLevelLabel;
+    WARN: LogLevelLabel;
+    INFO: LogLevelLabel;
+    DEBUG: LogLevelLabel;
+    TRACE: LogLevelLabel;
+};
+export { LogLevelLabel }
+export { LogLevelLabel as LogLevelLabel_alias_1 }
+export { LogLevelLabel as LogLevelLabel_alias_2 }
+
+// @public
+class StormLog implements IStormLog {
+    protected constructor(config: StormConfig, name?: string | undefined, additionalLoggers?: ILoggerWrapper[]);
+    // (undocumented)
+    protected additionalLoggers: ILoggerWrapper[];
+    addLogger(logger: ILogger): void;
+    addWrappedLogger(wrapper: ILoggerWrapper): void;
+    child(options: {
+        name: string;
+    } & Record<string, any>): IStormLog;
+    // (undocumented)
+    protected config: StormConfig;
+    static create(config: StormConfig, name?: string, additionalLoggers?: ILoggerWrapper[]): StormLog;
+    static debug(message: any): void;
+    debug(message: any): void;
+    static error(message: any): void;
+    error(message: any): void;
+    static exception(message: any): void;
+    exception(message: any): void;
+    static fatal(message: any): void;
+    fatal(message: any): void;
+    // (undocumented)
+    protected static getLoggers: () => Promise<GetLoggersResult>;
+    protected getStreams: () => Array<pino.DestinationStream | pino.StreamEntry<pino.Level>>;
+    static info(message: any): void;
+    info(message: any): void;
+    protected static initialize: (config: StormConfig, name?: string, streams?: (pino.DestinationStream | pino.StreamEntry<pino.Level>)[]) => Logger<LoggerOptions>;
+    static log(message: any): void;
+    log(message: any): void;
+    // (undocumented)
+    protected static logger: Logger<LoggerOptions>;
+    // (undocumented)
+    protected static logLevel: LogLevel;
+    // (undocumented)
+    protected static logLevelLabel: LogLevelLabel;
+    // (undocumented)
+    protected name?: string | undefined;
+    start(name: string): void;
+    static stopwatch(startTime: StormTime, name?: string): void;
+    stopwatch(name?: string, startTime?: StormTime): void;
+    static success(message: any): void;
+    success(message: any): void;
+    static trace(message: any): void;
+    trace(message: any): void;
+    static warn(message: any): void;
+    warn(message: any): void;
+}
+export { StormLog }
+export { StormLog as StormLog_alias_1 }
 
 // (No @packageDocumentation comment for this package)
 

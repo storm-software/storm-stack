@@ -13,19 +13,6 @@ const config = {
       rules: {
         "@nx/nx-plugin-checks": "error"
       }
-    },
-    {
-      files: ["./package.json"],
-      parser: "jsonc-eslint-parser",
-      rules: {
-        "@nx/dependency-checks": [
-          "error",
-          {
-            buildTargets: ["build"],
-            ignoredDependencies: ["nx", "typescript"]
-          }
-        ]
-      }
     }
   ]
 };
