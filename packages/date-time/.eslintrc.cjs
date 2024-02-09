@@ -8,13 +8,6 @@ const config = {
   },
   overrides: [
     {
-      files: ["./package.json", "./generators.json", "./executors.json", "./migrations.json"],
-      parser: "jsonc-eslint-parser",
-      rules: {
-        "@nx/nx-plugin-checks": "error"
-      }
-    },
-    {
       files: ["./package.json"],
       parser: "jsonc-eslint-parser",
       rules: {
@@ -22,7 +15,7 @@ const config = {
           "error",
           {
             buildTargets: ["build"],
-            ignoredDependencies: ["nx", "typescript"]
+            ignoredDependencies: ["typescript"]
           }
         ]
       }
