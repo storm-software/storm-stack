@@ -1,6 +1,6 @@
 {
   "name": "@storm-stack/monorepo",
-  "version": "0.2.5",
+  "version": "0.3.0",
   "private": true,
   "description": "⚡ The storm-stack monorepo contains utility applications, tools, and various libraries to create modern and scalable web applications.",
   "keywords": [
@@ -124,7 +124,10 @@
   },
   "namespace": "@storm-stack",
   "nx": {
-    "includedScripts": ["lint", "format"]
+    "includedScripts": [
+      "lint",
+      "format"
+    ]
   },
   "pnpm": {
     "overrides": {
