@@ -62,6 +62,4 @@ const nextConfig = {
   }
 };
 
-const plugins = [withMDX, withNx];
-
-export default composePlugins(...plugins)(nextConfig);
+export default composePlugins(...[withMDX, withNx])(nextConfig);
