@@ -14,14 +14,16 @@
     "esbuild": "^0.20.0",
     "fs-extra": "^11.2.0",
     "glob": "^10.3.10",
-    "tslib": "^2.3.0"
+    "tslib": "^2.6.2"
   },
   "devDependencies": {
-    "@types/fs-extra": "^11.0.4"
+    "@tamagui/web": "^1.89.8",
+    "@types/fs-extra": "^11.0.4",
+    "nx": "17.2.8"
   },
   "peerDependencies": {
-    "nx": "17.2.8",
-    "@tamagui/web": "^1.89.8"
+    "@tamagui/web": "^1.89.8",
+    "nx": "17.2.8"
   },
   "executors": "./executors.json"
 }

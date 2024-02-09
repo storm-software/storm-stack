@@ -10,8 +10,8 @@
   },
   "type": "module",
   "devDependencies": {
-    "@types/react": "18.2.43",
     "@types/node": "^20.10.5",
+    "@types/react": "18.2.43",
     "jotai": "^2.6.0",
     "react": "^18.2.0"
   },
