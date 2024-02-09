@@ -11,7 +11,8 @@
         "outputPath": "dist/packages/utilities",
         "tsConfig": "packages/utilities/tsconfig.json",
         "project": "packages/utilities/package.json",
-        "defaultConfiguration": "production"
+        "defaultConfiguration": "production",
+        "external": ["buffer/"]
       },
       "configurations": {
         "production": {
