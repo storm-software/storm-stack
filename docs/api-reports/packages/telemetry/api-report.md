@@ -4,229 +4,123 @@
 
 ```ts
 
-/// <reference types="node" />
-
-import { CopySyncOptions } from 'node:fs';
-import { ReleaseType } from 'semver';
-import { semverClassesSemver } from 'semver/classes/semver';
-
-// @public
-export function chmodPlusX(file: string): void;
-
-// @public
-const copyFile: (file: string, dest: string) => string | Buffer | undefined;
-export { copyFile }
-export { copyFile as copyFile_alias_1 }
-export { copyFile as copyFile_alias_2 }
+import { DestinationStream } from 'pino';
+import { Logger } from 'pino';
+import { LoggerOptions as LoggerOptions_2 } from 'pino';
+import pino from 'pino';
+import type { StormConfig } from '@storm-software/config';
+import { Temporal } from '@js-temporal/polyfill';
+import * as z from 'zod';
 
 // @public
-const copyFiles: (from: string, to: string, options?: CopySyncOptions) => string | Buffer | undefined;
-export { copyFiles }
-export { copyFiles as copyFiles_alias_1 }
-export { copyFiles as copyFiles_alias_2 }
-
-// @public (undocumented)
-const deriveNewSemverVersion: (currentSemverVersion: string, semverSpecifier: string, preid?: string) => string;
-export { deriveNewSemverVersion }
-export { deriveNewSemverVersion as deriveNewSemverVersion_alias_1 }
-export { deriveNewSemverVersion as deriveNewSemverVersion_alias_2 }
-
-// @public (undocumented)
-function ensurePackage(pkg: string, dev: boolean, pkgManager?: PackageManagers | undefined, tag?: string, projectPath?: string, exactVersion?: boolean): void;
-export { ensurePackage }
-export { ensurePackage as ensurePackage_alias_1 }
-export { ensurePackage as ensurePackage_alias_2 }
+const createFileStreamLogs: (config: StormConfig<"telemetry", TelemetryConfig>) => Array<pino.DestinationStream | pino.StreamEntry<pino.Level>>;
+export { createFileStreamLogs }
+export { createFileStreamLogs as createFileStreamLogs_alias_1 }
 
 // @public
-const exists: (filePath: string) => boolean;
-export { exists }
-export { exists as exists_alias_1 }
-export { exists as exists_alias_2 }
+const getPinoLogger: (config: StormConfig, name?: string, extraStreams?: (pino.DestinationStream | pino.StreamEntry<pino.Level>)[], stacktrace?: boolean) => Logger<LoggerOptions_2>;
+export { getPinoLogger }
+export { getPinoLogger as getPinoLogger_alias_1 }
 
 // @public (undocumented)
-type FileSystemErrorCode = ErrorCode | "invalid_file_path" | "invalid_file_content" | "file_does_not_exist" | "file_write_failure";
-
-// @public (undocumented)
-const FileSystemErrorCode: {
-    invalid_file_path: FileSystemErrorCode;
-    invalid_file_content: FileSystemErrorCode;
-    file_does_not_exist: FileSystemErrorCode;
-    file_write_failure: FileSystemErrorCode;
-    file_read_failure: FileSystemErrorCode;
-    success: ErrorCode;
-    missing_issue_code: ErrorCode;
-    invalid_config: ErrorCode;
-    failed_to_load_file: ErrorCode;
-    missing_context: ErrorCode;
-    record_not_found: ErrorCode;
-    required_field_missing: ErrorCode;
-    database_query_error: ErrorCode;
-    model_validation_error: ErrorCode;
-    field_validation_error: ErrorCode;
-    invalid_parameter: ErrorCode;
-    invalid_request: ErrorCode;
-    type_error: ErrorCode;
-    processing_error: ErrorCode;
-    internal_server_error: ErrorCode;
-    user_not_logged_in: ErrorCode;
-    unknown_cause: ErrorCode;
+type LoggerOptions = {
+    options: LoggerOptions_2;
+    stream?: DestinationStream;
 };
-export { FileSystemErrorCode }
-export { FileSystemErrorCode as FileSystemErrorCode_alias_1 }
+export { LoggerOptions }
+export { LoggerOptions as LoggerOptions_alias_1 }
 
 // @public
-function findContainingFolder(filePath: string): string;
-export { findContainingFolder }
-export { findContainingFolder as findContainingFolder_alias_1 }
-export { findContainingFolder as findContainingFolder_alias_2 }
+const LokiConfigSchema: z.ZodObject<{
+    host: z.ZodDefault<z.ZodString>;
+    username: z.ZodString;
+    password: z.ZodString;
+}, "strip", z.ZodTypeAny, {
+    host: string;
+    username: string;
+    password: string;
+}, {
+    username: string;
+    password: string;
+    host?: string | undefined;
+}>;
+export { LokiConfigSchema }
+export { LokiConfigSchema as LokiConfigSchema_alias_1 }
 
 // @public
-function findFileExtension(filePath: string): string;
-export { findFileExtension }
-export { findFileExtension as findFileExtension_alias_1 }
-export { findFileExtension as findFileExtension_alias_2 }
-
-// @public
-function findFileName(filePath: string): string;
-export { findFileName }
-export { findFileName as findFileName_alias_1 }
-export { findFileName as findFileName_alias_2 }
-
-// @public
-function findFilePath(filePath: string): string;
-export { findFilePath }
-export { findFilePath as findFilePath_alias_1 }
-export { findFilePath as findFilePath_alias_2 }
+class StormTrace extends StormLog implements IStormLog {
+    protected constructor(config: StormConfig<"telemetry", TelemetryConfig>, name?: string, additionalLoggers?: ILoggerWrapper[]);
+    // (undocumented)
+    protected config: StormConfig<"telemetry", TelemetryConfig>;
+    static create(config: StormConfig<"telemetry", TelemetryConfig>, name?: string, additionalLoggers?: ILoggerWrapper[]): StormTrace;
+    static debug(message: any): void;
+    static error(message: any): void;
+    static exception(message: any): void;
+    static fatal(message: any): void;
+    // (undocumented)
+    protected static getLoggers: () => Promise<GetLoggersResult>;
+    protected getStreams: () => Array<pino.DestinationStream | pino.StreamEntry<pino.Level>>;
+    static info(message: any): void;
+    protected static initialize: (config: StormConfig<"telemetry", TelemetryConfig>, name?: string, streams?: (pino.DestinationStream | pino.StreamEntry<pino.Level>)[]) => Logger<LoggerOptions_2>;
+    static log(message: any): void;
+    static stopwatch(startTime: StormTime, name?: string): void;
+    static success(message: any): void;
+    static trace(message: any): void;
+    static warn(message: any): void;
+}
+export { StormTrace }
+export { StormTrace as StormTrace_alias_1 }
 
 // @public (undocumented)
-const getWorkspaceRoot: () => any;
-export { getWorkspaceRoot }
-export { getWorkspaceRoot as getWorkspaceRoot_alias_1 }
-export { getWorkspaceRoot as getWorkspaceRoot_alias_2 }
+type TelemetryConfig = z.infer<typeof TelemetryConfigSchema>;
+export { TelemetryConfig }
+export { TelemetryConfig as TelemetryConfig_alias_1 }
 
 // @public
-function hasFileName(filePath: string): boolean;
-export { hasFileName }
-export { hasFileName as hasFileName_alias_1 }
-export { hasFileName as hasFileName_alias_2 }
-
-// @public
-function hasFilePath(filePath: string): boolean;
-export { hasFilePath }
-export { hasFilePath as hasFilePath_alias_1 }
-export { hasFilePath as hasFilePath_alias_2 }
-
-// @public (undocumented)
-function installPackage(pkg: string, dev: boolean, pkgManager?: PackageManagers | undefined, tag?: string, projectPath?: string, exactVersion?: boolean): void;
-export { installPackage }
-export { installPackage as installPackage_alias_1 }
-export { installPackage as installPackage_alias_2 }
-
-// @public
-const isDirectory: (path: string, additionalPath?: string) => boolean;
-export { isDirectory }
-export { isDirectory as isDirectory_alias_1 }
-export { isDirectory as isDirectory_alias_2 }
-
-// @public
-const isFile: (path: string, additionalPath?: string) => boolean;
-export { isFile }
-export { isFile as isFile_alias_1 }
-export { isFile as isFile_alias_2 }
-
-// @public (undocumented)
-const isRelativeVersionKeyword: (val: string) => val is ReleaseType;
-export { isRelativeVersionKeyword }
-export { isRelativeVersionKeyword as isRelativeVersionKeyword_alias_1 }
-export { isRelativeVersionKeyword as isRelativeVersionKeyword_alias_2 }
-
-// @public
-const joinPaths: (...paths: string[]) => string;
-export { joinPaths }
-export { joinPaths as joinPaths_alias_1 }
-export { joinPaths as joinPaths_alias_2 }
-
-// @public
-const loadTsConfig: (dir: string, name?: string) => {
-    path: string;
-    data: any;
-    files: any[];
-} | null;
-export { loadTsConfig }
-export { loadTsConfig as loadTsConfig_alias_1 }
-export { loadTsConfig as loadTsConfig_alias_2 }
-
-// @public
-const loadTsConfigFile: (file: string) => {
-    path: string;
-    data: any;
-    files: any[];
-} | null;
-export { loadTsConfigFile }
-export { loadTsConfigFile as loadTsConfigFile_alias_1 }
-export { loadTsConfigFile as loadTsConfigFile_alias_2 }
-
-// @public (undocumented)
-type PackageManagers = "npm" | "yarn" | "pnpm" | "bun";
-
-// @public (undocumented)
-const PackageManagers: {
-    NPM: PackageManagers;
-    YARN: PackageManagers;
-    PNPM: PackageManagers;
-    BUN: PackageManagers;
-};
-export { PackageManagers }
-export { PackageManagers as PackageManagers_alias_1 }
-export { PackageManagers as PackageManagers_alias_2 }
-
-// @public (undocumented)
-const parseVersion: (semver: string) => semverClassesSemver | null;
-export { parseVersion }
-export { parseVersion as parseVersion_alias_1 }
-export { parseVersion as parseVersion_alias_2 }
-
-// @public
-const readFile: (filePath: string) => string;
-export { readFile }
-export { readFile as readFile_alias_1 }
-export { readFile as readFile_alias_2 }
-
-// @public
-const readFileAsync: (filePath: string) => Promise<string>;
-export { readFileAsync }
-export { readFileAsync as readFileAsync_alias_1 }
-export { readFileAsync as readFileAsync_alias_2 }
-
-// @public
-function relativeToWorkspaceRoot(filePath: string): string;
-export { relativeToWorkspaceRoot }
-export { relativeToWorkspaceRoot as relativeToWorkspaceRoot_alias_1 }
-export { relativeToWorkspaceRoot as relativeToWorkspaceRoot_alias_2 }
-
-// @public
-function renameFile(filePath: string, newFileName: string): string;
-export { renameFile }
-export { renameFile as renameFile_alias_1 }
-export { renameFile as renameFile_alias_2 }
-
-// @public
-function resolvePath(filePath: string, basePath?: string): string;
-export { resolvePath }
-export { resolvePath as resolvePath_alias_1 }
-export { resolvePath as resolvePath_alias_2 }
-
-// @public
-const writeFile: (filePath: string, content: any) => void;
-export { writeFile }
-export { writeFile as writeFile_alias_1 }
-export { writeFile as writeFile_alias_2 }
-
-// @public
-const writeFileAsync: (filePath: string, content: any) => Promise<void>;
-export { writeFileAsync }
-export { writeFileAsync as writeFileAsync_alias_1 }
-export { writeFileAsync as writeFileAsync_alias_2 }
+const TelemetryConfigSchema: z.ZodObject<{
+    stacktrace: z.ZodOptional<z.ZodBoolean>;
+    fileLoggingDisabled: z.ZodDefault<z.ZodBoolean>;
+    fileName: z.ZodDefault<z.ZodOptional<z.ZodString>>;
+    fileExtension: z.ZodDefault<z.ZodString>;
+    path: z.ZodOptional<z.ZodString>;
+    loki: z.ZodOptional<z.ZodObject<{
+        host: z.ZodDefault<z.ZodString>;
+        username: z.ZodString;
+        password: z.ZodString;
+    }, "strip", z.ZodTypeAny, {
+        host: string;
+        username: string;
+        password: string;
+    }, {
+        username: string;
+        password: string;
+        host?: string | undefined;
+    }>>;
+}, "strip", z.ZodTypeAny, {
+    fileLoggingDisabled: boolean;
+    fileName: string;
+    fileExtension: string;
+    stacktrace?: boolean | undefined;
+    path?: string | undefined;
+    loki?: {
+        host: string;
+        username: string;
+        password: string;
+    } | undefined;
+}, {
+    stacktrace?: boolean | undefined;
+    fileLoggingDisabled?: boolean | undefined;
+    fileName?: string | undefined;
+    fileExtension?: string | undefined;
+    path?: string | undefined;
+    loki?: {
+        username: string;
+        password: string;
+        host?: string | undefined;
+    } | undefined;
+}>;
+export { TelemetryConfigSchema }
+export { TelemetryConfigSchema as TelemetryConfigSchema_alias_1 }
 
 // (No @packageDocumentation comment for this package)
 

@@ -251,7 +251,7 @@ class StormTime extends StormDateTime {
     getUTCFullYear(): number;
     getUTCMonth(): number;
     static now(): number;
-    protected validate(value?: DateTimeInput, options?: DateTimeOptions): boolean;
+    protected validate(value?: DateTimeInput, _options?: DateTimeOptions): boolean;
 }
 export { StormTime }
 export { StormTime as StormTime_alias_1 }
@@ -269,7 +269,7 @@ export { validateDateTime as validateDateTime_alias_1 }
 export { validateDateTime as validateDateTime_alias_2 }
 
 // @public (undocumented)
-function validateTime(value?: DateTimeInput, options?: DateTimeOptions): boolean;
+function validateTime(value?: DateTimeInput, _options?: DateTimeOptions): boolean;
 export { validateTime }
 export { validateTime as validateTime_alias_1 }
 export { validateTime as validateTime_alias_2 }

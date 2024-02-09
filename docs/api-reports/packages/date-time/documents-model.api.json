@@ -4829,7 +4829,7 @@
             {
               "kind": "Method",
               "canonicalReference": "@storm-stack/date-time!StormTime#validate:member(1)",
-              "docComment": "/**\n * Validate the input time value\n *\n * @param dateTime - The date value to validate\n *\n * @param options - The options to use\n *\n * @returns A boolean representing whether the value is a valid *date-time*\n */\n",
+              "docComment": "/**\n * Validate the input time value\n *\n * @param dateTime - The date value to validate\n *\n * @param _options - The options to use\n *\n * @returns A boolean representing whether the value is a valid *date-time*\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -4842,7 +4842,7 @@
                 },
                 {
                   "kind": "Content",
-                  "text": ", options?: "
+                  "text": ", _options?: "
                 },
                 {
                   "kind": "Reference",
@@ -4880,7 +4880,7 @@
                   "isOptional": true
                 },
                 {
-                  "parameterName": "options",
+                  "parameterName": "_options",
                   "parameterTypeTokenRange": {
                     "startIndex": 3,
                     "endIndex": 4
@@ -5041,7 +5041,7 @@
             },
             {
               "kind": "Content",
-              "text": ", options?: "
+              "text": ", _options?: "
             },
             {
               "kind": "Reference",
@@ -5078,7 +5078,7 @@
               "isOptional": true
             },
             {
-              "parameterName": "options",
+              "parameterName": "_options",
               "parameterTypeTokenRange": {
                 "startIndex": 3,
                 "endIndex": 4
