@@ -344,6 +344,9 @@ importers:
 
   packages/jotai:
     devDependencies:
+      '@types/node':
+        specifier: ^20.10.5
+        version: 20.10.5
       '@types/react':
         specifier: 18.2.43
         version: 18.2.43
