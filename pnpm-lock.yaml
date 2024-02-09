@@ -208,28 +208,28 @@ importers:
   apps/web-docs:
     dependencies:
       '@opentelemetry/api':
-        specifier: 1.7.0
+        specifier: ^1.7.0
         version: 1.7.0
       '@opentelemetry/instrumentation':
-        specifier: 0.46.0
+        specifier: ^0.46.0
         version: 0.46.0(@opentelemetry/api@1.7.0)
       '@opentelemetry/otlp-exporter-base':
-        specifier: 0.46.0
+        specifier: ^0.46.0
         version: 0.46.0(@opentelemetry/api@1.7.0)
       '@opentelemetry/resources':
-        specifier: 1.19.0
+        specifier: ^1.19.0
         version: 1.19.0(@opentelemetry/api@1.7.0)
       '@opentelemetry/sdk-trace-node':
-        specifier: 1.19.0
+        specifier: ^1.19.0
         version: 1.19.0(@opentelemetry/api@1.7.0)
       '@opentelemetry/semantic-conventions':
-        specifier: 1.19.0
+        specifier: ^1.19.0
         version: 1.19.0
       '@types/mdx':
-        specifier: 2.0.11
+        specifier: ^2.0.11
         version: 2.0.11
       '@vercel/edge-config':
-        specifier: 0.4.1
+        specifier: ^0.4.1
         version: 0.4.1
       '@vercel/otel':
         specifier: ^0.3.0
@@ -247,7 +247,7 @@ importers:
         specifier: '>=13.4.20-canary.13'
         version: 14.0.4(@babel/core@7.23.6)(@opentelemetry/api@1.7.0)(react-dom@18.2.0)(react@18.2.0)
       react:
-        specifier: 18.2.0
+        specifier: ^18.2.0
         version: 18.2.0
       react-dom:
         specifier: 18.2.0
