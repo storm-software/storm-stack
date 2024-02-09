@@ -3,6 +3,8 @@
   "compilerOptions": {
     "outDir": "../../dist/out-tsc",
     "noEmit": true,
+    "strict": false,
+    "composite": true,
     "jsx": "react-jsx",
     "types": ["@nx/react/typings/cssmodule.d.ts", "@nx/react/typings/image.d.ts"]
   },

@@ -4,27 +4,29 @@
   "projectType": "library",
   "sourceRoot": "packages/components/src",
   "targets": {
-    "clean": {
+    "build-base": {
       "cache": true,
       "inputs": ["default", "^production"],
-      "dependsOn": ["^clean"],
+      "dependsOn": ["^build"],
       "executor": "nx:run-commands",
-      "outputs": ["{options.outputPath}"],
-      "outputPath": "dist/packages/components",
       "options": {
-        "command": "npx rimraf dist/packages/components"
+        "command": "pnpm tamagui-build --clean",
+        "cwd": "packages/components"
       }
     },
     "build": {
       "cache": true,
       "inputs": ["default", "^production"],
-      "dependsOn": ["^build", "clean"],
+      "dependsOn": ["build-build"],
       "executor": "nx:run-commands",
-      "outputs": ["{options.outputPath}"],
-      "outputPath": "dist/packages/components",
       "options": {
-        "command": "npx tamagui-build",
-        "cwd": "packages/components"
+        "commands": [
+          "pnpm exec rimraf dist/packages/components",
+          "mkdir dist\\packages\\components",
+          "pnpm exec copyfiles -f LICENSE ./packages/components/package.json ./packages/components/*.md ./dist/packages/components",
+          "pnpm exec copyfiles -u 3 ./packages/components/dist/**/*.js ./dist/packages/components/dist"
+        ],
+        "parallel": false
       }
     },
     "lint": {},

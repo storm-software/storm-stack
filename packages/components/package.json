@@ -9,10 +9,17 @@
     "directory": "packages/components"
   },
   "type": "module",
+  "main": "src/index.tsx",
+  "module:jsx": "src",
+  "files": [
+    "types",
+    "dist"
+  ],
   "sideEffects": [
     "*.css"
   ],
   "dependencies": {
+    "@tamagui/animations-react-native": "^1.89.19",
     "@tamagui/font-inter": "^1.79.17",
     "@tamagui/react-native-media-driver": "^1.79.17",
     "@tamagui/shorthands": "^1.79.17",
