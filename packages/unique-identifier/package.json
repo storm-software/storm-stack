@@ -1,6 +1,6 @@
 {
   "name": "@storm-stack/unique-identifier",
-  "version": "1.15.1",
+  "version": "1.15.2",
   "private": false,
   "description": "This package provides a simple way to generate various types of unique identifiers.",
   "repository": {
