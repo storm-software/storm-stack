@@ -1,3 +1,40 @@
+## 0.3.0 (2024-02-09)
+
+
+### 🚀 Features
+
+- **tools-nx:** Initial check-in for Storm-Stack Nx Tools package ([556997b](https://github.com/storm-software/storm-stack/commit/556997b))
+
+- **monorepo:** Major redesign of project structure ([20c7a8f](https://github.com/storm-software/storm-stack/commit/20c7a8f))
+
+- **web-docs:** Update webdocs to use `fumadocs` going forward ([8344342](https://github.com/storm-software/storm-stack/commit/8344342))
+
+- **web-docs:** Added required config to support document generation ([691a97d](https://github.com/storm-software/storm-stack/commit/691a97d))
+
+
+### 🩹 Fixes
+
+- **monorepo:** Regenerate the monorepo's pnpm-lock file ([d7297d0](https://github.com/storm-software/storm-stack/commit/d7297d0))
+
+- **monorepo:** Regenerated the pnpm-lock file ([4bf3185](https://github.com/storm-software/storm-stack/commit/4bf3185))
+
+- **monorepo:** Resolved issues with the package.json population ([f88b8e4](https://github.com/storm-software/storm-stack/commit/f88b8e4))
+
+- **monorepo:** Update base lefthook config to ensure parameters are correct ([92cc1e5](https://github.com/storm-software/storm-stack/commit/92cc1e5))
+
+- **monorepo:** Regenerated pnpm-lock and removed frozen from ci install ([6edf38b](https://github.com/storm-software/storm-stack/commit/6edf38b))
+
+- **monorepo:** Removed eslint updates ([d4d95c1](https://github.com/storm-software/storm-stack/commit/d4d95c1))
+
+- **monorepo:** Installed latest root tsconfig ([38fe002](https://github.com/storm-software/storm-stack/commit/38fe002))
+
+- **nx-tools:** Resolved typing issues ([c6c430f](https://github.com/storm-software/storm-stack/commit/c6c430f))
+
+
+### ❤️  Thank You
+
+- Patrick Sullivan
+
 ## 0.2.5 (2024-02-06)
 
 

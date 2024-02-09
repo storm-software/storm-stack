@@ -12,7 +12,6 @@
       "@storm-stack/components/*": ["packages/components/src/*"],
       "@storm-stack/date-time": ["packages/date-time/src/index.ts"],
       "@storm-stack/date-time/*": ["packages/core/date-time/src/*"],
-      "@storm-stack/web-docs": ["apps/web-docs/src/index.ts"],
       "@storm-stack/errors": ["packages/errors/src/index.ts"],
       "@storm-stack/errors/*": ["packages/errors/src/*"],
       "@storm-stack/file-system": ["packages/file-system/src/index.ts"],
@@ -31,10 +30,13 @@
       "@storm-stack/table/*": ["packages/table/src/*"],
       "@storm-stack/telemetry": ["packages/telemetry/src/index.ts"],
       "@storm-stack/telemetry/*": ["packages/telemetry/src/*"],
-      "@storm-stack/unique-identifier": ["packages/unique-identifier/src/index.ts"],
+      "@storm-stack/unique-identifier": [
+        "packages/unique-identifier/src/index.ts"
+      ],
       "@storm-stack/unique-identifier/*": ["packages/unique-identifier/src/*"],
       "@storm-stack/utilities": ["packages/utilities/src/index.ts"],
-      "@storm-stack/utilities/*": ["packages/utilities/src/*"]
+      "@storm-stack/utilities/*": ["packages/utilities/src/*"],
+      "@storm-stack/web-docs": ["apps/web-docs/src/index.ts"]
     },
     "plugins": [
       {
