@@ -20,7 +20,7 @@ for (let i = 0; i < 256; ++i) {
   byteToHex.push((i + 0x100).toString(16).slice(1));
 }
 
-export function unsafeStringify(arr: number[], offset = 0) {
+function unsafeStringify(arr: number[], offset = 0) {
   // Note: Be careful editing this code!  It's been tuned for performance
   // and works in ways you may not expect. See https://github.com/uuidjs/uuid/pull/434
   //
@@ -69,10 +69,10 @@ export function unsafeStringify(arr: number[], offset = 0) {
   }`.toLowerCase();
 }
 
-export const DNS = "6ba7b810-9dad-11d1-80b4-00c04fd430c8";
-export const URL = "6ba7b811-9dad-11d1-80b4-00c04fd430c8";
+const DNS = "6ba7b810-9dad-11d1-80b4-00c04fd430c8";
+const URL = "6ba7b811-9dad-11d1-80b4-00c04fd430c8";
 
-export function parse(uuid: string) {
+function parse(uuid: string) {
   if (
     !isSetString(uuid) ||
     /^(?:[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}|00000000-0000-0000-0000-000000000000)$/i.test(
@@ -135,7 +135,7 @@ export function parse(uuid: string) {
  *
  * @returns A random UUID string
  */
-export function uuid5(
+function uuid5(
   name: string,
   version: number,
   hashFn: (bytes: string | number | boolean | Uint8Array | any[]) => Uint8Array
@@ -202,5 +202,4 @@ export function uuid5(
   return generateUUID;
 }
 
-const v5 = uuid5("v5", 0x50, sha1);
-export default v5;
+export const uuid = uuid5("v5", 0x50, sha1);
