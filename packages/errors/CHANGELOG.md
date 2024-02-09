@@ -1,3 +1,24 @@
+## 1.16.4 (2024-02-09)
+
+
+### 🚀 Features
+
+- **monorepo:** Major redesign of project structure ([20c7a8f](https://github.com/storm-software/storm-stack/commit/20c7a8f))
+
+
+### 🩹 Fixes
+
+- **monorepo:** Regenerate the monorepo's pnpm-lock file ([d7297d0](https://github.com/storm-software/storm-stack/commit/d7297d0))
+
+- **monorepo:** Removed eslint updates ([d4d95c1](https://github.com/storm-software/storm-stack/commit/d4d95c1))
+
+- **monorepo:** Readded the `noEmit` option to tsconfig ([b9b43fb](https://github.com/storm-software/storm-stack/commit/b9b43fb))
+
+
+### ❤️  Thank You
+
+- Patrick Sullivan
+
 ## 1.16.3 (2024-02-09)
 
 
