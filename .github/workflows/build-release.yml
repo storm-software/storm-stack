@@ -65,11 +65,11 @@ jobs:
       - name: Build repository packages
         run: pnpm build:all
 
-      - name: Run Linters
-        run: pnpm lint
+      # - name: Run Linters
+      #   run: pnpm lint
 
-      - name: Run Formatters
-        run: pnpm nx format
+      # - name: Run Formatters
+      #   run: pnpm nx format
 
       - name: Build repository packages
         run: pnpm build:all

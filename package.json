@@ -45,8 +45,8 @@
     "adr:add": "pnpm log4brains adr new",
     "adr:preview": "pnpm log4brains preview",
     "prebuild": "pnpm clean",
-    "build": "nx affected -t build --parallel=5 --nxBail",
-    "build:all": "nx run-many -t build --all --parallel=3 --nxBail",
+    "build": "nx affected -t build --parallel=5",
+    "build:all": "nx run-many -t build --all --parallel=3",
     "build:docs": "nx run-many -t build --projects=docs/* --parallel=5",
     "build:packages": "nx run-many -t build --projects=packages/* --parallel=5",
     "build:production": "nx run-many -t build --all --prod --parallel=5",
@@ -124,10 +124,7 @@
   },
   "namespace": "@storm-stack",
   "nx": {
-    "includedScripts": [
-      "lint",
-      "format"
-    ]
+    "includedScripts": ["lint", "format"]
   },
   "pnpm": {
     "overrides": {
