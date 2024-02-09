@@ -1,21 +1,16 @@
-export default function Index() {
-  /*
-   * Replace the elements below with your own.
-   *
-   * Note: The corresponding styles are in the ./index.none file.
-   */
+import Link from "next/link";
+
+export default function HomePage() {
   return (
-    <>
-      <div className="wrapper">
-        <div className="container">
-          <div id="welcome">
-            <h1>
-              <span> Hello there, </span>
-              Welcome docs-website 👋
-            </h1>
-          </div>
-        </div>
-      </div>
-    </>
+    <main className="flex h-screen flex-col justify-center text-center">
+      <h1 className="mb-4 text-2xl font-bold">Hello World</h1>
+      <p className="text-muted-foreground">
+        You can open{" "}
+        <Link href="/docs" className="text-foreground font-semibold underline">
+          /docs
+        </Link>{" "}
+        and see the documentation.
+      </p>
+    </main>
   );
 }

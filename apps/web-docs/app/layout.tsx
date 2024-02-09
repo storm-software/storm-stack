@@ -1,7 +1,12 @@
 import { RootProvider } from "fumadocs-ui/provider";
 import "fumadocs-ui/style.css";
+import { Inter } from "next/font/google";
 import type { ReactNode } from "react";
 import "./global.css";
+
+const inter = Inter({
+  subsets: ["latin"]
+});
 
 export const metadata = {
   title: "Welcome to docs-website",
@@ -14,7 +19,7 @@ export default function RootLayout({
   children: ReactNode;
 }) {
   return (
-    <html lang="en">
+    <html lang="en" className={inter.className}>
       <body>
         <RootProvider>{children}</RootProvider>
       </body>

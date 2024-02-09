@@ -27,10 +27,10 @@
     "**/*.tsx",
     "**/*.js",
     "**/*.jsx",
-    "../../apps/web/docs/.next/types/**/*.ts",
-    "../../dist/apps/web/docs/.next/types/**/*.ts",
-    "next-env.d.ts",
-    "../../dist/apps/web-docs/.next/types/**/*.ts"
+    "./next-env.d.ts",
+    "../../dist/apps/web-docs/.next/types/**/*.ts",
+    "next.config.mjs",
+    "../../apps/web-docs/.next/types/**/*.ts"
   ],
   "exclude": [
     "node_modules",

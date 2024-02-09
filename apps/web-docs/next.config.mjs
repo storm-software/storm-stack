@@ -1,12 +1,10 @@
-//@ts-check
+import { composePlugins, withNx } from "@nx/next";
+import { get } from "@vercel/edge-config";
+import createMDX from "fumadocs-mdx/config";
 
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const { composePlugins, withNx } = require("@nx/next");
-const { get } = require("@vercel/edge-config");
+const withMDX = createMDX();
 
-/**
- * @type {import('@nx/next/plugins/with-nx').WithNxOptions}
- **/
+/** @type {import('next').NextConfig} */
 const nextConfig = {
   basePath: "",
 
@@ -17,7 +15,7 @@ const nextConfig = {
   },
 
   swcMinify: true,
-  reactStrictMode: false,
+  reactStrictMode: true,
 
   /*experimental: {
     instrumentationHook: true
@@ -64,9 +62,6 @@ const nextConfig = {
   }
 };
 
-const plugins = [
-  // Add more Next.js plugins to this list if needed.
-  withNx
-];
+const plugins = [withMDX, withNx];
 
-module.exports = composePlugins(...plugins)(nextConfig);
+export default composePlugins(...plugins)(nextConfig);
