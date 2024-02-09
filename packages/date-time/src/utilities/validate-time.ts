@@ -1,13 +1,10 @@
 import { isBigInt, isDate, isNumber } from "@storm-stack/utilities";
 import { RFC_3339_TIME_REGEX } from "../constants";
-import { DateTimeInput, DateTimeOptions } from "../storm-date-time";
+import type { DateTimeInput, DateTimeOptions } from "../storm-date-time";
 import { isDateTime } from "./is-date-time";
 import { isInstant } from "./is-instant";
 
-export function validateTime(
-  value?: DateTimeInput,
-  options?: DateTimeOptions
-): boolean {
+export function validateTime(value?: DateTimeInput, _options?: DateTimeOptions): boolean {
   if (isDateTime(value)) {
     return value.isValid;
   }
@@ -24,14 +21,13 @@ export function validateTime(
       date = value;
     }
 
-    if (isNaN(date.getTime())) {
+    if (Number.isNaN(date.getTime())) {
       return false;
     }
 
     datetime = date.toUTCString();
   } else {
-    datetime =
-      value === null || value === void 0 ? void 0 : value.toUpperCase();
+    datetime = value === null || value === void 0 ? void 0 : value.toUpperCase();
   }
 
   if (!datetime) {

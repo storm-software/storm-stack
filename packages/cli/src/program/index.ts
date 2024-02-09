@@ -1,4 +1,5 @@
-import { type StormConfig, createStormConfig } from "@storm-software/config-tools";
+import type { StormConfig } from "@storm-software/config";
+import { createStormConfig } from "@storm-software/config-tools";
 import { getCauseFromUnknown } from "@storm-stack/errors";
 import { StormLog } from "@storm-stack/logging";
 import { EMPTY_STRING, NEWLINE_STRING, titleCase } from "@storm-stack/utilities";

@@ -1733,7 +1733,7 @@
         {
           "kind": "Class",
           "canonicalReference": "@storm-stack/serialization!StormParser:class",
-          "docComment": "/**\n * A static JSON parser class used by Storm Software to serialize and deserialize JSON\n *\n * @remarks\n *\n * This class uses the {@link https://github.com/blitz-js/superjson | SuperJSON} library\n */\n",
+          "docComment": "/**\n * A static JSON parser class used by Storm Software to serialize and deserialize JSON\n *\n * @remarks\n *\n * This class uses the [SuperJSON](https://github.com/blitz-js/superjson) library\n */\n",
           "excerptTokens": [
             {
               "kind": "Content",

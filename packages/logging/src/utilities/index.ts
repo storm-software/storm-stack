@@ -1,2 +1,3 @@
 export * from "./get-log-level";
-export * from "./pino-logger";
+export * from "./log-serializer";
+export * from "./get-pino-options";

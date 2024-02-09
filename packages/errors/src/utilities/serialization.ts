@@ -1,4 +1,4 @@
-import { JsonObject, JsonValue } from "@storm-stack/serialization";
+import type { JsonObject, JsonValue } from "@storm-stack/serialization";
 import { isSetObject } from "@storm-stack/utilities";
 import { ErrorCode } from "../errors";
 import { StormError } from "../storm-error";
@@ -29,18 +29,17 @@ export function deserializeStormError(json: JsonValue): StormError {
   if (isSetObject(json)) {
     const { code, message, stack, data, cause } = json as JsonObject;
 
-    const error = new StormError(
-      code ? String(code) : ErrorCode.internal_server_error,
-      {
-        message: String(message),
-        stack: String(stack),
-        data: String(data)
-      }
-    );
+    const error = new StormError(code ? String(code) : ErrorCode.internal_server_error, {
+      message: String(message),
+      stack: String(stack),
+      data: String(data)
+    });
 
     if (cause) {
       const errorCause = deserializeStormError(cause as JsonObject);
-      errorCause && (error.cause = errorCause);
+      if (errorCause) {
+        error.cause = errorCause;
+      }
     }
 
     return error;

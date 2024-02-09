@@ -1,0 +1,53 @@
+{
+  "name": "table",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "library",
+  "sourceRoot": "packages/table/src",
+  "targets": {
+    "build": {
+      "executor": "@storm-software/workspace-tools:tsup-browser",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "entry": "packages/table/src/index.ts",
+        "outputPath": "dist/packages/table",
+        "tsConfig": "packages/table/tsconfig.json",
+        "project": "packages/table/package.json",
+        "defaultConfiguration": "production",
+        "assets": [
+          {
+            "input": "packages/table",
+            "glob": "*.md",
+            "output": "/"
+          },
+          {
+            "input": "",
+            "glob": "LICENSE",
+            "output": "/"
+          }
+        ]
+      },
+      "configurations": {
+        "production": {
+          "debug": false,
+          "verbose": false
+        },
+        "development": {
+          "debug": true,
+          "verbose": true
+        }
+      }
+    },
+    "lint": {},
+    "test": {},
+    "nx-release-publish": {
+      "cache": false,
+      "inputs": ["default", "^production"],
+      "dependsOn": ["^build"],
+      "executor": "@storm-software/workspace-tools:npm-publish",
+      "options": {
+        "packageRoot": "dist/{projectRoot}",
+        "registry": "https://registry.npmjs.org/"
+      }
+    }
+  }
+}

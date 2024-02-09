@@ -13,7 +13,6 @@
         "tsConfig": "packages/jotai/tsconfig.json",
         "project": "packages/jotai/package.json",
         "defaultConfiguration": "production",
-        "platform": "browser",
         "external": ["react", "react-dom", "jotai"],
         "assets": [
           {
@@ -51,7 +50,5 @@
         "registry": "https://registry.npmjs.org/"
       }
     }
-  },
-  "tags": [],
-  "implicitDependencies": ["utilities", "serialization"]
+  }
 }

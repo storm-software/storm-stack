@@ -1028,7 +1028,7 @@
             {
               "kind": "Property",
               "canonicalReference": "@storm-stack/errors!StormError#stack:member",
-              "docComment": "/**\n * Prints a displayable, formatted the stack trace\n *\n * @returns The stack trace string\n */\n",
+              "docComment": "/**\n * Prints a displayable/formatted stack trace\n *\n * @returns The stack trace string\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",

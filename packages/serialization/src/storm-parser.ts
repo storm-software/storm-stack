@@ -1,26 +1,15 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 // import { Decimal } from "decimal.js";
 import { isObject, isString } from "@storm-stack/utilities";
+import { Buffer } from "buffer/";
 import SuperJSON from "superjson";
 import type { Class, JsonParserResult, JsonValue } from "./types";
-
-function _register<TData = any, TJsonObject extends JsonValue = JsonValue>(
-  name: string,
-  serialize: (data: TData) => TJsonObject,
-  deserialize: (json: TJsonObject) => TData,
-  isApplicable: (data: any) => data is TData
-) {
-  return SuperJSON.registerCustom<TData, TJsonObject>(
-    { isApplicable, serialize, deserialize },
-    name
-  );
-}
 
 /**
  * A static JSON parser class used by Storm Software to serialize and deserialize JSON
  *
  * @remarks
- * This class uses the {@link https://github.com/blitz-js/superjson | SuperJSON} library
+ * This class uses the [SuperJSON](https://github.com/blitz-js/superjson) library
  */
 export class StormParser extends SuperJSON {
   private static _instance: StormParser;
@@ -106,11 +95,13 @@ export class StormParser extends SuperJSON {
   private constructor() {
     super({ dedupe: true });
 
-    _register<Buffer, string>(
-      "Bytes",
-      (v) => v.toString("base64"),
-      (v) => Buffer.from(v, "base64"),
-      (v): v is Buffer => Buffer.isBuffer(v)
+    StormParser.instance.registerCustom<Buffer, string>(
+      {
+        isApplicable: (v): v is Buffer => Buffer.isBuffer(v),
+        serialize: (v) => v.toString("base64"),
+        deserialize: (v) => Buffer.from(v, "base64")
+      },
+      "Bytes"
     );
   }
 }

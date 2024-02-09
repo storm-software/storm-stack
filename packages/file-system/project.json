@@ -11,17 +11,16 @@
         "outputPath": "dist/packages/file-system",
         "tsConfig": "packages/file-system/tsconfig.json",
         "project": "packages/file-system/package.json",
-        "defaultConfiguration": "production",
-        "platform": "node"
+        "defaultConfiguration": "production"
       },
       "configurations": {
         "production": {
           "debug": false,
-          "verbose": true
+          "minify": true
         },
         "development": {
           "debug": true,
-          "verbose": true
+          "minify": false
         }
       }
     },
@@ -37,6 +36,12 @@
         "registry": "https://registry.npmjs.org/"
       }
     }
-  },
-  "implicitDependencies": ["cli", "utilities", "logging", "errors", "serialization"]
+  }
+  // "implicitDependencies": [
+  //   "cli",
+  //   "utilities",
+  //   "logging",
+  //   "errors",
+  //   "serialization"
+  // ]
 }

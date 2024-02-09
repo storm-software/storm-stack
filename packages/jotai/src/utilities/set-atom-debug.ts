@@ -1,5 +1,5 @@
 import { isDevelopment } from "@storm-stack/utilities";
-import { Atom } from "jotai/vanilla";
+import type { Atom } from "jotai/vanilla";
 
 /**
  * Add a debug label to the Jotai Atom

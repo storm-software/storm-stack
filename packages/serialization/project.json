@@ -2,7 +2,6 @@
   "name": "serialization",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "projectType": "library",
-  "root": "packages/serialization",
   "sourceRoot": "packages/serialization/src",
   "targets": {
     "build": {
@@ -12,9 +11,7 @@
         "outputPath": "dist/packages/serialization",
         "tsConfig": "packages/serialization/tsconfig.json",
         "project": "packages/serialization/package.json",
-        "defaultConfiguration": "production",
-        "debug": false,
-        "verbose": true
+        "defaultConfiguration": "production"
       },
       "configurations": {
         "production": {
@@ -37,6 +34,5 @@
         "registry": "https://registry.npmjs.org/"
       }
     }
-  },
-  "implicitDependencies": ["utilities"]
+  }
 }

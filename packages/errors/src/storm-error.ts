@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Serializable } from "@storm-stack/serialization";
-import { EMPTY_STRING, NEWLINE_STRING } from "@storm-stack/utilities";
-import StackTracey from "stacktracey";
+import { EMPTY_STRING, NEWLINE_STRING, isFunction } from "@storm-stack/utilities";
 import { getCauseFromUnknown, isStormError } from "./utilities";
 
 export interface StormErrorOptions {
@@ -68,7 +67,7 @@ export class StormError<TCode extends string = string> extends Error {
     if (stack) {
       this._stack = stack;
     } else {
-      if (typeof Error.captureStackTrace === "function") {
+      if (isFunction(Error.captureStackTrace)) {
         Error.captureStackTrace(this, this.constructor);
       } else {
         this._stack = new Error(message).stack;
@@ -93,13 +92,29 @@ export class StormError<TCode extends string = string> extends Error {
   }
 
   /**
-   * Prints a displayable, formatted the stack trace
+   * Prints a displayable/formatted stack trace
    *
    * @returns The stack trace string
    */
   public override get stack(): string {
     return this._stack
-      ? NEWLINE_STRING + new StackTracey(this._stack).withSources().asTable()
+      ? NEWLINE_STRING +
+          (this._stack || "")
+            .split("\n")
+            .map((line) => line.trim())
+            .map((line) => {
+              if (line.startsWith(`${this.name}: ${this.message}`)) {
+                return null;
+              }
+
+              if (line.startsWith("at")) {
+                return `  ${line}`;
+              }
+
+              return line;
+            })
+            .filter(Boolean)
+            .join("\n")
       : EMPTY_STRING;
   }
 

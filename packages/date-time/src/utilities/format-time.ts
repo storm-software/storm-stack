@@ -1,5 +1,5 @@
-import { Temporal } from "@js-temporal/polyfill";
-import { StormDateTime } from "../storm-date-time";
+import type { Temporal } from "@js-temporal/polyfill";
+import type { StormDateTime } from "../storm-date-time";
 import { StormTime } from "../storm-time";
 
 /**

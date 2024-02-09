@@ -13,19 +13,10 @@ export const Crypto = WebCrypto;
  *
  * @returns The WebCrypto object
  */
-export const getWebCrypto = async () => {
-  try {
-    if (!WebCrypto) {
-      const crypto = await import("node:crypto");
-      if (crypto) {
-        return crypto;
-      }
-
-      throw new Error();
-    }
-
-    return WebCrypto;
-  } catch (_) {
+export const getWebCrypto = () => {
+  if (!WebCrypto) {
     throw new Error("Crypto is not available");
   }
+
+  return WebCrypto;
 };

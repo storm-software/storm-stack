@@ -2,7 +2,6 @@
   "name": "utilities",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "projectType": "library",
-  "root": "packages/utilities",
   "sourceRoot": "packages/utilities/src",
   "targets": {
     "build": {
@@ -12,8 +11,7 @@
         "outputPath": "dist/packages/utilities",
         "tsConfig": "packages/utilities/tsconfig.json",
         "project": "packages/utilities/package.json",
-        "defaultConfiguration": "production",
-        "verbose": true
+        "defaultConfiguration": "production"
       },
       "configurations": {
         "production": {

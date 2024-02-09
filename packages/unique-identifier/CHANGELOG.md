@@ -1,14 +1,12 @@
 ## 1.14.5 (2024-02-06)
 
-
 ### 🩹 Fixes
 
-- **unique-identifier:** Added support to attempt imports from node:crypto for generating uuids ([1fc46b6](https://github.com/storm-software/storm-stack/commit/1fc46b6))
+-   **unique-identifier:** Added support to attempt imports from node:crypto for generating uuids ([1fc46b6](https://github.com/storm-software/storm-stack/commit/1fc46b6))
 
+### ❤️ Thank You
 
-### ❤️  Thank You
-
-- Patrick Sullivan
+-   Patrick Sullivan
 
 ## 1.13.10 (2024-01-30)
 

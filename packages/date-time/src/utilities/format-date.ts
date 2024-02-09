@@ -1,6 +1,6 @@
-import { Temporal } from "@js-temporal/polyfill";
+import type { Temporal } from "@js-temporal/polyfill";
 import { StormDate } from "../storm-date";
-import { StormDateTime } from "../storm-date-time";
+import type { StormDateTime } from "../storm-date-time";
 
 /**
  * Format a date field

@@ -1,6 +1,6 @@
-import { Temporal } from "@js-temporal/polyfill";
+import type { Temporal } from "@js-temporal/polyfill";
 import { EMPTY_STRING } from "@storm-stack/utilities";
-import { StormDateTime } from "../storm-date-time";
+import type { StormDateTime } from "../storm-date-time";
 
 /**
  * Format a date time field into ISO format

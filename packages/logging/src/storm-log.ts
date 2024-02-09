@@ -1,18 +1,13 @@
-import { type StormConfig, createStormConfig } from "@storm-software/config-tools";
+import type { StormConfig } from "@storm-software/config";
 import { StormTime, formatSince } from "@storm-stack/date-time";
-import { getCauseFromUnknown } from "@storm-stack/errors";
-import type pino from "pino";
+import { StormError, getCauseFromUnknown } from "@storm-stack/errors";
+import pino from "pino";
 import type { Logger, LoggerOptions as PinoLoggerOptions } from "pino";
 import { LoggerWrapper } from "./composition/logger-wrapper";
-import { LoggingConfigSchema } from "./schema";
-import type { ILogger, ILoggerWrapper, IStormLog, LoggingConfig } from "./types";
+import { LoggingErrorCode } from "./errors";
+import type { GetLoggersResult, ILogger, ILoggerWrapper, IStormLog } from "./types";
 import { LogLevel, type LogLevelLabel, getLogLevel } from "./utilities/get-log-level";
-import { getPinoLogger } from "./utilities/pino-logger";
-
-type GetLoggersResult = pino.BaseLogger & {
-  logLevel: LogLevel;
-  logLevelLabel: LogLevelLabel;
-};
+import { getPinoOptions } from "./utilities/get-pino-options";
 
 /**
  * The default logger class.
@@ -21,49 +16,47 @@ type GetLoggersResult = pino.BaseLogger & {
  * This logger writes to the console.
  */
 export class StormLog implements IStormLog {
-  private static logger: Logger<PinoLoggerOptions>;
-  private static logLevel: LogLevel;
-  private static logLevelLabel: LogLevelLabel;
+  protected static logger: Logger<PinoLoggerOptions>;
+  protected static logLevel: LogLevel;
+  protected static logLevelLabel: LogLevelLabel;
 
-  private static getLoggers = async (): Promise<GetLoggersResult> => {
+  protected static getLoggers = (): Promise<GetLoggersResult> => {
     if (!StormLog.logger) {
-      const config = await createStormConfig<"logging", LoggingConfig>(
-        "logging",
-        LoggingConfigSchema
-      );
-      StormLog.logger = StormLog.initialize(config as StormConfig<"logging", LoggingConfig>);
-      StormLog.logLevel = getLogLevel(config.logLevel);
-      StormLog.logLevelLabel = config.logLevel;
+      throw new StormError(LoggingErrorCode.logs_uninitialized, {
+        message:
+          "The Storm Log has not been initialized. Please initialize the logs by invoking `StormLog.initialize` before using them"
+      });
     }
 
-    return {
+    return Promise.resolve({
       ...StormLog.logger,
       logLevel: StormLog.logLevel,
       logLevelLabel: StormLog.logLevelLabel
-    };
+    });
   };
 
   /**
-   * Initialize the logger.
+   * Initialize the logs.
    *
    * @param config - The Storm config
    * @param name - The name of the project to initialized the loggers for
    * @returns The initialized loggers
    */
-  private static initialize = (
-    config: StormConfig<"logging", LoggingConfig>,
-    name?: string
+  protected static initialize = (
+    config: StormConfig,
+    name?: string,
+    streams: (pino.DestinationStream | pino.StreamEntry<pino.Level>)[] = []
   ): Logger<PinoLoggerOptions> => {
-    const pinoLogger: Logger<PinoLoggerOptions> = getPinoLogger(config, name);
+    const pinoLogger: Logger<PinoLoggerOptions> =
+      streams.length > 0
+        ? pino(getPinoOptions(config, name), pino.multistream(streams, { dedupe: false }))
+        : pino(getPinoOptions(config, name));
     pinoLogger.debug("The Storm log has ben initialized");
 
     return pinoLogger;
   };
 
-  #config: StormConfig<"logging", LoggingConfig>;
-  #name: string;
   #logger: Logger<PinoLoggerOptions>;
-  #additionalLoggers: ILoggerWrapper[];
   #logLevel: LogLevel;
   #processes: Array<{ name: string; startedAt: StormTime }> = [];
 
@@ -71,19 +64,14 @@ export class StormLog implements IStormLog {
    * The Singleton's constructor should always be private to prevent direct
    * construction calls with the `new` operator.
    */
-  private constructor(
-    config: StormConfig,
-    name?: string,
-    additionalLoggers: ILoggerWrapper[] = []
+  protected constructor(
+    protected config: StormConfig,
+    protected name?: string,
+    protected additionalLoggers: ILoggerWrapper[] = []
   ) {
-    this.#config = config;
-    this.#name = name ? name : config.name;
+    this.name = name ? name : config.name;
 
-    const logger = StormLog.initialize(this.#config, this.#name);
-
-    this.#logger = logger;
-    this.#additionalLoggers = additionalLoggers;
-
+    this.#logger = StormLog.initialize(this.config, this.name, this.getStreams());
     this.#logLevel = getLogLevel(config.logLevel);
   }
 
@@ -96,7 +84,7 @@ export class StormLog implements IStormLog {
    * @returns The initialized logger
    */
   public static create(
-    config: StormConfig<"logging", LoggingConfig>,
+    config: StormConfig,
     name?: string,
     additionalLoggers: ILoggerWrapper[] = []
   ) {
@@ -240,7 +228,7 @@ export class StormLog implements IStormLog {
   public success(message: any) {
     if (this.#logLevel >= LogLevel.INFO) {
       this.#logger.info({ msg: message, level: "success" });
-      Promise.all(this.#additionalLoggers.map((logger) => logger.success(message)));
+      Promise.all(this.additionalLoggers.map((logger) => logger.success(message)));
     }
   }
 
@@ -255,7 +243,7 @@ export class StormLog implements IStormLog {
       const error = getCauseFromUnknown(message);
 
       this.#logger.fatal({ error, level: "fatal" });
-      Promise.all(this.#additionalLoggers.map((logger) => logger.fatal(error)));
+      Promise.all(this.additionalLoggers.map((logger) => logger.fatal(error)));
     }
   }
 
@@ -270,7 +258,7 @@ export class StormLog implements IStormLog {
       const error = getCauseFromUnknown(message);
 
       this.#logger.error({ error, level: "error" });
-      Promise.all(this.#additionalLoggers.map((logger) => logger.error(error)));
+      Promise.all(this.additionalLoggers.map((logger) => logger.error(error)));
     }
   }
 
@@ -285,7 +273,7 @@ export class StormLog implements IStormLog {
       const error = getCauseFromUnknown(message);
 
       this.#logger.error({ error, level: "exception" });
-      Promise.all(this.#additionalLoggers.map((logger) => logger.exception(error)));
+      Promise.all(this.additionalLoggers.map((logger) => logger.exception(error)));
     }
   }
 
@@ -298,7 +286,7 @@ export class StormLog implements IStormLog {
   public warn(message: any) {
     if (this.#logLevel >= LogLevel.WARN) {
       this.#logger.warn(message);
-      Promise.all(this.#additionalLoggers.map((logger) => logger.warn(message)));
+      Promise.all(this.additionalLoggers.map((logger) => logger.warn(message)));
     }
   }
 
@@ -311,7 +299,7 @@ export class StormLog implements IStormLog {
   public info(message: any) {
     if (this.#logLevel >= LogLevel.INFO) {
       this.#logger.info(message);
-      Promise.all(this.#additionalLoggers.map((logger) => logger.info(message)));
+      Promise.all(this.additionalLoggers.map((logger) => logger.info(message)));
     }
   }
 
@@ -324,7 +312,7 @@ export class StormLog implements IStormLog {
   public debug(message: any) {
     if (this.#logLevel >= LogLevel.DEBUG) {
       this.#logger.debug(message);
-      Promise.all(this.#additionalLoggers.map((logger) => logger.debug(message)));
+      Promise.all(this.additionalLoggers.map((logger) => logger.debug(message)));
     }
   }
 
@@ -337,7 +325,7 @@ export class StormLog implements IStormLog {
   public trace(message: any) {
     if (this.#logLevel >= LogLevel.TRACE) {
       this.#logger.trace(message);
-      Promise.all(this.#additionalLoggers.map((logger) => logger.trace(message)));
+      Promise.all(this.additionalLoggers.map((logger) => logger.trace(message)));
     }
   }
 
@@ -350,7 +338,7 @@ export class StormLog implements IStormLog {
   public log(message: any) {
     if (this.#logLevel >= LogLevel.INFO) {
       this.#logger.info(message);
-      Promise.all(this.#additionalLoggers.map((logger) => logger.log(message)));
+      Promise.all(this.additionalLoggers.map((logger) => logger.log(message)));
     }
   }
 
@@ -408,7 +396,7 @@ export class StormLog implements IStormLog {
     }\n`;
 
     this.#logger.info(message);
-    Promise.all(this.#additionalLoggers.map((logger) => logger.info(message)));
+    Promise.all(this.additionalLoggers.map((logger) => logger.info(message)));
 
     if (name && this.#processes.some((item) => item.name === name)) {
       const index = this.#processes.findLastIndex((item) => item.name === name);
@@ -424,7 +412,7 @@ export class StormLog implements IStormLog {
    * @param options - The options of the child process
    */
   public child(options: { name: string } & Record<string, any>): IStormLog {
-    return new StormLog(this.#config, `${this.#name} ❯ ${options?.name}`, this.#additionalLoggers);
+    return new StormLog(this.config, `${this.name} ❯ ${options?.name}`, this.additionalLoggers);
   }
 
   /**
@@ -434,7 +422,7 @@ export class StormLog implements IStormLog {
    */
   public addWrappedLogger(wrapper: ILoggerWrapper) {
     if (wrapper) {
-      this.#additionalLoggers.push(wrapper);
+      this.additionalLoggers.push(wrapper);
     }
   }
 
@@ -445,7 +433,14 @@ export class StormLog implements IStormLog {
    */
   public addLogger(logger: ILogger) {
     if (logger) {
-      this.addWrappedLogger(LoggerWrapper.wrap(logger, this.#config.modules?.logging));
+      this.addWrappedLogger(LoggerWrapper.wrap(logger, this.config.modules?.logging));
     }
   }
+
+  /**
+   * Allow child classes to specify additional pino log streams
+   *
+   * @returns Additional log streams to use during initialization
+   */
+  protected getStreams = (): Array<pino.DestinationStream | pino.StreamEntry<pino.Level>> => [];
 }

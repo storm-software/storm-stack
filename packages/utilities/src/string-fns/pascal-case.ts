@@ -11,11 +11,7 @@ export const pascalCase = (input?: string): string | undefined => {
   return input
     ? input
         .split(" ")
-        .map(i =>
-          i.length > 0
-            ? i.trim().charAt(0).toUpperCase() + i.trim().slice(1)
-            : ""
-        )
+        .map((i) => (i.length > 0 ? i.trim().charAt(0).toUpperCase() + i.trim().slice(1) : ""))
         .join("")
     : input;
 };

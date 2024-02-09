@@ -1,17 +1,10 @@
 import { isBigInt, isDate, isNumber } from "@storm-stack/utilities";
 import { RFC_3339_DATE_REGEX } from "../constants";
-import {
-  DateTimeInput,
-  DateTimeOptions,
-  StormDateTime
-} from "../storm-date-time";
+import { type DateTimeInput, type DateTimeOptions, StormDateTime } from "../storm-date-time";
 import { isDateTime } from "./is-date-time";
 import { isInstant } from "./is-instant";
 
-export function validateDate(
-  value: DateTimeInput,
-  options?: DateTimeOptions
-): boolean {
+export function validateDate(value: DateTimeInput, options?: DateTimeOptions): boolean {
   if (isDateTime(value)) {
     return value.isValid;
   }
@@ -28,14 +21,13 @@ export function validateDate(
       date = value;
     }
 
-    if (isNaN(date.getTime())) {
+    if (Number.isNaN(date.getTime())) {
       return false;
     }
 
     datetime = date.toUTCString();
   } else {
-    datetime =
-      value === null || value === void 0 ? void 0 : value.toUpperCase();
+    datetime = value === null || value === void 0 ? void 0 : value.toUpperCase();
   }
 
   if (!datetime) {
@@ -59,8 +51,7 @@ export function validateDate(
 
     case 2:
       return (
-        createdDateTime.zonedDateTime.day >
-        (createdDateTime.zonedDateTime.inLeapYear ? 29 : 28)
+        createdDateTime.zonedDateTime.day > (createdDateTime.zonedDateTime.inLeapYear ? 29 : 28)
       );
 
     case 4:

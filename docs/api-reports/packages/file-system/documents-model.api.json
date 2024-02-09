@@ -1143,29 +1143,6 @@
         },
         {
           "kind": "Variable",
-          "canonicalReference": "@storm-stack/file-system!isCI:var",
-          "docComment": "/**\n * Returns true if the current environment is a CI environment.\n *\n * @returns True if the current environment is a CI environment.\n */\n",
-          "excerptTokens": [
-            {
-              "kind": "Content",
-              "text": "isCI: "
-            },
-            {
-              "kind": "Content",
-              "text": "() => boolean"
-            }
-          ],
-          "fileUrlPath": "tmp/.tsup/declaration/packages/cli/src/utilities/is-ci.d.ts",
-          "isReadonly": true,
-          "releaseTag": "Public",
-          "name": "isCI",
-          "variableTypeTokenRange": {
-            "startIndex": 1,
-            "endIndex": 2
-          }
-        },
-        {
-          "kind": "Variable",
           "canonicalReference": "@storm-stack/file-system!isDirectory:var",
           "docComment": "/**\n * Check if the given path is a directory\n *\n * @param path - The location to check\n *\n * @param additionalPath - An optional additional path to add to the start of the path\n *\n * @returns An indicator specifying if the file is a directory\n */\n",
           "excerptTokens": [
@@ -1208,38 +1185,6 @@
           "variableTypeTokenRange": {
             "startIndex": 1,
             "endIndex": 2
-          }
-        },
-        {
-          "kind": "Variable",
-          "canonicalReference": "@storm-stack/file-system!isInteractive:var",
-          "docComment": "/**\n * Check if the current process is interactive\n *\n * @param stream - The stream to check\n *\n * @returns True if the current process is interactive\n */\n",
-          "excerptTokens": [
-            {
-              "kind": "Content",
-              "text": "isInteractive: "
-            },
-            {
-              "kind": "Content",
-              "text": "(stream?: "
-            },
-            {
-              "kind": "Reference",
-              "text": "NodeJS.ReadStream",
-              "canonicalReference": "!\"\\\"process\\\"\".__global.NodeJS.ReadStream:interface"
-            },
-            {
-              "kind": "Content",
-              "text": " & {\n    fd: 0;\n}) => boolean"
-            }
-          ],
-          "fileUrlPath": "tmp/.tsup/declaration/packages/cli/src/utilities/is-interactive.d.ts",
-          "isReadonly": true,
-          "releaseTag": "Public",
-          "name": "isInteractive",
-          "variableTypeTokenRange": {
-            "startIndex": 1,
-            "endIndex": 4
           }
         },
         {

@@ -2,17 +2,8 @@
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
     "outDir": "../../dist/out-tsc",
-    "noEmit": true
   },
   "files": [],
-  "include": [
-    "src/**/*.ts",
-    "src/**/*.js",
-    "bin/**/*",
-    "declarations.d.ts",
-    "../cli/src/utilities/is-ci.ts",
-    "../cli/src/utilities/is-interactive.ts"
-  ],
-  "exclude": ["jest.config.ts", "src/**/*.spec.ts", "src/**/*.test.ts"],
-  "composite": true
+  "include": ["src/**/*.ts", "src/**/*.tsx", "src/**/*.js", "src/**/*.jsx"],
+  "exclude": ["jest.config.ts", "src/**/*.spec.ts", "src/**/*.test.ts"]
 }

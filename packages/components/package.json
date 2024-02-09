@@ -1,0 +1,44 @@
+{
+  "name": "@storm-stack/components",
+  "version": "1.8.5",
+  "private": false,
+  "description": "⚡ The storm-stack monorepo contains utility applications, tools, and various libraries to create modern and scalable web applications.",
+  "repository": {
+    "type": "github",
+    "url": "https://github.com/storm-software/storm-stack.git",
+    "directory": "packages/components"
+  },
+  "type": "module",
+  "sideEffects": ["*.css"],
+  "dependencies": {
+    "@tamagui/font-inter": "^1.79.17",
+    "@tamagui/react-native-media-driver": "^1.79.17",
+    "@tamagui/shorthands": "^1.79.17",
+    "@tamagui/themes": "^1.79.17",
+    "@tamagui/toast": "^1.89.8",
+    "@tamagui/web": "^1.89.8",
+    "tamagui": "^1.79.13"
+  },
+  "devDependencies": {
+    "@tamagui/build": "^1.79.13"
+  },
+  "peerDependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-native": "^0.73.1"
+  },
+  "peerDependenciesMeta": {
+    "react": {
+      "optional": false
+    },
+    "react-dom": {
+      "optional": true
+    },
+    "react-native": {
+      "optional": true
+    }
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

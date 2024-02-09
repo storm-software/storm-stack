@@ -10,6 +10,7 @@
   },
   "type": "module",
   "dependencies": {
+    "@storm-software/config-tools": "latest",
     "semver": "7.5.4"
   },
   "devDependencies": {

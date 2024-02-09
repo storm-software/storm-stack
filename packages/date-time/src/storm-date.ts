@@ -1,12 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Temporal } from "@js-temporal/polyfill";
-import { JsonValue, Serializable } from "@storm-stack/serialization";
-import {
-  isBigInt,
-  isDate,
-  isNumber,
-  isSetString
-} from "@storm-stack/utilities";
+import { type JsonValue, Serializable } from "@storm-stack/serialization";
+import { isBigInt, isDate, isNumber, isSetString } from "@storm-stack/utilities";
 import { RFC_3339_DATE_REGEX } from "./constants";
 import type { DateTimeInput, DateTimeOptions } from "./storm-date-time";
 import { StormDateTime } from "./storm-date-time";
@@ -29,9 +24,7 @@ export function serializeStormDate(date: StormDate): string {
  * @returns The deserialized date
  */
 export function deserializeStormDate(utcString: JsonValue): StormDate {
-  return isSetString(utcString)
-    ? StormDate.create(utcString)
-    : StormDate.create();
+  return isSetString(utcString) ? StormDate.create(utcString) : StormDate.create();
 }
 
 /**
@@ -82,18 +75,12 @@ export class StormDate extends StormDateTime {
    * @param options - The options to use
    * @returns A new instance of DateTime with the given date and time.
    */
-  public static override create = (
-    date?: DateTimeInput,
-    options?: DateTimeOptions
-  ) =>
+  public static override create = (date?: DateTimeInput, options?: DateTimeOptions) =>
     new StormDate(date, {
       timeZone:
-        (StormDateTime.isDateTime(date)
-          ? date.timeZoneId
-          : options?.timeZone) ?? Temporal.Now.timeZoneId(),
-      calendar: StormDateTime.isDateTime(date)
-        ? date.calendarId
-        : options?.calendar
+        (StormDateTime.isDateTime(date) ? date.timeZoneId : options?.timeZone) ??
+        Temporal.Now.timeZoneId(),
+      calendar: StormDateTime.isDateTime(date) ? date.calendarId : options?.calendar
     });
 
   public constructor(dateTime?: DateTimeInput, options?: DateTimeOptions) {
@@ -128,10 +115,7 @@ export class StormDate extends StormDateTime {
    * @param options - The options to use
    * @returns A boolean representing whether the value is a valid *date-time*
    */
-  protected override validate(
-    value?: DateTimeInput,
-    options?: DateTimeOptions
-  ): boolean {
+  protected override validate(value?: DateTimeInput, options?: DateTimeOptions): boolean {
     if (StormDateTime.isDateTime(value)) {
       return value.isValid;
     }
@@ -148,14 +132,13 @@ export class StormDate extends StormDateTime {
         date = value;
       }
 
-      if (isNaN(date.getTime())) {
+      if (Number.isNaN(date.getTime())) {
         return false;
       }
 
       datetime = date.toUTCString();
     } else {
-      datetime =
-        value === null || value === void 0 ? void 0 : value.toUpperCase();
+      datetime = value === null || value === void 0 ? void 0 : value.toUpperCase();
     }
 
     if (!datetime) {
@@ -179,8 +162,7 @@ export class StormDate extends StormDateTime {
 
       case 2:
         return (
-          createdDateTime.zonedDateTime.day >
-          (createdDateTime.zonedDateTime.inLeapYear ? 29 : 28)
+          createdDateTime.zonedDateTime.day > (createdDateTime.zonedDateTime.inLeapYear ? 29 : 28)
         );
 
       case 4:
@@ -263,9 +245,7 @@ export class StormDate extends StormDateTime {
    * @param dateTimeTo - DateTime = DateTime.current
    * @returns A duration object.
    */
-  public override getDuration(
-    dateTimeTo: StormDateTime = StormDate.current()
-  ): Temporal.Duration {
+  public override getDuration(dateTimeTo: StormDateTime = StormDate.current()): Temporal.Duration {
     return this.instant.since(dateTimeTo.instant);
   }
 }

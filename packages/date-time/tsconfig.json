@@ -1,16 +1,9 @@
 {
   "extends": "../../tsconfig.base.json",
-  "composite": true,
   "compilerOptions": {
     "outDir": "../../dist/out-tsc",
-    "noEmit": true
   },
   "files": [],
-  "include": [
-    "src/**/*.ts",
-    "src/**/*.js",
-    "bin/**/*",
-    "@js-temporal/polyfill/index.d.ts"
-  ],
+  "include": ["src/**/*.ts", "src/**/*.tsx", "src/**/*.js", "src/**/*.jsx"],
   "exclude": ["jest.config.ts", "src/**/*.spec.ts", "src/**/*.test.ts"]
 }

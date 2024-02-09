@@ -1,7 +1,7 @@
 import type { StormTime } from "@storm-stack/date-time";
 import type { MaybePromise } from "@storm-stack/utilities";
-import type * as z from "zod";
-import type { LoggingConfigSchema } from "./schema";
+import type pino from "pino";
+import type { LogLevel, LogLevelLabel } from "./utilities/get-log-level";
 
 export interface IStormLog {
   /**
@@ -248,4 +248,7 @@ export interface ILoggerWrapper {
   log: (message: any) => MaybePromise<void>;
 }
 
-export type LoggingConfig = z.infer<typeof LoggingConfigSchema>;
+export type GetLoggersResult = pino.BaseLogger & {
+  logLevel: LogLevel;
+  logLevelLabel: LogLevelLabel;
+};

@@ -1,3 +1,4 @@
+import { Buffer } from "buffer/";
 import { isBufferExists, isCollection, typeDetect } from "../type-checks";
 import {
   type Collection,

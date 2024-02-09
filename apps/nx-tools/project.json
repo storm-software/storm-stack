@@ -1,0 +1,83 @@
+{
+  "name": "nx-tools",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/nx-tools/src",
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nx/esbuild:esbuild",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/apps/nx-tools",
+        "tsConfig": "apps/nx-tools/tsconfig.json",
+        "project": "apps/nx-tools/package.json",
+        "main": "apps/nx-tools/src/index.ts",
+        "additionalEntryPoints": ["apps/nx-tools/src/executors/tamagui/executor.ts"],
+        "platform": "node",
+        "deleteOutputPath": true,
+        "bundle": true,
+        "thirdParty": true,
+        "skipTypeCheck": false,
+        "metafile": true,
+        "minify": false,
+        "format": ["cjs"],
+        "external": ["nx", "@angular-devkit/architect", "@tamagui/proxy-worm", "esbuild"],
+        "esbuildOptions": {
+          "outExtension": {
+            ".js": ".js"
+          }
+        },
+        "assets": [
+          {
+            "input": "./apps/nx-tools",
+            "glob": "*.md",
+            "output": "/"
+          },
+          {
+            "input": "",
+            "glob": "LICENSE",
+            "output": "/"
+          },
+          {
+            "input": "./apps/nx-tools/src",
+            "glob": "**/!(*.ts)",
+            "output": "./src"
+          },
+          {
+            "input": "./apps/nx-tools/src",
+            "glob": "**/*.d.ts",
+            "output": "./src"
+          },
+          {
+            "input": "./apps/nx-tools",
+            "glob": "generators.json",
+            "output": "."
+          },
+          {
+            "input": "./apps/nx-tools",
+            "glob": "executors.json",
+            "output": "."
+          },
+          {
+            "input": "./apps/nx-tools",
+            "glob": "**/schema.json",
+            "output": "."
+          },
+          {
+            "input": "./apps/nx-tools",
+            "glob": "**/files/**/{*.*,*}",
+            "output": "."
+          },
+          {
+            "input": "./apps/nx-tools/assets",
+            "glob": "**/*.*",
+            "output": "./assets"
+          }
+        ]
+      }
+    },
+    "lint": {},
+    "test": {}
+  },
+  "tags": []
+}

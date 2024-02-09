@@ -10,16 +10,10 @@
   },
   "type": "module",
   "dependencies": {
-    "@storm-software/config-tools": "latest",
+    "@storm-software/config": "latest",
     "chalk": "5.3.0",
     "pino": "8.16.2",
-    "pino-loki": "2.1.3",
-    "pino-pretty": "10.2.3",
-    "pino-std-serializers": "^6.2.2",
-    "zod": "3.22.4"
-  },
-  "devDependencies": {
-    "@types/node": "^20.10.5"
+    "pino-std-serializers": "^6.2.2"
   },
   "publishConfig": {
     "access": "public"

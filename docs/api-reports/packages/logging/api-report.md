@@ -4,16 +4,124 @@
 
 ```ts
 
+import type { Logger } from 'pino';
+import type { LoggerOptions } from 'pino';
+import pino from 'pino';
+import type { StormConfig } from '@storm-software/config';
 import { Temporal } from '@js-temporal/polyfill';
 
 // @public (undocumented)
-type DateTimeErrorCode = ErrorCode | "datetime_create_failure" | "ms_format" | "formatting_failure";
+const createErrorSerializer: (stacktrace?: boolean) => (err: Error) => Record<string, any>;
+export { createErrorSerializer }
+export { createErrorSerializer as createErrorSerializer_alias_1 }
+export { createErrorSerializer as createErrorSerializer_alias_2 }
 
 // @public (undocumented)
-const DateTimeErrorCode: {
-    datetime_create_failure: DateTimeErrorCode;
-    ms_format: DateTimeErrorCode;
-    formatting_failure: DateTimeErrorCode;
+type GetLoggersResult = pino.BaseLogger & {
+    logLevel: LogLevel;
+    logLevelLabel: LogLevelLabel;
+};
+export { GetLoggersResult }
+export { GetLoggersResult as GetLoggersResult_alias_1 }
+
+// @public
+const getLogLevel: (label: string) => LogLevel;
+export { getLogLevel }
+export { getLogLevel as getLogLevel_alias_1 }
+export { getLogLevel as getLogLevel_alias_2 }
+
+// @public
+const getLogLevelLabel: (logLevel: number) => LogLevelLabel;
+export { getLogLevelLabel }
+export { getLogLevelLabel as getLogLevelLabel_alias_1 }
+export { getLogLevelLabel as getLogLevelLabel_alias_2 }
+
+// @public
+const getPinoOptions: (config: StormConfig, name?: string, stacktrace?: boolean) => LoggerOptions;
+export { getPinoOptions }
+export { getPinoOptions as getPinoOptions_alias_1 }
+export { getPinoOptions as getPinoOptions_alias_2 }
+
+// @public (undocumented)
+interface ILogger {
+    debug?: (message: string) => MaybePromise<void>;
+    error: (message: string) => MaybePromise<void>;
+    exception?: (message: string) => MaybePromise<void>;
+    fatal?: (message: string) => MaybePromise<void>;
+    info: (message: string) => MaybePromise<void>;
+    log?: (message: string) => MaybePromise<void>;
+    success?: (message: string) => MaybePromise<void>;
+    trace?: (message: string) => MaybePromise<void>;
+    warn: (message: string) => MaybePromise<void>;
+}
+export { ILogger }
+export { ILogger as ILogger_alias_1 }
+
+// @public (undocumented)
+interface ILoggerWrapper {
+    debug: (message: any) => MaybePromise<void>;
+    error: (error: string | Error) => MaybePromise<void>;
+    exception: (error: string | Error) => MaybePromise<void>;
+    fatal: (error: string | Error) => MaybePromise<void>;
+    info: (message: any) => MaybePromise<void>;
+    log: (message: any) => MaybePromise<void>;
+    success: (message: any) => MaybePromise<void>;
+    trace: (message: any) => MaybePromise<void>;
+    warn: (message: any) => MaybePromise<void>;
+}
+export { ILoggerWrapper }
+export { ILoggerWrapper as ILoggerWrapper_alias_1 }
+
+// @public (undocumented)
+interface IStormLog {
+    child: (options: {
+        name: string;
+    } & Record<string, any>) => IStormLog;
+    debug: (...message: any[]) => MaybePromise<void>;
+    error: (...message: any[]) => MaybePromise<void>;
+    exception: (...message: any[]) => MaybePromise<void>;
+    fatal: (...message: any[]) => MaybePromise<void>;
+    info: (...message: any[]) => MaybePromise<void>;
+    log: (...message: any[]) => MaybePromise<void>;
+    start: (name: string) => MaybePromise<void>;
+    stopwatch: (name?: string, startTime?: StormTime) => MaybePromise<void>;
+    success: (...message: any[]) => MaybePromise<void>;
+    trace: (...message: any[]) => MaybePromise<void>;
+    warn: (...message: any[]) => MaybePromise<void>;
+}
+export { IStormLog }
+export { IStormLog as IStormLog_alias_1 }
+
+// @public
+class LoggerWrapper implements ILoggerWrapper {
+    // (undocumented)
+    protected config: StormConfig;
+    debug: (message: string) => MaybePromise<void>;
+    error: (error: string | Error) => MaybePromise<void>;
+    exception: (error: string | Error) => MaybePromise<void>;
+    fatal: (error: string | Error) => MaybePromise<void>;
+    protected getErrorMessage: (obj?: string | Error | null) => string;
+    info: (message: string) => MaybePromise<void>;
+    log: (message: string) => MaybePromise<void>;
+    // (undocumented)
+    protected logger: ILogger;
+    // (undocumented)
+    protected name?: string | undefined;
+    success: (message: string) => MaybePromise<void>;
+    trace: (message: string) => MaybePromise<void>;
+    warn: (message: string) => MaybePromise<void>;
+    static wrap: (logger: ILogger, config: StormConfig, name?: string) => LoggerWrapper;
+}
+export { LoggerWrapper }
+export { LoggerWrapper as LoggerWrapper_alias_1 }
+export { LoggerWrapper as LoggerWrapper_alias_2 }
+
+// @public (undocumented)
+type LoggingErrorCode = ErrorCode | "logs_uninitialized";
+
+// @public (undocumented)
+const LoggingErrorCode: {
+    logs_uninitialized: LoggingErrorCode;
     success: ErrorCode;
     missing_issue_code: ErrorCode;
     invalid_config: ErrorCode;
@@ -32,247 +140,92 @@ const DateTimeErrorCode: {
     user_not_logged_in: ErrorCode;
     unknown_cause: ErrorCode;
 };
-export { DateTimeErrorCode }
-export { DateTimeErrorCode as DateTimeErrorCode_alias_1 }
+export { LoggingErrorCode }
+export { LoggingErrorCode as LoggingErrorCode_alias_1 }
 
-// @public
-type DateTimeInput = StormDateTime | Temporal.Instant | Date | string | number | bigint | null | undefined;
-export { DateTimeInput }
-export { DateTimeInput as DateTimeInput_alias_1 }
+// @public (undocumented)
+type LogLevel = 0 | 10 | 20 | 30 | 40 | 60 | 70;
 
-// @public
-interface DateTimeOptions {
-    calendar?: Temporal.CalendarLike;
-    skipDefaulting?: boolean;
-    timeZone?: Temporal.TimeZoneLike;
-}
-export { DateTimeOptions }
-export { DateTimeOptions as DateTimeOptions_alias_1 }
-
-// @public
-function deserializeStormDate(utcString: JsonValue): StormDate;
-export { deserializeStormDate }
-export { deserializeStormDate as deserializeStormDate_alias_1 }
-
-// @public
-function deserializeStormDateTime(utcString: JsonValue): StormDateTime;
-export { deserializeStormDateTime }
-export { deserializeStormDateTime as deserializeStormDateTime_alias_1 }
-
-// @public
-function deserializeStormTime(utcString: JsonValue): StormTime;
-export { deserializeStormTime }
-export { deserializeStormTime as deserializeStormTime_alias_1 }
-
-// @public
-const formatDate: (dateTime?: StormDateTime, options?: Partial<Temporal.ZonedDateTimeToStringOptions>) => string;
-export { formatDate }
-export { formatDate as formatDate_alias_1 }
-export { formatDate as formatDate_alias_2 }
-
-// @public
-const formatDateTime: (dateTime?: StormDateTime, options?: Partial<Temporal.ZonedDateTimeToStringOptions>) => string;
-export { formatDateTime }
-export { formatDateTime as formatDateTime_alias_1 }
-export { formatDateTime as formatDateTime_alias_2 }
-
-// @public
-const formatDateTimeISO: (dateTime?: StormDateTime | null, options?: Partial<Temporal.ZonedDateTimeToStringOptions>) => string;
-export { formatDateTimeISO }
-export { formatDateTimeISO as formatDateTimeISO_alias_1 }
-export { formatDateTimeISO as formatDateTimeISO_alias_2 }
-
-// @public
-const formatSince: (dateTimeOrDuration: StormDateTime | Temporal.Duration, dateTimeTo?: StormDateTime, options?: FormatSinceOptions) => string;
-export { formatSince }
-export { formatSince as formatSince_alias_1 }
-export { formatSince as formatSince_alias_2 }
-
-// @public
-type FormatSinceOptions = {
-    colonNotation?: boolean;
-    compact?: boolean;
-    formatSubMilliseconds?: boolean;
-    keepDecimalsOnWholeSeconds?: boolean;
-    millisecondsDecimalDigits?: number;
-    secondsDecimalDigits?: number;
-    separateMilliseconds?: boolean;
-    unitCount?: number;
-    verbose?: boolean;
+// @public (undocumented)
+const LogLevel: {
+    SILENT: LogLevel;
+    FATAL: LogLevel;
+    ERROR: LogLevel;
+    WARN: LogLevel;
+    INFO: LogLevel;
+    DEBUG: LogLevel;
+    TRACE: LogLevel;
 };
-export { FormatSinceOptions }
-export { FormatSinceOptions as FormatSinceOptions_alias_1 }
-export { FormatSinceOptions as FormatSinceOptions_alias_2 }
-
-// @public
-const formatTime: (dateTime?: StormDateTime, options?: Partial<Temporal.ZonedDateTimeToStringOptions>) => string;
-export { formatTime }
-export { formatTime as formatTime_alias_1 }
-export { formatTime as formatTime_alias_2 }
-
-// @public
-function isDateTime(obj: unknown): obj is StormDateTime;
-export { isDateTime }
-export { isDateTime as isDateTime_alias_1 }
-export { isDateTime as isDateTime_alias_2 }
-
-// @public
-function isInstant(value: unknown): value is Temporal.Instant;
-export { isInstant }
-export { isInstant as isInstant_alias_1 }
-export { isInstant as isInstant_alias_2 }
+export { LogLevel }
+export { LogLevel as LogLevel_alias_1 }
+export { LogLevel as LogLevel_alias_2 }
 
 // @public (undocumented)
-const RFC_3339_DATE_REGEX: RegExp;
-export { RFC_3339_DATE_REGEX }
-export { RFC_3339_DATE_REGEX as RFC_3339_DATE_REGEX_alias_1 }
+type LogLevelLabel = "silent" | "fatal" | "error" | "warn" | "info" | "debug" | "trace";
 
 // @public (undocumented)
-const RFC_3339_DATETIME_REGEX: RegExp;
-export { RFC_3339_DATETIME_REGEX }
-export { RFC_3339_DATETIME_REGEX as RFC_3339_DATETIME_REGEX_alias_1 }
-
-// @public (undocumented)
-const RFC_3339_TIME_REGEX: RegExp;
-export { RFC_3339_TIME_REGEX }
-export { RFC_3339_TIME_REGEX as RFC_3339_TIME_REGEX_alias_1 }
-
-// @public
-function serializeStormDate(date: StormDate): string;
-export { serializeStormDate }
-export { serializeStormDate as serializeStormDate_alias_1 }
-
-// @public
-function serializeStormDateTime(dateTime: StormDateTime): string;
-export { serializeStormDateTime }
-export { serializeStormDateTime as serializeStormDateTime_alias_1 }
+const LogLevelLabel: {
+    SILENT: LogLevelLabel;
+    FATAL: LogLevelLabel;
+    ERROR: LogLevelLabel;
+    WARN: LogLevelLabel;
+    INFO: LogLevelLabel;
+    DEBUG: LogLevelLabel;
+    TRACE: LogLevelLabel;
+};
+export { LogLevelLabel }
+export { LogLevelLabel as LogLevelLabel_alias_1 }
+export { LogLevelLabel as LogLevelLabel_alias_2 }
 
 // @public
-function serializeStormTime(date: StormTime): string;
-export { serializeStormTime }
-export { serializeStormTime as serializeStormTime_alias_1 }
-
-// @public
-class StormDate extends StormDateTime {
-    constructor(dateTime?: DateTimeInput, options?: DateTimeOptions);
-    static create: (date?: DateTimeInput, options?: DateTimeOptions) => StormDate;
-    static current(): StormDate;
-    getDuration(dateTimeTo?: StormDateTime): Temporal.Duration;
-    getHours(): number;
-    getMilliseconds(): number;
-    getMinutes(): number;
-    getSeconds(): number;
-    getTimezoneOffset(): number;
-    getUTCHours(): number;
-    getUTCMilliseconds(): number;
-    getUTCMinutes(): number;
-    getUTCSeconds(): number;
-    static maximum(): StormDate;
-    static minimum(): StormDate;
-    static now(): number;
-    protected validate(value?: DateTimeInput, options?: DateTimeOptions): boolean;
+class StormLog implements IStormLog {
+    protected constructor(config: StormConfig, name?: string | undefined, additionalLoggers?: ILoggerWrapper[]);
+    // (undocumented)
+    protected additionalLoggers: ILoggerWrapper[];
+    addLogger(logger: ILogger): void;
+    addWrappedLogger(wrapper: ILoggerWrapper): void;
+    child(options: {
+        name: string;
+    } & Record<string, any>): IStormLog;
+    // (undocumented)
+    protected config: StormConfig;
+    static create(config: StormConfig, name?: string, additionalLoggers?: ILoggerWrapper[]): StormLog;
+    static debug(message: any): void;
+    debug(message: any): void;
+    static error(message: any): void;
+    error(message: any): void;
+    static exception(message: any): void;
+    exception(message: any): void;
+    static fatal(message: any): void;
+    fatal(message: any): void;
+    // (undocumented)
+    protected static getLoggers: () => Promise<GetLoggersResult>;
+    protected getStreams: () => Array<pino.DestinationStream | pino.StreamEntry<pino.Level>>;
+    static info(message: any): void;
+    info(message: any): void;
+    protected static initialize: (config: StormConfig, name?: string, streams?: (pino.DestinationStream | pino.StreamEntry<pino.Level>)[]) => Logger<LoggerOptions>;
+    static log(message: any): void;
+    log(message: any): void;
+    // (undocumented)
+    protected static logger: Logger<LoggerOptions>;
+    // (undocumented)
+    protected static logLevel: LogLevel;
+    // (undocumented)
+    protected static logLevelLabel: LogLevelLabel;
+    // (undocumented)
+    protected name?: string | undefined;
+    start(name: string): void;
+    static stopwatch(startTime: StormTime, name?: string): void;
+    stopwatch(name?: string, startTime?: StormTime): void;
+    static success(message: any): void;
+    success(message: any): void;
+    static trace(message: any): void;
+    trace(message: any): void;
+    static warn(message: any): void;
+    warn(message: any): void;
 }
-export { StormDate }
-export { StormDate as StormDate_alias_1 }
-
-// @public
-class StormDateTime extends Date {
-    constructor(dateTime?: DateTimeInput, options?: DateTimeOptions);
-    get calendarId(): string;
-    static create: (dateTime?: DateTimeInput, options?: DateTimeOptions) => StormDateTime;
-    static current(): StormDateTime;
-    get epochMilliseconds(): number;
-    getDate(): number;
-    getDay(): number;
-    getDuration(dateTimeTo?: StormDateTime): Temporal.Duration;
-    getFullYear(): number;
-    getHours(): number;
-    getMilliseconds(): number;
-    getMinutes(): number;
-    getMonth(): number;
-    getPlainDate(): StormDateTime;
-    getPlainTime(): StormDateTime;
-    getSeconds(): number;
-    getTime(): number;
-    getTimezoneOffset(): number;
-    getUTCDate(): number;
-    getUTCDay(): number;
-    getUTCFullYear(): number;
-    getUTCHours(): number;
-    getUTCMilliseconds(): number;
-    getUTCMinutes(): number;
-    getUTCMonth(): number;
-    getUTCSeconds(): number;
-    get input(): DateTimeInput;
-    get instant(): Temporal.Instant;
-    protected set instant(instant: Temporal.Instant);
-    static isDateTime(obj: unknown): obj is StormDateTime;
-    get isValid(): boolean;
-    static maximum(): StormDateTime;
-    static minimum(): StormDateTime;
-    static now(): number;
-    get options(): DateTimeOptions;
-    setDate(day: number): number;
-    setFullYear(year: number, month?: number, day?: number): number;
-    setHours(hour: number, minute: number, second?: number, millisecond?: number): number;
-    setMilliseconds(millisecond: number): number;
-    setMinutes(minute: number, second?: number, millisecond?: number): number;
-    setMonth(month: number, day?: number): number;
-    setSeconds(second: number, millisecond?: number): number;
-    setTime(time: number): number;
-    setUTCDate(day: number): number;
-    setUTCFullYear(year: number, month?: number, day?: number): number;
-    setUTCHours(hour: number, minute: number, second?: number, millisecond?: number): number;
-    setUTCMilliseconds(millisecond: number): number;
-    setUTCMinutes(minute: number, second?: number, millisecond?: number): number;
-    setUTCMonth(month: number, day?: number): number;
-    setUTCSeconds(second: number, millisecond?: number): number;
-    since(dateTimeTo?: StormDateTime): Temporal.Duration;
-    get timeZoneId(): string;
-    protected validate(value?: DateTimeInput, _options?: DateTimeOptions): boolean;
-    get zonedDateTime(): Temporal.ZonedDateTime;
-    protected set zonedDateTime(zonedDateTime: Temporal.ZonedDateTime);
-}
-export { StormDateTime }
-export { StormDateTime as StormDateTime_alias_1 }
-
-// @public
-class StormTime extends StormDateTime {
-    constructor(dateTime?: DateTimeInput, options?: DateTimeOptions);
-    static create: (time?: DateTimeInput, options?: DateTimeOptions) => StormTime;
-    static current(): StormTime;
-    getDate(): number;
-    getDay(): number;
-    getDuration(dateTimeTo?: StormTime): Temporal.Duration;
-    getFullYear(): number;
-    getMonth(): number;
-    getUTCDate(): number;
-    getUTCDay(): number;
-    getUTCFullYear(): number;
-    getUTCMonth(): number;
-    static now(): number;
-    protected validate(value?: DateTimeInput, options?: DateTimeOptions): boolean;
-}
-export { StormTime }
-export { StormTime as StormTime_alias_1 }
-
-// @public (undocumented)
-function validateDate(value: DateTimeInput, options?: DateTimeOptions): boolean;
-export { validateDate }
-export { validateDate as validateDate_alias_1 }
-export { validateDate as validateDate_alias_2 }
-
-// @public
-function validateDateTime(value: DateTimeInput, options?: DateTimeOptions): boolean;
-export { validateDateTime }
-export { validateDateTime as validateDateTime_alias_1 }
-export { validateDateTime as validateDateTime_alias_2 }
-
-// @public (undocumented)
-function validateTime(value?: DateTimeInput, options?: DateTimeOptions): boolean;
-export { validateTime }
-export { validateTime as validateTime_alias_1 }
-export { validateTime as validateTime_alias_2 }
+export { StormLog }
+export { StormLog as StormLog_alias_1 }
 
 // (No @packageDocumentation comment for this package)
 

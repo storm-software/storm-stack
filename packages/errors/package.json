@@ -11,10 +11,12 @@
   "type": "module",
   "dependencies": {
     "@storm-software/testing-tools": "latest",
-    "@storm-software/workspace-tools": "latest",
-    "stacktracey": "2.1.8"
+    "@storm-software/workspace-tools": "latest"
   },
   "publishConfig": {
     "access": "public"
+  },
+  "devDependencies": {
+    "@types/node": "^20.10.5"
   }
 }

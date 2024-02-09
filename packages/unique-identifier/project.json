@@ -2,7 +2,6 @@
   "name": "unique-identifier",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "projectType": "library",
-  "root": "packages/unique-identifier",
   "sourceRoot": "packages/unique-identifier/src",
   "targets": {
     "build": {
@@ -16,10 +15,12 @@
       },
       "configurations": {
         "production": {
-          "debug": false
+          "debug": false,
+          "minify": true
         },
         "development": {
-          "debug": true
+          "debug": true,
+          "minify": false
         }
       }
     },
@@ -35,6 +36,5 @@
         "registry": "https://registry.npmjs.org/"
       }
     }
-  },
-  "implicitDependencies": ["utilities"]
+  }
 }

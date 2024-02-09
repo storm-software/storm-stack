@@ -1,0 +1,43 @@
+{
+  "name": "components",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "library",
+  "sourceRoot": "packages/components/src",
+  "targets": {
+    "clean": {
+      "cache": true,
+      "inputs": ["default", "^production"],
+      "dependsOn": ["^clean"],
+      "executor": "nx:run-commands",
+      "outputs": ["{options.outputPath}"],
+      "outputPath": "dist/packages/components",
+      "options": {
+        "command": "npx rimraf dist/packages/components"
+      }
+    },
+    "build": {
+      "cache": true,
+      "inputs": ["default", "^production"],
+      "dependsOn": ["^build", "clean"],
+      "executor": "nx:run-commands",
+      "outputs": ["{options.outputPath}"],
+      "outputPath": "dist/packages/components",
+      "options": {
+        "command": "npx tamagui-build",
+        "cwd": "packages/components"
+      }
+    },
+    "lint": {},
+    "test": {},
+    "nx-release-publish": {
+      "cache": false,
+      "inputs": ["default", "^production"],
+      "dependsOn": ["^build"],
+      "executor": "@storm-software/workspace-tools:npm-publish",
+      "options": {
+        "packageRoot": "dist/{projectRoot}",
+        "registry": "https://registry.npmjs.org/"
+      }
+    }
+  }
+}

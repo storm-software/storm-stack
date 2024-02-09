@@ -13,12 +13,9 @@ import { upperCaseFirst } from "./upper-case-first";
 export const kebabCase = (input?: string): string | undefined => {
   const parts =
     input
-      ?.replace(
-        /([A-Z])+/g,
-        (input?: string) => upperCaseFirst(input) ?? EMPTY_STRING
-      )
+      ?.replace(/([A-Z])+/g, (input?: string) => upperCaseFirst(input) ?? EMPTY_STRING)
       ?.split(/(?=[A-Z])|[\.\-\s_]/)
-      .map(x => x.toLowerCase()) ?? [];
+      .map((x) => x.toLowerCase()) ?? [];
   if (parts.length === 0) return "";
   if (parts.length === 1) return parts[0];
 

@@ -2,7 +2,6 @@
   "name": "errors",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "projectType": "library",
-  "root": "packages/errors",
   "sourceRoot": "packages/errors/src",
   "targets": {
     "build": {
@@ -36,6 +35,5 @@
         "registry": "https://registry.npmjs.org/"
       }
     }
-  },
-  "implicitDependencies": ["utilities", "serialization"]
+  }
 }

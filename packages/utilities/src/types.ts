@@ -139,8 +139,9 @@ export type Except<
   Options extends ExceptOptions = { requireExactProps: false }
 > = {
   [KeyType in keyof ObjectType as Filter<KeyType, KeysType>]: ObjectType[KeyType];
-  // biome-ignore lint/complexity/noBannedTypes: <explanation>
-} & (Options["requireExactProps"] extends true ? Partial<Record<KeysType, never>> : {});
+} & (Options["requireExactProps"] extends true
+  ? Partial<Record<KeysType, never>>
+  : Record<string, never>);
 
 /**
  * Useful to flatten the type output to improve type hints shown in editors. And also to transform an interface into a type to aide with assignability.

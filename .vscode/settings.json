@@ -331,5 +331,6 @@
       "source.sortMembers": "explicit"
     }
   },
-  "eslint.validate": ["json"]
+  "eslint.validate": ["json"],
+  "cSpell.words": ["kleur"]
 }

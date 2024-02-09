@@ -20,7 +20,7 @@ module.exports = {
     fatal: "#7d1a1a"
   },
   extensions: {
-    logging: {
+    telemetry: {
       fileName: "storm",
       fileExtension: "log",
       path: "tmp/storm/logs",

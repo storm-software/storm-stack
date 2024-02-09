@@ -7,3 +7,4 @@ export * from "./is-deep-equal";
 export * from "./is-production";
 export * from "./is-runtime-server";
 export * from "./noop";
+export * from "./remove-empty-items";

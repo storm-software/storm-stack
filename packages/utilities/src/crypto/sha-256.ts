@@ -1,3 +1,4 @@
+import { EMPTY_STRING } from "..";
 import { getWebCrypto } from "./web-crypto";
 
 /**
@@ -9,13 +10,13 @@ import { getWebCrypto } from "./web-crypto";
  * @param value - The value to hash
  * @returns A SHA-256 hash string
  */
-export const sha256 = (value: string) =>
-  getWebCrypto().then((crypto) =>
-    crypto.subtle.digest("SHA-256", new TextEncoder().encode(value)).then((h) => {
-      const hexes: string[] = [];
-      const view = new DataView(h);
-      for (let i = 0; i < view.byteLength; i += 4)
-        hexes.push(`00000000${view.getUint32(i).toString(16)}`.slice(-8));
-      return hexes.join("");
-    })
-  );
+export const sha256 = (value: string) => {
+  const crypto = getWebCrypto();
+  crypto.subtle.digest("SHA-256", new TextEncoder().encode(value)).then((h) => {
+    const hexes: string[] = [];
+    const view = new DataView(h);
+    for (let i = 0; i < view.byteLength; i += 4)
+      hexes.push(`00000000${view.getUint32(i).toString(16)}`.slice(-8));
+    return hexes.join(EMPTY_STRING);
+  });
+};

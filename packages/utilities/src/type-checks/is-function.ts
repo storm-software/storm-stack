@@ -6,19 +6,14 @@
  */
 export const isFunction = (
   value: unknown
-): value is ((params?: unknown) => unknown) & Function => {
+): value is ((params?: unknown) => unknown) & ((args?: any[]) => any) => {
   try {
     return (
       value instanceof Function ||
       typeof value === "function" ||
-      !!(
-        value &&
-        value.constructor &&
-        (value as any)?.call &&
-        (value as any)?.apply
-      )
+      !!(value?.constructor && (value as any)?.call && (value as any)?.apply)
     );
-  } catch (e) {
+  } catch (_) {
     return false;
   }
 };

@@ -12,12 +12,11 @@ import { Fonts } from 'figlet';
 import type { Logger } from 'pino';
 import type { LoggerOptions } from 'pino';
 import { Options } from 'figlet';
-import type pino from 'pino';
+import pino from 'pino';
 import { Readable } from 'node:stream';
 import { StdioOptions } from 'child_process';
-import { StormConfig } from '@storm-software/config-tools';
+import type { StormConfig } from '@storm-software/config';
 import { Temporal } from '@js-temporal/polyfill';
-import type * as z from 'zod';
 
 // @public (undocumented)
 interface CLIArgument {

@@ -42,16 +42,15 @@
     "url": "https://stormsoftware.org"
   },
   "scripts": {
-    "adr": "pnpm log4brains adr new",
-    "adr-preview": "pnpm log4brains preview",
-    "api-extractor": "nx g @storm-software/workspace-tools:api-extractor --outputPath 'docs/api-reference' --clean --no-interactive",
+    "adr:add": "pnpm log4brains adr new",
+    "adr:preview": "pnpm log4brains preview",
     "prebuild": "pnpm clean",
     "build": "nx affected -t build --parallel=5 --nxBail",
-    "build:all": "nx run-many -t build --all --parallel=5 --nxBail",
+    "build:all": "nx run-many -t build --all --parallel=3 --nxBail",
     "build:docs": "nx run-many -t build --projects=docs/* --parallel=5",
     "build:packages": "nx run-many -t build --projects=packages/* --parallel=5",
     "build:production": "nx run-many -t build --all --prod --parallel=5",
-    "build:tools": "nx run-many -t build --projects=tools/* --parallel=5",
+    "build:tools": "nx run-many -t build --projects=nx-tools --parallel=5",
     "clean": "rimraf dist",
     "clean:docs": "rimraf dist/docs",
     "clean:packages": "rimraf dist/packages",
@@ -76,6 +75,7 @@
   },
   "dependencies": {
     "@biomejs/biome": "^1.5.1",
+    "@nderscore/tamagui-typescript-plugin": "^0.6.0",
     "@nx/cypress": "17.2.8",
     "@nx/devkit": "17.2.8",
     "@nx/jest": "17.2.8",
@@ -83,8 +83,9 @@
     "@nx/next": "17.2.8",
     "@nx/plugin": "17.2.8",
     "@nx/react": "17.2.8",
+    "@nx/react-native": "^18.0.2",
     "@nx/workspace": "17.2.8",
-    "@storm-software/config-tools": "latest",
+    "@storm-software/config": "latest",
     "@storm-software/git-tools": "latest",
     "@storm-software/linting-tools": "latest",
     "@storm-software/testing-tools": "latest",
@@ -108,6 +109,8 @@
     "nx": "17.2.8",
     "react": "^18.2.0",
     "react-dom": "18.2.0",
+    "react-native": "^0.73.4",
+    "rimraf": "^5.0.5",
     "ts-jest": "29.1.1",
     "ts-node": "10.9.2",
     "tslib": "2.6.2",
@@ -121,7 +124,10 @@
   },
   "namespace": "@storm-stack",
   "nx": {
-    "includedScripts": ["lint", "format"]
+    "includedScripts": [
+      "lint",
+      "format"
+    ]
   },
   "pnpm": {
     "overrides": {
@@ -147,11 +153,12 @@
       "@storm-stack/file-system": "workspace:*",
       "@storm-stack/cli": "workspace:*",
       "@storm-stack/jotai": "workspace:*",
-      "@storm-stack/frontend-components": "workspace:*",
-      "@storm-stack/docs-website": "workspace:*",
-      "@storm-stack/frontend-table": "workspace:*",
+      "@storm-stack/components": "workspace:*",
+      "@storm-stack/table": "workspace:*",
       "@storm-stack/plugin-system": "workspace:*",
-      "@storm-stack/tools-nx": "workspace:*"
+      "@storm-stack/telemetry": "workspace:*",
+      "@storm-stack/nx-tools": "workspace:*",
+      "@storm-stack/web-docs": "workspace:*"
     }
   },
   "triggerEmptyDevReleaseByIncrementingThisNumber": 0

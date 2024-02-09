@@ -1,6 +1,7 @@
+import type { StormConfig } from "@storm-software/config";
 import { getCauseFromUnknown } from "@storm-stack/errors";
 import { type MaybePromise, isSet, isSetString } from "@storm-stack/utilities";
-import type { ILogger, ILoggerWrapper, LoggingConfig } from "../types";
+import type { ILogger, ILoggerWrapper } from "../types";
 
 /**
  * A wrapper for a logger class.
@@ -14,18 +15,16 @@ export class LoggerWrapper implements ILoggerWrapper {
    * @param name - The logger's name.
    * @returns The wrapped logger.
    */
-  public static wrap = (logger: ILogger, config: LoggingConfig, name?: string): LoggerWrapper => {
+  public static wrap = (logger: ILogger, config: StormConfig, name?: string): LoggerWrapper => {
     return new LoggerWrapper(logger, config, name);
   };
 
-  #logger: ILogger;
-
   private constructor(
-    logger: ILogger,
-    protected config: LoggingConfig,
+    protected logger: ILogger,
+    protected config: StormConfig,
     protected name?: string
   ) {
-    this.#logger = logger;
+    this.logger = logger;
     this.config = config ?? { stacktrace: true };
   }
 
@@ -36,7 +35,7 @@ export class LoggerWrapper implements ILoggerWrapper {
    * @returns Either a promise that resolves to void or void.
    */
   public success = (message: string): MaybePromise<void> => {
-    return isSet(this.#logger.success) ? this.#logger.success(message) : this.info(message);
+    return isSet(this.logger.success) ? this.logger.success(message) : this.info(message);
   };
 
   /**
@@ -48,7 +47,7 @@ export class LoggerWrapper implements ILoggerWrapper {
   public fatal = (error: string | Error): MaybePromise<void> => {
     const message = this.getErrorMessage(error);
 
-    return isSet(this.#logger.fatal) ? this.#logger.fatal(message) : this.error(message);
+    return isSet(this.logger.fatal) ? this.logger.fatal(message) : this.error(message);
   };
 
   /**
@@ -60,7 +59,7 @@ export class LoggerWrapper implements ILoggerWrapper {
   public exception = (error: string | Error): MaybePromise<void> => {
     const message = this.getErrorMessage(error);
 
-    return isSet(this.#logger.exception) ? this.#logger.exception(message) : this.error(message);
+    return isSet(this.logger.exception) ? this.logger.exception(message) : this.error(message);
   };
 
   /**
@@ -70,7 +69,7 @@ export class LoggerWrapper implements ILoggerWrapper {
    * @returns Either a promise that resolves to void or void.
    */
   public error = (error: string | Error): MaybePromise<void> => {
-    return this.#logger.error(this.getErrorMessage(error));
+    return this.logger.error(this.getErrorMessage(error));
   };
 
   /**
@@ -80,7 +79,7 @@ export class LoggerWrapper implements ILoggerWrapper {
    * @returns Either a promise that resolves to void or void.
    */
   public warn = (message: string): MaybePromise<void> => {
-    return this.#logger.warn(message);
+    return this.logger.warn(message);
   };
 
   /**
@@ -90,7 +89,7 @@ export class LoggerWrapper implements ILoggerWrapper {
    * @returns Either a promise that resolves to void or void.
    */
   public info = (message: string): MaybePromise<void> => {
-    return this.#logger.info(message);
+    return this.logger.info(message);
   };
 
   /**
@@ -100,10 +99,10 @@ export class LoggerWrapper implements ILoggerWrapper {
    * @returns Either a promise that resolves to void or void.
    */
   public debug = (message: string): MaybePromise<void> => {
-    return isSet(this.#logger.debug)
-      ? this.#logger.debug(message)
-      : isSet(this.#logger.trace)
-        ? this.#logger.trace(message)
+    return isSet(this.logger.debug)
+      ? this.logger.debug(message)
+      : isSet(this.logger.trace)
+        ? this.logger.trace(message)
         : this.info(message);
   };
 
@@ -114,10 +113,10 @@ export class LoggerWrapper implements ILoggerWrapper {
    * @returns Either a promise that resolves to void or void.
    */
   public trace = (message: string): MaybePromise<void> => {
-    return isSet(this.#logger.trace)
-      ? this.#logger.trace(message)
-      : isSet(this.#logger.debug)
-        ? this.#logger.debug(message)
+    return isSet(this.logger.trace)
+      ? this.logger.trace(message)
+      : isSet(this.logger.debug)
+        ? this.logger.debug(message)
         : this.info(message);
   };
 
@@ -128,7 +127,7 @@ export class LoggerWrapper implements ILoggerWrapper {
    * @returns Either a promise that resolves to void or void.
    */
   public log = (message: string): MaybePromise<void> => {
-    return isSet(this.#logger.log) ? this.#logger.log(message) : this.info(message);
+    return isSet(this.logger.log) ? this.logger.log(message) : this.info(message);
   };
 
   /**

@@ -123,9 +123,6 @@ export { installPackage as installPackage_alias_1 }
 export { installPackage as installPackage_alias_2 }
 
 // @public
-export const isCI: () => boolean;
-
-// @public
 const isDirectory: (path: string, additionalPath?: string) => boolean;
 export { isDirectory }
 export { isDirectory as isDirectory_alias_1 }
@@ -136,11 +133,6 @@ const isFile: (path: string, additionalPath?: string) => boolean;
 export { isFile }
 export { isFile as isFile_alias_1 }
 export { isFile as isFile_alias_2 }
-
-// @public
-export const isInteractive: (stream?: NodeJS.ReadStream & {
-    fd: 0;
-}) => boolean;
 
 // @public (undocumented)
 const isRelativeVersionKeyword: (val: string) => val is ReleaseType;

@@ -2,18 +2,17 @@
   "name": "logging",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "projectType": "library",
-  "root": "packages/logging",
   "sourceRoot": "packages/logging/src",
   "targets": {
     "build": {
-      "executor": "@storm-software/workspace-tools:tsup-node",
+      "executor": "@storm-software/workspace-tools:tsup-neutral",
       "outputs": ["{options.outputPath}"],
       "options": {
+        "entry": "packages/logging/src/index.ts",
         "outputPath": "dist/packages/logging",
         "tsConfig": "packages/logging/tsconfig.json",
         "project": "packages/logging/package.json",
-        "defaultConfiguration": "production",
-        "platform": "node"
+        "defaultConfiguration": "production"
       },
       "configurations": {
         "production": {
@@ -37,7 +36,5 @@
       }
     }
   },
-  "tags": ["scope:logging", "type:lib", "lang:ts"],
-  "implicitDependencies": ["utilities", "date-time", "errors", "serialization"],
-  "config": "packages/logging/src/schema.ts"
+  "tags": ["scope:package", "type:lib", "lang:ts"]
 }

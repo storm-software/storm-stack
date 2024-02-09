@@ -2,7 +2,6 @@
   "name": "date-time",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "projectType": "library",
-  "root": "packages/date-time",
   "sourceRoot": "packages/date-time/src",
   "targets": {
     "build": {
@@ -36,6 +35,5 @@
         "registry": "https://registry.npmjs.org/"
       }
     }
-  },
-  "implicitDependencies": ["errors", "utilities", "serialization"]
+  }
 }

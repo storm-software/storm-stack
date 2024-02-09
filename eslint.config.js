@@ -16,11 +16,17 @@ const compat = new FlatCompat({
 
 module.exports = [
   { plugins: { "@nx": nxEslintPlugin } },
-  ...compat.config({ parser: "jsonc-eslint-parser" }).map(config => ({
+  ...compat.config({ parser: "jsonc-eslint-parser" }).map((config) => ({
     ...config,
     files: ["**/*.json"],
     rules: {}
   })),
+  {
+    files: ["**/executors/**/schema.json", "**/generators/**/schema.json"],
+    rules: {
+      "@nx/workspace/valid-schema-description": "error"
+    }
+  },
   {
     files: ["**/*.ts", "**/*.tsx", "**/*.js", "**/*.jsx"],
     rules: {
@@ -39,12 +45,12 @@ module.exports = [
       ]
     }
   },
-  ...compat.config({ extends: ["plugin:@nx/typescript"] }).map(config => ({
+  ...compat.config({ extends: ["plugin:@nx/typescript"] }).map((config) => ({
     ...config,
     files: ["**/*.ts", "**/*.tsx"],
     rules: {}
   })),
-  ...compat.config({ extends: ["plugin:@nx/javascript"] }).map(config => ({
+  ...compat.config({ extends: ["plugin:@nx/javascript"] }).map((config) => ({
     ...config,
     files: ["**/*.js", "**/*.jsx"],
     rules: {}

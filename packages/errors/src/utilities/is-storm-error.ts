@@ -1,5 +1,5 @@
 import { isError, isSetString } from "@storm-stack/utilities";
-import { StormError } from "../storm-error";
+import type { StormError } from "../storm-error";
 
 /**
  * Type-check to determine if `obj` is a `StormError` object
