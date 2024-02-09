@@ -1,7 +1,7 @@
 {
   "name": "@storm-stack/nx-tools",
   "private": false,
-  "version": "1.0.2",
+  "version": "1.0.3",
   "repository": {
     "type": "github",
     "url": "https://github.com/storm-software/storm-stack.git",
