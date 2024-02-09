@@ -57,7 +57,7 @@ Message: {msg}
     streams.push(...extraStreams);
 
     const multiStream = pino.multistream(streams, { dedupe: false });
-    multiStream.streams.map((s) => pinoPretty.pipe(s.stream));
+    // multiStream.streams.map((s) => pinoPretty.pipe(s.stream));
 
     return pino(baseOptions, multiStream);
   }

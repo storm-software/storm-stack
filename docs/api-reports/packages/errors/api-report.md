@@ -4,98 +4,663 @@
 
 ```ts
 
-// @public
-function createStormError<TCode extends string = string>({ code, name, message, cause, stack, data }: StormErrorOptions & {
-    code?: TCode;
-}): StormError<TCode>;
-export { createStormError }
-export { createStormError as createStormError_alias_1 }
-export { createStormError as createStormError_alias_2 }
-
-// @public
-function deserializeStormError(json: JsonValue): StormError;
-export { deserializeStormError }
-export { deserializeStormError as deserializeStormError_alias_1 }
-export { deserializeStormError as deserializeStormError_alias_2 }
+import { Buffer as Buffer_2 } from 'buffer/';
 
 // @public (undocumented)
-type ErrorCode = "success" | "missing_issue_code" | "invalid_config" | "failed_to_load_file" | "missing_context" | "record_not_found" | "required_field_missing" | "database_query_error" | "model_validation_error" | "field_validation_error" | "invalid_parameter" | "invalid_request" | "type_error" | "processing_error" | "internal_server_error" | "user_not_logged_in" | "unknown_cause";
+const $NestedValue: unique symbol;
+export { $NestedValue }
+export { $NestedValue as $NestedValue_alias_1 }
 
 // @public (undocumented)
-const ErrorCode: {
-    success: ErrorCode;
-    missing_issue_code: ErrorCode;
-    invalid_config: ErrorCode;
-    failed_to_load_file: ErrorCode;
-    missing_context: ErrorCode;
-    record_not_found: ErrorCode;
-    required_field_missing: ErrorCode;
-    database_query_error: ErrorCode;
-    model_validation_error: ErrorCode;
-    field_validation_error: ErrorCode;
-    invalid_parameter: ErrorCode;
-    invalid_request: ErrorCode;
-    type_error: ErrorCode;
-    processing_error: ErrorCode;
-    internal_server_error: ErrorCode;
-    user_not_logged_in: ErrorCode;
-    unknown_cause: ErrorCode;
+interface Abstract<T> {
+    // (undocumented)
+    prototype: T;
+}
+export { Abstract }
+export { Abstract as Abstract_alias_1 }
+
+// @public (undocumented)
+type AnyCase<T extends IndexType> = string extends T ? string : T extends `${infer F1}${infer F2}${infer R}` ? `${Uppercase<F1> | Lowercase<F1>}${Uppercase<F2> | Lowercase<F2>}${AnyCase<R>}` : T extends `${infer F}${infer R}` ? `${Uppercase<F> | Lowercase<F>}${AnyCase<R>}` : typeof EMPTY_STRING;
+export { AnyCase }
+export { AnyCase as AnyCase_alias_1 }
+
+// @public
+function argIdentity(value: any): any;
+export { argIdentity }
+export { argIdentity as argIdentity_alias_1 }
+export { argIdentity as argIdentity_alias_2 }
+
+// @public (undocumented)
+type ArrayElement<ArrayType extends readonly unknown[]> = ArrayType extends readonly (infer ElementType)[] ? ElementType : never;
+export { ArrayElement }
+export { ArrayElement as ArrayElement_alias_1 }
+
+// @public (undocumented)
+type BrowserNativeObject = Date | FileList | File;
+export { BrowserNativeObject }
+export { BrowserNativeObject as BrowserNativeObject_alias_1 }
+
+// @public
+const camelCase: (input?: string) => string | undefined;
+export { camelCase }
+export { camelCase as camelCase_alias_1 }
+export { camelCase as camelCase_alias_2 }
+
+// @public (undocumented)
+interface ClassTypeCheckable<T> extends ITyped {
+    isTypeOf: (value: unknown) => value is T;
+}
+export { ClassTypeCheckable }
+export { ClassTypeCheckable as ClassTypeCheckable_alias_1 }
+
+// @public (undocumented)
+interface Clonable<T> {
+    // (undocumented)
+    clone(): T;
+}
+export { Clonable }
+export { Clonable as Clonable_alias_1 }
+
+// @public (undocumented)
+type Collection = IArguments | unknown[] | Map<unknown, unknown> | Record<string | number | symbol, unknown> | Set<unknown>;
+export { Collection }
+export { Collection as Collection_alias_1 }
+
+// @public
+const constantCase: (input?: string) => string | undefined;
+export { constantCase }
+export { constantCase as constantCase_alias_1 }
+export { constantCase as constantCase_alias_2 }
+
+// @public
+function copy(value: unknown, valueType: string, customizer?: ((value: unknown, type: string) => unknown) | null): unknown;
+export { copy }
+export { copy as copy_alias_1 }
+export { copy as copy_alias_2 }
+
+// @public (undocumented)
+const Crypto_2: Crypto | undefined;
+export { Crypto_2 as Crypto }
+export { Crypto_2 as Crypto_alias_1 }
+export { Crypto_2 as Crypto_alias_2 }
+
+// @public
+function deepCopy<T>(value: T, options?: {
+    customizer?: (value: unknown, type: string) => unknown;
+}): T;
+export { deepCopy }
+export { deepCopy as deepCopy_alias_1 }
+export { deepCopy as deepCopy_alias_2 }
+
+// @public
+const deepMerge: {
+    <X = any, Y = any, Z = X & Y>(target: X, source: Y, options?: any): Z;
+    all(array: any[], options?: any): any;
 };
-export { ErrorCode }
-export { ErrorCode as ErrorCode_alias_1 }
-
-// @public
-function getCauseFromUnknown(cause: unknown): StormError;
-export { getCauseFromUnknown }
-export { getCauseFromUnknown as getCauseFromUnknown_alias_1 }
-export { getCauseFromUnknown as getCauseFromUnknown_alias_2 }
-
-// @public
-function isStormError<TCode extends string = any>(value: unknown): value is StormError<TCode>;
-export { isStormError }
-export { isStormError as isStormError_alias_1 }
-export { isStormError as isStormError_alias_2 }
-
-// @public
-function serializeStormError(error: StormError): JsonValue;
-export { serializeStormError }
-export { serializeStormError as serializeStormError_alias_1 }
-export { serializeStormError as serializeStormError_alias_2 }
-
-// @public
-class StormError<TCode extends string = string> extends Error {
-    constructor(code: TCode, { name, message, cause, stack, data }?: StormErrorOptions);
-    // (undocumented)
-    __proto__: ErrorConstructor;
-    get cause(): StormError | undefined;
-    set cause(_cause: unknown);
-    code: TCode;
-    static create(error?: unknown): StormError;
-    data?: any;
-    get originalStack(): string;
-    print(): string;
-    get stack(): string;
-    set stack(_stack: string);
-    toString(stacktrace?: boolean): string;
-}
-export { StormError }
-export { StormError as StormError_alias_1 }
+export { deepMerge }
+export { deepMerge as deepMerge_alias_1 }
+export { deepMerge as deepMerge_alias_2 }
 
 // @public (undocumented)
-interface StormErrorOptions {
+type DeepPartial<T> = T extends BrowserNativeObject | NestedValue ? T : {
+    [K in keyof T]?: DeepPartial<T[K]>;
+};
+export { DeepPartial }
+export { DeepPartial as DeepPartial_alias_1 }
+
+// @public (undocumented)
+const EMPTY_OBJECT: {};
+export { EMPTY_OBJECT }
+export { EMPTY_OBJECT as EMPTY_OBJECT_alias_1 }
+
+// @public (undocumented)
+const EMPTY_STRING = "";
+export { EMPTY_STRING }
+export { EMPTY_STRING as EMPTY_STRING_alias_1 }
+
+// @public (undocumented)
+type EmptyObject = {
+    [K in string | number]: never;
+};
+export { EmptyObject }
+export { EmptyObject as EmptyObject_alias_1 }
+
+// @public
+type Except<ObjectType, KeysType extends keyof ObjectType, Options extends ExceptOptions = {
+    requireExactProps: false;
+}> = {
+    [KeyType in keyof ObjectType as Filter<KeyType, KeysType>]: ObjectType[KeyType];
+} & (Options["requireExactProps"] extends true ? Partial<Record<KeysType, never>> : Record<string, never>);
+export { Except }
+export { Except as Except_alias_1 }
+
+// @public (undocumented)
+type Filter<KeyType, ExcludeType> = IsEqual<KeyType, ExcludeType> extends true ? never : KeyType extends ExcludeType ? never : KeyType;
+export { Filter }
+export { Filter as Filter_alias_1 }
+
+// @public
+const flattenObject: (obj: any, prefix?: string, keyStringFn?: (input?: string) => string | undefined) => any;
+export { flattenObject }
+export { flattenObject as flattenObject_alias_1 }
+export { flattenObject as flattenObject_alias_2 }
+
+// @public
+const getObjectTag: (value: unknown) => string;
+export { getObjectTag }
+export { getObjectTag as getObjectTag_alias_1 }
+export { getObjectTag as getObjectTag_alias_2 }
+
+// @public
+const getUnique: <T = any>(arr: T[]) => T[];
+export { getUnique }
+export { getUnique as getUnique_alias_1 }
+export { getUnique as getUnique_alias_2 }
+
+// @public
+const getWebCrypto: () => Crypto;
+export { getWebCrypto }
+export { getWebCrypto as getWebCrypto_alias_1 }
+export { getWebCrypto as getWebCrypto_alias_2 }
+
+// @public (undocumented)
+interface IIdentity<T = string> {
     // (undocumented)
-    cause?: unknown;
-    // (undocumented)
-    data?: any;
-    // (undocumented)
-    message?: string;
-    // (undocumented)
-    name?: string;
-    // (undocumented)
-    stack?: string;
+    id: T;
 }
-export { StormErrorOptions }
-export { StormErrorOptions as StormErrorOptions_alias_1 }
+export { IIdentity }
+export { IIdentity as IIdentity_alias_1 }
+
+// @public
+type Indexable = {
+    [index: IndexType]: any;
+};
+export { Indexable }
+export { Indexable as Indexable_alias_1 }
+
+// @public
+type IndexType = string | number | symbol;
+export { IndexType }
+export { IndexType as IndexType_alias_1 }
+
+// @public
+const isArrayLike: (value: any) => boolean;
+export { isArrayLike }
+export { isArrayLike as isArrayLike_alias_1 }
+export { isArrayLike as isArrayLike_alias_2 }
+
+// @public
+const isAsyncIterable: (value: unknown) => value is AsyncIterable<unknown>;
+export { isAsyncIterable }
+export { isAsyncIterable as isAsyncIterable_alias_1 }
+export { isAsyncIterable as isAsyncIterable_alias_2 }
+
+// @public
+const isBigInt: (value: unknown) => value is bigint;
+export { isBigInt }
+export { isBigInt as isBigInt_alias_1 }
+export { isBigInt as isBigInt_alias_2 }
+
+// @public
+const isBoolean: (value: unknown) => value is boolean;
+export { isBoolean }
+export { isBoolean as isBoolean_alias_1 }
+export { isBoolean as isBoolean_alias_2 }
+
+// @public
+const isBuffer: typeof Buffer_2.isBuffer;
+export { isBuffer }
+export { isBuffer as isBuffer_alias_1 }
+export { isBuffer as isBuffer_alias_2 }
+
+// @public (undocumented)
+const isBufferExists: boolean;
+export { isBufferExists }
+export { isBufferExists as isBufferExists_alias_1 }
+export { isBufferExists as isBufferExists_alias_2 }
+
+// @public
+function isCollection(value: any): value is Collection;
+export { isCollection }
+export { isCollection as isCollection_alias_1 }
+export { isCollection as isCollection_alias_2 }
+
+// @public
+const isDate: (value: unknown) => value is Date;
+export { isDate }
+export { isDate as isDate_alias_1 }
+export { isDate as isDate_alias_2 }
+
+// @public
+const isDevelopment: () => boolean;
+export { isDevelopment }
+export { isDevelopment as isDevelopment_alias_1 }
+export { isDevelopment as isDevelopment_alias_2 }
+
+// @public
+const isEmpty: (value: unknown) => boolean;
+export { isEmpty }
+export { isEmpty as isEmpty_alias_1 }
+export { isEmpty as isEmpty_alias_2 }
+
+// @public
+const isEmptyObject: (value: unknown) => value is {};
+export { isEmptyObject }
+export { isEmptyObject as isEmptyObject_alias_1 }
+export { isEmptyObject as isEmptyObject_alias_2 }
+
+// @public
+const isEmptyOrEmptyObject: (value: unknown) => boolean;
+export { isEmptyOrEmptyObject }
+export { isEmptyOrEmptyObject as isEmptyOrEmptyObject_alias_1 }
+export { isEmptyOrEmptyObject as isEmptyOrEmptyObject_alias_2 }
+
+// @public
+const isEmptyString: (value: unknown) => value is string;
+export { isEmptyString }
+export { isEmptyString as isEmptyString_alias_1 }
+export { isEmptyString as isEmptyString_alias_2 }
+
+// @public
+type IsEqual<A, B> = (<G>() => G extends A ? 1 : 2) extends <G>() => G extends B ? 1 : 2 ? true : false;
+export { IsEqual }
+export { IsEqual as IsEqual_alias_1 }
+
+// @public (undocumented)
+function isEqual(a: any, b: any): boolean;
+export { isEqual }
+export { isEqual as isEqual_alias_1 }
+export { isEqual as isEqual_alias_2 }
+
+// @public (undocumented)
+interface ISequenced {
+    sequence: number;
+}
+export { ISequenced }
+export { ISequenced as ISequenced_alias_1 }
+
+// @public
+const isError: (obj: unknown) => obj is Error;
+export { isError }
+export { isError as isError_alias_1 }
+export { isError as isError_alias_2 }
+
+// @public
+const isFloat: (value: any) => value is number;
+export { isFloat }
+export { isFloat as isFloat_alias_1 }
+export { isFloat as isFloat_alias_2 }
+
+// @public
+const isFunction: (value: unknown) => value is ((params?: unknown) => unknown) & ((args?: any[]) => any);
+export { isFunction }
+export { isFunction as isFunction_alias_1 }
+export { isFunction as isFunction_alias_2 }
+
+// @public
+const isInt: (value: any) => value is number;
+export { isInt }
+export { isInt as isInt_alias_1 }
+export { isInt as isInt_alias_2 }
+
+// @public (undocumented)
+const isMergeableObject: (value: any) => boolean;
+export { isMergeableObject }
+export { isMergeableObject as isMergeableObject_alias_1 }
+export { isMergeableObject as isMergeableObject_alias_2 }
+
+// @public
+const isMode: (mode: string) => boolean;
+export { isMode }
+export { isMode as isMode_alias_1 }
+export { isMode as isMode_alias_2 }
+
+// @public
+export const isNonNullObject: (value: any) => value is object;
+
+// @public
+const isNotEmpty: (value: unknown) => value is {};
+export { isNotEmpty }
+export { isNotEmpty as isNotEmpty_alias_1 }
+export { isNotEmpty as isNotEmpty_alias_2 }
+
+// @public
+const isNull: (value: unknown) => value is null;
+export { isNull }
+export { isNull as isNull_alias_1 }
+export { isNull as isNull_alias_2 }
+
+// @public
+const isNumber: (value: unknown) => value is number;
+export { isNumber }
+export { isNumber as isNumber_alias_1 }
+export { isNumber as isNumber_alias_2 }
+
+// @public
+const isObject: (value: unknown) => value is object;
+export { isObject }
+export { isObject as isObject_alias_1 }
+export { isObject as isObject_alias_2 }
+
+// @public
+const isObjectLike: (obj: unknown) => boolean;
+export { isObjectLike }
+export { isObjectLike as isObjectLike_alias_1 }
+export { isObjectLike as isObjectLike_alias_2 }
+
+// @public
+const isPlainObject: (obj: unknown) => boolean;
+export { isPlainObject }
+export { isPlainObject as isPlainObject_alias_1 }
+export { isPlainObject as isPlainObject_alias_2 }
+
+// @public
+const isPrimitive: (value: unknown) => boolean;
+export { isPrimitive }
+export { isPrimitive as isPrimitive_alias_1 }
+export { isPrimitive as isPrimitive_alias_2 }
+
+// @public
+const isProduction: () => boolean;
+export { isProduction }
+export { isProduction as isProduction_alias_1 }
+export { isProduction as isProduction_alias_2 }
+
+// @public
+const isPromise: (value: unknown) => value is Promise<unknown>;
+export { isPromise }
+export { isPromise as isPromise_alias_1 }
+export { isPromise as isPromise_alias_2 }
+
+// @public
+const isPromiseLike: (value: unknown) => value is PromiseLike<unknown>;
+export { isPromiseLike }
+export { isPromiseLike as isPromiseLike_alias_1 }
+export { isPromiseLike as isPromiseLike_alias_2 }
+
+// @public
+const isReactElement: (value: any) => boolean;
+export { isReactElement }
+export { isReactElement as isReactElement_alias_1 }
+export { isReactElement as isReactElement_alias_2 }
+
+// @public
+const isRef: <TRef = unknown>(value: unknown) => value is RefObject<TRef>;
+export { isRef }
+export { isRef as isRef_alias_1 }
+export { isRef as isRef_alias_2 }
+
+// @public
+const isRuntimeClient: () => boolean;
+export { isRuntimeClient }
+export { isRuntimeClient as isRuntimeClient_alias_1 }
+export { isRuntimeClient as isRuntimeClient_alias_2 }
+
+// @public
+const isRuntimeServer: () => boolean;
+export { isRuntimeServer }
+export { isRuntimeServer as isRuntimeServer_alias_1 }
+export { isRuntimeServer as isRuntimeServer_alias_2 }
+
+// @public
+const isSelectOption: (value: unknown) => value is SelectOption;
+export { isSelectOption }
+export { isSelectOption as isSelectOption_alias_1 }
+export { isSelectOption as isSelectOption_alias_2 }
+
+// @public
+const isSet: (value: unknown) => value is {};
+export { isSet }
+export { isSet as isSet_alias_1 }
+export { isSet as isSet_alias_2 }
+
+// @public
+const isSetObject: (value: unknown) => value is object;
+export { isSetObject }
+export { isSetObject as isSetObject_alias_1 }
+export { isSetObject as isSetObject_alias_2 }
+
+// @public
+const isSetString: (value: unknown) => value is string;
+export { isSetString }
+export { isSetString as isSetString_alias_1 }
+export { isSetString as isSetString_alias_2 }
+
+// @public
+const isString: (value: unknown) => value is string;
+export { isString }
+export { isString as isString_alias_1 }
+export { isString as isString_alias_2 }
+
+// @public
+const isSymbol: (value: unknown) => value is symbol;
+export { isSymbol }
+export { isSymbol as isSymbol_alias_1 }
+export { isSymbol as isSymbol_alias_2 }
+
+// @public
+const isTyped: (value: unknown) => value is ITyped;
+export { isTyped }
+export { isTyped as isTyped_alias_1 }
+export { isTyped as isTyped_alias_2 }
+
+// @public
+const isUndefined: (value: unknown) => boolean;
+export { isUndefined }
+export { isUndefined as isUndefined_alias_1 }
+export { isUndefined as isUndefined_alias_2 }
+
+// @public (undocumented)
+interface ITyped {
+    __typename: string;
+}
+export { ITyped }
+export { ITyped as ITyped_alias_1 }
+
+// @public (undocumented)
+interface IVersioned {
+    // (undocumented)
+    version: number;
+}
+export { IVersioned }
+export { IVersioned as IVersioned_alias_1 }
+
+// @public
+const kebabCase: (input?: string) => string | undefined;
+export { kebabCase }
+export { kebabCase as kebabCase_alias_1 }
+export { kebabCase as kebabCase_alias_2 }
+
+// @public (undocumented)
+type LiteralUnion<T extends U, U extends Primitive> = T | (U & {
+    _?: never;
+});
+export { LiteralUnion }
+export { LiteralUnion as LiteralUnion_alias_1 }
+
+// @public
+const lowerCaseFirst: (input?: string) => string | undefined;
+export { lowerCaseFirst }
+export { lowerCaseFirst as lowerCaseFirst_alias_1 }
+export { lowerCaseFirst as lowerCaseFirst_alias_2 }
+
+// @public (undocumented)
+type MaybePromise<T> = T | Promise<T>;
+export { MaybePromise }
+export { MaybePromise as MaybePromise_alias_1 }
+
+// @public (undocumented)
+type NestedValue<TValue extends object = object> = {
+    [$NestedValue]: never;
+} & TValue;
+export { NestedValue }
+export { NestedValue as NestedValue_alias_1 }
+
+// @public (undocumented)
+type Newable<T> = new (..._args: never[]) => T;
+export { Newable }
+export { Newable as Newable_alias_1 }
+
+// @public (undocumented)
+const NEWLINE_STRING = "\r\n";
+export { NEWLINE_STRING }
+export { NEWLINE_STRING as NEWLINE_STRING_alias_1 }
+
+// @public (undocumented)
+type NonUndefined<T> = T extends undefined ? never : T;
+export { NonUndefined }
+export { NonUndefined as NonUndefined_alias_1 }
+
+// @public
+const noop: (params?: unknown) => void;
+export { noop }
+export { noop as noop_alias_1 }
+export { noop as noop_alias_2 }
+
+// @public
+const pascalCase: (input?: string) => string | undefined;
+export { pascalCase }
+export { pascalCase as pascalCase_alias_1 }
+export { pascalCase as pascalCase_alias_2 }
+
+// @public
+const periodSplit: (input?: string) => string | undefined;
+export { periodSplit }
+export { periodSplit as periodSplit_alias_1 }
+export { periodSplit as periodSplit_alias_2 }
+
+// @public
+type Primitive = null | undefined | string | number | boolean | symbol | bigint;
+export { Primitive }
+export { Primitive as Primitive_alias_1 }
+
+// @public
+const propertyExists: (object: any, propertyKey: PropertyKey) => boolean;
+export { propertyExists }
+export { propertyExists as propertyExists_alias_1 }
+export { propertyExists as propertyExists_alias_2 }
+
+// @public
+const propertyUnsafe: (object: any, propertyKey: PropertyKey) => boolean;
+export { propertyUnsafe }
+export { propertyUnsafe as propertyUnsafe_alias_1 }
+export { propertyUnsafe as propertyUnsafe_alias_2 }
+
+// @public (undocumented)
+type ReducerFunction<TState, TAction> = (state: TState, action: TAction) => TState;
+export { ReducerFunction }
+export { ReducerFunction as ReducerFunction_alias_1 }
+
+// @public (undocumented)
+interface RefObject<T> {
+    // (undocumented)
+    current: T;
+}
+export { RefObject }
+export { RefObject as RefObject_alias_1 }
+
+// @public
+const removeEmptyItems: <T = any>(arr: (T | null | undefined)[]) => NonNullable<T>[];
+export { removeEmptyItems }
+export { removeEmptyItems as removeEmptyItems_alias_1 }
+export { removeEmptyItems as removeEmptyItems_alias_2 }
+
+// @public
+type RequiredKeysOf<BaseType extends object> = Exclude<{
+    [Key in keyof BaseType]: BaseType extends Record<Key, BaseType[Key]> ? Key : never;
+}[keyof BaseType], undefined>;
+export { RequiredKeysOf }
+export { RequiredKeysOf as RequiredKeysOf_alias_1 }
+
+// @public (undocumented)
+type Rollback = Record<string, (initialValue: any, currentValue: any) => any>;
+export { Rollback }
+export { Rollback as Rollback_alias_1 }
+
+// @public (undocumented)
+interface SelectOption {
+    disabled: boolean;
+    name: string;
+    selected: boolean;
+    value: string;
+}
+export { SelectOption }
+export { SelectOption as SelectOption_alias_1 }
+
+// @public
+type SetRequired<BaseType, Keys extends keyof BaseType> = BaseType extends unknown ? Simplify<Except<BaseType, Keys> & Required<Pick<BaseType, Keys>>> : never;
+export { SetRequired }
+export { SetRequired as SetRequired_alias_1 }
+
+// @public (undocumented)
+function sha1(bytes: string | number | boolean | Uint8Array | any[]): Uint8Array;
+export { sha1 }
+export { sha1 as sha1_alias_1 }
+export { sha1 as sha1_alias_2 }
+
+// @public
+const sha256: (value: string) => void;
+export { sha256 }
+export { sha256 as sha256_alias_1 }
+export { sha256 as sha256_alias_2 }
+
+// @public
+type Simplify<T> = {
+    [KeyType in keyof T]: T[KeyType];
+} & {};
+export { Simplify }
+export { Simplify as Simplify_alias_1 }
+
+// @public
+const snakeCase: (input?: string, options?: {
+    splitOnNumber: boolean;
+}) => string | undefined;
+export { snakeCase }
+export { snakeCase as snakeCase_alias_1 }
+export { snakeCase as snakeCase_alias_2 }
+
+// @public
+const titleCase: (input?: string) => string | undefined;
+export { titleCase }
+export { titleCase as titleCase_alias_1 }
+export { titleCase as titleCase_alias_2 }
+
+// @public (undocumented)
+const TYPE_ARGUMENTS = "Arguments";
+export { TYPE_ARGUMENTS }
+export { TYPE_ARGUMENTS as TYPE_ARGUMENTS_alias_1 }
+
+// @public (undocumented)
+const TYPE_ARRAY = "Array";
+export { TYPE_ARRAY }
+export { TYPE_ARRAY as TYPE_ARRAY_alias_1 }
+
+// @public (undocumented)
+const TYPE_MAP = "Map";
+export { TYPE_MAP }
+export { TYPE_MAP as TYPE_MAP_alias_1 }
+
+// @public (undocumented)
+const TYPE_OBJECT = "Object";
+export { TYPE_OBJECT }
+export { TYPE_OBJECT as TYPE_OBJECT_alias_1 }
+
+// @public (undocumented)
+const TYPE_SET = "Set";
+export { TYPE_SET }
+export { TYPE_SET as TYPE_SET_alias_1 }
+
+// @public (undocumented)
+function typeDetect(obj: unknown): string;
+export { typeDetect }
+export { typeDetect as typeDetect_alias_1 }
+export { typeDetect as typeDetect_alias_2 }
+
+// @public
+const upperCaseFirst: (input?: string) => string | undefined;
+export { upperCaseFirst }
+export { upperCaseFirst as upperCaseFirst_alias_1 }
+export { upperCaseFirst as upperCaseFirst_alias_2 }
 
 // (No @packageDocumentation comment for this package)
 

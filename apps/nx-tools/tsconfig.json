@@ -4,6 +4,7 @@
     "outDir": "../../dist/out-tsc",
     "module": "commonjs",
     "moduleResolution": "node",
+    "strict": false,
     "esModuleInterop": true,
     "declaration": true,
     "skipLibCheck": true,

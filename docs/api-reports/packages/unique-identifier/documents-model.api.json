@@ -173,2510 +173,374 @@
       "preserveMemberOrder": false,
       "members": [
         {
+          "kind": "Function",
+          "canonicalReference": "@storm-stack/unique-identifier!cuid:function(1)",
+          "docComment": "/**\n * Generate a random CUID\n *\n * @returns A random CUID string\n *\n * @example\n * ```typescript\n *\n * // Generate a random CUID\n * const id = cuid();\n * ```\n *\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export declare function cuid(): "
+            },
+            {
+              "kind": "Content",
+              "text": "string"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "fileUrlPath": "tmp/.tsup/declaration/packages/unique-identifier/src/cuid.d.ts",
+          "returnTypeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 2
+          },
+          "releaseTag": "Public",
+          "overloadIndex": 1,
+          "parameters": [],
+          "name": "cuid"
+        },
+        {
+          "kind": "Interface",
+          "canonicalReference": "@storm-stack/unique-identifier!DeconstructedSnowflake:interface",
+          "docComment": "/**\n * A deconstructed snowflake and the details around it's creation.\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export interface DeconstructedSnowflake "
+            }
+          ],
+          "fileUrlPath": "tmp/.tsup/declaration/packages/unique-identifier/src/snowflake.d.ts",
+          "releaseTag": "Public",
+          "name": "DeconstructedSnowflake",
+          "preserveMemberOrder": false,
+          "members": [
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "@storm-stack/unique-identifier!DeconstructedSnowflake#binary:member",
+              "docComment": "/**\n * The 64Bit snowflake binary string\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "binary: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "string"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isReadonly": false,
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "binary",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "@storm-stack/unique-identifier!DeconstructedSnowflake#sequence:member",
+              "docComment": "/**\n * The increment of this snowflake\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "sequence: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isReadonly": false,
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "sequence",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "@storm-stack/unique-identifier!DeconstructedSnowflake#shard_id:member",
+              "docComment": "/**\n * The shard_id used when generating\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "shard_id: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isReadonly": false,
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "shard_id",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "@storm-stack/unique-identifier!DeconstructedSnowflake#snowflake:member",
+              "docComment": "/**\n * Snowflake deconstructed from\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "snowflake: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "SnowflakeResolvable",
+                  "canonicalReference": "@storm-stack/unique-identifier!SnowflakeResolvable:type"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isReadonly": false,
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "snowflake",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "@storm-stack/unique-identifier!DeconstructedSnowflake#timestamp:member",
+              "docComment": "/**\n * The timestamp the snowflake was generated\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "timestamp: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isReadonly": false,
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "timestamp",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            }
+          ],
+          "extendsTokenRanges": []
+        },
+        {
+          "kind": "Function",
+          "canonicalReference": "@storm-stack/unique-identifier!deconstructSnowflake:function(1)",
+          "docComment": "/**\n * Deconstruct a snowflake to its values using the `epoch`.\n *\n * @param snowflake - Snowflake to deconstruct\n *\n * @returns Either the DeconstructedSnowflake object\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export declare function deconstructSnowflake(snowflake: "
+            },
+            {
+              "kind": "Reference",
+              "text": "SnowflakeResolvable",
+              "canonicalReference": "@storm-stack/unique-identifier!SnowflakeResolvable:type"
+            },
+            {
+              "kind": "Content",
+              "text": "): "
+            },
+            {
+              "kind": "Reference",
+              "text": "DeconstructedSnowflake",
+              "canonicalReference": "@storm-stack/unique-identifier!DeconstructedSnowflake:interface"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "fileUrlPath": "tmp/.tsup/declaration/packages/unique-identifier/src/snowflake.d.ts",
+          "returnTypeTokenRange": {
+            "startIndex": 3,
+            "endIndex": 4
+          },
+          "releaseTag": "Public",
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "snowflake",
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "isOptional": false
+            }
+          ],
+          "name": "deconstructSnowflake"
+        },
+        {
           "kind": "Variable",
-          "canonicalReference": "@storm-stack/unique-identifier!createErrorSerializer:var",
+          "canonicalReference": "@storm-stack/unique-identifier!default_alias:var",
           "docComment": "",
           "excerptTokens": [
             {
               "kind": "Content",
-              "text": "createErrorSerializer: "
+              "text": "v5: "
             },
             {
               "kind": "Content",
-              "text": "(stacktrace?: boolean) => (err: "
+              "text": "{\n    (value: string | any[] | "
             },
             {
               "kind": "Reference",
-              "text": "Error",
-              "canonicalReference": "!Error:interface"
+              "text": "ArrayLike",
+              "canonicalReference": "!ArrayLike:interface"
             },
             {
               "kind": "Content",
-              "text": ") => "
+              "text": "<number>, namespace: string | any[] | "
             },
             {
               "kind": "Reference",
-              "text": "Record",
-              "canonicalReference": "!Record:type"
+              "text": "ArrayLike",
+              "canonicalReference": "!ArrayLike:interface"
             },
             {
               "kind": "Content",
-              "text": "<string, any>"
+              "text": "<number>, buf: {\n        [x: string]: number | undefined;\n    }, offset: number): string | {\n        [x: string]: number | undefined;\n    };\n    name: string;\n    DNS: string;\n    URL: string;\n}"
             }
           ],
-          "fileUrlPath": "tmp/.tsup/declaration/packages/logging/src/utilities/log-serializer.d.ts",
+          "fileUrlPath": "tmp/.tsup/declaration/packages/unique-identifier/src/uuid.d.ts",
           "isReadonly": true,
           "releaseTag": "Public",
-          "name": "createErrorSerializer",
+          "name": "default_alias",
           "variableTypeTokenRange": {
             "startIndex": 1,
             "endIndex": 6
           }
         },
         {
-          "kind": "TypeAlias",
-          "canonicalReference": "@storm-stack/unique-identifier!GetLoggersResult:type",
-          "docComment": "",
-          "excerptTokens": [
-            {
-              "kind": "Content",
-              "text": "export type GetLoggersResult = "
-            },
-            {
-              "kind": "Reference",
-              "text": "pino.BaseLogger",
-              "canonicalReference": "!pino.BaseLogger:type"
-            },
-            {
-              "kind": "Content",
-              "text": " & {\n    logLevel: "
-            },
-            {
-              "kind": "Reference",
-              "text": "LogLevel",
-              "canonicalReference": "@storm-stack/unique-identifier!LogLevel:type"
-            },
-            {
-              "kind": "Content",
-              "text": ";\n    logLevelLabel: "
-            },
-            {
-              "kind": "Reference",
-              "text": "LogLevelLabel",
-              "canonicalReference": "@storm-stack/unique-identifier!LogLevelLabel:type"
-            },
-            {
-              "kind": "Content",
-              "text": ";\n}"
-            },
-            {
-              "kind": "Content",
-              "text": ";"
-            }
-          ],
-          "fileUrlPath": "tmp/.tsup/declaration/packages/logging/src/types.d.ts",
-          "releaseTag": "Public",
-          "name": "GetLoggersResult",
-          "typeTokenRange": {
-            "startIndex": 1,
-            "endIndex": 7
-          }
-        },
-        {
           "kind": "Variable",
-          "canonicalReference": "@storm-stack/unique-identifier!getLogLevel:var",
-          "docComment": "/**\n * Convert the log level label to a log level\n *\n * @param label - The log level label to convert\n *\n * @returns The log level\n */\n",
-          "excerptTokens": [
-            {
-              "kind": "Content",
-              "text": "getLogLevel: "
-            },
-            {
-              "kind": "Content",
-              "text": "(label: string) => "
-            },
-            {
-              "kind": "Reference",
-              "text": "LogLevel",
-              "canonicalReference": "@storm-stack/unique-identifier!LogLevel:type"
-            }
-          ],
-          "fileUrlPath": "tmp/.tsup/declaration/packages/logging/src/utilities/get-log-level.d.ts",
-          "isReadonly": true,
-          "releaseTag": "Public",
-          "name": "getLogLevel",
-          "variableTypeTokenRange": {
-            "startIndex": 1,
-            "endIndex": 3
-          }
-        },
-        {
-          "kind": "Variable",
-          "canonicalReference": "@storm-stack/unique-identifier!getLogLevelLabel:var",
-          "docComment": "/**\n * Convert the log level to a log level label\n *\n * @param logLevel - The log level to convert\n *\n * @returns The log level label\n */\n",
-          "excerptTokens": [
-            {
-              "kind": "Content",
-              "text": "getLogLevelLabel: "
-            },
-            {
-              "kind": "Content",
-              "text": "(logLevel: number) => "
-            },
-            {
-              "kind": "Reference",
-              "text": "LogLevelLabel",
-              "canonicalReference": "@storm-stack/unique-identifier!LogLevelLabel:type"
-            }
-          ],
-          "fileUrlPath": "tmp/.tsup/declaration/packages/logging/src/utilities/get-log-level.d.ts",
-          "isReadonly": true,
-          "releaseTag": "Public",
-          "name": "getLogLevelLabel",
-          "variableTypeTokenRange": {
-            "startIndex": 1,
-            "endIndex": 3
-          }
-        },
-        {
-          "kind": "Variable",
-          "canonicalReference": "@storm-stack/unique-identifier!getPinoOptions:var",
-          "docComment": "/**\n * Get the Pino transports for the logger\n *\n * @param config - The workspace config\n *\n * @param name - The name of the logger to get the options for\n *\n * @returns The options for the logger\n */\n",
-          "excerptTokens": [
-            {
-              "kind": "Content",
-              "text": "getPinoOptions: "
-            },
-            {
-              "kind": "Content",
-              "text": "(config: "
-            },
-            {
-              "kind": "Reference",
-              "text": "StormConfig",
-              "canonicalReference": "@storm-software/config!StormConfig:type"
-            },
-            {
-              "kind": "Content",
-              "text": ", name?: string, stacktrace?: boolean) => "
-            },
-            {
-              "kind": "Reference",
-              "text": "PinoLoggerOptions",
-              "canonicalReference": "!unknown"
-            }
-          ],
-          "fileUrlPath": "tmp/.tsup/declaration/packages/logging/src/utilities/get-pino-options.d.ts",
-          "isReadonly": true,
-          "releaseTag": "Public",
-          "name": "getPinoOptions",
-          "variableTypeTokenRange": {
-            "startIndex": 1,
-            "endIndex": 5
-          }
-        },
-        {
-          "kind": "Interface",
-          "canonicalReference": "@storm-stack/unique-identifier!ILogger:interface",
+          "canonicalReference": "@storm-stack/unique-identifier!DNS:var",
           "docComment": "",
           "excerptTokens": [
             {
               "kind": "Content",
-              "text": "export interface ILogger "
+              "text": "DNS = "
+            },
+            {
+              "kind": "Content",
+              "text": "\"6ba7b810-9dad-11d1-80b4-00c04fd430c8\""
             }
           ],
-          "fileUrlPath": "tmp/.tsup/declaration/packages/logging/src/types.d.ts",
-          "releaseTag": "Public",
-          "name": "ILogger",
-          "preserveMemberOrder": false,
-          "members": [
-            {
-              "kind": "PropertySignature",
-              "canonicalReference": "@storm-stack/unique-identifier!ILogger#debug:member",
-              "docComment": "/**\n * Write a debug message to the logs.\n *\n * @param message - The message to be printed.\n *\n * @returns Either a promise that resolves to void or void.\n */\n",
-              "excerptTokens": [
-                {
-                  "kind": "Content",
-                  "text": "debug?: "
-                },
-                {
-                  "kind": "Content",
-                  "text": "(message: string) => "
-                },
-                {
-                  "kind": "Reference",
-                  "text": "MaybePromise",
-                  "canonicalReference": "@storm-stack/unique-identifier!~MaybePromise:type"
-                },
-                {
-                  "kind": "Content",
-                  "text": "<void>"
-                },
-                {
-                  "kind": "Content",
-                  "text": ";"
-                }
-              ],
-              "isReadonly": false,
-              "isOptional": true,
-              "releaseTag": "Public",
-              "name": "debug",
-              "propertyTypeTokenRange": {
-                "startIndex": 1,
-                "endIndex": 4
-              }
-            },
-            {
-              "kind": "PropertySignature",
-              "canonicalReference": "@storm-stack/unique-identifier!ILogger#error:member",
-              "docComment": "/**\n * Write an error message to the logs.\n *\n * @param message - The message to be displayed.\n *\n * @returns Either a promise that resolves to void or void.\n */\n",
-              "excerptTokens": [
-                {
-                  "kind": "Content",
-                  "text": "error: "
-                },
-                {
-                  "kind": "Content",
-                  "text": "(message: string) => "
-                },
-                {
-                  "kind": "Reference",
-                  "text": "MaybePromise",
-                  "canonicalReference": "@storm-stack/unique-identifier!~MaybePromise:type"
-                },
-                {
-                  "kind": "Content",
-                  "text": "<void>"
-                },
-                {
-                  "kind": "Content",
-                  "text": ";"
-                }
-              ],
-              "isReadonly": false,
-              "isOptional": false,
-              "releaseTag": "Public",
-              "name": "error",
-              "propertyTypeTokenRange": {
-                "startIndex": 1,
-                "endIndex": 4
-              }
-            },
-            {
-              "kind": "PropertySignature",
-              "canonicalReference": "@storm-stack/unique-identifier!ILogger#exception:member",
-              "docComment": "/**\n * Write an exception message to the logs.\n *\n * @param message - The message to be displayed.\n *\n * @returns Either a promise that resolves to void or void.\n */\n",
-              "excerptTokens": [
-                {
-                  "kind": "Content",
-                  "text": "exception?: "
-                },
-                {
-                  "kind": "Content",
-                  "text": "(message: string) => "
-                },
-                {
-                  "kind": "Reference",
-                  "text": "MaybePromise",
-                  "canonicalReference": "@storm-stack/unique-identifier!~MaybePromise:type"
-                },
-                {
-                  "kind": "Content",
-                  "text": "<void>"
-                },
-                {
-                  "kind": "Content",
-                  "text": ";"
-                }
-              ],
-              "isReadonly": false,
-              "isOptional": true,
-              "releaseTag": "Public",
-              "name": "exception",
-              "propertyTypeTokenRange": {
-                "startIndex": 1,
-                "endIndex": 4
-              }
-            },
-            {
-              "kind": "PropertySignature",
-              "canonicalReference": "@storm-stack/unique-identifier!ILogger#fatal:member",
-              "docComment": "/**\n * Write a fatal message to the logs.\n *\n * @param message - The fatal message to be displayed.\n *\n * @returns Either a promise that resolves to void or void.\n */\n",
-              "excerptTokens": [
-                {
-                  "kind": "Content",
-                  "text": "fatal?: "
-                },
-                {
-                  "kind": "Content",
-                  "text": "(message: string) => "
-                },
-                {
-                  "kind": "Reference",
-                  "text": "MaybePromise",
-                  "canonicalReference": "@storm-stack/unique-identifier!~MaybePromise:type"
-                },
-                {
-                  "kind": "Content",
-                  "text": "<void>"
-                },
-                {
-                  "kind": "Content",
-                  "text": ";"
-                }
-              ],
-              "isReadonly": false,
-              "isOptional": true,
-              "releaseTag": "Public",
-              "name": "fatal",
-              "propertyTypeTokenRange": {
-                "startIndex": 1,
-                "endIndex": 4
-              }
-            },
-            {
-              "kind": "PropertySignature",
-              "canonicalReference": "@storm-stack/unique-identifier!ILogger#info:member",
-              "docComment": "/**\n * Write an informational message to the logs.\n *\n * @param message - The message to be printed.\n *\n * @returns Either a promise that resolves to void or void.\n */\n",
-              "excerptTokens": [
-                {
-                  "kind": "Content",
-                  "text": "info: "
-                },
-                {
-                  "kind": "Content",
-                  "text": "(message: string) => "
-                },
-                {
-                  "kind": "Reference",
-                  "text": "MaybePromise",
-                  "canonicalReference": "@storm-stack/unique-identifier!~MaybePromise:type"
-                },
-                {
-                  "kind": "Content",
-                  "text": "<void>"
-                },
-                {
-                  "kind": "Content",
-                  "text": ";"
-                }
-              ],
-              "isReadonly": false,
-              "isOptional": false,
-              "releaseTag": "Public",
-              "name": "info",
-              "propertyTypeTokenRange": {
-                "startIndex": 1,
-                "endIndex": 4
-              }
-            },
-            {
-              "kind": "PropertySignature",
-              "canonicalReference": "@storm-stack/unique-identifier!ILogger#log:member",
-              "docComment": "/**\n * Write an informational message to the logs.\n *\n * @param message - The message to be printed.\n *\n * @returns Either a promise that resolves to void or void.\n */\n",
-              "excerptTokens": [
-                {
-                  "kind": "Content",
-                  "text": "log?: "
-                },
-                {
-                  "kind": "Content",
-                  "text": "(message: string) => "
-                },
-                {
-                  "kind": "Reference",
-                  "text": "MaybePromise",
-                  "canonicalReference": "@storm-stack/unique-identifier!~MaybePromise:type"
-                },
-                {
-                  "kind": "Content",
-                  "text": "<void>"
-                },
-                {
-                  "kind": "Content",
-                  "text": ";"
-                }
-              ],
-              "isReadonly": false,
-              "isOptional": true,
-              "releaseTag": "Public",
-              "name": "log",
-              "propertyTypeTokenRange": {
-                "startIndex": 1,
-                "endIndex": 4
-              }
-            },
-            {
-              "kind": "PropertySignature",
-              "canonicalReference": "@storm-stack/unique-identifier!ILogger#success:member",
-              "docComment": "/**\n * Write a success message to the logs.\n *\n * @param message - The message to print.\n *\n * @returns Either a promise that resolves to void or void.\n */\n",
-              "excerptTokens": [
-                {
-                  "kind": "Content",
-                  "text": "success?: "
-                },
-                {
-                  "kind": "Content",
-                  "text": "(message: string) => "
-                },
-                {
-                  "kind": "Reference",
-                  "text": "MaybePromise",
-                  "canonicalReference": "@storm-stack/unique-identifier!~MaybePromise:type"
-                },
-                {
-                  "kind": "Content",
-                  "text": "<void>"
-                },
-                {
-                  "kind": "Content",
-                  "text": ";"
-                }
-              ],
-              "isReadonly": false,
-              "isOptional": true,
-              "releaseTag": "Public",
-              "name": "success",
-              "propertyTypeTokenRange": {
-                "startIndex": 1,
-                "endIndex": 4
-              }
-            },
-            {
-              "kind": "PropertySignature",
-              "canonicalReference": "@storm-stack/unique-identifier!ILogger#trace:member",
-              "docComment": "/**\n * Write a trace message to the logs.\n *\n * @param message - The message to be printed.\n *\n * @returns Either a promise that resolves to void or void.\n */\n",
-              "excerptTokens": [
-                {
-                  "kind": "Content",
-                  "text": "trace?: "
-                },
-                {
-                  "kind": "Content",
-                  "text": "(message: string) => "
-                },
-                {
-                  "kind": "Reference",
-                  "text": "MaybePromise",
-                  "canonicalReference": "@storm-stack/unique-identifier!~MaybePromise:type"
-                },
-                {
-                  "kind": "Content",
-                  "text": "<void>"
-                },
-                {
-                  "kind": "Content",
-                  "text": ";"
-                }
-              ],
-              "isReadonly": false,
-              "isOptional": true,
-              "releaseTag": "Public",
-              "name": "trace",
-              "propertyTypeTokenRange": {
-                "startIndex": 1,
-                "endIndex": 4
-              }
-            },
-            {
-              "kind": "PropertySignature",
-              "canonicalReference": "@storm-stack/unique-identifier!ILogger#warn:member",
-              "docComment": "/**\n * Write a warning message to the logs.\n *\n * @param message - The message to be printed.\n *\n * @returns Either a promise that resolves to void or void.\n */\n",
-              "excerptTokens": [
-                {
-                  "kind": "Content",
-                  "text": "warn: "
-                },
-                {
-                  "kind": "Content",
-                  "text": "(message: string) => "
-                },
-                {
-                  "kind": "Reference",
-                  "text": "MaybePromise",
-                  "canonicalReference": "@storm-stack/unique-identifier!~MaybePromise:type"
-                },
-                {
-                  "kind": "Content",
-                  "text": "<void>"
-                },
-                {
-                  "kind": "Content",
-                  "text": ";"
-                }
-              ],
-              "isReadonly": false,
-              "isOptional": false,
-              "releaseTag": "Public",
-              "name": "warn",
-              "propertyTypeTokenRange": {
-                "startIndex": 1,
-                "endIndex": 4
-              }
-            }
-          ],
-          "extendsTokenRanges": []
-        },
-        {
-          "kind": "Interface",
-          "canonicalReference": "@storm-stack/unique-identifier!ILoggerWrapper:interface",
-          "docComment": "",
-          "excerptTokens": [
-            {
-              "kind": "Content",
-              "text": "export interface ILoggerWrapper "
-            }
-          ],
-          "fileUrlPath": "tmp/.tsup/declaration/packages/logging/src/types.d.ts",
-          "releaseTag": "Public",
-          "name": "ILoggerWrapper",
-          "preserveMemberOrder": false,
-          "members": [
-            {
-              "kind": "PropertySignature",
-              "canonicalReference": "@storm-stack/unique-identifier!ILoggerWrapper#debug:member",
-              "docComment": "/**\n * Write a debug message to the logs.\n *\n * @param message - The message to be printed.\n *\n * @returns Either a promise that resolves to void or void.\n */\n",
-              "excerptTokens": [
-                {
-                  "kind": "Content",
-                  "text": "debug: "
-                },
-                {
-                  "kind": "Content",
-                  "text": "(message: any) => "
-                },
-                {
-                  "kind": "Reference",
-                  "text": "MaybePromise",
-                  "canonicalReference": "@storm-stack/unique-identifier!~MaybePromise:type"
-                },
-                {
-                  "kind": "Content",
-                  "text": "<void>"
-                },
-                {
-                  "kind": "Content",
-                  "text": ";"
-                }
-              ],
-              "isReadonly": false,
-              "isOptional": false,
-              "releaseTag": "Public",
-              "name": "debug",
-              "propertyTypeTokenRange": {
-                "startIndex": 1,
-                "endIndex": 4
-              }
-            },
-            {
-              "kind": "PropertySignature",
-              "canonicalReference": "@storm-stack/unique-identifier!ILoggerWrapper#error:member",
-              "docComment": "/**\n * Write an error message to the logs.\n *\n * @param message - The message to be displayed.\n *\n * @returns Either a promise that resolves to void or void.\n */\n",
-              "excerptTokens": [
-                {
-                  "kind": "Content",
-                  "text": "error: "
-                },
-                {
-                  "kind": "Content",
-                  "text": "(error: string | "
-                },
-                {
-                  "kind": "Reference",
-                  "text": "Error",
-                  "canonicalReference": "!Error:interface"
-                },
-                {
-                  "kind": "Content",
-                  "text": ") => "
-                },
-                {
-                  "kind": "Reference",
-                  "text": "MaybePromise",
-                  "canonicalReference": "@storm-stack/unique-identifier!~MaybePromise:type"
-                },
-                {
-                  "kind": "Content",
-                  "text": "<void>"
-                },
-                {
-                  "kind": "Content",
-                  "text": ";"
-                }
-              ],
-              "isReadonly": false,
-              "isOptional": false,
-              "releaseTag": "Public",
-              "name": "error",
-              "propertyTypeTokenRange": {
-                "startIndex": 1,
-                "endIndex": 6
-              }
-            },
-            {
-              "kind": "PropertySignature",
-              "canonicalReference": "@storm-stack/unique-identifier!ILoggerWrapper#exception:member",
-              "docComment": "/**\n * Write an exception message to the logs.\n *\n * @param message - The message to be displayed.\n *\n * @returns Either a promise that resolves to void or void.\n */\n",
-              "excerptTokens": [
-                {
-                  "kind": "Content",
-                  "text": "exception: "
-                },
-                {
-                  "kind": "Content",
-                  "text": "(error: string | "
-                },
-                {
-                  "kind": "Reference",
-                  "text": "Error",
-                  "canonicalReference": "!Error:interface"
-                },
-                {
-                  "kind": "Content",
-                  "text": ") => "
-                },
-                {
-                  "kind": "Reference",
-                  "text": "MaybePromise",
-                  "canonicalReference": "@storm-stack/unique-identifier!~MaybePromise:type"
-                },
-                {
-                  "kind": "Content",
-                  "text": "<void>"
-                },
-                {
-                  "kind": "Content",
-                  "text": ";"
-                }
-              ],
-              "isReadonly": false,
-              "isOptional": false,
-              "releaseTag": "Public",
-              "name": "exception",
-              "propertyTypeTokenRange": {
-                "startIndex": 1,
-                "endIndex": 6
-              }
-            },
-            {
-              "kind": "PropertySignature",
-              "canonicalReference": "@storm-stack/unique-identifier!ILoggerWrapper#fatal:member",
-              "docComment": "/**\n * Write a fatal message to the logs.\n *\n * @param message - The fatal message to be displayed.\n *\n * @returns Either a promise that resolves to void or void.\n */\n",
-              "excerptTokens": [
-                {
-                  "kind": "Content",
-                  "text": "fatal: "
-                },
-                {
-                  "kind": "Content",
-                  "text": "(error: string | "
-                },
-                {
-                  "kind": "Reference",
-                  "text": "Error",
-                  "canonicalReference": "!Error:interface"
-                },
-                {
-                  "kind": "Content",
-                  "text": ") => "
-                },
-                {
-                  "kind": "Reference",
-                  "text": "MaybePromise",
-                  "canonicalReference": "@storm-stack/unique-identifier!~MaybePromise:type"
-                },
-                {
-                  "kind": "Content",
-                  "text": "<void>"
-                },
-                {
-                  "kind": "Content",
-                  "text": ";"
-                }
-              ],
-              "isReadonly": false,
-              "isOptional": false,
-              "releaseTag": "Public",
-              "name": "fatal",
-              "propertyTypeTokenRange": {
-                "startIndex": 1,
-                "endIndex": 6
-              }
-            },
-            {
-              "kind": "PropertySignature",
-              "canonicalReference": "@storm-stack/unique-identifier!ILoggerWrapper#info:member",
-              "docComment": "/**\n * Write an informational message to the logs.\n *\n * @param message - The message to be printed.\n *\n * @returns Either a promise that resolves to void or void.\n */\n",
-              "excerptTokens": [
-                {
-                  "kind": "Content",
-                  "text": "info: "
-                },
-                {
-                  "kind": "Content",
-                  "text": "(message: any) => "
-                },
-                {
-                  "kind": "Reference",
-                  "text": "MaybePromise",
-                  "canonicalReference": "@storm-stack/unique-identifier!~MaybePromise:type"
-                },
-                {
-                  "kind": "Content",
-                  "text": "<void>"
-                },
-                {
-                  "kind": "Content",
-                  "text": ";"
-                }
-              ],
-              "isReadonly": false,
-              "isOptional": false,
-              "releaseTag": "Public",
-              "name": "info",
-              "propertyTypeTokenRange": {
-                "startIndex": 1,
-                "endIndex": 4
-              }
-            },
-            {
-              "kind": "PropertySignature",
-              "canonicalReference": "@storm-stack/unique-identifier!ILoggerWrapper#log:member",
-              "docComment": "/**\n * Write an informational message to the logs.\n *\n * @param message - The message to be printed.\n *\n * @returns Either a promise that resolves to void or void.\n */\n",
-              "excerptTokens": [
-                {
-                  "kind": "Content",
-                  "text": "log: "
-                },
-                {
-                  "kind": "Content",
-                  "text": "(message: any) => "
-                },
-                {
-                  "kind": "Reference",
-                  "text": "MaybePromise",
-                  "canonicalReference": "@storm-stack/unique-identifier!~MaybePromise:type"
-                },
-                {
-                  "kind": "Content",
-                  "text": "<void>"
-                },
-                {
-                  "kind": "Content",
-                  "text": ";"
-                }
-              ],
-              "isReadonly": false,
-              "isOptional": false,
-              "releaseTag": "Public",
-              "name": "log",
-              "propertyTypeTokenRange": {
-                "startIndex": 1,
-                "endIndex": 4
-              }
-            },
-            {
-              "kind": "PropertySignature",
-              "canonicalReference": "@storm-stack/unique-identifier!ILoggerWrapper#success:member",
-              "docComment": "/**\n * Write a success message to the logs.\n *\n * @param message - The message to print.\n *\n * @returns Either a promise that resolves to void or void.\n */\n",
-              "excerptTokens": [
-                {
-                  "kind": "Content",
-                  "text": "success: "
-                },
-                {
-                  "kind": "Content",
-                  "text": "(message: any) => "
-                },
-                {
-                  "kind": "Reference",
-                  "text": "MaybePromise",
-                  "canonicalReference": "@storm-stack/unique-identifier!~MaybePromise:type"
-                },
-                {
-                  "kind": "Content",
-                  "text": "<void>"
-                },
-                {
-                  "kind": "Content",
-                  "text": ";"
-                }
-              ],
-              "isReadonly": false,
-              "isOptional": false,
-              "releaseTag": "Public",
-              "name": "success",
-              "propertyTypeTokenRange": {
-                "startIndex": 1,
-                "endIndex": 4
-              }
-            },
-            {
-              "kind": "PropertySignature",
-              "canonicalReference": "@storm-stack/unique-identifier!ILoggerWrapper#trace:member",
-              "docComment": "/**\n * Write a trace message to the logs.\n *\n * @param message - The message to be printed.\n *\n * @returns Either a promise that resolves to void or void.\n */\n",
-              "excerptTokens": [
-                {
-                  "kind": "Content",
-                  "text": "trace: "
-                },
-                {
-                  "kind": "Content",
-                  "text": "(message: any) => "
-                },
-                {
-                  "kind": "Reference",
-                  "text": "MaybePromise",
-                  "canonicalReference": "@storm-stack/unique-identifier!~MaybePromise:type"
-                },
-                {
-                  "kind": "Content",
-                  "text": "<void>"
-                },
-                {
-                  "kind": "Content",
-                  "text": ";"
-                }
-              ],
-              "isReadonly": false,
-              "isOptional": false,
-              "releaseTag": "Public",
-              "name": "trace",
-              "propertyTypeTokenRange": {
-                "startIndex": 1,
-                "endIndex": 4
-              }
-            },
-            {
-              "kind": "PropertySignature",
-              "canonicalReference": "@storm-stack/unique-identifier!ILoggerWrapper#warn:member",
-              "docComment": "/**\n * Write a warning message to the logs.\n *\n * @param message - The message to be printed.\n *\n * @returns Either a promise that resolves to void or void.\n */\n",
-              "excerptTokens": [
-                {
-                  "kind": "Content",
-                  "text": "warn: "
-                },
-                {
-                  "kind": "Content",
-                  "text": "(message: any) => "
-                },
-                {
-                  "kind": "Reference",
-                  "text": "MaybePromise",
-                  "canonicalReference": "@storm-stack/unique-identifier!~MaybePromise:type"
-                },
-                {
-                  "kind": "Content",
-                  "text": "<void>"
-                },
-                {
-                  "kind": "Content",
-                  "text": ";"
-                }
-              ],
-              "isReadonly": false,
-              "isOptional": false,
-              "releaseTag": "Public",
-              "name": "warn",
-              "propertyTypeTokenRange": {
-                "startIndex": 1,
-                "endIndex": 4
-              }
-            }
-          ],
-          "extendsTokenRanges": []
-        },
-        {
-          "kind": "Interface",
-          "canonicalReference": "@storm-stack/unique-identifier!IStormLog:interface",
-          "docComment": "",
-          "excerptTokens": [
-            {
-              "kind": "Content",
-              "text": "export interface IStormLog "
-            }
-          ],
-          "fileUrlPath": "tmp/.tsup/declaration/packages/logging/src/types.d.ts",
-          "releaseTag": "Public",
-          "name": "IStormLog",
-          "preserveMemberOrder": false,
-          "members": [
-            {
-              "kind": "PropertySignature",
-              "canonicalReference": "@storm-stack/unique-identifier!IStormLog#child:member",
-              "docComment": "/**\n * Create a child logger\n *\n * @param name - The name of the child logger\n *\n * @returns The child logger\n */\n",
-              "excerptTokens": [
-                {
-                  "kind": "Content",
-                  "text": "child: "
-                },
-                {
-                  "kind": "Content",
-                  "text": "(options: {\n        name: string;\n    } & "
-                },
-                {
-                  "kind": "Reference",
-                  "text": "Record",
-                  "canonicalReference": "!Record:type"
-                },
-                {
-                  "kind": "Content",
-                  "text": "<string, any>) => "
-                },
-                {
-                  "kind": "Reference",
-                  "text": "IStormLog",
-                  "canonicalReference": "@storm-stack/unique-identifier!IStormLog:interface"
-                },
-                {
-                  "kind": "Content",
-                  "text": ";"
-                }
-              ],
-              "isReadonly": false,
-              "isOptional": false,
-              "releaseTag": "Public",
-              "name": "child",
-              "propertyTypeTokenRange": {
-                "startIndex": 1,
-                "endIndex": 5
-              }
-            },
-            {
-              "kind": "PropertySignature",
-              "canonicalReference": "@storm-stack/unique-identifier!IStormLog#debug:member",
-              "docComment": "/**\n * Write a debug message to the logs.\n *\n * @param message - The message to be printed.\n *\n * @returns Either a promise that resolves to void or void.\n */\n",
-              "excerptTokens": [
-                {
-                  "kind": "Content",
-                  "text": "debug: "
-                },
-                {
-                  "kind": "Content",
-                  "text": "(...message: any[]) => "
-                },
-                {
-                  "kind": "Reference",
-                  "text": "MaybePromise",
-                  "canonicalReference": "@storm-stack/unique-identifier!~MaybePromise:type"
-                },
-                {
-                  "kind": "Content",
-                  "text": "<void>"
-                },
-                {
-                  "kind": "Content",
-                  "text": ";"
-                }
-              ],
-              "isReadonly": false,
-              "isOptional": false,
-              "releaseTag": "Public",
-              "name": "debug",
-              "propertyTypeTokenRange": {
-                "startIndex": 1,
-                "endIndex": 4
-              }
-            },
-            {
-              "kind": "PropertySignature",
-              "canonicalReference": "@storm-stack/unique-identifier!IStormLog#error:member",
-              "docComment": "/**\n * Write an error message to the logs.\n *\n * @param message - The message to be displayed.\n *\n * @returns Either a promise that resolves to void or void.\n */\n",
-              "excerptTokens": [
-                {
-                  "kind": "Content",
-                  "text": "error: "
-                },
-                {
-                  "kind": "Content",
-                  "text": "(...message: any[]) => "
-                },
-                {
-                  "kind": "Reference",
-                  "text": "MaybePromise",
-                  "canonicalReference": "@storm-stack/unique-identifier!~MaybePromise:type"
-                },
-                {
-                  "kind": "Content",
-                  "text": "<void>"
-                },
-                {
-                  "kind": "Content",
-                  "text": ";"
-                }
-              ],
-              "isReadonly": false,
-              "isOptional": false,
-              "releaseTag": "Public",
-              "name": "error",
-              "propertyTypeTokenRange": {
-                "startIndex": 1,
-                "endIndex": 4
-              }
-            },
-            {
-              "kind": "PropertySignature",
-              "canonicalReference": "@storm-stack/unique-identifier!IStormLog#exception:member",
-              "docComment": "/**\n * Write an exception message to the logs.\n *\n * @param message - The message to be displayed.\n *\n * @returns Either a promise that resolves to void or void.\n */\n",
-              "excerptTokens": [
-                {
-                  "kind": "Content",
-                  "text": "exception: "
-                },
-                {
-                  "kind": "Content",
-                  "text": "(...message: any[]) => "
-                },
-                {
-                  "kind": "Reference",
-                  "text": "MaybePromise",
-                  "canonicalReference": "@storm-stack/unique-identifier!~MaybePromise:type"
-                },
-                {
-                  "kind": "Content",
-                  "text": "<void>"
-                },
-                {
-                  "kind": "Content",
-                  "text": ";"
-                }
-              ],
-              "isReadonly": false,
-              "isOptional": false,
-              "releaseTag": "Public",
-              "name": "exception",
-              "propertyTypeTokenRange": {
-                "startIndex": 1,
-                "endIndex": 4
-              }
-            },
-            {
-              "kind": "PropertySignature",
-              "canonicalReference": "@storm-stack/unique-identifier!IStormLog#fatal:member",
-              "docComment": "/**\n * Write a fatal message to the logs.\n *\n * @param message - The fatal message to be displayed.\n *\n * @returns Either a promise that resolves to void or void.\n */\n",
-              "excerptTokens": [
-                {
-                  "kind": "Content",
-                  "text": "fatal: "
-                },
-                {
-                  "kind": "Content",
-                  "text": "(...message: any[]) => "
-                },
-                {
-                  "kind": "Reference",
-                  "text": "MaybePromise",
-                  "canonicalReference": "@storm-stack/unique-identifier!~MaybePromise:type"
-                },
-                {
-                  "kind": "Content",
-                  "text": "<void>"
-                },
-                {
-                  "kind": "Content",
-                  "text": ";"
-                }
-              ],
-              "isReadonly": false,
-              "isOptional": false,
-              "releaseTag": "Public",
-              "name": "fatal",
-              "propertyTypeTokenRange": {
-                "startIndex": 1,
-                "endIndex": 4
-              }
-            },
-            {
-              "kind": "PropertySignature",
-              "canonicalReference": "@storm-stack/unique-identifier!IStormLog#info:member",
-              "docComment": "/**\n * Write an informational message to the logs.\n *\n * @param message - The message to be printed.\n *\n * @returns Either a promise that resolves to void or void.\n */\n",
-              "excerptTokens": [
-                {
-                  "kind": "Content",
-                  "text": "info: "
-                },
-                {
-                  "kind": "Content",
-                  "text": "(...message: any[]) => "
-                },
-                {
-                  "kind": "Reference",
-                  "text": "MaybePromise",
-                  "canonicalReference": "@storm-stack/unique-identifier!~MaybePromise:type"
-                },
-                {
-                  "kind": "Content",
-                  "text": "<void>"
-                },
-                {
-                  "kind": "Content",
-                  "text": ";"
-                }
-              ],
-              "isReadonly": false,
-              "isOptional": false,
-              "releaseTag": "Public",
-              "name": "info",
-              "propertyTypeTokenRange": {
-                "startIndex": 1,
-                "endIndex": 4
-              }
-            },
-            {
-              "kind": "PropertySignature",
-              "canonicalReference": "@storm-stack/unique-identifier!IStormLog#log:member",
-              "docComment": "/**\n * Write an informational message to the logs.\n *\n * @param message - The message to be printed.\n *\n * @returns Either a promise that resolves to void or void.\n */\n",
-              "excerptTokens": [
-                {
-                  "kind": "Content",
-                  "text": "log: "
-                },
-                {
-                  "kind": "Content",
-                  "text": "(...message: any[]) => "
-                },
-                {
-                  "kind": "Reference",
-                  "text": "MaybePromise",
-                  "canonicalReference": "@storm-stack/unique-identifier!~MaybePromise:type"
-                },
-                {
-                  "kind": "Content",
-                  "text": "<void>"
-                },
-                {
-                  "kind": "Content",
-                  "text": ";"
-                }
-              ],
-              "isReadonly": false,
-              "isOptional": false,
-              "releaseTag": "Public",
-              "name": "log",
-              "propertyTypeTokenRange": {
-                "startIndex": 1,
-                "endIndex": 4
-              }
-            },
-            {
-              "kind": "PropertySignature",
-              "canonicalReference": "@storm-stack/unique-identifier!IStormLog#start:member",
-              "docComment": "/**\n * Start a process\n *\n * @param name - The name of the process\n */\n",
-              "excerptTokens": [
-                {
-                  "kind": "Content",
-                  "text": "start: "
-                },
-                {
-                  "kind": "Content",
-                  "text": "(name: string) => "
-                },
-                {
-                  "kind": "Reference",
-                  "text": "MaybePromise",
-                  "canonicalReference": "@storm-stack/unique-identifier!~MaybePromise:type"
-                },
-                {
-                  "kind": "Content",
-                  "text": "<void>"
-                },
-                {
-                  "kind": "Content",
-                  "text": ";"
-                }
-              ],
-              "isReadonly": false,
-              "isOptional": false,
-              "releaseTag": "Public",
-              "name": "start",
-              "propertyTypeTokenRange": {
-                "startIndex": 1,
-                "endIndex": 4
-              }
-            },
-            {
-              "kind": "PropertySignature",
-              "canonicalReference": "@storm-stack/unique-identifier!IStormLog#stopwatch:member",
-              "docComment": "/**\n * Write an message to the logs specifying how long it took to complete a process\n *\n * @param name - The name of the process\n *\n * @param startTime - The start time of the process\n */\n",
-              "excerptTokens": [
-                {
-                  "kind": "Content",
-                  "text": "stopwatch: "
-                },
-                {
-                  "kind": "Content",
-                  "text": "(name?: string, startTime?: "
-                },
-                {
-                  "kind": "Reference",
-                  "text": "StormTime",
-                  "canonicalReference": "@storm-stack/unique-identifier!~StormTime:class"
-                },
-                {
-                  "kind": "Content",
-                  "text": ") => "
-                },
-                {
-                  "kind": "Reference",
-                  "text": "MaybePromise",
-                  "canonicalReference": "@storm-stack/unique-identifier!~MaybePromise:type"
-                },
-                {
-                  "kind": "Content",
-                  "text": "<void>"
-                },
-                {
-                  "kind": "Content",
-                  "text": ";"
-                }
-              ],
-              "isReadonly": false,
-              "isOptional": false,
-              "releaseTag": "Public",
-              "name": "stopwatch",
-              "propertyTypeTokenRange": {
-                "startIndex": 1,
-                "endIndex": 6
-              }
-            },
-            {
-              "kind": "PropertySignature",
-              "canonicalReference": "@storm-stack/unique-identifier!IStormLog#success:member",
-              "docComment": "/**\n * Write a success message to the logs.\n *\n * @param message - The message to print.\n *\n * @returns Either a promise that resolves to void or void.\n */\n",
-              "excerptTokens": [
-                {
-                  "kind": "Content",
-                  "text": "success: "
-                },
-                {
-                  "kind": "Content",
-                  "text": "(...message: any[]) => "
-                },
-                {
-                  "kind": "Reference",
-                  "text": "MaybePromise",
-                  "canonicalReference": "@storm-stack/unique-identifier!~MaybePromise:type"
-                },
-                {
-                  "kind": "Content",
-                  "text": "<void>"
-                },
-                {
-                  "kind": "Content",
-                  "text": ";"
-                }
-              ],
-              "isReadonly": false,
-              "isOptional": false,
-              "releaseTag": "Public",
-              "name": "success",
-              "propertyTypeTokenRange": {
-                "startIndex": 1,
-                "endIndex": 4
-              }
-            },
-            {
-              "kind": "PropertySignature",
-              "canonicalReference": "@storm-stack/unique-identifier!IStormLog#trace:member",
-              "docComment": "/**\n * Write a trace message to the logs.\n *\n * @param message - The message to be printed.\n *\n * @returns Either a promise that resolves to void or void.\n */\n",
-              "excerptTokens": [
-                {
-                  "kind": "Content",
-                  "text": "trace: "
-                },
-                {
-                  "kind": "Content",
-                  "text": "(...message: any[]) => "
-                },
-                {
-                  "kind": "Reference",
-                  "text": "MaybePromise",
-                  "canonicalReference": "@storm-stack/unique-identifier!~MaybePromise:type"
-                },
-                {
-                  "kind": "Content",
-                  "text": "<void>"
-                },
-                {
-                  "kind": "Content",
-                  "text": ";"
-                }
-              ],
-              "isReadonly": false,
-              "isOptional": false,
-              "releaseTag": "Public",
-              "name": "trace",
-              "propertyTypeTokenRange": {
-                "startIndex": 1,
-                "endIndex": 4
-              }
-            },
-            {
-              "kind": "PropertySignature",
-              "canonicalReference": "@storm-stack/unique-identifier!IStormLog#warn:member",
-              "docComment": "/**\n * Write a warning message to the logs.\n *\n * @param message - The message to be printed.\n *\n * @returns Either a promise that resolves to void or void.\n */\n",
-              "excerptTokens": [
-                {
-                  "kind": "Content",
-                  "text": "warn: "
-                },
-                {
-                  "kind": "Content",
-                  "text": "(...message: any[]) => "
-                },
-                {
-                  "kind": "Reference",
-                  "text": "MaybePromise",
-                  "canonicalReference": "@storm-stack/unique-identifier!~MaybePromise:type"
-                },
-                {
-                  "kind": "Content",
-                  "text": "<void>"
-                },
-                {
-                  "kind": "Content",
-                  "text": ";"
-                }
-              ],
-              "isReadonly": false,
-              "isOptional": false,
-              "releaseTag": "Public",
-              "name": "warn",
-              "propertyTypeTokenRange": {
-                "startIndex": 1,
-                "endIndex": 4
-              }
-            }
-          ],
-          "extendsTokenRanges": []
-        },
-        {
-          "kind": "Class",
-          "canonicalReference": "@storm-stack/unique-identifier!LoggerWrapper:class",
-          "docComment": "/**\n * A wrapper for a logger class.\n */\n",
-          "excerptTokens": [
-            {
-              "kind": "Content",
-              "text": "export declare class LoggerWrapper implements "
-            },
-            {
-              "kind": "Reference",
-              "text": "ILoggerWrapper",
-              "canonicalReference": "@storm-stack/unique-identifier!ILoggerWrapper:interface"
-            },
-            {
-              "kind": "Content",
-              "text": " "
-            }
-          ],
-          "fileUrlPath": "tmp/.tsup/declaration/packages/logging/src/composition/logger-wrapper.d.ts",
-          "releaseTag": "Public",
-          "isAbstract": false,
-          "name": "LoggerWrapper",
-          "preserveMemberOrder": false,
-          "members": [
-            {
-              "kind": "Property",
-              "canonicalReference": "@storm-stack/unique-identifier!LoggerWrapper#config:member",
-              "docComment": "",
-              "excerptTokens": [
-                {
-                  "kind": "Content",
-                  "text": "protected config: "
-                },
-                {
-                  "kind": "Reference",
-                  "text": "StormConfig",
-                  "canonicalReference": "@storm-software/config!StormConfig:type"
-                },
-                {
-                  "kind": "Content",
-                  "text": ";"
-                }
-              ],
-              "isReadonly": false,
-              "isOptional": false,
-              "releaseTag": "Public",
-              "name": "config",
-              "propertyTypeTokenRange": {
-                "startIndex": 1,
-                "endIndex": 2
-              },
-              "isStatic": false,
-              "isProtected": true,
-              "isAbstract": false
-            },
-            {
-              "kind": "Property",
-              "canonicalReference": "@storm-stack/unique-identifier!LoggerWrapper#debug:member",
-              "docComment": "/**\n * Write a debug message to the logs.\n *\n * @param message - The message to be printed.\n *\n * @returns Either a promise that resolves to void or void.\n */\n",
-              "excerptTokens": [
-                {
-                  "kind": "Content",
-                  "text": "debug: "
-                },
-                {
-                  "kind": "Content",
-                  "text": "(message: string) => "
-                },
-                {
-                  "kind": "Reference",
-                  "text": "MaybePromise",
-                  "canonicalReference": "@storm-stack/unique-identifier!~MaybePromise:type"
-                },
-                {
-                  "kind": "Content",
-                  "text": "<void>"
-                },
-                {
-                  "kind": "Content",
-                  "text": ";"
-                }
-              ],
-              "isReadonly": false,
-              "isOptional": false,
-              "releaseTag": "Public",
-              "name": "debug",
-              "propertyTypeTokenRange": {
-                "startIndex": 1,
-                "endIndex": 4
-              },
-              "isStatic": false,
-              "isProtected": false,
-              "isAbstract": false
-            },
-            {
-              "kind": "Property",
-              "canonicalReference": "@storm-stack/unique-identifier!LoggerWrapper#error:member",
-              "docComment": "/**\n * Write an error message to the logs.\n *\n * @param error - The message to be displayed.\n *\n * @returns Either a promise that resolves to void or void.\n */\n",
-              "excerptTokens": [
-                {
-                  "kind": "Content",
-                  "text": "error: "
-                },
-                {
-                  "kind": "Content",
-                  "text": "(error: string | "
-                },
-                {
-                  "kind": "Reference",
-                  "text": "Error",
-                  "canonicalReference": "!Error:interface"
-                },
-                {
-                  "kind": "Content",
-                  "text": ") => "
-                },
-                {
-                  "kind": "Reference",
-                  "text": "MaybePromise",
-                  "canonicalReference": "@storm-stack/unique-identifier!~MaybePromise:type"
-                },
-                {
-                  "kind": "Content",
-                  "text": "<void>"
-                },
-                {
-                  "kind": "Content",
-                  "text": ";"
-                }
-              ],
-              "isReadonly": false,
-              "isOptional": false,
-              "releaseTag": "Public",
-              "name": "error",
-              "propertyTypeTokenRange": {
-                "startIndex": 1,
-                "endIndex": 6
-              },
-              "isStatic": false,
-              "isProtected": false,
-              "isAbstract": false
-            },
-            {
-              "kind": "Property",
-              "canonicalReference": "@storm-stack/unique-identifier!LoggerWrapper#exception:member",
-              "docComment": "/**\n * Write an error message to the logs.\n *\n * @param error - The message to be displayed.\n *\n * @returns Either a promise that resolves to void or void.\n */\n",
-              "excerptTokens": [
-                {
-                  "kind": "Content",
-                  "text": "exception: "
-                },
-                {
-                  "kind": "Content",
-                  "text": "(error: string | "
-                },
-                {
-                  "kind": "Reference",
-                  "text": "Error",
-                  "canonicalReference": "!Error:interface"
-                },
-                {
-                  "kind": "Content",
-                  "text": ") => "
-                },
-                {
-                  "kind": "Reference",
-                  "text": "MaybePromise",
-                  "canonicalReference": "@storm-stack/unique-identifier!~MaybePromise:type"
-                },
-                {
-                  "kind": "Content",
-                  "text": "<void>"
-                },
-                {
-                  "kind": "Content",
-                  "text": ";"
-                }
-              ],
-              "isReadonly": false,
-              "isOptional": false,
-              "releaseTag": "Public",
-              "name": "exception",
-              "propertyTypeTokenRange": {
-                "startIndex": 1,
-                "endIndex": 6
-              },
-              "isStatic": false,
-              "isProtected": false,
-              "isAbstract": false
-            },
-            {
-              "kind": "Property",
-              "canonicalReference": "@storm-stack/unique-identifier!LoggerWrapper#fatal:member",
-              "docComment": "/**\n * Write a fatal message to the logs.\n *\n * @param error - The fatal message to be displayed.\n *\n * @returns Either a promise that resolves to void or void.\n */\n",
-              "excerptTokens": [
-                {
-                  "kind": "Content",
-                  "text": "fatal: "
-                },
-                {
-                  "kind": "Content",
-                  "text": "(error: string | "
-                },
-                {
-                  "kind": "Reference",
-                  "text": "Error",
-                  "canonicalReference": "!Error:interface"
-                },
-                {
-                  "kind": "Content",
-                  "text": ") => "
-                },
-                {
-                  "kind": "Reference",
-                  "text": "MaybePromise",
-                  "canonicalReference": "@storm-stack/unique-identifier!~MaybePromise:type"
-                },
-                {
-                  "kind": "Content",
-                  "text": "<void>"
-                },
-                {
-                  "kind": "Content",
-                  "text": ";"
-                }
-              ],
-              "isReadonly": false,
-              "isOptional": false,
-              "releaseTag": "Public",
-              "name": "fatal",
-              "propertyTypeTokenRange": {
-                "startIndex": 1,
-                "endIndex": 6
-              },
-              "isStatic": false,
-              "isProtected": false,
-              "isAbstract": false
-            },
-            {
-              "kind": "Property",
-              "canonicalReference": "@storm-stack/unique-identifier!LoggerWrapper#getErrorMessage:member",
-              "docComment": "/**\n * Format an error message.\n *\n * @param obj - The error to format.\n *\n * @returns The formatted error message.\n */\n",
-              "excerptTokens": [
-                {
-                  "kind": "Content",
-                  "text": "protected getErrorMessage: "
-                },
-                {
-                  "kind": "Content",
-                  "text": "(obj?: string | "
-                },
-                {
-                  "kind": "Reference",
-                  "text": "Error",
-                  "canonicalReference": "!Error:interface"
-                },
-                {
-                  "kind": "Content",
-                  "text": " | null) => string"
-                },
-                {
-                  "kind": "Content",
-                  "text": ";"
-                }
-              ],
-              "isReadonly": false,
-              "isOptional": false,
-              "releaseTag": "Public",
-              "name": "getErrorMessage",
-              "propertyTypeTokenRange": {
-                "startIndex": 1,
-                "endIndex": 4
-              },
-              "isStatic": false,
-              "isProtected": true,
-              "isAbstract": false
-            },
-            {
-              "kind": "Property",
-              "canonicalReference": "@storm-stack/unique-identifier!LoggerWrapper#info:member",
-              "docComment": "/**\n * Write an informational message to the logs.\n *\n * @param message - The message to be printed.\n *\n * @returns Either a promise that resolves to void or void.\n */\n",
-              "excerptTokens": [
-                {
-                  "kind": "Content",
-                  "text": "info: "
-                },
-                {
-                  "kind": "Content",
-                  "text": "(message: string) => "
-                },
-                {
-                  "kind": "Reference",
-                  "text": "MaybePromise",
-                  "canonicalReference": "@storm-stack/unique-identifier!~MaybePromise:type"
-                },
-                {
-                  "kind": "Content",
-                  "text": "<void>"
-                },
-                {
-                  "kind": "Content",
-                  "text": ";"
-                }
-              ],
-              "isReadonly": false,
-              "isOptional": false,
-              "releaseTag": "Public",
-              "name": "info",
-              "propertyTypeTokenRange": {
-                "startIndex": 1,
-                "endIndex": 4
-              },
-              "isStatic": false,
-              "isProtected": false,
-              "isAbstract": false
-            },
-            {
-              "kind": "Property",
-              "canonicalReference": "@storm-stack/unique-identifier!LoggerWrapper#log:member",
-              "docComment": "/**\n * Write a log message to the logs.\n *\n * @param message - The message to be printed.\n *\n * @returns Either a promise that resolves to void or void.\n */\n",
-              "excerptTokens": [
-                {
-                  "kind": "Content",
-                  "text": "log: "
-                },
-                {
-                  "kind": "Content",
-                  "text": "(message: string) => "
-                },
-                {
-                  "kind": "Reference",
-                  "text": "MaybePromise",
-                  "canonicalReference": "@storm-stack/unique-identifier!~MaybePromise:type"
-                },
-                {
-                  "kind": "Content",
-                  "text": "<void>"
-                },
-                {
-                  "kind": "Content",
-                  "text": ";"
-                }
-              ],
-              "isReadonly": false,
-              "isOptional": false,
-              "releaseTag": "Public",
-              "name": "log",
-              "propertyTypeTokenRange": {
-                "startIndex": 1,
-                "endIndex": 4
-              },
-              "isStatic": false,
-              "isProtected": false,
-              "isAbstract": false
-            },
-            {
-              "kind": "Property",
-              "canonicalReference": "@storm-stack/unique-identifier!LoggerWrapper#logger:member",
-              "docComment": "",
-              "excerptTokens": [
-                {
-                  "kind": "Content",
-                  "text": "protected logger: "
-                },
-                {
-                  "kind": "Reference",
-                  "text": "ILogger",
-                  "canonicalReference": "@storm-stack/unique-identifier!ILogger:interface"
-                },
-                {
-                  "kind": "Content",
-                  "text": ";"
-                }
-              ],
-              "isReadonly": false,
-              "isOptional": false,
-              "releaseTag": "Public",
-              "name": "logger",
-              "propertyTypeTokenRange": {
-                "startIndex": 1,
-                "endIndex": 2
-              },
-              "isStatic": false,
-              "isProtected": true,
-              "isAbstract": false
-            },
-            {
-              "kind": "Property",
-              "canonicalReference": "@storm-stack/unique-identifier!LoggerWrapper#name:member",
-              "docComment": "",
-              "excerptTokens": [
-                {
-                  "kind": "Content",
-                  "text": "protected name?: "
-                },
-                {
-                  "kind": "Content",
-                  "text": "string | undefined"
-                },
-                {
-                  "kind": "Content",
-                  "text": ";"
-                }
-              ],
-              "isReadonly": false,
-              "isOptional": true,
-              "releaseTag": "Public",
-              "name": "name",
-              "propertyTypeTokenRange": {
-                "startIndex": 1,
-                "endIndex": 2
-              },
-              "isStatic": false,
-              "isProtected": true,
-              "isAbstract": false
-            },
-            {
-              "kind": "Property",
-              "canonicalReference": "@storm-stack/unique-identifier!LoggerWrapper#success:member",
-              "docComment": "/**\n * Write a success message to the logs.\n *\n * @param message - The message to print.\n *\n * @returns Either a promise that resolves to void or void.\n */\n",
-              "excerptTokens": [
-                {
-                  "kind": "Content",
-                  "text": "success: "
-                },
-                {
-                  "kind": "Content",
-                  "text": "(message: string) => "
-                },
-                {
-                  "kind": "Reference",
-                  "text": "MaybePromise",
-                  "canonicalReference": "@storm-stack/unique-identifier!~MaybePromise:type"
-                },
-                {
-                  "kind": "Content",
-                  "text": "<void>"
-                },
-                {
-                  "kind": "Content",
-                  "text": ";"
-                }
-              ],
-              "isReadonly": false,
-              "isOptional": false,
-              "releaseTag": "Public",
-              "name": "success",
-              "propertyTypeTokenRange": {
-                "startIndex": 1,
-                "endIndex": 4
-              },
-              "isStatic": false,
-              "isProtected": false,
-              "isAbstract": false
-            },
-            {
-              "kind": "Property",
-              "canonicalReference": "@storm-stack/unique-identifier!LoggerWrapper#trace:member",
-              "docComment": "/**\n * Write a trace message to the logs.\n *\n * @param message - The message to be printed.\n *\n * @returns Either a promise that resolves to void or void.\n */\n",
-              "excerptTokens": [
-                {
-                  "kind": "Content",
-                  "text": "trace: "
-                },
-                {
-                  "kind": "Content",
-                  "text": "(message: string) => "
-                },
-                {
-                  "kind": "Reference",
-                  "text": "MaybePromise",
-                  "canonicalReference": "@storm-stack/unique-identifier!~MaybePromise:type"
-                },
-                {
-                  "kind": "Content",
-                  "text": "<void>"
-                },
-                {
-                  "kind": "Content",
-                  "text": ";"
-                }
-              ],
-              "isReadonly": false,
-              "isOptional": false,
-              "releaseTag": "Public",
-              "name": "trace",
-              "propertyTypeTokenRange": {
-                "startIndex": 1,
-                "endIndex": 4
-              },
-              "isStatic": false,
-              "isProtected": false,
-              "isAbstract": false
-            },
-            {
-              "kind": "Property",
-              "canonicalReference": "@storm-stack/unique-identifier!LoggerWrapper#warn:member",
-              "docComment": "/**\n * Write a warning message to the logs.\n *\n * @param message - The message to be printed.\n *\n * @returns Either a promise that resolves to void or void.\n */\n",
-              "excerptTokens": [
-                {
-                  "kind": "Content",
-                  "text": "warn: "
-                },
-                {
-                  "kind": "Content",
-                  "text": "(message: string) => "
-                },
-                {
-                  "kind": "Reference",
-                  "text": "MaybePromise",
-                  "canonicalReference": "@storm-stack/unique-identifier!~MaybePromise:type"
-                },
-                {
-                  "kind": "Content",
-                  "text": "<void>"
-                },
-                {
-                  "kind": "Content",
-                  "text": ";"
-                }
-              ],
-              "isReadonly": false,
-              "isOptional": false,
-              "releaseTag": "Public",
-              "name": "warn",
-              "propertyTypeTokenRange": {
-                "startIndex": 1,
-                "endIndex": 4
-              },
-              "isStatic": false,
-              "isProtected": false,
-              "isAbstract": false
-            },
-            {
-              "kind": "Property",
-              "canonicalReference": "@storm-stack/unique-identifier!LoggerWrapper.wrap:member",
-              "docComment": "/**\n * Wrap a logger.\n *\n * @param logger - The logger to wrap.\n *\n * @param config - The logging configuration.\n *\n * @param name - The logger's name.\n *\n * @returns The wrapped logger.\n */\n",
-              "excerptTokens": [
-                {
-                  "kind": "Content",
-                  "text": "static wrap: "
-                },
-                {
-                  "kind": "Content",
-                  "text": "(logger: "
-                },
-                {
-                  "kind": "Reference",
-                  "text": "ILogger",
-                  "canonicalReference": "@storm-stack/unique-identifier!ILogger:interface"
-                },
-                {
-                  "kind": "Content",
-                  "text": ", config: "
-                },
-                {
-                  "kind": "Reference",
-                  "text": "StormConfig",
-                  "canonicalReference": "@storm-software/config!StormConfig:type"
-                },
-                {
-                  "kind": "Content",
-                  "text": ", name?: string) => "
-                },
-                {
-                  "kind": "Reference",
-                  "text": "LoggerWrapper",
-                  "canonicalReference": "@storm-stack/unique-identifier!LoggerWrapper:class"
-                },
-                {
-                  "kind": "Content",
-                  "text": ";"
-                }
-              ],
-              "isReadonly": false,
-              "isOptional": false,
-              "releaseTag": "Public",
-              "name": "wrap",
-              "propertyTypeTokenRange": {
-                "startIndex": 1,
-                "endIndex": 7
-              },
-              "isStatic": true,
-              "isProtected": false,
-              "isAbstract": false
-            }
-          ],
-          "implementsTokenRanges": [
-            {
-              "startIndex": 1,
-              "endIndex": 2
-            }
-          ]
-        },
-        {
-          "kind": "TypeAlias",
-          "canonicalReference": "@storm-stack/unique-identifier!LoggingErrorCode:type",
-          "docComment": "",
-          "excerptTokens": [
-            {
-              "kind": "Content",
-              "text": "export type LoggingErrorCode = "
-            },
-            {
-              "kind": "Reference",
-              "text": "ErrorCode",
-              "canonicalReference": "@storm-stack/unique-identifier!~ErrorCode:type"
-            },
-            {
-              "kind": "Content",
-              "text": " | \"logs_uninitialized\""
-            },
-            {
-              "kind": "Content",
-              "text": ";"
-            }
-          ],
-          "fileUrlPath": "tmp/.tsup/declaration/packages/logging/src/errors.d.ts",
-          "releaseTag": "Public",
-          "name": "LoggingErrorCode",
-          "typeTokenRange": {
-            "startIndex": 1,
-            "endIndex": 3
-          }
-        },
-        {
-          "kind": "Variable",
-          "canonicalReference": "@storm-stack/unique-identifier!LoggingErrorCode:var",
-          "docComment": "",
-          "excerptTokens": [
-            {
-              "kind": "Content",
-              "text": "LoggingErrorCode: "
-            },
-            {
-              "kind": "Content",
-              "text": "{\n    logs_uninitialized: "
-            },
-            {
-              "kind": "Reference",
-              "text": "LoggingErrorCode",
-              "canonicalReference": "@storm-stack/unique-identifier!LoggingErrorCode:type"
-            },
-            {
-              "kind": "Content",
-              "text": ";\n    success: "
-            },
-            {
-              "kind": "Reference",
-              "text": "ErrorCode",
-              "canonicalReference": "@storm-stack/unique-identifier!~ErrorCode:type"
-            },
-            {
-              "kind": "Content",
-              "text": ";\n    missing_issue_code: "
-            },
-            {
-              "kind": "Reference",
-              "text": "ErrorCode",
-              "canonicalReference": "@storm-stack/unique-identifier!~ErrorCode:type"
-            },
-            {
-              "kind": "Content",
-              "text": ";\n    invalid_config: "
-            },
-            {
-              "kind": "Reference",
-              "text": "ErrorCode",
-              "canonicalReference": "@storm-stack/unique-identifier!~ErrorCode:type"
-            },
-            {
-              "kind": "Content",
-              "text": ";\n    failed_to_load_file: "
-            },
-            {
-              "kind": "Reference",
-              "text": "ErrorCode",
-              "canonicalReference": "@storm-stack/unique-identifier!~ErrorCode:type"
-            },
-            {
-              "kind": "Content",
-              "text": ";\n    missing_context: "
-            },
-            {
-              "kind": "Reference",
-              "text": "ErrorCode",
-              "canonicalReference": "@storm-stack/unique-identifier!~ErrorCode:type"
-            },
-            {
-              "kind": "Content",
-              "text": ";\n    record_not_found: "
-            },
-            {
-              "kind": "Reference",
-              "text": "ErrorCode",
-              "canonicalReference": "@storm-stack/unique-identifier!~ErrorCode:type"
-            },
-            {
-              "kind": "Content",
-              "text": ";\n    required_field_missing: "
-            },
-            {
-              "kind": "Reference",
-              "text": "ErrorCode",
-              "canonicalReference": "@storm-stack/unique-identifier!~ErrorCode:type"
-            },
-            {
-              "kind": "Content",
-              "text": ";\n    database_query_error: "
-            },
-            {
-              "kind": "Reference",
-              "text": "ErrorCode",
-              "canonicalReference": "@storm-stack/unique-identifier!~ErrorCode:type"
-            },
-            {
-              "kind": "Content",
-              "text": ";\n    model_validation_error: "
-            },
-            {
-              "kind": "Reference",
-              "text": "ErrorCode",
-              "canonicalReference": "@storm-stack/unique-identifier!~ErrorCode:type"
-            },
-            {
-              "kind": "Content",
-              "text": ";\n    field_validation_error: "
-            },
-            {
-              "kind": "Reference",
-              "text": "ErrorCode",
-              "canonicalReference": "@storm-stack/unique-identifier!~ErrorCode:type"
-            },
-            {
-              "kind": "Content",
-              "text": ";\n    invalid_parameter: "
-            },
-            {
-              "kind": "Reference",
-              "text": "ErrorCode",
-              "canonicalReference": "@storm-stack/unique-identifier!~ErrorCode:type"
-            },
-            {
-              "kind": "Content",
-              "text": ";\n    invalid_request: "
-            },
-            {
-              "kind": "Reference",
-              "text": "ErrorCode",
-              "canonicalReference": "@storm-stack/unique-identifier!~ErrorCode:type"
-            },
-            {
-              "kind": "Content",
-              "text": ";\n    type_error: "
-            },
-            {
-              "kind": "Reference",
-              "text": "ErrorCode",
-              "canonicalReference": "@storm-stack/unique-identifier!~ErrorCode:type"
-            },
-            {
-              "kind": "Content",
-              "text": ";\n    processing_error: "
-            },
-            {
-              "kind": "Reference",
-              "text": "ErrorCode",
-              "canonicalReference": "@storm-stack/unique-identifier!~ErrorCode:type"
-            },
-            {
-              "kind": "Content",
-              "text": ";\n    internal_server_error: "
-            },
-            {
-              "kind": "Reference",
-              "text": "ErrorCode",
-              "canonicalReference": "@storm-stack/unique-identifier!~ErrorCode:type"
-            },
-            {
-              "kind": "Content",
-              "text": ";\n    user_not_logged_in: "
-            },
-            {
-              "kind": "Reference",
-              "text": "ErrorCode",
-              "canonicalReference": "@storm-stack/unique-identifier!~ErrorCode:type"
-            },
-            {
-              "kind": "Content",
-              "text": ";\n    unknown_cause: "
-            },
-            {
-              "kind": "Reference",
-              "text": "ErrorCode",
-              "canonicalReference": "@storm-stack/unique-identifier!~ErrorCode:type"
-            },
-            {
-              "kind": "Content",
-              "text": ";\n}"
-            }
-          ],
-          "fileUrlPath": "tmp/.tsup/declaration/packages/logging/src/errors.d.ts",
-          "isReadonly": true,
-          "releaseTag": "Public",
-          "name": "LoggingErrorCode",
-          "variableTypeTokenRange": {
-            "startIndex": 1,
-            "endIndex": 38
-          }
-        },
-        {
-          "kind": "TypeAlias",
-          "canonicalReference": "@storm-stack/unique-identifier!LogLevel:type",
-          "docComment": "",
-          "excerptTokens": [
-            {
-              "kind": "Content",
-              "text": "export type LogLevel = "
-            },
-            {
-              "kind": "Content",
-              "text": "0 | 10 | 20 | 30 | 40 | 60 | 70"
-            },
-            {
-              "kind": "Content",
-              "text": ";"
-            }
-          ],
-          "fileUrlPath": "tmp/.tsup/declaration/packages/logging/src/utilities/get-log-level.d.ts",
-          "releaseTag": "Public",
-          "name": "LogLevel",
-          "typeTokenRange": {
+          "fileUrlPath": "tmp/.tsup/declaration/packages/unique-identifier/src/uuid.d.ts",
+          "initializerTokenRange": {
             "startIndex": 1,
             "endIndex": 2
-          }
-        },
-        {
-          "kind": "Variable",
-          "canonicalReference": "@storm-stack/unique-identifier!LogLevel:var",
-          "docComment": "",
-          "excerptTokens": [
-            {
-              "kind": "Content",
-              "text": "LogLevel: "
-            },
-            {
-              "kind": "Content",
-              "text": "{\n    SILENT: "
-            },
-            {
-              "kind": "Reference",
-              "text": "LogLevel",
-              "canonicalReference": "@storm-stack/unique-identifier!LogLevel:type"
-            },
-            {
-              "kind": "Content",
-              "text": ";\n    FATAL: "
-            },
-            {
-              "kind": "Reference",
-              "text": "LogLevel",
-              "canonicalReference": "@storm-stack/unique-identifier!LogLevel:type"
-            },
-            {
-              "kind": "Content",
-              "text": ";\n    ERROR: "
-            },
-            {
-              "kind": "Reference",
-              "text": "LogLevel",
-              "canonicalReference": "@storm-stack/unique-identifier!LogLevel:type"
-            },
-            {
-              "kind": "Content",
-              "text": ";\n    WARN: "
-            },
-            {
-              "kind": "Reference",
-              "text": "LogLevel",
-              "canonicalReference": "@storm-stack/unique-identifier!LogLevel:type"
-            },
-            {
-              "kind": "Content",
-              "text": ";\n    INFO: "
-            },
-            {
-              "kind": "Reference",
-              "text": "LogLevel",
-              "canonicalReference": "@storm-stack/unique-identifier!LogLevel:type"
-            },
-            {
-              "kind": "Content",
-              "text": ";\n    DEBUG: "
-            },
-            {
-              "kind": "Reference",
-              "text": "LogLevel",
-              "canonicalReference": "@storm-stack/unique-identifier!LogLevel:type"
-            },
-            {
-              "kind": "Content",
-              "text": ";\n    TRACE: "
-            },
-            {
-              "kind": "Reference",
-              "text": "LogLevel",
-              "canonicalReference": "@storm-stack/unique-identifier!LogLevel:type"
-            },
-            {
-              "kind": "Content",
-              "text": ";\n}"
-            }
-          ],
-          "fileUrlPath": "tmp/.tsup/declaration/packages/logging/src/utilities/get-log-level.d.ts",
+          },
           "isReadonly": true,
           "releaseTag": "Public",
-          "name": "LogLevel",
+          "name": "DNS",
           "variableTypeTokenRange": {
-            "startIndex": 1,
-            "endIndex": 16
+            "startIndex": 0,
+            "endIndex": 0
           }
         },
         {
-          "kind": "TypeAlias",
-          "canonicalReference": "@storm-stack/unique-identifier!LogLevelLabel:type",
-          "docComment": "",
+          "kind": "Function",
+          "canonicalReference": "@storm-stack/unique-identifier!hash:function(1)",
+          "docComment": "/**\n * Create a hash from a string.\n *\n * @param input - String to hash\n *\n * @returns The hashed string\n */\n",
           "excerptTokens": [
             {
               "kind": "Content",
-              "text": "export type LogLevelLabel = "
+              "text": "export declare function hash(input: "
             },
             {
               "kind": "Content",
-              "text": "\"silent\" | \"fatal\" | \"error\" | \"warn\" | \"info\" | \"debug\" | \"trace\""
+              "text": "string | object"
+            },
+            {
+              "kind": "Content",
+              "text": "): "
+            },
+            {
+              "kind": "Content",
+              "text": "string"
             },
             {
               "kind": "Content",
               "text": ";"
             }
           ],
-          "fileUrlPath": "tmp/.tsup/declaration/packages/logging/src/utilities/get-log-level.d.ts",
+          "fileUrlPath": "tmp/.tsup/declaration/packages/unique-identifier/src/hash.d.ts",
+          "returnTypeTokenRange": {
+            "startIndex": 3,
+            "endIndex": 4
+          },
           "releaseTag": "Public",
-          "name": "LogLevelLabel",
-          "typeTokenRange": {
-            "startIndex": 1,
-            "endIndex": 2
-          }
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "input",
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "isOptional": false
+            }
+          ],
+          "name": "hash"
         },
         {
-          "kind": "Variable",
-          "canonicalReference": "@storm-stack/unique-identifier!LogLevelLabel:var",
-          "docComment": "",
+          "kind": "Interface",
+          "canonicalReference": "@storm-stack/unique-identifier!ISnowflakeGeneratorOptions:interface",
+          "docComment": "/**\n * Options passed to the `generate` function to create a snowflake identifier.\n */\n",
           "excerptTokens": [
             {
               "kind": "Content",
-              "text": "LogLevelLabel: "
-            },
-            {
-              "kind": "Content",
-              "text": "{\n    SILENT: "
-            },
-            {
-              "kind": "Reference",
-              "text": "LogLevelLabel",
-              "canonicalReference": "@storm-stack/unique-identifier!LogLevelLabel:type"
-            },
-            {
-              "kind": "Content",
-              "text": ";\n    FATAL: "
-            },
-            {
-              "kind": "Reference",
-              "text": "LogLevelLabel",
-              "canonicalReference": "@storm-stack/unique-identifier!LogLevelLabel:type"
-            },
-            {
-              "kind": "Content",
-              "text": ";\n    ERROR: "
-            },
-            {
-              "kind": "Reference",
-              "text": "LogLevelLabel",
-              "canonicalReference": "@storm-stack/unique-identifier!LogLevelLabel:type"
-            },
-            {
-              "kind": "Content",
-              "text": ";\n    WARN: "
-            },
-            {
-              "kind": "Reference",
-              "text": "LogLevelLabel",
-              "canonicalReference": "@storm-stack/unique-identifier!LogLevelLabel:type"
-            },
-            {
-              "kind": "Content",
-              "text": ";\n    INFO: "
-            },
-            {
-              "kind": "Reference",
-              "text": "LogLevelLabel",
-              "canonicalReference": "@storm-stack/unique-identifier!LogLevelLabel:type"
-            },
-            {
-              "kind": "Content",
-              "text": ";\n    DEBUG: "
-            },
-            {
-              "kind": "Reference",
-              "text": "LogLevelLabel",
-              "canonicalReference": "@storm-stack/unique-identifier!LogLevelLabel:type"
-            },
-            {
-              "kind": "Content",
-              "text": ";\n    TRACE: "
-            },
-            {
-              "kind": "Reference",
-              "text": "LogLevelLabel",
-              "canonicalReference": "@storm-stack/unique-identifier!LogLevelLabel:type"
-            },
-            {
-              "kind": "Content",
-              "text": ";\n}"
+              "text": "export interface ISnowflakeGeneratorOptions "
             }
           ],
-          "fileUrlPath": "tmp/.tsup/declaration/packages/logging/src/utilities/get-log-level.d.ts",
-          "isReadonly": true,
+          "fileUrlPath": "tmp/.tsup/declaration/packages/unique-identifier/src/snowflake.d.ts",
           "releaseTag": "Public",
-          "name": "LogLevelLabel",
-          "variableTypeTokenRange": {
-            "startIndex": 1,
-            "endIndex": 16
-          }
-        },
-        {
-          "kind": "Class",
-          "canonicalReference": "@storm-stack/unique-identifier!StormLog:class",
-          "docComment": "/**\n * The default logger class.\n *\n * @remarks\n *\n * This logger writes to the console.\n */\n",
-          "excerptTokens": [
-            {
-              "kind": "Content",
-              "text": "export declare class StormLog implements "
-            },
-            {
-              "kind": "Reference",
-              "text": "IStormLog",
-              "canonicalReference": "@storm-stack/unique-identifier!IStormLog:interface"
-            },
-            {
-              "kind": "Content",
-              "text": " "
-            }
-          ],
-          "fileUrlPath": "tmp/.tsup/declaration/packages/logging/src/storm-log.d.ts",
-          "releaseTag": "Public",
-          "isAbstract": false,
-          "name": "StormLog",
+          "name": "ISnowflakeGeneratorOptions",
           "preserveMemberOrder": false,
           "members": [
             {
-              "kind": "Constructor",
-              "canonicalReference": "@storm-stack/unique-identifier!StormLog:constructor(1)",
-              "docComment": "/**\n * The Singleton's constructor should always be private to prevent direct construction calls with the `new` operator.\n */\n",
+              "kind": "PropertySignature",
+              "canonicalReference": "@storm-stack/unique-identifier!ISnowflakeGeneratorOptions#epoch:member",
+              "docComment": "/**\n * The epoch to use for the snowflake.\n *\n * @remarks\n *\n * This is the time in milliseconds since 1 January 1970 00:00:00 UTC.\n *\n * @default 1420070400000 (Date.UTC(1970, 0, 1).valueOf())\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
-                  "text": "protected constructor(config: "
-                },
-                {
-                  "kind": "Reference",
-                  "text": "StormConfig",
-                  "canonicalReference": "@storm-software/config!StormConfig:type"
+                  "text": "epoch: "
                 },
                 {
                   "kind": "Content",
-                  "text": ", name?: "
-                },
-                {
-                  "kind": "Content",
-                  "text": "string | undefined"
-                },
-                {
-                  "kind": "Content",
-                  "text": ", additionalLoggers?: "
-                },
-                {
-                  "kind": "Reference",
-                  "text": "ILoggerWrapper",
-                  "canonicalReference": "@storm-stack/unique-identifier!ILoggerWrapper:interface"
-                },
-                {
-                  "kind": "Content",
-                  "text": "[]"
-                },
-                {
-                  "kind": "Content",
-                  "text": ");"
-                }
-              ],
-              "releaseTag": "Public",
-              "isProtected": true,
-              "overloadIndex": 1,
-              "parameters": [
-                {
-                  "parameterName": "config",
-                  "parameterTypeTokenRange": {
-                    "startIndex": 1,
-                    "endIndex": 2
-                  },
-                  "isOptional": false
-                },
-                {
-                  "parameterName": "name",
-                  "parameterTypeTokenRange": {
-                    "startIndex": 3,
-                    "endIndex": 4
-                  },
-                  "isOptional": true
-                },
-                {
-                  "parameterName": "additionalLoggers",
-                  "parameterTypeTokenRange": {
-                    "startIndex": 5,
-                    "endIndex": 7
-                  },
-                  "isOptional": true
-                }
-              ]
-            },
-            {
-              "kind": "Property",
-              "canonicalReference": "@storm-stack/unique-identifier!StormLog#additionalLoggers:member",
-              "docComment": "",
-              "excerptTokens": [
-                {
-                  "kind": "Content",
-                  "text": "protected additionalLoggers: "
-                },
-                {
-                  "kind": "Reference",
-                  "text": "ILoggerWrapper",
-                  "canonicalReference": "@storm-stack/unique-identifier!ILoggerWrapper:interface"
-                },
-                {
-                  "kind": "Content",
-                  "text": "[]"
+                  "text": "number"
                 },
                 {
                   "kind": "Content",
@@ -2686,1672 +550,479 @@
               "isReadonly": false,
               "isOptional": false,
               "releaseTag": "Public",
-              "name": "additionalLoggers",
+              "name": "epoch",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "@storm-stack/unique-identifier!ISnowflakeGeneratorOptions#shardId:member",
+              "docComment": "/**\n * The id of the shard running this generator.\n *\n * @default 1\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "shardId: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isReadonly": false,
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "shardId",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "@storm-stack/unique-identifier!ISnowflakeGeneratorOptions#timestamp:member",
+              "docComment": "/**\n * The current timestamp to use for the snowflake.\n *\n * @default Date.now()\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "timestamp: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number | "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "Date",
+                  "canonicalReference": "!Date:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isReadonly": false,
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "timestamp",
               "propertyTypeTokenRange": {
                 "startIndex": 1,
                 "endIndex": 3
-              },
-              "isStatic": false,
-              "isProtected": true,
-              "isAbstract": false
-            },
-            {
-              "kind": "Method",
-              "canonicalReference": "@storm-stack/unique-identifier!StormLog#addLogger:member(1)",
-              "docComment": "/**\n * Add a logger to the internal loggers list\n *\n * @param logger - The logger to add\n */\n",
-              "excerptTokens": [
-                {
-                  "kind": "Content",
-                  "text": "addLogger(logger: "
-                },
-                {
-                  "kind": "Reference",
-                  "text": "ILogger",
-                  "canonicalReference": "@storm-stack/unique-identifier!ILogger:interface"
-                },
-                {
-                  "kind": "Content",
-                  "text": "): "
-                },
-                {
-                  "kind": "Content",
-                  "text": "void"
-                },
-                {
-                  "kind": "Content",
-                  "text": ";"
-                }
-              ],
-              "isStatic": false,
-              "returnTypeTokenRange": {
-                "startIndex": 3,
-                "endIndex": 4
-              },
-              "releaseTag": "Public",
-              "isProtected": false,
-              "overloadIndex": 1,
-              "parameters": [
-                {
-                  "parameterName": "logger",
-                  "parameterTypeTokenRange": {
-                    "startIndex": 1,
-                    "endIndex": 2
-                  },
-                  "isOptional": false
-                }
-              ],
-              "isOptional": false,
-              "isAbstract": false,
-              "name": "addLogger"
-            },
-            {
-              "kind": "Method",
-              "canonicalReference": "@storm-stack/unique-identifier!StormLog#addWrappedLogger:member(1)",
-              "docComment": "/**\n * Add a logger wrapper to the internal loggers list\n *\n * @param wrapper - The logger wrapper to use\n */\n",
-              "excerptTokens": [
-                {
-                  "kind": "Content",
-                  "text": "addWrappedLogger(wrapper: "
-                },
-                {
-                  "kind": "Reference",
-                  "text": "ILoggerWrapper",
-                  "canonicalReference": "@storm-stack/unique-identifier!ILoggerWrapper:interface"
-                },
-                {
-                  "kind": "Content",
-                  "text": "): "
-                },
-                {
-                  "kind": "Content",
-                  "text": "void"
-                },
-                {
-                  "kind": "Content",
-                  "text": ";"
-                }
-              ],
-              "isStatic": false,
-              "returnTypeTokenRange": {
-                "startIndex": 3,
-                "endIndex": 4
-              },
-              "releaseTag": "Public",
-              "isProtected": false,
-              "overloadIndex": 1,
-              "parameters": [
-                {
-                  "parameterName": "wrapper",
-                  "parameterTypeTokenRange": {
-                    "startIndex": 1,
-                    "endIndex": 2
-                  },
-                  "isOptional": false
-                }
-              ],
-              "isOptional": false,
-              "isAbstract": false,
-              "name": "addWrappedLogger"
-            },
-            {
-              "kind": "Method",
-              "canonicalReference": "@storm-stack/unique-identifier!StormLog#child:member(1)",
-              "docComment": "/**\n * Start a process\n *\n * @param options - The options of the child process\n */\n",
-              "excerptTokens": [
-                {
-                  "kind": "Content",
-                  "text": "child(options: "
-                },
-                {
-                  "kind": "Content",
-                  "text": "{\n        name: string;\n    } & "
-                },
-                {
-                  "kind": "Reference",
-                  "text": "Record",
-                  "canonicalReference": "!Record:type"
-                },
-                {
-                  "kind": "Content",
-                  "text": "<string, any>"
-                },
-                {
-                  "kind": "Content",
-                  "text": "): "
-                },
-                {
-                  "kind": "Reference",
-                  "text": "IStormLog",
-                  "canonicalReference": "@storm-stack/unique-identifier!IStormLog:interface"
-                },
-                {
-                  "kind": "Content",
-                  "text": ";"
-                }
-              ],
-              "isStatic": false,
-              "returnTypeTokenRange": {
-                "startIndex": 5,
-                "endIndex": 6
-              },
-              "releaseTag": "Public",
-              "isProtected": false,
-              "overloadIndex": 1,
-              "parameters": [
-                {
-                  "parameterName": "options",
-                  "parameterTypeTokenRange": {
-                    "startIndex": 1,
-                    "endIndex": 4
-                  },
-                  "isOptional": false
-                }
-              ],
-              "isOptional": false,
-              "isAbstract": false,
-              "name": "child"
-            },
-            {
-              "kind": "Property",
-              "canonicalReference": "@storm-stack/unique-identifier!StormLog#config:member",
-              "docComment": "",
-              "excerptTokens": [
-                {
-                  "kind": "Content",
-                  "text": "protected config: "
-                },
-                {
-                  "kind": "Reference",
-                  "text": "StormConfig",
-                  "canonicalReference": "@storm-software/config!StormConfig:type"
-                },
-                {
-                  "kind": "Content",
-                  "text": ";"
-                }
-              ],
-              "isReadonly": false,
-              "isOptional": false,
-              "releaseTag": "Public",
-              "name": "config",
-              "propertyTypeTokenRange": {
-                "startIndex": 1,
-                "endIndex": 2
-              },
-              "isStatic": false,
-              "isProtected": true,
-              "isAbstract": false
-            },
-            {
-              "kind": "Method",
-              "canonicalReference": "@storm-stack/unique-identifier!StormLog.create:member(1)",
-              "docComment": "/**\n * Create a new instance of the logger\n *\n * @param config - The Storm config\n *\n * @param name - The name of the project to initialized the loggers for\n *\n * @param additionalLoggers - Additional loggers to use\n *\n * @returns The initialized logger\n */\n",
-              "excerptTokens": [
-                {
-                  "kind": "Content",
-                  "text": "static create(config: "
-                },
-                {
-                  "kind": "Reference",
-                  "text": "StormConfig",
-                  "canonicalReference": "@storm-software/config!StormConfig:type"
-                },
-                {
-                  "kind": "Content",
-                  "text": ", name?: "
-                },
-                {
-                  "kind": "Content",
-                  "text": "string"
-                },
-                {
-                  "kind": "Content",
-                  "text": ", additionalLoggers?: "
-                },
-                {
-                  "kind": "Reference",
-                  "text": "ILoggerWrapper",
-                  "canonicalReference": "@storm-stack/unique-identifier!ILoggerWrapper:interface"
-                },
-                {
-                  "kind": "Content",
-                  "text": "[]"
-                },
-                {
-                  "kind": "Content",
-                  "text": "): "
-                },
-                {
-                  "kind": "Reference",
-                  "text": "StormLog",
-                  "canonicalReference": "@storm-stack/unique-identifier!StormLog:class"
-                },
-                {
-                  "kind": "Content",
-                  "text": ";"
-                }
-              ],
-              "isStatic": true,
-              "returnTypeTokenRange": {
-                "startIndex": 8,
-                "endIndex": 9
-              },
-              "releaseTag": "Public",
-              "isProtected": false,
-              "overloadIndex": 1,
-              "parameters": [
-                {
-                  "parameterName": "config",
-                  "parameterTypeTokenRange": {
-                    "startIndex": 1,
-                    "endIndex": 2
-                  },
-                  "isOptional": false
-                },
-                {
-                  "parameterName": "name",
-                  "parameterTypeTokenRange": {
-                    "startIndex": 3,
-                    "endIndex": 4
-                  },
-                  "isOptional": true
-                },
-                {
-                  "parameterName": "additionalLoggers",
-                  "parameterTypeTokenRange": {
-                    "startIndex": 5,
-                    "endIndex": 7
-                  },
-                  "isOptional": true
-                }
-              ],
-              "isOptional": false,
-              "isAbstract": false,
-              "name": "create"
-            },
-            {
-              "kind": "Method",
-              "canonicalReference": "@storm-stack/unique-identifier!StormLog#debug:member(1)",
-              "docComment": "/**\n * Write a debug message to the logs.\n *\n * @param message - The message to be printed.\n *\n * @returns Either a promise that resolves to void or void.\n */\n",
-              "excerptTokens": [
-                {
-                  "kind": "Content",
-                  "text": "debug(message: "
-                },
-                {
-                  "kind": "Content",
-                  "text": "any"
-                },
-                {
-                  "kind": "Content",
-                  "text": "): "
-                },
-                {
-                  "kind": "Content",
-                  "text": "void"
-                },
-                {
-                  "kind": "Content",
-                  "text": ";"
-                }
-              ],
-              "isStatic": false,
-              "returnTypeTokenRange": {
-                "startIndex": 3,
-                "endIndex": 4
-              },
-              "releaseTag": "Public",
-              "isProtected": false,
-              "overloadIndex": 1,
-              "parameters": [
-                {
-                  "parameterName": "message",
-                  "parameterTypeTokenRange": {
-                    "startIndex": 1,
-                    "endIndex": 2
-                  },
-                  "isOptional": false
-                }
-              ],
-              "isOptional": false,
-              "isAbstract": false,
-              "name": "debug"
-            },
-            {
-              "kind": "Method",
-              "canonicalReference": "@storm-stack/unique-identifier!StormLog.debug:member(1)",
-              "docComment": "/**\n * Write a debug message to the logs.\n *\n * @param message - The message to be printed.\n *\n * @returns Either a promise that resolves to void or void.\n */\n",
-              "excerptTokens": [
-                {
-                  "kind": "Content",
-                  "text": "static debug(message: "
-                },
-                {
-                  "kind": "Content",
-                  "text": "any"
-                },
-                {
-                  "kind": "Content",
-                  "text": "): "
-                },
-                {
-                  "kind": "Content",
-                  "text": "void"
-                },
-                {
-                  "kind": "Content",
-                  "text": ";"
-                }
-              ],
-              "isStatic": true,
-              "returnTypeTokenRange": {
-                "startIndex": 3,
-                "endIndex": 4
-              },
-              "releaseTag": "Public",
-              "isProtected": false,
-              "overloadIndex": 1,
-              "parameters": [
-                {
-                  "parameterName": "message",
-                  "parameterTypeTokenRange": {
-                    "startIndex": 1,
-                    "endIndex": 2
-                  },
-                  "isOptional": false
-                }
-              ],
-              "isOptional": false,
-              "isAbstract": false,
-              "name": "debug"
-            },
-            {
-              "kind": "Method",
-              "canonicalReference": "@storm-stack/unique-identifier!StormLog#error:member(1)",
-              "docComment": "/**\n * Write an error message to the logs.\n *\n * @param message - The message to be displayed.\n *\n * @returns Either a promise that resolves to void or void.\n */\n",
-              "excerptTokens": [
-                {
-                  "kind": "Content",
-                  "text": "error(message: "
-                },
-                {
-                  "kind": "Content",
-                  "text": "any"
-                },
-                {
-                  "kind": "Content",
-                  "text": "): "
-                },
-                {
-                  "kind": "Content",
-                  "text": "void"
-                },
-                {
-                  "kind": "Content",
-                  "text": ";"
-                }
-              ],
-              "isStatic": false,
-              "returnTypeTokenRange": {
-                "startIndex": 3,
-                "endIndex": 4
-              },
-              "releaseTag": "Public",
-              "isProtected": false,
-              "overloadIndex": 1,
-              "parameters": [
-                {
-                  "parameterName": "message",
-                  "parameterTypeTokenRange": {
-                    "startIndex": 1,
-                    "endIndex": 2
-                  },
-                  "isOptional": false
-                }
-              ],
-              "isOptional": false,
-              "isAbstract": false,
-              "name": "error"
-            },
-            {
-              "kind": "Method",
-              "canonicalReference": "@storm-stack/unique-identifier!StormLog.error:member(1)",
-              "docComment": "/**\n * Write an error message to the logs.\n *\n * @param message - The message to be displayed.\n *\n * @returns Either a promise that resolves to void or void.\n */\n",
-              "excerptTokens": [
-                {
-                  "kind": "Content",
-                  "text": "static error(message: "
-                },
-                {
-                  "kind": "Content",
-                  "text": "any"
-                },
-                {
-                  "kind": "Content",
-                  "text": "): "
-                },
-                {
-                  "kind": "Content",
-                  "text": "void"
-                },
-                {
-                  "kind": "Content",
-                  "text": ";"
-                }
-              ],
-              "isStatic": true,
-              "returnTypeTokenRange": {
-                "startIndex": 3,
-                "endIndex": 4
-              },
-              "releaseTag": "Public",
-              "isProtected": false,
-              "overloadIndex": 1,
-              "parameters": [
-                {
-                  "parameterName": "message",
-                  "parameterTypeTokenRange": {
-                    "startIndex": 1,
-                    "endIndex": 2
-                  },
-                  "isOptional": false
-                }
-              ],
-              "isOptional": false,
-              "isAbstract": false,
-              "name": "error"
-            },
-            {
-              "kind": "Method",
-              "canonicalReference": "@storm-stack/unique-identifier!StormLog#exception:member(1)",
-              "docComment": "/**\n * Write an exception message to the logs.\n *\n * @param message - The message to be displayed.\n *\n * @returns Either a promise that resolves to void or void.\n */\n",
-              "excerptTokens": [
-                {
-                  "kind": "Content",
-                  "text": "exception(message: "
-                },
-                {
-                  "kind": "Content",
-                  "text": "any"
-                },
-                {
-                  "kind": "Content",
-                  "text": "): "
-                },
-                {
-                  "kind": "Content",
-                  "text": "void"
-                },
-                {
-                  "kind": "Content",
-                  "text": ";"
-                }
-              ],
-              "isStatic": false,
-              "returnTypeTokenRange": {
-                "startIndex": 3,
-                "endIndex": 4
-              },
-              "releaseTag": "Public",
-              "isProtected": false,
-              "overloadIndex": 1,
-              "parameters": [
-                {
-                  "parameterName": "message",
-                  "parameterTypeTokenRange": {
-                    "startIndex": 1,
-                    "endIndex": 2
-                  },
-                  "isOptional": false
-                }
-              ],
-              "isOptional": false,
-              "isAbstract": false,
-              "name": "exception"
-            },
-            {
-              "kind": "Method",
-              "canonicalReference": "@storm-stack/unique-identifier!StormLog.exception:member(1)",
-              "docComment": "/**\n * Write an exception message to the logs.\n *\n * @param message - The message to be displayed.\n *\n * @returns Either a promise that resolves to void or void.\n */\n",
-              "excerptTokens": [
-                {
-                  "kind": "Content",
-                  "text": "static exception(message: "
-                },
-                {
-                  "kind": "Content",
-                  "text": "any"
-                },
-                {
-                  "kind": "Content",
-                  "text": "): "
-                },
-                {
-                  "kind": "Content",
-                  "text": "void"
-                },
-                {
-                  "kind": "Content",
-                  "text": ";"
-                }
-              ],
-              "isStatic": true,
-              "returnTypeTokenRange": {
-                "startIndex": 3,
-                "endIndex": 4
-              },
-              "releaseTag": "Public",
-              "isProtected": false,
-              "overloadIndex": 1,
-              "parameters": [
-                {
-                  "parameterName": "message",
-                  "parameterTypeTokenRange": {
-                    "startIndex": 1,
-                    "endIndex": 2
-                  },
-                  "isOptional": false
-                }
-              ],
-              "isOptional": false,
-              "isAbstract": false,
-              "name": "exception"
-            },
-            {
-              "kind": "Method",
-              "canonicalReference": "@storm-stack/unique-identifier!StormLog#fatal:member(1)",
-              "docComment": "/**\n * Write a fatal message to the logs.\n *\n * @param message - The fatal message to be displayed.\n *\n * @returns Either a promise that resolves to void or void.\n */\n",
-              "excerptTokens": [
-                {
-                  "kind": "Content",
-                  "text": "fatal(message: "
-                },
-                {
-                  "kind": "Content",
-                  "text": "any"
-                },
-                {
-                  "kind": "Content",
-                  "text": "): "
-                },
-                {
-                  "kind": "Content",
-                  "text": "void"
-                },
-                {
-                  "kind": "Content",
-                  "text": ";"
-                }
-              ],
-              "isStatic": false,
-              "returnTypeTokenRange": {
-                "startIndex": 3,
-                "endIndex": 4
-              },
-              "releaseTag": "Public",
-              "isProtected": false,
-              "overloadIndex": 1,
-              "parameters": [
-                {
-                  "parameterName": "message",
-                  "parameterTypeTokenRange": {
-                    "startIndex": 1,
-                    "endIndex": 2
-                  },
-                  "isOptional": false
-                }
-              ],
-              "isOptional": false,
-              "isAbstract": false,
-              "name": "fatal"
-            },
-            {
-              "kind": "Method",
-              "canonicalReference": "@storm-stack/unique-identifier!StormLog.fatal:member(1)",
-              "docComment": "/**\n * Write a fatal message to the logs.\n *\n * @param message - The fatal message to be displayed.\n *\n * @returns Either a promise that resolves to void or void.\n */\n",
-              "excerptTokens": [
-                {
-                  "kind": "Content",
-                  "text": "static fatal(message: "
-                },
-                {
-                  "kind": "Content",
-                  "text": "any"
-                },
-                {
-                  "kind": "Content",
-                  "text": "): "
-                },
-                {
-                  "kind": "Content",
-                  "text": "void"
-                },
-                {
-                  "kind": "Content",
-                  "text": ";"
-                }
-              ],
-              "isStatic": true,
-              "returnTypeTokenRange": {
-                "startIndex": 3,
-                "endIndex": 4
-              },
-              "releaseTag": "Public",
-              "isProtected": false,
-              "overloadIndex": 1,
-              "parameters": [
-                {
-                  "parameterName": "message",
-                  "parameterTypeTokenRange": {
-                    "startIndex": 1,
-                    "endIndex": 2
-                  },
-                  "isOptional": false
-                }
-              ],
-              "isOptional": false,
-              "isAbstract": false,
-              "name": "fatal"
-            },
-            {
-              "kind": "Property",
-              "canonicalReference": "@storm-stack/unique-identifier!StormLog.getLoggers:member",
-              "docComment": "",
-              "excerptTokens": [
-                {
-                  "kind": "Content",
-                  "text": "protected static getLoggers: "
-                },
-                {
-                  "kind": "Content",
-                  "text": "() => "
-                },
-                {
-                  "kind": "Reference",
-                  "text": "Promise",
-                  "canonicalReference": "!Promise:interface"
-                },
-                {
-                  "kind": "Content",
-                  "text": "<"
-                },
-                {
-                  "kind": "Reference",
-                  "text": "GetLoggersResult",
-                  "canonicalReference": "@storm-stack/unique-identifier!GetLoggersResult:type"
-                },
-                {
-                  "kind": "Content",
-                  "text": ">"
-                },
-                {
-                  "kind": "Content",
-                  "text": ";"
-                }
-              ],
-              "isReadonly": false,
-              "isOptional": false,
-              "releaseTag": "Public",
-              "name": "getLoggers",
-              "propertyTypeTokenRange": {
-                "startIndex": 1,
-                "endIndex": 6
-              },
-              "isStatic": true,
-              "isProtected": true,
-              "isAbstract": false
-            },
-            {
-              "kind": "Property",
-              "canonicalReference": "@storm-stack/unique-identifier!StormLog#getStreams:member",
-              "docComment": "/**\n * Allow child classes to specify additional pino log streams\n *\n * @returns Additional log streams to use during initialization\n */\n",
-              "excerptTokens": [
-                {
-                  "kind": "Content",
-                  "text": "protected getStreams: "
-                },
-                {
-                  "kind": "Content",
-                  "text": "() => "
-                },
-                {
-                  "kind": "Reference",
-                  "text": "Array",
-                  "canonicalReference": "!Array:interface"
-                },
-                {
-                  "kind": "Content",
-                  "text": "<"
-                },
-                {
-                  "kind": "Reference",
-                  "text": "pino.DestinationStream",
-                  "canonicalReference": "!pino.DestinationStream:type"
-                },
-                {
-                  "kind": "Content",
-                  "text": " | "
-                },
-                {
-                  "kind": "Reference",
-                  "text": "pino.StreamEntry",
-                  "canonicalReference": "!pino.StreamEntry:type"
-                },
-                {
-                  "kind": "Content",
-                  "text": "<"
-                },
-                {
-                  "kind": "Reference",
-                  "text": "pino.Level",
-                  "canonicalReference": "!pino.Level:type"
-                },
-                {
-                  "kind": "Content",
-                  "text": ">>"
-                },
-                {
-                  "kind": "Content",
-                  "text": ";"
-                }
-              ],
-              "isReadonly": false,
-              "isOptional": false,
-              "releaseTag": "Public",
-              "name": "getStreams",
-              "propertyTypeTokenRange": {
-                "startIndex": 1,
-                "endIndex": 10
-              },
-              "isStatic": false,
-              "isProtected": true,
-              "isAbstract": false
-            },
-            {
-              "kind": "Method",
-              "canonicalReference": "@storm-stack/unique-identifier!StormLog#info:member(1)",
-              "docComment": "/**\n * Write an informational message to the logs.\n *\n * @param message - The message to be printed.\n *\n * @returns Either a promise that resolves to void or void.\n */\n",
-              "excerptTokens": [
-                {
-                  "kind": "Content",
-                  "text": "info(message: "
-                },
-                {
-                  "kind": "Content",
-                  "text": "any"
-                },
-                {
-                  "kind": "Content",
-                  "text": "): "
-                },
-                {
-                  "kind": "Content",
-                  "text": "void"
-                },
-                {
-                  "kind": "Content",
-                  "text": ";"
-                }
-              ],
-              "isStatic": false,
-              "returnTypeTokenRange": {
-                "startIndex": 3,
-                "endIndex": 4
-              },
-              "releaseTag": "Public",
-              "isProtected": false,
-              "overloadIndex": 1,
-              "parameters": [
-                {
-                  "parameterName": "message",
-                  "parameterTypeTokenRange": {
-                    "startIndex": 1,
-                    "endIndex": 2
-                  },
-                  "isOptional": false
-                }
-              ],
-              "isOptional": false,
-              "isAbstract": false,
-              "name": "info"
-            },
-            {
-              "kind": "Method",
-              "canonicalReference": "@storm-stack/unique-identifier!StormLog.info:member(1)",
-              "docComment": "/**\n * Write an informational message to the logs.\n *\n * @param message - The message to be printed.\n *\n * @returns Either a promise that resolves to void or void.\n */\n",
-              "excerptTokens": [
-                {
-                  "kind": "Content",
-                  "text": "static info(message: "
-                },
-                {
-                  "kind": "Content",
-                  "text": "any"
-                },
-                {
-                  "kind": "Content",
-                  "text": "): "
-                },
-                {
-                  "kind": "Content",
-                  "text": "void"
-                },
-                {
-                  "kind": "Content",
-                  "text": ";"
-                }
-              ],
-              "isStatic": true,
-              "returnTypeTokenRange": {
-                "startIndex": 3,
-                "endIndex": 4
-              },
-              "releaseTag": "Public",
-              "isProtected": false,
-              "overloadIndex": 1,
-              "parameters": [
-                {
-                  "parameterName": "message",
-                  "parameterTypeTokenRange": {
-                    "startIndex": 1,
-                    "endIndex": 2
-                  },
-                  "isOptional": false
-                }
-              ],
-              "isOptional": false,
-              "isAbstract": false,
-              "name": "info"
-            },
-            {
-              "kind": "Property",
-              "canonicalReference": "@storm-stack/unique-identifier!StormLog.initialize:member",
-              "docComment": "/**\n * Initialize the logs.\n *\n * @param config - The Storm config\n *\n * @param name - The name of the project to initialized the loggers for\n *\n * @returns The initialized loggers\n */\n",
-              "excerptTokens": [
-                {
-                  "kind": "Content",
-                  "text": "protected static initialize: "
-                },
-                {
-                  "kind": "Content",
-                  "text": "(config: "
-                },
-                {
-                  "kind": "Reference",
-                  "text": "StormConfig",
-                  "canonicalReference": "@storm-software/config!StormConfig:type"
-                },
-                {
-                  "kind": "Content",
-                  "text": ", name?: string, streams?: ("
-                },
-                {
-                  "kind": "Reference",
-                  "text": "pino.DestinationStream",
-                  "canonicalReference": "!pino.DestinationStream:type"
-                },
-                {
-                  "kind": "Content",
-                  "text": " | "
-                },
-                {
-                  "kind": "Reference",
-                  "text": "pino.StreamEntry",
-                  "canonicalReference": "!pino.StreamEntry:type"
-                },
-                {
-                  "kind": "Content",
-                  "text": "<"
-                },
-                {
-                  "kind": "Reference",
-                  "text": "pino.Level",
-                  "canonicalReference": "!pino.Level:type"
-                },
-                {
-                  "kind": "Content",
-                  "text": ">)[]) => "
-                },
-                {
-                  "kind": "Reference",
-                  "text": "Logger",
-                  "canonicalReference": "!unknown"
-                },
-                {
-                  "kind": "Content",
-                  "text": "<"
-                },
-                {
-                  "kind": "Reference",
-                  "text": "PinoLoggerOptions",
-                  "canonicalReference": "!unknown"
-                },
-                {
-                  "kind": "Content",
-                  "text": ">"
-                },
-                {
-                  "kind": "Content",
-                  "text": ";"
-                }
-              ],
-              "isReadonly": false,
-              "isOptional": false,
-              "releaseTag": "Public",
-              "name": "initialize",
-              "propertyTypeTokenRange": {
-                "startIndex": 1,
-                "endIndex": 14
-              },
-              "isStatic": true,
-              "isProtected": true,
-              "isAbstract": false
-            },
-            {
-              "kind": "Method",
-              "canonicalReference": "@storm-stack/unique-identifier!StormLog#log:member(1)",
-              "docComment": "/**\n * Write an informational message to the logs.\n *\n * @param message - The message to be printed.\n *\n * @returns Either a promise that resolves to void or void.\n */\n",
-              "excerptTokens": [
-                {
-                  "kind": "Content",
-                  "text": "log(message: "
-                },
-                {
-                  "kind": "Content",
-                  "text": "any"
-                },
-                {
-                  "kind": "Content",
-                  "text": "): "
-                },
-                {
-                  "kind": "Content",
-                  "text": "void"
-                },
-                {
-                  "kind": "Content",
-                  "text": ";"
-                }
-              ],
-              "isStatic": false,
-              "returnTypeTokenRange": {
-                "startIndex": 3,
-                "endIndex": 4
-              },
-              "releaseTag": "Public",
-              "isProtected": false,
-              "overloadIndex": 1,
-              "parameters": [
-                {
-                  "parameterName": "message",
-                  "parameterTypeTokenRange": {
-                    "startIndex": 1,
-                    "endIndex": 2
-                  },
-                  "isOptional": false
-                }
-              ],
-              "isOptional": false,
-              "isAbstract": false,
-              "name": "log"
-            },
-            {
-              "kind": "Method",
-              "canonicalReference": "@storm-stack/unique-identifier!StormLog.log:member(1)",
-              "docComment": "/**\n * Write an informational message to the logs.\n *\n * @param message - The message to be printed.\n *\n * @returns Either a promise that resolves to void or void.\n */\n",
-              "excerptTokens": [
-                {
-                  "kind": "Content",
-                  "text": "static log(message: "
-                },
-                {
-                  "kind": "Content",
-                  "text": "any"
-                },
-                {
-                  "kind": "Content",
-                  "text": "): "
-                },
-                {
-                  "kind": "Content",
-                  "text": "void"
-                },
-                {
-                  "kind": "Content",
-                  "text": ";"
-                }
-              ],
-              "isStatic": true,
-              "returnTypeTokenRange": {
-                "startIndex": 3,
-                "endIndex": 4
-              },
-              "releaseTag": "Public",
-              "isProtected": false,
-              "overloadIndex": 1,
-              "parameters": [
-                {
-                  "parameterName": "message",
-                  "parameterTypeTokenRange": {
-                    "startIndex": 1,
-                    "endIndex": 2
-                  },
-                  "isOptional": false
-                }
-              ],
-              "isOptional": false,
-              "isAbstract": false,
-              "name": "log"
-            },
-            {
-              "kind": "Property",
-              "canonicalReference": "@storm-stack/unique-identifier!StormLog.logger:member",
-              "docComment": "",
-              "excerptTokens": [
-                {
-                  "kind": "Content",
-                  "text": "protected static logger: "
-                },
-                {
-                  "kind": "Reference",
-                  "text": "Logger",
-                  "canonicalReference": "!unknown"
-                },
-                {
-                  "kind": "Content",
-                  "text": "<"
-                },
-                {
-                  "kind": "Reference",
-                  "text": "PinoLoggerOptions",
-                  "canonicalReference": "!unknown"
-                },
-                {
-                  "kind": "Content",
-                  "text": ">"
-                },
-                {
-                  "kind": "Content",
-                  "text": ";"
-                }
-              ],
-              "isReadonly": false,
-              "isOptional": false,
-              "releaseTag": "Public",
-              "name": "logger",
-              "propertyTypeTokenRange": {
-                "startIndex": 1,
-                "endIndex": 5
-              },
-              "isStatic": true,
-              "isProtected": true,
-              "isAbstract": false
-            },
-            {
-              "kind": "Property",
-              "canonicalReference": "@storm-stack/unique-identifier!StormLog.logLevel:member",
-              "docComment": "",
-              "excerptTokens": [
-                {
-                  "kind": "Content",
-                  "text": "protected static logLevel: "
-                },
-                {
-                  "kind": "Reference",
-                  "text": "LogLevel",
-                  "canonicalReference": "@storm-stack/unique-identifier!LogLevel:type"
-                },
-                {
-                  "kind": "Content",
-                  "text": ";"
-                }
-              ],
-              "isReadonly": false,
-              "isOptional": false,
-              "releaseTag": "Public",
-              "name": "logLevel",
-              "propertyTypeTokenRange": {
-                "startIndex": 1,
-                "endIndex": 2
-              },
-              "isStatic": true,
-              "isProtected": true,
-              "isAbstract": false
-            },
-            {
-              "kind": "Property",
-              "canonicalReference": "@storm-stack/unique-identifier!StormLog.logLevelLabel:member",
-              "docComment": "",
-              "excerptTokens": [
-                {
-                  "kind": "Content",
-                  "text": "protected static logLevelLabel: "
-                },
-                {
-                  "kind": "Reference",
-                  "text": "LogLevelLabel",
-                  "canonicalReference": "@storm-stack/unique-identifier!LogLevelLabel:type"
-                },
-                {
-                  "kind": "Content",
-                  "text": ";"
-                }
-              ],
-              "isReadonly": false,
-              "isOptional": false,
-              "releaseTag": "Public",
-              "name": "logLevelLabel",
-              "propertyTypeTokenRange": {
-                "startIndex": 1,
-                "endIndex": 2
-              },
-              "isStatic": true,
-              "isProtected": true,
-              "isAbstract": false
-            },
-            {
-              "kind": "Property",
-              "canonicalReference": "@storm-stack/unique-identifier!StormLog#name:member",
-              "docComment": "",
-              "excerptTokens": [
-                {
-                  "kind": "Content",
-                  "text": "protected name?: "
-                },
-                {
-                  "kind": "Content",
-                  "text": "string | undefined"
-                },
-                {
-                  "kind": "Content",
-                  "text": ";"
-                }
-              ],
-              "isReadonly": false,
-              "isOptional": true,
-              "releaseTag": "Public",
-              "name": "name",
-              "propertyTypeTokenRange": {
-                "startIndex": 1,
-                "endIndex": 2
-              },
-              "isStatic": false,
-              "isProtected": true,
-              "isAbstract": false
-            },
-            {
-              "kind": "Method",
-              "canonicalReference": "@storm-stack/unique-identifier!StormLog#start:member(1)",
-              "docComment": "/**\n * Start a logging process to track\n *\n * @param name - The name of the process\n */\n",
-              "excerptTokens": [
-                {
-                  "kind": "Content",
-                  "text": "start(name: "
-                },
-                {
-                  "kind": "Content",
-                  "text": "string"
-                },
-                {
-                  "kind": "Content",
-                  "text": "): "
-                },
-                {
-                  "kind": "Content",
-                  "text": "void"
-                },
-                {
-                  "kind": "Content",
-                  "text": ";"
-                }
-              ],
-              "isStatic": false,
-              "returnTypeTokenRange": {
-                "startIndex": 3,
-                "endIndex": 4
-              },
-              "releaseTag": "Public",
-              "isProtected": false,
-              "overloadIndex": 1,
-              "parameters": [
-                {
-                  "parameterName": "name",
-                  "parameterTypeTokenRange": {
-                    "startIndex": 1,
-                    "endIndex": 2
-                  },
-                  "isOptional": false
-                }
-              ],
-              "isOptional": false,
-              "isAbstract": false,
-              "name": "start"
-            },
-            {
-              "kind": "Method",
-              "canonicalReference": "@storm-stack/unique-identifier!StormLog#stopwatch:member(1)",
-              "docComment": "/**\n * Write an message to the logs specifying how long it took to complete a process\n *\n * @param name - The name of the process\n *\n * @param startTime - The start time of the process\n */\n",
-              "excerptTokens": [
-                {
-                  "kind": "Content",
-                  "text": "stopwatch(name?: "
-                },
-                {
-                  "kind": "Content",
-                  "text": "string"
-                },
-                {
-                  "kind": "Content",
-                  "text": ", startTime?: "
-                },
-                {
-                  "kind": "Reference",
-                  "text": "StormTime",
-                  "canonicalReference": "@storm-stack/unique-identifier!~StormTime:class"
-                },
-                {
-                  "kind": "Content",
-                  "text": "): "
-                },
-                {
-                  "kind": "Content",
-                  "text": "void"
-                },
-                {
-                  "kind": "Content",
-                  "text": ";"
-                }
-              ],
-              "isStatic": false,
-              "returnTypeTokenRange": {
-                "startIndex": 5,
-                "endIndex": 6
-              },
-              "releaseTag": "Public",
-              "isProtected": false,
-              "overloadIndex": 1,
-              "parameters": [
-                {
-                  "parameterName": "name",
-                  "parameterTypeTokenRange": {
-                    "startIndex": 1,
-                    "endIndex": 2
-                  },
-                  "isOptional": true
-                },
-                {
-                  "parameterName": "startTime",
-                  "parameterTypeTokenRange": {
-                    "startIndex": 3,
-                    "endIndex": 4
-                  },
-                  "isOptional": true
-                }
-              ],
-              "isOptional": false,
-              "isAbstract": false,
-              "name": "stopwatch"
-            },
-            {
-              "kind": "Method",
-              "canonicalReference": "@storm-stack/unique-identifier!StormLog.stopwatch:member(1)",
-              "docComment": "/**\n * Write an message to the logs specifying how long it took to complete a process\n *\n * @param startTime - The start time of the process\n *\n * @param name - The name of the process\n */\n",
-              "excerptTokens": [
-                {
-                  "kind": "Content",
-                  "text": "static stopwatch(startTime: "
-                },
-                {
-                  "kind": "Reference",
-                  "text": "StormTime",
-                  "canonicalReference": "@storm-stack/unique-identifier!~StormTime:class"
-                },
-                {
-                  "kind": "Content",
-                  "text": ", name?: "
-                },
-                {
-                  "kind": "Content",
-                  "text": "string"
-                },
-                {
-                  "kind": "Content",
-                  "text": "): "
-                },
-                {
-                  "kind": "Content",
-                  "text": "void"
-                },
-                {
-                  "kind": "Content",
-                  "text": ";"
-                }
-              ],
-              "isStatic": true,
-              "returnTypeTokenRange": {
-                "startIndex": 5,
-                "endIndex": 6
-              },
-              "releaseTag": "Public",
-              "isProtected": false,
-              "overloadIndex": 1,
-              "parameters": [
-                {
-                  "parameterName": "startTime",
-                  "parameterTypeTokenRange": {
-                    "startIndex": 1,
-                    "endIndex": 2
-                  },
-                  "isOptional": false
-                },
-                {
-                  "parameterName": "name",
-                  "parameterTypeTokenRange": {
-                    "startIndex": 3,
-                    "endIndex": 4
-                  },
-                  "isOptional": true
-                }
-              ],
-              "isOptional": false,
-              "isAbstract": false,
-              "name": "stopwatch"
-            },
-            {
-              "kind": "Method",
-              "canonicalReference": "@storm-stack/unique-identifier!StormLog#success:member(1)",
-              "docComment": "/**\n * Write a success message to the logs.\n *\n * @param message - The message to print.\n *\n * @returns Either a promise that resolves to void or void.\n */\n",
-              "excerptTokens": [
-                {
-                  "kind": "Content",
-                  "text": "success(message: "
-                },
-                {
-                  "kind": "Content",
-                  "text": "any"
-                },
-                {
-                  "kind": "Content",
-                  "text": "): "
-                },
-                {
-                  "kind": "Content",
-                  "text": "void"
-                },
-                {
-                  "kind": "Content",
-                  "text": ";"
-                }
-              ],
-              "isStatic": false,
-              "returnTypeTokenRange": {
-                "startIndex": 3,
-                "endIndex": 4
-              },
-              "releaseTag": "Public",
-              "isProtected": false,
-              "overloadIndex": 1,
-              "parameters": [
-                {
-                  "parameterName": "message",
-                  "parameterTypeTokenRange": {
-                    "startIndex": 1,
-                    "endIndex": 2
-                  },
-                  "isOptional": false
-                }
-              ],
-              "isOptional": false,
-              "isAbstract": false,
-              "name": "success"
-            },
-            {
-              "kind": "Method",
-              "canonicalReference": "@storm-stack/unique-identifier!StormLog.success:member(1)",
-              "docComment": "/**\n * Write a success message to the logs.\n *\n * @param message - The message to print.\n *\n * @returns Either a promise that resolves to void or void.\n */\n",
-              "excerptTokens": [
-                {
-                  "kind": "Content",
-                  "text": "static success(message: "
-                },
-                {
-                  "kind": "Content",
-                  "text": "any"
-                },
-                {
-                  "kind": "Content",
-                  "text": "): "
-                },
-                {
-                  "kind": "Content",
-                  "text": "void"
-                },
-                {
-                  "kind": "Content",
-                  "text": ";"
-                }
-              ],
-              "isStatic": true,
-              "returnTypeTokenRange": {
-                "startIndex": 3,
-                "endIndex": 4
-              },
-              "releaseTag": "Public",
-              "isProtected": false,
-              "overloadIndex": 1,
-              "parameters": [
-                {
-                  "parameterName": "message",
-                  "parameterTypeTokenRange": {
-                    "startIndex": 1,
-                    "endIndex": 2
-                  },
-                  "isOptional": false
-                }
-              ],
-              "isOptional": false,
-              "isAbstract": false,
-              "name": "success"
-            },
-            {
-              "kind": "Method",
-              "canonicalReference": "@storm-stack/unique-identifier!StormLog#trace:member(1)",
-              "docComment": "/**\n * Write a trace message to the logs.\n *\n * @param message - The message to be printed.\n *\n * @returns Either a promise that resolves to void or void.\n */\n",
-              "excerptTokens": [
-                {
-                  "kind": "Content",
-                  "text": "trace(message: "
-                },
-                {
-                  "kind": "Content",
-                  "text": "any"
-                },
-                {
-                  "kind": "Content",
-                  "text": "): "
-                },
-                {
-                  "kind": "Content",
-                  "text": "void"
-                },
-                {
-                  "kind": "Content",
-                  "text": ";"
-                }
-              ],
-              "isStatic": false,
-              "returnTypeTokenRange": {
-                "startIndex": 3,
-                "endIndex": 4
-              },
-              "releaseTag": "Public",
-              "isProtected": false,
-              "overloadIndex": 1,
-              "parameters": [
-                {
-                  "parameterName": "message",
-                  "parameterTypeTokenRange": {
-                    "startIndex": 1,
-                    "endIndex": 2
-                  },
-                  "isOptional": false
-                }
-              ],
-              "isOptional": false,
-              "isAbstract": false,
-              "name": "trace"
-            },
-            {
-              "kind": "Method",
-              "canonicalReference": "@storm-stack/unique-identifier!StormLog.trace:member(1)",
-              "docComment": "/**\n * Write a trace message to the logs.\n *\n * @param message - The message to be printed.\n *\n * @returns Either a promise that resolves to void or void.\n */\n",
-              "excerptTokens": [
-                {
-                  "kind": "Content",
-                  "text": "static trace(message: "
-                },
-                {
-                  "kind": "Content",
-                  "text": "any"
-                },
-                {
-                  "kind": "Content",
-                  "text": "): "
-                },
-                {
-                  "kind": "Content",
-                  "text": "void"
-                },
-                {
-                  "kind": "Content",
-                  "text": ";"
-                }
-              ],
-              "isStatic": true,
-              "returnTypeTokenRange": {
-                "startIndex": 3,
-                "endIndex": 4
-              },
-              "releaseTag": "Public",
-              "isProtected": false,
-              "overloadIndex": 1,
-              "parameters": [
-                {
-                  "parameterName": "message",
-                  "parameterTypeTokenRange": {
-                    "startIndex": 1,
-                    "endIndex": 2
-                  },
-                  "isOptional": false
-                }
-              ],
-              "isOptional": false,
-              "isAbstract": false,
-              "name": "trace"
-            },
-            {
-              "kind": "Method",
-              "canonicalReference": "@storm-stack/unique-identifier!StormLog#warn:member(1)",
-              "docComment": "/**\n * Write a warning message to the logs.\n *\n * @param message - The message to be printed.\n *\n * @returns Either a promise that resolves to void or void.\n */\n",
-              "excerptTokens": [
-                {
-                  "kind": "Content",
-                  "text": "warn(message: "
-                },
-                {
-                  "kind": "Content",
-                  "text": "any"
-                },
-                {
-                  "kind": "Content",
-                  "text": "): "
-                },
-                {
-                  "kind": "Content",
-                  "text": "void"
-                },
-                {
-                  "kind": "Content",
-                  "text": ";"
-                }
-              ],
-              "isStatic": false,
-              "returnTypeTokenRange": {
-                "startIndex": 3,
-                "endIndex": 4
-              },
-              "releaseTag": "Public",
-              "isProtected": false,
-              "overloadIndex": 1,
-              "parameters": [
-                {
-                  "parameterName": "message",
-                  "parameterTypeTokenRange": {
-                    "startIndex": 1,
-                    "endIndex": 2
-                  },
-                  "isOptional": false
-                }
-              ],
-              "isOptional": false,
-              "isAbstract": false,
-              "name": "warn"
-            },
-            {
-              "kind": "Method",
-              "canonicalReference": "@storm-stack/unique-identifier!StormLog.warn:member(1)",
-              "docComment": "/**\n * Write a warning message to the logs.\n *\n * @param message - The message to be printed.\n *\n * @returns Either a promise that resolves to void or void.\n */\n",
-              "excerptTokens": [
-                {
-                  "kind": "Content",
-                  "text": "static warn(message: "
-                },
-                {
-                  "kind": "Content",
-                  "text": "any"
-                },
-                {
-                  "kind": "Content",
-                  "text": "): "
-                },
-                {
-                  "kind": "Content",
-                  "text": "void"
-                },
-                {
-                  "kind": "Content",
-                  "text": ";"
-                }
-              ],
-              "isStatic": true,
-              "returnTypeTokenRange": {
-                "startIndex": 3,
-                "endIndex": 4
-              },
-              "releaseTag": "Public",
-              "isProtected": false,
-              "overloadIndex": 1,
-              "parameters": [
-                {
-                  "parameterName": "message",
-                  "parameterTypeTokenRange": {
-                    "startIndex": 1,
-                    "endIndex": 2
-                  },
-                  "isOptional": false
-                }
-              ],
-              "isOptional": false,
-              "isAbstract": false,
-              "name": "warn"
+              }
             }
           ],
-          "implementsTokenRanges": [
+          "extendsTokenRanges": []
+        },
+        {
+          "kind": "Function",
+          "canonicalReference": "@storm-stack/unique-identifier!isValidSnowflake:function(1)",
+          "docComment": "/**\n * Check if a snowflake string Id is valid.\n *\n * @param snowflake - Snowflake to check\n *\n * @returns Whether the snowflake is valid\n */\n",
+          "excerptTokens": [
             {
-              "startIndex": 1,
-              "endIndex": 2
+              "kind": "Content",
+              "text": "export declare function isValidSnowflake(snowflake: "
+            },
+            {
+              "kind": "Content",
+              "text": "string"
+            },
+            {
+              "kind": "Content",
+              "text": "): "
+            },
+            {
+              "kind": "Content",
+              "text": "boolean"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
             }
-          ]
+          ],
+          "fileUrlPath": "tmp/.tsup/declaration/packages/unique-identifier/src/snowflake.d.ts",
+          "returnTypeTokenRange": {
+            "startIndex": 3,
+            "endIndex": 4
+          },
+          "releaseTag": "Public",
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "snowflake",
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "isOptional": false
+            }
+          ],
+          "name": "isValidSnowflake"
+        },
+        {
+          "kind": "Function",
+          "canonicalReference": "@storm-stack/unique-identifier!parse:function(1)",
+          "docComment": "",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export declare function parse(uuid: "
+            },
+            {
+              "kind": "Content",
+              "text": "string"
+            },
+            {
+              "kind": "Content",
+              "text": "): "
+            },
+            {
+              "kind": "Reference",
+              "text": "Uint8Array",
+              "canonicalReference": "!Uint8Array:interface"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "fileUrlPath": "tmp/.tsup/declaration/packages/unique-identifier/src/uuid.d.ts",
+          "returnTypeTokenRange": {
+            "startIndex": 3,
+            "endIndex": 4
+          },
+          "releaseTag": "Public",
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "uuid",
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "isOptional": false
+            }
+          ],
+          "name": "parse"
+        },
+        {
+          "kind": "Variable",
+          "canonicalReference": "@storm-stack/unique-identifier!randomInteger:var",
+          "docComment": "/**\n * Generate a random integer\n *\n * @param maximum - The maximum value (inclusive)\n *\n * @param minimum - The minimum value (inclusive)\n *\n * @returns A random integer\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "randomInteger: "
+            },
+            {
+              "kind": "Content",
+              "text": "(maximum: number, minimum?: number) => number"
+            }
+          ],
+          "fileUrlPath": "tmp/.tsup/declaration/packages/unique-identifier/src/random.d.ts",
+          "isReadonly": true,
+          "releaseTag": "Public",
+          "name": "randomInteger",
+          "variableTypeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 2
+          }
+        },
+        {
+          "kind": "Variable",
+          "canonicalReference": "@storm-stack/unique-identifier!randomLetter:var",
+          "docComment": "/**\n * Generate a random letter\n *\n * @param random - The random number generator\n *\n * @returns A random letter\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "randomLetter: "
+            },
+            {
+              "kind": "Content",
+              "text": "(random?: () => number) => string | undefined"
+            }
+          ],
+          "fileUrlPath": "tmp/.tsup/declaration/packages/unique-identifier/src/random.d.ts",
+          "isReadonly": true,
+          "releaseTag": "Public",
+          "name": "randomLetter",
+          "variableTypeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 2
+          }
+        },
+        {
+          "kind": "Function",
+          "canonicalReference": "@storm-stack/unique-identifier!snowflake:function(1)",
+          "docComment": "/**\n * Generate a snowflake identifier.\n *\n * @remarks\n *\n * Snowflakes are 64-bit unsigned integers that are roughly time-ordered.\n *\n * @param timestamp - The timestamp to use\n *\n * @param shardId - The shard id to use\n *\n * @returns A snowflake\n *\n * @example\n * ```typescript\n *\n * // Generate a snowflake with the default options\n * const id1 = snowflake();\n *\n * // Generate a snowflake with a custom shard id\n * const id2 = snowflake({ shardId: 2 });\n *\n * // Generate a snowflake with a custom shard id and timestamp\n * const id3 = snowflake({ shardId: 3, timestamp: new Date(\"2021-01-01\") });\n *\n * ```\n *\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export declare function snowflake({ shardId, epoch, timestamp }?: "
+            },
+            {
+              "kind": "Reference",
+              "text": "ISnowflakeGeneratorOptions",
+              "canonicalReference": "@storm-stack/unique-identifier!ISnowflakeGeneratorOptions:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "): "
+            },
+            {
+              "kind": "Content",
+              "text": "string"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "fileUrlPath": "tmp/.tsup/declaration/packages/unique-identifier/src/snowflake.d.ts",
+          "returnTypeTokenRange": {
+            "startIndex": 3,
+            "endIndex": 4
+          },
+          "releaseTag": "Public",
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "{ shardId, epoch, timestamp }",
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "isOptional": true
+            }
+          ],
+          "name": "snowflake"
+        },
+        {
+          "kind": "TypeAlias",
+          "canonicalReference": "@storm-stack/unique-identifier!SnowflakeResolvable:type",
+          "docComment": "/**\n * Resolvable value types for a valid Snowflake: * string * number * bigint\n *\n * @type {SnowflakeResolvable}\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export type SnowflakeResolvable = "
+            },
+            {
+              "kind": "Content",
+              "text": "string"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "fileUrlPath": "tmp/.tsup/declaration/packages/unique-identifier/src/snowflake.d.ts",
+          "releaseTag": "Public",
+          "name": "SnowflakeResolvable",
+          "typeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 2
+          }
+        },
+        {
+          "kind": "Function",
+          "canonicalReference": "@storm-stack/unique-identifier!unsafeStringify:function(1)",
+          "docComment": "",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export declare function unsafeStringify(arr: "
+            },
+            {
+              "kind": "Content",
+              "text": "number[]"
+            },
+            {
+              "kind": "Content",
+              "text": ", offset?: "
+            },
+            {
+              "kind": "Content",
+              "text": "number"
+            },
+            {
+              "kind": "Content",
+              "text": "): "
+            },
+            {
+              "kind": "Content",
+              "text": "string"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "fileUrlPath": "tmp/.tsup/declaration/packages/unique-identifier/src/uuid.d.ts",
+          "returnTypeTokenRange": {
+            "startIndex": 5,
+            "endIndex": 6
+          },
+          "releaseTag": "Public",
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "arr",
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "isOptional": false
+            },
+            {
+              "parameterName": "offset",
+              "parameterTypeTokenRange": {
+                "startIndex": 3,
+                "endIndex": 4
+              },
+              "isOptional": true
+            }
+          ],
+          "name": "unsafeStringify"
+        },
+        {
+          "kind": "Variable",
+          "canonicalReference": "@storm-stack/unique-identifier!URL_2:var",
+          "docComment": "",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "URL = "
+            },
+            {
+              "kind": "Content",
+              "text": "\"6ba7b811-9dad-11d1-80b4-00c04fd430c8\""
+            }
+          ],
+          "fileUrlPath": "tmp/.tsup/declaration/packages/unique-identifier/src/uuid.d.ts",
+          "initializerTokenRange": {
+            "startIndex": 1,
+            "endIndex": 2
+          },
+          "isReadonly": true,
+          "releaseTag": "Public",
+          "name": "URL_2",
+          "variableTypeTokenRange": {
+            "startIndex": 0,
+            "endIndex": 0
+          }
+        },
+        {
+          "kind": "Function",
+          "canonicalReference": "@storm-stack/unique-identifier!uuid5:function(1)",
+          "docComment": "/**\n * Generate a random UUID\n *\n * @remarks\n *\n * This helper function is a wrapper around the `crypto.randomUUID` function. You can find more information about this type of identifier in this {@link https://en.wikipedia.org/wiki/Universally_unique_identifier article}\n *\n * @returns A random UUID string\n *\n * @example\n * ```typescript\n *\n * // Generate a random UUID\n * const id = uuid();\n * ```\n *\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export declare function uuid5(name: "
+            },
+            {
+              "kind": "Content",
+              "text": "string"
+            },
+            {
+              "kind": "Content",
+              "text": ", version: "
+            },
+            {
+              "kind": "Content",
+              "text": "number"
+            },
+            {
+              "kind": "Content",
+              "text": ", hashFn: "
+            },
+            {
+              "kind": "Content",
+              "text": "(bytes: string | number | boolean | "
+            },
+            {
+              "kind": "Reference",
+              "text": "Uint8Array",
+              "canonicalReference": "!Uint8Array:interface"
+            },
+            {
+              "kind": "Content",
+              "text": " | any[]) => "
+            },
+            {
+              "kind": "Reference",
+              "text": "Uint8Array",
+              "canonicalReference": "!Uint8Array:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "): "
+            },
+            {
+              "kind": "Content",
+              "text": "{\n    (value: string | any[] | "
+            },
+            {
+              "kind": "Reference",
+              "text": "ArrayLike",
+              "canonicalReference": "!ArrayLike:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "<number>, namespace: string | any[] | "
+            },
+            {
+              "kind": "Reference",
+              "text": "ArrayLike",
+              "canonicalReference": "!ArrayLike:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "<number>, buf: {\n        [x: string]: number | undefined;\n    }, offset: number): string | {\n        [x: string]: number | undefined;\n    };\n    name: string;\n    DNS: string;\n    URL: string;\n}"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "fileUrlPath": "tmp/.tsup/declaration/packages/unique-identifier/src/uuid.d.ts",
+          "returnTypeTokenRange": {
+            "startIndex": 10,
+            "endIndex": 15
+          },
+          "releaseTag": "Public",
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "name",
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "isOptional": false
+            },
+            {
+              "parameterName": "version",
+              "parameterTypeTokenRange": {
+                "startIndex": 3,
+                "endIndex": 4
+              },
+              "isOptional": false
+            },
+            {
+              "parameterName": "hashFn",
+              "parameterTypeTokenRange": {
+                "startIndex": 5,
+                "endIndex": 9
+              },
+              "isOptional": false
+            }
+          ],
+          "name": "uuid5"
         }
       ]
     }
