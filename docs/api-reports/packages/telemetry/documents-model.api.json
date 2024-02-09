@@ -296,7 +296,16 @@
             },
             {
               "kind": "Content",
-              "text": ">)[], stacktrace?: boolean) => import(\"pino\").Logger<"
+              "text": ">)[], stacktrace?: boolean) => "
+            },
+            {
+              "kind": "Reference",
+              "text": "Logger",
+              "canonicalReference": "!unknown"
+            },
+            {
+              "kind": "Content",
+              "text": "<"
             },
             {
               "kind": "Reference",
@@ -314,7 +323,7 @@
           "name": "getPinoLogger",
           "variableTypeTokenRange": {
             "startIndex": 1,
-            "endIndex": 12
+            "endIndex": 14
           }
         },
         {

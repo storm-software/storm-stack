@@ -1,6 +1,10 @@
 import type { StormConfig } from "@storm-software/config";
 import { getPinoOptions } from "@storm-stack/logging";
-import pino, { type DestinationStream, type LoggerOptions as PinoLoggerOptions } from "pino";
+import pino, {
+  type DestinationStream,
+  type LoggerOptions as PinoLoggerOptions,
+  type Logger
+} from "pino";
 import pretty, { type PrettyOptions } from "pino-pretty";
 
 export type LoggerOptions = {
@@ -20,7 +24,7 @@ export const getPinoLogger = (
   name?: string,
   extraStreams?: (pino.DestinationStream | pino.StreamEntry<pino.Level>)[],
   stacktrace = true
-) => {
+): Logger<PinoLoggerOptions> => {
   const baseOptions: PinoLoggerOptions = getPinoOptions(config, name, stacktrace);
 
   const prettyOptions: PrettyOptions = {

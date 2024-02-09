@@ -7,6 +7,7 @@ import {
   tsupExecutorFn,
   withRunExecutor
 } from "@storm-software/workspace-tools";
+import type { TsupExecutorSchema } from "@storm-software/workspace-tools/src/executors/tsup/schema";
 import { StormLog } from "@storm-stack/logging";
 import { StormParser } from "@storm-stack/serialization";
 import { isFunction, isPrimitive, removeEmptyItems } from "@storm-stack/utilities";
@@ -98,7 +99,12 @@ export async function TamaguiExecutorFn(
       ...options,
       getConfig: (_options: GetConfigParams) =>
         getTamaguiConfig({ ..._options, clientPlatform: "web" }),
-      external: removeEmptyItems(["react", "react-dom", "react-native", ...options.external])
+      external: removeEmptyItems([
+        "react",
+        "react-dom",
+        "react-native",
+        ...(options.external ?? [])
+      ])
     },
     context,
     config
@@ -229,8 +235,9 @@ export const applyDefaultOptions = (
       entry: "{sourceRoot}/index.ts",
       plugins: [],
       getConfig: getTamaguiConfig,
+      assets: [],
       ...options
-    }),
+    } as TsupExecutorSchema),
     transports: ["pino-pretty", "pino-loki"],
     clientPlatform: options?.clientPlatform ? options.clientPlatform : "both"
   } as TamaguiExecutorSchema;
