@@ -1,3 +1,30 @@
+## 1.1.2 (2024-02-10)
+
+
+### 🚀 Features
+
+- **monorepo:** Major redesign of project structure ([20c7a8f](https://github.com/storm-software/storm-stack/commit/20c7a8f))
+
+- **components:** Added components library build script ([3d5cd73](https://github.com/storm-software/storm-stack/commit/3d5cd73))
+
+
+### 🩹 Fixes
+
+- **monorepo:** Resolved issues with the package.json population ([f88b8e4](https://github.com/storm-software/storm-stack/commit/f88b8e4))
+
+- **monorepo:** Removed eslint updates ([d4d95c1](https://github.com/storm-software/storm-stack/commit/d4d95c1))
+
+- **monorepo:** Readded the `noEmit` option to tsconfig ([b9b43fb](https://github.com/storm-software/storm-stack/commit/b9b43fb))
+
+- **components:** Mark the Components package as private for now ([3d40c6e](https://github.com/storm-software/storm-stack/commit/3d40c6e))
+
+- **unique-identifier:** Resolved issues with `uuid` function export ([c9384b0](https://github.com/storm-software/storm-stack/commit/c9384b0))
+
+
+### ❤️  Thank You
+
+- Patrick Sullivan
+
 ## 1.1.1 (2024-02-09)
 
 
