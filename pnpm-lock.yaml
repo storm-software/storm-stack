@@ -311,8 +311,8 @@ importers:
         specifier: ^1.89.20
         version: 1.89.20(react-native@0.73.4)
       '@tamagui/shorthands':
-        specifier: ^1.79.17
-        version: 1.79.17
+        specifier: ^1.89.20
+        version: 1.89.20
       '@tamagui/themes':
         specifier: ^1.79.17
         version: 1.79.17(react@18.2.0)
@@ -8908,8 +8908,8 @@ packages:
       - '@types/react'
     dev: false
 
-  /@tamagui/shorthands@1.79.17:
-    resolution: {integrity: sha512-k4rbnDShYWDtgcKMGpOHwsNP6td6uXECTZSp57m/9+URsTAxe57jwk39G7moQBspIUkcfCF62p45ZjgFkZFPVg==}
+  /@tamagui/shorthands@1.89.20:
+    resolution: {integrity: sha512-u6NGd3jc5Wm96IYkATFLPCIHXPMfdgPB3gVW4/jpPJWbNlzLXvlFv1UiB8AxoABz7rNhzpVOaoIthdNax0K4Ww==}
     dev: false
 
   /@tamagui/simple-hash@1.79.13:
