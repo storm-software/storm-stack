@@ -1,3 +1,15 @@
+## 0.5.1 (2024-02-10)
+
+
+### 🩹 Fixes
+
+- **monorepo:** Resovled Dependabot Alert #26 and added code scans for the future ([#26](https://github.com/storm-software/storm-stack/issues/26))
+
+
+### ❤️  Thank You
+
+- Patrick Sullivan
+
 ## 0.5.0 (2024-02-10)
 
 
