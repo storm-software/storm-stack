@@ -13,6 +13,7 @@
         "tsConfig": "packages/server-cache/tsconfig.json",
         "project": "packages/server-cache/package.json",
         "defaultConfiguration": "production",
+        "platform": "node",
         "assets": [
           {
             "input": "packages/server-cache",
@@ -24,8 +25,7 @@
             "glob": "LICENSE",
             "output": "/"
           }
-        ],
-        "platform": "node"
+        ]
       },
       "configurations": {
         "production": {

@@ -6,7 +6,11 @@ import { memoryDriver } from "bentocache/drivers/memory";
 import type {
   BusOptions,
   CacheProvider,
+  Factory,
   FileConfig,
+  GetOptions,
+  GetOrSetOptions,
+  HasOptions,
   MemoryConfig,
   RawBentoCacheOptions
 } from "bentocache/types";
@@ -62,6 +66,8 @@ export class StormCache {
 
     this.#configCache = this.#cache.namespace("config");
     this.#configCache.setForever("config", this.#config);
+
+    this.#trace.debug("StormCache initialization has completed successfully...");
   }
 
   public get cache(): BentoCache<{ store: ReturnType<typeof bentostore> }> {
@@ -74,5 +80,53 @@ export class StormCache {
 
   public get configCache(): CacheProvider {
     return this.#configCache;
+  }
+
+  public getOrSet<T>(
+    key: string,
+    factory: Factory<T>,
+    options?: GetOrSetOptions | undefined
+  ): Promise<T> {
+    return this.#cache.getOrSet<T>(key, factory, options);
+  }
+
+  public get<T>(
+    key: string,
+    defaultValue?: Factory<T> | undefined,
+    options?: GetOptions | undefined
+  ): Promise<T> {
+    return this.#cache.get<T>(key, defaultValue, options);
+  }
+
+  public set(key: string, value: any, options?: GetOrSetOptions | undefined) {
+    return this.#cache.set(key, value, options);
+  }
+
+  public has(key: string, options?: HasOptions | undefined): Promise<boolean> {
+    return this.#cache.has(key, options);
+  }
+
+  public getOrSetConfig<T>(
+    key: string,
+    factory: Factory<T>,
+    options?: GetOrSetOptions | undefined
+  ): Promise<T> {
+    return this.#configCache.getOrSet<T>(key, factory, options);
+  }
+
+  public getConfig<T>(
+    key: string,
+    defaultValue?: Factory<T> | undefined,
+    options?: GetOptions | undefined
+  ): Promise<T> {
+    return this.#configCache.get<T>(key, defaultValue, options);
+  }
+
+  public setConfig(key: string, value: any, options?: GetOrSetOptions | undefined) {
+    return this.#configCache.set(key, value, options);
+  }
+
+  public hasConfig(key: string, options?: HasOptions | undefined): Promise<boolean> {
+    return this.#configCache.has(key, options);
   }
 }
