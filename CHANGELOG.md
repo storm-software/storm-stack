@@ -1,3 +1,15 @@
+## 0.5.2 (2024-02-10)
+
+
+### 🩹 Fixes
+
+- **monorepo:** Fixed issue approving Dependabot PR item ([fbd704c](https://github.com/storm-software/storm-stack/commit/fbd704c))
+
+
+### ❤️  Thank You
+
+- Patrick Sullivan
+
 ## 0.5.1 (2024-02-10)
 
 
