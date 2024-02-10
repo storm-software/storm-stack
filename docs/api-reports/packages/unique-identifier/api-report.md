@@ -25,23 +25,6 @@ function deconstructSnowflake(snowflake: SnowflakeResolvable): DeconstructedSnow
 export { deconstructSnowflake }
 export { deconstructSnowflake as deconstructSnowflake_alias_1 }
 
-// @public (undocumented)
-export const default_alias: {
-    (value: string | any[] | ArrayLike<number>, namespace: string | any[] | ArrayLike<number>, buf: {
-        [x: string]: number | undefined;
-    }, offset: number): string | {
-        [x: string]: number | undefined;
-    };
-    name: string;
-    DNS: string;
-    URL: string;
-};
-
-// @public (undocumented)
-const DNS = "6ba7b810-9dad-11d1-80b4-00c04fd430c8";
-export { DNS }
-export { DNS as DNS_alias_1 }
-
 // @public
 function hash(input: string | object): string;
 export { hash }
@@ -60,11 +43,6 @@ export { ISnowflakeGeneratorOptions as ISnowflakeGeneratorOptions_alias_1 }
 function isValidSnowflake(snowflake: string): boolean;
 export { isValidSnowflake }
 export { isValidSnowflake as isValidSnowflake_alias_1 }
-
-// @public (undocumented)
-function parse(uuid: string): Uint8Array;
-export { parse }
-export { parse as parse_alias_1 }
 
 // @public
 const randomInteger: (maximum: number, minimum?: number) => number;
@@ -87,17 +65,7 @@ export { SnowflakeResolvable }
 export { SnowflakeResolvable as SnowflakeResolvable_alias_1 }
 
 // @public (undocumented)
-function unsafeStringify(arr: number[], offset?: number): string;
-export { unsafeStringify }
-export { unsafeStringify as unsafeStringify_alias_1 }
-
-// @public (undocumented)
-const URL_2 = "6ba7b811-9dad-11d1-80b4-00c04fd430c8";
-export { URL_2 as URL }
-export { URL_2 as URL_alias_1 }
-
-// @public
-function uuid5(name: string, version: number, hashFn: (bytes: string | number | boolean | Uint8Array | any[]) => Uint8Array): {
+const uuid: {
     (value: string | any[] | ArrayLike<number>, namespace: string | any[] | ArrayLike<number>, buf: {
         [x: string]: number | undefined;
     }, offset: number): string | {
@@ -107,8 +75,8 @@ function uuid5(name: string, version: number, hashFn: (bytes: string | number | 
     DNS: string;
     URL: string;
 };
-export { uuid5 }
-export { uuid5 as uuid5_alias_1 }
+export { uuid }
+export { uuid as uuid_alias_1 }
 
 // (No @packageDocumentation comment for this package)
 
