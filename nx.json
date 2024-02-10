@@ -41,5 +41,10 @@
         "linter": "eslint"
       }
     }
+  },
+  "pluginsConfig": {
+    "@nx/js": {
+      "analyzeSourceFiles": true
+    }
   }
 }
