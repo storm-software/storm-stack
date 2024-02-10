@@ -6,99 +6,39 @@
     "rootDir": ".",
     "baseUrl": ".",
     "paths": {
-      "@storm-stack/cli": [
-        "packages/cli/src/index.ts"
-      ],
-      "@storm-stack/cli/*": [
-        "packages/cli/src/*"
-      ],
-      "@storm-stack/components": [
-        "packages/components/src/index.ts"
-      ],
-      "@storm-stack/components/*": [
-        "packages/components/src/*"
-      ],
-      "@storm-stack/date-time": [
-        "packages/date-time/src/index.ts"
-      ],
-      "@storm-stack/date-time/*": [
-        "packages/core/date-time/src/*"
-      ],
-      "@storm-stack/errors": [
-        "packages/errors/src/index.ts"
-      ],
-      "@storm-stack/errors/*": [
-        "packages/errors/src/*"
-      ],
-      "@storm-stack/file-system": [
-        "packages/file-system/src/index.ts"
-      ],
-      "@storm-stack/file-system/*": [
-        "packages/file-system/src/*"
-      ],
-      "@storm-stack/jotai": [
-        "packages/jotai/src/index.ts"
-      ],
-      "@storm-stack/jotai/*": [
-        "packages/jotai/src/*"
-      ],
-      "@storm-stack/logging": [
-        "packages/logging/src/index.ts"
-      ],
-      "@storm-stack/logging/*": [
-        "packages/logging/src/*"
-      ],
-      "@storm-stack/nx-tools": [
-        "apps/nx-tools/src/index.ts"
-      ],
-      "@storm-stack/nx-tools/*": [
-        "apps/nx-tools/src/*"
-      ],
-      "@storm-stack/plugin-system": [
-        "packages/plugin-system/src/index.ts"
-      ],
-      "@storm-stack/plugin-system/*": [
-        "packages/plugin-system/src/*"
-      ],
-      "@storm-stack/serialization": [
-        "packages/serialization/src/index.ts"
-      ],
-      "@storm-stack/serialization/*": [
-        "packages/serialization/src/*"
-      ],
-      "@storm-stack/table": [
-        "packages/table/src/index.ts"
-      ],
-      "@storm-stack/table/*": [
-        "packages/table/src/*"
-      ],
-      "@storm-stack/telemetry": [
-        "packages/telemetry/src/index.ts"
-      ],
-      "@storm-stack/telemetry/*": [
-        "packages/telemetry/src/*"
-      ],
+      "@storm-stack/cli": ["packages/cli/src/index.ts"],
+      "@storm-stack/cli/*": ["packages/cli/src/*"],
+      "@storm-stack/components": ["packages/components/src/index.ts"],
+      "@storm-stack/components/*": ["packages/components/src/*"],
+      "@storm-stack/date-time": ["packages/date-time/src/index.ts"],
+      "@storm-stack/date-time/*": ["packages/core/date-time/src/*"],
+      "@storm-stack/errors": ["packages/errors/src/index.ts"],
+      "@storm-stack/errors/*": ["packages/errors/src/*"],
+      "@storm-stack/file-system": ["packages/file-system/src/index.ts"],
+      "@storm-stack/file-system/*": ["packages/file-system/src/*"],
+      "@storm-stack/jotai": ["packages/jotai/src/index.ts"],
+      "@storm-stack/jotai/*": ["packages/jotai/src/*"],
+      "@storm-stack/logging": ["packages/logging/src/index.ts"],
+      "@storm-stack/logging/*": ["packages/logging/src/*"],
+      "@storm-stack/nx-tools": ["apps/nx-tools/src/index.ts"],
+      "@storm-stack/nx-tools/*": ["apps/nx-tools/src/*"],
+      "@storm-stack/plugin-system": ["packages/plugin-system/src/index.ts"],
+      "@storm-stack/plugin-system/*": ["packages/plugin-system/src/*"],
+      "@storm-stack/serialization": ["packages/serialization/src/index.ts"],
+      "@storm-stack/serialization/*": ["packages/serialization/src/*"],
+      "@storm-stack/server-cache": ["packages/server-cache/src/index.ts"],
+      "@storm-stack/server-cache/*": ["packages/server-cache/src/*"],
+      "@storm-stack/table": ["packages/table/src/index.ts"],
+      "@storm-stack/table/*": ["packages/table/src/*"],
+      "@storm-stack/telemetry": ["packages/telemetry/src/index.ts"],
+      "@storm-stack/telemetry/*": ["packages/telemetry/src/*"],
       "@storm-stack/unique-identifier": [
         "packages/unique-identifier/src/index.ts"
       ],
-      "@storm-stack/unique-identifier/*": [
-        "packages/unique-identifier/src/*"
-      ],
-      "@storm-stack/utilities": [
-        "packages/utilities/src/index.ts"
-      ],
-      "@storm-stack/utilities/*": [
-        "packages/utilities/src/*"
-      ],
-      "@storm-stack/web-docs": [
-        "apps/web-docs/src/index.ts"
-      ],
-      "@storm-stack/server-cache": [
-        "packages/server-cache/src/index.ts"
-      ],
-      "@storm-stack/server-cache/*": [
-        "packages/server-cache/src/*"
-      ]
+      "@storm-stack/unique-identifier/*": ["packages/unique-identifier/src/*"],
+      "@storm-stack/utilities": ["packages/utilities/src/index.ts"],
+      "@storm-stack/utilities/*": ["packages/utilities/src/*"],
+      "@storm-stack/web-docs": ["apps/web-docs/src/index.ts"]
     },
     "plugins": [
       {
@@ -114,17 +54,8 @@
       }
     ]
   },
-  "include": [
-    "**/*.ts",
-    "**/*.tsx",
-    "**/*.d.ts",
-    "**/*.js",
-    "**/*.jsx"
-  ],
-  "exclude": [
-    "**/node_modules",
-    "**/tmp"
-  ],
+  "include": ["**/*.ts", "**/*.tsx", "**/*.d.ts", "**/*.js", "**/*.jsx"],
+  "exclude": ["**/node_modules", "**/tmp"],
   "typeAcquisition": {
     "enable": true
   }
