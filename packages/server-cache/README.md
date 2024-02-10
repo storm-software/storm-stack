@@ -16,7 +16,7 @@ This package is part of the <b>⚡storm-stack</b> monorepo. The storm-stack pack
 
 <h3 align="center">💻 Visit <a href="https://stormsoftware.org" target="_blank">stormsoftware.org</a> to stay up to date with this developer</h3><br />
 
-[![Version](https://img.shields.io/badge/version-1.19.2-1fb2a6.svg?style=for-the-badge&color=1fb2a6)](https://prettier.io/)&nbsp;
+[![Version](https://img.shields.io/badge/version-0.0.1-1fb2a6.svg?style=for-the-badge&color=1fb2a6)](https://prettier.io/)&nbsp;
 [![Nx](https://img.shields.io/badge/Nx-17.0.2-lightgrey?style=for-the-badge&logo=nx&logoWidth=20&&color=1fb2a6)](http://nx.dev/)&nbsp;[![NextJs](https://img.shields.io/badge/Next.js-14.0.2-lightgrey?style=for-the-badge&logo=nextdotjs&logoWidth=20&color=1fb2a6)](https://nextjs.org/)&nbsp;[![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg?style=for-the-badge&logo=commitlint&color=1fb2a6)](http://commitizen.github.io/cz-cli/)&nbsp;![Semantic-Release](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg?style=for-the-badge&color=1fb2a6)&nbsp;[![documented with docusaurus](https://img.shields.io/badge/documented_with-docusaurus-success.svg?style=for-the-badge&logo=readthedocs&color=1fb2a6)](https://docusaurus.io/)&nbsp;![GitHub Workflow Status (with event)](https://img.shields.io/github/actions/workflow/status/storm-software/storm-ops/cr.yml?style=for-the-badge&logo=github-actions&color=1fb2a6)
 
 > [!IMPORTANT]
@@ -30,9 +30,9 @@ This package is part of the <b>⚡storm-stack</b> monorepo. The storm-stack pack
 
 <!-- END header -->
 
-# Storm Logging Package
+# server-cache
 
-📓 This package provides a logging service for the Storm stack. Included is base logger functionality and a console logger utility used by the Storm CLI tools and for local development.
+A Storm-Stack patch to handle server-side caching with the [bentocache](https://bentocache.dev/docs/introduction) library.
 
 <!-- START doctoc -->
 <!-- END doctoc -->
@@ -42,14 +42,14 @@ This package is part of the <b>⚡storm-stack</b> monorepo. The storm-stack pack
 Using [pnpm](http://pnpm.io):
 
 ```bash
-pnpm add -D @storm-stack/logging
+pnpm add -D @storm-stack/server-cache
 ```
 
 <details>
   <summary>Using npm</summary>
 
 ```bash
-npm install -D @storm-stack/logging
+npm install -D @storm-stack/server-cache
 ```
 
 </details>
@@ -58,7 +58,7 @@ npm install -D @storm-stack/logging
   <summary>Using yarn</summary>
 
 ```bash
-yarn add -D @storm-stack/logging
+yarn add -D @storm-stack/server-cache
 ```
 
 </details>
@@ -73,15 +73,15 @@ This project is built using [Nx](https://nx.dev). As a result, many of the usual
 
 ### Building
 
-Run `nx build logging` to build the library.
+Run `nx build server-cache` to build the library.
 
 ### Running unit tests
 
-Run `nx test logging` to execute the unit tests via [Jest](https://jestjs.io).
+Run `nx test server-cache` to execute the unit tests via [Jest](https://jestjs.io).
 
 ### Linting
 
-Run `nx lint logging` to run [ESLint](https://eslint.org/) on the package.
+Run `nx lint server-cache` to run [ESLint](https://eslint.org/) on the package.
 
 <!-- START footer -->
 <!-- prettier-ignore-start -->

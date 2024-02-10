@@ -1,0 +1,54 @@
+{
+  "name": "server-cache",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "library",
+  "sourceRoot": "packages/server-cache/src",
+  "targets": {
+    "build": {
+      "executor": "@storm-software/workspace-tools:tsup-node",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "entry": "packages/server-cache/src/index.ts",
+        "outputPath": "dist/packages/server-cache",
+        "tsConfig": "packages/server-cache/tsconfig.json",
+        "project": "packages/server-cache/package.json",
+        "defaultConfiguration": "production",
+        "assets": [
+          {
+            "input": "packages/server-cache",
+            "glob": "*.md",
+            "output": "/"
+          },
+          {
+            "input": "",
+            "glob": "LICENSE",
+            "output": "/"
+          }
+        ],
+        "platform": "node"
+      },
+      "configurations": {
+        "production": {
+          "debug": false,
+          "verbose": false
+        },
+        "development": {
+          "debug": true,
+          "verbose": true
+        }
+      }
+    },
+    "lint": {},
+    "test": {},
+    "nx-release-publish": {
+      "cache": false,
+      "inputs": ["default", "^production"],
+      "dependsOn": ["^build"],
+      "executor": "@storm-software/workspace-tools:npm-publish",
+      "options": {
+        "packageRoot": "dist/{projectRoot}",
+        "registry": "https://registry.npmjs.org/"
+      }
+    }
+  }
+}

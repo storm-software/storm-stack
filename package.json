@@ -118,7 +118,7 @@
     "typescript": "5.3.3",
     "verdaccio": "5.29.0"
   },
-  "packageManager": "pnpm@8.10.5",
+  "packageManager": "pnpm@8.10.2",
   "engines": {
     "node": ">=18.17.1",
     "pnpm": ">=8.10.2"
@@ -159,8 +159,12 @@
       "@storm-stack/plugin-system": "workspace:*",
       "@storm-stack/telemetry": "workspace:*",
       "@storm-stack/nx-tools": "workspace:*",
-      "@storm-stack/web-docs": "workspace:*"
+      "@storm-stack/web-docs": "workspace:*",
+      "@storm-stack/server-cache": "workspace:*"
     }
   },
-  "triggerEmptyDevReleaseByIncrementingThisNumber": 0
+  "triggerEmptyDevReleaseByIncrementingThisNumber": 0,
+  "devDependencies": {
+    "prettier": "^2.6.2"
+  }
 }

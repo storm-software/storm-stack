@@ -332,5 +332,5 @@
     }
   },
   "eslint.validate": ["json"],
-  "cSpell.words": ["kleur"]
+  "cSpell.words": ["bentocache", "bentostore", "kleur"]
 }
