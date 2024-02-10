@@ -125,13 +125,11 @@
   },
   "namespace": "@storm-stack",
   "nx": {
-    "includedScripts": [
-      "lint",
-      "format"
-    ]
+    "includedScripts": ["lint", "format"]
   },
   "pnpm": {
     "overrides": {
+      "ip": ">=1.1.8",
       "next": ">=13.4.20-canary.13",
       "debug": ">=4.3.1",
       "got": ">=11.8.5",
