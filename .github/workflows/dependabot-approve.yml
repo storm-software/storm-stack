@@ -9,9 +9,9 @@ permissions:
 env:
   CI: true
   NX_VERBOSE_LOGGING: true
-  STORM_REPO_WORKER: stormie-bot
-  STORM_REPO_URL: https://github.com/storm-software/storm-stack
-  STORM_REPO_ROOT: ${{ github.workspace }}
+  STORM_WORKER: stormie-bot
+  STORM_REPOSITORY: https://github.com/storm-software/storm-stack
+  STORM_WORKSPACE_ROOT: ${{ github.workspace }}
   GITHUB_ACTOR: ${{ github.actor }}
   GITHUB_TOKEN: ${{ github.token }}
 
@@ -24,7 +24,8 @@ jobs:
         run: gh pr review --approve "$PR_URL"
         env:
           PR_URL: ${{github.event.pull_request.html_url}}
-          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+          GITHUB_ACTOR: ${{env.STORM_WORKER}}
+          GITHUB_TOKEN: ${{secrets.STORMIE_GITHUB_TOKEN}}
 
       - name: Enable auto-merge for Dependabot PRs
         run: gh pr merge --auto --squash "$PR_URL"
