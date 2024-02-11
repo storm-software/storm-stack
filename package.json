@@ -1,6 +1,6 @@
 {
   "name": "@storm-stack/monorepo",
-  "version": "0.5.2",
+  "version": "0.5.3",
   "private": true,
   "description": "⚡ The storm-stack monorepo contains utility applications, tools, and various libraries to create modern and scalable web applications.",
   "keywords": [
@@ -108,6 +108,7 @@
     "lefthook": "^1.5.6",
     "log4brains": "1.0.1",
     "nx": "17.2.8",
+    "prettier": "^2.6.2",
     "react": "^18.2.0",
     "react-dom": "18.2.0",
     "react-native": "^0.73.4",
@@ -164,8 +165,5 @@
       "@storm-stack/server-cache": "workspace:*"
     }
   },
-  "triggerEmptyDevReleaseByIncrementingThisNumber": 0,
-  "devDependencies": {
-    "prettier": "^2.6.2"
-  }
+  "triggerEmptyDevReleaseByIncrementingThisNumber": 0
 }

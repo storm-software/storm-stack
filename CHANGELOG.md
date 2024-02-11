@@ -1,3 +1,15 @@
+## 0.5.3 (2024-02-11)
+
+
+### 🩹 Fixes
+
+- **monorepo:** Resolved issue with incorrectly applied API key ([4122a19](https://github.com/storm-software/storm-stack/commit/4122a19))
+
+
+### ❤️  Thank You
+
+- Patrick Sullivan
+
 ## 0.5.2 (2024-02-10)
 
 
