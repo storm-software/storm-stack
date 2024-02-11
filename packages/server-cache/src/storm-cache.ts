@@ -1,77 +1,57 @@
+import { isAbsolute } from "node:path";
 import type { StormConfig } from "@storm-software/config";
+import { joinPaths } from "@storm-stack/file-system";
 import { StormTrace } from "@storm-stack/telemetry";
 import { BentoCache, bentostore } from "bentocache";
 import { fileDriver } from "bentocache/drivers/file";
 import { memoryDriver } from "bentocache/drivers/memory";
 import type {
-  BusOptions,
+  BentoCachePlugin,
   CacheProvider,
   Factory,
-  FileConfig,
   GetOptions,
   GetOrSetOptions,
   HasOptions,
-  MemoryConfig,
   RawBentoCacheOptions
 } from "bentocache/types";
 import { notificationBusDriver } from "./notification-bus";
 
-export interface StormCacheOptions extends Partial<RawBentoCacheOptions> {
-  store?: ReturnType<typeof bentostore>;
-  memory?: Partial<MemoryConfig>;
-  file?: Partial<FileConfig>;
-  bus?: Partial<BusOptions>;
-}
+export type StormCacheOptions = Partial<
+  RawBentoCacheOptions & {
+    stores: Record<string, ReturnType<typeof bentostore>>;
+    plugins?: BentoCachePlugin[];
+    default: keyof Record<string, ReturnType<typeof bentostore>>;
+  }
+>;
 
 export class StormCache {
-  public static create(config: StormConfig, trace?: StormTrace) {
-    return new StormCache(config, trace);
+  public static create(config: StormConfig, trace?: StormTrace, options: StormCacheOptions = {}) {
+    const _trace = trace ?? StormTrace.create("storm-cache", config);
+
+    const cache = new StormCache(config, _trace, options);
+    _trace.debug("StormCache initialization has completed successfully...");
+
+    return cache;
   }
+
+  protected trace: StormTrace;
 
   #config: StormConfig;
-  #trace: StormTrace;
-  #cache: BentoCache<{ store: ReturnType<typeof bentostore> }>;
+  #cacheManager: BentoCache<Record<string, ReturnType<typeof bentostore>>>;
   #configCache: CacheProvider;
 
-  private constructor(config: StormConfig, trace?: StormTrace, options: StormCacheOptions = {}) {
+  private constructor(config: StormConfig, trace: StormTrace, options: StormCacheOptions) {
     this.#config = config;
-    this.#trace = trace ?? StormTrace.create("storm-cache", this.#config);
+    this.trace = trace ?? StormTrace.create("storm-cache", this.#config);
 
-    this.#cache = new BentoCache({
-      default: "store",
-      logger: this.#trace,
-      prefix: options.prefix ? options.prefix : "storm-",
-      stores: {
-        store: options.store
-          ? options.store
-          : bentostore()
-              .useL1Layer(
-                memoryDriver({
-                  maxSize: options.memory?.maxSize ? options.memory?.maxSize : 20 * 1024 * 1024,
-                  maxItems: options.memory?.maxItems ? options.memory?.maxItems : 6000,
-                  maxEntrySize: options.memory?.maxEntrySize
-                })
-              )
-              .useL2Layer(
-                fileDriver({
-                  directory: options.file?.directory
-                    ? options.file?.directory
-                    : this.#config.cacheDirectory
-                })
-              )
-              .useBus(notificationBusDriver(options.bus))
-      },
-      ...options
-    });
+    this.#cacheManager = this.createCacheManager(options);
 
-    this.#configCache = this.#cache.namespace("config");
+    this.#configCache = this.#cacheManager.namespace("config");
     this.#configCache.setForever("config", this.#config);
-
-    this.#trace.debug("StormCache initialization has completed successfully...");
   }
 
-  public get cache(): BentoCache<{ store: ReturnType<typeof bentostore> }> {
-    return this.#cache;
+  public get cache(): BentoCache<Record<string, ReturnType<typeof bentostore>>> {
+    return this.#cacheManager;
   }
 
   public get originalConfig(): StormConfig {
@@ -87,7 +67,7 @@ export class StormCache {
     factory: Factory<T>,
     options?: GetOrSetOptions | undefined
   ): Promise<T> {
-    return this.#cache.getOrSet<T>(key, factory, options);
+    return this.#cacheManager.getOrSet<T>(key, factory, options);
   }
 
   public get<T>(
@@ -95,15 +75,15 @@ export class StormCache {
     defaultValue?: Factory<T> | undefined,
     options?: GetOptions | undefined
   ): Promise<T> {
-    return this.#cache.get<T>(key, defaultValue, options);
+    return this.#cacheManager.get<T>(key, defaultValue, options);
   }
 
   public set(key: string, value: any, options?: GetOrSetOptions | undefined) {
-    return this.#cache.set(key, value, options);
+    return this.#cacheManager.set(key, value, options);
   }
 
   public has(key: string, options?: HasOptions | undefined): Promise<boolean> {
-    return this.#cache.has(key, options);
+    return this.#cacheManager.has(key, options);
   }
 
   public getOrSetConfig<T>(
@@ -128,5 +108,45 @@ export class StormCache {
 
   public hasConfig(key: string, options?: HasOptions | undefined): Promise<boolean> {
     return this.#configCache.has(key, options);
+  }
+
+  protected createCacheManager(
+    options: StormCacheOptions
+  ): BentoCache<Record<string, ReturnType<typeof bentostore>>> {
+    return new BentoCache({
+      default: "store",
+      logger: this.trace,
+      prefix: "storm",
+      stores: {
+        store: bentostore()
+          .useL1Layer(
+            memoryDriver({
+              maxSize: 20 * 1024 * 1024,
+              maxItems: 6000
+            })
+          )
+          .useL2Layer(
+            fileDriver({
+              directory:
+                this.#config.cacheDirectory && isAbsolute(this.#config.cacheDirectory)
+                  ? this.#config.cacheDirectory
+                  : joinPaths(
+                      this.#config.workstationRoot,
+                      this.#config.cacheDirectory
+                        ? this.#config.cacheDirectory
+                        : "./node_modules/.cache/storm"
+                    )
+            })
+          )
+          .useBus(
+            notificationBusDriver({
+              retryQueue: {
+                enabled: true
+              }
+            })
+          )
+      },
+      ...options
+    });
   }
 }

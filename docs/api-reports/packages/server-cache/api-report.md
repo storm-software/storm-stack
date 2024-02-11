@@ -5,6 +5,7 @@
 ```ts
 
 import { BentoCache } from 'bentocache';
+import type { BentoCachePlugin } from 'bentocache/types';
 import { bentostore } from 'bentocache';
 import type { BusDriver } from 'bentocache/types';
 import type { BusOptions } from 'bentocache/types';
@@ -12,13 +13,11 @@ import type { CacheBusMessage } from 'bentocache/types';
 import type { CacheProvider } from 'bentocache/types';
 import type { CreateBusDriverResult } from 'bentocache/types';
 import type { Factory } from 'bentocache/types';
-import type { FileConfig } from 'bentocache/types';
 import type { GetOptions } from 'bentocache/types';
 import type { GetOrSetOptions } from 'bentocache/types';
 import type { HasOptions } from 'bentocache/types';
 import type { Logger } from 'pino';
 import type { LoggerOptions } from 'pino';
-import type { MemoryConfig } from 'bentocache/types';
 import pino from 'pino';
 import type { RawBentoCacheOptions } from 'bentocache/types';
 import type { StormConfig } from '@storm-software/config';
@@ -52,13 +51,13 @@ export { notificationBusDriver as notificationBusDriver_alias_2 }
 // @public (undocumented)
 class StormCache {
     // (undocumented)
-    get cache(): BentoCache<{
-        store: ReturnType<typeof bentostore>;
-    }>;
+    get cache(): BentoCache<Record<string, ReturnType<typeof bentostore>>>;
     // (undocumented)
     get configCache(): CacheProvider;
     // (undocumented)
-    static create(config: StormConfig, trace?: StormTrace): StormCache;
+    static create(config: StormConfig, trace?: StormTrace, options?: StormCacheOptions): StormCache;
+    // (undocumented)
+    protected createCacheManager(options: StormCacheOptions): BentoCache<Record<string, ReturnType<typeof bentostore>>>;
     // (undocumented)
     get<T>(key: string, defaultValue?: Factory<T> | undefined, options?: GetOptions | undefined): Promise<T>;
     // (undocumented)
@@ -77,21 +76,18 @@ class StormCache {
     set(key: string, value: any, options?: GetOrSetOptions | undefined): Promise<boolean>;
     // (undocumented)
     setConfig(key: string, value: any, options?: GetOrSetOptions | undefined): Promise<boolean>;
+    // (undocumented)
+    protected trace: StormTrace;
 }
 export { StormCache }
 export { StormCache as StormCache_alias_1 }
 
 // @public (undocumented)
-interface StormCacheOptions extends Partial<RawBentoCacheOptions> {
-    // (undocumented)
-    bus?: Partial<BusOptions>;
-    // (undocumented)
-    file?: Partial<FileConfig>;
-    // (undocumented)
-    memory?: Partial<MemoryConfig>;
-    // (undocumented)
-    store?: ReturnType<typeof bentostore>;
-}
+type StormCacheOptions = Partial<RawBentoCacheOptions & {
+    stores: Record<string, ReturnType<typeof bentostore>>;
+    plugins?: BentoCachePlugin[];
+    default: keyof Record<string, ReturnType<typeof bentostore>>;
+}>;
 export { StormCacheOptions }
 export { StormCacheOptions as StormCacheOptions_alias_1 }
 

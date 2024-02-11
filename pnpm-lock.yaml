@@ -75,19 +75,19 @@ importers:
         version: 17.2.8(@swc-node/register@1.6.8)(@swc/core@1.3.100)
       '@storm-software/config':
         specifier: latest
-        version: 1.2.11
+        version: 1.2.12
       '@storm-software/git-tools':
         specifier: latest
-        version: 1.36.11(@nx/devkit@17.2.8)(@types/node@20.10.5)(nx@17.2.8)(typescript@5.3.3)
+        version: 1.36.12(@nx/devkit@17.2.8)(@types/node@20.10.5)(nx@17.2.8)(typescript@5.3.3)
       '@storm-software/linting-tools':
         specifier: latest
-        version: 1.38.11(prettier@2.8.8)
+        version: 1.38.12(prettier@2.8.8)
       '@storm-software/testing-tools':
         specifier: latest
-        version: 1.33.11(@swc-node/register@1.6.8)(@swc/core@1.3.100)(@types/node@20.10.5)(nx@17.2.8)(ts-node@10.9.2)(typescript@5.3.3)(verdaccio@5.29.0)
+        version: 1.33.12(@swc-node/register@1.6.8)(@swc/core@1.3.100)(@types/node@20.10.5)(nx@17.2.8)(ts-node@10.9.2)(typescript@5.3.3)(verdaccio@5.29.0)
       '@storm-software/workspace-tools':
         specifier: latest
-        version: 1.56.11(@swc-node/register@1.6.8)(@swc/core@1.3.100)(@types/node@20.10.5)(esbuild@0.19.9)(nx@17.2.8)(ts-node@10.9.2)(typescript@5.3.3)(verdaccio@5.29.0)
+        version: 1.56.12(@swc-node/register@1.6.8)(@swc/core@1.3.100)(@types/node@20.10.5)(esbuild@0.19.9)(nx@17.2.8)(ts-node@10.9.2)(typescript@5.3.3)(verdaccio@5.29.0)
       '@swc-node/register':
         specifier: 1.6.8
         version: 1.6.8(@swc/core@1.3.100)(typescript@5.3.3)
@@ -142,6 +142,9 @@ importers:
       nx:
         specifier: 17.2.8
         version: 17.2.8(@swc-node/register@1.6.8)(@swc/core@1.3.100)
+      prettier:
+        specifier: ^2.6.2
+        version: 2.8.8
       react:
         specifier: ^18.2.0
         version: 18.2.0
@@ -169,10 +172,6 @@ importers:
       verdaccio:
         specifier: 5.29.0
         version: 5.29.0(typanion@3.14.0)
-    devDependencies:
-      prettier:
-        specifier: ^2.6.2
-        version: 2.8.8
 
   apps/nx-tools:
     dependencies:
@@ -181,13 +180,13 @@ importers:
         version: 17.2.8(nx@17.2.8)
       '@storm-software/config':
         specifier: latest
-        version: 1.2.11
+        version: 1.2.12
       '@storm-software/config-tools':
         specifier: latest
-        version: 1.27.11(typescript@5.3.3)
+        version: 1.27.12(typescript@5.3.3)
       '@storm-software/workspace-tools':
         specifier: latest
-        version: 1.56.11(@swc-node/register@1.6.8)(@swc/core@1.3.100)(@types/node@20.10.5)(esbuild@0.20.0)(nx@17.2.8)(ts-node@10.9.2)(typescript@5.3.3)(verdaccio@5.29.0)
+        version: 1.56.12(@swc-node/register@1.6.8)(@swc/core@1.3.100)(@types/node@20.10.5)(esbuild@0.20.0)(nx@17.2.8)(ts-node@10.9.2)(typescript@5.3.3)(verdaccio@5.29.0)
       '@tamagui/fake-react-native':
         specifier: ^1.89.11
         version: 1.89.11
@@ -206,7 +205,7 @@ importers:
     devDependencies:
       '@tamagui/web':
         specifier: ^1.89.8
-        version: 1.89.19
+        version: 1.89.20
       '@types/fs-extra':
         specifier: ^11.0.4
         version: 11.0.4
@@ -269,10 +268,10 @@ importers:
     dependencies:
       '@storm-software/config':
         specifier: latest
-        version: 1.2.11
+        version: 1.2.12
       '@storm-software/config-tools':
         specifier: latest
-        version: 1.27.11(typescript@5.3.3)
+        version: 1.27.12(typescript@5.3.3)
       chalk:
         specifier: 5.3.0
         version: 5.3.0
@@ -321,7 +320,7 @@ importers:
         version: 1.89.8(react-native@0.73.4)(react@18.2.0)
       '@tamagui/web':
         specifier: ^1.89.8
-        version: 1.89.19
+        version: 1.89.20
       tamagui:
         specifier: ^1.79.13
         version: 1.79.13(@types/react@18.2.55)(react-dom@18.2.0)(react-native-web@0.19.9)(react-native@0.73.4)(react@18.2.0)
@@ -349,10 +348,10 @@ importers:
     dependencies:
       '@storm-software/testing-tools':
         specifier: latest
-        version: 1.33.11(@swc-node/register@1.6.8)(@swc/core@1.3.100)(@types/node@20.10.5)(nx@17.2.8)(ts-node@10.9.2)(typescript@5.3.3)(verdaccio@5.29.0)
+        version: 1.33.12(@swc-node/register@1.6.8)(@swc/core@1.3.100)(@types/node@20.10.5)(nx@17.2.8)(ts-node@10.9.2)(typescript@5.3.3)(verdaccio@5.29.0)
       '@storm-software/workspace-tools':
         specifier: latest
-        version: 1.56.11(@swc-node/register@1.6.8)(@swc/core@1.3.100)(@types/node@20.10.5)(esbuild@0.19.9)(nx@17.2.8)(ts-node@10.9.2)(typescript@5.3.3)(verdaccio@5.29.0)
+        version: 1.56.12(@swc-node/register@1.6.8)(@swc/core@1.3.100)(@types/node@20.10.5)(esbuild@0.19.9)(nx@17.2.8)(ts-node@10.9.2)(typescript@5.3.3)(verdaccio@5.29.0)
     devDependencies:
       '@types/node':
         specifier: ^20.10.5
@@ -362,7 +361,7 @@ importers:
     dependencies:
       '@storm-software/config-tools':
         specifier: latest
-        version: 1.27.11(typescript@5.3.3)
+        version: 1.27.12(typescript@5.3.3)
       semver:
         specifier: 7.5.4
         version: 7.5.4
@@ -393,7 +392,7 @@ importers:
     dependencies:
       '@storm-software/config':
         specifier: latest
-        version: 1.2.11
+        version: 1.2.12
       chalk:
         specifier: 5.3.0
         version: 5.3.0
@@ -474,10 +473,10 @@ importers:
     dependencies:
       '@storm-software/config':
         specifier: latest
-        version: 1.2.11
+        version: 1.2.12
       '@storm-software/config-tools':
         specifier: latest
-        version: 1.27.11(typescript@5.3.3)
+        version: 1.27.12(typescript@5.3.3)
       pino:
         specifier: 8.16.2
         version: 8.16.2
@@ -4196,7 +4195,6 @@ packages:
       - '@swc/wasm'
       - '@types/node'
       - babel-plugin-macros
-      - bufferutil
       - debug
       - encoding
       - js-yaml
@@ -4205,7 +4203,6 @@ packages:
       - supports-color
       - ts-node
       - typescript
-      - utf-8-validate
       - verdaccio
     dev: false
 
@@ -7276,8 +7273,8 @@ packages:
       - utf-8-validate
     dev: false
 
-  /@storm-software/config-tools@1.27.11(typescript@5.3.3):
-    resolution: {integrity: sha512-4JgkoD0BRHMdIpmcEidyxd+4JYJ22NE+HNMGO2HiIwwLnzs/cJQveccSuTsYg6VidzbS3v7pvvMnK1SoZTwWzg==}
+  /@storm-software/config-tools@1.27.12(typescript@5.3.3):
+    resolution: {integrity: sha512-ZweV/h827NQ/4dfZzfjcfCga7G/N8WOzvpx1UXeBzpLpEw9LJRcmpNA440dKU/zDdoUcn5v87f7+kQcO5Q+2OA==}
     dependencies:
       chalk: 4.1.0
       cosmiconfig: 9.0.0(typescript@5.3.3)
@@ -7288,14 +7285,14 @@ packages:
       - typescript
     dev: false
 
-  /@storm-software/config@1.2.11:
-    resolution: {integrity: sha512-fwWOqn3hxsSvwBXkFS9/FaybI5zPIdju33b8c1OtLwsBZkZjFblTSnWJW4CZzDBAH23z6vG8j5it7qDhScfKBw==}
+  /@storm-software/config@1.2.12:
+    resolution: {integrity: sha512-4mRz5UUIuYLjJZiumM3y3IA/Wi8dXxV2T8+EtAjTmMvI8UO9K0CXg5rqSAYHm6/09eLR2VLSnuBbtDWSfzkL3A==}
     dependencies:
       zod: 3.22.4
     dev: false
 
-  /@storm-software/git-tools@1.36.11(@nx/devkit@17.2.8)(@types/node@20.10.5)(nx@17.2.8)(typescript@5.3.3):
-    resolution: {integrity: sha512-mXeRlz92VDL3DI1tRutycPTk1IJK39m4fdfTfsJN3zIatqkHnuKPq/tnLRJ7j7fmFjWi9ciiS52vMZxT0v2klA==}
+  /@storm-software/git-tools@1.36.12(@nx/devkit@17.2.8)(@types/node@20.10.5)(nx@17.2.8)(typescript@5.3.3):
+    resolution: {integrity: sha512-BAciRuV9je2HS1gTsSRSnmuWsPbysqotartEmurckTM1IswLVi9u38jqdd8YmRm9kqncPtBTmswcxGQNMbxL+g==}
     hasBin: true
     peerDependencies:
       '@nx/devkit': '>=17.2.8'
@@ -7329,8 +7326,8 @@ packages:
       - typescript
     dev: false
 
-  /@storm-software/linting-tools@1.38.11(prettier@2.8.8):
-    resolution: {integrity: sha512-DXb6cCHsLmmw+AQNNB3Ggrw5kUHWYs03JLR+sMqb9HEjfEdFO9b/aEMsoGUXPHei7nUudqe14IKD1euxbkag8g==}
+  /@storm-software/linting-tools@1.38.12(prettier@2.8.8):
+    resolution: {integrity: sha512-K/NEVvdaQHRgsgAz7fEsA38uCl1D/4kuN07IP3TrCgiHnxaxVM/xwbf2mp60rEenhqPOI/emM8viSuDCDACxqg==}
     hasBin: true
     dependencies:
       '@cspell/dict-ada': 4.0.2
@@ -7434,8 +7431,8 @@ packages:
       - utf-8-validate
     dev: false
 
-  /@storm-software/testing-tools@1.33.11(@swc-node/register@1.6.8)(@swc/core@1.3.100)(@types/node@20.10.5)(nx@17.2.8)(ts-node@10.9.2)(typescript@5.3.3)(verdaccio@5.29.0):
-    resolution: {integrity: sha512-hnbbVxBFBjQXtdqI+Ydu+mtxgi0053bMD2EORrP5ChvrNbaV1n9GCi/AJHaJDWzdsRazVz4Rj4xbf891XxFQHA==}
+  /@storm-software/testing-tools@1.33.12(@swc-node/register@1.6.8)(@swc/core@1.3.100)(@types/node@20.10.5)(nx@17.2.8)(ts-node@10.9.2)(typescript@5.3.3)(verdaccio@5.29.0):
+    resolution: {integrity: sha512-i0UOoc57T6D+LnmqkuRSLjlp/rMdRQOHit4gp3bhEvd2HwoMyBOVb+Cf77wCLUtFCz6k3TSObhCaGV3LNSErEg==}
     dependencies:
       '@nx/jest': 17.2.8(@swc-node/register@1.6.8)(@swc/core@1.3.100)(@types/node@20.10.5)(nx@17.2.8)(ts-node@10.9.2)(typescript@5.3.3)(verdaccio@5.29.0)
     transitivePeerDependencies:
@@ -7454,8 +7451,8 @@ packages:
       - verdaccio
     dev: false
 
-  /@storm-software/workspace-tools@1.56.11(@swc-node/register@1.6.8)(@swc/core@1.3.100)(@types/node@20.10.5)(esbuild@0.19.9)(nx@17.2.8)(ts-node@10.9.2)(typescript@5.3.3)(verdaccio@5.29.0):
-    resolution: {integrity: sha512-o7JWqLi5vtLlrcZzPB8G4WbIva5m54GW2Dfea156Ac9kET6/yHoJiB3/pwxaEvVL6HOJG5msB6ta3oM04qlz/w==}
+  /@storm-software/workspace-tools@1.56.12(@swc-node/register@1.6.8)(@swc/core@1.3.100)(@types/node@20.10.5)(esbuild@0.19.9)(nx@17.2.8)(ts-node@10.9.2)(typescript@5.3.3)(verdaccio@5.29.0):
+    resolution: {integrity: sha512-CWujTndBxlHtTGjX9oXzKc9oVnbgjzZAlPe3hVB/kJx/1JbK2YnSHx8oh0CYEd+rPHnhLCFvHZC67DODoaw2Mw==}
     dependencies:
       '@anatine/esbuild-decorators': 0.2.19(esbuild@0.19.9)
       '@microsoft/api-extractor': 7.38.5(@types/node@20.10.5)
@@ -7500,8 +7497,8 @@ packages:
       - verdaccio
     dev: false
 
-  /@storm-software/workspace-tools@1.56.11(@swc-node/register@1.6.8)(@swc/core@1.3.100)(@types/node@20.10.5)(esbuild@0.20.0)(nx@17.2.8)(ts-node@10.9.2)(typescript@5.3.3)(verdaccio@5.29.0):
-    resolution: {integrity: sha512-o7JWqLi5vtLlrcZzPB8G4WbIva5m54GW2Dfea156Ac9kET6/yHoJiB3/pwxaEvVL6HOJG5msB6ta3oM04qlz/w==}
+  /@storm-software/workspace-tools@1.56.12(@swc-node/register@1.6.8)(@swc/core@1.3.100)(@types/node@20.10.5)(esbuild@0.20.0)(nx@17.2.8)(ts-node@10.9.2)(typescript@5.3.3)(verdaccio@5.29.0):
+    resolution: {integrity: sha512-CWujTndBxlHtTGjX9oXzKc9oVnbgjzZAlPe3hVB/kJx/1JbK2YnSHx8oh0CYEd+rPHnhLCFvHZC67DODoaw2Mw==}
     dependencies:
       '@anatine/esbuild-decorators': 0.2.19(esbuild@0.20.0)
       '@microsoft/api-extractor': 7.38.5(@types/node@20.10.5)
@@ -8149,6 +8146,7 @@ packages:
       react: '*'
     dependencies:
       react: 18.2.0
+    dev: false
 
   /@tamagui/compose-refs@1.89.20(react@18.2.0):
     resolution: {integrity: sha512-tn+vMLAaNo14yQ+Kfi2F266XAS4ex9sZP1ojo3JgvAAJRSQgXnutTgJvxosPwKNm8McVNegopscgF5ft3JGdiw==}
@@ -8156,7 +8154,6 @@ packages:
       react: '*'
     dependencies:
       react: 18.2.0
-    dev: false
 
   /@tamagui/compose-refs@1.89.8(react@18.2.0):
     resolution: {integrity: sha512-6Xc3z7WfwaYnxGFDXX3vMNgUpo/wmApDgvhWDZbTbPUeiLiJVg06y9UhI/ZEsKUTmm6qC5ZC2IMmgMxTtuzlGg==}
@@ -8188,6 +8185,7 @@ packages:
       react: '*'
     dependencies:
       react: 18.2.0
+    dev: false
 
   /@tamagui/constants@1.89.20(react@18.2.0):
     resolution: {integrity: sha512-SUqwJLiFPfD83Lm7ptnU+SMa5lMcbvq41QzVz2LweI53OcWotek+xbq/3PjKrHzLIMen5iUI2ZVJdDHvOfw85Q==}
@@ -8195,7 +8193,6 @@ packages:
       react: '*'
     dependencies:
       react: 18.2.0
-    dev: false
 
   /@tamagui/constants@1.89.8(react@18.2.0):
     resolution: {integrity: sha512-mHWi5jrIhyWhJ9ajo4U/Zagf7f7XEtAH7RzMJm4rMgiUZ4+aKJKM7Gf0VYUvwBkBLBtfTSxRJ36vP8id+oRCWA==}
@@ -8504,6 +8501,7 @@ packages:
       '@tamagui/simple-hash': 1.89.19
     transitivePeerDependencies:
       - react
+    dev: false
 
   /@tamagui/helpers@1.89.20(react@18.2.0):
     resolution: {integrity: sha512-olOT1Xy44GA+5XBg7FAWpImImbw+htkJBBKXlsYOG3+TUrBk1wU+kv2LNV3JwJ0Pkry5N6qRDz8NzQktvZK7ag==}
@@ -8512,7 +8510,6 @@ packages:
       '@tamagui/simple-hash': 1.89.20
     transitivePeerDependencies:
       - react
-    dev: false
 
   /@tamagui/helpers@1.89.8(react@18.2.0):
     resolution: {integrity: sha512-emmJC3Vewm2ljlu73q/dXTjNNx5UIWOP7gpGpbLWsLWDtD2SnydX/LwArDVCju8EFwIM+c1b23WrtFp2+ruo3Q==}
@@ -8597,12 +8594,12 @@ packages:
     resolution: {integrity: sha512-qazK0QkrIZf9rSQad8mQu0pqaAh4Cp/bqm5aophlWXjJVJyZhkiDL3LUDBHPKFFYvOTaFQ038WPly+Fre/xwaQ==}
     dependencies:
       '@react-native/normalize-color': 2.1.0
+    dev: false
 
   /@tamagui/normalize-css-color@1.89.20:
     resolution: {integrity: sha512-6Gpv/IP/XeXeZiVGcIvXd4VL8b7yPR2G6nRHbCQI4kQfMNe0cKAjC636xdEFZAqHbRL3Uizcf/XyI7rY8PeL6Q==}
     dependencies:
       '@react-native/normalize-color': 2.1.0
-    dev: false
 
   /@tamagui/normalize-css-color@1.89.8:
     resolution: {integrity: sha512-DfpwXlxheRtKxI8EoofaizQV5oVIb/6TkBD7ClZs0wFgA4TTL2fIFbkiSqbT+rK3RIsK7RtAK+qqMgBfXVZiTg==}
@@ -8924,10 +8921,10 @@ packages:
 
   /@tamagui/simple-hash@1.89.19:
     resolution: {integrity: sha512-9At0w+jHa2+RgmmQui2Ax0Af0Za82yxMWfUa9O325aa8qFAQdN0VDcaawEQVGUEAMtlNQJJD7vYfywH+NvpQRw==}
+    dev: false
 
   /@tamagui/simple-hash@1.89.20:
     resolution: {integrity: sha512-X0wdqShe1EadyvE8JpuZTLF5mSvekFeaqLoZd7SvY565zvX/8i4XwYqr22MPbqfofeb7rXQ1f13XGX2/TXY47Q==}
-    dev: false
 
   /@tamagui/simple-hash@1.89.8:
     resolution: {integrity: sha512-qgQswCIH/vIivcO/6ZIRG4Ze4X1OkBVu/JaeKbWXSZMRzIJHJahKzfl4eABeAQshiqE0O9Fuv9smandXGZviyQ==}
@@ -9081,10 +9078,10 @@ packages:
 
   /@tamagui/timer@1.89.19:
     resolution: {integrity: sha512-roG3ORerbJvqPsMeI6V1b/ckk6OwvEssVA/TRvE97bgPqbc+WEnkugUDfHUE6iw5eKtW8WCmWbFXGsWBbJI2kw==}
+    dev: false
 
   /@tamagui/timer@1.89.20:
     resolution: {integrity: sha512-JGykonrLgTRalkn1BuWUkI8BUVKFCUgcaNgSxtqxLAIEboD05iduGkCKhGNMBBknznQcIWcu3VEKU1WANSY53w==}
-    dev: false
 
   /@tamagui/timer@1.89.8:
     resolution: {integrity: sha512-9kCrwC54qUkZqao6HBjOWoPZ39oCm9UhWWo49L9ZNHnYd3AtkfKaTQcnnjHAnRHUFjbZzMoHVG0NBUdX4jSChQ==}
@@ -9166,10 +9163,10 @@ packages:
 
   /@tamagui/types@1.89.19:
     resolution: {integrity: sha512-4/gxpk5tUYpiULfc3/9zBPbsK/nYMs1f2PCYi1e0Y6ydbVaNJz8wYbmLINabeA+Josk6mUpkeKR09iqjVw1yNQ==}
+    dev: false
 
   /@tamagui/types@1.89.20:
     resolution: {integrity: sha512-uSz+zwcUmqtzRaNoH5YdrxF6zZi0s45rUGjCOZgN5es3sN05iOA2+oCIAEw7VXJdUI83OuEJzSZVKjoT1NXR+w==}
-    dev: false
 
   /@tamagui/types@1.89.8:
     resolution: {integrity: sha512-NcHkuA5KNs+YxWA1N8Qn3Qw9wYj+6iN8kUjqcqNvmGMaihloGJUdA8ifO/yywvVxXc1wXEq6tmCpL3WahTML+A==}
@@ -9250,6 +9247,7 @@ packages:
     dependencies:
       '@tamagui/constants': 1.89.19(react@18.2.0)
       react: 18.2.0
+    dev: false
 
   /@tamagui/use-did-finish-ssr@1.89.20(react@18.2.0):
     resolution: {integrity: sha512-VFKtBn8OrqZX6J3ftRoNWyF+fm+P2RIJxWr8CaZUUcr7DFmDMRlR6OkVQ1K4e7q2W+u3C5qqOyjUYM0wc5O8AA==}
@@ -9258,7 +9256,6 @@ packages:
     dependencies:
       '@tamagui/constants': 1.89.20(react@18.2.0)
       react: 18.2.0
-    dev: false
 
   /@tamagui/use-did-finish-ssr@1.89.8(react@18.2.0):
     resolution: {integrity: sha512-e087GMakvu98cojg+xyAid5b7NfOSDspPfj+NLo6BTixqyHzzmqhci6SDvGI7siSn58Gus8j+HyroqfEOFsKuw==}
@@ -9314,6 +9311,7 @@ packages:
     dependencies:
       '@tamagui/constants': 1.89.19(react@18.2.0)
       react: 18.2.0
+    dev: false
 
   /@tamagui/use-event@1.89.20(react@18.2.0):
     resolution: {integrity: sha512-+X7boQ5+msFnHWsWffuIa1UjbCv0uK9/aKxIiehM6ten4qSTQ6+0JDmylYDONVq+Dfc1XfRKDcGhM9QdjhHARw==}
@@ -9322,7 +9320,6 @@ packages:
     dependencies:
       '@tamagui/constants': 1.89.20(react@18.2.0)
       react: 18.2.0
-    dev: false
 
   /@tamagui/use-event@1.89.8(react@18.2.0):
     resolution: {integrity: sha512-a5UCU6lnrpU/r+ceP1QHeXSgK78g+yM3nlhJ9Ryna0LlW7qRB+y/yCr/y+garGioqyXcmCBrlI3SuPAX7Qi2ig==}
@@ -9355,6 +9352,7 @@ packages:
       react: '*'
     dependencies:
       react: 18.2.0
+    dev: false
 
   /@tamagui/use-force-update@1.89.20(react@18.2.0):
     resolution: {integrity: sha512-8z0co6XPiU02dee+M+GH7SoeAcV1nnpXqpF1mBlh978oO2newYpgxbnDJKOYJ0WuXL2Z81T2s2fZYvDp5iNBMQ==}
@@ -9362,7 +9360,6 @@ packages:
       react: '*'
     dependencies:
       react: 18.2.0
-    dev: false
 
   /@tamagui/use-force-update@1.89.8(react@18.2.0):
     resolution: {integrity: sha512-eOFOUwiSuTaW9wyqQNN/2nE5N1P9y+Q6qbMEGeinl/4fdU1OYhwBRj26V+MlRX5oWgDvs2QF1P8nA6L/oflS1A==}
@@ -9488,6 +9485,7 @@ packages:
       '@tamagui/use-force-update': 1.89.19(react@18.2.0)
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
+    dev: false
 
   /@tamagui/web@1.89.20:
     resolution: {integrity: sha512-E49lcTbK2h0CEvHJH32GmWDGfR62Z6EmDhuhRJ9t6z0g2SQ7iqMlJrAq2DkpoGbEqtWWvVDfflZcplD4JU2Npw==}
@@ -9503,7 +9501,6 @@ packages:
       '@tamagui/use-force-update': 1.89.20(react@18.2.0)
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
-    dev: false
 
   /@tamagui/web@1.89.8:
     resolution: {integrity: sha512-4QZq0GplUnsb0h6ohXbuHplp6xx1ugwRp0kATNLQ9wKoZi633FUyBJ6pNvIfTLPR6/Cbc2Wck7crd6HSeU54/g==}
@@ -15506,10 +15503,6 @@ packages:
   /ip@1.1.8:
     resolution: {integrity: sha512-PuExPYUiu6qMBQb4l06ecm6T6ujzhmh+MeJcW9wa89PoAz5pvd4zPgN5WJV104mb6S2T1AwNIAaB70JNrLQWhg==}
 
-  /ip@2.0.0:
-    resolution: {integrity: sha512-WKa+XuLG1A1R0UWhl2+1XQSi+fZWMsYKffMZTTYsiZaUD8k2yDAj5atimTUD2TZkyCkNEeYE5NhFZmupOGtjYQ==}
-    dev: false
-
   /ipaddr.js@1.9.1:
     resolution: {integrity: sha512-0KI/607xoxSToH7GjN1FfSbLoU0+btTicjsQSWQlh/hZykN8KpmMf7uYwPW3R+akZ6R/w18ZlXSHBYXiYUPO3g==}
     engines: {node: '>= 0.10'}
@@ -20559,6 +20552,7 @@ packages:
     resolution: {integrity: sha512-tdN8qQGvNjw4CHbY+XXk0JgCXn9QiF21a55rBe5LJAU+kDyC4WQn4+awm2Xfk2lQMk5fKup9XgzTZtGkjBdP9Q==}
     engines: {node: '>=10.13.0'}
     hasBin: true
+    dev: false
 
   /prettier@3.2.4:
     resolution: {integrity: sha512-FWu1oLHKCrtpO1ypU6J0SbK2d9Ckwysq6bHj/uaCP26DxrPpppCLQRGVuqAxSTvhF00AcvDRyYrLNW7ocBhFFQ==}
@@ -22428,7 +22422,7 @@ packages:
     resolution: {integrity: sha512-7maUZy1N7uo6+WVEX6psASxtNlKaNVMlGQKkG/63nEDdLOWNbiUMoLK7X4uYoLhQstau72mLgfEWcXcwsaHbYQ==}
     engines: {node: '>= 10.13.0', npm: '>= 3.0.0'}
     dependencies:
-      ip: 2.0.0
+      ip: 1.1.8
       smart-buffer: 4.2.0
     dev: false
 
