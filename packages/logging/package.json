@@ -12,7 +12,7 @@
   "dependencies": {
     "@storm-software/config": "latest",
     "chalk": "5.3.0",
-    "pino": "8.16.2",
+    "pino": "8.18.0",
     "pino-std-serializers": "^6.2.2"
   },
   "publishConfig": {
