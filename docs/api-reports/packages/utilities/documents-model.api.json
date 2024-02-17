@@ -1,7 +1,7 @@
 {
   "metadata": {
     "toolPackage": "@microsoft/api-extractor",
-    "toolVersion": "7.38.5",
+    "toolVersion": "7.40.1",
     "schemaVersion": 1011,
     "oldestForwardsCompatibleVersion": 1001,
     "tsdocConfig": {
@@ -516,27 +516,45 @@
           }
         },
         {
-          "kind": "Variable",
-          "canonicalReference": "@storm-stack/utilities!camelCase:var",
+          "kind": "Function",
+          "canonicalReference": "@storm-stack/utilities!camelCase:function(1)",
           "docComment": "/**\n * Convert the input string to camel case.\n *\n * @remarks\n *\n * \"thisIsAnExample\"\n *\n * @param input - The input string.\n *\n * @returns The camel-cased string.\n */\n",
           "excerptTokens": [
             {
               "kind": "Content",
-              "text": "camelCase: "
+              "text": "camelCase: (input?: "
             },
             {
               "kind": "Content",
-              "text": "(input?: string) => string | undefined"
+              "text": "string"
+            },
+            {
+              "kind": "Content",
+              "text": ") => "
+            },
+            {
+              "kind": "Content",
+              "text": "string | undefined"
             }
           ],
           "fileUrlPath": "tmp/.tsup/declaration/packages/utilities/src/string-fns/camel-case.d.ts",
-          "isReadonly": true,
+          "returnTypeTokenRange": {
+            "startIndex": 3,
+            "endIndex": 4
+          },
           "releaseTag": "Public",
-          "name": "camelCase",
-          "variableTypeTokenRange": {
-            "startIndex": 1,
-            "endIndex": 2
-          }
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "input",
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "isOptional": true
+            }
+          ],
+          "name": "camelCase"
         },
         {
           "kind": "Interface",
@@ -737,27 +755,45 @@
           }
         },
         {
-          "kind": "Variable",
-          "canonicalReference": "@storm-stack/utilities!constantCase:var",
+          "kind": "Function",
+          "canonicalReference": "@storm-stack/utilities!constantCase:function(1)",
           "docComment": "/**\n * Convert the input string to constant case.\n *\n * @remarks\n *\n * \"THIS_IS_AN_EXAMPLE\"\n *\n * @param input - The input string.\n *\n * @returns The constant-cased string.\n */\n",
           "excerptTokens": [
             {
               "kind": "Content",
-              "text": "constantCase: "
+              "text": "constantCase: (input?: "
             },
             {
               "kind": "Content",
-              "text": "(input?: string) => string | undefined"
+              "text": "string"
+            },
+            {
+              "kind": "Content",
+              "text": ") => "
+            },
+            {
+              "kind": "Content",
+              "text": "string | undefined"
             }
           ],
           "fileUrlPath": "tmp/.tsup/declaration/packages/utilities/src/string-fns/constant-case.d.ts",
-          "isReadonly": true,
+          "returnTypeTokenRange": {
+            "startIndex": 3,
+            "endIndex": 4
+          },
           "releaseTag": "Public",
-          "name": "constantCase",
-          "variableTypeTokenRange": {
-            "startIndex": 1,
-            "endIndex": 2
-          }
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "input",
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "isOptional": true
+            }
+          ],
+          "name": "constantCase"
         },
         {
           "kind": "Function",
@@ -1281,86 +1317,189 @@
           }
         },
         {
-          "kind": "Variable",
-          "canonicalReference": "@storm-stack/utilities!flattenObject:var",
+          "kind": "Function",
+          "canonicalReference": "@storm-stack/utilities!flattenObject:function(1)",
           "docComment": "/**\n * Flatten an object.\n *\n * @param obj - The object to flatten.\n *\n * @param prefix - The prefix to use.\n *\n * @param keyStringFn - The function to use to convert the key to a string.\n *\n * @returns The flattened object.\n */\n",
           "excerptTokens": [
             {
               "kind": "Content",
-              "text": "flattenObject: "
+              "text": "flattenObject: (obj: "
             },
             {
               "kind": "Content",
-              "text": "(obj: any, prefix?: string, keyStringFn?: (input?: string) => string | undefined) => any"
+              "text": "any"
+            },
+            {
+              "kind": "Content",
+              "text": ", prefix?: "
+            },
+            {
+              "kind": "Content",
+              "text": "string"
+            },
+            {
+              "kind": "Content",
+              "text": ", keyStringFn?: "
+            },
+            {
+              "kind": "Content",
+              "text": "(input?: string) => string | undefined"
+            },
+            {
+              "kind": "Content",
+              "text": ") => "
+            },
+            {
+              "kind": "Content",
+              "text": "any"
             }
           ],
           "fileUrlPath": "tmp/.tsup/declaration/packages/utilities/src/helper-fns/flatten-object.d.ts",
-          "isReadonly": true,
+          "returnTypeTokenRange": {
+            "startIndex": 7,
+            "endIndex": 8
+          },
           "releaseTag": "Public",
-          "name": "flattenObject",
-          "variableTypeTokenRange": {
-            "startIndex": 1,
-            "endIndex": 2
-          }
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "obj",
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "isOptional": false
+            },
+            {
+              "parameterName": "prefix",
+              "parameterTypeTokenRange": {
+                "startIndex": 3,
+                "endIndex": 4
+              },
+              "isOptional": true
+            },
+            {
+              "parameterName": "keyStringFn",
+              "parameterTypeTokenRange": {
+                "startIndex": 5,
+                "endIndex": 6
+              },
+              "isOptional": true
+            }
+          ],
+          "name": "flattenObject"
         },
         {
-          "kind": "Variable",
-          "canonicalReference": "@storm-stack/utilities!getObjectTag:var",
+          "kind": "Function",
+          "canonicalReference": "@storm-stack/utilities!getObjectTag:function(1)",
           "docComment": "/**\n * Gets the `toStringTag` of `obj`.\n *\n * @param value - The obj to query.\n *\n * @returns Returns the `toStringTag`.\n */\n",
           "excerptTokens": [
             {
               "kind": "Content",
-              "text": "getObjectTag: "
+              "text": "getObjectTag: (value: "
             },
             {
               "kind": "Content",
-              "text": "(value: unknown) => string"
+              "text": "unknown"
+            },
+            {
+              "kind": "Content",
+              "text": ") => "
+            },
+            {
+              "kind": "Content",
+              "text": "string"
             }
           ],
           "fileUrlPath": "tmp/.tsup/declaration/packages/utilities/src/type-checks/get-object-tag.d.ts",
-          "isReadonly": true,
+          "returnTypeTokenRange": {
+            "startIndex": 3,
+            "endIndex": 4
+          },
           "releaseTag": "Public",
-          "name": "getObjectTag",
-          "variableTypeTokenRange": {
-            "startIndex": 1,
-            "endIndex": 2
-          }
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "value",
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "isOptional": false
+            }
+          ],
+          "name": "getObjectTag"
         },
         {
-          "kind": "Variable",
-          "canonicalReference": "@storm-stack/utilities!getUnique:var",
+          "kind": "Function",
+          "canonicalReference": "@storm-stack/utilities!getUnique:function(1)",
           "docComment": "/**\n * Returns an array of unique values from the given array.\n *\n * @param arr - The array to get unique values from.\n *\n * @returns An array of unique values.\n */\n",
           "excerptTokens": [
             {
               "kind": "Content",
-              "text": "getUnique: "
+              "text": "getUnique: <T = "
             },
             {
               "kind": "Content",
-              "text": "<T = any>(arr: T[]) => T[]"
+              "text": "any"
+            },
+            {
+              "kind": "Content",
+              "text": ">(arr: "
+            },
+            {
+              "kind": "Content",
+              "text": "T[]"
+            },
+            {
+              "kind": "Content",
+              "text": ") => "
+            },
+            {
+              "kind": "Content",
+              "text": "T[]"
             }
           ],
           "fileUrlPath": "tmp/.tsup/declaration/packages/utilities/src/helper-fns/get-unique.d.ts",
-          "isReadonly": true,
+          "returnTypeTokenRange": {
+            "startIndex": 5,
+            "endIndex": 6
+          },
           "releaseTag": "Public",
-          "name": "getUnique",
-          "variableTypeTokenRange": {
-            "startIndex": 1,
-            "endIndex": 2
-          }
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "arr",
+              "parameterTypeTokenRange": {
+                "startIndex": 3,
+                "endIndex": 4
+              },
+              "isOptional": false
+            }
+          ],
+          "typeParameters": [
+            {
+              "typeParameterName": "T",
+              "constraintTokenRange": {
+                "startIndex": 0,
+                "endIndex": 0
+              },
+              "defaultTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            }
+          ],
+          "name": "getUnique"
         },
         {
-          "kind": "Variable",
-          "canonicalReference": "@storm-stack/utilities!getWebCrypto:var",
+          "kind": "Function",
+          "canonicalReference": "@storm-stack/utilities!getWebCrypto:function(1)",
           "docComment": "/**\n * Get the WebCrypto object\n *\n * @remarks\n *\n * This helper function is used to get the WebCrypto object. If the object is not available, an error will be thrown.\n *\n * @returns The WebCrypto object\n */\n",
           "excerptTokens": [
             {
               "kind": "Content",
-              "text": "getWebCrypto: "
-            },
-            {
-              "kind": "Content",
-              "text": "() => "
+              "text": "getWebCrypto: () => "
             },
             {
               "kind": "Reference",
@@ -1369,13 +1508,14 @@
             }
           ],
           "fileUrlPath": "tmp/.tsup/declaration/packages/utilities/src/crypto/web-crypto.d.ts",
-          "isReadonly": true,
-          "releaseTag": "Public",
-          "name": "getWebCrypto",
-          "variableTypeTokenRange": {
+          "returnTypeTokenRange": {
             "startIndex": 1,
-            "endIndex": 3
-          }
+            "endIndex": 2
+          },
+          "releaseTag": "Public",
+          "overloadIndex": 1,
+          "parameters": [],
+          "name": "getWebCrypto"
         },
         {
           "kind": "Interface",
@@ -1505,40 +1645,62 @@
           }
         },
         {
-          "kind": "Variable",
-          "canonicalReference": "@storm-stack/utilities!isArrayLike:var",
+          "kind": "Function",
+          "canonicalReference": "@storm-stack/utilities!isArrayLike:function(1)",
           "docComment": "/**\n * Check if the provided value's type is \"array-like\"\n *\n * @param value - The value to type check\n *\n * @returns An indicator specifying if the object provided is \"array-like\"\n */\n",
           "excerptTokens": [
             {
               "kind": "Content",
-              "text": "isArrayLike: "
+              "text": "isArrayLike: (value: "
             },
             {
               "kind": "Content",
-              "text": "(value: any) => boolean"
+              "text": "any"
+            },
+            {
+              "kind": "Content",
+              "text": ") => "
+            },
+            {
+              "kind": "Content",
+              "text": "boolean"
             }
           ],
           "fileUrlPath": "tmp/.tsup/declaration/packages/utilities/src/type-checks/is-array-like.d.ts",
-          "isReadonly": true,
+          "returnTypeTokenRange": {
+            "startIndex": 3,
+            "endIndex": 4
+          },
           "releaseTag": "Public",
-          "name": "isArrayLike",
-          "variableTypeTokenRange": {
-            "startIndex": 1,
-            "endIndex": 2
-          }
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "value",
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "isOptional": false
+            }
+          ],
+          "name": "isArrayLike"
         },
         {
-          "kind": "Variable",
-          "canonicalReference": "@storm-stack/utilities!isAsyncIterable:var",
+          "kind": "Function",
+          "canonicalReference": "@storm-stack/utilities!isAsyncIterable:function(1)",
           "docComment": "/**\n * Check if the provided value's type is `AsyncIterable`\n *\n * @param value - The value to type check\n *\n * @returns An indicator specifying if the object provided is `AsyncIterable`\n */\n",
           "excerptTokens": [
             {
               "kind": "Content",
-              "text": "isAsyncIterable: "
+              "text": "isAsyncIterable: (value: "
             },
             {
               "kind": "Content",
-              "text": "(value: unknown) => "
+              "text": "unknown"
+            },
+            {
+              "kind": "Content",
+              "text": ") => "
             },
             {
               "kind": "Reference",
@@ -1560,26 +1722,40 @@
             }
           ],
           "fileUrlPath": "tmp/.tsup/declaration/packages/utilities/src/type-checks/is-async-iterable.d.ts",
-          "isReadonly": true,
+          "returnTypeTokenRange": {
+            "startIndex": 3,
+            "endIndex": 7
+          },
           "releaseTag": "Public",
-          "name": "isAsyncIterable",
-          "variableTypeTokenRange": {
-            "startIndex": 1,
-            "endIndex": 6
-          }
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "value",
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "isOptional": false
+            }
+          ],
+          "name": "isAsyncIterable"
         },
         {
-          "kind": "Variable",
-          "canonicalReference": "@storm-stack/utilities!isBigInt:var",
+          "kind": "Function",
+          "canonicalReference": "@storm-stack/utilities!isBigInt:function(1)",
           "docComment": "/**\n * Checks if `value` is classified as a `bigint` object.\n *\n * @param value - The obj to check.\n *\n * @returns Returns `true` if `value` is a bigint object, else `false`.\n *\n * @example\n * ```typescript\n * isDate(37n)\n * // => true\n *\n * isBigInt(37)\n * // => false\n * ```\n *\n */\n",
           "excerptTokens": [
             {
               "kind": "Content",
-              "text": "isBigInt: "
+              "text": "isBigInt: (value: "
             },
             {
               "kind": "Content",
-              "text": "(value: unknown) => "
+              "text": "unknown"
+            },
+            {
+              "kind": "Content",
+              "text": ") => "
             },
             {
               "kind": "Reference",
@@ -1592,26 +1768,40 @@
             }
           ],
           "fileUrlPath": "tmp/.tsup/declaration/packages/utilities/src/type-checks/is-bigint.d.ts",
-          "isReadonly": true,
+          "returnTypeTokenRange": {
+            "startIndex": 3,
+            "endIndex": 5
+          },
           "releaseTag": "Public",
-          "name": "isBigInt",
-          "variableTypeTokenRange": {
-            "startIndex": 1,
-            "endIndex": 4
-          }
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "value",
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "isOptional": false
+            }
+          ],
+          "name": "isBigInt"
         },
         {
-          "kind": "Variable",
-          "canonicalReference": "@storm-stack/utilities!isBoolean:var",
+          "kind": "Function",
+          "canonicalReference": "@storm-stack/utilities!isBoolean:function(1)",
           "docComment": "/**\n * Check if the provided value's type is `boolean`\n *\n * @param value - The value to type check\n *\n * @returns An indicator specifying if the value provided is of type `boolean`\n */\n",
           "excerptTokens": [
             {
               "kind": "Content",
-              "text": "isBoolean: "
+              "text": "isBoolean: (value: "
             },
             {
               "kind": "Content",
-              "text": "(value: unknown) => "
+              "text": "unknown"
+            },
+            {
+              "kind": "Content",
+              "text": ") => "
             },
             {
               "kind": "Reference",
@@ -1624,13 +1814,23 @@
             }
           ],
           "fileUrlPath": "tmp/.tsup/declaration/packages/utilities/src/type-checks/is-boolean.d.ts",
-          "isReadonly": true,
+          "returnTypeTokenRange": {
+            "startIndex": 3,
+            "endIndex": 5
+          },
           "releaseTag": "Public",
-          "name": "isBoolean",
-          "variableTypeTokenRange": {
-            "startIndex": 1,
-            "endIndex": 4
-          }
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "value",
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "isOptional": false
+            }
+          ],
+          "name": "isBoolean"
         },
         {
           "kind": "Variable",
@@ -1743,17 +1943,21 @@
           "name": "isCollection"
         },
         {
-          "kind": "Variable",
-          "canonicalReference": "@storm-stack/utilities!isDate:var",
+          "kind": "Function",
+          "canonicalReference": "@storm-stack/utilities!isDate:function(1)",
           "docComment": "/**\n * Checks if `value` is classified as a `Date` object.\n *\n * @param value - The value to check.\n *\n * @returns Returns `true` if `obj` is a date object, else `false`.\n *\n * @example\n * ```typescript\n * isDate(new Date)\n * // => true\n *\n * isDate('Mon April 23 2012')\n * // => false\n * ```\n *\n */\n",
           "excerptTokens": [
             {
               "kind": "Content",
-              "text": "isDate: "
+              "text": "isDate: (value: "
             },
             {
               "kind": "Content",
-              "text": "(value: unknown) => "
+              "text": "unknown"
+            },
+            {
+              "kind": "Content",
+              "text": ") => "
             },
             {
               "kind": "Reference",
@@ -1771,72 +1975,105 @@
             }
           ],
           "fileUrlPath": "tmp/.tsup/declaration/packages/utilities/src/type-checks/is-date.d.ts",
-          "isReadonly": true,
+          "returnTypeTokenRange": {
+            "startIndex": 3,
+            "endIndex": 6
+          },
           "releaseTag": "Public",
-          "name": "isDate",
-          "variableTypeTokenRange": {
-            "startIndex": 1,
-            "endIndex": 5
-          }
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "value",
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "isOptional": false
+            }
+          ],
+          "name": "isDate"
         },
         {
-          "kind": "Variable",
-          "canonicalReference": "@storm-stack/utilities!isDevelopment:var",
+          "kind": "Function",
+          "canonicalReference": "@storm-stack/utilities!isDevelopment:function(1)",
           "docComment": "/**\n * The function checks if the code is **NOT** running in production.\n *\n * @remarks\n *\n * **Please note:** This function does **not** check if the mode equals 'development' specifically.\n *\n * To check for the 'development' mode specifically, run:\n * ```typescript\n * const isDevelopmentSpecifically = isMode(\"development\");\n * ```\n *\n */\n",
           "excerptTokens": [
             {
               "kind": "Content",
-              "text": "isDevelopment: "
+              "text": "isDevelopment: () => "
             },
             {
               "kind": "Content",
-              "text": "() => boolean"
+              "text": "boolean"
             }
           ],
           "fileUrlPath": "tmp/.tsup/declaration/packages/utilities/src/helper-fns/is-production.d.ts",
-          "isReadonly": true,
-          "releaseTag": "Public",
-          "name": "isDevelopment",
-          "variableTypeTokenRange": {
+          "returnTypeTokenRange": {
             "startIndex": 1,
             "endIndex": 2
-          }
+          },
+          "releaseTag": "Public",
+          "overloadIndex": 1,
+          "parameters": [],
+          "name": "isDevelopment"
         },
         {
-          "kind": "Variable",
-          "canonicalReference": "@storm-stack/utilities!isEmpty:var",
+          "kind": "Function",
+          "canonicalReference": "@storm-stack/utilities!isEmpty:function(1)",
           "docComment": "/**\n * Check if the provided value's type is `null` or `undefined`\n *\n * @param value - The value to type check\n *\n * @returns An indicator specifying if the value provided is of type `null` or `undefined`\n */\n",
           "excerptTokens": [
             {
               "kind": "Content",
-              "text": "isEmpty: "
+              "text": "isEmpty: (value: "
             },
             {
               "kind": "Content",
-              "text": "(value: unknown) => boolean"
+              "text": "unknown"
+            },
+            {
+              "kind": "Content",
+              "text": ") => "
+            },
+            {
+              "kind": "Content",
+              "text": "boolean"
             }
           ],
           "fileUrlPath": "tmp/.tsup/declaration/packages/utilities/src/type-checks/is-empty.d.ts",
-          "isReadonly": true,
+          "returnTypeTokenRange": {
+            "startIndex": 3,
+            "endIndex": 4
+          },
           "releaseTag": "Public",
-          "name": "isEmpty",
-          "variableTypeTokenRange": {
-            "startIndex": 1,
-            "endIndex": 2
-          }
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "value",
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "isOptional": false
+            }
+          ],
+          "name": "isEmpty"
         },
         {
-          "kind": "Variable",
-          "canonicalReference": "@storm-stack/utilities!isEmptyObject:var",
+          "kind": "Function",
+          "canonicalReference": "@storm-stack/utilities!isEmptyObject:function(1)",
           "docComment": "/**\n * Check if the provided value's type is `{}`\n *\n * @param value - The value to type check\n *\n * @returns An indicator specifying if the value provided is of type `{}`\n */\n",
           "excerptTokens": [
             {
               "kind": "Content",
-              "text": "isEmptyObject: "
+              "text": "isEmptyObject: (value: "
             },
             {
               "kind": "Content",
-              "text": "(value: unknown) => "
+              "text": "unknown"
+            },
+            {
+              "kind": "Content",
+              "text": ") => "
             },
             {
               "kind": "Reference",
@@ -1849,49 +2086,81 @@
             }
           ],
           "fileUrlPath": "tmp/.tsup/declaration/packages/utilities/src/type-checks/is-empty-object.d.ts",
-          "isReadonly": true,
+          "returnTypeTokenRange": {
+            "startIndex": 3,
+            "endIndex": 5
+          },
           "releaseTag": "Public",
-          "name": "isEmptyObject",
-          "variableTypeTokenRange": {
-            "startIndex": 1,
-            "endIndex": 4
-          }
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "value",
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "isOptional": false
+            }
+          ],
+          "name": "isEmptyObject"
         },
         {
-          "kind": "Variable",
-          "canonicalReference": "@storm-stack/utilities!isEmptyOrEmptyObject:var",
+          "kind": "Function",
+          "canonicalReference": "@storm-stack/utilities!isEmptyOrEmptyObject:function(1)",
           "docComment": "/**\n * Check if the provided value's type is `null` or `undefined` or `{}`\n *\n * @param value - The value to type check\n *\n * @returns An indicator specifying if the value provided is of type `null` or `undefined` or `{}`\n */\n",
           "excerptTokens": [
             {
               "kind": "Content",
-              "text": "isEmptyOrEmptyObject: "
+              "text": "isEmptyOrEmptyObject: (value: "
             },
             {
               "kind": "Content",
-              "text": "(value: unknown) => boolean"
+              "text": "unknown"
+            },
+            {
+              "kind": "Content",
+              "text": ") => "
+            },
+            {
+              "kind": "Content",
+              "text": "boolean"
             }
           ],
           "fileUrlPath": "tmp/.tsup/declaration/packages/utilities/src/type-checks/is-empty-object.d.ts",
-          "isReadonly": true,
+          "returnTypeTokenRange": {
+            "startIndex": 3,
+            "endIndex": 4
+          },
           "releaseTag": "Public",
-          "name": "isEmptyOrEmptyObject",
-          "variableTypeTokenRange": {
-            "startIndex": 1,
-            "endIndex": 2
-          }
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "value",
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "isOptional": false
+            }
+          ],
+          "name": "isEmptyOrEmptyObject"
         },
         {
-          "kind": "Variable",
-          "canonicalReference": "@storm-stack/utilities!isEmptyString:var",
+          "kind": "Function",
+          "canonicalReference": "@storm-stack/utilities!isEmptyString:function(1)",
           "docComment": "/**\n * Determine if the type is string and is empty\n *\n * @param value - The value to type check\n *\n * @returns An indicator specifying if the value provided is of type `\"\"`\n */\n",
           "excerptTokens": [
             {
               "kind": "Content",
-              "text": "isEmptyString: "
+              "text": "isEmptyString: (value: "
             },
             {
               "kind": "Content",
-              "text": "(value: unknown) => "
+              "text": "unknown"
+            },
+            {
+              "kind": "Content",
+              "text": ") => "
             },
             {
               "kind": "Reference",
@@ -1904,13 +2173,23 @@
             }
           ],
           "fileUrlPath": "tmp/.tsup/declaration/packages/utilities/src/type-checks/is-empty-string.d.ts",
-          "isReadonly": true,
+          "returnTypeTokenRange": {
+            "startIndex": 3,
+            "endIndex": 5
+          },
           "releaseTag": "Public",
-          "name": "isEmptyString",
-          "variableTypeTokenRange": {
-            "startIndex": 1,
-            "endIndex": 4
-          }
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "value",
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "isOptional": false
+            }
+          ],
+          "name": "isEmptyString"
         },
         {
           "kind": "Function",
@@ -2069,17 +2348,21 @@
           "extendsTokenRanges": []
         },
         {
-          "kind": "Variable",
-          "canonicalReference": "@storm-stack/utilities!isError:var",
+          "kind": "Function",
+          "canonicalReference": "@storm-stack/utilities!isError:function(1)",
           "docComment": "/**\n * Checks if `obj` is an `Error`, `EvalError`, `RangeError`, `ReferenceError`, `SyntaxError`, `TypeError`, or `URIError` object.\n *\n * @param obj - The obj to check.\n *\n * @returns Returns `true` if `obj` is an error object, else `false`.\n *\n * @example\n * ```typescript\n * isError(new Error)\n * // => true\n *\n * isError(Error)\n * // => false\n * ```\n *\n */\n",
           "excerptTokens": [
             {
               "kind": "Content",
-              "text": "isError: "
+              "text": "isError: (obj: "
             },
             {
               "kind": "Content",
-              "text": "(obj: unknown) => "
+              "text": "unknown"
+            },
+            {
+              "kind": "Content",
+              "text": ") => "
             },
             {
               "kind": "Reference",
@@ -2097,26 +2380,40 @@
             }
           ],
           "fileUrlPath": "tmp/.tsup/declaration/packages/utilities/src/type-checks/is-error.d.ts",
-          "isReadonly": true,
+          "returnTypeTokenRange": {
+            "startIndex": 3,
+            "endIndex": 6
+          },
           "releaseTag": "Public",
-          "name": "isError",
-          "variableTypeTokenRange": {
-            "startIndex": 1,
-            "endIndex": 5
-          }
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "obj",
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "isOptional": false
+            }
+          ],
+          "name": "isError"
         },
         {
-          "kind": "Variable",
-          "canonicalReference": "@storm-stack/utilities!isFloat:var",
+          "kind": "Function",
+          "canonicalReference": "@storm-stack/utilities!isFloat:function(1)",
           "docComment": "/**\n * Check if the provided value's type is a float\n *\n * @param value - The value to type check\n *\n * @returns An indicator specifying if the value provided is of type `number` and is a float\n */\n",
           "excerptTokens": [
             {
               "kind": "Content",
-              "text": "isFloat: "
+              "text": "isFloat: (value: "
             },
             {
               "kind": "Content",
-              "text": "(value: any) => "
+              "text": "any"
+            },
+            {
+              "kind": "Content",
+              "text": ") => "
             },
             {
               "kind": "Reference",
@@ -2129,26 +2426,40 @@
             }
           ],
           "fileUrlPath": "tmp/.tsup/declaration/packages/utilities/src/type-checks/is-number.d.ts",
-          "isReadonly": true,
+          "returnTypeTokenRange": {
+            "startIndex": 3,
+            "endIndex": 5
+          },
           "releaseTag": "Public",
-          "name": "isFloat",
-          "variableTypeTokenRange": {
-            "startIndex": 1,
-            "endIndex": 4
-          }
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "value",
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "isOptional": false
+            }
+          ],
+          "name": "isFloat"
         },
         {
-          "kind": "Variable",
-          "canonicalReference": "@storm-stack/utilities!isFunction:var",
+          "kind": "Function",
+          "canonicalReference": "@storm-stack/utilities!isFunction:function(1)",
           "docComment": "/**\n * Check if the provided value's type is `Function`\n *\n * @param value - The value to type check\n *\n * @returns An indicator specifying if the value provided is of type `Function`\n */\n",
           "excerptTokens": [
             {
               "kind": "Content",
-              "text": "isFunction: "
+              "text": "isFunction: (value: "
             },
             {
               "kind": "Content",
-              "text": "(value: unknown) => "
+              "text": "unknown"
+            },
+            {
+              "kind": "Content",
+              "text": ") => "
             },
             {
               "kind": "Reference",
@@ -2161,26 +2472,40 @@
             }
           ],
           "fileUrlPath": "tmp/.tsup/declaration/packages/utilities/src/type-checks/is-function.d.ts",
-          "isReadonly": true,
+          "returnTypeTokenRange": {
+            "startIndex": 3,
+            "endIndex": 5
+          },
           "releaseTag": "Public",
-          "name": "isFunction",
-          "variableTypeTokenRange": {
-            "startIndex": 1,
-            "endIndex": 4
-          }
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "value",
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "isOptional": false
+            }
+          ],
+          "name": "isFunction"
         },
         {
-          "kind": "Variable",
-          "canonicalReference": "@storm-stack/utilities!isInt:var",
+          "kind": "Function",
+          "canonicalReference": "@storm-stack/utilities!isInt:function(1)",
           "docComment": "/**\n * Check if the provided value's type is an integer\n *\n * @param value - The value to type check\n *\n * @returns An indicator specifying if the value provided is of type `number` and is an integer\n */\n",
           "excerptTokens": [
             {
               "kind": "Content",
-              "text": "isInt: "
+              "text": "isInt: (value: "
             },
             {
               "kind": "Content",
-              "text": "(value: any) => "
+              "text": "any"
+            },
+            {
+              "kind": "Content",
+              "text": ") => "
             },
             {
               "kind": "Reference",
@@ -2193,72 +2518,122 @@
             }
           ],
           "fileUrlPath": "tmp/.tsup/declaration/packages/utilities/src/type-checks/is-number.d.ts",
-          "isReadonly": true,
+          "returnTypeTokenRange": {
+            "startIndex": 3,
+            "endIndex": 5
+          },
           "releaseTag": "Public",
-          "name": "isInt",
-          "variableTypeTokenRange": {
-            "startIndex": 1,
-            "endIndex": 4
-          }
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "value",
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "isOptional": false
+            }
+          ],
+          "name": "isInt"
         },
         {
-          "kind": "Variable",
-          "canonicalReference": "@storm-stack/utilities!isMergeableObject:var",
+          "kind": "Function",
+          "canonicalReference": "@storm-stack/utilities!isMergeableObject:function(1)",
           "docComment": "",
           "excerptTokens": [
             {
               "kind": "Content",
-              "text": "isMergeableObject: "
+              "text": "isMergeableObject: (value: "
             },
             {
               "kind": "Content",
-              "text": "(value: any) => boolean"
+              "text": "any"
+            },
+            {
+              "kind": "Content",
+              "text": ") => "
+            },
+            {
+              "kind": "Content",
+              "text": "boolean"
             }
           ],
           "fileUrlPath": "tmp/.tsup/declaration/packages/utilities/src/type-checks/is-mergeable-object.d.ts",
-          "isReadonly": true,
+          "returnTypeTokenRange": {
+            "startIndex": 3,
+            "endIndex": 4
+          },
           "releaseTag": "Public",
-          "name": "isMergeableObject",
-          "variableTypeTokenRange": {
-            "startIndex": 1,
-            "endIndex": 2
-          }
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "value",
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "isOptional": false
+            }
+          ],
+          "name": "isMergeableObject"
         },
         {
-          "kind": "Variable",
-          "canonicalReference": "@storm-stack/utilities!isMode:var",
+          "kind": "Function",
+          "canonicalReference": "@storm-stack/utilities!isMode:function(1)",
           "docComment": "/**\n * Check the current runtime mode of the process\n *\n * @param mode - The mode to check the current process's mode against\n *\n * @returns An indicator specifying if the current runtime matches the `mode` parameter\n */\n",
           "excerptTokens": [
             {
               "kind": "Content",
-              "text": "isMode: "
+              "text": "isMode: (mode: "
             },
             {
               "kind": "Content",
-              "text": "(mode: string) => boolean"
+              "text": "string"
+            },
+            {
+              "kind": "Content",
+              "text": ") => "
+            },
+            {
+              "kind": "Content",
+              "text": "boolean"
             }
           ],
           "fileUrlPath": "tmp/.tsup/declaration/packages/utilities/src/helper-fns/is-production.d.ts",
-          "isReadonly": true,
+          "returnTypeTokenRange": {
+            "startIndex": 3,
+            "endIndex": 4
+          },
           "releaseTag": "Public",
-          "name": "isMode",
-          "variableTypeTokenRange": {
-            "startIndex": 1,
-            "endIndex": 2
-          }
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "mode",
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "isOptional": false
+            }
+          ],
+          "name": "isMode"
         },
         {
-          "kind": "Variable",
-          "canonicalReference": "@storm-stack/utilities!isNonNullObject:var",
+          "kind": "Function",
+          "canonicalReference": "@storm-stack/utilities!isNonNullObject:function(1)",
           "docComment": "/**\n * Check if the provided value's type is `Object` and is not `null` or `undefined`\n *\n * @param value - The value to type check\n *\n * @returns An indicator specifying if the value provided is of type `Object` and is not `null` or `undefined`\n */\n",
           "excerptTokens": [
             {
               "kind": "Content",
-              "text": "isNonNullObject: "
+              "text": "isNonNullObject: (value: "
             },
             {
               "kind": "Content",
-              "text": "(value: any) => "
+              "text": "any"
+            },
+            {
+              "kind": "Content",
+              "text": ") => "
             },
             {
               "kind": "Reference",
@@ -2271,26 +2646,40 @@
             }
           ],
           "fileUrlPath": "tmp/.tsup/declaration/packages/utilities/src/type-checks/is-non-null-object.d.ts",
-          "isReadonly": true,
+          "returnTypeTokenRange": {
+            "startIndex": 3,
+            "endIndex": 5
+          },
           "releaseTag": "Public",
-          "name": "isNonNullObject",
-          "variableTypeTokenRange": {
-            "startIndex": 1,
-            "endIndex": 4
-          }
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "value",
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "isOptional": false
+            }
+          ],
+          "name": "isNonNullObject"
         },
         {
-          "kind": "Variable",
-          "canonicalReference": "@storm-stack/utilities!isNotEmpty:var",
+          "kind": "Function",
+          "canonicalReference": "@storm-stack/utilities!isNotEmpty:function(1)",
           "docComment": "/**\n * The inverse of the `isEmptyObject` function\n *\n * @param value - The value to type check\n *\n * @returns An indicator specifying if the value provided is **NOT** of type `null` or `undefined` or `{}`\n */\n",
           "excerptTokens": [
             {
               "kind": "Content",
-              "text": "isNotEmpty: "
+              "text": "isNotEmpty: (value: "
             },
             {
               "kind": "Content",
-              "text": "(value: unknown) => "
+              "text": "unknown"
+            },
+            {
+              "kind": "Content",
+              "text": ") => "
             },
             {
               "kind": "Reference",
@@ -2303,26 +2692,40 @@
             }
           ],
           "fileUrlPath": "tmp/.tsup/declaration/packages/utilities/src/type-checks/is-not-empty.d.ts",
-          "isReadonly": true,
+          "returnTypeTokenRange": {
+            "startIndex": 3,
+            "endIndex": 5
+          },
           "releaseTag": "Public",
-          "name": "isNotEmpty",
-          "variableTypeTokenRange": {
-            "startIndex": 1,
-            "endIndex": 4
-          }
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "value",
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "isOptional": false
+            }
+          ],
+          "name": "isNotEmpty"
         },
         {
-          "kind": "Variable",
-          "canonicalReference": "@storm-stack/utilities!isNull:var",
+          "kind": "Function",
+          "canonicalReference": "@storm-stack/utilities!isNull:function(1)",
           "docComment": "/**\n * Check if the provided value's type is `null`\n *\n * @param value - The value to type check\n *\n * @returns An indicator specifying if the value provided is of type `null`\n */\n",
           "excerptTokens": [
             {
               "kind": "Content",
-              "text": "isNull: "
+              "text": "isNull: (value: "
             },
             {
               "kind": "Content",
-              "text": "(value: unknown) => "
+              "text": "unknown"
+            },
+            {
+              "kind": "Content",
+              "text": ") => "
             },
             {
               "kind": "Reference",
@@ -2335,26 +2738,40 @@
             }
           ],
           "fileUrlPath": "tmp/.tsup/declaration/packages/utilities/src/type-checks/is-null.d.ts",
-          "isReadonly": true,
+          "returnTypeTokenRange": {
+            "startIndex": 3,
+            "endIndex": 5
+          },
           "releaseTag": "Public",
-          "name": "isNull",
-          "variableTypeTokenRange": {
-            "startIndex": 1,
-            "endIndex": 4
-          }
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "value",
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "isOptional": false
+            }
+          ],
+          "name": "isNull"
         },
         {
-          "kind": "Variable",
-          "canonicalReference": "@storm-stack/utilities!isNumber:var",
+          "kind": "Function",
+          "canonicalReference": "@storm-stack/utilities!isNumber:function(1)",
           "docComment": "/**\n * Check if the provided value's type is `number`\n *\n * @param value - The value to type check\n *\n * @returns An indicator specifying if the value provided is of type `number`\n */\n",
           "excerptTokens": [
             {
               "kind": "Content",
-              "text": "isNumber: "
+              "text": "isNumber: (value: "
             },
             {
               "kind": "Content",
-              "text": "(value: unknown) => "
+              "text": "unknown"
+            },
+            {
+              "kind": "Content",
+              "text": ") => "
             },
             {
               "kind": "Reference",
@@ -2367,26 +2784,40 @@
             }
           ],
           "fileUrlPath": "tmp/.tsup/declaration/packages/utilities/src/type-checks/is-number.d.ts",
-          "isReadonly": true,
+          "returnTypeTokenRange": {
+            "startIndex": 3,
+            "endIndex": 5
+          },
           "releaseTag": "Public",
-          "name": "isNumber",
-          "variableTypeTokenRange": {
-            "startIndex": 1,
-            "endIndex": 4
-          }
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "value",
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "isOptional": false
+            }
+          ],
+          "name": "isNumber"
         },
         {
-          "kind": "Variable",
-          "canonicalReference": "@storm-stack/utilities!isObject:var",
+          "kind": "Function",
+          "canonicalReference": "@storm-stack/utilities!isObject:function(1)",
           "docComment": "/**\n * Check if the provided value's type is `Object`\n *\n * @param value - The value to type check\n *\n * @returns An indicator specifying if the value provided is of type `Object`\n */\n",
           "excerptTokens": [
             {
               "kind": "Content",
-              "text": "isObject: "
+              "text": "isObject: (value: "
             },
             {
               "kind": "Content",
-              "text": "(value: unknown) => "
+              "text": "unknown"
+            },
+            {
+              "kind": "Content",
+              "text": ") => "
             },
             {
               "kind": "Reference",
@@ -2399,118 +2830,187 @@
             }
           ],
           "fileUrlPath": "tmp/.tsup/declaration/packages/utilities/src/type-checks/is-object.d.ts",
-          "isReadonly": true,
+          "returnTypeTokenRange": {
+            "startIndex": 3,
+            "endIndex": 5
+          },
           "releaseTag": "Public",
-          "name": "isObject",
-          "variableTypeTokenRange": {
-            "startIndex": 1,
-            "endIndex": 4
-          }
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "value",
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "isOptional": false
+            }
+          ],
+          "name": "isObject"
         },
         {
-          "kind": "Variable",
-          "canonicalReference": "@storm-stack/utilities!isObjectLike:var",
+          "kind": "Function",
+          "canonicalReference": "@storm-stack/utilities!isObjectLike:function(1)",
           "docComment": "/**\n * Checks if `value` is object-like. A value is object-like if it's not `null` and has a `typeof` result of \"object\".\n *\n * @param value - The value to check.\n *\n * @returns Returns `true` if `value` is object-like, else `false`.\n *\n * @example\n * ```typescript\n * isObjectLike({})\n * // => true\n *\n * isObjectLike([1, 2, 3])\n * // => true\n *\n * isObjectLike(Function)\n * // => false\n *\n * isObjectLike(null)\n * // => false\n * ```\n *\n */\n",
           "excerptTokens": [
             {
               "kind": "Content",
-              "text": "isObjectLike: "
+              "text": "isObjectLike: (obj: "
             },
             {
               "kind": "Content",
-              "text": "(obj: unknown) => boolean"
+              "text": "unknown"
+            },
+            {
+              "kind": "Content",
+              "text": ") => "
+            },
+            {
+              "kind": "Content",
+              "text": "boolean"
             }
           ],
           "fileUrlPath": "tmp/.tsup/declaration/packages/utilities/src/type-checks/is-plain-object.d.ts",
-          "isReadonly": true,
+          "returnTypeTokenRange": {
+            "startIndex": 3,
+            "endIndex": 4
+          },
           "releaseTag": "Public",
-          "name": "isObjectLike",
-          "variableTypeTokenRange": {
-            "startIndex": 1,
-            "endIndex": 2
-          }
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "obj",
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "isOptional": false
+            }
+          ],
+          "name": "isObjectLike"
         },
         {
-          "kind": "Variable",
-          "canonicalReference": "@storm-stack/utilities!isPlainObject:var",
+          "kind": "Function",
+          "canonicalReference": "@storm-stack/utilities!isPlainObject:function(1)",
           "docComment": "/**\n * Checks if `obj` is a plain object, that is, an object created by the `Object` constructor or one with a `[[Prototype]]` of `null`.\n *\n * @param obj - The value to check.\n *\n * @returns Returns `true` if `obj` is a plain object, else `false`.\n *\n * @example\n * ```typescript\n * function Foo() {\n *   this.a = 1\n * }\n *\n * isPlainObject(new Foo)\n * // => false\n *\n * isPlainObject([1, 2, 3])\n * // => false\n *\n * isPlainObject({ 'x': 0, 'y': 0 })\n * // => true\n *\n * isPlainObject(Object.create(null))\n * // => true\n * ```\n *\n */\n",
           "excerptTokens": [
             {
               "kind": "Content",
-              "text": "isPlainObject: "
+              "text": "isPlainObject: (obj: "
             },
             {
               "kind": "Content",
-              "text": "(obj: unknown) => boolean"
+              "text": "unknown"
+            },
+            {
+              "kind": "Content",
+              "text": ") => "
+            },
+            {
+              "kind": "Content",
+              "text": "boolean"
             }
           ],
           "fileUrlPath": "tmp/.tsup/declaration/packages/utilities/src/type-checks/is-plain-object.d.ts",
-          "isReadonly": true,
+          "returnTypeTokenRange": {
+            "startIndex": 3,
+            "endIndex": 4
+          },
           "releaseTag": "Public",
-          "name": "isPlainObject",
-          "variableTypeTokenRange": {
-            "startIndex": 1,
-            "endIndex": 2
-          }
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "obj",
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "isOptional": false
+            }
+          ],
+          "name": "isPlainObject"
         },
         {
-          "kind": "Variable",
-          "canonicalReference": "@storm-stack/utilities!isPrimitive:var",
+          "kind": "Function",
+          "canonicalReference": "@storm-stack/utilities!isPrimitive:function(1)",
           "docComment": "/**\n * Check if the provided value's type is a built-in primitive\n *\n * @remarks\n *\n * The full list of primitive types includes: * `number` * `string` * `boolean` * `symbol` * `bigint` * `undefined` * `null`\n *\n * @param obj - The value to type check\n *\n * @returns An indicator specifying if the value provided is a built-in primitive\n */\n",
           "excerptTokens": [
             {
               "kind": "Content",
-              "text": "isPrimitive: "
+              "text": "isPrimitive: (value: "
             },
             {
               "kind": "Content",
-              "text": "(value: unknown) => boolean"
+              "text": "unknown"
+            },
+            {
+              "kind": "Content",
+              "text": ") => "
+            },
+            {
+              "kind": "Content",
+              "text": "boolean"
             }
           ],
           "fileUrlPath": "tmp/.tsup/declaration/packages/utilities/src/type-checks/is-primitive.d.ts",
-          "isReadonly": true,
+          "returnTypeTokenRange": {
+            "startIndex": 3,
+            "endIndex": 4
+          },
           "releaseTag": "Public",
-          "name": "isPrimitive",
-          "variableTypeTokenRange": {
-            "startIndex": 1,
-            "endIndex": 2
-          }
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "value",
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "isOptional": false
+            }
+          ],
+          "name": "isPrimitive"
         },
         {
-          "kind": "Variable",
-          "canonicalReference": "@storm-stack/utilities!isProduction:var",
+          "kind": "Function",
+          "canonicalReference": "@storm-stack/utilities!isProduction:function(1)",
           "docComment": "/**\n * The function checks if the code is running in production.\n */\n",
           "excerptTokens": [
             {
               "kind": "Content",
-              "text": "isProduction: "
+              "text": "isProduction: () => "
             },
             {
               "kind": "Content",
-              "text": "() => boolean"
+              "text": "boolean"
             }
           ],
           "fileUrlPath": "tmp/.tsup/declaration/packages/utilities/src/helper-fns/is-production.d.ts",
-          "isReadonly": true,
-          "releaseTag": "Public",
-          "name": "isProduction",
-          "variableTypeTokenRange": {
+          "returnTypeTokenRange": {
             "startIndex": 1,
             "endIndex": 2
-          }
+          },
+          "releaseTag": "Public",
+          "overloadIndex": 1,
+          "parameters": [],
+          "name": "isProduction"
         },
         {
-          "kind": "Variable",
-          "canonicalReference": "@storm-stack/utilities!isPromise:var",
+          "kind": "Function",
+          "canonicalReference": "@storm-stack/utilities!isPromise:function(1)",
           "docComment": "/**\n * Check if the provided value's type is a promise\n *\n * @param value - The value to type check\n *\n * @returns An indicator specifying if the object provided is of type a promise\n */\n",
           "excerptTokens": [
             {
               "kind": "Content",
-              "text": "isPromise: "
+              "text": "isPromise: (value: "
             },
             {
               "kind": "Content",
-              "text": "(value: unknown) => "
+              "text": "unknown"
+            },
+            {
+              "kind": "Content",
+              "text": ") => "
             },
             {
               "kind": "Reference",
@@ -2532,26 +3032,40 @@
             }
           ],
           "fileUrlPath": "tmp/.tsup/declaration/packages/utilities/src/type-checks/is-promise.d.ts",
-          "isReadonly": true,
+          "returnTypeTokenRange": {
+            "startIndex": 3,
+            "endIndex": 7
+          },
           "releaseTag": "Public",
-          "name": "isPromise",
-          "variableTypeTokenRange": {
-            "startIndex": 1,
-            "endIndex": 6
-          }
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "value",
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "isOptional": false
+            }
+          ],
+          "name": "isPromise"
         },
         {
-          "kind": "Variable",
-          "canonicalReference": "@storm-stack/utilities!isPromiseLike:var",
+          "kind": "Function",
+          "canonicalReference": "@storm-stack/utilities!isPromiseLike:function(1)",
           "docComment": "/**\n * Check if the provided value's type is a promise-like\n *\n * @remarks\n *\n * A promise-like is an object that has a `then` function\n *\n * @param value - The value to type check\n *\n * @returns An indicator specifying if the object provided is of type a promise-like\n */\n",
           "excerptTokens": [
             {
               "kind": "Content",
-              "text": "isPromiseLike: "
+              "text": "isPromiseLike: (value: "
             },
             {
               "kind": "Content",
-              "text": "(value: unknown) => "
+              "text": "unknown"
+            },
+            {
+              "kind": "Content",
+              "text": ") => "
             },
             {
               "kind": "Reference",
@@ -2573,49 +3087,89 @@
             }
           ],
           "fileUrlPath": "tmp/.tsup/declaration/packages/utilities/src/type-checks/is-promise.d.ts",
-          "isReadonly": true,
+          "returnTypeTokenRange": {
+            "startIndex": 3,
+            "endIndex": 7
+          },
           "releaseTag": "Public",
-          "name": "isPromiseLike",
-          "variableTypeTokenRange": {
-            "startIndex": 1,
-            "endIndex": 6
-          }
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "value",
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "isOptional": false
+            }
+          ],
+          "name": "isPromiseLike"
         },
         {
-          "kind": "Variable",
-          "canonicalReference": "@storm-stack/utilities!isReactElement:var",
+          "kind": "Function",
+          "canonicalReference": "@storm-stack/utilities!isReactElement:function(1)",
           "docComment": "/**\n * Check if the provided value is a {@link https://github.com/facebook/react/blob/b5ac963fb791d1298e7f396236383bc955f916c1/src/isomorphic/classic/element/ReactElement.js#L21-L25 React Element}.\n *\n * @param value - The value to type check\n *\n * @returns An indicator specifying if the value provided is of type {@link https://github.com/facebook/react/blob/b5ac963fb791d1298e7f396236383bc955f916c1/src/isomorphic/classic/element/ReactElement.js#L21-L25 React Element}\n */\n",
           "excerptTokens": [
             {
               "kind": "Content",
-              "text": "isReactElement: "
+              "text": "isReactElement: (value: "
             },
             {
               "kind": "Content",
-              "text": "(value: any) => boolean"
+              "text": "any"
+            },
+            {
+              "kind": "Content",
+              "text": ") => "
+            },
+            {
+              "kind": "Content",
+              "text": "boolean"
             }
           ],
           "fileUrlPath": "tmp/.tsup/declaration/packages/utilities/src/type-checks/is-react-element.d.ts",
-          "isReadonly": true,
+          "returnTypeTokenRange": {
+            "startIndex": 3,
+            "endIndex": 4
+          },
           "releaseTag": "Public",
-          "name": "isReactElement",
-          "variableTypeTokenRange": {
-            "startIndex": 1,
-            "endIndex": 2
-          }
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "value",
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "isOptional": false
+            }
+          ],
+          "name": "isReactElement"
         },
         {
-          "kind": "Variable",
-          "canonicalReference": "@storm-stack/utilities!isRef:var",
+          "kind": "Function",
+          "canonicalReference": "@storm-stack/utilities!isRef:function(1)",
           "docComment": "/**\n * Check if the provided value's type is a ref\n *\n * @param value - The value to type check\n *\n * @returns An indicator specifying if the object provided is of type ref\n */\n",
           "excerptTokens": [
             {
               "kind": "Content",
-              "text": "isRef: "
+              "text": "isRef: <TRef = "
             },
             {
               "kind": "Content",
-              "text": "<TRef = unknown>(value: unknown) => "
+              "text": "unknown"
+            },
+            {
+              "kind": "Content",
+              "text": ">(value: "
+            },
+            {
+              "kind": "Content",
+              "text": "unknown"
+            },
+            {
+              "kind": "Content",
+              "text": ") => "
             },
             {
               "kind": "Reference",
@@ -2637,72 +3191,101 @@
             }
           ],
           "fileUrlPath": "tmp/.tsup/declaration/packages/utilities/src/type-checks/is-ref.d.ts",
-          "isReadonly": true,
+          "returnTypeTokenRange": {
+            "startIndex": 5,
+            "endIndex": 9
+          },
           "releaseTag": "Public",
-          "name": "isRef",
-          "variableTypeTokenRange": {
-            "startIndex": 1,
-            "endIndex": 6
-          }
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "value",
+              "parameterTypeTokenRange": {
+                "startIndex": 3,
+                "endIndex": 4
+              },
+              "isOptional": false
+            }
+          ],
+          "typeParameters": [
+            {
+              "typeParameterName": "TRef",
+              "constraintTokenRange": {
+                "startIndex": 0,
+                "endIndex": 0
+              },
+              "defaultTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            }
+          ],
+          "name": "isRef"
         },
         {
-          "kind": "Variable",
-          "canonicalReference": "@storm-stack/utilities!isRuntimeClient:var",
+          "kind": "Function",
+          "canonicalReference": "@storm-stack/utilities!isRuntimeClient:function(1)",
           "docComment": "/**\n * The function checks if the code is running in the browser (and not on the server).\n */\n",
           "excerptTokens": [
             {
               "kind": "Content",
-              "text": "isRuntimeClient: "
+              "text": "isRuntimeClient: () => "
             },
             {
               "kind": "Content",
-              "text": "() => boolean"
+              "text": "boolean"
             }
           ],
           "fileUrlPath": "tmp/.tsup/declaration/packages/utilities/src/helper-fns/is-runtime-server.d.ts",
-          "isReadonly": true,
-          "releaseTag": "Public",
-          "name": "isRuntimeClient",
-          "variableTypeTokenRange": {
+          "returnTypeTokenRange": {
             "startIndex": 1,
             "endIndex": 2
-          }
+          },
+          "releaseTag": "Public",
+          "overloadIndex": 1,
+          "parameters": [],
+          "name": "isRuntimeClient"
         },
         {
-          "kind": "Variable",
-          "canonicalReference": "@storm-stack/utilities!isRuntimeServer:var",
+          "kind": "Function",
+          "canonicalReference": "@storm-stack/utilities!isRuntimeServer:function(1)",
           "docComment": "/**\n * The function checks if the code is running on the server (and not in the browser).\n */\n",
           "excerptTokens": [
             {
               "kind": "Content",
-              "text": "isRuntimeServer: "
+              "text": "isRuntimeServer: () => "
             },
             {
               "kind": "Content",
-              "text": "() => boolean"
+              "text": "boolean"
             }
           ],
           "fileUrlPath": "tmp/.tsup/declaration/packages/utilities/src/helper-fns/is-runtime-server.d.ts",
-          "isReadonly": true,
-          "releaseTag": "Public",
-          "name": "isRuntimeServer",
-          "variableTypeTokenRange": {
+          "returnTypeTokenRange": {
             "startIndex": 1,
             "endIndex": 2
-          }
+          },
+          "releaseTag": "Public",
+          "overloadIndex": 1,
+          "parameters": [],
+          "name": "isRuntimeServer"
         },
         {
-          "kind": "Variable",
-          "canonicalReference": "@storm-stack/utilities!isSelectOption:var",
+          "kind": "Function",
+          "canonicalReference": "@storm-stack/utilities!isSelectOption:function(1)",
           "docComment": "/**\n * Check if the provided value's type is SelectOption\n *\n * @param value - The value to type check\n *\n * @returns An indicator specifying if the object provided is of type SelectOption\n */\n",
           "excerptTokens": [
             {
               "kind": "Content",
-              "text": "isSelectOption: "
+              "text": "isSelectOption: (value: "
             },
             {
               "kind": "Content",
-              "text": "(value: unknown) => "
+              "text": "unknown"
+            },
+            {
+              "kind": "Content",
+              "text": ") => "
             },
             {
               "kind": "Reference",
@@ -2720,26 +3303,40 @@
             }
           ],
           "fileUrlPath": "tmp/.tsup/declaration/packages/utilities/src/type-checks/is-select-option.d.ts",
-          "isReadonly": true,
+          "returnTypeTokenRange": {
+            "startIndex": 3,
+            "endIndex": 6
+          },
           "releaseTag": "Public",
-          "name": "isSelectOption",
-          "variableTypeTokenRange": {
-            "startIndex": 1,
-            "endIndex": 5
-          }
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "value",
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "isOptional": false
+            }
+          ],
+          "name": "isSelectOption"
         },
         {
-          "kind": "Variable",
-          "canonicalReference": "@storm-stack/utilities!isSet:var",
+          "kind": "Function",
+          "canonicalReference": "@storm-stack/utilities!isSet:function(1)",
           "docComment": "/**\n * The inverse of the `isEmpty` function\n *\n * @param value - The value to type check\n *\n * @returns An indicator specifying if the value provided is **NOT** of type `null` or `undefined`\n */\n",
           "excerptTokens": [
             {
               "kind": "Content",
-              "text": "isSet: "
+              "text": "isSet: (value: "
             },
             {
               "kind": "Content",
-              "text": "(value: unknown) => "
+              "text": "unknown"
+            },
+            {
+              "kind": "Content",
+              "text": ") => "
             },
             {
               "kind": "Reference",
@@ -2752,26 +3349,40 @@
             }
           ],
           "fileUrlPath": "tmp/.tsup/declaration/packages/utilities/src/type-checks/is-set.d.ts",
-          "isReadonly": true,
+          "returnTypeTokenRange": {
+            "startIndex": 3,
+            "endIndex": 5
+          },
           "releaseTag": "Public",
-          "name": "isSet",
-          "variableTypeTokenRange": {
-            "startIndex": 1,
-            "endIndex": 4
-          }
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "value",
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "isOptional": false
+            }
+          ],
+          "name": "isSet"
         },
         {
-          "kind": "Variable",
-          "canonicalReference": "@storm-stack/utilities!isSetObject:var",
+          "kind": "Function",
+          "canonicalReference": "@storm-stack/utilities!isSetObject:function(1)",
           "docComment": "/**\n * Check if the provided value's type is an object with some fields set\n *\n * @param value - The value to type check\n *\n * @returns An indicator specifying if the value provided is an object with some fields se\n */\n",
           "excerptTokens": [
             {
               "kind": "Content",
-              "text": "isSetObject: "
+              "text": "isSetObject: (value: "
             },
             {
               "kind": "Content",
-              "text": "(value: unknown) => "
+              "text": "unknown"
+            },
+            {
+              "kind": "Content",
+              "text": ") => "
             },
             {
               "kind": "Reference",
@@ -2784,26 +3395,40 @@
             }
           ],
           "fileUrlPath": "tmp/.tsup/declaration/packages/utilities/src/type-checks/is-set-object.d.ts",
-          "isReadonly": true,
+          "returnTypeTokenRange": {
+            "startIndex": 3,
+            "endIndex": 5
+          },
           "releaseTag": "Public",
-          "name": "isSetObject",
-          "variableTypeTokenRange": {
-            "startIndex": 1,
-            "endIndex": 4
-          }
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "value",
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "isOptional": false
+            }
+          ],
+          "name": "isSetObject"
         },
         {
-          "kind": "Variable",
-          "canonicalReference": "@storm-stack/utilities!isSetString:var",
+          "kind": "Function",
+          "canonicalReference": "@storm-stack/utilities!isSetString:function(1)",
           "docComment": "/**\n * Determine if the type is string and is not empty (length greater than zero)\n *\n * @param value - The value to type check\n *\n * @returns An indicator specifying if the value provided is of type `string` and length greater than zero\n */\n",
           "excerptTokens": [
             {
               "kind": "Content",
-              "text": "isSetString: "
+              "text": "isSetString: (value: "
             },
             {
               "kind": "Content",
-              "text": "(value: unknown) => "
+              "text": "unknown"
+            },
+            {
+              "kind": "Content",
+              "text": ") => "
             },
             {
               "kind": "Reference",
@@ -2816,26 +3441,40 @@
             }
           ],
           "fileUrlPath": "tmp/.tsup/declaration/packages/utilities/src/type-checks/is-set-string.d.ts",
-          "isReadonly": true,
+          "returnTypeTokenRange": {
+            "startIndex": 3,
+            "endIndex": 5
+          },
           "releaseTag": "Public",
-          "name": "isSetString",
-          "variableTypeTokenRange": {
-            "startIndex": 1,
-            "endIndex": 4
-          }
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "value",
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "isOptional": false
+            }
+          ],
+          "name": "isSetString"
         },
         {
-          "kind": "Variable",
-          "canonicalReference": "@storm-stack/utilities!isString:var",
+          "kind": "Function",
+          "canonicalReference": "@storm-stack/utilities!isString:function(1)",
           "docComment": "/**\n * Determine if the type is string\n *\n * @param value - The value to type check\n *\n * @returns An indicator specifying if the value provided is of type `string`\n */\n",
           "excerptTokens": [
             {
               "kind": "Content",
-              "text": "isString: "
+              "text": "isString: (value: "
             },
             {
               "kind": "Content",
-              "text": "(value: unknown) => "
+              "text": "unknown"
+            },
+            {
+              "kind": "Content",
+              "text": ") => "
             },
             {
               "kind": "Reference",
@@ -2848,26 +3487,40 @@
             }
           ],
           "fileUrlPath": "tmp/.tsup/declaration/packages/utilities/src/type-checks/is-string.d.ts",
-          "isReadonly": true,
+          "returnTypeTokenRange": {
+            "startIndex": 3,
+            "endIndex": 5
+          },
           "releaseTag": "Public",
-          "name": "isString",
-          "variableTypeTokenRange": {
-            "startIndex": 1,
-            "endIndex": 4
-          }
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "value",
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "isOptional": false
+            }
+          ],
+          "name": "isString"
         },
         {
-          "kind": "Variable",
-          "canonicalReference": "@storm-stack/utilities!isSymbol:var",
+          "kind": "Function",
+          "canonicalReference": "@storm-stack/utilities!isSymbol:function(1)",
           "docComment": "/**\n * Check if the provided value's type is `Symbol`\n *\n * @param value - The value to type check\n *\n * @returns An indicator specifying if the value provided is of type `Symbol`\n */\n",
           "excerptTokens": [
             {
               "kind": "Content",
-              "text": "isSymbol: "
+              "text": "isSymbol: (value: "
             },
             {
               "kind": "Content",
-              "text": "(value: unknown) => "
+              "text": "unknown"
+            },
+            {
+              "kind": "Content",
+              "text": ") => "
             },
             {
               "kind": "Reference",
@@ -2880,26 +3533,40 @@
             }
           ],
           "fileUrlPath": "tmp/.tsup/declaration/packages/utilities/src/type-checks/is-symbol.d.ts",
-          "isReadonly": true,
+          "returnTypeTokenRange": {
+            "startIndex": 3,
+            "endIndex": 5
+          },
           "releaseTag": "Public",
-          "name": "isSymbol",
-          "variableTypeTokenRange": {
-            "startIndex": 1,
-            "endIndex": 4
-          }
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "value",
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "isOptional": false
+            }
+          ],
+          "name": "isSymbol"
         },
         {
-          "kind": "Variable",
-          "canonicalReference": "@storm-stack/utilities!isTyped:var",
+          "kind": "Function",
+          "canonicalReference": "@storm-stack/utilities!isTyped:function(1)",
           "docComment": "/**\n * Check if the provided value has a `__typename` property\n *\n * @param value - The value to type check\n *\n * @returns An indicator specifying if the value provided has a `__typename` property\n */\n",
           "excerptTokens": [
             {
               "kind": "Content",
-              "text": "isTyped: "
+              "text": "isTyped: (value: "
             },
             {
               "kind": "Content",
-              "text": "(value: unknown) => "
+              "text": "unknown"
+            },
+            {
+              "kind": "Content",
+              "text": ") => "
             },
             {
               "kind": "Reference",
@@ -2917,36 +3584,64 @@
             }
           ],
           "fileUrlPath": "tmp/.tsup/declaration/packages/utilities/src/type-checks/is-typed.d.ts",
-          "isReadonly": true,
+          "returnTypeTokenRange": {
+            "startIndex": 3,
+            "endIndex": 6
+          },
           "releaseTag": "Public",
-          "name": "isTyped",
-          "variableTypeTokenRange": {
-            "startIndex": 1,
-            "endIndex": 5
-          }
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "value",
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "isOptional": false
+            }
+          ],
+          "name": "isTyped"
         },
         {
-          "kind": "Variable",
-          "canonicalReference": "@storm-stack/utilities!isUndefined:var",
+          "kind": "Function",
+          "canonicalReference": "@storm-stack/utilities!isUndefined:function(1)",
           "docComment": "/**\n * Check if the provided value's type is `undefined`\n *\n * @param value - The value to type check\n *\n * @returns An indicator specifying if the value provided is of type `undefined`\n */\n",
           "excerptTokens": [
             {
               "kind": "Content",
-              "text": "isUndefined: "
+              "text": "isUndefined: (value: "
             },
             {
               "kind": "Content",
-              "text": "(value: unknown) => boolean"
+              "text": "unknown"
+            },
+            {
+              "kind": "Content",
+              "text": ") => "
+            },
+            {
+              "kind": "Content",
+              "text": "boolean"
             }
           ],
           "fileUrlPath": "tmp/.tsup/declaration/packages/utilities/src/type-checks/is-undefined.d.ts",
-          "isReadonly": true,
+          "returnTypeTokenRange": {
+            "startIndex": 3,
+            "endIndex": 4
+          },
           "releaseTag": "Public",
-          "name": "isUndefined",
-          "variableTypeTokenRange": {
-            "startIndex": 1,
-            "endIndex": 2
-          }
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "value",
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "isOptional": false
+            }
+          ],
+          "name": "isUndefined"
         },
         {
           "kind": "Interface",
@@ -3039,27 +3734,45 @@
           "extendsTokenRanges": []
         },
         {
-          "kind": "Variable",
-          "canonicalReference": "@storm-stack/utilities!kebabCase:var",
+          "kind": "Function",
+          "canonicalReference": "@storm-stack/utilities!kebabCase:function(1)",
           "docComment": "/**\n * Convert the input string to kebab case.\n *\n * @remarks\n *\n * \"this-is-an-example\"\n *\n * @param input - The input string.\n *\n * @returns The kebab-cased string.\n */\n",
           "excerptTokens": [
             {
               "kind": "Content",
-              "text": "kebabCase: "
+              "text": "kebabCase: (input?: "
             },
             {
               "kind": "Content",
-              "text": "(input?: string) => string | undefined"
+              "text": "string"
+            },
+            {
+              "kind": "Content",
+              "text": ") => "
+            },
+            {
+              "kind": "Content",
+              "text": "string | undefined"
             }
           ],
           "fileUrlPath": "tmp/.tsup/declaration/packages/utilities/src/string-fns/kebab-case.d.ts",
-          "isReadonly": true,
+          "returnTypeTokenRange": {
+            "startIndex": 3,
+            "endIndex": 4
+          },
           "releaseTag": "Public",
-          "name": "kebabCase",
-          "variableTypeTokenRange": {
-            "startIndex": 1,
-            "endIndex": 2
-          }
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "input",
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "isOptional": true
+            }
+          ],
+          "name": "kebabCase"
         },
         {
           "kind": "TypeAlias",
@@ -3129,27 +3842,45 @@
           }
         },
         {
-          "kind": "Variable",
-          "canonicalReference": "@storm-stack/utilities!lowerCaseFirst:var",
+          "kind": "Function",
+          "canonicalReference": "@storm-stack/utilities!lowerCaseFirst:function(1)",
           "docComment": "/**\n * Lower case the first character of an input string.\n *\n * @remarks\n *\n * \"tHISISANEXAMPLE\"\n *\n * @param input - The input string.\n *\n * @returns The lower-cased string.\n */\n",
           "excerptTokens": [
             {
               "kind": "Content",
-              "text": "lowerCaseFirst: "
+              "text": "lowerCaseFirst: (input?: "
             },
             {
               "kind": "Content",
-              "text": "(input?: string) => string | undefined"
+              "text": "string"
+            },
+            {
+              "kind": "Content",
+              "text": ") => "
+            },
+            {
+              "kind": "Content",
+              "text": "string | undefined"
             }
           ],
           "fileUrlPath": "tmp/.tsup/declaration/packages/utilities/src/string-fns/lower-case-first.d.ts",
-          "isReadonly": true,
+          "returnTypeTokenRange": {
+            "startIndex": 3,
+            "endIndex": 4
+          },
           "releaseTag": "Public",
-          "name": "lowerCaseFirst",
-          "variableTypeTokenRange": {
-            "startIndex": 1,
-            "endIndex": 2
-          }
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "input",
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "isOptional": true
+            }
+          ],
+          "name": "lowerCaseFirst"
         },
         {
           "kind": "TypeAlias",
@@ -3369,73 +4100,127 @@
           }
         },
         {
-          "kind": "Variable",
-          "canonicalReference": "@storm-stack/utilities!noop:var",
+          "kind": "Function",
+          "canonicalReference": "@storm-stack/utilities!noop:function(1)",
           "docComment": "/**\n * A no op, or no-op, function for no operation\n *\n * @remarks\n *\n * Please see {@link https://dev.to/praneshpsg239/noop-in-javascript-478h this article} for more information.\n *\n * @param params - An optional parameter passed to the function. It can be anything (but is not used in any way)\n */\n",
           "excerptTokens": [
             {
               "kind": "Content",
-              "text": "noop: "
+              "text": "noop: (params?: "
             },
             {
               "kind": "Content",
-              "text": "(params?: unknown) => void"
+              "text": "unknown"
+            },
+            {
+              "kind": "Content",
+              "text": ") => "
+            },
+            {
+              "kind": "Content",
+              "text": "void"
             }
           ],
           "fileUrlPath": "tmp/.tsup/declaration/packages/utilities/src/helper-fns/noop.d.ts",
-          "isReadonly": true,
+          "returnTypeTokenRange": {
+            "startIndex": 3,
+            "endIndex": 4
+          },
           "releaseTag": "Public",
-          "name": "noop",
-          "variableTypeTokenRange": {
-            "startIndex": 1,
-            "endIndex": 2
-          }
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "params",
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "isOptional": true
+            }
+          ],
+          "name": "noop"
         },
         {
-          "kind": "Variable",
-          "canonicalReference": "@storm-stack/utilities!pascalCase:var",
+          "kind": "Function",
+          "canonicalReference": "@storm-stack/utilities!pascalCase:function(1)",
           "docComment": "/**\n * Convert the input string to pascal case.\n *\n * @remarks\n *\n * \"ThisIsAnExample\"\n *\n * @param input - The input string.\n *\n * @returns The pascal-cased string.\n */\n",
           "excerptTokens": [
             {
               "kind": "Content",
-              "text": "pascalCase: "
+              "text": "pascalCase: (input?: "
             },
             {
               "kind": "Content",
-              "text": "(input?: string) => string | undefined"
+              "text": "string"
+            },
+            {
+              "kind": "Content",
+              "text": ") => "
+            },
+            {
+              "kind": "Content",
+              "text": "string | undefined"
             }
           ],
           "fileUrlPath": "tmp/.tsup/declaration/packages/utilities/src/string-fns/pascal-case.d.ts",
-          "isReadonly": true,
+          "returnTypeTokenRange": {
+            "startIndex": 3,
+            "endIndex": 4
+          },
           "releaseTag": "Public",
-          "name": "pascalCase",
-          "variableTypeTokenRange": {
-            "startIndex": 1,
-            "endIndex": 2
-          }
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "input",
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "isOptional": true
+            }
+          ],
+          "name": "pascalCase"
         },
         {
-          "kind": "Variable",
-          "canonicalReference": "@storm-stack/utilities!periodSplit:var",
+          "kind": "Function",
+          "canonicalReference": "@storm-stack/utilities!periodSplit:function(1)",
           "docComment": "/**\n * Make all characters lowercase and add a period in between each word\n *\n * @remarks\n *\n * \"this.is.an.example\"\n *\n * @param input - The input string.\n *\n * @returns The period-split string.\n */\n",
           "excerptTokens": [
             {
               "kind": "Content",
-              "text": "periodSplit: "
+              "text": "periodSplit: (input?: "
             },
             {
               "kind": "Content",
-              "text": "(input?: string) => string | undefined"
+              "text": "string"
+            },
+            {
+              "kind": "Content",
+              "text": ") => "
+            },
+            {
+              "kind": "Content",
+              "text": "string | undefined"
             }
           ],
           "fileUrlPath": "tmp/.tsup/declaration/packages/utilities/src/string-fns/period-split.d.ts",
-          "isReadonly": true,
+          "returnTypeTokenRange": {
+            "startIndex": 3,
+            "endIndex": 4
+          },
           "releaseTag": "Public",
-          "name": "periodSplit",
-          "variableTypeTokenRange": {
-            "startIndex": 1,
-            "endIndex": 2
-          }
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "input",
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "isOptional": true
+            }
+          ],
+          "name": "periodSplit"
         },
         {
           "kind": "TypeAlias",
@@ -3464,17 +4249,21 @@
           }
         },
         {
-          "kind": "Variable",
-          "canonicalReference": "@storm-stack/utilities!propertyExists:var",
+          "kind": "Function",
+          "canonicalReference": "@storm-stack/utilities!propertyExists:function(1)",
           "docComment": "/**\n * Check if the provided object has the provided property\n *\n * @param object - The object to check\n *\n * @param propertyKey - The property to check\n *\n * @returns An indicator specifying if the object has the provided property\n */\n",
           "excerptTokens": [
             {
               "kind": "Content",
-              "text": "propertyExists: "
+              "text": "propertyExists: (object: "
             },
             {
               "kind": "Content",
-              "text": "(object: any, propertyKey: "
+              "text": "any"
+            },
+            {
+              "kind": "Content",
+              "text": ", propertyKey: "
             },
             {
               "kind": "Reference",
@@ -3483,30 +4272,56 @@
             },
             {
               "kind": "Content",
-              "text": ") => boolean"
+              "text": ") => "
+            },
+            {
+              "kind": "Content",
+              "text": "boolean"
             }
           ],
           "fileUrlPath": "tmp/.tsup/declaration/packages/utilities/src/type-checks/property-exists.d.ts",
-          "isReadonly": true,
+          "returnTypeTokenRange": {
+            "startIndex": 5,
+            "endIndex": 6
+          },
           "releaseTag": "Public",
-          "name": "propertyExists",
-          "variableTypeTokenRange": {
-            "startIndex": 1,
-            "endIndex": 4
-          }
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "object",
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "isOptional": false
+            },
+            {
+              "parameterName": "propertyKey",
+              "parameterTypeTokenRange": {
+                "startIndex": 3,
+                "endIndex": 4
+              },
+              "isOptional": false
+            }
+          ],
+          "name": "propertyExists"
         },
         {
-          "kind": "Variable",
-          "canonicalReference": "@storm-stack/utilities!propertyUnsafe:var",
+          "kind": "Function",
+          "canonicalReference": "@storm-stack/utilities!propertyUnsafe:function(1)",
           "docComment": "/**\n * Check if the provided object has the provided property and if it's safe to merge\n *\n * @param object - The object to check\n *\n * @param propertyKey - The property to check\n *\n * @returns An indicator specifying if the object has the provided property and if it's safe to merge\n */\n",
           "excerptTokens": [
             {
               "kind": "Content",
-              "text": "propertyUnsafe: "
+              "text": "propertyUnsafe: (object: "
             },
             {
               "kind": "Content",
-              "text": "(object: any, propertyKey: "
+              "text": "any"
+            },
+            {
+              "kind": "Content",
+              "text": ", propertyKey: "
             },
             {
               "kind": "Reference",
@@ -3515,17 +4330,39 @@
             },
             {
               "kind": "Content",
-              "text": ") => boolean"
+              "text": ") => "
+            },
+            {
+              "kind": "Content",
+              "text": "boolean"
             }
           ],
           "fileUrlPath": "tmp/.tsup/declaration/packages/utilities/src/type-checks/property-exists.d.ts",
-          "isReadonly": true,
+          "returnTypeTokenRange": {
+            "startIndex": 5,
+            "endIndex": 6
+          },
           "releaseTag": "Public",
-          "name": "propertyUnsafe",
-          "variableTypeTokenRange": {
-            "startIndex": 1,
-            "endIndex": 4
-          }
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "object",
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "isOptional": false
+            },
+            {
+              "parameterName": "propertyKey",
+              "parameterTypeTokenRange": {
+                "startIndex": 3,
+                "endIndex": 4
+              },
+              "isOptional": false
+            }
+          ],
+          "name": "propertyUnsafe"
         },
         {
           "kind": "TypeAlias",
@@ -3636,17 +4473,29 @@
           "extendsTokenRanges": []
         },
         {
-          "kind": "Variable",
-          "canonicalReference": "@storm-stack/utilities!removeEmptyItems:var",
+          "kind": "Function",
+          "canonicalReference": "@storm-stack/utilities!removeEmptyItems:function(1)",
           "docComment": "/**\n * Removes empty items from an array\n *\n * @param arr - The array to remove empty items from\n *\n * @returns The array with empty items removed\n */\n",
           "excerptTokens": [
             {
               "kind": "Content",
-              "text": "removeEmptyItems: "
+              "text": "removeEmptyItems: <T = "
             },
             {
               "kind": "Content",
-              "text": "<T = any>(arr: (T | null | undefined)[]) => "
+              "text": "any"
+            },
+            {
+              "kind": "Content",
+              "text": ">(arr: "
+            },
+            {
+              "kind": "Content",
+              "text": "(T | null | undefined)[]"
+            },
+            {
+              "kind": "Content",
+              "text": ") => "
             },
             {
               "kind": "Reference",
@@ -3659,13 +4508,36 @@
             }
           ],
           "fileUrlPath": "tmp/.tsup/declaration/packages/utilities/src/helper-fns/remove-empty-items.d.ts",
-          "isReadonly": true,
+          "returnTypeTokenRange": {
+            "startIndex": 5,
+            "endIndex": 7
+          },
           "releaseTag": "Public",
-          "name": "removeEmptyItems",
-          "variableTypeTokenRange": {
-            "startIndex": 1,
-            "endIndex": 4
-          }
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "arr",
+              "parameterTypeTokenRange": {
+                "startIndex": 3,
+                "endIndex": 4
+              },
+              "isOptional": false
+            }
+          ],
+          "typeParameters": [
+            {
+              "typeParameterName": "T",
+              "constraintTokenRange": {
+                "startIndex": 0,
+                "endIndex": 0
+              },
+              "defaultTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            }
+          ],
+          "name": "removeEmptyItems"
         },
         {
           "kind": "TypeAlias",
@@ -4035,27 +4907,45 @@
           "name": "sha1"
         },
         {
-          "kind": "Variable",
-          "canonicalReference": "@storm-stack/utilities!sha256:var",
+          "kind": "Function",
+          "canonicalReference": "@storm-stack/utilities!sha256:function(1)",
           "docComment": "/**\n * Generate a SHA-256 hash\n *\n * @remarks\n *\n * This helper function is used to generate a SHA-256 hash from a string value.\n *\n * @param value - The value to hash\n *\n * @returns A SHA-256 hash string\n */\n",
           "excerptTokens": [
             {
               "kind": "Content",
-              "text": "sha256: "
+              "text": "sha256: (value: "
             },
             {
               "kind": "Content",
-              "text": "(value: string) => void"
+              "text": "string"
+            },
+            {
+              "kind": "Content",
+              "text": ") => "
+            },
+            {
+              "kind": "Content",
+              "text": "void"
             }
           ],
           "fileUrlPath": "tmp/.tsup/declaration/packages/utilities/src/crypto/sha-256.d.ts",
-          "isReadonly": true,
+          "returnTypeTokenRange": {
+            "startIndex": 3,
+            "endIndex": 4
+          },
           "releaseTag": "Public",
-          "name": "sha256",
-          "variableTypeTokenRange": {
-            "startIndex": 1,
-            "endIndex": 2
-          }
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "value",
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "isOptional": false
+            }
+          ],
+          "name": "sha256"
         },
         {
           "kind": "TypeAlias",
@@ -4097,50 +4987,102 @@
           }
         },
         {
-          "kind": "Variable",
-          "canonicalReference": "@storm-stack/utilities!snakeCase:var",
+          "kind": "Function",
+          "canonicalReference": "@storm-stack/utilities!snakeCase:function(1)",
           "docComment": "/**\n * Convert the input string to snake case.\n *\n * @remarks\n *\n * \"this_is_an_example\"\n *\n * @param input - The input string.\n *\n * @param options - Options to control the behavior of the function.\n *\n * @returns The snake-cased string.\n */\n",
           "excerptTokens": [
             {
               "kind": "Content",
-              "text": "snakeCase: "
+              "text": "snakeCase: (input?: "
             },
             {
               "kind": "Content",
-              "text": "(input?: string, options?: {\n    splitOnNumber: boolean;\n}) => string | undefined"
+              "text": "string"
+            },
+            {
+              "kind": "Content",
+              "text": ", options?: "
+            },
+            {
+              "kind": "Content",
+              "text": "{\n    splitOnNumber: boolean;\n}"
+            },
+            {
+              "kind": "Content",
+              "text": ") => "
+            },
+            {
+              "kind": "Content",
+              "text": "string | undefined"
             }
           ],
           "fileUrlPath": "tmp/.tsup/declaration/packages/utilities/src/string-fns/snake-case.d.ts",
-          "isReadonly": true,
+          "returnTypeTokenRange": {
+            "startIndex": 5,
+            "endIndex": 6
+          },
           "releaseTag": "Public",
-          "name": "snakeCase",
-          "variableTypeTokenRange": {
-            "startIndex": 1,
-            "endIndex": 2
-          }
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "input",
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "isOptional": true
+            },
+            {
+              "parameterName": "options",
+              "parameterTypeTokenRange": {
+                "startIndex": 3,
+                "endIndex": 4
+              },
+              "isOptional": true
+            }
+          ],
+          "name": "snakeCase"
         },
         {
-          "kind": "Variable",
-          "canonicalReference": "@storm-stack/utilities!titleCase:var",
+          "kind": "Function",
+          "canonicalReference": "@storm-stack/utilities!titleCase:function(1)",
           "docComment": "/**\n * Convert the input string to title case.\n *\n * @remarks\n *\n * \"This Is An Example\"\n *\n * @param input - The input string.\n *\n * @returns The title cased string.\n */\n",
           "excerptTokens": [
             {
               "kind": "Content",
-              "text": "titleCase: "
+              "text": "titleCase: (input?: "
             },
             {
               "kind": "Content",
-              "text": "(input?: string) => string | undefined"
+              "text": "string"
+            },
+            {
+              "kind": "Content",
+              "text": ") => "
+            },
+            {
+              "kind": "Content",
+              "text": "string | undefined"
             }
           ],
           "fileUrlPath": "tmp/.tsup/declaration/packages/utilities/src/string-fns/title-case.d.ts",
-          "isReadonly": true,
+          "returnTypeTokenRange": {
+            "startIndex": 3,
+            "endIndex": 4
+          },
           "releaseTag": "Public",
-          "name": "titleCase",
-          "variableTypeTokenRange": {
-            "startIndex": 1,
-            "endIndex": 2
-          }
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "input",
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "isOptional": true
+            }
+          ],
+          "name": "titleCase"
         },
         {
           "kind": "Variable",
@@ -4323,27 +5265,45 @@
           "name": "typeDetect"
         },
         {
-          "kind": "Variable",
-          "canonicalReference": "@storm-stack/utilities!upperCaseFirst:var",
+          "kind": "Function",
+          "canonicalReference": "@storm-stack/utilities!upperCaseFirst:function(1)",
           "docComment": "/**\n * Upper case the first character of an input string.\n *\n * @remarks\n *\n * \"Thisisanexample\"\n *\n * @param input - The input string.\n *\n * @returns The capitalized string.\n */\n",
           "excerptTokens": [
             {
               "kind": "Content",
-              "text": "upperCaseFirst: "
+              "text": "upperCaseFirst: (input?: "
             },
             {
               "kind": "Content",
-              "text": "(input?: string) => string | undefined"
+              "text": "string"
+            },
+            {
+              "kind": "Content",
+              "text": ") => "
+            },
+            {
+              "kind": "Content",
+              "text": "string | undefined"
             }
           ],
           "fileUrlPath": "tmp/.tsup/declaration/packages/utilities/src/string-fns/upper-case-first.d.ts",
-          "isReadonly": true,
+          "returnTypeTokenRange": {
+            "startIndex": 3,
+            "endIndex": 4
+          },
           "releaseTag": "Public",
-          "name": "upperCaseFirst",
-          "variableTypeTokenRange": {
-            "startIndex": 1,
-            "endIndex": 2
-          }
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "input",
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "isOptional": true
+            }
+          ],
+          "name": "upperCaseFirst"
         }
       ]
     }

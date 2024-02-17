@@ -11,7 +11,7 @@
   "main": "./src/index.js",
   "typings": "./src/index.d.ts",
   "dependencies": {
-    "@nx/devkit": "17.2.8",
+    "@nx/devkit": "18.0.4",
     "@storm-software/config": "latest",
     "@storm-software/config-tools": "latest",
     "@storm-software/workspace-tools": "latest",
@@ -24,11 +24,11 @@
   "devDependencies": {
     "@tamagui/web": "^1.89.8",
     "@types/fs-extra": "^11.0.4",
-    "nx": "17.2.8"
+    "nx": "18.0.4"
   },
   "peerDependencies": {
     "@tamagui/web": "^1.89.8",
-    "nx": "17.2.8"
+    "nx": "18.0.4"
   },
   "executors": "./executors.json"
 }

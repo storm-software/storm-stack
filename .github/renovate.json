@@ -32,7 +32,7 @@
       "matchPackageNames": ["@nx"],
       "postUpgradeTasks": {
         "commands": [
-          "npx nx migrate latest --run-migrations --create-commits --commit-message='chore(storm-stack): update @nx dependencies [skip ci]'"
+          "npx nx migrate latest --run-migrations --create-commits --commit-message='chore(monorepo): update @nx dependencies [skip ci]'"
         ]
       }
     },

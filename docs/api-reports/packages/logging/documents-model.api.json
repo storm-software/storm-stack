@@ -1,7 +1,7 @@
 {
   "metadata": {
     "toolPackage": "@microsoft/api-extractor",
-    "toolVersion": "7.38.5",
+    "toolVersion": "7.40.1",
     "schemaVersion": 1011,
     "oldestForwardsCompatibleVersion": 1001,
     "tsdocConfig": {
@@ -173,17 +173,25 @@
       "preserveMemberOrder": false,
       "members": [
         {
-          "kind": "Variable",
-          "canonicalReference": "@storm-stack/logging!createErrorSerializer:var",
+          "kind": "Function",
+          "canonicalReference": "@storm-stack/logging!createErrorSerializer:function(1)",
           "docComment": "",
           "excerptTokens": [
             {
               "kind": "Content",
-              "text": "createErrorSerializer: "
+              "text": "createErrorSerializer: (stacktrace?: "
             },
             {
               "kind": "Content",
-              "text": "(stacktrace?: boolean) => (err: "
+              "text": "boolean"
+            },
+            {
+              "kind": "Content",
+              "text": ") => "
+            },
+            {
+              "kind": "Content",
+              "text": "(err: "
             },
             {
               "kind": "Reference",
@@ -205,13 +213,23 @@
             }
           ],
           "fileUrlPath": "tmp/.tsup/declaration/packages/logging/src/utilities/log-serializer.d.ts",
-          "isReadonly": true,
+          "returnTypeTokenRange": {
+            "startIndex": 3,
+            "endIndex": 8
+          },
           "releaseTag": "Public",
-          "name": "createErrorSerializer",
-          "variableTypeTokenRange": {
-            "startIndex": 1,
-            "endIndex": 6
-          }
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "stacktrace",
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "isOptional": true
+            }
+          ],
+          "name": "createErrorSerializer"
         },
         {
           "kind": "TypeAlias",
@@ -263,17 +281,21 @@
           }
         },
         {
-          "kind": "Variable",
-          "canonicalReference": "@storm-stack/logging!getLogLevel:var",
+          "kind": "Function",
+          "canonicalReference": "@storm-stack/logging!getLogLevel:function(1)",
           "docComment": "/**\n * Convert the log level label to a log level\n *\n * @param label - The log level label to convert\n *\n * @returns The log level\n */\n",
           "excerptTokens": [
             {
               "kind": "Content",
-              "text": "getLogLevel: "
+              "text": "getLogLevel: (label: "
             },
             {
               "kind": "Content",
-              "text": "(label: string) => "
+              "text": "string"
+            },
+            {
+              "kind": "Content",
+              "text": ") => "
             },
             {
               "kind": "Reference",
@@ -282,26 +304,40 @@
             }
           ],
           "fileUrlPath": "tmp/.tsup/declaration/packages/logging/src/utilities/get-log-level.d.ts",
-          "isReadonly": true,
+          "returnTypeTokenRange": {
+            "startIndex": 3,
+            "endIndex": 4
+          },
           "releaseTag": "Public",
-          "name": "getLogLevel",
-          "variableTypeTokenRange": {
-            "startIndex": 1,
-            "endIndex": 3
-          }
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "label",
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "isOptional": false
+            }
+          ],
+          "name": "getLogLevel"
         },
         {
-          "kind": "Variable",
-          "canonicalReference": "@storm-stack/logging!getLogLevelLabel:var",
+          "kind": "Function",
+          "canonicalReference": "@storm-stack/logging!getLogLevelLabel:function(1)",
           "docComment": "/**\n * Convert the log level to a log level label\n *\n * @param logLevel - The log level to convert\n *\n * @returns The log level label\n */\n",
           "excerptTokens": [
             {
               "kind": "Content",
-              "text": "getLogLevelLabel: "
+              "text": "getLogLevelLabel: (logLevel: "
             },
             {
               "kind": "Content",
-              "text": "(logLevel: number) => "
+              "text": "number"
+            },
+            {
+              "kind": "Content",
+              "text": ") => "
             },
             {
               "kind": "Reference",
@@ -310,26 +346,32 @@
             }
           ],
           "fileUrlPath": "tmp/.tsup/declaration/packages/logging/src/utilities/get-log-level.d.ts",
-          "isReadonly": true,
+          "returnTypeTokenRange": {
+            "startIndex": 3,
+            "endIndex": 4
+          },
           "releaseTag": "Public",
-          "name": "getLogLevelLabel",
-          "variableTypeTokenRange": {
-            "startIndex": 1,
-            "endIndex": 3
-          }
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "logLevel",
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "isOptional": false
+            }
+          ],
+          "name": "getLogLevelLabel"
         },
         {
-          "kind": "Variable",
-          "canonicalReference": "@storm-stack/logging!getPinoOptions:var",
+          "kind": "Function",
+          "canonicalReference": "@storm-stack/logging!getPinoOptions:function(1)",
           "docComment": "/**\n * Get the Pino transports for the logger\n *\n * @param config - The workspace config\n *\n * @param name - The name of the logger to get the options for\n *\n * @returns The options for the logger\n */\n",
           "excerptTokens": [
             {
               "kind": "Content",
-              "text": "getPinoOptions: "
-            },
-            {
-              "kind": "Content",
-              "text": "(config: "
+              "text": "getPinoOptions: (config: "
             },
             {
               "kind": "Reference",
@@ -338,7 +380,23 @@
             },
             {
               "kind": "Content",
-              "text": ", name?: string, stacktrace?: boolean) => "
+              "text": ", name?: "
+            },
+            {
+              "kind": "Content",
+              "text": "string"
+            },
+            {
+              "kind": "Content",
+              "text": ", stacktrace?: "
+            },
+            {
+              "kind": "Content",
+              "text": "boolean"
+            },
+            {
+              "kind": "Content",
+              "text": ") => "
             },
             {
               "kind": "Reference",
@@ -347,13 +405,39 @@
             }
           ],
           "fileUrlPath": "tmp/.tsup/declaration/packages/logging/src/utilities/get-pino-options.d.ts",
-          "isReadonly": true,
+          "returnTypeTokenRange": {
+            "startIndex": 7,
+            "endIndex": 8
+          },
           "releaseTag": "Public",
-          "name": "getPinoOptions",
-          "variableTypeTokenRange": {
-            "startIndex": 1,
-            "endIndex": 5
-          }
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "config",
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "isOptional": false
+            },
+            {
+              "parameterName": "name",
+              "parameterTypeTokenRange": {
+                "startIndex": 3,
+                "endIndex": 4
+              },
+              "isOptional": true
+            },
+            {
+              "parameterName": "stacktrace",
+              "parameterTypeTokenRange": {
+                "startIndex": 5,
+                "endIndex": 6
+              },
+              "isOptional": true
+            }
+          ],
+          "name": "getPinoOptions"
         },
         {
           "kind": "Interface",

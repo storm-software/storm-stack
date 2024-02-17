@@ -1,7 +1,7 @@
 {
   "metadata": {
     "toolPackage": "@microsoft/api-extractor",
-    "toolVersion": "7.38.5",
+    "toolVersion": "7.40.1",
     "schemaVersion": 1011,
     "oldestForwardsCompatibleVersion": 1001,
     "tsdocConfig": {
@@ -218,17 +218,33 @@
           "name": "chmodPlusX"
         },
         {
-          "kind": "Variable",
-          "canonicalReference": "@storm-stack/file-system!copyFile:var",
+          "kind": "Function",
+          "canonicalReference": "@storm-stack/file-system!copyFile:function(1)",
           "docComment": "/**\n * Copy a file from one location to another\n *\n * @param file - The file to copy\n *\n * @param dest - The destination location\n *\n * @returns An indicator specifying if the copy was successful\n */\n",
           "excerptTokens": [
             {
               "kind": "Content",
-              "text": "copyFile: "
+              "text": "copyFile: (file: "
             },
             {
               "kind": "Content",
-              "text": "(file: string, dest: string) => string | "
+              "text": "string"
+            },
+            {
+              "kind": "Content",
+              "text": ", dest: "
+            },
+            {
+              "kind": "Content",
+              "text": "string"
+            },
+            {
+              "kind": "Content",
+              "text": ") => "
+            },
+            {
+              "kind": "Content",
+              "text": "string | "
             },
             {
               "kind": "Reference",
@@ -241,26 +257,56 @@
             }
           ],
           "fileUrlPath": "tmp/.tsup/declaration/packages/file-system/src/files/copy-files.d.ts",
-          "isReadonly": true,
+          "returnTypeTokenRange": {
+            "startIndex": 5,
+            "endIndex": 8
+          },
           "releaseTag": "Public",
-          "name": "copyFile",
-          "variableTypeTokenRange": {
-            "startIndex": 1,
-            "endIndex": 4
-          }
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "file",
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "isOptional": false
+            },
+            {
+              "parameterName": "dest",
+              "parameterTypeTokenRange": {
+                "startIndex": 3,
+                "endIndex": 4
+              },
+              "isOptional": false
+            }
+          ],
+          "name": "copyFile"
         },
         {
-          "kind": "Variable",
-          "canonicalReference": "@storm-stack/file-system!copyFiles:var",
+          "kind": "Function",
+          "canonicalReference": "@storm-stack/file-system!copyFiles:function(1)",
           "docComment": "/**\n * Copy files from one location to another\n *\n * @param from - The source location\n *\n * @param to - The destination location\n *\n * @param options - The copy options\n *\n * @returns An indicator specifying if the copy was successful\n */\n",
           "excerptTokens": [
             {
               "kind": "Content",
-              "text": "copyFiles: "
+              "text": "copyFiles: (from: "
             },
             {
               "kind": "Content",
-              "text": "(from: string, to: string, options?: "
+              "text": "string"
+            },
+            {
+              "kind": "Content",
+              "text": ", to: "
+            },
+            {
+              "kind": "Content",
+              "text": "string"
+            },
+            {
+              "kind": "Content",
+              "text": ", options?: "
             },
             {
               "kind": "Reference",
@@ -269,7 +315,11 @@
             },
             {
               "kind": "Content",
-              "text": ") => string | "
+              "text": ") => "
+            },
+            {
+              "kind": "Content",
+              "text": "string | "
             },
             {
               "kind": "Reference",
@@ -282,36 +332,112 @@
             }
           ],
           "fileUrlPath": "tmp/.tsup/declaration/packages/file-system/src/files/copy-files.d.ts",
-          "isReadonly": true,
+          "returnTypeTokenRange": {
+            "startIndex": 7,
+            "endIndex": 10
+          },
           "releaseTag": "Public",
-          "name": "copyFiles",
-          "variableTypeTokenRange": {
-            "startIndex": 1,
-            "endIndex": 6
-          }
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "from",
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "isOptional": false
+            },
+            {
+              "parameterName": "to",
+              "parameterTypeTokenRange": {
+                "startIndex": 3,
+                "endIndex": 4
+              },
+              "isOptional": false
+            },
+            {
+              "parameterName": "options",
+              "parameterTypeTokenRange": {
+                "startIndex": 5,
+                "endIndex": 6
+              },
+              "isOptional": true
+            }
+          ],
+          "name": "copyFiles"
         },
         {
-          "kind": "Variable",
-          "canonicalReference": "@storm-stack/file-system!deriveNewSemverVersion:var",
+          "kind": "Function",
+          "canonicalReference": "@storm-stack/file-system!deriveNewSemverVersion:function(1)",
           "docComment": "",
           "excerptTokens": [
             {
               "kind": "Content",
-              "text": "deriveNewSemverVersion: "
+              "text": "deriveNewSemverVersion: (currentSemverVersion: "
             },
             {
               "kind": "Content",
-              "text": "(currentSemverVersion: string, semverSpecifier: string, preid?: string) => string"
+              "text": "string"
+            },
+            {
+              "kind": "Content",
+              "text": ", semverSpecifier: "
+            },
+            {
+              "kind": "Content",
+              "text": "string"
+            },
+            {
+              "kind": "Content",
+              "text": ", preid?: "
+            },
+            {
+              "kind": "Content",
+              "text": "string"
+            },
+            {
+              "kind": "Content",
+              "text": ") => "
+            },
+            {
+              "kind": "Content",
+              "text": "string"
             }
           ],
           "fileUrlPath": "tmp/.tsup/declaration/packages/file-system/src/package-management/semver-fns.d.ts",
-          "isReadonly": true,
+          "returnTypeTokenRange": {
+            "startIndex": 7,
+            "endIndex": 8
+          },
           "releaseTag": "Public",
-          "name": "deriveNewSemverVersion",
-          "variableTypeTokenRange": {
-            "startIndex": 1,
-            "endIndex": 2
-          }
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "currentSemverVersion",
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "isOptional": false
+            },
+            {
+              "parameterName": "semverSpecifier",
+              "parameterTypeTokenRange": {
+                "startIndex": 3,
+                "endIndex": 4
+              },
+              "isOptional": false
+            },
+            {
+              "parameterName": "preid",
+              "parameterTypeTokenRange": {
+                "startIndex": 5,
+                "endIndex": 6
+              },
+              "isOptional": true
+            }
+          ],
+          "name": "deriveNewSemverVersion"
         },
         {
           "kind": "Function",
@@ -444,27 +570,45 @@
           "name": "ensurePackage"
         },
         {
-          "kind": "Variable",
-          "canonicalReference": "@storm-stack/file-system!exists:var",
+          "kind": "Function",
+          "canonicalReference": "@storm-stack/file-system!exists:function(1)",
           "docComment": "/**\n * Check if a file exists\n *\n * @param filePath - The file path to check\n *\n * @returns An indicator specifying if the file exists\n */\n",
           "excerptTokens": [
             {
               "kind": "Content",
-              "text": "exists: "
+              "text": "exists: (filePath: "
             },
             {
               "kind": "Content",
-              "text": "(filePath: string) => boolean"
+              "text": "string"
+            },
+            {
+              "kind": "Content",
+              "text": ") => "
+            },
+            {
+              "kind": "Content",
+              "text": "boolean"
             }
           ],
           "fileUrlPath": "tmp/.tsup/declaration/packages/file-system/src/files/exists.d.ts",
-          "isReadonly": true,
+          "returnTypeTokenRange": {
+            "startIndex": 3,
+            "endIndex": 4
+          },
           "releaseTag": "Public",
-          "name": "exists",
-          "variableTypeTokenRange": {
-            "startIndex": 1,
-            "endIndex": 2
-          }
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "filePath",
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "isOptional": false
+            }
+          ],
+          "name": "exists"
         },
         {
           "kind": "TypeAlias",
@@ -899,27 +1043,28 @@
           "name": "findFilePath"
         },
         {
-          "kind": "Variable",
-          "canonicalReference": "@storm-stack/file-system!getWorkspaceRoot:var",
+          "kind": "Function",
+          "canonicalReference": "@storm-stack/file-system!getWorkspaceRoot:function(1)",
           "docComment": "",
           "excerptTokens": [
             {
               "kind": "Content",
-              "text": "getWorkspaceRoot: "
+              "text": "getWorkspaceRoot: () => "
             },
             {
               "kind": "Content",
-              "text": "() => any"
+              "text": "any"
             }
           ],
           "fileUrlPath": "tmp/.tsup/declaration/packages/file-system/src/files/get-workspace-root.d.ts",
-          "isReadonly": true,
-          "releaseTag": "Public",
-          "name": "getWorkspaceRoot",
-          "variableTypeTokenRange": {
+          "returnTypeTokenRange": {
             "startIndex": 1,
             "endIndex": 2
-          }
+          },
+          "releaseTag": "Public",
+          "overloadIndex": 1,
+          "parameters": [],
+          "name": "getWorkspaceRoot"
         },
         {
           "kind": "Function",
@@ -1142,63 +1287,135 @@
           "name": "installPackage"
         },
         {
-          "kind": "Variable",
-          "canonicalReference": "@storm-stack/file-system!isDirectory:var",
+          "kind": "Function",
+          "canonicalReference": "@storm-stack/file-system!isDirectory:function(1)",
           "docComment": "/**\n * Check if the given path is a directory\n *\n * @param path - The location to check\n *\n * @param additionalPath - An optional additional path to add to the start of the path\n *\n * @returns An indicator specifying if the file is a directory\n */\n",
           "excerptTokens": [
             {
               "kind": "Content",
-              "text": "isDirectory: "
+              "text": "isDirectory: (path: "
             },
             {
               "kind": "Content",
-              "text": "(path: string, additionalPath?: string) => boolean"
+              "text": "string"
+            },
+            {
+              "kind": "Content",
+              "text": ", additionalPath?: "
+            },
+            {
+              "kind": "Content",
+              "text": "string"
+            },
+            {
+              "kind": "Content",
+              "text": ") => "
+            },
+            {
+              "kind": "Content",
+              "text": "boolean"
             }
           ],
           "fileUrlPath": "tmp/.tsup/declaration/packages/file-system/src/files/is-file.d.ts",
-          "isReadonly": true,
+          "returnTypeTokenRange": {
+            "startIndex": 5,
+            "endIndex": 6
+          },
           "releaseTag": "Public",
-          "name": "isDirectory",
-          "variableTypeTokenRange": {
-            "startIndex": 1,
-            "endIndex": 2
-          }
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "path",
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "isOptional": false
+            },
+            {
+              "parameterName": "additionalPath",
+              "parameterTypeTokenRange": {
+                "startIndex": 3,
+                "endIndex": 4
+              },
+              "isOptional": true
+            }
+          ],
+          "name": "isDirectory"
         },
         {
-          "kind": "Variable",
-          "canonicalReference": "@storm-stack/file-system!isFile:var",
+          "kind": "Function",
+          "canonicalReference": "@storm-stack/file-system!isFile:function(1)",
           "docComment": "/**\n * Check if the given path is a file\n *\n * @param path - The location to check\n *\n * @param additionalPath - An optional additional path to add to the start of the path\n *\n * @returns An indicator specifying if the file is a file\n */\n",
           "excerptTokens": [
             {
               "kind": "Content",
-              "text": "isFile: "
+              "text": "isFile: (path: "
             },
             {
               "kind": "Content",
-              "text": "(path: string, additionalPath?: string) => boolean"
+              "text": "string"
+            },
+            {
+              "kind": "Content",
+              "text": ", additionalPath?: "
+            },
+            {
+              "kind": "Content",
+              "text": "string"
+            },
+            {
+              "kind": "Content",
+              "text": ") => "
+            },
+            {
+              "kind": "Content",
+              "text": "boolean"
             }
           ],
           "fileUrlPath": "tmp/.tsup/declaration/packages/file-system/src/files/is-file.d.ts",
-          "isReadonly": true,
+          "returnTypeTokenRange": {
+            "startIndex": 5,
+            "endIndex": 6
+          },
           "releaseTag": "Public",
-          "name": "isFile",
-          "variableTypeTokenRange": {
-            "startIndex": 1,
-            "endIndex": 2
-          }
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "path",
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "isOptional": false
+            },
+            {
+              "parameterName": "additionalPath",
+              "parameterTypeTokenRange": {
+                "startIndex": 3,
+                "endIndex": 4
+              },
+              "isOptional": true
+            }
+          ],
+          "name": "isFile"
         },
         {
-          "kind": "Variable",
-          "canonicalReference": "@storm-stack/file-system!isRelativeVersionKeyword:var",
+          "kind": "Function",
+          "canonicalReference": "@storm-stack/file-system!isRelativeVersionKeyword:function(1)",
           "docComment": "",
           "excerptTokens": [
             {
               "kind": "Content",
-              "text": "isRelativeVersionKeyword: "
+              "text": "isRelativeVersionKeyword: (val: "
             },
             {
               "kind": "Content",
-              "text": "(val: string) => "
+              "text": "string"
+            },
+            {
+              "kind": "Content",
+              "text": ") => "
             },
             {
               "kind": "Reference",
@@ -1216,82 +1433,162 @@
             }
           ],
           "fileUrlPath": "tmp/.tsup/declaration/packages/file-system/src/package-management/semver-fns.d.ts",
-          "isReadonly": true,
+          "returnTypeTokenRange": {
+            "startIndex": 3,
+            "endIndex": 6
+          },
           "releaseTag": "Public",
-          "name": "isRelativeVersionKeyword",
-          "variableTypeTokenRange": {
-            "startIndex": 1,
-            "endIndex": 5
-          }
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "val",
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "isOptional": false
+            }
+          ],
+          "name": "isRelativeVersionKeyword"
         },
         {
-          "kind": "Variable",
-          "canonicalReference": "@storm-stack/file-system!joinPaths:var",
+          "kind": "Function",
+          "canonicalReference": "@storm-stack/file-system!joinPaths:function(1)",
           "docComment": "/**\n * Join the given paths\n *\n * @param paths - The paths to join\n *\n * @returns The joined paths\n */\n",
           "excerptTokens": [
             {
               "kind": "Content",
-              "text": "joinPaths: "
+              "text": "joinPaths: (...paths: "
             },
             {
               "kind": "Content",
-              "text": "(...paths: string[]) => string"
+              "text": "string[]"
+            },
+            {
+              "kind": "Content",
+              "text": ") => "
+            },
+            {
+              "kind": "Content",
+              "text": "string"
             }
           ],
           "fileUrlPath": "tmp/.tsup/declaration/packages/file-system/src/files/join-paths.d.ts",
-          "isReadonly": true,
+          "returnTypeTokenRange": {
+            "startIndex": 3,
+            "endIndex": 4
+          },
           "releaseTag": "Public",
-          "name": "joinPaths",
-          "variableTypeTokenRange": {
-            "startIndex": 1,
-            "endIndex": 2
-          }
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "paths",
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "isOptional": false
+            }
+          ],
+          "name": "joinPaths"
         },
         {
-          "kind": "Variable",
-          "canonicalReference": "@storm-stack/file-system!loadTsConfig:var",
+          "kind": "Function",
+          "canonicalReference": "@storm-stack/file-system!loadTsConfig:function(1)",
           "docComment": "/**\n * Loads a tsconfig.json file and returns the parsed JSON object.\n *\n * @param dir - The directory to start searching for the tsconfig.json file.\n *\n * @param name - The name of the tsconfig.json file.\n *\n * @returns The parsed JSON object.\n */\n",
           "excerptTokens": [
             {
               "kind": "Content",
-              "text": "loadTsConfig: "
+              "text": "loadTsConfig: (dir: "
             },
             {
               "kind": "Content",
-              "text": "(dir: string, name?: string) => {\n    path: string;\n    data: any;\n    files: any[];\n} | null"
+              "text": "string"
+            },
+            {
+              "kind": "Content",
+              "text": ", name?: "
+            },
+            {
+              "kind": "Content",
+              "text": "string"
+            },
+            {
+              "kind": "Content",
+              "text": ") => "
+            },
+            {
+              "kind": "Content",
+              "text": "{\n    path: string;\n    data: any;\n    files: any[];\n} | null"
             }
           ],
           "fileUrlPath": "tmp/.tsup/declaration/packages/file-system/src/package-management/get-tsconfig.d.ts",
-          "isReadonly": true,
+          "returnTypeTokenRange": {
+            "startIndex": 5,
+            "endIndex": 6
+          },
           "releaseTag": "Public",
-          "name": "loadTsConfig",
-          "variableTypeTokenRange": {
-            "startIndex": 1,
-            "endIndex": 2
-          }
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "dir",
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "isOptional": false
+            },
+            {
+              "parameterName": "name",
+              "parameterTypeTokenRange": {
+                "startIndex": 3,
+                "endIndex": 4
+              },
+              "isOptional": true
+            }
+          ],
+          "name": "loadTsConfig"
         },
         {
-          "kind": "Variable",
-          "canonicalReference": "@storm-stack/file-system!loadTsConfigFile:var",
+          "kind": "Function",
+          "canonicalReference": "@storm-stack/file-system!loadTsConfigFile:function(1)",
           "docComment": "/**\n * Loads a tsconfig.json file and returns the parsed JSON object.\n *\n * @param name - The name/path of the tsconfig.json file.\n *\n * @returns The parsed JSON object.\n */\n",
           "excerptTokens": [
             {
               "kind": "Content",
-              "text": "loadTsConfigFile: "
+              "text": "loadTsConfigFile: (file: "
             },
             {
               "kind": "Content",
-              "text": "(file: string) => {\n    path: string;\n    data: any;\n    files: any[];\n} | null"
+              "text": "string"
+            },
+            {
+              "kind": "Content",
+              "text": ") => "
+            },
+            {
+              "kind": "Content",
+              "text": "{\n    path: string;\n    data: any;\n    files: any[];\n} | null"
             }
           ],
           "fileUrlPath": "tmp/.tsup/declaration/packages/file-system/src/package-management/get-tsconfig.d.ts",
-          "isReadonly": true,
+          "returnTypeTokenRange": {
+            "startIndex": 3,
+            "endIndex": 4
+          },
           "releaseTag": "Public",
-          "name": "loadTsConfigFile",
-          "variableTypeTokenRange": {
-            "startIndex": 1,
-            "endIndex": 2
-          }
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "file",
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "isOptional": false
+            }
+          ],
+          "name": "loadTsConfigFile"
         },
         {
           "kind": "TypeAlias",
@@ -1379,63 +1676,103 @@
           }
         },
         {
-          "kind": "Variable",
-          "canonicalReference": "@storm-stack/file-system!parseVersion:var",
+          "kind": "Function",
+          "canonicalReference": "@storm-stack/file-system!parseVersion:function(1)",
           "docComment": "",
           "excerptTokens": [
             {
               "kind": "Content",
-              "text": "parseVersion: "
+              "text": "parseVersion: (semver: "
             },
             {
               "kind": "Content",
-              "text": "(semver: string) => import(\"semver/classes/semver\") | null"
+              "text": "string"
+            },
+            {
+              "kind": "Content",
+              "text": ") => "
+            },
+            {
+              "kind": "Content",
+              "text": "import(\"semver/classes/semver\") | null"
             }
           ],
           "fileUrlPath": "tmp/.tsup/declaration/packages/file-system/src/package-management/semver-fns.d.ts",
-          "isReadonly": true,
+          "returnTypeTokenRange": {
+            "startIndex": 3,
+            "endIndex": 4
+          },
           "releaseTag": "Public",
-          "name": "parseVersion",
-          "variableTypeTokenRange": {
-            "startIndex": 1,
-            "endIndex": 2
-          }
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "semver",
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "isOptional": false
+            }
+          ],
+          "name": "parseVersion"
         },
         {
-          "kind": "Variable",
-          "canonicalReference": "@storm-stack/file-system!readFile:var",
+          "kind": "Function",
+          "canonicalReference": "@storm-stack/file-system!readFile:function(1)",
           "docComment": "/**\n * Read the given content to the given file path\n *\n * @param filePath - The file path to write to\n */\n",
           "excerptTokens": [
             {
               "kind": "Content",
-              "text": "readFile: "
+              "text": "readFile: (filePath: "
             },
             {
               "kind": "Content",
-              "text": "(filePath: string) => string"
+              "text": "string"
+            },
+            {
+              "kind": "Content",
+              "text": ") => "
+            },
+            {
+              "kind": "Content",
+              "text": "string"
             }
           ],
           "fileUrlPath": "tmp/.tsup/declaration/packages/file-system/src/files/read-file.d.ts",
-          "isReadonly": true,
+          "returnTypeTokenRange": {
+            "startIndex": 3,
+            "endIndex": 4
+          },
           "releaseTag": "Public",
-          "name": "readFile",
-          "variableTypeTokenRange": {
-            "startIndex": 1,
-            "endIndex": 2
-          }
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "filePath",
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "isOptional": false
+            }
+          ],
+          "name": "readFile"
         },
         {
-          "kind": "Variable",
-          "canonicalReference": "@storm-stack/file-system!readFileAsync:var",
+          "kind": "Function",
+          "canonicalReference": "@storm-stack/file-system!readFileAsync:function(1)",
           "docComment": "/**\n * Read the given content to the given file path\n *\n * @param filePath - The file path to read to\n */\n",
           "excerptTokens": [
             {
               "kind": "Content",
-              "text": "readFileAsync: "
+              "text": "readFileAsync: (filePath: "
             },
             {
               "kind": "Content",
-              "text": "(filePath: string) => "
+              "text": "string"
+            },
+            {
+              "kind": "Content",
+              "text": ") => "
             },
             {
               "kind": "Reference",
@@ -1448,13 +1785,23 @@
             }
           ],
           "fileUrlPath": "tmp/.tsup/declaration/packages/file-system/src/files/read-file.d.ts",
-          "isReadonly": true,
+          "returnTypeTokenRange": {
+            "startIndex": 3,
+            "endIndex": 5
+          },
           "releaseTag": "Public",
-          "name": "readFileAsync",
-          "variableTypeTokenRange": {
-            "startIndex": 1,
-            "endIndex": 4
-          }
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "filePath",
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "isOptional": false
+            }
+          ],
+          "name": "readFileAsync"
         },
         {
           "kind": "Function",
@@ -1624,40 +1971,86 @@
           "name": "resolvePath"
         },
         {
-          "kind": "Variable",
-          "canonicalReference": "@storm-stack/file-system!writeFile:var",
+          "kind": "Function",
+          "canonicalReference": "@storm-stack/file-system!writeFile:function(1)",
           "docComment": "/**\n * Write the given content to the given file path\n *\n * @param filePath - The file path to write to\n *\n * @param content - The content to write to the file\n */\n",
           "excerptTokens": [
             {
               "kind": "Content",
-              "text": "writeFile: "
+              "text": "writeFile: (filePath: "
             },
             {
               "kind": "Content",
-              "text": "(filePath: string, content: any) => void"
+              "text": "string"
+            },
+            {
+              "kind": "Content",
+              "text": ", content: "
+            },
+            {
+              "kind": "Content",
+              "text": "any"
+            },
+            {
+              "kind": "Content",
+              "text": ") => "
+            },
+            {
+              "kind": "Content",
+              "text": "void"
             }
           ],
           "fileUrlPath": "tmp/.tsup/declaration/packages/file-system/src/files/write-file.d.ts",
-          "isReadonly": true,
+          "returnTypeTokenRange": {
+            "startIndex": 5,
+            "endIndex": 6
+          },
           "releaseTag": "Public",
-          "name": "writeFile",
-          "variableTypeTokenRange": {
-            "startIndex": 1,
-            "endIndex": 2
-          }
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "filePath",
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "isOptional": false
+            },
+            {
+              "parameterName": "content",
+              "parameterTypeTokenRange": {
+                "startIndex": 3,
+                "endIndex": 4
+              },
+              "isOptional": false
+            }
+          ],
+          "name": "writeFile"
         },
         {
-          "kind": "Variable",
-          "canonicalReference": "@storm-stack/file-system!writeFileAsync:var",
+          "kind": "Function",
+          "canonicalReference": "@storm-stack/file-system!writeFileAsync:function(1)",
           "docComment": "/**\n * Read the given content to the given file path\n *\n * @param filePath - The file path to read to\n */\n",
           "excerptTokens": [
             {
               "kind": "Content",
-              "text": "writeFileAsync: "
+              "text": "writeFileAsync: (filePath: "
             },
             {
               "kind": "Content",
-              "text": "(filePath: string, content: any) => "
+              "text": "string"
+            },
+            {
+              "kind": "Content",
+              "text": ", content: "
+            },
+            {
+              "kind": "Content",
+              "text": "any"
+            },
+            {
+              "kind": "Content",
+              "text": ") => "
             },
             {
               "kind": "Reference",
@@ -1670,13 +2063,31 @@
             }
           ],
           "fileUrlPath": "tmp/.tsup/declaration/packages/file-system/src/files/write-file.d.ts",
-          "isReadonly": true,
+          "returnTypeTokenRange": {
+            "startIndex": 5,
+            "endIndex": 7
+          },
           "releaseTag": "Public",
-          "name": "writeFileAsync",
-          "variableTypeTokenRange": {
-            "startIndex": 1,
-            "endIndex": 4
-          }
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "filePath",
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "isOptional": false
+            },
+            {
+              "parameterName": "content",
+              "parameterTypeTokenRange": {
+                "startIndex": 3,
+                "endIndex": 4
+              },
+              "isOptional": false
+            }
+          ],
+          "name": "writeFileAsync"
         }
       ]
     }

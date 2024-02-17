@@ -1,7 +1,7 @@
 {
   "metadata": {
     "toolPackage": "@microsoft/api-extractor",
-    "toolVersion": "7.38.5",
+    "toolVersion": "7.40.1",
     "schemaVersion": 1011,
     "oldestForwardsCompatibleVersion": 1001,
     "tsdocConfig": {
@@ -596,50 +596,102 @@
           "name": "isValidSnowflake"
         },
         {
-          "kind": "Variable",
-          "canonicalReference": "@storm-stack/unique-identifier!randomInteger:var",
+          "kind": "Function",
+          "canonicalReference": "@storm-stack/unique-identifier!randomInteger:function(1)",
           "docComment": "/**\n * Generate a random integer\n *\n * @param maximum - The maximum value (inclusive)\n *\n * @param minimum - The minimum value (inclusive)\n *\n * @returns A random integer\n */\n",
           "excerptTokens": [
             {
               "kind": "Content",
-              "text": "randomInteger: "
+              "text": "randomInteger: (maximum: "
             },
             {
               "kind": "Content",
-              "text": "(maximum: number, minimum?: number) => number"
+              "text": "number"
+            },
+            {
+              "kind": "Content",
+              "text": ", minimum?: "
+            },
+            {
+              "kind": "Content",
+              "text": "number"
+            },
+            {
+              "kind": "Content",
+              "text": ") => "
+            },
+            {
+              "kind": "Content",
+              "text": "number"
             }
           ],
           "fileUrlPath": "tmp/.tsup/declaration/packages/unique-identifier/src/random.d.ts",
-          "isReadonly": true,
+          "returnTypeTokenRange": {
+            "startIndex": 5,
+            "endIndex": 6
+          },
           "releaseTag": "Public",
-          "name": "randomInteger",
-          "variableTypeTokenRange": {
-            "startIndex": 1,
-            "endIndex": 2
-          }
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "maximum",
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "isOptional": false
+            },
+            {
+              "parameterName": "minimum",
+              "parameterTypeTokenRange": {
+                "startIndex": 3,
+                "endIndex": 4
+              },
+              "isOptional": true
+            }
+          ],
+          "name": "randomInteger"
         },
         {
-          "kind": "Variable",
-          "canonicalReference": "@storm-stack/unique-identifier!randomLetter:var",
+          "kind": "Function",
+          "canonicalReference": "@storm-stack/unique-identifier!randomLetter:function(1)",
           "docComment": "/**\n * Generate a random letter\n *\n * @param random - The random number generator\n *\n * @returns A random letter\n */\n",
           "excerptTokens": [
             {
               "kind": "Content",
-              "text": "randomLetter: "
+              "text": "randomLetter: (random?: "
             },
             {
               "kind": "Content",
-              "text": "(random?: () => number) => string | undefined"
+              "text": "() => number"
+            },
+            {
+              "kind": "Content",
+              "text": ") => "
+            },
+            {
+              "kind": "Content",
+              "text": "string | undefined"
             }
           ],
           "fileUrlPath": "tmp/.tsup/declaration/packages/unique-identifier/src/random.d.ts",
-          "isReadonly": true,
+          "returnTypeTokenRange": {
+            "startIndex": 3,
+            "endIndex": 4
+          },
           "releaseTag": "Public",
-          "name": "randomLetter",
-          "variableTypeTokenRange": {
-            "startIndex": 1,
-            "endIndex": 2
-          }
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "random",
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "isOptional": true
+            }
+          ],
+          "name": "randomLetter"
         },
         {
           "kind": "Function",

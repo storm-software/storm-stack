@@ -1,7 +1,7 @@
 {
   "metadata": {
     "toolPackage": "@microsoft/api-extractor",
-    "toolVersion": "7.38.5",
+    "toolVersion": "7.40.1",
     "schemaVersion": 1011,
     "oldestForwardsCompatibleVersion": 1001,
     "tsdocConfig": {
@@ -698,17 +698,13 @@
           "name": "deserializeStormTime"
         },
         {
-          "kind": "Variable",
-          "canonicalReference": "@storm-stack/date-time!formatDate:var",
+          "kind": "Function",
+          "canonicalReference": "@storm-stack/date-time!formatDate:function(1)",
           "docComment": "/**\n * Format a date field\n *\n * @param dateTime - The date time to format\n *\n * @returns The formatted date\n */\n",
           "excerptTokens": [
             {
               "kind": "Content",
-              "text": "formatDate: "
-            },
-            {
-              "kind": "Content",
-              "text": "(dateTime?: "
+              "text": "formatDate: (dateTime?: "
             },
             {
               "kind": "Reference",
@@ -735,30 +731,52 @@
             },
             {
               "kind": "Content",
-              "text": ">) => string"
+              "text": ">"
+            },
+            {
+              "kind": "Content",
+              "text": ") => "
+            },
+            {
+              "kind": "Content",
+              "text": "string"
             }
           ],
           "fileUrlPath": "tmp/.tsup/declaration/packages/date-time/src/utilities/format-date.d.ts",
-          "isReadonly": true,
+          "returnTypeTokenRange": {
+            "startIndex": 8,
+            "endIndex": 9
+          },
           "releaseTag": "Public",
-          "name": "formatDate",
-          "variableTypeTokenRange": {
-            "startIndex": 1,
-            "endIndex": 8
-          }
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "dateTime",
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "isOptional": true
+            },
+            {
+              "parameterName": "options",
+              "parameterTypeTokenRange": {
+                "startIndex": 3,
+                "endIndex": 7
+              },
+              "isOptional": true
+            }
+          ],
+          "name": "formatDate"
         },
         {
-          "kind": "Variable",
-          "canonicalReference": "@storm-stack/date-time!formatDateTime:var",
+          "kind": "Function",
+          "canonicalReference": "@storm-stack/date-time!formatDateTime:function(1)",
           "docComment": "/**\n * Format a date time field\n *\n * @param dateTime - The date time to format\n *\n * @param options - The options to use\n *\n * @returns The formatted date time\n */\n",
           "excerptTokens": [
             {
               "kind": "Content",
-              "text": "formatDateTime: "
-            },
-            {
-              "kind": "Content",
-              "text": "(dateTime?: "
+              "text": "formatDateTime: (dateTime?: "
             },
             {
               "kind": "Reference",
@@ -785,30 +803,52 @@
             },
             {
               "kind": "Content",
-              "text": ">) => string"
+              "text": ">"
+            },
+            {
+              "kind": "Content",
+              "text": ") => "
+            },
+            {
+              "kind": "Content",
+              "text": "string"
             }
           ],
           "fileUrlPath": "tmp/.tsup/declaration/packages/date-time/src/utilities/format-date-time.d.ts",
-          "isReadonly": true,
+          "returnTypeTokenRange": {
+            "startIndex": 8,
+            "endIndex": 9
+          },
           "releaseTag": "Public",
-          "name": "formatDateTime",
-          "variableTypeTokenRange": {
-            "startIndex": 1,
-            "endIndex": 8
-          }
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "dateTime",
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "isOptional": true
+            },
+            {
+              "parameterName": "options",
+              "parameterTypeTokenRange": {
+                "startIndex": 3,
+                "endIndex": 7
+              },
+              "isOptional": true
+            }
+          ],
+          "name": "formatDateTime"
         },
         {
-          "kind": "Variable",
-          "canonicalReference": "@storm-stack/date-time!formatDateTimeISO:var",
+          "kind": "Function",
+          "canonicalReference": "@storm-stack/date-time!formatDateTimeISO:function(1)",
           "docComment": "/**\n * Format a date time field into ISO format\n *\n * @param dateTime - The date time to format\n *\n * @param options - The options to use\n *\n * @returns The formatted date time\n */\n",
           "excerptTokens": [
             {
               "kind": "Content",
-              "text": "formatDateTimeISO: "
-            },
-            {
-              "kind": "Content",
-              "text": "(dateTime?: "
+              "text": "formatDateTimeISO: (dateTime?: "
             },
             {
               "kind": "Reference",
@@ -817,7 +857,11 @@
             },
             {
               "kind": "Content",
-              "text": " | null, options?: "
+              "text": " | null"
+            },
+            {
+              "kind": "Content",
+              "text": ", options?: "
             },
             {
               "kind": "Reference",
@@ -835,30 +879,52 @@
             },
             {
               "kind": "Content",
-              "text": ">) => string"
+              "text": ">"
+            },
+            {
+              "kind": "Content",
+              "text": ") => "
+            },
+            {
+              "kind": "Content",
+              "text": "string"
             }
           ],
           "fileUrlPath": "tmp/.tsup/declaration/packages/date-time/src/utilities/format-date-time-iso.d.ts",
-          "isReadonly": true,
+          "returnTypeTokenRange": {
+            "startIndex": 9,
+            "endIndex": 10
+          },
           "releaseTag": "Public",
-          "name": "formatDateTimeISO",
-          "variableTypeTokenRange": {
-            "startIndex": 1,
-            "endIndex": 8
-          }
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "dateTime",
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 3
+              },
+              "isOptional": true
+            },
+            {
+              "parameterName": "options",
+              "parameterTypeTokenRange": {
+                "startIndex": 4,
+                "endIndex": 8
+              },
+              "isOptional": true
+            }
+          ],
+          "name": "formatDateTimeISO"
         },
         {
-          "kind": "Variable",
-          "canonicalReference": "@storm-stack/date-time!formatSince:var",
+          "kind": "Function",
+          "canonicalReference": "@storm-stack/date-time!formatSince:function(1)",
           "docComment": "/**\n * Formats a duration or a date-time since another date-time.\n *\n * @remarks\n *\n * An example output when the options.verbose is true: 4 days 3 hours 2 minutes 1 second 0 milliseconds\n *\n * An example output when the options.verbose is false: 4d 3h 2m 1s 0ms\n *\n * @param dateTimeOrDuration - The date-time or duration to format\n *\n * @param dateTimeTo - The date-time to format since\n *\n * @param options - The options to use\n *\n * @returns The formatted time since\n */\n",
           "excerptTokens": [
             {
               "kind": "Content",
-              "text": "formatSince: "
-            },
-            {
-              "kind": "Content",
-              "text": "(dateTimeOrDuration: "
+              "text": "formatSince: (dateTimeOrDuration: "
             },
             {
               "kind": "Reference",
@@ -894,17 +960,47 @@
             },
             {
               "kind": "Content",
-              "text": ") => string"
+              "text": ") => "
+            },
+            {
+              "kind": "Content",
+              "text": "string"
             }
           ],
           "fileUrlPath": "tmp/.tsup/declaration/packages/date-time/src/utilities/format-since.d.ts",
-          "isReadonly": true,
-          "releaseTag": "Public",
-          "name": "formatSince",
-          "variableTypeTokenRange": {
-            "startIndex": 1,
+          "returnTypeTokenRange": {
+            "startIndex": 9,
             "endIndex": 10
-          }
+          },
+          "releaseTag": "Public",
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "dateTimeOrDuration",
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 4
+              },
+              "isOptional": false
+            },
+            {
+              "parameterName": "dateTimeTo",
+              "parameterTypeTokenRange": {
+                "startIndex": 5,
+                "endIndex": 6
+              },
+              "isOptional": true
+            },
+            {
+              "parameterName": "options",
+              "parameterTypeTokenRange": {
+                "startIndex": 7,
+                "endIndex": 8
+              },
+              "isOptional": true
+            }
+          ],
+          "name": "formatSince"
         },
         {
           "kind": "TypeAlias",
@@ -933,17 +1029,13 @@
           }
         },
         {
-          "kind": "Variable",
-          "canonicalReference": "@storm-stack/date-time!formatTime:var",
+          "kind": "Function",
+          "canonicalReference": "@storm-stack/date-time!formatTime:function(1)",
           "docComment": "/**\n * Format a time field\n *\n * @param dateTime - The date time to format\n *\n * @returns The formatted time string\n */\n",
           "excerptTokens": [
             {
               "kind": "Content",
-              "text": "formatTime: "
-            },
-            {
-              "kind": "Content",
-              "text": "(dateTime?: "
+              "text": "formatTime: (dateTime?: "
             },
             {
               "kind": "Reference",
@@ -970,17 +1062,43 @@
             },
             {
               "kind": "Content",
-              "text": ">) => string"
+              "text": ">"
+            },
+            {
+              "kind": "Content",
+              "text": ") => "
+            },
+            {
+              "kind": "Content",
+              "text": "string"
             }
           ],
           "fileUrlPath": "tmp/.tsup/declaration/packages/date-time/src/utilities/format-time.d.ts",
-          "isReadonly": true,
+          "returnTypeTokenRange": {
+            "startIndex": 8,
+            "endIndex": 9
+          },
           "releaseTag": "Public",
-          "name": "formatTime",
-          "variableTypeTokenRange": {
-            "startIndex": 1,
-            "endIndex": 8
-          }
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "dateTime",
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "isOptional": true
+            },
+            {
+              "parameterName": "options",
+              "parameterTypeTokenRange": {
+                "startIndex": 3,
+                "endIndex": 7
+              },
+              "isOptional": true
+            }
+          ],
+          "name": "formatTime"
         },
         {
           "kind": "Function",

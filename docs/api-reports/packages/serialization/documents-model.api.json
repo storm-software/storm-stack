@@ -1,7 +1,7 @@
 {
   "metadata": {
     "toolPackage": "@microsoft/api-extractor",
-    "toolVersion": "7.38.5",
+    "toolVersion": "7.40.1",
     "schemaVersion": 1011,
     "oldestForwardsCompatibleVersion": 1001,
     "tsdocConfig": {
@@ -1329,17 +1329,33 @@
           }
         },
         {
-          "kind": "Variable",
-          "canonicalReference": "@storm-stack/serialization!Serializable:var",
+          "kind": "Function",
+          "canonicalReference": "@storm-stack/serialization!Serializable:function(1)",
           "docComment": "",
           "excerptTokens": [
             {
               "kind": "Content",
-              "text": "Serializable: "
+              "text": "Serializable: <TData = "
             },
             {
               "kind": "Content",
-              "text": "<TData = any>(options?: {\n    identifier?: string;\n}) => <TClass extends new (..._args: any) => any = new (..._args: any) => TData>(target: TClass) => {\n    new (..._args: any): {\n        [x: string]: any;\n        __typename: string;\n        serialize: () => "
+              "text": "any"
+            },
+            {
+              "kind": "Content",
+              "text": ">(options?: "
+            },
+            {
+              "kind": "Content",
+              "text": "{\n    identifier?: string;\n}"
+            },
+            {
+              "kind": "Content",
+              "text": ") => "
+            },
+            {
+              "kind": "Content",
+              "text": "<TClass extends new (..._args: any) => any = new (..._args: any) => TData>(target: TClass) => {\n    new (..._args: any): {\n        [x: string]: any;\n        __typename: string;\n        serialize: () => "
             },
             {
               "kind": "Reference",
@@ -1406,13 +1422,36 @@
             }
           ],
           "fileUrlPath": "tmp/.tsup/declaration/packages/serialization/src/serializable.d.ts",
-          "isReadonly": true,
+          "returnTypeTokenRange": {
+            "startIndex": 5,
+            "endIndex": 20
+          },
           "releaseTag": "Public",
-          "name": "Serializable",
-          "variableTypeTokenRange": {
-            "startIndex": 1,
-            "endIndex": 16
-          }
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "options",
+              "parameterTypeTokenRange": {
+                "startIndex": 3,
+                "endIndex": 4
+              },
+              "isOptional": true
+            }
+          ],
+          "typeParameters": [
+            {
+              "typeParameterName": "TData",
+              "constraintTokenRange": {
+                "startIndex": 0,
+                "endIndex": 0
+              },
+              "defaultTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            }
+          ],
+          "name": "Serializable"
         },
         {
           "kind": "TypeAlias",
