@@ -65,7 +65,7 @@
     "biome:check": "biome check --apply-unsafe --no-errors-on-unmatched --files-ignore-unknown=true",
     "biome:lint": "npx biome lint --apply --no-errors-on-unmatched --files-ignore-unknown=true",
     "biome:format": "npx biome format --write  --no-errors-on-unmatched --files-ignore-unknown=true",
-    "lint": "npx storm-lint all --skip-cspell --alex-config=\"@storm-software/linting-tools/alex/.alexrc\" --alex-config=\"@storm-software/linting-tools/alex/.alexignore\"",
+    "lint": "npx storm-lint all --skip-cspell --alex-config=\"@storm-software/linting-tools/alex/.alexrc\"",
     "local-registry": "nx local-registry @storm-stack/monorepo",
     "nx": "nx",
     "preinstall": "npx storm-pre-install || npx -y only-allow pnpm",
@@ -159,7 +159,8 @@
       "@storm-stack/telemetry": "workspace:*",
       "@storm-stack/nx-tools": "workspace:*",
       "@storm-stack/web-docs": "workspace:*",
-      "@storm-stack/server-cache": "workspace:*"
+      "@storm-stack/server-cache": "workspace:*",
+      "@storm-stack/style-dictionary": "workspace:*"
     }
   },
   "triggerEmptyDevReleaseByIncrementingThisNumber": 0

@@ -32,13 +32,13 @@
       "@storm-stack/table/*": ["packages/table/src/*"],
       "@storm-stack/telemetry": ["packages/telemetry/src/index.ts"],
       "@storm-stack/telemetry/*": ["packages/telemetry/src/*"],
-      "@storm-stack/unique-identifier": [
-        "packages/unique-identifier/src/index.ts"
-      ],
+      "@storm-stack/unique-identifier": ["packages/unique-identifier/src/index.ts"],
       "@storm-stack/unique-identifier/*": ["packages/unique-identifier/src/*"],
       "@storm-stack/utilities": ["packages/utilities/src/index.ts"],
       "@storm-stack/utilities/*": ["packages/utilities/src/*"],
-      "@storm-stack/web-docs": ["apps/web-docs/src/index.ts"]
+      "@storm-stack/web-docs": ["apps/web-docs/src/index.ts"],
+      "@storm-stack/style-dictionary": ["packages/style-dictionary/src/index.ts"],
+      "@storm-stack/style-dictionary/*": ["packages/style-dictionary/src/*"]
     },
     "plugins": [
       {
