@@ -22,7 +22,7 @@
       "options": {
         "commands": [
           "pnpm exec rimraf dist/packages/components",
-          "mkdir dist\\packages\\components",
+          "make-dir dist/packages/components",
           "pnpm exec copyfiles -f LICENSE ./packages/components/package.json ./packages/components/*.md ./dist/packages/components",
           "pnpm exec copyfiles -u 3 ./packages/components/dist/**/*.js ./dist/packages/components/dist"
         ],
