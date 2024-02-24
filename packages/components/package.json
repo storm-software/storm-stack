@@ -25,7 +25,7 @@
     "@tamagui/shorthands": "^1.89.20",
     "@tamagui/themes": "^1.79.17",
     "@tamagui/toast": "^1.89.8",
-    "@tamagui/web": "^1.89.8",
+    "@tamagui/web": "^1.89.20",
     "tamagui": "^1.79.13"
   },
   "devDependencies": {
