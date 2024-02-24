@@ -1,18 +1,19 @@
 {
   "name": "@storm-stack/style-dictionary",
   "version": "0.0.1",
+  "private": false,
   "description": "⚡ The storm-stack monorepo contains utility applications, tools, and various libraries to create modern and scalable web applications.",
   "repository": {
     "type": "github",
     "url": "https://github.com/storm-software/storm-stack.git",
     "directory": "packages/style-dictionary"
   },
-  "private": true,
   "type": "module",
   "publishConfig": {
     "access": "public"
   },
   "dependencies": {
+    "@tokens-studio/sd-transforms": "^0.14.2",
     "style-dictionary": "^3.9.2"
   }
 }

@@ -73,11 +73,13 @@
     "release": "npx storm-git release",
     "test": "echo Skipping all workspace testing..."
   },
+  "prettier": "@storm-software/linting-tools/prettier/config.json",
   "dependencies": {
     "@biomejs/biome": "^1.5.1",
     "@nderscore/tamagui-typescript-plugin": "^0.6.0",
     "@nx/cypress": "18.0.4",
     "@nx/devkit": "18.0.4",
+    "@nx/eslint-plugin": "^18.0.4",
     "@nx/jest": "18.0.4",
     "@nx/js": "18.0.4",
     "@nx/next": "18.0.4",
@@ -96,7 +98,7 @@
     "@swc/helpers": "0.5.3",
     "@testing-library/react": "14.0.0",
     "@types/jest": "29.5.12",
-    "@types/node": "^20.10.5",
+    "@types/node": "^20.11.20",
     "@types/react": "18.2.55",
     "@types/react-dom": "18.2.17",
     "babel-jest": "^29.4.1",
@@ -164,7 +166,8 @@
       "@storm-stack/nx-tools": "workspace:*",
       "@storm-stack/web-docs": "workspace:*",
       "@storm-stack/server-cache": "workspace:*",
-      "@storm-stack/style-dictionary": "workspace:*"
+      "@storm-stack/style-dictionary": "workspace:*",
+      "@storm-stack/themes": "workspace:*"
     }
   },
   "triggerEmptyDevReleaseByIncrementingThisNumber": 0

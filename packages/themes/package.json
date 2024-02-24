@@ -1,0 +1,18 @@
+{
+  "name": "@storm-stack/themes",
+  "version": "0.0.1",
+  "description": "A package containing the design themes used by Storm Stack user interfaces.",
+  "repository": {
+    "type": "github",
+    "url": "https://github.com/storm-software/storm-stack.git",
+    "directory": "packages/themes"
+  },
+  "private": false,
+  "type": "module",
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "@tamagui/theme-builder": "^1.90.6"
+  }
+}

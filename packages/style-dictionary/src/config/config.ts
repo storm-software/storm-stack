@@ -62,13 +62,13 @@ export default {
   // }],
   source: ["tokens/**/*.json"],
   platforms: {
-    css: {
-      transformGroup: "css",
+    tamagui: {
+      transformGroup: "storm/tamagui",
       buildPath: "build/",
       files: [
         {
-          destination: "variables.css",
-          format: "css/variables"
+          format: "javascript/module-flat",
+          destination: "design-tokens.js"
         }
       ]
     }

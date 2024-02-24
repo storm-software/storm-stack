@@ -28,17 +28,19 @@
       "@storm-stack/serialization/*": ["packages/serialization/src/*"],
       "@storm-stack/server-cache": ["packages/server-cache/src/index.ts"],
       "@storm-stack/server-cache/*": ["packages/server-cache/src/*"],
+      "@storm-stack/style-dictionary": ["packages/style-dictionary/src/index.ts"],
+      "@storm-stack/style-dictionary/*": ["packages/style-dictionary/src/*"],
       "@storm-stack/table": ["packages/table/src/index.ts"],
       "@storm-stack/table/*": ["packages/table/src/*"],
       "@storm-stack/telemetry": ["packages/telemetry/src/index.ts"],
       "@storm-stack/telemetry/*": ["packages/telemetry/src/*"],
+      "@storm-stack/themes": ["packages/themes/src/index.ts"],
+      "@storm-stack/themes/*": ["packages/themes/src/*"],
       "@storm-stack/unique-identifier": ["packages/unique-identifier/src/index.ts"],
       "@storm-stack/unique-identifier/*": ["packages/unique-identifier/src/*"],
       "@storm-stack/utilities": ["packages/utilities/src/index.ts"],
       "@storm-stack/utilities/*": ["packages/utilities/src/*"],
-      "@storm-stack/web-docs": ["apps/web-docs/src/index.ts"],
-      "@storm-stack/style-dictionary": ["packages/style-dictionary/src/index.ts"],
-      "@storm-stack/style-dictionary/*": ["packages/style-dictionary/src/*"]
+      "@storm-stack/web-docs": ["apps/web-docs/src/index.ts"]
     },
     "plugins": [
       {
@@ -55,8 +57,5 @@
     ]
   },
   "include": ["**/*.ts", "**/*.tsx", "**/*.d.ts", "**/*.js", "**/*.jsx"],
-  "exclude": ["**/node_modules", "**/tmp"],
-  "typeAcquisition": {
-    "enable": true
-  }
+  "exclude": ["**/node_modules", "**/tmp"]
 }

@@ -8,3 +8,4 @@
  */
 
 export * from "./config";
+export * from "./transforms";

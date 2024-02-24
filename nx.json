@@ -17,18 +17,6 @@
       "!{projectRoot}/cypress.config.[jt]s"
     ]
   },
-  "targetDefaults": {
-    "nx-release-publish": {
-      "cache": false,
-      "inputs": ["default", "^production"],
-      "dependsOn": ["^build"],
-      "executor": "@storm-software/workspace-tools:npm-publish",
-      "options": {
-        "packageRoot": "dist/{projectRoot}",
-        "registry": "https://registry.npmjs.org/"
-      }
-    }
-  },
   "generators": {
     "@nx/react": {
       "application": {
@@ -42,6 +30,30 @@
       }
     }
   },
+  "release": {
+    "projects": ["packages/*"],
+    "projectsRelationship": "independent",
+    "releaseTagPattern": "{projectName}@{version}",
+    "changelog": {
+      "automaticFromRef": true,
+      "projectChangelogs": {
+        "createRelease": "github"
+      }
+    },
+    "version": {
+      "conventionalCommits": true,
+      "generator": "@storm-software/workspace-tools:release-version"
+    }
+  },
+  "plugins": [
+    "@nx/plugin",
+    "@nx/js",
+    "@nx/jest",
+    "@nx/eslint",
+    "@nx/eslint-plugin",
+    "@nx/esbuild",
+    "@storm-software/workspace-tools"
+  ],
   "pluginsConfig": {
     "@nx/js": {
       "analyzeSourceFiles": true
