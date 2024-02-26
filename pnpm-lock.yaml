@@ -253,8 +253,8 @@ importers:
         specifier: ^8.0.2
         version: 8.0.2(@types/react@18.2.57)(next@14.0.4)(react-dom@18.2.0)(react@18.2.0)
       fumadocs-ui:
-        specifier: ^8.1.1
-        version: 8.1.1(@types/react-dom@18.2.19)(@types/react@18.2.57)(next@14.0.4)(react-dom@18.2.0)(react@18.2.0)(ts-node@10.9.2)
+        specifier: ^9.0.0
+        version: 9.1.0(@types/react-dom@18.2.19)(@types/react@18.2.57)(next@14.0.4)(react-dom@18.2.0)(react@18.2.0)(ts-node@10.9.2)
       next:
         specifier: '>=13.4.20-canary.13'
         version: 14.0.4(@babel/core@7.23.6)(@opentelemetry/api@1.7.0)(react-dom@18.2.0)(react@18.2.0)
@@ -6726,6 +6726,10 @@ packages:
     resolution: {integrity: sha512-UMKGMZ+8b88N0/n6DWwWth1PHsOaxjW+R2u+hzSiargZWTv+l3s1l8dhuIxUSsEUPlBDKLs2CSMiFZeviKQM1w==}
     dev: false
 
+  /@shikijs/core@1.1.7:
+    resolution: {integrity: sha512-gTYLUIuD1UbZp/11qozD3fWpUTuMqPSf3svDMMrL0UmlGU7D9dPw/V1FonwAorCUJBltaaESxq90jrSjQyGixg==}
+    dev: false
+
   /@shikijs/rehype@1.0.0:
     resolution: {integrity: sha512-MyrmV7yyTYXc++cwfnuP2aPqYtemxk11SicOdqz9zEptEKbehpyPMcyj7jLwvZrH6kjeQ3fxFg4BIc4ZvpscaA==}
     dependencies:
@@ -6737,10 +6741,27 @@ packages:
       unist-util-visit: 5.0.0
     dev: false
 
+  /@shikijs/rehype@1.1.7:
+    resolution: {integrity: sha512-gNNmzQjcosjCAoUBrW6DzCmp6XdUQk4RNmyLsqMaDVpGWQsQCkjMBnBLQ7xWnjq6lwQAlq+m1/19kImsUJnpkg==}
+    dependencies:
+      '@shikijs/transformers': 1.1.7
+      '@types/hast': 3.0.4
+      hast-util-to-string: 3.0.0
+      shiki: 1.1.7
+      unified: 11.0.4
+      unist-util-visit: 5.0.0
+    dev: false
+
   /@shikijs/transformers@1.0.0:
     resolution: {integrity: sha512-US0Sc0OdH7eGL64BtfvX3XezPfqhqF5mPyBFLlbZqSpFt2/emnv9GveAWzELGsIuvXoJ6N1RjeAdmQx5Xni6BQ==}
     dependencies:
       shiki: 1.0.0
+    dev: false
+
+  /@shikijs/transformers@1.1.7:
+    resolution: {integrity: sha512-lXz011ao4+rvweps/9h3CchBfzb1U5OtP5D51Tqc9lQYdLblWMIxQxH6Ybe1GeGINcEVM4goMyPrI0JvlIp4UQ==}
+    dependencies:
+      shiki: 1.1.7
     dev: false
 
   /@sideway/address@4.1.4:
@@ -14254,6 +14275,36 @@ packages:
       - supports-color
     dev: false
 
+  /fumadocs-core@9.1.0(@types/react@18.2.57)(next@14.0.4)(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-6eZg8vP7q7pyW8sfO5kGLuQ3ZCVQVM2t/nFQVRnCLxySWoUusrMHhuYc5Py32IcmYOVzYRL41oJXK+oRxZdwTQ==}
+    peerDependencies:
+      next: '>=13.4.20-canary.13'
+      react: '>= 18'
+      react-dom: '>= 18'
+    dependencies:
+      '@formatjs/intl-localematcher': 0.5.4
+      '@shikijs/rehype': 1.1.7
+      '@shikijs/transformers': 1.1.7
+      flexsearch: 0.7.21
+      github-slugger: 2.0.0
+      hast-util-to-estree: 3.1.0
+      negotiator: 0.6.3
+      next: 14.0.4(@babel/core@7.23.6)(@opentelemetry/api@1.7.0)(react-dom@18.2.0)(react@18.2.0)
+      react: 18.2.0
+      react-dom: 18.2.0(react@18.2.0)
+      react-remove-scroll: 2.5.7(@types/react@18.2.57)(react@18.2.0)
+      remark: 15.0.1
+      remark-gfm: 4.0.0
+      remark-mdx: 3.0.0
+      scroll-into-view-if-needed: 3.1.0
+      shiki: 1.1.7
+      swr: 2.2.4(react@18.2.0)
+      unist-util-visit: 5.0.0
+    transitivePeerDependencies:
+      - '@types/react'
+      - supports-color
+    dev: false
+
   /fumadocs-mdx@8.0.2(@types/react@18.2.57)(next@14.0.4)(react-dom@18.2.0)(react@18.2.0):
     resolution: {integrity: sha512-cH+yrOxbFweNfDxa/RntaxYEGWv3ZDROAxXIGMGLnxOddn8N4C/hRwKUnTrMJbCrLz/2nRsVxUi9Vp9666oDjg==}
     peerDependencies:
@@ -14274,8 +14325,8 @@ packages:
       - supports-color
     dev: false
 
-  /fumadocs-ui@8.1.1(@types/react-dom@18.2.19)(@types/react@18.2.57)(next@14.0.4)(react-dom@18.2.0)(react@18.2.0)(ts-node@10.9.2):
-    resolution: {integrity: sha512-oqDR7PEqO1fHt2UTK0r9/9wF7EMka5T5G7wIBaz5CqEykYGGS5elqI2aZCIxdT071bi+8o0JGc8zMbNaO/hPdQ==}
+  /fumadocs-ui@9.1.0(@types/react-dom@18.2.19)(@types/react@18.2.57)(next@14.0.4)(react-dom@18.2.0)(react@18.2.0)(ts-node@10.9.2):
+    resolution: {integrity: sha512-1A8KwICtjwg2/J6pTBmFTZQrFnlY76VEeGuytu3F7pnUlxUFVLNPs8IBzLVdjs71Qt31pKlnCbqugUBoP8p3LQ==}
     peerDependencies:
       next: '>=13.4.20-canary.13'
       react: '>= 18'
@@ -14293,7 +14344,7 @@ packages:
       class-variance-authority: 0.7.0
       clsx: 2.1.0
       cmdk: 0.2.1(@types/react@18.2.57)(react-dom@18.2.0)(react@18.2.0)
-      fumadocs-core: 8.1.1(@types/react@18.2.57)(next@14.0.4)(react-dom@18.2.0)(react@18.2.0)
+      fumadocs-core: 9.1.0(@types/react@18.2.57)(next@14.0.4)(react-dom@18.2.0)(react@18.2.0)
       lucide-react: 0.298.0(react@18.2.0)
       next: 14.0.4(@babel/core@7.23.6)(@opentelemetry/api@1.7.0)(react-dom@18.2.0)(react@18.2.0)
       next-themes: 0.2.1(next@14.0.4)(react-dom@18.2.0)(react@18.2.0)
@@ -22790,6 +22841,12 @@ packages:
     resolution: {integrity: sha512-rOUGJa3yFGgOrEoiELYxraoBbag3ZWf9bpodlr05Wjm85Scx8OIX+otdSefq9Pk7L47TKEzGodSQb4L38jka6A==}
     dependencies:
       '@shikijs/core': 1.0.0
+    dev: false
+
+  /shiki@1.1.7:
+    resolution: {integrity: sha512-9kUTMjZtcPH3i7vHunA6EraTPpPOITYTdA5uMrvsJRexktqP0s7P3s9HVK80b4pP42FRVe03D7fT3NmJv2yYhw==}
+    dependencies:
+      '@shikijs/core': 1.1.7
     dev: false
 
   /shimmer@1.2.1:
