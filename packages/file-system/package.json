@@ -11,11 +11,11 @@
   "type": "module",
   "dependencies": {
     "@storm-software/config-tools": "latest",
-    "semver": "7.5.4"
+    "semver": "7.6.0"
   },
   "devDependencies": {
     "@types/node": "^20.10.5",
-    "@types/semver": "7.5.6"
+    "@types/semver": "7.5.8"
   },
   "publishConfig": {
     "access": "public"
