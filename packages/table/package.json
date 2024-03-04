@@ -10,8 +10,8 @@
   },
   "type": "module",
   "dependencies": {
-    "@tanstack/react-table": "^8.11.8",
-    "@tanstack/table-core": "^8.11.8"
+    "@tanstack/react-table": "8.11.8",
+    "@tanstack/table-core": "8.11.8"
   },
   "peerDependencies": {
     "react": "^18.2.0",

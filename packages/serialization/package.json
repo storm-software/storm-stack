@@ -10,7 +10,7 @@
   },
   "type": "module",
   "dependencies": {
-    "buffer": "^6.0.3",
+    "buffer": "6.0.3",
     "superjson": "2.2.1"
   },
   "devDependencies": {

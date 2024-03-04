@@ -13,7 +13,7 @@
     "access": "public"
   },
   "dependencies": {
-    "buffer": "^6.0.3"
+    "buffer": "6.0.3"
   },
   "devDependencies": {
     "@types/node": "^20.10.5"
