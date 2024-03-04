@@ -43,10 +43,10 @@ importers:
   .:
     dependencies:
       '@biomejs/biome':
-        specifier: ^1.5.1
+        specifier: 1.5.1
         version: 1.5.1
       '@nderscore/tamagui-typescript-plugin':
-        specifier: ^0.6.0
+        specifier: 0.6.0
         version: 0.6.0(@tamagui/core@1.89.8)(@tamagui/helpers@1.90.6)(typescript@5.3.3)
       '@nx/cypress':
         specifier: 18.0.4
@@ -55,7 +55,7 @@ importers:
         specifier: 18.0.4
         version: 18.0.4(nx@18.0.4)
       '@nx/eslint-plugin':
-        specifier: ^18.0.4
+        specifier: 18.0.4
         version: 18.0.4(@swc-node/register@1.8.0)(@swc/core@1.3.107)(@types/node@20.11.20)(@typescript-eslint/parser@6.21.0)(eslint@8.56.0)(nx@18.0.4)(typescript@5.3.3)(verdaccio@5.29.2)
       '@nx/jest':
         specifier: 18.0.4
@@ -94,7 +94,7 @@ importers:
         specifier: latest
         version: 1.60.20(@swc-node/register@1.8.0)(@swc/core@1.3.107)(@types/node@20.11.20)(esbuild@0.19.9)(nx@18.0.4)(postcss@8.4.31)(ts-node@10.9.2)(typescript@5.3.3)(verdaccio@5.29.2)
       '@swc-node/register':
-        specifier: ~1.8.0
+        specifier: 1.8.0
         version: 1.8.0(@swc/core@1.3.107)(@swc/types@0.1.5)(typescript@5.3.3)
       '@swc/cli':
         specifier: 0.1.65
@@ -112,7 +112,7 @@ importers:
         specifier: 29.5.12
         version: 29.5.12
       '@types/node':
-        specifier: ^20.11.20
+        specifier: 20.11.20
         version: 20.11.20
       '@types/react':
         specifier: 18.2.57
@@ -121,13 +121,13 @@ importers:
         specifier: 18.2.19
         version: 18.2.19
       babel-jest:
-        specifier: ^29.4.1
+        specifier: 29.7.0
         version: 29.7.0(@babel/core@7.23.6)
       copyfiles:
-        specifier: ^2.4.1
+        specifier: 2.4.1
         version: 2.4.1
       cypress:
-        specifier: ^13.6.1
+        specifier: 13.6.1
         version: 13.6.1
       jest:
         specifier: 29.7.0
@@ -139,31 +139,31 @@ importers:
         specifier: 29.7.0
         version: 29.7.0
       lefthook:
-        specifier: ^1.5.6
+        specifier: 1.5.6
         version: 1.5.6
       log4brains:
         specifier: 1.0.1
         version: 1.0.1(@babel/core@7.23.6)(@types/react@18.2.57)
       make-dir-cli:
-        specifier: ^3.1.0
+        specifier: 3.1.0
         version: 3.1.0
       nx:
         specifier: 18.0.4
         version: 18.0.4(@swc-node/register@1.8.0)(@swc/core@1.3.107)
       prettier:
-        specifier: ^2.6.2
+        specifier: 2.8.8
         version: 2.8.8
       react:
-        specifier: ^18.2.0
+        specifier: 18.2.0
         version: 18.2.0
       react-dom:
         specifier: 18.2.0
         version: 18.2.0(react@18.2.0)
       react-native:
-        specifier: ^0.73.4
+        specifier: 0.73.4
         version: 0.73.4(@babel/core@7.23.6)(@babel/preset-env@7.23.6)(react@18.2.0)
       rimraf:
-        specifier: ^5.0.5
+        specifier: 5.0.5
         version: 5.0.5
       ts-jest:
         specifier: 29.1.2
@@ -172,7 +172,7 @@ importers:
         specifier: 10.9.2
         version: 10.9.2(@swc/core@1.3.107)(@types/node@20.11.20)(typescript@5.3.3)
       tslib:
-        specifier: ^2.6.2
+        specifier: 2.6.2
         version: 2.6.2
       typescript:
         specifier: 5.3.3
@@ -196,19 +196,19 @@ importers:
         specifier: latest
         version: 1.60.20(@swc-node/register@1.8.0)(@swc/core@1.3.107)(@types/node@20.11.20)(esbuild@0.20.0)(nx@18.0.4)(postcss@8.4.31)(ts-node@10.9.2)(typescript@5.3.3)(verdaccio@5.29.2)
       '@tamagui/fake-react-native':
-        specifier: ^1.89.11
+        specifier: 1.89.11
         version: 1.89.11
       esbuild:
-        specifier: ^0.20.0
+        specifier: 0.20.0
         version: 0.20.0
       fs-extra:
-        specifier: ^11.2.0
+        specifier: 11.2.0
         version: 11.2.0
       glob:
-        specifier: ^10.3.10
+        specifier: 10.3.10
         version: 10.3.10
       tslib:
-        specifier: ^2.6.2
+        specifier: 2.6.2
         version: 2.6.2
     devDependencies:
       '@tamagui/web':
@@ -224,46 +224,46 @@ importers:
   apps/web-docs:
     dependencies:
       '@opentelemetry/api':
-        specifier: ^1.7.0
+        specifier: 1.7.0
         version: 1.7.0
       '@opentelemetry/instrumentation':
-        specifier: ^0.46.0
+        specifier: 0.46.0
         version: 0.46.0(@opentelemetry/api@1.7.0)
       '@opentelemetry/otlp-exporter-base':
-        specifier: ^0.46.0
+        specifier: 0.46.0
         version: 0.46.0(@opentelemetry/api@1.7.0)
       '@opentelemetry/resources':
-        specifier: ^1.19.0
+        specifier: 1.19.0
         version: 1.19.0(@opentelemetry/api@1.7.0)
       '@opentelemetry/sdk-trace-node':
-        specifier: ^1.19.0
+        specifier: 1.19.0
         version: 1.19.0(@opentelemetry/api@1.7.0)
       '@opentelemetry/semantic-conventions':
-        specifier: ^1.19.0
+        specifier: 1.19.0
         version: 1.19.0
       '@types/mdx':
-        specifier: ^2.0.11
+        specifier: 2.0.11
         version: 2.0.11
       '@vercel/edge-config':
-        specifier: ^0.4.1
+        specifier: 0.4.1
         version: 0.4.1
       '@vercel/otel':
-        specifier: ^0.3.0
+        specifier: 0.3.0
         version: 0.3.0
       fumadocs-core:
-        specifier: ^8.1.1
+        specifier: 8.1.1
         version: 8.1.1(@types/react@18.2.57)(next@14.0.4)(react-dom@18.2.0)(react@18.2.0)
       fumadocs-mdx:
-        specifier: ^8.0.2
+        specifier: 8.0.2
         version: 8.0.2(@types/react@18.2.57)(next@14.0.4)(react-dom@18.2.0)(react@18.2.0)
       fumadocs-ui:
-        specifier: ^8.1.1
+        specifier: 8.1.1
         version: 8.1.1(@types/react-dom@18.2.19)(@types/react@18.2.57)(next@14.0.4)(react-dom@18.2.0)(react@18.2.0)(ts-node@10.9.2)
       next:
         specifier: '>=13.4.20-canary.13'
         version: 14.0.4(@babel/core@7.23.6)(@opentelemetry/api@1.7.0)(react-dom@18.2.0)(react@18.2.0)
       react:
-        specifier: ^18.2.0
+        specifier: 18.2.0
         version: 18.2.0
       react-dom:
         specifier: 18.2.0
@@ -290,47 +290,47 @@ importers:
         specifier: 2.11.2
         version: 2.11.2
       figlet:
-        specifier: ^1.7.0
+        specifier: 1.7.0
         version: 1.7.0
       prompts:
-        specifier: ^2.4.2
+        specifier: 2.4.2
         version: 2.4.2
       terminal-link:
-        specifier: ^3.0.0
+        specifier: 3.0.0
         version: 3.0.0
     devDependencies:
       '@types/figlet':
         specifier: ^1.5.8
         version: 1.5.8
       '@types/node':
-        specifier: ^20.11.20
+        specifier: ^20.10.5
         version: 20.11.20
 
   packages/components:
     dependencies:
       '@tamagui/animations-react-native':
-        specifier: ^1.89.19
+        specifier: 1.89.19
         version: 1.89.19(react-native@0.73.4)(react@18.2.0)
       '@tamagui/font-inter':
-        specifier: ^1.79.17
+        specifier: 1.79.17
         version: 1.79.17(react@18.2.0)
       '@tamagui/react-native-media-driver':
-        specifier: ^1.89.20
+        specifier: 1.89.20
         version: 1.89.20(react-native@0.73.4)
       '@tamagui/shorthands':
-        specifier: ^1.89.20
+        specifier: 1.89.20
         version: 1.89.20
       '@tamagui/themes':
-        specifier: ^1.79.17
+        specifier: 1.79.17
         version: 1.79.17(react@18.2.0)
       '@tamagui/toast':
-        specifier: ^1.89.8
+        specifier: 1.89.8
         version: 1.89.8(react-native@0.73.4)(react@18.2.0)
       '@tamagui/web':
-        specifier: ^1.89.20
+        specifier: 1.90.6
         version: 1.90.6
       tamagui:
-        specifier: ^1.79.13
+        specifier: 1.79.13
         version: 1.79.13(@types/react@18.2.57)(react-dom@18.2.0)(react-native-web@0.19.9)(react-native@0.73.4)(react@18.2.0)
     devDependencies:
       '@tamagui/build':
@@ -362,7 +362,7 @@ importers:
         version: 1.60.20(@swc-node/register@1.8.0)(@swc/core@1.3.107)(@types/node@20.11.20)(esbuild@0.19.9)(nx@18.0.4)(postcss@8.4.31)(ts-node@10.9.2)(typescript@5.3.3)(verdaccio@5.29.2)
     devDependencies:
       '@types/node':
-        specifier: ^20.11.20
+        specifier: ^20.10.5
         version: 20.11.20
 
   packages/file-system:
@@ -375,7 +375,7 @@ importers:
         version: 7.5.4
     devDependencies:
       '@types/node':
-        specifier: ^20.11.20
+        specifier: ^20.10.5
         version: 20.11.20
       '@types/semver':
         specifier: 7.5.6
@@ -384,7 +384,7 @@ importers:
   packages/jotai:
     devDependencies:
       '@types/node':
-        specifier: ^20.11.20
+        specifier: ^20.10.5
         version: 20.11.20
       '@types/react':
         specifier: 18.2.55
@@ -408,31 +408,31 @@ importers:
         specifier: 8.16.2
         version: 8.16.2
       pino-std-serializers:
-        specifier: ^6.2.2
+        specifier: 6.2.2
         version: 6.2.2
 
   packages/plugin-system:
     dependencies:
       '@antfu/ni':
-        specifier: ^0.21.12
+        specifier: 0.21.12
         version: 0.21.12
       enhanced-resolve:
-        specifier: ^5.15.0
+        specifier: 5.15.0
         version: 5.15.0
       execa:
-        specifier: ^8.0.1
+        specifier: 8.0.1
         version: 8.0.1
       glob:
-        specifier: ^10.3.10
+        specifier: 10.3.10
         version: 10.3.10
       md5:
-        specifier: ^2.3.0
+        specifier: 2.3.0
         version: 2.3.0
       pnpapi:
-        specifier: ^0.0.0
+        specifier: 0.0.0
         version: 0.0.0
       toposort:
-        specifier: ^2.0.2
+        specifier: 2.0.2
         version: 2.0.2
     devDependencies:
       '@types/md5':
@@ -445,14 +445,14 @@ importers:
   packages/serialization:
     dependencies:
       buffer:
-        specifier: ^6.0.3
+        specifier: 6.0.3
         version: 6.0.3
       superjson:
         specifier: 2.2.1
         version: 2.2.1
     devDependencies:
       '@types/node':
-        specifier: ^20.11.20
+        specifier: ^20.10.5
         version: 20.11.20
 
   packages/server-cache:
@@ -464,19 +464,19 @@ importers:
   packages/style-dictionary:
     dependencies:
       '@tokens-studio/sd-transforms':
-        specifier: ^0.14.2
+        specifier: 0.14.2
         version: 0.14.2(quill-delta@5.1.0)(rxjs@7.8.1)(tslib@2.6.2)
       style-dictionary:
-        specifier: ^3.9.2
+        specifier: 3.9.2
         version: 3.9.2
 
   packages/table:
     dependencies:
       '@tanstack/react-table':
-        specifier: ^8.11.8
+        specifier: 8.11.8
         version: 8.11.8(react-dom@18.2.0)(react@18.2.0)
       '@tanstack/table-core':
-        specifier: ^8.11.8
+        specifier: 8.11.8
         version: 8.11.8
     devDependencies:
       react:
@@ -504,17 +504,17 @@ importers:
         specifier: 10.3.1
         version: 10.3.1
       zod:
-        specifier: ^3.22.4
+        specifier: 3.22.4
         version: 3.22.4
     devDependencies:
       '@types/node':
-        specifier: ^20.11.20
+        specifier: ^20.10.5
         version: 20.11.20
 
   packages/themes:
     dependencies:
       '@tamagui/theme-builder':
-        specifier: ^1.90.6
+        specifier: 1.90.6
         version: 1.90.6
 
   packages/unique-identifier:
@@ -526,11 +526,11 @@ importers:
   packages/utilities:
     dependencies:
       buffer:
-        specifier: ^6.0.3
+        specifier: 6.0.3
         version: 6.0.3
     devDependencies:
       '@types/node':
-        specifier: ^20.11.20
+        specifier: ^20.10.5
         version: 20.11.20
 
 packages:
