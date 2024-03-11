@@ -28,7 +28,7 @@
   },
   "peerDependencies": {
     "@tamagui/web": "^1.89.8",
-    "nx": "18.0.4"
+    "nx": "18.0.8"
   },
   "executors": "./executors.json"
 }
