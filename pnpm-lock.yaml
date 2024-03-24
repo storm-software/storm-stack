@@ -303,7 +303,7 @@ importers:
         specifier: ^1.5.8
         version: 1.5.8
       '@types/node':
-        specifier: ^20.11.20
+        specifier: ^20.10.5
         version: 20.11.20
 
   packages/components:
@@ -362,7 +362,7 @@ importers:
         version: 1.60.20(@swc-node/register@1.8.0)(@swc/core@1.3.107)(@types/node@20.11.20)(esbuild@0.19.9)(nx@18.0.4)(postcss@8.4.31)(ts-node@10.9.2)(typescript@5.3.3)(verdaccio@5.29.2)
     devDependencies:
       '@types/node':
-        specifier: ^20.11.20
+        specifier: ^20.10.5
         version: 20.11.20
 
   packages/file-system:
@@ -375,7 +375,7 @@ importers:
         version: 7.5.4
     devDependencies:
       '@types/node':
-        specifier: ^20.11.20
+        specifier: ^20.10.5
         version: 20.11.20
       '@types/semver':
         specifier: 7.5.6
@@ -384,7 +384,7 @@ importers:
   packages/jotai:
     devDependencies:
       '@types/node':
-        specifier: ^20.11.20
+        specifier: ^20.10.5
         version: 20.11.20
       '@types/react':
         specifier: 18.2.55
@@ -452,7 +452,7 @@ importers:
         version: 2.2.1
     devDependencies:
       '@types/node':
-        specifier: ^20.11.20
+        specifier: ^20.10.5
         version: 20.11.20
 
   packages/server-cache:
@@ -508,7 +508,7 @@ importers:
         version: 3.22.4
     devDependencies:
       '@types/node':
-        specifier: ^20.11.20
+        specifier: ^20.10.5
         version: 20.11.20
 
   packages/themes:
@@ -530,7 +530,7 @@ importers:
         version: 6.0.3
     devDependencies:
       '@types/node':
-        specifier: ^20.11.20
+        specifier: ^20.10.5
         version: 20.11.20
 
 packages:
@@ -25969,8 +25969,8 @@ packages:
       - utf-8-validate
     dev: false
 
-  /webpack-dev-middleware@5.3.3(webpack@5.89.0):
-    resolution: {integrity: sha512-hj5CYrY0bZLB+eTO+x/j67Pkrquiy7kWepMHmUMoPsmcUaeEnQJqFzHJOyxgWlq746/wUuA64p9ta34Kyb01pA==}
+  /webpack-dev-middleware@5.3.4(webpack@5.89.0):
+    resolution: {integrity: sha512-BVdTqhhs+0IfoeAf7EoH5WE+exCmqGerHfDM0IL096Px60Tq2Mn9MAbnaGUe6HiMa41KMCYF19gyzZmBcq/o4Q==}
     engines: {node: '>= 12.13.0'}
     peerDependencies:
       webpack: ^4.0.0 || ^5.0.0
@@ -26025,7 +26025,7 @@ packages:
       sockjs: 0.3.24
       spdy: 4.0.2
       webpack: 5.89.0(@swc/core@1.3.107)(esbuild@0.19.9)
-      webpack-dev-middleware: 5.3.3(webpack@5.89.0)
+      webpack-dev-middleware: 5.3.4(webpack@5.89.0)
       ws: 8.15.1
     transitivePeerDependencies:
       - bufferutil
