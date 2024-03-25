@@ -11,11 +11,11 @@
   "main": "./src/index.js",
   "typings": "./src/index.d.ts",
   "dependencies": {
-    "@nx/devkit": "18.0.4",
+    "@nx/devkit": "18.1.2",
     "@storm-software/config": "latest",
     "@storm-software/config-tools": "latest",
     "@storm-software/workspace-tools": "latest",
-    "@tamagui/fake-react-native": "^1.89.11",
+    "@tamagui/fake-react-native": "^1.92.1",
     "esbuild": "^0.20.0",
     "fs-extra": "^11.2.0",
     "glob": "^10.3.10",
@@ -28,7 +28,7 @@
   },
   "peerDependencies": {
     "@tamagui/web": "^1.89.8",
-    "nx": "18.0.4"
+    "nx": "18.1.2"
   },
   "executors": "./executors.json"
 }
