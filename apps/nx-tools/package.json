@@ -22,9 +22,9 @@
     "tslib": "^2.6.2"
   },
   "devDependencies": {
-    "@tamagui/web": "^1.89.8",
+    "@tamagui/web": "^1.90.6",
     "@types/fs-extra": "^11.0.4",
-    "nx": "18.0.4"
+    "nx": "18.0.8"
   },
   "peerDependencies": {
     "@tamagui/web": "^1.89.8",
