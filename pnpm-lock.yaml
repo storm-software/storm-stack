@@ -251,8 +251,8 @@ importers:
         specifier: ^0.3.0
         version: 0.3.0
       fumadocs-core:
-        specifier: ^8.1.1
-        version: 8.1.1(@types/react@18.2.57)(next@14.0.4)(react-dom@18.2.0)(react@18.2.0)
+        specifier: ^11.0.6
+        version: 11.0.6(@types/react@18.2.57)(next@14.0.4)(react-dom@18.2.0)(react@18.2.0)
       fumadocs-mdx:
         specifier: ^8.0.2
         version: 8.0.2(@types/react@18.2.57)(next@14.0.4)(react-dom@18.2.0)(react@18.2.0)
@@ -303,7 +303,7 @@ importers:
         specifier: ^1.5.8
         version: 1.5.8
       '@types/node':
-        specifier: ^20.11.20
+        specifier: ^20.10.5
         version: 20.11.20
 
   packages/components:
@@ -362,7 +362,7 @@ importers:
         version: 1.60.20(@swc-node/register@1.8.0)(@swc/core@1.3.107)(@types/node@20.11.20)(esbuild@0.19.9)(nx@18.0.4)(postcss@8.4.31)(ts-node@10.9.2)(typescript@5.3.3)(verdaccio@5.29.2)
     devDependencies:
       '@types/node':
-        specifier: ^20.11.20
+        specifier: ^20.10.5
         version: 20.11.20
 
   packages/file-system:
@@ -375,7 +375,7 @@ importers:
         version: 7.5.4
     devDependencies:
       '@types/node':
-        specifier: ^20.11.20
+        specifier: ^20.10.5
         version: 20.11.20
       '@types/semver':
         specifier: 7.5.6
@@ -384,7 +384,7 @@ importers:
   packages/jotai:
     devDependencies:
       '@types/node':
-        specifier: ^20.11.20
+        specifier: ^20.10.5
         version: 20.11.20
       '@types/react':
         specifier: 18.2.55
@@ -452,7 +452,7 @@ importers:
         version: 2.2.1
     devDependencies:
       '@types/node':
-        specifier: ^20.11.20
+        specifier: ^20.10.5
         version: 20.11.20
 
   packages/server-cache:
@@ -508,7 +508,7 @@ importers:
         version: 3.22.4
     devDependencies:
       '@types/node':
-        specifier: ^20.11.20
+        specifier: ^20.10.5
         version: 20.11.20
 
   packages/themes:
@@ -530,7 +530,7 @@ importers:
         version: 6.0.3
     devDependencies:
       '@types/node':
-        specifier: ^20.11.20
+        specifier: ^20.10.5
         version: 20.11.20
 
 packages:
@@ -3839,7 +3839,7 @@ packages:
       hast-util-to-jsx-runtime: 2.3.0
       markdown-extensions: 2.0.0
       periscopic: 3.1.0
-      remark-mdx: 3.0.0
+      remark-mdx: 3.0.1
       remark-parse: 11.0.0
       remark-rehype: 11.1.0
       source-map: 0.7.4
@@ -6856,25 +6856,25 @@ packages:
       string-argv: 0.3.2
     dev: false
 
-  /@shikijs/core@1.0.0:
-    resolution: {integrity: sha512-UMKGMZ+8b88N0/n6DWwWth1PHsOaxjW+R2u+hzSiargZWTv+l3s1l8dhuIxUSsEUPlBDKLs2CSMiFZeviKQM1w==}
+  /@shikijs/core@1.5.1:
+    resolution: {integrity: sha512-xjV63pRUBvxA1LsxOUhRKLPh0uUjwBLzAKLdEuYSLIylo71sYuwDcttqNP01Ib1TZlLfO840CXHPlgUUsYFjzg==}
     dev: false
 
-  /@shikijs/rehype@1.0.0:
-    resolution: {integrity: sha512-MyrmV7yyTYXc++cwfnuP2aPqYtemxk11SicOdqz9zEptEKbehpyPMcyj7jLwvZrH6kjeQ3fxFg4BIc4ZvpscaA==}
+  /@shikijs/rehype@1.5.1:
+    resolution: {integrity: sha512-UzmDzid4Zv4ZeY+GvJlKabBVdTt40aCCoOyeq/JwLJ0YmiZhm5vOicpzdbmMcUClgpCtBjJRLaOg8mkhd7YX/w==}
     dependencies:
-      '@shikijs/transformers': 1.0.0
+      '@shikijs/transformers': 1.5.1
       '@types/hast': 3.0.4
       hast-util-to-string: 3.0.0
-      shiki: 1.0.0
+      shiki: 1.5.1
       unified: 11.0.4
       unist-util-visit: 5.0.0
     dev: false
 
-  /@shikijs/transformers@1.0.0:
-    resolution: {integrity: sha512-US0Sc0OdH7eGL64BtfvX3XezPfqhqF5mPyBFLlbZqSpFt2/emnv9GveAWzELGsIuvXoJ6N1RjeAdmQx5Xni6BQ==}
+  /@shikijs/transformers@1.5.1:
+    resolution: {integrity: sha512-vir+y0elkjh2CepLVbqeGX+ftuc6WpfWNCMV/EBIallSLzhBfDO9r/TORDVOzegbTg9JMEmtOFv6PT9cSZTcyA==}
     dependencies:
-      shiki: 1.0.0
+      shiki: 1.5.1
     dev: false
 
   /@sideway/address@4.1.4:
@@ -8508,7 +8508,7 @@ packages:
       react: '*'
     dependencies:
       react: 18.2.0
-      react-remove-scroll: 2.5.7(@types/react@18.2.57)(react@18.2.0)
+      react-remove-scroll: 2.5.10(@types/react@18.2.57)(react@18.2.0)
     transitivePeerDependencies:
       - '@types/react'
     dev: false
@@ -14666,6 +14666,37 @@ packages:
     requiresBuild: true
     optional: true
 
+  /fumadocs-core@11.0.6(@types/react@18.2.57)(next@14.0.4)(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-unnwQwm6MPP8xWWzFizns4Z9D5rGUXsUe8L/WHWduhbuhqF3Nn+RADtSrClwKcSe9KsPPVlQU3cf3CwPz4JWDg==}
+    peerDependencies:
+      next: '>=13.4.20-canary.13'
+      react: '>= 18'
+      react-dom: '>= 18'
+    dependencies:
+      '@formatjs/intl-localematcher': 0.5.4
+      '@shikijs/rehype': 1.5.1
+      '@shikijs/transformers': 1.5.1
+      flexsearch: 0.7.21
+      github-slugger: 2.0.0
+      hast-util-to-estree: 3.1.0
+      negotiator: 0.6.3
+      next: 14.0.4(@babel/core@7.23.6)(@opentelemetry/api@1.7.0)(react-dom@18.2.0)(react@18.2.0)
+      npm-to-yarn: 2.2.1
+      react: 18.2.0
+      react-dom: 18.2.0(react@18.2.0)
+      react-remove-scroll: 2.5.10(@types/react@18.2.57)(react@18.2.0)
+      remark: 15.0.1
+      remark-gfm: 4.0.0
+      remark-mdx: 3.0.1
+      scroll-into-view-if-needed: 3.1.0
+      shiki: 1.5.1
+      swr: 2.2.5(react@18.2.0)
+      unist-util-visit: 5.0.0
+    transitivePeerDependencies:
+      - '@types/react'
+      - supports-color
+    dev: false
+
   /fumadocs-core@8.1.1(@types/react@18.2.57)(next@14.0.4)(react-dom@18.2.0)(react@18.2.0):
     resolution: {integrity: sha512-R3lqbrpQQ40S6x/OdSXN/0nvomZYnpXSWEJVWhH7Z/Nzlic+M8Q4KeB++5wc/mGlcyUD8dF7qrvBbDor7MitvA==}
     peerDependencies:
@@ -14674,21 +14705,21 @@ packages:
       react-dom: '>= 18'
     dependencies:
       '@formatjs/intl-localematcher': 0.5.4
-      '@shikijs/rehype': 1.0.0
-      '@shikijs/transformers': 1.0.0
+      '@shikijs/rehype': 1.5.1
+      '@shikijs/transformers': 1.5.1
       flexsearch: 0.7.21
       github-slugger: 2.0.0
       negotiator: 0.6.3
       next: 14.0.4(@babel/core@7.23.6)(@opentelemetry/api@1.7.0)(react-dom@18.2.0)(react@18.2.0)
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
-      react-remove-scroll: 2.5.7(@types/react@18.2.57)(react@18.2.0)
+      react-remove-scroll: 2.5.10(@types/react@18.2.57)(react@18.2.0)
       remark: 15.0.1
       remark-gfm: 4.0.0
-      remark-mdx: 3.0.0
+      remark-mdx: 3.0.1
       scroll-into-view-if-needed: 3.1.0
-      shiki: 1.0.0
-      swr: 2.2.4(react@18.2.0)
+      shiki: 1.5.1
+      swr: 2.2.5(react@18.2.0)
       unist-util-visit: 5.0.0
     transitivePeerDependencies:
       - '@types/react'
@@ -20250,6 +20281,11 @@ packages:
       path-key: 4.0.0
     dev: false
 
+  /npm-to-yarn@2.2.1:
+    resolution: {integrity: sha512-O/j/ROyX0KGLG7O6Ieut/seQ0oiTpHF2tXAcFbpdTLQFiaNtkyTXXocM1fwpaa60dg1qpWj0nHlbNhx6qwuENQ==}
+    engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
+    dev: false
+
   /nth-check@2.1.1:
     resolution: {integrity: sha512-lqjrjmaOoAnWfMmBPL+XNnynZh2+swxiX3WUE0s4yEHI6m+AwrK2UZOimIRl3X/4QctVqS8AiZjFqyOGrMXb/w==}
     dependencies:
@@ -22114,8 +22150,8 @@ packages:
     resolution: {integrity: sha512-wViHqhAd8OHeLS/IRMJjTSDHF3U9eWi62F/MledQGPdJGDhodXJ9PBLNGr6WWL7qlH12Mt3TyTpbS+hGXMjCzQ==}
     engines: {node: '>=0.10.0'}
 
-  /react-remove-scroll-bar@2.3.4(@types/react@18.2.57)(react@18.2.0):
-    resolution: {integrity: sha512-63C4YQBUt0m6ALadE9XV56hV8BgJWDmmTPY758iIJjfQKt2nYwoUrPk0LXRXcB/yIj82T1/Ixfdpdk68LwIB0A==}
+  /react-remove-scroll-bar@2.3.6(@types/react@18.2.57)(react@18.2.0):
+    resolution: {integrity: sha512-DtSYaao4mBmX+HDo5YWYdBWQwYIQQshUV/dVxFxK+KM26Wjwp1gZ6rv6OC3oujI6Bfu6Xyg3TwK533AQutsn/g==}
     engines: {node: '>=10'}
     peerDependencies:
       '@types/react': ^16.8.0 || ^17.0.0 || ^18.0.0
@@ -22130,6 +22166,25 @@ packages:
       tslib: 2.6.2
     dev: false
 
+  /react-remove-scroll@2.5.10(@types/react@18.2.57)(react@18.2.0):
+    resolution: {integrity: sha512-m3zvBRANPBw3qxVVjEIPEQinkcwlFZ4qyomuWVpNJdv4c6MvHfXV0C3L9Jx5rr3HeBHKNRX+1jreB5QloDIJjA==}
+    engines: {node: '>=10'}
+    peerDependencies:
+      '@types/react': ^16.8.0 || ^17.0.0 || ^18.0.0
+      react: ^16.8.0 || ^17.0.0 || ^18.0.0
+    peerDependenciesMeta:
+      '@types/react':
+        optional: true
+    dependencies:
+      '@types/react': 18.2.57
+      react: 18.2.0
+      react-remove-scroll-bar: 2.3.6(@types/react@18.2.57)(react@18.2.0)
+      react-style-singleton: 2.2.1(@types/react@18.2.57)(react@18.2.0)
+      tslib: 2.6.2
+      use-callback-ref: 1.3.0(@types/react@18.2.57)(react@18.2.0)
+      use-sidecar: 1.1.2(@types/react@18.2.57)(react@18.2.0)
+    dev: false
+
   /react-remove-scroll@2.5.4(@types/react@18.2.57)(react@18.2.0):
     resolution: {integrity: sha512-xGVKJJr0SJGQVirVFAUZ2k1QLyO6m+2fy0l8Qawbp5Jgrv3DeLalrfMNBFSlmz5kriGGzsVBtGVnf4pTKIhhWA==}
     engines: {node: '>=10'}
@@ -22142,7 +22197,7 @@ packages:
     dependencies:
       '@types/react': 18.2.57
       react: 18.2.0
-      react-remove-scroll-bar: 2.3.4(@types/react@18.2.57)(react@18.2.0)
+      react-remove-scroll-bar: 2.3.6(@types/react@18.2.57)(react@18.2.0)
       react-style-singleton: 2.2.1(@types/react@18.2.57)(react@18.2.0)
       tslib: 2.6.2
       use-callback-ref: 1.3.0(@types/react@18.2.57)(react@18.2.0)
@@ -22161,26 +22216,7 @@ packages:
     dependencies:
       '@types/react': 18.2.57
       react: 18.2.0
-      react-remove-scroll-bar: 2.3.4(@types/react@18.2.57)(react@18.2.0)
-      react-style-singleton: 2.2.1(@types/react@18.2.57)(react@18.2.0)
-      tslib: 2.6.2
-      use-callback-ref: 1.3.0(@types/react@18.2.57)(react@18.2.0)
-      use-sidecar: 1.1.2(@types/react@18.2.57)(react@18.2.0)
-    dev: false
-
-  /react-remove-scroll@2.5.7(@types/react@18.2.57)(react@18.2.0):
-    resolution: {integrity: sha512-FnrTWO4L7/Bhhf3CYBNArEG/yROV0tKmTv7/3h9QCFvH6sndeFf1wPqOcbFVu5VAulS5dV1wGT3GZZ/1GawqiA==}
-    engines: {node: '>=10'}
-    peerDependencies:
-      '@types/react': ^16.8.0 || ^17.0.0 || ^18.0.0
-      react: ^16.8.0 || ^17.0.0 || ^18.0.0
-    peerDependenciesMeta:
-      '@types/react':
-        optional: true
-    dependencies:
-      '@types/react': 18.2.57
-      react: 18.2.0
-      react-remove-scroll-bar: 2.3.4(@types/react@18.2.57)(react@18.2.0)
+      react-remove-scroll-bar: 2.3.6(@types/react@18.2.57)(react@18.2.0)
       react-style-singleton: 2.2.1(@types/react@18.2.57)(react@18.2.0)
       tslib: 2.6.2
       use-callback-ref: 1.3.0(@types/react@18.2.57)(react@18.2.0)
@@ -22623,19 +22659,19 @@ packages:
       - supports-color
     dev: false
 
-  /remark-mdx@3.0.0:
+  /remark-mdx@3.0.0(supports-color@9.4.0):
     resolution: {integrity: sha512-O7yfjuC6ra3NHPbRVxfflafAj3LTwx3b73aBvkEFU5z4PsD6FD4vrqJAkE5iNGLz71GdjXfgRqm3SQ0h0VuE7g==}
     dependencies:
-      mdast-util-mdx: 3.0.0
+      mdast-util-mdx: 3.0.0(supports-color@9.4.0)
       micromark-extension-mdxjs: 3.0.0
     transitivePeerDependencies:
       - supports-color
     dev: false
 
-  /remark-mdx@3.0.0(supports-color@9.4.0):
-    resolution: {integrity: sha512-O7yfjuC6ra3NHPbRVxfflafAj3LTwx3b73aBvkEFU5z4PsD6FD4vrqJAkE5iNGLz71GdjXfgRqm3SQ0h0VuE7g==}
+  /remark-mdx@3.0.1:
+    resolution: {integrity: sha512-3Pz3yPQ5Rht2pM5R+0J2MrGoBSrzf+tJG94N+t/ilfdh8YLyyKYtidAYwTveB20BoHAcwIopOUqhcmh2F7hGYA==}
     dependencies:
-      mdast-util-mdx: 3.0.0(supports-color@9.4.0)
+      mdast-util-mdx: 3.0.0
       micromark-extension-mdxjs: 3.0.0
     transitivePeerDependencies:
       - supports-color
@@ -23373,10 +23409,10 @@ packages:
   /shell-quote@1.8.1:
     resolution: {integrity: sha512-6j1W9l1iAs/4xYBI1SYOVZyFcCis9b4KCLQ8fgAGG07QvzaRLVVRQvAy85yNmmZSjYjg4MWh4gNvlPujU/5LpA==}
 
-  /shiki@1.0.0:
-    resolution: {integrity: sha512-rOUGJa3yFGgOrEoiELYxraoBbag3ZWf9bpodlr05Wjm85Scx8OIX+otdSefq9Pk7L47TKEzGodSQb4L38jka6A==}
+  /shiki@1.5.1:
+    resolution: {integrity: sha512-vx4Ds3M3B9ZEmLeSXqBAB85osBWV8ErZfP69kuFQZozPgHc33m7spLTCUkcjwEjFm3gk3F9IdXMv8kX+v9xDHA==}
     dependencies:
-      '@shikijs/core': 1.0.0
+      '@shikijs/core': 1.5.1
     dev: false
 
   /shimmer@1.2.1:
@@ -24252,8 +24288,8 @@ packages:
       picocolors: 1.0.0
     dev: false
 
-  /swr@2.2.4(react@18.2.0):
-    resolution: {integrity: sha512-njiZ/4RiIhoOlAaLYDqwz5qH/KZXVilRLvomrx83HjzCWTfa+InyfAjv05PSFxnmLzZkNO9ZfvgoqzAaEI4sGQ==}
+  /swr@2.2.5(react@18.2.0):
+    resolution: {integrity: sha512-QtxqyclFeAsxEUeZIYmsaQ0UjimSq1RZ9Un7I68/0ClKK/U3LoyQunwkQfJZr2fc22DfIXLNDc2wFyTEikCUpg==}
     peerDependencies:
       react: ^16.11.0 || ^17.0.0 || ^18.0.0
     dependencies:
