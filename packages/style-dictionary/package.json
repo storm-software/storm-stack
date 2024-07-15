@@ -13,7 +13,7 @@
     "access": "public"
   },
   "dependencies": {
-    "@tokens-studio/sd-transforms": "^0.14.2",
+    "@tokens-studio/sd-transforms": "^0.16.0",
     "style-dictionary": "^3.9.2"
   }
 }

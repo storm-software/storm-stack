@@ -13,6 +13,6 @@
     "access": "public"
   },
   "dependencies": {
-    "@tamagui/theme-builder": "^1.90.6"
+    "@tamagui/theme-builder": "^1.102.1"
   }
 }
