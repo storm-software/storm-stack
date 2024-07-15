@@ -13,6 +13,6 @@
     "access": "public"
   },
   "dependencies": {
-    "bentocache": "1.0.0-beta.7"
+    "bentocache": "1.0.0-beta.9"
   }
 }
