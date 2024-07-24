@@ -1,0 +1,46 @@
+{
+  "$schema": "https://cdn.jsdelivr.net/npm/@storm-software/config/schemas/storm.schema.json",
+  "extends": "./node_modules/@storm-software/config/presets/base.json",
+  "name": "storm-stack",
+  "namespace": "storm-stack",
+  "repository": "https://github.com/storm-software/storm-stack",
+  "organization": "storm-software",
+  "ci": true,
+  "owner": "storm-stack",
+  "timezone": "America/New_York",
+  "locale": "en-US",
+  "logLevel": "debug",
+  "packageManager": "pnpm",
+  "externalPackagePatterns": ["@acidic/", "@storm-software/", "@storm-stack/", "@cyclone-ui/"],
+  "cloudflareAccountId": "d011605e7391539ac2e021ab4399e116",
+  "colors": {
+    "light": {
+      "background": "#fafafa",
+      "foreground": "#121212",
+      "brand": "#1fb2a6",
+      "help": "#8250df",
+      "success": "#087f5b",
+      "info": "#0550ae",
+      "warning": "#e3b341",
+      "error": "#a40e26"
+    },
+    "dark": {
+      "background": "#22272e",
+      "foreground": "#adbac7",
+      "brand": "#1fb2a6",
+      "help": "#8256d0",
+      "success": "#10b981",
+      "info": "#58a6ff",
+      "warning": "#f3d371",
+      "error": "#d1242f"
+    }
+  },
+  "extensions": {
+    "telemetry": {
+      "fileName": "storm",
+      "fileExtension": "log",
+      "path": "tmp/storm/logs",
+      "stacktrace": true
+    }
+  }
+}

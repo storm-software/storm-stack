@@ -43,10 +43,6 @@ const mergeObject = (target: Record<string, any>, source: Record<string, any>, o
     }
   }
   for (const key of getKeys(source)) {
-    if (propertyExists(target, key)) {
-      return;
-    }
-
     if (propertyUnsafe(target, key) && options.isMergeableObject(source[key])) {
       destination[key] = getMergeFunction(key, options)(target[key], source[key], options);
     } else {

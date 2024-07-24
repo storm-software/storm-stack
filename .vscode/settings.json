@@ -1,79 +1,28 @@
 {
+  "relay.autoStartCompiler": true,
+  "relay.rootDirectory": "../",
+  "relay.pathToConfig": "../packages/graphql-tools/config/relay.config.js",
+  "rust-analyzer.procMacro.ignored": {
+    "napi-derive": ["napi"]
+  },
   "json.schemas": [
     {
       "url": "https://cdn.jsdelivr.net/npm/tsup/schema.json",
       "fileMatch": ["package.json", "tsup.config.json"]
     },
     {
-      "url": "https://cdn.jsdelivr.net/npm/@storm-software/config/schema.json",
-      "fileMatch": [
-        "package.json",
-        ".stormrc",
-        ".stormrc.json",
-        ".stormrc.yaml",
-        ".stormrc.yml",
-        ".stormrc.js",
-        ".stormrc.ts",
-        ".stormrc.mjs",
-        ".stormrc.cjs ",
-        ".config/stormrc",
-        ".config/stormrc.json",
-        ".config/stormrc.yaml",
-        ".config/stormrc.yml",
-        ".config/stormrc.js",
-        ".config/stormrc.ts",
-        ".config/stormrc.mjs",
-        ".config/stormrc.cjs ",
-        "storm.config.js",
-        "storm.config.ts",
-        "storm.config.mjs",
-        "storm.config.cjs",
-        ".storm-softwarerc",
-        ".storm-softwarerc.json",
-        ".storm-softwarerc.yaml",
-        ".storm-softwarerc.yml",
-        ".storm-softwarerc.js",
-        ".storm-softwarerc.ts",
-        ".storm-softwarerc.mjs",
-        ".storm-softwarerc.cjs ",
-        ".config/storm-softwarerc",
-        ".config/storm-softwarerc.json",
-        ".config/storm-softwarerc.yaml",
-        ".config/storm-softwarerc.yml",
-        ".config/storm-softwarerc.js",
-        ".config/storm-softwarerc.ts",
-        ".config/storm-softwarerc.mjs",
-        ".config/storm-softwarerc.cjs ",
-        "storm-software.config.js",
-        "storm-software.config.ts",
-        "storm-software.config.mjs",
-        "storm-software.config.cjs",
-        ".storm-stackrc",
-        ".storm-stackrc.json",
-        ".storm-stackrc.yaml",
-        ".storm-stackrc.yml",
-        ".storm-stackrc.js",
-        ".storm-stackrc.ts",
-        ".storm-stackrc.mjs",
-        ".storm-stackrc.cjs ",
-        ".config/storm-stackrc",
-        ".config/storm-stackrc.json",
-        ".config/storm-stackrc.yaml",
-        ".config/storm-stackrc.yml",
-        ".config/storm-stackrc.js",
-        ".config/storm-stackrc.ts",
-        ".config/storm-stackrc.mjs",
-        ".config/storm-stackrc.cjs ",
-        "storm-stack.config.js",
-        "storm-stack.config.ts",
-        "storm-stack.config.mjs",
-        "storm-stack.config.cjs"
-      ]
+      "url": "https://cdn.jsdelivr.net/npm/nx/schemas/nx-schema.json",
+      "fileMatch": ["nx.json"]
+    },
+    {
+      "url": "https://cdn.jsdelivr.net/npm/@storm-software/config/schemas/storm.schema.json",
+      "fileMatch": ["storm.json"]
     }
   ],
-  "relay.autoStartCompiler": true,
-  "relay.rootDirectory": "../",
-  "relay.pathToConfig": "@storm-software/graphql-tools/config/relay.config.js",
+  "yaml.schemas": {
+    "url": "https://json.schemastore.org/github-action.json",
+    "fileMatch": [".github/actions/setup/action.yml"]
+  },
   "search.exclude": {
     "**/node_modules": true,
     "**/bower_components": true,
@@ -88,10 +37,7 @@
     "statusBar.foreground": "#1fb2a6"
   },
   "peacock.color": "#1fb2a6",
-  "editor.bracketPairColorization.enabled": true,
-  "editor.guides.bracketPairs": "active",
-  "editor.tabCompletion": "on",
-  "typescript.tsserver.log": "verbose",
+  // "typescript.tsserver.log": "verbose",
   "typescript.tsdk": "node_modules/typescript/lib",
   "typescript.enablePromptUseWorkspaceTsdk": true,
   "tailwindCSS.experimental.classRegex": [
@@ -101,12 +47,27 @@
       "(?:twMerge|twJoin)\\(([^\\);]*)[\\);]"
     ]
   ],
-  "biome.rename": true,
-  "editor.codeActionsOnSave": {
-    "quickfix.biome": "explicit"
+  "prettier.requireConfig": true,
+  "prettier.bracketSameLine": true,
+  "prettier.ignorePath": "./node_modules/@storm-software/prettier/.prettierignore",
+  "prettier.enableDebugLogs": true,
+
+  "eslint.useFlatConfig": true,
+  "eslint.run": "onSave",
+  "eslint.format.enable": true,
+  "eslint.debug": true,
+  "eslint.codeAction.disableRuleComment": {
+    "enable": true,
+    "location": "separateLine"
   },
+  "eslint.codeAction.showDocumentation": {
+    "enable": true
+  },
+  "editor.bracketPairColorization.enabled": true,
+  "editor.guides.bracketPairs": "active",
+  "editor.tabCompletion": "on",
   "editor.formatOnSave": false,
-  "editor.defaultFormatter": "biomejs.biome",
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
   "files.associations": {
     "*.hbs": "handlebars",
     "*.acid": "acidic",
@@ -114,51 +75,57 @@
   },
   "[javascript]": {
     "editor.formatOnSave": true,
-    "editor.defaultFormatter": "biomejs.biome",
+    "editor.defaultFormatter": "dbaeumer.vscode-eslint",
     "editor.codeActionsOnSave": {
-      "source.fixAll.eslint": true,
-      "quickfix.biome": true,
-      "source.sortMembers": true
+      "source.fixAll.eslint": "explicit",
+      "quickfix.biome": "explicit",
+      "source.sortMembers": "explicit"
     }
   },
   "[javascriptreact]": {
     "editor.formatOnSave": true,
-    "editor.defaultFormatter": "biomejs.biome",
+    "editor.defaultFormatter": "dbaeumer.vscode-eslint",
     "editor.codeActionsOnSave": {
-      "source.fixAll.eslint": true,
-      "quickfix.biome": true,
-      "source.sortMembers": true
+      "source.fixAll.eslint": "explicit",
+      "quickfix.biome": "explicit",
+      "source.sortMembers": "explicit"
     }
   },
   "[typescript]": {
     "editor.formatOnSave": true,
-    "editor.defaultFormatter": "biomejs.biome",
+    "editor.defaultFormatter": "dbaeumer.vscode-eslint",
     "editor.codeActionsOnSave": {
-      "source.fixAll.eslint": true,
-      "quickfix.biome": true,
-      "source.sortMembers": true
+      "source.fixAll.eslint": "explicit",
+      "quickfix.biome": "explicit",
+      "source.sortMembers": "explicit"
     }
   },
   "[typescriptreact]": {
     "editor.formatOnSave": true,
-    "editor.defaultFormatter": "biomejs.biome",
+    "editor.defaultFormatter": "dbaeumer.vscode-eslint",
     "editor.codeActionsOnSave": {
-      "source.fixAll.eslint": true,
-      "quickfix.biome": true,
-      "source.sortMembers": true
+      "source.fixAll.eslint": "explicit",
+      "quickfix.biome": "explicit",
+      "source.sortMembers": "explicit"
     }
   },
   "[json]": {
     "editor.formatOnSave": true,
-    "editor.defaultFormatter": "biomejs.biome"
+    "editor.defaultFormatter": "dbaeumer.vscode-eslint"
   },
   "[jsonc]": {
     "editor.formatOnSave": true,
-    "editor.defaultFormatter": "biomejs.biome"
+    "editor.defaultFormatter": "dbaeumer.vscode-eslint"
   },
   "[markdown]": {
     "editor.formatOnSave": true,
+    "editor.defaultFormatter": "dbaeumer.vscode-eslint",
     "editor.formatOnPaste": true
+  },
+  "[mdx]": {
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "dbaeumer.vscode-eslint",
+    "editor.wordWrap": "on"
   },
   "[prisma]": {
     "editor.formatOnSave": true,
@@ -170,167 +137,29 @@
   },
   "[handlebars]": {
     "editor.formatOnSave": false,
-    "editor.defaultFormatter": "biomejs.biome"
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "[csharp]": {
     "editor.formatOnSave": true,
-    "editor.defaultFormatter": "biomejs.biome"
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
-  "vsicons.associations.files": [
-    {
-      "icon": "registry",
-      "extensions": ["routes.config.ts"],
-      "filename": true,
-      "format": "svg"
-    },
-    {
-      "icon": "dependencies",
-      "extensions": ["dependencies.config.ts"],
-      "filename": true,
-      "format": "svg"
-    },
-    {
-      "icon": "swagger",
-      "extensions": ["api-spec.json"],
-      "filename": true,
-      "format": "svg"
-    },
-    {
-      "icon": "tailwind",
-      "extensions": ["tailwind.preset.js"],
-      "filename": true,
-      "format": "svg"
-    },
-    {
-      "icon": "jest",
-      "extensions": ["jest.preset.js"],
-      "filename": true,
-      "format": "svg"
-    },
-    {
-      "icon": "config",
-      "extensions": ["environment.ts"],
-      "format": "svg"
-    },
-    {
-      "icon": "config",
-      "extensions": ["environment.ts"],
-      "format": "svg"
-    },
-    {
-      "icon": "dotenv",
-      "extensions": [".env", ".env.local", ".env.production"],
-      "languages": ["dotenv"],
-      "format": "svg"
-    },
-    {
-      "icon": "sentry",
-      "extensions": [
-        ".sentryclirc",
-        "sentry.client.config.js",
-        "sentry.server.config.js",
-        "sentry.properties"
-      ],
-      "format": "svg"
-    }
-  ],
-  "vsicons.associations.folders": [
-    {
-      "icon": "graphql",
-      "extensions": ["graphql", "gql"],
-      "format": "svg"
-    },
-    {
-      "icon": "www",
-      "extensions": ["shell"],
-      "format": "svg"
-    },
-    {
-      "icon": "config",
-      "extensions": ["environment"],
-      "format": "svg"
-    },
-    {
-      "icon": "tools",
-      "extensions": ["tools", "executors", "generators"],
-      "format": "svg"
-    },
-    {
-      "icon": "helper",
-      "extensions": ["utilities"],
-      "format": "svg"
-    },
-    {
-      "icon": "typescript",
-      "extensions": ["constants"],
-      "format": "svg"
-    },
-    {
-      "icon": "typings2",
-      "extensions": ["enums"],
-      "format": "svg"
-    },
-    {
-      "icon": "typings",
-      "extensions": ["types"],
-      "format": "svg"
-    },
-    {
-      "icon": "db",
-      "extensions": ["state"],
-      "format": "svg"
-    },
-    {
-      "icon": "api",
-      "extensions": [".openapi-generator", "openapi", "asyncapi"],
-      "format": "svg"
-    },
-    {
-      "icon": "route",
-      "extensions": ["inversion"],
-      "format": "svg"
-    },
-    {
-      "icon": "route",
-      "extensions": ["inversion"],
-      "format": "svg"
-    },
-    {
-      "icon": "include",
-      "extensions": ["external"],
-      "format": "svg"
-    },
-    {
-      "icon": "library",
-      "extensions": ["shared"],
-      "format": "svg"
-    },
-    {
-      "icon": "server",
-      "extensions": ["dotnet"],
-      "format": "svg"
-    },
-    {
-      "icon": "style",
-      "extensions": ["design-system"],
-      "format": "svg"
-    },
-    {
-      "icon": "theme",
-      "extensions": ["tokens"],
-      "format": "svg"
-    }
-  ],
+  "[toml]": {
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "tamasfe.even-better-toml"
+  },
+  "[yaml]": {
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "redhat.vscode-yaml"
+  },
+  "[rust]": {
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "rust-lang.rust-analyzer"
+  },
+  "[css]": {
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
   "commitizen.capitalizeWindowsDriveLetter": true,
   "commitizen.autoSync": false,
   "commitizen.showOutputChannel": "always",
-  "[javascript][javascriptreact][typescript][typescriptreact]": {
-    "editor.codeActionsOnSave": {
-      "source.fixAll.eslint": "explicit",
-      "quickfix.biome": "explicit",
-      "source.sortMembers": "explicit"
-    }
-  },
-  "eslint.validate": ["json"],
-  "cSpell.words": ["bentocache", "bentostore", "kleur"]
 }

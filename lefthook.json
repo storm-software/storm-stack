@@ -1,3 +1,0 @@
-{
-	"extends": ["./node_modules/@storm-software/git-tools/lefthook/lefthook.yml"]
-}

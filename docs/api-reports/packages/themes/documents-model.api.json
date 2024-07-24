@@ -161,14 +161,14 @@
     }
   },
   "kind": "Package",
-  "canonicalReference": "@storm-stack/cli!",
+  "canonicalReference": "@storm-stack/themes!",
   "docComment": "",
-  "name": "@storm-stack/cli",
+  "name": "@storm-stack/themes",
   "preserveMemberOrder": false,
   "members": [
     {
       "kind": "EntryPoint",
-      "canonicalReference": "@storm-stack/cli!",
+      "canonicalReference": "@storm-stack/themes!",
       "name": "",
       "preserveMemberOrder": false,
       "members": []

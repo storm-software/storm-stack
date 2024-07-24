@@ -21,7 +21,14 @@
         "metafile": true,
         "minify": false,
         "format": ["cjs"],
-        "external": ["nx", "@angular-devkit/architect", "@tamagui/proxy-worm", "esbuild"],
+        "external": [
+          "nx",
+          "@angular-devkit/architect",
+          "@tamagui/proxy-worm",
+          "@tamagui/fake-react-native",
+          "@tamagui/web/native",
+          "esbuild"
+        ],
         "esbuildOptions": {
           "outExtension": {
             ".js": ".js"

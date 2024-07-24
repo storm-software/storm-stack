@@ -1,6 +1,6 @@
 {
   "$schema": "https://json.schemastore.org/tsconfig",
-  "extends": "@storm-software/linting-tools/tsconfig/tsconfig.root.json",
+  "extends": "@storm-software/tsconfig/base.json",
   "display": "Storm Software - Storm Stack",
   "compilerOptions": {
     "rootDir": ".",
@@ -28,7 +28,9 @@
       "@storm-stack/serialization/*": ["packages/serialization/src/*"],
       "@storm-stack/server-cache": ["packages/server-cache/src/index.ts"],
       "@storm-stack/server-cache/*": ["packages/server-cache/src/*"],
-      "@storm-stack/style-dictionary": ["packages/style-dictionary/src/index.ts"],
+      "@storm-stack/style-dictionary": [
+        "packages/style-dictionary/src/index.ts"
+      ],
       "@storm-stack/style-dictionary/*": ["packages/style-dictionary/src/*"],
       "@storm-stack/table": ["packages/table/src/index.ts"],
       "@storm-stack/table/*": ["packages/table/src/*"],
@@ -36,26 +38,15 @@
       "@storm-stack/telemetry/*": ["packages/telemetry/src/*"],
       "@storm-stack/themes": ["packages/themes/src/index.ts"],
       "@storm-stack/themes/*": ["packages/themes/src/*"],
-      "@storm-stack/unique-identifier": ["packages/unique-identifier/src/index.ts"],
+      "@storm-stack/unique-identifier": [
+        "packages/unique-identifier/src/index.ts"
+      ],
       "@storm-stack/unique-identifier/*": ["packages/unique-identifier/src/*"],
       "@storm-stack/utilities": ["packages/utilities/src/index.ts"],
       "@storm-stack/utilities/*": ["packages/utilities/src/*"],
       "@storm-stack/web-docs": ["apps/web-docs/src/index.ts"]
-    },
-    "plugins": [
-      {
-        "name": "@nderscore/tamagui-typescript-plugin",
-        "pathToApp": "apps/web-docs",
-        "defaultTheme": "dark",
-        "colorTileSize": 18,
-        "completionFilters": {
-          "showColorTokens": true,
-          "showTrueTokens": true,
-          "custom": {}
-        }
-      }
-    ]
+    }
   },
   "include": ["**/*.ts", "**/*.tsx", "**/*.d.ts", "**/*.js", "**/*.jsx"],
-  "exclude": ["**/node_modules", "**/tmp"]
+  "exclude": ["node_modules", "tmp"]
 }

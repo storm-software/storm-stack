@@ -13,9 +13,10 @@
     "access": "public"
   },
   "dependencies": {
-    "buffer": "^6.0.3"
+    "buffer": "^6.0.3",
+    "crypto": "^1.0.1"
   },
   "devDependencies": {
-    "@types/node": "^20.10.5"
+    "@types/node": "^20.11.20"
   }
 }

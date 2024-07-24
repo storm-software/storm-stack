@@ -9,7 +9,8 @@
     "declaration": true,
     "skipLibCheck": true,
     "isolatedModules": false,
-    "types": ["node"]
+    "types": ["node"],
+    "lib": ["esnext", "dom"],
   },
   "include": ["**/*.ts", "**/*.js", "**/*.json"],
   "exclude": ["jest.config.ts", "generators/**/files/**/*", "**/*.spec.ts", "**/*.test.ts"]

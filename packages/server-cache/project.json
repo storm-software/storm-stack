@@ -14,6 +14,7 @@
         "project": "packages/server-cache/package.json",
         "defaultConfiguration": "production",
         "platform": "node",
+        "externals": ["bentocache"],
         "assets": [
           {
             "input": "packages/server-cache",

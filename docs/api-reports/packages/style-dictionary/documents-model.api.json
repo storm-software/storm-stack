@@ -171,31 +171,7 @@
       "canonicalReference": "@storm-stack/style-dictionary!",
       "name": "",
       "preserveMemberOrder": false,
-      "members": [
-        {
-          "kind": "Variable",
-          "canonicalReference": "@storm-stack/style-dictionary!default_alias:var",
-          "docComment": "",
-          "excerptTokens": [
-            {
-              "kind": "Content",
-              "text": "_default: "
-            },
-            {
-              "kind": "Content",
-              "text": "{\n    source: string[];\n    platforms: {\n        css: {\n            transformGroup: string;\n            buildPath: string;\n            files: {\n                destination: string;\n                format: string;\n            }[];\n        };\n    };\n}"
-            }
-          ],
-          "fileUrlPath": "tmp/.tsup/declaration/packages/style-dictionary/src/config/config.d.ts",
-          "isReadonly": true,
-          "releaseTag": "Public",
-          "name": "default_alias",
-          "variableTypeTokenRange": {
-            "startIndex": 1,
-            "endIndex": 2
-          }
-        }
-      ]
+      "members": []
     }
   ]
 }

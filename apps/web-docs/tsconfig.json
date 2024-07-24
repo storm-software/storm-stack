@@ -16,12 +16,24 @@
         "name": "next"
       }
     ],
-    "types": [
-      "node"
-    ],
+    "types": ["node"],
     "moduleResolution": "node",
-    "noEmit": true
+    "noEmit": true,
+    "lib": ["dom", "dom.iterable", "esnext"]
   },
+  "plugins": [
+    {
+      "name": "@nderscore/tamagui-typescript-plugin",
+      "pathToApp": "./",
+      "defaultTheme": "dark",
+      "colorTileSize": 18,
+      "completionFilters": {
+        "showColorTokens": true,
+        "showTrueTokens": true,
+        "custom": {}
+      }
+    }
+  ],
   "include": [
     "**/*.ts",
     "**/*.tsx",
@@ -32,10 +44,5 @@
     "next.config.mjs",
     "../../apps/web-docs/.next/types/**/*.ts"
   ],
-  "exclude": [
-    "node_modules",
-    "jest.config.ts",
-    "src/**/*.spec.ts",
-    "src/**/*.test.ts"
-  ]
+  "exclude": ["node_modules", "jest.config.ts", "src/**/*.spec.ts", "src/**/*.test.ts"]
 }

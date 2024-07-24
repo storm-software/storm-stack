@@ -4,21 +4,6 @@
 
 ```ts
 
-// @public (undocumented)
-export const default_alias: {
-    source: string[];
-    platforms: {
-        css: {
-            transformGroup: string;
-            buildPath: string;
-            files: {
-                destination: string;
-                format: string;
-            }[];
-        };
-    };
-};
-
 // (No @packageDocumentation comment for this package)
 
 ```

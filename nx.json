@@ -1,62 +1,17 @@
 {
+  "$schema": "https://cdn.jsdelivr.net/npm/nx/schemas/nx-schema.json",
   "extends": "@storm-software/workspace-tools/config/nx.json",
-  "namedInputs": {
-    "production": [
-      "default",
-      "!{projectRoot}/**/?(*.)+(spec|test).[jt]s?(x)?(.snap)",
-      "!{projectRoot}/tsconfig.spec.json",
-      "!{projectRoot}/jest.config.[jt]s",
-      "!{projectRoot}/.eslintrc.json",
-      "!{projectRoot}/.storybook/**/*",
-      "!{projectRoot}/**/*.stories.@(js|jsx|ts|tsx|mdx)",
-      "!{projectRoot}/tsconfig.storybook.json",
-      "!{projectRoot}/src/test-setup.[jt]s",
-      "!{projectRoot}/test-setup.[jt]s",
-      "!{projectRoot}/cypress/**/*",
-      "!{projectRoot}/**/*.cy.[jt]s?(x)",
-      "!{projectRoot}/cypress.config.[jt]s"
-    ]
-  },
-  "generators": {
-    "@nx/react": {
-      "application": {
-        "babel": true
-      }
-    },
-    "@nx/next": {
-      "application": {
-        "style": "none",
-        "linter": "eslint"
-      }
-    }
-  },
-  "release": {
-    "projects": ["packages/*"],
-    "projectsRelationship": "independent",
-    "releaseTagPattern": "{projectName}@{version}",
-    "changelog": {
-      "automaticFromRef": true,
-      "projectChangelogs": {
-        "createRelease": "github"
-      }
-    },
-    "version": {
-      "conventionalCommits": true,
-      "generator": "@storm-software/workspace-tools:release-version"
-    }
-  },
   "plugins": [
-    "@nx/plugin",
-    "@nx/js",
-    "@nx/jest",
-    "@nx/eslint",
-    "@nx/eslint-plugin",
-    "@nx/esbuild",
-    "@storm-software/workspace-tools"
+    {
+      "plugin": "@nx/eslint/plugin",
+      "exclude": ["packages/**/__fixtures__/**/*"],
+      "options": {
+        "targetName": "lint",
+        "useFlatConfig": true
+      }
+    },
+    "@storm-software/workspace-tools/plugins/typescript"
   ],
-  "pluginsConfig": {
-    "@nx/js": {
-      "analyzeSourceFiles": true
-    }
-  }
+  "parallel": 1,
+ "useDaemonProcess": true
 }

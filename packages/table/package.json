@@ -14,8 +14,8 @@
     "@tanstack/table-core": "^8.11.8"
   },
   "peerDependencies": {
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react": "19.0.0-rc-f6cce072-20240723",
+    "react-dom": "19.0.0-rc-f6cce072-20240723"
   },
   "peerDependenciesMeta": {
     "react": {
@@ -29,7 +29,7 @@
     "access": "public"
   },
   "devDependencies": {
-    "react": "^18.2.0",
-    "react-dom": "18.2.0"
+    "react": "19.0.0-rc-f6cce072-20240723",
+    "react-dom": "19.0.0-rc-f6cce072-20240723"
   }
 }

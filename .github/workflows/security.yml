@@ -1,0 +1,32 @@
+name: Security
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - "main"
+      - "next"
+      - "beta"
+      - "experimental"
+    paths-ignore:
+      - "**/*.md"
+      - ".all-contributorsrc"
+
+jobs:
+  file-system-scan:
+    name: Vulnerability scanning - File system
+    uses: storm-software/storm-ops/.github/workflows/security-reusable.yml
+    with:
+      scan-type: "fs"
+      format: "sarif"
+      exit-code: 0
+      publish: true
+
+  config-scan:
+    name: Vulnerability scanning - Config
+    uses: storm-software/storm-ops/.github/workflows/security-reusable.yml
+    with:
+      scan-type: "config"
+      format: "sarif"
+      exit-code: 0
+      publish: true

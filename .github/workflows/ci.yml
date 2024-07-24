@@ -1,0 +1,37 @@
+name: "Continuous Integration"
+
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: override release tag
+        required: false
+  push:
+    branches:
+      - "main"
+      - "next"
+      - "beta"
+      - "experimental"
+
+jobs:
+  ci:
+    name: "Continuous Integration"
+    if: startsWith(github.repository, 'storm-software/')
+    permissions:
+      actions: read
+      contents: write
+      id-token: write
+    needs:
+      - start
+    uses: storm-software/storm-ops/.github/workflows/ci-reusable@main
+    with:
+      tag: ${{ inputs.tag }}
+      packageManager: pnpm
+      packageManagerVersion: 9.6.0
+      stormBot: Stormie-Bot
+    secrets:
+      githubToken: ${{ github.token }}
+      npmToken: ${{ secrets.STORM_BOT_NPM_TOKEN }}
+      cargoToken: ${{ secrets.STORM_BOT_CARGO_TOKEN }}
+      slackToken: ${{ secrets.STORM_BOT_SLACK_TOKEN }}
+      discordWebhook: ${{ secrets.STORM_BOT_DISCORD_WEBHOOK}}

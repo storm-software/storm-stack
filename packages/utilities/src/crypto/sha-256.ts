@@ -12,7 +12,7 @@ import { getWebCrypto } from "./web-crypto";
  */
 export const sha256 = (value: string) => {
   const crypto = getWebCrypto();
-  crypto.subtle.digest("SHA-256", new TextEncoder().encode(value)).then((h) => {
+  crypto.subtle.digest("SHA-256", new TextEncoder().encode(value)).then((h: any) => {
     const hexes: string[] = [];
     const view = new DataView(h);
     for (let i = 0; i < view.byteLength; i += 4)
