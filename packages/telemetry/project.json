@@ -37,10 +37,8 @@
         }
       }
     },
-    "lint": {},
-    "test": {},
     "nx-release-publish": {
-      "cache": false,
+      "cache": true,
       "inputs": ["default", "^production"],
       "dependsOn": ["^build"],
       "executor": "@storm-software/workspace-tools:npm-publish",
@@ -49,8 +47,5 @@
         "registry": "https://registry.npmjs.org/"
       }
     }
-  },
-  "tags": ["scope:backend", "type:lib", "lang:ts"],
-  "implicitDependencies": ["logging"],
-  "config": "packages/telemetry/src/schema.ts"
+  }
 }

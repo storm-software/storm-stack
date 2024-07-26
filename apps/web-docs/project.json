@@ -3,6 +3,7 @@
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "apps/web-docs",
   "projectType": "application",
+  "tags": [],
   "targets": {
     "build": {
       "executor": "@nx/next:build",
@@ -61,6 +62,5 @@
         "registry": "https://registry.npmjs.org/"
       }
     }
-  },
-  "tags": []
+  }
 }

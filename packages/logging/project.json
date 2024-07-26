@@ -3,6 +3,7 @@
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "projectType": "library",
   "sourceRoot": "packages/logging/src",
+  "tags": ["scope:package", "type:lib", "lang:ts"],
   "targets": {
     "build": {
       "executor": "@storm-software/workspace-tools:tsup-neutral",
@@ -23,10 +24,8 @@
         }
       }
     },
-    "lint": {},
-    "test": {},
     "nx-release-publish": {
-      "cache": false,
+      "cache": true,
       "inputs": ["default", "^production"],
       "dependsOn": ["^build"],
       "executor": "@storm-software/workspace-tools:npm-publish",
@@ -35,6 +34,5 @@
         "registry": "https://registry.npmjs.org/"
       }
     }
-  },
-  "tags": ["scope:package", "type:lib", "lang:ts"]
+  }
 }

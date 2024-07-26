@@ -1,0 +1,15 @@
+{
+  "name": "@storm-stack/string-fns",
+  "version": "0.0.1",
+  "type": "module",
+  "description": "⚡ A package containing various utility functions used to format string values.",
+  "repository": {
+    "type": "github",
+    "url": "https://github.com/storm-software/storm-stack.git",
+    "directory": "packages/string-fns"
+  },
+  "private": false,
+  "publishConfig": {
+    "access": "public"
+  }
+}

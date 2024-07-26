@@ -13,6 +13,5 @@
 
 export * from "./crypto";
 export * from "./helper-fns";
-export * from "./string-fns";
 export * from "./type-checks";
 export * from "./types";

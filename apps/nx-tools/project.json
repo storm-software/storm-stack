@@ -3,6 +3,7 @@
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "apps/nx-tools/src",
   "projectType": "library",
+  "tags": [],
   "targets": {
     "build": {
       "executor": "@nx/esbuild:esbuild",
@@ -97,6 +98,5 @@
         "registry": "https://registry.npmjs.org/"
       }
     }
-  },
-  "tags": []
+  }
 }

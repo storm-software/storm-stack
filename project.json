@@ -1,7 +1,7 @@
 {
   "name": "@storm-stack/monorepo",
   "$schema": "node_modules/nx/schemas/project-schema.json",
-  "projectType": "application",
+  "projectType": "library",
   "targets": {
     "local-registry": {
       "executor": "@nx/js:verdaccio",
@@ -10,12 +10,6 @@
         "config": ".verdaccio/config.yml",
         "storage": "tmp/local-registry/storage"
       }
-    },
-    // "nx-release-publish": {
-    //   "executor": "@nx/js:release-publish",
-    //   "options": {
-    //     "packageRoot": "{projectRoot}"
-    //   }
-    // }
+    }
   }
 }

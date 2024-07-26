@@ -1,4 +1,4 @@
-import { EMPTY_STRING } from "../types";
+import { EMPTY_STRING } from "@storm-stack/utilities";
 import { upperCaseFirst } from "./upper-case-first";
 
 /**

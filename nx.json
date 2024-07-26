@@ -1,17 +1,16 @@
 {
-  "$schema": "https://cdn.jsdelivr.net/npm/nx/schemas/nx-schema.json",
   "extends": "@storm-software/workspace-tools/config/nx.json",
   "plugins": [
     {
       "plugin": "@nx/eslint/plugin",
-      "exclude": ["packages/**/__fixtures__/**/*"],
+      "exclude": [
+        "packages/**/__fixtures__/**/*"
+      ],
       "options": {
         "targetName": "lint",
         "useFlatConfig": true
       }
     },
     "@storm-software/workspace-tools/plugins/typescript"
-  ],
-  "parallel": 1,
-  "useDaemonProcess": true
+  ]
 }

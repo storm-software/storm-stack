@@ -29,10 +29,8 @@
         "parallel": false
       }
     },
-    "lint": {},
-    "test": {},
     "nx-release-publish": {
-      "cache": false,
+      "cache": true,
       "inputs": ["default", "^production"],
       "dependsOn": ["^build"],
       "executor": "@storm-software/workspace-tools:npm-publish",
