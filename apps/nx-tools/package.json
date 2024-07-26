@@ -7,7 +7,7 @@
     "url": "https://github.com/storm-software/storm-stack.git",
     "directory": "apps/nx-tools"
   },
-  "private": false,
+  "private": true,
   "main": "./src/index.js",
   "typings": "./src/index.d.ts",
   "peerDependencies": {
