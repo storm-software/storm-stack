@@ -1,6 +1,5 @@
-import { isSet, isSetString } from "../type-checks";
+import { isSet, isSetString } from "@storm-stack/types";
 
-const hasElementType = typeof Element !== "undefined";
 const hasMap = typeof Map === "function";
 const hasSet = typeof Set === "function";
 const hasArrayBuffer =
@@ -12,8 +11,9 @@ function equal(a: any, b: any) {
   if (a && b && typeof a == "object" && typeof b == "object") {
     if (a.constructor !== b.constructor) return false;
 
+    let length;
     if (Array.isArray(a)) {
-      let length = a.length;
+      length = a.length;
       if (length != b.length) return false;
       for (let i = length; i-- !== 0; ) if (!equal(a[i], b[i])) return false;
       return true;
@@ -80,8 +80,6 @@ function equal(a: any, b: any) {
       )
         return false;
 
-    if (hasElementType && a instanceof Element) return false;
-
     for (let i = length; i-- !== 0; ) {
       if (
         Array.isArray(keys) &&
@@ -105,11 +103,28 @@ function equal(a: any, b: any) {
   return a !== a && b !== b;
 }
 
+/**
+ * Checks if two values are equal, including support for `Date`, `RegExp`, and deep object comparison.
+ *
+ * @example
+ * ```ts
+ * isEqual(1, 1); // true
+ * isEqual({ a: 1 }, { a: 1 }); // true
+ * isEqual(/abc/g, /abc/g); // true
+ * isEqual(new Date('2020-01-01'), new Date('2020-01-01')); // true
+ * isEqual([1, 2, 3], [1, 2, 3]); // true
+ * isEqual({ a: 1, b: { c: 2 } }, { a: 1, b: { c: 2 } }); // true
+ * ```
+ *
+ * @param a - The first value to compare.
+ * @param b - The second value to compare.
+ * @returns `true` if the values are equal, otherwise `false`.
+ */
 export function isEqual(a: any, b: any): boolean {
   try {
     return equal(a, b);
   } catch (error) {
-    if (((error as any)?.message || "").match(/stack|recursion/i)) {
+    if (/stack|recursion/i.test((error as any)?.message || "")) {
       console.warn("isEqual cannot handle circular refs");
       return false;
     }

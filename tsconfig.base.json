@@ -66,6 +66,12 @@
       "@storm-stack/server-cache/*": [
         "packages/server-cache/src/*"
       ],
+      "@storm-stack/string-fns": [
+        "packages/string-fns/src/index.ts"
+      ],
+      "@storm-stack/string-fns/*": [
+        "packages/string-fns/src/*"
+      ],
       "@storm-stack/style-dictionary": [
         "packages/style-dictionary/src/index.ts"
       ],
@@ -105,11 +111,11 @@
       "@storm-stack/web-docs": [
         "apps/web-docs/src/index.ts"
       ],
-      "@storm-stack/string-fns": [
-        "packages/string-fns/src/index.ts"
+      "@storm-stack/types": [
+        "packages/types/src/index.ts"
       ],
-      "@storm-stack/string-fns/*": [
-        "packages/string-fns/src/*"
+      "@storm-stack/types/*": [
+        "packages/types/src/*"
       ]
     }
   },

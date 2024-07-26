@@ -1,4 +1,4 @@
-import { isObject } from "../type-checks/is-object";
+import { isObject } from "@storm-stack/types";
 
 const WebCrypto: any =
   globalThis.crypto && isObject(typeof globalThis.crypto)

@@ -1,31 +1,59 @@
-import { periodSplit } from "../string-fns/period-split";
-import { isSetObject } from "../type-checks";
+import { isPlainObject } from "@storm-stack/types";
 
 /**
- * Flatten an object.
+ * Flattens a nested object into a single level object with dot-separated keys.
  *
- * @param obj - The object to flatten.
- * @param prefix - The prefix to use.
- * @param keyStringFn - The function to use to convert the key to a string.
- * @returns The flattened object.
+ * @example
+ * ```typescript
+ * const nestedObject = {
+ *   a: {
+ *     b: {
+ *       c: 1
+ *     }
+ *   },
+ *   d: [2, 3]
+ * };
+ *
+ * const flattened = flattenObject(nestedObject);
+ * console.log(flattened);
+ * // Output:
+ * // {
+ * //   'a.b.c': 1,
+ * //   'd.0': 2,
+ * //   'd.1': 3
+ * // }
+ * ```
+ *
+ * @param object - The object to flatten.
+ * @returns - The flattened object.
  */
-export const flattenObject = (
-  obj: any,
-  prefix = "",
-  keyStringFn: (input?: string) => string | undefined = periodSplit
-) => {
-  const flattened: any = {};
+export function flattenObject(object: object): Record<string, any> {
+  return flattenObjectImpl(object);
+}
 
-  for (const key of Object.keys(obj)) {
-    if (isSetObject(obj[key])) {
-      Object.assign(flattened, flattenObject(obj[key], prefix));
-    } else {
-      const prefixedKey = keyStringFn(`${prefix}_${key}`);
-      if (prefixedKey) {
-        flattened[prefixedKey] = obj[key];
-      }
+function flattenObjectImpl(object: object, prefix = ""): Record<string, any> {
+  const result: Record<string, any> = {};
+  const keys = Object.keys(object);
+
+  for (const key of keys) {
+    const value = (object as any)[key];
+
+    const prefixedKey = prefix ? `${prefix}.${key}` : key;
+
+    if (isPlainObject(value) && Object.keys(value).length > 0) {
+      Object.assign(result, flattenObjectImpl(value, prefixedKey));
+      continue;
     }
+
+    if (Array.isArray(value)) {
+      for (const [index, element_] of value.entries()) {
+        result[`${prefixedKey}.${index}`] = element_;
+      }
+      continue;
+    }
+
+    result[prefixedKey] = value;
   }
 
-  return flattened;
-};
+  return result;
+}

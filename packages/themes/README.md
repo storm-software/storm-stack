@@ -36,7 +36,6 @@ A package containing the design themes used by Storm Stack user interfaces
 
 <!-- START doctoc -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
-
 ## Table of Contents
 
 - [Installing](#installing)

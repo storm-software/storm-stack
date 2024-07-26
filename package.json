@@ -183,7 +183,8 @@
       "@storm-stack/server-cache": "workspace:*",
       "@storm-stack/style-dictionary": "workspace:*",
       "@storm-stack/themes": "workspace:*",
-      "@storm-stack/string-fns": "workspace:*"
+      "@storm-stack/string-fns": "workspace:*",
+      "@storm-stack/types": "workspace:*"
     }
   },
   "prettier": "@storm-software/prettier/config.json",

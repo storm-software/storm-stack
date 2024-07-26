@@ -1,18 +1,20 @@
-// Adapted from Chris Veness' SHA1 code at
+import { isString } from "@storm-stack/types";
 
-import { isString } from "../type-checks/is-string";
-
-// http://www.movable-type.co.uk/scripts/sha1.html
+// Adapted from Chris Veness' SHA1 code at http://www.movable-type.co.uk/scripts/sha1.html
 function f(s: number, x: number, y: number, z: number): number {
   switch (s) {
-    case 0:
+    case 0: {
       return (x & y) ^ (~x & z);
-    case 1:
+    }
+    case 1: {
       return x ^ y ^ z;
-    case 2:
+    }
+    case 2: {
       return (x & y) ^ (x & z) ^ (y & z);
-    default:
+    }
+    default: {
       return x ^ y ^ z;
+    }
   }
 }
 
@@ -23,14 +25,16 @@ function ROTL(x: number, n: number) {
 export function sha1(
   bytes: string | number | boolean | Uint8Array | any[]
 ): Uint8Array {
-  const K = [0x5a827999, 0x6ed9eba1, 0x8f1bbcdc, 0xca62c1d6];
-  const H = [0x67452301, 0xefcdab89, 0x98badcfe, 0x10325476, 0xc3d2e1f0];
+  const K = [0x5a_82_79_99, 0x6e_d9_eb_a1, 0x8f_1b_bc_dc, 0xca_62_c1_d6];
+  const H = [
+    0x67_45_23_01, 0xef_cd_ab_89, 0x98_ba_dc_fe, 0x10_32_54_76, 0xc3_d2_e1_f0
+  ];
 
   let _bytes: any[] = [];
   if (isString(bytes)) {
     const msg = unescape(encodeURIComponent(bytes));
     for (let i = 0; i < msg.length; ++i) {
-      _bytes.push(msg.charCodeAt(i));
+      _bytes.push(msg.codePointAt(i));
     }
   } else if (!Array.isArray(_bytes)) {
     _bytes = Array.prototype.slice.call(_bytes);
@@ -40,7 +44,7 @@ export function sha1(
 
   const l = _bytes.length / 4 + 2;
   const N = Math.ceil(l / 16);
-  const M = new Array(N);
+  const M = Array.from({ length: N }) as any[];
 
   for (let i = 0; i < N; ++i) {
     const arr = new Uint32Array(16);
@@ -57,7 +61,7 @@ export function sha1(
 
   M[N - 1][14] = ((_bytes.length - 1) * 8) / 2 ** 32;
   M[N - 1][14] = Math.floor(M[N - 1][14]);
-  M[N - 1][15] = ((_bytes.length - 1) * 8) & 0xffffffff;
+  M[N - 1][15] = ((_bytes.length - 1) * 8) & 0xff_ff_ff_ff;
 
   for (let i = 0; i < N; ++i) {
     const W = new Uint32Array(80);

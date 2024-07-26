@@ -1,5 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { isFunction, isMergeableObject, propertyUnsafe } from "../type-checks";
+import {
+  isFunction,
+  isMergeableObject,
+  propertyUnsafe
+} from "@storm-stack/types";
 
 const emptyTarget = (val: any) => {
   return Array.isArray(val) ? [] : {};
@@ -12,7 +16,7 @@ const cloneUnlessOtherwiseSpecified = (value: any, options?: any) => {
 };
 
 const defaultArrayMerge = (target: any[], source: any[], options?: any) => {
-  return target.concat(source).map(element => {
+  return [...target, ...source].map(element => {
     return cloneUnlessOtherwiseSpecified(element, options);
   });
 };
@@ -26,13 +30,14 @@ const getMergeFunction = (key: string, options?: any) => {
 };
 
 const getKeys = (target: Record<string, any>) => {
-  return Object.keys(target).concat(
-    (Object.getOwnPropertySymbols
+  return [
+    ...Object.keys(target),
+    ...((Object.getOwnPropertySymbols
       ? Object.getOwnPropertySymbols(target).filter(symbol => {
           return Object.propertyIsEnumerable.call(target, symbol);
         })
-      : []) as unknown as string[]
-  );
+      : []) as unknown as string[])
+  ];
 };
 
 const mergeObject = (
@@ -47,15 +52,10 @@ const mergeObject = (
     }
   }
   for (const key of getKeys(source)) {
-    if (propertyUnsafe(target, key) && options.isMergeableObject(source[key])) {
-      destination[key] = getMergeFunction(key, options)(
-        target[key],
-        source[key],
-        options
-      );
-    } else {
-      destination[key] = cloneUnlessOtherwiseSpecified(source[key], options);
-    }
+    destination[key] =
+      propertyUnsafe(target, key) && options.isMergeableObject(source[key])
+        ? getMergeFunction(key, options)(target[key], source[key], options)
+        : cloneUnlessOtherwiseSpecified(source[key], options);
   }
   return destination;
 };
@@ -74,6 +74,7 @@ export const deepMerge = <X = any, Y = any, Z = X & Y>(
   options: any = {}
 ): Z => {
   if (!target || !source) {
+    // eslint-disable-next-line unicorn/prefer-logical-operator-over-ternary
     return (target ? target : source) as Z;
   }
 
@@ -99,7 +100,7 @@ export const deepMerge = <X = any, Y = any, Z = X & Y>(
 
 deepMerge.all = function deepMergeAll(array: any[], options?: any) {
   if (!Array.isArray(array)) {
-    throw new Error("first argument should be an array");
+    throw new TypeError("first argument should be an array");
   }
 
   return array.reduce((prev, next) => {

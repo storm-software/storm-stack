@@ -1,0 +1,18 @@
+{
+  "name": "@storm-stack/types",
+  "version": "0.0.1",
+  "type": "module",
+  "description": "⚡ The storm-stack monorepo contains utility applications, tools, and various libraries to create modern and scalable web applications.",
+  "repository": {
+    "type": "github",
+    "url": "https://github.com/storm-software/storm-stack.git",
+    "directory": "packages/types"
+  },
+  "private": false,
+  "devDependencies": {
+    "@types/node": "^20.14.12"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

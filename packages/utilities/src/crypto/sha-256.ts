@@ -1,4 +1,4 @@
-import { EMPTY_STRING } from "..";
+import { EMPTY_STRING } from "@storm-stack/types";
 import { getWebCrypto } from "./web-crypto";
 
 /**
