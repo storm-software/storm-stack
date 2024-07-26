@@ -1,14 +1,14 @@
 {
   "name": "@storm-stack/cli",
   "version": "1.17.3",
-  "private": false,
+  "type": "module",
   "description": "A collection of CLI utilities to assist in creating command line applications.",
   "repository": {
     "type": "github",
     "url": "https://github.com/storm-software/storm-stack.git",
     "directory": "packages/cli"
   },
-  "type": "module",
+  "private": false,
   "dependencies": {
     "@storm-software/config": "latest",
     "@storm-software/config-tools": "latest",

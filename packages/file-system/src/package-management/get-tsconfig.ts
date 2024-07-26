@@ -1,7 +1,7 @@
+import { EMPTY_STRING } from "@storm-stack/utilities";
 import fs from "node:fs";
 import { createRequire } from "node:module";
 import path from "node:path";
-import { EMPTY_STRING } from "@storm-stack/utilities";
 import { findFileName, findFilePath } from "../files/file-path-fns";
 
 const singleComment = Symbol("singleComment");
@@ -50,7 +50,10 @@ const stripJsonComments = (
     if (isInsideString) {
       continue;
     }
-    if (!isInsideComment && currentCharacter + (nextCharacter ?? EMPTY_STRING) === "//") {
+    if (
+      !isInsideComment &&
+      currentCharacter + (nextCharacter ?? EMPTY_STRING) === "//"
+    ) {
       buffer += jsonString.slice(offset, index);
       offset = index;
       isInsideComment = singleComment;
@@ -67,7 +70,10 @@ const stripJsonComments = (
       isInsideComment = false;
       buffer += strip(jsonString, offset, index);
       offset = index;
-    } else if (!isInsideComment && currentCharacter + (nextCharacter ?? EMPTY_STRING) === "/*") {
+    } else if (
+      !isInsideComment &&
+      currentCharacter + (nextCharacter ?? EMPTY_STRING) === "/*"
+    ) {
       buffer += jsonString.slice(offset, index);
       offset = index;
       isInsideComment = multiComment;
@@ -107,7 +113,11 @@ const stripJsonComments = (
     }
   }
   return (
-    result + buffer + (isInsideComment ? strip(jsonString.slice(offset)) : jsonString.slice(offset))
+    result +
+    buffer +
+    (isInsideComment
+      ? strip(jsonString.slice(offset))
+      : jsonString.slice(offset))
   );
 };
 
@@ -120,7 +130,11 @@ const jsoncParse = (data: string) => {
 };
 
 const req = createRequire(import.meta.url);
-const findUp = (name: string, startDir: string, stopDir = path.parse(startDir).root) => {
+const findUp = (
+  name: string,
+  startDir: string,
+  stopDir = path.parse(startDir).root
+) => {
   let dir = startDir;
   while (dir !== stopDir) {
     const file = path.join(dir, name);
@@ -135,7 +149,8 @@ const findUp = (name: string, startDir: string, stopDir = path.parse(startDir).r
 };
 
 const resolveTsConfigFromFile = (cwd: string, filename: string) => {
-  if (path.isAbsolute(filename)) return fs.existsSync(filename) ? filename : null;
+  if (path.isAbsolute(filename))
+    return fs.existsSync(filename) ? filename : null;
   return findUp(filename, cwd);
 };
 
@@ -146,12 +161,18 @@ const resolveTsConfigFromExtends = (cwd: string, name: string) => {
   return id;
 };
 
-const loadTsConfigInternal = (_dir = process.cwd(), name = "tsconfig.json", isExtends = false) => {
+const loadTsConfigInternal = (
+  _dir = process.cwd(),
+  name = "tsconfig.json",
+  isExtends = false
+) => {
   let _a: any;
   let _b: any;
 
   const dir = path.resolve(_dir);
-  const id = isExtends ? resolveTsConfigFromExtends(dir, name) : resolveTsConfigFromFile(dir, name);
+  const id = isExtends
+    ? resolveTsConfigFromExtends(dir, name)
+    : resolveTsConfigFromFile(dir, name);
 
   if (!id) {
     return null;
@@ -161,11 +182,16 @@ const loadTsConfigInternal = (_dir = process.cwd(), name = "tsconfig.json", isEx
   const configDir = path.dirname(id);
   // biome-ignore lint/suspicious/noAssignInExpressions: <explanation>
   if ((_a = data.compilerOptions) == null ? void 0 : _a.baseUrl) {
-    data.compilerOptions.baseUrl = path.join(configDir, data.compilerOptions.baseUrl);
+    data.compilerOptions.baseUrl = path.join(
+      configDir,
+      data.compilerOptions.baseUrl
+    );
   }
   const extendsFiles = [];
   if (data.extends) {
-    const extendsList = Array.isArray(data.extends) ? data.extends : [data.extends];
+    const extendsList = Array.isArray(data.extends)
+      ? data.extends
+      : [data.extends];
     const extendsData: any = {};
     for (const name2 of extendsList) {
       const parentConfig: any = loadTsConfigInternal(configDir, name2, true);

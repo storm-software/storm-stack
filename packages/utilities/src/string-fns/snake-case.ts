@@ -19,7 +19,10 @@ export const snakeCase = (
 
   const parts =
     input
-      ?.replace(/([A-Z])+/g, (input?: string) => upperCaseFirst(input) ?? EMPTY_STRING)
+      ?.replace(
+        /([A-Z])+/g,
+        (input?: string) => upperCaseFirst(input) ?? EMPTY_STRING
+      )
       .split(/(?=[A-Z])|[\.\-\s_]/)
       .map((x: string) => x.toLowerCase()) ?? [];
   if (parts.length === 0) return "";
@@ -29,5 +32,8 @@ export const snakeCase = (
   });
   return options?.splitOnNumber === false
     ? result
-    : result.replace(/([A-Za-z]{1}[0-9]{1})/, (val: string) => `${val[0]}_${val[1]}`);
+    : result.replace(
+        /([A-Za-z]{1}[0-9]{1})/,
+        (val: string) => `${val[0]}_${val[1]}`
+      );
 };

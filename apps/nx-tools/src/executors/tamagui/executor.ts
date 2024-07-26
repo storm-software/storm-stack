@@ -10,7 +10,11 @@ import {
 import type { TsupExecutorSchema } from "@storm-software/workspace-tools/src/executors/tsup/schema";
 import { StormLog } from "@storm-stack/logging";
 import { StormParser } from "@storm-stack/serialization";
-import { isFunction, isPrimitive, removeEmptyItems } from "@storm-stack/utilities";
+import {
+  isFunction,
+  isPrimitive,
+  removeEmptyItems
+} from "@storm-stack/utilities";
 import { removeSync } from "fs-extra";
 import { getTamaguiConfig } from "./get-config";
 import type { TamaguiExecutorSchema } from "./schema.d";
@@ -21,7 +25,9 @@ export async function TamaguiExecutorFn(
   config?: StormConfig
 ) {
   const logger = StormLog.create(config, "Storm-Stack Tamagui Executor");
-  logger.info("⚡  Running Storm-Stack Tamagui compile executor on the workspace");
+  logger.info(
+    "⚡  Running Storm-Stack Tamagui compile executor on the workspace"
+  );
 
   // #region Apply default options
 
@@ -29,7 +35,7 @@ export async function TamaguiExecutorFn(
   logger.debug(`⚙️  Executor options:
   ${Object.keys(executorOptions)
     .map(
-      (key) =>
+      key =>
         `${key}: ${
           !executorOptions[key] || isPrimitive(executorOptions[key])
             ? executorOptions[key]
@@ -56,8 +62,10 @@ export async function TamaguiExecutorFn(
   }
 
   const workspaceRoot = findWorkspaceRootSafe();
-  const projectRoot = context.projectsConfigurations.projects[context.projectName]?.root;
-  const sourceRoot = context.projectsConfigurations.projects[context.projectName]?.sourceRoot;
+  const projectRoot =
+    context.projectsConfigurations.projects[context.projectName]?.root;
+  const sourceRoot =
+    context.projectsConfigurations.projects[context.projectName]?.sourceRoot;
 
   if (!workspaceRoot || !projectRoot || !sourceRoot) {
     throw new Error(

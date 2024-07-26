@@ -1,7 +1,13 @@
 import type { Collection } from "../types";
 import { typeDetect } from "./type-detect";
 
-const COLLECTION_TYPE_SET = new Set(["Arguments", "Array", "Map", "Object", "Set"]);
+const COLLECTION_TYPE_SET = new Set([
+  "Arguments",
+  "Array",
+  "Map",
+  "Object",
+  "Set"
+]);
 
 /**
  * Check if the provided value's type is `Collection`

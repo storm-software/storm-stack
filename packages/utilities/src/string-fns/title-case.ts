@@ -16,8 +16,8 @@ export const titleCase = (input?: string): string | undefined => {
 
   return input
     .split(/(?=[A-Z])|[\.\-\s_]/)
-    .map((s) => s.trim())
-    .filter((s) => !!s)
-    .map((s) => upperCaseFirst(s.toLowerCase()))
+    .map(s => s.trim())
+    .filter(s => !!s)
+    .map(s => upperCaseFirst(s.toLowerCase()))
     .join(" ");
 };

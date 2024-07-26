@@ -1,7 +1,12 @@
 import { StormDateTime } from "@storm-stack/date-time";
 import { StormError } from "@storm-stack/errors";
 import { PluginSystemErrorCode } from "../errors";
-import type { IPluginLoader, IPluginModule, PluginDefinition, PluginInstance } from "../types";
+import type {
+  IPluginLoader,
+  IPluginModule,
+  PluginDefinition,
+  PluginInstance
+} from "../types";
 import { createResolver } from "../utilities/create-resolver";
 
 /**
@@ -68,7 +73,10 @@ export abstract class PluginLoader<
     return instance;
   };
 
-  protected resolve = async (definition: PluginDefinition, _: Record<string, any> = {}) => {
+  protected resolve = async (
+    definition: PluginDefinition,
+    _: Record<string, any> = {}
+  ) => {
     const resolved = await this.resolver(definition.provider);
     if (!resolved) {
       throw new StormError(PluginSystemErrorCode.plugin_loading_failure, {

@@ -2,7 +2,11 @@ import type { StormConfig } from "@storm-software/config";
 import { createStormConfig } from "@storm-software/config-tools";
 import { getCauseFromUnknown } from "@storm-stack/errors";
 import { StormLog } from "@storm-stack/logging";
-import { EMPTY_STRING, NEWLINE_STRING, titleCase } from "@storm-stack/utilities";
+import {
+  EMPTY_STRING,
+  NEWLINE_STRING,
+  titleCase
+} from "@storm-stack/utilities";
 import chalk from "chalk";
 import { Argument, Command, Option } from "commander";
 import { Table } from "console-table-printer";
@@ -11,7 +15,10 @@ import type { CLIArgument, CLICommand, CLIConfig, CLIOption } from "../types";
 import { registerShutdown } from "./shutdown";
 
 const createCLIArgument = (cliArgument: CLIArgument): Argument => {
-  const argument = new Argument(cliArgument.flags, cliArgument.description ?? EMPTY_STRING);
+  const argument = new Argument(
+    cliArgument.flags,
+    cliArgument.description ?? EMPTY_STRING
+  );
   if (cliArgument.default) {
     argument.default;
   }
@@ -20,7 +27,10 @@ const createCLIArgument = (cliArgument: CLIArgument): Argument => {
 };
 
 const createCLIOption = (cliOption: CLIOption): Option => {
-  const option = new Option(cliOption.flags, cliOption.description ?? EMPTY_STRING);
+  const option = new Option(
+    cliOption.flags,
+    cliOption.description ?? EMPTY_STRING
+  );
   if (cliOption.choices) {
     option.choices(cliOption.choices);
   }
@@ -89,17 +99,21 @@ export async function createCLIProgram(cliConfig: CLIConfig): Promise<void> {
       }
     }
 
-    logger.info(`⚡ Starting the ${titleCase(cliConfig.name) ?? "Storm CLI"} application`);
+    logger.info(
+      `⚡ Starting the ${titleCase(cliConfig.name) ?? "Storm CLI"} application`
+    );
 
     const urlDisplay = `\nWebsite: ${cliConfig.homepageUrl ?? config.homepage} \nDocumentation: ${
-      cliConfig.documentationUrl ?? config.homepage.endsWith("/")
+      (cliConfig.documentationUrl ?? config.homepage.endsWith("/"))
         ? `${config.homepage}docs`
         : `${config.homepage}/docs`
     } \nRepository: ${cliConfig.repositoryUrl ?? config.repository} \n`;
     const licenseDisplay = `\n This software is distributed under the ${
       cliConfig.license ?? config.license
     } license. \nFor more information, please visit ${
-      cliConfig.licenseUrl ?? cliConfig.documentationUrl ?? config.homepage.endsWith("/")
+      (cliConfig.licenseUrl ??
+      cliConfig.documentationUrl ??
+      config.homepage.endsWith("/"))
         ? `${config.homepage}license`
         : `${config.homepage}/license`
     } \n`;

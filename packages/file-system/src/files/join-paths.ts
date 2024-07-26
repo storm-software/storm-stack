@@ -9,6 +9,8 @@ import { isAbsolute, join } from "node:path";
 export const joinPaths = (...paths: string[]): string => {
   const path = join(...paths);
 
-  const result = isAbsolute(path) ? path.replaceAll("/", "\\") : path.replaceAll("\\", "/");
+  const result = isAbsolute(path)
+    ? path.replaceAll("/", "\\")
+    : path.replaceAll("\\", "/");
   return result.startsWith("/C:") ? result.substring(1) : result;
 };

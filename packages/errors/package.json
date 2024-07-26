@@ -1,22 +1,22 @@
 {
   "name": "@storm-stack/errors",
   "version": "1.18.3",
-  "private": false,
+  "type": "module",
   "description": "This package includes a base error class and various utility functions for working with errors.",
   "repository": {
     "type": "github",
     "url": "https://github.com/storm-software/storm-stack.git",
     "directory": "packages/errors"
   },
-  "type": "module",
+  "private": false,
   "dependencies": {
     "@storm-software/testing-tools": "latest",
     "@storm-software/workspace-tools": "latest"
   },
-  "publishConfig": {
-    "access": "public"
-  },
   "devDependencies": {
     "@types/node": "^20.11.20"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }

@@ -1,22 +1,22 @@
 {
   "name": "@storm-stack/utilities",
   "version": "1.17.3",
-  "private": false,
+  "type": "module",
   "description": "This package includes various base utility class and various functions to assist in the development process.",
   "repository": {
     "type": "github",
     "url": "https://github.com/storm-software/storm-stack.git",
     "directory": "packages/utilities"
   },
-  "type": "module",
-  "publishConfig": {
-    "access": "public"
-  },
+  "private": false,
   "dependencies": {
     "buffer": "^6.0.3",
     "crypto": "^1.0.1"
   },
   "devDependencies": {
     "@types/node": "^20.11.20"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }

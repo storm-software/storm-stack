@@ -34,7 +34,10 @@ export interface Clonable<T> {
 
 export type MaybePromise<T> = T | Promise<T>;
 
-export type ReducerFunction<TState, TAction> = (state: TState, action: TAction) => TState;
+export type ReducerFunction<TState, TAction> = (
+  state: TState,
+  action: TAction
+) => TState;
 
 export type ArrayElement<ArrayType extends readonly unknown[]> =
   ArrayType extends readonly (infer ElementType)[] ? ElementType : never;
@@ -58,7 +61,14 @@ export type Collection =
  *
  * @category Type
  */
-export type Primitive = null | undefined | string | number | boolean | symbol | bigint;
+export type Primitive =
+  | null
+  | undefined
+  | string
+  | number
+  | boolean
+  | symbol
+  | bigint;
 
 export type LiteralUnion<T extends U, U extends Primitive> =
   | T
@@ -80,7 +90,10 @@ export type DeepPartial<T> = T extends BrowserNativeObject | NestedValue
       [K in keyof T]?: DeepPartial<T[K]>;
     };
 
-export type Rollback = Record<string, (initialValue: any, currentValue: any) => any>;
+export type Rollback = Record<
+  string,
+  (initialValue: any, currentValue: any) => any
+>;
 
 /**
  * Extract all required keys from the given type.
@@ -90,7 +103,9 @@ export type Rollback = Record<string, (initialValue: any, currentValue: any) => 
  */
 export type RequiredKeysOf<BaseType extends object> = Exclude<
   {
-    [Key in keyof BaseType]: BaseType extends Record<Key, BaseType[Key]> ? Key : never;
+    [Key in keyof BaseType]: BaseType extends Record<Key, BaseType[Key]>
+      ? Key
+      : never;
   }[keyof BaseType],
   undefined
 >;
@@ -104,15 +119,17 @@ export type RequiredKeysOf<BaseType extends object> = Exclude<
  * @category Type Guard
  * @category Utilities
  */
-export type IsEqual<A, B> = (<G>() => G extends A ? 1 : 2) extends <G>() => G extends B ? 1 : 2
-  ? true
-  : false;
+export type IsEqual<A, B> =
+  (<G>() => G extends A ? 1 : 2) extends <G>() => G extends B ? 1 : 2
+    ? true
+    : false;
 
-export type Filter<KeyType, ExcludeType> = IsEqual<KeyType, ExcludeType> extends true
-  ? never
-  : KeyType extends ExcludeType
+export type Filter<KeyType, ExcludeType> =
+  IsEqual<KeyType, ExcludeType> extends true
     ? never
-    : KeyType;
+    : KeyType extends ExcludeType
+      ? never
+      : KeyType;
 
 type ExceptOptions = {
   /**
@@ -138,7 +155,10 @@ export type Except<
   KeysType extends keyof ObjectType,
   Options extends ExceptOptions = { requireExactProps: false }
 > = {
-  [KeyType in keyof ObjectType as Filter<KeyType, KeysType>]: ObjectType[KeyType];
+  [KeyType in keyof ObjectType as Filter<
+    KeyType,
+    KeysType
+  >]: ObjectType[KeyType];
 } & (Options["requireExactProps"] extends true
   ? Partial<Record<KeysType, never>>
   : Record<string, never>);
@@ -159,7 +179,10 @@ export type Simplify<T> = { [KeyType in keyof T]: T[KeyType] } & {};
  * @remarks Use-case: You want to define a single model where the only thing that changes is whether or not some of the keys are required.
  * @category Object
  */
-export type SetRequired<BaseType, Keys extends keyof BaseType> = BaseType extends unknown // type](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-2-8.html#distributive-conditional-types). // union into a [distributive conditional // `extends unknown` is always going to be the case and is used to convert any
+export type SetRequired<
+  BaseType,
+  Keys extends keyof BaseType
+> = BaseType extends unknown // type](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-2-8.html#distributive-conditional-types). // union into a [distributive conditional // `extends unknown` is always going to be the case and is used to convert any
   ? Simplify<
       // Pick just the keys that are optional from the base type.
       Except<BaseType, Keys> &

@@ -1,7 +1,7 @@
 {
   "metadata": {
     "toolPackage": "@microsoft/api-extractor",
-    "toolVersion": "7.40.1",
+    "toolVersion": "7.46.2",
     "schemaVersion": 1011,
     "oldestForwardsCompatibleVersion": 1001,
     "tsdocConfig": {
@@ -171,7 +171,796 @@
       "canonicalReference": "@storm-stack/style-dictionary!",
       "name": "",
       "preserveMemberOrder": false,
-      "members": []
+      "members": [
+        {
+          "kind": "TypeAlias",
+          "canonicalReference": "@storm-stack/style-dictionary!ColorPaletteGroup:type",
+          "docComment": "",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export type ColorPaletteGroup = "
+            },
+            {
+              "kind": "Reference",
+              "text": "DesignTokenGroup",
+              "canonicalReference": "@storm-stack/style-dictionary!DesignTokenGroup:interface"
+            },
+            {
+              "kind": "Content",
+              "text": " & "
+            },
+            {
+              "kind": "Reference",
+              "text": "Record",
+              "canonicalReference": "!Record:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<string, "
+            },
+            {
+              "kind": "Reference",
+              "text": "ColorToken",
+              "canonicalReference": "@storm-stack/style-dictionary!ColorToken:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "> & {\n    $kind: \"color-palette\";\n}"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "fileUrlPath": "packages/style-dictionary/src/types.ts",
+          "releaseTag": "Public",
+          "name": "ColorPaletteGroup",
+          "typeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 7
+          }
+        },
+        {
+          "kind": "TypeAlias",
+          "canonicalReference": "@storm-stack/style-dictionary!ColorSchemeBackgroundGroup:type",
+          "docComment": "",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export type ColorSchemeBackgroundGroup = "
+            },
+            {
+              "kind": "Content",
+              "text": "{\n    $kind: \"color-scheme-background\";\n    \"0\"?: "
+            },
+            {
+              "kind": "Reference",
+              "text": "ColorToken",
+              "canonicalReference": "@storm-stack/style-dictionary!ColorToken:interface"
+            },
+            {
+              "kind": "Content",
+              "text": ";\n    value?: string;\n}"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "fileUrlPath": "packages/style-dictionary/src/types.ts",
+          "releaseTag": "Public",
+          "name": "ColorSchemeBackgroundGroup",
+          "typeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 4
+          }
+        },
+        {
+          "kind": "Interface",
+          "canonicalReference": "@storm-stack/style-dictionary!ColorSchemeGroup:interface",
+          "docComment": "",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export interface ColorSchemeGroup extends "
+            },
+            {
+              "kind": "Reference",
+              "text": "DesignTokenGroup",
+              "canonicalReference": "@storm-stack/style-dictionary!DesignTokenGroup:interface"
+            },
+            {
+              "kind": "Content",
+              "text": " "
+            }
+          ],
+          "fileUrlPath": "packages/style-dictionary/src/types.ts",
+          "releaseTag": "Public",
+          "name": "ColorSchemeGroup",
+          "preserveMemberOrder": false,
+          "members": [
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "@storm-stack/style-dictionary!ColorSchemeGroup#$kind:member",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "$kind: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "\"color-scheme\""
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isReadonly": false,
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "$kind",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            }
+          ],
+          "extendsTokenRanges": [
+            {
+              "startIndex": 1,
+              "endIndex": 2
+            }
+          ]
+        },
+        {
+          "kind": "Interface",
+          "canonicalReference": "@storm-stack/style-dictionary!ColorToken:interface",
+          "docComment": "",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export interface ColorToken extends "
+            },
+            {
+              "kind": "Reference",
+              "text": "DesignToken",
+              "canonicalReference": "@storm-stack/style-dictionary!DesignToken:interface"
+            },
+            {
+              "kind": "Content",
+              "text": " "
+            }
+          ],
+          "fileUrlPath": "packages/style-dictionary/src/types.ts",
+          "releaseTag": "Public",
+          "name": "ColorToken",
+          "preserveMemberOrder": false,
+          "members": [
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "@storm-stack/style-dictionary!ColorToken#type:member",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "type: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "\"color\""
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isReadonly": false,
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "type",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "@storm-stack/style-dictionary!ColorToken#value:member",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "value: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "string"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isReadonly": false,
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "value",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            }
+          ],
+          "extendsTokenRanges": [
+            {
+              "startIndex": 1,
+              "endIndex": 2
+            }
+          ]
+        },
+        {
+          "kind": "Variable",
+          "canonicalReference": "@storm-stack/style-dictionary!default_alias:var",
+          "docComment": "",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "_default: "
+            },
+            {
+              "kind": "Content",
+              "text": "{\n    source: string[];\n    platforms: {\n        tamagui: {\n            transformGroup: string;\n            buildPath: string;\n            files: {\n                format: string;\n                destination: string;\n            }[];\n        };\n    };\n}"
+            }
+          ],
+          "fileUrlPath": "tmp/.tsup/declaration/packages/style-dictionary/src/config/config.d.ts",
+          "isReadonly": true,
+          "releaseTag": "Public",
+          "name": "default_alias",
+          "variableTypeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 2
+          }
+        },
+        {
+          "kind": "Interface",
+          "canonicalReference": "@storm-stack/style-dictionary!DesignToken:interface",
+          "docComment": "",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export interface DesignToken "
+            }
+          ],
+          "fileUrlPath": "packages/style-dictionary/src/types.ts",
+          "releaseTag": "Public",
+          "name": "DesignToken",
+          "preserveMemberOrder": false,
+          "members": [
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "@storm-stack/style-dictionary!DesignToken#description:member",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "description?: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "string"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isReadonly": false,
+              "isOptional": true,
+              "releaseTag": "Public",
+              "name": "description",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "@storm-stack/style-dictionary!DesignToken#type:member",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "type?: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "DesignTokenTypes",
+                  "canonicalReference": "@storm-stack/style-dictionary!DesignTokenTypes:type"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isReadonly": false,
+              "isOptional": true,
+              "releaseTag": "Public",
+              "name": "type",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            }
+          ],
+          "extendsTokenRanges": []
+        },
+        {
+          "kind": "Interface",
+          "canonicalReference": "@storm-stack/style-dictionary!DesignTokenGroup:interface",
+          "docComment": "",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export interface DesignTokenGroup "
+            }
+          ],
+          "fileUrlPath": "packages/style-dictionary/src/types.ts",
+          "releaseTag": "Public",
+          "name": "DesignTokenGroup",
+          "preserveMemberOrder": false,
+          "members": [
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "@storm-stack/style-dictionary!DesignTokenGroup#$kind:member",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "$kind?: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "DesignTokenGroupKind",
+                  "canonicalReference": "@storm-stack/style-dictionary!DesignTokenGroupKind:type"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isReadonly": false,
+              "isOptional": true,
+              "releaseTag": "Public",
+              "name": "$kind",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "@storm-stack/style-dictionary!DesignTokenGroup#description:member",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "description?: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "string"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isReadonly": false,
+              "isOptional": true,
+              "releaseTag": "Public",
+              "name": "description",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            }
+          ],
+          "extendsTokenRanges": []
+        },
+        {
+          "kind": "TypeAlias",
+          "canonicalReference": "@storm-stack/style-dictionary!DesignTokenGroupKind:type",
+          "docComment": "",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export type DesignTokenGroupKind = "
+            },
+            {
+              "kind": "Content",
+              "text": "\"color-scheme\" | \"color-scheme-background\" | \"color-palette\""
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "fileUrlPath": "packages/style-dictionary/src/types.ts",
+          "releaseTag": "Public",
+          "name": "DesignTokenGroupKind",
+          "typeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 2
+          }
+        },
+        {
+          "kind": "Variable",
+          "canonicalReference": "@storm-stack/style-dictionary!DesignTokenGroupKind:var",
+          "docComment": "",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "DesignTokenGroupKind: "
+            },
+            {
+              "kind": "Content",
+              "text": "{\n    COLOR_SCHEME: "
+            },
+            {
+              "kind": "Reference",
+              "text": "DesignTokenGroupKind",
+              "canonicalReference": "@storm-stack/style-dictionary!DesignTokenGroupKind:type"
+            },
+            {
+              "kind": "Content",
+              "text": ";\n    COLOR_SCHEME_BACKGROUND: "
+            },
+            {
+              "kind": "Reference",
+              "text": "DesignTokenGroupKind",
+              "canonicalReference": "@storm-stack/style-dictionary!DesignTokenGroupKind:type"
+            },
+            {
+              "kind": "Content",
+              "text": ";\n    COLOR_PALETTE: "
+            },
+            {
+              "kind": "Reference",
+              "text": "DesignTokenGroupKind",
+              "canonicalReference": "@storm-stack/style-dictionary!DesignTokenGroupKind:type"
+            },
+            {
+              "kind": "Content",
+              "text": ";\n}"
+            }
+          ],
+          "fileUrlPath": "packages/style-dictionary/src/types.ts",
+          "isReadonly": true,
+          "releaseTag": "Public",
+          "name": "DesignTokenGroupKind",
+          "variableTypeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 8
+          }
+        },
+        {
+          "kind": "TypeAlias",
+          "canonicalReference": "@storm-stack/style-dictionary!DesignTokenTypes:type",
+          "docComment": "",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export type DesignTokenTypes = "
+            },
+            {
+              "kind": "Content",
+              "text": "\"color\" | \"size\" | \"spacing\" | \"fontFamilies\" | \"typography\" | \"border\" | \"radius\" | \"shadow\" | \"transition\""
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "fileUrlPath": "packages/style-dictionary/src/types.ts",
+          "releaseTag": "Public",
+          "name": "DesignTokenTypes",
+          "typeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 2
+          }
+        },
+        {
+          "kind": "Variable",
+          "canonicalReference": "@storm-stack/style-dictionary!DesignTokenTypes:var",
+          "docComment": "",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "DesignTokenTypes: "
+            },
+            {
+              "kind": "Content",
+              "text": "{\n    COLOR: "
+            },
+            {
+              "kind": "Reference",
+              "text": "DesignTokenTypes",
+              "canonicalReference": "@storm-stack/style-dictionary!DesignTokenTypes:type"
+            },
+            {
+              "kind": "Content",
+              "text": ";\n    SIZE: "
+            },
+            {
+              "kind": "Reference",
+              "text": "DesignTokenTypes",
+              "canonicalReference": "@storm-stack/style-dictionary!DesignTokenTypes:type"
+            },
+            {
+              "kind": "Content",
+              "text": ";\n    SPACING: "
+            },
+            {
+              "kind": "Reference",
+              "text": "DesignTokenTypes",
+              "canonicalReference": "@storm-stack/style-dictionary!DesignTokenTypes:type"
+            },
+            {
+              "kind": "Content",
+              "text": ";\n    FONT_FAMILIES: "
+            },
+            {
+              "kind": "Reference",
+              "text": "DesignTokenTypes",
+              "canonicalReference": "@storm-stack/style-dictionary!DesignTokenTypes:type"
+            },
+            {
+              "kind": "Content",
+              "text": ";\n    TYPOGRAPHY: "
+            },
+            {
+              "kind": "Reference",
+              "text": "DesignTokenTypes",
+              "canonicalReference": "@storm-stack/style-dictionary!DesignTokenTypes:type"
+            },
+            {
+              "kind": "Content",
+              "text": ";\n    BORDER: "
+            },
+            {
+              "kind": "Reference",
+              "text": "DesignTokenTypes",
+              "canonicalReference": "@storm-stack/style-dictionary!DesignTokenTypes:type"
+            },
+            {
+              "kind": "Content",
+              "text": ";\n    RADIUS: "
+            },
+            {
+              "kind": "Reference",
+              "text": "DesignTokenTypes",
+              "canonicalReference": "@storm-stack/style-dictionary!DesignTokenTypes:type"
+            },
+            {
+              "kind": "Content",
+              "text": ";\n    SHADOW: "
+            },
+            {
+              "kind": "Reference",
+              "text": "DesignTokenTypes",
+              "canonicalReference": "@storm-stack/style-dictionary!DesignTokenTypes:type"
+            },
+            {
+              "kind": "Content",
+              "text": ";\n    TRANSITION: "
+            },
+            {
+              "kind": "Reference",
+              "text": "DesignTokenTypes",
+              "canonicalReference": "@storm-stack/style-dictionary!DesignTokenTypes:type"
+            },
+            {
+              "kind": "Content",
+              "text": ";\n}"
+            }
+          ],
+          "fileUrlPath": "packages/style-dictionary/src/types.ts",
+          "isReadonly": true,
+          "releaseTag": "Public",
+          "name": "DesignTokenTypes",
+          "variableTypeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 20
+          }
+        },
+        {
+          "kind": "Function",
+          "canonicalReference": "@storm-stack/style-dictionary!registerColorPaletteTransforms:function(1)",
+          "docComment": "",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "registerColorPaletteTransforms: (sd: "
+            },
+            {
+              "kind": "Content",
+              "text": "typeof "
+            },
+            {
+              "kind": "Reference",
+              "text": "StyleDictionary",
+              "canonicalReference": "!unknown:member"
+            },
+            {
+              "kind": "Content",
+              "text": ") => "
+            },
+            {
+              "kind": "Content",
+              "text": "void"
+            }
+          ],
+          "fileUrlPath": "packages/style-dictionary/src/transforms/register-color-palette.ts",
+          "returnTypeTokenRange": {
+            "startIndex": 4,
+            "endIndex": 5
+          },
+          "releaseTag": "Public",
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "sd",
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 3
+              },
+              "isOptional": false
+            }
+          ],
+          "name": "registerColorPaletteTransforms"
+        },
+        {
+          "kind": "Function",
+          "canonicalReference": "@storm-stack/style-dictionary!registerTamaguiFormat:function(1)",
+          "docComment": "",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "registerTamaguiFormat: (sd: "
+            },
+            {
+              "kind": "Content",
+              "text": "typeof "
+            },
+            {
+              "kind": "Reference",
+              "text": "StyleDictionary",
+              "canonicalReference": "!unknown:member"
+            },
+            {
+              "kind": "Content",
+              "text": ") => "
+            },
+            {
+              "kind": "Content",
+              "text": "void"
+            }
+          ],
+          "fileUrlPath": "packages/style-dictionary/src/formats/register-tamagui.ts",
+          "returnTypeTokenRange": {
+            "startIndex": 4,
+            "endIndex": 5
+          },
+          "releaseTag": "Public",
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "sd",
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 3
+              },
+              "isOptional": false
+            }
+          ],
+          "name": "registerTamaguiFormat"
+        },
+        {
+          "kind": "Function",
+          "canonicalReference": "@storm-stack/style-dictionary!registerTamaguiTransformGroup:function(1)",
+          "docComment": "",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "registerTamaguiTransformGroup: (sd: "
+            },
+            {
+              "kind": "Content",
+              "text": "typeof "
+            },
+            {
+              "kind": "Reference",
+              "text": "StyleDictionary",
+              "canonicalReference": "!unknown:member"
+            },
+            {
+              "kind": "Content",
+              "text": ") => "
+            },
+            {
+              "kind": "Content",
+              "text": "void"
+            }
+          ],
+          "fileUrlPath": "packages/style-dictionary/src/transform-group/register-tamagui.ts",
+          "returnTypeTokenRange": {
+            "startIndex": 4,
+            "endIndex": 5
+          },
+          "releaseTag": "Public",
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "sd",
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 3
+              },
+              "isOptional": false
+            }
+          ],
+          "name": "registerTamaguiTransformGroup"
+        },
+        {
+          "kind": "Function",
+          "canonicalReference": "@storm-stack/style-dictionary!registerTokensStudioTransforms:function(1)",
+          "docComment": "",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "registerTokensStudioTransforms: (sd: "
+            },
+            {
+              "kind": "Content",
+              "text": "typeof "
+            },
+            {
+              "kind": "Reference",
+              "text": "StyleDictionary",
+              "canonicalReference": "!unknown:member"
+            },
+            {
+              "kind": "Content",
+              "text": ") => "
+            },
+            {
+              "kind": "Content",
+              "text": "void"
+            }
+          ],
+          "fileUrlPath": "packages/style-dictionary/src/transforms/register-tokens-studio.ts",
+          "returnTypeTokenRange": {
+            "startIndex": 4,
+            "endIndex": 5
+          },
+          "releaseTag": "Public",
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "sd",
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 3
+              },
+              "isOptional": false
+            }
+          ],
+          "name": "registerTokensStudioTransforms"
+        }
+      ]
     }
   ]
 }

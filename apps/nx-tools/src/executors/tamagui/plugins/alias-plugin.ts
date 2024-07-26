@@ -15,12 +15,18 @@ export const aliasPlugin = (config: { [x: string]: string }) => {
       };
 
       for (const aliasItem of alias) {
-        build.onResolve({ filter: new RegExp(`^.*${aliasItem}$`) }, (args: any) => {
-          return main(aliasItem, args);
-        });
-        build.onResolve({ filter: new RegExp(`^.*\\/${aliasItem}\\/.*$`) }, (args: any) => {
-          return main(aliasItem, args);
-        });
+        build.onResolve(
+          { filter: new RegExp(`^.*${aliasItem}$`) },
+          (args: any) => {
+            return main(aliasItem, args);
+          }
+        );
+        build.onResolve(
+          { filter: new RegExp(`^.*\\/${aliasItem}\\/.*$`) },
+          (args: any) => {
+            return main(aliasItem, args);
+          }
+        );
       }
     }
   };

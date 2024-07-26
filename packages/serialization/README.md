@@ -32,9 +32,30 @@ This package is part of the <b>⚡storm-stack</b> monorepo. The storm-stack pack
 
 # Storm Serialization
 
-This package contains the serialization logic for the Storm project. It is responsible for serializing and deserializing the data that is sent between the client and the server. The code serialization logic is handled by the [SuperJson](https://github.com/blitz-js/superjson) library.
+This package contains the serialization logic for the Storm project. It is
+responsible for serializing and deserializing the data that is sent between the
+client and the server. The code serialization logic is handled by the
+[SuperJson](https://github.com/blitz-js/superjson) library.
 
 <!-- START doctoc -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+## Table of Contents
+
+- [Installing](#installing)
+- [Reduced Package Size](#reduced-package-size)
+- [Development](#development)
+  - [Building](#building)
+  - [Running unit tests](#running-unit-tests)
+  - [Linting](#linting)
+- [Storm Workspaces](#storm-workspaces)
+- [Roadmap](#roadmap)
+- [Support](#support)
+- [License](#license)
+- [Changelog](#changelog)
+- [Contributing](#contributing)
+- [Contributors](#contributors)
+  - [💻 Visit stormsoftware.org to stay up to date with this developer](#-visit-stormsoftwareorg-to-stay-up-to-date-with-this-developer)
+
 <!-- END doctoc -->
 
 ## Installing
@@ -65,11 +86,15 @@ yarn add -D @storm-stack/serialization
 
 ## Reduced Package Size
 
-This project uses [tsup](https://tsup.egoist.dev/) to package the source code due to its ability to remove unused code and ship smaller javascript files thanks to code splitting. This helps to greatly reduce the size of the package and to make it easier to use in other projects.
+This project uses [tsup](https://tsup.egoist.dev/) to package the source code
+due to its ability to remove unused code and ship smaller javascript files
+thanks to code splitting. This helps to greatly reduce the size of the package
+and to make it easier to use in other projects.
 
 ## Development
 
-This project is built using [Nx](https://nx.dev). As a result, many of the usual commands are available to assist in development.
+This project is built using [Nx](https://nx.dev). As a result, many of the usual
+commands are available to assist in development.
 
 ### Building
 
@@ -77,7 +102,8 @@ Run `nx build serialization` to build the library.
 
 ### Running unit tests
 
-Run `nx test serialization` to execute the unit tests via [Jest](https://jestjs.io).
+Run `nx test serialization` to execute the unit tests via
+[Jest](https://jestjs.io).
 
 ### Linting
 

@@ -1,15 +1,19 @@
 {
   "name": "@storm-stack/nx-tools",
-  "private": false,
   "version": "1.2.3",
+  "type": "commonjs",
   "repository": {
     "type": "github",
     "url": "https://github.com/storm-software/storm-stack.git",
     "directory": "apps/nx-tools"
   },
-  "type": "commonjs",
+  "private": false,
   "main": "./src/index.js",
   "typings": "./src/index.d.ts",
+  "peerDependencies": {
+    "@tamagui/web": "^1.89.20",
+    "nx": "19.5.2"
+  },
   "dependencies": {
     "@nx/devkit": "19.5.2",
     "@storm-software/config": "latest",
@@ -24,10 +28,6 @@
   "devDependencies": {
     "@tamagui/web": "^1.89.20",
     "@types/fs-extra": "^11.0.4",
-    "nx": "19.5.2"
-  },
-  "peerDependencies": {
-    "@tamagui/web": "^1.89.20",
     "nx": "19.5.2"
   },
   "executors": "./executors.json"

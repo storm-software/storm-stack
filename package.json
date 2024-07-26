@@ -47,7 +47,7 @@
     "adr": "pnpm log4brains adr new",
     "adr-preview": "pnpm log4brains preview",
     "api-extractor": "pnpm storm-docs api-extractor --outputPath=\"docs/api-reference\" --clean",
-    "build-all": "pnpm build-plugins && nx affected -t build --parallel=5 --nxBail --exclude=\"@storm-stack/monorepo\"",
+    "build-all": "nx affected -t build --parallel=5 --nxBail --exclude=\"@storm-stack/monorepo,web-docs,nx-tools\"",
     "build-apps": "nx run-many -t build --projects=apps/* --parallel=5",
     "build-components": "nx run-many -t build --projects=components/* --parallel=5",
     "build-docs": "nx run-many -t build --projects=docs/* --parallel=5",

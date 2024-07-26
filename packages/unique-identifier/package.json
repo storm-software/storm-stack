@@ -1,14 +1,14 @@
 {
   "name": "@storm-stack/unique-identifier",
   "version": "1.17.3",
-  "private": false,
+  "type": "module",
   "description": "This package provides a simple way to generate various types of unique identifiers.",
   "repository": {
     "type": "github",
     "url": "https://github.com/storm-software/storm-stack.git",
     "directory": "packages/unique-identifier"
   },
-  "type": "module",
+  "private": false,
   "dependencies": {
     "@noble/hashes": "1.3.3"
   },

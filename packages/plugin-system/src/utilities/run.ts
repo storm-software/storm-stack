@@ -2,7 +2,10 @@ import { detect, getCommand } from "@antfu/ni";
 import { type ExecaReturnValue, execaCommand } from "execa";
 
 // wrapper around execa to run our command line processes
-export const execute = (command: string, rootPath: string): Promise<ExecaReturnValue<string>> => {
+export const execute = (
+  command: string,
+  rootPath: string
+): Promise<ExecaReturnValue<string>> => {
   return execaCommand(command, {
     preferLocal: true,
     shell: true,
@@ -14,7 +17,11 @@ export const execute = (command: string, rootPath: string): Promise<ExecaReturnV
 export const install = async (name: string, rootPath: string) => {
   await execute(
     getCommand(
-      (await detect({ autoInstall: false, cwd: rootPath, programmatic: true })) ?? "npm",
+      (await detect({
+        autoInstall: false,
+        cwd: rootPath,
+        programmatic: true
+      })) ?? "npm",
       "install",
       [name]
     ),

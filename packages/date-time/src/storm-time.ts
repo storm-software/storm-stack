@@ -1,7 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Temporal } from "@js-temporal/polyfill";
 import { type JsonValue, Serializable } from "@storm-stack/serialization";
-import { isBigInt, isDate, isNumber, isSetString } from "@storm-stack/utilities";
+import {
+  isBigInt,
+  isDate,
+  isNumber,
+  isSetString
+} from "@storm-stack/utilities";
 import { RFC_3339_TIME_REGEX } from "./constants";
 import type { DateTimeInput, DateTimeOptions } from "./storm-date-time";
 import { StormDateTime } from "./storm-date-time";
@@ -24,7 +29,9 @@ export function serializeStormTime(date: StormTime): string {
  * @returns The deserialized time
  */
 export function deserializeStormTime(utcString: JsonValue): StormTime {
-  return isSetString(utcString) ? StormTime.create(utcString) : StormTime.create();
+  return isSetString(utcString)
+    ? StormTime.create(utcString)
+    : StormTime.create();
 }
 
 /**
@@ -57,12 +64,18 @@ export class StormTime extends StormDateTime {
    * @param options - The options to use
    * @returns A new instance of StormTime with the time provided in the time parameter.
    */
-  public static override create = (time?: DateTimeInput, options?: DateTimeOptions) =>
+  public static override create = (
+    time?: DateTimeInput,
+    options?: DateTimeOptions
+  ) =>
     new StormTime(time, {
       timeZone:
-        (StormDateTime.isDateTime(time) ? time.timeZoneId : options?.timeZone) ??
-        Temporal.Now.timeZoneId(),
-      calendar: StormDateTime.isDateTime(time) ? time.calendarId : options?.calendar
+        (StormDateTime.isDateTime(time)
+          ? time.timeZoneId
+          : options?.timeZone) ?? Temporal.Now.timeZoneId(),
+      calendar: StormDateTime.isDateTime(time)
+        ? time.calendarId
+        : options?.calendar
     });
 
   public constructor(dateTime?: DateTimeInput, options?: DateTimeOptions) {
@@ -91,7 +104,10 @@ export class StormTime extends StormDateTime {
    * @param _options - The options to use
    * @returns A boolean representing whether the value is a valid *date-time*
    */
-  protected override validate(value?: DateTimeInput, _options?: DateTimeOptions): boolean {
+  protected override validate(
+    value?: DateTimeInput,
+    _options?: DateTimeOptions
+  ): boolean {
     if (StormDateTime.isDateTime(value)) {
       return value.isValid;
     }
@@ -114,7 +130,8 @@ export class StormTime extends StormDateTime {
 
       datetime = date.toUTCString();
     } else {
-      datetime = value === null || value === void 0 ? void 0 : value.toUpperCase();
+      datetime =
+        value === null || value === void 0 ? void 0 : value.toUpperCase();
     }
 
     if (!datetime) {
@@ -186,7 +203,9 @@ export class StormTime extends StormDateTime {
    * @param dateTimeTo - DateTime = DateTime.current
    * @returns A duration object.
    */
-  public override getDuration(dateTimeTo: StormTime = StormTime.current()): Temporal.Duration {
+  public override getDuration(
+    dateTimeTo: StormTime = StormTime.current()
+  ): Temporal.Duration {
     return this.instant.since(dateTimeTo.instant);
   }
 }

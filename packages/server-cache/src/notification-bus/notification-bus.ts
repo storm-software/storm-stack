@@ -40,12 +40,17 @@ export class NotificationBus implements BusDriver {
   /**
    * Subscribes to the given channel
    */
-  async subscribe(channelName: string, handler: (message: CacheBusMessage) => void) {
-    this.#trace?.trace(`Subscribing to the notification bus channel: ${channelName}`);
+  async subscribe(
+    channelName: string,
+    handler: (message: CacheBusMessage) => void
+  ) {
+    this.#trace?.trace(
+      `Subscribing to the notification bus channel: ${channelName}`
+    );
 
     const handlers = NotificationBus.#subscriptions.get(channelName) || [];
     handlers.push({
-      handler: (message) => {
+      handler: message => {
         this.receivedMessages.push(message);
         handler(message);
       },
@@ -58,20 +63,27 @@ export class NotificationBus implements BusDriver {
    * Unsubscribes from the given channel
    */
   async unsubscribe(channelName: string) {
-    this.#trace?.trace(`Unsubscribing to the notification bus channel: ${channelName}`);
+    this.#trace?.trace(
+      `Unsubscribing to the notification bus channel: ${channelName}`
+    );
 
     const handlers = NotificationBus.#subscriptions.get(channelName) || [];
     NotificationBus.#subscriptions.set(
       channelName,
-      handlers.filter((handlerInfo) => handlerInfo.busId !== this.#id)
+      handlers.filter(handlerInfo => handlerInfo.busId !== this.#id)
     );
   }
 
   /**
    * Publishes a message to the given channel
    */
-  publish(channelName: string, message: Omit<CacheBusMessage, "busId">): Promise<void> {
-    this.#trace?.trace(`Publishing changes to the notification bus channel: ${channelName}`);
+  publish(
+    channelName: string,
+    message: Omit<CacheBusMessage, "busId">
+  ): Promise<void> {
+    this.#trace?.trace(
+      `Publishing changes to the notification bus channel: ${channelName}`
+    );
 
     const handlers = NotificationBus.#subscriptions.get(channelName);
     if (!handlers) {

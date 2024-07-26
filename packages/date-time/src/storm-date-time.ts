@@ -1,6 +1,13 @@
 import { Temporal } from "@js-temporal/polyfill";
 import { type JsonValue, Serializable } from "@storm-stack/serialization";
-import { isBigInt, isDate, isNumber, isObject, isSet, isSetString } from "@storm-stack/utilities";
+import {
+  isBigInt,
+  isDate,
+  isNumber,
+  isObject,
+  isSet,
+  isSetString
+} from "@storm-stack/utilities";
 import { RFC_3339_DATETIME_REGEX } from "./constants";
 import { isInstant } from "./utilities/is-instant";
 
@@ -56,7 +63,9 @@ export function serializeStormDateTime(dateTime: StormDateTime): string {
  * @returns The deserialized dateTime
  */
 export function deserializeStormDateTime(utcString: JsonValue): StormDateTime {
-  return isSetString(utcString) ? StormDateTime.create(utcString) : StormDateTime.create();
+  return isSetString(utcString)
+    ? StormDateTime.create(utcString)
+    : StormDateTime.create();
 }
 
 /**
@@ -127,15 +136,21 @@ export class StormDateTime extends Date {
    * @param options - The options to use when creating the StormDateTime object
    * @returns A new instance of StormDateTime with the current date and time.
    */
-  public static create = (dateTime?: DateTimeInput, options?: DateTimeOptions) =>
+  public static create = (
+    dateTime?: DateTimeInput,
+    options?: DateTimeOptions
+  ) =>
     new StormDateTime(dateTime, {
       timeZone:
-        (StormDateTime.isDateTime(dateTime) ? dateTime.timeZoneId : options?.timeZone) ??
+        (StormDateTime.isDateTime(dateTime)
+          ? dateTime.timeZoneId
+          : options?.timeZone) ??
         process.env.STORM_TIMEZONE ??
         Temporal.Now.timeZoneId(),
       calendar: StormDateTime.isDateTime(dateTime)
         ? dateTime.calendarId
-        : options?.calendar ?? new Intl.DateTimeFormat().resolvedOptions().calendar
+        : (options?.calendar ??
+          new Intl.DateTimeFormat().resolvedOptions().calendar)
     });
 
   /**
@@ -281,7 +296,10 @@ export class StormDateTime extends Date {
    * @param _options - The options to use
    * @returns A boolean representing whether the value is a valid *date-time*
    */
-  protected validate(value?: DateTimeInput, _options?: DateTimeOptions): boolean {
+  protected validate(
+    value?: DateTimeInput,
+    _options?: DateTimeOptions
+  ): boolean {
     if (StormDateTime.isDateTime(value)) {
       return value.isValid;
     }
@@ -304,7 +322,8 @@ export class StormDateTime extends Date {
 
       datetime = date.toUTCString();
     } else {
-      datetime = value === null || value === void 0 ? void 0 : value.toUpperCase();
+      datetime =
+        value === null || value === void 0 ? void 0 : value.toUpperCase();
     }
 
     if (!datetime) {
@@ -471,7 +490,9 @@ export class StormDateTime extends Date {
     this.#zonedDateTime = this.#zonedDateTime.with({ millisecond });
     this.#instant = this.#zonedDateTime.toInstant();
 
-    return super.setMilliseconds(this.#instant.toZonedDateTimeISO("UTC").millisecond);
+    return super.setMilliseconds(
+      this.#instant.toZonedDateTimeISO("UTC").millisecond
+    );
   }
 
   /**
@@ -479,13 +500,18 @@ export class StormDateTime extends Date {
    * @param millisecond - A numeric value equal to the millisecond value.
    */
   public override setUTCMilliseconds(millisecond: number): number {
-    this.#instant = this.#instant.toZonedDateTimeISO("UTC").with({ millisecond }).toInstant();
+    this.#instant = this.#instant
+      .toZonedDateTimeISO("UTC")
+      .with({ millisecond })
+      .toInstant();
     this.#zonedDateTime = this.#instant.toZonedDateTime({
       timeZone: this.timeZoneId,
       calendar: this.calendarId
     });
 
-    return super.setUTCMilliseconds(this.#instant.toZonedDateTimeISO("UTC").millisecond);
+    return super.setUTCMilliseconds(
+      this.#instant.toZonedDateTimeISO("UTC").millisecond
+    );
   }
 
   /**
@@ -497,7 +523,10 @@ export class StormDateTime extends Date {
     this.#zonedDateTime = this.#zonedDateTime.with({ second, millisecond });
     this.#instant = this.#zonedDateTime.toInstant();
 
-    return super.setSeconds(this.#zonedDateTime.second, this.#zonedDateTime.millisecond);
+    return super.setSeconds(
+      this.#zonedDateTime.second,
+      this.#zonedDateTime.millisecond
+    );
   }
 
   /**
@@ -525,7 +554,11 @@ export class StormDateTime extends Date {
    * @param second - A numeric value equal to the seconds value.
    * @param millisecond - A numeric value equal to the milliseconds value.
    */
-  public override setMinutes(minute: number, second?: number, millisecond?: number): number {
+  public override setMinutes(
+    minute: number,
+    second?: number,
+    millisecond?: number
+  ): number {
     this.#zonedDateTime = this.#zonedDateTime.with({
       minute,
       second,
@@ -546,7 +579,11 @@ export class StormDateTime extends Date {
    * @param second - A numeric value equal to the seconds value.
    * @param millisecond - A numeric value equal to the milliseconds value.
    */
-  public override setUTCMinutes(minute: number, second?: number, millisecond?: number): number {
+  public override setUTCMinutes(
+    minute: number,
+    second?: number,
+    millisecond?: number
+  ): number {
     this.#instant = this.#instant
       .toZonedDateTimeISO("UTC")
       .with({ minute, second, millisecond })
@@ -557,7 +594,11 @@ export class StormDateTime extends Date {
     });
 
     const utcDateTime = this.#instant.toZonedDateTimeISO("UTC");
-    return super.setUTCMinutes(utcDateTime.minute, utcDateTime.second, utcDateTime.millisecond);
+    return super.setUTCMinutes(
+      utcDateTime.minute,
+      utcDateTime.second,
+      utcDateTime.millisecond
+    );
   }
 
   /**
@@ -642,7 +683,10 @@ export class StormDateTime extends Date {
    * @param day - A numeric value equal to the day of the month.
    */
   public override setUTCDate(day: number): number {
-    this.#instant = this.#instant.toZonedDateTimeISO("UTC").with({ day }).toInstant();
+    this.#instant = this.#instant
+      .toZonedDateTimeISO("UTC")
+      .with({ day })
+      .toInstant();
     this.#zonedDateTime = this.#instant.toZonedDateTime({
       timeZone: this.timeZoneId,
       calendar: this.calendarId
@@ -671,7 +715,10 @@ export class StormDateTime extends Date {
    * @param day - A numeric value representing the day of the month. If it is not supplied, the value from a call to the getUTCDate method is used.
    */
   public override setUTCMonth(month: number, day?: number): number {
-    this.#instant = this.#instant.toZonedDateTimeISO("UTC").with({ month, day }).toInstant();
+    this.#instant = this.#instant
+      .toZonedDateTimeISO("UTC")
+      .with({ month, day })
+      .toInstant();
     this.#zonedDateTime = this.#instant.toZonedDateTime({
       timeZone: this.timeZoneId,
       calendar: this.calendarId
@@ -687,7 +734,11 @@ export class StormDateTime extends Date {
    * @param month - A zero-based numeric value for the month (0 for January, 11 for December). Must be specified if numDate is specified.
    * @param day - A numeric value equal for the day of the month.
    */
-  public override setFullYear(year: number, month?: number, day?: number): number {
+  public override setFullYear(
+    year: number,
+    month?: number,
+    day?: number
+  ): number {
     this.#zonedDateTime = this.#zonedDateTime.with({ year, month, day });
     this.#instant = this.#zonedDateTime.toInstant();
 
@@ -705,15 +756,26 @@ export class StormDateTime extends Date {
    * @param month - A numeric value equal to the month. The value for January is 0, and other month values follow consecutively. Must be supplied if numDate is supplied.
    * @param day - A numeric value equal to the day of the month.
    */
-  public override setUTCFullYear(year: number, month?: number, day?: number): number {
-    this.#instant = this.#instant.toZonedDateTimeISO("UTC").with({ year, month, day }).toInstant();
+  public override setUTCFullYear(
+    year: number,
+    month?: number,
+    day?: number
+  ): number {
+    this.#instant = this.#instant
+      .toZonedDateTimeISO("UTC")
+      .with({ year, month, day })
+      .toInstant();
     this.#zonedDateTime = this.#instant.toZonedDateTime({
       timeZone: this.timeZoneId,
       calendar: this.calendarId
     });
 
     const utcDateTime = this.#instant.toZonedDateTimeISO("UTC");
-    return super.setUTCFullYear(utcDateTime.year, utcDateTime.month, utcDateTime.day);
+    return super.setUTCFullYear(
+      utcDateTime.year,
+      utcDateTime.month,
+      utcDateTime.day
+    );
   }
 
   /**
@@ -762,7 +824,9 @@ export class StormDateTime extends Date {
    * @param dateTimeTo - DateTime = DateTime.current
    * @returns A duration object.
    */
-  public since(dateTimeTo: StormDateTime = StormDateTime.current()): Temporal.Duration {
+  public since(
+    dateTimeTo: StormDateTime = StormDateTime.current()
+  ): Temporal.Duration {
     return this.#instant.since(dateTimeTo.instant);
   }
 
@@ -772,7 +836,9 @@ export class StormDateTime extends Date {
    * @param dateTimeTo - DateTime = DateTime.current
    * @returns A duration object.
    */
-  public getDuration(dateTimeTo: StormDateTime = StormDateTime.current()): Temporal.Duration {
+  public getDuration(
+    dateTimeTo: StormDateTime = StormDateTime.current()
+  ): Temporal.Duration {
     return this.instant.since(dateTimeTo.instant);
   }
 }

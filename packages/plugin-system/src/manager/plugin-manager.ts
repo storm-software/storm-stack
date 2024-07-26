@@ -1,7 +1,11 @@
-import { readFile } from "node:fs/promises";
 import { StormDateTime } from "@storm-stack/date-time";
 import { StormError } from "@storm-stack/errors";
-import { exists, findContainingFolder, findFilePath, joinPaths } from "@storm-stack/file-system";
+import {
+  exists,
+  findContainingFolder,
+  findFilePath,
+  joinPaths
+} from "@storm-stack/file-system";
 import type { IStormLog } from "@storm-stack/logging";
 import { StormParser } from "@storm-stack/serialization";
 import {
@@ -17,6 +21,7 @@ import {
 } from "@storm-stack/utilities";
 import { glob } from "glob";
 import md5 from "md5";
+import { readFile } from "node:fs/promises";
 import toposort from "toposort";
 import { PluginSystemErrorCode } from "../errors";
 import {
@@ -35,7 +40,10 @@ const PLUGIN_CONFIG_JSON = "plugin.json";
 /**
  * Discovers and instantiates plugins.
  */
-export class PluginManager<TContext = any, TPluginModule extends IPluginModule = any> {
+export class PluginManager<
+  TContext = any,
+  TPluginModule extends IPluginModule = any
+> {
   private _options: PluginManagerOptions;
   private _hasDiscovered = false;
 
@@ -55,7 +63,10 @@ export class PluginManager<TContext = any, TPluginModule extends IPluginModule =
     options: Omit<Partial<PluginManagerOptions>, "defaultLoader"> &
       Pick<PluginManagerOptions, "defaultLoader">
   ): Promise<PluginManager<TContext, TPluginModule>> => {
-    const pluginManager = new PluginManager<TContext, TPluginModule>(logger, options);
+    const pluginManager = new PluginManager<TContext, TPluginModule>(
+      logger,
+      options
+    );
 
     await pluginManager._getLoader(pluginManager._options.defaultLoader);
     if (pluginManager._options.discoveryMode === PluginDiscoveryMode.AUTO) {
@@ -85,9 +96,15 @@ export class PluginManager<TContext = any, TPluginModule extends IPluginModule =
     this._options = deepMerge(defaults, options);
 
     if (!this._options.tsconfig || !exists(this._options.tsconfig)) {
-      this._options.tsconfig = joinPaths(this._options.rootPath, "tsconfig.json");
+      this._options.tsconfig = joinPaths(
+        this._options.rootPath,
+        "tsconfig.json"
+      );
       if (!exists(this._options.tsconfig)) {
-        this._options.tsconfig = joinPaths(this._options.rootPath, "tsconfig.base.json");
+        this._options.tsconfig = joinPaths(
+          this._options.rootPath,
+          "tsconfig.base.json"
+        );
       }
     }
 
@@ -135,7 +152,9 @@ export class PluginManager<TContext = any, TPluginModule extends IPluginModule =
     }
 
     const definition: PluginDefinition = await this.register(provider);
-    const loader = await this._getLoader(definition.loader ?? this._options.defaultLoader);
+    const loader = await this._getLoader(
+      definition.loader ?? this._options.defaultLoader
+    );
 
     instance = await loader.load(definition, options);
     if (!isSetObject(instance)) {
@@ -144,10 +163,15 @@ export class PluginManager<TContext = any, TPluginModule extends IPluginModule =
       });
     }
 
-    this._store.set(this._getCacheId(instance.definition.provider, options), instance);
+    this._store.set(
+      this._getCacheId(instance.definition.provider, options),
+      instance
+    );
 
     await Promise.all(
-      instance.definition.dependencies.map((dependency) => this.instantiate(dependency, options))
+      instance.definition.dependencies.map(dependency =>
+        this.instantiate(dependency, options)
+      )
     );
 
     return instance;
@@ -162,9 +186,12 @@ export class PluginManager<TContext = any, TPluginModule extends IPluginModule =
     const instance = await this.instantiate(provider, options);
     if (!instance) {
       return {
-        [provider]: new StormError(PluginSystemErrorCode.plugin_loading_failure, {
-          message: `The plugin "${provider}" could not be loaded prior to execution.`
-        })
+        [provider]: new StormError(
+          PluginSystemErrorCode.plugin_loading_failure,
+          {
+            message: `The plugin "${provider}" could not be loaded prior to execution.`
+          }
+        )
       };
     }
 
@@ -172,13 +199,16 @@ export class PluginManager<TContext = any, TPluginModule extends IPluginModule =
     this._store.set(this._getCacheId(provider, options), instance);
 
     const dependenciesResults = await Promise.all(
-      instance.definition.dependencies.map((dependency) =>
+      instance.definition.dependencies.map(dependency =>
         this.execute(dependency, context, options, executionDateTime)
       )
     );
 
     const result = dependenciesResults.reduce(
-      (ret: Record<string, Error | null>, dependenciesResult: Record<string, Error | null>) => {
+      (
+        ret: Record<string, Error | null>,
+        dependenciesResult: Record<string, Error | null>
+      ) => {
         for (const key of Object.keys(dependenciesResult)) {
           if (!ret[key]) {
             // biome-ignore lint/style/noNonNullAssertion: <explanation>
@@ -238,8 +268,10 @@ export class PluginManager<TContext = any, TPluginModule extends IPluginModule =
           }
         ) => {
           hook.dependencies
-            .filter((dependency) => hooks.some((depHook) => depHook.provider === dependency))
-            .map((dependency) => ret.push([hook.provider, dependency]));
+            .filter(dependency =>
+              hooks.some(depHook => depHook.provider === dependency)
+            )
+            .map(dependency => ret.push([hook.provider, dependency]));
 
           return ret;
         },
@@ -248,11 +280,11 @@ export class PluginManager<TContext = any, TPluginModule extends IPluginModule =
 
       listeners = toposort
         .array(
-          hooks.map((hook) => hook.provider),
+          hooks.map(hook => hook.provider),
           edges
         )
         // biome-ignore lint/style/noNonNullAssertion: <explanation>
-        .map((hook: string) => hooks.find((h) => h.provider === hook)?.listener!);
+        .map((hook: string) => hooks.find(h => h.provider === hook)?.listener!);
     }
 
     let nextContext = context;
@@ -301,7 +333,7 @@ export class PluginManager<TContext = any, TPluginModule extends IPluginModule =
         message: `Could not find plugin provider ${provider}. \nDiscovered plugins: ${Object.keys(
           this._registry
         )
-          .map((key) => {
+          .map(key => {
             const found = this._registry.get(key);
 
             return `${found?.name} v${found?.version} - ${found?.configPath}`;
@@ -401,10 +433,14 @@ export class PluginManager<TContext = any, TPluginModule extends IPluginModule =
 
       module = await import(resolved);
     } catch (origError) {
-      this._logger.error(`Unable to initialize loader module ${loader}: ${origError}`);
+      this._logger.error(
+        `Unable to initialize loader module ${loader}: ${origError}`
+      );
 
       throw new StormError(PluginSystemErrorCode.module_not_found, {
-        message: isSet(origError) ? `Error: ${StormParser.stringify(origError)}` : undefined
+        message: isSet(origError)
+          ? `Error: ${StormParser.stringify(origError)}`
+          : undefined
       });
     }
 
@@ -432,7 +468,9 @@ export class PluginManager<TContext = any, TPluginModule extends IPluginModule =
    * @param _configPath - The path to the plugin configuration file.
    * @returns The plugin definition.
    */
-  private _getDefinition = async (_configPath: string): Promise<PluginDefinition | undefined> => {
+  private _getDefinition = async (
+    _configPath: string
+  ): Promise<PluginDefinition | undefined> => {
     let configPath = _configPath;
     let packagePath!: string;
     if (configPath.includes(PLUGIN_CONFIG_JSON)) {
@@ -460,7 +498,9 @@ export class PluginManager<TContext = any, TPluginModule extends IPluginModule =
     const tags = configJson?.tags ?? [];
 
     if (exists(joinPaths(configPath, "package.json"))) {
-      const packageContent = await readFile(joinPaths(configPath, "package.json"));
+      const packageContent = await readFile(
+        joinPaths(configPath, "package.json")
+      );
       const packageJson = JSON.parse(packageContent.toString());
       if (packageJson.peerDependencies) {
         dependencies = Object.keys(packageJson.peerDependencies).reduce(

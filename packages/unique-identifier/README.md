@@ -32,9 +32,29 @@ This package is part of the <b>⚡storm-stack</b> monorepo. The storm-stack pack
 
 # Storm Unique Identifier Package
 
-This package provides a simple way to generate various types of unique identifiers. It is designed to be used in a browser or NodeJS environment.
+This package provides a simple way to generate various types of unique
+identifiers. It is designed to be used in a browser or NodeJS environment.
 
 <!-- START doctoc -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+## Table of Contents
+
+- [Installing](#installing)
+- [Available Identifiers](#available-identifiers)
+- [Reduced Package Size](#reduced-package-size)
+- [Development](#development)
+  - [Building](#building)
+  - [Running unit tests](#running-unit-tests)
+  - [Linting](#linting)
+- [Storm Workspaces](#storm-workspaces)
+- [Roadmap](#roadmap)
+- [Support](#support)
+- [License](#license)
+- [Changelog](#changelog)
+- [Contributing](#contributing)
+- [Contributors](#contributors)
+  - [💻 Visit stormsoftware.org to stay up to date with this developer](#-visit-stormsoftwareorg-to-stay-up-to-date-with-this-developer)
+
 <!-- END doctoc -->
 
 ## Installing
@@ -78,11 +98,15 @@ This package includes generator functions for the following type of identifiers:
 
 ## Reduced Package Size
 
-This project uses [tsup](https://tsup.egoist.dev/) to package the source code due to its ability to remove unused code and ship smaller javascript files thanks to code splitting. This helps to greatly reduce the size of the package and to make it easier to use in other projects.
+This project uses [tsup](https://tsup.egoist.dev/) to package the source code
+due to its ability to remove unused code and ship smaller javascript files
+thanks to code splitting. This helps to greatly reduce the size of the package
+and to make it easier to use in other projects.
 
 ## Development
 
-This project is built using [Nx](https://nx.dev). As a result, many of the usual commands are available to assist in development.
+This project is built using [Nx](https://nx.dev). As a result, many of the usual
+commands are available to assist in development.
 
 ### Building
 
@@ -90,11 +114,13 @@ Run `nx build unique-identifier` to build the library.
 
 ### Running unit tests
 
-Run `nx test unique-identifier` to execute the unit tests via [Jest](https://jestjs.io).
+Run `nx test unique-identifier` to execute the unit tests via
+[Jest](https://jestjs.io).
 
 ### Linting
 
-Run `nx lint unique-identifier` to run [ESLint](https://eslint.org/) on the package.
+Run `nx lint unique-identifier` to run [ESLint](https://eslint.org/) on the
+package.
 
 <!-- START footer -->
 <!-- prettier-ignore-start -->

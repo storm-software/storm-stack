@@ -24,25 +24,26 @@ import type { TelemetryConfig } from "./types";
  * This logger writes to stdio and to a file and/or [Loki streams](https://grafana.com/oss/loki/).
  */
 export class StormTrace extends StormLog implements IStormLog {
-  protected static override getLoggers = async (): Promise<GetLoggersResult> => {
-    if (!StormTrace.logger) {
-      const config = await createStormConfig<"telemetry", TelemetryConfig>(
-        "telemetry",
-        TelemetryConfigSchema
-      );
-      StormTrace.logger = StormTrace.initialize(
-        config as StormConfig<"telemetry", TelemetryConfig>
-      );
-      StormTrace.logLevel = getLogLevel(config.logLevel);
-      StormTrace.logLevelLabel = config.logLevel;
-    }
+  protected static override getLoggers =
+    async (): Promise<GetLoggersResult> => {
+      if (!StormTrace.logger) {
+        const config = await createStormConfig<"telemetry", TelemetryConfig>(
+          "telemetry",
+          TelemetryConfigSchema
+        );
+        StormTrace.logger = StormTrace.initialize(
+          config as StormConfig<"telemetry", TelemetryConfig>
+        );
+        StormTrace.logLevel = getLogLevel(config.logLevel);
+        StormTrace.logLevelLabel = config.logLevel;
+      }
 
-    return {
-      ...StormTrace.logger,
-      logLevel: StormTrace.logLevel,
-      logLevelLabel: StormTrace.logLevelLabel
+      return {
+        ...StormTrace.logger,
+        logLevel: StormTrace.logLevel,
+        logLevelLabel: StormTrace.logLevelLabel
+      };
     };
-  };
 
   /**
    * Initialize the logger.
@@ -102,8 +103,9 @@ export class StormTrace extends StormLog implements IStormLog {
    * @returns Either a promise that resolves to void or void.
    */
   public static override success(message: any) {
-    StormTrace.getLoggers().then((logger) => {
-      StormTrace.logLevel >= LogLevel.INFO && logger.info({ msg: message, level: "success" });
+    StormTrace.getLoggers().then(logger => {
+      StormTrace.logLevel >= LogLevel.INFO &&
+        logger.info({ msg: message, level: "success" });
     });
   }
 
@@ -116,8 +118,9 @@ export class StormTrace extends StormLog implements IStormLog {
   public static override fatal(message: any) {
     const error = getCauseFromUnknown(message);
 
-    StormTrace.getLoggers().then((logger) => {
-      StormTrace.logLevel >= LogLevel.FATAL && logger.fatal({ error, level: "fatal" });
+    StormTrace.getLoggers().then(logger => {
+      StormTrace.logLevel >= LogLevel.FATAL &&
+        logger.fatal({ error, level: "fatal" });
     });
   }
 
@@ -130,8 +133,9 @@ export class StormTrace extends StormLog implements IStormLog {
   public static override error(message: any) {
     const error = getCauseFromUnknown(message);
 
-    StormTrace.getLoggers().then((logger) => {
-      StormTrace.logLevel >= LogLevel.ERROR && logger.error({ error, level: "error" });
+    StormTrace.getLoggers().then(logger => {
+      StormTrace.logLevel >= LogLevel.ERROR &&
+        logger.error({ error, level: "error" });
     });
   }
 
@@ -144,8 +148,9 @@ export class StormTrace extends StormLog implements IStormLog {
   public static override exception(message: any) {
     const error = getCauseFromUnknown(message);
 
-    StormTrace.getLoggers().then((logger) => {
-      StormTrace.logLevel >= LogLevel.ERROR && logger.error({ error, level: "exception" });
+    StormTrace.getLoggers().then(logger => {
+      StormTrace.logLevel >= LogLevel.ERROR &&
+        logger.error({ error, level: "exception" });
     });
   }
 
@@ -156,7 +161,7 @@ export class StormTrace extends StormLog implements IStormLog {
    * @returns Either a promise that resolves to void or void.
    */
   public static override warn(message: any) {
-    StormTrace.getLoggers().then((logger) => {
+    StormTrace.getLoggers().then(logger => {
       StormTrace.logLevel >= LogLevel.WARN && logger.warn(message);
     });
   }
@@ -168,7 +173,7 @@ export class StormTrace extends StormLog implements IStormLog {
    * @returns Either a promise that resolves to void or void.
    */
   public static override info(message: any) {
-    StormTrace.getLoggers().then((logger) => {
+    StormTrace.getLoggers().then(logger => {
       StormTrace.logLevel >= LogLevel.INFO && logger.info(message);
     });
   }
@@ -180,7 +185,7 @@ export class StormTrace extends StormLog implements IStormLog {
    * @returns Either a promise that resolves to void or void.
    */
   public static override debug(message: any) {
-    StormTrace.getLoggers().then((logger) => {
+    StormTrace.getLoggers().then(logger => {
       StormTrace.logLevel >= LogLevel.DEBUG && logger.debug(message);
     });
   }
@@ -192,7 +197,7 @@ export class StormTrace extends StormLog implements IStormLog {
    * @returns Either a promise that resolves to void or void.
    */
   public static override trace(message: any) {
-    StormTrace.getLoggers().then((logger) => {
+    StormTrace.getLoggers().then(logger => {
       StormTrace.logLevel >= LogLevel.TRACE && logger.trace(message);
     });
   }
@@ -204,7 +209,7 @@ export class StormTrace extends StormLog implements IStormLog {
    * @returns Either a promise that resolves to void or void.
    */
   public static override log(message: any) {
-    StormTrace.getLoggers().then((logger) => {
+    StormTrace.getLoggers().then(logger => {
       StormTrace.logLevel >= LogLevel.INFO && logger.info(message);
     });
   }
@@ -215,7 +220,7 @@ export class StormTrace extends StormLog implements IStormLog {
    * @param name - The name of the process
    */
   public static override stopwatch(startTime: StormTime, name?: string) {
-    StormTrace.getLoggers().then((logger) => {
+    StormTrace.getLoggers().then(logger => {
       StormTrace.logLevel >= LogLevel.INFO &&
         logger.info(
           `\n⏱️  Completed ${name ? ` ${name}` : ""} process in ${formatSince(startTime.since())}\n`

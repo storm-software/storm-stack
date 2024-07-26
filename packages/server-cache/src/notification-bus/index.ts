@@ -1,2 +1,2 @@
-export * from "./notification-bus-driver";
 export * from "./notification-bus";
+export * from "./notification-bus-driver";

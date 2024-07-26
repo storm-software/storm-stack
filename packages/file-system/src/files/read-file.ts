@@ -1,6 +1,6 @@
+import { StormError } from "@storm-stack/errors";
 import { readFile as readFileFs, readFileSync } from "node:fs";
 import { promisify } from "node:util";
-import { StormError } from "@storm-stack/errors";
 import { FileSystemErrorCode } from "../errors";
 
 /**

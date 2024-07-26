@@ -1,14 +1,17 @@
 import type StyleDictionary from "style-dictionary";
-import { type ColorSchemeBackgroundGroup, DesignTokenGroupKind } from "../types";
+import {
+  type ColorSchemeBackgroundGroup,
+  DesignTokenGroupKind
+} from "../types";
 
 export const registerColorPaletteTransforms = (sd: typeof StyleDictionary) => {
   sd.registerTransform({
     name: "storm/transform/color-palette",
     type: "attribute",
-    matcher: (token) =>
+    matcher: token =>
       token.$type === DesignTokenGroupKind.COLOR_SCHEME &&
       token.type === DesignTokenGroupKind.COLOR_SCHEME,
-    transformer: (token) => {
+    transformer: token => {
       const background = Object.values(token.value).find(
         (child: any) =>
           child?.$type === DesignTokenGroupKind.COLOR_SCHEME_BACKGROUND &&

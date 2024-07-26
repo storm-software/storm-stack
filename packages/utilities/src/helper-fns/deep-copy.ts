@@ -16,7 +16,10 @@ import {
  * @param collection
  * @param collectionType
  */
-function getKeys(collection: Collection, collectionType: string): Array<string | symbol> {
+function getKeys(
+  collection: Collection,
+  collectionType: string
+): Array<string | symbol> {
   switch (collectionType) {
     case TYPE_ARGUMENTS:
     case TYPE_ARRAY:
@@ -43,7 +46,11 @@ function getKeys(collection: Collection, collectionType: string): Array<string |
  * @param key
  * @param collectionType
  */
-function getValue(collection: Collection, key: unknown, collectionType: string): any {
+function getValue(
+  collection: Collection,
+  key: unknown,
+  collectionType: string
+): any {
   switch (collectionType) {
     case TYPE_ARGUMENTS:
     case TYPE_ARRAY:
@@ -260,14 +267,20 @@ function recursiveCopy(
 
   // walk within collection with iterator
   for (const collectionKey of keys) {
-    const collectionValue = getValue(value as Collection, collectionKey, valueType) as Record<
-      string,
-      unknown
-    >;
+    const collectionValue = getValue(
+      value as Collection,
+      collectionKey,
+      valueType
+    ) as Record<string, unknown>;
 
     if (visited.has(collectionValue)) {
       // for Circular
-      setValue(clone as Collection, collectionKey, references.get(collectionValue), valueType);
+      setValue(
+        clone as Collection,
+        collectionKey,
+        references.get(collectionValue),
+        valueType
+      );
     } else {
       const collectionValueType = typeDetect(collectionValue);
       const copiedCollectionValue = copy(collectionValue, collectionValueType);
@@ -281,7 +294,13 @@ function recursiveCopy(
       setValue(
         clone as Collection,
         collectionKey,
-        recursiveCopy(collectionValue, copiedCollectionValue, references, visited, customizer),
+        recursiveCopy(
+          collectionValue,
+          copiedCollectionValue,
+          references,
+          visited,
+          customizer
+        ),
         valueType
       );
     }
@@ -317,7 +336,15 @@ export function deepCopy<T>(
     [value as Record<string, any>, copiedValue]
   ]);
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const visited = new WeakSet<Record<string, any>>([value] as Iterable<Record<string, any>>);
+  const visited = new WeakSet<Record<string, any>>([value] as Iterable<
+    Record<string, any>
+  >);
 
-  return recursiveCopy(value, copiedValue, references, visited, customizer) as T;
+  return recursiveCopy(
+    value,
+    copiedValue,
+    references,
+    visited,
+    customizer
+  ) as T;
 }

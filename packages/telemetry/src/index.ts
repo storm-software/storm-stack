@@ -8,5 +8,5 @@
  */
 
 export * from "./schema";
-export * from "./types";
 export * from "./storm-trace";
+export * from "./types";

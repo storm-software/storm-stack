@@ -1,5 +1,5 @@
-import { basename, resolve } from "node:path";
 import { execute } from "@storm-stack/cli";
+import { basename, resolve } from "node:path";
 import { exists } from "../files/exists";
 import { joinPaths } from "../files/join-paths";
 
@@ -15,7 +15,7 @@ function findUp(names: string[], cwd: string): string | undefined {
   let dir = cwd;
   // eslint-disable-next-line no-constant-condition
   while (true) {
-    const target = names.find((name) => exists(joinPaths(dir, name)));
+    const target = names.find(name => exists(joinPaths(dir, name)));
     if (target) return target;
 
     const up = resolve(dir, "..");
@@ -75,9 +75,12 @@ export function installPackage(
       break;
 
     case "bun":
-      execute(`bun add ${exactVersion ? "--exact" : ""} ${dev ? " --dev" : ""} ${pkg}@${tag}`, {
-        cwd: projectPath
-      });
+      execute(
+        `bun add ${exactVersion ? "--exact" : ""} ${dev ? " --dev" : ""} ${pkg}@${tag}`,
+        {
+          cwd: projectPath
+        }
+      );
       break;
 
     default:

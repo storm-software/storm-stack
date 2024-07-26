@@ -1,8 +1,12 @@
+import type { StormConfig } from "@storm-software/config";
+import {
+  StormDateTime,
+  formatDate,
+  formatDateTime
+} from "@storm-stack/date-time";
+import { EMPTY_STRING, isSetString } from "@storm-stack/utilities";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
-import type { StormConfig } from "@storm-software/config";
-import { StormDateTime, formatDate, formatDateTime } from "@storm-stack/date-time";
-import { EMPTY_STRING, isSetString } from "@storm-stack/utilities";
 import pino from "pino";
 import pinoLoki from "pino-loki";
 import type { TelemetryConfig } from "../types";
@@ -18,7 +22,8 @@ export const createFileStreamLogs = (
   config: StormConfig<"telemetry", TelemetryConfig>
 ): Array<pino.DestinationStream | pino.StreamEntry<pino.Level>> => {
   const loggingConfig = config.extensions?.telemetry?.logging ?? {};
-  const streams: Array<pino.DestinationStream | pino.StreamEntry<pino.Level>> = [];
+  const streams: Array<pino.DestinationStream | pino.StreamEntry<pino.Level>> =
+    [];
 
   if (!loggingConfig.fileLoggingDisabled) {
     let logPath = loggingConfig.path;
@@ -86,7 +91,11 @@ export const createFileStreamLogs = (
   });*/
   }
 
-  if (loggingConfig.loki?.host && loggingConfig.loki?.username && loggingConfig.loki?.password) {
+  if (
+    loggingConfig.loki?.host &&
+    loggingConfig.loki?.username &&
+    loggingConfig.loki?.password
+  ) {
     streams.push({
       level: "info",
       stream: pinoLoki({

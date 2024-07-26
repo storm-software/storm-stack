@@ -33,7 +33,9 @@ function createEntropy(length = 4, random = Math.random) {
   let entropy = "";
 
   while (entropy.length < length) {
-    entropy = entropy + Math.floor(random() * CUID_LARGE_LENGTH).toString(CUID_LARGE_LENGTH);
+    entropy =
+      entropy +
+      Math.floor(random() * CUID_LARGE_LENGTH).toString(CUID_LARGE_LENGTH);
   }
   return entropy;
 }
@@ -51,7 +53,12 @@ function fingerprint(
   options: {
     globalObj?: any;
   } = {
-    globalObj: typeof global !== "undefined" ? global : typeof window !== "undefined" ? window : {}
+    globalObj:
+      typeof global !== "undefined"
+        ? global
+        : typeof window !== "undefined"
+          ? window
+          : {}
   }
 ) {
   const globals = Object.keys(options.globalObj).toString();

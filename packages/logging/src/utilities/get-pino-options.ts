@@ -19,7 +19,8 @@ export const getPinoOptions = (
 ): PinoLoggerOptions => {
   config.logLevel ??= config.env === "production" ? "info" : "debug";
   const _stacktrace =
-    stacktrace || (config?.env === "production" && !isRuntimeServer() ? false : true);
+    stacktrace ||
+    (config?.env === "production" && !isRuntimeServer() ? false : true);
   const errorSerializer = createErrorSerializer(_stacktrace);
 
   const baseOptions: PinoLoggerOptions = {

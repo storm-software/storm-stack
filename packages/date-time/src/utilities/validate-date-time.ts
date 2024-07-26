@@ -12,7 +12,10 @@ import { validateTime } from "./validate-time";
  * @param options - The options to use
  * @returns A boolean representing whether the value is a valid *date-time*
  */
-export function validateDateTime(value: DateTimeInput, options?: DateTimeOptions): boolean {
+export function validateDateTime(
+  value: DateTimeInput,
+  options?: DateTimeOptions
+): boolean {
   if (isDateTime(value)) {
     return value.isValid;
   }
@@ -35,7 +38,8 @@ export function validateDateTime(value: DateTimeInput, options?: DateTimeOptions
 
     datetime = date.toUTCString();
   } else {
-    datetime = value === null || value === void 0 ? void 0 : value.toUpperCase();
+    datetime =
+      value === null || value === void 0 ? void 0 : value.toUpperCase();
   }
 
   if (!datetime) {

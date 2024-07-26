@@ -7,7 +7,10 @@ import { findWorkspaceRoot } from "nx/src/utils/find-workspace-root.js";
  * @returns The workspace root path
  */
 export const getWorkspaceRoot = () => {
-  if (!process.env.STORM_WORKSPACE_ROOT && !process.env.NX_WORKSPACE_ROOT_PATH) {
+  if (
+    !process.env.STORM_WORKSPACE_ROOT &&
+    !process.env.NX_WORKSPACE_ROOT_PATH
+  ) {
     const config = createStormConfig();
     if (config?.workspaceRoot) {
       return config.workspaceRoot;

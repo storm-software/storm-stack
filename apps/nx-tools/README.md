@@ -32,7 +32,8 @@ This package is part of the <b>⚡storm-stack</b> monorepo. The storm-stack pack
 
 # Storm-Stack Nx Tools
 
-A package containing tools for managing a Storm workspace. It includes various [Nx](https://nx.dev) generators and executors for common development tasks.
+A package containing tools for managing a Storm workspace. It includes various
+[Nx](https://nx.dev) generators and executors for common development tasks.
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
@@ -69,7 +70,8 @@ yarn add -D @storm-stack/nx-tools
 
 ## Executors
 
-The following executors are available in this package to invoke common tasks for the workspace's projects:
+The following executors are available in this package to invoke common tasks for
+the workspace's projects:
 
 <!-- START executors -->
 <!-- prettier-ignore-start -->
@@ -99,7 +101,8 @@ nx run my-project:tamagui
 
 ## Generators
 
-The following generators are available with this package to assist in workspace management:
+The following generators are available with this package to assist in workspace
+management:
 
 <!-- START generators -->
 <!-- prettier-ignore-start -->

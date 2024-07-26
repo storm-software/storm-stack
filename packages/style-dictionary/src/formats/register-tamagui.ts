@@ -1,6 +1,10 @@
 import { EMPTY_STRING, NEWLINE_STRING } from "@storm-stack/utilities";
 import type StyleDictionary from "style-dictionary";
-import { type ColorPaletteGroup, DesignTokenGroupKind, DesignTokenTypes } from "../types";
+import {
+  type ColorPaletteGroup,
+  DesignTokenGroupKind,
+  DesignTokenTypes
+} from "../types";
 
 export const registerTamaguiFormat = (sd: typeof StyleDictionary) => {
   sd.registerFormat({
@@ -8,11 +12,11 @@ export const registerTamaguiFormat = (sd: typeof StyleDictionary) => {
     formatter: ({ dictionary }) =>
       `export const ColorPalettes = { ${dictionary.allTokens
         .filter(
-          (token) =>
+          token =>
             token?.$type === DesignTokenGroupKind.COLOR_PALETTE &&
             token?.type === DesignTokenGroupKind.COLOR_PALETTE
         )
-        .map((token) => {
+        .map(token => {
           const palettes = Object.values(token.value).filter(
             (child: any) =>
               child?.$type === DesignTokenGroupKind.COLOR_PALETTE &&
@@ -21,11 +25,11 @@ export const registerTamaguiFormat = (sd: typeof StyleDictionary) => {
 
           return palettes
             .map(
-              (palette) =>
+              palette =>
                 `${palette.name}: [ ${Object.keys(palette)
-                  .filter((key) => palette[key]?.type === DesignTokenTypes.COLOR)
+                  .filter(key => palette[key]?.type === DesignTokenTypes.COLOR)
                   .sort()
-                  .map((key) => palette[key]?.value ?? EMPTY_STRING)
+                  .map(key => palette[key]?.value ?? EMPTY_STRING)
                   .join(", ")} ]`
             )
             .join(`,${NEWLINE_STRING}`);

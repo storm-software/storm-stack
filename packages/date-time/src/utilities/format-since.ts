@@ -4,7 +4,8 @@ import { DateTimeErrorCode } from "../errors";
 import { StormDateTime } from "../storm-date-time";
 import { isDateTime } from "./is-date-time";
 
-const pluralize = (word: string, count: number) => (count === 1 ? word : `${word}s`);
+const pluralize = (word: string, count: number) =>
+  count === 1 ? word : `${word}s`;
 const SECOND_ROUNDING_EPSILON = 0.000_000_1;
 
 const parseMilliseconds = (milliseconds: number) => {
@@ -137,12 +138,19 @@ export const formatSince = (
 
   const result: string[] = [];
   const floorDecimals = (value: number, decimalDigits: number) => {
-    const flooredInterimValue = Math.floor(value * 10 ** decimalDigits + SECOND_ROUNDING_EPSILON);
+    const flooredInterimValue = Math.floor(
+      value * 10 ** decimalDigits + SECOND_ROUNDING_EPSILON
+    );
     const flooredValue = Math.round(flooredInterimValue) / 10 ** decimalDigits;
     return flooredValue.toFixed(decimalDigits);
   };
 
-  const add = (value: number, long: string, short: string, valueString?: string) => {
+  const add = (
+    value: number,
+    long: string,
+    short: string,
+    valueString?: string
+  ) => {
     if (
       (result.length === 0 || !options.colonNotation) &&
       value === 0 &&
@@ -158,10 +166,11 @@ export const formatSince = (
       prefix = result.length > 0 ? ":" : "";
       suffix = "";
       const wholeDigits = _valueString.includes(".")
-        ? _valueString.split(".")[0]?.length ?? 0
+        ? (_valueString.split(".")[0]?.length ?? 0)
         : _valueString.length;
       const minLength = result.length > 0 ? 2 : 1;
-      _valueString = "0".repeat(Math.max(0, minLength - wholeDigits)) + _valueString;
+      _valueString =
+        "0".repeat(Math.max(0, minLength - wholeDigits)) + _valueString;
     } else {
       prefix = "";
       suffix = options.verbose ? ` ${pluralize(long, value)}` : short;
@@ -189,7 +198,9 @@ export const formatSince = (
       add(parsed.nanoseconds, "nanosecond", "ns");
     } else {
       const millisecondsAndBelow =
-        parsed.milliseconds + parsed.microseconds / 1000 + parsed.nanoseconds / 1e6;
+        parsed.milliseconds +
+        parsed.microseconds / 1000 +
+        parsed.nanoseconds / 1e6;
 
       const millisecondsDecimalDigits =
         typeof options.millisecondsDecimalDigits === "number"
@@ -205,12 +216,19 @@ export const formatSince = (
         ? millisecondsAndBelow.toFixed(millisecondsDecimalDigits)
         : String(roundedMilliseconds);
 
-      add(Number.parseFloat(millisecondsString), "millisecond", "ms", millisecondsString);
+      add(
+        Number.parseFloat(millisecondsString),
+        "millisecond",
+        "ms",
+        millisecondsString
+      );
     }
   } else {
     const seconds = (milliseconds / 1000) % 60;
     const secondsDecimalDigits =
-      typeof options.secondsDecimalDigits === "number" ? options.secondsDecimalDigits : 1;
+      typeof options.secondsDecimalDigits === "number"
+        ? options.secondsDecimalDigits
+        : 1;
     const secondsFixed = floorDecimals(seconds, secondsDecimalDigits);
     const secondsString = options.keepDecimalsOnWholeSeconds
       ? secondsFixed

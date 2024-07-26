@@ -1,12 +1,12 @@
 {
   "name": "@storm-stack/web-docs",
   "version": "1.2.3",
-  "private": true,
   "repository": {
     "type": "github",
     "url": "https://github.com/storm-software/storm-stack.git",
     "directory": "apps/web-docs"
   },
+  "private": true,
   "dependencies": {
     "@opentelemetry/api": "^1.7.0",
     "@opentelemetry/instrumentation": "^0.46.0",

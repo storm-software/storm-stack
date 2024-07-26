@@ -1,7 +1,7 @@
-import { writeFile as writeFileFs, writeFileSync } from "node:fs";
-import { promisify } from "node:util";
 import { StormError } from "@storm-stack/errors";
 import { StormParser } from "@storm-stack/serialization";
+import { writeFile as writeFileFs, writeFileSync } from "node:fs";
+import { promisify } from "node:util";
 import { FileSystemErrorCode } from "../errors";
 
 /**
@@ -37,7 +37,10 @@ export const writeFile = (filePath: string, content: any): void => {
  *
  * @param filePath - The file path to read to
  */
-export const writeFileAsync = (filePath: string, content: any): Promise<void> => {
+export const writeFileAsync = (
+  filePath: string,
+  content: any
+): Promise<void> => {
   try {
     if (!filePath) {
       throw new StormError(FileSystemErrorCode.invalid_file_path, {

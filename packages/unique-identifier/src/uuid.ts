@@ -26,47 +26,49 @@ function unsafeStringify(arr: number[], offset = 0) {
   //
   // Note to future-self: No, you can't remove the `toLowerCase()` call.
   // REF: https://github.com/uuidjs/uuid/pull/677#issuecomment-1757351351
-  return `${
-    // biome-ignore lint/style/noNonNullAssertion: <explanation>
-    byteToHex[arr[offset + 0]!]! +
-    // biome-ignore lint/style/noNonNullAssertion: <explanation>
-    byteToHex[arr[offset + 1]!]! +
-    // biome-ignore lint/style/noNonNullAssertion: <explanation>
-    byteToHex[arr[offset + 2]!]! +
-    // biome-ignore lint/style/noNonNullAssertion: <explanation>
-    byteToHex[arr[offset + 3]!]!
-    // biome-ignore lint/style/noNonNullAssertion: <explanation>
-  }-${byteToHex[arr[offset + 4]!]!}${byteToHex[arr[offset + 5]!]!}-${byteToHex[
-    // biome-ignore lint/style/noNonNullAssertion: <explanation>
-    arr[offset + 6]!
-  ]!}${
-    // biome-ignore lint/style/noNonNullAssertion: <explanation>
-    byteToHex[arr[offset + 7]!]!
-  }-${
-    // biome-ignore lint/style/noNonNullAssertion: <explanation>
-    byteToHex[arr[offset + 8]!]!
-  }${
-    // biome-ignore lint/style/noNonNullAssertion: <explanation>
-    byteToHex[arr[offset + 9]!]!
-  }-${
-    // biome-ignore lint/style/noNonNullAssertion: <explanation>
-    byteToHex[arr[offset + 10]!]!
-  }${
-    // biome-ignore lint/style/noNonNullAssertion: <explanation>
-    byteToHex[arr[offset + 11]!]!
-  }${
-    // biome-ignore lint/style/noNonNullAssertion: <explanation>
-    byteToHex[arr[offset + 12]!]!
-  }${
-    // biome-ignore lint/style/noNonNullAssertion: <explanation>
-    byteToHex[arr[offset + 13]!]!
-  }${
-    // biome-ignore lint/style/noNonNullAssertion: <explanation>
-    byteToHex[arr[offset + 14]!]!
-  }${
-    // biome-ignore lint/style/noNonNullAssertion: <explanation>
-    byteToHex[arr[offset + 15]!]!
-  }`.toLowerCase();
+  return (
+    `${
+      // biome-ignore lint/style/noNonNullAssertion: <explanation>
+      byteToHex[arr[offset + 0]!]! +
+      // biome-ignore lint/style/noNonNullAssertion: <explanation>
+      byteToHex[arr[offset + 1]!]! +
+      // biome-ignore lint/style/noNonNullAssertion: <explanation>
+      byteToHex[arr[offset + 2]!]! +
+      // biome-ignore lint/style/noNonNullAssertion: <explanation>
+      byteToHex[arr[offset + 3]!]!
+      // biome-ignore lint/style/noNonNullAssertion: <explanation>
+    }-${byteToHex[arr[offset + 4]!]!}${byteToHex[arr[offset + 5]!]!}-${byteToHex[
+      // biome-ignore lint/style/noNonNullAssertion: <explanation>
+      arr[offset + 6]!
+    ]!}${
+      // biome-ignore lint/style/noNonNullAssertion: <explanation>
+      byteToHex[arr[offset + 7]!]!
+    }-${
+      // biome-ignore lint/style/noNonNullAssertion: <explanation>
+      byteToHex[arr[offset + 8]!]!
+    }${
+      // biome-ignore lint/style/noNonNullAssertion: <explanation>
+      byteToHex[arr[offset + 9]!]!
+    }-${
+      // biome-ignore lint/style/noNonNullAssertion: <explanation>
+      byteToHex[arr[offset + 10]!]!
+    }${
+      // biome-ignore lint/style/noNonNullAssertion: <explanation>
+      byteToHex[arr[offset + 11]!]!
+    }${
+      // biome-ignore lint/style/noNonNullAssertion: <explanation>
+      byteToHex[arr[offset + 12]!]!
+    }${
+      // biome-ignore lint/style/noNonNullAssertion: <explanation>
+      byteToHex[arr[offset + 13]!]!
+    }${
+      // biome-ignore lint/style/noNonNullAssertion: <explanation>
+      byteToHex[arr[offset + 14]!]!
+    }${
+      // biome-ignore lint/style/noNonNullAssertion: <explanation>
+      byteToHex[arr[offset + 15]!]!
+    }`.toLowerCase()
+  );
 }
 
 const DNS = "6ba7b810-9dad-11d1-80b4-00c04fd430c8";
@@ -158,7 +160,9 @@ function uuid5(
       _namespace = parse(_namespace);
     }
     if (_namespace?.length !== 16) {
-      throw TypeError("Namespace must be array-like (16 iterable integer values, 0-255)");
+      throw TypeError(
+        "Namespace must be array-like (16 iterable integer values, 0-255)"
+      );
     }
 
     // Compute hash of _namespace and _value, Per 4.3

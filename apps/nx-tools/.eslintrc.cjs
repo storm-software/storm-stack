@@ -8,7 +8,12 @@ const config = {
   },
   overrides: [
     {
-      files: ["./package.json", "./generators.json", "./executors.json", "./migrations.json"],
+      files: [
+        "./package.json",
+        "./generators.json",
+        "./executors.json",
+        "./migrations.json"
+      ],
       parser: "jsonc-eslint-parser",
       rules: {
         "@nx/nx-plugin-checks": "error"

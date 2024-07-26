@@ -29,11 +29,14 @@ export function deserializeStormError(json: JsonValue): StormError {
   if (isSetObject(json)) {
     const { code, message, stack, data, cause } = json as JsonObject;
 
-    const error = new StormError(code ? String(code) : ErrorCode.internal_server_error, {
-      message: String(message),
-      stack: String(stack),
-      data: String(data)
-    });
+    const error = new StormError(
+      code ? String(code) : ErrorCode.internal_server_error,
+      {
+        message: String(message),
+        stack: String(stack),
+        data: String(data)
+      }
+    );
 
     if (cause) {
       const errorCause = deserializeStormError(cause as JsonObject);

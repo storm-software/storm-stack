@@ -9,7 +9,14 @@ export const LogLevel = {
   TRACE: 70 as LogLevel
 };
 
-export type LogLevelLabel = "silent" | "fatal" | "error" | "warn" | "info" | "debug" | "trace";
+export type LogLevelLabel =
+  | "silent"
+  | "fatal"
+  | "error"
+  | "warn"
+  | "info"
+  | "debug"
+  | "trace";
 export const LogLevelLabel = {
   SILENT: "silent" as LogLevelLabel,
   FATAL: "fatal" as LogLevelLabel,

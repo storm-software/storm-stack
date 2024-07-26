@@ -1,6 +1,7 @@
 {
   "name": "@storm-stack/themes",
   "version": "0.0.1",
+  "type": "module",
   "description": "A package containing the design themes used by Storm Stack user interfaces.",
   "repository": {
     "type": "github",
@@ -8,11 +9,10 @@
     "directory": "packages/themes"
   },
   "private": false,
-  "type": "module",
-  "publishConfig": {
-    "access": "public"
-  },
   "dependencies": {
     "@tamagui/theme-builder": "^1.90.6"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }

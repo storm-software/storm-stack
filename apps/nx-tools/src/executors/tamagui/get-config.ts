@@ -154,7 +154,9 @@ export function getTamaguiConfig({
           "@tamagui/fake-react-native/idFn"
         ),
 
-        "react-native-safe-area-context": require.resolve("@tamagui/fake-react-native"),
+        "react-native-safe-area-context": require.resolve(
+          "@tamagui/fake-react-native"
+        ),
         "react-native-gesture-handler": require.resolve("@tamagui/proxy-worm")
       })
     );

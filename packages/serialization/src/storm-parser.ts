@@ -25,7 +25,9 @@ export class StormParser extends SuperJSON {
   /**
    * Deserialize the given value with superjson using the given metadata
    */
-  public static override deserialize<TData = unknown>(payload: JsonParserResult): TData {
+  public static override deserialize<TData = unknown>(
+    payload: JsonParserResult
+  ): TData {
     return StormParser.instance.deserialize(payload);
   }
 
@@ -58,7 +60,10 @@ export class StormParser extends SuperJSON {
    * @param deserialize - The function to deserialize the schema
    * @param isApplicable - The function to check if the schema is applicable
    */
-  public static register<TData = any, TJsonObject extends JsonValue = JsonValue>(
+  public static register<
+    TData = any,
+    TJsonObject extends JsonValue = JsonValue
+  >(
     name: string,
     serialize: (data: TData) => TJsonObject,
     deserialize: (json: TJsonObject) => TData,
@@ -86,7 +91,10 @@ export class StormParser extends SuperJSON {
           ? options?.identifier
           : classConstructor.name,
       allowProps:
-        options && isObject(options) && options?.allowProps && Array.isArray(options.allowProps)
+        options &&
+        isObject(options) &&
+        options?.allowProps &&
+        Array.isArray(options.allowProps)
           ? options.allowProps
           : ["__typename"]
     });
@@ -98,8 +106,8 @@ export class StormParser extends SuperJSON {
     StormParser.instance.registerCustom<Buffer, string>(
       {
         isApplicable: (v): v is Buffer => Buffer.isBuffer(v),
-        serialize: (v) => v.toString("base64"),
-        deserialize: (v) => Buffer.from(v, "base64")
+        serialize: v => v.toString("base64"),
+        deserialize: v => Buffer.from(v, "base64")
       },
       "Bytes"
     );

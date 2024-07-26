@@ -1,4 +1,3 @@
-import { isAbsolute } from "node:path";
 import type { StormConfig } from "@storm-software/config";
 import { joinPaths } from "@storm-stack/file-system";
 import { StormTrace } from "@storm-stack/telemetry";
@@ -14,6 +13,7 @@ import type {
   HasOptions,
   RawBentoCacheOptions
 } from "bentocache/types";
+import { isAbsolute } from "node:path";
 import { notificationBusDriver } from "./notification-bus";
 
 export type StormCacheOptions = Partial<
@@ -25,7 +25,11 @@ export type StormCacheOptions = Partial<
 >;
 
 export class StormCache {
-  public static create(config: StormConfig, trace?: StormTrace, options: StormCacheOptions = {}) {
+  public static create(
+    config: StormConfig,
+    trace?: StormTrace,
+    options: StormCacheOptions = {}
+  ) {
     const _trace = trace ?? StormTrace.create("storm-cache", config);
 
     const cache = new StormCache(config, _trace, options);
@@ -40,7 +44,11 @@ export class StormCache {
   #cacheManager: BentoCache<Record<string, ReturnType<typeof bentostore>>>;
   #configCache: CacheProvider;
 
-  private constructor(config: StormConfig, trace: StormTrace, options: StormCacheOptions) {
+  private constructor(
+    config: StormConfig,
+    trace: StormTrace,
+    options: StormCacheOptions
+  ) {
     this.#config = config;
     this.trace = trace ?? StormTrace.create("storm-cache", this.#config);
 
@@ -50,7 +58,9 @@ export class StormCache {
     this.#configCache.setForever("config", this.#config);
   }
 
-  public get cache(): BentoCache<Record<string, ReturnType<typeof bentostore>>> {
+  public get cache(): BentoCache<
+    Record<string, ReturnType<typeof bentostore>>
+  > {
     return this.#cacheManager;
   }
 
@@ -102,11 +112,18 @@ export class StormCache {
     return this.#configCache.get<T>(key, defaultValue, options);
   }
 
-  public setConfig(key: string, value: any, options?: GetOrSetOptions | undefined) {
+  public setConfig(
+    key: string,
+    value: any,
+    options?: GetOrSetOptions | undefined
+  ) {
     return this.#configCache.set(key, value, options);
   }
 
-  public hasConfig(key: string, options?: HasOptions | undefined): Promise<boolean> {
+  public hasConfig(
+    key: string,
+    options?: HasOptions | undefined
+  ): Promise<boolean> {
     return this.#configCache.has(key, options);
   }
 
@@ -128,7 +145,8 @@ export class StormCache {
           .useL2Layer(
             fileDriver({
               directory:
-                this.#config.cacheDirectory && isAbsolute(this.#config.cacheDirectory)
+                this.#config.cacheDirectory &&
+                isAbsolute(this.#config.cacheDirectory)
                   ? this.#config.cacheDirectory
                   : joinPaths(
                       this.#config.workstationRoot,

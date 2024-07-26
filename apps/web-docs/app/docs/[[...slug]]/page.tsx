@@ -1,13 +1,9 @@
-import { getPage, getPages } from "../../source";
+import { DocsBody, DocsPage } from "fumadocs-ui/page";
 import type { Metadata } from "next";
-import { DocsPage, DocsBody } from "fumadocs-ui/page";
 import { notFound } from "next/navigation";
+import { getPage, getPages } from "../../source";
 
-export default function Page({
-  params
-}: {
-  params: { slug?: string[] };
-}) {
+export default function Page({ params }: { params: { slug?: string[] } }) {
   const page = getPage(params.slug);
 
   if (page == null) {
@@ -27,7 +23,7 @@ export default function Page({
 }
 
 export async function generateStaticParams() {
-  return getPages().map((page) => ({
+  return getPages().map(page => ({
     slug: page.slugs
   }));
 }

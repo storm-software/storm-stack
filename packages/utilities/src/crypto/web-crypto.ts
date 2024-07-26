@@ -1,7 +1,9 @@
 import { isObject } from "../type-checks/is-object";
 
 const WebCrypto: any =
-  globalThis.crypto && isObject(typeof globalThis.crypto) ? globalThis.crypto : undefined;
+  globalThis.crypto && isObject(typeof globalThis.crypto)
+    ? globalThis.crypto
+    : undefined;
 
 export const Crypto = WebCrypto;
 

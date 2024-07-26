@@ -1,6 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Serializable } from "@storm-stack/serialization";
-import { EMPTY_STRING, NEWLINE_STRING, isFunction } from "@storm-stack/utilities";
+import {
+  EMPTY_STRING,
+  NEWLINE_STRING,
+  isFunction
+} from "@storm-stack/utilities";
 import { getCauseFromUnknown, isStormError } from "./utilities";
 
 export interface StormErrorOptions {
@@ -101,8 +105,8 @@ export class StormError<TCode extends string = string> extends Error {
       ? NEWLINE_STRING +
           (this._stack || "")
             .split("\n")
-            .map((line) => line.trim())
-            .map((line) => {
+            .map(line => line.trim())
+            .map(line => {
               if (line.startsWith(`${this.name}: ${this.message}`)) {
                 return null;
               }
@@ -142,7 +146,11 @@ export class StormError<TCode extends string = string> extends Error {
   public print(): string {
     return this.message
       ? `${this.name ? (this.code ? `${this.name} ` : this.name) : EMPTY_STRING} ${
-          this.code ? (this.code && this.name ? `(${this.code})` : this.code) : EMPTY_STRING
+          this.code
+            ? this.code && this.name
+              ? `(${this.code})`
+              : this.code
+            : EMPTY_STRING
         }${this.code || this.name ? ": " : EMPTY_STRING}${this.message}${
           this.cause
             ? `${NEWLINE_STRING}Cause: ${
@@ -161,7 +169,9 @@ export class StormError<TCode extends string = string> extends Error {
   public override toString(stacktrace?: boolean): string {
     return (
       this.print() +
-      (stacktrace !== false ? ` ${NEWLINE_STRING}Stack Trace: ${NEWLINE_STRING}${this.stack}` : "")
+      (stacktrace !== false
+        ? ` ${NEWLINE_STRING}Stack Trace: ${NEWLINE_STRING}${this.stack}`
+        : "")
     );
   }
 }

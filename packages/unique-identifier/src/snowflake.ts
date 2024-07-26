@@ -84,7 +84,8 @@ let sequence = 1;
  * @returns A 64Bit binary string
  */
 function ToBinaryString(snowflake: SnowflakeResolvable): string {
-  const cached64BitZeros = "0000000000000000000000000000000000000000000000000000000000000000";
+  const cached64BitZeros =
+    "0000000000000000000000000000000000000000000000000000000000000000";
   const binValue = BigInt(snowflake).toString(2);
   return binValue.length < 64
     ? cached64BitZeros.substring(0, 64 - binValue.length) + binValue
@@ -98,7 +99,11 @@ function ToBinaryString(snowflake: SnowflakeResolvable): string {
  * @param length - Number of bits to extract before stopping
  * @returns A bigint value of the extracted bits
  */
-function extractBits(snowflake: SnowflakeResolvable, start: number, length?: number): number {
+function extractBits(
+  snowflake: SnowflakeResolvable,
+  start: number,
+  length?: number
+): number {
   return parseInt(
     length
       ? ToBinaryString(snowflake).substring(start, start + length)
@@ -161,7 +166,9 @@ export function snowflake(
  * @param snowflake - Snowflake to deconstruct
  * @returns Either the DeconstructedSnowflake object
  */
-export function deconstructSnowflake(snowflake: SnowflakeResolvable): DeconstructedSnowflake {
+export function deconstructSnowflake(
+  snowflake: SnowflakeResolvable
+): DeconstructedSnowflake {
   const binary = ToBinaryString(snowflake);
 
   return {

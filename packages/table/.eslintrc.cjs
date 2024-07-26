@@ -15,7 +15,13 @@ const config = {
           "error",
           {
             buildTargets: ["build"],
-            ignoredDependencies: ["nx", "typescript", "react", "react-dom", "react-native"]
+            ignoredDependencies: [
+              "nx",
+              "typescript",
+              "react",
+              "react-dom",
+              "react-native"
+            ]
           }
         ]
       }

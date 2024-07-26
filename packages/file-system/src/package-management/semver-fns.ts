@@ -12,7 +12,9 @@ export const deriveNewSemverVersion = (
   preid?: string
 ) => {
   if (!valid(currentSemverVersion)) {
-    throw new Error(`Invalid semver version "${currentSemverVersion}" provided.`);
+    throw new Error(
+      `Invalid semver version "${currentSemverVersion}" provided.`
+    );
   }
 
   let newVersion = semverSpecifier;

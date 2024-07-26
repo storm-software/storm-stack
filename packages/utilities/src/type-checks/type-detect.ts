@@ -1,6 +1,6 @@
 import { isBuffer } from "./is-buffer";
 
-const globalObject = ((Obj) => {
+const globalObject = (Obj => {
   if (typeof globalThis === "object") {
     return globalThis; // eslint-disable-line
   }
@@ -48,12 +48,18 @@ export function typeDetect(obj: unknown): string {
 
   // https://html.spec.whatwg.org/multipage/browsers.html#location
   if (typeof window === "object" && window !== null) {
-    if (typeof (window as any).location === "object" && obj === (window as any).location) {
+    if (
+      typeof (window as any).location === "object" &&
+      obj === (window as any).location
+    ) {
       return "Location";
     }
 
     // https://html.spec.whatwg.org/#document
-    if (typeof (window as any).document === "object" && obj === (window as any).document) {
+    if (
+      typeof (window as any).document === "object" &&
+      obj === (window as any).document
+    ) {
       return "Document";
     }
 
@@ -97,7 +103,9 @@ export function typeDetect(obj: unknown): string {
     }
   }
 
-  const stringTag = typeof Symbol.toStringTag !== "undefined" && (obj as any)[Symbol.toStringTag];
+  const stringTag =
+    typeof Symbol.toStringTag !== "undefined" &&
+    (obj as any)[Symbol.toStringTag];
   if (typeof stringTag === "string") {
     return stringTag;
   }
@@ -138,12 +146,18 @@ export function typeDetect(obj: unknown): string {
   }
 
   // http://www.ecma-international.org/ecma-262/6.0/index.html#sec-%mapiteratorprototype%-@@tostringtag
-  if (typeof Map !== "undefined" && objPrototype === Object.getPrototypeOf(new Map().entries())) {
+  if (
+    typeof Map !== "undefined" &&
+    objPrototype === Object.getPrototypeOf(new Map().entries())
+  ) {
     return "Map Iterator";
   }
 
   // http://www.ecma-international.org/ecma-262/6.0/index.html#sec-%setiteratorprototype%-@@tostringtag
-  if (typeof Set !== "undefined" && objPrototype === Object.getPrototypeOf(new Set().entries())) {
+  if (
+    typeof Set !== "undefined" &&
+    objPrototype === Object.getPrototypeOf(new Set().entries())
+  ) {
     return "Set Iterator";
   }
 

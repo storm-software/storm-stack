@@ -1,4 +1,6 @@
-const alphabet = Array.from({ length: 26 }, (_x, i) => String.fromCharCode(i + 97));
+const alphabet = Array.from({ length: 26 }, (_x, i) =>
+  String.fromCharCode(i + 97)
+);
 
 /**
  * Generate a random integer

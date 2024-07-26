@@ -19,4 +19,6 @@ export const formatDateTime = (
     offset: "never"
   }
 ): string =>
-  dateTime ? `${dateTime.zonedDateTime.toString(options).replaceAll("T", " ")}` : EMPTY_STRING;
+  dateTime
+    ? `${dateTime.zonedDateTime.toString(options).replaceAll("T", " ")}`
+    : EMPTY_STRING;

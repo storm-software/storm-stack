@@ -1,4 +1,7 @@
-export type DesignTokenGroupKind = "color-scheme" | "color-scheme-background" | "color-palette";
+export type DesignTokenGroupKind =
+  | "color-scheme"
+  | "color-scheme-background"
+  | "color-palette";
 export const DesignTokenGroupKind = {
   COLOR_SCHEME: "color-scheme" as DesignTokenGroupKind,
   COLOR_SCHEME_BACKGROUND: "color-scheme-background" as DesignTokenGroupKind,

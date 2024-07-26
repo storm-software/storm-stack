@@ -30,10 +30,10 @@ pre-commit:
     prepare:
       glob: "**/{lefthook.yml,biome.json}"
       run: "pnpm exec storm-prepare"
-    validate:
-      glob: "**/*.*"
-      run: "pnpm exec storm-pre-commit {staged_files}"
-      stage_fixed: true
+    # validate:
+    #   glob: "**/*.*"
+    #   run: "pnpm exec storm-pre-commit {staged_files}"
+    #   stage_fixed: true
     # lint:
     #   glob: "**/*.*"
     #   run: "pnpm lint"

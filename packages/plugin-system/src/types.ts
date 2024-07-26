@@ -198,7 +198,10 @@ export interface IPluginManager {
    * @param options - Run-time options to configure your exports.
    * @returns An object containing the exported functionality.
    */
-  instantiate(provider: string, options?: Record<string, any>): Promise<PluginInstance>;
+  instantiate(
+    provider: string,
+    options?: Record<string, any>
+  ): Promise<PluginInstance>;
 
   /**
    * Registers a plugin definition in the manager.

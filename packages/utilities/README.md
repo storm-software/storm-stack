@@ -32,9 +32,29 @@ This package is part of the <b>⚡storm-stack</b> monorepo. The storm-stack pack
 
 # Storm Utilities Package
 
-This package contains various utilities functions that serve a wide range of purposes. These utilities are used by other packages in the storm-stack monorepo and any other projects that could benefit from their functionality.
+This package contains various utilities functions that serve a wide range of
+purposes. These utilities are used by other packages in the storm-stack monorepo
+and any other projects that could benefit from their functionality.
 
 <!-- START doctoc -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+## Table of Contents
+
+- [Installing](#installing)
+- [Reduced Package Size](#reduced-package-size)
+- [Development](#development)
+  - [Building](#building)
+  - [Running unit tests](#running-unit-tests)
+  - [Linting](#linting)
+- [Storm Workspaces](#storm-workspaces)
+- [Roadmap](#roadmap)
+- [Support](#support)
+- [License](#license)
+- [Changelog](#changelog)
+- [Contributing](#contributing)
+- [Contributors](#contributors)
+  - [💻 Visit stormsoftware.org to stay up to date with this developer](#-visit-stormsoftwareorg-to-stay-up-to-date-with-this-developer)
+
 <!-- END doctoc -->
 
 ## Installing
@@ -65,11 +85,15 @@ yarn add -D @storm-stack/utilities
 
 ## Reduced Package Size
 
-This project uses [tsup](https://tsup.egoist.dev/) to package the source code due to its ability to remove unused code and ship smaller javascript files thanks to code splitting. This helps to greatly reduce the size of the package and to make it easier to use in other projects.
+This project uses [tsup](https://tsup.egoist.dev/) to package the source code
+due to its ability to remove unused code and ship smaller javascript files
+thanks to code splitting. This helps to greatly reduce the size of the package
+and to make it easier to use in other projects.
 
 ## Development
 
-This project is built using [Nx](https://nx.dev). As a result, many of the usual commands are available to assist in development.
+This project is built using [Nx](https://nx.dev). As a result, many of the usual
+commands are available to assist in development.
 
 ### Building
 

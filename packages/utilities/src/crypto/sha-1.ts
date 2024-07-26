@@ -20,7 +20,9 @@ function ROTL(x: number, n: number) {
   return (x << n) | (x >>> (32 - n));
 }
 
-export function sha1(bytes: string | number | boolean | Uint8Array | any[]): Uint8Array {
+export function sha1(
+  bytes: string | number | boolean | Uint8Array | any[]
+): Uint8Array {
   const K = [0x5a827999, 0x6ed9eba1, 0x8f1bbcdc, 0xca62c1d6];
   const H = [0x67452301, 0xefcdab89, 0x98badcfe, 0x10325476, 0xc3d2e1f0];
 

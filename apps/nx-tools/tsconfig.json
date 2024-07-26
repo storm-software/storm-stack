@@ -10,8 +10,13 @@
     "skipLibCheck": true,
     "isolatedModules": false,
     "types": ["node"],
-    "lib": ["esnext", "dom"],
+    "lib": ["esnext", "dom"]
   },
   "include": ["**/*.ts", "**/*.js", "**/*.json"],
-  "exclude": ["jest.config.ts", "generators/**/files/**/*", "**/*.spec.ts", "**/*.test.ts"]
+  "exclude": [
+    "jest.config.ts",
+    "generators/**/files/**/*",
+    "**/*.spec.ts",
+    "**/*.test.ts"
+  ]
 }

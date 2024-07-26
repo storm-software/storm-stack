@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { isFunction, isMergeableObject, propertyExists, propertyUnsafe } from "../type-checks";
+import { isFunction, isMergeableObject, propertyUnsafe } from "../type-checks";
 
 const emptyTarget = (val: any) => {
   return Array.isArray(val) ? [] : {};
@@ -12,7 +12,7 @@ const cloneUnlessOtherwiseSpecified = (value: any, options?: any) => {
 };
 
 const defaultArrayMerge = (target: any[], source: any[], options?: any) => {
-  return target.concat(source).map((element) => {
+  return target.concat(source).map(element => {
     return cloneUnlessOtherwiseSpecified(element, options);
   });
 };
@@ -28,14 +28,18 @@ const getMergeFunction = (key: string, options?: any) => {
 const getKeys = (target: Record<string, any>) => {
   return Object.keys(target).concat(
     (Object.getOwnPropertySymbols
-      ? Object.getOwnPropertySymbols(target).filter((symbol) => {
+      ? Object.getOwnPropertySymbols(target).filter(symbol => {
           return Object.propertyIsEnumerable.call(target, symbol);
         })
       : []) as unknown as string[]
   );
 };
 
-const mergeObject = (target: Record<string, any>, source: Record<string, any>, options?: any) => {
+const mergeObject = (
+  target: Record<string, any>,
+  source: Record<string, any>,
+  options?: any
+) => {
   const destination: Record<string, any> = {};
   if (options.isMergeableObject(target)) {
     for (const key of getKeys(target)) {
@@ -44,7 +48,11 @@ const mergeObject = (target: Record<string, any>, source: Record<string, any>, o
   }
   for (const key of getKeys(source)) {
     if (propertyUnsafe(target, key) && options.isMergeableObject(source[key])) {
-      destination[key] = getMergeFunction(key, options)(target[key], source[key], options);
+      destination[key] = getMergeFunction(key, options)(
+        target[key],
+        source[key],
+        options
+      );
     } else {
       destination[key] = cloneUnlessOtherwiseSpecified(source[key], options);
     }

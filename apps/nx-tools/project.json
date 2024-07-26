@@ -12,7 +12,9 @@
         "tsConfig": "apps/nx-tools/tsconfig.json",
         "project": "apps/nx-tools/package.json",
         "main": "apps/nx-tools/src/index.ts",
-        "additionalEntryPoints": ["apps/nx-tools/src/executors/tamagui/executor.ts"],
+        "additionalEntryPoints": [
+          "apps/nx-tools/src/executors/tamagui/executor.ts"
+        ],
         "platform": "node",
         "deleteOutputPath": true,
         "bundle": true,

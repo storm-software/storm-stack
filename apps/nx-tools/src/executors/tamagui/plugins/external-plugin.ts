@@ -20,10 +20,13 @@ export const createExternalPlugin = ({
       }
 
       if (skipNodeModulesBundle) {
-        build.onResolve({ filter: NON_NODE_MODULE_RE }, (args: { path: any }) => ({
-          path: args.path,
-          external: true
-        }));
+        build.onResolve(
+          { filter: NON_NODE_MODULE_RE },
+          (args: { path: any }) => ({
+            path: args.path,
+            external: true
+          })
+        );
       }
 
       if (!patterns || patterns.length === 0) {
@@ -31,7 +34,7 @@ export const createExternalPlugin = ({
       }
 
       build.onResolve({ filter: /.*/ }, (args: { path: string }) => {
-        const external = patterns.some((p) => {
+        const external = patterns.some(p => {
           if (p instanceof RegExp) {
             return p.test(args.path);
           }
