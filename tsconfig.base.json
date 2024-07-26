@@ -28,10 +28,6 @@
       "@storm-stack/server-cache/*": ["packages/server-cache/src/*"],
       "@storm-stack/string-fns": ["packages/string-fns/src/index.ts"],
       "@storm-stack/string-fns/*": ["packages/string-fns/src/*"],
-      "@storm-stack/style-dictionary": [
-        "packages/style-dictionary/src/index.ts"
-      ],
-      "@storm-stack/style-dictionary/*": ["packages/style-dictionary/src/*"],
       "@storm-stack/telemetry": ["packages/telemetry/src/index.ts"],
       "@storm-stack/telemetry/*": ["packages/telemetry/src/*"],
       "@storm-stack/types": ["packages/types/src/index.ts"],
