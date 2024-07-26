@@ -21,8 +21,6 @@ jobs:
       actions: read
       contents: write
       id-token: write
-    needs:
-      - start
     uses: storm-software/storm-ops/.github/workflows/ci-reusable.yml@main
     with:
       tag: ${{ inputs.tag }}
