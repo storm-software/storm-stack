@@ -15,7 +15,7 @@ on:
 jobs:
   file-system-scan:
     name: Vulnerability scanning - File system
-    uses: storm-software/storm-ops/.github/workflows/security-reusable.yml
+    uses: storm-software/storm-ops/.github/workflows/security-reusable.yml@main
     with:
       scan-type: "fs"
       format: "sarif"
@@ -24,7 +24,7 @@ jobs:
 
   config-scan:
     name: Vulnerability scanning - Config
-    uses: storm-software/storm-ops/.github/workflows/security-reusable.yml
+    uses: storm-software/storm-ops/.github/workflows/security-reusable.yml@main
     with:
       scan-type: "config"
       format: "sarif"

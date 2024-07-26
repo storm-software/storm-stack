@@ -13,5 +13,5 @@
     "@storm-software/workspace-tools/plugins/typescript"
   ],
   "parallel": 1,
- "useDaemonProcess": true
+  "useDaemonProcess": true
 }
