@@ -1,6 +1,8 @@
 import { isString } from "@storm-stack/types";
 import {
   cleanDoubleSlashes,
+  decode as decodeURL,
+  encode as encodeURL,
   parseAuth,
   ParsedAuth,
   ParsedHost,
@@ -12,17 +14,56 @@ import {
 import { StormParser } from "./storm-parser";
 import { StormURL } from "./types";
 
+export type StormURLBuilderOptions = {
+  /**
+   * Should the URL be decoded
+   *
+   * @defaultValue `true`
+   */
+  decode: boolean;
+};
+
 /**
  * A class used to build URLs
  *
  * @remarks
- * This class is used to build URLs with a fluent API
+ * This class is used to build URLs with a fluent API.
+ *
+ * The [UFO](https://github.com/unjs/ufo) library is used under the hood to parse and stringify URLs.
+ *
+ * @class StormURLBuilder
  */
 export class StormURLBuilder {
   #url: StormURL;
 
-  constructor(url: string | StormURL) {
-    const parsedURL = isString(url) ? parseURL(url) : url;
+  /**
+   * Create a new URL builder
+   *
+   * @param url - The URL to build
+   * @param options - The options for the URL builder
+   * @returns The URL builder
+   */
+  public static create(
+    url: string | StormURL,
+    options?: StormURLBuilderOptions
+  ) {
+    return new StormURLBuilder(url, options);
+  }
+
+  /**
+   * Create a new URL builder
+   */
+  protected constructor(
+    url: string | StormURL,
+    options?: StormURLBuilderOptions
+  ) {
+    const decode = options?.decode ?? true;
+
+    const parsedURL = isString(url)
+      ? decode
+        ? parseURL(decodeURL(url))
+        : parseURL(url)
+      : url;
 
     this.#url = {
       __typename: "StormURL",
@@ -37,7 +78,7 @@ export class StormURLBuilder {
     }
   }
 
-  public get url(): StormURL {
+  public get _url(): StormURL {
     return this.#url;
   }
 
@@ -233,6 +274,15 @@ export class StormURLBuilder {
    */
   public toString(): string {
     return cleanDoubleSlashes(stringifyParsedURL(this.#url));
+  }
+
+  /**
+   * Returns the encoded string representation of the URL
+   *
+   * @returns The encoded string representation of the URL
+   */
+  public toEncoded(): string {
+    return encodeURL(this.toString());
   }
 
   /**
