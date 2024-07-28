@@ -27,7 +27,6 @@ jobs:
       packageManager: pnpm
       packageManagerVersion: 9.6.0
       stormBot: Stormie-Bot
-    secrets:
       githubToken: ${{ github.token }}
       npmToken: ${{ secrets.STORM_BOT_NPM_TOKEN }}
       cargoToken: ${{ secrets.STORM_BOT_CARGO_TOKEN }}
