@@ -7,5 +7,6 @@
  * @packageDocumentation
  */
 
+export * from "./convert";
 export * from "./type-checks";
 export * from "./utility-types";

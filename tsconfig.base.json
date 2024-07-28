@@ -14,6 +14,8 @@
       "@storm-stack/errors/*": ["packages/errors/src/*"],
       "@storm-stack/file-system": ["packages/file-system/src/index.ts"],
       "@storm-stack/file-system/*": ["packages/file-system/src/*"],
+      "@storm-stack/hashing": ["packages/hashing/src/index.ts"],
+      "@storm-stack/hashing/*": ["packages/hashing/src/*"],
       "@storm-stack/logging": ["packages/logging/src/index.ts"],
       "@storm-stack/logging/*": ["packages/logging/src/*"],
       "@storm-stack/nx-tools": ["apps/nx-tools/src/index.ts"],

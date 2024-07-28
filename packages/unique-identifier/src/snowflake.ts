@@ -32,8 +32,6 @@ export interface ISnowflakeGeneratorOptions {
  * * string
  * * number
  * * bigint
- *
- * @type {SnowflakeResolvable}
  */
 export type SnowflakeResolvable = string;
 
@@ -106,7 +104,7 @@ function extractBits(
 ): number {
   return Number.parseInt(
     length
-      ? ToBinaryString(snowflake).substring(start, start + length)
+      ? ToBinaryString(snowflake).slice(start, start + length)
       : ToBinaryString(snowflake).slice(Math.max(0, start)),
     2
   );
@@ -136,17 +134,11 @@ function extractBits(
  * @param shardId - The shard id to use
  * @returns A snowflake
  */
-export function snowflake(
-  {
-    shardId = DEFAULT_SHARD_ID,
-    epoch = DEFAULT_EPOCH,
-    timestamp = Date.now()
-  }: ISnowflakeGeneratorOptions = {
-    shardId: DEFAULT_SHARD_ID,
-    epoch: DEFAULT_EPOCH,
-    timestamp: Date.now()
-  }
-): string {
+export function snowflake({
+  shardId = DEFAULT_SHARD_ID,
+  epoch = DEFAULT_EPOCH,
+  timestamp = Date.now()
+}: ISnowflakeGeneratorOptions): string {
   timestamp =
     timestamp instanceof Date
       ? timestamp.valueOf()

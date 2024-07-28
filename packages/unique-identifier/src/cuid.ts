@@ -1,4 +1,4 @@
-import { hash } from "./hash";
+import { hash } from "@storm-stack/hashing";
 import { randomLetter } from "./random";
 
 /**
@@ -49,19 +49,15 @@ function createEntropy(length = 4, random = Math.random) {
  * @param options - Options
  * @returns The environment's Fingerprint
  */
-function fingerprint(
-  options: {
-    globalObj?: any;
-  } = {
-    globalObj:
-      typeof global === "undefined"
-        ? typeof window === "undefined"
-          ? {}
-          : window
-        : global
-  }
-) {
-  const globals = Object.keys(options.globalObj).toString();
+function fingerprint(options?: { globalObj?: any }) {
+  const globalObj =
+    (options?.globalObj ?? typeof global === "undefined")
+      ? typeof window === "undefined"
+        ? {}
+        : window
+      : global;
+
+  const globals = Object.keys(globalObj).toString();
   const sourceString =
     globals.length > 0
       ? globals + createEntropy(CUID_LARGE_LENGTH, Math.random)
@@ -91,7 +87,11 @@ export function cuid(): string {
   // The salt should be long enough to be globally unique across the full
   // length of the hash. For simplicity, we use the same length as the
   // intended id output.
-  const salt = createEntropy(length, Math.random);
+  const salt = createEntropy(CUID_LARGE_LENGTH, Math.random);
 
-  return `${randomLetter() + hash(`${time + salt + count + fingerprint()}`).substring(1, length)}`;
+  const hashed = hash(`${time + salt + count + fingerprint()}`);
+  return `${
+    randomLetter() +
+    hashed.slice(1, Math.min(hashed.length - 1, CUID_LARGE_LENGTH))
+  }`;
 }

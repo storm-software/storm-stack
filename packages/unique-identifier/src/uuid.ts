@@ -1,16 +1,5 @@
-import { isSetString, isString } from "@storm-stack/types";
-import { sha1 } from "@storm-stack/utilities";
-
-function stringToBytes(str: string | number | boolean) {
-  const _str = unescape(encodeURIComponent(str));
-  const bytes = [];
-
-  for (let i = 0; i < _str.length; ++i) {
-    bytes.push(_str.codePointAt(i));
-  }
-
-  return bytes;
-}
+import { hash } from "@storm-stack/hashing";
+import { isSetString, isString, stringToUint8Array } from "@storm-stack/types";
 
 /**
  * Convert array of 16 byte values to UUID string format of the form:
@@ -27,49 +16,22 @@ function unsafeStringify(arr: number[], offset = 0) {
   //
   // Note to future-self: No, you can't remove the `toLowerCase()` call.
   // REF: https://github.com/uuidjs/uuid/pull/677#issuecomment-1757351351
-  return (
-    `${
-      // biome-ignore lint/style/noNonNullAssertion: <explanation>
-      byteToHex[arr[offset + 0]!]! +
-      // biome-ignore lint/style/noNonNullAssertion: <explanation>
-      byteToHex[arr[offset + 1]!]! +
-      // biome-ignore lint/style/noNonNullAssertion: <explanation>
-      byteToHex[arr[offset + 2]!]! +
-      // biome-ignore lint/style/noNonNullAssertion: <explanation>
-      byteToHex[arr[offset + 3]!]!
-      // biome-ignore lint/style/noNonNullAssertion: <explanation>
-    }-${byteToHex[arr[offset + 4]!]!}${byteToHex[arr[offset + 5]!]!}-${byteToHex[
-      // biome-ignore lint/style/noNonNullAssertion: <explanation>
-      arr[offset + 6]!
-    ]!}${
-      // biome-ignore lint/style/noNonNullAssertion: <explanation>
-      byteToHex[arr[offset + 7]!]!
-    }-${
-      // biome-ignore lint/style/noNonNullAssertion: <explanation>
-      byteToHex[arr[offset + 8]!]!
-    }${
-      // biome-ignore lint/style/noNonNullAssertion: <explanation>
-      byteToHex[arr[offset + 9]!]!
-    }-${
-      // biome-ignore lint/style/noNonNullAssertion: <explanation>
-      byteToHex[arr[offset + 10]!]!
-    }${
-      // biome-ignore lint/style/noNonNullAssertion: <explanation>
-      byteToHex[arr[offset + 11]!]!
-    }${
-      // biome-ignore lint/style/noNonNullAssertion: <explanation>
-      byteToHex[arr[offset + 12]!]!
-    }${
-      // biome-ignore lint/style/noNonNullAssertion: <explanation>
-      byteToHex[arr[offset + 13]!]!
-    }${
-      // biome-ignore lint/style/noNonNullAssertion: <explanation>
-      byteToHex[arr[offset + 14]!]!
-    }${
-      // biome-ignore lint/style/noNonNullAssertion: <explanation>
-      byteToHex[arr[offset + 15]!]!
-    }`.toLowerCase()
-  );
+  return `${
+    byteToHex[arr[offset + 0]!]! +
+    byteToHex[arr[offset + 1]!]! +
+    byteToHex[arr[offset + 2]!]! +
+    byteToHex[arr[offset + 3]!]!
+  }-${byteToHex[arr[offset + 4]!]!}${byteToHex[arr[offset + 5]!]!}-${byteToHex[
+    arr[offset + 6]!
+  ]!}${byteToHex[arr[offset + 7]!]!}-${byteToHex[arr[offset + 8]!]!}${byteToHex[
+    arr[offset + 9]!
+  ]!}-${byteToHex[arr[offset + 10]!]!}${byteToHex[
+    arr[offset + 11]!
+  ]!}${byteToHex[arr[offset + 12]!]!}${byteToHex[
+    arr[offset + 13]!
+  ]!}${byteToHex[arr[offset + 14]!]!}${byteToHex[
+    arr[offset + 15]!
+  ]!}`.toLowerCase();
 }
 
 const DNS = "6ba7b810-9dad-11d1-80b4-00c04fd430c8";
@@ -140,29 +102,21 @@ function parse(uuid: string) {
  *
  * @returns A random UUID string
  */
-function uuid5(
-  name: string,
-  version: number,
-  hashFn: (bytes: string | number | boolean | Uint8Array | any[]) => Uint8Array
-) {
+function uuid5(name: string, version: number) {
   function generateUUID(
-    value: string | any[] | ArrayLike<number>,
-    namespace: string | any[] | ArrayLike<number>,
-    buf: { [x: string]: number | undefined },
-    offset: number
-  ) {
-    let _value = value;
-    let _namespace = namespace;
-    let _offset = offset;
-
-    if (isString(_value)) {
-      _value = stringToBytes(_value);
+    value: string | any[] | ArrayLike<number> = "",
+    namespace: string | any[] | ArrayLike<number> = "storm",
+    buf?: { [x: string]: number | undefined },
+    offset = 0
+  ): string {
+    if (isString(value)) {
+      value = stringToUint8Array(value);
     }
 
-    if (isString(_namespace)) {
-      _namespace = parse(_namespace);
+    if (isString(namespace)) {
+      namespace = parse(namespace);
     }
-    if (_namespace?.length !== 16) {
+    if (namespace?.length !== 16) {
       throw new TypeError(
         "Namespace must be array-like (16 iterable integer values, 0-255)"
       );
@@ -171,10 +125,10 @@ function uuid5(
     // Compute hash of _namespace and _value, Per 4.3
     // Future: Use spread syntax when supported on all platforms, e.g. `bytes =
     // hashFn([..._namespace, ... _value])`
-    let bytes = new Uint8Array(16 + _value.length);
-    bytes.set(_namespace);
-    bytes.set(_value, _namespace.length);
-    bytes = hashFn(bytes);
+    let bytes = new Uint8Array(16 + value.length);
+    bytes.set(namespace);
+    bytes.set(value, namespace.length);
+    bytes = stringToUint8Array(hash(bytes));
 
     if (bytes[6]) {
       bytes[6] = (bytes[6] & 0x0f) | version;
@@ -183,15 +137,15 @@ function uuid5(
       bytes[8] = (bytes[8] & 0x3f) | 0x80;
     }
 
-    if (buf) {
-      _offset = _offset || 0;
+    // if (buf) {
+    //   offset = offset || 0;
 
-      for (let i = 0; i < 16; ++i) {
-        buf[_offset + i] = bytes[i];
-      }
+    //   for (let i = 0; i < 16; ++i) {
+    //     buf[offset + i] = bytes[i];
+    //   }
 
-      return buf;
-    }
+    //   return buf as string;
+    // }
 
     return unsafeStringify([...bytes]);
   }
@@ -209,4 +163,4 @@ function uuid5(
   return generateUUID;
 }
 
-export const uuid = uuid5("v5", 0x50, sha1);
+export const uuid = uuid5("v5", 0x50);

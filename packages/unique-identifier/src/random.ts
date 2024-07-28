@@ -1,12 +1,12 @@
 const alphabet = Array.from({ length: 26 }, (_x, i) =>
-  String.fromCharCode(i + 97)
+  String.fromCodePoint(i + 97)
 );
 
 /**
  * Generate a random integer
  *
- * @param maximum The maximum value (inclusive)
- * @param minimum The minimum value (inclusive)
+ * @param maximum - The maximum value (inclusive)
+ * @param minimum - The minimum value (inclusive)
  * @returns A random integer
  */
 export const randomInteger = (maximum: number, minimum = 0) =>
@@ -15,7 +15,7 @@ export const randomInteger = (maximum: number, minimum = 0) =>
 /**
  * Generate a random letter
  *
- * @param random The random number generator
+ * @param random - The random number generator
  * @returns A random letter
  */
 export const randomLetter = (random: () => number = Math.random) =>

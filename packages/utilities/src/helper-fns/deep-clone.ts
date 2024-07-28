@@ -90,11 +90,11 @@ export function deepClone<T>(obj: T): Resolved<T> {
     (typeof SharedArrayBuffer !== "undefined" &&
       obj instanceof SharedArrayBuffer)
   ) {
-    return [...obj] as Resolved<T>;
+    return [...(obj as any)] as Resolved<T>;
   }
 
   if (obj instanceof DataView) {
-    const result = new DataView([...obj.buffer]);
+    const result = new DataView([...(obj.buffer as any)] as any);
     cloneDeepHelper(obj, result);
     return result as Resolved<T>;
   }

@@ -10,8 +10,7 @@
   },
   "private": false,
   "dependencies": {
-    "buffer": "^6.0.3",
-    "crypto": "^1.0.1"
+    "buffer": "^6.0.3"
   },
   "devDependencies": {
     "@types/node": "^20.14.12"
