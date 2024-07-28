@@ -30,11 +30,4 @@ jobs:
       packageManagerVersion: 9.6.0
       stormBot: Stormie-Bot
       githubToken: ${{ github.token }}
-    secrets:
-      inherit
-
-      # githubToken: ${{ github.token }}
-      # npmToken: ${{ secrets.STORM_BOT_NPM_TOKEN }}
-      # cargoToken: ${{ secrets.STORM_BOT_CARGO_TOKEN }}
-      # slackToken: ${{ secrets.STORM_BOT_SLACK_TOKEN }}
-      # discordWebhook: ${{ secrets.STORM_BOT_DISCORD_WEBHOOK}}
+    secrets: inherit

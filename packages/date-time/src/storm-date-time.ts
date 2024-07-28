@@ -28,7 +28,7 @@ export interface DateTimeOptions {
   /**
    * If false, the current date and time is defaulted when undefined or null is passed. If true, the current date and time is not defaulted.
    *
-   * @default false
+   * @defaultValue false
    */
   skipDefaulting?: boolean;
 }
@@ -117,7 +117,7 @@ export class StormDateTime extends Date {
    * @returns A new instance of StormDateTime with the maximum date and time.
    */
   public static minimum(): StormDateTime {
-    return StormDateTime.create(new Date(-8640000000000000));
+    return StormDateTime.create(new Date(-8_640_000_000_000_000));
   }
 
   /**
@@ -126,7 +126,7 @@ export class StormDateTime extends Date {
    * @returns A new instance of StormDateTime with the maximum date and time.
    */
   public static maximum(): StormDateTime {
-    return StormDateTime.create(new Date(8640000000000000));
+    return StormDateTime.create(new Date(8_640_000_000_000_000));
   }
 
   /**
@@ -184,9 +184,8 @@ export class StormDateTime extends Date {
       _dateTime = Temporal.Now.instant();
     }
 
-    const instant = !_dateTime
-      ? undefined
-      : StormDateTime.isDateTime(_dateTime)
+    const instant = _dateTime
+      ? StormDateTime.isDateTime(_dateTime)
         ? _dateTime.instant
         : Temporal.Instant.from(
             isDate(_dateTime)
@@ -196,7 +195,8 @@ export class StormDateTime extends Date {
                 : isNumber(_dateTime) || isBigInt(_dateTime)
                   ? new Date(Number(_dateTime)).toISOString()
                   : _dateTime
-          );
+          )
+      : undefined;
 
     super(instant ? Number(instant.epochMilliseconds) : "MISSING_DATE");
     if (instant && this.validate(_dateTime, options)) {
@@ -310,11 +310,8 @@ export class StormDateTime extends Date {
     let datetime: string | undefined;
     if (isDate(value) || isNumber(value) || isBigInt(value)) {
       let date!: Date;
-      if (isNumber(value) || isBigInt(value)) {
-        date = new Date(Number(value));
-      } else {
-        date = value;
-      }
+      date =
+        isNumber(value) || isBigInt(value) ? new Date(Number(value)) : value;
 
       if (Number.isNaN(date.getTime())) {
         return false;
@@ -466,7 +463,7 @@ export class StormDateTime extends Date {
    *  Gets the difference in minutes between the time on the local computer and Universal Coordinated Time (UTC).
    */
   public override getTimezoneOffset(): number {
-    return this.#zonedDateTime.offsetNanoseconds / 1000000;
+    return this.#zonedDateTime.offsetNanoseconds / 1_000_000;
   }
 
   /**

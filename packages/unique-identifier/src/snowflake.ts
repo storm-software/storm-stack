@@ -5,7 +5,7 @@ export interface ISnowflakeGeneratorOptions {
   /**
    * The id of the shard running this generator.
    *
-   * @default 1
+   * @defaultValue 1
    */
   shardId: number;
 
@@ -15,14 +15,14 @@ export interface ISnowflakeGeneratorOptions {
    * @remarks
    * This is the time in milliseconds since 1 January 1970 00:00:00 UTC.
    *
-   * @default 1420070400000 (Date.UTC(1970, 0, 1).valueOf())
+   * @defaultValue 1420070400000 (Date.UTC(1970, 0, 1).valueOf())
    */
   epoch: number;
 
   /**
    * The current timestamp to use for the snowflake.
    *
-   * @default Date.now()
+   * @defaultValue Date.now()
    */
   timestamp: number | Date;
 }
@@ -73,7 +73,7 @@ const DEFAULT_EPOCH: number = Date.UTC(1970, 0, 1).valueOf();
 /**
  * The sequence of the current running generator.
  *
- * @default 1
+ * @defaultValue 1
  */
 let sequence = 1;
 
@@ -88,7 +88,7 @@ function ToBinaryString(snowflake: SnowflakeResolvable): string {
     "0000000000000000000000000000000000000000000000000000000000000000";
   const binValue = BigInt(snowflake).toString(2);
   return binValue.length < 64
-    ? cached64BitZeros.substring(0, 64 - binValue.length) + binValue
+    ? cached64BitZeros.slice(0, Math.max(0, 64 - binValue.length)) + binValue
     : binValue;
 }
 
@@ -104,10 +104,10 @@ function extractBits(
   start: number,
   length?: number
 ): number {
-  return parseInt(
+  return Number.parseInt(
     length
       ? ToBinaryString(snowflake).substring(start, start + length)
-      : ToBinaryString(snowflake).substring(start),
+      : ToBinaryString(snowflake).slice(Math.max(0, start)),
     2
   );
 }
@@ -147,11 +147,10 @@ export function snowflake(
     timestamp: Date.now()
   }
 ): string {
-  if (timestamp instanceof Date) {
-    timestamp = timestamp.valueOf();
-  } else {
-    timestamp = new Date(timestamp).valueOf();
-  }
+  timestamp =
+    timestamp instanceof Date
+      ? timestamp.valueOf()
+      : new Date(timestamp).valueOf();
 
   let result = (BigInt(timestamp) - BigInt(epoch)) << BigInt(22);
   result = result | (BigInt(shardId % 1024) << BigInt(12));
@@ -187,7 +186,7 @@ export function deconstructSnowflake(
  * @returns Whether the snowflake is valid
  */
 export function isValidSnowflake(snowflake: string): boolean {
-  if (!/^[\d]{19}$/.test(snowflake)) {
+  if (!/^\d{19}$/.test(snowflake)) {
     return false;
   }
 
@@ -195,7 +194,7 @@ export function isValidSnowflake(snowflake: string): boolean {
     deconstructSnowflake(snowflake);
 
     return true;
-  } catch (_e) {
+  } catch {
     return false;
   }
 }

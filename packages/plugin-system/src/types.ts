@@ -15,28 +15,28 @@ export interface PluginManagerOptions {
   /**
    * The path to the root of the application.
    *
-   * @default process.env.STORM_WORKSPACE_ROOT
+   * @defaultValue process.env.STORM_WORKSPACE_ROOT
    */
   rootPath: string;
 
   /**
    * The path to the root of the application.
    *
-   * @default process.env.STORM_WORKSPACE_ROOT + "/tsconfig.json"
+   * @defaultValue process.env.STORM_WORKSPACE_ROOT + "/tsconfig.json"
    */
   tsconfig?: string;
 
   /**
    * Should node_modules be used to discover plugins?
    *
-   * @default true
+   * @defaultValue true
    */
   useNodeModules: boolean;
 
   /**
    * Should auto-install be used to discover plugins?
    *
-   * @default true
+   * @defaultValue true
    */
   autoInstall: boolean;
 
@@ -48,7 +48,7 @@ export interface PluginManagerOptions {
    * `fallback` - Discover plugins in the rootPath if a registered plugin provider is not found
    * `none` - Do not discover plugins in the rootPath, regardless of whether a registered plugin provider is found or not
    *
-   * @default "fallback"
+   * @defaultValue "fallback"
    */
   discoveryMode: PluginDiscoveryMode;
 

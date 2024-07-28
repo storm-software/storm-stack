@@ -4,7 +4,7 @@ import { randomLetter } from "./random";
 /**
  * ~22k hosts before 50% chance of initial counter collision with a remaining counter range of 9.0e+15 in JavaScript.
  */
-const INITIAL_COUNT_MAX = 476782367;
+const INITIAL_COUNT_MAX = 476_782_367;
 
 /**
  * The length of the CUID fingerprint.
@@ -14,7 +14,7 @@ const CUID_LARGE_LENGTH = 36;
 /**
  * The sequence of the current running generator.
  *
- * @default 1
+ * @defaultValue 1
  */
 const sequence = 1;
 
@@ -54,19 +54,20 @@ function fingerprint(
     globalObj?: any;
   } = {
     globalObj:
-      typeof global !== "undefined"
-        ? global
-        : typeof window !== "undefined"
-          ? window
-          : {}
+      typeof global === "undefined"
+        ? typeof window === "undefined"
+          ? {}
+          : window
+        : global
   }
 ) {
   const globals = Object.keys(options.globalObj).toString();
-  const sourceString = globals.length
-    ? globals + createEntropy(CUID_LARGE_LENGTH, Math.random)
-    : createEntropy(CUID_LARGE_LENGTH, Math.random);
+  const sourceString =
+    globals.length > 0
+      ? globals + createEntropy(CUID_LARGE_LENGTH, Math.random)
+      : createEntropy(CUID_LARGE_LENGTH, Math.random);
 
-  return hash(sourceString).substring(0, CUID_LARGE_LENGTH);
+  return hash(sourceString).slice(0, Math.max(0, CUID_LARGE_LENGTH));
 }
 
 /**

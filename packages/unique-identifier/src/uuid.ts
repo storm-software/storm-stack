@@ -1,11 +1,12 @@
-import { isSetString, isString, sha1 } from "@storm-stack/utilities";
+import { isSetString, isString } from "@storm-stack/types";
+import { sha1 } from "@storm-stack/utilities";
 
 function stringToBytes(str: string | number | boolean) {
   const _str = unescape(encodeURIComponent(str));
   const bytes = [];
 
   for (let i = 0; i < _str.length; ++i) {
-    bytes.push(_str.charCodeAt(i));
+    bytes.push(_str.codePointAt(i));
   }
 
   return bytes;
@@ -17,7 +18,7 @@ function stringToBytes(str: string | number | boolean) {
  */
 const byteToHex: string[] = [];
 for (let i = 0; i < 256; ++i) {
-  byteToHex.push((i + 0x100).toString(16).slice(1));
+  byteToHex.push((i + 0x1_00).toString(16).slice(1));
 }
 
 function unsafeStringify(arr: number[], offset = 0) {
@@ -77,11 +78,11 @@ const URL = "6ba7b811-9dad-11d1-80b4-00c04fd430c8";
 function parse(uuid: string) {
   if (
     !isSetString(uuid) ||
-    /^(?:[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}|00000000-0000-0000-0000-000000000000)$/i.test(
+    /^(?:[\da-f]{8}-[\da-f]{4}-[1-5][\da-f]{3}-[89ab][\da-f]{3}-[\da-f]{12}|0{8}-(?:0{4}-){3}0{12})$/i.test(
       uuid
     ) === false
   ) {
-    throw TypeError("Invalid UUID");
+    throw new TypeError("Invalid UUID");
   }
 
   let value!: number;
@@ -89,31 +90,33 @@ function parse(uuid: string) {
 
   // Parse ########-....-....-....-............
   // biome-ignore lint/suspicious/noAssignInExpressions: <explanation>
-  arr[0] = (value = parseInt(uuid.slice(0, 8), 16)) >>> 24;
+  arr[0] = (value = Number.parseInt(uuid.slice(0, 8), 16)) >>> 24;
   arr[1] = (value >>> 16) & 0xff;
   arr[2] = (value >>> 8) & 0xff;
   arr[3] = value & 0xff;
 
   // Parse ........-####-....-....-............
   // biome-ignore lint/suspicious/noAssignInExpressions: <explanation>
-  arr[4] = (value = parseInt(uuid.slice(9, 13), 16)) >>> 8;
+  arr[4] = (value = Number.parseInt(uuid.slice(9, 13), 16)) >>> 8;
   arr[5] = value & 0xff;
 
   // Parse ........-....-####-....-............
   // biome-ignore lint/suspicious/noAssignInExpressions: <explanation>
-  arr[6] = (value = parseInt(uuid.slice(14, 18), 16)) >>> 8;
+  arr[6] = (value = Number.parseInt(uuid.slice(14, 18), 16)) >>> 8;
   arr[7] = value & 0xff;
 
   // Parse ........-....-....-####-............
   // biome-ignore lint/suspicious/noAssignInExpressions: <explanation>
-  arr[8] = (value = parseInt(uuid.slice(19, 23), 16)) >>> 8;
+  arr[8] = (value = Number.parseInt(uuid.slice(19, 23), 16)) >>> 8;
   arr[9] = value & 0xff;
 
   // Parse ........-....-....-....-############
   // (Use "/" to avoid 32-bit truncation when bit-shifting high-order bytes)
   // biome-ignore lint/suspicious/noAssignInExpressions: <explanation>
-  arr[10] = ((value = parseInt(uuid.slice(24, 36), 16)) / 0x10000000000) & 0xff;
-  arr[11] = (value / 0x100000000) & 0xff;
+  arr[10] =
+    ((value = Number.parseInt(uuid.slice(24, 36), 16)) / 0x1_00_00_00_00_00) &
+    0xff;
+  arr[11] = (value / 0x1_00_00_00_00) & 0xff;
   arr[12] = (value >>> 24) & 0xff;
   arr[13] = (value >>> 16) & 0xff;
   arr[14] = (value >>> 8) & 0xff;
@@ -160,7 +163,7 @@ function uuid5(
       _namespace = parse(_namespace);
     }
     if (_namespace?.length !== 16) {
-      throw TypeError(
+      throw new TypeError(
         "Namespace must be array-like (16 iterable integer values, 0-255)"
       );
     }
@@ -190,14 +193,14 @@ function uuid5(
       return buf;
     }
 
-    return unsafeStringify(Array.from(bytes));
+    return unsafeStringify([...bytes]);
   }
 
   // Function#name is not settable on some platforms (#270)
   try {
     generateUUID.name = name;
     // eslint-disable-next-line no-empty
-  } catch (_) {}
+  } catch {}
 
   // For CommonJS default export support
   generateUUID.DNS = DNS;
