@@ -11,10 +11,11 @@
   "private": false,
   "dependencies": {
     "buffer": "^6.0.3",
-    "superjson": "2.2.1"
+    "superjson": "2.2.1",
+    "ufo": "^1.5.4"
   },
   "devDependencies": {
-    "@types/node": "^20.11.20"
+    "@types/node": "^20.14.12"
   },
   "publishConfig": {
     "access": "public"

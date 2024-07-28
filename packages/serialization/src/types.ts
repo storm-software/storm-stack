@@ -1,4 +1,5 @@
-import type { ClassTypeCheckable, ITyped } from "@storm-stack/utilities";
+import type { ClassTypeCheckable, ITyped } from "@storm-stack/types";
+import { ParsedURL } from "ufo";
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 export type PrimitiveJsonValue = string | number | boolean | undefined | null;
@@ -154,3 +155,12 @@ export type SerializableType<T> = ClassSerializable<T> &
 
 export type SerializationMetadata<T> = DataTransformer<T> &
   ClassTypeCheckable<T>;
+
+export type StormURL = ParsedURL & {
+  __typename: "StormURL";
+  query: Record<string, any>;
+  username?: string;
+  password?: string;
+  hostname?: string;
+  port?: string;
+};

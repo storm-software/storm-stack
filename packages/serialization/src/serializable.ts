@@ -2,7 +2,7 @@ import {
   type ClassTypeCheckable,
   type ITyped,
   isFunction
-} from "@storm-stack/utilities";
+} from "@storm-stack/types";
 import { StormParser } from "./storm-parser";
 import type { ClassSerializable, JsonParserResult, JsonValue } from "./types";
 
@@ -17,15 +17,14 @@ export const Serializable = <TData = any>(options?: {
   >(
     target: TClass
   ) => {
-    const identifier = options?.identifier ? options?.identifier : target.name;
+    const identifier = options?.identifier || target.name;
 
-    let isTypeOf!: ClassTypeCheckable<TData>["isTypeOf"];
-    if (isFunction((target.prototype as ClassTypeCheckable<TData>)?.isTypeOf)) {
-      isTypeOf = (target.prototype as ClassTypeCheckable<TData>).isTypeOf;
-    } else {
-      isTypeOf = (value: any): value is TData =>
-        value instanceof target || value?.__typename === identifier;
-    }
+    const isTypeOf: ClassTypeCheckable<TData>["isTypeOf"] = isFunction(
+      (target.prototype as ClassTypeCheckable<TData>)?.isTypeOf
+    )
+      ? (target.prototype as ClassTypeCheckable<TData>).isTypeOf
+      : (value: any): value is TData =>
+          value instanceof target || value?.__typename === identifier;
 
     StormParser.registerClass(target, identifier);
     return class
@@ -84,6 +83,7 @@ export const Serializable = <TData = any>(options?: {
        *
        * @param json - The JSON object to deserialize from
        */
+      // eslint-disable-next-line class-methods-use-this
       public deserialize = (json: JsonValue) => {
         return StormParser.serialize(json);
       };
@@ -103,6 +103,7 @@ export const Serializable = <TData = any>(options?: {
        * @param strObject - A stringified version of the class instance
        * @returns An instance of the class converted from the provided string
        */
+      // eslint-disable-next-line class-methods-use-this
       public parse = (strObject: string): TData => {
         return StormParser.parse(strObject);
       };
@@ -112,6 +113,7 @@ export const Serializable = <TData = any>(options?: {
        * @param value - The value to check
        * @returns True if the value is of the type of the class
        */
+      // eslint-disable-next-line class-methods-use-this
       public isTypeOf(value: any): value is TData {
         return isTypeOf(value);
       }

@@ -21,7 +21,7 @@
   },
   "devDependencies": {
     "@types/figlet": "^1.5.8",
-    "@types/node": "^20.11.20"
+    "@types/node": "^20.14.12"
   },
   "publishConfig": {
     "access": "public"

@@ -3,9 +3,7 @@
   "plugins": [
     {
       "plugin": "@nx/eslint/plugin",
-      "exclude": [
-        "packages/**/__fixtures__/**/*"
-      ],
+      "exclude": ["packages/**/__fixtures__/**/*"],
       "options": {
         "targetName": "lint",
         "useFlatConfig": true

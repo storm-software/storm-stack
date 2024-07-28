@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 // import { Decimal } from "decimal.js";
-import { isObject, isString } from "@storm-stack/utilities";
+import { isObject, isString } from "@storm-stack/types";
 import { Buffer } from "buffer/";
 import SuperJSON from "superjson";
 import type { Class, JsonParserResult, JsonValue } from "./types";
@@ -87,9 +87,7 @@ export class StormParser extends SuperJSON {
     StormParser.instance.registerClass(classConstructor, {
       identifier: isString(options)
         ? options
-        : options?.identifier
-          ? options?.identifier
-          : classConstructor.name,
+        : options?.identifier || classConstructor.name,
       allowProps:
         options &&
         isObject(options) &&
