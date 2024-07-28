@@ -1,6 +1,6 @@
 import type { StormConfig } from "@storm-software/config";
 import { getCauseFromUnknown } from "@storm-stack/errors";
-import { type MaybePromise, isSet, isSetString } from "@storm-stack/utilities";
+import { type MaybePromise, isSet, isSetString } from "@storm-stack/types";
 import type { ILogger, ILoggerWrapper } from "../types";
 
 /**

@@ -16,11 +16,11 @@ export const readFile = (filePath: string): string => {
       });
     }
 
-    return readFileSync(filePath, { encoding: "utf-8" });
-  } catch (e) {
+    return readFileSync(filePath, { encoding: "utf8" });
+  } catch (error_) {
     throw new StormError(FileSystemErrorCode.file_write_failure, {
       message: "An error occurred writing data to file",
-      cause: e
+      cause: error_
     });
   }
 };
@@ -38,11 +38,11 @@ export const readFileAsync = (filePath: string): Promise<string> => {
       });
     }
 
-    return promisify(readFileFs)(filePath, { encoding: "utf-8" });
-  } catch (e) {
+    return promisify(readFileFs)(filePath, { encoding: "utf8" });
+  } catch (error_) {
     throw new StormError(FileSystemErrorCode.file_write_failure, {
       message: "An error occurred writing data to file",
-      cause: e
+      cause: error_
     });
   }
 };

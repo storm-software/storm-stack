@@ -1,10 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Serializable } from "@storm-stack/serialization";
-import {
-  EMPTY_STRING,
-  NEWLINE_STRING,
-  isFunction
-} from "@storm-stack/utilities";
+import { EMPTY_STRING, NEWLINE_STRING, isFunction } from "@storm-stack/types";
 import { getCauseFromUnknown, isStormError } from "./utilities";
 
 export interface StormErrorOptions {
@@ -56,16 +52,13 @@ export class StormError<TCode extends string = string> extends Error {
 
   public constructor(
     code: TCode,
-    { name, message, cause, stack, data }: StormErrorOptions = {
-      name: "StormError",
-      message: "An error occurred during processing"
-    }
+    { name, message, cause, stack, data }: StormErrorOptions
   ) {
     super(message, { cause });
 
     this.code = code;
-    this.message ??= message ? message : "An error occurred during processing";
-    this.name ??= name ? name : this.constructor.name;
+    this.message ??= message || "An error occurred during processing";
+    this.name ??= name || this.constructor.name;
     this.data = data;
 
     if (stack) {
@@ -135,7 +128,7 @@ export class StormError<TCode extends string = string> extends Error {
    * @returns The stack trace string
    */
   public get originalStack(): string {
-    return super.stack ? super.stack : this.stack;
+    return super.stack || this.stack;
   }
 
   /**
@@ -169,9 +162,9 @@ export class StormError<TCode extends string = string> extends Error {
   public override toString(stacktrace?: boolean): string {
     return (
       this.print() +
-      (stacktrace !== false
-        ? ` ${NEWLINE_STRING}Stack Trace: ${NEWLINE_STRING}${this.stack}`
-        : "")
+      (stacktrace === false
+        ? ""
+        : ` ${NEWLINE_STRING}Stack Trace: ${NEWLINE_STRING}${this.stack}`)
     );
   }
 }

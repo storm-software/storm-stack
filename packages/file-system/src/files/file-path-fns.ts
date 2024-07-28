@@ -1,4 +1,4 @@
-import { EMPTY_STRING } from "@storm-stack/utilities";
+import { EMPTY_STRING } from "@storm-stack/types";
 import { dirname, isAbsolute, parse, relative, sep } from "node:path";
 import { getWorkspaceRoot } from "./get-workspace-root";
 import { joinPaths } from "./join-paths";
@@ -58,7 +58,7 @@ export function findContainingFolder(filePath: string): string {
     folderPath.lastIndexOf("\\") === folderPath.length - 1 ||
     folderPath.lastIndexOf("/") === folderPath.length - 1
   ) {
-    folderPath = folderPath.substring(0, folderPath.length - 1);
+    folderPath = folderPath.slice(0, Math.max(0, folderPath.length - 1));
   }
 
   return folderPath.split("\\").pop() ?? EMPTY_STRING;
@@ -118,8 +118,8 @@ export function relativeToWorkspaceRoot(filePath: string) {
 /**
  * Rename the file name with a new name.
  *
- * @param filePath The current file path being processed
- * @param newFileName The updated file name being processed
+ * @param filePath - The current file path being processed
+ * @param newFileName - The updated file name being processed
  * @returns The modified or unmodified file path.
  */
 export function renameFile(filePath: string, newFileName: string): string {

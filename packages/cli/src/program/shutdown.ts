@@ -1,5 +1,5 @@
 import type { StormLog } from "@storm-stack/logging";
-import type { MaybePromise } from "@storm-stack/utilities";
+import type { MaybePromise } from "@storm-stack/types";
 
 const errorTypes = ["unhandledRejection", "uncaughtException"];
 const signalTraps = ["SIGTERM", "SIGINT", "SIGUSR2"];
@@ -27,9 +27,9 @@ export function registerShutdown(config: {
         await shutdown();
         config.logger.info("Shutdown process complete, exiting with code 0");
         process.exit(0);
-      } catch (e) {
+      } catch (error_) {
         config.logger.warn("Shutdown process failed, exiting with code 1");
-        config.logger.error(e);
+        config.logger.error(error_);
         process.exit(1);
       }
     });
@@ -42,9 +42,9 @@ export function registerShutdown(config: {
         await shutdown();
         config.logger.info("Shutdown process complete, exiting with code 0");
         process.exit(0);
-      } catch (e) {
+      } catch (error_) {
         config.logger.warn("Shutdown process failed, exiting with code 1");
-        config.logger.error(e);
+        config.logger.error(error_);
         process.exit(1);
       }
     });
@@ -55,10 +55,12 @@ export function registerShutdown(config: {
       config.logger.info(`Manual shutdown ${reason ? `(${reason})` : ""}`);
       await shutdown();
       config.logger.info("Shutdown process complete, exiting with code 0");
+      // eslint-disable-next-line unicorn/no-process-exit
       process.exit(0);
-    } catch (e) {
+    } catch (error_) {
       config.logger.warn("Shutdown process failed, exiting with code 1");
-      config.logger.error(e);
+      config.logger.error(error_);
+      // eslint-disable-next-line unicorn/no-process-exit
       process.exit(1);
     }
   };

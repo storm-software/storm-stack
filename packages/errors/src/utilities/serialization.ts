@@ -1,5 +1,5 @@
 import type { JsonObject, JsonValue } from "@storm-stack/serialization";
-import { isSetObject } from "@storm-stack/utilities";
+import { isSetObject } from "@storm-stack/types";
 import { ErrorCode } from "../errors";
 import { StormError } from "../storm-error";
 

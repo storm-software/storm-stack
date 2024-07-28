@@ -35,22 +35,30 @@ export const LogLevelLabel = {
  */
 export const getLogLevel = (label: string): LogLevel => {
   switch (label) {
-    case "trace":
+    case "trace": {
       return LogLevel.TRACE;
-    case "debug":
+    }
+    case "debug": {
       return LogLevel.DEBUG;
-    case "info":
+    }
+    case "info": {
       return LogLevel.INFO;
-    case "warn":
+    }
+    case "warn": {
       return LogLevel.WARN;
-    case "error":
+    }
+    case "error": {
       return LogLevel.ERROR;
-    case "fatal":
+    }
+    case "fatal": {
       return LogLevel.FATAL;
-    case "silent":
+    }
+    case "silent": {
       return LogLevel.SILENT;
-    default:
+    }
+    default: {
       return LogLevel.INFO;
+    }
   }
 };
 

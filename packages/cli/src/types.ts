@@ -1,4 +1,4 @@
-import { MaybePromise } from "@storm-stack/utilities";
+import { MaybePromise } from "@storm-stack/types";
 import { Command } from "commander";
 import { Fonts, Options } from "figlet";
 

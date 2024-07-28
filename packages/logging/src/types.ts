@@ -1,5 +1,5 @@
 import type { StormTime } from "@storm-stack/date-time";
-import type { MaybePromise } from "@storm-stack/utilities";
+import type { MaybePromise } from "@storm-stack/types";
 import type pino from "pino";
 import type { LogLevel, LogLevelLabel } from "./utilities/get-log-level";
 

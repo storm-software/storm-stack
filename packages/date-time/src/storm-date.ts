@@ -1,12 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Temporal } from "@js-temporal/polyfill";
 import { type JsonValue, Serializable } from "@storm-stack/serialization";
-import {
-  isBigInt,
-  isDate,
-  isNumber,
-  isSetString
-} from "@storm-stack/utilities";
+import { isBigInt, isDate, isNumber, isSetString } from "@storm-stack/types";
 import { RFC_3339_DATE_REGEX } from "./constants";
 import type { DateTimeInput, DateTimeOptions } from "./storm-date-time";
 import { StormDateTime } from "./storm-date-time";
@@ -38,6 +33,7 @@ export function deserializeStormDate(utcString: JsonValue): StormDate {
  * A wrapper of the and Date class used by Storm Software to provide Date-Time values
  *
  * @decorator `@Serializable()`
+ * @class StormDate
  */
 @Serializable()
 export class StormDate extends StormDateTime {
@@ -63,7 +59,7 @@ export class StormDate extends StormDateTime {
    * @returns A new instance of StormDateTime with the maximum date and time.
    */
   public static override minimum(): StormDate {
-    return StormDate.create(new Date(-8640000000000000));
+    return StormDate.create(new Date(-8_640_000_000_000_000));
   }
 
   /**
@@ -72,7 +68,7 @@ export class StormDate extends StormDateTime {
    * @returns A new instance of StormDateTime with the maximum date and time.
    */
   public static override maximum(): StormDate {
-    return StormDate.create(new Date(8640000000000000));
+    return StormDate.create(new Date(8_640_000_000_000_000));
   }
 
   /**
@@ -141,12 +137,8 @@ export class StormDate extends StormDateTime {
 
     let datetime: string | undefined;
     if (isDate(value) || isNumber(value) || isBigInt(value)) {
-      let date!: Date;
-      if (isNumber(value) || isBigInt(value)) {
-        date = new Date(Number(value));
-      } else {
-        date = value;
-      }
+      const date =
+        isNumber(value) || isBigInt(value) ? new Date(Number(value)) : value;
 
       if (Number.isNaN(date.getTime())) {
         return false;
@@ -174,23 +166,27 @@ export class StormDate extends StormDateTime {
       case 7:
       case 8:
       case 10:
-      case 12:
+      case 12: {
         return createdDateTime.zonedDateTime.day > 31;
+      }
 
-      case 2:
+      case 2: {
         return (
           createdDateTime.zonedDateTime.day >
           (createdDateTime.zonedDateTime.inLeapYear ? 29 : 28)
         );
+      }
 
       case 4:
       case 6:
       case 9:
-      case 11:
+      case 11: {
         return createdDateTime.zonedDateTime.day > 30;
+      }
 
-      default:
+      default: {
         return true;
+      }
     }
   }
 

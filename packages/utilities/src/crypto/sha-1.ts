@@ -70,7 +70,6 @@ export function sha1(
     }
 
     for (let t = 16; t < 80; ++t) {
-      // biome-ignore lint/style/noNonNullAssertion: <explanation>
       W[t] = ROTL(W[t - 3]! ^ W[t - 8]! ^ W[t - 14]! ^ W[t - 16]!, 1);
     }
 
@@ -82,68 +81,42 @@ export function sha1(
 
     for (let t = 0; t < 80; ++t) {
       const s = Math.floor(t / 20);
-      // biome-ignore lint/style/noNonNullAssertion: <explanation>
       const T = (ROTL(a, 5) + f(s, b, c, d) + e + K[s]! + W[t]!) >>> 0;
       e = d;
       d = c;
-      // biome-ignore lint/style/noNonNullAssertion: <explanation>
+
       c = ROTL(b!, 30) >>> 0;
       b = a;
       a = T;
     }
 
-    // biome-ignore lint/style/noNonNullAssertion: <explanation>
     H[0] = (H[0]! + a!) >>> 0;
-    // biome-ignore lint/style/noNonNullAssertion: <explanation>
     H[1] = (H[1]! + b!) >>> 0;
-    // biome-ignore lint/style/noNonNullAssertion: <explanation>
     H[2] = (H[2]! + c!) >>> 0;
-    // biome-ignore lint/style/noNonNullAssertion: <explanation>
     H[3] = (H[3]! + d!) >>> 0;
-    // biome-ignore lint/style/noNonNullAssertion: <explanation>
     H[4] = (H[4]! + e!) >>> 0;
   }
 
   return Uint8Array.from([
-    // biome-ignore lint/style/noNonNullAssertion: <explanation>
     (H[0]! >> 24) & 0xff,
-    // biome-ignore lint/style/noNonNullAssertion: <explanation>
     (H[0]! >> 16) & 0xff,
-    // biome-ignore lint/style/noNonNullAssertion: <explanation>
     (H[0]! >> 8) & 0xff,
-    // biome-ignore lint/style/noNonNullAssertion: <explanation>
     H[0]! & 0xff,
-    // biome-ignore lint/style/noNonNullAssertion: <explanation>
     (H[1]! >> 24) & 0xff,
-    // biome-ignore lint/style/noNonNullAssertion: <explanation>
     (H[1]! >> 16) & 0xff,
-    // biome-ignore lint/style/noNonNullAssertion: <explanation>
     (H[1]! >> 8) & 0xff,
-    // biome-ignore lint/style/noNonNullAssertion: <explanation>
     H[1]! & 0xff,
-    // biome-ignore lint/style/noNonNullAssertion: <explanation>
     (H[2]! >> 24) & 0xff,
-    // biome-ignore lint/style/noNonNullAssertion: <explanation>
     (H[2]! >> 16) & 0xff,
-    // biome-ignore lint/style/noNonNullAssertion: <explanation>
     (H[2]! >> 8) & 0xff,
-    // biome-ignore lint/style/noNonNullAssertion: <explanation>
     H[2]! & 0xff,
-    // biome-ignore lint/style/noNonNullAssertion: <explanation>
     (H[3]! >> 24) & 0xff,
-    // biome-ignore lint/style/noNonNullAssertion: <explanation>
     (H[3]! >> 16) & 0xff,
-    // biome-ignore lint/style/noNonNullAssertion: <explanation>
     (H[3]! >> 8) & 0xff,
-    // biome-ignore lint/style/noNonNullAssertion: <explanation>
     H[3]! & 0xff,
-    // biome-ignore lint/style/noNonNullAssertion: <explanation>
     (H[4]! >> 24) & 0xff,
-    // biome-ignore lint/style/noNonNullAssertion: <explanation>
     (H[4]! >> 16) & 0xff,
-    // biome-ignore lint/style/noNonNullAssertion: <explanation>
     (H[4]! >> 8) & 0xff,
-    // biome-ignore lint/style/noNonNullAssertion: <explanation>
     H[4]! & 0xff
   ]);
 }

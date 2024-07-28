@@ -1,5 +1,5 @@
 import type { Temporal } from "@js-temporal/polyfill";
-import { EMPTY_STRING } from "@storm-stack/utilities";
+import { EMPTY_STRING } from "@storm-stack/types";
 import { StormDateTime } from "../storm-date-time";
 
 /**
@@ -11,14 +11,23 @@ import { StormDateTime } from "../storm-date-time";
  */
 export const formatDateTime = (
   dateTime: StormDateTime = StormDateTime.current(),
-  options: Partial<Temporal.ZonedDateTimeToStringOptions> = {
-    smallestUnit: "millisecond",
-    roundingMode: "ceil",
-    calendarName: "never",
-    timeZoneName: "never",
-    offset: "never"
-  }
-): string =>
-  dateTime
-    ? `${dateTime.zonedDateTime.toString(options).replaceAll("T", " ")}`
+  options?: Partial<Temporal.ZonedDateTimeToStringOptions>
+): string => {
+  const smallestUnit = options?.smallestUnit || "millisecond";
+  const roundingMode = options?.roundingMode || "ceil";
+  const calendarName = options?.calendarName || "never";
+  const timeZoneName = options?.timeZoneName || "never";
+  const offset = options?.offset || "never";
+
+  return dateTime
+    ? `${dateTime.zonedDateTime
+        .toString({
+          smallestUnit,
+          roundingMode,
+          calendarName,
+          timeZoneName,
+          offset
+        })
+        .replaceAll("T", " ")}`
     : EMPTY_STRING;
+};

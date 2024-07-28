@@ -47,6 +47,7 @@ export abstract class PluginLoader<
     return this.instantiate(definition, module, definition.provider, options);
   };
 
+  // eslint-disable-next-line class-methods-use-this
   public isValid = (module: TPluginModule): boolean => {
     if (!module) {
       return false;

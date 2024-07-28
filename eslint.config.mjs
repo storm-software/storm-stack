@@ -8,6 +8,7 @@ export default storm({
     "unicorn/no-useless-switch-case": 0,
     "react/jsx-closing-bracket-location": 0,
     "no-undef": 0,
-    "unicorn/consistent-function-scoping": 0
+    "unicorn/consistent-function-scoping": 0,
+    "class-methods-use-this": 0
   }
 });

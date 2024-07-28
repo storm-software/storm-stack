@@ -1,4 +1,4 @@
-import { isError, isSetString } from "@storm-stack/utilities";
+import { isError, isSetString } from "@storm-stack/types";
 import type { StormError } from "../storm-error";
 
 /**

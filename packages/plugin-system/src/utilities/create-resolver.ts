@@ -1,6 +1,6 @@
 import { StormError } from "@storm-stack/errors";
 import { joinPaths, loadTsConfigFile } from "@storm-stack/file-system";
-import { isString } from "@storm-stack/utilities";
+import { isString } from "@storm-stack/types";
 import { CachedInputFileSystem, ResolverFactory } from "enhanced-resolve";
 import fs from "node:fs";
 import { PluginSystemErrorCode } from "../errors";

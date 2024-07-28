@@ -1,4 +1,4 @@
-import { type Indexable, isError, isObject } from "@storm-stack/utilities";
+import { type Indexable, isError, isObject } from "@storm-stack/types";
 import { ErrorCode } from "../errors";
 import { StormError } from "../storm-error";
 import { createStormError } from "./create-storm-error";

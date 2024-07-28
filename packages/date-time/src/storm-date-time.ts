@@ -7,7 +7,7 @@ import {
   isObject,
   isSet,
   isSetString
-} from "@storm-stack/utilities";
+} from "@storm-stack/types";
 import { RFC_3339_DATETIME_REGEX } from "./constants";
 import { isInstant } from "./utilities/is-instant";
 
@@ -72,6 +72,7 @@ export function deserializeStormDateTime(utcString: JsonValue): StormDateTime {
  * A wrapper of the and Date class used by Storm Software to provide Date-Time values
  *
  * @decorator `@Serializable()`
+ * @class StormDateTime
  */
 @Serializable()
 export class StormDateTime extends Date {
@@ -202,11 +203,11 @@ export class StormDateTime extends Date {
     if (instant && this.validate(_dateTime, options)) {
       this.#instant = instant;
 
-      const timeZone = options?.timeZone
-        ? options?.timeZone
-        : process.env.TZ
-          ? process.env.TZ
-          : Temporal.Now.timeZoneId();
+      const timeZone =
+        options?.timeZone ||
+        process.env.STORM_TIMEZONE ||
+        process.env.TZ ||
+        Temporal.Now.timeZoneId();
       this.#zonedDateTime = options?.calendar
         ? this.#instant.toZonedDateTime({
             timeZone,
@@ -309,8 +310,7 @@ export class StormDateTime extends Date {
 
     let datetime: string | undefined;
     if (isDate(value) || isNumber(value) || isBigInt(value)) {
-      let date!: Date;
-      date =
+      const date =
         isNumber(value) || isBigInt(value) ? new Date(Number(value)) : value;
 
       if (Number.isNaN(date.getTime())) {

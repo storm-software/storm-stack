@@ -88,7 +88,7 @@ importers:
         version: 1.30.0
       '@storm-software/eslint':
         specifier: latest
-        version: 0.29.0(gzghyuw6hxvorjtnydejldz4ba)
+        version: 0.30.0(gzghyuw6hxvorjtnydejldz4ba)
       '@storm-software/git-tools':
         specifier: latest
         version: 2.34.1(@swc-node/register@1.9.2(@swc/core@1.5.7(@swc/helpers@0.5.12))(@swc/types@0.1.12)(typescript@5.5.4))(@swc/core@1.5.7(@swc/helpers@0.5.12))
@@ -4055,8 +4055,8 @@ packages:
   '@storm-software/config@1.30.0':
     resolution: {integrity: sha512-0F2l/YQzaYkMUyhhCVOeONz+ehbbv5dyDl0ewFA6cFUOhMu0Ic4EylmtqrV2zx5gI4hWlom0KElO7ou/j/ngBg==}
 
-  '@storm-software/eslint@0.29.0':
-    resolution: {integrity: sha512-VRoaqYY82+zXJgsPwif+bMYw9quTB8axwmvjZb9C6gkH2RhDb8gLBVUX//UGYJugh8plFayLVI10/BWccbqQ3w==}
+  '@storm-software/eslint@0.30.0':
+    resolution: {integrity: sha512-w8ayuWGEffb4xbwuep4RLj0DIc5J25AA3cRwJkyvBZRX8+h3cEaX+69hvx3jJ0BLcNc/ieSJ0kXqY2gWy4ezxQ==}
     peerDependencies:
       '@nx/eslint': '>=18.3.0'
       '@nx/eslint-plugin': '>=18.3.0'
@@ -19392,7 +19392,7 @@ snapshots:
     dependencies:
       zod: 3.23.8
 
-  '@storm-software/eslint@0.29.0(gzghyuw6hxvorjtnydejldz4ba)':
+  '@storm-software/eslint@0.30.0(gzghyuw6hxvorjtnydejldz4ba)':
     dependencies:
       '@graphql-eslint/eslint-plugin': 3.20.1(@babel/core@7.24.9)(@types/node@20.14.12)(bufferutil@4.0.8)(graphql@15.9.0)(utf-8-validate@5.0.10)
       '@next/eslint-plugin-next': 14.2.4

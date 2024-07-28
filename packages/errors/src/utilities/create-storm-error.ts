@@ -25,7 +25,7 @@ export function createStormError<TCode extends string = string>({
   }
 
   const stormError = new StormError<TCode>(
-    (code ? code : ErrorCode.internal_server_error) as TCode,
+    (code || ErrorCode.internal_server_error) as TCode,
     {
       name,
       message,

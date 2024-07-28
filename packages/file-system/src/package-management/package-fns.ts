@@ -36,14 +36,18 @@ function getPackageManager(projectPath = "."): PackageManagers {
   }
 
   switch (basename(lockFile)) {
-    case "yarn.lock":
+    case "yarn.lock": {
       return "yarn";
-    case "pnpm-lock.yaml":
+    }
+    case "pnpm-lock.yaml": {
       return "pnpm";
-    case "bun.lockb":
+    }
+    case "bun.lockb": {
       return "bun";
-    default:
+    }
+    default: {
       return "npm";
+    }
   }
 }
 
@@ -58,23 +62,25 @@ export function installPackage(
   const manager = pkgManager ?? getPackageManager(projectPath);
   console.log(`Installing package "${pkg}@${tag}" with ${manager}`);
   switch (manager) {
-    case "yarn":
+    case "yarn": {
       execute(
         `yarn --cwd "${projectPath}" add ${exactVersion ? "--exact" : ""} ${pkg}@${tag} ${
           dev ? " --dev" : ""
         }`
       );
       break;
+    }
 
-    case "pnpm":
+    case "pnpm": {
       execute(
         `pnpm add -C "${projectPath}" ${exactVersion ? "--save-exact" : ""} ${
           dev ? " --save-dev" : ""
         } ${pkg}@${tag}`
       );
       break;
+    }
 
-    case "bun":
+    case "bun": {
       execute(
         `bun add ${exactVersion ? "--exact" : ""} ${dev ? " --dev" : ""} ${pkg}@${tag}`,
         {
@@ -82,14 +88,16 @@ export function installPackage(
         }
       );
       break;
+    }
 
-    default:
+    default: {
       execute(
         `npm install --prefix "${projectPath}" ${exactVersion ? "--save-exact" : ""} ${
           dev ? " --save-dev" : ""
         } ${pkg}@${tag}`
       );
       break;
+    }
   }
 }
 
@@ -104,7 +112,7 @@ export function ensurePackage(
   const resolvePath = resolve(projectPath);
   try {
     require.resolve(pkg, { paths: [resolvePath] });
-  } catch (_err) {
+  } catch {
     installPackage(pkg, dev, pkgManager, tag, resolvePath, exactVersion);
   }
 }

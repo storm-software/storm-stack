@@ -1,12 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { StormLog } from "@storm-stack/logging";
 import { StormParser } from "@storm-stack/serialization";
-import { isEmptyObject } from "@storm-stack/utilities";
+import { isEmptyObject } from "@storm-stack/types";
 import {
   ExecOptions,
   StdioOptions,
   execSync as extExecSync
-} from "child_process";
+} from "node:child_process";
 import { Readable } from "node:stream";
 import { promisify } from "node:util";
 
@@ -28,26 +28,26 @@ export const execute = (
   try {
     StormLog.info(
       `Executing command: "${command}"${
-        !isEmptyObject(options)
-          ? `, options: ${StormParser.stringify(options)}`
-          : ""
-      }${!isEmptyObject(env) ? `, env: ${StormParser.stringify(env)}` : ""}${
-        !stdio ? `, stdio: ${stdio}` : ""
+        isEmptyObject(options)
+          ? ""
+          : `, options: ${StormParser.stringify(options)}`
+      }${isEmptyObject(env) ? "" : `, env: ${StormParser.stringify(env)}`}${
+        stdio ? "" : `, stdio: ${stdio}`
       }`
     );
 
     return extExecSync(command, {
-      encoding: "utf-8",
+      encoding: "utf8",
       env: { ...process.env, ...env },
       stdio,
       ...options
     });
-  } catch (e) {
+  } catch (error_) {
     StormLog.error(`An error occurred executing command: "${command}"`);
-    StormLog.error(e);
+    StormLog.error(error_);
 
     return (
-      (e as any)?.message ?? "Exception occurred while processing request "
+      (error_ as any)?.message ?? "Exception occurred while processing request "
     );
   }
 };

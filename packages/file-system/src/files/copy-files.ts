@@ -20,12 +20,12 @@ export const copyFiles = (
     cpSync(from, to, options);
 
     return undefined;
-  } catch (e) {
+  } catch (error_) {
     StormLog.error("An error occurred copying files");
-    StormLog.error(e);
+    StormLog.error(error_);
 
     return (
-      (e as any)?.message ?? "Exception occurred while processing request "
+      (error_ as any)?.message ?? "Exception occurred while processing request "
     );
   }
 };
@@ -47,12 +47,12 @@ export const copyFile = (
     copyFileSync(file, dest, constants.COPYFILE_FICLONE);
 
     return undefined;
-  } catch (e) {
+  } catch (error_) {
     StormLog.error("An error occurred copying files");
-    StormLog.error(e);
+    StormLog.error(error_);
 
     return (
-      (e as any)?.message ?? "Exception occurred while processing request "
+      (error_ as any)?.message ?? "Exception occurred while processing request "
     );
   }
 };

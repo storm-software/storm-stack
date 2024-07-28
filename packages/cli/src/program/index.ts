@@ -2,11 +2,8 @@ import type { StormConfig } from "@storm-software/config";
 import { createStormConfig } from "@storm-software/config-tools";
 import { getCauseFromUnknown } from "@storm-stack/errors";
 import { StormLog } from "@storm-stack/logging";
-import {
-  EMPTY_STRING,
-  NEWLINE_STRING,
-  titleCase
-} from "@storm-stack/utilities";
+import { titleCase } from "@storm-stack/string-fns";
+import { EMPTY_STRING, NEWLINE_STRING } from "@storm-stack/types";
 import chalk from "chalk";
 import { Argument, Command, Option } from "commander";
 import { Table } from "console-table-printer";
@@ -229,6 +226,7 @@ export async function createCLIProgram(cliConfig: CLIConfig): Promise<void> {
     }
   } catch (error) {
     logger.fatal(error);
+    // eslint-disable-next-line unicorn/no-process-exit
     process.exit(1);
   }
 }

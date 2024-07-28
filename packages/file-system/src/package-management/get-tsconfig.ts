@@ -1,4 +1,4 @@
-import { EMPTY_STRING } from "@storm-stack/utilities";
+import { EMPTY_STRING } from "@storm-stack/types";
 import fs from "node:fs";
 import { createRequire } from "node:module";
 import path from "node:path";
@@ -124,7 +124,7 @@ const stripJsonComments = (
 const jsoncParse = (data: string) => {
   try {
     return new Function(`return ${stripJsonComments(data).trim()}`)();
-  } catch (_) {
+  } catch {
     return {};
   }
 };
@@ -178,7 +178,7 @@ const loadTsConfigInternal = (
     return null;
   }
 
-  const data = jsoncParse(fs.readFileSync(id, "utf-8"));
+  const data = jsoncParse(fs.readFileSync(id, "utf8"));
   const configDir = path.dirname(id);
   // biome-ignore lint/suspicious/noAssignInExpressions: <explanation>
   if ((_a = data.compilerOptions) == null ? void 0 : _a.baseUrl) {

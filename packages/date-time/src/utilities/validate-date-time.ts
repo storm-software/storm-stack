@@ -1,4 +1,4 @@
-import { isBigInt, isDate, isNumber } from "@storm-stack/utilities";
+import { isBigInt, isDate, isNumber } from "@storm-stack/types";
 import { RFC_3339_DATETIME_REGEX } from "../constants";
 import type { DateTimeInput, DateTimeOptions } from "../storm-date-time";
 import { isDateTime } from "./is-date-time";
@@ -25,12 +25,8 @@ export function validateDateTime(
 
   let datetime: string | undefined;
   if (isDate(value) || isNumber(value) || isBigInt(value)) {
-    let date!: Date;
-    if (isNumber(value) || isBigInt(value)) {
-      date = new Date(Number(value));
-    } else {
-      date = value;
-    }
+    const date =
+      isNumber(value) || isBigInt(value) ? new Date(Number(value)) : value;
 
     if (Number.isNaN(date.getTime())) {
       return false;
@@ -59,7 +55,13 @@ export function validateDateTime(
   // Split the date-time-string up into the string-date and time-string part.
   // and check whether these parts are RFC 3339 compliant.
   return !!(
-    validateDate(datetime.substring(0, datetime.indexOf("T")), options) &&
-    validateTime(datetime.substring(datetime.indexOf("T") + 1), options)
+    validateDate(
+      datetime.slice(0, Math.max(0, datetime.indexOf("T"))),
+      options
+    ) &&
+    validateTime(
+      datetime.slice(Math.max(0, datetime.indexOf("T") + 1)),
+      options
+    )
   );
 }

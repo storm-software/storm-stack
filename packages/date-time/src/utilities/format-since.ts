@@ -16,9 +16,9 @@ const parseMilliseconds = (milliseconds: number) => {
   }
 
   return {
-    days: Math.trunc(milliseconds / 86400000),
-    hours: Math.trunc(milliseconds / 3600000) % 24,
-    minutes: Math.trunc(milliseconds / 60000) % 60,
+    days: Math.trunc(milliseconds / 86_400_000),
+    hours: Math.trunc(milliseconds / 3_600_000) % 24,
+    minutes: Math.trunc(milliseconds / 60_000) % 60,
     seconds: Math.trunc(milliseconds / 1000) % 60,
     milliseconds: Math.trunc(milliseconds) % 1000,
     microseconds: Math.trunc(milliseconds * 1000) % 1000,
@@ -94,24 +94,23 @@ export type FormatSinceOptions = {
 export const formatSince = (
   dateTimeOrDuration: StormDateTime | Temporal.Duration,
   dateTimeTo: StormDateTime = StormDateTime.current(),
-  options: FormatSinceOptions = {
-    colonNotation: false,
-    compact: false,
-    formatSubMilliseconds: false,
-    keepDecimalsOnWholeSeconds: false,
-    millisecondsDecimalDigits: 0,
-    secondsDecimalDigits: 1,
-    separateMilliseconds: false,
-    unitCount: 0,
-    verbose: false
-  }
+  options?: FormatSinceOptions
 ): string => {
+  const colonNotation = options?.colonNotation ?? false;
+  let compact = options?.compact ?? false;
+  let formatSubMilliseconds = options?.formatSubMilliseconds ?? false;
+  const keepDecimalsOnWholeSeconds =
+    options?.keepDecimalsOnWholeSeconds ?? false;
+  let millisecondsDecimalDigits = options?.millisecondsDecimalDigits ?? 0;
+  let secondsDecimalDigits = options?.secondsDecimalDigits ?? 1;
+  let separateMilliseconds = options?.separateMilliseconds ?? false;
+  const unitCount = options?.unitCount ?? 0;
+  let verbose = options?.verbose ?? false;
+
   let milliseconds!: number;
-  if (isDateTime(dateTimeOrDuration)) {
-    milliseconds = dateTimeTo.since(dateTimeOrDuration).milliseconds;
-  } else {
-    milliseconds = dateTimeOrDuration.milliseconds;
-  }
+  milliseconds = isDateTime(dateTimeOrDuration)
+    ? dateTimeTo.since(dateTimeOrDuration).milliseconds
+    : dateTimeOrDuration.milliseconds;
 
   if (!Number.isFinite(milliseconds)) {
     throw new StormError(DateTimeErrorCode.ms_format, {
@@ -124,16 +123,16 @@ export const formatSince = (
     milliseconds *= -1;
   }
 
-  if (options.colonNotation) {
-    options.compact = false;
-    options.formatSubMilliseconds = false;
-    options.separateMilliseconds = false;
-    options.verbose = false;
+  if (colonNotation) {
+    compact = false;
+    formatSubMilliseconds = false;
+    separateMilliseconds = false;
+    verbose = false;
   }
 
-  if (options.compact) {
-    options.secondsDecimalDigits = 0;
-    options.millisecondsDecimalDigits = 0;
+  if (compact) {
+    secondsDecimalDigits = 0;
+    millisecondsDecimalDigits = 0;
   }
 
   const result: string[] = [];
@@ -152,9 +151,9 @@ export const formatSince = (
     valueString?: string
   ) => {
     if (
-      (result.length === 0 || !options.colonNotation) &&
+      (result.length === 0 || !colonNotation) &&
       value === 0 &&
-      !(options.colonNotation && short === "m")
+      !(colonNotation && short === "m")
     ) {
       return;
     }
@@ -162,7 +161,7 @@ export const formatSince = (
     let _valueString = (valueString || value || "0").toString();
     let prefix: string;
     let suffix: string;
-    if (options.colonNotation) {
+    if (colonNotation) {
       prefix = result.length > 0 ? ":" : "";
       suffix = "";
       const wholeDigits = _valueString.includes(".")
@@ -173,7 +172,7 @@ export const formatSince = (
         "0".repeat(Math.max(0, minLength - wholeDigits)) + _valueString;
     } else {
       prefix = "";
-      suffix = options.verbose ? ` ${pluralize(long, value)}` : short;
+      suffix = verbose ? ` ${pluralize(long, value)}` : short;
     }
 
     result.push(prefix + _valueString + suffix);
@@ -187,12 +186,12 @@ export const formatSince = (
   add(parsed.minutes, "minute", "m");
 
   if (
-    options.separateMilliseconds ||
-    options.formatSubMilliseconds ||
-    (!options.colonNotation && milliseconds < 1000)
+    separateMilliseconds ||
+    formatSubMilliseconds ||
+    (!colonNotation && milliseconds < 1000)
   ) {
     add(parsed.seconds, "second", "s");
-    if (options.formatSubMilliseconds) {
+    if (formatSubMilliseconds) {
       add(parsed.milliseconds, "millisecond", "ms");
       add(parsed.microseconds, "microsecond", "µs");
       add(parsed.nanoseconds, "nanosecond", "ns");
@@ -201,11 +200,6 @@ export const formatSince = (
         parsed.milliseconds +
         parsed.microseconds / 1000 +
         parsed.nanoseconds / 1e6;
-
-      const millisecondsDecimalDigits =
-        typeof options.millisecondsDecimalDigits === "number"
-          ? options.millisecondsDecimalDigits
-          : 0;
 
       const roundedMilliseconds =
         millisecondsAndBelow >= 1
@@ -225,22 +219,18 @@ export const formatSince = (
     }
   } else {
     const seconds = (milliseconds / 1000) % 60;
-    const secondsDecimalDigits =
-      typeof options.secondsDecimalDigits === "number"
-        ? options.secondsDecimalDigits
-        : 1;
     const secondsFixed = floorDecimals(seconds, secondsDecimalDigits);
-    const secondsString = options.keepDecimalsOnWholeSeconds
+    const secondsString = keepDecimalsOnWholeSeconds
       ? secondsFixed
       : secondsFixed.replace(/\.0+$/, "");
     add(Number.parseFloat(secondsString), "second", "s", secondsString);
   }
 
   if (result.length === 0) {
-    return `0${options.verbose ? " milliseconds" : "ms"}`;
+    return `0${verbose ? " milliseconds" : "ms"}`;
   }
 
-  if (options.compact) {
+  if (compact) {
     if (!result[0]) {
       throw new StormError(DateTimeErrorCode.formatting_failure, {
         message: "Unexpected empty result"
@@ -250,10 +240,10 @@ export const formatSince = (
     return result[0];
   }
 
-  if (typeof options.unitCount === "number") {
-    const separator = options.colonNotation ? "" : " ";
-    return result.slice(0, Math.max(options.unitCount, 1)).join(separator);
+  if (typeof unitCount === "number") {
+    const separator = colonNotation ? "" : " ";
+    return result.slice(0, Math.max(unitCount, 1)).join(separator);
   }
 
-  return options.colonNotation ? result.join("") : result.join(" ");
+  return colonNotation ? result.join("") : result.join(" ");
 };

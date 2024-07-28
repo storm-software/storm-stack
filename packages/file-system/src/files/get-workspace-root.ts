@@ -20,7 +20,5 @@ export const getWorkspaceRoot = () => {
     return root?.dir;
   }
 
-  return process.env.STORM_WORKSPACE_ROOT
-    ? process.env.STORM_WORKSPACE_ROOT
-    : process.env.NX_WORKSPACE_ROOT_PATH;
+  return process.env.STORM_WORKSPACE_ROOT || process.env.NX_WORKSPACE_ROOT_PATH;
 };

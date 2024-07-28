@@ -1,5 +1,5 @@
 import type { StormDateTime } from "@storm-stack/date-time";
-import type { MaybePromise } from "@storm-stack/utilities";
+import type { MaybePromise } from "@storm-stack/types";
 
 export type PluginDiscoveryMode = "auto" | "fallback" | "none";
 export const PluginDiscoveryMode = {

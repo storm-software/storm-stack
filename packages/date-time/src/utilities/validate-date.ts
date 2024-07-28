@@ -1,4 +1,4 @@
-import { isBigInt, isDate, isNumber } from "@storm-stack/utilities";
+import { isBigInt, isDate, isNumber } from "@storm-stack/types";
 import { RFC_3339_DATE_REGEX } from "../constants";
 import {
   type DateTimeInput,
@@ -21,12 +21,8 @@ export function validateDate(
 
   let datetime: string | undefined;
   if (isDate(value) || isNumber(value) || isBigInt(value)) {
-    let date!: Date;
-    if (isNumber(value) || isBigInt(value)) {
-      date = new Date(Number(value));
-    } else {
-      date = value;
-    }
+    const date =
+      isNumber(value) || isBigInt(value) ? new Date(Number(value)) : value;
 
     if (Number.isNaN(date.getTime())) {
       return false;
@@ -54,22 +50,26 @@ export function validateDate(
     case 7:
     case 8:
     case 10:
-    case 12:
+    case 12: {
       return createdDateTime.zonedDateTime.day > 31;
+    }
 
-    case 2:
+    case 2: {
       return (
         createdDateTime.zonedDateTime.day >
         (createdDateTime.zonedDateTime.inLeapYear ? 29 : 28)
       );
+    }
 
     case 4:
     case 6:
     case 9:
-    case 11:
+    case 11: {
       return createdDateTime.zonedDateTime.day > 30;
+    }
 
-    default:
+    default: {
       return true;
+    }
   }
 }

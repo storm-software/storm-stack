@@ -1,12 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Temporal } from "@js-temporal/polyfill";
 import { type JsonValue, Serializable } from "@storm-stack/serialization";
-import {
-  isBigInt,
-  isDate,
-  isNumber,
-  isSetString
-} from "@storm-stack/utilities";
+import { isBigInt, isDate, isNumber, isSetString } from "@storm-stack/types";
 import { RFC_3339_TIME_REGEX } from "./constants";
 import type { DateTimeInput, DateTimeOptions } from "./storm-date-time";
 import { StormDateTime } from "./storm-date-time";
@@ -38,6 +33,7 @@ export function deserializeStormTime(utcString: JsonValue): StormTime {
  * A wrapper of the and Date class used by Storm Software to provide Date-Time values
  *
  * @decorator `@Serializable()`
+ * @class StormTime
  */
 @Serializable()
 export class StormTime extends StormDateTime {
@@ -117,12 +113,8 @@ export class StormTime extends StormDateTime {
 
     let datetime: string | undefined;
     if (isDate(value) || isNumber(value) || isBigInt(value)) {
-      let date!: Date;
-      if (isNumber(value) || isBigInt(value)) {
-        date = new Date(Number(value));
-      } else {
-        date = value;
-      }
+      const date =
+        isNumber(value) || isBigInt(value) ? new Date(Number(value)) : value;
 
       if (Number.isNaN(date.getTime())) {
         return false;

@@ -12,5 +12,5 @@ export const joinPaths = (...paths: string[]): string => {
   const result = isAbsolute(path)
     ? path.replaceAll("/", "\\")
     : path.replaceAll("\\", "/");
-  return result.startsWith("/C:") ? result.substring(1) : result;
+  return result.startsWith("/C:") ? result.slice(1) : result;
 };

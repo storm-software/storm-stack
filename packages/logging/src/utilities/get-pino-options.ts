@@ -1,6 +1,7 @@
 import type { StormConfig } from "@storm-software/config";
 import { isStormError } from "@storm-stack/errors";
-import { isRuntimeServer, titleCase } from "@storm-stack/utilities";
+import { titleCase } from "@storm-stack/string-fns";
+import { isRuntimeServer } from "@storm-stack/utilities";
 import type { LoggerOptions as PinoLoggerOptions } from "pino";
 import { LogLevel, getLogLevel } from "./get-log-level";
 import { createErrorSerializer } from "./log-serializer";
@@ -24,7 +25,7 @@ export const getPinoOptions = (
   const errorSerializer = createErrorSerializer(_stacktrace);
 
   const baseOptions: PinoLoggerOptions = {
-    name: name ? name : "Storm Software",
+    name: name || "Storm Software",
     enabled: getLogLevel(config.logLevel) > LogLevel.SILENT,
     level: config.logLevel,
     messageKey: "msg",

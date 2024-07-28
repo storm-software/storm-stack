@@ -8,17 +8,16 @@ import {
 } from "@storm-stack/file-system";
 import type { IStormLog } from "@storm-stack/logging";
 import { StormParser } from "@storm-stack/serialization";
+import { kebabCase, titleCase } from "@storm-stack/string-fns";
 import {
   EMPTY_STRING,
   type MaybePromise,
-  deepMerge,
   isFunction,
   isSet,
   isSetObject,
-  isString,
-  kebabCase,
-  titleCase
-} from "@storm-stack/utilities";
+  isString
+} from "@storm-stack/types";
+import { deepMerge } from "@storm-stack/utilities";
 import { glob } from "glob";
 import md5 from "md5";
 import { readFile } from "node:fs/promises";
@@ -122,14 +121,14 @@ export class PluginManager<
 
   public discover = async (): Promise<Map<string, PluginDefinition>> => {
     if (this._hasDiscovered) {
-      return Promise.resolve(this._registry);
+      return this._registry;
     }
 
     const fileGlob = this._globExpression();
     this._logger.info(`Discovering plugins using glob ${fileGlob}`);
 
     const paths = await glob(fileGlob);
-    await Promise.all(paths.map(this.register) ?? []);
+    await Promise.all(paths.map(element => this.register(element)) ?? []);
 
     this._hasDiscovered = true;
     return this._registry;
@@ -148,7 +147,7 @@ export class PluginManager<
   ): Promise<PluginInstance<TContext, TPluginModule>> => {
     let instance = this.getInstance(provider, options);
     if (instance) {
-      return Promise.resolve(instance);
+      return instance;
     }
 
     const definition: PluginDefinition = await this.register(provider);
@@ -223,8 +222,8 @@ export class PluginManager<
 
     try {
       instance.loader.process(context, instance, options);
-    } catch (e) {
-      result[provider] = StormError.create(e);
+    } catch (error_) {
+      result[provider] = StormError.create(error_);
     }
 
     return result;
@@ -251,8 +250,7 @@ export class PluginManager<
 
           hooks.push({
             provider,
-            // biome-ignore lint/style/noNonNullAssertion: <explanation>
-            listener: value.module.hooks?.[name]!,
+            listener: value.module.hooks![name]!,
             dependencies: plugin?.definition?.dependencies ?? []
           });
         }
@@ -284,7 +282,7 @@ export class PluginManager<
           edges
         )
         // biome-ignore lint/style/noNonNullAssertion: <explanation>
-        .map((hook: string) => hooks.find(h => h.provider === hook)?.listener!);
+        .map((hook: string) => hooks.find(h => h.provider === hook)!.listener!);
     }
 
     let nextContext = context;
@@ -343,7 +341,9 @@ export class PluginManager<
     }
 
     this._registry.set(provider, definition);
-    await Promise.all(definition.dependencies.map(this.register));
+    await Promise.all(
+      definition.dependencies.map(element => this.register(element))
+    );
 
     return definition;
   };
@@ -367,6 +367,7 @@ export class PluginManager<
    * @param options - The options for the plugin.
    * @returns The cache ID.
    */
+  // eslint-disable-next-line class-methods-use-this
   private _getCacheId(provider: string, options: any): string {
     return md5(`${provider}::${StormParser.stringify(options)}`);
   }

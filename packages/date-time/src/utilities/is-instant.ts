@@ -1,5 +1,5 @@
 import { Temporal } from "@js-temporal/polyfill";
-import { isFunction, isSet } from "@storm-stack/utilities";
+import { isFunction, isSet } from "@storm-stack/types";
 
 /**
  * Type-check to determine if `value` is a `Temporal.Instant` object

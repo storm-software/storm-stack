@@ -81,12 +81,12 @@ export class StormLog implements IStormLog {
     protected name?: string,
     protected additionalLoggers: ILoggerWrapper[] = []
   ) {
-    this.name = name ? name : config.name;
+    this.name = name || config.name;
 
     this.#logger = StormLog.initialize(
       this.config,
       this.name,
-      this.getStreams()
+      StormLog.getStreams()
     );
     this.#logLevel = getLogLevel(config.logLevel);
   }
@@ -481,7 +481,7 @@ export class StormLog implements IStormLog {
    *
    * @returns Additional log streams to use during initialization
    */
-  protected getStreams = (): Array<
+  protected static getStreams = (): Array<
     pino.DestinationStream | pino.StreamEntry<pino.Level>
   > => [];
 }

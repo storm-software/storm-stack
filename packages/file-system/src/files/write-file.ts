@@ -24,10 +24,10 @@ export const writeFile = (filePath: string, content: any): void => {
     }
 
     writeFileSync(filePath, StormParser.stringify(content));
-  } catch (e) {
+  } catch (error_) {
     throw new StormError(FileSystemErrorCode.file_write_failure, {
       message: "An error occurred writing data to file",
-      cause: e
+      cause: error_
     });
   }
 };
@@ -49,10 +49,10 @@ export const writeFileAsync = (
     }
 
     return promisify(writeFileFs)(filePath, content);
-  } catch (e) {
+  } catch (error_) {
     throw new StormError(FileSystemErrorCode.file_write_failure, {
       message: "An error occurred writing data to file",
-      cause: e
+      cause: error_
     });
   }
 };
