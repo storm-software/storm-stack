@@ -14,21 +14,29 @@ on:
       - "experimental"
 
 jobs:
-  ci:
-    name: "Continuous Integration"
-    if: startsWith(github.repository, 'storm-software/')
+  release:
+    if:
+      github.repository == 'storm-software/storm-stack' && (github.ref ==
+      'refs/heads/main' || github.ref == 'refs/heads/next' || github.ref ==
+      'refs/heads/beta' || github.ref == 'refs/heads/experimental')
+    name: Continuous Integration
+    runs-on: ubuntu-latest
     permissions:
       actions: read
       contents: write
       id-token: write
-    uses: storm-software/storm-ops/.github/workflows/ci-reusable.yml@main
-    with:
-      tag: ${{ inputs.tag }}
-      packageManager: pnpm
-      packageManagerVersion: 9.6.0
-      stormBot: Stormie-Bot
-      githubToken: ${{ github.token }}
-      npmToken: ${{ secrets.STORM_BOT_NPM_TOKEN }}
-      cargoToken: ${{ secrets.STORM_BOT_CARGO_TOKEN }}
-      slackToken: ${{ secrets.STORM_BOT_SLACK_TOKEN }}
-      discordWebhook: ${{ secrets.STORM_BOT_DISCORD_WEBHOOK}}
+
+    steps:
+      - name: Run Continuous Integration
+        uses: storm-software/storm-ops/.github/workflows/ci-reusable.yml@main
+        with:
+          tag: ${{ inputs.tag }}
+          packageManager: pnpm
+          packageManagerVersion: 9.6.0
+          stormBot: Stormie-Bot
+          stormBotGithubToken: ${{ secrets.STORM_BOT_GITHUB_TOKEN }}
+          githubToken: ${{ github.token }}
+          npmToken: ${{ secrets.STORM_BOT_NPM_TOKEN }}
+          cargoToken: ${{ secrets.STORM_BOT_CARGO_TOKEN }}
+          slackToken: ${{ secrets.STORM_BOT_SLACK_TOKEN }}
+          discordWebhook: ${{ secrets.STORM_BOT_DISCORD_WEBHOOK}}
