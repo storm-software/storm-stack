@@ -12,6 +12,12 @@ import {
 import { StormParser } from "./storm-parser";
 import { StormURL } from "./types";
 
+/**
+ * A class used to build URLs
+ *
+ * @remarks
+ * This class is used to build URLs with a fluent API
+ */
 export class StormURLBuilder {
   #url: StormURL;
 
@@ -40,6 +46,67 @@ export class StormURLBuilder {
   //   return this;
   // }
 
+  /**
+   * Set the protocol of the URL
+   *
+   * @param protocol - The protocol to set
+   * @returns The URL builder
+   */
+  public withProtocol(protocol: string): StormURLBuilder {
+    this.#url.protocol = protocol;
+    return this;
+  }
+
+  /**
+   * Set the hostname of the URL
+   *
+   * @param hostname - The hostname to set
+   * @returns The URL builder
+   */
+  public withHostname(hostname: string): StormURLBuilder {
+    this.#url.hostname = hostname;
+    return this;
+  }
+
+  /**
+   * Set the port of the URL
+   *
+   * @param port - The port to set
+   * @returns The URL builder
+   */
+  public withPort(port: number): StormURLBuilder {
+    this.#url.port = String(port);
+    return this;
+  }
+
+  /**
+   * Set the username of the URL
+   *
+   * @param username - The username to set
+   * @returns The URL builder
+   */
+  public withUsername(username: string): StormURLBuilder {
+    this.#url.username = username;
+    return this;
+  }
+
+  /**
+   * Set the password of the URL
+   *
+   * @param password - The password to set
+   * @returns The URL builder
+   */
+  public withPassword(password: string): StormURLBuilder {
+    this.#url.password = password;
+    return this;
+  }
+
+  /**
+   * Set the pathname of the URL
+   *
+   * @param pathname - The pathname to set
+   * @returns The URL builder
+   */
   public withHost(host: string | ParsedHost): StormURLBuilder {
     if (isString(host)) {
       this.#url.host = host;
@@ -56,6 +123,12 @@ export class StormURLBuilder {
     return this;
   }
 
+  /**
+   * Set the path of the URL
+   *
+   * @param path - The path to set
+   * @returns The URL builder
+   */
   public withPath(path: string): StormURLBuilder {
     const parsedPath = parsePath(path);
     this.#url = {
@@ -66,6 +139,23 @@ export class StormURLBuilder {
     return this;
   }
 
+  /**
+   * Set the hash of the URL
+   *
+   * @param hash - The hash to set
+   * @returns The URL builder
+   */
+  public withHash(hash: string): StormURLBuilder {
+    this.#url.hash = hash;
+    return this;
+  }
+
+  /**
+   * Set the auth of the URL
+   *
+   * @param auth - The auth to set
+   * @returns The URL builder
+   */
   public withAuth(auth: string | ParsedAuth): StormURLBuilder {
     if (isString(auth)) {
       this.#url.auth = auth;
@@ -83,6 +173,12 @@ export class StormURLBuilder {
     return this;
   }
 
+  /**
+   * Set the query of the URL
+   *
+   * @param query - The query to set
+   * @returns The URL builder
+   */
   public withQuery(
     query: string | [string, any] | Record<string, any>
   ): StormURLBuilder {
@@ -92,6 +188,12 @@ export class StormURLBuilder {
     return this;
   }
 
+  /**
+   * Add a query parameter to the URL
+   *
+   * @param query - The query parameter to add
+   * @returns The URL builder
+   */
   public addQueryParam(
     query: string | [string, any] | Record<string, any>
   ): StormURLBuilder {
@@ -115,14 +217,30 @@ export class StormURLBuilder {
     return this;
   }
 
+  /**
+   * Returns the built URL
+   *
+   * @returns The built URL
+   */
   public build(): StormURL {
     return this.#url;
   }
 
+  /**
+   * Returns the string representation of the URL
+   *
+   * @returns The string representation of the URL
+   */
   public toString(): string {
     return cleanDoubleSlashes(stringifyParsedURL(this.#url));
   }
 
+  /**
+   * Parse a query parameter value
+   *
+   * @param value - The value to parse
+   * @returns The parsed value
+   */
   private parseQueryParamValue(value: any): any {
     if (Array.isArray(value)) {
       const values = [];
