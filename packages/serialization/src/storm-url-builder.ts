@@ -56,7 +56,7 @@ export class StormURLBuilder {
     return this;
   }
 
-  public withPath(path: string): URLBuilder {
+  public withPath(path: string): StormURLBuilder {
     const parsedPath = parsePath(path);
     this.#url = {
       ...this.#url,
