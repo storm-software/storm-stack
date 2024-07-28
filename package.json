@@ -50,7 +50,6 @@
     "build": "nx affected -t build --parallel=5 --nxBail --exclude=\"@storm-stack/monorepo,web-docs,nx-tools\"",
     "build-all": "nx run-many -t build --parallel=5 --nxBail --exclude=\"@storm-stack/monorepo,web-docs,nx-tools\"",
     "build-apps": "nx run-many -t build --projects=apps/* --parallel=5",
-    "build-components": "nx run-many -t build --projects=components/* --parallel=5",
     "build-docs": "nx run-many -t build --projects=docs/* --parallel=5",
     "build-libs": "nx run-many -t build --projects=libs/* --parallel=5",
     "build-prod": "nx run-many -t build --all --prod --parallel=5",
