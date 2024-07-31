@@ -1,6 +1,6 @@
 {
   "$schema": "https://json.schemastore.org/tsconfig",
-  "extends": "@storm-software/tsconfig/base.json",
+  "extends": "@storm-software/tsconfig/core.json",
   "display": "Storm Software - Storm Stack",
   "compilerOptions": {
     "rootDir": ".",
@@ -9,7 +9,7 @@
       "@storm-stack/cli": ["packages/cli/src/index.ts"],
       "@storm-stack/cli/*": ["packages/cli/src/*"],
       "@storm-stack/date-time": ["packages/date-time/src/index.ts"],
-      "@storm-stack/date-time/*": ["packages/core/date-time/src/*"],
+      "@storm-stack/date-time/*": ["packages/date-time/src/*"],
       "@storm-stack/errors": ["packages/errors/src/index.ts"],
       "@storm-stack/errors/*": ["packages/errors/src/*"],
       "@storm-stack/file-system": ["packages/file-system/src/index.ts"],
@@ -42,5 +42,5 @@
     }
   },
   "include": ["**/*.ts", "**/*.tsx", "**/*.d.ts", "**/*.js", "**/*.jsx"],
-  "exclude": ["node_modules", "tmp"]
+  "exclude": ["tmp"]
 }

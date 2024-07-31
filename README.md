@@ -11,10 +11,12 @@
 </div>
 <br />
 
-Storm Software's <b>⚡Storm Stack</b> monorepo contains various utility applications, tools, and various libraries to create modern and scalable web applications. <br />
+Storm Software's <b>⚡Storm Stack</b> monorepo contains various utility
+applications, tools, and various libraries to create modern and scalable web
+applications. <br />
 
-Storm Stack is built using <a href="https://nx.dev/" target="_blank">Nx</a>, a set
-of extensible dev tools for monorepos, which helps you develop like Google,
+Storm Stack is built using <a href="https://nx.dev/" target="_blank">Nx</a>, a
+set of extensible dev tools for monorepos, which helps you develop like Google,
 Facebook, and Microsoft. Building on top of Nx, the Open System provides a set
 of tools and patterns that help you scale your monorepo to many teams while
 keeping the codebase maintainable.
@@ -62,7 +64,7 @@ keeping the codebase maintainable.
   - [Running End-to-End Tests](#running-end-to-end-tests)
   - [Understand your workspace](#understand-your-workspace)
 - [☁ Nx Cloud](#-nx-cloud)
-  - [Distributed Computation Caching \& Distributed Task Execution](#distributed-computation-caching--distributed-task-execution)
+  - [Distributed Computation Caching & Distributed Task Execution](#distributed-computation-caching--distributed-task-execution)
 - [Roadmap](#roadmap)
 - [Contributing](#contributing)
 - [Support](#support)
@@ -75,10 +77,13 @@ keeping the codebase maintainable.
 
 # Quick Features
 
-The following are some of the features/publishable code that are included in this repository:
+The following are some of the features/publishable code that are included in
+this repository:
 
-- Transport/protocol/backend agnostic data fetching (REST, GraphQL, promises, whatever!)
-- Auto Caching + Refetching (stale-while-revalidate, Window Refocus, Polling/Realtime)
+- Transport/protocol/backend agnostic data fetching (REST, GraphQL, promises,
+  whatever!)
+- Auto Caching + Refetching (stale-while-revalidate, Window Refocus,
+  Polling/Realtime)
 - Parallel + Dependent Queries
 - Mutations + Reactive Query Refetching
 - Multi-layer Cache + Automatic Garbage Collection
@@ -98,26 +103,34 @@ The following are some of the features/publishable code that are included in thi
 <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/typescript/typescript-original.svg" alt="TypeScript" width="40" height="40"/>&nbsp;<img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/codecov/codecov-plain.svg" alt="Codecov" width="40" height="40"/>&nbsp;<img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/apachekafka/apachekafka-original.svg" alt="Kafka" width="40" height="40"/>&nbsp;<img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/amazonwebservices/amazonwebservices-original.svg" alt="Kafka" width="40" height="40"/>&nbsp;<img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/css3/css3-plain.svg" alt="Kafka" width="40" height="40"/>&nbsp;<img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/github/github-original.svg" alt="Kafka" width="40" height="40"/>&nbsp;<img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/canva/canva-original.svg" alt="Kafka" width="40" height="40"/>&nbsp;<img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/electron/electron-original.svg" alt="Kafka" width="40" height="40"/>&nbsp;<img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/docker/docker-plain.svg" alt="Kafka" width="40" height="40"/>&nbsp;<img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/eslint/eslint-original.svg" alt="Kafka" width="40" height="40"/>&nbsp;<img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/figma/figma-original.svg" alt="Kafka" width="40" height="40"/>&nbsp;<img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/graphql/graphql-plain.svg" alt="Kafka" width="40" height="40"/>&nbsp;<img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/jira/jira-plain.svg" alt="Kafka" width="40" height="40"/>&nbsp;<img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/markdown/markdown-original.svg" alt="Kafka" width="40" height="40"/>&nbsp;<img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/mongodb/mongodb-plain.svg" alt="Kafka" width="40" height="40"/>&nbsp;<img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/mysql/mysql-plain.svg" alt="Kafka" width="40" height="40"/>&nbsp;<img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/nextjs/nextjs-original.svg" alt="Kafka" width="40" height="40"/>&nbsp;<img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/nodejs/nodejs-original.svg" alt="Kafka" width="40" height="40"/>&nbsp;<img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/postgresql/postgresql-original.svg" alt="Kafka" width="40" height="40"/>&nbsp;<img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/storybook/storybook-original.svg" alt="Kafka" width="40" height="40"/>&nbsp;<img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/redis/redis-plain.svg" alt="Kafka" width="40" height="40"/>&nbsp;<img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/prometheus/prometheus-original.svg" alt="Kafka" width="40" height="40"/>&nbsp;<img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/sqlite/sqlite-original.svg" alt="Kafka" width="40" height="40"/>&nbsp;<img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/react/react-original.svg" alt="Kafka" width="40" height="40"/>&nbsp;<img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/tailwindcss/tailwindcss-plain.svg" alt="Kafka" width="40" height="40"/>&nbsp;<img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/threejs/threejs-original.svg" alt="Kafka" width="40" height="40"/>&nbsp;<img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/vscode/vscode-original.svg" alt="Kafka" width="40" height="40"/>&nbsp;<img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/android/android-original.svg" alt="Kafka" width="40" height="40"/>&nbsp;<img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/apple/apple-original.svg" alt="Kafka" width="40" height="40"/>&nbsp;<img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/bash/bash-original.svg" alt="Kafka" width="40" height="40"/>&nbsp;<img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/blender/blender-original.svg" alt="Kafka" width="40" height="40"/>&nbsp;<img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/jamstack/jamstack-original.svg" alt="Kafka" width="40" height="40"/>&nbsp;<img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/npm/npm-original-wordmark.svg" alt="Kafka" width="40" height="40"/>&nbsp;
 </div>
 
-**Note:** The above list of technologies is far from exhaustive. It is just meant to serve as a short list of _some_ of the technologies that are used in this repository.
-<br /><br />
+**Note:** The above list of technologies is far from exhaustive. It is just
+meant to serve as a short list of _some_ of the technologies that are used in
+this repository. <br /><br />
 
 ## Acidic - Model-Driven Development
 
-In StormStack, ⚡ _acidic_ refers to a collection of applications and libraries that are used to build server-side code from a user-defined model. This functionality all lives in the Storm monorepo's `tools` directory (/tools/acidic).
+In StormStack, ⚡ _acidic_ refers to a collection of applications and libraries
+that are used to build server-side code from a user-defined model. This
+functionality all lives in the Storm monorepo's `tools` directory
+(/tools/acidic).
 
 <div align="center"><img src="https://pub-761b436209f44a4d886487c917806c08.r2.dev/acidic-generate-flow.png" width="800px" /></div>
 <br />
 
-More information can be found in the [📓 Documentation](https://acidicjs.com/docs).
-<br /><br />
+More information can be found in the
+[📓 Documentation](https://acidicjs.com/docs). <br /><br />
 
 ## Visual Studio Code Extension
 
-Acidic has it's own Visual Studio Code extension to support the language model in the IDE. The extension can be found in the [Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=storm-software.acidic).
+Acidic has it's own Visual Studio Code extension to support the language model
+in the IDE. The extension can be found in the
+[Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=storm-software.acidic).
 
 ## Environment Configuration Help
 
-If you run into any issues while trying to run any of the above steps, please reach out to Patrick Sullivan. See the [Support](#support) section for more information.
+If you run into any issues while trying to run any of the above steps, please
+reach out to Patrick Sullivan. See the [Support](#support) section for more
+information.
 
 # Getting Started
 
@@ -271,8 +284,8 @@ Visit [Nx Cloud](https://nx.app/) to learn more.
 
 # Roadmap
 
-See the [open issues](https://github.com/storm-software/storm-stack/issues) for a
-list of proposed features (and known issues).
+See the [open issues](https://github.com/storm-software/storm-stack/issues) for
+a list of proposed features (and known issues).
 
 - [Top Feature Requests](https://github.com/storm-software/storm-stack/issues?q=label%3Aenhancement+is%3Aopen+sort%3Areactions-%2B1-desc)
   (Add your votes using the 👍 reaction)

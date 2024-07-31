@@ -9,7 +9,7 @@
   "owner": "storm-stack",
   "timezone": "America/New_York",
   "locale": "en-US",
-  "logLevel": "debug",
+  "logLevel": "all",
   "packageManager": "pnpm",
   "externalPackagePatterns": ["@acidic/", "@storm-software/", "@storm-stack/", "@cyclone-ui/"],
   "cloudflareAccountId": "d011605e7391539ac2e021ab4399e116",
