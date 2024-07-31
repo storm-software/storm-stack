@@ -37,6 +37,7 @@ identifiers. It is designed to be used in a browser or NodeJS environment.
 
 <!-- START doctoc -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+
 ## Table of Contents
 
 - [Installing](#installing)
