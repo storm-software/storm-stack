@@ -1,3 +1,20 @@
+/*-------------------------------------------------------------------
+
+                  ⚡ Storm Software - Storm Stack
+
+ This code was released as part of the Storm Stack project. Storm Stack
+ is maintained by Storm Software under the Apache-2.0 License, and is
+ free for commercial and private use. For more information, please visit
+ our licensing page.
+
+ Website:         https://stormsoftware.com
+ Repository:      https://github.com/storm-software/storm-stack
+ Documentation:   https://stormsoftware.com/projects/storm-stack/docs
+ Contact:         https://stormsoftware.com/contact
+ License:         https://stormsoftware.com/projects/storm-stack/license
+
+ -------------------------------------------------------------------*/
+
 import { Temporal } from "@js-temporal/polyfill";
 import { type JsonValue, Serializable } from "@storm-stack/serialization";
 import {
@@ -305,7 +322,7 @@ export class StormDateTime extends Date {
       return value.isValid;
     }
     if (isInstant(value)) {
-      return !!value.epochMilliseconds;
+      return Boolean(value.epochMilliseconds);
     }
 
     let datetime: string | undefined;
@@ -644,7 +661,12 @@ export class StormDateTime extends Date {
   ): number {
     this.#instant = this.#instant
       .toZonedDateTimeISO("UTC")
-      .with({ hour, minute, second, millisecond })
+      .with({
+        hour,
+        minute,
+        second,
+        millisecond
+      })
       .toInstant();
     this.#zonedDateTime = this.#instant.toZonedDateTime({
       timeZone: this.timeZoneId,

@@ -1,3 +1,20 @@
+/*-------------------------------------------------------------------
+
+                  ⚡ Storm Software - Storm Stack
+
+ This code was released as part of the Storm Stack project. Storm Stack
+ is maintained by Storm Software under the Apache-2.0 License, and is
+ free for commercial and private use. For more information, please visit
+ our licensing page.
+
+ Website:         https://stormsoftware.com
+ Repository:      https://github.com/storm-software/storm-stack
+ Documentation:   https://stormsoftware.com/projects/storm-stack/docs
+ Contact:         https://stormsoftware.com/contact
+ License:         https://stormsoftware.com/projects/storm-stack/license
+
+ -------------------------------------------------------------------*/
+
 import { isBigInt, isDate, isNumber } from "@storm-stack/types";
 import { RFC_3339_DATETIME_REGEX } from "../constants";
 import type { DateTimeInput, DateTimeOptions } from "../storm-date-time";
@@ -20,7 +37,7 @@ export function validateDateTime(
     return value.isValid;
   }
   if (isInstant(value)) {
-    return !!value.epochMilliseconds;
+    return Boolean(value.epochMilliseconds);
   }
 
   let datetime: string | undefined;
@@ -54,14 +71,14 @@ export function validateDateTime(
 
   // Split the date-time-string up into the string-date and time-string part.
   // and check whether these parts are RFC 3339 compliant.
-  return !!(
+  return Boolean(
     validateDate(
       datetime.slice(0, Math.max(0, datetime.indexOf("T"))),
       options
     ) &&
-    validateTime(
-      datetime.slice(Math.max(0, datetime.indexOf("T") + 1)),
-      options
-    )
+      validateTime(
+        datetime.slice(Math.max(0, datetime.indexOf("T") + 1)),
+        options
+      )
   );
 }

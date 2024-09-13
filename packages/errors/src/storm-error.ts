@@ -16,9 +16,16 @@
  -------------------------------------------------------------------*/
 
 import { Serializable } from "@storm-stack/serialization";
-import { EMPTY_STRING, NEWLINE_STRING, isFunction } from "@storm-stack/types";
-import { getCauseFromUnknown } from "./utilities/get-cause-from-unknown";
-import { isStormError } from "./utilities/is-storm-error";
+import {
+  EMPTY_STRING,
+  type Indexable,
+  NEWLINE_STRING,
+  isError,
+  isFunction,
+  isObject,
+  isSetString
+} from "@storm-stack/types";
+import { ErrorCode } from "./errors";
 
 export interface StormErrorOptions {
   name?: string;
@@ -26,6 +33,111 @@ export interface StormErrorOptions {
   cause?: unknown;
   stack?: string;
   data?: any;
+}
+
+/**
+ * Creates a new StormError instance
+ *
+ * @param cause - The cause of the error
+ * @returns The newly created StormError
+ */
+export function createStormError<TCode extends string = string>({
+  code,
+  name,
+  message,
+  cause,
+  stack,
+  data
+}: StormErrorOptions & { code?: TCode }): StormError<TCode> {
+  if (isStormError(cause)) {
+    return cause;
+  }
+
+  if (cause instanceof Error && cause.name === "StormError") {
+    return cause as StormError<TCode>;
+  }
+
+  const stormError = new StormError<TCode>(
+    (code ?? ErrorCode.internal_server_error) as TCode,
+    {
+      name,
+      message,
+      cause,
+      stack,
+      data
+    }
+  );
+
+  // Inherit stack from error
+  if (cause instanceof Error && cause.stack) {
+    stormError.stack = cause.stack;
+  }
+
+  return stormError;
+}
+
+/**
+ * Gets the cause of an unknown error and returns it as a StormError
+ *
+ * @param cause - The cause of the error in an unknown type
+ * @returns The cause of the error in a StormError object or undefined
+ */
+export function getCauseFromUnknown(cause: unknown): StormError {
+  if (isStormError(cause)) {
+    return cause;
+  }
+  if (isError(cause)) {
+    return createStormError({
+      code: ErrorCode.internal_server_error,
+      name: cause.name,
+      message: cause.message,
+      cause,
+      stack: cause.stack
+    });
+  }
+  const type = typeof cause;
+  if (type === "undefined" || type === "function" || cause === null) {
+    return new StormError(ErrorCode.internal_server_error, {
+      cause
+    });
+  }
+
+  // Primitive types just get wrapped in an error
+  if (type !== "object") {
+    return new StormError(ErrorCode.internal_server_error, {
+      message: String(cause)
+    });
+  }
+
+  // If it's an object, we'll create a synthetic error
+  if (isObject(cause)) {
+    const err = new StormError(ErrorCode.unknown_cause, {});
+
+    for (const key of Object.keys(cause)) {
+      (err as Indexable)[key] = (cause as Indexable)[key];
+    }
+
+    return err;
+  }
+
+  return new StormError(ErrorCode.internal_server_error, { cause });
+}
+
+/**
+ * Type-check to determine if `obj` is a `StormError` object
+ *
+ * @param value - the object to check
+ * @returns The function isStormError is returning a boolean value.
+ */
+export function isStormError<TCode extends string = any>(
+  value: unknown
+): value is StormError<TCode> {
+  return (
+    isError(value) &&
+    isSetString((value as unknown as StormError<TCode>)?.code) &&
+    isSetString((value as unknown as StormError<TCode>)?.message) &&
+    isSetString((value as unknown as StormError<TCode>)?.stack)
+  );
 }
 
 /**
