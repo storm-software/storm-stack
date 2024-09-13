@@ -26,8 +26,7 @@ jobs:
     uses: storm-software/storm-ops/.github/workflows/ci-reusable.yml@main
     with:
       tag: ${{ inputs.tag }}
-      packageManager: pnpm
-      packageManagerVersion: 9.10.0
-      stormBot: Stormie-Bot
-      githubToken: ${{ github.token }}
+      package-manager: pnpm
+      package-manager-version: 9.10.0
+      storm-bot: Stormie-Bot
     secrets: inherit
