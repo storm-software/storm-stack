@@ -19,6 +19,7 @@ import { Serializable } from "@storm-stack/serialization";
 import {
   EMPTY_STRING,
   type Indexable,
+  MessageType,
   NEWLINE_STRING,
   isError,
   isFunction,
@@ -168,6 +169,11 @@ export class StormError<TCode extends string = string> extends Error {
    * Additional data to be passed with the error
    */
   public data?: any;
+
+  /**
+   * The type of error message
+   */
+  public type: MessageType = MessageType.ERROR;
 
   /**
    * Creates a new StormError instance

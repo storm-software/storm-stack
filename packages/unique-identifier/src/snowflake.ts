@@ -1,3 +1,20 @@
+/*-------------------------------------------------------------------
+
+                  ⚡ Storm Software - Storm Stack
+
+ This code was released as part of the Storm Stack project. Storm Stack
+ is maintained by Storm Software under the Apache-2.0 License, and is
+ free for commercial and private use. For more information, please visit
+ our licensing page.
+
+ Website:         https://stormsoftware.com
+ Repository:      https://github.com/storm-software/storm-stack
+ Documentation:   https://stormsoftware.com/projects/storm-stack/docs
+ Contact:         https://stormsoftware.com/contact
+ License:         https://stormsoftware.com/projects/storm-stack/license
+
+ -------------------------------------------------------------------*/
+
 /**
  * Options passed to the `generate` function to create a snowflake identifier.
  */
@@ -145,8 +162,8 @@ export function snowflake({
       : new Date(timestamp).valueOf();
 
   let result = (BigInt(timestamp) - BigInt(epoch)) << BigInt(22);
-  result = result | (BigInt(shardId % 1024) << BigInt(12));
-  result = result | BigInt(sequence++ % 4096);
+  result |= BigInt(shardId % 1024) << BigInt(12);
+  result |= BigInt(sequence++ % 4096);
 
   return result.toString();
 }

@@ -27,7 +27,7 @@ jobs:
     with:
       tag: ${{ inputs.tag }}
       packageManager: pnpm
-      packageManagerVersion: 9.6.0
+      packageManagerVersion: 9.10.0
       stormBot: Stormie-Bot
       githubToken: ${{ github.token }}
     secrets: inherit
