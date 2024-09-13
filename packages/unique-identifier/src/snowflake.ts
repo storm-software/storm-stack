@@ -24,7 +24,7 @@ export interface ISnowflakeGeneratorOptions {
    *
    * @defaultValue 1
    */
-  shardId: number;
+  shardId?: number;
 
   /**
    * The epoch to use for the snowflake.
@@ -34,14 +34,14 @@ export interface ISnowflakeGeneratorOptions {
    *
    * @defaultValue 1420070400000 (Date.UTC(1970, 0, 1).valueOf())
    */
-  epoch: number;
+  epoch?: number;
 
   /**
    * The current timestamp to use for the snowflake.
    *
    * @defaultValue Date.now()
    */
-  timestamp: number | Date;
+  timestamp?: number | Date;
 }
 
 /**
@@ -82,8 +82,8 @@ export interface DeconstructedSnowflake {
   binary: string;
 }
 
-const DEFAULT_SHARD_ID = 1;
-const DEFAULT_EPOCH: number = Date.UTC(1970, 0, 1).valueOf();
+export const DEFAULT_SHARD_ID = 1;
+export const DEFAULT_EPOCH: number = Date.UTC(1970, 0, 1).valueOf();
 
 /**
  * The sequence of the current running generator.
@@ -147,22 +147,26 @@ function extractBits(
  *
  * ```
  *
- * @param timestamp - The timestamp to use
- * @param shardId - The shard id to use
+ * @param options - The options to use when generating the snowflake
  * @returns A snowflake
  */
 export function snowflake({
-  shardId = DEFAULT_SHARD_ID,
-  epoch = DEFAULT_EPOCH,
-  timestamp = Date.now()
+  shardId,
+  epoch,
+  timestamp
 }: ISnowflakeGeneratorOptions): string {
-  timestamp =
-    timestamp instanceof Date
-      ? timestamp.valueOf()
-      : new Date(timestamp).valueOf();
+  let result =
+    (BigInt(
+      timestamp
+        ? timestamp instanceof Date
+          ? timestamp.valueOf()
+          : new Date(timestamp).valueOf()
+        : Date.now()
+    ) -
+      BigInt(epoch ?? DEFAULT_EPOCH)) <<
+    BigInt(22);
 
-  let result = (BigInt(timestamp) - BigInt(epoch)) << BigInt(22);
-  result |= BigInt(shardId % 1024) << BigInt(12);
+  result |= BigInt((shardId ?? DEFAULT_SHARD_ID) % 1024) << BigInt(12);
   result |= BigInt(sequence++ % 4096);
 
   return result.toString();

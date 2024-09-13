@@ -130,7 +130,7 @@ export function getCauseFromUnknown(cause: unknown): StormError {
  * @param value - the object to check
  * @returns The function isStormError is returning a boolean value.
  */
-export function isStormError<TCode extends string = any>(
+export function isStormError<TCode extends string = string>(
   value: unknown
 ): value is StormError<TCode> {
   return (
@@ -274,8 +274,8 @@ export class StormError<TCode extends string = string> extends Error {
       ? `${this.name ? (this.code ? `${this.name} ` : this.name) : EMPTY_STRING} ${
         this.code
           ? (this.code && this.name
-            ? `(${this.code})`
-            : this.code)
+              ? `(${this.code})`
+              : this.code)
           : EMPTY_STRING
       }${this.code || this.name ? ": " : EMPTY_STRING}${this.message}${
         this.cause

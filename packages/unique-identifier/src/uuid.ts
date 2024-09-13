@@ -47,17 +47,26 @@ export function uuid() {
 
   if (!buffer || index + 16 > 256) {
     buffer = Array.from({ length: (i = 256) });
-    while (i--) buffer[i] = Math.trunc(256 * Math.random());
+    while (i--) {
+      buffer[i] = Math.trunc(256 * Math.random());
+    }
+    // eslint-disable-next-line no-multi-assign
     i = index = 0;
   }
 
   for (; i < 16; i++) {
     num = buffer[index + i]!;
-    if (i == 6) out += hex[(num & 15) | 64];
-    else if (i == 8) out += hex[(num & 63) | 128];
-    else out += hex[num];
+    if (i === 6) {
+      out += hex[(num & 15) | 64];
+    } else if (i === 8) {
+      out += hex[(num & 63) | 128];
+    } else {
+      out += hex[num];
+    }
 
-    if (i & 1 && i > 1 && i < 11) out += "-";
+    if (i & 1 && i > 1 && i < 11) {
+      out += "-";
+    }
   }
 
   index++;
