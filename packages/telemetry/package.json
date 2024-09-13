@@ -1,6 +1,6 @@
 {
   "name": "@storm-stack/telemetry",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "A Storm-Stack library used to drive server logging and handling telemetry processing in a NodeJS environment.",
   "repository": {
     "type": "github",
