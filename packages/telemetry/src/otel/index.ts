@@ -15,17 +15,4 @@
 
  -------------------------------------------------------------------*/
 
-/**
- * The backend-telemetry library used by Storm Software for building TypeScript applications.
- *
- * @remarks
- * A library used to drive server logging and handling telemetry processing in a NodeJS envrionment
- *
- * @packageDocumentation
- */
-
-export * from "./errors";
-export * from "./otel";
-export * from "./schema";
-export * from "./storm-trace";
-export * from "./types";
+export * from "./init";

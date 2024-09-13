@@ -45,6 +45,11 @@ export const LokiConfigSchema = z
  */
 export const TelemetryConfigSchema = z
   .object({
+    serviceId: z
+      .string()
+      .url()
+      .trim()
+      .describe("The name of the current service"),
     stacktrace: z
       .boolean()
       .optional()
@@ -53,7 +58,7 @@ export const TelemetryConfigSchema = z
       ),
     fileLoggingDisabled: z
       .boolean()
-      .default(false)
+      .default(true)
       .describe("Should file logging be disabled"),
     fileName: z
       .string()

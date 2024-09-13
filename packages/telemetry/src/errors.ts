@@ -15,17 +15,10 @@
 
  -------------------------------------------------------------------*/
 
-/**
- * The backend-telemetry library used by Storm Software for building TypeScript applications.
- *
- * @remarks
- * A library used to drive server logging and handling telemetry processing in a NodeJS envrionment
- *
- * @packageDocumentation
- */
+import { ErrorCode } from "@storm-stack/errors/errors";
 
-export * from "./errors";
-export * from "./otel";
-export * from "./schema";
-export * from "./storm-trace";
-export * from "./types";
+export type TelemetryErrorCode = ErrorCode | "missing_service_id";
+export const TelemetryErrorCode = {
+  ...ErrorCode,
+  missing_service_id: "missing_service_id" as TelemetryErrorCode
+};

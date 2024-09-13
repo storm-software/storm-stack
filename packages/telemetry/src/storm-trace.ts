@@ -15,24 +15,14 @@
 
  -------------------------------------------------------------------*/
 
+import { Context, Span, SpanOptions } from "@opentelemetry/api";
+import { api } from "@opentelemetry/sdk-node";
 import type { StormConfig } from "@storm-software/config";
-import { createStormConfig } from "@storm-software/config-tools";
-import { type StormTime } from "@storm-stack/date-time/storm-time";
-import { formatSince } from "@storm-stack/date-time/utilities/format-since";
-import { getCauseFromUnknown } from "@storm-stack/errors/storm-error";
-import {
-  type GetLoggersResult,
-  type ILoggerWrapper,
-  type IStormLog,
-  LogLevel,
-  StormLog,
-  getLogLevel
-} from "@storm-stack/logging";
+import { StormError } from "@storm-stack/errors/storm-error";
+import { StormLog } from "@storm-stack/logging/storm-log";
 import type pino from "pino";
-import type { Logger, LoggerOptions as PinoLoggerOptions } from "pino";
-import { createFileStreamLogs } from "./logging/create-file-stream-logs";
-import { getPinoLogger } from "./logging/get-pino-logger";
-import { TelemetryConfigSchema } from "./schema";
+import { TelemetryErrorCode } from "./errors";
+import { initOtel } from "./otel/init";
 import type { TelemetryConfig } from "./types";
 
 /**
@@ -41,27 +31,8 @@ import type { TelemetryConfig } from "./types";
  * @remarks
  * This logger writes to stdio and to a file and/or [Loki streams](https://grafana.com/oss/loki/).
  */
-export class StormTrace extends StormLog implements IStormLog {
-  protected static override getLoggers =
-    async (): Promise<GetLoggersResult> => {
-      if (!StormTrace.logger) {
-        const config = await createStormConfig<"telemetry", TelemetryConfig>(
-          "telemetry",
-          TelemetryConfigSchema
-        );
-        StormTrace.logger = StormTrace.initialize(
-          config as StormConfig<"telemetry", TelemetryConfig>
-        );
-        StormTrace.logLevel = getLogLevel(config.logLevel);
-        StormTrace.logLevelLabel = config.logLevel;
-      }
-
-      return {
-        ...StormTrace.logger,
-        logLevel: StormTrace.logLevel,
-        logLevelLabel: StormTrace.logLevelLabel
-      };
-    };
+export class StormTrace extends StormLog {
+  static #tracer: api.Tracer;
 
   /**
    * Initialize the logger.
@@ -70,190 +41,59 @@ export class StormTrace extends StormLog implements IStormLog {
    * @param name - The name of the project to initialized the loggers for
    * @returns The initialized loggers
    */
-  protected static override initialize = (
+  public static override initialize = (
     config: StormConfig<"telemetry", TelemetryConfig>,
     name?: string,
     streams: (pino.DestinationStream | pino.StreamEntry<pino.Level>)[] = []
-  ): Logger<PinoLoggerOptions> => {
-    const pinoLogger: Logger<PinoLoggerOptions> = getPinoLogger(
-      config,
-      name,
-      streams,
-      config.extensions.logging?.stacktrace
+  ) => {
+    if (!name && !config.extensions.telemetry?.serviceId) {
+      throw StormError.create(TelemetryErrorCode.missing_service_id);
+    }
+
+    initOtel({
+      serviceId: name || config.extensions.telemetry?.serviceId
+    });
+    StormTrace.#tracer = api.trace.getTracer(
+      name || config.extensions.telemetry?.serviceId
     );
-    pinoLogger.debug("The Storm log has ben initialized");
 
-    return pinoLogger;
+    StormLog.initialize(config, name, streams);
   };
 
-  /**
-   * The Singleton's constructor should always be private to prevent direct
-   * construction calls with the `new` operator.
-   */
-  protected constructor(
-    protected override config: StormConfig<"telemetry", TelemetryConfig>,
-    name?: string,
-    additionalLoggers: ILoggerWrapper[] = []
-  ) {
-    super(config, name, additionalLoggers);
+  public static async span<TFunct extends (span: Span) => unknown>(
+    spanName: string,
+    funct: TFunct,
+    options?: SpanOptions,
+    context?: Context
+  ): Promise<ReturnType<TFunct>> {
+    const spanFunct = async (span: api.Span) => {
+      const result = await Promise.resolve(funct(span));
+
+      return result as ReturnType<TFunct>;
+    };
+
+    if (options && context) {
+      return StormTrace.#tracer.startActiveSpan(
+        `${StormTrace.name} > ${spanName}`,
+        options,
+        context,
+        spanFunct
+      );
+    } else if (options) {
+      return StormTrace.#tracer.startActiveSpan(
+        `${StormTrace.name} > ${spanName}`,
+        options,
+        spanFunct
+      );
+    }
+
+    return StormTrace.#tracer.startActiveSpan(
+      `${StormTrace.name} > ${spanName}`,
+      spanFunct
+    );
   }
 
-  /**
-   * Create a new instance of the logger
-   *
-   * @param config - The Storm config
-   * @param name - The name of the project to initialized the loggers for
-   * @param additionalLoggers - Additional loggers to use
-   * @returns The initialized logger
-   */
-  public static override create(
-    config: StormConfig<"telemetry", TelemetryConfig>,
-    name?: string,
-    additionalLoggers: ILoggerWrapper[] = []
-  ) {
-    return new StormTrace(config, name, additionalLoggers);
+  protected constructor() {
+    super();
   }
-
-  /**
-   * Write a success message to the logs.
-   *
-   * @param message - The message to print.
-   * @returns Either a promise that resolves to void or void.
-   */
-  public static override success(message: any) {
-    StormTrace.getLoggers().then(logger => {
-      StormTrace.logLevel >= LogLevel.INFO &&
-        logger.info({ msg: message, level: "success" });
-    });
-  }
-
-  /**
-   * Write a fatal message to the logs.
-   *
-   * @param message - The fatal message to be displayed.
-   * @returns Either a promise that resolves to void or void.
-   */
-  public static override fatal(message: any) {
-    const error = getCauseFromUnknown(message);
-
-    StormTrace.getLoggers().then(logger => {
-      StormTrace.logLevel >= LogLevel.FATAL &&
-        logger.fatal({ error, level: "fatal" });
-    });
-  }
-
-  /**
-   * Write an error message to the logs.
-   *
-   * @param message - The message to be displayed.
-   * @returns Either a promise that resolves to void or void.
-   */
-  public static override error(message: any) {
-    const error = getCauseFromUnknown(message);
-
-    StormTrace.getLoggers().then(logger => {
-      StormTrace.logLevel >= LogLevel.ERROR &&
-        logger.error({ error, level: "error" });
-    });
-  }
-
-  /**
-   * Write an exception message to the logs.
-   *
-   * @param message - The message to be displayed.
-   * @returns Either a promise that resolves to void or void.
-   */
-  public static override exception(message: any) {
-    const error = getCauseFromUnknown(message);
-
-    StormTrace.getLoggers().then(logger => {
-      StormTrace.logLevel >= LogLevel.ERROR &&
-        logger.error({ error, level: "exception" });
-    });
-  }
-
-  /**
-   * Write a warning message to the logs.
-   *
-   * @param message - The message to be printed.
-   * @returns Either a promise that resolves to void or void.
-   */
-  public static override warn(message: any) {
-    StormTrace.getLoggers().then(logger => {
-      StormTrace.logLevel >= LogLevel.WARN && logger.warn(message);
-    });
-  }
-
-  /**
-   * Write an informational message to the logs.
-   *
-   * @param message - The message to be printed.
-   * @returns Either a promise that resolves to void or void.
-   */
-  public static override info(message: any) {
-    StormTrace.getLoggers().then(logger => {
-      StormTrace.logLevel >= LogLevel.INFO && logger.info(message);
-    });
-  }
-
-  /**
-   * Write a debug message to the logs.
-   *
-   * @param message - The message to be printed.
-   * @returns Either a promise that resolves to void or void.
-   */
-  public static override debug(message: any) {
-    StormTrace.getLoggers().then(logger => {
-      StormTrace.logLevel >= LogLevel.DEBUG && logger.debug(message);
-    });
-  }
-
-  /**
-   * Write a trace message to the logs.
-   *
-   * @param message - The message to be printed.
-   * @returns Either a promise that resolves to void or void.
-   */
-  public static override trace(message: any) {
-    StormTrace.getLoggers().then(logger => {
-      StormTrace.logLevel >= LogLevel.TRACE && logger.trace(message);
-    });
-  }
-
-  /**
-   * Write an informational message to the logs.
-   *
-   * @param message - The message to be printed.
-   * @returns Either a promise that resolves to void or void.
-   */
-  public static override log(message: any) {
-    StormTrace.getLoggers().then(logger => {
-      StormTrace.logLevel >= LogLevel.INFO && logger.info(message);
-    });
-  }
-
-  /**
-   * Write an message to the logs specifying how long it took to complete a process
-   * @param startTime - The start time of the process
-   * @param name - The name of the process
-   */
-  public static override stopwatch(startTime: StormTime, name?: string) {
-    StormTrace.getLoggers().then(logger => {
-      StormTrace.logLevel >= LogLevel.INFO &&
-        logger.info(
-          `\n⏱️  Completed ${name ? ` ${name}` : ""} process in ${formatSince(startTime.since())}\n`
-        );
-    });
-  }
-
-  /**
-   * Allow child classes to specify additional pino log streams
-   *
-   * @returns Additional log streams to use during initialization
-   */
-  protected getStreams = (): Array<
-    pino.DestinationStream | pino.StreamEntry<pino.Level>
-  > => {
-    return createFileStreamLogs(this.config);
-  };
 }
