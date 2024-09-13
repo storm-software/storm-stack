@@ -1,3 +1,20 @@
+/*-------------------------------------------------------------------
+
+                  ⚡ Storm Software - Storm Stack
+
+ This code was released as part of the Storm Stack project. Storm Stack
+ is maintained by Storm Software under the Apache-2.0 License, and is
+ free for commercial and private use. For more information, please visit
+ our licensing page.
+
+ Website:         https://stormsoftware.com
+ Repository:      https://github.com/storm-software/storm-stack
+ Documentation:   https://stormsoftware.com/projects/storm-stack/docs
+ Contact:         https://stormsoftware.com/contact
+ License:         https://stormsoftware.com/projects/storm-stack/license
+
+ -------------------------------------------------------------------*/
+
 import { type Indexable, isError, isObject } from "@storm-stack/types";
 import { ErrorCode } from "../errors";
 import { StormError } from "../storm-error";
@@ -40,9 +57,11 @@ export function getCauseFromUnknown(cause: unknown): StormError {
   // If it's an object, we'll create a synthetic error
   if (isObject(cause)) {
     const err = new StormError(ErrorCode.unknown_cause, {});
-    for (const key in cause) {
+
+    for (const key of Object.keys(cause)) {
       (err as Indexable)[key] = (cause as Indexable)[key];
     }
+
     return err;
   }
 

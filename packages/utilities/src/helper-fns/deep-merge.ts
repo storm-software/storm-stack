@@ -9,9 +9,9 @@
 
  Website:         https://stormsoftware.com
  Repository:      https://github.com/storm-software/storm-stack
- Documentation:   https://docs.stormsoftware.com/projects/storm-stack
+ Documentation:   https://stormsoftware.com/projects/storm-stack/docs
  Contact:         https://stormsoftware.com/contact
- Licensing:       https://stormsoftware.com/licensing
+ License:         https://stormsoftware.com/projects/storm-stack/license
 
  -------------------------------------------------------------------*/
 
@@ -91,7 +91,7 @@ export const deepMerge = <X = any, Y = any, Z = X & Y>(
 ): Z => {
   if (!target || !source) {
     // eslint-disable-next-line unicorn/prefer-logical-operator-over-ternary
-    return (target ? target : source) as Z;
+    return (target || source) as Z;
   }
 
   const _options = options || {};

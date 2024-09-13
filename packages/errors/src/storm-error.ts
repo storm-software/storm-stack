@@ -1,7 +1,24 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
+/*-------------------------------------------------------------------
+
+                  ⚡ Storm Software - Storm Stack
+
+ This code was released as part of the Storm Stack project. Storm Stack
+ is maintained by Storm Software under the Apache-2.0 License, and is
+ free for commercial and private use. For more information, please visit
+ our licensing page.
+
+ Website:         https://stormsoftware.com
+ Repository:      https://github.com/storm-software/storm-stack
+ Documentation:   https://stormsoftware.com/projects/storm-stack/docs
+ Contact:         https://stormsoftware.com/contact
+ License:         https://stormsoftware.com/projects/storm-stack/license
+
+ -------------------------------------------------------------------*/
+
 import { Serializable } from "@storm-stack/serialization";
 import { EMPTY_STRING, NEWLINE_STRING, isFunction } from "@storm-stack/types";
-import { getCauseFromUnknown, isStormError } from "./utilities";
+import { getCauseFromUnknown } from "./utilities/get-cause-from-unknown";
+import { isStormError } from "./utilities/is-storm-error";
 
 export interface StormErrorOptions {
   name?: string;
@@ -63,12 +80,10 @@ export class StormError<TCode extends string = string> extends Error {
 
     if (stack) {
       this._stack = stack;
+    } else if (isFunction(Error.captureStackTrace)) {
+      Error.captureStackTrace(this, this.constructor);
     } else {
-      if (isFunction(Error.captureStackTrace)) {
-        Error.captureStackTrace(this, this.constructor);
-      } else {
-        this._stack = new Error(message).stack;
-      }
+      this._stack = new Error(message).stack;
     }
 
     Object.setPrototypeOf(this, StormError.prototype);
@@ -139,18 +154,18 @@ export class StormError<TCode extends string = string> extends Error {
   public print(): string {
     return this.message
       ? `${this.name ? (this.code ? `${this.name} ` : this.name) : EMPTY_STRING} ${
-          this.code
-            ? this.code && this.name
-              ? `(${this.code})`
-              : this.code
-            : EMPTY_STRING
-        }${this.code || this.name ? ": " : EMPTY_STRING}${this.message}${
-          this.cause
-            ? `${NEWLINE_STRING}Cause: ${
-                isStormError(this.cause) ? this.cause.print() : this.cause
-              }`
-            : EMPTY_STRING
-        }`
+        this.code
+          ? (this.code && this.name
+            ? `(${this.code})`
+            : this.code)
+          : EMPTY_STRING
+      }${this.code || this.name ? ": " : EMPTY_STRING}${this.message}${
+        this.cause
+          ? `${NEWLINE_STRING}Cause: ${
+            isStormError(this.cause) ? this.cause.print() : this.cause
+          }`
+          : EMPTY_STRING
+      }`
       : EMPTY_STRING;
   }
 

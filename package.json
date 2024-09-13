@@ -77,6 +77,7 @@
     "nuke-node_modules-packages": "pnpm exec rimraf --no-interactive --glob ./packages/**/node_modules",
     "nuke-node_modules-tools": "pnpm exec rimraf --no-interactive --glob ./tools/**/node_modules",
     "nx": "nx",
+    "push": "git push origin main:main",
     "readme-gen": "pnpm storm-git readme-gen --templates=\"docs/readme-templates\"",
     "release": "pnpm storm-git release",
     "start": "nx serve"
