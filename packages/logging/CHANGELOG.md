@@ -1,3 +1,10 @@
+## 1.21.0 (2024-09-13)
+
+
+### Features
+
+- **telemetry:** Added Open Telemetry support ([6ca1c8d](https://github.com/storm-software/storm-stack/commit/6ca1c8d))
+
 ## 1.20.0 (2024-02-10)
 
 ### 🚀 Features
