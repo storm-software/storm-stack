@@ -9,12 +9,6 @@
         "useFlatConfig": true
       }
     },
-    "@storm-software/workspace-tools/plugins/typescript",
-    {
-      "plugin": "@nx/rollup/plugin",
-      "options": {
-        "buildTargetName": "build"
-      }
-    }
+    "@storm-software/workspace-tools/plugins/typescript"
   ]
 }

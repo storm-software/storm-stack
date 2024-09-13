@@ -15,10 +15,4 @@
 
  -------------------------------------------------------------------*/
 
-import { ErrorCode } from "@storm-stack/errors/errors";
-
-export type TelemetryErrorCode = ErrorCode | "missing_service_name";
-export const TelemetryErrorCode = {
-  ...ErrorCode,
-  missing_service_name: "missing_service_name" as TelemetryErrorCode
-};
+export * from "./init";

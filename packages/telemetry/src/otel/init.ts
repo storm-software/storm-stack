@@ -26,16 +26,16 @@ import {
   ATTR_SERVICE_VERSION
 } from "@opentelemetry/semantic-conventions";
 
-export interface LoadOtelOptions {
-  serviceId: string;
+export interface InitOtelOptions {
+  serviceName: string;
   serviceVersion?: string;
 }
 
-export const initOtel = (options: LoadOtelOptions) => {
+export const initOtel = (options: InitOtelOptions) => {
   const sdk = new NodeSDK({
     resource: new Resource({
-      [ATTR_SERVICE_NAME]: options.serviceId,
-      [ATTR_SERVICE_VERSION]: options.serviceVersion || "1.0"
+      [ATTR_SERVICE_NAME]: options.serviceName,
+      [ATTR_SERVICE_VERSION]: options.serviceVersion || "1.0.0"
     }),
     spanProcessor: new tracing.SimpleSpanProcessor(
       new tracing.ConsoleSpanExporter()
@@ -51,7 +51,11 @@ export const initOtel = (options: LoadOtelOptions) => {
     instrumentations: [
       getNodeAutoInstrumentations(),
       new PinoInstrumentation({
-        // See below for Pino instrumentation options.
+        logKeys: {
+          traceId: "correlationId",
+          spanId: "spanId",
+          traceFlags: "data"
+        }
       })
     ]
   });

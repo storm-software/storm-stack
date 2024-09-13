@@ -38,16 +38,16 @@ export type ServerResultMeta = {
   /**
    * The server endpoint/action name
    */
-  endpoint: string;
+  serviceId: string;
 };
 
 export type ServerResult<T> =
-  | {
+  | ({
       /**
        * The meta data returned by the server
        */
       meta: ServerResultMeta;
-
+    } & {
       /**
        * The data returned by the server
        */
@@ -57,13 +57,8 @@ export type ServerResult<T> =
        * The message returned by the server
        */
       message?: MessageDetails;
-    }
+    })
   | {
-      /**
-       * The meta data returned by the server
-       */
-      meta: ServerResultMeta;
-
       /**
        * The errors returned by the server
        */

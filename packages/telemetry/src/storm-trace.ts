@@ -15,14 +15,16 @@
 
  -------------------------------------------------------------------*/
 
-import { Context, Span, SpanOptions } from "@opentelemetry/api";
+import { Context, Span, SpanKind, SpanOptions } from "@opentelemetry/api";
 import { api } from "@opentelemetry/sdk-node";
 import type { StormConfig } from "@storm-software/config";
 import { StormError } from "@storm-stack/errors/storm-error";
 import { StormLog } from "@storm-stack/logging/storm-log";
+import { uuid } from "@storm-stack/unique-identifier/uuid";
 import type pino from "pino";
 import { TelemetryErrorCode } from "./errors";
 import { initOtel } from "./otel/init";
+import { initSentry } from "./sentry/init";
 import type { TelemetryConfig } from "./types";
 
 /**
@@ -38,7 +40,7 @@ export class StormTrace extends StormLog {
    * Initialize the logger.
    *
    * @param config - The Storm config
-   * @param name - The name of the project to initialized the loggers for
+   * @param name - The name of the service to initialized the loggers for
    * @returns The initialized loggers
    */
   public static override initialize = (
@@ -46,24 +48,31 @@ export class StormTrace extends StormLog {
     name?: string,
     streams: (pino.DestinationStream | pino.StreamEntry<pino.Level>)[] = []
   ) => {
-    if (!name && !config.extensions.telemetry?.serviceId) {
-      throw StormError.create(TelemetryErrorCode.missing_service_id);
+    if (!name && !config.extensions.telemetry?.serviceName) {
+      throw StormError.create(TelemetryErrorCode.missing_service_name);
     }
 
-    initOtel({
-      serviceId: name || config.extensions.telemetry?.serviceId
-    });
-    StormTrace.#tracer = api.trace.getTracer(
-      name || config.extensions.telemetry?.serviceId
-    );
+    const serviceName = name || config.extensions.telemetry?.serviceName;
 
-    StormLog.initialize(config, name, streams);
+    initOtel({
+      serviceName,
+      serviceVersion: config.extensions.telemetry?.serviceVersion
+    });
+    initSentry({
+      dsn: "",
+      serviceName,
+      serviceVersion: config.extensions.telemetry?.serviceVersion
+    });
+
+    StormTrace.#tracer = api.trace.getTracer(serviceName);
+
+    StormLog.initialize(config, serviceName, streams);
   };
 
   public static async span<TFunct extends (span: Span) => unknown>(
-    spanName: string,
+    spanId: string,
     funct: TFunct,
-    options?: SpanOptions,
+    options: SpanOptions = {},
     context?: Context
   ): Promise<ReturnType<TFunct>> {
     const spanFunct = async (span: api.Span) => {
@@ -72,23 +81,27 @@ export class StormTrace extends StormLog {
       return result as ReturnType<TFunct>;
     };
 
-    if (options && context) {
+    const opts: SpanOptions = {
+      kind: SpanKind.SERVER,
+      attributes: {
+        ...options?.attributes,
+        correlationId: uuid(),
+        serviceName: StormTrace.name
+      },
+      ...options
+    };
+    if (context) {
       return StormTrace.#tracer.startActiveSpan(
-        `${StormTrace.name} > ${spanName}`,
-        options,
+        `${StormTrace.name} > ${spanId}`,
+        opts,
         context,
-        spanFunct
-      );
-    } else if (options) {
-      return StormTrace.#tracer.startActiveSpan(
-        `${StormTrace.name} > ${spanName}`,
-        options,
         spanFunct
       );
     }
 
     return StormTrace.#tracer.startActiveSpan(
-      `${StormTrace.name} > ${spanName}`,
+      `${StormTrace.name} > ${spanId}`,
+      opts,
       spanFunct
     );
   }

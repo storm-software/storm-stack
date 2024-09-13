@@ -29,7 +29,7 @@ import { ServerResult, ServerResultMeta } from "../server-result";
 export interface CreateServerResultMetaOptions {
   correlationId?: string;
   userId: string;
-  endpoint: string;
+  serviceId: string;
 }
 
 export interface CreateServerResultOptions<T> {
@@ -40,13 +40,13 @@ export interface CreateServerResultOptions<T> {
 export const createServerResultMeta = ({
   correlationId,
   userId,
-  endpoint
+  serviceId
 }: CreateServerResultMetaOptions): ServerResultMeta => {
   return {
     correlationId: correlationId || uuid(),
     timestamp: StormDateTime.current(),
     userId,
-    endpoint
+    serviceId
   };
 };
 
