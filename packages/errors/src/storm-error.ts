@@ -50,7 +50,7 @@ export function createStormError<TCode extends string = string>({
   stack,
   data
 }: StormErrorOptions & { code?: TCode }): StormError<TCode> {
-  if (isStormError(cause)) {
+  if (isStormError<TCode>(cause)) {
     return cause;
   }
 
@@ -273,9 +273,9 @@ export class StormError<TCode extends string = string> extends Error {
     return this.message
       ? `${this.name ? (this.code ? `${this.name} ` : this.name) : EMPTY_STRING} ${
         this.code
-          ? (this.code && this.name
+          ? this.code && this.name
               ? `(${this.code})`
-              : this.code)
+              : this.code
           : EMPTY_STRING
       }${this.code || this.name ? ": " : EMPTY_STRING}${this.message}${
         this.cause

@@ -1,10 +1,25 @@
+/*-------------------------------------------------------------------
+
+                  ⚡ Storm Software - Storm Stack
+
+ This code was released as part of the Storm Stack project. Storm Stack
+ is maintained by Storm Software under the Apache-2.0 License, and is
+ free for commercial and private use. For more information, please visit
+ our licensing page.
+
+ Website:         https://stormsoftware.com
+ Repository:      https://github.com/storm-software/storm-stack
+ Documentation:   https://stormsoftware.com/projects/storm-stack/docs
+ Contact:         https://stormsoftware.com/contact
+ License:         https://stormsoftware.com/projects/storm-stack/license
+
+ -------------------------------------------------------------------*/
+
 import type { StormConfig } from "@storm-software/config";
-import {
-  StormDateTime,
-  formatDate,
-  formatDateTime
-} from "@storm-stack/date-time";
-import { EMPTY_STRING, isSetString } from "@storm-stack/utilities";
+import { StormDateTime } from "@storm-stack/date-time/storm-date-time";
+import { formatDate, formatDateTime } from "@storm-stack/date-time/utilities";
+import { isSetString } from "@storm-stack/types/type-checks/is-set-string";
+import { EMPTY_STRING } from "@storm-stack/types/utility-types/base";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import pino from "pino";
@@ -37,7 +52,7 @@ export const createFileStreamLogs = (
         dest: join(
           logPath,
           formatDate().replaceAll("/", "-").replaceAll(" ", "-"),
-          `${`${loggingConfig.fileName ? loggingConfig.fileName : "storm"}-`}${formatDateTime(
+          `${`${loggingConfig.fileName || "storm"}-`}${formatDateTime(
             StormDateTime.current(),
             {
               smallestUnit: "second",
@@ -63,7 +78,7 @@ export const createFileStreamLogs = (
       })
     });
 
-    /*streams.push({
+    /* streams.push({
     level: "error",
     stream: createWriteStream(
       join(
@@ -88,7 +103,7 @@ export const createFileStreamLogs = (
         }`
       )
     )
-  });*/
+  }); */
   }
 
   if (

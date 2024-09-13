@@ -1,7 +1,24 @@
+/*-------------------------------------------------------------------
+
+                  ⚡ Storm Software - Storm Stack
+
+ This code was released as part of the Storm Stack project. Storm Stack
+ is maintained by Storm Software under the Apache-2.0 License, and is
+ free for commercial and private use. For more information, please visit
+ our licensing page.
+
+ Website:         https://stormsoftware.com
+ Repository:      https://github.com/storm-software/storm-stack
+ Documentation:   https://stormsoftware.com/projects/storm-stack/docs
+ Contact:         https://stormsoftware.com/contact
+ License:         https://stormsoftware.com/projects/storm-stack/license
+
+ -------------------------------------------------------------------*/
+
 import type { StormConfig } from "@storm-software/config";
-import { isStormError } from "@storm-stack/errors";
-import { titleCase } from "@storm-stack/string-fns";
-import { isRuntimeServer } from "@storm-stack/utilities";
+import { isStormError } from "@storm-stack/errors/storm-error";
+import { titleCase } from "@storm-stack/string-fns/title-case";
+import { isRuntimeServer } from "@storm-stack/utilities/helper-fns/is-runtime-server";
 import type { LoggerOptions as PinoLoggerOptions } from "pino";
 import { LogLevel, getLogLevel } from "./get-log-level";
 import { createErrorSerializer } from "./log-serializer";
@@ -20,8 +37,7 @@ export const getPinoOptions = (
 ): PinoLoggerOptions => {
   config.logLevel ??= config.env === "production" ? "info" : "debug";
   const _stacktrace =
-    stacktrace ||
-    (config?.env === "production" && !isRuntimeServer() ? false : true);
+    stacktrace || !(config?.env === "production" && !isRuntimeServer());
   const errorSerializer = createErrorSerializer(_stacktrace);
 
   const baseOptions: PinoLoggerOptions = {

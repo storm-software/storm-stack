@@ -1,4 +1,20 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
+/*-------------------------------------------------------------------
+
+                  ⚡ Storm Software - Storm Stack
+
+ This code was released as part of the Storm Stack project. Storm Stack
+ is maintained by Storm Software under the Apache-2.0 License, and is
+ free for commercial and private use. For more information, please visit
+ our licensing page.
+
+ Website:         https://stormsoftware.com
+ Repository:      https://github.com/storm-software/storm-stack
+ Documentation:   https://stormsoftware.com/projects/storm-stack/docs
+ Contact:         https://stormsoftware.com/contact
+ License:         https://stormsoftware.com/projects/storm-stack/license
+
+ -------------------------------------------------------------------*/
+
 // import { Decimal } from "decimal.js";
 import { isObject, isString } from "@storm-stack/types";
 import { Buffer } from "buffer/";
@@ -114,9 +130,9 @@ export class StormParser extends SuperJSON {
   }
 }
 
-/*export const registerClass = StormParser.registerClass;
+/* export const registerClass = StormParser.registerClass;
 export const register = StormParser.register;
 export const deserialize = StormParser.deserialize;
 export const serialize = StormParser.serialize;
 export const parse = StormParser.parse;
-export const stringify = StormParser.stringify;*/
+export const stringify = StormParser.stringify; */

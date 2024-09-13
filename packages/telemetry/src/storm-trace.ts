@@ -1,7 +1,25 @@
+/*-------------------------------------------------------------------
+
+                  ⚡ Storm Software - Storm Stack
+
+ This code was released as part of the Storm Stack project. Storm Stack
+ is maintained by Storm Software under the Apache-2.0 License, and is
+ free for commercial and private use. For more information, please visit
+ our licensing page.
+
+ Website:         https://stormsoftware.com
+ Repository:      https://github.com/storm-software/storm-stack
+ Documentation:   https://stormsoftware.com/projects/storm-stack/docs
+ Contact:         https://stormsoftware.com/contact
+ License:         https://stormsoftware.com/projects/storm-stack/license
+
+ -------------------------------------------------------------------*/
+
 import type { StormConfig } from "@storm-software/config";
 import { createStormConfig } from "@storm-software/config-tools";
-import { type StormTime, formatSince } from "@storm-stack/date-time";
-import { getCauseFromUnknown } from "@storm-stack/errors";
+import { type StormTime } from "@storm-stack/date-time/storm-time";
+import { formatSince } from "@storm-stack/date-time/utilities/format-since";
+import { getCauseFromUnknown } from "@storm-stack/errors/storm-error";
 import {
   type GetLoggersResult,
   type ILoggerWrapper,
@@ -233,7 +251,7 @@ export class StormTrace extends StormLog implements IStormLog {
    *
    * @returns Additional log streams to use during initialization
    */
-  protected override getStreams = (): Array<
+  protected getStreams = (): Array<
     pino.DestinationStream | pino.StreamEntry<pino.Level>
   > => {
     return createFileStreamLogs(this.config);

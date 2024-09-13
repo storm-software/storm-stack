@@ -1,4 +1,21 @@
-export type LogLevel = 0 | 10 | 20 | 30 | 40 | 60 | 70;
+/*-------------------------------------------------------------------
+
+                  ⚡ Storm Software - Storm Stack
+
+ This code was released as part of the Storm Stack project. Storm Stack
+ is maintained by Storm Software under the Apache-2.0 License, and is
+ free for commercial and private use. For more information, please visit
+ our licensing page.
+
+ Website:         https://stormsoftware.com
+ Repository:      https://github.com/storm-software/storm-stack
+ Documentation:   https://stormsoftware.com/projects/storm-stack/docs
+ Contact:         https://stormsoftware.com/contact
+ License:         https://stormsoftware.com/projects/storm-stack/license
+
+ -------------------------------------------------------------------*/
+
+export type LogLevel = 0 | 10 | 20 | 30 | 40 | 60 | 70 | 100;
 export const LogLevel = {
   SILENT: 0 as LogLevel,
   FATAL: 10 as LogLevel,
@@ -6,7 +23,8 @@ export const LogLevel = {
   WARN: 30 as LogLevel,
   INFO: 40 as LogLevel,
   DEBUG: 60 as LogLevel,
-  TRACE: 70 as LogLevel
+  TRACE: 70 as LogLevel,
+  ALL: 100 as LogLevel
 };
 
 export type LogLevelLabel =
@@ -16,7 +34,8 @@ export type LogLevelLabel =
   | "warn"
   | "info"
   | "debug"
-  | "trace";
+  | "trace"
+  | "all";
 export const LogLevelLabel = {
   SILENT: "silent" as LogLevelLabel,
   FATAL: "fatal" as LogLevelLabel,
@@ -24,7 +43,8 @@ export const LogLevelLabel = {
   WARN: "warn" as LogLevelLabel,
   INFO: "info" as LogLevelLabel,
   DEBUG: "debug" as LogLevelLabel,
-  TRACE: "trace" as LogLevelLabel
+  TRACE: "trace" as LogLevelLabel,
+  ALL: "all" as LogLevelLabel
 };
 
 /**
@@ -35,6 +55,9 @@ export const LogLevelLabel = {
  */
 export const getLogLevel = (label: string): LogLevel => {
   switch (label) {
+    case "all": {
+      return LogLevel.ALL;
+    }
     case "trace": {
       return LogLevel.TRACE;
     }
@@ -69,6 +92,9 @@ export const getLogLevel = (label: string): LogLevel => {
  * @returns The log level label
  */
 export const getLogLevelLabel = (logLevel: number): LogLevelLabel => {
+  if (logLevel >= LogLevel.ALL) {
+    return LogLevelLabel.ALL;
+  }
   if (logLevel >= LogLevel.TRACE) {
     return LogLevelLabel.TRACE;
   }

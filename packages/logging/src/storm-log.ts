@@ -1,5 +1,23 @@
+/*-------------------------------------------------------------------
+
+                  ⚡ Storm Software - Storm Stack
+
+ This code was released as part of the Storm Stack project. Storm Stack
+ is maintained by Storm Software under the Apache-2.0 License, and is
+ free for commercial and private use. For more information, please visit
+ our licensing page.
+
+ Website:         https://stormsoftware.com
+ Repository:      https://github.com/storm-software/storm-stack
+ Documentation:   https://stormsoftware.com/projects/storm-stack/docs
+ Contact:         https://stormsoftware.com/contact
+ License:         https://stormsoftware.com/projects/storm-stack/license
+
+ -------------------------------------------------------------------*/
+
 import type { StormConfig } from "@storm-software/config";
-import { StormTime, formatSince } from "@storm-stack/date-time";
+import { StormTime } from "@storm-stack/date-time/storm-time";
+import { formatSince } from "@storm-stack/date-time/utilities/format-since";
 import { StormError, getCauseFromUnknown } from "@storm-stack/errors";
 import type { Logger, LoggerOptions as PinoLoggerOptions } from "pino";
 import pino from "pino";
@@ -26,7 +44,9 @@ import { getPinoOptions } from "./utilities/get-pino-options";
  */
 export class StormLog implements IStormLog {
   protected static logger: Logger<PinoLoggerOptions>;
+
   protected static logLevel: LogLevel;
+
   protected static logLevelLabel: LogLevelLabel;
 
   protected static getLoggers = (): Promise<GetLoggersResult> => {
@@ -69,7 +89,9 @@ export class StormLog implements IStormLog {
   };
 
   #logger: Logger<PinoLoggerOptions>;
+
   #logLevel: LogLevel;
+
   #processes: Array<{ name: string; startedAt: StormTime }> = [];
 
   /**

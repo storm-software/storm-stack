@@ -1,6 +1,23 @@
+/*-------------------------------------------------------------------
+
+                  ⚡ Storm Software - Storm Stack
+
+ This code was released as part of the Storm Stack project. Storm Stack
+ is maintained by Storm Software under the Apache-2.0 License, and is
+ free for commercial and private use. For more information, please visit
+ our licensing page.
+
+ Website:         https://stormsoftware.com
+ Repository:      https://github.com/storm-software/storm-stack
+ Documentation:   https://stormsoftware.com/projects/storm-stack/docs
+ Contact:         https://stormsoftware.com/contact
+ License:         https://stormsoftware.com/projects/storm-stack/license
+
+ -------------------------------------------------------------------*/
+
 import type { StormConfig } from "@storm-software/config";
-import { joinPaths } from "@storm-stack/file-system";
-import { StormTrace } from "@storm-stack/telemetry";
+import { joinPaths } from "@storm-stack/file-system/files/join-paths";
+import { StormTrace } from "@storm-stack/telemetry/storm-trace";
 import { BentoCache, bentostore } from "bentocache";
 import { fileDriver } from "bentocache/drivers/file";
 import { memoryDriver } from "bentocache/drivers/memory";
@@ -30,7 +47,7 @@ export class StormCache {
     trace?: StormTrace,
     options: StormCacheOptions = {}
   ) {
-    const _trace = trace ?? StormTrace.create("storm-cache", config);
+    const _trace = trace ?? StormTrace.create(config, "storm-cache");
 
     const cache = new StormCache(config, _trace, options);
     _trace.debug("StormCache initialization has completed successfully...");
@@ -41,7 +58,9 @@ export class StormCache {
   protected trace: StormTrace;
 
   #config: StormConfig;
+
   #cacheManager: BentoCache<Record<string, ReturnType<typeof bentostore>>>;
+
   #configCache: CacheProvider;
 
   private constructor(
@@ -50,7 +69,7 @@ export class StormCache {
     options: StormCacheOptions
   ) {
     this.#config = config;
-    this.trace = trace ?? StormTrace.create("storm-cache", this.#config);
+    this.trace = trace ?? StormTrace.create(this.#config, "storm-cache");
 
     this.#cacheManager = this.createCacheManager(options);
 
@@ -150,9 +169,8 @@ export class StormCache {
                   ? this.#config.cacheDirectory
                   : joinPaths(
                       this.#config.workstationRoot,
-                      this.#config.cacheDirectory
-                        ? this.#config.cacheDirectory
-                        : "./node_modules/.cache/storm"
+                      this.#config.cacheDirectory ||
+                        "./node_modules/.cache/storm"
                     )
             })
           )
