@@ -5,21 +5,25 @@
   "sourceRoot": "packages/utilities/src",
   "targets": {
     "build": {
+      "cache": true,
       "executor": "@storm-software/workspace-tools:unbuild",
+      "inputs": ["typescript", "^production"],
       "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "clean": true,
       "options": {
+        "type": "packages/utilities/src/index.ts",
         "outputPath": "dist/packages/utilities",
         "tsConfig": "packages/utilities/tsconfig.json",
-        "project": "packages/utilities/package.json",
-        "defaultConfiguration": "production"
+        "project": "packages/utilities/package.json"
       },
       "configurations": {
         "production": {
-          "minify": true,
-          "verbose": true
+          "sourceMap": false,
+          "verbose": false
         },
         "development": {
-          "minify": false,
+          "sourceMap": true,
           "verbose": true
         }
       }

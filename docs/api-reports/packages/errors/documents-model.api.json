@@ -786,7 +786,7 @@
                 },
                 {
                   "kind": "Content",
-                  "text": ", { name, message, cause, stack, data }?: "
+                  "text": ", { name, message, cause, stack, data }: "
                 },
                 {
                   "kind": "Reference",
@@ -816,7 +816,7 @@
                     "startIndex": 3,
                     "endIndex": 4
                   },
-                  "isOptional": true
+                  "isOptional": false
                 }
               ]
             },

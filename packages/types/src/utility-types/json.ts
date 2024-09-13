@@ -1,10 +1,20 @@
-/**
- * Matches a JSON object.
- *
- * This type can be useful to enforce some input to be JSON-compatible or as a super-type to be extended from. Don't use this as a direct return type as the user would have to double-cast it: `jsonObject as unknown as CustomResponse`. Instead, you could extend your CustomResponse type from it to ensure your type only uses JSON-compatible types: `interface CustomResponse extends JsonObject { … }`.
- *
- * @category JSON
- */
+/*-------------------------------------------------------------------
+
+                  ⚡ Storm Software - Storm Stack
+
+ This code was released as part of the Storm Stack project. Storm Stack
+ is maintained by Storm Software under the Apache-2.0 License, and is
+ free for commercial and private use. For more information, please visit
+ our licensing page.
+
+ Website:         https://stormsoftware.com
+ Repository:      https://github.com/storm-software/storm-stack
+ Documentation:   https://stormsoftware.com/projects/storm-stack/docs
+ Contact:         https://stormsoftware.com/contact
+ License:         https://stormsoftware.com/projects/storm-stack/license
+
+ -------------------------------------------------------------------*/
+
 export type JsonObject = { [Key in string]: JsonValue } & {
   [Key in string]?: JsonValue | undefined;
 };

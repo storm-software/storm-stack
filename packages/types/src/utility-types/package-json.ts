@@ -1,11 +1,30 @@
+/*-------------------------------------------------------------------
+
+                  ⚡ Storm Software - Storm Stack
+
+ This code was released as part of the Storm Stack project. Storm Stack
+ is maintained by Storm Software under the Apache-2.0 License, and is
+ free for commercial and private use. For more information, please visit
+ our licensing page.
+
+ Website:         https://stormsoftware.com
+ Repository:      https://github.com/storm-software/storm-stack
+ Documentation:   https://stormsoftware.com/projects/storm-stack/docs
+ Contact:         https://stormsoftware.com/contact
+ License:         https://stormsoftware.com/projects/storm-stack/license
+
+ -------------------------------------------------------------------*/
+
+/* eslint-disable no-tabs */
+
 import type { JsonObject, JsonValue } from "./json";
 import { LiteralUnion } from "./object";
 
 // eslint-disable-next-line @typescript-eslint/no-namespace
 declare namespace PackageJson {
   /**
-	A person who has been involved in creating or maintaining the package.
-	*/
+   * A person who has been involved in creating or maintaining the package.
+   */
   export type Person =
     | string
     | {
@@ -18,59 +37,59 @@ declare namespace PackageJson {
     | string
     | {
         /**
-			The URL to the package's issue tracker.
-			*/
+         * The URL to the package's issue tracker.
+         */
         url?: string;
 
         /**
-			The email address to which issues should be reported.
-			*/
+         * The email address to which issues should be reported.
+         */
         email?: string;
       };
 
-  export type DirectoryLocations = {
+  export interface DirectoryLocations {
     [directoryType: string]: JsonValue | undefined;
 
     /**
-		Location for executable scripts. Sugar to generate entries in the `bin` property by walking the folder.
-		*/
+     * Location for executable scripts. Sugar to generate entries in the `bin` property by walking the folder.
+     */
     bin?: string;
 
     /**
-		Location for Markdown files.
-		*/
+     * Location for Markdown files.
+     */
     doc?: string;
 
     /**
-		Location for example scripts.
-		*/
+     * Location for example scripts.
+     */
     example?: string;
 
     /**
-		Location for the bulk of the library.
-		*/
+     * Location for the bulk of the library.
+     */
     lib?: string;
 
     /**
-		Location for man pages. Sugar to generate a `man` array by walking the folder.
-		*/
+     * Location for man pages. Sugar to generate a `man` array by walking the folder.
+     */
     man?: string;
 
     /**
-		Location for test files.
-		*/
+     * Location for test files.
+     */
     test?: string;
-  };
+  }
 
   export type Scripts = {
     /**
-		Run **before** the package is published (Also run on local `npm install` without any arguments).
-		*/
+     * Run **before** the package is published (Also run on local `npm install` without any arguments).
+     */
     prepublish?: string;
 
     /**
-		Run both **before** the package is packed and published, and on local `npm install` without any arguments. This is run **after** `prepublish`, but **before** `prepublishOnly`.
-		*/
+     * Run both **before** the package is packed and published, and on local `npm install` without any arguments. This is run **after** `prepublish`, but **before** `prepublishOnly`.
+     */
     prepare?: string;
 
     /**
@@ -212,10 +231,10 @@ declare namespace PackageJson {
   /**
 	A mapping of conditions and the paths to which they resolve.
 	*/
-  type ExportConditions = {
-    // eslint-disable-line @typescript-eslint/consistent-indexed-object-style
-    [condition: string]: Exports;
-  };
+  type ExportConditions = Record<
+    string,
+    null | string | (string | Record<string, any>)[] | Record<string, any>
+  >;
 
   /**
 	Entry points of a module, optionally with conditions and subpath exports.
@@ -223,16 +242,13 @@ declare namespace PackageJson {
   export type Exports =
     | null
     | string
-    | Array<string | ExportConditions>
+    | (string | ExportConditions)[]
     | ExportConditions;
 
   /**
 	Import map entries of a module, optionally with conditions and subpath imports.
 	*/
-  export type Imports = {
-    // eslint-disable-line @typescript-eslint/consistent-indexed-object-style
-    [key: `#${string}`]: Exports;
-  };
+  export type Imports = Record<`#${string}`, Exports>;
 
   // eslint-disable-next-line @typescript-eslint/consistent-type-definitions
   export interface NonStandardEntryPoints {
@@ -265,7 +281,7 @@ declare namespace PackageJson {
     sideEffects?: boolean | string[];
   }
 
-  export type TypeScriptConfiguration = {
+  export interface TypeScriptConfiguration {
     /**
 		Location of the bundled TypeScript declaration file.
 		*/
@@ -280,12 +296,12 @@ declare namespace PackageJson {
 		Location of the bundled TypeScript declaration file. Alias of `types`.
 		*/
     typings?: string;
-  };
+  }
 
   /**
 	An alternative configuration for workspaces.
 	*/
-  export type WorkspaceConfig = {
+  export interface WorkspaceConfig {
     /**
 		An array of workspace pattern strings which contain the workspace packages.
 		*/
@@ -298,7 +314,7 @@ declare namespace PackageJson {
 		[Not supported](https://github.com/npm/rfcs/issues/287) by npm.
 		*/
     nohoist?: WorkspacePattern[];
-  };
+  }
 
   /**
 	A workspace pattern points to a directory or group of directories which contain packages that should be included in the workspace installation process.
@@ -311,7 +327,7 @@ declare namespace PackageJson {
 	*/
   type WorkspacePattern = string;
 
-  export type YarnConfiguration = {
+  export interface YarnConfiguration {
     /**
 		If your package only allows one version of a given dependency, and you’d like to enforce the same behavior as `yarn install --flat` on the command-line, set this to `true`.
 
@@ -323,14 +339,14 @@ declare namespace PackageJson {
 		Selective version resolutions. Allows the definition of custom package versions inside dependencies without manual edits in the `yarn.lock` file.
 		*/
     resolutions?: Dependency;
-  };
+  }
 
-  export type JSPMConfiguration = {
+  export interface JSPMConfiguration {
     /**
 		JSPM configuration.
 		*/
     jspm?: PackageJson;
-  };
+  }
 
   /**
 	Type for [npm's `package.json` file](https://docs.npmjs.com/creating-a-package-json-file). Containing standard npm properties.
@@ -375,10 +391,10 @@ declare namespace PackageJson {
     /**
 		The licenses for the package.
 		*/
-    licenses?: Array<{
+    licenses?: {
       type?: string;
       url?: string;
-    }>;
+    }[];
 
     author?: Person;
 
@@ -515,56 +531,52 @@ declare namespace PackageJson {
     /**
 		Operating systems the module runs on.
 		*/
-    os?: Array<
-      LiteralUnion<
-        | "aix"
-        | "darwin"
-        | "freebsd"
-        | "linux"
-        | "openbsd"
-        | "sunos"
-        | "win32"
-        | "!aix"
-        | "!darwin"
-        | "!freebsd"
-        | "!linux"
-        | "!openbsd"
-        | "!sunos"
-        | "!win32",
-        string
-      >
-    >;
+    os?: LiteralUnion<
+      | "aix"
+      | "darwin"
+      | "freebsd"
+      | "linux"
+      | "openbsd"
+      | "sunos"
+      | "win32"
+      | "!aix"
+      | "!darwin"
+      | "!freebsd"
+      | "!linux"
+      | "!openbsd"
+      | "!sunos"
+      | "!win32",
+      string
+    >[];
 
     /**
 		CPU architectures the module runs on.
 		*/
-    cpu?: Array<
-      LiteralUnion<
-        | "arm"
-        | "arm64"
-        | "ia32"
-        | "mips"
-        | "mipsel"
-        | "ppc"
-        | "ppc64"
-        | "s390"
-        | "s390x"
-        | "x32"
-        | "x64"
-        | "!arm"
-        | "!arm64"
-        | "!ia32"
-        | "!mips"
-        | "!mipsel"
-        | "!ppc"
-        | "!ppc64"
-        | "!s390"
-        | "!s390x"
-        | "!x32"
-        | "!x64",
-        string
-      >
-    >;
+    cpu?: LiteralUnion<
+      | "arm"
+      | "arm64"
+      | "ia32"
+      | "mips"
+      | "mipsel"
+      | "ppc"
+      | "ppc64"
+      | "s390"
+      | "s390x"
+      | "x32"
+      | "x64"
+      | "!arm"
+      | "!arm64"
+      | "!ia32"
+      | "!mips"
+      | "!mipsel"
+      | "!ppc"
+      | "!ppc64"
+      | "!s390"
+      | "!s390x"
+      | "!x32"
+      | "!x64",
+      string
+    >[];
 
     /**
      * If set to `true`, a warning will be shown if package is installed locally. Useful if the package is primarily a command-line application that should be installed globally.
@@ -623,7 +635,7 @@ declare namespace PackageJson {
   /**
    * Type for [`package.json` file used by the Node.js runtime](https://nodejs.org/api/packages.html#nodejs-packagejson-field-definitions).
    */
-  export type NodeJsStandard = {
+  export interface NodeJsStandard {
     /**
      * Defines which package manager is expected to be used when working on the current project. It can set to any of the [supported package managers](https://nodejs.org/api/corepack.html#supported-package-managers), and will ensure that your teams use the exact same package manager versions without having to install anything else than Node.js.
      *
@@ -637,9 +649,9 @@ declare namespace PackageJson {
      * ```
      */
     packageManager?: string;
-  };
+  }
 
-  export type PublishConfig = {
+  export interface PublishConfig {
     /**
      * Additional, less common properties from the [npm docs on `publishConfig`](https://docs.npmjs.com/cli/v7/configuring-npm/package-json#publishconfig).
      */
@@ -663,7 +675,7 @@ declare namespace PackageJson {
      * Default: `'latest'`
      */
     tag?: string;
-  };
+  }
 }
 
 /**

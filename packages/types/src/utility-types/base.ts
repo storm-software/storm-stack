@@ -1,4 +1,19 @@
-/* eslint-disable @typescript-eslint/ban-types */
+/*-------------------------------------------------------------------
+
+                  ⚡ Storm Software - Storm Stack
+
+ This code was released as part of the Storm Stack project. Storm Stack
+ is maintained by Storm Software under the Apache-2.0 License, and is
+ free for commercial and private use. For more information, please visit
+ our licensing page.
+
+ Website:         https://stormsoftware.com
+ Repository:      https://github.com/storm-software/storm-stack
+ Documentation:   https://stormsoftware.com/projects/storm-stack/docs
+ Contact:         https://stormsoftware.com/contact
+ License:         https://stormsoftware.com/projects/storm-stack/license
+
+ -------------------------------------------------------------------*/
 
 import type { TypedArray } from "./array";
 
@@ -30,9 +45,7 @@ export type TypeTester = (value: any) => boolean;
  * The map should be ordered by testing preference, with more specific tests first.
  * If a test returns true, it is selected, and the key is returned as the type.
  */
-export interface TypeMap {
-  [type: string]: TypeTester;
-}
+export type TypeMap = Record<string, TypeTester>;
 
 declare const emptyObjectSymbol: unique symbol;
 
@@ -49,7 +62,9 @@ export type PlainObject = Record<any, {}>; // https://stackoverflow.com/a/750523
 export type AnyMap = Map<any, any>;
 export type AnyWeakMap = WeakMap<WeakKey, any>;
 export type EmptyArray = [];
-export type EmptyObject = { [emptyObjectSymbol]?: never };
+export interface EmptyObject {
+  [emptyObjectSymbol]?: never;
+}
 
 export type Any =
   | boolean
@@ -74,9 +89,7 @@ export type IndexType = string | number | symbol;
 /**
  * The declaration of a ***dictionary-type*** object
  */
-export type Indexable = {
-  [index: IndexType]: any;
-};
+export type Indexable = Record<IndexType, any>;
 
 export const EMPTY_STRING = "";
 export const NEWLINE_STRING = "\r\n";
@@ -107,9 +120,6 @@ export type ReducerFunction<TState, TAction> = (
   action: TAction
 ) => TState;
 
-export type ArrayElement<ArrayType extends readonly unknown[]> =
-  ArrayType extends readonly (infer ElementType)[] ? ElementType : never;
-
 // NOTE: for the file size optimization
 export const TYPE_ARGUMENTS = "Arguments";
 export const TYPE_ARRAY = "Array";
@@ -123,12 +133,6 @@ export type Collection =
   | Map<unknown, unknown>
   | Record<string | number | symbol, unknown>
   | Set<unknown>;
-
-export type LiteralUnion<T extends U, U extends Primitive> =
-  | T
-  | (U & {
-      _?: never;
-    });
 
 export type NonUndefined<T> = T extends undefined ? never : T;
 
@@ -181,7 +185,7 @@ export type Filter<KeyType, ExcludeType> =
       ? never
       : KeyType;
 
-type ExceptOptions = {
+interface ExceptOptions {
   /**
     Disallow assigning non-specified properties.
 
@@ -190,7 +194,7 @@ type ExceptOptions = {
     @defaultValue  false
     */
   requireExactProps?: boolean;
-};
+}
 
 /**
  * Create a type from an object type without certain keys.
@@ -330,10 +334,10 @@ export type GlobalThis = typeof globalThis;
  *
  * @category Class
  */
-export type Class<T, Arguments extends unknown[] = any[]> = {
+export interface Class<T, Arguments extends unknown[] = any[]> {
   prototype: Pick<T, keyof T>;
   new (...arguments_: Arguments): T;
-};
+}
 
 /**
  * Matches a [`class` constructor](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes).

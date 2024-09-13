@@ -1,5 +1,5 @@
 {
-  "extends": "@storm-software/workspace-tools/config/nx.json",
+  "extends": "@storm-software/workspace-tools/config/nx-default.json",
   "plugins": [
     {
       "plugin": "@nx/eslint/plugin",
@@ -9,6 +9,12 @@
         "useFlatConfig": true
       }
     },
-    "@storm-software/workspace-tools/plugins/typescript"
+    "@storm-software/workspace-tools/plugins/typescript",
+    {
+      "plugin": "@nx/rollup/plugin",
+      "options": {
+        "buildTargetName": "build"
+      }
+    }
   ]
 }

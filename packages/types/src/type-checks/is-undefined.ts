@@ -1,13 +1,21 @@
-/**
- * Check if the provided value's type is `undefined`
- *
- * @param value - The value to type check
- * @returns An indicator specifying if the value provided is of type `undefined`
- */
-export const isUndefined = (value: unknown) => {
-  try {
-    return value === undefined;
-  } catch {
-    return false;
-  }
+/*-------------------------------------------------------------------
+
+                  ⚡ Storm Software - Storm Stack
+
+ This code was released as part of the Storm Stack project. Storm Stack
+ is maintained by Storm Software under the Apache-2.0 License, and is
+ free for commercial and private use. For more information, please visit
+ our licensing page.
+
+ Website:         https://stormsoftware.com
+ Repository:      https://github.com/storm-software/storm-stack
+ Documentation:   https://stormsoftware.com/projects/storm-stack/docs
+
+ Contact:         https://stormsoftware.com/contact
+ Licensing:       https://stormsoftware.com/projects/storm-stack/licensing
+
+ -------------------------------------------------------------------*/
+
+export const isUndefined = (value: unknown): value is undefined => {
+  return value === undefined;
 };

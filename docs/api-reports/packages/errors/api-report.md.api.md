@@ -64,7 +64,7 @@ export { serializeStormError as serializeStormError_alias_2 }
 
 // @public
 class StormError<TCode extends string = string> extends Error {
-    constructor(code: TCode, { name, message, cause, stack, data }?: StormErrorOptions);
+    constructor(code: TCode, { name, message, cause, stack, data }: StormErrorOptions);
     // (undocumented)
     __proto__: ErrorConstructor;
     get cause(): StormError | undefined;

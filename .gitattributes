@@ -50,3 +50,5 @@ apps/**/.next/** -text linguist-vendored
 
 # Make dist folder indexable for github search
 dist/** linguist-generated=false
+
+pnpm-lock.yaml linguist-generated=true

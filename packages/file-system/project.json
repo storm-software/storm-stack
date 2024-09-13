@@ -5,34 +5,31 @@
   "sourceRoot": "packages/file-system/src",
   "targets": {
     "build": {
-      "executor": "@storm-software/workspace-tools:tsup-node",
+      "cache": true,
+      "executor": "@storm-software/workspace-tools:unbuild",
+      "inputs": ["typescript", "^production"],
       "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "clean": true,
       "options": {
+        "type": "packages/file-system/src/index.ts",
         "outputPath": "dist/packages/file-system",
         "tsConfig": "packages/file-system/tsconfig.json",
-        "project": "packages/file-system/package.json",
-        "defaultConfiguration": "production"
+        "project": "packages/file-system/package.json"
       },
       "configurations": {
         "production": {
-          "debug": false,
-          "minify": true
+          "sourceMap": false,
+          "verbose": false
         },
         "development": {
-          "debug": true,
-          "minify": false
+          "sourceMap": true,
+          "verbose": true
         }
       }
     },
     "nx-release-publish": {
-      "cache": true,
-      "inputs": ["default", "^production"],
-      "dependsOn": ["^build"],
-      "executor": "@storm-software/workspace-tools:npm-publish",
-      "options": {
-        "packageRoot": "dist/{projectRoot}",
-        "registry": "https://registry.npmjs.org/"
-      }
+      "executor": "@storm-software/workspace-tools:npm-publish"
     }
   }
 }

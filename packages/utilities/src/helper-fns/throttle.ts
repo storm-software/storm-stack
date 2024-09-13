@@ -1,3 +1,20 @@
+/*-------------------------------------------------------------------
+
+                ⚡ Storm Software - Storm Trading
+
+ This code was released as part of the Storm Trading project. Storm Trading
+ is maintained by Storm Software under the Apache-2.0 License, and is
+ free for commercial and private use. For more information, please visit
+ our licensing page.
+
+ Website:         https://stormsoftware.com
+ Repository:      https://github.com/storm-software/storm-trading
+ Documentation:   https://docs.stormsoftware.com/projects/storm-trading
+ Contact:         https://stormsoftware.com/contact
+ Licensing:       https://stormsoftware.com/licensing
+
+ -------------------------------------------------------------------*/
+
 /**
  * Creates a throttled function that only invokes the provided function at most once
  * per every `throttleMs` milliseconds. Subsequent calls to the throttled function
@@ -34,6 +51,7 @@ export function throttle<F extends (...args: any[]) => void>(
   const throttledFunction = function (...args: Parameters<F>) {
     const now = Date.now();
 
+    // eslint-disable-next-line eqeqeq
     if (lastCallTime == null || now - lastCallTime >= throttleMs) {
       lastCallTime = now;
       func(...args);

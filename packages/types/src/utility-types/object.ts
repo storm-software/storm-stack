@@ -1,3 +1,20 @@
+/*-------------------------------------------------------------------
+
+                  ⚡ Storm Software - Storm Stack
+
+ This code was released as part of the Storm Stack project. Storm Stack
+ is maintained by Storm Software under the Apache-2.0 License, and is
+ free for commercial and private use. For more information, please visit
+ our licensing page.
+
+ Website:         https://stormsoftware.com
+ Repository:      https://github.com/storm-software/storm-stack
+ Documentation:   https://stormsoftware.com/projects/storm-stack/docs
+ Contact:         https://stormsoftware.com/contact
+ License:         https://stormsoftware.com/projects/storm-stack/license
+
+ -------------------------------------------------------------------*/
+
 import type {
   StaticPartOfArray,
   UnknownArray,
@@ -11,7 +28,8 @@ import type {
   IsPrimitive,
   NonRecursiveType,
   Nullish,
-  Primitive
+  Primitive,
+  Simplify
 } from "./base";
 import type { StringKeyOf } from "./json";
 import type { IsNotFalse, LessThan, Sum } from "./logic";
@@ -170,7 +188,7 @@ type Paths_<T, Depth extends number = 0> = T extends
     : T extends UnknownArray
       ? number extends T["length"]
         ? // We need to handle the fixed and non-fixed index part of the array separately.
-          | InternalPaths<Array<VariablePartOfArray<T>[number]>, Depth>
+          | InternalPaths<VariablePartOfArray<T>[number][], Depth>
             | InternalPaths<StaticPartOfArray<T>, Depth>
         : InternalPaths<T, Depth>
       : T extends object
@@ -196,7 +214,7 @@ export type InternalPaths<
         : never;
     }[(T extends UnknownArray ? number : unknown) & keyof T];
 
-type GetOptions = {
+interface GetOptions {
   /**
    * Include `undefined` in the return type when accessing properties.
    *
@@ -205,7 +223,7 @@ type GetOptions = {
    * @defaultValue `true`
    */
   strict?: boolean;
-};
+}
 
 /**
  * Like the `Get` type but receives an array of strings as a path parameter.
@@ -360,7 +378,7 @@ type UncheckedIndex<T, U extends number | string> = [T] extends [
  *
  * Note:
  * - Returns `unknown` if `Key` is not a property of `BaseType`, since TypeScript uses structural typing, and it cannot be guaranteed that extra properties unknown to the type system will exist at runtime.
- * - Returns `undefined` from nullish values, to match the behaviour of most deep-key libraries like `lodash`, `dot-prop`, etc.
+ * - Returns `undefined` from nullish values, to match the behavior of most deep-key libraries like `lodash`, `dot-prop`, etc.
  */
 type PropertyOf<
   BaseType,
@@ -436,8 +454,6 @@ export type Get<
   Options extends GetOptions = {}
 > = GetWithPath<BaseType, Path extends string ? ToPath<Path> : Path, Options>;
 
-export type Simplify<T> = { [KeyType in keyof T]: T[KeyType] } & {};
-
 /**
  * Convert a union type to an intersection type using [distributive conditional types](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-2-8.html#distributive-conditional-types).
  *
@@ -460,17 +476,17 @@ export type Simplify<T> = { [KeyType in keyof T]: T[KeyType] } & {};
  * import type {UnionToIntersection} from 'type-fest';
  *
  * class CommandOne {
- * 	commands: {
- * 		a1: () => undefined,
- * 		b1: () => undefined,
- * 	}
+ *  commands: {
+ *    a1: () => undefined,
+ *    b1: () => undefined,
+ *  }
  * }
  *
  * class CommandTwo {
- * 	commands: {
- * 		a2: (argA: string) => undefined,
- * 		b2: (argB: string) => undefined,
- * 	}
+ *  commands: {
+ *    a2: (argA: string) => undefined,
+ *    b2: (argB: string) => undefined,
+ *  }
  * }
  *
  * const union = [new CommandOne(), new CommandTwo()].map(instance => instance.commands);
@@ -491,12 +507,12 @@ export type UnionToIntersection<Union> =
     Union extends unknown
       ? // The union type is used as the only argument to a function since the union
         // of function arguments is an intersection.
-        (distributedUnion: Union) => void
+        (_distributedUnion: Union) => void
       : // This won't happen.
         never
   ) extends // Infer the `Intersection` type since TypeScript represents the positional
   // arguments of unions of functions as an intersection of the union.
-  (mergedIntersection: infer Intersection) => void
+  (_mergedIntersection: infer Intersection) => void
     ? // The `& Union` is to allow indexing by the resulting type
       Intersection & Union
     : never;
@@ -513,59 +529,59 @@ export type UnionToIntersection<Union> =
  * import type {PickDeep, PartialDeep} from 'type-fest';
  *
  * type Configuration = {
- * 	userConfig: {
- * 		name: string;
- * 		age: number;
- * 		address: [
- * 			{
- * 				city1: string;
- * 				street1: string;
- * 			},
- * 			{
- * 				city2: string;
- * 				street2: string;
- * 			}
- * 		]
- * 	};
- * 	otherConfig: any;
+ *  userConfig: {
+ *    name: string;
+ *    age: number;
+ *    address: [
+ *      {
+ *        city1: string;
+ *        street1: string;
+ *      },
+ *      {
+ *        city2: string;
+ *        street2: string;
+ *      }
+ *    ]
+ *  };
+ *  otherConfig: any;
  * };
  *
  * type NameConfig = PickDeep<Configuration, 'userConfig.name'>;
  * // type NameConfig = {
- * // 	userConfig: {
- * // 		name: string;
- * // 	}
+ * //  userConfig: {
+ * //    name: string;
+ * //  }
  * // };
  *
  * // Supports optional properties
  * type User = PickDeep<PartialDeep<Configuration>, 'userConfig.name' | 'userConfig.age'>;
  * // type User = {
- * // 	userConfig?: {
- * // 		name?: string;
- * // 		age?: number;
- * // 	};
+ * //  userConfig?: {
+ * //    name?: string;
+ * //    age?: number;
+ * //  };
  * // };
  *
  * // Supports array
  * type AddressConfig = PickDeep<Configuration, 'userConfig.address.0'>;
  * // type AddressConfig = {
- * // 	userConfig: {
- * // 		address: [{
- * // 			city1: string;
- * // 			street1: string;
- * // 		}];
- * // 	};
+ * //  userConfig: {
+ * //    address: [{
+ * //      city1: string;
+ * //      street1: string;
+ * //    }];
+ * //   };
  * // }
  *
  * // Supports recurse into array
  * type Street = PickDeep<Configuration, 'userConfig.address.1.street2'>;
  * // type Street = {
- * // 	userConfig: {
- * // 		address: [
- * // 			unknown,
- * // 			{street2: string}
- * // 		];
- * // 	};
+ * //  userConfig: {
+ * //    address: [
+ * //      unknown,
+ * //      {street2: string}
+ * //    ];
+ * //  };
  * // }
  * ```
  *
@@ -635,11 +651,9 @@ type PickDeepArray<ArrayType extends UnknownArray, P extends number | string> =
     ? // When `ArrayIndex` is equal to `number`
       number extends ArrayIndex
       ? ArrayType extends unknown[]
-        ? Array<InternalPickDeep<NonNullable<ArrayType[number]>, SubPath>>
+        ? InternalPickDeep<NonNullable<ArrayType[number]>, SubPath>[]
         : ArrayType extends readonly unknown[]
-          ? ReadonlyArray<
-              InternalPickDeep<NonNullable<ArrayType[number]>, SubPath>
-            >
+          ? readonly InternalPickDeep<NonNullable<ArrayType[number]>, SubPath>[]
           : never
       : // When `ArrayIndex` is a number literal
         ArrayType extends unknown[]
@@ -675,11 +689,11 @@ type IsTuple<T> = T extends { length: infer Length } & readonly any[]
 
 // If this type is a tuple, what indices are allowed?
 type AllowedIndexes<
-  Tuple extends ReadonlyArray<any>,
+  Tuple extends readonly any[],
   Keys extends number = never
 > = Tuple extends readonly []
   ? Keys
-  : Tuple extends readonly [infer _, ...infer Tail]
+  : Tuple extends readonly [infer _First, ...infer Tail]
     ? AllowedIndexes<Tail, Keys | Tail["length"]>
     : Keys;
 
@@ -712,7 +726,7 @@ export type DeepKey<T, TDepth extends any[] = []> = TDepth["length"] extends 5
   ? never
   : unknown extends T
     ? PrefixFromDepth<string, TDepth>
-    : T extends IsTuple<T> & readonly any[]
+    : T extends IsTuple<T> & any[]
       ? PrefixTupleAccessor<T, AllowedIndexes<T>, TDepth>
       : T extends any[]
         ? PrefixArrayAccessor<T, [...TDepth, any]>

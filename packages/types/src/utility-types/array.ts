@@ -1,3 +1,20 @@
+/*-------------------------------------------------------------------
+
+                  ⚡ Storm Software - Storm Stack
+
+ This code was released as part of the Storm Stack project. Storm Stack
+ is maintained by Storm Software under the Apache-2.0 License, and is
+ free for commercial and private use. For more information, please visit
+ our licensing page.
+
+ Website:         https://stormsoftware.com
+ Repository:      https://github.com/storm-software/storm-stack
+ Documentation:   https://stormsoftware.com/projects/storm-stack/docs
+ Contact:         https://stormsoftware.com/contact
+ License:         https://stormsoftware.com/projects/storm-stack/license
+
+ -------------------------------------------------------------------*/
+
 import { isEmpty } from "../type-checks";
 
 export type UnknownArray = readonly unknown[];
@@ -23,7 +40,7 @@ export type TypedArray =
 /**
  * Infer the length of the given array `<T>`.
  *
- * @link https://itnext.io/implementing-arithmetic-within-typescripts-type-system-a1ef140a6f6f
+ * Check out {@link https://itnext.io/implementing-arithmetic-within-typescripts-type-system-a1ef140a6f6f this article} for more information.
  */
 export type ArrayLength<T extends readonly unknown[]> = T extends {
   readonly length: infer L;
@@ -139,7 +156,7 @@ export type LastArrayElement<
         ? // If we return `V[number] | U` directly, it would be wrong for `[[string, boolean, object, ...number[]]`.
           // So we need to recurse type `V` and carry over the type of the element before the spread element.
           LastArrayElement<V, U>
-        : Elements extends ReadonlyArray<infer U>
+        : Elements extends readonly (infer U)[]
           ? ElementBeforeTailingSpreadElement | U
           : never;
 
@@ -180,5 +197,5 @@ export type VariablePartOfArray<T extends UnknownArray> = T extends unknown
     : []
   : never; // Should never happen
 
-export const filterEmpty = <T>(values: Array<T | null | undefined> = []): T[] =>
+export const filterEmpty = <T>(values: (T | null | undefined)[] = []): T[] =>
   values.filter(value => !isEmpty(value)) as T[];

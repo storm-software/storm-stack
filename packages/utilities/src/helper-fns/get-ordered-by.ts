@@ -1,3 +1,20 @@
+/*-------------------------------------------------------------------
+
+                  ⚡ Storm Software - Storm Stack
+
+ This code was released as part of the Storm Stack project. Storm Stack
+ is maintained by Storm Software under the Apache-2.0 License, and is
+ free for commercial and private use. For more information, please visit
+ our licensing page.
+
+ Website:         https://stormsoftware.com
+ Repository:      https://github.com/storm-software/storm-stack
+ Documentation:   https://docs.stormsoftware.com/projects/storm-stack
+ Contact:         https://stormsoftware.com/contact
+ Licensing:       https://stormsoftware.com/licensing
+
+ -------------------------------------------------------------------*/
+
 type Order = "asc" | "desc";
 
 /**
@@ -35,7 +52,7 @@ type Order = "asc" | "desc";
  */
 export function getOrderedBy<T>(
   collection: T[],
-  keys: Array<keyof T>,
+  keys: (keyof T)[],
   orders: Order[]
 ): T[] {
   const compareValues = (a: T[keyof T], b: T[keyof T], order: Order) => {
@@ -49,7 +66,7 @@ export function getOrderedBy<T>(
   };
 
   const effectiveOrders = keys.map(
-    (_, index) => orders[index] || orders.at(-1)
+    (_, index) => orders[index] ?? orders.at(-1)
   );
 
   return [...collection].sort((a, b) => {

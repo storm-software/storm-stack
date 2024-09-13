@@ -5,47 +5,31 @@
   "sourceRoot": "packages/telemetry/src",
   "targets": {
     "build": {
-      "executor": "@storm-software/workspace-tools:tsup-node",
+      "cache": true,
+      "executor": "@storm-software/workspace-tools:unbuild",
+      "inputs": ["typescript", "^production"],
       "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "clean": true,
       "options": {
-        "entry": "packages/telemetry/src/index.ts",
+        "type": "packages/telemetry/src/index.ts",
         "outputPath": "dist/packages/telemetry",
         "tsConfig": "packages/telemetry/tsconfig.json",
-        "project": "packages/telemetry/package.json",
-        "defaultConfiguration": "production",
-        "assets": [
-          {
-            "input": "packages/telemetry",
-            "glob": "*.md",
-            "output": "/"
-          },
-          {
-            "input": "",
-            "glob": "LICENSE",
-            "output": "/"
-          }
-        ]
+        "project": "packages/telemetry/package.json"
       },
       "configurations": {
         "production": {
-          "debug": false,
+          "sourceMap": false,
           "verbose": false
         },
         "development": {
-          "debug": true,
+          "sourceMap": true,
           "verbose": true
         }
       }
     },
     "nx-release-publish": {
-      "cache": true,
-      "inputs": ["default", "^production"],
-      "dependsOn": ["^build"],
-      "executor": "@storm-software/workspace-tools:npm-publish",
-      "options": {
-        "packageRoot": "dist/{projectRoot}",
-        "registry": "https://registry.npmjs.org/"
-      }
+      "executor": "@storm-software/workspace-tools:npm-publish"
     }
   }
 }

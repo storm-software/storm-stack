@@ -51,11 +51,10 @@
   "prettier.bracketSameLine": true,
   "prettier.ignorePath": "./node_modules/@storm-software/prettier/.prettierignore",
   "prettier.enableDebugLogs": true,
-
   "eslint.useFlatConfig": true,
   "eslint.run": "onSave",
   "eslint.format.enable": true,
-  "eslint.debug": true,
+  "eslint.debug": false,
   "eslint.codeAction.disableRuleComment": {
     "enable": true,
     "location": "separateLine"
@@ -75,7 +74,7 @@
   },
   "[javascript]": {
     "editor.formatOnSave": true,
-    "editor.defaultFormatter": "dbaeumer.vscode-eslint",
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
     "editor.codeActionsOnSave": {
       "source.fixAll.eslint": "explicit",
       "quickfix.biome": "explicit",
@@ -115,7 +114,7 @@
   },
   "[jsonc]": {
     "editor.formatOnSave": true,
-    "editor.defaultFormatter": "dbaeumer.vscode-eslint"
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "[markdown]": {
     "editor.formatOnSave": true,

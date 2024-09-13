@@ -1,7 +1,7 @@
 {
-  "name": "nx-tools",
+  "name": "nx",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "apps/nx-tools/src",
+  "sourceRoot": "apps/nx/src",
   "projectType": "library",
   "tags": [],
   "targets": {
@@ -9,13 +9,11 @@
       "executor": "@nx/esbuild:esbuild",
       "outputs": ["{options.outputPath}"],
       "options": {
-        "outputPath": "dist/apps/nx-tools",
-        "tsConfig": "apps/nx-tools/tsconfig.json",
-        "project": "apps/nx-tools/package.json",
-        "main": "apps/nx-tools/src/index.ts",
-        "additionalEntryPoints": [
-          "apps/nx-tools/src/executors/tamagui/executor.ts"
-        ],
+        "outputPath": "dist/apps/nx",
+        "tsConfig": "apps/nx/tsconfig.json",
+        "project": "apps/nx/package.json",
+        "main": "apps/nx/src/index.ts",
+        "additionalEntryPoints": ["apps/nx/src/executors/tamagui/executor.ts"],
         "platform": "node",
         "deleteOutputPath": true,
         "bundle": true,
@@ -39,7 +37,7 @@
         },
         "assets": [
           {
-            "input": "./apps/nx-tools",
+            "input": "./apps/nx",
             "glob": "*.md",
             "output": "/"
           },
@@ -49,37 +47,37 @@
             "output": "/"
           },
           {
-            "input": "./apps/nx-tools/src",
+            "input": "./apps/nx/src",
             "glob": "**/!(*.ts)",
             "output": "./src"
           },
           {
-            "input": "./apps/nx-tools/src",
+            "input": "./apps/nx/src",
             "glob": "**/*.d.ts",
             "output": "./src"
           },
           {
-            "input": "./apps/nx-tools",
+            "input": "./apps/nx",
             "glob": "generators.json",
             "output": "."
           },
           {
-            "input": "./apps/nx-tools",
+            "input": "./apps/nx",
             "glob": "executors.json",
             "output": "."
           },
           {
-            "input": "./apps/nx-tools",
+            "input": "./apps/nx",
             "glob": "**/schema.json",
             "output": "."
           },
           {
-            "input": "./apps/nx-tools",
+            "input": "./apps/nx",
             "glob": "**/files/**/{*.*,*}",
             "output": "."
           },
           {
-            "input": "./apps/nx-tools/assets",
+            "input": "./apps/nx/assets",
             "glob": "**/*.*",
             "output": "./assets"
           }
@@ -87,14 +85,7 @@
       }
     },
     "nx-release-publish": {
-      "cache": true,
-      "inputs": ["default", "^production"],
-      "dependsOn": ["^build"],
-      "executor": "@storm-software/workspace-tools:npm-publish",
-      "options": {
-        "packageRoot": "dist/{projectRoot}",
-        "registry": "https://registry.npmjs.org/"
-      }
+      "executor": "@storm-software/workspace-tools:npm-publish"
     }
   }
 }

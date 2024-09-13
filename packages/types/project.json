@@ -5,38 +5,49 @@
   "sourceRoot": "packages/types/src",
   "targets": {
     "build": {
-      "executor": "@storm-software/workspace-tools:tsup-neutral",
+      "cache": true,
+      "executor": "@storm-software/workspace-tools:unbuild",
+      "inputs": ["typescript", "^production"],
       "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "clean": true,
       "options": {
-        "entry": "packages/types/src/index.ts",
+        "type": "packages/types/src/index.ts",
         "outputPath": "dist/packages/types",
         "tsConfig": "packages/types/tsconfig.json",
-        "project": "packages/types/package.json",
-        "defaultConfiguration": "production",
-        "assets": [
-          {
-            "input": "packages/types",
-            "glob": "*.md",
-            "output": "/"
-          },
-          {
-            "input": "",
-            "glob": "LICENSE",
-            "output": "/"
-          }
-        ],
-        "platform": "neutral"
+        "project": "packages/types/package.json"
       },
       "configurations": {
         "production": {
-          "debug": false,
+          "sourceMap": false,
           "verbose": false
         },
         "development": {
-          "debug": true,
+          "sourceMap": true,
           "verbose": true
         }
       }
+    },
+
+    // "build": {
+    //   "cache": true,
+    //   "inputs": [
+    //     "typescript",
+    //     "^production",
+    //     {
+    //       "externalDependencies": ["rollup"]
+    //     }
+    //   ],
+    //   "dependsOn": ["clean", "^build"],
+    //   "defaultConfiguration": "production",
+    //   "configurations": {
+    //     "production": {},
+    //     "development": {}
+    //   }
+    // },
+
+    "nx-release-publish": {
+      "executor": "@storm-software/workspace-tools:npm-publish"
     }
   }
 }

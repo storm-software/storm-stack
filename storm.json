@@ -5,13 +5,17 @@
   "namespace": "storm-stack",
   "repository": "https://github.com/storm-software/storm-stack",
   "organization": "storm-software",
-  "ci": true,
-  "owner": "storm-stack",
+  "owner": "@storm-software/development",
   "timezone": "America/New_York",
   "locale": "en-US",
   "logLevel": "all",
   "packageManager": "pnpm",
-  "externalPackagePatterns": ["@acidic/", "@storm-software/", "@storm-stack/", "@cyclone-ui/"],
+  "externalPackagePatterns": [
+    "@acidic/",
+    "@storm-software/",
+    "@storm-stack/",
+    "@cyclone-ui/"
+  ],
   "cloudflareAccountId": "d011605e7391539ac2e021ab4399e116",
   "colors": {
     "light": {

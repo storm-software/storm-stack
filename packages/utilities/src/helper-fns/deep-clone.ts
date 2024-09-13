@@ -1,3 +1,20 @@
+/*-------------------------------------------------------------------
+
+                  ⚡ Storm Software - Storm Stack
+
+ This code was released as part of the Storm Stack project. Storm Stack
+ is maintained by Storm Software under the Apache-2.0 License, and is
+ free for commercial and private use. For more information, please visit
+ our licensing page.
+
+ Website:         https://stormsoftware.com
+ Repository:      https://github.com/storm-software/storm-stack
+ Documentation:   https://docs.stormsoftware.com/projects/storm-stack
+ Contact:         https://stormsoftware.com/contact
+ Licensing:       https://stormsoftware.com/licensing
+
+ -------------------------------------------------------------------*/
+
 import { isPrimitive, isTypedArray } from "@storm-stack/types";
 
 /**
@@ -113,7 +130,7 @@ export function deepClone<T>(obj: T): Resolved<T> {
   }
 
   if (obj instanceof Error) {
-    const result = new (obj.constructor as { new (): Error })();
+    const result = new (obj.constructor as new () => Error)();
     result.message = obj.message;
     result.name = obj.name;
     result.stack = obj.stack;
@@ -159,39 +176,38 @@ type ResolvedMain<T> = T extends [never]
         ? ResolvedObject<T>
         : ValueOf<T>;
 
-type ResolvedObject<T extends object> =
-  T extends Array<infer U>
-    ? IsTuple<T> extends true
-      ? ResolvedTuple<T>
-      : Array<ResolvedMain<U>>
-    : T extends Set<infer U>
-      ? Set<ResolvedMain<U>>
-      : T extends Map<infer K, infer V>
-        ? Map<ResolvedMain<K>, ResolvedMain<V>>
-        : T extends WeakSet<any> | WeakMap<any, any>
-          ? never
-          : T extends
-                | Date
-                | Uint8Array
-                | Uint8ClampedArray
-                | Uint16Array
-                | Uint32Array
-                | BigUint64Array
-                | Int8Array
-                | Int16Array
-                | Int32Array
-                | BigInt64Array
-                | Float32Array
-                | Float64Array
-                | ArrayBuffer
-                | SharedArrayBuffer
-                | DataView
-                | Blob
-                | File
-            ? T
-            : {
-                [P in keyof T]: ResolvedMain<T[P]>;
-              };
+type ResolvedObject<T extends object> = T extends (infer U)[]
+  ? IsTuple<T> extends true
+    ? ResolvedTuple<T>
+    : ResolvedMain<U>[]
+  : T extends Set<infer U>
+    ? Set<ResolvedMain<U>>
+    : T extends Map<infer K, infer V>
+      ? Map<ResolvedMain<K>, ResolvedMain<V>>
+      : T extends WeakSet<any> | WeakMap<any, any>
+        ? never
+        : T extends
+              | Date
+              | Uint8Array
+              | Uint8ClampedArray
+              | Uint16Array
+              | Uint32Array
+              | BigUint64Array
+              | Int8Array
+              | Int16Array
+              | Int32Array
+              | BigInt64Array
+              | Float32Array
+              | Float64Array
+              | ArrayBuffer
+              | SharedArrayBuffer
+              | DataView
+              | Blob
+              | File
+          ? T
+          : {
+              [P in keyof T]: ResolvedMain<T[P]>;
+            };
 
 type ResolvedTuple<T extends readonly any[]> = T extends []
   ? []

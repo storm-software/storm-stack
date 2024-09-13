@@ -1,19 +1,37 @@
+/*-------------------------------------------------------------------
+
+                  ⚡ Storm Software - Storm Stack
+
+ This code was released as part of the Storm Stack project. Storm Stack
+ is maintained by Storm Software under the Apache-2.0 License, and is
+ free for commercial and private use. For more information, please visit
+ our licensing page.
+
+ Website:         https://stormsoftware.com
+ Repository:      https://github.com/storm-software/storm-stack
+ Documentation:   https://docs.stormsoftware.com/projects/storm-stack
+ Contact:         https://stormsoftware.com/contact
+ Licensing:       https://stormsoftware.com/licensing
+
+ -------------------------------------------------------------------*/
+
 import { isSet, isSetString } from "@storm-stack/types";
 
 const hasMap = typeof Map === "function";
 const hasSet = typeof Set === "function";
 const hasArrayBuffer =
-  typeof ArrayBuffer === "function" && !!ArrayBuffer.isView;
+  typeof ArrayBuffer === "function" && Boolean(ArrayBuffer.isView);
 
 function equal(a: any, b: any) {
   if (a === b) return true;
 
-  if (a && b && typeof a == "object" && typeof b == "object") {
+  if (a && b && typeof a === "object" && typeof b === "object") {
     if (a.constructor !== b.constructor) return false;
 
     let length;
     if (Array.isArray(a)) {
       length = a.length;
+      // eslint-disable-next-line eqeqeq
       if (length != b.length) return false;
       for (let i = length; i-- !== 0; ) if (!equal(a[i], b[i])) return false;
       return true;
@@ -26,8 +44,9 @@ function equal(a: any, b: any) {
       let i;
       while (!(i = it.next()).done) if (!b.has(i.value[0])) return false;
       it = a.entries();
-      while (!(i = it.next()).done)
+      while (!(i = it.next()).done) {
         if (!equal(i.value[1], b.get(i.value[0]))) return false;
+      }
       return true;
     }
 
@@ -47,38 +66,44 @@ function equal(a: any, b: any) {
       ArrayBuffer.isView(b)
     ) {
       length = a.length;
+      // eslint-disable-next-line eqeqeq
       if (length != b.length) return false;
       for (let i = length; i-- !== 0; ) if (a[i] !== b[i]) return false;
       return true;
     }
 
-    if (a.constructor === RegExp)
+    if (a.constructor === RegExp) {
       return a.source === b.source && a.flags === b.flags;
+    }
 
     if (
       a.valueOf !== Object.prototype.valueOf &&
       typeof a.valueOf === "function" &&
       typeof b.valueOf === "function"
-    )
+    ) {
       return a.valueOf() === b.valueOf();
+    }
     if (
       a.toString !== Object.prototype.toString &&
       typeof a.toString === "function" &&
       typeof b.toString === "function"
-    )
+    ) {
       return a.toString() === b.toString();
+    }
 
     const keys = Object.keys(a);
     length = keys.length;
     if (length !== Object.keys(b).length) return false;
 
-    for (let i = length; i-- !== 0; )
+    for (let i = length; i-- !== 0; ) {
       if (
         !isSet(i) ||
         !isSetString(keys[i]) ||
         !Object.prototype.hasOwnProperty.call(b, keys[i] as any)
-      )
+      ) {
         return false;
+      }
+    }
 
     for (let i = length; i-- !== 0; ) {
       if (
@@ -93,13 +118,15 @@ function equal(a: any, b: any) {
         !isSet(i) ||
         !isSetString(keys[i]) ||
         !equal(a[keys[i] as any], b[keys[i] as any])
-      )
+      ) {
         return false;
+      }
     }
 
     return true;
   }
 
+  // eslint-disable-next-line no-self-compare
   return a !== a && b !== b;
 }
 

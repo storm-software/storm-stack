@@ -5,6 +5,8 @@
   "compilerOptions": {
     "rootDir": ".",
     "baseUrl": ".",
+    "incremental": false,
+    "composite": false,
     "paths": {
       "@storm-stack/cli": ["packages/cli/src/index.ts"],
       "@storm-stack/cli/*": ["packages/cli/src/*"],
@@ -18,8 +20,8 @@
       "@storm-stack/hashing/*": ["packages/hashing/src/*"],
       "@storm-stack/logging": ["packages/logging/src/index.ts"],
       "@storm-stack/logging/*": ["packages/logging/src/*"],
-      "@storm-stack/nx-tools": ["apps/nx-tools/src/index.ts"],
-      "@storm-stack/nx-tools/*": ["apps/nx-tools/src/*"],
+      "@storm-stack/nx": ["apps/nx/src/index.ts"],
+      "@storm-stack/nx/*": ["apps/nx/src/*"],
       "@storm-stack/plugin-system": ["packages/plugin-system/src/index.ts"],
       "@storm-stack/plugin-system/*": ["packages/plugin-system/src/*"],
       "@storm-stack/serialization": ["packages/serialization/src/index.ts"],
@@ -37,8 +39,7 @@
       ],
       "@storm-stack/unique-identifier/*": ["packages/unique-identifier/src/*"],
       "@storm-stack/utilities": ["packages/utilities/src/index.ts"],
-      "@storm-stack/utilities/*": ["packages/utilities/src/*"],
-      "@storm-stack/web-docs": ["apps/web-docs/src/index.ts"]
+      "@storm-stack/utilities/*": ["packages/utilities/src/*"]
     }
   },
   "include": ["**/*.ts", "**/*.tsx", "**/*.d.ts", "**/*.js", "**/*.jsx"],

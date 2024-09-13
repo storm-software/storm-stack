@@ -2,10 +2,8 @@
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
     "outDir": "../../dist/out-tsc",
-    "noEmit": true,
     "types": ["node"]
   },
-  "files": [],
   "include": ["src/**/*.ts", "src/**/*.js"],
   "exclude": ["jest.config.ts", "src/**/*.spec.ts", "src/**/*.test.ts"]
 }

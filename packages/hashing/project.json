@@ -5,48 +5,31 @@
   "sourceRoot": "packages/hashing/src",
   "targets": {
     "build": {
-      "executor": "@storm-software/workspace-tools:tsup-neutral",
+      "cache": true,
+      "executor": "@storm-software/workspace-tools:unbuild",
+      "inputs": ["typescript", "^production"],
       "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "clean": true,
       "options": {
-        "entry": "packages/hashing/src/index.ts",
+        "type": "packages/hashing/src/index.ts",
         "outputPath": "dist/packages/hashing",
         "tsConfig": "packages/hashing/tsconfig.json",
-        "project": "packages/hashing/package.json",
-        "defaultConfiguration": "production",
-        "assets": [
-          {
-            "input": "packages/hashing",
-            "glob": "*.md",
-            "output": "/"
-          },
-          {
-            "input": "",
-            "glob": "LICENSE",
-            "output": "/"
-          }
-        ],
-        "platform": "neutral"
+        "project": "packages/hashing/package.json"
       },
       "configurations": {
         "production": {
-          "debug": false,
+          "sourceMap": false,
           "verbose": false
         },
         "development": {
-          "debug": true,
+          "sourceMap": true,
           "verbose": true
         }
       }
     },
     "nx-release-publish": {
-      "cache": true,
-      "inputs": ["default", "^production"],
-      "dependsOn": ["^build"],
-      "executor": "@storm-software/workspace-tools:npm-publish",
-      "options": {
-        "packageRoot": "dist/{projectRoot}",
-        "registry": "https://registry.npmjs.org/"
-      }
+      "executor": "@storm-software/workspace-tools:npm-publish"
     }
   }
 }

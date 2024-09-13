@@ -1,3 +1,22 @@
+/*-------------------------------------------------------------------
+
+                  ⚡ Storm Software - Storm Stack
+
+ This code was released as part of the Storm Stack project. Storm Stack
+ is maintained by Storm Software under the Apache-2.0 License, and is
+ free for commercial and private use. For more information, please visit
+ our licensing page.
+
+ Website:         https://stormsoftware.com
+ Repository:      https://github.com/storm-software/storm-stack
+ Documentation:   https://stormsoftware.com/projects/storm-stack/docs
+
+ Contact:         https://stormsoftware.com/contact
+ Licensing:       https://stormsoftware.com/projects/storm-stack/licensing
+
+ -------------------------------------------------------------------*/
+
+import "node-window-polyfill/register";
 import { isBuffer } from "./is-buffer";
 
 const globalObject = (Obj => {
@@ -46,62 +65,62 @@ export function typeDetect(obj: unknown): string {
     return "Array";
   }
 
-  // https://html.spec.whatwg.org/multipage/browsers.html#location
-  if (typeof window === "object" && window !== null) {
-    if (
-      typeof (window as any).location === "object" &&
-      obj === (window as any).location
-    ) {
-      return "Location";
-    }
+  // // https://html.spec.whatwg.org/multipage/browsers.html#location
+  // if (typeof window === "object" && window !== null) {
+  //   if (
+  //     typeof (window as any).location === "object" &&
+  //     obj === (window as any).location
+  //   ) {
+  //     return "Location";
+  //   }
 
-    // https://html.spec.whatwg.org/#document
-    if (
-      typeof (window as any).document === "object" &&
-      obj === (window as any).document
-    ) {
-      return "Document";
-    }
+  //   // https://html.spec.whatwg.org/#document
+  //   if (
+  //     typeof (window as any).document === "object" &&
+  //     obj === (window as any).document
+  //   ) {
+  //     return "Document";
+  //   }
 
-    // https://html.spec.whatwg.org/multipage/webappapis.html#mimetypearray
-    if (typeof (window as any).navigator === "object") {
-      if (
-        typeof (window as any).navigator.mimeTypes === "object" &&
-        obj === (window as any).navigator.mimeTypes
-      ) {
-        return "MimeTypeArray";
-      }
+  //   // https://html.spec.whatwg.org/multipage/webappapis.html#mimetypearray
+  //   if (typeof (window as any).navigator === "object") {
+  //     if (
+  //       typeof (window as any).navigator.mimeTypes === "object" &&
+  //       obj === (window as any).navigator.mimeTypes
+  //     ) {
+  //       return "MimeTypeArray";
+  //     }
 
-      // https://html.spec.whatwg.org/multipage/webappapis.html#pluginarray
-      if (
-        typeof (window as any).navigator.plugins === "object" &&
-        obj === (window as any).navigator.plugins
-      ) {
-        return "PluginArray";
-      }
-    }
+  //     // https://html.spec.whatwg.org/multipage/webappapis.html#pluginarray
+  //     if (
+  //       typeof (window as any).navigator.plugins === "object" &&
+  //       obj === (window as any).navigator.plugins
+  //     ) {
+  //       return "PluginArray";
+  //     }
+  //   }
 
-    // https://html.spec.whatwg.org/multipage/webappapis.html#pluginarray
-    if (
-      (typeof (window as any).HTMLElement === "function" ||
-        typeof (window as any).HTMLElement === "object") &&
-      obj instanceof (window as any).HTMLElement
-    ) {
-      if ((obj as any).tagName === "BLOCKQUOTE") {
-        return "HTMLQuoteElement";
-      }
+  //   // https://html.spec.whatwg.org/multipage/webappapis.html#pluginarray
+  //   if (
+  //     (typeof (window as any).HTMLElement === "function" ||
+  //       typeof (window as any).HTMLElement === "object") &&
+  //     obj instanceof (window as any).HTMLElement
+  //   ) {
+  //     if ((obj as any).tagName === "BLOCKQUOTE") {
+  //       return "HTMLQuoteElement";
+  //     }
 
-      // https://html.spec.whatwg.org/#htmltabledatacellelement
-      if ((obj as any).tagName === "TD") {
-        return "HTMLTableDataCellElement";
-      }
+  //     // https://html.spec.whatwg.org/#htmltabledatacellelement
+  //     if ((obj as any).tagName === "TD") {
+  //       return "HTMLTableDataCellElement";
+  //     }
 
-      // https://html.spec.whatwg.org/#htmltableheadercellelement
-      if ((obj as any).tagName === "TH") {
-        return "HTMLTableHeaderCellElement";
-      }
-    }
-  }
+  //     // https://html.spec.whatwg.org/#htmltableheadercellelement
+  //     if ((obj as any).tagName === "TH") {
+  //       return "HTMLTableHeaderCellElement";
+  //     }
+  //   }
+  // }
 
   const stringTag =
     Symbol.toStringTag !== undefined && (obj as any)[Symbol.toStringTag];

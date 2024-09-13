@@ -1,4 +1,21 @@
-import { BuildTuple } from "./base";
+/*-------------------------------------------------------------------
+
+                  ⚡ Storm Software - Storm Stack
+
+ This code was released as part of the Storm Stack project. Storm Stack
+ is maintained by Storm Software under the Apache-2.0 License, and is
+ free for commercial and private use. For more information, please visit
+ our licensing page.
+
+ Website:         https://stormsoftware.com
+ Repository:      https://github.com/storm-software/storm-stack
+ Documentation:   https://stormsoftware.com/projects/storm-stack/docs
+ Contact:         https://stormsoftware.com/contact
+ License:         https://stormsoftware.com/projects/storm-stack/license
+
+ -------------------------------------------------------------------*/
+
+import { BuildTuple, IsEqual } from "./base";
 import { IsNegative, NegativeInfinity, PositiveInfinity } from "./number";
 import { StringLength, StringToNumber } from "./string";
 
@@ -24,11 +41,6 @@ export type Not<A extends boolean> = A extends true
  * Returns a boolean for whether the given `boolean` is not `false`.
  */
 export type IsNotFalse<T extends boolean> = [T] extends [false] ? false : true;
-
-export type IsEqual<A, B> =
-  (<G>() => G extends A ? 1 : 2) extends <G>() => G extends B ? 1 : 2
-    ? true
-    : false;
 
 export type Or<A extends boolean, B extends boolean> = [
   A,
