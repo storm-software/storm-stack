@@ -1,3 +1,20 @@
+/*-------------------------------------------------------------------
+
+                  ⚡ Storm Software - Storm Stack
+
+ This code was released as part of the Storm Stack project. Storm Stack
+ is maintained by Storm Software under the Apache-2.0 License, and is
+ free for commercial and private use. For more information, please visit
+ our licensing page.
+
+ Website:         https://stormsoftware.com
+ Repository:      https://github.com/storm-software/storm-stack
+ Documentation:   https://stormsoftware.com/projects/storm-stack/docs
+ Contact:         https://stormsoftware.com/contact
+ License:         https://stormsoftware.com/projects/storm-stack/license
+
+ -------------------------------------------------------------------*/
+
 import { EMPTY_STRING } from "@storm-stack/types";
 import fs from "node:fs";
 import { createRequire } from "node:module";
@@ -181,7 +198,7 @@ const loadTsConfigInternal = (
   const data = jsoncParse(fs.readFileSync(id, "utf8"));
   const configDir = path.dirname(id);
   // biome-ignore lint/suspicious/noAssignInExpressions: <explanation>
-  if ((_a = data.compilerOptions) == null ? void 0 : _a.baseUrl) {
+  if ((_a = data.compilerOptions) === null ? void 0 : _a.baseUrl) {
     data.compilerOptions.baseUrl = path.join(
       configDir,
       data.compilerOptions.baseUrl

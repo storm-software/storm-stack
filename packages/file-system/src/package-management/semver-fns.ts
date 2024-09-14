@@ -1,3 +1,20 @@
+/*-------------------------------------------------------------------
+
+                  ⚡ Storm Software - Storm Stack
+
+ This code was released as part of the Storm Stack project. Storm Stack
+ is maintained by Storm Software under the Apache-2.0 License, and is
+ free for commercial and private use. For more information, please visit
+ our licensing page.
+
+ Website:         https://stormsoftware.com
+ Repository:      https://github.com/storm-software/storm-stack
+ Documentation:   https://stormsoftware.com/projects/storm-stack/docs
+ Contact:         https://stormsoftware.com/contact
+ License:         https://stormsoftware.com/projects/storm-stack/license
+
+ -------------------------------------------------------------------*/
+
 import { RELEASE_TYPES, type ReleaseType, inc, parse, valid } from "semver";
 
 export const parseVersion = (semver: string) => parse(semver);
@@ -27,13 +44,12 @@ export const deriveNewSemverVersion = (
       );
     }
     newVersion = derivedVersion;
-  } else {
+  } else if (!valid(semverSpecifier)) {
     // Ensure the new version specifier is a valid semver version, given it is not a valid semver keyword
-    if (!valid(semverSpecifier)) {
-      throw new Error(
-        `Invalid semver version specifier "${semverSpecifier}" provided. Please provide either a valid semver version or a valid semver version keyword.`
-      );
-    }
+    throw new Error(
+      `Invalid semver version specifier "${semverSpecifier}" provided. Please provide either a valid semver version or a valid semver version keyword.`
+    );
   }
+
   return newVersion;
 };

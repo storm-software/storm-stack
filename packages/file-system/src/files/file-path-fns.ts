@@ -1,3 +1,20 @@
+/*-------------------------------------------------------------------
+
+                  ⚡ Storm Software - Storm Stack
+
+ This code was released as part of the Storm Stack project. Storm Stack
+ is maintained by Storm Software under the Apache-2.0 License, and is
+ free for commercial and private use. For more information, please visit
+ our licensing page.
+
+ Website:         https://stormsoftware.com
+ Repository:      https://github.com/storm-software/storm-stack
+ Documentation:   https://stormsoftware.com/projects/storm-stack/docs
+ Contact:         https://stormsoftware.com/contact
+ License:         https://stormsoftware.com/projects/storm-stack/license
+
+ -------------------------------------------------------------------*/
+
 import { EMPTY_STRING } from "@storm-stack/types";
 import { dirname, isAbsolute, parse, relative, sep } from "node:path";
 import { getWorkspaceRoot } from "./get-workspace-root";
@@ -71,7 +88,7 @@ export function findContainingFolder(filePath: string): string {
  * @returns An indicator specifying if the file path has a file name
  */
 export function hasFileName(filePath: string): boolean {
-  return !!findFileName(filePath);
+  return Boolean(findFileName(filePath));
 }
 
 /**
@@ -81,7 +98,7 @@ export function hasFileName(filePath: string): boolean {
  * @returns An indicator specifying if the file path has a file path
  */
 export function hasFilePath(filePath: string): boolean {
-  return !!findFilePath(filePath);
+  return Boolean(findFilePath(filePath));
 }
 
 /**
