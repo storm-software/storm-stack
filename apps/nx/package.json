@@ -11,7 +11,7 @@
   "main": "./src/index.js",
   "typings": "./src/index.d.ts",
   "peerDependencies": {
-    "@tamagui/web": "^1.89.20",
+    "@tamagui/web": "^1.110.5",
     "nx": "19.7.3"
   },
   "dependencies": {
@@ -19,14 +19,14 @@
     "@storm-software/config": "latest",
     "@storm-software/config-tools": "latest",
     "@storm-software/workspace-tools": "latest",
-    "@tamagui/fake-react-native": "^1.89.11",
-    "esbuild": "^0.20.0",
+    "@tamagui/fake-react-native": "^1.110.5",
+    "esbuild": "^0.23.1",
     "fs-extra": "^11.2.0",
-    "glob": "^10.3.10",
-    "tslib": "^2.6.2"
+    "glob": "^10.4.5",
+    "tslib": "^2.7.0"
   },
   "devDependencies": {
-    "@tamagui/web": "^1.89.20",
+    "@tamagui/web": "^1.110.5",
     "@types/fs-extra": "^11.0.4",
     "nx": "19.7.3"
   },

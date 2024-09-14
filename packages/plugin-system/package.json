@@ -10,10 +10,10 @@
   },
   "private": false,
   "dependencies": {
-    "@antfu/ni": "^0.21.12",
-    "enhanced-resolve": "^5.15.0",
+    "@antfu/ni": "^0.23.0",
+    "enhanced-resolve": "^5.17.1",
     "execa": "^8.0.1",
-    "glob": "^10.3.10",
+    "glob": "^10.4.5",
     "md5": "^2.3.0",
     "pnpapi": "^0.0.0",
     "toposort": "^2.0.2"
