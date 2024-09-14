@@ -1,3 +1,10 @@
+## 1.19.0 (2024-09-14)
+
+
+### Features
+
+- **file-system:** Added banner to source control ([0c7bafc](https://github.com/storm-software/storm-stack/commit/0c7bafc))
+
 
 
 ## 1.17.0 (2024-02-10)
