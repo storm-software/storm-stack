@@ -53,6 +53,7 @@ jobs:
              }
         env:
           SLACK_BOT_TOKEN: ${{ secrets.STORM_BOT_SLACK_TOKEN }}
+
       - name: Send Discord notification - Deployment started
         uses: Ilshidur/action-discord@master
         with:
@@ -83,6 +84,7 @@ jobs:
             github.event.head_commit.url }}", "icon_url":
             "https://pub-761b436209f44a4d886487c917806c08.r2.dev/icon-fill.png"
             } }]'
+
       - name: Send Telegram notification - Deployment started
         uses: storm-software/action-telegram-notify@main
         with:
@@ -91,7 +93,7 @@ jobs:
           TELEGRAM_TOKEN: ${{ secrets.STORM_BOT_TELEGRAM_TOKEN }}
           TELEGRAM_CHAT: ${{ secrets.STORM_BOT_TELEGRAM_NOTIFICATION_CHAT }}
 
-  setup:
+  release:
     name: Setup workspace
     if: always() && !cancelled() && !contains(needs.*.result, 'failure') && github.event.pull_request.draft == false
     needs:
