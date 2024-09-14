@@ -124,7 +124,7 @@ jobs:
           token: ${{ secrets.STORM_BOT_GITHUB_TOKEN }}
 
       - name: Setup workspace
-        uses: ./.github/actions/setup
+        uses: ./.github/actions/setup-workspace
         with:
           working-directory: ./
 
