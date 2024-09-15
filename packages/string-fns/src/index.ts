@@ -24,6 +24,7 @@
  * @packageDocumentation
  */
 
+export * from "./acronyms";
 export * from "./camel-case";
 export * from "./constant-case";
 export * from "./get-words";

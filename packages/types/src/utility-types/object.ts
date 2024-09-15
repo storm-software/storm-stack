@@ -17,6 +17,7 @@
 
 /* eslint-disable tsdoc/syntax */
 /* eslint-disable @cspell/spellchecker */
+/* eslint-disable @typescript-eslint/ban-types */
 
 import type {
   StaticPartOfArray,
@@ -40,6 +41,9 @@ import type { Numeric } from "./number";
 import type { StringDigit } from "./string";
 import type { Index40, Nullable } from "./utilities";
 
+/**
+ * Returns a boolean for whether the given type is an empty object.
+ */
 export type IsEmptyObject<T> = T extends EmptyObject ? true : false;
 
 /**
@@ -76,9 +80,24 @@ type LiteralChecks<T, LiteralUnionType> =
       : never
   >;
 
+/**
+ * Returns a boolean for whether the given type is a string literal.
+ */
 export type IsStringLiteral<T> = LiteralCheck<T, string>;
+
+/**
+ * Returns a boolean for whether the given type is a numeric literal.
+ */
 export type IsNumericLiteral<T> = LiteralChecks<T, Numeric>;
+
+/**
+ * Returns a boolean for whether the given type is a boolean literal.
+ */
 export type IsBooleanLiteral<T> = LiteralCheck<T, boolean>;
+
+/**
+ * Returns a boolean for whether the given type is a symbol literal.
+ */
 export type IsSymbolLiteral<T> = LiteralCheck<T, symbol>;
 
 type IsLiteralUnion<T> =
@@ -87,6 +106,9 @@ type IsLiteralUnion<T> =
   | IsStringLiteral<T>
   | IsSymbolLiteral<T>;
 
+/**
+ * Returns a boolean for whether the given type is a literal type.
+ */
 export type IsLiteral<T> =
   IsPrimitive<T> extends true ? IsNotFalse<IsLiteralUnion<T>> : false;
 
