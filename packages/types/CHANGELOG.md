@@ -1,3 +1,10 @@
+## 0.4.0 (2024-09-15)
+
+
+### Features
+
+- **monorepo:** Update base builder version ([cd06bfc](https://github.com/storm-software/storm-stack/commit/cd06bfc))
+
 ## 0.3.0 (2024-09-15)
 
 
