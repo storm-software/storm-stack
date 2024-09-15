@@ -10,9 +10,8 @@
  Website:         https://stormsoftware.com
  Repository:      https://github.com/storm-software/storm-stack
  Documentation:   https://stormsoftware.com/projects/storm-stack/docs
-
  Contact:         https://stormsoftware.com/contact
- Licensing:       https://stormsoftware.com/projects/storm-stack/licensing
+ License:         https://stormsoftware.com/projects/storm-stack/license
 
  -------------------------------------------------------------------*/
 
@@ -256,7 +255,7 @@ export function prettyBytes(number: number, options?: Options): string {
 
   const isNegative = _number < 0;
   // eslint-disable-next-line prettier/prettier
-  const prefix = isNegative ? '-' : (opts.signed ? '+' : '');
+  const prefix = isNegative ? "-" : (opts.signed ? "+" : "");
 
   if (isNegative) {
     _number = -_number;

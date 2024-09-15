@@ -15,6 +15,9 @@
 
  -------------------------------------------------------------------*/
 
+/* eslint-disable tsdoc/syntax */
+/* eslint-disable @cspell/spellchecker */
+
 import type {
   StaticPartOfArray,
   UnknownArray,
@@ -451,7 +454,7 @@ type PropertyOf<
 export type Get<
   BaseType,
   Path extends readonly string[] | string,
-  Options extends GetOptions = {}
+  Options extends GetOptions = NonNullable<unknown>
 > = GetWithPath<BaseType, Path extends string ? ToPath<Path> : Path, Options>;
 
 /**

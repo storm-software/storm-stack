@@ -15,17 +15,45 @@
 
  -------------------------------------------------------------------*/
 
-import { snakeCase } from "./snake-case";
-
-/**
- * Convert the input string to constant case.
- *
- * @remarks
- * "THIS_IS_AN_EXAMPLE"
- *
- * @param input - The input string.
- * @returns The constant-cased string.
- */
-export const constantCase = (input?: string): string | undefined => {
-  return snakeCase(input)?.toUpperCase();
-};
+export const ACRONYMS = [
+  "API",
+  "CPU",
+  "CSS",
+  "DNS",
+  "EOF",
+  "GUID",
+  "HTML",
+  "HTTP",
+  "HTTPS",
+  "ID",
+  "IP",
+  "JSON",
+  "LHS",
+  "OEM",
+  "PP",
+  "QA",
+  "RAM",
+  "RHS",
+  "RPC",
+  "RSS",
+  "SLA",
+  "SMTP",
+  "SQL",
+  "SSH",
+  "SSL",
+  "TCP",
+  "TLS",
+  "TRPC",
+  "TTL",
+  "UDP",
+  "UI",
+  "UID",
+  "UUID",
+  "URI",
+  "URL",
+  "UTF",
+  "VM",
+  "XML",
+  "XSS",
+  "XSRF"
+];
