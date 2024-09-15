@@ -1,3 +1,10 @@
+## 0.4.1 (2024-09-15)
+
+
+### Bug Fixes
+
+- **types:** Remove unused node poyfill ([6d1cf31](https://github.com/storm-software/storm-stack/commit/6d1cf31))
+
 ## 0.4.0 (2024-09-15)
 
 
