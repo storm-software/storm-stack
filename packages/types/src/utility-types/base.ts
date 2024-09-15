@@ -15,6 +15,8 @@
 
  -------------------------------------------------------------------*/
 
+/* eslint-disable @typescript-eslint/ban-types */
+
 import type { TypedArray } from "./array";
 
 export type SerializablePrimitive =
@@ -34,6 +36,7 @@ export type BuiltIns = Primitive | void | Date | RegExp;
 /**
  * Matches any non-primitive object
  */
+// eslint-disable-next-line @typescript-eslint/ban-types
 export type AtomicObject = Function | Promise<any> | Date | RegExp;
 
 /** Determines if the passed value is of a specific type */
@@ -319,7 +322,7 @@ export type IsFunction<T> = T extends AnyFunction ? true : false;
  * import type {GlobalThis} from 'type-fest';
  *
  * type ExtraGlobals = GlobalThis & {
- * 	readonly GLOBAL_TOKEN: string;
+ *   readonly GLOBAL_TOKEN: string;
  * };
  *
  * (globalThis as ExtraGlobals).GLOBAL_TOKEN;
@@ -427,27 +430,27 @@ type StructuredCloneableData =
   | Blob
   | File;
 // DOM exclusive types
-//	| AudioData
-//	| CropTarget
-//	| CryptoKey
-//	| DOMException
-//	| DOMMatrix
-//	| DOMMatrixReadOnly
-//	| DOMPoint
-//	| DOMPointReadOnly
-//	| DOMQuad
-//	| DOMRect
-//	| DOMRectReadOnly
-//	| FileList
-//	| FileSystemDirectoryHandle
-//	| FileSystemFileHandle
-//	| FileSystemHandle
-//	| GPUCompilationInfo
-//	| GPUCompilationMessage
-//	| ImageBitmap
-//	| ImageData
-//	| RTCCertificate
-//	| VideoFrame
+// | AudioData
+// | CropTarget
+// | CryptoKey
+// | DOMException
+// | DOMMatrix
+// | DOMMatrixReadOnly
+// | DOMPoint
+// | DOMPointReadOnly
+// | DOMQuad
+// | DOMRect
+// | DOMRectReadOnly
+// | FileList
+// | FileSystemDirectoryHandle
+// | FileSystemFileHandle
+// | FileSystemHandle
+// | GPUCompilationInfo
+// | GPUCompilationMessage
+// | ImageBitmap
+// | ImageData
+// | RTCCertificate
+// | VideoFrame
 
 type StructuredCloneableCollection =
   | readonly StructuredCloneable[]

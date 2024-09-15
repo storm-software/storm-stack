@@ -88,7 +88,7 @@ export type AsyncReturnType<Target extends AsyncFunction> = Awaited<
  *
  * // Synchronous function.
  * function getFooSync(someArg: SomeType): Foo {
- * 	// …
+ *   // …
  * }
  *
  * type AsyncifiedFooGetter = Asyncify<typeof getFooSync>;
@@ -96,11 +96,11 @@ export type AsyncReturnType<Target extends AsyncFunction> = Awaited<
  *
  * // Same as `getFooSync` but asynchronous.
  * const getFooAsync: AsyncifiedFooGetter = (someArg) => {
- * 	// TypeScript now knows that `someArg` is `SomeType` automatically.
- * 	// It also knows that this function must return `Promise<Foo>`.
- * 	// If you have `@typescript-eslint/promise-function-async` linter rule enabled, it will even report that "Functions that return promises must be async.".
+ *   // TypeScript now knows that `someArg` is `SomeType` automatically.
+ *   // It also knows that this function must return `Promise<Foo>`.
+ *   // If you have `@typescript-eslint/promise-function-async` linter rule enabled, it will even report that "Functions that return promises must be async.".
  *
- * 	// …
+ *   // …
  * }
  * ```
  *

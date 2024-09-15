@@ -83,8 +83,6 @@
     "start": "nx serve"
   },
   "dependencies": {
-    "@babel/core": "^7.25.2",
-    "@babel/preset-env": "^7.25.4",
     "@commitlint/cli": "^19.5.0",
     "@ls-lint/ls-lint": "^2.2.3",
     "@nderscore/tamagui-typescript-plugin": "^0.6.0",
@@ -138,7 +136,7 @@
     "react-dom": "19.0.0-rc-f6cce072-20240723",
     "react-native": "0.75.3",
     "rimraf": "^5.0.10",
-    "sherif": "0.11.0",
+    "sherif": "1.0.0",
     "ts-jest": "29.2.5",
     "ts-node": "10.9.2",
     "tslib": "^2.7.0",

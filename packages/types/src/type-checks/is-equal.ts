@@ -10,11 +10,12 @@
  Website:         https://stormsoftware.com
  Repository:      https://github.com/storm-software/storm-stack
  Documentation:   https://stormsoftware.com/projects/storm-stack/docs
-
  Contact:         https://stormsoftware.com/contact
- Licensing:       https://stormsoftware.com/projects/storm-stack/licensing
+ License:         https://stormsoftware.com/projects/storm-stack/license
 
  -------------------------------------------------------------------*/
+
+/* eslint-disable no-restricted-syntax */
 
 export const isEqual = <TType>(x: TType, y: TType): boolean => {
   if (Object.is(x, y)) return true;

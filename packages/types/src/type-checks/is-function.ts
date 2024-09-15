@@ -10,11 +10,12 @@
  Website:         https://stormsoftware.com
  Repository:      https://github.com/storm-software/storm-stack
  Documentation:   https://stormsoftware.com/projects/storm-stack/docs
-
  Contact:         https://stormsoftware.com/contact
- Licensing:       https://stormsoftware.com/projects/storm-stack/licensing
+ License:         https://stormsoftware.com/projects/storm-stack/license
 
  -------------------------------------------------------------------*/
+
+/* eslint-disable @typescript-eslint/ban-types */
 
 import { getObjectTag } from "./get-object-tag";
 
