@@ -8,9 +8,6 @@
     "directory": "packages/types"
   },
   "private": false,
-  "dependencies": {
-    "node-window-polyfill": "^1.0.2"
-  },
   "devDependencies": {
     "@types/node": "^22.5.5"
   },

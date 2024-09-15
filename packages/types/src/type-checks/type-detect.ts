@@ -15,7 +15,6 @@
 
  -------------------------------------------------------------------*/
 
-import "node-window-polyfill/register";
 import { isBuffer } from "./is-buffer";
 
 const globalObject = (Obj => {
