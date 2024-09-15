@@ -15,6 +15,9 @@
 
  -------------------------------------------------------------------*/
 
+/**
+ * A utility type for specifying the type of an option for a Select or Radio form field.
+ */
 export interface SelectOption<T = string> {
   /**
    * The string value to display in the field

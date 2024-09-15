@@ -28,24 +28,6 @@
         }
       }
     },
-
-    // "build": {
-    //   "cache": true,
-    //   "inputs": [
-    //     "typescript",
-    //     "^production",
-    //     {
-    //       "externalDependencies": ["rollup"]
-    //     }
-    //   ],
-    //   "dependsOn": ["clean", "^build"],
-    //   "defaultConfiguration": "production",
-    //   "configurations": {
-    //     "production": {},
-    //     "development": {}
-    //   }
-    // },
-
     "nx-release-publish": {
       "executor": "@storm-software/workspace-tools:npm-publish"
     }

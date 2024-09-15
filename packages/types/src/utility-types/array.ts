@@ -40,7 +40,7 @@ export type TypedArray =
 /**
  * Infer the length of the given array `<T>`.
  *
- * Check out {@link https://itnext.io/implementing-arithmetic-within-typescripts-type-system-a1ef140a6f6f this article} for more information.
+ * Check out {@link https://itnext.io/implementing-arithmetic-within-typescripts-type-system-a1ef140a6f6f | this article} for more information.
  */
 export type ArrayLength<T extends readonly unknown[]> = T extends {
   readonly length: infer L;

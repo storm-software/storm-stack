@@ -25,7 +25,7 @@ pre-commit:
   commands:
     install:
       glob: "./{pnpm-lock.yaml,lefthook.yml}"
-      run: "pnpm install && git update-index"
+      run: "pnpm install && pnpm lefthook install && git update-index"
       stage_fixed: true
     prepare:
       glob: "**/{lefthook.yml,biome.json}"
@@ -40,20 +40,17 @@ pre-commit:
     #   stage_fixed: true
     lint-toml:
       glob: "**/*.toml"
-      run:
-        'pnpm exec taplo format --check
+      run: 'pnpm exec taplo format --check
         --config="./node_modules/@storm-software/linting-tools/taplo/.taplo.toml"'
     lint-filename:
       glob: "**/*.*"
-      run:
-        'pnpm exec ls-lint
-        --config="./node_modules/@storm-software/linting-tools/ls-lint/ls-lint.yml"'
+      run: 'pnpm exec ls-lint
+        --config="./node_modules/@storm-software/linting-tools/ls-lint/.ls-lint.yml"'
 
 commit-msg:
   commands:
     validate:
-      run:
-        'pnpm exec commitlint
+      run: 'pnpm exec commitlint
         --config="./node_modules/@storm-software/git-tools/commitlint/commitlint.config.cjs"
         --edit {1}'
 
@@ -66,20 +63,17 @@ pre-push:
       stage_fixed: true
     format-prettier:
       glob: "!packages/workspace-tools/src/generators/*/files/**/*"
-      run:
-        "pnpm exec prettier {staged_files} --write --ignore-unknown
+      run: "pnpm exec prettier {staged_files} --write --ignore-unknown
         --no-error-on-unmatched-pattern --cache && git update-index"
       stage_fixed: true
     format-toml:
       glob: "**/*.toml"
-      run:
-        'pnpm exec taplo format
+      run: 'pnpm exec taplo format
         --config="./node_modules/@storm-software/linting-tools/taplo/.taplo.toml"
         && git update-index'
     format-readme:
       glob: "**/{README.md,package.json,executors.json,generators.json}"
-      run:
-        'pnpm exec storm-git readme-gen --templates="./tools/readme-templates"'
+      run: 'pnpm exec storm-git readme-gen --templates="./tools/readme-templates"'
       stage_fixed: true
     build:
       glob: "**/*.*"
