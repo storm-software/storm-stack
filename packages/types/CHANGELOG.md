@@ -1,3 +1,10 @@
+## 0.4.2 (2024-09-15)
+
+
+### Bug Fixes
+
+- **monorepo:** Resolve issues in git hook configurations ([f925f93](https://github.com/storm-software/storm-stack/commit/f925f93))
+
 ## 0.4.1 (2024-09-15)
 
 
