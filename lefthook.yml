@@ -41,11 +41,11 @@ pre-commit:
     lint-toml:
       glob: "**/*.toml"
       run: 'pnpm exec taplo format --check
-        --config="./node_modules/@storm-software/linting-tools/taplo/.taplo.toml"'
+        --config="./node_modules/@storm-software/linting-tools/taplo/config.toml"'
     lint-filename:
       glob: "**/*.*"
       run: 'pnpm exec ls-lint
-        --config="./node_modules/@storm-software/linting-tools/ls-lint/.ls-lint.yml"'
+        --config="./node_modules/@storm-software/linting-tools/ls-lint/config.yml"'
 
 commit-msg:
   commands:
@@ -69,7 +69,7 @@ pre-push:
     format-toml:
       glob: "**/*.toml"
       run: 'pnpm exec taplo format
-        --config="./node_modules/@storm-software/linting-tools/taplo/.taplo.toml"
+        --config="./node_modules/@storm-software/linting-tools/taplo/config.toml"
         && git update-index'
     format-readme:
       glob: "**/{README.md,package.json,executors.json,generators.json}"
