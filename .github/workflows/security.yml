@@ -4,10 +4,9 @@ on:
   workflow_dispatch:
   push:
     branches:
-      - "main"
-      - "next"
-      - "beta"
-      - "experimental"
+      - main
+      - canary
+      - experimental
     paths-ignore:
       - "**/*.md"
       - ".all-contributorsrc"

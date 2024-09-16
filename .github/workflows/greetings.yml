@@ -5,10 +5,9 @@ on:
   pull_request_target:
   issues:
     branches:
-      - "main"
-      - "next"
-      - "beta"
-      - "experimental"
+      - main
+      - canary
+      - experimental
 
 jobs:
   greeting:

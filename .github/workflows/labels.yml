@@ -5,6 +5,8 @@ on:
   push:
     branches:
       - main
+      - canary
+      - experimental
     paths:
       - .github/labels.yml
 

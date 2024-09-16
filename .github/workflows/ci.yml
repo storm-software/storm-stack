@@ -9,7 +9,8 @@ on:
   push:
     branches:
       - main
-
+      - canary
+      - experimental
 env:
   CI: true
   # NX_CLOUD_DISTRIBUTED_EXECUTION: true # this enables DTE
@@ -27,7 +28,7 @@ env:
 jobs:
   start:
     name: Started CI workflow
-    if: github.repository == 'storm-software/storm-stack' && github.event.pull_request.draft == false
+    if: github.repository == 'storm-software/storm-stack' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/canary' || github.ref == 'refs/heads/experimental')
     runs-on: ubuntu-latest
     steps:
       - name: Send Slack notification - Deployment started
@@ -94,7 +95,7 @@ jobs:
           TELEGRAM_CHAT: ${{ secrets.STORM_BOT_TELEGRAM_NOTIFICATION_CHAT }}
 
   release:
-    name: Setup workspace
+    name: Continuous Integration
     if: always() && !cancelled() && !contains(needs.*.result, 'failure') && github.event.pull_request.draft == false
     needs:
       - start
@@ -124,9 +125,10 @@ jobs:
           token: ${{ secrets.STORM_BOT_GITHUB_TOKEN }}
 
       - name: Setup workspace
-        uses: ./.github/actions/setup-workspace
+        uses: storm-software/action-setup@main
         with:
-          working-directory: ./
+          package-manager-version: 9.10.0
+          storm-bot-github-token: ${{ secrets.STORM_BOT_GITHUB_TOKEN }}
 
       - name: Run Nx Set SHAs
         uses: nrwl/nx-set-shas@v4
