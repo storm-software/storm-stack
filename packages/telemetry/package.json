@@ -27,9 +27,9 @@
     "@sentry/types": "^8.30.0",
     "@storm-software/config": "latest",
     "@storm-software/config-tools": "latest",
-    "pino": "8.21.0",
+    "pino": "9.4.0",
     "pino-loki": "2.3.0",
-    "pino-pretty": "10.3.1",
+    "pino-pretty": "11.2.2",
     "zod": "^3.23.8"
   },
   "devDependencies": {

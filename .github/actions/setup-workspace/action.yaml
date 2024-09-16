@@ -49,7 +49,7 @@ runs:
         cache: pnpm
         cache-dependency-path: pnpm-lock.yaml
 
-    - uses: pnpm/action-setup@v3.0.0
+    - uses: pnpm/action-setup@v4.0.0
       id: pnpm-install
       with:
         version: 9.10.0
