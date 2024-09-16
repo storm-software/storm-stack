@@ -22,7 +22,7 @@
     "@tamagui/fake-react-native": "^1.110.5",
     "esbuild": "^0.23.1",
     "fs-extra": "^11.2.0",
-    "glob": "^10.4.5",
+    "glob": "^11.0.0",
     "tslib": "^2.7.0"
   },
   "devDependencies": {
