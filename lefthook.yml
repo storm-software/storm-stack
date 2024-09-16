@@ -51,7 +51,7 @@ commit-msg:
   commands:
     validate:
       run: 'pnpm exec commitlint
-        --config="./node_modules/@storm-software/git-tools/commitlint/commitlint.config.cjs"
+        --config="./node_modules/@storm-software/git-tools/commitlint/config.cjs"
         --edit {1}'
 
 pre-push:

@@ -92,10 +92,10 @@ importers:
         version: 1.54.2
       '@storm-software/eslint':
         specifier: latest
-        version: 0.74.0(4dyvvcaylukrcwxhdc7ddvs7tq)
+        version: 0.76.0(4dyvvcaylukrcwxhdc7ddvs7tq)
       '@storm-software/git-tools':
         specifier: latest
-        version: 2.58.3(@swc-node/register@1.10.9(@swc/core@1.7.26(@swc/helpers@0.5.13))(@swc/types@0.1.12)(typescript@5.6.2))(@swc/core@1.7.26(@swc/helpers@0.5.13))
+        version: 2.59.0(@swc-node/register@1.10.9(@swc/core@1.7.26(@swc/helpers@0.5.13))(@swc/types@0.1.12)(typescript@5.6.2))(@swc/core@1.7.26(@swc/helpers@0.5.13))
       '@storm-software/linting-tools':
         specifier: latest
         version: 1.83.0
@@ -4269,8 +4269,8 @@ packages:
   '@storm-software/config@1.54.2':
     resolution: {integrity: sha512-jWt1xG2li2mplAVDsenHogKUB72fusMEJ2ki2gXIKmeEXH4+1XmRTBJQyghfJfhS8+fzPWi/kEyf6i8/twf7Nw==}
 
-  '@storm-software/eslint@0.74.0':
-    resolution: {integrity: sha512-e8j6OBziHs3iM9NafEje9vuGrsqE4Xk9v6hqVyTi7Yvh/pfTzW/HLIA3Jmr2Z7RjV7ctyXdgpAT6MdAIjLza/g==}
+  '@storm-software/eslint@0.76.0':
+    resolution: {integrity: sha512-eTUWtArq+PgB1RLCYFXMg7wcbBdppl/m9rLRt0hLYFWOCUs4Rde5r5Br6DNsmWlh3c2T4BtAebul/pjMrywWRg==}
     peerDependencies:
       '@nx/eslint': '>=19.6.4'
       '@nx/eslint-plugin': '>=19.6.4'
@@ -4284,8 +4284,8 @@ packages:
       graphql:
         optional: true
 
-  '@storm-software/git-tools@2.58.3':
-    resolution: {integrity: sha512-uDQcPZK2+/gvxEus3U6zC0gNXmXPmKUROvg89bmtEAoSJIeBwo77TymB7fqtH6ivqHzbuKqlyzThxys3faXp7Q==}
+  '@storm-software/git-tools@2.59.0':
+    resolution: {integrity: sha512-mrJ33u7W/BHwshfTe3KPMDU44pFafq9xFKO9tJ2zohw7rp2O+rSMHmfi1i8mH+WbhnlOFl/ncom1DYBinLgrVg==}
     hasBin: true
 
   '@storm-software/linting-tools@1.83.0':
@@ -19943,7 +19943,7 @@ snapshots:
     dependencies:
       zod: 3.23.8
 
-  '@storm-software/eslint@0.74.0(4dyvvcaylukrcwxhdc7ddvs7tq)':
+  '@storm-software/eslint@0.76.0(4dyvvcaylukrcwxhdc7ddvs7tq)':
     dependencies:
       '@cspell/eslint-plugin': 8.13.1(eslint@8.57.0)
       '@graphql-eslint/eslint-plugin': 3.20.1(@babel/core@7.25.2)(@types/node@22.5.5)(bufferutil@4.0.8)(graphql@15.9.0)(utf-8-validate@5.0.10)
@@ -19994,7 +19994,7 @@ snapshots:
       - typescript
       - utf-8-validate
 
-  '@storm-software/git-tools@2.58.3(@swc-node/register@1.10.9(@swc/core@1.7.26(@swc/helpers@0.5.13))(@swc/types@0.1.12)(typescript@5.6.2))(@swc/core@1.7.26(@swc/helpers@0.5.13))':
+  '@storm-software/git-tools@2.59.0(@swc-node/register@1.10.9(@swc/core@1.7.26(@swc/helpers@0.5.13))(@swc/types@0.1.12)(typescript@5.6.2))(@swc/core@1.7.26(@swc/helpers@0.5.13))':
     dependencies:
       '@commitlint/types': 19.0.3
       '@textlint/markdown-to-ast': 14.0.4
