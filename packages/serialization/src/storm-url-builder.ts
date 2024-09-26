@@ -265,7 +265,7 @@ export class StormURLBuilder {
     } else if (Array.isArray(query) && query.length === 2) {
       this.#url.query[query[0]] = this.parseQueryParamValue(query[1]);
     } else {
-      for (const entry in Object.entries(query)) {
+      for (const entry of Object.entries(query)) {
         if (entry[0]) {
           this.#url.query[entry[0]] = this.parseQueryParamValue(entry[1]);
         }
