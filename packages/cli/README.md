@@ -40,6 +40,7 @@ This package is part of the ⚡<b>Storm Stack</b> monorepo. Storm Stack packages
 
 <!-- START doctoc -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+
 ## Table of Contents
 
 - [Command Line Utility Library](#command-line-utility-library)
