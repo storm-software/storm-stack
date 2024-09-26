@@ -1,3 +1,10 @@
+## 1.19.2 (2024-09-26)
+
+
+### Bug Fixes
+
+- **serialization:** Remove `noEmit` compiler option ([6591e6f](https://github.com/storm-software/storm-stack/commit/6591e6f))
+
 ## 1.19.1 (2024-09-26)
 
 
