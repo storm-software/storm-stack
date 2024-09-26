@@ -1,3 +1,10 @@
+## 1.20.0 (2024-09-26)
+
+
+### Features
+
+- **utilities:** Add helper functions list to README markdown ([c7c70fa](https://github.com/storm-software/storm-stack/commit/c7c70fa))
+
 ## 1.19.0 (2024-09-26)
 
 
