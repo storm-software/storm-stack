@@ -43,7 +43,8 @@ This package is part of the ⚡<b>Storm Stack</b> monorepo. Storm Stack packages
 ## Table of Contents
 
 - [Storm Utilities Package](#storm-utilities-package)
-  - [Table of Contents](#table-of-contents)
+  - [Helper Functions](#helper-functions)
+  - [Table of Contents](#table-of-contents-1)
   - [Installing](#installing)
   - [Reduced Package Size](#reduced-package-size)
   - [Development](#development)
@@ -71,27 +72,51 @@ This package is part of the ⚡<b>Storm Stack</b> monorepo. Storm Stack packages
 
 This package contains various utilities functions that serve a wide range of
 purposes. These utilities are used by other packages in the storm-stack monorepo
-and any other projects that could benefit from their functionality.
+and any other projects that could benefit from their functionality. 
+
+## Helper Functions
+
+The following helper functions are included in this package:
+
+- arg-identity
+- debounce
+- deep-clone
+- deep-merge
+- delay
+- flatten-object
+- get-ordered-by
+- get-unique
+- is-deep-equal
+- is-production
+- is-runtime-server
+- noop
+- remove-empty-items
+- throttle
+- timeout
+- union
+- with-timeout
 
 <!-- START doctoc -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
 ## Table of Contents
 
-- [Installing](#installing)
-- [Reduced Package Size](#reduced-package-size)
-- [Development](#development)
-  - [Building](#building)
-  - [Running unit tests](#running-unit-tests)
-  - [Linting](#linting)
-- [Storm Workspaces](#storm-workspaces)
-- [Roadmap](#roadmap)
-- [Support](#support)
-- [License](#license)
-- [Changelog](#changelog)
-- [Contributing](#contributing)
-- [Contributors](#contributors)
-  - [💻 Visit stormsoftware.org to stay up to date with this developer](#-visit-stormsoftwareorg-to-stay-up-to-date-with-this-developer)
+- [Storm Utilities Package](#storm-utilities-package)
+  - [Helper Functions](#helper-functions)
+  - [Table of Contents](#table-of-contents-1)
+  - [Installing](#installing)
+  - [Reduced Package Size](#reduced-package-size)
+  - [Development](#development)
+    - [Building](#building)
+    - [Running unit tests](#running-unit-tests)
+    - [Linting](#linting)
+  - [Storm Workspaces](#storm-workspaces)
+  - [Roadmap](#roadmap)
+  - [Support](#support)
+  - [License](#license)
+  - [Changelog](#changelog)
+  - [Contributing](#contributing)
+  - [Contributors](#contributors)
 
 <!-- END doctoc -->
 
