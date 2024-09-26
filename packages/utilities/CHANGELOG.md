@@ -1,3 +1,10 @@
+## 1.19.0 (2024-09-26)
+
+
+### Features
+
+- **utilities:** Added the types module to exports ([8e930df](https://github.com/storm-software/storm-stack/commit/8e930df))
+
 
 
 ## 1.17.0 (2024-02-10)
