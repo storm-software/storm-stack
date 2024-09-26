@@ -1,3 +1,10 @@
+## 1.19.1 (2024-09-26)
+
+
+### Bug Fixes
+
+- **serialization:** Remove extra parser code ([67be4ba](https://github.com/storm-software/storm-stack/commit/67be4ba))
+
 
 
 ## 1.18.0 (2024-02-10)
