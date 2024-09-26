@@ -130,9 +130,4 @@ export class StormParser extends SuperJSON {
   }
 }
 
-/* export const registerClass = StormParser.registerClass;
-export const register = StormParser.register;
-export const deserialize = StormParser.deserialize;
-export const serialize = StormParser.serialize;
-export const parse = StormParser.parse;
-export const stringify = StormParser.stringify; */
+
