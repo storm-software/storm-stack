@@ -26,3 +26,4 @@
  */
 
 export * from "./helper-fns";
+export * from "./types";
