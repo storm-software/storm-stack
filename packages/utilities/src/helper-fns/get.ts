@@ -15,6 +15,8 @@
 
  -------------------------------------------------------------------*/
 
+/* eslint-disable no-param-reassign */
+
 import { isDeepKey, isNumber, toStringKey } from "@storm-stack/types";
 import { toObjectPath } from "./to-object-path";
 

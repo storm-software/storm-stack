@@ -17,7 +17,7 @@
 
 const DOTS_KEY = /^[\w.]+$/g;
 
-const ESCAPE_REGEXP = /\\(\\)?/g;
+const ESCAPE_REGEXP = /\\(?<temp1>\\)?/g;
 const PROPERTY_REGEXP = new RegExp(
   // Match anything that isn't a dot or bracket.
   String.raw`[^.[\]]+` +

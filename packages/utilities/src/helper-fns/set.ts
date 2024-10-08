@@ -42,7 +42,7 @@ export function set<TObject extends Record<string, any> = Record<string, any>>(
     const key = resolvedPath[i];
     const nextKey = resolvedPath[i + 1];
 
-    if (current[key] == null) {
+    if (current[key] === null) {
       current[key] = isObjectIndex(nextKey) ? [] : {};
     }
 

@@ -17,7 +17,6 @@
 
 /* eslint-disable tsdoc/syntax */
 /* eslint-disable @cspell/spellchecker */
-/* eslint-disable @typescript-eslint/ban-types */
 
 import type {
   StaticPartOfArray,
@@ -40,8 +39,6 @@ import type { IsNotFalse, LessThan, Sum } from "./logic";
 import type { Numeric } from "./number";
 import type { StringDigit } from "./string";
 import type { Index40, Nullable } from "./utilities";
-
-export type ObjectIndex = string | number | symbol;
 
 /**
  * Returns a boolean for whether the given type is an empty object.

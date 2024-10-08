@@ -15,8 +15,7 @@
 
  -------------------------------------------------------------------*/
 
-import React from "react"; // via radix-ui
-
+import React from "react";
 import { useCallbackRef } from "./use-callback-ref";
 
 /**

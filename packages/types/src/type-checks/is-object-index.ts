@@ -23,7 +23,9 @@ const IS_UNSIGNED_INTEGER = /^(?:0|[1-9]\d*)$/;
  * @param value - The value to check.
  * @returns Returns `true` if the value is an object index, otherwise `false`.
  */
-export function isObjectIndex(value: PropertyKey): boolean {
+export function isObjectIndex(
+  value: PropertyKey
+): value is string | number | symbol {
   switch (typeof value) {
     case "number": {
       return (

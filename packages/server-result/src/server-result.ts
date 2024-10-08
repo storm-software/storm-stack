@@ -16,7 +16,7 @@
  -------------------------------------------------------------------*/
 
 import { StormDateTime } from "@storm-stack/date-time/storm-date-time";
-import { StormError } from "@storm-stack/errors";
+import { StormError } from "@storm-stack/errors/storm-error";
 import { MessageDetails } from "@storm-stack/types/utility-types/messages";
 import { ServerResultType } from "./types";
 

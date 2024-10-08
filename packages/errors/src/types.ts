@@ -15,7 +15,7 @@
 
  -------------------------------------------------------------------*/
 
-import { ValidationDetails } from "@storm-stack/types";
+import { ValidationDetails } from "@storm-stack/types/utility-types/validations";
 
 export type StormErrorOptions<
   TErrorType extends ErrorType = typeof ErrorType.EXCEPTION,
