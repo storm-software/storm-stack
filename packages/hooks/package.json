@@ -10,9 +10,9 @@
   },
   "private": false,
   "peerDependencies": {
-    "react": ">=18.3.1",
-    "react-dom": ">=18.3.1",
-    "react-native": ">=0.75.0"
+    "react": "19.0.0-rc-f6cce072-20240723",
+    "react-dom": "19.0.0-rc-f6cce072-20240723",
+    "react-native": "0.75.3"
   },
   "peerDependenciesMeta": {
     "react": {
@@ -26,9 +26,9 @@
     }
   },
   "devDependencies": {
-    "react": "18.3.1",
-    "react-dom": "18.3.1",
-    "react-native": "0.75.0"
+    "react": "19.0.0-rc-f6cce072-20240723",
+    "react-dom": "19.0.0-rc-f6cce072-20240723",
+    "react-native": "0.75.3"
   },
   "publishConfig": {
     "access": "public"
