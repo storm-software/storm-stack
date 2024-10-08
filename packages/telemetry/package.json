@@ -22,18 +22,18 @@
     "@opentelemetry/sdk-trace-base": "^1.26.0",
     "@opentelemetry/sdk-trace-node": "^1.26.0",
     "@opentelemetry/semantic-conventions": "^1.27.0",
-    "@sentry/node": "^8.30.0",
-    "@sentry/opentelemetry": "^8.30.0",
-    "@sentry/types": "^8.30.0",
+    "@sentry/node": "^8.33.1",
+    "@sentry/opentelemetry": "^8.33.1",
+    "@sentry/types": "^8.33.1",
     "@storm-software/config": "latest",
     "@storm-software/config-tools": "latest",
     "pino": "9.4.0",
-    "pino-loki": "2.3.0",
+    "pino-loki": "2.3.1",
     "pino-pretty": "11.2.2",
     "zod": "^3.23.8"
   },
   "devDependencies": {
-    "@types/node": "^22.5.5"
+    "@types/node": "^22.7.5"
   },
   "publishConfig": {
     "access": "public"
