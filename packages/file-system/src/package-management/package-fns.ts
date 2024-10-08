@@ -30,7 +30,7 @@ export const PackageManagers = {
 
 function findUp(names: string[], cwd: string): string | undefined {
   let dir = cwd;
-  // eslint-disable-next-line no-constant-condition
+
   while (true) {
     const target = names.find(name => exists(joinPaths(dir, name)));
     if (target) return target;
@@ -77,7 +77,9 @@ export function installPackage(
   exactVersion = true
 ) {
   const manager = pkgManager ?? getPackageManager(projectPath);
+  // eslint-disable-next-line no-console
   console.log(`Installing package "${pkg}@${tag}" with ${manager}`);
+
   switch (manager) {
     case "yarn": {
       execute(

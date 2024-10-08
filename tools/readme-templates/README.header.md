@@ -32,10 +32,3 @@ This package is part of the ⚡<b>Storm Stack</b> monorepo. Storm Stack packages
 </div>
 
 <br />
-
-<!-- START doctoc -->
-<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
-
-<!-- END doctoc -->
-
-<br />

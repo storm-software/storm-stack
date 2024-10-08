@@ -36,36 +36,6 @@ This package is part of the ⚡<b>Storm Stack</b> monorepo. Storm Stack packages
 <b>Be sure to ⭐ this repository on <a href="https://github.com/storm-software/storm-stack" target="_blank">GitHub</a> so you can keep up to date on any daily progress!</b>
 </div>
 
-<br />
-
-<!-- START doctoc -->
-<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
-## Table of Contents
-
-- [Storm Utilities Package](#storm-utilities-package)
-  - [Helper Functions](#helper-functions)
-  - [Table of Contents](#table-of-contents)
-  - [Installing](#installing)
-  - [Reduced Package Size](#reduced-package-size)
-  - [Development](#development)
-    - [Building](#building)
-    - [Running unit tests](#running-unit-tests)
-    - [Linting](#linting)
-  - [Storm Workspaces](#storm-workspaces)
-  - [Roadmap](#roadmap)
-  - [Support](#support)
-  - [License](#license)
-  - [Changelog](#changelog)
-  - [Contributing](#contributing)
-  - [Contributors](#contributors)
-
-<!-- END doctoc -->
-
-<br />
-
-<!-- markdownlint-restore -->
-<!-- prettier-ignore-end -->
-
 <!-- END header -->
 
 # Storm Utilities Package
@@ -96,29 +66,15 @@ The following helper functions are included in this package:
 - union
 - with-timeout
 
+
+<br />
+
 <!-- START doctoc -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
-## Table of Contents
-
-- [Storm Utilities Package](#storm-utilities-package)
-  - [Helper Functions](#helper-functions)
-  - [Table of Contents](#table-of-contents-1)
-  - [Installing](#installing)
-  - [Reduced Package Size](#reduced-package-size)
-  - [Development](#development)
-    - [Building](#building)
-    - [Running unit tests](#running-unit-tests)
-    - [Linting](#linting)
-  - [Storm Workspaces](#storm-workspaces)
-  - [Roadmap](#roadmap)
-  - [Support](#support)
-  - [License](#license)
-  - [Changelog](#changelog)
-  - [Contributing](#contributing)
-  - [Contributors](#contributors)
-
 <!-- END doctoc -->
+
+<br />
 
 ## Installing
 

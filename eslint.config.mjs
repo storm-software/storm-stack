@@ -33,7 +33,7 @@ export default getStormConfig({
     "function-paren-newline": 0,
     "space-before-function-paren": 0
   },
-  markdown: false,
+  markdown: true,
   react: false,
   tsConfigType: "recommended",
   useUnicorn: true

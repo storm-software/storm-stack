@@ -38,44 +38,18 @@ This package is part of the ⚡<b>Storm Stack</b> monorepo. Storm Stack packages
 
 <br />
 
-<!-- START doctoc -->
-<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
-## Table of Contents
-
-- [Storm-Stack Nx Tools](#storm-stack-nx-tools)
-  - [Installing](#installing)
-  - [Executors](#executors)
-  - [Storm-Stack Tamagui Compiler](#storm-stack-tamagui-compiler)
-    - [Example](#example)
-  - [Generators](#generators)
-  - [Building](#building)
-  - [Running unit tests](#running-unit-tests)
-  - [Storm Workspaces](#storm-workspaces)
-  - [Roadmap](#roadmap)
-  - [Support](#support)
-  - [License](#license)
-  - [Changelog](#changelog)
-  - [Contributing](#contributing)
-  - [Contributors](#contributors)
-
-<!-- END doctoc -->
-
-<br />
-
-<!-- markdownlint-restore -->
-<!-- prettier-ignore-end -->
-
-<!-- END header -->
 
 # Storm-Stack Nx Tools
 
 A package containing tools for managing a Storm workspace. It includes various
 [Nx](https://nx.dev) generators and executors for common development tasks.
 
-<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- START doctoc -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
-<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+<!-- END doctoc -->
+
+<br />
 
 This library was generated with [Nx](https://nx.dev).
 

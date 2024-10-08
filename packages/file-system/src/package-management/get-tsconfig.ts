@@ -65,6 +65,7 @@ const stripJsonComments = (
       }
     }
     if (isInsideString) {
+      // eslint-disable-next-line no-continue
       continue;
     }
     if (
@@ -113,6 +114,7 @@ const stripJsonComments = (
           commaIndex = -1;
         } else if (
           currentCharacter !== " " &&
+          // eslint-disable-next-line no-tabs
           currentCharacter !== "	" &&
           currentCharacter !== "\r" &&
           currentCharacter !== "\n"
@@ -140,6 +142,7 @@ const stripJsonComments = (
 
 const jsoncParse = (data: string) => {
   try {
+    // eslint-disable-next-line no-new-func
     return new Function(`return ${stripJsonComments(data).trim()}`)();
   } catch {
     return {};
@@ -166,8 +169,9 @@ const findUp = (
 };
 
 const resolveTsConfigFromFile = (cwd: string, filename: string) => {
-  if (path.isAbsolute(filename))
+  if (path.isAbsolute(filename)) {
     return fs.existsSync(filename) ? filename : null;
+  }
   return findUp(filename, cwd);
 };
 
@@ -197,7 +201,7 @@ const loadTsConfigInternal = (
 
   const data = jsoncParse(fs.readFileSync(id, "utf8"));
   const configDir = path.dirname(id);
-  // biome-ignore lint/suspicious/noAssignInExpressions: <explanation>
+  // eslint-disable-next-line no-cond-assign
   if ((_a = data.compilerOptions) === null ? void 0 : _a.baseUrl) {
     data.compilerOptions.baseUrl = path.join(
       configDir,
@@ -214,11 +218,13 @@ const loadTsConfigInternal = (
       const parentConfig: any = loadTsConfigInternal(configDir, name2, true);
       if (parentConfig) {
         Object.assign(extendsData, {
-          ...(parentConfig == null ? void 0 : parentConfig.data),
+          ...(parentConfig === null ? void 0 : parentConfig.data),
           compilerOptions: {
             ...extendsData.compilerOptions,
-            // biome-ignore lint/suspicious/noAssignInExpressions: <explanation>
-            ...((_b = parentConfig == null ? void 0 : parentConfig.data) == null
+
+            // eslint-disable-next-line no-cond-assign
+            ...((_b = parentConfig === null ? void 0 : parentConfig.data) ===
+            null
               ? void 0
               : _b.compilerOptions)
           }

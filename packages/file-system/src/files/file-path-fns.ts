@@ -110,7 +110,7 @@ export function hasFilePath(filePath: string): boolean {
  */
 export function resolvePath(
   filePath: string,
-  basePath: string = getWorkspaceRoot()
+  basePath: string = getWorkspaceRoot() as string
 ) {
   if (isAbsolute(filePath)) {
     return filePath;
@@ -129,7 +129,7 @@ export function resolvePath(
  * @returns The resolved file path
  */
 export function relativeToWorkspaceRoot(filePath: string) {
-  return relative(filePath, getWorkspaceRoot());
+  return relative(filePath, getWorkspaceRoot() as string);
 }
 
 /**
