@@ -25,6 +25,7 @@ import {
 } from "@storm-stack/types/utility-types/messages";
 import { uuid } from "@storm-stack/unique-identifier/uuid";
 import { ServerResult, ServerResultMeta } from "../server-result";
+import { ServerResultType } from "../types";
 
 export interface CreateServerResultMetaOptions {
   correlationId?: string;
@@ -32,9 +33,9 @@ export interface CreateServerResultMetaOptions {
   serviceId: string;
 }
 
-export interface CreateServerResultOptions<T> {
+export interface CreateServerResultOptions<TData> {
   message?: (Partial<MessageDetails> & Omit<MessageDetails, "type">) | string;
-  data: T;
+  data: TData;
 }
 
 export const createServerResultMeta = ({
@@ -50,13 +51,14 @@ export const createServerResultMeta = ({
   };
 };
 
-export const createServerResult = <T>(
+export const createServerResult = <TData>(
   meta: CreateServerResultMetaOptions,
-  options: CreateServerResultOptions<T> | StormError | StormError[]
-): ServerResult<T> => {
+  options: CreateServerResultOptions<TData> | StormError | StormError[]
+): ServerResult<TData> => {
   if (Array.isArray(options)) {
     return {
       meta: createServerResultMeta(meta),
+      status: ServerResultType.ERROR,
       errors: options
     };
   }
@@ -64,12 +66,14 @@ export const createServerResult = <T>(
   if (isStormError<any>(options)) {
     return {
       meta: createServerResultMeta(meta),
+      status: ServerResultType.ERROR,
       errors: [options]
     };
   }
 
   return {
     meta: createServerResultMeta(meta),
+    status: ServerResultType.SUCCESS,
     data: options.data,
     message:
       isSetString(options.message) ||

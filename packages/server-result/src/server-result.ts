@@ -15,9 +15,10 @@
 
  -------------------------------------------------------------------*/
 
-import { StormDateTime } from "@storm-stack/date-time";
+import { StormDateTime } from "@storm-stack/date-time/storm-date-time";
 import { StormError } from "@storm-stack/errors";
 import { MessageDetails } from "@storm-stack/types/utility-types/messages";
+import { ServerResultType } from "./types";
 
 export type ServerResultMeta = {
   /**
@@ -41,26 +42,37 @@ export type ServerResultMeta = {
   serviceId: string;
 };
 
-export type ServerResult<T> =
-  | ({
+export type ServerResult<TData> = {
+  /**
+   * The meta data returned by the server
+   */
+  meta: ServerResultMeta;
+} & (
+  | {
       /**
-       * The meta data returned by the server
+       * The status returned by the server
        */
-      meta: ServerResultMeta;
-    } & {
+      status: typeof ServerResultType.SUCCESS;
+
       /**
        * The data returned by the server
        */
-      data: T;
+      data: TData;
 
       /**
-       * The message returned by the server
+       * The display message returned by the server
        */
       message?: MessageDetails;
-    })
+    }
   | {
+      /**
+       * The status returned by the server
+       */
+      status: typeof ServerResultType.ERROR;
+
       /**
        * The errors returned by the server
        */
       errors: StormError[];
-    };
+    }
+);

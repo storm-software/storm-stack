@@ -15,16 +15,29 @@
 
  -------------------------------------------------------------------*/
 
-export type MessageType = "error" | "info" | "success" | "warning";
-// eslint-disable-next-line no-redeclare
+export type MessageType = "help" | "error" | "warning" | "info" | "success";
+
 export const MessageType = {
+  HELP: "help" as MessageType,
   ERROR: "error" as MessageType,
+  WARNING: "warning" as MessageType,
   INFO: "info" as MessageType,
-  SUCCESS: "success" as MessageType,
-  WARNING: "warning" as MessageType
+  SUCCESS: "success" as MessageType
 };
 
-export type MessageDetails<TMessageType extends string = MessageType> =
+export type MessageDetails<
+  TMessageType extends
+    | typeof MessageType.HELP
+    | typeof MessageType.ERROR
+    | typeof MessageType.WARNING
+    | typeof MessageType.INFO
+    | typeof MessageType.SUCCESS =
+    | typeof MessageType.HELP
+    | typeof MessageType.ERROR
+    | typeof MessageType.WARNING
+    | typeof MessageType.INFO
+    | typeof MessageType.SUCCESS
+> =
   | {
       code: string;
       message?: string;
@@ -36,15 +49,8 @@ export type MessageDetails<TMessageType extends string = MessageType> =
       type: TMessageType;
     };
 
-export type ErrorMessageDetails = {
-  type: "error";
-} & Omit<MessageDetails, "type">;
-export type WarningMessageDetails = {
-  type: "warning";
-} & Omit<MessageDetails, "type">;
-export type InfoMessageDetails = {
-  type: "info";
-} & Omit<MessageDetails, "type">;
-export type SuccessMessageDetails = {
-  type: "success";
-} & Omit<MessageDetails, "type">;
+export type HelpMessageDetails = MessageDetails<typeof MessageType.HELP>;
+export type ErrorMessageDetails = MessageDetails<typeof MessageType.ERROR>;
+export type WarningMessageDetails = MessageDetails<typeof MessageType.WARNING>;
+export type InfoMessageDetails = MessageDetails<typeof MessageType.INFO>;
+export type SuccessMessageDetails = MessageDetails<typeof MessageType.SUCCESS>;

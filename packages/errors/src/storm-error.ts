@@ -18,6 +18,7 @@
 import { Serializable } from "@storm-stack/serialization";
 import {
   EMPTY_STRING,
+  ErrorMessageDetails,
   type Indexable,
   MessageType,
   NEWLINE_STRING,
@@ -27,14 +28,7 @@ import {
   isSetString
 } from "@storm-stack/types";
 import { ErrorCode } from "./errors";
-
-export interface StormErrorOptions {
-  name?: string;
-  message?: string;
-  cause?: unknown;
-  stack?: string;
-  data?: any;
-}
+import { ErrorType, type StormErrorOptions } from "./types";
 
 /**
  * Creates a new StormError instance
@@ -45,6 +39,7 @@ export interface StormErrorOptions {
 export function createStormError<TCode extends string = string>({
   code,
   name,
+  type,
   message,
   cause,
   stack,
@@ -62,6 +57,7 @@ export function createStormError<TCode extends string = string>({
     (code ?? ErrorCode.internal_server_error) as TCode,
     {
       name,
+      type,
       message,
       cause,
       stack,
@@ -147,7 +143,11 @@ export function isStormError<TCode extends string = string>(
  * @decorator `@Serializable()`
  */
 @Serializable()
-export class StormError<TCode extends string = string> extends Error {
+export class StormError<
+  TCode extends string = string,
+  TErrorType extends ErrorType = typeof ErrorType.EXCEPTION,
+  TData = undefined
+> extends Error {
   __proto__ = Error;
 
   /**
@@ -168,12 +168,12 @@ export class StormError<TCode extends string = string> extends Error {
   /**
    * Additional data to be passed with the error
    */
-  public data?: any;
+  public data?: TData;
 
   /**
-   * The type of error message
+   * The type of error response message/event
    */
-  public type: MessageType = MessageType.ERROR;
+  public type: TErrorType = ErrorType.EXCEPTION as TErrorType;
 
   /**
    * Creates a new StormError instance
@@ -187,21 +187,25 @@ export class StormError<TCode extends string = string> extends Error {
 
   public constructor(
     code: TCode,
-    { name, message, cause, stack, data }: StormErrorOptions
+    options: StormErrorOptions<TErrorType, TData>
   ) {
-    super(message, { cause });
+    super(options.message, { cause: options.cause });
 
     this.code = code;
-    this.message ??= message || "An error occurred during processing";
-    this.name ??= name || this.constructor.name;
-    this.data = data;
+    this.message ??= options.message || "An error occurred during processing";
+    this.name ??= options.name || this.constructor.name;
+    this.data = options.data as TData;
 
-    if (stack) {
-      this._stack = stack;
+    if (options.type) {
+      this.type = options.type as TErrorType;
+    }
+
+    if (options.stack) {
+      this._stack = options.stack;
     } else if (isFunction(Error.captureStackTrace)) {
       Error.captureStackTrace(this, this.constructor);
     } else {
-      this._stack = new Error(message).stack;
+      this._stack = new Error(options.message).stack;
     }
 
     Object.setPrototypeOf(this, StormError.prototype);
@@ -299,5 +303,18 @@ export class StormError<TCode extends string = string> extends Error {
         ? ""
         : ` ${NEWLINE_STRING}Stack Trace: ${NEWLINE_STRING}${this.stack}`)
     );
+  }
+
+  /**
+   * Convert the error object into a message details object
+   *
+   * @returns The error message details object
+   */
+  public toMessage(): ErrorMessageDetails {
+    return {
+      code: this.code,
+      message: this.print(),
+      type: MessageType.ERROR
+    };
   }
 }

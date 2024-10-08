@@ -36,3 +36,4 @@ export * from "./package-json";
 export * from "./string";
 export * from "./tsconfig";
 export * from "./utilities";
+export * from "./validations";

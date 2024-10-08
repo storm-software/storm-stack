@@ -15,15 +15,8 @@
 
  -------------------------------------------------------------------*/
 
-/**
- * The server-result library used by Storm Software for building TypeScript applications.
- *
- * @remarks
- * A package containing the ServerResult definition
- *
- * @packageDocumentation
- */
-
-export * from "./server-result";
-export * from "./types";
-export * from "./utilities";
+export type ServerResultType = "success" | "error";
+export const ServerResultType = {
+  SUCCESS: "success" as ServerResultType,
+  ERROR: "error" as ServerResultType
+};
