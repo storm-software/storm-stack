@@ -38,7 +38,6 @@ This package is part of the ⚡<b>Storm Stack</b> monorepo. Storm Stack packages
 
 <br />
 
-
 # Storm-Stack Nx Tools
 
 A package containing tools for managing a Storm workspace. It includes various
@@ -46,6 +45,22 @@ A package containing tools for managing a Storm workspace. It includes various
 
 <!-- START doctoc -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+## Table of Contents
+
+- [Installing](#installing)
+- [Executors](#executors)
+- [Storm-Stack Tamagui Compiler](#storm-stack-tamagui-compiler)
+  - [Example](#example)
+- [Generators](#generators)
+- [Building](#building)
+- [Running unit tests](#running-unit-tests)
+- [Storm Workspaces](#storm-workspaces)
+- [Roadmap](#roadmap)
+- [Support](#support)
+- [License](#license)
+- [Changelog](#changelog)
+- [Contributing](#contributing)
+- [Contributors](#contributors)
 
 <!-- END doctoc -->
 
@@ -136,6 +151,8 @@ Run `nx test nx-tools` to execute the unit tests via [Jest](https://jestjs.io).
 <!-- START footer -->
 <!-- prettier-ignore-start -->
 <!-- markdownlint-disable -->
+
+
 
 
 ## Storm Workspaces

@@ -50,6 +50,21 @@ A Storm-Stack patch to handle server-side caching with the
 
 <!-- START doctoc -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+## Table of Contents
+
+- [Installing](#installing)
+- [Reduced Package Size](#reduced-package-size)
+- [Development](#development)
+  - [Building](#building)
+  - [Running unit tests](#running-unit-tests)
+  - [Linting](#linting)
+- [Storm Workspaces](#storm-workspaces)
+- [Roadmap](#roadmap)
+- [Support](#support)
+- [License](#license)
+- [Changelog](#changelog)
+- [Contributing](#contributing)
+- [Contributors](#contributors)
 
 <!-- END doctoc -->
 
@@ -109,6 +124,8 @@ Run `nx lint server-cache` to run [ESLint](https://eslint.org/) on the package.
 <!-- START footer -->
 <!-- prettier-ignore-start -->
 <!-- markdownlint-disable -->
+
+
 
 
 ## Storm Workspaces
