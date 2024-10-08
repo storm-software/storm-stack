@@ -1,3 +1,20 @@
+/*-------------------------------------------------------------------
+
+                  ⚡ Storm Software - Storm Stack
+
+ This code was released as part of the Storm Stack project. Storm Stack
+ is maintained by Storm Software under the Apache-2.0 License, and is
+ free for commercial and private use. For more information, please visit
+ our licensing page.
+
+ Website:         https://stormsoftware.com
+ Repository:      https://github.com/storm-software/storm-stack
+ Documentation:   https://stormsoftware.com/projects/storm-stack/docs
+ Contact:         https://stormsoftware.com/contact
+ License:         https://stormsoftware.com/projects/storm-stack/license
+
+ -------------------------------------------------------------------*/
+
 // Based on https://github.com/puleos/object-hash v3.0.0 (MIT)
 
 import { isFunction } from "@storm-stack/types";
@@ -126,6 +143,7 @@ function createHasher(options: CreateHasherOptions) {
     },
     dispatch(value: any): string | void {
       if (options.replacer) {
+        // eslint-disable-next-line no-param-reassign
         value = options.replacer(value);
       }
       const type = value === null ? "null" : typeof value;
@@ -142,12 +160,14 @@ function createHasher(options: CreateHasherOptions) {
       const objectLength = objString.length;
 
       // '[object a]'.length === 10, the minimum
+      // eslint-disable-next-line @typescript-eslint/no-unused-expressions
       objectLength < 10
         ? (objType = "unknown:[" + objString + "]")
         : (objType = objString.slice(8, objectLength - 1));
       objType = objType.toLowerCase();
 
       let objectNumber = null;
+      // eslint-disable-next-line no-cond-assign
       if ((objectNumber = context.get(object)) === undefined) {
         context.set(object, context.size);
       } else {
@@ -190,11 +210,9 @@ function createHasher(options: CreateHasherOptions) {
 
         if (options.excludeKeys) {
           keys = keys.filter(key => {
-            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
             return !options.excludeKeys!(key);
           });
           extraKeys = extraKeys.filter(key => {
-            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
             return !options.excludeKeys!(key);
           });
         }
@@ -217,8 +235,8 @@ function createHasher(options: CreateHasherOptions) {
       }
     },
     array(arr: any, unordered: boolean): string | void {
-      unordered =
-        unordered === undefined ? options.unorderedArrays !== false : unordered; // default to options.unorderedArrays
+      // eslint-disable-next-line no-param-reassign
+      unordered = unordered ?? options.unorderedArrays !== false; // default to options.unorderedArrays
 
       write("array:" + arr.length + ":");
       if (!unordered || arr.length <= 1) {
@@ -251,16 +269,6 @@ function createHasher(options: CreateHasherOptions) {
     },
     symbol(sym: any) {
       return write("symbol:" + sym.toString());
-    },
-    unkown(value: any, type: string) {
-      write(type);
-      if (!value) {
-        return;
-      }
-      write(":");
-      if (value && typeof value.entries === "function") {
-        return this.array([...value.entries()], true /* ordered */);
-      }
     },
     unknown(value: any, type: string) {
       write(type);

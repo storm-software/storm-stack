@@ -1,19 +1,38 @@
-// Based on https://github.com/brix/crypto-js 4.1.1 (MIT)
+/*-------------------------------------------------------------------
+
+                  ⚡ Storm Software - Storm Stack
+
+ This code was released as part of the Storm Stack project. Storm Stack
+ is maintained by Storm Software under the Apache-2.0 License, and is
+ free for commercial and private use. For more information, please visit
+ our licensing page.
+
+ Website:         https://stormsoftware.com
+ Repository:      https://github.com/storm-software/storm-stack
+ Documentation:   https://stormsoftware.com/projects/storm-stack/docs
+ Contact:         https://stormsoftware.com/contact
+ License:         https://stormsoftware.com/projects/storm-stack/license
+
+ -------------------------------------------------------------------*/
+
+/* eslint-disable no-multi-assign */
 
 // Based on https://github.com/brix/crypto-js 4.1.1 (MIT)
 
 export class WordArray {
   words: number[];
+
   sigBytes: number;
 
   constructor(words?: number[], sigBytes?: number) {
-    words = this.words = words || [];
+    // eslint-disable-next-line no-param-reassign
+    words = this.words = words ?? [];
 
-    this.sigBytes = sigBytes === undefined ? words.length * 4 : sigBytes;
+    this.sigBytes = sigBytes ?? words.length * 4;
   }
 
   toString(encoder?: typeof Hex): string {
-    return (encoder || Hex).stringify(this);
+    return (encoder ?? Hex).stringify(this);
   }
 
   concat(wordArray: WordArray) {
@@ -113,8 +132,11 @@ export const Utf8 = {
 
 export class BufferedBlockAlgorithm {
   _data = new WordArray();
+
   _nDataBytes = 0;
+
   _minBufferSize = 0;
+
   blockSize = 512 / 32;
 
   reset() {
@@ -125,6 +147,7 @@ export class BufferedBlockAlgorithm {
   _append(data: string | WordArray) {
     // Convert string to WordArray, else assume WordArray already
     if (typeof data === "string") {
+      // eslint-disable-next-line no-param-reassign
       data = Utf8.parse(data);
     }
 
@@ -134,7 +157,6 @@ export class BufferedBlockAlgorithm {
     this._nDataBytes += data.sigBytes;
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   _doProcessBlock(_dataWords: any, _offset: any) {}
 
   _process(doFlush?: boolean) {
@@ -142,6 +164,7 @@ export class BufferedBlockAlgorithm {
 
     // Count blocks ready
     let nBlocksReady = this._data.sigBytes / (this.blockSize * 4); /* bytes */
+    // eslint-disable-next-line @typescript-eslint/no-unused-expressions
     doFlush
       ? (nBlocksReady = Math.ceil(nBlocksReady))
       : (nBlocksReady = Math.max(
