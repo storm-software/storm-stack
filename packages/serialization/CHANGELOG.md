@@ -1,3 +1,10 @@
+## 1.20.1 (2024-10-08)
+
+
+### Bug Fixes
+
+- **monorepo:** Resolve issue with markdown across entire monorepo ([ee6720c](https://github.com/storm-software/storm-stack/commit/ee6720c))
+
 ## 1.20.0 (2024-10-08)
 
 
