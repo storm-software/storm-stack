@@ -15,7 +15,7 @@
 
  -------------------------------------------------------------------*/
 
-import { isPlainObject } from "@storm-stack/types";
+import { DeepKey, DeepValue, isPlainObject } from "@storm-stack/types";
 
 /**
  * Flattens a nested object into a single level object with dot-separated keys.
@@ -44,12 +44,12 @@ import { isPlainObject } from "@storm-stack/types";
  * @param object - The object to flatten.
  * @returns - The flattened object.
  */
-export function flattenObject(object: object): Record<string, any> {
-  return flattenObjectImpl(object);
+export function flattenObject<TObject extends Record<string, any> = Record<string, any>, TDeepKeyObject extends { [TKey in DeepKey<TObject>]: DeepValue<TObject, TKey> } = { [TKey in DeepKey<TObject>]: DeepValue<TObject, TKey> }>(object: TObject): TDeepKeyObject {
+  return flattenObjectImpl<TObject, TDeepKeyObject>(object);
 }
 
-function flattenObjectImpl(object: object, prefix = ""): Record<string, any> {
-  const result: Record<string, any> = {};
+function flattenObjectImpl<TObject extends Record<string, any> = Record<string, any>, TDeepKeyObject extends { [TKey in DeepKey<TObject>]: DeepValue<TObject, TKey> } = { [TKey in DeepKey<TObject>]: DeepValue<TObject, TKey> }>(object: TObject, prefix = ""): TDeepKeyObject {
+  const result = {} as TDeepKeyObject;
   const keys = Object.keys(object);
 
   for (const key of keys) {
@@ -58,18 +58,18 @@ function flattenObjectImpl(object: object, prefix = ""): Record<string, any> {
     const prefixedKey = prefix ? `${prefix}.${key}` : key;
 
     if (isPlainObject(value) && Object.keys(value).length > 0) {
-      Object.assign(result, flattenObjectImpl(value, prefixedKey));
+      Object.assign(result, flattenObjectImpl<typeof value>(value, prefixedKey));
       continue;
     }
 
     if (Array.isArray(value)) {
       for (const [index, element_] of value.entries()) {
-        result[`${prefixedKey}.${index}`] = element_;
+        result[`${prefixedKey}.${index}` as DeepKey<TObject>] = element_;
       }
       continue;
     }
 
-    result[prefixedKey] = value;
+    result[prefixedKey as DeepKey<TObject>] = value;
   }
 
   return result;

@@ -19,7 +19,7 @@ import { isBuffer } from "./is-buffer";
 
 const globalObject = (Obj => {
   if (typeof globalThis === "object") {
-    return globalThis; // eslint-disable-line
+    return globalThis;
   }
   Object.defineProperty(Obj, "typeDetectGlobalObject", {
     get() {
@@ -63,62 +63,62 @@ export function typeDetect(obj: unknown): string {
     return "Array";
   }
 
-  // // https://html.spec.whatwg.org/multipage/browsers.html#location
-  // if (typeof window === "object" && window !== null) {
-  //   if (
-  //     typeof (window as any).location === "object" &&
-  //     obj === (window as any).location
-  //   ) {
-  //     return "Location";
-  //   }
+  // https://html.spec.whatwg.org/multipage/browsers.html#location
+  if (typeof window === "object" && window !== null) {
+    if (
+      typeof (window as any).location === "object" &&
+      obj === (window as any).location
+    ) {
+      return "Location";
+    }
 
-  //   // https://html.spec.whatwg.org/#document
-  //   if (
-  //     typeof (window as any).document === "object" &&
-  //     obj === (window as any).document
-  //   ) {
-  //     return "Document";
-  //   }
+    // https://html.spec.whatwg.org/#document
+    if (
+      typeof (window as any).document === "object" &&
+      obj === (window as any).document
+    ) {
+      return "Document";
+    }
 
-  //   // https://html.spec.whatwg.org/multipage/webappapis.html#mimetypearray
-  //   if (typeof (window as any).navigator === "object") {
-  //     if (
-  //       typeof (window as any).navigator.mimeTypes === "object" &&
-  //       obj === (window as any).navigator.mimeTypes
-  //     ) {
-  //       return "MimeTypeArray";
-  //     }
+    // https://html.spec.whatwg.org/multipage/webappapis.html#mimetypearray
+    if (typeof (window as any).navigator === "object") {
+      if (
+        typeof (window as any).navigator.mimeTypes === "object" &&
+        obj === (window as any).navigator.mimeTypes
+      ) {
+        return "MimeTypeArray";
+      }
 
-  //     // https://html.spec.whatwg.org/multipage/webappapis.html#pluginarray
-  //     if (
-  //       typeof (window as any).navigator.plugins === "object" &&
-  //       obj === (window as any).navigator.plugins
-  //     ) {
-  //       return "PluginArray";
-  //     }
-  //   }
+      // https://html.spec.whatwg.org/multipage/webappapis.html#pluginarray
+      if (
+        typeof (window as any).navigator.plugins === "object" &&
+        obj === (window as any).navigator.plugins
+      ) {
+        return "PluginArray";
+      }
+    }
 
-  //   // https://html.spec.whatwg.org/multipage/webappapis.html#pluginarray
-  //   if (
-  //     (typeof (window as any).HTMLElement === "function" ||
-  //       typeof (window as any).HTMLElement === "object") &&
-  //     obj instanceof (window as any).HTMLElement
-  //   ) {
-  //     if ((obj as any).tagName === "BLOCKQUOTE") {
-  //       return "HTMLQuoteElement";
-  //     }
+    // https://html.spec.whatwg.org/multipage/webappapis.html#pluginarray
+    if (
+      (typeof (window as any).HTMLElement === "function" ||
+        typeof (window as any).HTMLElement === "object") &&
+      obj instanceof (window as any).HTMLElement
+    ) {
+      if ((obj as any).tagName === "BLOCKQUOTE") {
+        return "HTMLQuoteElement";
+      }
 
-  //     // https://html.spec.whatwg.org/#htmltabledatacellelement
-  //     if ((obj as any).tagName === "TD") {
-  //       return "HTMLTableDataCellElement";
-  //     }
+      // https://html.spec.whatwg.org/#htmltabledatacellelement
+      if ((obj as any).tagName === "TD") {
+        return "HTMLTableDataCellElement";
+      }
 
-  //     // https://html.spec.whatwg.org/#htmltableheadercellelement
-  //     if ((obj as any).tagName === "TH") {
-  //       return "HTMLTableHeaderCellElement";
-  //     }
-  //   }
-  // }
+      // https://html.spec.whatwg.org/#htmltableheadercellelement
+      if ((obj as any).tagName === "TH") {
+        return "HTMLTableHeaderCellElement";
+      }
+    }
+  }
 
   const stringTag =
     Symbol.toStringTag !== undefined && (obj as any)[Symbol.toStringTag];

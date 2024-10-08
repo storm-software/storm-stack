@@ -15,18 +15,26 @@
 
  -------------------------------------------------------------------*/
 
-export * from "./arg-identity";
-export * from "./deep-clone";
-export * from "./deep-merge";
-export * from "./delay";
-export * from "./flatten-object";
-export * from "./get";
-export * from "./get-unique";
-export * from "./is-deep-equal";
-export * from "./is-production";
-export * from "./is-runtime-server";
-export * from "./noop";
-export * from "./remove-empty-items";
-export * from "./set";
-export * from "./to-object-path";
-export * from "./unflatten-object";
+const IS_UNSIGNED_INTEGER = /^(?:0|[1-9]\d*)$/;
+
+/**
+ * Checks if the given value is an object index.
+ *
+ * @param value - The value to check.
+ * @returns Returns `true` if the value is an object index, otherwise `false`.
+ */
+export function isObjectIndex(value: PropertyKey): boolean {
+  switch (typeof value) {
+    case "number": {
+      return (
+        Number.isInteger(value) && value >= 0 && value < Number.MAX_SAFE_INTEGER
+      );
+    }
+    case "symbol": {
+      return false;
+    }
+    case "string": {
+      return IS_UNSIGNED_INTEGER.test(value);
+    }
+  }
+}

@@ -41,6 +41,8 @@ import type { Numeric } from "./number";
 import type { StringDigit } from "./string";
 import type { Index40, Nullable } from "./utilities";
 
+export type ObjectIndex = string | number | symbol;
+
 /**
  * Returns a boolean for whether the given type is an empty object.
  */

@@ -17,4 +17,5 @@
 
 export * from "./buffer-to-string";
 export * from "./string-to-uint8array";
+export * from "./to-string-key";
 export * from "./uint8array-to-string";

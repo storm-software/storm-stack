@@ -92,7 +92,7 @@
   },
   "[typescript]": {
     "editor.formatOnSave": true,
-    "editor.defaultFormatter": "dbaeumer.vscode-eslint",
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
     "editor.codeActionsOnSave": {
       "source.fixAll.eslint": "explicit",
       "quickfix.biome": "explicit",
@@ -160,5 +160,5 @@
   },
   "commitizen.capitalizeWindowsDriveLetter": true,
   "commitizen.autoSync": false,
-  "commitizen.showOutputChannel": "always",
+  "commitizen.showOutputChannel": "always"
 }
