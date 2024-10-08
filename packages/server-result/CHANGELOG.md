@@ -1,3 +1,10 @@
+## 0.3.2 (2024-10-08)
+
+
+### Bug Fixes
+
+- **types:** Regenerate the monorepo markdown files ([2b5818e](https://github.com/storm-software/storm-stack/commit/2b5818e))
+
 ## 0.3.1 (2024-10-08)
 
 
