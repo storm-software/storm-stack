@@ -1,3 +1,10 @@
+## 1.22.0 (2024-10-08)
+
+
+### Features
+
+- **monorepo:** Upgrade to monorepo base packages ([b1fbbe8](https://github.com/storm-software/storm-stack/commit/b1fbbe8))
+
 ## 1.21.0 (2024-10-08)
 
 
