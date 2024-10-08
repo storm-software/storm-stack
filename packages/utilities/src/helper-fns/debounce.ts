@@ -15,7 +15,7 @@
 
  -------------------------------------------------------------------*/
 
-interface DebounceOptions {
+export interface DebounceOptions {
   signal?: AbortSignal;
 }
 
@@ -76,11 +76,11 @@ export function debounce<F extends (...args: any[]) => void>(
     }, debounceMs);
   } as F & { cancel: () => void };
 
-  const onAbort = function () {
+  const onAbort = () => {
     debounced.cancel();
   };
 
-  debounced.cancel = function () {
+  debounced.cancel = () => {
     if (timeoutId !== null) {
       clearTimeout(timeoutId);
       timeoutId = null;

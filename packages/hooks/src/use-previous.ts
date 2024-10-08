@@ -15,19 +15,19 @@
 
  -------------------------------------------------------------------*/
 
-export * from "./arg-identity";
-export * from "./debounce";
-export * from "./deep-clone";
-export * from "./deep-merge";
-export * from "./delay";
-export * from "./flatten-object";
-export * from "./get";
-export * from "./get-unique";
-export * from "./is-deep-equal";
-export * from "./is-production";
-export * from "./is-runtime-server";
-export * from "./noop";
-export * from "./remove-empty-items";
-export * from "./set";
-export * from "./to-object-path";
-export * from "./unflatten-object";
+import React from "react";
+
+export function usePrevious<T>(value: T) {
+  const ref = React.useRef({ value, previous: value });
+
+  // We compare values before making an update to ensure that
+  // a change has been made. This ensures the previous value is
+  // persisted correctly between renders.
+  return React.useMemo(() => {
+    if (ref.current.value !== value) {
+      ref.current.previous = ref.current.value;
+      ref.current.value = value;
+    }
+    return ref.current.previous;
+  }, [value]);
+}

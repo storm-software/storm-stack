@@ -15,19 +15,24 @@
 
  -------------------------------------------------------------------*/
 
-export * from "./arg-identity";
-export * from "./debounce";
-export * from "./deep-clone";
-export * from "./deep-merge";
-export * from "./delay";
-export * from "./flatten-object";
-export * from "./get";
-export * from "./get-unique";
-export * from "./is-deep-equal";
-export * from "./is-production";
-export * from "./is-runtime-server";
-export * from "./noop";
-export * from "./remove-empty-items";
-export * from "./set";
-export * from "./to-object-path";
-export * from "./unflatten-object";
+import * as React from "react";
+
+/**
+ * A custom hook that converts a callback to a ref to avoid triggering re-renders when passed as a
+ * prop or avoid re-executing effects when passed as a dependency
+ */
+export function useCallbackRef<T extends (...args: any[]) => any>(
+  callback: T | undefined
+): T {
+  const callbackRef = React.useRef(callback);
+
+  React.useEffect(() => {
+    callbackRef.current = callback;
+  });
+
+  // https://github.com/facebook/react/issues/19240
+  return React.useMemo(
+    () => ((...args) => callbackRef.current?.(...args)) as T,
+    []
+  );
+}

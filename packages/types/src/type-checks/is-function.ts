@@ -15,15 +15,14 @@
 
  -------------------------------------------------------------------*/
 
-/* eslint-disable @typescript-eslint/ban-types */
-
+import { AnyFunction } from "../utility-types/base";
 import { getObjectTag } from "./get-object-tag";
 
-export function isSyncFunction(value?: any): value is Function {
+export function isSyncFunction(value?: any): value is AnyFunction {
   return getObjectTag(value) === "[object Function]";
 }
 
-export function isAsyncFunction(value?: any): value is Function {
+export function isAsyncFunction(value?: any): value is AnyFunction {
   return getObjectTag(value) === "[object AsyncFunction]";
 }
 
@@ -33,9 +32,7 @@ export function isAsyncFunction(value?: any): value is Function {
  * @param value - The value to type check
  * @returns An indicator specifying if the value provided is of type `Function`
  */
-export const isFunction = (
-  value: unknown
-): value is ((params?: unknown) => unknown) & ((args?: any[]) => any) => {
+export const isFunction = (value: unknown): value is AnyFunction => {
   try {
     return (
       value instanceof Function ||

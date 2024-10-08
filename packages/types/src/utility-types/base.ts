@@ -15,7 +15,7 @@
 
  -------------------------------------------------------------------*/
 
-/* eslint-disable @typescript-eslint/ban-types */
+/* eslint-disable @typescript-eslint/no-unsafe-function-type */
 
 import type { TypedArray } from "./array";
 
@@ -36,7 +36,6 @@ export type BuiltIns = Primitive | void | Date | RegExp;
 /**
  * Matches any non-primitive object
  */
-// eslint-disable-next-line @typescript-eslint/ban-types
 export type AtomicObject = Function | Promise<any> | Date | RegExp;
 
 /** Determines if the passed value is of a specific type */
@@ -52,7 +51,9 @@ export type TypeMap = Record<string, TypeTester>;
 
 declare const emptyObjectSymbol: unique symbol;
 
-export type AnyFunction = Function | ((...args: any) => any);
+export type FunctionOrValue<Value> = Value extends () => infer X ? X : Value;
+
+export type AnyFunction = (...args: any) => any;
 export type Nullish = undefined | null;
 export type Nullishable<T> = T | Nullish;
 export type NonNullishObject = object; // not null/undefined which are Object
@@ -61,7 +62,7 @@ export type AnyNumber = number | number;
 export type AnyString = string | string;
 export type AnyBoolean = boolean | boolean;
 export type AnyArray = any[];
-export type PlainObject = Record<any, {}>; // https://stackoverflow.com/a/75052315/130638
+export type PlainObject = Record<any, object>; // https://stackoverflow.com/a/75052315/130638
 export type AnyMap = Map<any, any>;
 export type AnyWeakMap = WeakMap<WeakKey, any>;
 export type EmptyArray = [];
@@ -359,7 +360,7 @@ export type Constructor<T, Arguments extends unknown[] = any[]> = new (
  * @privateRemarks
  * We cannot use a `type` here because TypeScript throws: 'abstract' modifier cannot appear on a type member. (1070)
  */
-// eslint-disable-next-line @typescript-eslint/consistent-type-definitions
+
 export interface AbstractClass<T, Arguments extends unknown[] = any[]>
   extends AbstractConstructor<T, Arguments> {
   prototype: Pick<T, keyof T>;

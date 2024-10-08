@@ -189,7 +189,8 @@
       "@storm-stack/string-fns": "workspace:*",
       "@storm-stack/types": "workspace:*",
       "@storm-stack/hashing": "workspace:*",
-      "@storm-stack/server-result": "workspace:*"
+      "@storm-stack/server-result": "workspace:*",
+      "@storm-stack/hooks": "workspace:*"
     }
   },
   "prettier": "@storm-software/prettier/config.json",

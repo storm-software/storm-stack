@@ -15,19 +15,14 @@
 
  -------------------------------------------------------------------*/
 
-export * from "./arg-identity";
-export * from "./debounce";
-export * from "./deep-clone";
-export * from "./deep-merge";
-export * from "./delay";
-export * from "./flatten-object";
-export * from "./get";
-export * from "./get-unique";
-export * from "./is-deep-equal";
-export * from "./is-production";
-export * from "./is-runtime-server";
-export * from "./noop";
-export * from "./remove-empty-items";
-export * from "./set";
-export * from "./to-object-path";
-export * from "./unflatten-object";
+import { isRuntimeServer } from "@storm-stack/utilities/helper-fns/is-runtime-server";
+import { useEffect, useLayoutEffect } from "react";
+
+/**
+ * The function checks if the code is running on the server-side
+ *
+ * @returns An indicator specifying if the code is running on the server-side
+ */
+export const useIsomorphicLayoutEffect = isRuntimeServer()
+  ? useEffect
+  : useLayoutEffect;

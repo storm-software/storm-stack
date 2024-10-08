@@ -15,19 +15,30 @@
 
  -------------------------------------------------------------------*/
 
-export * from "./arg-identity";
-export * from "./debounce";
-export * from "./deep-clone";
-export * from "./deep-merge";
-export * from "./delay";
-export * from "./flatten-object";
-export * from "./get";
-export * from "./get-unique";
-export * from "./is-deep-equal";
-export * from "./is-production";
-export * from "./is-runtime-server";
-export * from "./noop";
-export * from "./remove-empty-items";
-export * from "./set";
-export * from "./to-object-path";
-export * from "./unflatten-object";
+import React from "react"; // via radix-ui
+
+import { useCallbackRef } from "./use-callback-ref";
+
+/**
+ * Listens for when the escape key is down
+ */
+export function useEscapeKeydown(
+  onEscapeKeyDownProp?: (event: KeyboardEvent) => void,
+  ownerDocument: Document = globalThis?.document
+) {
+  const onEscapeKeyDown = useCallbackRef(onEscapeKeyDownProp);
+
+  React.useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        onEscapeKeyDown(event);
+      }
+    };
+
+    ownerDocument.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      ownerDocument.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [onEscapeKeyDown, ownerDocument]);
+}
