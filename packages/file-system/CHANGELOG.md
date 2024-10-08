@@ -1,3 +1,10 @@
+## 1.24.0 (2024-10-08)
+
+
+### Features
+
+- **utilities:** Added the flatten and unflatten utility functions and helper types ([702d44d](https://github.com/storm-software/storm-stack/commit/702d44d))
+
 ## 1.23.1 (2024-09-15)
 
 

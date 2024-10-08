@@ -1,3 +1,12 @@
+## 0.3.0 (2024-10-08)
+
+
+### Features
+
+- **utilities:** Added the flatten and unflatten utility functions and helper types ([702d44d](https://github.com/storm-software/storm-stack/commit/702d44d))
+
+- **errors:** Added the `ErrorType` concept to separate error data behavior ([cfffb39](https://github.com/storm-software/storm-stack/commit/cfffb39))
+
 ## 0.2.1 (2024-09-15)
 
 

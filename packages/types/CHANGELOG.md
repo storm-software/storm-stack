@@ -1,3 +1,14 @@
+## 0.5.0 (2024-10-08)
+
+
+### Features
+
+- **utilities:** Added the flatten and unflatten utility functions and helper types ([702d44d](https://github.com/storm-software/storm-stack/commit/702d44d))
+
+- **errors:** Added the `ErrorType` concept to separate error data behavior ([cfffb39](https://github.com/storm-software/storm-stack/commit/cfffb39))
+
+- **hooks:** Initial check-in of the base reusable React `hooks` package ([6af6750](https://github.com/storm-software/storm-stack/commit/6af6750))
+
 ## 0.4.2 (2024-09-15)
 
 

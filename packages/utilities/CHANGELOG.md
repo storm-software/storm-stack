@@ -1,3 +1,17 @@
+## 1.21.0 (2024-10-08)
+
+
+### Features
+
+- **utilities:** Added the flatten and unflatten utility functions and helper types ([702d44d](https://github.com/storm-software/storm-stack/commit/702d44d))
+
+- **hooks:** Initial check-in of the base reusable React `hooks` package ([6af6750](https://github.com/storm-software/storm-stack/commit/6af6750))
+
+
+### Bug Fixes
+
+- **monorepo:** Automated linting resolution on monorepo ([7136dec](https://github.com/storm-software/storm-stack/commit/7136dec))
+
 ## 1.20.0 (2024-09-26)
 
 
