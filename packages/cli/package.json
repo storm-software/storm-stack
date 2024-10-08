@@ -20,8 +20,8 @@
     "terminal-link": "^3.0.0"
   },
   "devDependencies": {
-    "@types/figlet": "^1.5.8",
-    "@types/node": "^22.5.5"
+    "@types/figlet": "^1.7.0",
+    "@types/node": "^22.7.5"
   },
   "publishConfig": {
     "access": "public"
