@@ -127,7 +127,7 @@ jobs:
       - name: Setup workspace
         uses: storm-software/action-setup@main
         with:
-          package-manager-version: 9.10.0
+          package-manager-version: 9.12.1
           storm-bot-github-token: ${{ secrets.STORM_BOT_GITHUB_TOKEN }}
 
       - name: Run Nx Set SHAs

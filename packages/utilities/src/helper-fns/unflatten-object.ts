@@ -16,7 +16,7 @@
  -------------------------------------------------------------------*/
 
 import { DeepKey, DeepValue } from "@storm-stack/types";
-import { set } from "./set";
+import { setField } from "./set-field";
 
 /**
  * Flattens a nested object into a single level object with dot-separated keys.
@@ -53,7 +53,7 @@ export function unflattenObject<
 >(deepKeyObject: TDeepKeyObject): TObject {
   return Object.entries(deepKeyObject).reduce(
     (ret: TObject, [key, value]: [string, any]) => {
-      return set<TObject>(ret, key as DeepKey<TObject>, value);
+      return setField<TObject>(ret, key as DeepKey<TObject>, value);
     },
     {} as TObject
   );

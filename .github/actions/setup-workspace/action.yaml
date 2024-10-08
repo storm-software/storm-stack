@@ -19,7 +19,7 @@ runs:
           PNPM_VERSION=$PKG_JSON
         fi
         if [ ! -z pnpm ]; then
-          PNPM_VERSION=9.10.0
+          PNPM_VERSION=9.12.1
         fi
         echo "Using PNPM version $PNPM_VERSION"
         echo "version=$PNPM_VERSION" >> $GITHUB_OUTPUT
@@ -52,7 +52,7 @@ runs:
     - uses: pnpm/action-setup@v4.0.0
       id: pnpm-install
       with:
-        version: 9.10.0
+        version: 9.12.1
 
     - name: Get pnpm store directory
       shell: bash
