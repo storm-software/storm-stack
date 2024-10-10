@@ -1,3 +1,10 @@
+## 0.4.2 (2024-10-10)
+
+
+### Bug Fixes
+
+- **monorepo:** Regenerate markup after token update ([a37ef2a](https://github.com/storm-software/storm-stack/commit/a37ef2a))
+
 ## 0.4.1 (2024-10-10)
 
 
