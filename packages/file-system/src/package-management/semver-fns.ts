@@ -15,7 +15,7 @@
 
  -------------------------------------------------------------------*/
 
-import { RELEASE_TYPES, type ReleaseType, inc, parse, valid } from "semver";
+import { RELEASE_TYPES, ReleaseType, inc, parse, valid } from "semver";
 
 export const parseVersion = (semver: string) => parse(semver);
 
