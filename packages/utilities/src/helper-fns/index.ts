@@ -29,5 +29,6 @@ export * from "./is-runtime-server";
 export * from "./noop";
 export * from "./remove-empty-items";
 export * from "./set-field";
-export * from "./to-object-path";
+export * from "./to-deep-key";
+export * from "./to-path";
 export * from "./unflatten-object";

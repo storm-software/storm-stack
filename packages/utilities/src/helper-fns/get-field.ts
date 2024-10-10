@@ -18,7 +18,7 @@
 /* eslint-disable no-param-reassign */
 
 import { isDeepKey, isNumber, toStringKey } from "@storm-stack/types";
-import { toObjectPath } from "./to-object-path";
+import { toPath } from "./to-path";
 
 /**
  * See the definition of `@types/lodash`.
@@ -421,7 +421,7 @@ export function getField(
   path: PropertyKey | readonly PropertyKey[],
   defaultValue?: any
 ): any {
-  if (object == null) {
+  if (object === null) {
     return defaultValue;
   }
 
@@ -431,7 +431,7 @@ export function getField(
 
       if (result === undefined) {
         if (isDeepKey(path)) {
-          return getField(object, toObjectPath(path), defaultValue);
+          return getField(object, toPath(path), defaultValue);
         }
         return defaultValue;
       }
@@ -483,7 +483,7 @@ function getWithPath(
   let current = object;
 
   for (const element_ of path) {
-    if (current == null) {
+    if (current === null) {
       return defaultValue;
     }
 

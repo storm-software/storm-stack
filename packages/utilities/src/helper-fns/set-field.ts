@@ -16,7 +16,7 @@
  -------------------------------------------------------------------*/
 
 import { DeepKey, isObjectIndex, isString } from "@storm-stack/types";
-import { toObjectPath } from "./to-object-path";
+import { toPath } from "./to-path";
 
 /**
  * Sets a value at a given deep path in an object.
@@ -32,7 +32,7 @@ export function setField<
   const resolvedPath = Array.isArray(path)
     ? path
     : isString(path)
-      ? toObjectPath(path)
+      ? toPath(path)
       : [path];
 
   let current: any = object;

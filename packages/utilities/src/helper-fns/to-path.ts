@@ -53,7 +53,7 @@ const PROPERTY_REGEXP = new RegExp(
  * toPath('') // Returns []
  * toPath('.a[b].c.d[e]["f.g"].h') // Returns ['', 'a', 'b', 'c', 'd', 'e', 'f.g', 'h']
  */
-export function toObjectPath(deepKey: string): string[] {
+export function toPath(deepKey: string): string[] {
   if (DOTS_KEY.test(deepKey)) {
     return deepKey.split(".");
   }
