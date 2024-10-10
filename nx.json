@@ -1,5 +1,8 @@
 {
   "extends": "@storm-software/workspace-tools/config/nx-default.json",
+  "release": {
+    "projects": ["packages/*", "apps/*"]
+  },
   "plugins": [
     {
       "plugin": "@nx/eslint/plugin",
