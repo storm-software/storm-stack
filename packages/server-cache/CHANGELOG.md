@@ -1,3 +1,10 @@
+## 0.3.1 (2024-10-10)
+
+
+### Bug Fixes
+
+- **types:** Added missing tags and regenerated markdown ([7ab98cc](https://github.com/storm-software/storm-stack/commit/7ab98cc))
+
 ## 0.3.0 (2024-10-10)
 
 
