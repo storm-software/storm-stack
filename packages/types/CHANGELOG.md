@@ -1,3 +1,10 @@
+## 0.7.0 (2024-10-10)
+
+
+### Features
+
+- **utilities:** Added the `toPath` and `toDeepKey` functions ([1977f13](https://github.com/storm-software/storm-stack/commit/1977f13))
+
 ## 0.6.2 (2024-10-10)
 
 
