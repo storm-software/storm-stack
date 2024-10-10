@@ -1,6 +1,6 @@
 {
   "name": "@storm-stack/utilities",
-  "version": "1.22.4",
+  "version": "1.23.0",
   "description": "This package includes various base utility class and various functions to assist in the development process.",
   "repository": {
     "type": "github",

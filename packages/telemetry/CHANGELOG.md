@@ -1,3 +1,15 @@
+## 1.4.0 (2024-10-10)
+
+
+### Features
+
+- **utilities:** Update the base Nx configuration ([99988e0](https://github.com/storm-software/storm-stack/commit/99988e0))
+
+
+### Bug Fixes
+
+- **monorepo:** Update the Nx configuration to include release process specifications ([df311f7](https://github.com/storm-software/storm-stack/commit/df311f7))
+
 ## 1.3.4 (2024-10-10)
 
 
