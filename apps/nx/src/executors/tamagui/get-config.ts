@@ -1,14 +1,30 @@
+/*-------------------------------------------------------------------
+
+                  ⚡ Storm Software - Storm Stack
+
+ This code was released as part of the Storm Stack project. Storm Stack
+ is maintained by Storm Software under the Apache-2.0 License, and is
+ free for commercial and private use. For more information, please visit
+ our licensing page.
+
+ Website:         https://stormsoftware.com
+ Repository:      https://github.com/storm-software/storm-stack
+ Documentation:   https://stormsoftware.com/projects/storm-stack/docs
+ Contact:         https://stormsoftware.com/contact
+ License:         https://stormsoftware.com/projects/storm-stack/license
+
+ -------------------------------------------------------------------*/
+
 import { joinPathFragments } from "@nx/devkit";
 import {
   type BuildOptions,
-  type GetConfigParams,
   outExtension
 } from "@storm-software/workspace-tools";
 import type { BuildOptions as EsBuildOptions } from "esbuild";
 import { aliasPlugin } from "./plugins/alias-plugin";
 import { createExternalPlugin } from "./plugins/external-plugin";
 
-export type GetTamaguiConfigParams = GetConfigParams & {
+export type GetTamaguiConfigParams = any & {
   clientPlatform: "native" | "web";
 };
 
@@ -39,7 +55,7 @@ export function getTamaguiConfig({
   dtsTsConfig,
   minify = false,
   getTransform
-}: GetConfigParams): BuildOptions {
+}: any): BuildOptions {
   const externalPlugin = createExternalPlugin({
     skipNodeModulesBundle: true
   });

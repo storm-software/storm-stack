@@ -47,20 +47,22 @@ A package containing tools for managing a Storm workspace. It includes various
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 ## Table of Contents
 
-- [Installing](#installing)
-- [Executors](#executors)
-- [Storm-Stack Tamagui Compiler](#storm-stack-tamagui-compiler)
-  - [Example](#example)
-- [Generators](#generators)
-- [Building](#building)
-- [Running unit tests](#running-unit-tests)
-- [Storm Workspaces](#storm-workspaces)
-- [Roadmap](#roadmap)
-- [Support](#support)
-- [License](#license)
-- [Changelog](#changelog)
-- [Contributing](#contributing)
-- [Contributors](#contributors)
+- [Storm-Stack Nx Tools](#storm-stack-nx-tools)
+  - [Table of Contents](#table-of-contents)
+  - [Installing](#installing)
+  - [Executors](#executors)
+  - [Storm-Stack Tamagui Compiler](#storm-stack-tamagui-compiler)
+    - [Example](#example)
+  - [Generators](#generators)
+  - [Building](#building)
+  - [Running unit tests](#running-unit-tests)
+  - [Storm Workspaces](#storm-workspaces)
+  - [Roadmap](#roadmap)
+  - [Support](#support)
+  - [License](#license)
+  - [Changelog](#changelog)
+  - [Contributing](#contributing)
+  - [Contributors](#contributors)
 
 <!-- END doctoc -->
 

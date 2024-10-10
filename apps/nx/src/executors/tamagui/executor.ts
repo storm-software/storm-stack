@@ -1,20 +1,31 @@
+/*-------------------------------------------------------------------
+
+                  ⚡ Storm Software - Storm Stack
+
+ This code was released as part of the Storm Stack project. Storm Stack
+ is maintained by Storm Software under the Apache-2.0 License, and is
+ free for commercial and private use. For more information, please visit
+ our licensing page.
+
+ Website:         https://stormsoftware.com
+ Repository:      https://github.com/storm-software/storm-stack
+ Documentation:   https://stormsoftware.com/projects/storm-stack/docs
+ Contact:         https://stormsoftware.com/contact
+ License:         https://stormsoftware.com/projects/storm-stack/license
+
+ -------------------------------------------------------------------*/
+
 import type { ExecutorContext } from "@nx/devkit";
 import type { StormConfig } from "@storm-software/config";
 import { findWorkspaceRootSafe } from "@storm-software/config-tools";
 import {
-  type GetConfigParams,
   applyDefaultOptions as baseApplyDefaultOptions,
   tsupExecutorFn,
   withRunExecutor
 } from "@storm-software/workspace-tools";
 import type { TsupExecutorSchema } from "@storm-software/workspace-tools/src/executors/tsup/schema";
 import { StormLog } from "@storm-stack/logging";
-import { StormParser } from "@storm-stack/serialization";
-import {
-  isFunction,
-  isPrimitive,
-  removeEmptyItems
-} from "@storm-stack/utilities";
+import { removeEmptyItems } from "@storm-stack/utilities";
 import { removeSync } from "fs-extra";
 import { getTamaguiConfig } from "./get-config";
 import type { TamaguiExecutorSchema } from "./schema.d";
@@ -24,28 +35,13 @@ export async function TamaguiExecutorFn(
   context: ExecutorContext,
   config?: StormConfig
 ) {
-  const logger = StormLog.create(config, "Storm-Stack Tamagui Executor");
-  logger.info(
+  StormLog.info(
     "⚡  Running Storm-Stack Tamagui compile executor on the workspace"
   );
 
   // #region Apply default options
 
-  const executorOptions = options as Record<string, any>;
-  logger.debug(`⚙️  Executor options:
-  ${Object.keys(executorOptions)
-    .map(
-      key =>
-        `${key}: ${
-          !executorOptions[key] || isPrimitive(executorOptions[key])
-            ? executorOptions[key]
-            : isFunction(executorOptions[key])
-              ? "<function>"
-              : StormParser.stringify(executorOptions[key])
-        }`
-    )
-    .join("\n")}
-  `);
+  // const executorOptions = options as Record<string, any>;
 
   // #endregion Apply default options
 
@@ -78,13 +74,13 @@ export async function TamaguiExecutorFn(
   // #region Clean output directory
 
   if (options.clean !== false) {
-    logger.info(`🧹 Cleaning output path: ${options.outputPath}`);
+    StormLog.info(`🧹 Cleaning output path: ${options.outputPath}`);
     removeSync(options.outputPath);
   }
 
   // #endregion Clean output directory
 
-  /*const packageJson = readJSONSync(joinPaths("package.json"));
+  /* const packageJson = readJSONSync(joinPaths("package.json"));
 
   const pkgMain = packageJson.main;
   const pkgSource = packageJson.source;
@@ -95,17 +91,12 @@ export async function TamaguiExecutorFn(
   const pkgTypes = Boolean(packageJson.types || packageJson.typings);
   const pkgRemoveSideEffects = packageJson.removeSideEffects || false;
 
-
-
-
-
-
     const external = options.bundle ? ['@swc/*', '*.node'] : undefined */
 
   const result = await tsupExecutorFn(
     {
       ...options,
-      getConfig: (_options: GetConfigParams) =>
+      getConfig: (_options: any) =>
         getTamaguiConfig({ ..._options, clientPlatform: "web" }),
       external: removeEmptyItems([
         "react",
@@ -228,7 +219,7 @@ export async function TamaguiExecutorFn(
         })(),
       ])
     })
-  )*/
+  ) */
 
   return {
     success: true
@@ -247,7 +238,7 @@ export const applyDefaultOptions = (
       ...options
     } as TsupExecutorSchema),
     transports: ["pino-pretty", "pino-loki"],
-    clientPlatform: options?.clientPlatform ? options.clientPlatform : "both"
+    clientPlatform: options?.clientPlatform || "both"
   } as TamaguiExecutorSchema;
 };
 

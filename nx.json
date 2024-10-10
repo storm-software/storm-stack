@@ -1,7 +1,7 @@
 {
   "extends": "@storm-software/workspace-tools/config/nx-default.json",
   "release": {
-    "projects": ["packages/*", "apps/*"],
+    "projects": ["packages/*"],
     "projectsRelationship": "independent",
     "releaseTagPattern": "{projectName}@{version}",
     "conventionalCommits": {
