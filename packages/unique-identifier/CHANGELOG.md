@@ -1,3 +1,10 @@
+## 1.19.4 (2024-10-10)
+
+
+### Bug Fixes
+
+- **monorepo:** Regenerate the README file formatting ([b81153c](https://github.com/storm-software/storm-stack/commit/b81153c))
+
 ## 1.19.3 (2024-10-09)
 
 
