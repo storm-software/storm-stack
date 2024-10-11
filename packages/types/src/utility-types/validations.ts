@@ -21,10 +21,14 @@ export type ValidationDetails<
   TMessageType extends
     | typeof MessageType.ERROR
     | typeof MessageType.WARNING
-    | typeof MessageType.INFO =
+    | typeof MessageType.INFO
+    | typeof MessageType.HELP
+    | typeof MessageType.SUCCESS =
     | typeof MessageType.ERROR
     | typeof MessageType.WARNING
     | typeof MessageType.INFO
+    | typeof MessageType.HELP
+    | typeof MessageType.SUCCESS
 > = MessageDetails<TMessageType> & {
   /**
    * The field that the message is related to.
@@ -42,3 +46,7 @@ export type WarningValidationDetails = ValidationDetails<
   typeof MessageType.WARNING
 >;
 export type InfoValidationDetails = ValidationDetails<typeof MessageType.INFO>;
+export type HelpValidationDetails = ValidationDetails<typeof MessageType.HELP>;
+export type SuccessValidationDetails = ValidationDetails<
+  typeof MessageType.SUCCESS
+>;
