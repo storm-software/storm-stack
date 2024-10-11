@@ -1,3 +1,10 @@
+## 1.24.0 (2024-10-11)
+
+
+### Features
+
+- **types:** Added the `help` and `success` ValidationDetail message types ([207bf67](https://github.com/storm-software/storm-stack/commit/207bf67))
+
 ## 1.23.0 (2024-10-10)
 
 
