@@ -50,3 +50,14 @@ export type HelpValidationDetails = ValidationDetails<typeof MessageType.HELP>;
 export type SuccessValidationDetails = ValidationDetails<
   typeof MessageType.SUCCESS
 >;
+
+export type InferValidationType<TMessageType extends MessageType> =
+  TMessageType extends typeof MessageType.ERROR
+    ? ErrorValidationDetails
+    : TMessageType extends typeof MessageType.WARNING
+      ? WarningValidationDetails
+      : TMessageType extends typeof MessageType.INFO
+        ? InfoValidationDetails
+        : TMessageType extends typeof MessageType.SUCCESS
+          ? SuccessValidationDetails
+          : ValidationDetails;

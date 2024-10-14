@@ -30,6 +30,11 @@ export interface SelectOption<T = string> {
   value: string | number | boolean;
 
   /**
+   * The description of the select option
+   */
+  description?: string;
+
+  /**
    * Is the option value valid for selection in the dropdown
    */
   disabled: boolean;
