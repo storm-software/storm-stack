@@ -1,6 +1,6 @@
 {
   "name": "@storm-stack/server-cache",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "type": "module",
   "description": "Storm-Stack patch to handle server-side caching with the [Bentocache](https://bentocache.dev/docs/introduction) library.",
   "repository": {

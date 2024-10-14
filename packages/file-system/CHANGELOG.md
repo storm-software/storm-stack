@@ -1,3 +1,10 @@
+## 1.28.0 (2024-10-14)
+
+
+### Features
+
+- **types:** Added the `description` property to the `SelectOption` type ([94c33d2](https://github.com/storm-software/storm-stack/commit/94c33d2))
+
 ## 1.27.0 (2024-10-11)
 
 
