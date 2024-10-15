@@ -1,6 +1,6 @@
 {
   "name": "@storm-stack/types",
-  "version": "0.9.0",
+  "version": "0.10.0",
   "description": "⚡ The storm-stack monorepo contains utility applications, tools, and various libraries to create modern and scalable web applications.",
   "repository": {
     "type": "github",

@@ -1,3 +1,10 @@
+## 0.8.0 (2024-10-15)
+
+
+### Features
+
+- **types:** Added the `index` and `status` properties to the `SelectOption` type ([7da9603](https://github.com/storm-software/storm-stack/commit/7da9603))
+
 ## 0.7.0 (2024-10-14)
 
 
