@@ -20,6 +20,11 @@
  */
 export interface SelectOption<T = string> {
   /**
+   * The index of the select option
+   */
+  index: number;
+
+  /**
    * The string value to display in the field
    */
   name: T;
@@ -33,6 +38,11 @@ export interface SelectOption<T = string> {
    * The description of the select option
    */
   description?: string;
+
+  /**
+   * A short string describing the status of the select option
+   */
+  status?: string;
 
   /**
    * Is the option value valid for selection in the dropdown
