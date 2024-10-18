@@ -1,3 +1,15 @@
+## 1.28.0 (2024-10-18)
+
+
+### Features
+
+- **date-time:** Added new flags to formatting options for helper functions ([b702d6c](https://github.com/storm-software/storm-stack/commit/b702d6c))
+
+
+### Bug Fixes
+
+- **serialization:** Resolved stack overflow issue with `StormParser` class ([f890df9](https://github.com/storm-software/storm-stack/commit/f890df9))
+
 ## 1.27.0 (2024-10-15)
 
 
