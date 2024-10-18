@@ -15,8 +15,10 @@
 
  -------------------------------------------------------------------*/
 
+import { format, type Format } from "@formkit/tempo";
 import type { Temporal } from "@js-temporal/polyfill";
 import { EMPTY_STRING } from "@storm-stack/types";
+import { DEFAULT_DATE_TIME_FORMAT } from "../constants";
 import { StormDateTime } from "../storm-date-time";
 
 export type FormatDateTimeOptions =
@@ -34,6 +36,21 @@ export type FormatDateTimeOptions =
      * @defaultValue false
      */
     returnEmptyIfInvalid?: boolean;
+
+    /**
+     * The format to use when generating the string
+     *
+     * @remarks
+     * For more information read the [Tempo documentation](https://tempo.formkit.com/#format-tokens)
+     *
+     * @defaultValue "M/D/YYYY h:mm A"
+     */
+    format?: Format;
+
+    /**
+     * The locale used in the formatting
+     */
+    locale?: string;
   };
 
 /**
@@ -45,15 +62,15 @@ export type FormatDateTimeOptions =
  */
 export const formatDateTime = (
   dateTime?: StormDateTime | null,
-  options?: FormatDateTimeOptions
+  options: FormatDateTimeOptions = {}
 ): string => {
   let value = dateTime;
 
-  const smallestUnit = options?.smallestUnit || "millisecond";
-  const roundingMode = options?.roundingMode || "ceil";
-  const calendarName = options?.calendarName || "never";
-  const timeZoneName = options?.timeZoneName || "never";
-  const offset = options?.offset || "never";
+  // const smallestUnit = options?.smallestUnit || "millisecond";
+  // const roundingMode = options?.roundingMode || "ceil";
+  // const calendarName = options?.calendarName || "never";
+  // const timeZoneName = options?.timeZoneName || "never";
+  // const offset = options?.offset || "never";
 
   if (!dateTime && options?.returnEmptyIfNotSet) {
     return EMPTY_STRING;
@@ -67,13 +84,9 @@ export const formatDateTime = (
     value = StormDateTime.current();
   }
 
-  return value!.zonedDateTime
-    .toString({
-      smallestUnit,
-      roundingMode,
-      calendarName,
-      timeZoneName,
-      offset
-    })
-    .replaceAll("T", " ");
+  return format(
+    value,
+    options.format || DEFAULT_DATE_TIME_FORMAT,
+    options.locale
+  );
 };

@@ -10,6 +10,7 @@
   },
   "private": false,
   "dependencies": {
+    "@formkit/tempo": "^0.1.2",
     "@js-temporal/polyfill": "0.4.4"
   },
   "publishConfig": {

@@ -23,3 +23,9 @@ export const RFC_3339_DATE_REGEX =
 
 export const RFC_3339_TIME_REGEX =
   /^([01]\d|2[0-3]):([0-5]\d):([0-5]\d)(\.\d+)?((Z)|([+|-]([01]\d|2[0-3]):[0-5]\d))$/;
+
+export const DEFAULT_DATE_FORMAT = "M/D/YYYY";
+
+export const DEFAULT_TIME_FORMAT = "h:mm A";
+
+export const DEFAULT_DATE_TIME_FORMAT = `${DEFAULT_DATE_FORMAT} ${DEFAULT_TIME_FORMAT}`;

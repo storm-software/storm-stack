@@ -297,6 +297,9 @@ importers:
 
   packages/date-time:
     dependencies:
+      '@formkit/tempo':
+        specifier: ^0.1.2
+        version: 0.1.2
       '@js-temporal/polyfill':
         specifier: 0.4.4
         version: 0.4.4
@@ -2262,6 +2265,9 @@ packages:
   '@eslint/plugin-kit@0.2.0':
     resolution: {integrity: sha512-vH9PiIMMwvhCx31Af3HiGzsVNULDbyVkHXwlemn/B0TFj/00ho3y55efXrUZTfQipxoHC5u4xq6zblww1zm1Ig==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
+
+  '@formkit/tempo@0.1.2':
+    resolution: {integrity: sha512-jNPPbjL8oj7hK3eHX++CwbR6X4GKQt+x00/q4yeXkwynXHGKL27dylYhpEgwrmediPP4y7s0XtN1if/M/JYujg==}
 
   '@graphql-eslint/eslint-plugin@3.20.1':
     resolution: {integrity: sha512-RbwVlz1gcYG62sECR1u0XqMh8w5e5XMCCZoMvPQ3nJzEBCTfXLGX727GBoRmSvY1x4gJmqNZ1lsOX7lZY14RIw==}
@@ -16379,6 +16385,8 @@ snapshots:
   '@eslint/plugin-kit@0.2.0':
     dependencies:
       levn: 0.4.1
+
+  '@formkit/tempo@0.1.2': {}
 
   '@graphql-eslint/eslint-plugin@3.20.1(@babel/core@7.25.2)(@types/node@22.7.5)(bufferutil@4.0.8)(graphql@15.9.0)(utf-8-validate@5.0.10)':
     dependencies:

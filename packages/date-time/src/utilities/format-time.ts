@@ -15,8 +15,10 @@
 
  -------------------------------------------------------------------*/
 
+import { format, type Format } from "@formkit/tempo";
 import type { Temporal } from "@js-temporal/polyfill";
 import { EMPTY_STRING } from "@storm-stack/types/utility-types/base";
+import { DEFAULT_TIME_FORMAT } from "../constants";
 import type { StormDateTime } from "../storm-date-time";
 import { StormTime } from "../storm-time";
 
@@ -34,6 +36,21 @@ export type FormatTimeOptions = Partial<Temporal.ToStringPrecisionOptions> & {
    * @defaultValue false
    */
   returnEmptyIfInvalid?: boolean;
+
+  /**
+   * The format to use when generating the string
+   *
+   * @remarks
+   * For more information read the [Tempo documentation](https://tempo.formkit.com/#format-tokens)
+   *
+   * @defaultValue "h:mm A"
+   */
+  format?: Format;
+
+  /**
+   * The locale used in the formatting
+   */
+  locale?: string;
 };
 
 /**
@@ -44,12 +61,12 @@ export type FormatTimeOptions = Partial<Temporal.ToStringPrecisionOptions> & {
  */
 export const formatTime = (
   dateTime?: StormDateTime | null,
-  options?: FormatTimeOptions
+  options: FormatTimeOptions = {}
 ): string => {
   let value = dateTime;
 
-  const smallestUnit = options?.smallestUnit || "milliseconds";
-  const roundingMode = options?.roundingMode || "ceil";
+  // const smallestUnit = options?.smallestUnit || "milliseconds";
+  // const roundingMode = options?.roundingMode || "ceil";
 
   if (!dateTime && options?.returnEmptyIfNotSet) {
     return EMPTY_STRING;
@@ -63,8 +80,5 @@ export const formatTime = (
     value = StormTime.current();
   }
 
-  return value!.zonedDateTime.toPlainTime().toString({
-    smallestUnit,
-    roundingMode
-  });
+  return format(value, options.format || DEFAULT_TIME_FORMAT, options.locale);
 };

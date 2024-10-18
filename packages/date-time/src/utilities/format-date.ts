@@ -15,12 +15,13 @@
 
  -------------------------------------------------------------------*/
 
-import type { Temporal } from "@js-temporal/polyfill";
+import { format, type Format } from "@formkit/tempo";
 import { EMPTY_STRING } from "@storm-stack/types/utility-types/base";
+import { DEFAULT_DATE_FORMAT } from "../constants";
 import { StormDate } from "../storm-date";
 import type { StormDateTime } from "../storm-date-time";
 
-export type FormatDateOptions = Partial<Temporal.ShowCalendarOption> & {
+export type FormatDateOptions = {
   /**
    * Should an empty string be returned if the date is null or undefined
    *
@@ -34,6 +35,21 @@ export type FormatDateOptions = Partial<Temporal.ShowCalendarOption> & {
    * @defaultValue false
    */
   returnEmptyIfInvalid?: boolean;
+
+  /**
+   * The format to use when generating the string
+   *
+   * @remarks
+   * For more information read the [Tempo documentation](https://tempo.formkit.com/#format-tokens)
+   *
+   * @defaultValue "M/D/YYYY"
+   */
+  format?: Format;
+
+  /**
+   * The locale used in the formatting
+   */
+  locale?: string;
 };
 
 /**
@@ -44,16 +60,15 @@ export type FormatDateOptions = Partial<Temporal.ShowCalendarOption> & {
  */
 export const formatDate = (
   dateTime?: StormDateTime | null,
-  options?: FormatDateOptions
+  options: FormatDateOptions = {}
 ): string => {
   let value = dateTime;
 
-  const calendarName = options?.calendarName || "never";
-  if (!dateTime && options?.returnEmptyIfNotSet) {
+  if (!dateTime && options.returnEmptyIfNotSet) {
     return EMPTY_STRING;
   }
 
-  if ((!dateTime || !dateTime.isValid) && options?.returnEmptyIfInvalid) {
+  if ((!dateTime || !dateTime.isValid) && options.returnEmptyIfInvalid) {
     return EMPTY_STRING;
   }
 
@@ -61,7 +76,5 @@ export const formatDate = (
     value = StormDate.current();
   }
 
-  return value!.zonedDateTime.toPlainDate().toString({
-    calendarName
-  });
+  return format(value, options.format || DEFAULT_DATE_FORMAT, options.locale);
 };
