@@ -15,4 +15,5 @@
 
  -------------------------------------------------------------------*/
 
+export * from "./default-value-helpers";
 export * from "./serialization";

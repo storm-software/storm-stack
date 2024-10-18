@@ -19,16 +19,21 @@ import { Serializable } from "@storm-stack/serialization";
 import {
   EMPTY_STRING,
   ErrorMessageDetails,
-  type Indexable,
   MessageType,
   NEWLINE_STRING,
+  ValidationDetails,
   isError,
   isFunction,
   isObject,
-  isSetString
+  isSetString,
+  type Indexable
 } from "@storm-stack/types";
 import { ErrorCode } from "./errors";
 import { ErrorType, type StormErrorOptions } from "./types";
+import {
+  getDefaultCodeFromType,
+  getDefaultNameFromType
+} from "./utilities/default-value-helpers";
 
 /**
  * Creates a new StormError instance
@@ -36,7 +41,11 @@ import { ErrorType, type StormErrorOptions } from "./types";
  * @param cause - The cause of the error
  * @returns The newly created StormError
  */
-export function createStormError<TCode extends string = string>({
+export function createStormError<
+  TCode extends string = string,
+  TErrorType extends ErrorType = ErrorType,
+  TData = undefined
+>({
   code,
   name,
   type,
@@ -44,16 +53,20 @@ export function createStormError<TCode extends string = string>({
   cause,
   stack,
   data
-}: StormErrorOptions & { code?: TCode }): StormError<TCode> {
+}: StormErrorOptions<TErrorType, TData> & { code?: TCode }): StormError<
+  TCode,
+  TErrorType,
+  TData
+> {
   if (isStormError<TCode>(cause)) {
-    return cause;
+    return cause as StormError<TCode, TErrorType, TData>;
   }
 
   if (cause instanceof Error && cause.name === "StormError") {
-    return cause as StormError<TCode>;
+    return cause as StormError<TCode, TErrorType, TData>;
   }
 
-  const stormError = new StormError<TCode>(
+  const stormError = new StormError<TCode, TErrorType, TData>(
     (code ?? ErrorCode.internal_server_error) as TCode,
     {
       name,
@@ -79,36 +92,65 @@ export function createStormError<TCode extends string = string>({
  * @param cause - The cause of the error in an unknown type
  * @returns The cause of the error in a StormError object or undefined
  */
-export function getCauseFromUnknown(cause: unknown): StormError {
+export function getCauseFromUnknown<
+  TErrorType extends ErrorType = ErrorType,
+  TData = undefined
+>(
+  cause: unknown,
+  type: TErrorType = ErrorType.EXCEPTION as TErrorType,
+  data: TData
+): StormError<string, TErrorType, TData> {
   if (isStormError(cause)) {
-    return cause;
+    const result = cause as StormError<string, TErrorType, TData>;
+    result.data ??= data;
+
+    return result;
   }
+
   if (isError(cause)) {
-    return createStormError({
-      code: ErrorCode.internal_server_error,
+    return createStormError<string, TErrorType, TData>({
+      code: getDefaultCodeFromType(type),
       name: cause.name,
       message: cause.message,
       cause,
-      stack: cause.stack
-    });
-  }
-  const type = typeof cause;
-  if (type === "undefined" || type === "function" || cause === null) {
-    return new StormError(ErrorCode.internal_server_error, {
-      cause
+      stack: cause.stack,
+      type,
+      data
     });
   }
 
+  const causeType = typeof cause;
+  if (causeType === "undefined" || causeType === "function" || cause === null) {
+    return new StormError<string, TErrorType, TData>(
+      getDefaultCodeFromType(type),
+      {
+        name: getDefaultNameFromType(type),
+        cause,
+        type,
+        data
+      }
+    );
+  }
+
   // Primitive types just get wrapped in an error
-  if (type !== "object") {
-    return new StormError(ErrorCode.internal_server_error, {
-      message: String(cause)
-    });
+  if (causeType !== "object") {
+    return new StormError<string, TErrorType, TData>(
+      getDefaultCodeFromType(type),
+      {
+        name: getDefaultNameFromType(type),
+        type,
+        data,
+        message: String(cause)
+      }
+    );
   }
 
   // If it's an object, we'll create a synthetic error
   if (isObject(cause)) {
-    const err = new StormError(ErrorCode.unknown_cause, {});
+    const err = new StormError<string, TErrorType, TData>(
+      getDefaultCodeFromType(type),
+      { name: getDefaultNameFromType(type), type, data }
+    );
 
     for (const key of Object.keys(cause)) {
       (err as Indexable)[key] = (cause as Indexable)[key];
@@ -117,7 +159,10 @@ export function getCauseFromUnknown(cause: unknown): StormError {
     return err;
   }
 
-  return new StormError(ErrorCode.internal_server_error, { cause });
+  return new StormError<string, TErrorType, TData>(
+    getDefaultCodeFromType(type),
+    { name: getDefaultNameFromType(type), cause, type, data }
+  );
 }
 
 /**
@@ -158,7 +203,7 @@ export class StormError<
   /**
    * The inner error
    */
-  private _cause?: StormError;
+  private _cause?: StormError<string, ErrorType, any>;
 
   /**
    * The error code
@@ -168,7 +213,7 @@ export class StormError<
   /**
    * Additional data to be passed with the error
    */
-  public data?: TData;
+  public data: TData;
 
   /**
    * The type of error response message/event
@@ -181,8 +226,107 @@ export class StormError<
    * @param error - The error to create
    * @returns The newly created StormError
    */
-  public static create(error?: unknown): StormError {
-    return getCauseFromUnknown(error);
+  public static create<
+    TErrorType extends ErrorType = ErrorType,
+    TData = undefined
+  >(
+    error?: unknown,
+    type: TErrorType = ErrorType.EXCEPTION as TErrorType,
+    data: TData = undefined as TData
+  ): StormError<string, TErrorType, TData> {
+    return getCauseFromUnknown(error, type, data);
+  }
+
+  /**
+   * Creates a new Validation StormError instance
+   *
+   * @param validationDetails - The validation details
+   * @param options - The options to use
+   * @returns The newly created StormError
+   */
+  public static createValidation(
+    validationDetails: ValidationDetails | ValidationDetails[],
+    options?: Omit<StormErrorOptions, "type" | "data">
+  ): StormError<string, typeof ErrorType.VALIDATION, ValidationDetails[]> {
+    return StormError.create(
+      options,
+      ErrorType.VALIDATION,
+      Array.isArray(validationDetails) ? validationDetails : [validationDetails]
+    );
+  }
+
+  /**
+   * Creates a new Not Found StormError instance
+   *
+   * @param recordName - The name of the items returned (or in this case *not returned*) in the search results
+   * @param options - The options to use
+   * @returns The newly created StormError
+   */
+  public static createNotFound(
+    recordName?: string,
+    options?: Omit<StormErrorOptions, "type" | "data">
+  ): StormError<string, typeof ErrorType.NOT_FOUND, string | undefined> {
+    return StormError.create(options, ErrorType.NOT_FOUND, recordName);
+  }
+
+  /**
+   * Creates a new Security StormError instance
+   *
+   * @param data - Any relevant data related to the security issue
+   * @param options - The options to use
+   * @returns The newly created StormError
+   */
+  public static createSecurity(
+    data?: any,
+    options?: Omit<StormErrorOptions, "type" | "data">
+  ): StormError<string, typeof ErrorType.NOT_FOUND, any> {
+    return StormError.create(options, ErrorType.NOT_FOUND, data);
+  }
+
+  /**
+   * Creates a new Service Unavailable StormError instance
+   *
+   * @param serviceName - The name of the service that is currently unavailable
+   * @param options - The options to use
+   * @returns The newly created StormError
+   */
+  public static createServiceUnavailable(
+    serviceName: string,
+    options?: Omit<StormErrorOptions, "type" | "data">
+  ): StormError<string, typeof ErrorType.SERVICE_UNAVAILABLE, string> {
+    return StormError.create(
+      options,
+      ErrorType.SERVICE_UNAVAILABLE,
+      serviceName
+    );
+  }
+
+  /**
+   * Creates a new Action Unsupported StormError instance
+   *
+   * @param action - The action that is unsupported
+   * @param options - The options to use
+   * @returns The newly created StormError
+   */
+  public static createActionUnsupported(
+    action: string,
+    options?: Omit<StormErrorOptions, "type" | "data">
+  ): StormError<string, typeof ErrorType.ACTION_UNSUPPORTED, string> {
+    return StormError.create(options, ErrorType.ACTION_UNSUPPORTED, action);
+  }
+
+  /**
+   * Creates a new Unknown StormError instance
+   *
+   * @param data - The action that is unsupported
+   * @param options - The options to use
+   * @returns The newly created StormError
+   */
+  public static createUnknown(
+    data: any,
+    options?: Omit<StormErrorOptions, "type" | "data">
+  ): StormError<string, typeof ErrorType.UNKNOWN, any> {
+    return StormError.create(options, ErrorType.UNKNOWN, data);
   }
 
   public constructor(
@@ -222,7 +366,7 @@ export class StormError<
    * The cause of the error
    */
   public override set cause(_cause: unknown) {
-    this._cause = getCauseFromUnknown(_cause);
+    this._cause = getCauseFromUnknown(_cause, this.type, this.data);
   }
 
   /**
@@ -278,14 +422,20 @@ export class StormError<
       ? `${this.name ? (this.code ? `${this.name} ` : this.name) : EMPTY_STRING} ${
           this.code
             ? this.code && this.name
-              ? `(${this.code})`
-              : this.code
-            : EMPTY_STRING
-        }${this.code || this.name ? ": " : EMPTY_STRING}${this.message}${
+              ? `(${this.type} - ${this.code})`
+              : `${this.type} - ${this.code}`
+            : this.name
+              ? `(${this.type})`
+              : this.type
+        }: ${this.message}${
           this.cause
             ? `${NEWLINE_STRING}Cause: ${
                 isStormError(this.cause) ? this.cause.print() : this.cause
               }`
+            : EMPTY_STRING
+        }${
+          this.data
+            ? `${NEWLINE_STRING}Data: ${JSON.stringify(this.data, null, 2)}`
             : EMPTY_STRING
         }`
       : EMPTY_STRING;

@@ -24,13 +24,16 @@ export type ErrorCode =
   | "record_not_found"
   | "required_field_missing"
   | "database_query_error"
-  | "model_validation_error"
+  | "validation_error"
   | "field_validation_error"
   | "invalid_parameter"
   | "invalid_request"
+  | "unsupported_request"
   | "type_error"
+  | "service_unavailable"
   | "processing_error"
   | "internal_server_error"
+  | "general_security_issue"
   | "user_not_logged_in"
   | "unknown_cause";
 export const ErrorCode = {
@@ -42,13 +45,16 @@ export const ErrorCode = {
   record_not_found: "record_not_found" as ErrorCode,
   required_field_missing: "required_field_missing" as ErrorCode,
   database_query_error: "database_query_error" as ErrorCode,
-  model_validation_error: "model_validation_error" as ErrorCode,
+  validation_error: "validation_error" as ErrorCode,
   field_validation_error: "field_validation_error" as ErrorCode,
   invalid_parameter: "invalid_parameter" as ErrorCode,
   invalid_request: "invalid_request" as ErrorCode,
+  unsupported_request: "unsupported_request" as ErrorCode,
   type_error: "type_error" as ErrorCode,
+  service_unavailable: "service_unavailable" as ErrorCode,
   processing_error: "processing_error" as ErrorCode,
   internal_server_error: "internal_server_error" as ErrorCode,
+  general_security_issue: "general_security_issue" as ErrorCode,
   user_not_logged_in: "user_not_logged_in" as ErrorCode,
   unknown_cause: "unknown_cause" as ErrorCode
 };

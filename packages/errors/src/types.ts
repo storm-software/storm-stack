@@ -19,7 +19,7 @@ import { ValidationDetails } from "@storm-stack/types/utility-types/validations"
 
 export type StormErrorOptions<
   TErrorType extends ErrorType = typeof ErrorType.EXCEPTION,
-  TData = undefined
+  TData = any
 > = {
   /**
    * The error name.
@@ -50,7 +50,7 @@ export type StormErrorOptions<
   /**
    * Additional data to be included with the error.
    */
-  data?: TData;
+  data: TData;
 };
 
 export type StormValidationErrorOptions = StormErrorOptions<
@@ -59,14 +59,16 @@ export type StormValidationErrorOptions = StormErrorOptions<
 >;
 
 export type ErrorType =
-  | "validation"
   | "exception"
+  | "not_found"
+  | "validation"
   | "service_unavailable"
   | "unsupported"
   | "security"
   | "unknown";
 export const ErrorType = {
   EXCEPTION: "exception" as ErrorType,
+  NOT_FOUND: "not_found" as ErrorType,
   VALIDATION: "validation" as ErrorType,
   SERVICE_UNAVAILABLE: "service_unavailable" as ErrorType,
   ACTION_UNSUPPORTED: "action_unsupported" as ErrorType,
