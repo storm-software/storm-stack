@@ -19,6 +19,22 @@ import type { Temporal } from "@js-temporal/polyfill";
 import { StormDate } from "../storm-date";
 import type { StormDateTime } from "../storm-date-time";
 
+export type FormatDateOptions = Partial<Temporal.ShowCalendarOption> & {
+  /**
+   * Should an empty string be returned if the date is null or undefined
+   *
+   * @defaultValue false
+   */
+  returnEmptyIfNotSet?: boolean;
+
+  /**
+   * Should an empty string be returned if the date is invalid
+   *
+   * @defaultValue false
+   */
+  returnEmptyIfInvalid?: boolean;
+};
+
 /**
  * Format a date field
  *
@@ -26,12 +42,25 @@ import type { StormDateTime } from "../storm-date-time";
  * @returns The formatted date
  */
 export const formatDate = (
-  dateTime: StormDateTime = StormDate.current(),
-  options?: Partial<Temporal.ShowCalendarOption>
+  dateTime?: StormDateTime | null,
+  options?: FormatDateOptions
 ): string => {
-  const calendarName = options?.calendarName || "never";
+  let value = dateTime;
 
-  return dateTime.zonedDateTime.toPlainDate().toString({
+  const calendarName = options?.calendarName || "never";
+  if (!dateTime && options?.returnEmptyIfNotSet) {
+    return "";
+  }
+
+  if ((!dateTime || !dateTime.isValid) && options?.returnEmptyIfInvalid) {
+    return "";
+  }
+
+  if (!dateTime || !dateTime.isValid) {
+    value = StormDate.current();
+  }
+
+  return value!.zonedDateTime.toPlainDate().toString({
     calendarName
   });
 };

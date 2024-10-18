@@ -16,6 +16,7 @@
  -------------------------------------------------------------------*/
 
 import type { StormConfig } from "@storm-software/config";
+import { StormDate } from "@storm-stack/date-time/storm-date";
 import { StormDateTime } from "@storm-stack/date-time/storm-date-time";
 import { formatDate, formatDateTime } from "@storm-stack/date-time/utilities";
 import { isSetString } from "@storm-stack/types/type-checks/is-set-string";
@@ -51,7 +52,9 @@ export const createFileStreamLogs = (
       stream: pino.destination({
         dest: join(
           logPath,
-          formatDate().replaceAll("/", "-").replaceAll(" ", "-"),
+          formatDate(StormDate.current())
+            .replaceAll("/", "-")
+            .replaceAll(" ", "-"),
           `${`${loggingConfig.fileName || "storm"}-`}${formatDateTime(
             StormDateTime.current(),
             {
