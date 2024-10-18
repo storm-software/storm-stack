@@ -17,6 +17,7 @@
 
 import type { Temporal } from "@js-temporal/polyfill";
 import { StormError } from "@storm-stack/errors";
+import { MessageType } from "@storm-stack/types";
 import { DateTimeErrorCode } from "../errors";
 import { StormDateTime } from "../storm-date-time";
 import { isDateTime } from "./is-date-time";
@@ -27,9 +28,12 @@ const SECOND_ROUNDING_EPSILON = 0.000_000_1;
 
 const parseMilliseconds = (milliseconds: number) => {
   if (!Number.isFinite(milliseconds)) {
-    throw new StormError(DateTimeErrorCode.ms_format, {
-      message: "Method `parseMilliseconds` expected a finite number"
-    });
+    throw StormError.createValidation(
+      { code: DateTimeErrorCode.ms_format, type: MessageType.ERROR },
+      {
+        message: "Method `parseMilliseconds` expected a finite number"
+      }
+    );
   }
 
   return {
@@ -130,9 +134,12 @@ export const formatSince = (
     : dateTimeOrDuration.milliseconds;
 
   if (!Number.isFinite(milliseconds)) {
-    throw new StormError(DateTimeErrorCode.ms_format, {
-      message: "Method `formatSince` expected a finite number"
-    });
+    throw StormError.createValidation(
+      { code: DateTimeErrorCode.ms_format, type: MessageType.ERROR },
+      {
+        message: "Method `formatSince` expected a finite number"
+      }
+    );
   }
 
   // Adjust the milliseconds to be positive
@@ -249,9 +256,12 @@ export const formatSince = (
 
   if (compact) {
     if (!result[0]) {
-      throw new StormError(DateTimeErrorCode.formatting_failure, {
-        message: "Unexpected empty result"
-      });
+      throw StormError.createValidation(
+        { code: DateTimeErrorCode.formatting_failure, type: MessageType.ERROR },
+        {
+          message: "Unexpected empty result"
+        }
+      );
     }
 
     return result[0];

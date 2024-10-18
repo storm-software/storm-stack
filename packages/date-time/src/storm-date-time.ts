@@ -97,6 +97,21 @@ export function deserializeStormDateTime(utcString: JsonValue): StormDateTime {
 @Serializable()
 export class StormDateTime extends Date {
   /**
+   * A helper function to get the default time zone
+   *
+   * @returns The default time zone
+   */
+  public static getDefaultTimeZone(): string {
+    return (
+      Temporal.Now.timeZoneId() ||
+      process.env.STORM_TIMEZONE ||
+      process.env.DEFAULT_TIMEZONE ||
+      process.env.TZ ||
+      "UTC"
+    );
+  }
+
+  /**
    * Type-check to determine if `obj` is a `DateTime` object
    *
    * `isDateTime` returns true if the object passed to it has a `_symbol` property that is equal to
@@ -159,19 +174,16 @@ export class StormDateTime extends Date {
    */
   public static create = (
     dateTime?: DateTimeInput,
-    options?: DateTimeOptions
+    options: DateTimeOptions = {}
   ) =>
     new StormDateTime(dateTime, {
-      timeZone:
-        (StormDateTime.isDateTime(dateTime)
-          ? dateTime.timeZoneId
-          : options?.timeZone) ??
-        process.env.STORM_TIMEZONE ??
-        Temporal.Now.timeZoneId(),
+      ...options,
+      timeZone: StormDateTime.isDateTime(dateTime)
+        ? dateTime.timeZoneId
+        : options?.timeZone,
       calendar: StormDateTime.isDateTime(dateTime)
         ? dateTime.calendarId
-        : (options?.calendar ??
-          new Intl.DateTimeFormat().resolvedOptions().calendar)
+        : options?.calendar
     });
 
   /**
@@ -254,7 +266,7 @@ export class StormDateTime extends Date {
    */
   #zonedDateTime: Temporal.ZonedDateTime = Temporal.Now.zonedDateTime(
     new Intl.DateTimeFormat().resolvedOptions().calendar,
-    process.env.STORM_TIMEZONE ?? Temporal.Now.timeZoneId()
+    StormDateTime.getDefaultTimeZone()
   );
 
   /**
@@ -267,8 +279,11 @@ export class StormDateTime extends Date {
    */
   #options: DateTimeOptions;
 
-  public constructor(dateTime?: DateTimeInput, options?: DateTimeOptions) {
+  public constructor(dateTime?: DateTimeInput, options: DateTimeOptions = {}) {
     let _dateTime = dateTime;
+
+    options.timeZone ??= StormDateTime.getDefaultTimeZone();
+    options.calendar ??= new Intl.DateTimeFormat().resolvedOptions().calendar;
 
     const input = dateTime;
     if (!_dateTime && !options?.skipDefaulting) {
@@ -293,21 +308,16 @@ export class StormDateTime extends Date {
     if (instant && StormDateTime.validate(_dateTime, options) === null) {
       this.#instant = instant;
 
-      const timeZone =
-        options?.timeZone ||
-        process.env.STORM_TIMEZONE ||
-        process.env.TZ ||
-        Temporal.Now.timeZoneId();
       this.#zonedDateTime = options?.calendar
         ? this.#instant.toZonedDateTime({
-            timeZone,
+            timeZone: options.timeZone,
             calendar: options.calendar
           })
-        : this.#instant.toZonedDateTimeISO(timeZone);
+        : this.#instant.toZonedDateTimeISO(options.timeZone);
     }
 
     this.#input = input;
-    this.#options = options ?? {};
+    this.#options = options;
   }
 
   /**
@@ -356,7 +366,7 @@ export class StormDateTime extends Date {
    * An accessor that returns the `timeZoneId` string of the DateTime object
    */
   public get timeZoneId(): string {
-    return this.#zonedDateTime.timeZoneId;
+    return this.#zonedDateTime.timeZoneId || StormDateTime.getDefaultTimeZone();
   }
 
   /**
@@ -840,7 +850,7 @@ export class StormDateTime extends Date {
   public getPlainDate(): StormDateTime {
     return StormDateTime.create(
       this.#zonedDateTime.toPlainDate().toZonedDateTime({
-        timeZone: Temporal.Now.timeZoneId(),
+        timeZone: StormDateTime.getDefaultTimeZone(),
         plainTime: undefined
       }).epochMilliseconds,
       {
@@ -858,7 +868,7 @@ export class StormDateTime extends Date {
   public getPlainTime(): StormDateTime {
     return StormDateTime.create(
       this.#zonedDateTime.toPlainTime().toZonedDateTime({
-        timeZone: Temporal.Now.timeZoneId(),
+        timeZone: StormDateTime.getDefaultTimeZone(),
         plainDate: Temporal.PlainDate.from({
           year: 1970,
           month: 0,

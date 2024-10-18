@@ -86,16 +86,12 @@ export class StormTime extends StormDateTime {
    */
   public static override create = (
     time?: DateTimeInput,
-    options?: DateTimeOptions
+    options: DateTimeOptions = {}
   ) =>
     new StormTime(time, {
-      timeZone:
-        (StormDateTime.isDateTime(time)
-          ? time.timeZoneId
-          : options?.timeZone) ?? Temporal.Now.timeZoneId(),
-      calendar: StormDateTime.isDateTime(time)
-        ? time.calendarId
-        : options?.calendar
+      ...options,
+      timeZone: StormDateTime.isDateTime(time) ? time.timeZoneId : undefined,
+      calendar: StormDateTime.isDateTime(time) ? time.calendarId : undefined
     });
 
   /**
@@ -160,12 +156,16 @@ export class StormTime extends StormDateTime {
     return null;
   }
 
-  public constructor(dateTime?: DateTimeInput, options?: DateTimeOptions) {
+  public constructor(dateTime?: DateTimeInput, options: DateTimeOptions = {}) {
     super(dateTime, options);
 
     const stormDateTime = StormDateTime.create(dateTime, options);
     this.instant = stormDateTime.instant
-      .toZonedDateTimeISO("UTC")
+      .toZonedDateTimeISO(
+        options.timeZone ||
+          stormDateTime.timeZoneId ||
+          StormDateTime.getDefaultTimeZone()
+      )
       .with({
         year: 1970,
         month: 1,

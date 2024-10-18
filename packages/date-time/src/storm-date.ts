@@ -218,24 +218,24 @@ export class StormDate extends StormDateTime {
    */
   public static override create = (
     date?: DateTimeInput,
-    options?: DateTimeOptions
+    options: DateTimeOptions = {}
   ) =>
     new StormDate(date, {
-      timeZone:
-        (StormDateTime.isDateTime(date)
-          ? date.timeZoneId
-          : options?.timeZone) ?? Temporal.Now.timeZoneId(),
-      calendar: StormDateTime.isDateTime(date)
-        ? date.calendarId
-        : options?.calendar
+      ...options,
+      timeZone: StormDateTime.isDateTime(date) ? date.timeZoneId : undefined,
+      calendar: StormDateTime.isDateTime(date) ? date.calendarId : undefined
     });
 
-  public constructor(dateTime?: DateTimeInput, options?: DateTimeOptions) {
+  public constructor(dateTime?: DateTimeInput, options: DateTimeOptions = {}) {
     super(dateTime, options);
 
     const stormDateTime = StormDateTime.create(dateTime, options);
     this.instant = stormDateTime.instant
-      .toZonedDateTimeISO("UTC")
+      .toZonedDateTimeISO(
+        options.timeZone ||
+          stormDateTime.timeZoneId ||
+          StormDateTime.getDefaultTimeZone()
+      )
       .with({
         hour: 0,
         minute: 0,
