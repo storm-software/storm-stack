@@ -1,3 +1,10 @@
+## 0.13.0 (2024-10-18)
+
+
+### Features
+
+- **date-time:** Added the `getDefaultTimeZone` function to the `StormDateTime` class ([f2fac83](https://github.com/storm-software/storm-stack/commit/f2fac83))
+
 ## 0.12.0 (2024-10-18)
 
 
