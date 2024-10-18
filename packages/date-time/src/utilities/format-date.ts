@@ -16,6 +16,7 @@
  -------------------------------------------------------------------*/
 
 import type { Temporal } from "@js-temporal/polyfill";
+import { EMPTY_STRING } from "@storm-stack/types/utility-types/base";
 import { StormDate } from "../storm-date";
 import type { StormDateTime } from "../storm-date-time";
 
@@ -49,11 +50,11 @@ export const formatDate = (
 
   const calendarName = options?.calendarName || "never";
   if (!dateTime && options?.returnEmptyIfNotSet) {
-    return "";
+    return EMPTY_STRING;
   }
 
   if ((!dateTime || !dateTime.isValid) && options?.returnEmptyIfInvalid) {
-    return "";
+    return EMPTY_STRING;
   }
 
   if (!dateTime || !dateTime.isValid) {

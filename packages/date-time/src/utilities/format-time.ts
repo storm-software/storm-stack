@@ -16,8 +16,25 @@
  -------------------------------------------------------------------*/
 
 import type { Temporal } from "@js-temporal/polyfill";
+import { EMPTY_STRING } from "@storm-stack/types/utility-types/base";
 import type { StormDateTime } from "../storm-date-time";
 import { StormTime } from "../storm-time";
+
+export type FormatTimeOptions = Partial<Temporal.ToStringPrecisionOptions> & {
+  /**
+   * Should an empty string be returned if the date is null or undefined
+   *
+   * @defaultValue false
+   */
+  returnEmptyIfNotSet?: boolean;
+
+  /**
+   * Should an empty string be returned if the date is invalid
+   *
+   * @defaultValue false
+   */
+  returnEmptyIfInvalid?: boolean;
+};
 
 /**
  * Format a time field
@@ -26,13 +43,27 @@ import { StormTime } from "../storm-time";
  * @returns The formatted time string
  */
 export const formatTime = (
-  dateTime: StormDateTime = StormTime.current(),
-  options?: Partial<Temporal.ToStringPrecisionOptions>
+  dateTime?: StormDateTime | null,
+  options?: FormatTimeOptions
 ): string => {
+  let value = dateTime;
+
   const smallestUnit = options?.smallestUnit || "milliseconds";
   const roundingMode = options?.roundingMode || "ceil";
 
-  return dateTime.zonedDateTime.toPlainTime().toString({
+  if (!dateTime && options?.returnEmptyIfNotSet) {
+    return EMPTY_STRING;
+  }
+
+  if ((!dateTime || !dateTime.isValid) && options?.returnEmptyIfInvalid) {
+    return EMPTY_STRING;
+  }
+
+  if (!dateTime || !dateTime.isValid) {
+    value = StormTime.current();
+  }
+
+  return value!.zonedDateTime.toPlainTime().toString({
     smallestUnit,
     roundingMode
   });
