@@ -1,3 +1,10 @@
+## 1.16.0 (2024-10-18)
+
+
+### Features
+
+- **date-time:** Provide time zone to the formatting function ([318ab55](https://github.com/storm-software/storm-stack/commit/318ab55))
+
 ## 1.15.0 (2024-10-18)
 
 

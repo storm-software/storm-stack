@@ -1,3 +1,12 @@
+## 1.28.0 (2024-10-18)
+
+
+### Features
+
+- **date-time:** Using Tempo to format Date objects ([3b50a18](https://github.com/storm-software/storm-stack/commit/3b50a18))
+
+- **date-time:** Provide time zone to the formatting function ([318ab55](https://github.com/storm-software/storm-stack/commit/318ab55))
+
 ## 1.27.0 (2024-10-18)
 
 
