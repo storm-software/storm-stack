@@ -118,16 +118,14 @@ export class StormParser extends SuperJSON {
 
   private constructor() {
     super({ dedupe: true });
-
-    StormParser.instance.registerCustom<Buffer, string>(
-      {
-        isApplicable: (v): v is Buffer => Buffer.isBuffer(v),
-        serialize: v => v.toString("base64"),
-        deserialize: v => Buffer.from(v, "base64")
-      },
-      "Bytes"
-    );
   }
 }
 
-
+StormParser.instance.registerCustom<Buffer, string>(
+  {
+    isApplicable: (v): v is Buffer => Buffer.isBuffer(v),
+    serialize: v => v.toString("base64"),
+    deserialize: v => Buffer.from(v, "base64")
+  },
+  "Bytes"
+);
