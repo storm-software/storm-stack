@@ -80,5 +80,10 @@ export const formatTime = (
     value = StormTime.current();
   }
 
-  return format(value, options.format || DEFAULT_TIME_FORMAT, options.locale);
+  return format({
+    date: value,
+    format: options.format || DEFAULT_TIME_FORMAT,
+    locale: options.locale,
+    tz: value!.timeZoneId
+  });
 };
