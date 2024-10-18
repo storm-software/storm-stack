@@ -21,10 +21,18 @@ export type DateTimeErrorCode =
   | ErrorCode
   | "datetime_create_failure"
   | "ms_format"
-  | "formatting_failure";
+  | "formatting_failure"
+  | "invalid_instant"
+  | "invalid_time"
+  | "rfc_3339_format"
+  | "invalid_day_of_month";
 export const DateTimeErrorCode = {
   ...ErrorCode,
   datetime_create_failure: "datetime_create_failure" as DateTimeErrorCode,
   ms_format: "ms_format" as DateTimeErrorCode,
-  formatting_failure: "formatting_failure" as DateTimeErrorCode
+  formatting_failure: "formatting_failure" as DateTimeErrorCode,
+  invalid_instant: "invalid_instant" as DateTimeErrorCode,
+  invalid_time: "invalid_time" as DateTimeErrorCode,
+  rfc_3339_format: "rfc_3339_format" as DateTimeErrorCode,
+  invalid_day_of_month: "invalid_day_of_month" as DateTimeErrorCode
 };

@@ -28,6 +28,7 @@ export type ErrorCode =
   | "field_validation_error"
   | "invalid_parameter"
   | "invalid_request"
+  | "invalid_value"
   | "unsupported_request"
   | "type_error"
   | "service_unavailable"
@@ -49,6 +50,8 @@ export const ErrorCode = {
   field_validation_error: "field_validation_error" as ErrorCode,
   invalid_parameter: "invalid_parameter" as ErrorCode,
   invalid_request: "invalid_request" as ErrorCode,
+  invalid_value: "invalid_value" as ErrorCode,
+  invalid_format: "invalid_format" as ErrorCode,
   unsupported_request: "unsupported_request" as ErrorCode,
   type_error: "type_error" as ErrorCode,
   service_unavailable: "service_unavailable" as ErrorCode,

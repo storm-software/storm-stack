@@ -17,8 +17,16 @@
 
 import { Temporal } from "@js-temporal/polyfill";
 import { type JsonValue, Serializable } from "@storm-stack/serialization";
-import { isBigInt, isDate, isNumber, isSetString } from "@storm-stack/types";
+import {
+  isBigInt,
+  isDate,
+  isNumber,
+  isSetString,
+  MessageType,
+  ValidationDetails
+} from "@storm-stack/types";
 import { RFC_3339_DATE_REGEX } from "./constants";
+import { DateTimeErrorCode } from "./errors";
 import type { DateTimeInput, DateTimeOptions } from "./storm-date-time";
 import { StormDateTime } from "./storm-date-time";
 import { isInstant } from "./utilities/is-instant";
@@ -88,6 +96,120 @@ export class StormDate extends StormDateTime {
   }
 
   /**
+   * Validate the input date value
+   *
+   * @param dateTime - The date value to validate
+   * @param options - The options to use
+   * @returns A boolean representing whether the value is a valid *date-time*
+   */
+  public static override validate(
+    value?: DateTimeInput,
+    options?: DateTimeOptions
+  ): ValidationDetails | null {
+    if (StormDateTime.isDateTime(value)) {
+      return value.validate();
+    }
+    if (isInstant(value)) {
+      if (value.epochMilliseconds) {
+        return null;
+      }
+
+      return {
+        code: DateTimeErrorCode.invalid_instant,
+        type: MessageType.ERROR
+      };
+    }
+
+    let datetime: string | undefined;
+    if (isDate(value) || isNumber(value) || isBigInt(value)) {
+      const date =
+        isNumber(value) || isBigInt(value) ? new Date(Number(value)) : value;
+
+      if (Number.isNaN(date.getTime())) {
+        return {
+          code: DateTimeErrorCode.invalid_time,
+          type: MessageType.ERROR
+        };
+      }
+
+      datetime = date.toISOString();
+    } else {
+      datetime =
+        value === null || value === void 0 ? void 0 : value.toUpperCase();
+    }
+
+    if (!datetime) {
+      return {
+        code: DateTimeErrorCode.invalid_value,
+        type: MessageType.ERROR
+      };
+    }
+
+    // Validate the structure of the date-string
+    if (!RFC_3339_DATE_REGEX.test(datetime)) {
+      return {
+        code: DateTimeErrorCode.rfc_3339_format,
+        type: MessageType.ERROR
+      };
+    }
+
+    const createdDateTime = StormDateTime.create(value, options);
+    switch (createdDateTime.zonedDateTime.month) {
+      case 1:
+      case 3:
+      case 5:
+      case 7:
+      case 8:
+      case 10:
+      case 12: {
+        if (createdDateTime.zonedDateTime.day > 31) {
+          return {
+            code: DateTimeErrorCode.invalid_day_of_month,
+            type: MessageType.ERROR
+          };
+        }
+
+        break;
+      }
+
+      case 2: {
+        if (
+          createdDateTime.zonedDateTime.day >
+          (createdDateTime.zonedDateTime.inLeapYear ? 29 : 28)
+        ) {
+          return {
+            code: DateTimeErrorCode.invalid_day_of_month,
+            type: MessageType.ERROR
+          };
+        }
+
+        break;
+      }
+
+      case 4:
+      case 6:
+      case 9:
+      case 11: {
+        if (createdDateTime.zonedDateTime.day > 30) {
+          return {
+            code: DateTimeErrorCode.invalid_day_of_month,
+            type: MessageType.ERROR
+          };
+        }
+
+        break;
+      }
+
+      default: {
+        break;
+      }
+    }
+
+    // Success - Valid
+    return null;
+  }
+
+  /**
    * Creates a new StormDate object with the given date and time
    *
    * @param date - The date to use
@@ -131,79 +253,6 @@ export class StormDate extends StormDateTime {
       microsecond: 0,
       nanosecond: 0
     });
-  }
-
-  /**
-   * Validate the input date value
-   *
-   * @param dateTime - The date value to validate
-   * @param options - The options to use
-   * @returns A boolean representing whether the value is a valid *date-time*
-   */
-  protected override validate(
-    value?: DateTimeInput,
-    options?: DateTimeOptions
-  ): boolean {
-    if (StormDateTime.isDateTime(value)) {
-      return value.isValid;
-    }
-    if (isInstant(value)) {
-      return Boolean(value.epochMilliseconds);
-    }
-
-    let datetime: string | undefined;
-    if (isDate(value) || isNumber(value) || isBigInt(value)) {
-      const date =
-        isNumber(value) || isBigInt(value) ? new Date(Number(value)) : value;
-
-      if (Number.isNaN(date.getTime())) {
-        return false;
-      }
-
-      datetime = date.toUTCString();
-    } else {
-      datetime =
-        value === null || value === void 0 ? void 0 : value.toUpperCase();
-    }
-
-    if (!datetime) {
-      return false;
-    }
-
-    if (!RFC_3339_DATE_REGEX.test(datetime)) {
-      return false;
-    }
-
-    const createdDateTime = StormDateTime.create(value, options);
-    switch (createdDateTime.zonedDateTime.month) {
-      case 1:
-      case 3:
-      case 5:
-      case 7:
-      case 8:
-      case 10:
-      case 12: {
-        return createdDateTime.zonedDateTime.day > 31;
-      }
-
-      case 2: {
-        return (
-          createdDateTime.zonedDateTime.day >
-          (createdDateTime.zonedDateTime.inLeapYear ? 29 : 28)
-        );
-      }
-
-      case 4:
-      case 6:
-      case 9:
-      case 11: {
-        return createdDateTime.zonedDateTime.day > 30;
-      }
-
-      default: {
-        return true;
-      }
-    }
   }
 
   /**

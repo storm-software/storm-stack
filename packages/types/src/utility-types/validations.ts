@@ -34,9 +34,9 @@ export type ValidationDetails<
    * The field that the message is related to.
    *
    * @remarks
-   * If `null`, the message is not related to a specific field - in this case it is likely a global/form message.
+   * If `undefined` or `null`, the message is not related to a specific field - in this case it is likely a global/form message.
    */
-  field: string | null;
+  field?: string | null;
 };
 
 export type ErrorValidationDetails = ValidationDetails<

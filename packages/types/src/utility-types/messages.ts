@@ -42,11 +42,13 @@ export type MessageDetails<
       code: string;
       message?: string;
       type: TMessageType;
+      params?: string[];
     }
   | {
       code?: string;
       message: string;
       type: TMessageType;
+      params?: string[];
     };
 
 export type HelpMessageDetails = MessageDetails<typeof MessageType.HELP>;

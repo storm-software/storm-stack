@@ -23,9 +23,12 @@ import {
   isNumber,
   isObject,
   isSet,
-  isSetString
+  isSetString,
+  MessageType,
+  ValidationDetails
 } from "@storm-stack/types";
 import { RFC_3339_DATETIME_REGEX } from "./constants";
+import { DateTimeErrorCode } from "./errors";
 import { isInstant } from "./utilities/is-instant";
 
 /**
@@ -172,6 +175,76 @@ export class StormDateTime extends Date {
     });
 
   /**
+   * Validate the input date value
+   *
+   * @param dateTime - The date value to validate
+   * @param _options - The options to use
+   * @returns A boolean representing whether the value is a valid *date-time*
+   */
+  public static validate(
+    value?: DateTimeInput,
+    _options?: DateTimeOptions
+  ): ValidationDetails | null {
+    if (StormDateTime.isDateTime(value)) {
+      return value.validate();
+    }
+    if (isInstant(value)) {
+      if (value.epochMilliseconds) {
+        return null;
+      }
+
+      return {
+        code: DateTimeErrorCode.invalid_instant,
+        type: MessageType.ERROR
+      };
+    }
+
+    let datetime: string | undefined;
+    if (isDate(value) || isNumber(value) || isBigInt(value)) {
+      const date =
+        isNumber(value) || isBigInt(value) ? new Date(Number(value)) : value;
+
+      if (Number.isNaN(date.getTime())) {
+        return {
+          code: DateTimeErrorCode.invalid_time,
+          type: MessageType.ERROR
+        };
+      }
+
+      datetime = date.toISOString();
+    } else {
+      datetime =
+        value === null || value === void 0 ? void 0 : value.toUpperCase();
+    }
+
+    if (!datetime) {
+      return {
+        code: DateTimeErrorCode.invalid_value,
+        type: MessageType.ERROR
+      };
+    }
+
+    // Validate the structure of the date-string
+    if (!RFC_3339_DATETIME_REGEX.test(datetime)) {
+      return {
+        code: DateTimeErrorCode.rfc_3339_format,
+        type: MessageType.ERROR
+      };
+    }
+
+    // Check if it is a correct date using the javascript Date parse() method.
+    if (!Date.parse(datetime)) {
+      return {
+        code: DateTimeErrorCode.rfc_3339_format,
+        type: MessageType.ERROR
+      };
+    }
+
+    // Success - Valid
+    return null;
+  }
+
+  /**
    * A private accessor that stores the `Temporal.Instant` object of the DateTime object
    */
   #instant: Temporal.Instant = Temporal.Now.instant();
@@ -217,7 +290,7 @@ export class StormDateTime extends Date {
       : undefined;
 
     super(instant ? Number(instant.epochMilliseconds) : "MISSING_DATE");
-    if (instant && this.validate(_dateTime, options)) {
+    if (instant && StormDateTime.validate(_dateTime, options) === null) {
       this.#instant = instant;
 
       const timeZone =
@@ -290,7 +363,7 @@ export class StormDateTime extends Date {
    * An accessor that returns the `isValid` boolean of the DateTime object
    */
   public get isValid(): boolean {
-    return this.validate(this.#zonedDateTime.epochMilliseconds, this.#options);
+    return this.validate() === null;
   }
 
   /**
@@ -308,53 +381,15 @@ export class StormDateTime extends Date {
   }
 
   /**
-   * Validate the input date value
+   * A function that validates the current DateTime object
    *
-   * @param dateTime - The date value to validate
-   * @param _options - The options to use
-   * @returns A boolean representing whether the value is a valid *date-time*
+   * @returns A StormError object if the DateTime object is invalid, otherwise null
    */
-  protected validate(
-    value?: DateTimeInput,
-    _options?: DateTimeOptions
-  ): boolean {
-    if (StormDateTime.isDateTime(value)) {
-      return value.isValid;
-    }
-    if (isInstant(value)) {
-      return Boolean(value.epochMilliseconds);
-    }
-
-    let datetime: string | undefined;
-    if (isDate(value) || isNumber(value) || isBigInt(value)) {
-      const date =
-        isNumber(value) || isBigInt(value) ? new Date(Number(value)) : value;
-
-      if (Number.isNaN(date.getTime())) {
-        return false;
-      }
-
-      datetime = date.toUTCString();
-    } else {
-      datetime =
-        value === null || value === void 0 ? void 0 : value.toUpperCase();
-    }
-
-    if (!datetime) {
-      return false;
-    }
-
-    // Validate the structure of the date-string
-    if (!RFC_3339_DATETIME_REGEX.test(datetime)) {
-      return false;
-    }
-
-    // Check if it is a correct date using the javascript Date parse() method.
-    if (!Date.parse(datetime)) {
-      return false;
-    }
-
-    return true;
+  public validate(): ValidationDetails | null {
+    return StormDateTime.validate(
+      this.#zonedDateTime.epochMilliseconds,
+      this.#options
+    );
   }
 
   /**
