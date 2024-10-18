@@ -1,3 +1,10 @@
+## 1.26.0 (2024-10-18)
+
+
+### Features
+
+- **date-time:** Added the static validate method to the `StormDateTime` utility classes ([3169747](https://github.com/storm-software/storm-stack/commit/3169747))
+
 ## 1.25.0 (2024-10-18)
 
 

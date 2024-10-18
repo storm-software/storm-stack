@@ -1,3 +1,12 @@
+## 1.28.0 (2024-10-18)
+
+
+### Features
+
+- **errors:** Added helper function to `StormError` to quickly create with specific types ([6ffdb40](https://github.com/storm-software/storm-stack/commit/6ffdb40))
+
+- **date-time:** Added the static validate method to the `StormDateTime` utility classes ([3169747](https://github.com/storm-software/storm-stack/commit/3169747))
+
 ## 1.27.0 (2024-10-18)
 
 
