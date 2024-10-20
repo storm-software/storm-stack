@@ -98,12 +98,10 @@ export class StormTime extends StormDateTime {
    * Validate the input time value
    *
    * @param dateTime - The date value to validate
-   * @param _options - The options to use
    * @returns A boolean representing whether the value is a valid *date-time*
    */
   public static override validate(
-    value?: DateTimeInput,
-    _options?: DateTimeOptions
+    value?: DateTimeInput
   ): ValidationDetails | null {
     if (StormDateTime.isDateTime(value)) {
       return value.validate();
@@ -180,6 +178,15 @@ export class StormTime extends StormDateTime {
   }
 
   /**
+   * A function that validates the current Time object
+   *
+   * @returns A ValidationDetails object if the Time object is invalid, otherwise null
+   */
+  public override validate(): ValidationDetails | null {
+    return StormTime.validate(this.zonedDateTime.epochMilliseconds);
+  }
+
+  /**
    *  Gets the year, using local time.
    */
   public override getFullYear(): number {
@@ -197,14 +204,14 @@ export class StormTime extends StormDateTime {
    *  Gets the month, using local time.
    */
   public override getMonth(): number {
-    return 1;
+    return 0;
   }
 
   /**
    *  Gets the month of a Date object using Universal Coordinated Time (UTC).
    */
   public override getUTCMonth(): number {
-    return 1;
+    return 0;
   }
 
   /**

@@ -100,12 +100,10 @@ export class StormDate extends StormDateTime {
    * Validate the input date value
    *
    * @param dateTime - The date value to validate
-   * @param options - The options to use
    * @returns A boolean representing whether the value is a valid *date-time*
    */
   public static override validate(
-    value?: DateTimeInput,
-    options?: DateTimeOptions
+    value?: DateTimeInput
   ): ValidationDetails | null {
     if (StormDateTime.isDateTime(value)) {
       return value.validate();
@@ -154,7 +152,7 @@ export class StormDate extends StormDateTime {
       };
     }
 
-    return validateDayOfMonth(StormDateTime.create(value, options));
+    return validateDayOfMonth(StormDate.create(value));
   }
 
   /**
@@ -201,6 +199,15 @@ export class StormDate extends StormDateTime {
       microsecond: 0,
       nanosecond: 0
     });
+  }
+
+  /**
+   * A function that validates the current Date object
+   *
+   * @returns A ValidationDetails object if the Date object is invalid, otherwise null
+   */
+  public override validate(): ValidationDetails | null {
+    return StormDate.validate(this.zonedDateTime.epochMilliseconds);
   }
 
   /**

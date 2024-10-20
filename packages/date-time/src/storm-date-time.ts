@@ -191,13 +191,9 @@ export class StormDateTime extends Date {
    * Validate the input date value
    *
    * @param dateTime - The date value to validate
-   * @param _options - The options to use
    * @returns A boolean representing whether the value is a valid *date-time*
    */
-  public static validate(
-    value?: DateTimeInput,
-    options?: DateTimeOptions
-  ): ValidationDetails | null {
+  public static validate(value?: DateTimeInput): ValidationDetails | null {
     if (StormDateTime.isDateTime(value)) {
       return value.validate();
     }
@@ -253,7 +249,7 @@ export class StormDateTime extends Date {
       };
     }
 
-    return validateDayOfMonth(StormDateTime.create(value, options));
+    return validateDayOfMonth(StormDateTime.create(value));
   }
 
   /**
@@ -305,7 +301,7 @@ export class StormDateTime extends Date {
       : undefined;
 
     super(instant ? Number(instant.epochMilliseconds) : "MISSING_DATE");
-    if (instant && StormDateTime.validate(_dateTime, options) === null) {
+    if (instant && StormDateTime.validate(_dateTime) === null) {
       this.#instant = instant;
 
       this.#zonedDateTime = options?.calendar
@@ -400,13 +396,10 @@ export class StormDateTime extends Date {
   /**
    * A function that validates the current DateTime object
    *
-   * @returns A StormError object if the DateTime object is invalid, otherwise null
+   * @returns A ValidationDetails object if the DateTime object is invalid, otherwise null
    */
   public validate(): ValidationDetails | null {
-    return StormDateTime.validate(
-      this.#zonedDateTime.epochMilliseconds,
-      this.#options
-    );
+    return StormDateTime.validate(this.#zonedDateTime.epochMilliseconds);
   }
 
   /**
