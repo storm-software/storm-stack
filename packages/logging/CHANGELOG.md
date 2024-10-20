@@ -1,3 +1,10 @@
+## 1.28.1 (2024-10-20)
+
+
+### Bug Fixes
+
+- **date-time:** Resolved issue with creating date-time in validation function ([2a3c1e8](https://github.com/storm-software/storm-stack/commit/2a3c1e8))
+
 ## 1.28.0 (2024-10-18)
 
 
