@@ -1,3 +1,15 @@
+## 1.28.0 (2024-10-20)
+
+
+### Features
+
+- **serialization:** Added the `parseCookie` and `serializeCookie` helper functions ([0b695ef](https://github.com/storm-software/storm-stack/commit/0b695ef))
+
+
+### Refactoring
+
+- **serialization:** Use type-checkers from `types` package ([2379ba8](https://github.com/storm-software/storm-stack/commit/2379ba8))
+
 ## 1.27.2 (2024-10-20)
 
 
