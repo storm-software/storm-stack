@@ -15,6 +15,7 @@
 
  -------------------------------------------------------------------*/
 
+export * from "./cookie";
 export * from "./serializable";
 export * from "./storm-parser";
 export * from "./storm-url-builder";
