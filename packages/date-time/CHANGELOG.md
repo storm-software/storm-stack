@@ -1,3 +1,10 @@
+## 1.29.0 (2024-10-20)
+
+
+### Features
+
+- **date-time:** Added the day of the month validation to date classes ([734d0c8](https://github.com/storm-software/storm-stack/commit/734d0c8))
+
 ## 1.28.0 (2024-10-18)
 
 
