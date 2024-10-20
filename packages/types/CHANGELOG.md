@@ -1,3 +1,10 @@
+## 0.15.2 (2024-10-20)
+
+
+### Bug Fixes
+
+- **date-time:** Resolve issue with call to validation prior to construction ([d020d67](https://github.com/storm-software/storm-stack/commit/d020d67))
+
 ## 0.15.1 (2024-10-20)
 
 
