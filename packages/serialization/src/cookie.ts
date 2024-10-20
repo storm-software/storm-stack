@@ -40,7 +40,7 @@ export function parseCookie(
   strCookie: string,
   options?: CookieParseOptions
 ): Record<string, string> {
-  if (typeof strCookie !== "string") {
+  if (!isString(strCookie)) {
     throw new TypeError("argument str must be a string");
   }
 
@@ -112,7 +112,7 @@ export function parseSetCookie(
 ): SetCookie {
   const parts = (setCookieValue || "")
     .split(";")
-    .filter(str => typeof str === "string" && Boolean(str.trim()));
+    .filter(str => isString(str) && Boolean(str.trim()));
 
   const nameValuePairStr = parts.shift() || "";
 
@@ -262,10 +262,9 @@ export function serializeCookie(
   }
 
   if (opt.priority) {
-    const priority =
-      typeof opt.priority === "string"
-        ? opt.priority.toLowerCase()
-        : opt.priority;
+    const priority = isString(opt.priority)
+      ? opt.priority.toLowerCase()
+      : opt.priority;
 
     switch (priority) {
       case "low": {
@@ -335,7 +334,7 @@ export function splitSetCookieString(strCookie: string | string[]): string[] {
     return strCookie.flatMap(c => splitSetCookieString(c));
   }
 
-  if (typeof strCookie !== "string") {
+  if (!isString(strCookie)) {
     return [];
   }
 
