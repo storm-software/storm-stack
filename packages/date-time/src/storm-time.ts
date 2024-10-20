@@ -25,7 +25,7 @@ import {
   MessageType,
   ValidationDetails
 } from "@storm-stack/types";
-import { RFC_3339_TIME_REGEX } from "./constants";
+import { RFC_3339_DATE_TIME_REGEX, RFC_3339_TIME_REGEX } from "./constants";
 import { DateTimeErrorCode } from "./errors";
 import type { DateTimeInput, DateTimeOptions } from "./storm-date-time";
 import { StormDateTime } from "./storm-date-time";
@@ -143,7 +143,10 @@ export class StormTime extends StormDateTime {
     }
 
     // Validate the structure of the date-string
-    if (!RFC_3339_TIME_REGEX.test(datetime)) {
+    if (
+      !RFC_3339_TIME_REGEX.test(datetime) &&
+      !RFC_3339_DATE_TIME_REGEX.test(datetime)
+    ) {
       return {
         code: DateTimeErrorCode.rfc_3339_format,
         type: MessageType.ERROR

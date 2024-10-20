@@ -27,7 +27,7 @@ import {
   MessageType,
   ValidationDetails
 } from "@storm-stack/types";
-import { RFC_3339_DATETIME_REGEX } from "./constants";
+import { RFC_3339_DATE_TIME_REGEX } from "./constants";
 import { DateTimeErrorCode } from "./errors";
 import { isInstant } from "./utilities/is-instant";
 import { validateDayOfMonth } from "./utilities/validate-day-of-month";
@@ -88,6 +88,8 @@ export function deserializeStormDateTime(utcString: JsonValue): StormDateTime {
     ? StormDateTime.create(utcString)
     : StormDateTime.create();
 }
+
+export const DATE_TIME_MISSING_DATE = "MISSING_DATE";
 
 /**
  * A wrapper of the and Date class used by Storm Software to provide Date-Time values
@@ -234,7 +236,7 @@ export class StormDateTime extends Date {
     }
 
     // Validate the structure of the date-string
-    if (!RFC_3339_DATETIME_REGEX.test(datetime)) {
+    if (!RFC_3339_DATE_TIME_REGEX.test(datetime)) {
       return {
         code: DateTimeErrorCode.rfc_3339_format,
         type: MessageType.ERROR
@@ -300,7 +302,7 @@ export class StormDateTime extends Date {
           )
       : undefined;
 
-    super(instant ? Number(instant.epochMilliseconds) : "MISSING_DATE");
+    super(instant ? Number(instant.epochMilliseconds) : DATE_TIME_MISSING_DATE);
     if (instant) {
       this.#instant = instant;
 
