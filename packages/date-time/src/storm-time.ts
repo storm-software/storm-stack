@@ -166,13 +166,13 @@ export class StormTime extends StormDateTime {
       )
       .with({
         year: 1970,
-        month: 1,
+        month: 0,
         day: 1
       })
       .toInstant();
     this.zonedDateTime = stormDateTime.zonedDateTime.with({
       year: 1970,
-      month: 1,
+      month: 0,
       day: 1
     });
   }

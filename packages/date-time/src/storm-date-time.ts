@@ -301,7 +301,7 @@ export class StormDateTime extends Date {
       : undefined;
 
     super(instant ? Number(instant.epochMilliseconds) : "MISSING_DATE");
-    if (instant && StormDateTime.validate(_dateTime) === null) {
+    if (instant) {
       this.#instant = instant;
 
       this.#zonedDateTime = options?.calendar
