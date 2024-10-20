@@ -30,6 +30,7 @@ import {
 import { RFC_3339_DATETIME_REGEX } from "./constants";
 import { DateTimeErrorCode } from "./errors";
 import { isInstant } from "./utilities/is-instant";
+import { validateDayOfMonth } from "./utilities/validate-day-of-month";
 
 /**
  * The options to use when creating a new DateTime object
@@ -50,7 +51,7 @@ export interface DateTimeOptions {
    *
    * @defaultValue false
    */
-  skipDefaulting?: boolean;
+  defaultToNow?: boolean;
 }
 
 /**
@@ -195,7 +196,7 @@ export class StormDateTime extends Date {
    */
   public static validate(
     value?: DateTimeInput,
-    _options?: DateTimeOptions
+    options?: DateTimeOptions
   ): ValidationDetails | null {
     if (StormDateTime.isDateTime(value)) {
       return value.validate();
@@ -252,8 +253,7 @@ export class StormDateTime extends Date {
       };
     }
 
-    // Success - Valid
-    return null;
+    return validateDayOfMonth(StormDateTime.create(value, options));
   }
 
   /**
@@ -286,7 +286,7 @@ export class StormDateTime extends Date {
     options.calendar ??= new Intl.DateTimeFormat().resolvedOptions().calendar;
 
     const input = dateTime;
-    if (!_dateTime && !options?.skipDefaulting) {
+    if (!_dateTime && options?.defaultToNow) {
       _dateTime = Temporal.Now.instant();
     }
 
@@ -370,10 +370,17 @@ export class StormDateTime extends Date {
   }
 
   /**
-   * An accessor that returns the `isValid` boolean of the DateTime object
+   * An accessor that returns the `valid` boolean of the DateTime object
    */
-  public get isValid(): boolean {
+  public get valid(): boolean {
     return this.validate() === null;
+  }
+
+  /**
+   * An accessor that returns the `invalid` boolean of the DateTime object
+   */
+  public get invalid(): boolean {
+    return !this.valid;
   }
 
   /**

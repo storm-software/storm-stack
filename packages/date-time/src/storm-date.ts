@@ -30,6 +30,7 @@ import { DateTimeErrorCode } from "./errors";
 import type { DateTimeInput, DateTimeOptions } from "./storm-date-time";
 import { StormDateTime } from "./storm-date-time";
 import { isInstant } from "./utilities/is-instant";
+import { validateDayOfMonth } from "./utilities/validate-day-of-month";
 
 /**
  * Serializes a StormDate into a string
@@ -153,60 +154,7 @@ export class StormDate extends StormDateTime {
       };
     }
 
-    const createdDateTime = StormDateTime.create(value, options);
-    switch (createdDateTime.zonedDateTime.month) {
-      case 1:
-      case 3:
-      case 5:
-      case 7:
-      case 8:
-      case 10:
-      case 12: {
-        if (createdDateTime.zonedDateTime.day > 31) {
-          return {
-            code: DateTimeErrorCode.invalid_day_of_month,
-            type: MessageType.ERROR
-          };
-        }
-
-        break;
-      }
-
-      case 2: {
-        if (
-          createdDateTime.zonedDateTime.day >
-          (createdDateTime.zonedDateTime.inLeapYear ? 29 : 28)
-        ) {
-          return {
-            code: DateTimeErrorCode.invalid_day_of_month,
-            type: MessageType.ERROR
-          };
-        }
-
-        break;
-      }
-
-      case 4:
-      case 6:
-      case 9:
-      case 11: {
-        if (createdDateTime.zonedDateTime.day > 30) {
-          return {
-            code: DateTimeErrorCode.invalid_day_of_month,
-            type: MessageType.ERROR
-          };
-        }
-
-        break;
-      }
-
-      default: {
-        break;
-      }
-    }
-
-    // Success - Valid
-    return null;
+    return validateDayOfMonth(StormDateTime.create(value, options));
   }
 
   /**

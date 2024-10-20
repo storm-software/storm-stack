@@ -24,4 +24,5 @@ export * from "./is-date-time";
 export * from "./is-instant";
 export * from "./validate-date";
 export * from "./validate-date-time";
+export * from "./validate-day-of-month";
 export * from "./validate-time";
