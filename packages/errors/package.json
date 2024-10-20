@@ -1,6 +1,6 @@
 {
   "name": "@storm-stack/errors",
-  "version": "1.29.1",
+  "version": "1.29.2",
   "type": "module",
   "description": "This package includes a base error class and various utility functions for working with errors.",
   "repository": {

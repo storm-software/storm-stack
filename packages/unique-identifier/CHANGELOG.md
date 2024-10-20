@@ -1,3 +1,10 @@
+## 1.26.2 (2024-10-20)
+
+
+### Bug Fixes
+
+- **date-time:** Resolve issue with parsing ISO-8601 string ([a63273e](https://github.com/storm-software/storm-stack/commit/a63273e))
+
 ## 1.26.1 (2024-10-20)
 
 
