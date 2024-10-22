@@ -1,3 +1,10 @@
+## 1.30.0 (2024-10-22)
+
+
+### Features
+
+- **types:** Add type parameters and the `icon` property to the `SelectOption` type ([c0ae1d6](https://github.com/storm-software/storm-stack/commit/c0ae1d6))
+
 ## 1.29.0 (2024-10-22)
 
 
