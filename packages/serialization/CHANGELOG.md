@@ -1,3 +1,10 @@
+## 1.29.0 (2024-10-22)
+
+
+### Features
+
+- **monorepo:** Use latest storm build tools in monorepo ([6bf00c5](https://github.com/storm-software/storm-stack/commit/6bf00c5))
+
 ## 1.28.0 (2024-10-20)
 
 
