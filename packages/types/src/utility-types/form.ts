@@ -15,10 +15,15 @@
 
  -------------------------------------------------------------------*/
 
+export type SelectOptionValue = string | number | boolean | null;
+
 /**
  * A utility type for specifying the type of an option for a Select or Radio form field.
  */
-export interface SelectOption<T = string> {
+export interface SelectOption<
+  TValue extends SelectOptionValue = SelectOptionValue,
+  TName = string
+> {
   /**
    * The index of the select option
    */
@@ -27,12 +32,12 @@ export interface SelectOption<T = string> {
   /**
    * The string value to display in the field
    */
-  name: T;
+  name: TName;
 
   /**
    * The value stored behind the scenes when selected
    */
-  value: string | number | boolean;
+  value: TValue;
 
   /**
    * The description of the select option
@@ -43,6 +48,11 @@ export interface SelectOption<T = string> {
    * A short string describing the status of the select option
    */
   status?: string;
+
+  /**
+   * An optional icon to display in the select option
+   */
+  icon?: any;
 
   /**
    * Is the option value valid for selection in the dropdown
