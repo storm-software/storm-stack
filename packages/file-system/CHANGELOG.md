@@ -1,3 +1,10 @@
+## 1.33.2 (2024-10-24)
+
+
+### Bug Fixes
+
+- **date-time:** Update the conditionals in validate functions ([f5f4e26](https://github.com/storm-software/storm-stack/commit/f5f4e26))
+
 ## 1.33.1 (2024-10-24)
 
 
