@@ -1,3 +1,10 @@
+## 0.11.2 (2024-10-24)
+
+
+### Bug Fixes
+
+- **date-time:** Resolve issue with null date-time validations ([3eaf348](https://github.com/storm-software/storm-stack/commit/3eaf348))
+
 ## 0.11.1 (2024-10-24)
 
 
