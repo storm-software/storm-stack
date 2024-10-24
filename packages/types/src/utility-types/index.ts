@@ -31,6 +31,7 @@ export * from "./form";
 export * from "./json";
 export * from "./logic";
 export * from "./messages";
+export * from "./navigator";
 export * from "./object";
 export * from "./package-json";
 export * from "./string";
