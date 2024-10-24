@@ -15,7 +15,7 @@
 
  -------------------------------------------------------------------*/
 
-import { format, type Format } from "@formkit/tempo";
+import { format, FormatOptions, type Format } from "@formkit/tempo";
 import type { Temporal } from "@js-temporal/polyfill";
 import { EMPTY_STRING } from "@storm-stack/types";
 import { DEFAULT_DATE_TIME_FORMAT } from "../constants";
@@ -76,11 +76,11 @@ export const formatDateTime = (
     return EMPTY_STRING;
   }
 
-  if ((!dateTime || !dateTime.isValid) && options?.returnEmptyIfInvalid) {
+  if ((!dateTime || !dateTime.valid) && options?.returnEmptyIfInvalid) {
     return EMPTY_STRING;
   }
 
-  if (!dateTime || !dateTime.isValid) {
+  if (!dateTime || !dateTime.valid) {
     value = StormDateTime.current();
   }
 
@@ -89,5 +89,5 @@ export const formatDateTime = (
     format: options.format || DEFAULT_DATE_TIME_FORMAT,
     locale: options.locale,
     tz: value!.timeZoneId
-  });
+  } as FormatOptions);
 };

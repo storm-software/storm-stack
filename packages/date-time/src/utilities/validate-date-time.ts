@@ -16,7 +16,7 @@
  -------------------------------------------------------------------*/
 
 import { isBigInt, isDate, isNumber } from "@storm-stack/types";
-import { RFC_3339_DATETIME_REGEX } from "../constants";
+import { RFC_3339_DATE_TIME_REGEX } from "../constants";
 import type { DateTimeInput, DateTimeOptions } from "../storm-date-time";
 import { isDateTime } from "./is-date-time";
 import { isInstant } from "./is-instant";
@@ -34,7 +34,7 @@ export function validateDateTime(
   options?: DateTimeOptions
 ): boolean {
   if (isDateTime(value)) {
-    return value.isValid;
+    return value.valid;
   }
   if (isInstant(value)) {
     return Boolean(value.epochMilliseconds);
@@ -60,7 +60,7 @@ export function validateDateTime(
   }
 
   // Validate the structure of the date-string
-  if (!RFC_3339_DATETIME_REGEX.test(datetime)) {
+  if (!RFC_3339_DATE_TIME_REGEX.test(datetime)) {
     return false;
   }
 

@@ -15,7 +15,7 @@
 
  -------------------------------------------------------------------*/
 
-import { format, type Format } from "@formkit/tempo";
+import { format, FormatOptions, type Format } from "@formkit/tempo";
 import { EMPTY_STRING } from "@storm-stack/types/utility-types/base";
 import { DEFAULT_DATE_FORMAT } from "../constants";
 import { StormDate } from "../storm-date";
@@ -68,11 +68,11 @@ export const formatDate = (
     return EMPTY_STRING;
   }
 
-  if ((!dateTime || !dateTime.isValid) && options.returnEmptyIfInvalid) {
+  if ((!dateTime || !dateTime.valid) && options.returnEmptyIfInvalid) {
     return EMPTY_STRING;
   }
 
-  if (!dateTime || !dateTime.isValid) {
+  if (!dateTime || !dateTime.valid) {
     value = StormDate.current();
   }
 
@@ -81,5 +81,5 @@ export const formatDate = (
     format: options.format || DEFAULT_DATE_FORMAT,
     locale: options.locale,
     tz: value!.timeZoneId
-  });
+  } as FormatOptions);
 };

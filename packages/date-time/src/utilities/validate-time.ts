@@ -26,7 +26,7 @@ export function validateTime(
   _options?: DateTimeOptions
 ): boolean {
   if (isDateTime(value)) {
-    return value.isValid;
+    return value.valid;
   }
   if (isInstant(value)) {
     return Boolean(value.epochMilliseconds);

@@ -24,13 +24,14 @@ import {
 } from "../storm-date-time";
 import { isDateTime } from "./is-date-time";
 import { isInstant } from "./is-instant";
+import { validateDayOfMonth } from "./validate-day-of-month";
 
 export function validateDate(
   value: DateTimeInput,
   options?: DateTimeOptions
 ): boolean {
   if (isDateTime(value)) {
-    return value.isValid;
+    return value.valid;
   }
   if (isInstant(value)) {
     return Boolean(value.epochMilliseconds);
@@ -59,34 +60,5 @@ export function validateDate(
     return false;
   }
 
-  const createdDateTime = StormDateTime.create(value, options);
-  switch (createdDateTime.zonedDateTime.month) {
-    case 1:
-    case 3:
-    case 5:
-    case 7:
-    case 8:
-    case 10:
-    case 12: {
-      return createdDateTime.zonedDateTime.day > 31;
-    }
-
-    case 2: {
-      return (
-        createdDateTime.zonedDateTime.day >
-        (createdDateTime.zonedDateTime.inLeapYear ? 29 : 28)
-      );
-    }
-
-    case 4:
-    case 6:
-    case 9:
-    case 11: {
-      return createdDateTime.zonedDateTime.day > 30;
-    }
-
-    default: {
-      return true;
-    }
-  }
+  return validateDayOfMonth(StormDateTime.create(value, options)) === null;
 }
