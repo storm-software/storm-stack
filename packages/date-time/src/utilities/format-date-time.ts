@@ -15,7 +15,7 @@
 
  -------------------------------------------------------------------*/
 
-import { format, FormatOptions, type Format } from "@formkit/tempo";
+import { DateInput, format, FormatOptions, type Format } from "@formkit/tempo";
 import type { Temporal } from "@js-temporal/polyfill";
 import { EMPTY_STRING } from "@storm-stack/types";
 import { DEFAULT_DATE_TIME_FORMAT } from "../constants";
@@ -61,7 +61,7 @@ export type FormatDateTimeOptions =
  * @returns The formatted date time
  */
 export const formatDateTime = (
-  dateTime?: StormDateTime | null,
+  dateTime?: DateInput | null,
   options: FormatDateTimeOptions = {}
 ): string => {
   let value = dateTime;
@@ -76,11 +76,14 @@ export const formatDateTime = (
     return EMPTY_STRING;
   }
 
-  if ((!dateTime || !dateTime.valid) && options?.returnEmptyIfInvalid) {
+  if (
+    (!dateTime || StormDateTime.validate(dateTime) !== null) &&
+    options?.returnEmptyIfInvalid
+  ) {
     return EMPTY_STRING;
   }
 
-  if (!dateTime || !dateTime.valid) {
+  if (!dateTime || StormDateTime.validate(dateTime) !== null) {
     value = StormDateTime.current();
   }
 
@@ -88,6 +91,8 @@ export const formatDateTime = (
     date: value,
     format: options.format || DEFAULT_DATE_TIME_FORMAT,
     locale: options.locale,
-    tz: value!.timeZoneId
+    tz: StormDateTime.isDateTime(value)
+      ? value.timeZoneId
+      : StormDateTime.getDefaultTimeZone()
   } as FormatOptions);
 };

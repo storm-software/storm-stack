@@ -15,11 +15,11 @@
 
  -------------------------------------------------------------------*/
 
-import { format, FormatOptions, type Format } from "@formkit/tempo";
+import { DateInput, format, FormatOptions, type Format } from "@formkit/tempo";
 import { EMPTY_STRING } from "@storm-stack/types/utility-types/base";
 import { DEFAULT_DATE_FORMAT } from "../constants";
 import { StormDate } from "../storm-date";
-import type { StormDateTime } from "../storm-date-time";
+import { StormDateTime } from "../storm-date-time";
 
 export type FormatDateOptions = {
   /**
@@ -59,7 +59,7 @@ export type FormatDateOptions = {
  * @returns The formatted date
  */
 export const formatDate = (
-  dateTime?: StormDateTime | null,
+  dateTime?: DateInput | null,
   options: FormatDateOptions = {}
 ): string => {
   let value = dateTime;
@@ -68,11 +68,14 @@ export const formatDate = (
     return EMPTY_STRING;
   }
 
-  if ((!dateTime || !dateTime.valid) && options.returnEmptyIfInvalid) {
+  if (
+    (!dateTime || StormDate.validate(dateTime) !== null) &&
+    options.returnEmptyIfInvalid
+  ) {
     return EMPTY_STRING;
   }
 
-  if (!dateTime || !dateTime.valid) {
+  if (!dateTime || StormDate.validate(dateTime) !== null) {
     value = StormDate.current();
   }
 
@@ -80,6 +83,8 @@ export const formatDate = (
     date: value,
     format: options.format || DEFAULT_DATE_FORMAT,
     locale: options.locale,
-    tz: value!.timeZoneId
+    tz: StormDateTime.isDateTime(value)
+      ? value.timeZoneId
+      : StormDateTime.getDefaultTimeZone()
   } as FormatOptions);
 };

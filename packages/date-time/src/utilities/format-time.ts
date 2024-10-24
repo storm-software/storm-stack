@@ -15,11 +15,11 @@
 
  -------------------------------------------------------------------*/
 
-import { format, FormatOptions, type Format } from "@formkit/tempo";
+import { DateInput, format, FormatOptions, type Format } from "@formkit/tempo";
 import type { Temporal } from "@js-temporal/polyfill";
 import { EMPTY_STRING } from "@storm-stack/types/utility-types/base";
 import { DEFAULT_TIME_FORMAT } from "../constants";
-import type { StormDateTime } from "../storm-date-time";
+import { StormDateTime } from "../storm-date-time";
 import { StormTime } from "../storm-time";
 
 export type FormatTimeOptions = Partial<Temporal.ToStringPrecisionOptions> & {
@@ -60,7 +60,7 @@ export type FormatTimeOptions = Partial<Temporal.ToStringPrecisionOptions> & {
  * @returns The formatted time string
  */
 export const formatTime = (
-  dateTime?: StormDateTime | null,
+  dateTime?: DateInput | null,
   options: FormatTimeOptions = {}
 ): string => {
   let value = dateTime;
@@ -72,11 +72,14 @@ export const formatTime = (
     return EMPTY_STRING;
   }
 
-  if ((!dateTime || !dateTime.valid) && options?.returnEmptyIfInvalid) {
+  if (
+    (!dateTime || StormTime.validate(dateTime) !== null) &&
+    options?.returnEmptyIfInvalid
+  ) {
     return EMPTY_STRING;
   }
 
-  if (!dateTime || !dateTime.valid) {
+  if (!dateTime || StormTime.validate(dateTime) !== null) {
     value = StormTime.current();
   }
 
@@ -84,6 +87,8 @@ export const formatTime = (
     date: value,
     format: options.format || DEFAULT_TIME_FORMAT,
     locale: options.locale,
-    tz: value!.timeZoneId
+    tz: StormDateTime.isDateTime(value)
+      ? value.timeZoneId
+      : StormDateTime.getDefaultTimeZone()
   } as FormatOptions);
 };
