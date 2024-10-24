@@ -1,3 +1,10 @@
+## 1.18.0 (2024-10-24)
+
+
+### Features
+
+- **hooks:** Added the `composeRefs` function and hook ([80a1379](https://github.com/storm-software/storm-stack/commit/80a1379))
+
 ## 1.17.0 (2024-10-22)
 
 

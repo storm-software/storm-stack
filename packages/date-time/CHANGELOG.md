@@ -1,3 +1,15 @@
+## 1.33.0 (2024-10-24)
+
+
+### Features
+
+- **hooks:** Added the `composeRefs` function and hook ([80a1379](https://github.com/storm-software/storm-stack/commit/80a1379))
+
+
+### Bug Fixes
+
+- **date-time:** Resolved issue with formatting date-time values ([bbddb1a](https://github.com/storm-software/storm-stack/commit/bbddb1a))
+
 ## 1.32.0 (2024-10-22)
 
 
