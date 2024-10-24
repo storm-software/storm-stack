@@ -27,7 +27,11 @@ import {
   MessageType,
   ValidationDetails
 } from "@storm-stack/types";
-import { RFC_3339_DATE_TIME_REGEX } from "./constants";
+import {
+  DATE_TIME_INVALID_DATE,
+  DATE_TIME_MISSING_DATE,
+  RFC_3339_DATE_TIME_REGEX
+} from "./constants";
 import { DateTimeErrorCode } from "./errors";
 import { isInstant } from "./utilities/is-instant";
 import { validateDayOfMonth } from "./utilities/validate-day-of-month";
@@ -88,8 +92,6 @@ export function deserializeStormDateTime(utcString: JsonValue): StormDateTime {
     ? StormDateTime.create(utcString)
     : StormDateTime.create();
 }
-
-export const DATE_TIME_MISSING_DATE = "MISSING_DATE";
 
 /**
  * A wrapper of the and Date class used by Storm Software to provide Date-Time values
@@ -196,9 +198,21 @@ export class StormDateTime extends Date {
    * @returns A boolean representing whether the value is a valid *date-time*
    */
   public static validate(value?: DateTimeInput): ValidationDetails | null {
+    if (
+      isDate(value) ||
+      (StormDateTime.isDateTime(value) &&
+        value.toString() === DATE_TIME_INVALID_DATE)
+    ) {
+      return {
+        code: DateTimeErrorCode.rfc_3339_format,
+        type: MessageType.ERROR
+      };
+    }
+
     if (StormDateTime.isDateTime(value)) {
       return value.validate();
     }
+
     if (isInstant(value)) {
       if (value.epochMilliseconds) {
         return null;

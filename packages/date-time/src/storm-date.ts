@@ -25,7 +25,11 @@ import {
   MessageType,
   ValidationDetails
 } from "@storm-stack/types";
-import { RFC_3339_DATE_REGEX, RFC_3339_DATE_TIME_REGEX } from "./constants";
+import {
+  DATE_TIME_INVALID_DATE,
+  RFC_3339_DATE_REGEX,
+  RFC_3339_DATE_TIME_REGEX
+} from "./constants";
 import { DateTimeErrorCode } from "./errors";
 import type { DateTimeInput, DateTimeOptions } from "./storm-date-time";
 import { StormDateTime } from "./storm-date-time";
@@ -105,9 +109,21 @@ export class StormDate extends StormDateTime {
   public static override validate(
     value?: DateTimeInput
   ): ValidationDetails | null {
+    if (
+      isDate(value) ||
+      (StormDateTime.isDateTime(value) &&
+        value.toString() === DATE_TIME_INVALID_DATE)
+    ) {
+      return {
+        code: DateTimeErrorCode.rfc_3339_format,
+        type: MessageType.ERROR
+      };
+    }
+
     if (StormDateTime.isDateTime(value)) {
       return value.validate();
     }
+
     if (isInstant(value)) {
       if (value.epochMilliseconds) {
         return null;

@@ -29,3 +29,6 @@ export const DEFAULT_DATE_FORMAT = "M/D/YYYY";
 export const DEFAULT_TIME_FORMAT = "h:mm A";
 
 export const DEFAULT_DATE_TIME_FORMAT = `${DEFAULT_DATE_FORMAT} ${DEFAULT_TIME_FORMAT}`;
+
+export const DATE_TIME_MISSING_DATE = "Missing Date";
+export const DATE_TIME_INVALID_DATE = "Invalid Date";
