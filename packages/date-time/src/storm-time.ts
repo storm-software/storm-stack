@@ -108,9 +108,8 @@ export class StormTime extends StormDateTime {
     value?: DateTimeInput
   ): ValidationDetails | null {
     if (
-      isDate(value) ||
-      (StormDateTime.isDateTime(value) &&
-        value.toString() === DATE_TIME_INVALID_DATE)
+      (isDate(value) || StormDateTime.isDateTime(value)) &&
+      value.toString() === DATE_TIME_INVALID_DATE
     ) {
       return {
         code: DateTimeErrorCode.rfc_3339_format,
