@@ -1,3 +1,10 @@
+## 0.11.0 (2024-10-24)
+
+
+### Features
+
+- **hooks:** Added `useBattery`, `useClickAway`, and `useCopyToClipboard` hooks ([556db4d](https://github.com/storm-software/storm-stack/commit/556db4d))
+
 ## 0.10.0 (2024-10-24)
 
 
