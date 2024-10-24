@@ -35,6 +35,5 @@ export default getStormConfig({
   },
   markdown: true,
   react: false,
-  tsConfigType: "recommended",
   useUnicorn: true
 });

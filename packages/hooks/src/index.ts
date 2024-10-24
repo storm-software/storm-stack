@@ -16,6 +16,7 @@
  -------------------------------------------------------------------*/
 
 export * from "./use-callback-ref";
+export * from "./use-compose-refs";
 export * from "./use-debounce";
 export * from "./use-did-finish-ssr";
 export * from "./use-escape-keydown";
