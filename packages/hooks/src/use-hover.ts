@@ -16,24 +16,19 @@
  -------------------------------------------------------------------*/
 
 import { useCallback, useRef, useState } from "react";
-import { ReactRef, setRef } from "./use-compose-refs";
 
 /**
  * A hook that returns tuple containing a ref and a boolean indicating if the element (referenced by the ref) is being hovered.
  *
- * @param forwardedRef - An optional ref to be composed with the hover ref
  * @returns A tuple containing a ref and a boolean indicating if the element is being hovered
  */
-export const useHover = (
-  forwardedRef?: ReactRef<HTMLElement>
-): [(node: HTMLElement) => void, boolean] => {
+export const useHover = (): [(node: HTMLElement) => void, boolean] => {
   const [hovering, setHovering] = useState(false);
   const previousNode = useRef<HTMLElement | null>(null);
 
   const handleMouseEnter = useCallback(() => {
     setHovering(true);
   }, []);
-
   const handleMouseLeave = useCallback(() => {
     setHovering(false);
   }, []);
@@ -56,8 +51,7 @@ export const useHover = (
         node.addEventListener("mouseleave", handleMouseLeave);
       }
 
-      setRef(forwardedRef, node);
-      setRef(previousNode, node);
+      previousNode.current = node;
     },
     [handleMouseEnter, handleMouseLeave]
   );
