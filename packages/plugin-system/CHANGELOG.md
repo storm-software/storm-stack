@@ -1,3 +1,10 @@
+## 1.19.1 (2024-10-26)
+
+
+### Bug Fixes
+
+- **hooks:** Resolve issue updating element reference in `useHook` hook ([340e2f4](https://github.com/storm-software/storm-stack/commit/340e2f4))
+
 ## 1.19.0 (2024-10-26)
 
 
