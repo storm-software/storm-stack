@@ -1,3 +1,10 @@
+## 1.34.0 (2024-10-26)
+
+
+### Features
+
+- **types:** Added the `isFileResult` type-checker and updated `status` field ([2fc6410](https://github.com/storm-software/storm-stack/commit/2fc6410))
+
 ## 1.33.2 (2024-10-24)
 
 
