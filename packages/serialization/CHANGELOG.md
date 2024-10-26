@@ -1,3 +1,10 @@
+## 1.35.0 (2024-10-26)
+
+
+### Features
+
+- **hooks:** Added the `useHover`, `useIdle`, and `useNetworkState` hooks ([b52aa2f](https://github.com/storm-software/storm-stack/commit/b52aa2f))
+
 ## 1.34.0 (2024-10-26)
 
 
