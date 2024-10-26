@@ -55,6 +55,11 @@ export interface SelectOption<
   icon?: any;
 
   /**
+   * An optional image to display in the select option
+   */
+  image?: any;
+
+  /**
    * Is the option value valid for selection in the dropdown
    */
   disabled: boolean;
