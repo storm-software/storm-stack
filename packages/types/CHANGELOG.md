@@ -1,3 +1,10 @@
+## 0.21.0 (2024-10-26)
+
+
+### Features
+
+- **types:** Added the `FileResult` shared type definition ([f9d07c6](https://github.com/storm-software/storm-stack/commit/f9d07c6))
+
 ## 0.20.3 (2024-10-24)
 
 
