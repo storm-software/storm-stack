@@ -15,33 +15,22 @@
 
  -------------------------------------------------------------------*/
 
-import { ValidationDetails } from "./validations";
-
-export type FileStatus = "initialized" | "validated" | "uploaded" | "failed";
-export const FileStatus = {
-  INITIALIZED: "initialized" as FileStatus,
-  VALIDATED: "validated" as FileStatus,
-  UPLOADED: "uploaded" as FileStatus,
-  FAILED: "failed" as FileStatus
-};
+import { FileResult, FileStatus } from "../utility-types/file";
+import { isSetObject } from "./is-set-object";
+import { isSetString } from "./is-set-string";
 
 /**
- * A type that representing a file object.
+ * Check if the provided value is a `FileResult` object
+ *
+ * @param value - The value to type check
+ * @returns An indicator specifying if the value provided is a `FileResult` object
  */
-export type FileResult = {
-  name: string;
-  status: FileStatus;
-  issues?: ValidationDetails[];
-  size?: number;
-  mimeType?: string;
-  lastModified?: number;
-} & (
-  | {
-      uri: string;
-      file?: File;
-    }
-  | {
-      uri?: string;
-      file: File;
-    }
-);
+export const isFileResult = (value: any): value is FileResult => {
+  return (
+    isSetObject(value) &&
+    "status" in value &&
+    Object.values(FileStatus).includes(value.status as FileStatus) &&
+    (isSetString((value as FileResult)?.uri) ||
+      isSetObject((value as FileResult)?.file))
+  );
+};
