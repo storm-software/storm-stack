@@ -57,6 +57,16 @@ export function deserializeStormTime(utcString: JsonValue): StormTime {
     : StormTime.create();
 }
 
+export const createTime = (
+  time?: DateTimeInput,
+  options: DateTimeOptions = {}
+) =>
+  new StormTime(time, {
+    ...options,
+    timeZone: StormDateTime.isDateTime(time) ? time.timeZoneId : undefined,
+    calendar: StormDateTime.isDateTime(time) ? time.calendarId : undefined
+  });
+
 /**
  * A wrapper of the and Date class used by Storm Software to provide Date-Time values
  *
@@ -80,23 +90,6 @@ export class StormTime extends StormDateTime {
   public static override current(): StormTime {
     return StormTime.create(Temporal.Now.instant());
   }
-
-  /**
-   * Creates a new instance of DateTime from a string with a specified format.
-   *
-   * @param time - The input value used to determine the current time
-   * @param options - The options to use
-   * @returns A new instance of StormTime with the time provided in the time parameter.
-   */
-  public static override create = (
-    time?: DateTimeInput,
-    options: DateTimeOptions = {}
-  ) =>
-    new StormTime(time, {
-      ...options,
-      timeZone: StormDateTime.isDateTime(time) ? time.timeZoneId : undefined,
-      calendar: StormDateTime.isDateTime(time) ? time.calendarId : undefined
-    });
 
   /**
    * Validate the input time value
@@ -171,6 +164,18 @@ export class StormTime extends StormDateTime {
     // Success - Valid
     return null;
   }
+
+  /**
+   * Creates a new instance of DateTime from a string with a specified format.
+   *
+   * @param time - The input value used to determine the current time
+   * @param options - The options to use
+   * @returns A new instance of StormTime with the time provided in the time parameter.
+   */
+  public static override create = (
+    time?: DateTimeInput,
+    options: DateTimeOptions = {}
+  ) => createTime(time, options);
 
   public constructor(dateTime?: DateTimeInput, options: DateTimeOptions = {}) {
     super(dateTime, options);

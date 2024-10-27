@@ -93,6 +93,20 @@ export function deserializeStormDateTime(utcString: JsonValue): StormDateTime {
     : StormDateTime.create();
 }
 
+export const createDateTime = (
+  dateTime?: DateTimeInput,
+  options: DateTimeOptions = {}
+) =>
+  new StormDateTime(dateTime, {
+    ...options,
+    timeZone: StormDateTime.isDateTime(dateTime)
+      ? dateTime.timeZoneId
+      : options?.timeZone,
+    calendar: StormDateTime.isDateTime(dateTime)
+      ? dateTime.calendarId
+      : options?.calendar
+  });
+
 /**
  * A wrapper of the and Date class used by Storm Software to provide Date-Time values
  *
@@ -171,27 +185,6 @@ export class StormDateTime extends Date {
   }
 
   /**
-   * Creates a new instance of StormDateTime from a string with a specified format.
-   *
-   * @param dateTime - The input value used to determine the current date and time
-   * @param options - The options to use when creating the StormDateTime object
-   * @returns A new instance of StormDateTime with the current date and time.
-   */
-  public static create = (
-    dateTime?: DateTimeInput,
-    options: DateTimeOptions = {}
-  ) =>
-    new StormDateTime(dateTime, {
-      ...options,
-      timeZone: StormDateTime.isDateTime(dateTime)
-        ? dateTime.timeZoneId
-        : options?.timeZone,
-      calendar: StormDateTime.isDateTime(dateTime)
-        ? dateTime.calendarId
-        : options?.calendar
-    });
-
-  /**
    * Validate the input date value
    *
    * @param dateTime - The date value to validate
@@ -266,6 +259,18 @@ export class StormDateTime extends Date {
 
     return validateDayOfMonth(StormDateTime.create(value));
   }
+
+  /**
+   * Creates a new instance of StormDateTime from a string with a specified format.
+   *
+   * @param dateTime - The input value used to determine the current date and time
+   * @param options - The options to use when creating the StormDateTime object
+   * @returns A new instance of StormDateTime with the current date and time.
+   */
+  public static create = (
+    dateTime?: DateTimeInput,
+    options: DateTimeOptions = {}
+  ) => createDateTime(dateTime, options);
 
   /**
    * A private accessor that stores the `Temporal.Instant` object of the DateTime object
