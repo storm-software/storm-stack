@@ -93,20 +93,6 @@ export function deserializeStormDateTime(utcString: JsonValue): StormDateTime {
     : StormDateTime.create();
 }
 
-export const createDateTime = (
-  dateTime?: DateTimeInput,
-  options: DateTimeOptions = {}
-) =>
-  new StormDateTime(dateTime, {
-    ...options,
-    timeZone: StormDateTime.isDateTime(dateTime)
-      ? dateTime.timeZoneId
-      : options?.timeZone,
-    calendar: StormDateTime.isDateTime(dateTime)
-      ? dateTime.calendarId
-      : options?.calendar
-  });
-
 /**
  * A wrapper of the and Date class used by Storm Software to provide Date-Time values
  *
@@ -267,10 +253,20 @@ export class StormDateTime extends Date {
    * @param options - The options to use when creating the StormDateTime object
    * @returns A new instance of StormDateTime with the current date and time.
    */
-  public static create = (
+  public static create(
     dateTime?: DateTimeInput,
     options: DateTimeOptions = {}
-  ) => createDateTime(dateTime, options);
+  ) {
+    return new StormDateTime(dateTime, {
+      ...options,
+      timeZone: StormDateTime.isDateTime(dateTime)
+        ? dateTime.timeZoneId
+        : options?.timeZone,
+      calendar: StormDateTime.isDateTime(dateTime)
+        ? dateTime.calendarId
+        : options?.calendar
+    });
+  }
 
   /**
    * A private accessor that stores the `Temporal.Instant` object of the DateTime object
