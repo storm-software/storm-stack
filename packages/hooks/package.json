@@ -1,6 +1,6 @@
 {
   "name": "@storm-stack/hooks",
-  "version": "0.15.0",
+  "version": "0.15.1",
   "type": "module",
   "description": "⚡ The storm-stack monorepo contains utility applications, tools, and various libraries to create modern and scalable web applications.",
   "repository": {

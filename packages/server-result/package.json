@@ -1,6 +1,6 @@
 {
   "name": "@storm-stack/server-result",
-  "version": "0.13.1",
+  "version": "0.13.2",
   "type": "module",
   "description": "⚡ The storm-stack monorepo contains utility applications, tools, and various libraries to create modern and scalable web applications.",
   "repository": {

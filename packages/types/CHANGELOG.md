@@ -1,3 +1,10 @@
+## 0.24.1 (2024-10-27)
+
+
+### Bug Fixes
+
+- **date-time:** Update static function to no longer be constants ([f366ffe](https://github.com/storm-software/storm-stack/commit/f366ffe))
+
 ## 0.24.0 (2024-10-27)
 
 
