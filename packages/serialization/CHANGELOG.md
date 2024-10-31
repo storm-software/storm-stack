@@ -1,3 +1,10 @@
+## 1.36.2 (2024-10-31)
+
+
+### Bug Fixes
+
+- **date-time:** Resolve issue with incorrectly exporting classes ([140d576](https://github.com/storm-software/storm-stack/commit/140d576))
+
 ## 1.36.1 (2024-10-27)
 
 
