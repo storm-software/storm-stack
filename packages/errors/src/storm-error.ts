@@ -188,7 +188,7 @@ export function isStormError<TCode extends string = string>(
  * @decorator `@Serializable()`
  */
 @Serializable()
-export class StormError<
+class StormError<
   TCode extends string = string,
   TErrorType extends ErrorType = typeof ErrorType.EXCEPTION,
   TData = undefined
@@ -468,3 +468,5 @@ export class StormError<
     };
   }
 }
+
+export { StormError };

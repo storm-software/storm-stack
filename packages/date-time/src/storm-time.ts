@@ -64,7 +64,7 @@ export function deserializeStormTime(utcString: JsonValue): StormTime {
  * @class StormTime
  */
 @Serializable()
-export class StormTime extends StormDateTime {
+class StormTime extends StormDateTime {
   /**
    * The current function returns a new DateTime object with the current date and time
    * @returns A new instance of DateTime with the current date and time.
@@ -273,3 +273,5 @@ export class StormTime extends StormDateTime {
     return this.instant.since(dateTimeTo.instant);
   }
 }
+
+export { StormTime };

@@ -100,7 +100,7 @@ export function deserializeStormDateTime(utcString: JsonValue): StormDateTime {
  * @class StormDateTime
  */
 @Serializable()
-export class StormDateTime extends Date {
+class StormDateTime extends Date {
   /**
    * A helper function to get the default time zone
    *
@@ -922,3 +922,5 @@ export class StormDateTime extends Date {
     return this.instant.since(dateTimeTo.instant);
   }
 }
+
+export { StormDateTime };
