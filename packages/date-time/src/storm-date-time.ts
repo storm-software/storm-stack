@@ -171,6 +171,51 @@ class StormDateTime extends Date {
   }
 
   /**
+   * Get the month index from the month name
+   *
+   * @example
+   * StormDateTime.getMonthIndex(""); // -1
+   * StormDateTime.getMonthIndex("invalid"); // -1
+   * StormDateTime.getMonthIndex("January"); // 0
+   * StormDateTime.getMonthIndex("february"); // 1
+   * StormDateTime.getMonthIndex("JUNE"); // 5
+   *
+   * @param month - The month name
+   * @returns The month index
+   */
+  public static getMonthIndex(month?: string): number {
+    if (month) {
+      if (month.toLowerCase() === "january") {
+        return 0;
+      } else if (month.toLowerCase() === "february") {
+        return 1;
+      } else if (month.toLowerCase() === "march") {
+        return 2;
+      } else if (month.toLowerCase() === "april") {
+        return 3;
+      } else if (month.toLowerCase() === "may") {
+        return 4;
+      } else if (month.toLowerCase() === "june") {
+        return 5;
+      } else if (month.toLowerCase() === "july") {
+        return 6;
+      } else if (month.toLowerCase() === "august") {
+        return 7;
+      } else if (month.toLowerCase() === "september") {
+        return 8;
+      } else if (month.toLowerCase() === "october") {
+        return 9;
+      } else if (month.toLowerCase() === "november") {
+        return 10;
+      } else if (month.toLowerCase() === "december") {
+        return 11;
+      }
+    }
+
+    return -1;
+  }
+
+  /**
    * Validate the input date value
    *
    * @param dateTime - The date value to validate
