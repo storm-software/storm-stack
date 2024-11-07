@@ -1,3 +1,10 @@
+## 1.20.0 (2024-11-07)
+
+
+### Features
+
+- **date-time:** Added the `getMonthIndex` helper function ([8d979d2](https://github.com/storm-software/storm-stack/commit/8d979d2))
+
 ## 1.19.2 (2024-10-27)
 
 
