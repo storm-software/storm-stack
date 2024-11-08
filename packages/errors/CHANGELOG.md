@@ -1,3 +1,9 @@
+## 1.36.0 (2024-11-08)
+
+### Features
+
+- **monorepo:** Upgrade the workspace's Nx package versions ([075a024](https://github.com/storm-software/storm-stack/commit/075a024))
+
 ## 1.35.0 (2024-11-08)
 
 ### Features
