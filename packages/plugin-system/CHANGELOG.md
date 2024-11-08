@@ -1,3 +1,9 @@
+## 1.21.0 (2024-11-08)
+
+### Features
+
+- **types:** Regenerate packages with upgraded ops packages ([936026a](https://github.com/storm-software/storm-stack/commit/936026a))
+
 ## 1.20.0 (2024-11-07)
 
 
