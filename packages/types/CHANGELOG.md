@@ -1,3 +1,10 @@
+## 0.26.0 (2024-11-08)
+
+
+### Features
+
+- **errors:** Added the `createFromData` helper function ([c15576d](https://github.com/storm-software/storm-stack/commit/c15576d))
+
 ## 0.25.0 (2024-11-07)
 
 
