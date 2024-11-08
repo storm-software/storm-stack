@@ -15,14 +15,13 @@
 
  -------------------------------------------------------------------*/
 
-import type { StormLog } from "@storm-stack/logging";
+import { StormLog } from "@storm-stack/logging";
 import type { MaybePromise } from "@storm-stack/types";
 
 const errorTypes = ["unhandledRejection", "uncaughtException"];
 const signalTraps = ["SIGTERM", "SIGINT", "SIGUSR2"];
 
 export function registerShutdown(config: {
-  logger: StormLog;
   onShutdown(): void | MaybePromise<void>;
 }): (reason?: string) => Promise<void> {
   let exited = false;
@@ -31,7 +30,7 @@ export function registerShutdown(config: {
     if (exited) {
       return;
     }
-    config.logger.info("Shutting down...");
+    StormLog.info("Shutting down...");
     exited = true;
     await config.onShutdown();
   }
@@ -39,14 +38,14 @@ export function registerShutdown(config: {
   errorTypes.map(type => {
     process.on(type, async e => {
       try {
-        config.logger.info(`process.on ${type}`);
-        config.logger.error(e);
+        StormLog.info(`process.on ${type}`);
+        StormLog.error(e);
         await shutdown();
-        config.logger.info("Shutdown process complete, exiting with code 0");
+        StormLog.info("Shutdown process complete, exiting with code 0");
         process.exit(0);
       } catch (error_) {
-        config.logger.warn("Shutdown process failed, exiting with code 1");
-        config.logger.error(error_);
+        StormLog.warn("Shutdown process failed, exiting with code 1");
+        StormLog.error(error_);
         process.exit(1);
       }
     });
@@ -55,13 +54,13 @@ export function registerShutdown(config: {
   signalTraps.map(type => {
     process.once(type, async () => {
       try {
-        config.logger.info(`process.on ${type}`);
+        StormLog.info(`process.on ${type}`);
         await shutdown();
-        config.logger.info("Shutdown process complete, exiting with code 0");
+        StormLog.info("Shutdown process complete, exiting with code 0");
         process.exit(0);
       } catch (error_) {
-        config.logger.warn("Shutdown process failed, exiting with code 1");
-        config.logger.error(error_);
+        StormLog.warn("Shutdown process failed, exiting with code 1");
+        StormLog.error(error_);
         process.exit(1);
       }
     });
@@ -69,14 +68,14 @@ export function registerShutdown(config: {
 
   return async (reason?: string) => {
     try {
-      config.logger.info(`Manual shutdown ${reason ? `(${reason})` : ""}`);
+      StormLog.info(`Manual shutdown ${reason ? `(${reason})` : ""}`);
       await shutdown();
-      config.logger.info("Shutdown process complete, exiting with code 0");
+      StormLog.info("Shutdown process complete, exiting with code 0");
       // eslint-disable-next-line unicorn/no-process-exit
       process.exit(0);
     } catch (error_) {
-      config.logger.warn("Shutdown process failed, exiting with code 1");
-      config.logger.error(error_);
+      StormLog.warn("Shutdown process failed, exiting with code 1");
+      StormLog.error(error_);
       // eslint-disable-next-line unicorn/no-process-exit
       process.exit(1);
     }

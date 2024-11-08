@@ -17,15 +17,15 @@
 
 import type { StormConfig } from "@storm-software/config";
 import { createStormConfig } from "@storm-software/config-tools";
-import { getCauseFromUnknown } from "@storm-stack/errors";
+import { StormError } from "@storm-stack/errors";
 import { StormLog } from "@storm-stack/logging";
 import { titleCase } from "@storm-stack/string-fns";
 import { EMPTY_STRING, NEWLINE_STRING } from "@storm-stack/types";
 import chalk from "chalk";
 import { Argument, Command, Option } from "commander";
 import { Table } from "console-table-printer";
-import { text } from "figlet";
 import type { CLIArgument, CLICommand, CLIConfig, CLIOption } from "../types";
+import { writeBanner } from "../utilities/write-banner";
 import { registerShutdown } from "./shutdown";
 
 const createCLIArgument = (cliArgument: CLIArgument): Argument => {
@@ -80,40 +80,25 @@ const createCLICommand = (cliCommand: CLICommand): Command => {
 
 export async function createCLIProgram(cliConfig: CLIConfig): Promise<void> {
   const config: StormConfig = createStormConfig();
-  const logger = StormLog.create(config);
+
+  const name = cliConfig.name ?? config.name ?? "Storm CLI";
+
+  StormLog.initialize(config, name);
+  StormLog.info(config);
 
   try {
-    if (cliConfig.banner?.hide !== true) {
-      text(
-        cliConfig.banner?.name ?? cliConfig.name ?? config.name ?? "Storm CLI",
-        cliConfig.banner?.options ?? {
-          font: cliConfig.banner?.font ?? "Larry 3D"
-        },
-        (err, data) => {
-          if (err) {
-            return;
-          }
-
-          console.log(chalk.hex(config.colors.primary)(data));
-        }
-      );
-
-      if (cliConfig.by?.hide !== true) {
-        text(
-          `by ${cliConfig.by?.name ?? config.organization ?? "Storm"}`,
-          cliConfig.banner?.options ?? { font: cliConfig.by?.font ?? "Doom" },
-          (err, data) => {
-            if (err) {
-              return;
-            }
-
-            console.log(chalk.hex(config.colors.primary)(data));
-          }
-        );
+    writeBanner(
+      {
+        name,
+        ...cliConfig.banner
+      },
+      {
+        name: config.organization,
+        ...cliConfig.by
       }
-    }
+    );
 
-    logger.info(
+    StormLog.info(
       `⚡ Starting the ${titleCase(cliConfig.name) ?? "Storm CLI"} application`
     );
 
@@ -132,18 +117,17 @@ export async function createCLIProgram(cliConfig: CLIConfig): Promise<void> {
         : `${config.homepage}/license`
     } \n`;
 
-    logger.debug(urlDisplay);
-    logger.info(licenseDisplay);
+    StormLog.debug(urlDisplay);
+    StormLog.info(licenseDisplay);
 
-    logger.start(titleCase(cliConfig.name) ?? "Storm CLI Application");
+    const startDateTime = StormLog.start(titleCase(cliConfig.name ?? name));
     const program = new Command(cliConfig.name ?? "Storm CLI");
     const shutdown = registerShutdown({
-      logger,
       onShutdown: () => {
-        logger.stopwatch("Storm CLI Application");
+        StormLog.stopwatch(startDateTime, titleCase(cliConfig.name ?? name));
         program.exitOverride();
 
-        logger.info("Application is shutting down...");
+        StormLog.info("Application is shutting down...");
       }
     });
 
@@ -179,24 +163,50 @@ export async function createCLIProgram(cliConfig: CLIConfig): Promise<void> {
               const table = new Table({
                 style: {
                   headerTop: {
-                    left: chalk.hex(config.colors.background)("╔"),
-                    mid: chalk.hex(config.colors.background)("╦"),
-                    right: chalk.hex(config.colors.background)("╗"),
-                    other: chalk.hex(config.colors.background)("═")
+                    left: chalk.hex(
+                      (config.colors as any)?.dark?.background ?? "#FFFFFF"
+                    )("╔"),
+                    mid: chalk.hex(
+                      (config.colors as any)?.dark?.background ?? "#FFFFFF"
+                    )("╦"),
+                    right: chalk.hex(
+                      (config.colors as any)?.dark?.background ?? "#FFFFFF"
+                    )("╗"),
+                    other: chalk.hex(
+                      (config.colors as any)?.dark?.background ?? "#FFFFFF"
+                    )("═")
                   },
                   headerBottom: {
-                    left: chalk.hex(config.colors.background)("╟"),
-                    mid: chalk.hex(config.colors.background)("╬"),
-                    right: chalk.hex(config.colors.background)("╢"),
-                    other: chalk.hex(config.colors.background)("═")
+                    left: chalk.hex(
+                      (config.colors as any)?.dark?.background ?? "#FFFFFF"
+                    )("╟"),
+                    mid: chalk.hex(
+                      (config.colors as any)?.dark?.background ?? "#FFFFFF"
+                    )("╬"),
+                    right: chalk.hex(
+                      (config.colors as any)?.dark?.background ?? "#FFFFFF"
+                    )("╢"),
+                    other: chalk.hex(
+                      (config.colors as any)?.dark?.background ?? "#FFFFFF"
+                    )("═")
                   },
                   tableBottom: {
-                    left: chalk.hex(config.colors.background)("╚"),
-                    mid: chalk.hex(config.colors.background)("╩"),
-                    right: chalk.hex(config.colors.background)("╝"),
-                    other: chalk.hex(config.colors.background)("═")
+                    left: chalk.hex(
+                      (config.colors as any)?.dark?.background ?? "#FFFFFF"
+                    )("╚"),
+                    mid: chalk.hex(
+                      (config.colors as any)?.dark?.background ?? "#FFFFFF"
+                    )("╩"),
+                    right: chalk.hex(
+                      (config.colors as any)?.dark?.background ?? "#FFFFFF"
+                    )("╝"),
+                    other: chalk.hex(
+                      (config.colors as any)?.dark?.background ?? "#FFFFFF"
+                    )("═")
                   },
-                  vertical: chalk.hex(config.colors.background)("║")
+                  vertical: chalk.hex(
+                    (config.colors as any)?.dark?.background ?? "#FFFFFF"
+                  )("║")
                 },
                 title: command.name,
                 columns: [
@@ -225,7 +235,9 @@ export async function createCLIProgram(cliConfig: CLIConfig): Promise<void> {
                       options: option.choices?.join(", ") ?? EMPTY_STRING,
                       defaultValue: option.default?.value ?? EMPTY_STRING
                     },
-                    { color: config.colors.primary }
+                    {
+                      color: (config.colors as any)?.dark?.primary ?? "#FFFFFF"
+                    }
                   );
                 }
               }
@@ -238,11 +250,11 @@ export async function createCLIProgram(cliConfig: CLIConfig): Promise<void> {
       await program.parseAsync(process.argv);
       shutdown();
     } catch (innerError) {
-      logger.fatal(innerError);
-      shutdown(getCauseFromUnknown(innerError).message);
+      StormLog.fatal(innerError);
+      shutdown(StormError.create(innerError).message);
     }
   } catch (error) {
-    logger.fatal(error);
+    StormLog.fatal(error);
     // eslint-disable-next-line unicorn/no-process-exit
     process.exit(1);
   }

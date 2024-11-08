@@ -238,6 +238,32 @@ class StormError<
   }
 
   /**
+   * Creates a new Exception StormError instance
+   *
+   * @param error - The validation details
+   * @param data - The options to use
+   * @returns The newly created StormError
+   */
+  public static createException<TData = undefined>(
+    error?: unknown,
+    data: TData = undefined as TData
+  ): StormError<string, typeof ErrorType.EXCEPTION, TData> {
+    return StormError.create(error, ErrorType.EXCEPTION, data);
+  }
+
+  /**
+   * Creates a new Exception StormError instance
+   *
+   * @param data - The options to use
+   * @returns The newly created StormError
+   */
+  public static createFromData<TData = undefined>(
+    data: TData = undefined as TData
+  ): StormError<string, typeof ErrorType.EXCEPTION, TData> {
+    return StormError.createException(undefined, data);
+  }
+
+  /**
    * Creates a new Validation StormError instance
    *
    * @param validationDetails - The validation details

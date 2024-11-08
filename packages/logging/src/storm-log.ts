@@ -18,8 +18,8 @@
 import type { StormConfig } from "@storm-software/config";
 import { StormDateTime } from "@storm-stack/date-time/storm-date-time";
 import { formatSince } from "@storm-stack/date-time/utilities/format-since";
-import { StormError, getCauseFromUnknown } from "@storm-stack/errors";
-import type { Logger, LoggerOptions as PinoLoggerOptions } from "pino";
+import { StormError } from "@storm-stack/errors";
+import type { Logger } from "pino";
 import pino from "pino";
 import { LoggingErrorCode } from "./errors";
 import type { ILoggerWrapper } from "./types";
@@ -35,7 +35,7 @@ import { getPinoOptions } from "./utilities/get-pino-options";
 export class StormLog {
   static #name: string;
 
-  static #logger: Logger<PinoLoggerOptions>;
+  static #logger: Logger;
 
   static #logLevel: LogLevel;
 
@@ -45,11 +45,10 @@ export class StormLog {
     return StormLog.#name;
   }
 
-  protected static getLogger = (): Logger<PinoLoggerOptions> => {
+  protected static getLogger = (): Logger => {
     if (!StormLog.#logger) {
       throw new StormError(LoggingErrorCode.logs_uninitialized, {
-        message:
-          "The Storm Log has not been initialized. Please initialize the logs by invoking `StormLog.initialize` before using them"
+        data: "The Storm Log has not been initialized. Please initialize the logs by invoking `StormLog.initialize` before using them"
       });
     }
 
@@ -68,7 +67,7 @@ export class StormLog {
     name: string = "Storm",
     streams: (pino.DestinationStream | pino.StreamEntry<pino.Level>)[] = []
   ) => {
-    const pinoLogger: Logger<PinoLoggerOptions> =
+    const pinoLogger: Logger =
       streams.length > 0
         ? pino(
             getPinoOptions(config, name),
@@ -112,7 +111,7 @@ export class StormLog {
    * @returns Either a promise that resolves to void or void.
    */
   public static fatal(message: any) {
-    const error = getCauseFromUnknown(message);
+    const error = StormError.create(message);
 
     const logger = StormLog.getLogger();
     if (StormLog.#logLevel >= LogLevel.FATAL) {
@@ -131,7 +130,7 @@ export class StormLog {
    * @returns Either a promise that resolves to void or void.
    */
   public static error(message: any) {
-    const error = getCauseFromUnknown(message);
+    const error = StormError.create(message);
 
     const logger = StormLog.getLogger();
     if (StormLog.#logLevel >= LogLevel.ERROR) {
@@ -150,7 +149,7 @@ export class StormLog {
    * @returns Either a promise that resolves to void or void.
    */
   public static exception(message: any) {
-    const error = getCauseFromUnknown(message);
+    const error = StormError.create(message);
 
     const logger = StormLog.getLogger();
     if (StormLog.#logLevel >= LogLevel.ERROR) {
