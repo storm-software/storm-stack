@@ -1,3 +1,9 @@
+## 1.37.0 (2024-11-10)
+
+### Features
+
+- **cli:** Added the `execute` and `install` utility functions ([8b04259](https://github.com/storm-software/storm-stack/commit/8b04259))
+
 ## 1.36.0 (2024-11-08)
 
 ### Features
