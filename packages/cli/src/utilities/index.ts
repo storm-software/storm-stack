@@ -18,6 +18,7 @@
 export * from "./cli-link";
 export * from "./create-cli-options";
 export * from "./execute";
+export * from "./execute-command";
 export * from "./install";
 export * from "./is-ci";
 export * from "./is-interactive";

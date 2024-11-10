@@ -15,6 +15,7 @@
 
  -------------------------------------------------------------------*/
 
+import { parse } from "@formkit/tempo";
 import { Temporal } from "@js-temporal/polyfill";
 import { type JsonValue, Serializable } from "@storm-stack/serialization";
 import {
@@ -24,6 +25,7 @@ import {
   isObject,
   isSet,
   isSetString,
+  isString,
   MessageType,
   ValidationDetails
 } from "@storm-stack/types";
@@ -357,7 +359,9 @@ class StormDateTime extends Date {
                 ? new Date(Number(_dateTime.epochMilliseconds)).toISOString()
                 : isNumber(_dateTime) || isBigInt(_dateTime)
                   ? new Date(Number(_dateTime)).toISOString()
-                  : _dateTime
+                  : isString(_dateTime)
+                    ? parse(_dateTime).toISOString()
+                    : _dateTime
           )
       : undefined;
 

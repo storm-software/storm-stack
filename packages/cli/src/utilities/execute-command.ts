@@ -15,7 +15,9 @@
 
  -------------------------------------------------------------------*/
 
-import { execaCommand } from "execa";
+import { detect, getCommand } from "@antfu/ni";
+import { CLICommandType } from "../types";
+import { execute } from "./execute";
 
 /**
  * Execute a CLI command
@@ -24,14 +26,24 @@ import { execaCommand } from "execa";
  * This function is a wrapper around the execa command to run CLI commands
  *
  * @param command - The command to execute
+ * @param args - The arguments to pass to the command
  * @param cwd - The current working directory to use when executing the command
  * @returns The result of the command or an exception
  */
-export const execute = (command: string, cwd: string) => {
-  return execaCommand(command, {
-    preferLocal: true,
-    shell: true,
-    stdio: "inherit",
-    cwd
-  });
+export const executeCommand = async (
+  command: CLICommandType = CLICommandType.EXECUTE,
+  args?: string[],
+  cwd: string = "./"
+) => {
+  const result = getCommand(
+    (await detect({
+      autoInstall: true,
+      cwd,
+      programmatic: true
+    })) ?? "npm",
+    command,
+    args
+  );
+
+  return execute(`${result.command} ${result.args.join(" ")}`, cwd);
 };
