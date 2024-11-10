@@ -1,3 +1,9 @@
+## 1.37.0 (2024-11-10)
+
+### Features
+
+- **date-time:** Resolve issue parsing ISO string in `StormDateTime` constructor ([c8032d6](https://github.com/storm-software/storm-stack/commit/c8032d6))
+
 ## 1.36.0 (2024-11-10)
 
 ### Features
