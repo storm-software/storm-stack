@@ -15,16 +15,17 @@
 
  -------------------------------------------------------------------*/
 
-import { CLICommandType } from "../types";
-import { executeCommand } from "./execute";
-
+import { installPackage, InstallPackageOptions } from "@antfu/install-pkg";
 /**
  * Install a package
  *
  * @param name - The name of the package to install
- * @param cwd - The current working directory to use when executing the command
+ * @param options - The options to use when installing the package
  * @returns The result of the command or an exception
  */
-export const install = (name: string, cwd: string) => {
-  return executeCommand(CLICommandType.INSTALL, [name], cwd);
+export const install = (
+  names: string | string[],
+  options?: InstallPackageOptions
+) => {
+  return installPackage(names, options);
 };

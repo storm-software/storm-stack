@@ -263,6 +263,9 @@ importers:
 
   packages/cli:
     dependencies:
+      '@antfu/install-pkg':
+        specifier: ^0.4.1
+        version: 0.4.1
       '@antfu/ni':
         specifier: ^0.23.0
         version: 0.23.0
@@ -293,6 +296,9 @@ importers:
       terminal-link:
         specifier: ^3.0.0
         version: 3.0.0
+      tinyexec:
+        specifier: ^0.3.1
+        version: 0.3.1
     devDependencies:
       '@types/figlet':
         specifier: ^1.7.0
@@ -538,6 +544,9 @@ packages:
     peerDependenciesMeta:
       chokidar:
         optional: true
+
+  '@antfu/install-pkg@0.4.1':
+    resolution: {integrity: sha512-T7yB5QNG29afhWVkVq7XeIMBa5U/vs9mX69YqayXypPRmYzUmzwnYltplHmPtZ4HPCn+sQKeXW8I47wCbuBOjw==}
 
   '@antfu/ni@0.23.0':
     resolution: {integrity: sha512-R5/GkA3PfGewAXLzz6lN5XagunF6PKeDtWt8dbZQXvHfebLS0qEczV+Azg/d+tKgSh6kRBpxvu8oSjARdPtw0A==}
@@ -13568,6 +13577,9 @@ packages:
   tinyexec@0.3.0:
     resolution: {integrity: sha512-tVGE0mVJPGb0chKhqmsoosjsS+qUnJVGJpZgsHYQcGoPlG3B51R3PouqTgEGH2Dc9jjFyOqOpix6ZHNMXp1FZg==}
 
+  tinyexec@0.3.1:
+    resolution: {integrity: sha512-WiCJLEECkO18gwqIp6+hJg0//p23HXp4S+gGtAKu3mI2F2/sXC4FvHvXvB0zJVVaTPhx1/tOwdbRsa1sOBIKqQ==}
+
   tmp@0.0.33:
     resolution: {integrity: sha512-jRCJlojKnZ3addtTOjdIqoRuPEKBvNXcGYqzO6zWZX8KfKEpnGY5jfggJQ3EjKuu8D4bJRr0y+cYJFmYbImXGw==}
     engines: {node: '>=0.6.0'}
@@ -14732,6 +14744,11 @@ snapshots:
       source-map: 0.7.4
     optionalDependencies:
       chokidar: 3.6.0
+
+  '@antfu/install-pkg@0.4.1':
+    dependencies:
+      package-manager-detector: 0.2.2
+      tinyexec: 0.3.1
 
   '@antfu/ni@0.23.0': {}
 
@@ -32246,6 +32263,8 @@ snapshots:
   tiny-warning@1.0.3: {}
 
   tinyexec@0.3.0: {}
+
+  tinyexec@0.3.1: {}
 
   tmp@0.0.33:
     dependencies:

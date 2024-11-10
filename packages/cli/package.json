@@ -10,6 +10,7 @@
   },
   "private": false,
   "dependencies": {
+    "@antfu/install-pkg": "^0.4.1",
     "@antfu/ni": "^0.23.0",
     "@storm-software/config": "latest",
     "@storm-software/config-tools": "latest",
@@ -19,7 +20,8 @@
     "execa": "^9.4.0",
     "figlet": "^1.7.0",
     "prompts": "^2.4.2",
-    "terminal-link": "^3.0.0"
+    "terminal-link": "^3.0.0",
+    "tinyexec": "^0.3.1"
   },
   "devDependencies": {
     "@types/figlet": "^1.7.0",
