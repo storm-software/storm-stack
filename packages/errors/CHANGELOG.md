@@ -1,3 +1,9 @@
+## 1.38.0 (2024-11-10)
+
+### Features
+
+- **cli:** Added `@antfu/install-pkg` to improve install ([26cf962](https://github.com/storm-software/storm-stack/commit/26cf962))
+
 ## 1.37.0 (2024-11-10)
 
 ### Features
