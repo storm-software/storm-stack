@@ -10,11 +10,13 @@
   },
   "private": false,
   "dependencies": {
+    "@antfu/ni": "^0.23.0",
     "@storm-software/config": "latest",
     "@storm-software/config-tools": "latest",
     "chalk": "5.3.0",
     "commander": "12.1.0",
     "console-table-printer": "2.12.1",
+    "execa": "^9.4.0",
     "figlet": "^1.7.0",
     "prompts": "^2.4.2",
     "terminal-link": "^3.0.0"

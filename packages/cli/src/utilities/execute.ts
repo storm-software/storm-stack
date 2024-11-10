@@ -15,73 +15,64 @@
 
  -------------------------------------------------------------------*/
 
+import { detect, getCommand } from "@antfu/ni";
 import { StormLog } from "@storm-stack/logging";
-import { StormParser } from "@storm-stack/serialization";
-import { isEmptyObject } from "@storm-stack/types";
-import {
-  ExecOptions,
-  StdioOptions,
-  execSync as extExecSync
-} from "node:child_process";
-import { Readable } from "node:stream";
-import { promisify } from "node:util";
+import { execaCommand } from "execa";
+import { CLICommandType } from "../types";
 
 /**
- * Execute a command.
+ * Execute a CLI command
+ *
+ * @remarks
+ * This function is a wrapper around the execa command to run CLI commands
  *
  * @param command - The command to execute
- * @param options - The options to use when executing the command
- * @param env - The environment variables to use when executing the command
- * @param stdio - The stdio options to use when executing the command
- * @returns The result of the command
+ * @param cwd - The current working directory to use when executing the command
+ * @returns The result of the command or an exception
  */
-export const execute = (
-  command: string,
-  options: ExecOptions = {},
-  env: Record<string, string> = {},
-  stdio: StdioOptions = "inherit"
-): string | Buffer | Readable | undefined => {
+export const execute = (command: string, cwd: string) => {
   try {
-    StormLog.info(
-      `Executing command: "${command}"${
-        isEmptyObject(options)
-          ? ""
-          : `, options: ${StormParser.stringify(options)}`
-      }${isEmptyObject(env) ? "" : `, env: ${StormParser.stringify(env)}`}${
-        stdio ? "" : `, stdio: ${stdio}`
-      }`
-    );
+    StormLog.trace(`Executing command: "${command}" in directory: "${cwd}"`);
 
-    return extExecSync(command, {
-      encoding: "utf8",
-      env: { ...process.env, ...env },
-      stdio,
-      ...options
+    return execaCommand(command, {
+      preferLocal: true,
+      shell: true,
+      stdio: "inherit",
+      cwd
     });
-  } catch (error_) {
+  } catch (error) {
     StormLog.error(`An error occurred executing command: "${command}"`);
-    StormLog.error(error_);
+    StormLog.error(error);
 
-    return (
-      (error_ as any)?.message ?? "Exception occurred while processing request "
-    );
+    return error;
   }
 };
 
 /**
- * Execute a command asynchronously.
+ * Execute a CLI command
+ *
+ * @remarks
+ * This function is a wrapper around the execa command to run CLI commands
  *
  * @param command - The command to execute
- * @param options - The options to use when executing the command
- * @param env - The environment variables to use when executing the command
- * @param stdio - The stdio options to use when executing the command
- * @returns The result of the command
+ * @param args - The arguments to pass to the command
+ * @param cwd - The current working directory to use when executing the command
+ * @returns The result of the command or an exception
  */
-export const executeAsync = async (
-  command: string,
-  options?: ExecOptions,
-  env?: Record<string, string>,
-  stdio?: StdioOptions
-): Promise<string | Buffer | undefined> => {
-  return (await promisify(execute)(command, options, env, stdio)) as any;
+export const executeCommand = async (
+  command: CLICommandType = CLICommandType.EXECUTE,
+  args?: string[],
+  cwd: string = "./"
+) => {
+  const result = getCommand(
+    (await detect({
+      autoInstall: true,
+      cwd,
+      programmatic: true
+    })) ?? "npm",
+    command,
+    args
+  );
+
+  return execute(`${result.command} ${result.args.join(" ")}`, cwd);
 };

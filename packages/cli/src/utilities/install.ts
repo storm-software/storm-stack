@@ -15,10 +15,16 @@
 
  -------------------------------------------------------------------*/
 
-export * from "./cli-link";
-export * from "./create-cli-options";
-export * from "./execute";
-export * from "./install";
-export * from "./is-ci";
-export * from "./is-interactive";
-export * from "./write-banner";
+import { CLICommandType } from "../types";
+import { executeCommand } from "./execute";
+
+/**
+ * Install a package
+ *
+ * @param name - The name of the package to install
+ * @param cwd - The current working directory to use when executing the command
+ * @returns The result of the command or an exception
+ */
+export const install = (name: string, cwd: string) => {
+  return executeCommand(CLICommandType.INSTALL, [name], cwd);
+};

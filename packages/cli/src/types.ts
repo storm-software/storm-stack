@@ -67,3 +67,29 @@ export interface CLIOptionDefault {
   value: unknown;
   description?: string | undefined;
 }
+
+export type CLICommandType =
+  | "agent"
+  | "run"
+  | "install"
+  | "frozen"
+  | "global"
+  | "add"
+  | "upgrade"
+  | "upgrade-interactive"
+  | "execute"
+  | "uninstall"
+  | "global_uninstall";
+export const CLICommandType = {
+  AGENT: "agent" as CLICommandType,
+  RUN: "run" as CLICommandType,
+  INSTALL: "install" as CLICommandType,
+  FROZEN: "frozen" as CLICommandType,
+  GLOBAL: "global" as CLICommandType,
+  ADD: "add" as CLICommandType,
+  UPGRADE: "upgrade" as CLICommandType,
+  UPGRADE_INTERACTIVE: "upgrade-interactive" as CLICommandType,
+  EXECUTE: "execute" as CLICommandType,
+  UNINSTALL: "uninstall" as CLICommandType,
+  GLOBAL_UNINSTALL: "global_uninstall" as CLICommandType
+};
