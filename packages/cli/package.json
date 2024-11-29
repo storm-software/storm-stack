@@ -10,22 +10,22 @@
   },
   "private": false,
   "dependencies": {
-    "@antfu/install-pkg": "^0.4.1",
-    "@antfu/ni": "^0.23.0",
+    "@antfu/install-pkg": "^0.5.0",
+    "@antfu/ni": "^0.23.1",
     "@storm-software/config": "latest",
     "@storm-software/config-tools": "latest",
     "chalk": "5.3.0",
     "commander": "12.1.0",
     "console-table-printer": "2.12.1",
-    "execa": "^9.4.0",
-    "figlet": "^1.7.0",
+    "execa": "^9.5.1",
+    "figlet": "^1.8.0",
     "prompts": "^2.4.2",
     "terminal-link": "^3.0.0",
     "tinyexec": "^0.3.1"
   },
   "devDependencies": {
     "@types/figlet": "^1.7.0",
-    "@types/node": "^22.7.5"
+    "@types/node": "^22.10.1"
   },
   "publishConfig": {
     "access": "public"
