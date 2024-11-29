@@ -11,24 +11,24 @@
   "main": "./src/index.js",
   "typings": "./src/index.d.ts",
   "peerDependencies": {
-    "@tamagui/web": "^1.113.0",
-    "nx": "20.0.11"
+    "@tamagui/web": "^1.117.2",
+    "nx": "20.1.4"
   },
   "dependencies": {
-    "@nx/devkit": "20.0.11",
+    "@nx/devkit": "20.1.4",
     "@storm-software/config": "latest",
     "@storm-software/config-tools": "latest",
     "@storm-software/workspace-tools": "latest",
-    "@tamagui/fake-react-native": "^1.113.0",
+    "@tamagui/fake-react-native": "^1.117.2",
     "esbuild": "^0.24.0",
     "fs-extra": "^11.2.0",
     "glob": "^11.0.0",
-    "tslib": "^2.7.0"
+    "tslib": "^2.8.1"
   },
   "devDependencies": {
-    "@tamagui/web": "^1.113.0",
+    "@tamagui/web": "^1.117.2",
     "@types/fs-extra": "^11.0.4",
-    "nx": "20.0.11"
+    "nx": "20.1.4"
   },
   "executors": "./executors.json"
 }
