@@ -10,5 +10,8 @@
   "private": false,
   "publishConfig": {
     "access": "public"
+  },
+  "dependencies": {
+    "match-sorter": "^8.0.0"
   }
 }

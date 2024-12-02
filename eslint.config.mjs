@@ -35,5 +35,6 @@ export default getStormConfig({
   },
   markdown: true,
   react: false,
+  typescriptEslintConfigType: "base",
   useUnicorn: true
 });
