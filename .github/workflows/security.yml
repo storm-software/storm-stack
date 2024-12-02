@@ -1,7 +1,7 @@
 name: Security
 
 on:
-  workflow_dispatch:
+  pull_request:
   push:
     branches:
       - main
@@ -11,10 +11,16 @@ on:
       - "**/*.md"
       - ".all-contributorsrc"
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.number || github.ref }}
+  cancel-in-progress: true
+
+permissions: write-all
+
 jobs:
   file-system-scan:
     name: Vulnerability scanning - File system
-    uses: storm-software/storm-ops/.github/workflows/security-reusable.yml@main
+    uses: storm-ops/.github/workflows/security-reusable.yml@main
     with:
       scan-type: "fs"
       format: "sarif"
@@ -23,7 +29,7 @@ jobs:
 
   config-scan:
     name: Vulnerability scanning - Config
-    uses: storm-software/storm-ops/.github/workflows/security-reusable.yml@main
+    uses: storm-ops/.github/workflows/security-reusable.yml@main
     with:
       scan-type: "config"
       format: "sarif"

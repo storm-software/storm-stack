@@ -1,4 +1,4 @@
-name: CI/CD
+name: "CI/CD"
 
 on:
   workflow_dispatch:
@@ -11,100 +11,38 @@ on:
       - main
       - canary
       - experimental
-env:
-  CI: true
-  # NX_CLOUD_DISTRIBUTED_EXECUTION: true # this enables DTE
-  # NX_CLOUD_DISTRIBUTED_EXECUTION_AGENT_COUNT: 3 # expected number of agents
-  # NX_BRANCH: ${{ github.event.number || github.ref_name }}
-  # NX_CLOUD_ACCESS_TOKEN: ${{ secrets.NX_CLOUD_ACCESS_TOKEN }}
-  STORM_BOT: Stormie-Bot
-  STORM_REPOSITORY: ${{ github.repositoryUrl }}
-  STORM_WORKSPACE_ROOT: ${{ github.workspace }}
-  GITHUB_ACTOR: ${{ github.actor }}
-  GITHUB_TOKEN: ${{ github.token }}
-  NPM_TOKEN: ${{ secrets.STORM_BOT_NPM_TOKEN }}
-  CARGO_REGISTRY_TOKEN: ${{ secrets.STORM_BOT_CARGO_TOKEN }}
 
 jobs:
   start:
-    name: Started CI workflow
-    if: github.repository == 'storm-software/storm-stack' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/canary' || github.ref == 'refs/heads/experimental')
+    name: "Send in process notification"
     runs-on: ubuntu-latest
-    steps:
-      - name: Send Slack notification - Deployment started
-        uses: slackapi/slack-github-action@v1.27.0
-        with:
-          channel-id: "notifications"
-          payload: |
-            {
-               "text": "Deployment for ${{ github.repository }} has started (In Progress)",
-               "attachments": [
-                 {
-                   "pretext": "Deployment for ${{ github.repository }} has started",
-                   "color": "1fb2a6",
-                   "fields": [
-                     {
-                       "title": "Status",
-                       "short": true,
-                       "value": "In Progress"
-                     }
-                   ]
-                 }
-               ]
-             }
-        env:
-          SLACK_BOT_TOKEN: ${{ secrets.STORM_BOT_SLACK_TOKEN }}
-
-      - name: Send Discord notification - Deployment started
-        uses: Ilshidur/action-discord@master
-        with:
-          args: "Deployment for ${{ github.repository }} has started - #${{
-            github.run_number }}"
-        env:
-          DISCORD_WEBHOOK: ${{ secrets.STORM_BOT_DISCORD_WEBHOOK }}
-          DISCORD_USERNAME: ${{ env.STORM_BOT }}
-          DISCORD_AVATAR: "https://pub-761b436209f44a4d886487c917806c08.r2.dev/icon-stormie.png"
-          DISCORD_EMBEDS:
-            '[{"title": "Deployment #${{ github.run_number }} has started",
-            "description": "Deployment for ${{ github.repository }} is currently
-            in process - #${{ github.run_number }}", "thumbnail": { "url":
-            "https://pub-761b436209f44a4d886487c917806c08.r2.dev/icon-fill.png"
-            }, "image": { "url":
-            "https://pub-761b436209f44a4d886487c917806c08.r2.dev/logo-fill.png"
-            }, "author": { "name": "${{ github.actor }}", "url":
-            "https://github.com/${{ github.actor }}", "icon_url":
-            "https://avatars.githubusercontent.com/u/${{ github.actor_id }}?v=4"
-            }, "fields": [ { "name": "Repository", "value": "${{
-            github.repository }}" }, { "name": "Repository URL", "value": "${{
-            github.repositoryUrl }}" }, { "name": "Pipeline Status", "value":
-            "In Progress" }], "color": 2077350, "timestamp": "${{
-            github.event.repository.updated_at }}", "url": "${{
-            github.event.pull_request.html_url || github.event.head_commit.url
-            }}", "footer": { "text": "Click here to see the full workflow
-            details: ${{ github.event.pull_request.html_url ||
-            github.event.head_commit.url }}", "icon_url":
-            "https://pub-761b436209f44a4d886487c917806c08.r2.dev/icon-fill.png"
-            } }]'
-
-      - name: Send Telegram notification - Deployment started
-        uses: storm-software/action-telegram-notify@main
-        with:
-          status: "in-progress"
-        env:
-          TELEGRAM_TOKEN: ${{ secrets.STORM_BOT_TELEGRAM_TOKEN }}
-          TELEGRAM_CHAT: ${{ secrets.STORM_BOT_TELEGRAM_NOTIFICATION_CHAT }}
-
-  release:
-    name: Continuous Integration
-    if: always() && !cancelled() && !contains(needs.*.result, 'failure') && github.event.pull_request.draft == false
-    needs:
-      - start
-    runs-on: ubuntu-latest
-    timeout-minutes: 60
     permissions:
-      actions: read
       contents: write
       id-token: write
+    if: github.repository == 'storm-software/storm-stack' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/canary' || github.ref == 'refs/heads/experimental')
+    steps:
+      - name: Send notification - Deployment started
+        uses: storm-software/action-notify@main
+        with:
+          title: "Deployment for ${{ github.repository }} has started (In Progress)"
+          subtitle: "Deployment for ${{ github.repository }} has started - #${{ github.run_number }}"
+          description: "Deployment for ${{ github.repository }} is currently in process - #${{ github.run_number }}. Click here to see the full workflow details: ${{ github.event.pull_request.html_url || github.event.head_commit.url }}."
+          color: 2077350
+          status: "In Progress"
+          slack-token: ${{ secrets.STORM_BOT_SLACK_TOKEN }}
+          telegram-token: ${{ secrets.STORM_BOT_TELEGRAM_TOKEN }}
+          telegram-chat: ${{ secrets.STORM_BOT_TELEGRAM_NOTIFICATION_CHAT }}
+          discord-webhook: ${{ secrets.STORM_BOT_DISCORD_WEBHOOK}}
+
+  process:
+    name: "Continuous Integration"
+    if: always() && !cancelled() && !contains(needs.*.result, 'failure') && github.event.pull_request.draft == false
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      id-token: write
+    needs:
+      - start
     steps:
       - name: Checkout [Pull Request]
         uses: actions/checkout@v4
@@ -127,19 +65,35 @@ jobs:
       - name: Setup workspace
         uses: storm-software/action-setup@main
         with:
-          package-manager-version: 9.12.1
+          package-manager: pnpm
+          package-manager-version: 9.10.0
+          storm-bot: Stormie-Bot
           storm-bot-github-token: ${{ secrets.STORM_BOT_GITHUB_TOKEN }}
 
-      - name: Run Nx Set SHAs
+      - name: Configure git
+        run: |
+          git config user.name "Stormie-Bot"
+          git config user.email "bot@stormsoftware.com"
+          git config lfs.allowincompletepush true
+          npm config set //registry.npmjs.org/:_authToken=$NPM_TOKEN
+        shell: bash
+
+      - name: Get appropriate base and head commits for `nx affected` commands
         uses: nrwl/nx-set-shas@v4
         with:
-          main-branch-name: main
+          main-branch-name: "main"
+
+      - name: Set appropriate base and head commits for `nx affected` commands
+        run: |
+          echo "BASE: ${{ env.NX_BASE }}"
+          echo "HEAD: ${{ env.NX_HEAD }}"
+        shell: bash
 
       - name: Run build script
         run: pnpm build-all
         shell: bash
 
-      - name: Release Library Version Updates
+      - name: Release repository updates
         run: pnpm release --base=${{ env.NX_BASE }} --head=${{ env.NX_HEAD }}
         env:
           GITHUB_ACTOR: ${{ github.actor }}
@@ -147,231 +101,70 @@ jobs:
           GH_TOKEN: ${{ github.token }}
           NPM_TOKEN: ${{ secrets.STORM_BOT_NPM_TOKEN }}
           CARGO_REGISTRY_TOKEN: ${{ secrets.STORM_BOT_CARGO_TOKEN }}
+          CLOUDFLARE_API_TOKEN: ${{ secrets.STORM_BOT_CLOUDFLARE_TOKEN }}
           STORM_BOT: Stormie-Bot
           STORM_WORKSPACE_ROOT: ${{ github.workspace }}
           STORM_REPOSITORY: ${{ github.repositoryUrl }}
+          CYCLONE_REGISTRY_ACCESS_KEY: ${{ secrets.CYCLONE_REGISTRY_ACCESS_KEY }}
+          CYCLONE_REGISTRY_SECRET_KEY: ${{ secrets.CYCLONE_REGISTRY_SECRET_KEY }}
           TAG: ${{ inputs.tag }}
 
   success:
     needs:
-      - release
+      - process
     if: ${{ success() }}
     name: Send success notification
     runs-on: ubuntu-latest
     steps:
-      - name: Send Slack notification - Deployment successful
-        uses: slackapi/slack-github-action@v1.27.0
+      - name: Send notification - Deployment successful
+        uses: storm-software/action-notify@main
         with:
-          channel-id: "notifications"
-          update-ts: ${{ steps.release.outputs.ts }}
-          payload: |
-            {
-              "text": "Deployment for ${{ github.repository }} has finished (Completed) \n\nPipeline Status: Success \nClick here to see the full workflow details: ${{ github.event.pull_request.html_url || github.event.head_commit.url }}",
-              "attachments": [
-                {
-                  "pretext": "Deployment for ${{ github.repository }} has finished successfully",
-                  "color": "087f5b",
-                  "fields": [
-                    {
-                      "title": "Status",
-                      "short": true,
-                      "value": "Completed"
-                    }
-                  ]
-                }
-              ]
-            }
-        env:
-          SLACK_BOT_TOKEN: ${{ secrets.STORM_BOT_SLACK_TOKEN }}
-
-      - name: Send Discord notification - Deployment successful
-        uses: Ilshidur/action-discord@master
-        with:
-          args: "Deployment for ${{ github.repository }} finished successfully -
-            #${{ github.run_number }}"
-        env:
-          DISCORD_WEBHOOK: ${{ secrets.STORM_BOT_DISCORD_WEBHOOK }}
-          DISCORD_USERNAME: ${{ env.STORM_BOT }}
-          DISCORD_AVATAR: "https://pub-761b436209f44a4d886487c917806c08.r2.dev/icon-stormie.png"
-          DISCORD_EMBEDS:
-            '[{"title": "Deployment #${{ github.run_number }} was successful!",
-            "description": "Deployment for ${{ github.repository }} has finished
-            successfully - #${{ github.run_number }}", "thumbnail": { "url":
-            "https://pub-761b436209f44a4d886487c917806c08.r2.dev/icon-fill.png"
-            }, "image": { "url":
-            "https://pub-761b436209f44a4d886487c917806c08.r2.dev/logo-fill.png"
-            }, "author": { "name": "${{ github.actor }}", "url":
-            "https://github.com/${{ github.actor }}", "icon_url":
-            "https://avatars.githubusercontent.com/u/${{ github.actor_id }}?v=4"
-            }, "fields": [ { "name": "Repository", "value": "${{
-            github.repository }}" }, { "name": "Repository URL", "value": "${{
-            github.repositoryUrl }}" }, { "name": "Pipeline Status", "value":
-            "Success" }], "color": 556891, "timestamp": "${{
-            github.event.repository.updated_at }}", "url": "${{
-            github.event.pull_request.html_url || github.event.head_commit.url
-            }}", "footer": { "text": "Click here to see the full workflow
-            details: ${{ github.event.pull_request.html_url ||
-            github.event.head_commit.url }}", "icon_url":
-            "https://pub-761b436209f44a4d886487c917806c08.r2.dev/icon-fill.png"
-            }}]'
-
-      - name: Send Telegram notification - Deployment successful
-        uses: storm-software/action-telegram-notify@main
-        with:
-          status: "success"
-        env:
-          TELEGRAM_TOKEN: ${{ secrets.STORM_BOT_TELEGRAM_TOKEN }}
-          TELEGRAM_CHAT: ${{ secrets.STORM_BOT_TELEGRAM_NOTIFICATION_CHAT }}
+          title: "Deployment for ${{ github.repository }} has finished (Success)"
+          subtitle: "Deployment for ${{ github.repository }} has finished successfully - #${{ github.run_number }}"
+          description: "Deployment for ${{ github.repository }} has finished successfully - #${{ github.run_number }}. Click here to see the full workflow details: ${{ github.event.pull_request.html_url || github.event.head_commit.url }}."
+          color: 556891
+          status: "Success"
+          slack-token: ${{ secrets.STORM_BOT_SLACK_TOKEN }}
+          telegram-token: ${{ secrets.STORM_BOT_TELEGRAM_TOKEN }}
+          telegram-chat: ${{ secrets.STORM_BOT_TELEGRAM_NOTIFICATION_CHAT }}
+          discord-webhook: ${{ secrets.STORM_BOT_DISCORD_WEBHOOK}}
 
   failure:
     needs:
-      - release
+      - process
     if: ${{ failure() }}
     name: Send failure notification
     runs-on: ubuntu-latest
     steps:
-      - name: Send Slack notification - Deployment failed
-        uses: slackapi/slack-github-action@v1.27.0
+      - name: Send notification - Deployment successful
+        uses: storm-software/action-notify@main
         with:
-          channel-id: "notifications"
-          update-ts: ${{ steps.release.outputs.ts }}
-          payload: |
-            {
-              "text": "Deployment for ${{ github.repository }} has finished (Failure) \n\nPipeline Status: Failure\nError: ${{ job.conclusion }}\nReason: ${{ job.cancelled }}\nConclusion: ${{ job.conclusion }}\nOutput: ${{ job.output }}\nLogs: ${{ job.logs }} \nSteps: ${{ job.steps }} \nActions: ${{ job.actions }} \nServices: ${{ job.services }} \nEnvironment: ${{ job.environment}} \nClick here to see the full workflow details: ${{ github.event.pull_request.html_url || github.event.head_commit.url }}",
-              "attachments": [
-                {
-                  "pretext": "Deployment for ${{ github.repository }} has finished with failures",
-                  "color": "990000",
-                  "fields": [
-                    {
-                      "title": "Status",
-                      "short": true,
-                      "value": "Failure"
-                    }
-                  ]
-                }
-              ]
-            }
-        env:
-          SLACK_BOT_TOKEN: ${{ secrets.STORM_BOT_SLACK_TOKEN }}
-
-      - name: Send Discord notification - Deployment failed
-        uses: Ilshidur/action-discord@master
-        with:
-          args:
-            "Deployment for ${{ github.repository }} finished with failures -
-            #${{ github.run_number }}"
-        env:
-          DISCORD_WEBHOOK: ${{ secrets.STORM_BOT_DISCORD_WEBHOOK }}
-          DISCORD_USERNAME: ${{ env.STORM_BOT }}
-          DISCORD_AVATAR: "https://pub-761b436209f44a4d886487c917806c08.r2.dev/icon-stormie.png"
-          DISCORD_EMBEDS:
-            '[{"title": "Deployment #${{ github.run_number }} has failed",
-            "description": "Deployment for ${{ github.repository }} finished
-            with failures - #${{ github.run_number }}", "thumbnail": { "url":
-            "https://pub-761b436209f44a4d886487c917806c08.r2.dev/icon-fill.png"
-            }, "image": { "url":
-            "https://pub-761b436209f44a4d886487c917806c08.r2.dev/logo-fill.png"
-            }, "author": { "name": "${{ github.actor }}", "url":
-            "https://github.com/${{ github.actor }}", "icon_url":
-            "https://avatars.githubusercontent.com/u/${{ github.actor_id }}?v=4"
-            }, "fields": [ { "name": "Repository", "value": "${{
-            github.repository }}" }, { "name": "Repository URL", "value": "${{
-            github.repositoryUrl }}" }, { "name": "Pipeline Status", "value":
-            "Failure" }, { "name": "Event", "value": "${{ github.event_name }}"
-            }, { "name": "Result", "value": "${{ steps.release.result }}" }, {
-            "name": "Conclusion", "value": "${{ steps.release.conclusion }}" },
-            { "name": "Output", "value": "${{ toJSON(steps.release.outputs) }}"
-            }], "color": 10027008, "timestamp": "${{
-            github.event.repository.updated_at }}", "url": "${{
-            github.event.pull_request.html_url || github.event.head_commit.url
-            }}", "footer": { "text": "Click here to see the full workflow
-            details: ${{ github.event.pull_request.html_url ||
-            github.event.head_commit.url }}", "icon_url":
-            "https://pub-761b436209f44a4d886487c917806c08.r2.dev/icon-fill.png"
-            } }]'
-
-      - name: Send Telegram notification - Deployment failed
-        uses: storm-software/action-telegram-notify@main
-        with:
-          status: "failed"
-        env:
-          TELEGRAM_TOKEN: ${{ secrets.STORM_BOT_TELEGRAM_TOKEN }}
-          TELEGRAM_CHAT: ${{ secrets.STORM_BOT_TELEGRAM_NOTIFICATION_CHAT }}
+          title: "Deployment for ${{ github.repository }} has finished (Failure)"
+          subtitle: "Deployment for ${{ github.repository }} finished with failures - #${{ github.run_number }}"
+          description: "Deployment for ${{ github.repository }} finished with failures - #${{ github.run_number }}. Click here to see the full workflow details: ${{ github.event.pull_request.html_url || github.event.head_commit.url }}."
+          color: 10027008
+          status: "Failure"
+          slack-token: ${{ secrets.STORM_BOT_SLACK_TOKEN }}
+          telegram-token: ${{ secrets.STORM_BOT_TELEGRAM_TOKEN }}
+          telegram-chat: ${{ secrets.STORM_BOT_TELEGRAM_NOTIFICATION_CHAT }}
+          discord-webhook: ${{ secrets.STORM_BOT_DISCORD_WEBHOOK}}
 
   cancelled:
     needs:
-      - release
+      - process
     if: ${{ cancelled() }}
     name: Send cancelled notification
     runs-on: ubuntu-latest
     steps:
-      - name: Send Slack notification - Deployment cancelled
-        uses: slackapi/slack-github-action@v1.27.0
+      - name: Send notification - Deployment cancelled
+        uses: storm-software/action-notify@main
         with:
-          channel-id: "notifications"
-          update-ts: ${{ steps.release.outputs.ts }}
-          payload: |
-            {
-              "text": "Deployment for ${{ github.repository }} has finished (Cancelled) \n\nPipeline Status: Cancelled\nError: ${{ job.conclusion }}\nReason: ${{ job.cancelled }}\nConclusion: ${{ job.conclusion }}\nOutput: ${{ job.output }}\nLogs: ${{ job.logs }} \nSteps: ${{ job.steps }} \nActions: ${{ job.actions }} \nServices: ${{ job.services }} \nEnvironment: ${{ job.environment}} \nClick here to see the full workflow details: ${{ github.event.pull_request.html_url || github.event.head_commit.url }}",
-              "attachments": [
-                {
-                  "pretext": "Deployment for ${{ github.repository }} has been cancelled",
-                  "color": "990000",
-                  "fields": [
-                    {
-                      "title": "Status",
-                      "short": true,
-                      "value": "Cancelled"
-                    }
-                  ]
-                }
-              ]
-            }
-        env:
-          SLACK_BOT_TOKEN: ${{ secrets.STORM_BOT_SLACK_TOKEN }}
-
-      - name: Send Discord notification - Deployment cancelled
-        uses: Ilshidur/action-discord@master
-        with:
-          args:
-            "Deployment for ${{ github.repository }} has been cancelled - #${{
-            github.run_number }}"
-        env:
-          DISCORD_WEBHOOK: ${{ secrets.STORM_BOT_DISCORD_WEBHOOK }}
-          DISCORD_USERNAME: ${{ env.STORM_BOT }}
-          DISCORD_AVATAR: "https://pub-761b436209f44a4d886487c917806c08.r2.dev/icon-stormie.png"
-          DISCORD_EMBEDS:
-            '[{"title": "Deployment #${{ github.run_number }} was cancelled",
-            "description": "Deployment for ${{ github.repository }} was
-            cancelled before it could complete normal execution - #${{
-            github.run_number }}", "thumbnail": { "url":
-            "https://pub-761b436209f44a4d886487c917806c08.r2.dev/icon-fill.png"
-            }, "image": { "url":
-            "https://pub-761b436209f44a4d886487c917806c08.r2.dev/logo-fill.png"
-            }, "author": { "name": "${{ github.actor }}", "url":
-            "https://github.com/${{ github.actor }}", "icon_url":
-            "https://avatars.githubusercontent.com/u/${{ github.actor_id }}?v=4"
-            }, "fields": [ { "name": "Repository", "value": "${{
-            github.repository }}" }, { "name": "Repository URL", "value": "${{
-            github.repositoryUrl }}" }, { "name": "Pipeline Status", "value":
-            "Cancelled" }, { "name": "Event", "value": "${{ github.event_name
-            }}" }, { "name": "Result", "value": "${{ steps.release.result }}" },
-            { "name": "Conclusion", "value": "${{ steps.release.conclusion }}"
-            }, { "name": "Output", "value": "${{ toJSON(steps.release.outputs)
-            }}" }], "color": 16565273, "timestamp": "${{
-            github.event.repository.updated_at }}", "url": "${{
-            github.event.pull_request.html_url || github.event.head_commit.url
-            }}", "footer": { "text": "Click here to see the full workflow
-            details: ${{ github.event.pull_request.html_url ||
-            github.event.head_commit.url }}", "icon_url":
-            "https://pub-761b436209f44a4d886487c917806c08.r2.dev/icon-fill.png"
-            } }]'
-
-      - name: Send Telegram notification - Deployment cancelled
-        uses: storm-software/action-telegram-notify@main
-        with:
-          status: "cancelled"
-        env:
-          TELEGRAM_TOKEN: ${{ secrets.STORM_BOT_TELEGRAM_TOKEN }}
-          TELEGRAM_CHAT: ${{ secrets.STORM_BOT_TELEGRAM_NOTIFICATION_CHAT }}
+          title: "Deployment for ${{ github.repository }} has finished (Cancelled)"
+          subtitle: "Deployment for ${{ github.repository }} was cancelled - #${{ github.run_number }}"
+          description: "Deployment for ${{ github.repository }} was stopped before it could complete - #${{ github.run_number }}. Click here to see the full workflow details: ${{ github.event.pull_request.html_url || github.event.head_commit.url }}."
+          color: 16565273
+          status: "Cancelled"
+          slack-token: ${{ secrets.STORM_BOT_SLACK_TOKEN }}
+          telegram-token: ${{ secrets.STORM_BOT_TELEGRAM_TOKEN }}
+          telegram-chat: ${{ secrets.STORM_BOT_TELEGRAM_NOTIFICATION_CHAT }}
+          discord-webhook: ${{ secrets.STORM_BOT_DISCORD_WEBHOOK}}

@@ -22,10 +22,10 @@
   },
   "license": "Apache-2.0",
   "private": true,
-  "packageManager": "pnpm@9.12.1",
+  "packageManager": "pnpm@9.10.0",
   "engines": {
-    "node": ">=22.9.0",
-    "pnpm": ">=9.12.1"
+    "node": ">=22.8.0",
+    "pnpm": ">=9.10.0"
   },
   "keywords": [
     "storm-stack",
@@ -65,10 +65,13 @@
     "dep-graph": "nx dep-graph",
     "e2e": "nx e2e",
     "format": "nx format:write",
+    "format-sherif": "pnpx sherif -f -i typescript -i react -i react-dom",
     "graph": "nx graph",
     "help": "nx help",
     "install-csb": "corepack enable && pnpm install --no-frozen-lockfile",
     "lint": "pnpm storm-lint all --skip-cspell --skip-circular-deps",
+    "lint-knip": "pnpx knip",
+    "lint-sherif": "pnpx sherif -i typescript -i react -i react-dom",
     "local-registry": "nx local-registry @storm-stack/monorepo",
     "nuke": "pnpm nuke-cache && pnpm nuke-node_modules",
     "nuke-cache": "pnpm exec rimraf --no-interactive -- ./dist ./tmp ./pnpm-lock.yaml ./.tamagui",
@@ -85,7 +88,6 @@
   "dependencies": {
     "@commitlint/cli": "^19.5.0",
     "@ls-lint/ls-lint": "^2.2.3",
-    "@nderscore/tamagui-typescript-plugin": "^0.6.0",
     "@nx/cypress": "20.0.11",
     "@nx/devkit": "20.0.11",
     "@nx/eslint-plugin": "20.0.11",
@@ -137,6 +139,7 @@
     "react-native": "0.75.4",
     "rimraf": "^6.0.1",
     "sherif": "1.0.0",
+    "syncpack": "^13.0.0",
     "ts-jest": "29.2.5",
     "ts-node": "10.9.2",
     "tslib": "^2.7.0",
@@ -146,12 +149,15 @@
   "namespace": "@storm-stack",
   "nx": {
     "includedScripts": [
+      "lint-knip",
       "lint-ls",
+      "lint-sherif",
       "lint",
       "format",
       "format-readme",
       "format-prettier",
       "format-toml",
+      "format-sherif",
       "commit",
       "release"
     ]
