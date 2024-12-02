@@ -1,6 +1,6 @@
 {
   "name": "@storm-stack/utilities",
-  "version": "1.36.0",
+  "version": "1.37.0",
   "description": "This package includes various base utility class and various functions to assist in the development process.",
   "repository": {
     "type": "github",
@@ -8,10 +8,10 @@
     "directory": "packages/utilities"
   },
   "private": false,
-  "publishConfig": {
-    "access": "public"
-  },
   "dependencies": {
     "match-sorter": "^8.0.0"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }

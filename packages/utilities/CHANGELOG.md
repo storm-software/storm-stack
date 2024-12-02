@@ -1,3 +1,9 @@
+## 1.37.0 (2024-12-02)
+
+### Features
+
+- **utilities:** Added `match-sorter` and `remove-accent` modules ([3eeff01](https://github.com/storm-software/storm-stack/commit/3eeff01))
+
 ## 1.36.0 (2024-11-10)
 
 ### Features
