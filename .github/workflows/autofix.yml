@@ -43,10 +43,6 @@ jobs:
           package-manager-version: 9.10.0
           storm-bot-github-token: ${{ secrets.STORM_BOT_GITHUB_TOKEN }}
 
-      - name: Build Storm Nx-Plugin packages
-        run: pnpm build-plugins
-        shell: bash
-
       - uses: nrwl/nx-set-shas@v4
         with:
           main-branch-name: main
@@ -56,16 +52,16 @@ jobs:
         shell: bash
 
       - name: Run TOML linter
-        run: pnpm format-toml
+        run: pnpm exec taplo format --config="./node_modules/@storm-software/linting-tools/taplo/config.toml"
 
       - name: Run Prettier linter
-        run: pnpm format-prettier
+        run: pnpm exec prettier --write --ignore-unknown --no-error-on-unmatched-pattern --config="./node_modules/@storm-software/prettier/config.json" --ignore-path="./node_modules/@storm-software/prettier/.prettierignore"
 
       # - name: Run Knip linter
       #   run: pnpm lint-knip
 
       - name: Run README formatter
-        run: pnpm format-readme
+        run: pnpm exec storm-git readme-gen --templates="./tools/readme-templates"
 
       - name: Run Nx formatter
         run: pnpm nx format:write
