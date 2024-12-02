@@ -1,3 +1,9 @@
+## 1.40.0 (2024-12-02)
+
+### Features
+
+- **monorepo:** Upgrade workflow actions to use the new base processes ([14d2f2f](https://github.com/storm-software/storm-stack/commit/14d2f2f))
+
 ## 1.39.0 (2024-11-10)
 
 ### Features
