@@ -1,3 +1,9 @@
+## 0.24.0 (2024-12-03)
+
+### Features
+
+- **hooks:** Added the `useMemoStable` and `useCallbackStable` hooks ([4629ec3](https://github.com/storm-software/storm-stack/commit/4629ec3))
+
 ## 0.23.0 (2024-12-02)
 
 ### Features
