@@ -15,8 +15,6 @@
 
  -------------------------------------------------------------------*/
 
-/* eslint-disable @typescript-eslint/no-unsafe-function-type */
-
 import type { TypedArray } from "./array";
 
 export type SerializablePrimitive =

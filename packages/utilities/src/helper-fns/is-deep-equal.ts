@@ -15,6 +15,8 @@
 
  -------------------------------------------------------------------*/
 
+/* eslint-disable no-cond-assign */
+
 import { isSet, isSetString } from "@storm-stack/types";
 
 const hasMap = typeof Map === "function";
@@ -111,6 +113,7 @@ function equal(a: any, b: any) {
         (keys[i] === "_owner" || keys[i] === "__v" || keys[i] === "__o") &&
         a.$$typeof
       ) {
+        // eslint-disable-next-line no-continue
         continue;
       }
 

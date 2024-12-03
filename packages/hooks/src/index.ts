@@ -16,6 +16,7 @@
  -------------------------------------------------------------------*/
 
 export * from "./use-callback-ref";
+export * from "./use-callback-stable";
 export * from "./use-compose-refs";
 export * from "./use-debounce";
 export * from "./use-did-finish-ssr";
@@ -25,5 +26,6 @@ export * from "./use-hover";
 export * from "./use-idle";
 export * from "./use-isomorphic-layout-effect";
 export * from "./use-keyboard-visible";
+export * from "./use-memo-stable";
 export * from "./use-network-state";
 export * from "./use-previous";
