@@ -1,3 +1,9 @@
+## 0.25.1 (2024-12-04)
+
+### Bug Fixes
+
+- **monorepo:** Resolved issue with missing env values in CI workflow action ([d0c6d6b](https://github.com/storm-software/storm-stack/commit/d0c6d6b))
+
 ## 0.25.0 (2024-12-04)
 
 ### Features
