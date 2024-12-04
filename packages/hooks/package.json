@@ -2,7 +2,7 @@
   "name": "@storm-stack/hooks",
   "version": "0.25.0",
   "type": "module",
-  "description": "A collection of React hooks used by Storm Software in various packages/applications.",
+  "description": "A collection of React hooks used by Storm Software in various client libraries and applications.",
   "repository": {
     "type": "github",
     "url": "https://github.com/storm-software/storm-stack.git",
