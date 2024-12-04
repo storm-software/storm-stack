@@ -1,3 +1,9 @@
+## 0.24.2 (2024-12-04)
+
+### Bug Fixes
+
+- **monorepo:** Resolve issue with external workflow execution ([8c13959](https://github.com/storm-software/storm-stack/commit/8c13959))
+
 ## 0.24.1 (2024-12-04)
 
 ### Bug Fixes
