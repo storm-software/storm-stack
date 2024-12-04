@@ -1,3 +1,9 @@
+## 1.38.1 (2024-12-04)
+
+### Bug Fixes
+
+- **hooks:** Ensure a consistent typing in `useComposeRefs` hook ([3537a18](https://github.com/storm-software/storm-stack/commit/3537a18))
+
 ## 1.38.0 (2024-12-03)
 
 ### Features
