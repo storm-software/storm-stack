@@ -35,7 +35,7 @@ export function registerShutdown(config: {
     await config.onShutdown();
   }
 
-  errorTypes.map(type => {
+  for (const type of errorTypes) {
     process.on(type, async e => {
       try {
         StormLog.info(`process.on ${type}`);
@@ -49,9 +49,9 @@ export function registerShutdown(config: {
         process.exit(1);
       }
     });
-  });
+  }
 
-  signalTraps.map(type => {
+  for (const type of signalTraps) {
     process.once(type, async () => {
       try {
         StormLog.info(`process.on ${type}`);
@@ -64,7 +64,7 @@ export function registerShutdown(config: {
         process.exit(1);
       }
     });
-  });
+  }
 
   return async (reason?: string) => {
     try {

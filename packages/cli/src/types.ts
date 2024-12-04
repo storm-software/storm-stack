@@ -80,6 +80,7 @@ export type CLICommandType =
   | "execute"
   | "uninstall"
   | "global_uninstall";
+// eslint-disable-next-line no-redeclare
 export const CLICommandType = {
   AGENT: "agent" as CLICommandType,
   RUN: "run" as CLICommandType,
