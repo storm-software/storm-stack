@@ -1,3 +1,9 @@
+## 0.25.0 (2024-12-04)
+
+### Features
+
+- **cli:** Update CLI program function name ([9a8dc91](https://github.com/storm-software/storm-stack/commit/9a8dc91))
+
 ## 0.24.2 (2024-12-04)
 
 ### Bug Fixes
