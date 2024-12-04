@@ -16,6 +16,7 @@
  -------------------------------------------------------------------*/
 
 /* eslint-disable no-cond-assign */
+/* eslint-disable space-in-parens */
 
 import { isSet, isSetString } from "@storm-stack/types";
 
@@ -155,7 +156,9 @@ export function isEqual(a: any, b: any): boolean {
     return equal(a, b);
   } catch (error) {
     if (/stack|recursion/i.test((error as any)?.message || "")) {
+      // eslint-disable-next-line no-console
       console.warn("isEqual cannot handle circular refs");
+
       return false;
     }
 
