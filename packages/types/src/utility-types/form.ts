@@ -15,6 +15,8 @@
 
  -------------------------------------------------------------------*/
 
+import { NameValuePair } from "./utilities";
+
 export type SelectOptionValue = string | number | boolean | null;
 
 /**
@@ -23,21 +25,11 @@ export type SelectOptionValue = string | number | boolean | null;
 export interface SelectOption<
   TValue extends SelectOptionValue = SelectOptionValue,
   TName = string
-> {
+> extends NameValuePair<TValue, TName> {
   /**
    * The index of the select option
    */
   index: number;
-
-  /**
-   * The string value to display in the field
-   */
-  name: TName;
-
-  /**
-   * The value stored behind the scenes when selected
-   */
-  value: TValue;
 
   /**
    * The description of the select option

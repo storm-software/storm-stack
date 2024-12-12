@@ -189,7 +189,7 @@ export type StormURL = ParsedURL & {
  */
 export interface CookieSerializeOptions {
   /**
-   * Specifies the value for the {@link https://tools.ietf.org/html/rfc6265#section-5.2.3|Domain Set-Cookie attribute}. By default, no
+   * Specifies the value for the {@link https://tools.ietf.org/html/rfc6265#section-5.2.3 | Domain Set-Cookie attribute}. By default, no
    * domain is set, and most clients will consider the cookie to apply to only
    * the current domain.
    */
@@ -208,18 +208,18 @@ export interface CookieSerializeOptions {
   encode?(value: string): string;
 
   /**
-   * Specifies the `Date` object to be the value for the {@link https://tools.ietf.org/html/rfc6265#section-5.2.1|`Expires` `Set-Cookie` attribute}. By default,
+   * Specifies the `Date` object to be the value for the {@link https://tools.ietf.org/html/rfc6265#section-5.2.1 | `Expires` `Set-Cookie` attribute}. By default,
    * no expiration is set, and most clients will consider this a "non-persistent cookie" and will delete
    * it on a condition like exiting a web browser application.
    *
-   * *Note* the {@link https://tools.ietf.org/html/rfc6265#section-5.3|cookie storage model specification}
+   * *Note* the {@link https://tools.ietf.org/html/rfc6265#section-5.3 | cookie storage model specification}
    * states that if both `expires` and `maxAge` are set, then `maxAge` takes precedence, but it is
    * possible not all clients by obey this, so if both are set, they should
    * point to the same date and time.
    */
   expires?: Date | undefined;
   /**
-   * Specifies the boolean value for the {@link https://tools.ietf.org/html/rfc6265#section-5.2.6|`HttpOnly` `Set-Cookie` attribute}.
+   * Specifies the boolean value for the {@link https://tools.ietf.org/html/rfc6265#section-5.2.6 | `HttpOnly` `Set-Cookie` attribute}.
    * When truthy, the `HttpOnly` attribute is set, otherwise it is not. By
    * default, the `HttpOnly` attribute is not set.
    *
@@ -232,7 +232,7 @@ export interface CookieSerializeOptions {
    * `Set-Cookie` attribute. The given number will be converted to an integer
    * by rounding down. By default, no maximum age is set.
    *
-   * *Note* the {@link https://tools.ietf.org/html/rfc6265#section-5.3|cookie storage model specification}
+   * *Note* the {@link https://tools.ietf.org/html/rfc6265#section-5.3 | cookie storage model specification}
    * states that if both `expires` and `maxAge` are set, then `maxAge` takes precedence, but it is
    * possible not all clients by obey this, so if both are set, they should
    * point to the same date and time.
@@ -276,7 +276,7 @@ export interface CookieSerializeOptions {
    */
   sameSite?: true | false | "lax" | "strict" | "none" | undefined;
   /**
-   * Specifies the boolean value for the {@link https://tools.ietf.org/html/rfc6265#section-5.2.5|`Secure` `Set-Cookie` attribute}. When truthy, the
+   * Specifies the boolean value for the {@link https://tools.ietf.org/html/rfc6265#section-5.2.5 | `Secure` `Set-Cookie` attribute}. When truthy, the
    * `Secure` attribute is set, otherwise it is not. By default, the `Secure` attribute is not set.
    *
    * *Note* be careful when setting this to `true`, as compliant clients will

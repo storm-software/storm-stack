@@ -29,7 +29,6 @@ type NarrowRaw<A> =
   | (A extends [] ? [] : never)
   | (A extends Narrowable ? A : never)
   | {
-      // eslint-disable-next-line @typescript-eslint/ban-types
       [K in keyof A]: A[K] extends Function ? A[K] : NarrowRaw<A[K]>;
     };
 
@@ -38,7 +37,6 @@ export type Narrow<A> = Try<A, [], NarrowRaw<A>>;
 export type Try<A1, A2, Catch = never> = A1 extends A2 ? A1 : Catch;
 
 // Hack to get TypeScript to show simplified types in error messages
-// eslint-disable-next-line @typescript-eslint/ban-types
 export type Pretty<T> = { [K in keyof T]: T[K] } & {};
 
 export type ComputeRange<
@@ -49,3 +47,18 @@ export type ComputeRange<
   : ComputeRange<N, [...Result, Result["length"]]>;
 
 export type Index40 = ComputeRange<40>[number];
+
+/**
+ * A utility type for specifying a name/value pair.
+ */
+export interface NameValuePair<TValue, TName = string> {
+  /**
+   * The name of the pair
+   */
+  name: TName;
+
+  /**
+   * The value of the pair
+   */
+  value: TValue;
+}

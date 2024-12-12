@@ -26,6 +26,7 @@ export default getStormConfig({
     "react/jsx-closing-bracket-location": 0,
     "no-undef": 0,
     "no-unused-vars": "warn",
+    "no-redeclare": 0,
     "unicorn/consistent-function-scoping": 0,
     "class-methods-use-this": 0,
     "operator-linebreak": 0,

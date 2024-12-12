@@ -31,7 +31,7 @@ export type ValidationDetails<
     | typeof MessageType.SUCCESS
 > = MessageDetails<TMessageType> & {
   /**
-   * The field that the message is related to.
+   * The field path that the message is related to.
    *
    * @remarks
    * If `undefined` or `null`, the message is not related to a specific field - in this case it is likely a global/form message.
