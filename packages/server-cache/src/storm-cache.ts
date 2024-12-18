@@ -38,24 +38,20 @@ export type StormCacheOptions = Partial<
     stores: Record<string, ReturnType<typeof bentostore>>;
     plugins?: BentoCachePlugin[];
     default: keyof Record<string, ReturnType<typeof bentostore>>;
+  } & {
+    trace: StormTrace;
   }
 >;
 
 export class StormCache {
-  public static create(
-    config: StormConfig,
-    trace?: StormTrace,
-    options: StormCacheOptions = {}
-  ) {
-    const _trace = trace ?? StormTrace.create(config, "storm-cache");
+  public static create(config: StormConfig, options: StormCacheOptions = {}) {
+    StormTrace.initialize("storm-cache", config);
 
-    const cache = new StormCache(config, _trace, options);
-    _trace.debug("StormCache initialization has completed successfully...");
+    const cache = new StormCache(config, options);
+    StormTrace.debug("StormCache initialization has completed successfully...");
 
     return cache;
   }
-
-  protected trace: StormTrace;
 
   #config: StormConfig;
 
@@ -63,14 +59,8 @@ export class StormCache {
 
   #configCache: CacheProvider;
 
-  private constructor(
-    config: StormConfig,
-    trace: StormTrace,
-    options: StormCacheOptions
-  ) {
+  private constructor(config: StormConfig, options: StormCacheOptions) {
     this.#config = config;
-    this.trace = trace ?? StormTrace.create(this.#config, "storm-cache");
-
     this.#cacheManager = this.createCacheManager(options);
 
     this.#configCache = this.#cacheManager.namespace("config");
@@ -151,7 +141,7 @@ export class StormCache {
   ): BentoCache<Record<string, ReturnType<typeof bentostore>>> {
     return new BentoCache({
       default: "store",
-      logger: this.trace,
+      logger: StormTrace,
       prefix: "storm",
       stores: {
         store: bentostore()

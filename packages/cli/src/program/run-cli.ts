@@ -88,7 +88,7 @@ export async function runCLI(cliConfig: CLIConfig): Promise<void> {
 
   const name = cliConfig.name ?? config.name ?? "Storm CLI";
 
-  StormLog.initialize(config, name);
+  StormLog.initialize(name, config);
   StormLog.info(config);
 
   try {

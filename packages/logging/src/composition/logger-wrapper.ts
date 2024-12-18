@@ -16,9 +16,11 @@
  -------------------------------------------------------------------*/
 
 import type { StormConfig } from "@storm-software/config";
-import { getCauseFromUnknown } from "@storm-stack/errors";
+import { StormError } from "@storm-stack/errors";
 import { isSet, isSetString } from "@storm-stack/types/type-checks";
 import { type MaybePromise } from "@storm-stack/types/utility-types";
+import { isProduction } from "@storm-stack/utilities/helper-fns/is-production";
+import { isRuntimeServer } from "@storm-stack/utilities/helper-fns/is-runtime-server";
 import type { ILogger, ILoggerWrapper } from "../types";
 
 /**
@@ -166,15 +168,19 @@ export class LoggerWrapper implements ILoggerWrapper {
    * @param obj - The error to format.
    * @returns The formatted error message.
    */
-  protected getErrorMessage = (obj?: string | Error | null): string => {
-    if (isSetString(obj)) {
-      return obj;
+  protected getErrorMessage = (err?: string | Error | null): string => {
+    if (isSetString(err)) {
+      return err;
     }
 
-    const error = getCauseFromUnknown(obj);
+    const error = StormError.create(err);
 
     let message = error.print();
-    if (this.config.stacktrace && isSet(error.stack)) {
+    if (
+      !isProduction(this.config?.env) &&
+      !isRuntimeServer() &&
+      isSet(error.stack)
+    ) {
       message += `\n${error.stack}`;
     }
 

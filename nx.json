@@ -131,6 +131,6 @@
       }
     },
     "@storm-software/workspace-tools/plugins/typescript"
-  ],
-  "useLegacyCache": true
+  ]
+  // "useLegacyCache": true
 }

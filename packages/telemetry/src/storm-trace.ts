@@ -37,22 +37,26 @@ export class StormTrace extends StormLog {
   static #tracer: api.Tracer;
 
   /**
-   * Initialize the logger.
+   * Initialize the telemetry utility.
    *
    * @param config - The Storm config
    * @param name - The name of the service to initialized the loggers for
    * @returns The initialized loggers
    */
   public static override initialize = (
-    config: StormConfig<"telemetry", TelemetryConfig>,
-    name?: string,
+    name: string,
+    config?: StormConfig<"telemetry", TelemetryConfig>,
     streams: (pino.DestinationStream | pino.StreamEntry<pino.Level>)[] = []
   ) => {
-    if (!name && !config.extensions.telemetry?.serviceName) {
+    if (!config && !StormTrace.#tracer) {
       throw StormError.create(TelemetryErrorCode.missing_service_name);
     }
 
-    const serviceName = name || config.extensions.telemetry?.serviceName;
+    if (!config && !StormTrace.#tracer) {
+      throw StormError.create(TelemetryErrorCode.missing_service_name);
+    }
+
+    const serviceName = name || config?.extensions.telemetry?.serviceName;
 
     initOtel({
       serviceName,

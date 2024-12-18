@@ -17,8 +17,12 @@
 
 import { ErrorCode } from "@storm-stack/errors/errors";
 
-export type LoggingErrorCode = ErrorCode | "logs_uninitialized";
+export type LoggingErrorCode =
+  | ErrorCode
+  | "logs_uninitialized"
+  | "invalid_init_params";
 export const LoggingErrorCode = {
   ...ErrorCode,
+  invalid_init_params: "invalid_init_params" as LoggingErrorCode,
   logs_uninitialized: "logs_uninitialized" as LoggingErrorCode
 };

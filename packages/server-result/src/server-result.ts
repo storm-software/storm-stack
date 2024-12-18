@@ -17,8 +17,9 @@
 
 import { StormDateTime } from "@storm-stack/date-time/storm-date-time";
 import { StormError } from "@storm-stack/errors/storm-error";
+import { StormURL } from "@storm-stack/serialization";
 import { MessageDetails } from "@storm-stack/types/utility-types/messages";
-import { ServerResultType } from "./types";
+import { UserBase } from "@storm-stack/types/utility-types/user";
 
 export type ServerResultMeta = {
   /**
@@ -32,28 +33,18 @@ export type ServerResultMeta = {
   timestamp: StormDateTime;
 
   /**
-   * The user ID who made the server request
+   * The details of the user who made the server request
    */
-  userId: string;
+  user: UserBase;
 
   /**
-   * The server endpoint/action name
+   * The server endpoint/action url
    */
-  serviceId: string;
+  url: StormURL;
 };
 
-export type ServerResult<TData> = {
-  /**
-   * The meta data returned by the server
-   */
-  meta: ServerResultMeta;
-} & (
+export type ServerResultBody<TData> =
   | {
-      /**
-       * The status returned by the server
-       */
-      status: typeof ServerResultType.SUCCESS;
-
       /**
        * The data returned by the server
        */
@@ -66,13 +57,32 @@ export type ServerResult<TData> = {
     }
   | {
       /**
-       * The status returned by the server
+       * The error returned by the server
        */
-      status: typeof ServerResultType.ERROR;
+      error: StormError;
+    };
 
-      /**
-       * The errors returned by the server
-       */
-      errors: StormError[];
-    }
-);
+export type ServerResult<TData> = {
+  /**
+   * The meta data returned by the server
+   */
+  meta: ServerResultMeta;
+} & ServerResultBody<TData>;
+
+// export declare class Response extends BodyMixin {
+//   constructor (body?: BodyInit, init?: ResponseInit)
+
+//   readonly headers: Headers
+//   readonly ok: boolean
+//   readonly status: number
+//   readonly statusText: string
+//   readonly type: ResponseType
+//   readonly url: string
+//   readonly redirected: boolean
+
+//   readonly clone: () => Response
+
+//   static error (): Response
+//   static json(data: any, init?: ResponseInit): Response
+//   static redirect (url: string | URL, status: ResponseRedirectStatus): Response
+// }

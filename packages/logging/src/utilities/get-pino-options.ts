@@ -18,6 +18,7 @@
 import type { StormConfig } from "@storm-software/config";
 import { isStormError } from "@storm-stack/errors/storm-error";
 import { titleCase } from "@storm-stack/string-fns/title-case";
+import { isProduction } from "@storm-stack/utilities/helper-fns/is-production";
 import { isRuntimeServer } from "@storm-stack/utilities/helper-fns/is-runtime-server";
 import type { LoggerOptions as PinoLoggerOptions } from "pino";
 import { LogLevel, getLogLevel } from "./get-log-level";
@@ -37,7 +38,7 @@ export const getPinoOptions = (
 ): PinoLoggerOptions => {
   config.logLevel ??= config.env === "production" ? "info" : "debug";
   const _stacktrace =
-    stacktrace || !(config?.env === "production" && !isRuntimeServer());
+    stacktrace || !(isProduction(config?.env) && !isRuntimeServer());
   const errorSerializer = createErrorSerializer(_stacktrace);
 
   const baseOptions: PinoLoggerOptions = {

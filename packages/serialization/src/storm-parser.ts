@@ -26,18 +26,16 @@ import type { Class, JsonParserResult, JsonValue } from "./types";
  *
  * @remarks
  * This class uses the [SuperJSON](https://github.com/blitz-js/superjson) library
- *
- * @class StormParser
  */
 export class StormParser extends SuperJSON {
-  private static _instance: StormParser;
+  static #instance: StormParser;
 
   public static get instance(): StormParser {
-    if (!StormParser._instance) {
-      StormParser._instance = new StormParser();
+    if (!StormParser.#instance) {
+      StormParser.#instance = new StormParser();
     }
 
-    return StormParser._instance;
+    return StormParser.#instance;
   }
 
   /**

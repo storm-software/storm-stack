@@ -33,7 +33,11 @@ import { getPinoOptions } from "./utilities/get-pino-options";
  * This logger writes to the console.
  */
 export class StormLog {
-  static #name: string;
+  static #isInitialized: boolean = false;
+
+  static #name: string = "storm";
+
+  static #config: StormConfig;
 
   static #logger: Logger;
 
@@ -43,6 +47,10 @@ export class StormLog {
 
   public static get name() {
     return StormLog.#name;
+  }
+
+  public static get config() {
+    return StormLog.#config;
   }
 
   protected static getLogger = (): Logger => {
@@ -63,22 +71,34 @@ export class StormLog {
    * @returns The initialized loggers
    */
   public static initialize = (
-    config: StormConfig,
-    name: string = "Storm",
+    name: string,
+    config?: StormConfig,
     streams: (pino.DestinationStream | pino.StreamEntry<pino.Level>)[] = []
   ) => {
-    const pinoLogger: Logger =
-      streams.length > 0
-        ? pino(
-            getPinoOptions(config, name),
-            pino.multistream(streams, { dedupe: false })
-          )
-        : pino(getPinoOptions(config, name));
-    pinoLogger.debug("The Storm log has ben initialized");
+    if (!config && !StormLog.#isInitialized) {
+      throw new StormError(LoggingErrorCode.invalid_init_params, {
+        data: "The `config` parameter must be supplied to `StormLog.initialize` the first time it is called."
+      });
+    }
 
-    StormLog.#name = name;
-    StormLog.#logger = pinoLogger;
-    StormLog.#logLevel = getLogLevel(config.logLevel);
+    StormLog.#name += `-${name}`;
+    if (!StormLog.#isInitialized) {
+      StormLog.#config = config!;
+
+      const pinoLogger: Logger =
+        streams.length > 0
+          ? pino(
+              getPinoOptions(config!, name),
+              pino.multistream(streams, { dedupe: false })
+            )
+          : pino(getPinoOptions(config!, name));
+
+      StormLog.#logger = pinoLogger;
+      StormLog.#logLevel = getLogLevel(config!.logLevel);
+
+      pinoLogger.debug(`The "${StormLog.#name}" logger has ben initialized`);
+      StormLog.#isInitialized = true;
+    }
   };
 
   /**
