@@ -1,3 +1,9 @@
+## 0.34.0 (2024-12-12)
+
+### Features
+
+- **types:** Added the `NameValuePair` and `UserBase` base utility types ([ed101af](https://github.com/storm-software/storm-stack/commit/ed101af))
+
 ## 0.33.0 (2024-12-03)
 
 ### Features
