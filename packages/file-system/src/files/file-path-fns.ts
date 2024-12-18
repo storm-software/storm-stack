@@ -17,7 +17,7 @@
 
 import { EMPTY_STRING } from "@storm-stack/types";
 import { dirname, isAbsolute, parse, relative, sep } from "node:path";
-import { getWorkspaceRoot } from "./get-workspace-root";
+import { getWorkspaceRoot } from "../directories/get-workspace-root";
 import { joinPaths } from "./join-paths";
 
 /**
@@ -37,12 +37,42 @@ export function findFileName(filePath: string): string {
 }
 
 /**
- * Find the file path from a file path.
+ * Find the full file path's directories from a file path.
+ *
+ * @example
+ * const folderPath = findFilePath("C:\\Users\\user\\Documents\\file.txt");
+ * // folderPath = "C:\\Users\\user\\Documents"
+ *
  * @param filePath - The file path to process
- * @returns The file path
+ * @returns The full file path's directories
  */
 export function findFilePath(filePath: string): string {
   return filePath.replace(findFileName(filePath), "");
+}
+
+/**
+ * Find the top most folder containing the file from a file path.
+ *
+ * @remarks
+ * If you're looking for the full path of the folder (for example: `C:\\Users\\user\\Documents` instead of just `Documents`) containing the file, use {@link findFilePath} instead.
+ *
+ * @example
+ * const folderPath = findFileFolder("C:\\Users\\user\\Documents\\file.txt");
+ * // folderPath = "Documents"
+ *
+ * @param filePath - The file path to process
+ * @returns The folder containing the file
+ */
+export function findFileFolder(filePath: string): string {
+  let folderPath = findFilePath(filePath);
+  if (
+    folderPath.lastIndexOf("\\") === folderPath.length - 1 ||
+    folderPath.lastIndexOf("/") === folderPath.length - 1
+  ) {
+    folderPath = folderPath.slice(0, Math.max(0, folderPath.length - 1));
+  }
+
+  return folderPath.split("\\").pop() ?? EMPTY_STRING;
 }
 
 /**
@@ -58,27 +88,6 @@ export function findFileExtension(filePath: string): string {
   }
 
   return splits.join(".") ?? EMPTY_STRING;
-}
-
-/**
- * Find the folder containing the file.
- *
- * @remarks
- * Example: `C:\Users\user\Documents\file.txt` would return `Documents`
- *
- * @param filePath - The file path to process
- * @returns The file path
- */
-export function findContainingFolder(filePath: string): string {
-  let folderPath = findFilePath(filePath);
-  if (
-    folderPath.lastIndexOf("\\") === folderPath.length - 1 ||
-    folderPath.lastIndexOf("/") === folderPath.length - 1
-  ) {
-    folderPath = folderPath.slice(0, Math.max(0, folderPath.length - 1));
-  }
-
-  return folderPath.split("\\").pop() ?? EMPTY_STRING;
 }
 
 /**

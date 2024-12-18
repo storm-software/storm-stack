@@ -15,10 +15,5 @@
 
  -------------------------------------------------------------------*/
 
-export * from "./copy-files";
-export * from "./exists";
-export * from "./file-path-fns";
-export * from "./is-file";
-export * from "./join-paths";
-export * from "./read-file";
-export * from "./write-file";
+export * from "./get-env-paths";
+export * from "./get-workspace-root";

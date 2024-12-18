@@ -15,6 +15,7 @@
 
  -------------------------------------------------------------------*/
 
+export * from "./directories";
 export * from "./errors";
 export * from "./files";
 export * from "./package-management";
