@@ -19,17 +19,20 @@
  * Check the current runtime mode of the process
  *
  * @param mode - The mode to check the current process's mode against
+ * @param env - An optional environment name to check the current process's mode against
  * @returns An indicator specifying if the current runtime matches the `mode` parameter
  */
-export const isMode = (mode: string): boolean =>
-  process.env.NODE_ENV?.toLowerCase() === mode;
+export const isMode = (mode: string, env = process.env.NODE_ENV): boolean =>
+  env?.toLowerCase() === mode;
 
 /**
  * The function checks if the code is running in production.
  *
+ * @param env - An optional environment name to check the current process's mode against
  * @returns A boolean indicating if the code is running in production.
  */
-export const isProduction = (): boolean => isMode("production");
+export const isProduction = (env?: string): boolean =>
+  isMode("production", env);
 
 /**
  * The function checks if the code is **NOT** running in production.
@@ -42,7 +45,7 @@ export const isProduction = (): boolean => isMode("production");
  * ```typescript
  * const isDevelopmentSpecifically = isMode("development");
  * ```
- *
+ * @param env - An optional environment name to check the current process's mode against
  * @returns A boolean indicating if the code is **NOT** running in production.
  */
-export const isDevelopment = (): boolean => !isProduction();
+export const isDevelopment = (env?: string): boolean => !isProduction(env);
