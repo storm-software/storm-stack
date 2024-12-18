@@ -1,3 +1,9 @@
+## 1.39.0 (2024-12-18)
+
+### Features
+
+- **file-system:** Added the `getEnvPaths` utility function ([7dae4df](https://github.com/storm-software/storm-stack/commit/7dae4df))
+
 ## 1.38.0 (2024-11-10)
 
 ### Features

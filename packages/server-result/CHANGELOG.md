@@ -1,3 +1,9 @@
+## 0.18.0 (2024-12-18)
+
+### Features
+
+- **logging:** Update the `initialize` method signature in the `StormLog` class ([7b11262](https://github.com/storm-software/storm-stack/commit/7b11262))
+
 ## 0.17.0 (2024-11-10)
 
 ### Features

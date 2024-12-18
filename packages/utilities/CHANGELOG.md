@@ -1,3 +1,9 @@
+## 1.39.0 (2024-12-18)
+
+### Features
+
+- **utilities:** Added the `env` parameter to the `isMode` checker utilities ([df847cb](https://github.com/storm-software/storm-stack/commit/df847cb))
+
 ## 1.38.1 (2024-12-04)
 
 ### Bug Fixes
