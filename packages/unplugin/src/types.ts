@@ -112,7 +112,7 @@ export interface ESLintrc {
   /**
    * Filepath to save the generated eslint config
    *
-   * @defaultValue './.eslintrc-storm.json'
+   * @defaultValue './.eslintrc-storm-stack.json'
    */
   filepath?: string;
   /**
@@ -129,7 +129,7 @@ export interface BiomeLintrc {
   /**
    * Filepath to save the generated eslint config
    *
-   * @defaultValue './.eslintrc-storm.json'
+   * @defaultValue './.eslintrc-storm-stack.json'
    */
   filepath?: string;
 }
@@ -199,7 +199,7 @@ export interface Options {
    * Default enabled when `typescript` is installed locally.
    * Set `false` to disable.
    *
-   * @defaultValue './storm.d.ts'
+   * @defaultValue './storm-stack.d.ts'
    */
   dts?: string | boolean;
 
@@ -246,12 +246,12 @@ export interface Options {
   exclude?: FilterPattern;
 
   /**
-   * Generate corresponding .eslintrc-storm.json file.
+   * Generate corresponding .eslintrc-storm-stack.json file.
    */
   eslintrc?: ESLintrc;
 
   /**
-   * Generate corresponding .biomelintrc.json file.
+   * Generate corresponding .biomelintrc-storm-stack.json file.
    */
   biomelintrc?: BiomeLintrc;
 

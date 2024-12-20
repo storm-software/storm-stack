@@ -13,14 +13,14 @@ A plugin used in Storm Stack build processes to handle `StormEnv` parameters, ty
 Using [pnpm](http://pnpm.io):
 
 ```bash
-pnpm add -D unplugin-storm
+pnpm add -D unplugin-storm-stack
 ```
 
 <details>
   <summary>Using npm</summary>
 
 ```bash
-npm install -D unplugin-storm
+npm install -D unplugin-storm-stack
 ```
 
 </details>
@@ -29,7 +29,7 @@ npm install -D unplugin-storm
   <summary>Using yarn</summary>
 
 ```bash
-yarn add -D unplugin-storm
+yarn add -D unplugin-storm-stack
 ```
 
 </details>

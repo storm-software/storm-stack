@@ -46,8 +46,8 @@
       "@storm-stack/unique-identifier/*": ["packages/unique-identifier/src/*"],
       "@storm-stack/utilities": ["packages/utilities/src/index.ts"],
       "@storm-stack/utilities/*": ["packages/utilities/src/*"],
-      "unplugin-storm": ["packages/unplugin/src/index.ts"],
-      "unplugin-storm/*": ["packages/unplugin/src/*"]
+      "unplugin-storm-stack": ["packages/unplugin/src/index.ts"],
+      "unplugin-storm-stack/*": ["packages/unplugin/src/*"]
     }
   },
   "include": ["**/*.ts", "**/*.tsx", "**/*.d.ts", "**/*.js", "**/*.jsx"],

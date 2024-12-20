@@ -113,7 +113,7 @@ export default createUnplugin<Options>(options => {
   };
 
   return {
-    name: "unplugin-storm",
+    name: "unplugin-storm-stack",
     enforce: "post",
     transformInclude,
     transform,

@@ -1,5 +1,5 @@
 {
-  "name": "unplugin-storm",
+  "name": "unplugin-storm-stack",
   "version": "0.0.1",
   "type": "module",
   "description": "⚡ A `unplugin` plugin used in Storm Stack build processes to handle `StormEnv` parameters, typia transforms, and much more.",
