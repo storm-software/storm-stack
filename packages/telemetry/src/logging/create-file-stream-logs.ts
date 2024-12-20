@@ -42,7 +42,6 @@ export const createFileStreamLogs = (
     [];
 
   if (!loggingConfig.fileLoggingDisabled) {
-
     let logPath = loggingConfig.path;
     if (!isSetString(logPath)) {
       logPath = join(tmpdir(), "storm", "logs");

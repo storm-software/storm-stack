@@ -1,0 +1,43 @@
+{
+  "name": "env",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "library",
+  "sourceRoot": "packages/env/src",
+  "targets": {
+    "build": {
+      "executor": "@storm-software/workspace-tools:unbuild",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "entry": "packages/env/src/index.ts",
+        "outputPath": "dist/packages/env",
+        "tsConfig": "packages/env/tsconfig.json",
+        "project": "packages/env/package.json",
+        "defaultConfiguration": "production",
+        "platform": "neutral",
+        "assets": [
+          {
+            "input": "packages/env",
+            "glob": "*.md",
+            "output": "/"
+          },
+          {
+            "input": "",
+            "glob": "LICENSE",
+            "output": "/"
+          }
+        ]
+      },
+      "configurations": {
+        "production": {
+          "debug": false,
+          "verbose": false
+        },
+        "development": {
+          "debug": true,
+          "verbose": true
+        }
+      }
+    }
+  },
+  "tags": ["platform:neutral"]
+}
