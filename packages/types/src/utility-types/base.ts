@@ -51,7 +51,40 @@ declare const emptyObjectSymbol: unique symbol;
 
 export type FunctionOrValue<Value> = Value extends () => infer X ? X : Value;
 
-export type AnyFunction = (...args: any) => any;
+/**
+ * A [[List]]
+ *
+ * @example
+ * ```ts
+ * type list0 = [1, 2, 3]
+ * type list1 = number[]
+ * ```
+ *
+ * @param A - its type
+ * @returns [[List]]
+ */
+export type List<A = any> = ReadonlyArray<A>;
+
+/**
+ * Alias to create a [[Function]]
+ *
+ * @example
+ * ```ts
+ * import { FunctionLike } from '@storm-stack/types'
+ *
+ * type test0 = FunctionLike<[string, number], boolean>
+ * /// (args_0: string, args_1: number) => boolean
+ * ```
+ *
+ * @param P - parameters
+ * @param R - return type
+ * @returns [[Function]]
+ */
+export type FunctionLike<P extends List = any, R extends any = any> = (
+  ...args: P
+) => R;
+
+export type AnyFunction = FunctionLike<any, any>;
 export type Nullish = undefined | null;
 export type Nullishable<T> = T | Nullish;
 export type NonNullishObject = object; // not null/undefined which are Object

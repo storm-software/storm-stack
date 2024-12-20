@@ -15,7 +15,7 @@
 
  -------------------------------------------------------------------*/
 
-import { IsUnknown } from "./base";
+import { FunctionLike, IsUnknown } from "./base";
 
 /**
  * Create a function type with a return type of your choice and the same parameters as the given function type.
@@ -106,5 +106,27 @@ export type AsyncReturnType<Target extends AsyncFunction> = Awaited<
  *
  * @category Async
  */
-export type Asyncify<Function_ extends (...arguments_: any[]) => any> =
-  SetReturnType<Function_, Promise<Awaited<ReturnType<Function_>>>>;
+export type Asyncify<Function_ extends FunctionLike> = SetReturnType<
+  Function_,
+  Promise<Awaited<ReturnType<Function_>>>
+>;
+
+/**
+ * Get the result type of a `Promise`
+ *
+ * @example
+ * ```ts
+ * import { Await } from '@storm-stack/types'
+ *
+ * const promise = new Promise<string>((res, rej) => res('x'))
+ *
+ * type test0 = C.Await<typeof promise>  // string
+ * type test1 = C.Await<Promise<number>> // number
+ * ```
+ *
+ * @param P - A promise
+ * @returns [[Any]]
+ *
+ * @category Async
+ */
+export type Await<P extends any> = P extends Promise<infer A> ? A : P;
