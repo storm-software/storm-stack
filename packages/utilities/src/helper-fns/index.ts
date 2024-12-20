@@ -23,6 +23,7 @@ export * from "./delay";
 export * from "./flatten-object";
 export * from "./get-field";
 export * from "./get-unique";
+export * from "./identity";
 export * from "./is-equal";
 export * from "./is-production";
 export * from "./is-runtime-server";

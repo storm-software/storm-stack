@@ -16,21 +16,19 @@
  -------------------------------------------------------------------*/
 
 /**
- * A no op, or no-op, function for no operation
- *
- * @remarks Please see {@link https://dev.to/praneshpsg239/noop-in-javascript-478h | this article} for more information.
- *
- * @param _params - An optional parameter passed to the function. It can be anything (but is not used in any way)
- */
-export const noop = (_params?: unknown): void => {};
-
-/**
- * An asynchronous no-operation function that does nothing.
- * This can be used as a placeholder or default function.
+ * Returns the input value unchanged.
  *
  * @example
- * asyncNoop(); // Does nothing
+ * ```ts
+ * identity(5); // Returns 5
+ * identity('hello'); // Returns 'hello'
+ * identity({ key: 'value' }); // Returns { key: 'value' }
+ * ```
  *
- * @returns This function returns a Promise that resolves to undefined.
+ * @template T - The type of the input value.
+ * @param x - The value to be returned.
+ * @returns The input value.
  */
-export async function asyncNoop(_params?: unknown): Promise<void> {}
+export function identity<T>(x: T): T {
+  return x;
+}

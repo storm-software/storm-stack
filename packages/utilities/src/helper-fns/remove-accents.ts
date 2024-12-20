@@ -15,7 +15,7 @@
 
  -------------------------------------------------------------------*/
 
-const characterMap: Record<string, string> = {
+export const characterMap: Record<string, string> = {
   À: "A",
   Á: "A",
   Â: "A",
