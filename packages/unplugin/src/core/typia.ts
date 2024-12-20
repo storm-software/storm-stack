@@ -24,7 +24,7 @@ import ts from "typescript";
 import { transform as typiaTransform } from "typia/lib/transform";
 import type { Alias, ResolvedConfig } from "vite";
 import type { ResolvedOptions } from "../types";
-import type { Data, ID, Source, UnContext } from "./utilities";
+import type { Data, UnContext } from "./utilities";
 import { Cache, wrap } from "./utilities";
 
 /* eslint-disable eqeqeq */
@@ -51,14 +51,14 @@ const sourceCache = new Map<string, ts.SourceFile>();
  * @returns The transformed code.
  */
 async function transformTypia(
-  id: ID,
-  source: Source,
+  id: string,
+  source: MagicString,
   unpluginContext: UnContext,
   options: ResolvedOptions,
   aliases?: Alias[]
 ): Promise<Data> {
-  const wrappedId = wrap<ID>(resolve(id));
-  const wrappedSource = wrap<Source>(source);
+  // const wrappedId = wrap<ID>(resolve(id));
+  // const wrappedSource = wrap<Source>(source);
 
   /** Whether to enable cache */
   const cacheEnable = options.cache;
@@ -67,14 +67,14 @@ async function transformTypia(
   compilerOptions = await getTsCompilerOption(cacheEnable, options.tsconfig);
 
   const { program, tsSource } = await getProgramAndSource(
-    wrappedId,
-    wrappedSource,
+    id,
+    source,
     compilerOptions,
     aliases,
     cacheEnable
   );
 
-  using result = transform(wrappedId, program, tsSource, options.typia);
+  using result = transform(id, program, tsSource, options.typia);
   const { diagnostics, transformed, file } = result;
 
   warnDiagnostic(diagnostics, transformed, unpluginContext);
@@ -133,15 +133,15 @@ async function getTsCompilerOption(
  * @returns The program and source.
  */
 async function getProgramAndSource(
-  id: ID,
-  source: Source,
+  id: string,
+  source: MagicString,
   compilerOptions: ts.CompilerOptions,
   aliases?: Alias[],
   cacheEnable = true
 ): Promise<{ program: ts.Program; tsSource: ts.SourceFile }> {
   const tsSource = ts.createSourceFile(
     id,
-    source,
+    source.toString(),
     compilerOptions.target ?? ts.ScriptTarget.ES2020
   );
   const host = ts.createCompilerHost(compilerOptions);
@@ -234,7 +234,7 @@ async function getProgramAndSource(
  * @returns The transformed code and source map.
  */
 function transform(
-  id: ID,
+  id: string,
   program: ts.Program,
   tsSource: ts.SourceFile,
   typiaOptions?: ResolvedOptions["typia"]
@@ -321,13 +321,10 @@ function generateCodeWithMap({
   code,
   id
 }: {
-  source: Source;
+  source: MagicString;
   code: Data;
-  id: ID;
+  id: string;
 }) {
-  /** generate Magic string */
-  const s = new MagicString(source);
-
   /** generate diff */
   const diff = dmp.diff_main(source, code);
 
@@ -348,7 +345,7 @@ function generateCodeWithMap({
       }
       case 1: {
         /** add text */
-        s.prependLeft(offset, text);
+        source.prependLeft(offset, text);
 
         /* offset is not increased because text is prepended */
 
@@ -371,12 +368,12 @@ function generateCodeWithMap({
               ? firstNonWhitespaceIndexOfText
               : 0);
 
-          s.update(offsetStart, offset + textLength, replaceText);
+          source.update(offsetStart, offset + textLength, replaceText);
 
           /** skip next */
           index += 1;
         } else {
-          s.remove(offset, offset + textLength);
+          source.remove(offset, offset + textLength);
         }
 
         /* offset is increased  */
@@ -388,13 +385,13 @@ function generateCodeWithMap({
     }
   }
 
-  if (!s.hasChanged()) {
+  if (!source.hasChanged()) {
     return;
   }
 
   return {
-    code: s.toString(),
-    map: s.generateMap({
+    code: source.toString(),
+    map: source.generateMap({
       source: id,
       file: `${id}.map`,
       includeContent: true
@@ -410,8 +407,8 @@ export async function generateCode({
   config,
   writeLog
 }: {
-  id: ID;
-  source: Source;
+  id: string;
+  source: MagicString;
   context: UnContext;
   options: ResolvedOptions;
   config: Partial<ResolvedConfig>;
@@ -423,8 +420,11 @@ export async function generateCode({
     }
   | undefined
 > {
+  // const wrappedSource = wrap<Source>(s.toString());
+  // const wrappedId = wrap<ID>();
+
   /** get cache */
-  using cache = options.cache ? new Cache(id, source) : undefined;
+  using cache = options.cache ? new Cache(id, source.toString()) : undefined;
   let code = cache?.data;
 
   if (code == null) {

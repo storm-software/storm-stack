@@ -68,7 +68,7 @@ export class Cache {
 
   #hashPath: CachePath;
 
-  constructor(id: ID, source: Source) {
+  constructor(id: string, source: string) {
     this.#hashKey = this.getHashKey(id, source);
     this.#hashPath = wrap<CachePath>(join(getCacheDir(), this.#hashKey));
     this.#data = this.getCache();
@@ -126,7 +126,7 @@ export class Cache {
     writeFileSync(this.#hashPath, cache, { encoding: "utf8" });
   }
 
-  private getHashKey(id: ID, source: Source): CacheKey {
+  private getHashKey(id: string, source: string): CacheKey {
     const h = this.hash(source);
     const filebase = `${basename(dirname(id))}_${basename(id)}`;
 

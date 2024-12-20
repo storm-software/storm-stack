@@ -60,6 +60,7 @@ const unpluginFactory: UnpluginFactory<Options | undefined, false> = (
   let ctx = createContext(options);
 
   const transformInclude: TransformInclude = id => {
+    // eslint-disable-next-line unicorn/no-array-callback-reference
     return ctx.filter(id);
   };
 
