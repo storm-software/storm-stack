@@ -194,7 +194,9 @@
       "@storm-stack/types": "workspace:*",
       "@storm-stack/hashing": "workspace:*",
       "@storm-stack/server-result": "workspace:*",
-      "@storm-stack/hooks": "workspace:*"
+      "@storm-stack/hooks": "workspace:*",
+      "@storm-stack/env": "workspace:*",
+      "unplugin-storm": "workspace:*"
     }
   },
   "prettier": "@storm-software/prettier/config.json",
