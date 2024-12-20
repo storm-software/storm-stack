@@ -39,8 +39,8 @@ export interface Options {
    * @defaultValue false
    *
    * @example
-   * ```
-   * import prettyBytes from 'pretty-bytes';
+   * ```ts
+   * import { prettyBytes } from '@storm-stack/string-fns/pretty-bytes';
    *
    * prettyBytes(1337, {bits: true});
    * //=> '1.34 kbit'
@@ -54,8 +54,8 @@ export interface Options {
    * @defaultValue false
    *
    * @example
-   * ```
-   * import prettyBytes from 'pretty-bytes';
+   * ```ts
+   * import { prettyBytes } from '@storm-stack/string-fns/pretty-bytes';
    *
    * prettyBytes(1000, {binary: true});
    * //=> '1000 bit'
@@ -74,11 +74,11 @@ export interface Options {
    * @defaultValue undefined
    *
    * @example
-   * ```
-   * import prettyBytes from 'pretty-bytes';
+   * ```ts
+   * import { prettyBytes } from '@storm-stack/string-fns/pretty-bytes';
    *
    * // Show the number with at least 3 fractional digits
-   * 	prettyBytes(1900, {minimumFractionDigits: 3});
+   * prettyBytes(1900, {minimumFractionDigits: 3});
    * //=> '1.900 kB'
    *
    * prettyBytes(1900);
@@ -95,8 +95,8 @@ export interface Options {
    * @defaultValue undefined
    *
    * @example
-   * ```
-   * import prettyBytes from 'pretty-bytes';
+   * ```ts
+   * import { prettyBytes } from '@storm-stack/string-fns/pretty-bytes';
    *
    * // Show the number with at most 1 fractional digit
    * prettyBytes(1920, {maximumFractionDigits: 1});
@@ -114,8 +114,8 @@ export interface Options {
    * @defaultValue true
    *
    * @example
-   * ```
-   * import prettyBytes from 'pretty-bytes';
+   * ```ts
+   * import { prettyBytes } from '@storm-stack/string-fns/pretty-bytes';
    *
    * prettyBytes(1920, {space: false});
    * //=> '1.9kB'
@@ -166,7 +166,7 @@ const BIBIT_UNITS = [
  * Formats the given number using `Number#toLocaleString`.
  *
  * @remarks
- *  - If locale is a string, the value is expected to be a locale-key (for example: `de`).
+ * - If locale is a string, the value is expected to be a locale-key (for example: `de`).
  * - If locale is true, the system default locale is used for translation.
  * - If no value for locale is specified, the number is returned unmodified.
  *
@@ -202,8 +202,8 @@ export const toLocaleString = (
  * @param number - The number to format.
  *
  * @example
- * ```
- * import prettyBytes from 'pretty-bytes';
+ * ```ts
+ * import { prettyBytes } from '@storm-stack/string-fns/pretty-bytes';
  *
  * prettyBytes(1337);
  * //=> '1.34 kB'
@@ -254,8 +254,8 @@ export function prettyBytes(number: number, options?: Options): string {
   }
 
   const isNegative = _number < 0;
-  // eslint-disable-next-line prettier/prettier
-  const prefix = isNegative ? "-" : (opts.signed ? "+" : "");
+
+  const prefix = isNegative ? "-" : opts.signed ? "+" : "";
 
   if (isNegative) {
     _number = -_number;
