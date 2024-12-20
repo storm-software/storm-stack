@@ -20,5 +20,7 @@ import type { ImportsMap } from "../types";
 export default <ImportsMap>{
   "@storm-stack/env": ["StormEnv"],
   "@storm-stack/logging": ["StormLog"],
-  "@storm-stack/trace": ["StormTrace"]
+  "@storm-stack/trace": ["StormTrace"],
+  "@storm-stack/date-time": ["StormDateTime", "StormDate", "StormTime"],
+  "@storm-stack/errors": ["StormError"]
 };

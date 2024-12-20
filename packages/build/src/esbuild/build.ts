@@ -26,27 +26,12 @@ import path from "node:path";
 import stormStackPlugin from "unplugin-storm-stack/esbuild";
 import { handle, pipe, transduce } from "../utilities/helpers";
 import { writeLog } from "../utilities/log";
+import { type BuildOptions, DEFAULT_BUILD_OPTIONS } from "./config";
 import { depsCheckPlugin } from "./plugins/deps-check";
 import { fixImportsPlugin } from "./plugins/fix-imports";
 import { onErrorPlugin } from "./plugins/on-error";
 import { resolvePathsPlugin } from "./plugins/resolve-paths";
 import { tscPlugin } from "./plugins/tsc";
-
-export type BuildResult = esbuild.BuildResult;
-export type BuildOptions = esbuild.BuildOptions & {
-  name?: string;
-  emitTypes?: boolean;
-  emitMetafile?: boolean;
-  outbase?: never; // we don't support this
-};
-
-const DEFAULT_BUILD_OPTIONS = {
-  platform: "node",
-  target: "ES2021",
-  logLevel: "error",
-  tsconfig: "tsconfig.build.json",
-  metafile: true
-} as const;
 
 /**
  * Apply defaults to the original build options
