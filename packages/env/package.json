@@ -1,6 +1,6 @@
 {
   "name": "@storm-stack/env",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "type": "module",
   "description": "A package used by Storm Software to manage environment variables, configurations, and secrets",
   "repository": {
