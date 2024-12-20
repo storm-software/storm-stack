@@ -17,6 +17,7 @@
 
 import { slash, throttle, toArray } from "@antfu/utils";
 import { createFilter } from "@rollup/pluginutils";
+import { LogType } from "consola";
 import { isPackageExists } from "local-pkg";
 import MagicString from "magic-string";
 import { existsSync, promises as fs } from "node:fs";
@@ -24,50 +25,98 @@ import { dirname, isAbsolute, relative, resolve } from "node:path";
 import process from "node:process";
 import type { Import, InlinePreset } from "unimport";
 import { createUnimport, resolvePreset } from "unimport";
+import type { ResolvedConfig } from "vite";
 import { presets } from "../presets";
-import type { BiomeLintrc, ESLint, ImportExtended, Options } from "../types";
-import { generateBiomeLintConfigs } from "./biomelintrc";
+import type {
+  ImportExtended,
+  Options,
+  ResolvedOptions,
+  Resolver
+} from "../types";
+import { generateBiomeLintConfigs } from "./biome";
 import { generateESLintFlatConfigs, generateESLintrcConfigs } from "./eslint";
 import { resolversAddon } from "./resolvers";
+import { generateCode } from "./typia";
+import { ID, Source, wrap, writeConsoleLog } from "./utilities";
 
-export function createContext(options: Options = {}, rootDir = process.cwd()) {
-  let root = slash(rootDir);
+export function createContext(
+  rawOptions: Options = {},
+  config: Partial<ResolvedConfig> = {}
+) {
+  let root = slash(config.root || process.cwd());
+
+  const preferDTS = isPackageExists("typescript");
+
+  const options = {
+    ...rawOptions,
+    imports: [
+      ...(rawOptions.imports
+        ? Array.isArray(rawOptions.imports)
+          ? rawOptions.imports
+          : [rawOptions.imports]
+        : []),
+      "storm-stack"
+    ] as ResolvedOptions["imports"],
+    packagePresets: rawOptions.packagePresets ?? [],
+    ignore: rawOptions.ignore ?? [],
+    ignoreDts: rawOptions.ignoreDts ?? [],
+    include: rawOptions.include || [],
+    exclude: rawOptions.exclude || [],
+    silent: rawOptions.silent ?? false,
+    defaultExportByFilename: Boolean(rawOptions.defaultExportByFilename),
+    dts:
+      preferDTS === false
+        ? false
+        : preferDTS === true
+          ? resolve(root, "storm-stack.d.ts")
+          : resolve(root, preferDTS),
+    dirsScanOptions: rawOptions.dirsScanOptions ?? {},
+    dirs: rawOptions.dirs ?? [],
+    vueDirectives: rawOptions.vueDirectives ?? {},
+    vueTemplate: rawOptions.vueTemplate ?? false,
+    eslint: {
+      enabled: rawOptions.eslint?.enabled ?? false,
+      eslintrcFilepath:
+        rawOptions.eslint?.enabled === true ||
+        rawOptions.eslint?.enabled === "eslintrc"
+          ? rawOptions.eslint?.eslintrcFilepath ||
+            "./.eslintrc-storm-stack.json"
+          : undefined,
+      eslintFlatFilepath:
+        rawOptions.eslint?.enabled === true ||
+        rawOptions.eslint?.enabled === "eslint-flat"
+          ? rawOptions.eslint?.eslintFlatFilepath ||
+            "./eslint-storm-stack.config.js"
+          : undefined,
+      globalsPropValue: rawOptions.eslint?.globalsPropValue ?? true
+    },
+    biome: {
+      enabled: rawOptions.biome?.enabled ?? false,
+      filepath: rawOptions.biome?.filepath || "./biome.json"
+    },
+    parser: rawOptions.parser,
+    // eslint-disable-next-line unicorn/no-magic-array-flat-depth
+    resolvers: rawOptions.resolvers ? [rawOptions.resolvers].flat(2) : [],
+    injectAtEnd: rawOptions.injectAtEnd !== false,
+    dumpUnimportItems:
+      rawOptions.dumpUnimportItems === true
+        ? "./.unimport-items.json"
+        : (rawOptions.dumpUnimportItems ?? false)
+  } as ResolvedOptions;
 
   const {
-    dts: preferDTS = isPackageExists("typescript"),
+    dts,
+    injectAtEnd,
+    resolvers,
+    parser,
+    eslint,
+    biome,
     dirsScanOptions,
     dirs,
     vueDirectives,
-    vueTemplate
+    vueTemplate,
+    dumpUnimportItems
   } = options;
-
-  const eslint: ESLint = options.eslint ?? {};
-  eslint.enabled = eslint.enabled ?? false;
-  eslint.eslintrcFilepath =
-    eslint.enabled === true || eslint.enabled === "eslintrc"
-      ? eslint.eslintrcFilepath || "./.eslintrc-storm-stack.json"
-      : undefined;
-  eslint.eslintFlatFilepath =
-    eslint.enabled === true || eslint.enabled === "eslint-flat"
-      ? eslint.eslintFlatFilepath || "./eslint-storm-stack.config.js"
-      : undefined;
-  eslint.globalsPropValue = eslint.globalsPropValue ?? true;
-
-  const biomelintrc: BiomeLintrc = options.biomelintrc ?? {};
-  biomelintrc.enabled = biomelintrc.enabled !== undefined;
-  biomelintrc.filepath =
-    biomelintrc.filepath || "./.biomelintrc-storm-stack.json";
-
-  const dumpUnimportItems =
-    options.dumpUnimportItems === true
-      ? "./.unimport-items.json"
-      : (options.dumpUnimportItems ?? false);
-
-  // eslint-disable-next-line unicorn/no-magic-array-flat-depth
-  const resolvers = options.resolvers ? [options.resolvers].flat(2) : [];
-
-  // When "options.injectAtEnd" is undefined or true, it's true.
-  const injectAtEnd = options.injectAtEnd !== false;
 
   const unimport = createUnimport({
     imports: [],
@@ -81,10 +130,10 @@ export function createContext(options: Options = {}, rootDir = process.cwd()) {
     },
     dirs,
     injectAtEnd,
-    parser: options.parser,
+    parser,
     addons: {
       addons: [
-        resolversAddon(resolvers),
+        resolversAddon(resolvers as Resolver[]),
         {
           name: "unplugin-storm-stack:dts",
           declaration(dts) {
@@ -95,6 +144,7 @@ export function createContext(options: Options = {}, rootDir = process.cwd()) {
 // noinspection JSUnusedGlobalSymbols
 // Generated by unplugin-storm-stack
 // biome-ignore lint: disable
+
 ${dts}`.trim()}\n`;
           }
         }
@@ -104,11 +154,17 @@ ${dts}`.trim()}\n`;
     }
   });
 
+  const writeLog = (type: LogType, ...args: string[]) => {
+    if (!options.silent) {
+      writeConsoleLog(type, ...args);
+    }
+  };
+
   const importsPromise = flattenImports(options.imports).then(imports => {
     if (imports.length === 0 && resolvers.length === 0 && !dirs?.length) {
-      // eslint-disable-next-line no-console
-      console.warn(
-        "[storm-stack] plugin installed but no imports has defined, see https://github.com/antfu/unplugin-auto-import#configurations for configurations"
+      writeLog(
+        "warn",
+        "plugin installed but no imports has defined, see https://github.com/antfu/unplugin-auto-import#configurations for configurations"
       );
     }
 
@@ -136,22 +192,10 @@ ${dts}`.trim()}\n`;
     return unimport.getInternalContext().replaceImports(imports);
   });
 
-  const filter = createFilter(
-    options.include || [
-      /\.[jt]sx?$/,
-      /\.astro$/,
-      /\.vue$/,
-      /\.vue\?vue/,
-      /\.svelte$/
-    ],
+  const filter: (id: string | unknown) => boolean = createFilter(
+    options.include || [/\.[cm]?tsx?$/],
     options.exclude || [/[/\\]node_modules[/\\]/, /[/\\]\.git[/\\]/]
   );
-  const dts =
-    preferDTS === false
-      ? false
-      : preferDTS === true
-        ? resolve(root, "storm-stack.d.ts")
-        : resolve(root, preferDTS);
 
   const multilineCommentsRE = /\/\*.*?\*\//gs;
   const singlelineCommentsRE = /\/\/.*$/gm;
@@ -266,9 +310,9 @@ ${dts}`.trim()}\n`;
 
     if (eslint.eslintrcFilepath) {
       if (/\.[cm]?[jt]sx?$/.test(eslint.eslintrcFilepath)) {
-        // eslint-disable-next-line no-console
-        console.warn(
-          `[storm-stack] ESLintrc config file should be a JSON file, not a JS/TS file. Skip creating ${eslint.eslintrcFilepath}`
+        writeLog(
+          "warn",
+          `ESLintrc config file should be a JSON file, not a JS/TS file. Skip creating ${eslint.eslintrcFilepath}`
         );
       } else {
         promises.push(
@@ -284,9 +328,9 @@ ${dts}`.trim()}\n`;
 
     if (eslint.eslintFlatFilepath) {
       if (/\.c?json$/.test(eslint.eslintFlatFilepath)) {
-        // eslint-disable-next-line no-console
-        console.warn(
-          `[storm-stack] ESLint flat config file should be a TS/JS file, not a JSON file. Skip creating ${eslint.eslintFlatFilepath}`
+        writeLog(
+          "warn",
+          `ESLint flat config file should be a TS/JS file, not a JSON file. Skip creating ${eslint.eslintFlatFilepath}`
         );
       } else {
         promises.push(
@@ -300,12 +344,12 @@ ${dts}`.trim()}\n`;
       }
     }
 
-    if (biomelintrc.enabled) {
+    if (biome?.enabled) {
       promises.push(
         generateBiomeLint().then(content => {
           if (content !== lastBiomeLint) {
             lastBiomeLint = content;
-            return writeFile(biomelintrc.filepath!, content);
+            return writeFile(biome.filepath!, content);
           }
         })
       );
@@ -344,26 +388,43 @@ ${dts}`.trim()}\n`;
     writeConfigFilesThrottled();
   }
 
-  async function transform(code: string, id: string) {
+  async function transform(source: string, id: string) {
     await importsPromise;
 
-    const s = new MagicString(code);
+    const s = new MagicString(source);
 
     await unimport.injectImports(s, id);
+    if (s.hasChanged()) {
+      writeConfigFilesThrottled();
+    }
 
-    if (!s.hasChanged()) return;
+    const wrappedSource = wrap<Source>(s.toString());
+    const wrappedId = wrap<ID>(resolve(id));
 
-    writeConfigFilesThrottled();
+    /** skip if source does not include typia */
+    if (!wrappedSource.includes("typia")) {
+      return {
+        code: s.toString(),
+        map: s.generateMap({ source: id, includeContent: true, hires: true })
+      };
+    }
 
-    return {
-      code: s.toString(),
-      map: s.generateMap({ source: id, includeContent: true, hires: true })
-    };
+    return generateCode({
+      id: wrappedId,
+      source: wrappedSource,
+      context: this,
+      config,
+      options,
+      writeLog
+    });
   }
 
   return {
     root,
+    options,
+    config,
     dirs,
+    writeLog,
     filter,
     scanDirs,
     writeConfigFiles,
@@ -375,6 +436,8 @@ ${dts}`.trim()}\n`;
     unimport
   };
 }
+
+export type PluginContext = ReturnType<typeof createContext>;
 
 export async function flattenImports(
   map: Options["imports"]

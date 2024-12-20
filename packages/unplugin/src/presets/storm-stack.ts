@@ -15,25 +15,10 @@
 
  -------------------------------------------------------------------*/
 
-import { builtinPresets } from "unimport";
-import { jotai, jotaiUtils } from "./jotai";
-import react from "./react";
-import reactI18next from "./react-i18next";
-import reactRouter from "./react-router";
-import reactRouterDom from "./react-router-dom";
-import stormStack from "./storm-stack";
-import vitepress from "./vitepress";
+import type { ImportsMap } from "../types";
 
-export const presets = {
-  ...builtinPresets,
-  react: react,
-  "react-router": reactRouter,
-  "react-router-dom": reactRouterDom,
-  "react-i18next": reactI18next,
-  "storm-stack": stormStack,
-  vitepress: vitepress,
-  jotai: jotai,
-  "jotai/utils": jotaiUtils
+export default <ImportsMap>{
+  "@storm-stack/env": ["StormEnv"],
+  "@storm-stack/logging": ["StormLog"],
+  "@storm-stack/trace": ["StormTrace"]
 };
-
-export type PresetName = keyof typeof presets;

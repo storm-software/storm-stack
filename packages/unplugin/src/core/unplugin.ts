@@ -19,7 +19,7 @@ import { slash } from "@antfu/utils";
 import { isPackageExists } from "local-pkg";
 import pm from "picomatch";
 import type { SourceMap } from "rollup";
-import { createUnplugin } from "unplugin";
+import { createUnplugin, UnpluginFactory } from "unplugin";
 import type { Options } from "../types";
 import { createContext } from "./ctx";
 
@@ -54,11 +54,13 @@ interface ConfigResolved {
   (config: any): Promise<void>;
 }
 
-export default createUnplugin<Options>(options => {
+const unpluginFactory: UnpluginFactory<Options | undefined, false> = (
+  options = {}
+) => {
   let ctx = createContext(options);
 
   const transformInclude: TransformInclude = id => {
-    return ctx.filter(element => id === element);
+    return ctx.filter(id);
   };
 
   const transform: Transform = async (code, id) => {
@@ -74,7 +76,9 @@ export default createUnplugin<Options>(options => {
   };
 
   const viteConfig: ViteConfig = async config => {
-    if (options.viteOptimizeDeps === false) return;
+    if (ctx.options.viteOptimizeDeps === false) {
+      return;
+    }
 
     const exclude = config.optimizeDeps?.exclude || [];
 
@@ -107,7 +111,7 @@ export default createUnplugin<Options>(options => {
 
   const configResolved: ConfigResolved = async config => {
     if (ctx.root !== config.root) {
-      ctx = createContext(options, config.root);
+      ctx = createContext(options, config);
       await ctx.scanDirs();
     }
   };
@@ -125,4 +129,6 @@ export default createUnplugin<Options>(options => {
       configResolved
     }
   };
-});
+};
+
+export default createUnplugin<Options>(unpluginFactory);

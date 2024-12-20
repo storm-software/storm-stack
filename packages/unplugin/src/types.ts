@@ -19,6 +19,8 @@ import type { Arrayable, Awaitable } from "@antfu/utils";
 import type { FilterPattern } from "@rollup/pluginutils";
 import type { PresetOptions } from "@storm-software/eslint";
 import { Linter } from "eslint";
+import { RequiredDeep } from "type-fest";
+import { ITransformOptions } from "typia/lib/transformers/ITransformOptions";
 import type {
   AddonVueDirectivesOptions,
   Import,
@@ -144,7 +146,7 @@ export interface ESLint {
   userConfigs?: Linter.Config[];
 }
 
-export interface BiomeLintrc {
+export interface Biome {
   /**
    * @defaultValue false
    */
@@ -152,7 +154,7 @@ export interface BiomeLintrc {
   /**
    * Filepath to save the generated eslint config
    *
-   * @defaultValue './.eslintrc-storm-stack.json'
+   * @defaultValue './biome.json'
    */
   filepath?: string;
 }
@@ -269,14 +271,44 @@ export interface Options {
   exclude?: FilterPattern;
 
   /**
+   * The path to the tsconfig file.
+   * If not specified, the plugin will try to find it automatically.
+   *
+   * @defaultValue undefined
+   */
+  tsconfig?: string;
+
+  /**
+   * Whether to enable silent mode.
+   *
+   * @defaultValue false
+   */
+  silent?: boolean;
+
+  /**
+   * The options for the typia transformer.
+   */
+  typia?: ITransformOptions;
+
+  /**
+   * The optiosn for cache.
+   * The cache-dir-searching feature is powered by [find-cache-dir](https://github.com/sindresorhus/find-cache-dir). If you want to change cache dir, set an environment variable `CACHE_DIR`.
+   * if `true`, it will enable cache with and will use node_modules/.cache/unplugin_typia.
+   * if `false`, it will disable cache.
+   *
+   * @defaultValue false
+   */
+  cache?: true | false;
+
+  /**
    * Generate corresponding eslint-storm-stack.config.js and/or .eslintrc-storm-stack.json file.
    */
   eslint?: ESLint;
 
   /**
-   * Generate corresponding .biomelintrc-storm-stack.json file.
+   * Generate corresponding biome.json file.
    */
-  biomelintrc?: BiomeLintrc;
+  biome?: Biome;
 
   /**
    * Save unimport items into a JSON file for other tools to consume.
@@ -295,5 +327,13 @@ export interface Options {
    */
   viteOptimizeDeps?: boolean;
 }
+
+export type ResolvedOptions = RequiredDeep<Pick<Options, "typia">> &
+  Required<Pick<Options, "imports" | "dirs" | "eslint" | "tsconfig">> &
+  Omit<Options, "dts" | "resolvers"> & {
+    dts?: string;
+    resolvers: Resolver[];
+    dumpUnimportItems?: string;
+  };
 
 export type { PresetName } from "./presets";
