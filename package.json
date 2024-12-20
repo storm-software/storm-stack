@@ -113,7 +113,7 @@
     "@taplo/cli": "^0.7.0",
     "@testing-library/react": "16.0.1",
     "@types/jest": "29.5.13",
-    "@types/node": "^22.7.5",
+    "@types/node": "^22.10.2",
     "@types/react": "npm:types-react@rc",
     "@types/react-dom": "npm:types-react-dom@rc",
     "babel-jest": "29.7.0",
@@ -143,6 +143,9 @@
     "tslib": "^2.7.0",
     "typescript": "5.6.2",
     "verdaccio": "5.32.2"
+  },
+  "devDependencies": {
+    "node": "^23.5.0"
   },
   "namespace": "@storm-stack",
   "nx": {
@@ -196,7 +199,8 @@
       "@storm-stack/server-result": "workspace:*",
       "@storm-stack/hooks": "workspace:*",
       "@storm-stack/env": "workspace:*",
-      "unplugin-storm-stack": "workspace:*"
+      "unplugin-storm-stack": "workspace:*",
+      "@storm-stack/build": "workspace:*"
     }
   },
   "prettier": "@storm-software/prettier/config.json",

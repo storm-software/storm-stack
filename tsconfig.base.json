@@ -8,6 +8,8 @@
     "incremental": false,
     "composite": false,
     "paths": {
+      "@storm-stack/build": ["packages/build/src/index.ts"],
+      "@storm-stack/build/*": ["packages/build/src/*"],
       "@storm-stack/cli": ["packages/cli/src/index.ts"],
       "@storm-stack/cli/*": ["packages/cli/src/*"],
       "@storm-stack/date-time": ["packages/date-time/src/index.ts"],
