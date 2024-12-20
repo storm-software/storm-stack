@@ -25,15 +25,9 @@ import process from "node:process";
 import type { Import, InlinePreset } from "unimport";
 import { createUnimport, resolvePreset } from "unimport";
 import { presets } from "../presets";
-import type {
-  BiomeLintrc,
-  ESLintGlobalsPropValue,
-  ESLintrc,
-  ImportExtended,
-  Options
-} from "../types";
+import type { BiomeLintrc, ESLint, ImportExtended, Options } from "../types";
 import { generateBiomeLintConfigs } from "./biomelintrc";
-import { generateESLintConfigs } from "./eslintrc";
+import { generateESLintFlatConfigs, generateESLintrcConfigs } from "./eslint";
 import { resolversAddon } from "./resolvers";
 
 export function createContext(options: Options = {}, rootDir = process.cwd()) {
@@ -47,10 +41,17 @@ export function createContext(options: Options = {}, rootDir = process.cwd()) {
     vueTemplate
   } = options;
 
-  const eslintrc: ESLintrc = options.eslintrc ?? {};
-  eslintrc.enabled = eslintrc.enabled ?? false;
-  eslintrc.filepath = eslintrc.filepath || "./.eslintrc-storm-stack.json";
-  eslintrc.globalsPropValue = eslintrc.globalsPropValue ?? true;
+  const eslint: ESLint = options.eslint ?? {};
+  eslint.enabled = eslint.enabled ?? false;
+  eslint.eslintrcFilepath =
+    eslint.enabled === true || eslint.enabled === "eslintrc"
+      ? eslint.eslintrcFilepath || "./.eslintrc-storm-stack.json"
+      : undefined;
+  eslint.eslintFlatFilepath =
+    eslint.enabled === true || eslint.enabled === "eslint-flat"
+      ? eslint.eslintFlatFilepath || "./eslint-storm-stack.config.js"
+      : undefined;
+  eslint.globalsPropValue = eslint.globalsPropValue ?? true;
 
   const biomelintrc: BiomeLintrc = options.biomelintrc ?? {};
   biomelintrc.enabled = biomelintrc.enabled !== undefined;
@@ -215,27 +216,21 @@ ${dts}`.trim()}\n`;
     return currentContent;
   }
 
-  async function parseESLint(): Promise<
-    Record<string, ESLintGlobalsPropValue>
-  > {
-    if (!eslintrc.filepath) return {};
-    if (/\.[cm]?[jt]sx?$/.test(eslintrc.filepath)) {
-      // Skip JavaScript-like files
-      return {};
-    }
-    const configStr = existsSync(eslintrc.filepath!)
-      ? await fs.readFile(eslintrc.filepath!, "utf8")
+  async function generateESLintrc() {
+    const configStr = existsSync(eslint.eslintrcFilepath!)
+      ? await fs.readFile(eslint.eslintrcFilepath!, "utf8")
       : "";
     const config = JSON.parse(configStr || '{ "globals": {} }');
-    return config.globals;
+
+    return generateESLintrcConfigs(
+      await unimport.getImports(),
+      eslint,
+      config.globals
+    );
   }
 
-  async function generateESLint() {
-    return generateESLintConfigs(
-      await unimport.getImports(),
-      eslintrc,
-      await parseESLint()
-    );
+  async function generateESLintFlat() {
+    return generateESLintFlatConfigs(await unimport.getImports(), eslint);
   }
 
   async function generateBiomeLint() {
@@ -268,24 +263,41 @@ ${dts}`.trim()}\n`;
         })
       );
     }
-    if (eslintrc.enabled && eslintrc.filepath) {
-      const filepath = eslintrc.filepath;
-      promises.push(
-        generateESLint().then(async _content => {
-          let content = _content;
-          if (filepath.endsWith(".cjs")) {
-            content = `module.exports = ${content}`;
-          } else if (filepath.endsWith(".mjs") || filepath.endsWith(".js")) {
-            content = `export default ${content}`;
-          }
 
-          content = `${content}\n`;
-          if (content.trim() !== lastESLint?.trim()) {
-            lastESLint = content;
-            return writeFile(eslintrc.filepath!, content);
-          }
-        })
-      );
+    if (eslint.eslintrcFilepath) {
+      if (/\.[cm]?[jt]sx?$/.test(eslint.eslintrcFilepath)) {
+        // eslint-disable-next-line no-console
+        console.warn(
+          `[storm-stack] ESLintrc config file should be a JSON file, not a JS/TS file. Skip creating ${eslint.eslintrcFilepath}`
+        );
+      } else {
+        promises.push(
+          generateESLintrc().then(async content => {
+            if (content.trim() !== lastESLint?.trim()) {
+              lastESLint = content;
+              return writeFile(eslint.eslintrcFilepath!, content);
+            }
+          })
+        );
+      }
+    }
+
+    if (eslint.eslintFlatFilepath) {
+      if (/\.c?json$/.test(eslint.eslintFlatFilepath)) {
+        // eslint-disable-next-line no-console
+        console.warn(
+          `[storm-stack] ESLint flat config file should be a TS/JS file, not a JSON file. Skip creating ${eslint.eslintFlatFilepath}`
+        );
+      } else {
+        promises.push(
+          generateESLintFlat().then(async content => {
+            if (content.trim() !== lastESLint?.trim()) {
+              lastESLint = content;
+              return writeFile(eslint.eslintFlatFilepath!, content);
+            }
+          })
+        );
+      }
     }
 
     if (biomelintrc.enabled) {
@@ -358,7 +370,8 @@ ${dts}`.trim()}\n`;
     writeConfigFilesThrottled,
     transform,
     generateDTS,
-    generateESLint,
+    generateESLintrc,
+    generateESLintFlat,
     unimport
   };
 }

@@ -120,6 +120,7 @@
     "rollup",
     "rspack",
     "auto-import",
+    "typia",
     "transform"
   ],
   "dependencies": {
@@ -132,6 +133,7 @@
     "unplugin": "^2.1.0"
   },
   "devDependencies": {
+    "@storm-software/eslint": "latest",
     "@types/node": "^22.10.2",
     "@types/picomatch": "^3.0.1",
     "@types/resolve": "^1.20.6",

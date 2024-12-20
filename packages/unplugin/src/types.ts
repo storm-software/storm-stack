@@ -17,6 +17,8 @@
 
 import type { Arrayable, Awaitable } from "@antfu/utils";
 import type { FilterPattern } from "@rollup/pluginutils";
+import type { PresetOptions } from "@storm-software/eslint";
+import { Linter } from "eslint";
 import type {
   AddonVueDirectivesOptions,
   Import,
@@ -104,21 +106,42 @@ export type ESLintGlobalsPropValue =
   | "writable"
   | "writeable";
 
-export interface ESLintrc {
+export interface ESLint {
   /**
    * @defaultValue false
    */
-  enabled?: boolean;
+  enabled?: boolean | "eslint-flat" | "eslintrc";
   /**
-   * Filepath to save the generated eslint config
+   * Filepath to save the generated eslintrc config
    *
    * @defaultValue './.eslintrc-storm-stack.json'
    */
-  filepath?: string;
+  eslintrcFilepath?: string;
+  /**
+   * Filepath to save the generated eslint flat config
+   *
+   * @defaultValue './eslint-storm-stack.config.js'
+   */
+  eslintFlatFilepath?: string;
   /**
    * @defaultValue true
    */
   globalsPropValue?: ESLintGlobalsPropValue;
+  /**
+   * The options to pass to the `@storm-software/eslint` preset
+   *
+   * @remarks
+   * This value is only used when `enabled` is set to `true` or `eslint-flat`
+   */
+  presetOptions?: Omit<PresetOptions, "name"> &
+    Partial<Pick<PresetOptions, "name">>;
+  /**
+   * Custom ESLint config to pass to the `@storm-software/eslint` preset
+   *
+   * @remarks
+   * This value is only used when `enabled` is set to `true` or `eslint-flat`
+   */
+  userConfigs?: Linter.Config[];
 }
 
 export interface BiomeLintrc {
@@ -246,9 +269,9 @@ export interface Options {
   exclude?: FilterPattern;
 
   /**
-   * Generate corresponding .eslintrc-storm-stack.json file.
+   * Generate corresponding eslint-storm-stack.config.js and/or .eslintrc-storm-stack.json file.
    */
-  eslintrc?: ESLintrc;
+  eslint?: ESLint;
 
   /**
    * Generate corresponding .biomelintrc-storm-stack.json file.
