@@ -91,7 +91,9 @@ const unpluginFactory: UnpluginFactory<Options | undefined, false> = (
         )
     );
 
-    if (imports.size === 0) return;
+    if (imports.size === 0) {
+      return;
+    }
 
     return {
       optimizeDeps: {

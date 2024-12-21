@@ -38,6 +38,7 @@ export * from "./period-split";
 export * from "./pretty-bytes";
 export * from "./snake-case";
 export * from "./start-case";
+export * from "./strip-indents";
 export * from "./title-case";
 export * from "./unescape";
 export * from "./upper-case-first";

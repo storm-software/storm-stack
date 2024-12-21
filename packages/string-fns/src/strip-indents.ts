@@ -15,31 +15,29 @@
 
  -------------------------------------------------------------------*/
 
-import { ESBuildOptions } from "./types";
-
-export const DEFAULT_BUILD_OPTIONS = {
-  platform: "node",
-  target: "ES2021",
-  logLevel: "error",
-  tsconfig: "tsconfig.json",
-  metafile: true
-} as const;
-
-export const adapterConfig: Omit<ESBuildOptions, "projectRoot">[] = [
-  {
-    name: "cjs",
-    format: "cjs",
-    bundle: true,
-    entryPoints: ["src/index.ts"],
-    outExtension: { ".js": ".js" },
-    emitTypes: true
-  },
-  {
-    name: "esm",
-    format: "esm",
-    bundle: true,
-    entryPoints: ["src/index.ts"],
-    outExtension: { ".js": ".mjs" },
-    emitTypes: true
-  }
-];
+/**
+ * Removes indents, which is useful for printing warning and messages.
+ *
+ * @example
+ * ```ts
+ * stripIndents`
+ *  Options:
+ *  - option1
+ *  - option2
+ * `
+ * ```
+ *
+ * @param strings - Template strings
+ * @param values - Additional values
+ * @returns The stripped string
+ */
+export function stripIndents(
+  strings: TemplateStringsArray,
+  ...values: any[]
+): string {
+  return String.raw(strings, ...values)
+    .split("\n")
+    .map(line => line.trim())
+    .join("\n")
+    .trim();
+}

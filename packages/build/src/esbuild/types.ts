@@ -15,31 +15,26 @@
 
  -------------------------------------------------------------------*/
 
-import { ESBuildOptions } from "./types";
+import { ProjectGraph, ProjectsConfigurations } from "@nx/devkit";
+import * as esbuild from "esbuild";
+import { WorkspaceTypeAndRoot } from "nx/src/utils/find-workspace-root";
 
-export const DEFAULT_BUILD_OPTIONS = {
-  platform: "node",
-  target: "ES2021",
-  logLevel: "error",
-  tsconfig: "tsconfig.json",
-  metafile: true
-} as const;
+export type ESBuildOptions = Omit<
+  esbuild.BuildOptions,
+  "outbase" | "outfile"
+> & {
+  projectRoot: string;
+  name?: string;
+  emitTypes?: boolean;
+  emitMetafile?: boolean;
+};
 
-export const adapterConfig: Omit<ESBuildOptions, "projectRoot">[] = [
-  {
-    name: "cjs",
-    format: "cjs",
-    bundle: true,
-    entryPoints: ["src/index.ts"],
-    outExtension: { ".js": ".js" },
-    emitTypes: true
-  },
-  {
-    name: "esm",
-    format: "esm",
-    bundle: true,
-    entryPoints: ["src/index.ts"],
-    outExtension: { ".js": ".mjs" },
-    emitTypes: true
-  }
-];
+export type ESBuildResult = esbuild.BuildResult;
+
+export type ESBuildResolvedOptions = ESBuildOptions &
+  Required<Pick<ESBuildOptions, "name" | "outdir">> & {
+    workspaceRoot: WorkspaceTypeAndRoot;
+    projectName: string;
+    projectGraph: ProjectGraph;
+    projectConfigurations: ProjectsConfigurations;
+  };

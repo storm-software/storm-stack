@@ -16,22 +16,33 @@
  -------------------------------------------------------------------*/
 
 import { hfs } from "@humanfs/node";
+import {
+  createProjectGraphAsync,
+  joinPathFragments,
+  ProjectGraphProjectNode,
+  readJsonFile,
+  readProjectsConfigurationFromProjectGraph,
+  writeJsonFile
+} from "@nx/devkit";
+import { calculateProjectBuildableDependencies } from "@nx/js/src/utils/buildable-libs-utils";
 import { watch as createWatcher } from "chokidar";
 import { debounce, flatten, omit } from "es-toolkit";
 import { map } from "es-toolkit/compat";
 import * as esbuild from "esbuild";
 import { BuildContext } from "esbuild";
 import { globbySync } from "globby";
-import path from "node:path";
+import { existsSync } from "node:fs";
+import { findWorkspaceRoot } from "nx/src/utils/find-workspace-root";
 import stormStackPlugin from "unplugin-storm-stack/esbuild";
 import { handle, pipe, transduce } from "../utilities/helpers";
 import { writeLog } from "../utilities/log";
-import { type BuildOptions, DEFAULT_BUILD_OPTIONS } from "./config";
+import { DEFAULT_BUILD_OPTIONS } from "./config";
 import { depsCheckPlugin } from "./plugins/deps-check";
 import { fixImportsPlugin } from "./plugins/fix-imports";
 import { onErrorPlugin } from "./plugins/on-error";
 import { resolvePathsPlugin } from "./plugins/resolve-paths";
 import { tscPlugin } from "./plugins/tsc";
+import { ESBuildResolvedOptions, type ESBuildOptions } from "./types";
 
 /**
  * Apply defaults to the original build options
@@ -39,29 +50,212 @@ import { tscPlugin } from "./plugins/tsc";
  * @param options - the original build options
  * @returns the build options with defaults applied
  */
-const applyDefaults = (options: BuildOptions): BuildOptions => ({
-  ...DEFAULT_BUILD_OPTIONS,
-  format: "cjs",
-  outExtension: { ".js": ".js" },
-  resolveExtensions: [".ts", ".js", ".node"],
-  entryPoints: globbySync("./src/**/*.{j,t}s", {
-    ignore: ["./src/__tests__/**/*"]
-  }),
-  mainFields: ["module", "main"],
-  ...options,
-  // outfile has precedence over outdir, hence these ternaries
-  outfile: options.outfile ? getOutFile(options) : undefined,
-  outdir: options.outfile ? undefined : getOutDir(options),
-  plugins: [
-    stormStackPlugin(),
-    ...(options.plugins ?? []),
-    resolvePathsPlugin,
-    fixImportsPlugin,
-    tscPlugin(options.emitTypes),
-    onErrorPlugin
-  ],
-  external: [...(options.external ?? []), ...getProjectExternals(options)]
-});
+const resolveOptions = async (
+  options: ESBuildOptions
+): Promise<ESBuildResolvedOptions> => {
+  const projectRoot = options.projectRoot;
+
+  const workspaceRoot = findWorkspaceRoot(projectRoot);
+  if (!workspaceRoot) {
+    throw new Error("Cannot find Nx workspace root");
+  }
+
+  const nxJsonPath = joinPathFragments(workspaceRoot.dir, "nx.json");
+  if (!(await hfs.isFile(nxJsonPath))) {
+    throw new Error("Cannot find Nx workspace configuration");
+  }
+
+  const projectGraph = await createProjectGraphAsync({
+    exitOnError: true
+  });
+
+  const projectJsonPath = joinPathFragments(
+    workspaceRoot.dir,
+    projectRoot,
+    "project.json"
+  );
+  if (!(await hfs.isFile(projectJsonPath))) {
+    throw new Error("Cannot find project.json configuration");
+  }
+
+  const projectJson = await hfs.json(projectJsonPath);
+  const projectName = projectJson.name;
+
+  const projectConfigurations =
+    readProjectsConfigurationFromProjectGraph(projectGraph);
+  if (!projectConfigurations?.projects?.[projectName]) {
+    throw new Error(
+      "The Build process failed because the project does not have a valid configuration in the project.json file. Check if the file exists in the root of the project."
+    );
+  }
+
+  // const packageJsonPath = joinPathFragments(projectRoot, "project.json");
+  // if (!(await hfs.isFile(packageJsonPath))) {
+  //   throw new Error("Cannot find package.json configuration");
+  // }
+
+  // const packageJson = await hfs.json(
+  //   joinPathFragments(workspaceRoot.dir, projectRoot, "package.json")
+  // );
+
+  return {
+    ...DEFAULT_BUILD_OPTIONS,
+    format: "cjs",
+    outExtension: { ".js": ".js" },
+    resolveExtensions: [".ts", ".js", ".node"],
+    entryPoints: globbySync("./src/**/*.{j,t}s", {
+      ignore: ["./src/__tests__/**/*"]
+    }),
+    mainFields: ["module", "main"],
+    ...options,
+    outdir:
+      options.outdir ||
+      joinPathFragments(workspaceRoot.dir, "dist", projectRoot),
+    plugins: [
+      stormStackPlugin(),
+      ...(options.plugins ?? []),
+      resolvePathsPlugin,
+      fixImportsPlugin,
+      tscPlugin(options.emitTypes),
+      onErrorPlugin
+    ],
+    external: [...(options.external ?? [])],
+    name: `${options.name || projectName}-${options.format || "cjs"}`,
+    projectConfigurations,
+    projectName,
+    projectGraph,
+    workspaceRoot
+  };
+};
+
+const generatePackageJson = async (options: ESBuildResolvedOptions) => {
+  const nxJsonPath = joinPathFragments(options.workspaceRoot.dir, "nx.json");
+  if (!(await hfs.isFile(nxJsonPath))) {
+    throw new Error("Cannot find Nx workspace configuration");
+  }
+
+  const projectJsonPath = joinPathFragments(
+    options.workspaceRoot.dir,
+    options.projectRoot,
+    "project.json"
+  );
+  if (!(await hfs.isFile(projectJsonPath))) {
+    throw new Error("Cannot find project.json configuration");
+  }
+
+  if (!options.projectConfigurations?.projects?.[options.projectName]) {
+    throw new Error(
+      "The Build process failed because the project does not have a valid configuration in the project.json file. Check if the file exists in the root of the project."
+    );
+  }
+
+  const packageJsonPath = joinPathFragments(
+    options.projectRoot,
+    "project.json"
+  );
+  if (!(await hfs.isFile(packageJsonPath))) {
+    throw new Error("Cannot find package.json configuration");
+  }
+
+  const packageJson = await hfs.json(
+    joinPathFragments(
+      options.workspaceRoot.dir,
+      options.projectRoot,
+      "package.json"
+    )
+  );
+
+  const projectDependencies = calculateProjectBuildableDependencies(
+    undefined,
+    options.projectGraph,
+    options.workspaceRoot.dir,
+    options.projectName,
+    process.env.NX_TASK_TARGET_TARGET || "build",
+    process.env.NX_TASK_TARGET_CONFIGURATION || "production",
+    true
+  );
+
+  const localPackages = projectDependencies.dependencies
+    .filter(
+      dep =>
+        dep.node.type === "lib" &&
+        dep.node.data.root !== options.projectRoot &&
+        dep.node.data.root !== options.workspaceRoot.dir
+    )
+    .reduce(
+      (ret, project) => {
+        const projectNode = project.node as ProjectGraphProjectNode;
+
+        if (projectNode.data.root) {
+          const projectPackageJsonPath = joinPathFragments(
+            options.workspaceRoot.dir,
+            projectNode.data.root,
+            "package.json"
+          );
+          if (existsSync(projectPackageJsonPath)) {
+            const projectPackageJson = readJsonFile(projectPackageJsonPath);
+
+            if (projectPackageJson.private !== false) {
+              ret.push(projectPackageJson);
+            }
+          }
+        }
+
+        return ret;
+      },
+      [] as Record<string, any>[]
+    );
+
+  if (localPackages.length > 0) {
+    writeLog(
+      "trace",
+      `📦  Adding local packages to package.json: ${localPackages.map(p => p.name).join(", ")}`
+    );
+
+    packageJson.peerDependencies = localPackages.reduce((ret, localPackage) => {
+      if (!ret[localPackage.name]) {
+        ret[localPackage.name] = `>=${localPackage.version || "0.0.1"}`;
+      }
+
+      return ret;
+    }, packageJson.peerDependencies ?? {});
+    packageJson.peerDependenciesMeta = localPackages.reduce(
+      (ret, localPackage) => {
+        if (!ret[localPackage.name]) {
+          ret[localPackage.name] = {
+            optional: false
+          };
+        }
+
+        return ret;
+      },
+      packageJson.peerDependenciesMeta ?? {}
+    );
+    packageJson.devDependencies = localPackages.reduce((ret, localPackage) => {
+      if (!ret[localPackage.name]) {
+        ret[localPackage.name] = localPackage.version || "0.0.1";
+      }
+
+      return ret;
+    }, packageJson.peerDependencies ?? {});
+  } else {
+    writeLog(
+      "trace",
+      "📦  No local packages dependencies to add to package.json"
+    );
+  }
+
+  packageJson.main = "./dist/index.cjs";
+  packageJson.module = "./dist/index.mjs";
+  packageJson.types = "./dist/index.d.ts";
+
+  await writeJsonFile(
+    joinPathFragments(options.outdir, "package.json"),
+    packageJson
+  );
+
+  return options;
+};
 
 /**
  * Create two deferred builds for esm and cjs. The one follows the other:
@@ -71,13 +265,14 @@ const applyDefaults = (options: BuildOptions): BuildOptions => ({
  * @param options - the original build options
  * @returns if options = [a, b], we get [a-esm, a-cjs, b-esm, b-cjs]
  */
-function createBuildOptions(options: BuildOptions[]) {
+async function createOptions(options: ESBuildOptions[]) {
   return flatten(
-    map(options, options => [
-      // we defer it so that we don't trigger glob immediately
-      () => applyDefaults(options)
-      // ... here can go more steps
-    ])
+    await Promise.all(
+      map(options, options => [
+        // we defer it so that we don't trigger glob immediately
+        () => resolveOptions(options)
+      ])
+    )
   );
 }
 
@@ -85,39 +280,41 @@ function createBuildOptions(options: BuildOptions[]) {
  * We only want to trigger the glob search once we are ready, and that is when
  * the previous build has finished. We get the build options from the deferred.
  */
-function computeOptions(options: () => BuildOptions) {
+async function computeOptions(
+  options: () => Promise<ESBuildResolvedOptions>
+): Promise<ESBuildResolvedOptions> {
   return options();
 }
 
-/**
- * Extensions are not automatically by esbuild set for `options.outfile`. We
- * look at the set `options.outExtension` and we add that to `options.outfile`.
- */
-function addExtensionFormat(options: BuildOptions) {
-  if (options.outfile && options.outExtension) {
-    const ext = options.outExtension[".js"];
+// /**
+//  * Extensions are not automatically by esbuild set for `options.outfile`. We
+//  * look at the set `options.outExtension` and we add that to `options.outfile`.
+//  */
+// function addExtensionFormat(options: ESBuildOptions) {
+//   if (options.outfile && options.outExtension) {
+//     const ext = options.outExtension[".js"];
 
-    options.outfile = `${options.outfile}${ext}`;
-  }
+//     options.outfile = `${options.outfile}${ext}`;
+//   }
 
-  return options;
-}
+//   return options;
+// }
 
-/**
- * If we don't have `options.outfile`, we default `options.outdir`
- */
-function addDefaultOutDir(options: BuildOptions) {
-  if (options.outfile === undefined) {
-    options.outdir = getOutDir(options);
-  }
+// /**
+//  * If we don't have `options.outfile`, we default `options.outdir`
+//  */
+// function addDefaultOutDir(options: ESBuildOptions) {
+//   if (options.outfile === undefined) {
+//     options.outdir = getOutDir(options);
+//   }
 
-  return options;
-}
+//   return options;
+// }
 
 /**
  * Execute esbuild with all the configurations we pass
  */
-async function executeEsBuild(options: BuildOptions) {
+async function executeEsBuild(options: ESBuildResolvedOptions) {
   if (process.env.WATCH === "true") {
     const context = await esbuild.context(
       omit(options, ["name", "emitTypes", "emitMetafile"]) as any
@@ -129,12 +326,9 @@ async function executeEsBuild(options: BuildOptions) {
   const build = await esbuild.build(
     omit(options, ["name", "emitTypes", "emitMetafile"]) as any
   );
-  const outdir =
-    options.outdir ??
-    (options.outfile ? path.dirname(options.outfile) : undefined);
 
   if (build.metafile && options.emitMetafile) {
-    const metafilePath = `${outdir}/${options.name}.meta.json`;
+    const metafilePath = `${options.outdir}/${options.name}.meta.json`;
     await hfs.write(metafilePath, JSON.stringify(build.metafile));
   }
 
@@ -144,7 +338,7 @@ async function executeEsBuild(options: BuildOptions) {
 /**
  * A blank esbuild run to do an analysis of our deps
  */
-async function dependencyCheck(options: BuildOptions) {
+async function dependencyCheck(options: ESBuildResolvedOptions) {
   // we only check our dependencies for a full build
   if (process.env.DEV === "true") return undefined;
   // Only run on test and publish pipelines on Buildkite
@@ -178,17 +372,12 @@ async function dependencyCheck(options: BuildOptions) {
  * @param options - the build options
  * @returns the build result
  */
-export async function build(options: BuildOptions[]) {
+export async function build(options: ESBuildOptions[]) {
   void transduce.async(options, dependencyCheck);
 
   return transduce.async(
-    createBuildOptions(options),
-    pipe.async(
-      computeOptions,
-      addExtensionFormat,
-      addDefaultOutDir,
-      executeEsBuild
-    )
+    await createOptions(options),
+    pipe.async(computeOptions, generatePackageJson, executeEsBuild)
   );
 }
 
@@ -199,7 +388,7 @@ export async function build(options: BuildOptions[]) {
  * @param options - the build options
  * @returns the build result
  */
-const watch = (context: BuildContext, options: BuildOptions) => {
+const watch = (context: BuildContext, options: ESBuildResolvedOptions) => {
   if (process.env.WATCH !== "true") return context;
 
   // common chokidar options for the watchers
@@ -235,30 +424,9 @@ const watch = (context: BuildContext, options: BuildOptions) => {
 
 // Utils ::::::::::::::::::::::::::::::::::::::::::::::::::
 
-// get a default directory if needed (no outfile)
-function getOutDir(options: BuildOptions) {
-  if (options.outfile !== undefined) {
-    return path.dirname(options.outfile);
-  }
-
-  return options.outdir ?? "dist";
-}
-
-// get the output file from an original path
-function getOutFile(options: BuildOptions) {
-  if (options.outfile !== undefined) {
-    const dirname = getOutDir(options);
-    const filename = path.basename(options.outfile);
-
-    return `${dirname}/${filename}`;
-  }
-
-  return undefined;
-}
-
 // get the current project externals this helps to mark dependencies as external
 // by having convention in the package.json (dev = bundled, non-dev = external)
-function getProjectExternals(options: BuildOptions) {
+function getProjectExternals(options: ESBuildOptions) {
   const pkg = require(`${process.cwd()}/package.json`);
   const peerDeps = Object.keys(pkg.peerDependencies ?? {});
   const regDeps = Object.keys(pkg.dependencies ?? {});
