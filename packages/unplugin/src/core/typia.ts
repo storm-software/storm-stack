@@ -311,6 +311,8 @@ function findMatchingAlias(text: string, aliases: Alias[]) {
       return alias.find.test(text);
     });
   }
+
+  return undefined;
 }
 
 /**

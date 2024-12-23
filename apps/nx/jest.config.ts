@@ -18,4 +18,4 @@
 
 import { getJestConfig } from "@storm-software/testing-tools";
 
-export default getJestConfig("tools/nx", true, "nx");
+export default getJestConfig("apps/nx", true, "nx");

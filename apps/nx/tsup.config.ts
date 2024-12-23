@@ -15,13 +15,22 @@
 
  -------------------------------------------------------------------*/
 
-export const replaceReactNativeWeb = {
-  esm: {
-    from: 'from "react-native"',
-    to: 'from "react-native-web"'
-  },
-  cjs: {
-    from: 'require("react-native")',
-    to: 'require("react-native-web")'
+import { defineConfig } from "tsup";
+
+export default defineConfig({
+  name: "nx",
+  target: "node22",
+  entryPoints: ["./src/index.ts"],
+  format: ["cjs"],
+  bundle: true,
+  splitting: true,
+  clean: true,
+  sourcemap: false,
+  tsconfig: "./tsconfig.json",
+  external: ["nx", "@nx/*", "@swc/*", "@angular-devkit/schematics"],
+  dts: {
+    resolve: true,
+    // build types for `src/index.ts` only
+    entry: "./src/index.ts"
   }
-};
+});

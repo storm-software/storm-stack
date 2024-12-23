@@ -6,13 +6,12 @@
     "moduleResolution": "node",
     "strict": false,
     "esModuleInterop": true,
-    "declaration": true,
     "skipLibCheck": true,
     "isolatedModules": false,
     "types": ["node"],
-    "lib": ["esnext", "dom"]
+    "lib": ["esnext"]
   },
-  "include": ["**/*.ts", "**/*.js", "**/*.json"],
+  "include": ["src/**/*.ts", "src/**/*.js", "**/*.json", "tsup.config.ts"],
   "exclude": [
     "jest.config.ts",
     "generators/**/files/**/*",

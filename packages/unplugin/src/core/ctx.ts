@@ -302,10 +302,10 @@ ${dts}
     const promises: any[] = [];
     if (dts) {
       promises.push(
-        generateDTS(dts).then(content => {
+        generateDTS(dts).then(async content => {
           if (content !== lastDTS) {
             lastDTS = content;
-            return writeFile(dts, content);
+            await writeFile(dts, content);
           }
         })
       );
@@ -322,7 +322,7 @@ ${dts}
           generateESLintrc().then(async content => {
             if (content.trim() !== lastESLint?.trim()) {
               lastESLint = content;
-              return writeFile(eslint.eslintrcFilepath!, content);
+              await writeFile(eslint.eslintrcFilepath!, content);
             }
           })
         );
@@ -340,7 +340,7 @@ ${dts}
           generateESLintFlat().then(async content => {
             if (content.trim() !== lastESLint?.trim()) {
               lastESLint = content;
-              return writeFile(eslint.eslintFlatFilepath!, content);
+              await writeFile(eslint.eslintFlatFilepath!, content);
             }
           })
         );
@@ -349,10 +349,10 @@ ${dts}
 
     if (biome?.enabled) {
       promises.push(
-        generateBiomeLint().then(content => {
+        generateBiomeLint().then(async content => {
           if (content !== lastBiomeLint) {
             lastBiomeLint = content;
-            return writeFile(biome.filepath!, content);
+            await writeFile(biome.filepath!, content);
           }
         })
       );
@@ -360,12 +360,12 @@ ${dts}
 
     if (dumpUnimportItems) {
       promises.push(
-        unimport.getImports().then(items => {
+        unimport.getImports().then(async items => {
           if (!dumpUnimportItems) return;
           const content = JSON.stringify(items, null, 2);
           if (content !== lastUnimportItems) {
             lastUnimportItems = content;
-            return writeFile(dumpUnimportItems, content);
+            await writeFile(dumpUnimportItems, content);
           }
         })
       );

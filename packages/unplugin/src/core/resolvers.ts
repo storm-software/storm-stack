@@ -66,8 +66,12 @@ export async function firstMatchedResolver(
     const resolved = await (typeof resolver === "function"
       ? resolver(name)
       : resolver.resolve(name));
-    if (resolved) return normalizeImport(resolved, fullName);
+    if (resolved) {
+      return normalizeImport(resolved, fullName);
+    }
   }
+
+  return null;
 }
 
 export function resolversAddon(resolvers: Resolver[]): Addon {
@@ -110,6 +114,8 @@ export function resolversAddon(resolvers: Resolver[]): Addon {
       if (dynamic.length > 0 || sideEffects.length > 0) {
         return [...matched, ...dynamic, ...sideEffects];
       }
+
+      return matched;
     }
   };
 }

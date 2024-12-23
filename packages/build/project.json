@@ -4,38 +4,66 @@
   "projectType": "library",
   "sourceRoot": "packages/build/src",
   "targets": {
-    "build": {
-      "executor": "@storm-software/workspace-tools:unbuild",
-      "outputs": ["{options.outputPath}"],
+    // "build": {
+    //   "executor": "@nx/esbuild:esbuild",
+    //   "outputs": ["{options.outputPath}"],
+    //   "options": {
+    //     "outputPath": "dist/packages/build",
+    //     "tsConfig": "packages/build/tsconfig.json",
+    //     "project": "packages/build/package.json",
+    //     "defaultConfiguration": "production",
+    //     "main": "packages/build/src/index.ts",
+    //     "format": ["cjs", "esm"],
+    //     "platform": "node",
+    //     "deleteOutputPath": true,
+    //     "bundle": true,
+    //     "thirdParty": true,
+    //     "skipTypeCheck": false,
+    //     "metafile": true,
+    //     "minify": false,
+
+    //     "assets": [
+    //       {
+    //         "input": "packages/build",
+    //         "glob": "*.md",
+    //         "output": "/"
+    //       },
+    //       {
+    //         "input": "",
+    //         "glob": "LICENSE",
+    //         "output": "/"
+    //       }
+    //     ]
+    //   },
+    //   "configurations": {
+    //     "production": {
+    //       "debug": false,
+    //       "verbose": false
+    //     },
+    //     "development": {
+    //       "debug": true,
+    //       "verbose": true
+    //     }
+    //   }
+    // }
+
+    "build-base": {
+      "executor": "nx:run-commands",
+      "dependsOn": ["clean", "^build"],
       "options": {
-        "entry": "packages/build/src/index.ts",
-        "outputPath": "dist/packages/build",
-        "tsConfig": "packages/build/tsconfig.json",
-        "project": "packages/build/package.json",
-        "defaultConfiguration": "production",
-        "platform": "node",
-        "assets": [
-          {
-            "input": "packages/build",
-            "glob": "*.md",
-            "output": "/"
-          },
-          {
-            "input": "",
-            "glob": "LICENSE",
-            "output": "/"
-          }
+        "command": "tsup --config=\"tsup.config.ts\"",
+        "cwd": "{projectRoot}"
+      }
+    },
+    "build": {
+      "executor": "nx:run-commands",
+      "dependsOn": ["build-base"],
+      "options": {
+        "commands": [
+          "pnpm copyfiles LICENSE dist/packages/build",
+          "pnpm copyfiles --up=2 ./packages/build/README.md ./packages/build/package.json dist/packages/build",
+          "pnpm copyfiles --up=3 ./packages/build/dist/* dist/packages/build/dist"
         ]
-      },
-      "configurations": {
-        "production": {
-          "debug": false,
-          "verbose": false
-        },
-        "development": {
-          "debug": true,
-          "verbose": true
-        }
       }
     }
   },

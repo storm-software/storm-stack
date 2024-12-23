@@ -15,19 +15,22 @@
 
  -------------------------------------------------------------------*/
 
-import type * as esbuild from "esbuild";
+import { defineConfig } from "tsup";
 
-/**
- * For dependencies that forgot to add them into their package.json.
- */
-export const fixImportsPlugin: esbuild.Plugin = {
-  name: "storm-stack:fix-imports",
-  setup(build) {
-    build.onResolve({ filter: /^spdx-exceptions/ }, () => {
-      return { path: require.resolve("spdx-exceptions") };
-    });
-    build.onResolve({ filter: /^spdx-license-ids/ }, () => {
-      return { path: require.resolve("spdx-license-ids") };
-    });
+export default defineConfig({
+  name: "build",
+  target: "node22",
+  entryPoints: ["./src/node/app.ts"],
+  format: ["cjs"],
+  bundle: true,
+  splitting: true,
+  clean: true,
+  sourcemap: false,
+  tsconfig: "./tsconfig.json",
+  external: ["nx", "@nx/*", "@swc/*", "typia"],
+  dts: {
+    resolve: true,
+    // build types for `src/index.ts` only
+    entry: "./src/index.ts"
   }
-};
+});

@@ -1,9 +1,9 @@
 {
   "executors": {
-    "tamagui": {
-      "implementation": "./src/executors/tamagui/executor",
-      "schema": "./src/executors/tamagui/schema.json",
-      "description": "Run the [Tamagui compiler](https://tamagui.dev/docs/intro/why-a-compiler) to correctly format react components for web and mobile"
+    "node-build": {
+      "implementation": "./src/executors/node-build/executor",
+      "schema": "./src/executors/node-build/schema.json",
+      "description": "An executor used to build a NodeJs application"
     }
   }
 }

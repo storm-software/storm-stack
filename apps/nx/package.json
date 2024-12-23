@@ -7,28 +7,58 @@
     "url": "https://github.com/storm-software/storm-stack.git",
     "directory": "apps/nx"
   },
-  "private": true,
-  "main": "./src/index.js",
-  "typings": "./src/index.d.ts",
+  "private": false,
+  "main": "./index.js",
+  "exports": {
+    ".": "./index.js",
+    "./package.json": "./package.json",
+    "./migrations.json": "./migrations.json",
+    "./generators.json": "./generators.json",
+    "./generators/*/schema.json": "./generators/*/schema.json",
+    "./executors.json": "./executors.json",
+    "./executors/*/schema.json": "./executors/*/schema.json"
+  },
+  "typings": "./index.d.ts",
   "peerDependencies": {
-    "@tamagui/web": "^1.113.0",
-    "nx": "20.0.11"
+    "@nx/devkit": "^20.0.11",
+    "@nx/js": "^20.0.11",
+    "@nx/workspace": "20.0.11",
+    "@samchon/openapi": "^2.3.1",
+    "@swc/core": "1.7.26",
+    "@swc/wasm": "^1.10.1",
+    "nx": "^20.0.11"
+  },
+  "peerDependenciesMeta": {
+    "@nx/devkit": {
+      "optional": true
+    },
+    "@nx/js": {
+      "optional": false
+    },
+    "@nx/workspace": {
+      "optional": true
+    },
+    "@swc/wasm": {
+      "optional": true
+    },
+    "nx": {
+      "optional": false
+    }
   },
   "dependencies": {
-    "@nx/devkit": "20.0.11",
     "@storm-software/config": "latest",
     "@storm-software/config-tools": "latest",
-    "@storm-software/workspace-tools": "latest",
-    "@tamagui/fake-react-native": "^1.113.0",
-    "esbuild": "^0.24.0",
-    "fs-extra": "^11.2.0",
-    "glob": "^11.0.0",
-    "tslib": "^2.7.0"
+    "@storm-software/workspace-tools": "latest"
   },
   "devDependencies": {
-    "@tamagui/web": "^1.113.0",
-    "@types/fs-extra": "^11.0.4",
-    "nx": "20.0.11"
+    "@nx/devkit": "^20.0.11",
+    "@nx/js": "^20.0.11",
+    "@nx/workspace": "20.0.11",
+    "@samchon/openapi": "^2.3.1",
+    "@swc/core": "1.7.26",
+    "@swc/wasm": "^1.10.1",
+    "nx": "^20.0.11",
+    "tsup": "^8.3.5"
   },
   "executors": "./executors.json"
 }

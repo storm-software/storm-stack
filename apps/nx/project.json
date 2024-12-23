@@ -5,82 +5,93 @@
   "projectType": "library",
   "tags": [],
   "targets": {
-    "build": {
-      "executor": "@nx/esbuild:esbuild",
-      "outputs": ["{options.outputPath}"],
+    // "build": {
+    //   "cache": true,
+    //   "executor": "@nx/esbuild:esbuild",
+    //   "inputs": ["default", "^production"],
+    //   "dependsOn": ["clean", "^build"],
+    //   "outputs": ["{options.outputPath}"],
+    //   "options": {
+    //     "outputPath": "dist/apps/nx",
+    //     "tsConfig": "apps/nx/tsconfig.json",
+    //     "project": "apps/nx/package.json",
+    //     "main": "apps/src/nx/index.ts",
+    //     "additionalEntryPoints": [
+    //       "apps/nx/src/executors/node-build/executor.ts"
+    //     ],
+    //     "platform": "node",
+    //     "deleteOutputPath": true,
+    //     "bundle": true,
+    //     "thirdParty": true,
+    //     "skipTypeCheck": false,
+    //     "metafile": true,
+    //     "minify": false,
+    //     "format": ["cjs"],
+    //     "esbuildOptions": {
+    //       "outExtension": {
+    //         ".js": ".js"
+    //       },
+    //       "loader": { ".node": "copy" }
+    //     },
+    //     "external": ["nx", "@nx/*", "@swc/*", "@samchon/openapi"],
+    //     "assets": [
+    //       {
+    //         "input": "apps/nx",
+    //         "glob": "**/files/**",
+    //         "output": "/"
+    //       },
+    //       {
+    //         "input": "apps/nx",
+    //         "glob": "**/files/**/.gitkeep",
+    //         "output": "/"
+    //       },
+    //       {
+    //         "input": "apps/nx",
+    //         "glob": "**/*.json",
+    //         "ignore": ["**/tsconfig*.json", "project.json", ".eslintrc"],
+    //         "output": "."
+    //       },
+    //       {
+    //         "input": "apps/nx",
+    //         "glob": "**/*.js",
+    //         "ignore": ["**/jest.config.js"],
+    //         "output": "."
+    //       },
+    //       {
+    //         "input": "apps/nx",
+    //         "glob": "**/*.d.ts",
+    //         "output": "."
+    //       },
+    //       {
+    //         "input": "apps/nx",
+    //         "glob": "*.md",
+    //         "output": "."
+    //       },
+    //       {
+    //         "input": "",
+    //         "glob": "LICENSE",
+    //         "output": "."
+    //       }
+    //     ]
+    //   }
+    // },
+
+    "build-base": {
+      "executor": "nx:run-commands",
+      "dependsOn": ["clean", "^build"],
       "options": {
-        "outputPath": "dist/apps/nx",
-        "tsConfig": "apps/nx/tsconfig.json",
-        "project": "apps/nx/package.json",
-        "main": "apps/nx/src/index.ts",
-        "additionalEntryPoints": ["apps/nx/src/executors/tamagui/executor.ts"],
-        "platform": "node",
-        "deleteOutputPath": true,
-        "bundle": true,
-        "thirdParty": true,
-        "skipTypeCheck": false,
-        "metafile": true,
-        "minify": false,
-        "format": ["cjs"],
-        "external": [
-          "nx",
-          "@angular-devkit/architect",
-          "@tamagui/proxy-worm",
-          "@tamagui/fake-react-native",
-          "@tamagui/web/native",
-          "esbuild"
-        ],
-        "esbuildOptions": {
-          "outExtension": {
-            ".js": ".js"
-          }
-        },
-        "assets": [
-          {
-            "input": "./apps/nx",
-            "glob": "*.md",
-            "output": "/"
-          },
-          {
-            "input": "",
-            "glob": "LICENSE",
-            "output": "/"
-          },
-          {
-            "input": "./apps/nx/src",
-            "glob": "**/!(*.ts)",
-            "output": "./src"
-          },
-          {
-            "input": "./apps/nx/src",
-            "glob": "**/*.d.ts",
-            "output": "./src"
-          },
-          {
-            "input": "./apps/nx",
-            "glob": "generators.json",
-            "output": "."
-          },
-          {
-            "input": "./apps/nx",
-            "glob": "executors.json",
-            "output": "."
-          },
-          {
-            "input": "./apps/nx",
-            "glob": "**/schema.json",
-            "output": "."
-          },
-          {
-            "input": "./apps/nx",
-            "glob": "**/files/**/{*.*,*}",
-            "output": "."
-          },
-          {
-            "input": "./apps/nx/assets",
-            "glob": "**/*.*",
-            "output": "./assets"
-          }
+        "command": "tsup --config='tsup.config.ts'",
+        "cwd": "{projectRoot}"
+      }
+    },
+    "build": {
+      "executor": "nx:run-commands",
+      "dependsOn": ["build-base"],
+      "options": {
+        "commands": [
+          "pnpm copyfiles LICENSE dist/apps/nx",
+          "pnpm copyfiles --up=2 ./apps/nx/README.md ./apps/nx/package.json dist/apps/nx",
+          "pnpm copyfiles --up=3 ./apps/nx/dist/* dist/apps/nx/dist"
         ]
       }
     },
