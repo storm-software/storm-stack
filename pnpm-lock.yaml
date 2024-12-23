@@ -100,7 +100,7 @@ importers:
         version: 0.34.0
       '@storm-software/workspace-tools':
         specifier: latest
-        version: 1.207.1(ghypqkwxjdesj3xia6hem7yhxi)
+        version: 1.207.2(ghypqkwxjdesj3xia6hem7yhxi)
       '@swc-node/register':
         specifier: 1.10.9
         version: 1.10.9(@swc/core@1.7.26(@swc/helpers@0.5.13))(@swc/types@0.1.12)(typescript@5.6.2)
@@ -239,7 +239,7 @@ importers:
         version: 1.118.0(typescript@5.5.4)
       '@storm-software/workspace-tools':
         specifier: latest
-        version: 1.207.1(3kp5sfiq2dfsbvbgzyzp6c3uii)
+        version: 1.207.2(3kp5sfiq2dfsbvbgzyzp6c3uii)
     devDependencies:
       '@nx/devkit':
         specifier: ^20.0.11
@@ -413,7 +413,7 @@ importers:
         version: 1.86.0(@nx/jest@20.0.11(@babel/traverse@7.25.6)(@swc-node/register@1.10.9(@swc/core@1.7.26(@swc/helpers@0.5.13))(@swc/types@0.1.12)(typescript@5.6.2))(@swc/core@1.7.26(@swc/helpers@0.5.13))(@swc/wasm@1.10.1)(@types/node@22.10.2)(nx@20.2.2(@swc-node/register@1.10.9(@swc/core@1.7.26(@swc/helpers@0.5.13))(@swc/types@0.1.12)(typescript@5.6.2))(@swc/core@1.7.26(@swc/helpers@0.5.13)))(ts-node@10.9.2(@swc/core@1.7.26(@swc/helpers@0.5.13))(@swc/wasm@1.10.1)(@types/node@22.10.2)(typescript@5.6.2))(typescript@5.6.2)(verdaccio@5.32.2(typanion@3.14.0)))(jest@29.7.0(@types/node@22.10.2)(ts-node@10.9.2(@swc/core@1.7.26(@swc/helpers@0.5.13))(@swc/wasm@1.10.1)(@types/node@22.10.2)(typescript@5.6.2)))
       '@storm-software/workspace-tools':
         specifier: latest
-        version: 1.207.1(gfjzg3dgjwjqynmuzsocamyslq)
+        version: 1.207.2(gfjzg3dgjwjqynmuzsocamyslq)
     devDependencies:
       '@types/node':
         specifier: ^22.10.2
@@ -4725,8 +4725,8 @@ packages:
       '@swc/core':
         optional: true
 
-  '@storm-software/workspace-tools@1.207.1':
-    resolution: {integrity: sha512-CRi2xVapBe/HbM6y7G2tC6PVfhz2C5oFrifdKqzv3mUcOdRgOb87zn1mlYXHvxgPLg3POSaJthx7IJyueIcDQQ==}
+  '@storm-software/workspace-tools@1.207.2':
+    resolution: {integrity: sha512-ePDxtIjrrFI6KQhBsg3vW0rOZvLRJdUgWxMKXIm2yOCGMcwfEsMpaEiFyZysAkQxLRV3a6jtsNvAXaXaJptIPw==}
     peerDependencies:
       '@microsoft/api-extractor': 7.46.2
       '@nx/devkit': ^20.2.2
@@ -19963,7 +19963,7 @@ snapshots:
     optionalDependencies:
       '@swc/core': 1.7.26(@swc/helpers@0.5.13)
 
-  '@storm-software/workspace-tools@1.207.1(3kp5sfiq2dfsbvbgzyzp6c3uii)':
+  '@storm-software/workspace-tools@1.207.2(3kp5sfiq2dfsbvbgzyzp6c3uii)':
     dependencies:
       '@anatine/esbuild-decorators': 0.2.19(esbuild@0.19.12)
       '@ltd/j-toml': 1.38.0
@@ -20026,7 +20026,7 @@ snapshots:
       - supports-color
       - ts-node
 
-  '@storm-software/workspace-tools@1.207.1(gfjzg3dgjwjqynmuzsocamyslq)':
+  '@storm-software/workspace-tools@1.207.2(gfjzg3dgjwjqynmuzsocamyslq)':
     dependencies:
       '@anatine/esbuild-decorators': 0.2.19(esbuild@0.19.12)
       '@ltd/j-toml': 1.38.0
@@ -20089,7 +20089,7 @@ snapshots:
       - supports-color
       - ts-node
 
-  '@storm-software/workspace-tools@1.207.1(ghypqkwxjdesj3xia6hem7yhxi)':
+  '@storm-software/workspace-tools@1.207.2(ghypqkwxjdesj3xia6hem7yhxi)':
     dependencies:
       '@anatine/esbuild-decorators': 0.2.19(esbuild@0.19.12)
       '@ltd/j-toml': 1.38.0
