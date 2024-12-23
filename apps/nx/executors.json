@@ -1,9 +1,0 @@
-{
-  "executors": {
-    "node-build": {
-      "implementation": "./src/executors/node-build/executor",
-      "schema": "./src/executors/node-build/schema.json",
-      "description": "An executor used to build a NodeJs application"
-    }
-  }
-}

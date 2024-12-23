@@ -1,7 +1,7 @@
 {
   "extends": "@storm-software/workspace-tools/config/nx-default.json",
   "release": {
-    "projects": ["packages/*"],
+    "projects": ["packages/*", "build/*"],
     "projectsRelationship": "independent",
     "releaseTagPattern": "{projectName}@{version}",
     "conventionalCommits": {
@@ -130,7 +130,8 @@
         "useFlatConfig": true
       }
     },
-    "@storm-software/workspace-tools/plugins/typescript"
+    "@storm-software/workspace-tools/plugins/typescript",
+    "@storm-software/workspace-tools/plugins/typescript/tsup"
   ]
   // "useLegacyCache": true
 }

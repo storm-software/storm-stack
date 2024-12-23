@@ -8,8 +8,12 @@
     "incremental": false,
     "composite": false,
     "paths": {
-      "@storm-stack/build": ["packages/build/src/index.ts"],
-      "@storm-stack/build/*": ["packages/build/src/*"],
+      "@storm-stack/build-core": ["build/core/src/index.ts"],
+      "@storm-stack/build-core/*": ["build/core/src/*"],
+      "@storm-stack/build-nx": ["build/nx/src/index.ts"],
+      "@storm-stack/build-nx/*": ["build/nx/src/*"],
+      "@storm-stack/build-plugin": ["build/plugin/src/index.ts"],
+      "@storm-stack/build-plugin/*": ["build/plugin/src/*"],
       "@storm-stack/cli": ["packages/cli/src/index.ts"],
       "@storm-stack/cli/*": ["packages/cli/src/*"],
       "@storm-stack/date-time": ["packages/date-time/src/index.ts"],
@@ -26,8 +30,6 @@
       "@storm-stack/hooks/*": ["packages/hooks/src/*"],
       "@storm-stack/logging": ["packages/logging/src/index.ts"],
       "@storm-stack/logging/*": ["packages/logging/src/*"],
-      "@storm-stack/nx": ["apps/nx/src/index.ts"],
-      "@storm-stack/nx/*": ["apps/nx/src/*"],
       "@storm-stack/plugin-system": ["packages/plugin-system/src/index.ts"],
       "@storm-stack/plugin-system/*": ["packages/plugin-system/src/*"],
       "@storm-stack/serialization": ["packages/serialization/src/index.ts"],
@@ -40,6 +42,8 @@
       "@storm-stack/string-fns/*": ["packages/string-fns/src/*"],
       "@storm-stack/telemetry": ["packages/telemetry/src/index.ts"],
       "@storm-stack/telemetry/*": ["packages/telemetry/src/*"],
+      "@storm-stack/tools-config": ["tools/config/src/index.ts"],
+      "@storm-stack/tools-config/*": ["tools/config/src/*"],
       "@storm-stack/types": ["packages/types/src/index.ts"],
       "@storm-stack/types/*": ["packages/types/src/*"],
       "@storm-stack/unique-identifier": [
@@ -47,9 +51,7 @@
       ],
       "@storm-stack/unique-identifier/*": ["packages/unique-identifier/src/*"],
       "@storm-stack/utilities": ["packages/utilities/src/index.ts"],
-      "@storm-stack/utilities/*": ["packages/utilities/src/*"],
-      "unplugin-storm-stack": ["packages/unplugin/src/index.ts"],
-      "unplugin-storm-stack/*": ["packages/unplugin/src/*"]
+      "@storm-stack/utilities/*": ["packages/utilities/src/*"]
     }
   },
   "include": ["**/*.ts", "**/*.tsx", "**/*.d.ts", "**/*.js", "**/*.jsx"],

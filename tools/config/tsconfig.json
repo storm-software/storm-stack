@@ -1,0 +1,17 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "outDir": "../../dist/out-tsc",
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "strict": false,
+    "sourceMap": false,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "isolatedModules": false,
+    "types": ["node"],
+    "lib": ["esnext"]
+  },
+  "include": ["src/**/*.ts", "src/**/*.js", "**/*.json"],
+  "exclude": ["**/*.spec.ts", "**/*.test.ts"]
+}

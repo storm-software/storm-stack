@@ -2,6 +2,8 @@
 version: 2
 
 triggerPaths:
+  - "tools/*/package.json"
+  - "build/*/package.json"
   - "packages/*/package.json"
   - "package.json"
   - "pnpm-lock.yaml"

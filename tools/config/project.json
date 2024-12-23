@@ -1,0 +1,28 @@
+{
+  "name": "tools-config",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "tools/config/src",
+  "projectType": "library",
+  "tags": [],
+  "// targets": "to see all targets run: nx show project tools-config --web",
+  "targets": {
+    "build-base": {
+      "executor": "nx:run-commands",
+      "dependsOn": ["clean", "^build"],
+      "options": {
+        "command": "tsup src/*.ts --format cjs,esm --dts --splitting --clean",
+        "cwd": "{projectRoot}"
+      }
+    },
+    "build": {
+      "executor": "nx:run-commands",
+      "dependsOn": ["build-base"],
+      "options": {
+        "commands": [
+          "pnpm copyfiles --up=2 ./tools/config/package.json dist/tools/config",
+          "pnpm copyfiles --up=3 ./tools/config/dist/* dist/tools/config/dist"
+        ]
+      }
+    }
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "name": "build-nx",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "build/nx/src",
+  "projectType": "library",
+  "tags": ["platform:node"],
+  "targets": {
+    "build-base": {
+      "executor": "nx:run-commands",
+      "dependsOn": ["clean", "^build"],
+      "options": {
+        "command": "tsup --config=\"tsup.config.ts\"",
+        "cwd": "{projectRoot}"
+      }
+    },
+    "build": {
+      "executor": "nx:run-commands",
+      "dependsOn": ["build-base"],
+      "options": {
+        "commands": [
+          "pnpm copyfiles LICENSE dist/build/nx",
+          "pnpm copyfiles --up=2 ./build/nx/README.md ./build/nx/package.json ./build/nx/executors.json ./build/nx/generators.json dist/build/nx",
+          "pnpm copyfiles --up=3 ./build/nx/dist/* dist/build/nx/dist"
+        ]
+      }
+    }
+  }
+}

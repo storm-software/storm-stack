@@ -1,0 +1,32 @@
+{
+  "name": "build-core",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "library",
+  "sourceRoot": "build/core/src",
+  "tags": ["platform:node"],
+  "targets": {
+    "build-base": {
+      "cache": false,
+      "executor": "nx:run-commands",
+      "dependsOn": ["clean", "^build"],
+      "options": {
+        "command": "tsup --config=\"tsup.config.ts\"",
+        "cwd": "{projectRoot}"
+      }
+    },
+    "build": {
+      "executor": "nx:run-commands",
+      "dependsOn": ["build-base"],
+      "options": {
+        "commands": [
+          "pnpm copyfiles LICENSE dist/build/core",
+          "pnpm copyfiles --up=2 ./build/core/README.md ./build/core/package.json dist/build/core",
+          "pnpm copyfiles --up=3 ./build/core/dist/* dist/build/core/dist"
+        ]
+      }
+    },
+    "nx-release-publish": {
+      "executor": "@storm-software/workspace-tools:npm-publish"
+    }
+  }
+}

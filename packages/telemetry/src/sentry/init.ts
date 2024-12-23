@@ -50,22 +50,24 @@ export const initSentry = (options: InitSentryOptions) => {
   });
 
   const client = Sentry.getClient();
-  setupEventContextTrace(client);
+  if (client) {
+    setupEventContextTrace(client);
 
-  const provider = new BasicTracerProvider({
-    sampler: new SentrySampler(client)
-  });
+    const provider = new BasicTracerProvider({
+      sampler: new SentrySampler(client)
+    });
 
-  const SentryContextManager = wrapContextManagerClass(
-    AsyncLocalStorageContextManager
-  );
+    const SentryContextManager = wrapContextManagerClass(
+      AsyncLocalStorageContextManager
+    );
 
-  provider.addSpanProcessor(new SentrySpanProcessor());
-  provider.register({
-    propagator: new SentryPropagator(),
-    contextManager: new SentryContextManager()
-  });
+    provider.addSpanProcessor(new SentrySpanProcessor());
+    provider.register({
+      propagator: new SentryPropagator(),
+      contextManager: new SentryContextManager()
+    });
 
-  setOpenTelemetryContextAsyncContextStrategy();
-  Sentry.validateOpenTelemetrySetup();
+    setOpenTelemetryContextAsyncContextStrategy();
+    Sentry.validateOpenTelemetrySetup();
+  }
 };

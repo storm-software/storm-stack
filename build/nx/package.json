@@ -1,0 +1,65 @@
+{
+  "name": "@storm-stack/build-nx",
+  "version": "1.3.0",
+  "type": "commonjs",
+  "repository": {
+    "type": "github",
+    "url": "https://github.com/storm-software/storm-stack.git",
+    "directory": "build/nx"
+  },
+  "private": false,
+  "main": "./index.js",
+  "exports": {
+    ".": "./index.js",
+    "./package.json": "./package.json",
+    "./migrations.json": "./migrations.json",
+    "./generators.json": "./generators.json",
+    "./generators/*/schema.json": "./generators/*/schema.json",
+    "./executors.json": "./executors.json",
+    "./executors/*/schema.json": "./executors/*/schema.json"
+  },
+  "typings": "./index.d.ts",
+  "peerDependencies": {
+    "@nx/devkit": "^20.0.11",
+    "@nx/js": "^20.0.11",
+    "@nx/workspace": "^20.0.11",
+    "@samchon/openapi": "^2.3.1",
+    "@swc/core": "1.7.26",
+    "@swc/wasm": "^1.10.1",
+    "nx": "^20.0.11"
+  },
+  "peerDependenciesMeta": {
+    "@nx/devkit": {
+      "optional": true
+    },
+    "@nx/js": {
+      "optional": false
+    },
+    "@nx/workspace": {
+      "optional": true
+    },
+    "@swc/wasm": {
+      "optional": true
+    },
+    "nx": {
+      "optional": false
+    }
+  },
+  "dependencies": {
+    "@storm-software/config": "latest",
+    "@storm-software/config-tools": "latest",
+    "@storm-software/workspace-tools": "latest"
+  },
+  "devDependencies": {
+    "@nx/devkit": "^20.0.11",
+    "@nx/js": "^20.0.11",
+    "@nx/workspace": "^20.0.11",
+    "@samchon/openapi": "^2.3.1",
+    "@swc/core": "1.7.26",
+    "@swc/wasm": "^1.10.1",
+    "@types/node": "^22.10.2",
+    "nx": "^20.0.11",
+    "tsup": "^8.3.5"
+  },
+  "executors": "./executors.json"
+}
