@@ -9,8 +9,6 @@
     "sourceMap": false,
     "esModuleInterop": true,
     "skipLibCheck": true,
-    "isolatedModules": false,
-    "types": ["node"],
     "lib": ["esnext"]
   },
   "include": ["src/**/*.ts", "src/**/*.js", "**/*.json", "tsup.config.ts"],
