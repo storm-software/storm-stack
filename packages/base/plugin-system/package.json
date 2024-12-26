@@ -6,7 +6,7 @@
   "repository": {
     "type": "github",
     "url": "https://github.com/storm-software/storm-stack.git",
-    "directory": "packages/plugin-system"
+    "directory": "packages/base/plugin-system"
   },
   "private": false,
   "dependencies": {

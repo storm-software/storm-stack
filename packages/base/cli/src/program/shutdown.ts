@@ -15,7 +15,7 @@
 
  -------------------------------------------------------------------*/
 
-import { StormLog } from "@storm-stack/logging";
+import { StormLog } from "@storm-stack/logging/storm-log";
 import type { MaybePromise } from "@storm-stack/types";
 
 const errorTypes = ["unhandledRejection", "uncaughtException"];
