@@ -1,0 +1,22 @@
+{
+  "name": "@storm-stack/file-system",
+  "version": "1.39.0",
+  "type": "module",
+  "description": "⚡ The storm-stack monorepo contains utility applications, tools, and various libraries to create modern and scalable web applications.",
+  "repository": {
+    "type": "github",
+    "url": "https://github.com/storm-software/storm-stack.git",
+    "directory": "packages/file-system"
+  },
+  "private": false,
+  "dependencies": {
+    "@storm-software/config-tools": "latest",
+    "semver": "7.6.3"
+  },
+  "devDependencies": {
+    "@types/semver": "7.5.8"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

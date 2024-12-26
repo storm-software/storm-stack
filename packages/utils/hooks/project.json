@@ -1,0 +1,36 @@
+{
+  "name": "utils-hooks",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "library",
+  "sourceRoot": "packages/utils/hooks/src",
+  "targets": {
+    "build": {
+      "cache": true,
+      "executor": "@storm-software/workspace-tools:unbuild",
+      "inputs": ["typescript", "^production"],
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "clean": true,
+      "options": {
+        "type": "packages/utils/hooks/src/index.ts",
+        "outputPath": "dist/packages/utils/hooks",
+        "tsConfig": "packages/utils/hooks/tsconfig.json",
+        "project": "packages/utils/hooks/package.json",
+        "externals": ["react", "react-dom", "react-native"]
+      },
+      "configurations": {
+        "production": {
+          "sourceMap": false,
+          "verbose": false
+        },
+        "development": {
+          "sourceMap": true,
+          "verbose": true
+        }
+      }
+    },
+    "nx-release-publish": {
+      "executor": "@storm-software/workspace-tools:npm-publish"
+    }
+  }
+}

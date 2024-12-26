@@ -1,0 +1,35 @@
+{
+  "name": "utils-unique-identifier",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "library",
+  "sourceRoot": "packages/utils/unique-identifier/src",
+  "targets": {
+    "build": {
+      "cache": true,
+      "executor": "@storm-software/workspace-tools:unbuild",
+      "inputs": ["typescript", "^production"],
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "clean": true,
+      "options": {
+        "type": "packages/utils/unique-identifier/src/index.ts",
+        "outputPath": "dist/packages/utils/unique-identifier",
+        "tsConfig": "packages/utils/unique-identifier/tsconfig.json",
+        "project": "packages/utils/unique-identifier/package.json"
+      },
+      "configurations": {
+        "production": {
+          "sourceMap": false,
+          "verbose": false
+        },
+        "development": {
+          "sourceMap": true,
+          "verbose": true
+        }
+      }
+    },
+    "nx-release-publish": {
+      "executor": "@storm-software/workspace-tools:npm-publish"
+    }
+  }
+}

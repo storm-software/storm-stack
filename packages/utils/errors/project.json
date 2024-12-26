@@ -1,0 +1,35 @@
+{
+  "name": "utils-errors",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "library",
+  "sourceRoot": "packages/utils/errors/src",
+  "targets": {
+    "build": {
+      "cache": true,
+      "executor": "@storm-software/workspace-tools:unbuild",
+      "inputs": ["typescript", "^production"],
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "clean": true,
+      "options": {
+        "type": "packages/utils/errors/src/index.ts",
+        "outputPath": "dist/packages/utils/errors",
+        "tsConfig": "packages/utils/errors/tsconfig.json",
+        "project": "packages/utils/errors/package.json"
+      },
+      "configurations": {
+        "production": {
+          "sourceMap": false,
+          "verbose": false
+        },
+        "development": {
+          "sourceMap": true,
+          "verbose": true
+        }
+      }
+    },
+    "nx-release-publish": {
+      "executor": "@storm-software/workspace-tools:npm-publish"
+    }
+  }
+}
