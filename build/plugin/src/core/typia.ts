@@ -282,7 +282,9 @@ function transform(
   };
 }
 
-/** Warn diagnostics */
+/**
+ * Warn diagnostics.
+ */
 function warnDiagnostic(
   diagnostics: ts.Diagnostic[],
   transformed: ts.SourceFile[],

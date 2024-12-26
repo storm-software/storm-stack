@@ -19,9 +19,15 @@ export const config = {
       snapTo: ["@storm-stack/monorepo"]
     },
     {
-      "dependencies": ["@nx/**", "nx"],
-      "pinVersion": "20.0.11",
-      "label": "Nx Dependencies should all use the same version"
+      label: "Nx Dependencies should all use the same version",
+      dependencies: ["@nx/**", "nx"],
+      snapTo: ["@storm-stack/monorepo"]
+    },
+    {
+      label:
+        "All local dependencies should use the current workspace's version",
+      dependencies: ["@storm-stack/**"],
+      pinVersion: ["workspace:*"]
     }
   ]
 };

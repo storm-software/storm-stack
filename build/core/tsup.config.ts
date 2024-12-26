@@ -15,7 +15,7 @@
 
  -------------------------------------------------------------------*/
 
-import { getTsupConfig } from "@storm-stack/tools-config";
+import { getTsupConfig } from "@storm-stack/tools-config/tsup.shared";
 import type { Options } from "tsup";
 
 const config: Options = getTsupConfig({

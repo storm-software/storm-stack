@@ -5,14 +5,6 @@
   "projectType": "library",
   "tags": ["platform:node"],
   "targets": {
-    "build-base": {
-      "executor": "nx:run-commands",
-      "dependsOn": ["clean", "^build"],
-      "options": {
-        "command": "tsup --config=\"tsup.config.ts\"",
-        "cwd": "{projectRoot}"
-      }
-    },
     "build": {
       "executor": "nx:run-commands",
       "dependsOn": ["build-base"],

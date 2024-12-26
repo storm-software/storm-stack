@@ -5,25 +5,6 @@
   "sourceRoot": "build/plugin/src",
   "tags": ["platform:node"],
   "targets": {
-    "build-base": {
-      "executor": "nx:run-commands",
-      "dependsOn": ["clean", "^build"],
-      "options": {
-        "command": "tsup --config=\"tsup.config.ts\"",
-        "cwd": "{projectRoot}"
-      }
-    },
-    "build": {
-      "executor": "nx:run-commands",
-      "dependsOn": ["build-base"],
-      "options": {
-        "commands": [
-          "pnpm copyfiles LICENSE dist/build/plugin",
-          "pnpm copyfiles --up=2 ./build/plugin/README.md ./build/plugin/package.json dist/build/plugin",
-          "pnpm copyfiles --up=3 ./build/plugin/dist/* dist/build/plugin/dist"
-        ]
-      }
-    },
     "nx-release-publish": {
       "executor": "@storm-software/workspace-tools:npm-publish"
     }

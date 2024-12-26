@@ -8,9 +8,9 @@
     "directory": "build/nx"
   },
   "private": false,
-  "main": "./index.js",
+  "main": "./dist/index.js",
   "exports": {
-    ".": "./index.js",
+    ".": "./dist/index.js",
     "./package.json": "./package.json",
     "./migrations.json": "./migrations.json",
     "./generators.json": "./generators.json",
@@ -18,15 +18,15 @@
     "./executors.json": "./executors.json",
     "./executors/*/schema.json": "./executors/*/schema.json"
   },
-  "typings": "./index.d.ts",
+  "typings": "./dist/index.d.ts",
   "peerDependencies": {
-    "@nx/devkit": "^20.0.11",
-    "@nx/js": "^20.0.11",
-    "@nx/workspace": "^20.0.11",
+    "@nx/devkit": "20.3.0",
+    "@nx/js": "20.3.0",
+    "@nx/workspace": "20.3.0",
     "@samchon/openapi": "^2.3.1",
     "@swc/core": "1.7.26",
     "@swc/wasm": "^1.10.1",
-    "nx": "^20.0.11"
+    "nx": "20.3.0"
   },
   "peerDependenciesMeta": {
     "@nx/devkit": {
@@ -51,14 +51,14 @@
     "@storm-software/workspace-tools": "latest"
   },
   "devDependencies": {
-    "@nx/devkit": "^20.0.11",
-    "@nx/js": "^20.0.11",
-    "@nx/workspace": "^20.0.11",
+    "@nx/devkit": "20.3.0",
+    "@nx/js": "20.3.0",
+    "@nx/workspace": "20.3.0",
     "@samchon/openapi": "^2.3.1",
     "@swc/core": "1.7.26",
     "@swc/wasm": "^1.10.1",
     "@types/node": "^22.10.2",
-    "nx": "^20.0.11",
+    "nx": "20.3.0",
     "tsup": "^8.3.5"
   },
   "executors": "./executors.json"
