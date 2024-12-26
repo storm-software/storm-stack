@@ -10,7 +10,7 @@
   },
   "private": false,
   "dependencies": {
-    "@antfu/install-pkg": "^0.4.1",
+    "@antfu/install-pkg": "^0.5.0",
     "@antfu/ni": "^0.23.0",
     "@storm-software/config": "latest",
     "@storm-software/config-tools": "latest",
