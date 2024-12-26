@@ -1,0 +1,18 @@
+{
+  "name": "@storm-stack/serialization",
+  "version": "1.46.0",
+  "type": "module",
+  "description": "A package used to support serializing and deserializing data sent between the client and the server.",
+  "repository": {
+    "type": "github",
+    "url": "https://github.com/storm-software/storm-stack.git",
+    "directory": "packages/base/serialization"
+  },
+  "private": false,
+  "devDependencies": {
+    "@types/node": "^22.10.2"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

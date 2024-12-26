@@ -1,13 +1,30 @@
-import { StormDateTime } from "@storm-stack/date-time";
-import { StormError } from "@storm-stack/errors";
+/*-------------------------------------------------------------------
+
+                  ⚡ Storm Software - Storm Stack
+
+ This code was released as part of the Storm Stack project. Storm Stack
+ is maintained by Storm Software under the Apache-2.0 License, and is
+ free for commercial and private use. For more information, please visit
+ our licensing page.
+
+ Website:         https://stormsoftware.com
+ Repository:      https://github.com/storm-software/storm-stack
+ Documentation:   https://stormsoftware.com/projects/storm-stack/docs
+ Contact:         https://stormsoftware.com/contact
+ License:         https://stormsoftware.com/projects/storm-stack/license
+
+ -------------------------------------------------------------------*/
+
+import { StormDateTime } from "@storm-stack/date-time/storm-date-time";
+import { StormError } from "@storm-stack/errors/storm-error";
 import {
   exists,
-  findContainingFolder,
+  findFileFolder,
   findFilePath,
   joinPaths
 } from "@storm-stack/file-system";
+import { StormJSON } from "@storm-stack/json/storm-json";
 import type { IStormLog } from "@storm-stack/logging";
-import { StormParser } from "@storm-stack/serialization";
 import { kebabCase, titleCase } from "@storm-stack/string-fns";
 import {
   EMPTY_STRING,
@@ -44,14 +61,19 @@ export class PluginManager<
   TPluginModule extends IPluginModule = any
 > {
   private _options: PluginManagerOptions;
+
   private _hasDiscovered = false;
 
   private _registry: Map<string, PluginDefinition>;
+
   private _store: Map<string, PluginInstance<TContext, TPluginModule>>;
+
   private _hooks: Map<string, PluginHookFn<TContext>[]>;
+
   private _logger: IStormLog;
 
   private _loaders: Map<string, IPluginLoader<TContext, TPluginModule>>;
+
   private _loaderResolver: (request: string) => Promise<string>;
 
   public static create = async <
@@ -367,9 +389,9 @@ export class PluginManager<
    * @param options - The options for the plugin.
    * @returns The cache ID.
    */
-  // eslint-disable-next-line class-methods-use-this
+
   private _getCacheId(provider: string, options: any): string {
-    return md5(`${provider}::${StormParser.stringify(options)}`);
+    return md5(`${provider}::${StormJSON.stringify(options)}`);
   }
 
   /**
@@ -440,7 +462,7 @@ export class PluginManager<
 
       throw new StormError(PluginSystemErrorCode.module_not_found, {
         message: isSet(origError)
-          ? `Error: ${StormParser.stringify(origError)}`
+          ? `Error: ${StormJSON.stringify(origError)}`
           : undefined
       });
     }
@@ -528,7 +550,7 @@ export class PluginManager<
       description ??= packageJson.description;
     }
 
-    name ??= findContainingFolder(provider);
+    name ??= findFileFolder(provider);
 
     return {
       id:

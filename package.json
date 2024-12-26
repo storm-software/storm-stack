@@ -193,7 +193,9 @@
       "@storm-stack/build-nx": "workspace:*",
       "@storm-stack/build-core": "workspace:*",
       "@storm-stack/tools-config": "workspace:*",
-      "@storm-stack/cli-helpers": "workspace:*"
+      "@storm-stack/cli-helpers": "workspace:*",
+      "@storm-stack/json": "workspace:*",
+      "@storm-stack/path": "workspace:*"
     }
   },
   "prettier": "@storm-software/prettier/config.json",

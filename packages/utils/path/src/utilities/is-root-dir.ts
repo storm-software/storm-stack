@@ -16,28 +16,11 @@
  -------------------------------------------------------------------*/
 
 /**
- * The types library used by Storm Software for building TypeScript applications.
+ * Check if the directory is the root directory.
  *
- * @remarks
- * A base package containing various type definitions used by Cyclone UI
- *
- * @packageDocumentation
+ * @param dir - The directory to check.
+ * @returns Returns true if the directory is the root directory.
  */
-
-export * from "./array";
-export * from "./async";
-export * from "./base";
-export * from "./file";
-export * from "./form";
-export * from "./json";
-export * from "./logic";
-export * from "./messages";
-export * from "./navigator";
-export * from "./object";
-export * from "./package-json";
-export * from "./package-manager";
-export * from "./string";
-export * from "./tsconfig";
-export * from "./user";
-export * from "./utilities";
-export * from "./validations";
+export const isRootDir = (dir: string): boolean => {
+  return Boolean(dir === "/" || dir === "c:\\" || dir === "C:\\");
+};

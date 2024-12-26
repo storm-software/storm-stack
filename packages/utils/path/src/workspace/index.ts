@@ -15,29 +15,7 @@
 
  -------------------------------------------------------------------*/
 
-/**
- * The types library used by Storm Software for building TypeScript applications.
- *
- * @remarks
- * A base package containing various type definitions used by Cyclone UI
- *
- * @packageDocumentation
- */
-
-export * from "./array";
-export * from "./async";
-export * from "./base";
-export * from "./file";
-export * from "./form";
-export * from "./json";
-export * from "./logic";
-export * from "./messages";
-export * from "./navigator";
-export * from "./object";
-export * from "./package-json";
-export * from "./package-manager";
-export * from "./string";
-export * from "./tsconfig";
-export * from "./user";
-export * from "./utilities";
-export * from "./validations";
+export * from "./get-tsconfig";
+export * from "./get-workspace-root";
+export * from "./package-fns";
+export * from "./semver-fns";

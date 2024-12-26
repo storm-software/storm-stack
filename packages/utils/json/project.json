@@ -1,0 +1,43 @@
+{
+  "name": "utils-json",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "library",
+  "sourceRoot": "packages/utils/json/src",
+  "tags": ["platform:neutral"],
+  "targets": {
+    "build": {
+      "executor": "@storm-software/workspace-tools:unbuild",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "entry": "packages/utils/json/src/index.ts",
+        "outputPath": "dist/packages/utils/json",
+        "tsConfig": "packages/utils/json/tsconfig.json",
+        "project": "packages/utils/json/package.json",
+        "defaultConfiguration": "production",
+        "platform": "neutral",
+        "assets": [
+          {
+            "input": "packages/utils/json",
+            "glob": "*.md",
+            "output": "/"
+          },
+          {
+            "input": "",
+            "glob": "LICENSE",
+            "output": "/"
+          }
+        ]
+      },
+      "configurations": {
+        "production": {
+          "debug": false,
+          "verbose": false
+        },
+        "development": {
+          "debug": true,
+          "verbose": true
+        }
+      }
+    }
+  }
+}

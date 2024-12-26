@@ -22,24 +22,28 @@
       "@storm-stack/date-time/*": ["packages/base/date-time/src/*"],
       "@storm-stack/env": ["packages/base/env/src/index.ts"],
       "@storm-stack/env/*": ["packages/base/env/src/*"],
-      "@storm-stack/errors": ["packages/utils/errors/src/index.ts"],
-      "@storm-stack/errors/*": ["packages/utils/errors/src/*"],
-      "@storm-stack/file-system": ["packages/utils/file-system/src/index.ts"],
-      "@storm-stack/file-system/*": ["packages/utils/file-system/src/*"],
+      "@storm-stack/errors": ["packages/base/errors/src/index.ts"],
+      "@storm-stack/errors/*": ["packages/base/errors/src/*"],
+      "@storm-stack/file-system": ["packages/base/file-system/src/index.ts"],
+      "@storm-stack/file-system/*": ["packages/base/file-system/src/*"],
       "@storm-stack/hashing": ["packages/utils/hashing/src/index.ts"],
       "@storm-stack/hashing/*": ["packages/utils/hashing/src/*"],
       "@storm-stack/hooks": ["packages/utils/hooks/src/index.ts"],
       "@storm-stack/hooks/*": ["packages/utils/hooks/src/*"],
+      "@storm-stack/json": ["packages/utils/json/src/index.ts"],
+      "@storm-stack/json/*": ["packages/utils/json/src/*"],
       "@storm-stack/logging": ["packages/base/logging/src/index.ts"],
       "@storm-stack/logging/*": ["packages/base/logging/src/*"],
+      "@storm-stack/path": ["packages/utils/path/src/index.ts"],
+      "@storm-stack/path/*": ["packages/utils/path/src/*"],
       "@storm-stack/plugin-system": [
         "packages/base/plugin-system/src/index.ts"
       ],
       "@storm-stack/plugin-system/*": ["packages/base/plugin-system/src/*"],
       "@storm-stack/serialization": [
-        "packages/utils/serialization/src/index.ts"
+        "packages/base/serialization/src/index.ts"
       ],
-      "@storm-stack/serialization/*": ["packages/utils/serialization/src/*"],
+      "@storm-stack/serialization/*": ["packages/base/serialization/src/*"],
       "@storm-stack/server-cache": ["packages/base/server-cache/src/index.ts"],
       "@storm-stack/server-cache/*": ["packages/base/server-cache/src/*"],
       "@storm-stack/server-result": [

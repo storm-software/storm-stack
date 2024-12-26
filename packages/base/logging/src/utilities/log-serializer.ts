@@ -15,11 +15,8 @@
 
  -------------------------------------------------------------------*/
 
-import {
-  StormError,
-  getCauseFromUnknown
-} from "@storm-stack/errors/storm-error";
-import { type JsonObject, StormParser } from "@storm-stack/serialization";
+import { StormError } from "@storm-stack/errors/storm-error";
+import { StormJSON, type JsonObject } from "@storm-stack/json";
 import { EMPTY_STRING } from "@storm-stack/types/utility-types";
 import { errWithCause } from "pino-std-serializers";
 
@@ -27,13 +24,13 @@ export const createErrorSerializer =
   (stacktrace?: boolean): ((err: Error) => Record<string, any>) =>
   (err: Error) => {
     try {
-      const stormError = getCauseFromUnknown(err);
+      const stormError = StormError.create(err);
       if (stacktrace === false) {
         stormError.stack = EMPTY_STRING;
       }
 
       return {
-        ...StormParser.serialize(stormError as unknown as JsonObject),
+        ...StormJSON.serialize(stormError as unknown as JsonObject),
         fullMessage: stormError.toString(stacktrace)
       };
     } catch (error_) {

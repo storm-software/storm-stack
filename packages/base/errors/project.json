@@ -1,0 +1,35 @@
+{
+  "name": "base-errors",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "library",
+  "sourceRoot": "packages/base/errors/src",
+  "targets": {
+    "build": {
+      "cache": true,
+      "executor": "@storm-software/workspace-tools:unbuild",
+      "inputs": ["typescript", "^production"],
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "clean": true,
+      "options": {
+        "type": "packages/base/errors/src/index.ts",
+        "outputPath": "dist/packages/base/errors",
+        "tsConfig": "packages/base/errors/tsconfig.json",
+        "project": "packages/base/errors/package.json"
+      },
+      "configurations": {
+        "production": {
+          "sourceMap": false,
+          "verbose": false
+        },
+        "development": {
+          "sourceMap": true,
+          "verbose": true
+        }
+      }
+    },
+    "nx-release-publish": {
+      "executor": "@storm-software/workspace-tools:npm-publish"
+    }
+  }
+}

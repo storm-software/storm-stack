@@ -16,8 +16,9 @@
  -------------------------------------------------------------------*/
 
 import type { StormConfig } from "@storm-software/config";
-import { StormError } from "@storm-stack/errors";
-import { isSet, isSetString } from "@storm-stack/types/type-checks";
+import { StormError } from "@storm-stack/errors/storm-error";
+import { isSet } from "@storm-stack/types/type-checks/is-set";
+import { isSetString } from "@storm-stack/types/type-checks/is-set-string";
 import { type MaybePromise } from "@storm-stack/types/utility-types";
 import { isProduction } from "@storm-stack/utilities/helper-fns/is-production";
 import { isRuntimeServer } from "@storm-stack/utilities/helper-fns/is-runtime-server";
@@ -177,7 +178,7 @@ export class LoggerWrapper implements ILoggerWrapper {
 
     let message = error.print();
     if (
-      !isProduction(this.config?.env) &&
+      !isProduction(this.config?.envName) &&
       !isRuntimeServer() &&
       isSet(error.stack)
     ) {

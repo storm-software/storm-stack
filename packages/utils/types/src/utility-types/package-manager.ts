@@ -15,29 +15,22 @@
 
  -------------------------------------------------------------------*/
 
-/**
- * The types library used by Storm Software for building TypeScript applications.
- *
- * @remarks
- * A base package containing various type definitions used by Cyclone UI
- *
- * @packageDocumentation
- */
+export type PackageManagers = "npm" | "yarn" | "pnpm" | "bun";
+export const PackageManagers = {
+  NPM: "npm" as PackageManagers,
+  YARN: "yarn" as PackageManagers,
+  PNPM: "pnpm" as PackageManagers,
+  BUN: "bun" as PackageManagers
+};
 
-export * from "./array";
-export * from "./async";
-export * from "./base";
-export * from "./file";
-export * from "./form";
-export * from "./json";
-export * from "./logic";
-export * from "./messages";
-export * from "./navigator";
-export * from "./object";
-export * from "./package-json";
-export * from "./package-manager";
-export * from "./string";
-export * from "./tsconfig";
-export * from "./user";
-export * from "./utilities";
-export * from "./validations";
+export type PackageManagerLockFiles =
+  | "package-lock.json"
+  | "yarn.lock"
+  | "pnpm-lock.yaml"
+  | "bun.lock";
+export const PackageManagerLockFiles = {
+  NPM: "package-lock.json" as PackageManagerLockFiles,
+  YARN: "yarn.lock" as PackageManagerLockFiles,
+  PNPM: "pnpm-lock.yaml" as PackageManagerLockFiles,
+  BUN: "bun.lock" as PackageManagerLockFiles
+};
