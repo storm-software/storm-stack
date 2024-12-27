@@ -3,6 +3,19 @@ import * as baseConfig from "@storm-software/linting-tools/syncpack/config.json"
 /** @type {import("syncpack").RcFile} */
 export const config = {
   ...baseConfig,
+  formatRepository: true,
+  formatBugs: true,
+  customTypes: {
+    ...baseConfig.customTypes,
+    nodeEngine: {
+      path: "engines.node",
+      strategy: "version"
+    },
+    pnpmOverrides: {
+      path: "pnpm.overrides",
+      strategy: "versionsByName"
+    }
+  },
   source: [...baseConfig.source, "build/*/package.json"],
   versionGroups: [
     ...baseConfig.versionGroups,
@@ -25,9 +38,10 @@ export const config = {
     },
     {
       label:
-        "All local dependencies should use the current workspace's version",
-      dependencies: ["@storm-stack/**"],
-      pinVersion: ["workspace:*"]
+        "Ensure semver ranges for locally developed packages satisfy the local version",
+      dependencies: ["$LOCAL"],
+      dependencyTypes: ["dev", "peer"],
+      policy: "sameRange"
     }
   ]
 };

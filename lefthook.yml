@@ -75,6 +75,14 @@ pre-push:
     #   glob: "**/{README.md,package.json,executors.json,generators.json}"
     #   run: 'pnpm exec storm-git readme-gen --templates="./tools/readme-templates"'
     #   stage_fixed: true
+    syncpack:
+      glob: "**/{package.json}"
+      run: "pnpm syncpack"
+      stage_fixed: true
+    install:
+      glob: "**/{package.json}"
+      run: "pnpm install --no-frozen-lockfile"
+      stage_fixed: true
     build:
       glob: "**/*.*"
       run: "pnpm build-all"
