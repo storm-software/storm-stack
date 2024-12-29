@@ -1,6 +1,6 @@
 {
   "name": "@storm-stack/build-core",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "type": "module",
   "description": "A package containing `storm-build` for building Storm Stack libraries and services",
   "repository": {
