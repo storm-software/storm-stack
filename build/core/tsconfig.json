@@ -4,7 +4,8 @@
     "outDir": "../../dist/out-tsc",
     "rootDir": "../..",
     "sourceMap": false,
-    "strict": false
+    "strict": false,
+    "types": ["node"]
   },
   "include": [
     "src/**/*.ts",

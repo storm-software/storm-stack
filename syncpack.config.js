@@ -16,7 +16,13 @@ export const config = {
       strategy: "versionsByName"
     }
   },
-  source: [...baseConfig.source, "build/*/package.json"],
+  source: [
+    ...baseConfig.source,
+    "tools/*/package.json",
+    "build/*/package.json",
+    "packages/**/package.json",
+    "apps/*/package.json"
+  ],
   versionGroups: [
     ...baseConfig.versionGroups,
     {

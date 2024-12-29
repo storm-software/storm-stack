@@ -15,14 +15,20 @@
 
  -------------------------------------------------------------------*/
 
-import { getTsupConfig } from "@storm-stack/tools-config/tsup.shared";
-import type { Options } from "tsup";
+import { defineConfig } from "tsup";
 
-const config: Options = getTsupConfig({
-  name: "build-nx",
-  entryPoints: ["./src/index.ts", "./src/executors/*/executor.ts"],
-  format: ["cjs"],
-  external: ["nx", "@nx/*", "@swc/*", "@angular-devkit/schematics", "vue-tsc"]
+export default defineConfig({
+  name: "tools-config",
+  entryPoints: ["src/*.ts"],
+  external: ["tsup"],
+  target: "node22",
+  format: ["cjs", "esm"],
+  bundle: true,
+  splitting: true,
+  clean: true,
+  sourcemap: false,
+  tsconfig: "./tsconfig.json",
+  dts: {
+    resolve: true
+  }
 });
-
-export default config;

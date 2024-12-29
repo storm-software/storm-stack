@@ -12,6 +12,6 @@
     "types": ["node"],
     "lib": ["esnext"]
   },
-  "include": ["src/**/*.ts", "src/**/*.js", "**/*.json"],
+  "include": ["src/**/*.ts", "src/**/*.js", "**/*.json", "tsup.config.ts"],
   "exclude": ["**/*.spec.ts", "**/*.test.ts"]
 }
