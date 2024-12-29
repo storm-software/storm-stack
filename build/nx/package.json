@@ -1,6 +1,6 @@
 {
   "name": "@storm-stack/build-nx",
-  "version": "0.0.0",
+  "version": "1.4.2",
   "type": "commonjs",
   "repository": {
     "type": "github",

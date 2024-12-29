@@ -1,3 +1,9 @@
+## 1.4.2 (2024-12-29)
+
+### Bug Fixes
+
+- **build-nx:** Resolve issue with distribution paths ([983f036](https://github.com/storm-software/storm-stack/commit/983f036))
+
 ## 1.4.1 (2024-12-29)
 
 ### Bug Fixes
