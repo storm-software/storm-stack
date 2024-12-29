@@ -3,7 +3,7 @@
 
 # Storm Stack - Environment
 
-A package used by Storm Software to manage base-environment variables,
+A package used by Storm Software to manage utils-environment variables,
 configurations, and secrets
 
 <!-- START doctoc -->
@@ -14,14 +14,14 @@ configurations, and secrets
 Using [pnpm](http://pnpm.io):
 
 ```bash
-pnpm add -D @storm-stack/base-env
+pnpm add -D @storm-stack/utils-env
 ```
 
 <details>
   <summary>Using npm</summary>
 
 ```bash
-npm install -D @storm-stack/base-env
+npm install -D @storm-stack/utils-env
 ```
 
 </details>
@@ -30,7 +30,7 @@ npm install -D @storm-stack/base-env
   <summary>Using yarn</summary>
 
 ```bash
-yarn add -D @storm-stack/base-env
+yarn add -D @storm-stack/utils-env
 ```
 
 </details>
@@ -49,15 +49,15 @@ commands are available to assist in development.
 
 ### Building
 
-Run `nx build base-env` to build the library.
+Run `nx build utils-env` to build the library.
 
 ### Running unit tests
 
-Run `nx test base-env` to execute the unit tests via [Jest](https://jestjs.io).
+Run `nx test utils-env` to execute the unit tests via [Jest](https://jestjs.io).
 
 ### Linting
 
-Run `nx lint base-env` to run [ESLint](https://eslint.org/) on the package.
+Run `nx lint utils-env` to run [ESLint](https://eslint.org/) on the package.
 
 <!-- START footer -->
 <!-- END footer -->

@@ -15,4 +15,7 @@
 
  -------------------------------------------------------------------*/
 
+export * from "./environment-checks";
 export * from "./get-workspace-config";
+export * from "./providers";
+export * from "./runtime-checks";

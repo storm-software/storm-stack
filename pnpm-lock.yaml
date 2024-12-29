@@ -39,7 +39,7 @@ overrides:
   '@storm-stack/hooks': 0.25.1
   '@storm-stack/env': 0.1.0
   '@storm-stack/build-plugin': 0.2.1
-  '@storm-stack/build-nx': 0.0.0
+  '@storm-stack/build-nx': 1.4.2
   '@storm-stack/build-core': 0.1.1
   '@storm-stack/tools-config': 0.0.1
   '@storm-stack/cli-helpers': 0.0.1
@@ -388,18 +388,6 @@ importers:
         specifier: 0.4.4
         version: 0.4.4
 
-  packages/base/env:
-    dependencies:
-      '@storm-software/config':
-        specifier: latest
-        version: 1.80.0
-      '@storm-software/config-tools':
-        specifier: latest
-        version: 1.119.0(typescript@5.7.2)
-      typia:
-        specifier: ^7.5.0
-        version: 7.5.1(@samchon/openapi@2.3.1)(typescript@5.7.2)
-
   packages/base/errors:
     dependencies:
       '@storm-software/testing-tools':
@@ -595,6 +583,22 @@ importers:
       '@types/figlet':
         specifier: ^1.7.0
         version: 1.7.0
+      '@types/node':
+        specifier: ^22.10.2
+        version: 22.10.2
+
+  packages/utils/env:
+    dependencies:
+      '@storm-software/config':
+        specifier: latest
+        version: 1.80.0
+      '@storm-software/config-tools':
+        specifier: latest
+        version: 1.119.0(typescript@5.7.2)
+      typia:
+        specifier: ^7.5.0
+        version: 7.5.1(@samchon/openapi@2.3.1)(typescript@5.7.2)
+    devDependencies:
       '@types/node':
         specifier: ^22.10.2
         version: 22.10.2

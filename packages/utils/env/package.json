@@ -1,5 +1,5 @@
 {
-  "name": "@storm-stack/env",
+  "name": "@storm-stack/utils-env",
   "version": "0.1.0",
   "type": "module",
   "description": "A package used by Storm Software to manage environment variables, configurations, and secrets",
@@ -13,6 +13,9 @@
     "@storm-software/config": "latest",
     "@storm-software/config-tools": "latest",
     "typia": "^7.5.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.2"
   },
   "publishConfig": {
     "access": "public"

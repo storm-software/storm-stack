@@ -191,7 +191,7 @@
       "@storm-stack/hooks": "0.25.1",
       "@storm-stack/env": "0.1.0",
       "@storm-stack/build-plugin": "0.2.1",
-      "@storm-stack/build-nx": "0.0.0",
+      "@storm-stack/build-nx": "1.4.2",
       "@storm-stack/build-core": "0.1.1",
       "@storm-stack/tools-config": "0.0.1",
       "@storm-stack/cli-helpers": "0.0.1",

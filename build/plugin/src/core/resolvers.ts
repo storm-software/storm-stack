@@ -76,7 +76,7 @@ export async function firstMatchedResolver(
 
 export function resolversAddon(resolvers: Resolver[]): Addon {
   return {
-    name: "unplugin-storm-stack:resolvers",
+    name: "storm-stack:resolvers",
     async matchImports(names, matched) {
       if (resolvers.length === 0) return;
       const dynamic: ImportExtended[] = [];

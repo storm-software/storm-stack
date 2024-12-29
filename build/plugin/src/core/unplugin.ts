@@ -120,7 +120,7 @@ const unpluginFactory: UnpluginFactory<Options | undefined, false> = (
   };
 
   return {
-    name: "unplugin-storm-stack",
+    name: "storm-stack",
     enforce: "post",
     transformInclude,
     transform,
