@@ -1,11 +1,5 @@
-import type { EntryPointsOption } from "@storm-stack/build-core";
-import type { AssetGlob } from "@storm-stack/build-tools";
+import type { NodeAppBuildOptions } from "@storm-stack/build-core";
 
-export type Platform = "browser" | "neutral" | "node" | "worker";
-
-export interface NodeApplicationExecutorSchema {
-  entryPoints: EntryPointsOption;
-  outputPath: string;
-  assets: (AssetGlob | string)[];
-  debug?: boolean;
-}
+export type NodeApplicationExecutorSchema = Partial<
+  Pick<NodeAppBuildOptions, "entryPoints" | "outputPath" | "assets" | "debug">
+>;

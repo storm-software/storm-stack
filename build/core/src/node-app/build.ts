@@ -15,8 +15,7 @@
 
  -------------------------------------------------------------------*/
 
-import type { AssetGlob } from "@storm-software/build-tools";
-import { build as esbuild } from "@storm-software/esbuild";
+import { build as esbuild, type ESBuildOptions } from "@storm-software/esbuild";
 import stormStack from "@storm-stack/build-plugin/esbuild";
 import { EntryPointsOption } from "../types";
 
@@ -46,7 +45,7 @@ export interface NodeAppBuildOptions {
    *
    * @defaultValue []
    */
-  assets?: (AssetGlob | string)[];
+  assets?: ESBuildOptions["assets"];
 
   /**
    * The output path of the build
@@ -65,7 +64,7 @@ export interface NodeAppBuildOptions {
  * @param projectRoot - The project root
  * @param entry - The entry point(s) of the project
  */
-export const build = async (
+export const build = (
   projectRoot: string,
   options: NodeAppBuildOptions = {}
 ) => {
@@ -75,7 +74,7 @@ export const build = async (
       ? [options.entryPoints]
       : options.entryPoints;
 
-  await esbuild([
+  return esbuild([
     {
       entryPoints,
       projectRoot,
@@ -83,6 +82,7 @@ export const build = async (
       platform: "node",
       format: "cjs",
       bundle: true,
+      generatePackageJson: true,
       minify: !options.debug,
       sourcemap: options.debug,
       plugins: [
@@ -98,6 +98,7 @@ export const build = async (
       platform: "node",
       format: "esm",
       bundle: true,
+      generatePackageJson: true,
       minify: !options.debug,
       sourcemap: options.debug,
       plugins: [

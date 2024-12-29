@@ -76,7 +76,7 @@ pre-push:
     #   run: 'pnpm exec storm-git readme-gen --templates="./tools/readme-templates"'
     #   stage_fixed: true
     syncpack:
-      glob: "**/{package.json}"
+      glob: "**/{package.json,syncpack.config.js}"
       run: "pnpm syncpack"
       stage_fixed: true
     install:

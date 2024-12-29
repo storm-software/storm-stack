@@ -22,7 +22,16 @@ const config: Options = getTsupConfig({
   name: "build-nx",
   entryPoints: ["./src/index.ts", "./src/executors/*/executor.ts"],
   format: ["cjs"],
-  external: ["nx", "@nx/*", "@swc/*", "@angular-devkit/schematics", "vue-tsc"]
+  dts: false,
+  external: [
+    "nx",
+    "@nx/*",
+    "@swc/*",
+    "@storm-software/*",
+    "@storm-stack/*",
+    "@angular-devkit/schematics",
+    "vue-tsc"
+  ]
 });
 
 export default config;

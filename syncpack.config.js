@@ -38,6 +38,12 @@ export const config = {
       snapTo: ["@storm-stack/monorepo"]
     },
     {
+      label:
+        "Build related dependencies should all use the version specified in build-core",
+      dependencies: ["@microsoft/api-extractor", "esbuild"],
+      snapTo: ["@storm-stack/build-core"]
+    },
+    {
       label: "Nx Dependencies should all use the same version",
       dependencies: ["@nx/**", "nx"],
       snapTo: ["@storm-stack/monorepo"]
