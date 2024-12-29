@@ -6,38 +6,31 @@
   "tags": ["platform:neutral"],
   "targets": {
     "build": {
+      "cache": true,
       "executor": "@storm-software/workspace-tools:unbuild",
+      "inputs": ["typescript", "^production"],
       "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "clean": true,
       "options": {
-        "entry": "packages/utils/json/src/index.ts",
+        "type": "packages/utils/json/src/index.ts",
         "outputPath": "dist/packages/utils/json",
         "tsConfig": "packages/utils/json/tsconfig.json",
-        "project": "packages/utils/json/package.json",
-        "defaultConfiguration": "production",
-        "platform": "neutral",
-        "assets": [
-          {
-            "input": "packages/utils/json",
-            "glob": "*.md",
-            "output": "/"
-          },
-          {
-            "input": "",
-            "glob": "LICENSE",
-            "output": "/"
-          }
-        ]
+        "project": "packages/utils/json/package.json"
       },
       "configurations": {
         "production": {
-          "debug": false,
+          "sourceMap": false,
           "verbose": false
         },
         "development": {
-          "debug": true,
+          "sourceMap": true,
           "verbose": true
         }
       }
+    },
+    "nx-release-publish": {
+      "executor": "@storm-software/workspace-tools:npm-publish"
     }
   }
 }

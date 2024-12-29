@@ -5,38 +5,31 @@
   "sourceRoot": "packages/utils/cli-helpers/src",
   "targets": {
     "build": {
+      "cache": true,
       "executor": "@storm-software/workspace-tools:unbuild",
+      "inputs": ["typescript", "^production"],
       "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "clean": true,
       "options": {
-        "entry": "packages/utils/cli-helpers/src/index.ts",
+        "type": "packages/utils/cli-helpers/src/index.ts",
         "outputPath": "dist/packages/utils/cli-helpers",
         "tsConfig": "packages/utils/cli-helpers/tsconfig.json",
-        "project": "packages/utils/cli-helpers/package.json",
-        "defaultConfiguration": "production",
-        "platform": "node",
-        "assets": [
-          {
-            "input": "packages/utils/cli-helpers",
-            "glob": "*.md",
-            "output": "/"
-          },
-          {
-            "input": "",
-            "glob": "LICENSE",
-            "output": "/"
-          }
-        ]
+        "project": "packages/utils/cli-helpers/package.json"
       },
       "configurations": {
         "production": {
-          "debug": false,
+          "sourceMap": false,
           "verbose": false
         },
         "development": {
-          "debug": true,
+          "sourceMap": true,
           "verbose": true
         }
       }
+    },
+    "nx-release-publish": {
+      "executor": "@storm-software/workspace-tools:npm-publish"
     }
   },
   "tags": ["platform:node"]
