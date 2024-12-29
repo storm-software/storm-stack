@@ -12,7 +12,9 @@
         "commands": [
           "pnpm copyfiles LICENSE dist/build/nx",
           "pnpm copyfiles --up=2 ./build/nx/README.md ./build/nx/package.json ./build/nx/executors.json ./build/nx/generators.json dist/build/nx",
-          "pnpm copyfiles --up=3 ./build/nx/dist/* dist/build/nx/dist"
+          "pnpm copyfiles --up=3 ./build/nx/dist/* dist/build/nx/dist",
+          "pnpm copyfiles --up=4 ./build/nx/dist/executors/*/executor.js ./build/nx/dist/executors/*/executor.d.ts dist/build/nx/dist/executors",
+          "pnpm copyfiles --up=4 ./build/nx/src/executors/*/schema.json ./build/nx/src/executors/*/schema.d.ts dist/build/nx/dist/executors"
         ]
       }
     }

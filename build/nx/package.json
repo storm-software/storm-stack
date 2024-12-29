@@ -1,6 +1,6 @@
 {
   "name": "@storm-stack/build-nx",
-  "version": "1.4.1",
+  "version": "0.0.0",
   "type": "commonjs",
   "repository": {
     "type": "github",
@@ -14,9 +14,9 @@
     "./package.json": "./package.json",
     "./migrations.json": "./migrations.json",
     "./generators.json": "./generators.json",
-    "./generators/*/schema.json": "./generators/*/schema.json",
+    "./generators/*": "./dist/generators/*",
     "./executors.json": "./executors.json",
-    "./executors/*/schema.json": "./executors/*/schema.json"
+    "./executors/*": "./dist/executors/*"
   },
   "typings": "./dist/index.d.ts",
   "peerDependencies": {
