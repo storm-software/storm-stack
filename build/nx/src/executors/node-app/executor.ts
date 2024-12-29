@@ -17,7 +17,7 @@
 
 import type { ExecutorContext, PromiseExecutor } from "@nx/devkit";
 import { withRunExecutor } from "@storm-software/workspace-tools";
-import { build } from "@storm-stack/build-core/node/app";
+import { build } from "@storm-stack/build-core/node-app";
 import type { NodeApplicationExecutorSchema } from "./schema";
 
 export async function executorFn(
@@ -38,7 +38,13 @@ export async function executorFn(
   }
 
   await build(
-    context.projectsConfigurations.projects[context.projectName]?.root!
+    context.projectsConfigurations.projects[context.projectName]?.root!,
+    {
+      entryPoints: options.entryPoints,
+      outputPath: options.outputPath,
+      assets: options.assets,
+      debug: options.debug
+    }
   );
 
   return {
@@ -53,6 +59,11 @@ export default withRunExecutor<NodeApplicationExecutorSchema>(
     skipReadingConfig: false,
     hooks: {
       applyDefaultOptions: (options: NodeApplicationExecutorSchema) => {
+        options.entryPoints ??= ["{sourceRoot}/index.ts"];
+        options.outputPath ??= "dist";
+        options.assets ??= [];
+        options.debug ??= false;
+
         return options as NodeApplicationExecutorSchema;
       }
     }

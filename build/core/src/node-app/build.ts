@@ -15,8 +15,49 @@
 
  -------------------------------------------------------------------*/
 
+import type { AssetGlob } from "@storm-software/build-tools";
 import { build as esbuild } from "@storm-software/esbuild";
 import stormStack from "@storm-stack/build-plugin/esbuild";
+import { EntryPointsOption } from "../types";
+
+/**
+ * The options for building a NodeJs application
+ */
+export interface NodeAppBuildOptions {
+  /**
+   * The entry point(s) of the project
+   *
+   * @defaultValue ["src/index.ts"]
+   */
+  entryPoints?: EntryPointsOption;
+
+  /**
+   * Should the build be run in development mode
+   *
+   * @remarks
+   * When set to `true`, the build will not be minified and will include sourcemaps
+   *
+   * @defaultValue false
+   */
+  debug?: boolean;
+
+  /**
+   * A list of files to include in the build package
+   *
+   * @defaultValue []
+   */
+  assets?: (AssetGlob | string)[];
+
+  /**
+   * The output path of the build
+   *
+   * @remarks
+   * The path is relative to the distribution/build directory. In most cases, you should not need to change this.
+   *
+   * @defaultValue "dist"
+   */
+  outputPath?: string;
+}
 
 /**
  * Build a NodeJs application
@@ -26,27 +67,24 @@ import stormStack from "@storm-stack/build-plugin/esbuild";
  */
 export const build = async (
   projectRoot: string,
-  entry:
-    | string
-    | string[]
-    | Record<string, string>
-    | {
-        in: string;
-        out: string;
-      }[] = ["src/index.ts"]
+  options: NodeAppBuildOptions = {}
 ) => {
-  const entryPoints = typeof entry === "string" ? [entry] : entry;
+  const entryPoints = !options.entryPoints
+    ? ["src/index.ts"]
+    : typeof options.entryPoints === "string"
+      ? [options.entryPoints]
+      : options.entryPoints;
 
   await esbuild([
     {
       entryPoints,
       projectRoot,
-      outdir: "dist",
+      outdir: options.outputPath || "dist",
       platform: "node",
       format: "cjs",
       bundle: true,
-      minify: true,
-      sourcemap: true,
+      minify: !options.debug,
+      sourcemap: options.debug,
       plugins: [
         stormStack({
           cache: true
@@ -56,12 +94,12 @@ export const build = async (
     {
       entryPoints,
       projectRoot,
-      outdir: "dist",
+      outdir: options.outputPath || "dist",
       platform: "node",
       format: "esm",
       bundle: true,
-      minify: true,
-      sourcemap: true,
+      minify: !options.debug,
+      sourcemap: options.debug,
       plugins: [
         stormStack({
           cache: true
