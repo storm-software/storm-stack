@@ -1,3 +1,9 @@
+## 0.3.0 (2024-12-29)
+
+### Features
+
+- **utils-env:** Added the `env` runtime checks helpers ([f789045](https://github.com/storm-software/storm-stack/commit/f789045))
+
 ## 0.2.1 (2024-12-29)
 
 ### Bug Fixes

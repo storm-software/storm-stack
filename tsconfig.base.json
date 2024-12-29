@@ -20,6 +20,7 @@
       "@storm-stack/cli/*": ["packages/base/cli/src/*"],
       "@storm-stack/date-time": ["packages/base/date-time/src/index.ts"],
       "@storm-stack/date-time/*": ["packages/base/date-time/src/*"],
+      "@storm-stack/env": ["packages/utils/env/src/index.ts"],
       "@storm-stack/env/*": ["packages/utils/env/src/*"],
       "@storm-stack/errors": ["packages/base/errors/src/index.ts"],
       "@storm-stack/errors/*": ["packages/base/errors/src/*"],
@@ -64,8 +65,7 @@
         "packages/utils/unique-identifier/src/*"
       ],
       "@storm-stack/utilities": ["packages/utils/utilities/src/index.ts"],
-      "@storm-stack/utilities/*": ["packages/utils/utilities/src/*"],
-      "@storm-stack/env": ["packages/utils/env/src/index.ts"]
+      "@storm-stack/utilities/*": ["packages/utils/utilities/src/*"]
     }
   },
   "include": ["**/*.ts", "**/*.tsx", "**/*.d.ts", "**/*.js", "**/*.jsx"],
