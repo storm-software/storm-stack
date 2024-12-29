@@ -17,5 +17,6 @@
 
 export * from "./get-tsconfig";
 export * from "./get-workspace-root";
+export * from "./local-require";
 export * from "./package-fns";
 export * from "./semver-fns";
