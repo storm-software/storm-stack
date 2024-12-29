@@ -19,8 +19,8 @@ import { getTsupConfig } from "@storm-stack/tools-config/tsup.shared";
 import type { Options } from "tsup";
 
 const config: Options = getTsupConfig({
-  name: "build-nx",
-  entryPoints: ["./src/node/app.ts"],
+  name: "build-core",
+  entryPoints: ["./src/node-app/index.ts"],
   external: ["nx", "@nx/*", "@swc/*", "typia"]
 });
 
