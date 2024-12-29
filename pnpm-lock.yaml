@@ -38,9 +38,9 @@ overrides:
   '@storm-stack/server-result': 0.18.0
   '@storm-stack/hooks': 0.25.1
   '@storm-stack/env': 0.1.0
-  '@storm-stack/build-plugin': 0.1.0
+  '@storm-stack/build-plugin': 0.2.0
   '@storm-stack/build-nx': 0.0.1
-  '@storm-stack/build-core': 0.0.1
+  '@storm-stack/build-core': 0.1.0
   '@storm-stack/tools-config': 0.0.1
   '@storm-stack/cli-helpers': 0.0.1
   '@storm-stack/json': 0.0.1
@@ -2934,7 +2934,6 @@ packages:
 
   '@ls-lint/ls-lint@2.2.3':
     resolution: {integrity: sha512-ekM12jNm/7O2I/hsRv9HvYkRdfrHpiV1epVuI2NP+eTIcEgdIdKkKCs9KgQydu/8R5YXTov9aHdOgplmCHLupw==}
-    cpu: [x64, arm64, s390x]
     os: [darwin, linux, win32]
     hasBin: true
 
