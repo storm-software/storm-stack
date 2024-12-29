@@ -1,6 +1,6 @@
 {
   "name": "@storm-stack/build-plugin",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "type": "module",
   "description": "⚡ A `unplugin` plugin used in Storm Stack build processes to handle `StormEnv` parameters, typia transforms, and much more.",
   "repository": {
