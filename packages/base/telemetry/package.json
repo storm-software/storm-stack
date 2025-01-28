@@ -22,7 +22,7 @@
     "@opentelemetry/sdk-trace-base": "^1.26.0",
     "@opentelemetry/sdk-trace-node": "^1.26.0",
     "@opentelemetry/semantic-conventions": "^1.27.0",
-    "@sentry/node": "^8.33.1",
+    "@sentry/node": "^8.49.0",
     "@sentry/opentelemetry": "^8.33.1",
     "@sentry/types": "^8.33.1",
     "@storm-software/config": "latest",
