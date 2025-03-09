@@ -74,7 +74,11 @@ export const createNodesV2: CreateNodesV2<StormStackAdapterPluginOptions> = [
             );
             return {};
           }
-          if (!project.tags?.some(tag => tag?.startsWith("adapter:"))) {
+          if (
+            !project.tags?.some(tag =>
+              tag?.toLowerCase()?.startsWith("adapter:")
+            )
+          ) {
             return {};
           }
 
@@ -114,10 +118,10 @@ export const createNodesV2: CreateNodesV2<StormStackAdapterPluginOptions> = [
             },
             configurations: {
               production: {
-                debug: true
+                mode: "production"
               },
               development: {
-                debug: false
+                mode: "development"
               }
             }
           };

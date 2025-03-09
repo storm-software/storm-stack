@@ -150,9 +150,6 @@ export const createNodesV2: CreateNodesV2<StormStackPluginPluginOptions> = [
           addProjectScopeTag(project, StormStackProjectTagScopeValue.PLUGIN);
 
           const implicitDependencies = project.implicitDependencies ?? [];
-          if (!implicitDependencies.includes("tools-config")) {
-            implicitDependencies.push("tools-config");
-          }
           if (!implicitDependencies.includes("storm-stack")) {
             implicitDependencies.push("storm-stack");
           }
