@@ -7,7 +7,6 @@ triggerPaths:
   - package.json
   - pnpm-lock.yaml
   - pnpm-workspace.yaml
-  - "apps/*/package.json"
 
 projectIgnorePaths:
   - .github/

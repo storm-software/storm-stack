@@ -2,8 +2,6 @@ packages:
   - "tools/*"
   - "packages/*"
   - "examples/*"
-  - "docs/*"
-  - "apps/*"
 
 catalog:
   "@microsoft/api-extractor": ^7.48.1

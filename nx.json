@@ -1,35 +1,6 @@
 {
   "$schema": "https://cdn.jsdelivr.net/npm/nx/schemas/nx-schema.json",
   "extends": "@storm-software/workspace-tools/config/base.json",
-  "targetDefaults": {
-    "build-tools": {
-      "cache": true,
-      "inputs": ["{workspaceRoot}/tools"],
-      "outputs": ["{workspaceRoot}/dist/plugins", "{workspaceRoot}/dist/tools"]
-    },
-    "build-plugins": {
-      "cache": true,
-      "inputs": ["{workspaceRoot}/packages/plugin-*"],
-      "outputs": ["{workspaceRoot}/dist/packages/plugin-*"],
-      "dependsOn": ["build-tools"]
-    },
-    "build-adapters": {
-      "cache": true,
-      "inputs": [
-        "{workspaceRoot}/packages/log",
-        "{workspaceRoot}/packages/log-*",
-        "{workspaceRoot}/packages/fs",
-        "{workspaceRoot}/packages/fs-*"
-      ],
-      "outputs": [
-        "{workspaceRoot}/dist/packages/log",
-        "{workspaceRoot}/dist/packages/log-*",
-        "{workspaceRoot}/dist/packages/fs",
-        "{workspaceRoot}/dist/packages/fs-*"
-      ],
-      "dependsOn": ["build-tools", "build-plugins"]
-    }
-  },
   "release": {
     "groups": {
       "packages": {
@@ -45,5 +16,6 @@
     "@storm-software/workspace-tools/plugins/typescript/tsup",
     "./dist/plugins/plugin.js",
     "./dist/plugins/adapter.js"
-  ]
+  ],
+  "nxCloudId": "67b584948b1da22d67d83d57"
 }

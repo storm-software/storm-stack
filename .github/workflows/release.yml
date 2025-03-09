@@ -28,9 +28,7 @@ jobs:
     permissions:
       contents: write
       id-token: write
-    if: github.repository == 'storm-software/storm-stack' && (github.ref ==
-      'refs/heads/main' || github.ref == 'refs/heads/canary' || github.ref ==
-      'refs/heads/experimental')
+    if: github.repository == 'storm-software/storm-stack' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/canary' || github.ref == 'refs/heads/experimental')
     steps:
       - name: Send notification - Deployment started
         uses: storm-software/action-notify@main
@@ -52,8 +50,7 @@ jobs:
 
   process:
     name: "Continuous Integration"
-    if: always() && !cancelled() && !contains(needs.*.result, 'failure') &&
-      github.event.pull_request.draft == false
+    if: always() && !cancelled() && !contains(needs.*.result, 'failure') && github.event.pull_request.draft == false
     runs-on: ubuntu-latest
     permissions:
       contents: write

@@ -62,9 +62,6 @@
     "start": "nx serve",
     "view-config": "pnpm exec storm-config"
   },
-  "dependencies": {
-    "@storm-software/eslint": "catalog:"
-  },
   "devDependencies": {
     "@ls-lint/ls-lint": "^2.2.3",
     "@nx/devkit": "catalog:",

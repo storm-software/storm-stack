@@ -1,7 +1,7 @@
 tasks:
   - init: |
       npx pnpm install
-      pnpm build-all
+      pnpm build
     command: pnpm start
 
 ports:
