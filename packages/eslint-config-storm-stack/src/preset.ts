@@ -1,4 +1,4 @@
-/*-------------------------------------------------------------------
+/* -------------------------------------------------------------------
 
                   ⚡ Storm Software - Storm Stack
 
@@ -13,11 +13,16 @@
  Contact:         https://stormsoftware.com/contact
  License:         https://stormsoftware.com/projects/storm-stack/license
 
- -------------------------------------------------------------------*/
+ ------------------------------------------------------------------- */
 
-import { type PresetOptions, getStormConfig } from "@storm-software/eslint";
-import baseConfig from "@storm-stack/eslint-plugin/configs/base";
+import { getStormConfig } from "@storm-software/eslint";
+import type {
+  ConfigNames,
+  OptionsConfig,
+  TypedFlatConfigItem
+} from "@storm-software/eslint/types";
 import type { Linter } from "eslint";
+import type { Awaitable, FlatConfigComposer } from "eslint-flat-config-utils";
 
 /**
  * Get the ESLint configuration for a Storm Stack project.
@@ -28,9 +33,14 @@ import type { Linter } from "eslint";
  * @param options - The preset options.
  * @param userConfigs - Additional ESLint configurations.
  */
-export function getESLintConfig(
-  options: PresetOptions = {},
-  ...userConfigs: Linter.Config[]
-): Linter.Config[] {
-  return getStormConfig(options, baseConfig, ...userConfigs);
+export async function getESLintConfig(
+  options: OptionsConfig & Omit<TypedFlatConfigItem, "files">,
+  ...userConfigs: Awaitable<
+    | TypedFlatConfigItem
+    | TypedFlatConfigItem[]
+    | FlatConfigComposer<any, any>
+    | Linter.Config[]
+  >[]
+): Promise<FlatConfigComposer<TypedFlatConfigItem, ConfigNames>> {
+  return getStormConfig(options, ...userConfigs);
 }
