@@ -129,9 +129,6 @@ export const createNodesV2: CreateNodesV2<StormStackAdapterPluginOptions> = [
           if (!implicitDependencies.includes("storm-stack")) {
             implicitDependencies.push("storm-stack");
           }
-          if (!implicitDependencies.includes("nx")) {
-            implicitDependencies.push("nx");
-          }
 
           const result = project?.name
             ? {

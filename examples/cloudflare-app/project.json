@@ -10,7 +10,8 @@
       "options": {
         "outputPath": "dist/examples/cloudflare-app",
         "skipCache": true,
-        "skipInstalls": true
+        "skipInstalls": true,
+        "mode": "development"
       }
     }
   }

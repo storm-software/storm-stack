@@ -14,7 +14,8 @@
   },
   "devDependencies": {
     "@types/node": "catalog:",
-    "storm-stack": "workspace:*"
+    "storm-stack": "workspace:*",
+    "@storm-stack/nx": "workspace:*"
   },
   "publishConfig": {
     "access": "public"

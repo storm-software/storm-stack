@@ -15,6 +15,7 @@
   },
   "devDependencies": {
     "@sentry/types": "^9.5.0",
+    "@storm-stack/nx": "workspace:*",
     "@types/node": "catalog:",
     "storm-stack": "workspace:*"
   },
