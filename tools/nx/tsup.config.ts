@@ -22,7 +22,8 @@ const config: Options = getTsupConfig({
   name: "tools-nx",
   entry: ["index.ts", "src/types.ts", "src/plugins/*.ts"],
   format: ["cjs"],
-  dts: false
+  dts: false,
+  bundle: false
 });
 
 export default config;

@@ -3,7 +3,7 @@
 # Environment variables configuration
 
 Below is a list of environment variables used by the
-[@storm-stack/log-otel](https://www.npmjs.com/package/@storm-stack/log-otel)
+[@storm-stack/log-sentry](https://www.npmjs.com/package/@storm-stack/log-sentry)
 package. These values can be updated in the `.env` file in the root of the
 project.
 
