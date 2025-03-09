@@ -99,7 +99,7 @@ jobs:
       #     ./location_of_script_within_repo/buildscript.sh
 
       - name: Run build script
-        run: pnpm build-all
+        run: pnpm build
         shell: bash
 
       - name: Perform CodeQL Analysis

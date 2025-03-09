@@ -3,7 +3,7 @@
 # Environment variables configuration
 
 Below is a list of environment variables used by the
-[@storm-stack/log-console](https://www.npmjs.com/package/@storm-stack/log-console)
+[@storm-stack/log-stream](https://www.npmjs.com/package/@storm-stack/log-stream)
 package. These values can be updated in the `.env` file in the root of the
 project.
 

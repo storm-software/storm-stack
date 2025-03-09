@@ -42,7 +42,6 @@
     "bootstrap": "pnpm exec zx tools/scripts/src/bootstrap.mjs",
     "build": "pnpm exec zx tools/scripts/src/build.mjs --prod",
     "build-dev": "pnpm exec zx tools/scripts/src/build.mjs --dev",
-    "build-devkit": "pnpm exec zx tools/scripts/src/build-devkit.mjs --dev",
     "clean": "pnpm exec rimraf dist",
     "commit": "pnpm exec storm-git commit",
     "dep-graph": "nx dep-graph",
@@ -103,7 +102,7 @@
     "ts-node": "^10.9.2",
     "tslib": "^2.8.1",
     "typescript": "~5.7.3",
-    "verdaccio": "^5.32.2",
+    "verdaccio": "6.0.5",
     "zx": "^8.3.2"
   },
   "manypkg": {
