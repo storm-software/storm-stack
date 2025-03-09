@@ -13,14 +13,14 @@ A package containing a Storm Stack log adapter to write logs to a file.
 Using [pnpm](http://pnpm.io):
 
 ```bash
-pnpm add -D @storm-stack/log-file
+pnpm add @storm-stack/log-file
 ```
 
 <details>
   <summary>Using npm</summary>
 
 ```bash
-npm install -D @storm-stack/log-file
+npm install @storm-stack/log-file
 ```
 
 </details>
@@ -29,7 +29,7 @@ npm install -D @storm-stack/log-file
   <summary>Using yarn</summary>
 
 ```bash
-yarn add -D @storm-stack/log-file
+yarn add @storm-stack/log-file
 ```
 
 </details>

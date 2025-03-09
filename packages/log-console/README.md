@@ -13,14 +13,14 @@ A package containing a Storm Stack log adapter to write logs to a console.
 Using [pnpm](http://pnpm.io):
 
 ```bash
-pnpm add -D @storm-stack/log-console
+pnpm add @storm-stack/log-console
 ```
 
 <details>
   <summary>Using npm</summary>
 
 ```bash
-npm install -D @storm-stack/log-console
+npm install @storm-stack/log-console
 ```
 
 </details>
@@ -29,7 +29,7 @@ npm install -D @storm-stack/log-console
   <summary>Using yarn</summary>
 
 ```bash
-yarn add -D @storm-stack/log-console
+yarn add @storm-stack/log-console
 ```
 
 </details>

@@ -16,13 +16,12 @@
  ------------------------------------------------------------------- */
 
 /**
- * The log-otel library used by Storm Software for building NodeJS applications.
+ * The log-sentry library used by Storm Software for building NodeJS applications.
  *
  * @remarks
- * A package containing a Storm Stack log adapter to write logs to an OpenTelemetry collector
+ * A package containing a Storm Stack log adapter to write log messages to Sentry
  *
  * @packageDocumentation
  */
 
 export * from "./sink";
-export * from "./types";

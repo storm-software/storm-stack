@@ -149,7 +149,8 @@
       "@storm-stack/log-console": "workspace:*",
       "@storm-stack/log-file": "workspace:*",
       "@storm-stack/log-stream": "workspace:*",
-      "@storm-stack/log-otel": "workspace:*"
+      "@storm-stack/log-otel": "workspace:*",
+      "@storm-stack/log-sentry": "workspace:*"
     },
     "onlyBuiltDependencies": [
       "@biomejs/biome",

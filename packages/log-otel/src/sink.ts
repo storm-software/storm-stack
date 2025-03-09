@@ -37,34 +37,35 @@ import type {
 
 /**
  * Creates a sink that forwards log records to OpenTelemetry.
+ *
+ * @see https://opentelemetry.io/
+ *
  * @param options Options for creating the sink.
  * @returns The sink.
  */
-export function getOpenTelemetrySink(
-  options: OpenTelemetrySinkOptions = {}
-): LogSink {
+export function getSink(options: OpenTelemetrySinkOptions = {}): LogSink {
   // if (options.diagnostics) {
   //   diag.setLogger(new DiagLoggerAdaptor(), DiagLogLevel.DEBUG);
   // }
 
+  const serviceName =
+    process.env.APP_NAME ||
+    process.env.NAME ||
+    process.env.OTEL_SERVICE_NAME ||
+    "storm";
+
   let loggerProvider: ILoggerProvider;
   if (options.loggerProvider == null) {
-    // eslint-disable-next-line ts/no-unsafe-call
     const resource = Resource.default().merge(
-      // eslint-disable-next-line ts/no-unsafe-call
       new Resource({
-        [ATTR_SERVICE_NAME]:
-          process.env.APP_NAME ||
-          process.env.NAME ||
-          process.env.OTEL_SERVICE_NAME ||
-          "storm"
+        [ATTR_SERVICE_NAME]: serviceName
       })
     );
 
     loggerProvider = new LoggerProvider({ resource });
-    // eslint-disable-next-line ts/no-unsafe-call
+
     const otlpExporter = new OTLPLogExporter(options.otlpExporterConfig);
-    // eslint-disable-next-line ts/no-unsafe-call
+
     loggerProvider.addLogRecordProcessor(
       // @ts-ignore: it works anyway...
       new SimpleLogRecordProcessor(otlpExporter)
@@ -74,18 +75,14 @@ export function getOpenTelemetrySink(
   }
 
   const objectRenderer = options.objectRenderer ?? "inspect";
-  // eslint-disable-next-line ts/no-unsafe-call
-  const logger = loggerProvider.getLogger(
-    process.env.STORM_APP_NAME!,
-    process.env.STORM_APP_VERSION!
-  );
+
+  const logger = loggerProvider.getLogger(serviceName, process.env.APP_VERSION);
   const sink = (record: LogRecord) => {
     const { level, message, timestamp, properties } = record;
 
     const severityNumber = mapLevelToSeverityNumber(level);
     const attributes = convertToAttributes(properties, objectRenderer);
 
-    // eslint-disable-next-line ts/no-unsafe-call
     logger.emit({
       severityNumber,
       severityText: level,
@@ -105,7 +102,6 @@ export function getOpenTelemetrySink(
   };
 
   if (loggerProvider.shutdown != null) {
-    // eslint-disable-next-line ts/no-unsafe-call
     const shutdown = loggerProvider.shutdown.bind(loggerProvider);
     sink[Symbol.asyncDispose] = shutdown;
   }
@@ -173,7 +169,7 @@ function convertToString(
   } else if (value instanceof Date) {
     return value.toISOString();
   } else {
-    return JSON.stringify(value);
+    return StormJSON.stringify(value);
   }
 }
 
@@ -203,7 +199,7 @@ function convertMessageToString(
     if (message.length <= i + 1) break;
     const val = message[i + 1];
     const extra = convertToString(val, objectRenderer);
-    body += extra ?? JSON.stringify(extra);
+    body += extra ?? StormJSON.stringify(extra);
   }
   return body;
 }
@@ -219,9 +215,7 @@ function convertMessageToCustomBodyFormat(
 }
 
 /**
- * A platform-specific inspect function.  In Deno, this is {@link Deno.inspect},
- * and in Node.js/Bun it is {@link util.inspect}.  If neither is available, it
- * falls back to {@link JSON.stringify}.
+ * A platform-specific inspect function. In Deno, this is {@link Deno.inspect}, and in Node.js/Bun it is {@link util.inspect}. If neither is available, it falls back to {@link StormJSON.stringify}.
  *
  * @param value The value to inspect.
  * @returns The string representation of the value.
@@ -246,7 +240,8 @@ const inspect: (value: unknown) => string =
         globalThis.util.inspect === "function"
       ? // @ts-ignore: Node.js global
         globalThis.util.inspect
-      : JSON.stringify;
+      : // eslint-disable-next-line ts/unbound-method
+        StormJSON.stringify;
 
 // class DiagLoggerAdaptor implements DiagLogger {
 //   logger: IStormLog;
