@@ -13,9 +13,6 @@
     "@storm-stack/plugin-cloudflare": "workspace:*",
     "storm-stack": "workspace:*"
   },
-  "publishConfig": {
-    "access": "public"
-  },
   "storm": {
     "name": "examples-cloudflare-app"
   }

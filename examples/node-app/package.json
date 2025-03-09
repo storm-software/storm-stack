@@ -16,9 +16,6 @@
     "@storm-stack/plugin-node": "workspace:*",
     "storm-stack": "workspace:*"
   },
-  "publishConfig": {
-    "access": "public"
-  },
   "storm": {
     "name": "examples-node-app"
   }

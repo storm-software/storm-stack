@@ -1,35 +1,22 @@
 {
   "name": "@storm-stack/biome",
-  "type": "module",
   "version": "0.0.1",
-  "private": false,
+  "type": "module",
   "description": "A shared Biome configuration containing globals used in Storm Stack projects.",
-  "author": {
-    "name": "Storm Software",
-    "email": "contact@stormsoftware.com",
-    "url": "https://stormsoftware.com"
-  },
-  "contributors": [
-    {
-      "name": "Storm Software",
-      "email": "contact@stormsoftware.com",
-      "url": "https://stormsoftware.com"
-    }
-  ],
-  "license": "Apache-2.0",
-  "funding": {
-    "type": "github",
-    "url": "https://github.com/sponsors/storm-software"
-  },
-  "homepage": "https://stormsoftware.com",
   "repository": {
     "type": "github",
     "url": "https://github.com/storm-software/storm-stack.git",
     "directory": "packages/biome"
   },
+  "homepage": "https://stormsoftware.com",
   "bugs": {
     "url": "https://stormsoftware.com/support",
     "email": "support@stormsoftware.com"
+  },
+  "author": {
+    "name": "Storm Software",
+    "email": "contact@stormsoftware.com",
+    "url": "https://stormsoftware.com"
   },
   "maintainers": [
     {
@@ -38,13 +25,19 @@
       "url": "https://stormsoftware.com"
     }
   ],
-  "keywords": [
-    "storm-stack",
-    "storm-software",
-    "biome",
-    "biomejs"
+  "contributors": [
+    {
+      "name": "Storm Software",
+      "email": "contact@stormsoftware.com",
+      "url": "https://stormsoftware.com"
+    }
   ],
-  "sideEffects": false,
+  "funding": {
+    "type": "github",
+    "url": "https://github.com/sponsors/storm-software"
+  },
+  "license": "Apache-2.0",
+  "private": false,
   "exports": {
     "./package.json": "./package.json",
     "./biome.json": "./dist/biome.json",
@@ -52,6 +45,12 @@
   },
   "files": [
     "dist/**/*"
+  ],
+  "keywords": [
+    "storm-stack",
+    "storm-software",
+    "biome",
+    "biomejs"
   ],
   "peerDependencies": {
     "@biomejs/biome": "1.9.4"
@@ -66,5 +65,6 @@
   },
   "publishConfig": {
     "access": "public"
-  }
+  },
+  "sideEffects": false
 }

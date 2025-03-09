@@ -42,7 +42,6 @@
     "tsup": "catalog:"
   },
   "devDependencies": {
-    "@storm-software/config-tools": "catalog:",
     "@types/node": "catalog:"
   }
 }

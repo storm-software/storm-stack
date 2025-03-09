@@ -105,9 +105,6 @@
     "tsup": "catalog:",
     "typescript": "catalog:"
   },
-  "publishConfig": {
-    "access": "public"
-  },
   "executors": "./executors.json",
   "generators": "./generators.json"
 }
