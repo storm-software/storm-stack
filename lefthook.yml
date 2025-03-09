@@ -123,8 +123,7 @@ pre-push:
       stage_fixed: true
     readme:
       glob: "**/*"
-      run: 'pnpm exec storm-git readme --templates="tools/readme-templates"
-        --project="@stryke/monorepo" '
+      run: 'pnpm exec storm-git readme --templates="tools/readme-templates" --project="@storm-stack/monorepo" '
       stage_fixed: true
     format:
       glob: "**/*"
