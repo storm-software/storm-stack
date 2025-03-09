@@ -13,9 +13,9 @@
     "@stryke/json": "catalog:"
   },
   "devDependencies": {
+    "@storm-stack/nx": "workspace:*",
     "@types/node": "catalog:",
-    "storm-stack": "workspace:*",
-    "@storm-stack/nx": "workspace:*"
+    "storm-stack": "workspace:*"
   },
   "publishConfig": {
     "access": "public"
