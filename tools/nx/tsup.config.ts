@@ -21,7 +21,8 @@ import type { Options } from "tsup";
 const config: Options = getTsupConfig({
   name: "tools-nx",
   entry: ["index.ts", "src/types.ts", "src/plugins/*.ts"],
-  format: ["cjs"]
+  format: ["cjs"],
+  dts: false
 });
 
 export default config;

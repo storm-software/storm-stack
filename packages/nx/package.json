@@ -77,14 +77,12 @@
     "./generators/*/generator.js": "./dist/generators/*/generator.js"
   },
   "typings": "dist/index.d.ts",
-  "peerDependencies": {
-    "@storm-stack/plugin-cloudflare": "workspace:*",
-    "@storm-stack/plugin-node": "workspace:*"
-  },
   "dependencies": {
     "@nx/devkit": "catalog:",
     "@storm-software/config": "catalog:",
     "@storm-software/workspace-tools": "catalog:",
+    "@storm-stack/plugin-cloudflare": "workspace:*",
+    "@storm-stack/plugin-node": "workspace:*",
     "defu": "catalog:",
     "storm-stack": "workspace:*"
   },
