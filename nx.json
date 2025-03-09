@@ -1,137 +1,49 @@
 {
-  "extends": "@storm-software/workspace-tools/config/nx-default.json",
+  "$schema": "https://cdn.jsdelivr.net/npm/nx/schemas/nx-schema.json",
+  "extends": "@storm-software/workspace-tools/config/base.json",
+  "targetDefaults": {
+    "build-tools": {
+      "cache": true,
+      "inputs": ["{workspaceRoot}/tools"],
+      "outputs": ["{workspaceRoot}/dist/plugins", "{workspaceRoot}/dist/tools"]
+    },
+    "build-plugins": {
+      "cache": true,
+      "inputs": ["{workspaceRoot}/packages/plugin-*"],
+      "outputs": ["{workspaceRoot}/dist/packages/plugin-*"],
+      "dependsOn": ["build-tools"]
+    },
+    "build-adapters": {
+      "cache": true,
+      "inputs": [
+        "{workspaceRoot}/packages/log",
+        "{workspaceRoot}/packages/log-*",
+        "{workspaceRoot}/packages/fs",
+        "{workspaceRoot}/packages/fs-*"
+      ],
+      "outputs": [
+        "{workspaceRoot}/dist/packages/log",
+        "{workspaceRoot}/dist/packages/log-*",
+        "{workspaceRoot}/dist/packages/fs",
+        "{workspaceRoot}/dist/packages/fs-*"
+      ],
+      "dependsOn": ["build-tools", "build-plugins"]
+    }
+  },
   "release": {
-    "projects": ["packages/*", "build/*"],
-    "projectsRelationship": "independent",
-    "releaseTagPattern": "{projectName}@{version}",
-    "conventionalCommits": {
-      "types": {
-        "feat": {
-          "semverBump": "minor",
-          "changelog": {
-            "title": "Features",
-            "hidden": false
-          }
-        },
-        "fix": {
-          "semverBump": "patch",
-          "changelog": {
-            "title": "Bug Fixes",
-            "hidden": false
-          }
-        },
-        "perf": {
-          "semverBump": "none",
-          "changelog": {
-            "title": "Performance Improvements",
-            "hidden": false
-          }
-        },
-        "refactor": {
-          "semverBump": "patch",
-          "changelog": {
-            "title": "Refactoring",
-            "hidden": false
-          }
-        },
-        "docs": {
-          "semverBump": "none",
-          "changelog": {
-            "title": "Documentation",
-            "hidden": false
-          }
-        },
-        "deps": {
-          "semverBump": "patch",
-          "changelog": {
-            "title": "Dependency Upgrades",
-            "hidden": false
-          }
-        },
-        "types": {
-          "semverBump": "minor",
-          "changelog": {
-            "title": "Type Definitions",
-            "hidden": false
-          }
-        },
-        "chore": {
-          "semverBump": "none",
-          "changelog": {
-            "title": "Chores",
-            "hidden": true
-          }
-        },
-        "examples": {
-          "semverBump": "none",
-          "changelog": {
-            "title": "Examples",
-            "hidden": false
-          }
-        },
-        "test": {
-          "semverBump": "none",
-          "changelog": {
-            "title": "Testing",
-            "hidden": true
-          }
-        },
-        "style": {
-          "semverBump": "minor",
-          "changelog": {
-            "title": "Styling",
-            "hidden": false
-          }
-        },
-        "ci": {
-          "semverBump": "patch",
-          "changelog": {
-            "title": "Continuous Integration",
-            "hidden": false
-          }
-        },
-        "revert": {
-          "semverBump": "patch",
-          "changelog": {
-            "title": "Revert",
-            "hidden": false
-          }
-        }
-      }
-    },
-    "changelog": {
-      "automaticFromRef": true,
-      "workspaceChangelog": false,
-      "projectChangelogs": {
-        "createRelease": "github",
-        "entryWhenNoChanges": false,
-        "renderOptions": {
-          "authors": false,
-          "commitReferences": true,
-          "versionTitleDate": true
-        }
-      }
-    },
-    "version": {
-      "preVersionCommand": "pnpm build-all",
-      "generator": "@storm-software/workspace-tools:release-version",
-      "generatorOptions": {
-        "currentVersionResolver": "git-tag",
-        "specifierSource": "conventional-commits"
+    "groups": {
+      "packages": {
+        "projects": ["packages/*"],
+        "projectsRelationship": "independent",
+        "releaseTagPattern": "{projectName}@{version}"
       }
     }
   },
   "plugins": [
-    {
-      "plugin": "@nx/eslint/plugin",
-      "exclude": ["packages/**/__fixtures__/**/*"],
-      "options": {
-        "targetName": "lint",
-        "useFlatConfig": true
-      }
-    },
     "@storm-software/workspace-tools/plugins/typescript",
-    "@storm-software/workspace-tools/plugins/typescript/tsup"
+    "@storm-software/workspace-tools/plugins/typescript/untyped",
+    "@storm-software/workspace-tools/plugins/typescript/tsup",
+    "./dist/plugins/plugin.js",
+    "./dist/plugins/adapter.js"
   ]
-  // "useLegacyCache": true
 }

@@ -3,71 +3,49 @@
   "extends": "@storm-software/tsconfig/core.json",
   "display": "Storm Software - Storm Stack",
   "compilerOptions": {
-    "rootDir": ".",
     "baseUrl": ".",
-    "incremental": false,
-    "composite": false,
+    "rootDir": ".",
     "paths": {
-      "@storm-stack/build-core": ["build/core/src/index.ts"],
-      "@storm-stack/build-core/*": ["build/core/src/*"],
-      "@storm-stack/build-nx": ["build/nx/src/index.ts"],
-      "@storm-stack/build-nx/*": ["build/nx/src/*"],
-      "@storm-stack/build-plugin": ["build/plugin/src/index.ts"],
-      "@storm-stack/build-plugin/*": ["build/plugin/src/*"],
-      "@storm-stack/cli": ["packages/base/cli/src/index.ts"],
-      "@storm-stack/cli-helpers": ["packages/utils/cli-helpers/src/index.ts"],
-      "@storm-stack/cli-helpers/*": ["packages/utils/cli-helpers/src/*"],
-      "@storm-stack/cli/*": ["packages/base/cli/src/*"],
-      "@storm-stack/date-time": ["packages/base/date-time/src/index.ts"],
-      "@storm-stack/date-time/*": ["packages/base/date-time/src/*"],
-      "@storm-stack/env/*": ["packages/utils/env/src/*"],
-      "@storm-stack/errors": ["packages/base/errors/src/index.ts"],
-      "@storm-stack/errors/*": ["packages/base/errors/src/*"],
-      "@storm-stack/file-system": ["packages/base/file-system/src/index.ts"],
-      "@storm-stack/file-system/*": ["packages/base/file-system/src/*"],
-      "@storm-stack/hashing": ["packages/utils/hashing/src/index.ts"],
-      "@storm-stack/hashing/*": ["packages/utils/hashing/src/*"],
-      "@storm-stack/hooks": ["packages/utils/hooks/src/index.ts"],
-      "@storm-stack/hooks/*": ["packages/utils/hooks/src/*"],
-      "@storm-stack/json": ["packages/utils/json/src/index.ts"],
-      "@storm-stack/json/*": ["packages/utils/json/src/*"],
-      "@storm-stack/logging": ["packages/base/logging/src/index.ts"],
-      "@storm-stack/logging/*": ["packages/base/logging/src/*"],
-      "@storm-stack/path": ["packages/utils/path/src/index.ts"],
-      "@storm-stack/path/*": ["packages/utils/path/src/*"],
-      "@storm-stack/plugin-system": [
-        "packages/base/plugin-system/src/index.ts"
+      "@storm-stack/biome": ["packages/biome/src/index.ts"],
+      "@storm-stack/biome/*": ["packages/biome/src/*"],
+      "@storm-stack/examples-cloudflare-app": [
+        "examples/cloudflare-app/src/index.ts"
       ],
-      "@storm-stack/plugin-system/*": ["packages/base/plugin-system/src/*"],
-      "@storm-stack/serialization": [
-        "packages/base/serialization/src/index.ts"
+      "@storm-stack/examples-cloudflare-app/*": [
+        "examples/cloudflare-app/src/*"
       ],
-      "@storm-stack/serialization/*": ["packages/base/serialization/src/*"],
-      "@storm-stack/server-cache": ["packages/base/server-cache/src/index.ts"],
-      "@storm-stack/server-cache/*": ["packages/base/server-cache/src/*"],
-      "@storm-stack/server-result": [
-        "packages/base/server-result/src/index.ts"
+      "@storm-stack/examples-node-app": ["examples/node-app/src/index.ts"],
+      "@storm-stack/examples-node-app/*": ["examples/node-app/src/*"],
+      "@storm-stack/log": ["packages/log/src/index.ts"],
+      "@storm-stack/log/*": ["packages/log/src/*"],
+      "@storm-stack/nx": ["packages/nx/src/index.ts"],
+      "@storm-stack/nx/*": ["packages/nx/src/*"],
+      "@storm-stack/plugin-cloudflare": [
+        "packages/plugin-cloudflare/src/index.ts"
       ],
-      "@storm-stack/server-result/*": ["packages/base/server-result/src/*"],
-      "@storm-stack/string-fns": ["packages/utils/string-fns/src/index.ts"],
-      "@storm-stack/string-fns/*": ["packages/utils/string-fns/src/*"],
-      "@storm-stack/telemetry": ["packages/base/telemetry/src/index.ts"],
-      "@storm-stack/telemetry/*": ["packages/base/telemetry/src/*"],
+      "@storm-stack/plugin-cloudflare/*": ["packages/plugin-cloudflare/src/*"],
+      "@storm-stack/plugin-node": ["packages/plugin-node/src/index.ts"],
+      "@storm-stack/plugin-node/*": ["packages/plugin-node/src/*"],
       "@storm-stack/tools-config": ["tools/config/src/index.ts"],
       "@storm-stack/tools-config/*": ["tools/config/src/*"],
-      "@storm-stack/types": ["packages/utils/types/src/index.ts"],
-      "@storm-stack/types/*": ["packages/utils/types/src/*"],
-      "@storm-stack/unique-identifier": [
-        "packages/utils/unique-identifier/src/index.ts"
+      "@storm-stack/tools-nx": ["tools/nx/src/index.ts"],
+      "@storm-stack/tools-nx/*": ["tools/nx/src/*"],
+      "@storm-stack/tools-scripts": ["tools/scripts/src/index.ts"],
+      "@storm-stack/tools-scripts/*": ["tools/scripts/src/*"],
+      "eslint-config-storm-stack": [
+        "packages/eslint-config-storm-stack/src/index.ts"
       ],
-      "@storm-stack/unique-identifier/*": [
-        "packages/utils/unique-identifier/src/*"
+      "eslint-config-storm-stack/*": [
+        "packages/eslint-config-storm-stack/src/*"
       ],
-      "@storm-stack/utilities": ["packages/utils/utilities/src/index.ts"],
-      "@storm-stack/utilities/*": ["packages/utils/utilities/src/*"],
-      "@storm-stack/env": ["packages/utils/env/src/index.ts"]
+      "eslint-plugin-storm-stack": [
+        "packages/eslint-plugin-storm-stack/src/index.ts"
+      ],
+      "eslint-plugin-storm-stack/*": [
+        "packages/eslint-plugin-storm-stack/src/*"
+      ],
+      "storm-stack": ["packages/storm-stack/src/index.ts"],
+      "storm-stack/*": ["packages/storm-stack/src/*"]
     }
-  },
-  "include": ["**/*.ts", "**/*.tsx", "**/*.d.ts", "**/*.js", "**/*.jsx"],
-  "exclude": ["tmp"]
+  }
 }

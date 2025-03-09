@@ -1,4 +1,4 @@
-<div align="center"><img src="https://pub-761b436209f44a4d886487c917806c08.r2.dev/storm-banner.gif" width="100%" alt="Storm Software" /></div>
+<div align="center"><img src="https://public.storm-cdn.com/storm-stack-banner2.gif" width="100%" alt="Storm Stack" /></div>
 <br />
 
 <div align="center">

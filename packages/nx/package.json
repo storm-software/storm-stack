@@ -1,0 +1,99 @@
+{
+  "name": "@storm-stack/nx",
+  "version": "0.0.1",
+  "repository": {
+    "type": "github",
+    "url": "https://github.com/storm-software/storm-stack.git",
+    "directory": "packages/nx"
+  },
+  "private": false,
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "exports": {
+    "./package.json": "./package.json",
+    "./docs/*": "./docs/*",
+    "./migrations.json": "./migrations.json",
+    "./executors.json": "./executors.json",
+    "./executors/*/schema.json": "./dist/src/executors/*/schema.json",
+    "./generators.json": "./generators.json",
+    "./generators/*/schema.json": "./dist/src/generators/*/schema.json",
+    ".": {
+      "import": {
+        "types": "./dist/index.d.mts",
+        "default": "./dist/index.mjs"
+      },
+      "require": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      },
+      "default": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      }
+    },
+    "./index": {
+      "import": {
+        "types": "./dist/index.d.mts",
+        "default": "./dist/index.mjs"
+      },
+      "require": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      },
+      "default": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      }
+    },
+    "./executors": {
+      "import": {
+        "types": "./dist/executors.d.mts",
+        "default": "./dist/executors.mjs"
+      },
+      "require": {
+        "types": "./dist/executors.d.ts",
+        "default": "./dist/executors.js"
+      },
+      "default": {
+        "types": "./dist/executors.d.ts",
+        "default": "./dist/executors.js"
+      }
+    },
+    "./generators": {
+      "import": {
+        "types": "./dist/generators.d.mts",
+        "default": "./dist/generators.mjs"
+      },
+      "require": {
+        "types": "./dist/generators.d.ts",
+        "default": "./dist/generators.js"
+      },
+      "default": {
+        "types": "./dist/generators.d.ts",
+        "default": "./dist/generators.js"
+      }
+    },
+    "./executors/*/executor.js": "./dist/executors/*/executor.js",
+    "./generators/*/generator.js": "./dist/generators/*/generator.js"
+  },
+  "typings": "dist/index.d.ts",
+  "peerDependencies": {
+    "@storm-stack/plugin-cloudflare": "workspace:*",
+    "@storm-stack/plugin-node": "workspace:*"
+  },
+  "dependencies": {
+    "@nx/devkit": "catalog:",
+    "@storm-software/config": "catalog:",
+    "@storm-software/workspace-tools": "catalog:",
+    "defu": "catalog:",
+    "storm-stack": "workspace:*"
+  },
+  "devDependencies": {
+    "@storm-software/testing-tools": "catalog:",
+    "@types/node": "catalog:",
+    "eslint-flat-config-utils": "catalog:",
+    "tsup": "catalog:",
+    "untyped": "catalog:"
+  },
+  "executors": "./executors.json"
+}

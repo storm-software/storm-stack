@@ -1,0 +1,19 @@
+{
+  "name": "examples-node-app",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "sourceRoot": "examples/node-app/src",
+  "targets": {
+    "build": {
+      "executor": "@storm-stack/nx:node-app-build",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "entry": "{sourceRoot}/index.ts#getCity",
+        "outputPath": "dist/examples/node-app",
+        "skipCache": true,
+        "skipInstalls": true,
+        "mode": "development"
+      }
+    }
+  }
+}

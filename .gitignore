@@ -9,6 +9,7 @@ tmp
 /out-tsc
 out
 .nx
+**/.storm
 
 # build
 
@@ -100,6 +101,7 @@ bld/
 # [Bb]in/
 [Oo]bj/
 [Ll]og/
+!packages/[Ll]og
 
 # Visual Studio 2015/2017 cache/options directory
 .vs/

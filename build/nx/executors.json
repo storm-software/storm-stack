@@ -1,9 +1,0 @@
-{
-  "executors": {
-    "node-build": {
-      "implementation": "./dist/executors/node-app/executor",
-      "schema": "./dist/executors/node-app/schema.json",
-      "description": "An executor used to build a NodeJs application"
-    }
-  }
-}

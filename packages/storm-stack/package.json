@@ -1,0 +1,292 @@
+{
+  "name": "storm-stack",
+  "version": "0.0.1",
+  "type": "module",
+  "description": "A build toolkit and runtime used by Storm Software in TypeScript applications",
+  "repository": {
+    "type": "github",
+    "url": "https://github.com/storm-software/storm-stack.git",
+    "directory": "packages/storm-stack"
+  },
+  "private": false,
+  "exports": {
+    "./package.json": "./package.json",
+    ".": {
+      "import": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      },
+      "require": {
+        "types": "./dist/index.d.cts",
+        "default": "./dist/index.cjs"
+      },
+      "default": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      }
+    },
+    "./index": {
+      "import": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      },
+      "require": {
+        "types": "./dist/index.d.cts",
+        "default": "./dist/index.cjs"
+      },
+      "default": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      }
+    },
+    "./api": {
+      "import": {
+        "types": "./dist/api.d.ts",
+        "default": "./dist/api.js"
+      },
+      "require": {
+        "types": "./dist/api.d.cts",
+        "default": "./dist/api.cjs"
+      },
+      "default": {
+        "types": "./dist/api.d.ts",
+        "default": "./dist/api.js"
+      }
+    },
+    "./compiler": {
+      "import": {
+        "types": "./dist/compiler.d.ts",
+        "default": "./dist/compiler.js"
+      },
+      "require": {
+        "types": "./dist/compiler.d.cts",
+        "default": "./dist/compiler.cjs"
+      },
+      "default": {
+        "types": "./dist/compiler.d.ts",
+        "default": "./dist/compiler.js"
+      }
+    },
+    "./plugin": {
+      "import": {
+        "types": "./dist/plugin.d.ts",
+        "default": "./dist/plugin.js"
+      },
+      "require": {
+        "types": "./dist/plugin.d.cts",
+        "default": "./dist/plugin.cjs"
+      },
+      "default": {
+        "types": "./dist/plugin.d.ts",
+        "default": "./dist/plugin.js"
+      }
+    },
+    "./helpers": {
+      "import": {
+        "types": "./dist/helpers/index.d.ts",
+        "default": "./dist/helpers/index.js"
+      },
+      "require": {
+        "types": "./dist/helpers/index.d.cts",
+        "default": "./dist/helpers/index.cjs"
+      },
+      "default": {
+        "types": "./dist/helpers/index.d.ts",
+        "default": "./dist/helpers/index.js"
+      }
+    },
+    "./types": {
+      "import": {
+        "types": "./dist/types/index.d.ts",
+        "default": "./dist/types/index.js"
+      },
+      "require": {
+        "types": "./dist/types/index.d.cts",
+        "default": "./dist/types/index.cjs"
+      },
+      "default": {
+        "types": "./dist/types/index.d.ts",
+        "default": "./dist/types/index.js"
+      }
+    },
+    "./types/*": {
+      "import": {
+        "types": "./dist/types/*.d.ts",
+        "default": "./dist/types/*.js"
+      },
+      "require": {
+        "types": "./dist/types/*.d.cts",
+        "default": "./dist/types/*.cjs"
+      },
+      "default": {
+        "types": "./dist/types/*.d.ts",
+        "default": "./dist/types/*.js"
+      }
+    },
+    "./astro": {
+      "import": {
+        "types": "./dist/unplugin/astro.d.ts",
+        "default": "./dist/unplugin/astro.js"
+      },
+      "require": {
+        "types": "./dist/unplugin/astro.d.cts",
+        "default": "./dist/unplugin/astro.cjs"
+      },
+      "default": {
+        "types": "./dist/unplugin/astro.d.ts",
+        "default": "./dist/unplugin/astro.js"
+      }
+    },
+    "./esbuild": {
+      "import": {
+        "types": "./dist/unplugin/esbuild.d.ts",
+        "default": "./dist/unplugin/esbuild.js"
+      },
+      "require": {
+        "types": "./dist/unplugin/esbuild.d.cts",
+        "default": "./dist/unplugin/esbuild.cjs"
+      },
+      "default": {
+        "types": "./dist/unplugin/esbuild.d.ts",
+        "default": "./dist/unplugin/esbuild.js"
+      }
+    },
+    "./farm": {
+      "import": {
+        "types": "./dist/unplugin/farm.d.ts",
+        "default": "./dist/unplugin/farm.js"
+      },
+      "require": {
+        "types": "./dist/unplugin/farm.d.cts",
+        "default": "./dist/unplugin/farm.cjs"
+      },
+      "default": {
+        "types": "./dist/unplugin/farm.d.ts",
+        "default": "./dist/unplugin/farm.js"
+      }
+    },
+    "./nuxt": {
+      "import": {
+        "types": "./dist/unplugin/nuxt.d.ts",
+        "default": "./dist/unplugin/nuxt.js"
+      },
+      "require": {
+        "types": "./dist/unplugin/nuxt.d.cts",
+        "default": "./dist/unplugin/nuxt.cjs"
+      },
+      "default": {
+        "types": "./dist/unplugin/nuxt.d.ts",
+        "default": "./dist/unplugin/nuxt.js"
+      }
+    },
+    "./rolldown": {
+      "import": {
+        "types": "./dist/unplugin/rolldown.d.ts",
+        "default": "./dist/unplugin/rolldown.js"
+      },
+      "require": {
+        "types": "./dist/unplugin/rolldown.d.cts",
+        "default": "./dist/unplugin/rolldown.cjs"
+      },
+      "default": {
+        "types": "./dist/unplugin/rolldown.d.ts",
+        "default": "./dist/unplugin/rolldown.js"
+      }
+    },
+    "./vite": {
+      "import": {
+        "types": "./dist/unplugin/vite.d.ts",
+        "default": "./dist/unplugin/vite.js"
+      },
+      "require": {
+        "types": "./dist/unplugin/vite.d.cts",
+        "default": "./dist/unplugin/vite.cjs"
+      },
+      "default": {
+        "types": "./dist/unplugin/vite.d.ts",
+        "default": "./dist/unplugin/vite.js"
+      }
+    },
+    "./rollup": {
+      "import": {
+        "types": "./dist/unplugin/rollup.d.ts",
+        "default": "./dist/unplugin/rollup.js"
+      },
+      "require": {
+        "types": "./dist/unplugin/rollup.d.cts",
+        "default": "./dist/unplugin/rollup.cjs"
+      },
+      "default": {
+        "types": "./dist/unplugin/rollup.d.ts",
+        "default": "./dist/unplugin/rollup.js"
+      }
+    },
+    "./rspack": {
+      "import": {
+        "types": "./dist/unplugin/rspack.d.ts",
+        "default": "./dist/unplugin/rspack.js"
+      },
+      "require": {
+        "types": "./dist/unplugin/rspack.d.cts",
+        "default": "./dist/unplugin/rspack.cjs"
+      },
+      "default": {
+        "types": "./dist/unplugin/rspack.d.ts",
+        "default": "./dist/unplugin/rspack.js"
+      }
+    },
+    "./webpack": {
+      "import": {
+        "types": "./dist/unplugin/webpack.d.ts",
+        "default": "./dist/unplugin/webpack.js"
+      },
+      "require": {
+        "types": "./dist/unplugin/webpack.d.cts",
+        "default": "./dist/unplugin/webpack.cjs"
+      },
+      "default": {
+        "types": "./dist/unplugin/webpack.d.ts",
+        "default": "./dist/unplugin/webpack.js"
+      }
+    }
+  },
+  "types": "dist/index.d.ts",
+  "typings": "dist/index.d.ts",
+  "dependencies": {
+    "@deepkit/injector": "^1.0.2",
+    "@deepkit/type-compiler": "^1.0.2",
+    "@donedeal0/superdiff": "^3.1.2",
+    "@nuxt/kit": "^3.15.4",
+    "@nuxt/schema": "^3.15.4",
+    "@storm-software/build-tools": "catalog:",
+    "@storm-software/config": "catalog:",
+    "@storm-software/config-tools": "catalog:",
+    "@storm-software/esbuild": "catalog:",
+    "@storm-software/testing-tools": "catalog:",
+    "@storm-software/unbuild": "catalog:",
+    "@stryke/env": "catalog:",
+    "@stryke/fs": "catalog:",
+    "@stryke/hash": "catalog:",
+    "@stryke/helpers": "catalog:",
+    "@stryke/json": "catalog:",
+    "@stryke/path": "catalog:",
+    "@stryke/string-format": "catalog:",
+    "@stryke/types": "catalog:",
+    "@stryke/unique-id": "catalog:",
+    "c12": "^3.0.1",
+    "chalk-template": "^1.1.0",
+    "defu": "catalog:",
+    "diff-match-patch": "^1.0.5",
+    "esbuild": "catalog:",
+    "jiti": "catalog:",
+    "magic-string": "^0.30.17",
+    "prettier": "catalog:",
+    "ts-morph": "^25.0.1",
+    "tsup": "catalog:",
+    "unimport": "^4.1.1",
+    "vite": "catalog:"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

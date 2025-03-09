@@ -1,0 +1,169 @@
+{
+  "name": "eslint-plugin-storm-stack",
+  "version": "0.0.1",
+  "type": "module",
+  "description": "A shared ESLint configuration containing globals used in Storm Stack projects",
+  "repository": {
+    "type": "github",
+    "url": "https://github.com/storm-software/storm-stack.git",
+    "directory": "packages/eslint-plugin"
+  },
+  "homepage": "https://stormsoftware.com",
+  "bugs": {
+    "url": "https://stormsoftware.com/support",
+    "email": "support@stormsoftware.com"
+  },
+  "author": {
+    "name": "Storm Software",
+    "email": "contact@stormsoftware.com",
+    "url": "https://stormsoftware.com"
+  },
+  "maintainers": [
+    {
+      "name": "Storm Software",
+      "email": "contact@stormsoftware.com",
+      "url": "https://stormsoftware.com"
+    }
+  ],
+  "contributors": [
+    {
+      "name": "Storm Software",
+      "email": "contact@stormsoftware.com",
+      "url": "https://stormsoftware.com"
+    }
+  ],
+  "funding": {
+    "type": "github",
+    "url": "https://github.com/sponsors/storm-software"
+  },
+  "license": "Apache-2.0",
+  "private": false,
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "exports": {
+    "./package.json": "./package.json",
+    ".": {
+      "import": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      },
+      "require": {
+        "types": "./dist/index.d.cts",
+        "default": "./dist/index.cjs"
+      },
+      "default": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      }
+    },
+    "./index": {
+      "import": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      },
+      "require": {
+        "types": "./dist/index.d.cts",
+        "default": "./dist/index.cjs"
+      },
+      "default": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      }
+    },
+    "./plugin": {
+      "import": {
+        "types": "./dist/plugin.d.ts",
+        "default": "./dist/plugin.js"
+      },
+      "require": {
+        "types": "./dist/plugin.d.cts",
+        "default": "./dist/plugin.cjs"
+      },
+      "default": {
+        "types": "./dist/plugin.d.ts",
+        "default": "./dist/plugin.js"
+      }
+    },
+    "./config": {
+      "import": {
+        "types": "./dist/configs/base.d.ts",
+        "default": "./dist/configs/base.js"
+      },
+      "require": {
+        "types": "./dist/configs/base.d.cts",
+        "default": "./dist/configs/base.cjs"
+      },
+      "default": {
+        "types": "./dist/configs/base.d.ts",
+        "default": "./dist/configs/base.js"
+      }
+    },
+    "./configs/*": {
+      "import": {
+        "types": "./dist/configs/*.d.ts",
+        "default": "./dist/configs/*.js"
+      },
+      "require": {
+        "types": "./dist/configs/*.d.cts",
+        "default": "./dist/configs/*.cjs"
+      },
+      "default": {
+        "types": "./dist/configs/*.d.ts",
+        "default": "./dist/configs/*.js"
+      }
+    }
+  },
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist/**/*"
+  ],
+  "keywords": [
+    "storm-stack",
+    "storm-software",
+    "eslint",
+    "eslint-config",
+    "eslintconfig"
+  ],
+  "peerDependencies": {
+    "eslint": "catalog:",
+    "prettier": "catalog:"
+  },
+  "peerDependenciesMeta": {
+    "eslint": {
+      "optional": false
+    }
+  },
+  "dependencies": {
+    "@eslint/compat": "^1.2.3",
+    "@eslint/eslintrc": "^3.1.0",
+    "@eslint/js": "^9.14.0",
+    "@storm-software/eslint": "catalog:",
+    "@storm-software/prettier": "catalog:",
+    "@typescript-eslint/eslint-plugin": "^8.0.0",
+    "@typescript-eslint/parser": "^8.0.0",
+    "@typescript-eslint/scope-manager": "^8.24.1",
+    "@typescript-eslint/utils": "^8.24.1",
+    "defu": "catalog:",
+    "eslint-plugin-i18n-text": "^1.0.1",
+    "eslint-plugin-import": "^2.31.0",
+    "eslint-rule-documentation": "^1.0.23",
+    "globals": "^15.12.0"
+  },
+  "devDependencies": {
+    "@eslint/config-inspector": "^0.5.1",
+    "@types/eslint": "^9.6.1",
+    "@types/eslint__js": "^8.42.3",
+    "@types/node": "catalog:",
+    "esbuild": "catalog:",
+    "eslint": "catalog:",
+    "eslint-doc-generator": "^2.0.2",
+    "eslint-plugin-eslint-plugin": "^6.4.0",
+    "eslint-typegen": "2.0.0",
+    "tsup": "catalog:",
+    "typescript": "catalog:"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "sideEffects": false
+}

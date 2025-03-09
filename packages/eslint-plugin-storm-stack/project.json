@@ -1,0 +1,15 @@
+{
+  "name": "eslint-plugin-storm-stack",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "library",
+  "sourceRoot": "packages/eslint-plugin-storm-stack/src",
+  "tags": ["platform:node"],
+  "targets": {
+    "format-docs": {
+      "command": "eslint-doc-generator"
+    },
+    "nx-release-publish": {
+      "executor": "@storm-software/workspace-tools:npm-publish"
+    }
+  }
+}

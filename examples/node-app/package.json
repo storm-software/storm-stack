@@ -1,0 +1,25 @@
+{
+  "name": "@storm-stack/examples-node-app",
+  "version": "0.0.1",
+  "type": "module",
+  "description": "An example Storm Stack NodeJs application",
+  "repository": {
+    "type": "github",
+    "url": "https://github.com/storm-software/storm-stack.git",
+    "directory": "examples/node-app"
+  },
+  "private": true,
+  "dependencies": {
+    "@storm-stack/log": "workspace:*"
+  },
+  "devDependencies": {
+    "@storm-stack/plugin-node": "workspace:*",
+    "storm-stack": "workspace:*"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "storm": {
+    "name": "examples-node-app"
+  }
+}

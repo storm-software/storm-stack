@@ -1,0 +1,43 @@
+{
+  "name": "eslint-config-storm-stack",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "library",
+  "sourceRoot": "packages/eslint-config-storm-stack/src",
+  "tags": ["platform:node"],
+  "targets": {
+    "build": {
+      "executor": "@storm-software/workspace-tools:unbuild",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "entry": ["packages/eslint-config-storm-stack/src/index.ts"],
+        "outputPath": "dist/packages/eslint-config-storm-stack",
+        "tsconfig": "packages/eslint-config-storm-stack/tsconfig.json",
+        "project": "packages/eslint-config-storm-stack/package.json",
+        "defaultConfiguration": "production",
+        "platform": "node",
+        "assets": [
+          {
+            "input": "packages/eslint-config-storm-stack",
+            "glob": "*.md",
+            "output": "/"
+          },
+          {
+            "input": "",
+            "glob": "LICENSE",
+            "output": "/"
+          }
+        ]
+      },
+      "configurations": {
+        "production": {
+          "debug": false,
+          "verbose": false
+        },
+        "development": {
+          "debug": true,
+          "verbose": true
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "name": "@storm-stack/examples-cloudflare-app",
+  "version": "0.0.1",
+  "type": "module",
+  "description": "An example Storm Stack Cloudflare application",
+  "repository": {
+    "type": "github",
+    "url": "https://github.com/storm-software/storm-stack.git",
+    "directory": "examples/cloudflare-app"
+  },
+  "private": true,
+  "devDependencies": {
+    "@storm-stack/plugin-cloudflare": "workspace:*",
+    "storm-stack": "workspace:*"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "storm": {
+    "name": "examples-cloudflare-app"
+  }
+}

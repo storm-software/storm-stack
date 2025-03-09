@@ -1,0 +1,13 @@
+{
+  "$schema": "https://biomejs.dev/schemas/1.9.4/schema.json",
+  "javascript": {
+    "globals": [
+      "storm",
+      "StormError",
+      "StormDateTime",
+      "StormDate",
+      "StormTime",
+      "StormJSON"
+    ]
+  }
+}

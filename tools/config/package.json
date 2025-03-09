@@ -16,13 +16,33 @@
         "default": "./dist/index.cjs"
       }
     },
-    "./*": "./dist/*"
+    "./index": {
+      "import": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      },
+      "require": {
+        "types": "./dist/index.d.cts",
+        "default": "./dist/index.cjs"
+      }
+    },
+    "./*": {
+      "import": {
+        "types": "./dist/*.d.ts",
+        "default": "./dist/*.js"
+      },
+      "require": {
+        "types": "./dist/*.d.cts",
+        "default": "./dist/*.cjs"
+      }
+    }
   },
   "types": "./dist/index.d.ts",
   "dependencies": {
-    "tsup": "^8.3.5"
+    "tsup": "catalog:"
   },
   "devDependencies": {
-    "@types/node": "^22.10.2"
+    "@storm-software/config-tools": "catalog:",
+    "@types/node": "catalog:"
   }
 }

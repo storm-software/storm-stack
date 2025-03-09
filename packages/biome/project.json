@@ -1,0 +1,22 @@
+{
+  "name": "biome",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "library",
+  "sourceRoot": "packages/biome/src",
+  "targets": {
+    "build": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": [
+          "pnpm copyfiles LICENSE dist/packages/biome",
+          "pnpm copyfiles --up=2 ./packages/biome/*.md ./packages/biome/package.json dist/packages/biome",
+          "pnpm copyfiles --up=3 ./packages/biome/dist/* dist/packages/biome/src"
+        ]
+      }
+    },
+    "nx-release-publish": {
+      "executor": "@storm-software/workspace-tools:npm-publish"
+    }
+  },
+  "tags": ["platform:neutral"]
+}

@@ -1,0 +1,22 @@
+{
+  "name": "@storm-stack/log",
+  "version": "0.0.1",
+  "type": "module",
+  "description": "A package containing the base log adapters for Storm Stack.",
+  "repository": {
+    "type": "github",
+    "url": "https://github.com/storm-software/storm-stack.git",
+    "directory": "packages/log"
+  },
+  "private": false,
+  "dependencies": {
+    "@stryke/json": "catalog:"
+  },
+  "devDependencies": {
+    "@types/node": "catalog:",
+    "storm-stack": "workspace:*"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

@@ -8,15 +8,15 @@
   "json.schemas": [
     {
       "url": "https://cdn.jsdelivr.net/npm/tsup/schema.json",
-      "fileMatch": ["package.json", "tsup.config.json"]
+      "fileMatch": ["tsup.config.json"]
     },
     {
       "url": "https://cdn.jsdelivr.net/npm/nx/schemas/nx-schema.json",
       "fileMatch": ["nx.json"]
     },
     {
-      "url": "https://cdn.jsdelivr.net/npm/@storm-software/config/schemas/storm.schema.json",
-      "fileMatch": ["storm.json"]
+      "url": "https://cdn.jsdelivr.net/npm/@storm-software/config/schemas/storm-workspace.schema.json",
+      "fileMatch": ["storm-workspace.json"]
     }
   ],
   "yaml.schemas": {
@@ -37,7 +37,6 @@
     "statusBar.foreground": "#1fb2a6"
   },
   "peacock.color": "#1fb2a6",
-  // "typescript.tsserver.log": "verbose",
   "typescript.tsdk": "node_modules/typescript/lib",
   "typescript.enablePromptUseWorkspaceTsdk": true,
   "tailwindCSS.experimental.classRegex": [
@@ -49,12 +48,14 @@
   ],
   "prettier.requireConfig": true,
   "prettier.bracketSameLine": true,
+  "prettier.configPath": "./node_modules/@storm-software/prettier/config.json",
   "prettier.ignorePath": "./node_modules/@storm-software/prettier/.prettierignore",
   "prettier.enableDebugLogs": true,
-  "eslint.useFlatConfig": true,
-  "eslint.run": "onSave",
-  "eslint.format.enable": true,
-  "eslint.debug": false,
+  "prettier.enable": true,
+  "markdownlint.config": {
+    "extends": "./node_modules/@storm-software/markdownlint/config/config.json"
+  },
+  "eslint.debug": true,
   "eslint.codeAction.disableRuleComment": {
     "enable": true,
     "location": "separateLine"
@@ -62,10 +63,15 @@
   "eslint.codeAction.showDocumentation": {
     "enable": true
   },
+  "eslint.useFlatConfig": true,
   "editor.bracketPairColorization.enabled": true,
   "editor.guides.bracketPairs": "active",
   "editor.tabCompletion": "on",
   "editor.formatOnSave": false,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit",
+    "source.organizeImports": "never"
+  },
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "files.associations": {
     "*.hbs": "handlebars",
@@ -74,7 +80,7 @@
   },
   "[javascript]": {
     "editor.formatOnSave": true,
-    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.defaultFormatter": "dbaeumer.vscode-eslint",
     "editor.codeActionsOnSave": {
       "source.fixAll.eslint": "explicit",
       "quickfix.biome": "explicit",
@@ -92,7 +98,7 @@
   },
   "[typescript]": {
     "editor.formatOnSave": true,
-    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.defaultFormatter": "dbaeumer.vscode-eslint",
     "editor.codeActionsOnSave": {
       "source.fixAll.eslint": "explicit",
       "quickfix.biome": "explicit",
@@ -142,6 +148,10 @@
     "editor.formatOnSave": true,
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
+  "[rust]": {
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "rust-lang.rust-analyzer"
+  },
   "[toml]": {
     "editor.formatOnSave": true,
     "editor.defaultFormatter": "tamasfe.even-better-toml"
@@ -149,10 +159,6 @@
   "[yaml]": {
     "editor.formatOnSave": true,
     "editor.defaultFormatter": "redhat.vscode-yaml"
-  },
-  "[rust]": {
-    "editor.formatOnSave": true,
-    "editor.defaultFormatter": "rust-lang.rust-analyzer"
   },
   "[css]": {
     "editor.formatOnSave": true,

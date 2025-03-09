@@ -1,0 +1,23 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "rootDir": "../..",
+    "types": ["node"],
+    "outDir": "../../dist/out-tsc"
+  },
+  "include": [
+    "executors.ts",
+    "generators.ts",
+    "index.ts",
+    "src/**/*.ts",
+    "src/**/*.d.ts",
+    "src/**/*.json",
+    "tsup.config.ts"
+  ],
+  "exclude": [
+    "jest.config.ts",
+    "src/generators/**/files/**/*",
+    "src/**/*.spec.ts",
+    "src/**/*.test.ts"
+  ]
+}

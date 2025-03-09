@@ -1,4 +1,4 @@
-/*-------------------------------------------------------------------
+/* -------------------------------------------------------------------
 
                   ⚡ Storm Software - Storm Stack
 
@@ -13,23 +13,31 @@
  Contact:         https://stormsoftware.com/contact
  License:         https://stormsoftware.com/projects/storm-stack/license
 
- -------------------------------------------------------------------*/
+ ------------------------------------------------------------------- */
 
-import { defineConfig, Options } from "tsup";
+import type { Options } from "tsup";
+import { defineConfig } from "tsup";
 
 export const getTsupConfig = (
   options: Partial<Options> & Pick<Options, "name" | "entryPoints">
 ): Options =>
   defineConfig({
     target: "node22",
+    outDir: "dist",
     format: ["cjs", "esm"],
     bundle: true,
     splitting: true,
+    treeshake: true,
+    keepNames: true,
     clean: true,
     sourcemap: false,
     tsconfig: "./tsconfig.json",
     dts: {
       resolve: true
+    },
+    onSuccess: async () => {
+      // eslint-disable-next-line no-console
+      console.log(`${options.name} build completed successfully!`);
     },
     ...options
   }) as Options;

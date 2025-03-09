@@ -1,0 +1,19 @@
+{
+  "executors": {
+    "node-app-build": {
+      "implementation": "./dist/src/executors/node-app-build/executor",
+      "schema": "./dist/src/executors/node-app-build/schema.json",
+      "description": "An executor used to build a NodeJs application"
+    },
+    "cloudflare-app-build": {
+      "implementation": "./dist/src/executors/cloudflare-app-build/executor",
+      "schema": "./dist/src/executors/cloudflare-app-build/schema.json",
+      "description": "An executor used to build a Cloudflare Worker application"
+    },
+    "node-lib-build": {
+      "implementation": "./dist/src/executors/node-lib-build/executor",
+      "schema": "./dist/src/executors/node-lib-build/schema.json",
+      "description": "An executor used to build a NodeJs library"
+    }
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "name": "nx",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "packages/nx/src",
+  "projectType": "library",
+  "implicitDependencies": ["storm-stack", "plugin-cloudflare"],
+  "targets": {
+    "build": {
+      "executor": "nx:run-commands",
+      "dependsOn": ["build-base", "build-untyped"],
+      "options": {
+        "commands": [
+          "pnpm copyfiles LICENSE dist/packages/nx",
+          "pnpm copyfiles --up=2 ./packages/nx/*.md ./packages/nx/executors.json ./packages/nx/generators.json ./packages/nx/package.json dist/packages/nx",
+          "pnpm copyfiles --up=3 \"./packages/nx/src/**/schema.*\" dist/packages/nx/dist/src",
+          "pnpm copyfiles --up=4 \"./packages/nx/src/**/*.md\" dist/packages/nx/docs/api",
+          "pnpm copyfiles --up=4 \"./packages/nx/src/generators/*/files/**/*\" dist/packages/nx/dist/src/generators",
+          "pnpm copyfiles --up=3 \"./packages/nx/dist/**/*\" dist/packages/nx/dist"
+        ]
+      }
+    },
+    "nx-release-publish": {
+      "executor": "@storm-software/workspace-tools:npm-publish"
+    }
+  }
+}

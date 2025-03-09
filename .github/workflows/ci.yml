@@ -99,7 +99,7 @@ jobs:
         shell: bash
 
       - name: Run build script
-        run: pnpm build-all
+        run: pnpm build-prod
         shell: bash
 
       - name: Release repository updates
