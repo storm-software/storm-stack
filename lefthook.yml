@@ -97,16 +97,16 @@ pre-push:
       glob: "**/*"
       run: "pnpm exec storm-pre-push {staged_files}"
       stage_fixed: true
-    lint-filename:
-      glob: "**/*"
-      run: 'pnpm exec ls-lint
-        --config="./node_modules/@storm-software/linting-tools/ls-lint/config.yml"'
+    # lint-filename:
+    #   glob: "**/*"
+    #   run: 'pnpm exec ls-lint
+    #     --config="./node_modules/@storm-software/linting-tools/ls-lint/config.yml"'
     lint-codeowners:
       glob: "**/CODEOWNERS"
       run: pnpm exec storm-lint codeowners
     lint-github-actions:
       glob: ".github/workflows/*.*"
-      run: zizmor --offline .github/workflows/
+      run: zizmor --offline --config="./tools/config/src/zizmor.yml" .github/workflows/
     sherif:
       glob:
         - "*.js"

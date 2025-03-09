@@ -2,20 +2,30 @@
 
 # Environment variables configuration
 
-Below is a list of environment variables used by the [@storm-stack/examples-cloudflare-app](https://www.npmjs.com/package/@storm-stack/examples-cloudflare-app) package. These values can be updated in the `.env` file in the root of the project.
+Below is a list of environment variables used by the
+[@storm-stack/examples-cloudflare-app](https://www.npmjs.com/package/@storm-stack/examples-cloudflare-app)
+package. These values can be updated in the `.env` file in the root of the
+project.
 
 ## Variables
 
-The below list of environment variables are used as configuration parameters to drive the processing of the application. The data contained in these variables are **not** considered sensitive or confidential. Any values provided in these variables will be available in plain text to the public.
+The below list of environment variables are used as configuration parameters to
+drive the processing of the application. The data contained in these variables
+are **not** considered sensitive or confidential. Any values provided in these
+variables will be available in plain text to the public.
 
-| Name | Description | Type | Default Value | Required |
-| ---- | ----------- | ---- | ------------- | :--------: |
-| APP_NAME | The name of the application. |  |  | ✔ |
-| ENVIRONMENT | The environment the application is running in. This value will be populated with the value of `MODE` if not provided. |  | "production" |  |
-| INCLUDE_ERROR_DATA | Indicates if error data should be included. |  | `false` |  |
-| LOCALE | The locale for the application. |  | "en_US" |  |
-| MODE | The processing mode of the application. |  | "production" |  |
-| PLATFORM | The type of platform the application is running on. |  | "node" |  |
-| STACKTRACE | Indicates if error stack traces should be captured. |  | `false` |  |
-| TIMEZONE | The timezone for the application. |  | "America/New_York" |  |
-| __STORM_INJECTED__ | The serialized environment variables injected into the application. |  | "{}" |  |
+| Name               | Description                                                                                                           | Type | Default Value      | Required |
+| ------------------ | --------------------------------------------------------------------------------------------------------------------- | ---- | ------------------ | :------: |
+| APP_NAME           | The name of the application.                                                                                          |      |                    |    ✔    |
+| APP_VERSION        | The version of the application.                                                                                       |      | "1.0.0"            |          |
+| DEVELOPMENT        | Indicates if the application is running in development mode.                                                          |      | `false`            |          |
+| ENVIRONMENT        | The environment the application is running in. This value will be populated with the value of `MODE` if not provided. |      | "production"       |          |
+| INCLUDE_ERROR_DATA | Indicates if error data should be included.                                                                           |      | `false`            |          |
+| LOCALE             | The default locale to use in the application.                                                                         |      | "en_US"            |          |
+| LOG_LEVEL          | The lowest logging level for the application.                                                                         |      | `info`             |          |
+| MODE               | The processing mode of the application.                                                                               |      | `production`       |          |
+| PLATFORM           | The type of platform the application is running on.                                                                   |      | "node"             |          |
+| PRODUCTION         | Indicates if the application is running in production mode.                                                           |      | `true`             |          |
+| STACKTRACE         | Indicates if error stack traces should be captured.                                                                   |      | `false`            |          |
+| STAGING            | Indicates if the application is running in staging mode.                                                              |      | `false`            |          |
+| TIMEZONE           | The default timezone to use in the application.                                                                       |      | "America/New_York" |          |

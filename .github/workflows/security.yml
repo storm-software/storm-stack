@@ -15,12 +15,13 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.event.number || github.ref }}
   cancel-in-progress: true
 
-permissions: write-all
-
 jobs:
   file-system-scan:
     name: Vulnerability scanning - File system
     uses: storm-software/storm-ops/.github/workflows/security-reusable.yml@main
+    permissions:
+      contents: read
+      security-events: write
     with:
       scan-type: "fs"
       format: "sarif"
@@ -30,6 +31,9 @@ jobs:
   config-scan:
     name: Vulnerability scanning - Config
     uses: storm-software/storm-ops/.github/workflows/security-reusable.yml@main
+    permissions:
+      contents: read
+      security-events: write
     with:
       scan-type: "config"
       format: "sarif"

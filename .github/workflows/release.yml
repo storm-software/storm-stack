@@ -1,4 +1,4 @@
-name: "CI/CD"
+name: "Release"
 
 on:
   workflow_dispatch:
@@ -28,14 +28,21 @@ jobs:
     permissions:
       contents: write
       id-token: write
-    if: github.repository == 'storm-software/storm-stack' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/canary' || github.ref == 'refs/heads/experimental')
+    if: github.repository == 'storm-software/storm-stack' && (github.ref ==
+      'refs/heads/main' || github.ref == 'refs/heads/canary' || github.ref ==
+      'refs/heads/experimental')
     steps:
       - name: Send notification - Deployment started
         uses: storm-software/action-notify@main
         with:
           title: "Deployment for ${{ github.repository }} has started (In Progress)"
-          subtitle: "Deployment for ${{ github.repository }} has started - #${{ github.run_number }}"
-          description: "Deployment for ${{ github.repository }} is currently in process - #${{ github.run_number }}. Click here to see the full workflow details: ${{ github.event.pull_request.html_url || github.event.head_commit.url }}."
+          subtitle: "Deployment for ${{ github.repository }} has started - #${{
+            github.run_number }}"
+          description:
+            "Deployment for ${{ github.repository }} is currently in process -
+            #${{ github.run_number }}. Click here to view the changes associated
+            with this deployment: ${{ github.event.pull_request.html_url ||
+            github.event.head_commit.url }} "
           color: 2077350
           status: "In Progress"
           slack-token: ${{ secrets.STORM_BOT_SLACK_TOKEN }}
@@ -45,7 +52,8 @@ jobs:
 
   process:
     name: "Continuous Integration"
-    if: always() && !cancelled() && !contains(needs.*.result, 'failure') && github.event.pull_request.draft == false
+    if: always() && !cancelled() && !contains(needs.*.result, 'failure') &&
+      github.event.pull_request.draft == false
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -62,6 +70,7 @@ jobs:
           # We need to fetch all branches and commits so that Nx affected has a base to compare against.
           fetch-depth: 0
           token: ${{ secrets.STORM_BOT_GITHUB_TOKEN }}
+          persist-credentials: false
 
       - name: Checkout `main` branch
         uses: actions/checkout@v4
@@ -70,18 +79,19 @@ jobs:
           # We need to fetch all branches and commits so that Nx affected has a base to compare against.
           fetch-depth: 0
           token: ${{ secrets.STORM_BOT_GITHUB_TOKEN }}
+          persist-credentials: false
 
       - name: Setup workspace
         uses: storm-software/action-setup@main
         with:
           package-manager: pnpm
-          package-manager-version: 9.10.0
-          storm-bot: Stormie-Bot
+          package-manager-version: 10.3.0
+          storm-bot: stormie-bot
           storm-bot-github-token: ${{ secrets.STORM_BOT_GITHUB_TOKEN }}
 
       - name: Configure git
         run: |
-          git config user.name "Stormie-Bot"
+          git config user.name "stormie-bot"
           git config user.email "bot@stormsoftware.com"
           git config lfs.allowincompletepush true
           npm config set //registry.npmjs.org/:_authToken=$NPM_TOKEN
@@ -98,11 +108,12 @@ jobs:
           echo "HEAD: ${{ env.NX_HEAD }}"
         shell: bash
 
-      - name: Run build script
-        run: pnpm build-prod
+      - name: Run workspace build
+        run: pnpm build
         shell: bash
 
       - name: Release repository updates
+        if: ${{ success() }}
         run: pnpm release --base=${{ env.NX_BASE }} --head=${{ env.NX_HEAD }}
         env:
           GITHUB_ACTOR: ${{ github.actor }}
@@ -111,7 +122,7 @@ jobs:
           NPM_TOKEN: ${{ secrets.STORM_BOT_NPM_TOKEN }}
           CARGO_REGISTRY_TOKEN: ${{ secrets.STORM_BOT_CARGO_TOKEN }}
           CLOUDFLARE_API_TOKEN: ${{ secrets.STORM_BOT_CLOUDFLARE_TOKEN }}
-          STORM_BOT: Stormie-Bot
+          STORM_BOT: stormie-bot
           STORM_WORKSPACE_ROOT: ${{ github.workspace }}
           STORM_REPOSITORY: ${{ github.repositoryUrl }}
           CYCLONE_REGISTRY_ACCESS_KEY: ${{ secrets.CYCLONE_REGISTRY_ACCESS_KEY }}
@@ -129,8 +140,14 @@ jobs:
         uses: storm-software/action-notify@main
         with:
           title: "Deployment for ${{ github.repository }} has finished (Success)"
-          subtitle: "Deployment for ${{ github.repository }} has finished successfully - #${{ github.run_number }}"
-          description: "Deployment for ${{ github.repository }} has finished successfully - #${{ github.run_number }}. Click here to see the full workflow details: ${{ github.event.pull_request.html_url || github.event.head_commit.url }}."
+          subtitle:
+            "Deployment for ${{ github.repository }} has finished successfully -
+            #${{ github.run_number }}"
+          description:
+            "Deployment for ${{ github.repository }} has finished successfully -
+            #${{ github.run_number }}. Click here to view the changes associated
+            with this deployment: ${{ github.event.pull_request.html_url ||
+            github.event.head_commit.url }} "
           color: 556891
           status: "Success"
           slack-token: ${{ secrets.STORM_BOT_SLACK_TOKEN }}
@@ -149,8 +166,14 @@ jobs:
         uses: storm-software/action-notify@main
         with:
           title: "Deployment for ${{ github.repository }} has finished (Failure)"
-          subtitle: "Deployment for ${{ github.repository }} finished with failures - #${{ github.run_number }}"
-          description: "Deployment for ${{ github.repository }} finished with failures - #${{ github.run_number }}. Click here to see the full workflow details: ${{ github.event.pull_request.html_url || github.event.head_commit.url }}."
+          subtitle:
+            "Deployment for ${{ github.repository }} finished with failures -
+            #${{ github.run_number }}"
+          description:
+            "Deployment for ${{ github.repository }} finished with failures -
+            #${{ github.run_number }}. Click here to view the changes associated
+            with this deployment: ${{ github.event.pull_request.html_url ||
+            github.event.head_commit.url }} "
           color: 10027008
           status: "Failure"
           slack-token: ${{ secrets.STORM_BOT_SLACK_TOKEN }}
@@ -169,8 +192,15 @@ jobs:
         uses: storm-software/action-notify@main
         with:
           title: "Deployment for ${{ github.repository }} has finished (Cancelled)"
-          subtitle: "Deployment for ${{ github.repository }} was cancelled - #${{ github.run_number }}"
-          description: "Deployment for ${{ github.repository }} was stopped before it could complete - #${{ github.run_number }}. Click here to see the full workflow details: ${{ github.event.pull_request.html_url || github.event.head_commit.url }}."
+          subtitle:
+            "Deployment for ${{ github.repository }} has been cancelled - #${{
+            github.run_number }}"
+          description:
+            "Deployment for ${{ github.repository }} was stopped before it could
+            complete - #${{ github.run_number }}. Click here to view the changes
+            associated with this deployment: ${{
+            github.event.pull_request.html_url || github.event.head_commit.url
+            }}."
           color: 16565273
           status: "Cancelled"
           slack-token: ${{ secrets.STORM_BOT_SLACK_TOKEN }}

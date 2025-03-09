@@ -9,6 +9,7 @@
 # the `language` matrix defined below to confirm you have the correct set of
 # supported CodeQL languages.
 #
+
 name: "CodeQL"
 
 on:
@@ -66,7 +67,7 @@ jobs:
         with:
           package-manager: pnpm
           package-manager-version: 9.10.0
-          storm-bot: Stormie-Bot
+          storm-bot: stormie-bot
           storm-bot-github-token: ${{ secrets.STORM_BOT_GITHUB_TOKEN }}
 
       # Initializes the CodeQL tools for scanning.
