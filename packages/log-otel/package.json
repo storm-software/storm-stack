@@ -1,0 +1,27 @@
+{
+  "name": "@storm-stack/log-otel",
+  "version": "0.0.1",
+  "type": "module",
+  "description": "A package containing a Storm Stack log adapter to write logs to OpenTelemetry",
+  "repository": {
+    "type": "github",
+    "url": "https://github.com/storm-software/storm-stack.git",
+    "directory": "packages/log-otel"
+  },
+  "private": false,
+  "dependencies": {
+    "@opentelemetry/api-logs": "^0.57.2",
+    "@opentelemetry/exporter-logs-otlp-http": "^0.57.2",
+    "@opentelemetry/otlp-exporter-base": "^0.57.2",
+    "@opentelemetry/resources": "^1.30.1",
+    "@opentelemetry/sdk-logs": "^0.57.2",
+    "@opentelemetry/semantic-conventions": "^1.30.0"
+  },
+  "devDependencies": {
+    "@types/node": "catalog:",
+    "storm-stack": "workspace:*"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

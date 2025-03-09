@@ -69,13 +69,13 @@ const DEFAULT_VARIABLES = {
     description: "Indicates if error data should be included.",
     isOptional: false
   },
-  TIMEZONE: {
+  DEFAULT_TIMEZONE: {
     text: "string",
     defaultValue: "America/New_York",
     description: "The default timezone to use in the application.",
     isOptional: false
   },
-  LOCALE: {
+  DEFAULT_LOCALE: {
     text: "string",
     defaultValue: "en_US",
     description: "The default locale to use in the application.",

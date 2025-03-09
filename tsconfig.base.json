@@ -20,6 +20,8 @@
       "@storm-stack/log-console/*": ["packages/log-console/src/*"],
       "@storm-stack/log-file": ["packages/log-file/src/index.ts"],
       "@storm-stack/log-file/*": ["packages/log-file/src/*"],
+      "@storm-stack/log-otel": ["packages/log-otel/src/index.ts"],
+      "@storm-stack/log-otel/*": ["packages/log-otel/src/*"],
       "@storm-stack/log-stream": ["packages/log-stream/src/index.ts"],
       "@storm-stack/log-stream/*": ["packages/log-stream/src/*"],
       "@storm-stack/nx": ["packages/nx/src/index.ts"],

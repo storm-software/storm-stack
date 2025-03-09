@@ -61,6 +61,7 @@
     "start": "nx serve",
     "view-config": "pnpm exec storm-config"
   },
+  "dependencies": {},
   "devDependencies": {
     "@ls-lint/ls-lint": "^2.2.3",
     "@nx/devkit": "catalog:",
@@ -147,7 +148,8 @@
       "storm-stack": "workspace:*",
       "@storm-stack/log-console": "workspace:*",
       "@storm-stack/log-file": "workspace:*",
-      "@storm-stack/log-stream": "workspace:*"
+      "@storm-stack/log-stream": "workspace:*",
+      "@storm-stack/log-otel": "workspace:*"
     },
     "onlyBuiltDependencies": [
       "@biomejs/biome",
