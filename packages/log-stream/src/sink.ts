@@ -17,7 +17,7 @@
 
 import type { WritableStream } from "node:stream/web";
 import type { LogRecord, LogSink } from "storm-stack/types";
-import { defaultTextFormatter } from "./helpers/formatter";
+import { defaultTextFormatter } from "./formatter";
 import type { TextFormatter } from "./types";
 
 /**
@@ -59,7 +59,7 @@ export interface StreamSinkOptions {
  * @param options The options for the sink.
  * @returns A sink that writes to the stream.
  */
-export function getStreamSink(
+export function getSink(
   stream: WritableStream,
   options: StreamSinkOptions = {}
 ): LogSink & AsyncDisposable {

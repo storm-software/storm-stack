@@ -1,17 +1,14 @@
 {
-  "name": "@storm-stack/log",
+  "name": "@storm-stack/log-stream",
   "version": "0.0.1",
   "type": "module",
-  "description": "A package containing the base log adapters for Storm Stack.",
+  "description": "A package containing a Storm Stack log adapter to write logs to a stream",
   "repository": {
     "type": "github",
     "url": "https://github.com/storm-software/storm-stack.git",
-    "directory": "packages/log"
+    "directory": "packages/log-stream"
   },
   "private": false,
-  "dependencies": {
-    "@stryke/json": "catalog:"
-  },
   "devDependencies": {
     "@types/node": "catalog:",
     "storm-stack": "workspace:*"

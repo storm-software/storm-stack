@@ -10,7 +10,7 @@
   },
   "private": true,
   "dependencies": {
-    "@storm-stack/log": "workspace:*"
+    "@storm-stack/log-console": "workspace:*"
   },
   "devDependencies": {
     "@storm-stack/plugin-node": "workspace:*",

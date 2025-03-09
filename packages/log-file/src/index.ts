@@ -16,15 +16,14 @@
  ------------------------------------------------------------------- */
 
 /**
- * The log library used by Storm Software for building TypeScript applications.
+ * The log-file library used by Storm Software for building NodeJS applications.
  *
  * @remarks
- * A package containing the base log adapters for Storm Stack
+ * A package containing a log sink that writes to a file
  *
  * @packageDocumentation
  */
 
-export * from "./helpers/base-file-sink";
-export * from "./helpers/filter";
-export * from "./helpers/formatter";
+export * from "./base/base-sink";
+export * from "./sink";
 export * from "./types";

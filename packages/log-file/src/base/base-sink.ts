@@ -15,42 +15,14 @@
 
  ------------------------------------------------------------------- */
 
+import { defaultTextFormatter } from "@storm-stack/log-stream/formatter";
 import type { LogRecord, LogSink } from "storm-stack/types";
-import type { StreamSinkOptions } from "../stream";
-import { defaultTextFormatter } from "./formatter";
-
-export type FileSinkOptions = StreamSinkOptions;
-
-/**
- * A platform-specific file sink driver.
- * @typeParam TFile The type of the file descriptor.
- */
-export interface FileSinkDriver<TFile> {
-  /**
-   * Open a file for appending and return a file descriptor.
-   * @param path A path to the file to open.
-   */
-  openSync: (path: string) => TFile;
-
-  /**
-   * Write a chunk of data to the file.
-   * @param fd The file descriptor.
-   * @param chunk The data to write.
-   */
-  writeSync: (fd: TFile, chunk: Uint8Array) => void;
-
-  /**
-   * Flush the file to ensure that all data is written to the disk.
-   * @param fd The file descriptor.
-   */
-  flushSync: (fd: TFile) => void;
-
-  /**
-   * Close the file.
-   * @param fd The file descriptor.
-   */
-  closeSync: (fd: TFile) => void;
-}
+import type {
+  FileSinkDriver,
+  FileSinkOptions,
+  RotatingFileSinkDriver,
+  RotatingFileSinkOptions
+} from "../types";
 
 /**
  * Get a platform-independent file sink.
@@ -74,40 +46,6 @@ export function getBaseFileSink<TFile>(
   };
   sink[Symbol.dispose] = () => options.closeSync(fd);
   return sink;
-}
-
-/**
- * Options for the {@link getBaseRotatingFileSink} function.
- */
-export interface RotatingFileSinkOptions extends FileSinkOptions {
-  /**
-   * The maximum bytes of the file before it is rotated.  1 MiB by default.
-   */
-  maxSize?: number;
-
-  /**
-   * The maximum number of files to keep.  5 by default.
-   */
-  maxFiles?: number;
-}
-
-/**
- * A platform-specific rotating file sink driver.
- */
-export interface RotatingFileSinkDriver<TFile> extends FileSinkDriver<TFile> {
-  /**
-   * Get the size of the file.
-   * @param path A path to the file.
-   * @returns The `size` of the file in bytes, in an object.
-   */
-  statSync: (path: string) => { size: number };
-
-  /**
-   * Rename a file.
-   * @param oldPath A path to the file to rename.
-   * @param newPath A path to be renamed to.
-   */
-  renameSync: (oldPath: string, newPath: string) => void;
 }
 
 /**

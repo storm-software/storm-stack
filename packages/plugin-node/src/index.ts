@@ -158,7 +158,7 @@ export default class NodePlugin<
           this.config.features.includes(StormStackNodeFeatures.HTTP) &&
           this.install(options, "@stryke/http"),
         options.projectType === "application" &&
-          this.install(options, "@storm-stack/log")
+          this.install(options, "@storm-stack/log-console")
       ].filter(Boolean)
     );
   }
@@ -254,7 +254,7 @@ export default class NodePlugin<
         return this.writeFile(
           entry.file,
           `${getFileHeader()}
-          
+
 import ${entry.name ? `{ ${entry.name} }` : "handler"} from "${joinPaths(
             relativePath(
               joinPaths(options.projectRoot, findFilePath(entry.file)),
@@ -266,11 +266,11 @@ import ${entry.name ? `{ ${entry.name} }` : "handler"} from "${joinPaths(
             )
           )}";
 import { createStormApp } from ".${joinPaths(options.runtimeDir.replace(options.artifactsDir, ""), "app")}";
-import { getConsoleSink } from "@storm-stack/log/console";
+import { getSink } from "@storm-stack/log-console";
 
 export default createStormApp(${entry.name ? entry.name : "handler"}, {
 name: ${options.name ? `"${options.name}"` : "undefined"},
-log: { handle: getConsoleSink(), logLevel: "debug" },
+log: { handle: getSink(), logLevel: "debug" },
 });
 
 `

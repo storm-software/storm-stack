@@ -15,18 +15,14 @@
 
  ------------------------------------------------------------------- */
 
-import type { LogSink } from "storm-stack/types";
-
 import fs from "node:fs";
+import type { LogSink } from "storm-stack/types";
+import { getBaseFileSink, getBaseRotatingFileSink } from "./base/base-sink";
 import type {
   FileSinkOptions,
   RotatingFileSinkDriver,
   RotatingFileSinkOptions
-} from "./helpers/base-file-sink";
-import {
-  getBaseFileSink,
-  getBaseRotatingFileSink
-} from "./helpers/base-file-sink";
+} from "./types";
 
 /**
  * A Node.js-specific file sink driver.
@@ -52,7 +48,7 @@ export const nodeDriver: RotatingFileSinkDriver<number> = {
  * @returns A sink that writes to the file.  The sink is also a disposable
  *          object that closes the file when disposed.
  */
-export function getFileSink(
+export function getSink(
   path: string,
   options: FileSinkOptions = {}
 ): LogSink & Disposable {
@@ -73,7 +69,7 @@ export function getFileSink(
  * @param options - The options for the sink and the file driver.
  * @returns A sink that writes to the file. The sink is also a disposable object that closes the file when disposed.
  */
-export function getRotatingFileSink(
+export function getRotatingSink(
   path: string,
   options: RotatingFileSinkOptions = {}
 ): LogSink & Disposable {

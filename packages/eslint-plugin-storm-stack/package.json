@@ -160,7 +160,7 @@
     "eslint-plugin-eslint-plugin": "^6.4.0",
     "eslint-typegen": "2.0.0",
     "tsup": "catalog:",
-    "typescript": "catalog:"
+    "typescript": "~5.7.3"
   },
   "publishConfig": {
     "access": "public"

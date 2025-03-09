@@ -233,6 +233,31 @@ export type LogFilter = (record: LogRecord) => boolean;
 export type LogFilterLike = LogFilter | LogLevel | null;
 
 /**
+ * The formatted values for a log record.
+ */
+export interface FormattedValues {
+  /**
+   * The formatted timestamp.
+   */
+  timestamp: string;
+
+  /**
+   * The formatted log level.
+   */
+  level: string;
+
+  /**
+   * The formatted message.
+   */
+  message: string;
+
+  /**
+   * The unformatted log record.
+   */
+  record: LogRecord;
+}
+
+/**
  * A logger interface. It provides methods to log messages at different severity levels.
  *
  * @remarks

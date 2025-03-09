@@ -17,15 +17,14 @@
 
 import { StormJSON } from "@stryke/json/storm-json";
 import util from "node:util";
-import type { LogLevel, LogRecord } from "storm-stack/types";
+import type { FormattedValues, LogLevel, LogRecord } from "storm-stack/types";
 import type {
   AnsiColor,
   AnsiColorFormatterOptions,
   AnsiStyle,
-  FormattedValues,
   TextFormatter,
   TextFormatterOptions
-} from "../types";
+} from "./types";
 
 /**
  * The severity level abbreviations.
@@ -288,56 +287,3 @@ export function getAnsiColorFormatter(
  * @since 0.5.0
  */
 export const ansiColorFormatter: TextFormatter = getAnsiColorFormatter();
-
-/**
- * The styles for the log level in the console.
- */
-const logLevelStyles: Record<LogLevel, string> = {
-  "debug": "background-color: gray; color: white;",
-  "info": "background-color: white; color: black;",
-  "warning": "background-color: orange; color: black;",
-  "error": "background-color: red; color: white;",
-  "fatal": "background-color: maroon; color: white;"
-};
-
-/**
- * The default console formatter.
- *
- * @param record The log record to format.
- * @returns The formatted log record, as an array of arguments for
- *          {@link console.log}.
- */
-export function defaultConsoleFormatter(record: LogRecord): readonly unknown[] {
-  let msg = "";
-  const values: unknown[] = [];
-
-  for (let i = 0; i < record.message.length; i++) {
-    if (i % 2 === 0 && typeof record.message[i] === "string") {
-      msg += record.message[i] as string;
-    } else {
-      msg += "%o";
-      values.push(record.message[i]);
-    }
-  }
-
-  const date = new Date(record.timestamp);
-
-  return [
-    `%c${date.getUTCMonth()}/${date.getUTCDay()}/${date.getUTCFullYear()} ${date.getUTCHours().toString().padStart(2, "0")}:${date
-      .getUTCMinutes()
-      .toString()
-      .padStart(
-        2,
-        "0"
-      )}:${date.getUTCSeconds().toString().padStart(2, "0")}.${date
-      .getUTCMilliseconds()
-      .toString()
-      .padStart(3, "0")} %c${levelAbbreviations[record.level]}%c %c${msg}`,
-    "color: gray;",
-    logLevelStyles[record.level],
-    "background-color: default;",
-    "color: gray;",
-    "color: default;",
-    ...values
-  ];
-}

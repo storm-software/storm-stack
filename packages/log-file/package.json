@@ -1,0 +1,22 @@
+{
+  "name": "@storm-stack/log-file",
+  "version": "0.0.1",
+  "type": "module",
+  "description": "A package containing a Storm Stack log adapter to write logs to a file",
+  "repository": {
+    "type": "github",
+    "url": "https://github.com/storm-software/storm-stack.git",
+    "directory": "packages/log-file"
+  },
+  "private": false,
+  "dependencies": {
+    "@storm-stack/log-stream": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/node": "catalog:",
+    "storm-stack": "workspace:*"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

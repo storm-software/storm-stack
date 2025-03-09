@@ -16,7 +16,7 @@
  ------------------------------------------------------------------- */
 
 import type { LogLevel, LogRecord, LogSink } from "storm-stack/types";
-import { defaultConsoleFormatter } from "./helpers/formatter";
+import { defaultConsoleFormatter } from "./formatter";
 import type { ConsoleSinkOptions } from "./types";
 
 /**
@@ -25,7 +25,7 @@ import type { ConsoleSinkOptions } from "./types";
  * @param options - The options for the sink.
  * @returns A sink that logs to the console.
  */
-export function getConsoleSink(options: ConsoleSinkOptions = {}): LogSink {
+export function getSink(options: ConsoleSinkOptions = {}): LogSink {
   const formatter = options.formatter ?? defaultConsoleFormatter;
   const console = options.console ?? (globalThis as any).console;
 

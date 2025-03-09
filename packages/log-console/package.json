@@ -1,0 +1,22 @@
+{
+  "name": "@storm-stack/log-console",
+  "version": "0.0.1",
+  "type": "module",
+  "description": "A package containing a Storm Stack log adapter to write logs to a console",
+  "repository": {
+    "type": "github",
+    "url": "https://github.com/storm-software/storm-stack.git",
+    "directory": "packages/log-console"
+  },
+  "private": false,
+  "dependencies": {
+    "@stryke/json": "catalog:"
+  },
+  "devDependencies": {
+    "@types/node": "catalog:",
+    "storm-stack": "workspace:*"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

@@ -1,9 +1,9 @@
 <!-- START header -->
 <!-- END header -->
 
-# Storm Stack - Log Base Adapters
+# Storm Stack - Stream Log Adapters
 
-A package containing the base log adapters for Storm Stack.
+A package containing a Storm Stack log adapter to write logs to a stream.
 
 <!-- START doctoc -->
 <!-- END doctoc -->
@@ -13,14 +13,14 @@ A package containing the base log adapters for Storm Stack.
 Using [pnpm](http://pnpm.io):
 
 ```bash
-pnpm add -D @storm-stack/log
+pnpm add -D @storm-stack/log-stream
 ```
 
 <details>
   <summary>Using npm</summary>
 
 ```bash
-npm install -D @storm-stack/log
+npm install -D @storm-stack/log-stream
 ```
 
 </details>
@@ -29,7 +29,7 @@ npm install -D @storm-stack/log
   <summary>Using yarn</summary>
 
 ```bash
-yarn add -D @storm-stack/log
+yarn add -D @storm-stack/log-stream
 ```
 
 </details>
@@ -48,15 +48,16 @@ commands are available to assist in development.
 
 ### Building
 
-Run `nx build log` to build the library.
+Run `nx build log-stream` to build the library.
 
 ### Running unit tests
 
-Run `nx test log` to execute the unit tests via [Jest](https://jestjs.io).
+Run `nx test log-stream` to execute the unit tests via
+[Jest](https://jestjs.io).
 
 ### Linting
 
-Run `nx lint log` to run [ESLint](https://eslint.org/) on the package.
+Run `nx lint log-stream` to run [ESLint](https://eslint.org/) on the package.
 
 <!-- START footer -->
 <!-- END footer -->
