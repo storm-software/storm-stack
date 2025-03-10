@@ -256,8 +256,8 @@
     "@deepkit/injector": "^1.0.2",
     "@deepkit/type-compiler": "^1.0.2",
     "@donedeal0/superdiff": "^3.1.2",
-    "@nuxt/kit": "^3.15.4",
-    "@nuxt/schema": "^3.15.4",
+    "@nuxt/kit": "^3.16.0",
+    "@nuxt/schema": "^3.16.0",
     "@storm-software/build-tools": "catalog:",
     "@storm-software/config": "catalog:",
     "@storm-software/config-tools": "catalog:",
@@ -273,7 +273,7 @@
     "@stryke/string-format": "catalog:",
     "@stryke/types": "catalog:",
     "@stryke/unique-id": "catalog:",
-    "c12": "^3.0.1",
+    "c12": "^3.0.2",
     "chalk-template": "^1.1.0",
     "defu": "catalog:",
     "diff-match-patch": "^1.0.5",
@@ -283,7 +283,7 @@
     "prettier": "catalog:",
     "ts-morph": "^25.0.1",
     "tsup": "catalog:",
-    "unimport": "^4.1.1",
+    "unimport": "^4.1.2",
     "vite": "catalog:"
   },
   "publishConfig": {
