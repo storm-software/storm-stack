@@ -67,6 +67,20 @@
         "types": "./dist/index.d.ts",
         "default": "./dist/index.js"
       }
+    },
+    "./preset": {
+      "import": {
+        "types": "./dist/preset.d.ts",
+        "default": "./dist/preset.js"
+      },
+      "require": {
+        "types": "./dist/preset.d.cts",
+        "default": "./dist/preset.cjs"
+      },
+      "default": {
+        "types": "./dist/preset.d.ts",
+        "default": "./dist/preset.js"
+      }
     }
   },
   "files": [
@@ -78,9 +92,6 @@
     "biome",
     "biomejs"
   ],
-  "peerDependencies": {
-    "eslint": "catalog:"
-  },
   "peerDependenciesMeta": {
     "eslint": {
       "optional": false
@@ -88,10 +99,14 @@
   },
   "dependencies": {
     "@storm-software/eslint": "catalog:",
-    "eslint-flat-config-utils": "catalog:"
+    "eslint-flat-config-utils": "catalog:",
+    "eslint-plugin-storm-stack": "workspace:*"
   },
   "devDependencies": {
-    "eslint": "catalog:"
+    "eslint": "catalog:",
+    "eslint-typegen": "catalog:",
+    "tsup": "catalog:",
+    "tsx": "catalog:"
   },
   "publishConfig": {
     "access": "public"

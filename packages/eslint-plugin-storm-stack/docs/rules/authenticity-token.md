@@ -1,6 +1,6 @@
 # Disallow usage of CSRF tokens in JavaScript (`storm-stack/authenticity-token`)
 
-💼 This rule is enabled in the 🔐 `internal` config.
+💼 This rule is enabled in the 🔐 `recommended` config.
 
 <!-- end auto-generated rule header -->
 
@@ -35,7 +35,7 @@ serialize the input elements of a form:
 👎 Examples of **incorrect** code for this rule:
 
 ```js
-const csrfToken = this.closest("form").elements["authenticity_token"].value
+const csrfToken = this.closest("form").elements.authenticity_token.value
 ```
 
 👍 Examples of **correct** code for this rule:
@@ -48,13 +48,13 @@ const csrfToken = this.closest("form").elements["authenticity_token"].value
 ```
 
 ```js
-on("click", ".js-my-button", function (e) {
+on("click", ".js-my-button", (e) => {
   const form = this.closest("form")
 
   fetch(form.action, {
     method: form.method,
     body: new FormData(form)
-  }).then(function () {
+  }).then(() =>  {
     alert("Success!")
   })
 
@@ -70,11 +70,11 @@ a data-attribute:
 ```
 
 ```js
-on("click", ".js-my-button", function (e) {
+on("click", ".js-my-button", (e)  =>  {
   csrfRequest(this.getAttribute("data-url"), {
     method: "PUT",
     body: data
-  }).then(function () {
+  }).then( () =>  {
     alert("Success!")
   })
 

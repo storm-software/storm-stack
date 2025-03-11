@@ -28,6 +28,11 @@ import type { IStormRequest } from "storm-stack/types";
 export class StormRequest<TData = any>
   implements IStormRequest<TData> {
   /**
+   * The request meta.
+   */
+  public readonly meta: Record<string, any>;
+
+  /**
    * The request data.
    */
   public readonly data: TData;
@@ -47,8 +52,9 @@ export class StormRequest<TData = any>
    *
    * @param data - The request data.
    */
-  public constructor(data: TData) {
+  public constructor(data: TData, meta = {}) {
     this.data = data;
+    this.meta = meta;
   }
 }`;
 }

@@ -8,6 +8,24 @@
     "format-docs": {
       "command": "eslint-doc-generator"
     },
+    "build": {
+      "executor": "@storm-software/workspace-tools:unbuild",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "defaultConfiguration": "production",
+        "platform": "node"
+      },
+      "configurations": {
+        "production": {
+          "debug": false,
+          "verbose": false
+        },
+        "development": {
+          "debug": true,
+          "verbose": true
+        }
+      }
+    },
     "nx-release-publish": {
       "executor": "@storm-software/workspace-tools:npm-publish"
     }

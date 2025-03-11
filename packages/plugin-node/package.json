@@ -73,14 +73,13 @@
   "dependencies": {
     "@storm-software/config-tools": "catalog:",
     "@storm-software/esbuild": "catalog:",
-    "@storm-stack/plugin-node": "workspace:*",
     "@stryke/env": "catalog:",
     "@stryke/fs": "catalog:",
     "@stryke/hash": "catalog:",
     "@stryke/json": "catalog:",
     "@stryke/path": "catalog:",
     "@stryke/types": "catalog:",
-    "bundle-require": "^5.1.0",
+    "bundle-require": "catalog:",
     "defu": "catalog:",
     "esbuild": "catalog:",
     "storm-stack": "workspace:*"

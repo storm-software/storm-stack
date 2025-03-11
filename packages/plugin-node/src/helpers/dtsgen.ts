@@ -25,8 +25,8 @@ export function generateDeclarations(
   _features: StormStackNodeFeatures[]
 ) {
   return `${getFileHeader(`
-/// <reference types="storm-stack/types" />
-/// <reference types="@storm-stack/plugin-node/types" />
+/// <reference types="storm-stack/types/global" />
+/// <reference types="@storm-stack/plugin-node/types/global" />
 `)}
 declare global {
   const $storm: StormContext<{
@@ -44,7 +44,7 @@ export {};
 
 export function generateImports(path: string) {
   return `${getFileHeader(`
-/// <reference types="@storm-stack/plugin-node/types" />
+/// <reference types="@storm-stack/plugin-node/types/global" />
 `)}
 declare global {
   const StormEvent: (typeof import("${path}/event"))["StormEvent"];

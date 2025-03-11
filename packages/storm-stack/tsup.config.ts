@@ -29,7 +29,7 @@ const config: Options = getTsupConfig({
   ],
   outDir: "dist",
   bundle: true,
-  splitting: false,
+  splitting: true,
   treeshake: true,
   keepNames: true,
   clean: true,

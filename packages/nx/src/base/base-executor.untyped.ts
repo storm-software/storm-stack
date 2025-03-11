@@ -21,7 +21,7 @@ import { defineUntypedSchema } from "untyped";
 export default defineUntypedSchema({
   ...baseExecutorSchema,
   $schema: {
-    id: "BuildExecutorSchema",
+    id: "StormStackBaseExecutorSchema",
     title: "Storm Stack Base Executor",
     description:
       "A shared/base schema type definition for Storm Stack executors",

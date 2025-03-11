@@ -15,9 +15,7 @@
 
  ------------------------------------------------------------------- */
 
-export { stormStackCloudflareAppBuildExecutorFn } from "./src/executors/cloudflare-app-build/executor";
-export type { StormStackCloudflareAppBuildExecutorSchema } from "./src/executors/cloudflare-app-build/schema";
-export { stormStackNodeAppBuildExecutorFn } from "./src/executors/node-app-build/executor";
-export type { StormStackNodeAppBuildExecutorSchema } from "./src/executors/node-app-build/schema";
-export { stormStackNodeLibBuildExecutorFn } from "./src/executors/node-lib-build/executor";
-export type { StormStackNodeLibBuildExecutorSchema } from "./src/executors/node-lib-build/schema";
+export { executorFn as cloudflareWorkerBuildExecutor } from "./src/executors/cloudflare-worker-build/executor";
+export type { StormStackCloudflareWorkerBuildExecutorSchema } from "./src/executors/cloudflare-worker-build/schema";
+export { executorFn as nodeBuildExecutor } from "./src/executors/node-build/executor";
+export type { StormStackNodeBuildExecutorSchema } from "./src/executors/node-build/schema";

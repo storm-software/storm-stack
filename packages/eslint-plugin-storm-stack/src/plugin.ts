@@ -1,32 +1,46 @@
+/* -------------------------------------------------------------------
+
+                  ⚡ Storm Software - Storm Stack
+
+ This code was released as part of the Storm Stack project. Storm Stack
+ is maintained by Storm Software under the Apache-2.0 License, and is
+ free for commercial and private use. For more information, please visit
+ our licensing page.
+
+ Website:         https://stormsoftware.com
+ Repository:      https://github.com/storm-software/storm-stack
+ Documentation:   https://stormsoftware.com/projects/storm-stack/docs
+ Contact:         https://stormsoftware.com/contact
+ License:         https://stormsoftware.com/projects/storm-stack/license
+
+ ------------------------------------------------------------------- */
+
 import type { ESLint } from "eslint";
-import { version } from "../package.json" with { type: "json" };
+import packageJson from "../package.json" with { type: "json" };
 import asyncPreventDefault from "./rules/async-prevent-default";
 import authenticityToken from "./rules/authenticity-token";
 import consistentListNewline from "./rules/consistent-list-newline";
 import ifNewline from "./rules/if-newline";
-import importDedupe from "./rules/import-dedupe"; // Ensure this file exists and is correctly named
-import noImplicitBuggyGlobals from "./rules/no-implicit-buggy-globals";
-import noImportDist from "./rules/no-import-dist";
-import noImportNodeModulesByPath from "./rules/no-import-node-modules-by-path";
-import noTsExportEqual from "./rules/no-ts-export-equal";
+import noImplicitGlobals from "./rules/no-implicit-globals";
+import stormErrorsOnly from "./rules/storm-errors-only";
+import stormRequestsOnly from "./rules/storm-requests-only";
+import stormResponsesOnly from "./rules/storm-responses-only";
 import topLevelFunctions from "./rules/top-level-functions";
 
 export const plugin = {
   meta: {
     name: "storm-stack",
-    version
+    version: packageJson.version
   },
   rules: {
     "async-prevent-default": asyncPreventDefault,
     "authenticity-token": authenticityToken,
     "consistent-list-newline": consistentListNewline,
-    "no-implicit-buggy-globals": noImplicitBuggyGlobals,
+    "no-implicit-globals": noImplicitGlobals,
     "if-newline": ifNewline,
-    "import-dedupe": importDedupe,
-    "indent-unindent": authenticityToken,
-    "no-import-dist": noImportDist,
-    "no-import-node-modules-by-path": noImportNodeModulesByPath,
-    "no-ts-export-equal": noTsExportEqual,
+    "storm-errors-only": stormErrorsOnly,
+    "storm-requests-only": stormRequestsOnly,
+    "storm-responses-only": stormResponsesOnly,
     "top-level-functions": topLevelFunctions
   }
 } satisfies ESLint.Plugin;

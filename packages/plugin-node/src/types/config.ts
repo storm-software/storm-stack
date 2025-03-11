@@ -53,6 +53,8 @@ export interface StormStackNodePluginConfig {
 
   /**
    * The runtime configuration for the application
+   *
+   * @defaultValue "./service.config.ts"
    */
-  runtimeConfig?: TypeDefinitionParameter;
+  config?: TypeDefinitionParameter;
 }

@@ -1,4 +1,4 @@
-/*-------------------------------------------------------------------
+/* -------------------------------------------------------------------
 
                   ⚡ Storm Software - Storm Stack
 
@@ -13,7 +13,7 @@
  Contact:         https://stormsoftware.com/contact
  License:         https://stormsoftware.com/projects/storm-stack/license
 
- -------------------------------------------------------------------*/
+ ------------------------------------------------------------------- */
 
 import prettierRC from "@storm-software/prettier";
 import prettier from "prettier";
@@ -23,18 +23,9 @@ const config = {
   postprocess: content =>
     prettier.format(content, { ...prettierRC, parser: "markdown" }),
   configEmoji: [
-    ["browser", "💻"],
-    ["internal", "🔐"],
-    ["react", "⚛️"],
-    ["node", "📦"],
-    ["eslint", "🚨"],
-    ["prettier", "🎨"],
-    ["typescript", "🔷"],
-    ["graphql", "🔗"],
-    ["json", "📄"],
-    ["yaml", "🧾"],
-    ["markdown", "📝"],
-    ["recommended", "🌟"]
+    ["base", "📝"],
+    ["recommended", "🌟"],
+    ["strict", "🔐"]
   ],
   ruleDocSectionInclude: ["Rule Details", "Version"]
 };

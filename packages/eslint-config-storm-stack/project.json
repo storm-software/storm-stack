@@ -5,39 +5,24 @@
   "sourceRoot": "packages/eslint-config-storm-stack/src",
   "tags": ["platform:node"],
   "targets": {
-    "build": {
-      "executor": "@storm-software/workspace-tools:unbuild",
-      "outputs": ["{options.outputPath}"],
+    "build-typegen": {
+      "executor": "nx:run-commands",
+      "dependsOn": ["clean", "^build"],
       "options": {
-        "entry": ["packages/eslint-config-storm-stack/src/index.ts"],
-        "outputPath": "dist/packages/eslint-config-storm-stack",
-        "tsconfig": "packages/eslint-config-storm-stack/tsconfig.json",
-        "project": "packages/eslint-config-storm-stack/package.json",
-        "defaultConfiguration": "production",
-        "platform": "node",
-        "assets": [
-          {
-            "input": "packages/eslint-config-storm-stack",
-            "glob": "*.md",
-            "output": "/"
-          },
-          {
-            "input": "",
-            "glob": "LICENSE",
-            "output": "/"
-          }
-        ]
-      },
-      "configurations": {
-        "production": {
-          "debug": false,
-          "verbose": false
-        },
-        "development": {
-          "debug": true,
-          "verbose": true
-        }
+        "command": "tsx scripts/typegen.ts",
+        "cwd": "{projectRoot}"
       }
+    },
+    "build-base": {
+      "executor": "nx:run-commands",
+      "dependsOn": ["clean", "build-typegen", "^build"],
+      "options": {
+        "command": "tsup --config=tsup.config.ts",
+        "cwd": "{projectRoot}"
+      }
+    },
+    "nx-release-publish": {
+      "executor": "@storm-software/workspace-tools:npm-publish"
     }
   }
 }

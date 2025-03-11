@@ -1,0 +1,72 @@
+{
+  "id": "#",
+  "title": "Storm Stack Cloudflare Worker Build Executor",
+  "description": "A type definition for the Cloudflare Worker application build executor schema",
+  "required": [
+    "entry"
+  ],
+  "properties": {
+    "outputPath": {
+      "title": "Output Path",
+      "type": "string",
+      "format": "path",
+      "description": "The output path for the build",
+      "id": "#outputPath",
+      "default": "dist/{projectRoot}"
+    },
+    "tsconfig": {
+      "title": "TypeScript Configuration File",
+      "type": "string",
+      "format": "path",
+      "description": "The path to the tsconfig file",
+      "id": "#tsconfig",
+      "default": "{projectRoot}/tsconfig.json"
+    },
+    "skipInstalls": {
+      "title": "Skip Installs",
+      "type": "boolean",
+      "description": "Skip installing dependencies during prepare stage",
+      "id": "#skipInstalls"
+    },
+    "skipCache": {
+      "title": "Skip Cache",
+      "type": "boolean",
+      "description": "Skip the cache when building",
+      "id": "#skipCache"
+    },
+    "silent": {
+      "title": "Silent",
+      "type": "boolean",
+      "description": "Should the build run silently - only report errors back to the user",
+      "id": "#silent",
+      "default": false
+    },
+    "entry": {
+      "title": "Entry File",
+      "type": "string",
+      "description": "The entry file or files to build",
+      "id": "#entry",
+      "default": "{sourceRoot}/index.ts"
+    },
+    "mode": {
+      "title": "Mode",
+      "type": "string",
+      "description": "The build mode",
+      "enum": [
+        "development",
+        "staging",
+        "production"
+      ],
+      "id": "#mode",
+      "default": "production"
+    }
+  },
+  "type": "object",
+  "default": {
+    "outputPath": "dist/{projectRoot}",
+    "tsconfig": "{projectRoot}/tsconfig.json",
+    "silent": false,
+    "entry": "{sourceRoot}/index.ts",
+    "mode": "production"
+  }
+}

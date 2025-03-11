@@ -80,11 +80,16 @@
   "dependencies": {
     "@nx/devkit": "catalog:",
     "@storm-software/config": "catalog:",
+    "@storm-software/testing-tools": "catalog:",
     "@storm-software/workspace-tools": "catalog:",
-    "@storm-stack/plugin-cloudflare": "workspace:*",
+    "@storm-stack/plugin-cloudflare-worker": "workspace:*",
     "@storm-stack/plugin-node": "workspace:*",
     "defu": "catalog:",
-    "storm-stack": "workspace:*"
+    "eslint-flat-config-utils": "catalog:",
+    "jsonc-eslint-parser": "catalog:",
+    "storm-stack": "workspace:*",
+    "tsup": "catalog:",
+    "untyped": "catalog:"
   },
   "devDependencies": {
     "@storm-software/testing-tools": "catalog:",

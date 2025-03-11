@@ -93,13 +93,12 @@ export function createStormApp<TRequest extends StormRequest, TResponseData = an
     process.on("exit", handleExit);
   }
 
-  return async function wrappedHandler(data: TRequest["data"]): Promise<StormResponse<TResponseData> | StormResponse<StormError>> {
-    const request = new StormRequest(data) as TRequest;
-
+  return async function wrappedHandler(request: TRequest): Promise<StormResponse<TResponseData | StormError>> {
     const context = {
       name,
       version,
       request,
+      meta: request.meta,
       log: log.with({ name, version, requestId: request.id }),
       buildInfo,
       runtimeInfo,
@@ -134,7 +133,7 @@ export function createStormApp<TRequest extends StormRequest, TResponseData = an
       try {
         const result = await Promise.resolve(handler(request));
 
-        return new StormResponse<TResponseData>(context.request.id, result);
+        return new StormResponse<TResponseData>(context.request.id, context.meta, result);
       } catch (exception) {
         const error = getErrorFromUnknown(exception);
         context.log.fatal(
@@ -144,7 +143,7 @@ export function createStormApp<TRequest extends StormRequest, TResponseData = an
           }
         );
 
-        return new StormResponse(context.request.id, error);
+        return new StormResponse(context.request.id, context.meta, error);
       }
      });
 

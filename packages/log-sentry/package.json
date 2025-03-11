@@ -10,11 +10,11 @@
   },
   "private": false,
   "dependencies": {
-    "@sentry/core": "^9.5.0",
+    "@sentry/core": "catalog:",
     "@stryke/json": "catalog:"
   },
   "devDependencies": {
-    "@sentry/types": "^9.5.0",
+    "@sentry/types": "catalog:",
     "@storm-stack/nx": "workspace:*",
     "@types/node": "catalog:",
     "storm-stack": "workspace:*"

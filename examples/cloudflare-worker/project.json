@@ -1,0 +1,18 @@
+{
+  "name": "examples-cloudflare-worker",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "sourceRoot": "examples/cloudflare-worker/src",
+  "targets": {
+    "build": {
+      "executor": "@storm-stack/nx:cloudflare-worker-build",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/examples/cloudflare-worker",
+        "skipCache": true,
+        "skipInstalls": true,
+        "mode": "development"
+      }
+    }
+  }
+}

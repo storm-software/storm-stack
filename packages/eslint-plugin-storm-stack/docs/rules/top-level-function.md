@@ -1,9 +1,13 @@
-# top-level-function
+# Require top-level methods to be functions (`storm-stack/top-level-function`)
+
+💼 This rule is enabled in the ✅ `recommended` config.
+
+<!-- end auto-generated rule header -->
+
+## Rule Details
 
 Enforce top-level function to be declared using `function` instead of arrow
 function or function expression. With auto-fix.
-
-## Rule Details
 
 <!-- eslint-skip -->
 
@@ -52,3 +56,7 @@ export const square: MyFunction = (a: number, b: number): number => {
   return a2 + b2 + 2 * a * b
 }
 ```
+
+## Version
+
+4.3.2

@@ -28,14 +28,19 @@ import { isStormError } from "./error";
 export class StormResponse<TData = any>
   implements IStormResponse<TData> {
   /**
+   * The response meta.
+   */
+  public readonly meta: Record<string, any>;
+
+  /**
    * The response data (if applicable).
    */
-  public readonly data?: TData;
+  public data?: TData;
 
   /**
    * The response error (if applicable).
    */
-  public readonly error?: StormError;
+  public error?: StormError;
 
   /**
    * The request identifier.
@@ -57,15 +62,18 @@ export class StormResponse<TData = any>
   /**
    * Create a new request.
    *
-   * @param data - The request data.
+   * @param requestId - The request identifier.
+   * @param meta - The response meta.
+   * @param result - The request result.
    */
-  public constructor(requestId: string, data: TData | StormError) {
+  public constructor(requestId: string, meta = {}, result?: TData | StormError) {
     this.requestId = requestId;
+    this.meta = meta;
 
-    if (isStormError(data)) {
-      this.error = data;
+    if (isStormError(result)) {
+      this.error = result;
     } else {
-      this.data = data;
+      this.data = result;
     }
   }
 }`;

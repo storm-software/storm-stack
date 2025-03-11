@@ -53,7 +53,7 @@
     "biomejs"
   ],
   "peerDependencies": {
-    "@biomejs/biome": "1.9.4"
+    "@biomejs/biome": "^1.9.4"
   },
   "peerDependenciesMeta": {
     "@biomejs/biome": {
@@ -61,7 +61,7 @@
     }
   },
   "devDependencies": {
-    "@biomejs/biome": "1.9.4"
+    "@biomejs/biome": "catalog:"
   },
   "publishConfig": {
     "access": "public"

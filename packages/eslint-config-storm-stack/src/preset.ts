@@ -15,14 +15,12 @@
 
  ------------------------------------------------------------------- */
 
-import { getStormConfig } from "@storm-software/eslint";
-import type {
-  ConfigNames,
-  OptionsConfig,
-  TypedFlatConfigItem
-} from "@storm-software/eslint/types";
+import { getOverrides, getStormConfig } from "@storm-software/eslint";
 import type { Linter } from "eslint";
 import type { Awaitable, FlatConfigComposer } from "eslint-flat-config-utils";
+import { globals as stormStackGlobals } from "eslint-plugin-storm-stack/configs/globals";
+import { stormStack } from "./configs/storm-stack";
+import type { ConfigNames, OptionsConfig, TypedFlatConfigItem } from "./types";
 
 /**
  * Get the ESLint configuration for a Storm Stack project.
@@ -33,7 +31,7 @@ import type { Awaitable, FlatConfigComposer } from "eslint-flat-config-utils";
  * @param options - The preset options.
  * @param userConfigs - Additional ESLint configurations.
  */
-export async function getESLintConfig(
+export async function getConfig(
   options: OptionsConfig & Omit<TypedFlatConfigItem, "files">,
   ...userConfigs: Awaitable<
     | TypedFlatConfigItem
@@ -42,5 +40,26 @@ export async function getESLintConfig(
     | Linter.Config[]
   >[]
 ): Promise<FlatConfigComposer<TypedFlatConfigItem, ConfigNames>> {
-  return getStormConfig(options, ...userConfigs);
+  const { globals = {} } = options;
+
+  const configs: TypedFlatConfigItem[] = [];
+  if (options["storm-stack"] ?? true) {
+    configs.push(
+      ...(await stormStack({
+        overrides: getOverrides(options, "storm-stack" as any),
+        defaultConfig:
+          typeof options["storm-stack"] === "string"
+            ? options["storm-stack"]
+            : "recommended"
+      }))
+    );
+  }
+
+  return getStormConfig(
+    {
+      ...options,
+      globals: { ...globals, ...stormStackGlobals }
+    },
+    ...userConfigs
+  ).append(configs);
 }

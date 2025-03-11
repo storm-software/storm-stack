@@ -64,8 +64,8 @@ export const STORM_ASYNC_CONTEXT = getContext<StormContext>(STORM_CONTEXT_KEY, {
 export const getBuildInfo = (): StormBuildInfo => {
   return {
     buildId: process.env.STORM_BUILD_ID!,
-    timestamp: process.env.STORM_BUILD_TIMESTAMP 
-      ? Number(process.env.STORM_BUILD_TIMESTAMP) 
+    timestamp: process.env.STORM_BUILD_TIMESTAMP
+      ? Number(process.env.STORM_BUILD_TIMESTAMP)
       : 0,
     releaseId: process.env.STORM_RELEASE_ID!,
     mode: (process.env.STORM_MODE ||
@@ -115,7 +115,12 @@ export const getRuntimeInfo = (): StormRuntimeInfo => {
 };
 
 export const getAppName = () => {
-  return process.env.STORM_APP_NAME || process.env.APP_NAME || "storm";
+  const appName = process.env.STORM_APP_NAME || process.env.APP_NAME;
+  if (!appName) {
+    throw new Error("App name is not defined.");
+  }
+
+  return appName;
 };
 
 export const getAppVersion = () => {

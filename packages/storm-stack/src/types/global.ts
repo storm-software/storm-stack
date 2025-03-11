@@ -79,18 +79,18 @@ export type StormEnv = {
   INCLUDE_ERROR_DATA: boolean;
 
   /**
-   * The timezone for the application.
+   * The default timezone for the application.
    *
    * @defaultValue "America/New_York"
    */
-  TIMEZONE: string;
+  DEFAULT_TIMEZONE: string;
 
   /**
-   * The timezone for the application.
+   * The default locale for the application.
    *
    * @defaultValue "en_US"
    */
-  LOCALE: string;
+  DEFAULT_LOCALE: string;
 
   /**
    * The default lowest log level to accept. If `null`, the logger will reject all records. This value only applies if `lowestLogLevel` is not provided to the `logs` configuration.
@@ -112,6 +112,11 @@ export interface IStormRequest<TData = any> {
   id: string;
 
   /**
+   * Any metadata associated with the request.
+   */
+  meta: Record<string, any>;
+
+  /**
    * The payload of the request.
    */
   data: TData;
@@ -122,6 +127,11 @@ export interface IStormResponse<TData = any> {
    * The unique identifier for the request.
    */
   requestId: string;
+
+  /**
+   * Any metadata associated with the response.
+   */
+  meta: Record<string, any>;
 
   /**
    * The payload of the response.
@@ -147,7 +157,7 @@ export interface IStormResponse<TData = any> {
 /**
  * A logging callback function.  It is used to defer the computation of a
  * message template until it is actually logged.
- * @param prefix The message template prefix.
+ * @param prefix - The message template prefix.
  * @returns The rendered message array.
  */
 export type LogCallback = (prefix: LogTemplatePrefix) => unknown[];

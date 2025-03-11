@@ -1,0 +1,20 @@
+{
+  "name": "@storm-stack/examples-cloudflare-worker",
+  "version": "0.0.1",
+  "type": "module",
+  "description": "An example Storm Stack Cloudflare Worker application",
+  "repository": {
+    "type": "github",
+    "url": "https://github.com/storm-software/storm-stack.git",
+    "directory": "examples/cloudflare-worker"
+  },
+  "private": true,
+  "devDependencies": {
+    "@storm-stack/nx": "workspace:*",
+    "@storm-stack/plugin-cloudflare-worker": "workspace:*",
+    "storm-stack": "workspace:*"
+  },
+  "storm": {
+    "name": "examples-cloudflare-worker"
+  }
+}

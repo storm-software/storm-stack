@@ -109,7 +109,7 @@ export const createNodesV2: CreateNodesV2<StormStackAdapterPluginOptions> = [
             cache: true,
             inputs: ["typescript", "^production"],
             outputs: ["{options.outputPath}"],
-            executor: "@storm-stack/nx:node-lib-build",
+            executor: "@storm-stack/nx:node-build",
             dependsOn: ["clean", "^build"],
             defaultConfiguration: "production",
             options: {

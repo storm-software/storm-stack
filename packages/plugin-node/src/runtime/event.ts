@@ -43,7 +43,7 @@ export class StormEvent<TEventType extends string = string, TEventData = any>
 
   /**
    * The event label.
-   * 
+   *
    * @remarks
    * The label format is "{type}-v{version}"
    */

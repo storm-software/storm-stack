@@ -1,4 +1,4 @@
-/*-------------------------------------------------------------------
+/* -------------------------------------------------------------------
 
                   ⚡ Storm Software - Storm Stack
 
@@ -13,7 +13,7 @@
  Contact:         https://stormsoftware.com/contact
  License:         https://stormsoftware.com/projects/storm-stack/license
 
- -------------------------------------------------------------------*/
+ ------------------------------------------------------------------- */
 
 import type { Linter } from "eslint";
 import { plugin } from "./plugin";
@@ -24,8 +24,7 @@ import { plugin } from "./plugin";
  * @packageDocumentation
  */
 
-export * from "../../eslint-config/src/preset";
-export * from "./config";
+export * from "./configs";
 
 export default plugin;
 

@@ -1,4 +1,4 @@
-/*-------------------------------------------------------------------
+/* -------------------------------------------------------------------
 
                   ⚡ Storm Software - Storm Stack
 
@@ -13,7 +13,7 @@
  Contact:         https://stormsoftware.com/contact
  License:         https://stormsoftware.com/projects/storm-stack/license
 
- -------------------------------------------------------------------*/
+ ------------------------------------------------------------------- */
 
 import type {
   RuleListener,
@@ -26,20 +26,20 @@ import type { Rule } from "eslint";
 
 // @keep-sorted
 const hasDocs = new Set([
-  "consistent-chaining",
-  "consistent-list-newline",
-  "curly",
-  "if-newline",
-  "import-dedupe",
-  "indent-unindent",
+  "async-prevent-default",
+  "authenticity-token",
+  "no-implicit-globals",
+  "storm-errors-only",
+  "storm-requests-only",
+  "storm-responses-only",
   "top-level-function"
 ]);
 
 const blobUrl =
-  "https://github.com/storm-software/storm-stack/blob/main/devkit/eslint-plugin/src/rules";
+  "https://github.com/storm-software/storm-stack/blob/main/packages/eslint-plugin-storm-stack/src/rules";
 
 const docsUrl =
-  "https://docs.stormsoftware.com/projects/storm-stack/eslint-plugin/rules";
+  "https://docs.stormsoftware.com/projects/storm-stack/eslint/plugin/rules";
 
 export type RuleModule<T extends readonly unknown[]> = Rule.RuleModule & {
   defaultOptions: T;

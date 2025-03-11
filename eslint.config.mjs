@@ -20,5 +20,8 @@ import { getStormConfig } from "@storm-software/eslint";
 Error.stackTraceLimit = Number.POSITIVE_INFINITY;
 
 export default getStormConfig({
-  name: "storm-stack"
+  repositoryName: "storm-stack",
+  nx: {
+    depsCheck: false
+  }
 });

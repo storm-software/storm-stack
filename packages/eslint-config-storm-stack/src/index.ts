@@ -24,4 +24,10 @@
  * @packageDocumentation
  */
 
-export * from "./preset";
+import { getConfig } from "./preset";
+
+const config = getConfig({
+  "storm-stack": "recommended"
+});
+
+export default config;

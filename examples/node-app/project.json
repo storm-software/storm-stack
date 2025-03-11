@@ -5,7 +5,7 @@
   "sourceRoot": "examples/node-app/src",
   "targets": {
     "build": {
-      "executor": "@storm-stack/nx:node-app-build",
+      "executor": "@storm-stack/nx:node-build",
       "outputs": ["{options.outputPath}"],
       "options": {
         "entry": "{sourceRoot}/index.ts#getCity",

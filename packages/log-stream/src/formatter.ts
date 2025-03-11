@@ -220,9 +220,8 @@ const defaultLevelColors: Record<LogLevel, AnsiColor | null> = {
  *
  * ![A preview of an ANSI color formatter.](https://i.imgur.com/I8LlBUf.png)
  *
- * @param option The options for the ANSI color formatter.
+ * @param options - The options for the ANSI color formatter.
  * @returns The ANSI color formatter.
- * @since 0.6.0
  */
 export function getAnsiColorFormatter(
   options: AnsiColorFormatterOptions = {}
