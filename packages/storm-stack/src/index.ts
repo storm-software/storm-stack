@@ -24,7 +24,6 @@
  * @packageDocumentation
  */
 
-export * from "./api";
 export * from "./compiler";
 export * from "./engine";
 export * from "./helpers";
