@@ -21,7 +21,7 @@ usePwsh();
 
 try {
   let result = await $`pnpm nx clear-cache`.timeout(`${5 * 60}s`);
-  if (!result.ok()) {
+  if (!result.ok) {
     throw new Error(
       `An error occured while clearing Nx cache: \n\n${result.message}\n`
     );
@@ -31,7 +31,7 @@ try {
     await $`pnpm exec rimraf --no-interactive -- ./.nx/cache ./.nx/workspace-data ./dist ./tmp ./pnpm-lock.yaml`.timeout(
       `${5 * 60}s`
     );
-  if (!result.ok()) {
+  if (!result.ok) {
     throw new Error(
       `An error occured while removing cache directories: \n\n${result.message}\n`
     );
@@ -41,7 +41,7 @@ try {
     await $`pnpm exec rimraf --no-interactive --glob "*/**/{node_modules,dist,.storm}`.timeout(
       `${5 * 60}s`
     );
-  if (!result.ok()) {
+  if (!result.ok) {
     throw new Error(
       `An error occured while removing node modules and build directories from the monorepo's projects: \n\n${result.message}\n`
     );
@@ -51,7 +51,7 @@ try {
     await $`pnpm exec rimraf --no-interactive --glob "./node_modules/!rimraf/**"`.timeout(
       `${5 * 60}s`
     );
-  if (!result.ok()) {
+  if (!result.ok) {
     throw new Error(
       `An error occured while removing node modules from the workspace root: \n\n${result.message}\n`
     );

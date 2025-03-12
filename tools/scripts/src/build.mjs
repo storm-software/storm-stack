@@ -37,7 +37,7 @@ Building the monorepo in ${configuration} mode...
 `)}`,
     async () => {
       let result = await $`pnpm bootstrap`.timeout("60s");
-      if (!result.ok()) {
+      if (!result.ok) {
         throw new Error(
           `An error occured while bootstrapping the monorepo: \n\n${result.message}\n`
         );
@@ -46,7 +46,7 @@ Building the monorepo in ${configuration} mode...
       if (configuration === "production") {
         result =
           await $`pnpm nx run-many --target=build --all --exclude="@storm-stack/monorepo" --configuration=production --parallel=5`;
-        if (!result.ok()) {
+        if (!result.ok) {
           throw new Error(
             `An error occured while building the monorepo in production mode: \n\n${result.message}\n`
           );
@@ -54,7 +54,7 @@ Building the monorepo in ${configuration} mode...
       } else {
         result =
           await $`pnpm nx run-many --target=build --all --exclude="@storm-stack/monorepo" --configuration=${configuration} --nxBail`;
-        if (!result.ok()) {
+        if (!result.ok) {
           throw new Error(
             `An error occured while building the monorepo in development mode: \n\n${result.message}\n`
           );

@@ -29,7 +29,7 @@ try {
     await $`pnpm nx run-many --target=lint,format --all --exclude="@storm-stack/monorepo" --parallel=5`.timeout(
       `${30 * 60}s`
     );
-  if (!result.ok()) {
+  if (!result.ok) {
     throw new Error(
       `An error occured while formatting the monorepo: \n\n${result.message}\n`
     );
@@ -39,7 +39,7 @@ try {
     await $`pnpm nx format:write ${files} --sort-root-tsconfig-paths --all`.timeout(
       `${30 * 60}s`
     );
-  if (!result.ok()) {
+  if (!result.ok) {
     throw new Error(
       `An error occured while running \`nx format:write\` on the monorepo: \n\n${result.message}\n`
     );
