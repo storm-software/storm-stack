@@ -27,9 +27,7 @@ export default withRunExecutor<StormStackNodeBuildExecutorSchema>(
   {
     skipReadingConfig: false,
     hooks: {
-      applyDefaultOptions: (
-        options: Partial<StormStackNodeBuildExecutorSchema>
-      ) => {
+      applyDefaultOptions: (options: StormStackNodeBuildExecutorSchema) => {
         options.entry ??= "{sourceRoot}/index.ts";
 
         return options;

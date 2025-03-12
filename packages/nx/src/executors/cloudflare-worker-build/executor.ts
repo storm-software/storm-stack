@@ -30,12 +30,12 @@ export default withRunExecutor<StormStackCloudflareWorkerBuildExecutorSchema>(
     skipReadingConfig: false,
     hooks: {
       applyDefaultOptions: (
-        options: Partial<StormStackCloudflareWorkerBuildExecutorSchema>
+        options: StormStackCloudflareWorkerBuildExecutorSchema
       ) => {
         options.entry ??= "{sourceRoot}/index.ts";
         options.mode ??= "production";
 
-        return options as StormStackCloudflareWorkerBuildExecutorSchema;
+        return options;
       }
     }
   }

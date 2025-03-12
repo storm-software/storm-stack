@@ -57,7 +57,7 @@ export interface StormStackCloudflareWorkerBuildExecutorSchema {
   * 
   * @default "{sourceRoot}/index.ts"
  */
- entry: string,
+ entry?: string,
 
  /**
   * Mode

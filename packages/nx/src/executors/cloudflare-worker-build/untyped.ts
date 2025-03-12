@@ -25,6 +25,6 @@ export default defineUntypedSchema({
     title: "Storm Stack Cloudflare Worker Build Executor",
     description:
       "A type definition for the Cloudflare Worker application build executor schema",
-    required: ["entry"]
+    required: []
   }
 });

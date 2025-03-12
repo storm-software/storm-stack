@@ -25,7 +25,7 @@ export default defineUntypedSchema({
     title: "Storm Stack Build Executor",
     description:
       "A type definition for the base Storm Stack build executor schema",
-    required: ["mode"]
+    required: []
   },
   entry: {
     $schema: {
