@@ -1,6 +1,14 @@
-name: GitGuardian scan
+name: GitGuardian Scan
 
-on: [push, pull_request]
+on:
+  push:
+    branches:
+      - main
+      - canary
+      - experimental
+  pull_request:
+    branches:
+      - "**"
 
 jobs:
   scanning:
