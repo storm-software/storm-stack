@@ -15,7 +15,7 @@
 
  ------------------------------------------------------------------- */
 
-import { $, argv, chalk, echo, usePwsh } from "zx";
+import { $, argv, chalk, echo, spinner, usePwsh } from "zx";
 
 usePwsh();
 
@@ -31,21 +31,41 @@ try {
     }
   }
 
-  echo`${chalk.whiteBright(`
-Building the monorepo in ${configuration} mode
-`)}`;
+  await spinner(
+    `${chalk.whiteBright(`
+Building the monorepo in ${configuration} mode...
+`)}`,
+    async () => {
+      let result = await $`pnpm bootstrap`.timeout("60s");
+      if (!result.ok()) {
+        throw new Error(
+          `An error occured while bootstrapping the monorepo: \n\n${result.message}\n`
+        );
+      }
 
-  await $`pnpm bootstrap`.timeout("60s");
-
-  if (configuration === "production") {
-    await $`pnpm nx run-many --target=build --all --exclude="@storm-stack/monorepo" --configuration=production --parallel=5`;
-  } else {
-    await $`pnpm nx run-many --target=build --all --exclude="@storm-stack/monorepo" --configuration=${configuration} --nxBail`;
-  }
+      if (configuration === "production") {
+        result =
+          await $`pnpm nx run-many --target=build --all --exclude="@storm-stack/monorepo" --configuration=production --parallel=5`;
+        if (!result.ok()) {
+          throw new Error(
+            `An error occured while building the monorepo in production mode: \n\n${result.message}\n`
+          );
+        }
+      } else {
+        result =
+          await $`pnpm nx run-many --target=build --all --exclude="@storm-stack/monorepo" --configuration=${configuration} --nxBail`;
+        if (!result.ok()) {
+          throw new Error(
+            `An error occured while building the monorepo in development mode: \n\n${result.message}\n`
+          );
+        }
+      }
+    }
+  );
 
   echo`${chalk.green(`Successfully built the monorepo in ${configuration} mode!`)}`;
 } catch (error) {
-  echo`${chalk.red(`A failure occured while building the monorepo:
-${error?.message ? error.message : "No message could be found"}
-`)}`;
+  echo`${chalk.red(error?.message ? error.message : "A failure occured while building the monorepo")}`;
+
+  process.exit(1);
 }

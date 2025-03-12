@@ -20,20 +20,46 @@ import { $, chalk, echo, usePwsh } from "zx";
 usePwsh();
 
 try {
-  await $`pnpm nx clear-cache`;
-  await $`pnpm exec rimraf --no-interactive -- ./.nx/cache ./.nx/workspace-data ./dist ./tmp ./pnpm-lock.yaml`.timeout(
-    `${5 * 60}s`
-  );
-  await $`pnpm exec rimraf --no-interactive --glob "./*/**/{node_modules,dist}" `.timeout(
-    `${5 * 60}s`
-  );
-  await $`pnpm exec rimraf --no-interactive --glob "node_modules/!rimraf/**" `.timeout(
-    `${5 * 60}s`
-  );
+  let result = await $`pnpm nx clear-cache`.timeout(`${5 * 60}s`);
+  if (!result.ok()) {
+    throw new Error(
+      `An error occured while clearing Nx cache: \n\n${result.message}\n`
+    );
+  }
 
-  echo`${chalk.green("Successfully nuked the cache, node_modules, and dist folders")}`;
+  result =
+    await $`pnpm exec rimraf --no-interactive -- ./.nx/cache ./.nx/workspace-data ./dist ./tmp ./pnpm-lock.yaml`.timeout(
+      `${5 * 60}s`
+    );
+  if (!result.ok()) {
+    throw new Error(
+      `An error occured while removing cache directories: \n\n${result.message}\n`
+    );
+  }
+
+  result =
+    await $`pnpm exec rimraf --no-interactive --glob "*/**/{node_modules,dist,.storm}`.timeout(
+      `${5 * 60}s`
+    );
+  if (!result.ok()) {
+    throw new Error(
+      `An error occured while removing node modules and build directories from the monorepo's projects: \n\n${result.message}\n`
+    );
+  }
+
+  result =
+    await $`pnpm exec rimraf --no-interactive --glob "./node_modules/!rimraf/**"`.timeout(
+      `${5 * 60}s`
+    );
+  if (!result.ok()) {
+    throw new Error(
+      `An error occured while removing node modules from the workspace root: \n\n${result.message}\n`
+    );
+  }
+
+  echo`${chalk.green("Successfully nuked the cache, node modules, and build folders")}`;
 } catch (error) {
-  echo`${chalk.red(`A failure occured while nuking the monorepo:
-${error?.message ? error.message : "No message could be found"}
-`)}`;
+  echo`${chalk.red(error?.message ? error.message : "A failure occured while nuking the monorepo")}`;
+
+  process.exit(1);
 }

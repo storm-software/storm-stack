@@ -41,7 +41,7 @@ try {
 
   echo`${chalk.green("Completed monorepo bootstrapping successfully!")}`;
 } catch (error) {
-  echo`${chalk.red(`A failure occured while building the monorepo:
-${error?.message ? error.message : "No message could be found"}
-`)}`;
+  echo`${chalk.red(error?.message ? error.message : "A failure occured while bootstrapping the monorepo")}`;
+
+  process.exit(1);
 }
