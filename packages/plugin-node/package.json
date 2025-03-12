@@ -71,6 +71,7 @@
   "types": "dist/types/index.d.ts",
   "typings": "dist/types/index.d.ts",
   "dependencies": {
+    "@storm-software/build-tools": "catalog:",
     "@storm-software/config-tools": "catalog:",
     "@storm-software/esbuild": "catalog:",
     "@stryke/env": "catalog:",

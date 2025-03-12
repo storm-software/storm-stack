@@ -49,7 +49,8 @@
     "@stryke/json": "catalog:",
     "@stryke/path": "catalog:",
     "@stryke/types": "catalog:",
-    "storm-stack": "workspace:*"
+    "storm-stack": "workspace:*",
+    "unenv": "^1.10.0"
   },
   "devDependencies": {
     "tsup": "catalog:"

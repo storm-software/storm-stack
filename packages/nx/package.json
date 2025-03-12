@@ -80,7 +80,9 @@
   "dependencies": {
     "@nx/devkit": "catalog:",
     "@storm-software/config": "catalog:",
+    "@storm-software/esbuild": "catalog:",
     "@storm-software/testing-tools": "catalog:",
+    "@storm-software/unbuild": "catalog:",
     "@storm-software/workspace-tools": "catalog:",
     "@storm-stack/plugin-cloudflare-worker": "workspace:*",
     "@storm-stack/plugin-node": "workspace:*",

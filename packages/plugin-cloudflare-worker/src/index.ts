@@ -28,6 +28,7 @@ import type {
   Options,
   PluginConfig
 } from "storm-stack/types";
+import { cloudflare, env, nodeless } from "unenv";
 
 export default class CloudflareWorkerPlugin<
   TOptions extends Options = Options,
@@ -59,6 +60,13 @@ export default class CloudflareWorkerPlugin<
     options.platform = "browser";
     options.override.format = "esm";
     options.override.target = "chrome95";
+
+    const { alias, inject, polyfill, external } = env(nodeless, cloudflare, {});
+
+    options.override.alias = alias;
+    options.override.inject = inject;
+    options.override.polyfill = polyfill;
+    options.override.external = external;
   }
 
   protected async initInstalls(options: TResolvedOptions) {
