@@ -1,3 +1,4 @@
+#!/usr/bin/env zx
 /* -------------------------------------------------------------------
 
                   ⚡ Storm Software - Storm Stack
@@ -16,11 +17,13 @@
  ------------------------------------------------------------------- */
 
 import { build } from "esbuild";
-import { chalk, echo, usePwsh } from "zx";
+import { $, chalk, echo, usePwsh } from "zx";
 
 usePwsh();
 
 try {
+  await echo`${chalk.whiteBright("⚙️  Bootstrapping the monorepo...")}`;
+
   await build({
     entryPoints: [
       "tools/nx/src/plugins/plugin.ts",
@@ -38,6 +41,17 @@ try {
     platform: "node",
     preserveSymlinks: true
   });
+
+  const proc = $`pnpm nx reset`.timeout(`${5 * 60}s`);
+  proc.stdout.on("data", data => {
+    echo`${data}`;
+  });
+  const result = await proc;
+  if (!result.ok) {
+    throw new Error(
+      `An error occured while resetting the Nx deamon process: \n\n${result.message}\n`
+    );
+  }
 
   echo`${chalk.green("Completed monorepo bootstrapping successfully!")}`;
 } catch (error) {

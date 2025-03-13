@@ -1,3 +1,4 @@
+#!/usr/bin/env zx
 /* -------------------------------------------------------------------
 
                   ⚡ Storm Software - Storm Stack
@@ -15,7 +16,7 @@
 
  ------------------------------------------------------------------- */
 
-import { $, argv, chalk, echo, spinner, usePwsh } from "zx";
+import { $, argv, chalk, echo, usePwsh } from "zx";
 
 usePwsh();
 
@@ -31,37 +32,44 @@ try {
     }
   }
 
-  await spinner(
-    `${chalk.whiteBright(`
-Building the monorepo in ${configuration} mode...
-`)}`,
-    async () => {
-      let result = await $`pnpm bootstrap`.timeout("60s");
-      if (!result.ok) {
-        throw new Error(
-          `An error occured while bootstrapping the monorepo: \n\n${result.message}\n`
-        );
-      }
+  await echo`${chalk.whiteBright(`📦  Building the monorepo in ${configuration} mode...`)}`;
 
-      if (configuration === "production") {
-        result =
-          await $`pnpm nx run-many --target=build --all --exclude="@storm-stack/monorepo" --configuration=production --parallel=5`;
-        if (!result.ok) {
-          throw new Error(
-            `An error occured while building the monorepo in production mode: \n\n${result.message}\n`
-          );
-        }
-      } else {
-        result =
-          await $`pnpm nx run-many --target=build --all --exclude="@storm-stack/monorepo" --configuration=${configuration} --nxBail`;
-        if (!result.ok) {
-          throw new Error(
-            `An error occured while building the monorepo in development mode: \n\n${result.message}\n`
-          );
-        }
-      }
+  let proc = $`pnpm bootstrap`.timeout("60s");
+  proc.stdout.on("data", data => {
+    echo`${data}`;
+  });
+  let result = await proc;
+  if (!result.ok) {
+    throw new Error(
+      `An error occured while bootstrapping the monorepo: \n\n${result.message}\n`
+    );
+  }
+
+  if (configuration === "production") {
+    proc = $`pnpm nx run-many --target=build --all --exclude="@storm-stack/monorepo" --configuration=production --parallel=5`;
+    proc.stdout.on("data", data => {
+      echo`${data}`;
+    });
+    result = await proc;
+
+    if (!result.ok) {
+      throw new Error(
+        `An error occured while building the monorepo in production mode: \n\n${result.message}\n`
+      );
     }
-  );
+  } else {
+    proc = $`pnpm nx run-many --target=build --all --exclude="@storm-stack/monorepo" --configuration=${configuration} --nxBail`;
+    proc.stdout.on("data", data => {
+      echo`${data}`;
+    });
+    result = await proc;
+
+    if (!result.ok) {
+      throw new Error(
+        `An error occured while building the monorepo in development mode: \n\n${result.message}\n`
+      );
+    }
+  }
 
   echo`${chalk.green(`Successfully built the monorepo in ${configuration} mode!`)}`;
 } catch (error) {

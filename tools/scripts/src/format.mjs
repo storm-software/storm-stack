@@ -1,3 +1,4 @@
+#!/usr/bin/env zx
 /* -------------------------------------------------------------------
 
                   ⚡ Storm Software - Storm Stack
@@ -20,25 +21,35 @@ import { $, argv, chalk, echo, usePwsh } from "zx";
 usePwsh();
 
 try {
+  await echo`${chalk.whiteBright("🎨  Formatting the monorepo...")}`;
+
   let files = "";
   if (argv._ && argv._.length > 0) {
     files = `--files ${argv._.join(" ")}`;
   }
 
-  let result =
-    await $`pnpm nx run-many --target=lint,format --all --exclude="@storm-stack/monorepo" --parallel=5`.timeout(
+  let proc =
+    $`pnpm nx run-many --target=lint,format --all --exclude="@storm-stack/monorepo" --parallel=5`.timeout(
       `${30 * 60}s`
     );
+  proc.stdout.on("data", data => {
+    echo`${data}`;
+  });
+  let result = await proc;
   if (!result.ok) {
     throw new Error(
       `An error occured while formatting the monorepo: \n\n${result.message}\n`
     );
   }
 
-  result =
-    await $`pnpm nx format:write ${files} --sort-root-tsconfig-paths --all`.timeout(
+  proc =
+    $`pnpm nx format:write ${files} --sort-root-tsconfig-paths --all`.timeout(
       `${30 * 60}s`
     );
+  proc.stdout.on("data", data => {
+    echo`${data}`;
+  });
+  result = await proc;
   if (!result.ok) {
     throw new Error(
       `An error occured while running \`nx format:write\` on the monorepo: \n\n${result.message}\n`
