@@ -83,8 +83,15 @@ export abstract class Plugin<
       this.name = this.name.replace(/plugin$/, "").trim();
     }
 
-    this.installPath = installPath || `@storm-stack/plugin-${this.name}`;
     this.log = createLog(`${this.name}-plugin`);
+    this.installPath = installPath || `@storm-stack/plugin-${this.name}`;
+
+    if (!installPath) {
+      this.log(
+        LogLevelLabel.WARN,
+        `No install path parameter provided to constructor for ${this.name} plugin. Will attempt to use "${this.installPath}".`
+      );
+    }
   }
 
   /**
@@ -96,8 +103,20 @@ export abstract class Plugin<
 
   /**
    * Writes a file to the file system
+   *
+   * @param filepath - The file path to write the file
+   * @param content - The content to write to the file
+   * @param skipFormat - Should the plugin skip formatting the `content` string with Prettier
    */
-  protected async writeFile(filepath: string, content: string) {
+  protected async writeFile(
+    filepath: string,
+    content: string,
+    skipFormat = false
+  ) {
+    if (skipFormat) {
+      return writeFile(filepath, content);
+    }
+
     const config = (await resolveConfig(filepath)) ?? {};
     await writeFile(
       filepath,
@@ -119,7 +138,10 @@ export abstract class Plugin<
   protected async build(options: TResolvedOptions) {
     this.log(LogLevelLabel.TRACE, "Building Storm Stack project");
 
-    if (options.projectType === "library") {
+    if (
+      options.projectType === "library" ||
+      options.projectType === "adapter"
+    ) {
       await this.buildLib(options);
     } else {
       await this.buildApp(options);

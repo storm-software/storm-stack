@@ -3,7 +3,7 @@
 # Environment variables configuration
 
 Below is a list of environment variables used by the
-[@storm-stack/examples-cloudflare-app](https://www.npmjs.com/package/@storm-stack/examples-cloudflare-app)
+[@storm-stack/examples-cloudflare-worker](https://www.npmjs.com/package/@storm-stack/examples-cloudflare-worker)
 package. These values can be updated in the `.env` file in the root of the
 project.
 

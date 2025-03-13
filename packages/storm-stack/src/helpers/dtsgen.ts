@@ -51,6 +51,8 @@ declare global {
   const StormRequest: (typeof import("${path}/request"))["StormRequest"];
   const StormResponse: (typeof import("${path}/response"))["StormResponse"];
   const StormLog: (typeof import("${path}/log"))["StormLog"];
+  const id: (typeof import("${path}/id"))["id"];
+  const getRandom: (typeof import("${path}/id"))["getRandom"];
 
   type StormError = import("${path}/error").StormError;
   type StormRequest<TData = any> = import("${path}/request").StormRequest<TData>;

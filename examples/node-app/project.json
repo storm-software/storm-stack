@@ -4,12 +4,26 @@
   "projectType": "application",
   "sourceRoot": "examples/node-app/src",
   "targets": {
-    "build": {
-      "executor": "@storm-stack/nx:node-build",
+    "prepare": {
+      "executor": "@storm-stack/nx:prepare",
       "outputs": ["{options.outputPath}"],
       "options": {
         "entry": "{sourceRoot}/index.ts#getCity",
         "outputPath": "dist/examples/node-app",
+        "plugins": ["@storm-stack/plugin-node"],
+        "skipCache": true,
+        "skipInstalls": true,
+        "mode": "development"
+      }
+    },
+    "build": {
+      "executor": "@storm-stack/nx:build",
+      "outputs": ["{options.outputPath}"],
+      "dependsOn": ["prepare"],
+      "options": {
+        "entry": "{sourceRoot}/index.ts#getCity",
+        "outputPath": "dist/examples/node-app",
+        "plugins": ["@storm-stack/plugin-node"],
         "skipCache": true,
         "skipInstalls": true,
         "mode": "development"

@@ -45,6 +45,20 @@
         "default": "./dist/index.js"
       }
     },
+    "./plugin": {
+      "import": {
+        "types": "./dist/plugin/index.d.mts",
+        "default": "./dist/plugin/index.mjs"
+      },
+      "require": {
+        "types": "./dist/plugin/index.d.ts",
+        "default": "./dist/plugin/index.js"
+      },
+      "default": {
+        "types": "./dist/plugin/index.d.ts",
+        "default": "./dist/plugin/index.js"
+      }
+    },
     "./executors": {
       "import": {
         "types": "./dist/executors.d.mts",
@@ -77,26 +91,35 @@
     "./generators/*/generator.js": "./dist/generators/*/generator.js"
   },
   "typings": "dist/index.d.ts",
+  "peerDependencies": {
+    "@storm-stack/plugin-cloudflare": "workspace:*",
+    "@storm-stack/plugin-node": "workspace:*"
+  },
+  "peerDependenciesMeta": {
+    "@storm-stack/plugin-cloudflare": {
+      "optional": true
+    },
+    "@storm-stack/plugin-node": {
+      "optional": true
+    }
+  },
   "dependencies": {
     "@nx/devkit": "catalog:",
+    "@storm-software/build-tools": "catalog:",
     "@storm-software/config": "catalog:",
+    "@storm-software/config-tools": "catalog:",
     "@storm-software/esbuild": "catalog:",
-    "@storm-software/testing-tools": "catalog:",
     "@storm-software/unbuild": "catalog:",
     "@storm-software/workspace-tools": "catalog:",
-    "@storm-stack/plugin-cloudflare-worker": "workspace:*",
-    "@storm-stack/plugin-node": "workspace:*",
     "defu": "catalog:",
-    "eslint-flat-config-utils": "catalog:",
-    "jsonc-eslint-parser": "catalog:",
-    "storm-stack": "workspace:*",
-    "tsup": "catalog:",
-    "untyped": "catalog:"
+    "nx": "catalog:",
+    "storm-stack": "workspace:*"
   },
   "devDependencies": {
     "@storm-software/testing-tools": "catalog:",
     "@types/node": "catalog:",
     "eslint-flat-config-utils": "catalog:",
+    "jsonc-eslint-parser": "catalog:",
     "tsup": "catalog:",
     "untyped": "catalog:"
   },

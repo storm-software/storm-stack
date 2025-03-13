@@ -19,7 +19,7 @@ import { getFileHeader } from "../helpers/utilities/file-header";
 
 export function writeRequest() {
   return `${getFileHeader()}
-import { nanoid } from "@stryke/unique-id/nanoid-client";
+import { id } from "./id";
 import type { IStormRequest } from "storm-stack/types";
 
 /**
@@ -28,19 +28,29 @@ import type { IStormRequest } from "storm-stack/types";
 export class StormRequest<TData = any>
   implements IStormRequest<TData> {
   /**
-   * The request meta.
+   * The metadata associated with the request.
    */
   public readonly meta: Record<string, any>;
 
   /**
-   * The request data.
+   * Any identifiers associated with the request.
+   */
+  public readonly identifiers?: Record<string, any>;
+
+  /**
+   * Any parameters associated with the request.
+   */
+  public readonly params?: Record<string, any>;
+
+  /**
+   * The payload data associated with the request.
    */
   public readonly data: TData;
 
   /**
    * The request identifier.
    */
-  public readonly id = nanoid();
+  public readonly id = id();
 
   /**
    * The request created timestamp.
@@ -48,13 +58,24 @@ export class StormRequest<TData = any>
   public readonly timestamp = Date.now();
 
   /**
-   * Create a new request.
+   * Create a new request object.
    *
    * @param data - The request data.
+   * @param meta - The request metadata.
+   * @param params - The request parameters.
+   * @param identifiers - The request identifiers.
    */
-  public constructor(data: TData, meta = {}) {
+  public constructor(
+    data: TData,
+    meta = {},
+    params?: Record<string, any>,
+    identifiers?: Record<string, any>
+  ) {
     this.data = data;
     this.meta = meta;
+    this.params = params;
+    this.identifiers = identifiers;
   }
-}`;
+}
+  `;
 }

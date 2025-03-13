@@ -42,9 +42,8 @@ const logLevelStyles: Record<LogLevel, string> = {
 /**
  * The default console formatter.
  *
- * @param record The log record to format.
- * @returns The formatted log record, as an array of arguments for
- *          {@link console.log}.
+ * @param record - The log record to format.
+ * @returns The formatted log record, as an array of arguments for {@link console.log}.
  */
 export function defaultConsoleFormatter(record: LogRecord): readonly unknown[] {
   let msg = "";

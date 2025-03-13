@@ -17,12 +17,14 @@ packages:
 
 catalog:
   "@biomejs/biome": ^1.9.4
+  "@cloudflare/unenv-preset": 2.0.2
   "@deepkit/injector": ^1.0.2
   "@deepkit/type-compiler": ^1.0.2
   "@donedeal0/superdiff": ^3.1.2
   "@eslint/compat": ^1.2.3
   "@eslint/config-inspector": ^0.5.1
   "@ls-lint/ls-lint": ^2.2.3
+  "@ltd/j-toml": ^1.38.0
   "@microsoft/api-extractor": ^7.48.1
   "@nuxt/kit": ^3.15.4
   "@nuxt/schema": ^3.15.4
@@ -33,6 +35,7 @@ catalog:
   "@opentelemetry/sdk-logs": ^0.57.2
   "@opentelemetry/semantic-conventions": ^1.30.0
   "@sentry/core": ^9.5.0
+  "@sentry/node": ^9.5.0
   "@sentry/types": ^9.5.0
   "@taplo/cli": ^0.7.0
   "@types/eslint": ^9.6.1
@@ -81,6 +84,7 @@ catalog:
   bundle-require: ^5.1.0
   c12: ^3.0.1
   chalk-template: ^1.1.0
+  commander: ^13.1.0
   diff-match-patch: ^1.0.5
   eslint: ^9.20.1
   eslint-doc-generator: ^2.0.2
@@ -93,6 +97,8 @@ catalog:
   lefthook: ^1.7.18
   log4brains: ^1.0.1
   magic-string: ^0.30.17
+  nx/: ^0.0.0
+  nx/devkit: ^0.0.0
   prettier: ^3.5.2
   nx: ^20.5.0
   jest: 29.7.0
@@ -115,6 +121,7 @@ catalog:
   rollup: ^4.28.1
   rolldown: ^1.0.0-beta.1
   unbuild: ^3.3.0
+  unenv: npm:unenv-nightly
   unimport: ^4.1.1
   untyped: "1.5.2"
   verdaccio: 6.0.5
@@ -128,10 +135,10 @@ overrides:
   "@storm-stack/log-console": workspace:*
   "@storm-stack/log-storage": workspace:*
   "@storm-stack/log-otel": workspace:*
-  "@storm-stack/log-sentry": workspace:*
+  "@storm-stack/log-sentry-node": workspace:*
   "@storm-stack/log-stream": workspace:*
   "@storm-stack/nx": workspace:*
-  "@storm-stack/plugin-cloudflare-worker": workspace:*
+  "@storm-stack/plugin-cloudflare": workspace:*
   "@storm-stack/plugin-node": workspace:*
   "@storm-stack/tools-config": workspace:*
   "@storm-stack/tools-nx": workspace:*
@@ -153,3 +160,6 @@ overrides:
   shell-quote: ">=1.8.1"
   simple-git: ">=3.27.0"
   storm-stack: workspace:*
+catalogs:
+  conflicts_unenv_npm:unenvmnightly:
+    unenv: npm:unenv-nightly

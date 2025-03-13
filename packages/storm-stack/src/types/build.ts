@@ -27,7 +27,13 @@ import type MagicString from "magic-string";
 import type { SourceMap } from "magic-string";
 import type { JSDoc, ts, Type } from "ts-morph";
 import type { InlinePreset, Unimport } from "unimport";
-import type { DotenvOptions, ProjectConfig } from "./config";
+import type {
+  AdapterProjectConfig,
+  ApplicationProjectConfig,
+  DotenvOptions,
+  LibraryProjectConfig,
+  ProjectConfig
+} from "./config";
 
 /**
  * The result of the compiler
@@ -245,7 +251,7 @@ export interface ResolvedEntryTypeDefinition extends TypeDefinition {
   input: TypeDefinition;
 }
 
-export interface BuildInfo {
+export interface MetaInfo {
   /**
    * The checksum generated from the resolved options
    */
@@ -267,85 +273,101 @@ export interface BuildInfo {
   timestamp: number;
 }
 
-export type InferResolvedOptions<TOptions extends Options = Options> =
-  TOptions &
-    Required<
-      Pick<
-        TOptions,
-        | "platform"
-        | "mode"
-        | "silent"
-        | "outputPath"
-        | "skipInstalls"
-        | "skipCache"
-        | "minify"
-        | "importDump"
-        | "tsconfig"
-        | "projectType"
-      >
-    > & {
-      /**
-       * The Storm workspace configuration
-       */
-      workspaceConfig: StormConfig;
+export type InferProjectConfig<TConfig extends ProjectConfig = ProjectConfig> =
+  TConfig["projectType"] extends "application"
+    ? ApplicationProjectConfig & TConfig
+    : TConfig["projectType"] extends "library"
+      ? LibraryProjectConfig & TConfig
+      : TConfig["projectType"] extends "adapter"
+        ? AdapterProjectConfig & TConfig
+        : never;
 
-      /**
-       * The build information
-       */
-      buildInfo: BuildInfo;
+export type InferResolvedOptions<
+  TOptions extends Options = Options,
+  TConfig extends InferProjectConfig<TOptions> = InferProjectConfig<TOptions>
+> = TConfig &
+  Required<
+    Pick<
+      TOptions,
+      | "platform"
+      | "mode"
+      | "silent"
+      | "outputPath"
+      | "skipInstalls"
+      | "skipCache"
+      | "minify"
+      | "importDump"
+      | "tsconfig"
+    >
+  > & {
+    /**
+     * The Storm workspace configuration
+     */
+    workspaceConfig: StormConfig;
 
-      /**
-       * The Storm Stack environment paths
-       */
-      envPaths: EnvPaths;
+    /**
+     * The metadata information
+     */
+    meta: MetaInfo;
 
-      /**
-       * The platform configuration to use when building the project
-       */
-      platform: Platform;
+    /**
+     * The metadata information currently written to disk
+     */
+    persistedMeta?: MetaInfo;
 
-      /**
-       * The directory to generate files in the prepare step
-       *
-       * @defaultValue "\{projectRoot\}/.storm"
-       */
-      artifactsDir: string;
+    /**
+     * The Storm Stack environment paths
+     */
+    envPaths: EnvPaths;
 
-      /**
-       * The directory where the artifact runtime files are stored
-       */
-      runtimeDir: string;
+    /**
+     * The platform configuration to use when building the project
+     */
+    platform: Platform;
 
-      /**
-       * The directory where the artifact types are stored
-       */
-      typesDir: string;
+    /**
+     * The directory to generate files in the prepare step
+     *
+     * @defaultValue "\{projectRoot\}/.storm"
+     */
+    artifactsDir: string;
 
-      /**
-       * The imports to insert into the source code
-       */
-      presets: InlinePreset[];
+    /**
+     * The directory where the artifact runtime files are stored
+     */
+    runtimeDir: string;
 
-      /**
-       * The parsed .env configuration object
-       */
-      resolvedDotenv: ResolvedDotenvOptions;
+    /**
+     * The directory where the artifact types are stored
+     */
+    typesDir: string;
 
-      /**
-       * The entry points of the source code
-       */
-      resolvedEntry: ResolvedEntryTypeDefinition[];
+    /**
+     * The imports to insert into the source code
+     */
+    presets: InlinePreset[];
 
-      /**
-       * An object containing overridden options to be provided to the build invoked by the plugins (for example: esbuild, unbuild, vite, etc.)
-       *
-       * @remarks
-       * Any values added here will have top priority over the resolved build options
-       */
-      override: Record<string, any>;
-    };
+    /**
+     * The parsed .env configuration object
+     */
+    resolvedDotenv: ResolvedDotenvOptions;
 
-export type ResolvedOptions = InferResolvedOptions<Options>;
+    /**
+     * The entry points of the source code
+     */
+    resolvedEntry: ResolvedEntryTypeDefinition[];
+
+    /**
+     * An object containing overridden options to be provided to the build invoked by the plugins (for example: esbuild, unbuild, vite, etc.)
+     *
+     * @remarks
+     * Any values added here will have top priority over the resolved build options
+     */
+    override: Record<string, any>;
+  };
+
+export type ResolvedOptions<TOptions extends Options = Options> =
+  InferResolvedOptions<TOptions>;
 
 export type UnimportContext = Omit<Unimport, "injectImports"> & {
   dumpImports: () => Promise<void>;
@@ -360,11 +382,14 @@ export interface EngineHookFunctions<
   "init:options": (options: TResolvedOptions) => MaybePromise<void>;
   "init:installs": (options: TResolvedOptions) => MaybePromise<void>;
   "init:tsconfig": (options: TResolvedOptions) => MaybePromise<void>;
+  "clean": (options: TResolvedOptions) => MaybePromise<void>;
   "prepare:types": (options: TResolvedOptions) => MaybePromise<void>;
   "prepare:runtime": (options: TResolvedOptions) => MaybePromise<void>;
   "prepare:entry": (options: TResolvedOptions) => MaybePromise<void>;
-  "build:run": (options: TResolvedOptions) => MaybePromise<void>;
-  "finalize:run": (options: TResolvedOptions) => MaybePromise<void>;
+  "prepare:deploy": (options: TResolvedOptions) => MaybePromise<void>;
+  "prepare:misc": (options: TResolvedOptions) => MaybePromise<void>;
+  "build": (options: TResolvedOptions) => MaybePromise<void>;
+  "finalize": (options: TResolvedOptions) => MaybePromise<void>;
 }
 
 export type EngineHooks<

@@ -15,6 +15,36 @@ export interface StormStackBaseExecutorSchema {
  outputPath?: string,
 
  /**
+  * Entry File
+  * 
+  * The entry file or files to build
+  * 
+  * @default "{sourceRoot}/index.ts"
+  * 
+  * @format path
+ */
+ entry?: string,
+
+ /**
+  * Plugins
+  * 
+  * A list of plugins to use during Storm Stack processing
+  * 
+ */
+ plugins?: Array<string>,
+
+ /**
+  * Mode
+  * 
+  * The build mode
+  * 
+  * @default "production"
+  * 
+  * @enum development,staging,production
+ */
+ mode?: string,
+
+ /**
   * TypeScript Configuration File
   * 
   * The path to the tsconfig file

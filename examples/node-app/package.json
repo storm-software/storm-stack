@@ -16,8 +16,5 @@
     "@storm-stack/nx": "workspace:*",
     "@storm-stack/plugin-node": "workspace:*",
     "storm-stack": "workspace:*"
-  },
-  "storm": {
-    "name": "examples-node-app"
   }
 }

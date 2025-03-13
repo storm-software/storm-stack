@@ -50,7 +50,7 @@
   "prettier.bracketSameLine": true,
   "prettier.configPath": "./node_modules/@storm-software/prettier/config.json",
   "prettier.ignorePath": "./node_modules/@storm-software/prettier/.prettierignore",
-  "prettier.enableDebugLogs": true,
+  "prettier.enableDebugLogs": false,
   "prettier.enable": true,
   "markdownlint.config": {
     "extends": "./node_modules/@storm-software/markdownlint/config/config.json"

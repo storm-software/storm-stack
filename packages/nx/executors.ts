@@ -15,7 +15,9 @@
 
  ------------------------------------------------------------------- */
 
-export { executorFn as cloudflareWorkerBuildExecutor } from "./src/executors/cloudflare-worker-build/executor";
-export type { StormStackCloudflareWorkerBuildExecutorSchema } from "./src/executors/cloudflare-worker-build/schema";
-export { executorFn as nodeBuildExecutor } from "./src/executors/node-build/executor";
-export type { StormStackNodeBuildExecutorSchema } from "./src/executors/node-build/schema";
+export { executorFn as stormStackBuildExecutor } from "./src/executors/build/executor";
+export type { StormStackBuildExecutorSchema } from "./src/executors/build/schema";
+export { executorFn as stormStackCleanExecutor } from "./src/executors/clean/executor";
+export type { StormStackCleanExecutorSchema } from "./src/executors/clean/schema";
+export { executorFn as stormStackPrepareExecutor } from "./src/executors/prepare/executor";
+export type { StormStackPrepareExecutorSchema } from "./src/executors/prepare/schema";

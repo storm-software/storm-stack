@@ -4,11 +4,26 @@
   "projectType": "application",
   "sourceRoot": "examples/cloudflare-worker/src",
   "targets": {
-    "build": {
-      "executor": "@storm-stack/nx:cloudflare-worker-build",
+    "prepare": {
+      "executor": "@storm-stack/nx:prepare",
       "outputs": ["{options.outputPath}"],
       "options": {
+        "entry": "{sourceRoot}/index.ts#handler",
         "outputPath": "dist/examples/cloudflare-worker",
+        "plugins": ["@storm-stack/plugin-cloudflare"],
+        "skipCache": true,
+        "skipInstalls": true,
+        "mode": "development"
+      }
+    },
+    "build": {
+      "executor": "@storm-stack/nx:build",
+      "outputs": ["{options.outputPath}"],
+      "dependsOn": ["prepare"],
+      "options": {
+        "entry": "{sourceRoot}/index.ts#handler",
+        "outputPath": "dist/examples/cloudflare-worker",
+        "plugins": ["@storm-stack/plugin-cloudflare"],
         "skipCache": true,
         "skipInstalls": true,
         "mode": "development"

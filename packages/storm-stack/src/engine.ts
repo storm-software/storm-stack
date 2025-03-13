@@ -69,6 +69,7 @@ import {
 import { createUnimport } from "./helpers/unimport";
 import { createLog } from "./helpers/utilities/logger";
 import type { Plugin } from "./plugin";
+import { writeId } from "./runtime";
 import { writeError } from "./runtime/error";
 import { writeLog } from "./runtime/log";
 import { writeRequest } from "./runtime/request";
@@ -224,6 +225,14 @@ export class Engine<
       {
         imports: ["StormLog"],
         from: "storm:log"
+      },
+      {
+        imports: ["id"],
+        from: "storm:id"
+      },
+      {
+        imports: ["getRandom"],
+        from: "storm:id"
       }
     ];
 
@@ -251,10 +260,13 @@ export class Engine<
       (await this.loadConfig()) ?? {}
     ) as TResolvedOptions;
 
-    this.resolvedOptions.buildInfo = {
-      buildId: nanoid(),
-      releaseId: nanoid(),
-      checksum: await hashDirectory(this.resolvedOptions.projectRoot),
+    const checksum = await hashDirectory(this.resolvedOptions.projectRoot, {
+      ignored: ["node_modules", ".git", ".nx", ".cache", ".storm", "tmp"]
+    });
+    this.resolvedOptions.meta ??= {
+      buildId: nanoid(24),
+      releaseId: nanoid(24),
+      checksum,
       timestamp: Date.now()
     };
 
@@ -269,6 +281,24 @@ export class Engine<
       this.resolvedOptions.artifactsDir,
       "types"
     );
+
+    if (
+      existsSync(
+        joinPaths(
+          this.resolvedOptions.projectRoot,
+          this.resolvedOptions.artifactsDir,
+          "meta.json"
+        )
+      )
+    ) {
+      this.resolvedOptions.persistedMeta = await readJsonFile(
+        joinPaths(
+          this.resolvedOptions.projectRoot,
+          this.resolvedOptions.artifactsDir,
+          "meta.json"
+        )
+      );
+    }
 
     this.resolvedOptions.dts =
       this.options.dts || joinPaths(this.resolvedOptions.typesDir, "env.d.ts");
@@ -314,8 +344,8 @@ export class Engine<
     }
 
     if (
-      this.resolvedOptions.entry &&
-      this.resolvedOptions.projectType === "application"
+      this.resolvedOptions.projectType === "application" &&
+      this.resolvedOptions.entry
     ) {
       if (isSetString(this.resolvedOptions.entry)) {
         this.resolvedOptions.resolvedEntry = [
@@ -378,12 +408,6 @@ export class Engine<
             this.log,
             this.resolvedOptions,
             "@stryke/json"
-          ),
-        this.resolvedOptions.projectType === "application" &&
-          installPackage<TOptions>(
-            this.log,
-            this.resolvedOptions,
-            "@stryke/unique-id"
           )
       ].filter(Boolean)
     );
@@ -577,24 +601,81 @@ export class Engine<
   }
 
   /**
-   * Prepare the Storm Stack project prior to building
-   *
-   * @remarks
-   * This method will create the necessary directories, and write the artifacts files to the project.
+   * Clean any previously prepared artifacts
    */
-  public async prepare() {
+  public async clean() {
     if (!this.#initialized) {
       await this.init();
     }
 
-    this.log(LogLevelLabel.TRACE, "Preparing Storm Stack project");
+    this.log(LogLevelLabel.TRACE, "Running Storm Stack - Clean command");
 
-    await removeDirectory(
-      joinPaths(
-        this.resolvedOptions.projectRoot,
-        this.resolvedOptions.artifactsDir
+    await Promise.all([
+      removeDirectory(
+        joinPaths(
+          this.resolvedOptions.projectRoot,
+          this.resolvedOptions.artifactsDir
+        )
+      ),
+      removeDirectory(
+        joinPaths(
+          this.resolvedOptions.workspaceConfig.workspaceRoot,
+          this.resolvedOptions.outputPath?.replace(
+            this.resolvedOptions.workspaceConfig.workspaceRoot,
+            ""
+          ) || joinPaths("dist", this.resolvedOptions.projectRoot)
+        )
       )
-    );
+    ]);
+
+    await this.#hooks
+      .callHook("clean", this.resolvedOptions)
+      .catch((error: Error) => {
+        this.log(
+          LogLevelLabel.ERROR,
+          `An error occured while cleaning the Storm Stack project: ${error.message} \n${error.stack ?? ""}`
+        );
+
+        throw new Error(
+          "An error occured while cleaning the Storm Stack project",
+          { cause: error }
+        );
+      });
+
+    this.log(LogLevelLabel.TRACE, "Storm Stack - Clean command completed");
+  }
+
+  /**
+   * Prepare the Storm Stack project prior to building
+   *
+   * @remarks
+   * This method will create the necessary directories, and write the artifacts files to the project.
+   *
+   * @param autoClean - Whether to automatically clean the previous build artifacts before preparing the project
+   */
+  public async prepare(autoClean = true) {
+    if (!this.#initialized) {
+      await this.init();
+    }
+
+    if (
+      existsSync(
+        joinPaths(
+          this.resolvedOptions.projectRoot,
+          this.resolvedOptions.artifactsDir
+        )
+      ) &&
+      autoClean
+    ) {
+      this.log(
+        LogLevelLabel.INFO,
+        "Cleaning the previous build artifacts before preparing the project"
+      );
+
+      await this.clean();
+    }
+
+    this.log(LogLevelLabel.TRACE, "Preparing Storm Stack project");
 
     if (
       !existsSync(
@@ -646,10 +727,12 @@ export class Engine<
       joinPaths(
         this.resolvedOptions.projectRoot,
         this.resolvedOptions.artifactsDir,
-        "build.json"
+        "meta.json"
       ),
-      StormJSON.stringify(this.resolvedOptions.buildInfo)
+      StormJSON.stringify(this.resolvedOptions.meta)
     );
+    this.resolvedOptions.persistedMeta = this.resolvedOptions.meta;
+
     await this.writeDeclarations();
 
     await this.#hooks
@@ -682,6 +765,7 @@ export class Engine<
         this.writeFile(joinPaths(runtimeDir, "request.ts"), writeRequest()),
         this.writeFile(joinPaths(runtimeDir, "response.ts"), writeResponse()),
         this.writeFile(joinPaths(runtimeDir, "error.ts"), writeError()),
+        this.writeFile(joinPaths(runtimeDir, "id.ts"), writeId()),
         this.writeFile(joinPaths(runtimeDir, "log.ts"), writeLog())
       ]);
 
@@ -716,23 +800,76 @@ export class Engine<
             });
           });
       }
+
+      this.#hooks
+        .callHook("prepare:deploy", this.resolvedOptions)
+        .catch((error: Error) => {
+          this.log(
+            LogLevelLabel.ERROR,
+            `An error occured while creating deployment artifacts: ${error.message} \n${error.stack ?? ""}`
+          );
+
+          throw new Error(
+            "An error occured while creating deployment artifacts",
+            {
+              cause: error
+            }
+          );
+        });
     }
+
+    this.#hooks
+      .callHook("prepare:misc", this.resolvedOptions)
+      .catch((error: Error) => {
+        this.log(
+          LogLevelLabel.ERROR,
+          `An error occured while creating miscellaneous artifacts: ${error.message} \n${error.stack ?? ""}`
+        );
+
+        throw new Error(
+          "An error occured while creating miscellaneous artifacts",
+          {
+            cause: error
+          }
+        );
+      });
 
     await this.writeDotenvDoc();
   }
 
   /**
-   * Build the Storm Stack project
+   * Build the project
+   *
+   * @param autoPrepare - Whether to automatically prepare the project if it has not been prepared
+   * @param autoClean - Whether to automatically clean the previous build artifacts before preparing the project
    */
-  public async build() {
+  public async build(autoPrepare = true, autoClean = true) {
     if (!this.#initialized) {
       await this.init();
+    }
+
+    if (
+      this.resolvedOptions.persistedMeta?.checksum !==
+      this.resolvedOptions.meta.checksum
+    ) {
+      if (autoPrepare) {
+        this.log(
+          LogLevelLabel.INFO,
+          "The Storm Stack project has been modified since the last time `prepare` was ran. Re-preparing the project."
+        );
+
+        await this.prepare(autoClean);
+      } else {
+        throw new Error(
+          "The Storm Stack project has not been prepared. Please run the `prepare` command before trying to build the project."
+        );
+      }
     }
 
     this.log(LogLevelLabel.TRACE, "Building Storm Stack project");
 
     await this.#hooks
-      .callHook("build:run", this.resolvedOptions)
+      .callHook("build", this.resolvedOptions)
       .catch((error: Error) => {
         this.log(
           LogLevelLabel.ERROR,
@@ -747,13 +884,16 @@ export class Engine<
   }
 
   /**
-   * Post build process
+   * Finalization process
+   *
+   * @remarks
+   * This step includes any final processes or clean up required by Storm Stack. It will be run after each Storm Stack command.
    */
   public async finalize() {
     this.log(LogLevelLabel.TRACE, "Storm Stack finalize execution started");
 
     await this.#hooks
-      .callHook("finalize:run", this.resolvedOptions)
+      .callHook("finalize", this.resolvedOptions)
       .catch((error: Error) => {
         this.log(
           LogLevelLabel.ERROR,
@@ -930,10 +1070,10 @@ Note: Please ensure the plugin package's default export is a class that extends 
             ""
           ),
         APP_VERSION: this.packageJson.version,
-        BUILD_ID: this.resolvedOptions.buildInfo.buildId,
-        BUILD_TIMESTAMP: this.resolvedOptions.buildInfo.timestamp,
-        BUILD_CHECKSUM: this.resolvedOptions.buildInfo.checksum,
-        RELEASE_ID: this.resolvedOptions.buildInfo.releaseId,
+        BUILD_ID: this.resolvedOptions.meta.buildId,
+        BUILD_TIMESTAMP: this.resolvedOptions.meta.timestamp,
+        BUILD_CHECKSUM: this.resolvedOptions.meta.checksum,
+        RELEASE_ID: this.resolvedOptions.meta.releaseId,
         MODE: this.resolvedOptions.mode,
         ORG: this.resolvedOptions.workspaceConfig.organization,
         ORGANIZATION: this.resolvedOptions.workspaceConfig.organization,

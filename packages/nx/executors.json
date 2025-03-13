@@ -1,14 +1,19 @@
 {
   "executors": {
-    "node-build": {
-      "implementation": "./dist/src/executors/node-build/executor",
-      "schema": "./dist/src/executors/node-build/schema.json",
-      "description": "An executor used to build a NodeJs project"
+    "clean": {
+      "implementation": "./dist/src/executors/clean/executor",
+      "schema": "./dist/src/executors/clean/schema.json",
+      "description": "An executor used to run the Storm Stack - Clean process"
     },
-    "cloudflare-worker-build": {
-      "implementation": "./dist/src/executors/cloudflare-worker-build/executor",
-      "schema": "./dist/src/executors/cloudflare-worker-build/schema.json",
-      "description": "An executor used to build a Cloudflare Worker project"
+    "prepare": {
+      "implementation": "./dist/src/executors/prepare/executor",
+      "schema": "./dist/src/executors/prepare/schema.json",
+      "description": "An executor used to run the Storm Stack - Prepare process"
+    },
+    "build": {
+      "implementation": "./dist/src/executors/build/executor",
+      "schema": "./dist/src/executors/build/schema.json",
+      "description": "An executor used to run the Storm Stack - Build process"
     }
   }
 }

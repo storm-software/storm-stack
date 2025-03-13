@@ -20,10 +20,10 @@ import type { LogRecord } from "storm-stack/types";
 /**
  * A console formatter is a function that accepts a log record and returns an array of arguments to pass to {@link console.log}.
  *
- * @param record The log record to format.
+ * @param record - The log record to format.
  * @returns The formatted log record, as an array of arguments for {@link console.log}.
  */
-export type ConsoleFormatter = (record: LogRecord) => readonly unknown[];
+export type ConsoleFormatter = (record: LogRecord) => readonly any[];
 
 /**
  * Options for the {@link getConsoleSink} function.

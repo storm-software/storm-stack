@@ -19,6 +19,7 @@ import { getFileHeader } from "../helpers/utilities/file-header";
 
 export function writeError() {
   return `${getFileHeader()}
+
 import { StormJSON } from "@stryke/json/storm-json";
 import type { ErrorMessageDetails, Indexable } from "@stryke/types";
 import {

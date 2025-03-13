@@ -117,6 +117,16 @@ export interface IStormRequest<TData = any> {
   meta: Record<string, any>;
 
   /**
+   * Any identifiers associated with the request.
+   */
+  identifiers?: Record<string, any>;
+
+  /**
+   * Any parameters associated with the request.
+   */
+  params?: Record<string, any>;
+
+  /**
    * The payload of the request.
    */
   data: TData;

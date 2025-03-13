@@ -27,6 +27,33 @@ export default defineUntypedSchema({
       "A shared/base schema type definition for Storm Stack executors",
     required: []
   },
+  entry: {
+    $schema: {
+      title: "Entry File",
+      type: "string",
+      format: "path",
+      description: "The entry file or files to build"
+    },
+    $default: "{sourceRoot}/index.ts"
+  },
+  plugins: {
+    $schema: {
+      title: "Plugins",
+      type: "array",
+      description: "A list of plugins to use during Storm Stack processing",
+      items: { type: "string" }
+    },
+    $default: []
+  },
+  mode: {
+    $schema: {
+      title: "Mode",
+      type: "string",
+      description: "The build mode",
+      enum: ["development", "staging", "production"]
+    },
+    $default: "production"
+  },
   tsconfig: {
     $schema: {
       title: "TypeScript Configuration File",

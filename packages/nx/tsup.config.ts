@@ -22,10 +22,13 @@ const config: Options = getTsupConfig({
   name: "nx",
   entry: [
     "./index.ts",
+    "./src/plugin/index.ts",
     "./src/executors/*/executor.ts",
     "./src/executors/*/untyped.ts"
   ],
-  format: ["cjs"]
+  dts: true,
+  shims: true,
+  skipNodeModulesBundle: true
 });
 
 export default config;

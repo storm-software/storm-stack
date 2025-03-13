@@ -27,11 +27,9 @@ import type {
 /**
  * Get a platform-independent file sink.
  *
- * @typeParam TFile The type of the file descriptor.
- * @param path A path to the file to write to.
- * @param options The options for the sink and the file driver.
- * @returns A sink that writes to the file.  The sink is also a disposable
- *          object that closes the file when disposed.
+ * @param path - A path to the file to write to.
+ * @param options - The options for the sink and the file driver.
+ * @returns A sink that writes to the file. The sink is also a disposable object that closes the file when disposed.
  */
 export function getBaseFileSink<TFile>(
   path: string,
@@ -56,8 +54,8 @@ export function getBaseFileSink<TFile>(
  * followed by a dot and a number, starting from 1.  The number is incremented
  * for each rotation, and the maximum number of files to keep is `maxFiles`.
  *
- * @param path A path to the file to write to.
- * @param options The options for the sink and the file driver.
+ * @param path - A path to the file to write to.
+ * @param options - The options for the sink and the file driver.
  * @returns A sink that writes to the file.  The sink is also a disposable
  *          object that closes the file when disposed.
  */

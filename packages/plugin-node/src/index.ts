@@ -94,7 +94,7 @@ export default class NodePlugin<
 
     if (!this.config.skipBuild) {
       hooks.addHooks({
-        "build:run": this.build.bind(this)
+        "build": this.build.bind(this)
       });
     }
   }
@@ -255,7 +255,7 @@ export default class NodePlugin<
           entry.file,
           `${getFileHeader()}
 
-import ${entry.name ? `{ ${entry.name} }` : "handler"} from "${joinPaths(
+import ${entry.input.name ? `{ ${entry.input.name} as handler }` : "handler"} from "${joinPaths(
             relativePath(
               joinPaths(options.projectRoot, findFilePath(entry.file)),
               joinPaths(options.projectRoot, findFilePath(entry.input.file))
@@ -268,7 +268,7 @@ import ${entry.name ? `{ ${entry.name} }` : "handler"} from "${joinPaths(
 import { createStormApp } from ".${joinPaths(options.runtimeDir.replace(options.artifactsDir, ""), "app")}";
 import { getSink } from "@storm-stack/log-console";
 
-export default createStormApp(${entry.name ? entry.name : "handler"}, {
+export default createStormApp(handler, {
 name: ${options.name ? `"${options.name}"` : "undefined"},
 log: { handle: getSink(), logLevel: "debug" },
 });
@@ -310,6 +310,7 @@ log: { handle: getSink(), logLevel: "debug" },
           "storm:context": joinPaths(runtimeDir, "context"),
           "storm:error": joinPaths(runtimeDir, "error"),
           "storm:event": joinPaths(runtimeDir, "event"),
+          "storm:id": joinPaths(runtimeDir, "id"),
           "storm:log": joinPaths(runtimeDir, "log"),
           "storm:request": joinPaths(runtimeDir, "request"),
           "storm:response": joinPaths(runtimeDir, "response")

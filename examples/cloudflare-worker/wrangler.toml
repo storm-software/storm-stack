@@ -1,0 +1,6 @@
+
+name = 'examples-cloudflare-worker'
+compatibility_date = '2025-03-13'
+main = '/.storm/entry-oqFxRJ2G.ts'
+account_id = 'undefined'
+compatibility_flags = ['nodejs_als']

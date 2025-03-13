@@ -103,19 +103,11 @@ export interface ProjectConfig {
   name?: string;
 
   /**
-   * The entry point for the project
-   *
-   * @remarks
-   * This is only used for applications. Libraries will have a separate entry point added for each file.
-   */
-  entry?: TypeDefinitionParameter | TypeDefinitionParameter[];
-
-  /**
    * The type of project being built
    *
    * @defaultValue "application"
    */
-  projectType?: "application" | "library";
+  projectType?: "application" | "library" | "adapter";
 
   /**
    * A list of resolvable paths to plugins used during the build process
@@ -130,12 +122,54 @@ export interface ProjectConfig {
   /**
    * The name of the generated declaration (.d.ts) file to use for the Storm global variables. Set `false` to disable - no file will be generated.
    *
-   * @defaultValue "{projectRoot}/.storm/types/env.d.ts"
+   * @defaultValue "\{projectRoot\}/.storm/types/env.d.ts"
    */
   dts?: string | false;
+}
+
+export interface ApplicationProjectConfig {
+  /**
+   * The entry point for the project
+   *
+   * @remarks
+   * This is only used for applications. Libraries will have a separate entry point added for each file.
+   */
+  entry?: TypeDefinitionParameter | TypeDefinitionParameter[];
+
+  /**
+   * The type of project being built
+   */
+  projectType?: "application";
 
   /**
    * The log configuration for the project
    */
   logs?: LogConfig | LogConfig[];
+}
+
+export interface LibraryProjectConfig extends ProjectConfig {
+  /**
+   * The type of project being built
+   */
+  projectType?: "library";
+}
+
+export interface AdapterProjectConfig extends ProjectConfig {
+  /**
+   * The type of adapter exported by the project
+   */
+  adapter: string;
+
+  /**
+   * The type of project being built
+   */
+  projectType: "adapter";
+
+  /**
+   * A file that includes code required to initialize the adapter
+   *
+   * @remarks
+   * This code will be called before the application's entry point. An example usage for this would be log instrumentation setup.
+   */
+  init?: TypeDefinitionParameter;
 }

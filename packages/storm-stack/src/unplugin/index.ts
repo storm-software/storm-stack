@@ -47,7 +47,7 @@ export const unpluginFactory: UnpluginFactory<Options> = options => {
       await engine.init();
 
       log(LogLevelLabel.TRACE, "Prepare Storm Stack project...");
-      await engine.prepare();
+      await engine.prepare(true);
     }
 
     async function transform(

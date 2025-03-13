@@ -57,7 +57,8 @@ Run `nx test plugin-node` to execute the unit tests via
 
 ### Linting
 
-Run `nx lint plugin-node` to run [ESLint](https://eslint.org/) on the package.
+Run `nx lint plugin-node` to run [ESLint](https://eslint.org/) on the
+package.
 
 <!-- START footer -->
 <!-- END footer -->

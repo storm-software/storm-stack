@@ -275,6 +275,7 @@
     "@stryke/unique-id": "catalog:",
     "c12": "catalog:",
     "chalk-template": "catalog:",
+    "commander": "^13.1.0",
     "defu": "catalog:",
     "diff-match-patch": "catalog:",
     "esbuild": "catalog:",

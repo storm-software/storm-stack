@@ -76,5 +76,6 @@ export class StormResponse<TData = any>
       this.data = result;
     }
   }
-}`;
+}
+  `;
 }

@@ -14,6 +14,36 @@
 The output path for the build
 
 
+## `entry`
+- **Type**: `string`
+- **Default**: `"{sourceRoot}/index.ts"`
+
+> Entry File
+
+
+The entry file or files to build
+
+
+## `plugins`
+- **Type**: `array`
+- **Default**: `[]`
+
+> Plugins
+
+
+A list of plugins to use during Storm Stack processing
+
+
+## `mode`
+- **Type**: `string`
+- **Default**: `"production"`
+
+> Mode
+
+
+The build mode
+
+
 ## `tsconfig`
 - **Type**: `string`
 - **Default**: `"{projectRoot}/tsconfig.json"`

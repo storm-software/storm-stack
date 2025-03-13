@@ -22,5 +22,8 @@ export const globals = {
   StormError: "readonly",
   StormRequest: "readonly",
   StormResponse: "readonly",
-  StormJSON: "readonly"
+  StormEvent: "readonly",
+  StormJSON: "readonly",
+  id: "readonly",
+  getRandom: "readonly"
 } as Record<string, ESLintGlobalsPropValue>;

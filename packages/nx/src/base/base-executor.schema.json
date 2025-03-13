@@ -12,6 +12,36 @@
       "id": "#outputPath",
       "default": "dist/{projectRoot}"
     },
+    "entry": {
+      "title": "Entry File",
+      "type": "string",
+      "format": "path",
+      "description": "The entry file or files to build",
+      "id": "#entry",
+      "default": "{sourceRoot}/index.ts"
+    },
+    "plugins": {
+      "title": "Plugins",
+      "type": "array",
+      "description": "A list of plugins to use during Storm Stack processing",
+      "items": {
+        "type": "string"
+      },
+      "id": "#plugins",
+      "default": []
+    },
+    "mode": {
+      "title": "Mode",
+      "type": "string",
+      "description": "The build mode",
+      "enum": [
+        "development",
+        "staging",
+        "production"
+      ],
+      "id": "#mode",
+      "default": "production"
+    },
     "tsconfig": {
       "title": "TypeScript Configuration File",
       "type": "string",
@@ -43,6 +73,9 @@
   "type": "object",
   "default": {
     "outputPath": "dist/{projectRoot}",
+    "entry": "{sourceRoot}/index.ts",
+    "plugins": [],
+    "mode": "production",
     "tsconfig": "{projectRoot}/tsconfig.json",
     "silent": false
   }

@@ -31,6 +31,7 @@ export const getTsupConfig = (
     keepNames: true,
     clean: true,
     sourcemap: false,
+    platform: "node",
     tsconfig: "./tsconfig.json",
     dts: {
       resolve: true

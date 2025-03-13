@@ -105,15 +105,56 @@ export const createNodesV2: CreateNodesV2<StormStackAdapterPluginOptions> = [
             relativeRoot = relativeRoot.slice(1);
           }
 
-          targets.build = {
+          targets.clean = {
+            executor: "@storm-stack/nx:clean",
+            defaultConfiguration: "production",
+            options: {
+              outputPath: "{workspaceRoot}/dist/{projectRoot}",
+              plugins: ["@storm-stack/plugin-node"],
+              skipInstalls: true
+            },
+            configurations: {
+              production: {
+                mode: "production"
+              },
+              development: {
+                mode: "development"
+              }
+            }
+          };
+
+          targets.prepare = {
             cache: true,
             inputs: ["typescript", "^production"],
-            outputs: ["{options.outputPath}"],
-            executor: "@storm-stack/nx:node-build",
+            outputs: ["{projectRoot}/.storm"],
+            executor: "@storm-stack/nx:prepare",
             dependsOn: ["clean", "^build"],
             defaultConfiguration: "production",
             options: {
               outputPath: "{workspaceRoot}/dist/{projectRoot}",
+              plugins: ["@storm-stack/plugin-node"],
+              skipInstalls: true
+            },
+            configurations: {
+              production: {
+                mode: "production"
+              },
+              development: {
+                mode: "development"
+              }
+            }
+          };
+
+          targets.build = {
+            cache: true,
+            inputs: ["typescript", "^production"],
+            outputs: ["{options.outputPath}"],
+            executor: "@storm-stack/nx:build",
+            dependsOn: ["clean", "^build"],
+            defaultConfiguration: "production",
+            options: {
+              outputPath: "{workspaceRoot}/dist/{projectRoot}",
+              plugins: ["@storm-stack/plugin-node"],
               skipInstalls: true
             },
             configurations: {
@@ -132,6 +173,9 @@ export const createNodesV2: CreateNodesV2<StormStackAdapterPluginOptions> = [
           const implicitDependencies = project.implicitDependencies ?? [];
           if (!implicitDependencies.includes("storm-stack")) {
             implicitDependencies.push("storm-stack");
+          }
+          if (!implicitDependencies.includes("plugin-node")) {
+            implicitDependencies.push("plugin-node");
           }
 
           const result = project?.name
