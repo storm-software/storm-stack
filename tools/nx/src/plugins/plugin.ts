@@ -149,19 +149,13 @@ export const createNodesV2: CreateNodesV2<StormStackPluginPluginOptions> = [
           );
           addProjectScopeTag(project, StormStackProjectTagScopeValue.PLUGIN);
 
-          const implicitDependencies = project.implicitDependencies ?? [];
-          if (!implicitDependencies.includes("storm-stack")) {
-            implicitDependencies.push("storm-stack");
-          }
-
           const result = project?.name
             ? {
                 projects: {
                   [project.name]: {
                     ...project,
                     root: relativeRoot,
-                    targets,
-                    implicitDependencies
+                    targets
                   }
                 }
               }
