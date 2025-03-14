@@ -21,8 +21,8 @@ import {
   loadEnvFile as loadEnvFileBase
 } from "@stryke/env/load-env";
 import type { DotenvParseOutput } from "@stryke/env/types";
-import { joinPaths } from "@stryke/path/utilities/join-paths";
-import type { PackageJson } from "@stryke/types/utility-types/package-json";
+import { joinPaths } from "@stryke/path/join-paths";
+import type { PackageJson } from "@stryke/types/package-json";
 import { loadConfig } from "c12";
 import defu from "defu";
 import type { Options, ResolvedDotenvOptions } from "../../types/build";

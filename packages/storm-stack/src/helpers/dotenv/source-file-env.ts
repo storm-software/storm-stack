@@ -18,10 +18,10 @@
 import type { DotenvParseOutput } from "@stryke/env/types";
 import { ENV_PREFIXES } from "@stryke/env/types";
 import { camelCase } from "@stryke/string-format/camel-case";
-import { isEmpty } from "@stryke/types/type-checks/is-empty";
-import { isSetObject } from "@stryke/types/type-checks/is-set-object";
-import { isSetString } from "@stryke/types/type-checks/is-set-string";
-import { isString } from "@stryke/types/type-checks/is-string";
+import { isEmpty } from "@stryke/type-checks/is-empty";
+import { isSetObject } from "@stryke/type-checks/is-set-object";
+import { isSetString } from "@stryke/type-checks/is-set-string";
+import { isString } from "@stryke/type-checks/is-string";
 import type { Project } from "ts-morph";
 import { SyntaxKind } from "ts-morph";
 import type {

@@ -10,7 +10,7 @@
 # supported CodeQL languages.
 #
 
-name: "CodeQL"
+name: "CodeQL Scan"
 
 on:
   pull_request:

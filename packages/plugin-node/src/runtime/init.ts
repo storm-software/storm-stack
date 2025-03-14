@@ -15,13 +15,12 @@
 
  ------------------------------------------------------------------- */
 
-/**
- * The log-sentry-node library used by Storm Software for building NodeJS applications.
- *
- * @remarks
- * A package containing a Storm Stack log adapter to write log messages to Sentry in a NodeJS application.
- *
- * @packageDocumentation
- */
+import { getFileHeader } from "storm-stack/helpers";
 
-export * from "./sink";
+export function writeInit() {
+  return `${getFileHeader()}
+
+// Do nothing - this is a placeholder for Storm Stack plugins that do not require any initialization
+
+`;
+}

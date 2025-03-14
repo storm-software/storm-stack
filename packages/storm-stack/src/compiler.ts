@@ -17,7 +17,7 @@
 
 import { declarationTransformer, transformer } from "@deepkit/type-compiler";
 import { LogLevelLabel } from "@storm-software/config-tools/types";
-import type { MaybePromise } from "@stryke/types/utility-types/base";
+import type { MaybePromise } from "@stryke/types/base";
 import MagicString from "magic-string";
 import { Project, ts } from "ts-morph";
 import { getCache, setCache } from "./helpers/transform";

@@ -19,8 +19,21 @@ import { getFileHeader } from "storm-stack/helpers";
 
 export function writeCreateApp() {
   return `${getFileHeader()}
-import type { MaybePromise } from "@stryke/types";
+
 import { InjectorContext } from "@deepkit/injector";
+import type {
+  BuilderConfig,
+  BuilderResult,
+  DeserializerFunction,
+  HandlerFunction,
+  SerializerFunction,
+  StormContext,
+  StormRuntimeParams,
+  ValidatorFunction
+} from "@storm-stack/plugin-node/types";
+import { isNativeError } from "node:util/types";
+import type { StormEnv } from "storm-stack/types";
+import { ErrorType } from "storm-stack/types";
 import {
   getAppName,
   getAppVersion,
@@ -28,133 +41,252 @@ import {
   getRuntimeInfo,
   STORM_ASYNC_CONTEXT
 } from "./context";
-import type {
-  StormEnv
-} from "storm-stack/types";
-import type {
-  StormContext,
-  StormRuntimeParams
-} from "@storm-stack/plugin-node/types";
 import { getErrorFromUnknown } from "./error";
-import { StormEvent } from "./event";
-import { StormRequest } from "./request";
+import type { StormEvent } from "./event";
+import { uniqueId } from "./id";
+import type { StormRequest } from "./request";
 import { StormResponse } from "./response";
 
 /**
- * Creates a Storm application.
+ * Creates a Storm application handler.
  *
  * @remarks
  * This function is the main entry point for Storm Stack applications.
  *
- * @param handler - The main handler function for the application.
- * @param params - Optional configuration parameters for the application.
+ * @param params - Configuration parameters for the application.
+ * @param handlerFn - The main handler function for the application.
+ * @param validatorFn - A function that validates the request payload and returns a validated payload or an error.
  * @returns A function that takes an request and returns a result or a promise of a result.
  */
-export function createStormApp<TRequest extends StormRequest, TResponseData = any>(
-  handler: (request: TRequest) => MaybePromise<TResponseData | StormError>,
-  params: StormRuntimeParams
-) {
-  const name = params.name || getAppName();
-  const version = getAppVersion();
-  const buildInfo = getBuildInfo();
-  const runtimeInfo = getRuntimeInfo();
-  const injector = InjectorContext.forProviders(params.providers ?? []);
+export function builder<
+  TRequest extends StormRequest,
+  TResponse extends StormResponse,
+  TPayload,
+  TResult
+>(params: StormRuntimeParams) {
+  const builderConfig = {} as BuilderConfig<
+    TRequest,
+    TResponse,
+    TPayload,
+    TResult
+  >;
 
-  const disposables = new Set<Disposable>();
-  const asyncDisposables = new Set<AsyncDisposable>();
+  const build = () => {
+    if (!builderConfig.handler || !builderConfig.deserializer || !builderConfig.serializer) {
+      const missing = [
+        !builderConfig.deserializer && "deserializer",
+        !builderConfig.handler && "handler",
+        !builderConfig.serializer && "serializer"
+      ].filter(Boolean);
 
-  async function handleExit(): Promise<void> {
-    for (const disposable of disposables) {
-      disposable[Symbol.dispose]();
-    }
-    disposables.clear();
-
-    const promises = [] as PromiseLike<void>[];
-    for (const disposable of asyncDisposables) {
-      promises.push(disposable[Symbol.asyncDispose]());
-      asyncDisposables.delete(disposable);
-    }
-    await Promise.all(promises);
-  }
-
-  const log = new StormLog(Array.isArray(params.log) ? params.log : [params.log]);
-  for (const sink of log.sinks) {
-    if (Symbol.asyncDispose in sink) {
-      asyncDisposables.add(sink as AsyncDisposable);
-    }
-    if (Symbol.dispose in sink) {
-      disposables.add(sink as Disposable);
-    }
-  }
-
-  if ("process" in globalThis && !("Deno" in globalThis)) {
-    // @ts-ignore: It's fine to use process in Node
-    // deno-lint-ignore no-process-global
-    process.on("exit", handleExit);
-  }
-
-  return async function wrappedHandler(request: TRequest): Promise<StormResponse<TResponseData | StormError>> {
-    const context = {
-      name,
-      version,
-      request,
-      meta: request.meta,
-      log: log.with({ name, version, requestId: request.id }),
-      buildInfo,
-      runtimeInfo,
-      env: {} as StormEnv,
-      injector,
-      emit: (event: StormEvent) => {},
-      __internal: {
-        events: [] as StormEvent[]
-      }
-    } as StormContext<StormEnv, TRequest>;
-
-    function emit(event: StormEvent) {
-      context.log.debug(
-        \`The \${event.label} event was emitted by the application.\`,
-        {
-          event,
-        }
+      throw new Error(
+        \`The \${missing.length > 2 ? [...missing].splice(missing.length - 1, 0, "and").join(", ") : missing.length > 1 ? [...missing].splice(missing.length - 1, 0, "and").join(" ") : missing[0]} function\${missing.length > 1 ? "s" : ""} must be configured. Please add \\\`.\${missing[0]}(<your_function>)\\\` before \\\`.build()\\\` is called.\`
       );
+    }
 
-      context.__internal.events.push(event);
-    };
-    context.emit = emit;
+    const name = params.name || getAppName();
+    const version = getAppVersion();
+    const buildInfo = getBuildInfo();
+    const runtimeInfo = getRuntimeInfo();
+    const injector = InjectorContext.forProviders(params.providers ?? []);
 
-    context.log.debug(
-      "Starting the application handler process.",
-      {
-        request,
+    const disposables = new Set<Disposable>();
+    const asyncDisposables = new Set<AsyncDisposable>();
+
+    async function handleExit(): Promise<void> {
+      for (const disposable of disposables) {
+        disposable[Symbol.dispose]();
       }
+      disposables.clear();
+
+      const promises = [] as PromiseLike<void>[];
+      for (const disposable of asyncDisposables) {
+        promises.push(disposable[Symbol.asyncDispose]());
+        asyncDisposables.delete(disposable);
+      }
+      await Promise.all(promises);
+    }
+
+    const log = new StormLog(
+      Array.isArray(params.log) ? params.log : [params.log]
     );
+    for (const sink of log.sinks) {
+      if (Symbol.asyncDispose in sink) {
+        asyncDisposables.add(sink as AsyncDisposable);
+      }
+      if (Symbol.dispose in sink) {
+        disposables.add(sink as Disposable);
+      }
+    }
 
-    const response = await STORM_ASYNC_CONTEXT.callAsync(context, async () => {
-      try {
-        const result = await Promise.resolve(handler(request));
+    if ("process" in globalThis && !("Deno" in globalThis)) {
+      // eslint-disable-next-line ts/no-misused-promises
+      process.on("exit", handleExit);
+    }
 
-        return new StormResponse<TResponseData>(context.request.id, context.meta, result);
-      } catch (exception) {
-        const error = getErrorFromUnknown(exception);
-        context.log.fatal(
-          "The application was forced to terminate due to a fatal error.",
-          {
-            error,
+    return async function appWrapper(payload: TPayload): Promise<TResult> {
+      async function contextWrapper(
+        payload: TPayload
+      ): Promise<TResponse | StormResponse<StormError>> {
+        const request = await Promise.resolve(
+          builderConfig.deserializer!(payload)
+        );
+        if (isNativeError(request) || (Array.isArray(request) && request.length > 0)) {
+          // if the deserializer returns an error or an array of issues, we need to return a validation error response
+          return new StormResponse(
+            uniqueId(),
+            {},
+            getErrorFromUnknown(null, ErrorType.VALIDATION, request)
+          );
+        }
+
+        const context = {
+          name,
+          version,
+          request,
+          meta: request.meta,
+          log: log.with({ name, version, requestId: request.id }),
+          buildInfo,
+          runtimeInfo,
+          env: {} as StormEnv,
+          injector,
+          emit: (_event: StormEvent) => {},
+          __internal: {
+            events: [] as StormEvent[]
+          }
+        } as StormContext<StormEnv, TRequest>;
+
+        function emit(event: StormEvent) {
+          context.log.debug(
+            \`The \${event.label} event was emitted by the application.\`,
+            {
+              event
+            }
+          );
+
+          context.__internal.events.push(event);
+        }
+        context.emit = emit;
+
+        context.log.debug("Starting the application handler process.", {
+          request
+        });
+
+        const response = await STORM_ASYNC_CONTEXT.callAsync(
+          context,
+          async () => {
+            try {
+              if (builderConfig.validator) {
+                const issues = await Promise.resolve(
+                  builderConfig.validator(context.request)
+                );
+                if (issues) {
+                  return StormResponse.create(
+                    getErrorFromUnknown(
+                      null,
+                      ErrorType.VALIDATION,
+                      issues
+                    )
+                  );
+                }
+              }
+
+              const result = await Promise.resolve(
+                builderConfig.handler!(request as TRequest)
+              );
+
+              return StormResponse.create(result);
+            } catch (e) {
+              const error = getErrorFromUnknown(e);
+              context.log.fatal(
+                "The application was forced to terminate due to a fatal error.",
+                {
+                  error
+                }
+              );
+
+              return StormResponse.create(error);
+            }
           }
         );
 
-        return new StormResponse(context.request.id, context.meta, error);
-      }
-     });
+        context.log.debug("The application handler process has completed.", {
+          response
+        });
 
-    context.log.debug(
-      "The application handler process has completed.",
-      {
-        response,
+        return response;
       }
-    );
 
-    return response;
+      const result = await contextWrapper(payload);
+      if (builderConfig.serializer) {
+        return Promise.resolve(builderConfig.serializer(result));
+      }
+
+      return result as TResult;
+    };
   };
-}`;
+
+  const createBuilderResult = () => {
+    const result = {
+      build
+    } as BuilderResult<TRequest, TResponse, TPayload, TResult>;
+
+    result.validator = (validatorFn: ValidatorFunction<TRequest>) => {
+      if (builderConfig.validator) {
+        // eslint-disable-next-line no-console
+        console.warn(
+          "A validator function has already been configured. Please ensure you meant to overwrite the previously configured value."
+        );
+      }
+
+      builderConfig.validator = validatorFn;
+      return createBuilderResult();
+    };
+    result.handler = (handlerFn: HandlerFunction<TRequest, TResponse>) => {
+      if (builderConfig.handler) {
+        // eslint-disable-next-line no-console
+        console.warn(
+          "A handler function has already been configured. Please ensure you meant to overwrite the previously configured value."
+        );
+      }
+
+      builderConfig.handler = handlerFn;
+      return createBuilderResult();
+    };
+    result.serializer = (
+      serializerFn: SerializerFunction<TResponse, TResult>
+    ) => {
+      if (builderConfig.serializer) {
+        // eslint-disable-next-line no-console
+        console.warn(
+          "A serializer function has already been configured. Please ensure you meant to overwrite the previously configured value."
+        );
+      }
+
+      builderConfig.serializer = serializerFn;
+      return createBuilderResult();
+    };
+
+    result.deserializer = (
+      deserializerFn: DeserializerFunction<TRequest, TPayload>
+    ) => {
+      if (builderConfig.deserializer) {
+        // eslint-disable-next-line no-console
+        console.warn(
+          "A deserializer function has already been configured. Please ensure you meant to overwrite the previously configured value."
+        );
+      }
+
+      builderConfig.deserializer = deserializerFn;
+      return createBuilderResult();
+    };
+
+    return result;
+  };
+
+  return createBuilderResult();
+}
+
+
+`;
 }

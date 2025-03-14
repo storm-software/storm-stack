@@ -262,8 +262,8 @@
     "@storm-software/config": "catalog:",
     "@storm-software/config-tools": "catalog:",
     "@storm-software/esbuild": "catalog:",
-    "@storm-software/testing-tools": "catalog:",
     "@storm-software/unbuild": "catalog:",
+    "@stryke/convert": "catalog:",
     "@stryke/env": "catalog:",
     "@stryke/fs": "catalog:",
     "@stryke/hash": "catalog:",
@@ -271,11 +271,11 @@
     "@stryke/json": "catalog:",
     "@stryke/path": "catalog:",
     "@stryke/string-format": "catalog:",
-    "@stryke/types": "catalog:",
+    "@stryke/type-checks": "catalog:",
     "@stryke/unique-id": "catalog:",
     "c12": "catalog:",
     "chalk-template": "catalog:",
-    "commander": "^13.1.0",
+    "commander": "catalog:",
     "defu": "catalog:",
     "diff-match-patch": "catalog:",
     "esbuild": "catalog:",
@@ -283,9 +283,15 @@
     "magic-string": "catalog:",
     "prettier": "catalog:",
     "ts-morph": "catalog:",
-    "tsup": "catalog:",
     "unimport": "catalog:",
     "vite": "catalog:"
+  },
+  "devDependencies": {
+    "@storm-software/testing-tools": "catalog:",
+    "@stryke/types": "catalog:",
+    "@types/node": "catalog:",
+    "tsup": "catalog:",
+    "typescript": "~5.7.3"
   },
   "publishConfig": {
     "access": "public"

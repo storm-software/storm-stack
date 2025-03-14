@@ -18,19 +18,19 @@
 import { cloudflare } from "@cloudflare/unenv-preset";
 import { parse as parseToml, stringify as stringifyToml } from "@ltd/j-toml";
 import { LogLevelLabel } from "@storm-software/config-tools/types";
-import { joinPaths } from "@storm-software/config-tools/utilities/correct-paths";
 import { StormStackNodeAppStyle } from "@storm-stack/plugin-node/types/config";
-import { readFile, readJsonFile } from "@stryke/fs/files/read-file";
-import { removeFile } from "@stryke/fs/index";
+import { readFile, readJsonFile } from "@stryke/fs/read-file";
+import { removeFile } from "@stryke/fs/remove-file";
 import { StormJSON } from "@stryke/json/storm-json";
-import { existsSync } from "@stryke/path/utilities/exists";
+import { existsSync } from "@stryke/path/exists";
 import {
   findFileExtension,
   findFileName,
   findFilePath,
   relativePath
-} from "@stryke/path/utilities/file-path-fns";
-import type { TsConfigJson } from "@stryke/types/utility-types/tsconfig";
+} from "@stryke/path/file-path-fns";
+import { joinPaths } from "@stryke/path/join-paths";
+import type { TsConfigJson } from "@stryke/types/tsconfig";
 import { getFileHeader, getParsedTypeScriptConfig } from "storm-stack/helpers";
 import { Plugin } from "storm-stack/plugin";
 import type {
@@ -55,7 +55,7 @@ export default class CloudflarePlugin<
   ] as PluginConfig[];
 
   public constructor() {
-    super("cloudflare-worker", "@storm-stack/plugin-cloudflare");
+    super("cloudflare", "@storm-stack/plugin-cloudflare-worker");
 
     const { env } = defineEnv({
       presets: [cloudflare]
@@ -170,7 +170,7 @@ export default class CloudflarePlugin<
           `${getFileHeader()}
 
 ${this.#unenv.polyfill.map(p => `import "${p}";`).join("\n")}
-import ${entry.input.name ? `{ ${entry.input.name} as handler }` : "handler"} from "${joinPaths(
+import ${entry.input.name ? `{ ${entry.input.name} as handle }` : "handle"} from "${joinPaths(
             relativePath(
               joinPaths(options.projectRoot, findFilePath(entry.file)),
               joinPaths(options.projectRoot, findFilePath(entry.input.file))
@@ -180,17 +180,20 @@ import ${entry.input.name ? `{ ${entry.input.name} as handler }` : "handler"} fr
               ""
             )
           )}";
-import { createStormApp } from ".${joinPaths(
+
+import { builder } from ".${joinPaths(
             options.runtimeDir.replace(options.artifactsDir, ""),
             "app"
           )}";
 import { getSink } from "@storm-stack/log-console";
 
 export default {
-  fetch: createStormApp(handler, {
+  fetch: builder({
     name: ${options.name ? `"${options.name}"` : "undefined"},
     log: { handle: getSink(), logLevel: "debug" },
   })
+    .handler(handle)
+    .build()
 }
 
 `

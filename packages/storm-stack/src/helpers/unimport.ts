@@ -16,12 +16,12 @@
  ------------------------------------------------------------------- */
 
 import { LogLevelLabel } from "@storm-software/config-tools/types";
-import { createDirectory } from "@stryke/fs/files/helpers";
-import { writeFile } from "@stryke/fs/files/write-file";
+import { createDirectory } from "@stryke/fs/helpers";
+import { writeFile } from "@stryke/fs/write-file";
 import { throttle } from "@stryke/helpers/throttle";
 import { StormJSON } from "@stryke/json/storm-json";
 import { existsSync, findFilePath, joinPaths } from "@stryke/path/index";
-import { isSetString } from "@stryke/types/type-checks";
+import { isSetString } from "@stryke/type-checks";
 import { createUnimport as createUnimportExt } from "unimport";
 import type {
   InferResolvedOptions,

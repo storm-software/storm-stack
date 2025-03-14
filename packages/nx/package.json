@@ -92,11 +92,11 @@
   },
   "typings": "dist/index.d.ts",
   "peerDependencies": {
-    "@storm-stack/plugin-cloudflare": "workspace:*",
+    "@storm-stack/plugin-cloudflare-worker": "workspace:*",
     "@storm-stack/plugin-node": "workspace:*"
   },
   "peerDependenciesMeta": {
-    "@storm-stack/plugin-cloudflare": {
+    "@storm-stack/plugin-cloudflare-worker": {
       "optional": true
     },
     "@storm-stack/plugin-node": {

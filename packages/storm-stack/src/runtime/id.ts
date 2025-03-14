@@ -45,7 +45,7 @@ export function getRandom(array: Uint8Array) {
  * @param size - The size of the string to generate
  * @returns A unique identifier following the nanoid format
  */
-export function id(size = 24): string {
+export function uniqueId(size = 24): string {
   // Use our custom getRandom function to fill a Uint8Array with random values.
   const randomBytes = getRandom(new Uint8Array(size));
 

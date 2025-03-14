@@ -1,12 +1,12 @@
 {
-  "name": "@storm-stack/plugin-cloudflare",
+  "name": "@storm-stack/plugin-cloudflare-worker",
   "version": "0.0.1",
   "type": "module",
   "description": "A Storm Stack build plugin for Cloudflare Workers",
   "repository": {
     "type": "github",
     "url": "https://github.com/storm-software/storm-stack.git",
-    "directory": "packages/plugin-cloudflare"
+    "directory": "packages/plugin-cloudflare-worker"
   },
   "private": false,
   "exports": {
@@ -50,11 +50,11 @@
     "@stryke/fs": "catalog:",
     "@stryke/json": "catalog:",
     "@stryke/path": "catalog:",
-    "@stryke/types": "catalog:",
     "storm-stack": "workspace:*",
     "unenv": "catalog:"
   },
   "devDependencies": {
+    "@stryke/types": "catalog:",
     "tsup": "catalog:"
   },
   "publishConfig": {

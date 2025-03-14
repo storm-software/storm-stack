@@ -21,16 +21,11 @@ export function writeError() {
   return `${getFileHeader()}
 
 import { StormJSON } from "@stryke/json/storm-json";
-import type { ErrorMessageDetails, Indexable } from "@stryke/types";
-import {
-  EMPTY_STRING,
-  isError,
-  isFunction,
-  isObject,
-  isSetString,
-  MessageType,
-  NEWLINE_STRING
-} from "@stryke/types";
+import type { ErrorMessageDetails, Indexable, MessageType } from "@stryke/types";
+import { isError } from "@stryke/type-checks/is-error";
+import { isFunction } from "@stryke/type-checks/is-function";
+import { isObject } from "@stryke/type-checks/is-object";
+import { isSetString } from "@stryke/type-checks/is-set-string";
 import type { IStormError, ParsedStacktrace, StormErrorOptions } from "storm-stack/types";
 import { ErrorType } from "storm-stack/types";
 
@@ -219,7 +214,7 @@ export class StormError extends Error implements IStormError {
   /**
    * The inner error
    */
-  #cause?: IStormError;
+  #cause: IStormError | undefined = undefined;
 
   /**
    * The error code
@@ -229,7 +224,7 @@ export class StormError extends Error implements IStormError {
   /**
    * Additional data to be passed with the error
    */
-  public data: any;
+  public data?: any;
 
   /**
    * The error message parameters
@@ -259,11 +254,6 @@ export class StormError extends Error implements IStormError {
         this.type = options.type;
       }
 
-      this.name = options.name || getDefaultErrorNameFromErrorType(this.type);
-      this.data = options.data;
-      this.params = options.params;
-      this.cause ??= options.cause;
-
       if (options.stack) {
         this.#stack = options.stack;
         // eslint-disable-next-line ts/unbound-method
@@ -272,6 +262,11 @@ export class StormError extends Error implements IStormError {
       } else {
         this.#stack = new Error(options.code).stack;
       }
+
+      this.name = options.name || getDefaultErrorNameFromErrorType(this.type);
+      this.data = options.data;
+      this.params = options.params;
+      this.cause ??= options.cause;
     }
 
     Object.setPrototypeOf(this, StormError.prototype);
@@ -289,6 +284,9 @@ export class StormError extends Error implements IStormError {
    */
   public override set cause(cause: unknown) {
     this.#cause = getErrorFromUnknown(cause, this.type, this.data);
+    if (this.#cause.stack) {
+      this.#stack = this.#cause.stack;
+    }
   }
 
   /**
@@ -299,7 +297,7 @@ export class StormError extends Error implements IStormError {
   public get stacktrace(): ParsedStacktrace[] {
     const stacktrace: ParsedStacktrace[] = [];
     if (this.#stack) {
-      for (const line of this.#stack.split(NEWLINE_STRING)) {
+      for (const line of this.#stack.split("\\n")) {
         const parsed =
           /^\\s+at (?:(?<function>[^)]+) \\()?(?<source>[^)]+)\\)?$/u.exec(line)
             ?.groups as
@@ -355,7 +353,7 @@ export class StormError extends Error implements IStormError {
       .map(line => {
         return \`    at \${line.function} (\${line.source}:\${line.line}:\${line.column})\`;
       })
-      .join(NEWLINE_STRING);
+      .join("\\n");
   }
 
   /**
@@ -382,7 +380,7 @@ export class StormError extends Error implements IStormError {
    */
   public format(includeData = $storm.env.INCLUDE_ERROR_DATA): string {
     return this.message
-      ? \`\${this.name && this.name !== this.constructor.name ? (this.code ? \`\${this.name} \` : this.name) : EMPTY_STRING} \${
+      ? \`\${this.name && this.name !== this.constructor.name ? (this.code ? \`\${this.name} \` : this.name) : ""} \${
           this.code
             ? this.code && this.name
               ? \`[\${this.type} - \${this.code}]\`
@@ -392,16 +390,16 @@ export class StormError extends Error implements IStormError {
               : this.type
         }: \${this.message}\${
           this.cause
-            ? \` \${NEWLINE_STRING}Cause: \${
+            ? \` \nCause: \${
                 isError(this.cause) ? this.cause.format() : this.cause
               }\`
-            : EMPTY_STRING
+            : ""
         }\${
           includeData && this.data
-            ? \` \${NEWLINE_STRING}Data: \${StormJSON.stringify(this.data)}\`
-            : EMPTY_STRING
+            ? \` \nData: \${StormJSON.stringify(this.data)}\`
+            : ""
         }\`
-      : EMPTY_STRING;
+      : "";
   }
 
   /**
@@ -418,8 +416,8 @@ export class StormError extends Error implements IStormError {
     return (
       this.format(includeData) +
       (stacktrace
-        ? EMPTY_STRING
-        : \` \${NEWLINE_STRING}Stack Trace: \${NEWLINE_STRING}\${this.stack}\`)
+        ? ""
+        : \` \nStack Trace: \n\${this.stack}\`)
     );
   }
 
@@ -432,7 +430,7 @@ export class StormError extends Error implements IStormError {
     return {
       code: this.code,
       message: this.toString(stacktrace),
-      type: MessageType.ERROR
+      type: "error",
     };
   }
 }

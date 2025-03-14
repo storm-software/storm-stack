@@ -15,9 +15,9 @@
 
  ------------------------------------------------------------------- */
 
-import { isSet } from "@stryke/types/type-checks/is-set";
-import { NEWLINE_STRING } from "@stryke/types/utility-types/base";
-import type { PackageJson } from "@stryke/types/utility-types/package-json";
+import { isSet } from "@stryke/type-checks/is-set";
+import { NEWLINE_STRING } from "@stryke/types/base";
+import type { PackageJson } from "@stryke/types/package-json";
 import type { ResolvedDotenvTypeDefinitionProperty } from "../../types/build";
 
 export function generateDotenvMarkdown(

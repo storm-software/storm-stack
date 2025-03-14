@@ -16,4 +16,5 @@ projectIgnorePaths:
   - benchmarks/
   - docs/
   - examples/
+  - tools/
   - test/

@@ -1,9 +1,9 @@
 <!-- START header -->
 <!-- END header -->
 
-# Storm Stack - Sentry NodeJs Log Adapter
+# Storm Stack - Sentry Log Adapter
 
-A package containing a Storm Stack log adapter to write log messages to [Sentry](https://sentry.io/) in NodeJs applications.
+A package containing a Storm Stack log adapter to write log messages to [Sentry](https://sentry.io/).
 
 <!-- START doctoc -->
 <!-- END doctoc -->
@@ -13,14 +13,14 @@ A package containing a Storm Stack log adapter to write log messages to [Sentry]
 Using [pnpm](http://pnpm.io):
 
 ```bash
-pnpm add @storm-stack/log-sentry-node
+pnpm add @storm-stack/log-sentry
 ```
 
 <details>
   <summary>Using npm</summary>
 
 ```bash
-npm install @storm-stack/log-sentry-node
+npm install @storm-stack/log-sentry
 ```
 
 </details>
@@ -29,7 +29,7 @@ npm install @storm-stack/log-sentry-node
   <summary>Using yarn</summary>
 
 ```bash
-yarn add @storm-stack/log-sentry-node
+yarn add @storm-stack/log-sentry
 ```
 
 </details>
@@ -48,16 +48,16 @@ commands are available to assist in development.
 
 ### Building
 
-Run `nx build log-sentry-node` to build the library.
+Run `nx build log-sentry` to build the library.
 
 ### Running unit tests
 
-Run `nx test log-sentry-node` to execute the unit tests via
+Run `nx test log-sentry` to execute the unit tests via
 [Jest](https://jestjs.io).
 
 ### Linting
 
-Run `nx lint log-sentry-node` to run [ESLint](https://eslint.org/) on the package.
+Run `nx lint log-sentry` to run [ESLint](https://eslint.org/) on the package.
 
 <!-- START footer -->
 <!-- END footer -->

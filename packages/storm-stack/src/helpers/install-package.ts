@@ -16,9 +16,9 @@
  ------------------------------------------------------------------- */
 
 import { LogLevelLabel } from "@storm-software/config-tools/types";
-import { install } from "@stryke/fs/package/install";
-import { isPackageListed } from "@stryke/fs/package/package-fns";
-import { isNumber } from "@stryke/types/type-checks/is-number";
+import { install } from "@stryke/fs/install";
+import { isPackageListed } from "@stryke/fs/package-fns";
+import { isNumber } from "@stryke/type-checks/is-number";
 import type { InferResolvedOptions, Options } from "../types/build";
 import type { LogFn } from "../types/config";
 

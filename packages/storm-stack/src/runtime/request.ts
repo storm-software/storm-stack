@@ -19,14 +19,14 @@ import { getFileHeader } from "../helpers/utilities/file-header";
 
 export function writeRequest() {
   return `${getFileHeader()}
-import { id } from "./id";
+
+import { uniqueId } from "./id";
 import type { IStormRequest } from "storm-stack/types";
 
 /**
  * A base request class used by the Storm Stack runtime.
  */
-export class StormRequest<TData = any>
-  implements IStormRequest<TData> {
+export class StormRequest<TData = any> implements IStormRequest<TData> {
   /**
    * The metadata associated with the request.
    */
@@ -50,7 +50,7 @@ export class StormRequest<TData = any>
   /**
    * The request identifier.
    */
-  public readonly id = id();
+  public readonly id = uniqueId();
 
   /**
    * The request created timestamp.

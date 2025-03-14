@@ -19,28 +19,45 @@ import { getFileHeader } from "../helpers/utilities/file-header";
 
 export function writeResponse() {
   return `${getFileHeader()}
+
 import type { IStormResponse } from "storm-stack/types";
 import { isStormError } from "./error";
+import type { StormError } from "./error";
 
 /**
  * A base response class used by the Storm Stack runtime.
  */
-export class StormResponse<TData = any>
-  implements IStormResponse<TData> {
+export class StormResponse<
+  TData extends any | StormError = any | StormError
+> implements IStormResponse<TData>
+{
+  /**
+   * Create a new response.
+   *
+   * @remarks
+   * **IMPORTANT:** This function uses the \`$storm\` context object - never use this function outside of the context wrapper/tree since the context will not be available.
+   *
+   * @param data - The response data
+   */
+  public static create<TData>(
+    data: TData
+  ): StormResponse<TData> {
+    return new StormResponse(
+      $storm.request.id,
+      $storm.meta,
+      data
+    );
+  }
+
   /**
    * The response meta.
    */
   public readonly meta: Record<string, any>;
 
   /**
-   * The response data (if applicable).
+   * The response data.
    */
-  public data?: TData;
-
-  /**
-   * The response error (if applicable).
-   */
-  public error?: StormError;
+  public data: TData;
 
   /**
    * The request identifier.
@@ -55,27 +72,27 @@ export class StormResponse<TData = any>
   /**
    * An indicator of whether the response was successful.
    */
-  public get success(): boolean {
-    return !this.error;
+  public get success() {
+    return !isStormError(this.data);
   }
 
   /**
-   * Create a new request.
+   * Create a new response.
    *
    * @param requestId - The request identifier.
-   * @param meta - The response meta.
-   * @param result - The request result.
+   * @param meta - The current context's metadata.
+   * @param data - The response data
    */
-  public constructor(requestId: string, meta = {}, result?: TData | StormError) {
+  public constructor(
+    requestId: string,
+    meta: Record<string, any>,
+    data: TData
+  ) {
     this.requestId = requestId;
     this.meta = meta;
-
-    if (isStormError(result)) {
-      this.error = result;
-    } else {
-      this.data = result;
-    }
+    this.data = data;
   }
 }
+
   `;
 }

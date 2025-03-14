@@ -15,15 +15,15 @@
 
  ------------------------------------------------------------------- */
 
-import { isWritable } from "@stryke/fs/files/chmod-x";
-import { createDirectory } from "@stryke/fs/files/helpers";
-import { readFile } from "@stryke/fs/files/read-file";
-import { removeFile } from "@stryke/fs/files/remove-file";
-import { writeFile } from "@stryke/fs/files/write-file";
+import { isWritable } from "@stryke/fs/chmod-x";
+import { createDirectory } from "@stryke/fs/helpers";
+import { readFile } from "@stryke/fs/read-file";
+import { removeFile } from "@stryke/fs/remove-file";
+import { writeFile } from "@stryke/fs/write-file";
 import { hash } from "@stryke/hash";
-import { existsSync } from "@stryke/path/utilities/exists";
-import { findFileName } from "@stryke/path/utilities/file-path-fns";
-import { joinPaths } from "@stryke/path/utilities/join-paths";
+import { existsSync } from "@stryke/path/exists";
+import { findFileName } from "@stryke/path/file-path-fns";
+import { joinPaths } from "@stryke/path/join-paths";
 import type MagicString from "magic-string";
 import type { SourceFile } from "../types/build";
 import { getString } from "./utilities/magic-string";

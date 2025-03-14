@@ -18,9 +18,13 @@
 import type { InjectorContext, ProviderWithScope } from "@deepkit/injector";
 import type { ProviderInfo } from "@stryke/env/providers";
 import type { RuntimeInfo } from "@stryke/env/runtime-checks";
+import type { MaybePromise } from "@stryke/types/base";
+import type { ValidationDetail as ExternalValidationDetail } from "@stryke/types/validations";
 import type {
+  IStormError,
   IStormLog,
   IStormRequest,
+  IStormResponse,
   LogSinkInstance,
   StormEnv
 } from "storm-stack/types/global";
@@ -206,7 +210,7 @@ export interface IStormEvent<TEventType extends string = string, TData = any>
    * The event label.
    *
    * @remarks
-   * The label format is "{type}-v{version}"
+   * The label format is "\{type\}-v\{version\}"
    */
   label: string;
 }
@@ -303,4 +307,69 @@ export interface StormContext<
    * @internal
    */
   __internal: Internal_StormContextStore;
+}
+
+export type ValidationDetail = ExternalValidationDetail;
+
+export type DeserializerFunction<TRequest extends IStormRequest, TPayload> = (
+  payload: TPayload
+) => MaybePromise<TRequest | IStormError | ValidationDetail[]>;
+
+export type SerializerFunction<TResponse extends IStormResponse, TResult> = (
+  response: TResponse | IStormResponse<IStormError>
+) => MaybePromise<TResult>;
+
+export type ValidatorFunction<TRequest extends IStormRequest> = (
+  request: TRequest
+) => MaybePromise<IStormError | ValidationDetail[] | void | null | undefined>;
+
+export type HandlerFunction<
+  TRequest extends IStormRequest,
+  TResponse extends IStormResponse
+> = (request: TRequest) => MaybePromise<TResponse["data"] | IStormError>;
+
+/**
+ * Interface representing the attachments for a Storm application builder.
+ *
+ * @remarks
+ * This interface defines the structure for the attachments that can be used to
+ * customize the behavior of the Storm application builder.
+ */
+export interface BuilderConfig<
+  TRequest extends IStormRequest,
+  TResponse extends IStormResponse,
+  TPayload,
+  TResult
+> {
+  deserializer?: DeserializerFunction<TRequest, TPayload>;
+  validator?: ValidatorFunction<TRequest>;
+  handler?: HandlerFunction<TRequest, TResponse>;
+  serializer?: SerializerFunction<TResponse, TResult>;
+}
+
+export interface BuilderResult<
+  TRequest extends IStormRequest,
+  TResponse extends IStormResponse,
+  TPayload,
+  TResult
+> {
+  deserializer: (
+    deserializerFn: DeserializerFunction<TRequest, TPayload>
+  ) => Omit<
+    BuilderResult<TRequest, TResponse, TPayload, TResult>,
+    "deserializer"
+  >;
+  validator: (
+    validatorFn: ValidatorFunction<TRequest>
+  ) => Omit<BuilderResult<TRequest, TResponse, TPayload, TResult>, "validator">;
+  handler: (
+    handlerFn: HandlerFunction<TRequest, TResponse>
+  ) => Omit<BuilderResult<TRequest, TResponse, TPayload, TResult>, "handler">;
+  serializer: (
+    serializerFn: SerializerFunction<TResponse, TResult>
+  ) => Omit<
+    BuilderResult<TRequest, TResponse, TPayload, TResult>,
+    "serializer"
+  >;
+  build: () => (payload: TPayload) => Promise<TResult>;
 }

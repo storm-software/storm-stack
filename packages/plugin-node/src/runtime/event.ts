@@ -19,6 +19,7 @@ import { getFileHeader } from "storm-stack/helpers";
 
 export function writeEvent() {
   return `${getFileHeader()}
+
 import type { IStormEvent } from "@storm-stack/plugin-node/types";
 
 /**

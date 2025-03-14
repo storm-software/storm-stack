@@ -19,34 +19,27 @@ import type { Diff, ObjectData } from "@donedeal0/superdiff";
 import { getObjectDiff } from "@donedeal0/superdiff";
 import { LogLevelLabel } from "@storm-software/config-tools/types";
 import type { StormConfig } from "@storm-software/config/types";
-
+import { parseTypeDefinition } from "@stryke/convert/parse-type-definition";
 import { getEnvPaths } from "@stryke/env/get-env-paths";
-import { createDirectory, removeDirectory } from "@stryke/fs/files/helpers";
-import { readJsonFile } from "@stryke/fs/files/read-file";
-import { writeFile } from "@stryke/fs/files/write-file";
-import { install } from "@stryke/fs/package/install";
-import {
-  isPackageExists,
-  isPackageListed
-} from "@stryke/fs/package/package-fns";
+import { createDirectory, removeDirectory } from "@stryke/fs/helpers";
+import { install } from "@stryke/fs/install";
+import { isPackageExists, isPackageListed } from "@stryke/fs/package-fns";
+import { readJsonFile } from "@stryke/fs/read-file";
+import { writeFile } from "@stryke/fs/write-file";
 import { hash } from "@stryke/hash/hash";
 import { hashDirectory } from "@stryke/hash/hash-files";
 import { StormJSON } from "@stryke/json/storm-json";
-import { existsSync } from "@stryke/path/utilities/exists";
-import {
-  findFilePath,
-  relativePath
-} from "@stryke/path/utilities/file-path-fns";
-import { joinPaths } from "@stryke/path/utilities/join-paths";
+import { existsSync } from "@stryke/path/exists";
+import { findFilePath, relativePath } from "@stryke/path/file-path-fns";
+import { joinPaths } from "@stryke/path/join-paths";
 import { titleCase } from "@stryke/string-format/title-case";
-import { parseTypeDefinition } from "@stryke/types/helpers/parse-type-definition";
-import { isNumber } from "@stryke/types/type-checks/is-number";
-import { isSetString } from "@stryke/types/type-checks/is-set-string";
+import { isNumber } from "@stryke/type-checks/is-number";
+import { isSetString } from "@stryke/type-checks/is-set-string";
 import type {
   TypeDefinition,
   TypeDefinitionParameter
-} from "@stryke/types/utility-types/configuration";
-import type { PackageJson } from "@stryke/types/utility-types/package-json";
+} from "@stryke/types/configuration";
+import type { PackageJson } from "@stryke/types/package-json";
 import { nanoid } from "@stryke/unique-id/nanoid-client";
 import defu from "defu";
 import { createHooks } from "hookable";
@@ -403,6 +396,12 @@ export class Engine<
           "@stryke/types",
           true
         ),
+        this.resolvedOptions.projectType === "application" &&
+          installPackage<TOptions>(
+            this.log,
+            this.resolvedOptions,
+            "@stryke/type-checks"
+          ),
         this.resolvedOptions.projectType === "application" &&
           installPackage<TOptions>(
             this.log,

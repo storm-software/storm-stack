@@ -16,11 +16,11 @@
  ------------------------------------------------------------------- */
 
 import { LogLevelLabel } from "@storm-software/config-tools/types";
+import { parseTypeDefinition } from "@stryke/convert/parse-type-definition";
 import { StormJSON } from "@stryke/json/storm-json";
-import { existsSync } from "@stryke/path/utilities/exists";
-import { joinPaths } from "@stryke/path/utilities/join-paths";
-import { parseTypeDefinition } from "@stryke/types/helpers/parse-type-definition";
-import { isObject } from "@stryke/types/type-checks/is-object";
+import { existsSync } from "@stryke/path/exists";
+import { joinPaths } from "@stryke/path/join-paths";
+import { isObject } from "@stryke/type-checks/is-object";
 import defu from "defu";
 import type {
   ClassDeclaration,

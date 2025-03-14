@@ -15,7 +15,7 @@
 
  ------------------------------------------------------------------- */
 
-import { NEWLINE_STRING } from "@stryke/types/utility-types/base";
+import { NEWLINE_STRING } from "@stryke/types/base";
 import { getFileHeader } from "storm-stack/helpers";
 import type { ResolvedDotenvTypeDefinitionProperty } from "storm-stack/types";
 import type { StormStackNodeFeatures } from "../types/config";
@@ -25,8 +25,8 @@ export function generateDeclarations(
   _features: StormStackNodeFeatures[]
 ) {
   return `${getFileHeader(`
-/// <reference types="storm-stack/types/global" />
-/// <reference types="@storm-stack/plugin-node/types/global" />
+/// <reference types="storm-stack/types" />
+/// <reference types="@storm-stack/plugin-node/types" />
 `)}
 declare global {
   const $storm: StormContext<{
@@ -44,7 +44,7 @@ export {};
 
 export function generateImports(path: string) {
   return `${getFileHeader(`
-/// <reference types="@storm-stack/plugin-node/types/global" />
+/// <reference types="@storm-stack/plugin-node/types" />
 `)}
 declare global {
   const StormEvent: (typeof import("${path}/event"))["StormEvent"];

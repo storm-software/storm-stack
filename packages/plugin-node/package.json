@@ -79,13 +79,13 @@
     "@stryke/hash": "catalog:",
     "@stryke/json": "catalog:",
     "@stryke/path": "catalog:",
-    "@stryke/types": "catalog:",
     "bundle-require": "catalog:",
     "defu": "catalog:",
     "esbuild": "catalog:",
     "storm-stack": "workspace:*"
   },
   "devDependencies": {
+    "@stryke/types": "catalog:",
     "@types/node": "catalog:",
     "tsup": "catalog:"
   },

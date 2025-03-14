@@ -15,27 +15,13 @@
 
  ------------------------------------------------------------------- */
 
-import { isString } from "@stryke/type-checks/is-string";
-import MagicString from "magic-string";
-
-export function getString(source: string | MagicString): string {
-  if (isString(source)) {
-    return source;
-  }
-
-  return source.toString();
-}
-
 /**
- * Get the magic string.
+ * The log-sentry library used by Storm Software for building applications.
  *
- * @param code - The source code.
- * @returns The magic string.
+ * @remarks
+ * A package containing a Storm Stack log adapter to write log messages to Sentry.
+ *
+ * @packageDocumentation
  */
-export function getMagicString(source: string | MagicString): MagicString {
-  if (isString(source)) {
-    return new MagicString(source);
-  }
 
-  return source;
-}
+export * from "./sink";

@@ -15,10 +15,10 @@
 
  ------------------------------------------------------------------- */
 
-import { readJsonFile } from "@stryke/fs/files/read-file";
+import { readJsonFile } from "@stryke/fs/read-file";
 import { deepClone } from "@stryke/helpers/deep-clone";
 import { existsSync, joinPaths } from "@stryke/path";
-import type { TsConfigJson } from "@stryke/types/utility-types/tsconfig";
+import type { TsConfigJson } from "@stryke/types/tsconfig";
 import defu from "defu";
 import { ts } from "ts-morph";
 import type { Options } from "../types";

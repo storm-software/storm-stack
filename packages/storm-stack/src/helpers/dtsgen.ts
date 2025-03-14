@@ -15,7 +15,6 @@
 
  ------------------------------------------------------------------- */
 
-import { NEWLINE_STRING } from "@stryke/types/utility-types/base";
 import type { ResolvedDotenvTypeDefinitionProperty } from "../types/build";
 import { getFileHeader } from "./utilities/file-header";
 
@@ -32,7 +31,7 @@ ${Object.keys(env)
   .map(
     item => `    ${item}${env[item]?.isOptional ? "?" : ""}: ${env[item]?.text}`
   )
-  .join(NEWLINE_STRING)}
+  .join("\n")}
     }
   }
 }
@@ -51,7 +50,7 @@ declare global {
   const StormRequest: (typeof import("${path}/request"))["StormRequest"];
   const StormResponse: (typeof import("${path}/response"))["StormResponse"];
   const StormLog: (typeof import("${path}/log"))["StormLog"];
-  const id: (typeof import("${path}/id"))["id"];
+  const uniqueId: (typeof import("${path}/id"))["uniqueId"];
   const getRandom: (typeof import("${path}/id"))["getRandom"];
 
   type StormError = import("${path}/error").StormError;

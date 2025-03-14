@@ -30,8 +30,8 @@ import {
   addProjectTag,
   setDefaultProjectTags
 } from "@storm-software/workspace-tools/utils/project-tags";
-import type { PackageJson } from "@stryke/types/utility-types/package-json";
-import type { TsConfigJson } from "@stryke/types/utility-types/tsconfig";
+import type { PackageJson } from "@stryke/types/package-json";
+import type { TsConfigJson } from "@stryke/types/tsconfig";
 import { readNxJson } from "nx/src/config/nx-json.js";
 import type { ProjectConfiguration } from "nx/src/config/workspace-json-project-json.js";
 import type { PackageJson as PackageJsonNx } from "nx/src/utils/package-json.js";

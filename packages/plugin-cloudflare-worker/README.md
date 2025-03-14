@@ -70,14 +70,14 @@ A package containing the Cloudflare Worker build plugin for Storm Stack.
 Using [pnpm](http://pnpm.io):
 
 ```bash
-pnpm add -D @storm-stack/plugin-cloudflare
+pnpm add -D @storm-stack/plugin-cloudflare-worker
 ```
 
 <details>
   <summary>Using npm</summary>
 
 ```bash
-npm install -D @storm-stack/plugin-cloudflare
+npm install -D @storm-stack/plugin-cloudflare-worker
 ```
 
 </details>
@@ -86,7 +86,7 @@ npm install -D @storm-stack/plugin-cloudflare
   <summary>Using yarn</summary>
 
 ```bash
-yarn add -D @storm-stack/plugin-cloudflare
+yarn add -D @storm-stack/plugin-cloudflare-worker
 ```
 
 </details>
@@ -105,17 +105,17 @@ commands are available to assist in development.
 
 ### Building
 
-Run `nx build plugin-cloudflare` to build the library.
+Run `nx build plugin-cloudflare-worker` to build the library.
 
 ### Running unit tests
 
-Run `nx test plugin-cloudflare` to execute the unit tests via
+Run `nx test plugin-cloudflare-worker` to execute the unit tests via
 [Jest](https://jestjs.io).
 
 ### Linting
 
-Run `nx lint plugin-cloudflare` to run [ESLint](https://eslint.org/) on the
-package.
+Run `nx lint plugin-cloudflare-worker` to run [ESLint](https://eslint.org/) on
+the package.
 
 <!-- START footer -->
 <!-- prettier-ignore-start -->

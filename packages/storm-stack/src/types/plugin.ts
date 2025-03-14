@@ -15,7 +15,7 @@
 
  ------------------------------------------------------------------- */
 
-import type { MaybePromise } from "@stryke/types/utility-types/base";
+import type { MaybePromise } from "@stryke/types/base";
 import type { EngineHooks, InferResolvedOptions, Options } from "./build";
 import type { PluginConfig } from "./config";
 

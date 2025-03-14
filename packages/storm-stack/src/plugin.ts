@@ -18,11 +18,11 @@
 import { LogLevelLabel } from "@storm-software/config-tools/types";
 import type { UnbuildOptions } from "@storm-software/unbuild";
 import { build as unbuild } from "@storm-software/unbuild";
-import { writeFile } from "@stryke/fs/files/write-file";
+import { writeFile } from "@stryke/fs/write-file";
 import { hash } from "@stryke/hash/hash";
-import { findFilePath } from "@stryke/path/utilities/file-path-fns";
-import { joinPaths } from "@stryke/path/utilities/join-paths";
-import type { MaybePromise } from "@stryke/types/utility-types/base";
+import { findFilePath } from "@stryke/path/file-path-fns";
+import { joinPaths } from "@stryke/path/join-paths";
+import type { MaybePromise } from "@stryke/types/base";
 import { defu } from "defu";
 import { format, resolveConfig } from "prettier";
 import { Compiler } from "./compiler";

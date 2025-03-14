@@ -16,21 +16,19 @@
  ------------------------------------------------------------------- */
 
 import { LogLevelLabel } from "@storm-software/config-tools/types";
-import {
-  joinPaths,
-  normalizeWindowsPath
-} from "@storm-software/config-tools/utilities/correct-paths";
 import type { ESBuildOptions } from "@storm-software/esbuild";
 import { build as esbuild } from "@storm-software/esbuild";
-import { readFile, readJsonFile } from "@stryke/fs/files/read-file";
+import { readFile, readJsonFile } from "@stryke/fs/read-file";
 import { StormJSON } from "@stryke/json/storm-json";
+import { normalizeWindowsPath } from "@stryke/path/correct-path";
 import {
   findFileExtension,
   findFileName,
   findFilePath,
   relativePath
-} from "@stryke/path/utilities/file-path-fns";
-import type { TsConfigJson } from "@stryke/types/utility-types/tsconfig";
+} from "@stryke/path/file-path-fns";
+import { joinPaths } from "@stryke/path/join-paths";
+import type { TsConfigJson } from "@stryke/types/tsconfig";
 import defu from "defu";
 import { getFileHeader, getParsedTypeScriptConfig } from "storm-stack/helpers";
 import { Plugin } from "storm-stack/plugin";
@@ -48,6 +46,7 @@ import { externalPlugin } from "./helpers/external-plugin";
 import { writeCreateApp } from "./runtime/app";
 import { writeContext } from "./runtime/context";
 import { writeEvent } from "./runtime/event";
+import { writeInit } from "./runtime/init";
 import type { StormStackNodePluginConfig } from "./types/config";
 import { StormStackNodeAppStyle, StormStackNodeFeatures } from "./types/config";
 
@@ -62,7 +61,7 @@ export default class NodePlugin<
   protected config: StormStackNodePluginConfig;
 
   public constructor(config: Partial<StormStackNodePluginConfig> = {}) {
-    super("nodejs", "@storm-stack/plugin-node");
+    super("node", "@storm-stack/plugin-node");
 
     this.config = config as StormStackNodePluginConfig;
     this.config.style ??= StormStackNodeAppStyle.BASE;
@@ -116,7 +115,7 @@ export default class NodePlugin<
     options.override.target = "node22";
 
     options.presets.push({
-      imports: ["createStormApp"],
+      imports: ["builder"],
       from: "storm:app"
     });
     options.presets.push({
@@ -239,7 +238,8 @@ export default class NodePlugin<
     await Promise.all([
       this.writeFile(joinPaths(runtimeDir, "app.ts"), writeCreateApp()),
       this.writeFile(joinPaths(runtimeDir, "context.ts"), writeContext()),
-      this.writeFile(joinPaths(runtimeDir, "event.ts"), writeEvent())
+      this.writeFile(joinPaths(runtimeDir, "event.ts"), writeEvent()),
+      this.writeFile(joinPaths(runtimeDir, "init.ts"), writeInit())
     ]);
   }
 
@@ -255,7 +255,9 @@ export default class NodePlugin<
           entry.file,
           `${getFileHeader()}
 
-import ${entry.input.name ? `{ ${entry.input.name} as handler }` : "handler"} from "${joinPaths(
+import ".${joinPaths(options.runtimeDir.replace(options.artifactsDir, ""), "init")}";
+
+import ${entry.input.name ? `{ ${entry.input.name} as handle }` : "handle"} from "${joinPaths(
             relativePath(
               joinPaths(options.projectRoot, findFilePath(entry.file)),
               joinPaths(options.projectRoot, findFilePath(entry.input.file))
@@ -265,13 +267,15 @@ import ${entry.input.name ? `{ ${entry.input.name} as handler }` : "handler"} fr
               ""
             )
           )}";
-import { createStormApp } from ".${joinPaths(options.runtimeDir.replace(options.artifactsDir, ""), "app")}";
+import { builder } from ".${joinPaths(options.runtimeDir.replace(options.artifactsDir, ""), "app")}";
 import { getSink } from "@storm-stack/log-console";
 
-export default createStormApp(handler, {
-name: ${options.name ? `"${options.name}"` : "undefined"},
-log: { handle: getSink(), logLevel: "debug" },
-});
+export default builder({
+  name: ${options.name ? `"${options.name}"` : "undefined"},
+  log: { handle: getSink(), logLevel: "debug" },
+})
+  .handler(handle)
+  .build();
 
 `
         );

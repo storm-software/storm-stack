@@ -11,7 +11,7 @@
   "private": true,
   "devDependencies": {
     "@storm-stack/nx": "workspace:*",
-    "@storm-stack/plugin-cloudflare": "workspace:*",
+    "@storm-stack/plugin-cloudflare-worker": "workspace:*",
     "storm-stack": "workspace:*"
   }
 }

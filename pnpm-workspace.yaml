@@ -75,6 +75,8 @@ catalog:
   "@stryke/types": latest
   "@stryke/hash": latest
   "@stryke/string-format": latest
+  "@stryke/convert": latest
+  "@stryke/type-checks": latest
   "@swc-node/register": ^1.10.9
   "@swc/core": ^1.7.26
   "@swc/wasm": ^1.10.1
@@ -135,10 +137,10 @@ overrides:
   "@storm-stack/log-console": workspace:*
   "@storm-stack/log-storage": workspace:*
   "@storm-stack/log-otel": workspace:*
-  "@storm-stack/log-sentry-node": workspace:*
+  "@storm-stack/log-sentry": workspace:*
   "@storm-stack/log-stream": workspace:*
   "@storm-stack/nx": workspace:*
-  "@storm-stack/plugin-cloudflare": workspace:*
+  "@storm-stack/plugin-cloudflare-worker": workspace:*
   "@storm-stack/plugin-node": workspace:*
   "@storm-stack/tools-config": workspace:*
   "@storm-stack/tools-nx": workspace:*
@@ -160,6 +162,3 @@ overrides:
   shell-quote: ">=1.8.1"
   simple-git: ">=3.27.0"
   storm-stack: workspace:*
-catalogs:
-  conflicts_unenv_npm:unenvmnightly:
-    unenv: npm:unenv-nightly

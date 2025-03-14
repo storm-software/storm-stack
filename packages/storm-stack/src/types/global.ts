@@ -16,7 +16,7 @@
  ------------------------------------------------------------------- */
 
 import type { TypeScriptBuildBaseEnv } from "@storm-software/build-tools/types";
-import type { ErrorMessageDetails } from "@stryke/types/utility-types/messages";
+import type { ErrorMessageDetails } from "@stryke/types/messages";
 
 export type StormEnv = {
   [TKey in Uppercase<string>]: TKey extends `STORM_${infer TBaseKey}`
@@ -131,8 +131,16 @@ export interface IStormRequest<TData = any> {
    */
   data: TData;
 }
-
-export interface IStormResponse<TData = any> {
+/**
+ * A Storm response interface. It represents the structure of a response returned by the Storm Stack runtime.
+ *
+ * @remarks
+ * The `IStormResponse` interface is used to standardize the structure of responses returned by the Storm Stack runtime.
+ * It includes properties for the request ID, metadata, payload data, error information, timestamp, and success status.
+ */
+export interface IStormResponse<
+  TData extends any | IStormError = any | IStormError
+> {
   /**
    * The unique identifier for the request.
    */
@@ -144,14 +152,9 @@ export interface IStormResponse<TData = any> {
   meta: Record<string, any>;
 
   /**
-   * The payload of the response.
+   * The data of the response.
    */
-  data?: TData;
-
-  /**
-   * The error object (if applicable).
-   */
-  error?: IStormError;
+  data: TData;
 
   /**
    * The timestamp of the response.
@@ -207,15 +210,9 @@ export interface LogRecord {
   readonly message: readonly unknown[];
 
   /**
-   * The raw log message.  This is the original message template without any
-   * further processing.  It can be either:
-   *
-   * - A string without any substitutions if the log record was created with
-   *   a method call syntax, e.g., "Hello, {name}!" for
-   *   `logger.info("Hello, {name}!", { name })`.
-   * - A template string array if the log record was created with a tagged
-   *   template literal syntax, e.g., `["Hello, ", "!"]` for
-   *   ``logger.info`Hello, ${name}!```.
+   * The raw log message. This is the original message template without any further processing. It can be either:
+   * - A string without any substitutions if the log record was created with a method call syntax, e.g., "Hello, \{name\}!" for logger.info("Hello, \{name\}!", \{ name \}).
+   * - A template string array if the log record was created with a tagged template literal syntax, e.g., ["Hello, ", "!"] for logger.info\`Hello, $\{name\}!\`
    */
   readonly rawMessage: string | TemplateStringsArray;
 
@@ -233,7 +230,7 @@ export interface LogRecord {
 /**
  * A sink is a function that accepts a log record and prints it somewhere.
  *
- * @param record The log record to sink.
+ * @param record - The log record to sink.
  */
 export type LogSink = (record: LogRecord) => void;
 
@@ -241,7 +238,7 @@ export type LogSink = (record: LogRecord) => void;
  * A filter is a function that accepts a log record and returns `true` if the
  * record should be passed to the sink.
  *
- * @param record The log record to filter.
+ * @param record - The log record to filter.
  * @returns `true` if the record should be passed to the sink.
  */
 export type LogFilter = (record: LogRecord) => boolean;
@@ -514,6 +511,11 @@ export interface IStormError extends Error {
    * The type of error response message/event
    */
   type: ErrorType;
+
+  /**
+   * The underlying cause of the error, if any. This is typically another error object that caused this error to be thrown.
+   */
+  cause: IStormError | undefined;
 
   /**
    * The parsed stacktrace

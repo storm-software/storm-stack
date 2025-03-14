@@ -1,17 +1,24 @@
 {
-  "name": "@storm-stack/log-sentry-node",
+  "name": "@storm-stack/log-sentry",
   "version": "0.0.1",
   "type": "module",
-  "description": "A package containing a Storm Stack log adapter to write log messages to Sentry in a NodeJS application",
+  "description": "A package containing a Storm Stack log adapter to write log messages to Sentry",
   "repository": {
     "type": "github",
     "url": "https://github.com/storm-software/storm-stack.git",
-    "directory": "packages/log-sentry-node"
+    "directory": "packages/log-sentry"
   },
   "private": false,
+  "peerDependencies": {
+    "@sentry/node": "catalog:"
+  },
+  "peerDependenciesMeta": {
+    "@sentry/node": {
+      "optional": true
+    }
+  },
   "dependencies": {
     "@sentry/core": "catalog:",
-    "@sentry/node": "catalog:",
     "@stryke/json": "catalog:"
   },
   "devDependencies": {

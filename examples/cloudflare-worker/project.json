@@ -10,7 +10,7 @@
       "options": {
         "entry": "{sourceRoot}/index.ts#handler",
         "outputPath": "dist/examples/cloudflare-worker",
-        "plugins": ["@storm-stack/plugin-cloudflare"],
+        "plugins": ["@storm-stack/plugin-cloudflare-worker"],
         "skipCache": true,
         "skipInstalls": true,
         "mode": "development"
@@ -23,7 +23,7 @@
       "options": {
         "entry": "{sourceRoot}/index.ts#handler",
         "outputPath": "dist/examples/cloudflare-worker",
-        "plugins": ["@storm-stack/plugin-cloudflare"],
+        "plugins": ["@storm-stack/plugin-cloudflare-worker"],
         "skipCache": true,
         "skipInstalls": true,
         "mode": "development"
