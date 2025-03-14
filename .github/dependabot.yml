@@ -16,12 +16,12 @@ updates:
       - "@sullivanpj"
       - "@storm-software/operations"
     commit-message:
-      prefix: "deps(monorepo):"
+      prefix: "chore(monorepo):"
     directory: "/"
     schedule:
       interval: "monthly"
     ignore:
-      - dependency-name: "{@storm-software/*,@cyclone-ui/*,@acidic/*,@nx/*,nx}"
+      - dependency-name: "{@storm-software/*,@cyclone-ui/*,@acidic/*,@stryke/*,@storm-stack/*,@nx/*,nx}"
     open-pull-requests-limit: 1
     labels:
       - dependencies
@@ -37,7 +37,7 @@ updates:
       - "@sullivanpj"
       - "@storm-software/operations"
     commit-message:
-      prefix: "deps(monorepo):"
+      prefix: "chore(monorepo):"
     directory: "/"
     schedule:
       interval: "monthly"
@@ -56,7 +56,7 @@ updates:
       - "@sullivanpj"
       - "@storm-software/operations"
     commit-message:
-      prefix: "deps(monorepo):"
+      prefix: "chore(monorepo):"
     directory: "/"
     schedule:
       interval: "monthly"

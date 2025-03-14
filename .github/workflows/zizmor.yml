@@ -32,7 +32,7 @@ jobs:
           enable-cache: false
 
       - name: Run zizmor
-        run: uvx zizmor .github/workflows -v -p --min-severity=medium --format sarif . > results.sarif
+        run: uvx zizmor --config="./tools/config/zizmor.yml" .github/workflows -v -p --min-severity=medium --format sarif . > results.sarif
         env:
           GH_TOKEN: ${{ github.token }}
 

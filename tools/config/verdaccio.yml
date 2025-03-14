@@ -8,7 +8,7 @@ uplinks:
     maxage: 60m
 
 packages:
-  "@storm-software/*":
+  "@storm-stack/*":
     access: $all
     publish: $all
     proxy: http://localhost:4873
