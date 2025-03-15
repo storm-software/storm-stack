@@ -123,5 +123,11 @@
     ]
   },
   "prettier": "@storm-software/prettier/config.json",
-  "triggerEmptyDevReleaseByIncrementingThisNumber": 0
+  "triggerEmptyDevReleaseByIncrementingThisNumber": 0,
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "@deepkit/type-compiler",
+      "nx"
+    ]
+  }
 }
