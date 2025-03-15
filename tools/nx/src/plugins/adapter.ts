@@ -170,13 +170,13 @@ export const createNodesV2: CreateNodesV2<StormStackAdapterPluginOptions> = [
           setDefaultProjectTags(project, name);
           addProjectScopeTag(project, StormStackProjectTagScopeValue.ADAPTER);
 
-          // const implicitDependencies = project.implicitDependencies ?? [];
-          // if (!implicitDependencies.includes("storm-stack")) {
-          //   implicitDependencies.push("storm-stack");
-          // }
-          // if (!implicitDependencies.includes("plugin-node")) {
-          //   implicitDependencies.push("plugin-node");
-          // }
+          const implicitDependencies = project.implicitDependencies ?? [];
+          if (!implicitDependencies.includes("storm-stack")) {
+            implicitDependencies.push("storm-stack");
+          }
+          if (!implicitDependencies.includes("plugin-node")) {
+            implicitDependencies.push("plugin-node");
+          }
 
           const result = project?.name
             ? {
@@ -184,7 +184,8 @@ export const createNodesV2: CreateNodesV2<StormStackAdapterPluginOptions> = [
                   [project.name]: {
                     ...project,
                     root: relativeRoot,
-                    targets
+                    targets,
+                    implicitDependencies
                   }
                 }
               }
