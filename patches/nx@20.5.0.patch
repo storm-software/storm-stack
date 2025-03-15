@@ -1,11 +1,13 @@
 diff --git a/src/command-line/release/changelog.js b/src/command-line/release/changelog.js
-index 5a23b02b641d28279dd3ffe0b3425876aca596a2..f776dc0953547963ef686b8937621ce2919a260c 100644
+index 5a23b02b641d28279dd3ffe0b3425876aca596a2..f4acaa0da70c6169b7d7369f25f4c0302c45adb4 100644
 --- a/src/command-line/release/changelog.js
 +++ b/src/command-line/release/changelog.js
-@@ -257,6 +257,9 @@ function createAPI(overrideReleaseConfig) {
+@@ -256,7 +256,10 @@ function createAPI(overrideReleaseConfig) {
+                     continue;
                  }
                  const dependentProjects = (projectsVersionData[project].dependentProjects || [])
-                     .map((dep) => {
+-                    .map((dep) => {
++                  .map((dep) => {
 +
 +                    console.log(`[storm-stack-debug]: Project Name: ${project}, Project Current Version: ${projectsVersionData[project].currentVersion}, Project New Version: ${projectsVersionData[project].newVersion}, Dependency Name: ${dep.source}`)
 +

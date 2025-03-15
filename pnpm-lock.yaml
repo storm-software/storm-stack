@@ -34,25 +34,25 @@ catalogs:
       specifier: ^1.38.0
       version: 1.38.0
     '@nx/devkit':
-      specifier: ^20.5.0
+      specifier: 20.5.0
       version: 20.5.0
     '@nx/eslint-plugin':
-      specifier: ^20.5.0
+      specifier: 20.5.0
       version: 20.5.0
     '@nx/jest':
-      specifier: ^20.5.0
+      specifier: 20.5.0
       version: 20.5.0
     '@nx/js':
-      specifier: ^20.5.0
+      specifier: 20.5.0
       version: 20.5.0
     '@nx/plugin':
-      specifier: ^20.5.0
+      specifier: 20.5.0
       version: 20.5.0
     '@nx/react':
-      specifier: ^20.5.0
+      specifier: 20.5.0
       version: 20.5.0
     '@nx/workspace':
-      specifier: ^20.5.0
+      specifier: 20.5.0
       version: 20.5.0
     '@opentelemetry/api-logs':
       specifier: ^0.57.2
@@ -259,7 +259,7 @@ catalogs:
       specifier: ^0.30.17
       version: 0.30.17
     nx:
-      specifier: ^20.5.0
+      specifier: 20.5.0
       version: 20.5.0
     prettier:
       specifier: ^3.5.2
