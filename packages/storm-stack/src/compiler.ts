@@ -162,7 +162,7 @@ export class Compiler {
       return cache;
     }
 
-    if (!this.options.skipCache) {
+    if (this.options.skipCache) {
       return;
     }
 
@@ -181,7 +181,7 @@ export class Compiler {
       this.#cache.delete(sourceFile);
     }
 
-    if (!this.options.skipCache) {
+    if (this.options.skipCache) {
       return;
     }
 
