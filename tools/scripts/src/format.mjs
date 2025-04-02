@@ -16,9 +16,9 @@
 
  ------------------------------------------------------------------- */
 
-import { $, argv, chalk, echo, usePwsh } from "zx";
+import { $, argv, chalk, echo } from "zx";
 
-usePwsh();
+// usePwsh();
 
 try {
   await echo`${chalk.whiteBright("🎨  Formatting the monorepo...")}`;
@@ -38,7 +38,7 @@ try {
   let result = await proc;
   if (!result.ok) {
     throw new Error(
-      `An error occured while formatting the monorepo: \n\n${result.message}\n`
+      `An error occurred while formatting the monorepo: \n\n${result.message}\n`
     );
   }
 
@@ -52,13 +52,13 @@ try {
   result = await proc;
   if (!result.ok) {
     throw new Error(
-      `An error occured while running \`nx format:write\` on the monorepo: \n\n${result.message}\n`
+      `An error occurred while running \`nx format:write\` on the monorepo: \n\n${result.message}\n`
     );
   }
 
   echo`${chalk.green("Successfully formatted the monorepo's files")}`;
 } catch (error) {
-  echo`${chalk.red(error?.message ? error.message : "A failure occured while formatting the monorepo")}`;
+  echo`${chalk.red(error?.message ? error.message : "A failure occurred while formatting the monorepo")}`;
 
   process.exit(1);
 }

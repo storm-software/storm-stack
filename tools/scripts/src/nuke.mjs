@@ -16,9 +16,9 @@
 
  ------------------------------------------------------------------- */
 
-import { $, chalk, echo, usePwsh } from "zx";
+import { $, chalk, echo } from "zx";
 
-usePwsh();
+// usePwsh();
 
 try {
   await echo`${chalk.whiteBright("💣  Nuking the monorepo...")}`;
@@ -30,7 +30,7 @@ try {
   let result = await proc;
   if (!result.ok) {
     throw new Error(
-      `An error occured while clearing Nx cache: \n\n${result.message}\n`
+      `An error occurred while clearing Nx cache: \n\n${result.message}\n`
     );
   }
 
@@ -44,12 +44,12 @@ try {
   result = await proc;
   if (!result.ok) {
     throw new Error(
-      `An error occured while removing cache directories: \n\n${result.message}\n`
+      `An error occurred while removing cache directories: \n\n${result.message}\n`
     );
   }
 
   proc =
-    $`pnpm exec rimraf --no-interactive --glob "*/**/{node_modules,dist,.storm}`.timeout(
+    $`pnpm exec rimraf --no-interactive --glob "*/**/{node_modules,dist,.storm}"`.timeout(
       `${5 * 60}s`
     );
   proc.stdout.on("data", data => {
@@ -58,7 +58,7 @@ try {
   result = await proc;
   if (!result.ok) {
     throw new Error(
-      `An error occured while removing node modules and build directories from the monorepo's projects: \n\n${result.message}\n`
+      `An error occurred while removing node modules and build directories from the monorepo's projects: \n\n${result.message}\n`
     );
   }
 
@@ -72,13 +72,13 @@ try {
   result = await proc;
   if (!result.ok) {
     throw new Error(
-      `An error occured while removing node modules from the workspace root: \n\n${result.message}\n`
+      `An error occurred while removing node modules from the workspace root: \n\n${result.message}\n`
     );
   }
 
   echo`${chalk.green("Successfully nuked the cache, node modules, and build folders")}`;
 } catch (error) {
-  echo`${chalk.red(error?.message ? error.message : "A failure occured while nuking the monorepo")}`;
+  echo`${chalk.red(error?.message ? error.message : "A failure occurred while nuking the monorepo")}`;
 
   process.exit(1);
 }

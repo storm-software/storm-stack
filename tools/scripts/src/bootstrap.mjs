@@ -17,9 +17,9 @@
  ------------------------------------------------------------------- */
 
 import { build } from "esbuild";
-import { chalk, echo, usePwsh } from "zx";
+import { chalk, echo } from "zx";
 
-usePwsh();
+// usePwsh();
 
 try {
   await echo`${chalk.whiteBright("⚙️  Bootstrapping the monorepo...")}`;
@@ -49,13 +49,13 @@ try {
   // const result = await proc;
   // if (!result.ok) {
   //   throw new Error(
-  //     `An error occured while resetting the Nx deamon process: \n\n${result.message}\n`
+  //     `An error occurred while resetting the Nx deamon process: \n\n${result.message}\n`
   //   );
   // }
 
   echo`${chalk.green("Completed monorepo bootstrapping successfully!")}`;
 } catch (error) {
-  echo`${chalk.red(error?.message ? error.message : "A failure occured while bootstrapping the monorepo")}`;
+  echo`${chalk.red(error?.message ? error.message : "A failure occurred while bootstrapping the monorepo")}`;
 
   process.exit(1);
 }

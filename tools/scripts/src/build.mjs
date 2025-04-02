@@ -16,9 +16,9 @@
 
  ------------------------------------------------------------------- */
 
-import { $, argv, chalk, echo, usePwsh } from "zx";
+import { $, argv, chalk, echo } from "zx";
 
-usePwsh();
+// usePwsh();
 
 try {
   let configuration = argv.configuration;
@@ -41,7 +41,7 @@ try {
   let result = await proc;
   if (!result.ok) {
     throw new Error(
-      `An error occured while bootstrapping the monorepo: \n\n${result.message}\n`
+      `An error occurred while bootstrapping the monorepo: \n\n${result.message}\n`
     );
   }
 
@@ -54,7 +54,7 @@ try {
 
     if (!result.ok) {
       throw new Error(
-        `An error occured while building the monorepo in production mode: \n\n${result.message}\n`
+        `An error occurred while building the monorepo in production mode: \n\n${result.message}\n`
       );
     }
   } else {
@@ -66,14 +66,14 @@ try {
 
     if (!result.ok) {
       throw new Error(
-        `An error occured while building the monorepo in development mode: \n\n${result.message}\n`
+        `An error occurred while building the monorepo in development mode: \n\n${result.message}\n`
       );
     }
   }
 
   echo`${chalk.green(`Successfully built the monorepo in ${configuration} mode!`)}`;
 } catch (error) {
-  echo`${chalk.red(error?.message ? error.message : "A failure occured while building the monorepo")}`;
+  echo`${chalk.red(error?.message ? error.message : "A failure occurred while building the monorepo")}`;
 
   process.exit(1);
 }

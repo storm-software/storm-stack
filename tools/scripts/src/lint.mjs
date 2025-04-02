@@ -16,9 +16,9 @@
 
  ------------------------------------------------------------------- */
 
-import { $, chalk, echo, usePwsh } from "zx";
+import { $, chalk, echo } from "zx";
 
-usePwsh();
+// usePwsh();
 
 try {
   await echo`${chalk.whiteBright("📋  Linting the monorepo...")}`;
@@ -33,7 +33,7 @@ try {
   let result = await proc;
   if (!result.ok) {
     throw new Error(
-      `An error occured while linting the monorepo: \n\n${result.message}\n`
+      `An error occurred while linting the monorepo: \n\n${result.message}\n`
     );
   }
 
@@ -46,13 +46,13 @@ try {
   result = await proc;
   if (!result.ok) {
     throw new Error(
-      `An error occured while running \`storm-lint\` on the monorepo: \n\n${result.message}\n`
+      `An error occurred while running \`storm-lint\` on the monorepo: \n\n${result.message}\n`
     );
   }
 
   echo`${chalk.green("Successfully linted the monorepo's files")}`;
 } catch (error) {
-  echo`${chalk.red(error?.message ? error.message : "A failure occured while linting the monorepo")}`;
+  echo`${chalk.red(error?.message ? error.message : "A failure occurred while linting the monorepo")}`;
 
   process.exit(1);
 }
