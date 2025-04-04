@@ -32,11 +32,7 @@ import type { TsConfigJson } from "@stryke/types/tsconfig";
 import defu from "defu";
 import { getFileHeader, getParsedTypeScriptConfig } from "storm-stack/helpers";
 import { Plugin } from "storm-stack/plugin";
-import type {
-  EngineHooks,
-  InferResolvedOptions,
-  Options
-} from "storm-stack/types";
+import type { Context, EngineHooks, Options } from "storm-stack/types";
 import {
   generateDeclarations,
   generateHttpImports,
@@ -51,10 +47,8 @@ import type { StormStackNodePluginConfig } from "./types/config";
 import { StormStackNodeAppStyle, StormStackNodeFeatures } from "./types/config";
 
 export default class NodePlugin<
-  TOptions extends Options = Options,
-  TResolvedOptions extends
-    InferResolvedOptions<TOptions> = InferResolvedOptions<TOptions>
-> extends Plugin<TOptions, TResolvedOptions> {
+  TOptions extends Options = Options
+> extends Plugin<TOptions> {
   /**
    * The configuration for the Node.js plugin
    */
@@ -81,9 +75,9 @@ export default class NodePlugin<
     }
   }
 
-  public addHooks(hooks: EngineHooks<TOptions, TResolvedOptions>) {
+  public addHooks(hooks: EngineHooks<TOptions>) {
     hooks.addHooks({
-      "init:options": this.initOptions.bind(this),
+      "init:context": this.initOptions.bind(this),
       "init:installs": this.initInstalls.bind(this),
       "init:tsconfig": this.initTsconfig.bind(this),
       "prepare:types": this.prepareTypes.bind(this),
@@ -93,54 +87,54 @@ export default class NodePlugin<
 
     if (!this.config.skipBuild) {
       hooks.addHooks({
-        "build": this.build.bind(this)
+        "build:execute": this.build.bind(this)
       });
     }
   }
 
-  protected override async buildApp(options: TResolvedOptions) {
+  protected override async buildApp(context: Context<TOptions>) {
     this.log(LogLevelLabel.TRACE, `Building the project`);
 
-    return this.esbuild(options);
+    return this.esbuild(context);
   }
 
-  protected async initOptions(options: TResolvedOptions) {
+  protected async initOptions(context: Context<TOptions>) {
     this.log(
       LogLevelLabel.TRACE,
-      `Resolving Storm Stack options for the project.`
+      `Resolving Storm Stack context for the project.`
     );
 
-    options.platform ??= "node";
-    options.override.format = "esm";
-    options.override.target = "node22";
+    context.platform ??= "node";
+    context.override.format = "esm";
+    context.override.target = "node22";
 
-    options.presets.push({
+    context.presets.push({
       imports: ["builder"],
       from: "storm:app"
     });
-    options.presets.push({
+    context.presets.push({
       imports: ["useStorm"],
       from: "storm:context"
     });
-    options.presets.push({
+    context.presets.push({
       imports: ["StormEvent"],
       from: "storm:event"
     });
 
     if (this.config.features.includes(StormStackNodeFeatures.HTTP)) {
-      options.presets.push({
+      context.presets.push({
         imports: ["StormURL"],
         from: "@stryke/http/types",
         type: true
       });
-      options.presets.push({
+      context.presets.push({
         imports: ["StormURLBuilder"],
         from: "@stryke/http/url-builder"
       });
     }
   }
 
-  protected async initInstalls(options: TResolvedOptions) {
+  protected async initInstalls(context: Context<TOptions>) {
     this.log(
       LogLevelLabel.TRACE,
       `Running required installations for the project.`
@@ -148,28 +142,28 @@ export default class NodePlugin<
 
     await Promise.all(
       [
-        this.install(options, "@types/node", true),
-        options.projectType === "application" &&
-          this.install(options, "@deepkit/injector"),
-        options.projectType === "application" &&
-          this.install(options, "@stryke/env"),
-        options.projectType === "application" &&
+        this.install(context, "@types/node", true),
+        context.projectType === "application" &&
+          this.install(context, "@deepkit/injector"),
+        context.projectType === "application" &&
+          this.install(context, "@stryke/env"),
+        context.projectType === "application" &&
           this.config.features.includes(StormStackNodeFeatures.HTTP) &&
-          this.install(options, "@stryke/http"),
-        options.projectType === "application" &&
-          this.install(options, "@storm-stack/log-console")
+          this.install(context, "@stryke/http"),
+        context.projectType === "application" &&
+          this.install(context, "@storm-stack/log-console")
       ].filter(Boolean)
     );
   }
 
-  protected async initTsconfig(options: TResolvedOptions) {
+  protected async initTsconfig(context: Context<TOptions>) {
     this.log(
       LogLevelLabel.TRACE,
-      `Resolving TypeScript configuration in "${options.tsconfig!}"`
+      `Resolving TypeScript configuration in "${context.tsconfig!}"`
     );
 
-    const tsconfig = await getParsedTypeScriptConfig(options);
-    const tsconfigJson = await readJsonFile<TsConfigJson>(options.tsconfig!);
+    const tsconfig = await getParsedTypeScriptConfig(context);
+    const tsconfigJson = await readJsonFile<TsConfigJson>(context.tsconfig!);
 
     tsconfigJson.compilerOptions ??= {};
     if (
@@ -182,15 +176,15 @@ export default class NodePlugin<
       tsconfigJson.compilerOptions.types.push("node");
     }
 
-    return this.writeFile(options.tsconfig!, StormJSON.stringify(tsconfigJson));
+    return this.writeFile(context.tsconfig!, StormJSON.stringify(tsconfigJson));
   }
 
-  protected async prepareTypes(options: TResolvedOptions) {
-    if (!options.dts || !options.resolvedDotenv.types?.variables?.properties) {
+  protected async prepareTypes(context: Context<TOptions>) {
+    if (!context.dts || !context.resolvedDotenv.types?.variables?.properties) {
       return;
     }
 
-    const typesDir = joinPaths(options.projectRoot, options.typesDir);
+    const typesDir = joinPaths(context.projectRoot, context.typesDir);
 
     this.log(
       LogLevelLabel.TRACE,
@@ -198,8 +192,8 @@ export default class NodePlugin<
     );
 
     const runtimePath = relativePath(
-      joinPaths(options.projectRoot, options.typesDir),
-      joinPaths(options.projectRoot, options.runtimeDir)
+      joinPaths(context.projectRoot, context.typesDir),
+      joinPaths(context.projectRoot, context.runtimeDir)
     );
 
     await Promise.all(
@@ -215,11 +209,11 @@ export default class NodePlugin<
           ),
         this.writeFile(
           joinPaths(
-            options.projectRoot,
-            options.dts.replace(options.projectRoot, "").trim()
+            context.projectRoot,
+            context.dts.replace(context.projectRoot, "").trim()
           ),
           generateDeclarations(
-            options.resolvedDotenv.types.variables.properties,
+            context.resolvedDotenv.types.variables.properties,
             this.config.features
           )
         )
@@ -227,8 +221,8 @@ export default class NodePlugin<
     );
   }
 
-  protected async prepareRuntime(options: TResolvedOptions) {
-    const runtimeDir = joinPaths(options.projectRoot, options.runtimeDir);
+  protected async prepareRuntime(context: Context<TOptions>) {
+    const runtimeDir = joinPaths(context.projectRoot, context.runtimeDir);
 
     this.log(
       LogLevelLabel.TRACE,
@@ -243,9 +237,9 @@ export default class NodePlugin<
     ]);
   }
 
-  protected async prepareEntry(options: TResolvedOptions) {
+  protected async prepareEntry(context: Context<TOptions>) {
     await Promise.all(
-      options.resolvedEntry.map(async entry => {
+      context.resolvedEntry.map(async entry => {
         this.log(
           LogLevelLabel.TRACE,
           `Preparing the entry artifact ${entry.file} (${entry?.name ? `export: "${entry.name}"` : "default"})" from input "${entry.input.file} (${entry.input.name ? `export: "${entry.input.name}"` : "default"})"`
@@ -255,23 +249,23 @@ export default class NodePlugin<
           entry.file,
           `${getFileHeader()}
 
-import ".${joinPaths(options.runtimeDir.replace(options.artifactsDir, ""), "init")}";
+import ".${joinPaths(context.runtimeDir.replace(context.artifactsDir, ""), "init")}";
 
 import ${entry.input.name ? `{ ${entry.input.name} as handle }` : "handle"} from "${joinPaths(
             relativePath(
-              joinPaths(options.projectRoot, findFilePath(entry.file)),
-              joinPaths(options.projectRoot, findFilePath(entry.input.file))
+              joinPaths(context.projectRoot, findFilePath(entry.file)),
+              joinPaths(context.projectRoot, findFilePath(entry.input.file))
             ),
             findFileName(entry.input.file).replace(
               findFileExtension(entry.input.file),
               ""
             )
           )}";
-import { builder } from ".${joinPaths(options.runtimeDir.replace(options.artifactsDir, ""), "app")}";
+import { builder } from ".${joinPaths(context.runtimeDir.replace(context.artifactsDir, ""), "app")}";
 import { getSink } from "@storm-stack/log-console";
 
 export default builder({
-  name: ${options.name ? `"${options.name}"` : "undefined"},
+  name: ${context.name ? `"${context.name}"` : "undefined"},
   log: { handle: getSink(), logLevel: "debug" },
 })
   .handler(handle)
@@ -286,27 +280,26 @@ export default builder({
   /**
    * Run the esbuild process
    *
-   * @param options - The esbuild options
+   * @param context - The build context
    * @param override - Top priority build options override
    */
   private async esbuild(
-    options: TResolvedOptions,
+    context: Context<TOptions>,
     override: Partial<ESBuildOptions> = {}
   ) {
-    const runtimeDir = joinPaths(options.projectRoot, options.runtimeDir);
-    const compiler = await this.getCompiler(options);
+    const runtimeDir = joinPaths(context.projectRoot, context.runtimeDir);
 
     return esbuild(
-      defu(override ?? {}, options.override, {
-        entry: options.resolvedEntry.map(entry => entry.file),
-        projectRoot: options.projectRoot,
-        outputPath: options.outputPath,
-        platform: options.platform,
+      defu(override ?? {}, context.override, {
+        entry: context.resolvedEntry.map(entry => entry.file),
+        projectRoot: context.projectRoot,
+        outputPath: context.outputPath,
+        platform: context.platform,
         generatePackageJson: true,
-        minify: Boolean(options.minify),
-        sourcemap: options.mode === "production",
+        minify: Boolean(context.minify),
+        sourcemap: context.mode !== "production",
         bundle: true,
-        env: options.resolvedDotenv.values as {
+        env: context.resolvedDotenv.values as {
           [key: string]: string;
         },
         alias: {
@@ -320,7 +313,10 @@ export default builder({
           "storm:response": joinPaths(runtimeDir, "response")
         },
         plugins: [
-          externalPlugin(options, compiler.project.getCompilerOptions().paths),
+          externalPlugin(
+            context,
+            context.resolvedTsconfig.tsconfigJson.compilerOptions?.paths
+          ),
           {
             name: "storm-stack:compiler",
             setup: build => {
@@ -331,7 +327,8 @@ export default builder({
                 );
 
                 return {
-                  contents: await compiler.compile(
+                  contents: await context.compiler.compile(
+                    context,
                     normalizeWindowsPath(args.path),
                     await readFile(args.path)
                   )

@@ -24,7 +24,7 @@ import { existsSync, findFilePath, joinPaths } from "@stryke/path/index";
 import { isSetString } from "@stryke/type-checks";
 import { createUnimport as createUnimportExt } from "unimport";
 import type {
-  InferResolvedOptions,
+  Context,
   Options,
   SourceFile,
   UnimportContext
@@ -33,11 +33,10 @@ import type { LogFn } from "../types/config";
 
 let lastImportsDump: string | undefined;
 
-export function createUnimport<
-  TOptions extends Options = Options,
-  TResolvedOptions extends
-    InferResolvedOptions<TOptions> = InferResolvedOptions<TOptions>
->(log: LogFn, options: TResolvedOptions): UnimportContext {
+export function createUnimport<TOptions extends Options = Options>(
+  log: LogFn,
+  context: Context<TOptions>
+): UnimportContext {
   log(
     LogLevelLabel.TRACE,
     "Creating Unimport context with Storm Stack presets"
@@ -52,7 +51,7 @@ export function createUnimport<
     ],
     commentsDebug: ["@unimport-debug", "@imports-debug", "@storm-debug"],
     injectAtEnd: true,
-    presets: options.presets
+    presets: context.presets
     // parser: "acorn",
     //     addons: {
     //       addons: [
@@ -73,15 +72,15 @@ export function createUnimport<
   });
 
   async function dumpImports() {
-    if (options?.importDump !== false) {
+    if (context?.importDump !== false) {
       log(LogLevelLabel.TRACE, "Dumping import file...");
 
       const items = await unimport.getImports();
 
       const importDumpFile = joinPaths(
-        options.projectRoot,
-        isSetString(options?.importDump)
-          ? options.importDump
+        context.projectRoot,
+        isSetString(context?.importDump)
+          ? context.importDump
           : ".storm/import-dump.json"
       );
       if (!existsSync(findFilePath(importDumpFile))) {

@@ -17,7 +17,7 @@
 
 import { getWorkspaceConfig } from "@storm-software/config-tools/get-config";
 import { LogLevelLabel } from "@storm-software/config-tools/types";
-import type { StormConfig } from "@storm-software/config/types";
+import type { StormWorkspaceConfig } from "@storm-software/config/types";
 import type {
   TransformResult,
   UnpluginBuildContext,
@@ -27,15 +27,20 @@ import type {
 import { createUnplugin } from "unplugin";
 import { Engine } from "../engine";
 import { createLog } from "../helpers/utilities/logger";
-import type { Options } from "../types";
+import type { Context, Options } from "../types";
 
-export const unpluginFactory: UnpluginFactory<Options> = options => {
+export const unpluginFactory: UnpluginFactory<Options> = <
+  TOptions extends Options = Options
+>(
+  options: TOptions
+) => {
   const log = createLog("unplugin", options);
   log(LogLevelLabel.TRACE, "Initializing Unplugin");
 
   try {
-    let workspaceConfig!: StormConfig;
-    let engine!: Engine;
+    let workspaceConfig!: StormWorkspaceConfig;
+    let engine!: Engine<TOptions>;
+    let context!: Context<TOptions>;
 
     async function buildStart(this: UnpluginBuildContext): Promise<void> {
       log(LogLevelLabel.TRACE, "Build Starting");
@@ -44,7 +49,7 @@ export const unpluginFactory: UnpluginFactory<Options> = options => {
       engine = new Engine(options, workspaceConfig);
 
       log(LogLevelLabel.TRACE, "Initializing Storm Stack...");
-      await engine.init();
+      context = await engine.init();
 
       log(LogLevelLabel.TRACE, "Prepare Storm Stack project...");
       await engine.prepare(true);
@@ -56,9 +61,9 @@ export const unpluginFactory: UnpluginFactory<Options> = options => {
     ): Promise<TransformResult> {
       log(LogLevelLabel.TRACE, "Running Transform");
 
-      return engine.compiler.getResult(
-        engine.compiler.getSourceFile(id, code),
-        await engine.compiler.compile(id, code)
+      return context.compiler.getResult(
+        context.compiler.getSourceFile(id, code),
+        await context.compiler.compile(context, id, code)
       );
     }
 

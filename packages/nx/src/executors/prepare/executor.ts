@@ -17,7 +17,7 @@
 
 import type { ExecutorContext } from "@nx/devkit";
 import { writeTrace } from "@storm-software/config-tools/logger";
-import type { StormConfig } from "@storm-software/config/types";
+import type { StormWorkspaceConfig } from "@storm-software/config/types";
 import { withRunExecutor } from "@storm-software/workspace-tools";
 import defu from "defu";
 import { Engine } from "storm-stack/engine";
@@ -28,7 +28,7 @@ import type { StormStackPrepareExecutorSchema } from "./schema";
 export async function executorFn(
   options: StormStackPrepareExecutorSchema,
   context: ExecutorContext,
-  workspaceConfig: StormConfig
+  workspaceConfig: StormWorkspaceConfig
 ) {
   if (!context.projectName) {
     throw new Error(

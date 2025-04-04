@@ -21,7 +21,7 @@ import { existsSync, joinPaths } from "@stryke/path";
 import type { TsConfigJson } from "@stryke/types/tsconfig";
 import defu from "defu";
 import { ts } from "ts-morph";
-import type { Options } from "../types";
+import type { Options, ResolvedTsConfig } from "../types";
 
 export function getTsconfigFilePath(options: Options): string {
   const tsconfigFilePath =
@@ -37,7 +37,7 @@ export function getTsconfigFilePath(options: Options): string {
 
 export async function getParsedTypeScriptConfig(
   options: Options
-): Promise<ts.ParsedCommandLine> {
+): Promise<ResolvedTsConfig> {
   const tsconfigFilePath = getTsconfigFilePath(options);
 
   let tsconfigJson = await readJsonFile<TsConfigJson>(tsconfigFilePath);
@@ -59,7 +59,7 @@ ${tsconfig.errors.map(error => `- ${(error.category !== undefined && error.code 
     throw new Error(errorMessage);
   }
 
-  return tsconfig;
+  return { ...tsconfig, tsconfigJson };
 }
 
 export async function getTsconfigChanges(

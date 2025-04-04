@@ -20,7 +20,7 @@ import { defineConfig } from "tsup";
 
 export const getTsupConfig = (
   options: Partial<Options> & Pick<Options, "name" | "entryPoints">
-): Options =>
+) =>
   defineConfig({
     target: "node22",
     outDir: "dist",
@@ -41,4 +41,4 @@ export const getTsupConfig = (
       console.log(`${options.name} build completed successfully!`);
     },
     ...options
-  }) as Options;
+  })

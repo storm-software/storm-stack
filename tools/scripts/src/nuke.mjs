@@ -49,7 +49,7 @@ try {
   }
 
   proc =
-    $`pnpm exec rimraf --no-interactive --glob "*/**/{node_modules,dist,.storm}"`.timeout(
+    $`pnpm exec rimraf --no-interactive --glob "packages/**/{node_modules,dist,.storm}"`.timeout(
       `${5 * 60}s`
     );
   proc.stdout.on("data", data => {

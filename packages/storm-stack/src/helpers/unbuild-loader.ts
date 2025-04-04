@@ -18,7 +18,7 @@
 import type { Loader, LoaderResult } from "@storm-software/unbuild/types";
 import { transform } from "esbuild";
 import jiti from "jiti";
-import type { Compiler } from "../compiler";
+import type { Context, Options } from "../types";
 
 const DECLARATION_RE = /\.d\.[cm]?ts$/;
 const CM_LETTER_RE = /(?<=\.)(?:c|m)(?=[jt]s$)/;
@@ -27,7 +27,9 @@ const KNOWN_EXT_RE = /\.(?:c|m)?[jt]sx?$/;
 
 const TS_EXTS = new Set([".ts", ".mts", ".cts"]);
 
-export const getUnbuildLoader = (compiler: Compiler): Loader => {
+export const getUnbuildLoader = <TOptions extends Options = Options>(
+  context: Context<TOptions>
+): Loader => {
   return async (input, { options }) => {
     if (!KNOWN_EXT_RE.test(input.path) || DECLARATION_RE.test(input.path)) {
       return;
@@ -52,15 +54,21 @@ export const getUnbuildLoader = (compiler: Compiler): Loader => {
 
     // typescript => js
     if (TS_EXTS.has(input.extension)) {
-      contents = await transform(await compiler.compile(input.path, contents), {
-        ...options.esbuild,
-        loader: "ts"
-      }).then(r => r.code);
+      contents = await transform(
+        await context.compiler.compile(context, input.path, contents),
+        {
+          ...options.esbuild,
+          loader: "ts"
+        }
+      ).then(r => r.code);
     } else if ([".tsx", ".jsx"].includes(input.extension)) {
-      contents = await transform(await compiler.compile(input.path, contents), {
-        loader: input.extension === ".tsx" ? "tsx" : "jsx",
-        ...options.esbuild
-      }).then(r => r.code);
+      contents = await transform(
+        await context.compiler.compile(context, input.path, contents),
+        {
+          loader: input.extension === ".tsx" ? "tsx" : "jsx",
+          ...options.esbuild
+        }
+      ).then(r => r.code);
     }
 
     // esm => cjs

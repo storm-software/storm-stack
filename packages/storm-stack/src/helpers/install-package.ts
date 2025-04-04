@@ -19,32 +19,33 @@ import { LogLevelLabel } from "@storm-software/config-tools/types";
 import { install } from "@stryke/fs/install";
 import { isPackageListed } from "@stryke/fs/package-fns";
 import { isNumber } from "@stryke/type-checks/is-number";
-import type { InferResolvedOptions, Options } from "../types/build";
+import type { Context, Options } from "../types/build";
 import type { LogFn } from "../types/config";
 
 /**
  * Installs a package if it is not already installed.
  *
  * @param log - The logger function
- * @param options - The resolved options
+ * @param context - The resolved options
  * @param packageName - The name of the package to install
  * @param dev - Whether to install the package as a dev dependency
  */
-export async function installPackage<
-  TOptions extends Options = Options,
-  TResolvedOptions extends
-    InferResolvedOptions<TOptions> = InferResolvedOptions<TOptions>
->(log: LogFn, options: TResolvedOptions, packageName: string, dev = false) {
-  const isInstalled = await isPackageListed(packageName, options.projectRoot);
+export async function installPackage<TOptions extends Options = Options>(
+  log: LogFn,
+  context: Context<TOptions>,
+  packageName: string,
+  dev = false
+) {
+  const isInstalled = await isPackageListed(packageName, context.projectRoot);
   if (!isInstalled) {
-    if (options.skipInstalls !== true) {
+    if (context.skipInstalls !== true) {
       log(
         LogLevelLabel.WARN,
         `The package "${packageName}" is not installed. It will be installed automatically.`
       );
 
       const result = await install(packageName, {
-        cwd: options.projectRoot,
+        cwd: context.projectRoot,
         dev
       });
       if (isNumber(result.exitCode) && result.exitCode > 0) {

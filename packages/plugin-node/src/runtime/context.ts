@@ -63,15 +63,15 @@ export const STORM_ASYNC_CONTEXT = getContext<StormContext>(STORM_CONTEXT_KEY, {
 
 export const getBuildInfo = (): StormBuildInfo => {
   return {
-    buildId: process.env.STORM_BUILD_ID!,
-    timestamp: process.env.STORM_BUILD_TIMESTAMP
-      ? Number(process.env.STORM_BUILD_TIMESTAMP)
+    buildId: process.env.BUILD_ID!,
+    timestamp: process.env.BUILD_TIMESTAMP
+      ? Number(process.env.BUILD_TIMESTAMP)
       : 0,
-    releaseId: process.env.STORM_RELEASE_ID!,
-    mode: (process.env.STORM_MODE ||
+    releaseId: process.env.RELEASE_ID!,
+    mode: (process.env.MODE ||
       process.env.NODE_ENV ||
       "production") as StormBuildInfo["mode"],
-    platform: (process.env.STORM_PLATFORM ||
+    platform: (process.env.PLATFORM ||
       "node") as StormBuildInfo["platform"],
     isTest,
     isDebug: isDebug || isDevelopment,
@@ -115,7 +115,7 @@ export const getRuntimeInfo = (): StormRuntimeInfo => {
 };
 
 export const getAppName = () => {
-  const appName = process.env.STORM_APP_NAME || process.env.APP_NAME;
+  const appName = process.env.APP_NAME;
   if (!appName) {
     throw new Error("App name is not defined.");
   }
@@ -124,7 +124,7 @@ export const getAppName = () => {
 };
 
 export const getAppVersion = () => {
-  return process.env.STORM_APP_VERSION || process.env.APP_VERSION;
+  return process.env.APP_VERSION;
 };
 
 export function useStorm(): StormContext {

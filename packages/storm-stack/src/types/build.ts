@@ -16,16 +16,17 @@
  ------------------------------------------------------------------- */
 
 import type { Platform } from "@storm-software/build-tools/types";
-import type { StormConfig } from "@storm-software/config/types";
+import type { StormWorkspaceConfig } from "@storm-software/config/types";
 import type { EnvPaths } from "@stryke/env/get-env-paths";
 import type { DotenvParseOutput } from "@stryke/env/types";
 import type { MaybePromise } from "@stryke/types/base";
 import type { TypeDefinition } from "@stryke/types/configuration";
+import type { PackageJson } from "@stryke/types/package-json";
 import type { TsConfigJson } from "@stryke/types/tsconfig";
 import type { Hookable } from "hookable";
 import type MagicString from "magic-string";
 import type { SourceMap } from "magic-string";
-import type { JSDoc, ts, Type } from "ts-morph";
+import type { JSDoc, Project, ts, Type } from "ts-morph";
 import type { InlinePreset, Unimport } from "unimport";
 import type {
   AdapterProjectConfig,
@@ -62,7 +63,7 @@ export interface SourceFile {
   /**
    * The environment variables used in the source code
    */
-  env: Record<string, SourceFileEnv>;
+  env: string[];
 
   /**
    * The transpiled source code
@@ -188,14 +189,6 @@ export type ResolvedDotenvTypeDefinition = Omit<TypeDefinition, "file"> &
     properties: Record<string, ResolvedDotenvTypeDefinitionProperty>;
   };
 
-export interface SourceFileEnv {
-  name: string;
-  description?: string;
-  value: any;
-  defaultValue?: string;
-  type: Omit<ResolvedDotenvTypeDefinitionProperty, "jsDocs">;
-}
-
 export interface ResolvedDotenvTypeDefinitions {
   /**
    * A path to the type definition for the expected env configuration parameters. This value can include both a path to the typescript file and the name of the type definition to use separated by a `":"` or `"#"` character. For example: `"./src/types/env.ts#DotenvConfiguration"`.
@@ -251,6 +244,10 @@ export interface ResolvedEntryTypeDefinition extends TypeDefinition {
   input: TypeDefinition;
 }
 
+export type ResolvedTsConfig = ts.ParsedCommandLine & {
+  tsconfigJson: TsConfigJson;
+};
+
 export interface MetaInfo {
   /**
    * The checksum generated from the resolved options
@@ -273,6 +270,45 @@ export interface MetaInfo {
   timestamp: number;
 }
 
+export interface ICompiler<TOptions extends Options = Options> {
+  /**
+   * Get the source file.
+   *
+   * @param id - The name of the file.
+   * @param code - The source code.
+   * @returns The source file.
+   */
+  getSourceFile: (id: string, code: string | MagicString) => SourceFile;
+
+  /**
+   * Get the result of the compiler.
+   *
+   * @param sourceFile - The source file.
+   * @param transpiled - The transpiled source code.
+   * @returns The result of the compiler.
+   */
+  getResult: (sourceFile: SourceFile, transpiled?: string) => CompilerResult;
+
+  /**
+   * Run the compiler.
+   *
+   * @param context - The context object
+   * @param id - The name of the file to compile
+   * @param code - The source code to compile
+   * @returns The compiled source code
+   */
+  compile: (
+    context: Context<TOptions>,
+    id: string,
+    code: string | MagicString
+  ) => Promise<string>;
+}
+
+export type UnimportContext = Omit<Unimport, "injectImports"> & {
+  dumpImports: () => Promise<void>;
+  injectImports: (source: SourceFile) => Promise<SourceFile>;
+};
+
 export type InferProjectConfig<TConfig extends ProjectConfig = ProjectConfig> =
   TConfig["projectType"] extends "application"
     ? ApplicationProjectConfig & TConfig
@@ -282,7 +318,7 @@ export type InferProjectConfig<TConfig extends ProjectConfig = ProjectConfig> =
         ? AdapterProjectConfig & TConfig
         : never;
 
-export type InferResolvedOptions<
+export type Context<
   TOptions extends Options = Options,
   TConfig extends InferProjectConfig<TOptions> = InferProjectConfig<TOptions>
 > = TConfig &
@@ -303,7 +339,7 @@ export type InferResolvedOptions<
     /**
      * The Storm workspace configuration
      */
-    workspaceConfig: StormConfig;
+    workspaceConfig: StormWorkspaceConfig;
 
     /**
      * The metadata information
@@ -314,6 +350,11 @@ export type InferResolvedOptions<
      * The metadata information currently written to disk
      */
     persistedMeta?: MetaInfo;
+
+    /**
+     * The project root directory
+     */
+    compiler: ICompiler<TOptions>;
 
     /**
      * The Storm Stack environment paths
@@ -358,42 +399,57 @@ export type InferResolvedOptions<
     resolvedEntry: ResolvedEntryTypeDefinition[];
 
     /**
+     * The parsed TypeScript configuration
+     */
+    resolvedTsconfig: ResolvedTsConfig;
+
+    /**
+     * The project's package.json file content
+     */
+    packageJson: PackageJson;
+
+    /**
+     * The `ts-morph` project instance
+     */
+    project: Project;
+
+    /**
+     * The .env variables used in the source code
+     */
+    vars: Record<string, ResolvedDotenvTypeDefinitionProperty>;
+
+    /**
      * An object containing overridden options to be provided to the build invoked by the plugins (for example: esbuild, unbuild, vite, etc.)
      *
      * @remarks
      * Any values added here will have top priority over the resolved build options
      */
     override: Record<string, any>;
+
+    /**
+     * The resolved `unimport` context to be used by the compiler
+     */
+    unimport: UnimportContext;
   };
 
-export type ResolvedOptions<TOptions extends Options = Options> =
-  InferResolvedOptions<TOptions>;
-
-export type UnimportContext = Omit<Unimport, "injectImports"> & {
-  dumpImports: () => Promise<void>;
-  injectImports: (source: SourceFile) => Promise<SourceFile>;
-};
-
-export interface EngineHookFunctions<
-  TOptions extends Options = Options,
-  TResolvedOptions extends
-    InferResolvedOptions<TOptions> = InferResolvedOptions<TOptions>
-> {
-  "init:options": (options: TResolvedOptions) => MaybePromise<void>;
-  "init:installs": (options: TResolvedOptions) => MaybePromise<void>;
-  "init:tsconfig": (options: TResolvedOptions) => MaybePromise<void>;
-  "clean": (options: TResolvedOptions) => MaybePromise<void>;
-  "prepare:types": (options: TResolvedOptions) => MaybePromise<void>;
-  "prepare:runtime": (options: TResolvedOptions) => MaybePromise<void>;
-  "prepare:entry": (options: TResolvedOptions) => MaybePromise<void>;
-  "prepare:deploy": (options: TResolvedOptions) => MaybePromise<void>;
-  "prepare:misc": (options: TResolvedOptions) => MaybePromise<void>;
-  "build": (options: TResolvedOptions) => MaybePromise<void>;
-  "finalize": (options: TResolvedOptions) => MaybePromise<void>;
+export interface EngineHookFunctions<TOptions extends Options = Options> {
+  "init:context": (context: Context<TOptions>) => MaybePromise<void>;
+  "init:installs": (context: Context<TOptions>) => MaybePromise<void>;
+  "init:tsconfig": (context: Context<TOptions>) => MaybePromise<void>;
+  "clean": (context: Context<TOptions>) => MaybePromise<void>;
+  "prepare:types": (context: Context<TOptions>) => MaybePromise<void>;
+  "prepare:runtime": (context: Context<TOptions>) => MaybePromise<void>;
+  "prepare:entry": (context: Context<TOptions>) => MaybePromise<void>;
+  "prepare:deploy": (context: Context<TOptions>) => MaybePromise<void>;
+  "prepare:misc": (context: Context<TOptions>) => MaybePromise<void>;
+  "build:transform": (
+    context: Context<TOptions>,
+    sourceFile: SourceFile
+  ) => MaybePromise<void>;
+  "build:execute": (context: Context<TOptions>) => MaybePromise<void>;
+  "finalize": (context: Context<TOptions>) => MaybePromise<void>;
 }
 
-export type EngineHooks<
-  TOptions extends Options = Options,
-  TResolvedOptions extends
-    InferResolvedOptions<TOptions> = InferResolvedOptions<TOptions>
-> = Hookable<EngineHookFunctions<TOptions, TResolvedOptions>>;
+export type EngineHooks<TOptions extends Options = Options> = Hookable<
+  EngineHookFunctions<TOptions>
+>;

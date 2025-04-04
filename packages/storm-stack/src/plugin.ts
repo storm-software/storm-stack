@@ -18,29 +18,22 @@
 import { LogLevelLabel } from "@storm-software/config-tools/types";
 import type { UnbuildOptions } from "@storm-software/unbuild";
 import { build as unbuild } from "@storm-software/unbuild";
-import { writeFile } from "@stryke/fs/write-file";
-import { hash } from "@stryke/hash/hash";
-import { findFilePath } from "@stryke/path/file-path-fns";
-import { joinPaths } from "@stryke/path/join-paths";
 import type { MaybePromise } from "@stryke/types/base";
 import { defu } from "defu";
-import { format, resolveConfig } from "prettier";
-import { Compiler } from "./compiler";
-import { getParsedTypeScriptConfig, installPackage } from "./helpers";
+import { installPackage } from "./helpers";
 import { getUnbuildLoader } from "./helpers/unbuild-loader";
 import { createLog } from "./helpers/utilities/logger";
-import type { EngineHooks, InferResolvedOptions, Options } from "./types/build";
+import { writeFile } from "./helpers/utilities/write-file";
+import type { Context, EngineHooks, Options } from "./types/build";
 import type { LogFn, PluginConfig } from "./types/config";
 import type { IPlugin } from "./types/plugin";
 
-export abstract class Plugin<
-  TOptions extends Options = Options,
-  TResolvedOptions extends
-    InferResolvedOptions<TOptions> = InferResolvedOptions<TOptions>
-> implements IPlugin<TOptions, TResolvedOptions>
+/**
+ * The base class for all plugins
+ */
+export abstract class Plugin<TOptions extends Options = Options>
+  implements IPlugin<TOptions>
 {
-  #compiler: Compiler;
-
   /**
    * The name of the plugin
    */
@@ -64,19 +57,12 @@ export abstract class Plugin<
    */
   public log: LogFn;
 
-  public async getCompiler(options: TResolvedOptions): Promise<Compiler> {
-    if (!this.#compiler) {
-      const tsconfig = await getParsedTypeScriptConfig(options);
-      this.#compiler = new Compiler(
-        options,
-        joinPaths(findFilePath(options.envPaths.cache), hash(tsconfig.options)),
-        tsconfig
-      );
-    }
-
-    return this.#compiler;
-  }
-
+  /**
+   * The constructor for the plugin
+   *
+   * @param name - The name of the plugin
+   * @param installPath - The path to install the plugin
+   */
   public constructor(name: string, installPath?: string) {
     this.name = name.toLowerCase();
     if (this.name.endsWith("plugin")) {
@@ -97,9 +83,7 @@ export abstract class Plugin<
   /**
    * Function to add hooks into the Storm Stack engine
    */
-  public abstract addHooks(
-    hooks: EngineHooks<TOptions, TResolvedOptions>
-  ): MaybePromise<void>;
+  public abstract addHooks(hooks: EngineHooks<TOptions>): MaybePromise<void>;
 
   /**
    * Writes a file to the file system
@@ -113,47 +97,48 @@ export abstract class Plugin<
     content: string,
     skipFormat = false
   ) {
-    if (skipFormat) {
-      return writeFile(filepath, content);
-    }
-
-    const config = (await resolveConfig(filepath)) ?? {};
-    await writeFile(
-      filepath,
-      await format(content, {
-        ...config,
-        filepath
-      })
-    );
+    return writeFile(filepath, content, skipFormat);
   }
 
+  /**
+   * Installs a package if it is not already installed.
+   *
+   * @param context - The resolved Storm Stack context
+   * @param packageName - The name of the package to install
+   * @param dev - Whether to install the package as a dev dependency
+   */
   protected async install(
-    options: TResolvedOptions,
+    context: Context<TOptions>,
     packageName: string,
     dev = false
   ) {
-    return installPackage<TOptions>(this.log, options, packageName, dev);
+    return installPackage<TOptions>(this.log, context, packageName, dev);
   }
 
-  protected async build(options: TResolvedOptions) {
+  /**
+   * Builds the Storm Stack project
+   *
+   * @param context - The resolved Storm Stack context
+   */
+  protected async build(context: Context<TOptions>) {
     this.log(LogLevelLabel.TRACE, "Building Storm Stack project");
 
     if (
-      options.projectType === "library" ||
-      options.projectType === "adapter"
+      context.projectType === "library" ||
+      context.projectType === "adapter"
     ) {
-      await this.buildLib(options);
+      await this.buildLib(context);
     } else {
-      await this.buildApp(options);
+      await this.buildApp(context);
     }
   }
 
   /**
    * Run the build process for application projects
    *
-   * @param _options - The resolved Storm Stack options
+   * @param _context - The resolved Storm Stack context
    */
-  protected async buildApp(_options: TResolvedOptions) {
+  protected async buildApp(_context: Context<TOptions>) {
     this.log(
       LogLevelLabel.WARN,
       "Skipping build for project - this plugin does not support application builds"
@@ -163,21 +148,19 @@ export abstract class Plugin<
   /**
    * Run the unbuild process for library builds
    *
-   * @param options - The unbuild options
+   * @param context - The unbuild context
    */
-  protected async buildLib(options: TResolvedOptions) {
-    const compiler = await this.getCompiler(options);
-
+  protected async buildLib(context: Context<TOptions>) {
     return unbuild(
-      defu(options.override, {
-        projectRoot: options.projectRoot,
-        outputPath: options.outputPath || "dist",
-        platform: options.platform,
+      defu(context.override, {
+        projectRoot: context.projectRoot,
+        outputPath: context.outputPath || "dist",
+        platform: context.platform,
         generatePackageJson: true,
-        minify: Boolean(options.minify),
-        sourcemap: options.mode === "production",
-        loaders: [getUnbuildLoader(compiler)],
-        env: options.resolvedDotenv.values as {
+        minify: Boolean(context.minify),
+        sourcemap: context.mode === "production",
+        loaders: [getUnbuildLoader<TOptions>(context)],
+        env: context.resolvedDotenv.values as {
           [key: string]: string;
         }
       }) as UnbuildOptions

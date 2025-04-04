@@ -16,14 +16,10 @@
  ------------------------------------------------------------------- */
 
 import type { MaybePromise } from "@stryke/types/base";
-import type { EngineHooks, InferResolvedOptions, Options } from "./build";
+import type { EngineHooks, Options } from "./build";
 import type { PluginConfig } from "./config";
 
-export interface IPlugin<
-  TOptions extends Options = Options,
-  TResolvedOptions extends
-    InferResolvedOptions<TOptions> = InferResolvedOptions<TOptions>
-> {
+export interface IPlugin<TOptions extends Options = Options> {
   /**
    * The name of the plugin
    */
@@ -37,9 +33,7 @@ export interface IPlugin<
   /**
    * Function to add hooks to the engine
    */
-  addHooks: (
-    hooks: EngineHooks<TOptions, TResolvedOptions>
-  ) => MaybePromise<void>;
+  addHooks: (hooks: EngineHooks<TOptions>) => MaybePromise<void>;
 
   /**
    * A list of plugin modules required as dependencies by the current plugin.

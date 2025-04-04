@@ -16,9 +16,8 @@
  ------------------------------------------------------------------- */
 
 import { getTsupConfig } from "@storm-stack/tools-config/tsup.shared";
-import type { Options } from "tsup";
 
-const config: Options = getTsupConfig({
+const config = getTsupConfig({
   name: "plugin-cloudflare-worker",
   entry: ["src/*.ts"],
   outDir: "dist",

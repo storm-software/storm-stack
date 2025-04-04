@@ -34,8 +34,8 @@ import type { TsConfigJson } from "@stryke/types/tsconfig";
 import { getFileHeader, getParsedTypeScriptConfig } from "storm-stack/helpers";
 import { Plugin } from "storm-stack/plugin";
 import type {
+  Context,
   EngineHooks,
-  InferResolvedOptions,
   Options,
   PluginConfig
 } from "storm-stack/types";
@@ -44,9 +44,7 @@ import { defineEnv } from "unenv";
 import { CLOUDFLARE_MODULES, DEFAULT_CONDITIONS } from "./helpers";
 
 export default class CloudflarePlugin<
-  TOptions extends Options = Options,
-  TResolvedOptions extends
-    InferResolvedOptions<TOptions> = InferResolvedOptions<TOptions>
+  TOptions extends Options = Options
 > extends Plugin<TOptions> {
   #unenv: Environment;
 
@@ -63,10 +61,10 @@ export default class CloudflarePlugin<
     this.#unenv = env;
   }
 
-  public addHooks(hooks: EngineHooks<TOptions, TResolvedOptions>) {
+  public addHooks(hooks: EngineHooks<TOptions>) {
     hooks.addHooks({
       "clean": this.clean.bind(this),
-      "init:options": this.initOptions.bind(this),
+      "init:context": this.initOptions.bind(this),
       "init:installs": this.initInstalls.bind(this),
       "init:tsconfig": this.initTsconfig.bind(this),
       "prepare:entry": this.prepareEntry.bind(this),
@@ -74,33 +72,33 @@ export default class CloudflarePlugin<
     });
   }
 
-  protected async clean(options: TResolvedOptions) {
+  protected async clean(context: Context<TOptions>) {
     this.log(
       LogLevelLabel.TRACE,
       `Clean Cloudflare specific artifacts the Storm Stack project.`
     );
 
-    if (options.projectType === "application") {
-      const wranglerFilePath = joinPaths(options.projectRoot, "wrangler.toml");
+    if (context.projectType === "application") {
+      const wranglerFilePath = joinPaths(context.projectRoot, "wrangler.toml");
       if (wranglerFilePath) {
         await removeFile(wranglerFilePath);
       }
     }
   }
 
-  protected async initOptions(options: TResolvedOptions) {
+  protected async initOptions(context: Context<TOptions>) {
     this.log(
       LogLevelLabel.TRACE,
-      `Resolving Storm Stack options for the project.`
+      `Resolving Storm Stack context for the project.`
     );
 
-    options.platform = "neutral";
-    options.override.format = "esm";
-    options.override.target = "chrome95";
+    context.platform = "neutral";
+    context.override.format = "esm";
+    context.override.target = "chrome95";
 
-    if (options.projectType === "application") {
-      options.override.alias = this.#unenv.alias;
-      options.override.inject = Object.values(this.#unenv.inject)
+    if (context.projectType === "application") {
+      context.override.alias = this.#unenv.alias;
+      context.override.inject = Object.values(this.#unenv.inject)
         .filter(Boolean)
         .reduce((ret: string[], inj: string | string[]) => {
           if (typeof inj === "string" && !ret.includes(inj)) {
@@ -111,15 +109,15 @@ export default class CloudflarePlugin<
 
           return ret;
         }, []);
-      options.override.external = [
+      context.override.external = [
         ...CLOUDFLARE_MODULES,
         ...this.#unenv.external
       ];
-      options.override.conditions = [...DEFAULT_CONDITIONS, "development"];
+      context.override.conditions = [...DEFAULT_CONDITIONS, "development"];
     }
   }
 
-  protected async initInstalls(options: TResolvedOptions) {
+  protected async initInstalls(context: Context<TOptions>) {
     this.log(
       LogLevelLabel.TRACE,
       `Running required installations for the project.`
@@ -127,22 +125,22 @@ export default class CloudflarePlugin<
 
     await Promise.all(
       [
-        this.install(options, "@cloudflare/workers-types", true),
-        options.projectType === "application" &&
-          this.install(options, "@cloudflare/unenv-preset"),
-        options.projectType === "application" && this.install(options, "unenv")
+        this.install(context, "@cloudflare/workers-types", true),
+        context.projectType === "application" &&
+          this.install(context, "@cloudflare/unenv-preset"),
+        context.projectType === "application" && this.install(context, "unenv")
       ].filter(Boolean)
     );
   }
 
-  protected async initTsconfig(options: TResolvedOptions) {
+  protected async initTsconfig(context: Context<TOptions>) {
     this.log(
       LogLevelLabel.TRACE,
-      `Resolving TypeScript configuration in "${options.tsconfig!}"`
+      `Resolving TypeScript configuration in "${context.tsconfig!}"`
     );
 
-    const tsconfig = await getParsedTypeScriptConfig(options);
-    const tsconfigJson = await readJsonFile<TsConfigJson>(options.tsconfig!);
+    const tsconfig = await getParsedTypeScriptConfig(context);
+    const tsconfigJson = await readJsonFile<TsConfigJson>(context.tsconfig!);
 
     tsconfigJson.compilerOptions ??= {};
     if (
@@ -154,12 +152,12 @@ export default class CloudflarePlugin<
       tsconfigJson.compilerOptions.types.push("@cloudflare/workers-types");
     }
 
-    return this.writeFile(options.tsconfig!, StormJSON.stringify(tsconfigJson));
+    return this.writeFile(context.tsconfig!, StormJSON.stringify(tsconfigJson));
   }
 
-  protected async prepareEntry(options: TResolvedOptions) {
+  protected async prepareEntry(context: Context<TOptions>) {
     await Promise.all(
-      options.resolvedEntry.map(async entry => {
+      context.resolvedEntry.map(async entry => {
         this.log(
           LogLevelLabel.TRACE,
           `Preparing the entry artifact ${entry.file} (${entry?.name ? `export: "${entry.name}"` : "default"})" from input "${entry.input.file} (${entry.input.name ? `export: "${entry.input.name}"` : "default"})"`
@@ -172,8 +170,8 @@ export default class CloudflarePlugin<
 ${this.#unenv.polyfill.map(p => `import "${p}";`).join("\n")}
 import ${entry.input.name ? `{ ${entry.input.name} as handle }` : "handle"} from "${joinPaths(
             relativePath(
-              joinPaths(options.projectRoot, findFilePath(entry.file)),
-              joinPaths(options.projectRoot, findFilePath(entry.input.file))
+              joinPaths(context.projectRoot, findFilePath(entry.file)),
+              joinPaths(context.projectRoot, findFilePath(entry.input.file))
             ),
             findFileName(entry.input.file).replace(
               findFileExtension(entry.input.file),
@@ -182,14 +180,14 @@ import ${entry.input.name ? `{ ${entry.input.name} as handle }` : "handle"} from
           )}";
 
 import { builder } from ".${joinPaths(
-            options.runtimeDir.replace(options.artifactsDir, ""),
+            context.runtimeDir.replace(context.artifactsDir, ""),
             "app"
           )}";
 import { getSink } from "@storm-stack/log-console";
 
 export default {
   fetch: builder({
-    name: ${options.name ? `"${options.name}"` : "undefined"},
+    name: ${context.name ? `"${context.name}"` : "undefined"},
     log: { handle: getSink(), logLevel: "debug" },
   })
     .handler(handle)
@@ -202,11 +200,11 @@ export default {
     );
   }
 
-  protected async prepareDeploy(options: TResolvedOptions) {
-    if (options.projectType === "application") {
+  protected async prepareDeploy(context: Context<TOptions>) {
+    if (context.projectType === "application") {
       this.log(LogLevelLabel.TRACE, "Preparing the wrangler deployment file");
 
-      const wranglerFilePath = joinPaths(options.projectRoot, "wrangler.toml");
+      const wranglerFilePath = joinPaths(context.projectRoot, "wrangler.toml");
       let wranglerFileContent = "";
 
       if (existsSync(wranglerFilePath)) {
@@ -214,9 +212,9 @@ export default {
       }
 
       if (!wranglerFileContent) {
-        wranglerFileContent = `name = "${options.name}"
+        wranglerFileContent = `name = "${context.name}"
 compatibility_date = "${new Date().toISOString().split("T")[0]}"
-main = "${(options.resolvedEntry && options.resolvedEntry.length > 0 && options.resolvedEntry[0] ? options.resolvedEntry[0].file : "src/index.ts").replace(options.projectRoot, "")}"
+main = "${(context.resolvedEntry && context.resolvedEntry.length > 0 && context.resolvedEntry[0] ? context.resolvedEntry[0].file : "src/index.ts").replace(context.projectRoot, "")}"
 
 account_id = "${process.env.CLOUDFLARE_ACCOUNT_ID}"
 compatibility_flags = [ "nodejs_als" ]
@@ -225,15 +223,15 @@ compatibility_flags = [ "nodejs_als" ]
 
       const wranglerFile = parseToml(wranglerFileContent);
 
-      wranglerFile.name ??= options.name!;
+      wranglerFile.name ??= context.name!;
       wranglerFile.compatibility_date ??= new Date()
         .toISOString()
         .split("T")[0]!;
       wranglerFile.main ??=
-        options.resolvedEntry &&
-        options.resolvedEntry.length > 0 &&
-        options.resolvedEntry[0]
-          ? options.resolvedEntry[0].file
+        context.resolvedEntry &&
+        context.resolvedEntry.length > 0 &&
+        context.resolvedEntry[0]
+          ? context.resolvedEntry[0].file
           : "src/index.ts";
       wranglerFile.account_id ??= process.env.CLOUDFLARE_ACCOUNT_ID!;
       wranglerFile.compatibility_flags ??= ["nodejs_als"];

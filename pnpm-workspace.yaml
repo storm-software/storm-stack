@@ -16,6 +16,12 @@ packages:
   - "examples/*"
 
 catalog:
+  "@ast-grep/napi": ^0.36.2
+  "@babel/core": ^7.26.10
+  "@babel/generator": ^7.27.0
+  "@babel/parser": ^7.27.0
+  "@babel/traverse": ^7.27.0
+  "@babel/types": ^7.27.0
   "@biomejs/biome": ^1.9.4
   "@cloudflare/unenv-preset": 2.0.2
   "@deepkit/injector": ^1.0.2
@@ -40,6 +46,7 @@ catalog:
   "@taplo/cli": ^0.7.0
   "@types/eslint": ^9.6.1
   "@types/eslint__js": ^8.42.3
+  "@types/invariant": ^2.2.37
   "@types/jest": 29.5.13
   "@types/react": "npm:types-react@rc"
   "@types/react-dom": "npm:types-react-dom@rc"
@@ -95,6 +102,7 @@ catalog:
   eslint-rule-documentation: ^1.0.23
   eslint-typegen: 2.0.0
   globals: ^15.12.0
+  invariant: ^2.2.4
   jsonc-eslint-parser: 2.4.0
   lefthook: ^1.7.18
   log4brains: ^1.0.1
@@ -129,6 +137,8 @@ catalog:
   defu: "^6.1.4"
   jiti: "^2.4.2"
   eslint-flat-config-utils: 2.0.1
+  zod: ^3.24.2
+  zod-validation-error: ^3.4.0
   zx: ^8.3.2
 overrides:
   "@storm-stack/biome": workspace:*
@@ -144,21 +154,21 @@ overrides:
   "@storm-stack/tools-nx": workspace:*
   "@storm-stack/tools-readme-templates": workspace:*
   "@storm-stack/tools-scripts": workspace:*
-  debug: ">=4.3.7"
-  eslint-config-storm-stack: workspace:*
-  eslint-plugin-storm-stack: workspace:*
-  follow-redirects: ">=1.15.9"
-  got: ">=14.4.2"
-  ip: ">=2.0.1"
-  loader-utils: ">=3.3.1"
-  markdown-it: ">=14.1.0"
-  node-fetch: ">=3.3.2"
-  nth-check: ">=2.1.1"
-  parse-path: ">=7.0.0"
-  parse-url: ">=9.2.0"
-  postcss: ">=8.4.47"
-  shell-quote: ">=1.8.1"
-  simple-git: ">=3.27.0"
-  storm-stack: workspace:*
+  "debug": ">=4.3.7"
+  "eslint-config-storm-stack": workspace:*
+  "eslint-plugin-storm-stack": workspace:*
+  "follow-redirects": ">=1.15.9"
+  "got": ">=14.4.2"
+  "ip": ">=2.0.1"
+  "loader-utils": ">=3.3.1"
+  "markdown-it": ">=14.1.0"
+  "node-fetch": ">=3.3.2"
+  "nth-check": ">=2.1.1"
+  "parse-path": ">=7.0.0"
+  "parse-url": ">=9.2.0"
+  "postcss": ">=8.4.47"
+  "shell-quote": ">=1.8.1"
+  "simple-git": ">=3.27.0"
+  "storm-stack": workspace:*
 patchedDependencies:
   nx@20.5.0: patches/nx@20.5.0.patch

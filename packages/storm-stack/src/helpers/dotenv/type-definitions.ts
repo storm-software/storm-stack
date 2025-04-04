@@ -31,6 +31,7 @@ import type {
 } from "ts-morph";
 import { SyntaxKind } from "ts-morph";
 import type {
+  Context,
   Options,
   ResolvedDotenvTypeDefinition,
   ResolvedDotenvTypeDefinitionProperty,
@@ -44,6 +45,24 @@ const DEFAULT_VARIABLES = {
     defaultValue: "{}",
     description:
       "The serialized environment variables injected into the application.",
+    isOptional: false
+  },
+  BUILD_ID: {
+    text: "string",
+    description:
+      "The build ID of the application. This value is injected by the Storm Stack build process.",
+    isOptional: false
+  },
+  BUILD_TIMESTAMP: {
+    text: "number",
+    description:
+      "The build timestamp of the application. This value is injected by the Storm Stack build process.",
+    isOptional: false
+  },
+  RELEASE_ID: {
+    text: "string",
+    description:
+      "The release ID of the application. This value is injected by the Storm Stack build process.",
     isOptional: false
   },
   APP_NAME: {
@@ -116,6 +135,19 @@ const DEFAULT_VARIABLES = {
     text: "boolean",
     defaultValue: true,
     description: "Indicates if the application is running in production mode.",
+    isOptional: false
+  },
+  DEBUG: {
+    text: "boolean",
+    defaultValue: false,
+    description: "Indicates if the application is running in debug mode.",
+    isOptional: false
+  },
+  NODE_ENV: {
+    text: '"development" | "staging" | "production"',
+    defaultValue: "production",
+    description:
+      "The environment the application is running in. This variable is a duplicate of `ENVIRONMENT` to support use in external packages.",
     isOptional: false
   },
   LOG_LEVEL: {
@@ -290,24 +322,23 @@ const getResolvedDotenvTypeDefinitionProperties = (
   return getDeclarationProperties(decl);
 };
 
-export const getDotenvTypeDefinitions = (
+export const getDotenvTypeDefinitions = <TOptions extends Options = Options>(
   log: LogFn,
-  options: Options,
-  project: Project
+  context: Context<TOptions>
 ): ResolvedDotenvTypeDefinitions => {
   const result = {} as ResolvedDotenvTypeDefinitions;
 
-  if (!options.dotenv?.types) {
+  if (!context.dotenv?.types) {
     log(
       LogLevelLabel.WARN,
       "No environment variable type definitions were provided in the `dotenv.types` configuration."
     );
   } else {
-    const params = isObject(options.dotenv.types)
-      ? options.dotenv.types
+    const params = isObject(context.dotenv.types)
+      ? context.dotenv.types
       : {
-          variables: `${options.dotenv.types}#Variables`,
-          secrets: `${options.dotenv.types}#Secrets`
+          variables: `${context.dotenv.types}#Variables`,
+          secrets: `${context.dotenv.types}#Secrets`
         };
 
     if (params.variables) {
@@ -320,11 +351,11 @@ export const getDotenvTypeDefinitions = (
         );
       }
 
-      if (existsSync(joinPaths(options.projectRoot, result.variables.file))) {
+      if (existsSync(joinPaths(context.projectRoot, result.variables.file))) {
         result.variables.properties = getResolvedDotenvTypeDefinitionProperties(
           log,
-          options,
-          project,
+          context,
+          context.project,
           result.variables.file,
           result.variables.name || "Variables"
         );
@@ -351,11 +382,11 @@ export const getDotenvTypeDefinitions = (
         );
       }
 
-      if (existsSync(joinPaths(options.projectRoot, result.secrets.file))) {
+      if (existsSync(joinPaths(context.projectRoot, result.secrets.file))) {
         result.secrets.properties = getResolvedDotenvTypeDefinitionProperties(
           log,
-          options,
-          project,
+          context,
+          context.project,
           result.secrets.file,
           result.secrets.name || "Secrets"
         );

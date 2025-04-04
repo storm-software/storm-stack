@@ -19,7 +19,6 @@ import { getTsupConfig } from "@storm-stack/tools-config/tsup.shared";
 import type * as esbuild from "esbuild";
 import { existsSync } from "node:fs";
 import fs from "node:fs/promises";
-import type { Options } from "tsup";
 
 const plugin: esbuild.Plugin = {
   name: "storm:rules-dts",
@@ -53,7 +52,7 @@ const plugin: esbuild.Plugin = {
   }
 };
 
-const config: Options = getTsupConfig({
+const config = getTsupConfig({
   name: "eslint-config",
   entry: ["src/*.ts"],
   format: ["cjs", "esm"],

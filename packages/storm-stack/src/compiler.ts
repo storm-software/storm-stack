@@ -17,23 +17,31 @@
 
 import { declarationTransformer, transformer } from "@deepkit/type-compiler";
 import { LogLevelLabel } from "@storm-software/config-tools/types";
+import { hash } from "@stryke/hash/hash";
+import { noop } from "@stryke/helpers/noop";
+import { findFilePath } from "@stryke/path/file-path-fns";
+import { joinPaths } from "@stryke/path/join-paths";
 import type { MaybePromise } from "@stryke/types/base";
-import MagicString from "magic-string";
-import { Project, ts } from "ts-morph";
-import { getCache, setCache } from "./helpers/transform";
+import type MagicString from "magic-string";
+import { ts } from "ts-morph";
+import { getCache, setCache } from "./helpers/cache";
+import { injectEnv } from "./helpers/dotenv/inject-env";
 import { createLog } from "./helpers/utilities/logger";
 import { getMagicString } from "./helpers/utilities/magic-string";
 import { generateSourceMap } from "./helpers/utilities/source-map";
 import type { LogFn } from "./types";
-import type { CompilerResult, Options, SourceFile } from "./types/build";
+import type {
+  CompilerResult,
+  Context,
+  ICompiler,
+  Options,
+  SourceFile
+} from "./types/build";
 
-export class Compiler {
+export class Compiler<TOptions extends Options = Options>
+  implements ICompiler<TOptions>
+{
   #cache: WeakMap<SourceFile, string> = new WeakMap();
-
-  /**
-   * The `ts-morph` project instance
-   */
-  public project: Project;
 
   /**
    * The logger function to use
@@ -41,77 +49,52 @@ export class Compiler {
   protected log: LogFn;
 
   /**
-   * The options provided to Storm Stack
-   */
-  protected options: Options;
-
-  /**
-   * The directory to store cache for the files in the project
+   * The cache directory
    */
   protected cacheDir: string;
-
-  /**
-   * The root directory of the project
-   */
-  protected projectRoot: string;
-
-  /**
-   * The parsed TypeScript configuration
-   */
-  protected tsconfig: ts.ParsedCommandLine;
 
   /**
    * A callback function to be called before the source file is compiled
    */
   protected onTransformCallback: (
-    sourceFile: SourceFile,
-    project: Project
-  ) => MaybePromise<SourceFile> = sourceFile => sourceFile;
+    context: Context<TOptions>,
+    sourceFile: SourceFile
+  ) => MaybePromise<void>;
 
   constructor(
-    options: Options,
-    cacheDir: string,
-    tsconfig: ts.ParsedCommandLine,
-    onTransformCallback?: (sourceFile: SourceFile) => MaybePromise<SourceFile>
+    context: Context<TOptions>,
+    onTransformCallback: (
+      context: Context<TOptions>,
+      sourceFile: SourceFile
+    ) => MaybePromise<void> = noop
   ) {
-    this.options = options;
-    this.log = createLog("compiler", this.options);
+    this.log = createLog("compiler", context);
+    this.onTransformCallback = onTransformCallback;
 
-    this.cacheDir = cacheDir;
-    this.projectRoot = this.options.projectRoot;
-    this.tsconfig = tsconfig;
-
-    if (onTransformCallback) {
-      this.onTransformCallback = onTransformCallback;
-    }
-
-    this.project = new Project({
-      compilerOptions: this.tsconfig.options,
-      tsConfigFilePath: this.options.tsconfig
-    });
+    this.cacheDir = joinPaths(
+      findFilePath(this.cacheDir),
+      hash(context.resolvedTsconfig.options)
+    );
   }
 
   /**
    * Compile the source code.
    *
-   * @param options - The compiler options.
+   * @param context - The compiler context.
    * @param id - The name of the file to compile.
    * @param code - The source code to compile.
    * @returns The compiled source code and source map.
    */
   public async compile(
+    context: Context<TOptions>,
     id: string,
     code: string | MagicString
   ): Promise<string> {
     this.log(LogLevelLabel.TRACE, `Compiling ${id}`);
 
-    const source = await Promise.resolve(
-      this.onTransformCallback(this.getSourceFile(id, code), this.project)
-    );
+    const source = this.getSourceFile(id, code);
 
-    let transpiled: string | undefined;
-
-    transpiled = await this.getCache(source);
+    let transpiled: string | undefined = await this.getCache(context, source);
     if (transpiled) {
       this.log(LogLevelLabel.TRACE, `Cache hit: ${source.id}`);
     } else {
@@ -119,9 +102,8 @@ export class Compiler {
     }
 
     if (!transpiled) {
-      transpiled = await this.transpileModule(source);
-
-      await this.setCache(source, transpiled);
+      transpiled = await this.transpileModule(context, source);
+      await this.setCache(context, source, transpiled);
     }
 
     return transpiled;
@@ -138,7 +120,7 @@ export class Compiler {
     return {
       id,
       code: getMagicString(code),
-      env: {}
+      env: []
     };
   }
 
@@ -156,13 +138,13 @@ export class Compiler {
     return generateSourceMap(sourceFile.id, sourceFile.code, transpiled);
   }
 
-  protected async getCache(sourceFile: SourceFile) {
+  protected async getCache(context: Context<TOptions>, sourceFile: SourceFile) {
     let cache = this.#cache.get(sourceFile);
     if (cache) {
       return cache;
     }
 
-    if (this.options.skipCache) {
+    if (context.skipCache) {
       return;
     }
 
@@ -174,14 +156,18 @@ export class Compiler {
     return cache;
   }
 
-  protected async setCache(sourceFile: SourceFile, transpiled?: string) {
+  protected async setCache(
+    context: Context<TOptions>,
+    sourceFile: SourceFile,
+    transpiled?: string
+  ) {
     if (transpiled) {
       this.#cache.set(sourceFile, transpiled);
     } else {
       this.#cache.delete(sourceFile);
     }
 
-    if (this.options.skipCache) {
+    if (context.skipCache) {
       return;
     }
 
@@ -191,38 +177,61 @@ export class Compiler {
   /**
    * Transpile the module.
    *
+   * @param context - The compiler context.
    * @param source - The compiler source file.
    * @returns The transpiled module.
    */
-  protected async transpileModule(source: SourceFile): Promise<string> {
-    const current = {
-      ...source,
-      code: new MagicString(source.code.toString())
-    } as SourceFile;
+  protected async transpileModule(
+    context: Context<TOptions>,
+    source: SourceFile
+  ): Promise<string> {
+    this.log(
+      LogLevelLabel.TRACE,
+      `Transpiling ${source.id} module with TypeScript compiler`
+    );
 
-    const transpiled = ts.transpileModule(current.code.toString(), {
+    let transformed = await injectEnv<TOptions>(source, context);
+    if (transformed.env.length > 0) {
+      context.vars = transformed.env.reduce((ret, env) => {
+        const property =
+          context.resolvedDotenv.types?.variables?.properties?.[env];
+        if (property) {
+          ret[env] = property;
+        }
+
+        return ret;
+      }, context.vars);
+    }
+
+    await Promise.resolve(this.onTransformCallback(context, transformed));
+
+    if (
+      context.unimport &&
+      !transformed.id.replaceAll("\\", "/").includes(context.runtimeDir)
+    ) {
+      transformed = await context.unimport.injectImports(transformed);
+    }
+
+    const transpiled = ts.transpileModule(transformed.code.toString(), {
       compilerOptions: {
-        ...this.project.getCompilerOptions(),
-        configFilePath: this.options.tsconfig
+        ...context.project.getCompilerOptions(),
+        configFilePath: context.tsconfig
       },
-      fileName: current.id,
+      fileName: transformed.id,
       transformers: {
         before: [transformer],
         after: [declarationTransformer]
       }
     });
 
-    const transformed = current.code
-      .overwrite(0, current.code.length(), transpiled.outputText)
-      .toString();
-    if (transformed === null) {
-      this.log(LogLevelLabel.ERROR, `Transform is null: ${current.id}`);
+    if (transpiled === null) {
+      this.log(LogLevelLabel.ERROR, `Transform is null: ${transformed.id}`);
 
-      throw new Error(`Transform is null: ${current.id}`);
+      throw new Error(`Transform is null: ${transformed.id}`);
     } else {
-      this.log(LogLevelLabel.TRACE, `Transformed: ${current.id}`);
+      this.log(LogLevelLabel.TRACE, `Transformed: ${transformed.id}`);
     }
 
-    return transformed;
+    return transpiled.outputText;
   }
 }

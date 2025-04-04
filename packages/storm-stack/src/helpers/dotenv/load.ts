@@ -15,7 +15,7 @@
 
  ------------------------------------------------------------------- */
 
-import type { StormConfig } from "@storm-software/config/types";
+import type { StormWorkspaceConfig } from "@storm-software/config/types";
 import {
   loadEnv as loadEnvBase,
   loadEnvFile as loadEnvFileBase
@@ -55,7 +55,7 @@ const loadEnvDirectory = async <TEnv extends DotenvParseOutput>(
   dotenv: ResolvedDotenvOptions,
   cacheDir: string,
   packageJson: PackageJson,
-  workspaceConfig: StormConfig
+  workspaceConfig: StormWorkspaceConfig
 ): Promise<TEnv> => {
   const [envResult, c12Result] = await Promise.all([
     loadEnvFiles<TEnv>(options, directory, dotenv),
@@ -88,7 +88,7 @@ export const loadEnv = async <TEnv extends DotenvParseOutput>(
   cacheDir: string,
   configDir: string,
   packageJson: PackageJson,
-  workspaceConfig: StormConfig
+  workspaceConfig: StormWorkspaceConfig
 ): Promise<TEnv> => {
   const [project, workspace, config] = await Promise.all([
     loadEnvDirectory(

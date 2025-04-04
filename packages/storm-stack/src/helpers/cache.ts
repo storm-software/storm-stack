@@ -33,7 +33,6 @@ import { getString } from "./utilities/magic-string";
  *
  * @param id - The name of the file to compile.
  * @param code - The source code to compile.
- * @param tsCompilerOptions - The raw TypeScript configuration.
  * @returns The source key.
  */
 function getCacheHashKey(id: string, code: string | MagicString): string {

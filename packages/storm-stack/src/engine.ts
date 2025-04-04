@@ -18,7 +18,7 @@
 import type { Diff, ObjectData } from "@donedeal0/superdiff";
 import { getObjectDiff } from "@donedeal0/superdiff";
 import { LogLevelLabel } from "@storm-software/config-tools/types";
-import type { StormConfig } from "@storm-software/config/types";
+import type { StormWorkspaceConfig } from "@storm-software/config/types";
 import { parseTypeDefinition } from "@stryke/convert/parse-type-definition";
 import { getEnvPaths } from "@stryke/env/get-env-paths";
 import { createDirectory, removeDirectory } from "@stryke/fs/helpers";
@@ -46,7 +46,7 @@ import { createHooks } from "hookable";
 import type { Jiti } from "jiti";
 import { createJiti } from "jiti";
 import { format, resolveConfig } from "prettier";
-import type { Project, ts } from "ts-morph";
+import { Project } from "ts-morph";
 import { Compiler } from "./compiler";
 import { installPackage } from "./helpers";
 import { generateDotenvMarkdown } from "./helpers/dotenv/docgen";
@@ -68,16 +68,15 @@ import { writeLog } from "./runtime/log";
 import { writeRequest } from "./runtime/request";
 import { writeResponse } from "./runtime/response";
 import type {
+  Context,
   EngineHookFunctions,
   EngineHooks,
-  InferResolvedOptions,
   LogFn,
   Options,
   PluginConfig,
   ProjectConfig,
   ResolvedDotenvOptions,
-  SourceFile,
-  UnimportContext
+  SourceFile
 } from "./types";
 
 /**
@@ -88,40 +87,18 @@ import type {
  *
  * @public
  */
-export class Engine<
-  TOptions extends Options = Options,
-  TResolvedOptions extends
-    InferResolvedOptions<TOptions> = InferResolvedOptions<TOptions>
-> {
+export class Engine<TOptions extends Options = Options> {
   #initialized = false;
-
-  /**
-   * The compiler used to transform the source files
-   */
-  #compiler!: Compiler;
-
-  /**
-   * The compiler used to transform the source files
-   */
-  public get compiler(): Compiler {
-    if (!this.#initialized) {
-      throw new Error(
-        "Cannot access the compiler before the driver is initialized"
-      );
-    }
-
-    return this.#compiler;
-  }
 
   /**
    * The engine hooks - these allow the plugins to hook into the engines processing
    */
-  #hooks!: EngineHooks<TOptions, TResolvedOptions>;
+  #hooks!: EngineHooks<TOptions>;
 
   /**
    * The plugins provided in the options
    */
-  #plugins: Plugin<TOptions, TResolvedOptions>[] = [];
+  #plugins: Plugin<TOptions>[] = [];
 
   /**
    * The options provided to Storm Stack
@@ -131,7 +108,7 @@ export class Engine<
   /**
    * The resolved options provided to Storm Stack
    */
-  protected resolvedOptions: TResolvedOptions;
+  protected context: Context<TOptions>;
 
   /**
    * The entry point for the project
@@ -154,51 +131,36 @@ export class Engine<
   protected config!: ProjectConfig;
 
   /**
-   * The project's package.json file content
-   */
-  protected packageJson!: PackageJson;
-
-  /**
    * The project's project.json file content
    */
   protected projectJson!: Record<string, any>;
-
-  /**
-   * The resolved `unimport` context to be used by the compiler
-   */
-  protected unimport!: UnimportContext;
-
-  /**
-   * The resolved tsconfig options
-   */
-  protected tsconfig!: ts.ParsedCommandLine;
 
   /**
    * The default environment variables to apply
    */
   protected defaultEnv: Record<string, any> = {};
 
-  public constructor(options: TOptions, workspaceConfig: StormConfig) {
+  public constructor(options: TOptions, workspaceConfig: StormWorkspaceConfig) {
     this.options = options;
     this.log = createLog("engine", this.options);
 
-    this.resolvedOptions = this.options as TResolvedOptions;
-    this.resolvedOptions.override ??= {};
-    this.resolvedOptions.workspaceConfig = workspaceConfig;
-    this.resolvedOptions.envPaths = getEnvPaths({
+    this.context = this.options as Context<TOptions>;
+    this.context.override ??= {};
+    this.context.workspaceConfig = workspaceConfig;
+    this.context.envPaths = getEnvPaths({
       orgId: "storm-software",
       appId: "storm-stack",
-      workspaceRoot: this.resolvedOptions.workspaceConfig?.workspaceRoot
+      workspaceRoot: this.context.workspaceConfig?.workspaceRoot
     });
-    if (!this.resolvedOptions.envPaths.cache) {
+    if (!this.context.envPaths.cache) {
       throw new Error("The cache directory could not be determined.");
     }
 
-    this.resolvedOptions.envPaths.cache = joinPaths(
-      this.resolvedOptions.envPaths.cache,
+    this.context.envPaths.cache = joinPaths(
+      this.context.envPaths.cache,
       hash(this.options.projectRoot)
     );
-    this.resolvedOptions.presets = [
+    this.context.presets = [
       {
         imports: ["StormJSON"],
         from: "@stryke/json/storm-json"
@@ -229,90 +191,79 @@ export class Engine<
       }
     ];
 
-    this.resolver = createJiti(
-      this.resolvedOptions.workspaceConfig.workspaceRoot,
-      {
-        interopDefault: true,
-        fsCache: joinPaths(this.resolvedOptions.envPaths.temp, "jiti"),
-        moduleCache: true
-      }
-    );
+    this.resolver = createJiti(this.context.workspaceConfig.workspaceRoot, {
+      interopDefault: true,
+      fsCache: joinPaths(this.context.envPaths.temp, "jiti"),
+      moduleCache: true
+    });
   }
 
   /**
    * Initialize the engine
    */
-  public async init() {
+  public async init(): Promise<Context<TOptions>> {
     this.log(LogLevelLabel.TRACE, "Initializing Storm Stack engine");
 
-    this.#hooks =
-      createHooks<EngineHookFunctions<TOptions, TResolvedOptions>>();
+    this.#hooks = createHooks<EngineHookFunctions<TOptions>>();
 
-    this.resolvedOptions = defu(
-      this.resolvedOptions,
+    this.context = defu(
+      this.context,
       (await this.loadConfig()) ?? {}
-    ) as TResolvedOptions;
+    ) as Context<TOptions>;
 
-    const checksum = await hashDirectory(this.resolvedOptions.projectRoot, {
+    this.context.vars = {};
+
+    const checksum = await hashDirectory(this.context.projectRoot, {
       ignored: ["node_modules", ".git", ".nx", ".cache", ".storm", "tmp"]
     });
-    this.resolvedOptions.meta ??= {
+    this.context.meta ??= {
       buildId: nanoid(24),
       releaseId: nanoid(24),
       checksum,
       timestamp: Date.now()
     };
 
-    this.resolvedOptions.tsconfig ??= getTsconfigFilePath(this.resolvedOptions);
+    this.context.tsconfig ??= getTsconfigFilePath(this.context);
 
-    this.resolvedOptions.artifactsDir ??= ".storm";
-    this.resolvedOptions.runtimeDir = joinPaths(
-      this.resolvedOptions.artifactsDir,
-      "runtime"
-    );
-    this.resolvedOptions.typesDir = joinPaths(
-      this.resolvedOptions.artifactsDir,
-      "types"
-    );
+    this.context.artifactsDir ??= ".storm";
+    this.context.runtimeDir = joinPaths(this.context.artifactsDir, "runtime");
+    this.context.typesDir = joinPaths(this.context.artifactsDir, "types");
 
     if (
       existsSync(
         joinPaths(
-          this.resolvedOptions.projectRoot,
-          this.resolvedOptions.artifactsDir,
+          this.context.projectRoot,
+          this.context.artifactsDir,
           "meta.json"
         )
       )
     ) {
-      this.resolvedOptions.persistedMeta = await readJsonFile(
+      this.context.persistedMeta = await readJsonFile(
         joinPaths(
-          this.resolvedOptions.projectRoot,
-          this.resolvedOptions.artifactsDir,
+          this.context.projectRoot,
+          this.context.artifactsDir,
           "meta.json"
         )
       );
     }
 
-    this.resolvedOptions.dts =
-      this.options.dts || joinPaths(this.resolvedOptions.typesDir, "env.d.ts");
-    if (isSetString(this.resolvedOptions.dts)) {
-      this.resolvedOptions.dts = this.resolvedOptions.dts
-        .replace(this.resolvedOptions.projectRoot, "")
+    this.context.dts =
+      this.options.dts || joinPaths(this.context.typesDir, "env.d.ts");
+    if (isSetString(this.context.dts)) {
+      this.context.dts = this.context.dts
+        .replace(this.context.projectRoot, "")
         .trim();
     }
 
-    this.resolvedOptions.outputPath ??= joinPaths(
-      "dist",
-      this.resolvedOptions.projectRoot
-    );
+    this.context.outputPath ??= joinPaths("dist", this.context.projectRoot);
 
-    if (!this.resolvedOptions.plugins) {
+    if (!this.context.plugins) {
       this.log(
         LogLevelLabel.WARN,
         "No Storm Stack plugins were specified in the options. Please ensure this is correct, as it is generally not recommended."
       );
     } else {
-      for (const plugin of this.resolvedOptions.plugins) {
+      for (const plugin of this.context.plugins) {
         await this.addPlugin(plugin);
       }
 
@@ -326,37 +277,33 @@ export class Engine<
       "Checking the Storm Stack project configuration"
     );
 
-    const projectJsonPath = joinPaths(
-      this.resolvedOptions.projectRoot,
-      "project.json"
-    );
+    const projectJsonPath = joinPaths(this.context.projectRoot, "project.json");
     if (existsSync(projectJsonPath)) {
       this.projectJson = await readJsonFile(projectJsonPath);
-      this.resolvedOptions.name ??= this.projectJson?.name;
-      this.resolvedOptions.projectType ??= this.projectJson?.projectType;
+      this.context.name ??= this.projectJson?.name;
+      this.context.projectType ??= this.projectJson?.projectType;
     }
 
-    if (
-      this.resolvedOptions.projectType === "application" &&
-      this.resolvedOptions.entry
-    ) {
-      if (isSetString(this.resolvedOptions.entry)) {
-        this.resolvedOptions.resolvedEntry = [
+    if (this.context.projectType === "application" && this.context.entry) {
+      this.context.errorsFile ??= joinPaths(
+        this.context.workspaceConfig.workspaceRoot,
+        "errors.json"
+      );
+
+      if (isSetString(this.context.entry)) {
+        this.context.resolvedEntry = [
           {
-            ...this.resolveEntry(
-              this.resolvedOptions,
-              this.resolvedOptions.entry
-            ),
-            input: parseTypeDefinition(this.resolvedOptions.entry)!
+            ...this.resolveEntry(this.context, this.context.entry),
+            input: parseTypeDefinition(this.context.entry)!
           }
         ];
       } else if (
-        Array.isArray(this.resolvedOptions.entry) &&
-        this.resolvedOptions.entry.filter(Boolean).length > 0
+        Array.isArray(this.context.entry) &&
+        this.context.entry.filter(Boolean).length > 0
       ) {
-        this.resolvedOptions.resolvedEntry = this.resolvedOptions.entry
+        this.context.resolvedEntry = this.context.entry
           .map(entry => ({
-            ...this.resolveEntry(this.resolvedOptions, entry),
+            ...this.resolveEntry(this.context, entry),
             input: parseTypeDefinition(entry)!
           }))
           .filter(Boolean);
@@ -364,7 +311,7 @@ export class Engine<
     }
 
     await this.#hooks
-      .callHook("init:options", this.resolvedOptions)
+      .callHook("init:context", this.context)
       .catch((error: Error) => {
         this.log(
           LogLevelLabel.ERROR,
@@ -390,29 +337,20 @@ export class Engine<
 
     await Promise.all(
       [
-        installPackage<TOptions>(
-          this.log,
-          this.resolvedOptions,
-          "@stryke/types",
-          true
-        ),
-        this.resolvedOptions.projectType === "application" &&
+        installPackage<TOptions>(this.log, this.context, "@stryke/types", true),
+        this.context.projectType === "application" &&
           installPackage<TOptions>(
             this.log,
-            this.resolvedOptions,
+            this.context,
             "@stryke/type-checks"
           ),
-        this.resolvedOptions.projectType === "application" &&
-          installPackage<TOptions>(
-            this.log,
-            this.resolvedOptions,
-            "@stryke/json"
-          )
+        this.context.projectType === "application" &&
+          installPackage<TOptions>(this.log, this.context, "@stryke/json")
       ].filter(Boolean)
     );
 
     await this.#hooks
-      .callHook("init:installs", this.resolvedOptions)
+      .callHook("init:installs", this.context)
       .catch((error: Error) => {
         this.log(
           LogLevelLabel.ERROR,
@@ -427,44 +365,42 @@ export class Engine<
 
     this.log(
       LogLevelLabel.TRACE,
-      `Checking the TypeScript configuration file (tsconfig.json): ${this.resolvedOptions.tsconfig}`
+      `Checking the TypeScript configuration file (tsconfig.json): ${this.context.tsconfig}`
     );
 
     const originalTsconfigJson = await readJsonFile<NonNullable<ObjectData>>(
-      this.resolvedOptions.tsconfig
+      this.context.tsconfig
     );
 
-    const json = await getTsconfigChanges(this.resolvedOptions);
+    const json = await getTsconfigChanges(this.context);
     if (
       !json.include?.some(filterPattern =>
         (filterPattern as string[]).includes(
-          joinPaths(this.resolvedOptions.artifactsDir, "**/*.ts")
+          joinPaths(this.context.artifactsDir, "**/*.ts")
         )
       )
     ) {
       json.include ??= [];
-      json.include.push(
-        joinPaths(this.resolvedOptions.artifactsDir, "**/*.ts")
-      );
+      json.include.push(joinPaths(this.context.artifactsDir, "**/*.ts"));
     }
 
     const config =
       (await resolveConfig(
         joinPaths(
-          this.resolvedOptions.workspaceConfig.workspaceRoot,
-          this.resolvedOptions.tsconfig
+          this.context.workspaceConfig.workspaceRoot,
+          this.context.tsconfig
         )
       )) ?? {};
     await this.writeFile(
-      this.resolvedOptions.tsconfig,
+      this.context.tsconfig,
       await format(StormJSON.stringify(json), {
         ...config,
-        filepath: this.resolvedOptions.tsconfig
+        filepath: this.context.tsconfig
       })
     );
 
     await this.#hooks
-      .callHook("init:tsconfig", this.resolvedOptions)
+      .callHook("init:tsconfig", this.context)
       .catch((error: Error) => {
         this.log(
           LogLevelLabel.ERROR,
@@ -479,9 +415,7 @@ export class Engine<
 
     const result = getObjectDiff(
       originalTsconfigJson,
-      await readJsonFile<NonNullable<ObjectData>>(
-        this.resolvedOptions.tsconfig
-      ),
+      await readJsonFile<NonNullable<ObjectData>>(this.context.tsconfig),
       {
         ignoreArrayOrder: true,
         showOnly: {
@@ -555,48 +489,64 @@ export class Engine<
       );
     }
 
-    this.tsconfig = await getParsedTypeScriptConfig(this.resolvedOptions);
-    if (!this.tsconfig) {
+    this.context.resolvedTsconfig = await getParsedTypeScriptConfig(
+      this.context
+    );
+    if (!this.context.resolvedTsconfig) {
       throw new Error("Failed to parse the TypeScript configuration file.");
     }
 
-    const packageJsonPath = joinPaths(
-      this.resolvedOptions.projectRoot,
-      "package.json"
-    );
+    const packageJsonPath = joinPaths(this.context.projectRoot, "package.json");
     if (!existsSync(packageJsonPath)) {
       throw new Error(
-        `Cannot find a \`package.json\` configuration file in ${this.resolvedOptions.projectRoot}.`
+        `Cannot find a \`package.json\` configuration file in ${this.context.projectRoot}.`
       );
     }
-    this.packageJson = await readJsonFile<PackageJson>(packageJsonPath);
+    this.context.packageJson = await readJsonFile<PackageJson>(packageJsonPath);
 
-    this.unimport = createUnimport<TOptions, TResolvedOptions>(
-      this.log,
-      this.resolvedOptions
+    this.context.unimport = createUnimport<TOptions>(this.log, this.context);
+    await this.context.unimport.init();
+
+    this.context.project = new Project({
+      compilerOptions: this.context.resolvedTsconfig.options,
+      tsConfigFilePath: this.context.tsconfig
+    });
+
+    const handleTransform = async (
+      context: Context<TOptions>,
+      sourceFile: SourceFile
+    ) => {
+      await this.#hooks
+        .callHook("build:transform", context, sourceFile)
+        .catch((error: Error) => {
+          this.log(
+            LogLevelLabel.ERROR,
+            `An error occured while building the Storm Stack project: ${error.message} \n${error.stack ?? ""}`
+          );
+
+          throw new Error(
+            "An error occured while building the Storm Stack project",
+            { cause: error }
+          );
+        });
+    };
+
+    this.context.compiler = new Compiler<TOptions>(
+      this.context,
+      handleTransform
     );
-    await this.unimport.init();
 
-    this.#compiler = new Compiler(
-      this.resolvedOptions,
-      joinPaths(
-        findFilePath(this.resolvedOptions.envPaths.cache),
-        hash(this.tsconfig.options)
-      ),
-      this.tsconfig,
-      this.transformSourceFile.bind(this)
-    );
-
-    this.resolvedOptions.resolvedDotenv = await this.resolveDotenvOptions();
-    if (isSetString(this.resolvedOptions.resolvedDotenv.docgen)) {
-      this.resolvedOptions.resolvedDotenv.docgen =
-        this.resolvedOptions.resolvedDotenv.docgen
-          .replace(this.resolvedOptions.projectRoot, "")
-          .trim();
+    this.context.resolvedDotenv = await this.resolveDotenvOptions();
+    if (isSetString(this.context.resolvedDotenv.docgen)) {
+      this.context.resolvedDotenv.docgen = this.context.resolvedDotenv.docgen
+        .replace(this.context.projectRoot, "")
+        .trim();
     }
 
     this.log(LogLevelLabel.TRACE, "Storm Stack engine has been initialized");
     this.#initialized = true;
+
+    return this.context;
   }
 
   /**
@@ -611,35 +561,30 @@ export class Engine<
 
     await Promise.all([
       removeDirectory(
-        joinPaths(
-          this.resolvedOptions.projectRoot,
-          this.resolvedOptions.artifactsDir
-        )
+        joinPaths(this.context.projectRoot, this.context.artifactsDir)
       ),
       removeDirectory(
         joinPaths(
-          this.resolvedOptions.workspaceConfig.workspaceRoot,
-          this.resolvedOptions.outputPath?.replace(
-            this.resolvedOptions.workspaceConfig.workspaceRoot,
+          this.context.workspaceConfig.workspaceRoot,
+          this.context.outputPath?.replace(
+            this.context.workspaceConfig.workspaceRoot,
             ""
-          ) || joinPaths("dist", this.resolvedOptions.projectRoot)
+          ) || joinPaths("dist", this.context.projectRoot)
         )
       )
     ]);
 
-    await this.#hooks
-      .callHook("clean", this.resolvedOptions)
-      .catch((error: Error) => {
-        this.log(
-          LogLevelLabel.ERROR,
-          `An error occured while cleaning the Storm Stack project: ${error.message} \n${error.stack ?? ""}`
-        );
+    await this.#hooks.callHook("clean", this.context).catch((error: Error) => {
+      this.log(
+        LogLevelLabel.ERROR,
+        `An error occured while cleaning the Storm Stack project: ${error.message} \n${error.stack ?? ""}`
+      );
 
-        throw new Error(
-          "An error occured while cleaning the Storm Stack project",
-          { cause: error }
-        );
-      });
+      throw new Error(
+        "An error occured while cleaning the Storm Stack project",
+        { cause: error }
+      );
+    });
 
     this.log(LogLevelLabel.TRACE, "Storm Stack - Clean command completed");
   }
@@ -659,10 +604,7 @@ export class Engine<
 
     if (
       existsSync(
-        joinPaths(
-          this.resolvedOptions.projectRoot,
-          this.resolvedOptions.artifactsDir
-        )
+        joinPaths(this.context.projectRoot, this.context.artifactsDir)
       ) &&
       autoClean
     ) {
@@ -678,64 +620,42 @@ export class Engine<
 
     if (
       !existsSync(
-        joinPaths(
-          this.resolvedOptions.projectRoot,
-          this.resolvedOptions.artifactsDir
-        )
+        joinPaths(this.context.projectRoot, this.context.artifactsDir)
       )
     ) {
       await createDirectory(
-        joinPaths(
-          this.resolvedOptions.projectRoot,
-          this.resolvedOptions.artifactsDir
-        )
+        joinPaths(this.context.projectRoot, this.context.artifactsDir)
       );
     }
     if (
-      !existsSync(
-        joinPaths(
-          this.resolvedOptions.projectRoot,
-          this.resolvedOptions.runtimeDir
-        )
-      )
+      !existsSync(joinPaths(this.context.projectRoot, this.context.runtimeDir))
     ) {
       await createDirectory(
-        joinPaths(
-          this.resolvedOptions.projectRoot,
-          this.resolvedOptions.runtimeDir
-        )
+        joinPaths(this.context.projectRoot, this.context.runtimeDir)
       );
     }
     if (
-      !existsSync(
-        joinPaths(
-          this.resolvedOptions.projectRoot,
-          this.resolvedOptions.typesDir
-        )
-      )
+      !existsSync(joinPaths(this.context.projectRoot, this.context.typesDir))
     ) {
       await createDirectory(
-        joinPaths(
-          this.resolvedOptions.projectRoot,
-          this.resolvedOptions.typesDir
-        )
+        joinPaths(this.context.projectRoot, this.context.typesDir)
       );
     }
 
     await this.writeFile(
       joinPaths(
-        this.resolvedOptions.projectRoot,
-        this.resolvedOptions.artifactsDir,
+        this.context.projectRoot,
+        this.context.artifactsDir,
         "meta.json"
       ),
-      StormJSON.stringify(this.resolvedOptions.meta)
+      StormJSON.stringify(this.context.meta)
     );
-    this.resolvedOptions.persistedMeta = this.resolvedOptions.meta;
+    this.context.persistedMeta = this.context.meta;
 
     await this.writeDeclarations();
 
     await this.#hooks
-      .callHook("prepare:types", this.resolvedOptions)
+      .callHook("prepare:types", this.context)
       .catch((error: Error) => {
         this.log(
           LogLevelLabel.ERROR,
@@ -748,12 +668,12 @@ export class Engine<
         );
       });
 
-    if (this.resolvedOptions.projectType === "application") {
-      await this.unimport.dumpImports();
+    if (this.context.projectType === "application") {
+      await this.context.unimport.dumpImports();
 
       const runtimeDir = joinPaths(
-        this.resolvedOptions.projectRoot,
-        this.resolvedOptions.runtimeDir
+        this.context.projectRoot,
+        this.context.runtimeDir
       );
       this.log(
         LogLevelLabel.TRACE,
@@ -769,7 +689,7 @@ export class Engine<
       ]);
 
       await this.#hooks
-        .callHook("prepare:runtime", this.resolvedOptions)
+        .callHook("prepare:runtime", this.context)
         .catch((error: Error) => {
           this.log(
             LogLevelLabel.ERROR,
@@ -782,12 +702,9 @@ export class Engine<
           );
         });
 
-      if (
-        this.resolvedOptions.resolvedEntry &&
-        this.resolvedOptions.resolvedEntry.length > 0
-      ) {
+      if (this.context.resolvedEntry && this.context.resolvedEntry.length > 0) {
         this.#hooks
-          .callHook("prepare:entry", this.resolvedOptions)
+          .callHook("prepare:entry", this.context)
           .catch((error: Error) => {
             this.log(
               LogLevelLabel.ERROR,
@@ -801,7 +718,7 @@ export class Engine<
       }
 
       this.#hooks
-        .callHook("prepare:deploy", this.resolvedOptions)
+        .callHook("prepare:deploy", this.context)
         .catch((error: Error) => {
           this.log(
             LogLevelLabel.ERROR,
@@ -817,21 +734,19 @@ export class Engine<
         });
     }
 
-    this.#hooks
-      .callHook("prepare:misc", this.resolvedOptions)
-      .catch((error: Error) => {
-        this.log(
-          LogLevelLabel.ERROR,
-          `An error occured while creating miscellaneous artifacts: ${error.message} \n${error.stack ?? ""}`
-        );
+    this.#hooks.callHook("prepare:misc", this.context).catch((error: Error) => {
+      this.log(
+        LogLevelLabel.ERROR,
+        `An error occured while creating miscellaneous artifacts: ${error.message} \n${error.stack ?? ""}`
+      );
 
-        throw new Error(
-          "An error occured while creating miscellaneous artifacts",
-          {
-            cause: error
-          }
-        );
-      });
+      throw new Error(
+        "An error occured while creating miscellaneous artifacts",
+        {
+          cause: error
+        }
+      );
+    });
 
     await this.writeDotenvDoc();
   }
@@ -847,10 +762,7 @@ export class Engine<
       await this.init();
     }
 
-    if (
-      this.resolvedOptions.persistedMeta?.checksum !==
-      this.resolvedOptions.meta.checksum
-    ) {
+    if (this.context.persistedMeta?.checksum !== this.context.meta.checksum) {
       if (autoPrepare) {
         this.log(
           LogLevelLabel.INFO,
@@ -868,7 +780,7 @@ export class Engine<
     this.log(LogLevelLabel.TRACE, "Building Storm Stack project");
 
     await this.#hooks
-      .callHook("build", this.resolvedOptions)
+      .callHook("build:execute", this.context)
       .catch((error: Error) => {
         this.log(
           LogLevelLabel.ERROR,
@@ -880,6 +792,17 @@ export class Engine<
           { cause: error }
         );
       });
+
+    if (this.context.vars) {
+      await this.writeFile(
+        joinPaths(
+          this.context.projectRoot,
+          this.context.artifactsDir,
+          "vars.json"
+        ),
+        StormJSON.stringify(this.context.vars)
+      );
+    }
   }
 
   /**
@@ -892,7 +815,7 @@ export class Engine<
     this.log(LogLevelLabel.TRACE, "Storm Stack finalize execution started");
 
     await this.#hooks
-      .callHook("finalize", this.resolvedOptions)
+      .callHook("finalize", this.context)
       .catch((error: Error) => {
         this.log(
           LogLevelLabel.ERROR,
@@ -909,7 +832,7 @@ export class Engine<
   }
 
   protected resolveEntry(
-    options: TResolvedOptions,
+    options: Context<TOptions>,
     entry: TypeDefinitionParameter
   ): TypeDefinition {
     const parsed = parseTypeDefinition(entry)!;
@@ -946,16 +869,16 @@ export class Engine<
         typeof plugin === "string" ? [plugin, {}] : plugin;
       const isInstalled = await isPackageListed(
         pluginConfig[0],
-        this.resolvedOptions.projectRoot
+        this.context.projectRoot
       );
-      if (!isInstalled && this.resolvedOptions.skipInstalls !== true) {
+      if (!isInstalled && this.context.skipInstalls !== true) {
         this.log(
           LogLevelLabel.WARN,
           `The plugin package "${pluginConfig[0]}" is not installed. It will be installed automatically.`
         );
 
         const result = await install(pluginConfig[0], {
-          cwd: this.resolvedOptions.projectRoot
+          cwd: this.context.projectRoot
         });
         if (isNumber(result.exitCode) && result.exitCode > 0) {
           this.log(LogLevelLabel.ERROR, result.stderr);
@@ -1027,9 +950,9 @@ Note: Please ensure the plugin package's default export is a class that extends 
    */
   protected async loadConfig(): Promise<ProjectConfig> {
     return loadConfig(
-      this.resolvedOptions.projectRoot,
-      this.resolvedOptions.mode,
-      joinPaths(this.resolvedOptions.envPaths.cache, "jiti")
+      this.context.projectRoot,
+      this.context.mode,
+      joinPaths(this.context.envPaths.cache, "jiti")
     );
   }
 
@@ -1040,48 +963,45 @@ Note: Please ensure the plugin package's default export is a class that extends 
    */
   protected async resolveDotenvOptions(): Promise<ResolvedDotenvOptions> {
     const dotenv = {} as ResolvedDotenvOptions;
-    dotenv.types = getDotenvTypeDefinitions(
-      this.log,
-      this.resolvedOptions,
-      this.#compiler.project
-    );
-    dotenv.additionalFiles = this.resolvedOptions.dotenv?.additionalFiles ?? [];
+    dotenv.types = getDotenvTypeDefinitions(this.log, this.context);
+    dotenv.additionalFiles = this.context.dotenv?.additionalFiles ?? [];
     dotenv.docgen =
-      this.resolvedOptions.dotenv?.docgen ??
-      joinPaths(this.resolvedOptions.projectRoot, "docs", "dotenv.md");
-    dotenv.replace = Boolean(this.resolvedOptions.dotenv?.replace);
+      this.context.dotenv?.docgen ??
+      joinPaths(this.context.projectRoot, "docs", "dotenv.md");
+    dotenv.replace = Boolean(this.context.dotenv?.replace);
 
     const env = defu(
       await loadEnv(
-        this.resolvedOptions,
+        this.context,
         dotenv,
-        this.resolvedOptions.envPaths.cache,
-        this.resolvedOptions.envPaths.config,
-        this.packageJson,
-        this.resolvedOptions.workspaceConfig
+        this.context.envPaths.cache,
+        this.context.envPaths.config,
+        this.context.packageJson,
+        this.context.workspaceConfig
       ),
       this.defaultEnv,
       {
         APP_NAME:
-          this.resolvedOptions.name ||
-          this.packageJson.name?.replace(
-            `/${this.resolvedOptions.workspaceConfig.namespace}`,
+          this.context.name ||
+          this.context.packageJson.name?.replace(
+            `/${this.context.workspaceConfig.namespace}`,
             ""
           ),
-        APP_VERSION: this.packageJson.version,
-        BUILD_ID: this.resolvedOptions.meta.buildId,
-        BUILD_TIMESTAMP: this.resolvedOptions.meta.timestamp,
-        BUILD_CHECKSUM: this.resolvedOptions.meta.checksum,
-        RELEASE_ID: this.resolvedOptions.meta.releaseId,
-        MODE: this.resolvedOptions.mode,
-        ORG: this.resolvedOptions.workspaceConfig.organization,
-        ORGANIZATION: this.resolvedOptions.workspaceConfig.organization,
-        PLATFORM: this.resolvedOptions.platform,
-        STACKTRACE: this.resolvedOptions.mode === "development",
-        ENVIRONMENT: this.resolvedOptions.mode,
-        DEVELOPMENT: this.resolvedOptions.mode === "development",
-        STAGING: this.resolvedOptions.mode === "staging",
-        PRODUCTION: this.resolvedOptions.mode === "production"
+        APP_VERSION: this.context.packageJson.version,
+        BUILD_ID: this.context.meta.buildId,
+        BUILD_TIMESTAMP: this.context.meta.timestamp,
+        BUILD_CHECKSUM: this.context.meta.checksum,
+        RELEASE_ID: this.context.meta.releaseId,
+        MODE: this.context.mode,
+        ORG: this.context.workspaceConfig.organization,
+        ORGANIZATION: this.context.workspaceConfig.organization,
+        PLATFORM: this.context.platform,
+        STACKTRACE: this.context.mode === "development",
+        ENVIRONMENT: this.context.mode,
+        DEVELOPMENT: this.context.mode === "development",
+        STAGING: this.context.mode === "staging",
+        PRODUCTION: this.context.mode === "production",
+        DEBUG: this.context.mode === "development"
       }
     );
 
@@ -1097,36 +1017,13 @@ Note: Please ensure the plugin package's default export is a class that extends 
   }
 
   /**
-   * Prepare the source file prior to compilation
-   *
-   * @param source - The source file to prepare
-   * @param _project - The project instance
-   * @returns The prepared source file
-   */
-  protected async transformSourceFile(
-    source: SourceFile,
-    _project: Project
-  ): Promise<SourceFile> {
-    if (
-      this.unimport &&
-      !source.id.replaceAll("\\", "/").includes(this.resolvedOptions.runtimeDir)
-    ) {
-      source = await this.unimport.injectImports(source);
-    }
-
-    return source;
-  }
-
-  /**
    * Write the Typescript declarations
    */
   protected async writeDeclarations() {
-    if (isSetString(this.resolvedOptions.dts)) {
+    if (isSetString(this.context.dts)) {
       const dtsFile = joinPaths(
-        this.resolvedOptions.projectRoot,
-        this.resolvedOptions.dts
-          .replace(this.resolvedOptions.projectRoot, "")
-          .trim()
+        this.context.projectRoot,
+        this.context.dts.replace(this.context.projectRoot, "").trim()
       );
       this.log(
         LogLevelLabel.TRACE,
@@ -1134,9 +1031,9 @@ Note: Please ensure the plugin package's default export is a class that extends 
       );
 
       let content = "";
-      if (this.resolvedOptions.resolvedDotenv.types?.variables?.properties) {
+      if (this.context.resolvedDotenv.types?.variables?.properties) {
         content = generateDeclarations(
-          this.resolvedOptions.resolvedDotenv.types.variables.properties
+          this.context.resolvedDotenv.types.variables.properties
         );
       }
 
@@ -1150,20 +1047,14 @@ Note: Please ensure the plugin package's default export is a class that extends 
           content && this.writeFile(dtsFile, content),
           this.writeFile(
             joinPaths(
-              this.resolvedOptions.projectRoot,
-              this.resolvedOptions.typesDir,
+              this.context.projectRoot,
+              this.context.typesDir,
               "imports.d.ts"
             ),
             generateImports(
               relativePath(
-                joinPaths(
-                  this.resolvedOptions.projectRoot,
-                  this.resolvedOptions.typesDir
-                ),
-                joinPaths(
-                  this.resolvedOptions.projectRoot,
-                  this.resolvedOptions.runtimeDir
-                )
+                joinPaths(this.context.projectRoot, this.context.typesDir),
+                joinPaths(this.context.projectRoot, this.context.runtimeDir)
               )
             )
           )
@@ -1184,11 +1075,11 @@ Note: Please ensure the plugin package's default export is a class that extends 
    * Write the dotenv documentation markdown file
    */
   private async writeDotenvDoc() {
-    if (isSetString(this.resolvedOptions.resolvedDotenv.docgen)) {
+    if (isSetString(this.context.resolvedDotenv.docgen)) {
       const docgenFile = joinPaths(
-        this.resolvedOptions.projectRoot,
-        this.resolvedOptions.resolvedDotenv.docgen
-          .replace(this.resolvedOptions.projectRoot, "")
+        this.context.projectRoot,
+        this.context.resolvedDotenv.docgen
+          .replace(this.context.projectRoot, "")
           .trim()
       );
       this.log(
@@ -1196,7 +1087,7 @@ Note: Please ensure the plugin package's default export is a class that extends 
         `Documenting environment variables configuration in "${docgenFile}"`
       );
 
-      if (this.resolvedOptions.resolvedDotenv.types?.variables?.properties) {
+      if (this.context.resolvedDotenv.types?.variables?.properties) {
         const docgenFilePath = findFilePath(docgenFile);
         if (docgenFilePath && !existsSync(docgenFilePath)) {
           await createDirectory(docgenFilePath);
@@ -1205,8 +1096,8 @@ Note: Please ensure the plugin package's default export is a class that extends 
         return this.writeFile(
           docgenFile,
           generateDotenvMarkdown(
-            this.packageJson,
-            this.resolvedOptions.resolvedDotenv.types.variables.properties
+            this.context.packageJson,
+            this.context.resolvedDotenv.types.variables.properties
           )
         );
       }
