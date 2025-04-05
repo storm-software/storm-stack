@@ -33,12 +33,14 @@ import defu from "defu";
 import { getFileHeader, getParsedTypeScriptConfig } from "storm-stack/helpers";
 import { Plugin } from "storm-stack/plugin";
 import type { Context, EngineHooks, Options } from "storm-stack/types";
+import type { SourceFile } from "storm-stack/types/build";
 import {
   generateDeclarations,
   generateHttpImports,
   generateImports
 } from "./helpers/dtsgen";
 import { externalPlugin } from "./helpers/external-plugin";
+import { transformContext } from "./helpers/transform-context";
 import { writeCreateApp } from "./runtime/app";
 import { writeContext } from "./runtime/context";
 import { writeEvent } from "./runtime/event";
@@ -82,7 +84,8 @@ export default class NodePlugin<
       "init:tsconfig": this.initTsconfig.bind(this),
       "prepare:types": this.prepareTypes.bind(this),
       "prepare:runtime": this.prepareRuntime.bind(this),
-      "prepare:entry": this.prepareEntry.bind(this)
+      "prepare:entry": this.prepareEntry.bind(this),
+      "build:transform": this.transform.bind(this)
     });
 
     if (!this.config.skipBuild) {
@@ -143,8 +146,7 @@ export default class NodePlugin<
     await Promise.all(
       [
         this.install(context, "@types/node", true),
-        context.projectType === "application" &&
-          this.install(context, "@deepkit/injector"),
+        context.projectType === "application" && this.install(context, "qs"),
         context.projectType === "application" &&
           this.install(context, "@stryke/env"),
         context.projectType === "application" &&
@@ -275,6 +277,13 @@ export default builder({
         );
       })
     );
+  }
+
+  protected async transform(
+    context: Context<TOptions>,
+    sourceFile: SourceFile
+  ) {
+    transformContext(sourceFile);
   }
 
   /**

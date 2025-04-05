@@ -43,17 +43,16 @@ import type { PackageJson } from "@stryke/types/package-json";
 import { nanoid } from "@stryke/unique-id/nanoid-client";
 import defu from "defu";
 import { createHooks } from "hookable";
-import type { Jiti } from "jiti";
 import { createJiti } from "jiti";
 import { format, resolveConfig } from "prettier";
 import { Project } from "ts-morph";
 import { Compiler } from "./compiler";
-import { installPackage } from "./helpers";
+import { installPackage, loadConfig } from "./helpers";
 import { generateDotenvMarkdown } from "./helpers/dotenv/docgen";
 import { loadEnv } from "./helpers/dotenv/load";
 import { getDotenvTypeDefinitions } from "./helpers/dotenv/type-definitions";
 import { generateDeclarations, generateImports } from "./helpers/dtsgen";
-import { loadConfig } from "./helpers/load-config";
+import { runLintCheck } from "./helpers/eslint/run-eslint-check";
 import {
   getParsedTypeScriptConfig,
   getTsconfigChanges,
@@ -121,21 +120,6 @@ export class Engine<TOptions extends Options = Options> {
   protected log: LogFn;
 
   /**
-   * The Jiti module resolver
-   */
-  protected resolver: Jiti;
-
-  /**
-   * The Storm Project configuration object
-   */
-  protected config!: ProjectConfig;
-
-  /**
-   * The project's project.json file content
-   */
-  protected projectJson!: Record<string, any>;
-
-  /**
    * The default environment variables to apply
    */
   protected defaultEnv: Record<string, any> = {};
@@ -191,11 +175,14 @@ export class Engine<TOptions extends Options = Options> {
       }
     ];
 
-    this.resolver = createJiti(this.context.workspaceConfig.workspaceRoot, {
-      interopDefault: true,
-      fsCache: joinPaths(this.context.envPaths.temp, "jiti"),
-      moduleCache: true
-    });
+    this.context.resolver = createJiti(
+      this.context.workspaceConfig.workspaceRoot,
+      {
+        interopDefault: true,
+        fsCache: joinPaths(this.context.envPaths.cache, "jiti"),
+        moduleCache: true
+      }
+    );
   }
 
   /**
@@ -279,9 +266,9 @@ export class Engine<TOptions extends Options = Options> {
 
     const projectJsonPath = joinPaths(this.context.projectRoot, "project.json");
     if (existsSync(projectJsonPath)) {
-      this.projectJson = await readJsonFile(projectJsonPath);
-      this.context.name ??= this.projectJson?.name;
-      this.context.projectType ??= this.projectJson?.projectType;
+      this.context.projectJson = await readJsonFile(projectJsonPath);
+      this.context.name ??= this.context.projectJson?.name;
+      this.context.projectType ??= this.context.projectJson?.projectType;
     }
 
     if (this.context.projectType === "application" && this.context.entry) {
@@ -521,11 +508,11 @@ export class Engine<TOptions extends Options = Options> {
         .catch((error: Error) => {
           this.log(
             LogLevelLabel.ERROR,
-            `An error occured while building the Storm Stack project: ${error.message} \n${error.stack ?? ""}`
+            `An error occured while transforming the Storm Stack project: ${error.message} \n${error.stack ?? ""}`
           );
 
           throw new Error(
-            "An error occured while building the Storm Stack project",
+            "An error occured while transforming the Storm Stack project",
             { cause: error }
           );
         });
@@ -779,6 +766,15 @@ export class Engine<TOptions extends Options = Options> {
 
     this.log(LogLevelLabel.TRACE, "Building Storm Stack project");
 
+    if (!this.context.skipLint) {
+      await runLintCheck(this.log, this.context, {
+        lintDuringBuild: true,
+        eslintOptions: {
+          cacheLocation: joinPaths(this.context.envPaths.cache, "eslint")
+        }
+      });
+    }
+
     await this.#hooks
       .callHook("build:execute", this.context)
       .catch((error: Error) => {
@@ -890,9 +886,9 @@ export class Engine<TOptions extends Options = Options> {
 
       let pluginInstance!: Plugin<TOptions>;
       try {
-        const module = await this.resolver.import<{
+        const module = await this.context.resolver.import<{
           default: new (config: any) => Plugin<TOptions>;
-        }>(this.resolver.esmResolve(pluginConfig[0]));
+        }>(this.context.resolver.esmResolve(pluginConfig[0]));
         const PluginConstructor = module.default;
 
         pluginInstance = new PluginConstructor(pluginConfig[1]);

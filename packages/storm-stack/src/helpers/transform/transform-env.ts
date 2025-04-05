@@ -18,7 +18,7 @@
 import { Lang, parseAsync } from "@ast-grep/napi";
 import type { Context, Options, SourceFile } from "../../types/build";
 
-export async function injectEnv<TOptions extends Options = Options>(
+export async function transformEnv<TOptions extends Options = Options>(
   source: SourceFile,
   context: Context<TOptions>
 ): Promise<SourceFile> {
@@ -36,7 +36,7 @@ export async function injectEnv<TOptions extends Options = Options>(
     rule: {
       kind: "member_expression",
       any: [
-        { pattern: "\$storm.env.$ENV_VALUE" },
+        { pattern: "$storm.env.$ENV_VALUE" },
         { pattern: "process.env.$ENV_VALUE" },
         { pattern: "input.meta.$ENV_VALUE" }
       ]

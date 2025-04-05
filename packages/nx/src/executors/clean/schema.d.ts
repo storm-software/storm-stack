@@ -72,6 +72,14 @@ export interface StormStackCleanExecutorSchema {
  skipCache?: boolean,
 
  /**
+  * Skip Lint
+  * 
+  * Skip linting the project when building
+  * 
+ */
+ skipLint?: boolean,
+
+ /**
   * Silent
   * 
   * Should the build run silently - only report errors back to the user

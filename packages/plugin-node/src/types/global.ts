@@ -15,7 +15,6 @@
 
  ------------------------------------------------------------------- */
 
-import type { InjectorContext, ProviderWithScope } from "@deepkit/injector";
 import type { ProviderInfo } from "@stryke/env/providers";
 import type { RuntimeInfo } from "@stryke/env/runtime-checks";
 import type { MaybePromise } from "@stryke/types/base";
@@ -234,7 +233,6 @@ interface Internal_StormContextStore {
 
 export interface StormRuntimeParams {
   name?: string;
-  providers?: ProviderWithScope[];
   log: LogSinkInstance | LogSinkInstance[];
 }
 
@@ -287,11 +285,6 @@ export interface StormContext<
    * The root application logger for Storm Stack projects.
    */
   readonly log: IStormLog;
-
-  /**
-   * The injected service providers for the Storm application.
-   */
-  injector: InjectorContext;
 
   /**
    * A function to emit an event to a processing queue.

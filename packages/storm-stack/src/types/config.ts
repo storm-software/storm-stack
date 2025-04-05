@@ -135,6 +135,11 @@ export interface ProjectConfig {
    * @defaultValue "errors.json"
    */
   errorsFile?: string;
+
+  /**
+   * Should linting be skipped for this project?
+   */
+  skipLint?: boolean;
 }
 
 export interface ApplicationProjectConfig {

@@ -25,6 +25,7 @@ variables will be available in plain text to the public.
 | DEFAULT_TIMEZONE   | The default timezone to use in the application.                                                                                   |      | "America/New_York" |          |
 | DEVELOPMENT        | Indicates if the application is running in development mode.                                                                      |      | `false`            |          |
 | ENVIRONMENT        | The environment the application is running in. This value will be populated with the value of `MODE` if not provided.             |      | "production"       |          |
+| ERROR_URL          | The URL to send error data to. This value is used by the Storm Stack error tracking system.                                       |      |                    |    ✔    |
 | INCLUDE_ERROR_DATA | Indicates if error data should be included.                                                                                       |      | `false`            |          |
 | LOG_LEVEL          | The lowest logging level for the application.                                                                                     |      | `info`             |          |
 | MODE               | The processing mode of the application.                                                                                           |      | `production`       |          |

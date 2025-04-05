@@ -1,0 +1,32 @@
+{
+  "general": {
+    "1": "The process encountered an internal error and was unable to complete the request.",
+    "2": "The process encountered an unexpected condition that prevented it from completing the request."
+  },
+  "not_found": {
+    "1": "The requested resource was not found.",
+    "2": "The requested resource does not exist."
+  },
+  "security": {
+    "1": "The request has been refused due to invalid authorization.",
+    "2": "The request requires user authentication.",
+    "3": "The provided credentials are invalid."
+  },
+  "validation": {
+    "1": "The request was not processed due to validation errors.",
+    "2": "The request was rejected due to validation errors.",
+    "3": "The server cannot or will not process the request due to a client error.",
+    "4": "The request could not be understood by the server due to malformed syntax."
+  },
+  "unknown": {
+    "1": "The process encountered an unknown issue that prevented it from completing the request."
+  },
+  "service_unavailable": {
+    "1": "The server is currently unable to process the request.",
+    "2": "The server is currently unable to handle the request due to temporary overloading or maintenance of the server."
+  },
+  "action_unsupported": {
+    "1": "The requested action is not supported.",
+    "2": "The requested action is not allowed."
+  }
+}

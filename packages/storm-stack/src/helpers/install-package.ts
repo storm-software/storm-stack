@@ -62,3 +62,20 @@ export async function installPackage<TOptions extends Options = Options>(
     }
   }
 }
+
+/**
+ * Installs a package if it is not already installed.
+ *
+ * @param log - The logger function
+ * @param context - The resolved options
+ * @param packages - The list of packages to install
+ */
+export async function installPackages<TOptions extends Options = Options>(
+  log: LogFn,
+  context: Context<TOptions>,
+  packages: Array<{ name: string; dev?: boolean }>
+) {
+  return Promise.all(
+    packages.map(async pkg => installPackage(log, context, pkg.name, pkg.dev))
+  );
+}

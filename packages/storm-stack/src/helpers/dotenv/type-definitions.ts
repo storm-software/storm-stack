@@ -88,6 +88,12 @@ const DEFAULT_VARIABLES = {
     description: "Indicates if error data should be included.",
     isOptional: false
   },
+  ERROR_URL: {
+    text: "string",
+    description:
+      "The URL to send error data to. This value is used by the Storm Stack error tracking system.",
+    isOptional: false
+  },
   DEFAULT_TIMEZONE: {
     text: "string",
     defaultValue: "America/New_York",

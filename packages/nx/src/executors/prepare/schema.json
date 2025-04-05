@@ -62,6 +62,12 @@
       "description": "Skip the cache when building",
       "id": "#skipCache"
     },
+    "skipLint": {
+      "title": "Skip Lint",
+      "type": "boolean",
+      "description": "Skip linting the project when building",
+      "id": "#skipLint"
+    },
     "silent": {
       "title": "Silent",
       "type": "boolean",

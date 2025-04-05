@@ -20,7 +20,6 @@ import { getFileHeader } from "storm-stack/helpers";
 export function writeCreateApp() {
   return `${getFileHeader()}
 
-import { InjectorContext } from "@deepkit/injector";
 import type {
   BuilderConfig,
   BuilderResult,
@@ -88,7 +87,6 @@ export function builder<
     const version = getAppVersion();
     const buildInfo = getBuildInfo();
     const runtimeInfo = getRuntimeInfo();
-    const injector = InjectorContext.forProviders(params.providers ?? []);
 
     const disposables = new Set<Disposable>();
     const asyncDisposables = new Set<AsyncDisposable>();
@@ -149,7 +147,6 @@ export function builder<
           buildInfo,
           runtimeInfo,
           env: {} as StormEnv,
-          injector,
           emit: (_event: StormEvent) => {},
           __internal: {
             events: [] as StormEvent[]

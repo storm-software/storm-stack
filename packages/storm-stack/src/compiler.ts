@@ -18,14 +18,13 @@
 import { declarationTransformer, transformer } from "@deepkit/type-compiler";
 import { LogLevelLabel } from "@storm-software/config-tools/types";
 import { hash } from "@stryke/hash/hash";
-import { noop } from "@stryke/helpers/noop";
 import { findFilePath } from "@stryke/path/file-path-fns";
 import { joinPaths } from "@stryke/path/join-paths";
-import type { MaybePromise } from "@stryke/types/base";
 import type MagicString from "magic-string";
 import { ts } from "ts-morph";
 import { getCache, setCache } from "./helpers/cache";
-import { injectEnv } from "./helpers/dotenv/inject-env";
+import { transformEnv } from "./helpers/transform/transform-env";
+import { transformErrors } from "./helpers/transform/transform-errors";
 import { createLog } from "./helpers/utilities/logger";
 import { getMagicString } from "./helpers/utilities/magic-string";
 import { generateSourceMap } from "./helpers/utilities/source-map";
@@ -59,14 +58,14 @@ export class Compiler<TOptions extends Options = Options>
   protected onTransformCallback: (
     context: Context<TOptions>,
     sourceFile: SourceFile
-  ) => MaybePromise<void>;
+  ) => Promise<void>;
 
   constructor(
     context: Context<TOptions>,
     onTransformCallback: (
       context: Context<TOptions>,
       sourceFile: SourceFile
-    ) => MaybePromise<void> = noop
+    ) => Promise<void> = async () => {}
   ) {
     this.log = createLog("compiler", context);
     this.onTransformCallback = onTransformCallback;
@@ -190,7 +189,7 @@ export class Compiler<TOptions extends Options = Options>
       `Transpiling ${source.id} module with TypeScript compiler`
     );
 
-    let transformed = await injectEnv<TOptions>(source, context);
+    let transformed = await transformEnv<TOptions>(source, context);
     if (transformed.env.length > 0) {
       context.vars = transformed.env.reduce((ret, env) => {
         const property =
@@ -203,7 +202,9 @@ export class Compiler<TOptions extends Options = Options>
       }, context.vars);
     }
 
-    await Promise.resolve(this.onTransformCallback(context, transformed));
+    transformed = await transformErrors<TOptions>(transformed, context);
+
+    await this.onTransformCallback(context, transformed);
 
     if (
       context.unimport &&

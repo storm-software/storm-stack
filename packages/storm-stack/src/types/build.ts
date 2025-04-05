@@ -24,6 +24,7 @@ import type { TypeDefinition } from "@stryke/types/configuration";
 import type { PackageJson } from "@stryke/types/package-json";
 import type { TsConfigJson } from "@stryke/types/tsconfig";
 import type { Hookable } from "hookable";
+import type { Jiti } from "jiti";
 import type MagicString from "magic-string";
 import type { SourceMap } from "magic-string";
 import type { JSDoc, Project, ts, Type } from "ts-morph";
@@ -409,6 +410,11 @@ export type Context<
     packageJson: PackageJson;
 
     /**
+     * The project's project.json file content
+     */
+    projectJson: Record<string, any>;
+
+    /**
      * The `ts-morph` project instance
      */
     project: Project;
@@ -417,6 +423,11 @@ export type Context<
      * The .env variables used in the source code
      */
     vars: Record<string, ResolvedDotenvTypeDefinitionProperty>;
+
+    /**
+     * The Jiti module resolver
+     */
+    resolver: Jiti;
 
     /**
      * An object containing overridden options to be provided to the build invoked by the plugins (for example: esbuild, unbuild, vite, etc.)

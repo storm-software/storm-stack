@@ -72,6 +72,15 @@ Skip installing dependencies during prepare stage
 Skip the cache when building
 
 
+## `skipLint`
+- **Type**: `boolean`
+
+> Skip Lint
+
+
+Skip linting the project when building
+
+
 ## `silent`
 - **Type**: `boolean`
 - **Default**: `false`

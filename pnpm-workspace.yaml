@@ -103,6 +103,7 @@ catalog:
   eslint-typegen: 2.0.0
   globals: ^15.12.0
   invariant: ^2.2.4
+  jest-worker: ^29.7.0
   jsonc-eslint-parser: 2.4.0
   lefthook: ^1.7.18
   log4brains: ^1.0.1
@@ -172,3 +173,22 @@ overrides:
   "storm-stack": workspace:*
 patchedDependencies:
   nx@20.5.0: patches/nx@20.5.0.patch
+catalogs:
+  conflicts_eslint_:
+    eslint: ""
+  conflicts_eslint_9_24_0:
+    eslint: 9.24.0
+  conflicts_conflicts_eslint_9_24_0_c:
+    eslint: c
+  conflicts_conflicts_eslint_9_24_0_ca:
+    eslint: ca
+  conflicts_conflicts_eslint_9_24_0_cat:
+    eslint: cat
+  conflicts_conflicts_eslint_9_24_0_cata:
+    eslint: cata
+  conflicts_conflicts_eslint_9_24_0_catal:
+    eslint: catal
+  conflicts_conflicts_eslint_9_24_0_catalo:
+    eslint: catalo
+  conflicts_conflicts_eslint_9_24_0_catalog:
+    eslint: catalog

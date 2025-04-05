@@ -17,7 +17,6 @@
 
 import type { Loader, LoaderResult } from "@storm-software/unbuild/types";
 import { transform } from "esbuild";
-import jiti from "jiti";
 import type { Context, Options } from "../types";
 
 const DECLARATION_RE = /\.d\.[cm]?ts$/;
@@ -74,7 +73,7 @@ export const getUnbuildLoader = <TOptions extends Options = Options>(
     // esm => cjs
     const isCjs = options.format === "cjs";
     if (isCjs) {
-      contents = jiti("")
+      contents = context.resolver
         .transform({
           source: contents,
           retainLines: false

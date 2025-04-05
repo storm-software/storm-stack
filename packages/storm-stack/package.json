@@ -282,7 +282,6 @@
   },
   "dependencies": {
     "@ast-grep/napi": "catalog:",
-    "@deepkit/injector": "catalog:",
     "@deepkit/type-compiler": "catalog:",
     "@donedeal0/superdiff": "catalog:",
     "@storm-software/build-tools": "catalog:",
@@ -306,6 +305,7 @@
     "defu": "catalog:",
     "diff-match-patch": "catalog:",
     "esbuild": "catalog:",
+    "jest-worker": "catalog:",
     "jiti": "catalog:",
     "magic-string": "catalog:",
     "prettier": "catalog:",
@@ -316,6 +316,7 @@
     "@storm-software/testing-tools": "catalog:",
     "@stryke/types": "catalog:",
     "@types/node": "catalog:",
+    "eslint": "catalog:",
     "tsup": "catalog:",
     "typescript": "~5.7.3"
   },

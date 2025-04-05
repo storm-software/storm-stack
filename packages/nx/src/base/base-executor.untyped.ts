@@ -77,6 +77,13 @@ export default defineUntypedSchema({
       description: "Skip the cache when building"
     }
   },
+  skipLint: {
+    $schema: {
+      title: "Skip Lint",
+      type: "boolean",
+      description: "Skip linting the project when building"
+    }
+  },
   silent: {
     $schema: {
       title: "Silent",

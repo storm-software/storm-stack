@@ -35,8 +35,8 @@ import { ErrorType } from "storm-stack/types";
  * @param _type - The error type.
  * @returns The default error code.
  */
-export function getDefaultCode(_type: ErrorType): string {
-  return "00001";
+export function getDefaultCode(_type: ErrorType): number {
+  return 1;
 }
 
 /**
@@ -63,7 +63,7 @@ export function getDefaultErrorNameFromErrorType(type: ErrorType): string {
       return "Security Error";
     }
     case ErrorType.UNKNOWN:
-    case ErrorType.EXCEPTION:
+    case ErrorType.GENERAL:
     default: {
       return "System Error";
     }
@@ -117,7 +117,7 @@ export function createStormError({
  */
 export function getErrorFromUnknown(
   cause: unknown,
-  type: ErrorType = ErrorType.EXCEPTION,
+  type: ErrorType = ErrorType.GENERAL,
   data?: any
 ): StormError {
   if (isStormError(cause)) {
@@ -219,7 +219,17 @@ export class StormError extends Error implements IStormError {
   /**
    * The error code
    */
-  public code!: string;
+  public code: number;
+
+  /**
+   * The error message parameters
+   */
+  public params = [] as string[];
+
+  /**
+   * The type of error event
+   */
+  public type: ErrorType = ErrorType.GENERAL;
 
   /**
    * Additional data to be passed with the error
@@ -227,46 +237,42 @@ export class StormError extends Error implements IStormError {
   public data?: any;
 
   /**
-   * The error message parameters
-   */
-  public params?: string[];
-
-  /**
-   * The type of error response message/event
-   */
-  public type: ErrorType = ErrorType.EXCEPTION;
-
-  /**
    * The StormError constructor
    *
    * @param options - The options for the error
    */
-  public constructor(options: StormErrorOptions | string) {
-    super(
+  public constructor(options: StormErrorOptions);
+  public constructor(optionsOrMessage: StormErrorOptions | string, type = ErrorType.GENERAL) {
+      super(
       "An error occurred during processing",
-      isSetString(options) ? undefined : { cause: options.cause }
+      isSetString(optionsOrMessage) ? undefined : { cause: optionsOrMessage.cause }
     );
 
-    if (!isSetString(options)) {
-      this.code = options.code;
+    if (isSetString(optionsOrMessage)) {
+      this.message = optionsOrMessage;
+      this.type = type || ErrorType.GENERAL;
+      this.code = getDefaultCode(this.type);
+    } else {
+      this.code = optionsOrMessage.code;
 
-      if (options.type) {
-        this.type = options.type;
+      if (optionsOrMessage.type) {
+        this.type = optionsOrMessage.type;
       }
-
-      if (options.stack) {
-        this.#stack = options.stack;
+      if (optionsOrMessage.params) {
+        this.params = optionsOrMessage.params;
+      }
+      if (optionsOrMessage.stack) {
+        this.#stack = optionsOrMessage.stack;
         // eslint-disable-next-line ts/unbound-method
       } else if (isFunction(Error.captureStackTrace)) {
         Error.captureStackTrace(this, this.constructor);
       } else {
-        this.#stack = new Error(options.code).stack;
+        this.#stack = new Error("").stack;
       }
 
-      this.name = options.name || getDefaultErrorNameFromErrorType(this.type);
-      this.data = options.data;
-      this.params = options.params;
-      this.cause ??= options.cause;
+      this.name = optionsOrMessage.name || getDefaultErrorNameFromErrorType(this.type);
+      this.data = optionsOrMessage.data;
+      this.cause ??= optionsOrMessage.cause;
     }
 
     Object.setPrototypeOf(this, StormError.prototype);
@@ -373,12 +379,19 @@ export class StormError extends Error implements IStormError {
   }
 
   /**
+   * A URL to a page that displays the error message details
+   */
+  public get url(): string {
+    return \`\${process.env.ERROR_URL}/\${this.type.toLowerCase().replaceAll("_", "-")}/\${this.code}\${this.params.length > 0 ? \`/\${this.params.join("/")}\` : ""}\`;
+  }
+
+  /**
    * Prints the display error message string
    *
    * @param includeData - Whether to include the data in the error message
    * @returns The display error message string
    */
-  public format(includeData = $storm.env.INCLUDE_ERROR_DATA): string {
+  public toDisplay(includeData = $storm.env.INCLUDE_ERROR_DATA): string {
     return this.message
       ? \`\${this.name && this.name !== this.constructor.name ? (this.code ? \`\${this.name} \` : this.name) : ""} \${
           this.code
@@ -391,7 +404,7 @@ export class StormError extends Error implements IStormError {
         }: \${this.message}\${
           this.cause
             ? \` \nCause: \${
-                isError(this.cause) ? this.cause.format() : this.cause
+                isError(this.cause) ? this.cause.toDisplay() : this.cause
               }\`
             : ""
         }\${
@@ -414,24 +427,11 @@ export class StormError extends Error implements IStormError {
     includeData = $storm.env.INCLUDE_ERROR_DATA
   ): string {
     return (
-      this.format(includeData) +
+      this.toDisplay(includeData) +
       (stacktrace
         ? ""
         : \` \nStack Trace: \n\${this.stack}\`)
     );
-  }
-
-  /**
-   * Convert the error object into a message details object
-   *
-   * @returns The error message details object
-   */
-  public toMessage(stacktrace = $storm.env.STACKTRACE): ErrorMessageDetails {
-    return {
-      code: this.code,
-      message: this.toString(stacktrace),
-      type: "error",
-    };
   }
 }
 

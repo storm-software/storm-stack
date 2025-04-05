@@ -16,7 +16,6 @@
  ------------------------------------------------------------------- */
 
 import type { TypeScriptBuildBaseEnv } from "@storm-software/build-tools/types";
-import type { ErrorMessageDetails } from "@stryke/types/messages";
 
 export type StormEnv = {
   [TKey in Uppercase<string>]: TKey extends `STORM_${infer TBaseKey}`
@@ -97,7 +96,7 @@ export type StormEnv = {
    *
    * @defaultValue "info"
    */
-  LOWEST_LOG_LEVEL?: LogLevel | null;
+  LOG_LEVEL?: LogLevel | null;
 };
 
 export interface IStormRequest<TData = any> {
@@ -427,6 +426,19 @@ export interface LogSinkInstance {
 }
 
 /**
+ * The type of error response message/event
+ */
+export enum ErrorType {
+  GENERAL = "general",
+  NOT_FOUND = "not_found",
+  VALIDATION = "validation",
+  SERVICE_UNAVAILABLE = "service_unavailable",
+  ACTION_UNSUPPORTED = "action_unsupported",
+  SECURITY = "security",
+  UNKNOWN = "unknown"
+}
+
+/**
  * Interface representing the Storm error options.
  */
 export interface StormErrorOptions {
@@ -438,7 +450,7 @@ export interface StormErrorOptions {
   /**
    * The error code
    */
-  code: string;
+  code: number;
 
   /**
    * The error message parameters.
@@ -468,19 +480,6 @@ export interface StormErrorOptions {
   data: any;
 }
 
-/**
- * The type of error response message/event
- */
-export enum ErrorType {
-  EXCEPTION = "exception",
-  NOT_FOUND = "not_found",
-  VALIDATION = "validation",
-  SERVICE_UNAVAILABLE = "service_unavailable",
-  ACTION_UNSUPPORTED = "action_unsupported",
-  SECURITY = "security",
-  UNKNOWN = "unknown"
-}
-
 export interface ParsedStacktrace {
   column?: number;
   function?: string;
@@ -495,22 +494,27 @@ export interface IStormError extends Error {
   /**
    * The error code
    */
-  code: string;
+  code: number;
 
   /**
    * The error message parameters
    */
-  params?: string[];
+  params: string[];
+
+  /**
+   * The type of error that was thrown.
+   */
+  type?: ErrorType;
+
+  /**
+   * A url to display the error message
+   */
+  url: string;
 
   /**
    * Additional data to be passed with the error
    */
   data?: any;
-
-  /**
-   * The type of error response message/event
-   */
-  type: ErrorType;
 
   /**
    * The underlying cause of the error, if any. This is typically another error object that caused this error to be thrown.
@@ -528,14 +532,9 @@ export interface IStormError extends Error {
   originalStack?: string;
 
   /**
-   * Format the error message
+   * Returns a formatted error string that can be displayed to the user.
    */
-  format: () => string;
-
-  /**
-   * Convert the error to a message object
-   */
-  toMessage: () => ErrorMessageDetails;
+  toDisplay: () => string;
 
   /**
    * Internal function to inherit the error
