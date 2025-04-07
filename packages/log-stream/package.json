@@ -10,7 +10,7 @@
   },
   "private": false,
   "devDependencies": {
-    "@storm-stack/core": "0.2.0",
+    "@storm-stack/core": "0.3.0",
     "@storm-stack/nx": "0.2.0",
     "@types/node": "catalog:"
   },

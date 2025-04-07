@@ -13,8 +13,8 @@
     "@storm-stack/log-console": "workspace:*"
   },
   "devDependencies": {
-    "@storm-stack/core": "workspace:*",
+    "@storm-stack/core": "0.3.0",
     "@storm-stack/nx": "workspace:*",
-    "@storm-stack/plugin-node": "workspace:*"
+    "@storm-stack/plugin-node": "0.3.0"
   }
 }

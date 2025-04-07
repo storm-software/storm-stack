@@ -450,13 +450,13 @@ importers:
   examples/cloudflare-worker:
     devDependencies:
       '@storm-stack/core':
-        specifier: workspace:*
+        specifier: 0.3.0
         version: link:../../packages/core
       '@storm-stack/nx':
         specifier: workspace:*
         version: link:../../packages/nx
       '@storm-stack/preset-cloudflare-worker':
-        specifier: workspace:*
+        specifier: 0.3.0
         version: link:../../packages/preset-cloudflare-worker
 
   examples/node-app:
@@ -466,13 +466,13 @@ importers:
         version: link:../../packages/log-console
     devDependencies:
       '@storm-stack/core':
-        specifier: workspace:*
+        specifier: 0.3.0
         version: link:../../packages/core
       '@storm-stack/nx':
         specifier: workspace:*
         version: link:../../packages/nx
       '@storm-stack/plugin-node':
-        specifier: workspace:*
+        specifier: 0.3.0
         version: link:../../packages/plugin-node
 
   packages/biome:
@@ -704,7 +704,7 @@ importers:
         version: 0.7.0
     devDependencies:
       '@storm-stack/core':
-        specifier: 0.2.0
+        specifier: 0.3.0
         version: link:../core
       '@storm-stack/nx':
         specifier: 0.2.0
@@ -738,7 +738,7 @@ importers:
         version: 0.7.0
     devDependencies:
       '@storm-stack/core':
-        specifier: 0.2.0
+        specifier: 0.3.0
         version: link:../core
       '@storm-stack/nx':
         specifier: 0.2.0
@@ -760,7 +760,7 @@ importers:
         version: 0.7.0
     devDependencies:
       '@storm-stack/core':
-        specifier: 0.2.0
+        specifier: 0.3.0
         version: link:../core
       '@storm-stack/nx':
         specifier: 0.2.0
@@ -776,7 +776,7 @@ importers:
         version: link:../log-stream
     devDependencies:
       '@storm-stack/core':
-        specifier: 0.2.0
+        specifier: 0.3.0
         version: link:../core
       '@storm-stack/nx':
         specifier: 0.2.0
@@ -788,7 +788,7 @@ importers:
   packages/log-stream:
     devDependencies:
       '@storm-stack/core':
-        specifier: 0.2.0
+        specifier: 0.3.0
         version: link:../core
       '@storm-stack/nx':
         specifier: 0.2.0
@@ -821,7 +821,7 @@ importers:
         specifier: 'catalog:'
         version: 1.264.24(@storm-software/esbuild@0.31.32(b5163e2068f5de67f0eac381221e576a))(@storm-software/prettier@0.42.23(prettier-plugin-astro@0.14.1)(prettier-plugin-organize-imports@4.1.0(prettier@3.5.3)(typescript@5.7.3))(prettier-plugin-pkg@0.18.1(prettier@3.5.3))(prettier-plugin-prisma@5.0.0(prettier@3.5.3))(prettier-plugin-sh@0.15.0(prettier@3.5.3))(prettier@3.5.3))(@storm-software/unbuild@0.38.10(5e427d7ab55fb8f996ef17edd490d98c))(@types/node@22.14.0)(markdownlint-cli2@0.17.2)(nx@20.7.0(@swc-node/register@1.10.10(@swc/core@1.7.26(@swc/helpers@0.5.15))(@swc/types@0.1.21)(typescript@5.8.2))(@swc/core@1.7.26(@swc/helpers@0.5.15)))(prettier@3.5.3)(typescript@5.8.2)
       '@storm-stack/core':
-        specifier: 0.2.0
+        specifier: 0.3.0
         version: link:../core
       '@storm-stack/plugin-node':
         specifier: workspace:*
@@ -858,7 +858,7 @@ importers:
   packages/plugin-http:
     dependencies:
       '@storm-stack/core':
-        specifier: workspace:*
+        specifier: 0.3.0
         version: link:../core
       '@stryke/http':
         specifier: 'catalog:'
@@ -895,7 +895,7 @@ importers:
         specifier: 'catalog:'
         version: 0.31.32(9c3d881a1df99ab96377e656234428d6)
       '@storm-stack/core':
-        specifier: workspace:*
+        specifier: 0.3.0
         version: link:../core
       '@stryke/env':
         specifier: 'catalog:'
@@ -944,10 +944,10 @@ importers:
         specifier: 'catalog:'
         version: 1.162.1(@storm-software/config@1.112.3)
       '@storm-stack/core':
-        specifier: workspace:*
+        specifier: 0.3.0
         version: link:../core
       '@storm-stack/plugin-node':
-        specifier: workspace:*
+        specifier: 0.3.0
         version: link:../plugin-node
       '@stryke/fs':
         specifier: 'catalog:'

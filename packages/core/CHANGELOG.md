@@ -2,6 +2,13 @@
 
 # Changelog for Storm Stack - Core
 
+## [0.3.0](https://github.com/storm-software/storm-stack/releases/tag/core%400.3.0) (2025-04-07)
+
+### Features
+
+- **plugin-http:** Initial check-in of the `http` plugiun
+  ([7bc84ed6](https://github.com/storm-software/storm-stack/commit/7bc84ed6))
+
 ## [0.2.0](https://github.com/storm-software/storm-stack/releases/tag/core%400.2.0) (2025-04-07)
 
 ### Features

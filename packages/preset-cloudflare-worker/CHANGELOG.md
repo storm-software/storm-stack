@@ -2,6 +2,18 @@
 
 # Changelog for Storm Stack - Preset Cloudflare Worker
 
+## [0.3.0](https://github.com/storm-software/storm-stack/releases/tag/preset-cloudflare-worker%400.3.0) (2025-04-07)
+
+### Features
+
+- **plugin-http:** Initial check-in of the `http` plugiun
+  ([7bc84ed6](https://github.com/storm-software/storm-stack/commit/7bc84ed6))
+
+### Updated Dependencies
+
+- Updated plugin-node to 0.3.0
+- Updated core to 0.3.0
+
 ## [0.2.0](https://github.com/storm-software/storm-stack/releases/tag/preset-cloudflare-worker%400.2.0) (2025-04-07)
 
 ### Features
