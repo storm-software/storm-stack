@@ -1,6 +1,6 @@
 ![Storm Software](https://public.storm-cdn.com/brand-banner.png)
 
-# Changelog for Storm Stack - Storm Stack
+# Changelog for Storm Stack - Core
 
 ## [0.1.1](https://github.com/storm-software/storm-stack/releases/tag/storm-stack%400.1.1) (2025-04-07)
 

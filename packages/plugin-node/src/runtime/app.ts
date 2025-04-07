@@ -15,7 +15,7 @@
 
  ------------------------------------------------------------------- */
 
-import { getFileHeader } from "storm-stack/helpers";
+import { getFileHeader } from "@storm-stack/core/helpers";
 
 export function writeCreateApp() {
   return `${getFileHeader()}

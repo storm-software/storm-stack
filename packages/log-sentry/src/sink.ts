@@ -17,8 +17,8 @@
 
 import type { Client, ParameterizedString } from "@sentry/core";
 import { getClient } from "@sentry/core";
+import type { LogRecord, LogSink } from "@storm-stack/core/types";
 import { StormJSON } from "@stryke/json/storm-json";
-import type { LogRecord, LogSink } from "storm-stack/types";
 
 function getParameterizedString(record: LogRecord): ParameterizedString {
   let result = "";

@@ -15,9 +15,9 @@
 
  ------------------------------------------------------------------- */
 
+import type { Options } from "@storm-stack/core/types";
 import { match, tsconfigPathsToRegExp } from "bundle-require";
 import type { Plugin } from "esbuild";
-import type { Options } from "storm-stack/types";
 
 // Must not start with "/" or "./" or "../" or "C:\" or be the exact strings ".." or "."
 const NON_NODE_MODULE_RE = /^[A-Z]:[/\\]|^\.{0,2}\/|^\.{1,2}$/;

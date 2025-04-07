@@ -82,7 +82,7 @@
     "bundle-require": "catalog:",
     "defu": "catalog:",
     "esbuild": "catalog:",
-    "storm-stack": "0.1.1"
+    "@storm-stack/core": "workspace:*"
   },
   "devDependencies": {
     "@stryke/types": "catalog:",

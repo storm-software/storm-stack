@@ -10,8 +10,8 @@
   },
   "private": true,
   "devDependencies": {
-    "@storm-stack/nx": "0.1.1",
-    "@storm-stack/preset-cloudflare-worker": "0.1.1",
-    "storm-stack": "0.1.1"
+    "@storm-stack/nx": "workspace:*",
+    "@storm-stack/preset-cloudflare-worker": "workspace:*",
+    "@storm-stack/core": "workspace:*"
   }
 }

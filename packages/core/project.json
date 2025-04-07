@@ -1,8 +1,9 @@
 {
-  "name": "storm-stack",
+  "name": "core",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "projectType": "library",
-  "sourceRoot": "packages/storm-stack/src",
+  "sourceRoot": "packages/core/src",
+  "tags": ["platform:node"],
   "targets": {
     "build-base": {
       "executor": "nx:run-commands",
@@ -17,16 +18,15 @@
       "dependsOn": ["build-base"],
       "options": {
         "commands": [
-          "pnpm copyfiles LICENSE dist/packages/storm-stack",
-          "pnpm copyfiles --up=2 ./packages/storm-stack/*.md ./packages/storm-stack/package.json dist/packages/storm-stack",
-          "pnpm copyfiles --up=3 \"./packages/storm-stack/dist/**/*\" dist/packages/storm-stack/dist",
-          "pnpm copyfiles --up=4 \"./packages/storm-stack/dist/bin/**/*\" dist/packages/storm-stack/bin"
+          "pnpm copyfiles LICENSE dist/packages/core",
+          "pnpm copyfiles --up=2 ./packages/core/*.md ./packages/core/package.json dist/packages/core",
+          "pnpm copyfiles --up=3 \"./packages/core/dist/**/*\" dist/packages/core/dist",
+          "pnpm copyfiles --up=4 \"./packages/core/dist/bin/**/*\" dist/packages/core/bin"
         ]
       }
     },
     "nx-release-publish": {
       "executor": "@storm-software/workspace-tools:npm-publish"
     }
-  },
-  "tags": ["platform:node"]
+  }
 }

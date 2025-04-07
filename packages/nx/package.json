@@ -113,7 +113,7 @@
     "@storm-software/workspace-tools": "catalog:",
     "defu": "catalog:",
     "nx": "catalog:",
-    "storm-stack": "0.1.1"
+    "@storm-stack/core": "workspace:*"
   },
   "devDependencies": {
     "@storm-software/testing-tools": "catalog:",

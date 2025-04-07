@@ -15,9 +15,13 @@
 
  ------------------------------------------------------------------- */
 
+import type {
+  FormattedValues,
+  LogLevel,
+  LogRecord
+} from "@storm-stack/core/types";
 import { StormJSON } from "@stryke/json/storm-json";
 import util from "node:util";
-import type { FormattedValues, LogLevel, LogRecord } from "storm-stack/types";
 import type {
   AnsiColor,
   AnsiColorFormatterOptions,

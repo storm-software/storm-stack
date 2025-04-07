@@ -18,7 +18,7 @@
 import { getTsupConfig } from "@storm-stack/tools-config/tsup.shared";
 
 const config = getTsupConfig({
-  name: "storm-stack",
+  name: "core",
   entry: [
     "src/*.ts",
     "src/types/*.ts",

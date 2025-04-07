@@ -15,8 +15,8 @@
 
  ------------------------------------------------------------------- */
 
-import { getMagicString, getString } from "storm-stack/helpers";
-import type { SourceFile } from "storm-stack/types/build";
+import { getMagicString, getString } from "@storm-stack/core/helpers";
+import type { SourceFile } from "@storm-stack/core/types/build";
 
 export function transformContext(source: SourceFile): SourceFile {
   source.code = getMagicString(

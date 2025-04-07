@@ -21,7 +21,7 @@ import type {
 } from "@opentelemetry/api-logs";
 import type { OTLPExporterNodeConfigBase } from "@opentelemetry/otlp-exporter-base";
 import type { LogRecordProcessor } from "@opentelemetry/sdk-logs";
-import type { StormEnv } from "storm-stack/types";
+import type { StormEnv } from "@storm-stack/core/types";
 
 /**
  * The OpenTelemetry logger provider.

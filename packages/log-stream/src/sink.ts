@@ -15,8 +15,8 @@
 
  ------------------------------------------------------------------- */
 
+import type { LogRecord, LogSink } from "@storm-stack/core/types";
 import type { WritableStream } from "node:stream/web";
-import type { LogRecord, LogSink } from "storm-stack/types";
 import { defaultTextFormatter } from "./formatter";
 import type { TextFormatter } from "./types";
 

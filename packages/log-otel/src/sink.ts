@@ -27,7 +27,7 @@ import {
   SimpleLogRecordProcessor
 } from "@opentelemetry/sdk-logs";
 import { ATTR_SERVICE_NAME } from "@opentelemetry/semantic-conventions";
-import type { LogRecord, LogSink } from "storm-stack/types";
+import type { LogRecord, LogSink } from "@storm-stack/core/types";
 import type {
   BodyFormatter,
   ILoggerProvider,

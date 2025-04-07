@@ -15,8 +15,8 @@
 
  ------------------------------------------------------------------- */
 
+import type { LogSink } from "@storm-stack/core/types";
 import fs from "node:fs";
-import type { LogSink } from "storm-stack/types";
 import { getBaseFileSink, getBaseRotatingFileSink } from "./base/base-sink";
 import type {
   FileSinkOptions,

@@ -15,7 +15,7 @@
 
  ------------------------------------------------------------------- */
 
-import type { LogLevel, LogRecord, LogSink } from "storm-stack/types";
+import type { LogLevel, LogRecord, LogSink } from "@storm-stack/core/types";
 import { defaultConsoleFormatter } from "./formatter";
 import type { ConsoleSinkOptions } from "./types";
 

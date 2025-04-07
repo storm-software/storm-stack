@@ -43,6 +43,8 @@ catalog:
   "@sentry/core": ^9.5.0
   "@sentry/node": ^9.5.0
   "@sentry/types": ^9.5.0
+  "@storm-stack/log-console": 0.1.1
+  "@storm-stack/log-stream": 0.1.1
   "@storm-stack/nx": 0.1.0
   "@storm-stack/plugin-node": 0.1.0
   "@storm-stack/preset-cloudflare-worker": 0.1.0
@@ -146,6 +148,7 @@ catalog:
   zod-validation-error: ^3.4.0
   zx: ^8.3.2
 overrides:
+  "@storm-stack/core": workspace:*
   "@storm-stack/biome": workspace:*
   "@storm-stack/log-console": workspace:*
   "@storm-stack/log-storage": workspace:*
@@ -174,7 +177,6 @@ overrides:
   "postcss": ">=8.4.47"
   "shell-quote": ">=1.8.1"
   "simple-git": ">=3.27.0"
-  "storm-stack": workspace:*
 patchedDependencies:
   nx@20.5.0: patches/nx@20.5.0.patch
 catalogs:
@@ -196,3 +198,27 @@ catalogs:
     eslint: catalo
   conflicts_conflicts_eslint_9_24_0_catalog:
     eslint: catalog
+  conflicts_@storm-stack/plugin-node_0_1_1:
+    "@storm-stack/plugin-node": 0.1.1
+  conflicts_storm-stack_0_1_1:
+    storm-stack: 0.1.1
+  conflicts_@storm-stack/nx_0_1_1:
+    "@storm-stack/nx": 0.1.1
+  conflicts_@storm-stack/preset-cloudflare-worker_0_1_1:
+    "@storm-stack/preset-cloudflare-worker": 0.1.1
+  conflicts_conflicts_storm-stack_0_1_1_w:
+    storm-stack: w
+  conflicts_conflicts_storm-stack_0_1_1_wo:
+    storm-stack: wo
+  conflicts_conflicts_storm-stack_0_1_1_wor:
+    storm-stack: wor
+  conflicts_conflicts_storm-stack_0_1_1_work:
+    storm-stack: work
+  conflicts_conflicts_storm-stack_0_1_1_works:
+    storm-stack: works
+  conflicts_conflicts_storm-stack_0_1_1_worksp:
+    storm-stack: worksp
+  conflicts_conflicts_storm-stack_0_1_1_workspa:
+    storm-stack: workspa
+  conflicts_conflicts_storm-stack_0_1_1_workspac:
+    storm-stack: workspac

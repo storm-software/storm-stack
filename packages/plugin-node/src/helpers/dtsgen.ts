@@ -15,9 +15,9 @@
 
  ------------------------------------------------------------------- */
 
+import { getFileHeader } from "@storm-stack/core/helpers";
+import type { ResolvedDotenvTypeDefinitionProperty } from "@storm-stack/core/types";
 import { NEWLINE_STRING } from "@stryke/types/base";
-import { getFileHeader } from "storm-stack/helpers";
-import type { ResolvedDotenvTypeDefinitionProperty } from "storm-stack/types";
 import type { StormStackNodeFeatures } from "../types/config";
 
 export function generateDeclarations(

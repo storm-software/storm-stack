@@ -15,8 +15,8 @@
 
  ------------------------------------------------------------------- */
 
+import type { LogRecord, LogSink } from "@storm-stack/core/types";
 import { defaultTextFormatter } from "@storm-stack/log-stream/formatter";
-import type { LogRecord, LogSink } from "storm-stack/types";
 import type {
   FileSinkDriver,
   FileSinkOptions,

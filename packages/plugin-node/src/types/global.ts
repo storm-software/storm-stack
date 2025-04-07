@@ -15,10 +15,6 @@
 
  ------------------------------------------------------------------- */
 
-import type { ProviderInfo } from "@stryke/env/providers";
-import type { RuntimeInfo } from "@stryke/env/runtime-checks";
-import type { MaybePromise } from "@stryke/types/base";
-import type { ValidationDetail as ExternalValidationDetail } from "@stryke/types/validations";
 import type {
   IStormError,
   IStormLog,
@@ -26,7 +22,11 @@ import type {
   IStormResponse,
   LogSinkInstance,
   StormEnv
-} from "storm-stack/types/global";
+} from "@storm-stack/core/types/global";
+import type { ProviderInfo } from "@stryke/env/providers";
+import type { RuntimeInfo } from "@stryke/env/runtime-checks";
+import type { MaybePromise } from "@stryke/types/base";
+import type { ValidationDetail as ExternalValidationDetail } from "@stryke/types/validations";
 
 /**
  * Interface representing the runtime information for the Storm application.

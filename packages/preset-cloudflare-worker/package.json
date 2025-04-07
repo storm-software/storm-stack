@@ -46,11 +46,11 @@
     "@cloudflare/unenv-preset": "catalog:",
     "@ltd/j-toml": "catalog:",
     "@storm-software/config-tools": "catalog:",
-    "@storm-stack/plugin-node": "0.1.1",
+    "@storm-stack/core": "workspace:*",
+    "@storm-stack/plugin-node": "workspace:*",
     "@stryke/fs": "catalog:",
     "@stryke/json": "catalog:",
     "@stryke/path": "catalog:",
-    "storm-stack": "0.1.1",
     "unenv": "catalog:"
   },
   "devDependencies": {

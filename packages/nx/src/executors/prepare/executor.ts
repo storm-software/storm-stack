@@ -19,10 +19,10 @@ import type { ExecutorContext } from "@nx/devkit";
 import { writeTrace } from "@storm-software/config-tools/logger";
 import type { StormWorkspaceConfig } from "@storm-software/config/types";
 import { withRunExecutor } from "@storm-software/workspace-tools";
+import { Engine } from "@storm-stack/core/engine";
+import { loadConfig } from "@storm-stack/core/helpers/load-config";
+import type { Options } from "@storm-stack/core/types";
 import defu from "defu";
-import { Engine } from "storm-stack/engine";
-import { loadConfig } from "storm-stack/helpers/load-config";
-import type { Options } from "storm-stack/types";
 import type { StormStackPrepareExecutorSchema } from "./schema";
 
 export async function executorFn(
