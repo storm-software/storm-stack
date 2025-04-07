@@ -17,7 +17,6 @@
 
 import { LogLevelLabel } from "@storm-software/config-tools/types";
 import { parseTypeDefinition } from "@stryke/convert/parse-type-definition";
-import { StormJSON } from "@stryke/json/storm-json";
 import { existsSync } from "@stryke/path/exists";
 import { joinPaths } from "@stryke/path/join-paths";
 import { isObject } from "@stryke/type-checks/is-object";
@@ -27,6 +26,7 @@ import type {
   InterfaceDeclaration,
   Project,
   PropertySignature,
+  Type,
   TypeAliasDeclaration
 } from "ts-morph";
 import { SyntaxKind } from "ts-morph";
@@ -35,6 +35,7 @@ import type {
   Options,
   ResolvedDotenvTypeDefinition,
   ResolvedDotenvTypeDefinitionProperty,
+  ResolvedDotenvTypeDefinitionPropertyType,
   ResolvedDotenvTypeDefinitions
 } from "../../types/build";
 import type { LogFn } from "../../types/config";
@@ -164,6 +165,41 @@ const DEFAULT_VARIABLES = {
   }
 } as Record<string, ResolvedDotenvTypeDefinitionProperty>;
 
+const getType = (type: Type): ResolvedDotenvTypeDefinitionPropertyType => {
+  return {
+    isAnonymous: type.isAnonymous(),
+    isArray: type.isArray(),
+    isBoolean: type.isBoolean(),
+    isClass: type.isClass(),
+    isEnum: type.isEnum(),
+    isEnumLiteral: type.isEnumLiteral(),
+    isIntersection: type.isIntersection(),
+    isLiteral: type.isLiteral(),
+    isNumber: type.isNumber(),
+    isObject: type.isObject(),
+    isString: type.isString() || type.getText().includes("string"),
+    isStringLiteral: type.isStringLiteral(),
+    isTuple: type.isTuple(),
+    isTypeParameter: type.isTypeParameter(),
+    isUndefined: type.isUndefined(),
+    isUnion: type.isUnion(),
+    isUnknown: type.isUnknown(),
+    isVoid: type.isVoid(),
+    isNull: type.isNull(),
+    isAny: type.isAny(),
+    isNever: type.isNever(),
+    isBigInt: type.isBigInt(),
+    isInterface: type.isInterface(),
+    isClassOrInterface: type.isClassOrInterface(),
+    isReadonlyArray: type.isReadonlyArray?.() ?? false,
+    isTemplateLiteral: type.isTemplateLiteral?.() ?? false,
+    isBooleanLiteral: type.isBooleanLiteral?.() ?? false,
+    isBigIntLiteral: type.isBigIntLiteral?.() ?? false,
+    isNumberLiteral: type.isNumberLiteral?.() ?? false,
+    isUnionOrIntersection: type.isUnionOrIntersection?.() ?? false
+  };
+};
+
 const getDeclarationPropertiesFromPropertySignatures = (
   properties: PropertySignature[],
   current: Record<string, ResolvedDotenvTypeDefinitionProperty> = {}
@@ -193,7 +229,7 @@ const getDeclarationPropertiesFromPropertySignatures = (
     );
 
     ret[prop.getName()] = {
-      type: prop.getType(),
+      type: getType(prop.getType()),
       text: prop.getType().getText(),
       defaultValue,
       description:
@@ -201,7 +237,7 @@ const getDeclarationPropertiesFromPropertySignatures = (
           ? jsDocs[0].getDescription().trim()
           : undefined,
       isOptional: Boolean(prop.getQuestionTokenNode()),
-      jsDocs
+      comment: jsDocs?.map(jsDoc => jsDoc.getCommentText()).join("\n") ?? ""
     };
 
     return ret;
@@ -418,7 +454,7 @@ export const getDotenvTypeDefinitions = <TOptions extends Options = Options>(
 
   log(
     LogLevelLabel.TRACE,
-    `Resolved dotenv definitions: \n${StormJSON.stringify(result)}`
+    `Resolved ${Object.keys(result.variables.properties).length} variable and ${Object.keys(result.secrets?.properties ?? {}).length} secret dotenv definitions`
   );
 
   return result;

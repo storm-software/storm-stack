@@ -83,9 +83,7 @@ const inspect: (value: unknown) => string =
  */
 export function getSink(client?: Client): LogSink {
   return (record: LogRecord) => {
-    if (!client) {
-      client = getClient();
-    }
+    client ??= getClient();
 
     if (record.level === "error" || record.level === "fatal") {
       client?.captureException(getParameterizedString(record), {

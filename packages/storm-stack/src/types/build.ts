@@ -27,7 +27,7 @@ import type { Hookable } from "hookable";
 import type { Jiti } from "jiti";
 import type MagicString from "magic-string";
 import type { SourceMap } from "magic-string";
-import type { JSDoc, Project, ts, Type } from "ts-morph";
+import type { Project, ts } from "ts-morph";
 import type { InlinePreset, Unimport } from "unimport";
 import type {
   AdapterProjectConfig,
@@ -176,13 +176,76 @@ export type Options = Partial<ProjectConfig> & {
   tsconfigRaw?: TsConfigJson;
 };
 
+export interface ResolvedDotenvTypeDefinitionPropertyType {
+  /** Gets if this is an anonymous type. */
+  isAnonymous: boolean;
+  /** Gets if this is an any type. */
+  isAny: boolean;
+  /** Gets if this is a never type. */
+  isNever: boolean;
+  /** Gets if this is an array type. */
+  isArray: boolean;
+  /** Gets if this is a readonly array type. */
+  isReadonlyArray: boolean;
+  /** Gets if this is a template literal type. */
+  isTemplateLiteral: boolean;
+  /** Gets if this is a boolean type. */
+  isBoolean: boolean;
+  /** Gets if this is a string type. */
+  isString: boolean;
+  /** Gets if this is a number type. */
+  isNumber: boolean;
+  /** Gets if this is a BigInt. */
+  isBigInt: boolean;
+  /** Gets if this is a literal type. */
+  isLiteral: boolean;
+  /** Gets if this is a boolean literal type. */
+  isBooleanLiteral: boolean;
+  /** Gets if this is a BigInt literal type. */
+  isBigIntLiteral: boolean;
+  /** Gets if this is an enum literal type. */
+  isEnumLiteral: boolean;
+  /** Gets if this is a number literal type. */
+  isNumberLiteral: boolean;
+  /** Gets if this is a string literal type. */
+  isStringLiteral: boolean;
+  /** Gets if this is a class type. */
+  isClass: boolean;
+  /** Gets if this is a class or interface type. */
+  isClassOrInterface: boolean;
+  /** Gets if this is an enum type. */
+  isEnum: boolean;
+  /** Gets if this is an interface type. */
+  isInterface: boolean;
+  /** Gets if this is an object type. */
+  isObject: boolean;
+  /** Gets if this is a type parameter. */
+  isTypeParameter: boolean;
+  /** Gets if this is a tuple type. */
+  isTuple: boolean;
+  /** Gets if this is a union type. */
+  isUnion: boolean;
+  /** Gets if this is an intersection type. */
+  isIntersection: boolean;
+  /** Gets if this is a union or intersection type. */
+  isUnionOrIntersection: boolean;
+  /** Gets if this is the unknown type. */
+  isUnknown: boolean;
+  /** Gets if this is the null type. */
+  isNull: boolean;
+  /** Gets if this is the undefined type. */
+  isUndefined: boolean;
+  /** Gets if this is the void type. */
+  isVoid: boolean;
+}
+
 export interface ResolvedDotenvTypeDefinitionProperty {
-  jsDocs?: JSDoc[];
+  comment?: string;
   defaultValue?: any;
   description?: string;
   text: string;
   isOptional: boolean;
-  type?: Type<ts.Type>;
+  type?: ResolvedDotenvTypeDefinitionPropertyType;
 }
 
 export type ResolvedDotenvTypeDefinition = Omit<TypeDefinition, "file"> &

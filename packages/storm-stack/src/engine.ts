@@ -795,6 +795,8 @@ export class Engine<TOptions extends Options = Options> {
       });
 
     if (this.context.vars) {
+      this.log(LogLevelLabel.TRACE, "Writing Storm Stack var.json file");
+
       await this.writeFile(
         joinPaths(
           this.context.projectRoot,

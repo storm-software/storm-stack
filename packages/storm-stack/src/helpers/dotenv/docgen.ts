@@ -42,7 +42,7 @@ ${Object.keys(env)
   .filter(key => key !== "__STORM_INJECTED__")
   .sort()
   .map(key => {
-    return `| ${key} | ${env[key]?.description?.replaceAll("\r", "")?.replaceAll("\n", "") ?? ""} | ${env[key]?.type?.getText() ?? ""} | ${isSet(env[key]?.defaultValue) ? (env[key]?.text === "string" ? `"${String(env[key]?.defaultValue)}"` : `\`${String(env[key]?.defaultValue)}\``) : ""} | ${
+    return `| ${key} | ${env[key]?.description?.replaceAll("\r", "")?.replaceAll("\n", "") ?? ""} | ${env[key]?.text ?? ""} | ${isSet(env[key]?.defaultValue) ? (env[key]?.text === "string" ? `"${String(env[key]?.defaultValue)}"` : `\`${String(env[key]?.defaultValue)}\``) : ""} | ${
       isSet(env[key]?.defaultValue) || env[key]?.isOptional ? "" : "✔"
     } |`;
   })

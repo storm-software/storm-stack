@@ -40,7 +40,7 @@ import type {
  *
  * @see https://opentelemetry.io/
  *
- * @param options Options for creating the sink.
+ * @param options - Options for creating the sink.
  * @returns The sink.
  */
 export function getSink(options: OpenTelemetrySinkOptions = {}): LogSink {
@@ -49,10 +49,7 @@ export function getSink(options: OpenTelemetrySinkOptions = {}): LogSink {
   // }
 
   const serviceName =
-    process.env.APP_NAME ||
-    process.env.NAME ||
-    process.env.OTEL_SERVICE_NAME ||
-    "storm";
+    process.env.APP_NAME || process.env.OTEL_SERVICE_NAME || "storm";
 
   let loggerProvider: ILoggerProvider;
   if (options.loggerProvider == null) {

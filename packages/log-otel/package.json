@@ -25,5 +25,13 @@
   },
   "publishConfig": {
     "access": "public"
+  },
+  "storm": {
+    "adapter": "log",
+    "dotenv": {
+      "types": {
+        "variables": "./src/types.ts#StormOpenTelemetryLogEnv"
+      }
+    }
   }
 }

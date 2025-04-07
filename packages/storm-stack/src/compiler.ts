@@ -18,7 +18,6 @@
 import { declarationTransformer, transformer } from "@deepkit/type-compiler";
 import { LogLevelLabel } from "@storm-software/config-tools/types";
 import { hash } from "@stryke/hash/hash";
-import { findFilePath } from "@stryke/path/file-path-fns";
 import { joinPaths } from "@stryke/path/join-paths";
 import type MagicString from "magic-string";
 import { ts } from "ts-morph";
@@ -71,7 +70,7 @@ export class Compiler<TOptions extends Options = Options>
     this.onTransformCallback = onTransformCallback;
 
     this.cacheDir = joinPaths(
-      findFilePath(this.cacheDir),
+      context.envPaths.cache,
       hash(context.resolvedTsconfig.options)
     );
   }

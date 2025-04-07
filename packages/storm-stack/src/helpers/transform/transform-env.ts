@@ -56,7 +56,7 @@ export async function transformEnv<TOptions extends Options = Options>(
         typeDef.defaultValue;
       if (!typeDef.isOptional && value === undefined) {
         throw new Error(
-          `Environment variable "${name}" is not defined in the .env configuration files`
+          `Environment variable \`${name}\` is not defined in the .env configuration files`
         );
       }
 
@@ -64,8 +64,8 @@ export async function transformEnv<TOptions extends Options = Options>(
         node.text(),
         typeDef?.text === "string" ||
           typeDef?.text?.includes('"') ||
-          typeDef?.type?.isString() ||
-          typeDef?.type?.isStringLiteral()
+          typeDef?.type?.isString ||
+          typeDef?.type?.isStringLiteral
           ? `"${value}"`
           : `${value}`
       );
@@ -74,7 +74,13 @@ export async function transformEnv<TOptions extends Options = Options>(
       }
     } else {
       throw new Error(
-        `Environment variable "${name}" is not defined in the dotenv type definition but is used in the code`
+        `Environment variable \`${name}\` is not defined in the dotenv type definition but is used in the code. \n\nThe following variable names are defined in the dotenv type definition: \n${Object.keys(
+          typeDefs
+        )
+          .map(typeDef => ` - ${typeDef} `)
+          .join(
+            "\n"
+          )} \n\nPlease check your \`dotenv\` configuration option. If you are using a custom dotenv type definition, please make sure that the variable names match the ones in the code. \n\n`
       );
     }
   });
