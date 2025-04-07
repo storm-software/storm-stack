@@ -447,29 +447,29 @@ importers:
   examples/cloudflare-worker:
     devDependencies:
       '@storm-stack/nx':
-        specifier: 0.1.0
+        specifier: 0.1.1
         version: link:../../packages/nx
       '@storm-stack/preset-cloudflare-worker':
-        specifier: 0.1.0
+        specifier: 0.1.1
         version: link:../../packages/preset-cloudflare-worker
       storm-stack:
-        specifier: 0.1.0
+        specifier: 0.1.1
         version: link:../../packages/storm-stack
 
   examples/node-app:
     dependencies:
       '@storm-stack/log-console':
-        specifier: 0.1.0
+        specifier: 0.1.1
         version: link:../../packages/log-console
     devDependencies:
       '@storm-stack/nx':
-        specifier: 0.1.0
+        specifier: 0.1.1
         version: link:../../packages/nx
       '@storm-stack/plugin-node':
-        specifier: 0.1.0
+        specifier: 0.1.1
         version: link:../../packages/plugin-node
       storm-stack:
-        specifier: 0.1.0
+        specifier: 0.1.1
         version: link:../../packages/storm-stack
 
   packages/biome:
@@ -487,7 +487,7 @@ importers:
         specifier: 'catalog:'
         version: 2.0.1
       eslint-plugin-storm-stack:
-        specifier: 0.2.0
+        specifier: 0.2.1
         version: link:../eslint-plugin-storm-stack
     devDependencies:
       eslint:
@@ -571,13 +571,13 @@ importers:
         version: 0.6.1
     devDependencies:
       '@storm-stack/nx':
-        specifier: 0.1.0
+        specifier: 0.1.1
         version: link:../nx
       '@types/node':
         specifier: 'catalog:'
         version: 22.14.0
       storm-stack:
-        specifier: 0.1.0
+        specifier: 0.1.1
         version: link:../storm-stack
 
   packages/log-otel:
@@ -605,13 +605,13 @@ importers:
         version: 0.6.1
     devDependencies:
       '@storm-stack/nx':
-        specifier: 0.1.0
+        specifier: 0.1.1
         version: link:../nx
       '@types/node':
         specifier: 'catalog:'
         version: 22.14.0
       storm-stack:
-        specifier: 0.1.0
+        specifier: 0.1.1
         version: link:../storm-stack
 
   packages/log-sentry:
@@ -627,41 +627,41 @@ importers:
         version: 0.6.1
     devDependencies:
       '@storm-stack/nx':
-        specifier: 0.1.0
+        specifier: 0.1.1
         version: link:../nx
       '@types/node':
         specifier: 'catalog:'
         version: 22.14.0
       storm-stack:
-        specifier: 0.1.0
+        specifier: 0.1.1
         version: link:../storm-stack
 
   packages/log-storage:
     dependencies:
       '@storm-stack/log-stream':
-        specifier: 0.1.0
+        specifier: 0.1.1
         version: link:../log-stream
     devDependencies:
       '@storm-stack/nx':
-        specifier: 0.1.0
+        specifier: 0.1.1
         version: link:../nx
       '@types/node':
         specifier: 'catalog:'
         version: 22.14.0
       storm-stack:
-        specifier: 0.1.0
+        specifier: 0.1.1
         version: link:../storm-stack
 
   packages/log-stream:
     devDependencies:
       '@storm-stack/nx':
-        specifier: 0.1.0
+        specifier: 0.1.1
         version: link:../nx
       '@types/node':
         specifier: 'catalog:'
         version: 22.14.0
       storm-stack:
-        specifier: 0.1.0
+        specifier: 0.1.1
         version: link:../storm-stack
 
   packages/nx:
@@ -700,7 +700,7 @@ importers:
         specifier: 'catalog:'
         version: 20.7.0(@swc-node/register@1.10.10(@swc/core@1.7.26(@swc/helpers@0.5.15))(@swc/types@0.1.21)(typescript@5.8.2))(@swc/core@1.7.26(@swc/helpers@0.5.15))
       storm-stack:
-        specifier: 0.1.0
+        specifier: 0.1.1
         version: link:../storm-stack
     devDependencies:
       '@storm-software/testing-tools':
@@ -758,7 +758,7 @@ importers:
         specifier: 'catalog:'
         version: 0.25.0
       storm-stack:
-        specifier: 0.1.0
+        specifier: 0.1.1
         version: link:../storm-stack
     devDependencies:
       '@stryke/types':
@@ -783,7 +783,7 @@ importers:
         specifier: 'catalog:'
         version: 1.162.1(@storm-software/config@1.112.3)
       '@storm-stack/plugin-node':
-        specifier: 0.1.0
+        specifier: 0.1.1
         version: link:../plugin-node
       '@stryke/fs':
         specifier: 'catalog:'
@@ -795,7 +795,7 @@ importers:
         specifier: 'catalog:'
         version: 0.4.7(@storm-software/config@1.112.3)
       storm-stack:
-        specifier: 0.1.0
+        specifier: 0.1.1
         version: link:../storm-stack
       unenv:
         specifier: 'catalog:'

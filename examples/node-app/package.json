@@ -10,11 +10,11 @@
   },
   "private": true,
   "dependencies": {
-    "@storm-stack/log-console": "0.1.0"
+    "@storm-stack/log-console": "0.1.1"
   },
   "devDependencies": {
-    "@storm-stack/nx": "0.1.0",
-    "@storm-stack/plugin-node": "0.1.0",
-    "storm-stack": "0.1.0"
+    "@storm-stack/nx": "0.1.1",
+    "@storm-stack/plugin-node": "0.1.1",
+    "storm-stack": "0.1.1"
   }
 }

@@ -1,6 +1,6 @@
 {
   "name": "@storm-stack/nx",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "repository": {
     "type": "github",
     "url": "https://github.com/storm-software/storm-stack.git",
@@ -113,7 +113,7 @@
     "@storm-software/workspace-tools": "catalog:",
     "defu": "catalog:",
     "nx": "catalog:",
-    "storm-stack": "0.1.0"
+    "storm-stack": "0.1.1"
   },
   "devDependencies": {
     "@storm-software/testing-tools": "catalog:",
