@@ -1,12 +1,12 @@
 {
-  "name": "@storm-stack/plugin-node",
-  "version": "0.2.0",
+  "name": "@storm-stack/plugin-http",
+  "version": "0.0.1",
   "type": "module",
-  "description": "A Storm Stack plugin for creating applications using the NodeJs runtime.",
+  "description": "A Storm Stack plugin for including http helper functionality.",
   "repository": {
     "type": "github",
     "url": "https://github.com/storm-software/storm-stack.git",
-    "directory": "packages/plugin-node"
+    "directory": "packages/plugin-http"
   },
   "private": false,
   "exports": {
@@ -71,20 +71,13 @@
   "types": "dist/types/index.d.ts",
   "typings": "dist/types/index.d.ts",
   "dependencies": {
-    "@storm-software/build-tools": "catalog:",
-    "@storm-software/config-tools": "catalog:",
-    "@storm-software/esbuild": "catalog:",
     "@storm-stack/core": "workspace:*",
-    "@stryke/env": "catalog:",
-    "@stryke/fs": "catalog:",
-    "@stryke/hash": "catalog:",
+    "@stryke/http": "catalog:",
     "@stryke/json": "catalog:",
-    "@stryke/path": "catalog:",
-    "bundle-require": "catalog:",
-    "defu": "catalog:",
-    "esbuild": "catalog:"
+    "@stryke/path": "catalog:"
   },
   "devDependencies": {
+    "@storm-software/config-tools": "catalog:",
     "@stryke/types": "catalog:",
     "@types/node": "catalog:",
     "tsup": "catalog:"

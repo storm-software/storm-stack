@@ -15,31 +15,20 @@
 
  ------------------------------------------------------------------- */
 
-import type { TypeDefinitionParameter } from "@stryke/types/index";
+import { getTsupConfig } from "@storm-stack/tools-config/tsup.shared";
 
-export enum StormStackNodeFeatures {
-  SENTRY = "sentry"
-}
+const config = getTsupConfig({
+  name: "plugin-http",
+  entry: ["src/index.ts", "src/types/*.ts"],
+  outDir: "dist",
+  bundle: true,
+  splitting: false,
+  treeshake: true,
+  keepNames: true,
+  clean: true,
+  sourcemap: false,
+  dts: true,
+  shims: false
+});
 
-export interface StormStackNodePluginConfig {
-  /**
-   * The features to include in the application
-   *
-   * @defaultValue []
-   */
-  features: StormStackNodeFeatures[];
-
-  /**
-   * Should this plugin skip the build process for both applications and libraries
-   *
-   * @defaultValue false
-   */
-  skipBuild: boolean;
-
-  /**
-   * The runtime configuration for the application
-   *
-   * @defaultValue "./service.config.ts"
-   */
-  config?: TypeDefinitionParameter;
-}
+export default config;

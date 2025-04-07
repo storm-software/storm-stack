@@ -24,7 +24,7 @@ The **⚡Storm Stack** monorepo contains the [storm-stack](https://www.npmjs.com
 <!-- markdownlint-disable -->
 
 > [!IMPORTANT] 
-> This repository, and the apps, libraries, and tools contained within, is still in it's initial development phase. As a result, bugs and issues are expected with it's usage. When the main development phase completes, a proper release will be performed, the packages will be availible through NPM (and other distributions), and this message will be removed. However, in the meantime, please feel free to report any issues you may come across.
+> This repository, and the apps, libraries, and tools contained within, is still in it's initial development phase. As a result, bugs and issues are expected with it's usage. When the main development phase completes, a proper release will be performed, the packages will be available through NPM (and other distributions), and this message will be removed. However, in the meantime, please feel free to report any issues you may come across.
 
 <!-- markdownlint-restore -->
 <!-- prettier-ignore-end -->
@@ -64,7 +64,7 @@ The following sections outline some of the features/publishable content included
 
 ## Engine
 
-The [storm-stack](https://www.npmjs.com/package/storm-stack) package includes the Storm Stack engine and CLI used to drive the build and deploy processes.
+The [@storm-stack/core](https://www.npmjs.com/package/@storm-stack/core) package includes the Storm Stack engine and CLI used to drive the build and deploy processes.
 
 ## Plugins
 

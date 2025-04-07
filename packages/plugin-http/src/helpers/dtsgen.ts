@@ -15,31 +15,14 @@
 
  ------------------------------------------------------------------- */
 
-import type { TypeDefinitionParameter } from "@stryke/types/index";
+import { getFileHeader } from "@storm-stack/core/helpers";
 
-export enum StormStackNodeFeatures {
-  SENTRY = "sentry"
+export function generateHttpImports() {
+  return `${getFileHeader()}
+declare global {
+  const StormURL: typeof import("@stryke/http")["StormURL"];
 }
 
-export interface StormStackNodePluginConfig {
-  /**
-   * The features to include in the application
-   *
-   * @defaultValue []
-   */
-  features: StormStackNodeFeatures[];
-
-  /**
-   * Should this plugin skip the build process for both applications and libraries
-   *
-   * @defaultValue false
-   */
-  skipBuild: boolean;
-
-  /**
-   * The runtime configuration for the application
-   *
-   * @defaultValue "./service.config.ts"
-   */
-  config?: TypeDefinitionParameter;
+export {};
+`;
 }

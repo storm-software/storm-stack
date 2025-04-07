@@ -37,11 +37,7 @@ import {
 import { joinPaths } from "@stryke/path/join-paths";
 import type { TsConfigJson } from "@stryke/types/tsconfig";
 import defu from "defu";
-import {
-  generateDeclarations,
-  generateHttpImports,
-  generateImports
-} from "./helpers/dtsgen";
+import { generateDeclarations, generateImports } from "./helpers/dtsgen";
 import { externalPlugin } from "./helpers/external-plugin";
 import { transformContext } from "./helpers/transform-context";
 import { writeCreateApp } from "./runtime/app";
@@ -49,9 +45,9 @@ import { writeContext } from "./runtime/context";
 import { writeEvent } from "./runtime/event";
 import { writeInit } from "./runtime/init";
 import type { StormStackNodePluginConfig } from "./types/config";
-import { StormStackNodeAppStyle, StormStackNodeFeatures } from "./types/config";
+import { StormStackNodeFeatures } from "./types/config";
 
-export default class NodePlugin<
+export default class StormStackNodePlugin<
   TOptions extends Options = Options
 > extends Plugin<TOptions> {
   /**
@@ -63,21 +59,8 @@ export default class NodePlugin<
     super("node", "@storm-stack/plugin-node");
 
     this.config = config as StormStackNodePluginConfig;
-    this.config.style ??= StormStackNodeAppStyle.BASE;
     this.config.features ??= [];
     this.config.skipBuild ??= false;
-
-    switch (this.config.style) {
-      case StormStackNodeAppStyle.API:
-        if (!this.config.features.includes(StormStackNodeFeatures.HTTP)) {
-          this.config.features.push(StormStackNodeFeatures.HTTP);
-        }
-        break;
-      case StormStackNodeAppStyle.CLI:
-      case StormStackNodeAppStyle.BASE:
-      default:
-        break;
-    }
   }
 
   public addHooks(hooks: EngineHooks<TOptions>) {
@@ -126,18 +109,6 @@ export default class NodePlugin<
       imports: ["StormEvent"],
       from: "storm:event"
     });
-
-    if (this.config.features.includes(StormStackNodeFeatures.HTTP)) {
-      context.unimportPresets.push({
-        imports: ["StormURL"],
-        from: "@stryke/http/types",
-        type: true
-      });
-      context.unimportPresets.push({
-        imports: ["StormURLBuilder"],
-        from: "@stryke/http/url-builder"
-      });
-    }
   }
 
   protected async initInstalls(context: Context<TOptions>) {
@@ -149,7 +120,6 @@ export default class NodePlugin<
     await Promise.all(
       [
         this.install(context, "@types/node", true),
-        context.projectType === "application" && this.install(context, "qs"),
         context.projectType === "application" &&
           this.install(context, "@stryke/json"),
         context.projectType === "application" &&
@@ -157,10 +127,10 @@ export default class NodePlugin<
         context.projectType === "application" &&
           this.install(context, "@stryke/env"),
         context.projectType === "application" &&
-          this.config.features.includes(StormStackNodeFeatures.HTTP) &&
-          this.install(context, "@stryke/http"),
+          this.install(context, "@storm-stack/log-console"),
         context.projectType === "application" &&
-          this.install(context, "@storm-stack/log-console")
+          this.config.features.includes(StormStackNodeFeatures.SENTRY) &&
+          this.install(context, "@storm-stack/log-sentry")
       ].filter(Boolean)
     );
   }
@@ -211,11 +181,6 @@ export default class NodePlugin<
           joinPaths(typesDir, "node.d.ts"),
           generateImports(runtimePath)
         ),
-        this.config.features.includes(StormStackNodeFeatures.HTTP) &&
-          this.writeFile(
-            joinPaths(typesDir, "http.d.ts"),
-            generateHttpImports()
-          ),
         this.writeFile(
           joinPaths(
             context.projectRoot,

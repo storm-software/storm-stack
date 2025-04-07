@@ -17,11 +17,6 @@ packages:
 
 catalog:
   "@ast-grep/napi": ^0.36.2
-  "@babel/core": ^7.26.10
-  "@babel/generator": ^7.27.0
-  "@babel/parser": ^7.27.0
-  "@babel/traverse": ^7.27.0
-  "@babel/types": ^7.27.0
   "@biomejs/biome": ^1.9.4
   "@cloudflare/unenv-preset": 2.0.2
   "@deepkit/injector": ^1.0.2
@@ -43,11 +38,7 @@ catalog:
   "@sentry/core": ^9.5.0
   "@sentry/node": ^9.5.0
   "@sentry/types": ^9.5.0
-  "@storm-stack/log-console": 0.1.1
-  "@storm-stack/log-stream": 0.1.1
-  "@storm-stack/nx": 0.1.0
-  "@storm-stack/plugin-node": 0.1.0
-  "@storm-stack/preset-cloudflare-worker": 0.1.0
+  "@storm-stack/core": 0.2.0
   "@taplo/cli": ^0.7.0
   "@types/eslint": ^9.6.1
   "@types/eslint__js": ^8.42.3
@@ -81,6 +72,7 @@ catalog:
   "@stryke/env": latest
   "@stryke/fs": latest
   "@stryke/helpers": latest
+  "@stryke/http": latest
   "@stryke/unique-id": latest
   "@stryke/json": latest
   "@stryke/path": latest
@@ -122,7 +114,6 @@ catalog:
   react-dom: 19.0.0-rc-f6cce072-20240723
   react-native: 0.75.4
   sherif: ^1.0.0
-  storm-stack: 0.1.0
   ts-jest: ^29.2.5
   ts-morph: ^25.0.1
   ts-node: ^10.9.2
@@ -156,6 +147,7 @@ overrides:
   "@storm-stack/log-sentry": workspace:*
   "@storm-stack/log-stream": workspace:*
   "@storm-stack/nx": workspace:*
+  "@storm-stack/plugin-http": workspace:*
   "@storm-stack/preset-cloudflare-worker": workspace:*
   "@storm-stack/plugin-node": workspace:*
   "@storm-stack/tools-config": workspace:*
@@ -180,45 +172,13 @@ overrides:
 patchedDependencies:
   nx@20.5.0: patches/nx@20.5.0.patch
 catalogs:
-  conflicts_eslint_:
-    eslint: ""
-  conflicts_eslint_9_24_0:
-    eslint: 9.24.0
-  conflicts_conflicts_eslint_9_24_0_c:
-    eslint: c
-  conflicts_conflicts_eslint_9_24_0_ca:
-    eslint: ca
-  conflicts_conflicts_eslint_9_24_0_cat:
-    eslint: cat
-  conflicts_conflicts_eslint_9_24_0_cata:
-    eslint: cata
-  conflicts_conflicts_eslint_9_24_0_catal:
-    eslint: catal
-  conflicts_conflicts_eslint_9_24_0_catalo:
-    eslint: catalo
-  conflicts_conflicts_eslint_9_24_0_catalog:
-    eslint: catalog
-  conflicts_@storm-stack/plugin-node_0_1_1:
-    "@storm-stack/plugin-node": 0.1.1
-  conflicts_storm-stack_0_1_1:
-    storm-stack: 0.1.1
-  conflicts_@storm-stack/nx_0_1_1:
-    "@storm-stack/nx": 0.1.1
-  conflicts_@storm-stack/preset-cloudflare-worker_0_1_1:
-    "@storm-stack/preset-cloudflare-worker": 0.1.1
-  conflicts_conflicts_storm-stack_0_1_1_w:
-    storm-stack: w
-  conflicts_conflicts_storm-stack_0_1_1_wo:
-    storm-stack: wo
-  conflicts_conflicts_storm-stack_0_1_1_wor:
-    storm-stack: wor
-  conflicts_conflicts_storm-stack_0_1_1_work:
-    storm-stack: work
-  conflicts_conflicts_storm-stack_0_1_1_works:
-    storm-stack: works
-  conflicts_conflicts_storm-stack_0_1_1_worksp:
-    storm-stack: worksp
-  conflicts_conflicts_storm-stack_0_1_1_workspa:
-    storm-stack: workspa
-  conflicts_conflicts_storm-stack_0_1_1_workspac:
-    storm-stack: workspac
+  conflicts_@storm-stack/log-console_0_2_0:
+    "@storm-stack/log-console": 0.2.0
+  conflicts_@storm-stack/nx_0_2_0:
+    "@storm-stack/nx": 0.2.0
+  conflicts_@storm-stack/plugin-node_0_2_0:
+    "@storm-stack/plugin-node": 0.2.0
+  conflicts_@storm-stack/log-stream_0_2_0:
+    "@storm-stack/log-stream": 0.2.0
+  conflicts_@storm-stack/preset-cloudflare-worker_0_2_0:
+    "@storm-stack/preset-cloudflare-worker": 0.2.0

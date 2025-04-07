@@ -23,13 +23,7 @@ import {
   getParsedTypeScriptConfig
 } from "@storm-stack/core/helpers";
 import { Preset } from "@storm-stack/core/preset";
-import type {
-  Context,
-  EngineHooks,
-  Options,
-  PluginConfig
-} from "@storm-stack/core/types";
-import { StormStackNodeAppStyle } from "@storm-stack/plugin-node/types/config";
+import type { Context, EngineHooks, Options } from "@storm-stack/core/types";
 import { readFile, readJsonFile } from "@stryke/fs/read-file";
 import { removeFile } from "@stryke/fs/remove-file";
 import { StormJSON } from "@stryke/json/storm-json";
@@ -42,18 +36,20 @@ import {
 } from "@stryke/path/file-path-fns";
 import { joinPaths } from "@stryke/path/join-paths";
 import type { TsConfigJson } from "@stryke/types/tsconfig";
+import defu from "defu";
 import type { Environment } from "unenv";
 import { defineEnv } from "unenv";
 import { CLOUDFLARE_MODULES, DEFAULT_CONDITIONS } from "./helpers";
 
-export default class CloudflarePlugin<
+export default class StormStackCloudflareWorkerPreset<
   TOptions extends Options = Options
 > extends Preset<TOptions> {
   #unenv: Environment;
 
   public override dependencies = [
-    ["@storm-stack/plugin-node", { style: StormStackNodeAppStyle.API }]
-  ] as PluginConfig[];
+    "@storm-stack/plugin-node",
+    "@storm-stack/plugin-http"
+  ];
 
   public constructor() {
     super("cloudflare", "@storm-stack/preset-cloudflare-worker");
@@ -100,7 +96,11 @@ export default class CloudflarePlugin<
     context.override.target = "chrome95";
 
     if (context.projectType === "application") {
-      context.override.alias = this.#unenv.alias;
+      context.override.alias = defu(
+        context.override.alias ?? {},
+        this.#unenv.alias
+      );
+
       context.override.inject = Object.values(this.#unenv.inject)
         .filter(Boolean)
         .reduce((ret: string[], inj: string | string[]) => {
