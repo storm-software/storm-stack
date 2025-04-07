@@ -1,6 +1,6 @@
 {
   "name": "@storm-stack/log-sentry",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "type": "module",
   "description": "A package containing a Storm Stack log adapter to write log messages to Sentry",
   "repository": {
@@ -22,9 +22,9 @@
     "@stryke/json": "catalog:"
   },
   "devDependencies": {
-    "@storm-stack/nx": "workspace:*",
-    "@types/node": "catalog:",
-    "@storm-stack/core": "workspace:*"
+    "@storm-stack/core": "0.2.0",
+    "@storm-stack/nx": "0.2.0",
+    "@types/node": "catalog:"
   },
   "publishConfig": {
     "access": "public"

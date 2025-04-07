@@ -2,6 +2,22 @@
 
 # Changelog for Storm Stack - Nx
 
+## [0.2.0](https://github.com/storm-software/storm-stack/releases/tag/nx%400.2.0) (2025-04-07)
+
+### Features
+
+- **core:** Rename core package to `core`
+  ([22c9b4e3](https://github.com/storm-software/storm-stack/commit/22c9b4e3))
+
+### Bug Fixes
+
+- **monorepo:** Resolve issues with renaming core package
+  ([14f0a577](https://github.com/storm-software/storm-stack/commit/14f0a577))
+
+### Updated Dependencies
+
+- Updated core to 0.2.0
+
 ## [0.1.1](https://github.com/storm-software/storm-stack/releases/tag/nx%400.1.1) (2025-04-07)
 
 ### Miscellaneous
