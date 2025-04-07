@@ -15,6 +15,7 @@
 
  ------------------------------------------------------------------- */
 
+export * from "./cache";
 export * from "./dotenv/docgen";
 export * from "./dotenv/load";
 export * from "./dotenv/source-file-env";
@@ -22,7 +23,6 @@ export * from "./dotenv/type-definitions";
 export * from "./dtsgen";
 export * from "./install-package";
 export * from "./load-config";
-export * from "./cache";
 export * from "./tsconfig";
 export * from "./unbuild-loader";
 export * from "./unimport";

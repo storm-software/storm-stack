@@ -41,30 +41,31 @@ This package is part of the ⚡<b>Storm Stack</b> monorepo. Storm Stack packages
 # Storm-Stack Nx Plugin
 
 A package containing tools for managing a Storm workspace. It includes various
-[Nx](https://nx.dev) generators and executors for common development
-tasks.
+[Nx](https://nx.dev) generators and executors for common development tasks.
 
 <!-- START doctoc -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
 ## Table of Contents
 
-- [Storm-Stack Nx Plugin](#storm-stack-nx-plugin)
-  - [Table of Contents](#table-of-contents)
-  - [Installing](#installing)
-  - [Executors](#executors)
-  - [Storm-Stack Tamagui Compiler](#storm-stack-tamagui-compiler)
-    - [Example](#example)
-  - [Generators](#generators)
-  - [Building](#building)
-  - [Running unit tests](#running-unit-tests)
-  - [Storm Workspaces](#storm-workspaces)
-  - [Roadmap](#roadmap)
-  - [Support](#support)
-  - [License](#license)
-  - [Changelog](#changelog)
-  - [Contributing](#contributing)
-  - [Contributors](#contributors)
+- [Installing](#installing)
+- [Executors](#executors)
+- [clean](#clean)
+  - [Example](#example)
+- [prepare](#prepare)
+  - [Example](#example-1)
+- [build](#build)
+  - [Example](#example-2)
+- [Generators](#generators)
+- [Building](#building)
+- [Running unit tests](#running-unit-tests)
+- [Storm Workspaces](#storm-workspaces)
+- [Roadmap](#roadmap)
+- [Support](#support)
+- [License](#license)
+- [Changelog](#changelog)
+- [Contributing](#contributing)
+- [Contributors](#contributors)
 
 <!-- END doctoc -->
 
@@ -108,19 +109,51 @@ the workspace's projects:
 <!-- markdownlint-disable -->
 
 
-## Storm-Stack Tamagui Compiler
+## clean
 
-Run the [Tamagui compiler](https://tamagui.dev/docs/intro/why-a-compiler) to correctly format react components for web and mobile
+An executor used to run the Storm Stack - Clean process
 
 ### Example 
 
 This executor can be used by executing the following in a command line utility: 
 
 ```cmd 
-nx run my-project:tamagui
+nx run my-project:clean
 ```
 
-**Please note:** _The tamagui executor should be included in the desired projects's `project.json` file._ 
+**Please note:** _The clean executor should be included in the desired projects's `project.json` file._ 
+
+
+
+## prepare
+
+An executor used to run the Storm Stack - Prepare process
+
+### Example 
+
+This executor can be used by executing the following in a command line utility: 
+
+```cmd 
+nx run my-project:prepare
+```
+
+**Please note:** _The prepare executor should be included in the desired projects's `project.json` file._ 
+
+
+
+## build
+
+An executor used to run the Storm Stack - Build process
+
+### Example 
+
+This executor can be used by executing the following in a command line utility: 
+
+```cmd 
+nx run my-project:build
+```
+
+**Please note:** _The build executor should be included in the desired projects's `project.json` file._ 
 
 
 
@@ -150,8 +183,7 @@ Run `nx build devkit-nx` to build the library.
 
 ## Running unit tests
 
-Run `nx test devkit-nx` to execute the unit tests via
-[Jest](https://jestjs.io).
+Run `nx test devkit-nx` to execute the unit tests via [Jest](https://jestjs.io).
 
 <!-- START footer -->
 <!-- prettier-ignore-start -->

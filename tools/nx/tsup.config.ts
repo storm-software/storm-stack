@@ -16,7 +16,6 @@
  ------------------------------------------------------------------- */
 
 import { getTsupConfig } from "@storm-stack/tools-config/tsup.shared";
-import type { Options } from "tsup";
 
 const config = getTsupConfig({
   name: "tools-nx",

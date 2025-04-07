@@ -6,5 +6,5 @@
 
 ### Features
 
-- **eslint-plugin-storm-stack:** Added the `storm-json-only` rule
+  - **eslint-plugin-storm-stack:** Added the `storm-json-only` rule
   ([d73ea1d8](https://github.com/storm-software/storm-stack/commit/d73ea1d8))
