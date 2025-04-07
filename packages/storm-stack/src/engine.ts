@@ -771,7 +771,7 @@ export class Engine<TOptions extends Options = Options> {
 
     this.log(LogLevelLabel.TRACE, "Building Storm Stack project");
 
-    if (!this.context.skipLint) {
+    if (this.context.skipLint === false) {
       await runLintCheck(this.log, this.context, {
         lintDuringBuild: true,
         eslintOptions: {
