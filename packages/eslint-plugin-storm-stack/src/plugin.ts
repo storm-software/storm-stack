@@ -21,6 +21,7 @@ import asyncPreventDefault from "./rules/async-prevent-default";
 import ifNewline from "./rules/if-newline";
 import noImplicitGlobals from "./rules/no-implicit-globals";
 import stormErrorsOnly from "./rules/storm-errors-only";
+import stormJSONOnly from "./rules/storm-json-only";
 import stormRequestsOnly from "./rules/storm-requests-only";
 import stormResponsesOnly from "./rules/storm-responses-only";
 import topLevelFunctions from "./rules/top-level-functions";
@@ -34,6 +35,7 @@ export const plugin = {
     "async-prevent-default": asyncPreventDefault,
     "no-implicit-globals": noImplicitGlobals,
     "if-newline": ifNewline,
+    "storm-json-only": stormJSONOnly,
     "storm-errors-only": stormErrorsOnly,
     "storm-requests-only": stormRequestsOnly,
     "storm-responses-only": stormResponsesOnly,

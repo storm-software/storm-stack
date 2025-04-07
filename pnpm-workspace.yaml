@@ -43,6 +43,9 @@ catalog:
   "@sentry/core": ^9.5.0
   "@sentry/node": ^9.5.0
   "@sentry/types": ^9.5.0
+  "@storm-stack/nx": 0.1.0
+  "@storm-stack/plugin-node": 0.1.0
+  "@storm-stack/preset-cloudflare-worker": 0.1.0
   "@taplo/cli": ^0.7.0
   "@types/eslint": ^9.6.1
   "@types/eslint__js": ^8.42.3
@@ -117,6 +120,7 @@ catalog:
   react-dom: 19.0.0-rc-f6cce072-20240723
   react-native: 0.75.4
   sherif: ^1.0.0
+  storm-stack: 0.1.0
   ts-jest: ^29.2.5
   ts-morph: ^25.0.1
   ts-node: ^10.9.2

@@ -25,10 +25,9 @@ const config: Linter.Config = {
   ignores: base.ignores,
   rules: {
     "storm-stack/async-prevent-default": "warn",
-    "storm-stack/authenticity-token": "warn",
-    "storm-stack/consistent-list-newline": "warn",
     "storm-stack/if-newline": "warn",
     "storm-stack/no-implicit-globals": "error",
+    "storm-stack/storm-json-only": "error",
     "storm-stack/storm-errors-only": "error",
     "storm-stack/storm-requests-only": "error",
     "storm-stack/storm-responses-only": "error",
