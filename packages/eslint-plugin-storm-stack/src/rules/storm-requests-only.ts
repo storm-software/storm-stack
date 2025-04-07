@@ -1,4 +1,4 @@
-/*-------------------------------------------------------------------
+/* -------------------------------------------------------------------
 
                   ⚡ Storm Software - Storm Stack
 
@@ -13,7 +13,7 @@
  Contact:         https://stormsoftware.com/contact
  License:         https://stormsoftware.com/projects/storm-stack/license
 
- -------------------------------------------------------------------*/
+ ------------------------------------------------------------------- */
 
 import type { RuleFixer } from "@typescript-eslint/utils/ts-eslint";
 import { createEslintRule } from "../helpers/create-rule";
@@ -27,8 +27,7 @@ export default createEslintRule<Options, MessageIds>({
   meta: {
     type: "problem",
     docs: {
-      description:
-        "Prefer usage of `StormRequest` class when using Storm Stack"
+      description: "Prefer usage of `StormRequest` class when using Storm Stack"
     },
     fixable: "code",
     schema: [],
@@ -39,31 +38,35 @@ export default createEslintRule<Options, MessageIds>({
   },
   defaultOptions: [],
   create: context => {
-
     return {
       NewExpression(node) {
-        if (node.callee.type === 'Identifier' && node.callee.name === 'Request') {
+        if (
+          node.callee.type === "Identifier" &&
+          node.callee.name === "Request"
+        ) {
           context.report({
             node,
             messageId: "stormRequestsOnly",
             fix(fixer: RuleFixer) {
-              return fixer.replaceText(node.callee, 'StormRequest');
+              return fixer.replaceText(node.callee, "StormRequest");
             }
           });
         }
       },
       CallExpression(node) {
-        if (node.callee.type === 'Identifier' && node.callee.name === 'Request') {
+        if (
+          node.callee.type === "Identifier" &&
+          node.callee.name === "Request"
+        ) {
           context.report({
             node,
             messageId: "stormRequestsOnly",
             fix(fixer: RuleFixer) {
-              return fixer.replaceText(node.callee, 'StormRequest');
+              return fixer.replaceText(node.callee, "StormRequest");
             }
           });
         }
-      },
+      }
     };
-
   }
 });

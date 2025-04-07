@@ -1,4 +1,4 @@
-/*-------------------------------------------------------------------
+/* -------------------------------------------------------------------
 
                   ⚡ Storm Software - Storm Stack
 
@@ -13,7 +13,7 @@
  Contact:         https://stormsoftware.com/contact
  License:         https://stormsoftware.com/projects/storm-stack/license
 
- -------------------------------------------------------------------*/
+ ------------------------------------------------------------------- */
 
 import type { RuleFixer } from "@typescript-eslint/utils/ts-eslint";
 import { createEslintRule } from "../helpers/create-rule";
@@ -39,31 +39,35 @@ export default createEslintRule<Options, MessageIds>({
   },
   defaultOptions: [],
   create: context => {
-
     return {
       NewExpression(node) {
-        if (node.callee.type === 'Identifier' && node.callee.name === 'Response') {
+        if (
+          node.callee.type === "Identifier" &&
+          node.callee.name === "Response"
+        ) {
           context.report({
             node,
             messageId: "stormResponsesOnly",
             fix(fixer: RuleFixer) {
-              return fixer.replaceText(node.callee, 'StormResponse');
+              return fixer.replaceText(node.callee, "StormResponse");
             }
           });
         }
       },
       CallExpression(node) {
-        if (node.callee.type === 'Identifier' && node.callee.name === 'Response') {
+        if (
+          node.callee.type === "Identifier" &&
+          node.callee.name === "Response"
+        ) {
           context.report({
             node,
             messageId: "stormResponsesOnly",
             fix(fixer: RuleFixer) {
-              return fixer.replaceText(node.callee, 'StormResponse');
+              return fixer.replaceText(node.callee, "StormResponse");
             }
           });
         }
-      },
+      }
     };
-
   }
 });

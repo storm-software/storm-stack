@@ -18,8 +18,6 @@
 import type { ESLint } from "eslint";
 import packageJson from "../package.json" with { type: "json" };
 import asyncPreventDefault from "./rules/async-prevent-default";
-import authenticityToken from "./rules/authenticity-token";
-import consistentListNewline from "./rules/consistent-list-newline";
 import ifNewline from "./rules/if-newline";
 import noImplicitGlobals from "./rules/no-implicit-globals";
 import stormErrorsOnly from "./rules/storm-errors-only";
@@ -34,8 +32,6 @@ export const plugin = {
   },
   rules: {
     "async-prevent-default": asyncPreventDefault,
-    "authenticity-token": authenticityToken,
-    "consistent-list-newline": consistentListNewline,
     "no-implicit-globals": noImplicitGlobals,
     "if-newline": ifNewline,
     "storm-errors-only": stormErrorsOnly,
