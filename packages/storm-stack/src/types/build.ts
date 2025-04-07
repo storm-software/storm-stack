@@ -387,7 +387,7 @@ export type Context<
     /**
      * The imports to insert into the source code
      */
-    presets: InlinePreset[];
+    unimportPresets: InlinePreset[];
 
     /**
      * The parsed .env configuration object

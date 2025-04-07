@@ -25,7 +25,7 @@ import { getUnbuildLoader } from "./helpers/unbuild-loader";
 import { createLog } from "./helpers/utilities/logger";
 import { writeFile } from "./helpers/utilities/write-file";
 import type { Context, EngineHooks, Options } from "./types/build";
-import type { LogFn, PluginConfig } from "./types/config";
+import type { LogFn } from "./types/config";
 import type { IPlugin } from "./types/plugin";
 
 /**
@@ -43,14 +43,6 @@ export abstract class Plugin<TOptions extends Options = Options>
    * The name of the plugin
    */
   public installPath: string;
-
-  /**
-   * A list of plugin modules required as dependencies by the current plugin.
-   *
-   * @remarks
-   * These plugins will be called prior to the current plugin.
-   */
-  public dependencies = [] as Array<string | PluginConfig>;
 
   /**
    * The logger function to use

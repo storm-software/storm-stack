@@ -449,9 +449,9 @@ importers:
       '@storm-stack/nx':
         specifier: workspace:*
         version: link:../../packages/nx
-      '@storm-stack/plugin-cloudflare-worker':
+      '@storm-stack/preset-cloudflare-worker':
         specifier: workspace:*
-        version: link:../../packages/plugin-cloudflare-worker
+        version: link:../../packages/preset-cloudflare-worker
       storm-stack:
         specifier: workspace:*
         version: link:../../packages/storm-stack
@@ -687,12 +687,12 @@ importers:
       '@storm-software/workspace-tools':
         specifier: 'catalog:'
         version: 1.264.24(@storm-software/esbuild@0.31.32(61c61a5e96961dbca8d381d09f4357f1))(@storm-software/prettier@0.42.23(prettier-plugin-astro@0.14.1)(prettier-plugin-organize-imports@4.1.0(prettier@3.5.3)(typescript@5.7.3))(prettier-plugin-pkg@0.18.1(prettier@3.5.3))(prettier-plugin-prisma@5.0.0(prettier@3.5.3))(prettier-plugin-sh@0.15.0(prettier@3.5.3))(prettier@3.5.3))(@storm-software/unbuild@0.38.9(8c3ce763b26017919e47635aa4c2a2e5))(@types/node@22.14.0)(markdownlint-cli2@0.17.2)(nx@20.7.0(@swc-node/register@1.10.10(@swc/core@1.7.26(@swc/helpers@0.5.15))(@swc/types@0.1.21)(typescript@5.8.2))(@swc/core@1.7.26(@swc/helpers@0.5.15)))(prettier@3.5.3)(typescript@5.8.2)
-      '@storm-stack/plugin-cloudflare-worker':
-        specifier: workspace:*
-        version: link:../plugin-cloudflare-worker
       '@storm-stack/plugin-node':
         specifier: workspace:*
         version: link:../plugin-node
+      '@storm-stack/preset-cloudflare-worker':
+        specifier: workspace:*
+        version: link:../preset-cloudflare-worker
       defu:
         specifier: 'catalog:'
         version: 6.1.4
@@ -721,43 +721,6 @@ importers:
       untyped:
         specifier: 'catalog:'
         version: 1.5.2
-
-  packages/plugin-cloudflare-worker:
-    dependencies:
-      '@cloudflare/unenv-preset':
-        specifier: 'catalog:'
-        version: 2.0.2(unenv-nightly@2.0.0-20250401-121608-fbf145d)
-      '@ltd/j-toml':
-        specifier: 'catalog:'
-        version: 1.38.0
-      '@storm-software/config-tools':
-        specifier: 'catalog:'
-        version: 1.162.1(@storm-software/config@1.112.2)
-      '@storm-stack/plugin-node':
-        specifier: workspace:*
-        version: link:../plugin-node
-      '@stryke/fs':
-        specifier: 'catalog:'
-        version: 0.10.7(@storm-software/config@1.112.2)(nx@20.7.0(@swc-node/register@1.10.10(@swc/core@1.11.16(@swc/helpers@0.5.15))(@swc/types@0.1.21)(typescript@5.8.2))(@swc/core@1.11.16(@swc/helpers@0.5.15)))
-      '@stryke/json':
-        specifier: 'catalog:'
-        version: 0.5.4
-      '@stryke/path':
-        specifier: 'catalog:'
-        version: 0.4.7(@storm-software/config@1.112.2)
-      storm-stack:
-        specifier: workspace:*
-        version: link:../storm-stack
-      unenv:
-        specifier: 'catalog:'
-        version: unenv-nightly@2.0.0-20250401-121608-fbf145d
-    devDependencies:
-      '@stryke/types':
-        specifier: 'catalog:'
-        version: 0.7.4
-      tsup:
-        specifier: 'catalog:'
-        version: 8.4.0(@microsoft/api-extractor@7.52.2(@types/node@22.14.0))(@swc/core@1.11.16(@swc/helpers@0.5.15))(jiti@2.4.2)(postcss@8.5.3)(tsx@4.19.3)(typescript@5.8.2)(yaml@2.7.1)
 
   packages/plugin-node:
     dependencies:
@@ -804,6 +767,43 @@ importers:
       '@types/node':
         specifier: 'catalog:'
         version: 22.14.0
+      tsup:
+        specifier: 'catalog:'
+        version: 8.4.0(@microsoft/api-extractor@7.52.2(@types/node@22.14.0))(@swc/core@1.11.16(@swc/helpers@0.5.15))(jiti@2.4.2)(postcss@8.5.3)(tsx@4.19.3)(typescript@5.8.2)(yaml@2.7.1)
+
+  packages/preset-cloudflare-worker:
+    dependencies:
+      '@cloudflare/unenv-preset':
+        specifier: 'catalog:'
+        version: 2.0.2(unenv-nightly@2.0.0-20250401-121608-fbf145d)
+      '@ltd/j-toml':
+        specifier: 'catalog:'
+        version: 1.38.0
+      '@storm-software/config-tools':
+        specifier: 'catalog:'
+        version: 1.162.1(@storm-software/config@1.112.2)
+      '@storm-stack/plugin-node':
+        specifier: workspace:*
+        version: link:../plugin-node
+      '@stryke/fs':
+        specifier: 'catalog:'
+        version: 0.10.7(@storm-software/config@1.112.2)(nx@20.7.0(@swc-node/register@1.10.10(@swc/core@1.11.16(@swc/helpers@0.5.15))(@swc/types@0.1.21)(typescript@5.8.2))(@swc/core@1.11.16(@swc/helpers@0.5.15)))
+      '@stryke/json':
+        specifier: 'catalog:'
+        version: 0.5.4
+      '@stryke/path':
+        specifier: 'catalog:'
+        version: 0.4.7(@storm-software/config@1.112.2)
+      storm-stack:
+        specifier: workspace:*
+        version: link:../storm-stack
+      unenv:
+        specifier: 'catalog:'
+        version: unenv-nightly@2.0.0-20250401-121608-fbf145d
+    devDependencies:
+      '@stryke/types':
+        specifier: 'catalog:'
+        version: 0.7.4
       tsup:
         specifier: 'catalog:'
         version: 8.4.0(@microsoft/api-extractor@7.52.2(@types/node@22.14.0))(@swc/core@1.11.16(@swc/helpers@0.5.15))(jiti@2.4.2)(postcss@8.5.3)(tsx@4.19.3)(typescript@5.8.2)(yaml@2.7.1)
@@ -3247,7 +3247,6 @@ packages:
 
   '@ls-lint/ls-lint@2.3.0':
     resolution: {integrity: sha512-lsT5/7SxtImOIjpefC9wcoXt2lkikKhCjd6U+Q9Z6X5h2HBU/71ggt+XStdodZ0HkJGO333zDUeec7JROMCPFw==}
-    cpu: [x64, arm64, s390x, ppc64le]
     os: [darwin, linux, win32]
     hasBin: true
 

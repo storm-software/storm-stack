@@ -32,7 +32,7 @@ import {
 import { joinPaths } from "@stryke/path/join-paths";
 import type { TsConfigJson } from "@stryke/types/tsconfig";
 import { getFileHeader, getParsedTypeScriptConfig } from "storm-stack/helpers";
-import { Plugin } from "storm-stack/plugin";
+import { Preset } from "storm-stack/preset";
 import type {
   Context,
   EngineHooks,
@@ -45,7 +45,7 @@ import { CLOUDFLARE_MODULES, DEFAULT_CONDITIONS } from "./helpers";
 
 export default class CloudflarePlugin<
   TOptions extends Options = Options
-> extends Plugin<TOptions> {
+> extends Preset<TOptions> {
   #unenv: Environment;
 
   public override dependencies = [
@@ -53,7 +53,7 @@ export default class CloudflarePlugin<
   ] as PluginConfig[];
 
   public constructor() {
-    super("cloudflare", "@storm-stack/plugin-cloudflare-worker");
+    super("cloudflare", "@storm-stack/preset-cloudflare-worker");
 
     const { env } = defineEnv({
       presets: [cloudflare]

@@ -1,7 +1,7 @@
 import { getJestConfig } from "@storm-software/testing-tools";
 
 export default getJestConfig(
-  "packages/plugin-cloudflare-worker",
+  "packages/preset-cloudflare-worker",
   true,
-  "plugin-cloudflare-worker"
+  "preset-cloudflare-worker"
 );

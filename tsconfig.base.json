@@ -28,14 +28,14 @@
       "@storm-stack/log-stream/*": ["packages/log-stream/src/*"],
       "@storm-stack/nx": ["packages/nx/src/index.ts"],
       "@storm-stack/nx/*": ["packages/nx/src/*"],
-      "@storm-stack/plugin-cloudflare-worker": [
-        "packages/plugin-cloudflare-worker/src/index.ts"
-      ],
-      "@storm-stack/plugin-cloudflare-worker/*": [
-        "packages/plugin-cloudflare-worker/src/*"
-      ],
       "@storm-stack/plugin-node": ["packages/plugin-node/src/index.ts"],
       "@storm-stack/plugin-node/*": ["packages/plugin-node/src/*"],
+      "@storm-stack/preset-cloudflare-worker": [
+        "packages/preset-cloudflare-worker/src/index.ts"
+      ],
+      "@storm-stack/preset-cloudflare-worker/*": [
+        "packages/preset-cloudflare-worker/src/*"
+      ],
       "@storm-stack/tools-config/*": ["tools/config/*"],
       "@storm-stack/tools-nx": ["tools/nx/src/index.ts"],
       "@storm-stack/tools-nx/*": ["tools/nx/src/*"],

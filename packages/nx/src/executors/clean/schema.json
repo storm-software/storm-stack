@@ -20,6 +20,16 @@
       "id": "#entry",
       "default": "{sourceRoot}/index.ts"
     },
+    "presets": {
+      "title": "Presets",
+      "type": "array",
+      "description": "A list of presets to use during Storm Stack processing",
+      "items": {
+        "type": "string"
+      },
+      "id": "#presets",
+      "default": []
+    },
     "plugins": {
       "title": "Plugins",
       "type": "array",
@@ -80,6 +90,7 @@
   "default": {
     "outputPath": "dist/{projectRoot}",
     "entry": "{sourceRoot}/index.ts",
+    "presets": [],
     "plugins": [],
     "mode": "production",
     "tsconfig": "{projectRoot}/tsconfig.json",

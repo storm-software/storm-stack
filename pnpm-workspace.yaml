@@ -149,7 +149,7 @@ overrides:
   "@storm-stack/log-sentry": workspace:*
   "@storm-stack/log-stream": workspace:*
   "@storm-stack/nx": workspace:*
-  "@storm-stack/plugin-cloudflare-worker": workspace:*
+  "@storm-stack/preset-cloudflare-worker": workspace:*
   "@storm-stack/plugin-node": workspace:*
   "@storm-stack/tools-config": workspace:*
   "@storm-stack/tools-nx": workspace:*

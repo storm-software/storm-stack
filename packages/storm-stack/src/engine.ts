@@ -61,6 +61,7 @@ import {
 import { createUnimport } from "./helpers/unimport";
 import { createLog } from "./helpers/utilities/logger";
 import type { Plugin } from "./plugin";
+import type { Preset } from "./preset";
 import { writeId } from "./runtime";
 import { writeError } from "./runtime/error";
 import { writeLog } from "./runtime/log";
@@ -144,7 +145,7 @@ export class Engine<TOptions extends Options = Options> {
       this.context.envPaths.cache,
       hash(this.options.projectRoot)
     );
-    this.context.presets = [
+    this.context.unimportPresets = [
       {
         imports: ["StormJSON"],
         from: "@stryke/json/storm-json"
@@ -244,16 +245,20 @@ export class Engine<TOptions extends Options = Options> {
 
     this.context.outputPath ??= joinPaths("dist", this.context.projectRoot);
 
+    for (const preset of this.context.presets ?? []) {
+      await this.addPreset(preset);
+    }
+
+    for (const plugin of this.context.plugins ?? []) {
+      await this.addPlugin(plugin);
+    }
+
     if (!this.context.plugins) {
       this.log(
         LogLevelLabel.WARN,
         "No Storm Stack plugins were specified in the options. Please ensure this is correct, as it is generally not recommended."
       );
     } else {
-      for (const plugin of this.context.plugins) {
-        await this.addPlugin(plugin);
-      }
-
       for (const plugin of this.#plugins) {
         await Promise.resolve(plugin.addHooks(this.#hooks));
       }
@@ -848,6 +853,98 @@ export class Engine<TOptions extends Options = Options> {
   }
 
   /**
+   * Add a Storm Stack preset to the build process
+   *
+   * @param preset - The import path of the preset to add
+   */
+  protected async addPreset(preset: string | PluginConfig) {
+    if (
+      preset &&
+      !this.#plugins.some(p =>
+        typeof preset === "string"
+          ? p.installPath === preset
+          : p.installPath === preset[0]
+      )
+    ) {
+      const pluginConfig: PluginConfig =
+        typeof preset === "string" ? [preset, {}] : preset;
+      const isInstalled = await isPackageListed(
+        pluginConfig[0],
+        this.context.projectRoot
+      );
+      if (!isInstalled && this.context.skipInstalls !== true) {
+        this.log(
+          LogLevelLabel.WARN,
+          `The preset package "${pluginConfig[0]}" is not installed. It will be installed automatically.`
+        );
+
+        const result = await install(pluginConfig[0], {
+          cwd: this.context.projectRoot
+        });
+        if (isNumber(result.exitCode) && result.exitCode > 0) {
+          this.log(LogLevelLabel.ERROR, result.stderr);
+          throw new Error(
+            `An error occurred while installing the build preset package "${pluginConfig[0]}" `
+          );
+        }
+      }
+
+      let presetInstance!: Preset<TOptions>;
+      try {
+        const module = await this.context.resolver.import<{
+          default: new (config: any) => Preset<TOptions>;
+        }>(this.context.resolver.esmResolve(pluginConfig[0]));
+        const PresetConstructor = module.default;
+
+        presetInstance = new PresetConstructor(pluginConfig[1]);
+      } catch (error) {
+        if (!isInstalled) {
+          throw new Error(
+            `The preset package "${pluginConfig[0]}" is not installed. Please install the package using the command: "npm install ${pluginConfig[0]} --save-dev"`
+          );
+        } else {
+          throw new Error(
+            `An error occurred while importing the build preset package "${pluginConfig[0]}":
+${error.message}
+
+Note: Please ensure the preset package's default export is a class that extends \`Plugin\` with a constructor that excepts zero arguments.`
+          );
+        }
+      }
+
+      if (!presetInstance) {
+        throw new Error(
+          `The preset package "${pluginConfig[0]}" does not export a valid module.`
+        );
+      }
+
+      if (!presetInstance.name) {
+        throw new Error(
+          `The module in the build preset package "${pluginConfig[0]}" must export a \`name\` string value.`
+        );
+      }
+      if (!presetInstance.addHooks) {
+        throw new Error(
+          `The build preset "${presetInstance.name}" must export an \`addHooks\` function.`
+        );
+      }
+
+      if (presetInstance.dependencies) {
+        for (const dependency of presetInstance.dependencies) {
+          await this.addPlugin(dependency);
+        }
+      }
+
+      this.log(
+        LogLevelLabel.INFO,
+        `Successfully initialized the "${presetInstance.name}" preset`
+      );
+
+      this.#plugins.push(presetInstance);
+    }
+  }
+
+  /**
    * Add a Storm Stack plugin to the build process
    *
    * @param plugin - The import path of the plugin to add
@@ -922,12 +1019,6 @@ Note: Please ensure the plugin package's default export is a class that extends 
         throw new Error(
           `The build plugin "${pluginInstance.name}" must export an \`addHooks\` function.`
         );
-      }
-
-      if (pluginInstance.dependencies) {
-        for (const dependency of pluginInstance.dependencies) {
-          await this.addPlugin(dependency);
-        }
       }
 
       this.log(

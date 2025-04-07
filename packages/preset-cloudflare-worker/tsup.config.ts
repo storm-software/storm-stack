@@ -18,7 +18,7 @@
 import { getTsupConfig } from "@storm-stack/tools-config/tsup.shared";
 
 const config = getTsupConfig({
-  name: "plugin-cloudflare-worker",
+  name: "preset-cloudflare-worker",
   entry: ["src/*.ts"],
   outDir: "dist",
   bundle: false,

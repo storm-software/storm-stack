@@ -47,7 +47,7 @@ The **⚡Storm Stack** monorepo contains the [storm-stack](https://www.npmjs.com
   - [Running End-to-End Tests](#running-end-to-end-tests)
   - [Understand your workspace](#understand-your-workspace)
 - [☁ Nx Cloud](#-nx-cloud)
-  - [Distributed Computation Caching & Distributed Task Execution](#distributed-computation-caching--distributed-task-execution)
+  - [Distributed Computation Caching \& Distributed Task Execution](#distributed-computation-caching--distributed-task-execution)
 - [Roadmap](#roadmap)
 - [Contributing](#contributing)
 - [Support](#support)
@@ -70,7 +70,7 @@ The [storm-stack](https://www.npmjs.com/package/storm-stack) package includes th
 
 - The following Storm Stack plugin packages are included in this repository:
   - [@storm-stack/plugin-node](https://www.npmjs.com/package/@storm-stack/plugin-node) - A plugin for Node.js applications
-  - [@storm-stack/plugin-cloudflare-worker](https://www.npmjs.com/package/@storm-stack/plugin-cloudflare-worker) - A plugin for Cloudflare Worker applications
+  - [@storm-stack/preset-cloudflare-worker](https://www.npmjs.com/package/@storm-stack/preset-cloudflare-worker) - A preset for Cloudflare Worker applications
 
 ## Adapters
 

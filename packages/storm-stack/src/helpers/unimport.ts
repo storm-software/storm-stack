@@ -51,7 +51,7 @@ export function createUnimport<TOptions extends Options = Options>(
     ],
     commentsDebug: ["@unimport-debug", "@imports-debug", "@storm-debug"],
     injectAtEnd: true,
-    presets: context.presets
+    presets: context.unimportPresets
     // parser: "acorn",
     //     addons: {
     //       addons: [

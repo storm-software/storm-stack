@@ -111,26 +111,26 @@ export default class NodePlugin<
     context.override.format = "esm";
     context.override.target = "node22";
 
-    context.presets.push({
+    context.unimportPresets.push({
       imports: ["builder"],
       from: "storm:app"
     });
-    context.presets.push({
+    context.unimportPresets.push({
       imports: ["useStorm"],
       from: "storm:context"
     });
-    context.presets.push({
+    context.unimportPresets.push({
       imports: ["StormEvent"],
       from: "storm:event"
     });
 
     if (this.config.features.includes(StormStackNodeFeatures.HTTP)) {
-      context.presets.push({
+      context.unimportPresets.push({
         imports: ["StormURL"],
         from: "@stryke/http/types",
         type: true
       });
-      context.presets.push({
+      context.unimportPresets.push({
         imports: ["StormURLBuilder"],
         from: "@stryke/http/url-builder"
       });

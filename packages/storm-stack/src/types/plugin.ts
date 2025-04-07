@@ -34,7 +34,10 @@ export interface IPlugin<TOptions extends Options = Options> {
    * Function to add hooks to the engine
    */
   addHooks: (hooks: EngineHooks<TOptions>) => MaybePromise<void>;
+}
 
+export interface IPreset<TOptions extends Options = Options>
+  extends IPlugin<TOptions> {
   /**
    * A list of plugin modules required as dependencies by the current plugin.
    *

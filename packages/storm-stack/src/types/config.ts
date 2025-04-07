@@ -110,6 +110,11 @@ export interface ProjectConfig {
   projectType?: "application" | "library" | "adapter";
 
   /**
+   * A list of resolvable paths to presets used during the build process
+   */
+  presets?: Array<string | PluginConfig>;
+
+  /**
    * A list of resolvable paths to plugins used during the build process
    */
   plugins?: Array<string | PluginConfig>;
