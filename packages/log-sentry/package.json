@@ -31,7 +31,10 @@
   },
   "storm": {
     "adapter": "log",
-    "init": "src/instrument.ts",
-    "sink": "src/index.ts"
+    "dotenv": {
+      "types": {
+        "variables": "./src/types.ts#StormSentryLogEnv"
+      }
+    }
   }
 }

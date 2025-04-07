@@ -15,14 +15,14 @@
 
  ------------------------------------------------------------------- */
 
-import * as Sentry from "@sentry/node";
+import type { StormEnv } from "storm-stack/types/global";
 
-Sentry.init({
-  dsn: process.env.SENTRY_DSN,
-  environment: process.env.ENVIRONMENT,
-  release: process.env.RELEASE_ID,
-  debug: !!process.env.DEBUG,
-  enabled: true,
-  attachStacktrace: !!process.env.STACKTRACE,
-  sendClientReports: true
-});
+export interface StormSentryLogEnv extends StormEnv {
+  /**
+   * The DSN for Sentry
+   *
+   * @remarks
+   * This is used to send logs to Sentry.
+   */
+  SENTRY_DSN: string;
+}
