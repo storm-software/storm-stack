@@ -30,7 +30,7 @@ import type {
   StormRuntimeParams,
   ValidatorFunction
 } from "@storm-stack/plugin-node/types";
-import { isNativeError } from "node:util/types";
+import { isError } from "@stryke/type-checks/is-error";
 import type { StormEnv } from "storm-stack/types";
 import { ErrorType } from "storm-stack/types";
 import {
@@ -129,7 +129,7 @@ export function builder<
         const request = await Promise.resolve(
           builderConfig.deserializer!(payload)
         );
-        if (isNativeError(request) || (Array.isArray(request) && request.length > 0)) {
+        if (isError(request) || (Array.isArray(request) && request.length > 0)) {
           // if the deserializer returns an error or an array of issues, we need to return a validation error response
           return new StormResponse(
             uniqueId(),

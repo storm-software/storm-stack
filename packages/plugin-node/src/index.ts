@@ -148,6 +148,10 @@ export default class NodePlugin<
         this.install(context, "@types/node", true),
         context.projectType === "application" && this.install(context, "qs"),
         context.projectType === "application" &&
+          this.install(context, "@stryke/json"),
+        context.projectType === "application" &&
+          this.install(context, "@stryke/type-checks"),
+        context.projectType === "application" &&
           this.install(context, "@stryke/env"),
         context.projectType === "application" &&
           this.config.features.includes(StormStackNodeFeatures.HTTP) &&
