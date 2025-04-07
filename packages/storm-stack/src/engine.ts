@@ -1057,7 +1057,9 @@ Note: Please ensure the plugin package's default export is a class that extends 
     dotenv.docgen =
       this.context.dotenv?.docgen ??
       joinPaths(this.context.projectRoot, "docs", "dotenv.md");
-    dotenv.replace = Boolean(this.context.dotenv?.replace);
+    dotenv.replace = Boolean(
+      this.context.dotenv?.replace ?? this.context.projectType === "application"
+    );
 
     const env = defu(
       await loadEnv(

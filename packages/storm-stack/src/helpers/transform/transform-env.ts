@@ -49,26 +49,28 @@ export async function transformEnv<TOptions extends Options = Options>(
   nodes.forEach(node => {
     const name = node.getMatch("ENV_VALUE")?.text()?.replace("STORM_", "");
     if (name && typeDefs[name]) {
-      const typeDef = typeDefs[name];
-      const value =
-        context.resolvedDotenv.values?.[name] ??
-        context.resolvedDotenv.values?.[`STORM_${name}`] ??
-        typeDef.defaultValue;
-      if (!typeDef.isOptional && value === undefined) {
-        throw new Error(
-          `Environment variable \`${name}\` is not defined in the .env configuration files`
+      if (context.resolvedDotenv.replace) {
+        const typeDef = typeDefs[name];
+        const value =
+          context.resolvedDotenv.values?.[name] ??
+          context.resolvedDotenv.values?.[`STORM_${name}`] ??
+          typeDef.defaultValue;
+        if (!typeDef.isOptional && value === undefined) {
+          throw new Error(
+            `Environment variable \`${name}\` is not defined in the .env configuration files`
+          );
+        }
+
+        source.code = source.code.replaceAll(
+          node.text(),
+          typeDef?.text === "string" ||
+            typeDef?.text?.includes('"') ||
+            typeDef?.type?.isString ||
+            typeDef?.type?.isStringLiteral
+            ? `"${value}"`
+            : `${value}`
         );
       }
-
-      source.code = source.code.replaceAll(
-        node.text(),
-        typeDef?.text === "string" ||
-          typeDef?.text?.includes('"') ||
-          typeDef?.type?.isString ||
-          typeDef?.type?.isStringLiteral
-          ? `"${value}"`
-          : `${value}`
-      );
       if (!source.env.includes(name)) {
         source.env.push(name);
       }
