@@ -1,6 +1,6 @@
 {
   "name": "@storm-stack/preset-cloudflare-worker",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "type": "module",
   "description": "A Storm Stack build preset for Cloudflare Workers",
   "repository": {
@@ -46,11 +46,11 @@
     "@cloudflare/unenv-preset": "catalog:",
     "@ltd/j-toml": "catalog:",
     "@storm-software/config-tools": "catalog:",
-    "@storm-stack/plugin-node": "workspace:*",
+    "@storm-stack/plugin-node": "0.1.0",
     "@stryke/fs": "catalog:",
     "@stryke/json": "catalog:",
     "@stryke/path": "catalog:",
-    "storm-stack": "workspace:*",
+    "storm-stack": "0.1.0",
     "unenv": "catalog:"
   },
   "devDependencies": {

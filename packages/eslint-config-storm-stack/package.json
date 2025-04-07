@@ -1,6 +1,6 @@
 {
   "name": "eslint-config-storm-stack",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "type": "module",
   "description": "⚡ The storm-stack monorepo contains utility applications, tools, and various libraries to create modern and scalable web applications.",
   "repository": {
@@ -100,7 +100,7 @@
   "dependencies": {
     "@storm-software/eslint": "catalog:",
     "eslint-flat-config-utils": "catalog:",
-    "eslint-plugin-storm-stack": "workspace:*"
+    "eslint-plugin-storm-stack": "0.1.0"
   },
   "devDependencies": {
     "eslint": "catalog:",
