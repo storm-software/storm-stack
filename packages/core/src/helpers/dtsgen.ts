@@ -22,7 +22,7 @@ export function generateDeclarations(
   env: Record<string, ResolvedDotenvTypeDefinitionProperty>
 ) {
   return `${getFileHeader(`
-/// <reference types="storm-stack/types" />
+/// <reference types="@storm-stack/core/types" />
 `)}
 declare global {
   const $storm: {
@@ -42,7 +42,7 @@ export {};
 
 export function generateImports(path: string) {
   return `${getFileHeader(`
-/// <reference types="storm-stack/types" />
+/// <reference types="@storm-stack/core/types" />
 `)}
 declare global {
   const StormError: (typeof import("${path}/error"))["StormError"];

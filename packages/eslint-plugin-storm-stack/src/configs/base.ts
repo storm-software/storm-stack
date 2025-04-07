@@ -23,7 +23,7 @@ const config: Linter.Config = {
   files: ["**/*.{,c,m}{j,t}s{,x}"],
   name: "storm-stack:base",
   plugins: {
-    "@storm-stack/core": plugin
+    "storm-stack": plugin
   },
   languageOptions: {
     globals

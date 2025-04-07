@@ -9,6 +9,7 @@
       "@storm-stack/biome": ["packages/biome/src/index.ts"],
       "@storm-stack/biome/*": ["packages/biome/src/*"],
       "@storm-stack/core": ["packages/core/src/index.ts"],
+      "@storm-stack/core/*": ["packages/core/src/*"],
       "@storm-stack/examples-cloudflare-worker": [
         "examples/cloudflare-worker/src/index.ts"
       ],
@@ -53,8 +54,7 @@
       ],
       "eslint-plugin-storm-stack/*": [
         "packages/eslint-plugin-storm-stack/src/*"
-      ],
-      "storm-stack/*": ["packages/storm-stack/src/*"]
+      ]
     }
   }
 }

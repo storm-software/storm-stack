@@ -27,7 +27,7 @@
 import { getConfig } from "./preset";
 
 const config = getConfig({
-  "@storm-stack/core": "recommended"
+  "storm-stack": "recommended"
 });
 
 export default config;

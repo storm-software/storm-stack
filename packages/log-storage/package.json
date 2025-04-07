@@ -13,9 +13,9 @@
     "@storm-stack/log-stream": "workspace:*"
   },
   "devDependencies": {
+    "@storm-stack/core": "workspace:*",
     "@storm-stack/nx": "workspace:*",
-    "@types/node": "catalog:",
-    "@storm-stack/core": "workspace:*"
+    "@types/node": "catalog:"
   },
   "publishConfig": {
     "access": "public"

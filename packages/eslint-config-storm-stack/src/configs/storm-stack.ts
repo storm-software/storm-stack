@@ -40,7 +40,7 @@ export async function stormStack(
       files,
       name: "storm/storm-stack/setup",
       plugins: {
-        "@storm-stack/core": pluginStormStack
+        "storm-stack": pluginStormStack
       },
       ignores: [".storm", "**/.storm"]
     },

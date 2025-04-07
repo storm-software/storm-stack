@@ -25,7 +25,7 @@ export function generateDeclarations(
   _features: StormStackNodeFeatures[]
 ) {
   return `${getFileHeader(`
-/// <reference types="storm-stack/types" />
+/// <reference types="@storm-stack/core/types" />
 /// <reference types="@storm-stack/plugin-node/types" />
 `)}
 declare global {

@@ -111,9 +111,9 @@
     "@storm-software/esbuild": "catalog:",
     "@storm-software/unbuild": "catalog:",
     "@storm-software/workspace-tools": "catalog:",
+    "@storm-stack/core": "workspace:*",
     "defu": "catalog:",
-    "nx": "catalog:",
-    "@storm-stack/core": "workspace:*"
+    "nx": "catalog:"
   },
   "devDependencies": {
     "@storm-software/testing-tools": "catalog:",

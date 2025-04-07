@@ -86,11 +86,11 @@ export async function getTsconfigChanges(
 
   // if (
   //   !tsconfig.options.types?.some(
-  //     type => type.toLowerCase() === "storm-stack/types"
+  //     type => type.toLowerCase() === "@storm-stack/core/types"
   //   )
   // ) {
   //   tsconfigJson.compilerOptions.types ??= [];
-  //   tsconfigJson.compilerOptions.types.push("storm-stack/types");
+  //   tsconfigJson.compilerOptions.types.push("@storm-stack/core/types");
   // }
 
   if (

@@ -26,8 +26,8 @@ import { isError } from "@stryke/type-checks/is-error";
 import { isFunction } from "@stryke/type-checks/is-function";
 import { isObject } from "@stryke/type-checks/is-object";
 import { isSetString } from "@stryke/type-checks/is-set-string";
-import type { IStormError, ParsedStacktrace, StormErrorOptions } from "storm-stack/types";
-import { ErrorType } from "storm-stack/types";
+import type { IStormError, ParsedStacktrace, StormErrorOptions } from "@storm-stack/core/types";
+import { ErrorType } from "@storm-stack/core/types";
 
 /**
  * Get the default error code for the given error type.
