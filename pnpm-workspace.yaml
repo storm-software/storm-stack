@@ -182,3 +182,9 @@ catalogs:
     "@storm-stack/log-stream": 0.2.0
   conflicts_@storm-stack/preset-cloudflare-worker_0_2_0:
     "@storm-stack/preset-cloudflare-worker": 0.2.0
+  conflicts_@storm-stack/core_0_3_0:
+    "@storm-stack/core": 0.3.0
+  conflicts_conflicts_@storm-stack/plugin-node_0_2_0_0_3_0:
+    "@storm-stack/plugin-node": 0.3.0
+  conflicts_conflicts_@storm-stack/preset-cloudflare-worker_0_2_0_0_3_0:
+    "@storm-stack/preset-cloudflare-worker": 0.3.0

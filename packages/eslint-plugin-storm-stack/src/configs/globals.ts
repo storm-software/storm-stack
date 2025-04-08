@@ -19,6 +19,7 @@ import type { ESLintGlobalsPropValue } from "@storm-software/eslint/types";
 
 export const globals = {
   $storm: "readonly",
+  StormURL: "readonly",
   StormError: "readonly",
   StormRequest: "readonly",
   StormResponse: "readonly",

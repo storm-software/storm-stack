@@ -24,6 +24,7 @@ import stormErrorsOnly from "./rules/storm-errors-only";
 import stormJSONOnly from "./rules/storm-json-only";
 import stormRequestsOnly from "./rules/storm-requests-only";
 import stormResponsesOnly from "./rules/storm-responses-only";
+import stormURLsOnly from "./rules/storm-urls-only";
 import topLevelFunctions from "./rules/top-level-functions";
 
 export const plugin = {
@@ -35,6 +36,7 @@ export const plugin = {
     "async-prevent-default": asyncPreventDefault,
     "no-implicit-globals": noImplicitGlobals,
     "if-newline": ifNewline,
+    "storm-urls-only": stormURLsOnly,
     "storm-json-only": stormJSONOnly,
     "storm-errors-only": stormErrorsOnly,
     "storm-requests-only": stormRequestsOnly,

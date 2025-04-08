@@ -27,6 +27,7 @@ const config: Linter.Config = {
     "storm-stack/async-prevent-default": "error",
     "storm-stack/if-newline": "error",
     "storm-stack/no-implicit-globals": "error",
+    "storm-stack/storm-urls-only": "error",
     "storm-stack/storm-json-only": "error",
     "storm-stack/storm-errors-only": "error",
     "storm-stack/storm-requests-only": "error",
