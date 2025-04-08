@@ -15,6 +15,9 @@ catalogs:
     '@cloudflare/unenv-preset':
       specifier: 2.0.2
       version: 2.0.2
+    '@deepkit/injector':
+      specifier: ^1.0.2
+      version: 1.0.5
     '@deepkit/type-compiler':
       specifier: ^1.0.2
       version: 1.0.5
@@ -455,6 +458,12 @@ importers:
 
   examples/cli-app:
     dependencies:
+      '@deepkit/injector':
+        specifier: 'catalog:'
+        version: 1.0.5(@deepkit/core@1.0.5)(@deepkit/type@1.0.5(@deepkit/core@1.0.5))
+      '@storm-stack/log-console':
+        specifier: workspace:*
+        version: link:../../packages/log-console
       '@stryke/cli':
         specifier: 'catalog:'
         version: 0.4.1
@@ -470,6 +479,13 @@ importers:
         version: link:../../packages/preset-cli
 
   examples/cloudflare-worker:
+    dependencies:
+      '@deepkit/injector':
+        specifier: 'catalog:'
+        version: 1.0.5(@deepkit/core@1.0.5)(@deepkit/type@1.0.5(@deepkit/core@1.0.5))
+      '@storm-stack/log-console':
+        specifier: workspace:*
+        version: link:../../packages/log-console
     devDependencies:
       '@storm-stack/core':
         specifier: workspace:*
@@ -483,6 +499,9 @@ importers:
 
   examples/node-app:
     dependencies:
+      '@deepkit/injector':
+        specifier: 'catalog:'
+        version: 1.0.5(@deepkit/core@1.0.5)(@deepkit/type@1.0.5(@deepkit/core@1.0.5))
       '@storm-stack/log-console':
         specifier: workspace:*
         version: link:../../packages/log-console
@@ -2134,6 +2153,15 @@ packages:
     resolution: {integrity: sha512-LzxlLEMbBOPYB85uXrDqvD4MgcenjRBLIns3zyhx7vTPj/0u2eQhzXvPiGcaJrV38Q9dbkExWp6cOHPJ+EtFYg==}
     engines: {node: '>= 6'}
 
+  '@deepkit/core@1.0.5':
+    resolution: {integrity: sha512-1N+HuDEV7BOiF1KFg5JwMtgPCtxR1KPLIut645o98sUcnQzJP0ywvgyqpfqV+D9IK7TGBGxQDhbUSQlBG34pTg==}
+
+  '@deepkit/injector@1.0.5':
+    resolution: {integrity: sha512-D4nHCJeNyPWzk8xlJ409sEf66tFYLaIi1jfW3LJErwAeIv9qKCXXcid3Ciu1uNQ5la6FUrQQWB6A/tszui2SQg==}
+    peerDependencies:
+      '@deepkit/core': ^1.0.1
+      '@deepkit/type': ^1.0.1
+
   '@deepkit/type-compiler@1.0.5':
     resolution: {integrity: sha512-KiKvy/CmB4hVWKLqJonLGHW0BUKYzcuzUvhd746SLbu5jvvvuF4mnwzAKeIk3rdNojimLzURVkJyqM7CryJtug==}
     hasBin: true
@@ -2142,6 +2170,11 @@ packages:
 
   '@deepkit/type-spec@1.0.1':
     resolution: {integrity: sha512-14iJbtfGdjewxhzSWTU+nxQOD+sopFg8MP0W0kizJQMRADxhreDID8lDUk6zWoAJ6aLsQ1QbKZAl1UokzRI69A==}
+
+  '@deepkit/type@1.0.5':
+    resolution: {integrity: sha512-vZZf5KBz2BMxnRaW8dGr1kXFFMYoaQjDgeqTBKoioX3VgCtjFEnIog6w8Gh8tmEdfdiiKCCZr/h4D158R9BGyw==}
+    peerDependencies:
+      '@deepkit/core': ^1.0.1
 
   '@discoveryjs/json-ext@0.5.7':
     resolution: {integrity: sha512-dBVuXR082gk3jsFp7Rd/JI4kytwGHecnCoTtXFb7DB6CNHp4rg5k1bhg0nWdLGLnOV71lmDzGQaLMy8iPLY0pw==}
@@ -3341,7 +3374,6 @@ packages:
 
   '@ls-lint/ls-lint@2.3.0':
     resolution: {integrity: sha512-lsT5/7SxtImOIjpefC9wcoXt2lkikKhCjd6U+Q9Z6X5h2HBU/71ggt+XStdodZ0HkJGO333zDUeec7JROMCPFw==}
-    cpu: [x64, arm64, s390x, ppc64le]
     os: [darwin, linux, win32]
     hasBin: true
 
@@ -5318,6 +5350,9 @@ packages:
   '@types/unist@3.0.3':
     resolution: {integrity: sha512-ko/gIFJRv177XgZsZcBwnqJN5x/Gien8qNOn0D5bQU/zAzVf9Zt3BlcUiLqhV9y4ARk0GbT3tnUiPNgnTXzc/Q==}
 
+  '@types/uuid@8.3.4':
+    resolution: {integrity: sha512-c/I8ZRb51j+pYGAu5CrFMRxqZ2ke4y2grEBO5AUjgSkSk+qT2Ea+OdWElz/OiMf5MNpn2b17kuVBwZLQJXzihw==}
+
   '@types/ws@8.18.1':
     resolution: {integrity: sha512-ThVF6DCVhA8kUGy+aazFQ4kXQ7E1Ty7A3ypFOe0IcJV8O/M511G99AW24irKrW56Wt44yG9+ij8FaqoBGkuBXg==}
 
@@ -7113,6 +7148,10 @@ packages:
   dot-case@3.0.4:
     resolution: {integrity: sha512-Kv5nKlh6yRrdrGvxeJ2e5y2eRUpkUosIW4A2AS38zwSz27zu7ufDwQPi5Jhs3XAlGNetl3bmnGhQsMtkKJnj3w==}
 
+  dot-prop@5.3.0:
+    resolution: {integrity: sha512-QM8q3zDe58hqUqjraQOmzZ1LIH9SWQJTlEKCH4kJ2oQvLZk7RbQXvtDM2XEq3fwkV9CCvvH4LA0AV+ogFsBM2Q==}
+    engines: {node: '>=8'}
+
   dot-prop@9.0.0:
     resolution: {integrity: sha512-1gxPBJpI/pcjQhKgIU91II6Wkay+dLcN3M6rf2uwP8hRur3HtQXjVrdAK3sjC0piaEuxzMwjXChcETiJl47lAQ==}
     engines: {node: '>=18'}
@@ -8730,6 +8769,10 @@ packages:
   is-number@7.0.0:
     resolution: {integrity: sha512-41Cifkg6e8TylSpdtTpeLVMqvSBEVzTttHvERD741+pnZ8ANv0004MRL43QKPDlK9cGvNp6NZWZUBlbGXYxxng==}
     engines: {node: '>=0.12.0'}
+
+  is-obj@2.0.0:
+    resolution: {integrity: sha512-drqDG3cbczxxEJRoOXcOjtdp1J/lyp1mNn0xaznRs8+muBhgQcrnbspox5X5fOw0HnMnbfDzvnEMEtqDEJEo8w==}
+    engines: {node: '>=8'}
 
   is-plain-obj@3.0.0:
     resolution: {integrity: sha512-gwsOE28k+23GP1B6vFl1oVh/WOzmawBrKwo5Ev6wMKzPkaXaCDIQKzLnvsA42DRlbVTWorkgTKIviAKCWkfUwA==}
@@ -11927,6 +11970,10 @@ packages:
     resolution: {integrity: sha512-/OaKK0xYrs3DmxRYqL/yDc+FxFUVYhDlXMhRmv3z915w2HF1tnN1omB354j8VUGO/hbRzyD6Y3sA7v7GS/ceog==}
     engines: {node: '>=4'}
 
+  to-fast-properties@3.0.1:
+    resolution: {integrity: sha512-/wtNi1tW1F3nf0OL6AqVxGw9Tr1ET70InMhJuVxPwFdGqparF0nQ4UWGLf2DsoI2bFDtthlBnALncZpUzOnsUw==}
+    engines: {node: '>=8'}
+
   to-regex-range@5.0.1:
     resolution: {integrity: sha512-65P7iz6X5yEr1cwcgvQxbbIw7Uk3gOy5dIdtZ4rDveLqhrdJP+Li/Hx6tyK0NEb+2GCyneCMJiGqrADCSNk8sQ==}
     engines: {node: '>=8.0'}
@@ -14072,6 +14119,16 @@ snapshots:
       tunnel-agent: 0.6.0
       uuid: 8.3.2
 
+  '@deepkit/core@1.0.5':
+    dependencies:
+      dot-prop: 5.3.0
+      to-fast-properties: 3.0.1
+
+  '@deepkit/injector@1.0.5(@deepkit/core@1.0.5)(@deepkit/type@1.0.5(@deepkit/core@1.0.5))':
+    dependencies:
+      '@deepkit/core': 1.0.5
+      '@deepkit/type': 1.0.5(@deepkit/core@1.0.5)
+
   '@deepkit/type-compiler@1.0.5(rollup@4.39.0)(typescript@5.7.3)':
     dependencies:
       '@deepkit/type-spec': 1.0.1
@@ -14088,6 +14145,14 @@ snapshots:
       - supports-color
 
   '@deepkit/type-spec@1.0.1': {}
+
+  '@deepkit/type@1.0.5(@deepkit/core@1.0.5)':
+    dependencies:
+      '@deepkit/core': 1.0.5
+      '@deepkit/type-spec': 1.0.1
+      '@types/uuid': 8.3.4
+      buffer: 5.7.1
+      uuid: 8.3.2
 
   '@discoveryjs/json-ext@0.5.7': {}
 
@@ -19262,6 +19327,8 @@ snapshots:
 
   '@types/unist@3.0.3': {}
 
+  '@types/uuid@8.3.4': {}
+
   '@types/ws@8.18.1':
     dependencies:
       '@types/node': 22.14.0
@@ -21461,6 +21528,10 @@ snapshots:
     dependencies:
       no-case: 3.0.4
       tslib: 2.8.1
+
+  dot-prop@5.3.0:
+    dependencies:
+      is-obj: 2.0.0
 
   dot-prop@9.0.0:
     dependencies:
@@ -23829,6 +23900,8 @@ snapshots:
       has-tostringtag: 1.0.2
 
   is-number@7.0.0: {}
+
+  is-obj@2.0.0: {}
 
   is-plain-obj@3.0.0: {}
 
@@ -28422,6 +28495,8 @@ snapshots:
   to-arraybuffer@1.0.1: {}
 
   to-fast-properties@2.0.0: {}
+
+  to-fast-properties@3.0.1: {}
 
   to-regex-range@5.0.1:
     dependencies:

@@ -9,6 +9,10 @@
     "directory": "examples/cloudflare-worker"
   },
   "private": true,
+  "dependencies": {
+    "@deepkit/injector": "catalog:",
+    "@storm-stack/log-console": "workspace:*"
+  },
   "devDependencies": {
     "@storm-stack/core": "workspace:*",
     "@storm-stack/nx": "workspace:*",
