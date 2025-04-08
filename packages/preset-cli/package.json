@@ -1,0 +1,61 @@
+{
+  "name": "@storm-stack/preset-cli",
+  "version": "0.0.1",
+  "type": "module",
+  "description": "A Storm Stack build preset for Cloudflare Workers",
+  "repository": {
+    "type": "github",
+    "url": "https://github.com/storm-software/storm-stack.git",
+    "directory": "packages/preset-cli"
+  },
+  "private": false,
+  "exports": {
+    "./package.json": "./package.json",
+    ".": {
+      "import": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      },
+      "require": {
+        "types": "./dist/index.d.cts",
+        "default": "./dist/index.cjs"
+      },
+      "default": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      }
+    },
+    "./index": {
+      "import": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      },
+      "require": {
+        "types": "./dist/index.d.cts",
+        "default": "./dist/index.cjs"
+      },
+      "default": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      }
+    }
+  },
+  "types": "dist/index.d.ts",
+  "typings": "dist/index.d.ts",
+  "dependencies": {
+    "@storm-software/config-tools": "catalog:",
+    "@storm-stack/core": "workspace:*",
+    "@storm-stack/plugin-node": "workspace:*",
+    "@stryke/cli": "catalog:",
+    "@stryke/fs": "catalog:",
+    "@stryke/path": "catalog:",
+    "defu": "catalog:"
+  },
+  "devDependencies": {
+    "@stryke/types": "catalog:",
+    "tsup": "catalog:"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

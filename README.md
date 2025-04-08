@@ -36,6 +36,7 @@ The **⚡Storm Stack** monorepo contains the [storm-stack](https://www.npmjs.com
 - [Features](#features)
   - [Engine](#engine)
   - [Plugins](#plugins)
+  - [Presets](#presets)
   - [Adapters](#adapters)
   - [Development Tools](#development-tools)
 - [Environment Configuration Help](#environment-configuration-help)
@@ -68,15 +69,27 @@ The [@storm-stack/core](https://www.npmjs.com/package/@storm-stack/core) package
 
 ## Plugins
 
-- The following Storm Stack plugin packages are included in this repository:
-  - [@storm-stack/plugin-node](https://www.npmjs.com/package/@storm-stack/plugin-node) - A plugin for Node.js applications
-  - [@storm-stack/preset-cloudflare-worker](https://www.npmjs.com/package/@storm-stack/preset-cloudflare-worker) - A preset for Cloudflare Worker applications
+The following Storm Stack plugin packages are included in this repository:
+- [@storm-stack/plugin-node](https://www.npmjs.com/package/@storm-stack/plugin-node) - A plugin for Node.js applications
+- [@storm-stack/plugin-http](https://www.npmjs.com/package/@storm-stack/plugin-http) - A plugin that adds Http helper types, classes, and functions to a project
+
+## Presets
+
+The following Storm Stack preset packages are included in this repository:
+- [@storm-stack/preset-cloudflare-worker](https://www.npmjs.com/package/@storm-stack/preset-cloudflare-worker) - A preset for Cloudflare Worker applications
+- [@storm-stack/preset-cli](https://www.npmjs.com/package/@storm-stack/preset-cli) - A preset for creating commandline applications
 
 ## Adapters
 
 An application developed with Storm Stack can include a set of adapters that are used to abstract the underlying technology. This allows the application to be built and deployed to different platforms without changing the code. There are currently two classes of adapters available:
 
-- Log Adapters - adapters that provide logging and reporting functionality for the application
+- Log Adapters - adapters that provide logging and reporting functionality for the application. The following log adapters packages are included in the repository:
+  - [@storm-stack/log-console](https://www.npmjs.com/package/@storm-stack/log-console) - A package containing functionality to write log messages to the console
+  - [@storm-stack/log-sentry](https://www.npmjs.com/package/@storm-stack/log-sentry) - A package containing functionality to write log messages to [sentry](https://sentry.io)
+  - [@storm-stack/log-otel](https://www.npmjs.com/package/@storm-stack/log-otel) - A package containing functionality to write log messages to an [OpenTelemetry](https://opentelemetry.io/) collector
+  - [@storm-stack/log-storage](https://www.npmjs.com/package/@storm-stack/log-storage) - A package containing functionality to write log messages to a specified storage type
+  - [@storm-stack/log-stream](https://www.npmjs.com/package/@storm-stack/log-stream) - A package containing functionality to write log messages to streams
+
 - File System Adapters - adapters used to abstract away the process of writing or reading from the file system
 
 ## Development Tools
@@ -88,9 +101,16 @@ The following packages are included in this repository to assist with the develo
 - An [ESLint](https://eslint.org/) shared configuration to ensure code quality and consistency
 - A [Biome](https://biomejs.dev/) shared configuration to include required globals and rules
 
+<br />
 <div align="center">
-<b><a href="https://github.com/storm-software/storm-stack" target="_blank">Be sure to ⭐ this repository on GitHub so you can keep up to date on any daily progress!</a></b>
+<b><a href="https://github.com/storm-software/storm-stack" target="_blank">Be sure to ⭐ this repository on GitHub so you can keep up to date on any daily progress!</a>
+</b>
 </div>
+
+<br />
+<div align="right">[ <a href="#table-of-contents">Back to top ▲</a> ]</div>
+<br />
+
 
 # Environment Configuration Help
 
