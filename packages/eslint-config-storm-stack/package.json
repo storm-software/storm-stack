@@ -100,7 +100,7 @@
   "dependencies": {
     "@storm-software/eslint": "catalog:",
     "eslint-flat-config-utils": "catalog:",
-    "eslint-plugin-storm-stack": "0.4.0"
+    "eslint-plugin-storm-stack": "workspace:*"
   },
   "devDependencies": {
     "eslint": "catalog:",

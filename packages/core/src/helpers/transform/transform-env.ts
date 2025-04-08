@@ -16,9 +16,28 @@
  ------------------------------------------------------------------- */
 
 import { Lang, parseAsync } from "@ast-grep/napi";
-import type { Context, Options, SourceFile } from "../../types/build";
+import { LogLevelLabel } from "@storm-software/config-tools/types";
+import { readJsonFile } from "@stryke/fs/read-file";
+import { deepClone } from "@stryke/helpers/deep-clone";
+import { isEqual } from "@stryke/helpers/is-equal";
+import { Mutex } from "@stryke/helpers/mutex";
+import { StormJSON } from "@stryke/json/storm-json";
+import { existsSync } from "@stryke/path/exists";
+import { joinPaths } from "@stryke/path/join-paths";
+import defu from "defu";
+import type {
+  Context,
+  Options,
+  ResolvedDotenvTypeDefinitionProperty,
+  SourceFile
+} from "../../types/build";
+import type { LogFn } from "../../types/config";
+import { writeFile } from "../utilities/write-file";
+
+const mutex = new Mutex();
 
 export async function transformEnv<TOptions extends Options = Options>(
+  log: LogFn,
   source: SourceFile,
   context: Context<TOptions>
 ): Promise<SourceFile> {
@@ -28,6 +47,19 @@ export async function transformEnv<TOptions extends Options = Options>(
       "No type definitions found for environment variables. Please check your dotenv configuration."
     );
   }
+
+  let vars = {} as Record<string, ResolvedDotenvTypeDefinitionProperty>;
+  if (
+    existsSync(
+      joinPaths(context.projectRoot, context.artifactsDir, "vars.json")
+    )
+  ) {
+    vars = await readJsonFile(
+      joinPaths(context.projectRoot, context.artifactsDir, "vars.json")
+    );
+  }
+
+  const originalVars = deepClone(vars);
 
   const ast = await parseAsync(Lang.TypeScript, source.code.toString());
   const root = ast.root();
@@ -46,11 +78,11 @@ export async function transformEnv<TOptions extends Options = Options>(
     return source;
   }
 
-  nodes.forEach(node => {
+  for (const node of nodes) {
     const name = node.getMatch("ENV_VALUE")?.text()?.replace("STORM_", "");
     if (name && typeDefs[name]) {
+      const typeDef = typeDefs[name];
       if (context.resolvedDotenv.replace) {
-        const typeDef = typeDefs[name];
         const value =
           context.resolvedDotenv.values?.[name] ??
           context.resolvedDotenv.values?.[`STORM_${name}`] ??
@@ -71,9 +103,8 @@ export async function transformEnv<TOptions extends Options = Options>(
             : `${value}`
         );
       }
-      if (!source.env.includes(name)) {
-        source.env.push(name);
-      }
+
+      vars[name] ??= typeDef;
     } else {
       throw new Error(
         `Environment variable \`${name}\` is not defined in the dotenv type definition but is used in the code. \n\nThe following variable names are defined in the dotenv type definition: \n${Object.keys(
@@ -85,7 +116,31 @@ export async function transformEnv<TOptions extends Options = Options>(
           )} \n\nPlease check your \`dotenv\` configuration option. If you are using a custom dotenv type definition, please make sure that the variable names match the ones in the code. \n\n`
       );
     }
-  });
+  }
+
+  if (!isEqual(originalVars, vars)) {
+    log(
+      LogLevelLabel.INFO,
+      `Adding enviroment variables from ${source.id} to vars.json.`
+    );
+
+    await mutex.acquire();
+    try {
+      await writeFile(
+        joinPaths(context.projectRoot, context.artifactsDir, "vars.json"),
+        StormJSON.stringify(
+          defu(
+            vars,
+            await readJsonFile(
+              joinPaths(context.projectRoot, context.artifactsDir, "vars.json")
+            )
+          )
+        )
+      );
+    } finally {
+      mutex.release();
+    }
+  }
 
   return source;
 }

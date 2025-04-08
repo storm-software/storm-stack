@@ -5,12 +5,28 @@
   "sourceRoot": "packages/eslint-plugin-storm-stack/src",
   "tags": ["platform:node"],
   "targets": {
-    "format-docs": {
-      "command": "eslint-doc-generator"
+    "docs-build": {
+      "executor": "@storm-software/workspace-tools:unbuild",
+      "outputs": ["{projectRoot}/dist"],
+      "options": {
+        "platform": "node",
+        "outputPath": "{projectRoot}",
+        "buildOnly": true
+      }
+    },
+    "docs": {
+      "executor": "nx:run-commands",
+      "outputs": ["{projectRoot}/docs"],
+      "dependsOn": ["docs-build"],
+      "options": {
+        "cwd": "packages/eslint-plugin-storm-stack",
+        "command": "pnpm exec eslint-doc-generator"
+      }
     },
     "build": {
       "executor": "@storm-software/workspace-tools:unbuild",
       "outputs": ["{options.outputPath}"],
+      "dependsOn": ["docs"],
       "options": {
         "defaultConfiguration": "production",
         "platform": "node"
@@ -26,6 +42,7 @@
         }
       }
     },
+
     "nx-release-publish": {
       "executor": "@storm-software/workspace-tools:npm-publish"
     }

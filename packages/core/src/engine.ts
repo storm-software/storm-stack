@@ -23,9 +23,9 @@ import { parseTypeDefinition } from "@stryke/convert/parse-type-definition";
 import { getEnvPaths } from "@stryke/env/get-env-paths";
 import { createDirectory, removeDirectory } from "@stryke/fs/helpers";
 import { install } from "@stryke/fs/install";
-import { isPackageExists, isPackageListed } from "@stryke/fs/package-fns";
+import { isPackageExists } from "@stryke/fs/package-fns";
 import { readJsonFile } from "@stryke/fs/read-file";
-import { writeFile } from "@stryke/fs/write-file";
+import { writeFile, writeJsonFile } from "@stryke/fs/write-file";
 import { hash } from "@stryke/hash/hash";
 import { hashDirectory } from "@stryke/hash/hash-files";
 import { StormJSON } from "@stryke/json/storm-json";
@@ -198,8 +198,6 @@ export class Engine<TOptions extends Options = Options> {
       this.context,
       (await this.loadConfig()) ?? {}
     ) as Context<TOptions>;
-
-    this.context.vars = {};
 
     const checksum = await hashDirectory(this.context.projectRoot, {
       ignored: ["node_modules", ".git", ".nx", ".cache", ".storm", "tmp"]
@@ -793,19 +791,6 @@ export class Engine<TOptions extends Options = Options> {
           { cause: error }
         );
       });
-
-    if (this.context.vars) {
-      this.log(LogLevelLabel.TRACE, "Writing Storm Stack var.json file");
-
-      await this.writeFile(
-        joinPaths(
-          this.context.projectRoot,
-          this.context.artifactsDir,
-          "vars.json"
-        ),
-        StormJSON.stringify(this.context.vars)
-      );
-    }
   }
 
   /**
@@ -848,7 +833,7 @@ export class Engine<TOptions extends Options = Options> {
       file: joinPaths(
         options.projectRoot,
         options.artifactsDir,
-        `entry-${hash(entryFile, { maxLength: 8 })}.ts`
+        `entry-${hash({ file: entryFile, name: parsed.name }, { maxLength: 8 })}.ts`
       ),
       name: parsed.name
     };
@@ -870,10 +855,12 @@ export class Engine<TOptions extends Options = Options> {
     ) {
       const pluginConfig: PluginConfig =
         typeof preset === "string" ? [preset, {}] : preset;
-      const isInstalled = await isPackageListed(
-        pluginConfig[0],
-        this.context.projectRoot
-      );
+      const isInstalled = isPackageExists(pluginConfig[0], {
+        paths: [
+          this.context.workspaceConfig.workspaceRoot,
+          this.context.projectRoot
+        ]
+      });
       if (!isInstalled && this.context.skipInstalls !== true) {
         this.log(
           LogLevelLabel.WARN,
@@ -962,10 +949,12 @@ Note: Please ensure the preset package's default export is a class that extends 
     ) {
       const pluginConfig: PluginConfig =
         typeof plugin === "string" ? [plugin, {}] : plugin;
-      const isInstalled = await isPackageListed(
-        pluginConfig[0],
-        this.context.projectRoot
-      );
+      const isInstalled = isPackageExists(pluginConfig[0], {
+        paths: [
+          this.context.workspaceConfig.workspaceRoot,
+          this.context.projectRoot
+        ]
+      });
       if (!isInstalled && this.context.skipInstalls !== true) {
         this.log(
           LogLevelLabel.WARN,
@@ -1103,6 +1092,15 @@ Note: Please ensure the plugin package's default export is a class that extends 
 
       return ret;
     }, env);
+
+    await writeJsonFile(
+      joinPaths(
+        this.context.projectRoot,
+        this.context.artifactsDir,
+        "vars.json"
+      ),
+      {}
+    );
 
     return dotenv;
   }

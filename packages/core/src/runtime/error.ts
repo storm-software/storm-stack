@@ -27,7 +27,7 @@ export function writeError() {
  import { isObject } from "@stryke/type-checks/is-object";
  import { isSetString } from "@stryke/type-checks/is-set-string";
  import type { IStormError, ParsedStacktrace, StormErrorOptions } from "@storm-stack/core/types";
- import { ErrorType } from "@storm-stack/core/types";
+ import type { ErrorType } from "@storm-stack/core/types";
 
  /**
   * Get the default error code for the given error type.
@@ -47,26 +47,20 @@ export function writeError() {
   */
  export function getDefaultErrorNameFromErrorType(type: ErrorType): string {
    switch (type) {
-     case ErrorType.NOT_FOUND: {
+     case "not_found":
        return "Not Found Error";
-     }
-     case ErrorType.VALIDATION: {
+     case "validation":
        return "Validation Error";
-     }
-     case ErrorType.SERVICE_UNAVAILABLE: {
+     case "service_unavailable":
        return "System Unavailable Error";
-     }
-     case ErrorType.ACTION_UNSUPPORTED: {
+     case "action_unsupported":
        return "Unsupported Error";
-     }
-     case ErrorType.SECURITY: {
+     case "security":
        return "Security Error";
-     }
-     case ErrorType.UNKNOWN:
-     case ErrorType.GENERAL:
-     default: {
+     case "general":
+     case "unknown":
+     default:
        return "System Error";
-     }
    }
  }
 
@@ -117,7 +111,7 @@ export function writeError() {
   */
  export function getErrorFromUnknown(
    cause: unknown,
-   type: ErrorType = ErrorType.GENERAL,
+   type: ErrorType = "general",
    data?: any
  ): StormError {
    if (isStormError(cause)) {
@@ -229,28 +223,31 @@ export function writeError() {
    /**
     * The type of error event
     */
-   public type: ErrorType = ErrorType.GENERAL;
+   public type: ErrorType = "general";
 
    /**
     * Additional data to be passed with the error
     */
    public data?: any;
 
-   /**
-    * The StormError constructor
-    *
-    * @param options - The options for the error
-    */
-   public constructor(options: StormErrorOptions);
-   public constructor(optionsOrMessage: StormErrorOptions | string, type = ErrorType.GENERAL) {
-       super(
+    /**
+   * The StormError constructor
+   *
+   * @param options - The options for the error
+   * @param type - The type of error
+   */
+  public constructor(
+    optionsOrMessage: StormErrorOptions | string,
+    type: ErrorType = "general"
+  ) {
+    super(
        "An error occurred during processing",
        isSetString(optionsOrMessage) ? undefined : { cause: optionsOrMessage.cause }
      );
 
      if (isSetString(optionsOrMessage)) {
        this.message = optionsOrMessage;
-       this.type = type || ErrorType.GENERAL;
+       this.type = type || "general";
        this.code = getDefaultCode(this.type);
      } else {
        this.code = optionsOrMessage.code;
@@ -382,7 +379,7 @@ export function writeError() {
     * A URL to a page that displays the error message details
     */
    public get url(): string {
-     return \`\${process.env.ERROR_URL}/\${this.type.toLowerCase().replaceAll("_", "-")}/\${this.code}\`;
+     return \`\${$storm.env.ERROR_URL}/\${this.type.toLowerCase().replaceAll("_", "-")}/\${this.code}\`;
    }
 
    /**

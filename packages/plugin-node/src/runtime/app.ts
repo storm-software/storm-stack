@@ -32,7 +32,6 @@ import type {
 } from "@storm-stack/plugin-node/types";
 import { isError } from "@stryke/type-checks/is-error";
 import type { StormEnv } from "@storm-stack/core/types";
-import { ErrorType } from "@storm-stack/core/types";
 import {
   getAppName,
   getAppVersion,
@@ -45,6 +44,7 @@ import type { StormEvent } from "./event";
 import { uniqueId } from "./id";
 import type { StormRequest } from "./request";
 import { StormResponse } from "./response";
+import { InjectorContext } from "@deepkit/injector";
 
 /**
  * Creates a Storm application handler.
@@ -87,6 +87,7 @@ export function builder<
     const version = getAppVersion();
     const buildInfo = getBuildInfo();
     const runtimeInfo = getRuntimeInfo();
+    const injector = InjectorContext.forProviders(params.providers ?? []);
 
     const disposables = new Set<Disposable>();
     const asyncDisposables = new Set<AsyncDisposable>();
@@ -134,7 +135,7 @@ export function builder<
           return new StormResponse(
             uniqueId(),
             {},
-            getErrorFromUnknown(null, ErrorType.VALIDATION, request)
+            getErrorFromUnknown(null, "validation", request)
           );
         }
 
@@ -146,6 +147,7 @@ export function builder<
           log: log.with({ name, version, requestId: request.id }),
           buildInfo,
           runtimeInfo,
+          injector,
           env: {} as StormEnv,
           emit: (_event: StormEvent) => {},
           __internal: {
@@ -181,7 +183,7 @@ export function builder<
                   return StormResponse.create(
                     getErrorFromUnknown(
                       null,
-                      ErrorType.VALIDATION,
+                      "validation",
                       issues
                     )
                   );

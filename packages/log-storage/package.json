@@ -10,11 +10,11 @@
   },
   "private": false,
   "dependencies": {
-    "@storm-stack/log-stream": "0.2.0"
+    "@storm-stack/log-stream": "workspace:*"
   },
   "devDependencies": {
-    "@storm-stack/core": "0.3.0",
-    "@storm-stack/nx": "0.2.0",
+    "@storm-stack/core": "workspace:*",
+    "@storm-stack/nx": "workspace:*",
     "@types/node": "catalog:"
   },
   "publishConfig": {

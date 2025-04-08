@@ -15,13 +15,14 @@
 
  ------------------------------------------------------------------- */
 
-import prettierRC from "@storm-software/prettier";
+import prettierConfig from "@storm-software/prettier";
 import prettier from "prettier";
 
 /** @type {import('eslint-doc-generator').GenerateOptions} */
 const config = {
+  initRuleDocs: true,
   postprocess: content =>
-    prettier.format(content, { ...prettierRC, parser: "markdown" }),
+    prettier.format(content, { ...prettierConfig, parser: "markdown" }),
   configEmoji: [
     ["base", "📝"],
     ["recommended", "🌟"],

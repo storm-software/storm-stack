@@ -121,6 +121,8 @@ export default class StormStackNodePlugin<
       [
         this.install(context, "@types/node", true),
         context.projectType === "application" &&
+          this.install(context, "@deepkit/injector"),
+        context.projectType === "application" &&
           this.install(context, "@stryke/json"),
         context.projectType === "application" &&
           this.install(context, "@stryke/type-checks"),
@@ -272,7 +274,21 @@ export default builder({
 
     return esbuild(
       defu(override ?? {}, context.override, {
-        entry: context.resolvedEntry.map(entry => entry.file),
+        entry: context.resolvedEntry.reduce(
+          (ret, entry) => {
+            ret[
+              entry.input.file
+                .replace(findFileExtension(entry.input.file), "")
+                .replace(
+                  `${context.projectJson?.sourceRoot || context.projectRoot}/`,
+                  ""
+                )
+            ] = entry.file;
+
+            return ret;
+          },
+          {} as Record<string, string>
+        ),
         projectRoot: context.projectRoot,
         outputPath: context.outputPath,
         platform: context.platform,
@@ -280,6 +296,7 @@ export default builder({
         minify: Boolean(context.minify),
         sourcemap: context.mode !== "production",
         bundle: true,
+        banner: "//  ⚡  Built with Storm Stack \n",
         env: context.resolvedDotenv.values as {
           [key: string]: string;
         },

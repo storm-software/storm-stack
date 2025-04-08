@@ -428,15 +428,14 @@ export interface LogSinkInstance {
 /**
  * The type of error response message/event
  */
-export enum ErrorType {
-  GENERAL = "general",
-  NOT_FOUND = "not_found",
-  VALIDATION = "validation",
-  SERVICE_UNAVAILABLE = "service_unavailable",
-  ACTION_UNSUPPORTED = "action_unsupported",
-  SECURITY = "security",
-  UNKNOWN = "unknown"
-}
+export type ErrorType =
+  | "general"
+  | "not_found"
+  | "validation"
+  | "service_unavailable"
+  | "action_unsupported"
+  | "security"
+  | "unknown";
 
 /**
  * Interface representing the Storm error options.

@@ -20,8 +20,8 @@ import type { ExamplePayload } from "./types";
 export function getCity(request: StormRequest<ExamplePayload>) {
   const payload = request.data;
   if (!payload) {
-    // This error message should be replaced by the Babel plugin
-    return new StormError("No payload found");
+    // This error message should be replaced by the compiler
+    return new StormError(`No payload found in ${request.id} request`);
   }
 
   $storm.log.info("Getting city from payload");

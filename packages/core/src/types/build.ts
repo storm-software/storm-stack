@@ -483,11 +483,6 @@ export type Context<
     project: Project;
 
     /**
-     * The .env variables used in the source code
-     */
-    vars: Record<string, ResolvedDotenvTypeDefinitionProperty>;
-
-    /**
      * The Jiti module resolver
      */
     resolver: Jiti;

@@ -39,14 +39,16 @@ This package is part of the ⚡<b>Storm Stack</b> monorepo. Storm Stack packages
 
 <!-- END header -->
 
-# devkit-eslint-plugin-storm-stack
+# Storm Stack - ESLint Plugin
 
-A shared ESLint configuration containing globals used by Storm Stack projects
+An ESLint plugin containing helpful linting rules for Storm Stack projects
 
 <!-- START doctoc -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 ## Table of Contents
 
+- [Storm Stack - ESLint Plugin](#storm-stack---eslint-plugin)
+  - [Table of Contents](#table-of-contents)
   - [Installing](#installing)
   - [Reduced Package Size](#reduced-package-size)
   - [Development](#development)
@@ -68,14 +70,14 @@ A shared ESLint configuration containing globals used by Storm Stack projects
 Using [pnpm](http://pnpm.io):
 
 ```bash
-pnpm add -D storm-stack/devkit-eslint-plugin-storm-stack
+pnpm add -D eslint-plugin-storm-stack
 ```
 
 <details>
   <summary>Using npm</summary>
 
 ```bash
-npm install -D storm-stack/devkit-eslint-plugin-storm-stack
+npm install -D eslint-plugin-storm-stack
 ```
 
 </details>
@@ -84,7 +86,7 @@ npm install -D storm-stack/devkit-eslint-plugin-storm-stack
   <summary>Using yarn</summary>
 
 ```bash
-yarn add -D storm-stack/devkit-eslint-plugin-storm-stack
+yarn add -D eslint-plugin-storm-stack
 ```
 
 </details>
@@ -103,16 +105,16 @@ commands are available to assist in development.
 
 ### Building
 
-Run `nx build devkit-eslint-plugin-storm-stack` to build the library.
+Run `nx build eslint-plugin-storm-stack` to build the library.
 
 ### Running unit tests
 
-Run `nx test devkit-eslint-plugin-storm-stack` to execute the unit tests via
+Run `nx test eslint-plugin-storm-stack` to execute the unit tests via
 [Jest](https://jestjs.io).
 
 ### Linting
 
-Run `nx lint devkit-eslint-plugin-storm-stack` to run
+Run `nx lint eslint-plugin-storm-stack` to run
 [ESLint](https://eslint.org/) on the package.
 
 <!-- START footer -->

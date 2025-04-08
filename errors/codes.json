@@ -1,7 +1,12 @@
 {
   "general": {
     "1": "The process encountered an internal error and was unable to complete the request.",
-    "2": "The process encountered an unexpected condition that prevented it from completing the request."
+    "2": "The process encountered an unexpected condition that prevented it from completing the request.",
+    "3": "Null arrays cannot be provided to getRandom",
+    "4": "App name is not defined.",
+    "5": "useStorm is not available in this environment.",
+    "6": "The %s function%s must be configured. Please add .%s(<your_function>) before .build() is called.",
+    "7": "No payload found in %s request"
   },
   "not_found": {
     "1": "The requested resource was not found.",

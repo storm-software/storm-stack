@@ -188,20 +188,12 @@ export class Compiler<TOptions extends Options = Options>
       `Transpiling ${source.id} module with TypeScript compiler`
     );
 
-    let transformed = await transformEnv<TOptions>(source, context);
-    if (transformed.env.length > 0) {
-      context.vars = transformed.env.reduce((ret, env) => {
-        const property =
-          context.resolvedDotenv.types?.variables?.properties?.[env];
-        if (property) {
-          ret[env] = property;
-        }
-
-        return ret;
-      }, context.vars);
-    }
-
-    transformed = await transformErrors<TOptions>(transformed, context);
+    let transformed = await transformEnv<TOptions>(this.log, source, context);
+    transformed = await transformErrors<TOptions>(
+      this.log,
+      transformed,
+      context
+    );
 
     await this.onTransformCallback(context, transformed);
 

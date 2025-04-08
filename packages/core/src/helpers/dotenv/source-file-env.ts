@@ -51,5 +51,5 @@ export const removeEnvPrefix = <TEnv extends DotenvParseOutput | string>(
 };
 
 export const formatEnvField = (key: string): string => {
-  return camelCase(removeEnvPrefix(key))!;
+  return camelCase(removeEnvPrefix(key));
 };

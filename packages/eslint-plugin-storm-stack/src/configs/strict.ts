@@ -16,13 +16,14 @@
  ------------------------------------------------------------------- */
 
 import type { Linter } from "eslint";
-import base from "./base";
+import recommended from "./recommended";
 
 const config: Linter.Config = {
-  name: "storm-stack:recommended",
-  plugins: base.plugins,
-  languageOptions: base.languageOptions,
-  ignores: base.ignores,
+  files: recommended.files,
+  name: "storm-stack:strict",
+  plugins: recommended.plugins,
+  languageOptions: recommended.languageOptions,
+  ignores: recommended.ignores,
   rules: {
     "storm-stack/async-prevent-default": "error",
     "storm-stack/if-newline": "error",
