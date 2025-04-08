@@ -620,7 +620,7 @@ importers:
         specifier: 'catalog:'
         version: 2.0.1
       eslint-plugin-storm-stack:
-        specifier: 0.3.0
+        specifier: 0.4.0
         version: link:../eslint-plugin-storm-stack
     devDependencies:
       eslint:

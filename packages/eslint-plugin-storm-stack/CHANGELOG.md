@@ -2,6 +2,13 @@
 
 # Changelog for Storm Stack - Eslint Plugin Storm Stack
 
+## [0.4.0](https://github.com/storm-software/storm-stack/releases/tag/eslint-plugin-storm-stack%400.4.0) (2025-04-08)
+
+### Features
+
+- **eslint-plugin-storm-stack:** Added the `storm-urls-only` rule
+  ([7ccd292d](https://github.com/storm-software/storm-stack/commit/7ccd292d))
+
 ## [0.3.0](https://github.com/storm-software/storm-stack/releases/tag/eslint-plugin-storm-stack%400.3.0) (2025-04-07)
 
 ### Features
