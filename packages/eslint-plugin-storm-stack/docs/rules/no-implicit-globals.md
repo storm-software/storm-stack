@@ -1,6 +1,7 @@
 # Disallow implicit global variables (`storm-stack/no-implicit-globals`)
 
-💼 This rule is enabled in the ✅ `recommended` config.
+💼⚠️ This rule is enabled in the following configs: 🌟 `recommended`, 🔒
+`strict`. This rule _warns_ in the 📋 `base` config.
 
 <!-- end auto-generated rule header -->
 
@@ -22,4 +23,4 @@ var foo = 1;
 
 ## Version
 
-4.3.2
+0.4.0

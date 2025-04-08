@@ -20,13 +20,12 @@ import prettier from "prettier";
 
 /** @type {import('eslint-doc-generator').GenerateOptions} */
 const config = {
-  initRuleDocs: true,
   postprocess: content =>
     prettier.format(content, { ...prettierConfig, parser: "markdown" }),
   configEmoji: [
-    ["base", "📝"],
+    ["base", "📋"],
     ["recommended", "🌟"],
-    ["strict", "🔐"]
+    ["strict", "🔒"]
   ],
   ruleDocSectionInclude: ["Rule Details", "Version"]
 };

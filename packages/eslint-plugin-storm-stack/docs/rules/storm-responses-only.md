@@ -1,6 +1,10 @@
-# Require usage of StormResponse class (`storm-stack/storm-responses-only`)
+# Prefer usage of `StormResponse` class when using Storm Stack (`storm-stack/storm-responses-only`)
 
-💼 This rule is enabled in the ✅ `base` config.
+💼⚠️ This rule is enabled in the following configs: 🌟 `recommended`, 🔒
+`strict`. This rule _warns_ in the 📋 `base` config.
+
+🔧 This rule is automatically fixable by the
+[`--fix` CLI option](https://eslint.org/docs/latest/user-guide/command-line-interface#--fix).
 
 <!-- end auto-generated rule header -->
 
@@ -8,7 +12,7 @@
 
 👎 Examples of **incorrect** code for this rule:
 
-```js
+```ts
 function handler(request): Response {
   // ...
 
@@ -18,7 +22,7 @@ function handler(request): Response {
 
 👍 Examples of **correct** code for this rule:
 
-```js
+```ts
 function handler(request): StormResponse {
   // ...
 
@@ -28,4 +32,4 @@ function handler(request): StormResponse {
 
 ## Version
 
-4.3.2
+0.4.0

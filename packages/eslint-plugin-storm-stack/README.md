@@ -3,7 +3,7 @@
 <!-- markdownlint-disable -->
 
 
-<div align="center"><img src="https://public.storm-cdn.com/storm-stack-banner2.gif" width="100%" alt="Storm Stack" /></div>
+<div align="center"><img src="https://public.storm-cdn.com/storm-banner.gif" width="100%" alt="Storm Stack" /></div>
 <br />
 
 <div align="center">
@@ -45,11 +45,13 @@ An ESLint plugin containing helpful linting rules for Storm Stack projects
 
 <!-- START doctoc -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+
 ## Table of Contents
 
 - [Storm Stack - ESLint Plugin](#storm-stack---eslint-plugin)
   - [Table of Contents](#table-of-contents)
   - [Installing](#installing)
+  - [Rules](#rules)
   - [Reduced Package Size](#reduced-package-size)
   - [Development](#development)
     - [Building](#building)
@@ -91,6 +93,33 @@ yarn add -D eslint-plugin-storm-stack
 
 </details>
 
+## Rules
+
+<!-- begin auto-generated rules list -->
+
+💼 Configurations enabled in.\
+⚠️ Configurations set to warn in.\
+🚫 Configurations disabled in.\
+📋 Set in the `base` configuration.\
+🌟 Set in the `recommended` configuration.\
+🔒 Set in the `strict` configuration.\
+🔧 Automatically fixable by the
+[`--fix` CLI option](https://eslint.org/docs/user-guide/command-line-interface#--fix).
+
+| Name                                                         | Description                                                      | 💼    | ⚠️  | 🚫  | 🔧  |
+| :----------------------------------------------------------- | :--------------------------------------------------------------- | :---- | :-- | :-- | :-- |
+| [async-prevent-default](docs/rules/async-prevent-default.md) | disallow `event.preventDefault` calls inside of async functions  | 🔒    | 🌟  | 📋  |     |
+| [if-newline](docs/rules/if-newline.md)                       | Newline after if                                                 | 🔒    | 🌟  | 📋  | 🔧  |
+| [no-implicit-globals](docs/rules/no-implicit-globals.md)     | disallow implicit global variables                               | 🌟 🔒 | 📋  |     |     |
+| [storm-errors-only](docs/rules/storm-errors-only.md)         | Prefer usage of `StormError` class when using Storm Stack        | 🌟 🔒 | 📋  |     | 🔧  |
+| [storm-json-only](docs/rules/storm-json-only.md)             | Prefer usage of `StormJSON` class when using Storm Stack         | 🔒    | 🌟  | 📋  | 🔧  |
+| [storm-requests-only](docs/rules/storm-requests-only.md)     | Prefer usage of `StormRequest` class when using Storm Stack      | 🌟 🔒 | 📋  |     | 🔧  |
+| [storm-responses-only](docs/rules/storm-responses-only.md)   | Prefer usage of `StormResponse` class when using Storm Stack     | 🌟 🔒 | 📋  |     | 🔧  |
+| [storm-urls-only](docs/rules/storm-urls-only.md)             | Prefer usage of `StormURL` class when using Storm Stack          | 🔒    | 🌟  | 📋  | 🔧  |
+| [top-level-functions](docs/rules/top-level-functions.md)     | Enforce top-level functions to be declared with function keyword | 🌟 🔒 | 📋  |     | 🔧  |
+
+<!-- end auto-generated rules list -->
+
 ## Reduced Package Size
 
 This project uses [tsup](https://tsup.egoist.dev/) to package the source code
@@ -114,8 +143,8 @@ Run `nx test eslint-plugin-storm-stack` to execute the unit tests via
 
 ### Linting
 
-Run `nx lint eslint-plugin-storm-stack` to run
-[ESLint](https://eslint.org/) on the package.
+Run `nx lint eslint-plugin-storm-stack` to run [ESLint](https://eslint.org/) on
+the package.
 
 <!-- START footer -->
 <!-- prettier-ignore-start -->
@@ -244,7 +273,7 @@ specification. Contributions of any kind welcome!
 <br />
 
 <div align="center">
-<img src="https://pub-761b436209f44a4d886487c917806c08.r2.dev/logo-banner.png" width="100%" alt="Storm Software" />
+<img src="https://public.storm-cdn.com/brand-banner.png" width="100%" alt="Storm Software" />
 </div>
 <br />
 
@@ -275,9 +304,9 @@ generation of development tools, please reach out on our
 
 <br />
 
-<div align="center"><a href="https://stormsoftware.com" target="_blank"><img src="https://pub-761b436209f44a4d886487c917806c08.r2.dev/icon-fill.png" alt="Storm Software" width="200px"/></a></div>
+<div align="center"><a href="https://stormsoftware.com" target="_blank"><img src="https://public.storm-cdn.com/icon-fill.png" alt="Storm Software" width="200px"/></a></div>
 <br />
-<div align="center"><a href="https://stormsoftware.com" target="_blank"><img src="https://pub-761b436209f44a4d886487c917806c08.r2.dev/visit-us-text.svg" alt="Visit us at stormsoftware.com" height="90px"/></a></div>
+<div align="center"><a href="https://stormsoftware.com" target="_blank"><img src="https://public.storm-cdn.com/visit-us-text.svg" alt="Visit us at stormsoftware.com" height="90px"/></a></div>
 
 <br />
 

@@ -1,6 +1,10 @@
-# Require top-level methods to be functions (`storm-stack/top-level-function`)
+# Enforce top-level functions to be declared with function keyword (`storm-stack/top-level-functions`)
 
-💼 This rule is enabled in the ✅ `recommended` config.
+💼⚠️ This rule is enabled in the following configs: 🌟 `recommended`, 🔒
+`strict`. This rule _warns_ in the 📋 `base` config.
+
+🔧 This rule is automatically fixable by the
+[`--fix` CLI option](https://eslint.org/docs/latest/user-guide/command-line-interface#--fix).
 
 <!-- end auto-generated rule header -->
 
@@ -59,4 +63,4 @@ export const square: MyFunction = (a: number, b: number): number => {
 
 ## Version
 
-4.3.2
+0.4.0

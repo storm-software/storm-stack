@@ -1,6 +1,7 @@
 # Disallow `event.preventDefault` calls inside of async functions (`storm-stack/async-prevent-default`)
 
-💼 This rule is enabled in the 💻 `browser` config.
+💼⚠️🚫 This rule is enabled in the 🔒 `strict` config. This rule _warns_ in the
+🌟 `recommended` config. This rule is _disabled_ in the 📋 `base` config.
 
 <!-- end auto-generated rule header -->
 
@@ -65,4 +66,4 @@ document.addEventListener("click", function (event) {
 
 ## Version
 
-4.3.2
+0.4.0

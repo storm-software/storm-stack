@@ -16,6 +16,7 @@
  ------------------------------------------------------------------- */
 
 import type { Linter } from "eslint";
+import { configs } from "./configs";
 import { plugin } from "./plugin";
 
 /**
@@ -24,9 +25,10 @@ import { plugin } from "./plugin";
  * @packageDocumentation
  */
 
-export * from "./configs";
-
-export default plugin;
+export default {
+  ...plugin,
+  configs
+};
 
 type RuleDefinitions = (typeof plugin)["rules"];
 
