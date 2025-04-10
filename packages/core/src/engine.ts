@@ -201,7 +201,7 @@ export class Engine<TOptions extends Options = Options> {
     ) as Context<TOptions>;
 
     const checksum = await hashDirectory(this.context.projectRoot, {
-      ignored: ["node_modules", ".git", ".nx", ".cache", ".storm", "tmp"]
+      ignore: ["node_modules", ".git", ".nx", ".cache", ".storm", "tmp"]
     });
     this.context.meta ??= {
       buildId: nanoid(24),
