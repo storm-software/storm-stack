@@ -1225,7 +1225,7 @@ Note: Please ensure the plugin package's default export is a class that extends 
    * Writes a file to the file system
    */
   private async writeFile(filepath: string, content: string) {
-    this.log(LogLevelLabel.TRACE, `Writing file ${filepath} to disk \n`);
+    this.log(LogLevelLabel.TRACE, `Writing file ${filepath} to disk`);
 
     return writeFile(this.log, filepath, content);
   }

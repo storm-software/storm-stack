@@ -17,5 +17,21 @@
     "@storm-stack/core": "workspace:*",
     "@storm-stack/nx": "workspace:*",
     "@storm-stack/plugin-node": "workspace:*"
+  },
+  "storm": {
+    "plugins": [
+      [
+        "@storm-stack/plugin-node",
+        {
+          "features": [
+            "sentry"
+          ]
+        }
+      ]
+    ],
+    "skipCache": true,
+    "skipInstalls": true,
+    "skipLint": true,
+    "mode": "development"
   }
 }

@@ -27,8 +27,7 @@
       "items": {
         "type": "string"
       },
-      "id": "#presets",
-      "default": []
+      "id": "#presets"
     },
     "plugins": {
       "title": "Plugins",
@@ -37,8 +36,7 @@
       "items": {
         "type": "string"
       },
-      "id": "#plugins",
-      "default": []
+      "id": "#plugins"
     },
     "mode": {
       "title": "Mode",
@@ -104,8 +102,6 @@
   "default": {
     "outputPath": "dist/{projectRoot}",
     "entry": "{sourceRoot}/index.ts",
-    "presets": [],
-    "plugins": [],
     "mode": "production",
     "tsconfig": "{projectRoot}/tsconfig.json",
     "silent": false,

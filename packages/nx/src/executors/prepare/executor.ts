@@ -58,8 +58,8 @@ export async function executorFn(
         projectRoot:
           context.projectsConfigurations.projects[context.projectName]!.root
       },
-      options,
-      config
+      config,
+      options
     ) as Options,
     workspaceConfig
   );

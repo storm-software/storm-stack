@@ -26,7 +26,6 @@ The entry file or files to build
 
 ## `presets`
 - **Type**: `array`
-- **Default**: `[]`
 
 > Presets
 
@@ -36,7 +35,6 @@ A list of presets to use during Storm Stack processing
 
 ## `plugins`
 - **Type**: `array`
-- **Default**: `[]`
 
 > Plugins
 

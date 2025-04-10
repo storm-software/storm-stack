@@ -89,7 +89,7 @@ export abstract class Plugin<TOptions extends Options = Options>
     content: string,
     skipFormat = false
   ) {
-    this.log(LogLevelLabel.TRACE, `Writing file ${filepath} to disk \n`);
+    this.log(LogLevelLabel.TRACE, `Writing file ${filepath} to disk`);
 
     return writeFile(this.log, filepath, content, skipFormat);
   }

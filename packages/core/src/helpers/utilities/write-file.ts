@@ -36,8 +36,6 @@ export async function writeFile(
 ) {
   try {
     if (skipFormat) {
-      log(LogLevelLabel.ERROR, content);
-
       await writeFileBase(filepath, content);
     } else {
       const config = await resolveConfig(filepath);
@@ -46,7 +44,6 @@ export async function writeFile(
         filepath
       });
 
-      log(LogLevelLabel.ERROR, formatted);
       await writeFileBase(filepath, formatted || "");
     }
   } catch (error) {
