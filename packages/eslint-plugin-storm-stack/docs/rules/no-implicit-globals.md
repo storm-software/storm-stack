@@ -10,7 +10,7 @@
 👎 Examples of **incorrect** code for this rule:
 
 ```js
-var foo = 1;
+const foo = 1;
 ```
 
 👍 Examples of **correct** code for this rule:

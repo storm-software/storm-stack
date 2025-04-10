@@ -14,18 +14,8 @@ drive the processing of the application. The data contained in these variables
 are **not** considered sensitive or confidential. Any values provided in these
 variables will be available in plain text to the public.
 
-| Name               | Description                                                                                                           | Type | Default Value      | Required |
-| ------------------ | --------------------------------------------------------------------------------------------------------------------- | ---- | ------------------ | :------: |
-| APP_NAME           | The name of the application.                                                                                          |      |                    |    ✔    |
-| APP_VERSION        | The version of the application.                                                                                       |      | "1.0.0"            |          |
-| DEFAULT_LOCALE     | The default locale to use in the application.                                                                         |      | "en_US"            |          |
-| DEFAULT_TIMEZONE   | The default timezone to use in the application.                                                                       |      | "America/New_York" |          |
-| DEVELOPMENT        | Indicates if the application is running in development mode.                                                          |      | `false`            |          |
-| ENVIRONMENT        | The environment the application is running in. This value will be populated with the value of `MODE` if not provided. |      | "production"       |          |
-| INCLUDE_ERROR_DATA | Indicates if error data should be included.                                                                           |      | `false`            |          |
-| LOG_LEVEL          | The lowest logging level for the application.                                                                         |      | `info`             |          |
-| MODE               | The processing mode of the application.                                                                               |      | `production`       |          |
-| PLATFORM           | The type of platform the application is running on.                                                                   |      | "node"             |          |
-| PRODUCTION         | Indicates if the application is running in production mode.                                                           |      | `true`             |          |
-| STACKTRACE         | Indicates if error stack traces should be captured.                                                                   |      | `false`            |          |
-| STAGING            | Indicates if the application is running in staging mode.                                                              |      | `false`            |          |
+| Name              | Description                                   | Type   | Default Value |  Required   |
+| ----------------- | --------------------------------------------- | ------ | ------------- | :---------: | --- |
+| APP_NAME          | The name of the application.                  | string |               |     ✔      |
+| APP_VERSION       | The version of the application.               | string | "1.0.0"       |             |
+| OTEL_SERVICE_NAME | The name of the OpenTelemetry service to use. | string | undefined     | `undefined` |     |

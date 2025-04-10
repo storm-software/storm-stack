@@ -3,15 +3,15 @@
 <!-- markdownlint-disable -->
 
 
-<div align="center"><img src="https://public.storm-cdn.com/core-banner2.gif" width="100%" alt="Storm Stack" /></div>
+<div align="center"><img src="https://public.storm-cdn.com/storm-banner.gif" width="100%" alt="Storm Stack" /></div>
 <br />
 
 <div align="center">
 <b>
 <a href="https://stormsoftware.com" target="_blank">Website</a>  •
-<a href="https://github.com/storm-software/core" target="_blank">GitHub</a>  •
+<a href="https://github.com/storm-software/storm-stack" target="_blank">GitHub</a>  •
 <a href="https://discord.gg/MQ6YVzakM5">Discord</a>  •  <a href="https://stormstack.github.io/stormstack/" target="_blank">Docs</a>  •  <a href="https://stormsoftware.com/contact" target="_blank">Contact</a>  •
-<a href="https://github.com/storm-software/core/issues/new?assignees=&labels=bug&template=bug-report.yml&title=Bug Report%3A+">Report a Bug</a>
+<a href="https://github.com/storm-software/storm-stack/issues/new?assignees=&labels=bug&template=bug-report.yml&title=Bug Report%3A+">Report a Bug</a>
 </b>
 </div>
 
@@ -21,14 +21,19 @@ This package is part of the ⚡<b>Storm Stack</b> monorepo. Storm Stack packages
 
 <h3 align="center">💻 Visit <a href="https://stormsoftware.com" target="_blank">stormsoftware.com</a> to stay up to date with this developer</h3><br />
 
-[![Version](https://img.shields.io/badge/version-0.1.0-1fb2a6.svg?style=for-the-badge&color=1fb2a6)](https://prettier.io/)&nbsp;[![Nx](https://img.shields.io/badge/Nx-17.0.2-lightgrey?style=for-the-badge&logo=nx&logoWidth=20&&color=1fb2a6)](http://nx.dev/)&nbsp;[![NextJs](https://img.shields.io/badge/Next.js-14.0.2-lightgrey?style=for-the-badge&logo=nextdotjs&logoWidth=20&color=1fb2a6)](https://nextjs.org/)&nbsp;[![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg?style=for-the-badge&logo=commitlint&color=1fb2a6)](http://commitizen.github.io/cz-cli/)&nbsp;![Semantic-Release](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg?style=for-the-badge&color=1fb2a6)&nbsp;[![documented with Fumadocs](https://img.shields.io/badge/documented_with-fumadocs-success.svg?style=for-the-badge&logo=readthedocs&color=1fb2a6)](https://fumadocs.vercel.app/)&nbsp;![GitHub Workflow Status (with event)](https://img.shields.io/github/actions/workflow/status/storm-software/core/cr.yml?style=for-the-badge&logo=github-actions&color=1fb2a6)
+[![Version](https://img.shields.io/badge/version-0.3.0-1fb2a6.svg?style=for-the-badge&color=1fb2a6)](https://prettier.io/)&nbsp;[![Nx](https://img.shields.io/badge/Nx-17.0.2-lightgrey?style=for-the-badge&logo=nx&logoWidth=20&&color=1fb2a6)](http://nx.dev/)&nbsp;[![NextJs](https://img.shields.io/badge/Next.js-14.0.2-lightgrey?style=for-the-badge&logo=nextdotjs&logoWidth=20&color=1fb2a6)](https://nextjs.org/)&nbsp;[![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg?style=for-the-badge&logo=commitlint&color=1fb2a6)](http://commitizen.github.io/cz-cli/)&nbsp;![Semantic-Release](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg?style=for-the-badge&color=1fb2a6)&nbsp;[![documented with Fumadocs](https://img.shields.io/badge/documented_with-fumadocs-success.svg?style=for-the-badge&logo=readthedocs&color=1fb2a6)](https://fumadocs.vercel.app/)&nbsp;![GitHub Workflow Status (with event)](https://img.shields.io/github/actions/workflow/status/storm-software/storm-stack/cr.yml?style=for-the-badge&logo=github-actions&color=1fb2a6)
 
+<!-- prettier-ignore-start -->
+<!-- markdownlint-disable -->
 
 > [!IMPORTANT] 
 > This repository, and the apps, libraries, and tools contained within, is still in it's initial development phase. As a result, bugs and issues are expected with it's usage. When the main development phase completes, a proper release will be performed, the packages will be availible through NPM (and other distributions), and this message will be removed. However, in the meantime, please feel free to report any issues you may come across.
 
+<!-- markdownlint-restore -->
+<!-- prettier-ignore-end -->
+
 <div align="center">
-<b>Be sure to ⭐ this repository on <a href="https://github.com/storm-software/core" target="_blank">GitHub</a> so you can keep up to date on any daily progress!</b>
+<b>Be sure to ⭐ this repository on <a href="https://github.com/storm-software/storm-stack" target="_blank">GitHub</a> so you can keep up to date on any daily progress!</b>
 </div>
 
 <br />
@@ -47,21 +52,19 @@ A build toolkit and runtime used by Storm Software in TypeScript applications
 
 ## Table of Contents
 
-- [Storm Stack](#storm-stack)
-  - [Table of Contents](#table-of-contents)
-  - [Installing](#installing)
-  - [Reduced Package Size](#reduced-package-size)
-  - [Development](#development)
-    - [Building](#building)
-    - [Running unit tests](#running-unit-tests)
-    - [Linting](#linting)
-  - [Storm Workspaces](#storm-workspaces)
-  - [Roadmap](#roadmap)
-  - [Support](#support)
-  - [License](#license)
-  - [Changelog](#changelog)
-  - [Contributing](#contributing)
-  - [Contributors](#contributors)
+- [Installing](#installing)
+- [Reduced Package Size](#reduced-package-size)
+- [Development](#development)
+  - [Building](#building)
+  - [Running unit tests](#running-unit-tests)
+  - [Linting](#linting)
+- [Storm Workspaces](#storm-workspaces)
+- [Roadmap](#roadmap)
+- [Support](#support)
+- [License](#license)
+- [Changelog](#changelog)
+- [Contributing](#contributing)
+- [Contributors](#contributors)
 
 <!-- END doctoc -->
 
@@ -120,8 +123,6 @@ Run `nx lint core` to run [ESLint](https://eslint.org/) on the package.
 <!-- markdownlint-disable -->
 
 
-
-
 ## Storm Workspaces
 
 Storm workspaces are built using
@@ -136,14 +137,14 @@ maintainable.
 
 ## Roadmap
 
-See the [open issues](https://github.com/storm-software/core/issues) for a
-list of proposed features (and known issues).
+See the [open issues](https://github.com/storm-software/storm-stack/issues) for
+a list of proposed features (and known issues).
 
-- [Top Feature Requests](https://github.com/storm-software/core/issues?q=label%3Aenhancement+is%3Aopen+sort%3Areactions-%2B1-desc)
+- [Top Feature Requests](https://github.com/storm-software/storm-stack/issues?q=label%3Aenhancement+is%3Aopen+sort%3Areactions-%2B1-desc)
   (Add your votes using the 👍 reaction)
-- [Top Bugs](https://github.com/storm-software/core/issues?q=is%3Aissue+is%3Aopen+label%3Abug+sort%3Areactions-%2B1-desc)
+- [Top Bugs](https://github.com/storm-software/storm-stack/issues?q=is%3Aissue+is%3Aopen+label%3Abug+sort%3Areactions-%2B1-desc)
   (Add your votes using the 👍 reaction)
-- [Newest Bugs](https://github.com/storm-software/core/issues?q=is%3Aopen+is%3Aissue+label%3Abug)
+- [Newest Bugs](https://github.com/storm-software/storm-stack/issues?q=is%3Aopen+is%3Aissue+label%3Abug)
 
 <div align="right">[ <a href="#table-of-contents">Back to top ▲</a> ]</div>
 <br />
@@ -153,7 +154,7 @@ list of proposed features (and known issues).
 Reach out to the maintainer at one of the following places:
 
 - [Contact](https://stormsoftware.com/contact)
-- [GitHub discussions](https://github.com/storm-software/core/discussions)
+- [GitHub discussions](https://github.com/storm-software/storm-stack/discussions)
 - <support@stormsoftware.com>
 
 <div align="right">[ <a href="#table-of-contents">Back to top ▲</a> ]</div>
@@ -197,7 +198,7 @@ Please try to create bug reports that are:
 Please adhere to this project's [code of conduct](.github/CODE_OF_CONDUCT.md).
 
 You can use
-[markdownlint-cli](https://github.com/storm-software/core/markdownlint-cli)
+[markdownlint-cli](https://github.com/storm-software/storm-stack/markdownlint-cli)
 to check for common markdown style inconsistency.
 
 <div align="right">[ <a href="#table-of-contents">Back to top ▲</a> ]</div>
@@ -213,7 +214,7 @@ Thanks goes to these wonderful people
 <table>
   <tbody>
     <tr>
-      <td align="center" valign="top" width="14.28%"><a href="http://www.sullypat.com/"><img src="https://avatars.githubusercontent.com/u/99053093?v=4?s=100" width="100px;" alt="Patrick Sullivan"/><br /><sub><b>Patrick Sullivan</b></sub></a><br /><a href="#design-sullivanpj" title="Design">🎨</a> <a href="https://github.com/storm-software/core/commits?author=sullivanpj" title="Code">💻</a> <a href="#tool-sullivanpj" title="Tools">🔧</a> <a href="https://github.com/storm-software/core/commits?author=sullivanpj" title="Documentation">📖</a> <a href="https://github.com/storm-software/core/commits?author=sullivanpj" title="Tests">⚠️</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="http://www.sullypat.com/"><img src="https://avatars.githubusercontent.com/u/99053093?v=4?s=100" width="100px;" alt="Patrick Sullivan"/><br /><sub><b>Patrick Sullivan</b></sub></a><br /><a href="#design-sullivanpj" title="Design">🎨</a> <a href="https://github.com/storm-software/storm-stack/commits?author=sullivanpj" title="Code">💻</a> <a href="#tool-sullivanpj" title="Tools">🔧</a> <a href="https://github.com/storm-software/storm-stack/commits?author=sullivanpj" title="Documentation">📖</a> <a href="https://github.com/storm-software/storm-stack/commits?author=sullivanpj" title="Tests">⚠️</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://tylerbenning.com/"><img src="https://avatars.githubusercontent.com/u/7265547?v=4?s=100" width="100px;" alt="Tyler Benning"/><br /><sub><b>Tyler Benning</b></sub></a><br /><a href="#design-tbenning" title="Design">🎨</a></td>
       <td align="center" valign="top" width="14.28%"><a href="http://stormsoftware.com"><img src="https://avatars.githubusercontent.com/u/149802440?v=4?s=100" width="100px;" alt="Stormie"/><br /><sub><b>Stormie</b></sub></a><br /><a href="#maintenance-stormie-bot" title="Maintenance">🚧</a></td>
     </tr>

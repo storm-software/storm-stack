@@ -24,7 +24,7 @@ synchronous and asynchronous.
 
 👎 Examples of **incorrect** code for this rule:
 
-```js
+```ts
 document.addEventListener("click", async function (event) {
   const data = await fetch();
 
@@ -34,7 +34,7 @@ document.addEventListener("click", async function (event) {
 
 👍 Examples of **correct** code for this rule:
 
-```js
+```ts
 document.addEventListener("click", function (event) {
   // preventDefault in a regular function
   event.preventDefault();
@@ -51,7 +51,7 @@ async function loadData(el) {
 
 This could also be done with an async IIFE.
 
-```js
+```ts
 document.addEventListener("click", function (event) {
   // preventDefault in a regular function
   event.preventDefault();

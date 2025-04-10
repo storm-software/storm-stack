@@ -21,18 +21,22 @@ This package is part of the ⚡<b>Storm Stack</b> monorepo. Storm Stack packages
 
 <h3 align="center">💻 Visit <a href="https://stormsoftware.com" target="_blank">stormsoftware.com</a> to stay up to date with this developer</h3><br />
 
-[![Version](https://img.shields.io/badge/version-0.1.0-1fb2a6.svg?style=for-the-badge&color=1fb2a6)](https://prettier.io/)&nbsp;[![Nx](https://img.shields.io/badge/Nx-17.0.2-lightgrey?style=for-the-badge&logo=nx&logoWidth=20&&color=1fb2a6)](http://nx.dev/)&nbsp;[![NextJs](https://img.shields.io/badge/Next.js-14.0.2-lightgrey?style=for-the-badge&logo=nextdotjs&logoWidth=20&color=1fb2a6)](https://nextjs.org/)&nbsp;[![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg?style=for-the-badge&logo=commitlint&color=1fb2a6)](http://commitizen.github.io/cz-cli/)&nbsp;![Semantic-Release](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg?style=for-the-badge&color=1fb2a6)&nbsp;[![documented with Fumadocs](https://img.shields.io/badge/documented_with-fumadocs-success.svg?style=for-the-badge&logo=readthedocs&color=1fb2a6)](https://fumadocs.vercel.app/)&nbsp;![GitHub Workflow Status (with event)](https://img.shields.io/github/actions/workflow/status/storm-software/storm-stack/cr.yml?style=for-the-badge&logo=github-actions&color=1fb2a6)
+[![Version](https://img.shields.io/badge/version-0.2.0-1fb2a6.svg?style=for-the-badge&color=1fb2a6)](https://prettier.io/)&nbsp;[![Nx](https://img.shields.io/badge/Nx-17.0.2-lightgrey?style=for-the-badge&logo=nx&logoWidth=20&&color=1fb2a6)](http://nx.dev/)&nbsp;[![NextJs](https://img.shields.io/badge/Next.js-14.0.2-lightgrey?style=for-the-badge&logo=nextdotjs&logoWidth=20&color=1fb2a6)](https://nextjs.org/)&nbsp;[![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg?style=for-the-badge&logo=commitlint&color=1fb2a6)](http://commitizen.github.io/cz-cli/)&nbsp;![Semantic-Release](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg?style=for-the-badge&color=1fb2a6)&nbsp;[![documented with Fumadocs](https://img.shields.io/badge/documented_with-fumadocs-success.svg?style=for-the-badge&logo=readthedocs&color=1fb2a6)](https://fumadocs.vercel.app/)&nbsp;![GitHub Workflow Status (with event)](https://img.shields.io/github/actions/workflow/status/storm-software/storm-stack/cr.yml?style=for-the-badge&logo=github-actions&color=1fb2a6)
 
+<!-- prettier-ignore-start -->
+<!-- markdownlint-disable -->
 
 > [!IMPORTANT] 
 > This repository, and the apps, libraries, and tools contained within, is still in it's initial development phase. As a result, bugs and issues are expected with it's usage. When the main development phase completes, a proper release will be performed, the packages will be availible through NPM (and other distributions), and this message will be removed. However, in the meantime, please feel free to report any issues you may come across.
+
+<!-- markdownlint-restore -->
+<!-- prettier-ignore-end -->
 
 <div align="center">
 <b>Be sure to ⭐ this repository on <a href="https://github.com/storm-software/storm-stack" target="_blank">GitHub</a> so you can keep up to date on any daily progress!</b>
 </div>
 
 <br />
-
 
 <!-- markdownlint-restore -->
 <!-- prettier-ignore-end -->
@@ -45,7 +49,6 @@ A package containing a Storm Stack log adapter to write logs to a stream.
 
 <!-- START doctoc -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
-
 ## Table of Contents
 
 - [Installing](#installing)
@@ -120,8 +123,6 @@ Run `nx lint log-stream` to run [ESLint](https://eslint.org/) on the package.
 <!-- markdownlint-disable -->
 
 
-
-
 ## Storm Workspaces
 
 Storm workspaces are built using
@@ -136,8 +137,8 @@ maintainable.
 
 ## Roadmap
 
-See the [open issues](https://github.com/storm-software/storm-stack/issues) for a
-list of proposed features (and known issues).
+See the [open issues](https://github.com/storm-software/storm-stack/issues) for
+a list of proposed features (and known issues).
 
 - [Top Feature Requests](https://github.com/storm-software/storm-stack/issues?q=label%3Aenhancement+is%3Aopen+sort%3Areactions-%2B1-desc)
   (Add your votes using the 👍 reaction)

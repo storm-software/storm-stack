@@ -27,18 +27,16 @@ This package is part of the ⚡<b>Storm Stack</b> monorepo. Storm Stack packages
 <!-- markdownlint-disable -->
 
 > [!IMPORTANT] 
-> This repository, and the apps, libraries, and tools contained within, is still in it's initial development phase. As a result, bugs and issues are expected with it's usage. When the main development phase completes, a proper release will be performed, the packages will be availible through NPM (and other distributions), and this message will be removed. However, in the meantime, please feel free to report any issues you may come across.
+> This repository, and the apps, libraries, and tools contained within, is still in it's initial development phase. As a result, bugs and issues are expected with it's usage. When the main development phase completes, a proper release will be performed, the packages will be available through NPM (and other distributions), and this message will be removed. However, in the meantime, please feel free to report any issues you may come across.
 
 <!-- markdownlint-restore -->
 <!-- prettier-ignore-end -->
 
-<div align="center">
-<b>Be sure to ⭐ this repository on <a href="https://github.com/storm-software/storm-stack" target="_blank">GitHub</a> so you can keep up to date on any daily progress!</b>
-</div>
+<div align="center"><b>Be sure to ⭐ this repository on <a href="https://github.com/storm-software/storm-stack" target="_blank">GitHub</a> so you can keep up to date on any daily progress!</b></div>
 
 <br />
 
-# Storm-Stack Nx Plugin
+# Storm Stack - Nx Plugin
 
 A package containing tools for managing a Storm workspace. It includes various
 [Nx](https://nx.dev) generators and executors for common development tasks.
@@ -190,8 +188,6 @@ Run `nx test devkit-nx` to execute the unit tests via [Jest](https://jestjs.io).
 <!-- markdownlint-disable -->
 
 
-
-
 ## Storm Workspaces
 
 Storm workspaces are built using
@@ -206,8 +202,8 @@ maintainable.
 
 ## Roadmap
 
-See the [open issues](https://github.com/storm-software/storm-stack/issues) for a
-list of proposed features (and known issues).
+See the [open issues](https://github.com/storm-software/storm-stack/issues) for
+a list of proposed features (and known issues).
 
 - [Top Feature Requests](https://github.com/storm-software/storm-stack/issues?q=label%3Aenhancement+is%3Aopen+sort%3Areactions-%2B1-desc)
   (Add your votes using the 👍 reaction)
