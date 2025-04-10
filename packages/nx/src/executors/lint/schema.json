@@ -1,7 +1,7 @@
 {
   "id": "#",
-  "title": "Storm Stack Clean Executor",
-  "description": "A type definition for the Storm Stack - Clean executor schema",
+  "title": "Storm Stack Lint Executor",
+  "description": "A type definition for the Storm Stack - Lint executor schema",
   "required": [],
   "properties": {
     "outputPath": {
@@ -84,6 +84,20 @@
       "description": "Should the build run silently - only report errors back to the user",
       "id": "#silent",
       "default": false
+    },
+    "autoPrepare": {
+      "title": "Auto Prepare",
+      "type": "boolean",
+      "description": "Automatically prepare the project (if required)",
+      "id": "#autoPrepare",
+      "default": true
+    },
+    "autoClean": {
+      "title": "Auto Clean",
+      "type": "boolean",
+      "description": "Automatically clean the project (if required)",
+      "id": "#autoClean",
+      "default": true
     }
   },
   "type": "object",
@@ -94,6 +108,8 @@
     "plugins": [],
     "mode": "production",
     "tsconfig": "{projectRoot}/tsconfig.json",
-    "silent": false
+    "silent": false,
+    "autoPrepare": true,
+    "autoClean": true
   }
 }

@@ -10,10 +10,20 @@
       "schema": "./dist/src/executors/prepare/schema.json",
       "description": "An executor used to run the Storm Stack - Prepare process"
     },
+    "lint": {
+      "implementation": "./dist/src/executors/lint/executor",
+      "schema": "./dist/src/executors/lint/schema.json",
+      "description": "An executor used to run the Storm Stack - Lint process"
+    },
     "build": {
       "implementation": "./dist/src/executors/build/executor",
       "schema": "./dist/src/executors/build/schema.json",
       "description": "An executor used to run the Storm Stack - Build process"
+    },
+    "docs": {
+      "implementation": "./dist/src/executors/docs/executor",
+      "schema": "./dist/src/executors/docs/schema.json",
+      "description": "An executor used to run the Storm Stack - Docs process"
     }
   }
 }

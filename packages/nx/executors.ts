@@ -19,5 +19,9 @@ export { executorFn as stormStackBuildExecutor } from "./src/executors/build/exe
 export type { StormStackBuildExecutorSchema } from "./src/executors/build/schema";
 export { executorFn as stormStackCleanExecutor } from "./src/executors/clean/executor";
 export type { StormStackCleanExecutorSchema } from "./src/executors/clean/schema";
+export { executorFn as stormStackDocsExecutor } from "./src/executors/docs/executor";
+export type { StormStackDocsExecutorSchema } from "./src/executors/docs/schema";
+export { executorFn as stormStackLintExecutor } from "./src/executors/lint/executor";
+export type { StormStackLintExecutorSchema } from "./src/executors/lint/schema";
 export { executorFn as stormStackPrepareExecutor } from "./src/executors/prepare/executor";
 export type { StormStackPrepareExecutorSchema } from "./src/executors/prepare/schema";

@@ -723,6 +723,52 @@ export class Engine<TOptions extends Options = Options> {
   }
 
   /**
+   * Lint the project
+   *
+   * @param autoPrepare - Whether to automatically prepare the project if it has not been prepared
+   * @param autoClean - Whether to automatically clean the previous build artifacts before preparing the project
+   * @param lintDuringBuild - Whether to lint the project during the build process
+   */
+  public async lint(
+    autoPrepare = true,
+    autoClean = true,
+    lintDuringBuild = false
+  ) {
+    if (!this.#initialized) {
+      await this.init();
+    }
+
+    if (this.context.persistedMeta?.checksum !== this.context.meta.checksum) {
+      if (autoPrepare) {
+        this.log(
+          LogLevelLabel.INFO,
+          "The Storm Stack project has been modified since the last time `prepare` was ran. Re-preparing the project."
+        );
+
+        await this.prepare(autoClean);
+      } else {
+        throw new Error(
+          "The Storm Stack project has not been prepared. Please run the `prepare` command before trying to lint the project."
+        );
+      }
+    }
+
+    this.log(LogLevelLabel.INFO, "Linting the Storm Stack project");
+
+    await runLintCheck(this.log, this.context, {
+      lintDuringBuild,
+      eslintOptions: {
+        cacheLocation: joinPaths(this.context.envPaths.cache, "eslint")
+      }
+    });
+
+    this.log(
+      LogLevelLabel.TRACE,
+      "Storm Stack documentation generation completed"
+    );
+  }
+
+  /**
    * Build the project
    *
    * @param autoPrepare - Whether to automatically prepare the project if it has not been prepared
@@ -749,14 +795,7 @@ export class Engine<TOptions extends Options = Options> {
     }
 
     if (this.context.skipLint === false) {
-      this.log(LogLevelLabel.INFO, "Linting the Storm Stack project");
-
-      await runLintCheck(this.log, this.context, {
-        lintDuringBuild: true,
-        eslintOptions: {
-          cacheLocation: joinPaths(this.context.envPaths.cache, "eslint")
-        }
-      });
+      await this.lint(autoPrepare, autoClean, true);
     }
 
     this.log(LogLevelLabel.INFO, "Building the Storm Stack project");
@@ -777,9 +816,31 @@ export class Engine<TOptions extends Options = Options> {
   }
 
   /**
-   * Documentation process
+   * Generate the documentation for the project
+   *
+   * @param autoPrepare - Whether to automatically prepare the project if it has not been prepared
+   * @param autoClean - Whether to automatically clean the previous build artifacts before preparing the project
    */
-  public async docs() {
+  public async docs(autoPrepare = true, autoClean = true) {
+    if (!this.#initialized) {
+      await this.init();
+    }
+
+    if (this.context.persistedMeta?.checksum !== this.context.meta.checksum) {
+      if (autoPrepare) {
+        this.log(
+          LogLevelLabel.INFO,
+          "The Storm Stack project has been modified since the last time `prepare` was ran. Re-preparing the project."
+        );
+
+        await this.prepare(autoClean);
+      } else {
+        throw new Error(
+          "The Storm Stack project has not been prepared. Please run the `prepare` command before trying to build the project."
+        );
+      }
+    }
+
     this.log(
       LogLevelLabel.INFO,
       "Generating documentation for the Storm Stack project"
