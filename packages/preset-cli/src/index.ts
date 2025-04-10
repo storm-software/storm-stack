@@ -16,10 +16,19 @@
  ------------------------------------------------------------------- */
 
 import { LogLevelLabel } from "@storm-software/config-tools/types";
+import { getFileHeader } from "@storm-stack/core/helpers";
 import { Preset } from "@storm-stack/core/preset";
 import type { Context, EngineHooks, Options } from "@storm-stack/core/types";
+import { StormStackNodeFeatures } from "@storm-stack/plugin-node/types/config";
 import { listFiles } from "@stryke/fs/list-files";
+import {
+  findFileExtension,
+  findFileName,
+  findFilePath,
+  relativePath
+} from "@stryke/path/file-path-fns";
 import { isDirectory } from "@stryke/path/is-file";
+import { joinPaths } from "@stryke/path/join-paths";
 import { isSetString } from "@stryke/type-checks/is-set-string";
 import type { StormStackCLIPresetConfig } from "./types/config";
 
@@ -28,10 +37,13 @@ export default class StormStackCLIPreset<
 > extends Preset<TOptions> {
   #config: StormStackCLIPresetConfig;
 
-  public constructor(config: StormStackCLIPresetConfig) {
+  public constructor(config: Partial<StormStackCLIPresetConfig> = {}) {
     super("cli", "@storm-stack/preset-cli");
 
-    this.#config = config;
+    this.#config = {
+      features: [],
+      ...config
+    };
     this.dependencies = [
       ["@storm-stack/plugin-node", { features: this.#config.features }]
     ];
@@ -40,7 +52,8 @@ export default class StormStackCLIPreset<
   public addHooks(hooks: EngineHooks<TOptions>) {
     hooks.addHooks({
       "init:context": this.initContext.bind(this),
-      "init:installs": this.initInstalls.bind(this)
+      "init:installs": this.initInstalls.bind(this),
+      "prepare:entry": this.prepareEntry.bind(this)
     });
   }
 
@@ -50,9 +63,38 @@ export default class StormStackCLIPreset<
       `Initializing CLI specific options for the Storm Stack project.`
     );
 
-    if (context.projectType === "application") {
-      if (isSetString(context.entry) && isDirectory(context.entry)) {
-        context.entry = await listFiles(context.entry);
+    if (
+      context.projectType === "application" &&
+      isSetString(context.entry) &&
+      isDirectory(context.entry)
+    ) {
+      const files = (await listFiles(joinPaths(context.entry, "**/*"))).map(
+        file =>
+          file.replace(
+            `${joinPaths(
+              context.workspaceConfig.workspaceRoot,
+              context.entry as string
+            )}/`,
+            ""
+          )
+      );
+      if (files.length === 0) {
+        this.log(
+          LogLevelLabel.WARN,
+          `No commands could be found in ${context.entry}. Please ensure this is correct.`
+        );
+      } else {
+        this.log(
+          LogLevelLabel.TRACE,
+          `The following commands were found in the entry directory: ${files.join(
+            ", "
+          )}`
+        );
+
+        context.resolvedEntry = files.map(file => ({
+          file: joinPaths(context.projectRoot, context.artifactsDir, file),
+          input: { file: joinPaths(context.entry as string, file) }
+        }));
       }
     }
 
@@ -84,48 +126,61 @@ export default class StormStackCLIPreset<
     );
   }
 
-  //   protected async prepareEntry(context: Context<TOptions>) {
-  //     await Promise.all(
-  //       context.resolvedEntry.map(async entry => {
-  //         this.log(
-  //           LogLevelLabel.TRACE,
-  //           `Preparing the entry artifact ${entry.file} (${entry?.name ? `export: "${entry.name}"` : "default"})" from input "${entry.input.file} (${entry.input.name ? `export: "${entry.input.name}"` : "default"})"`
-  //         );
+  protected async prepareEntry(context: Context<TOptions>) {
+    try {
+      for (const entry of context.resolvedEntry) {
+        this.log(
+          LogLevelLabel.TRACE,
+          `Preparing the entry artifact ${entry.file} (${entry?.name ? `export: "${entry.name}"` : "default"})" from input "${entry.input.file}" (${entry.input.name ? `export: "${entry.input.name}"` : "default"})`
+        );
 
-  //         return this.writeFile(
-  //           entry.file,
-  //           `#!/usr/bin/env node
-  // ${getFileHeader()}
+        await this.writeFile(
+          entry.file,
+          `${getFileHeader()}
 
-  // import ${entry.input.name ? `{ ${entry.input.name} as handle }` : "handle"} from "${joinPaths(
-  //             relativePath(
-  //               joinPaths(context.projectRoot, findFilePath(entry.file)),
-  //               joinPaths(context.projectRoot, findFilePath(entry.input.file))
-  //             ),
-  //             findFileName(entry.input.file).replace(
-  //               findFileExtension(entry.input.file),
-  //               ""
-  //             )
-  //           )}";
+import ".${joinPaths(context.runtimeDir.replace(context.artifactsDir, ""), "init")}";
 
-  // import { builder } from ".${joinPaths(
-  //             context.runtimeDir.replace(context.artifactsDir, ""),
-  //             "app"
-  //           )}";
-  // import { getSink } from "@storm-stack/log-console";
+import ${entry.input.name ? `{ ${entry.input.name} as handle }` : "handle"} from "${joinPaths(
+            relativePath(
+              findFilePath(entry.file),
+              findFilePath(entry.input.file)
+            ),
+            findFileName(entry.input.file).replace(
+              findFileExtension(entry.input.file),
+              ""
+            )
+          )}";
+import { builder } from ".${joinPaths(context.runtimeDir.replace(context.artifactsDir, ""), "app")}";
+import { getSink as getConsoleSink } from "@storm-stack/log-console";${
+            this.#config.features?.includes(StormStackNodeFeatures.SENTRY)
+              ? `
+import { getSink as getSentrySink } from "@storm-stack/log-sentry";`
+              : ""
+          }
 
-  // export default {
-  //   fetch: builder({
-  //     name: ${context.name ? `"${context.name}"` : "undefined"},
-  //     log: { handle: getSink(), logLevel: "debug" },
-  //   })
-  //     .handler(handle)
-  //     .build()
-  // }
+export default builder({
+  name: ${context.name ? `"${context.name}"` : "undefined"},
+  log: [
+    { handle: getConsoleSink(), logLevel: "debug" }${
+      this.#config.features.includes(StormStackNodeFeatures.SENTRY)
+        ? `,
+    { handle: getSentrySink(), logLevel: "error" }`
+        : ""
+    }
+  ],
+})
+  .handler(handle)
+  .build();
 
-  //  `
-  //         );
-  //       })
-  //     );
-  //   }
+`
+        );
+      }
+    } catch (error) {
+      this.log(
+        LogLevelLabel.ERROR,
+        `Failed to prepare the entry artifact: ${(error as any)?.message}`
+      );
+      throw error;
+    }
+  }
 }
