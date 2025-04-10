@@ -24,7 +24,7 @@ import type {
 /**
  * A text formatter is a function that accepts a log record and returns a string.
  *
- * @param record The log record to format.
+ * @param record - The log record to format.
  * @returns The formatted log record.
  */
 export type TextFormatter = (record: LogRecord) => string;
@@ -225,4 +225,19 @@ export interface AnsiColorFormatterOptions extends TextFormatterOptions {
    * The ANSI color for the category.  No color is used by default.
    */
   // categoryColor?: AnsiColor | null;
+}
+
+/**
+ * Options for the {@link getSink} function.
+ */
+export interface StreamSinkOptions {
+  /**
+   * The text formatter to use. Defaults to {@link defaultTextFormatter}.
+   */
+  formatter?: TextFormatter;
+
+  /**
+   * The text encoder to use. Defaults to an instance of {@link TextEncoder}.
+   */
+  encoder?: { encode: (text: string) => Uint8Array };
 }

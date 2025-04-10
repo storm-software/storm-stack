@@ -15,13 +15,27 @@
 
  ------------------------------------------------------------------- */
 
-import type { StreamSinkOptions } from "@storm-stack/log-stream/sink";
+import type { LogRecord } from "@storm-stack/core/types/global";
+import type { Storage, StorageValue } from "unstorage";
 
-export type FileSinkOptions = StreamSinkOptions;
+export type StorageFormatter<T extends StorageValue = StorageValue> = (
+  record: LogRecord
+) => T;
+
+export interface StorageSinkOptions<T extends StorageValue = StorageValue> {
+  /**
+   * The text formatter to use.  Defaults to {@link defaultTextFormatter}.
+   */
+  formatter?: StorageFormatter<T>;
+
+  /**
+   * The [unstorage](https://unstorage.unjs.io/) storage to use. Defaults to `localStorage` in the browser and `fs` in Node.js.
+   */
+  storage: Storage<T>;
+}
 
 /**
  * A platform-specific file sink driver.
- * @typeParam TFile The type of the file descriptor.
  */
 export interface FileSinkDriver<TFile> {
   /**
@@ -51,9 +65,9 @@ export interface FileSinkDriver<TFile> {
 }
 
 /**
- * Options for the {@link getBaseRotatingFileSink} function.
+ * Options for the {@link getRotatingSink} function.
  */
-export interface RotatingFileSinkOptions extends FileSinkOptions {
+export interface RotatingStorageSinkOptions extends StorageSinkOptions {
   /**
    * The maximum bytes of the file before it is rotated.  1 MiB by default.
    */

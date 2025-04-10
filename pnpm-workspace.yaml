@@ -133,6 +133,7 @@ catalog:
   unbuild: ^3.3.0
   unenv: npm:unenv-nightly
   unimport: ^4.1.1
+  unstorage: ^1.15.0
   untyped: "1.5.2"
   verdaccio: 6.0.5
   vite: ^6.0.4

@@ -18,22 +18,7 @@
 import type { LogRecord, LogSink } from "@storm-stack/core/types";
 import type { WritableStream } from "node:stream/web";
 import { defaultTextFormatter } from "./formatter";
-import type { TextFormatter } from "./types";
-
-/**
- * Options for the {@link getStreamSink} function.
- */
-export interface StreamSinkOptions {
-  /**
-   * The text formatter to use.  Defaults to {@link defaultTextFormatter}.
-   */
-  formatter?: TextFormatter;
-
-  /**
-   * The text encoder to use.  Defaults to an instance of {@link TextEncoder}.
-   */
-  encoder?: { encode: (text: string) => Uint8Array };
-}
+import type { StreamSinkOptions } from "./types";
 
 /**
  * A factory that returns a sink that writes to a {@link WritableStream}.
@@ -55,8 +40,8 @@ export interface StreamSinkOptions {
  * const stderrSink = getStreamSink(stream.Writable.toWeb(process.stderr));
  * ```
  *
- * @param stream The stream to write to.
- * @param options The options for the sink.
+ * @param stream - The stream to write to.
+ * @param options - The options for the sink.
  * @returns A sink that writes to the stream.
  */
 export function getSink(

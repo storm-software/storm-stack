@@ -87,7 +87,8 @@
   "devDependencies": {
     "@stryke/types": "catalog:",
     "@types/node": "catalog:",
-    "tsup": "catalog:"
+    "tsup": "catalog:",
+    "unstorage": "catalog:"
   },
   "publishConfig": {
     "access": "public"

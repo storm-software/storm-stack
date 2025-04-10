@@ -28,6 +28,7 @@ import type { ProviderInfo } from "@stryke/env/providers";
 import type { RuntimeInfo } from "@stryke/env/runtime-checks";
 import type { MaybePromise } from "@stryke/types/base";
 import type { ValidationDetail as ExternalValidationDetail } from "@stryke/types/validations";
+import type { Storage } from "unstorage";
 
 /**
  * Interface representing the runtime information for the Storm application.
@@ -235,6 +236,7 @@ interface Internal_StormContextStore {
 export interface StormRuntimeParams {
   name?: string;
   providers?: ProviderWithScope[];
+  storage?: Storage;
   log: LogSinkInstance | LogSinkInstance[];
 }
 
@@ -284,9 +286,14 @@ export interface StormContext<
   readonly meta: Record<string, any>;
 
   /**
-   * The root application logger for Storm Stack projects.
+   * The root application logger for the Storm Stack application.
    */
   readonly log: IStormLog;
+
+  /**
+   * The root [unstorage](https://unstorage.unjs.io/) storage to use for Storm Stack application.
+   */
+  readonly storage: Storage;
 
   /**
    * The injected service providers for the Storm application.

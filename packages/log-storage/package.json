@@ -10,7 +10,8 @@
   },
   "private": false,
   "dependencies": {
-    "@storm-stack/log-stream": "workspace:*"
+    "@storm-stack/log-stream": "workspace:*",
+    "unstorage": "catalog:"
   },
   "devDependencies": {
     "@storm-stack/core": "workspace:*",

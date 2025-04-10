@@ -45,6 +45,7 @@ import { uniqueId } from "./id";
 import type { StormRequest } from "./request";
 import { StormResponse } from "./response";
 import { InjectorContext } from "@deepkit/injector";
+import { createStorage } from "unstorage";
 
 /**
  * Creates a Storm application handler.
@@ -92,7 +93,10 @@ export function builder<
     const disposables = new Set<Disposable>();
     const asyncDisposables = new Set<AsyncDisposable>();
 
+    const storage = params.storage ?? createStorage();
     async function handleExit(): Promise<void> {
+      await storage.dispose();
+
       for (const disposable of disposables) {
         disposable[Symbol.dispose]();
       }
@@ -144,10 +148,11 @@ export function builder<
           version,
           request,
           meta: request.meta,
-          log: log.with({ name, version, requestId: request.id }),
           buildInfo,
           runtimeInfo,
           injector,
+          log: log.with({ name, version, requestId: request.id }),
+          storage,
           env: {} as StormEnv,
           emit: (_event: StormEvent) => {},
           __internal: {

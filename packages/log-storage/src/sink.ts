@@ -15,44 +15,36 @@
 
  ------------------------------------------------------------------- */
 
-import type { LogSink } from "@storm-stack/core/types";
-import fs from "node:fs";
-import { getBaseFileSink, getBaseRotatingFileSink } from "./base/base-sink";
-import type {
-  FileSinkOptions,
-  RotatingFileSinkDriver,
-  RotatingFileSinkOptions
-} from "./types";
-
-/**
- * A Node.js-specific file sink driver.
- */
-export const nodeDriver: RotatingFileSinkDriver<number> = {
-  openSync(path: string) {
-    return fs.openSync(path, "a");
-  },
-  writeSync: fs.writeSync,
-  flushSync: fs.fsyncSync,
-  closeSync: fs.closeSync,
-  statSync: fs.statSync,
-  renameSync: fs.renameSync
-};
+import type { LogRecord, LogSink } from "@storm-stack/core/types";
+import { defaultTextFormatter } from "@storm-stack/log-stream/formatter";
+import type { StorageValue } from "unstorage";
+import type { StorageSinkOptions } from "./types";
 
 /**
  * Get a file sink.
  *
  * Note that this function is unavailable in the browser.
  *
- * @param path A path to the file to write to.
- * @param options The options for the sink.
+ * @param path - A path to the file to write to.
+ * @param options - The options for the sink.
  * @returns A sink that writes to the file.  The sink is also a disposable
  *          object that closes the file when disposed.
  */
-export function getSink(
-  path: string,
-  options: FileSinkOptions = {}
-): LogSink & Disposable {
-  return getBaseFileSink(path, { ...options, ...nodeDriver });
+export async function getSink<T extends StorageValue = StorageValue>(
+  options: StorageSinkOptions<T>
+): Promise<LogSink & AsyncDisposable> {
+  const formatter = options.formatter ?? defaultTextFormatter;
+  const storage = options.storage;
+
+  const sink: LogSink & AsyncDisposable = (record: LogRecord) => {
+    void storage.setItem(
+      `storm-${new Date().toISOString().replace("T", "_").replace("Z", "")}.log`,
+      formatter(record) as T
+    );
+  };
+
+  sink[Symbol.asyncDispose] = async () => storage.dispose();
+  return sink;
 }
 
 /**
@@ -69,9 +61,9 @@ export function getSink(
  * @param options - The options for the sink and the file driver.
  * @returns A sink that writes to the file. The sink is also a disposable object that closes the file when disposed.
  */
-export function getRotatingSink(
-  path: string,
-  options: RotatingFileSinkOptions = {}
-): LogSink & Disposable {
-  return getBaseRotatingFileSink(path, { ...options, ...nodeDriver });
-}
+// export function getRotatingSink(
+//   path: string,
+//   options: RotatingStorageSinkOptions = {}
+// ): LogSink & Disposable {
+//   return getBaseRotatingFileSink(path, { ...options, ...nodeDriver });
+// }

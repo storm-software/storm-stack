@@ -94,7 +94,7 @@ const inspect: (value: unknown, options?: { colors?: boolean }) => string =
  * ```
  * 2023-11-14 22:13:20.000 +00:00 [INFO] Hello, world!
  * ```
- * @param options The options for the text formatter.
+ * @param options - The options for the text formatter.
  * @returns The text formatter.
  */
 export function getTextFormatter(

@@ -123,6 +123,8 @@ export default class StormStackNodePlugin<
         context.projectType === "application" &&
           this.install(context, "@deepkit/injector"),
         context.projectType === "application" &&
+          this.install(context, "unstorage"),
+        context.projectType === "application" &&
           this.install(context, "@stryke/json"),
         context.projectType === "application" &&
           this.install(context, "@stryke/type-checks"),
