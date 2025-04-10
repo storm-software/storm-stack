@@ -15,34 +15,35 @@
 
  ------------------------------------------------------------------- */
 
-export interface ExamplePayload {
+/**
+ * The payload for the example CLI application.
+ */
+export interface ServePayload {
   /**
-   * The name of the person.
+   * The host to bind the server to.
+   *
+   * @defaultValue "localhost"
    */
-  name: string;
+  host: string;
 
   /**
-   * The age of the person.
+   * The port to bind the server to.
+   *
+   * @defaultValue 3000
    */
-  age: number;
+  port: number;
 
   /**
-   * The address of the person.
+   * Should the server serve compressed files?
+   *
+   * @defaultValue false
    */
-  address: {
-    /**
-     * The street of the address.
-     */
-    street: string;
+  compress: boolean;
 
-    /**
-     * The city of the address.
-     */
-    city: string;
-
-    /**
-     * The country of the address.
-     */
-    country: string;
-  };
+  /**
+   * Should the server load environment variables from the .env file?
+   *
+   * @defaultValue true
+   */
+  loadEnv: boolean;
 }

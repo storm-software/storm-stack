@@ -185,6 +185,7 @@ export async function transformErrors<TOptions extends Options = Options>(
     await mutex.acquire();
     try {
       await writeFile(
+        log,
         joinPaths(
           context.workspaceConfig.workspaceRoot,
           context.workspaceConfig.error.codesFile

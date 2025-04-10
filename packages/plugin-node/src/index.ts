@@ -53,14 +53,14 @@ export default class StormStackNodePlugin<
   /**
    * The configuration for the Node.js plugin
    */
-  protected config: StormStackNodePluginConfig;
+  #config: StormStackNodePluginConfig;
 
   public constructor(config: Partial<StormStackNodePluginConfig> = {}) {
     super("node", "@storm-stack/plugin-node");
 
-    this.config = config as StormStackNodePluginConfig;
-    this.config.features ??= [];
-    this.config.skipBuild ??= false;
+    this.#config = config as StormStackNodePluginConfig;
+    this.#config.features ??= [];
+    this.#config.skipBuild ??= false;
   }
 
   public addHooks(hooks: EngineHooks<TOptions>) {
@@ -74,7 +74,7 @@ export default class StormStackNodePlugin<
       "build:transform": this.transform.bind(this)
     });
 
-    if (!this.config.skipBuild) {
+    if (!this.#config.skipBuild) {
       hooks.addHooks({
         "build:execute": this.build.bind(this)
       });
@@ -131,7 +131,7 @@ export default class StormStackNodePlugin<
         context.projectType === "application" &&
           this.install(context, "@storm-stack/log-console"),
         context.projectType === "application" &&
-          this.config.features.includes(StormStackNodeFeatures.SENTRY) &&
+          this.#config.features.includes(StormStackNodeFeatures.SENTRY) &&
           this.install(context, "@storm-stack/log-sentry")
       ].filter(Boolean)
     );
@@ -190,7 +190,7 @@ export default class StormStackNodePlugin<
           ),
           generateDeclarations(
             context.resolvedDotenv.types.variables.properties,
-            this.config.features
+            this.#config.features
           )
         )
       ].filter(Boolean)
@@ -214,14 +214,14 @@ export default class StormStackNodePlugin<
   }
 
   protected async prepareEntry(context: Context<TOptions>) {
-    await Promise.all(
-      context.resolvedEntry.map(async entry => {
+    try {
+      for (const entry of context.resolvedEntry) {
         this.log(
           LogLevelLabel.TRACE,
-          `Preparing the entry artifact ${entry.file} (${entry?.name ? `export: "${entry.name}"` : "default"})" from input "${entry.input.file} (${entry.input.name ? `export: "${entry.input.name}"` : "default"})"`
+          `Preparing the entry artifact ${entry.file} (${entry?.name ? `export: "${entry.name}"` : "default"})" from input "${entry.input.file}" (${entry.input.name ? `export: "${entry.input.name}"` : "default"})`
         );
 
-        return this.writeFile(
+        await this.writeFile(
           entry.file,
           `${getFileHeader()}
 
@@ -238,25 +238,48 @@ import ${entry.input.name ? `{ ${entry.input.name} as handle }` : "handle"} from
             )
           )}";
 import { builder } from ".${joinPaths(context.runtimeDir.replace(context.artifactsDir, ""), "app")}";
-import { getSink } from "@storm-stack/log-console";
+import { getSink as getConsoleSink } from "@storm-stack/log-console";${
+            this.#config.features?.includes(StormStackNodeFeatures.SENTRY)
+              ? `
+import { getSink as getSentrySink } from "@storm-stack/log-sentry";`
+              : ""
+          }
 
 export default builder({
   name: ${context.name ? `"${context.name}"` : "undefined"},
-  log: { handle: getSink(), logLevel: "debug" },
+  log: [
+    { handle: getConsoleSink(), logLevel: "debug" }${
+      this.#config.features.includes(StormStackNodeFeatures.SENTRY)
+        ? `,
+    { handle: getSentrySink(), logLevel: "error" }`
+        : ""
+    }
+  ],
 })
   .handler(handle)
   .build();
 
 `
         );
-      })
-    );
+      }
+    } catch (error) {
+      this.log(
+        LogLevelLabel.ERROR,
+        `Failed to prepare the entry artifact: ${(error as any)?.message}`
+      );
+      throw error;
+    }
   }
 
   protected async transform(
     context: Context<TOptions>,
     sourceFile: SourceFile
   ) {
+    this.log(
+      LogLevelLabel.TRACE,
+      `Transforming the source file "${sourceFile.id}"`
+    );
+
     transformContext(sourceFile);
   }
 

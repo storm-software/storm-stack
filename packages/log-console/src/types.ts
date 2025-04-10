@@ -23,10 +23,10 @@ import type { LogRecord } from "@storm-stack/core/types";
  * @param record - The log record to format.
  * @returns The formatted log record, as an array of arguments for {@link console.log}.
  */
-export type ConsoleFormatter = (record: LogRecord) => readonly any[];
+export type ConsoleFormatter = (record: LogRecord) => readonly any[] | string;
 
 /**
- * Options for the {@link getConsoleSink} function.
+ * Options for the {@link getSink} function.
  */
 export interface ConsoleSinkOptions {
   /**

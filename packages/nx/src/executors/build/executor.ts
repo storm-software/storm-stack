@@ -91,6 +91,7 @@ export default withRunExecutor<StormStackBuildExecutorSchema>(
     hooks: {
       applyDefaultOptions: (options: StormStackBuildExecutorSchema) => {
         options.entry ??= "{sourceRoot}/index.ts";
+        options.mode ??= "production";
 
         return options;
       }

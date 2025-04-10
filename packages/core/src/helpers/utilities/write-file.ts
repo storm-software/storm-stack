@@ -15,31 +15,44 @@
 
  ------------------------------------------------------------------- */
 
+import { LogLevelLabel } from "@storm-software/config-tools/types";
 import { writeFile as writeFileBase } from "@stryke/fs/write-file";
 import { format, resolveConfig } from "prettier";
+import type { LogFn } from "../../types/config";
 
 /**
  * Writes and formats a file to the file system
  *
+ * @param log - The logger function to use
  * @param filepath - The file path to write the file
  * @param content - The content to write to the file
  * @param skipFormat - Should the plugin skip formatting the `content` string with Prettier
  */
 export async function writeFile(
+  log: LogFn,
   filepath: string,
   content: string,
   skipFormat = false
 ) {
-  if (skipFormat) {
-    return writeFileBase(filepath, content);
-  }
+  try {
+    if (skipFormat) {
+      log(LogLevelLabel.ERROR, content);
 
-  const config = (await resolveConfig(filepath)) ?? {};
-  await writeFileBase(
-    filepath,
-    await format(content, {
-      ...config,
-      filepath
-    })
-  );
+      await writeFileBase(filepath, content);
+    } else {
+      const config = await resolveConfig(filepath);
+      const formatted = await format(content, {
+        ...(config ?? {}),
+        filepath
+      });
+
+      log(LogLevelLabel.ERROR, formatted);
+      await writeFileBase(filepath, formatted || "");
+    }
+  } catch (error) {
+    log(
+      LogLevelLabel.ERROR,
+      `Failed to write file ${filepath} to disk \n${(error as Error)?.message ? (error as Error).message : ""}`
+    );
+  }
 }

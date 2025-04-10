@@ -15,6 +15,8 @@
 
  ------------------------------------------------------------------- */
 
+/* eslint-disable ts/no-unsafe-call */
+
 import Diff from "diff-match-patch";
 import type MagicString from "magic-string";
 import type { CompilerResult } from "../../types/build";

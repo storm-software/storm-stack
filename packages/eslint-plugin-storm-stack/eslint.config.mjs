@@ -41,5 +41,6 @@ export default composer(baseConfig).append({
     "eslint-plugin/prefer-placeholders": "off",
     "eslint-plugin/test-case-shorthand-strings": "off",
     "eslint-plugin/require-meta-docs-url": "off"
-  }
+  },
+  ignores: ["docs/rules/**/*.md"]
 });

@@ -18,7 +18,9 @@
 import { LogLevelLabel } from "@storm-software/config-tools/types";
 import { Preset } from "@storm-stack/core/preset";
 import type { Context, EngineHooks, Options } from "@storm-stack/core/types";
-
+import { listFiles } from "@stryke/fs/list-files";
+import { isDirectory } from "@stryke/path/is-file";
+import { isSetString } from "@stryke/type-checks/is-set-string";
 import type { StormStackCLIPresetConfig } from "./types/config";
 
 export default class StormStackCLIPreset<
@@ -26,12 +28,13 @@ export default class StormStackCLIPreset<
 > extends Preset<TOptions> {
   #config: StormStackCLIPresetConfig;
 
-  public override dependencies = ["@storm-stack/plugin-node"];
-
   public constructor(config: StormStackCLIPresetConfig) {
     super("cli", "@storm-stack/preset-cli");
 
     this.#config = config;
+    this.dependencies = [
+      ["@storm-stack/plugin-node", { features: this.#config.features }]
+    ];
   }
 
   public addHooks(hooks: EngineHooks<TOptions>) {
@@ -41,11 +44,17 @@ export default class StormStackCLIPreset<
     });
   }
 
-  protected async initContext(_context: Context<TOptions>) {
+  protected async initContext(context: Context<TOptions>) {
     this.log(
       LogLevelLabel.TRACE,
       `Initializing CLI specific options for the Storm Stack project.`
     );
+
+    if (context.projectType === "application") {
+      if (isSetString(context.entry) && isDirectory(context.entry)) {
+        context.entry = await listFiles(context.entry);
+      }
+    }
 
     // const binaryName =
     //   this.#config.binaryName || kebabCase(context.name || "cli");

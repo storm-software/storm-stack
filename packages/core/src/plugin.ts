@@ -89,7 +89,9 @@ export abstract class Plugin<TOptions extends Options = Options>
     content: string,
     skipFormat = false
   ) {
-    return writeFile(filepath, content, skipFormat);
+    this.log(LogLevelLabel.TRACE, `Writing file ${filepath} to disk \n`);
+
+    return writeFile(this.log, filepath, content, skipFormat);
   }
 
   /**

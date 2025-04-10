@@ -9,7 +9,7 @@
   # use flake
   # dotenv .env
   #
-  description = "Storm Software's Pump.Dump development environment";
+  description = "Storm Software's Storm Stack development environment";
 
   inputs = {
     # nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
@@ -26,7 +26,13 @@
     {
       devShells = eachSystem (pkgs: {
         default = pkgs.mkShell {
-          packages = [
+           packages = [
+            pkgs.direnv
+
+            pkgs.git
+            pkgs.gh
+            pkgs.zizmor
+
             pkgs.node2nix
             pkgs.nodejs
             pkgs.corepack
@@ -34,9 +40,7 @@
             pkgs.nodePackages.typescript
             pkgs.nodePackages.typescript-language-server
             pkgs.nodePackages.prettier
-            pkgs.git
             pkgs.typos
-            # pkgs.python3
           ];
         };
       });

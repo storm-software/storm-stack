@@ -127,6 +127,7 @@ export async function transformEnv<TOptions extends Options = Options>(
     await mutex.acquire();
     try {
       await writeFile(
+        log,
         joinPaths(context.projectRoot, context.artifactsDir, "vars.json"),
         StormJSON.stringify(
           defu(

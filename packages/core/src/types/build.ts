@@ -505,7 +505,7 @@ export interface EngineHookFunctions<TOptions extends Options = Options> {
   "init:context": (context: Context<TOptions>) => MaybePromise<void>;
   "init:installs": (context: Context<TOptions>) => MaybePromise<void>;
   "init:tsconfig": (context: Context<TOptions>) => MaybePromise<void>;
-  "clean": (context: Context<TOptions>) => MaybePromise<void>;
+  "clean:execute": (context: Context<TOptions>) => MaybePromise<void>;
   "prepare:types": (context: Context<TOptions>) => MaybePromise<void>;
   "prepare:runtime": (context: Context<TOptions>) => MaybePromise<void>;
   "prepare:entry": (context: Context<TOptions>) => MaybePromise<void>;
@@ -516,7 +516,8 @@ export interface EngineHookFunctions<TOptions extends Options = Options> {
     sourceFile: SourceFile
   ) => MaybePromise<void>;
   "build:execute": (context: Context<TOptions>) => MaybePromise<void>;
-  "finalize": (context: Context<TOptions>) => MaybePromise<void>;
+  "docs:generate": (context: Context<TOptions>) => MaybePromise<void>;
+  "finalize:execute": (context: Context<TOptions>) => MaybePromise<void>;
 }
 
 export type EngineHooks<TOptions extends Options = Options> = Hookable<

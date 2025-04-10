@@ -52,9 +52,7 @@
   "prettier.ignorePath": "./node_modules/@storm-software/prettier/.prettierignore",
   "prettier.enableDebugLogs": false,
   "prettier.enable": true,
-  "markdownlint.config": {
-    "extends": "./node_modules/@storm-software/markdownlint/config/config.json"
-  },
+  "markdownlint.configFile": "./node_modules/@storm-software/markdownlint/config/base.markdownlint-cli2.jsonc",
   "eslint.debug": true,
   "eslint.codeAction.disableRuleComment": {
     "enable": true,

@@ -10,9 +10,9 @@
   },
   "private": true,
   "dependencies": {
-    "@stryke/cli": "catalog:",
     "@deepkit/injector": "catalog:",
-        "@storm-stack/log-console": "workspace:*"
+    "@storm-stack/log-console": "workspace:*",
+    "@stryke/cli": "catalog:"
   },
   "devDependencies": {
     "@storm-stack/core": "workspace:*",

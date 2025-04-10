@@ -25,7 +25,6 @@ import { createDirectory, removeDirectory } from "@stryke/fs/helpers";
 import { install } from "@stryke/fs/install";
 import { isPackageExists } from "@stryke/fs/package-fns";
 import { readJsonFile } from "@stryke/fs/read-file";
-import { writeFile, writeJsonFile } from "@stryke/fs/write-file";
 import { hash } from "@stryke/hash/hash";
 import { hashDirectory } from "@stryke/hash/hash-files";
 import { StormJSON } from "@stryke/json/storm-json";
@@ -44,7 +43,6 @@ import { nanoid } from "@stryke/unique-id/nanoid-client";
 import defu from "defu";
 import { createHooks } from "hookable";
 import { createJiti } from "jiti";
-import { format, resolveConfig } from "prettier";
 import { Project } from "ts-morph";
 import { Compiler } from "./compiler";
 import { installPackage, loadConfig } from "./helpers";
@@ -60,6 +58,7 @@ import {
 } from "./helpers/tsconfig";
 import { createUnimport } from "./helpers/unimport";
 import { createLog } from "./helpers/utilities/logger";
+import { writeFile } from "./helpers/utilities/write-file";
 import type { Plugin } from "./plugin";
 import type { Preset } from "./preset";
 import { writeId } from "./runtime";
@@ -111,11 +110,6 @@ export class Engine<TOptions extends Options = Options> {
   protected context: Context<TOptions>;
 
   /**
-   * The entry point for the project
-   */
-  protected entry?: TypeDefinition | TypeDefinition[];
-
-  /**
    * The logger for the plugin
    */
   protected log: LogFn;
@@ -131,7 +125,13 @@ export class Engine<TOptions extends Options = Options> {
 
     this.context = this.options as Context<TOptions>;
     this.context.override ??= {};
+
     this.context.workspaceConfig = workspaceConfig;
+    this.context.errorsFile ??= joinPaths(
+      this.context.workspaceConfig.workspaceRoot,
+      "errors.json"
+    );
+
     this.context.envPaths = getEnvPaths({
       orgId: "storm-software",
       appId: "storm-stack",
@@ -145,6 +145,7 @@ export class Engine<TOptions extends Options = Options> {
       this.context.envPaths.cache,
       hash(this.options.projectRoot)
     );
+
     this.context.unimportPresets = [
       {
         imports: ["StormJSON"],
@@ -275,11 +276,6 @@ export class Engine<TOptions extends Options = Options> {
     }
 
     if (this.context.projectType === "application" && this.context.entry) {
-      this.context.errorsFile ??= joinPaths(
-        this.context.workspaceConfig.workspaceRoot,
-        "errors.json"
-      );
-
       if (isSetString(this.context.entry)) {
         this.context.resolvedEntry = [
           {
@@ -374,20 +370,7 @@ export class Engine<TOptions extends Options = Options> {
       json.include.push(joinPaths(this.context.artifactsDir, "**/*.ts"));
     }
 
-    const config =
-      (await resolveConfig(
-        joinPaths(
-          this.context.workspaceConfig.workspaceRoot,
-          this.context.tsconfig
-        )
-      )) ?? {};
-    await this.writeFile(
-      this.context.tsconfig,
-      await format(StormJSON.stringify(json), {
-        ...config,
-        filepath: this.context.tsconfig
-      })
-    );
+    await this.writeFile(this.context.tsconfig, StormJSON.stringify(json));
 
     await this.#hooks
       .callHook("init:tsconfig", this.context)
@@ -547,7 +530,10 @@ export class Engine<TOptions extends Options = Options> {
       await this.init();
     }
 
-    this.log(LogLevelLabel.TRACE, "Running Storm Stack - Clean command");
+    this.log(
+      LogLevelLabel.INFO,
+      "🧹 Cleaning the previous Storm Stack artifacts"
+    );
 
     await Promise.all([
       removeDirectory(
@@ -564,17 +550,19 @@ export class Engine<TOptions extends Options = Options> {
       )
     ]);
 
-    await this.#hooks.callHook("clean", this.context).catch((error: Error) => {
-      this.log(
-        LogLevelLabel.ERROR,
-        `An error occured while cleaning the Storm Stack project: ${error.message} \n${error.stack ?? ""}`
-      );
+    await this.#hooks
+      .callHook("clean:execute", this.context)
+      .catch((error: Error) => {
+        this.log(
+          LogLevelLabel.ERROR,
+          `An error occured while cleaning the Storm Stack project: ${error.message} \n${error.stack ?? ""}`
+        );
 
-      throw new Error(
-        "An error occured while cleaning the Storm Stack project",
-        { cause: error }
-      );
-    });
+        throw new Error(
+          "An error occured while cleaning the Storm Stack project",
+          { cause: error }
+        );
+      });
 
     this.log(LogLevelLabel.TRACE, "Storm Stack - Clean command completed");
   }
@@ -598,15 +586,10 @@ export class Engine<TOptions extends Options = Options> {
       ) &&
       autoClean
     ) {
-      this.log(
-        LogLevelLabel.INFO,
-        "Cleaning the previous build artifacts before preparing the project"
-      );
-
       await this.clean();
     }
 
-    this.log(LogLevelLabel.TRACE, "Preparing Storm Stack project");
+    this.log(LogLevelLabel.INFO, "Preparing the Storm Stack project");
 
     if (
       !existsSync(
@@ -692,22 +675,20 @@ export class Engine<TOptions extends Options = Options> {
           );
         });
 
-      if (this.context.resolvedEntry && this.context.resolvedEntry.length > 0) {
-        this.#hooks
-          .callHook("prepare:entry", this.context)
-          .catch((error: Error) => {
-            this.log(
-              LogLevelLabel.ERROR,
-              `An error occured while creating entry artifacts: ${error.message} \n${error.stack ?? ""}`
-            );
+      await this.#hooks
+        .callHook("prepare:entry", this.context)
+        .catch((error: Error) => {
+          this.log(
+            LogLevelLabel.ERROR,
+            `An error occured while creating entry artifacts: ${error.message} \n${error.stack ?? ""}`
+          );
 
-            throw new Error("An error occured while creating entry artifacts", {
-              cause: error
-            });
+          throw new Error("An error occured while creating entry artifacts", {
+            cause: error
           });
-      }
+        });
 
-      this.#hooks
+      await this.#hooks
         .callHook("prepare:deploy", this.context)
         .catch((error: Error) => {
           this.log(
@@ -724,21 +705,21 @@ export class Engine<TOptions extends Options = Options> {
         });
     }
 
-    this.#hooks.callHook("prepare:misc", this.context).catch((error: Error) => {
-      this.log(
-        LogLevelLabel.ERROR,
-        `An error occured while creating miscellaneous artifacts: ${error.message} \n${error.stack ?? ""}`
-      );
+    await this.#hooks
+      .callHook("prepare:misc", this.context)
+      .catch((error: Error) => {
+        this.log(
+          LogLevelLabel.ERROR,
+          `An error occured while creating miscellaneous artifacts: ${error.message} \n${error.stack ?? ""}`
+        );
 
-      throw new Error(
-        "An error occured while creating miscellaneous artifacts",
-        {
-          cause: error
-        }
-      );
-    });
-
-    await this.writeDotenvDoc();
+        throw new Error(
+          "An error occured while creating miscellaneous artifacts",
+          {
+            cause: error
+          }
+        );
+      });
   }
 
   /**
@@ -767,9 +748,9 @@ export class Engine<TOptions extends Options = Options> {
       }
     }
 
-    this.log(LogLevelLabel.TRACE, "Building Storm Stack project");
-
     if (this.context.skipLint === false) {
+      this.log(LogLevelLabel.INFO, "Linting the Storm Stack project");
+
       await runLintCheck(this.log, this.context, {
         lintDuringBuild: true,
         eslintOptions: {
@@ -777,6 +758,8 @@ export class Engine<TOptions extends Options = Options> {
         }
       });
     }
+
+    this.log(LogLevelLabel.INFO, "Building the Storm Stack project");
 
     await this.#hooks
       .callHook("build:execute", this.context)
@@ -794,6 +777,37 @@ export class Engine<TOptions extends Options = Options> {
   }
 
   /**
+   * Documentation process
+   */
+  public async docs() {
+    this.log(
+      LogLevelLabel.INFO,
+      "Generating documentation for the Storm Stack project"
+    );
+
+    await this.writeDotenvDoc();
+
+    await this.#hooks
+      .callHook("docs:generate", this.context)
+      .catch((error: Error) => {
+        this.log(
+          LogLevelLabel.ERROR,
+          `An error occured while generating documentation for the Storm Stack project: ${error.message} \n${error.stack ?? ""}`
+        );
+
+        throw new Error(
+          "An error occured while generating documentation for the Storm Stack project",
+          { cause: error }
+        );
+      });
+
+    this.log(
+      LogLevelLabel.TRACE,
+      "Storm Stack documentation generation completed"
+    );
+  }
+
+  /**
    * Finalization process
    *
    * @remarks
@@ -802,8 +816,10 @@ export class Engine<TOptions extends Options = Options> {
   public async finalize() {
     this.log(LogLevelLabel.TRACE, "Storm Stack finalize execution started");
 
+    await this.writeDotenvDoc();
+
     await this.#hooks
-      .callHook("finalize", this.context)
+      .callHook("finalize:execute", this.context)
       .catch((error: Error) => {
         this.log(
           LogLevelLabel.ERROR,
@@ -819,21 +835,21 @@ export class Engine<TOptions extends Options = Options> {
     this.log(LogLevelLabel.TRACE, "Storm Stack finalize execution completed");
   }
 
-  protected resolveEntry(
+  private resolveEntry(
     options: Context<TOptions>,
     entry: TypeDefinitionParameter
   ): TypeDefinition {
     const parsed = parseTypeDefinition(entry)!;
-    let entryFile = parsed.file.replace(options.projectRoot, "");
-    while (entryFile.startsWith("/")) {
-      entryFile = entryFile.substring(1);
-    }
+    const entryFile = parsed.file
+      .replace(options.projectRoot, "")
+      .replaceAll("\\", "/")
+      .replaceAll(/^(?:\.\/)*/g, "");
 
     return {
       file: joinPaths(
         options.projectRoot,
         options.artifactsDir,
-        `entry-${hash({ file: entryFile, name: parsed.name }, { maxLength: 8 })}.ts`
+        `entry-${hash({ file: entryFile, name: parsed.name }, { maxLength: 24 }).replaceAll("-", "0").replaceAll("_", "1")}.ts`
       ),
       name: parsed.name
     };
@@ -844,7 +860,7 @@ export class Engine<TOptions extends Options = Options> {
    *
    * @param preset - The import path of the preset to add
    */
-  protected async addPreset(preset: string | PluginConfig) {
+  private async addPreset(preset: string | PluginConfig) {
     if (
       preset &&
       !this.#plugins.some(p =>
@@ -938,7 +954,7 @@ Note: Please ensure the preset package's default export is a class that extends 
    *
    * @param plugin - The import path of the plugin to add
    */
-  protected async addPlugin(plugin: string | PluginConfig) {
+  private async addPlugin(plugin: string | PluginConfig) {
     if (
       plugin &&
       !this.#plugins.some(p =>
@@ -1026,7 +1042,7 @@ Note: Please ensure the plugin package's default export is a class that extends 
    *
    * @returns The Storm Stack configuration
    */
-  protected async loadConfig(): Promise<ProjectConfig> {
+  private async loadConfig(): Promise<ProjectConfig> {
     return loadConfig(
       this.context.projectRoot,
       this.context.mode,
@@ -1039,7 +1055,7 @@ Note: Please ensure the plugin package's default export is a class that extends 
    *
    * @returns The resolved dotenv options
    */
-  protected async resolveDotenvOptions(): Promise<ResolvedDotenvOptions> {
+  private async resolveDotenvOptions(): Promise<ResolvedDotenvOptions> {
     const dotenv = {} as ResolvedDotenvOptions;
     dotenv.types = getDotenvTypeDefinitions(this.log, this.context);
     dotenv.additionalFiles = this.context.dotenv?.additionalFiles ?? [];
@@ -1093,13 +1109,13 @@ Note: Please ensure the plugin package's default export is a class that extends 
       return ret;
     }, env);
 
-    await writeJsonFile(
+    await this.writeFile(
       joinPaths(
         this.context.projectRoot,
         this.context.artifactsDir,
         "vars.json"
       ),
-      {}
+      "{}"
     );
 
     return dotenv;
@@ -1108,7 +1124,7 @@ Note: Please ensure the plugin package's default export is a class that extends 
   /**
    * Write the Typescript declarations
    */
-  protected async writeDeclarations() {
+  private async writeDeclarations() {
     if (isSetString(this.context.dts)) {
       const dtsFile = joinPaths(
         this.context.projectRoot,
@@ -1164,51 +1180,53 @@ Note: Please ensure the plugin package's default export is a class that extends 
    * Write the dotenv documentation markdown file
    */
   private async writeDotenvDoc() {
-    if (isSetString(this.context.resolvedDotenv.docgen)) {
-      const docgenFile = joinPaths(
-        this.context.projectRoot,
-        this.context.resolvedDotenv.docgen
-          .replace(this.context.projectRoot, "")
-          .trim()
-      );
-      this.log(
-        LogLevelLabel.TRACE,
-        `Documenting environment variables configuration in "${docgenFile}"`
-      );
-
-      if (this.context.resolvedDotenv.types?.variables?.properties) {
-        const docgenFilePath = findFilePath(docgenFile);
-        if (docgenFilePath && !existsSync(docgenFilePath)) {
-          await createDirectory(docgenFilePath);
-        }
-
-        return this.writeFile(
-          docgenFile,
-          generateDotenvMarkdown(
-            this.context.packageJson,
-            this.context.resolvedDotenv.types.variables.properties
-          )
-        );
-      }
-    }
-
-    this.log(
-      LogLevelLabel.INFO,
-      "The `dotenv.docgen` option was set to `false`. Skipping dotenv documentation."
+    const varsFile = joinPaths(
+      this.context.projectRoot,
+      this.context.artifactsDir,
+      "vars.json"
     );
+    if (existsSync(varsFile)) {
+      const vars = await readJsonFile(varsFile);
+
+      if (isSetString(this.context.resolvedDotenv.docgen)) {
+        const docgenFile = joinPaths(
+          this.context.projectRoot,
+          this.context.resolvedDotenv.docgen
+            .replace(this.context.projectRoot, "")
+            .trim()
+        );
+
+        this.log(
+          LogLevelLabel.TRACE,
+          `Documenting environment variables configuration in "${docgenFile}"`
+        );
+
+        if (vars) {
+          const docgenFilePath = findFilePath(docgenFile);
+          if (docgenFilePath && !existsSync(docgenFilePath)) {
+            await createDirectory(docgenFilePath);
+          }
+
+          return this.writeFile(
+            docgenFile,
+            generateDotenvMarkdown(this.context.packageJson, vars)
+          );
+        }
+      }
+
+      this.log(
+        LogLevelLabel.INFO,
+        "The `dotenv.docgen` option was set to `false`. Skipping dotenv documentation."
+      );
+    }
   }
 
   /**
    * Writes a file to the file system
    */
   private async writeFile(filepath: string, content: string) {
-    const config = (await resolveConfig(filepath)) ?? {};
-    await writeFile(
-      filepath,
-      await format(content, {
-        ...config,
-        filepath
-      })
-    );
+    this.log(LogLevelLabel.TRACE, `Writing file ${filepath} to disk \n`);
+
+    return writeFile(this.log, filepath, content);
   }
 }

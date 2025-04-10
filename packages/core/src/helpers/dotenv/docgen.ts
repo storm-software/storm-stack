@@ -37,7 +37,7 @@ Below is a list of environment variables used by the [${
 The below list of environment variables are used as configuration parameters to drive the processing of the application. The data contained in these variables are **not** considered sensitive or confidential. Any values provided in these variables will be available in plain text to the public.
 
 | Name | Description | Type | Default Value | Required |
-| ---- | ----------- | ---- | ------------- | :--------: |
+| ---- | ----------- | ---- | ------------- | :------: |
 ${Object.keys(env)
   .filter(key => key !== "__STORM_INJECTED__")
   .sort()

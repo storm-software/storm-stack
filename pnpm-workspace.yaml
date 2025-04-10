@@ -114,7 +114,6 @@ catalog:
   jest: 29.7.0
   jest-environment-jsdom: 29.7.0
   jest-environment-node: 29.7.0
-  proper-lockfile: ^4.1.2
   react: 19.0.0-rc-f6cce072-20240723
   react-dom: 19.0.0-rc-f6cce072-20240723
   react-native: 0.75.4
@@ -177,16 +176,3 @@ overrides:
   "simple-git": ">=3.27.0"
 patchedDependencies:
   nx@20.5.0: patches/nx@20.5.0.patch
-catalogs:
-  conflicts_@stryke/cli_c:s:
-    "@stryke/cli": c:*
-  conflicts_@stryke/cli_ca:s:
-    "@stryke/cli": ca:*
-  conflicts_@stryke/cli_cat:s:
-    "@stryke/cli": cat:*
-  conflicts_@stryke/cli_cata:s:
-    "@stryke/cli": cata:*
-  conflicts_@stryke/cli_catal:s:
-    "@stryke/cli": catal:*
-  conflicts_@stryke/cli_catalo:s:
-    "@stryke/cli": catalo:*

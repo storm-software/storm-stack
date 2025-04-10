@@ -49,6 +49,7 @@
     "@stryke/cli": "catalog:",
     "@stryke/fs": "catalog:",
     "@stryke/path": "catalog:",
+    "@stryke/type-checks": "catalog:",
     "defu": "catalog:"
   },
   "devDependencies": {

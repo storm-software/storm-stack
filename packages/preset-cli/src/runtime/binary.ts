@@ -19,7 +19,6 @@ import { getFileHeader } from "@storm-stack/core/helpers";
 import type { Context, Options } from "@storm-stack/core/types";
 import { relativePath } from "@stryke/path/file-path-fns";
 import { joinPaths } from "@stryke/path/join-paths";
-import { kebabCase } from "@stryke/string-format/kebab-case";
 import type { StormStackCLIPresetConfig } from "../types/config";
 
 export function writeBinary<TOptions extends Options = Options>(
@@ -33,8 +32,7 @@ import commands from "${joinPaths(
     relativePath(
       joinPaths(context.projectRoot, config.binaryPath),
       joinPaths(context.projectRoot, context.artifactsDir)
-    ),
-
+    )
   )}";
 import { colors } from "consola/utils";
 import { formatLineColumns, resolveValue } from "./_utils";
