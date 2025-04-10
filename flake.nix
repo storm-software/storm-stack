@@ -28,6 +28,7 @@
         default = pkgs.mkShell {
            packages = [
             pkgs.direnv
+            pkgs.zsh
 
             pkgs.git
             pkgs.gh
