@@ -17,10 +17,10 @@
   },
   "license": "Apache-2.0",
   "private": true,
-  "packageManager": "pnpm@10.3.0",
+  "packageManager": "pnpm@10.8.0",
   "engines": {
-    "node": ">=22.12.0",
-    "pnpm": ">=10.3.0"
+    "node": ">=22.14.0",
+    "pnpm": ">=10.8.0"
   },
   "keywords": [
     "storm-stack",
