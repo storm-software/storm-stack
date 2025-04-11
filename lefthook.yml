@@ -106,7 +106,8 @@ pre-push:
       run: pnpm exec storm-lint codeowners
     lint-github-actions:
       glob: ".github/workflows/*.*"
-      run: zizmor --offline --config="./tools/config/zizmor.yml" .github/workflows/
+      run:
+        zizmor --offline --config="./tools/config/zizmor.yml" .github/workflows/
     sherif:
       glob:
         - "*.js"
@@ -123,7 +124,9 @@ pre-push:
       stage_fixed: true
     readme:
       glob: "**/*"
-      run: 'pnpm exec storm-git readme --templates="tools/readme-templates" --project="@storm-stack/monorepo" '
+      run:
+        'pnpm exec storm-git readme --templates="tools/readme-templates"
+        --project="@storm-stack/monorepo" '
       stage_fixed: true
     format:
       glob: "**/*"

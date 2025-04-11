@@ -41,4 +41,4 @@ export const getTsupConfig = (
       console.log(`${options.name} build completed successfully!`);
     },
     ...options
-  })
+  });

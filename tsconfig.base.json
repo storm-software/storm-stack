@@ -10,14 +10,14 @@
       "@storm-stack/biome/*": ["packages/biome/src/*"],
       "@storm-stack/core": ["packages/core/src/index.ts"],
       "@storm-stack/core/*": ["packages/core/src/*"],
+      "@storm-stack/examples-cli-app": ["examples/cli-app/src/index.ts"],
+      "@storm-stack/examples-cli-app/*": ["examples/cli-app/src/*"],
       "@storm-stack/examples-cloudflare-worker": [
         "examples/cloudflare-worker/src/index.ts"
       ],
       "@storm-stack/examples-cloudflare-worker/*": [
         "examples/cloudflare-worker/src/*"
       ],
-      "@storm-stack/examples-cli-app": ["examples/cli-app/src/index.ts"],
-      "@storm-stack/examples-cli-app/*": ["examples/cli-app/src/*"],
       "@storm-stack/examples-node-app": ["examples/node-app/src/index.ts"],
       "@storm-stack/examples-node-app/*": ["examples/node-app/src/*"],
       "@storm-stack/log-console": ["packages/log-console/src/index.ts"],

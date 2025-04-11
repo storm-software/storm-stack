@@ -16,7 +16,6 @@
  ------------------------------------------------------------------- */
 
 import { isSet } from "@stryke/type-checks/is-set";
-import { NEWLINE_STRING } from "@stryke/types/base";
 import type { PackageJson } from "@stryke/types/package-json";
 import type { ResolvedDotenvTypeDefinitionProperty } from "../../types/build";
 
@@ -46,6 +45,6 @@ ${Object.keys(env)
       isSet(env[key]?.defaultValue) || env[key]?.isOptional ? "" : "✔"
     } |`;
   })
-  .join(NEWLINE_STRING)}
+  .join("\n")}
 `;
 }

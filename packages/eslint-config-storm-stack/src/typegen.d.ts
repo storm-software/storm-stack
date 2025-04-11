@@ -1632,6 +1632,8 @@ type CapitalizedComments = []|[("always" | "never")]|[("always" | "never"), ({
 type ClassMethodsUseThis = []|[{
   exceptMethods?: string[]
   enforceForClassFields?: boolean
+  ignoreOverrideMethods?: boolean
+  ignoreClassesWithImplements?: ("all" | "public-fields")
 }]
 // ----- comma-dangle -----
 type CommaDangle = []|[(_CommaDangleValue | {

@@ -49,6 +49,7 @@ A package containing a Storm Stack log adapter to write logs to a stream.
 
 <!-- START doctoc -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+
 ## Table of Contents
 
 - [Installing](#installing)

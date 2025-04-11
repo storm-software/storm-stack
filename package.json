@@ -49,7 +49,6 @@
     "format": "pnpm exec zx tools/scripts/src/format.mjs",
     "graph": "nx graph",
     "help": "nx help",
-    "install-csb": "corepack enable && pnpm install --no-frozen-lockfile",
     "lint": "pnpm exec zx tools/scripts/src/lint.mjs",
     "local-registry": "nx local-registry @storm-stack/monorepo",
     "nuke": "pnpm exec zx tools/scripts/src/nuke.mjs",

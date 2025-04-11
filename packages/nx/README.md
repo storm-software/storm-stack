@@ -52,8 +52,12 @@ A package containing tools for managing a Storm workspace. It includes various
   - [Example](#example)
 - [prepare](#prepare)
   - [Example](#example-1)
-- [build](#build)
+- [lint](#lint)
   - [Example](#example-2)
+- [build](#build)
+  - [Example](#example-3)
+- [docs](#docs)
+  - [Example](#example-4)
 - [Generators](#generators)
 - [Building](#building)
 - [Running unit tests](#running-unit-tests)
@@ -139,6 +143,22 @@ nx run my-project:prepare
 
 
 
+## lint
+
+An executor used to run the Storm Stack - Lint process
+
+### Example 
+
+This executor can be used by executing the following in a command line utility: 
+
+```cmd 
+nx run my-project:lint
+```
+
+**Please note:** _The lint executor should be included in the desired projects's `project.json` file._ 
+
+
+
 ## build
 
 An executor used to run the Storm Stack - Build process
@@ -152,6 +172,22 @@ nx run my-project:build
 ```
 
 **Please note:** _The build executor should be included in the desired projects's `project.json` file._ 
+
+
+
+## docs
+
+An executor used to run the Storm Stack - Docs process
+
+### Example 
+
+This executor can be used by executing the following in a command line utility: 
+
+```cmd 
+nx run my-project:docs
+```
+
+**Please note:** _The docs executor should be included in the desired projects's `project.json` file._ 
 
 
 

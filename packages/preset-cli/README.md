@@ -49,6 +49,7 @@ A package containing a Storm Stack preset for generating CLI applications
 
 <!-- START doctoc -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+
 ## Table of Contents
 
 - [Installing](#installing)

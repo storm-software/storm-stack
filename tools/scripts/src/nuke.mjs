@@ -21,7 +21,7 @@ import { $, chalk, echo } from "zx";
 // usePwsh();
 
 try {
-  await echo`${chalk.whiteBright("💣  Nuking the monorepo...")}`;
+  echo`${chalk.whiteBright("💣  Nuking the monorepo...")}`;
 
   let proc = $`pnpm nx clear-cache`.timeout(`${5 * 60}s`);
   proc.stdout.on("data", data => {
@@ -34,10 +34,9 @@ try {
     );
   }
 
-  proc =
-    $`pnpm exec rimraf --no-interactive -- ./.nx/cache ./.nx/workspace-data ./dist ./tmp ./pnpm-lock.yaml`.timeout(
-      `${5 * 60}s`
-    );
+  proc = $`rm -rf ./.nx/cache ./.nx/workspace-data ./dist ./tmp`.timeout(
+    `${5 * 60}s`
+  );
   proc.stdout.on("data", data => {
     echo`${data}`;
   });
@@ -48,10 +47,7 @@ try {
     );
   }
 
-  proc =
-    $`pnpm exec rimraf --no-interactive --glob "packages/**/{node_modules,dist,.storm}"`.timeout(
-      `${5 * 60}s`
-    );
+  proc = $`rm -rf ./packages/*/node_modules`.timeout(`${5 * 60}s`);
   proc.stdout.on("data", data => {
     echo`${data}`;
   });
@@ -62,23 +58,29 @@ try {
     );
   }
 
-  proc =
-    $`pnpm exec rimraf --no-interactive --glob "./node_modules/!rimraf/**"`.timeout(
-      `${5 * 60}s`
-    );
+  proc = $`rm -rf ./tools/*/node_modules`.timeout(`${5 * 60}s`);
   proc.stdout.on("data", data => {
     echo`${data}`;
   });
   result = await proc;
   if (!result.ok) {
     throw new Error(
-      `An error occurred while removing node modules from the workspace root: \n\n${result.message}\n`
+      `An error occurred while removing node modules and build directories from the monorepo's projects: \n\n${result.message}\n`
     );
   }
 
-  echo`${chalk.green("Successfully nuked the cache, node modules, and build folders")}`;
+  proc = $`rm -rf ./node_modules`.timeout(`${5 * 60}s`);
+  proc.stdout.on("data", data => {
+    echo`${data}`;
+  });
+  result = await proc;
+  if (!result.ok) {
+    throw new Error(
+      `An error occurred while removing node modules and build directories from the monorepo's projects: \n\n${result.message}\n`
+    );
+  }
+
+  echo`${chalk.green("Successfully nuked the cache, node modules, and build folders \n\n")}`;
 } catch (error) {
   echo`${chalk.red(error?.message ? error.message : "A failure occurred while nuking the monorepo")}`;
-
-  process.exit(1);
 }

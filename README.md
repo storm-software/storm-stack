@@ -12,7 +12,16 @@
 
 <br />
 
-The **⚡Storm Stack** monorepo contains the [storm-stack](https://www.npmjs.com/package/storm-stack) package and various plugins and tools for building and deploying applications. At a high-level, Storm Stack is a system that generates artifacts and code during the build and deploy processes. The goal is to allow the developer to focus on the code/business logic, rather than the specifics around technologies, frameworks, or cloud providers. This is achieved by using a set of tools and plugins that are designed to work together. Please note: some features of Storm Stack are opinionated to meet the needs of Storm Software; however, it is simple to customize to fit any specific requirements you may have.
+The **⚡Storm Stack** monorepo contains the
+[storm-stack](https://www.npmjs.com/package/storm-stack) package and various
+plugins and tools for building and deploying applications. At a high-level,
+Storm Stack is a system that generates artifacts and code during the build and
+deploy processes. The goal is to allow the developer to focus on the
+code/business logic, rather than the specifics around technologies, frameworks,
+or cloud providers. This is achieved by using a set of tools and plugins that
+are designed to work together. Please note: some features of Storm Stack are
+opinionated to meet the needs of Storm Software; however, it is simple to
+customize to fit any specific requirements you may have.
 
 <h3 align="center">💻 Visit <a href="https://stormsoftware.com" target="_blank">stormsoftware.com</a> to stay up to date with this developer</h3>
 
@@ -48,7 +57,7 @@ The **⚡Storm Stack** monorepo contains the [storm-stack](https://www.npmjs.com
   - [Running End-to-End Tests](#running-end-to-end-tests)
   - [Understand your workspace](#understand-your-workspace)
 - [☁ Nx Cloud](#-nx-cloud)
-  - [Distributed Computation Caching \& Distributed Task Execution](#distributed-computation-caching--distributed-task-execution)
+  - [Distributed Computation Caching & Distributed Task Execution](#distributed-computation-caching--distributed-task-execution)
 - [Roadmap](#roadmap)
 - [Contributing](#contributing)
 - [Support](#support)
@@ -61,45 +70,75 @@ The **⚡Storm Stack** monorepo contains the [storm-stack](https://www.npmjs.com
 
 # Features
 
-The following sections outline some of the features/publishable content included in this repository.
+The following sections outline some of the features/publishable content included
+in this repository.
 
 ## Engine
 
-The [@storm-stack/core](https://www.npmjs.com/package/@storm-stack/core) package includes the Storm Stack engine and CLI used to drive the build and deploy processes.
+The [@storm-stack/core](https://www.npmjs.com/package/@storm-stack/core) package
+includes the Storm Stack engine and CLI used to drive the build and deploy
+processes.
 
 ## Plugins
 
 The following Storm Stack plugin packages are included in this repository:
-- [@storm-stack/plugin-node](https://www.npmjs.com/package/@storm-stack/plugin-node) - A plugin for Node.js applications
-- [@storm-stack/plugin-http](https://www.npmjs.com/package/@storm-stack/plugin-http) - A plugin that adds Http helper types, classes, and functions to a project
+
+- [@storm-stack/plugin-node](https://www.npmjs.com/package/@storm-stack/plugin-node) -
+  A plugin for Node.js applications
+- [@storm-stack/plugin-http](https://www.npmjs.com/package/@storm-stack/plugin-http) -
+  A plugin that adds Http helper types, classes, and functions to a project
 
 ## Presets
 
 The following Storm Stack preset packages are included in this repository:
-- [@storm-stack/preset-cloudflare-worker](https://www.npmjs.com/package/@storm-stack/preset-cloudflare-worker) - A preset for Cloudflare Worker applications
-- [@storm-stack/preset-cli](https://www.npmjs.com/package/@storm-stack/preset-cli) - A preset for creating commandline applications
+
+- [@storm-stack/preset-cloudflare-worker](https://www.npmjs.com/package/@storm-stack/preset-cloudflare-worker) -
+  A preset for Cloudflare Worker applications
+- [@storm-stack/preset-cli](https://www.npmjs.com/package/@storm-stack/preset-cli) -
+  A preset for creating commandline applications
 
 ## Adapters
 
-An application developed with Storm Stack can include a set of adapters that are used to abstract the underlying technology. This allows the application to be built and deployed to different platforms without changing the code. There are currently two classes of adapters available:
+An application developed with Storm Stack can include a set of adapters that are
+used to abstract the underlying technology. This allows the application to be
+built and deployed to different platforms without changing the code. There are
+currently two classes of adapters available:
 
-- Log Adapters - adapters that provide logging and reporting functionality for the application. The following log adapters packages are included in the repository:
-  - [@storm-stack/log-console](https://www.npmjs.com/package/@storm-stack/log-console) - A package containing functionality to write log messages to the console
-  - [@storm-stack/log-sentry](https://www.npmjs.com/package/@storm-stack/log-sentry) - A package containing functionality to write log messages to [sentry](https://sentry.io)
-  - [@storm-stack/log-otel](https://www.npmjs.com/package/@storm-stack/log-otel) - A package containing functionality to write log messages to an [OpenTelemetry](https://opentelemetry.io/) collector
-  - [@storm-stack/log-storage](https://www.npmjs.com/package/@storm-stack/log-storage) - A package containing functionality to write log messages to a specified storage type
-  - [@storm-stack/log-stream](https://www.npmjs.com/package/@storm-stack/log-stream) - A package containing functionality to write log messages to streams
+- Log Adapters - adapters that provide logging and reporting functionality for
+  the application. The following log adapters packages are included in the
+  repository:
 
-- File System Adapters - adapters used to abstract away the process of writing or reading from the file system
+  - [@storm-stack/log-console](https://www.npmjs.com/package/@storm-stack/log-console) -
+    A package containing functionality to write log messages to the console
+  - [@storm-stack/log-sentry](https://www.npmjs.com/package/@storm-stack/log-sentry) -
+    A package containing functionality to write log messages to
+    [sentry](https://sentry.io)
+  - [@storm-stack/log-otel](https://www.npmjs.com/package/@storm-stack/log-otel) -
+    A package containing functionality to write log messages to an
+    [OpenTelemetry](https://opentelemetry.io/) collector
+  - [@storm-stack/log-storage](https://www.npmjs.com/package/@storm-stack/log-storage) -
+    A package containing functionality to write log messages to a specified
+    storage type
+  - [@storm-stack/log-stream](https://www.npmjs.com/package/@storm-stack/log-stream) -
+    A package containing functionality to write log messages to streams
+
+- File System Adapters - adapters used to abstract away the process of writing
+  or reading from the file system
 
 ## Development Tools
 
-The following packages are included in this repository to assist with the development/repository management process and are available for use in any application:
+The following packages are included in this repository to assist with the
+development/repository management process and are available for use in any
+application:
 
-- A [Nx](https://nx.dev/) plugin to manage monorepos using Storm Stack to build and deploy applications
-- An [ESLint](https://eslint.org/) plugin to format code ensuring it's high quality
-- An [ESLint](https://eslint.org/) shared configuration to ensure code quality and consistency
-- A [Biome](https://biomejs.dev/) shared configuration to include required globals and rules
+- A [Nx](https://nx.dev/) plugin to manage monorepos using Storm Stack to build
+  and deploy applications
+- An [ESLint](https://eslint.org/) plugin to format code ensuring it's high
+  quality
+- An [ESLint](https://eslint.org/) shared configuration to ensure code quality
+  and consistency
+- A [Biome](https://biomejs.dev/) shared configuration to include required
+  globals and rules
 
 <br />
 <div align="center">
@@ -111,12 +150,11 @@ The following packages are included in this repository to assist with the develo
 <div align="right">[ <a href="#table-of-contents">Back to top ▲</a> ]</div>
 <br />
 
-
 # Environment Configuration Help
 
-If you run into any issues while trying to run any of the monorepo's code locally, please
-reach out to us on [Discord](https://discord.gg/MQ6YVzakM5). See the [Support](#support) section for more
-information.
+If you run into any issues while trying to run any of the monorepo's code
+locally, please reach out to us on [Discord](https://discord.gg/MQ6YVzakM5). See
+the [Support](#support) section for more information.
 
 <div align="right">[ <a href="#table-of-contents">Back to top ▲</a> ]</div>
 <br />

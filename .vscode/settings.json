@@ -5,6 +5,31 @@
   "rust-analyzer.procMacro.ignored": {
     "napi-derive": ["napi"]
   },
+  "nix.enableLanguageServer": true,
+  "nix.serverPath": "nixd", // or "nil"
+  "nix.serverSettings": {
+    // check https://github.com/nix-community/nixd/blob/main/nixd/docs/configuration.md for all nixd config
+    "nixd": {
+      "formatting": {
+        "command": ["nixfmt"]
+      },
+      "options": {
+        // By default, this entry will be read from `import <nixpkgs> { }`.
+        // You can write arbitrary Nix expressions here, to produce valid "options" declaration result.
+        // Tip: for flake-based configuration, utilize `builtins.getFlake`
+        "nixos": {
+          "expr": "(builtins.getFlake \"${workspaceFolder}/flake.nix\").nixosConfigurations.<name>.options"
+        },
+        "home-manager": {
+          "expr": "(builtins.getFlake \"${workspaceFolder}/flake.nix\").homeConfigurations.<name>.options"
+        },
+        // Tip: use ${workspaceFolder} variable to define path
+        "nix-darwin": {
+          "expr": "(builtins.getFlake \"${workspaceFolder}/flake.nix\").darwinConfigurations.<name>.options"
+        }
+      }
+    }
+  },
   "json.schemas": [
     {
       "url": "https://cdn.jsdelivr.net/npm/tsup/schema.json",

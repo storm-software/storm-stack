@@ -10,6 +10,7 @@ onlyBuiltDependencies:
   - protobufjs
   - sharp
   - utf-8-validate
+
 packages:
   - "tools/*"
   - "packages/*"
@@ -175,5 +176,3 @@ overrides:
   "postcss": ">=8.4.47"
   "shell-quote": ">=1.8.1"
   "simple-git": ">=3.27.0"
-patchedDependencies:
-  nx@20.5.0: patches/nx@20.5.0.patch
