@@ -38,7 +38,7 @@ export async function getSink<T extends StorageValue = StorageValue>(
 
   const sink: LogSink & AsyncDisposable = (record: LogRecord) => {
     void storage.setItem(
-      `storm-${new Date().toISOString().replace("T", "_").replace("Z", "")}.log`,
+      `logs:storm-${new Date().toISOString().replace("T", "_").replace("Z", "")}.log`,
       formatter(record) as T
     );
   };

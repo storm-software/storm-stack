@@ -16,10 +16,10 @@
  ------------------------------------------------------------------- */
 
 /**
- * The log-file library used by Storm Software for building NodeJS applications.
+ * The log-storage library used by Storm Software for building NodeJS applications.
  *
  * @remarks
- * A package containing a log sink that writes to a file
+ * A package containing a log sink that writes to storage
  *
  * @packageDocumentation
  */

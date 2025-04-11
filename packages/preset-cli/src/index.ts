@@ -121,6 +121,8 @@ export default class StormStackCLIPreset<
       [
         this.install(context, "@stryke/cli"),
         context.projectType === "application" &&
+          this.install(context, "@storm-stack/log-storage"),
+        context.projectType === "application" &&
           this.install(context, "consola")
       ].filter(Boolean)
     );
@@ -151,23 +153,29 @@ import ${entry.input.name ? `{ ${entry.input.name} as handle }` : "handle"} from
             )
           )}";
 import { builder } from ".${joinPaths(context.runtimeDir.replace(context.artifactsDir, ""), "app")}";
-import { getSink as getConsoleSink } from "@storm-stack/log-console";${
+import { getSink as getStorageSink } from "@storm-stack/log-storage";${
             this.#config.features?.includes(StormStackNodeFeatures.SENTRY)
               ? `
 import { getSink as getSentrySink } from "@storm-stack/log-sentry";`
               : ""
           }
+import type { createStorage } from "unstorage";
+import fsLiteDriver from "unstorage/drivers/fs-lite";
+
+const storage = createStorage();
+storage.mount("logs", fsLiteDriver({ base: "var/log" }));
 
 export default builder({
   name: ${context.name ? `"${context.name}"` : "undefined"},
   log: [
-    { handle: getConsoleSink(), logLevel: "debug" }${
+    { handle: getStorageSink({ storage }), logLevel: "debug" }${
       this.#config.features.includes(StormStackNodeFeatures.SENTRY)
         ? `,
     { handle: getSentrySink(), logLevel: "error" }`
         : ""
     }
   ],
+  storage
 })
   .handler(handle)
   .build();

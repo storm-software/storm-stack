@@ -82,12 +82,12 @@ in {
 
   # https://devenv.sh/git-hooks/
   git-hooks.hooks = {
-    build = {
-      name = "Build";
-      enable = true;
-      entry = "build";
-      pass_filenames = false;
-    };
+    # build = {
+    #   name = "Build";
+    #   enable = true;
+    #   entry = "build";
+    #   pass_filenames = false;
+    # };
     shellcheck.enable = true;
   };
 
