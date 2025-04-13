@@ -24,7 +24,7 @@ jobs:
       - name: GitGuardian scan
         uses: GitGuardian/ggshield/actions/secret@v1.36.0
         with:
-          args: "--exclude tools/config/verdaccio.yml --exclude nx.json"
+          args: "--exclude pnpm-lock.yaml --exclude tools/config/verdaccio.yml --exclude nx.json"
         env:
           GITHUB_PUSH_BEFORE_SHA: ${{ github.event.before }}
           GITHUB_PUSH_BASE_SHA: ${{ github.event.base }}
