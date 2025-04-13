@@ -64,20 +64,8 @@ pre-commit:
         - "*.gql"
         - "*.xml"
         - "*.svg"
-        - "*.txt"
-        - "*.log"
         - "*.env"
-        - "*.env.example"
-        - "*.env.local"
-        - "*.env.development"
-        - "*.env.test"
-        - "*.env.production"
-        - "*.env.staging"
-        - "*.env.local.example"
-        - "*.env.development.example"
-        - "*.env.test.example"
-        - "*.env.production.example"
-        - "*.env.staging.example"
+        - ".env.{local,development,test,production,staging}"
       run: pnpm exec storm-lint all --skip-cspell --skip-circular-deps
       stage_fixed: true
 
