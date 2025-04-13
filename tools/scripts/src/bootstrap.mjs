@@ -38,8 +38,7 @@ try {
     bundle: true,
     minify: false,
     format: "esm",
-    platform: "node",
-    preserveSymlinks: true
+    platform: "node"
   });
 
   const proc = $`pnpm nx reset`.timeout(`${5 * 60}s`);
