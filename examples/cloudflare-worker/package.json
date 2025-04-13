@@ -11,11 +11,11 @@
   "private": true,
   "dependencies": {
     "@deepkit/injector": "catalog:",
-    "@storm-stack/log-console": "workspace:*"
+    "@storm-stack/log-console": "0.3.0"
   },
   "devDependencies": {
-    "@storm-stack/core": "workspace:*",
-    "@storm-stack/nx": "workspace:*",
-    "@storm-stack/preset-cloudflare-worker": "workspace:*"
+    "@storm-stack/core": "0.4.0",
+    "@storm-stack/nx": "0.3.0",
+    "@storm-stack/preset-cloudflare-worker": "0.4.0"
   }
 }

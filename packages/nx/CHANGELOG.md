@@ -2,6 +2,35 @@
 
 # Changelog for Storm Stack - Nx
 
+## [0.3.0](https://github.com/storm-software/storm-stack/releases/tag/nx%400.3.0) (2025-04-13)
+
+### Features
+
+- **monorepo:** Added `devenv` to repository
+  ([f442b14f](https://github.com/storm-software/storm-stack/commit/f442b14f))
+- **nx:** Added the `lint` and `docs` executors
+  ([13f40e06](https://github.com/storm-software/storm-stack/commit/13f40e06))
+- **core:** Completed transform error compiler functionality
+  ([0599c3fc](https://github.com/storm-software/storm-stack/commit/0599c3fc))
+
+### Bug Fixes
+
+- **core:** Resolve issues with entry file generation
+  ([4aad7536](https://github.com/storm-software/storm-stack/commit/4aad7536))
+
+### Miscellaneous
+
+- **core:** Reduce the amount of noise in trace logs
+  ([7ab51069](https://github.com/storm-software/storm-stack/commit/7ab51069))
+- **monorepo:** Format repository markdown files
+  ([b0643179](https://github.com/storm-software/storm-stack/commit/b0643179))
+- **monorepo:** Update the Storm CDN url in image links
+  ([22cb22d7](https://github.com/storm-software/storm-stack/commit/22cb22d7))
+
+### Updated Dependencies
+
+- Updated core to 0.4.0
+
 ## [0.2.0](https://github.com/storm-software/storm-stack/releases/tag/nx%400.2.0) (2025-04-07)
 
 ### Features

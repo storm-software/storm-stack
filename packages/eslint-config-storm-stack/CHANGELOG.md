@@ -2,6 +2,26 @@
 
 # Changelog for Storm Stack - Eslint Config Storm Stack
 
+## [0.3.0](https://github.com/storm-software/storm-stack/releases/tag/eslint-config-storm-stack%400.3.0) (2025-04-13)
+
+### Features
+
+- **monorepo:** Added `devenv` to repository
+  ([f442b14f](https://github.com/storm-software/storm-stack/commit/f442b14f))
+- **core:** Completed transform error compiler functionality
+  ([0599c3fc](https://github.com/storm-software/storm-stack/commit/0599c3fc))
+
+### Miscellaneous
+
+- **monorepo:** Format repository markdown files
+  ([b0643179](https://github.com/storm-software/storm-stack/commit/b0643179))
+- **monorepo:** Update the Storm CDN url in image links
+  ([22cb22d7](https://github.com/storm-software/storm-stack/commit/22cb22d7))
+
+### Updated Dependencies
+
+- Updated eslint-plugin-storm-stack to 0.5.0
+
 ## [0.2.0](https://github.com/storm-software/storm-stack/releases/tag/eslint-config-storm-stack%400.2.0) (2025-04-07)
 
 ### Features

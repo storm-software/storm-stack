@@ -2,6 +2,31 @@
 
 # Changelog for Storm Stack - Log Console
 
+## [0.3.0](https://github.com/storm-software/storm-stack/releases/tag/log-console%400.3.0) (2025-04-13)
+
+### Features
+
+- **core:** Completed transform error compiler functionality
+  ([0599c3fc](https://github.com/storm-software/storm-stack/commit/0599c3fc))
+
+### Bug Fixes
+
+- **core:** Resolve issues with entry file generation
+  ([4aad7536](https://github.com/storm-software/storm-stack/commit/4aad7536))
+
+### Miscellaneous
+
+- **monorepo:** Format repository markdown files
+  ([b0643179](https://github.com/storm-software/storm-stack/commit/b0643179))
+- **monorepo:** Update the Storm CDN url in image links
+  ([22cb22d7](https://github.com/storm-software/storm-stack/commit/22cb22d7))
+
+### Updated Dependencies
+
+- Updated core to 0.4.0
+- Updated core to 0.4.0
+- Updated nx to 0.3.0
+
 ## [0.2.0](https://github.com/storm-software/storm-stack/releases/tag/log-console%400.2.0) (2025-04-07)
 
 ### Features
