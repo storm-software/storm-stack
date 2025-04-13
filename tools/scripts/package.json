@@ -5,6 +5,7 @@
   "private": true,
   "dependencies": {
     "@storm-software/config-tools": "catalog:",
+    "defu": "catalog:",
     "esbuild": "catalog:"
   },
   "devDependencies": {

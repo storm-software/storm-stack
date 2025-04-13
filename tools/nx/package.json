@@ -105,5 +105,8 @@
     "tsup": "catalog:"
   },
   "executors": "./executors.json",
-  "generators": "./generators.json"
+  "generators": "./generators.json",
+  "dependencies": {
+    "defu": "catalog:"
+  }
 }
