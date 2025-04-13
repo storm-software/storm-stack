@@ -19,26 +19,26 @@ packages:
 catalog:
   "@ast-grep/napi": ^0.36.2
   "@biomejs/biome": ^1.9.4
-  "@cloudflare/unenv-preset": 2.0.2
-  "@deepkit/injector": ^1.0.2
-  "@deepkit/type-compiler": ^1.0.2
+  "@cloudflare/unenv-preset": 2.3.1
+  "@deepkit/injector": ^1.0.5
+  "@deepkit/type-compiler": ^1.0.5
   "@donedeal0/superdiff": ^3.1.2
-  "@eslint/compat": ^1.2.3
-  "@eslint/config-inspector": ^0.5.1
-  "@ls-lint/ls-lint": ^2.2.3
+  "@eslint/compat": ^1.2.8
+  "@eslint/config-inspector": ^0.7.1
+  "@ls-lint/ls-lint": ^2.3.0
   "@ltd/j-toml": ^1.38.0
-  "@microsoft/api-extractor": ^7.48.1
-  "@nuxt/kit": ^3.15.4
-  "@nuxt/schema": ^3.15.4
-  "@opentelemetry/api-logs": ^0.57.2
-  "@opentelemetry/exporter-logs-otlp-http": ^0.57.2
-  "@opentelemetry/otlp-exporter-base": ^0.57.2
+  "@microsoft/api-extractor": ^7.52.3
+  "@nuxt/kit": ^3.16.2
+  "@nuxt/schema": ^3.16.2
+  "@opentelemetry/api-logs": ^0.200.0
+  "@opentelemetry/exporter-logs-otlp-http": ^0.200.0
+  "@opentelemetry/otlp-exporter-base": ^0.200.0
   "@opentelemetry/resources": ^1.30.1
-  "@opentelemetry/sdk-logs": ^0.57.2
-  "@opentelemetry/semantic-conventions": ^1.30.0
-  "@sentry/core": ^9.5.0
-  "@sentry/node": ^9.5.0
-  "@sentry/types": ^9.5.0
+  "@opentelemetry/sdk-logs": ^0.200.0
+  "@opentelemetry/semantic-conventions": ^1.32.0
+  "@sentry/core": ^9.12.0
+  "@sentry/node": ^9.12.0
+  "@sentry/types": ^9.12.0
   "@storm-stack/core": 0.3.0
   "@storm-stack/plugin-node": 0.3.0
   "@storm-stack/preset-cloudflare-worker": 0.3.0
@@ -46,17 +46,17 @@ catalog:
   "@types/eslint": ^9.6.1
   "@types/eslint__js": ^8.42.3
   "@types/invariant": ^2.2.37
-  "@types/jest": 29.5.13
+  "@types/jest": 29.5.14
   "@types/react": "npm:types-react@rc"
   "@types/react-dom": "npm:types-react-dom@rc"
-  "@types/node": ^22.10.2
-  "@nx/devkit": 20.7.0
-  "@nx/eslint-plugin": 20.7.0
-  "@nx/jest": 20.7.0
-  "@nx/js": 20.7.0
-  "@nx/plugin": 20.7.0
-  "@nx/react": 20.7.0
-  "@nx/workspace": 20.7.0
+  "@types/node": ^22.14.1
+  "@nx/devkit": 20.7.2
+  "@nx/eslint-plugin": 20.7.2
+  "@nx/jest": 20.7.2
+  "@nx/js": 20.7.2
+  "@nx/plugin": 20.7.2
+  "@nx/react": 20.7.2
+  "@nx/workspace": 20.7.2
   "@storm-software/build-tools": latest
   "@storm-software/config": latest
   "@storm-software/config-tools": latest
@@ -85,41 +85,41 @@ catalog:
   "@stryke/convert": latest
   "@stryke/type-checks": latest
   "@stryke/cli": latest
-  "@swc-node/register": ^1.10.9
-  "@swc/core": ^1.7.26
-  "@swc/wasm": ^1.10.1
-  "@swc/helpers": ^0.5.13
-  "@typescript-eslint/scope-manager": ^8.24.1
-  "@typescript-eslint/utils": ^8.24.1
+  "@swc-node/register": ^1.10.10
+  "@swc/core": ^1.11.20
+  "@swc/wasm": ^1.11.20
+  "@swc/helpers": ^0.5.17
+  "@typescript-eslint/scope-manager": ^8.29.1
+  "@typescript-eslint/utils": ^8.29.1
   bundle-require: ^5.1.0
-  c12: ^3.0.1
+  c12: ^3.0.3
   chalk-template: ^1.1.0
   commander: ^13.1.0
   diff-match-patch: ^1.0.5
-  eslint: ^9.20.1
-  eslint-doc-generator: ^2.0.2
+  eslint: ^9.24.0
+  eslint-doc-generator: ^2.1.2
   eslint-plugin-eslint-plugin: 6.4.0
   eslint-plugin-i18n-text: 1.0.1
-  eslint-plugin-storm-stack: 0.4.0
+  eslint-plugin-storm-stack: 0.5.0
   eslint-rule-documentation: ^1.0.23
-  eslint-typegen: 2.0.0
-  globals: ^15.12.0
+  eslint-typegen: 2.1.0
+  globals: ^15.15.0
   invariant: ^2.2.4
   jest-worker: ^29.7.0
   jsonc-eslint-parser: 2.4.0
-  lefthook: ^1.7.18
-  log4brains: ^1.0.1
+  lefthook: ^1.11.9
+  log4brains: ^1.1.0
   magic-string: ^0.30.17
-  prettier: ^3.5.2
-  nx: 20.7.0
+  prettier: ^3.5.3
+  nx: 20.7.2
   jest: 29.7.0
   jest-environment-jsdom: 29.7.0
   jest-environment-node: 29.7.0
   react: 19.0.0-rc-f6cce072-20240723
   react-dom: 19.0.0-rc-f6cce072-20240723
   react-native: 0.75.4
-  sherif: ^1.0.0
-  ts-jest: ^29.2.5
+  sherif: ^1.5.0
+  ts-jest: ^29.3.2
   ts-morph: ^25.0.1
   ts-node: ^10.9.2
   tslib: ^2.8.1
@@ -128,22 +128,22 @@ catalog:
   rimraf: ^6.0.1
   tsx: ^4.19.3
   typescript: ~5.7.3
-  esbuild: 0.25.0
-  rollup: ^4.28.1
-  rolldown: ^1.0.0-beta.1
-  unbuild: ^3.3.0
+  esbuild: 0.25.2
+  rollup: ^4.40.0
+  rolldown: ^1.0.0-beta.7
+  unbuild: ^3.5.0
   unenv: npm:unenv-nightly
-  unimport: ^4.1.1
+  unimport: ^4.2.0
   unstorage: ^1.15.0
   untyped: "1.5.2"
-  verdaccio: 6.0.5
-  vite: ^6.0.4
+  verdaccio: 6.1.2
+  vite: ^6.2.6
   defu: "^6.1.4"
   jiti: "^2.4.2"
   eslint-flat-config-utils: 2.0.1
   zod: ^3.24.2
   zod-validation-error: ^3.4.0
-  zx: ^8.3.2
+  zx: ^8.5.2
 overrides:
   "@storm-stack/core": workspace:*
   "@storm-stack/biome": workspace:*
