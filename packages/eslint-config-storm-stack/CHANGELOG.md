@@ -2,6 +2,13 @@
 
 # Changelog for Storm Stack - Eslint Config Storm Stack
 
+## [0.3.1](https://github.com/storm-software/storm-stack/releases/tag/eslint-config-storm-stack%400.3.1) (2025-04-13)
+
+### Miscellaneous
+
+- **monorepo:** Update workspace package version links
+  ([96614e38](https://github.com/storm-software/storm-stack/commit/96614e38))
+
 ## [0.3.0](https://github.com/storm-software/storm-stack/releases/tag/eslint-config-storm-stack%400.3.0) (2025-04-13)
 
 ### Features

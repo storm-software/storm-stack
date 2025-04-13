@@ -1,6 +1,6 @@
 {
   "name": "@storm-stack/plugin-http",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "type": "module",
   "description": "A Storm Stack plugin for including http helper functionality.",
   "repository": {
@@ -71,7 +71,7 @@
   "types": "dist/types/index.d.ts",
   "typings": "dist/types/index.d.ts",
   "dependencies": {
-    "@storm-stack/core": "workspace:*",
+    "@storm-stack/core": "0.4.1",
     "@stryke/http": "catalog:",
     "@stryke/json": "catalog:",
     "@stryke/path": "catalog:"
