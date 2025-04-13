@@ -138,6 +138,9 @@ export async function transformEnv<TOptions extends Options = Options>(
           )
         )
       );
+    } catch (e) {
+      // eslint-disable-next-line no-console
+      console.error(e);
     } finally {
       mutex.release();
     }
