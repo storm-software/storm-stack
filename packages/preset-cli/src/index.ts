@@ -159,7 +159,7 @@ import { getSink as getStorageSink } from "@storm-stack/log-storage";${
 import { getSink as getSentrySink } from "@storm-stack/log-sentry";`
               : ""
           }
-import type { createStorage } from "unstorage";
+import { createStorage } from "unstorage";
 import fsLiteDriver from "unstorage/drivers/fs-lite";
 
 const storage = createStorage();
@@ -168,7 +168,7 @@ storage.mount("logs", fsLiteDriver({ base: "var/log" }));
 export default builder({
   name: ${context.name ? `"${context.name}"` : "undefined"},
   log: [
-    { handle: getStorageSink({ storage }), logLevel: "debug" }${
+    { handle: await getStorageSink({ storage }), logLevel: "debug" }${
       this.#config.features.includes(StormStackNodeFeatures.SENTRY)
         ? `,
     { handle: getSentrySink(), logLevel: "error" }`
