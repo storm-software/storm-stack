@@ -2,6 +2,13 @@
 
 # Changelog for Storm Stack - Biome
 
+## [0.1.3](https://github.com/storm-software/storm-stack/releases/tag/biome%400.1.3) (2025-04-14)
+
+### Miscellaneous
+
+- **monorepo:** Format monorepo source code
+  ([3383a1a5](https://github.com/storm-software/storm-stack/commit/3383a1a5))
+
 ## [0.1.2](https://github.com/storm-software/storm-stack/releases/tag/biome%400.1.2) (2025-04-13)
 
 ### Miscellaneous

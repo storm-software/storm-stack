@@ -2,6 +2,19 @@
 
 # Changelog for Storm Stack - Nx
 
+## [0.3.2](https://github.com/storm-software/storm-stack/releases/tag/nx%400.3.2) (2025-04-14)
+
+### Miscellaneous
+
+- **monorepo:** Format monorepo source code
+  ([3383a1a5](https://github.com/storm-software/storm-stack/commit/3383a1a5))
+- **monorepo:** Resolve monorepo package dependencies
+  ([58c39ac7](https://github.com/storm-software/storm-stack/commit/58c39ac7))
+
+### Updated Dependencies
+
+- Updated core to 0.4.2
+
 ## [0.3.1](https://github.com/storm-software/storm-stack/releases/tag/nx%400.3.1) (2025-04-13)
 
 ### Miscellaneous
