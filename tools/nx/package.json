@@ -96,6 +96,9 @@
     "storm",
     "sullivanpj"
   ],
+  "dependencies": {
+    "defu": "catalog:"
+  },
   "devDependencies": {
     "@nx/devkit": "catalog:",
     "@stryke/types": "catalog:",
@@ -105,8 +108,5 @@
     "tsup": "catalog:"
   },
   "executors": "./executors.json",
-  "generators": "./generators.json",
-  "dependencies": {
-    "defu": "catalog:"
-  }
+  "generators": "./generators.json"
 }

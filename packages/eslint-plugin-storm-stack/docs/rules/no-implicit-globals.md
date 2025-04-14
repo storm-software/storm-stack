@@ -10,15 +10,15 @@
 👎 Examples of **incorrect** code for this rule:
 
 ```js
-const foo = 1;
+const foo = 1
 ```
 
 👍 Examples of **correct** code for this rule:
 
 ```js
-(function () {
-  const foo = 1;
-})();
+;(function () {
+  const foo = 1
+})()
 ```
 
 ## Version

@@ -44,11 +44,7 @@
       "title": "Mode",
       "type": "string",
       "description": "The build mode",
-      "enum": [
-        "development",
-        "staging",
-        "production"
-      ],
+      "enum": ["development", "staging", "production"],
       "id": "#mode",
       "default": "production"
     },
