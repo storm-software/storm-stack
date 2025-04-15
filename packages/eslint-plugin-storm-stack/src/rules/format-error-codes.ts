@@ -19,6 +19,7 @@ import { readJsonFileSync } from "@stryke/fs/read-file";
 import { writeJsonFileSync } from "@stryke/fs/write-file";
 import { deepClone } from "@stryke/helpers/deep-clone";
 import { isEqual } from "@stryke/helpers/is-equal";
+import { existsSync } from "@stryke/path/exists";
 import { isSetString } from "@stryke/type-checks/is-set-string";
 import type { TSESTree } from "@typescript-eslint/utils";
 import { AST_NODE_TYPES } from "@typescript-eslint/utils";
@@ -26,7 +27,6 @@ import type {
   RuleContext,
   RuleFixer
 } from "@typescript-eslint/utils/ts-eslint";
-import { existsSync } from "node:fs";
 import { createEslintRule } from "../helpers/create-rule";
 
 export const RULE_NAME = "format-error-codes";

@@ -132,9 +132,17 @@ export async function transformEnv<TOptions extends Options = Options>(
         StormJSON.stringify(
           defu(
             vars,
-            await readJsonFile(
+            existsSync(
               joinPaths(context.projectRoot, context.artifactsDir, "vars.json")
             )
+              ? await readJsonFile(
+                  joinPaths(
+                    context.projectRoot,
+                    context.artifactsDir,
+                    "vars.json"
+                  )
+                )
+              : {}
           )
         )
       );

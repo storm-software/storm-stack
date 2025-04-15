@@ -15,6 +15,7 @@
 
  ------------------------------------------------------------------- */
 
+import { getWorkspaceConfig } from "@storm-software/config-tools/get-config";
 import { GLOB_CODE_FILE } from "@storm-software/eslint/utils/constants";
 import type { Linter } from "eslint";
 import { configs } from "eslint-plugin-storm-stack/configs";
@@ -30,10 +31,12 @@ export async function stormStack(
     defaultConfig = "recommended"
   } = options;
 
-  let config: Linter.Config<Linter.RulesRecord> = {};
+  let config = {} as Linter.Config;
   if (defaultConfig !== "none") {
     config = configs[defaultConfig];
   }
+
+  const workspaceConfig = await getWorkspaceConfig();
 
   return [
     {
@@ -48,6 +51,14 @@ export async function stormStack(
       name: "storm/storm-stack/rules",
       rules: {
         ...config.rules,
+
+        "storm-stack/format-error-codes": [
+          config.rules?.["storm-stack/format-error-codes"]?.[0] ?? "warn",
+          {
+            ...(config.rules?.["storm-stack/format-error-codes"]?.[1] ?? {}),
+            codesFile: workspaceConfig.error.codesFile
+          }
+        ],
 
         ...overrides
       }

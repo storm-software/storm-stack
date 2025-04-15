@@ -16,9 +16,9 @@
  ------------------------------------------------------------------- */
 
 import { combine } from "@storm-software/eslint/utils/combine";
+import { writeFile } from "@stryke/fs/write-file";
 import { flatConfigsToRulesDTS } from "eslint-typegen/core";
 import { builtinRules } from "eslint/use-at-your-own-risk";
-import fs from "node:fs/promises";
 import { stormStack } from "../src/configs";
 
 const configs = await combine(
@@ -32,15 +32,14 @@ const configs = await combine(
   stormStack()
 );
 
-const configNames = configs.map(i => i.name).filter(Boolean) as string[];
-
-let dts = await flatConfigsToRulesDTS(configs, {
+const dts = await flatConfigsToRulesDTS(configs, {
   includeAugmentation: false
 });
 
-dts += `
-// Names of all the configs
-export type ConfigNames = ${configNames.map(i => `'${i}'`).join(" | ")}
-`;
-
-await fs.writeFile("src/typegen.d.ts", dts);
+await writeFile(
+  "src/typegen.d.ts",
+  `${dts}
+  // Names of all the configs
+  export type ConfigNames = ${(configs.map(i => i.name).filter(Boolean) as string[]).map(i => `'${i}'`).join(" | ")}
+  `
+);
