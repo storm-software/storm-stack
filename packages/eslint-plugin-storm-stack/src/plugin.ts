@@ -18,6 +18,7 @@
 import type { ESLint } from "eslint";
 import packageJson from "../package.json" with { type: "json" };
 import asyncPreventDefault from "./rules/async-prevent-default";
+import formatErrorCodes from "./rules/format-error-codes";
 import ifNewline from "./rules/if-newline";
 import noImplicitGlobals from "./rules/no-implicit-globals";
 import stormErrorsOnly from "./rules/storm-errors-only";
@@ -34,6 +35,7 @@ export const plugin = {
   },
   rules: {
     "async-prevent-default": asyncPreventDefault,
+    "format-error-codes": formatErrorCodes,
     "no-implicit-globals": noImplicitGlobals,
     "if-newline": ifNewline,
     "storm-urls-only": stormURLsOnly,

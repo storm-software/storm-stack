@@ -31,6 +31,7 @@ const config: Linter.Config = {
   ignores: [".storm"],
   rules: {
     "storm-stack/async-prevent-default": "off",
+    "storm-stack/format-error-codes": "warn",
     "storm-stack/if-newline": "off",
     "storm-stack/no-implicit-globals": "warn",
     "storm-stack/storm-urls-only": "off",
