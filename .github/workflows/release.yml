@@ -106,12 +106,11 @@ jobs:
         shell: bash
 
       - name: Run workspace build
-        run: pnpm build
-        shell: bash
+        run: devenv build
 
       - name: Release repository updates
         if: ${{ success() }}
-        run: pnpm release --base=${{ env.NX_BASE }} --head=${{ env.NX_HEAD }}
+        run: devenv shell release --base=${{ env.NX_BASE }} --head=${{ env.NX_HEAD }}
         env:
           GITHUB_ACTOR: ${{ github.actor }}
           GITHUB_TOKEN: ${{ github.token }}
