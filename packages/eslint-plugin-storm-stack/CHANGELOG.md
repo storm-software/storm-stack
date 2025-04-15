@@ -2,6 +2,15 @@
 
 # Changelog for Storm Stack - Eslint Plugin Storm Stack
 
+## [0.5.2](https://github.com/storm-software/storm-stack/releases/tag/eslint-plugin-storm-stack%400.5.2) (2025-04-15)
+
+### Miscellaneous
+
+- **eslint-plugin-storm-stack:** Regenerate linting rules documentation
+  ([7dbbc0e2](https://github.com/storm-software/storm-stack/commit/7dbbc0e2))
+- **monorepo:** Format monorepo source code
+  ([3383a1a5](https://github.com/storm-software/storm-stack/commit/3383a1a5))
+
 ## [0.5.1](https://github.com/storm-software/storm-stack/releases/tag/eslint-plugin-storm-stack%400.5.1) (2025-04-14)
 
 ### Miscellaneous

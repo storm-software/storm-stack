@@ -74,7 +74,7 @@
     "@storm-software/build-tools": "catalog:",
     "@storm-software/config-tools": "catalog:",
     "@storm-software/esbuild": "catalog:",
-    "@storm-stack/core": "0.4.2",
+    "@storm-stack/core": "0.4.3",
     "@stryke/env": "catalog:",
     "@stryke/fs": "catalog:",
     "@stryke/hash": "catalog:",

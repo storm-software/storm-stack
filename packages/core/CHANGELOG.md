@@ -2,6 +2,15 @@
 
 # Changelog for Storm Stack - Core
 
+## [0.4.3](https://github.com/storm-software/storm-stack/releases/tag/core%400.4.3) (2025-04-15)
+
+### Miscellaneous
+
+- **core:** Remove the `vars.json` file during preparation
+  ([70f51ab8](https://github.com/storm-software/storm-stack/commit/70f51ab8))
+- **monorepo:** Format monorepo source code
+  ([3383a1a5](https://github.com/storm-software/storm-stack/commit/3383a1a5))
+
 ## [0.4.2](https://github.com/storm-software/storm-stack/releases/tag/core%400.4.2) (2025-04-14)
 
 ### Miscellaneous

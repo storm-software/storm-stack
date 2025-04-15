@@ -2,6 +2,21 @@
 
 # Changelog for Storm Stack - Nx
 
+## [0.3.3](https://github.com/storm-software/storm-stack/releases/tag/nx%400.3.3) (2025-04-15)
+
+### Miscellaneous
+
+- **nx:** Regenerate `untyped` files
+  ([375af66b](https://github.com/storm-software/storm-stack/commit/375af66b))
+- **monorepo:** Format monorepo source code
+  ([3383a1a5](https://github.com/storm-software/storm-stack/commit/3383a1a5))
+- **monorepo:** Resolve monorepo package dependencies
+  ([58c39ac7](https://github.com/storm-software/storm-stack/commit/58c39ac7))
+
+### Updated Dependencies
+
+- Updated core to 0.4.3
+
 ## [0.3.2](https://github.com/storm-software/storm-stack/releases/tag/nx%400.3.2) (2025-04-14)
 
 ### Miscellaneous

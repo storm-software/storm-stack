@@ -14,8 +14,8 @@
     "@storm-stack/log-console": "0.3.2"
   },
   "devDependencies": {
-    "@storm-stack/core": "0.4.2",
-    "@storm-stack/nx": "0.3.2",
+    "@storm-stack/core": "0.4.3",
+    "@storm-stack/nx": "0.3.3",
     "@storm-stack/plugin-node": "0.4.2"
   },
   "storm": {
