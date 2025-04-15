@@ -86,34 +86,13 @@ jobs:
           token: ${{ secrets.STORM_BOT_GITHUB_TOKEN }}
           persist-credentials: false
 
-      - name: Install and set up Nix
-        uses: cachix/install-nix-action@v26
-
-      - name: Configures Nix to use the devenv cache
-        uses: cachix/cachix-action@v14
-        with:
-          name: devenv
-
-      - name: Install devenv
-        run: nix profile install nixpkgs#devenv
-
       - name: Setup workspace
-        uses: storm-software/action-setup@main
+        uses: storm-software/action-devenv-setup@main
         with:
           gpg-sign-key: ${{ secrets.STORM_BOT_GPG_SIGN_KEY }}
           gpg-private-key: ${{ secrets.STORM_BOT_GPG_PRIVATE_KEY }}
           gpg-passphrase: ${{ secrets.STORM_BOT_GPG_PASSPHRASE }}
-          package-manager: pnpm
-          package-manager-version: 10.8.0
           storm-bot-github-token: ${{ secrets.STORM_BOT_GITHUB_TOKEN }}
-
-      - name: Configure git
-        run: |
-          git config user.name "stormie-bot"
-          git config user.email "bot@stormsoftware.com"
-          git config lfs.allowincompletepush true
-          npm config set //registry.npmjs.org/:_authToken=$NPM_TOKEN
-        shell: bash
 
       - name: Get appropriate base and head commits for `nx affected` commands
         uses: nrwl/nx-set-shas@v4
