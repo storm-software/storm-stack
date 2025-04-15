@@ -110,7 +110,7 @@ jobs:
 
       - name: Release repository updates
         if: ${{ success() }}
-        run: devenv shell release --base=${{ env.NX_BASE }} --head=${{ env.NX_HEAD }}
+        run: devenv shell release -- --base=${{ env.NX_BASE }} --head=${{ env.NX_HEAD }}
         env:
           GITHUB_ACTOR: ${{ github.actor }}
           GITHUB_TOKEN: ${{ github.token }}
