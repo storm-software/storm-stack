@@ -89,10 +89,10 @@
     },
     "nixpkgs-unstable": {
       "locked": {
-        "lastModified": 1744157173,
+        "lastModified": 1744536153,
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "6a39c6e495eefabc935d8ddf66aa45d85b85fa3f",
+        "rev": "18dd725c29603f582cf1900e0d25f9f1063dbf11",
         "type": "github"
       },
       "original": {
@@ -110,7 +110,23 @@
         "nixpkgs-unstable": "nixpkgs-unstable",
         "pre-commit-hooks": [
           "git-hooks"
-        ]
+        ],
+        "storm-ops": "storm-ops"
+      }
+    },
+    "storm-ops": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1744686782,
+        "owner": "storm-software",
+        "repo": "storm-ops",
+        "rev": "37cdd7eb0a0cf72a09f71751a63f44e85f739b1d",
+        "type": "github"
+      },
+      "original": {
+        "owner": "storm-software",
+        "repo": "storm-ops",
+        "type": "github"
       }
     }
   },
