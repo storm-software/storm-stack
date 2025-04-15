@@ -1,11 +1,11 @@
 {
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
-    "outDir": "../../dist/out-tsc",
-    "noEmit": true
+    "rootDir": "../../..",
+    "types": ["node"],
+    "strict": false,
+    "outDir": "../../dist/out-tsc"
   },
-  "files": [],
-  "include": ["src/**/*.ts", "src/**/*.js", "bin/**/*"],
-  "exclude": ["jest.config.ts", "src/**/*.spec.ts", "src/**/*.test.ts"],
-  "composite": true
+  "include": ["src/**/*.ts", "bin/**/*.ts", "tsup.config.ts"],
+  "exclude": ["jest.config.ts", "src/**/*.spec.ts", "src/**/*.test.ts"]
 }

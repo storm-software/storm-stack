@@ -12,9 +12,9 @@ onlyBuiltDependencies:
   - utf-8-validate
 
 packages:
-  - "tools/*"
-  - "packages/*"
-  - "examples/*"
+  - "tools/**"
+  - "packages/**"
+  - "examples/**"
 
 catalog:
   "@ast-grep/napi": ^0.36.2
