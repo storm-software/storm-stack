@@ -1,0 +1,8 @@
+{
+  "name": "tools-errors",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "tools/errors/src",
+  "projectType": "library",
+  "tags": [],
+  "targets": {}
+}
