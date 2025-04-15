@@ -24,23 +24,6 @@ import type { RuleContext } from "@typescript-eslint/utils/ts-eslint";
 import defu from "defu";
 import type { Rule } from "eslint";
 
-// @keep-sorted
-const hasDocs = new Set([
-  "async-prevent-default",
-  "authenticity-token",
-  "no-implicit-globals",
-  "storm-errors-only",
-  "storm-requests-only",
-  "storm-responses-only",
-  "top-level-function"
-]);
-
-const blobUrl =
-  "https://github.com/storm-software/storm-stack/blob/main/packages/eslint-plugin-storm-stack/src/rules";
-
-const docsUrl =
-  "https://docs.stormsoftware.com/projects/storm-stack/eslint/plugin/rules";
-
 export type RuleModule<T extends readonly unknown[]> = Rule.RuleModule & {
   defaultOptions: T;
 };
@@ -106,10 +89,9 @@ function createRule<
   };
 }
 
-export const createEslintRule = RuleCreator(ruleName =>
-  hasDocs.has(ruleName)
-    ? `${docsUrl}/${ruleName}.md`
-    : `${blobUrl}/${ruleName}.test.ts`
+export const createEslintRule = RuleCreator(
+  ruleName =>
+    `https://docs.stormsoftware.com/projects/storm-stack/eslint/plugin/rules/${ruleName}.md`
 ) as any as <TOptions extends readonly unknown[], TMessageIds extends string>({
   name,
   meta,

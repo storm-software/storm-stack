@@ -192,6 +192,9 @@ catalogs:
     '@typescript-eslint/scope-manager':
       specifier: ^8.29.1
       version: 8.29.1
+    '@typescript-eslint/types':
+      specifier: ^8.29.1
+      version: 8.29.1
     '@typescript-eslint/utils':
       specifier: ^8.29.1
       version: 8.29.1
@@ -718,6 +721,15 @@ importers:
       '@eslint/compat':
         specifier: 'catalog:'
         version: 1.2.8(eslint@9.24.0(jiti@2.4.2))
+      '@stryke/fs':
+        specifier: 'catalog:'
+        version: 0.12.1(@storm-software/config@1.112.22)(nx@20.7.2(@swc-node/register@1.10.10(@swc/core@1.11.20(@swc/helpers@0.5.17))(@swc/types@0.1.21)(typescript@5.8.3))(@swc/core@1.11.20(@swc/helpers@0.5.17)))
+      '@stryke/helpers':
+        specifier: 'catalog:'
+        version: 0.5.2
+      '@stryke/type-checks':
+        specifier: 'catalog:'
+        version: 0.3.1
       '@typescript-eslint/scope-manager':
         specifier: 'catalog:'
         version: 8.29.1
@@ -749,6 +761,9 @@ importers:
       '@types/node':
         specifier: 'catalog:'
         version: 22.14.1
+      '@typescript-eslint/types':
+        specifier: 'catalog:'
+        version: 8.29.1
       esbuild:
         specifier: 'catalog:'
         version: 0.25.2
@@ -3271,7 +3286,6 @@ packages:
 
   '@ls-lint/ls-lint@2.3.0':
     resolution: {integrity: sha512-lsT5/7SxtImOIjpefC9wcoXt2lkikKhCjd6U+Q9Z6X5h2HBU/71ggt+XStdodZ0HkJGO333zDUeec7JROMCPFw==}
-    cpu: [x64, arm64, s390x, ppc64le]
     os: [darwin, linux, win32]
     hasBin: true
 
@@ -4604,6 +4618,12 @@ packages:
 
   '@storm-software/config-tools@1.162.14':
     resolution: {integrity: sha512-JdcJf8Tvq7pBXP/Y+5ax2DXI8hivZat0eg9XxDelrMM+aBlUKcbTIDXt4guHLw0BtNwyJCa7MZPYZGHbr/cfkw==}
+    hasBin: true
+    peerDependencies:
+      '@storm-software/config': workspace:*
+
+  '@storm-software/config-tools@1.162.15':
+    resolution: {integrity: sha512-c9/SR8wMR+q/4GrUyQGv/mSCQo/L1gEzzDSdV0UZAgjwceiyltAJbQxuwaEa6EPzSK9S7frbT4mmZBXHbz8xTg==}
     hasBin: true
     peerDependencies:
       '@storm-software/config': workspace:*
@@ -17877,6 +17897,20 @@ snapshots:
     transitivePeerDependencies:
       - magicast
 
+  '@storm-software/config-tools@1.162.15(@storm-software/config@1.112.22)':
+    dependencies:
+      '@storm-software/config': 1.112.22
+      c12: 2.0.4
+      chalk: 4.1.2
+      commander: 12.1.0
+      defu: 6.1.4
+      giget: 1.2.5
+      jiti: 2.4.2
+      sqlite: 5.1.1
+      zod: 3.24.2
+    transitivePeerDependencies:
+      - magicast
+
   '@storm-software/config@1.112.22':
     dependencies:
       zod: 3.24.2
@@ -18653,7 +18687,7 @@ snapshots:
 
   '@stryke/path@0.4.10(@storm-software/config@1.112.22)':
     dependencies:
-      '@storm-software/config-tools': 1.162.14(@storm-software/config@1.112.22)
+      '@storm-software/config-tools': 1.162.15(@storm-software/config@1.112.22)
       mlly: 1.7.4
     transitivePeerDependencies:
       - '@storm-software/config'

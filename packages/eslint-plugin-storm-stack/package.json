@@ -47,6 +47,9 @@
   },
   "dependencies": {
     "@eslint/compat": "catalog:",
+    "@stryke/fs": "catalog:",
+    "@stryke/helpers": "catalog:",
+    "@stryke/type-checks": "catalog:",
     "@typescript-eslint/scope-manager": "catalog:",
     "@typescript-eslint/utils": "catalog:",
     "defu": "catalog:",
@@ -59,6 +62,7 @@
     "@types/eslint": "catalog:",
     "@types/eslint__js": "catalog:",
     "@types/node": "catalog:",
+    "@typescript-eslint/types": "catalog:",
     "esbuild": "catalog:",
     "eslint": "catalog:",
     "eslint-doc-generator": "catalog:",

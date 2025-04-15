@@ -26,6 +26,16 @@ const type = "GET";
 throw new StormError({ type: "general", code: 123, args: { type } });
 ```
 
+## Options
+
+<!-- begin auto-generated rule options list -->
+
+| Name        | Description                                           | Type   | Default                     |
+| :---------- | :---------------------------------------------------- | :----- | :-------------------------- |
+| `codesFile` | The path to the JSON file containing the error codes. | String | `./tools/errors/codes.json` |
+
+<!-- end auto-generated rule options list -->
+
 ## Version
 
 0.4.0
