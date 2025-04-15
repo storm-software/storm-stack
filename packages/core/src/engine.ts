@@ -25,6 +25,7 @@ import { createDirectory, removeDirectory } from "@stryke/fs/helpers";
 import { install } from "@stryke/fs/install";
 import { isPackageExists } from "@stryke/fs/package-fns";
 import { readJsonFile } from "@stryke/fs/read-file";
+import { removeFile } from "@stryke/fs/remove-file";
 import { hash } from "@stryke/hash/hash";
 import { hashDirectory } from "@stryke/hash/hash-files";
 import { StormJSON } from "@stryke/json/storm-json";
@@ -1170,14 +1171,23 @@ Note: Please ensure the plugin package's default export is a class that extends 
       return ret;
     }, env);
 
-    await this.writeFile(
-      joinPaths(
-        this.context.projectRoot,
-        this.context.artifactsDir,
-        "vars.json"
-      ),
-      "{}"
-    );
+    if (
+      existsSync(
+        joinPaths(
+          this.context.projectRoot,
+          this.context.artifactsDir,
+          "vars.json"
+        )
+      )
+    ) {
+      await removeFile(
+        joinPaths(
+          this.context.projectRoot,
+          this.context.artifactsDir,
+          "vars.json"
+        )
+      );
+    }
 
     return dotenv;
   }
