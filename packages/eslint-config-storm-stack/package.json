@@ -99,11 +99,14 @@
   },
   "dependencies": {
     "@storm-software/eslint": "catalog:",
-    "eslint-flat-config-utils": "catalog:",
-    "eslint-plugin-storm-stack": "0.5.2"
+    "eslint-flat-config-utils": "catalog:"
   },
   "devDependencies": {
+    "@storm-software/config": "catalog:",
+    "@storm-software/config-tools": "catalog:",
+    "@stryke/fs": "catalog:",
     "eslint": "catalog:",
+    "eslint-plugin-storm-stack": "workspace:*",
     "eslint-typegen": "catalog:",
     "tsup": "catalog:",
     "tsx": "catalog:"

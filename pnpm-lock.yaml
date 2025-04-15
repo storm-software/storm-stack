@@ -192,9 +192,6 @@ catalogs:
     '@typescript-eslint/scope-manager':
       specifier: ^8.29.1
       version: 8.29.1
-    '@typescript-eslint/types':
-      specifier: ^8.29.1
-      version: 8.29.1
     '@typescript-eslint/utils':
       specifier: ^8.29.1
       version: 8.29.1
@@ -699,13 +696,22 @@ importers:
       eslint-flat-config-utils:
         specifier: 'catalog:'
         version: 2.0.1
-      eslint-plugin-storm-stack:
-        specifier: workspace:*
-        version: link:../eslint-plugin-storm-stack
     devDependencies:
+      '@storm-software/config':
+        specifier: 'catalog:'
+        version: 1.112.24
+      '@storm-software/config-tools':
+        specifier: 'catalog:'
+        version: 1.162.16(@storm-software/config@1.112.24)
+      '@stryke/fs':
+        specifier: 'catalog:'
+        version: 0.12.1(@storm-software/config@1.112.24)(nx@20.8.0(@swc-node/register@1.10.10(@swc/core@1.11.20(@swc/helpers@0.5.17))(@swc/types@0.1.21)(typescript@5.8.3))(@swc/core@1.11.20(@swc/helpers@0.5.17)))
       eslint:
         specifier: 'catalog:'
         version: 9.24.0(jiti@2.4.2)
+      eslint-plugin-storm-stack:
+        specifier: workspace:*
+        version: link:../eslint-plugin-storm-stack
       eslint-typegen:
         specifier: 'catalog:'
         version: 2.1.0(eslint@9.24.0(jiti@2.4.2))
@@ -727,6 +733,9 @@ importers:
       '@stryke/helpers':
         specifier: 'catalog:'
         version: 0.5.2
+      '@stryke/path':
+        specifier: 'catalog:'
+        version: 0.4.10(@storm-software/config@1.112.24)
       '@stryke/type-checks':
         specifier: 'catalog:'
         version: 0.3.1
@@ -761,9 +770,6 @@ importers:
       '@types/node':
         specifier: 'catalog:'
         version: 22.14.1
-      '@typescript-eslint/types':
-        specifier: 'catalog:'
-        version: 8.29.1
       esbuild:
         specifier: 'catalog:'
         version: 0.25.2
@@ -3286,7 +3292,6 @@ packages:
 
   '@ls-lint/ls-lint@2.3.0':
     resolution: {integrity: sha512-lsT5/7SxtImOIjpefC9wcoXt2lkikKhCjd6U+Q9Z6X5h2HBU/71ggt+XStdodZ0HkJGO333zDUeec7JROMCPFw==}
-    cpu: [x64, arm64, s390x, ppc64le]
     os: [darwin, linux, win32]
     hasBin: true
 
