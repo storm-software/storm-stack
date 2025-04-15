@@ -18,6 +18,6 @@
   "devDependencies": {
     "@storm-stack/core": "0.4.3",
     "@storm-stack/nx": "0.3.3",
-    "@storm-stack/preset-cli": "0.1.2"
+    "@storm-stack/preset-cli": "0.1.3"
   }
 }

@@ -2,6 +2,18 @@
 
 # Changelog for Storm Stack - Preset Cli
 
+## [0.1.3](https://github.com/storm-software/storm-stack/releases/tag/preset-cli%400.1.3) (2025-04-15)
+
+### Bug Fixes
+
+- **preset-cli:** Resolve issue with missing `tsup` build configuration
+  ([1174c61e](https://github.com/storm-software/storm-stack/commit/1174c61e))
+
+### Miscellaneous
+
+- **monorepo:** Ensure workspace packages are linked correctly
+  ([9b0ce7cc](https://github.com/storm-software/storm-stack/commit/9b0ce7cc))
+
 ## [0.1.2](https://github.com/storm-software/storm-stack/releases/tag/preset-cli%400.1.2) (2025-04-14)
 
 ### Miscellaneous
