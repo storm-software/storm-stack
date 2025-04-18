@@ -14,5 +14,10 @@ drive the processing of the application. The data contained in these variables
 are **not** considered sensitive or confidential. Any values provided in these
 variables will be available in plain text to the public.
 
-| Name | Description | Type | Default Value | Required |
-| ---- | ----------- | ---- | ------------- | :------: |
+| Name        | Description                                                                                                           | Type    | Default Value | Required |
+| ----------- | --------------------------------------------------------------------------------------------------------------------- | ------- | ------------- | :------: |
+| DEBUG       | Indicates if the application is running in debug mode.                                                                | boolean | `false`       |          |
+| ENVIRONMENT | The environment the application is running in. This value will be populated with the value of `MODE` if not provided. | string  | "production"  |          |
+| RELEASE_ID  | The release ID of the application. This value is injected by the Storm Stack build process.                           | string  |               |    ✔    |
+| SENTRY_DSN  | The DSN for Sentry                                                                                                    | string  | "undefined"   |          |
+| STACKTRACE  | Indicates if error stack traces should be captured.                                                                   | boolean | `false`       |          |
