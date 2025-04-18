@@ -701,6 +701,9 @@ importers:
       '@storm-software/eslint':
         specifier: 'catalog:'
         version: 0.146.5(668ce761bd6c66fdcaf428aef6cc804b)
+      defu:
+        specifier: 'catalog:'
+        version: 6.1.4
       eslint-flat-config-utils:
         specifier: 'catalog:'
         version: 2.0.1
