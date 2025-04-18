@@ -98,19 +98,20 @@
     }
   },
   "dependencies": {
+    "@storm-software/config-tools": "catalog:",
     "@storm-software/eslint": "catalog:",
     "defu": "catalog:",
-    "eslint-flat-config-utils": "catalog:"
+    "eslint-flat-config-utils": "catalog:",
+    "eslint-plugin-storm-stack": "workspace:*"
   },
   "devDependencies": {
-    "@storm-software/config": "catalog:",
-    "@storm-software/config-tools": "catalog:",
-    "@stryke/fs": "catalog:",
+    "@types/node": "catalog:",
+    "chalk-template": "catalog:",
     "eslint": "catalog:",
-    "eslint-plugin-storm-stack": "workspace:*",
     "eslint-typegen": "catalog:",
     "tsup": "catalog:",
-    "tsx": "catalog:"
+    "tsx": "catalog:",
+    "typescript": "catalog:"
   },
   "publishConfig": {
     "access": "public"

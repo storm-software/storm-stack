@@ -15,12 +15,15 @@
 
  ------------------------------------------------------------------- */
 
-import { getOverrides, getStormConfig } from "@storm-software/eslint";
+import { getStormConfig } from "@storm-software/eslint";
+import type { OptionsTypescript } from "@storm-software/eslint/types";
+import defu from "defu";
 import type { Linter } from "eslint";
 import type { Awaitable, FlatConfigComposer } from "eslint-flat-config-utils";
-import { globals as stormStackGlobals } from "eslint-plugin-storm-stack/configs/globals";
+import { globals } from "eslint-plugin-storm-stack/configs/globals";
 import { stormStack } from "./configs/storm-stack";
 import type { ConfigNames, OptionsConfig, TypedFlatConfigItem } from "./types";
+import { getOverrides } from "./utilities/get-overrides";
 
 /**
  * Get the ESLint configuration for a Storm Stack project.
@@ -32,7 +35,7 @@ import type { ConfigNames, OptionsConfig, TypedFlatConfigItem } from "./types";
  * @param userConfigs - Additional ESLint configurations.
  */
 export async function getConfig(
-  options: OptionsConfig & Omit<TypedFlatConfigItem, "files">,
+  options: OptionsConfig & Omit<TypedFlatConfigItem, "files"> = {},
   ...userConfigs: Awaitable<
     | TypedFlatConfigItem
     | TypedFlatConfigItem[]
@@ -40,26 +43,34 @@ export async function getConfig(
     | Linter.Config[]
   >[]
 ): Promise<FlatConfigComposer<TypedFlatConfigItem, ConfigNames>> {
-  const { globals = {} } = options;
-
   const configs: TypedFlatConfigItem[] = [];
   if (options["storm-stack"] ?? true) {
-    configs.push(
-      ...(await stormStack({
-        overrides: getOverrides(options, "storm-stack" as any),
-        defaultConfig:
-          typeof options["storm-stack"] === "string"
-            ? options["storm-stack"]
-            : "recommended"
-      }))
-    );
+    const config = await stormStack({
+      overrides: getOverrides(options, "storm-stack"),
+      defaultConfig:
+        typeof options["storm-stack"] === "string"
+          ? options["storm-stack"]
+          : "recommended"
+    });
+    configs.push(...config);
   }
 
   return getStormConfig(
-    {
-      ...options,
-      globals: { ...globals, ...stormStackGlobals }
-    },
+    defu(options ?? {}, {
+      typescript: {
+        override: {
+          "ts/consistent-type-imports": [
+            "warn",
+            {
+              disallowTypeAnnotations: false,
+              fixStyle: "separate-type-imports",
+              prefer: "type-imports"
+            }
+          ]
+        }
+      } as OptionsTypescript,
+      globals
+    }),
     ...userConfigs
   ).append(configs);
 }

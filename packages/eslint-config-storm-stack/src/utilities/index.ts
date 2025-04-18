@@ -15,18 +15,4 @@
 
  ------------------------------------------------------------------- */
 
-import { getTsupConfig } from "@storm-stack/tools-config/tsup.shared";
-
-const config = getTsupConfig({
-  name: "eslint-config",
-  entry: ["src/*.ts"],
-  format: ["esm"],
-  dts: true,
-  bundle: true,
-  splitting: true,
-  clean: true,
-  shims: true,
-  external: ["eslint"]
-});
-
-export default config;
+export * from "./get-overrides";

@@ -27,9 +27,68 @@
         "types": "./dist/index.d.ts",
         "default": "./dist/index.mjs"
       }
+    },
+    "./plugin": {
+      "import": {
+        "types": "./dist/plugin.d.ts",
+        "default": "./dist/plugin.mjs"
+      },
+      "require": {
+        "types": "./dist/plugin.d.ts",
+        "default": "./dist/plugin.cjs"
+      },
+      "default": {
+        "types": "./dist/plugin.d.ts",
+        "default": "./dist/plugin.mjs"
+      }
+    },
+    "./configs": {
+      "import": {
+        "types": "./dist/configs/index.d.ts",
+        "default": "./dist/configs/index.mjs"
+      },
+      "require": {
+        "types": "./dist/configs/index.d.ts",
+        "default": "./dist/configs/index.cjs"
+      },
+      "default": {
+        "types": "./dist/configs/index.d.ts",
+        "default": "./dist/configs/index.mjs"
+      }
+    },
+    "./configs/*": {
+      "import": {
+        "types": "./dist/configs/*.d.ts",
+        "default": "./dist/configs/*.mjs"
+      },
+      "require": {
+        "types": "./dist/configs/*.d.ts",
+        "default": "./dist/configs/*.cjs"
+      },
+      "default": {
+        "types": "./dist/configs/*.d.ts",
+        "default": "./dist/configs/*.mjs"
+      }
+    },
+    "./rules/*": {
+      "import": {
+        "types": "./dist/rules/*.d.ts",
+        "default": "./dist/rules/*.mjs"
+      },
+      "require": {
+        "types": "./dist/rules/*.d.ts",
+        "default": "./dist/rules/*.cjs"
+      },
+      "default": {
+        "types": "./dist/rules/*.d.ts",
+        "default": "./dist/rules/*.mjs"
+      }
     }
   },
   "types": "dist/index.d.ts",
+  "files": [
+    "dist/**/*"
+  ],
   "keywords": [
     "storm-stack",
     "storm-software",

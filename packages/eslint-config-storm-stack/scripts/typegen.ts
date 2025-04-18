@@ -1,3 +1,4 @@
+#!/usr/bin/env -S pnpm tsx
 /* -------------------------------------------------------------------
 
                   ⚡ Storm Software - Storm Stack
@@ -16,30 +17,53 @@
  ------------------------------------------------------------------- */
 
 import { combine } from "@storm-software/eslint/utils/combine";
-import { writeFile } from "@stryke/fs/write-file";
+import chalkTemplate from "chalk-template";
 import { flatConfigsToRulesDTS } from "eslint-typegen/core";
 import { builtinRules } from "eslint/use-at-your-own-risk";
+import { writeFile } from "node:fs/promises";
 import { stormStack } from "../src/configs";
 
-const configs = await combine(
-  {
-    plugins: {
-      "": {
-        rules: Object.fromEntries(builtinRules.entries())
+try {
+  console.log(
+    chalkTemplate`{whiteBright 📦  Generating ESLint configuration types... }`
+  );
+
+  const configs = await combine(
+    {
+      plugins: {
+        "": {
+          rules: Object.fromEntries(builtinRules.entries())
+        }
       }
-    }
-  },
-  stormStack()
-);
+    },
+    stormStack()
+  );
 
-const dts = await flatConfigsToRulesDTS(configs, {
-  includeAugmentation: false
-});
+  const dts = await flatConfigsToRulesDTS(configs, {
+    includeAugmentation: false
+  });
 
-await writeFile(
-  "src/typegen.d.ts",
-  `${dts}
-  // Names of all the configs
-  export type ConfigNames = ${(configs.map(i => i.name).filter(Boolean) as string[]).map(i => `'${i}'`).join(" | ")}
-  `
-);
+  await writeFile(
+    "src/typegen.d.ts",
+    `${dts}
+
+// Names of all the configs
+export type ConfigNames = ${configs
+      .map(i => i.name)
+      .filter(Boolean)
+      .map(i => `'${i}'`)
+      .join(" | ")}
+    `,
+    { encoding: "utf-8" }
+  );
+
+  console.log(
+    chalkTemplate`{green Completed ESLint configuration types generation successfully! }`
+  );
+} catch (error) {
+  console.log(
+    chalkTemplate`{red ${error?.message ? error.message : "A failure occurred while generating ESLint configuration types"} }`
+  );
+
+  process.exit(1);
+}

@@ -29,7 +29,8 @@
       "dependsOn": ["docs"],
       "options": {
         "defaultConfiguration": "production",
-        "platform": "node"
+        "platform": "node",
+        "clean": true
       },
       "configurations": {
         "production": {

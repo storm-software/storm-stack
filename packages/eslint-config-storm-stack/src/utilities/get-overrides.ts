@@ -15,18 +15,14 @@
 
  ------------------------------------------------------------------- */
 
-import { getTsupConfig } from "@storm-stack/tools-config/tsup.shared";
+import { getOverrides as getBaseOverrides } from "@storm-software/eslint";
+import type { OptionsConfig as BaseOptionsConfig } from "@storm-software/eslint/types";
+import type { Linter } from "eslint";
+import type { OptionsConfig, RuleOptions } from "../types";
 
-const config = getTsupConfig({
-  name: "eslint-config",
-  entry: ["src/*.ts"],
-  format: ["esm"],
-  dts: true,
-  bundle: true,
-  splitting: true,
-  clean: true,
-  shims: true,
-  external: ["eslint"]
-});
-
-export default config;
+export function getOverrides(
+  options: OptionsConfig,
+  configName: keyof OptionsConfig
+): Partial<Linter.RulesRecord & RuleOptions> {
+  return getBaseOverrides(options, configName as keyof BaseOptionsConfig);
+}

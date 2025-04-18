@@ -15,7 +15,7 @@
 
  ------------------------------------------------------------------- */
 
-import { getWorkspaceConfig } from "@storm-software/config-tools/get-config";
+import { getWorkspaceConfig } from "@storm-software/config-tools";
 import { GLOB_CODE_FILE } from "@storm-software/eslint/utils/constants";
 import type { Linter } from "eslint";
 import { configs } from "eslint-plugin-storm-stack/configs";

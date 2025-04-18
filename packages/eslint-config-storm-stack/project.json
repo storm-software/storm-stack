@@ -9,7 +9,7 @@
       "executor": "nx:run-commands",
       "dependsOn": ["clean", "^build"],
       "options": {
-        "command": "tsx scripts/typegen.ts",
+        "command": "tsx --tsconfig tsconfig.scripts.json scripts/typegen.ts",
         "cwd": "{projectRoot}"
       }
     },
