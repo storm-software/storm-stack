@@ -1,6 +1,6 @@
 {
   "name": "eslint-plugin-storm-stack",
-  "version": "0.5.2",
+  "version": "0.6.0",
   "type": "module",
   "description": "An ESLint Plugin with linting rules that ensure a Storm Stack project is following the best practices.",
   "repository": {

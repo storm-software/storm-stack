@@ -2,6 +2,12 @@
 
 # Changelog for Storm Stack - Plugin Http
 
+## [0.2.3](https://github.com/storm-software/storm-stack/releases/tag/plugin-http%400.2.3) (2025-04-18)
+
+### Updated Dependencies
+
+- Updated core to 0.5.0
+
 ## [0.2.2](https://github.com/storm-software/storm-stack/releases/tag/plugin-http%400.2.2) (2025-04-14)
 
 ### Miscellaneous

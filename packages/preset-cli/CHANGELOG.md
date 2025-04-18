@@ -2,6 +2,18 @@
 
 # Changelog for Storm Stack - Preset Cli
 
+## [0.2.0](https://github.com/storm-software/storm-stack/releases/tag/preset-cli%400.2.0) (2025-04-18)
+
+### Features
+
+- **core:** Patch `@deepkit/type-compiler` to read from JSDoc comments
+  ([7a12e757](https://github.com/storm-software/storm-stack/commit/7a12e757))
+
+### Updated Dependencies
+
+- Updated plugin-node to 0.5.0
+- Updated core to 0.5.0
+
 ## [0.1.3](https://github.com/storm-software/storm-stack/releases/tag/preset-cli%400.1.3) (2025-04-15)
 
 ### Bug Fixes

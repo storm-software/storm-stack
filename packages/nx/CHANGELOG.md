@@ -2,6 +2,12 @@
 
 # Changelog for Storm Stack - Nx
 
+## [0.3.4](https://github.com/storm-software/storm-stack/releases/tag/nx%400.3.4) (2025-04-18)
+
+### Updated Dependencies
+
+- Updated core to 0.5.0
+
 ## [0.3.3](https://github.com/storm-software/storm-stack/releases/tag/nx%400.3.3) (2025-04-15)
 
 ### Miscellaneous

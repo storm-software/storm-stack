@@ -1,6 +1,6 @@
 {
   "name": "@storm-stack/plugin-node",
-  "version": "0.4.2",
+  "version": "0.5.0",
   "type": "module",
   "description": "A Storm Stack plugin for creating applications using the NodeJs runtime.",
   "repository": {
@@ -74,7 +74,7 @@
     "@storm-software/build-tools": "catalog:",
     "@storm-software/config-tools": "catalog:",
     "@storm-software/esbuild": "catalog:",
-    "@storm-stack/core": "workspace:*",
+    "@storm-stack/core": "0.5.0",
     "@stryke/env": "catalog:",
     "@stryke/fs": "catalog:",
     "@stryke/hash": "catalog:",

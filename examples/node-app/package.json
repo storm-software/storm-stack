@@ -11,12 +11,12 @@
   "private": true,
   "dependencies": {
     "@deepkit/injector": "catalog:",
-    "@storm-stack/log-console": "workspace:*"
+    "@storm-stack/log-console": "0.3.3"
   },
   "devDependencies": {
-    "@storm-stack/core": "workspace:*",
-    "@storm-stack/nx": "workspace:*",
-    "@storm-stack/plugin-node": "workspace:*"
+    "@storm-stack/core": "0.5.0",
+    "@storm-stack/nx": "0.3.4",
+    "@storm-stack/plugin-node": "0.5.0"
   },
   "storm": {
     "plugins": [

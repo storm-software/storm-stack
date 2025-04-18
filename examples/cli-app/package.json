@@ -11,13 +11,13 @@
   "private": true,
   "dependencies": {
     "@deepkit/injector": "catalog:",
-    "@storm-stack/log-storage": "workspace:*",
+    "@storm-stack/log-storage": "0.3.3",
     "@stryke/cli": "catalog:",
     "unstorage": "catalog:"
   },
   "devDependencies": {
-    "@storm-stack/core": "workspace:*",
-    "@storm-stack/nx": "workspace:*",
-    "@storm-stack/preset-cli": "workspace:*"
+    "@storm-stack/core": "0.5.0",
+    "@storm-stack/nx": "0.3.4",
+    "@storm-stack/preset-cli": "0.2.0"
   }
 }
