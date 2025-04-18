@@ -11,7 +11,7 @@
   "private": true,
   "dependencies": {
     "@deepkit/injector": "catalog:",
-    "@storm-stack/log-storage": "0.3.3",
+    "@storm-stack/log-storage": "0.3.4",
     "@stryke/cli": "catalog:",
     "unstorage": "catalog:"
   },

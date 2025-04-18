@@ -2,6 +2,14 @@
 
 # Changelog for Storm Stack - Log Console
 
+## [0.3.4](https://github.com/storm-software/storm-stack/releases/tag/log-console%400.3.4) (2025-04-18)
+
+### Miscellaneous
+
+- **monorepo:** Update repository tsconfig.json to set `verbatimModuleSyntax` to
+  false
+  ([3ea65023](https://github.com/storm-software/storm-stack/commit/3ea65023))
+
 ## [0.3.3](https://github.com/storm-software/storm-stack/releases/tag/log-console%400.3.3) (2025-04-18)
 
 ### Updated Dependencies
