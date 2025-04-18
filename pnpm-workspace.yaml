@@ -17,7 +17,7 @@ packages:
   - examples/*
 
 catalog:
-  '@ast-grep/napi': ^0.36.2
+  '@ast-grep/napi': ^0.37.0
   '@biomejs/biome': ^1.9.4
   '@cloudflare/unenv-preset': 2.3.1
   '@deepkit/injector': ^1.0.5
@@ -29,7 +29,7 @@ catalog:
   '@eslint/config-inspector': ^0.7.1
   '@ls-lint/ls-lint': ^2.3.0
   '@ltd/j-toml': ^1.38.0
-  '@microsoft/api-extractor': ^7.52.3
+  '@microsoft/api-extractor': ^7.52.4
   '@nuxt/kit': ^3.16.2
   '@nuxt/schema': ^3.16.2
   '@opentelemetry/api-logs': ^0.200.0
@@ -38,9 +38,9 @@ catalog:
   '@opentelemetry/resources': ^1.30.1
   '@opentelemetry/sdk-logs': ^0.200.0
   '@opentelemetry/semantic-conventions': ^1.32.0
-  '@sentry/core': ^9.12.0
-  '@sentry/node': ^9.12.0
-  '@sentry/types': ^9.12.0
+  '@sentry/core': ^9.13.0
+  '@sentry/node': ^9.13.0
+  '@sentry/types': ^9.13.0
   '@taplo/cli': ^0.7.0
   '@types/eslint': ^9.6.1
   '@types/eslint__js': ^8.42.3
@@ -85,12 +85,12 @@ catalog:
   '@stryke/type-checks': latest
   '@stryke/cli': latest
   '@swc-node/register': ^1.10.10
-  '@swc/core': ^1.11.20
-  '@swc/wasm': ^1.11.20
+  '@swc/core': ^1.11.21
+  '@swc/wasm': ^1.11.21
   '@swc/helpers': ^0.5.17
-  '@typescript-eslint/scope-manager': ^8.29.1
-  '@typescript-eslint/types': ^8.29.1
-  '@typescript-eslint/utils': ^8.29.1
+  '@typescript-eslint/scope-manager': ^8.30.1
+  '@typescript-eslint/types': ^8.30.1
+  '@typescript-eslint/utils': ^8.30.1
   bundle-require: ^5.1.0
   c12: ^3.0.3
   chalk-template: ^1.1.0
@@ -106,7 +106,7 @@ catalog:
   invariant: ^2.2.4
   jest-worker: ^29.7.0
   jsonc-eslint-parser: 2.4.0
-  lefthook: ^1.11.9
+  lefthook: ^1.11.10
   log4brains: ^1.1.0
   magic-string: ^0.30.17
   prettier: ^3.5.3
@@ -136,13 +136,13 @@ catalog:
   unstorage: ^1.15.0
   untyped: 1.5.2
   verdaccio: 6.1.2
-  vite: ^6.2.6
+  vite: ^6.3.2
   defu: ^6.1.4
   jiti: ^2.4.2
   eslint-flat-config-utils: 2.0.1
-  zod: ^3.24.2
+  zod: ^3.24.3
   zod-validation-error: ^3.4.0
-  zx: ^8.5.2
+  zx: ^8.5.3
 
 overrides:
   '@storm-stack/core': workspace:*
