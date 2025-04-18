@@ -20,7 +20,7 @@ import { LogLevelLabel } from "@storm-software/config-tools/types";
 import { hash } from "@stryke/hash/hash";
 import { joinPaths } from "@stryke/path/join-paths";
 import type MagicString from "magic-string";
-import { ts } from "ts-morph";
+import ts from "typescript";
 import { getCache, setCache } from "./helpers/cache";
 import { transformEnv } from "./helpers/transform/transform-env";
 import { transformErrors } from "./helpers/transform/transform-errors";
@@ -73,6 +73,24 @@ export class Compiler<TOptions extends Options = Options>
       context.envPaths.cache,
       hash(context.resolvedTsconfig.options)
     );
+  }
+
+  /**
+   * Transpile the module.
+   *
+   * @param context - The compiler context.
+   * @param id - The name of the file to compile.
+   * @param code - The source code to compile.
+   * @returns The transpiled module.
+   */
+  public async transpile(
+    context: Context<TOptions>,
+    id: string,
+    code: string | MagicString
+  ): Promise<string> {
+    const source = this.getSourceFile(id, code);
+
+    return this.transpileModule(context, source);
   }
 
   /**

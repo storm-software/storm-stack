@@ -59,6 +59,37 @@ declare global {
   type StormLog = import("${path}/log").StormLog;
 }
 
+declare module "storm:error" {
+  let _StormError: (typeof import("${path}/error"))["StormError"];
+  export { _StormError as StormError };
+}
+
+declare module "storm:json" {
+  let _StormJSON: (typeof import("@stryke/json"))["StormJSON"];
+  export { _StormJSON as StormJSON };
+}
+
+declare module "storm:request" {
+  let _StormRequest: (typeof import("${path}/request"))["StormRequest"];
+  export { _StormRequest as StormRequest };
+}
+
+declare module "storm:response" {
+  let _StormResponse: (typeof import("${path}/response"))["StormResponse"];
+  export { _StormResponse as StormResponse };
+}
+
+declare module "storm:log" {
+  let _StormLog: (typeof import("${path}/log"))["StormLog"];
+  export { _StormLog as StormLog };
+}
+
+declare module "storm:id" {
+  let _uniqueId: (typeof import("${path}/id"))["uniqueId"];
+  let _getRandom: (typeof import("${path}/id"))["getRandom"];
+  export { _uniqueId as uniqueId, _getRandom as getRandom };
+}
+
 export {};
 `;
 }

@@ -15,15 +15,18 @@
 
  ------------------------------------------------------------------- */
 
-import type { Options } from "@storm-stack/core/types";
+import type { LogFn, Options } from "@storm-stack/core/types";
 import { match, tsconfigPathsToRegExp } from "bundle-require";
 import type { Plugin } from "esbuild";
 
 // Must not start with "/" or "./" or "../" or "C:\" or be the exact strings ".." or "."
-const NON_NODE_MODULE_RE = /^[A-Z]:[/\\]|^\.{0,2}\/|^\.{1,2}$/;
+const NON_NODE_MODULE_REGEX = /^[A-Z]:[/\\]|^\.{0,2}\/|^\.{1,2}$/;
 
 export const externalPlugin = (
-  options: Options,
+  log: LogFn,
+  options: Pick<Options, "external" | "noExternal"> & {
+    skipNodeModulesBundle?: boolean;
+  } = {},
   tsconfigResolvePaths: Record<string, any> = {}
 ): Plugin => {
   // const log = createLog("external-plugin", options);
@@ -33,13 +36,18 @@ export const externalPlugin = (
     setup(build) {
       const external = options.external ?? [];
       const noExternal = options.noExternal ?? [];
-      const skipNodeModulesBundle = false;
+      const skipNodeModulesBundle = options.skipNodeModulesBundle ?? false;
 
       if (skipNodeModulesBundle) {
         const resolvePatterns = tsconfigPathsToRegExp(tsconfigResolvePaths);
         build.onResolve({ filter: /.*/ }, args => {
           // Resolve `paths` from tsconfig
-          if (match(args.path, resolvePatterns)) {
+          if (
+            match(args.path, resolvePatterns) ||
+            args.path.startsWith("internal:") ||
+            args.path.startsWith("virtual:") ||
+            args.path.startsWith("storm:")
+          ) {
             return;
           }
           // Respect explicit external/noExternal conditions
@@ -50,7 +58,7 @@ export const externalPlugin = (
             return { external: true };
           }
           // Exclude any other import that looks like a Node module
-          if (!NON_NODE_MODULE_RE.test(args.path)) {
+          if (!NON_NODE_MODULE_REGEX.test(args.path)) {
             return {
               path: args.path,
               external: true

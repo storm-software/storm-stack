@@ -46,12 +46,13 @@ import { createHooks } from "hookable";
 import { createJiti } from "jiti";
 import { Project } from "ts-morph";
 import { Compiler } from "./compiler";
-import { installPackage, loadConfig } from "./helpers";
 import { generateDotenvMarkdown } from "./helpers/dotenv/docgen";
 import { loadEnv } from "./helpers/dotenv/load";
 import { getDotenvTypeDefinitions } from "./helpers/dotenv/type-definitions";
 import { generateDeclarations, generateImports } from "./helpers/dtsgen";
 import { runLintCheck } from "./helpers/eslint/run-eslint-check";
+import { installPackage } from "./helpers/install-package";
+import { loadConfig } from "./helpers/load-config";
 import {
   getParsedTypeScriptConfig,
   getTsconfigChanges,
@@ -615,6 +616,8 @@ export class Engine<TOptions extends Options = Options> {
         joinPaths(this.context.projectRoot, this.context.typesDir)
       );
     }
+
+    // emitDts(this.context);
 
     await this.writeFile(
       joinPaths(

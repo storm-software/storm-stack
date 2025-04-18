@@ -15,7 +15,10 @@
 
  ------------------------------------------------------------------- */
 
-import type { ServePayload } from "../types";
+// eslint-disable-next-line ts/consistent-type-imports
+import { StormRequest } from "../../.storm/runtime/request";
+// eslint-disable-next-line ts/consistent-type-imports
+import { ServePayload } from "../types";
 
 /**
  * Start a server and serve the application

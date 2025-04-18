@@ -155,8 +155,8 @@ export async function getTsconfigChanges(
     tsconfigJson.compilerOptions.isolatedModules = true;
   }
 
-  if (tsconfig.options.verbatimModuleSyntax !== true) {
-    tsconfigJson.compilerOptions.verbatimModuleSyntax = true;
+  if (tsconfig.options.verbatimModuleSyntax !== false) {
+    tsconfigJson.compilerOptions.verbatimModuleSyntax = false;
   }
 
   if (tsconfig.options.allowJs !== true) {

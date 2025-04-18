@@ -35,8 +35,6 @@ export interface ServePayload {
 
   /**
    * Should the server serve compressed files?
-   *
-   * @defaultValue false
    */
   compress: boolean;
 

@@ -22,7 +22,7 @@ const config = getTsupConfig({
   entry: [
     "src/*.ts",
     "src/types/*.ts",
-    "src/helpers/index.ts",
+    "src/helpers/*.ts",
     "src/runtime/*.ts",
     "src/unplugin/*.ts"
   ],
@@ -32,7 +32,7 @@ const config = getTsupConfig({
   treeshake: true,
   keepNames: true,
   clean: true,
-  sourcemap: false,
+  sourcemap: true,
   dts: true,
   shims: false
 });

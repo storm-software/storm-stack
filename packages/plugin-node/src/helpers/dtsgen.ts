@@ -53,6 +53,11 @@ declare global {
     import("${path}/event").StormEvent<TEventType, TData>;
 }
 
+declare module "storm:event" {
+  let _StormEvent: (typeof import("${path}/event"))["StormEvent"];
+  export { _StormEvent as StormEvent };
+}
+
 export {};
 `;
 }

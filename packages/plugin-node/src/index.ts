@@ -25,9 +25,8 @@ import {
 import { Plugin } from "@storm-stack/core/plugin";
 import type { Context, EngineHooks, Options } from "@storm-stack/core/types";
 import type { SourceFile } from "@storm-stack/core/types/build";
-import { readFile, readJsonFile } from "@stryke/fs/read-file";
+import { readJsonFile } from "@stryke/fs/read-file";
 import { StormJSON } from "@stryke/json/storm-json";
-import { normalizeWindowsPath } from "@stryke/path/correct-path";
 import {
   findFileExtension,
   findFileName,
@@ -37,6 +36,7 @@ import {
 import { joinPaths } from "@stryke/path/join-paths";
 import type { TsConfigJson } from "@stryke/types/tsconfig";
 import defu from "defu";
+import { compilerPlugin } from "./helpers/compiler-plugin";
 import { generateDeclarations, generateImports } from "./helpers/dtsgen";
 import { externalPlugin } from "./helpers/external-plugin";
 import { transformContext } from "./helpers/transform-context";
@@ -337,28 +337,11 @@ export default builder({
         },
         plugins: [
           externalPlugin(
+            this.log,
             context,
             context.resolvedTsconfig.tsconfigJson.compilerOptions?.paths
           ),
-          {
-            name: "storm-stack:compiler",
-            setup: build => {
-              build.onLoad({ filter: /\.ts$/ }, async args => {
-                this.log(
-                  LogLevelLabel.TRACE,
-                  `Transforming ${args.path} with Storm Stack compiler`
-                );
-
-                return {
-                  contents: await context.compiler.compile(
-                    context,
-                    normalizeWindowsPath(args.path),
-                    await readFile(args.path)
-                  )
-                };
-              });
-            }
-          }
+          compilerPlugin(this.log, context)
         ]
       }) as ESBuildOptions
     );

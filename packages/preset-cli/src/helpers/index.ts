@@ -15,21 +15,4 @@
 
  ------------------------------------------------------------------- */
 
-import { getTsupConfig } from "@storm-stack/tools-config/tsup.shared";
-
-const config = getTsupConfig({
-  name: "preset-cli",
-  entry: ["src/index.ts", "src/types/*.ts", "src/helpers/*.ts"],
-  outDir: "dist",
-  bundle: false,
-  splitting: false,
-  treeshake: true,
-  minify: false,
-  keepNames: true,
-  clean: true,
-  sourcemap: true,
-  dts: true,
-  shims: false
-});
-
-export default config;
+export * from "./extract-command";

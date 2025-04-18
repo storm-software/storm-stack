@@ -30,6 +30,7 @@ import {
 import { isDirectory } from "@stryke/path/is-file";
 import { joinPaths } from "@stryke/path/join-paths";
 import { isSetString } from "@stryke/type-checks/is-set-string";
+import { extractCommand } from "./helpers/extract-command";
 import type { StormStackCLIPresetConfig } from "./types/config";
 
 export default class StormStackCLIPreset<
@@ -130,6 +131,8 @@ export default class StormStackCLIPreset<
 
   protected async prepareEntry(context: Context<TOptions>) {
     try {
+      await extractCommand(this.log, context, this.#config);
+
       for (const entry of context.resolvedEntry) {
         this.log(
           LogLevelLabel.TRACE,
@@ -186,7 +189,7 @@ export default builder({
     } catch (error) {
       this.log(
         LogLevelLabel.ERROR,
-        `Failed to prepare the entry artifact: ${(error as any)?.message}`
+        `Failed to prepare the entry artifact: ${error?.message}`
       );
       throw error;
     }

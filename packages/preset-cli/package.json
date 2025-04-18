@@ -43,6 +43,7 @@
   "types": "dist/index.d.ts",
   "typings": "dist/index.d.ts",
   "dependencies": {
+    "@deepkit/type": "catalog:",
     "@storm-software/config-tools": "catalog:",
     "@storm-stack/core": "workspace:*",
     "@storm-stack/plugin-node": "workspace:*",

@@ -2,6 +2,15 @@
   "version": "0.2.0",
   "configurations": [
     {
+      "name": "Debug Build Script",
+      "type": "node",
+      "request": "launch",
+      "program": "/nix/store/kclz9i3vq2fz8nnn947l773a95fj77z3-pnpm-10.8.0/bin/pnpm",
+      "args": ["nx", "run", "examples-cli-app:build:development"],
+      "cwd": "${workspaceFolder}",
+      "console": "integratedTerminal"
+    },
+    {
       "name": "Run Prepare",
       "request": "launch"
     },

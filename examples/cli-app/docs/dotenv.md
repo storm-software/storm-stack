@@ -14,16 +14,13 @@ drive the processing of the application. The data contained in these variables
 are **not** considered sensitive or confidential. Any values provided in these
 variables will be available in plain text to the public.
 
-| Name               | Description                                                                                                                       | Type          | Default Value |   Required   |
-| ------------------ | --------------------------------------------------------------------------------------------------------------------------------- | ------------- | ------------- | :----------: | ------------ | --- |
-| APP_NAME           | The name of the application.                                                                                                      | string        |               |      ✔      |
-| APP_VERSION        | The version of the application.                                                                                                   | string        | "1.0.0"       |              |
-| BUILD_ID           | The build ID of the application. This value is injected by the Storm Stack build process.                                         | string        |               |      ✔      |
-| BUILD_TIMESTAMP    | The build timestamp of the application. This value is injected by the Storm Stack build process.                                  | number        |               |      ✔      |
-| ERROR_URL          | The URL to send error data to. This value is used by the Storm Stack error tracking system.                                       | string        |               |      ✔      |
-| INCLUDE_ERROR_DATA | Indicates if error data should be included.                                                                                       | boolean       | `false`       |              |
-| MODE               | The processing mode of the application.                                                                                           | "development" | "staging"     | "production" | `production` |     |
-| NODE_ENV           | The environment the application is running in. This variable is a duplicate of `ENVIRONMENT` to support use in external packages. | "development" | "staging"     | "production" | `production` |     |
-| PLATFORM           | The type of platform the application is running on.                                                                               | string        | "node"        |              |
-| RELEASE_ID         | The release ID of the application. This value is injected by the Storm Stack build process.                                       | string        |               |      ✔      |
-| STACKTRACE         | Indicates if error stack traces should be captured.                                                                               | boolean       | `false`       |              |
+| Name            | Description                                                                                                                       | Type          | Default Value |   Required   |
+| --------------- | --------------------------------------------------------------------------------------------------------------------------------- | ------------- | ------------- | :----------: | ------------ | --- |
+| APP_NAME        | The name of the application.                                                                                                      | string        |               |      ✔      |
+| APP_VERSION     | The version of the application.                                                                                                   | string        | "1.0.0"       |              |
+| BUILD_ID        | The build ID of the application. This value is injected by the Storm Stack build process.                                         | string        |               |      ✔      |
+| BUILD_TIMESTAMP | The build timestamp of the application. This value is injected by the Storm Stack build process.                                  | number        |               |      ✔      |
+| MODE            | The processing mode of the application.                                                                                           | "development" | "staging"     | "production" | `production` |     |
+| NODE_ENV        | The environment the application is running in. This variable is a duplicate of `ENVIRONMENT` to support use in external packages. | "development" | "staging"     | "production" | `production` |     |
+| PLATFORM        | The type of platform the application is running on.                                                                               | string        | "node"        |              |
+| RELEASE_ID      | The release ID of the application. This value is injected by the Storm Stack build process.                                       | string        |               |      ✔      |

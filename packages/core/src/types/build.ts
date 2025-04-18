@@ -354,6 +354,20 @@ export interface ICompiler<TOptions extends Options = Options> {
   getResult: (sourceFile: SourceFile, transpiled?: string) => CompilerResult;
 
   /**
+   * Transpile the module.
+   *
+   * @param context - The compiler context.
+   * @param id - The name of the file to compile
+   * @param code - The source code to compile
+   * @returns The transpiled module.
+   */
+  transpile: (
+    context: Context<TOptions>,
+    id: string,
+    code: string | MagicString
+  ) => Promise<string>;
+
+  /**
    * Run the compiler.
    *
    * @param context - The context object
