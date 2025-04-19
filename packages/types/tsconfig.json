@@ -1,0 +1,11 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "types": ["node"],
+    "strict": true,
+    "outDir": "../../dist/out-tsc",
+    "verbatimModuleSyntax": false
+  },
+  "include": ["src/**/*.ts"],
+  "reflection": true
+}

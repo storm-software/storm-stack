@@ -15,23 +15,34 @@
 
  ------------------------------------------------------------------- */
 
-import { getStormConfig } from "@storm-software/eslint";
+export interface IStormRequest<TData = any> {
+  /**
+   * The timestamp of the request.
+   */
+  timestamp: number;
 
-Error.stackTraceLimit = Number.POSITIVE_INFINITY;
+  /**
+   * The unique identifier for the request.
+   */
+  id: string;
 
-export default getStormConfig({
-  repositoryName: "storm-stack",
+  /**
+   * Any metadata associated with the request.
+   */
+  meta: Record<string, any>;
 
-  typescript: {
-    override: {
-      "ts/consistent-type-imports": [
-        "warn",
-        {
-          disallowTypeAnnotations: false,
-          fixStyle: "separate-type-imports",
-          prefer: "type-imports"
-        }
-      ]
-    }
-  }
-});
+  /**
+   * Any identifiers associated with the request.
+   */
+  identifiers?: Record<string, any>;
+
+  /**
+   * Any parameters associated with the request.
+   */
+  params?: Record<string, any>;
+
+  /**
+   * The payload of the request.
+   */
+  data: TData;
+}

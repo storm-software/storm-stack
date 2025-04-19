@@ -10,7 +10,7 @@
   },
   "private": false,
   "dependencies": {
-    "@storm-stack/log-stream": "catalog:conflicts_@storm-stack/log-stream_0_3_4",
+    "@storm-stack/log-stream": "workspace:*",
     "unstorage": "catalog:"
   },
   "devDependencies": {

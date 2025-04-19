@@ -1,0 +1,65 @@
+{
+  "name": "types",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "library",
+  "sourceRoot": "packages/types/src",
+  "targets": {
+    "build-cjs": {
+      "dependsOn": ["build-cjs-base"],
+      "executor": "@nx/js:tsc",
+      "options": {
+        "main": "packages/types/src/index.ts",
+        "additionalEntryPoints": [
+          "packages/types/src/env.ts",
+          "packages/types/src/error.ts",
+          "packages/types/src/log.ts",
+          "packages/types/src/request.ts",
+          "packages/types/src/response.ts"
+        ],
+        "outputPath": "dist/packages/types/dist/cjs",
+        "tsConfig": "packages/types/tsconfig.cjs.json",
+        "generatePackageJson": false,
+        "clean": false
+      }
+    },
+    "build-esm": {
+      "dependsOn": ["build-esm-base"],
+      "executor": "@nx/js:tsc",
+      "options": {
+        "main": "packages/types/src/index.ts",
+        "additionalEntryPoints": [
+          "packages/types/src/env.ts",
+          "packages/types/src/error.ts",
+          "packages/types/src/log.ts",
+          "packages/types/src/request.ts",
+          "packages/types/src/response.ts"
+        ],
+        "outputPath": "dist/packages/types/dist/esm",
+        "tsConfig": "packages/types/tsconfig.esm.json",
+        "generatePackageJson": false,
+        "clean": false
+      }
+    },
+    "build": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": [
+          "rm -rf ./dist/packages/types",
+          "mkdir -p ./dist/packages/types",
+          "mkdir -p ./dist/packages/types/dist/cjs",
+          "mkdir -p ./dist/packages/types/dist/esm",
+          "echo '{\"type\": \"commonjs\"}' > ./dist/packages/types/dist/cjs/package.json",
+          "echo '{\"type\": \"module\"}' > ./dist/packages/types/dist/esm/package.json",
+          "pnpm nx run types:build-cjs",
+          "pnpm nx run types:build-esm",
+          "pnpm copyfiles LICENSE dist/packages/types",
+          "pnpm copyfiles --up=2 ./packages/types/*.md ./packages/types/package.json dist/packages/types"
+        ]
+      }
+    },
+    "nx-release-publish": {
+      "executor": "@storm-software/workspace-tools:npm-publish"
+    }
+  },
+  "tags": ["platform:neutral"]
+}
