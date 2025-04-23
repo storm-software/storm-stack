@@ -2,8 +2,8 @@
   {
     "kind": 20,
     "typeName": "StormRequest",
-    "typeArguments": [1],
-    "types": [10, 15, 19, 23, 24, 26, 28],
+    "typeArguments": [1, 10, 14, 17],
+    "types": [20, 21, 22, 23, 24, 26, 28],
     "classType": "StormRequest",
     "arguments": [1],
     "entityOptions": {
@@ -50,53 +50,27 @@
   },
   { "kind": 7 },
   {
-    "kind": 15,
-    "type": 11,
-    "name": "meta",
-    "visibility": 0,
-    "readonly": true,
-    "description": "The metadata associated with the request."
-  },
-  {
     "kind": 30,
     "typeName": "Record",
-    "typeArguments": [12, 13],
-    "types": [14]
+    "typeArguments": [11, 12],
+    "types": [13]
   },
   { "kind": 5 },
   { "kind": 1 },
-  { "kind": 31, "index": 12, "type": 13 },
-  {
-    "kind": 15,
-    "type": 16,
-    "name": "identifiers",
-    "visibility": 0,
-    "optional": true,
-    "readonly": true,
-    "description": "Any identifiers associated with the request."
-  },
+  { "kind": 31, "index": 11, "type": 12 },
   {
     "kind": 30,
     "typeName": "Record",
-    "typeArguments": [17, 18],
-    "types": [14]
+    "typeArguments": [15, 16],
+    "types": [13]
   },
   { "kind": 5 },
   { "kind": 1 },
   {
-    "kind": 15,
-    "type": 20,
-    "name": "params",
-    "visibility": 0,
-    "optional": true,
-    "readonly": true,
-    "description": "Any parameters associated with the request."
-  },
-  {
     "kind": 30,
     "typeName": "Record",
-    "typeArguments": [21, 22],
-    "types": [14]
+    "typeArguments": [18, 19],
+    "types": [13]
   },
   { "kind": 5 },
   { "kind": 1 },
@@ -107,6 +81,31 @@
     "visibility": 0,
     "readonly": true,
     "description": "The payload data associated with the request."
+  },
+  {
+    "kind": 15,
+    "type": 10,
+    "name": "identifiers",
+    "visibility": 0,
+    "readonly": true,
+    "description": "Any identifiers associated with the request."
+  },
+  {
+    "kind": 15,
+    "type": 14,
+    "name": "params",
+    "visibility": 0,
+    "optional": true,
+    "readonly": true,
+    "description": "Any parameters associated with the request."
+  },
+  {
+    "kind": 15,
+    "type": 17,
+    "name": "meta",
+    "visibility": 0,
+    "readonly": true,
+    "description": "The metadata associated with the request."
   },
   {
     "kind": 15,
@@ -132,31 +131,15 @@
     "kind": 16,
     "visibility": 0,
     "name": "constructor",
-    "return": 36,
+    "return": 30,
     "parameters": [
       { "kind": 18, "name": "data", "type": 1 },
       { "kind": 18, "name": "meta", "type": 29 },
-      { "kind": 18, "name": "params", "type": 30, "optional": true },
-      { "kind": 18, "name": "identifiers", "type": 33, "optional": true }
+      { "kind": 18, "name": "params", "type": 14, "optional": true },
+      { "kind": 18, "name": "identifiers", "type": 10, "optional": true }
     ],
     "description": "Create a new request object."
   },
-  { "kind": 1 },
-  {
-    "kind": 30,
-    "typeName": "Record",
-    "typeArguments": [31, 32],
-    "types": [14]
-  },
-  { "kind": 5 },
-  { "kind": 1 },
-  {
-    "kind": 30,
-    "typeName": "Record",
-    "typeArguments": [34, 35],
-    "types": [14]
-  },
-  { "kind": 5 },
   { "kind": 1 },
   { "kind": 1 }
 ]

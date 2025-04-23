@@ -17,7 +17,6 @@
 
 import { LogLevelLabel } from "@storm-software/config-tools/types";
 import { createDirectory } from "@stryke/fs/helpers";
-import { writeFile } from "@stryke/fs/write-file";
 import { throttle } from "@stryke/helpers/throttle";
 import { StormJSON } from "@stryke/json/storm-json";
 import { existsSync, findFilePath, joinPaths } from "@stryke/path/index";
@@ -30,6 +29,7 @@ import type {
   UnimportContext
 } from "../types/build";
 import type { LogFn } from "../types/config";
+import { writeFile } from "./utilities/write-file";
 
 let lastImportsDump: string | undefined;
 
@@ -95,7 +95,7 @@ export function createUnimport<TOptions extends Options = Options>(
       const content = StormJSON.stringify(items);
       if (content.trim() !== lastImportsDump?.trim()) {
         lastImportsDump = content;
-        await writeFile(importDumpFile, content);
+        await writeFile(log, importDumpFile, content);
       }
     }
   }

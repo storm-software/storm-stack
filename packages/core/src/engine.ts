@@ -157,6 +157,10 @@ export class Engine<TOptions extends Options = Options> {
         from: "@stryke/json/storm-json"
       },
       {
+        imports: ["StormURL"],
+        from: "@stryke/url/storm-url"
+      },
+      {
         imports: ["StormError"],
         from: "storm:error"
       },
@@ -332,7 +336,9 @@ export class Engine<TOptions extends Options = Options> {
             "@stryke/type-checks"
           ),
         this.context.projectType === "application" &&
-          installPackage<TOptions>(this.log, this.context, "@stryke/json")
+          installPackage<TOptions>(this.log, this.context, "@stryke/json"),
+        this.context.projectType === "application" &&
+          installPackage<TOptions>(this.log, this.context, "@stryke/url")
       ].filter(Boolean)
     );
 

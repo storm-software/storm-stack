@@ -30,7 +30,7 @@ import {
 import { isDirectory } from "@stryke/path/is-file";
 import { joinPaths } from "@stryke/path/join-paths";
 import { isSetString } from "@stryke/type-checks/is-set-string";
-import { reflectRequest } from "./helpers/reflect-request";
+import { reflectCommands } from "./helpers/reflect-command";
 import type { StormStackCLIPresetConfig } from "./types/config";
 
 export default class StormStackCLIPreset<
@@ -131,7 +131,7 @@ export default class StormStackCLIPreset<
 
   protected async prepareEntry(context: Context<TOptions>) {
     try {
-      await reflectRequest(this.log, context, this.#config);
+      await reflectCommands(this.log, context, this.#config);
 
       for (const entry of context.resolvedEntry) {
         this.log(
@@ -156,17 +156,13 @@ import ${entry.input.name ? `{ ${entry.input.name} as handle }` : "handle"} from
             )
           )}";
 import { builder } from ".${joinPaths(context.runtimeDir.replace(context.artifactsDir, ""), "app")}";
+import { storage } from ".${joinPaths(context.runtimeDir.replace(context.artifactsDir, ""), "storage")}";
 import { getSink as getStorageSink } from "@storm-stack/log-storage";${
             this.#config.features?.includes(StormStackNodeFeatures.SENTRY)
               ? `
 import { getSink as getSentrySink } from "@storm-stack/log-sentry";`
               : ""
           }
-import { createStorage } from "unstorage";
-import fsLiteDriver from "unstorage/drivers/fs-lite";
-
-const storage = createStorage();
-storage.mount("logs", fsLiteDriver({ base: "var/log" }));
 
 export default builder({
   name: ${context.name ? `"${context.name}"` : "undefined"},
@@ -182,6 +178,52 @@ export default builder({
 })
   .handler(handle)
   .build();
+
+/*
+const dev = defineCommand({
+  meta: {
+    name: 'dev',
+    version: version,
+    description: 'Start the dev server',
+  },
+  args: {
+    clean: {
+      type: 'boolean',
+    },
+    host: {
+      type: 'string',
+    },
+    port: {
+      type: 'string',
+    },
+    https: {
+      type: 'boolean',
+    },
+    mode: {
+      type: 'string',
+      description:
+        'If set to "production" you can run the development server but serve the production bundle',
+    },
+    'debug-bundle': {
+      type: 'string',
+      description: "Will output the bundle to a temp file and then serve it from there afterwards allowing you to easily edit the bundle to debug problems.",
+    },
+    debug: {
+      type: 'string',
+      description: "Pass debug args to Vite",
+    },
+  },
+  async run({ args }) {
+    const { dev } = await import('./cli/dev')
+    await dev({
+      ...args,
+      debugBundle: args['debug-bundle'],
+      mode: modes[args.mode],
+    })
+  },
+})
+  */
+
 
 `
         );

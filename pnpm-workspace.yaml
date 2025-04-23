@@ -76,6 +76,7 @@ catalog:
   '@stryke/helpers': latest
   '@stryke/http': latest
   '@stryke/unique-id': latest
+  '@stryke/url': latest
   '@stryke/json': latest
   '@stryke/path': latest
   '@stryke/types': latest

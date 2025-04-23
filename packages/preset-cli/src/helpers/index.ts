@@ -15,4 +15,4 @@
 
  ------------------------------------------------------------------- */
 
-export * from "./reflect-request";
+export * from "./reflect-command";

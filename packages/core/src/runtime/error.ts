@@ -21,6 +21,7 @@ export function writeError() {
   return `${getFileHeader()}
 
  import { StormJSON } from "@stryke/json/storm-json";
+ import { StormURL } from "@stryke/url/storm-url";
  import type { ErrorMessageDetails, Indexable, MessageType } from "@stryke/types";
  import { isError } from "@stryke/type-checks/is-error";
  import { isFunction } from "@stryke/type-checks/is-function";
@@ -375,42 +376,43 @@ export function writeError() {
      return this.#stack;
    }
 
-   /**
-    * A URL to a page that displays the error message details
-    */
-   public get url(): string {
-     return \`\${$storm.env.ERROR_URL}/\${this.type.toLowerCase().replaceAll("_", "-")}/\${this.code}\`;
-   }
+  /**
+   * A URL to a page that displays the error message details
+   */
+  public get url(): string {
+    const url = new StormURL($storm.env.ERROR_URL!);
+    url.paths.push(this.type.toLowerCase().replaceAll("_", "-"));
+    url.paths.push(String(this.code));
 
-   /**
-    * Prints the display error message string
-    *
-    * @param includeData - Whether to include the data in the error message
-    * @returns The display error message string
-    */
-   public toDisplay(includeData = $storm.env.INCLUDE_ERROR_DATA): string {
-     return this.message
-       ? \`\${this.name && this.name !== this.constructor.name ? (this.code ? \`\${this.name} \` : this.name) : ""} \${
-           this.code
-             ? this.code && this.name
-               ? \`[\${this.type} - \${this.code}]\`
-               : \`\${this.type} - \${this.code}\`
-             : this.name
-               ? \`[\${this.type}]\`
-               : this.type
-         }: \${this.message}\${
-           this.cause
-             ? \` \nCause: \${
-                 isError(this.cause) ? this.cause.toDisplay() : this.cause
-               }\`
-             : ""
-         }\${
-           includeData && this.data
-             ? \` \nData: \${StormJSON.stringify(this.data)}\`
-             : ""
-         }\`
-       : "";
-   }
+    if (this.params.length > 0) {
+      url.params.params = this.params;
+    }
+
+    return url.toEncoded();
+  }
+
+  /**
+   * Prints the display error message string
+   *
+   * @param includeData - Whether to include the data in the error message
+   * @returns The display error message string
+   */
+  public toDisplay(includeData = $storm.env.INCLUDE_ERROR_DATA): string {
+    return \`\${this.name && this.name !== this.constructor.name ? (this.code ? \`\${this.name} \` : this.name) : ""} \${
+      this.code
+        ? this.code && this.name
+          ? \`[\${this.type} - \${this.code}]\`
+          : \`\${this.type} - \${this.code}\`
+        : this.name
+          ? \`[\${this.type}]\`
+          : this.type
+    }: Please review the details of this error at the following URL: \${this.url}\${
+      includeData && this.data
+        ? \`
+Data: \${StormJSON.stringify(this.data)}\`
+        : ""
+    }\`;
+  }
 
    /**
     * Prints the error message and stack trace

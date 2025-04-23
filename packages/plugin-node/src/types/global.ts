@@ -15,7 +15,6 @@
 
  ------------------------------------------------------------------- */
 
-import type { InjectorContext, ProviderWithScope } from "@deepkit/injector";
 import type {
   IStormError,
   IStormLog,
@@ -235,7 +234,6 @@ interface Internal_StormContextStore {
 
 export interface StormRuntimeParams {
   name?: string;
-  providers?: ProviderWithScope[];
   storage?: Storage;
   log: LogSinkInstance | LogSinkInstance[];
 }
@@ -294,11 +292,6 @@ export interface StormContext<
    * The root [unstorage](https://unstorage.unjs.io/) storage to use for Storm Stack application.
    */
   readonly storage: Storage;
-
-  /**
-   * The injected service providers for the Storm application.
-   */
-  injector: InjectorContext;
 
   /**
    * A function to emit an event to a processing queue.

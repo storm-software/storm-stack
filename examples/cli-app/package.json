@@ -10,14 +10,14 @@
   },
   "private": true,
   "dependencies": {
-    "@deepkit/injector": "catalog:",
-    "@storm-stack/log-storage": "0.4.0",
+    "@storm-stack/log-storage": "workspace:*",
     "@stryke/cli": "catalog:",
+    "@stryke/url": "catalog:",
     "unstorage": "catalog:"
   },
   "devDependencies": {
-    "@storm-stack/core": "0.6.0",
-    "@storm-stack/nx": "0.4.0",
-    "@storm-stack/preset-cli": "0.3.0"
+    "@storm-stack/core": "workspace:*",
+    "@storm-stack/nx": "workspace:*",
+    "@storm-stack/preset-cli": "workspace:*"
   }
 }

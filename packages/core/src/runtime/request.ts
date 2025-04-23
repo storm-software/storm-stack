@@ -26,26 +26,31 @@ import type { IStormRequest } from "@storm-stack/types";
 /**
  * A base request class used by the Storm Stack runtime.
  */
-export class StormRequest<TData = any> implements IStormRequest<TData> {
-  /**
-   * The metadata associated with the request.
-   */
-  public readonly meta: Record<string, any>;
-
-  /**
-   * Any identifiers associated with the request.
-   */
-  public readonly identifiers?: Record<string, any>;
-
-  /**
-   * Any parameters associated with the request.
-   */
-  public readonly params?: Record<string, any>;
-
+export class StormRequest<
+  TData = any,
+  TIdentifiers extends Record<string, any> = Record<string, any>,
+  TParams extends Record<string, any> = Record<string, any>,
+  TMeta extends Record<string, any> = Record<string, any>
+> implements IStormRequest<TData, TIdentifiers, TParams, TMeta> {
   /**
    * The payload data associated with the request.
    */
   public readonly data: TData;
+
+  /**
+   * Any identifiers associated with the request.
+   */
+  public readonly identifiers: TIdentifiers;
+
+  /**
+   * Any parameters associated with the request.
+   */
+  public readonly params?: TParams;
+
+  /**
+   * The metadata associated with the request.
+   */
+  public readonly meta: TMeta;
 
   /**
    * The request identifier.
@@ -68,8 +73,8 @@ export class StormRequest<TData = any> implements IStormRequest<TData> {
   public constructor(
     data: TData,
     meta = {},
-    params?: Record<string, any>,
-    identifiers?: Record<string, any>
+    params?: TParams,
+    identifiers?: TIdentifiers
   ) {
     this.data = data;
     this.meta = meta;

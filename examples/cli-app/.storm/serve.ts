@@ -8,13 +8,9 @@
 import "./runtime/init";
 
 import { getSink as getStorageSink } from "@storm-stack/log-storage";
-import { createStorage } from "unstorage";
-import fsLiteDriver from "unstorage/drivers/fs-lite";
 import handle from "../src/commands/serve";
 import { builder } from "./runtime/app";
-
-const storage = createStorage();
-storage.mount("logs", fsLiteDriver({ base: "var/log" }));
+import { storage } from "./runtime/storage";
 
 export default builder({
   name: "examples-cli-app",
@@ -23,3 +19,48 @@ export default builder({
 })
   .handler(handle)
   .build();
+
+/*
+const dev = defineCommand({
+  meta: {
+    name: 'dev',
+    version: version,
+    description: 'Start the dev server',
+  },
+  args: {
+    clean: {
+      type: 'boolean',
+    },
+    host: {
+      type: 'string',
+    },
+    port: {
+      type: 'string',
+    },
+    https: {
+      type: 'boolean',
+    },
+    mode: {
+      type: 'string',
+      description:
+        'If set to "production" you can run the development server but serve the production bundle',
+    },
+    'debug-bundle': {
+      type: 'string',
+      description: "Will output the bundle to a temp file and then serve it from there afterwards allowing you to easily edit the bundle to debug problems.",
+    },
+    debug: {
+      type: 'string',
+      description: "Pass debug args to Vite",
+    },
+  },
+  async run({ args }) {
+    const { dev } = await import('./cli/dev')
+    await dev({
+      ...args,
+      debugBundle: args['debug-bundle'],
+      mode: modes[args.mode],
+    })
+  },
+})
+  */

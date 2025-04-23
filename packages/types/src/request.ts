@@ -15,7 +15,12 @@
 
  ------------------------------------------------------------------- */
 
-export interface IStormRequest<TData = any> {
+export interface IStormRequest<
+  TData = any,
+  TIdentifiers extends Record<string, any> = Record<string, any>,
+  TParams extends Record<string, any> = Record<string, any>,
+  TMeta extends Record<string, any> = Record<string, any>
+> {
   /**
    * The timestamp of the request.
    */
@@ -29,17 +34,17 @@ export interface IStormRequest<TData = any> {
   /**
    * Any metadata associated with the request.
    */
-  meta: Record<string, any>;
+  meta: TMeta;
 
   /**
    * Any identifiers associated with the request.
    */
-  identifiers?: Record<string, any>;
+  identifiers?: TIdentifiers;
 
   /**
    * Any parameters associated with the request.
    */
-  params?: Record<string, any>;
+  params?: TParams;
 
   /**
    * The payload of the request.

@@ -50,8 +50,13 @@ export default class StormStackHttpPlugin<
     };
 
     context.unimportPresets.push({
-      imports: ["StormURL"],
-      from: "@stryke/http/url"
+      imports: [
+        "parseCookie",
+        "parseSetCookie",
+        "serializeCookie",
+        "splitSetCookieString"
+      ],
+      from: "@stryke/http"
     });
   }
 

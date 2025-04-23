@@ -29,4 +29,11 @@ export interface StormStackCLIPresetConfig {
    * The name of the binary that will be generated to run the CLI
    */
   binaryName?: string;
+
+  /**
+   * The directory to write the output log files to
+   *
+   * @defaultValue "var/log"
+   */
+  logPath?: string;
 }

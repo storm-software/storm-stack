@@ -46,8 +46,6 @@
     "@cloudflare/unenv-preset": "catalog:",
     "@ltd/j-toml": "catalog:",
     "@storm-software/config-tools": "catalog:",
-    "@storm-stack/core": "0.6.0",
-    "@storm-stack/plugin-node": "0.6.0",
     "@stryke/fs": "catalog:",
     "@stryke/json": "catalog:",
     "@stryke/path": "catalog:",

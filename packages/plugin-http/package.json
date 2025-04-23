@@ -71,7 +71,6 @@
   "types": "dist/types/index.d.ts",
   "typings": "dist/types/index.d.ts",
   "dependencies": {
-    "@storm-stack/core": "0.6.0",
     "@stryke/http": "catalog:",
     "@stryke/json": "catalog:",
     "@stryke/path": "catalog:"

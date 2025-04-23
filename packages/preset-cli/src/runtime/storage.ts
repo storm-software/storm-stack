@@ -15,22 +15,21 @@
 
  ------------------------------------------------------------------- */
 
-// eslint-disable-next-line ts/consistent-type-imports
-import { StormRequest } from "../../.storm/runtime/request";
-// eslint-disable-next-line ts/consistent-type-imports
-import { ServePayload } from "../types";
+import { getFileHeader } from "@storm-stack/core/helpers";
+import type { Context, Options } from "@storm-stack/core/types";
+import { joinPaths } from "@stryke/path/join-paths";
+import type { StormStackCLIPresetConfig } from "../types/config";
 
-/**
- * Start a server and serve the application
- *
- * @param event - The event object containing the payload
- */
-function handler(event: StormRequest<ServePayload>) {
-  const payload = event.data;
+export function writeStorage<TOptions extends Options = Options>(
+  context: Context<TOptions>,
+  config: Required<StormStackCLIPresetConfig>
+) {
+  return `${getFileHeader()}
 
-  $storm.log.info(
-    `Starting server on ${payload.host}:${payload.port} with compress: ${payload.compress} and loadEnv: ${payload.loadEnv}`
-  );
+import { createStorage } from "unstorage";
+import fsLiteDriver from "unstorage/drivers/fs-lite";
+
+export const storage = createStorage();
+storage.mount("logs", fsLiteDriver({ base: "${config.logPath || context.envPaths.log || joinPaths("/var/log", context.name || "storm-software")}" }));
+`;
 }
-
-export default handler;

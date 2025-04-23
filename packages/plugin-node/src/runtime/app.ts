@@ -44,7 +44,6 @@ import type { StormEvent } from "./event";
 import { uniqueId } from "./id";
 import type { StormRequest } from "./request";
 import { StormResponse } from "./response";
-import { InjectorContext } from "@deepkit/injector";
 import { createStorage } from "unstorage";
 
 /**
@@ -88,7 +87,6 @@ export function builder<
     const version = getAppVersion();
     const buildInfo = getBuildInfo();
     const runtimeInfo = getRuntimeInfo();
-    const injector = InjectorContext.forProviders(params.providers ?? []);
 
     const disposables = new Set<Disposable>();
     const asyncDisposables = new Set<AsyncDisposable>();

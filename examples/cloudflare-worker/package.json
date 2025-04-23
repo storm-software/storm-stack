@@ -10,12 +10,12 @@
   },
   "private": true,
   "dependencies": {
-    "@deepkit/injector": "catalog:",
-    "@storm-stack/log-console": "0.4.0"
+    "@storm-stack/log-console": "workspace:*",
+    "@stryke/url": "catalog:"
   },
   "devDependencies": {
-    "@storm-stack/core": "0.6.0",
-    "@storm-stack/nx": "0.4.0",
-    "@storm-stack/preset-cloudflare-worker": "0.5.0"
+    "@storm-stack/core": "workspace:*",
+    "@storm-stack/nx": "workspace:*",
+    "@storm-stack/preset-cloudflare-worker": "workspace:*"
   }
 }

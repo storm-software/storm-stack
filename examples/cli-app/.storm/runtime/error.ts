@@ -12,6 +12,7 @@ import { isFunction } from "@stryke/type-checks/is-function";
 import { isObject } from "@stryke/type-checks/is-object";
 import { isSetString } from "@stryke/type-checks/is-set-string";
 import type { Indexable } from "@stryke/types";
+import { StormURL } from "@stryke/url/storm-url";
 
 /**
  * Get the default error code for the given error type.
@@ -366,7 +367,15 @@ export class StormError extends Error implements IStormError {
    * A URL to a page that displays the error message details
    */
   public get url(): string {
-    return `${$storm.env.ERROR_URL}/${this.type.toLowerCase().replaceAll("_", "-")}/${this.code}`;
+    const url = new StormURL($storm.env.ERROR_URL!);
+    url.paths.push(this.type.toLowerCase().replaceAll("_", "-"));
+    url.paths.push(String(this.code));
+
+    if (this.params.length > 0) {
+      url.params.params = this.params;
+    }
+
+    return url.toEncoded();
   }
 
   /**
@@ -376,27 +385,20 @@ export class StormError extends Error implements IStormError {
    * @returns The display error message string
    */
   public toDisplay(includeData = $storm.env.INCLUDE_ERROR_DATA): string {
-    return this.message
-      ? `${this.name && this.name !== this.constructor.name ? (this.code ? `${this.name} ` : this.name) : ""} ${
-          this.code
-            ? this.code && this.name
-              ? `[${this.type} - ${this.code}]`
-              : `${this.type} - ${this.code}`
-            : this.name
-              ? `[${this.type}]`
-              : this.type
-        }: ${this.message}${
-          this.cause
-            ? ` 
-Cause: ${isError(this.cause) ? this.cause.toDisplay() : this.cause}`
-            : ""
-        }${
-          includeData && this.data
-            ? ` 
+    return `${this.name && this.name !== this.constructor.name ? (this.code ? `${this.name} ` : this.name) : ""} ${
+      this.code
+        ? this.code && this.name
+          ? `[${this.type} - ${this.code}]`
+          : `${this.type} - ${this.code}`
+        : this.name
+          ? `[${this.type}]`
+          : this.type
+    }: Please review the details of this error at the following URL: ${this.url}${
+      includeData && this.data
+        ? `
 Data: ${StormJSON.stringify(this.data)}`
-            : ""
-        }`
-      : "";
+        : ""
+    }`;
   }
 
   /**
