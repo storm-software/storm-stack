@@ -2,6 +2,18 @@
 
 # Changelog for Storm Stack - Preset Cli
 
+## [0.3.0](https://github.com/storm-software/storm-stack/releases/tag/preset-cli%400.3.0) (2025-04-23)
+
+### Features
+
+- **core:** Added `deepkit` type reflection to builds
+  ([c25871c0](https://github.com/storm-software/storm-stack/commit/c25871c0))
+
+### Updated Dependencies
+
+- Updated plugin-node to 0.6.0
+- Updated core to 0.6.0
+
 ## [0.2.0](https://github.com/storm-software/storm-stack/releases/tag/preset-cli%400.2.0) (2025-04-18)
 
 ### Features

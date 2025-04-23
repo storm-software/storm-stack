@@ -2,6 +2,17 @@
 
 # Changelog for Storm Stack - Plugin Http
 
+## [0.3.0](https://github.com/storm-software/storm-stack/releases/tag/plugin-http%400.3.0) (2025-04-23)
+
+### Features
+
+- **core:** Added `deepkit` type reflection to builds
+  ([c25871c0](https://github.com/storm-software/storm-stack/commit/c25871c0))
+
+### Updated Dependencies
+
+- Updated core to 0.6.0
+
 ## [0.2.3](https://github.com/storm-software/storm-stack/releases/tag/plugin-http%400.2.3) (2025-04-18)
 
 ### Updated Dependencies

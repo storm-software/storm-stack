@@ -2,6 +2,17 @@
 
 # Changelog for Storm Stack - Core
 
+## [0.6.0](https://github.com/storm-software/storm-stack/releases/tag/core%400.6.0) (2025-04-23)
+
+### Features
+
+- **core:** Added `deepkit` type reflection to builds
+  ([c25871c0](https://github.com/storm-software/storm-stack/commit/c25871c0))
+
+### Updated Dependencies
+
+- Updated types to 0.1.0
+
 ## [0.5.0](https://github.com/storm-software/storm-stack/releases/tag/core%400.5.0) (2025-04-18)
 
 ### Features

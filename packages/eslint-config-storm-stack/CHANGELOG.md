@@ -2,6 +2,12 @@
 
 # Changelog for Storm Stack - Eslint Config Storm Stack
 
+## [0.5.0](https://github.com/storm-software/storm-stack/releases/tag/eslint-config-storm-stack%400.5.0) (2025-04-23)
+
+### Updated Dependencies
+
+- Updated eslint-plugin-storm-stack to 0.7.0
+
 ## [0.4.0](https://github.com/storm-software/storm-stack/releases/tag/eslint-config-storm-stack%400.4.0) (2025-04-18)
 
 ### Updated Dependencies

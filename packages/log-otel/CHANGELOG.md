@@ -2,6 +2,19 @@
 
 # Changelog for Storm Stack - Log Otel
 
+## [0.4.0](https://github.com/storm-software/storm-stack/releases/tag/log-otel%400.4.0) (2025-04-23)
+
+### Features
+
+- **core:** Added `deepkit` type reflection to builds
+  ([c25871c0](https://github.com/storm-software/storm-stack/commit/c25871c0))
+
+### Updated Dependencies
+
+- Updated core to 0.6.0
+- Updated core to 0.6.0
+- Updated nx to 0.4.0
+
 ## [0.3.4](https://github.com/storm-software/storm-stack/releases/tag/log-otel%400.3.4) (2025-04-18)
 
 ### Miscellaneous
