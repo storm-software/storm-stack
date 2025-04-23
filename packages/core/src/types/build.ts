@@ -15,6 +15,7 @@
 
  ------------------------------------------------------------------- */
 
+import type { ReflectionClass } from "@deepkit/type";
 import type { Platform } from "@storm-software/build-tools/types";
 import type { StormWorkspaceConfig } from "@storm-software/config/types";
 import type { EnvPaths } from "@stryke/env/get-env-paths";
@@ -27,7 +28,7 @@ import type { Hookable } from "hookable";
 import type { Jiti } from "jiti";
 import type MagicString from "magic-string";
 import type { SourceMap } from "magic-string";
-import type { Project, ts } from "ts-morph";
+import type ts from "typescript";
 import type { InlinePreset, Unimport } from "unimport";
 import type {
   AdapterProjectConfig,
@@ -131,6 +132,13 @@ export type Options = Partial<ProjectConfig> & {
   skipCache?: boolean;
 
   /**
+   * Should the esbuild processes skip the bundling of node_modules?
+   *
+   * @defaultValue false
+   */
+  skipNodeModulesBundle?: boolean;
+
+  /**
    * A list of external packages to exclude from the bundled code
    */
   external?: string[];
@@ -176,99 +184,44 @@ export type Options = Partial<ProjectConfig> & {
   tsconfigRaw?: TsConfigJson;
 };
 
-export interface ResolvedDotenvTypeDefinitionPropertyType {
-  /** Gets if this is an anonymous type. */
-  isAnonymous: boolean;
-  /** Gets if this is an any type. */
-  isAny: boolean;
-  /** Gets if this is a never type. */
-  isNever: boolean;
-  /** Gets if this is an array type. */
-  isArray: boolean;
-  /** Gets if this is a readonly array type. */
-  isReadonlyArray: boolean;
-  /** Gets if this is a template literal type. */
-  isTemplateLiteral: boolean;
-  /** Gets if this is a boolean type. */
-  isBoolean: boolean;
-  /** Gets if this is a string type. */
-  isString: boolean;
-  /** Gets if this is a number type. */
-  isNumber: boolean;
-  /** Gets if this is a BigInt. */
-  isBigInt: boolean;
-  /** Gets if this is a literal type. */
-  isLiteral: boolean;
-  /** Gets if this is a boolean literal type. */
-  isBooleanLiteral: boolean;
-  /** Gets if this is a BigInt literal type. */
-  isBigIntLiteral: boolean;
-  /** Gets if this is an enum literal type. */
-  isEnumLiteral: boolean;
-  /** Gets if this is a number literal type. */
-  isNumberLiteral: boolean;
-  /** Gets if this is a string literal type. */
-  isStringLiteral: boolean;
-  /** Gets if this is a class type. */
-  isClass: boolean;
-  /** Gets if this is a class or interface type. */
-  isClassOrInterface: boolean;
-  /** Gets if this is an enum type. */
-  isEnum: boolean;
-  /** Gets if this is an interface type. */
-  isInterface: boolean;
-  /** Gets if this is an object type. */
-  isObject: boolean;
-  /** Gets if this is a type parameter. */
-  isTypeParameter: boolean;
-  /** Gets if this is a tuple type. */
-  isTuple: boolean;
-  /** Gets if this is a union type. */
-  isUnion: boolean;
-  /** Gets if this is an intersection type. */
-  isIntersection: boolean;
-  /** Gets if this is a union or intersection type. */
-  isUnionOrIntersection: boolean;
-  /** Gets if this is the unknown type. */
-  isUnknown: boolean;
-  /** Gets if this is the null type. */
-  isNull: boolean;
-  /** Gets if this is the undefined type. */
-  isUndefined: boolean;
-  /** Gets if this is the void type. */
-  isVoid: boolean;
-}
-
-export interface ResolvedDotenvTypeDefinitionProperty {
-  comment?: string;
-  defaultValue?: any;
-  description?: string;
-  text: string;
-  isOptional: boolean;
-  type?: ResolvedDotenvTypeDefinitionPropertyType;
-}
-
-export type ResolvedDotenvTypeDefinition = Omit<TypeDefinition, "file"> &
-  Partial<Pick<TypeDefinition, "file">> & {
-    properties: Record<string, ResolvedDotenvTypeDefinitionProperty>;
-  };
-
-export interface ResolvedDotenvTypeDefinitions {
+export interface ResolvedDotenvType<
+  TReflection extends ReflectionClass<any> | undefined =
+    | ReflectionClass<any>
+    | undefined
+> {
   /**
    * A path to the type definition for the expected env configuration parameters. This value can include both a path to the typescript file and the name of the type definition to use separated by a `":"` or `"#"` character. For example: `"./src/types/env.ts#DotenvConfiguration"`.
    *
    * @remarks
    * If a value is not provided for this option, the plugin will attempt to infer the type definition from the `storm.dotenv.types.variables` object in the project's `package.json` file.
    */
-  variables?: ResolvedDotenvTypeDefinition;
+  reflection: TReflection;
 
   /**
-   * A path to the type definition for the expected env secret parameters. This value can include both a path to the typescript file and the name of the type definition to use separated by a `":"` or `"#"` character. For example: `"./src/types/env.ts#DotenvSecrets"`.
+   * The type definition for the expected env configuration parameters
    *
    * @remarks
-   * If a value is not provided for this option, the plugin will attempt to infer the type definition from the `storm.dotenv.types.secrets` object in the project's `package.json` file.
+   * This value is parsed from the {@link DotenvOptions.types} option.
    */
-  secrets?: ResolvedDotenvTypeDefinition;
+  typeDefinition?: TypeDefinition;
+}
+
+export interface ResolvedDotenvTypes {
+  /**
+   * The type definition for the expected env configuration parameters
+   *
+   * @remarks
+   * This value is parsed from the {@link DotenvOptions.types} option.
+   */
+  variables: ResolvedDotenvType<ReflectionClass<any>>;
+
+  /**
+   * The type definition for the expected env secret parameters
+   *
+   * @remarks
+   * This value is parsed from the {@link DotenvOptions.types} option.
+   */
+  secrets?: ResolvedDotenvType;
 }
 
 export type ResolvedDotenvOptions = Required<
@@ -280,7 +233,7 @@ export type ResolvedDotenvOptions = Required<
    * @remarks
    * This value is parsed from the {@link DotenvOptions.types} option.
    */
-  types?: ResolvedDotenvTypeDefinitions;
+  types: ResolvedDotenvTypes;
 
   /**
    * Should the plugin replace the env variables in the source code with their values?
@@ -334,6 +287,38 @@ export interface MetaInfo {
   timestamp: number;
 }
 
+export interface TranspileOptions {
+  /**
+   * Skip all transformations.
+   *
+   * @defaultValue false
+   */
+  skipTransform?: boolean;
+
+  /**
+   * Skip the .env environment variable transformation.
+   *
+   * @defaultValue false
+   */
+  skipEnvTransform?: boolean;
+
+  /**
+   * Skip the error codes formatting transformation.
+   *
+   * @defaultValue false
+   */
+  skipErrorsTransform?: boolean;
+}
+
+export interface CompileOptions extends TranspileOptions {
+  /**
+   * Skip the cache.
+   *
+   * @defaultValue false
+   */
+  skipCache?: boolean;
+}
+
 export interface ICompiler<TOptions extends Options = Options> {
   /**
    * Get the source file.
@@ -356,15 +341,17 @@ export interface ICompiler<TOptions extends Options = Options> {
   /**
    * Transpile the module.
    *
-   * @param context - The compiler context.
-   * @param id - The name of the file to compile
-   * @param code - The source code to compile
+   * @param context - The context object
+   * @param id - The name of the file to transpile
+   * @param code - The source code to transpile
+   * @param options - The transpile options
    * @returns The transpiled module.
    */
   transpile: (
     context: Context<TOptions>,
     id: string,
-    code: string | MagicString
+    code: string | MagicString,
+    options?: CompileOptions
   ) => Promise<string>;
 
   /**
@@ -373,12 +360,14 @@ export interface ICompiler<TOptions extends Options = Options> {
    * @param context - The context object
    * @param id - The name of the file to compile
    * @param code - The source code to compile
+   * @param options - The compiler options
    * @returns The compiled source code
    */
   compile: (
     context: Context<TOptions>,
     id: string,
-    code: string | MagicString
+    code: string | MagicString,
+    options?: CompileOptions
   ) => Promise<string>;
 }
 
@@ -490,11 +479,6 @@ export type Context<
      * The project's project.json file content
      */
     projectJson: Record<string, any>;
-
-    /**
-     * The `ts-morph` project instance
-     */
-    project: Project;
 
     /**
      * The Jiti module resolver

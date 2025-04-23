@@ -16,11 +16,11 @@
  ------------------------------------------------------------------- */
 
 import type { LogLevelLabel } from "@storm-software/config-tools/types";
+import type { LogLevel } from "@storm-stack/types/log";
 import type {
   DotenvConfiguration,
   TypeDefinitionParameter
 } from "@stryke/types/configuration";
-import type { LogLevel } from "./global";
 
 export type LogFn = (type: LogLevelLabel, ...args: string[]) => void;
 

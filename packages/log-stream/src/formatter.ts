@@ -19,7 +19,7 @@ import type {
   FormattedValues,
   LogLevel,
   LogRecord
-} from "@storm-stack/core/types";
+} from "@storm-stack/types/log";
 import { StormJSON } from "@stryke/json/storm-json";
 import util from "node:util";
 import type {

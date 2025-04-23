@@ -17,6 +17,7 @@
 
 import { Lang, parseAsync } from "@ast-grep/napi";
 import { LogLevelLabel } from "@storm-software/config-tools/types";
+import type { ErrorType } from "@storm-stack/types/error";
 import { readJsonFile } from "@stryke/fs/read-file";
 import { deepClone } from "@stryke/helpers/deep-clone";
 import { isEqual } from "@stryke/helpers/is-equal";
@@ -27,7 +28,6 @@ import defu from "defu";
 import { existsSync } from "node:fs";
 import type { Context, Options, SourceFile } from "../../types/build";
 import type { LogFn } from "../../types/config";
-import type { ErrorType } from "../../types/global";
 import { writeFile } from "../utilities/write-file";
 
 const mutex = new Mutex();

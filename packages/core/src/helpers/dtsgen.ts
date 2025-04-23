@@ -15,24 +15,34 @@
 
  ------------------------------------------------------------------- */
 
-import type { ResolvedDotenvTypeDefinitionProperty } from "../types/build";
+import { stringifyType } from "@deepkit/type";
+import type { ResolvedDotenvType } from "../types/build";
 import { getFileHeader } from "./utilities/file-header";
 
-export function generateDeclarations(
-  env: Record<string, ResolvedDotenvTypeDefinitionProperty>
-) {
+export function generateDeclarationVariables(env: ResolvedDotenvType) {
+  if (!env.reflection) {
+    return "{}";
+  }
+
+  return `{
+${env.reflection
+  .getProperties()
+  .sort((a, b) => a.getNameAsString().localeCompare(b.getNameAsString()))
+  .map(
+    item =>
+      `    ${item.getNameAsString()}${item.isActualOptional() ? "?" : ""}: ${stringifyType(item.getType())}`
+  )
+  .join("\n")}
+}`;
+}
+
+export function generateDeclarations(env: ResolvedDotenvType) {
   return `${getFileHeader(`
-/// <reference types="@storm-stack/core/types" />
+/// <reference types="@storm-stack/types" />
 `)}
 declare global {
   const $storm: {
-    env: {
-${Object.keys(env)
-  .map(
-    item => `    ${item}${env[item]?.isOptional ? "?" : ""}: ${env[item]?.text}`
-  )
-  .join("\n")}
-    }
+    env: ${generateDeclarationVariables(env)}
   }
 }
 
@@ -42,7 +52,7 @@ export {};
 
 export function generateImports(path: string) {
   return `${getFileHeader(`
-/// <reference types="@storm-stack/core/types" />
+/// <reference types="@storm-stack/types" />
 `)}
 declare global {
   const StormError: (typeof import("${path}/error"))["StormError"];

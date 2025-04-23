@@ -1,0 +1,111 @@
+/* -------------------------------------------------------------------
+
+                  ⚡ Storm Software - Storm Stack
+
+ This code was released as part of the Storm Stack project. Storm Stack
+ is maintained by Storm Software under the Apache-2.0 License, and is
+ free for commercial and private use. For more information, please visit
+ our licensing page.
+
+ Website:         https://stormsoftware.com
+ Repository:      https://github.com/storm-software/storm-stack
+ Documentation:   https://stormsoftware.com/projects/storm-stack/docs
+ Contact:         https://stormsoftware.com/contact
+ License:         https://stormsoftware.com/projects/storm-stack/license
+
+ ------------------------------------------------------------------- */
+
+import type { Type } from "@deepkit/type";
+import { reflect } from "@deepkit/type";
+import { existsSync } from "@stryke/path/exists";
+import {
+  findFileExtension,
+  findFileName,
+  findFilePath
+} from "@stryke/path/file-path-fns";
+import { joinPaths } from "@stryke/path/join-paths";
+import type { TypeDefinition } from "@stryke/types/configuration";
+import type { Context, Options } from "../../types/build";
+import { bundle } from "../esbuild/bundle";
+import { resolvePath } from "../utilities/resolve-path";
+
+/**
+ * Compiles a type definition to a module.
+ *
+ * @param context - The context object containing the environment paths.
+ * @param entry - The type definition to compile.
+ * @returns A promise that resolves to the compiled module.
+ */
+export async function resolveType<
+  TOptions extends Options = Options,
+  TResult = any
+>(context: Context<TOptions>, entry: TypeDefinition): Promise<TResult> {
+  const transpilePath = joinPaths(
+    context.envPaths.temp,
+    "transpiled",
+    findFilePath(entry.file)
+  );
+
+  const path = await resolvePath(context, entry.file);
+  if (!path || !existsSync(path)) {
+    throw new Error(
+      `Module not found: ${entry.file}. Please check the path and try again.`
+    );
+  }
+
+  const result = await bundle(
+    context,
+    path,
+    transpilePath,
+    {
+      write: true
+    },
+    {
+      skipTransform: true
+    }
+  );
+  if (result.errors.length > 0) {
+    throw new Error(
+      `Failed to transpile ${entry.file}: ${result.errors
+        .map(error => error.text)
+        .join(", ")}`
+    );
+  }
+
+  const resolved = await context.resolver.import<Record<string, any>>(
+    context.resolver.esmResolve(
+      `${joinPaths(
+        transpilePath,
+        findFileName(entry.file).replace(findFileExtension(entry.file), "")
+      )}.js`
+    )
+  );
+
+  let exportName = entry.name;
+  if (!exportName) {
+    exportName = "default";
+  }
+
+  const resolvedType = resolved[exportName] ?? resolved[`__Ω${exportName}`];
+  if (!resolvedType) {
+    throw new Error(
+      `Unable to resolve type ${exportName} in ${entry.file}. Please check the path and try again.`
+    );
+  }
+
+  return resolvedType;
+}
+
+/**
+ * Compiles a type definition to a module.
+ *
+ * @param context - The context object containing the environment paths.
+ * @param entry - The type definition to compile.
+ * @returns A promise that resolves to the compiled module.
+ */
+export async function reflectType<TOptions extends Options = Options>(
+  context: Context<TOptions>,
+  entry: TypeDefinition
+): Promise<Type> {
+  return reflect(await resolveType(context, entry));
+}

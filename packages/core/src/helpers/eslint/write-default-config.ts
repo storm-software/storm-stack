@@ -47,5 +47,5 @@ export default getConfig({
     LogLevelLabel.INFO,
     `Writing a default ESLint config file to ${eslintConfigFile}`
   );
-  return writeFile(eslintConfigFile, eslintConfig);
+  return writeFile(log, eslintConfigFile, eslintConfig);
 }

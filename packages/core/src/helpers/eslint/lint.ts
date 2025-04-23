@@ -87,7 +87,7 @@ async function writeOutputFile(
     );
   } else {
     try {
-      await writeFile(filePath, outputData);
+      await writeFile(log, filePath, outputData);
 
       log(LogLevelLabel.INFO, `The output file has been created: ${filePath}`);
     } catch (err) {

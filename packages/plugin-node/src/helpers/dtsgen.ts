@@ -15,27 +15,21 @@
 
  ------------------------------------------------------------------- */
 
-import { getFileHeader } from "@storm-stack/core/helpers";
-import type { ResolvedDotenvTypeDefinitionProperty } from "@storm-stack/core/types";
-import { NEWLINE_STRING } from "@stryke/types/base";
+import { generateDeclarationVariables } from "@storm-stack/core/helpers/dtsgen";
+import { getFileHeader } from "@storm-stack/core/helpers/utilities";
+import type { ResolvedDotenvType } from "@storm-stack/core/types";
 import type { StormStackNodeFeatures } from "../types/config";
 
 export function generateDeclarations(
-  env: Record<string, ResolvedDotenvTypeDefinitionProperty>,
+  env: ResolvedDotenvType,
   _features: StormStackNodeFeatures[]
 ) {
   return `${getFileHeader(`
-/// <reference types="@storm-stack/core/types" />
+/// <reference types="@storm-stack/types" />
 /// <reference types="@storm-stack/plugin-node/types" />
 `)}
 declare global {
-  const $storm: StormContext<{
-${Object.keys(env)
-  .map(
-    item => `    ${item}${env[item]?.isOptional ? "?" : ""}: ${env[item]?.text}`
-  )
-  .join(NEWLINE_STRING)}
-  }>
+  const $storm: StormContext<${generateDeclarationVariables(env)}>;
 }
 
 export {};

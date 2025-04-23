@@ -17,7 +17,7 @@
 
 import type { Client, ParameterizedString } from "@sentry/core";
 import { getClient } from "@sentry/core";
-import type { LogRecord, LogSink } from "@storm-stack/core/types";
+import type { LogRecord, LogSink } from "@storm-stack/types";
 import { StormJSON } from "@stryke/json/storm-json";
 
 function getParameterizedString(record: LogRecord): ParameterizedString {
@@ -26,7 +26,6 @@ function getParameterizedString(record: LogRecord): ParameterizedString {
   const tplValues: string[] = [];
   for (let i = 0; i < record.message.length; i++) {
     if (i % 2 === 0) {
-      // eslint-disable-next-line ts/restrict-plus-operands
       result += record.message[i];
       tplString += String(record.message[i]).replaceAll("%", "%%");
     } else {

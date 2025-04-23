@@ -30,7 +30,7 @@ import {
 import { isDirectory } from "@stryke/path/is-file";
 import { joinPaths } from "@stryke/path/join-paths";
 import { isSetString } from "@stryke/type-checks/is-set-string";
-import { extractCommand } from "./helpers/extract-command";
+import { reflectRequest } from "./helpers/reflect-request";
 import type { StormStackCLIPresetConfig } from "./types/config";
 
 export default class StormStackCLIPreset<
@@ -131,7 +131,7 @@ export default class StormStackCLIPreset<
 
   protected async prepareEntry(context: Context<TOptions>) {
     try {
-      await extractCommand(this.log, context, this.#config);
+      await reflectRequest(this.log, context, this.#config);
 
       for (const entry of context.resolvedEntry) {
         this.log(

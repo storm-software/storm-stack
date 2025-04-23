@@ -45,13 +45,23 @@ try {
     );
   }
 
+  proc = $`pnpm nx run nx:build:${configuration}`;
+  proc.stdout.on("data", data => {
+    echo`${data}`;
+  });
+  result = await proc;
+  if (!result.ok) {
+    throw new Error(
+      `An error occurred while building the Nx plugin toolkit packages in ${configuration} mode: \n\n${result.message}\n`
+    );
+  }
+
   if (configuration === "production") {
     proc = $`pnpm nx run-many --target=build --all --exclude="@storm-stack/monorepo" --configuration=production --parallel=5`;
     proc.stdout.on("data", data => {
       echo`${data}`;
     });
     result = await proc;
-
     if (!result.ok) {
       throw new Error(
         `An error occurred while building the monorepo in production mode: \n\n${result.message}\n`
@@ -63,7 +73,6 @@ try {
       echo`${data}`;
     });
     result = await proc;
-
     if (!result.ok) {
       throw new Error(
         `An error occurred while building the monorepo in development mode: \n\n${result.message}\n`

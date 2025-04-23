@@ -35,6 +35,8 @@ import { joinPaths } from "@stryke/path/join-paths";
 import { titleCase } from "@stryke/string-format/title-case";
 import { isNumber } from "@stryke/type-checks/is-number";
 import { isSetString } from "@stryke/type-checks/is-set-string";
+import { isString } from "@stryke/type-checks/is-string";
+import { isUndefined } from "@stryke/type-checks/is-undefined";
 import type {
   TypeDefinition,
   TypeDefinitionParameter
@@ -44,13 +46,14 @@ import { nanoid } from "@stryke/unique-id/nanoid-client";
 import defu from "defu";
 import { createHooks } from "hookable";
 import { createJiti } from "jiti";
-import { Project } from "ts-morph";
 import { Compiler } from "./compiler";
 import { generateDotenvMarkdown } from "./helpers/dotenv/docgen";
 import { loadEnv } from "./helpers/dotenv/load";
-import { getDotenvTypeDefinitions } from "./helpers/dotenv/type-definitions";
+import { reflectDotenvTypes } from "./helpers/dotenv/reflect-dotenv";
+import { resolveDotenvProperties } from "./helpers/dotenv/resolve-dotenv";
+import { writeDotenvReflection } from "./helpers/dotenv/write-dotenv";
 import { generateDeclarations, generateImports } from "./helpers/dtsgen";
-import { runLintCheck } from "./helpers/eslint/run-eslint-check";
+import { runLintCheck } from "./helpers/eslint/lint";
 import { installPackage } from "./helpers/install-package";
 import { loadConfig } from "./helpers/load-config";
 import {
@@ -218,22 +221,18 @@ export class Engine<TOptions extends Options = Options> {
     this.context.runtimeDir = joinPaths(this.context.artifactsDir, "runtime");
     this.context.typesDir = joinPaths(this.context.artifactsDir, "types");
 
-    if (
-      existsSync(
-        joinPaths(
-          this.context.projectRoot,
-          this.context.artifactsDir,
-          "meta.json"
-        )
-      )
-    ) {
-      this.context.persistedMeta = await readJsonFile(
-        joinPaths(
-          this.context.projectRoot,
-          this.context.artifactsDir,
-          "meta.json"
-        )
-      );
+    const metaFilePath = joinPaths(
+      this.context.projectRoot,
+      this.context.artifactsDir,
+      "meta.json"
+    );
+    try {
+      if (existsSync(metaFilePath)) {
+        this.context.persistedMeta = await readJsonFile(metaFilePath);
+      }
+    } catch {
+      this.context.persistedMeta = undefined;
+      await removeFile(metaFilePath);
     }
 
     this.context.dts =
@@ -482,17 +481,12 @@ export class Engine<TOptions extends Options = Options> {
     this.context.unimport = createUnimport<TOptions>(this.log, this.context);
     await this.context.unimport.init();
 
-    this.context.project = new Project({
-      compilerOptions: this.context.resolvedTsconfig.options,
-      tsConfigFilePath: this.context.tsconfig
-    });
-
     const handleTransform = async (
       context: Context<TOptions>,
       sourceFile: SourceFile
     ) => {
       await this.#hooks
-        .callHook("build:transform", context, sourceFile)
+        .callHook("build:transform", this.context, sourceFile)
         .catch((error: Error) => {
           this.log(
             LogLevelLabel.ERROR,
@@ -617,7 +611,7 @@ export class Engine<TOptions extends Options = Options> {
       );
     }
 
-    // emitDts(this.context);
+    await this.writeDotenvReflection();
 
     await this.writeFile(
       joinPaths(
@@ -881,8 +875,6 @@ export class Engine<TOptions extends Options = Options> {
   public async finalize() {
     this.log(LogLevelLabel.TRACE, "Storm Stack finalize execution started");
 
-    await this.writeDotenvDoc();
-
     await this.#hooks
       .callHook("finalize:execute", this.context)
       .catch((error: Error) => {
@@ -1122,7 +1114,7 @@ Note: Please ensure the plugin package's default export is a class that extends 
    */
   private async resolveDotenvOptions(): Promise<ResolvedDotenvOptions> {
     const dotenv = {} as ResolvedDotenvOptions;
-    dotenv.types = getDotenvTypeDefinitions(this.log, this.context);
+    dotenv.types = await reflectDotenvTypes(this.log, this.context);
     dotenv.additionalFiles = this.context.dotenv?.additionalFiles ?? [];
     dotenv.docgen =
       this.context.dotenv?.docgen ??
@@ -1167,32 +1159,40 @@ Note: Please ensure the plugin package's default export is a class that extends 
     );
 
     dotenv.values = Object.keys(env).reduce((ret, key) => {
-      if (key.includes("(") || key.includes(")")) {
-        ret[key.replaceAll("(", "").replaceAll(")", "")] = env[key];
+      let value = env[key];
+      if (isString(value)) {
+        value = `"${value.replaceAll('"', "")}"`;
+      } else if (!isUndefined(value)) {
+        value = String(value);
       }
+
+      ret[key.replaceAll("(", "").replaceAll(")", "")] = value;
 
       return ret;
     }, env);
 
-    if (
-      existsSync(
-        joinPaths(
-          this.context.projectRoot,
-          this.context.artifactsDir,
-          "vars.json"
-        )
-      )
-    ) {
-      await removeFile(
-        joinPaths(
-          this.context.projectRoot,
-          this.context.artifactsDir,
-          "vars.json"
-        )
+    return dotenv;
+  }
+
+  /**
+   * Write the dotenv reflection file
+   */
+  private async writeDotenvReflection() {
+    await writeDotenvReflection(
+      this.log,
+      this.context,
+      this.context.resolvedDotenv.types.variables.reflection,
+      "variables"
+    );
+
+    if (this.context.resolvedDotenv.types.secrets?.reflection) {
+      await writeDotenvReflection(
+        this.log,
+        this.context,
+        this.context.resolvedDotenv.types.secrets?.reflection,
+        "secrets"
       );
     }
-
-    return dotenv;
   }
 
   /**
@@ -1210,9 +1210,9 @@ Note: Please ensure the plugin package's default export is a class that extends 
       );
 
       let content = "";
-      if (this.context.resolvedDotenv.types?.variables?.properties) {
+      if (this.context.resolvedDotenv.types.variables.reflection) {
         content = generateDeclarations(
-          this.context.resolvedDotenv.types.variables.properties
+          this.context.resolvedDotenv.types.variables
         );
       }
 
@@ -1254,45 +1254,40 @@ Note: Please ensure the plugin package's default export is a class that extends 
    * Write the dotenv documentation markdown file
    */
   private async writeDotenvDoc() {
-    const varsFile = joinPaths(
-      this.context.projectRoot,
-      this.context.artifactsDir,
-      "vars.json"
-    );
-    if (existsSync(varsFile)) {
-      const vars = await readJsonFile(varsFile);
+    if (isSetString(this.context.resolvedDotenv.docgen)) {
+      const vars = await resolveDotenvProperties(
+        this.log,
+        this.context,
+        "variables"
+      );
 
-      if (isSetString(this.context.resolvedDotenv.docgen)) {
-        const docgenFile = joinPaths(
-          this.context.projectRoot,
-          this.context.resolvedDotenv.docgen
-            .replace(this.context.projectRoot, "")
-            .trim()
-        );
-
-        this.log(
-          LogLevelLabel.TRACE,
-          `Documenting environment variables configuration in "${docgenFile}"`
-        );
-
-        if (vars) {
-          const docgenFilePath = findFilePath(docgenFile);
-          if (docgenFilePath && !existsSync(docgenFilePath)) {
-            await createDirectory(docgenFilePath);
-          }
-
-          return this.writeFile(
-            docgenFile,
-            generateDotenvMarkdown(this.context.packageJson, vars)
-          );
-        }
-      }
+      const docgenFile = joinPaths(
+        this.context.projectRoot,
+        this.context.resolvedDotenv.docgen
+          .replace(this.context.projectRoot, "")
+          .trim()
+      );
 
       this.log(
-        LogLevelLabel.INFO,
-        "The `dotenv.docgen` option was set to `false`. Skipping dotenv documentation."
+        LogLevelLabel.TRACE,
+        `Documenting environment variables configuration in "${docgenFile}"`
+      );
+
+      const docgenFilePath = findFilePath(docgenFile);
+      if (docgenFilePath && !existsSync(docgenFilePath)) {
+        await createDirectory(docgenFilePath);
+      }
+
+      return this.writeFile(
+        docgenFile,
+        generateDotenvMarkdown(this.context.packageJson, vars)
       );
     }
+
+    this.log(
+      LogLevelLabel.INFO,
+      "The `dotenv.docgen` option was set to `false`. Skipping dotenv documentation."
+    );
   }
 
   /**

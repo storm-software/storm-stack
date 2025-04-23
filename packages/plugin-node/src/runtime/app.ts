@@ -31,7 +31,7 @@ import type {
   ValidatorFunction
 } from "@storm-stack/plugin-node/types";
 import { isError } from "@stryke/type-checks/is-error";
-import type { StormEnv } from "@storm-stack/core/types";
+import type { StormEnv } from "@storm-stack/types/env";
 import {
   getAppName,
   getAppVersion,

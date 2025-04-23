@@ -95,6 +95,132 @@
         "default": "./dist/helpers/index.js"
       }
     },
+    "./helpers/*": {
+      "import": {
+        "types": "./dist/helpers/*.d.ts",
+        "default": "./dist/helpers/*.js"
+      },
+      "require": {
+        "types": "./dist/helpers/*.d.cts",
+        "default": "./dist/helpers/*.cjs"
+      },
+      "default": {
+        "types": "./dist/helpers/*.d.ts",
+        "default": "./dist/helpers/*.js"
+      }
+    },
+    "./helpers/utilities": {
+      "import": {
+        "types": "./dist/helpers/utilities/index.d.ts",
+        "default": "./dist/helpers/utilities/index.js"
+      },
+      "require": {
+        "types": "./dist/helpers/utilities/index.d.cts",
+        "default": "./dist/helpers/utilities/index.cjs"
+      },
+      "default": {
+        "types": "./dist/helpers/utilities/index.d.ts",
+        "default": "./dist/helpers/utilities/index.js"
+      }
+    },
+    "./helpers/utilities/*": {
+      "import": {
+        "types": "./dist/helpers/utilities/*.d.ts",
+        "default": "./dist/helpers/utilities/*.js"
+      },
+      "require": {
+        "types": "./dist/helpers/utilities/*.d.cts",
+        "default": "./dist/helpers/utilities/*.cjs"
+      },
+      "default": {
+        "types": "./dist/helpers/utilities/*.d.ts",
+        "default": "./dist/helpers/utilities/*.js"
+      }
+    },
+    "./helpers/deepkit": {
+      "import": {
+        "types": "./dist/helpers/deepkit/index.d.ts",
+        "default": "./dist/helpers/deepkit/index.js"
+      },
+      "require": {
+        "types": "./dist/helpers/deepkit/index.d.cts",
+        "default": "./dist/helpers/deepkit/index.cjs"
+      },
+      "default": {
+        "types": "./dist/helpers/deepkit/index.d.ts",
+        "default": "./dist/helpers/deepkit/index.js"
+      }
+    },
+    "./helpers/deepkit/*": {
+      "import": {
+        "types": "./dist/helpers/deepkit/*.d.ts",
+        "default": "./dist/helpers/deepkit/*.js"
+      },
+      "require": {
+        "types": "./dist/helpers/deepkit/*.d.cts",
+        "default": "./dist/helpers/deepkit/*.cjs"
+      },
+      "default": {
+        "types": "./dist/helpers/deepkit/*.d.ts",
+        "default": "./dist/helpers/deepkit/*.js"
+      }
+    },
+    "./helpers/esbuild": {
+      "import": {
+        "types": "./dist/helpers/esbuild/index.d.ts",
+        "default": "./dist/helpers/esbuild/index.js"
+      },
+      "require": {
+        "types": "./dist/helpers/esbuild/index.d.cts",
+        "default": "./dist/helpers/esbuild/index.cjs"
+      },
+      "default": {
+        "types": "./dist/helpers/esbuild/index.d.ts",
+        "default": "./dist/helpers/esbuild/index.js"
+      }
+    },
+    "./helpers/esbuild/*": {
+      "import": {
+        "types": "./dist/helpers/esbuild/*.d.ts",
+        "default": "./dist/helpers/esbuild/*.js"
+      },
+      "require": {
+        "types": "./dist/helpers/esbuild/*.d.cts",
+        "default": "./dist/helpers/esbuild/*.cjs"
+      },
+      "default": {
+        "types": "./dist/helpers/esbuild/*.d.ts",
+        "default": "./dist/helpers/esbuild/*.js"
+      }
+    },
+    "./helpers/eslint": {
+      "import": {
+        "types": "./dist/helpers/eslint/index.d.ts",
+        "default": "./dist/helpers/eslint/index.js"
+      },
+      "require": {
+        "types": "./dist/helpers/eslint/index.d.cts",
+        "default": "./dist/helpers/eslint/index.cjs"
+      },
+      "default": {
+        "types": "./dist/helpers/eslint/index.d.ts",
+        "default": "./dist/helpers/eslint/index.js"
+      }
+    },
+    "./helpers/eslint/*": {
+      "import": {
+        "types": "./dist/helpers/eslint/*.d.ts",
+        "default": "./dist/helpers/eslint/*.js"
+      },
+      "require": {
+        "types": "./dist/helpers/eslint/*.d.cts",
+        "default": "./dist/helpers/eslint/*.cjs"
+      },
+      "default": {
+        "types": "./dist/helpers/eslint/*.d.ts",
+        "default": "./dist/helpers/eslint/*.js"
+      }
+    },
     "./types": {
       "import": {
         "types": "./dist/types/index.d.ts",
@@ -308,17 +434,18 @@
     "jest-worker": "catalog:",
     "jiti": "catalog:",
     "magic-string": "catalog:",
+    "mlly": "catalog:",
     "prettier": "catalog:",
-    "ts-morph": "catalog:",
     "unimport": "catalog:"
   },
   "devDependencies": {
     "@storm-software/testing-tools": "catalog:",
+    "@storm-stack/types": "workspace:*",
     "@stryke/types": "catalog:",
     "@types/node": "catalog:",
     "eslint": "catalog:",
     "tsup": "catalog:",
-    "typescript": "~5.7.3"
+    "typescript": "5.8.3"
   },
   "publishConfig": {
     "access": "public"

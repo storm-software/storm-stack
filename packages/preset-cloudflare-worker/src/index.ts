@@ -92,6 +92,14 @@ export default class StormStackCloudflareWorkerPreset<
     );
 
     context.platform = "neutral";
+
+    context.external ??= [];
+    context.external.push(...CLOUDFLARE_MODULES, ...this.#unenv.external);
+
+    context.noExternal ??= [];
+    context.noExternal.push("@cloudflare/unenv-preset/node/console");
+    context.noExternal.push("@cloudflare/unenv-preset/node/process");
+
     context.override.format = "esm";
     context.override.target = "chrome95";
 
@@ -112,10 +120,7 @@ export default class StormStackCloudflareWorkerPreset<
 
           return ret;
         }, []);
-      context.override.external = [
-        ...CLOUDFLARE_MODULES,
-        ...this.#unenv.external
-      ];
+
       context.override.conditions = [...DEFAULT_CONDITIONS, "development"];
     }
   }

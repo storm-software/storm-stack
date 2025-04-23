@@ -15,7 +15,7 @@
 
  ------------------------------------------------------------------- */
 
-import type { LogRecord } from "@storm-stack/core/types/global";
+import type { LogRecord } from "@storm-stack/types/log";
 import type { Storage, StorageValue } from "unstorage";
 
 export type StorageFormatter<T extends StorageValue = StorageValue> = (

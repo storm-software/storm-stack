@@ -37,17 +37,40 @@
   },
   "license": "Apache-2.0",
   "private": false,
-  "main": "./src/index.js",
-  "module": "./src/index.js",
+  "main": "./dist/cjs/src/index.js",
+  "module": "./dist/esm/src/index.js",
   "exports": {
     "./package.json": "./package.json",
     ".": {
-      "types": "./src/index.d.ts",
-      "import": "./src/index.js",
-      "default": "./src/index.js"
+      "import": {
+        "types": "./dist/esm/src/index.d.ts",
+        "default": "./dist/esm/src/index.js"
+      },
+      "require": {
+        "types": "./dist/cjs/src/index.d.ts",
+        "default": "./dist/cjs/src/index.js"
+      },
+      "default": {
+        "types": "./dist/esm/src/index.d.ts",
+        "default": "./dist/esm/src/index.js"
+      }
+    },
+    "./*": {
+      "import": {
+        "types": "./dist/esm/src/*.d.ts",
+        "default": "./dist/esm/src/*.js"
+      },
+      "require": {
+        "types": "./dist/cjs/src/*.d.ts",
+        "default": "./dist/cjs/src/*.js"
+      },
+      "default": {
+        "types": "./dist/esm/src/*.d.ts",
+        "default": "./dist/esm/src/*.js"
+      }
     }
   },
-  "types": "./src/index.d.ts",
+  "types": "./dist/cjs/src/index.d.ts",
   "files": [
     "dist/**/*"
   ],

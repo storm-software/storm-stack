@@ -21,7 +21,7 @@ export function writeRequest() {
   return `${getFileHeader()}
 
 import { uniqueId } from "./id";
-import type { IStormRequest } from "@storm-stack/core/types";
+import type { IStormRequest } from "@storm-stack/types";
 
 /**
  * A base request class used by the Storm Stack runtime.

@@ -15,7 +15,7 @@
 
  ------------------------------------------------------------------- */
 
-import type { LogLevel, LogRecord } from "@storm-stack/core/types";
+import type { LogLevel, LogRecord } from "@storm-stack/types";
 
 /**
  * The severity level abbreviations.

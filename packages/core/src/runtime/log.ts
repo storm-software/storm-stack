@@ -30,7 +30,7 @@ import type {
   LogRecord,
   LogSink,
   LogSinkInstance
-} from "@storm-stack/core/types";
+} from "@storm-stack/types";
 import { StormError } from "./error";
 
 const LOG_LEVELS = [

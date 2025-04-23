@@ -20,7 +20,7 @@ import { deepClone } from "@stryke/helpers/deep-clone";
 import { existsSync, joinPaths } from "@stryke/path";
 import type { TsConfigJson } from "@stryke/types/tsconfig";
 import defu from "defu";
-import { ts } from "ts-morph";
+import ts from "typescript";
 import type { Options, ResolvedTsConfig } from "../types";
 
 export function getTsconfigFilePath(options: Options): string {
@@ -86,11 +86,11 @@ export async function getTsconfigChanges(
 
   // if (
   //   !tsconfig.options.types?.some(
-  //     type => type.toLowerCase() === "@storm-stack/core/types"
+  //     type => type.toLowerCase() === "@storm-stack/types"
   //   )
   // ) {
   //   tsconfigJson.compilerOptions.types ??= [];
-  //   tsconfigJson.compilerOptions.types.push("@storm-stack/core/types");
+  //   tsconfigJson.compilerOptions.types.push("@storm-stack/types");
   // }
 
   if (

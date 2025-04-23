@@ -16,14 +16,15 @@
  ------------------------------------------------------------------- */
 
 import { LogLevelLabel } from "@storm-software/config-tools/types";
-import type { Context, LogFn, Options } from "@storm-stack/core/types";
 import { readFile } from "@stryke/fs/read-file";
 import { normalizeWindowsPath } from "@stryke/path/correct-path";
 import type { Plugin } from "esbuild";
+import type { CompileOptions, Context, LogFn, Options } from "../../types";
 
 export function compilerPlugin<TOptions extends Options = Options>(
   log: LogFn,
-  context: Context<TOptions>
+  context: Context<TOptions>,
+  options?: CompileOptions
 ): Plugin {
   return {
     name: "storm-stack:compiler",
@@ -38,7 +39,8 @@ export function compilerPlugin<TOptions extends Options = Options>(
           contents: await context.compiler.compile(
             context,
             normalizeWindowsPath(args.path),
-            await readFile(args.path)
+            await readFile(args.path),
+            options
           )
         };
       });

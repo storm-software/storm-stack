@@ -30,7 +30,7 @@ ${getFileHeader()}
 
 import commands from "${joinPaths(
     relativePath(
-      joinPaths(context.projectRoot, config.binaryPath),
+      joinPaths(context.projectRoot, config.binaryName),
       joinPaths(context.projectRoot, context.artifactsDir)
     )
   )}";

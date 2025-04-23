@@ -171,6 +171,9 @@ export const createNodesV2: CreateNodesV2<StormStackAdapterPluginOptions> = [
           addProjectScopeTag(project, StormStackProjectTagScopeValue.ADAPTER);
 
           const implicitDependencies = project.implicitDependencies ?? [];
+          if (!implicitDependencies.includes("types")) {
+            implicitDependencies.push("types");
+          }
           if (!implicitDependencies.includes("core")) {
             implicitDependencies.push("core");
           }

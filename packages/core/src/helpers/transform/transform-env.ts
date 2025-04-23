@@ -17,22 +17,14 @@
 
 import { Lang, parseAsync } from "@ast-grep/napi";
 import { LogLevelLabel } from "@storm-software/config-tools/types";
-import { readJsonFile } from "@stryke/fs/read-file";
-import { deepClone } from "@stryke/helpers/deep-clone";
-import { isEqual } from "@stryke/helpers/is-equal";
 import { Mutex } from "@stryke/helpers/mutex";
-import { StormJSON } from "@stryke/json/storm-json";
-import { existsSync } from "@stryke/path/exists";
-import { joinPaths } from "@stryke/path/join-paths";
-import defu from "defu";
-import type {
-  Context,
-  Options,
-  ResolvedDotenvTypeDefinitionProperty,
-  SourceFile
-} from "../../types/build";
+import type { Context, Options, SourceFile } from "../../types/build";
 import type { LogFn } from "../../types/config";
-import { writeFile } from "../utilities/write-file";
+import {
+  resolveDotenvProperties,
+  resolveDotenvReflection
+} from "../dotenv/resolve-dotenv";
+import { writeDotenvProperties } from "../dotenv/write-dotenv";
 
 const mutex = new Mutex();
 
@@ -41,25 +33,14 @@ export async function transformEnv<TOptions extends Options = Options>(
   source: SourceFile,
   context: Context<TOptions>
 ): Promise<SourceFile> {
-  const typeDefs = context.resolvedDotenv?.types?.variables?.properties;
-  if (!typeDefs) {
-    throw new Error(
-      "No type definitions found for environment variables. Please check your dotenv configuration."
-    );
-  }
+  const varsReflection = await resolveDotenvReflection(context, "variables");
 
-  let vars = {} as Record<string, ResolvedDotenvTypeDefinitionProperty>;
-  if (
-    existsSync(
-      joinPaths(context.projectRoot, context.artifactsDir, "vars.json")
-    )
-  ) {
-    vars = await readJsonFile(
-      joinPaths(context.projectRoot, context.artifactsDir, "vars.json")
-    );
-  }
-
-  const originalVars = deepClone(vars);
+  const dotenvProperties = await resolveDotenvProperties(
+    log,
+    context,
+    "variables"
+  );
+  const originalLength = dotenvProperties.length;
 
   const ast = await parseAsync(Lang.TypeScript, source.code.toString());
   const root = ast.root();
@@ -80,35 +61,29 @@ export async function transformEnv<TOptions extends Options = Options>(
 
   for (const node of nodes) {
     const name = node.getMatch("ENV_VALUE")?.text()?.replace("STORM_", "");
-    if (name && typeDefs[name]) {
-      const typeDef = typeDefs[name];
+
+    if (name && varsReflection.hasProperty(name)) {
+      const reflectionProperty = varsReflection.getProperty(name);
+
       if (context.resolvedDotenv.replace) {
         const value =
           context.resolvedDotenv.values?.[name] ??
           context.resolvedDotenv.values?.[`STORM_${name}`] ??
-          typeDef.defaultValue;
-        if (!typeDef.isOptional && value === undefined) {
+          reflectionProperty.getDefaultValue();
+        if (reflectionProperty.isValueRequired() && value === undefined) {
           throw new Error(
             `Environment variable \`${name}\` is not defined in the .env configuration files`
           );
         }
 
-        source.code = source.code.replaceAll(
-          node.text(),
-          typeDef?.text === "string" ||
-            typeDef?.text?.includes('"') ||
-            typeDef?.type?.isString ||
-            typeDef?.type?.isStringLiteral
-            ? `"${value}"`
-            : `${value}`
-        );
+        source.code = source.code.replaceAll(node.text(), String(value));
       }
 
-      vars[name] ??= typeDef;
+      dotenvProperties.push(reflectionProperty);
     } else {
       throw new Error(
         `Environment variable \`${name}\` is not defined in the dotenv type definition but is used in the code. \n\nThe following variable names are defined in the dotenv type definition: \n${Object.keys(
-          typeDefs
+          varsReflection
         )
           .map(typeDef => ` - ${typeDef} `)
           .join(
@@ -118,34 +93,15 @@ export async function transformEnv<TOptions extends Options = Options>(
     }
   }
 
-  if (!isEqual(originalVars, vars)) {
+  if (dotenvProperties.length !== originalLength) {
     log(
       LogLevelLabel.INFO,
-      `Adding enviroment variables from ${source.id} to vars.json.`
+      `Adding environment variables from ${source.id} to variables.json.`
     );
 
     await mutex.acquire();
     try {
-      await writeFile(
-        log,
-        joinPaths(context.projectRoot, context.artifactsDir, "vars.json"),
-        StormJSON.stringify(
-          defu(
-            vars,
-            existsSync(
-              joinPaths(context.projectRoot, context.artifactsDir, "vars.json")
-            )
-              ? await readJsonFile(
-                  joinPaths(
-                    context.projectRoot,
-                    context.artifactsDir,
-                    "vars.json"
-                  )
-                )
-              : {}
-          )
-        )
-      );
+      await writeDotenvProperties(log, context, "variables", dotenvProperties);
     } catch (e) {
       // eslint-disable-next-line no-console
       console.error(e);

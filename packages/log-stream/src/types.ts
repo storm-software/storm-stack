@@ -19,7 +19,7 @@ import type {
   FormattedValues,
   LogLevel,
   LogRecord
-} from "@storm-stack/core/types";
+} from "@storm-stack/types/log";
 
 /**
  * A text formatter is a function that accepts a log record and returns a string.

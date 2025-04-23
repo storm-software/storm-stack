@@ -70,7 +70,7 @@ export default class StormStackHttpPlugin<
   }
 
   protected async prepareTypes(context: Context<TOptions>) {
-    if (!context.dts || !context.resolvedDotenv.types?.variables?.properties) {
+    if (!context.dts || !context.resolvedDotenv.types?.variables?.reflection) {
       return;
     }
 

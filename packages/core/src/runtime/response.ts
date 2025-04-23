@@ -20,7 +20,7 @@ import { getFileHeader } from "../helpers/utilities/file-header";
 export function writeResponse() {
   return `${getFileHeader()}
 
-import type { IStormResponse } from "@storm-stack/core/types";
+import type { IStormResponse } from "@storm-stack/types";
 import { isStormError } from "./error";
 import type { StormError } from "./error";
 

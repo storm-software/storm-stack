@@ -21,13 +21,15 @@ import type {
 } from "@opentelemetry/api-logs";
 import { SeverityNumber } from "@opentelemetry/api-logs";
 import { OTLPLogExporter } from "@opentelemetry/exporter-logs-otlp-http";
-import { Resource } from "@opentelemetry/resources";
+import type { DetectedResourceAttributes } from "@opentelemetry/resources";
+import { resourceFromAttributes } from "@opentelemetry/resources";
 import {
   LoggerProvider,
   SimpleLogRecordProcessor
 } from "@opentelemetry/sdk-logs";
 import { ATTR_SERVICE_NAME } from "@opentelemetry/semantic-conventions";
-import type { LogRecord, LogSink } from "@storm-stack/core/types";
+import type { LogRecord, LogSink } from "@storm-stack/types";
+import { StormJSON } from "@stryke/json/storm-json";
 import type {
   BodyFormatter,
   ILoggerProvider,
@@ -53,11 +55,10 @@ export function getSink(options: OpenTelemetrySinkOptions = {}): LogSink {
 
   let loggerProvider: ILoggerProvider;
   if (options.loggerProvider == null) {
-    const resource = Resource.default().merge(
-      new Resource({
-        [ATTR_SERVICE_NAME]: serviceName
-      })
-    );
+    // eslint-disable-next-line ts/no-unsafe-call
+    const resource = resourceFromAttributes({
+      [ATTR_SERVICE_NAME]: serviceName
+    } as DetectedResourceAttributes);
 
     loggerProvider = new LoggerProvider({ resource });
 

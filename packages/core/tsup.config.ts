@@ -23,6 +23,10 @@ const config = getTsupConfig({
     "src/*.ts",
     "src/types/*.ts",
     "src/helpers/*.ts",
+    "src/helpers/utilities/*.ts",
+    "src/helpers/esbuild/*.ts",
+    "src/helpers/eslint/*.ts",
+    "src/helpers/deepkit/*.ts",
     "src/runtime/*.ts",
     "src/unplugin/*.ts"
   ],
@@ -34,7 +38,8 @@ const config = getTsupConfig({
   clean: true,
   sourcemap: true,
   dts: true,
-  shims: false
+  shims: false,
+  external: ["typescript"]
 });
 
 export default config;

@@ -4,6 +4,25 @@
   "projectType": "library",
   "sourceRoot": "packages/preset-cli/src",
   "targets": {
+    "build-base": {
+      "executor": "nx:run-commands",
+      "dependsOn": ["clean", "^build"],
+      "options": {
+        "command": "tsup-node --config=tsup.config.ts",
+        "cwd": "{projectRoot}"
+      }
+    },
+    "build": {
+      "executor": "nx:run-commands",
+      "dependsOn": ["build-base"],
+      "options": {
+        "commands": [
+          "pnpm copyfiles LICENSE dist/packages/preset-cli",
+          "pnpm copyfiles --up=2 ./packages/preset-cli/*.md ./packages/preset-cli/package.json dist/packages/preset-cli",
+          "pnpm copyfiles --up=3 \"./packages/preset-cli/dist/**/*\" dist/packages/preset-cli/dist"
+        ]
+      }
+    },
     "nx-release-publish": {
       "executor": "@storm-software/workspace-tools:npm-publish"
     }

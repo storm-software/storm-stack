@@ -14,8 +14,27 @@ drive the processing of the application. The data contained in these variables
 are **not** considered sensitive or confidential. Any values provided in these
 variables will be available in plain text to the public.
 
-| Name              | Description                                   | Type   | Default Value |  Required   |
-| ----------------- | --------------------------------------------- | ------ | ------------- | :---------: | --- |
-| APP_NAME          | The name of the application.                  | string |               |     ✔      |
-| APP_VERSION       | The version of the application.               | string | "1.0.0"       |             |
-| OTEL_SERVICE_NAME | The name of the OpenTelemetry service to use. | string | undefined     | `undefined` |     |
+| Name               | Description                                                                                                                                                                     | Type      | Default Value | Required |
+| ------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------- | ------------- | :------: |
+| OTEL_SERVICE_NAME  | The name of the OpenTelemetry service to use.                                                                                                                                   | undefined |               |          |
+| APP_NAME           | The name of the application.                                                                                                                                                    | undefined |               |    ✔    |
+| APP_VERSION        | The version of the application.                                                                                                                                                 | undefined |               |    ✔    |
+| BUILD_ID           | The unique identifier for the build.                                                                                                                                            | undefined |               |    ✔    |
+| BUILD_TIMESTAMP    | The timestamp the build was ran at.                                                                                                                                             | undefined |               |    ✔    |
+| BUILD_CHECKSUM     | A checksum hash created during the build.                                                                                                                                       | undefined |               |    ✔    |
+| RELEASE_ID         | The unique identifier for the release.                                                                                                                                          | undefined |               |    ✔    |
+| PLATFORM           | The platform for which the application was built.                                                                                                                               | undefined |               |    ✔    |
+| MODE               | The mode in which the application is running.                                                                                                                                   | undefined |               |    ✔    |
+| ENVIRONMENT        | The environment the application is running in. This value will be populated with the value of `MODE` if not provided.                                                           | undefined |               |    ✔    |
+| DEVELOPMENT        | Indicates if the application is running in development mode.                                                                                                                    | undefined |               |    ✔    |
+| STAGING            | Indicates if the application is running in staging mode.                                                                                                                        | undefined |               |    ✔    |
+| PRODUCTION         | Indicates if the application is running in production mode.                                                                                                                     | undefined |               |    ✔    |
+| DEBUG              | Indicates if the application is running in debug mode.                                                                                                                          | undefined |               |    ✔    |
+| NODE_ENV           | The environment the application is running in. This variable is a duplicate of `ENVIRONMENT` to support use in external packages.                                               | undefined |               |    ✔    |
+| STACKTRACE         | Indicates if error stack traces should be captured.                                                                                                                             | undefined |               |    ✔    |
+| INCLUDE_ERROR_DATA | Indicates if error data should be included.                                                                                                                                     | undefined |               |    ✔    |
+| ERROR_URL          | The URL to send error data to. This value is used by the Storm Stack error tracking system.                                                                                     | undefined |               |    ✔    |
+| DEFAULT_TIMEZONE   | The default timezone for the application.                                                                                                                                       | undefined |               |    ✔    |
+| DEFAULT_LOCALE     | The default locale for the application.                                                                                                                                         | undefined |               |    ✔    |
+| LOG_LEVEL          | The default lowest log level to accept. If `null`, the logger will reject all records. This value only applies if `lowestLogLevel` is not provided to the `logs` configuration. | undefined |               |          |
+| undefined          |                                                                                                                                                                                 | undefined |               |    ✔    |

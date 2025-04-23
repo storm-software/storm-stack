@@ -21,7 +21,7 @@ import type {
 } from "@opentelemetry/api-logs";
 import type { OTLPExporterNodeConfigBase } from "@opentelemetry/otlp-exporter-base";
 import type { LogRecordProcessor } from "@opentelemetry/sdk-logs";
-import type { StormEnv } from "@storm-stack/core/types";
+import type { StormEnv } from "@storm-stack/types";
 
 /**
  * The OpenTelemetry logger provider.
@@ -29,7 +29,8 @@ import type { StormEnv } from "@storm-stack/core/types";
 export type ILoggerProvider = LoggerProviderBase & {
   /**
    * Adds a new {@link LogRecordProcessor} to this logger.
-   * @param processor the new LogRecordProcessor to be added.
+   *
+   * @param processor - the new LogRecordProcessor to be added.
    */
   addLogRecordProcessor: (processor: LogRecordProcessor) => void;
 

@@ -21,14 +21,14 @@ const config = getTsupConfig({
   name: "preset-cloudflare-worker",
   entry: ["src/*.ts"],
   outDir: "dist",
-  bundle: false,
+  bundle: true,
   splitting: false,
   treeshake: true,
   keepNames: true,
   clean: true,
   sourcemap: false,
   dts: true,
-  shims: false
+  shims: true
 });
 
 export default config;

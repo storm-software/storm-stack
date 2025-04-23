@@ -15,7 +15,7 @@
 
  ------------------------------------------------------------------- */
 
-import type { StormEnv } from "@storm-stack/core/types/global";
+import type { StormEnv } from "@storm-stack/types/env";
 
 export interface StormSentryLogEnv extends StormEnv {
   /**

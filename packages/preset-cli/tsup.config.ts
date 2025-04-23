@@ -19,9 +19,9 @@ import { getTsupConfig } from "@storm-stack/tools-config/tsup.shared";
 
 const config = getTsupConfig({
   name: "preset-cli",
-  entry: ["src/index.ts", "src/types/*.ts", "src/helpers/*.ts"],
+  entry: ["src/index.ts"],
   outDir: "dist",
-  bundle: false,
+  bundle: true,
   splitting: false,
   treeshake: true,
   minify: false,
@@ -29,7 +29,7 @@ const config = getTsupConfig({
   clean: true,
   sourcemap: true,
   dts: true,
-  shims: false
+  shims: true
 });
 
 export default config;

@@ -23,7 +23,7 @@ import type {
   IStormResponse,
   LogSinkInstance,
   StormEnv
-} from "@storm-stack/core/types/global";
+} from "@storm-stack/types";
 import type { ProviderInfo } from "@stryke/env/providers";
 import type { RuntimeInfo } from "@stryke/env/runtime-checks";
 import type { MaybePromise } from "@stryke/types/base";

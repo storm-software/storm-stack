@@ -63,6 +63,7 @@
       "eslint-plugin-storm-stack/*": [
         "packages/eslint-plugin-storm-stack/src/*"
       ]
-    }
+    },
+    "verbatimModuleSyntax": false
   }
 }

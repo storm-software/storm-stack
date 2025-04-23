@@ -29,11 +29,13 @@ import { getMagicString } from "./helpers/utilities/magic-string";
 import { generateSourceMap } from "./helpers/utilities/source-map";
 import type { LogFn } from "./types";
 import type {
+  CompileOptions,
   CompilerResult,
   Context,
   ICompiler,
   Options,
-  SourceFile
+  SourceFile,
+  TranspileOptions
 } from "./types/build";
 
 export class Compiler<TOptions extends Options = Options>
@@ -86,11 +88,12 @@ export class Compiler<TOptions extends Options = Options>
   public async transpile(
     context: Context<TOptions>,
     id: string,
-    code: string | MagicString
+    code: string | MagicString,
+    options: TranspileOptions = {}
   ): Promise<string> {
     const source = this.getSourceFile(id, code);
 
-    return this.transpileModule(context, source);
+    return this.transpileModule(context, source, options);
   }
 
   /**
@@ -104,21 +107,25 @@ export class Compiler<TOptions extends Options = Options>
   public async compile(
     context: Context<TOptions>,
     id: string,
-    code: string | MagicString
+    code: string | MagicString,
+    options: CompileOptions = {}
   ): Promise<string> {
     this.log(LogLevelLabel.TRACE, `Compiling ${id}`);
 
     const source = this.getSourceFile(id, code);
 
-    let transpiled: string | undefined = await this.getCache(context, source);
-    if (transpiled) {
-      this.log(LogLevelLabel.TRACE, `Cache hit: ${source.id}`);
-    } else {
-      this.log(LogLevelLabel.TRACE, `Cache miss: ${source.id}`);
+    let transpiled: string | undefined;
+    if (!options.skipCache) {
+      transpiled = await this.getCache(context, source);
+      if (transpiled) {
+        this.log(LogLevelLabel.TRACE, `Cache hit: ${source.id}`);
+      } else {
+        this.log(LogLevelLabel.TRACE, `Cache miss: ${source.id}`);
+      }
     }
 
     if (!transpiled) {
-      transpiled = await this.transpileModule(context, source);
+      transpiled = await this.transpileModule(context, source, options);
       await this.setCache(context, source, transpiled);
     }
 
@@ -199,21 +206,30 @@ export class Compiler<TOptions extends Options = Options>
    */
   protected async transpileModule(
     context: Context<TOptions>,
-    source: SourceFile
+    source: SourceFile,
+    options: TranspileOptions = {}
   ): Promise<string> {
     this.log(
       LogLevelLabel.TRACE,
       `Transpiling ${source.id} module with TypeScript compiler`
     );
 
-    let transformed = await transformEnv<TOptions>(this.log, source, context);
-    transformed = await transformErrors<TOptions>(
-      this.log,
-      transformed,
-      context
-    );
+    let transformed = source;
+    if (!options.skipTransform) {
+      if (!options.skipEnvTransform) {
+        transformed = await transformEnv<TOptions>(this.log, source, context);
+      }
 
-    await this.onTransformCallback(context, transformed);
+      if (!options.skipErrorsTransform) {
+        transformed = await transformErrors<TOptions>(
+          this.log,
+          transformed,
+          context
+        );
+      }
+
+      await this.onTransformCallback(context, transformed);
+    }
 
     if (
       context.unimport &&
@@ -224,7 +240,7 @@ export class Compiler<TOptions extends Options = Options>
 
     const transpiled = ts.transpileModule(transformed.code.toString(), {
       compilerOptions: {
-        ...context.project.getCompilerOptions(),
+        ...context.resolvedTsconfig.options,
         configFilePath: context.tsconfig
       },
       fileName: transformed.id,

@@ -20,13 +20,7 @@
 import { TypeScriptBuildBaseEnv } from "@storm-software/build-tools/types";
 import { LogLevel } from "./log.js";
 
-export type StormEnv = {
-  [TKey in Uppercase<string>]: TKey extends `STORM_${infer TBaseKey}`
-    ? `STORM_${TBaseKey}` extends keyof TypeScriptBuildBaseEnv
-      ? TypeScriptBuildBaseEnv[`STORM_${TBaseKey}`]
-      : any
-    : any;
-} & {
+export interface StormEnvVariables {
   /**
    * The name of the application.
    */
@@ -154,4 +148,15 @@ export type StormEnv = {
    * @defaultValue "info"
    */
   LOG_LEVEL?: LogLevel | null;
-};
+}
+
+/**
+ * The environment variables used by the Storm Stack application
+ */
+export type StormEnv = {
+  [TKey in Uppercase<string>]: TKey extends `STORM_${infer TBaseKey}`
+    ? `STORM_${TBaseKey}` extends keyof TypeScriptBuildBaseEnv
+      ? TypeScriptBuildBaseEnv[`STORM_${TBaseKey}`]
+      : any
+    : any;
+} & StormEnvVariables;
