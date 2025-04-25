@@ -111,7 +111,7 @@
     "@storm-software/esbuild": "catalog:",
     "@storm-software/unbuild": "catalog:",
     "@storm-software/workspace-tools": "catalog:",
-    "@storm-stack/core": "0.9.0",
+    "@storm-stack/core": "workspace:*",
     "defu": "catalog:",
     "nx": "catalog:"
   },
@@ -122,6 +122,11 @@
     "jsonc-eslint-parser": "catalog:",
     "tsup": "catalog:",
     "untyped": "catalog:"
+  },
+  "publishConfig": {
+    "access": "public",
+    "directory": "dist/packages/nx",
+    "linkDirectory": true
   },
   "executors": "./executors.json"
 }

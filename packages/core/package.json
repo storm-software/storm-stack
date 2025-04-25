@@ -440,7 +440,7 @@
   },
   "devDependencies": {
     "@storm-software/testing-tools": "catalog:",
-    "@storm-stack/types": "0.3.0",
+    "@storm-stack/types": "workspace:*",
     "@stryke/types": "catalog:",
     "@types/node": "catalog:",
     "eslint": "catalog:",
@@ -448,6 +448,8 @@
     "typescript": "5.8.3"
   },
   "publishConfig": {
-    "access": "public"
+    "access": "public",
+    "directory": "dist/packages/core",
+    "linkDirectory": true
   }
 }

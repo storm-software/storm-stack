@@ -82,6 +82,8 @@
     "tsup": "catalog:"
   },
   "publishConfig": {
-    "access": "public"
+    "access": "public",
+    "directory": "dist/packages/plugin-http",
+    "linkDirectory": true
   }
 }

@@ -114,7 +114,9 @@
     "typescript": "catalog:"
   },
   "publishConfig": {
-    "access": "public"
+    "access": "public",
+    "directory": "dist/packages/eslint-config-storm-stack",
+    "linkDirectory": true
   },
   "sideEffects": false
 }

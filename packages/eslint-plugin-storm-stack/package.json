@@ -132,6 +132,8 @@
     "tsup": "catalog:"
   },
   "publishConfig": {
-    "access": "public"
+    "access": "public",
+    "directory": "dist/packages/eslint-plugin-storm-stack",
+    "linkDirectory": true
   }
 }

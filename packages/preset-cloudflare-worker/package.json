@@ -57,6 +57,8 @@
     "tsup": "catalog:"
   },
   "publishConfig": {
-    "access": "public"
+    "access": "public",
+    "directory": "dist/packages/preset-cloudflare-worker",
+    "linkDirectory": true
   }
 }

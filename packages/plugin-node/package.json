@@ -91,6 +91,8 @@
     "unstorage": "catalog:"
   },
   "publishConfig": {
-    "access": "public"
+    "access": "public",
+    "directory": "dist/packages/plugin-node",
+    "linkDirectory": true
   }
 }

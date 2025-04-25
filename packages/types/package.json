@@ -85,7 +85,9 @@
     "typescript": "5.8.3"
   },
   "publishConfig": {
-    "access": "public"
+    "access": "public",
+    "directory": "dist/packages/types",
+    "linkDirectory": true
   },
   "sideEffects": false
 }

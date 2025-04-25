@@ -10,15 +10,17 @@
   },
   "private": false,
   "dependencies": {
-    "@storm-stack/log-stream": "0.5.1",
+    "@storm-stack/log-stream": "workspace:*",
     "unstorage": "catalog:"
   },
   "devDependencies": {
-    "@storm-stack/core": "0.9.0",
-    "@storm-stack/nx": "0.5.1",
+    "@storm-stack/core": "workspace:*",
+    "@storm-stack/nx": "workspace:*",
     "@types/node": "catalog:"
   },
   "publishConfig": {
-    "access": "public"
+    "access": "public",
+    "directory": "dist/packages/log-storage",
+    "linkDirectory": true
   }
 }
