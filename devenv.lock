@@ -3,10 +3,10 @@
     "devenv": {
       "locked": {
         "dir": "src/modules",
-        "lastModified": 1744725539,
+        "lastModified": 1745604263,
         "owner": "cachix",
         "repo": "devenv",
-        "rev": "e35cb7bb6e6424b83560b5ae0896f75263942191",
+        "rev": "36807c727e743e7a00999922e7f737a0cc4e05ac",
         "type": "github"
       },
       "original": {
@@ -89,10 +89,10 @@
     },
     "nixpkgs-unstable": {
       "locked": {
-        "lastModified": 1744536153,
+        "lastModified": 1745377448,
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "18dd725c29603f582cf1900e0d25f9f1063dbf11",
+        "rev": "507b63021ada5fee621b6ca371c4fca9ca46f52c",
         "type": "github"
       },
       "original": {
@@ -117,10 +117,10 @@
     "storm-ops": {
       "flake": false,
       "locked": {
-        "lastModified": 1744719021,
+        "lastModified": 1745602360,
         "owner": "storm-software",
         "repo": "storm-ops",
-        "rev": "aa2f41a828797666bba0a49ecd66679d083cd915",
+        "rev": "8913d0d4d94c059756b3596231f59de6a95d787e",
         "type": "github"
       },
       "original": {

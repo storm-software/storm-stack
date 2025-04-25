@@ -40,14 +40,7 @@ catalog:
   '@sentry/core': ^9.13.0
   '@sentry/node': ^9.13.0
   '@sentry/types': ^9.13.0
-  '@storm-stack/core': 0.7.0
-  '@storm-stack/log-console': 0.5.0
-  '@storm-stack/log-storage': ^0.0.0
-  '@storm-stack/log-stream': 0.5.0
   '@storm-stack/nx': 0.5.0
-  '@storm-stack/plugin-node': 0.8.0
-  '@storm-stack/preset-cli': 0.5.0
-  '@storm-stack/preset-cloudflare-worker': 0.6.0
   '@taplo/cli': ^0.7.0
   '@types/eslint': ^9.6.1
   '@types/eslint__js': ^8.42.3
@@ -190,6 +183,3 @@ overrides:
 patchedDependencies:
   '@deepkit/type-compiler@1.0.5': patches/@deepkit__type-compiler@1.0.5.patch
   '@deepkit/type@1.0.5': patches/@deepkit__type@1.0.5.patch
-catalogs:
-  conflicts_@storm-stack/core_0_8_0:
-    '@storm-stack/core': 0.8.0

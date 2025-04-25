@@ -10,12 +10,12 @@
   },
   "private": true,
   "dependencies": {
-    "@storm-stack/log-console": "catalog:"
+    "@storm-stack/log-console": "workspace:*"
   },
   "devDependencies": {
     "@storm-stack/core": "workspace:*",
-    "@storm-stack/nx": "catalog:",
-    "@storm-stack/plugin-node": "catalog:",
+    "@storm-stack/nx": "workspace:*",
+    "@storm-stack/plugin-node": "workspace:*",
     "@stryke/url": "catalog:"
   },
   "storm": {

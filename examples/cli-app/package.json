@@ -21,7 +21,7 @@
   "devDependencies": {
     "@storm-stack/core": "workspace:*",
     "@storm-stack/nx": "workspace:*",
-    "@storm-stack/preset-cli": "catalog:",
+    "@storm-stack/preset-cli": "workspace:*",
     "@storm-stack/types": "workspace:*"
   },
   "storm": {
