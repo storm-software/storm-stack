@@ -511,7 +511,7 @@ importers:
     dependencies:
       '@storm-stack/log-storage':
         specifier: workspace:*
-        version: link:../../packages/log-storage/dist/packages/log-storage
+        version: link:../../packages/log-storage
       '@stryke/cli':
         specifier: 'catalog:'
         version: 0.8.0
@@ -524,51 +524,51 @@ importers:
     devDependencies:
       '@storm-stack/core':
         specifier: workspace:*
-        version: link:../../packages/core/dist/packages/core
+        version: link:../../packages/core
       '@storm-stack/nx':
         specifier: workspace:*
-        version: link:../../packages/nx/dist/packages/nx
+        version: link:../../packages/nx
       '@storm-stack/preset-cli':
         specifier: workspace:*
-        version: link:../../packages/preset-cli/dist/packages/preset-cli
+        version: link:../../packages/preset-cli
       '@storm-stack/types':
         specifier: workspace:*
-        version: link:../../packages/types/dist/packages/types
+        version: link:../../packages/types
 
   examples/cloudflare-worker:
     dependencies:
       '@storm-stack/log-console':
         specifier: workspace:*
-        version: link:../../packages/log-console/dist/packages/log-console
+        version: link:../../packages/log-console
       '@stryke/url':
         specifier: 'catalog:'
         version: 0.1.0(@storm-software/config@1.113.2)
     devDependencies:
       '@storm-stack/core':
         specifier: workspace:*
-        version: link:../../packages/core/dist/packages/core
+        version: link:../../packages/core
       '@storm-stack/nx':
         specifier: workspace:*
-        version: link:../../packages/nx/dist/packages/nx
+        version: link:../../packages/nx
       '@storm-stack/preset-cloudflare-worker':
         specifier: workspace:*
-        version: link:../../packages/preset-cloudflare-worker/dist/packages/preset-cloudflare-worker
+        version: link:../../packages/preset-cloudflare-worker
 
   examples/node-app:
     dependencies:
       '@storm-stack/log-console':
         specifier: workspace:*
-        version: link:../../packages/log-console/dist/packages/log-console
+        version: link:../../packages/log-console
     devDependencies:
       '@storm-stack/core':
         specifier: workspace:*
-        version: link:../../packages/core/dist/packages/core
+        version: link:../../packages/core
       '@storm-stack/nx':
         specifier: workspace:*
-        version: link:../../packages/nx/dist/packages/nx
+        version: link:../../packages/nx
       '@storm-stack/plugin-node':
         specifier: workspace:*
-        version: link:../../packages/plugin-node/dist/packages/plugin-node
+        version: link:../../packages/plugin-node
       '@stryke/url':
         specifier: 'catalog:'
         version: 0.1.0(@storm-software/config@1.113.2)
@@ -578,7 +578,6 @@ importers:
       '@biomejs/biome':
         specifier: 'catalog:'
         version: 1.9.4
-    publishDirectory: dist/packages/biome
 
   packages/core:
     dependencies:
@@ -696,7 +695,7 @@ importers:
         version: 1.104.60(@nx/jest@20.8.0(@babel/traverse@7.27.0)(@swc-node/register@1.10.10(@swc/core@1.7.26(@swc/helpers@0.5.17))(@swc/types@0.1.21)(typescript@5.8.3))(@swc/core@1.7.26(@swc/helpers@0.5.17))(@types/node@22.14.1)(babel-plugin-macros@3.1.0)(nx@20.8.0(@swc-node/register@1.10.10(@swc/core@1.7.26(@swc/helpers@0.5.17))(@swc/types@0.1.21)(typescript@5.8.3))(@swc/core@1.7.26(@swc/helpers@0.5.17)))(ts-node@10.9.2(@swc/core@1.7.26(@swc/helpers@0.5.17))(@types/node@22.14.1)(typescript@5.8.3))(typescript@5.8.3)(verdaccio@6.1.2(typanion@3.14.0)))(jest@29.7.0(@types/node@22.14.1)(babel-plugin-macros@3.1.0)(ts-node@10.9.2(@swc/core@1.7.26(@swc/helpers@0.5.17))(@types/node@22.14.1)(typescript@5.8.3)))
       '@storm-stack/types':
         specifier: workspace:*
-        version: link:../types/dist/packages/types
+        version: link:../types
       '@stryke/types':
         specifier: 'catalog:'
         version: 0.8.1
@@ -712,7 +711,6 @@ importers:
       typescript:
         specifier: 5.8.3
         version: 5.8.3
-    publishDirectory: dist/packages/core
 
   packages/eslint-config-storm-stack:
     dependencies:
@@ -730,7 +728,7 @@ importers:
         version: 2.0.1
       eslint-plugin-storm-stack:
         specifier: workspace:*
-        version: link:../eslint-plugin-storm-stack/dist/packages/eslint-plugin-storm-stack
+        version: link:../eslint-plugin-storm-stack
     devDependencies:
       '@types/node':
         specifier: 'catalog:'
@@ -753,7 +751,6 @@ importers:
       typescript:
         specifier: 'catalog:'
         version: 5.7.3
-    publishDirectory: dist/packages/eslint-config-storm-stack
 
   packages/eslint-plugin-storm-stack:
     dependencies:
@@ -827,7 +824,6 @@ importers:
       tsup:
         specifier: 'catalog:'
         version: 8.4.0(@microsoft/api-extractor@7.52.3(@types/node@22.14.1))(@swc/core@1.11.21(@swc/helpers@0.5.17))(jiti@2.4.2)(postcss@8.5.3)(tsx@4.19.3)(typescript@5.8.3)(yaml@2.7.1)
-    publishDirectory: dist/packages/eslint-plugin-storm-stack
 
   packages/log-console:
     dependencies:
@@ -837,14 +833,13 @@ importers:
     devDependencies:
       '@storm-stack/core':
         specifier: workspace:*
-        version: link:../core/dist/packages/core
+        version: link:../core
       '@storm-stack/nx':
         specifier: workspace:*
-        version: link:../nx/dist/packages/nx
+        version: link:../nx
       '@types/node':
         specifier: 'catalog:'
         version: 22.14.1
-    publishDirectory: dist/packages/log-console
 
   packages/log-otel:
     dependencies:
@@ -872,14 +867,13 @@ importers:
     devDependencies:
       '@storm-stack/core':
         specifier: workspace:*
-        version: link:../core/dist/packages/core
+        version: link:../core
       '@storm-stack/nx':
         specifier: workspace:*
-        version: link:../nx/dist/packages/nx
+        version: link:../nx
       '@types/node':
         specifier: 'catalog:'
         version: 22.14.1
-    publishDirectory: dist/packages/log-otel
 
   packages/log-sentry:
     dependencies:
@@ -895,47 +889,44 @@ importers:
     devDependencies:
       '@storm-stack/core':
         specifier: workspace:*
-        version: link:../core/dist/packages/core
+        version: link:../core
       '@storm-stack/nx':
         specifier: workspace:*
-        version: link:../nx/dist/packages/nx
+        version: link:../nx
       '@types/node':
         specifier: 'catalog:'
         version: 22.14.1
-    publishDirectory: dist/packages/log-sentry
 
   packages/log-storage:
     dependencies:
       '@storm-stack/log-stream':
         specifier: workspace:*
-        version: link:../log-stream/dist/packages/log-stream
+        version: link:../log-stream
       unstorage:
         specifier: 'catalog:'
         version: 1.15.0
     devDependencies:
       '@storm-stack/core':
         specifier: workspace:*
-        version: link:../core/dist/packages/core
+        version: link:../core
       '@storm-stack/nx':
         specifier: workspace:*
-        version: link:../nx/dist/packages/nx
+        version: link:../nx
       '@types/node':
         specifier: 'catalog:'
         version: 22.14.1
-    publishDirectory: dist/packages/log-storage
 
   packages/log-stream:
     devDependencies:
       '@storm-stack/core':
         specifier: workspace:*
-        version: link:../core/dist/packages/core
+        version: link:../core
       '@storm-stack/nx':
         specifier: workspace:*
-        version: link:../nx/dist/packages/nx
+        version: link:../nx
       '@types/node':
         specifier: 'catalog:'
         version: 22.14.1
-    publishDirectory: dist/packages/log-stream
 
   packages/nx:
     dependencies:
@@ -962,13 +953,13 @@ importers:
         version: 1.266.6(@storm-software/esbuild@0.32.0(268b6351326605c06f3f295c78b7efdc))(@storm-software/prettier@0.45.7(prettier-plugin-astro@0.14.1)(prettier-plugin-organize-imports@4.1.0(prettier@3.5.3)(typescript@5.8.3))(prettier-plugin-pkg@0.18.1(prettier@3.5.3))(prettier-plugin-prisma@5.0.0(prettier@3.5.3))(prettier-plugin-sh@0.15.0(prettier@3.5.3))(prettier-plugin-toml@2.0.4(prettier@3.5.3))(prettier@3.5.3))(@storm-software/unbuild@0.40.0(fe9fc305b898258b0645ce4843db157f))(@types/node@22.14.1)(markdownlint-cli2@0.17.2)(nx@20.8.0(@swc-node/register@1.10.10(@swc/core@1.7.26(@swc/helpers@0.5.17))(@swc/types@0.1.21)(typescript@5.8.3))(@swc/core@1.7.26(@swc/helpers@0.5.17)))(prettier@3.5.3)(typescript@5.8.3)
       '@storm-stack/core':
         specifier: workspace:*
-        version: link:../core/dist/packages/core
+        version: link:../core
       '@storm-stack/plugin-node':
         specifier: workspace:*
-        version: link:../plugin-node/dist/packages/plugin-node
+        version: link:../plugin-node
       '@storm-stack/preset-cloudflare-worker':
         specifier: workspace:*
-        version: link:../preset-cloudflare-worker/dist/packages/preset-cloudflare-worker
+        version: link:../preset-cloudflare-worker
       defu:
         specifier: 'catalog:'
         version: 6.1.4
@@ -994,7 +985,6 @@ importers:
       untyped:
         specifier: 'catalog:'
         version: 1.5.2
-    publishDirectory: dist/packages/nx
 
   packages/plugin-http:
     dependencies:
@@ -1073,7 +1063,6 @@ importers:
       unstorage:
         specifier: 'catalog:'
         version: 1.15.0
-    publishDirectory: dist/packages/plugin-node
 
   packages/preset-cli:
     dependencies:
@@ -1111,7 +1100,6 @@ importers:
       tsup:
         specifier: 'catalog:'
         version: 8.4.0(@microsoft/api-extractor@7.52.3(@types/node@22.14.1))(@swc/core@1.11.21(@swc/helpers@0.5.17))(jiti@2.4.2)(postcss@8.5.3)(tsx@4.19.3)(typescript@5.8.3)(yaml@2.7.1)
-    publishDirectory: dist/packages/preset-cli
 
   packages/preset-cloudflare-worker:
     dependencies:
@@ -1146,7 +1134,6 @@ importers:
       tsup:
         specifier: 'catalog:'
         version: 8.4.0(@microsoft/api-extractor@7.52.3(@types/node@22.14.1))(@swc/core@1.11.21(@swc/helpers@0.5.17))(jiti@2.4.2)(postcss@8.5.3)(tsx@4.19.3)(typescript@5.8.3)(yaml@2.7.1)
-    publishDirectory: dist/packages/preset-cloudflare-worker
 
   packages/types:
     devDependencies:
@@ -1156,7 +1143,6 @@ importers:
       typescript:
         specifier: 5.8.3
         version: 5.8.3
-    publishDirectory: dist/packages/types
 
   tools/config: {}
 
@@ -4590,6 +4576,12 @@ packages:
 
   '@storm-software/config-tools@1.162.18':
     resolution: {integrity: sha512-LEfpiBlIw8BPTEKrB68pft917PHvoEY6CGL60H5a9DOBngcvQQikLiJjy6SY/il1HnbQiGmwSM8MLVrEu1ufJg==}
+    hasBin: true
+    peerDependencies:
+      '@storm-software/config': workspace:*
+
+  '@storm-software/config-tools@1.163.3':
+    resolution: {integrity: sha512-P8dHDLDuzfszNgGcivWFBBB/Y9vtNbKJxaoZC7e3xqLBMA6GXOwo+MrPzb5O/aFkjcNdNK98A5gmXf/h7xZAZg==}
     hasBin: true
     peerDependencies:
       '@storm-software/config': workspace:*
@@ -16059,11 +16051,11 @@ snapshots:
       tslib: 2.8.1
       yargs-parser: 21.1.1
 
-  '@nx/eslint-plugin@20.8.0(@babel/traverse@7.27.0)(@swc-node/register@1.10.10(@swc/core@1.11.21(@swc/helpers@0.5.17))(@swc/types@0.1.21)(typescript@5.7.3))(@swc/core@1.11.21(@swc/helpers@0.5.17))(@typescript-eslint/parser@8.29.1(eslint@9.24.0(jiti@2.4.2))(typescript@5.7.3))(eslint-config-prettier@10.1.2(eslint@9.24.0(jiti@2.4.2)))(eslint@9.24.0(jiti@2.4.2))(nx@20.8.0(@swc-node/register@1.10.10(@swc/core@1.11.21(@swc/helpers@0.5.17))(@swc/types@0.1.21)(typescript@5.7.3))(@swc/core@1.11.21(@swc/helpers@0.5.17)))(typescript@5.7.3)(verdaccio@6.1.2(typanion@3.14.0))':
+  '@nx/eslint-plugin@20.8.0(@babel/traverse@7.27.0)(@swc-node/register@1.10.10(@swc/core@1.11.21(@swc/helpers@0.5.17))(@swc/types@0.1.21)(typescript@5.7.3))(@swc/core@1.11.21(@swc/helpers@0.5.17))(@typescript-eslint/parser@8.29.1(eslint@9.24.0(jiti@2.4.2))(typescript@5.8.3))(eslint-config-prettier@10.1.2(eslint@9.24.0(jiti@2.4.2)))(eslint@9.24.0(jiti@2.4.2))(nx@20.8.0(@swc-node/register@1.10.10(@swc/core@1.11.21(@swc/helpers@0.5.17))(@swc/types@0.1.21)(typescript@5.7.3))(@swc/core@1.11.21(@swc/helpers@0.5.17)))(typescript@5.7.3)(verdaccio@6.1.2(typanion@3.14.0))':
     dependencies:
       '@nx/devkit': 20.8.0(nx@20.8.0(@swc-node/register@1.10.10(@swc/core@1.11.21(@swc/helpers@0.5.17))(@swc/types@0.1.21)(typescript@5.7.3))(@swc/core@1.11.21(@swc/helpers@0.5.17)))
       '@nx/js': 20.8.0(@babel/traverse@7.27.0)(@swc-node/register@1.10.10(@swc/core@1.11.21(@swc/helpers@0.5.17))(@swc/types@0.1.21)(typescript@5.7.3))(@swc/core@1.11.21(@swc/helpers@0.5.17))(nx@20.8.0(@swc-node/register@1.10.10(@swc/core@1.11.21(@swc/helpers@0.5.17))(@swc/types@0.1.21)(typescript@5.7.3))(@swc/core@1.11.21(@swc/helpers@0.5.17)))(verdaccio@6.1.2(typanion@3.14.0))
-      '@typescript-eslint/parser': 8.29.1(eslint@9.24.0(jiti@2.4.2))(typescript@5.7.3)
+      '@typescript-eslint/parser': 8.29.1(eslint@9.24.0(jiti@2.4.2))(typescript@5.8.3)
       '@typescript-eslint/type-utils': 8.29.1(eslint@9.24.0(jiti@2.4.2))(typescript@5.7.3)
       '@typescript-eslint/utils': 8.30.1(eslint@9.24.0(jiti@2.4.2))(typescript@5.7.3)
       chalk: 4.1.2
@@ -17309,6 +17301,20 @@ snapshots:
     transitivePeerDependencies:
       - magicast
 
+  '@storm-software/config-tools@1.163.3(@storm-software/config@1.113.2)(magicast@0.3.5)':
+    dependencies:
+      '@storm-software/config': 1.113.2
+      c12: 2.0.4(magicast@0.3.5)
+      chalk: 4.1.2
+      commander: 12.1.0
+      defu: 6.1.4
+      giget: 1.2.5
+      jiti: 2.4.2
+      sqlite: 5.1.1
+      zod: 3.24.2
+    transitivePeerDependencies:
+      - magicast
+
   '@storm-software/config@1.113.2':
     dependencies:
       zod: 3.24.2
@@ -17398,10 +17404,10 @@ snapshots:
       '@graphql-eslint/eslint-plugin': 4.4.0(@types/node@22.14.1)(eslint@9.24.0(jiti@2.4.2))(graphql@16.10.0)(typescript@5.7.3)
       '@next/eslint-plugin-next': 15.3.0
       '@nx/eslint': 20.8.0(@babel/traverse@7.27.0)(@swc-node/register@1.10.10(@swc/core@1.11.21(@swc/helpers@0.5.17))(@swc/types@0.1.21)(typescript@5.7.3))(@swc/core@1.11.21(@swc/helpers@0.5.17))(@zkochan/js-yaml@0.0.7)(eslint@9.24.0(jiti@2.4.2))(nx@20.8.0(@swc-node/register@1.10.10(@swc/core@1.11.21(@swc/helpers@0.5.17))(@swc/types@0.1.21)(typescript@5.7.3))(@swc/core@1.11.21(@swc/helpers@0.5.17)))(verdaccio@6.1.2(typanion@3.14.0))
-      '@nx/eslint-plugin': 20.8.0(@babel/traverse@7.27.0)(@swc-node/register@1.10.10(@swc/core@1.11.21(@swc/helpers@0.5.17))(@swc/types@0.1.21)(typescript@5.7.3))(@swc/core@1.11.21(@swc/helpers@0.5.17))(@typescript-eslint/parser@8.29.1(eslint@9.24.0(jiti@2.4.2))(typescript@5.7.3))(eslint-config-prettier@10.1.2(eslint@9.24.0(jiti@2.4.2)))(eslint@9.24.0(jiti@2.4.2))(nx@20.8.0(@swc-node/register@1.10.10(@swc/core@1.11.21(@swc/helpers@0.5.17))(@swc/types@0.1.21)(typescript@5.7.3))(@swc/core@1.11.21(@swc/helpers@0.5.17)))(typescript@5.7.3)(verdaccio@6.1.2(typanion@3.14.0))
+      '@nx/eslint-plugin': 20.8.0(@babel/traverse@7.27.0)(@swc-node/register@1.10.10(@swc/core@1.11.21(@swc/helpers@0.5.17))(@swc/types@0.1.21)(typescript@5.7.3))(@swc/core@1.11.21(@swc/helpers@0.5.17))(@typescript-eslint/parser@8.29.1(eslint@9.24.0(jiti@2.4.2))(typescript@5.8.3))(eslint-config-prettier@10.1.2(eslint@9.24.0(jiti@2.4.2)))(eslint@9.24.0(jiti@2.4.2))(nx@20.8.0(@swc-node/register@1.10.10(@swc/core@1.11.21(@swc/helpers@0.5.17))(@swc/types@0.1.21)(typescript@5.7.3))(@swc/core@1.11.21(@swc/helpers@0.5.17)))(typescript@5.7.3)(verdaccio@6.1.2(typanion@3.14.0))
       '@prettier/plugin-xml': 3.4.1(prettier@3.5.3)
       '@stylistic/eslint-plugin': 4.2.0(eslint@9.24.0(jiti@2.4.2))(typescript@5.7.3)
-      '@typescript-eslint/eslint-plugin': 8.29.1(@typescript-eslint/parser@8.29.1(eslint@9.24.0(jiti@2.4.2))(typescript@5.7.3))(eslint@9.24.0(jiti@2.4.2))(typescript@5.7.3)
+      '@typescript-eslint/eslint-plugin': 8.29.1(@typescript-eslint/parser@8.29.1(eslint@9.24.0(jiti@2.4.2))(typescript@5.8.3))(eslint@9.24.0(jiti@2.4.2))(typescript@5.7.3)
       '@typescript-eslint/parser': 8.29.1(eslint@9.24.0(jiti@2.4.2))(typescript@5.7.3)
       '@typescript-eslint/utils': 8.30.1(eslint@9.24.0(jiti@2.4.2))(typescript@5.7.3)
       '@unocss/eslint-plugin': 66.0.0(eslint@9.24.0(jiti@2.4.2))(typescript@5.7.3)
@@ -17441,7 +17447,7 @@ snapshots:
       eslint-plugin-toml: 0.12.0(eslint@9.24.0(jiti@2.4.2))
       eslint-plugin-tsdoc: 0.4.0
       eslint-plugin-unicorn: 57.0.0(eslint@9.24.0(jiti@2.4.2))
-      eslint-plugin-unused-imports: 4.1.4(@typescript-eslint/eslint-plugin@8.29.1(@typescript-eslint/parser@8.29.1(eslint@9.24.0(jiti@2.4.2))(typescript@5.7.3))(eslint@9.24.0(jiti@2.4.2))(typescript@5.7.3))(eslint@9.24.0(jiti@2.4.2))
+      eslint-plugin-unused-imports: 4.1.4(@typescript-eslint/eslint-plugin@8.29.1(@typescript-eslint/parser@8.29.1(eslint@9.24.0(jiti@2.4.2))(typescript@5.8.3))(eslint@9.24.0(jiti@2.4.2))(typescript@5.7.3))(eslint@9.24.0(jiti@2.4.2))
       eslint-plugin-yml: 1.17.0(eslint@9.24.0(jiti@2.4.2))
       globals: 16.0.0
       graphql: 16.10.0
@@ -17867,7 +17873,7 @@ snapshots:
 
   '@stryke/path@0.4.11(@storm-software/config@1.113.2)(magicast@0.3.5)':
     dependencies:
-      '@storm-software/config-tools': 1.162.18(@storm-software/config@1.113.2)(magicast@0.3.5)
+      '@storm-software/config-tools': 1.163.3(@storm-software/config@1.113.2)(magicast@0.3.5)
       mlly: 1.7.4
     transitivePeerDependencies:
       - '@storm-software/config'
@@ -18462,10 +18468,10 @@ snapshots:
     dependencies:
       '@types/yargs-parser': 21.0.3
 
-  '@typescript-eslint/eslint-plugin@8.29.1(@typescript-eslint/parser@8.29.1(eslint@9.24.0(jiti@2.4.2))(typescript@5.7.3))(eslint@9.24.0(jiti@2.4.2))(typescript@5.7.3)':
+  '@typescript-eslint/eslint-plugin@8.29.1(@typescript-eslint/parser@8.29.1(eslint@9.24.0(jiti@2.4.2))(typescript@5.8.3))(eslint@9.24.0(jiti@2.4.2))(typescript@5.7.3)':
     dependencies:
       '@eslint-community/regexpp': 4.12.1
-      '@typescript-eslint/parser': 8.29.1(eslint@9.24.0(jiti@2.4.2))(typescript@5.7.3)
+      '@typescript-eslint/parser': 8.29.1(eslint@9.24.0(jiti@2.4.2))(typescript@5.8.3)
       '@typescript-eslint/scope-manager': 8.29.1
       '@typescript-eslint/type-utils': 8.29.1(eslint@9.24.0(jiti@2.4.2))(typescript@5.7.3)
       '@typescript-eslint/utils': 8.29.1(eslint@9.24.0(jiti@2.4.2))(typescript@5.7.3)
@@ -21733,11 +21739,11 @@ snapshots:
       semver: 7.7.1
       strip-indent: 4.0.0
 
-  eslint-plugin-unused-imports@4.1.4(@typescript-eslint/eslint-plugin@8.29.1(@typescript-eslint/parser@8.29.1(eslint@9.24.0(jiti@2.4.2))(typescript@5.7.3))(eslint@9.24.0(jiti@2.4.2))(typescript@5.7.3))(eslint@9.24.0(jiti@2.4.2)):
+  eslint-plugin-unused-imports@4.1.4(@typescript-eslint/eslint-plugin@8.29.1(@typescript-eslint/parser@8.29.1(eslint@9.24.0(jiti@2.4.2))(typescript@5.8.3))(eslint@9.24.0(jiti@2.4.2))(typescript@5.7.3))(eslint@9.24.0(jiti@2.4.2)):
     dependencies:
       eslint: 9.24.0(jiti@2.4.2)
     optionalDependencies:
-      '@typescript-eslint/eslint-plugin': 8.29.1(@typescript-eslint/parser@8.29.1(eslint@9.24.0(jiti@2.4.2))(typescript@5.7.3))(eslint@9.24.0(jiti@2.4.2))(typescript@5.7.3)
+      '@typescript-eslint/eslint-plugin': 8.29.1(@typescript-eslint/parser@8.29.1(eslint@9.24.0(jiti@2.4.2))(typescript@5.8.3))(eslint@9.24.0(jiti@2.4.2))(typescript@5.7.3)
 
   eslint-plugin-unused-imports@4.1.4(@typescript-eslint/eslint-plugin@8.29.1(@typescript-eslint/parser@8.29.1(eslint@9.24.0(jiti@2.4.2))(typescript@5.8.3))(eslint@9.24.0(jiti@2.4.2))(typescript@5.8.3))(eslint@9.24.0(jiti@2.4.2)):
     dependencies:

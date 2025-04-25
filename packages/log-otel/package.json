@@ -19,14 +19,12 @@
     "@stryke/json": "catalog:"
   },
   "devDependencies": {
-    "@storm-stack/core": "0.9.1",
-    "@storm-stack/nx": "0.5.2",
+    "@storm-stack/core": "workspace:*",
+    "@storm-stack/nx": "workspace:*",
     "@types/node": "catalog:"
   },
   "publishConfig": {
-    "access": "public",
-    "directory": "dist/packages/log-otel",
-    "linkDirectory": true
+    "access": "public"
   },
   "storm": {
     "adapter": "log",

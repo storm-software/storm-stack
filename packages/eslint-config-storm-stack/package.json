@@ -102,7 +102,7 @@
     "@storm-software/eslint": "catalog:",
     "defu": "catalog:",
     "eslint-flat-config-utils": "catalog:",
-    "eslint-plugin-storm-stack": "0.7.1"
+    "eslint-plugin-storm-stack": "workspace:*"
   },
   "devDependencies": {
     "@types/node": "catalog:",
@@ -114,9 +114,7 @@
     "typescript": "catalog:"
   },
   "publishConfig": {
-    "access": "public",
-    "directory": "dist/packages/eslint-config-storm-stack",
-    "linkDirectory": true
+    "access": "public"
   },
   "sideEffects": false
 }

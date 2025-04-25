@@ -58,8 +58,6 @@
     "tsup": "catalog:"
   },
   "publishConfig": {
-    "access": "public",
-    "directory": "dist/packages/preset-cli",
-    "linkDirectory": true
+    "access": "public"
   }
 }

@@ -64,9 +64,7 @@
     "@biomejs/biome": "catalog:"
   },
   "publishConfig": {
-    "access": "public",
-    "directory": "dist/packages/biome",
-    "linkDirectory": true
+    "access": "public"
   },
   "sideEffects": false
 }
