@@ -64,35 +64,35 @@ catalog:
   '@nx/plugin': 20.8.0
   '@nx/react': 20.8.0
   '@nx/workspace': 20.8.0
-  '@storm-software/build-tools': latest
-  '@storm-software/config': latest
-  '@storm-software/config-tools': latest
-  '@storm-software/cspell': latest
-  '@storm-software/git-tools': latest
-  '@storm-software/linting-tools': latest
-  '@storm-software/eslint': latest
-  '@storm-software/prettier': latest
-  '@storm-software/markdownlint': latest
-  '@storm-software/esbuild': latest
-  '@storm-software/unbuild': latest
-  '@storm-software/untyped': latest
-  '@storm-software/testing-tools': latest
-  '@storm-software/tsconfig': latest
-  '@storm-software/workspace-tools': latest
-  '@stryke/env': latest
-  '@stryke/fs': latest
-  '@stryke/helpers': latest
-  '@stryke/http': latest
-  '@stryke/unique-id': latest
-  '@stryke/url': latest
-  '@stryke/json': latest
-  '@stryke/path': latest
-  '@stryke/types': latest
-  '@stryke/hash': latest
-  '@stryke/string-format': latest
-  '@stryke/convert': latest
-  '@stryke/type-checks': latest
-  '@stryke/cli': latest
+  '@storm-software/build-tools': 0.143.46
+  '@storm-software/config': 1.113.3
+  '@storm-software/config-tools': 1.163.3
+  '@storm-software/cspell': 0.20.27
+  '@storm-software/git-tools': 2.104.25
+  '@storm-software/linting-tools': 1.119.39
+  '@storm-software/eslint': 0.146.8
+  '@storm-software/prettier': 0.45.8
+  '@storm-software/markdownlint': 0.18.15
+  '@storm-software/esbuild': 0.32.2
+  '@storm-software/unbuild': 0.40.2
+  '@storm-software/untyped': 0.11.37
+  '@storm-software/testing-tools': 1.104.61
+  '@storm-software/tsconfig': 0.35.51
+  '@storm-software/workspace-tools': 1.266.9
+  '@stryke/env': 0.6.5
+  '@stryke/fs': 0.12.1
+  '@stryke/helpers': 0.5.2
+  '@stryke/http': 0.8.0
+  '@stryke/unique-id': 0.2.6
+  '@stryke/url': 0.1.0
+  '@stryke/json': 0.8.1
+  '@stryke/path': 0.4.11
+  '@stryke/types': 0.8.1
+  '@stryke/hash': 0.9.2
+  '@stryke/string-format': 0.4.2
+  '@stryke/convert': 0.1.5
+  '@stryke/type-checks': 0.3.2
+  '@stryke/cli': 0.8.0
   '@swc-node/register': ^1.10.10
   '@swc/core': ^1.11.21
   '@swc/wasm': ^1.11.21

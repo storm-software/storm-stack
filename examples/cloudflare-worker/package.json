@@ -16,6 +16,6 @@
   "devDependencies": {
     "@storm-stack/core": "workspace:*",
     "@storm-stack/nx": "workspace:*",
-    "@storm-stack/preset-cloudflare-worker": "catalog:"
+    "@storm-stack/preset-cloudflare-worker": "workspace:*"
   }
 }

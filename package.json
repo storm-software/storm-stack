@@ -58,6 +58,7 @@
     "release": "pnpm exec storm-git release",
     "sherif": "pnpm exec sherif -f -i typescript -i react -i react-dom",
     "start": "nx serve",
+    "upgrade-storm-deps": "pnpm exec zx tools/scripts/src/upgrade-storm-deps.mjs",
     "view-config": "pnpm exec storm-config"
   },
   "devDependencies": {
