@@ -16,9 +16,9 @@
     "unstorage": "catalog:"
   },
   "devDependencies": {
-    "@storm-stack/core": "workspace:*",
+    "@storm-stack/core": "0.8.0",
     "@storm-stack/nx": "workspace:*",
-    "@storm-stack/preset-cli": "workspace:*",
+    "@storm-stack/preset-cli": "0.5.0",
     "@storm-stack/types": "workspace:*"
   }
 }

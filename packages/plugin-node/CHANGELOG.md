@@ -2,6 +2,13 @@
 
 # Changelog for Storm Stack - Plugin Node
 
+## [0.8.0](https://github.com/storm-software/storm-stack/releases/tag/plugin-node%400.8.0) (2025-04-25)
+
+### Features
+
+- **preset-cli:** Added support for the `options` argument type
+  ([eef96e81](https://github.com/storm-software/storm-stack/commit/eef96e81))
+
 ## [0.6.0](https://github.com/storm-software/storm-stack/releases/tag/plugin-node%400.6.0) (2025-04-23)
 
 ### Features

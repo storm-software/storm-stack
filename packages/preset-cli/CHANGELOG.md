@@ -2,6 +2,13 @@
 
 # Changelog for Storm Stack - Preset Cli
 
+## [0.5.0](https://github.com/storm-software/storm-stack/releases/tag/preset-cli%400.5.0) (2025-04-25)
+
+### Features
+
+- **preset-cli:** Added support for the `options` argument type
+  ([eef96e81](https://github.com/storm-software/storm-stack/commit/eef96e81))
+
 ## [0.3.0](https://github.com/storm-software/storm-stack/releases/tag/preset-cli%400.3.0) (2025-04-23)
 
 ### Features

@@ -2,6 +2,18 @@
 
 # Changelog for Storm Stack - Log Sentry
 
+## [0.6.0](https://github.com/storm-software/storm-stack/releases/tag/log-sentry%400.6.0) (2025-04-25)
+
+### Features
+
+- **preset-cli:** Added support for the `options` argument type
+  ([eef96e81](https://github.com/storm-software/storm-stack/commit/eef96e81))
+
+### Updated Dependencies
+
+- Updated core to 0.8.0
+- Updated core to 0.8.0
+
 ## [0.5.0](https://github.com/storm-software/storm-stack/releases/tag/log-sentry%400.5.0) (2025-04-25)
 
 ### Updated Dependencies

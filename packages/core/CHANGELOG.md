@@ -2,6 +2,13 @@
 
 # Changelog for Storm Stack - Core
 
+## [0.8.0](https://github.com/storm-software/storm-stack/releases/tag/core%400.8.0) (2025-04-25)
+
+### Features
+
+- **preset-cli:** Added support for the `options` argument type
+  ([eef96e81](https://github.com/storm-software/storm-stack/commit/eef96e81))
+
 ## [0.7.0](https://github.com/storm-software/storm-stack/releases/tag/core%400.7.0) (2025-04-25)
 
 ### Updated Dependencies
