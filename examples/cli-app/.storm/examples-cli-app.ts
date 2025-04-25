@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 /* eslint-disable */
 // biome-ignore lint: disable
 // prettier-ignore

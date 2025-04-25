@@ -9,11 +9,7 @@
       "outputs": ["{options.outputPath}"],
       "options": {
         "entry": "{sourceRoot}/commands",
-        "outputPath": "dist/examples/cli-app",
-        "presets": ["@storm-stack/preset-cli"],
-        "skipCache": true,
-        "skipInstalls": true,
-        "mode": "development"
+        "outputPath": "dist/examples/cli-app"
       }
     },
     "build": {
@@ -22,11 +18,7 @@
       "dependsOn": ["prepare"],
       "options": {
         "entry": "{sourceRoot}/commands",
-        "outputPath": "dist/examples/cli-app",
-        "presets": ["@storm-stack/preset-cli"],
-        "skipCache": true,
-        "skipInstalls": true,
-        "mode": "development"
+        "outputPath": "dist/examples/cli-app"
       }
     }
   }

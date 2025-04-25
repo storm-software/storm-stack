@@ -341,12 +341,14 @@ export default builder({
         entry: context.resolvedEntry.reduce(
           (ret, entry) => {
             ret[
-              entry.input.file
-                .replace(findFileExtension(entry.input.file), "")
-                .replace(
-                  `${context.projectJson?.sourceRoot || context.projectRoot}/`,
-                  ""
-                )
+              entry.output ||
+                entry.input.file
+                  .replace(findFileExtension(entry.input.file), "")
+                  .replace(
+                    `${context.projectJson?.sourceRoot || context.projectRoot}/`,
+                    ""
+                  ) ||
+                entry.file
             ] = entry.file;
 
             return ret;
@@ -360,7 +362,10 @@ export default builder({
         bundle: true,
         minify: Boolean(context.minify),
         sourcemap: context.mode !== "production",
-        banner: "//  ⚡  Built with Storm Stack \n",
+        banner:
+          context.mode !== "production"
+            ? "\n//  ⚡  Built with Storm Stack \n"
+            : "",
         env: context.resolvedDotenv.values as {
           [key: string]: string;
         },

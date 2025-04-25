@@ -149,7 +149,7 @@ catalogs:
       version: 0.8.0
     '@stryke/json':
       specifier: latest
-      version: 0.7.3
+      version: 0.8.1
     '@stryke/path':
       specifier: latest
       version: 0.4.11
@@ -164,7 +164,7 @@ catalogs:
       version: 0.8.1
     '@stryke/unique-id':
       specifier: latest
-      version: 0.2.5
+      version: 0.2.6
     '@stryke/url':
       specifier: latest
       version: 0.1.0
@@ -631,7 +631,7 @@ importers:
         version: 0.5.2
       '@stryke/json':
         specifier: 'catalog:'
-        version: 0.7.3
+        version: 0.8.1
       '@stryke/path':
         specifier: 'catalog:'
         version: 0.4.11(@storm-software/config@1.112.26)(magicast@0.3.5)
@@ -643,7 +643,7 @@ importers:
         version: 0.3.2
       '@stryke/unique-id':
         specifier: 'catalog:'
-        version: 0.2.5(@storm-software/config@1.112.26)(magicast@0.3.5)(nx@20.8.0(@swc-node/register@1.10.10(@swc/core@1.7.26(@swc/helpers@0.5.17))(@swc/types@0.1.21)(typescript@5.8.3))(@swc/core@1.7.26(@swc/helpers@0.5.17)))
+        version: 0.2.6(@storm-software/config@1.112.26)(magicast@0.3.5)(nx@20.8.0(@swc-node/register@1.10.10(@swc/core@1.7.26(@swc/helpers@0.5.17))(@swc/types@0.1.21)(typescript@5.8.3))(@swc/core@1.7.26(@swc/helpers@0.5.17)))
       c12:
         specifier: 'catalog:'
         version: 3.0.3(magicast@0.3.5)
@@ -829,7 +829,7 @@ importers:
     dependencies:
       '@stryke/json':
         specifier: 'catalog:'
-        version: 0.7.3
+        version: 0.8.1
     devDependencies:
       '@storm-stack/core':
         specifier: workspace:*
@@ -863,7 +863,7 @@ importers:
         version: 1.32.0
       '@stryke/json':
         specifier: 'catalog:'
-        version: 0.7.3
+        version: 0.8.1
     devDependencies:
       '@storm-stack/core':
         specifier: workspace:*
@@ -885,7 +885,7 @@ importers:
         version: 9.13.0
       '@stryke/json':
         specifier: 'catalog:'
-        version: 0.7.3
+        version: 0.8.1
     devDependencies:
       '@storm-stack/core':
         specifier: workspace:*
@@ -993,7 +993,7 @@ importers:
         version: 0.8.0
       '@stryke/json':
         specifier: 'catalog:'
-        version: 0.7.3
+        version: 0.8.1
       '@stryke/path':
         specifier: 'catalog:'
         version: 0.4.11(@storm-software/config@1.112.26)(magicast@0.3.5)
@@ -1033,7 +1033,7 @@ importers:
         version: 0.9.2(@storm-software/config@1.112.26)(magicast@0.3.5)(nx@20.8.0(@swc-node/register@1.10.10(@swc/core@1.11.21(@swc/helpers@0.5.17))(@swc/types@0.1.21)(typescript@5.8.3))(@swc/core@1.11.21(@swc/helpers@0.5.17)))
       '@stryke/json':
         specifier: 'catalog:'
-        version: 0.7.3
+        version: 0.8.1
       '@stryke/path':
         specifier: 'catalog:'
         version: 0.4.11(@storm-software/config@1.112.26)(magicast@0.3.5)
@@ -1113,7 +1113,7 @@ importers:
         version: 0.12.1(@storm-software/config@1.112.26)(magicast@0.3.5)(nx@20.8.0(@swc-node/register@1.10.10(@swc/core@1.11.21(@swc/helpers@0.5.17))(@swc/types@0.1.21)(typescript@5.8.3))(@swc/core@1.11.21(@swc/helpers@0.5.17)))
       '@stryke/json':
         specifier: 'catalog:'
-        version: 0.7.3
+        version: 0.8.1
       '@stryke/path':
         specifier: 'catalog:'
         version: 0.4.11(@storm-software/config@1.112.26)(magicast@0.3.5)
@@ -3325,6 +3325,7 @@ packages:
 
   '@ls-lint/ls-lint@2.3.0':
     resolution: {integrity: sha512-lsT5/7SxtImOIjpefC9wcoXt2lkikKhCjd6U+Q9Z6X5h2HBU/71ggt+XStdodZ0HkJGO333zDUeec7JROMCPFw==}
+    cpu: [x64, arm64, s390x, ppc64le]
     os: [darwin, linux, win32]
     hasBin: true
 
@@ -4742,6 +4743,9 @@ packages:
   '@stryke/json@0.7.3':
     resolution: {integrity: sha512-Lkj21fCaWm3qdTDnbc1eNg0ex0eVJeecOM+iWssCZjUUUS7caakq5QAAqlZjw9Tt21VWBbTRedNJ6dnVkVx+Jw==}
 
+  '@stryke/json@0.8.1':
+    resolution: {integrity: sha512-x6IfXBUbgDX+6lZrii/D5licjkthmf6mlOIXHK24H/C2VXqK8N6ef+8iugze0whEWJh1D27oXxiphDcAa3Cyvw==}
+
   '@stryke/path@0.4.11':
     resolution: {integrity: sha512-w9+2lx6pI+LoVK08pWs7ONuc2C3+KompaxGGLdewdPui+h3RpROUlEDLYG/hf4ExricjV21h5ThB45VFntPzCg==}
 
@@ -4754,8 +4758,8 @@ packages:
   '@stryke/types@0.8.1':
     resolution: {integrity: sha512-Laio7IVuJ0VzAdIP755F5l7t3LCKLWn8qljhnv6B4MZG2n8DeWmtz/6k8hU0NGw4c5l4CkOQ4QGM85KXgfld5g==}
 
-  '@stryke/unique-id@0.2.5':
-    resolution: {integrity: sha512-Accdi7620ktZHWnxQTzeA0JWsx5zMeRsmOyXFR6ZOPPakttx7IQ/7n3kZHW8aWJl2hY1Oo0MfRHRk6MP7skXhw==}
+  '@stryke/unique-id@0.2.6':
+    resolution: {integrity: sha512-635gZiqniq0f1gf7xqnVv7GuL2qKN/o5ITqyknQiHu7Zeknzw5sgvjzF7WUy6tKPoT3YZB/UHXKcolJUKV6/lQ==}
 
   '@stryke/url@0.1.0':
     resolution: {integrity: sha512-rIBqkad+XAfGTI+PqR9di370vTUradjnQgP4e4ncappR6VBgiHHSmmvSJYEIVB2ZdsJuV9xAma3MiNz2+33X1Q==}
@@ -17835,6 +17839,15 @@ snapshots:
       lines-and-columns: 2.0.4
       superjson: 2.2.2
 
+  '@stryke/json@0.8.1':
+    dependencies:
+      '@stryke/type-checks': 0.3.2
+      '@stryke/types': 0.8.1
+      buffer: 6.0.3
+      jsonc-parser: 3.3.1
+      lines-and-columns: 2.0.4
+      superjson: 2.2.2
+
   '@stryke/path@0.4.11(@storm-software/config@1.112.26)(magicast@0.3.5)':
     dependencies:
       '@storm-software/config-tools': 1.162.18(@storm-software/config@1.112.26)(magicast@0.3.5)
@@ -17854,7 +17867,7 @@ snapshots:
 
   '@stryke/types@0.8.1': {}
 
-  '@stryke/unique-id@0.2.5(@storm-software/config@1.112.26)(magicast@0.3.5)(nx@20.8.0(@swc-node/register@1.10.10(@swc/core@1.7.26(@swc/helpers@0.5.17))(@swc/types@0.1.21)(typescript@5.8.3))(@swc/core@1.7.26(@swc/helpers@0.5.17)))':
+  '@stryke/unique-id@0.2.6(@storm-software/config@1.112.26)(magicast@0.3.5)(nx@20.8.0(@swc-node/register@1.10.10(@swc/core@1.7.26(@swc/helpers@0.5.17))(@swc/types@0.1.21)(typescript@5.8.3))(@swc/core@1.7.26(@swc/helpers@0.5.17)))':
     dependencies:
       '@stryke/hash': 0.9.2(@storm-software/config@1.112.26)(magicast@0.3.5)(nx@20.8.0(@swc-node/register@1.10.10(@swc/core@1.7.26(@swc/helpers@0.5.17))(@swc/types@0.1.21)(typescript@5.8.3))(@swc/core@1.7.26(@swc/helpers@0.5.17)))
     transitivePeerDependencies:

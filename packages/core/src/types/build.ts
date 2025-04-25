@@ -259,6 +259,11 @@ export interface ResolvedEntryTypeDefinition extends TypeDefinition {
    * The user provided entry point in the source code
    */
   input: TypeDefinition;
+
+  /**
+   * An optional name to use in the package export during the build process
+   */
+  output?: string;
 }
 
 export type ResolvedTsConfig = ts.ParsedCommandLine & {

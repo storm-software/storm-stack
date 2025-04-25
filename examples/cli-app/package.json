@@ -9,6 +9,9 @@
     "directory": "examples/cli-app"
   },
   "private": true,
+  "bin": {
+    "examples-cli-app": "dist/examples-cli-app.js"
+  },
   "dependencies": {
     "@storm-stack/log-storage": "workspace:*",
     "@stryke/cli": "catalog:",
@@ -16,9 +19,25 @@
     "unstorage": "catalog:"
   },
   "devDependencies": {
-    "@storm-stack/core": "0.8.0",
+    "@storm-stack/core": "workspace:*",
     "@storm-stack/nx": "workspace:*",
-    "@storm-stack/preset-cli": "0.5.0",
+    "@storm-stack/preset-cli": "catalog:",
     "@storm-stack/types": "workspace:*"
+  },
+  "storm": {
+    "plugins": [
+      [
+        "@storm-stack/preset-cli",
+        {
+          "features": [
+            "sentry"
+          ]
+        }
+      ]
+    ],
+    "skipCache": true,
+    "skipInstalls": true,
+    "skipLint": true,
+    "mode": "development"
   }
 }

@@ -35,13 +35,14 @@ import {
 } from "@stryke/path/file-path-fns";
 import { isDirectory } from "@stryke/path/is-file";
 import { joinPaths } from "@stryke/path/join-paths";
+import { kebabCase } from "@stryke/string-format/kebab-case";
 import { titleCase } from "@stryke/string-format/title-case";
 import { isSetString } from "@stryke/type-checks/is-set-string";
+import defu from "defu";
 import { reflectCommands } from "./helpers/reflect-command";
 import { writeStorage } from "./runtime/storage";
 import type { StormStackCLIPresetConfig } from "./types/config";
 import type { CommandReflection } from "./types/reflection";
-
 export default class StormStackCLIPreset<
   TOptions extends Options = Options
 > extends Preset<TOptions> {
@@ -103,6 +104,42 @@ export default class StormStackCLIPreset<
             ", "
           )}`
         );
+
+        const binaryName = kebabCase(
+          this.#config.binaryName || context.name || "cli"
+        );
+        const resolvedEntry = {
+          file: joinPaths(
+            context.projectRoot,
+            context.artifactsDir,
+            `${binaryName}.ts`
+          ),
+          input: { file: joinPaths(context.entry) },
+          output: binaryName
+        };
+
+        await this.writeFile(
+          joinPaths(context.projectRoot, "package.json"),
+          StormJSON.stringify(
+            defu(
+              {
+                bin: {
+                  [binaryName]: `${joinPaths("dist", binaryName)}.js`
+                }
+              },
+              context.packageJson
+            )
+          )
+        );
+
+        if (
+          context.resolvedEntry.length === 0 ||
+          !context.resolvedEntry[0]?.file
+        ) {
+          context.resolvedEntry.push(resolvedEntry);
+        } else {
+          context.resolvedEntry[0] = resolvedEntry;
+        }
 
         this.#commandEntries = files.reduce((ret, file) => {
           let entryFile = joinPaths(
@@ -168,6 +205,10 @@ export default class StormStackCLIPreset<
       this.writeFile(
         joinPaths(runtimeDir, "storage.ts"),
         writeStorage(context, this.#config)
+      ),
+      this.writeFile(
+        joinPaths(runtimeDir, "storage.ts"),
+        writeStorage(context, this.#config)
       )
     ]);
   }
@@ -193,7 +234,8 @@ export default class StormStackCLIPreset<
         context.resolvedEntry.map(async entry =>
           this.writeFile(
             entry.file,
-            `${getFileHeader()}
+            `#!/usr/bin/env node
+${getFileHeader()}
 
 import "storm:init";
 

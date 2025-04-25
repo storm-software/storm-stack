@@ -177,6 +177,7 @@ export class Engine<TOptions extends Options = Options> {
       this.context,
       (await this.loadConfig()) ?? {}
     ) as Context<TOptions>;
+    this.context.minify ??= this.context.mode === "production";
 
     const checksum = await hashDirectory(this.context.projectRoot, {
       ignore: ["node_modules", ".git", ".nx", ".cache", ".storm", "tmp"]
@@ -283,6 +284,14 @@ export class Engine<TOptions extends Options = Options> {
       LogLevelLabel.TRACE,
       "Checking the Storm Stack project configuration"
     );
+
+    const packageJsonPath = joinPaths(this.context.projectRoot, "package.json");
+    if (!existsSync(packageJsonPath)) {
+      throw new Error(
+        `Cannot find a \`package.json\` configuration file in ${this.context.projectRoot}.`
+      );
+    }
+    this.context.packageJson = await readJsonFile<PackageJson>(packageJsonPath);
 
     const projectJsonPath = joinPaths(this.context.projectRoot, "project.json");
     if (existsSync(projectJsonPath)) {
@@ -492,14 +501,6 @@ export class Engine<TOptions extends Options = Options> {
     if (!this.context.resolvedTsconfig) {
       throw new Error("Failed to parse the TypeScript configuration file.");
     }
-
-    const packageJsonPath = joinPaths(this.context.projectRoot, "package.json");
-    if (!existsSync(packageJsonPath)) {
-      throw new Error(
-        `Cannot find a \`package.json\` configuration file in ${this.context.projectRoot}.`
-      );
-    }
-    this.context.packageJson = await readJsonFile<PackageJson>(packageJsonPath);
 
     this.context.unimport = createUnimport<TOptions>(this.log, this.context);
     await this.context.unimport.init();
