@@ -2,6 +2,12 @@
 
 # Changelog for Storm Stack - Core
 
+## [0.9.0](https://github.com/storm-software/storm-stack/releases/tag/core%400.9.0) (2025-04-25)
+
+### Updated Dependencies
+
+- Updated types to 0.3.0
+
 ## [0.8.0](https://github.com/storm-software/storm-stack/releases/tag/core%400.8.0) (2025-04-25)
 
 ### Features

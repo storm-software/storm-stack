@@ -1,6 +1,6 @@
 {
   "name": "@storm-stack/preset-cli",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "type": "module",
   "description": "A Storm Stack build preset for Cloudflare Workers",
   "repository": {
