@@ -2,6 +2,15 @@
 
 # Changelog for Storm Stack - Log Storage
 
+## [0.5.0](https://github.com/storm-software/storm-stack/releases/tag/log-storage%400.5.0) (2025-04-25)
+
+### Updated Dependencies
+
+- Updated log-stream to 0.5.0
+- Updated core to 0.7.0
+- Updated core to 0.7.0
+- Updated nx to 0.5.0
+
 ## [0.4.0](https://github.com/storm-software/storm-stack/releases/tag/log-storage%400.4.0) (2025-04-23)
 
 ### Features
