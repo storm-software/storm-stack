@@ -36,12 +36,17 @@ import {
 import { joinPaths } from "@stryke/path/join-paths";
 import type { TsConfigJson } from "@stryke/types/tsconfig";
 import defu from "defu";
-import { generateDeclarations, generateImports } from "./helpers/dtsgen";
+import {
+  generateDeclarations,
+  generateGlobal,
+  generateImports
+} from "./helpers/dtsgen";
 import { transformContext } from "./helpers/transform-context";
 import { writeCreateApp } from "./runtime/app";
 import { writeContext } from "./runtime/context";
 import { writeEvent } from "./runtime/event";
 import { writeInit } from "./runtime/init";
+import { writeStorage } from "./runtime/storage";
 import type { StormStackNodePluginConfig } from "./types/config";
 import { StormStackNodeFeatures } from "./types/config";
 
@@ -91,71 +96,57 @@ export default class StormStackNodePlugin<
       `Resolving Storm Stack context for the project.`
     );
 
+    const runtimeDir = joinPaths(
+      context.workspaceConfig.workspaceRoot,
+      context.projectRoot,
+      context.runtimeDir
+    );
+
     context.platform ??= "node";
-    context.override.format = "esm";
-    context.override.target = "node22";
-    context.override.alias = {
-      "storm:app": joinPaths(
-        context.workspaceConfig.workspaceRoot,
-        context.projectRoot,
-        context.runtimeDir,
-        "app"
-      ),
-      "storm:context": joinPaths(
-        context.workspaceConfig.workspaceRoot,
-        context.projectRoot,
-        context.runtimeDir,
-        "context"
-      ),
-      "storm:error": joinPaths(
-        context.workspaceConfig.workspaceRoot,
-        context.projectRoot,
-        context.runtimeDir,
-        "error"
-      ),
-      "storm:event": joinPaths(
-        context.workspaceConfig.workspaceRoot,
-        context.projectRoot,
-        context.runtimeDir,
-        "event"
-      ),
-      "storm:id": joinPaths(
-        context.workspaceConfig.workspaceRoot,
-        context.projectRoot,
-        context.runtimeDir,
-        "id"
-      ),
-      "storm:log": joinPaths(
-        context.workspaceConfig.workspaceRoot,
-        context.projectRoot,
-        context.runtimeDir,
-        "log"
-      ),
-      "storm:request": joinPaths(
-        context.workspaceConfig.workspaceRoot,
-        context.projectRoot,
-        context.runtimeDir,
-        "request"
-      ),
-      "storm:response": joinPaths(
-        context.workspaceConfig.workspaceRoot,
-        context.projectRoot,
-        context.runtimeDir,
-        "response"
-      )
-    };
+    context.override = defu(
+      {
+        format: "esm",
+        target: "node22",
+        alias: {
+          "storm:init": joinPaths(runtimeDir, "init"),
+          "storm:app": joinPaths(runtimeDir, "app"),
+          "storm:context": joinPaths(runtimeDir, "context"),
+          "storm:error": joinPaths(runtimeDir, "error"),
+          "storm:event": joinPaths(runtimeDir, "event"),
+          "storm:id": joinPaths(runtimeDir, "id"),
+          "storm:storage": joinPaths(runtimeDir, "storage"),
+          "storm:log": joinPaths(runtimeDir, "log"),
+          "storm:request": joinPaths(runtimeDir, "request"),
+          "storm:response": joinPaths(runtimeDir, "response"),
+          "storm:json": "@stryke/json",
+          "storm:url": "@stryke/url"
+        }
+      },
+      context.override
+    );
 
     context.unimportPresets.push({
       imports: ["builder"],
-      from: "storm:app"
+      from: joinPaths(runtimeDir, "app")
     });
     context.unimportPresets.push({
-      imports: ["useStorm"],
-      from: "storm:context"
+      imports: [
+        "useStorm",
+        "getBuildInfo",
+        "getRuntimeInfo",
+        "getAppName",
+        "getAppVersion",
+        "STORM_ASYNC_CONTEXT"
+      ],
+      from: joinPaths(runtimeDir, "context")
+    });
+    context.unimportPresets.push({
+      imports: ["storage"],
+      from: joinPaths(runtimeDir, "storage")
     });
     context.unimportPresets.push({
       imports: ["StormEvent"],
-      from: "storm:event"
+      from: joinPaths(runtimeDir, "event")
     });
   }
 
@@ -170,10 +161,6 @@ export default class StormStackNodePlugin<
         this.install(context, "@types/node", true),
         context.projectType === "application" &&
           this.install(context, "unstorage"),
-        context.projectType === "application" &&
-          this.install(context, "@stryke/json"),
-        context.projectType === "application" &&
-          this.install(context, "@stryke/type-checks"),
         context.projectType === "application" &&
           this.install(context, "@stryke/env"),
         context.projectType === "application" &&
@@ -228,8 +215,12 @@ export default class StormStackNodePlugin<
     await Promise.all(
       [
         this.writeFile(
-          joinPaths(typesDir, "node.d.ts"),
+          joinPaths(typesDir, "modules-node.d.ts"),
           generateImports(runtimePath)
+        ),
+        this.writeFile(
+          joinPaths(typesDir, "global-node.d.ts"),
+          generateGlobal(runtimePath)
         ),
         this.writeFile(
           joinPaths(
@@ -254,10 +245,14 @@ export default class StormStackNodePlugin<
     );
 
     await Promise.all([
+      this.writeFile(joinPaths(runtimeDir, "init.ts"), writeInit()),
       this.writeFile(joinPaths(runtimeDir, "app.ts"), writeCreateApp()),
-      this.writeFile(joinPaths(runtimeDir, "context.ts"), writeContext()),
-      this.writeFile(joinPaths(runtimeDir, "event.ts"), writeEvent()),
-      this.writeFile(joinPaths(runtimeDir, "init.ts"), writeInit())
+      this.writeFile(
+        joinPaths(runtimeDir, "context.ts"),
+        writeContext(context)
+      ),
+      this.writeFile(joinPaths(runtimeDir, "storage.ts"), writeStorage()),
+      this.writeFile(joinPaths(runtimeDir, "event.ts"), writeEvent())
     ]);
   }
 
@@ -273,7 +268,7 @@ export default class StormStackNodePlugin<
           entry.file,
           `${getFileHeader()}
 
-import ".${joinPaths(context.runtimeDir.replace(context.artifactsDir, ""), "init")}";
+import "storm:init";
 
 import ${entry.input.name ? `{ ${entry.input.name} as handle }` : "handle"} from "${joinPaths(
             relativePath(
@@ -285,7 +280,7 @@ import ${entry.input.name ? `{ ${entry.input.name} as handle }` : "handle"} from
               ""
             )
           )}";
-import { builder } from ".${joinPaths(context.runtimeDir.replace(context.artifactsDir, ""), "app")}";
+import { builder } from "storm:app";
 import { getSink as getConsoleSink } from "@storm-stack/log-console";${
             this.#config.features?.includes(StormStackNodeFeatures.SENTRY)
               ? `

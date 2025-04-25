@@ -23,6 +23,7 @@ import type {
   LogSinkInstance,
   StormEnv
 } from "@storm-stack/types";
+import type { EnvPaths } from "@stryke/env/get-env-paths";
 import type { ProviderInfo } from "@stryke/env/providers";
 import type { RuntimeInfo } from "@stryke/env/runtime-checks";
 import type { MaybePromise } from "@stryke/types/base";
@@ -32,7 +33,7 @@ import type { Storage } from "unstorage";
 /**
  * Interface representing the runtime information for the Storm application.
  */
-export interface StormRuntimeInfo extends Partial<RuntimeInfo> {
+export interface StormRuntimeInfo extends Partial<RuntimeInfo>, EnvPaths {
   /**
    * Indicates if the application is running on Node.js.
    */
@@ -311,11 +312,17 @@ export interface StormContext<
 
 export type ValidationDetail = ExternalValidationDetail;
 
-export type DeserializerFunction<TRequest extends IStormRequest, TPayload> = (
+export type DeserializerFunction<
+  TRequest extends IStormRequest,
+  TPayload = any
+> = (
   payload: TPayload
 ) => MaybePromise<TRequest | IStormError | ValidationDetail[]>;
 
-export type SerializerFunction<TResponse extends IStormResponse, TResult> = (
+export type SerializerFunction<
+  TResponse extends IStormResponse,
+  TResult = any
+> = (
   response: TResponse | IStormResponse<IStormError>
 ) => MaybePromise<TResult>;
 
@@ -338,8 +345,8 @@ export type HandlerFunction<
 export interface BuilderConfig<
   TRequest extends IStormRequest,
   TResponse extends IStormResponse,
-  TPayload,
-  TResult
+  TPayload = any,
+  TResult = any
 > {
   deserializer?: DeserializerFunction<TRequest, TPayload>;
   validator?: ValidatorFunction<TRequest>;
@@ -350,8 +357,8 @@ export interface BuilderConfig<
 export interface BuilderResult<
   TRequest extends IStormRequest,
   TResponse extends IStormResponse,
-  TPayload,
-  TResult
+  TPayload = any,
+  TResult = any
 > {
   deserializer: (
     deserializerFn: DeserializerFunction<TRequest, TPayload>

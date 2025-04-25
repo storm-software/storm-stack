@@ -40,6 +40,7 @@ export function generateDeclarations(env: ResolvedDotenvType) {
   return `${getFileHeader(`
 /// <reference types="@storm-stack/types" />
 `)}
+
 declare global {
   const $storm: {
     env: ${generateDeclarationVariables(env)}
@@ -47,59 +48,208 @@ declare global {
 }
 
 export {};
+
  `;
+}
+
+export function generateGlobal(path: string) {
+  return `${getFileHeader(`
+/// <reference types="@storm-stack/types" />
+`)}
+
+declare global {
+  const StormJSON: (typeof import("@stryke/json"))["StormJSON"];
+  type StormJSON = import("@stryke/json").StormJSON;
+
+  const StormURL: (typeof import("@stryke/url"))["StormURL"];
+  type StormURL = import("@stryke/url").StormURL;
+
+  const StormLog: (typeof import("${path}/log"))["StormLog"];
+  type StormLog = import("${path}/log").StormLog;
+
+  const uniqueId: (typeof import("${path}/id"))["uniqueId"];
+  const getRandom: (typeof import("${path}/id"))["getRandom"];
+
+  const _StormError: (typeof import("${path}/error"))["StormError"];
+  class StormError extends _StormError {
+    /**
+     * The StormError constructor
+     *
+     * @param options - The options for the error
+     * @param type - The type of error
+     */
+    public constructor(
+      optionsOrMessage: StormErrorOptions | string,
+      type: ErrorType = "general"
+    ) {
+      super(optionsOrMessage, type);
+    }
+  }
+
+  const createStormError: (typeof import("${path}/error"))["createStormError"];
+  const isStormError: (typeof import("${path}/error"))["isStormError"];
+  const getErrorFromUnknown: (typeof import("${path}/error"))[
+    "getErrorFromUnknown"
+  ];
+
+  const _StormRequest: (typeof import("${path}/request"))["StormRequest"];
+  class StormRequest<
+    TData = any,
+    TIdentifiers extends Record<string, any> = Record<string, any>,
+    TParams extends Record<string, any> = Record<string, any>,
+    TMeta extends Record<string, any> = Record<string, any>
+  > extends _StormRequest<TData, TIdentifiers, TParams, TMeta> {
+    /**
+     * Create a new request object.
+     *
+     * @param data - The request data.
+     * @param meta - The request metadata.
+     * @param params - The request parameters.
+     * @param identifiers - The request identifiers.
+     */
+    public constructor(
+      data: TData,
+      meta = {},
+      params?: TParams,
+      identifiers?: TIdentifiers
+    ) {
+      super(data, meta, params, identifiers);
+    }
+  }
+
+  const _StormResponse: (typeof import("${path}/response"))["StormResponse"];
+  class StormResponse<
+    TData extends any | StormError = any | StormError
+  > extends _StormResponse<TData> {
+    /**
+     * Create a new response.
+     *
+     * @param requestId - The request identifier.
+     * @param meta - The current context's metadata.
+     * @param data - The response data
+     */
+    public constructor(
+      requestId: string,
+      meta: Record<string, any>,
+      data: TData
+    ) {
+      super(requestId, meta, data);
+    }
+  }
+}
+
+export {};
+
+`;
 }
 
 export function generateImports(path: string) {
   return `${getFileHeader(`
 /// <reference types="@storm-stack/types" />
 `)}
-declare global {
-  const StormError: (typeof import("${path}/error"))["StormError"];
-  const StormJSON: (typeof import("@stryke/json"))["StormJSON"];
-  const StormRequest: (typeof import("${path}/request"))["StormRequest"];
-  const StormResponse: (typeof import("${path}/response"))["StormResponse"];
-  const StormLog: (typeof import("${path}/log"))["StormLog"];
-  const uniqueId: (typeof import("${path}/id"))["uniqueId"];
-  const getRandom: (typeof import("${path}/id"))["getRandom"];
 
-  type StormError = import("${path}/error").StormError;
-  type StormRequest<TData = any> = import("${path}/request").StormRequest<TData>;
-  type StormResponse = import("${path}/response").StormResponse;
-  type StormLog = import("${path}/log").StormLog;
-}
-
-declare module "storm:error" {
-  let _StormError: (typeof import("${path}/error"))["StormError"];
-  export { _StormError as StormError };
+declare module "storm:url" {
+  const StormURL: (typeof import("@stryke/url"))["StormURL"];
+  export { StormURL };
 }
 
 declare module "storm:json" {
-  let _StormJSON: (typeof import("@stryke/json"))["StormJSON"];
-  export { _StormJSON as StormJSON };
+  const StormJSON: (typeof import("@stryke/json"))["StormJSON"];
+  export { StormJSON };
+}
+
+declare module "storm:error" {
+  const _StormError: (typeof import("${path}/error"))["StormError"];
+
+  class StormError extends _StormError {
+    /**
+     * The StormError constructor
+     *
+     * @param options - The options for the error
+     * @param type - The type of error
+     */
+    public constructor(
+      optionsOrMessage: StormErrorOptions | string,
+      type: ErrorType = "general"
+    ) {
+      super(optionsOrMessage, type);
+    }
+  }
+
+  const createStormError: (typeof import("${path}/error"))["createStormError"];
+  const isStormError: (typeof import("${path}/error"))["isStormError"];
+  const getErrorFromUnknown: (typeof import("${path}/error"))[
+    "getErrorFromUnknown"
+  ];
+
+  export { StormError, createStormError, isStormError, getErrorFromUnknown };
 }
 
 declare module "storm:request" {
-  let _StormRequest: (typeof import("${path}/request"))["StormRequest"];
-  export { _StormRequest as StormRequest };
+  const _StormRequest: (typeof import("${path}/request"))["StormRequest"];
+
+  class StormRequest<
+    TData = any,
+    TIdentifiers extends Record<string, any> = Record<string, any>,
+    TParams extends Record<string, any> = Record<string, any>,
+    TMeta extends Record<string, any> = Record<string, any>
+  > extends _StormRequest<TData, TIdentifiers, TParams, TMeta> {
+    /**
+     * Create a new request object.
+     *
+     * @param data - The request data.
+     * @param meta - The request metadata.
+     * @param params - The request parameters.
+     * @param identifiers - The request identifiers.
+     */
+    public constructor(
+      data: TData,
+      meta = {},
+      params?: TParams,
+      identifiers?: TIdentifiers
+    ) {
+      super(data, meta, params, identifiers);
+    }
+  }
+
+  export { StormRequest };
 }
 
 declare module "storm:response" {
-  let _StormResponse: (typeof import("${path}/response"))["StormResponse"];
-  export { _StormResponse as StormResponse };
+  const _StormResponse: (typeof import("${path}/response"))["StormResponse"];
+
+  class StormResponse<
+    TData extends any | StormError = any | StormError
+  > extends _StormResponse<TData> {
+    /**
+     * Create a new response.
+     *
+     * @param requestId - The request identifier.
+     * @param meta - The current context's metadata.
+     * @param data - The response data
+     */
+    public constructor(
+      requestId: string,
+      meta: Record<string, any>,
+      data: TData
+    ) {
+      super(requestId, meta, data);
+    }
+  }
+
+  export { StormResponse };
 }
 
 declare module "storm:log" {
-  let _StormLog: (typeof import("${path}/log"))["StormLog"];
-  export { _StormLog as StormLog };
+  const StormLog: (typeof import("${path}/log"))["StormLog"];
+  export { StormLog };
 }
 
 declare module "storm:id" {
-  let _uniqueId: (typeof import("${path}/id"))["uniqueId"];
-  let _getRandom: (typeof import("${path}/id"))["getRandom"];
-  export { _uniqueId as uniqueId, _getRandom as getRandom };
+  const uniqueId: (typeof import("${path}/id"))["uniqueId"];
+  const getRandom: (typeof import("${path}/id"))["getRandom"];
+  export { uniqueId, getRandom };
 }
 
-export {};
 `;
 }

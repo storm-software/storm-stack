@@ -52,7 +52,11 @@ import { loadEnv } from "./helpers/dotenv/load";
 import { reflectDotenvTypes } from "./helpers/dotenv/reflect-dotenv";
 import { resolveDotenvProperties } from "./helpers/dotenv/resolve-dotenv";
 import { writeDotenvReflection } from "./helpers/dotenv/write-dotenv";
-import { generateDeclarations, generateImports } from "./helpers/dtsgen";
+import {
+  generateDeclarations,
+  generateGlobal,
+  generateImports
+} from "./helpers/dtsgen";
 import { runLintCheck } from "./helpers/eslint/lint";
 import { installPackage } from "./helpers/install-package";
 import { loadConfig } from "./helpers/load-config";
@@ -151,41 +155,6 @@ export class Engine<TOptions extends Options = Options> {
       hash(this.options.projectRoot)
     );
 
-    this.context.unimportPresets = [
-      {
-        imports: ["StormJSON"],
-        from: "@stryke/json/storm-json"
-      },
-      {
-        imports: ["StormURL"],
-        from: "@stryke/url/storm-url"
-      },
-      {
-        imports: ["StormError"],
-        from: "storm:error"
-      },
-      {
-        imports: ["StormRequest"],
-        from: "storm:request"
-      },
-      {
-        imports: ["StormResponse"],
-        from: "storm:response"
-      },
-      {
-        imports: ["StormLog"],
-        from: "storm:log"
-      },
-      {
-        imports: ["id"],
-        from: "storm:id"
-      },
-      {
-        imports: ["getRandom"],
-        from: "storm:id"
-      }
-    ];
-
     this.context.resolver = createJiti(
       this.context.workspaceConfig.workspaceRoot,
       {
@@ -224,6 +193,48 @@ export class Engine<TOptions extends Options = Options> {
     this.context.artifactsDir ??= ".storm";
     this.context.runtimeDir = joinPaths(this.context.artifactsDir, "runtime");
     this.context.typesDir = joinPaths(this.context.artifactsDir, "types");
+
+    const runtimeDir = joinPaths(
+      this.context.workspaceConfig.workspaceRoot,
+      this.context.projectRoot,
+      this.context.runtimeDir
+    );
+
+    this.context.unimportPresets = [
+      {
+        imports: ["StormJSON"],
+        from: "@stryke/json"
+      },
+      {
+        imports: ["StormURL"],
+        from: "@stryke/url"
+      },
+      {
+        imports: [
+          "StormError",
+          "createStormError",
+          "isStormError",
+          "getErrorFromUnknown"
+        ],
+        from: joinPaths(runtimeDir, "error")
+      },
+      {
+        imports: ["StormRequest"],
+        from: joinPaths(runtimeDir, "request")
+      },
+      {
+        imports: ["StormResponse"],
+        from: joinPaths(runtimeDir, "response")
+      },
+      {
+        imports: ["StormLog"],
+        from: joinPaths(runtimeDir, "log")
+      },
+      {
+        imports: ["uniqueId", "getRandom"],
+        from: joinPaths(runtimeDir, "id")
+      }
+    ];
 
     const metaFilePath = joinPaths(
       this.context.projectRoot,
@@ -329,6 +340,12 @@ export class Engine<TOptions extends Options = Options> {
     await Promise.all(
       [
         installPackage<TOptions>(this.log, this.context, "@stryke/types", true),
+        installPackage<TOptions>(
+          this.log,
+          this.context,
+          "@storm-stack/types",
+          true
+        ),
         this.context.projectType === "application" &&
           installPackage<TOptions>(
             this.log,
@@ -1234,9 +1251,22 @@ Note: Please ensure the plugin package's default export is a class that extends 
             joinPaths(
               this.context.projectRoot,
               this.context.typesDir,
-              "imports.d.ts"
+              "modules.d.ts"
             ),
             generateImports(
+              relativePath(
+                joinPaths(this.context.projectRoot, this.context.typesDir),
+                joinPaths(this.context.projectRoot, this.context.runtimeDir)
+              )
+            )
+          ),
+          this.writeFile(
+            joinPaths(
+              this.context.projectRoot,
+              this.context.typesDir,
+              "global.d.ts"
+            ),
+            generateGlobal(
               relativePath(
                 joinPaths(this.context.projectRoot, this.context.typesDir),
                 joinPaths(this.context.projectRoot, this.context.runtimeDir)

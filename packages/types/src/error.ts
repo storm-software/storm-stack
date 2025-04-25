@@ -93,7 +93,7 @@ export interface IStormError extends Error {
   /**
    * The type of error that was thrown.
    */
-  type?: ErrorType;
+  type: ErrorType;
 
   /**
    * A url to display the error message
@@ -109,6 +109,14 @@ export interface IStormError extends Error {
    * The underlying cause of the error, if any. This is typically another error object that caused this error to be thrown.
    */
   cause: IStormError | undefined;
+
+  /**
+   * The error stack
+   *
+   * @remarks
+   * This is overridden in `StormError` to be a parsed stacktrace
+   */
+  stack: string;
 
   /**
    * The parsed stacktrace

@@ -1,6 +1,6 @@
 {
   "$schema": "https://cdn.jsdelivr.net/npm/@storm-software/config/schemas/storm-workspace.schema.json",
-  "extends": "@storm-software/config/presets/base.json",
+  "extends": "@storm-software/config/presets/storm-software.json",
   "name": "storm-stack",
   "namespace": "storm-stack",
   "repository": "https://github.com/storm-software/storm-stack",

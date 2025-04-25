@@ -52,19 +52,19 @@ export class StormRequest<
    * Create a new request object.
    *
    * @param data - The request data.
+   * @param identifiers - The request identifiers.
    * @param meta - The request metadata.
    * @param params - The request parameters.
-   * @param identifiers - The request identifiers.
    */
   public constructor(
     data: TData,
+    identifiers: TIdentifiers,
     meta = {},
-    params?: TParams,
-    identifiers?: TIdentifiers
+    params?: TParams
   ) {
     this.data = data;
-    this.meta = meta;
-    this.params = params;
     this.identifiers = identifiers;
+    this.meta = meta as TMeta;
+    this.params = params;
   }
 }

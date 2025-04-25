@@ -36,32 +36,100 @@ export {};
  `;
 }
 
-export function generateImports(path: string) {
+export function generateGlobal(path: string) {
   return `${getFileHeader(`
 /// <reference types="@storm-stack/plugin-node/types" />
 `)}
 declare global {
-  const StormEvent: (typeof import("${path}/event"))["StormEvent"];
+  const _StormEvent: (typeof import("${path}/event"))["StormEvent"];
 
-  type StormEvent<TEventType extends string = string, TData = any> =
-    import("${path}/event").StormEvent<TEventType, TData>;
-}
+  class StormEvent<TEventType extends string = string, TEventData = any>
+   extends _StormEvent<TEventType, TEventData> {
+    /**
+    * Creates a new event.
+    *
+    * @param type - The event type.
+    * @param data - The event data.
+    */
+    public constructor(
+      type: TEventType,
+      data: TEventData
+    ) {
+      super(type, data);
+    }
+  }
 
-declare module "storm:event" {
-  let _StormEvent: (typeof import("${path}/event"))["StormEvent"];
-  export { _StormEvent as StormEvent };
+  const getBuildInfo: (typeof import("${path}/context"))["getBuildInfo"];
+  const getRuntimeInfo: (typeof import("${path}/context"))["getRuntimeInfo"];
+  const getAppName: (typeof import("${path}/context"))["getAppName"];
+  const getAppVersion: (typeof import("${path}/context"))["getAppVersion"];
+  const useStorm: (typeof import("${path}/context"))["useStorm"];
+  const STORM_ASYNC_CONTEXT: (typeof import("${path}/context"))["STORM_ASYNC_CONTEXT"];
 }
 
 export {};
+
 `;
 }
 
-export function generateHttpImports() {
-  return `${getFileHeader()}
-declare global {
-  const StormURLBuilder: typeof import("@stryke/http")["StormURLBuilder"];
+export function generateImports(path: string) {
+  return `${getFileHeader(`
+/// <reference types="@storm-stack/plugin-node/types" />
+`)}
+
+declare module "storm:init" {
+  export {};
 }
 
-export {};
+declare module "storm:app" {
+  const builder: (typeof import("${path}/app"))["builder"];
+  export { builder };
+}
+
+declare module "storm:context" {
+  const getBuildInfo: (typeof import("${path}/context"))["getBuildInfo"];
+  const getRuntimeInfo: (typeof import("${path}/context"))["getRuntimeInfo"];
+  const getAppName: (typeof import("${path}/context"))["getAppName"];
+  const getAppVersion: (typeof import("${path}/context"))["getAppVersion"];
+  const useStorm: (typeof import("${path}/context"))["useStorm"];
+  const STORM_ASYNC_CONTEXT: (typeof import("${path}/context"))["STORM_ASYNC_CONTEXT"];
+
+  export {
+    getBuildInfo,
+    getRuntimeInfo,
+    useStorm,
+    getAppName,
+    getAppVersion,
+    STORM_ASYNC_CONTEXT
+  };
+}
+
+declare module "storm:storage" {
+  const storage: (typeof import("${path}/storage"))["storage"];
+  export { storage };
+}
+
+declare module "storm:event" {
+  const _StormEvent: (typeof import("${path}/event"))["StormEvent"];
+
+  class StormEvent<TEventType extends string = string, TEventData = any>
+   extends _StormEvent<TEventType, TEventData> {
+    /**
+    * Creates a new event.
+    *
+    * @param type - The event type.
+    * @param data - The event data.
+    */
+    public constructor(
+      type: TEventType,
+      data: TEventData
+    ) {
+      super(type, data);
+    }
+  }
+
+  export { StormEvent };
+}
+
 `;
 }

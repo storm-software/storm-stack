@@ -38,12 +38,12 @@ import {
   getBuildInfo,
   getRuntimeInfo,
   STORM_ASYNC_CONTEXT
-} from "./context";
-import { getErrorFromUnknown } from "./error";
-import type { StormEvent } from "./event";
-import { uniqueId } from "./id";
-import type { StormRequest } from "./request";
-import { StormResponse } from "./response";
+} from "storm:context";
+import { getErrorFromUnknown } from "storm:error";
+import { StormEvent } from "storm:event";
+import { uniqueId } from "storm:id";
+import { StormRequest } from "storm:request";
+import { StormResponse } from "storm:response";
 import { createStorage } from "unstorage";
 
 /**
@@ -132,7 +132,7 @@ export function builder<
         const request = await Promise.resolve(
           builderConfig.deserializer!(payload)
         );
-        if (isError(request) || (Array.isArray(request) && request.length > 0)) {
+        if (isError(request) || Array.isArray(request)) {
           // if the deserializer returns an error or an array of issues, we need to return a validation error response
           return new StormResponse(
             uniqueId(),
@@ -148,7 +148,6 @@ export function builder<
           meta: request.meta,
           buildInfo,
           runtimeInfo,
-          injector,
           log: log.with({ name, version, requestId: request.id }),
           storage,
           env: {} as StormEnv,

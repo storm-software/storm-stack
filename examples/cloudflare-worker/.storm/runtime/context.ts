@@ -26,6 +26,7 @@ import {
   nodeMajorVersion,
   nodeVersion
 } from "@stryke/env/environment-checks";
+import { getEnvPaths } from "@stryke/env/get-env-paths";
 import { providerInfo } from "@stryke/env/providers";
 import {
   runtimeInfo as baseRuntimeInfo,
@@ -49,15 +50,15 @@ export const STORM_ASYNC_CONTEXT = getContext<StormContext>(STORM_CONTEXT_KEY, {
 
 export const getBuildInfo = (): StormBuildInfo => {
   return {
-    buildId: process.env.BUILD_ID!,
-    timestamp: process.env.BUILD_TIMESTAMP
-      ? Number(process.env.BUILD_TIMESTAMP)
+    buildId: $storm.env.BUILD_ID!,
+    timestamp: $storm.env.BUILD_TIMESTAMP
+      ? Number($storm.env.BUILD_TIMESTAMP)
       : 0,
-    releaseId: process.env.RELEASE_ID!,
-    mode: (process.env.MODE ||
-      process.env.NODE_ENV ||
+    releaseId: $storm.env.RELEASE_ID!,
+    mode: ($storm.env.MODE ||
+      $storm.env.NODE_ENV ||
       "production") as StormBuildInfo["mode"],
-    platform: (process.env.PLATFORM || "node") as StormBuildInfo["platform"],
+    platform: ($storm.env.PLATFORM || "node") as StormBuildInfo["platform"],
     isTest,
     isDebug: isDebug || isDevelopment,
     isProduction,
@@ -66,10 +67,28 @@ export const getBuildInfo = (): StormBuildInfo => {
   };
 };
 
+export const getAppName = () => {
+  const appName = $storm.env.APP_NAME;
+  if (!appName) {
+    throw new Error("App name is not defined.");
+  }
+
+  return appName;
+};
+
+export const getAppVersion = () => {
+  return $storm.env.APP_VERSION;
+};
+
 export const getRuntimeInfo = (): StormRuntimeInfo => {
+  const envPaths = getEnvPaths({
+    orgId: "storm-software",
+    appId: "examples-cloudflare-worker"
+  });
+
   return {
     ...baseRuntimeInfo,
-
+    ...envPaths,
     isNode,
     isBun,
     isDeno,
@@ -97,19 +116,6 @@ export const getRuntimeInfo = (): StormRuntimeInfo => {
     nodeMajorVersion,
     provider: providerInfo
   };
-};
-
-export const getAppName = () => {
-  const appName = process.env.APP_NAME;
-  if (!appName) {
-    throw new Error("App name is not defined.");
-  }
-
-  return appName;
-};
-
-export const getAppVersion = () => {
-  return process.env.APP_VERSION;
 };
 
 export function useStorm(): StormContext {

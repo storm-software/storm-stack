@@ -157,7 +157,9 @@ export default class StormStackCloudflareWorkerPreset<
       )
     ) {
       tsconfigJson.compilerOptions.types ??= [];
-      tsconfigJson.compilerOptions.types.push("@cloudflare/workers-types");
+      tsconfigJson.compilerOptions.types.push(
+        "@cloudflare/workers-types/experimental"
+      );
     }
 
     return this.writeFile(context.tsconfig!, StormJSON.stringify(tsconfigJson));

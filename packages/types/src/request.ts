@@ -39,7 +39,7 @@ export interface IStormRequest<
   /**
    * Any identifiers associated with the request.
    */
-  identifiers?: TIdentifiers;
+  identifiers: TIdentifiers;
 
   /**
    * Any parameters associated with the request.

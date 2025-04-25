@@ -19,6 +19,7 @@ import {
   ReflectionClass,
   ReflectionFunction,
   ReflectionKind,
+  resolveClassType,
   stringifyType
 } from "@deepkit/type";
 import { LogLevelLabel } from "@storm-software/config-tools/types";
@@ -26,25 +27,46 @@ import { resolveType } from "@storm-stack/core/helpers/deepkit/reflect-type";
 import { getReflectionsPath } from "@storm-stack/core/helpers/deepkit/resolve-reflections";
 import { writeFile } from "@storm-stack/core/helpers/utilities/write-file";
 import type { LogFn } from "@storm-stack/core/types";
-import type { Context, Options } from "@storm-stack/core/types/build";
+import type {
+  Context,
+  Options,
+  ResolvedEntryTypeDefinition
+} from "@storm-stack/core/types/build";
 import { StormJSON } from "@stryke/json/storm-json";
+import {
+  findFileExtension,
+  findFileName,
+  findFilePath,
+  findFolderName
+} from "@stryke/path/file-path-fns";
+import { resolveParentPath } from "@stryke/path/get-parent-path";
+import { isRelativePath } from "@stryke/path/is-file";
 import { joinPaths } from "@stryke/path/join-paths";
-import type { StormStackCLIPresetConfig } from "../types/config";
+import { kebabCase } from "@stryke/string-format/kebab-case";
+import { titleCase } from "@stryke/string-format/title-case";
+import { loadFile } from "magicast";
+import type { CommandReflection } from "../types/reflection";
 
 export async function reflectCommands<TOptions extends Options = Options>(
   log: LogFn,
   context: Context<TOptions>,
-  _config: StormStackCLIPresetConfig
-): Promise<ReflectionFunction[]> {
+  commandEntries: ResolvedEntryTypeDefinition[]
+): Promise<Record<string, CommandReflection>> {
   // const compiler = new CompilerContext();
 
-  const reflections = [] as ReflectionFunction[];
-  const metadata = {} as Record<string, any>;
-  for (const entry of context.resolvedEntry) {
+  const reflections = {} as Record<string, CommandReflection>;
+  for (const entry of commandEntries.sort((a, b) =>
+    a.file.localeCompare(b.file)
+  )) {
     log(
       LogLevelLabel.TRACE,
       `Precompiling the entry artifact ${entry.file} (${entry?.name ? `export: "${entry.name}"` : "default"})" from input "${entry.input.file}" (${entry.input.name ? `export: "${entry.input.name}"` : "default"})`
     );
+
+    const entryModule = await loadFile(entry.input.file);
+    if (!entryModule) {
+      throw new Error(`Failure loading module AST: ${entry.input.file}`);
+    }
 
     // eslint-disable-next-line ts/no-unsafe-function-type
     const command = await resolveType<TOptions, Function>(context, entry.input);
@@ -67,31 +89,86 @@ export async function reflectCommands<TOptions extends Options = Options>(
       ) {
         const parameterReflection = ReflectionClass.from(parameter.type);
         if (parameterReflection.hasProperty("data")) {
+          const dataReflection = resolveClassType(
+            parameterReflection.getProperty("data").getType()
+          );
+
           await writeFile(
             log,
             joinPaths(
-              getReflectionsPath(context),
-              `${entry.input.file
-                .replace(context.projectRoot, "")
-                .replace(/\.ts$/, "")}-data.json`
+              context.projectRoot,
+              context.artifactsDir,
+              "reflections",
+              entry.file
+                .replace(
+                  joinPaths(context.projectRoot, context.artifactsDir),
+                  ""
+                )
+                .replace(findFileName(entry.file), ""),
+              `${findFileName(entry.file).replace(findFileExtension(entry.file), "")}-data.json`
             ),
             StormJSON.stringify(parameterReflection.serializeType())
           );
 
-          reflections.push(commandReflection);
-          metadata[entry.input.file] = {
-            name: commandReflection.name,
+          let name = findFileName(entry.file).replace(
+            findFileExtension(entry.file),
+            ""
+          );
+          if (name === "index") {
+            name = findFolderName(entry.file);
+          }
+
+          const argsTypeName = dataReflection.getName();
+          let argsTypeImport = entryModule.imports[argsTypeName]?.from;
+          if (!argsTypeImport) {
+            throw new Error(
+              `Cannot find import for ${argsTypeName} in ${entry.input.file}`
+            );
+          }
+
+          if (isRelativePath(argsTypeImport)) {
+            argsTypeImport = joinPaths(
+              findFilePath(entry.input.file),
+              argsTypeImport
+            );
+          }
+
+          const reflection = {
+            name,
+            displayName: titleCase(name),
             description: commandReflection.description,
-            parameters: parameterReflection.getProperties().map(prop => {
+            entry,
+            argsTypeName,
+            argsTypeImport,
+            args: dataReflection.getProperties().map(property => {
+              const argName = property.getNameAsString();
+              const argAlias = kebabCase(argName);
+
               return {
-                name: prop.getNameAsString(),
-                description: prop.getDescription(),
-                type: stringifyType(prop.getType()),
-                isOptional: prop.isActualOptional(),
-                default: prop.getDefaultValue()
+                name: argName,
+                displayName: titleCase(argName),
+                type: stringifyType(property.getType()),
+                description: property.getDescription(),
+                alias: argAlias !== argName ? [argAlias] : [],
+                required:
+                  !property.isOptional() &&
+                  property.getDefaultValue() === undefined,
+                default: property.getDefaultValue()
               };
             })
-          };
+          } as CommandReflection;
+
+          const parentCommand = findFolderName(
+            resolveParentPath(findFilePath(entry.file))
+          );
+          if (parentCommand && reflections[parentCommand]) {
+            reflection.displayName = `${titleCase(parentCommand)} - ${reflection.displayName}`;
+
+            reflections[parentCommand].subCommands ??= {};
+            reflections[parentCommand].subCommands[name] = reflection;
+          } else {
+            reflections[name] = reflection;
+          }
         }
       }
     }
@@ -100,7 +177,7 @@ export async function reflectCommands<TOptions extends Options = Options>(
   await writeFile(
     log,
     joinPaths(getReflectionsPath(context), "cli.json"),
-    StormJSON.stringify(metadata)
+    StormJSON.stringify(reflections)
   );
 
   return reflections;

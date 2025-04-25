@@ -18,9 +18,15 @@
 import { LogLevelLabel } from "@storm-software/config-tools/types";
 import { getFileHeader } from "@storm-stack/core/helpers";
 import { Preset } from "@storm-stack/core/preset";
-import type { Context, EngineHooks, Options } from "@storm-stack/core/types";
+import type {
+  Context,
+  EngineHooks,
+  Options,
+  ResolvedEntryTypeDefinition
+} from "@storm-stack/core/types";
 import { StormStackNodeFeatures } from "@storm-stack/plugin-node/types/config";
 import { listFiles } from "@stryke/fs/list-files";
+import { StormJSON } from "@stryke/json/storm-json";
 import {
   findFileExtension,
   findFileName,
@@ -29,14 +35,19 @@ import {
 } from "@stryke/path/file-path-fns";
 import { isDirectory } from "@stryke/path/is-file";
 import { joinPaths } from "@stryke/path/join-paths";
+import { titleCase } from "@stryke/string-format/title-case";
 import { isSetString } from "@stryke/type-checks/is-set-string";
 import { reflectCommands } from "./helpers/reflect-command";
+import { writeStorage } from "./runtime/storage";
 import type { StormStackCLIPresetConfig } from "./types/config";
+import type { CommandReflection } from "./types/reflection";
 
 export default class StormStackCLIPreset<
   TOptions extends Options = Options
 > extends Preset<TOptions> {
   #config: StormStackCLIPresetConfig;
+
+  #commandEntries: ResolvedEntryTypeDefinition[] = [];
 
   public constructor(config: Partial<StormStackCLIPresetConfig> = {}) {
     super("cli", "@storm-stack/preset-cli");
@@ -54,7 +65,8 @@ export default class StormStackCLIPreset<
     hooks.addHooks({
       "init:context": this.initContext.bind(this),
       "init:installs": this.initInstalls.bind(this),
-      "prepare:entry": this.prepareEntry.bind(this)
+      "prepare:entry": this.prepareEntry.bind(this),
+      "prepare:runtime": this.prepareRuntime.bind(this)
     });
   }
 
@@ -69,7 +81,7 @@ export default class StormStackCLIPreset<
       isSetString(context.entry) &&
       isDirectory(context.entry)
     ) {
-      const files = (await listFiles(joinPaths(context.entry, "**/*"))).map(
+      const files = (await listFiles(joinPaths(context.entry, "**/*.ts"))).map(
         file =>
           file.replace(
             `${joinPaths(
@@ -92,24 +104,39 @@ export default class StormStackCLIPreset<
           )}`
         );
 
-        context.resolvedEntry = files.map(file => ({
-          file: joinPaths(context.projectRoot, context.artifactsDir, file),
-          input: { file: joinPaths(context.entry as string, file) }
-        }));
+        this.#commandEntries = files.reduce((ret, file) => {
+          let entryFile = joinPaths(
+            context.projectRoot,
+            context.artifactsDir,
+            "commands",
+            file.replace(context.entry as string, "")
+          );
+          if (
+            findFileName(entryFile) !== "index.ts" &&
+            findFileName(entryFile) !== "index.tsx"
+          ) {
+            entryFile = joinPaths(
+              entryFile.replace(findFileExtension(entryFile), ""),
+              "index.ts"
+            );
+          }
+
+          if (ret.some(entry => entry.file === entryFile)) {
+            this.log(
+              LogLevelLabel.WARN,
+              `Duplicate entry file found: ${entryFile}. Please ensure this is correct.`
+            );
+          } else {
+            ret.push({
+              file: entryFile,
+              input: { file: joinPaths(context.entry as string, file) }
+            });
+          }
+
+          return ret;
+        }, [] as ResolvedEntryTypeDefinition[]);
       }
     }
-
-    // const binaryName =
-    //   this.#config.binaryName || kebabCase(context.name || "cli");
-    // context.artifactsDir = joinPaths(
-    //   context.projectRoot,
-    //   this.#config.binaryPath
-    // );
-    // context.runtimeDir = joinPaths(context.artifactsDir, "runtime");
-    // context.resolvedEntry = context.resolvedEntry.map(entry => ({
-    //   ...entry,
-    //   file: joinPaths(this.#config.binaryPath, entry.file)
-    // }));
   }
 
   protected async initInstalls(context: Context<TOptions>) {
@@ -129,42 +156,247 @@ export default class StormStackCLIPreset<
     );
   }
 
+  protected async prepareRuntime(context: Context<TOptions>) {
+    const runtimeDir = joinPaths(context.projectRoot, context.runtimeDir);
+
+    this.log(
+      LogLevelLabel.TRACE,
+      `Preparing the runtime files in "${runtimeDir}"`
+    );
+
+    await Promise.all([
+      this.writeFile(
+        joinPaths(runtimeDir, "storage.ts"),
+        writeStorage(context, this.#config)
+      )
+    ]);
+  }
+
   protected async prepareEntry(context: Context<TOptions>) {
     try {
-      await reflectCommands(this.log, context, this.#config);
+      const commands = await reflectCommands(
+        this.log,
+        context,
+        this.#commandEntries
+      );
 
-      for (const entry of context.resolvedEntry) {
-        this.log(
-          LogLevelLabel.TRACE,
-          `Preparing the entry artifact ${entry.file} (${entry?.name ? `export: "${entry.name}"` : "default"})" from input "${entry.input.file}" (${entry.input.name ? `export: "${entry.input.name}"` : "default"})`
-        );
+      await Promise.all(
+        Object.values(commands).map(async command =>
+          this.prepareCommandDefinition(context, command)
+        )
+      );
 
-        await this.writeFile(
-          entry.file,
-          `${getFileHeader()}
+      const name = this.#config.binaryName || context.name;
+      const displayName = titleCase(name);
 
-import ".${joinPaths(context.runtimeDir.replace(context.artifactsDir, ""), "init")}";
+      await Promise.all(
+        context.resolvedEntry.map(async entry =>
+          this.writeFile(
+            entry.file,
+            `${getFileHeader()}
 
-import ${entry.input.name ? `{ ${entry.input.name} as handle }` : "handle"} from "${joinPaths(
-            relativePath(
-              findFilePath(entry.file),
-              findFilePath(entry.input.file)
-            ),
-            findFileName(entry.input.file).replace(
-              findFileExtension(entry.input.file),
-              ""
-            )
-          )}";
-import { builder } from ".${joinPaths(context.runtimeDir.replace(context.artifactsDir, ""), "app")}";
-import { storage } from ".${joinPaths(context.runtimeDir.replace(context.artifactsDir, ""), "storage")}";
+import "storm:init";
+
+import { renderUrls, renderLicense } from "@stryke/cli/meta";
+import { resolveCommand } from "@stryke/cli/parse";
+import { runCommand } from "@stryke/cli/run";
+import {
+  alignText,
+  alignTextLeft,
+  alignTextCenter
+} from "@stryke/cli/align-text";
+import { registerShutdown } from "@stryke/cli/shutdown";
+import { renderUsage } from "@stryke/cli/usage";
+import { tryGetWorkspaceConfig } from "@stryke/cli/usage";
+import consola from "consola";
+import { getAppVersion } from "storm:context";
+import { isStormError } from "storm:error";
+import { colors } from "consola/utils";
+
+const shutdown = await registerShutdown();
+
+try {
+  const rawArgs = process.argv.slice(2);
+  const command = await resolveCommand(
+    {
+      meta: {
+        name: "${name}",
+        displayName: "${displayName}",
+        version: getAppVersion(),
+        description: "${context.packageJson.description || `The ${displayName} command-line interface application`}",
+        homepage: ${
+          context.workspaceConfig?.homepage
+            ? `"${context.workspaceConfig.homepage}"`
+            : context.packageJson.homepage
+              ? `"${context.packageJson.homepage}"`
+              : "undefined"
+        },
+        license: ${
+          context.workspaceConfig?.license
+            ? `"${context.workspaceConfig.license}"`
+            : context.packageJson.license
+              ? `"${context.packageJson.license}"`
+              : "undefined"
+        },
+        licensing: ${
+          context.workspaceConfig?.licensing
+            ? `"${context.workspaceConfig.licensing}"`
+            : "undefined"
+        },
+        docs: ${
+          context.workspaceConfig?.docs
+            ? `"${context.workspaceConfig.docs}"`
+            : "undefined"
+        },
+        repository: ${
+          context.workspaceConfig?.repository
+            ? `"${context.workspaceConfig.repository}"`
+            : isSetString(context.packageJson.repository)
+              ? `"${context.packageJson.repository}"`
+              : isSetString(context.packageJson.repository?.url)
+                ? `"${context.packageJson.repository?.url}"`
+                : "undefined"
+        },
+        contact: ${
+          context.workspaceConfig?.contact
+            ? `"${context.workspaceConfig.contact}"`
+            : "undefined"
+        }
+      },
+      subCommands: {
+        ${Object.keys(commands)
+          .map(
+            command =>
+              `${command}: () => import("./${joinPaths("commands", command)}").then(m => m.default)`
+          )
+          .join(",\n")}
+      }
+    },
+    rawArgs
+  );
+
+  const meta =
+    typeof command.meta === "function"
+      ? await command.meta()
+      : await command.meta;
+  if (meta) {
+    const renderedUrls = renderUrls(meta);
+    const renderedDescription = \`\${colors.dim(meta.description)}\`;
+
+    const titleText = \`\${colors.bold(\`\${meta.displayName} v\${meta.version}\`)}\`;
+    const renderedTitle = alignText(
+      titleText,
+      lineLength => alignTextCenter(lineLength, Math.max(...[titleText, renderedDescription, renderedUrls].join("\\n").split("\\n").map(line => line.length)))
+    );
+
+    consola.box(\`\${renderedTitle}\\n\\n\${renderedDescription}\\n\\n\${renderedUrls}\`, {
+      padding: 1
+    });
+    consola.log(\`\\n\\n\${renderLicense(meta)}\\n\\n\`);
+  }
+
+  if (
+    rawArgs.includes("--help") ||
+    rawArgs.includes("-h") ||
+    rawArgs.includes("-?")
+  ) {
+    consola.log(\`\${await renderUsage(command)}\\n\\n\`);
+    consola.log(\`\${await renderLicense(meta)}\\n\\n\`);
+  } else if (
+    rawArgs.length === 1 &&
+    (rawArgs[0] === "--version" || rawArgs[0] === "-v")
+  ) {
+    const meta =
+      typeof command.meta === "function"
+        ? await command.meta()
+        : await command.meta;
+    if (!meta?.version) {
+      throw new StormError({ code: 8 });
+    }
+
+    consola.log(meta.version);
+  } else {
+    await runCommand(command, { rawArgs });
+  }
+} catch (error) {
+  consola.error(error, "An unexpected error occurred");
+  await shutdown(isStormError(error) ? error.code : 1);
+}
+
+`
+          )
+        )
+      );
+    } catch (error) {
+      this.log(
+        LogLevelLabel.ERROR,
+        `Failed to prepare the entry artifact: ${error?.message}`
+      );
+      throw error;
+    }
+  }
+
+  protected async prepareCommandDefinition(
+    context: Context<TOptions>,
+    command: CommandReflection
+  ) {
+    if (command.subCommands) {
+      await Promise.all(
+        Object.values(command.subCommands).map(async subCommand =>
+          this.prepareCommandDefinition(context, subCommand)
+        )
+      );
+    }
+
+    this.log(
+      LogLevelLabel.TRACE,
+      `Preparing the entry artifact ${command.entry.file} (${command.entry?.name ? `export: "${command.entry.name}"` : "default"})" from input "${command.entry.input.file}" (${command.entry.input.name ? `export: "${command.entry.input.name}"` : "default"})`
+    );
+
+    await this.writeFile(
+      command.entry.file,
+      `${getFileHeader()}
+
+import ${command.entry.input.name ? `{ ${command.entry.input.name} as handle }` : "handle"} from "${joinPaths(
+        relativePath(
+          findFilePath(command.entry.file),
+          findFilePath(command.entry.input.file)
+        ),
+        findFileName(command.entry.input.file).replace(
+          findFileExtension(command.entry.input.file),
+          ""
+        )
+      )}";
+import { builder } from "storm:app";
+import { storage } from "storm:storage";
+import { StormRequest } from "storm:request";
+import { StormResponse } from "storm:response";
 import { getSink as getStorageSink } from "@storm-stack/log-storage";${
-            this.#config.features?.includes(StormStackNodeFeatures.SENTRY)
-              ? `
+        this.#config.features?.includes(StormStackNodeFeatures.SENTRY)
+          ? `
 import { getSink as getSentrySink } from "@storm-stack/log-sentry";`
-              : ""
-          }
+          : ""
+      }
+import { defineCommand } from "@stryke/cli/define-command";
+import { getAppVersion } from "storm:context";${
+        command.subCommands && Object.keys(command.subCommands).length > 0
+          ? Object.keys(command.subCommands)
+              .map(key => `import ${key} from "./${key}";`)
+              .join("\n")
+          : ""
+      }
+import type { CommandContext } from "@stryke/cli/types";
+import { deserialize } from "@deepkit/type";
+import { ${command.argsTypeName} } from "${relativePath(
+        findFilePath(command.entry.file),
+        joinPaths(context.workspaceConfig.workspaceRoot, command.argsTypeImport)
+      )}";
 
-export default builder({
+const handleCommand = builder<
+  StormRequest<${command.argsTypeName}>,
+  StormResponse,
+  CommandContext
+>({
   name: ${context.name ? `"${context.name}"` : "undefined"},
   log: [
     { handle: await getStorageSink({ storage }), logLevel: "debug" }${
@@ -177,63 +409,52 @@ export default builder({
   storage
 })
   .handler(handle)
+  .deserializer(payload => new StormRequest({
+    data: deserialize<${command.argsTypeName}>(payload.args)
+  }))
   .build();
 
-/*
-const dev = defineCommand({
+export default defineCommand({
   meta: {
-    name: 'dev',
-    version: version,
-    description: 'Start the dev server',
-  },
-  args: {
-    clean: {
-      type: 'boolean',
-    },
-    host: {
-      type: 'string',
-    },
-    port: {
-      type: 'string',
-    },
-    https: {
-      type: 'boolean',
-    },
-    mode: {
-      type: 'string',
-      description:
-        'If set to "production" you can run the development server but serve the production bundle',
-    },
-    'debug-bundle': {
-      type: 'string',
-      description: "Will output the bundle to a temp file and then serve it from there afterwards allowing you to easily edit the bundle to debug problems.",
-    },
-    debug: {
-      type: 'string',
-      description: "Pass debug args to Vite",
-    },
-  },
-  async run({ args }) {
-    const { dev } = await import('./cli/dev')
-    await dev({
-      ...args,
-      debugBundle: args['debug-bundle'],
-      mode: modes[args.mode],
-    })
-  },
-})
-  */
+    name: "${command.name}",
+    displayName: "${command.displayName}",
+    description: "${command.description}"
+  },${
+    command.args.length > 0
+      ? `args: ${StormJSON.stringify(
+          command.args.reduce((ret, arg) => {
+            ret[arg.name] = {
+              description: arg.description,
+              type: arg.type,
+              required: arg.required,
+              default:
+                arg.type === "boolean"
+                  ? Boolean(arg.default)
+                  : arg.type === "number"
+                    ? Number(arg.default)
+                    : String(arg.default).replaceAll('"', "")
+            };
 
+            if (arg.type === "boolean") {
+              ret[arg.name].negativeDescription =
+                `The inverse of the "${arg.name}" argument.`;
+            }
+
+            return ret;
+          }, {})
+        )},`
+      : ""
+  }${
+    command.subCommands && Object.keys(command.subCommands).length > 0
+      ? `subCommands: {
+      ${Object.keys(command.subCommands).join(", \n")}
+  },`
+      : ""
+  }
+  handle: handleCommand
+})
 
 `
-        );
-      }
-    } catch (error) {
-      this.log(
-        LogLevelLabel.ERROR,
-        `Failed to prepare the entry artifact: ${error?.message}`
-      );
-      throw error;
-    }
+    );
   }
 }

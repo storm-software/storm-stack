@@ -22,7 +22,7 @@ import type { StormStackCLIPresetConfig } from "../types/config";
 
 export function writeStorage<TOptions extends Options = Options>(
   context: Context<TOptions>,
-  config: Required<StormStackCLIPresetConfig>
+  config: StormStackCLIPresetConfig
 ) {
   return `${getFileHeader()}
 

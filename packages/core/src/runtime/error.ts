@@ -22,12 +22,20 @@ export function writeError() {
 
  import { StormJSON } from "@stryke/json/storm-json";
  import { StormURL } from "@stryke/url/storm-url";
- import type { ErrorMessageDetails, Indexable, MessageType } from "@stryke/types";
+ import type {
+  ErrorMessageDetails,
+  Indexable,
+  MessageType
+} from "@stryke/types";
  import { isError } from "@stryke/type-checks/is-error";
  import { isFunction } from "@stryke/type-checks/is-function";
  import { isObject } from "@stryke/type-checks/is-object";
  import { isSetString } from "@stryke/type-checks/is-set-string";
- import type { IStormError, ParsedStacktrace, StormErrorOptions } from "@storm-stack/types";
+ import type {
+   IStormError,
+   ParsedStacktrace,
+   StormErrorOptions
+ } from "@storm-stack/types";
  import type { ErrorType } from "@storm-stack/types";
 
  /**
@@ -209,7 +217,7 @@ export function writeError() {
    /**
     * The inner error
     */
-   #cause: IStormError | undefined = undefined;
+   #cause?: IStormError;
 
    /**
     * The error code
@@ -231,7 +239,7 @@ export function writeError() {
     */
    public data?: any;
 
-    /**
+  /**
    * The StormError constructor
    *
    * @param options - The options for the error
@@ -374,6 +382,15 @@ export function writeError() {
     */
    public get originalStack(): string | undefined {
      return this.#stack;
+   }
+
+  /**
+    * The unformatted stack trace
+    *
+    * @returns The stack trace string
+    */
+   public set originalStack(stack: string | undefined) {
+     this.#stack = stack;
    }
 
   /**

@@ -1,7 +1,7 @@
 {
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
-    "types": ["node"],
+    "types": ["node", "@storm-stack/plugin-node/types", "@storm-stack/types"],
     "outDir": "../../dist/out-tsc",
     "verbatimModuleSyntax": false
   },

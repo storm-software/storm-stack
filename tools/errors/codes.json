@@ -6,7 +6,8 @@
     "4": "App name is not defined.",
     "5": "useStorm is not available in this environment.",
     "6": "The %s function%s must be configured. Please add .%s(<your_function>) before .build() is called.",
-    "7": "No payload found in %s request"
+    "7": "No payload found in %s request",
+    "8": "The application version could not be determined."
   },
   "not_found": {
     "1": "The requested resource was not found.",

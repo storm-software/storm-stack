@@ -84,14 +84,14 @@ export async function getTsconfigChanges(
     tsconfigJson.compilerOptions.emitDecoratorMetadata = true;
   }
 
-  // if (
-  //   !tsconfig.options.types?.some(
-  //     type => type.toLowerCase() === "@storm-stack/types"
-  //   )
-  // ) {
-  //   tsconfigJson.compilerOptions.types ??= [];
-  //   tsconfigJson.compilerOptions.types.push("@storm-stack/types");
-  // }
+  if (
+    !tsconfig.options.types?.some(
+      type => type.toLowerCase() === "@storm-stack/types"
+    )
+  ) {
+    tsconfigJson.compilerOptions.types ??= [];
+    tsconfigJson.compilerOptions.types.push("@storm-stack/types");
+  }
 
   if (
     !tsconfig.options.lib?.some(

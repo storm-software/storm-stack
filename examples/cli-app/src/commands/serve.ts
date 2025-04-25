@@ -16,8 +16,6 @@
  ------------------------------------------------------------------- */
 
 // eslint-disable-next-line ts/consistent-type-imports
-import { StormRequest } from "../../.storm/runtime/request";
-// eslint-disable-next-line ts/consistent-type-imports
 import { ServePayload } from "../types";
 
 /**

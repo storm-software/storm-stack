@@ -36,7 +36,7 @@ export interface ServePayload {
   /**
    * Should the server serve compressed files?
    */
-  compress: boolean;
+  compress?: boolean;
 
   /**
    * Should the server load environment variables from the .env file?
@@ -44,4 +44,29 @@ export interface ServePayload {
    * @defaultValue true
    */
   loadEnv: boolean;
+}
+
+export interface AddPayload {
+  /**
+   * The file to add to the file system.
+   *
+   * @defaultValue "server.ts"
+   */
+  file: string;
+
+  /**
+   * The type of the file.
+   *
+   * @defaultValue "server"
+   */
+  type: string;
+}
+
+export interface AddPagePayload {
+  /**
+   * The file to add to the file system.
+   *
+   * @defaultValue "page.ts"
+   */
+  file: string;
 }
