@@ -9,13 +9,18 @@ import "@cloudflare/unenv-preset/polyfill/performance";
 import { handler as handle } from "../src/index";
 
 import { getSink } from "@storm-stack/log-console";
+import { WorkerEntrypoint } from "cloudflare:workers";
 import { builder } from "./runtime/app";
 
-export default {
-  fetch: builder({
-    name: "examples-cloudflare-worker",
-    log: { handle: getSink(), logLevel: "debug" }
-  })
-    .handler(handle)
-    .build()
-};
+const handleRequest = builder({
+  name: "examples-cloudflare-worker",
+  log: { handle: getSink(), logLevel: "debug" }
+})
+  .handler(handle)
+  .build();
+
+export default class extends WorkerEntrypoint {
+  fetch(req, env, ctx) {
+    return handleRequest({ req, env, ctx });
+  }
+}

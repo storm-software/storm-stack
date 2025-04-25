@@ -18,25 +18,37 @@
 import { generateDeclarationVariables } from "@storm-stack/core/helpers/dtsgen";
 import { getFileHeader } from "@storm-stack/core/helpers/utilities";
 import type { ResolvedDotenvType } from "@storm-stack/core/types";
-import type { StormStackNodeFeatures } from "../types/config";
+import { StormStackNodeFeatures } from "../types/config";
 
 export function generateDeclarations(
   env: ResolvedDotenvType,
-  _features: StormStackNodeFeatures[]
+  features: StormStackNodeFeatures[]
 ) {
   return `${getFileHeader(`
 /// <reference types="@storm-stack/types" />
 /// <reference types="@storm-stack/plugin-node/types" />
 `)}
 declare global {
-  const $storm: StormContext<${generateDeclarationVariables(env)}>;
+  const $storm: StormContext<${generateDeclarationVariables(env)}${
+    features.includes(StormStackNodeFeatures.ENV_PATHS)
+      ? `, {
+      /**
+       * The environment paths for the Storm application.
+       */
+      readonly paths: EnvPaths;
+    }`
+      : ""
+  }>;
 }
 
 export {};
  `;
 }
 
-export function generateGlobal(path: string) {
+export function generateGlobal(
+  path: string,
+  features: StormStackNodeFeatures[]
+) {
   return `${getFileHeader(`
 /// <reference types="@storm-stack/plugin-node/types" />
 `)}
@@ -60,9 +72,12 @@ declare global {
   }
 
   const getBuildInfo: (typeof import("${path}/context"))["getBuildInfo"];
-  const getRuntimeInfo: (typeof import("${path}/context"))["getRuntimeInfo"];
-  const getAppName: (typeof import("${path}/context"))["getAppName"];
-  const getAppVersion: (typeof import("${path}/context"))["getAppVersion"];
+  const getRuntimeInfo: (typeof import("${path}/context"))["getRuntimeInfo"];${
+    features.includes(StormStackNodeFeatures.ENV_PATHS)
+      ? `
+  const envPaths: (typeof import("${path}/context"))["envPaths"];`
+      : ""
+  }
   const useStorm: (typeof import("${path}/context"))["useStorm"];
   const STORM_ASYNC_CONTEXT: (typeof import("${path}/context"))["STORM_ASYNC_CONTEXT"];
 }
@@ -72,7 +87,10 @@ export {};
 `;
 }
 
-export function generateImports(path: string) {
+export function generateImports(
+  path: string,
+  features: StormStackNodeFeatures[]
+) {
   return `${getFileHeader(`
 /// <reference types="@storm-stack/plugin-node/types" />
 `)}
@@ -88,18 +106,24 @@ declare module "storm:app" {
 
 declare module "storm:context" {
   const getBuildInfo: (typeof import("${path}/context"))["getBuildInfo"];
-  const getRuntimeInfo: (typeof import("${path}/context"))["getRuntimeInfo"];
-  const getAppName: (typeof import("${path}/context"))["getAppName"];
-  const getAppVersion: (typeof import("${path}/context"))["getAppVersion"];
+  const getRuntimeInfo: (typeof import("${path}/context"))["getRuntimeInfo"];${
+    features.includes(StormStackNodeFeatures.ENV_PATHS)
+      ? `
+  const envPaths: (typeof import("${path}/context"))["envPaths"];`
+      : ""
+  }
   const useStorm: (typeof import("${path}/context"))["useStorm"];
   const STORM_ASYNC_CONTEXT: (typeof import("${path}/context"))["STORM_ASYNC_CONTEXT"];
 
-  export {
+  export {${
+    features.includes(StormStackNodeFeatures.ENV_PATHS)
+      ? `
+    envPaths,`
+      : ""
+  }
     getBuildInfo,
     getRuntimeInfo,
     useStorm,
-    getAppName,
-    getAppVersion,
     STORM_ASYNC_CONTEXT
   };
 }

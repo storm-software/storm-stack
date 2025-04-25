@@ -19,15 +19,13 @@ declare module "storm:app" {
 declare module "storm:context" {
   const getBuildInfo: (typeof import("../runtime/context"))["getBuildInfo"];
   const getRuntimeInfo: (typeof import("../runtime/context"))["getRuntimeInfo"];
-  const getAppName: (typeof import("../runtime/context"))["getAppName"];
-  const getAppVersion: (typeof import("../runtime/context"))["getAppVersion"];
+  const envPaths: (typeof import("../runtime/context"))["envPaths"];
   const useStorm: (typeof import("../runtime/context"))["useStorm"];
   const STORM_ASYNC_CONTEXT: (typeof import("../runtime/context"))["STORM_ASYNC_CONTEXT"];
 
   export {
     STORM_ASYNC_CONTEXT,
-    getAppName,
-    getAppVersion,
+    envPaths,
     getBuildInfo,
     getRuntimeInfo,
     useStorm

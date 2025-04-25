@@ -18,6 +18,7 @@
 import { LogLevelLabel } from "@storm-software/config-tools/types";
 import type { ESBuildOptions } from "@storm-software/esbuild";
 import { build as esbuild } from "@storm-software/esbuild";
+import { reflectDotenvTypes } from "@storm-stack/core/helpers/dotenv/reflect-dotenv";
 import { compilerPlugin } from "@storm-stack/core/helpers/esbuild/compiler-plugin";
 import { externalPlugin } from "@storm-stack/core/helpers/esbuild/external-plugin";
 import { getParsedTypeScriptConfig } from "@storm-stack/core/helpers/tsconfig";
@@ -36,6 +37,7 @@ import {
 import { joinPaths } from "@stryke/path/join-paths";
 import type { TsConfigJson } from "@stryke/types/tsconfig";
 import defu from "defu";
+import type { InlinePreset } from "unimport";
 import {
   generateDeclarations,
   generateGlobal,
@@ -49,7 +51,6 @@ import { writeInit } from "./runtime/init";
 import { writeStorage } from "./runtime/storage";
 import type { StormStackNodePluginConfig } from "./types/config";
 import { StormStackNodeFeatures } from "./types/config";
-
 export default class StormStackNodePlugin<
   TOptions extends Options = Options
 > extends Plugin<TOptions> {
@@ -103,27 +104,22 @@ export default class StormStackNodePlugin<
     );
 
     context.platform ??= "node";
-    context.override = defu(
-      {
-        format: "esm",
-        target: "node22",
-        alias: {
-          "storm:init": joinPaths(runtimeDir, "init"),
-          "storm:app": joinPaths(runtimeDir, "app"),
-          "storm:context": joinPaths(runtimeDir, "context"),
-          "storm:error": joinPaths(runtimeDir, "error"),
-          "storm:event": joinPaths(runtimeDir, "event"),
-          "storm:id": joinPaths(runtimeDir, "id"),
-          "storm:storage": joinPaths(runtimeDir, "storage"),
-          "storm:log": joinPaths(runtimeDir, "log"),
-          "storm:request": joinPaths(runtimeDir, "request"),
-          "storm:response": joinPaths(runtimeDir, "response"),
-          "storm:json": "@stryke/json",
-          "storm:url": "@stryke/url"
-        }
-      },
-      context.override
-    );
+    context.override = defu(context.override, {
+      alias: {
+        "storm:init": joinPaths(runtimeDir, "init"),
+        "storm:app": joinPaths(runtimeDir, "app"),
+        "storm:context": joinPaths(runtimeDir, "context"),
+        "storm:error": joinPaths(runtimeDir, "error"),
+        "storm:event": joinPaths(runtimeDir, "event"),
+        "storm:id": joinPaths(runtimeDir, "id"),
+        "storm:storage": joinPaths(runtimeDir, "storage"),
+        "storm:log": joinPaths(runtimeDir, "log"),
+        "storm:request": joinPaths(runtimeDir, "request"),
+        "storm:response": joinPaths(runtimeDir, "response"),
+        "storm:json": "@stryke/json",
+        "storm:url": "@stryke/url"
+      }
+    });
 
     context.unimportPresets.push({
       imports: ["builder"],
@@ -131,13 +127,13 @@ export default class StormStackNodePlugin<
     });
     context.unimportPresets.push({
       imports: [
-        "useStorm",
+        this.#config.features.includes(StormStackNodeFeatures.ENV_PATHS) &&
+          "envPaths",
         "getBuildInfo",
         "getRuntimeInfo",
-        "getAppName",
-        "getAppVersion",
+        "useStorm",
         "STORM_ASYNC_CONTEXT"
-      ],
+      ].filter(Boolean) as InlinePreset["imports"],
       from: joinPaths(runtimeDir, "context")
     });
     context.unimportPresets.push({
@@ -196,10 +192,7 @@ export default class StormStackNodePlugin<
   }
 
   protected async prepareTypes(context: Context<TOptions>) {
-    if (!context.dts || !context.resolvedDotenv.types?.variables?.reflection) {
-      return;
-    }
-
+    const resolvedDotenvTypes = await reflectDotenvTypes(this.log, context);
     const typesDir = joinPaths(context.projectRoot, context.typesDir);
 
     this.log(
@@ -216,19 +209,16 @@ export default class StormStackNodePlugin<
       [
         this.writeFile(
           joinPaths(typesDir, "modules-node.d.ts"),
-          generateImports(runtimePath)
+          generateImports(runtimePath, this.#config.features)
         ),
         this.writeFile(
           joinPaths(typesDir, "global-node.d.ts"),
-          generateGlobal(runtimePath)
+          generateGlobal(runtimePath, this.#config.features)
         ),
         this.writeFile(
-          joinPaths(
-            context.projectRoot,
-            context.dts.replace(context.projectRoot, "").trim()
-          ),
+          joinPaths(typesDir, "env.d.ts"),
           generateDeclarations(
-            context.resolvedDotenv.types.variables,
+            resolvedDotenvTypes.variables,
             this.#config.features
           )
         )
@@ -245,11 +235,18 @@ export default class StormStackNodePlugin<
     );
 
     await Promise.all([
-      this.writeFile(joinPaths(runtimeDir, "init.ts"), writeInit()),
-      this.writeFile(joinPaths(runtimeDir, "app.ts"), writeCreateApp()),
+      this.writeFile(
+        joinPaths(runtimeDir, "init.ts"),
+        writeInit(this.#config.features),
+        true
+      ),
+      this.writeFile(
+        joinPaths(runtimeDir, "app.ts"),
+        writeCreateApp(this.#config.features)
+      ),
       this.writeFile(
         joinPaths(runtimeDir, "context.ts"),
-        writeContext(context)
+        writeContext(context, this.#config.features)
       ),
       this.writeFile(joinPaths(runtimeDir, "storage.ts"), writeStorage()),
       this.writeFile(joinPaths(runtimeDir, "event.ts"), writeEvent())
@@ -337,47 +334,65 @@ export default builder({
     override: Partial<ESBuildOptions> = {}
   ) {
     return esbuild(
-      defu(override ?? {}, context.override, {
-        entry: context.resolvedEntry.reduce(
-          (ret, entry) => {
-            ret[
-              entry.output ||
-                entry.input.file
-                  .replace(findFileExtension(entry.input.file), "")
-                  .replace(
-                    `${context.projectJson?.sourceRoot || context.projectRoot}/`,
-                    ""
-                  ) ||
-                entry.file
-            ] = entry.file;
+      defu(
+        override ?? {},
+        context.override,
+        {
+          entry: context.resolvedEntry.reduce(
+            (ret, entry) => {
+              ret[
+                entry.output ||
+                  entry.input.file
+                    .replace(
+                      `${context.projectJson?.sourceRoot || context.projectRoot}/`,
+                      ""
+                    )
+                    .replace(findFileExtension(entry.input.file), "") ||
+                  entry.file
+                    .replace(
+                      `${context.projectJson?.sourceRoot || context.projectRoot}/`,
+                      ""
+                    )
+                    .replace(findFileExtension(entry.file), "")
+              ] = entry.file;
 
-            return ret;
-          },
-          {} as Record<string, string>
-        ),
-        projectRoot: context.projectRoot,
-        outputPath: context.outputPath,
-        platform: context.platform,
-        generatePackageJson: true,
-        bundle: true,
-        minify: Boolean(context.minify),
-        sourcemap: context.mode !== "production",
-        banner:
-          context.mode !== "production"
-            ? "\n//  ⚡  Built with Storm Stack \n"
-            : "",
-        env: context.resolvedDotenv.values as {
-          [key: string]: string;
-        },
-        plugins: [
-          externalPlugin(
-            this.log,
-            context,
-            context.resolvedTsconfig.tsconfigJson.compilerOptions?.paths
+              return ret;
+            },
+            {} as Record<string, string>
           ),
-          compilerPlugin(this.log, context)
-        ]
-      }) as ESBuildOptions
+          mode: context.mode,
+          format: context.format,
+          platform: context.platform,
+          projectRoot: context.projectRoot,
+          outputPath: context.outputPath,
+          generatePackageJson: true,
+          bundle: true,
+          treeShaking: true,
+          metafile: context.mode !== "production",
+          minify: Boolean(context.minify ?? context.mode === "production"),
+          sourcemap: context.mode !== "production",
+          banner:
+            context.mode !== "production"
+              ? "\n//  ⚡  Built with Storm Stack \n"
+              : " ",
+          env: context.resolvedDotenv.values as {
+            [key: string]: string;
+          },
+          plugins: [
+            externalPlugin(
+              this.log,
+              context,
+              context.resolvedTsconfig.tsconfigJson.compilerOptions?.paths
+            ),
+            compilerPlugin(this.log, context)
+          ]
+        },
+        {
+          platform: "node",
+          format: "esm",
+          target: "node22"
+        }
+      ) as ESBuildOptions
     );
   }
 }

@@ -10,12 +10,12 @@
   },
   "private": true,
   "dependencies": {
-    "@storm-stack/log-console": "0.5.0"
+    "@storm-stack/log-console": "catalog:"
   },
   "devDependencies": {
-    "@storm-stack/core": "0.8.0",
-    "@storm-stack/nx": "0.5.0",
-    "@storm-stack/plugin-node": "0.8.0",
+    "@storm-stack/core": "workspace:*",
+    "@storm-stack/nx": "catalog:",
+    "@storm-stack/plugin-node": "catalog:",
     "@stryke/url": "catalog:"
   },
   "storm": {
@@ -24,14 +24,14 @@
         "@storm-stack/plugin-node",
         {
           "features": [
-            "sentry"
+            "sentry",
+            "env-paths"
           ]
         }
       ]
     ],
     "skipCache": true,
     "skipInstalls": true,
-    "skipLint": true,
-    "mode": "development"
+    "skipLint": true
   }
 }

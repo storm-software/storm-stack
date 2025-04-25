@@ -18,7 +18,8 @@
 import type { TypeDefinitionParameter } from "@stryke/types/index";
 
 export enum StormStackNodeFeatures {
-  SENTRY = "sentry"
+  SENTRY = "sentry",
+  ENV_PATHS = "env-paths"
 }
 
 export interface StormStackNodePluginConfig {

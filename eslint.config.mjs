@@ -21,17 +21,9 @@ Error.stackTraceLimit = Number.POSITIVE_INFINITY;
 
 export default getStormConfig({
   repositoryName: "storm-stack",
-
   typescript: {
     override: {
-      "ts/consistent-type-imports": [
-        "warn",
-        {
-          disallowTypeAnnotations: false,
-          fixStyle: "separate-type-imports",
-          prefer: "type-imports"
-        }
-      ]
+      "ts/consistent-type-imports": "off"
     }
   }
 });

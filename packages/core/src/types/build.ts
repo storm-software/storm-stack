@@ -21,7 +21,10 @@ import type { StormWorkspaceConfig } from "@storm-software/config/types";
 import type { EnvPaths } from "@stryke/env/get-env-paths";
 import type { DotenvParseOutput } from "@stryke/env/types";
 import type { MaybePromise } from "@stryke/types/base";
-import type { TypeDefinition } from "@stryke/types/configuration";
+import type {
+  TypeDefinition,
+  TypeDefinitionParameter
+} from "@stryke/types/configuration";
 import type { PackageJson } from "@stryke/types/package-json";
 import type { TsConfigJson } from "@stryke/types/tsconfig";
 import type { Hookable } from "hookable";
@@ -76,24 +79,16 @@ export interface SourceFile {
 /**
  * The format for providing the application entry point(s) to the build command
  */
-export type Options = Partial<ProjectConfig> & {
-  /**
-   * {@inheritdoc TypeScriptBuildResolvedOptions.projectRoot}
-   */
-  projectRoot: string;
-
+export type Options = ProjectConfig & {
   /**
    * {@inheritdoc TypeScriptBuildResolvedOptions.outputPath}
    */
   outputPath?: string;
 
   /**
-   * The platform to target when compiling the source code
-   *
-   * @remarks
-   * If the `"browser"` or `"neutral"` platforms are selected, environment variables containing secrets will not be embedded into the compiled source code.
+   * The entry point(s) for the application
    */
-  platform?: "node" | "browser" | "neutral";
+  entry?: TypeDefinitionParameter | TypeDefinitionParameter[];
 
   /**
    * The mode to use when compiling the source code
@@ -103,67 +98,11 @@ export type Options = Partial<ProjectConfig> & {
   mode?: "development" | "staging" | "production";
 
   /**
-   * The format to use when compiling the source code
-   */
-  format?: "esm" | "cjs";
-
-  /**
    * Should the plugin run silently (no console output)
    *
    * @defaultValue false
    */
   silent?: boolean;
-
-  /**
-   * Should the Storm Stack CLI processes skip installing missing packages?
-   *
-   * @remarks
-   * This option is useful for CI/CD environments where the installation of packages is handled by a different process.
-   *
-   * @defaultValue false
-   */
-  skipInstalls?: boolean;
-
-  /**
-   * Should the compiler processes skip any improvements that make use of cache?
-   *
-   * @defaultValue false
-   */
-  skipCache?: boolean;
-
-  /**
-   * Should the esbuild processes skip the bundling of node_modules?
-   *
-   * @defaultValue false
-   */
-  skipNodeModulesBundle?: boolean;
-
-  /**
-   * A list of external packages to exclude from the bundled code
-   */
-  external?: string[];
-
-  /**
-   * A list of packages that should be included in the bundled code
-   */
-  noExternal?: string[];
-
-  /**
-   * Should the compiler minify the output
-   *
-   * @remarks
-   * This value is set to `true` by default when the {@link Options.mode} is set to `"production"`
-   *
-   * @defaultValue false
-   */
-  minify?: boolean;
-
-  /**
-   * The path to the file to save the generated imports
-   *
-   * @defaultValue "\{projectRoot\}/.storm/import-dump.json"
-   */
-  importDump?: string | boolean;
 
   /**
    * The path to the tsconfig file to be used by the compiler
@@ -390,24 +329,18 @@ export type InferProjectConfig<TConfig extends ProjectConfig = ProjectConfig> =
         ? AdapterProjectConfig & TConfig
         : never;
 
-export type Context<
-  TOptions extends Options = Options,
-  TConfig extends InferProjectConfig<TOptions> = InferProjectConfig<TOptions>
-> = TConfig &
+export type Context<TOptions extends Options = Options> = Omit<
+  TOptions,
+  "tsconfig" | "projectType" | "mode" | "outputPath"
+> &
   Required<
-    Pick<
-      TOptions,
-      | "platform"
-      | "mode"
-      | "silent"
-      | "outputPath"
-      | "skipInstalls"
-      | "skipCache"
-      | "minify"
-      | "importDump"
-      | "tsconfig"
-    >
+    Pick<TOptions, "tsconfig" | "projectType" | "mode" | "outputPath">
   > & {
+    /**
+     * The original input options
+     */
+    options: TOptions;
+
     /**
      * The Storm workspace configuration
      */
@@ -434,9 +367,29 @@ export type Context<
     envPaths: EnvPaths;
 
     /**
+     * The format to use when compiling the source code
+     *
+     * @defaultValue "esm"
+     */
+    format?: "esm" | "cjs";
+
+    /**
      * The platform configuration to use when building the project
+     *
+     * @remarks
+     * If the `"browser"` or `"neutral"` platforms are selected, environment variables containing secrets will not be embedded into the compiled source code.
      */
     platform: Platform;
+
+    /**
+     * Should the compiler minify the output
+     *
+     * @remarks
+     * This value is set to `true` by default when the {@link Options.mode} is set to `"production"`
+     *
+     * @defaultValue false
+     */
+    minify: boolean;
 
     /**
      * The directory to generate files in the prepare step
@@ -483,7 +436,7 @@ export type Context<
     /**
      * The project's project.json file content
      */
-    projectJson: Record<string, any>;
+    projectJson?: Record<string, any>;
 
     /**
      * The Jiti module resolver

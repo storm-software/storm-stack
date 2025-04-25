@@ -28,8 +28,11 @@ import defu from "defu";
 import type { Options, ResolvedDotenvOptions } from "../../types/build";
 import { removeEnvPrefix } from "./source-file-env";
 
-const loadEnvFiles = async <TEnv extends DotenvParseOutput>(
-  options: Options,
+const loadEnvFiles = async <
+  TOptions extends Options = Options,
+  TEnv extends DotenvParseOutput = DotenvParseOutput
+>(
+  options: TOptions,
   cwd: string,
   dotenv: ResolvedDotenvOptions
 ): Promise<TEnv> => {
@@ -49,16 +52,19 @@ const loadEnvFiles = async <TEnv extends DotenvParseOutput>(
   return removeEnvPrefix(env) as TEnv;
 };
 
-const loadEnvDirectory = async <TEnv extends DotenvParseOutput>(
+const loadEnvDirectory = async <
+  TOptions extends Options = Options,
+  TEnv extends DotenvParseOutput = DotenvParseOutput
+>(
   directory: string,
-  options: Options,
+  options: TOptions,
   dotenv: ResolvedDotenvOptions,
   cacheDir: string,
   packageJson: PackageJson,
   workspaceConfig: StormWorkspaceConfig
 ): Promise<TEnv> => {
   const [envResult, c12Result] = await Promise.all([
-    loadEnvFiles<TEnv>(options, directory, dotenv),
+    loadEnvFiles<TOptions, TEnv>(options, directory, dotenv),
     loadConfig({
       cwd: directory,
       name: "storm",
@@ -66,8 +72,7 @@ const loadEnvDirectory = async <TEnv extends DotenvParseOutput>(
       defaults: {
         NAME: packageJson.name?.replace(`@${workspaceConfig.namespace}/`, ""),
         MODE: options.mode,
-        ORG: workspaceConfig.organization,
-        PLATFORM: options.platform
+        ORG: workspaceConfig.organization
       },
       globalRc: true,
       packageJson: true,
@@ -82,8 +87,11 @@ const loadEnvDirectory = async <TEnv extends DotenvParseOutput>(
   return defu(envResult as any, c12Result.config, workspaceConfig) as TEnv;
 };
 
-export const loadEnv = async <TEnv extends DotenvParseOutput>(
-  options: Options,
+export const loadEnv = async <
+  TOptions extends Options = Options,
+  TEnv extends DotenvParseOutput = DotenvParseOutput
+>(
+  options: TOptions,
   dotenv: ResolvedDotenvOptions,
   cacheDir: string,
   configDir: string,
@@ -91,7 +99,7 @@ export const loadEnv = async <TEnv extends DotenvParseOutput>(
   workspaceConfig: StormWorkspaceConfig
 ): Promise<TEnv> => {
   const [project, workspace, config] = await Promise.all([
-    loadEnvDirectory(
+    loadEnvDirectory<TOptions, TEnv>(
       options.projectRoot,
       options,
       dotenv,
@@ -99,7 +107,7 @@ export const loadEnv = async <TEnv extends DotenvParseOutput>(
       packageJson,
       workspaceConfig
     ),
-    loadEnvDirectory(
+    loadEnvDirectory<TOptions, TEnv>(
       workspaceConfig.workspaceRoot,
       options,
       dotenv,
@@ -107,7 +115,7 @@ export const loadEnv = async <TEnv extends DotenvParseOutput>(
       packageJson,
       workspaceConfig
     ),
-    loadEnvDirectory(
+    loadEnvDirectory<TOptions, TEnv>(
       configDir,
       options,
       dotenv,

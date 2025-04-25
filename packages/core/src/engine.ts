@@ -111,7 +111,7 @@ export class Engine<TOptions extends Options = Options> {
   /**
    * The options provided to Storm Stack
    */
-  protected options: Options;
+  protected options: TOptions;
 
   /**
    * The resolved options provided to Storm Stack
@@ -133,6 +133,7 @@ export class Engine<TOptions extends Options = Options> {
     this.log = createLog("engine", this.options);
 
     this.context = this.options as Context<TOptions>;
+    this.context.options = options;
     this.context.override ??= {};
 
     this.context.workspaceConfig = workspaceConfig;
@@ -251,14 +252,6 @@ export class Engine<TOptions extends Options = Options> {
       await removeFile(metaFilePath);
     }
 
-    this.context.dts =
-      this.options.dts || joinPaths(this.context.typesDir, "env.d.ts");
-    if (isSetString(this.context.dts)) {
-      this.context.dts = this.context.dts
-        .replace(this.context.projectRoot, "")
-        .trim();
-    }
-
     this.context.outputPath ??= joinPaths("dist", this.context.projectRoot);
 
     for (const preset of this.context.presets ?? []) {
@@ -300,19 +293,22 @@ export class Engine<TOptions extends Options = Options> {
       this.context.projectType ??= this.context.projectJson?.projectType;
     }
 
-    if (this.context.projectType === "application" && this.context.entry) {
-      if (isSetString(this.context.entry)) {
+    if (
+      this.context.projectType === "application" &&
+      this.context.options.entry
+    ) {
+      if (isSetString(this.context.options.entry)) {
         this.context.resolvedEntry = [
           {
-            ...this.resolveEntry(this.context, this.context.entry),
-            input: parseTypeDefinition(this.context.entry)!
+            ...this.resolveEntry(this.context, this.context.options.entry),
+            input: parseTypeDefinition(this.context.options.entry)!
           }
         ];
       } else if (
-        Array.isArray(this.context.entry) &&
-        this.context.entry.filter(Boolean).length > 0
+        Array.isArray(this.context.options.entry) &&
+        this.context.options.entry.filter(Boolean).length > 0
       ) {
-        this.context.resolvedEntry = this.context.entry
+        this.context.resolvedEntry = this.context.options.entry
           .map(entry => ({
             ...this.resolveEntry(this.context, entry),
             input: parseTypeDefinition(entry)!
@@ -742,6 +738,14 @@ export class Engine<TOptions extends Options = Options> {
           }
         );
       });
+
+    // Re-resolve the tsconfig to ensure it is up to date
+    this.context.resolvedTsconfig = await getParsedTypeScriptConfig(
+      this.context
+    );
+    if (!this.context.resolvedTsconfig) {
+      throw new Error("Failed to parse the TypeScript configuration file.");
+    }
   }
 
   /**
@@ -1223,68 +1227,56 @@ Note: Please ensure the plugin package's default export is a class that extends 
    * Write the Typescript declarations
    */
   private async writeDeclarations() {
-    if (isSetString(this.context.dts)) {
-      const dtsFile = joinPaths(
-        this.context.projectRoot,
-        this.context.dts.replace(this.context.projectRoot, "").trim()
-      );
-      this.log(
-        LogLevelLabel.TRACE,
-        `Writing a declaration file in "${dtsFile}"`
-      );
+    const dtsFile = joinPaths(
+      this.context.projectRoot,
+      this.context.typesDir,
+      "env.d.ts"
+    );
+    this.log(LogLevelLabel.TRACE, `Writing a declaration file in "${dtsFile}"`);
 
-      let content = "";
-      if (this.context.resolvedDotenv.types.variables.reflection) {
-        content = generateDeclarations(
-          this.context.resolvedDotenv.types.variables
-        );
-      }
-
-      const dtsFilePath = findFilePath(dtsFile);
-      if (dtsFilePath && !existsSync(dtsFilePath)) {
-        await createDirectory(dtsFilePath);
-      }
-
-      return Promise.all(
-        [
-          content && this.writeFile(dtsFile, content),
-          this.writeFile(
-            joinPaths(
-              this.context.projectRoot,
-              this.context.typesDir,
-              "modules.d.ts"
-            ),
-            generateImports(
-              relativePath(
-                joinPaths(this.context.projectRoot, this.context.typesDir),
-                joinPaths(this.context.projectRoot, this.context.runtimeDir)
-              )
-            )
-          ),
-          this.writeFile(
-            joinPaths(
-              this.context.projectRoot,
-              this.context.typesDir,
-              "global.d.ts"
-            ),
-            generateGlobal(
-              relativePath(
-                joinPaths(this.context.projectRoot, this.context.typesDir),
-                joinPaths(this.context.projectRoot, this.context.runtimeDir)
-              )
-            )
-          )
-        ].filter(Boolean)
+    let content = "";
+    if (this.context.resolvedDotenv.types.variables.reflection) {
+      content = generateDeclarations(
+        this.context.resolvedDotenv.types.variables
       );
     }
 
-    this.log(
-      LogLevelLabel.INFO,
-      "The `dts` option was set to `false`. Skipping declaration generation."
-    );
+    const dtsFilePath = findFilePath(dtsFile);
+    if (dtsFilePath && !existsSync(dtsFilePath)) {
+      await createDirectory(dtsFilePath);
+    }
 
-    // eslint-disable-next-line no-useless-return
-    return;
+    return Promise.all(
+      [
+        content && this.writeFile(dtsFile, content),
+        this.writeFile(
+          joinPaths(
+            this.context.projectRoot,
+            this.context.typesDir,
+            "modules.d.ts"
+          ),
+          generateImports(
+            relativePath(
+              joinPaths(this.context.projectRoot, this.context.typesDir),
+              joinPaths(this.context.projectRoot, this.context.runtimeDir)
+            )
+          )
+        ),
+        this.writeFile(
+          joinPaths(
+            this.context.projectRoot,
+            this.context.typesDir,
+            "global.d.ts"
+          ),
+          generateGlobal(
+            relativePath(
+              joinPaths(this.context.projectRoot, this.context.typesDir),
+              joinPaths(this.context.projectRoot, this.context.runtimeDir)
+            )
+          )
+        )
+      ].filter(Boolean)
+    );
   }
 
   /**

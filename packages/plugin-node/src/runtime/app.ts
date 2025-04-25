@@ -16,8 +16,9 @@
  ------------------------------------------------------------------- */
 
 import { getFileHeader } from "@storm-stack/core/helpers";
+import { StormStackNodeFeatures } from "../types/config";
 
-export function writeCreateApp() {
+export function writeCreateApp(features: StormStackNodeFeatures[]) {
   return `${getFileHeader()}
 
 import type {
@@ -32,9 +33,12 @@ import type {
 } from "@storm-stack/plugin-node/types";
 import { isError } from "@stryke/type-checks/is-error";
 import type { StormEnv } from "@storm-stack/types/env";
-import {
-  getAppName,
-  getAppVersion,
+import {${
+    features.includes(StormStackNodeFeatures.ENV_PATHS)
+      ? `
+  envPaths,`
+      : ""
+  }
   getBuildInfo,
   getRuntimeInfo,
   STORM_ASYNC_CONTEXT
@@ -83,10 +87,15 @@ export function builder<
       );
     }
 
-    const name = params.name || getAppName();
-    const version = getAppVersion();
-    const buildInfo = getBuildInfo();
-    const runtimeInfo = getRuntimeInfo();
+    const name = params.name || $storm.env.APP_NAME;
+    const version = $storm.env.APP_VERSION;
+    const build = getBuildInfo();
+    const runtime = getRuntimeInfo();${
+      features.includes(StormStackNodeFeatures.ENV_PATHS)
+        ? `
+    const paths = envPaths;`
+        : ""
+    }
 
     const disposables = new Set<Disposable>();
     const asyncDisposables = new Set<AsyncDisposable>();
@@ -145,9 +154,14 @@ export function builder<
           name,
           version,
           request,
-          meta: request.meta,
-          buildInfo,
-          runtimeInfo,
+          meta: request.meta,${
+            features.includes(StormStackNodeFeatures.ENV_PATHS)
+              ? `
+          paths,`
+              : ""
+          }
+          build,
+          runtime,
           log: log.with({ name, version, requestId: request.id }),
           storage,
           env: {} as StormEnv,
@@ -155,7 +169,11 @@ export function builder<
           __internal: {
             events: [] as StormEvent[]
           }
-        } as StormContext<StormEnv, TRequest>;
+        } as StormContext<StormEnv, {${
+          features.includes(StormStackNodeFeatures.ENV_PATHS)
+            ? ` paths: EnvPaths `
+            : ""
+        }}, TRequest>;
 
         function emit(event: StormEvent) {
           context.log.debug(
@@ -179,7 +197,7 @@ export function builder<
             try {
               if (builderConfig.validator) {
                 const issues = await Promise.resolve(
-                  builderConfig.validator(context.request)
+                  builderConfig.validator(context)
                 );
                 if (issues) {
                   return StormResponse.create(

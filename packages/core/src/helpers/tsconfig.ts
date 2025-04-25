@@ -16,16 +16,18 @@
  ------------------------------------------------------------------- */
 
 import { readJsonFile } from "@stryke/fs/read-file";
-import { deepClone } from "@stryke/helpers/deep-clone";
 import { existsSync, joinPaths } from "@stryke/path";
 import type { TsConfigJson } from "@stryke/types/tsconfig";
 import defu from "defu";
 import ts from "typescript";
-import type { Options, ResolvedTsConfig } from "../types";
+import type { Context, Options, ResolvedTsConfig } from "../types";
 
-export function getTsconfigFilePath(options: Options): string {
+export function getTsconfigFilePath<TOptions extends Options = Options>(
+  context: Context<TOptions>
+): string {
   const tsconfigFilePath =
-    options.tsconfig || joinPaths(options.projectRoot, "tsconfig.json");
+    context.options.tsconfig ||
+    joinPaths(context.options.projectRoot, "tsconfig.json");
   if (!existsSync(tsconfigFilePath)) {
     throw new Error(
       `Cannot find the \`tsconfig.json\` configuration file at ${tsconfigFilePath}`
@@ -35,21 +37,21 @@ export function getTsconfigFilePath(options: Options): string {
   return tsconfigFilePath;
 }
 
-export async function getParsedTypeScriptConfig(
-  options: Options
-): Promise<ResolvedTsConfig> {
-  const tsconfigFilePath = getTsconfigFilePath(options);
+export async function getParsedTypeScriptConfig<
+  TOptions extends Options = Options
+>(context: Context<TOptions>): Promise<ResolvedTsConfig> {
+  const tsconfigFilePath = getTsconfigFilePath(context);
 
   let tsconfigJson = await readJsonFile<TsConfigJson>(tsconfigFilePath);
-  if (options.tsconfigRaw) {
+  if (context.tsconfigRaw) {
     // Merge the compiler options
-    tsconfigJson = defu(tsconfigJson, options.tsconfigRaw);
+    tsconfigJson = defu(tsconfigJson, context.tsconfigRaw);
   }
 
   const tsconfig = ts.parseJsonConfigFileContent(
     tsconfigJson,
     ts.sys,
-    options.projectRoot
+    context.projectRoot
   );
   if (tsconfig.errors.length > 0) {
     const errorMessage = `Cannot parse the compiler options provided in the \`tsconfigRaw\` option. Please investigate the following issues:
@@ -62,15 +64,15 @@ ${tsconfig.errors.map(error => `- ${(error.category !== undefined && error.code 
   return { ...tsconfig, tsconfigJson };
 }
 
-export async function getTsconfigChanges(
-  options: Options
+export async function getTsconfigChanges<TOptions extends Options = Options>(
+  context: Context<TOptions>
 ): Promise<TsConfigJson> {
-  const tsconfig = await getParsedTypeScriptConfig(options);
-  const tsconfigJson = await readJsonFile<TsConfigJson>(options.tsconfig!);
-  tsconfigJson.compilerOptions ??= {};
+  const tsconfig = await getParsedTypeScriptConfig(context);
 
-  const originalTsconfigJson = deepClone(tsconfigJson) as TsConfigJson;
-  originalTsconfigJson.compilerOptions ??= {};
+  const tsconfigJson = await readJsonFile<TsConfigJson>(
+    getTsconfigFilePath(context)
+  );
+  tsconfigJson.compilerOptions ??= {};
 
   if (tsconfigJson.reflection !== true) {
     tsconfigJson.reflection = true;
@@ -172,7 +174,7 @@ export async function getTsconfigChanges(
   }
 
   // Browser platform
-  if (options.platform === "browser") {
+  if (context.platform === "browser") {
     if (tsconfig.options.jsx !== ts.JsxEmit.ReactJSX) {
       tsconfigJson.compilerOptions.jsx = "react-jsx";
     }

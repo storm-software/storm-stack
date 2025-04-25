@@ -20,7 +20,6 @@ import { createDirectory } from "@stryke/fs/helpers";
 import { throttle } from "@stryke/helpers/throttle";
 import { StormJSON } from "@stryke/json/storm-json";
 import { existsSync, findFilePath, joinPaths } from "@stryke/path/index";
-import { isSetString } from "@stryke/type-checks";
 import { createUnimport as createUnimportExt } from "unimport";
 import type {
   Context,
@@ -72,31 +71,27 @@ export function createUnimport<TOptions extends Options = Options>(
   });
 
   async function dumpImports() {
-    if (context?.importDump !== false) {
-      log(LogLevelLabel.TRACE, "Dumping import file...");
+    log(LogLevelLabel.TRACE, "Dumping import file...");
 
-      const items = await unimport.getImports();
+    const items = await unimport.getImports();
+    const importDumpFile = joinPaths(
+      context.projectRoot,
+      context.artifactsDir,
+      "imports-dump.json"
+    );
+    if (!existsSync(findFilePath(importDumpFile))) {
+      await createDirectory(findFilePath(importDumpFile));
+    }
 
-      const importDumpFile = joinPaths(
-        context.projectRoot,
-        isSetString(context?.importDump)
-          ? context.importDump
-          : ".storm/import-dump.json"
-      );
-      if (!existsSync(findFilePath(importDumpFile))) {
-        await createDirectory(findFilePath(importDumpFile));
-      }
+    log(
+      LogLevelLabel.TRACE,
+      `Writing imports-dump JSON file: ${importDumpFile}`
+    );
 
-      log(
-        LogLevelLabel.TRACE,
-        `Writing import-dump JSON file: ${importDumpFile}`
-      );
-
-      const content = StormJSON.stringify(items);
-      if (content.trim() !== lastImportsDump?.trim()) {
-        lastImportsDump = content;
-        await writeFile(log, importDumpFile, content);
-      }
+    const content = StormJSON.stringify(items);
+    if (content.trim() !== lastImportsDump?.trim()) {
+      lastImportsDump = content;
+      await writeFile(log, importDumpFile, content);
     }
   }
 

@@ -16,7 +16,6 @@ import { registerShutdown } from "@stryke/cli/shutdown";
 import { renderUsage } from "@stryke/cli/usage";
 import consola from "consola";
 import { colors } from "consola/utils";
-import { getAppVersion } from "storm:context";
 import { isStormError } from "storm:error";
 
 const shutdown = await registerShutdown();
@@ -27,8 +26,8 @@ try {
     {
       meta: {
         name: "examples-cli-app",
-        displayName: "Examples Cli App",
-        version: getAppVersion(),
+        displayName: "Examples CLI App",
+        version: $storm.env.APP_VERSION,
         description: "An example Storm Stack commandline application",
         homepage: "https://stormsoftware.com",
         license: "Apache-2.0",

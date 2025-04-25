@@ -53,8 +53,8 @@
   },
   {
     "from": "/home/development/repos/storm-stack/examples/node-app/.storm/runtime/context",
-    "name": "useStorm",
-    "as": "useStorm"
+    "name": "envPaths",
+    "as": "envPaths"
   },
   {
     "from": "/home/development/repos/storm-stack/examples/node-app/.storm/runtime/context",
@@ -68,13 +68,8 @@
   },
   {
     "from": "/home/development/repos/storm-stack/examples/node-app/.storm/runtime/context",
-    "name": "getAppName",
-    "as": "getAppName"
-  },
-  {
-    "from": "/home/development/repos/storm-stack/examples/node-app/.storm/runtime/context",
-    "name": "getAppVersion",
-    "as": "getAppVersion"
+    "name": "useStorm",
+    "as": "useStorm"
   },
   {
     "from": "/home/development/repos/storm-stack/examples/node-app/.storm/runtime/context",

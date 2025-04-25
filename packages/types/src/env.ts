@@ -148,6 +148,11 @@ export interface StormEnvVariables {
    * @defaultValue "info"
    */
   LOG_LEVEL?: LogLevel | null;
+
+  /**
+   * A file system path to write out logs to.
+   */
+  LOG_PATH?: string;
 }
 
 /**

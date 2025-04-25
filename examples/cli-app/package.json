@@ -10,7 +10,7 @@
   },
   "private": true,
   "bin": {
-    "examples-cli-app": "dist/examples-cli-app.js"
+    "examples-cli": "dist/examples-cli.js"
   },
   "dependencies": {
     "@storm-stack/log-storage": "workspace:*",
@@ -29,6 +29,7 @@
       [
         "@storm-stack/preset-cli",
         {
+          "bin": "examples-cli",
           "features": [
             "sentry"
           ]
@@ -37,7 +38,6 @@
     ],
     "skipCache": true,
     "skipInstalls": true,
-    "skipLint": true,
-    "mode": "development"
+    "skipLint": true
   }
 }

@@ -19,8 +19,7 @@ import type { StormEnv } from "@storm-stack/types/env";
 import { isError } from "@stryke/type-checks/is-error";
 import { createStorage } from "unstorage";
 import {
-  getAppName,
-  getAppVersion,
+  envPaths,
   getBuildInfo,
   getRuntimeInfo,
   STORM_ASYNC_CONTEXT
@@ -72,10 +71,11 @@ export function builder<
       );
     }
 
-    const name = params.name || getAppName();
-    const version = getAppVersion();
-    const buildInfo = getBuildInfo();
-    const runtimeInfo = getRuntimeInfo();
+    const name = params.name || $storm.env.APP_NAME;
+    const version = $storm.env.APP_VERSION;
+    const build = getBuildInfo();
+    const runtime = getRuntimeInfo();
+    const paths = envPaths;
 
     const disposables = new Set<Disposable>();
     const asyncDisposables = new Set<AsyncDisposable>();
@@ -135,8 +135,9 @@ export function builder<
           version,
           request,
           meta: request.meta,
-          buildInfo,
-          runtimeInfo,
+          paths,
+          build,
+          runtime,
           log: log.with({ name, version, requestId: request.id }),
           storage,
           env: {} as StormEnv,
@@ -144,7 +145,7 @@ export function builder<
           __internal: {
             events: [] as StormEvent[]
           }
-        } as StormContext<StormEnv, TRequest>;
+        } as StormContext<StormEnv, { paths: EnvPaths }, TRequest>;
 
         function emit(event: StormEvent) {
           context.log.debug(
@@ -168,7 +169,7 @@ export function builder<
             try {
               if (builderConfig.validator) {
                 const issues = await Promise.resolve(
-                  builderConfig.validator(context.request)
+                  builderConfig.validator(context)
                 );
                 if (issues) {
                   return StormResponse.create(

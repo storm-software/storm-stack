@@ -87,6 +87,7 @@
     "@stryke/types": "catalog:",
     "@types/node": "catalog:",
     "tsup": "catalog:",
+    "unimport": "catalog:",
     "unstorage": "catalog:"
   },
   "publishConfig": {

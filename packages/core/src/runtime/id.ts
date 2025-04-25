@@ -28,7 +28,7 @@ export function writeId() {
  */
 export function getRandom(array: Uint8Array) {
   if (array === null) {
-    throw new TypeError("Null arrays cannot be provided to getRandom");
+    throw new StormError({ code: 9 });
   }
 
   // Fill the array with random values

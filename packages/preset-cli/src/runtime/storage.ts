@@ -16,20 +16,15 @@
  ------------------------------------------------------------------- */
 
 import { getFileHeader } from "@storm-stack/core/helpers";
-import type { Context, Options } from "@storm-stack/core/types";
-import { joinPaths } from "@stryke/path/join-paths";
-import type { StormStackCLIPresetConfig } from "../types/config";
 
-export function writeStorage<TOptions extends Options = Options>(
-  context: Context<TOptions>,
-  config: StormStackCLIPresetConfig
-) {
+export function writeStorage() {
   return `${getFileHeader()}
 
-import { createStorage } from "unstorage";
+import { envPaths } from "storm:context";
 import fsLiteDriver from "unstorage/drivers/fs-lite";
+import { createStorage } from "unstorage";
 
 export const storage = createStorage();
-storage.mount("logs", fsLiteDriver({ base: "${config.logPath || context.envPaths.log || joinPaths("/var/log", context.name || "storm-software")}" }));
+storage.mount("logs", fsLiteDriver({ base: envPaths.log }));
 `;
 }

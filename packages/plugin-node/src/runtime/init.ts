@@ -16,11 +16,16 @@
  ------------------------------------------------------------------- */
 
 import { getFileHeader } from "@storm-stack/core/helpers";
+import { StormStackNodeFeatures } from "../types/config";
 
-export function writeInit() {
+export function writeInit(features: StormStackNodeFeatures[]) {
   return `${getFileHeader()}
 
-// Do nothing - this is a placeholder for Storm Stack plugins that do not require any initialization
+${
+  features.includes(StormStackNodeFeatures.SENTRY)
+    ? `import @storm-stack/log-sentry/init;`
+    : "// Do nothing - this is a placeholder for Storm Stack plugins that do not require any initialization"
+}
 
 `;
 }

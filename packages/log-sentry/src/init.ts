@@ -18,11 +18,11 @@
 import * as Sentry from "@sentry/node";
 
 Sentry.init({
-  dsn: process.env.SENTRY_DSN,
-  environment: process.env.ENVIRONMENT,
-  release: process.env.RELEASE_ID,
-  debug: !!process.env.DEBUG,
+  dsn: $storm.env.SENTRY_DSN,
+  environment: $storm.env.ENVIRONMENT,
+  release: `${$storm.env.APP_NAME}@${$storm.env.RELEASE_ID}`,
+  debug: !!$storm.env.DEBUG,
   enabled: true,
-  attachStacktrace: !!process.env.STACKTRACE,
+  attachStacktrace: !!$storm.env.STACKTRACE,
   sendClientReports: true
 });

@@ -23,7 +23,6 @@ import type {
   LogSinkInstance,
   StormEnv
 } from "@storm-stack/types";
-import type { EnvPaths } from "@stryke/env/get-env-paths";
 import type { ProviderInfo } from "@stryke/env/providers";
 import type { RuntimeInfo } from "@stryke/env/runtime-checks";
 import type { MaybePromise } from "@stryke/types/base";
@@ -33,7 +32,7 @@ import type { Storage } from "unstorage";
 /**
  * Interface representing the runtime information for the Storm application.
  */
-export interface StormRuntimeInfo extends Partial<RuntimeInfo>, EnvPaths {
+export interface StormRuntimeInfo extends Partial<RuntimeInfo> {
   /**
    * Indicates if the application is running on Node.js.
    */
@@ -140,6 +139,22 @@ export interface StormRuntimeInfo extends Partial<RuntimeInfo>, EnvPaths {
  */
 export interface StormBuildInfo {
   /**
+   * The name of the application.
+   *
+   * @remarks
+   * This is the name of the application as defined in env.APP_NAME or package.json file.
+   */
+  name: string;
+
+  /**
+   * The version of the application.
+   *
+   * @remarks
+   * This is the version of the application as defined in env.APP_VERSION or package.json file.
+   */
+  version: string;
+
+  /**
    * The unique identifier for the build.
    */
   buildId: string;
@@ -245,10 +260,11 @@ export interface StormRuntimeParams {
  * @remarks
  * This object is injected into the global scope of the Storm Stack application. It can be accessed using the `storm` variable.
  */
-export interface StormContext<
+export type StormContext<
   TEnv extends StormEnv = StormEnv,
+  TAdditionalFields extends Record<string, any> = Record<string, any>,
   TRequest extends IStormRequest = IStormRequest
-> {
+> = TAdditionalFields & {
   /**
    * The name of the Storm application.
    */
@@ -267,12 +283,12 @@ export interface StormContext<
   /**
    * The runtime information for the Storm application.
    */
-  readonly runtimeInfo: StormRuntimeInfo;
+  readonly runtime: StormRuntimeInfo;
 
   /**
    * The build information for the Storm application.
    */
-  readonly buildInfo: StormBuildInfo;
+  readonly build: StormBuildInfo;
 
   /**
    * The current request object for the Storm application.
@@ -308,9 +324,13 @@ export interface StormContext<
    * @internal
    */
   __internal: Internal_StormContextStore;
-}
+};
 
 export type ValidationDetail = ExternalValidationDetail;
+
+export type SetupFunction = () => MaybePromise<
+  IStormError | void | null | undefined
+>;
 
 export type DeserializerFunction<
   TRequest extends IStormRequest,
@@ -319,6 +339,32 @@ export type DeserializerFunction<
   payload: TPayload
 ) => MaybePromise<TRequest | IStormError | ValidationDetail[]>;
 
+export type ValidatorFunction<
+  TRequest extends IStormRequest,
+  TContext extends StormContext<StormEnv, any, TRequest>
+> = (
+  context: TContext
+) => MaybePromise<IStormError | ValidationDetail[] | void | null | undefined>;
+
+export type PreprocessFunction<
+  TRequest extends IStormRequest,
+  TContext extends StormContext<StormEnv, any, TRequest>
+> = (context: TContext) => MaybePromise<IStormError | void | null | undefined>;
+
+export type HandlerFunction<
+  TRequest extends IStormRequest,
+  TResponse extends IStormResponse
+> = (request: TRequest) => MaybePromise<TResponse["data"] | IStormError>;
+
+export type PostprocessFunction<
+  TRequest extends IStormRequest,
+  TContext extends StormContext<StormEnv, any, TRequest>,
+  TResponse extends IStormResponse
+> = (
+  context: TContext,
+  response: TResponse
+) => MaybePromise<IStormError | void | null | undefined>;
+
 export type SerializerFunction<
   TResponse extends IStormResponse,
   TResult = any
@@ -326,14 +372,9 @@ export type SerializerFunction<
   response: TResponse | IStormResponse<IStormError>
 ) => MaybePromise<TResult>;
 
-export type ValidatorFunction<TRequest extends IStormRequest> = (
-  request: TRequest
-) => MaybePromise<IStormError | ValidationDetail[] | void | null | undefined>;
-
-export type HandlerFunction<
-  TRequest extends IStormRequest,
-  TResponse extends IStormResponse
-> = (request: TRequest) => MaybePromise<TResponse["data"] | IStormError>;
+export type CleanupFunction = () => MaybePromise<
+  IStormError | void | null | undefined
+>;
 
 /**
  * Interface representing the attachments for a Storm application builder.
@@ -346,20 +387,38 @@ export interface BuilderConfig<
   TRequest extends IStormRequest,
   TResponse extends IStormResponse,
   TPayload = any,
-  TResult = any
+  TResult = any,
+  TContext extends StormContext<StormEnv, any, TRequest> = StormContext<
+    StormEnv,
+    any,
+    TRequest
+  >
 > {
+  setup?: SetupFunction;
   deserializer?: DeserializerFunction<TRequest, TPayload>;
-  validator?: ValidatorFunction<TRequest>;
+  validator?: ValidatorFunction<TRequest, TContext>;
+  preprocess?: PreprocessFunction<TRequest, TContext>;
   handler?: HandlerFunction<TRequest, TResponse>;
+  postprocess?: PostprocessFunction<TRequest, TContext, TResponse>;
   serializer?: SerializerFunction<TResponse, TResult>;
+  cleanup?: CleanupFunction;
 }
 
 export interface BuilderResult<
   TRequest extends IStormRequest,
   TResponse extends IStormResponse,
   TPayload = any,
-  TResult = any
+  TResult = any,
+  TContext extends StormContext<StormEnv, any, TRequest> = StormContext<
+    StormEnv,
+    any,
+    TRequest
+  >
 > {
+  setup: () => Omit<
+    BuilderResult<TRequest, TResponse, TPayload, TResult>,
+    "setup"
+  >;
   deserializer: (
     deserializerFn: DeserializerFunction<TRequest, TPayload>
   ) => Omit<
@@ -367,16 +426,32 @@ export interface BuilderResult<
     "deserializer"
   >;
   validator: (
-    validatorFn: ValidatorFunction<TRequest>
+    validatorFn: ValidatorFunction<TRequest, TContext>
   ) => Omit<BuilderResult<TRequest, TResponse, TPayload, TResult>, "validator">;
+  preprocess: (
+    preprocessFn: PreprocessFunction<TRequest, TContext>
+  ) => Omit<
+    BuilderResult<TRequest, TResponse, TPayload, TResult>,
+    "preprocess"
+  >;
   handler: (
     handlerFn: HandlerFunction<TRequest, TResponse>
   ) => Omit<BuilderResult<TRequest, TResponse, TPayload, TResult>, "handler">;
+  postprocess: (
+    postprocessFn: PostprocessFunction<TRequest, TContext, TResponse>
+  ) => Omit<
+    BuilderResult<TRequest, TResponse, TPayload, TResult>,
+    "postprocess"
+  >;
   serializer: (
     serializerFn: SerializerFunction<TResponse, TResult>
   ) => Omit<
     BuilderResult<TRequest, TResponse, TPayload, TResult>,
     "serializer"
+  >;
+  cleanup: () => Omit<
+    BuilderResult<TRequest, TResponse, TPayload, TResult>,
+    "cleanup"
   >;
   build: () => (payload: TPayload) => Promise<TResult>;
 }

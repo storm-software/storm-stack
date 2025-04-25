@@ -23,6 +23,7 @@ declare global {
     ERROR_URL: string
     INCLUDE_ERROR_DATA: boolean
     LOG_LEVEL?: 'debug' | 'info' | 'warning' | 'error' | 'fatal' | null
+    LOG_PATH?: string
     MODE: 'development' | 'staging' | 'production'
     NODE_ENV: 'development' | 'staging' | 'production'
     PLATFORM: 'node' | 'browser' | 'worker'

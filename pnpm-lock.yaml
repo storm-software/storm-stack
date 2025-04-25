@@ -155,7 +155,7 @@ catalogs:
       version: 0.4.11
     '@stryke/string-format':
       specifier: latest
-      version: 0.4.1
+      version: 0.4.2
     '@stryke/type-checks':
       specifier: latest
       version: 0.3.2
@@ -637,7 +637,7 @@ importers:
         version: 0.4.11(@storm-software/config@1.112.26)(magicast@0.3.5)
       '@stryke/string-format':
         specifier: 'catalog:'
-        version: 0.4.1
+        version: 0.4.2
       '@stryke/type-checks':
         specifier: 'catalog:'
         version: 0.3.2
@@ -1056,6 +1056,9 @@ importers:
       tsup:
         specifier: 'catalog:'
         version: 8.4.0(@microsoft/api-extractor@7.52.3(@types/node@22.14.1))(@swc/core@1.11.21(@swc/helpers@0.5.17))(jiti@2.4.2)(postcss@8.5.3)(tsx@4.19.3)(typescript@5.8.3)(yaml@2.7.1)
+      unimport:
+        specifier: 'catalog:'
+        version: 4.2.0
       unstorage:
         specifier: 'catalog:'
         version: 1.15.0
@@ -1079,7 +1082,7 @@ importers:
         version: 0.4.11(@storm-software/config@1.112.26)(magicast@0.3.5)
       '@stryke/string-format':
         specifier: 'catalog:'
-        version: 0.4.1
+        version: 0.4.2
       '@stryke/type-checks':
         specifier: 'catalog:'
         version: 0.3.2
@@ -4751,6 +4754,9 @@ packages:
 
   '@stryke/string-format@0.4.1':
     resolution: {integrity: sha512-qfGho5E4Z+VvgE1b3AmyDxgYO2H5UkV0fLBPDJn9TmezzqIYclYfbzmQAEUCOKg1xoEaZrcXvUYVf27GqN1fiQ==}
+
+  '@stryke/string-format@0.4.2':
+    resolution: {integrity: sha512-9Vwt3eUkzM1x1yLG9xblnhB/vDv0v9f/BoR2P3wwfCWviPBnSoEHSLy+/zaOVHKnC2aWHXIdyOUmMUAeaqs1kA==}
 
   '@stryke/type-checks@0.3.2':
     resolution: {integrity: sha512-HZqTlxXcVkQcfmsBeHUNntqwFqAZNOVnAaJYnt46VeoeGJwWfI0eTe6Q68/wB4ykpL7WseqvM3QGjncxpPa7EA==}
@@ -17740,7 +17746,7 @@ snapshots:
       '@stryke/fs': 0.12.1(@storm-software/config@1.112.26)(magicast@0.3.5)(nx@20.8.0(@swc-node/register@1.10.10(@swc/core@1.11.21(@swc/helpers@0.5.17))(@swc/types@0.1.21)(typescript@5.8.3))(@swc/core@1.11.21(@swc/helpers@0.5.17)))
       '@stryke/json': 0.7.3
       '@stryke/path': 0.4.11(@storm-software/config@1.112.26)(magicast@0.3.5)
-      '@stryke/string-format': 0.4.1
+      '@stryke/string-format': 0.4.2
       '@stryke/type-checks': 0.3.2
       defu: 6.1.4
     transitivePeerDependencies:
@@ -17754,7 +17760,7 @@ snapshots:
       '@stryke/fs': 0.12.1(@storm-software/config@1.112.26)(magicast@0.3.5)(nx@20.8.0(@swc-node/register@1.10.10(@swc/core@1.7.26(@swc/helpers@0.5.17))(@swc/types@0.1.21)(typescript@5.8.3))(@swc/core@1.7.26(@swc/helpers@0.5.17)))
       '@stryke/json': 0.7.3
       '@stryke/path': 0.4.11(@storm-software/config@1.112.26)(magicast@0.3.5)
-      '@stryke/string-format': 0.4.1
+      '@stryke/string-format': 0.4.2
       '@stryke/type-checks': 0.3.2
       defu: 6.1.4
     transitivePeerDependencies:
@@ -17857,6 +17863,11 @@ snapshots:
       - magicast
 
   '@stryke/string-format@0.4.1':
+    dependencies:
+      '@stryke/helpers': 0.5.2
+      '@stryke/types': 0.8.1
+
+  '@stryke/string-format@0.4.2':
     dependencies:
       '@stryke/helpers': 0.5.2
       '@stryke/types': 0.8.1

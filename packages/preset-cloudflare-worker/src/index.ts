@@ -20,7 +20,8 @@ import { parse as parseToml, stringify as stringifyToml } from "@ltd/j-toml";
 import { LogLevelLabel } from "@storm-software/config-tools/types";
 import {
   getFileHeader,
-  getParsedTypeScriptConfig
+  getParsedTypeScriptConfig,
+  getTsconfigFilePath
 } from "@storm-stack/core/helpers";
 import { Preset } from "@storm-stack/core/preset";
 import type { Context, EngineHooks, Options } from "@storm-stack/core/types";
@@ -92,6 +93,8 @@ export default class StormStackCloudflareWorkerPreset<
     );
 
     context.platform = "neutral";
+    context.format = "esm";
+    context.override.target = "chrome95";
 
     context.external ??= [];
     context.external.push(...CLOUDFLARE_MODULES, ...this.#unenv.external);
@@ -99,9 +102,6 @@ export default class StormStackCloudflareWorkerPreset<
     context.noExternal ??= [];
     context.noExternal.push("@cloudflare/unenv-preset/node/console");
     context.noExternal.push("@cloudflare/unenv-preset/node/process");
-
-    context.override.format = "esm";
-    context.override.target = "chrome95";
 
     if (context.projectType === "application") {
       context.override.alias = defu(
@@ -142,18 +142,32 @@ export default class StormStackCloudflareWorkerPreset<
   }
 
   protected async initTsconfig(context: Context<TOptions>) {
+    const tsconfigFilePath = getTsconfigFilePath(context);
+
     this.log(
       LogLevelLabel.TRACE,
-      `Resolving TypeScript configuration in "${context.tsconfig!}"`
+      `Resolving TypeScript configuration in "${tsconfigFilePath}"`
     );
 
     const tsconfig = await getParsedTypeScriptConfig(context);
-    const tsconfigJson = await readJsonFile<TsConfigJson>(context.tsconfig!);
+    const tsconfigJson = await readJsonFile<TsConfigJson>(tsconfigFilePath);
 
     tsconfigJson.compilerOptions ??= {};
     if (
+      tsconfig.options.types &&
+      tsconfig.options.types.some(
+        type => type.toLowerCase() === "@cloudflare/workers-types"
+      )
+    ) {
+      tsconfigJson.compilerOptions.types =
+        tsconfigJson.compilerOptions.types!.filter(
+          type => type.toLowerCase() !== "@cloudflare/workers-types"
+        );
+    }
+
+    if (
       !tsconfig.options.types?.some(type =>
-        type.toLowerCase().includes("@cloudflare/workers-types")
+        type.toLowerCase().includes("@cloudflare/workers-types/experimental")
       )
     ) {
       tsconfigJson.compilerOptions.types ??= [];
@@ -194,14 +208,19 @@ import { builder } from ".${joinPaths(
             "app"
           )}";
 import { getSink } from "@storm-stack/log-console";
+import { WorkerEntrypoint } from "cloudflare:workers";
 
-export default {
-  fetch: builder({
+const handleRequest = builder({
     name: ${context.name ? `"${context.name}"` : "undefined"},
     log: { handle: getSink(), logLevel: "debug" },
   })
     .handler(handle)
-    .build()
+    .build();
+
+export default class extends WorkerEntrypoint {
+  fetch(req, env, ctx) {
+    return handleRequest({ req, env, ctx });
+  }
 }
 
 `

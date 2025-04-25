@@ -28,8 +28,6 @@ declare global {
 
   const getBuildInfo: (typeof import("../runtime/context"))["getBuildInfo"];
   const getRuntimeInfo: (typeof import("../runtime/context"))["getRuntimeInfo"];
-  const getAppName: (typeof import("../runtime/context"))["getAppName"];
-  const getAppVersion: (typeof import("../runtime/context"))["getAppVersion"];
   const useStorm: (typeof import("../runtime/context"))["useStorm"];
   const STORM_ASYNC_CONTEXT: (typeof import("../runtime/context"))["STORM_ASYNC_CONTEXT"];
 }

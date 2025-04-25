@@ -26,7 +26,6 @@ import {
   nodeMajorVersion,
   nodeVersion
 } from "@stryke/env/environment-checks";
-import { getEnvPaths } from "@stryke/env/get-env-paths";
 import { providerInfo } from "@stryke/env/providers";
 import {
   runtimeInfo as baseRuntimeInfo,
@@ -50,6 +49,8 @@ export const STORM_ASYNC_CONTEXT = getContext<StormContext>(STORM_CONTEXT_KEY, {
 
 export const getBuildInfo = (): StormBuildInfo => {
   return {
+    name: $storm.env.APP_NAME!,
+    version: $storm.env.APP_VERSION!,
     buildId: $storm.env.BUILD_ID!,
     timestamp: $storm.env.BUILD_TIMESTAMP
       ? Number($storm.env.BUILD_TIMESTAMP)
@@ -67,28 +68,9 @@ export const getBuildInfo = (): StormBuildInfo => {
   };
 };
 
-export const getAppName = () => {
-  const appName = $storm.env.APP_NAME;
-  if (!appName) {
-    throw new Error("App name is not defined.");
-  }
-
-  return appName;
-};
-
-export const getAppVersion = () => {
-  return $storm.env.APP_VERSION;
-};
-
 export const getRuntimeInfo = (): StormRuntimeInfo => {
-  const envPaths = getEnvPaths({
-    orgId: "storm-software",
-    appId: "examples-cloudflare-worker"
-  });
-
   return {
     ...baseRuntimeInfo,
-    ...envPaths,
     isNode,
     isBun,
     isDeno,

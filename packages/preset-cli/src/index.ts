@@ -26,6 +26,7 @@ import type {
 } from "@storm-stack/core/types";
 import { StormStackNodeFeatures } from "@storm-stack/plugin-node/types/config";
 import { listFiles } from "@stryke/fs/list-files";
+import { readJsonFile } from "@stryke/fs/read-file";
 import { StormJSON } from "@stryke/json/storm-json";
 import {
   findFileExtension,
@@ -43,6 +44,7 @@ import { reflectCommands } from "./helpers/reflect-command";
 import { writeStorage } from "./runtime/storage";
 import type { StormStackCLIPresetConfig } from "./types/config";
 import type { CommandReflection } from "./types/reflection";
+
 export default class StormStackCLIPreset<
   TOptions extends Options = Options
 > extends Preset<TOptions> {
@@ -58,7 +60,12 @@ export default class StormStackCLIPreset<
       ...config
     };
     this.dependencies = [
-      ["@storm-stack/plugin-node", { features: this.#config.features }]
+      [
+        "@storm-stack/plugin-node",
+        {
+          features: [...this.#config.features, StormStackNodeFeatures.ENV_PATHS]
+        }
+      ]
     ];
   }
 
@@ -105,18 +112,23 @@ export default class StormStackCLIPreset<
           )}`
         );
 
-        const binaryName = kebabCase(
-          this.#config.binaryName || context.name || "cli"
-        );
+        const bin = kebabCase(this.#config.bin || context.name || "cli");
         const resolvedEntry = {
           file: joinPaths(
             context.projectRoot,
             context.artifactsDir,
-            `${binaryName}.ts`
+            `${bin}.ts`
           ),
           input: { file: joinPaths(context.entry) },
-          output: binaryName
+          output: bin
         };
+
+        let packageJson = context.packageJson;
+        if (!packageJson) {
+          packageJson = await readJsonFile(
+            joinPaths(context.projectRoot, "package.json")
+          );
+        }
 
         await this.writeFile(
           joinPaths(context.projectRoot, "package.json"),
@@ -124,10 +136,10 @@ export default class StormStackCLIPreset<
             defu(
               {
                 bin: {
-                  [binaryName]: `${joinPaths("dist", binaryName)}.js`
+                  [bin]: `${joinPaths("dist", bin)}.js`
                 }
               },
-              context.packageJson
+              packageJson
             )
           )
         );
@@ -202,14 +214,7 @@ export default class StormStackCLIPreset<
     );
 
     await Promise.all([
-      this.writeFile(
-        joinPaths(runtimeDir, "storage.ts"),
-        writeStorage(context, this.#config)
-      ),
-      this.writeFile(
-        joinPaths(runtimeDir, "storage.ts"),
-        writeStorage(context, this.#config)
-      )
+      this.writeFile(joinPaths(runtimeDir, "storage.ts"), writeStorage())
     ]);
   }
 
@@ -227,7 +232,7 @@ export default class StormStackCLIPreset<
         )
       );
 
-      const name = this.#config.binaryName || context.name;
+      const name = context.name ?? this.#config.bin;
       const displayName = titleCase(name);
 
       await Promise.all(
@@ -251,7 +256,6 @@ import { registerShutdown } from "@stryke/cli/shutdown";
 import { renderUsage } from "@stryke/cli/usage";
 import { tryGetWorkspaceConfig } from "@stryke/cli/usage";
 import consola from "consola";
-import { getAppVersion } from "storm:context";
 import { isStormError } from "storm:error";
 import { colors } from "consola/utils";
 
@@ -264,7 +268,7 @@ try {
       meta: {
         name: "${name}",
         displayName: "${displayName}",
-        version: getAppVersion(),
+        version: $storm.env.APP_VERSION,
         description: "${context.packageJson.description || `The ${displayName} command-line interface application`}",
         homepage: ${
           context.workspaceConfig?.homepage
