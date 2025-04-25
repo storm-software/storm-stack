@@ -92,6 +92,16 @@
         "required": false
       },
       {
+        "name": "platform",
+        "displayName": "Platform",
+        "type": "enum",
+        "options": ["node", "browser"],
+        "description": "Should the server serve compressed files?",
+        "alias": [],
+        "required": false,
+        "default": "\"node\""
+      },
+      {
         "name": "loadEnv",
         "displayName": "Load Env",
         "type": "boolean",

@@ -39,6 +39,13 @@ export interface ServePayload {
   compress?: boolean;
 
   /**
+   * Should the server serve compressed files?
+   *
+   * @defaultValue "node"
+   */
+  platform: "node" | "browser";
+
+  /**
    * Should the server load environment variables from the .env file?
    *
    * @defaultValue true

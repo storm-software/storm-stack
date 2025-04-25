@@ -38,12 +38,12 @@ import {
   getBuildInfo,
   getRuntimeInfo,
   STORM_ASYNC_CONTEXT
-} from "storm:context";
-import { getErrorFromUnknown } from "storm:error";
-import { StormEvent } from "storm:event";
-import { uniqueId } from "storm:id";
-import { StormRequest } from "storm:request";
-import { StormResponse } from "storm:response";
+} from "./context";
+import { getErrorFromUnknown } from "./error";
+import { StormEvent } from "./event";
+import { uniqueId } from "./id";
+import { StormRequest } from "./request";
+import { StormResponse } from "./response";
 import { createStorage } from "unstorage";
 
 /**

@@ -26,6 +26,7 @@ function getParameterizedString(record: LogRecord): ParameterizedString {
   const tplValues: string[] = [];
   for (let i = 0; i < record.message.length; i++) {
     if (i % 2 === 0) {
+      // eslint-disable-next-line ts/restrict-plus-operands
       result += record.message[i];
       tplString += String(record.message[i]).replaceAll("%", "%%");
     } else {

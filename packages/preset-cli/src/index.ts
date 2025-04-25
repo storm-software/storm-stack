@@ -394,8 +394,9 @@ import { ${command.argsTypeName} } from "${relativePath(
 
 const handleCommand = builder<
   StormRequest<${command.argsTypeName}>,
-  StormResponse,
-  CommandContext
+  StormResponse<any>,
+  CommandContext<any>,
+  any
 >({
   name: ${context.name ? `"${context.name}"` : "undefined"},
   log: [
@@ -409,9 +410,9 @@ const handleCommand = builder<
   storage
 })
   .handler(handle)
-  .deserializer(payload => new StormRequest({
-    data: deserialize<${command.argsTypeName}>(payload.args)
-  }))
+  .deserializer(payload => new StormRequest(
+    deserialize<${command.argsTypeName}>(payload.args)
+  ))
   .build();
 
 export default defineCommand({
@@ -426,6 +427,7 @@ export default defineCommand({
             ret[arg.name] = {
               description: arg.description,
               type: arg.type,
+              options: arg.options,
               required: arg.required,
               default:
                 arg.type === "boolean"

@@ -144,10 +144,22 @@ export async function reflectCommands<TOptions extends Options = Options>(
               const argName = property.getNameAsString();
               const argAlias = kebabCase(argName);
 
+              let type = stringifyType(property.getType());
+              let options = undefined as string[] | number[] | undefined;
+              if (type.includes("|")) {
+                options = type
+                  .split("|")
+                  .map(option =>
+                    option.trim().replaceAll('"', "").replaceAll("'", "")
+                  );
+                type = "enum";
+              }
+
               return {
                 name: argName,
                 displayName: titleCase(argName),
-                type: stringifyType(property.getType()),
+                type,
+                options,
                 description: property.getDescription(),
                 alias: argAlias !== argName ? [argAlias] : [],
                 required:

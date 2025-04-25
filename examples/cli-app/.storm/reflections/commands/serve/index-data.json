@@ -2,8 +2,8 @@
   {
     "kind": 20,
     "typeName": "StormRequest",
-    "typeArguments": [1, 10, 14, 17],
-    "types": [20, 21, 22, 23, 24, 26, 28],
+    "typeArguments": [1, 14, 18, 21],
+    "types": [24, 25, 26, 27, 28, 30, 32],
     "classType": "StormRequest",
     "arguments": [1],
     "entityOptions": {
@@ -13,7 +13,7 @@
   {
     "kind": 30,
     "typeName": "ServePayload",
-    "types": [2, 4, 6, 8],
+    "types": [2, 4, 6, 8, 12],
     "entityOptions": {
       "description": "The payload for the example CLI application."
     }
@@ -45,6 +45,16 @@
   {
     "kind": 32,
     "type": 9,
+    "name": "platform",
+    "description": "Should the server serve compressed files?",
+    "default": "\"node\""
+  },
+  { "kind": 23, "types": [10, 11] },
+  { "kind": 13, "literal": "node" },
+  { "kind": 13, "literal": "browser" },
+  {
+    "kind": 32,
+    "type": 13,
     "name": "loadEnv",
     "description": "Should the server load environment variables from the .env file?",
     "default": "true"
@@ -53,25 +63,25 @@
   {
     "kind": 30,
     "typeName": "Record",
-    "typeArguments": [11, 12],
-    "types": [13]
-  },
-  { "kind": 5 },
-  { "kind": 1 },
-  { "kind": 31, "index": 11, "type": 12 },
-  {
-    "kind": 30,
-    "typeName": "Record",
     "typeArguments": [15, 16],
-    "types": [13]
+    "types": [17]
+  },
+  { "kind": 5 },
+  { "kind": 1 },
+  { "kind": 31, "index": 15, "type": 16 },
+  {
+    "kind": 30,
+    "typeName": "Record",
+    "typeArguments": [19, 20],
+    "types": [17]
   },
   { "kind": 5 },
   { "kind": 1 },
   {
     "kind": 30,
     "typeName": "Record",
-    "typeArguments": [18, 19],
-    "types": [13]
+    "typeArguments": [22, 23],
+    "types": [17]
   },
   { "kind": 5 },
   { "kind": 1 },
@@ -85,7 +95,7 @@
   },
   {
     "kind": 15,
-    "type": 10,
+    "type": 14,
     "name": "identifiers",
     "visibility": 0,
     "readonly": true,
@@ -93,7 +103,7 @@
   },
   {
     "kind": 15,
-    "type": 14,
+    "type": 18,
     "name": "params",
     "visibility": 0,
     "optional": true,
@@ -102,7 +112,7 @@
   },
   {
     "kind": 15,
-    "type": 17,
+    "type": 21,
     "name": "meta",
     "visibility": 0,
     "readonly": true,
@@ -110,7 +120,7 @@
   },
   {
     "kind": 15,
-    "type": 25,
+    "type": 29,
     "name": "id",
     "visibility": 0,
     "readonly": true,
@@ -120,7 +130,7 @@
   { "kind": 0 },
   {
     "kind": 15,
-    "type": 27,
+    "type": 31,
     "name": "timestamp",
     "visibility": 0,
     "readonly": true,
@@ -132,12 +142,12 @@
     "kind": 16,
     "visibility": 0,
     "name": "constructor",
-    "return": 30,
+    "return": 34,
     "parameters": [
       { "kind": 18, "name": "data", "type": 1 },
-      { "kind": 18, "name": "identifiers", "type": 10 },
-      { "kind": 18, "name": "meta", "type": 29 },
-      { "kind": 18, "name": "params", "type": 14, "optional": true }
+      { "kind": 18, "name": "identifiers", "type": 14 },
+      { "kind": 18, "name": "meta", "type": 33 },
+      { "kind": 18, "name": "params", "type": 18, "optional": true }
     ],
     "description": "Create a new request object."
   },

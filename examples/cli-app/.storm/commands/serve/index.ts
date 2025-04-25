@@ -18,8 +18,9 @@ import { ServePayload } from "../../../src/types";
 
 const handleCommand = builder<
   StormRequest<ServePayload>,
-  StormResponse,
-  CommandContext
+  StormResponse<any>,
+  CommandContext<any>,
+  any
 >({
   name: "examples-cli-app",
   log: [{ handle: await getStorageSink({ storage }), logLevel: "debug" }],
@@ -27,10 +28,7 @@ const handleCommand = builder<
 })
   .handler(handle)
   .deserializer(
-    payload =>
-      new StormRequest({
-        data: deserialize<ServePayload>(payload.args)
-      })
+    payload => new StormRequest(deserialize<ServePayload>(payload.args))
   )
   .build();
 
@@ -59,6 +57,13 @@ export default defineCommand({
       required: false,
       default: false,
       negativeDescription: 'The inverse of the "compress" argument.'
+    },
+    platform: {
+      description: "Should the server serve compressed files?",
+      type: "enum",
+      options: ["node", "browser"],
+      required: false,
+      default: "node"
     },
     loadEnv: {
       description:

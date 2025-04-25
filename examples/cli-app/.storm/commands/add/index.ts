@@ -19,8 +19,9 @@ import page from "./page";
 
 const handleCommand = builder<
   StormRequest<AddPayload>,
-  StormResponse,
-  CommandContext
+  StormResponse<any>,
+  CommandContext<any>,
+  any
 >({
   name: "examples-cli-app",
   log: [{ handle: await getStorageSink({ storage }), logLevel: "debug" }],
@@ -28,10 +29,7 @@ const handleCommand = builder<
 })
   .handler(handle)
   .deserializer(
-    payload =>
-      new StormRequest({
-        data: deserialize<AddPayload>(payload.args)
-      })
+    payload => new StormRequest(deserialize<AddPayload>(payload.args))
   )
   .build();
 

@@ -22,6 +22,7 @@ export interface CommandReflectionArg {
   displayName: string;
   description?: string;
   type: string;
+  options?: string[] | number[];
   required: boolean;
   default?: any;
 }

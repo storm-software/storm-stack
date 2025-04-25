@@ -12,9 +12,9 @@ onlyBuiltDependencies:
   - utf-8-validate
 
 packages:
-  - tools/*
-  - packages/*
-  - examples/*
+  - tools/**
+  - packages/**
+  - examples/**
 
 catalog:
   '@ast-grep/napi': ^0.37.0
@@ -40,6 +40,9 @@ catalog:
   '@sentry/core': ^9.13.0
   '@sentry/node': ^9.13.0
   '@sentry/types': ^9.13.0
+  '@storm-stack/core': 0.7.0
+  '@storm-stack/log-storage': ^0.0.0
+  '@storm-stack/nx': 0.5.0
   '@taplo/cli': ^0.7.0
   '@types/eslint': ^9.6.1
   '@types/eslint__js': ^8.42.3
