@@ -1,6 +1,6 @@
 {
   "name": "@storm-stack/biome",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "type": "module",
   "description": "A shared Biome configuration containing globals used in Storm Stack projects.",
   "repository": {

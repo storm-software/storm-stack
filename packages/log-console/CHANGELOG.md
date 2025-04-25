@@ -2,6 +2,19 @@
 
 # Changelog for Storm Stack - Log Console
 
+## [0.5.3](https://github.com/storm-software/storm-stack/releases/tag/log-console%400.5.3) (2025-04-25)
+
+### Miscellaneous
+
+- **monorepo:** Clean up the workspace package linking
+  ([a046139f](https://github.com/storm-software/storm-stack/commit/a046139f))
+
+### Updated Dependencies
+
+- Updated core to 0.9.2
+- Updated core to 0.9.2
+- Updated nx to 0.5.3
+
 ## [0.5.2](https://github.com/storm-software/storm-stack/releases/tag/log-console%400.5.2) (2025-04-25)
 
 ### Miscellaneous

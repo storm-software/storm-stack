@@ -2,6 +2,17 @@
 
 # Changelog for Storm Stack - Eslint Config Storm Stack
 
+## [0.6.2](https://github.com/storm-software/storm-stack/releases/tag/eslint-config-storm-stack%400.6.2) (2025-04-25)
+
+### Miscellaneous
+
+- **monorepo:** Clean up the workspace package linking
+  ([a046139f](https://github.com/storm-software/storm-stack/commit/a046139f))
+
+### Updated Dependencies
+
+- Updated eslint-plugin-storm-stack to 0.7.2
+
 ## [0.6.1](https://github.com/storm-software/storm-stack/releases/tag/eslint-config-storm-stack%400.6.1) (2025-04-25)
 
 ### Miscellaneous

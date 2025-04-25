@@ -2,6 +2,13 @@
 
 # Changelog for Storm Stack - Biome
 
+## [0.1.5](https://github.com/storm-software/storm-stack/releases/tag/biome%400.1.5) (2025-04-25)
+
+### Miscellaneous
+
+- **monorepo:** Clean up the workspace package linking
+  ([a046139f](https://github.com/storm-software/storm-stack/commit/a046139f))
+
 ## [0.1.4](https://github.com/storm-software/storm-stack/releases/tag/biome%400.1.4) (2025-04-25)
 
 ### Miscellaneous

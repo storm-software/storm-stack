@@ -2,6 +2,13 @@
 
 # Changelog for Storm Stack - Types
 
+## [0.3.2](https://github.com/storm-software/storm-stack/releases/tag/types%400.3.2) (2025-04-25)
+
+### Miscellaneous
+
+- **monorepo:** Clean up the workspace package linking
+  ([a046139f](https://github.com/storm-software/storm-stack/commit/a046139f))
+
 ## [0.3.1](https://github.com/storm-software/storm-stack/releases/tag/types%400.3.1) (2025-04-25)
 
 ### Miscellaneous

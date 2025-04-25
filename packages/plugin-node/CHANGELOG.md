@@ -2,6 +2,13 @@
 
 # Changelog for Storm Stack - Plugin Node
 
+## [0.9.2](https://github.com/storm-software/storm-stack/releases/tag/plugin-node%400.9.2) (2025-04-25)
+
+### Miscellaneous
+
+- **monorepo:** Clean up the workspace package linking
+  ([a046139f](https://github.com/storm-software/storm-stack/commit/a046139f))
+
 ## [0.9.1](https://github.com/storm-software/storm-stack/releases/tag/plugin-node%400.9.1) (2025-04-25)
 
 ### Miscellaneous
