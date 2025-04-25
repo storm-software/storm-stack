@@ -2,6 +2,13 @@
 
 # Changelog for Storm Stack - Preset Cloudflare Worker
 
+## [0.7.1](https://github.com/storm-software/storm-stack/releases/tag/preset-cloudflare-worker%400.7.1) (2025-04-25)
+
+### Miscellaneous
+
+- **monorepo:** Update workspace configuration to use pnpm for publish
+  ([c9fd85a0](https://github.com/storm-software/storm-stack/commit/c9fd85a0))
+
 ## [0.5.0](https://github.com/storm-software/storm-stack/releases/tag/preset-cloudflare-worker%400.5.0) (2025-04-23)
 
 ### Features

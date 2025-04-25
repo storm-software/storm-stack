@@ -2,6 +2,13 @@
 
 # Changelog for Storm Stack - Eslint Plugin Storm Stack
 
+## [0.7.1](https://github.com/storm-software/storm-stack/releases/tag/eslint-plugin-storm-stack%400.7.1) (2025-04-25)
+
+### Miscellaneous
+
+- **monorepo:** Update workspace configuration to use pnpm for publish
+  ([c9fd85a0](https://github.com/storm-software/storm-stack/commit/c9fd85a0))
+
 ## [0.5.2](https://github.com/storm-software/storm-stack/releases/tag/eslint-plugin-storm-stack%400.5.2) (2025-04-15)
 
 ### Miscellaneous

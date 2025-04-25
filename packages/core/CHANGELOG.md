@@ -2,6 +2,17 @@
 
 # Changelog for Storm Stack - Core
 
+## [0.9.1](https://github.com/storm-software/storm-stack/releases/tag/core%400.9.1) (2025-04-25)
+
+### Miscellaneous
+
+- **monorepo:** Update workspace configuration to use pnpm for publish
+  ([c9fd85a0](https://github.com/storm-software/storm-stack/commit/c9fd85a0))
+
+### Updated Dependencies
+
+- Updated types to 0.3.1
+
 ## [0.9.0](https://github.com/storm-software/storm-stack/releases/tag/core%400.9.0) (2025-04-25)
 
 ### Updated Dependencies

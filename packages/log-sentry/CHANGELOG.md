@@ -2,6 +2,19 @@
 
 # Changelog for Storm Stack - Log Sentry
 
+## [0.7.1](https://github.com/storm-software/storm-stack/releases/tag/log-sentry%400.7.1) (2025-04-25)
+
+### Miscellaneous
+
+- **monorepo:** Update workspace configuration to use pnpm for publish
+  ([c9fd85a0](https://github.com/storm-software/storm-stack/commit/c9fd85a0))
+
+### Updated Dependencies
+
+- Updated core to 0.9.1
+- Updated core to 0.9.1
+- Updated nx to 0.5.2
+
 ## [0.7.0](https://github.com/storm-software/storm-stack/releases/tag/log-sentry%400.7.0) (2025-04-25)
 
 ### Miscellaneous

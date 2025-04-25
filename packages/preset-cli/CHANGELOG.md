@@ -2,6 +2,13 @@
 
 # Changelog for Storm Stack - Preset Cli
 
+## [0.6.1](https://github.com/storm-software/storm-stack/releases/tag/preset-cli%400.6.1) (2025-04-25)
+
+### Miscellaneous
+
+- **monorepo:** Update workspace configuration to use pnpm for publish
+  ([c9fd85a0](https://github.com/storm-software/storm-stack/commit/c9fd85a0))
+
 ## [0.5.0](https://github.com/storm-software/storm-stack/releases/tag/preset-cli%400.5.0) (2025-04-25)
 
 ### Features

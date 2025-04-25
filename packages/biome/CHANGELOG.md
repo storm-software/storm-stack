@@ -2,6 +2,13 @@
 
 # Changelog for Storm Stack - Biome
 
+## [0.1.4](https://github.com/storm-software/storm-stack/releases/tag/biome%400.1.4) (2025-04-25)
+
+### Miscellaneous
+
+- **monorepo:** Update workspace configuration to use pnpm for publish
+  ([c9fd85a0](https://github.com/storm-software/storm-stack/commit/c9fd85a0))
+
 ## [0.1.3](https://github.com/storm-software/storm-stack/releases/tag/biome%400.1.3) (2025-04-14)
 
 ### Miscellaneous
