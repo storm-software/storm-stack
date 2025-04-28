@@ -67,18 +67,18 @@ catalog:
   '@storm-software/build-tools': 0.144.1
   '@storm-software/config': 1.113.5
   '@storm-software/config-tools': 1.163.5
-  '@storm-software/cspell': 0.21.0
-  '@storm-software/git-tools': 2.104.27
-  '@storm-software/linting-tools': 1.119.40
-  '@storm-software/eslint': 0.148.0
-  '@storm-software/prettier': 0.45.9
+  '@storm-software/cspell': 0.21.1
+  '@storm-software/git-tools': 2.104.28
+  '@storm-software/linting-tools': 1.119.41
+  '@storm-software/eslint': 0.148.1
+  '@storm-software/prettier': 0.45.10
   '@storm-software/markdownlint': 0.18.16
-  '@storm-software/esbuild': 0.33.1
-  '@storm-software/unbuild': 0.41.1
+  '@storm-software/esbuild': 0.33.2
+  '@storm-software/unbuild': 0.41.2
   '@storm-software/untyped': 0.11.38
   '@storm-software/testing-tools': 1.104.62
   '@storm-software/tsconfig': 0.35.52
-  '@storm-software/workspace-tools': 1.267.0
+  '@storm-software/workspace-tools': 1.267.1
   '@stryke/env': 0.6.5
   '@stryke/fs': 0.12.1
   '@stryke/helpers': 0.5.2
