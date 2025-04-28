@@ -37,18 +37,18 @@ catalog:
   '@eslint/config-inspector': ^0.7.1
   '@ls-lint/ls-lint': ^2.3.0
   '@ltd/j-toml': ^1.38.0
-  '@microsoft/api-extractor': ^7.52.4
-  '@nuxt/kit': ^3.16.2
-  '@nuxt/schema': ^3.16.2
+  '@microsoft/api-extractor': ^7.52.5
+  '@nuxt/kit': ^3.17.0
+  '@nuxt/schema': ^3.17.0
   '@opentelemetry/api-logs': ^0.200.0
   '@opentelemetry/exporter-logs-otlp-http': ^0.200.0
   '@opentelemetry/otlp-exporter-base': ^0.200.0
   '@opentelemetry/resources': ^2.0.0
   '@opentelemetry/sdk-logs': ^0.200.0
   '@opentelemetry/semantic-conventions': ^1.32.0
-  '@sentry/core': ^9.13.0
-  '@sentry/node': ^9.13.0
-  '@sentry/types': ^9.13.0
+  '@sentry/core': ^9.14.0
+  '@sentry/node': ^9.14.0
+  '@sentry/types': ^9.14.0
   '@taplo/cli': ^0.7.0
   '@types/eslint': ^9.6.1
   '@types/eslint__js': ^8.42.3
@@ -56,29 +56,29 @@ catalog:
   '@types/jest': 29.5.14
   '@types/react': npm:types-react@rc
   '@types/react-dom': npm:types-react-dom@rc
-  '@types/node': ^22.14.1
-  '@nx/devkit': 20.8.0
-  '@nx/eslint-plugin': 20.8.0
-  '@nx/jest': 20.8.0
-  '@nx/js': 20.8.0
-  '@nx/plugin': 20.8.0
-  '@nx/react': 20.8.0
-  '@nx/workspace': 20.8.0
-  '@storm-software/build-tools': 0.143.46
-  '@storm-software/config': 1.113.3
-  '@storm-software/config-tools': 1.163.3
-  '@storm-software/cspell': 0.20.27
-  '@storm-software/git-tools': 2.104.25
-  '@storm-software/linting-tools': 1.119.39
-  '@storm-software/eslint': 0.146.8
-  '@storm-software/prettier': 0.45.8
-  '@storm-software/markdownlint': 0.18.15
-  '@storm-software/esbuild': 0.32.2
-  '@storm-software/unbuild': 0.40.2
-  '@storm-software/untyped': 0.11.37
-  '@storm-software/testing-tools': 1.104.61
-  '@storm-software/tsconfig': 0.35.51
-  '@storm-software/workspace-tools': 1.266.9
+  '@types/node': ^22.15.3
+  '@nx/devkit': 20.8.1
+  '@nx/eslint-plugin': 20.8.1
+  '@nx/jest': 20.8.1
+  '@nx/js': 20.8.1
+  '@nx/plugin': 20.8.1
+  '@nx/react': 20.8.1
+  '@nx/workspace': 20.8.1
+  '@storm-software/build-tools': 0.144.1
+  '@storm-software/config': 1.113.5
+  '@storm-software/config-tools': 1.163.5
+  '@storm-software/cspell': 0.21.0
+  '@storm-software/git-tools': 2.104.27
+  '@storm-software/linting-tools': 1.119.40
+  '@storm-software/eslint': 0.148.0
+  '@storm-software/prettier': 0.45.9
+  '@storm-software/markdownlint': 0.18.16
+  '@storm-software/esbuild': 0.33.1
+  '@storm-software/unbuild': 0.41.1
+  '@storm-software/untyped': 0.11.38
+  '@storm-software/testing-tools': 1.104.62
+  '@storm-software/tsconfig': 0.35.52
+  '@storm-software/workspace-tools': 1.267.0
   '@stryke/env': 0.6.5
   '@stryke/fs': 0.12.1
   '@stryke/helpers': 0.5.2
@@ -94,18 +94,18 @@ catalog:
   '@stryke/type-checks': 0.3.2
   '@stryke/cli': 0.8.0
   '@swc-node/register': ^1.10.10
-  '@swc/core': ^1.11.21
-  '@swc/wasm': ^1.11.21
+  '@swc/core': ^1.11.22
+  '@swc/wasm': ^1.11.22
   '@swc/helpers': ^0.5.17
-  '@typescript-eslint/scope-manager': ^8.30.1
-  '@typescript-eslint/types': ^8.30.1
-  '@typescript-eslint/utils': ^8.30.1
+  '@typescript-eslint/scope-manager': ^8.31.1
+  '@typescript-eslint/types': ^8.31.1
+  '@typescript-eslint/utils': ^8.31.1
   bundle-require: ^5.1.0
   c12: ^3.0.3
   chalk-template: ^1.1.0
   commander: ^13.1.0
   diff-match-patch: ^1.0.5
-  eslint: ^9.24.0
+  eslint: ^9.25.1
   eslint-doc-generator: ^2.1.2
   eslint-plugin-eslint-plugin: 6.4.0
   eslint-plugin-i18n-text: 1.0.1
@@ -115,13 +115,13 @@ catalog:
   invariant: ^2.2.4
   jest-worker: ^29.7.0
   jsonc-eslint-parser: 2.4.0
-  lefthook: ^1.11.10
+  lefthook: ^1.11.12
   log4brains: ^1.1.0
   magic-string: ^0.30.17
   magicast: ^0.3.5
   mlly: ^1.7.4
   prettier: ^3.5.3
-  nx: 20.8.0
+  nx: 20.8.1
   jest: 29.7.0
   jest-environment-jsdom: 29.7.0
   jest-environment-node: 29.7.0
@@ -137,16 +137,16 @@ catalog:
   rimraf: ^6.0.1
   tsx: ^4.19.3
   typescript: ~5.7.3
-  esbuild: 0.25.2
-  rollup: ^4.40.0
-  rolldown: ^1.0.0-beta.7
+  esbuild: 0.25.3
+  rollup: ^4.40.1
+  rolldown: ^1.0.0-beta.8
   unbuild: ^3.5.0
   unenv: npm:unenv-nightly
   unimport: ^4.2.0
-  unstorage: ^1.15.0
+  unstorage: ^1.16.0
   untyped: 1.5.2
   verdaccio: 6.1.2
-  vite: ^6.3.2
+  vite: ^6.3.3
   defu: ^6.1.4
   jiti: ^2.4.2
   eslint-flat-config-utils: 2.0.1
