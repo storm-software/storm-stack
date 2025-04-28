@@ -5,119 +5,106 @@
 # Storm Stack Lint Executor
 
 ## `outputPath`
+
 - **Type**: `string`
 - **Default**: `"dist/{projectRoot}"`
 
 > Output Path
 
-
 The output path for the build
 
-
 ## `entry`
+
 - **Type**: `string`
 - **Default**: `"{sourceRoot}/index.ts"`
 
 > Entry File
 
-
 The entry file or files to build
 
-
 ## `presets`
+
 - **Type**: `array`
 - **Default**: `[]`
 
 > Presets
 
-
 A list of presets to use during Storm Stack processing
 
-
 ## `plugins`
+
 - **Type**: `array`
 - **Default**: `[]`
 
 > Plugins
 
-
 A list of plugins to use during Storm Stack processing
 
-
 ## `mode`
+
 - **Type**: `string`
 - **Default**: `"production"`
 
 > Mode
 
-
 The build mode
 
-
 ## `tsconfig`
+
 - **Type**: `string`
 - **Default**: `"{projectRoot}/tsconfig.json"`
 
 > TypeScript Configuration File
 
-
 The path to the tsconfig file
 
-
 ## `skipInstalls`
+
 - **Type**: `boolean`
 
 > Skip Installs
 
-
 Skip installing dependencies during prepare stage
 
-
 ## `skipCache`
+
 - **Type**: `boolean`
 
 > Skip Cache
 
-
 Skip the cache when building
 
-
 ## `skipLint`
+
 - **Type**: `boolean`
 
 > Skip Lint
 
-
 Skip linting the project when building
 
-
 ## `silent`
+
 - **Type**: `boolean`
 - **Default**: `false`
 
 > Silent
 
-
 Should the build run silently - only report errors back to the user
 
-
 ## `autoPrepare`
+
 - **Type**: `boolean`
 - **Default**: `true`
 
 > Auto Prepare
 
-
 Automatically prepare the project (if required)
 
-
 ## `autoClean`
+
 - **Type**: `boolean`
 - **Default**: `true`
 
 > Auto Clean
 
-
 Automatically clean the project (if required)
-
-

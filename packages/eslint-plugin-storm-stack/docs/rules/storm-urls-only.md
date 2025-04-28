@@ -13,13 +13,13 @@
 👎 Examples of **incorrect** code for this rule:
 
 ```ts
-const url = new URL("https://example.com");
+const url = new URL("https://example.com")
 ```
 
 👍 Examples of **correct** code for this rule:
 
 ```ts
-const url = new StormURL("https://example.com");
+const url = new StormURL("https://example.com")
 ```
 
 ## Version
