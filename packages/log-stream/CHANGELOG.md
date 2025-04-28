@@ -2,6 +2,19 @@
 
 # Changelog for Storm Stack - Log Stream
 
+## [0.5.4](https://github.com/storm-software/storm-stack/releases/tag/log-stream%400.5.4) (2025-04-28)
+
+### Miscellaneous
+
+- **monorepo:** Upgrade workspace package dependencies
+  ([2af8f02f](https://github.com/storm-software/storm-stack/commit/2af8f02f))
+
+### Updated Dependencies
+
+- Updated core to 0.9.3
+- Updated core to 0.9.3
+- Updated nx to 0.5.4
+
 ## [0.5.3](https://github.com/storm-software/storm-stack/releases/tag/log-stream%400.5.3) (2025-04-25)
 
 ### Miscellaneous

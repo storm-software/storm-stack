@@ -1,6 +1,6 @@
 {
   "name": "@storm-stack/log-stream",
-  "version": "0.5.3",
+  "version": "0.5.4",
   "type": "module",
   "description": "A package containing a Storm Stack log adapter to write logs to a stream",
   "repository": {
@@ -10,8 +10,8 @@
   },
   "private": false,
   "devDependencies": {
-    "@storm-stack/core": "workspace:*",
-    "@storm-stack/nx": "workspace:*",
+    "@storm-stack/core": "0.9.3",
+    "@storm-stack/nx": "0.5.4",
     "@types/node": "catalog:"
   },
   "publishConfig": {

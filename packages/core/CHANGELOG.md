@@ -2,6 +2,13 @@
 
 # Changelog for Storm Stack - Core
 
+## [0.9.3](https://github.com/storm-software/storm-stack/releases/tag/core%400.9.3) (2025-04-28)
+
+### Miscellaneous
+
+- **monorepo:** Upgrade workspace package dependencies
+  ([2af8f02f](https://github.com/storm-software/storm-stack/commit/2af8f02f))
+
 ## [0.9.2](https://github.com/storm-software/storm-stack/releases/tag/core%400.9.2) (2025-04-25)
 
 ### Miscellaneous
