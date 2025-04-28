@@ -29,7 +29,11 @@ import type {
   SerializerFunction,
   StormContext,
   StormRuntimeParams,
-  ValidatorFunction
+  ValidatorFunction,
+  SetupFunction,
+  CleanupFunction,
+  PreprocessFunction,
+  PostprocessFunction
 } from "@storm-stack/plugin-node/types";
 import { isError } from "@stryke/type-checks/is-error";
 import type { StormEnv } from "@storm-stack/types/env";
@@ -141,13 +145,8 @@ export function builder<
         const request = await Promise.resolve(
           builderConfig.deserializer!(payload)
         );
-        if (isError(request) || Array.isArray(request)) {
-          // if the deserializer returns an error or an array of issues, we need to return a validation error response
-          return new StormResponse(
-            uniqueId(),
-            {},
-            getErrorFromUnknown(null, "validation", request)
-          );
+        if (isError(request)) {
+          return StormResponse.create(request);
         }
 
         const context = {
@@ -196,23 +195,38 @@ export function builder<
           async () => {
             try {
               if (builderConfig.validator) {
-                const issues = await Promise.resolve(
+                const validatorResult = await Promise.resolve(
                   builderConfig.validator(context)
                 );
-                if (issues) {
-                  return StormResponse.create(
-                    getErrorFromUnknown(
-                      null,
-                      "validation",
-                      issues
-                    )
-                  );
+                if (isError(validatorResult)) {
+                  return StormResponse.create(validatorResult);
+                }
+              }
+
+              if (builderConfig.preprocess) {
+                const preprocessResult = await Promise.resolve(
+                  builderConfig.preprocess(context)
+                );
+                if (isError(preprocessResult)) {
+                  return StormResponse.create(preprocessResult);
                 }
               }
 
               const result = await Promise.resolve(
                 builderConfig.handler!(request as TRequest)
               );
+              if (isError(result)) {
+                return StormResponse.create(result);
+              }
+
+              if (builderConfig.postprocess) {
+                const postprocessResult = await Promise.resolve(
+                  builderConfig.postprocess(context)
+                );
+                if (isError(postprocessResult)) {
+                  return StormResponse.create(postprocessResult);
+                }
+              }
 
               return StormResponse.create(result);
             } catch (e) {
@@ -250,39 +264,15 @@ export function builder<
       build
     } as BuilderResult<TRequest, TResponse, TPayload, TResult>;
 
-    result.validator = (validatorFn: ValidatorFunction<TRequest>) => {
-      if (builderConfig.validator) {
+    result.setup = (setupFn: SetupFunction) => {
+      if (builderConfig.setup) {
         // eslint-disable-next-line no-console
         console.warn(
-          "A validator function has already been configured. Please ensure you meant to overwrite the previously configured value."
+          "A setup function has already been configured. Please ensure you meant to overwrite the previously configured value."
         );
       }
 
-      builderConfig.validator = validatorFn;
-      return createBuilderResult();
-    };
-    result.handler = (handlerFn: HandlerFunction<TRequest, TResponse>) => {
-      if (builderConfig.handler) {
-        // eslint-disable-next-line no-console
-        console.warn(
-          "A handler function has already been configured. Please ensure you meant to overwrite the previously configured value."
-        );
-      }
-
-      builderConfig.handler = handlerFn;
-      return createBuilderResult();
-    };
-    result.serializer = (
-      serializerFn: SerializerFunction<TResponse, TResult>
-    ) => {
-      if (builderConfig.serializer) {
-        // eslint-disable-next-line no-console
-        console.warn(
-          "A serializer function has already been configured. Please ensure you meant to overwrite the previously configured value."
-        );
-      }
-
-      builderConfig.serializer = serializerFn;
+      builderConfig.setup = setupFn;
       return createBuilderResult();
     };
 
@@ -297,6 +287,80 @@ export function builder<
       }
 
       builderConfig.deserializer = deserializerFn;
+      return createBuilderResult();
+    };
+
+    result.validator = (validatorFn: ValidatorFunction<TRequest, TContext>) => {
+      if (builderConfig.validator) {
+        // eslint-disable-next-line no-console
+        console.warn(
+          "A validator function has already been configured. Please ensure you meant to overwrite the previously configured value."
+        );
+      }
+
+      builderConfig.validator = validatorFn;
+      return createBuilderResult();
+    };
+
+    result.preprocess = (preprocessFn: PreprocessFunction<TRequest, TContext>) => {
+      if (builderConfig.preprocess) {
+        // eslint-disable-next-line no-console
+        console.warn(
+          "A preprocess function has already been configured. Please ensure you meant to overwrite the previously configured value."
+        );
+      }
+
+      builderConfig.preprocess = preprocessFn;
+      return createBuilderResult();
+    };
+
+    result.handler = (handlerFn: HandlerFunction<TRequest, TResponse>) => {
+      if (builderConfig.handler) {
+        // eslint-disable-next-line no-console
+        console.warn(
+          "A handler function has already been configured. Please ensure you meant to overwrite the previously configured value."
+        );
+      }
+
+      builderConfig.handler = handlerFn;
+      return createBuilderResult();
+    };
+
+    result.postprocess = (postprocessFn: PostprocessFunction<TRequest, TContext, TResponse>) => {
+      if (builderConfig.postprocess) {
+        // eslint-disable-next-line no-console
+        console.warn(
+          "A postprocess function has already been configured. Please ensure you meant to overwrite the previously configured value."
+        );
+      }
+
+      builderConfig.postprocess = postprocessFn;
+      return createBuilderResult();
+    };
+
+    result.serializer = (
+      serializerFn: SerializerFunction<TResponse, TResult>
+    ) => {
+      if (builderConfig.serializer) {
+        // eslint-disable-next-line no-console
+        console.warn(
+          "A serializer function has already been configured. Please ensure you meant to overwrite the previously configured value."
+        );
+      }
+
+      builderConfig.serializer = serializerFn;
+      return createBuilderResult();
+    };
+
+    result.cleanup = (cleanupFn: CleanupFunction) => {
+      if (builderConfig.cleanup) {
+        // eslint-disable-next-line no-console
+        console.warn(
+          "A cleanup function has already been configured. Please ensure you meant to overwrite the previously configured value."
+        );
+      }
+
+      builderConfig.cleanup = cleanupFn;
       return createBuilderResult();
     };
 

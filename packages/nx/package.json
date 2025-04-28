@@ -92,8 +92,8 @@
   },
   "typings": "dist/index.d.ts",
   "peerDependencies": {
-    "@storm-stack/plugin-node": "workspace:*",
-    "@storm-stack/preset-cloudflare-worker": "workspace:*"
+    "@storm-stack/plugin-node": "0.9.2",
+    "@storm-stack/preset-cloudflare-worker": "0.7.2"
   },
   "peerDependenciesMeta": {
     "@storm-stack/plugin-node": {
@@ -111,7 +111,7 @@
     "@storm-software/esbuild": "catalog:",
     "@storm-software/unbuild": "catalog:",
     "@storm-software/workspace-tools": "catalog:",
-    "@storm-stack/core": "0.9.2",
+    "@storm-stack/core": "workspace:*",
     "defu": "catalog:",
     "nx": "catalog:"
   },

@@ -20,4 +20,4 @@ export * from "./build.mjs";
 export * from "./format.mjs";
 export * from "./lint.mjs";
 export * from "./nuke.mjs";
-export * from "./upgrade-storm-deps.mjs";
+export * from "./update-storm.mjs";

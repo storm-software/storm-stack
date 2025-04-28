@@ -335,16 +335,12 @@ export type SetupFunction = () => MaybePromise<
 export type DeserializerFunction<
   TRequest extends IStormRequest,
   TPayload = any
-> = (
-  payload: TPayload
-) => MaybePromise<TRequest | IStormError | ValidationDetail[]>;
+> = (payload: TPayload) => MaybePromise<TRequest | IStormError>;
 
 export type ValidatorFunction<
   TRequest extends IStormRequest,
   TContext extends StormContext<StormEnv, any, TRequest>
-> = (
-  context: TContext
-) => MaybePromise<IStormError | ValidationDetail[] | void | null | undefined>;
+> = (context: TContext) => MaybePromise<IStormError | void | null | undefined>;
 
 export type PreprocessFunction<
   TRequest extends IStormRequest,
@@ -359,10 +355,10 @@ export type HandlerFunction<
 export type PostprocessFunction<
   TRequest extends IStormRequest,
   TContext extends StormContext<StormEnv, any, TRequest>,
-  TResponse extends IStormResponse
+  TResult
 > = (
   context: TContext,
-  response: TResponse
+  result: TResult
 ) => MaybePromise<IStormError | void | null | undefined>;
 
 export type SerializerFunction<
@@ -370,7 +366,7 @@ export type SerializerFunction<
   TResult = any
 > = (
   response: TResponse | IStormResponse<IStormError>
-) => MaybePromise<TResult>;
+) => MaybePromise<TResult | IStormError>;
 
 export type CleanupFunction = () => MaybePromise<
   IStormError | void | null | undefined
@@ -399,7 +395,7 @@ export interface BuilderConfig<
   validator?: ValidatorFunction<TRequest, TContext>;
   preprocess?: PreprocessFunction<TRequest, TContext>;
   handler?: HandlerFunction<TRequest, TResponse>;
-  postprocess?: PostprocessFunction<TRequest, TContext, TResponse>;
+  postprocess?: PostprocessFunction<TRequest, TContext, TResult>;
   serializer?: SerializerFunction<TResponse, TResult>;
   cleanup?: CleanupFunction;
 }
@@ -438,7 +434,7 @@ export interface BuilderResult<
     handlerFn: HandlerFunction<TRequest, TResponse>
   ) => Omit<BuilderResult<TRequest, TResponse, TPayload, TResult>, "handler">;
   postprocess: (
-    postprocessFn: PostprocessFunction<TRequest, TContext, TResponse>
+    postprocessFn: PostprocessFunction<TRequest, TContext, TResult>
   ) => Omit<
     BuilderResult<TRequest, TResponse, TPayload, TResult>,
     "postprocess"

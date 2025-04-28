@@ -32,7 +32,7 @@ try {
     }
   }
 
-  echo`${chalk.whiteBright(`📦  Building the monorepo in ${configuration} mode...`)}`;
+  echo`${chalk.whiteBright(`🏗️  Building the monorepo in ${configuration} mode...`)}`;
 
   let proc = $`pnpm bootstrap`.timeout("60s");
   proc.stdout.on("data", data => {
