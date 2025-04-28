@@ -17,7 +17,7 @@
   },
   "license": "Apache-2.0",
   "private": true,
-  "packageManager": "pnpm@10.8.1",
+  "packageManager": "pnpm@10.10.0",
   "engines": {
     "node": ">=22.14.0",
     "pnpm": ">=10.8.1"
@@ -58,7 +58,7 @@
     "release": "pnpm exec storm-git release",
     "sherif": "pnpm exec sherif -f -i typescript -i react -i react-dom",
     "start": "nx serve",
-    "upgrade-storm-deps": "pnpm exec zx tools/scripts/src/upgrade-storm-deps.mjs",
+    "update-storm": "pnpm exec zx tools/scripts/src/update-storm.mjs",
     "view-config": "pnpm exec storm-config"
   },
   "devDependencies": {
