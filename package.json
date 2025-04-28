@@ -19,8 +19,8 @@
   "private": true,
   "packageManager": "pnpm@10.10.0",
   "engines": {
-    "node": ">=22.14.0",
-    "pnpm": ">=10.8.1"
+    "node": ">=22.15.0",
+    "pnpm": ">=10.10.0"
   },
   "keywords": [
     "storm-stack",
