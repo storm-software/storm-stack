@@ -2,6 +2,23 @@
 
 # Changelog for Storm Stack - Nx
 
+## [0.6.0](https://github.com/storm-software/storm-stack/releases/tag/nx%400.6.0) (2025-04-29)
+
+### Features
+
+- **core:** Update NodeJs package to use tsup for builds
+  ([f714c254](https://github.com/storm-software/storm-stack/commit/f714c254))
+
+### Miscellaneous
+
+- **monorepo:** Update banners on source files
+  ([49367b8e](https://github.com/storm-software/storm-stack/commit/49367b8e))
+
+### Updated Dependencies
+
+- Updated core to 0.10.0
+- Updated core to 0.10.0
+
 ## [0.5.4](https://github.com/storm-software/storm-stack/releases/tag/nx%400.5.4) (2025-04-28)
 
 ### Miscellaneous

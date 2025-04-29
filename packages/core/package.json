@@ -1,6 +1,6 @@
 {
   "name": "@storm-stack/core",
-  "version": "0.9.4",
+  "version": "0.10.0",
   "type": "module",
   "description": "A build toolkit and runtime used by Storm Software in TypeScript applications",
   "repository": {
@@ -440,7 +440,7 @@
   },
   "devDependencies": {
     "@storm-software/testing-tools": "catalog:",
-    "@storm-stack/types": "workspace:*",
+    "@storm-stack/types": "0.3.3",
     "@stryke/types": "catalog:",
     "@types/node": "catalog:",
     "eslint": "catalog:",

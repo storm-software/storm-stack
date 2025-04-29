@@ -2,6 +2,13 @@
 
 # Changelog for Storm Stack - Plugin Http
 
+## [0.5.2](https://github.com/storm-software/storm-stack/releases/tag/plugin-http%400.5.2) (2025-04-29)
+
+### Miscellaneous
+
+- **monorepo:** Update banners on source files
+  ([49367b8e](https://github.com/storm-software/storm-stack/commit/49367b8e))
+
 ## [0.5.1](https://github.com/storm-software/storm-stack/releases/tag/plugin-http%400.5.1) (2025-04-25)
 
 ### Miscellaneous

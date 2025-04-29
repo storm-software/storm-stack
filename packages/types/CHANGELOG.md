@@ -2,6 +2,13 @@
 
 # Changelog for Storm Stack - Types
 
+## [0.3.3](https://github.com/storm-software/storm-stack/releases/tag/types%400.3.3) (2025-04-29)
+
+### Miscellaneous
+
+- **monorepo:** Update banners on source files
+  ([49367b8e](https://github.com/storm-software/storm-stack/commit/49367b8e))
+
 ## [0.3.2](https://github.com/storm-software/storm-stack/releases/tag/types%400.3.2) (2025-04-25)
 
 ### Miscellaneous

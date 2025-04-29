@@ -2,6 +2,18 @@
 
 # Changelog for Storm Stack - Plugin Node
 
+## [0.10.0](https://github.com/storm-software/storm-stack/releases/tag/plugin-node%400.10.0) (2025-04-29)
+
+### Features
+
+- **core:** Update NodeJs package to use tsup for builds
+  ([f714c254](https://github.com/storm-software/storm-stack/commit/f714c254))
+
+### Miscellaneous
+
+- **monorepo:** Update banners on source files
+  ([49367b8e](https://github.com/storm-software/storm-stack/commit/49367b8e))
+
 ## [0.9.3](https://github.com/storm-software/storm-stack/releases/tag/plugin-node%400.9.3) (2025-04-28)
 
 ### Miscellaneous

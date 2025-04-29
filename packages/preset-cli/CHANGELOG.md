@@ -2,6 +2,13 @@
 
 # Changelog for Storm Stack - Preset Cli
 
+## [0.6.3](https://github.com/storm-software/storm-stack/releases/tag/preset-cli%400.6.3) (2025-04-29)
+
+### Miscellaneous
+
+- **monorepo:** Update banners on source files
+  ([49367b8e](https://github.com/storm-software/storm-stack/commit/49367b8e))
+
 ## [0.6.2](https://github.com/storm-software/storm-stack/releases/tag/preset-cli%400.6.2) (2025-04-25)
 
 ### Miscellaneous

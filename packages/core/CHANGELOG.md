@@ -2,6 +2,22 @@
 
 # Changelog for Storm Stack - Core
 
+## [0.10.0](https://github.com/storm-software/storm-stack/releases/tag/core%400.10.0) (2025-04-29)
+
+### Features
+
+- **core:** Update NodeJs package to use tsup for builds
+  ([f714c254](https://github.com/storm-software/storm-stack/commit/f714c254))
+
+### Miscellaneous
+
+- **monorepo:** Update banners on source files
+  ([49367b8e](https://github.com/storm-software/storm-stack/commit/49367b8e))
+
+### Updated Dependencies
+
+- Updated types to 0.3.3
+
 ## [0.9.4](https://github.com/storm-software/storm-stack/releases/tag/core%400.9.4) (2025-04-28)
 
 ### Miscellaneous

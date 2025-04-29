@@ -2,6 +2,19 @@
 
 # Changelog for Storm Stack - Log Otel
 
+## [0.6.0](https://github.com/storm-software/storm-stack/releases/tag/log-otel%400.6.0) (2025-04-29)
+
+### Features
+
+- **core:** Update NodeJs package to use tsup for builds
+  ([f714c254](https://github.com/storm-software/storm-stack/commit/f714c254))
+
+### Updated Dependencies
+
+- Updated core to 0.10.0
+- Updated core to 0.10.0
+- Updated nx to 0.6.0
+
 ## [0.5.4](https://github.com/storm-software/storm-stack/releases/tag/log-otel%400.5.4) (2025-04-28)
 
 ### Miscellaneous

@@ -2,6 +2,19 @@
 
 # Changelog for Storm Stack - Log Sentry
 
+## [0.8.0](https://github.com/storm-software/storm-stack/releases/tag/log-sentry%400.8.0) (2025-04-29)
+
+### Features
+
+- **core:** Update NodeJs package to use tsup for builds
+  ([f714c254](https://github.com/storm-software/storm-stack/commit/f714c254))
+
+### Updated Dependencies
+
+- Updated core to 0.10.0
+- Updated core to 0.10.0
+- Updated nx to 0.6.0
+
 ## [0.7.3](https://github.com/storm-software/storm-stack/releases/tag/log-sentry%400.7.3) (2025-04-28)
 
 ### Miscellaneous

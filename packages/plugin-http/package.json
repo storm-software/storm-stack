@@ -1,6 +1,6 @@
 {
   "name": "@storm-stack/plugin-http",
-  "version": "0.5.1",
+  "version": "0.5.2",
   "type": "module",
   "description": "A Storm Stack plugin for including http helper functionality.",
   "repository": {
