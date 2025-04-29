@@ -2,11 +2,7 @@
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
     "jsx": "react-jsx",
-    "types": [
-      "@storm-stack/types",
-      "node",
-      "@cloudflare/workers-types/experimental"
-    ],
+    "types": ["node", "@cloudflare/workers-types/experimental"],
     "outDir": "../../dist/out-tsc",
     "verbatimModuleSyntax": false
   },

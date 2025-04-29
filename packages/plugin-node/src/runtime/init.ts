@@ -24,7 +24,7 @@ export function writeInit(features: StormStackNodeFeatures[]) {
 
 ${
   features.includes(StormStackNodeFeatures.SENTRY)
-    ? `import @storm-stack/log-sentry/init;`
+    ? `import "@storm-stack/log-sentry/init";`
     : "// Do nothing - this is a placeholder for Storm Stack plugins that do not require any initialization"
 }
 

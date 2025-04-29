@@ -19,20 +19,15 @@
   "private": true,
   "packageManager": "pnpm@10.10.0",
   "engines": {
-    "node": ">=22.15.0",
+    "node": ">=22.14.0",
     "pnpm": ">=10.10.0"
   },
   "keywords": [
     "storm-stack",
+    "stormstack",
     "storm-software",
     "storm",
-    "stormstack",
-    "storm-ops",
-    "acidic",
-    "cyclone-ui",
-    "nextjs",
-    "prisma",
-    "graphql",
+    "deepkit",
     "sullivanpj",
     "monorepo"
   ],

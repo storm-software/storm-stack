@@ -20,7 +20,9 @@ const handleRequest = builder({
   .build();
 
 export default class extends WorkerEntrypoint {
-  fetch(req, env, ctx) {
-    return handleRequest({ req, env, ctx });
+  public override async fetch(req: any) {
+    return (await Promise.resolve(
+      handleRequest({ req, env: this.env, ctx: this.ctx })
+    )) as Response;
   }
 }

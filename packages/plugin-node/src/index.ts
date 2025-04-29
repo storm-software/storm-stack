@@ -106,22 +106,6 @@ export default class StormStackNodePlugin<
     );
 
     context.platform ??= "node";
-    context.override = defu(context.override, {
-      alias: {
-        "storm:init": joinPaths(runtimeDir, "init"),
-        "storm:app": joinPaths(runtimeDir, "app"),
-        "storm:context": joinPaths(runtimeDir, "context"),
-        "storm:error": joinPaths(runtimeDir, "error"),
-        "storm:event": joinPaths(runtimeDir, "event"),
-        "storm:id": joinPaths(runtimeDir, "id"),
-        "storm:storage": joinPaths(runtimeDir, "storage"),
-        "storm:log": joinPaths(runtimeDir, "log"),
-        "storm:request": joinPaths(runtimeDir, "request"),
-        "storm:response": joinPaths(runtimeDir, "response"),
-        "storm:json": "@stryke/json",
-        "storm:url": "@stryke/url"
-      }
-    });
 
     context.unimportPresets.push({
       imports: ["builder"],
@@ -333,66 +317,118 @@ export default builder({
    */
   private async esbuild(
     context: Context<TOptions>,
-    override: Partial<ESBuildOptions> = {}
+    override: Partial<ESBuildOptions> & { alias?: Record<string, string> } = {}
   ) {
+    const runtimeDir = joinPaths(
+      context.workspaceConfig.workspaceRoot,
+      context.projectRoot,
+      context.runtimeDir
+    );
+
+    const buildOptions = {
+      entry: context.resolvedEntry.reduce(
+        (ret, entry) => {
+          ret[
+            entry.output ||
+              entry.input.file
+                .replace(
+                  `${context.projectJson?.sourceRoot || context.projectRoot}/`,
+                  ""
+                )
+                .replace(findFileExtension(entry.input.file), "") ||
+              entry.file
+                .replace(
+                  `${context.projectJson?.sourceRoot || context.projectRoot}/`,
+                  ""
+                )
+                .replace(findFileExtension(entry.file), "")
+          ] = entry.file;
+
+          return ret;
+        },
+        {} as Record<string, string>
+      ),
+      mode: context.mode,
+      format: context.format,
+      platform: context.platform,
+      projectRoot: context.projectRoot,
+      outputPath: context.outputPath,
+      tsconfig: context.tsconfig,
+      metafile: context.mode !== "production",
+      minify: Boolean(context.minify ?? context.mode === "production"),
+      // sourcemap: context.mode !== "production",
+      banner: {
+        js:
+          context.mode !== "production"
+            ? "\n//  ⚡  Built with Storm Stack \n"
+            : " "
+      },
+      env: context.resolvedDotenv.values as {
+        [key: string]: string;
+      },
+      esbuildPlugins: [
+        externalPlugin(
+          this.log,
+          context,
+          context.resolvedTsconfig.tsconfigJson.compilerOptions?.paths
+        ),
+        compilerPlugin(this.log, context)
+      ],
+      external: context.external,
+      noExternal: context.noExternal,
+      skipNodeModulesBundle: true
+    } satisfies ESBuildOptions;
+
     return esbuild(
       defu(
+        {
+          esbuildOptions(options) {
+            options.alias = defu(
+              override?.alias ?? {},
+              context.override?.alias ?? {},
+              {
+                "storm:init": joinPaths(runtimeDir, "init"),
+                "storm:app": joinPaths(runtimeDir, "app"),
+                "storm:context": joinPaths(runtimeDir, "context"),
+                "storm:error": joinPaths(runtimeDir, "error"),
+                "storm:event": joinPaths(runtimeDir, "event"),
+                "storm:id": joinPaths(runtimeDir, "id"),
+                "storm:storage": joinPaths(runtimeDir, "storage"),
+                "storm:log": joinPaths(runtimeDir, "log"),
+                "storm:request": joinPaths(runtimeDir, "request"),
+                "storm:response": joinPaths(runtimeDir, "response"),
+                "storm:json": "@stryke/json",
+                "storm:url": "@stryke/url"
+              }
+            );
+          }
+        },
         override ?? {},
         context.override,
+        buildOptions,
         {
-          entry: context.resolvedEntry.reduce(
-            (ret, entry) => {
-              ret[
-                entry.output ||
-                  entry.input.file
-                    .replace(
-                      `${context.projectJson?.sourceRoot || context.projectRoot}/`,
-                      ""
-                    )
-                    .replace(findFileExtension(entry.input.file), "") ||
-                  entry.file
-                    .replace(
-                      `${context.projectJson?.sourceRoot || context.projectRoot}/`,
-                      ""
-                    )
-                    .replace(findFileExtension(entry.file), "")
-              ] = entry.file;
-
-              return ret;
-            },
-            {} as Record<string, string>
-          ),
-          mode: context.mode,
-          format: context.format,
-          platform: context.platform,
-          projectRoot: context.projectRoot,
-          outputPath: context.outputPath,
+          dts: true,
           generatePackageJson: true,
           bundle: true,
-          treeShaking: true,
-          metafile: context.mode !== "production",
-          minify: Boolean(context.minify ?? context.mode === "production"),
-          sourcemap: context.mode !== "production",
-          banner:
-            context.mode !== "production"
-              ? "\n//  ⚡  Built with Storm Stack \n"
-              : " ",
-          env: context.resolvedDotenv.values as {
-            [key: string]: string;
-          },
-          plugins: [
-            externalPlugin(
-              this.log,
-              context,
-              context.resolvedTsconfig.tsconfigJson.compilerOptions?.paths
-            ),
-            compilerPlugin(this.log, context)
-          ]
-        },
-        {
+          treeshake: true,
+          shims: true,
           platform: "node",
           format: "esm",
-          target: "node22"
+          target: "node22",
+          noExternal: [
+            "storm:init",
+            "storm:app",
+            "storm:context",
+            "storm:error",
+            "storm:event",
+            "storm:id",
+            "storm:storage",
+            "storm:log",
+            "storm:request",
+            "storm:response",
+            "storm:json",
+            "storm:url"
+          ]
         }
       ) as ESBuildOptions
     );

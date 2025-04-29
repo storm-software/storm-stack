@@ -10,8 +10,8 @@
   },
   "private": false,
   "devDependencies": {
-    "@storm-stack/core": "0.9.4",
-    "@storm-stack/nx": "0.5.4",
+    "@storm-stack/core": "workspace:*",
+    "@storm-stack/nx": "workspace:*",
     "@types/node": "catalog:"
   },
   "publishConfig": {
