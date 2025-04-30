@@ -2,6 +2,13 @@
 
 # Changelog for Storm Stack - Core
 
+## [0.11.0](https://github.com/storm-software/storm-stack/releases/tag/core%400.11.0) (2025-04-30)
+
+### Features
+
+- **plugin-node:** Complete tsup build integration
+  ([6d5a3a3c](https://github.com/storm-software/storm-stack/commit/6d5a3a3c))
+
 ## [0.10.0](https://github.com/storm-software/storm-stack/releases/tag/core%400.10.0) (2025-04-29)
 
 ### Features
