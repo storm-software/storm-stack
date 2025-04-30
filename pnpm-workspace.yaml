@@ -50,12 +50,14 @@ catalog:
   '@sentry/core': ^9.14.0
   '@sentry/node': ^9.14.0
   '@sentry/types': ^9.14.0
-  '@storm-stack/core': 0.9.4
+  '@storm-stack/core': 0.10.0
   '@storm-stack/log-console': 0.5.4
-  '@storm-stack/log-storage': 0.5.4
+  '@storm-stack/log-storage': 0.6.0
   '@storm-stack/log-stream': 0.5.4
-  '@storm-stack/nx': 0.5.4
+  '@storm-stack/nx': 0.6.0
   '@storm-stack/plugin-node': 0.9.3
+  '@storm-stack/preset-cli': 0.6.3
+  '@storm-stack/types': 0.3.3
   '@taplo/cli': ^0.7.0
   '@types/eslint': ^9.6.1
   '@types/eslint__js': ^8.42.3
@@ -71,21 +73,21 @@ catalog:
   '@nx/plugin': 20.8.1
   '@nx/react': 20.8.1
   '@nx/workspace': 20.8.1
-  '@storm-software/build-tools': 0.144.6
-  '@storm-software/config': 1.113.10
-  '@storm-software/config-tools': 1.163.10
-  '@storm-software/cspell': 0.21.6
-  '@storm-software/git-tools': 2.104.33
-  '@storm-software/linting-tools': 1.119.46
-  '@storm-software/eslint': 0.148.6
-  '@storm-software/prettier': 0.45.15
-  '@storm-software/markdownlint': 0.18.16
-  '@storm-software/esbuild': 0.33.7
-  '@storm-software/unbuild': 0.41.7
+  '@storm-software/build-tools': 0.144.12
+  '@storm-software/config': 1.113.16
+  '@storm-software/config-tools': 1.163.17
+  '@storm-software/cspell': 0.21.12
+  '@storm-software/git-tools': 2.104.35
+  '@storm-software/linting-tools': 1.119.52
+  '@storm-software/eslint': 0.148.12
+  '@storm-software/prettier': 0.45.21
+  '@storm-software/markdownlint': 0.18.27
+  '@storm-software/esbuild': 0.35.13
+  '@storm-software/unbuild': 0.41.13
   '@storm-software/untyped': 0.11.38
   '@storm-software/testing-tools': 1.104.62
-  '@storm-software/tsconfig': 0.35.57
-  '@storm-software/workspace-tools': 1.267.6
+  '@storm-software/tsconfig': 0.35.63
+  '@storm-software/workspace-tools': 1.267.12
   '@stryke/env': 0.6.5
   '@stryke/fs': 0.12.1
   '@stryke/helpers': 0.5.2

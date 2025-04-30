@@ -17,11 +17,10 @@
  ------------------------------------------------------------------- */
 
 import { LogLevelLabel } from "@storm-software/config-tools/types";
-import type { ESBuildOptions } from "@storm-software/esbuild";
-import { build as esbuild } from "@storm-software/esbuild";
+import { resolveContext } from "@storm-software/esbuild/context";
+import { executeTsup } from "@storm-software/esbuild/tsup";
+import type { ESBuildOptions } from "@storm-software/esbuild/types";
 import { reflectDotenvTypes } from "@storm-stack/core/helpers/dotenv/reflect-dotenv";
-import { compilerPlugin } from "@storm-stack/core/helpers/esbuild/compiler-plugin";
-import { externalPlugin } from "@storm-stack/core/helpers/esbuild/external-plugin";
 import { getParsedTypeScriptConfig } from "@storm-stack/core/helpers/tsconfig";
 import { getFileHeader } from "@storm-stack/core/helpers/utilities";
 import { Plugin } from "@storm-stack/core/plugin";
@@ -45,6 +44,7 @@ import {
   generateImports
 } from "./helpers/dtsgen";
 import { transformContext } from "./helpers/transform-context";
+import { tsupPlugin } from "./helpers/tsup-plugin";
 import { writeCreateApp } from "./runtime/app";
 import { writeContext } from "./runtime/context";
 import { writeEvent } from "./runtime/event";
@@ -356,7 +356,7 @@ export default builder({
       tsconfig: context.tsconfig,
       metafile: context.mode !== "production",
       minify: Boolean(context.minify ?? context.mode === "production"),
-      // sourcemap: context.mode !== "production",
+      sourcemap: context.mode !== "production",
       banner: {
         js:
           context.mode !== "production"
@@ -366,20 +366,13 @@ export default builder({
       env: context.resolvedDotenv.values as {
         [key: string]: string;
       },
-      esbuildPlugins: [
-        externalPlugin(
-          this.log,
-          context,
-          context.resolvedTsconfig.tsconfigJson.compilerOptions?.paths
-        ),
-        compilerPlugin(this.log, context)
-      ],
+      plugins: [tsupPlugin(context)],
       external: context.external,
       noExternal: context.noExternal,
-      skipNodeModulesBundle: true
+      skipNodeModulesBundle: context.skipNodeModulesBundle
     } satisfies ESBuildOptions;
 
-    return esbuild(
+    const buildContext = await resolveContext(
       defu(
         {
           esbuildOptions(options) {
@@ -428,9 +421,12 @@ export default builder({
             "storm:response",
             "storm:json",
             "storm:url"
-          ]
+          ],
+          skipNodeModulesBundle: true
         }
       ) as ESBuildOptions
     );
+
+    await executeTsup(buildContext);
   }
 }

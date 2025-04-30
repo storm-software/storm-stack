@@ -29,7 +29,7 @@ const config = getTsupConfig({
   clean: true,
   sourcemap: true,
   dts: true,
-  shims: false
+  shims: true
 });
 
 export default config;

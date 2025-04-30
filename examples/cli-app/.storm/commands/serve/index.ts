@@ -32,7 +32,7 @@ const handleCommand = builder<
 })
   .handler(handle)
   .deserializer(
-    payload => new StormRequest(deserialize<ServePayload>(payload.args))
+    (payload: any) => new StormRequest(deserialize<ServePayload>(payload.args))
   )
   .build();
 

@@ -29,6 +29,7 @@ declare global {
     PLATFORM: 'node' | 'browser' | 'worker'
     PRODUCTION: boolean
     RELEASE_ID: string
+    SENTRY_DSN: string
     STACKTRACE: boolean
     STAGING: boolean
 }, {

@@ -32,7 +32,8 @@ const handleCommand = builder<
 })
   .handler(handle)
   .deserializer(
-    payload => new StormRequest(deserialize<AddPagePayload>(payload.args))
+    (payload: any) =>
+      new StormRequest(deserialize<AddPagePayload>(payload.args))
   )
   .build();
 

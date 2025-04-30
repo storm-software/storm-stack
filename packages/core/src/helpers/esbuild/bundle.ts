@@ -53,7 +53,7 @@ export async function bundle<TOptions extends Options = Options>(
           noExternal: context.noExternal,
           skipNodeModulesBundle: true
         },
-        context.resolvedTsconfig.tsconfigJson.compilerOptions?.paths
+        context.resolvedTsconfig.options?.paths
       ),
       compilerPlugin(noop, context, options)
     ]

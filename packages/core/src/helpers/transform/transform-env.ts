@@ -83,10 +83,9 @@ export async function transformEnv<TOptions extends Options = Options>(
       dotenvProperties.push(reflectionProperty);
     } else {
       throw new Error(
-        `Environment variable \`${name}\` is not defined in the dotenv type definition but is used in the code. \n\nThe following variable names are defined in the dotenv type definition: \n${Object.keys(
-          varsReflection
-        )
-          .map(typeDef => ` - ${typeDef} `)
+        `Environment variable \`${name}\` is not defined in the dotenv type definition but is used in the code. \n\nThe following variable names are defined in the dotenv type definition: \n${varsReflection
+          .getPropertyNames()
+          .map(typeDef => ` - ${String(typeDef)} `)
           .join(
             "\n"
           )} \n\nPlease check your \`dotenv\` configuration option. If you are using a custom dotenv type definition, please make sure that the variable names match the ones in the code. \n\n`

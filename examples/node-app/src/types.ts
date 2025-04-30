@@ -16,6 +16,9 @@
 
  ------------------------------------------------------------------- */
 
+// eslint-disable-next-line ts/consistent-type-imports
+import { StormSentryLogEnv } from "@storm-stack/log-sentry/types";
+
 export interface ExamplePayload {
   /**
    * The name of the person.
@@ -47,3 +50,5 @@ export interface ExamplePayload {
     country: string;
   };
 }
+
+export interface StormNodeAppEnv extends StormSentryLogEnv {}

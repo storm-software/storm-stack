@@ -457,7 +457,7 @@ const handleCommand = builder<
   storage
 })
   .handler(handle)
-  .deserializer(payload => new StormRequest(
+  .deserializer((payload: any) => new StormRequest(
     deserialize<${command.argsTypeName}>(payload.args)
   ))
   .build();
