@@ -45,5 +45,45 @@
     "from": "/home/development/repos/storm-stack/examples/cli-app/.storm/runtime/id",
     "name": "getRandom",
     "as": "getRandom"
+  },
+  {
+    "from": "/home/development/repos/storm-stack/examples/cli-app/.storm/runtime/app",
+    "name": "builder",
+    "as": "builder"
+  },
+  {
+    "from": "/home/development/repos/storm-stack/examples/cli-app/.storm/runtime/context",
+    "name": "envPaths",
+    "as": "envPaths"
+  },
+  {
+    "from": "/home/development/repos/storm-stack/examples/cli-app/.storm/runtime/context",
+    "name": "getBuildInfo",
+    "as": "getBuildInfo"
+  },
+  {
+    "from": "/home/development/repos/storm-stack/examples/cli-app/.storm/runtime/context",
+    "name": "getRuntimeInfo",
+    "as": "getRuntimeInfo"
+  },
+  {
+    "from": "/home/development/repos/storm-stack/examples/cli-app/.storm/runtime/context",
+    "name": "useStorm",
+    "as": "useStorm"
+  },
+  {
+    "from": "/home/development/repos/storm-stack/examples/cli-app/.storm/runtime/context",
+    "name": "STORM_ASYNC_CONTEXT",
+    "as": "STORM_ASYNC_CONTEXT"
+  },
+  {
+    "from": "/home/development/repos/storm-stack/examples/cli-app/.storm/runtime/storage",
+    "name": "storage",
+    "as": "storage"
+  },
+  {
+    "from": "/home/development/repos/storm-stack/examples/cli-app/.storm/runtime/event",
+    "name": "StormEvent",
+    "as": "StormEvent"
   }
 ]

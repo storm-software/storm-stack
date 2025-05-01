@@ -16,9 +16,9 @@
     "@stryke/url": "catalog:"
   },
   "devDependencies": {
-    "@storm-stack/core": "0.12.0",
+    "@storm-stack/core": "workspace:*",
     "@storm-stack/nx": "workspace:*",
-    "@storm-stack/plugin-node": "0.12.0",
+    "@storm-stack/plugin-node": "workspace:*",
     "@stryke/types": "catalog:"
   },
   "storm": {
@@ -35,7 +35,6 @@
     ],
     "skipCache": true,
     "skipInstalls": true,
-    "skipLint": true,
     "dotenv": {
       "types": {
         "variables": "./src/types.ts#StormNodeAppEnv"

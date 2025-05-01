@@ -53,6 +53,7 @@
     "release": "pnpm exec storm-git release",
     "sherif": "pnpm exec sherif -f -i typescript -i react -i react-dom",
     "start": "nx serve",
+    "update-pnpm-link": "pnpm update --recursive --workspace",
     "update-storm": "pnpm exec zx tools/scripts/src/update-storm.mjs",
     "view-config": "pnpm exec storm-config"
   },

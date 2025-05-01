@@ -17,8 +17,7 @@
  ------------------------------------------------------------------- */
 
 import { LogLevelLabel } from "@storm-software/config-tools/types";
-import { resolveContext } from "@storm-software/esbuild/context";
-import { executeTsup } from "@storm-software/esbuild/tsup";
+import { build } from "@storm-software/esbuild/build";
 import type { ESBuildOptions } from "@storm-software/esbuild/types";
 import { reflectDotenvTypes } from "@storm-stack/core/helpers/dotenv/reflect-dotenv";
 import { compilerPlugin } from "@storm-stack/core/helpers/esbuild/compiler-plugin";
@@ -176,38 +175,36 @@ export default class StormStackNodePlugin<
   }
 
   protected async prepareTypes(context: Context<TOptions>) {
-    const resolvedDotenvTypes = await reflectDotenvTypes(this.log, context);
-    const typesDir = joinPaths(context.projectRoot, context.typesDir);
-
     this.log(
       LogLevelLabel.TRACE,
-      `Preparing the type declaration (d.ts) files in "${typesDir}"`
+      `Preparing NodeJs type declaration files (d.ts)`
     );
+
+    const resolvedDotenvTypes = await reflectDotenvTypes(this.log, context);
+    const typesDir = joinPaths(context.projectRoot, context.typesDir);
 
     const runtimePath = relativePath(
       joinPaths(context.projectRoot, context.typesDir),
       joinPaths(context.projectRoot, context.runtimeDir)
     );
 
-    await Promise.all(
-      [
-        this.writeFile(
-          joinPaths(typesDir, "modules-node.d.ts"),
-          generateImports(runtimePath, this.#config.features)
-        ),
-        this.writeFile(
-          joinPaths(typesDir, "global-node.d.ts"),
-          generateGlobal(runtimePath, this.#config.features)
-        ),
-        this.writeFile(
-          joinPaths(typesDir, "env.d.ts"),
-          generateDeclarations(
-            resolvedDotenvTypes.variables,
-            this.#config.features
-          )
+    await Promise.all([
+      this.writeFile(
+        joinPaths(typesDir, "modules-node.d.ts"),
+        generateImports(runtimePath, this.#config.features)
+      ),
+      this.writeFile(
+        joinPaths(typesDir, "global-node.d.ts"),
+        generateGlobal(runtimePath, this.#config.features)
+      ),
+      this.writeFile(
+        joinPaths(typesDir, "env.d.ts"),
+        generateDeclarations(
+          resolvedDotenvTypes.variables,
+          this.#config.features
         )
-      ].filter(Boolean)
-    );
+      )
+    ]);
   }
 
   protected async prepareRuntime(context: Context<TOptions>) {
@@ -354,10 +351,27 @@ export default builder({
       },
       external: context.external,
       noExternal: context.noExternal,
-      skipNodeModulesBundle: context.skipNodeModulesBundle
+      skipNodeModulesBundle: context.skipNodeModulesBundle,
+      assets: [
+        {
+          "input": context.projectRoot,
+          "glob": "README.md",
+          "output": "/"
+        },
+        {
+          "input": context.projectRoot,
+          "glob": "CHANGELOG.md",
+          "output": "/"
+        },
+        {
+          "input": "",
+          "glob": "LICENSE",
+          "output": "/"
+        }
+      ]
     } satisfies ESBuildOptions;
 
-    const buildContext = await resolveContext(
+    await build(
       defu(
         {
           esbuildOptions(options) {
@@ -416,7 +430,5 @@ export default builder({
         }
       ) as ESBuildOptions
     );
-
-    await executeTsup(buildContext);
   }
 }

@@ -220,27 +220,26 @@ export default class StormStackCLIPreset<
   }
 
   protected async prepareEntry(context: Context<TOptions>) {
-    try {
-      const commands = await reflectCommands(
-        this.log,
-        context,
-        this.#commandEntries
-      );
+    const commands = await reflectCommands(
+      this.log,
+      context,
+      this.#commandEntries
+    );
 
-      await Promise.all(
-        Object.values(commands).map(async command =>
-          this.prepareCommandDefinition(context, command)
-        )
-      );
+    await Promise.all(
+      Object.values(commands).map(async command =>
+        this.prepareCommandDefinition(context, command)
+      )
+    );
 
-      const name = context.name ?? this.#config.bin;
-      const displayName = titleCase(name);
+    const name = context.name ?? this.#config.bin;
+    const displayName = titleCase(name);
 
-      await Promise.all(
-        context.resolvedEntry.map(async entry =>
-          this.writeFile(
-            entry.file,
-            `#!/usr/bin/env node
+    await Promise.all(
+      context.resolvedEntry.map(async entry =>
+        this.writeFile(
+          entry.file,
+          `#!/usr/bin/env node
 ${getFileHeader()}
 
 import "storm:init";
@@ -371,16 +370,9 @@ try {
 }
 
 `
-          )
         )
-      );
-    } catch (error) {
-      this.log(
-        LogLevelLabel.ERROR,
-        `Failed to prepare the entry artifact: ${error?.message}`
-      );
-      throw error;
-    }
+      )
+    );
   }
 
   protected async prepareCommandDefinition(

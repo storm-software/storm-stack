@@ -20,15 +20,14 @@ import { getTsupConfig } from "@storm-stack/tools-config/tsup.shared";
 
 const config = getTsupConfig({
   name: "preset-cli",
-  entry: ["src/index.ts"],
+  entry: ["src/*.ts"],
   outDir: "dist",
   bundle: true,
   splitting: false,
   treeshake: true,
-  minify: false,
   keepNames: true,
   clean: true,
-  sourcemap: true,
+  sourcemap: false,
   dts: true,
   shims: true
 });

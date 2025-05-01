@@ -2,8 +2,8 @@
   {
     "kind": 30,
     "types": [
-      1, 3, 5, 7, 9, 11, 13, 15, 20, 25, 27, 29, 31, 33, 35, 40, 42, 44, 46, 48,
-      50, 58
+      1, 3, 5, 7, 9, 11, 13, 15, 17, 22, 27, 29, 31, 33, 35, 37, 42, 44, 46, 48,
+      50, 52, 60
     ],
     "entityOptions": {
       "description": "An object containing the dotenv variables used by the examples-cli-app application."
@@ -12,13 +12,20 @@
   {
     "kind": 32,
     "type": 2,
+    "name": "SENTRY_DSN",
+    "description": "The DSN for Sentry"
+  },
+  { "kind": 5 },
+  {
+    "kind": 32,
+    "type": 4,
     "name": "APP_NAME",
     "description": "The name of the application."
   },
   { "kind": 5 },
   {
     "kind": 32,
-    "type": 4,
+    "type": 6,
     "name": "APP_VERSION",
     "description": "The version of the application.",
     "default": "\"1.0.0\""
@@ -26,64 +33,64 @@
   { "kind": 5 },
   {
     "kind": 32,
-    "type": 6,
+    "type": 8,
     "name": "BUILD_ID",
     "description": "The unique identifier for the build."
   },
   { "kind": 5 },
   {
     "kind": 32,
-    "type": 8,
+    "type": 10,
     "name": "BUILD_TIMESTAMP",
     "description": "The timestamp the build was ran at."
   },
   { "kind": 6 },
   {
     "kind": 32,
-    "type": 10,
+    "type": 12,
     "name": "BUILD_CHECKSUM",
     "description": "A checksum hash created during the build."
   },
   { "kind": 5 },
   {
     "kind": 32,
-    "type": 12,
+    "type": 14,
     "name": "RELEASE_ID",
     "description": "The unique identifier for the release."
   },
   { "kind": 5 },
   {
     "kind": 32,
-    "type": 14,
+    "type": 16,
     "name": "RELEASE_TAG",
     "description": "The tag for the release. This is generally in the format of \"\\<APP_NAME\\>\\@\\<APP_VERSION\\>\"."
   },
   { "kind": 5 },
   {
     "kind": 32,
-    "type": 16,
+    "type": 18,
     "name": "PLATFORM",
     "description": "The platform for which the application was built.",
     "default": "\"node\""
   },
-  { "kind": 23, "types": [17, 18, 19] },
+  { "kind": 23, "types": [19, 20, 21] },
   { "kind": 13, "literal": "node" },
   { "kind": 13, "literal": "browser" },
   { "kind": 13, "literal": "worker" },
   {
     "kind": 32,
-    "type": 21,
+    "type": 23,
     "name": "MODE",
     "description": "The mode in which the application is running.",
     "default": "\"production\""
   },
-  { "kind": 23, "types": [22, 23, 24] },
+  { "kind": 23, "types": [24, 25, 26] },
   { "kind": 13, "literal": "development" },
   { "kind": 13, "literal": "staging" },
   { "kind": 13, "literal": "production" },
   {
     "kind": 32,
-    "type": 26,
+    "type": 28,
     "name": "ENVIRONMENT",
     "description": "The environment the application is running in. This value will be populated with the value of `MODE` if not provided.",
     "default": "\"production\""
@@ -91,7 +98,7 @@
   { "kind": 5 },
   {
     "kind": 32,
-    "type": 28,
+    "type": 30,
     "name": "DEVELOPMENT",
     "description": "Indicates if the application is running in development mode.",
     "default": "false"
@@ -99,7 +106,7 @@
   { "kind": 7 },
   {
     "kind": 32,
-    "type": 30,
+    "type": 32,
     "name": "STAGING",
     "description": "Indicates if the application is running in staging mode.",
     "default": "false"
@@ -107,7 +114,7 @@
   { "kind": 7 },
   {
     "kind": 32,
-    "type": 32,
+    "type": 34,
     "name": "PRODUCTION",
     "description": "Indicates if the application is running in production mode.",
     "default": "true"
@@ -115,7 +122,7 @@
   { "kind": 7 },
   {
     "kind": 32,
-    "type": 34,
+    "type": 36,
     "name": "DEBUG",
     "description": "Indicates if the application is running in debug mode.",
     "default": "false"
@@ -123,18 +130,18 @@
   { "kind": 7 },
   {
     "kind": 32,
-    "type": 36,
+    "type": 38,
     "name": "NODE_ENV",
     "description": "The environment the application is running in. This variable is a duplicate of `ENVIRONMENT` to support use in external packages.",
     "default": "\"production\""
   },
-  { "kind": 23, "types": [37, 38, 39] },
+  { "kind": 23, "types": [39, 40, 41] },
   { "kind": 13, "literal": "development" },
   { "kind": 13, "literal": "staging" },
   { "kind": 13, "literal": "production" },
   {
     "kind": 32,
-    "type": 41,
+    "type": 43,
     "name": "STACKTRACE",
     "description": "Indicates if error stack traces should be captured.",
     "default": "false"
@@ -142,7 +149,7 @@
   { "kind": 7 },
   {
     "kind": 32,
-    "type": 43,
+    "type": 45,
     "name": "INCLUDE_ERROR_DATA",
     "description": "Indicates if error data should be included.",
     "default": "false"
@@ -150,14 +157,14 @@
   { "kind": 7 },
   {
     "kind": 32,
-    "type": 45,
+    "type": 47,
     "name": "ERROR_URL",
     "description": "The URL to send error data to. This value is used by the Storm Stack error tracking system."
   },
   { "kind": 5 },
   {
     "kind": 32,
-    "type": 47,
+    "type": 49,
     "name": "DEFAULT_TIMEZONE",
     "description": "The default timezone for the application.",
     "default": "\"America/New_York\""
@@ -165,7 +172,7 @@
   { "kind": 5 },
   {
     "kind": 32,
-    "type": 49,
+    "type": 51,
     "name": "DEFAULT_LOCALE",
     "description": "The default locale for the application.",
     "default": "\"en_US\""
@@ -173,13 +180,13 @@
   { "kind": 5 },
   {
     "kind": 32,
-    "type": 51,
+    "type": 53,
     "name": "LOG_LEVEL",
     "optional": true,
     "description": "The default lowest log level to accept. If `null`, the logger will reject all records. This value only applies if `lowestLogLevel` is not provided to the `logs` configuration.",
     "default": "\"info\""
   },
-  { "kind": 23, "types": [52, 53, 54, 55, 56, 57] },
+  { "kind": 23, "types": [54, 55, 56, 57, 58, 59] },
   { "kind": 13, "literal": "debug" },
   { "kind": 13, "literal": "info" },
   { "kind": 13, "literal": "warning" },
@@ -188,7 +195,7 @@
   { "kind": 10 },
   {
     "kind": 32,
-    "type": 59,
+    "type": 61,
     "name": "LOG_PATH",
     "optional": true,
     "description": "A file system path to write out logs to."

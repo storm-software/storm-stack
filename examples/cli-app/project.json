@@ -10,8 +10,6 @@
       "options": {
         "entry": "{sourceRoot}/commands",
         "outputPath": "dist/examples/cli-app",
-        "skipCache": true,
-        "skipInstalls": true,
         "mode": "development"
       }
     },
@@ -22,9 +20,6 @@
       "options": {
         "entry": "{sourceRoot}/commands",
         "outputPath": "dist/examples/cli-app",
-        "skipCache": true,
-        "skipInstalls": true,
-        "skipLint": true,
         "mode": "development"
       }
     }

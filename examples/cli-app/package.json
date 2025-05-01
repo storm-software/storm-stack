@@ -13,19 +13,20 @@
     "examples-cli": "dist/examples-cli.js"
   },
   "dependencies": {
+    "@storm-stack/log-sentry": "workspace:*",
     "@storm-stack/log-storage": "workspace:*",
     "@stryke/cli": "catalog:",
     "@stryke/url": "catalog:",
     "unstorage": "catalog:"
   },
   "devDependencies": {
-    "@storm-stack/core": "0.12.0",
+    "@storm-stack/core": "workspace:*",
     "@storm-stack/nx": "workspace:*",
     "@storm-stack/preset-cli": "workspace:*",
-    "@storm-stack/types": "0.4.0"
+    "@storm-stack/types": "workspace:*"
   },
   "storm": {
-    "plugins": [
+    "presets": [
       [
         "@storm-stack/preset-cli",
         {
@@ -35,6 +36,13 @@
           ]
         }
       ]
-    ]
+    ],
+    "skipCache": true,
+    "skipInstalls": true,
+    "dotenv": {
+      "types": {
+        "variables": "./src/types.ts#StormNodeAppEnv"
+      }
+    }
   }
 }
