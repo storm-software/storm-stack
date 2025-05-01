@@ -2,6 +2,26 @@
 
 # Changelog for Storm Stack - Eslint Config Storm Stack
 
+## [0.7.1](https://github.com/storm-software/storm-stack/releases/tag/eslint-config-storm-stack%400.7.1) (2025-05-01)
+
+### Bug Fixes
+
+- **eslint-config-storm-stack:** Resolve issue with mismatched types
+  ([a101f0c8](https://github.com/storm-software/storm-stack/commit/a101f0c8))
+- **eslint-config-storm-stack:** Changes to typing provided to base preset
+  ([d70ccfd9](https://github.com/storm-software/storm-stack/commit/d70ccfd9))
+- **eslint-config-storm-stack:** Resolve typing issues with preset
+  ([3ddc6f49](https://github.com/storm-software/storm-stack/commit/3ddc6f49))
+- **core:** Resolve issue reading variables persistence
+  ([80aa7047](https://github.com/storm-software/storm-stack/commit/80aa7047))
+
+### Miscellaneous
+
+- **monorepo:** Update workspace dependencies
+  ([cfcbcf8c](https://github.com/storm-software/storm-stack/commit/cfcbcf8c))
+- **eslint-config-storm-stack:** Update the configuration for the dts build
+  ([2a158fac](https://github.com/storm-software/storm-stack/commit/2a158fac))
+
 ## [0.7.0](https://github.com/storm-software/storm-stack/releases/tag/eslint-config-storm-stack%400.7.0) (2025-04-30)
 
 ### Features

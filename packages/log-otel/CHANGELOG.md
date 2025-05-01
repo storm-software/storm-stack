@@ -2,6 +2,19 @@
 
 # Changelog for Storm Stack - Log Otel
 
+## [0.9.1](https://github.com/storm-software/storm-stack/releases/tag/log-otel%400.9.1) (2025-05-01)
+
+### Miscellaneous
+
+- **monorepo:** Uopdate workspace package linking
+  ([851b3ff7](https://github.com/storm-software/storm-stack/commit/851b3ff7))
+
+### Updated Dependencies
+
+- Updated core to 0.14.1
+- Updated core to 0.14.1
+- Updated nx to 0.9.1
+
 ## [0.9.0](https://github.com/storm-software/storm-stack/releases/tag/log-otel%400.9.0) (2025-05-01)
 
 ### Features

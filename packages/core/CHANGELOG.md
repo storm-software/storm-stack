@@ -2,6 +2,15 @@
 
 # Changelog for Storm Stack - Core
 
+## [0.14.1](https://github.com/storm-software/storm-stack/releases/tag/core%400.14.1) (2025-05-01)
+
+### Bug Fixes
+
+- **core:** Resolve issue with incorrectly excluding `process.env` variables
+  ([21a227df](https://github.com/storm-software/storm-stack/commit/21a227df))
+- **core:** Resolve issue reading variables persistence
+  ([80aa7047](https://github.com/storm-software/storm-stack/commit/80aa7047))
+
 ## [0.14.0](https://github.com/storm-software/storm-stack/releases/tag/core%400.14.0) (2025-05-01)
 
 ### Features
