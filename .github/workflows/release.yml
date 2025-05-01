@@ -106,7 +106,7 @@ jobs:
         shell: bash
 
       - name: Release repository updates
-        run: devenv release ${{ env.NX_BASE }} ${{ env.NX_HEAD }}
+        run: devenv shell release ${{ env.NX_BASE }} ${{ env.NX_HEAD }}
         env:
           NX_BASE: ${{ env.NX_BASE }}
           NX_HEAD: ${{ env.NX_HEAD }}
