@@ -13,6 +13,7 @@
       {
         "name": "file",
         "displayName": "File",
+        "reflectionType": [{ "kind": 5 }],
         "type": "string",
         "description": "The file to add to the file system.",
         "alias": [],
@@ -22,6 +23,7 @@
       {
         "name": "type",
         "displayName": "Type",
+        "reflectionType": [{ "kind": 5 }],
         "type": "string",
         "description": "The type of the file.",
         "alias": [],
@@ -44,6 +46,7 @@
           {
             "name": "file",
             "displayName": "File",
+            "reflectionType": [{ "kind": 5 }],
             "type": "string",
             "description": "The file to add to the file system.",
             "alias": [],
@@ -68,6 +71,7 @@
       {
         "name": "host",
         "displayName": "Host",
+        "reflectionType": [{ "kind": 5 }],
         "type": "string",
         "description": "The host to bind the server to.",
         "alias": [],
@@ -77,6 +81,7 @@
       {
         "name": "port",
         "displayName": "Port",
+        "reflectionType": [{ "kind": 6 }],
         "type": "number",
         "description": "The port to bind the server to.",
         "alias": [],
@@ -86,6 +91,7 @@
       {
         "name": "compress",
         "displayName": "Compress",
+        "reflectionType": [{ "kind": 7 }],
         "type": "boolean",
         "description": "Should the server serve compressed files?",
         "alias": [],
@@ -94,6 +100,11 @@
       {
         "name": "platform",
         "displayName": "Platform",
+        "reflectionType": [
+          { "kind": 23, "types": [1, 2] },
+          { "kind": 13, "literal": "node" },
+          { "kind": 13, "literal": "browser" }
+        ],
         "type": "enum",
         "options": ["node", "browser"],
         "description": "Should the server serve compressed files?",
@@ -104,6 +115,7 @@
       {
         "name": "loadEnv",
         "displayName": "Load Env",
+        "reflectionType": [{ "kind": 7 }],
         "type": "boolean",
         "description": "Should the server load environment variables from the .env file?",
         "alias": ["load-env"],

@@ -16,14 +16,13 @@
 
  ------------------------------------------------------------------- */
 
-import type { ReflectionProperty, SerializedTypes } from "@deepkit/type";
-import {
+import type {
   ReflectionClass,
-  ReflectionKind,
-  resolveClassType
+  ReflectionProperty,
+  SerializedTypes
 } from "@deepkit/type";
+import { resolveClassType } from "@deepkit/type";
 import { readJsonFile } from "@stryke/fs/read-file";
-import { StormJSON } from "@stryke/json/storm-json";
 import { existsSync } from "@stryke/path/exists";
 import { joinPaths } from "@stryke/path/join-paths";
 import type { TypeDefinition } from "@stryke/types/configuration";
@@ -36,7 +35,6 @@ import type {
 } from "../../types/build";
 import type { LogFn } from "../../types/config";
 import { getReflectionsPath } from "../deepkit/resolve-reflections";
-import { writeFile } from "../utilities/write-file";
 
 export function getDotenvDefaultTypeDefinition<
   TOptions extends Options = Options
@@ -81,11 +79,11 @@ export async function resolveDotenvProperties<
 ): Promise<ReflectionProperty[]> {
   const varsFilePath = getDotenvPath(context, name);
 
-  const reflection = ReflectionClass.from({
-    kind: ReflectionKind.objectLiteral,
-    description: `An object containing the dotenv variables used by the ${context.name ? `${context.name} application` : "application"}.`,
-    types: []
-  });
+  // const reflection = ReflectionClass.from({
+  //   kind: ReflectionKind.objectLiteral,
+  //   description: `An object containing the dotenv variables used by the ${context.name ? `${context.name} application` : "application"}.`,
+  //   types: []
+  // });
 
   if (existsSync(varsFilePath)) {
     return resolveClassType(
@@ -93,11 +91,11 @@ export async function resolveDotenvProperties<
     ).getProperties();
   }
 
-  await writeFile(
-    log,
-    varsFilePath,
-    StormJSON.stringify(reflection.serializeType())
-  );
+  // await writeFile(
+  //   log,
+  //   varsFilePath,
+  //   StormJSON.stringify(reflection.serializeType())
+  // );
 
   return [] as ReflectionProperty[];
 }

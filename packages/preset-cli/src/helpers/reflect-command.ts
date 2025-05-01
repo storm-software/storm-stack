@@ -21,6 +21,7 @@ import {
   ReflectionFunction,
   ReflectionKind,
   resolveClassType,
+  serializeType,
   stringifyType
 } from "@deepkit/type";
 import { LogLevelLabel } from "@storm-software/config-tools/types";
@@ -159,6 +160,7 @@ export async function reflectCommands<TOptions extends Options = Options>(
               return {
                 name: argName,
                 displayName: titleCase(argName),
+                reflectionType: serializeType(property.getType()),
                 type,
                 options,
                 description: property.getDescription(),

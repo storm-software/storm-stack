@@ -137,6 +137,34 @@
         "default": "./dist/helpers/utilities/*.js"
       }
     },
+    "./helpers/dotenv": {
+      "import": {
+        "types": "./dist/helpers/dotenv/index.d.ts",
+        "default": "./dist/helpers/dotenv/index.js"
+      },
+      "require": {
+        "types": "./dist/helpers/dotenv/index.d.cts",
+        "default": "./dist/helpers/dotenv/index.cjs"
+      },
+      "default": {
+        "types": "./dist/helpers/dotenv/index.d.ts",
+        "default": "./dist/helpers/dotenv/index.js"
+      }
+    },
+    "./helpers/dotenv/*": {
+      "import": {
+        "types": "./dist/helpers/dotenv/*.d.ts",
+        "default": "./dist/helpers/dotenv/*.js"
+      },
+      "require": {
+        "types": "./dist/helpers/dotenv/*.d.cts",
+        "default": "./dist/helpers/dotenv/*.cjs"
+      },
+      "default": {
+        "types": "./dist/helpers/dotenv/*.d.ts",
+        "default": "./dist/helpers/dotenv/*.js"
+      }
+    },
     "./helpers/deepkit": {
       "import": {
         "types": "./dist/helpers/deepkit/index.d.ts",

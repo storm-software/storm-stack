@@ -16,5 +16,6 @@
     "@storm-software/workspace-tools/plugins/typescript/tsup",
     "./dist/plugins/plugin.js",
     "./dist/plugins/adapter.js"
-  ]
+  ],
+  "nxCloudId": "67b584948b1da22d67d83d57"
 }

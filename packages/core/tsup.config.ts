@@ -27,6 +27,7 @@ const config = getTsupConfig({
     "src/helpers/utilities/*.ts",
     "src/helpers/esbuild/*.ts",
     "src/helpers/eslint/*.ts",
+    "src/helpers/dotenv/*.ts",
     "src/helpers/deepkit/*.ts",
     "src/runtime/*.ts",
     "src/unplugin/*.ts"

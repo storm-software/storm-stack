@@ -554,7 +554,11 @@ export class Engine<TOptions extends Options = Options> {
 
     await Promise.all([
       removeDirectory(
-        joinPaths(this.context.projectRoot, this.context.artifactsDir)
+        joinPaths(
+          this.context.workspaceConfig.workspaceRoot,
+          this.context.projectRoot,
+          this.context.artifactsDir
+        )
       ),
       removeDirectory(
         joinPaths(

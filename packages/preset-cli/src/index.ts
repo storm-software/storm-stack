@@ -16,8 +16,15 @@
 
  ------------------------------------------------------------------- */
 
+import type { ReflectionClass } from "@deepkit/type";
+import { deserializeType } from "@deepkit/type";
 import { LogLevelLabel } from "@storm-software/config-tools/types";
 import { getFileHeader } from "@storm-stack/core/helpers";
+import { resolveDotenvReflection } from "@storm-stack/core/helpers/dotenv/resolve-dotenv";
+import {
+  writeDotenvProperties,
+  writeDotenvReflection
+} from "@storm-stack/core/helpers/dotenv/write-dotenv";
 import { Preset } from "@storm-stack/core/preset";
 import type {
   Context,
@@ -37,6 +44,7 @@ import {
 } from "@stryke/path/file-path-fns";
 import { isDirectory } from "@stryke/path/is-file";
 import { joinPaths } from "@stryke/path/join-paths";
+import { constantCase } from "@stryke/string-format/constant-case";
 import { kebabCase } from "@stryke/string-format/kebab-case";
 import { titleCase } from "@stryke/string-format/title-case";
 import { isSetString } from "@stryke/type-checks/is-set-string";
@@ -45,7 +53,6 @@ import { reflectCommands } from "./helpers/reflect-command";
 import { writeStorage } from "./runtime/storage";
 import type { StormStackCLIPresetConfig } from "./types/config";
 import type { CommandReflection } from "./types/reflection";
-
 export default class StormStackCLIPreset<
   TOptions extends Options = Options
 > extends Preset<TOptions> {
@@ -224,6 +231,18 @@ export default class StormStackCLIPreset<
       this.log,
       context,
       this.#commandEntries
+    );
+
+    const varsReflection = await resolveDotenvReflection(context, "variables");
+    Object.values(commands).forEach(command => {
+      this.addCommandArgReflections(varsReflection, command);
+    });
+    await writeDotenvReflection(this.log, context, varsReflection, "variables");
+    await writeDotenvProperties(
+      this.log,
+      context,
+      "variables",
+      varsReflection.getProperties()
     );
 
     await Promise.all(
@@ -497,5 +516,27 @@ export default defineCommand({
 
 `
     );
+  }
+
+  protected addCommandArgReflections(
+    reflection: ReflectionClass<any>,
+    command: CommandReflection
+  ) {
+    command.args.forEach(arg => {
+      if (!reflection.hasProperty(constantCase(arg.name))) {
+        reflection.addProperty({
+          name: constantCase(arg.name),
+          optional: true,
+          description: arg.description,
+          type: deserializeType(arg.reflectionType)
+        });
+      }
+    });
+
+    if (command.subCommands) {
+      Object.values(command.subCommands).forEach(subCommand =>
+        this.addCommandArgReflections(reflection, subCommand)
+      );
+    }
   }
 }
