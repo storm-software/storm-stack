@@ -1,6 +1,6 @@
 {
   "name": "@storm-stack/log-otel",
-  "version": "0.9.1",
+  "version": "0.9.2",
   "type": "module",
   "description": "A package containing a Storm Stack log adapter to write logs to an OpenTelemetry collector",
   "repository": {
@@ -20,7 +20,7 @@
   },
   "devDependencies": {
     "@storm-stack/core": "workspace:*",
-    "@storm-stack/nx": "workspace:*",
+    "@storm-stack/nx": "0.9.2",
     "@types/node": "catalog:"
   },
   "publishConfig": {
