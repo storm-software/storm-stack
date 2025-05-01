@@ -821,10 +821,6 @@ export class Engine<TOptions extends Options = Options> {
       }
     }
 
-    if (this.context.skipLint === false) {
-      await this.lint(autoPrepare, autoClean, true);
-    }
-
     this.log(LogLevelLabel.INFO, "Building the Storm Stack project");
 
     await this.#hooks

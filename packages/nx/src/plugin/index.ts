@@ -102,11 +102,11 @@ export const createNodesV2: CreateNodesV2<StormStackNxPluginOptions> = [
           }
 
           targets.clean = {
+            dependsOn: ["^clean"],
             executor: "@storm-stack/nx:clean",
             defaultConfiguration: "production",
             options: {
-              outputPath: "{workspaceRoot}/dist/{projectRoot}",
-              plugins: ["@storm-stack/plugin-node"]
+              outputPath: "dist/{projectRoot}"
             },
             configurations: {
               production: {
@@ -124,13 +124,13 @@ export const createNodesV2: CreateNodesV2<StormStackNxPluginOptions> = [
           targets.prepare = {
             cache: true,
             inputs: ["typescript", "^production"],
-            outputs: ["{projectRoot}/.storm"],
-            executor: "@storm-stack/nx:prepare",
+            outputs: ["{options.outputPath}"],
             dependsOn: ["clean", "^build"],
+            executor: "@storm-stack/nx:prepare",
             defaultConfiguration: "production",
             options: {
-              outputPath: "{workspaceRoot}/dist/{projectRoot}",
-              plugins: ["@storm-stack/plugin-node"]
+              outputPath: "dist/{projectRoot}",
+              autoClean: true
             },
             configurations: {
               production: {
@@ -149,12 +149,36 @@ export const createNodesV2: CreateNodesV2<StormStackNxPluginOptions> = [
             cache: true,
             inputs: ["typescript", "^production", "{projectRoot}/.storm"],
             outputs: ["{options.outputPath}"],
-            executor: "@storm-stack/nx:build",
             dependsOn: ["prepare"],
+            executor: "@storm-stack/nx:build",
             defaultConfiguration: "production",
             options: {
-              outputPath: "{workspaceRoot}/dist/{projectRoot}",
-              plugins: ["@storm-stack/plugin-node"]
+              outputPath: "dist/{projectRoot}",
+              autoPrepare: true
+            },
+            configurations: {
+              production: {
+                mode: "production"
+              },
+              staging: {
+                mode: "staging"
+              },
+              development: {
+                mode: "development"
+              }
+            }
+          };
+
+          targets.docs = {
+            cache: true,
+            inputs: ["typescript", "^production", "{projectRoot}/.storm"],
+            outputs: ["{options.outputPath}"],
+            dependsOn: ["prepare", "^build"],
+            executor: "@storm-stack/nx:docs",
+            defaultConfiguration: "production",
+            options: {
+              outputPath: "dist/{projectRoot}",
+              autoPrepare: true
             },
             configurations: {
               production: {
@@ -170,9 +194,14 @@ export const createNodesV2: CreateNodesV2<StormStackNxPluginOptions> = [
           };
 
           setDefaultProjectTags(project, name);
-          addProjectTag(project, "storm-stack" as ProjectTagVariant, "node", {
-            overwrite: true
-          });
+          addProjectTag(
+            project,
+            "storm-stack" as ProjectTagVariant,
+            project.projectType || "library",
+            {
+              overwrite: true
+            }
+          );
 
           const result = project?.name
             ? {

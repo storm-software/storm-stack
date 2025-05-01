@@ -364,7 +364,7 @@ export default builder({
           "output": "/"
         },
         {
-          "input": "",
+          "input": ".",
           "glob": "LICENSE",
           "output": "/"
         }
