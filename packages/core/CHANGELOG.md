@@ -2,6 +2,13 @@
 
 # Changelog for Storm Stack - Core
 
+## [0.13.0](https://github.com/storm-software/storm-stack/releases/tag/core%400.13.0) (2025-05-01)
+
+### Features
+
+- **nx:** Added additional executor options to Nx plugin
+  ([6ae7cc23](https://github.com/storm-software/storm-stack/commit/6ae7cc23))
+
 ## [0.12.1](https://github.com/storm-software/storm-stack/releases/tag/core%400.12.1) (2025-05-01)
 
 ### Bug Fixes

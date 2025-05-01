@@ -2,6 +2,20 @@
 
 # Changelog for Storm Stack - Log Storage
 
+## [0.8.0](https://github.com/storm-software/storm-stack/releases/tag/log-storage%400.8.0) (2025-05-01)
+
+### Features
+
+- **nx:** Added additional executor options to Nx plugin
+  ([6ae7cc23](https://github.com/storm-software/storm-stack/commit/6ae7cc23))
+
+### Updated Dependencies
+
+- Updated log-stream to 0.8.0
+- Updated core to 0.13.0
+- Updated core to 0.13.0
+- Updated nx to 0.8.0
+
 ## [0.7.1](https://github.com/storm-software/storm-stack/releases/tag/log-storage%400.7.1) (2025-05-01)
 
 ### Bug Fixes
