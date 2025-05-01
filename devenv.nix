@@ -56,7 +56,7 @@ in {
     build-dev.exec = "pnpm build-dev";
     lint.exec = "pnpm lint";
     format.exec = "pnpm format";
-    release.exec = "pnpm release";
+    release.exec = "pnpm release --base=$1 --head=$2";
     nuke.exec = "pnpm nuke";
   };
 

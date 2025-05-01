@@ -106,8 +106,10 @@ jobs:
         shell: bash
 
       - name: Release repository updates
-        run: devenv shell release -- --base=${{ env.NX_BASE }} --head=${{ env.NX_HEAD }}
+        run: devenv release ${{ env.NX_BASE }} ${{ env.NX_HEAD }}
         env:
+          NX_BASE: ${{ env.NX_BASE }}
+          NX_HEAD: ${{ env.NX_HEAD }}
           GITHUB_ACTOR: ${{ github.actor }}
           GITHUB_TOKEN: ${{ github.token }}
           GH_TOKEN: ${{ github.token }}

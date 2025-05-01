@@ -20,8 +20,19 @@
 import { $, argv, chalk, echo } from "zx";
 
 try {
-  const base = argv.base;
-  const head = argv.head;
+  let base = argv.base;
+  if (!base) {
+    base = process.env.NX_BASE;
+  }
+  let head = argv.head;
+  if (!head) {
+    head = process.env.NX_HEAD;
+  }
+  if (!base && !head) {
+    throw new Error(
+      `Base and head arguments are required. Please provide them using the --base and --head flags.`
+    );
+  }
 
   await echo`${chalk.whiteBright(`📦  Releasing Storm Stack packages (Base tag: "${base}", Head tag: "${head}")`)}`;
 
