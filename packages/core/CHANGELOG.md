@@ -2,6 +2,13 @@
 
 # Changelog for Storm Stack - Core
 
+## [0.13.1](https://github.com/storm-software/storm-stack/releases/tag/core%400.13.1) (2025-05-01)
+
+### Miscellaneous
+
+- **monorepo:** update auto-merge non-major dependencies
+  ([#165](https://github.com/storm-software/storm-stack/pull/165))
+
 ## [0.13.0](https://github.com/storm-software/storm-stack/releases/tag/core%400.13.0) (2025-05-01)
 
 ### Features

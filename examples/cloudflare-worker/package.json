@@ -10,13 +10,13 @@
   },
   "private": true,
   "dependencies": {
-    "@storm-stack/log-console": "0.8.0",
+    "@storm-stack/log-console": "workspace:*",
     "@stryke/url": "catalog:"
   },
   "devDependencies": {
     "@cloudflare/workers-types": "catalog:",
-    "@storm-stack/core": "0.13.0",
-    "@storm-stack/nx": "0.8.0",
+    "@storm-stack/core": "0.13.1",
+    "@storm-stack/nx": "0.8.1",
     "@storm-stack/preset-cloudflare-worker": "workspace:*"
   }
 }
