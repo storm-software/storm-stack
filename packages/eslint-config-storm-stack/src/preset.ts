@@ -74,7 +74,7 @@ export async function getConfig(
         }
       } as OptionsTypescript,
       globals
-    }),
+    }) as Parameters<typeof getStormConfig>[0],
     ...userConfigs
   ).append(configs as BaseTypedFlatConfigItem[]);
 }
