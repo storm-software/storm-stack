@@ -67,6 +67,7 @@ in {
 
     pnpm install
     bootstrap
+    pnpm nx reset
   '';
 
   # https://devenv.sh/git-hooks/
