@@ -30,7 +30,7 @@ export function getString(source: string | MagicString): string {
 /**
  * Get the magic string.
  *
- * @param code - The source code.
+ * @param source - The source string or magic string.
  * @returns The magic string.
  */
 export function getMagicString(source: string | MagicString): MagicString {

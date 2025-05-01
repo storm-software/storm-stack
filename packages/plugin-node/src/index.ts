@@ -21,11 +21,11 @@ import { resolveContext } from "@storm-software/esbuild/context";
 import { executeTsup } from "@storm-software/esbuild/tsup";
 import type { ESBuildOptions } from "@storm-software/esbuild/types";
 import { reflectDotenvTypes } from "@storm-stack/core/helpers/dotenv/reflect-dotenv";
+import { compilerPlugin } from "@storm-stack/core/helpers/esbuild/compiler-plugin";
 import { getParsedTypeScriptConfig } from "@storm-stack/core/helpers/tsconfig";
 import { getFileHeader } from "@storm-stack/core/helpers/utilities";
 import { Plugin } from "@storm-stack/core/plugin";
 import type { Context, EngineHooks, Options } from "@storm-stack/core/types";
-import type { SourceFile } from "@storm-stack/core/types/build";
 import { readJsonFile } from "@stryke/fs/read-file";
 import { StormJSON } from "@stryke/json/storm-json";
 import {
@@ -43,8 +43,7 @@ import {
   generateGlobal,
   generateImports
 } from "./helpers/dtsgen";
-import { transformContext } from "./helpers/transform-context";
-import { tsupPlugin } from "./helpers/tsup-plugin";
+import { preTransform } from "./helpers/pre-transform";
 import { writeCreateApp } from "./runtime/app";
 import { writeContext } from "./runtime/context";
 import { writeEvent } from "./runtime/event";
@@ -76,8 +75,7 @@ export default class StormStackNodePlugin<
       "init:tsconfig": this.initTsconfig.bind(this),
       "prepare:types": this.prepareTypes.bind(this),
       "prepare:runtime": this.prepareRuntime.bind(this),
-      "prepare:entry": this.prepareEntry.bind(this),
-      "build:transform": this.transform.bind(this)
+      "prepare:entry": this.prepareEntry.bind(this)
     });
 
     if (!this.#config.skipBuild) {
@@ -297,18 +295,6 @@ export default builder({
     }
   }
 
-  protected async transform(
-    context: Context<TOptions>,
-    sourceFile: SourceFile
-  ) {
-    this.log(
-      LogLevelLabel.TRACE,
-      `Transforming the source file "${sourceFile.id}"`
-    );
-
-    transformContext(sourceFile);
-  }
-
   /**
    * Run the esbuild process
    *
@@ -366,7 +352,6 @@ export default builder({
       env: context.resolvedDotenv.values as {
         [key: string]: string;
       },
-      plugins: [tsupPlugin(context)],
       external: context.external,
       noExternal: context.noExternal,
       skipNodeModulesBundle: context.skipNodeModulesBundle
@@ -394,7 +379,12 @@ export default builder({
                 "storm:url": "@stryke/url"
               }
             );
-          }
+          },
+          esbuildPlugins: [
+            compilerPlugin(this.log, context, {
+              onPreTransform: preTransform
+            })
+          ]
         },
         override ?? {},
         context.override,

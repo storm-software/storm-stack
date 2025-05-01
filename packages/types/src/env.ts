@@ -55,6 +55,11 @@ export interface StormEnvVariables {
   RELEASE_ID: string;
 
   /**
+   * The tag for the release. This is generally in the format of "\<APP_NAME\>\@\<APP_VERSION\>".
+   */
+  RELEASE_TAG: string;
+
+  /**
    * The platform for which the application was built.
    *
    * @defaultValue "node"

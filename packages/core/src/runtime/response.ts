@@ -22,8 +22,8 @@ export function writeResponse() {
   return `${getFileHeader()}
 
 import type { IStormResponse } from "@storm-stack/types";
-import { isStormError } from "./error";
-import type { StormError } from "./error";
+import { isStormError, StormError } from "./error";
+import { useStorm } from "./context";
 
 /**
  * A base response class used by the Storm Stack runtime.
@@ -44,8 +44,8 @@ export class StormResponse<
     data: TData
   ): StormResponse<TData> {
     return new StormResponse(
-      $storm.request.id,
-      $storm.meta,
+      useStorm().request.id,
+      useStorm().meta,
       data
     );
   }

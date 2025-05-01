@@ -1174,6 +1174,7 @@ Note: Please ensure the plugin package's default export is a class that extends 
         BUILD_TIMESTAMP: this.context.meta.timestamp,
         BUILD_CHECKSUM: this.context.meta.checksum,
         RELEASE_ID: this.context.meta.releaseId,
+        RELEASE_TAG: `${this.context.name}@${this.context.packageJson.version}`,
         MODE: this.context.mode,
         ORG: this.context.workspaceConfig.organization,
         ORGANIZATION: this.context.workspaceConfig.organization,

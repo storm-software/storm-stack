@@ -18,6 +18,7 @@
 
 import { declarationTransformer, transformer } from "@deepkit/type-compiler";
 import { LogLevelLabel } from "@storm-software/config-tools/types";
+import { readFileIfExistingSync } from "@stryke/fs/read-file";
 import { hash } from "@stryke/hash/hash";
 import { joinPaths } from "@stryke/path/join-paths";
 import type MagicString from "magic-string";
@@ -90,7 +91,7 @@ export class Compiler<TOptions extends Options = Options>
     context: Context<TOptions>,
     id: string,
     code: string | MagicString,
-    options: TranspileOptions = {}
+    options: TranspileOptions<TOptions> = {}
   ): Promise<string> {
     const source = this.getSourceFile(id, code);
 
@@ -109,7 +110,7 @@ export class Compiler<TOptions extends Options = Options>
     context: Context<TOptions>,
     id: string,
     code: string | MagicString,
-    options: CompileOptions = {}
+    options: CompileOptions<TOptions> = {}
   ): Promise<string> {
     this.log(LogLevelLabel.TRACE, `Compiling ${id}`);
 
@@ -140,10 +141,12 @@ export class Compiler<TOptions extends Options = Options>
    * @param code - The source code.
    * @returns The source file.
    */
-  public getSourceFile(id: string, code: string | MagicString): SourceFile {
+  public getSourceFile(id: string, code?: string | MagicString): SourceFile {
+    const content = code ?? readFileIfExistingSync(id);
+
     return {
       id,
-      code: getMagicString(code),
+      code: getMagicString(content),
       env: []
     };
   }
@@ -208,7 +211,7 @@ export class Compiler<TOptions extends Options = Options>
   protected async transpileModule(
     context: Context<TOptions>,
     source: SourceFile,
-    options: TranspileOptions = {}
+    options: TranspileOptions<TOptions> = {}
   ): Promise<string> {
     this.log(
       LogLevelLabel.TRACE,
@@ -216,6 +219,12 @@ export class Compiler<TOptions extends Options = Options>
     );
 
     let transformed = source;
+    if (options.onPreTransform) {
+      transformed = await Promise.resolve(
+        options.onPreTransform(context, source)
+      );
+    }
+
     if (!options.skipTransform) {
       if (!options.skipEnvTransform) {
         transformed = await transformEnv<TOptions>(this.log, source, context);
@@ -237,6 +246,12 @@ export class Compiler<TOptions extends Options = Options>
       !transformed.id.replaceAll("\\", "/").includes(context.runtimeDir)
     ) {
       transformed = await context.unimport.injectImports(transformed);
+    }
+
+    if (options.onPostTransform) {
+      transformed = await Promise.resolve(
+        options.onPostTransform(context, source)
+      );
     }
 
     const transpiled = ts.transpileModule(transformed.code.toString(), {

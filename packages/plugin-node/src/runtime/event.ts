@@ -22,6 +22,7 @@ export function writeEvent() {
   return `${getFileHeader()}
 
 import type { IStormEvent } from "@storm-stack/plugin-node/types";
+import { useStorm } from "./context";
 
 /**
  * A base event class used by the Storm Stack runtime.
@@ -31,7 +32,7 @@ export class StormEvent<TEventType extends string = string, TEventData = any>
   /**
    * The request identifier.
    */
-  public readonly requestId: string = $storm.request.id;
+  public readonly requestId: string = useStorm().request.id;
 
   /**
    * The event type.

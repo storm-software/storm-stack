@@ -99,7 +99,8 @@ export function createUnimport<TOptions extends Options = Options>(
   const dumpImportsThrottled = throttle(dumpImports, 500);
 
   async function injectImports(source: SourceFile) {
-    await unimport.injectImports(source.code, source.id);
+    const result = await unimport.injectImports(source.code, source.id);
+
     if (!source.code.hasChanged()) {
       return source;
     }
@@ -117,7 +118,10 @@ export function createUnimport<TOptions extends Options = Options>(
     //   })
     // };
 
-    return source;
+    return {
+      ...source,
+      code: result.s
+    };
   }
 
   return {

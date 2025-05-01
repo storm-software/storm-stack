@@ -39,6 +39,7 @@ import {
 } from "@stryke/env/runtime-checks";
 import { AsyncLocalStorage } from "node:async_hooks";
 import { getContext } from "unctx";
+import { StormError } from "./error";
 
 const STORM_CONTEXT_KEY = "storm-stack";
 
@@ -104,6 +105,6 @@ export function useStorm(): StormContext {
   try {
     return STORM_ASYNC_CONTEXT.use();
   } catch {
-    throw new Error("useStorm is not available in this environment.");
+    throw new StormError({ type: "general", code: 12 });
   }
 }

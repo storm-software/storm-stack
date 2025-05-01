@@ -48,7 +48,7 @@ import {${
   getRuntimeInfo,
   STORM_ASYNC_CONTEXT
 } from "./context";
-import { getErrorFromUnknown } from "./error";
+import { getErrorFromUnknown, StormError } from "./error";
 import { StormEvent } from "./event";
 import { uniqueId } from "./id";
 import { StormRequest } from "./request";

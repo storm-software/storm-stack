@@ -20,9 +20,11 @@ import { getMagicString, getString } from "@storm-stack/core/helpers";
 import type { SourceFile } from "@storm-stack/core/types/build";
 
 export function transformContext(source: SourceFile): SourceFile {
-  source.code = getMagicString(
-    getString(source.code).replaceAll("$storm", "useStorm()")
-  );
+  if (getString(source.code).includes("$storm")) {
+    source.code = getMagicString(
+      getString(source.code).replaceAll("$storm", "useStorm()")
+    );
+  }
 
   return source;
 }

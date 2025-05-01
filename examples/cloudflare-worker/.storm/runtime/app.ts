@@ -23,7 +23,7 @@ import type { StormEnv } from "@storm-stack/types/env";
 import { isError } from "@stryke/type-checks/is-error";
 import { createStorage } from "unstorage";
 import { getBuildInfo, getRuntimeInfo, STORM_ASYNC_CONTEXT } from "./context";
-import { getErrorFromUnknown } from "./error";
+import { getErrorFromUnknown, StormError } from "./error";
 import { StormEvent } from "./event";
 import { StormRequest } from "./request";
 import { StormResponse } from "./response";

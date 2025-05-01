@@ -8,7 +8,10 @@
     "6": "The %s function%s must be configured. Please add .%s(<your_function>) before .build() is called.",
     "7": "No payload found in %s request",
     "8": "The application version could not be determined.",
-    "9": "Null arrays cannot be provided to getRandom"
+    "9": "Null arrays cannot be provided to getRandom",
+    "10": "No log record was made.",
+    "11": "Invalid log level: \"%s\"",
+    "12": "Unable to access context. Please ensure it was initialized prior to its use."
   },
   "not_found": {
     "1": "The requested resource was not found.",

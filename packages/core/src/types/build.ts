@@ -232,7 +232,7 @@ export interface MetaInfo {
   timestamp: number;
 }
 
-export interface TranspileOptions {
+export interface TranspileOptions<TOptions extends Options = Options> {
   /**
    * Skip all transformations.
    *
@@ -253,9 +253,34 @@ export interface TranspileOptions {
    * @defaultValue false
    */
   skipErrorsTransform?: boolean;
+
+  /**
+   * Transform the source file before transpilation.
+   *
+   * @param context - The context object
+   * @param source - The source file
+   * @returns The transformed source file
+   */
+  onPreTransform?: (
+    context: Context<TOptions>,
+    source: SourceFile
+  ) => MaybePromise<SourceFile>;
+
+  /**
+   * Transform the source file after transpilation.
+   *
+   * @param context - The context object
+   * @param source - The source file
+   * @returns The transformed source file
+   */
+  onPostTransform?: (
+    context: Context<TOptions>,
+    source: SourceFile
+  ) => MaybePromise<SourceFile>;
 }
 
-export interface CompileOptions extends TranspileOptions {
+export interface CompileOptions<TOptions extends Options = Options>
+  extends TranspileOptions<TOptions> {
   /**
    * Skip the cache.
    *
@@ -272,7 +297,7 @@ export interface ICompiler<TOptions extends Options = Options> {
    * @param code - The source code.
    * @returns The source file.
    */
-  getSourceFile: (id: string, code: string | MagicString) => SourceFile;
+  getSourceFile: (id: string, code?: string | MagicString) => SourceFile;
 
   /**
    * Get the result of the compiler.
@@ -296,7 +321,7 @@ export interface ICompiler<TOptions extends Options = Options> {
     context: Context<TOptions>,
     id: string,
     code: string | MagicString,
-    options?: CompileOptions
+    options?: CompileOptions<TOptions>
   ) => Promise<string>;
 
   /**
@@ -312,7 +337,7 @@ export interface ICompiler<TOptions extends Options = Options> {
     context: Context<TOptions>,
     id: string,
     code: string | MagicString,
-    options?: CompileOptions
+    options?: CompileOptions<TOptions>
   ) => Promise<string>;
 }
 

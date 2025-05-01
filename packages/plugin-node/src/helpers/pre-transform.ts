@@ -16,17 +16,25 @@
 
  ------------------------------------------------------------------- */
 
-// eslint-disable-next-line ts/consistent-type-imports
-import { ExamplePayload } from "./types";
+import type {
+  Context,
+  Options,
+  SourceFile
+} from "@storm-stack/core/types/build";
+import { transformContext } from "./transform-context";
 
-export function getCity(request: StormRequest<ExamplePayload>) {
-  const payload = request.data;
-  if (!payload) {
-    // This error message should be replaced by the compiler
-    return new StormError(`No payload found in ${request.id} request`);
-  }
-
-  $storm.log.info("Getting city from payload");
-
-  return payload.address.city;
+/**
+ * Pre-transform function for the Node plugin.
+ * This function is called before the main transform function.
+ * It is used to modify the source file before it is transformed.
+ *
+ * @param context - The context object containing options and other information.
+ * @param sourceFile - The source file to be transformed.
+ * @returns The transformed source file.
+ */
+export function preTransform<TOptions extends Options = Options>(
+  context: Context<TOptions>,
+  sourceFile: SourceFile
+) {
+  return transformContext(sourceFile);
 }

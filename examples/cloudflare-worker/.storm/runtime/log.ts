@@ -16,7 +16,6 @@ LogRecord,
 LogSink,
 LogSinkInstance
 } from "@storm-stack/types";
-import { StormJSON } from "@stryke/json/storm-json";
 import { StormError } from "./error";
 
 const LOG_LEVELS = [
@@ -57,7 +56,7 @@ export function getLevelFilter(level: LogLevel | null): LogFilter {
     return () => true;
   }
 
-  throw new StormError(`Invalid log level: ${level as string}.`);
+  throw new StormError({ type: "general", code: 11, params: [String(level)] });
 }
 
 /**
@@ -78,7 +77,11 @@ export function parseLogLevel(level: string): LogLevel {
     case "fatal":
       return formattedLevel;
     default:
-      throw new StormError(`Invalid log level: ${level}.`);
+      throw new StormError({
+        type: "general",
+        code: 11,
+        params: [String(level)]
+      });
   }
 }
 
@@ -111,11 +114,11 @@ export function isLogLevel(level: string): level is LogLevel {
 function compareLogLevel(a: LogLevel, b: LogLevel): number {
   const aIndex = LOG_LEVELS.indexOf(a);
   if (aIndex < 0) {
-    throw new StormError(`Invalid log level: ${StormJSON.stringify(a)}.`);
+    throw new StormError({ type: "general", code: 11, params: [String(a)] });
   }
   const bIndex = LOG_LEVELS.indexOf(b);
   if (bIndex < 0) {
-    throw new StormError(`Invalid log level: ${StormJSON.stringify(b)}.`);
+    throw new StormError({ type: "general", code: 11, params: [String(b)] });
   }
   return aIndex - bIndex;
 }
@@ -248,7 +251,7 @@ export class StormLog implements IStormLog {
           return renderMessage(tpl, values);
         });
         if (rawMessage == null) {
-          throw new StormError("No log record was made.");
+          throw new StormError({ type: "general", code: 10 });
         }
       }
       return [msg, rawMessage];

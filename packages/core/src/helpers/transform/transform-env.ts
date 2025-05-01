@@ -51,8 +51,7 @@ export async function transformEnv<TOptions extends Options = Options>(
       kind: "member_expression",
       any: [
         { pattern: "$storm.env.$ENV_VALUE" },
-        { pattern: "process.env.$ENV_VALUE" },
-        { pattern: "input.meta.$ENV_VALUE" }
+        { pattern: "useStorm().env.$ENV_VALUE" }
       ]
     }
   });

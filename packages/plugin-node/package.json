@@ -79,9 +79,7 @@
     "@stryke/hash": "catalog:",
     "@stryke/json": "catalog:",
     "@stryke/path": "catalog:",
-    "bundle-require": "catalog:",
-    "defu": "catalog:",
-    "esbuild": "catalog:"
+    "defu": "catalog:"
   },
   "devDependencies": {
     "@stryke/types": "catalog:",
