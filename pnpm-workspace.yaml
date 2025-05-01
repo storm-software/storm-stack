@@ -93,7 +93,7 @@ catalog:
   '@stryke/string-format': 0.4.2
   '@stryke/convert': 0.1.5
   '@stryke/type-checks': 0.3.2
-  '@stryke/cli': 0.8.0
+  '@stryke/cli': 0.9.0
   '@swc-node/register': ^1.10.10
   '@swc/core': ^1.11.22
   '@swc/wasm': ^1.11.24

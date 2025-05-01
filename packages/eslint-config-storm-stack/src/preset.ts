@@ -50,7 +50,7 @@ export async function getConfig(
   const configs: TypedFlatConfigItem[] = [];
   if (options["storm-stack"] ?? true) {
     const config = await stormStack({
-      overrides: getOverrides(options, "storm-stack"),
+      overrides: getOverrides(options, "storm-stack") as any,
       defaultConfig:
         typeof options["storm-stack"] === "string"
           ? options["storm-stack"]

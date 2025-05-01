@@ -130,8 +130,8 @@ catalogs:
       specifier: 1.267.22
       version: 1.267.22
     '@stryke/cli':
-      specifier: 0.8.0
-      version: 0.8.0
+      specifier: 0.9.0
+      version: 0.9.0
     '@stryke/convert':
       specifier: 0.1.5
       version: 0.1.5
@@ -517,7 +517,7 @@ importers:
         version: link:../../packages/log-storage
       '@stryke/cli':
         specifier: 'catalog:'
-        version: 0.8.0
+        version: 0.9.0
       '@stryke/url':
         specifier: 'catalog:'
         version: 0.1.0(@storm-software/config@1.113.26)
@@ -1095,7 +1095,7 @@ importers:
         version: 1.163.27(@storm-software/config@1.113.26)(magicast@0.3.5)
       '@stryke/cli':
         specifier: 'catalog:'
-        version: 0.8.0
+        version: 0.9.0
       '@stryke/fs':
         specifier: 'catalog:'
         version: 0.12.1(@storm-software/config@1.113.26)(magicast@0.3.5)(nx@20.8.1(@swc-node/register@1.10.10(@swc/core@1.11.22(@swc/helpers@0.5.17))(@swc/types@0.1.21)(typescript@5.8.3))(@swc/core@1.11.22(@swc/helpers@0.5.17)))
@@ -3388,7 +3388,6 @@ packages:
 
   '@ls-lint/ls-lint@2.3.0':
     resolution: {integrity: sha512-lsT5/7SxtImOIjpefC9wcoXt2lkikKhCjd6U+Q9Z6X5h2HBU/71ggt+XStdodZ0HkJGO333zDUeec7JROMCPFw==}
-    cpu: [x64, arm64, s390x, ppc64le]
     os: [darwin, linux, win32]
     hasBin: true
 
@@ -4824,8 +4823,8 @@ packages:
   '@storybook/csf@0.1.13':
     resolution: {integrity: sha512-7xOOwCLGB3ebM87eemep89MYRFTko+D8qE7EdAAq74lgdqRR5cOUtYWJLjO2dLtP94nqoOdHJo6MdLLKzg412Q==}
 
-  '@stryke/cli@0.8.0':
-    resolution: {integrity: sha512-MpPrquN0Dh6YYDjaOmT2mXjqPW5QLXf2TecFtmUX6xoJ8qNXMIAfRFi9e1C5xzU7EmwnAjTdfOlawMaTDBMQDw==}
+  '@stryke/cli@0.9.0':
+    resolution: {integrity: sha512-SsU2UjGYhS2hN6pF92ILcZXhbpkG1eKTnbphLLCKB4LzpzlePu6onv8s48Cxc5rAvamChJ7voVg4wMOOvSjfHg==}
 
   '@stryke/convert@0.1.5':
     resolution: {integrity: sha512-s/YXF3wPzcJnMlzp97SRIpYjH+coSa9ZpUH2sQWSHb05ZHoEUv4zera/VtqAvjJbsscy3wSvyLpFC2L/uAZEKQ==}
@@ -18433,7 +18432,7 @@ snapshots:
     dependencies:
       type-fest: 2.19.0
 
-  '@stryke/cli@0.8.0':
+  '@stryke/cli@0.9.0':
     dependencies:
       '@antfu/ni': 23.3.1
       '@stryke/convert': 0.1.5
