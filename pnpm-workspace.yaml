@@ -19,6 +19,7 @@ onlyBuiltDependencies:
   - protobufjs
   - sharp
   - utf-8-validate
+  - unrs-resolver
 
 packages:
   - tools/**

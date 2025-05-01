@@ -23,7 +23,7 @@ try {
   const base = argv.base;
   const head = argv.head;
 
-  await echo`${chalk.whiteBright("📦  Releasing Storm Stack packages...")}`;
+  await echo`${chalk.whiteBright(`📦  Releasing Storm Stack packages (Base tag: "${base}", Head tag: "${head}")`)}`;
 
   let proc = $`pnpm bootstrap`.timeout(`${30 * 60}s`);
   proc.stdout.on("data", data => {
