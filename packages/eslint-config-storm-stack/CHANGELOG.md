@@ -2,6 +2,13 @@
 
 # Changelog for Storm Stack - Eslint Config Storm Stack
 
+## [0.7.0](https://github.com/storm-software/storm-stack/releases/tag/eslint-config-storm-stack%400.7.0) (2025-04-30)
+
+### Features
+
+- **plugin-node:** Complete tsup build integration
+  ([6d5a3a3c](https://github.com/storm-software/storm-stack/commit/6d5a3a3c))
+
 ## [0.6.3](https://github.com/storm-software/storm-stack/releases/tag/eslint-config-storm-stack%400.6.3) (2025-04-28)
 
 ### Miscellaneous

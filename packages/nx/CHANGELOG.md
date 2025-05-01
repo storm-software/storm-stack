@@ -2,6 +2,18 @@
 
 # Changelog for Storm Stack - Nx
 
+## [0.7.0](https://github.com/storm-software/storm-stack/releases/tag/nx%400.7.0) (2025-04-30)
+
+### Features
+
+- **plugin-node:** Complete tsup build integration
+  ([6d5a3a3c](https://github.com/storm-software/storm-stack/commit/6d5a3a3c))
+
+### Updated Dependencies
+
+- Updated core to 0.11.0
+- Updated core to 0.11.0
+
 ## [0.6.0](https://github.com/storm-software/storm-stack/releases/tag/nx%400.6.0) (2025-04-29)
 
 ### Features
