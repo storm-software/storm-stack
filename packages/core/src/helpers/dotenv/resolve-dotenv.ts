@@ -16,13 +16,15 @@
 
  ------------------------------------------------------------------- */
 
-import type {
+import type { ReflectionProperty, SerializedTypes } from "@deepkit/type";
+import {
   ReflectionClass,
-  ReflectionProperty,
-  SerializedTypes
+  ReflectionKind,
+  resolveClassType
 } from "@deepkit/type";
-import { resolveClassType } from "@deepkit/type";
+import { LogLevelLabel } from "@storm-software/config-tools/types";
 import { readJsonFile } from "@stryke/fs/read-file";
+import { StormJSON } from "@stryke/json/storm-json";
 import { existsSync } from "@stryke/path/exists";
 import { joinPaths } from "@stryke/path/join-paths";
 import type { TypeDefinition } from "@stryke/types/configuration";
@@ -35,6 +37,7 @@ import type {
 } from "../../types/build";
 import type { LogFn } from "../../types/config";
 import { getReflectionsPath } from "../deepkit/resolve-reflections";
+import { writeFile } from "../utilities/write-file";
 
 export function getDotenvDefaultTypeDefinition<
   TOptions extends Options = Options
@@ -79,23 +82,30 @@ export async function resolveDotenvProperties<
 ): Promise<ReflectionProperty[]> {
   const varsFilePath = getDotenvPath(context, name);
 
-  // const reflection = ReflectionClass.from({
-  //   kind: ReflectionKind.objectLiteral,
-  //   description: `An object containing the dotenv variables used by the ${context.name ? `${context.name} application` : "application"}.`,
-  //   types: []
-  // });
+  const reflection = ReflectionClass.from({
+    kind: ReflectionKind.objectLiteral,
+    description: `An object containing the dotenv variables used by the ${context.name ? `${context.name} application` : "application"}.`,
+    types: []
+  });
 
-  if (existsSync(varsFilePath)) {
-    return resolveClassType(
-      deserializeType(await readJsonFile<SerializedTypes>(varsFilePath))
-    ).getProperties();
+  try {
+    if (existsSync(varsFilePath)) {
+      return resolveClassType(
+        deserializeType(await readJsonFile<SerializedTypes>(varsFilePath))
+      ).getProperties();
+    }
+  } catch (e) {
+    log(
+      LogLevelLabel.ERROR,
+      `Failed to read the dotenv properties from "${varsFilePath}". Error: ${e}`
+    );
   }
 
-  // await writeFile(
-  //   log,
-  //   varsFilePath,
-  //   StormJSON.stringify(reflection.serializeType())
-  // );
+  await writeFile(
+    log,
+    varsFilePath,
+    StormJSON.stringify(reflection.serializeType())
+  );
 
   return [] as ReflectionProperty[];
 }
