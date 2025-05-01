@@ -29,7 +29,7 @@ catalog:
   '@ast-grep/napi': ^0.37.0
   '@biomejs/biome': ^1.9.4
   '@cloudflare/unenv-preset': 2.3.1
-  '@cloudflare/workers-types': ^4.20250429.0
+  '@cloudflare/workers-types': ^4.20250430.0
   '@deepkit/type': ^1.0.5
   '@deepkit/core': ^1.0.5
   '@deepkit/type-compiler': ^1.0.5
@@ -38,9 +38,9 @@ catalog:
   '@eslint/config-inspector': ^0.7.1
   '@ls-lint/ls-lint': ^2.3.0
   '@ltd/j-toml': ^1.38.0
-  '@microsoft/api-extractor': ^7.52.5
-  '@nuxt/kit': ^3.17.0
-  '@nuxt/schema': ^3.17.0
+  '@microsoft/api-extractor': ^7.52.6
+  '@nuxt/kit': ^3.17.1
+  '@nuxt/schema': ^3.17.1
   '@opentelemetry/api-logs': ^0.200.0
   '@opentelemetry/exporter-logs-otlp-http': ^0.200.0
   '@opentelemetry/otlp-exporter-base': ^0.200.0
@@ -50,13 +50,6 @@ catalog:
   '@sentry/core': ^9.14.0
   '@sentry/node': ^9.14.0
   '@sentry/types': ^9.14.0
-  '@storm-stack/core': 0.13.0
-  '@storm-stack/log-console': 0.8.0
-  '@storm-stack/log-sentry': 0.11.0
-  '@storm-stack/log-storage': 0.8.0
-  '@storm-stack/log-stream': 0.8.0
-  '@storm-stack/nx': 0.8.0
-  '@storm-stack/plugin-node': 0.13.0
   '@taplo/cli': ^0.7.0
   '@types/eslint': ^9.6.1
   '@types/eslint__js': ^8.42.3
@@ -72,21 +65,21 @@ catalog:
   '@nx/plugin': 20.8.1
   '@nx/react': 20.8.1
   '@nx/workspace': 20.8.1
-  '@storm-software/build-tools': 0.144.12
-  '@storm-software/config': 1.113.16
-  '@storm-software/config-tools': 1.163.17
-  '@storm-software/cspell': 0.21.12
-  '@storm-software/git-tools': 2.104.35
-  '@storm-software/linting-tools': 1.119.52
-  '@storm-software/eslint': 0.148.12
-  '@storm-software/prettier': 0.45.21
-  '@storm-software/markdownlint': 0.18.27
+  '@storm-software/build-tools': 0.144.22
+  '@storm-software/config': 1.113.26
+  '@storm-software/config-tools': 1.163.27
+  '@storm-software/cspell': 0.21.22
+  '@storm-software/git-tools': 2.104.49
+  '@storm-software/linting-tools': 1.119.62
+  '@storm-software/eslint': 0.148.22
+  '@storm-software/prettier': 0.45.31
+  '@storm-software/markdownlint': 0.18.37
   '@storm-software/esbuild': 0.35.13
-  '@storm-software/unbuild': 0.41.13
-  '@storm-software/untyped': 0.11.38
-  '@storm-software/testing-tools': 1.104.62
-  '@storm-software/tsconfig': 0.35.63
-  '@storm-software/workspace-tools': 1.267.12
+  '@storm-software/unbuild': 0.41.23
+  '@storm-software/untyped': 0.11.59
+  '@storm-software/testing-tools': 1.104.83
+  '@storm-software/tsconfig': 0.35.73
+  '@storm-software/workspace-tools': 1.267.22
   '@stryke/env': 0.6.5
   '@stryke/fs': 0.12.1
   '@stryke/helpers': 0.5.2
@@ -103,7 +96,7 @@ catalog:
   '@stryke/cli': 0.8.0
   '@swc-node/register': ^1.10.10
   '@swc/core': ^1.11.22
-  '@swc/wasm': ^1.11.22
+  '@swc/wasm': ^1.11.24
   '@swc/helpers': ^0.5.17
   '@typescript-eslint/scope-manager': ^8.31.1
   '@typescript-eslint/types': ^8.31.1
@@ -143,7 +136,7 @@ catalog:
   tsup: 8.4.0
   copyfiles: ^2.4.1
   rimraf: ^6.0.1
-  tsx: ^4.19.3
+  tsx: ^4.19.4
   typescript: ~5.7.3
   esbuild: 0.25.3
   rollup: ^4.40.1
@@ -154,7 +147,7 @@ catalog:
   unstorage: ^1.16.0
   untyped: 1.5.2
   verdaccio: 6.1.2
-  vite: ^6.3.3
+  vite: ^6.3.4
   defu: ^6.1.4
   jiti: ^2.4.2
   eslint-flat-config-utils: 2.0.1

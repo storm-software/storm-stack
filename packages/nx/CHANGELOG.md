@@ -2,6 +2,18 @@
 
 # Changelog for Storm Stack - Nx
 
+## [0.8.1](https://github.com/storm-software/storm-stack/releases/tag/nx%400.8.1) (2025-05-01)
+
+### Miscellaneous
+
+- **monorepo:** update auto-merge non-major dependencies
+  ([#165](https://github.com/storm-software/storm-stack/pull/165))
+
+### Updated Dependencies
+
+- Updated core to 0.13.1
+- Updated core to 0.13.1
+
 ## [0.8.0](https://github.com/storm-software/storm-stack/releases/tag/nx%400.8.0) (2025-05-01)
 
 ### Features
