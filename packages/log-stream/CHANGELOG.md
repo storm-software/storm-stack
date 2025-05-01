@@ -2,6 +2,19 @@
 
 # Changelog for Storm Stack - Log Stream
 
+## [0.9.0](https://github.com/storm-software/storm-stack/releases/tag/log-stream%400.9.0) (2025-05-01)
+
+### Features
+
+- **preset-cli:** Added .env logic for CLI arguments
+  ([cf281d99](https://github.com/storm-software/storm-stack/commit/cf281d99))
+
+### Updated Dependencies
+
+- Updated core to 0.14.0
+- Updated core to 0.14.0
+- Updated nx to 0.9.0
+
 ## [0.8.0](https://github.com/storm-software/storm-stack/releases/tag/log-stream%400.8.0) (2025-05-01)
 
 ### Features

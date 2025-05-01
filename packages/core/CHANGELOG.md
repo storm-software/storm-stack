@@ -2,6 +2,13 @@
 
 # Changelog for Storm Stack - Core
 
+## [0.14.0](https://github.com/storm-software/storm-stack/releases/tag/core%400.14.0) (2025-05-01)
+
+### Features
+
+- **preset-cli:** Added .env logic for CLI arguments
+  ([cf281d99](https://github.com/storm-software/storm-stack/commit/cf281d99))
+
 ## [0.13.1](https://github.com/storm-software/storm-stack/releases/tag/core%400.13.1) (2025-05-01)
 
 ### Miscellaneous

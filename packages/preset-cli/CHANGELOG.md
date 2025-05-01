@@ -2,6 +2,13 @@
 
 # Changelog for Storm Stack - Preset Cli
 
+## [0.8.0](https://github.com/storm-software/storm-stack/releases/tag/preset-cli%400.8.0) (2025-05-01)
+
+### Features
+
+- **preset-cli:** Added .env logic for CLI arguments
+  ([cf281d99](https://github.com/storm-software/storm-stack/commit/cf281d99))
+
 ## [0.7.1](https://github.com/storm-software/storm-stack/releases/tag/preset-cli%400.7.1) (2025-05-01)
 
 ### Bug Fixes
