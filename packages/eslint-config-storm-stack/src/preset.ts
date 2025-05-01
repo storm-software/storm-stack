@@ -41,8 +41,8 @@ import { getOverrides } from "./utilities/get-overrides";
 export async function getConfig(
   options: OptionsConfig & Omit<TypedFlatConfigItem, "files"> = {},
   ...userConfigs: Awaitable<
-    | TypedFlatConfigItem
-    | TypedFlatConfigItem[]
+    | BaseTypedFlatConfigItem
+    | BaseTypedFlatConfigItem[]
     | FlatConfigComposer<any, any>
     | Linter.Config[]
   >[]
