@@ -13,8 +13,8 @@
     "examples-cli": "dist/examples-cli.js"
   },
   "dependencies": {
-    "@storm-stack/log-sentry": "workspace:*",
-    "@storm-stack/log-storage": "workspace:*",
+    "@storm-stack/log-sentry": "0.12.3",
+    "@storm-stack/log-storage": "0.9.3",
     "@stryke/cli": "catalog:",
     "@stryke/url": "catalog:",
     "unstorage": "catalog:"

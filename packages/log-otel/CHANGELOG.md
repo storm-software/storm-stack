@@ -2,6 +2,13 @@
 
 # Changelog for Storm Stack - Log Otel
 
+## [0.9.3](https://github.com/storm-software/storm-stack/releases/tag/log-otel%400.9.3) (2025-05-01)
+
+### Miscellaneous
+
+- **monorepo:** Rerun `update-pnpm-link` script
+  ([ad47954e](https://github.com/storm-software/storm-stack/commit/ad47954e))
+
 ## [0.9.2](https://github.com/storm-software/storm-stack/releases/tag/log-otel%400.9.2) (2025-05-01)
 
 ### Miscellaneous

@@ -1,6 +1,6 @@
 {
   "name": "eslint-config-storm-stack",
-  "version": "0.7.3",
+  "version": "0.7.4",
   "type": "module",
   "description": "An ESLint configuration with linting rules that ensure a Storm Stack project is following the best practices.",
   "repository": {

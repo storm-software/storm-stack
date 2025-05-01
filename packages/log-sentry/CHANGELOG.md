@@ -2,6 +2,13 @@
 
 # Changelog for Storm Stack - Log Sentry
 
+## [0.12.3](https://github.com/storm-software/storm-stack/releases/tag/log-sentry%400.12.3) (2025-05-01)
+
+### Miscellaneous
+
+- **monorepo:** Rerun `update-pnpm-link` script
+  ([ad47954e](https://github.com/storm-software/storm-stack/commit/ad47954e))
+
 ## [0.12.2](https://github.com/storm-software/storm-stack/releases/tag/log-sentry%400.12.2) (2025-05-01)
 
 ### Miscellaneous

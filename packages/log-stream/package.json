@@ -1,6 +1,6 @@
 {
   "name": "@storm-stack/log-stream",
-  "version": "0.9.2",
+  "version": "0.9.3",
   "type": "module",
   "description": "A package containing a Storm Stack log adapter to write logs to a stream",
   "repository": {
