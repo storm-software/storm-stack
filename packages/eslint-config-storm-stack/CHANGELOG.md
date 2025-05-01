@@ -2,6 +2,13 @@
 
 # Changelog for Storm Stack - Eslint Config Storm Stack
 
+## [0.7.2](https://github.com/storm-software/storm-stack/releases/tag/eslint-config-storm-stack%400.7.2) (2025-05-01)
+
+### Bug Fixes
+
+- **eslint-config-storm-stack:** Resolve typing issues from prior changes
+  ([753900e9](https://github.com/storm-software/storm-stack/commit/753900e9))
+
 ## [0.7.1](https://github.com/storm-software/storm-stack/releases/tag/eslint-config-storm-stack%400.7.1) (2025-05-01)
 
 ### Bug Fixes

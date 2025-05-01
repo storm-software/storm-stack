@@ -10,7 +10,7 @@
   },
   "private": true,
   "dependencies": {
-    "@storm-stack/log-console": "workspace:*",
+    "@storm-stack/log-console": "0.9.2",
     "@stryke/json": "catalog:",
     "@stryke/type-checks": "catalog:",
     "@stryke/url": "catalog:"
@@ -18,7 +18,7 @@
   "devDependencies": {
     "@cloudflare/workers-types": "catalog:",
     "@storm-stack/core": "workspace:*",
-    "@storm-stack/nx": "workspace:*",
+    "@storm-stack/nx": "0.9.2",
     "@storm-stack/preset-cloudflare-worker": "workspace:*",
     "@storm-stack/types": "workspace:*",
     "@stryke/types": "catalog:"
