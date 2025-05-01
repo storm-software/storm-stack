@@ -105,11 +105,7 @@ jobs:
           echo "HEAD: ${{ env.NX_HEAD }}"
         shell: bash
 
-      - name: Run workspace build
-        run: devenv build
-
       - name: Release repository updates
-        if: ${{ success() }}
         run: devenv shell release -- --base=${{ env.NX_BASE }} --head=${{ env.NX_HEAD }}
         env:
           GITHUB_ACTOR: ${{ github.actor }}

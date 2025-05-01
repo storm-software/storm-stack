@@ -50,7 +50,7 @@
     "nx": "nx",
     "postinstall": "pnpm bootstrap",
     "push": "git push origin main:main",
-    "release": "pnpm exec storm-git release",
+    "release": "pnpm exec zx tools/scripts/src/release.mjs",
     "sherif": "pnpm exec sherif -f -i typescript -i react -i react-dom",
     "start": "nx serve",
     "update-pnpm-link": "pnpm update --recursive --workspace",

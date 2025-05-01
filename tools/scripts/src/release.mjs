@@ -17,28 +17,37 @@
 
  ------------------------------------------------------------------- */
 
-import { $, chalk, echo } from "zx";
-
-// usePwsh();
+import { $, argv, chalk, echo } from "zx";
 
 try {
-  await echo`${chalk.whiteBright("📋  Linting the monorepo...")}`;
+  const base = argv.base;
+  const head = argv.head;
 
-  let proc =
-    $`pnpm nx run-many --target=lint --all --exclude="@storm-stack/monorepo" --parallel=5`.timeout(
-      `${30 * 60}s`
-    );
+  await echo`${chalk.whiteBright("📦  Releasing Storm Stack packages...")}`;
+
+  let proc = $`pnpm bootstrap`.timeout(`${30 * 60}s`);
   proc.stdout.on("data", data => {
     echo`${data}`;
   });
   let result = await proc;
   if (!result.ok) {
     throw new Error(
-      `An error occurred while linting the monorepo: \n\n${result.message}\n`
+      `An error occurred while bootstrapping repository: \n\n${result.message}\n`
     );
   }
 
-  proc = $`pnpm exec storm-lint all --skip-cspell --skip-circular-deps`.timeout(
+  proc = $`pnpm build`.timeout(`${30 * 60}s`);
+  proc.stdout.on("data", data => {
+    echo`${data}`;
+  });
+  result = await proc;
+  if (!result.ok) {
+    throw new Error(
+      `An error occurred while building Storm Stack packages: \n\n${result.message}\n`
+    );
+  }
+
+  proc = $`pnpm exec storm-git release --base=${base} --head=${head}`.timeout(
     `${30 * 60}s`
   );
   proc.stdout.on("data", data => {
@@ -47,13 +56,13 @@ try {
   result = await proc;
   if (!result.ok) {
     throw new Error(
-      `An error occurred while running \`storm-lint\` on the monorepo: \n\n${result.message}\n`
+      `An error occurred while releasing Storm Stack packages: \n\n${result.message}\n`
     );
   }
 
-  echo`${chalk.green("Successfully linted the monorepo's files")}`;
+  echo`${chalk.green("Successfully released Storm Stack packages")}`;
 } catch (error) {
-  echo`${chalk.red(error?.message ? error.message : "A failure occurred while linting the monorepo")}`;
+  echo`${chalk.red(error?.message ? error.message : "A failure occurred while releasing Storm Stack packages")}`;
 
   process.exit(1);
 }
