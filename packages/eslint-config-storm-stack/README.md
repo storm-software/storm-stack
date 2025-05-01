@@ -43,7 +43,7 @@ This package is part of the ⚡<b>Storm Stack</b> monorepo. Storm Stack packages
 
 <!-- END header -->
 
-# devkit-eslint-config-storm-stack
+# Storm Stack - ESLint Configuration
 
 A package containing shared ESLint configuration used by Storm Stack projects.
 
@@ -52,19 +52,21 @@ A package containing shared ESLint configuration used by Storm Stack projects.
 
 ## Table of Contents
 
-- [Installing](#installing)
-- [Reduced Package Size](#reduced-package-size)
-- [Development](#development)
-  - [Building](#building)
-  - [Running unit tests](#running-unit-tests)
-  - [Linting](#linting)
-- [Storm Workspaces](#storm-workspaces)
-- [Roadmap](#roadmap)
-- [Support](#support)
-- [License](#license)
-- [Changelog](#changelog)
-- [Contributing](#contributing)
-- [Contributors](#contributors)
+- [Storm Stack - ESLint Configuration](#storm-stack---eslint-configuration)
+  - [Table of Contents](#table-of-contents)
+  - [Installing](#installing)
+  - [Reduced Package Size](#reduced-package-size)
+  - [Development](#development)
+    - [Building](#building)
+    - [Running unit tests](#running-unit-tests)
+    - [Linting](#linting)
+  - [Storm Workspaces](#storm-workspaces)
+  - [Roadmap](#roadmap)
+  - [Support](#support)
+  - [License](#license)
+  - [Changelog](#changelog)
+  - [Contributing](#contributing)
+  - [Contributors](#contributors)
 
 <!-- END doctoc -->
 
@@ -73,14 +75,14 @@ A package containing shared ESLint configuration used by Storm Stack projects.
 Using [pnpm](http://pnpm.io):
 
 ```bash
-pnpm add -D storm-stack/devkit-eslint-config-storm-stack
+pnpm add -D eslint-config-storm-stack
 ```
 
 <details>
   <summary>Using npm</summary>
 
 ```bash
-npm install -D storm-stack/devkit-eslint-config-storm-stack
+npm install -D eslint-config-storm-stack
 ```
 
 </details>
@@ -89,7 +91,7 @@ npm install -D storm-stack/devkit-eslint-config-storm-stack
   <summary>Using yarn</summary>
 
 ```bash
-yarn add -D storm-stack/devkit-eslint-config-storm-stack
+yarn add -D eslint-config-storm-stack
 ```
 
 </details>
