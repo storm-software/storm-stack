@@ -2,6 +2,17 @@
 
 # Changelog for Storm Stack - Core
 
+## [0.12.0](https://github.com/storm-software/storm-stack/releases/tag/core%400.12.0) (2025-05-01)
+
+### Features
+
+- **core:** Added `onPreTransform` and `onPostTransform` compiler options
+  ([b0dbd5c8](https://github.com/storm-software/storm-stack/commit/b0dbd5c8))
+
+### Updated Dependencies
+
+- Updated types to 0.4.0
+
 ## [0.11.0](https://github.com/storm-software/storm-stack/releases/tag/core%400.11.0) (2025-04-30)
 
 ### Features

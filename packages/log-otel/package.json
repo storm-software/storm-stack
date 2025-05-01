@@ -19,8 +19,8 @@
     "@stryke/json": "catalog:"
   },
   "devDependencies": {
-    "@storm-stack/core": "0.11.0",
-    "@storm-stack/nx": "0.7.0",
+    "@storm-stack/core": "0.12.0",
+    "@storm-stack/nx": "workspace:*",
     "@types/node": "catalog:"
   },
   "publishConfig": {

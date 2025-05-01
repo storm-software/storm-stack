@@ -2,6 +2,18 @@
 
 # Changelog for Storm Stack - Log Sentry
 
+## [0.10.0](https://github.com/storm-software/storm-stack/releases/tag/log-sentry%400.10.0) (2025-05-01)
+
+### Features
+
+- **core:** Added `onPreTransform` and `onPostTransform` compiler options
+  ([b0dbd5c8](https://github.com/storm-software/storm-stack/commit/b0dbd5c8))
+
+### Updated Dependencies
+
+- Updated core to 0.12.0
+- Updated core to 0.12.0
+
 ## [0.9.0](https://github.com/storm-software/storm-stack/releases/tag/log-sentry%400.9.0) (2025-04-30)
 
 ### Features

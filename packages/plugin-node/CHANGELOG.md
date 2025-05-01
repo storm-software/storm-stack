@@ -2,6 +2,13 @@
 
 # Changelog for Storm Stack - Plugin Node
 
+## [0.12.0](https://github.com/storm-software/storm-stack/releases/tag/plugin-node%400.12.0) (2025-05-01)
+
+### Features
+
+- **core:** Added `onPreTransform` and `onPostTransform` compiler options
+  ([b0dbd5c8](https://github.com/storm-software/storm-stack/commit/b0dbd5c8))
+
 ## [0.11.0](https://github.com/storm-software/storm-stack/releases/tag/plugin-node%400.11.0) (2025-04-30)
 
 ### Features

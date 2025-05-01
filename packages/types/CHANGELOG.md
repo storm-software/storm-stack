@@ -2,6 +2,13 @@
 
 # Changelog for Storm Stack - Types
 
+## [0.4.0](https://github.com/storm-software/storm-stack/releases/tag/types%400.4.0) (2025-05-01)
+
+### Features
+
+- **core:** Added `onPreTransform` and `onPostTransform` compiler options
+  ([b0dbd5c8](https://github.com/storm-software/storm-stack/commit/b0dbd5c8))
+
 ## [0.3.3](https://github.com/storm-software/storm-stack/releases/tag/types%400.3.3) (2025-04-29)
 
 ### Miscellaneous
