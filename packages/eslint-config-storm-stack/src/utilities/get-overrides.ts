@@ -18,12 +18,11 @@
 
 import { getOverrides as getBaseOverrides } from "@storm-software/eslint";
 import type { OptionsConfig as BaseOptionsConfig } from "@storm-software/eslint/types";
-import type { Linter } from "eslint";
-import type { OptionsConfig, RuleOptions } from "../types";
+import type { OptionsConfig } from "../types";
 
 export function getOverrides(
   options: OptionsConfig,
   configName: keyof OptionsConfig
-): Partial<Linter.RulesRecord & RuleOptions> {
+) {
   return getBaseOverrides(options, configName as keyof BaseOptionsConfig);
 }
