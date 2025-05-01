@@ -509,6 +509,9 @@ importers:
 
   examples/cli-app:
     dependencies:
+      '@storm-stack/log-sentry':
+        specifier: workspace:*
+        version: link:../../packages/log-sentry
       '@storm-stack/log-storage':
         specifier: workspace:*
         version: link:../../packages/log-storage

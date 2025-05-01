@@ -2,6 +2,18 @@
 
 # Changelog for Storm Stack - Nx
 
+## [0.7.1](https://github.com/storm-software/storm-stack/releases/tag/nx%400.7.1) (2025-05-01)
+
+### Bug Fixes
+
+- **preset-cli:** Resolve issue writting output directory
+  ([bae1fefc](https://github.com/storm-software/storm-stack/commit/bae1fefc))
+
+### Updated Dependencies
+
+- Updated core to 0.12.1
+- Updated core to 0.12.1
+
 ## [0.7.0](https://github.com/storm-software/storm-stack/releases/tag/nx%400.7.0) (2025-04-30)
 
 ### Features

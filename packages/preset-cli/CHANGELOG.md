@@ -2,6 +2,13 @@
 
 # Changelog for Storm Stack - Preset Cli
 
+## [0.7.1](https://github.com/storm-software/storm-stack/releases/tag/preset-cli%400.7.1) (2025-05-01)
+
+### Bug Fixes
+
+- **preset-cli:** Resolve issue writting output directory
+  ([bae1fefc](https://github.com/storm-software/storm-stack/commit/bae1fefc))
+
 ## [0.7.0](https://github.com/storm-software/storm-stack/releases/tag/preset-cli%400.7.0) (2025-04-30)
 
 ### Features

@@ -2,6 +2,13 @@
 
 # Changelog for Storm Stack - Plugin Node
 
+## [0.12.1](https://github.com/storm-software/storm-stack/releases/tag/plugin-node%400.12.1) (2025-05-01)
+
+### Bug Fixes
+
+- **preset-cli:** Resolve issue writting output directory
+  ([bae1fefc](https://github.com/storm-software/storm-stack/commit/bae1fefc))
+
 ## [0.12.0](https://github.com/storm-software/storm-stack/releases/tag/plugin-node%400.12.0) (2025-05-01)
 
 ### Features
