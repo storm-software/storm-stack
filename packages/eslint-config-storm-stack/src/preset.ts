@@ -17,16 +17,13 @@
  ------------------------------------------------------------------- */
 
 import { getStormConfig } from "@storm-software/eslint";
-import type {
-  TypedFlatConfigItem as BaseTypedFlatConfigItem,
-  OptionsTypescript
-} from "@storm-software/eslint/types";
+import type { OptionsTypescript } from "@storm-software/eslint/types";
 import defu from "defu";
 import type { Linter } from "eslint";
 import type { Awaitable, FlatConfigComposer } from "eslint-flat-config-utils";
 import { globals } from "eslint-plugin-storm-stack/configs/globals";
 import { stormStack } from "./configs/storm-stack";
-import type { ConfigNames, OptionsConfig, TypedFlatConfigItem } from "./types";
+import type { OptionsConfig, TypedFlatConfigItem } from "./types";
 import { getOverrides } from "./utilities/get-overrides";
 
 /**
@@ -46,11 +43,11 @@ export async function getConfig(
     | FlatConfigComposer<any, any>
     | Linter.Config[]
   >[]
-): Promise<FlatConfigComposer<TypedFlatConfigItem, ConfigNames>> {
+) {
   const configs: TypedFlatConfigItem[] = [];
   if (options["storm-stack"] ?? true) {
     const config = await stormStack({
-      overrides: getOverrides(options, "storm-stack") as any,
+      overrides: getOverrides(options, "storm-stack"),
       defaultConfig:
         typeof options["storm-stack"] === "string"
           ? options["storm-stack"]
@@ -74,7 +71,7 @@ export async function getConfig(
         }
       } as OptionsTypescript,
       globals
-    }) as Parameters<typeof getStormConfig>[0],
+    }),
     ...userConfigs
-  ).append(configs as BaseTypedFlatConfigItem[]);
+  ).append(configs);
 }
