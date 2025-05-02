@@ -51,6 +51,8 @@ catalog:
   '@sentry/core': ^9.14.0
   '@sentry/node': ^9.14.0
   '@sentry/types': ^9.14.0
+  '@storm-stack/log-console': 0.9.3
+  '@storm-stack/log-stream': 0.9.3
   '@taplo/cli': ^0.7.0
   '@types/eslint': ^9.6.1
   '@types/eslint__js': ^8.42.3
