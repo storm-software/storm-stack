@@ -32,7 +32,7 @@ import { getOverrides } from "./utilities/get-overrides";
  * @remarks
  * This function returns a flat ESLint configuration that can be used in Storm Stack projects. It also includes the ESLint configuration added by the [\@storm-software/eslint](https://www.npmjs.com/package/\@storm-software/eslint) preset.
  *
- * @param options - The preset options.
+ * @param options - The preset options applied to the ESLint configuration.
  * @param userConfigs - Additional ESLint configurations.
  */
 export async function getConfig(
