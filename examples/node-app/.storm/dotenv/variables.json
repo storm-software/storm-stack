@@ -1,7 +1,7 @@
 [
   {
     "kind": 30,
-    "types": [1, 3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 26, 31, 36, 38],
+    "types": [1, 3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23, 25, 30, 35],
     "entityOptions": {
       "description": "An object containing the dotenv variables used by the examples-node-app application."
     }
@@ -62,70 +62,70 @@
   {
     "kind": 32,
     "type": 16,
-    "name": "BUILD_ID",
-    "description": "The unique identifier for the build."
-  },
-  { "kind": 5 },
-  {
-    "kind": 32,
-    "type": 18,
-    "name": "BUILD_TIMESTAMP",
-    "description": "The timestamp the build was ran at."
-  },
-  { "kind": 6 },
-  {
-    "kind": 32,
-    "type": 20,
-    "name": "RELEASE_ID",
-    "description": "The unique identifier for the release."
-  },
-  { "kind": 5 },
-  {
-    "kind": 32,
-    "type": 22,
-    "name": "MODE",
-    "description": "The mode in which the application is running.",
-    "default": "\"production\""
-  },
-  { "kind": 23, "types": [23, 24, 25] },
-  { "kind": 13, "literal": "development" },
-  { "kind": 13, "literal": "staging" },
-  { "kind": 13, "literal": "production" },
-  {
-    "kind": 32,
-    "type": 27,
-    "name": "NODE_ENV",
-    "description": "The environment the application is running in. This variable is a duplicate of `ENVIRONMENT` to support use in external packages.",
-    "default": "\"production\""
-  },
-  { "kind": 23, "types": [28, 29, 30] },
-  { "kind": 13, "literal": "development" },
-  { "kind": 13, "literal": "staging" },
-  { "kind": 13, "literal": "production" },
-  {
-    "kind": 32,
-    "type": 32,
-    "name": "PLATFORM",
-    "description": "The platform for which the application was built.",
-    "default": "\"node\""
-  },
-  { "kind": 23, "types": [33, 34, 35] },
-  { "kind": 13, "literal": "node" },
-  { "kind": 13, "literal": "browser" },
-  { "kind": 13, "literal": "worker" },
-  {
-    "kind": 32,
-    "type": 37,
     "name": "ERROR_URL",
     "description": "The URL to send error data to. This value is used by the Storm Stack error tracking system."
   },
   { "kind": 5 },
   {
     "kind": 32,
-    "type": 39,
+    "type": 18,
     "name": "INCLUDE_ERROR_DATA",
     "description": "Indicates if error data should be included.",
     "default": "false"
   },
-  { "kind": 7 }
+  { "kind": 7 },
+  {
+    "kind": 32,
+    "type": 20,
+    "name": "BUILD_ID",
+    "description": "The unique identifier for the build."
+  },
+  { "kind": 5 },
+  {
+    "kind": 32,
+    "type": 22,
+    "name": "BUILD_TIMESTAMP",
+    "description": "The timestamp the build was ran at."
+  },
+  { "kind": 6 },
+  {
+    "kind": 32,
+    "type": 24,
+    "name": "RELEASE_ID",
+    "description": "The unique identifier for the release."
+  },
+  { "kind": 5 },
+  {
+    "kind": 32,
+    "type": 26,
+    "name": "MODE",
+    "description": "The mode in which the application is running.",
+    "default": "\"production\""
+  },
+  { "kind": 23, "types": [27, 28, 29] },
+  { "kind": 13, "literal": "development" },
+  { "kind": 13, "literal": "staging" },
+  { "kind": 13, "literal": "production" },
+  {
+    "kind": 32,
+    "type": 31,
+    "name": "NODE_ENV",
+    "description": "The environment the application is running in. This variable is a duplicate of `ENVIRONMENT` to support use in external packages.",
+    "default": "\"production\""
+  },
+  { "kind": 23, "types": [32, 33, 34] },
+  { "kind": 13, "literal": "development" },
+  { "kind": 13, "literal": "staging" },
+  { "kind": 13, "literal": "production" },
+  {
+    "kind": 32,
+    "type": 36,
+    "name": "PLATFORM",
+    "description": "The platform for which the application was built.",
+    "default": "\"node\""
+  },
+  { "kind": 23, "types": [37, 38, 39] },
+  { "kind": 13, "literal": "node" },
+  { "kind": 13, "literal": "browser" },
+  { "kind": 13, "literal": "worker" }
 ]
