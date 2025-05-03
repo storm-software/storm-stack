@@ -27,7 +27,7 @@ import type { OptionsConfig, TypedFlatConfigItem } from "./types";
 import { getOverrides } from "./utilities/get-overrides";
 
 /**
- * Get the ESLint configuration for a Storm Stack project.
+ * Get the ESLint configuration for a Storm Stack project. This is generally invoked from a `eslint.config.ts` / `eslint.config.js` file in the workspace's root.
  *
  * @remarks
  * This function returns a flat ESLint configuration that can be used in Storm Stack projects. It also includes the ESLint configuration added by the [\@storm-software/eslint](https://www.npmjs.com/package/\@storm-software/eslint) preset.
