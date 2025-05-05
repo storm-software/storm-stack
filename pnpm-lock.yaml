@@ -753,9 +753,6 @@ importers:
       eslint-flat-config-utils:
         specifier: 'catalog:'
         version: 2.0.1
-      eslint-plugin-storm-stack:
-        specifier: workspace:*
-        version: link:../eslint-plugin-storm-stack
     devDependencies:
       '@types/node':
         specifier: 'catalog:'

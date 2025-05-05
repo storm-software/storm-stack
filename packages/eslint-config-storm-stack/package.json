@@ -101,8 +101,7 @@
     "@storm-software/config-tools": "catalog:",
     "@storm-software/eslint": "catalog:",
     "defu": "catalog:",
-    "eslint-flat-config-utils": "catalog:",
-    "eslint-plugin-storm-stack": "catalog:"
+    "eslint-flat-config-utils": "catalog:"
   },
   "devDependencies": {
     "@types/node": "catalog:",
