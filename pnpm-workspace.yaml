@@ -55,7 +55,8 @@ catalog:
   "@storm-stack/log-console": 0.9.3
   "@storm-stack/log-sentry": 0.12.3
   "@storm-stack/log-storage": 0.9.3
-  "@storm-stack/nx": 0.9.3
+  "@storm-stack/log-stream": 0.9.3
+  "@storm-stack/nx": 0.9.4
   "@storm-stack/types": 0.34.0
   "@taplo/cli": ^0.7.0
   "@types/eslint": ^9.6.1
