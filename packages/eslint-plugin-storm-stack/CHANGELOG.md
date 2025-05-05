@@ -2,6 +2,13 @@
 
 # Changelog for Storm Stack - Eslint Plugin Storm Stack
 
+## [0.8.1](https://github.com/storm-software/storm-stack/releases/tag/eslint-plugin-storm-stack%400.8.1) (2025-05-05)
+
+### Miscellaneous
+
+- **eslint-plugin-storm-stack:** Added comment to the package
+  ([518c076e](https://github.com/storm-software/storm-stack/commit/518c076e))
+
 ## [0.8.0](https://github.com/storm-software/storm-stack/releases/tag/eslint-plugin-storm-stack%400.8.0) (2025-04-29)
 
 ### Features
