@@ -13,13 +13,13 @@
 👎 Examples of **incorrect** code for this rule:
 
 ```ts
-throw new Error("Failed to process request");
+throw new Error("Failed to process request")
 ```
 
 👍 Examples of **correct** code for this rule:
 
 ```ts
-throw new StormError("Failed to process request");
+throw new StormError("Failed to process request")
 ```
 
 ## Version

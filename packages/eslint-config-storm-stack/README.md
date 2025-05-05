@@ -45,7 +45,9 @@ This package is part of the ⚡<b>Storm Stack</b> monorepo. Storm Stack packages
 
 # Storm Stack - ESLint Configuration
 
-A package containing shared ESLint configuration used by Storm Stack projects. This package can be used directly in your own projects to ensure that your code is consistent with the rest of the Storm Stack ecosystem.
+A package containing shared ESLint configuration used by Storm Stack projects.
+This package can be used directly in your own projects to ensure that your code
+is consistent with the rest of the Storm Stack ecosystem.
 
 <!-- START doctoc -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->

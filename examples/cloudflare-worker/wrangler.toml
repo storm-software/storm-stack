@@ -1,6 +1,5 @@
-
-account_id = 'undefined'
-compatibility_date = '2025-04-08'
+account_id          = 'undefined'
+compatibility_date  = '2025-04-08'
 compatibility_flags = ['nodejs_als']
-main = '/.storm/entry-h9JIrhAo.ts'
-name = 'examples-cloudflare-worker'
+main                = '/.storm/entry-h9JIrhAo.ts'
+name                = 'examples-cloudflare-worker'

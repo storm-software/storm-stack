@@ -26,10 +26,10 @@ synchronous and asynchronous.
 
 ```ts
 document.addEventListener("click", async function (event) {
-  const data = await fetch();
+  const data = await fetch()
 
-  event.preventDefault();
-});
+  event.preventDefault()
+})
 ```
 
 👍 Examples of **correct** code for this rule:
@@ -37,14 +37,14 @@ document.addEventListener("click", async function (event) {
 ```ts
 document.addEventListener("click", function (event) {
   // preventDefault in a regular function
-  event.preventDefault();
+  event.preventDefault()
 
   // call async helper function
-  loadData(event.target);
-});
+  loadData(event.target)
+})
 
 async function loadData(el) {
-  const data = await fetch();
+  const data = await fetch()
   // ...
 }
 ```
@@ -54,14 +54,14 @@ This could also be done with an async IIFE.
 ```ts
 document.addEventListener("click", function (event) {
   // preventDefault in a regular function
-  event.preventDefault();
+  event.preventDefault()
 
   // call async IIFE
-  (async function () {
-    const data = await fetch();
+  ;(async function () {
+    const data = await fetch()
     // ...
-  })();
-});
+  })()
+})
 ```
 
 ## Version

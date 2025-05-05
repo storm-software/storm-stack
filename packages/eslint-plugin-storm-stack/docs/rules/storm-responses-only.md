@@ -16,7 +16,7 @@
 function handler(request): Response {
   // ...
 
-  return new Response("Hello, world!");
+  return new Response("Hello, world!")
 }
 ```
 
@@ -26,7 +26,7 @@ function handler(request): Response {
 function handler(request): StormResponse {
   // ...
 
-  return new StormResponse("Hello, world!");
+  return new StormResponse("Hello, world!")
 }
 ```
 

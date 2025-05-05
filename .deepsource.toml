@@ -3,8 +3,8 @@ version = 1
 [[analyzers]]
 name = "javascript"
 
-  [analyzers.meta]
-  environment = ["nodejs"]
+[analyzers.meta]
+environment = ["nodejs"]
 
 [[analyzers]]
 name = "shell"
