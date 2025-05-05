@@ -1,6 +1,6 @@
 {
   "name": "eslint-config-storm-stack",
-  "version": "0.7.14",
+  "version": "0.7.15",
   "type": "module",
   "description": "An ESLint configuration with linting rules that ensure a Storm Stack project is following the best practices.",
   "repository": {
@@ -106,7 +106,7 @@
     "@stryke/fs": "catalog:",
     "defu": "catalog:",
     "eslint-flat-config-utils": "catalog:",
-    "eslint-plugin-storm-stack": "workspace:*"
+    "eslint-plugin-storm-stack": "0.8.2"
   },
   "devDependencies": {
     "@types/node": "catalog:",

@@ -2,6 +2,17 @@
 
 # Changelog for Storm Stack - Eslint Config Storm Stack
 
+## [0.7.15](https://github.com/storm-software/storm-stack/releases/tag/eslint-config-storm-stack%400.7.15) (2025-05-05)
+
+### Miscellaneous
+
+- **monorepo:** Format monorepo source code
+  ([00071027](https://github.com/storm-software/storm-stack/commit/00071027))
+
+### Updated Dependencies
+
+- Updated eslint-plugin-storm-stack to 0.8.2
+
 ## [0.7.14](https://github.com/storm-software/storm-stack/releases/tag/eslint-config-storm-stack%400.7.14) (2025-05-05)
 
 ### Miscellaneous

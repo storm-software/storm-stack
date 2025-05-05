@@ -2,6 +2,13 @@
 
 # Changelog for Storm Stack - Nx
 
+## [0.9.4](https://github.com/storm-software/storm-stack/releases/tag/nx%400.9.4) (2025-05-05)
+
+### Miscellaneous
+
+- **monorepo:** Format monorepo source code
+  ([00071027](https://github.com/storm-software/storm-stack/commit/00071027))
+
 ## [0.9.3](https://github.com/storm-software/storm-stack/releases/tag/nx%400.9.3) (2025-05-05)
 
 ### Miscellaneous
