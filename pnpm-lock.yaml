@@ -747,6 +747,9 @@ importers:
       '@storm-software/eslint':
         specifier: 'catalog:'
         version: 0.148.22(905f7cdbbc0597afea2e51e704273ceb)
+      '@stryke/fs':
+        specifier: 'catalog:'
+        version: 0.12.1(@storm-software/config@1.113.26)(magicast@0.3.5)(nx@20.8.1(@swc-node/register@1.10.10(@swc/core@1.11.22(@swc/helpers@0.5.17))(@swc/types@0.1.21)(typescript@5.8.3))(@swc/core@1.11.22(@swc/helpers@0.5.17)))
       defu:
         specifier: 'catalog:'
         version: 6.1.4
@@ -763,6 +766,9 @@ importers:
       eslint:
         specifier: 'catalog:'
         version: 9.26.0(jiti@2.4.2)
+      eslint-plugin-storm-stack:
+        specifier: workspace:*
+        version: link:../eslint-plugin-storm-stack
       eslint-typegen:
         specifier: 'catalog:'
         version: 2.1.0(eslint@9.26.0(jiti@2.4.2))
@@ -3385,7 +3391,6 @@ packages:
 
   '@ls-lint/ls-lint@2.3.0':
     resolution: {integrity: sha512-lsT5/7SxtImOIjpefC9wcoXt2lkikKhCjd6U+Q9Z6X5h2HBU/71ggt+XStdodZ0HkJGO333zDUeec7JROMCPFw==}
-    cpu: [x64, arm64, s390x, ppc64le]
     os: [darwin, linux, win32]
     hasBin: true
 

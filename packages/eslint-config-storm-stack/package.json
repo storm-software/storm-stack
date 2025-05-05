@@ -92,6 +92,10 @@
     "eslint",
     "eslint-config"
   ],
+  "peerDependencies": {
+    "eslint": ">=9.26.0",
+    "eslint-plugin-storm-stack": "workspace:*"
+  },
   "peerDependenciesMeta": {
     "eslint": {
       "optional": false
@@ -100,6 +104,7 @@
   "dependencies": {
     "@storm-software/config-tools": "catalog:",
     "@storm-software/eslint": "catalog:",
+    "@stryke/fs": "catalog:",
     "defu": "catalog:",
     "eslint-flat-config-utils": "catalog:"
   },
@@ -107,6 +112,7 @@
     "@types/node": "catalog:",
     "chalk-template": "catalog:",
     "eslint": "catalog:",
+    "eslint-plugin-storm-stack": "workspace:*",
     "eslint-typegen": "catalog:",
     "tsup": "catalog:",
     "tsx": "catalog:",
