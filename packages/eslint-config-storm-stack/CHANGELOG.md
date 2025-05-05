@@ -2,6 +2,13 @@
 
 # Changelog for Storm Stack - Eslint Config Storm Stack
 
+## [0.7.12](https://github.com/storm-software/storm-stack/releases/tag/eslint-config-storm-stack%400.7.12) (2025-05-05)
+
+### Miscellaneous
+
+- **eslint-config-storm-stack:** Add missing items to package.json dependencies
+  ([493a8c97](https://github.com/storm-software/storm-stack/commit/493a8c97))
+
 ## [0.7.11](https://github.com/storm-software/storm-stack/releases/tag/eslint-config-storm-stack%400.7.11) (2025-05-05)
 
 ### Miscellaneous
