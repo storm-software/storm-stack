@@ -23,7 +23,7 @@
     "@storm-stack/core": "workspace:*",
     "@storm-stack/nx": "workspace:*",
     "@storm-stack/preset-cli": "workspace:*",
-    "@storm-stack/types": "workspace:*"
+    "@storm-stack/types": "0.4.1"
   },
   "storm": {
     "presets": [

@@ -2,6 +2,13 @@
 
 # Changelog for Storm Stack - Types
 
+## [0.4.1](https://github.com/storm-software/storm-stack/releases/tag/types%400.4.1) (2025-05-05)
+
+### Miscellaneous
+
+- **monorepo:** Update the package versions
+  ([a8444cf2](https://github.com/storm-software/storm-stack/commit/a8444cf2))
+
 ## [0.4.0](https://github.com/storm-software/storm-stack/releases/tag/types%400.4.0) (2025-05-01)
 
 ### Features
