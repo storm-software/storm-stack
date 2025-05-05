@@ -1,6 +1,8 @@
 shamefullyHoist: true
 autoInstallPeers: true
 strictPeerDependencies: false
+linkWorkspacePackages: true
+preferWorkspacePackages: true
 registry: https://registry.npmjs.org/
 gitChecks: true
 publishBranch: main
