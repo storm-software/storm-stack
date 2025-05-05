@@ -28,16 +28,16 @@ catalog:
   '@ast-grep/napi': ^0.37.0
   '@biomejs/biome': ^1.9.4
   '@cloudflare/unenv-preset': 2.3.1
-  '@cloudflare/workers-types': ^4.20250430.0
+  '@cloudflare/workers-types': ^4.20250505.0
   '@deepkit/type': ^1.0.5
   '@deepkit/core': ^1.0.5
   '@deepkit/type-compiler': ^1.0.5
   '@donedeal0/superdiff': ^3.1.2
-  '@eslint/compat': ^1.2.8
+  '@eslint/compat': ^1.2.9
   '@eslint/config-inspector': ^0.7.1
   '@ls-lint/ls-lint': ^2.3.0
   '@ltd/j-toml': ^1.38.0
-  '@microsoft/api-extractor': ^7.52.6
+  '@microsoft/api-extractor': ^7.52.7
   '@nuxt/kit': ^3.17.1
   '@nuxt/schema': ^3.17.1
   '@opentelemetry/api-logs': ^0.200.0
@@ -46,9 +46,9 @@ catalog:
   '@opentelemetry/resources': ^2.0.0
   '@opentelemetry/sdk-logs': ^0.200.0
   '@opentelemetry/semantic-conventions': ^1.32.0
-  '@sentry/core': ^9.14.0
-  '@sentry/node': ^9.14.0
-  '@sentry/types': ^9.14.0
+  '@sentry/core': ^9.15.0
+  '@sentry/node': ^9.15.0
+  '@sentry/types': ^9.15.0
   '@storm-stack/log-console': 0.9.3
   '@storm-stack/log-sentry': 0.12.3
   '@storm-stack/log-storage': 0.9.3
@@ -109,7 +109,7 @@ catalog:
   chalk-template: ^1.1.0
   commander: ^13.1.0
   diff-match-patch: ^1.0.5
-  eslint: ^9.25.1
+  eslint: ^9.26.0
   eslint-doc-generator: ^2.1.2
   eslint-plugin-eslint-plugin: 6.4.0
   eslint-plugin-i18n-text: 1.0.1
@@ -155,7 +155,7 @@ catalog:
   defu: ^6.1.4
   jiti: ^2.4.2
   eslint-flat-config-utils: 2.0.1
-  zod: ^3.24.3
+  zod: ^3.24.4
   zod-validation-error: ^3.4.0
   zx: ^8.5.3
 
