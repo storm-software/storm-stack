@@ -113,6 +113,7 @@ catalog:
   eslint-doc-generator: ^2.1.2
   eslint-plugin-eslint-plugin: 6.4.0
   eslint-plugin-i18n-text: 1.0.1
+  eslint-plugin-storm-stack: 0.8.1
   eslint-rule-documentation: ^1.0.23
   eslint-typegen: 2.1.0
   globals: ^15.15.0
