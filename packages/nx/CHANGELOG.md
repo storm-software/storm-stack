@@ -2,6 +2,13 @@
 
 # Changelog for Storm Stack - Nx
 
+## [0.9.7](https://github.com/storm-software/storm-stack/releases/tag/nx%400.9.7) (2025-05-05)
+
+### Miscellaneous
+
+- **monorepo:** Update Storm-Ops and resolve workspace links
+  ([27bf7d84](https://github.com/storm-software/storm-stack/commit/27bf7d84))
+
 ## [0.9.6](https://github.com/storm-software/storm-stack/releases/tag/nx%400.9.6) (2025-05-05)
 
 ### Miscellaneous
