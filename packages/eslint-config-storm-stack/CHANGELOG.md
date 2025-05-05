@@ -2,6 +2,13 @@
 
 # Changelog for Storm Stack - Eslint Config Storm Stack
 
+## [0.7.14](https://github.com/storm-software/storm-stack/releases/tag/eslint-config-storm-stack%400.7.14) (2025-05-05)
+
+### Miscellaneous
+
+- **monorepo:** Upgrade Storm-Ops dependency versions
+  ([f566519c](https://github.com/storm-software/storm-stack/commit/f566519c))
+
 ## [0.7.13](https://github.com/storm-software/storm-stack/releases/tag/eslint-config-storm-stack%400.7.13) (2025-05-05)
 
 ### Miscellaneous
