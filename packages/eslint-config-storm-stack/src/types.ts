@@ -60,7 +60,7 @@ export interface OptionsStormStack extends OptionsFiles, OptionsOverrides {
 }
 
 /**
- * Storm Stack ESLint configuration options.
+ * Additional ESLint configuration options.
  */
 export interface OptionsConfig extends BaseOptionsConfig {
   /**
