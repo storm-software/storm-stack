@@ -71,21 +71,21 @@ catalog:
   '@nx/plugin': 20.8.1
   '@nx/react': 20.8.1
   '@nx/workspace': 20.8.1
-  '@storm-software/build-tools': 0.144.22
-  '@storm-software/config': 1.113.26
-  '@storm-software/config-tools': 1.163.27
-  '@storm-software/cspell': 0.21.22
-  '@storm-software/git-tools': 2.104.49
-  '@storm-software/linting-tools': 1.119.62
-  '@storm-software/eslint': 0.148.22
-  '@storm-software/prettier': 0.45.31
-  '@storm-software/markdownlint': 0.18.37
-  '@storm-software/esbuild': 0.35.13
-  '@storm-software/unbuild': 0.41.23
-  '@storm-software/untyped': 0.11.59
-  '@storm-software/testing-tools': 1.104.83
-  '@storm-software/tsconfig': 0.35.73
-  '@storm-software/workspace-tools': 1.267.22
+  '@storm-software/build-tools': latest
+  '@storm-software/config': latest
+  '@storm-software/config-tools': latest
+  '@storm-software/cspell': latest
+  '@storm-software/git-tools': latest
+  '@storm-software/linting-tools': latest
+  '@storm-software/eslint': latest
+  '@storm-software/prettier': latest
+  '@storm-software/markdownlint': latest
+  '@storm-software/esbuild': latest
+  '@storm-software/unbuild': latest
+  '@storm-software/untyped': latest
+  '@storm-software/testing-tools': latest
+  '@storm-software/tsconfig': latest
+  '@storm-software/workspace-tools': latest
   '@stryke/env': 0.6.5
   '@stryke/fs': 0.12.1
   '@stryke/helpers': 0.5.2

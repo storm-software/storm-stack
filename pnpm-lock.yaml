@@ -85,49 +85,49 @@ catalogs:
       specifier: ^9.15.0
       version: 9.15.0
     '@storm-software/build-tools':
-      specifier: 0.144.22
+      specifier: latest
       version: 0.144.22
     '@storm-software/config':
-      specifier: 1.113.26
+      specifier: latest
       version: 1.113.26
     '@storm-software/config-tools':
-      specifier: 1.163.27
+      specifier: latest
       version: 1.163.27
     '@storm-software/cspell':
-      specifier: 0.21.22
+      specifier: latest
       version: 0.21.22
     '@storm-software/esbuild':
-      specifier: 0.35.13
+      specifier: latest
       version: 0.35.13
     '@storm-software/eslint':
-      specifier: 0.148.22
+      specifier: latest
       version: 0.148.22
     '@storm-software/git-tools':
-      specifier: 2.104.49
+      specifier: latest
       version: 2.104.49
     '@storm-software/linting-tools':
-      specifier: 1.119.62
+      specifier: latest
       version: 1.119.62
     '@storm-software/markdownlint':
-      specifier: 0.18.37
+      specifier: latest
       version: 0.18.37
     '@storm-software/prettier':
-      specifier: 0.45.31
+      specifier: latest
       version: 0.45.31
     '@storm-software/testing-tools':
-      specifier: 1.104.83
+      specifier: latest
       version: 1.104.83
     '@storm-software/tsconfig':
-      specifier: 0.35.73
+      specifier: latest
       version: 0.35.73
     '@storm-software/unbuild':
-      specifier: 0.41.23
+      specifier: latest
       version: 0.41.23
     '@storm-software/untyped':
-      specifier: 0.11.59
+      specifier: latest
       version: 0.11.59
     '@storm-software/workspace-tools':
-      specifier: 1.267.22
+      specifier: latest
       version: 1.267.22
     '@stryke/cli':
       specifier: 0.9.0
@@ -3013,15 +3013,6 @@ packages:
   '@eslint-react/var@1.43.0':
     resolution: {integrity: sha512-dJdiSRyPNjp4mpxK5PaphI55tjns8snazB0A2B8cStaVIwrGXZiHa8QaLfQG7d1DU2cQ6NACV0peo8YtrbhlHQ==}
     engines: {bun: '>=1.0.15', node: '>=18.18.0'}
-
-  '@eslint/compat@1.2.8':
-    resolution: {integrity: sha512-LqCYHdWL/QqKIJuZ/ucMAv8d4luKGs4oCPgpt8mWztQAtPrHfXKQ/XAUc8ljCHAfJCn6SvkpTcGt5Tsh8saowA==}
-    engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
-    peerDependencies:
-      eslint: ^9.10.0
-    peerDependenciesMeta:
-      eslint:
-        optional: true
 
   '@eslint/compat@1.2.9':
     resolution: {integrity: sha512-gCdSY54n7k+driCadyMNv8JSPzYLeDVM/ikZRtvtROBpRdFSkS8W9A82MqsaY7lZuwL0wiapgD0NT1xT0hyJsA==}
@@ -14839,10 +14830,6 @@ snapshots:
       - supports-color
       - typescript
 
-  '@eslint/compat@1.2.8(eslint@9.26.0(jiti@2.4.2))':
-    optionalDependencies:
-      eslint: 9.26.0(jiti@2.4.2)
-
   '@eslint/compat@1.2.9(eslint@9.26.0(jiti@2.4.2))':
     optionalDependencies:
       eslint: 9.26.0(jiti@2.4.2)
@@ -21022,7 +21009,7 @@ snapshots:
 
   dotenv-expand@11.0.7:
     dependencies:
-      dotenv: 16.4.7
+      dotenv: 16.5.0
 
   dotenv@16.4.7: {}
 
@@ -21408,7 +21395,7 @@ snapshots:
 
   eslint-config-flat-gitignore@2.1.0(eslint@9.26.0(jiti@2.4.2)):
     dependencies:
-      '@eslint/compat': 1.2.8(eslint@9.26.0(jiti@2.4.2))
+      '@eslint/compat': 1.2.9(eslint@9.26.0(jiti@2.4.2))
       eslint: 9.26.0(jiti@2.4.2)
 
   eslint-config-prettier@10.1.2(eslint@9.26.0(jiti@2.4.2)):
@@ -24572,7 +24559,7 @@ snapshots:
       micromark-util-resolve-all: 2.0.1
       micromark-util-subtokenize: 2.1.0
       micromark-util-symbol: 2.0.1
-      micromark-util-types: 2.0.1
+      micromark-util-types: 2.0.2
 
   micromark-core-commonmark@2.0.3:
     dependencies:
@@ -24600,7 +24587,7 @@ snapshots:
       micromark-factory-whitespace: 2.0.1
       micromark-util-character: 2.1.1
       micromark-util-symbol: 2.0.1
-      micromark-util-types: 2.0.1
+      micromark-util-types: 2.0.2
       parse-entities: 4.0.2
 
   micromark-extension-frontmatter@2.0.0:
@@ -24643,7 +24630,7 @@ snapshots:
       micromark-factory-space: 2.0.1
       micromark-util-character: 2.1.1
       micromark-util-symbol: 2.0.1
-      micromark-util-types: 2.0.1
+      micromark-util-types: 2.0.2
 
   micromark-extension-gfm-table@2.1.1:
     dependencies:
@@ -24684,7 +24671,7 @@ snapshots:
       micromark-factory-space: 2.0.1
       micromark-util-character: 2.1.1
       micromark-util-symbol: 2.0.1
-      micromark-util-types: 2.0.1
+      micromark-util-types: 2.0.2
 
   micromark-extension-mdx-expression@3.0.1:
     dependencies:
@@ -24741,14 +24728,14 @@ snapshots:
     dependencies:
       micromark-util-character: 2.1.1
       micromark-util-symbol: 2.0.1
-      micromark-util-types: 2.0.1
+      micromark-util-types: 2.0.2
 
   micromark-factory-label@2.0.1:
     dependencies:
       devlop: 1.1.0
       micromark-util-character: 2.1.1
       micromark-util-symbol: 2.0.1
-      micromark-util-types: 2.0.1
+      micromark-util-types: 2.0.2
 
   micromark-factory-mdx-expression@2.0.3:
     dependencies:
@@ -24772,14 +24759,14 @@ snapshots:
       micromark-factory-space: 2.0.1
       micromark-util-character: 2.1.1
       micromark-util-symbol: 2.0.1
-      micromark-util-types: 2.0.1
+      micromark-util-types: 2.0.2
 
   micromark-factory-whitespace@2.0.1:
     dependencies:
       micromark-factory-space: 2.0.1
       micromark-util-character: 2.1.1
       micromark-util-symbol: 2.0.1
-      micromark-util-types: 2.0.1
+      micromark-util-types: 2.0.2
 
   micromark-util-character@2.1.1:
     dependencies:
@@ -24866,7 +24853,7 @@ snapshots:
       debug: 4.4.0
       decode-named-character-reference: 1.1.0
       devlop: 1.1.0
-      micromark-core-commonmark: 2.0.2
+      micromark-core-commonmark: 2.0.3
       micromark-factory-space: 2.0.1
       micromark-util-character: 2.1.1
       micromark-util-chunked: 2.0.1
@@ -24878,7 +24865,7 @@ snapshots:
       micromark-util-sanitize-uri: 2.0.1
       micromark-util-subtokenize: 2.1.0
       micromark-util-symbol: 2.0.1
-      micromark-util-types: 2.0.1
+      micromark-util-types: 2.0.2
     transitivePeerDependencies:
       - supports-color
 
@@ -25581,7 +25568,7 @@ snapshots:
       bl: 4.1.0
       chalk: 4.1.2
       cli-cursor: 3.1.0
-      cli-spinners: 2.6.1
+      cli-spinners: 2.9.2
       is-interactive: 1.0.0
       log-symbols: 4.1.0
       strip-ansi: 6.0.1
