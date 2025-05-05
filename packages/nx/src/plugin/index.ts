@@ -203,7 +203,7 @@ export const createNodesV2: CreateNodesV2<StormStackNxPluginOptions> = [
             }
           );
 
-          const result = project?.name
+          return project?.name
             ? {
                 projects: {
                   [project.name]: {
@@ -214,10 +214,6 @@ export const createNodesV2: CreateNodesV2<StormStackNxPluginOptions> = [
                 }
               }
             : {};
-          console.log(`Writing Results for ${project?.name ?? "missing name"}`);
-          console.log(result);
-
-          return result;
         } catch (error) {
           console.error(error);
           return {};
