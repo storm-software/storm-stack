@@ -14,16 +14,16 @@
   },
   "dependencies": {
     "@storm-stack/log-sentry": "0.12.6",
-    "@storm-stack/log-storage": "0.9.6",
+    "@storm-stack/log-storage": "0.9.7",
     "@stryke/cli": "catalog:",
     "@stryke/url": "catalog:",
     "unstorage": "catalog:"
   },
   "devDependencies": {
     "@storm-stack/core": "workspace:*",
-    "@storm-stack/nx": "workspace:*",
+    "@storm-stack/nx": "0.9.8",
     "@storm-stack/preset-cli": "workspace:*",
-    "@storm-stack/types": "workspace:*"
+    "@storm-stack/types": "0.4.2"
   },
   "storm": {
     "presets": [

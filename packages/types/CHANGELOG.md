@@ -2,6 +2,13 @@
 
 # Changelog for Storm Stack - Types
 
+## [0.4.2](https://github.com/storm-software/storm-stack/releases/tag/types%400.4.2) (2025-05-05)
+
+### Bug Fixes
+
+- **types:** Resolved issues with invalid `dependsOn` property
+  ([6b72e19e](https://github.com/storm-software/storm-stack/commit/6b72e19e))
+
 ## [0.4.1](https://github.com/storm-software/storm-stack/releases/tag/types%400.4.1) (2025-05-05)
 
 ### Miscellaneous

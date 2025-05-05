@@ -2,6 +2,17 @@
 
 # Changelog for Storm Stack - Log Storage
 
+## [0.9.7](https://github.com/storm-software/storm-stack/releases/tag/log-storage%400.9.7) (2025-05-05)
+
+### Bug Fixes
+
+- **types:** Resolved issues with invalid `dependsOn` property
+  ([6b72e19e](https://github.com/storm-software/storm-stack/commit/6b72e19e))
+
+### Updated Dependencies
+
+- Updated nx to 0.9.8
+
 ## [0.9.6](https://github.com/storm-software/storm-stack/releases/tag/log-storage%400.9.6) (2025-05-05)
 
 ### Miscellaneous

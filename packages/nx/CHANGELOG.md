@@ -2,6 +2,13 @@
 
 # Changelog for Storm Stack - Nx
 
+## [0.9.8](https://github.com/storm-software/storm-stack/releases/tag/nx%400.9.8) (2025-05-05)
+
+### Bug Fixes
+
+- **types:** Resolved issues with invalid `dependsOn` property
+  ([6b72e19e](https://github.com/storm-software/storm-stack/commit/6b72e19e))
+
 ## [0.9.7](https://github.com/storm-software/storm-stack/releases/tag/nx%400.9.7) (2025-05-05)
 
 ### Miscellaneous
