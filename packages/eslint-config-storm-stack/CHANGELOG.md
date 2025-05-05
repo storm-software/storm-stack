@@ -2,6 +2,13 @@
 
 # Changelog for Storm Stack - Eslint Config Storm Stack
 
+## [0.7.8](https://github.com/storm-software/storm-stack/releases/tag/eslint-config-storm-stack%400.7.8) (2025-05-05)
+
+### Miscellaneous
+
+- **eslint-config-storm-stack:** Added comments to the options types
+  ([a86b9712](https://github.com/storm-software/storm-stack/commit/a86b9712))
+
 ## [0.7.7](https://github.com/storm-software/storm-stack/releases/tag/eslint-config-storm-stack%400.7.7) (2025-05-05)
 
 ### Miscellaneous
