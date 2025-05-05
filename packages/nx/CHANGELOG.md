@@ -2,6 +2,13 @@
 
 # Changelog for Storm Stack - Nx
 
+## [0.9.10](https://github.com/storm-software/storm-stack/releases/tag/nx%400.9.10) (2025-05-05)
+
+### Miscellaneous
+
+- **monorepo:** Upgrade Storm-Ops dependencies
+  ([50e81e01](https://github.com/storm-software/storm-stack/commit/50e81e01))
+
 ## [0.9.9](https://github.com/storm-software/storm-stack/releases/tag/nx%400.9.9) (2025-05-05)
 
 ### Miscellaneous
