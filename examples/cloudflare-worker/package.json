@@ -17,8 +17,8 @@
   },
   "devDependencies": {
     "@cloudflare/workers-types": "catalog:",
-    "@storm-stack/core": "workspace:*",
-    "@storm-stack/nx": "workspace:*",
+    "@storm-stack/core": "0.14.2",
+    "@storm-stack/nx": "0.9.3",
     "@storm-stack/preset-cloudflare-worker": "workspace:*",
     "@storm-stack/types": "0.4.1",
     "@stryke/types": "catalog:"
