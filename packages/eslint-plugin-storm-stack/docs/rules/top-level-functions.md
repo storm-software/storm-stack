@@ -18,10 +18,10 @@ function or function expression. With auto-fix.
 ```ts
 // 👎 bad
 export const square = (a: number, b: number): number => {
-  const a2 = a * a
-  const b2 = b * b
-  return a2 + b2 + 2 * a * b
-}
+  const a2 = a * a;
+  const b2 = b * b;
+  return a2 + b2 + 2 * a * b;
+};
 ```
 
 <!-- eslint-skip -->
@@ -29,10 +29,10 @@ export const square = (a: number, b: number): number => {
 ```ts
 // 👎 bad
 export const square = function (a: number, b: number): number {
-  const a2 = a * a
-  const b2 = b * b
-  return a2 + b2 + 2 * a * b
-}
+  const a2 = a * a;
+  const b2 = b * b;
+  return a2 + b2 + 2 * a * b;
+};
 ```
 
 <!-- eslint-skip -->
@@ -55,10 +55,10 @@ When the variable is assigned with types, it rule will ignore it.
 ```ts
 // 👍 ok
 export const square: MyFunction = (a: number, b: number): number => {
-  const a2 = a * a
-  const b2 = b * b
-  return a2 + b2 + 2 * a * b
-}
+  const a2 = a * a;
+  const b2 = b * b;
+  return a2 + b2 + 2 * a * b;
+};
 ```
 
 ## Version

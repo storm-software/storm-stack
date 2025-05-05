@@ -13,13 +13,13 @@
 👎 Examples of **incorrect** code for this rule:
 
 ```ts
-const value = JSON.parse(strValue)
+const value = JSON.parse(strValue);
 ```
 
 👍 Examples of **correct** code for this rule:
 
 ```ts
-const value = StormJSON.parse(strValue)
+const value = StormJSON.parse(strValue);
 ```
 
 ## Version

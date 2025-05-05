@@ -40,7 +40,6 @@ customize to fit any specific requirements you may have.
 
 <!-- START doctoc -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
-
 ## Table of Contents
 
 - [Features](#features)

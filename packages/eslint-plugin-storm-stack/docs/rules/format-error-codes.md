@@ -13,17 +13,17 @@
 👎 Examples of **incorrect** code for this rule:
 
 ```ts
-const type = "GET"
+const type = "GET";
 
-throw new StormError(`Failed to process ${type} request`)
+throw new StormError(`Failed to process ${type} request`);
 ```
 
 👍 Examples of **correct** code for this rule:
 
 ```ts
-const type = "GET"
+const type = "GET";
 
-throw new StormError({ type: "general", code: 123, args: { type } })
+throw new StormError({ type: "general", code: 123, args: { type } });
 ```
 
 ## Options
