@@ -2,6 +2,13 @@
 
 # Changelog for Storm Stack - Log Sentry
 
+## [0.12.6](https://github.com/storm-software/storm-stack/releases/tag/log-sentry%400.12.6) (2025-05-05)
+
+### Miscellaneous
+
+- **monorepo:** Mark workspace package links
+  ([ef0e4245](https://github.com/storm-software/storm-stack/commit/ef0e4245))
+
 ## [0.12.5](https://github.com/storm-software/storm-stack/releases/tag/log-sentry%400.12.5) (2025-05-05)
 
 ### Miscellaneous

@@ -2,6 +2,13 @@
 
 # Changelog for Storm Stack - Log Stream
 
+## [0.9.6](https://github.com/storm-software/storm-stack/releases/tag/log-stream%400.9.6) (2025-05-05)
+
+### Miscellaneous
+
+- **monorepo:** Mark workspace package links
+  ([ef0e4245](https://github.com/storm-software/storm-stack/commit/ef0e4245))
+
 ## [0.9.5](https://github.com/storm-software/storm-stack/releases/tag/log-stream%400.9.5) (2025-05-05)
 
 ### Miscellaneous

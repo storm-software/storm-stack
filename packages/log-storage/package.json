@@ -1,6 +1,6 @@
 {
   "name": "@storm-stack/log-storage",
-  "version": "0.9.5",
+  "version": "0.9.6",
   "type": "module",
   "description": "A package containing a Storm Stack log adapter to write logs to storage (for example: a file system)",
   "repository": {
@@ -10,7 +10,7 @@
   },
   "private": false,
   "dependencies": {
-    "@storm-stack/log-stream": "workspace:*",
+    "@storm-stack/log-stream": "0.9.6",
     "unstorage": "catalog:"
   },
   "devDependencies": {
