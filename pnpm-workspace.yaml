@@ -51,13 +51,6 @@ catalog:
   "@sentry/core": ^9.15.0
   "@sentry/node": ^9.15.0
   "@sentry/types": ^9.15.0
-  "@storm-stack/core": 0.14.2
-  "@storm-stack/log-console": 0.9.3
-  "@storm-stack/log-sentry": 0.12.3
-  "@storm-stack/log-storage": 0.9.3
-  "@storm-stack/log-stream": 0.9.3
-  "@storm-stack/nx": 0.9.4
-  "@storm-stack/types": 0.34.0
   "@taplo/cli": ^0.7.0
   "@types/eslint": ^9.6.1
   "@types/eslint__js": ^8.42.3
@@ -118,7 +111,6 @@ catalog:
   eslint-doc-generator: ^2.1.2
   eslint-plugin-eslint-plugin: 6.4.0
   eslint-plugin-i18n-text: 1.0.1
-  eslint-plugin-storm-stack: 0.8.2
   eslint-rule-documentation: ^1.0.23
   eslint-typegen: 2.1.0
   globals: ^15.15.0

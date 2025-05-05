@@ -10,15 +10,15 @@
   },
   "private": true,
   "dependencies": {
-    "@storm-stack/log-console": "0.9.4",
+    "@storm-stack/log-console": "workspace:*",
     "@stryke/json": "catalog:",
     "@stryke/type-checks": "catalog:",
     "@stryke/url": "catalog:"
   },
   "devDependencies": {
     "@cloudflare/workers-types": "catalog:",
-    "@storm-stack/core": "0.14.3",
-    "@storm-stack/nx": "0.9.6",
+    "@storm-stack/core": "workspace:*",
+    "@storm-stack/nx": "workspace:*",
     "@storm-stack/preset-cloudflare-worker": "workspace:*",
     "@storm-stack/types": "workspace:*",
     "@stryke/types": "catalog:"
