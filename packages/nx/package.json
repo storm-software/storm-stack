@@ -92,8 +92,8 @@
   },
   "typings": "dist/index.d.ts",
   "peerDependencies": {
-    "@storm-stack/plugin-node": "0.13.0",
-    "@storm-stack/preset-cloudflare-worker": "0.8.0"
+    "@storm-stack/plugin-node": ">=0.13.0",
+    "@storm-stack/preset-cloudflare-worker": ">=0.8.0"
   },
   "peerDependenciesMeta": {
     "@storm-stack/plugin-node": {
