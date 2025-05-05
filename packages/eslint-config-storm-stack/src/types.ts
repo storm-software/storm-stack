@@ -47,6 +47,9 @@ export type TypedFlatConfigItem = Omit<
     plugins?: Record<string, any>;
   };
 
+/**
+ * Storm Stack ESLint configuration options.
+ */
 export interface OptionsStormStack extends OptionsFiles, OptionsOverrides {
   /**
    * The configuration type to use as the defaults (before overrides are applied).
@@ -56,6 +59,9 @@ export interface OptionsStormStack extends OptionsFiles, OptionsOverrides {
   defaultConfig?: "none" | "base" | "recommended" | "strict";
 }
 
+/**
+ * Storm Stack ESLint configuration options.
+ */
 export interface OptionsConfig extends BaseOptionsConfig {
   /**
    * Enable storm-stack rules.
