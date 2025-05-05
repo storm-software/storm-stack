@@ -2,6 +2,13 @@
 
 # Changelog for Storm Stack - Nx
 
+## [0.9.9](https://github.com/storm-software/storm-stack/releases/tag/nx%400.9.9) (2025-05-05)
+
+### Miscellaneous
+
+- **nx:** Clean up the Nx plugin
+  ([9998cf39](https://github.com/storm-software/storm-stack/commit/9998cf39))
+
 ## [0.9.8](https://github.com/storm-software/storm-stack/releases/tag/nx%400.9.8) (2025-05-05)
 
 ### Bug Fixes
