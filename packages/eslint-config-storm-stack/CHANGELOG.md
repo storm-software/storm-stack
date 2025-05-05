@@ -2,6 +2,15 @@
 
 # Changelog for Storm Stack - Eslint Config Storm Stack
 
+## [0.7.10](https://github.com/storm-software/storm-stack/releases/tag/eslint-config-storm-stack%400.7.10) (2025-05-05)
+
+### Miscellaneous
+
+- **eslint-config-storm-stack:** Remove unused dependencies
+  ([b4ef3da5](https://github.com/storm-software/storm-stack/commit/b4ef3da5))
+- **eslint-config-storm-stack:** Added package link to workspace
+  ([9cb89380](https://github.com/storm-software/storm-stack/commit/9cb89380))
+
 ## [0.7.9](https://github.com/storm-software/storm-stack/releases/tag/eslint-config-storm-stack%400.7.9) (2025-05-05)
 
 ### Miscellaneous
