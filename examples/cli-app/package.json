@@ -13,15 +13,15 @@
     "examples-cli": "dist/examples-cli.js"
   },
   "dependencies": {
-    "@storm-stack/log-sentry": "0.12.5",
-    "@storm-stack/log-storage": "0.9.5",
+    "@storm-stack/log-sentry": "workspace:*",
+    "@storm-stack/log-storage": "workspace:*",
     "@stryke/cli": "catalog:",
     "@stryke/url": "catalog:",
     "unstorage": "catalog:"
   },
   "devDependencies": {
     "@storm-stack/core": "workspace:*",
-    "@storm-stack/nx": "0.9.7",
+    "@storm-stack/nx": "workspace:*",
     "@storm-stack/preset-cli": "workspace:*",
     "@storm-stack/types": "workspace:*"
   },
