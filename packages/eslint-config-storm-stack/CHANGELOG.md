@@ -2,6 +2,13 @@
 
 # Changelog for Storm Stack - Eslint Config Storm Stack
 
+## [0.7.13](https://github.com/storm-software/storm-stack/releases/tag/eslint-config-storm-stack%400.7.13) (2025-05-05)
+
+### Miscellaneous
+
+- **eslint-config-storm-stack:** Added to description in README markdown
+  ([4ac21a95](https://github.com/storm-software/storm-stack/commit/4ac21a95))
+
 ## [0.7.12](https://github.com/storm-software/storm-stack/releases/tag/eslint-config-storm-stack%400.7.12) (2025-05-05)
 
 ### Miscellaneous
