@@ -2,6 +2,13 @@
 
 # Changelog for Storm Stack - Core
 
+## [0.14.3](https://github.com/storm-software/storm-stack/releases/tag/core%400.14.3) (2025-05-05)
+
+### Miscellaneous
+
+- **monorepo:** Update workspace package linking
+  ([be6585be](https://github.com/storm-software/storm-stack/commit/be6585be))
+
 ## [0.14.2](https://github.com/storm-software/storm-stack/releases/tag/core%400.14.2) (2025-05-05)
 
 ### Miscellaneous

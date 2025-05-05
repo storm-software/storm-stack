@@ -2,6 +2,19 @@
 
 # Changelog for Storm Stack - Log Sentry
 
+## [0.12.4](https://github.com/storm-software/storm-stack/releases/tag/log-sentry%400.12.4) (2025-05-05)
+
+### Miscellaneous
+
+- **monorepo:** Update workspace package linking
+  ([be6585be](https://github.com/storm-software/storm-stack/commit/be6585be))
+
+### Updated Dependencies
+
+- Updated core to 0.14.3
+- Updated core to 0.14.3
+- Updated nx to 0.9.6
+
 ## [0.12.3](https://github.com/storm-software/storm-stack/releases/tag/log-sentry%400.12.3) (2025-05-01)
 
 ### Miscellaneous
