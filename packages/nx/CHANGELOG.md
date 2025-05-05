@@ -2,6 +2,13 @@
 
 # Changelog for Storm Stack - Nx
 
+## [0.9.5](https://github.com/storm-software/storm-stack/releases/tag/nx%400.9.5) (2025-05-05)
+
+### Miscellaneous
+
+- **monorepo:** Reformat the workspace packaages
+  ([37cac925](https://github.com/storm-software/storm-stack/commit/37cac925))
+
 ## [0.9.4](https://github.com/storm-software/storm-stack/releases/tag/nx%400.9.4) (2025-05-05)
 
 ### Miscellaneous

@@ -15,7 +15,7 @@
   },
   "devDependencies": {
     "@storm-stack/core": "0.14.2",
-    "@storm-stack/nx": "0.9.4",
+    "@storm-stack/nx": "0.9.5",
     "@types/node": "catalog:"
   },
   "publishConfig": {
