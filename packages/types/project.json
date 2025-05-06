@@ -5,6 +5,7 @@
   "sourceRoot": "packages/types/src",
   "targets": {
     "build-cjs": {
+      "cache": false,
       "executor": "@nx/js:tsc",
       "options": {
         "main": "packages/types/src/index.ts",
@@ -22,6 +23,7 @@
       }
     },
     "build-esm": {
+      "cache": false,
       "executor": "@nx/js:tsc",
       "options": {
         "main": "packages/types/src/index.ts",
