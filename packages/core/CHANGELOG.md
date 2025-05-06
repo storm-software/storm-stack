@@ -2,6 +2,13 @@
 
 # Changelog for Storm Stack - Core
 
+## [0.14.4](https://github.com/storm-software/storm-stack/releases/tag/core%400.14.4) (2025-05-06)
+
+### Miscellaneous
+
+- **monorepo:** Rerun the `update-pnpm-link` script
+  ([ed3c509d](https://github.com/storm-software/storm-stack/commit/ed3c509d))
+
 ## [0.14.3](https://github.com/storm-software/storm-stack/releases/tag/core%400.14.3) (2025-05-05)
 
 ### Miscellaneous

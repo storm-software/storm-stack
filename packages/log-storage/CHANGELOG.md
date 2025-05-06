@@ -2,6 +2,20 @@
 
 # Changelog for Storm Stack - Log Storage
 
+## [0.9.8](https://github.com/storm-software/storm-stack/releases/tag/log-storage%400.9.8) (2025-05-06)
+
+### Miscellaneous
+
+- **monorepo:** Rerun the `update-pnpm-link` script
+  ([ed3c509d](https://github.com/storm-software/storm-stack/commit/ed3c509d))
+
+### Updated Dependencies
+
+- Updated log-stream to 0.9.7
+- Updated core to 0.14.4
+- Updated core to 0.14.4
+- Updated nx to 0.9.12
+
 ## [0.9.7](https://github.com/storm-software/storm-stack/releases/tag/log-storage%400.9.7) (2025-05-05)
 
 ### Bug Fixes

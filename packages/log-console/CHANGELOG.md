@@ -2,6 +2,19 @@
 
 # Changelog for Storm Stack - Log Console
 
+## [0.9.7](https://github.com/storm-software/storm-stack/releases/tag/log-console%400.9.7) (2025-05-06)
+
+### Miscellaneous
+
+- **monorepo:** Rerun the `update-pnpm-link` script
+  ([ed3c509d](https://github.com/storm-software/storm-stack/commit/ed3c509d))
+
+### Updated Dependencies
+
+- Updated core to 0.14.4
+- Updated core to 0.14.4
+- Updated nx to 0.9.12
+
 ## [0.9.6](https://github.com/storm-software/storm-stack/releases/tag/log-console%400.9.6) (2025-05-05)
 
 ### Miscellaneous

@@ -2,6 +2,18 @@
 
 # Changelog for Storm Stack - Nx
 
+## [0.9.12](https://github.com/storm-software/storm-stack/releases/tag/nx%400.9.12) (2025-05-06)
+
+### Miscellaneous
+
+- **monorepo:** Rerun the `update-pnpm-link` script
+  ([ed3c509d](https://github.com/storm-software/storm-stack/commit/ed3c509d))
+
+### Updated Dependencies
+
+- Updated core to 0.14.4
+- Updated core to 0.14.4
+
 ## [0.9.11](https://github.com/storm-software/storm-stack/releases/tag/nx%400.9.11) (2025-05-06)
 
 ### Miscellaneous
