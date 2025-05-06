@@ -2,6 +2,13 @@
 
 # Changelog for Storm Stack - Nx
 
+## [0.9.11](https://github.com/storm-software/storm-stack/releases/tag/nx%400.9.11) (2025-05-06)
+
+### Miscellaneous
+
+- **nx:** Add logic to check for `storm` property in package.json
+  ([e24843f6](https://github.com/storm-software/storm-stack/commit/e24843f6))
+
 ## [0.9.10](https://github.com/storm-software/storm-stack/releases/tag/nx%400.9.10) (2025-05-05)
 
 ### Miscellaneous
