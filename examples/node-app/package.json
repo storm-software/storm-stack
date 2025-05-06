@@ -18,7 +18,7 @@
   "devDependencies": {
     "@storm-stack/core": "0.14.5",
     "@storm-stack/nx": "0.9.13",
-    "@storm-stack/plugin-node": "workspace:*",
+    "@storm-stack/plugin-node": "0.13.1",
     "@stryke/types": "catalog:"
   },
   "storm": {

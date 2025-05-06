@@ -2,6 +2,13 @@
 
 # Changelog for Storm Stack - Plugin Node
 
+## [0.13.1](https://github.com/storm-software/storm-stack/releases/tag/plugin-node%400.13.1) (2025-05-06)
+
+### Miscellaneous
+
+- **monorepo:** Added missing dependencies to packages
+  ([6ce71cc6](https://github.com/storm-software/storm-stack/commit/6ce71cc6))
+
 ## [0.13.0](https://github.com/storm-software/storm-stack/releases/tag/plugin-node%400.13.0) (2025-05-01)
 
 ### Features

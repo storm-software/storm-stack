@@ -2,6 +2,13 @@
 
 # Changelog for Storm Stack - Plugin Http
 
+## [0.5.3](https://github.com/storm-software/storm-stack/releases/tag/plugin-http%400.5.3) (2025-05-06)
+
+### Miscellaneous
+
+- **monorepo:** Added missing dependencies to packages
+  ([6ce71cc6](https://github.com/storm-software/storm-stack/commit/6ce71cc6))
+
 ## [0.5.2](https://github.com/storm-software/storm-stack/releases/tag/plugin-http%400.5.2) (2025-04-29)
 
 ### Miscellaneous
