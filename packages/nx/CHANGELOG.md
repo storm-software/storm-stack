@@ -2,6 +2,18 @@
 
 # Changelog for Storm Stack - Nx
 
+## [0.9.13](https://github.com/storm-software/storm-stack/releases/tag/nx%400.9.13) (2025-05-06)
+
+### Miscellaneous
+
+- **monorepo:** Updates to linking and devenv configuration
+  ([c175decb](https://github.com/storm-software/storm-stack/commit/c175decb))
+
+### Updated Dependencies
+
+- Updated core to 0.14.5
+- Updated core to 0.14.5
+
 ## [0.9.12](https://github.com/storm-software/storm-stack/releases/tag/nx%400.9.12) (2025-05-06)
 
 ### Miscellaneous

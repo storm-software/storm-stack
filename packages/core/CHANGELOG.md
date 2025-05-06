@@ -2,6 +2,13 @@
 
 # Changelog for Storm Stack - Core
 
+## [0.14.5](https://github.com/storm-software/storm-stack/releases/tag/core%400.14.5) (2025-05-06)
+
+### Miscellaneous
+
+- **monorepo:** Updates to linking and devenv configuration
+  ([c175decb](https://github.com/storm-software/storm-stack/commit/c175decb))
+
 ## [0.14.4](https://github.com/storm-software/storm-stack/releases/tag/core%400.14.4) (2025-05-06)
 
 ### Miscellaneous
