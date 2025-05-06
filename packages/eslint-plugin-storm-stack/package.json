@@ -122,7 +122,6 @@
     "@types/eslint": "catalog:",
     "@types/eslint__js": "catalog:",
     "@types/node": "catalog:",
-    "esbuild": "catalog:",
     "eslint": "catalog:",
     "eslint-doc-generator": "catalog:",
     "eslint-plugin-eslint-plugin": "catalog:",

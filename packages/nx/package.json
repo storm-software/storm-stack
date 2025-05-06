@@ -111,7 +111,7 @@
     "@storm-software/esbuild": "catalog:",
     "@storm-software/unbuild": "catalog:",
     "@storm-software/workspace-tools": "catalog:",
-    "@storm-stack/core": "0.14.4",
+    "@storm-stack/core": "workspace:*",
     "defu": "catalog:",
     "nx": "catalog:"
   },

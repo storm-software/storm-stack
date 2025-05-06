@@ -443,6 +443,7 @@
     "@storm-software/config-tools": "catalog:",
     "@storm-software/esbuild": "catalog:",
     "@storm-software/unbuild": "catalog:",
+    "@storm-stack/types": "workspace:*",
     "@stryke/convert": "catalog:",
     "@stryke/env": "catalog:",
     "@stryke/fs": "catalog:",
@@ -468,7 +469,6 @@
   },
   "devDependencies": {
     "@storm-software/testing-tools": "catalog:",
-    "@storm-stack/types": "workspace:*",
     "@stryke/types": "catalog:",
     "@types/node": "catalog:",
     "eslint": "catalog:",
