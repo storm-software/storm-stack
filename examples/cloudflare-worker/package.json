@@ -20,7 +20,7 @@
     "@storm-stack/core": "0.14.5",
     "@storm-stack/nx": "0.9.13",
     "@storm-stack/preset-cloudflare-worker": "0.8.1",
-    "@storm-stack/types": "workspace:*",
+    "@storm-stack/types": "0.4.3",
     "@stryke/types": "catalog:"
   }
 }

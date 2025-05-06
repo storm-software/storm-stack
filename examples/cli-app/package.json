@@ -15,7 +15,7 @@
   "dependencies": {
     "@storm-stack/log-sentry": "0.12.8",
     "@storm-stack/log-storage": "0.9.9",
-    "@storm-stack/types": "workspace:*",
+    "@storm-stack/types": "0.4.3",
     "@stryke/cli": "catalog:",
     "@stryke/url": "catalog:",
     "unstorage": "catalog:"

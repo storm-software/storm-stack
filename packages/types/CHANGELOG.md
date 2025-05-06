@@ -2,6 +2,13 @@
 
 # Changelog for Storm Stack - Types
 
+## [0.4.3](https://github.com/storm-software/storm-stack/releases/tag/types%400.4.3) (2025-05-06)
+
+### Miscellaneous
+
+- **types:** Skip caching during sub-tasks
+  ([53fad3e8](https://github.com/storm-software/storm-stack/commit/53fad3e8))
+
 ## [0.4.2](https://github.com/storm-software/storm-stack/releases/tag/types%400.4.2) (2025-05-05)
 
 ### Bug Fixes
