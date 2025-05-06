@@ -1,6 +1,3 @@
-linkWorkspacePackages: true
-preferWorkspacePackages: true
-
 onlyBuiltDependencies:
   - "@biomejs/biome"
   - "@deepkit/type-compiler"
