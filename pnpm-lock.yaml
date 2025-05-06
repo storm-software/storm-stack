@@ -1015,6 +1015,9 @@ importers:
 
   packages/plugin-http:
     dependencies:
+      '@storm-stack/core':
+        specifier: workspace:*
+        version: link:../core
       '@stryke/http':
         specifier: 'catalog:'
         version: 0.8.0
@@ -1037,7 +1040,6 @@ importers:
       tsup:
         specifier: 'catalog:'
         version: 8.4.0(@microsoft/api-extractor@7.52.7(@types/node@22.15.3))(@swc/core@1.11.22(@swc/helpers@0.5.17))(jiti@2.4.2)(postcss@8.5.3)(tsx@4.19.4)(typescript@5.8.3)(yaml@2.7.1)
-    publishDirectory: dist/packages/plugin-http
 
   packages/plugin-node:
     dependencies:
@@ -1050,6 +1052,9 @@ importers:
       '@storm-software/esbuild':
         specifier: 'catalog:'
         version: 0.37.1(@babel/traverse@7.27.1)(@microsoft/api-extractor@7.52.7(@types/node@22.15.3))(@swc-node/register@1.10.10(@swc/core@1.11.22(@swc/helpers@0.5.17))(@swc/types@0.1.21)(typescript@5.8.3))(@swc/core@1.11.22(@swc/helpers@0.5.17))(@swc/helpers@0.5.17)(jiti@2.4.2)(magicast@0.3.5)(nx@20.8.1(@swc-node/register@1.10.10(@swc/core@1.11.22(@swc/helpers@0.5.17))(@swc/types@0.1.21)(typescript@5.8.3))(@swc/core@1.11.22(@swc/helpers@0.5.17)))(postcss@8.5.3)(tsx@4.19.4)(typescript@5.8.3)(verdaccio@6.1.2(typanion@3.14.0))(yaml@2.7.1)
+      '@storm-stack/core':
+        specifier: workspace:*
+        version: link:../core
       '@stryke/env':
         specifier: 'catalog:'
         version: 0.6.5(magicast@0.3.5)(nx@20.8.1(@swc-node/register@1.10.10(@swc/core@1.11.22(@swc/helpers@0.5.17))(@swc/types@0.1.21)(typescript@5.8.3))(@swc/core@1.11.22(@swc/helpers@0.5.17)))
@@ -1093,6 +1098,9 @@ importers:
       '@storm-software/config-tools':
         specifier: 'catalog:'
         version: 1.165.1(magicast@0.3.5)
+      '@storm-stack/core':
+        specifier: workspace:*
+        version: link:../core
       '@stryke/cli':
         specifier: 'catalog:'
         version: 0.9.0
@@ -1133,6 +1141,9 @@ importers:
       '@storm-software/config-tools':
         specifier: 'catalog:'
         version: 1.165.1(magicast@0.3.5)
+      '@storm-stack/core':
+        specifier: workspace:*
+        version: link:../core
       '@stryke/fs':
         specifier: 'catalog:'
         version: 0.12.1(magicast@0.3.5)(nx@20.8.1(@swc-node/register@1.10.10(@swc/core@1.11.22(@swc/helpers@0.5.17))(@swc/types@0.1.21)(typescript@5.8.3))(@swc/core@1.11.22(@swc/helpers@0.5.17)))

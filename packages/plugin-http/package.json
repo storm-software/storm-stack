@@ -71,6 +71,7 @@
   "types": "dist/types/index.d.ts",
   "typings": "dist/types/index.d.ts",
   "dependencies": {
+    "@storm-stack/core": "workspace:*",
     "@stryke/http": "catalog:",
     "@stryke/json": "catalog:",
     "@stryke/path": "catalog:"
@@ -82,8 +83,6 @@
     "tsup": "catalog:"
   },
   "publishConfig": {
-    "access": "public",
-    "directory": "dist/packages/plugin-http",
-    "linkDirectory": true
+    "access": "public"
   }
 }
