@@ -16,9 +16,9 @@ onlyBuiltDependencies:
   - unrs-resolver
 
 packages:
-  - tools/**
-  - packages/**
-  - examples/**
+  - "tools/**"
+  - "packages/**"
+  - "examples/**"
 
 catalog:
   "@ast-grep/napi": ^0.37.0

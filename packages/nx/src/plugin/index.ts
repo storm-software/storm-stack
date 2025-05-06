@@ -60,9 +60,9 @@ export const createNodesV2: CreateNodesV2<StormStackNxPluginOptions> = [
           const packageJson = readJsonFile<PackageJson>(
             joinPaths(projectRoot, "package.json")
           );
-          if (!packageJson) {
+          if (!packageJson?.storm) {
             console.error(
-              `No package.json found in project root: ${projectRoot}`
+              `No \`storm\` property found in package.json: ${projectRoot}`
             );
             return {};
           }
