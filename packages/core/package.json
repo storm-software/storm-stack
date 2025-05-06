@@ -468,7 +468,7 @@
   },
   "devDependencies": {
     "@storm-software/testing-tools": "catalog:",
-    "@storm-stack/types": "0.4.2",
+    "@storm-stack/types": "workspace:*",
     "@stryke/types": "catalog:",
     "@types/node": "catalog:",
     "eslint": "catalog:",
