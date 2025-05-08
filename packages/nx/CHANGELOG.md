@@ -2,6 +2,12 @@
 
 # Changelog for Storm Stack - Nx
 
+## [0.9.18](https://github.com/storm-software/storm-stack/releases/tag/nx%400.9.18) (2025-05-08)
+
+### Bug Fixes
+
+- **nx:** Resolve issues with TSUP configuration
+
 ## [0.9.17](https://github.com/storm-software/storm-stack/releases/tag/nx%400.9.17) (2025-05-08)
 
 ### Bug Fixes
