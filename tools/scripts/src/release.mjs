@@ -36,22 +36,11 @@ try {
 
   await echo`${chalk.whiteBright(`📦  Releasing Storm Stack packages (Base tag: "${base}", Head tag: "${head}")`)}`;
 
-  let proc = $`pnpm bootstrap`.timeout(`${30 * 60}s`);
+  let proc = $`pnpm build`.timeout(`${30 * 60}s`);
   proc.stdout.on("data", data => {
     echo`${data}`;
   });
   let result = await proc;
-  if (!result.ok) {
-    throw new Error(
-      `An error occurred while bootstrapping repository: \n\n${result.message}\n`
-    );
-  }
-
-  proc = $`pnpm build`.timeout(`${30 * 60}s`);
-  proc.stdout.on("data", data => {
-    echo`${data}`;
-  });
-  result = await proc;
   if (!result.ok) {
     throw new Error(
       `An error occurred while building Storm Stack packages: \n\n${result.message}\n`
