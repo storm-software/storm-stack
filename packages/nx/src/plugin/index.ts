@@ -91,7 +91,9 @@ export const createNodesV2: CreateNodesV2<StormStackNxPluginOptions> = [
           const targets: ProjectConfiguration["targets"] =
             readTargetsFromPackageJson(
               packageJson as PackageJsonNx,
-              readNxJson(context.workspaceRoot)
+              readNxJson(context.workspaceRoot),
+              projectRoot,
+              context.workspaceRoot
             );
 
           let relativeRoot = projectRoot
