@@ -4,6 +4,28 @@
   "sourceRoot": "packages/nx/src",
   "projectType": "library",
   "targets": {
+    "build-untyped": {
+      "cache": true,
+      "executor": "nx:run-commands",
+      "dependsOn": ["^build"],
+      "inputs": [
+        "{projectRoot}/src/**/untyped.ts",
+        "{projectRoot}/src/**/*.untyped.ts"
+      ],
+      "outputs": [
+        "{projectRoot}/src/**/schema.d.ts",
+        "{projectRoot}/src/**/*.schema.d.ts",
+        "{projectRoot}/src/**/schema.md",
+        "{projectRoot}/src/**/*.schema.md",
+        "{projectRoot}/src/**/schema.json",
+        "{projectRoot}/src/**/*.schema.json"
+      ],
+      "options": {
+        "commands": [
+          "storm-untyped generate --entry=\"packages/nx/src/**/{untyped.ts,*.untyped.ts}\""
+        ]
+      }
+    },
     "build": {
       "executor": "nx:run-commands",
       "dependsOn": ["build-base", "build-untyped"],
