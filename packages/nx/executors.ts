@@ -17,12 +17,12 @@
  ------------------------------------------------------------------- */
 
 export { executorFn as stormStackBuildExecutor } from "./src/executors/build/executor";
-export type { StormStackBuildExecutorSchema } from "./src/executors/build/schema";
+export type { StormStackBuildExecutorSchema } from "./src/executors/build/schema.d";
 export { executorFn as stormStackCleanExecutor } from "./src/executors/clean/executor";
-export type { StormStackCleanExecutorSchema } from "./src/executors/clean/schema";
+export type { StormStackCleanExecutorSchema } from "./src/executors/clean/schema.d";
 export { executorFn as stormStackDocsExecutor } from "./src/executors/docs/executor";
-export type { StormStackDocsExecutorSchema } from "./src/executors/docs/schema";
+export type { StormStackDocsExecutorSchema } from "./src/executors/docs/schema.d";
 export { executorFn as stormStackLintExecutor } from "./src/executors/lint/executor";
-export type { StormStackLintExecutorSchema } from "./src/executors/lint/schema";
+export type { StormStackLintExecutorSchema } from "./src/executors/lint/schema.d";
 export { executorFn as stormStackPrepareExecutor } from "./src/executors/prepare/executor";
-export type { StormStackPrepareExecutorSchema } from "./src/executors/prepare/schema";
+export type { StormStackPrepareExecutorSchema } from "./src/executors/prepare/schema.d";

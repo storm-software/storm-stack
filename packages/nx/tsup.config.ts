@@ -22,10 +22,16 @@ const config = getTsupConfig({
   name: "nx",
   entry: [
     "./index.ts",
+    "./executors.ts",
     "./src/plugin/index.ts",
     "./src/executors/*/executor.ts",
     "./src/executors/*/untyped.ts"
   ],
+  outDir: "dist",
+  format: ["cjs", "esm"],
+  platform: "node",
+  bundle: true,
+  splitting: true,
   dts: true,
   shims: true,
   clean: false,

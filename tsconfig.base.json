@@ -30,7 +30,7 @@
       "@storm-stack/log-storage/*": ["packages/log-storage/src/*"],
       "@storm-stack/log-stream": ["packages/log-stream/src/index.ts"],
       "@storm-stack/log-stream/*": ["packages/log-stream/src/*"],
-      "@storm-stack/nx": ["packages/nx/src/index.ts"],
+      "@storm-stack/nx": ["packages/nx/index.ts"],
       "@storm-stack/nx/*": ["packages/nx/src/*"],
       "@storm-stack/plugin-http": ["packages/plugin-http/src/index.ts"],
       "@storm-stack/plugin-http/*": ["packages/plugin-http/src/*"],
