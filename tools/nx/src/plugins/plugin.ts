@@ -52,12 +52,14 @@ export const createNodesV2: CreateNodesV2<StormStackPluginPluginOptions> = [
     return createNodesFromFiles(
       (configFile, options, context) => {
         try {
-          console.log(`Processing project.json file: ${configFile}`);
+          console.log(
+            `[storm-stack/plugin]: Processing project.json file: ${configFile}`
+          );
 
           const projectRoot = getProjectRoot(configFile, context.workspaceRoot);
           if (!projectRoot) {
             console.error(
-              `project.json file must be location in the project root directory: ${configFile}`
+              `[storm-stack/plugin]: project.json file must be located in the project root directory: ${configFile}`
             );
             return {};
           }
@@ -67,7 +69,7 @@ export const createNodesV2: CreateNodesV2<StormStackPluginPluginOptions> = [
           );
           if (!packageJson) {
             console.error(
-              `No package.json found in project root: ${projectRoot}`
+              `[storm-stack/plugin]: No package.json found in project root: ${projectRoot}`
             );
             return {};
           }
@@ -82,7 +84,7 @@ export const createNodesV2: CreateNodesV2<StormStackPluginPluginOptions> = [
           );
           if (!tsconfigJson) {
             console.error(
-              `No tsconfig.json found in project root: ${projectRoot}`
+              `[storm-stack/plugin]: No tsconfig.json found in project root: ${projectRoot}`
             );
             return {};
           }
@@ -90,7 +92,9 @@ export const createNodesV2: CreateNodesV2<StormStackPluginPluginOptions> = [
           const targets: ProjectConfiguration["targets"] =
             readTargetsFromPackageJson(
               packageJson as PackageJsonNx,
-              readNxJson(context.workspaceRoot)
+              readNxJson(context.workspaceRoot),
+              projectRoot,
+              context.workspaceRoot
             );
 
           let relativeRoot = projectRoot
@@ -150,7 +154,13 @@ export const createNodesV2: CreateNodesV2<StormStackPluginPluginOptions> = [
           );
           addProjectScopeTag(project, StormStackProjectTagScopeValue.PLUGIN);
 
-          const result = project?.name
+          if (project?.name) {
+            console.log(
+              `[storm-stack/plugin]: Inferred Nx configuration for ${project.name}`
+            );
+          }
+
+          return project?.name
             ? {
                 projects: {
                   [project.name]: {
@@ -161,17 +171,13 @@ export const createNodesV2: CreateNodesV2<StormStackPluginPluginOptions> = [
                 }
               }
             : {};
-          console.log(`Writing Results for ${project?.name ?? "missing name"}`);
-          console.log(result);
-
-          return result;
         } catch (error_) {
-          console.error(error_);
+          console.error(`[storm-stack/plugin]: ${JSON.stringify(error_)}`);
           return {};
         }
       },
       configFiles,
-      options,
+      options ?? {},
       context
     );
   }
