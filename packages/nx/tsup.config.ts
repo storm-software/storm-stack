@@ -28,6 +28,7 @@ const config = getTsupConfig({
   ],
   dts: true,
   shims: true,
+  clean: false,
   skipNodeModulesBundle: true
 });
 

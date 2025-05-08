@@ -22,11 +22,5 @@
       "executor": "@storm-software/workspace-tools:npm-publish"
     }
   },
-  "implicitDependencies": [
-    "plugin-node",
-    "plugin-http",
-    "preset-cloudflare-worker",
-    "preset-cli",
-    "core"
-  ]
+  "implicitDependencies": ["core"]
 }

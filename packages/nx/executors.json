@@ -3,27 +3,27 @@
     "clean": {
       "implementation": "./dist/src/executors/clean/executor",
       "schema": "./dist/src/executors/clean/schema.json",
-      "description": "An executor used to run the Storm Stack - Clean process"
+      "description": "Run the `clean` Storm Stack command on the given project"
     },
     "prepare": {
       "implementation": "./dist/src/executors/prepare/executor",
       "schema": "./dist/src/executors/prepare/schema.json",
-      "description": "An executor used to run the Storm Stack - Prepare process"
+      "description": "Run the `prepare` Storm Stack command on the given project"
     },
     "lint": {
       "implementation": "./dist/src/executors/lint/executor",
       "schema": "./dist/src/executors/lint/schema.json",
-      "description": "An executor used to run the Storm Stack - Lint process"
+      "description": "Run the `lint` Storm Stack command on the given project"
     },
     "build": {
       "implementation": "./dist/src/executors/build/executor",
       "schema": "./dist/src/executors/build/schema.json",
-      "description": "An executor used to run the Storm Stack - Build process"
+      "description": "Run the `build` Storm Stack command on the given project"
     },
     "docs": {
       "implementation": "./dist/src/executors/docs/executor",
       "schema": "./dist/src/executors/docs/schema.json",
-      "description": "An executor used to run the Storm Stack - Docs process"
+      "description": "Run the `docs` Storm Stack command on the given project"
     }
   }
 }
