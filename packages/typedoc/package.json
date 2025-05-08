@@ -1,6 +1,6 @@
 {
   "name": "@storm-stack/typedoc",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "type": "module",
   "description": "A Typedoc plugin for generating documentation in Storm Stack packages.",
   "repository": {

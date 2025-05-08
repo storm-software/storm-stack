@@ -2,6 +2,17 @@
 
 # Changelog for Storm Stack - Core
 
+## [0.15.0](https://github.com/storm-software/storm-stack/releases/tag/core%400.15.0) (2025-05-08)
+
+### Features
+
+- **core:** Add reference documentation generator
+- **typedoc:** Added the Storm Stack typedoc plugin
+
+### Bug Fixes
+
+- **typedoc:** Resolve typing issues with typedoc package
+
 ## [0.14.5](https://github.com/storm-software/storm-stack/releases/tag/core%400.14.5) (2025-05-06)
 
 ### Miscellaneous

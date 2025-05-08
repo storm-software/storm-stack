@@ -2,6 +2,12 @@
 
 # Changelog for Storm Stack - Eslint Plugin Storm Stack
 
+## [0.8.5](https://github.com/storm-software/storm-stack/releases/tag/eslint-plugin-storm-stack%400.8.5) (2025-05-08)
+
+### Miscellaneous
+
+- **monorepo:** Update workspace package links
+
 ## [0.8.4](https://github.com/storm-software/storm-stack/releases/tag/eslint-plugin-storm-stack%400.8.4) (2025-05-06)
 
 ### Miscellaneous
