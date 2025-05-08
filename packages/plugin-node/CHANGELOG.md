@@ -2,6 +2,16 @@
 
 # Changelog for Storm Stack - Plugin Node
 
+## [0.13.2](https://github.com/storm-software/storm-stack/releases/tag/plugin-node%400.13.2) (2025-05-08)
+
+### Miscellaneous
+
+- **monorepo:** Update workspace package dependencies
+
+### Updated Dependencies
+
+- Updated core to 0.15.1
+
 ## [0.13.1](https://github.com/storm-software/storm-stack/releases/tag/plugin-node%400.13.1) (2025-05-06)
 
 ### Miscellaneous

@@ -2,6 +2,19 @@
 
 # Changelog for Storm Stack - Log Storage
 
+## [0.9.11](https://github.com/storm-software/storm-stack/releases/tag/log-storage%400.9.11) (2025-05-08)
+
+### Miscellaneous
+
+- **monorepo:** Update workspace package dependencies
+
+### Updated Dependencies
+
+- Updated log-stream to 0.9.10
+- Updated core to 0.15.1
+- Updated core to 0.15.1
+- Updated nx to 0.9.15
+
 ## [0.9.10](https://github.com/storm-software/storm-stack/releases/tag/log-storage%400.9.10) (2025-05-08)
 
 ### Miscellaneous
