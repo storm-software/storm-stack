@@ -2,6 +2,23 @@
 
 # Changelog for Storm Stack - Nx
 
+## [0.9.14](https://github.com/storm-software/storm-stack/releases/tag/nx%400.9.14) (2025-05-08)
+
+### Bug Fixes
+
+- **nx:** Resolve issue with building Nx plugin
+- **nx:** Resolve issue with Nx plugin
+
+### Miscellaneous
+
+- **monorepo:** Upgrade Nx package versions
+- **monorepo:** Update workspace package links
+
+### Updated Dependencies
+
+- Updated core to 0.15.0
+- Updated core to 0.15.0
+
 ## [0.9.13](https://github.com/storm-software/storm-stack/releases/tag/nx%400.9.13) (2025-05-06)
 
 ### Miscellaneous
