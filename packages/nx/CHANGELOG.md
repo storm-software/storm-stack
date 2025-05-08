@@ -2,6 +2,12 @@
 
 # Changelog for Storm Stack - Nx
 
+## [0.9.17](https://github.com/storm-software/storm-stack/releases/tag/nx%400.9.17) (2025-05-08)
+
+### Bug Fixes
+
+- **nx:** Resolve issue with missing exports
+
 ## [0.9.16](https://github.com/storm-software/storm-stack/releases/tag/nx%400.9.16) (2025-05-08)
 
 ### Miscellaneous
