@@ -47,7 +47,7 @@ try {
   }
 
   if (configuration === "production") {
-    proc = $`pnpm nx run nx:build:production --outputStyle=dynamic-legacy --skipNxCache`;
+    proc = $`pnpm nx run nx:build:production --outputStyle=dynamic-legacy`;
     proc.stdout.on("data", data => {
       echo`${data}`;
     });
@@ -69,7 +69,7 @@ try {
       );
     }
   } else {
-    proc = $`pnpm nx run nx:build:${configuration} --outputStyle=dynamic-legacy --skipNxCache`;
+    proc = $`pnpm nx run nx:build:${configuration} --outputStyle=dynamic-legacy`;
     proc.stdout.on("data", data => {
       echo`${data}`;
     });
