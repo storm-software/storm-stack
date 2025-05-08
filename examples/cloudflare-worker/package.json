@@ -10,16 +10,16 @@
   },
   "private": true,
   "dependencies": {
-    "@storm-stack/log-console": "0.9.10",
+    "@storm-stack/log-console": "workspace:*",
     "@stryke/json": "catalog:",
     "@stryke/type-checks": "catalog:",
     "@stryke/url": "catalog:"
   },
   "devDependencies": {
     "@cloudflare/workers-types": "catalog:",
-    "@storm-stack/core": "0.15.1",
-    "@storm-stack/nx": "0.9.15",
-    "@storm-stack/preset-cloudflare-worker": "0.8.2",
+    "@storm-stack/core": "workspace:*",
+    "@storm-stack/nx": "workspace:*",
+    "@storm-stack/preset-cloudflare-worker": "workspace:*",
     "@storm-stack/types": "workspace:*",
     "@stryke/types": "catalog:"
   }
