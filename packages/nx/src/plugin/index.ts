@@ -18,7 +18,6 @@
 
 import type { CreateNodesResultV2, CreateNodesV2 } from "@nx/devkit";
 import { createNodesFromFiles, readJsonFile } from "@nx/devkit";
-import { joinPaths } from "@storm-software/config-tools/utilities/correct-paths";
 import type { ProjectTagVariant } from "@storm-software/workspace-tools";
 import {
   getProjectConfigFromProjectRoot,
@@ -28,6 +27,7 @@ import {
   addProjectTag,
   setDefaultProjectTags
 } from "@storm-software/workspace-tools/utils/project-tags";
+import { joinPaths } from "@stryke/path/join-paths";
 import type { PackageJson } from "@stryke/types/package-json";
 import type { TsConfigJson } from "@stryke/types/tsconfig";
 import { readNxJson } from "nx/src/config/nx-json.js";

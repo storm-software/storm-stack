@@ -25,7 +25,7 @@ try {
   await echo`${chalk.whiteBright("📋  Linting the monorepo...")}`;
 
   let proc =
-    $`pnpm nx run-many --target=lint --all --exclude="@storm-stack/monorepo" --parallel=5`.timeout(
+    $`pnpm nx run-many --target=lint --all --exclude="@storm-stack/monorepo" --outputStyle=dynamic-legacy --parallel=5`.timeout(
       `${30 * 60}s`
     );
   proc.stdout.on("data", data => {

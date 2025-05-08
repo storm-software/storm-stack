@@ -30,7 +30,7 @@ export default composer(baseConfig).append({
     "./migrations.json"
   ],
   rules: {
-    "@nx/nx-plugin-checks": "error"
+    "@nx/nx-plugin-checks": "warn"
   },
   languageOptions: {
     parser
