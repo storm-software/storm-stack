@@ -47,15 +47,11 @@ export const name = "storm-stack/plugin";
 export interface StormStackPluginPluginOptions {}
 
 export const createNodesV2: CreateNodesV2<StormStackPluginPluginOptions> = [
-  "packages/plugin-*/project.json",
+  "packages/plugin-*/project.json,packages/preset-*/project.json",
   async (configFiles, options, context): Promise<CreateNodesResultV2> => {
     return createNodesFromFiles(
       (configFile, options, context) => {
         try {
-          console.log(
-            `[storm-stack/plugin]: Processing project.json file: ${configFile}`
-          );
-
           const projectRoot = getProjectRoot(configFile, context.workspaceRoot);
           if (!projectRoot) {
             console.error(
@@ -154,10 +150,9 @@ export const createNodesV2: CreateNodesV2<StormStackPluginPluginOptions> = [
           );
           addProjectScopeTag(project, StormStackProjectTagScopeValue.PLUGIN);
 
-          if (project?.name) {
-            console.log(
-              `[storm-stack/plugin]: Inferred Nx configuration for ${project.name}`
-            );
+          const implicitDependencies = project.implicitDependencies ?? [];
+          if (!implicitDependencies.includes("core")) {
+            implicitDependencies.push("core");
           }
 
           return project?.name

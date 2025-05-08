@@ -1,12 +1,12 @@
 {
-  "name": "@storm-stack/typedoc",
+  "name": "@storm-stack/plugin-typedoc",
   "version": "0.1.0",
   "type": "module",
   "description": "A Typedoc plugin for generating documentation in Storm Stack packages.",
   "repository": {
     "type": "github",
     "url": "https://github.com/storm-software/storm-stack.git",
-    "directory": "packages/typedoc"
+    "directory": "packages/plugin-typedoc"
   },
   "license": "Apache-2.0",
   "private": false,
@@ -40,6 +40,14 @@
     "typedoc-plugin",
     "typedocplugin"
   ],
+  "peerDependencies": {
+    "typedoc-plugin-frontmatter": "catalog:"
+  },
+  "peerDependenciesMeta": {
+    "typedoc-plugin-frontmatter": {
+      "optional": false
+    }
+  },
   "dependencies": {
     "handlebars": "catalog:",
     "typedoc": "catalog:",

@@ -1,3 +1,6 @@
+linkWorkspacePackages: true
+preferWorkspacePackages: true
+
 onlyBuiltDependencies:
   - "@biomejs/biome"
   - "@deepkit/type-compiler"
@@ -132,7 +135,6 @@ catalog:
   typedoc: "0.25.12"
   typedoc-plugin-frontmatter: ^1.3.0
   typedoc-plugin-markdown: 3.17.1
-  typescript: 5.8.3
   esbuild: 0.25.3
   rollup: ^4.40.1
   rolldown: ^1.0.0-beta.8
@@ -154,13 +156,13 @@ overrides:
   "@storm-stack/types": workspace:*
   "@storm-stack/core": workspace:*
   "@storm-stack/biome": workspace:*
-  "@storm-stack/typedoc": workspace:*
   "@storm-stack/log-console": workspace:*
   "@storm-stack/log-storage": workspace:*
   "@storm-stack/log-otel": workspace:*
   "@storm-stack/log-sentry": workspace:*
   "@storm-stack/log-stream": workspace:*
   "@storm-stack/nx": workspace:*
+  "@storm-stack/plugin-typedoc": workspace:*
   "@storm-stack/plugin-http": workspace:*
   "@storm-stack/preset-cli": workspace:*
   "@storm-stack/preset-cloudflare-worker": workspace:*

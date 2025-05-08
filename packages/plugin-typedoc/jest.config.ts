@@ -1,7 +1,7 @@
 import { getJestConfig } from "@storm-software/testing-tools";
 
 export default getJestConfig(
-  "packages/typedoc",
+  "packages/plugin-typedoc",
   true,
-  "typedoc"
+  "plugin-typedoc"
 );

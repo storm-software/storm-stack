@@ -49,8 +49,8 @@
       "@storm-stack/tools-nx/*": ["tools/nx/src/*"],
       "@storm-stack/tools-scripts": ["tools/scripts/src/index.ts"],
       "@storm-stack/tools-scripts/*": ["tools/scripts/src/*"],
-      "@storm-stack/typedoc": ["packages/typedoc/src/index.ts"],
-      "@storm-stack/typedoc/*": ["packages/typedoc/src/*"],
+      "@storm-stack/plugin-typedoc": ["packages/plugin-typedoc/src/index.ts"],
+      "@storm-stack/plugin-typedoc/*": ["packages/plugin-typedoc/src/*"],
       "@storm-stack/types": ["packages/types/src/index.ts"],
       "@storm-stack/types/*": ["packages/types/src/*"],
       "eslint-config-storm-stack": [

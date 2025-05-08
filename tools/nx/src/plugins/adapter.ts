@@ -45,10 +45,6 @@ export const createNodesV2: CreateNodesV2<StormStackAdapterPluginOptions> = [
     return createNodesFromFiles(
       (configFile, options, context) => {
         try {
-          console.log(
-            `[storm-stack/adapter]: Processing project.json file: ${configFile}`
-          );
-
           const projectRoot = getProjectRoot(configFile, context.workspaceRoot);
           if (!projectRoot) {
             console.error(
@@ -73,7 +69,7 @@ export const createNodesV2: CreateNodesV2<StormStackAdapterPluginOptions> = [
           );
           if (!project) {
             console.error(
-              `No project configuration found in project root: ${projectRoot}`
+              `[storm-stack/adapter]: No project configuration found in project root: ${projectRoot}`
             );
             return {};
           }
@@ -176,20 +172,8 @@ export const createNodesV2: CreateNodesV2<StormStackAdapterPluginOptions> = [
           addProjectScopeTag(project, StormStackProjectTagScopeValue.ADAPTER);
 
           const implicitDependencies = project.implicitDependencies ?? [];
-          if (!implicitDependencies.includes("types")) {
-            implicitDependencies.push("types");
-          }
-          if (!implicitDependencies.includes("core")) {
-            implicitDependencies.push("core");
-          }
-          if (!implicitDependencies.includes("plugin-node")) {
-            implicitDependencies.push("plugin-node");
-          }
-
-          if (project?.name) {
-            console.log(
-              `[storm-stack/adapter]: Inferred Nx configuration for ${project.name}`
-            );
+          if (!implicitDependencies.includes("nx")) {
+            implicitDependencies.push("nx");
           }
 
           return project?.name
