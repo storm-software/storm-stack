@@ -16,9 +16,9 @@
 
  ------------------------------------------------------------------- */
 
- import { Application } from 'typedoc';
- import StormStackMarkdownTheme from './helpers/theme';
+import type { Application } from "typedoc";
+import StormStackMarkdownTheme from "./helpers/theme";
 
- export function load(app: Application) {
-   app.renderer.defineTheme('storm-stack', StormStackMarkdownTheme);
- }
+export function load(app: Application) {
+  app.renderer.defineTheme("storm-stack", StormStackMarkdownTheme);
+}

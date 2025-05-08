@@ -41,7 +41,9 @@
     "typedocplugin"
   ],
   "dependencies": {
-    "typedoc": "catalog:"
+    "handlebars": "catalog:",
+    "typedoc": "catalog:",
+    "typedoc-plugin-markdown": "catalog:"
   },
   "devDependencies": {
     "@types/node": "catalog:"

@@ -1,29 +1,50 @@
-import * as Handlebars from 'handlebars';
-import { CommentDisplayPart } from 'typedoc/dist/lib/models/comments/comment';
+/* -------------------------------------------------------------------
 
-export default function () {
-  Handlebars.registerHelper('comment', function (parts: CommentDisplayPart[]) {
+                  ⚡ Storm Software - Storm Stack
+
+ This code was released as part of the Storm Stack project. Storm Stack
+ is maintained by Storm Software under the Apache-2.0 license, and is
+ free for commercial and private use. For more information, please visit
+ our licensing page at https://stormsoftware.com/projects/storm-stack/license.
+
+ Website:                  https://stormsoftware.com
+ Repository:               https://github.com/storm-software/storm-stack
+ Documentation:            https://stormsoftware.com/projects/storm-stack/docs
+ Contact:                  https://stormsoftware.com/contact
+
+ SPDX-License-Identifier:  Apache-2.0
+
+ ------------------------------------------------------------------- */
+
+import * as Handlebars from "handlebars";
+import type { CommentDisplayPart } from "typedoc";
+
+function registerCommentHelper() {
+  Handlebars.registerHelper("comment", (parts: CommentDisplayPart[]) => {
     const result: string[] = [];
     for (const part of parts) {
+      // eslint-disable-next-line ts/switch-exhaustiveness-check
       switch (part.kind) {
-        case 'text':
-        case 'code':
+        case "text":
+        case "code":
           result.push(part.text);
           break;
-        case 'inline-tag':
+        case "inline-tag":
           switch (part.tag) {
-            case '@label':
-            case '@inheritdoc':
+            case "@label":
+            case "@inheritdoc":
               break;
-            case '@link':
-            case '@linkcode':
-            case '@linkplain': {
+            case "@link":
+            case "@linkcode":
+            case "@linkplain": {
               if (part.target) {
                 const url =
-                  typeof part.target === 'string'
+                  typeof part.target === "string"
                     ? part.target
-                    : Handlebars.helpers.relativeURL((part.target as any).url);
-                const wrap = part.tag === '@linkcode' ? '`' : '';
+                    : Handlebars.helpers.relativeURL
+                      ? Handlebars.helpers.relativeURL((part.target as any).url)
+                      : "";
+                const wrap = part.tag === "@linkcode" ? "`" : "";
                 result.push(
                   url ? `[${wrap}${part.text}${wrap}](${url})` : part.text
                 );
@@ -38,14 +59,16 @@ export default function () {
           }
           break;
         default:
-          result.push('');
+          result.push("");
       }
     }
 
     return result
-      .join('')
-      .split('\n')
-      .filter((line) => !line.startsWith('@note'))
-      .join('\n');
+      .join("")
+      .split("\n")
+      .filter(line => !line.startsWith("@note"))
+      .join("\n");
   });
 }
+
+export default registerCommentHelper;

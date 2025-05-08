@@ -20,7 +20,7 @@ import { createDirectory, removeDirectory } from "@stryke/fs/helpers";
 import { existsSync } from "@stryke/path/exists";
 import { joinPaths } from "@stryke/path/join-paths";
 import defu from "defu";
-import * as TypeDoc from "typedoc";
+import * as typedoc from "typedoc";
 import type { Context, Options } from "../../types/build";
 
 /**
@@ -31,7 +31,7 @@ import type { Context, Options } from "../../types/build";
  */
 export async function generateReferenceDocs<TOptions extends Options = Options>(
   context: Context<TOptions>,
-  override: TypeDoc.Configuration.TypeDocOptions = {}
+  override: typedoc.Configuration.TypeDocOptions = {}
 ) {
   // Clean and recreate the output directories
   const outputPath = joinPaths(
@@ -46,7 +46,7 @@ export async function generateReferenceDocs<TOptions extends Options = Options>(
 
   await createDirectory(outputPath);
 
-  const app = await TypeDoc.Application.bootstrapWithPlugins(
+  const app = await typedoc.Application.bootstrapWithPlugins(
     defu(override, {
       plugin: [
         "typedoc-plugin-markdown",
@@ -66,11 +66,15 @@ export async function generateReferenceDocs<TOptions extends Options = Options>(
         joinPaths(context.options.projectRoot, "tsconfig.json"),
       exclude: context.resolvedTsconfig?.raw?.exclude,
       out: outputPath
-    })
+    }),
+    [
+      new typedoc.TypeDocReader(),
+      new typedoc.PackageJsonReader(),
+      new typedoc.TSConfigReader()
+    ]
   );
 
   const project = await app.convert();
-
   if (project) {
     await app.generateOutputs(project);
   }

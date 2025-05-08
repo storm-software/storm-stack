@@ -66,7 +66,6 @@ import {
   getTsconfigChanges,
   getTsconfigFilePath
 } from "./helpers/tsconfig";
-import { generateReferenceDocs } from "./helpers/typedoc";
 import { createUnimport } from "./helpers/unimport";
 import { createLog } from "./helpers/utilities/logger";
 import { writeFile } from "./helpers/utilities/write-file";
@@ -874,7 +873,7 @@ export class Engine<TOptions extends Options = Options> {
       "Generating documentation for the Storm Stack project"
     );
 
-    await generateReferenceDocs(this.context);
+    // await generateReferenceDocs(this.context);
     await this.writeDotenvDoc();
 
     await this.#hooks
