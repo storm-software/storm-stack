@@ -2,6 +2,12 @@
 
 # Changelog for Storm Stack - Nx
 
+## [0.9.19](https://github.com/storm-software/storm-stack/releases/tag/nx%400.9.19) (2025-05-08)
+
+### Bug Fixes
+
+- **nx:** Update build to exclude clean from `dependsOn` list
+
 ## [0.9.18](https://github.com/storm-software/storm-stack/releases/tag/nx%400.9.18) (2025-05-08)
 
 ### Bug Fixes

@@ -1,6 +1,6 @@
 {
   "name": "@storm-stack/nx",
-  "version": "0.9.18",
+  "version": "0.9.19",
   "repository": {
     "type": "github",
     "url": "https://github.com/storm-software/storm-stack.git",

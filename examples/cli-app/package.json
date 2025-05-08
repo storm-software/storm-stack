@@ -22,7 +22,7 @@
   },
   "devDependencies": {
     "@storm-stack/core": "workspace:*",
-    "@storm-stack/nx": "0.9.18",
+    "@storm-stack/nx": "0.9.19",
     "@storm-stack/preset-cli": "workspace:*"
   },
   "storm": {
