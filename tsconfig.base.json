@@ -8,6 +8,8 @@
     "paths": {
       "@storm-stack/biome": ["packages/biome/src/index.ts"],
       "@storm-stack/biome/*": ["packages/biome/src/*"],
+      "@storm-stack/typedoc": ["packages/typedoc/src/index.ts"],
+      "@storm-stack/typedoc/*": ["packages/typedoc/src/*"],
       "@storm-stack/core": ["packages/core/src/index.ts"],
       "@storm-stack/core/*": ["packages/core/src/*"],
       "@storm-stack/examples-cli-app": ["examples/cli-app/src/index.ts"],

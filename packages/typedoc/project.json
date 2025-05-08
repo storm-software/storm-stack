@@ -1,0 +1,33 @@
+{
+  "name": "typedoc",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "library",
+  "sourceRoot": "packages/typedoc/src",
+  "tags": ["platform:node"],
+  "targets": {
+    "build": {
+      "executor": "@storm-software/workspace-tools:unbuild",
+      "outputs": ["{options.outputPath}"],
+      "dependsOn": ["docs"],
+      "options": {
+        "defaultConfiguration": "production",
+        "platform": "node",
+        "clean": true
+      },
+      "configurations": {
+        "production": {
+          "debug": false,
+          "verbose": false
+        },
+        "development": {
+          "debug": true,
+          "verbose": true
+        }
+      }
+    },
+
+    "nx-release-publish": {
+      "executor": "@storm-software/workspace-tools:npm-publish"
+    }
+  }
+}

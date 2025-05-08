@@ -410,6 +410,7 @@
     "@nuxt/kit": "^3.17.1",
     "@nuxt/schema": "^3.17.1",
     "@rspack/cli": "^1.3.8",
+    "@storm-stack/typedoc": "workspace:*",
     "rollup": "^4.40.1",
     "vite": "^6.3.4",
     "webpack": "^5.99.7"
@@ -420,6 +421,9 @@
     },
     "@nuxt/schema": {
       "optional": true
+    },
+    "@storm-stack/typedoc": {
+      "optional": false
     },
     "rollup": {
       "optional": true
@@ -443,7 +447,7 @@
     "@storm-software/config-tools": "catalog:",
     "@storm-software/esbuild": "catalog:",
     "@storm-software/unbuild": "catalog:",
-    "@storm-stack/types": "0.4.3",
+    "@storm-stack/types": "workspace:*",
     "@stryke/convert": "catalog:",
     "@stryke/env": "catalog:",
     "@stryke/fs": "catalog:",
@@ -456,7 +460,6 @@
     "@stryke/unique-id": "catalog:",
     "c12": "catalog:",
     "chalk-template": "catalog:",
-    "commander": "catalog:",
     "defu": "catalog:",
     "diff-match-patch": "catalog:",
     "esbuild": "catalog:",
@@ -465,6 +468,9 @@
     "magic-string": "catalog:",
     "mlly": "catalog:",
     "prettier": "catalog:",
+    "typedoc": "catalog:",
+    "typedoc-plugin-frontmatter": "catalog:",
+    "typedoc-plugin-markdown": "catalog:",
     "unimport": "catalog:"
   },
   "devDependencies": {
