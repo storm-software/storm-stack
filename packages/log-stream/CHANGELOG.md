@@ -2,6 +2,16 @@
 
 # Changelog for Storm Stack - Log Stream
 
+## [0.9.11](https://github.com/storm-software/storm-stack/releases/tag/log-stream%400.9.11) (2025-05-08)
+
+### Miscellaneous
+
+- **monorepo:** Update workspace package links
+
+### Updated Dependencies
+
+- Updated nx to 0.9.16
+
 ## [0.9.10](https://github.com/storm-software/storm-stack/releases/tag/log-stream%400.9.10) (2025-05-08)
 
 ### Miscellaneous

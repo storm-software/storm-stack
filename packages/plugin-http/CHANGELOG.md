@@ -2,6 +2,12 @@
 
 # Changelog for Storm Stack - Plugin Http
 
+## [0.5.5](https://github.com/storm-software/storm-stack/releases/tag/plugin-http%400.5.5) (2025-05-08)
+
+### Miscellaneous
+
+- **monorepo:** Update workspace package links
+
 ## [0.5.4](https://github.com/storm-software/storm-stack/releases/tag/plugin-http%400.5.4) (2025-05-08)
 
 ### Miscellaneous
