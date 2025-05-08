@@ -87,8 +87,38 @@
         "default": "./dist/generators.js"
       }
     },
-    "./executors/*/executor.js": "./dist/executors/*/executor.js",
-    "./generators/*/generator.js": "./dist/generators/*/generator.js"
+    "./executors/*/untyped": {
+      "import": {
+        "types": "./dist/src/executors/*/untyped.d.mts",
+        "default": "./dist/src/executors/*/untyped.mjs"
+      },
+      "require": {
+        "types": "./dist/src/executors/*/untyped.d.ts",
+        "default": "./dist/src/executors/*/untyped.js"
+      },
+      "default": {
+        "types": "./dist/src/executors/*/untyped.d.ts",
+        "default": "./dist/src/executors/*/untyped.js"
+      }
+    },
+    "./generators/*/untyped": {
+      "import": {
+        "types": "./dist/src/generators/*/untyped.d.mts",
+        "default": "./dist/src/generators/*/untyped.mjs"
+      },
+      "require": {
+        "types": "./dist/src/generators/*/untyped.d.ts",
+        "default": "./dist/src/generators/*/untyped.js"
+      },
+      "default": {
+        "types": "./dist/src/generators/*/untyped.d.ts",
+        "default": "./dist/src/generators/*/untyped.js"
+      }
+    },
+    "./executors/*/executor.js": "./dist/src/executors/*/executor.js",
+    "./executors/*/executor.mjs": "./dist/src/executors/*/executor.mjs",
+    "./generators/*/generator.js": "./dist/src/generators/*/generator.js",
+    "./generators/*/generator.mjs": "./dist/src/generators/*/generator.mjs"
   },
   "typings": "dist/index.d.ts",
   "peerDependencies": {
