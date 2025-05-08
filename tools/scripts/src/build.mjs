@@ -35,7 +35,7 @@ try {
 
   echo`${chalk.whiteBright(`🏗️  Building the monorepo in ${configuration} mode...`)}`;
 
-  let proc = $`pnpm bootstrap`.timeout("60s");
+  let proc = $`pnpm bootstrap`.timeout(`${1 * 60}s`);
   proc.stdout.on("data", data => {
     echo`${data}`;
   });
@@ -47,7 +47,10 @@ try {
   }
 
   if (configuration === "production") {
-    proc = $`pnpm nx run nx:build:production --outputStyle=dynamic-legacy`;
+    proc =
+      $`pnpm nx run nx:build:production --outputStyle=dynamic-legacy`.timeout(
+        `${2 * 60}s`
+      );
     proc.stdout.on("data", data => {
       echo`${data}`;
     });
@@ -58,7 +61,10 @@ try {
       );
     }
 
-    proc = $`pnpm nx run-many --target=build --all --exclude="@storm-stack/monorepo" --configuration=production --outputStyle=dynamic-legacy --parallel=5`;
+    proc =
+      $`pnpm nx run-many --target=build --all --exclude="@storm-stack/monorepo" --configuration=production --outputStyle=dynamic-legacy --parallel=5`.timeout(
+        `${2 * 60}s`
+      );
     proc.stdout.on("data", data => {
       echo`${data}`;
     });
@@ -69,7 +75,10 @@ try {
       );
     }
   } else {
-    proc = $`pnpm nx run nx:build:${configuration} --outputStyle=dynamic-legacy`;
+    proc =
+      $`pnpm nx run nx:build:${configuration} --outputStyle=dynamic-legacy`.timeout(
+        `${2 * 60}s`
+      );
     proc.stdout.on("data", data => {
       echo`${data}`;
     });
@@ -80,7 +89,10 @@ try {
       );
     }
 
-    proc = $`pnpm nx run-many --target=build --all --exclude="@storm-stack/monorepo" --configuration=${configuration} --nxBail --outputStyle=dynamic-legacy`;
+    proc =
+      $`pnpm nx run-many --target=build --all --exclude="@storm-stack/monorepo" --configuration=${configuration} --nxBail --outputStyle=dynamic-legacy`.timeout(
+        `${2 * 60}s`
+      );
     proc.stdout.on("data", data => {
       echo`${data}`;
     });

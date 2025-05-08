@@ -40,14 +40,14 @@ try {
     platform: "node"
   });
 
-  const proc = $`pnpm nx reset`.timeout(`${5 * 60}s`);
+  const proc = $`pnpm nx reset --onlyDaemon`.timeout(`${2 * 60}s`);
   proc.stdout.on("data", data => {
     echo`${data}`;
   });
   const result = await proc;
   if (!result.ok) {
     throw new Error(
-      `An error occurred while resetting the Nx deamon process: \n\n${result.message}\n`
+      `An error occurred while resetting the Nx daemon process: \n\n${result.message}\n`
     );
   }
 

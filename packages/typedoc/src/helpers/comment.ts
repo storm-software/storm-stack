@@ -23,7 +23,6 @@ function registerCommentHelper() {
   Handlebars.registerHelper("comment", (parts: CommentDisplayPart[]) => {
     const result: string[] = [];
     for (const part of parts) {
-      // eslint-disable-next-line ts/switch-exhaustiveness-check
       switch (part.kind) {
         case "text":
         case "code":

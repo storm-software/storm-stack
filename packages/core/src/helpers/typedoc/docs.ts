@@ -76,6 +76,7 @@ export async function generateReferenceDocs<TOptions extends Options = Options>(
 
   const project = await app.convert();
   if (project) {
+    // eslint-disable-next-line ts/no-unsafe-call
     await app.generateOutputs(project);
   }
 }
