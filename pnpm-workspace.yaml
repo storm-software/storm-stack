@@ -18,10 +18,10 @@ packages:
   - "examples/*"
 
 catalog:
-  "@ast-grep/napi": ^0.37.0
+  "@ast-grep/napi": ^0.38.0
   "@biomejs/biome": ^1.9.4
   "@cloudflare/unenv-preset": 2.3.1
-  "@cloudflare/workers-types": ^4.20250505.0
+  "@cloudflare/workers-types": ^4.20250510.0
   "@deepkit/type": ^1.0.5
   "@deepkit/core": ^1.0.5
   "@deepkit/type-compiler": ^1.0.5
@@ -31,17 +31,17 @@ catalog:
   "@ls-lint/ls-lint": ^2.3.0
   "@ltd/j-toml": ^1.38.0
   "@microsoft/api-extractor": ^7.52.7
-  "@nuxt/kit": ^3.17.1
-  "@nuxt/schema": ^3.17.1
+  "@nuxt/kit": ^3.17.2
+  "@nuxt/schema": ^3.17.2
   "@opentelemetry/api-logs": ^0.200.0
   "@opentelemetry/exporter-logs-otlp-http": ^0.200.0
   "@opentelemetry/otlp-exporter-base": ^0.200.0
   "@opentelemetry/resources": ^2.0.0
   "@opentelemetry/sdk-logs": ^0.200.0
-  "@opentelemetry/semantic-conventions": ^1.32.0
-  "@sentry/core": ^9.15.0
-  "@sentry/node": ^9.15.0
-  "@sentry/types": ^9.15.0
+  "@opentelemetry/semantic-conventions": ^1.33.0
+  "@sentry/core": ^9.17.0
+  "@sentry/node": ^9.17.0
+  "@sentry/types": ^9.17.0
   "@taplo/cli": ^0.7.0
   "@types/eslint": ^9.6.1
   "@types/eslint__js": ^8.42.3
@@ -49,14 +49,14 @@ catalog:
   "@types/jest": 29.5.14
   "@types/react": npm:types-react@rc
   "@types/react-dom": npm:types-react-dom@rc
-  "@types/node": ^22.15.3
-  "@nx/devkit": 21.0.2
-  "@nx/eslint-plugin": 21.0.2
-  "@nx/jest": 21.0.2
-  "@nx/js": 21.0.2
-  "@nx/plugin": 21.0.2
-  "@nx/react": 21.0.2
-  "@nx/workspace": 21.0.2
+  "@types/node": ^22.15.17
+  "@nx/devkit": 21.0.3
+  "@nx/eslint-plugin": 21.0.3
+  "@nx/jest": 21.0.3
+  "@nx/js": 21.0.3
+  "@nx/plugin": 21.0.3
+  "@nx/react": 21.0.3
+  "@nx/workspace": 21.0.3
   "@storm-software/build-tools": latest
   "@storm-software/config": latest
   "@storm-software/config-tools": latest
@@ -90,9 +90,9 @@ catalog:
   "@swc/core": ^1.11.22
   "@swc/wasm": ^1.11.24
   "@swc/helpers": ^0.5.17
-  "@typescript-eslint/scope-manager": ^8.31.1
-  "@typescript-eslint/types": ^8.31.1
-  "@typescript-eslint/utils": ^8.31.1
+  "@typescript-eslint/scope-manager": ^8.32.0
+  "@typescript-eslint/types": ^8.32.0
+  "@typescript-eslint/utils": ^8.32.0
   bundle-require: ^5.1.0
   c12: ^3.0.3
   chalk-template: ^1.1.0
@@ -129,12 +129,12 @@ catalog:
   copyfiles: ^2.4.1
   rimraf: ^6.0.1
   tsx: ^4.19.4
-  typedoc: "0.25.12"
+  typedoc: "0.28.4"
   typedoc-plugin-frontmatter: ^1.3.0
   typedoc-plugin-markdown: 3.17.1
   typescript: 5.8.3
-  esbuild: 0.25.3
-  rollup: ^4.40.1
+  esbuild: 0.25.4
+  rollup: ^4.40.2
   rolldown: ^1.0.0-beta.8
   unbuild: ^3.5.0
   unenv: npm:unenv-nightly
@@ -142,13 +142,13 @@ catalog:
   unstorage: ^1.16.0
   untyped: 1.5.2
   verdaccio: 6.1.2
-  vite: ^6.3.4
+  vite: ^6.3.5
   defu: ^6.1.4
   jiti: ^2.4.2
   eslint-flat-config-utils: 2.0.1
   zod: ^3.24.4
-  zod-validation-error: ^3.4.0
-  zx: ^8.5.3
+  zod-validation-error: ^3.4.1
+  zx: ^8.5.4
 
 overrides:
   "@storm-stack/types": workspace:*
