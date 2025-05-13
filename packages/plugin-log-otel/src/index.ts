@@ -40,12 +40,12 @@ export type LogOpenTelemetryPluginConfig = LogPluginConfig & {
 export default class LogOpenTelemetryPlugin<
   TOptions extends Options = Options
 > extends LogPlugin<TOptions> {
-  protected override dependencies: string[] = [
-    "@opentelemetry/api-logs@^0.200.0",
-    "@opentelemetry/resources@^0.200.0",
-    "@opentelemetry/sdk-logs@^0.200.0",
-    "@opentelemetry/semantic-conventions@^1.32.0"
-  ];
+  protected override installs = {
+    "@opentelemetry/api-logs@^0.200.0": "dependency",
+    "@opentelemetry/resources@^0.200.0": "dependency",
+    "@opentelemetry/sdk-logs@^0.200.0": "dependency",
+    "@opentelemetry/semantic-conventions@^1.32.0": "dependency"
+  } as Record<string, "dependency" | "devDependency">;
 
   public constructor(protected override config: LogOpenTelemetryPluginConfig) {
     super(config, "log-otel-plugin", "@storm-stack/plugin-log-otel");
@@ -58,9 +58,9 @@ export default class LogOpenTelemetryPlugin<
       );
     }
 
-    this.dependencies.push(
+    this.installs[
       `@opentelemetry/exporter-logs-otlp-${this.config.exporter}@^0.200.0`
-    );
+    ] = "dependency";
   }
 
   protected override writeSink(_context: Context<TOptions>) {

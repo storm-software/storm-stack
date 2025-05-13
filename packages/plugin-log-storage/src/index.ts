@@ -21,11 +21,40 @@ import type { Options } from "@storm-stack/core/types";
 import type { LogPluginConfig } from "@storm-stack/devkit/plugins/log";
 import LogPlugin from "@storm-stack/devkit/plugins/log";
 
+export type LogStoragePluginConfig = LogPluginConfig & {
+  /**
+   * Whether to use the file system storage driver.
+   *
+   * @defaultValue true
+   */
+  useFileSystem?: boolean;
+
+  /**
+   * The storage ID to use for the log storage.
+   *
+   * @defaultValue "logs"
+   */
+  storageId?: string;
+};
+
 export default class LogStoragePlugin<
   TOptions extends Options = Options
 > extends LogPlugin<TOptions> {
-  public constructor(config: LogPluginConfig) {
+  public constructor(protected override config: LogStoragePluginConfig) {
     super(config, "log-storage-plugin", "@storm-stack/plugin-log-storage");
+
+    this.config.useFileSystem ??= true;
+    this.config.storageId ??= "logs";
+
+    if (this.config.useFileSystem) {
+      this.dependencies.push([
+        "@storm-stack/plugin-storage-fs",
+        {
+          storageId: this.config.storageId,
+          base: "getEnvPaths().log"
+        }
+      ]);
+    }
   }
 
   protected override writeSink() {
@@ -207,7 +236,7 @@ const formatter: TextFormatter = getTextFormatter();
 
 const sink: LogSink & AsyncDisposable = (record: LogRecord) => {
   void storage.setItem(
-    \`logs:storm-\${new Date().toISOString().replace("T", "_").replace("Z", "")}.log\`,
+    \`${this.config.storageId}:storm-\${new Date().toISOString().replace("T", "_").replace("Z", "")}.log\`,
     formatter(record) as T
   );
 };

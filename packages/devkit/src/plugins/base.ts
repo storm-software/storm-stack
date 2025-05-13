@@ -30,15 +30,11 @@ export default class BasePlugin<
   /**
    * A list of dependencies that are required for the plugin to work. These dependencies will be installed when Storm Stack CLI is run.
    */
-  protected dependencies: string[] = [];
-
-  /**
-   * A list of devDependencies that are required for the plugin to work. These dependencies will be installed when Storm Stack CLI is run.
-   */
-  protected devDependencies: string[] = [];
+  protected installs: Record<string, "dependency" | "devDependency">;
 
   public constructor(name: string, installPath?: string) {
     super(name, installPath);
+    this.installs = {};
   }
 
   public addHooks(hooks: EngineHooks<TOptions>) {
@@ -53,22 +49,28 @@ export default class BasePlugin<
       `Adding required installations for the project.`
     );
 
-    const promises = [] as Promise<void>[];
-    if (
-      this.dependencies.length > 0 &&
-      context.options.projectType === "application"
-    ) {
-      this.dependencies.forEach(dependency => {
-        context.installs[dependency] = "dependency";
+    if (Object.keys(this.installs).length > 0) {
+      Object.keys(this.installs).forEach(dependency => {
+        if (
+          this.installs[dependency] &&
+          (this.installs[dependency] === "devDependency" ||
+            context.options.projectType === "application")
+        ) {
+          if (
+            dependency.lastIndexOf("@") > 0 &&
+            dependency.substring(0, dependency.lastIndexOf("@")) in
+              context.installs
+          ) {
+            // Remove the existing dependency if it does not include the version
+            // This is a workaround for the fact that we cannot install the same package with different versions
+            delete context.installs[
+              dependency.substring(0, dependency.lastIndexOf("@"))
+            ];
+          }
+
+          context.installs[dependency] = this.installs[dependency];
+        }
       });
     }
-
-    if (this.devDependencies.length > 0) {
-      this.devDependencies.forEach(dependency => {
-        context.installs[dependency] = "devDependency";
-      });
-    }
-
-    await Promise.all(promises);
   }
 }

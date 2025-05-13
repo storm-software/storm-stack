@@ -59,17 +59,6 @@ export default abstract class LogPlugin<
     context: Context<TOptions>
   ): MaybePromise<string>;
 
-  /**
-   * Allow derived classes to prepare the Log Sink runtime source code.
-   *
-   * @param _context - The context to use
-   */
-  protected writeInit(_context: Context<TOptions>): MaybePromise<string> {
-    // Do nothing
-
-    return "";
-  }
-
   async #prepareRuntime(context: Context<TOptions>) {
     this.log(LogLevelLabel.TRACE, `Prepare the Storm Stack logging project.`);
 
@@ -84,19 +73,6 @@ export default abstract class LogPlugin<
         ),
         await Promise.resolve(this.writeSink(context))
       );
-
-      const initCode = await Promise.resolve(this.writeInit(context));
-      if (initCode) {
-        await this.writeFile(
-          joinPaths(
-            context.options.projectRoot,
-            "runtime",
-            "logs",
-            `${this.name}.init.ts`
-          ),
-          initCode
-        );
-      }
     }
   }
 

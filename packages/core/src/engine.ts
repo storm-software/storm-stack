@@ -40,7 +40,6 @@ import { init } from "./init";
 import { lint } from "./lint";
 import type { Plugin } from "./plugin";
 import { prepare } from "./prepare";
-import type { Preset } from "./preset";
 import type {
   Context,
   EngineHookFunctions,
@@ -170,17 +169,17 @@ export class Engine<TOptions extends Options = Options> {
     ) as Context<TOptions>["options"];
 
     for (const preset of this.context.options.presets ?? []) {
-      await this.addPreset(preset);
+      await this.addPlugin(preset, true);
     }
 
     for (const plugin of this.context.options.plugins ?? []) {
-      await this.addPlugin(plugin);
+      await this.addPlugin(plugin, false);
     }
 
-    if (!this.context.options.plugins) {
+    if (this.#plugins.length === 0) {
       this.log(
         LogLevelLabel.WARN,
-        "No Storm Stack plugins were specified in the options. Please ensure this is correct, as it is generally not recommended."
+        "No Storm Stack plugins or presets were specified in the options. Please ensure this is correct, as it is generally not recommended."
       );
     } else {
       for (const plugin of this.#plugins) {
@@ -363,194 +362,117 @@ export class Engine<TOptions extends Options = Options> {
   }
 
   /**
-   * Add a Storm Stack preset to the build process
+   * Add a Storm Stack plugin or preset to the build process
    *
-   * @param preset - The import path of the preset to add
+   * @param config - The import path of the plugin or preset to add
+   * @param isPreset - Whether the plugin is a preset
    */
-  private async addPreset(preset: string | PluginConfig) {
-    if (
-      preset &&
-      !this.#plugins.some(p =>
-        typeof preset === "string"
-          ? p.installPath === preset
-          : p.installPath === preset[0]
-      )
-    ) {
-      const pluginConfig: PluginConfig =
-        typeof preset === "string" ? [preset, {}] : preset;
-      const isInstalled = isPackageExists(pluginConfig[0], {
-        paths: [
-          this.context.workspaceConfig.workspaceRoot,
-          this.context.options.projectRoot
-        ]
-      });
-      if (!isInstalled && this.context.options.skipInstalls !== true) {
-        this.log(
-          LogLevelLabel.WARN,
-          `The preset package "${pluginConfig[0]}" is not installed. It will be installed automatically.`
-        );
-
-        const result = await install(pluginConfig[0], {
-          cwd: this.context.options.projectRoot
-        });
-        if (isNumber(result.exitCode) && result.exitCode > 0) {
-          this.log(LogLevelLabel.ERROR, result.stderr);
-          throw new Error(
-            `An error occurred while installing the build preset package "${pluginConfig[0]}" `
-          );
-        }
-      }
-
-      let presetInstance!: Preset<TOptions>;
-      try {
-        const module = await this.context.resolver.import<{
-          default: new (config: any) => Preset<TOptions>;
-        }>(this.context.resolver.esmResolve(pluginConfig[0]));
-        const PresetConstructor = module.default;
-
-        presetInstance = new PresetConstructor(pluginConfig[1]);
-      } catch (error) {
-        if (!isInstalled) {
-          throw new Error(
-            `The preset package "${pluginConfig[0]}" is not installed. Please install the package using the command: "npm install ${pluginConfig[0]} --save-dev"`
-          );
-        } else {
-          throw new Error(
-            `An error occurred while importing the build preset package "${pluginConfig[0]}":
-${error.message}
-
-Note: Please ensure the preset package's default export is a class that extends \`Plugin\` with a constructor that excepts zero arguments.`
-          );
-        }
-      }
-
-      if (!presetInstance) {
-        throw new Error(
-          `The preset package "${pluginConfig[0]}" does not export a valid module.`
-        );
-      }
-
-      if (!presetInstance.name) {
-        throw new Error(
-          `The module in the build preset package "${pluginConfig[0]}" must export a \`name\` string value.`
-        );
-      }
-      if (!presetInstance.addHooks) {
-        throw new Error(
-          `The build preset "${presetInstance.name}" must export an \`addHooks\` function.`
-        );
-      }
-
-      if (presetInstance.dependencies) {
-        for (const dependency of presetInstance.dependencies) {
-          await this.addPlugin(dependency);
+  private async addPlugin(config: string | PluginConfig, isPreset = false) {
+    if (config) {
+      const instance = await this.initPlugin(config);
+      if (instance.dependencies) {
+        for (const dependency of instance.dependencies) {
+          await this.addPlugin(dependency, false);
         }
       }
 
       this.log(
         LogLevelLabel.INFO,
-        `Successfully initialized the "${presetInstance.name}" preset`
+        `Successfully loaded the "${instance.name}" ${isPreset ? "preset" : "plugin"}`
       );
 
-      this.#plugins.push(presetInstance);
+      this.#plugins.push(instance);
     }
   }
 
   /**
-   * Add a Storm Stack plugin to the build process
+   * Initialize a Storm Stack plugin
    *
    * @param plugin - The import path of the plugin to add
    */
-  private async addPlugin(plugin: string | PluginConfig) {
+  private async initPlugin(
+    plugin: string | PluginConfig
+  ): Promise<Plugin<TOptions>> {
+    const pluginConfig: PluginConfig =
+      typeof plugin === "string" ? [plugin, {}] : plugin;
+
+    let installPath = pluginConfig[0];
     if (
-      plugin &&
-      !this.#plugins.some(p =>
-        typeof plugin === "string"
-          ? p.installPath === plugin
-          : p.installPath === plugin[0]
-      )
+      installPath.startsWith("@") &&
+      installPath.split("/").filter(Boolean).length > 2
     ) {
-      const pluginConfig: PluginConfig =
-        typeof plugin === "string" ? [plugin, {}] : plugin;
+      const splits = installPath.split("/").filter(Boolean);
+      installPath = `${splits[0]}/${splits[1]}`;
+    }
 
-      let installPath = pluginConfig[0];
-      if (
-        installPath.startsWith("@") &&
-        installPath.split("/").filter(Boolean).length > 2
-      ) {
-        const splits = installPath.split("/").filter(Boolean);
-        installPath = `${splits[0]}/${splits[1]}`;
-      }
+    const isInstalled = isPackageExists(installPath, {
+      paths: [
+        this.context.workspaceConfig.workspaceRoot,
+        this.context.options.projectRoot
+      ]
+    });
+    if (!isInstalled && this.context.options.skipInstalls !== true) {
+      this.log(
+        LogLevelLabel.WARN,
+        `The plugin package "${installPath}" is not installed. It will be installed automatically.`
+      );
 
-      const isInstalled = isPackageExists(installPath, {
-        paths: [
-          this.context.workspaceConfig.workspaceRoot,
-          this.context.options.projectRoot
-        ]
+      const result = await install(installPath, {
+        cwd: this.context.options.projectRoot
       });
-      if (!isInstalled && this.context.options.skipInstalls !== true) {
-        this.log(
-          LogLevelLabel.WARN,
-          `The plugin package "${installPath}" is not installed. It will be installed automatically.`
+      if (isNumber(result.exitCode) && result.exitCode > 0) {
+        this.log(LogLevelLabel.ERROR, result.stderr);
+        throw new Error(
+          `An error occurred while installing the build plugin package "${installPath}" `
         );
-
-        const result = await install(installPath, {
-          cwd: this.context.options.projectRoot
-        });
-        if (isNumber(result.exitCode) && result.exitCode > 0) {
-          this.log(LogLevelLabel.ERROR, result.stderr);
-          throw new Error(
-            `An error occurred while installing the build plugin package "${installPath}" `
-          );
-        }
       }
+    }
 
-      let pluginInstance!: Plugin<TOptions>;
-      try {
-        const module = await this.context.resolver.import<{
-          default: new (config: any) => Plugin<TOptions>;
-        }>(this.context.resolver.esmResolve(pluginConfig[0]));
-        const PluginConstructor = module.default;
+    let pluginInstance!: Plugin<TOptions>;
+    try {
+      const module = await this.context.resolver.import<{
+        default: new (config: any) => Plugin<TOptions>;
+      }>(this.context.resolver.esmResolve(pluginConfig[0]));
+      const PluginConstructor = module.default;
 
-        pluginInstance = new PluginConstructor(pluginConfig[1]);
-      } catch (error) {
-        if (!isInstalled) {
-          throw new Error(
-            `The plugin package "${pluginConfig[0]}" is not installed. Please install the package using the command: "npm install ${pluginConfig[0]} --save-dev"`
-          );
-        } else {
-          throw new Error(
-            `An error occurred while importing the build plugin package "${pluginConfig[0]}":
+      pluginInstance = new PluginConstructor(pluginConfig[1]);
+    } catch (error) {
+      if (!isInstalled) {
+        throw new Error(
+          `The plugin package "${pluginConfig[0]}" is not installed. Please install the package using the command: "npm install ${pluginConfig[0]} --save-dev"`
+        );
+      } else {
+        throw new Error(
+          `An error occurred while importing the build plugin package "${pluginConfig[0]}":
 ${error.message}
 
 Note: Please ensure the plugin package's default export is a class that extends \`Plugin\` with a constructor that excepts zero arguments.`
-          );
-        }
-      }
-
-      if (!pluginInstance) {
-        throw new Error(
-          `The plugin package "${pluginConfig[0]}" does not export a valid module.`
         );
       }
-
-      if (!pluginInstance.name) {
-        throw new Error(
-          `The module in the build plugin package "${pluginConfig[0]}" must export a \`name\` string value.`
-        );
-      }
-      if (!pluginInstance.addHooks) {
-        throw new Error(
-          `The build plugin "${pluginInstance.name}" must export an \`addHooks\` function.`
-        );
-      }
-
-      this.log(
-        LogLevelLabel.INFO,
-        `Successfully initialized the "${pluginInstance.name}" plugin`
-      );
-
-      this.#plugins.push(pluginInstance);
     }
+
+    if (!pluginInstance) {
+      throw new Error(
+        `The plugin package "${pluginConfig[0]}" does not export a valid module.`
+      );
+    }
+
+    if (!pluginInstance.name) {
+      throw new Error(
+        `The module in the build plugin package "${pluginConfig[0]}" must export a \`name\` string value.`
+      );
+    }
+    if (!pluginInstance.addHooks) {
+      throw new Error(
+        `The build plugin "${pluginInstance.name}" must export an \`addHooks\` function.`
+      );
+    }
+
+    this.log(
+      LogLevelLabel.INFO,
+      `Successfully initialized the "${pluginInstance.name}" plugin`
+    );
+
+    return pluginInstance;
   }
 }

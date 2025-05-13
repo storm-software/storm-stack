@@ -19,7 +19,6 @@
 import { createLog } from "./helpers/utilities/logger";
 import { Plugin } from "./plugin";
 import type { Options } from "./types/build";
-import type { PluginConfig } from "./types/config";
 import type { IPreset } from "./types/plugin";
 
 /**
@@ -29,14 +28,6 @@ export abstract class Preset<TOptions extends Options = Options>
   extends Plugin<TOptions>
   implements IPreset<TOptions>
 {
-  /**
-   * A list of plugin modules required as dependencies by the current Preset.
-   *
-   * @remarks
-   * These plugins will be called prior to the current Preset.
-   */
-  public dependencies = [] as Array<string | PluginConfig>;
-
   /**
    * The constructor for the Preset
    *

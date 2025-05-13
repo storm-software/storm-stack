@@ -24,7 +24,9 @@ import LogPlugin from "@storm-stack/devkit/plugins/log";
 export default class LogSentryPlugin<
   TOptions extends Options = Options
 > extends LogPlugin<TOptions> {
-  protected override dependencies: string[] = ["@sentry/core@^9.15.0"];
+  protected override installs = {
+    "@sentry/core@^9.15.0": "dependency"
+  } as Record<string, "dependency" | "devDependency">;
 
   public constructor(config: LogPluginConfig) {
     super(config, "log-sentry-plugin", "@storm-stack/plugin-log-sentry");

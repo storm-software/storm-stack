@@ -22,7 +22,7 @@ import { createLog } from "./helpers/utilities/logger";
 import { writeFile } from "./helpers/utilities/write-file";
 import { installPackage } from "./init/installs/utilities";
 import type { Context, EngineHooks, Options } from "./types/build";
-import type { LogFn } from "./types/config";
+import type { LogFn, PluginConfig } from "./types/config";
 import type { IPlugin } from "./types/plugin";
 
 /**
@@ -47,14 +47,12 @@ export abstract class Plugin<TOptions extends Options = Options>
   public log: LogFn;
 
   /**
-   * A string representing the type of plugin
+   * A list of plugin modules required as dependencies by the current Preset.
    *
    * @remarks
-   * This is used to determine the type of plugin during processing.
-   *
-   * @defaultValue "generic"
+   * These plugins will be called prior to the current Preset.
    */
-  public type: string = "generic";
+  public dependencies = [] as Array<string | PluginConfig>;
 
   /**
    * The constructor for the plugin
