@@ -1,5 +1,23 @@
 ![Storm Software](https://public.storm-cdn.com/brand-banner.png)
 
+# Changelog for Storm Stack - Plugin Log Sentry
+
+## [0.13.0](https://github.com/storm-software/storm-stack/releases/tag/plugin-log-sentry%400.13.0) (2025-05-13)
+
+### Features
+
+- **monorepo:** Major updates to structure of core engine processing
+
+### Updated Dependencies
+
+- Updated devkit to 0.2.0
+- Updated devkit to 0.2.0
+- Updated core to 0.16.0
+- Updated core to 0.16.0
+- Updated nx to 0.10.0
+
+![Storm Software](https://public.storm-cdn.com/brand-banner.png)
+
 # Changelog for Storm Stack - Log Sentry
 
 ## [0.12.11](https://github.com/storm-software/storm-stack/releases/tag/log-sentry%400.12.11) (2025-05-08)

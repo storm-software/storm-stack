@@ -2,6 +2,17 @@
 
 # Changelog for Storm Stack - Core
 
+## [0.16.0](https://github.com/storm-software/storm-stack/releases/tag/core%400.16.0) (2025-05-13)
+
+### Features
+
+- **monorepo:** Major updates to structure of core engine processing
+- **plugin-typedoc:** Update typedoc functionality to be separate plugin
+
+### Updated Dependencies
+
+- Updated types to 0.5.0
+
 ## [0.15.1](https://github.com/storm-software/storm-stack/releases/tag/core%400.15.1) (2025-05-08)
 
 ### Miscellaneous

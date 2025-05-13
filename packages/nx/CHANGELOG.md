@@ -2,6 +2,26 @@
 
 # Changelog for Storm Stack - Nx
 
+## [0.10.0](https://github.com/storm-software/storm-stack/releases/tag/nx%400.10.0) (2025-05-13)
+
+### Features
+
+- **monorepo:** Major updates to structure of core engine processing
+- **plugin-typedoc:** Update typedoc functionality to be separate plugin
+
+### Bug Fixes
+
+- **nx:** Ensure plugin only infers tasks for projects with storm config
+
+### Miscellaneous
+
+- **monorepo:** Update workspace package links
+
+### Updated Dependencies
+
+- Updated core to 0.16.0
+- Updated core to 0.16.0
+
 ## [0.9.19](https://github.com/storm-software/storm-stack/releases/tag/nx%400.9.19) (2025-05-08)
 
 ### Bug Fixes

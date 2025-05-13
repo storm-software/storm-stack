@@ -2,6 +2,12 @@
 
 # Changelog for Storm Stack - Eslint Config Storm Stack
 
+## [0.8.0](https://github.com/storm-software/storm-stack/releases/tag/eslint-config-storm-stack%400.8.0) (2025-05-13)
+
+### Features
+
+- **plugin-typedoc:** Update typedoc functionality to be separate plugin
+
 ## [0.7.18](https://github.com/storm-software/storm-stack/releases/tag/eslint-config-storm-stack%400.7.18) (2025-05-08)
 
 ### Miscellaneous

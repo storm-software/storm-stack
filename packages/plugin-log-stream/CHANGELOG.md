@@ -1,5 +1,23 @@
 ![Storm Software](https://public.storm-cdn.com/brand-banner.png)
 
+# Changelog for Storm Stack - Plugin Log Stream
+
+## [0.10.0](https://github.com/storm-software/storm-stack/releases/tag/plugin-log-stream%400.10.0) (2025-05-13)
+
+### Features
+
+- **monorepo:** Major updates to structure of core engine processing
+
+### Updated Dependencies
+
+- Updated devkit to 0.2.0
+- Updated devkit to 0.2.0
+- Updated core to 0.16.0
+- Updated core to 0.16.0
+- Updated nx to 0.10.0
+
+![Storm Software](https://public.storm-cdn.com/brand-banner.png)
+
 # Changelog for Storm Stack - Log Stream
 
 ## [0.9.11](https://github.com/storm-software/storm-stack/releases/tag/log-stream%400.9.11) (2025-05-08)

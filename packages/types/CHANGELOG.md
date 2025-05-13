@@ -2,6 +2,12 @@
 
 # Changelog for Storm Stack - Types
 
+## [0.5.0](https://github.com/storm-software/storm-stack/releases/tag/types%400.5.0) (2025-05-13)
+
+### Features
+
+- **monorepo:** Major updates to structure of core engine processing
+
 ## [0.4.3](https://github.com/storm-software/storm-stack/releases/tag/types%400.4.3) (2025-05-06)
 
 ### Miscellaneous
