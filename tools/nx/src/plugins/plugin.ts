@@ -42,11 +42,11 @@ import { addProjectScopeTag } from "../utilities/project-tags";
 
 /* eslint-disable no-console */
 
-export const name = "storm-stack/plugin";
+export const name = "storm-stack/tools/plugin";
 
-export interface StormStackPluginPluginOptions {}
+export interface StormStackToolsPluginOptions {}
 
-export const createNodesV2: CreateNodesV2<StormStackPluginPluginOptions> = [
+export const createNodesV2: CreateNodesV2<StormStackToolsPluginOptions> = [
   "packages/{plugin-*,preset-*}/project.json",
   async (configFiles, options, context): Promise<CreateNodesResultV2> => {
     return createNodesFromFiles(

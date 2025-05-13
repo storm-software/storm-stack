@@ -27,6 +27,7 @@ import {
   addProjectTag,
   setDefaultProjectTags
 } from "@storm-software/workspace-tools/utils/project-tags";
+import { existsSync } from "@stryke/path/exists";
 import { joinPaths } from "@stryke/path/join-paths";
 import type { PackageJson } from "@stryke/types/package-json";
 import type { TsConfigJson } from "@stryke/types/tsconfig";
@@ -37,22 +38,20 @@ import { readTargetsFromPackageJson } from "nx/src/utils/package-json.js";
 
 /* eslint-disable no-console */
 
-export const name = "storm-stack/nx/plugin";
+export const name = "storm-stack/nx";
 
 export interface StormStackNxPluginOptions {}
 
 export const createNodesV2: CreateNodesV2<StormStackNxPluginOptions> = [
-  "packages/*/project.json",
+  "**/project.json",
   async (configFiles, options, context): Promise<CreateNodesResultV2> => {
     return createNodesFromFiles(
       (configFile, options, context) => {
         try {
-          console.log(`Processing project.json file: ${configFile}`);
-
           const projectRoot = getProjectRoot(configFile, context.workspaceRoot);
           if (!projectRoot) {
             console.error(
-              `project.json file must be location in the project root directory: ${configFile}`
+              `[storm-stack/nx]: project.json file must be location in the project root directory: ${configFile}`
             );
             return {};
           }
@@ -60,10 +59,10 @@ export const createNodesV2: CreateNodesV2<StormStackNxPluginOptions> = [
           const packageJson = readJsonFile<PackageJson>(
             joinPaths(projectRoot, "package.json")
           );
-          if (!packageJson?.storm) {
-            console.error(
-              `No \`storm\` property found in package.json: ${projectRoot}`
-            );
+          if (
+            !packageJson?.storm &&
+            !existsSync(joinPaths(projectRoot, "storm.json"))
+          ) {
             return {};
           }
 
@@ -73,7 +72,7 @@ export const createNodesV2: CreateNodesV2<StormStackNxPluginOptions> = [
           );
           if (!project) {
             console.error(
-              `No project configuration found in project root: ${projectRoot}`
+              `[storm-stack/nx]: No project configuration found in project root: ${projectRoot}`
             );
             return {};
           }
@@ -83,7 +82,7 @@ export const createNodesV2: CreateNodesV2<StormStackNxPluginOptions> = [
           );
           if (!tsconfigJson) {
             console.error(
-              `No tsconfig.json found in project root: ${projectRoot}`
+              `[storm-stack/nx]: No tsconfig.json found in project root: ${projectRoot}`
             );
             return {};
           }
@@ -108,7 +107,8 @@ export const createNodesV2: CreateNodesV2<StormStackNxPluginOptions> = [
             executor: "@storm-stack/nx:clean",
             defaultConfiguration: "production",
             options: {
-              outputPath: "dist/{projectRoot}"
+              outputPath: "dist/{projectRoot}",
+              projectType: project.projectType
             },
             configurations: {
               production: {
@@ -131,7 +131,7 @@ export const createNodesV2: CreateNodesV2<StormStackNxPluginOptions> = [
             executor: "@storm-stack/nx:prepare",
             defaultConfiguration: "production",
             options: {
-              autoClean: true
+              projectType: project.projectType
             },
             configurations: {
               production: {
@@ -155,7 +155,7 @@ export const createNodesV2: CreateNodesV2<StormStackNxPluginOptions> = [
             defaultConfiguration: "production",
             options: {
               outputPath: "dist/{projectRoot}",
-              autoPrepare: true
+              projectType: project.projectType
             },
             configurations: {
               production: {
@@ -176,6 +176,9 @@ export const createNodesV2: CreateNodesV2<StormStackNxPluginOptions> = [
             dependsOn: ["prepare", "^lint"],
             executor: "@storm-stack/nx:lint",
             defaultConfiguration: "production",
+            options: {
+              projectType: project.projectType
+            },
             configurations: {
               production: {
                 mode: "production"
@@ -197,7 +200,7 @@ export const createNodesV2: CreateNodesV2<StormStackNxPluginOptions> = [
             executor: "@storm-stack/nx:docs",
             defaultConfiguration: "production",
             options: {
-              autoPrepare: true
+              projectType: project.projectType
             },
             configurations: {
               production: {

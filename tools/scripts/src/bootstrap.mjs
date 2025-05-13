@@ -29,7 +29,7 @@ try {
     outdir: "dist/plugins",
     tsconfig: "tools/nx/tsconfig.json",
     packages: "bundle",
-    external: ["nx", "@nx/devkit"],
+    external: ["nx", "@nx/*"],
     logLevel: "info",
     bundle: true,
     minify: false,
