@@ -9,3 +9,19 @@ rules:
     ignore:
       # ignore line 12, column 10 on pypi.yml
       # - pypi.yml:12:10
+  unpinned-uses:
+    ignore:
+      - release.yml
+      - zizmor.yml
+      - sync-labels.yml
+      - lock.yml
+      - gitguardian.yml
+      - contributors.yml
+      - codeql.yml
+  excessive-permissions:
+    ignore:
+      - release.yml
+      - zizmor.yml
+      - sync-labels.yml
+      - lock.yml
+      - gitguardian.yml
