@@ -11,7 +11,9 @@
     "9": "Null arrays cannot be provided to getRandom",
     "10": "No log record was made.",
     "11": "Invalid log level: \"%s\"",
-    "12": "Unable to access context. Please ensure it was initialized prior to its use."
+    "12": "Unable to access context. Please ensure it was initialized prior to its use.",
+    "13": "The \"CLOUDFLARE_ACCOUNT_ID\" variable must be defined to use the Cloudflare KV storage function.",
+    "14": "The \"CLOUDFLARE_API_TOKEN\", \"CLOUDFLARE_EMAIL\"/\"CLOUDFLARE_API_KEY\", or \"CLOUDFLARE_USER_SERVICE_KEY\" variable must be defined to use the Cloudflare KV storage function."
   },
   "not_found": {
     "1": "The requested resource was not found.",

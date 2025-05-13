@@ -25,9 +25,10 @@ import StoragePlugin from "@storm-stack/devkit/plugins/storage";
 import { readFile } from "@stryke/fs";
 import { existsSync, joinPaths } from "@stryke/path";
 import type { KVOptions } from "unstorage/drivers/cloudflare-kv-binding";
+import type { KVHTTPOptions } from "unstorage/drivers/cloudflare-kv-http";
 
-export type StorageCloudflareKVPluginConfig = Omit<KVOptions, "binding"> &
-  StoragePluginConfig & {
+export type StorageCloudflareKVPluginConfig = StoragePluginConfig &
+  Omit<KVOptions, "binding"> & {
     /**
      * The binding name for the Cloudflare KV.
      *
@@ -36,7 +37,7 @@ export type StorageCloudflareKVPluginConfig = Omit<KVOptions, "binding"> &
      *
      * @defaultValue "STORAGE"
      */
-    binding: string;
+    binding?: string;
 
     /**
      * The minimum TTL for the Cloudflare KV.
@@ -47,7 +48,7 @@ export type StorageCloudflareKVPluginConfig = Omit<KVOptions, "binding"> &
      * @defaultValue 60
      */
     minTTL: number;
-  };
+  } & Omit<KVHTTPOptions, "namespaceId" | "minTTL">;
 
 export default class StorageCloudflareKVPlugin<
   TOptions extends Options = Options
@@ -61,7 +62,6 @@ export default class StorageCloudflareKVPlugin<
       "@storm-stack/plugin-storage-cloudflare-kv"
     );
 
-    this.config.binding ??= "STORAGE";
     this.config.minTTL ??= 60;
   }
 
@@ -74,13 +74,43 @@ export default class StorageCloudflareKVPlugin<
   }
 
   protected override writeStorage() {
-    return `${getFileHeader()}
+    if (this.config.binding) {
+      return `${getFileHeader()}
 
-import cloudflareKVBindingDriver from "unstorage/drivers/cloudflare-kv-binding"
+import cloudflareKVBindingDriver from "unstorage/drivers/cloudflare-kv-binding";
 import { env } from "cloudflare:workers";
 
 export default cloudflareKVBindingDriver({ binding: env.${this.config.binding}, minTTL: ${this.config.minTTL ?? 60} });
 `;
+    } else {
+      return `${getFileHeader()}
+
+import cloudflareKVHTTPDriver from "unstorage/drivers/cloudflare-kv-http";
+
+const accountId = process.env.CLOUDFLARE_ACCOUNT_ID || $storm.vars.CLOUDFLARE_ACCOUNT_ID;
+const apiToken = process.env.CLOUDFLARE_API_TOKEN || $storm.vars.CLOUDFLARE_API_TOKEN;
+const email = process.env.CLOUDFLARE_EMAIL || $storm.vars.CLOUDFLARE_EMAIL;
+const apiKey = process.env.CLOUDFLARE_API_KEY || $storm.vars.CLOUDFLARE_API_KEY;
+const userServiceKey = process.env.CLOUDFLARE_USER_SERVICE_KEY || $storm.vars.CLOUDFLARE_USER_SERVICE_KEY;
+
+if (!accountId) {
+  throw new StormError({ type: "general", code: 13 });
+}
+if (!apiToken && (!email || !apiKey) && !userServiceKey) {
+  throw new StormError({ type: "general", code: 14 });
+}
+
+export default cloudflareKVHTTPDriver({
+  accountId,
+  namespaceId: ${this.config.namespace ? `"${this.config.namespace}"` : "undefined"},
+  apiToken,
+  email,
+  apiKey,
+  userServiceKey,
+  minTTL: ${this.config.minTTL ?? 60}
+});
+`;
+    }
   }
 
   async #prepareDeploy(context: Context<TOptions>) {
@@ -106,8 +136,8 @@ export default cloudflareKVBindingDriver({ binding: env.${this.config.binding}, 
 
       wranglerFile.kv_namespaces ??= [];
       wranglerFile.kv_namespaces.push({
-        binding: this.config.binding,
-        id: this.config.binding
+        binding: this.config.binding || "STORAGE",
+        id: this.config.namespace
       });
 
       return this.writeFile(
