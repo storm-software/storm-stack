@@ -2,6 +2,17 @@
 
 # Changelog for Storm Stack - Plugin Storage Fs
 
+## [0.1.1](https://github.com/storm-software/storm-stack/releases/tag/plugin-storage-fs%400.1.1) (2025-05-13)
+
+### Miscellaneous
+
+- **monorepo:** Update workspace package links
+
+### Updated Dependencies
+
+- Updated devkit to 0.3.1
+- Updated devkit to 0.3.1
+
 ## [0.1.0](https://github.com/storm-software/storm-stack/releases/tag/plugin-storage-fs%400.1.0) (2025-05-13)
 
 ### Features
