@@ -42,16 +42,16 @@
       "@storm-stack/plugin-log-storage/*": [
         "packages/plugin-log-storage/src/*"
       ],
-      "@storm-stack/plugin-storage-fs": [
-        "packages/plugin-storage-fs/src/index.ts"
-      ],
-      "@storm-stack/plugin-storage-fs/*": ["packages/plugin-storage-fs/src/*"],
       "@storm-stack/plugin-storage-cloudflare-kv": [
         "packages/plugin-storage-cloudflare-kv/src/index.ts"
       ],
       "@storm-stack/plugin-storage-cloudflare-kv/*": [
         "packages/plugin-storage-cloudflare-kv/src/*"
       ],
+      "@storm-stack/plugin-storage-fs": [
+        "packages/plugin-storage-fs/src/index.ts"
+      ],
+      "@storm-stack/plugin-storage-fs/*": ["packages/plugin-storage-fs/src/*"],
       "@storm-stack/preset-cli": ["packages/preset-cli/src/index.ts"],
       "@storm-stack/preset-cli/*": ["packages/preset-cli/src/*"],
       "@storm-stack/preset-cloudflare-worker": [

@@ -2,6 +2,24 @@
 
 # Changelog for Storm Stack - Plugin Log Sentry
 
+## [0.14.0](https://github.com/storm-software/storm-stack/releases/tag/plugin-log-sentry%400.14.0) (2025-05-13)
+
+### Features
+
+- **plugin-log-storage:** Added `useFileSystem` and `storageId` options
+
+### Miscellaneous
+
+- **monorepo:** Update workspace package links
+
+### Updated Dependencies
+
+- Updated devkit to 0.3.0
+- Updated devkit to 0.3.0
+- Updated core to 0.17.0
+- Updated core to 0.17.0
+- Updated nx to 0.10.1
+
 ## [0.13.0](https://github.com/storm-software/storm-stack/releases/tag/plugin-log-sentry%400.13.0) (2025-05-13)
 
 ### Features

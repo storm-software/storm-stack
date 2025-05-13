@@ -2,6 +2,22 @@
 
 # Changelog for Storm Stack - Devkit
 
+## [0.3.0](https://github.com/storm-software/storm-stack/releases/tag/devkit%400.3.0) (2025-05-13)
+
+### Features
+
+- **core:** Enhanced the `storage` runtime module to support plugins
+- **plugin-log-storage:** Added `useFileSystem` and `storageId` options
+- **devkit:** Added the `StoragePlugin` base class
+
+### Miscellaneous
+
+- **monorepo:** Update workspace package links
+
+### Updated Dependencies
+
+- Updated core to 0.17.0
+
 ## [0.2.0](https://github.com/storm-software/storm-stack/releases/tag/devkit%400.2.0) (2025-05-13)
 
 ### Features

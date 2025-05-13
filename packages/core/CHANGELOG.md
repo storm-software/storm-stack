@@ -2,6 +2,17 @@
 
 # Changelog for Storm Stack - Core
 
+## [0.17.0](https://github.com/storm-software/storm-stack/releases/tag/core%400.17.0) (2025-05-13)
+
+### Features
+
+- **core:** Enhanced the `storage` runtime module to support plugins
+- **plugin-log-storage:** Added `useFileSystem` and `storageId` options
+
+### Miscellaneous
+
+- **monorepo:** Update workspace package links
+
 ## [0.16.0](https://github.com/storm-software/storm-stack/releases/tag/core%400.16.0) (2025-05-13)
 
 ### Features

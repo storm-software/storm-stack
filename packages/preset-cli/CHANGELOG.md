@@ -2,6 +2,19 @@
 
 # Changelog for Storm Stack - Preset Cli
 
+## [0.9.1](https://github.com/storm-software/storm-stack/releases/tag/preset-cli%400.9.1) (2025-05-13)
+
+### Miscellaneous
+
+- **monorepo:** Update workspace package links
+
+### Updated Dependencies
+
+- Updated devkit to 0.3.0
+- Updated devkit to 0.3.0
+- Updated core to 0.17.0
+- Updated core to 0.17.0
+
 ## [0.9.0](https://github.com/storm-software/storm-stack/releases/tag/preset-cli%400.9.0) (2025-05-13)
 
 ### Features
