@@ -2,6 +2,24 @@
 
 # Changelog for Storm Stack - Plugin Log Storage
 
+## [0.11.0](https://github.com/storm-software/storm-stack/releases/tag/plugin-log-storage%400.11.0) (2025-05-13)
+
+### Features
+
+- **core:** Enhanced the `storage` runtime module to support plugins
+- **plugin-log-storage:** Added `useFileSystem` and `storageId` options
+
+### Miscellaneous
+
+- **monorepo:** Update workspace package links
+
+### Updated Dependencies
+
+- Updated devkit to 0.3.0
+- Updated devkit to 0.3.0
+- Updated core to 0.17.0
+- Updated core to 0.17.0
+
 ## [0.10.0](https://github.com/storm-software/storm-stack/releases/tag/plugin-log-storage%400.10.0) (2025-05-13)
 
 ### Features
