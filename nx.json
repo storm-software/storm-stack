@@ -14,7 +14,6 @@
     "@storm-software/workspace-tools/plugins/typescript",
     "@storm-software/workspace-tools/plugins/typescript/untyped",
     "@storm-software/workspace-tools/plugins/typescript/tsup",
-    "./dist/plugins/plugin.js",
-    "./dist/plugins/adapter.js"
+    "./dist/plugins/plugin.js"
   ]
 }
