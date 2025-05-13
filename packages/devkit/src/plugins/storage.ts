@@ -18,27 +18,24 @@
 
 import { LogLevelLabel } from "@storm-software/config-tools/types";
 import type { Context, EngineHooks, Options } from "@storm-stack/core/types";
-import type { LogLevel } from "@storm-stack/types/shared/log";
 import { joinPaths } from "@stryke/path/join-paths";
 import { camelCase } from "@stryke/string-format/camel-case";
 import type { MaybePromise } from "@stryke/types/base";
 import LibraryPlugin from "./library";
 
-export interface LogPluginConfig {
-  logLevel?: LogLevel;
+export interface StoragePluginConfig {
+  storageId: string;
 }
 
-export default abstract class LogPlugin<
+export default abstract class StoragePlugin<
   TOptions extends Options = Options
 > extends LibraryPlugin<TOptions> {
   public constructor(
-    protected override config: LogPluginConfig,
+    protected override config: StoragePluginConfig,
     name: string,
     installPath?: string
   ) {
     super(config, name, installPath);
-
-    this.config.logLevel ??= "info";
   }
 
   public override addHooks(hooks: EngineHooks<TOptions>) {
@@ -51,27 +48,16 @@ export default abstract class LogPlugin<
   }
 
   /**
-   * Allow derived classes to prepare the Log Sink runtime source code.
+   * Allow derived classes to prepare the storage runtime source code.
    *
    * @param context - The context to use
    */
-  protected abstract writeSink(
+  protected abstract writeStorage(
     context: Context<TOptions>
   ): MaybePromise<string>;
 
-  /**
-   * Allow derived classes to prepare the Log Sink runtime source code.
-   *
-   * @param _context - The context to use
-   */
-  protected writeInit(_context: Context<TOptions>): MaybePromise<string> {
-    // Do nothing
-
-    return "";
-  }
-
   async #prepareRuntime(context: Context<TOptions>) {
-    this.log(LogLevelLabel.TRACE, `Prepare the Storm Stack logging project.`);
+    this.log(LogLevelLabel.TRACE, `Prepare the Storm Stack storage artifact.`);
 
     if (context.options.projectType === "application") {
       await this.writeFile(
@@ -79,24 +65,11 @@ export default abstract class LogPlugin<
           context.options.projectRoot,
           context.artifactsDir,
           "runtime",
-          "logs",
+          "storage",
           `${this.name}.ts`
         ),
-        await Promise.resolve(this.writeSink(context))
+        await Promise.resolve(this.writeStorage(context))
       );
-
-      const initCode = await Promise.resolve(this.writeInit(context));
-      if (initCode) {
-        await this.writeFile(
-          joinPaths(
-            context.options.projectRoot,
-            "runtime",
-            "logs",
-            `${this.name}.init.ts`
-          ),
-          initCode
-        );
-      }
     }
   }
 
@@ -107,11 +80,11 @@ export default abstract class LogPlugin<
     );
 
     if (context.options.projectType === "application") {
-      const name = `${camelCase(this.name)}Sink`;
-      context.runtime.logs.push({
+      const name = `${camelCase(this.name)}Storage`;
+      context.runtime.storage.push({
         name,
-        logLevel: this.config.logLevel || "info",
-        import: `import ${name} from "./${joinPaths("logs", this.name)}"; `
+        storageId: this.config.storageId,
+        import: `import ${name} from "./${joinPaths("storage", this.name)}"; `
       });
     }
   }

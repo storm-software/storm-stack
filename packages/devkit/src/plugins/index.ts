@@ -19,3 +19,4 @@
 export { default as BasePlugin } from "./base";
 export { default as LibraryPlugin } from "./library";
 export { default as LogPlugin } from "./log";
+export { default as StoragePlugin } from "./storage";
