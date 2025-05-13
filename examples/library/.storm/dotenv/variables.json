@@ -1,0 +1,9 @@
+[
+  {
+    "kind": 30,
+    "types": [],
+    "entityOptions": {
+      "description": "An object containing the dotenv variables used by the examples-library application."
+    }
+  }
+]

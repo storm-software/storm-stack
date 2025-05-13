@@ -1,9 +1,9 @@
 
-account_id = 'undefined'
-compatibility_date = '2025-04-08'
-compatibility_flags = ['nodejs_als']
-main = '/.storm/entry-h9JIrhAo.ts'
 name = 'examples-cloudflare-worker'
+compatibility_date = '2025-05-13'
+main = '/.storm/entry-0LGqoAa1pmeC5fOU1GFizPSV.ts'
+account_id = 'undefined'
+compatibility_flags = ['nodejs_als']
 kv_namespaces = [
     { binding = 'STORAGE', id = 'STORAGE' },
 ]

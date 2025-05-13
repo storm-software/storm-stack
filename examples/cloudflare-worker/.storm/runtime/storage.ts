@@ -10,6 +10,4 @@ import storageCloudflareKvStorageStorage from "./storage/storage-cloudflare-kv-s
 
 export const storage = createStorage();
 
-storage.mount("logs", fsLiteDriver({ base: getEnvPaths().log }));
-
 storage.mount("storage", storageCloudflareKvStorageStorage);
