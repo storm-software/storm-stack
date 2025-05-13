@@ -18,21 +18,18 @@
 
 import { match, tsconfigPathsToRegExp } from "bundle-require";
 import type { Plugin } from "esbuild";
-import type { LogFn, Options } from "../../types";
+import type { Options } from "../../types";
 
 // Must not start with "/" or "./" or "../" or "C:\" or be the exact strings ".." or "."
 const NON_NODE_MODULE_REGEX = /^[A-Z]:[/\\]|^\.{0,2}\/|^\.{1,2}$/;
 
 export const externalPlugin = (
-  log: LogFn,
   options: Pick<
     Options,
     "external" | "noExternal" | "skipNodeModulesBundle"
   > = {},
   tsconfigResolvePaths: Record<string, any> = {}
 ): Plugin => {
-  // const log = createLog("external-plugin", options);
-
   return {
     name: "storm-stack:external",
     setup(build) {

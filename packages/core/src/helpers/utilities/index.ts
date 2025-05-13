@@ -16,8 +16,12 @@
 
  ------------------------------------------------------------------- */
 
+export * from "./cache";
 export * from "./file-header";
+export * from "./load-config";
 export * from "./logger";
 export * from "./magic-string";
+export * from "./resolve-path";
 export * from "./source-map";
+export * from "./tsconfig";
 export * from "./write-file";

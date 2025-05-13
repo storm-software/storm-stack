@@ -14,6 +14,20 @@ declare global {
   const StormURL: (typeof import("@stryke/url"))["StormURL"];
   type StormURL = import("@stryke/url").StormURL;
 
+  const parseCookie: (typeof import("@stryke/http"))["parseCookie"];
+  type parseCookie = import("@stryke/http").parseCookie;
+
+  const parseSetCookie: (typeof import("@stryke/http"))["parseSetCookie"];
+  type parseSetCookie = import("@stryke/http").parseSetCookie;
+
+  const serializeCookie: (typeof import("@stryke/http"))["serializeCookie"];
+  type serializeCookie = import("@stryke/http").serializeCookie;
+
+  const splitSetCookieString: (typeof import("@stryke/http"))[
+    "splitSetCookieString"
+  ];
+  type splitSetCookieString = import("@stryke/http").splitSetCookieString;
+
   const StormLog: (typeof import("../runtime/log"))["StormLog"];
   type StormLog = import("../runtime/log").StormLog;
 

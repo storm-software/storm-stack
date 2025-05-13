@@ -19,12 +19,12 @@
 import type { ReflectionClass } from "@deepkit/type";
 import { deserializeType } from "@deepkit/type";
 import { LogLevelLabel } from "@storm-software/config-tools/types";
-import { getFileHeader } from "@storm-stack/core/helpers";
-import { resolveDotenvReflection } from "@storm-stack/core/helpers/dotenv/resolve-dotenv";
+import { resolveDotenvReflection } from "@storm-stack/core/helpers/dotenv/resolve";
 import {
   writeDotenvProperties,
   writeDotenvReflection
-} from "@storm-stack/core/helpers/dotenv/write-dotenv";
+} from "@storm-stack/core/helpers/dotenv/write-reflections";
+import { getFileHeader } from "@storm-stack/core/helpers/utilities/file-header";
 import { Preset } from "@storm-stack/core/preset";
 import type {
   Context,
@@ -32,7 +32,9 @@ import type {
   Options,
   ResolvedEntryTypeDefinition
 } from "@storm-stack/core/types";
-import { StormStackNodeFeatures } from "@storm-stack/plugin-node/types/config";
+import { unbuild } from "@storm-stack/devkit/helpers/unbuild/build";
+
+import { esbuild } from "@storm-stack/devkit/helpers/esbuild/build";
 import { listFiles } from "@stryke/fs/list-files";
 import { readJsonFile } from "@stryke/fs/read-file";
 import { StormJSON } from "@stryke/json/storm-json";
@@ -50,9 +52,11 @@ import { titleCase } from "@stryke/string-format/title-case";
 import { isSetString } from "@stryke/type-checks/is-set-string";
 import defu from "defu";
 import { reflectCommands } from "./helpers/reflect-command";
+import { writePrompt } from "./runtime/prompt";
 import { writeStorage } from "./runtime/storage";
 import type { StormStackCLIPresetConfig } from "./types/config";
 import type { CommandReflection } from "./types/reflection";
+
 export default class StormStackCLIPreset<
   TOptions extends Options = Options
 > extends Preset<TOptions> {
@@ -63,15 +67,12 @@ export default class StormStackCLIPreset<
   public constructor(config: Partial<StormStackCLIPresetConfig> = {}) {
     super("cli", "@storm-stack/preset-cli");
 
-    this.#config = {
-      features: [],
-      ...config
-    };
+    this.#config = config;
     this.dependencies = [
       [
-        "@storm-stack/plugin-node",
+        "@storm-stack/plugin-log-console",
         {
-          features: [...this.#config.features, StormStackNodeFeatures.ENV_PATHS]
+          logLevel: "info"
         }
       ]
     ];
@@ -80,9 +81,10 @@ export default class StormStackCLIPreset<
   public addHooks(hooks: EngineHooks<TOptions>) {
     hooks.addHooks({
       "init:context": this.initContext.bind(this),
-      "init:installs": this.initInstalls.bind(this),
       "prepare:entry": this.prepareEntry.bind(this),
-      "prepare:runtime": this.prepareRuntime.bind(this)
+      "prepare:runtime": this.prepareRuntime.bind(this),
+      "build:library": this.buildLibrary.bind(this),
+      "build:application": this.buildApplication.bind(this)
     });
   }
 
@@ -92,129 +94,125 @@ export default class StormStackCLIPreset<
       `Initializing CLI specific options for the Storm Stack project.`
     );
 
-    if (
-      context.projectType === "application" &&
-      isSetString(context.entry) &&
-      isDirectory(context.entry)
-    ) {
-      const files = (await listFiles(joinPaths(context.entry, "**/*.ts"))).map(
-        file =>
+    context.options.platform = "node";
+
+    if (context.options.projectType === "application") {
+      context.installs["@clack/prompts@0.10.1"] = "dependency";
+      context.installs["@stryke/cli"] = "dependency";
+
+      if (isSetString(context.entry) && isDirectory(context.entry)) {
+        const files = (
+          await listFiles(joinPaths(context.entry, "**/*.ts"))
+        ).map(file =>
           file.replace(
             `${joinPaths(
               context.workspaceConfig.workspaceRoot,
-              context.entry as string
+              context.options.entry as string
             )}/`,
             ""
           )
-      );
-      if (files.length === 0) {
-        this.log(
-          LogLevelLabel.WARN,
-          `No commands could be found in ${context.entry}. Please ensure this is correct.`
         );
-      } else {
-        this.log(
-          LogLevelLabel.TRACE,
-          `The following commands were found in the entry directory: ${files.join(
-            ", "
-          )}`
-        );
-
-        const bin = kebabCase(this.#config.bin || context.name || "cli");
-        const resolvedEntry = {
-          file: joinPaths(
-            context.projectRoot,
-            context.artifactsDir,
-            `${bin}.ts`
-          ),
-          input: { file: joinPaths(context.entry) },
-          output: bin
-        };
-
-        let packageJson = context.packageJson;
-        if (!packageJson) {
-          packageJson = await readJsonFile(
-            joinPaths(context.projectRoot, "package.json")
+        if (files.length === 0) {
+          this.log(
+            LogLevelLabel.WARN,
+            `No commands could be found in ${context.entry}. Please ensure this is correct.`
           );
-        }
-
-        await this.writeFile(
-          joinPaths(context.projectRoot, "package.json"),
-          StormJSON.stringify(
-            defu(
-              {
-                bin: {
-                  [bin]: `${joinPaths("dist", bin)}.js`
-                }
-              },
-              packageJson
-            )
-          )
-        );
-
-        if (
-          context.resolvedEntry.length === 0 ||
-          !context.resolvedEntry[0]?.file
-        ) {
-          context.resolvedEntry.push(resolvedEntry);
         } else {
-          context.resolvedEntry[0] = resolvedEntry;
-        }
-
-        this.#commandEntries = files.reduce((ret, file) => {
-          let entryFile = joinPaths(
-            context.projectRoot,
-            context.artifactsDir,
-            "commands",
-            file.replace(context.entry as string, "")
+          this.log(
+            LogLevelLabel.TRACE,
+            `The following commands were found in the entry directory: ${files.join(
+              ", "
+            )}`
           );
-          if (
-            findFileName(entryFile) !== "index.ts" &&
-            findFileName(entryFile) !== "index.tsx"
-          ) {
-            entryFile = joinPaths(
-              entryFile.replace(findFileExtension(entryFile), ""),
-              "index.ts"
+
+          const bin = kebabCase(
+            this.#config.bin || context.options.name || "cli"
+          );
+          const resolvedEntry = {
+            file: joinPaths(
+              context.options.projectRoot,
+              context.artifactsDir,
+              `${bin}.ts`
+            ),
+            input: { file: joinPaths(context.entry) },
+            output: bin
+          };
+
+          let packageJson = context.packageJson;
+          if (!packageJson) {
+            packageJson = await readJsonFile(
+              joinPaths(context.options.projectRoot, "package.json")
             );
           }
 
-          if (ret.some(entry => entry.file === entryFile)) {
-            this.log(
-              LogLevelLabel.WARN,
-              `Duplicate entry file found: ${entryFile}. Please ensure this is correct.`
-            );
+          await this.writeFile(
+            joinPaths(context.options.projectRoot, "package.json"),
+            StormJSON.stringify(
+              defu(
+                {
+                  bin: {
+                    [bin]: `${joinPaths("dist", bin)}.js`
+                  }
+                },
+                packageJson
+              )
+            )
+          );
+
+          if (!Array.isArray(context.entry)) {
+            context.entry = [];
+          }
+
+          if (context.entry.length === 0 || !context.entry[0]?.file) {
+            context.entry.push(resolvedEntry);
           } else {
-            ret.push({
-              file: entryFile,
-              input: { file: joinPaths(context.entry as string, file) }
-            });
+            context.entry[0] = resolvedEntry;
           }
 
-          return ret;
-        }, [] as ResolvedEntryTypeDefinition[]);
+          this.#commandEntries = files.reduce((ret, file) => {
+            let entryFile = joinPaths(
+              context.options.projectRoot,
+              context.artifactsDir,
+              "commands",
+              file.replace(context.options.entry as string, "")
+            );
+            if (
+              findFileName(entryFile) !== "index.ts" &&
+              findFileName(entryFile) !== "index.tsx"
+            ) {
+              entryFile = joinPaths(
+                entryFile.replace(findFileExtension(entryFile), ""),
+                "index.ts"
+              );
+            }
+
+            if (ret.some(entry => entry.file === entryFile)) {
+              this.log(
+                LogLevelLabel.WARN,
+                `Duplicate entry file found: ${entryFile}. Please ensure this is correct.`
+              );
+            } else {
+              ret.push({
+                file: entryFile,
+                input: {
+                  file: joinPaths(context.options.entry as string, file)
+                }
+              });
+            }
+
+            return ret;
+          }, [] as ResolvedEntryTypeDefinition[]);
+        }
       }
     }
   }
 
-  protected async initInstalls(context: Context<TOptions>) {
-    this.log(
-      LogLevelLabel.TRACE,
-      `Running required installations for the project.`
-    );
-
-    await Promise.all(
-      [
-        this.install(context, "@stryke/cli"),
-        context.projectType === "application" &&
-          this.install(context, "@storm-stack/log-storage"),
-        context.projectType === "application" &&
-          this.install(context, "consola")
-      ].filter(Boolean)
-    );
-  }
-
   protected async prepareRuntime(context: Context<TOptions>) {
-    const runtimeDir = joinPaths(context.projectRoot, context.runtimeDir);
+    const runtimeDir = joinPaths(
+      context.options.projectRoot,
+      context.artifactsDir,
+      "runtime"
+    );
 
     this.log(
       LogLevelLabel.TRACE,
@@ -222,7 +220,8 @@ export default class StormStackCLIPreset<
     );
 
     await Promise.all([
-      this.writeFile(joinPaths(runtimeDir, "storage.ts"), writeStorage())
+      this.writeFile(joinPaths(runtimeDir, "storage.ts"), writeStorage()),
+      this.writeFile(joinPaths(runtimeDir, "prompt.ts"), writePrompt())
     ]);
   }
 
@@ -251,11 +250,11 @@ export default class StormStackCLIPreset<
       )
     );
 
-    const name = context.name ?? this.#config.bin;
+    const name = context.options.name ?? this.#config.bin;
     const displayName = titleCase(name);
 
     await Promise.all(
-      context.resolvedEntry.map(async entry =>
+      context.entry.map(async entry =>
         this.writeFile(
           entry.file,
           `#!/usr/bin/env node
@@ -270,13 +269,13 @@ import {
   alignText,
   alignTextLeft,
   alignTextCenter
-} from "@stryke/cli/align-text";
+} from "@stryke/cli/utils/align-text";
+ import { box } from "@stryke/cli/utils/box";
+import { colors } from "@stryke/cli/utils/color";
 import { registerShutdown } from "@stryke/cli/shutdown";
 import { renderUsage } from "@stryke/cli/usage";
 import { tryGetWorkspaceConfig } from "@stryke/cli/usage";
-import consola from "consola";
-import { isStormError } from "storm:error";
-import { colors } from "consola/utils";
+import { isStormError } from "./runtime/error";
 
 const shutdown = await registerShutdown();
 
@@ -287,7 +286,7 @@ try {
       meta: {
         name: "${name}",
         displayName: "${displayName}",
-        version: $storm.env.APP_VERSION,
+        version: $storm.vars.APP_VERSION,
         description: "${context.packageJson.description || `The ${displayName} command-line interface application`}",
         homepage: ${
           context.workspaceConfig?.homepage
@@ -354,10 +353,15 @@ try {
       lineLength => alignTextCenter(lineLength, Math.max(...[titleText, renderedDescription, renderedUrls].join("\\n").split("\\n").map(line => line.length)))
     );
 
-    consola.box(\`\${renderedTitle}\\n\\n\${renderedDescription}\\n\\n\${renderedUrls}\`, {
-      padding: 1
-    });
-    consola.log(\`\\n\\n\${renderLicense(meta)}\\n\\n\`);
+    console.log(
+      box(\`\${renderedTitle}\\n\\n\${renderedDescription}\\n\\n\${renderedUrls}\`, {
+        title: ${context.workspaceConfig?.organization ? `"${titleCase(context.workspaceConfig.organization)}"` : "undefined"},
+        style: {
+          padding: 1
+        }
+      })
+    );
+    console.log(\`\\n\\n\${renderLicense(meta)}\\n\\n\`);
   }
 
   if (
@@ -365,8 +369,8 @@ try {
     rawArgs.includes("-h") ||
     rawArgs.includes("-?")
   ) {
-    consola.log(\`\${await renderUsage(command)}\\n\\n\`);
-    consola.log(\`\${await renderLicense(meta)}\\n\\n\`);
+    console.log(\`\${await renderUsage(command)}\\n\\n\`);
+    console.log(\`\${await renderLicense(meta)}\\n\\n\`);
   } else if (
     rawArgs.length === 1 &&
     (rawArgs[0] === "--version" || rawArgs[0] === "-v")
@@ -379,12 +383,12 @@ try {
       throw new StormError({ code: 8 });
     }
 
-    consola.log(meta.version);
+    console.log(meta.version);
   } else {
     await runCommand(command, { rawArgs });
   }
 } catch (error) {
-  consola.error(error, "An unexpected error occurred");
+  console.error(error, "An unexpected error occurred");
   await shutdown(isStormError(error) ? error.code : 1);
 }
 
@@ -425,53 +429,24 @@ import ${command.entry.input.name ? `{ ${command.entry.input.name} as handle }` 
           ""
         )
       )}";
-import { builder } from "storm:app";
-import { storage } from "storm:storage";
-import { StormRequest } from "storm:request";
-import { StormResponse } from "storm:response";
-import { getSink as getStorageSink } from "@storm-stack/log-storage";${
-        this.#config.features?.includes(StormStackNodeFeatures.SENTRY)
-          ? `
-import { getSink as getSentrySink } from "@storm-stack/log-sentry";`
-          : ""
-      }
-import { defineCommand } from "@stryke/cli/define-command";
-import { getAppVersion } from "storm:context";${
+import { wrap } from "./runtime/app";
+import { storage } from "./runtime/storage";
+import { StormRequest } from "./runtime/request";
+import { StormResponse } from "./runtime/response";
+import { getAppVersion } from "./runtime/context";${
         command.subCommands && Object.keys(command.subCommands).length > 0
           ? Object.keys(command.subCommands)
               .map(key => `import ${key} from "./${key}";`)
               .join("\n")
           : ""
       }
+import { defineCommand } from "@stryke/cli/define-command";
 import type { CommandContext } from "@stryke/cli/types";
-import { deserialize } from "@deepkit/type";
+import { deserialize, serialize } from "@deepkit/type";
 import { ${command.argsTypeName} } from "${relativePath(
         findFilePath(command.entry.file),
         joinPaths(context.workspaceConfig.workspaceRoot, command.argsTypeImport)
       )}";
-
-const handleCommand = builder<
-  StormRequest<${command.argsTypeName}>,
-  StormResponse<any>,
-  CommandContext<any>,
-  any
->({
-  name: ${context.name ? `"${context.name}"` : "undefined"},
-  log: [
-    { handle: await getStorageSink({ storage }), logLevel: "debug" }${
-      this.#config.features.includes(StormStackNodeFeatures.SENTRY)
-        ? `,
-    { handle: getSentrySink(), logLevel: "error" }`
-        : ""
-    }
-  ],
-  storage
-})
-  .handler(handle)
-  .deserializer((payload: any) => new StormRequest(
-    deserialize<${command.argsTypeName}>(payload.args)
-  ))
-  .build();
 
 export default defineCommand({
   meta: {
@@ -511,7 +486,20 @@ export default defineCommand({
   },`
       : ""
   }
-  handle: handleCommand
+  handle: wrap<
+    StormRequest<${command.argsTypeName}>,
+    StormResponse<any>,
+    CommandContext<any>,
+    any
+  >(
+    handle,
+    {
+      deserializer: (payload: any) => new StormRequest(
+        deserialize<${command.argsTypeName}>(payload.args)
+      ),
+      serializer: (result: any) => new StormResponse(result)
+    }
+  )
 })
 
 `
@@ -538,5 +526,13 @@ export default defineCommand({
         this.addCommandArgReflections(reflection, subCommand)
       );
     }
+  }
+
+  protected async buildLibrary(context: Context<TOptions>) {
+    return unbuild(context);
+  }
+
+  protected async buildApplication(context: Context<TOptions>) {
+    return esbuild(context);
   }
 }

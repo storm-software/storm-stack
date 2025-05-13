@@ -1,0 +1,31 @@
+{
+  "name": "examples-library",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "library",
+  "sourceRoot": "examples/library/src",
+  "targets": {
+    "prepare": {
+      "cache": true,
+      "inputs": ["typescript", "^production"],
+      "outputs": ["{options.outputPath}"],
+      "executor": "@storm-stack/nx:prepare",
+      "options": {
+        "entry": "{sourceRoot}/index.ts#getCity",
+        "outputPath": "dist/examples/library",
+        "mode": "development"
+      }
+    },
+    "build": {
+      "cache": true,
+      "inputs": ["typescript", "^production"],
+      "outputs": ["{options.outputPath}"],
+      "executor": "@storm-stack/nx:build",
+      "dependsOn": ["prepare"],
+      "options": {
+        "entry": "{sourceRoot}/index.ts#getCity",
+        "outputPath": "dist/examples/library",
+        "mode": "development"
+      }
+    }
+  }
+}

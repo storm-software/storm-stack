@@ -1,0 +1,31 @@
+{
+  "name": "@storm-stack/examples-library",
+  "version": "0.0.1",
+  "type": "module",
+  "description": "An example Storm Stack library",
+  "repository": {
+    "type": "github",
+    "url": "https://github.com/storm-software/storm-stack.git",
+    "directory": "examples/library"
+  },
+  "private": true,
+  "dependencies": {
+    "@storm-stack/types": "workspace:*",
+    "@stryke/json": "catalog:",
+    "@stryke/type-checks": "catalog:",
+    "@stryke/url": "catalog:"
+  },
+  "devDependencies": {
+    "@storm-stack/core": "workspace:*",
+    "@storm-stack/devkit": "workspace:*",
+    "@storm-stack/nx": "workspace:*",
+    "@stryke/types": "catalog:"
+  },
+  "storm": {
+    "plugins": [
+      "@storm-stack/devkit/plugins/library"
+    ],
+    "skipCache": true,
+    "skipInstalls": true
+  }
+}

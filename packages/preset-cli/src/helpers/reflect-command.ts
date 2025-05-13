@@ -98,12 +98,12 @@ export async function reflectCommands<TOptions extends Options = Options>(
           await writeFile(
             log,
             joinPaths(
-              context.projectRoot,
+              context.options.projectRoot,
               context.artifactsDir,
               "reflections",
               entry.file
                 .replace(
-                  joinPaths(context.projectRoot, context.artifactsDir),
+                  joinPaths(context.options.projectRoot, context.artifactsDir),
                   ""
                 )
                 .replace(findFileName(entry.file), ""),

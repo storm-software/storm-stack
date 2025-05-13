@@ -1,0 +1,195 @@
+{
+  "name": "@storm-stack/devkit",
+  "version": "0.1.5",
+  "type": "module",
+  "description": "A collection of tools and utilities for developing Storm Stack plugins and presets.",
+  "repository": {
+    "type": "github",
+    "url": "https://github.com/storm-software/storm-stack.git",
+    "directory": "packages/devkit"
+  },
+  "homepage": "https://stormsoftware.com",
+  "bugs": {
+    "url": "https://stormsoftware.com/support",
+    "email": "support@stormsoftware.com"
+  },
+  "author": {
+    "name": "Storm Software",
+    "email": "contact@stormsoftware.com",
+    "url": "https://stormsoftware.com"
+  },
+  "maintainers": [
+    {
+      "name": "Storm Software",
+      "email": "contact@stormsoftware.com",
+      "url": "https://stormsoftware.com"
+    }
+  ],
+  "contributors": [
+    {
+      "name": "Storm Software",
+      "email": "contact@stormsoftware.com",
+      "url": "https://stormsoftware.com"
+    }
+  ],
+  "funding": {
+    "type": "github",
+    "url": "https://github.com/sponsors/storm-software"
+  },
+  "license": "Apache-2.0",
+  "private": false,
+  "exports": {
+    "./package.json": "./package.json",
+    ".": {
+      "import": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      },
+      "require": {
+        "types": "./dist/index.d.cts",
+        "default": "./dist/index.cjs"
+      },
+      "default": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      }
+    },
+    "./index": {
+      "import": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      },
+      "require": {
+        "types": "./dist/index.d.cts",
+        "default": "./dist/index.cjs"
+      },
+      "default": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      }
+    },
+    "./plugins": {
+      "import": {
+        "types": "./dist/plugins/index.d.ts",
+        "default": "./dist/plugins/index.js"
+      },
+      "require": {
+        "types": "./dist/plugins/index.d.cts",
+        "default": "./dist/plugins/index.cjs"
+      },
+      "default": {
+        "types": "./dist/plugins/index.d.ts",
+        "default": "./dist/plugins/index.js"
+      }
+    },
+    "./plugins/*": {
+      "import": {
+        "types": "./dist/plugins/*.d.ts",
+        "default": "./dist/plugins/*.js"
+      },
+      "require": {
+        "types": "./dist/plugins/*.d.cts",
+        "default": "./dist/plugins/*.cjs"
+      },
+      "default": {
+        "types": "./dist/plugins/*.d.ts",
+        "default": "./dist/plugins/*.js"
+      }
+    },
+    "./helpers": {
+      "import": {
+        "types": "./dist/helpers/index.d.ts",
+        "default": "./dist/helpers/index.js"
+      },
+      "require": {
+        "types": "./dist/helpers/index.d.cts",
+        "default": "./dist/helpers/index.cjs"
+      },
+      "default": {
+        "types": "./dist/helpers/index.d.ts",
+        "default": "./dist/helpers/index.js"
+      }
+    },
+    "./helpers/esbuild": {
+      "import": {
+        "types": "./dist/helpers/esbuild/index.d.ts",
+        "default": "./dist/helpers/esbuild/index.js"
+      },
+      "require": {
+        "types": "./dist/helpers/esbuild/index.d.cts",
+        "default": "./dist/helpers/esbuild/index.cjs"
+      },
+      "default": {
+        "types": "./dist/helpers/esbuild/index.d.ts",
+        "default": "./dist/helpers/esbuild/index.js"
+      }
+    },
+    "./helpers/esbuild/*": {
+      "import": {
+        "types": "./dist/helpers/esbuild/*.d.ts",
+        "default": "./dist/helpers/esbuild/*.js"
+      },
+      "require": {
+        "types": "./dist/helpers/esbuild/*.d.cts",
+        "default": "./dist/helpers/esbuild/*.cjs"
+      },
+      "default": {
+        "types": "./dist/helpers/esbuild/*.d.ts",
+        "default": "./dist/helpers/esbuild/*.js"
+      }
+    },
+    "./helpers/unbuild": {
+      "import": {
+        "types": "./dist/helpers/unbuild/index.d.ts",
+        "default": "./dist/helpers/unbuild/index.js"
+      },
+      "require": {
+        "types": "./dist/helpers/unbuild/index.d.cts",
+        "default": "./dist/helpers/unbuild/index.cjs"
+      },
+      "default": {
+        "types": "./dist/helpers/unbuild/index.d.ts",
+        "default": "./dist/helpers/unbuild/index.js"
+      }
+    },
+    "./helpers/unbuild/*": {
+      "import": {
+        "types": "./dist/helpers/unbuild/*.d.ts",
+        "default": "./dist/helpers/unbuild/*.js"
+      },
+      "require": {
+        "types": "./dist/helpers/unbuild/*.d.cts",
+        "default": "./dist/helpers/unbuild/*.cjs"
+      },
+      "default": {
+        "types": "./dist/helpers/unbuild/*.d.ts",
+        "default": "./dist/helpers/unbuild/*.js"
+      }
+    }
+  },
+  "files": [
+    "dist/**/*"
+  ],
+  "keywords": [
+    "storm-stack",
+    "storm-software",
+    "devkit"
+  ],
+  "dependencies": {
+    "@storm-software/esbuild": "catalog:",
+    "@storm-software/unbuild": "catalog:",
+    "@storm-stack/core": "workspace:*",
+    "@stryke/path": "catalog:",
+    "@stryke/string-format": "catalog:",
+    "defu": "catalog:",
+    "esbuild": "catalog:"
+  },
+  "devDependencies": {
+    "@storm-stack/types": "workspace:*",
+    "@types/node": "catalog:"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "sideEffects": false
+}

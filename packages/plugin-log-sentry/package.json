@@ -1,0 +1,105 @@
+{
+  "name": "@storm-stack/plugin-log-sentry",
+  "version": "0.12.11",
+  "type": "module",
+  "description": "A package containing a Storm Stack log adapter to write log messages to Sentry",
+  "repository": {
+    "type": "github",
+    "url": "https://github.com/storm-software/storm-stack.git",
+    "directory": "packages/plugin-log-sentry"
+  },
+  "private": false,
+  "exports": {
+    "./package.json": "./package.json",
+    ".": {
+      "import": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      },
+      "require": {
+        "types": "./dist/index.d.cts",
+        "default": "./dist/index.cjs"
+      },
+      "default": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      }
+    },
+    "./index": {
+      "import": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      },
+      "require": {
+        "types": "./dist/index.d.cts",
+        "default": "./dist/index.cjs"
+      },
+      "default": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      }
+    },
+    "./plugin": {
+      "import": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      },
+      "require": {
+        "types": "./dist/index.d.cts",
+        "default": "./dist/index.cjs"
+      },
+      "default": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      }
+    },
+    "./types": {
+      "import": {
+        "types": "./dist/types.d.ts",
+        "default": "./dist/types.js"
+      },
+      "require": {
+        "types": "./dist/types.d.cts",
+        "default": "./dist/types.cjs"
+      },
+      "default": {
+        "types": "./dist/types.d.ts",
+        "default": "./dist/types.js"
+      }
+    }
+  },
+  "files": [
+    "dist/**/*"
+  ],
+  "keywords": [
+    "storm-stack",
+    "storm-software",
+    "storm-stack-plugin",
+    "storm-stack-log-plugin"
+  ],
+  "peerDependencies": {
+    "@sentry/core": "catalog:",
+    "@sentry/node": "catalog:"
+  },
+  "peerDependenciesMeta": {
+    "@sentry/core": {
+      "optional": true
+    },
+    "@sentry/node": {
+      "optional": true
+    }
+  },
+  "dependencies": {
+    "@storm-stack/core": "workspace:*",
+    "@storm-stack/devkit": "workspace:*",
+    "@stryke/json": "catalog:"
+  },
+  "devDependencies": {
+    "@storm-stack/nx": "workspace:*",
+    "@types/node": "catalog:",
+    "tsup": "catalog:"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

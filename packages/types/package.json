@@ -57,16 +57,72 @@
     },
     "./*": {
       "import": {
-        "types": "./dist/esm/src/*.d.ts",
-        "default": "./dist/esm/src/*.js"
+        "types": "./dist/esm/src/shared/*.d.ts",
+        "default": "./dist/esm/src/shared/*.js"
       },
       "require": {
-        "types": "./dist/cjs/src/*.d.ts",
-        "default": "./dist/cjs/src/*.js"
+        "types": "./dist/cjs/src/shared/*.d.ts",
+        "default": "./dist/cjs/src/shared/*.js"
       },
       "default": {
-        "types": "./dist/esm/src/*.d.ts",
-        "default": "./dist/esm/src/*.js"
+        "types": "./dist/esm/src/shared/*.d.ts",
+        "default": "./dist/esm/src/shared/*.js"
+      }
+    },
+    "./shared": {
+      "import": {
+        "types": "./dist/esm/src/shared/index.d.ts",
+        "default": "./dist/esm/src/shared/index.js"
+      },
+      "require": {
+        "types": "./dist/cjs/src/shared/index.d.ts",
+        "default": "./dist/cjs/src/shared/index.js"
+      },
+      "default": {
+        "types": "./dist/esm/src/shared/index.d.ts",
+        "default": "./dist/esm/src/shared/index.js"
+      }
+    },
+    "./shared/*": {
+      "import": {
+        "types": "./dist/esm/src/shared/*.d.ts",
+        "default": "./dist/esm/src/shared/*.js"
+      },
+      "require": {
+        "types": "./dist/cjs/src/shared/*.d.ts",
+        "default": "./dist/cjs/src/shared/*.js"
+      },
+      "default": {
+        "types": "./dist/esm/src/shared/*.d.ts",
+        "default": "./dist/esm/src/shared/*.js"
+      }
+    },
+    "./node": {
+      "import": {
+        "types": "./dist/esm/src/node/index.d.ts",
+        "default": "./dist/esm/src/node/index.js"
+      },
+      "require": {
+        "types": "./dist/cjs/src/node/index.d.ts",
+        "default": "./dist/cjs/src/node/index.js"
+      },
+      "default": {
+        "types": "./dist/esm/src/node/index.d.ts",
+        "default": "./dist/esm/src/node/index.js"
+      }
+    },
+    "./node/*": {
+      "import": {
+        "types": "./dist/esm/src/node/*.d.ts",
+        "default": "./dist/esm/src/node/*.js"
+      },
+      "require": {
+        "types": "./dist/cjs/src/node/*.d.ts",
+        "default": "./dist/cjs/src/node/*.js"
+      },
+      "default": {
+        "types": "./dist/esm/src/node/*.d.ts",
+        "default": "./dist/esm/src/node/*.js"
       }
     }
   },
@@ -80,6 +136,9 @@
     "types",
     "typescript"
   ],
+  "dependencies": {
+    "unstorage": "catalog:"
+  },
   "devDependencies": {
     "@storm-software/build-tools": "catalog:",
     "typescript": "5.8.3"

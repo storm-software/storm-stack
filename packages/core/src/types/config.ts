@@ -17,7 +17,6 @@
  ------------------------------------------------------------------- */
 
 import type { LogLevelLabel } from "@storm-software/config-tools/types";
-import type { LogLevel } from "@storm-stack/types/log";
 import type {
   DotenvConfiguration,
   TypeDefinitionParameter
@@ -61,38 +60,6 @@ export interface DotenvOptions extends DotenvConfiguration {
    * @defaultValue false
    */
   replace?: boolean;
-
-  /**
-   * Generate a markdown file that documents the variables and secrets used in the project.
-   *
-   * @remarks
-   * This field's value will either be a string representing a path to the markdown file to generate, or `false` to disable the generation of the file.
-   *
-   * @defaultValue "\{projectRoot\}/docs/generated/dotenv.md"
-   */
-  docgen?: string | false;
-}
-
-// export type Plugin =
-//   | "filesystem"
-//   | "database"
-//   | "cache"
-//   | "queue"
-//   | "mail"
-//   | "http"
-//   | "websocket"
-//   | "other";
-
-export interface LogConfig {
-  /**
-   * The {@link LogSink} definition
-   */
-  sink: TypeDefinitionParameter;
-
-  /**
-   * The lowest log level for the sink to accept.
-   */
-  logLevel: LogLevel;
 }
 
 export type PluginConfig = [string, Record<string, any>];
@@ -113,7 +80,12 @@ export interface ProjectConfig {
    *
    * @defaultValue "application"
    */
-  projectType?: "application" | "library" | "adapter";
+  projectType?: "application" | "library";
+
+  /**
+   * The platform to build the project for
+   */
+  platform?: "node" | "browser" | "neutral";
 
   /**
    * A list of resolvable paths to presets used during the build process
@@ -182,7 +154,7 @@ export interface ProjectConfig {
   errorsFile?: string;
 }
 
-export interface ApplicationProjectConfig {
+export type ApplicationProjectConfig = ProjectConfig & {
   /**
    * The entry point for the project
    *
@@ -194,37 +166,41 @@ export interface ApplicationProjectConfig {
   /**
    * The type of project being built
    */
-  projectType?: "application";
+  projectType: "application";
+};
 
+export type NodeProjectConfig = ProjectConfig & {
   /**
-   * The log configuration for the project
-   */
-  logs?: LogConfig | LogConfig[];
-}
-
-export interface LibraryProjectConfig extends ProjectConfig {
-  /**
-   * The type of project being built
-   */
-  projectType?: "library";
-}
-
-export interface AdapterProjectConfig extends ProjectConfig {
-  /**
-   * The type of adapter exported by the project
-   */
-  adapter: string;
-
-  /**
-   * The type of project being built
-   */
-  projectType: "adapter";
-
-  /**
-   * A file that includes code required to initialize the adapter
+   * The platform to build the project for
    *
-   * @remarks
-   * This code will be called before the application's entry point. An example usage for this would be log instrumentation setup.
+   * @defaultValue "node"
    */
-  init?: TypeDefinitionParameter;
-}
+  platform: "node";
+};
+
+export type LibraryProjectConfig = ProjectConfig & {
+  /**
+   * The type of project being built
+   */
+  projectType: "library";
+};
+
+// export interface AdapterProjectConfig extends ProjectConfig {
+//   /**
+//    * The type of adapter exported by the project
+//    */
+//   adapter: string;
+
+//   /**
+//    * The type of project being built
+//    */
+//   projectType: "adapter";
+
+//   /**
+//    * A file that includes code required to initialize the adapter
+//    *
+//    * @remarks
+//    * This code will be called before the application's entry point. An example usage for this would be log instrumentation setup.
+//    */
+//   init?: TypeDefinitionParameter;
+// }

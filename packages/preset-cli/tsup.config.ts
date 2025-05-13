@@ -20,7 +20,7 @@ import { getTsupConfig } from "@storm-stack/tools-config/tsup.shared";
 
 const config = getTsupConfig({
   name: "preset-cli",
-  entry: ["src/*.ts"],
+  entry: ["src/index.ts"],
   outDir: "dist",
   bundle: true,
   splitting: false,
@@ -29,7 +29,8 @@ const config = getTsupConfig({
   clean: true,
   sourcemap: false,
   dts: true,
-  shims: true
+  shims: true,
+  skipNodeModulesBundle: true
 });
 
 export default config;

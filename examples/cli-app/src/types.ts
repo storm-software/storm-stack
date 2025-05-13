@@ -17,7 +17,7 @@
  ------------------------------------------------------------------- */
 
 // eslint-disable-next-line ts/consistent-type-imports
-import { StormSentryLogEnv } from "@storm-stack/log-sentry/types";
+import { StormSentryLogEnv } from "@storm-stack/plugin-log-sentry/types";
 
 /**
  * The payload for the example CLI application.

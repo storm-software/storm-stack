@@ -84,7 +84,6 @@
     },
     "./executors/*/executor.js": "./dist/src/executors/*/executor.js",
     "./generators/*/generator.js": "./dist/src/generators/*/generator.js",
-    "./plugins/adapter": "./dist/src/plugins/adapter.js",
     "./plugins/plugin": "./dist/src/plugins/plugin.js"
   },
   "typings": "dist/index.d.ts",

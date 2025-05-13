@@ -21,7 +21,6 @@ import { writeTrace } from "@storm-software/config-tools/logger";
 import type { StormWorkspaceConfig } from "@storm-software/config/types";
 import { withRunExecutor } from "@storm-software/workspace-tools";
 import { Engine } from "@storm-stack/core/engine";
-import { loadConfig } from "@storm-stack/core/helpers/load-config";
 import type { Options } from "@storm-stack/core/types";
 import defu from "defu";
 import type { StormStackBuildExecutorSchema } from "./schema";
@@ -48,20 +47,13 @@ export async function executorFn(
     );
   }
 
-  const config = await loadConfig(
-    context.projectsConfigurations.projects[context.projectName]!.root,
-    options.mode
-  );
+  const projectRoot =
+    context.projectsConfigurations.projects[context.projectName]!.root;
+  const projectType =
+    context.projectsConfigurations.projects[context.projectName]!.projectType;
 
   const engine = new Engine(
-    defu(
-      {
-        projectRoot:
-          context.projectsConfigurations.projects[context.projectName]!.root
-      },
-      config,
-      options
-    ) as Options,
+    defu({ projectRoot, projectType }, options) as Options,
     workspaceConfig
   );
 

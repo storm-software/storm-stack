@@ -16,7 +16,6 @@
 
  ------------------------------------------------------------------- */
 
-import { noop } from "@stryke/helpers/noop";
 import { findFilePath, relativePath } from "@stryke/path/file-path-fns";
 import defu from "defu";
 import type { BuildOptions } from "esbuild";
@@ -47,15 +46,14 @@ export async function bundle<TOptions extends Options = Options>(
     logLevel: "silent",
     plugins: [
       externalPlugin(
-        noop,
         {
-          external: context.external,
-          noExternal: context.noExternal,
+          external: context.options.external,
+          noExternal: context.options.noExternal,
           skipNodeModulesBundle: true
         },
-        context.resolvedTsconfig.options?.paths
+        context.tsconfig.options?.paths
       ),
-      compilerPlugin(noop, context, options)
+      compilerPlugin(context, options)
     ]
   }) as BuildOptions;
 

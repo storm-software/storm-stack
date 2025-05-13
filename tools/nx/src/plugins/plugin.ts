@@ -47,7 +47,7 @@ export const name = "storm-stack/plugin";
 export interface StormStackPluginPluginOptions {}
 
 export const createNodesV2: CreateNodesV2<StormStackPluginPluginOptions> = [
-  "packages/plugin-*/project.json,packages/preset-*/project.json",
+  "packages/{plugin-*,preset-*}/project.json",
   async (configFiles, options, context): Promise<CreateNodesResultV2> => {
     return createNodesFromFiles(
       (configFile, options, context) => {
@@ -112,7 +112,7 @@ export const createNodesV2: CreateNodesV2<StormStackPluginPluginOptions> = [
             ],
             outputs: ["{projectRoot}/dist"],
             executor: "nx:run-commands",
-            dependsOn: ["build-untyped", "^build"],
+            dependsOn: ["^build"],
             options: {
               command: 'tsup-node --config="tsup.config.ts"',
               cwd: relativeRoot
@@ -129,7 +129,7 @@ export const createNodesV2: CreateNodesV2<StormStackPluginPluginOptions> = [
             ],
             outputs: ["{workspaceRoot}/dist/{projectRoot}"],
             executor: "nx:run-commands",
-            dependsOn: ["build-untyped", "build-base"],
+            dependsOn: ["build-base"],
             options: {
               commands: [
                 `pnpm copyfiles LICENSE dist/${relativeRoot}`,
@@ -150,9 +150,13 @@ export const createNodesV2: CreateNodesV2<StormStackPluginPluginOptions> = [
           );
           addProjectScopeTag(project, StormStackProjectTagScopeValue.PLUGIN);
 
-          const implicitDependencies = project.implicitDependencies ?? [];
-          if (!implicitDependencies.includes("core")) {
-            implicitDependencies.push("core");
+          if (!project?.implicitDependencies?.includes("core")) {
+            project.implicitDependencies ??= [];
+            project.implicitDependencies.push("core");
+          }
+          if (!project?.implicitDependencies?.includes("devkit")) {
+            project.implicitDependencies ??= [];
+            project.implicitDependencies.push("devkit");
           }
 
           return project?.name

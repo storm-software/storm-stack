@@ -22,10 +22,21 @@ import { LogLevelLabel } from "@storm-software/config-tools/types";
 import {
   getFileHeader,
   getParsedTypeScriptConfig,
-  getTsconfigFilePath
+  getTsconfigFilePath,
+  writeFile
 } from "@storm-stack/core/helpers";
+import {
+  writeApp,
+  writeContext,
+  writeEvent
+} from "@storm-stack/core/prepare/runtime/runtime/node";
 import { Preset } from "@storm-stack/core/preset";
-import type { Context, EngineHooks, Options } from "@storm-stack/core/types";
+import type {
+  Context,
+  EngineHooks,
+  Options,
+  PluginConfig
+} from "@storm-stack/core/types";
 import { readFile, readJsonFile } from "@stryke/fs/read-file";
 import { removeFile } from "@stryke/fs/remove-file";
 import { StormJSON } from "@stryke/json/storm-json";
@@ -49,9 +60,13 @@ export default class StormStackCloudflareWorkerPreset<
   #unenv: Environment;
 
   public override dependencies = [
-    "@storm-stack/plugin-node",
-    "@storm-stack/plugin-http"
-  ];
+    [
+      "@storm-stack/plugin-log-console",
+      {
+        logLevel: "info"
+      }
+    ]
+  ] as PluginConfig[];
 
   public constructor() {
     super("cloudflare", "@storm-stack/preset-cloudflare-worker");
@@ -66,8 +81,8 @@ export default class StormStackCloudflareWorkerPreset<
     hooks.addHooks({
       "clean": this.clean.bind(this),
       "init:context": this.initOptions.bind(this),
-      "init:installs": this.initInstalls.bind(this),
       "init:tsconfig": this.initTsconfig.bind(this),
+      "prepare:runtime": this.prepareRuntime.bind(this),
       "prepare:entry": this.prepareEntry.bind(this),
       "prepare:deploy": this.prepareDeploy.bind(this)
     });
@@ -79,8 +94,11 @@ export default class StormStackCloudflareWorkerPreset<
       `Clean Cloudflare specific artifacts the Storm Stack project.`
     );
 
-    if (context.projectType === "application") {
-      const wranglerFilePath = joinPaths(context.projectRoot, "wrangler.toml");
+    if (context.options.projectType === "application") {
+      const wranglerFilePath = joinPaths(
+        context.options.projectRoot,
+        "wrangler.toml"
+      );
       if (wranglerFilePath) {
         await removeFile(wranglerFilePath);
       }
@@ -93,18 +111,22 @@ export default class StormStackCloudflareWorkerPreset<
       `Resolving Storm Stack context for the project.`
     );
 
-    context.platform = "neutral";
-    context.format = "esm";
+    context.options.platform = "node";
+    context.override.platform = "neutral";
+    context.override.format = "esm";
     context.override.target = "chrome95";
 
-    context.external ??= [];
-    context.external.push(...CLOUDFLARE_MODULES, ...this.#unenv.external);
+    context.options.external ??= [];
+    context.options.external.push(
+      ...CLOUDFLARE_MODULES,
+      ...this.#unenv.external
+    );
 
-    context.noExternal ??= [];
-    context.noExternal.push("@cloudflare/unenv-preset/node/console");
-    context.noExternal.push("@cloudflare/unenv-preset/node/process");
+    context.options.noExternal ??= [];
+    context.options.noExternal.push("@cloudflare/unenv-preset/node/console");
+    context.options.noExternal.push("@cloudflare/unenv-preset/node/process");
 
-    if (context.projectType === "application") {
+    if (context.options.projectType === "application") {
       context.override.alias = defu(
         context.override.alias ?? {},
         this.#unenv.alias
@@ -123,23 +145,12 @@ export default class StormStackCloudflareWorkerPreset<
         }, []);
 
       context.override.conditions = [...DEFAULT_CONDITIONS, "development"];
+
+      context.installs["@cloudflare/unenv-preset"] = "dependency";
+      context.installs.unenv = "dependency";
     }
-  }
 
-  protected async initInstalls(context: Context<TOptions>) {
-    this.log(
-      LogLevelLabel.TRACE,
-      `Running required installations for the project.`
-    );
-
-    await Promise.all(
-      [
-        this.install(context, "@cloudflare/workers-types", true),
-        context.projectType === "application" &&
-          this.install(context, "@cloudflare/unenv-preset"),
-        context.projectType === "application" && this.install(context, "unenv")
-      ].filter(Boolean)
-    );
+    context.installs["@cloudflare/workers-types"] = "devDependency";
   }
 
   protected async initTsconfig(context: Context<TOptions>) {
@@ -177,12 +188,67 @@ export default class StormStackCloudflareWorkerPreset<
       );
     }
 
-    return this.writeFile(context.tsconfig!, StormJSON.stringify(tsconfigJson));
+    return this.writeFile(
+      context.options.tsconfig!,
+      StormJSON.stringify(tsconfigJson)
+    );
+  }
+
+  protected async prepareTypes(context: Context<TOptions>) {
+    this.log(
+      LogLevelLabel.TRACE,
+      `Preparing the TypeScript declaration (d.ts) artifacts for the Storm Stack project.`
+    );
+    const runtimeDir = joinPaths(
+      context.options.projectRoot,
+      context.artifactsDir,
+      "runtime"
+    );
+
+    await Promise.all([
+      writeFile(this.log, joinPaths(runtimeDir, "app.ts"), writeApp(context)),
+      writeFile(
+        this.log,
+        joinPaths(runtimeDir, "context.ts"),
+        writeContext(context)
+      ),
+      writeFile(
+        this.log,
+        joinPaths(runtimeDir, "event.ts"),
+        writeEvent(context)
+      )
+    ]);
+  }
+
+  protected async prepareRuntime(context: Context<TOptions>) {
+    this.log(
+      LogLevelLabel.TRACE,
+      `Preparing the runtime artifacts for the Storm Stack project.`
+    );
+    const runtimeDir = joinPaths(
+      context.options.projectRoot,
+      context.artifactsDir,
+      "runtime"
+    );
+
+    await Promise.all([
+      writeFile(this.log, joinPaths(runtimeDir, "app.ts"), writeApp(context)),
+      writeFile(
+        this.log,
+        joinPaths(runtimeDir, "context.ts"),
+        writeContext(context)
+      ),
+      writeFile(
+        this.log,
+        joinPaths(runtimeDir, "event.ts"),
+        writeEvent(context)
+      )
+    ]);
   }
 
   protected async prepareEntry(context: Context<TOptions>) {
     await Promise.all(
-      context.resolvedEntry.map(async entry => {
+      context.entry.map(async entry => {
         this.log(
           LogLevelLabel.TRACE,
           `Preparing the entry artifact ${entry.file} (${entry?.name ? `export: "${entry.name}"` : "default"})" from input "${entry.input.file} (${entry.input.name ? `export: "${entry.input.name}"` : "default"})"`
@@ -195,34 +261,35 @@ export default class StormStackCloudflareWorkerPreset<
 ${this.#unenv.polyfill.map(p => `import "${p}";`).join("\n")}
 import ${entry.input.name ? `{ ${entry.input.name} as handle }` : "handle"} from "${joinPaths(
             relativePath(
-              joinPaths(context.projectRoot, findFilePath(entry.file)),
-              joinPaths(context.projectRoot, findFilePath(entry.input.file))
+              joinPaths(context.options.projectRoot, findFilePath(entry.file)),
+              joinPaths(
+                context.options.projectRoot,
+                findFilePath(entry.input.file)
+              )
             ),
             findFileName(entry.input.file).replace(
               findFileExtension(entry.input.file),
               ""
             )
           )}";
+import { wrap } from "./runtime/app";
+import { deserialize, serialize } from "@deepkit/type";
+import { StormRequest } from "./runtime/request";
+import { StormResponse } from "./runtime/response";
 
-import { builder } from ".${joinPaths(
-            context.runtimeDir.replace(context.artifactsDir, ""),
-            "app"
-          )}";
-import { getSink } from "@storm-stack/log-console";
-import { WorkerEntrypoint } from "cloudflare:workers";
+const handleRequest = wrap(
+  handle,
+  {
+    deserializer: (req: Request) => new StormRequest(
+      deserialize(req)
+    ),
+    serializer: result => StormResponse.create(serialize(result))
+  }
+);
 
-const handleRequest = builder({
-    name: ${context.name ? `"${context.name}"` : "undefined"},
-    log: { handle: getSink(), logLevel: "debug" },
-  })
-    .handler(handle)
-    .build();
-
-export default class extends WorkerEntrypoint {
-  public override async fetch(req: any) {
-    return (await Promise.resolve(
-      handleRequest({ req, env: this.env, ctx: this.ctx })
-    )) as Response;
+export default {
+  async fetch(req: Request) {
+    return handleRequest(req);
   }
 }
 
@@ -233,10 +300,13 @@ export default class extends WorkerEntrypoint {
   }
 
   protected async prepareDeploy(context: Context<TOptions>) {
-    if (context.projectType === "application") {
+    if (context.options.projectType === "application") {
       this.log(LogLevelLabel.TRACE, "Preparing the wrangler deployment file");
 
-      const wranglerFilePath = joinPaths(context.projectRoot, "wrangler.toml");
+      const wranglerFilePath = joinPaths(
+        context.options.projectRoot,
+        "wrangler.toml"
+      );
       let wranglerFileContent = "";
 
       if (existsSync(wranglerFilePath)) {
@@ -244,9 +314,9 @@ export default class extends WorkerEntrypoint {
       }
 
       if (!wranglerFileContent) {
-        wranglerFileContent = `name = "${context.name}"
+        wranglerFileContent = `name = "${context.options.name}"
 compatibility_date = "${new Date().toISOString().split("T")[0]}"
-main = "${(context.resolvedEntry && context.resolvedEntry.length > 0 && context.resolvedEntry[0] ? context.resolvedEntry[0].file : "src/index.ts").replace(context.projectRoot, "")}"
+main = "${(context.entry && context.entry.length > 0 && context.entry[0] ? context.entry[0].file : "src/index.ts").replace(context.options.projectRoot, "")}"
 
 account_id = "${process.env.CLOUDFLARE_ACCOUNT_ID}"
 compatibility_flags = [ "nodejs_als" ]
@@ -255,15 +325,13 @@ compatibility_flags = [ "nodejs_als" ]
 
       const wranglerFile = parseToml(wranglerFileContent);
 
-      wranglerFile.name ??= context.name!;
+      wranglerFile.name ??= context.options.name!;
       wranglerFile.compatibility_date ??= new Date()
         .toISOString()
         .split("T")[0]!;
       wranglerFile.main ??=
-        context.resolvedEntry &&
-        context.resolvedEntry.length > 0 &&
-        context.resolvedEntry[0]
-          ? context.resolvedEntry[0].file
+        context.entry && context.entry.length > 0 && context.entry[0]
+          ? context.entry[0].file
           : "src/index.ts";
       wranglerFile.account_id ??= process.env.CLOUDFLARE_ACCOUNT_ID!;
       wranglerFile.compatibility_flags ??= ["nodejs_als"];

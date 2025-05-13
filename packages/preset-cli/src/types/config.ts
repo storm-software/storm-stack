@@ -16,16 +16,7 @@
 
  ------------------------------------------------------------------- */
 
-import type { StormStackNodeFeatures } from "@storm-stack/plugin-node/types/config";
-
 export interface StormStackCLIPresetConfig {
-  /**
-   * The features to include in the application
-   *
-   * @defaultValue []
-   */
-  features: StormStackNodeFeatures[];
-
   /**
    * The name of the binary that will be generated to run the CLI
    */

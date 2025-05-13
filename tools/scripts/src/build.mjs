@@ -46,62 +46,74 @@ try {
     );
   }
 
-  if (configuration === "production") {
-    proc =
-      $`pnpm nx run nx:build:production --outputStyle=dynamic-legacy`.timeout(
-        `${2 * 60}s`
-      );
-    proc.stdout.on("data", data => {
-      echo`${data}`;
-    });
-    result = await proc;
-    if (!result.ok) {
-      throw new Error(
-        `An error occurred while building the Nx plugin package in production mode: \n\n${result.message}\n`
-      );
-    }
+  proc =
+    $`pnpm nx run types:build:${configuration} --outputStyle=dynamic-legacy`.timeout(
+      `${3 * 60}s`
+    );
+  proc.stdout.on("data", data => {
+    echo`${data}`;
+  });
+  result = await proc;
+  if (!result.ok) {
+    throw new Error(
+      `An error occurred while building the types package in ${configuration} mode: \n\n${result.message}\n`
+    );
+  }
 
-    proc =
-      $`pnpm nx run-many --target=build --all --exclude="@storm-stack/monorepo" --configuration=production --outputStyle=dynamic-legacy --parallel=5`.timeout(
-        `${2 * 60}s`
-      );
-    proc.stdout.on("data", data => {
-      echo`${data}`;
-    });
-    result = await proc;
-    if (!result.ok) {
-      throw new Error(
-        `An error occurred while building the monorepo in production mode: \n\n${result.message}\n`
-      );
-    }
-  } else {
-    proc =
-      $`pnpm nx run nx:build:${configuration} --outputStyle=dynamic-legacy`.timeout(
-        `${2 * 60}s`
-      );
-    proc.stdout.on("data", data => {
-      echo`${data}`;
-    });
-    result = await proc;
-    if (!result.ok) {
-      throw new Error(
-        `An error occurred while building the Nx plugin package in ${configuration} mode: \n\n${result.message}\n`
-      );
-    }
+  proc =
+    $`pnpm nx run nx:build:${configuration} --outputStyle=dynamic-legacy`.timeout(
+      `${3 * 60}s`
+    );
+  proc.stdout.on("data", data => {
+    echo`${data}`;
+  });
+  result = await proc;
+  if (!result.ok) {
+    throw new Error(
+      `An error occurred while building the Nx plugin package in ${configuration} mode: \n\n${result.message}\n`
+    );
+  }
 
-    proc =
-      $`pnpm nx run-many --target=build --all --exclude="@storm-stack/monorepo" --configuration=${configuration} --nxBail --outputStyle=dynamic-legacy`.timeout(
-        `${2 * 60}s`
-      );
-    proc.stdout.on("data", data => {
-      echo`${data}`;
-    });
-    result = await proc;
-    if (!result.ok) {
-      throw new Error(
-        `An error occurred while building the monorepo in ${configuration} mode: \n\n${result.message}\n`
-      );
-    }
+  proc =
+    $`pnpm nx run-many --target=build --projects="plugin-*,preset-*" --configuration=${configuration} --outputStyle=dynamic-legacy --parallel=5`.timeout(
+      `${5 * 60}s`
+    );
+  proc.stdout.on("data", data => {
+    echo`${data}`;
+  });
+  result = await proc;
+  if (!result.ok) {
+    throw new Error(
+      `An error occurred while building the monorepo's plugins and presets in ${configuration} mode: \n\n${result.message}\n`
+    );
+  }
+
+  proc =
+    $`pnpm nx run-many --target=build --projects="examples-*" --configuration=${configuration} --outputStyle=dynamic-legacy --parallel=5`.timeout(
+      `${5 * 60}s`
+    );
+  proc.stdout.on("data", data => {
+    echo`${data}`;
+  });
+  result = await proc;
+  if (!result.ok) {
+    throw new Error(
+      `An error occurred while building the monorepo's examples in ${configuration} mode: \n\n${result.message}\n`
+    );
+  }
+
+  proc =
+    $`pnpm nx run-many --target=build --exclude="@storm-stack/monorepo" --configuration=${configuration} --outputStyle=dynamic-legacy --parallel=5`.timeout(
+      `${5 * 60}s`
+    );
+  proc.stdout.on("data", data => {
+    echo`${data}`;
+  });
+  result = await proc;
+  if (!result.ok) {
+    throw new Error(
+      `An error occurred while building the monorepo in ${configuration} mode: \n\n${result.message}\n`
+    );
   }
 
   echo`${chalk.green(`Successfully built the monorepo in ${configuration} mode!`)}`;

@@ -119,10 +119,6 @@ jobs:
           STORM_BOT: stormie-bot
           STORM_WORKSPACE_ROOT: ${{ github.workspace }}
           STORM_REPOSITORY: ${{ github.repositoryUrl }}
-          CYCLONE_REGISTRY_ACCESS_KEY:
-            ${{ secrets.CYCLONE_REGISTRY_ACCESS_KEY }}
-          CYCLONE_REGISTRY_SECRET_KEY:
-            ${{ secrets.CYCLONE_REGISTRY_SECRET_KEY }}
           TAG: ${{ inputs.tag }}
 
   success:

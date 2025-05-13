@@ -9,7 +9,7 @@ import type {
 StormBuildInfo,
 StormContext,
 StormRuntimeInfo
-} from "@storm-stack/plugin-node/types";
+} from "@storm-stack/types/node";
 import { isCI, isInteractive } from "@stryke/env/ci-checks";
 import {
   hasTTY,
@@ -26,6 +26,10 @@ import {
   nodeMajorVersion,
   nodeVersion
 } from "@stryke/env/environment-checks";
+import {
+  getEnvPaths as _getEnvPaths,
+  EnvPaths
+} from "@stryke/env/get-env-paths";
 import { providerInfo } from "@stryke/env/providers";
 import {
   runtimeInfo as baseRuntimeInfo,
@@ -48,28 +52,57 @@ export const STORM_ASYNC_CONTEXT = getContext<StormContext>(STORM_CONTEXT_KEY, {
   AsyncLocalStorage
 });
 
-export const getBuildInfo = (): StormBuildInfo => {
+/**
+ * Get the build information for the current application.
+ *
+ * @returns The build information for the current application.
+ */
+export function getBuildInfo(): StormBuildInfo {
   return {
-    name: $storm.env.APP_NAME!,
-    version: $storm.env.APP_VERSION!,
-    buildId: $storm.env.BUILD_ID!,
-    timestamp: $storm.env.BUILD_TIMESTAMP
-      ? Number($storm.env.BUILD_TIMESTAMP)
+    name: $storm.vars.APP_NAME!,
+    packageName: "@storm-stack/examples-cloudflare-worker",
+    version: $storm.vars.APP_VERSION!,
+    buildId: $storm.vars.BUILD_ID!,
+    timestamp: $storm.vars.BUILD_TIMESTAMP
+      ? Number($storm.vars.BUILD_TIMESTAMP)
       : 0,
-    releaseId: $storm.env.RELEASE_ID!,
-    mode: ($storm.env.MODE ||
-      $storm.env.NODE_ENV ||
+    releaseId: $storm.vars.RELEASE_ID!,
+    mode: ($storm.vars.MODE ||
+      $storm.vars.NODE_ENV ||
       "production") as StormBuildInfo["mode"],
-    platform: ($storm.env.PLATFORM || "node") as StormBuildInfo["platform"],
+    platform: ($storm.vars.PLATFORM || "node") as StormBuildInfo["platform"],
     isTest,
     isDebug: isDebug || isDevelopment,
     isProduction,
     isStaging,
     isDevelopment
   };
-};
+}
 
-export const getRuntimeInfo = (): StormRuntimeInfo => {
+let _envPaths!: EnvPaths;
+
+/**
+ * Get the environment paths for the current application.
+ *
+ * @returns The environment paths for the current application.
+ */
+export function getEnvPaths(): EnvPaths {
+  if (!_envPaths) {
+    _envPaths = _getEnvPaths({
+      orgId: "storm-software",
+      appId: "examples-cloudflare-worker"
+    });
+  }
+
+  return _envPaths;
+}
+
+/**
+ * Get the runtime information for the current application.
+ *
+ * @returns The runtime information for the current application.
+ */
+export function getRuntimeInfo(): StormRuntimeInfo {
   return {
     ...baseRuntimeInfo,
     isNode,
@@ -99,8 +132,14 @@ export const getRuntimeInfo = (): StormRuntimeInfo => {
     nodeMajorVersion,
     provider: providerInfo
   };
-};
+}
 
+/**
+ * Get the Storm context for the current application.
+ *
+ * @returns The Storm context for the current application.
+ * @throws {StormError} If the Storm context is not available.
+ */
 export function useStorm(): StormContext {
   try {
     return STORM_ASYNC_CONTEXT.use();

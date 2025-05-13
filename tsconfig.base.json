@@ -10,6 +10,8 @@
       "@storm-stack/biome/*": ["packages/biome/src/*"],
       "@storm-stack/core": ["packages/core/src/index.ts"],
       "@storm-stack/core/*": ["packages/core/src/*"],
+      "@storm-stack/devkit": ["packages/devkit/src/index.ts"],
+      "@storm-stack/devkit/*": ["packages/devkit/src/*"],
       "@storm-stack/examples-cli-app": ["examples/cli-app/src/index.ts"],
       "@storm-stack/examples-cli-app/*": ["examples/cli-app/src/*"],
       "@storm-stack/examples-cloudflare-worker": [
@@ -18,24 +20,32 @@
       "@storm-stack/examples-cloudflare-worker/*": [
         "examples/cloudflare-worker/src/*"
       ],
-      "@storm-stack/examples-node-app": ["examples/node-app/src/index.ts"],
-      "@storm-stack/examples-node-app/*": ["examples/node-app/src/*"],
-      "@storm-stack/log-console": ["packages/log-console/src/index.ts"],
-      "@storm-stack/log-console/*": ["packages/log-console/src/*"],
-      "@storm-stack/log-otel": ["packages/log-otel/src/index.ts"],
-      "@storm-stack/log-otel/*": ["packages/log-otel/src/*"],
-      "@storm-stack/log-sentry": ["packages/log-sentry/src/index.ts"],
-      "@storm-stack/log-sentry/*": ["packages/log-sentry/src/*"],
-      "@storm-stack/log-storage": ["packages/log-storage/src/index.ts"],
-      "@storm-stack/log-storage/*": ["packages/log-storage/src/*"],
-      "@storm-stack/log-stream": ["packages/log-stream/src/index.ts"],
-      "@storm-stack/log-stream/*": ["packages/log-stream/src/*"],
+      "@storm-stack/examples-library": ["examples/library/src/index.ts"],
+      "@storm-stack/examples-library/*": ["examples/library/src/*"],
+      "@storm-stack/plugin-log-console/*": [
+        "packages/plugin-log-console/src/*"
+      ],
+      "@storm-stack/plugin-log-otel/*": ["packages/plugin-log-otel/src/*"],
+      "@storm-stack/plugin-log-sentry/*": ["packages/plugin-log-sentry/src/*"],
+      "@storm-stack/plugin-log-storage/*": [
+        "packages/plugin-log-storage/src/*"
+      ],
+      "@storm-stack/plugin-log-stream/*": ["packages/plugin-log-stream/src/*"],
       "@storm-stack/nx": ["packages/nx/index.ts"],
       "@storm-stack/nx/*": ["packages/nx/src/*"],
-      "@storm-stack/plugin-http": ["packages/plugin-http/src/index.ts"],
-      "@storm-stack/plugin-http/*": ["packages/plugin-http/src/*"],
-      "@storm-stack/plugin-node": ["packages/plugin-node/src/index.ts"],
-      "@storm-stack/plugin-node/*": ["packages/plugin-node/src/*"],
+      "@storm-stack/plugin-log-console": [
+        "packages/plugin-log-console/src/index.ts"
+      ],
+      "@storm-stack/plugin-log-otel": ["packages/plugin-log-otel/src/index.ts"],
+      "@storm-stack/plugin-log-sentry": [
+        "packages/plugin-log-sentry/src/index.ts"
+      ],
+      "@storm-stack/plugin-log-storage": [
+        "packages/plugin-log-storage/src/index.ts"
+      ],
+      "@storm-stack/plugin-log-stream": [
+        "packages/plugin-log-stream/src/index.ts"
+      ],
       "@storm-stack/preset-cli": ["packages/preset-cli/src/index.ts"],
       "@storm-stack/preset-cli/*": ["packages/preset-cli/src/*"],
       "@storm-stack/preset-cloudflare-worker": [
@@ -49,10 +59,11 @@
       "@storm-stack/tools-nx/*": ["tools/nx/src/*"],
       "@storm-stack/tools-scripts": ["tools/scripts/src/index.ts"],
       "@storm-stack/tools-scripts/*": ["tools/scripts/src/*"],
-      "@storm-stack/plugin-typedoc": ["packages/plugin-typedoc/src/index.ts"],
-      "@storm-stack/plugin-typedoc/*": ["packages/plugin-typedoc/src/*"],
       "@storm-stack/types": ["packages/types/src/index.ts"],
-      "@storm-stack/types/*": ["packages/types/src/*"],
+      "@storm-stack/types/*": [
+        "packages/types/src/*",
+        "packages/types/src/shared/*"
+      ],
       "eslint-config-storm-stack": [
         "packages/eslint-config-storm-stack/src/index.ts"
       ],

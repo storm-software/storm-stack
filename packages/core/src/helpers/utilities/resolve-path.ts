@@ -44,14 +44,14 @@ export async function resolvePath<TOptions extends Options = Options>(
 
   path = joinPaths(
     context.workspaceConfig.workspaceRoot,
-    context.projectRoot,
+    context.options.projectRoot,
     file
   );
   if (existsSync(path)) {
     return path;
   }
 
-  path = joinPaths(context.projectRoot, file);
+  path = joinPaths(context.options.projectRoot, file);
   if (existsSync(path)) {
     return path;
   }
@@ -59,7 +59,10 @@ export async function resolvePath<TOptions extends Options = Options>(
   return resolvePackage(file, {
     paths: [
       context.workspaceConfig.workspaceRoot,
-      joinPaths(context.workspaceConfig.workspaceRoot, context.projectRoot)
+      joinPaths(
+        context.workspaceConfig.workspaceRoot,
+        context.options.projectRoot
+      )
     ]
   });
 }

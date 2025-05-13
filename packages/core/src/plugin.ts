@@ -17,14 +17,10 @@
  ------------------------------------------------------------------- */
 
 import { LogLevelLabel } from "@storm-software/config-tools/types";
-import type { UnbuildOptions } from "@storm-software/unbuild";
-import { build as unbuild } from "@storm-software/unbuild";
 import type { MaybePromise } from "@stryke/types/base";
-import { defu } from "defu";
-import { installPackage } from "./helpers";
-import { getUnbuildLoader } from "./helpers/unbuild-loader";
 import { createLog } from "./helpers/utilities/logger";
 import { writeFile } from "./helpers/utilities/write-file";
+import { installPackage } from "./init/installs/utilities";
 import type { Context, EngineHooks, Options } from "./types/build";
 import type { LogFn } from "./types/config";
 import type { IPlugin } from "./types/plugin";
@@ -51,6 +47,16 @@ export abstract class Plugin<TOptions extends Options = Options>
   public log: LogFn;
 
   /**
+   * A string representing the type of plugin
+   *
+   * @remarks
+   * This is used to determine the type of plugin during processing.
+   *
+   * @defaultValue "generic"
+   */
+  public type: string = "generic";
+
+  /**
    * The constructor for the plugin
    *
    * @param name - The name of the plugin
@@ -58,8 +64,10 @@ export abstract class Plugin<TOptions extends Options = Options>
    */
   public constructor(name: string, installPath?: string) {
     this.name = name.toLowerCase();
-    if (this.name.endsWith("plugin")) {
-      this.name = this.name.replace(/plugin$/, "").trim();
+    if (this.name.startsWith("plugin-")) {
+      this.name = this.name.replace(/^plugin-/, "").trim();
+    } else if (this.name.endsWith("-plugin")) {
+      this.name = this.name.replace(/-plugin$/, "").trim();
     }
 
     this.log = createLog(`${this.name}-plugin`);
@@ -108,57 +116,5 @@ export abstract class Plugin<TOptions extends Options = Options>
     dev = false
   ) {
     return installPackage<TOptions>(this.log, context, packageName, dev);
-  }
-
-  /**
-   * Builds the Storm Stack project
-   *
-   * @param context - The resolved Storm Stack context
-   */
-  protected async build(context: Context<TOptions>) {
-    this.log(LogLevelLabel.TRACE, "Building Storm Stack project");
-
-    if (
-      context.projectType === "library" ||
-      context.projectType === "adapter"
-    ) {
-      await this.buildLib(context);
-    } else {
-      await this.buildApp(context);
-    }
-  }
-
-  /**
-   * Run the build process for application projects
-   *
-   * @param _context - The resolved Storm Stack context
-   */
-  protected async buildApp(_context: Context<TOptions>) {
-    this.log(
-      LogLevelLabel.WARN,
-      "Skipping build for project - this plugin does not support application builds"
-    );
-  }
-
-  /**
-   * Run the unbuild process for library builds
-   *
-   * @param context - The unbuild context
-   */
-  protected async buildLib(context: Context<TOptions>) {
-    return unbuild(
-      defu(context.override, {
-        projectRoot: context.projectRoot,
-        outputPath: context.outputPath || "dist",
-        platform: context.platform,
-        generatePackageJson: true,
-        minify: Boolean(context.minify),
-        sourcemap: context.mode === "production",
-        loaders: [getUnbuildLoader<TOptions>(context)],
-        env: context.resolvedDotenv.values as {
-          [key: string]: string;
-        }
-      }) as UnbuildOptions
-    );
   }
 }

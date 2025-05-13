@@ -37,8 +37,10 @@ catalog:
   "@nuxt/kit": ^3.17.1
   "@nuxt/schema": ^3.17.1
   "@opentelemetry/api-logs": ^0.200.0
+  "@opentelemetry/exporter-logs-otlp-grpc": ^0.200.0
   "@opentelemetry/exporter-logs-otlp-http": ^0.200.0
   "@opentelemetry/otlp-exporter-base": ^0.200.0
+  "@opentelemetry/otlp-grpc-exporter-base": ^0.200.0
   "@opentelemetry/resources": ^2.0.0
   "@opentelemetry/sdk-logs": ^0.200.0
   "@opentelemetry/semantic-conventions": ^1.32.0
@@ -53,13 +55,13 @@ catalog:
   "@types/react": npm:types-react@rc
   "@types/react-dom": npm:types-react-dom@rc
   "@types/node": ^22.15.3
-  "@nx/devkit": 21.0.2
-  "@nx/eslint-plugin": 21.0.2
-  "@nx/jest": 21.0.2
-  "@nx/js": 21.0.2
-  "@nx/plugin": 21.0.2
-  "@nx/react": 21.0.2
-  "@nx/workspace": 21.0.2
+  "@nx/devkit": 21.0.3
+  "@nx/eslint-plugin": 21.0.3
+  "@nx/jest": 21.0.3
+  "@nx/js": 21.0.3
+  "@nx/plugin": 21.0.3
+  "@nx/react": 21.0.3
+  "@nx/workspace": 21.0.3
   "@storm-software/build-tools": latest
   "@storm-software/config": latest
   "@storm-software/config-tools": latest
@@ -75,20 +77,20 @@ catalog:
   "@storm-software/testing-tools": latest
   "@storm-software/tsconfig": latest
   "@storm-software/workspace-tools": latest
-  "@stryke/env": 0.6.5
-  "@stryke/fs": 0.12.1
-  "@stryke/helpers": 0.5.2
-  "@stryke/http": 0.8.0
-  "@stryke/unique-id": 0.2.6
-  "@stryke/url": 0.1.0
-  "@stryke/json": 0.8.1
-  "@stryke/path": 0.4.11
-  "@stryke/types": 0.8.1
-  "@stryke/hash": 0.9.2
-  "@stryke/string-format": 0.4.2
-  "@stryke/convert": 0.1.5
-  "@stryke/type-checks": 0.3.2
-  "@stryke/cli": 0.9.0
+  "@stryke/env": ^0.6.6
+  "@stryke/fs": ^0.12.2
+  "@stryke/helpers": ^0.5.3
+  "@stryke/http": ^0.8.1
+  "@stryke/unique-id": ^0.2.7
+  "@stryke/url": ^0.1.1
+  "@stryke/json": ^0.8.2
+  "@stryke/path": ^0.4.14
+  "@stryke/types": ^0.8.2
+  "@stryke/hash": ^0.9.3
+  "@stryke/string-format": ^0.4.7
+  "@stryke/convert": ^0.1.6
+  "@stryke/type-checks": ^0.3.3
+  "@stryke/cli": ^0.10.2
   "@swc-node/register": ^1.10.10
   "@swc/core": ^1.11.22
   "@swc/wasm": ^1.11.24
@@ -117,7 +119,7 @@ catalog:
   magicast: ^0.3.5
   mlly: ^1.7.4
   prettier: ^3.5.3
-  nx: 21.0.2
+  nx: 21.0.3
   jest: 29.7.0
   jest-environment-jsdom: 29.7.0
   jest-environment-node: 29.7.0
@@ -155,18 +157,16 @@ catalog:
 overrides:
   "@storm-stack/types": workspace:*
   "@storm-stack/core": workspace:*
+  "@storm-stack/devkit": workspace:*
   "@storm-stack/biome": workspace:*
-  "@storm-stack/log-console": workspace:*
-  "@storm-stack/log-storage": workspace:*
-  "@storm-stack/log-otel": workspace:*
-  "@storm-stack/log-sentry": workspace:*
-  "@storm-stack/log-stream": workspace:*
+  "@storm-stack/plugin-log-console": workspace:*
+  "@storm-stack/plugin-log-storage": workspace:*
+  "@storm-stack/plugin-log-otel": workspace:*
+  "@storm-stack/plugin-log-sentry": workspace:*
+  "@storm-stack/plugin-log-stream": workspace:*
   "@storm-stack/nx": workspace:*
-  "@storm-stack/plugin-typedoc": workspace:*
-  "@storm-stack/plugin-http": workspace:*
   "@storm-stack/preset-cli": workspace:*
   "@storm-stack/preset-cloudflare-worker": workspace:*
-  "@storm-stack/plugin-node": workspace:*
   "@storm-stack/tools-config": workspace:*
   "@storm-stack/tools-nx": workspace:*
   "@storm-stack/tools-readme-templates": workspace:*

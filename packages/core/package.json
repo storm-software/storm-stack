@@ -81,6 +81,160 @@
         "default": "./dist/plugin.js"
       }
     },
+    "./init": {
+      "import": {
+        "types": "./dist/init/index.d.ts",
+        "default": "./dist/init/index.js"
+      },
+      "require": {
+        "types": "./dist/init/index.d.cts",
+        "default": "./dist/init/index.cjs"
+      },
+      "default": {
+        "types": "./dist/init/index.d.ts",
+        "default": "./dist/init/index.js"
+      }
+    },
+    "./clean": {
+      "import": {
+        "types": "./dist/clean/index.d.ts",
+        "default": "./dist/clean/index.js"
+      },
+      "require": {
+        "types": "./dist/clean/index.d.cts",
+        "default": "./dist/clean/index.cjs"
+      },
+      "default": {
+        "types": "./dist/clean/index.d.ts",
+        "default": "./dist/clean/index.js"
+      }
+    },
+    "./prepare": {
+      "import": {
+        "types": "./dist/prepare/index.d.ts",
+        "default": "./dist/prepare/index.js"
+      },
+      "require": {
+        "types": "./dist/prepare/index.d.cts",
+        "default": "./dist/prepare/index.cjs"
+      },
+      "default": {
+        "types": "./dist/prepare/index.d.ts",
+        "default": "./dist/prepare/index.js"
+      }
+    },
+    "./prepare/types/dts/shared": {
+      "import": {
+        "types": "./dist/prepare/types/dts/shared.d.ts",
+        "default": "./dist/prepare/types/dts/shared.js"
+      },
+      "require": {
+        "types": "./dist/prepare/types/dts/shared.d.cts",
+        "default": "./dist/prepare/types/dts/shared.cjs"
+      },
+      "default": {
+        "types": "./dist/prepare/types/dts/shared.d.ts",
+        "default": "./dist/prepare/types/dts/shared.js"
+      }
+    },
+    "./prepare/types/dts/node": {
+      "import": {
+        "types": "./dist/prepare/types/dts/node.d.ts",
+        "default": "./dist/prepare/types/dts/node.js"
+      },
+      "require": {
+        "types": "./dist/prepare/types/dts/node.d.cts",
+        "default": "./dist/prepare/types/dts/node.cjs"
+      },
+      "default": {
+        "types": "./dist/prepare/types/dts/node.d.ts",
+        "default": "./dist/prepare/types/dts/node.js"
+      }
+    },
+    "./prepare/runtime/runtime/shared/*": {
+      "import": {
+        "types": "./dist/prepare/runtime/runtime/shared/*.d.ts",
+        "default": "./dist/prepare/runtime/runtime/shared/*.js"
+      },
+      "require": {
+        "types": "./dist/prepare/runtime/runtime/shared/*.d.cts",
+        "default": "./dist/prepare/runtime/runtime/shared/*.cjs"
+      },
+      "default": {
+        "types": "./dist/prepare/runtime/runtime/shared/*.d.ts",
+        "default": "./dist/prepare/runtime/runtime/shared/*.js"
+      }
+    },
+    "./prepare/runtime/runtime/node/*": {
+      "import": {
+        "types": "./dist/prepare/runtime/runtime/node/*.d.ts",
+        "default": "./dist/prepare/runtime/runtime/node/*.js"
+      },
+      "require": {
+        "types": "./dist/prepare/runtime/runtime/node/*.d.cts",
+        "default": "./dist/prepare/runtime/runtime/node/*.cjs"
+      },
+      "default": {
+        "types": "./dist/prepare/runtime/runtime/node/*.d.ts",
+        "default": "./dist/prepare/runtime/runtime/node/*.js"
+      }
+    },
+    "./lint": {
+      "import": {
+        "types": "./dist/lint/index.d.ts",
+        "default": "./dist/lint/index.js"
+      },
+      "require": {
+        "types": "./dist/lint/index.d.cts",
+        "default": "./dist/lint/index.cjs"
+      },
+      "default": {
+        "types": "./dist/lint/index.d.ts",
+        "default": "./dist/lint/index.js"
+      }
+    },
+    "./build": {
+      "import": {
+        "types": "./dist/build/index.d.ts",
+        "default": "./dist/build/index.js"
+      },
+      "require": {
+        "types": "./dist/build/index.d.cts",
+        "default": "./dist/build/index.cjs"
+      },
+      "default": {
+        "types": "./dist/build/index.d.ts",
+        "default": "./dist/build/index.js"
+      }
+    },
+    "./docs": {
+      "import": {
+        "types": "./dist/docs/index.d.ts",
+        "default": "./dist/docs/index.js"
+      },
+      "require": {
+        "types": "./dist/docs/index.d.cts",
+        "default": "./dist/docs/index.cjs"
+      },
+      "default": {
+        "types": "./dist/docs/index.d.ts",
+        "default": "./dist/docs/index.js"
+      }
+    },
+    "./finalize": {
+      "import": {
+        "types": "./dist/finalize/index.d.ts",
+        "default": "./dist/finalize/index.js"
+      },
+      "require": {
+        "types": "./dist/finalize/index.d.cts",
+        "default": "./dist/finalize/index.cjs"
+      },
+      "default": {
+        "types": "./dist/finalize/index.d.ts",
+        "default": "./dist/finalize/index.js"
+      }
+    },
     "./helpers": {
       "import": {
         "types": "./dist/helpers/index.d.ts",
@@ -221,32 +375,74 @@
         "default": "./dist/helpers/esbuild/*.js"
       }
     },
-    "./helpers/eslint": {
+    "./helpers/unbuild": {
       "import": {
-        "types": "./dist/helpers/eslint/index.d.ts",
-        "default": "./dist/helpers/eslint/index.js"
+        "types": "./dist/helpers/unbuild/index.d.ts",
+        "default": "./dist/helpers/unbuild/index.js"
       },
       "require": {
-        "types": "./dist/helpers/eslint/index.d.cts",
-        "default": "./dist/helpers/eslint/index.cjs"
+        "types": "./dist/helpers/unbuild/index.d.cts",
+        "default": "./dist/helpers/unbuild/index.cjs"
       },
       "default": {
-        "types": "./dist/helpers/eslint/index.d.ts",
-        "default": "./dist/helpers/eslint/index.js"
+        "types": "./dist/helpers/unbuild/index.d.ts",
+        "default": "./dist/helpers/unbuild/index.js"
       }
     },
-    "./helpers/eslint/*": {
+    "./helpers/unbuild/*": {
       "import": {
-        "types": "./dist/helpers/eslint/*.d.ts",
-        "default": "./dist/helpers/eslint/*.js"
+        "types": "./dist/helpers/unbuild/*.d.ts",
+        "default": "./dist/helpers/unbuild/*.js"
       },
       "require": {
-        "types": "./dist/helpers/eslint/*.d.cts",
-        "default": "./dist/helpers/eslint/*.cjs"
+        "types": "./dist/helpers/unbuild/*.d.cts",
+        "default": "./dist/helpers/unbuild/*.cjs"
       },
       "default": {
-        "types": "./dist/helpers/eslint/*.d.ts",
-        "default": "./dist/helpers/eslint/*.js"
+        "types": "./dist/helpers/unbuild/*.d.ts",
+        "default": "./dist/helpers/unbuild/*.js"
+      }
+    },
+    "./helpers/typedoc": {
+      "import": {
+        "types": "./dist/helpers/typedoc/index.d.ts",
+        "default": "./dist/helpers/typedoc/index.js"
+      },
+      "require": {
+        "types": "./dist/helpers/typedoc/index.d.cts",
+        "default": "./dist/helpers/typedoc/index.cjs"
+      },
+      "default": {
+        "types": "./dist/helpers/typedoc/index.d.ts",
+        "default": "./dist/helpers/typedoc/index.js"
+      }
+    },
+    "./helpers/typedoc/*": {
+      "import": {
+        "types": "./dist/helpers/typedoc/*.d.ts",
+        "default": "./dist/helpers/typedoc/*.js"
+      },
+      "require": {
+        "types": "./dist/helpers/typedoc/*.d.cts",
+        "default": "./dist/helpers/typedoc/*.cjs"
+      },
+      "default": {
+        "types": "./dist/helpers/typedoc/*.d.ts",
+        "default": "./dist/helpers/typedoc/*.js"
+      }
+    },
+    "./helpers/transform/*": {
+      "import": {
+        "types": "./dist/helpers/transform/*.d.ts",
+        "default": "./dist/helpers/transform/*.js"
+      },
+      "require": {
+        "types": "./dist/helpers/transform/*.d.cts",
+        "default": "./dist/helpers/transform/*.cjs"
+      },
+      "default": {
+        "types": "./dist/helpers/transform/*.d.ts",
+        "default": "./dist/helpers/transform/*.js"
       }
     },
     "./types": {
@@ -442,7 +638,6 @@
     "@storm-software/config": "catalog:",
     "@storm-software/config-tools": "catalog:",
     "@storm-software/esbuild": "catalog:",
-    "@storm-software/unbuild": "catalog:",
     "@storm-stack/types": "workspace:*",
     "@stryke/convert": "catalog:",
     "@stryke/env": "catalog:",
@@ -459,11 +654,15 @@
     "defu": "catalog:",
     "diff-match-patch": "catalog:",
     "esbuild": "catalog:",
+    "handlebars": "catalog:",
     "jest-worker": "catalog:",
     "jiti": "catalog:",
     "magic-string": "catalog:",
     "mlly": "catalog:",
     "prettier": "catalog:",
+    "typedoc": "catalog:",
+    "typedoc-plugin-frontmatter": "catalog:",
+    "typedoc-plugin-markdown": "catalog:",
     "unimport": "catalog:"
   },
   "devDependencies": {

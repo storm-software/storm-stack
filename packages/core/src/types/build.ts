@@ -17,8 +17,8 @@
  ------------------------------------------------------------------- */
 
 import type { ReflectionClass } from "@deepkit/type";
-import type { Platform } from "@storm-software/build-tools/types";
 import type { StormWorkspaceConfig } from "@storm-software/config/types";
+import type { LogLevel } from "@storm-stack/types/shared/log";
 import type { EnvPaths } from "@stryke/env/get-env-paths";
 import type { DotenvParseOutput } from "@stryke/env/types";
 import type { MaybePromise } from "@stryke/types/base";
@@ -35,7 +35,6 @@ import type { SourceMap } from "magic-string";
 import type ts from "typescript";
 import type { InlinePreset, Unimport } from "unimport";
 import type {
-  AdapterProjectConfig,
   ApplicationProjectConfig,
   DotenvOptions,
   LibraryProjectConfig,
@@ -77,10 +76,18 @@ export interface SourceFile {
   result?: CompilerResult;
 }
 
+export type InferProjectConfig<
+  TProjectConfig extends ProjectConfig = ProjectConfig
+> = TProjectConfig["projectType"] extends "application"
+  ? ApplicationProjectConfig
+  : TProjectConfig["projectType"] extends "library"
+    ? LibraryProjectConfig
+    : ProjectConfig;
+
 /**
  * The format for providing the application entry point(s) to the build command
  */
-export type Options = ProjectConfig & {
+export type Options<TProjectConfig extends ProjectConfig = ProjectConfig> = {
   /**
    * {@inheritdoc TypeScriptBuildResolvedOptions.outputPath}
    */
@@ -122,7 +129,7 @@ export type Options = ProjectConfig & {
    * If populated, this option takes higher priority than `tsconfig`
    */
   tsconfigRaw?: TsConfigJson;
-};
+} & InferProjectConfig<TProjectConfig>;
 
 export interface ResolvedDotenvType<
   TReflection extends ReflectionClass<any> | undefined =
@@ -165,7 +172,7 @@ export interface ResolvedDotenvTypes {
 }
 
 export type ResolvedDotenvOptions = Required<
-  Pick<DotenvOptions, "additionalFiles" | "docgen">
+  Pick<DotenvOptions, "additionalFiles">
 > & {
   /**
    * The path to the type definition for the expected env configuration parameters
@@ -232,7 +239,46 @@ export interface MetaInfo {
   timestamp: number;
 }
 
-export interface TranspileOptions<TOptions extends Options = Options> {
+export interface CompilerOptions<TOptions extends Options = Options> {
+  /**
+   * Transform the source file before other transformations.
+   *
+   * @param context - The context object
+   * @param source - The source file
+   * @returns The transformed source file
+   */
+  onPreTransform?: (
+    context: Context<TOptions>,
+    source: SourceFile
+  ) => MaybePromise<void>;
+
+  /**
+   * Transform the source file before transpilation.
+   *
+   * @param context - The context object
+   * @param sourceFile - The source file
+   * @returns The transformed source file
+   */
+  onTransform?: (
+    context: Context<TOptions>,
+    sourceFile: SourceFile
+  ) => MaybePromise<void>;
+
+  /**
+   * Transform the source file after transpilation.
+   *
+   * @param context - The context object
+   * @param source - The source file
+   * @returns The transformed source file
+   */
+  onPostTransform?: (
+    context: Context<TOptions>,
+    source: SourceFile
+  ) => MaybePromise<void>;
+}
+
+export interface TranspileOptions<TOptions extends Options = Options>
+  extends CompilerOptions<TOptions> {
   /**
    * Skip all transformations.
    *
@@ -253,30 +299,6 @@ export interface TranspileOptions<TOptions extends Options = Options> {
    * @defaultValue false
    */
   skipErrorsTransform?: boolean;
-
-  /**
-   * Transform the source file before transpilation.
-   *
-   * @param context - The context object
-   * @param source - The source file
-   * @returns The transformed source file
-   */
-  onPreTransform?: (
-    context: Context<TOptions>,
-    source: SourceFile
-  ) => MaybePromise<SourceFile>;
-
-  /**
-   * Transform the source file after transpilation.
-   *
-   * @param context - The context object
-   * @param source - The source file
-   * @returns The transformed source file
-   */
-  onPostTransform?: (
-    context: Context<TOptions>,
-    source: SourceFile
-  ) => MaybePromise<SourceFile>;
 }
 
 export interface CompileOptions<TOptions extends Options = Options>
@@ -346,160 +368,225 @@ export type UnimportContext = Omit<Unimport, "injectImports"> & {
   injectImports: (source: SourceFile) => Promise<SourceFile>;
 };
 
-export type InferProjectConfig<TConfig extends ProjectConfig = ProjectConfig> =
-  TConfig["projectType"] extends "application"
-    ? ApplicationProjectConfig & TConfig
-    : TConfig["projectType"] extends "library"
-      ? LibraryProjectConfig & TConfig
-      : TConfig["projectType"] extends "adapter"
-        ? AdapterProjectConfig & TConfig
-        : never;
+export type InferOptions<TOptions extends Options = Options> =
+  TOptions["projectType"] extends "application"
+    ? TOptions & Options<ApplicationProjectConfig>
+    : TOptions["projectType"] extends "library"
+      ? TOptions & Options<LibraryProjectConfig>
+      : never;
 
-export type Context<TOptions extends Options = Options> = Omit<
-  TOptions,
-  "tsconfig" | "projectType" | "mode" | "outputPath"
-> &
+export type ResolvedOptions<TOptions extends Options = Options> = TOptions &
   Required<
-    Pick<TOptions, "tsconfig" | "projectType" | "mode" | "outputPath">
+    Pick<
+      TOptions,
+      "name" | "tsconfig" | "mode" | "outputPath" | "platform" | "errorsFile"
+    >
   > & {
     /**
-     * The original input options
-     */
-    options: TOptions;
-
-    /**
-     * The Storm workspace configuration
-     */
-    workspaceConfig: StormWorkspaceConfig;
-
-    /**
-     * The metadata information
-     */
-    meta: MetaInfo;
-
-    /**
-     * The metadata information currently written to disk
-     */
-    persistedMeta?: MetaInfo;
-
-    /**
-     * The project root directory
-     */
-    compiler: ICompiler<TOptions>;
-
-    /**
-     * The Storm Stack environment paths
-     */
-    envPaths: EnvPaths;
-
-    /**
-     * The format to use when compiling the source code
      *
-     * @defaultValue "esm"
      */
-    format?: "esm" | "cjs";
-
-    /**
-     * The platform configuration to use when building the project
-     *
-     * @remarks
-     * If the `"browser"` or `"neutral"` platforms are selected, environment variables containing secrets will not be embedded into the compiled source code.
-     */
-    platform: Platform;
-
-    /**
-     * Should the compiler minify the output
-     *
-     * @remarks
-     * This value is set to `true` by default when the {@link Options.mode} is set to `"production"`
-     *
-     * @defaultValue false
-     */
-    minify: boolean;
-
-    /**
-     * The directory to generate files in the prepare step
-     *
-     * @defaultValue "\{projectRoot\}/.storm"
-     */
-    artifactsDir: string;
-
-    /**
-     * The directory where the artifact runtime files are stored
-     */
-    runtimeDir: string;
-
-    /**
-     * The directory where the artifact types are stored
-     */
-    typesDir: string;
-
-    /**
-     * The imports to insert into the source code
-     */
-    unimportPresets: InlinePreset[];
-
-    /**
-     * The parsed .env configuration object
-     */
-    resolvedDotenv: ResolvedDotenvOptions;
-
-    /**
-     * The entry points of the source code
-     */
-    resolvedEntry: ResolvedEntryTypeDefinition[];
-
-    /**
-     * The parsed TypeScript configuration
-     */
-    resolvedTsconfig: ResolvedTsConfig;
-
-    /**
-     * The project's package.json file content
-     */
-    packageJson: PackageJson;
-
-    /**
-     * The project's project.json file content
-     */
-    projectJson?: Record<string, any>;
-
-    /**
-     * The Jiti module resolver
-     */
-    resolver: Jiti;
-
-    /**
-     * An object containing overridden options to be provided to the build invoked by the plugins (for example: esbuild, unbuild, vite, etc.)
-     *
-     * @remarks
-     * Any values added here will have top priority over the resolved build options
-     */
-    override: Record<string, any>;
-
-    /**
-     * The resolved `unimport` context to be used by the compiler
-     */
-    unimport: UnimportContext;
+    original: TOptions;
   };
 
+export interface LogRuntimeConfig {
+  /**
+   * The name of the log sink to be used by the runtime.
+   */
+  name: string;
+
+  /**
+   * The lowest log level for the driver to accept.
+   */
+  logLevel: LogLevel;
+
+  /**
+   * The import statement to be used by the runtime.
+   */
+  import?: string;
+}
+
+export interface StorageRuntimeConfig {
+  /**
+   * The storage id to be used by the runtime.
+   */
+  storageId: string;
+
+  /**
+   * The import statement to be used by the runtime.
+   */
+  import: string;
+
+  /**
+   * The name of the storage to be used by the runtime.
+   */
+  name: string;
+}
+
+export interface RuntimeConfig {
+  logs: LogRuntimeConfig[];
+  storage: StorageRuntimeConfig[];
+  init: string[];
+}
+
+export interface Context<TOptions extends Options = Options> {
+  /**
+   * An object containing the options provided to Storm Stack
+   */
+  options: ResolvedOptions<TOptions>;
+
+  /**
+   * The Storm workspace configuration
+   */
+  workspaceConfig:
+    | StormWorkspaceConfig
+    | (Partial<StormWorkspaceConfig> &
+        Pick<StormWorkspaceConfig, "workspaceRoot">);
+
+  /**
+   * The Storm Stack artifacts directory
+   */
+  artifactsDir: string;
+
+  /**
+   * The metadata information
+   */
+  meta: MetaInfo;
+
+  /**
+   * The metadata information currently written to disk
+   */
+  persistedMeta?: MetaInfo;
+
+  /**
+   * The project root directory
+   */
+  compiler: ICompiler<TOptions>;
+
+  /**
+   * The Storm Stack environment paths
+   */
+  envPaths: EnvPaths;
+
+  /**
+   * The imports to insert into the source code
+   */
+  unimportPresets: InlinePreset[];
+
+  /**
+   * The parsed .env configuration object
+   */
+  dotenv: ResolvedDotenvOptions;
+
+  /**
+   * The entry points of the source code
+   */
+  entry: ResolvedEntryTypeDefinition[];
+
+  /**
+   * The installations required by the project
+   */
+  installs: Record<string, "dependency" | "devDependency">;
+
+  /**
+   * The runtime configuration
+   */
+  runtime: RuntimeConfig;
+
+  /**
+   * The parsed TypeScript configuration
+   */
+  tsconfig: ResolvedTsConfig;
+
+  /**
+   * The project's package.json file content
+   */
+  packageJson: PackageJson;
+
+  /**
+   * The project's project.json file content
+   */
+  projectJson?: Record<string, any>;
+
+  /**
+   * The Jiti module resolver
+   */
+  resolver: Jiti;
+
+  /**
+   * An object containing overridden options to be provided to the build invoked by the plugins (for example: esbuild, unbuild, vite, etc.)
+   *
+   * @remarks
+   * Any values added here will have top priority over the resolved build options
+   */
+  override: Record<string, any>;
+
+  /**
+   * The resolved `unimport` context to be used by the compiler
+   */
+  unimport: UnimportContext;
+}
+
 export interface EngineHookFunctions<TOptions extends Options = Options> {
+  // Init - Hooks used during the initialization of the Storm Stack engine
+  "init:begin": (context: Context<TOptions>) => MaybePromise<void>;
   "init:context": (context: Context<TOptions>) => MaybePromise<void>;
   "init:installs": (context: Context<TOptions>) => MaybePromise<void>;
   "init:tsconfig": (context: Context<TOptions>) => MaybePromise<void>;
-  "clean:execute": (context: Context<TOptions>) => MaybePromise<void>;
+  "init:unimport": (context: Context<TOptions>) => MaybePromise<void>;
+  "init:dotenv": (context: Context<TOptions>) => MaybePromise<void>;
+  "init:entry": (context: Context<TOptions>) => MaybePromise<void>;
+  "init:complete": (context: Context<TOptions>) => MaybePromise<void>;
+
+  // Clean - Hooks used during the cleaning of the Storm Stack project
+  "clean:begin": (context: Context<TOptions>) => MaybePromise<void>;
+  "clean:artifacts": (context: Context<TOptions>) => MaybePromise<void>;
+  "clean:output": (context: Context<TOptions>) => MaybePromise<void>;
+  "clean:docs": (context: Context<TOptions>) => MaybePromise<void>;
+  "clean:complete": (context: Context<TOptions>) => MaybePromise<void>;
+
+  // Prepare - Hooks used during the preparation of the Storm Stack artifacts
+  "prepare:begin": (context: Context<TOptions>) => MaybePromise<void>;
+  "prepare:directories": (context: Context<TOptions>) => MaybePromise<void>;
   "prepare:types": (context: Context<TOptions>) => MaybePromise<void>;
   "prepare:runtime": (context: Context<TOptions>) => MaybePromise<void>;
+  "prepare:reflections": (context: Context<TOptions>) => MaybePromise<void>;
   "prepare:entry": (context: Context<TOptions>) => MaybePromise<void>;
   "prepare:deploy": (context: Context<TOptions>) => MaybePromise<void>;
   "prepare:misc": (context: Context<TOptions>) => MaybePromise<void>;
+  "prepare:complete": (context: Context<TOptions>) => MaybePromise<void>;
+
+  // Lint - Hooks used during the linting process
+  "lint:begin": (context: Context<TOptions>) => MaybePromise<void>;
+  "lint:eslint": (context: Context<TOptions>) => MaybePromise<void>;
+  "lint:complete": (context: Context<TOptions>) => MaybePromise<void>;
+
+  // Build - Hooks used during the build process of the Storm Stack project
+  "build:begin": (context: Context<TOptions>) => MaybePromise<void>;
+  "build:pre-transform": (
+    context: Context<TOptions>,
+    sourceFile: SourceFile
+  ) => MaybePromise<void>;
   "build:transform": (
     context: Context<TOptions>,
     sourceFile: SourceFile
   ) => MaybePromise<void>;
-  "build:execute": (context: Context<TOptions>) => MaybePromise<void>;
-  "docs:generate": (context: Context<TOptions>) => MaybePromise<void>;
-  "finalize:execute": (context: Context<TOptions>) => MaybePromise<void>;
+  "build:post-transform": (
+    context: Context<TOptions>,
+    sourceFile: SourceFile
+  ) => MaybePromise<void>;
+  "build:library": (context: Context<TOptions>) => MaybePromise<void>;
+  "build:application": (context: Context<TOptions>) => MaybePromise<void>;
+  "build:complete": (context: Context<TOptions>) => MaybePromise<void>;
+
+  // Docs - Hooks used during the documentation generation process
+  "docs:begin": (context: Context<TOptions>) => MaybePromise<void>;
+  "docs:dotenv": (context: Context<TOptions>) => MaybePromise<void>;
+  "docs:api-reference": (context: Context<TOptions>) => MaybePromise<void>;
+  "docs:complete": (context: Context<TOptions>) => MaybePromise<void>;
+
+  // Finalize - Hooks used during the finalization of the Storm Stack project
+  "finalize:begin": (context: Context<TOptions>) => MaybePromise<void>;
+  "finalize:complete": (context: Context<TOptions>) => MaybePromise<void>;
 }
 
 export type EngineHooks<TOptions extends Options = Options> = Hookable<

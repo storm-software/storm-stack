@@ -16,9 +16,5 @@
 
  ------------------------------------------------------------------- */
 
-export * from "./docgen";
-export * from "./load";
-export * from "./reflect-dotenv";
-export * from "./resolve-dotenv";
+export * from "./resolve";
 export * from "./source-file-env";
-export * from "./write-dotenv";

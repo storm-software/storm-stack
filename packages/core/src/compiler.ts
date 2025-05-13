@@ -23,15 +23,17 @@ import { hash } from "@stryke/hash/hash";
 import { joinPaths } from "@stryke/path/join-paths";
 import type MagicString from "magic-string";
 import ts from "typescript";
-import { getCache, setCache } from "./helpers/cache";
+import { transformContext } from "./helpers/transform/transform-context";
 import { transformEnv } from "./helpers/transform/transform-env";
 import { transformErrors } from "./helpers/transform/transform-errors";
+import { getCache, setCache } from "./helpers/utilities/cache";
 import { createLog } from "./helpers/utilities/logger";
 import { getMagicString } from "./helpers/utilities/magic-string";
 import { generateSourceMap } from "./helpers/utilities/source-map";
 import type { LogFn } from "./types";
 import type {
   CompileOptions,
+  CompilerOptions,
   CompilerResult,
   Context,
   ICompiler,
@@ -45,6 +47,8 @@ export class Compiler<TOptions extends Options = Options>
 {
   #cache: WeakMap<SourceFile, string> = new WeakMap();
 
+  #options: CompilerOptions<TOptions>;
+
   /**
    * The logger function to use
    */
@@ -55,27 +59,16 @@ export class Compiler<TOptions extends Options = Options>
    */
   protected cacheDir: string;
 
-  /**
-   * A callback function to be called before the source file is compiled
-   */
-  protected onTransformCallback: (
-    context: Context<TOptions>,
-    sourceFile: SourceFile
-  ) => Promise<void>;
-
   constructor(
     context: Context<TOptions>,
-    onTransformCallback: (
-      context: Context<TOptions>,
-      sourceFile: SourceFile
-    ) => Promise<void> = async () => {}
+    options: CompilerOptions<TOptions> = {}
   ) {
-    this.log = createLog("compiler", context);
-    this.onTransformCallback = onTransformCallback;
+    this.log = createLog("compiler", context.options);
+    this.#options = options;
 
     this.cacheDir = joinPaths(
       context.envPaths.cache,
-      hash(context.resolvedTsconfig.options)
+      hash(context.tsconfig.options)
     );
   }
 
@@ -171,7 +164,7 @@ export class Compiler<TOptions extends Options = Options>
       return cache;
     }
 
-    if (context.skipCache) {
+    if (context.options.skipCache) {
       return;
     }
 
@@ -194,7 +187,7 @@ export class Compiler<TOptions extends Options = Options>
       this.#cache.delete(sourceFile);
     }
 
-    if (context.skipCache) {
+    if (context.options.skipCache) {
       return;
     }
 
@@ -206,6 +199,7 @@ export class Compiler<TOptions extends Options = Options>
    *
    * @param context - The compiler context.
    * @param source - The compiler source file.
+   * @param options - The transpile options.
    * @returns The transpiled module.
    */
   protected async transpileModule(
@@ -220,44 +214,54 @@ export class Compiler<TOptions extends Options = Options>
 
     let transformed = source;
     if (options.onPreTransform) {
-      transformed = await Promise.resolve(
-        options.onPreTransform(context, source)
-      );
+      await Promise.resolve(options.onPreTransform(context, source));
+    }
+
+    if (this.#options.onPreTransform) {
+      await Promise.resolve(this.#options.onPreTransform(context, source));
     }
 
     if (!options.skipTransform) {
+      if (context.options.platform === "node") {
+        transformContext(source);
+      }
+
       if (!options.skipEnvTransform) {
         transformed = await transformEnv<TOptions>(this.log, source, context);
       }
 
       if (!options.skipErrorsTransform) {
-        transformed = await transformErrors<TOptions>(
-          this.log,
-          transformed,
-          context
-        );
+        await transformErrors<TOptions>(this.log, transformed, context);
       }
 
-      await this.onTransformCallback(context, transformed);
+      if (this.#options.onTransform) {
+        await Promise.resolve(this.#options.onTransform(context, transformed));
+      }
     }
 
     if (
       context.unimport &&
-      !transformed.id.replaceAll("\\", "/").includes(context.runtimeDir)
+      !transformed.id
+        .replaceAll("\\", "/")
+        .includes(joinPaths(context.artifactsDir, "runtime"))
     ) {
       transformed = await context.unimport.injectImports(transformed);
     }
 
-    if (options.onPostTransform) {
-      transformed = await Promise.resolve(
-        options.onPostTransform(context, source)
+    if (this.#options.onPostTransform) {
+      await Promise.resolve(
+        this.#options.onPostTransform(context, transformed)
       );
+    }
+
+    if (options.onPostTransform) {
+      await Promise.resolve(options.onPostTransform(context, transformed));
     }
 
     const transpiled = ts.transpileModule(transformed.code.toString(), {
       compilerOptions: {
-        ...context.resolvedTsconfig.options,
-        configFilePath: context.tsconfig
+        ...context.tsconfig.options,
+        configFilePath: context.options.tsconfig
       },
       fileName: transformed.id,
       transformers: {

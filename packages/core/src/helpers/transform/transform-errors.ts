@@ -60,30 +60,20 @@ export async function transformErrors<TOptions extends Options = Options>(
   source: SourceFile,
   context: Context<TOptions>
 ): Promise<SourceFile> {
-  if (!context.workspaceConfig.error.codesFile) {
+  const errorCodesFilePath = joinPaths(
+    context.workspaceConfig.workspaceRoot,
+    context.options.errorsFile!
+  );
+  let errorCodes = {} as Record<ErrorType, Record<string, string>>;
+
+  if (!existsSync(errorCodesFilePath)) {
     log(
       LogLevelLabel.WARN,
-      `No error codes file path configured in \`storm-workspace.json\`. Skipping error transformation processing.`
+      `No error codes file path exists. Writing empty file.`
     );
-
-    return source;
-  }
-
-  let errorCodes = {} as Record<ErrorType, Record<string, string>>;
-  if (
-    existsSync(
-      joinPaths(
-        context.workspaceConfig.workspaceRoot,
-        context.workspaceConfig.error.codesFile
-      )
-    )
-  ) {
-    errorCodes = await readJsonFile(
-      joinPaths(
-        context.workspaceConfig.workspaceRoot,
-        context.workspaceConfig.error.codesFile
-      )
-    );
+    await writeFile(log, errorCodesFilePath, StormJSON.stringify({}));
+  } else {
+    errorCodes = await readJsonFile(errorCodesFilePath);
   }
 
   const originalErrorCodes = deepClone(errorCodes);
@@ -155,8 +145,8 @@ export async function transformErrors<TOptions extends Options = Options>(
         }
 
         errorCodes[type] ??= {};
-        let code = Object.keys(errorCodes[type]).find(
-          key => errorCodes[type][key] === message
+        let code = Object.keys(errorCodes[type] ?? {}).find(
+          key => errorCodes[type]?.[key] === message
         );
         if (!code) {
           code = getLatestErrorCode(type, errorCodes);
@@ -166,7 +156,8 @@ export async function transformErrors<TOptions extends Options = Options>(
             `Found unlisted error message "${message}" in ${source.id}. Assigning it to "${type}" code #${code}.`
           );
 
-          errorCodes[type][code] = message;
+          errorCodes[type] ??= {};
+          errorCodes[type]![code] = message;
         }
 
         source.code = source.code.replaceAll(
@@ -180,27 +171,16 @@ export async function transformErrors<TOptions extends Options = Options>(
   if (!isEqual(originalErrorCodes, errorCodes)) {
     log(
       LogLevelLabel.INFO,
-      `Adding error messages from ${source.id} to ${context.workspaceConfig.error.codesFile}.`
+      `Adding error messages from ${source.id} to ${context.options.errorsFile}.`
     );
 
     await mutex.acquire();
     try {
       await writeFile(
         log,
-        joinPaths(
-          context.workspaceConfig.workspaceRoot,
-          context.workspaceConfig.error.codesFile
-        ),
+        errorCodesFilePath,
         StormJSON.stringify(
-          defu(
-            errorCodes,
-            await readJsonFile(
-              joinPaths(
-                context.workspaceConfig.workspaceRoot,
-                context.workspaceConfig.error.codesFile
-              )
-            )
-          )
+          defu(errorCodes, await readJsonFile(errorCodesFilePath))
         )
       );
     } finally {

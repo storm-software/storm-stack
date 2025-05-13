@@ -24,8 +24,8 @@ import type { LogFn } from "../../types/config";
 import {
   resolveDotenvProperties,
   resolveDotenvReflection
-} from "../dotenv/resolve-dotenv";
-import { writeDotenvProperties } from "../dotenv/write-dotenv";
+} from "../dotenv/resolve";
+import { writeDotenvProperties } from "../dotenv/write-reflections";
 
 const mutex = new Mutex();
 
@@ -50,8 +50,8 @@ export async function transformEnv<TOptions extends Options = Options>(
     rule: {
       kind: "member_expression",
       any: [
-        { pattern: "$storm.env.$ENV_VALUE" },
-        { pattern: "useStorm().env.$ENV_VALUE" },
+        { pattern: "$storm.vars.$ENV_VALUE" },
+        { pattern: "useStorm().vars.$ENV_VALUE" },
         { pattern: "process.env.$ENV_VALUE" }
       ]
     }
@@ -66,13 +66,10 @@ export async function transformEnv<TOptions extends Options = Options>(
     if (name && varsReflection.hasProperty(name)) {
       const reflectionProperty = varsReflection.getProperty(name);
 
-      if (
-        context.resolvedDotenv.replace &&
-        !node.text().startsWith("process.env.")
-      ) {
+      if (context.dotenv.replace && !node.text().startsWith("process.env.")) {
         const value =
-          context.resolvedDotenv.values?.[name] ??
-          context.resolvedDotenv.values?.[`STORM_${name}`] ??
+          context.dotenv.values?.[name] ??
+          context.dotenv.values?.[`STORM_${name}`] ??
           reflectionProperty.getDefaultValue();
         if (reflectionProperty.isValueRequired() && value === undefined) {
           throw new Error(

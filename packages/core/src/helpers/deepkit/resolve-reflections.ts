@@ -30,7 +30,7 @@ export function getReflectionsPath<TOptions extends Options = Options>(
 ): string {
   return joinPaths(
     context.workspaceConfig.workspaceRoot,
-    context.projectRoot,
+    context.options.projectRoot,
     context.artifactsDir,
     "reflections"
   );

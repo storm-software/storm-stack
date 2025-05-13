@@ -10,7 +10,7 @@ ErrorType,
 IStormError,
 ParsedStacktrace,
 StormErrorOptions
-} from "@storm-stack/types";
+} from "@storm-stack/types/error";
 import { StormJSON } from "@stryke/json/storm-json";
 import { isError } from "@stryke/type-checks/is-error";
 import { isFunction } from "@stryke/type-checks/is-function";
@@ -364,8 +364,8 @@ export class StormError extends Error implements IStormError {
    *
    * @returns The stack trace string
    */
-  public get originalStack(): string | undefined {
-    return this.#stack;
+  public get originalStack(): string {
+    return this.#stack || "";
   }
 
   /**
@@ -373,7 +373,7 @@ export class StormError extends Error implements IStormError {
    *
    * @returns The stack trace string
    */
-  public set originalStack(stack: string | undefined) {
+  public set originalStack(stack: string) {
     this.#stack = stack;
   }
 

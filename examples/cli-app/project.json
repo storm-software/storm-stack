@@ -5,8 +5,10 @@
   "sourceRoot": "examples/cli-app/src",
   "targets": {
     "prepare": {
-      "executor": "@storm-stack/nx:prepare",
+      "cache": true,
+      "inputs": ["typescript", "^production"],
       "outputs": ["{options.outputPath}"],
+      "executor": "@storm-stack/nx:prepare",
       "options": {
         "entry": "{sourceRoot}/commands",
         "outputPath": "dist/examples/cli-app",
@@ -14,8 +16,10 @@
       }
     },
     "build": {
-      "executor": "@storm-stack/nx:build",
+      "cache": true,
+      "inputs": ["typescript", "^production"],
       "outputs": ["{options.outputPath}"],
+      "executor": "@storm-stack/nx:build",
       "dependsOn": ["prepare"],
       "options": {
         "entry": "{sourceRoot}/commands",

@@ -126,12 +126,11 @@ export const createNodesV2: CreateNodesV2<StormStackNxPluginOptions> = [
           targets.prepare = {
             cache: true,
             inputs: ["typescript", "^production"],
-            outputs: ["{options.outputPath}"],
+            outputs: ["{projectRoot}/.storm"],
             dependsOn: ["clean", "^build"],
             executor: "@storm-stack/nx:prepare",
             defaultConfiguration: "production",
             options: {
-              outputPath: "dist/{projectRoot}",
               autoClean: true
             },
             configurations: {
@@ -171,15 +170,33 @@ export const createNodesV2: CreateNodesV2<StormStackNxPluginOptions> = [
             }
           };
 
+          targets.lint = {
+            cache: true,
+            inputs: ["typescript", "^production", "{projectRoot}/.storm"],
+            dependsOn: ["prepare", "^lint"],
+            executor: "@storm-stack/nx:lint",
+            defaultConfiguration: "production",
+            configurations: {
+              production: {
+                mode: "production"
+              },
+              staging: {
+                mode: "staging"
+              },
+              development: {
+                mode: "development"
+              }
+            }
+          };
+
           targets.docs = {
             cache: true,
             inputs: ["typescript", "^production", "{projectRoot}/.storm"],
-            outputs: ["{options.outputPath}"],
-            dependsOn: ["prepare", "^build"],
+            outputs: ["{projectRoot}/docs/generated"],
+            dependsOn: ["prepare", "build", "^docs"],
             executor: "@storm-stack/nx:docs",
             defaultConfiguration: "production",
             options: {
-              outputPath: "dist/{projectRoot}",
               autoPrepare: true
             },
             configurations: {

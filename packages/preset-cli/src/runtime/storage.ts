@@ -21,11 +21,11 @@ import { getFileHeader } from "@storm-stack/core/helpers";
 export function writeStorage() {
   return `${getFileHeader()}
 
-import { envPaths } from "storm:context";
+import { getEnvPaths } from "./context";
 import fsLiteDriver from "unstorage/drivers/fs-lite";
 import { createStorage } from "unstorage";
 
 export const storage = createStorage();
-storage.mount("logs", fsLiteDriver({ base: envPaths.log }));
+storage.mount("logs", fsLiteDriver({ base: getEnvPaths().log }));
 `;
 }

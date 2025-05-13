@@ -46,6 +46,7 @@
     "@deepkit/type": "catalog:",
     "@storm-software/config-tools": "catalog:",
     "@storm-stack/core": "workspace:*",
+    "@storm-stack/devkit": "workspace:*",
     "@stryke/cli": "catalog:",
     "@stryke/fs": "catalog:",
     "@stryke/path": "catalog:",

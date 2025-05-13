@@ -10,11 +10,16 @@
       "options": {
         "main": "packages/types/src/index.ts",
         "additionalEntryPoints": [
-          "packages/types/src/env.ts",
-          "packages/types/src/error.ts",
-          "packages/types/src/log.ts",
-          "packages/types/src/request.ts",
-          "packages/types/src/response.ts"
+          "packages/types/src/shared/index.ts",
+          "packages/types/src/shared/env.ts",
+          "packages/types/src/shared/error.ts",
+          "packages/types/src/shared/log.ts",
+          "packages/types/src/shared/request.ts",
+          "packages/types/src/shared/response.ts",
+          "packages/types/src/node/index.ts",
+          "packages/types/src/node/event.ts",
+          "packages/types/src/node/context.ts",
+          "packages/types/src/node/app.ts"
         ],
         "outputPath": "dist/packages/types/dist/cjs",
         "tsConfig": "packages/types/tsconfig.cjs.json",
@@ -28,11 +33,16 @@
       "options": {
         "main": "packages/types/src/index.ts",
         "additionalEntryPoints": [
-          "packages/types/src/env.ts",
-          "packages/types/src/error.ts",
-          "packages/types/src/log.ts",
-          "packages/types/src/request.ts",
-          "packages/types/src/response.ts"
+          "packages/types/src/shared/index.ts",
+          "packages/types/src/shared/env.ts",
+          "packages/types/src/shared/error.ts",
+          "packages/types/src/shared/log.ts",
+          "packages/types/src/shared/request.ts",
+          "packages/types/src/shared/response.ts",
+          "packages/types/src/node/index.ts",
+          "packages/types/src/node/event.ts",
+          "packages/types/src/node/context.ts",
+          "packages/types/src/node/app.ts"
         ],
         "outputPath": "dist/packages/types/dist/esm",
         "tsConfig": "packages/types/tsconfig.esm.json",
@@ -41,6 +51,9 @@
       }
     },
     "build": {
+      "cache": true,
+      "inputs": ["typescript", "^production"],
+      "outputs": ["{workspaceRoot}/dist/{projectRoot}"],
       "executor": "nx:run-commands",
       "options": {
         "commands": [

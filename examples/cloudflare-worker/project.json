@@ -5,8 +5,10 @@
   "sourceRoot": "examples/cloudflare-worker/src",
   "targets": {
     "prepare": {
-      "executor": "@storm-stack/nx:prepare",
+      "cache": true,
+      "inputs": ["typescript", "^production"],
       "outputs": ["{options.outputPath}"],
+      "executor": "@storm-stack/nx:prepare",
       "options": {
         "entry": "{sourceRoot}/index.ts#handler",
         "outputPath": "dist/examples/cloudflare-worker",
@@ -17,8 +19,10 @@
       }
     },
     "build": {
-      "executor": "@storm-stack/nx:build",
+      "cache": true,
+      "inputs": ["typescript", "^production"],
       "outputs": ["{options.outputPath}"],
+      "executor": "@storm-stack/nx:build",
       "dependsOn": ["prepare"],
       "options": {
         "entry": "{sourceRoot}/index.ts#handler",

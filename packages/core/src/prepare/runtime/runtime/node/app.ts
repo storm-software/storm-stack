@@ -1,0 +1,274 @@
+/* -------------------------------------------------------------------
+
+                  ⚡ Storm Software - Storm Stack
+
+ This code was released as part of the Storm Stack project. Storm Stack
+ is maintained by Storm Software under the Apache-2.0 license, and is
+ free for commercial and private use. For more information, please visit
+ our licensing page at https://stormsoftware.com/projects/storm-stack/license.
+
+ Website:                  https://stormsoftware.com
+ Repository:               https://github.com/storm-software/storm-stack
+ Documentation:            https://stormsoftware.com/projects/storm-stack/docs
+ Contact:                  https://stormsoftware.com/contact
+
+ SPDX-License-Identifier:  Apache-2.0
+
+ ------------------------------------------------------------------- */
+
+import { getFileHeader } from "../../../../helpers/utilities/file-header";
+import type { Context, Options } from "../../../../types/build";
+
+export function writeApp<TOptions extends Options = Options>(
+  _context: Context<TOptions>
+) {
+  return `${getFileHeader()}
+
+import type {
+  BuilderConfig,
+  BuilderResult,
+  DeserializerFunction,
+  HandlerFunction,
+  SerializerFunction,
+  StormContext,
+  StormRuntimeParams,
+  ValidatorFunction,
+  SetupFunction,
+  CleanupFunction,
+  PreprocessFunction,
+  PostprocessFunction
+} from "@storm-stack/types/node";
+import type {
+  IStormRequest
+} from "@storm-stack/types/request";
+import type {
+  IStormResponse
+} from "@storm-stack/types/response";
+import { isError } from "@stryke/type-checks/is-error";
+import type { StormEnv } from "@storm-stack/types/env";
+import {
+  getBuildInfo,
+  getRuntimeInfo,
+  STORM_ASYNC_CONTEXT
+} from "./context";
+import { getErrorFromUnknown, StormError } from "./error";
+import { StormEvent } from "./event";
+import { uniqueId } from "./id";
+import { StormRequest } from "./request";
+import { StormResponse } from "./response";
+import { storage } from "./storage";
+
+/**
+ * Interface representing the attachments for a Storm application builder.
+ *
+ * @remarks
+ * This interface defines the structure for the attachments that can be used to
+ * customize the behavior of the Storm application builder.
+ */
+export interface Config<
+  TRequest extends IStormRequest,
+  TResponse extends IStormResponse,
+  TPayload = any,
+  TResult = any,
+  TContext extends StormContext<StormEnv, any, TRequest> = StormContext<
+    StormEnv,
+    any,
+    TRequest
+  >
+> {
+  setup?: SetupFunction;
+  deserializer?: DeserializerFunction<TRequest, TPayload>;
+  validator?: ValidatorFunction<TRequest, TContext>;
+  preprocess?: PreprocessFunction<TRequest, TContext>;
+  postprocess?: PostprocessFunction<TRequest, TContext, TResult>;
+  serializer?: SerializerFunction<TResponse, TResult>;
+  cleanup?: CleanupFunction;
+}
+
+/**
+ * Wrap an application entry point with the necessary context and error handling.
+ *
+ * @remarks
+ * This function is the main entry point for Storm Stack applications.
+ *
+ * @param handler - The main handler function for the application.
+ * @param config - Configuration parameters for the application.
+ * @returns A function that takes an request and returns a result or a promise of a result.
+ */
+export function wrap<
+  TRequest extends StormRequest,
+  TResponse extends StormResponse,
+  TPayload,
+  TResult
+>(
+  handler: HandlerFunction<TRequest, TResponse>,
+  config: Config<
+    TRequest,
+    TResponse,
+    TPayload,
+    TResult
+  >
+) {
+  if (!config.deserializer || !config.serializer) {
+    const missing = [
+      !config.deserializer && "deserializer",
+      !config.serializer && "serializer"
+    ].filter(Boolean);
+
+    throw new Error(
+      \`The \${missing.length > 2 ? [...missing].splice(missing.length - 1, 0, "and").join(", ") : missing.length > 1 ? [...missing].splice(missing.length - 1, 0, "and").join(" ") : missing[0]} function\${missing.length > 1 ? "s" : ""} must be configured. Please add \\\`.\${missing[0]}(<your_function>)\\\` before \\\`.build()\\\` is called.\`
+    );
+  }
+
+  const name = $storm.vars.APP_NAME;
+  const version = $storm.vars.APP_VERSION;
+  const build = getBuildInfo();
+  const runtime = getRuntimeInfo();
+
+  const disposables = new Set<Disposable>();
+  const asyncDisposables = new Set<AsyncDisposable>();
+
+  async function handleExit(): Promise<void> {
+    await storage.dispose();
+
+    for (const disposable of disposables) {
+      disposable[Symbol.dispose]();
+    }
+    disposables.clear();
+
+    const promises = [] as PromiseLike<void>[];
+    for (const disposable of asyncDisposables) {
+      promises.push(disposable[Symbol.asyncDispose]());
+      asyncDisposables.delete(disposable);
+    }
+    await Promise.all(promises);
+  }
+
+  const log = new StormLog();
+  for (const sink of log.sinks()) {
+    if (Symbol.asyncDispose in sink) {
+      asyncDisposables.add(sink as AsyncDisposable);
+    }
+    if (Symbol.dispose in sink) {
+      disposables.add(sink as Disposable);
+    }
+  }
+
+  if ("process" in globalThis && !("Deno" in globalThis)) {
+    // eslint-disable-next-line ts/no-misused-promises
+    process.on("exit", handleExit);
+  }
+
+  return async function wrapper(payload: TPayload): Promise<TResult> {
+    async function innerWrapper(
+      payload: TPayload
+    ): Promise<TResponse | StormResponse<StormError>> {
+      const request = await Promise.resolve(
+        config.deserializer!(payload)
+      );
+      if (isError(request)) {
+        return StormResponse.create(request);
+      }
+
+      const context = {
+        name,
+        version,
+        request,
+        meta: request.meta,
+        build,
+        runtime,
+        log: log.with({ name, version, requestId: request.id }),
+        storage,
+        vars: {} as StormEnv,
+        emit: (_event: StormEvent) => {},
+        __internal: {
+          events: [] as StormEvent[]
+        }
+      } as StormContext<StormEnv>;
+
+      function emit(event: StormEvent) {
+        context.log.debug(
+          \`The \${event.label} event was emitted by the application.\`,
+          {
+            event
+          }
+        );
+
+        context.__internal.events.push(event);
+      }
+      context.emit = emit;
+
+      context.log.debug("Starting the application handler process.", {
+        request
+      });
+
+      const response = await STORM_ASYNC_CONTEXT.callAsync(
+        context,
+        async () => {
+          try {
+            if (config.validator) {
+              const validatorResult = await Promise.resolve(
+                config.validator(context)
+              );
+              if (isError(validatorResult)) {
+                return StormResponse.create(validatorResult);
+              }
+            }
+
+            if (config.preprocess) {
+              const preprocessResult = await Promise.resolve(
+                config.preprocess(context)
+              );
+              if (isError(preprocessResult)) {
+                return StormResponse.create(preprocessResult);
+              }
+            }
+
+            const result = await Promise.resolve(
+              handler(request as TRequest)
+            );
+            if (isError(result)) {
+              return StormResponse.create(result);
+            }
+
+            if (config.postprocess) {
+              const postprocessResult = await Promise.resolve(
+                config.postprocess(context, result)
+              );
+              if (isError(postprocessResult)) {
+                return StormResponse.create(postprocessResult);
+              }
+            }
+
+            return StormResponse.create(result);
+          } catch (e) {
+            const error = getErrorFromUnknown(e);
+            context.log.fatal(
+              "The application was forced to terminate due to a fatal error.",
+              {
+                error
+              }
+            );
+
+            return StormResponse.create(error);
+          }
+        }
+      );
+
+      context.log.debug("The application handler process has completed.", {
+        response
+      });
+
+      return response;
+    }
+
+    const result = await innerWrapper(payload);
+    if (config.serializer) {
+      return Promise.resolve(config.serializer(result)) as TResult;
+    }
+
+    return result as TResult;
+  };
+}
+`;
+}

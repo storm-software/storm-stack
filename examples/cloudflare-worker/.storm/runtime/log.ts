@@ -7,16 +7,16 @@
 
 /* eslint-disable camelcase */
 
-import type {
-IStormLog,
-LogCallback,
-LogFilter,
-LogLevel,
-LogRecord,
-LogSink,
-LogSinkInstance
-} from "@storm-stack/types";
+import {
+  IStormLog,
+  LogCallback,
+  LogFilter,
+  LogLevel,
+  LogRecord,
+  LogSink
+} from "@storm-stack/types/log";
 import { StormError } from "./error";
+import logConsoleSink from "./logs/log-console"; 
 
 const LOG_LEVELS = [
   "trace",
@@ -77,11 +77,7 @@ export function parseLogLevel(level: string): LogLevel {
     case "fatal":
       return formattedLevel;
     default:
-      throw new StormError({
-        type: "general",
-        code: 11,
-        params: [String(level)]
-      });
+      throw new StormError({ type: "general", code: 11, params: [String(level)] });
   }
 }
 
@@ -124,6 +120,86 @@ function compareLogLevel(a: LogLevel, b: LogLevel): number {
 }
 
 /**
+ * Parse a message template into a message template array and a values array.
+ * @param template The message template.
+ * @param properties The values to replace placeholders with.
+ * @returns The message template array and the values array.
+ */
+function parseMessageTemplate(
+  template: string,
+  properties: Record<string, unknown>
+): readonly unknown[] {
+  const message: unknown[] = [];
+  let part = "";
+  for (let i = 0; i < template.length; i++) {
+    const char = template.charAt(i);
+    const nextChar = template.charAt(i + 1);
+
+    if (char === "{" && nextChar === "{") {
+      // Escaped { character
+      part += char;
+      i++;
+    } else if (char === "}" && nextChar === "}") {
+      // Escaped } character
+      part += char;
+      i++;
+    } else if (char === "{") {
+      // Start of a placeholder
+      message.push(part);
+      part = "";
+    } else if (char === "}") {
+      // End of a placeholder
+      let prop: unknown;
+      if (part.match(/^s|s$/)) {
+        prop = part in properties ? properties[part] : properties[part.trim()];
+      } else {
+        prop = properties[part];
+      }
+      message.push(prop);
+      part = "";
+    } else {
+      // Default case
+      part += char;
+    }
+  }
+  message.push(part);
+  return message;
+}
+
+/**
+ * Render a message template with values.
+ * @param template The message template.
+ * @param values The message template values.
+ * @returns The message template values interleaved between the substitution values.
+ */
+function renderMessage(
+  template: TemplateStringsArray,
+  values: readonly unknown[]
+): unknown[] {
+  const args = [] as unknown[];
+  for (let i = 0; i < template.length; i++) {
+    if (template[i]) {
+      args.push(template[i]);
+      if (i < values.length && values[i]) {
+        args.push(values[i]);
+      }
+    }
+  }
+
+  return args;
+}
+
+/**
+ * The log sinks added by Storm Stack plugins.
+ *
+ * @remarks
+ * This constant is generated dynamically by the build process. Do not modify it directly.
+ */
+const LOG_SINKS = [
+{ logLevel: "info", handle: logConsoleSink }
+] as const;
+
+/**
  * A logger implementation. Do not use this directly; use {@link getLogger} instead. This class is exported for testing purposes.
  */
 export class StormLog implements IStormLog {
@@ -134,15 +210,14 @@ export class StormLog implements IStormLog {
    */
   #storage = {} as Record<string, unknown>;
 
-  public readonly sinks: LogSinkInstance[];
-
   public readonly filters: LogFilter[];
 
   public lowestLogLevel: LogLevel | null =
-    (process.env.LOG_LEVEL as LogLevel | null) || "info";
+    (process.env.LOG_LEVEL as LogLevel | null) ||
+    $storm.vars.LOG_LEVEL ||
+    LogLevel.INFO;
 
-  public constructor(sinks: LogSinkInstance[] = []) {
-    this.sinks = sinks;
+  public constructor() {
     this.filters = [];
   }
 
@@ -160,17 +235,18 @@ export class StormLog implements IStormLog {
     return true;
   }
 
-  public *getSinks(level: LogLevel): Iterable<LogSink> {
+  public *sinks(level?: LogLevel): Iterable<LogSink> {
     if (
       this.lowestLogLevel === null ||
-      compareLogLevel(level, this.lowestLogLevel) < 0
+      compareLogLevel(level || this.lowestLogLevel, this.lowestLogLevel) < 0
     ) {
       return;
     }
 
-    for (const sink of this.sinks
-      .filter(sink => compareLogLevel(level, sink.logLevel) < 0)
-      .map(sink => sink.handle)) {
+    for (const sink of LOG_SINKS.filter(sink =>
+      compareLogLevel(level ?? this.lowestLogLevel ?? "info", sink.logLevel) < 0)
+        .map(sink => sink.handle)
+    ) {
       yield sink;
     }
   }
@@ -183,15 +259,19 @@ export class StormLog implements IStormLog {
     ) {
       return;
     }
-    for (const sink of this.getSinks(record.level)) {
-      if (bypassSinks?.has(sink)) continue;
-      try {
-        sink(record);
-      } catch (error) {
-        const bypassSinks2 = new Set(bypassSinks);
-        bypassSinks2.add(sink);
 
-        console.error(`Failed to emit a log record to sink ${sink}: ${error}`);
+    for (const sink of this.sinks(record.level)) {
+      if (!bypassSinks?.has(sink)) {
+        try {
+          sink(record);
+        } catch (error) {
+          const bypassSinks2 = new Set(bypassSinks);
+          bypassSinks2.add(sink);
+
+          console.error(
+            `Failed to emit a log record to sink ${sink}: ${error}`
+          );
+        }
       }
     }
   }
@@ -477,74 +557,4 @@ export class StormLogCtx implements IStormLog {
       this.logTemplate("fatal", message, values);
     }
   }
-}
-
-/**
- * Parse a message template into a message template array and a values array.
- * @param template The message template.
- * @param properties The values to replace placeholders with.
- * @returns The message template array and the values array.
- */
-export function parseMessageTemplate(
-  template: string,
-  properties: Record<string, unknown>
-): readonly unknown[] {
-  const message: unknown[] = [];
-  let part = "";
-  for (let i = 0; i < template.length; i++) {
-    const char = template.charAt(i);
-    const nextChar = template.charAt(i + 1);
-
-    if (char === "{" && nextChar === "{") {
-      // Escaped { character
-      part += char;
-      i++;
-    } else if (char === "}" && nextChar === "}") {
-      // Escaped } character
-      part += char;
-      i++;
-    } else if (char === "{") {
-      // Start of a placeholder
-      message.push(part);
-      part = "";
-    } else if (char === "}") {
-      // End of a placeholder
-      let prop: unknown;
-      if (part.match(/^s|s$/)) {
-        prop = part in properties ? properties[part] : properties[part.trim()];
-      } else {
-        prop = properties[part];
-      }
-      message.push(prop);
-      part = "";
-    } else {
-      // Default case
-      part += char;
-    }
-  }
-  message.push(part);
-  return message;
-}
-
-/**
- * Render a message template with values.
- * @param template The message template.
- * @param values The message template values.
- * @returns The message template values interleaved between the substitution values.
- */
-export function renderMessage(
-  template: TemplateStringsArray,
-  values: readonly unknown[]
-): unknown[] {
-  const args = [] as unknown[];
-  for (let i = 0; i < template.length; i++) {
-    if (template[i]) {
-      args.push(template[i]);
-      if (i < values.length && values[i]) {
-        args.push(values[i]);
-      }
-    }
-  }
-
-  return args;
 }
