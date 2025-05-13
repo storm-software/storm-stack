@@ -12,7 +12,6 @@
       "options": {
         "entry": "{sourceRoot}/index.ts#handler",
         "outputPath": "dist/examples/cloudflare-worker",
-        "presets": ["@storm-stack/preset-cloudflare-worker"],
         "skipCache": true,
         "skipInstalls": true,
         "mode": "development"
@@ -27,7 +26,6 @@
       "options": {
         "entry": "{sourceRoot}/index.ts#handler",
         "outputPath": "dist/examples/cloudflare-worker",
-        "presets": ["@storm-stack/preset-cloudflare-worker"],
         "skipCache": true,
         "skipInstalls": true,
         "mode": "development"

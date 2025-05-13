@@ -16,26 +16,21 @@
 
  ------------------------------------------------------------------- */
 
-import { getFileHeader } from "../../../../helpers/utilities/file-header";
-import type { Context, Options } from "../../../../types/build";
+import { getTsupConfig } from "@storm-stack/tools-config/tsup.shared";
 
-export function writeStorage<TOptions extends Options = Options>(
-  context: Context<TOptions>
-) {
-  return `${getFileHeader()}
+const config = getTsupConfig({
+  name: "plugin-storage-cloudflare-kv",
+  entry: ["src/index.ts", "src/types.ts"],
+  outDir: "dist",
+  bundle: true,
+  splitting: false,
+  treeshake: true,
+  keepNames: true,
+  clean: true,
+  sourcemap: false,
+  dts: true,
+  shims: true,
+  skipNodeModulesBundle: true
+});
 
-import { createStorage } from "unstorage";
-${context.runtime.storage
-  .map(storage => storage.import)
-  .filter(Boolean)
-  .join("\n")}
-
-export const storage = createStorage();
-
-${context.runtime.storage
-  .map(storage => {
-    return `storage.mount("${storage.namespace}", ${storage.name});`;
-  })
-  .join("\n")}
-`;
-}
+export default config;

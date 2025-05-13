@@ -24,7 +24,7 @@ import type { MaybePromise } from "@stryke/types/base";
 import LibraryPlugin from "./library";
 
 export interface StoragePluginConfig {
-  storageId: string;
+  namespace: string;
 }
 
 export default abstract class StoragePlugin<
@@ -36,6 +36,12 @@ export default abstract class StoragePlugin<
     installPath?: string
   ) {
     super(config, name, installPath);
+
+    if (!this.config.namespace) {
+      throw new Error(
+        `The \`namespace\` configuration parameter was not provided to the ${this.name} plugin.`
+      );
+    }
   }
 
   public override addHooks(hooks: EngineHooks<TOptions>) {
@@ -66,7 +72,7 @@ export default abstract class StoragePlugin<
           context.artifactsDir,
           "runtime",
           "storage",
-          `${this.name}.ts`
+          `${this.name}-${this.config.namespace.replaceAll(".", "-").replaceAll(":", "-")}.ts`
         ),
         await Promise.resolve(this.writeStorage(context))
       );
@@ -80,11 +86,11 @@ export default abstract class StoragePlugin<
     );
 
     if (context.options.projectType === "application") {
-      const name = `${camelCase(this.name)}Storage`;
+      const name = `${camelCase(`${this.name}-${this.config.namespace.replaceAll(".", "-").replaceAll(":", "-")}`)}Storage`;
       context.runtime.storage.push({
         name,
-        storageId: this.config.storageId,
-        import: `import ${name} from "./${joinPaths("storage", this.name)}"; `
+        namespace: this.config.namespace,
+        import: `import ${name} from "./${joinPaths("storage", `${this.name}-${this.config.namespace.replaceAll(".", "-").replaceAll(":", "-")}`)}"; `
       });
     }
   }

@@ -34,7 +34,7 @@ export type LogStoragePluginConfig = LogPluginConfig & {
    *
    * @defaultValue "logs"
    */
-  storageId?: string;
+  namespace?: string;
 };
 
 export default class LogStoragePlugin<
@@ -44,13 +44,13 @@ export default class LogStoragePlugin<
     super(config, "log-storage-plugin", "@storm-stack/plugin-log-storage");
 
     this.config.useFileSystem ??= true;
-    this.config.storageId ??= "logs";
+    this.config.namespace ??= "logs";
 
     if (this.config.useFileSystem) {
       this.dependencies.push([
         "@storm-stack/plugin-storage-fs",
         {
-          storageId: this.config.storageId,
+          namespace: this.config.namespace,
           base: "getEnvPaths().log"
         }
       ]);
@@ -236,7 +236,7 @@ const formatter: TextFormatter = getTextFormatter();
 
 const sink: LogSink & AsyncDisposable = (record: LogRecord) => {
   void storage.setItem(
-    \`${this.config.storageId}:storm-\${new Date().toISOString().replace("T", "_").replace("Z", "")}.log\`,
+    \`${this.config.namespace}:storm-\${new Date().toISOString().replace("T", "_").replace("Z", "")}.log\`,
     formatter(record) as T
   );
 };

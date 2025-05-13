@@ -79,7 +79,7 @@ export default class StormStackCloudflareWorkerPreset<
 
   public addHooks(hooks: EngineHooks<TOptions>) {
     hooks.addHooks({
-      "clean": this.clean.bind(this),
+      "clean:complete": this.clean.bind(this),
       "init:context": this.initOptions.bind(this),
       "init:tsconfig": this.initTsconfig.bind(this),
       "prepare:runtime": this.prepareRuntime.bind(this),

@@ -16,8 +16,8 @@ import {
   LogSink
 } from "@storm-stack/types/log";
 import { StormError } from "./error";
-import logConsoleSink from "./logs/log-console"; 
-import logSentrySink from "./logs/log-sentry"; 
+import logConsoleInfoSink from "./logs/log-console-info"; 
+import logSentryInfoSink from "./logs/log-sentry-info"; 
 
 const LOG_LEVELS = [
   "trace",
@@ -197,8 +197,8 @@ function renderMessage(
  * This constant is generated dynamically by the build process. Do not modify it directly.
  */
 const LOG_SINKS = [
-{ logLevel: "info", handle: logConsoleSink }, 
-{ logLevel: "info", handle: logSentrySink }
+{ logLevel: "info", handle: logConsoleInfoSink }, 
+{ logLevel: "info", handle: logSentryInfoSink }
 ] as const;
 
 /**

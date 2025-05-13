@@ -186,7 +186,8 @@
   },
   "devDependencies": {
     "@storm-stack/types": "workspace:*",
-    "@types/node": "catalog:"
+    "@types/node": "catalog:",
+    "tsup": "catalog:"
   },
   "publishConfig": {
     "access": "public"

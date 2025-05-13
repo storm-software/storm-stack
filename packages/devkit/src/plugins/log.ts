@@ -69,7 +69,7 @@ export default abstract class LogPlugin<
           context.artifactsDir,
           "runtime",
           "logs",
-          `${this.name}.ts`
+          `${this.name}-${this.config.logLevel}.ts`
         ),
         await Promise.resolve(this.writeSink(context))
       );
@@ -83,11 +83,11 @@ export default abstract class LogPlugin<
     );
 
     if (context.options.projectType === "application") {
-      const name = `${camelCase(this.name)}Sink`;
+      const name = `${camelCase(`${this.name}-${this.config.logLevel}`)}Sink`;
       context.runtime.logs.push({
         name,
         logLevel: this.config.logLevel || "info",
-        import: `import ${name} from "./${joinPaths("logs", this.name)}"; `
+        import: `import ${name} from "./${joinPaths("logs", `${this.name}-${this.config.logLevel}`)}"; `
       });
     }
   }

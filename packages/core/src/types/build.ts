@@ -409,7 +409,7 @@ export interface StorageRuntimeConfig {
   /**
    * The storage id to be used by the runtime.
    */
-  storageId: string;
+  namespace: string;
 
   /**
    * The import statement to be used by the runtime.

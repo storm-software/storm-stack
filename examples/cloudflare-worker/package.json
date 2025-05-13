@@ -24,5 +24,19 @@
     "@storm-stack/plugin-log-console": "workspace:*",
     "@storm-stack/preset-cloudflare-worker": "workspace:*",
     "@stryke/types": "catalog:"
+  },
+  "storm": {
+    "plugins": [
+      [
+        "@storm-stack/plugin-storage-cloudflare-kv",
+        {
+          "binding": "STORAGE",
+          "namespace": "storage"
+        }
+      ]
+    ],
+    "presets": [
+      "@storm-stack/preset-cloudflare-worker"
+    ]
   }
 }
