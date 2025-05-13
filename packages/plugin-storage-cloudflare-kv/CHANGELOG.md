@@ -2,6 +2,13 @@
 
 # Changelog for Storm Stack - Plugin Storage Cloudflare Kv
 
+## [0.2.0](https://github.com/storm-software/storm-stack/releases/tag/plugin-storage-cloudflare-kv%400.2.0) (2025-05-13)
+
+### Features
+
+- **plugin-storage-cloudflare-kv:** Added Cloudflare KV (http) support using
+  Cloudflare API v4
+
 ## [0.1.1](https://github.com/storm-software/storm-stack/releases/tag/plugin-storage-cloudflare-kv%400.1.1) (2025-05-13)
 
 ### Miscellaneous
