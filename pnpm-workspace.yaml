@@ -163,7 +163,7 @@ overrides:
   "@storm-stack/plugin-log-storage": workspace:*
   "@storm-stack/plugin-log-otel": workspace:*
   "@storm-stack/plugin-log-sentry": workspace:*
-  "@storm-stack/plugin-log-stream": workspace:*
+  "@storm-stack/plugin-storage-fs": workspace:*
   "@storm-stack/nx": workspace:*
   "@storm-stack/preset-cli": workspace:*
   "@storm-stack/preset-cloudflare-worker": workspace:*

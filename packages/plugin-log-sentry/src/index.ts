@@ -47,7 +47,6 @@ import * as Sentry from "@sentry/node";
 import type { LogRecord, LogSink } from "@storm-stack/types/log";
 import { StormJSON } from "@stryke/json/storm-json";
 
-
 /**
  * A platform-specific inspect function. In Deno, this is {@link Deno.inspect}, and in Node.js/Bun it is {@link util.inspect}. If neither is available, it falls back to {@link StormJSON.stringify}.
  *

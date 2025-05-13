@@ -638,7 +638,7 @@
     "@storm-software/config": "catalog:",
     "@storm-software/config-tools": "catalog:",
     "@storm-software/esbuild": "catalog:",
-    "@storm-stack/types": "0.5.0",
+    "@storm-stack/types": "workspace:*",
     "@stryke/convert": "catalog:",
     "@stryke/env": "catalog:",
     "@stryke/fs": "catalog:",

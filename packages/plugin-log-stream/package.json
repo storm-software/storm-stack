@@ -78,11 +78,11 @@
     "storm-stack-log-plugin"
   ],
   "dependencies": {
-    "@storm-stack/core": "0.16.0",
-    "@storm-stack/devkit": "0.2.0"
+    "@storm-stack/core": "workspace:*",
+    "@storm-stack/devkit": "workspace:*"
   },
   "devDependencies": {
-    "@storm-stack/nx": "0.10.0",
+    "@storm-stack/nx": "workspace:*",
     "@types/node": "catalog:",
     "tsup": "catalog:"
   },

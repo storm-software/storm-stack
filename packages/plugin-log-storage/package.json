@@ -77,13 +77,15 @@
     "storm-stack-plugin",
     "storm-stack-log-plugin"
   ],
+  "peerDependencies": {
+    "@storm-stack/plugin-storage-fs": "workspace:*"
+  },
   "dependencies": {
-    "@storm-stack/core": "0.16.0",
-    "@storm-stack/devkit": "0.2.0",
+    "@storm-stack/core": "workspace:*",
+    "@storm-stack/devkit": "workspace:*",
     "unstorage": "catalog:"
   },
   "devDependencies": {
-    "@storm-stack/nx": "0.10.0",
     "@types/node": "catalog:",
     "tsup": "catalog:"
   },

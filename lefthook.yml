@@ -37,10 +37,6 @@ pre-commit:
       glob: '**/*'
       run: 'pnpm exec storm-pre-commit {staged_files}'
       stage_fixed: true
-    pnpm-workspace:
-      glob: "**/*"
-      run: "pnpm update --recursive --workspace"
-      stage_fixed: true
     lint:
       glob:
         - "*.js"
@@ -88,6 +84,10 @@ pre-push:
     validate:
       glob: "**/*"
       run: "pnpm exec storm-pre-push {staged_files}"
+      stage_fixed: true
+    pnpm-workspace:
+      glob: "**/*"
+      run: "pnpm update --recursive --workspace"
       stage_fixed: true
     # lint-filename:
     #   glob: "**/*"
