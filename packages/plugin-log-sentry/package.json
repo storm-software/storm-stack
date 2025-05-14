@@ -1,6 +1,6 @@
 {
   "name": "@storm-stack/plugin-log-sentry",
-  "version": "0.14.1",
+  "version": "0.14.2",
   "type": "module",
   "description": "A package containing a Storm Stack log adapter to write log messages to Sentry",
   "repository": {

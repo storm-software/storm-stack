@@ -1,6 +1,6 @@
 {
   "name": "@storm-stack/plugin-storage-cloudflare-r2",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "type": "module",
   "description": "A package containing a Storm Stack storage adapter to write to Cloudflare R2",
   "repository": {
