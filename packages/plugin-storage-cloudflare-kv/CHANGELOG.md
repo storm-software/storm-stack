@@ -2,6 +2,17 @@
 
 # Changelog for Storm Stack - Plugin Storage Cloudflare Kv
 
+## [0.3.0](https://github.com/storm-software/storm-stack/releases/tag/plugin-storage-cloudflare-kv%400.3.0) (2025-05-14)
+
+### Features
+
+- **plugin-storage-cloudflare-r2:** Initial check-in of the Cloudflare R2
+  storage plugin
+
+### Miscellaneous
+
+- **monorepo:** Update workspace package links
+
 ## [0.2.0](https://github.com/storm-software/storm-stack/releases/tag/plugin-storage-cloudflare-kv%400.2.0) (2025-05-13)
 
 ### Features

@@ -2,6 +2,12 @@
 
 # Changelog for Storm Stack - Plugin Log Otel
 
+## [0.11.2](https://github.com/storm-software/storm-stack/releases/tag/plugin-log-otel%400.11.2) (2025-05-14)
+
+### Miscellaneous
+
+- **monorepo:** Update workspace package links
+
 ## [0.11.1](https://github.com/storm-software/storm-stack/releases/tag/plugin-log-otel%400.11.1) (2025-05-13)
 
 ### Miscellaneous
