@@ -5,5 +5,5 @@ main = '/.storm/entry-0LGqoAa1pmeC5fOU1GFizPSV.ts'
 account_id = 'undefined'
 compatibility_flags = ['nodejs_als']
 kv_namespaces = [
-    { binding = 'STORAGE', id = 'STORAGE' },
+    { binding = 'STORAGE', id = 'storage' },
 ]

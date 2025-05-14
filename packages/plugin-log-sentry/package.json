@@ -91,11 +91,11 @@
   },
   "dependencies": {
     "@storm-stack/core": "workspace:*",
-    "@storm-stack/devkit": "0.3.1",
+    "@storm-stack/devkit": "workspace:*",
     "@stryke/json": "catalog:"
   },
   "devDependencies": {
-    "@storm-stack/nx": "0.10.2",
+    "@storm-stack/nx": "workspace:*",
     "@types/node": "catalog:",
     "tsup": "catalog:"
   },
