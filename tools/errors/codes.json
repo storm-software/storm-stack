@@ -12,8 +12,9 @@
     "10": "No log record was made.",
     "11": "Invalid log level: \"%s\"",
     "12": "Unable to access context. Please ensure it was initialized prior to its use.",
-    "13": "The \"CLOUDFLARE_ACCOUNT_ID\" variable must be defined to use the Cloudflare KV storage function.",
-    "14": "The \"CLOUDFLARE_API_TOKEN\", \"CLOUDFLARE_EMAIL\"/\"CLOUDFLARE_API_KEY\", or \"CLOUDFLARE_USER_SERVICE_KEY\" variable must be defined to use the Cloudflare KV storage function."
+    "13": "The \"CLOUDFLARE_ACCOUNT_ID\" variable must be defined to use %s via the Cloudflare v4 API.",
+    "14": "The \"CLOUDFLARE_API_TOKEN\", \"CLOUDFLARE_EMAIL\"/\"CLOUDFLARE_API_KEY\", or \"CLOUDFLARE_USER_SERVICE_KEY\" variable must be defined to use Cloudflare KV storage via the Cloudflare v4 API.",
+    "15": "The \"CLOUDFLARE_R2_ACCESS_KEY_ID\" and \"CLOUDFLARE_R2_SECRET_ACCESS_KEY\" variables must be defined to use Cloudflare R2 storage via the Cloudflare v4 API."
   },
   "not_found": {
     "1": "The requested resource was not found.",

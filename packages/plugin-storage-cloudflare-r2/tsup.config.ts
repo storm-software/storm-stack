@@ -19,7 +19,7 @@
 import { getTsupConfig } from "@storm-stack/tools-config/tsup.shared";
 
 const config = getTsupConfig({
-  name: "plugin-storage-cloudflare-kv",
+  name: "plugin-storage-cloudflare-r2",
   entry: ["src/index.ts"],
   outDir: "dist",
   bundle: true,

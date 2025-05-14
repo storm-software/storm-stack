@@ -24,43 +24,34 @@ import type { StoragePluginConfig } from "@storm-stack/devkit/plugins/storage";
 import StoragePlugin from "@storm-stack/devkit/plugins/storage";
 import { readFile } from "@stryke/fs";
 import { existsSync, joinPaths } from "@stryke/path";
-import type { KVOptions } from "unstorage/drivers/cloudflare-kv-binding";
-import type { KVHTTPOptions } from "unstorage/drivers/cloudflare-kv-http";
+import type { CloudflareR2Options } from "unstorage/drivers/cloudflare-r2-binding";
 
-export type StorageCloudflareKVPluginConfig = StoragePluginConfig &
-  Omit<KVOptions, "binding"> & {
+export type StorageCloudflareR2PluginConfig = StoragePluginConfig &
+  Omit<CloudflareR2Options, "binding"> & {
     /**
-     * The binding name for the Cloudflare KV.
+     * The binding name for the Cloudflare R2.
      *
      * @remarks
-     * This is used to access the Cloudflare KV binding in the worker.
+     * This is used to access the Cloudflare R2 binding in the worker.
      */
     binding?: string;
+  };
 
-    /**
-     * The minimum TTL for the Cloudflare KV.
-     *
-     * @remarks
-     * This is used to set the minimum TTL for the Cloudflare KV.
-     *
-     * @defaultValue 60
-     */
-    minTTL: number;
-  } & Omit<KVHTTPOptions, "namespaceId" | "minTTL">;
-
-export default class StorageCloudflareKVPlugin<
+export default class StorageCloudflareR2Plugin<
   TOptions extends Options = Options
 > extends StoragePlugin<TOptions> {
   public constructor(
-    protected override config: StorageCloudflareKVPluginConfig
+    protected override config: StorageCloudflareR2PluginConfig
   ) {
     super(
       config,
-      "storage-cloudflare-kv-plugin",
-      "@storm-stack/plugin-storage-cloudflare-kv"
+      "storage-cloudflare-r2-plugin",
+      "@storm-stack/plugin-storage-cloudflare-r2"
     );
 
-    this.config.minTTL ??= 60;
+    if (this.config.binding) {
+      this.installs["aws4fetch@1.0.20"] = "dependency";
+    }
   }
 
   public override addHooks(hooks: EngineHooks<TOptions>) {
@@ -75,39 +66,35 @@ export default class StorageCloudflareKVPlugin<
     if (this.config.binding) {
       return `${getFileHeader()}
 
-import cloudflareKVBindingDriver from "unstorage/drivers/cloudflare-kv-binding";
+import cloudflareR2BindingDriver from "unstorage/drivers/cloudflare-r2-binding";
 import { env } from "cloudflare:workers";
 
-export default cloudflareKVBindingDriver({ binding: env.${this.config.binding}, minTTL: ${this.config.minTTL ?? 60} });
+export default cloudflareR2BindingDriver({ binding: env.${this.config.binding}, base: ${this.config.base || "undefined"} });
 `;
     } else {
       return `${getFileHeader()}
 
-import cloudflareKVHTTPDriver from "unstorage/drivers/cloudflare-kv-http";
+import s3Driver from "unstorage/drivers/s3";
 
 const accountId = process.env.CLOUDFLARE_ACCOUNT_ID || $storm.vars.CLOUDFLARE_ACCOUNT_ID;
-const apiToken = process.env.CLOUDFLARE_API_TOKEN || $storm.vars.CLOUDFLARE_API_TOKEN;
-const email = process.env.CLOUDFLARE_EMAIL || $storm.vars.CLOUDFLARE_EMAIL;
-const apiKey = process.env.CLOUDFLARE_API_KEY || $storm.vars.CLOUDFLARE_API_KEY;
-const userServiceKey = process.env.CLOUDFLARE_USER_SERVICE_KEY || $storm.vars.CLOUDFLARE_USER_SERVICE_KEY;
+const accessKey = process.env.CLOUDFLARE_R2_ACCESS_KEY_ID || $storm.vars.CLOUDFLARE_R2_ACCESS_KEY_ID;
+const secretAccessKey = process.env.CLOUDFLARE_R2_SECRET_ACCESS_KEY || $storm.vars.CLOUDFLARE_R2_SECRET_ACCESS_KEY;
 
 if (!accountId) {
   throw new StormError({
-    type: "general", code: 13, params: ["Cloudflare KV storage"]
+    type: "general", code: 13, params: ["Cloudflare R2 storage"]
   });
 }
-if (!apiToken && (!email || !apiKey) && !userServiceKey) {
-  throw new StormError({ type: "general", code: 14 });
+if (!accessKey && !secretAccessKey) {
+  throw new StormError({ type: "general", code: 15 });
 }
 
-export default cloudflareKVHTTPDriver({
-  accountId,
-  namespaceId: ${this.config.namespace ? `"${this.config.namespace}"` : "undefined"},
-  apiToken,
-  email,
-  apiKey,
-  userServiceKey,
-  minTTL: ${this.config.minTTL ?? 60}
+export default s3Driver({
+  accessKeyId: accessKey,
+  secretAccessKey: secretAccessKey,
+  endpoint: \`https://\${accountId}.r2.cloudflarestorage.com\`,
+  bucket: "${this.config.namespace}",
+  region: "auto",
 });
 `;
     }
@@ -117,7 +104,7 @@ export default cloudflareKVHTTPDriver({
     if (context.options.projectType === "application" && this.config.binding) {
       this.log(
         LogLevelLabel.TRACE,
-        "Writing the Cloudflare KV binding to the wrangler file."
+        "Writing the Cloudflare R2 binding to the wrangler file."
       );
 
       const wranglerFilePath = joinPaths(
@@ -131,13 +118,13 @@ export default cloudflareKVHTTPDriver({
       }
 
       const wranglerFile = parseToml(wranglerFileContent || "") as {
-        kv_namespaces?: Array<{ binding: string; id: string }>;
+        r2_buckets?: Array<{ binding: string; bucket_name: string }>;
       };
 
-      wranglerFile.kv_namespaces ??= [];
-      wranglerFile.kv_namespaces.push({
+      wranglerFile.r2_buckets ??= [];
+      wranglerFile.r2_buckets.push({
         binding: this.config.binding,
-        id: this.config.namespace
+        bucket_name: this.config.namespace
       });
 
       return this.writeFile(

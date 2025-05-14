@@ -1,12 +1,12 @@
 {
-  "name": "@storm-stack/plugin-storage-cloudflare-kv",
-  "version": "0.1.1",
+  "name": "@storm-stack/plugin-storage-cloudflare-r2",
+  "version": "0.0.1",
   "type": "module",
-  "description": "A package containing a Storm Stack storage adapter to write to Cloudflare KV",
+  "description": "A package containing a Storm Stack storage adapter to write to Cloudflare R2",
   "repository": {
     "type": "github",
     "url": "https://github.com/storm-software/storm-stack.git",
-    "directory": "packages/plugin-storage-cloudflare-kv"
+    "directory": "packages/plugin-storage-cloudflare-r2"
   },
   "private": false,
   "exports": {
@@ -63,6 +63,14 @@
     "storm-stack-plugin",
     "storm-stack-storage-plugin"
   ],
+  "peerDependencies": {
+    "aws4fetch": "^1.0.20"
+  },
+  "peerDependenciesMeta": {
+    "aws4fetch": {
+      "optional": true
+    }
+  },
   "dependencies": {
     "@ltd/j-toml": "catalog:",
     "@storm-software/config-tools": "catalog:",

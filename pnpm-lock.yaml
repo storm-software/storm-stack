@@ -345,6 +345,7 @@ overrides:
   '@storm-stack/plugin-log-sentry': workspace:*
   '@storm-stack/plugin-storage-fs': workspace:*
   '@storm-stack/plugin-storage-cloudflare-kv': workspace:*
+  '@storm-stack/plugin-storage-cloudflare-r2': workspace:*
   '@storm-stack/nx': workspace:*
   '@storm-stack/preset-cli': workspace:*
   '@storm-stack/preset-cloudflare-worker': workspace:*
@@ -526,7 +527,7 @@ importers:
         version: 0.1.1
       unstorage:
         specifier: 'catalog:'
-        version: 1.16.0
+        version: 1.16.0(aws4fetch@1.0.20)
     devDependencies:
       '@storm-stack/core':
         specifier: workspace:*
@@ -1065,7 +1066,7 @@ importers:
         version: link:../plugin-storage-fs
       unstorage:
         specifier: 'catalog:'
-        version: 1.16.0
+        version: 1.16.0(aws4fetch@1.0.20)
     devDependencies:
       '@types/node':
         specifier: 'catalog:'
@@ -1096,7 +1097,44 @@ importers:
         version: 0.4.14(magicast@0.3.5)
       unstorage:
         specifier: 'catalog:'
-        version: 1.16.0
+        version: 1.16.0(aws4fetch@1.0.20)
+    devDependencies:
+      '@storm-stack/nx':
+        specifier: workspace:*
+        version: link:../nx
+      '@types/node':
+        specifier: 'catalog:'
+        version: 22.15.3
+      tsup:
+        specifier: 'catalog:'
+        version: 8.4.0(@microsoft/api-extractor@7.52.8(@types/node@22.15.3))(@swc/core@1.11.22(@swc/helpers@0.5.17))(jiti@2.4.2)(postcss@8.5.3)(tsx@4.19.4)(typescript@5.8.3)(yaml@2.7.1)
+
+  packages/plugin-storage-cloudflare-r2:
+    dependencies:
+      '@ltd/j-toml':
+        specifier: 'catalog:'
+        version: 1.38.0
+      '@storm-software/config-tools':
+        specifier: 'catalog:'
+        version: 1.169.8(magicast@0.3.5)
+      '@storm-stack/core':
+        specifier: workspace:*
+        version: link:../core
+      '@storm-stack/devkit':
+        specifier: workspace:*
+        version: link:../devkit
+      '@stryke/fs':
+        specifier: 'catalog:'
+        version: 0.12.2(magicast@0.3.5)(nx@21.0.3(@swc-node/register@1.10.10(@swc/core@1.11.22(@swc/helpers@0.5.17))(@swc/types@0.1.21)(typescript@5.8.3))(@swc/core@1.11.22(@swc/helpers@0.5.17)))
+      '@stryke/path':
+        specifier: 'catalog:'
+        version: 0.4.14(magicast@0.3.5)
+      aws4fetch:
+        specifier: ^1.0.20
+        version: 1.0.20
+      unstorage:
+        specifier: 'catalog:'
+        version: 1.16.0(aws4fetch@1.0.20)
     devDependencies:
       '@storm-stack/nx':
         specifier: workspace:*
@@ -1118,7 +1156,7 @@ importers:
         version: link:../devkit
       unstorage:
         specifier: 'catalog:'
-        version: 1.16.0
+        version: 1.16.0(aws4fetch@1.0.20)
     devDependencies:
       '@types/node':
         specifier: 'catalog:'
@@ -1211,7 +1249,7 @@ importers:
     dependencies:
       unstorage:
         specifier: 'catalog:'
-        version: 1.16.0
+        version: 1.16.0(aws4fetch@1.0.20)
     devDependencies:
       '@storm-software/build-tools':
         specifier: 'catalog:'
@@ -3605,7 +3643,6 @@ packages:
 
   '@ls-lint/ls-lint@2.3.0':
     resolution: {integrity: sha512-lsT5/7SxtImOIjpefC9wcoXt2lkikKhCjd6U+Q9Z6X5h2HBU/71ggt+XStdodZ0HkJGO333zDUeec7JROMCPFw==}
-    cpu: [x64, arm64, s390x, ppc64le]
     os: [darwin, linux, win32]
     hasBin: true
 
@@ -6149,6 +6186,9 @@ packages:
 
   aws4@1.13.2:
     resolution: {integrity: sha512-lHe62zvbTB5eEABUVi/AwVh0ZKY9rMMDhmm+eeyuuUQbQ3+J+fONVQOZyj+DdrvD4BY33uYniyRJ4UJIaSKAfw==}
+
+  aws4fetch@1.0.20:
+    resolution: {integrity: sha512-/djoAN709iY65ETD6LKCtyyEI04XIBP5xVvfmNxsEP0uJB5tyaGBztSryRr4HqMStr9R06PisQE7m9zDTXKu6g==}
 
   axe-core@4.10.3:
     resolution: {integrity: sha512-Xm7bpRXnDSX2YE2YFfBk2FnF0ep6tmG7xPh8iHee8MIcrgq762Nkce856dYtJYLkuIoYZvGfTs/PbZhideTcEg==}
@@ -18055,7 +18095,7 @@ snapshots:
       '@stryke/json': 0.8.2
       '@stryke/path': 0.4.14(magicast@0.3.5)
       '@stryke/type-checks': 0.3.3
-      '@stryke/types': 0.8.2
+      '@stryke/types': 0.8.3
       '@zkochan/js-yaml': 0.0.7
       chalk: 5.4.1
       defu: 6.1.4
@@ -19478,6 +19518,8 @@ snapshots:
 
   aws4@1.13.2: {}
 
+  aws4fetch@1.0.20: {}
+
   axe-core@4.10.3: {}
 
   axios@1.9.0:
@@ -19820,9 +19862,9 @@ snapshots:
       esbuild: 0.24.2
       load-tsconfig: 0.2.5
 
-  bundle-require@5.1.0(esbuild@0.25.3):
+  bundle-require@5.1.0(esbuild@0.25.4):
     dependencies:
-      esbuild: 0.25.3
+      esbuild: 0.25.4
       load-tsconfig: 0.2.5
 
   bytes-iec@3.1.1: {}
@@ -27476,12 +27518,12 @@ snapshots:
 
   tsup@8.4.0(@microsoft/api-extractor@7.52.8(@types/node@22.15.3))(@swc/core@1.11.22(@swc/helpers@0.5.17))(jiti@2.4.2)(postcss@8.5.3)(tsx@4.19.4)(typescript@5.8.3)(yaml@2.7.1):
     dependencies:
-      bundle-require: 5.1.0(esbuild@0.25.3)
+      bundle-require: 5.1.0(esbuild@0.25.4)
       cac: 6.7.14
       chokidar: 4.0.3
       consola: 3.4.2
       debug: 4.4.0
-      esbuild: 0.25.3
+      esbuild: 0.25.4
       joycon: 3.1.1
       picocolors: 1.1.1
       postcss-load-config: 6.0.1(jiti@2.4.2)(postcss@8.5.3)(tsx@4.19.4)(yaml@2.7.1)
@@ -27505,12 +27547,12 @@ snapshots:
 
   tsup@8.4.0(@microsoft/api-extractor@7.52.8(@types/node@22.15.3))(@swc/core@1.7.26(@swc/helpers@0.5.17))(jiti@2.4.2)(postcss@8.5.3)(tsx@4.19.4)(typescript@5.8.3)(yaml@2.7.1):
     dependencies:
-      bundle-require: 5.1.0(esbuild@0.25.3)
+      bundle-require: 5.1.0(esbuild@0.25.4)
       cac: 6.7.14
       chokidar: 4.0.3
       consola: 3.4.2
       debug: 4.4.0
-      esbuild: 0.25.3
+      esbuild: 0.25.4
       joycon: 3.1.1
       picocolors: 1.1.1
       postcss-load-config: 6.0.1(jiti@2.4.2)(postcss@8.5.3)(tsx@4.19.4)(yaml@2.7.1)
@@ -27902,7 +27944,7 @@ snapshots:
       '@unrs/resolver-binding-win32-ia32-msvc': 1.7.2
       '@unrs/resolver-binding-win32-x64-msvc': 1.7.2
 
-  unstorage@1.16.0:
+  unstorage@1.16.0(aws4fetch@1.0.20):
     dependencies:
       anymatch: 3.1.3
       chokidar: 4.0.3
@@ -27912,6 +27954,8 @@ snapshots:
       node-fetch-native: 1.6.6
       ofetch: 1.4.1
       ufo: 1.6.1
+    optionalDependencies:
+      aws4fetch: 1.0.20
 
   untildify@4.0.0: {}
 
