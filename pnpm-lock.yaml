@@ -150,6 +150,9 @@ catalogs:
     '@stryke/helpers':
       specifier: ^0.5.3
       version: 0.5.3
+    '@stryke/http':
+      specifier: ^0.8.1
+      version: 0.8.1
     '@stryke/json':
       specifier: ^0.8.2
       version: 0.8.2
@@ -157,8 +160,8 @@ catalogs:
       specifier: ^0.4.14
       version: 0.4.14
     '@stryke/string-format':
-      specifier: ^0.4.7
-      version: 0.4.7
+      specifier: ^0.4.9
+      version: 0.4.9
     '@stryke/type-checks':
       specifier: ^0.3.3
       version: 0.3.3
@@ -315,6 +318,9 @@ catalogs:
     typedoc-plugin-markdown:
       specifier: 3.17.1
       version: 3.17.1
+    unctx:
+      specifier: ^2.4.1
+      version: 2.4.1
     unenv:
       specifier: npm:unenv-nightly
       version: 2.0.0-20250401-121608-fbf145d
@@ -337,6 +343,7 @@ catalogs:
 overrides:
   '@storm-stack/types': workspace:*
   '@storm-stack/core': workspace:*
+  '@storm-stack/cli': workspace:*
   '@storm-stack/devkit': workspace:*
   '@storm-stack/biome': workspace:*
   '@storm-stack/plugin-log-console': workspace:*
@@ -525,7 +532,7 @@ importers:
         version: 0.10.2
       '@stryke/url':
         specifier: 'catalog:'
-        version: 0.1.1
+        version: 0.1.1(magicast@0.3.5)
       unstorage:
         specifier: 'catalog:'
         version: 1.16.0(aws4fetch@1.0.20)
@@ -565,7 +572,7 @@ importers:
         version: 0.3.3
       '@stryke/url':
         specifier: 'catalog:'
-        version: 0.1.1
+        version: 0.1.1(magicast@0.3.5)
     devDependencies:
       '@cloudflare/workers-types':
         specifier: 'catalog:'
@@ -599,7 +606,7 @@ importers:
         version: 0.3.3
       '@stryke/url':
         specifier: 'catalog:'
-        version: 0.1.1
+        version: 0.1.1(magicast@0.3.5)
     devDependencies:
       '@storm-stack/core':
         specifier: workspace:*
@@ -619,6 +626,64 @@ importers:
       '@biomejs/biome':
         specifier: 'catalog:'
         version: 1.9.4
+
+  packages/cli:
+    dependencies:
+      '@storm-software/config-tools':
+        specifier: 'catalog:'
+        version: 1.169.8(magicast@0.3.5)
+      '@storm-stack/core':
+        specifier: workspace:*
+        version: link:../core
+      '@stryke/env':
+        specifier: 'catalog:'
+        version: 0.6.6(magicast@0.3.5)(nx@21.0.3(@swc-node/register@1.10.10(@swc/core@1.11.22(@swc/helpers@0.5.17))(@swc/types@0.1.21)(typescript@5.8.3))(@swc/core@1.11.22(@swc/helpers@0.5.17)))
+      '@stryke/fs':
+        specifier: 'catalog:'
+        version: 0.12.2(magicast@0.3.5)(nx@21.0.3(@swc-node/register@1.10.10(@swc/core@1.11.22(@swc/helpers@0.5.17))(@swc/types@0.1.21)(typescript@5.8.3))(@swc/core@1.11.22(@swc/helpers@0.5.17)))
+      '@stryke/http':
+        specifier: 'catalog:'
+        version: 0.8.1
+      '@stryke/json':
+        specifier: 'catalog:'
+        version: 0.8.2
+      '@stryke/path':
+        specifier: 'catalog:'
+        version: 0.4.14(magicast@0.3.5)
+      '@stryke/type-checks':
+        specifier: 'catalog:'
+        version: 0.3.3
+      '@stryke/url':
+        specifier: 'catalog:'
+        version: 0.1.1(magicast@0.3.5)
+      unctx:
+        specifier: 'catalog:'
+        version: 2.4.1
+      unstorage:
+        specifier: 'catalog:'
+        version: 1.16.0(aws4fetch@1.0.20)
+    devDependencies:
+      '@storm-stack/nx':
+        specifier: workspace:*
+        version: link:../nx
+      '@storm-stack/plugin-log-sentry':
+        specifier: workspace:*
+        version: link:../plugin-log-sentry
+      '@storm-stack/plugin-log-storage':
+        specifier: workspace:*
+        version: link:../plugin-log-storage
+      '@storm-stack/preset-cli':
+        specifier: workspace:*
+        version: link:../preset-cli
+      '@storm-stack/types':
+        specifier: workspace:*
+        version: link:../types
+      '@stryke/types':
+        specifier: 'catalog:'
+        version: 0.8.2
+      '@types/node':
+        specifier: 'catalog:'
+        version: 22.15.3
 
   packages/core:
     dependencies:
@@ -678,7 +743,7 @@ importers:
         version: 0.4.14(magicast@0.3.5)
       '@stryke/string-format':
         specifier: 'catalog:'
-        version: 0.4.7
+        version: 0.4.9
       '@stryke/type-checks':
         specifier: 'catalog:'
         version: 0.3.3
@@ -775,7 +840,7 @@ importers:
         version: 0.4.14(magicast@0.3.5)
       '@stryke/string-format':
         specifier: 'catalog:'
-        version: 0.4.7
+        version: 0.4.9
       defu:
         specifier: 'catalog:'
         version: 6.1.4
@@ -1223,12 +1288,15 @@ importers:
       '@stryke/fs':
         specifier: 'catalog:'
         version: 0.12.2(magicast@0.3.5)(nx@21.0.3(@swc-node/register@1.10.10(@swc/core@1.11.22(@swc/helpers@0.5.17))(@swc/types@0.1.21)(typescript@5.8.3))(@swc/core@1.11.22(@swc/helpers@0.5.17)))
+      '@stryke/json':
+        specifier: 'catalog:'
+        version: 0.8.2
       '@stryke/path':
         specifier: 'catalog:'
         version: 0.4.14(magicast@0.3.5)
       '@stryke/string-format':
         specifier: 'catalog:'
-        version: 0.4.7
+        version: 0.4.9
       '@stryke/type-checks':
         specifier: 'catalog:'
         version: 0.3.3
@@ -3681,7 +3749,6 @@ packages:
 
   '@ls-lint/ls-lint@2.3.0':
     resolution: {integrity: sha512-lsT5/7SxtImOIjpefC9wcoXt2lkikKhCjd6U+Q9Z6X5h2HBU/71ggt+XStdodZ0HkJGO333zDUeec7JROMCPFw==}
-    cpu: [x64, arm64, s390x, ppc64le]
     os: [darwin, linux, win32]
     hasBin: true
 
@@ -5032,6 +5099,9 @@ packages:
   '@stryke/helpers@0.5.3':
     resolution: {integrity: sha512-z7TC3h7G3PL/ibkaiUEPV1OXCe05mIlGFoyXWUm0ny5KjgzouUDp4lGoVPUR7X5Dt59eO1jw+KwbXzn/Tpdc1A==}
 
+  '@stryke/http@0.8.1':
+    resolution: {integrity: sha512-vWUqsWCnkPbCNFegsakaRHpInf1b1Fmwu0UMh13Nyl0RIPxfeT5F7tFN5dGefz6iogeh6xQ5AF3N+FJhB790Xw==}
+
   '@stryke/json@0.8.2':
     resolution: {integrity: sha512-yamHS5HgBhb+EIkMl/VkxZnmek6EXRKpEc6ILZ6ugWQZjB0r3mkCVorxTjQ/JHwZ+C2MgViZiUCGMQT+BTkatQ==}
 
@@ -5040,6 +5110,9 @@ packages:
 
   '@stryke/string-format@0.4.7':
     resolution: {integrity: sha512-xGevJs0u6jer6UtCk6EzOkD3iZjiNuNldzjjMRhhdmwguOfQ5yhLGuAg/QA8+iEw+7aQ2yPnViIZCQwRloxEIg==}
+
+  '@stryke/string-format@0.4.9':
+    resolution: {integrity: sha512-RB29MmUP3Y/UYDtN6Rsk53gSJW55rnR91s1bHS4XEJiCdyWQ7Hfcf1273Lbb4Hb/O/webD/7bJ6m5xfZ+i6UIQ==}
 
   '@stryke/type-checks@0.3.3':
     resolution: {integrity: sha512-crGM0jWq43fplVlrLfqPFTks8F2+28YjJLhNjUB6GKnXpzM8NixjhjMb6SFg1EU4M40HkqPKBbTZZSOBwF8j8Q==}
@@ -5841,8 +5914,8 @@ packages:
   '@vitest/utils@3.1.1':
     resolution: {integrity: sha512-1XIjflyaU2k3HMArJ50bwSh3wKWPD6Q47wz/NUSmRV0zNywPc4w79ARjg/i/aNINHwA+mIALhUVqD9/aUvZNgg==}
 
-  '@vue/shared@3.5.13':
-    resolution: {integrity: sha512-/hnE/qP5ZoGpol0a5mDi45bOd7t3tjYJBjsgCsivow7D48cJeV5l05RD82lPqi7gRiphZM37rnhW1l6ZoCNNnQ==}
+  '@vue/shared@3.5.14':
+    resolution: {integrity: sha512-oXTwNxVfc9EtP1zzXAlSlgARLXNC84frFYkS0HHz0h3E4WZSP9sywqjqzGCP9Y34M8ipNmd380pVgmMuwELDyQ==}
 
   '@webassemblyjs/ast@1.14.1':
     resolution: {integrity: sha512-nuBEDgQfm1ccRp/8bCQrx1frohyufl4JlbMMZ4P1wpeOfDhF6FQkxZJ1b/e+PLwr6X1Nhw6OLme5usuBWYBvuQ==}
@@ -16523,7 +16596,7 @@ snapshots:
 
   '@nuxt/schema@3.17.3':
     dependencies:
-      '@vue/shared': 3.5.13
+      '@vue/shared': 3.5.14
       consola: 3.4.2
       defu: 6.1.4
       pathe: 2.0.3
@@ -18164,10 +18237,14 @@ snapshots:
       '@stryke/type-checks': 0.3.3
       '@stryke/types': 0.8.2
 
+  '@stryke/http@0.8.1':
+    dependencies:
+      '@stryke/type-checks': 0.3.3
+
   '@stryke/json@0.8.2':
     dependencies:
       '@stryke/type-checks': 0.3.3
-      '@stryke/types': 0.8.2
+      '@stryke/types': 0.8.3
       buffer: 6.0.3
       jsonc-parser: 3.3.1
       lines-and-columns: 2.0.4
@@ -18181,6 +18258,11 @@ snapshots:
       - magicast
 
   '@stryke/string-format@0.4.7':
+    dependencies:
+      '@stryke/helpers': 0.5.3
+      '@stryke/types': 0.8.3
+
+  '@stryke/string-format@0.4.9':
     dependencies:
       '@stryke/helpers': 0.5.3
       '@stryke/types': 0.8.3
@@ -18200,7 +18282,7 @@ snapshots:
       - magicast
       - nx
 
-  '@stryke/url@0.1.1':
+  '@stryke/url@0.1.1(magicast@0.3.5)':
     dependencies:
       '@stryke/json': 0.8.2
       '@stryke/path': 0.4.14(magicast@0.3.5)
@@ -19142,7 +19224,7 @@ snapshots:
       tinyrainbow: 2.0.0
     optional: true
 
-  '@vue/shared@3.5.13': {}
+  '@vue/shared@3.5.14': {}
 
   '@webassemblyjs/ast@1.14.1':
     dependencies:

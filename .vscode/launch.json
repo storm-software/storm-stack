@@ -2,7 +2,7 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "Debug CLI-App Build Script",
+      "name": "Debug CLI-App Example Build Script",
       "type": "node",
       "request": "launch",
       "program": "/nix/store/kclz9i3vq2fz8nnn947l773a95fj77z3-pnpm-10.8.0/bin/pnpm",
@@ -11,11 +11,20 @@
       "console": "integratedTerminal"
     },
     {
-      "name": "Debug Library Build Script",
+      "name": "Debug Library Example Build Script",
       "type": "node",
       "request": "launch",
       "program": "/nix/store/kclz9i3vq2fz8nnn947l773a95fj77z3-pnpm-10.8.0/bin/pnpm",
       "args": ["nx", "run", "examples-library:build:development"],
+      "cwd": "${workspaceFolder}",
+      "console": "integratedTerminal"
+    },
+    {
+      "name": "Debug Storm Stack CLI Build Script",
+      "type": "node",
+      "request": "launch",
+      "program": "/nix/store/kclz9i3vq2fz8nnn947l773a95fj77z3-pnpm-10.8.0/bin/pnpm",
+      "args": ["nx", "run", "cli:build:development"],
       "cwd": "${workspaceFolder}",
       "console": "integratedTerminal"
     },

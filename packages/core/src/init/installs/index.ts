@@ -65,11 +65,11 @@ export async function initInstalls<TOptions extends Options = Options>(
 
   log(
     LogLevelLabel.TRACE,
-    `The following packages must be installed as dependencies: ${Object.keys(
+    `The following packages must be installed as dependencies: \n${Object.keys(
       context.installs
     )
-      .map(key => `${key} (${context.installs[key]})`)
-      .join(", ")}`
+      .map(key => ` - ${key} (${context.installs[key]})`)
+      .join("\n")}\n`
   );
 
   for (const [key, value] of Object.entries(context.installs)) {

@@ -29,11 +29,7 @@ import { resolveType } from "@storm-stack/core/helpers/deepkit/reflect-type";
 import { getReflectionsPath } from "@storm-stack/core/helpers/deepkit/resolve-reflections";
 import { writeFile } from "@storm-stack/core/helpers/utilities/write-file";
 import type { LogFn } from "@storm-stack/core/types";
-import type {
-  Context,
-  Options,
-  ResolvedEntryTypeDefinition
-} from "@storm-stack/core/types/build";
+import type { Context, Options } from "@storm-stack/core/types/build";
 import { StormJSON } from "@stryke/json/storm-json";
 import {
   findFileExtension,
@@ -51,15 +47,14 @@ import type { CommandReflection } from "../types/reflection";
 
 export async function reflectCommands<TOptions extends Options = Options>(
   log: LogFn,
-  context: Context<TOptions>,
-  commandEntries: ResolvedEntryTypeDefinition[]
+  context: Context<TOptions>
 ): Promise<Record<string, CommandReflection>> {
   // const compiler = new CompilerContext();
 
   const reflections = {} as Record<string, CommandReflection>;
-  for (const entry of commandEntries.sort((a, b) =>
-    a.file.localeCompare(b.file)
-  )) {
+  for (const entry of context.entry
+    .filter(entry => entry.input.file !== context.options.entry)
+    .sort((a, b) => a.file.localeCompare(b.file))) {
     log(
       LogLevelLabel.TRACE,
       `Precompiling the entry artifact ${entry.file} (${entry?.name ? `export: "${entry.name}"` : "default"})" from input "${entry.input.file}" (${entry.input.name ? `export: "${entry.input.name}"` : "default"})`

@@ -16,17 +16,50 @@
 
  ------------------------------------------------------------------- */
 
-// eslint-disable-next-line ts/consistent-type-imports
-import { ServePayload } from "../types";
+/**
+ * The payload for the example CLI application.
+ */
+export interface BuildPayload {
+  /**
+   * The host to bind the server to.
+   *
+   * @defaultValue "localhost"
+   */
+  host: string;
+
+  /**
+   * The port to bind the server to.
+   *
+   * @defaultValue 3000
+   */
+  port: number;
+
+  /**
+   * Should the server serve compressed files?
+   */
+  compress?: boolean;
+
+  /**
+   * Should the server serve compressed files?
+   *
+   * @defaultValue "node"
+   */
+  platform: "node" | "browser";
+
+  /**
+   * Should the server load environment variables from the .env file?
+   *
+   * @defaultValue true
+   */
+  loadEnv: boolean;
+}
 
 /**
- * Start a server and serve the application
+ * Build the Storm Stack project and generate the distribution files in the output directory
  *
- * @param event - The event object containing the payload
+ * @param payload - The payload object containing the command parameters
  */
-function handler(event: StormRequest<ServePayload>) {
-  const payload = event.data;
-
+function handler(payload: BuildPayload) {
   $storm.log.info(
     `Starting server on ${payload.host}:${payload.port} with compress: ${payload.compress} and loadEnv: ${payload.loadEnv}`
   );

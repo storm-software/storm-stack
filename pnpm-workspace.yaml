@@ -47,6 +47,9 @@ catalog:
   "@sentry/core": ^9.15.0
   "@sentry/node": ^9.15.0
   "@sentry/types": ^9.15.0
+  "@stryke/j": ^0.0.0
+  "@stryke/js": ^0.0.0
+  "@stryke/jso": ^0.0.0
   "@taplo/cli": ^0.7.0
   "@types/eslint": ^9.6.1
   "@types/eslint__js": ^8.42.3
@@ -87,7 +90,7 @@ catalog:
   "@stryke/path": ^0.4.14
   "@stryke/types": ^0.8.2
   "@stryke/hash": ^0.9.3
-  "@stryke/string-format": ^0.4.7
+  "@stryke/string-format": ^0.4.9
   "@stryke/convert": ^0.1.6
   "@stryke/type-checks": ^0.3.3
   "@stryke/cli": ^0.10.2
@@ -141,6 +144,7 @@ catalog:
   rollup: ^4.40.1
   rolldown: ^1.0.0-beta.8
   unbuild: ^3.5.0
+  unctx: ^2.4.1
   unenv: npm:unenv-nightly
   unimport: ^4.2.0
   unstorage: ^1.16.0
@@ -157,6 +161,7 @@ catalog:
 overrides:
   "@storm-stack/types": workspace:*
   "@storm-stack/core": workspace:*
+  "@storm-stack/cli": workspace:*
   "@storm-stack/devkit": workspace:*
   "@storm-stack/biome": workspace:*
   "@storm-stack/plugin-log-console": workspace:*

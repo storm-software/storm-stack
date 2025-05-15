@@ -1,14 +1,17 @@
 {
-  "name": "@storm-stack/preset-cli",
-  "version": "0.9.3",
+  "name": "@storm-stack/cli",
+  "version": "0.0.1",
   "type": "module",
-  "description": "A Storm Stack build preset for Cloudflare Workers",
+  "description": "The command-line interface application for managing Storm Stack projects.",
   "repository": {
     "type": "github",
     "url": "https://github.com/storm-software/storm-stack.git",
-    "directory": "packages/preset-cli"
+    "directory": "packages/cli"
   },
   "private": false,
+  "bin": {
+    "storm-stack": "dist/storm-stack.js"
+  },
   "exports": {
     "./package.json": "./package.json",
     ".": {
@@ -40,27 +43,52 @@
       }
     }
   },
-  "types": "dist/index.d.ts",
-  "typings": "dist/index.d.ts",
+  "files": [
+    "dist/**/*"
+  ],
+  "keywords": [
+    "storm-stack",
+    "storm-software"
+  ],
   "dependencies": {
-    "@deepkit/type": "catalog:",
     "@storm-software/config-tools": "catalog:",
     "@storm-stack/core": "workspace:*",
-    "@storm-stack/devkit": "workspace:*",
-    "@stryke/cli": "catalog:",
+    "@stryke/env": "catalog:",
     "@stryke/fs": "catalog:",
+    "@stryke/http": "catalog:",
     "@stryke/json": "catalog:",
     "@stryke/path": "catalog:",
-    "@stryke/string-format": "catalog:",
     "@stryke/type-checks": "catalog:",
-    "defu": "catalog:",
-    "magicast": "catalog:"
+    "@stryke/url": "catalog:",
+    "unctx": "catalog:",
+    "unstorage": "catalog:"
   },
   "devDependencies": {
+    "@storm-stack/nx": "workspace:*",
+    "@storm-stack/plugin-log-sentry": "workspace:*",
+    "@storm-stack/plugin-log-storage": "workspace:*",
+    "@storm-stack/preset-cli": "workspace:*",
+    "@storm-stack/types": "workspace:*",
     "@stryke/types": "catalog:",
-    "tsup": "catalog:"
+    "@types/node": "catalog:"
   },
   "publishConfig": {
     "access": "public"
+  },
+  "storm": {
+    "name": "Storm Stack CLI",
+    "plugins": [
+      "@storm-stack/plugin-log-storage",
+      "@storm-stack/plugin-log-sentry"
+    ],
+    "presets": [
+      [
+        "@storm-stack/preset-cli",
+        {
+          "bin": "storm-stack"
+        }
+      ]
+    ],
+    "skipCache": true
   }
 }

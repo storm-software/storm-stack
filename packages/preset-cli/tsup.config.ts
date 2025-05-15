@@ -27,7 +27,7 @@ const config = getTsupConfig({
   treeshake: true,
   keepNames: true,
   clean: true,
-  sourcemap: false,
+  sourcemap: true,
   dts: true,
   shims: true,
   skipNodeModulesBundle: true
