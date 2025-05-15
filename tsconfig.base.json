@@ -54,6 +54,10 @@
       "@storm-stack/plugin-storage-cloudflare-r2/*": [
         "packages/plugin-storage-cloudflare-r2/src/*"
       ],
+      "@storm-stack/plugin-storage-s3": [
+        "packages/plugin-storage-s3/src/index.ts"
+      ],
+      "@storm-stack/plugin-storage-s3/*": ["packages/plugin-storage-s3/src/*"],
       "@storm-stack/plugin-storage-fs": [
         "packages/plugin-storage-fs/src/index.ts"
       ],

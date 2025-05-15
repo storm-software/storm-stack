@@ -166,6 +166,7 @@ overrides:
   "@storm-stack/plugin-storage-fs": workspace:*
   "@storm-stack/plugin-storage-cloudflare-kv": workspace:*
   "@storm-stack/plugin-storage-cloudflare-r2": workspace:*
+  "@storm-stack/plugin-storage-s3": workspace:*
   "@storm-stack/nx": workspace:*
   "@storm-stack/preset-cli": workspace:*
   "@storm-stack/preset-cloudflare-worker": workspace:*
