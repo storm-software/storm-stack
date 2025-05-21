@@ -19,24 +19,55 @@
 import type { SerializedTypes } from "@deepkit/type";
 import type { ResolvedEntryTypeDefinition } from "@storm-stack/core/types";
 
-export interface CommandReflectionArg {
+export interface CommandRelationsReflection {
+  parent?: string;
+  children: string[];
+}
+
+export interface CommandPayloadArgReflection {
   name: string;
   displayName: string;
   description?: string;
+  aliases: string[];
   type: string;
+  stringifiedType: string;
   reflectionType: SerializedTypes;
   options?: string[] | number[];
+  array: boolean;
   required: boolean;
   default?: any;
 }
 
-export interface CommandReflection {
+export interface CommandPayloadReflection {
   name: string;
-  description?: string;
-  displayName: string;
-  entry: ResolvedEntryTypeDefinition;
-  argsTypeName: string;
-  argsTypeImport: string;
-  args: CommandReflectionArg[];
-  subCommands?: Record<string, CommandReflection>;
+  importPath?: string;
+  args: CommandPayloadArgReflection[];
 }
+
+export interface CommandReflection {
+  commandId: string;
+  path: string[];
+  name: string;
+  displayName: string;
+  description?: string;
+  aliases: string[];
+  entry: ResolvedEntryTypeDefinition;
+  payload: CommandPayloadReflection;
+  relations: CommandRelationsReflection;
+}
+
+export type CommandReflectionTree = Omit<
+  CommandReflection,
+  "commandId" | "relations" | "payload"
+> & {
+  parent: null;
+  children: Record<string, CommandReflectionTreeBranch>;
+};
+
+export type CommandReflectionTreeBranch = Omit<
+  CommandReflection,
+  "relations"
+> & {
+  parent: CommandReflectionTree | CommandReflectionTreeBranch;
+  children: Record<string, CommandReflectionTreeBranch>;
+};

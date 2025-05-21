@@ -54,17 +54,9 @@ export async function resolveType<
     );
   }
 
-  const result = await bundle(
-    context,
-    path,
-    transpilePath,
-    {
-      write: true
-    },
-    {
-      skipTransform: true
-    }
-  );
+  const result = await bundle(context, path, transpilePath, {
+    write: true
+  });
   if (result.errors.length > 0) {
     throw new Error(
       `Failed to transpile ${entry.file}: ${result.errors

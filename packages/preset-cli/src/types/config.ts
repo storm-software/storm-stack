@@ -20,5 +20,20 @@ export interface StormStackCLIPresetConfig {
   /**
    * The name of the binary that will be generated to run the CLI
    */
-  bin?: string;
+  bin?: string | string[];
+
+  /**
+   * If a boolean, this will be used to determine the default value of the `interactive` flag. If `never` is specified, the CLI will not include an interactive mode.
+   */
+  interactive?: boolean | "never";
+
+  /**
+   * The homepage URL of the CLI application (this is used for the help command)
+   */
+  homepage?: string;
+
+  /**
+   * The documentation website URL of the CLI application (this is used for the help command)
+   */
+  docs?: string;
 }

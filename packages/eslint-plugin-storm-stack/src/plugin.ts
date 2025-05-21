@@ -24,8 +24,6 @@ import ifNewline from "./rules/if-newline";
 import noImplicitGlobals from "./rules/no-implicit-globals";
 import stormErrorsOnly from "./rules/storm-errors-only";
 import stormJSONOnly from "./rules/storm-json-only";
-import stormRequestsOnly from "./rules/storm-requests-only";
-import stormResponsesOnly from "./rules/storm-responses-only";
 import stormURLsOnly from "./rules/storm-urls-only";
 import topLevelFunctions from "./rules/top-level-functions";
 
@@ -42,8 +40,6 @@ export const plugin = {
     "storm-urls-only": stormURLsOnly,
     "storm-json-only": stormJSONOnly,
     "storm-errors-only": stormErrorsOnly,
-    "storm-requests-only": stormRequestsOnly,
-    "storm-responses-only": stormResponsesOnly,
     "top-level-functions": topLevelFunctions
   }
 } satisfies ESLint.Plugin;

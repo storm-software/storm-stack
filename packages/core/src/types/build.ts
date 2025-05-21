@@ -18,6 +18,17 @@
 
 import type { ReflectionClass } from "@deepkit/type";
 import type { StormWorkspaceConfig } from "@storm-software/config/types";
+import type { IStormPayload, IStormResult, StormEnv } from "@storm-stack/types";
+import type {
+  CleanupFunction,
+  DeserializerFunction,
+  PostprocessFunction,
+  PreprocessFunction,
+  SerializerFunction,
+  SetupFunction,
+  StormContext,
+  ValidatorFunction
+} from "@storm-stack/types/node";
 import type { LogLevel } from "@storm-stack/types/shared/log";
 import type { EnvPaths } from "@stryke/env/get-env-paths";
 import type { DotenvParseOutput } from "@stryke/env/types";
@@ -181,6 +192,14 @@ export type ResolvedDotenvOptions = Required<
    * This value is parsed from the {@link DotenvOptions.types} option.
    */
   types: ResolvedDotenvTypes;
+
+  /**
+   * An additional prefix (or list of additional prefixes) to apply to the environment variables
+   *
+   * @remarks
+   * By default, the plugin will use the `STORM_` prefix. This option is useful for avoiding conflicts with other environment variables.
+   */
+  prefix: string[];
 
   /**
    * Should the plugin replace the env variables in the source code with their values?
@@ -426,6 +445,33 @@ export interface RuntimeConfig {
   logs: LogRuntimeConfig[];
   storage: StorageRuntimeConfig[];
   init: string[];
+}
+
+/**
+ * Interface representing the attachments for a Storm application builder.
+ *
+ * @remarks
+ * This interface defines the structure for the attachments that can be used to
+ * customize the behavior of the Storm application builder.
+ */
+export interface Config<
+  TPayload extends IStormPayload,
+  TResult extends IStormResult,
+  TInput = any,
+  TOutput = any,
+  TContext extends StormContext<StormEnv, any, TPayload> = StormContext<
+    StormEnv,
+    any,
+    TPayload
+  >
+> {
+  setup?: SetupFunction;
+  deserializer?: DeserializerFunction<TPayload, TInput>;
+  validator?: ValidatorFunction<TPayload, TContext>;
+  preprocess?: PreprocessFunction<TPayload, TContext>;
+  postprocess?: PostprocessFunction<TPayload, TContext, TOutput>;
+  serializer?: SerializerFunction<TResult, TOutput>;
+  cleanup?: CleanupFunction;
 }
 
 export interface Context<TOptions extends Options = Options> {

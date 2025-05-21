@@ -29,7 +29,8 @@ import {
   writeApp,
   writeContext,
   writeEvent
-} from "@storm-stack/core/prepare/runtime/runtime/node";
+} from "@storm-stack/core/prepare/runtime/node";
+
 import { Preset } from "@storm-stack/core/preset";
 import type {
   Context,

@@ -10,7 +10,7 @@
   },
   "private": true,
   "bin": {
-    "examples-cli": "dist/examples-cli.js"
+    "examples-cli": "dist/examples-cli.mjs"
   },
   "dependencies": {
     "@storm-stack/types": "workspace:*",

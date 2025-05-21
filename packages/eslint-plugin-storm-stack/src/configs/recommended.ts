@@ -36,8 +36,6 @@ const config: Linter.Config = {
     "storm-stack/storm-urls-only": "warn",
     "storm-stack/storm-json-only": "warn",
     "storm-stack/storm-errors-only": "error",
-    "storm-stack/storm-requests-only": "error",
-    "storm-stack/storm-responses-only": "error",
     "storm-stack/top-level-functions": "error"
   }
 };

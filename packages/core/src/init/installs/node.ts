@@ -27,14 +27,13 @@ import type { Context, Options } from "../../types/build";
 export function getNodeDeps<TOptions extends Options = Options>(
   context: Context<TOptions>
 ): Record<string, "dependency" | "devDependency"> {
-  const result = {
-    "@types/node": "devDependency"
-  } as Record<string, "dependency" | "devDependency">;
+  context.installs ??= {};
+  context.installs["@types/node"] = "devDependency";
 
   if (context.options.projectType === "application") {
-    result["@stryke/env"] = "dependency";
-    result.unctx = "dependency";
+    context.installs["@stryke/env"] = "dependency";
+    context.installs.unctx = "dependency";
   }
 
-  return result;
+  return context.installs;
 }

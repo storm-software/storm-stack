@@ -1,65 +1,149 @@
 [
   { "from": "@stryke/json", "name": "StormJSON", "as": "StormJSON" },
   { "from": "@stryke/url", "name": "StormURL", "as": "StormURL" },
-  { "from": "@stryke/http", "name": "parseCookie", "as": "parseCookie" },
-  { "from": "@stryke/http", "name": "parseSetCookie", "as": "parseSetCookie" },
   {
-    "from": "@stryke/http",
-    "name": "serializeCookie",
-    "as": "serializeCookie"
+    "from": "examples/cli-app/.storm/runtime/error",
+    "name": "StormError",
+    "as": "StormError"
   },
   {
-    "from": "@stryke/http",
-    "name": "splitSetCookieString",
-    "as": "splitSetCookieString"
-  },
-  { "from": ".storm/runtime/error", "name": "StormError", "as": "StormError" },
-  {
-    "from": ".storm/runtime/error",
+    "from": "examples/cli-app/.storm/runtime/error",
     "name": "createStormError",
     "as": "createStormError"
   },
   {
-    "from": ".storm/runtime/error",
+    "from": "examples/cli-app/.storm/runtime/error",
     "name": "isStormError",
     "as": "isStormError"
   },
   {
-    "from": ".storm/runtime/error",
+    "from": "examples/cli-app/.storm/runtime/error",
     "name": "getErrorFromUnknown",
     "as": "getErrorFromUnknown"
   },
   {
-    "from": ".storm/runtime/request",
-    "name": "StormRequest",
-    "as": "StormRequest"
+    "from": "examples/cli-app/.storm/runtime/payload",
+    "name": "StormPayload",
+    "as": "StormPayload"
   },
   {
-    "from": ".storm/runtime/response",
-    "name": "StormResponse",
-    "as": "StormResponse"
+    "from": "examples/cli-app/.storm/runtime/result",
+    "name": "StormResult",
+    "as": "StormResult"
   },
-  { "from": ".storm/runtime/log", "name": "StormLog", "as": "StormLog" },
-  { "from": ".storm/runtime/id", "name": "uniqueId", "as": "uniqueId" },
-  { "from": ".storm/runtime/id", "name": "getRandom", "as": "getRandom" },
-  { "from": ".storm/runtime/storage", "name": "storage", "as": "storage" },
-  { "from": ".storm/runtime/app", "name": "builder", "as": "builder" },
-  { "from": ".storm/runtime/context", "name": "envPaths", "as": "envPaths" },
   {
-    "from": ".storm/runtime/context",
+    "from": "examples/cli-app/.storm/runtime/log",
+    "name": "StormLog",
+    "as": "StormLog"
+  },
+  {
+    "from": "examples/cli-app/.storm/runtime/id",
+    "name": "uniqueId",
+    "as": "uniqueId"
+  },
+  {
+    "from": "examples/cli-app/.storm/runtime/id",
+    "name": "getRandom",
+    "as": "getRandom"
+  },
+  {
+    "from": "examples/cli-app/.storm/runtime/storage",
+    "name": "storage",
+    "as": "storage"
+  },
+  {
+    "from": "examples/cli-app/.storm/runtime/app",
+    "name": "withContext",
+    "as": "withContext"
+  },
+  {
+    "from": "examples/cli-app/.storm/runtime/context",
+    "name": "useStorm",
+    "as": "useStorm"
+  },
+  {
+    "from": "examples/cli-app/.storm/runtime/context",
+    "name": "STORM_ASYNC_CONTEXT",
+    "as": "STORM_ASYNC_CONTEXT"
+  },
+  {
+    "from": "examples/cli-app/.storm/runtime/env",
+    "name": "getEnvPaths",
+    "as": "getEnvPaths"
+  },
+  {
+    "from": "examples/cli-app/.storm/runtime/env",
     "name": "getBuildInfo",
     "as": "getBuildInfo"
   },
   {
-    "from": ".storm/runtime/context",
+    "from": "examples/cli-app/.storm/runtime/env",
     "name": "getRuntimeInfo",
     "as": "getRuntimeInfo"
   },
-  { "from": ".storm/runtime/context", "name": "useStorm", "as": "useStorm" },
   {
-    "from": ".storm/runtime/context",
-    "name": "STORM_ASYNC_CONTEXT",
-    "as": "STORM_ASYNC_CONTEXT"
+    "from": "examples/cli-app/.storm/runtime/event",
+    "name": "StormEvent",
+    "as": "StormEvent"
   },
-  { "from": ".storm/runtime/event", "name": "StormEvent", "as": "StormEvent" }
+  {
+    "from": "examples/cli-app/.storm/runtime/cli",
+    "name": "parseArgs",
+    "as": "parseArgs"
+  },
+  {
+    "from": "examples/cli-app/.storm/runtime/cli",
+    "name": "colors",
+    "as": "colors"
+  },
+  {
+    "from": "examples/cli-app/.storm/runtime/cli",
+    "name": "getColor",
+    "as": "getColor"
+  },
+  {
+    "from": "examples/cli-app/.storm/runtime/cli",
+    "name": "ColorName",
+    "as": "ColorName"
+  },
+  {
+    "from": "examples/cli-app/.storm/runtime/cli",
+    "name": "link",
+    "as": "link"
+  },
+  {
+    "from": "examples/cli-app/.storm/runtime/cli",
+    "name": "LinkOptions",
+    "as": "LinkOptions"
+  },
+  {
+    "from": "examples/cli-app/.storm/runtime/cli",
+    "name": "prompt",
+    "as": "prompt"
+  },
+  {
+    "from": "examples/cli-app/.storm/runtime/cli",
+    "name": "PromptCommonOptions",
+    "as": "PromptCommonOptions"
+  },
+  {
+    "from": "examples/cli-app/.storm/runtime/cli",
+    "name": "TextPromptOptions",
+    "as": "TextPromptOptions"
+  },
+  {
+    "from": "examples/cli-app/.storm/runtime/cli",
+    "name": "ConfirmPromptOptions",
+    "as": "ConfirmPromptOptions"
+  },
+  {
+    "from": "examples/cli-app/.storm/runtime/cli",
+    "name": "SelectPromptOptions",
+    "as": "SelectPromptOptions"
+  },
+  {
+    "from": "examples/cli-app/.storm/runtime/cli",
+    "name": "MultiSelectPromptOptions",
+    "as": "MultiSelectPromptOptions"
+  }
 ]

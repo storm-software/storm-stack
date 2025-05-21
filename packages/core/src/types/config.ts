@@ -52,6 +52,14 @@ export interface DotenvOptions extends DotenvConfiguration {
   types?: DotenvTypeDefinitionOptions | string;
 
   /**
+   * An additional prefix (or list of additional prefixes) to apply to the environment variables
+   *
+   * @remarks
+   * By default, the plugin will use the `STORM_` prefix. This option is useful for avoiding conflicts with other environment variables.
+   */
+  prefix?: string | string[];
+
+  /**
    * Should the plugin replace the env variables in the source code with their values?
    *
    * @remarks

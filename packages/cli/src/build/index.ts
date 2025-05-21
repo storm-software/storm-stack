@@ -19,7 +19,7 @@
 /**
  * The payload for the example CLI application.
  */
-export interface BuildPayload {
+interface BuildPayload {
   /**
    * The host to bind the server to.
    *
@@ -57,9 +57,11 @@ export interface BuildPayload {
 /**
  * Build the Storm Stack project and generate the distribution files in the output directory
  *
- * @param payload - The payload object containing the command parameters
+ * @param request - The request object containing the command payload
  */
-function handler(payload: BuildPayload) {
+function handler(request: StormPayload<BuildPayload>) {
+  const payload = request.data;
+
   $storm.log.info(
     `Starting server on ${payload.host}:${payload.port} with compress: ${payload.compress} and loadEnv: ${payload.loadEnv}`
   );

@@ -72,7 +72,7 @@ export default abstract class StoragePlugin<
           context.artifactsDir,
           "runtime",
           "storage",
-          `${this.name}-${this.config.namespace.replaceAll(".", "-").replaceAll(":", "-")}.ts`
+          `${this.name}-${this.config.namespace.replaceAll(".", "-").replaceAll(":", "-").replaceAll(" ", "-")}.ts`
         ),
         await Promise.resolve(this.writeStorage(context))
       );
@@ -86,11 +86,11 @@ export default abstract class StoragePlugin<
     );
 
     if (context.options.projectType === "application") {
-      const name = `${camelCase(`${this.name}-${this.config.namespace.replaceAll(".", "-").replaceAll(":", "-")}`)}Storage`;
+      const name = `${camelCase(`${this.name}-${this.config.namespace.replaceAll(".", "-").replaceAll(":", "-").replaceAll(" ", "-")}`)}Storage`;
       context.runtime.storage.push({
         name,
         namespace: this.config.namespace,
-        import: `import ${name} from "./${joinPaths("storage", `${this.name}-${this.config.namespace.replaceAll(".", "-").replaceAll(":", "-")}`)}"; `
+        import: `import ${name} from "./${joinPaths("storage", `${this.name}-${this.config.namespace.replaceAll(".", "-").replaceAll(":", "-").replaceAll(" ", "-")}`)}"; `
       });
     }
   }

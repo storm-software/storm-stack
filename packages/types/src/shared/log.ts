@@ -242,7 +242,7 @@ export interface IStormLog {
    * @param values - The message template values.
    */
   error: ((
-    message: TemplateStringsArray,
+    message: TemplateStringsArray | Error,
     ...values: readonly unknown[]
   ) => void) &
     ((
@@ -262,7 +262,7 @@ export interface IStormLog {
    * @param values - The message template values.
    */
   fatal: ((
-    message: TemplateStringsArray,
+    message: TemplateStringsArray | Error,
     ...values: readonly unknown[]
   ) => void) &
     ((

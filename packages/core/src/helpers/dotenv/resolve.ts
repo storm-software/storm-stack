@@ -114,9 +114,10 @@ export async function resolveDotenvReflection<
   TOptions extends Options = Options
 >(
   context: Context<TOptions>,
-  name: "variables" | "secrets"
+  name: "variables" | "secrets",
+  skipContext = false
 ): Promise<ReflectionClass<any>> {
-  if (context.dotenv?.types?.[name]?.reflection) {
+  if (context.dotenv?.types?.[name]?.reflection && skipContext) {
     return context.dotenv?.types?.[name]?.reflection;
   }
 

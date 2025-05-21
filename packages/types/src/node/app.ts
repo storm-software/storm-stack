@@ -18,8 +18,8 @@
 
 import type { StormEnv } from "../shared/env.js";
 import type { IStormError } from "../shared/error.js";
-import type { IStormRequest } from "../shared/request.js";
-import type { IStormResponse } from "../shared/response.js";
+import type { IStormPayload } from "../shared/payload.js";
+import type { IStormResult } from "../shared/result.js";
 import type { StormContext } from "./context.js";
 
 export type ValidationDetailType =
@@ -49,40 +49,36 @@ export type SetupFunction = () => MaybePromise<
 >;
 
 export type DeserializerFunction<
-  TRequest extends IStormRequest,
-  TPayload = any
-> = (payload: TPayload) => MaybePromise<TRequest | IStormError>;
+  TPayload extends IStormPayload,
+  TInput = any
+> = (input: TInput) => MaybePromise<TPayload | IStormError>;
 
 export type ValidatorFunction<
-  TRequest extends IStormRequest,
-  TContext extends StormContext<StormEnv, any, TRequest>
+  TPayload extends IStormPayload,
+  TContext extends StormContext<StormEnv, any, TPayload>
 > = (context: TContext) => MaybePromise<IStormError | void | null | undefined>;
 
 export type PreprocessFunction<
-  TRequest extends IStormRequest,
-  TContext extends StormContext<StormEnv, any, TRequest>
+  TPayload extends IStormPayload,
+  TContext extends StormContext<StormEnv, any, TPayload>
 > = (context: TContext) => MaybePromise<IStormError | void | null | undefined>;
 
-export type HandlerFunction<
-  TRequest extends IStormRequest,
-  TResponse extends IStormResponse
-> = (request: TRequest) => MaybePromise<TResponse["data"] | IStormError>;
+export type HandlerFunction<TInput = any, TOutput = any> = (
+  payload: IStormPayload<TInput>
+) => MaybePromise<TOutput | IStormError>;
 
 export type PostprocessFunction<
-  TRequest extends IStormRequest,
-  TContext extends StormContext<StormEnv, any, TRequest>,
-  TResult
+  TPayload extends IStormPayload,
+  TContext extends StormContext<StormEnv, any, TPayload>,
+  TOutput
 > = (
   context: TContext,
-  result: TResult
+  output: TOutput
 ) => MaybePromise<IStormError | void | null | undefined>;
 
-export type SerializerFunction<
-  TResponse extends IStormResponse,
-  TResult = any
-> = (
-  response: TResponse | IStormResponse<IStormError>
-) => MaybePromise<TResult | IStormError>;
+export type SerializerFunction<TResult extends IStormResult, TOutput = any> = (
+  response: TResult | IStormResult<IStormError>
+) => MaybePromise<TOutput | IStormError>;
 
 export type CleanupFunction = () => MaybePromise<
   IStormError | void | null | undefined

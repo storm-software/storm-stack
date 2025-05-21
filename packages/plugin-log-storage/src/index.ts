@@ -51,7 +51,7 @@ export default class LogStoragePlugin<
         "@storm-stack/plugin-storage-fs",
         {
           namespace: this.config.namespace,
-          base: "getEnvPaths().log"
+          envPath: "log"
         }
       ]);
     }

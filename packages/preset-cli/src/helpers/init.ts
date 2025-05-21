@@ -23,13 +23,10 @@ import type { Context, Options } from "@storm-stack/core/types/build";
 import { listFiles } from "@stryke/fs/list-files";
 import { readJsonFile } from "@stryke/fs/read-file";
 import { StormJSON } from "@stryke/json/storm-json";
-import {
-  findFileExtension,
-  findFileName,
-  findFolderName
-} from "@stryke/path/file-path-fns";
+import { findFileExtension, findFileName } from "@stryke/path/file-path-fns";
 import { isDirectory } from "@stryke/path/is-file";
 import { joinPaths } from "@stryke/path/join-paths";
+import { constantCase } from "@stryke/string-format/constant-case";
 import { kebabCase } from "@stryke/string-format/kebab-case";
 import { isSetString } from "@stryke/type-checks/is-set-string";
 import { isString } from "@stryke/type-checks/is-string";
@@ -37,19 +34,94 @@ import { defu } from "defu";
 import type { StormStackCLIPresetConfig } from "../types/config";
 
 export async function initContext<TOptions extends Options = Options>(
-  log: LogFn,
-  context: Context<TOptions>
+  context: Context<TOptions>,
+  config: StormStackCLIPresetConfig
 ) {
-  log(
-    LogLevelLabel.TRACE,
-    `Initializing CLI specific options for the Storm Stack project.`
+  context.options.platform = "node";
+
+  context.override.alias ??= {};
+  context.override.alias["storm:cli"] = joinPaths(
+    context.options.projectRoot,
+    context.artifactsDir,
+    "runtime",
+    "cli.ts"
   );
 
-  context.options.platform = "node";
-  if (context.options.projectType === "application") {
-    context.installs["@clack/prompts@0.10.1"] = "dependency";
-    context.installs["@stryke/cli"] = "dependency";
+  context.override.noExternal ??= [];
+  if (Array.isArray(context.override.noExternal)) {
+    context.override.noExternal.push("storm:cli");
   }
+
+  context.options.dotenv ??= {};
+  context.options.dotenv.prefix = (
+    !context.options.dotenv.prefix
+      ? []
+      : Array.isArray(context.options.dotenv.prefix)
+        ? context.options.dotenv.prefix
+        : [context.options.dotenv.prefix]
+  ).reduce(
+    (ret, prefix) => {
+      const prefixName = constantCase(prefix.replace(/_$/, ""));
+      if (prefixName && !ret.includes(prefixName)) {
+        ret.push(prefixName);
+      }
+
+      return ret;
+    },
+    (!config.bin
+      ? []
+      : typeof config.bin === "string"
+        ? [config.bin]
+        : config.bin
+    ).map(bin => constantCase(bin))
+  );
+}
+
+export async function initInstalls<TOptions extends Options = Options>(
+  context: Context<TOptions>,
+  config: StormStackCLIPresetConfig
+) {
+  if (
+    context.options.projectType === "application" &&
+    config.interactive !== "never"
+  ) {
+    context.installs["@clack/prompts@0.10.1"] = "dependency";
+  }
+}
+
+export async function initUnimport<TOptions extends Options = Options>(
+  context: Context<TOptions>,
+  config: StormStackCLIPresetConfig
+) {
+  const imports = [
+    "parseArgs",
+    "colors",
+    "getColor",
+    "ColorName",
+    "link",
+    "LinkOptions"
+  ];
+  if (config.interactive !== "never") {
+    imports.push(
+      "prompt",
+      "PromptCommonOptions",
+      "TextPromptOptions",
+      "ConfirmPromptOptions",
+      "SelectPromptOptions",
+      "MultiSelectPromptOptions"
+    );
+  }
+
+  context.unimportPresets ??= [];
+  context.unimportPresets.push({
+    imports,
+    from: joinPaths(
+      context.options.projectRoot,
+      context.artifactsDir,
+      "runtime",
+      "cli"
+    )
+  });
 }
 
 export async function initEntry<TOptions extends Options = Options>(
@@ -73,26 +145,31 @@ export async function initEntry<TOptions extends Options = Options>(
     );
   }
 
-  let commandsDict = (await listFiles(joinPaths(commandsDir, "*.ts"))).reduce(
-    (ret, file) => {
-      ret[findFileName(file).replace(findFileExtension(file), "")] =
-        file.replace(`${commandsDir}/`, "");
-      return ret;
-    },
-    {} as Record<string, string>
-  );
-
-  if (Object.keys(commandsDict).length === 0) {
-    commandsDict = (
-      await listFiles(joinPaths(commandsDir, "**/index.ts"))
-    ).reduce(
+  let commandsDict = (await listFiles(joinPaths(commandsDir, "**/*.ts")))
+    .filter(file => findFileName(file) !== "index.ts")
+    .reduce(
       (ret, file) => {
-        ret[findFolderName(file)] = file.replace(`${commandsDir}/`, "");
+        const filePath = file.replace(commandsDir, "").replaceAll(/^\/+/g, "");
+        ret[
+          filePath.replace(findFileExtension(filePath), "").replaceAll("/", "-")
+        ] = filePath;
         return ret;
       },
       {} as Record<string, string>
     );
-  }
+
+  commandsDict = (
+    await listFiles(joinPaths(commandsDir, "**/index.ts"))
+  ).reduce((ret, file) => {
+    const filePath = file.replace(commandsDir, "").replaceAll(/^\/+/g, "");
+    ret[
+      filePath
+        .replace(findFileName(filePath), "")
+        .replaceAll(/\/+$/g, "")
+        .replaceAll("/", "-")
+    ] = filePath;
+    return ret;
+  }, commandsDict);
 
   if (Object.keys(commandsDict).length === 0) {
     log(
@@ -102,14 +179,25 @@ export async function initEntry<TOptions extends Options = Options>(
   } else {
     log(
       LogLevelLabel.INFO,
-      `The following commands were found in the entry directory: \n\n${Object.keys(
+      `The following commands were found in the entry directory: \n${Object.keys(
         commandsDict
       )
-        .map(key => `- ${key}: ${commandsDir}/${commandsDict[key]}`)
-        .join("\n")}\n`
+        .map(key => ` - ${key}: ${commandsDir}/${commandsDict[key]}`)
+        .join("\n")}`
     );
 
-    const bin = kebabCase(config.bin || context.options.name || "cli");
+    const bin =
+      kebabCase(
+        config.bin &&
+          (isSetString(config.bin) ||
+            (Array.isArray(config.bin) &&
+              config.bin.length > 0 &&
+              config.bin[0]))
+          ? isSetString(config.bin)
+            ? config.bin
+            : config.bin[0]
+          : context.options.name || context.packageJson?.name
+      ) || "cli";
     context.entry = [
       {
         file: joinPaths(
@@ -131,15 +219,26 @@ export async function initEntry<TOptions extends Options = Options>(
       );
     }
 
+    let binConfig = {};
+    if (config.bin && Array.isArray(config.bin) && config.bin.length > 0) {
+      binConfig = config.bin.reduce(
+        (ret, binName) => {
+          ret[kebabCase(binName)] = `${joinPaths("dist", bin)}.mjs`;
+          return ret;
+        },
+        binConfig as Record<string, string>
+      );
+    } else {
+      binConfig[kebabCase(bin)] = `${joinPaths("dist", bin)}.mjs`;
+    }
+
     await writeFile(
       log,
       joinPaths(context.options.projectRoot, "package.json"),
       StormJSON.stringify(
         defu(
           {
-            bin: {
-              [bin]: `${joinPaths("dist", bin)}.js`
-            }
+            bin: binConfig
           },
           packageJson
         )
@@ -161,7 +260,6 @@ export async function initEntry<TOptions extends Options = Options>(
         "commands",
         commandsDict[command]
       );
-
       if (ret.some(entry => entry.file === entryFile)) {
         log(
           LogLevelLabel.WARN,
@@ -175,7 +273,8 @@ export async function initEntry<TOptions extends Options = Options>(
               context.options.entry as string,
               commandsDict[command]
             )
-          }
+          },
+          output: command
         });
       }
 

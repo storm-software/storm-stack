@@ -41,8 +41,6 @@ const config: Linter.Config = {
     "storm-stack/storm-urls-only": "off",
     "storm-stack/storm-json-only": "off",
     "storm-stack/storm-errors-only": "warn",
-    "storm-stack/storm-requests-only": "warn",
-    "storm-stack/storm-responses-only": "warn",
     "storm-stack/top-level-functions": "warn"
   }
 };

@@ -23,7 +23,15 @@ import StoragePlugin from "@storm-stack/devkit/plugins/storage";
 import type { FSStorageOptions } from "unstorage/drivers/fs-lite";
 
 export type StorageFileSystemPluginConfig = FSStorageOptions &
-  StoragePluginConfig;
+  StoragePluginConfig & {
+    /**
+     * The environment path to use for the storage.
+     *
+     * @remarks
+     * These environment paths are returned using the \`\@stryke/env\` package.
+     */
+    envPath?: "data" | "config" | "cache" | "log" | "temp";
+  };
 
 export default class StorageFileSystemPlugin<
   TOptions extends Options = Options
@@ -35,9 +43,23 @@ export default class StorageFileSystemPlugin<
   protected override writeStorage() {
     return `${getFileHeader()}
 
-import fsLiteDriver from "unstorage/drivers/fs-lite";
+import fsLiteDriver from "unstorage/drivers/fs-lite";${
+      this.config.envPath
+        ? `
+import { join } from "node:path";
+import { getEnvPaths } from "../env";`
+        : ""
+    }
 
-export default fsLiteDriver({ base: ${this.config.base ? `"${this.config.base}"` : "undefined"}, readOnly: ${Boolean(this.config.readOnly)}, noClear: ${Boolean(this.config.noClear)} });
+export default fsLiteDriver({ base: ${
+      this.config.envPath
+        ? this.config.base
+          ? `join(getEnvPaths().${this.config.envPath}, "${this.config.base}")`
+          : `getEnvPaths().${this.config.envPath}`
+        : this.config.base
+          ? `"${this.config.base}"`
+          : "undefined"
+    }, readOnly: ${Boolean(this.config.readOnly)}, noClear: ${Boolean(this.config.noClear)} });
 `;
   }
 }

@@ -40,7 +40,7 @@ const loadEnvFiles = async <
   cwd: string,
   dotenv: ResolvedDotenvOptions
 ): Promise<TEnv> => {
-  let env = await loadEnvBase(cwd, options.mode);
+  let env = await loadEnvBase(cwd, options.mode, dotenv.prefix);
   if (dotenv.additionalFiles.length > 0) {
     const additionalEnvFiles = await Promise.all(
       dotenv.additionalFiles.map(async additionalEnvFile =>

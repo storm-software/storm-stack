@@ -18,7 +18,7 @@
 
 import type { ExamplePayload } from "./types";
 
-export function handler(event: StormRequest<ExamplePayload>) {
+export function handler(event: StormPayload<ExamplePayload>) {
   const payload = event.data;
 
   return payload.address.city;

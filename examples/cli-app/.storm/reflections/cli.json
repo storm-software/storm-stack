@@ -1,1 +1,422 @@
-{}
+{
+  "serve": {
+    "commandId": "serve",
+    "path": ["commands"],
+    "name": "commands",
+    "displayName": "Commands - Commands",
+    "description": "Start a server and serve the application.",
+    "aliases": [],
+    "entry": {
+      "file": "examples/cli-app/.storm/commands/serve.ts",
+      "input": { "file": "examples/cli-app/src/commands/serve.ts" },
+      "output": "serve"
+    },
+    "payload": {
+      "name": "ServePayload",
+      "importPath": "examples/cli-app/src/types",
+      "args": [
+        {
+          "name": "help",
+          "displayName": "Help",
+          "description": "Show help information.",
+          "aliases": ["h", "?"],
+          "type": "boolean",
+          "stringifiedType": "boolean",
+          "reflectionType": [{ "kind": 7 }],
+          "options": [],
+          "array": false,
+          "required": false,
+          "default": false
+        },
+        {
+          "name": "version",
+          "displayName": "Version",
+          "description": "Show the version of the application.",
+          "aliases": ["v"],
+          "type": "boolean",
+          "stringifiedType": "boolean",
+          "reflectionType": [{ "kind": 7 }],
+          "options": [],
+          "array": false,
+          "required": false,
+          "default": false
+        },
+        {
+          "name": "interactive",
+          "displayName": "Interactive",
+          "description": "Enable interactive mode (will be set to false if running in a CI pipeline).",
+          "aliases": ["i", "interact"],
+          "type": "boolean",
+          "stringifiedType": "boolean",
+          "reflectionType": [{ "kind": 7 }],
+          "options": [],
+          "array": false,
+          "required": false,
+          "default": true
+        },
+        {
+          "name": "no-interactive",
+          "displayName": "No Interactive",
+          "description": "Disable interactive mode (will be set to true if running in a CI pipeline).",
+          "aliases": ["no-interact"],
+          "type": "boolean",
+          "stringifiedType": "boolean",
+          "reflectionType": [{ "kind": 7 }],
+          "options": [],
+          "array": false,
+          "required": false,
+          "default": false
+        },
+        {
+          "name": "no-banner",
+          "displayName": "Hide Banner",
+          "description": "Hide the banner displayed while running the CLI application (will be set to true if running in a CI pipeline).",
+          "aliases": [],
+          "type": "boolean",
+          "stringifiedType": "boolean",
+          "reflectionType": [{ "kind": 7 }],
+          "options": [],
+          "array": false,
+          "required": false,
+          "default": false
+        },
+        {
+          "name": "verbose",
+          "displayName": "Verbose",
+          "description": "Enable verbose output.",
+          "aliases": ["v"],
+          "type": "boolean",
+          "stringifiedType": "boolean",
+          "reflectionType": [{ "kind": 7 }],
+          "options": [],
+          "array": false,
+          "required": false,
+          "default": false
+        },
+        {
+          "name": "host",
+          "displayName": "Host",
+          "aliases": [],
+          "reflectionType": [{ "kind": 5 }],
+          "type": "string",
+          "stringifiedType": "string",
+          "description": "The host to bind the server to",
+          "array": false,
+          "required": false,
+          "default": "\"localhost\""
+        },
+        {
+          "name": "port",
+          "displayName": "Port",
+          "aliases": ["p"],
+          "reflectionType": [{ "kind": 6 }],
+          "type": "number",
+          "stringifiedType": "number",
+          "description": "The port to bind the server to",
+          "array": false,
+          "required": false,
+          "default": "3000"
+        },
+        {
+          "name": "compress",
+          "displayName": "Compress",
+          "aliases": ["c"],
+          "reflectionType": [{ "kind": 7 }],
+          "type": "boolean",
+          "stringifiedType": "boolean",
+          "description": "Should the server serve compressed files",
+          "array": false,
+          "required": false
+        },
+        {
+          "name": "no-compress",
+          "displayName": "No Compress",
+          "aliases": [],
+          "reflectionType": [{ "kind": 7 }],
+          "type": "boolean",
+          "stringifiedType": "boolean",
+          "options": [],
+          "description": "The inverse of the compress option.",
+          "array": false,
+          "required": false,
+          "default": false
+        },
+        {
+          "name": "platform",
+          "displayName": "Platform",
+          "aliases": [],
+          "reflectionType": [
+            { "kind": 23, "types": [1, 2] },
+            { "kind": 13, "literal": "node" },
+            { "kind": 13, "literal": "browser" }
+          ],
+          "type": "enum",
+          "stringifiedType": "'node' | 'browser'",
+          "options": ["node", "browser"],
+          "description": "Should the server serve compressed files",
+          "array": false,
+          "required": false,
+          "default": "\"node\""
+        },
+        {
+          "name": "load-env",
+          "displayName": "Load Env",
+          "aliases": ["l"],
+          "reflectionType": [{ "kind": 7 }],
+          "type": "boolean",
+          "stringifiedType": "boolean",
+          "description": "Should the server load environment variables from the .env file",
+          "array": false,
+          "required": false,
+          "default": "true"
+        },
+        {
+          "name": "no-load-env",
+          "displayName": "No Load Env",
+          "aliases": [],
+          "reflectionType": [{ "kind": 7 }],
+          "type": "boolean",
+          "stringifiedType": "boolean",
+          "options": [],
+          "description": "The inverse of the load-env option.",
+          "array": false,
+          "required": false,
+          "default": false
+        }
+      ]
+    },
+    "relations": { "parent": "serve", "children": ["serve"] }
+  },
+  "add-page": {
+    "commandId": "add-page",
+    "path": ["add"],
+    "name": "add",
+    "displayName": "Add",
+    "description": "Add a page to the file system.",
+    "aliases": [],
+    "entry": {
+      "file": "examples/cli-app/.storm/commands/add/page.ts",
+      "input": { "file": "examples/cli-app/src/commands/add/page.ts" },
+      "output": "add-page"
+    },
+    "payload": {
+      "name": "AddPagePayload",
+      "importPath": "examples/cli-app/src/types",
+      "args": [
+        {
+          "name": "help",
+          "displayName": "Help",
+          "description": "Show help information.",
+          "aliases": ["h", "?"],
+          "type": "boolean",
+          "stringifiedType": "boolean",
+          "reflectionType": [{ "kind": 7 }],
+          "options": [],
+          "array": false,
+          "required": false,
+          "default": false
+        },
+        {
+          "name": "version",
+          "displayName": "Version",
+          "description": "Show the version of the application.",
+          "aliases": ["v"],
+          "type": "boolean",
+          "stringifiedType": "boolean",
+          "reflectionType": [{ "kind": 7 }],
+          "options": [],
+          "array": false,
+          "required": false,
+          "default": false
+        },
+        {
+          "name": "interactive",
+          "displayName": "Interactive",
+          "description": "Enable interactive mode (will be set to false if running in a CI pipeline).",
+          "aliases": ["i", "interact"],
+          "type": "boolean",
+          "stringifiedType": "boolean",
+          "reflectionType": [{ "kind": 7 }],
+          "options": [],
+          "array": false,
+          "required": false,
+          "default": true
+        },
+        {
+          "name": "no-interactive",
+          "displayName": "No Interactive",
+          "description": "Disable interactive mode (will be set to true if running in a CI pipeline).",
+          "aliases": ["no-interact"],
+          "type": "boolean",
+          "stringifiedType": "boolean",
+          "reflectionType": [{ "kind": 7 }],
+          "options": [],
+          "array": false,
+          "required": false,
+          "default": false
+        },
+        {
+          "name": "no-banner",
+          "displayName": "Hide Banner",
+          "description": "Hide the banner displayed while running the CLI application (will be set to true if running in a CI pipeline).",
+          "aliases": [],
+          "type": "boolean",
+          "stringifiedType": "boolean",
+          "reflectionType": [{ "kind": 7 }],
+          "options": [],
+          "array": false,
+          "required": false,
+          "default": false
+        },
+        {
+          "name": "verbose",
+          "displayName": "Verbose",
+          "description": "Enable verbose output.",
+          "aliases": ["v"],
+          "type": "boolean",
+          "stringifiedType": "boolean",
+          "reflectionType": [{ "kind": 7 }],
+          "options": [],
+          "array": false,
+          "required": false,
+          "default": false
+        },
+        {
+          "name": "file",
+          "displayName": "File",
+          "aliases": ["f"],
+          "reflectionType": [{ "kind": 5 }],
+          "type": "string",
+          "stringifiedType": "string",
+          "description": "The file to add to the file system",
+          "array": false,
+          "required": false,
+          "default": "\"page.ts\""
+        }
+      ]
+    },
+    "relations": { "children": [] }
+  },
+  "add": {
+    "commandId": "add",
+    "path": ["add"],
+    "name": "add",
+    "displayName": "Add",
+    "description": "Add an item to the file system.",
+    "aliases": [],
+    "entry": {
+      "file": "examples/cli-app/.storm/commands/add/index.ts",
+      "input": { "file": "examples/cli-app/src/commands/add/index.ts" },
+      "output": "add"
+    },
+    "payload": {
+      "name": "AddPayload",
+      "importPath": "examples/cli-app/src/types",
+      "args": [
+        {
+          "name": "help",
+          "displayName": "Help",
+          "description": "Show help information.",
+          "aliases": ["h", "?"],
+          "type": "boolean",
+          "stringifiedType": "boolean",
+          "reflectionType": [{ "kind": 7 }],
+          "options": [],
+          "array": false,
+          "required": false,
+          "default": false
+        },
+        {
+          "name": "version",
+          "displayName": "Version",
+          "description": "Show the version of the application.",
+          "aliases": ["v"],
+          "type": "boolean",
+          "stringifiedType": "boolean",
+          "reflectionType": [{ "kind": 7 }],
+          "options": [],
+          "array": false,
+          "required": false,
+          "default": false
+        },
+        {
+          "name": "interactive",
+          "displayName": "Interactive",
+          "description": "Enable interactive mode (will be set to false if running in a CI pipeline).",
+          "aliases": ["i", "interact"],
+          "type": "boolean",
+          "stringifiedType": "boolean",
+          "reflectionType": [{ "kind": 7 }],
+          "options": [],
+          "array": false,
+          "required": false,
+          "default": true
+        },
+        {
+          "name": "no-interactive",
+          "displayName": "No Interactive",
+          "description": "Disable interactive mode (will be set to true if running in a CI pipeline).",
+          "aliases": ["no-interact"],
+          "type": "boolean",
+          "stringifiedType": "boolean",
+          "reflectionType": [{ "kind": 7 }],
+          "options": [],
+          "array": false,
+          "required": false,
+          "default": false
+        },
+        {
+          "name": "no-banner",
+          "displayName": "Hide Banner",
+          "description": "Hide the banner displayed while running the CLI application (will be set to true if running in a CI pipeline).",
+          "aliases": [],
+          "type": "boolean",
+          "stringifiedType": "boolean",
+          "reflectionType": [{ "kind": 7 }],
+          "options": [],
+          "array": false,
+          "required": false,
+          "default": false
+        },
+        {
+          "name": "verbose",
+          "displayName": "Verbose",
+          "description": "Enable verbose output.",
+          "aliases": ["v"],
+          "type": "boolean",
+          "stringifiedType": "boolean",
+          "reflectionType": [{ "kind": 7 }],
+          "options": [],
+          "array": false,
+          "required": false,
+          "default": false
+        },
+        {
+          "name": "file",
+          "displayName": "File",
+          "aliases": ["f"],
+          "reflectionType": [{ "kind": 5 }],
+          "type": "string",
+          "stringifiedType": "string",
+          "description": "The file to add to the file system",
+          "array": false,
+          "required": false,
+          "default": "\"server.ts\""
+        },
+        {
+          "name": "type",
+          "displayName": "Type",
+          "aliases": ["t"],
+          "reflectionType": [{ "kind": 5 }],
+          "type": "string",
+          "stringifiedType": "string",
+          "description": "The type of the file",
+          "array": false,
+          "required": false,
+          "default": "\"server\""
+        }
+      ]
+    },
+    "relations": { "children": [] }
+  }
+}

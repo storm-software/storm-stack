@@ -7,19 +7,19 @@
 
 import type { IStormEvent } from "@storm-stack/types/node/event";
 import { useStorm } from "./context";
-import { StormRequest } from "./request";
+import { StormPayload } from "./payload";
 
 /**
  * A base event class used by the Storm Stack runtime.
  */
 export class StormEvent<TEventType extends string = string, TEventData = any>
-  extends StormRequest<TEventData>
+  extends StormPayload<TEventData>
   implements IStormEvent<TEventType, TEventData>
 {
   /**
-   * The request identifier.
+   * The payload identifier.
    */
-  public readonly requestId: string = useStorm().request.id;
+  public readonly payloadId: string = useStorm().payload.id;
 
   /**
    * The event type.

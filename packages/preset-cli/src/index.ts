@@ -20,11 +20,18 @@ import { LogLevelLabel } from "@storm-software/config-tools/types";
 
 import { Preset } from "@storm-stack/core/preset";
 import type { Context, EngineHooks, Options } from "@storm-stack/core/types";
-import { unbuild } from "@storm-stack/devkit/helpers/unbuild/build";
-
-import { esbuild } from "@storm-stack/devkit/helpers/esbuild/build";
-import { initContext, initEntry } from "./helpers/init";
-import { prepareEntry, prepareRuntime } from "./helpers/prepare";
+import {
+  buildApplication,
+  buildLibrary,
+  permissionExecutable
+} from "./helpers/build";
+import {
+  initContext,
+  initEntry,
+  initInstalls,
+  initUnimport
+} from "./helpers/init";
+import { prepareEntry, prepareRuntime, prepareTypes } from "./helpers/prepare";
 import type { StormStackCLIPresetConfig } from "./types/config";
 
 export default class StormStackCLIPreset<
@@ -42,6 +49,14 @@ export default class StormStackCLIPreset<
         {
           logLevel: "info"
         }
+      ],
+      [
+        "@storm-stack/plugin-storage-fs",
+        {
+          namespace: "crash-reports",
+          base: "crash-reports",
+          envPath: "log"
+        }
       ]
     ];
   }
@@ -49,11 +64,15 @@ export default class StormStackCLIPreset<
   public addHooks(hooks: EngineHooks<TOptions>) {
     hooks.addHooks({
       "init:context": this.initContext.bind(this),
+      "init:installs": this.initInstalls.bind(this),
+      "init:unimport": this.initUnimport.bind(this),
       "init:entry": this.initEntry.bind(this),
       "prepare:entry": this.prepareEntry.bind(this),
+      "prepare:types": this.prepareTypes.bind(this),
       "prepare:runtime": this.prepareRuntime.bind(this),
       "build:library": this.buildLibrary.bind(this),
-      "build:application": this.buildApplication.bind(this)
+      "build:application": this.buildApplication.bind(this),
+      "build:complete": this.buildComplete.bind(this)
     });
   }
 
@@ -63,7 +82,25 @@ export default class StormStackCLIPreset<
       `Initializing CLI specific options for the Storm Stack project.`
     );
 
-    await initContext(this.log, context);
+    await initContext(context, this.#config);
+  }
+
+  protected async initInstalls(context: Context<TOptions>) {
+    this.log(
+      LogLevelLabel.TRACE,
+      `Adding CLI specific dependencies to the Storm Stack project.`
+    );
+
+    await initInstalls(context, this.#config);
+  }
+
+  protected async initUnimport(context: Context<TOptions>) {
+    this.log(
+      LogLevelLabel.TRACE,
+      `Initializing CLI specific Unimport presets for the Storm Stack project.`
+    );
+
+    await initUnimport(context, this.#config);
   }
 
   protected async initEntry(context: Context<TOptions>) {
@@ -77,9 +114,23 @@ export default class StormStackCLIPreset<
     }
   }
 
+  protected async prepareTypes(context: Context<TOptions>) {
+    this.log(
+      LogLevelLabel.TRACE,
+      `Initializing CLI specific type definitions for the Storm Stack project.`
+    );
+
+    await prepareTypes(this.log, context, this.#config);
+  }
+
   protected async prepareRuntime(context: Context<TOptions>) {
     if (context.options.projectType === "application") {
-      await prepareRuntime(this.log, context);
+      this.log(
+        LogLevelLabel.TRACE,
+        `Preparing the CLI application's runtime artifacts.`
+      );
+
+      await prepareRuntime(this.log, context, this.#config);
     }
   }
 
@@ -95,10 +146,14 @@ export default class StormStackCLIPreset<
   }
 
   protected async buildLibrary(context: Context<TOptions>) {
-    return unbuild(context);
+    return buildLibrary(this.log, context);
   }
 
   protected async buildApplication(context: Context<TOptions>) {
-    return esbuild(context);
+    return buildApplication(this.log, context);
+  }
+
+  protected async buildComplete(context: Context<TOptions>) {
+    return permissionExecutable(this.log, context);
   }
 }

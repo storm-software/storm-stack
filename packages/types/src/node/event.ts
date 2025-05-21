@@ -17,14 +17,14 @@
  ------------------------------------------------------------------- */
 
 // eslint-disable-next-line ts/consistent-type-imports
-import { IStormRequest } from "../shared/request";
+import { IStormPayload } from "../shared/payload";
 
 export interface IStormEvent<TEventType extends string = string, TData = any>
-  extends IStormRequest<TData> {
+  extends IStormPayload<TData> {
   /**
-   * The unique identifier for the request.
+   * The unique identifier for the payload.
    */
-  requestId: string;
+  payloadId: string;
 
   /**
    * The type of the event.

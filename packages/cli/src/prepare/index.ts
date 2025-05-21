@@ -16,13 +16,10 @@
 
  ------------------------------------------------------------------- */
 
-// eslint-disable-next-line ts/consistent-type-imports
-import { StormRequest } from "../../.storm/runtime/request";
-
 /**
  * The payload for the example CLI application.
  */
-export interface PreparePayload {
+interface PreparePayload {
   /**
    * The host to bind the server to.
    *
@@ -62,7 +59,7 @@ export interface PreparePayload {
  *
  * @param request - The request object containing the command payload
  */
-function handler(request: StormRequest<PreparePayload>) {
+function handler(request: StormPayload<PreparePayload>) {
   const payload = request.data;
 
   $storm.log.info(

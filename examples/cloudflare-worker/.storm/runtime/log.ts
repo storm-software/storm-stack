@@ -15,7 +15,8 @@ import {
   LogRecord,
   LogSink
 } from "@storm-stack/types/log";
-import { StormError } from "./error";
+import { StormError, isStormError } from "./error";
+import { isError } from "@stryke/type-checks/is-error";
 import logConsoleInfoSink from "./logs/log-console-info"; 
 
 const LOG_LEVELS = [
@@ -243,10 +244,11 @@ export class StormLog implements IStormLog {
       return;
     }
 
-    for (const sink of LOG_SINKS.filter(sink =>
-      compareLogLevel(level ?? this.lowestLogLevel ?? "info", sink.logLevel) < 0)
-        .map(sink => sink.handle)
-    ) {
+    for (const sink of LOG_SINKS.filter(
+      sink =>
+        compareLogLevel(level ?? this.lowestLogLevel ?? "info", sink.logLevel) <
+        0
+    ).map(sink => sink.handle)) {
       yield sink;
     }
   }
@@ -269,7 +271,7 @@ export class StormLog implements IStormLog {
           bypassSinks2.add(sink);
 
           console.error(
-            `Failed to emit a log record to sink ${sink}: ${error}`
+            `Failed to emit a log record to sink ${sink.name}: ${(error as any)?.message || "Could not display error message"}`
           );
         }
       }
@@ -294,12 +296,10 @@ export class StormLog implements IStormLog {
             },
             rawMessage,
             get properties() {
-              if (cachedProps == null) {
-                cachedProps = {
-                  ...implicitContext,
-                  ...properties()
-                };
-              }
+              cachedProps ??= {
+                ...implicitContext,
+                ...properties()
+              };
               return cachedProps;
             }
           }
@@ -409,10 +409,20 @@ export class StormLog implements IStormLog {
   }
 
   public error(
-    message: TemplateStringsArray | string | LogCallback,
+    message: TemplateStringsArray | string | LogCallback | Error,
     ...values: unknown[]
   ): void {
-    if (typeof message === "string") {
+    if (isStormError(message)) {
+      this.log("error", message.toDisplay(), {
+        error: message,
+        ...((values[0] ?? {}) as Record<string, unknown>)
+      });
+    } else if (isError(message)) {
+      this.log("error", message.message, {
+        error: message,
+        ...((values[0] ?? {}) as Record<string, unknown>)
+      });
+    } else if (typeof message === "string") {
       this.log("error", message, (values[0] ?? {}) as Record<string, unknown>);
     } else if (typeof message === "function") {
       this.logLazily("error", message);
@@ -422,10 +432,20 @@ export class StormLog implements IStormLog {
   }
 
   public fatal(
-    message: TemplateStringsArray | string | LogCallback,
+    message: TemplateStringsArray | string | LogCallback | Error,
     ...values: unknown[]
   ): void {
-    if (typeof message === "string") {
+    if (isStormError(message)) {
+      this.log("fatal", message.toDisplay(), {
+        error: message,
+        ...((values[0] ?? {}) as Record<string, unknown>)
+      });
+    } else if (isError(message)) {
+      this.log("fatal", message.message, {
+        error: message,
+        ...((values[0] ?? {}) as Record<string, unknown>)
+      });
+    } else if (typeof message === "string") {
       this.log("fatal", message, (values[0] ?? {}) as Record<string, unknown>);
     } else if (typeof message === "function") {
       this.logLazily("fatal", message);
@@ -533,10 +553,20 @@ export class StormLogCtx implements IStormLog {
   }
 
   error(
-    message: TemplateStringsArray | string | LogCallback,
+    message: TemplateStringsArray | string | LogCallback | Error,
     ...values: unknown[]
   ): void {
-    if (typeof message === "string") {
+    if (isStormError(message)) {
+      this.log("error", message.toDisplay(), {
+        error: message,
+        ...((values[0] ?? {}) as Record<string, unknown>)
+      });
+    } else if (isError(message)) {
+      this.log("error", message.message, {
+        error: message,
+        ...((values[0] ?? {}) as Record<string, unknown>)
+      });
+    } else if (typeof message === "string") {
       this.log("error", message, (values[0] ?? {}) as Record<string, unknown>);
     } else if (typeof message === "function") {
       this.logLazily("error", message);
@@ -546,10 +576,20 @@ export class StormLogCtx implements IStormLog {
   }
 
   fatal(
-    message: TemplateStringsArray | string | LogCallback,
+    message: TemplateStringsArray | string | LogCallback | Error,
     ...values: unknown[]
   ): void {
-    if (typeof message === "string") {
+    if (isStormError(message)) {
+      this.log("fatal", message.toDisplay(), {
+        error: message,
+        ...((values[0] ?? {}) as Record<string, unknown>)
+      });
+    } else if (isError(message)) {
+      this.log("fatal", message.message, {
+        error: message,
+        ...((values[0] ?? {}) as Record<string, unknown>)
+      });
+    } else if (typeof message === "string") {
       this.log("fatal", message, (values[0] ?? {}) as Record<string, unknown>);
     } else if (typeof message === "function") {
       this.logLazily("fatal", message);
@@ -558,3 +598,4 @@ export class StormLogCtx implements IStormLog {
     }
   }
 }
+

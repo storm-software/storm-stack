@@ -19,7 +19,7 @@
 // eslint-disable-next-line ts/consistent-type-imports
 import { ExamplePayload } from "./types";
 
-export function getCity(request: StormRequest<ExamplePayload>) {
+export function getCity(request: StormPayload<ExamplePayload>) {
   const payload = request.data;
   if (!payload) {
     // This error message should be replaced by the compiler

@@ -67,9 +67,10 @@ declare global {
     }
   }
 
-  const getBuildInfo: (typeof import("${path}/context"))["getBuildInfo"];
-  const getRuntimeInfo: (typeof import("${path}/context"))["getRuntimeInfo"];
-  const getEnvPaths: (typeof import("${path}/context"))["getEnvPaths"];
+  const getBuildInfo: (typeof import("${path}/env"))["getBuildInfo"];
+  const getRuntimeInfo: (typeof import("${path}/env"))["getRuntimeInfo"];
+  const getEnvPaths: (typeof import("${path}/env"))["getEnvPaths"];
+
   const useStorm: (typeof import("${path}/context"))["useStorm"];
   const STORM_ASYNC_CONTEXT: (typeof import("${path}/context"))["STORM_ASYNC_CONTEXT"];
 }
@@ -89,22 +90,28 @@ export function generateNodeModules<TOptions extends Options = Options>(
 `)}
 
 declare module "storm:app" {
-  const builder: (typeof import("${path}/app"))["builder"];
+  const withContext: (typeof import("${path}/app"))["withContext"];
 
-  export { builder };
+  export { withContext };
 }
 
-declare module "storm:context" {
-  const getBuildInfo: (typeof import("${path}/context"))["getBuildInfo"];
-  const getRuntimeInfo: (typeof import("${path}/context"))["getRuntimeInfo"];
-  const getEnvPaths: (typeof import("${path}/context"))["getEnvPaths"];
-  const useStorm: (typeof import("${path}/context"))["useStorm"];
-  const STORM_ASYNC_CONTEXT: (typeof import("${path}/context"))["STORM_ASYNC_CONTEXT"];
+declare module "storm:env" {
+  const getBuildInfo: (typeof import("${path}/env"))["getBuildInfo"];
+  const getRuntimeInfo: (typeof import("${path}/env"))["getRuntimeInfo"];
+  const getEnvPaths: (typeof import("${path}/env"))["getEnvPaths"];
 
   export {
     getBuildInfo,
     getRuntimeInfo,
-    getEnvPaths,
+    getEnvPaths
+  };
+}
+
+declare module "storm:context" {
+  const useStorm: (typeof import("${path}/context"))["useStorm"];
+  const STORM_ASYNC_CONTEXT: (typeof import("${path}/context"))["STORM_ASYNC_CONTEXT"];
+
+  export {
     useStorm,
     STORM_ASYNC_CONTEXT
   };

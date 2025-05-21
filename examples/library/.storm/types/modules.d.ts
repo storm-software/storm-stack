@@ -63,59 +63,46 @@ declare module "storm:error" {
   export { StormError, createStormError, getErrorFromUnknown, isStormError };
 }
 
-declare module "storm:request" {
-  const _StormRequest: (typeof import("../runtime/request"))["StormRequest"];
+declare module "storm:payload" {
+  const _StormPayload: (typeof import("../runtime/payload"))["StormPayload"];
 
-  class StormRequest<
-    TData = any,
-    TIdentifiers extends Record<string, any> = Record<string, any>,
-    TParams extends Record<string, any> = Record<string, any>,
-    TMeta extends Record<string, any> = Record<string, any>
-  > extends _StormRequest<TData, TIdentifiers, TParams, TMeta> {
+  class StormPayload<TData = any> extends _StormPayload<TData> {
     /**
-     * Create a new request object.
+     * Create a new payload object.
      *
-     * @param data - The request data.
-     * @param meta - The request metadata.
-     * @param params - The request parameters.
-     * @param identifiers - The request identifiers.
+     * @param data - The payload data.
      */
-    public constructor(
-      data: TData,
-      meta = {},
-      params?: TParams,
-      identifiers?: TIdentifiers
-    ) {
-      super(data, meta, params, identifiers);
+    public constructor(data: TData) {
+      super(data);
     }
   }
 
-  export { StormRequest };
+  export { StormPayload };
 }
 
-declare module "storm:response" {
-  const _StormResponse: (typeof import("../runtime/response"))["StormResponse"];
+declare module "storm:result" {
+  const _StormResult: (typeof import("../runtime/result"))["StormResult"];
 
-  class StormResponse<
+  class StormResult<
     TData extends any | StormError = any | StormError
-  > extends _StormResponse<TData> {
+  > extends _StormResult<TData> {
     /**
-     * Create a new response.
+     * Create a new result.
      *
-     * @param requestId - The request identifier.
+     * @param payloadId - The payload identifier.
      * @param meta - The current context's metadata.
-     * @param data - The response data
+     * @param data - The result data
      */
     public constructor(
-      requestId: string,
+      payloadId: string,
       meta: Record<string, any>,
       data: TData
     ) {
-      super(requestId, meta, data);
+      super(payloadId, meta, data);
     }
   }
 
-  export { StormResponse };
+  export { StormResult };
 }
 
 declare module "storm:log" {

@@ -7,11 +7,10 @@
     "prepare": {
       "cache": true,
       "inputs": ["typescript", "^production"],
-      "outputs": ["{options.outputPath}"],
+      "outputs": ["{projectRoot}/.storm"],
       "executor": "@storm-stack/nx:prepare",
       "options": {
-        "entry": "{sourceRoot}",
-        "outputPath": "dist/packages/cli"
+        "entry": "{sourceRoot}"
       }
     },
     "build": {
@@ -28,12 +27,11 @@
     "docs": {
       "cache": true,
       "inputs": ["typescript", "^production"],
-      "outputs": ["{options.outputPath}"],
-      "executor": "@storm-stack/nx:build",
+      "outputs": ["{projectRoot}/docs"],
+      "executor": "@storm-stack/nx:docs",
       "dependsOn": ["prepare", "build"],
       "options": {
-        "entry": "{sourceRoot}",
-        "outputPath": "packages/cli/docs"
+        "entry": "{sourceRoot}"
       }
     },
     "nx-release-publish": {
@@ -41,6 +39,7 @@
     }
   },
   "implicitDependencies": [
+    "nx",
     "preset-cli",
     "plugin-log-storage",
     "plugin-log-sentry"

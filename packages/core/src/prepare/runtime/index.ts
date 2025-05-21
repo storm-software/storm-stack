@@ -21,16 +21,16 @@ import { joinPaths } from "@stryke/path/join-paths";
 import { writeFile } from "../../helpers/utilities/write-file";
 import type { Context, EngineHooks, Options } from "../../types/build";
 import type { LogFn } from "../../types/config";
-import { writeApp } from "./runtime/node/app";
-import { writeContext } from "./runtime/node/context";
-import { writeEvent } from "./runtime/node/event";
-import { writeError } from "./runtime/shared/error";
-import { writeId } from "./runtime/shared/id";
-import { writeInit } from "./runtime/shared/init";
-import { writeLog } from "./runtime/shared/log";
-import { writeRequest } from "./runtime/shared/request";
-import { writeResponse } from "./runtime/shared/response";
-import { writeStorage } from "./runtime/shared/storage";
+import { writeApp } from "./node/app";
+import { writeContext } from "./node/context";
+import { writeEnv } from "./node/env";
+import { writeEvent } from "./node/event";
+import { writePayload, writeResult } from "./shared";
+import { writeError } from "./shared/error";
+import { writeId } from "./shared/id";
+import { writeInit } from "./shared/init";
+import { writeLog } from "./shared/log";
+import { writeStorage } from "./shared/storage";
 
 export async function prepareRuntime<TOptions extends Options = Options>(
   log: LogFn,
@@ -49,8 +49,8 @@ export async function prepareRuntime<TOptions extends Options = Options>(
   );
 
   const promises = [
-    writeFile(log, joinPaths(runtimeDir, "request.ts"), writeRequest()),
-    writeFile(log, joinPaths(runtimeDir, "response.ts"), writeResponse()),
+    writeFile(log, joinPaths(runtimeDir, "payload.ts"), writePayload()),
+    writeFile(log, joinPaths(runtimeDir, "result.ts"), writeResult()),
     writeFile(log, joinPaths(runtimeDir, "error.ts"), writeError()),
     writeFile(log, joinPaths(runtimeDir, "id.ts"), writeId()),
     writeFile(log, joinPaths(runtimeDir, "log.ts"), writeLog(context), true),
@@ -63,6 +63,9 @@ export async function prepareRuntime<TOptions extends Options = Options>(
     );
     promises.push(
       writeFile(log, joinPaths(runtimeDir, "context.ts"), writeContext(context))
+    );
+    promises.push(
+      writeFile(log, joinPaths(runtimeDir, "env.ts"), writeEnv(context))
     );
     promises.push(
       writeFile(log, joinPaths(runtimeDir, "event.ts"), writeEvent(context))

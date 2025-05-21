@@ -31,7 +31,13 @@ export async function bundle<TOptions extends Options = Options>(
   override: Partial<BuildOptions> = {},
   options?: CompileOptions
 ) {
-  const esbuildOptions = defu(override ?? {}, context.override, {
+  const contextOverrides = { ...context.override };
+  delete contextOverrides.alias;
+  delete contextOverrides.external;
+  delete contextOverrides.noExternal;
+  delete contextOverrides.skipNodeModulesBundle;
+
+  const esbuildOptions = defu(override ?? {}, contextOverrides, {
     entryPoints: [entryPoint],
     platform: "node",
     format: "esm",

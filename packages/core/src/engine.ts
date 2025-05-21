@@ -189,7 +189,7 @@ export class Engine<TOptions extends Options = Options> {
 
     await init(this.log, this.context, this.#hooks);
 
-    this.log(LogLevelLabel.TRACE, "Storm Stack engine has been initialized");
+    this.log(LogLevelLabel.INFO, "Storm Stack engine has been initialized");
     this.#initialized = true;
 
     return this.context;
@@ -377,7 +377,7 @@ export class Engine<TOptions extends Options = Options> {
       }
 
       this.log(
-        LogLevelLabel.INFO,
+        LogLevelLabel.TRACE,
         `Successfully loaded the "${instance.name}" ${isPreset ? "preset" : "plugin"}`
       );
 
@@ -469,7 +469,7 @@ Note: Please ensure the plugin package's default export is a class that extends 
     }
 
     this.log(
-      LogLevelLabel.INFO,
+      LogLevelLabel.TRACE,
       `Successfully initialized the "${pluginInstance.name}" plugin`
     );
 

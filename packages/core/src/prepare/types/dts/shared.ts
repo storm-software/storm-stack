@@ -107,48 +107,39 @@ declare global {
     "getErrorFromUnknown"
   ];
 
-  const _StormRequest: (typeof import("${path}/request"))["StormRequest"];
-  class StormRequest<
-    TData = any,
-    TIdentifiers extends Record<string, any> = Record<string, any>,
-    TParams extends Record<string, any> = Record<string, any>,
-    TMeta extends Record<string, any> = Record<string, any>
-  > extends _StormRequest<TData, TIdentifiers, TParams, TMeta> {
+  const _StormPayload: (typeof import("${path}/payload"))["StormPayload"];
+  class StormPayload<
+    TData = any
+  > extends _StormPayload<TData> {
     /**
-     * Create a new request object.
+     * Create a new payload object.
      *
-     * @param data - The request data.
-     * @param meta - The request metadata.
-     * @param params - The request parameters.
-     * @param identifiers - The request identifiers.
+     * @param data - The payload data.
      */
     public constructor(
-      data: TData,
-      meta = {},
-      params?: TParams,
-      identifiers?: TIdentifiers
+      data: TData
     ) {
-      super(data, meta, params, identifiers);
+      super(data);
     }
   }
 
-  const _StormResponse: (typeof import("${path}/response"))["StormResponse"];
-  class StormResponse<
+  const _StormResult: (typeof import("${path}/result"))["StormResult"];
+  class StormResult<
     TData extends any | StormError = any | StormError
-  > extends _StormResponse<TData> {
+  > extends _StormResult<TData> {
     /**
-     * Create a new response.
+     * Create a new result.
      *
-     * @param requestId - The request identifier.
+     * @param payloadId - The payload identifier.
      * @param meta - The current context's metadata.
-     * @param data - The response data
+     * @param data - The result data
      */
     public constructor(
-      requestId: string,
+      payloadId: string,
       meta: Record<string, any>,
       data: TData
     ) {
-      super(requestId, meta, data);
+      super(payloadId, meta, data);
     }
   }
 }
@@ -186,7 +177,12 @@ declare module "storm:http" {
   const serializeCookie: (typeof import("@stryke/http"))["serializeCookie"];
   const splitSetCookieString: (typeof import("@stryke/http"))["splitSetCookieString"];
 
-  export { parseCookie, parseSetCookie, serializeCookie, splitSetCookieString };
+  export {
+    parseCookie,
+    parseSetCookie,
+    serializeCookie,
+    splitSetCookieString
+  };
 }
 
 declare module "storm:storage" {
@@ -219,62 +215,58 @@ declare module "storm:error" {
     "getErrorFromUnknown"
   ];
 
-  export { StormError, createStormError, isStormError, getErrorFromUnknown };
+  export {
+    StormError,
+    createStormError,
+    isStormError,
+    getErrorFromUnknown
+  };
 }
 
-declare module "storm:request" {
-  const _StormRequest: (typeof import("${path}/request"))["StormRequest"];
+declare module "storm:payload" {
+  const _StormPayload: (typeof import("${path}/payload"))["StormPayload"];
 
-  class StormRequest<
-    TData = any,
-    TIdentifiers extends Record<string, any> = Record<string, any>,
-    TParams extends Record<string, any> = Record<string, any>,
-    TMeta extends Record<string, any> = Record<string, any>
-  > extends _StormRequest<TData, TIdentifiers, TParams, TMeta> {
+  class StormPayload<
+    TData = any
+  > extends _StormPayload<TData> {
     /**
-     * Create a new request object.
+     * Create a new payload object.
      *
-     * @param data - The request data.
-     * @param meta - The request metadata.
-     * @param params - The request parameters.
-     * @param identifiers - The request identifiers.
+     * @param data - The payload data.
      */
     public constructor(
-      data: TData,
-      meta = {},
-      params?: TParams,
-      identifiers?: TIdentifiers
+      data: TData
     ) {
-      super(data, meta, params, identifiers);
+      super(data);
     }
   }
 
-  export { StormRequest };
+  export { StormPayload };
 }
 
-declare module "storm:response" {
-  const _StormResponse: (typeof import("${path}/response"))["StormResponse"];
+declare module "storm:result" {
+  const _StormResult: (typeof import("${path}/result"))["StormResult"];
 
-  class StormResponse<
+  class StormResult<
     TData extends any | StormError = any | StormError
-  > extends _StormResponse<TData> {
+  > extends _StormResult<TData> {
     /**
-     * Create a new response.
+     * Create a new result.
      *
-     * @param requestId - The request identifier.
+     * @param payloadId - The payload identifier.
      * @param meta - The current context's metadata.
-     * @param data - The response data
+     * @param data - The result data
      */
     public constructor(
-      requestId: string,
+      payloadId: string,
       meta: Record<string, any>,
       data: TData
     ) {
-      super(requestId, meta, data);
+      super(payloadId, meta, data);
     }
   }
 
-  export { StormResponse };
+  export { StormResult };
 }
 
 declare module "storm:log" {

@@ -27,7 +27,6 @@ import { prepareDirectories } from "./directories";
 import { prepareReflections } from "./reflections";
 import { prepareRuntime } from "./runtime";
 import { prepareTypes } from "./types";
-
 export async function prepare<TOptions extends Options = Options>(
   log: LogFn,
   context: Context<TOptions>,
@@ -112,4 +111,15 @@ export async function prepare<TOptions extends Options = Options>(
       { cause: error }
     );
   });
+
+  // await compressDirectory(
+  //   joinPaths(context.options.projectRoot, context.artifactsDir),
+  //   {
+  //     destination: joinPaths(
+  //       context.envPaths.cache,
+  //       context.options.projectRoot,
+  //       `${context.meta.checksum}.tar.gz`
+  //     )
+  //   }
+  // );
 }

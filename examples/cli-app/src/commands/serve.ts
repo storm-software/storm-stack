@@ -24,7 +24,7 @@ import { ServePayload } from "../types";
  *
  * @param event - The event object containing the payload
  */
-function handler(event: StormRequest<ServePayload>) {
+function handler(event: StormPayload<ServePayload>) {
   const payload = event.data;
 
   $storm.log.info(

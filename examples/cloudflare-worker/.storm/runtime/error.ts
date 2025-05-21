@@ -381,7 +381,7 @@ export class StormError extends Error implements IStormError {
    * A URL to a page that displays the error message details
    */
   public get url(): string {
-    const url = new StormURL($storm.env.ERROR_URL!);
+    const url = new StormURL($storm.vars.ERROR_URL!);
     url.paths.push(this.type.toLowerCase().replaceAll("_", "-"));
     url.paths.push(String(this.code));
 
@@ -398,7 +398,7 @@ export class StormError extends Error implements IStormError {
    * @param includeData - Whether to include the data in the error message
    * @returns The display error message string
    */
-  public toDisplay(includeData = $storm.env.INCLUDE_ERROR_DATA): string {
+  public toDisplay(includeData = $storm.vars.INCLUDE_ERROR_DATA): string {
     return `${this.name && this.name !== this.constructor.name ? (this.code ? `${this.name} ` : this.name) : ""} ${
       this.code
         ? this.code && this.name
@@ -423,8 +423,8 @@ Data: ${StormJSON.stringify(this.data)}`
    * @returns The error message and stack trace string
    */
   public override toString(
-    stacktrace = $storm.env.STACKTRACE,
-    includeData = $storm.env.INCLUDE_ERROR_DATA
+    stacktrace = $storm.vars.STACKTRACE,
+    includeData = $storm.vars.INCLUDE_ERROR_DATA
   ): string {
     return (
       this.toDisplay(includeData) +

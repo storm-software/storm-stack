@@ -17,6 +17,7 @@
  ------------------------------------------------------------------- */
 
 import { LogLevelLabel } from "@storm-software/config-tools/types";
+import { ENV_PREFIXES } from "@stryke/env/types";
 import { isString } from "@stryke/type-checks/is-string";
 import { isUndefined } from "@stryke/type-checks/is-undefined";
 import defu from "defu";
@@ -43,6 +44,24 @@ export async function initDotenv<TOptions extends Options = Options>(
   context.dotenv ??= {} as ResolvedDotenvOptions;
   context.dotenv.types = await reflectDotenvTypes(log, context);
   context.dotenv.additionalFiles = context.dotenv?.additionalFiles ?? [];
+
+  context.dotenv.prefix = !context.options.dotenv?.prefix
+    ? []
+    : typeof context.options.dotenv?.prefix === "string"
+      ? [context.options.dotenv.prefix]
+      : context.options.dotenv.prefix;
+  context.dotenv.prefix = context.dotenv.prefix.reduce(
+    (ret, prefix) => {
+      const prefixName = prefix.replace(/_$/, "");
+      if (prefixName && !ret.includes(prefixName)) {
+        ret.push(prefixName);
+      }
+
+      return ret;
+    },
+    ENV_PREFIXES.map(prefix => prefix.replace(/_$/, ""))
+  );
+
   context.dotenv.replace = Boolean(
     context.dotenv?.replace ?? context.options.projectType === "application"
   );

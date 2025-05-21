@@ -36,28 +36,6 @@ export async function esbuild<TOptions extends Options = Options>(
   );
 
   const buildOptions = {
-    entry: context.entry.reduce(
-      (ret, entry) => {
-        ret[
-          entry.output ||
-            entry.input.file
-              .replace(
-                `${context.projectJson?.sourceRoot || context.options.projectRoot}/`,
-                ""
-              )
-              .replace(findFileExtension(entry.input.file), "") ||
-            entry.file
-              .replace(
-                `${context.projectJson?.sourceRoot || context.options.projectRoot}/`,
-                ""
-              )
-              .replace(findFileExtension(entry.file), "")
-        ] = entry.file;
-
-        return ret;
-      },
-      {} as Record<string, string>
-    ),
     mode: context.options.mode,
     platform: context.options.platform,
     projectRoot: context.options.projectRoot,
@@ -90,12 +68,37 @@ export async function esbuild<TOptions extends Options = Options>(
         "output": "/"
       },
       {
-        "input": ".",
+        "input": "",
         "glob": "LICENSE",
         "output": "/"
       }
     ]
-  } satisfies ESBuildOptions;
+  } as ESBuildOptions;
+
+  if (!override.entry) {
+    buildOptions.entry = context.entry.reduce(
+      (ret, entry) => {
+        ret[
+          entry.output ||
+            entry.input.file
+              .replace(
+                `${context.projectJson?.sourceRoot || context.options.projectRoot}/`,
+                ""
+              )
+              .replace(findFileExtension(entry.input.file), "") ||
+            entry.file
+              .replace(
+                `${context.projectJson?.sourceRoot || context.options.projectRoot}/`,
+                ""
+              )
+              .replace(findFileExtension(entry.file), "")
+        ] = entry.file;
+
+        return ret;
+      },
+      {} as Record<string, string>
+    );
+  }
 
   await build(
     defu(
@@ -107,14 +110,15 @@ export async function esbuild<TOptions extends Options = Options>(
             {
               "storm:init": joinPaths(runtimeDir, "init"),
               "storm:app": joinPaths(runtimeDir, "app"),
+              "storm:env": joinPaths(runtimeDir, "env"),
               "storm:context": joinPaths(runtimeDir, "context"),
               "storm:error": joinPaths(runtimeDir, "error"),
               "storm:event": joinPaths(runtimeDir, "event"),
               "storm:id": joinPaths(runtimeDir, "id"),
               "storm:storage": joinPaths(runtimeDir, "storage"),
               "storm:log": joinPaths(runtimeDir, "log"),
-              "storm:request": joinPaths(runtimeDir, "request"),
-              "storm:response": joinPaths(runtimeDir, "response"),
+              "storm:payload": joinPaths(runtimeDir, "payload"),
+              "storm:result": joinPaths(runtimeDir, "result"),
               "storm:json": "@stryke/json",
               "storm:url": "@stryke/url",
               "storm:http": "@stryke/http"
@@ -135,17 +139,19 @@ export async function esbuild<TOptions extends Options = Options>(
         platform: "node",
         format: "esm",
         target: "node22",
+        distDir: "dist",
         noExternal: [
           "storm:init",
           "storm:app",
           "storm:context",
+          "storm:env",
           "storm:error",
           "storm:event",
           "storm:id",
           "storm:storage",
           "storm:log",
-          "storm:request",
-          "storm:response",
+          "storm:payload",
+          "storm:result",
           "storm:json",
           "storm:url",
           "storm:http"

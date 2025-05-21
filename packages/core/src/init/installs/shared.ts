@@ -27,18 +27,16 @@ import type { Context, Options } from "../../types/build";
 export function getSharedDeps<TOptions extends Options = Options>(
   context: Context<TOptions>
 ): Record<string, "dependency" | "devDependency"> {
-  const result = {
-    "@stryke/types": "devDependency",
-    "@storm-stack/types": "devDependency"
-  } as Record<string, "dependency" | "devDependency">;
+  context.installs ??= {};
+  context.installs["@stryke/types"] = "devDependency";
+  context.installs["@storm-stack/types"] = "devDependency";
 
   if (context.options.projectType === "application") {
-    result["@stryke/type-checks"] = "dependency";
-    result["@stryke/json"] = "dependency";
-    result["@stryke/url"] = "dependency";
-    result["@stryke/http"] = "dependency";
-    result.unstorage = "dependency";
+    context.installs["@stryke/type-checks"] = "dependency";
+    context.installs["@stryke/json"] = "dependency";
+    context.installs["@stryke/url"] = "dependency";
+    context.installs.unstorage = "dependency";
   }
 
-  return result;
+  return context.installs;
 }

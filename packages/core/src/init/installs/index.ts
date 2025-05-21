@@ -69,7 +69,7 @@ export async function initInstalls<TOptions extends Options = Options>(
       context.installs
     )
       .map(key => ` - ${key} (${context.installs[key]})`)
-      .join("\n")}\n`
+      .join("\n")}`
   );
 
   for (const [key, value] of Object.entries(context.installs)) {

@@ -40,7 +40,11 @@ export async function initUnimport<TOptions extends Options = Options>(
     `Initializing Unimport for the Storm Stack project.`
   );
 
-  const runtimeDir = joinPaths(context.artifactsDir, "runtime");
+  const runtimeDir = joinPaths(
+    context.options.projectRoot,
+    context.artifactsDir,
+    "runtime"
+  );
   context.unimportPresets = [
     {
       imports: ["StormJSON"],
@@ -52,15 +56,6 @@ export async function initUnimport<TOptions extends Options = Options>(
     },
     {
       imports: [
-        "parseCookie",
-        "parseSetCookie",
-        "serializeCookie",
-        "splitSetCookieString"
-      ],
-      from: "@stryke/http"
-    },
-    {
-      imports: [
         "StormError",
         "createStormError",
         "isStormError",
@@ -69,12 +64,12 @@ export async function initUnimport<TOptions extends Options = Options>(
       from: joinPaths(runtimeDir, "error")
     },
     {
-      imports: ["StormRequest"],
-      from: joinPaths(runtimeDir, "request")
+      imports: ["StormPayload"],
+      from: joinPaths(runtimeDir, "payload")
     },
     {
-      imports: ["StormResponse"],
-      from: joinPaths(runtimeDir, "response")
+      imports: ["StormResult"],
+      from: joinPaths(runtimeDir, "result")
     },
     {
       imports: ["StormLog"],
@@ -92,18 +87,20 @@ export async function initUnimport<TOptions extends Options = Options>(
 
   if (context.options.platform === "node") {
     context.unimportPresets.push({
-      imports: ["builder"],
+      imports: ["withContext"],
       from: joinPaths(runtimeDir, "app")
     });
     context.unimportPresets.push({
-      imports: [
-        "envPaths",
-        "getBuildInfo",
-        "getRuntimeInfo",
-        "useStorm",
-        "STORM_ASYNC_CONTEXT"
-      ].filter(Boolean) as InlinePreset["imports"],
+      imports: ["useStorm", "STORM_ASYNC_CONTEXT"].filter(
+        Boolean
+      ) as InlinePreset["imports"],
       from: joinPaths(runtimeDir, "context")
+    });
+    context.unimportPresets.push({
+      imports: ["getEnvPaths", "getBuildInfo", "getRuntimeInfo"].filter(
+        Boolean
+      ) as InlinePreset["imports"],
+      from: joinPaths(runtimeDir, "env")
     });
     context.unimportPresets.push({
       imports: ["StormEvent"],

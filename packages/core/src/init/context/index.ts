@@ -97,6 +97,94 @@ export async function initContext<TOptions extends Options = Options>(
     await removeFile(metaFilePath);
   }
 
+  context.override.bundle ??= true;
+  context.override.platform ??= "neutral";
+  context.override.target ??= "esnext";
+  context.override.format ??= "esm";
+
+  context.override.alias ??= {};
+  context.override.alias["storm:init"] ??= joinPaths(
+    context.options.projectRoot,
+    context.artifactsDir,
+    "init"
+  );
+  context.override.alias["storm:error"] ??= joinPaths(
+    context.options.projectRoot,
+    context.artifactsDir,
+    "error"
+  );
+  context.override.alias["storm:id"] ??= joinPaths(
+    context.options.projectRoot,
+    context.artifactsDir,
+    "id"
+  );
+  context.override.alias["storm:storage"] ??= joinPaths(
+    context.options.projectRoot,
+    context.artifactsDir,
+    "storage"
+  );
+  context.override.alias["storm:log"] ??= joinPaths(
+    context.options.projectRoot,
+    context.artifactsDir,
+    "log"
+  );
+  context.override.alias["storm:payload"] ??= joinPaths(
+    context.options.projectRoot,
+    context.artifactsDir,
+    "payload"
+  );
+  context.override.alias["storm:result"] ??= joinPaths(
+    context.options.projectRoot,
+    context.artifactsDir,
+    "result"
+  );
+  context.override.alias["storm:json"] ??= "@stryke/json";
+  context.override.alias["storm:url"] ??= "@stryke/url";
+
+  context.override.noExternal ??= [];
+  if (Array.isArray(context.override.noExternal)) {
+    context.override.noExternal.push(
+      "storm:init",
+      "storm:error",
+      "storm:id",
+      "storm:storage",
+      "storm:log",
+      "storm:payload",
+      "storm:result",
+      "storm:json",
+      "storm:url"
+    );
+  }
+
+  if (context.options.platform === "node") {
+    context.override.platform ??= "node";
+    context.override.target ??= "node22";
+
+    context.override.alias["storm:app"] ??= joinPaths(
+      context.options.projectRoot,
+      context.artifactsDir,
+      "app"
+    );
+    context.override.alias["storm:context"] ??= joinPaths(
+      context.options.projectRoot,
+      context.artifactsDir,
+      "context"
+    );
+    context.override.alias["storm:event"] ??= joinPaths(
+      context.options.projectRoot,
+      context.artifactsDir,
+      "event"
+    );
+
+    if (Array.isArray(context.override.noExternal)) {
+      context.override.noExternal.push(
+        "storm:app",
+        "storm:context",
+        "storm:event"
+      );
+    }
+  }
+
   await hooks.callHook("init:context", context).catch((error: Error) => {
     log(
       LogLevelLabel.ERROR,

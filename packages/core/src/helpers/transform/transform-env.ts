@@ -50,9 +50,9 @@ export async function transformEnv<TOptions extends Options = Options>(
     rule: {
       kind: "member_expression",
       any: [
-        { pattern: "$storm.vars.$ENV_VALUE" },
-        { pattern: "useStorm().vars.$ENV_VALUE" },
-        { pattern: "process.env.$ENV_VALUE" }
+        { pattern: "$storm.vars.$ENV_NAME" },
+        { pattern: "useStorm().vars.$ENV_NAME" },
+        { pattern: "process.env.$ENV_NAME" }
       ]
     }
   });
@@ -61,35 +61,45 @@ export async function transformEnv<TOptions extends Options = Options>(
   }
 
   for (const node of nodes) {
-    const name = node.getMatch("ENV_VALUE")?.text()?.replace("STORM_", "");
+    const envName = node.getMatch("ENV_NAME")?.text();
+    if (envName) {
+      const prefix = context.dotenv.prefix.find(pre =>
+        varsReflection.hasProperty(envName.replace(`${pre}_`, ""))
+      );
+      if (
+        prefix &&
+        varsReflection.hasProperty(envName.replace(`${prefix}_`, ""))
+      ) {
+        const name = envName.replace(`${prefix}_`, "");
+        const reflectionProperty = varsReflection.getProperty(name);
 
-    if (name && varsReflection.hasProperty(name)) {
-      const reflectionProperty = varsReflection.getProperty(name);
+        if (context.dotenv.replace && !node.text().startsWith("process.env.")) {
+          const value =
+            context.dotenv.values?.[name] ??
+            Object.keys(context.dotenv.values ?? {}).find(key =>
+              context.dotenv.prefix.find(pre => key === `${pre}_${name}`)
+            ) ??
+            reflectionProperty.getDefaultValue();
+          if (reflectionProperty.isValueRequired() && value === undefined) {
+            throw new Error(
+              `Environment variable \`${name}\` is not defined in the .env configuration files`
+            );
+          }
 
-      if (context.dotenv.replace && !node.text().startsWith("process.env.")) {
-        const value =
-          context.dotenv.values?.[name] ??
-          context.dotenv.values?.[`STORM_${name}`] ??
-          reflectionProperty.getDefaultValue();
-        if (reflectionProperty.isValueRequired() && value === undefined) {
-          throw new Error(
-            `Environment variable \`${name}\` is not defined in the .env configuration files`
-          );
+          source.code = source.code.replaceAll(node.text(), String(value));
         }
 
-        source.code = source.code.replaceAll(node.text(), String(value));
+        dotenvProperties.push(reflectionProperty);
+      } else {
+        throw new Error(
+          `Environment variable \`${envName}\` is not defined in the dotenv type definition but is used in the code. \n\nThe following variable names are defined in the dotenv type definition: \n${varsReflection
+            .getPropertyNames()
+            .map(typeDef => ` - ${String(typeDef)} `)
+            .join(
+              "\n"
+            )} \n\nUsing the following env prefix: \n${context.dotenv.prefix.map(prefix => ` - ${prefix}`).join("\n")} \n\nPlease check your \`dotenv\` configuration option. If you are using a custom dotenv type definition, please make sure that the variable names match the ones in the code. \n\n`
+        );
       }
-
-      dotenvProperties.push(reflectionProperty);
-    } else {
-      throw new Error(
-        `Environment variable \`${name}\` is not defined in the dotenv type definition but is used in the code. \n\nThe following variable names are defined in the dotenv type definition: \n${varsReflection
-          .getPropertyNames()
-          .map(typeDef => ` - ${String(typeDef)} `)
-          .join(
-            "\n"
-          )} \n\nPlease check your \`dotenv\` configuration option. If you are using a custom dotenv type definition, please make sure that the variable names match the ones in the code. \n\n`
-      );
     }
   }
 
