@@ -116,8 +116,6 @@ yarn add -D eslint-plugin-storm-stack
 | [no-implicit-globals](docs/rules/no-implicit-globals.md)     | disallow implicit global variables                                                                   | 🌟 🔒 | 📋  |     |     |
 | [storm-errors-only](docs/rules/storm-errors-only.md)         | Prefer usage of `StormError` class when using Storm Stack                                            | 🌟 🔒 | 📋  |     | 🔧  |
 | [storm-json-only](docs/rules/storm-json-only.md)             | Prefer usage of `StormJSON` class when using Storm Stack                                             | 🔒    | 🌟  | 📋  | 🔧  |
-| [storm-requests-only](docs/rules/storm-requests-only.md)     | Prefer usage of `StormRequest` class when using Storm Stack                                          | 🌟 🔒 | 📋  |     | 🔧  |
-| [storm-responses-only](docs/rules/storm-responses-only.md)   | Prefer usage of `StormResponse` class when using Storm Stack                                         | 🌟 🔒 | 📋  |     | 🔧  |
 | [storm-urls-only](docs/rules/storm-urls-only.md)             | Prefer usage of `StormURL` class when using Storm Stack                                              | 🔒    | 🌟  | 📋  | 🔧  |
 | [top-level-functions](docs/rules/top-level-functions.md)     | Enforce top-level functions to be declared with function keyword                                     | 🌟 🔒 | 📋  |     | 🔧  |
 

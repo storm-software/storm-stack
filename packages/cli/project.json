@@ -38,10 +38,5 @@
       "executor": "@storm-software/workspace-tools:npm-publish"
     }
   },
-  "implicitDependencies": [
-    "nx",
-    "preset-cli",
-    "plugin-log-storage",
-    "plugin-log-sentry"
-  ]
+  "implicitDependencies": ["nx", "preset-cli"]
 }
