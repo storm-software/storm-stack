@@ -87,6 +87,20 @@ try {
   }
 
   proc =
+    $`pnpm nx run cli:build:${configuration} --outputStyle=dynamic-legacy`.timeout(
+      `${5 * 60}s`
+    );
+  proc.stdout.on("data", data => {
+    echo`${data}`;
+  });
+  result = await proc;
+  if (!result.ok) {
+    throw new Error(
+      `An error occurred while building the CLI application in ${configuration} mode: \n\n${result.message}\n`
+    );
+  }
+
+  proc =
     $`pnpm nx run-many --target=build --projects="examples-*" --configuration=${configuration} --outputStyle=dynamic-legacy --parallel=5`.timeout(
       `${5 * 60}s`
     );

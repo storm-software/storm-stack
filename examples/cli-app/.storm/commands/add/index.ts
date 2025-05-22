@@ -145,7 +145,6 @@ async function handler() {
           } else {
             console.log(colors.dim(" > Running in non-interactive mode..."));
           }
-
           console.log("");
         }
 
