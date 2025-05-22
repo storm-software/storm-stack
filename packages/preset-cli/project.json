@@ -5,6 +5,7 @@
   "sourceRoot": "packages/preset-cli/src",
   "targets": {
     "build-base": {
+      "cache": false,
       "executor": "nx:run-commands",
       "dependsOn": ["clean", "^build"],
       "options": {
@@ -13,6 +14,7 @@
       }
     },
     "build": {
+      "cache": false,
       "executor": "nx:run-commands",
       "dependsOn": ["build-base"],
       "options": {

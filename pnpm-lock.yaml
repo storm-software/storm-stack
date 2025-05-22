@@ -669,12 +669,15 @@ importers:
       '@storm-stack/nx':
         specifier: workspace:*
         version: link:../nx
-      '@storm-stack/plugin-log-console':
-        specifier: workspace:*
-        version: link:../plugin-log-console
       '@storm-stack/plugin-log-sentry':
         specifier: workspace:*
         version: link:../plugin-log-sentry
+      '@storm-stack/plugin-log-storage':
+        specifier: workspace:*
+        version: link:../plugin-log-storage
+      '@storm-stack/plugin-storage-fs':
+        specifier: workspace:*
+        version: link:../plugin-storage-fs
       '@storm-stack/preset-cli':
         specifier: workspace:*
         version: link:../preset-cli
