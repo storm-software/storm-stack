@@ -2,6 +2,18 @@
 
 # Changelog for Storm Stack - Core
 
+## [0.18.0](https://github.com/storm-software/storm-stack/releases/tag/core%400.18.0) (2025-05-22)
+
+### Features
+
+- **preset-cli:** Added interactive prompts and env arguments to generated
+  source code
+- **cli:** Initial check-in of the CLI application
+
+### Updated Dependencies
+
+- Updated types to 0.6.0
+
 ## [0.17.0](https://github.com/storm-software/storm-stack/releases/tag/core%400.17.0) (2025-05-13)
 
 ### Features

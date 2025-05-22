@@ -2,6 +2,17 @@
 
 # Changelog for Storm Stack - Eslint Plugin Storm Stack
 
+## [0.9.0](https://github.com/storm-software/storm-stack/releases/tag/eslint-plugin-storm-stack%400.9.0) (2025-05-22)
+
+### Features
+
+- **preset-cli:** Added interactive prompts and env arguments to generated
+  source code
+
+### Bug Fixes
+
+- **cli:** Resolve issue with package's implicit dependencies
+
 ## [0.8.5](https://github.com/storm-software/storm-stack/releases/tag/eslint-plugin-storm-stack%400.8.5) (2025-05-08)
 
 ### Miscellaneous

@@ -90,8 +90,8 @@
     }
   },
   "dependencies": {
-    "@storm-stack/core": "workspace:*",
-    "@storm-stack/devkit": "workspace:*",
+    "@storm-stack/core": "0.18.0",
+    "@storm-stack/devkit": "0.4.0",
     "@stryke/json": "catalog:"
   },
   "devDependencies": {

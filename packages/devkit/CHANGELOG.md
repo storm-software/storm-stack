@@ -2,6 +2,18 @@
 
 # Changelog for Storm Stack - Devkit
 
+## [0.4.0](https://github.com/storm-software/storm-stack/releases/tag/devkit%400.4.0) (2025-05-22)
+
+### Features
+
+- **preset-cli:** Added interactive prompts and env arguments to generated
+  source code
+
+### Updated Dependencies
+
+- Updated types to 0.6.0
+- Updated core to 0.18.0
+
 ## [0.3.1](https://github.com/storm-software/storm-stack/releases/tag/devkit%400.3.1) (2025-05-13)
 
 ### Miscellaneous
