@@ -2,6 +2,26 @@
 
 # Changelog for Storm Stack - Preset Cli
 
+## [0.10.0](https://github.com/storm-software/storm-stack/releases/tag/preset-cli%400.10.0) (2025-05-22)
+
+### Features
+
+- **preset-cli:** Added interactive prompts and env arguments to generated
+  source code
+- **cli:** Initial check-in of the CLI application
+
+### Miscellaneous
+
+- **monorepo:** Update build script to split out CLI application build
+- **cli:** Added correct plugin dependencies
+
+### Updated Dependencies
+
+- Updated devkit to 0.4.0
+- Updated devkit to 0.4.0
+- Updated core to 0.18.0
+- Updated core to 0.18.0
+
 ## [0.9.3](https://github.com/storm-software/storm-stack/releases/tag/preset-cli%400.9.3) (2025-05-14)
 
 ### Miscellaneous

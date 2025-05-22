@@ -8,10 +8,10 @@
     "paths": {
       "@storm-stack/biome": ["packages/biome/src/index.ts"],
       "@storm-stack/biome/*": ["packages/biome/src/*"],
-      "@storm-stack/core": ["packages/core/src/index.ts"],
-      "@storm-stack/core/*": ["packages/core/src/*"],
       "@storm-stack/cli": ["packages/cli/src/index.ts"],
       "@storm-stack/cli/*": ["packages/cli/src/*"],
+      "@storm-stack/core": ["packages/core/src/index.ts"],
+      "@storm-stack/core/*": ["packages/core/src/*"],
       "@storm-stack/devkit": ["packages/devkit/src/index.ts"],
       "@storm-stack/devkit/*": ["packages/devkit/src/*"],
       "@storm-stack/examples-cli-app": ["examples/cli-app/src/index.ts"],

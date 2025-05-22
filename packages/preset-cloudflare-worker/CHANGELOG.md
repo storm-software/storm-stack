@@ -2,6 +2,18 @@
 
 # Changelog for Storm Stack - Preset Cloudflare Worker
 
+## [0.11.0](https://github.com/storm-software/storm-stack/releases/tag/preset-cloudflare-worker%400.11.0) (2025-05-22)
+
+### Features
+
+- **preset-cli:** Added interactive prompts and env arguments to generated
+  source code
+
+### Updated Dependencies
+
+- Updated core to 0.18.0
+- Updated core to 0.18.0
+
 ## [0.10.1](https://github.com/storm-software/storm-stack/releases/tag/preset-cloudflare-worker%400.10.1) (2025-05-13)
 
 ### Miscellaneous
