@@ -2,6 +2,19 @@
 
 # Changelog for Storm Stack - Plugin Log Storage
 
+## [0.13.1](https://github.com/storm-software/storm-stack/releases/tag/plugin-log-storage%400.13.1) (2025-05-23)
+
+### Miscellaneous
+
+- **monorepo:** Update the workspace package links
+
+### Updated Dependencies
+
+- Updated devkit to 0.5.1
+- Updated devkit to 0.5.1
+- Updated core to 0.20.0
+- Updated core to 0.20.0
+
 ## [0.13.0](https://github.com/storm-software/storm-stack/releases/tag/plugin-log-storage%400.13.0) (2025-05-23)
 
 ### Features
