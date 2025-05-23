@@ -2,6 +2,24 @@
 
 # Changelog for Storm Stack - Cli
 
+## [0.2.0](https://github.com/storm-software/storm-stack/releases/tag/cli%400.2.0) (2025-05-23)
+
+### Features
+
+- **preset-cli:** Added Variable Management commands generation and positional
+  args
+
+### Updated Dependencies
+
+- Updated plugin-log-storage to 0.13.0
+- Updated plugin-log-sentry to 0.15.0
+- Updated plugin-storage-fs to 0.3.0
+- Updated preset-cli to 0.11.0
+- Updated preset-cli to 0.11.0
+- Updated core to 0.19.0
+- Updated nx to 0.11.0
+- Updated nx to 0.11.0
+
 ## [0.1.0](https://github.com/storm-software/storm-stack/releases/tag/cli%400.1.0) (2025-05-22)
 
 ### Features

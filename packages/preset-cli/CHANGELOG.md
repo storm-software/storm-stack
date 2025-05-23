@@ -2,6 +2,24 @@
 
 # Changelog for Storm Stack - Preset Cli
 
+## [0.11.0](https://github.com/storm-software/storm-stack/releases/tag/preset-cli%400.11.0) (2025-05-23)
+
+### Features
+
+- **preset-cli:** Added Variable Management commands generation and positional
+  args
+
+### Bug Fixes
+
+- **preset-cli:** Resolve issue with commands as file names
+
+### Updated Dependencies
+
+- Updated devkit to 0.5.0
+- Updated devkit to 0.5.0
+- Updated core to 0.19.0
+- Updated core to 0.19.0
+
 ## [0.10.0](https://github.com/storm-software/storm-stack/releases/tag/preset-cli%400.10.0) (2025-05-22)
 
 ### Features

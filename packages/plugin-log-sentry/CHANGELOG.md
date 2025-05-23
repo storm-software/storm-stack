@@ -2,6 +2,21 @@
 
 # Changelog for Storm Stack - Plugin Log Sentry
 
+## [0.15.0](https://github.com/storm-software/storm-stack/releases/tag/plugin-log-sentry%400.15.0) (2025-05-23)
+
+### Features
+
+- **preset-cli:** Added Variable Management commands generation and positional
+  args
+
+### Updated Dependencies
+
+- Updated devkit to 0.5.0
+- Updated devkit to 0.5.0
+- Updated core to 0.19.0
+- Updated core to 0.19.0
+- Updated nx to 0.11.0
+
 ## [0.14.2](https://github.com/storm-software/storm-stack/releases/tag/plugin-log-sentry%400.14.2) (2025-05-14)
 
 ### Miscellaneous

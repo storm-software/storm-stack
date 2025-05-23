@@ -2,6 +2,20 @@
 
 # Changelog for Storm Stack - Plugin Storage Fs
 
+## [0.3.0](https://github.com/storm-software/storm-stack/releases/tag/plugin-storage-fs%400.3.0) (2025-05-23)
+
+### Features
+
+- **preset-cli:** Added Variable Management commands generation and positional
+  args
+
+### Updated Dependencies
+
+- Updated devkit to 0.5.0
+- Updated devkit to 0.5.0
+- Updated core to 0.19.0
+- Updated core to 0.19.0
+
 ## [0.2.0](https://github.com/storm-software/storm-stack/releases/tag/plugin-storage-fs%400.2.0) (2025-05-22)
 
 ### Features

@@ -2,6 +2,20 @@
 
 # Changelog for Storm Stack - Plugin Log Storage
 
+## [0.13.0](https://github.com/storm-software/storm-stack/releases/tag/plugin-log-storage%400.13.0) (2025-05-23)
+
+### Features
+
+- **preset-cli:** Added Variable Management commands generation and positional
+  args
+
+### Updated Dependencies
+
+- Updated devkit to 0.5.0
+- Updated devkit to 0.5.0
+- Updated core to 0.19.0
+- Updated core to 0.19.0
+
 ## [0.12.0](https://github.com/storm-software/storm-stack/releases/tag/plugin-log-storage%400.12.0) (2025-05-22)
 
 ### Features

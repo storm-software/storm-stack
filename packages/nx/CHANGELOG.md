@@ -2,6 +2,18 @@
 
 # Changelog for Storm Stack - Nx
 
+## [0.11.0](https://github.com/storm-software/storm-stack/releases/tag/nx%400.11.0) (2025-05-23)
+
+### Features
+
+- **preset-cli:** Added Variable Management commands generation and positional
+  args
+
+### Updated Dependencies
+
+- Updated core to 0.19.0
+- Updated core to 0.19.0
+
 ## [0.10.2](https://github.com/storm-software/storm-stack/releases/tag/nx%400.10.2) (2025-05-13)
 
 ### Miscellaneous

@@ -2,6 +2,17 @@
 
 # Changelog for Storm Stack - Devkit
 
+## [0.5.0](https://github.com/storm-software/storm-stack/releases/tag/devkit%400.5.0) (2025-05-23)
+
+### Features
+
+- **preset-cli:** Added Variable Management commands generation and positional
+  args
+
+### Updated Dependencies
+
+- Updated core to 0.19.0
+
 ## [0.4.0](https://github.com/storm-software/storm-stack/releases/tag/devkit%400.4.0) (2025-05-22)
 
 ### Features
