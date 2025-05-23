@@ -16,12 +16,10 @@
 
  ------------------------------------------------------------------- */
 
-// import { prompt } from "storm:cli";
-
 /**
  * The payload for the example CLI application.
  */
-interface AddApplicationPayload {
+interface NewLibraryPayload {
   /**
    * The host to bind the server to.
    *
@@ -57,14 +55,12 @@ interface AddApplicationPayload {
 }
 
 /**
- * Add a Storm Stack application project to the current workspace.
+ * New a Storm Stack library project to the current workspace.
  *
  * @param request - The request object containing the command payload
  */
-async function handler(request: StormPayload<AddApplicationPayload>) {
+function handler(request: StormPayload<NewLibraryPayload>) {
   const payload = request.data;
-
-  // await prompt(payload.host);
 
   $storm.log.info(
     `Starting server on ${payload.host}:${payload.port} with compress: ${payload.compress} and loadEnv: ${payload.loadEnv}`
