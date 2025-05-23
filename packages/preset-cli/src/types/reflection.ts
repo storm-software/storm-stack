@@ -19,6 +19,14 @@
 import type { SerializedTypes } from "@deepkit/type";
 import type { ResolvedEntryTypeDefinition } from "@storm-stack/core/types";
 
+export type CommandEntryTypeDefinition = ResolvedEntryTypeDefinition &
+  Required<Pick<ResolvedEntryTypeDefinition, "output">> & {
+    displayName?: string;
+    description?: string;
+    path: string[];
+    isVirtual: boolean;
+  };
+
 export interface CommandRelationsReflection {
   parent?: string;
   children: string[];
@@ -46,12 +54,11 @@ export interface CommandPayloadReflection {
 
 export interface CommandReflection {
   commandId: string;
-  path: string[];
   name: string;
   displayName: string;
   description?: string;
   aliases: string[];
-  entry: ResolvedEntryTypeDefinition;
+  entry: CommandEntryTypeDefinition;
   payload: CommandPayloadReflection;
   relations: CommandRelationsReflection;
 }

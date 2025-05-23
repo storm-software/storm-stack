@@ -183,7 +183,9 @@ async function handler() {
       }
     }
   } catch (err) {
-    console.error(colors.red("Error occurred while processing Add command."));
+    console.error(
+      ` ${colors.red("✖")} ${colors.redBright(`Error occurred while processing Add command.`)}`
+    );
   }
 }
 

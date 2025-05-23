@@ -33,7 +33,9 @@ export function generateNodeDeclarations<TOptions extends Options = Options>(
 /// <reference types="@storm-stack/types/node" />
 `)}
 declare global {
-  const $storm: StormContext<${generateVariables(env)}>;
+  type StormVariables = ${generateVariables(env)};
+
+  const $storm: StormContext<StormVariables>;
 }
 
 export {};

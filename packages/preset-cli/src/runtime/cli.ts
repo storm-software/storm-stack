@@ -17,9 +17,26 @@
  ------------------------------------------------------------------- */
 
 import { getFileHeader } from "@storm-stack/core/helpers";
+import type { Options } from "@storm-stack/core/types";
+import { titleCase } from "@stryke/string-format/title-case";
+import { isSetString } from "@stryke/type-checks/is-set-string";
+import type { StormStackCLIPresetContext } from "../types/build";
 import type { StormStackCLIPresetConfig } from "../types/config";
 
-export function writeRuntime(config: StormStackCLIPresetConfig) {
+export function writeRuntime<TOptions extends Options = Options>(
+  context: StormStackCLIPresetContext<TOptions>,
+  config: StormStackCLIPresetConfig
+) {
+  const binName =
+    (config.bin &&
+    (isSetString(config.bin) ||
+      (Array.isArray(config.bin) && config.bin.length > 0 && config.bin[0]))
+      ? isSetString(config.bin)
+        ? config.bin
+        : config.bin[0]
+      : context.options.name || context.packageJson?.name) || "cli";
+  const appTitle = titleCase(context.options.name);
+
   return `${getFileHeader()}
 
 ${
@@ -205,6 +222,51 @@ function stripAnsi(text: string) {
     String.raw\`[\\u001B\\u009B][[\\]()#;?]*(?:(?:(?:(?:;[-a-zA-Z\\d\\/#&.:=?%@~_]+)*|[a-zA-Z\\d]+(?:;[-a-zA-Z\\d\\/#&.:=?%@~_]*)*)?\\u0007)\`,
     String.raw\`(?:(?:\\d{1,4}(?:;\\d{0,4})*)?[\\dA-PR-TZcf-nq-uy=><~]))\`
   ].join("|"), "g"), "");
+}
+
+/**
+ * Renders a CLI banner with the specified title.
+ *
+ * @param title - The title to display in the banner.
+ * @param description - The description to display in the banner.
+ * @returns The rendered banner as a string.
+ */
+export function renderBanner(title: string, description: string): string {
+  const consoleWidth = Math.max(process.stdout.columns - 2, 46);
+  const width = Math.max(Math.min(consoleWidth, Math.max(title.length + 2, 40)), 44);
+
+  const banner = [] as string[];
+  banner.push(colors.cyan(\`┏━━━━ ${binName} ━━ v${
+    context.packageJson.version || "1.0.0"
+  } \${"━".repeat(width - 10 - ${
+    binName.length + (context.packageJson.version?.length ?? 5)
+  })}┓\`));
+  banner.push(colors.cyan(\`┃\${" ".repeat(width)}┃\`));${
+    appTitle
+      ? `
+  banner.push(\`\${colors.cyan("┃")}\${" ".repeat((width - ${appTitle.length}) / 2)}\${colors.whiteBright(colors.bold("${appTitle}"))}\${" ".repeat((width - ${appTitle.length}) / 2)}\${colors.cyan("┃")}\`);`
+      : ""
+  }
+  banner.push(\`\${colors.cyan("┃")}\${" ".repeat((width - title.length) / 2)}\${colors.whiteBright(colors.bold(title))}\${" ".repeat((width - title.length) / 2)}\${colors.cyan("┃")}\`);
+  banner.push(colors.cyan(\`┃\${" ".repeat(width)}┃\`));
+  banner.push(\`\${colors.cyan("┃")}\${
+    colors.dim(description.length < width - 2
+      ? \`\${" ".repeat((width - description.length) / 2)}\${description}\${" ".repeat((width - description.length) / 2)}\`
+      : description.split(" ").reduce((ret, word) => {
+          const lines = ret.split("\\n");
+          if (lines[lines.length - 1].length + word.length > width - 2) {
+            ret += "\\n";
+          }
+
+          ret += \`\${word} \`;
+          return ret;
+        }, "").trim())} \${colors.cyan("┃")}\`);
+  banner.push(colors.cyan(\`┃\${" ".repeat(width)}┃\`));
+  banner.push(colors.cyan(\`┗\${"━".repeat(width)}┛\`));
+
+  return banner
+    .map(line => \`\${" ".repeat((consoleWidth - line.length) / 2)}\${line}\${" ".repeat((consoleWidth - line.length) / 2)}\`)
+    .join("\\n");
 }
 
 ${

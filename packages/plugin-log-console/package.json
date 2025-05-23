@@ -107,8 +107,8 @@
     "storm-stack-log-plugin"
   ],
   "dependencies": {
-    "@storm-stack/core": "0.18.0",
-    "@storm-stack/devkit": "0.4.0",
+    "@storm-stack/core": "workspace:*",
+    "@storm-stack/devkit": "workspace:*",
     "@stryke/json": "catalog:"
   },
   "devDependencies": {

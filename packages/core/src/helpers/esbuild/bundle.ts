@@ -24,12 +24,15 @@ import type { CompileOptions, Context, Options } from "../../types/build";
 import { compilerPlugin } from "./compiler-plugin";
 import { externalPlugin } from "./external-plugin";
 
+export type BundleOptions<TOptions extends Options = Options> = CompileOptions &
+  Pick<TOptions, "external" | "noExternal" | "skipNodeModulesBundle">;
+
 export async function bundle<TOptions extends Options = Options>(
   context: Context<TOptions>,
   entryPoint: string,
   outputDir: string,
   override: Partial<BuildOptions> = {},
-  options?: CompileOptions
+  options?: BundleOptions<TOptions>
 ) {
   const contextOverrides = { ...context.override };
   delete contextOverrides.alias;
@@ -53,9 +56,9 @@ export async function bundle<TOptions extends Options = Options>(
     plugins: [
       externalPlugin(
         {
-          external: context.options.external,
-          noExternal: context.options.noExternal,
-          skipNodeModulesBundle: true
+          external: options?.external ?? context.options.external,
+          noExternal: options?.noExternal ?? context.options.noExternal,
+          skipNodeModulesBundle: options?.skipNodeModulesBundle ?? true
         },
         context.tsconfig.options?.paths
       ),

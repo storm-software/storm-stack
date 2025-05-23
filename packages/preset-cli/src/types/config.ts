@@ -36,4 +36,14 @@ export interface StormStackCLIPresetConfig {
    * The documentation website URL of the CLI application (this is used for the help command)
    */
   docs?: string;
+
+  /**
+   * Should the vars commands be added to the CLI?
+   *
+   * @remarks
+   * This will add the `vars` commands to the CLI that will allow you to view and edit the variables state.
+   *
+   * @defaultValue true
+   */
+  manageVars?: boolean;
 }

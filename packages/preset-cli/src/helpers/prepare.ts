@@ -39,28 +39,28 @@ import { camelCase } from "@stryke/string-format/camel-case";
 import { constantCase } from "@stryke/string-format/constant-case";
 import { kebabCase } from "@stryke/string-format/kebab-case";
 import { pascalCase } from "@stryke/string-format/pascal-case";
-import { titleCase } from "@stryke/string-format/title-case";
 import { isSetString } from "@stryke/type-checks/is-set-string";
 import { writeRuntime } from "../runtime/cli";
+import {
+  writeVarsDelete,
+  writeVarsGet,
+  writeVarsList,
+  writeVarsSet
+} from "../runtime/vars";
+import type { StormStackCLIPresetContext } from "../types/build";
 import type { StormStackCLIPresetConfig } from "../types/config";
 import type { CommandReflectionTreeBranch } from "../types/reflection";
 import { reflectCommandTree } from "./reflect-command";
 
-async function prepareCommandDefinition<TOptions extends Options = Options>(
+async function writeCommandEntry<TOptions extends Options = Options>(
   log: LogFn,
   context: Context<TOptions>,
   command: CommandReflectionTreeBranch,
   config: StormStackCLIPresetConfig
 ) {
-  if (command.children) {
-    for (const subCommand of Object.values(command.children)) {
-      await prepareCommandDefinition(log, context, subCommand, config);
-    }
-  }
-
   log(
     LogLevelLabel.TRACE,
-    `Preparing the entry artifact ${command.entry.file} (${command.entry?.name ? `export: "${command.entry.name}"` : "default"})" from input "${command.entry.input.file}" (${command.entry.input.name ? `export: "${command.entry.input.name}"` : "default"})`
+    `Preparing the command entry artifact ${command.entry.file} (${command.entry?.name ? `export: "${command.entry.name}"` : "default"})" from input "${command.entry.input.file}" (${command.entry.input.name ? `export: "${command.entry.input.name}"` : "default"})`
   );
 
   const runtimeRelativePath = relativePath(
@@ -91,6 +91,7 @@ async function prepareCommandDefinition<TOptions extends Options = Options>(
                   ? `-${alias} <${arg.name}>`
                   : `--${alias} <${arg.name}>`
               )
+              .sort((a, b) => b.localeCompare(a))
               .join(", ")}`
           : ""
       }`;
@@ -103,6 +104,7 @@ async function prepareCommandDefinition<TOptions extends Options = Options>(
                   ? `-${alias} <${arg.name}>...`
                   : `--${alias} <${arg.name}>...`
               )
+              .sort((a, b) => b.localeCompare(a))
               .join(", ")}`
           : ""
       }`;
@@ -112,6 +114,7 @@ async function prepareCommandDefinition<TOptions extends Options = Options>(
       arg.aliases.length > 0
         ? `, ${arg.aliases
             .map(alias => (alias.length === 1 ? `-${alias}` : `--${alias}`))
+            .sort((a, b) => b.localeCompare(a))
             .join(", ")}`
         : ""
     }`;
@@ -183,8 +186,10 @@ async function prepareCommandDefinition<TOptions extends Options = Options>(
         ? config.bin
         : config.bin[0]
       : context.options.name || context.packageJson?.name) || "cli";
-
-  const bannerTitle = `${context.options.name ? `${titleCase(context.options.name)} - ` : ""}${command.displayName}`;
+  const description =
+    !command.description?.endsWith(".") && !command.description?.endsWith("?")
+      ? `${command.description}.`
+      : command.description;
 
   await writeFile(
     log,
@@ -203,7 +208,7 @@ import ${command.entry.input.name ? `{ ${command.entry.input.name} as handle }` 
     )}";
 import { withContext } from "${joinPaths(runtimeRelativePath, "app")}";
 import { getRuntimeInfo } from "${joinPaths(runtimeRelativePath, "env")}";
-import { colors${config.interactive !== "never" ? ", prompt" : ""} } from "${joinPaths(runtimeRelativePath, "cli")}";${
+import { colors, renderBanner${config.interactive !== "never" ? ", prompt" : ""} } from "${joinPaths(runtimeRelativePath, "cli")}";${
       command.children && Object.values(command.children).length > 0
         ? Object.values(command.children)
             .map(
@@ -241,16 +246,33 @@ export function renderUsage(includeCommands = true) {
     command.description
       ? `
 
-  \${colors.dim("${command.description}")}
+\${colors.dim("${description}")}
 `
       : ""
   }
   \${colors.bold("Usage:")}
-    ${kebabCase(binName)} ${command.path.join(" ")} [options] ${
+    ${kebabCase(binName)}${
+      command.entry.path.length > 0
+        ? ` ${command.entry.path
+            .filter(Boolean)
+            .map(part => part.replace("[", "<").replace("]", ">"))
+            .join(" ")}`
+        : ""
+    } [options] ${
       Object.values(command.children).length > 0
         ? `
 ${Object.values(command.children)
-  .map(child => `    ${kebabCase(binName)} ${child.path.join(" ")} [options]`)
+  .map(
+    child =>
+      `    ${kebabCase(binName)}${
+        child.entry.path.length > 0
+          ? ` ${child.entry.path
+              .filter(Boolean)
+              .map(part => part.replace("[", "<").replace("]", ">"))
+              .join(" ")}`
+          : ""
+      } [options]`
+  )
   .join("\n")}`
         : ""
     }${
@@ -279,8 +301,8 @@ async function handler() {
   try {
     ${
       Object.values(command.children).length > 0
-        ? `if (process.argv.length > ${command.path.length + 2}) {
-      const command = process.argv[${command.path.length + 1}];
+        ? `if (process.argv.length > ${command.entry.path.length + 2}) {
+      const command = process.argv[${command.entry.path.length + 1}];
       if (command && !command.startsWith("-")) {
       ${Object.values(command.children)
         .map(
@@ -291,9 +313,9 @@ async function handler() {
         )
         .join(" ")}
 
-        console.error(colors.red(\`Unknown command: \${colors.bold(command || "")}\`));
+        console.error(\` \${colors.red("✖")} \${colors.redBright(\`Unknown command: \${colors.bold(command || "")}\`)}\`);
         console.log("");
-        console.log(renderUsage());
+        console.log(renderUsage(true));
         console.log("");
 
         return;
@@ -302,7 +324,7 @@ async function handler() {
         : ""
     }
 
-    const args = parseArgs(process.argv.slice(${command.path.length + 1}), {${
+    const args = parseArgs(process.argv.slice(${command.entry.path.length + 1}), {${
       command.payload.args.filter(arg => arg.type === "boolean").length > 0
         ? `
       boolean: [${command.payload.args
@@ -328,9 +350,7 @@ async function handler() {
     if (args["version"] || args["v"]) {
       console.log($storm.vars.APP_VERSION);
     } else {
-      const consoleWidth = Math.max(process.stdout.columns - 2, 46);
       const runtimeInfo = getRuntimeInfo();
-
       const isVerbose = args["verbose"] ?? Boolean(process.env.${constantCase(binName)}_VERBOSE);
       ${
         config.interactive !== "never"
@@ -343,21 +363,12 @@ async function handler() {
       }
 
       if (args["no-banner"] !== true && !runtimeInfo.isCI) {
-        const width = Math.max(Math.min(consoleWidth, ${Math.max(bannerTitle.length + 2, 40)}), 44);
-
-        const banner = [];
-        banner.push(colors.cyan(\`┏━━━━ ${binName} ━━ v${context.packageJson.version || "1.0.0"} \${"━".repeat(width - 10 - ${binName.length + (context.packageJson.version?.length ?? 5)})}┓\`));
-        banner.push(colors.cyan(\`┃\${" ".repeat(width)}┃\`));
-        banner.push(\`\${colors.cyan("┃")}\${" ".repeat((width - ${bannerTitle.length}) / 2)}\${colors.whiteBright(colors.bold("${bannerTitle}"))}\${" ".repeat((width - ${bannerTitle.length}) / 2)}\${colors.cyan("┃")}\`);
-        banner.push(colors.cyan(\`┃\${" ".repeat(width)}┃\`));
-        banner.push(colors.cyan(\`┗\${"━".repeat(width)}┛\`));
-
-        console.log(banner.map(bannerline => \`\${" ".repeat((consoleWidth - bannerline.length) / 2)}\${bannerline}\${" ".repeat((consoleWidth - bannerline.length) / 2)}\`).join("\\n"));
+        console.log(renderBanner("${command.displayName}", "${description}"));
+        console.log("");
       }
 
       if (args["help"] || args["h"] || args["?"]) {
-        console.log("");
-        console.log(renderUsage());
+        console.log(renderUsage(true));
         console.log("");
       } else {
         if (isVerbose) {
@@ -457,7 +468,7 @@ async function handler() {
       }
     }
   } catch (err) {
-    console.error(colors.red("Error occurred while processing ${command.displayName} command."));
+   console.error(\` \${colors.red("✖")} \${colors.redBright(\`Error occurred while processing ${command.displayName} command.\`)}\`);
   }
 }
 
@@ -465,6 +476,315 @@ export default handler;
 
 `
   );
+}
+
+async function writeVirtualCommandEntry<TOptions extends Options = Options>(
+  log: LogFn,
+  context: Context<TOptions>,
+  command: CommandReflectionTreeBranch,
+  config: StormStackCLIPresetConfig
+) {
+  log(
+    LogLevelLabel.TRACE,
+    `Preparing the virtual command entry artifact ${command.entry.file} (${command.entry?.name ? `export: "${command.entry.name}"` : "default"})" from input "${command.entry.input.file}" (${command.entry.input.name ? `export: "${command.entry.input.name}"` : "default"})`
+  );
+
+  const runtimeRelativePath = relativePath(
+    findFilePath(command.entry.file),
+    joinPaths(
+      context.workspaceConfig.workspaceRoot,
+      context.options.projectRoot,
+      context.artifactsDir,
+      "runtime"
+    )
+  );
+
+  const optionsColumn1 = command.payload.args.map(arg => {
+    if (arg.type === "string" || arg.type === "number" || arg.type === "enum") {
+      return `--${arg.name} <${arg.name}>${
+        arg.aliases.length > 0
+          ? `, ${arg.aliases
+              .map(alias =>
+                alias.length === 1
+                  ? `-${alias} <${arg.name}>`
+                  : `--${alias} <${arg.name}>`
+              )
+              .sort((a, b) => b.localeCompare(a))
+              .join(", ")}`
+          : ""
+      }`;
+    } else if (arg.type === "array") {
+      return `--${arg.name} <${arg.name}>...${
+        arg.aliases.length > 0
+          ? `, ${arg.aliases
+              .map(alias =>
+                alias.length === 1
+                  ? `-${alias} <${arg.name}>...`
+                  : `--${alias} <${arg.name}>...`
+              )
+              .sort((a, b) => b.localeCompare(a))
+              .join(", ")}`
+          : ""
+      }`;
+    }
+
+    return `--${arg.name}${
+      arg.aliases.length > 0
+        ? `, ${arg.aliases
+            .map(alias => (alias.length === 1 ? `-${alias}` : `--${alias}`))
+            .sort((a, b) => b.localeCompare(a))
+            .join(", ")}`
+        : ""
+    }`;
+  });
+
+  const optionsColumn2 = command.payload.args.map(arg => {
+    if (arg.type === "string" || arg.type === "number" || arg.type === "enum") {
+      return `${
+        arg.description
+          ? `\${colors.dim("${
+              !arg.description?.endsWith(".") && !arg.description?.endsWith("?")
+                ? `${arg.description}.`
+                : arg.description
+            }`
+          : ""
+      }${
+        arg.type === "enum" && arg.options && arg.options.length > 0
+          ? ` Valid options are: ${arg.options.join(", ")}`
+          : ""
+      }${
+        arg.default !== undefined
+          ? ` [default: ${typeof arg.default === "string" ? arg.default.replaceAll('"', '\\"') : arg.default}]`
+          : ""
+      }")}`;
+    } else if (arg.type === "array") {
+      return `${
+        arg.description
+          ? `\${colors.dim("${
+              !arg.description?.endsWith(".") && !arg.description?.endsWith("?")
+                ? `${arg.description}.`
+                : arg.description
+            }`
+          : ""
+      }${
+        arg.default !== undefined
+          ? ` [default: ${
+              typeof arg.default === "string"
+                ? arg.default.replaceAll('"', '\\"')
+                : arg.default
+            }]`
+          : ""
+      }")}`;
+    }
+
+    return `${
+      arg.description
+        ? `\${colors.dim("${
+            !arg.description?.endsWith(".") && !arg.description?.endsWith("?")
+              ? `${arg.description}.`
+              : arg.description
+          }`
+        : ""
+    }${arg.default !== undefined ? ` [default: ${arg.default}]` : ""}")}`;
+  });
+
+  const column1MaxLength =
+    Math.max(...optionsColumn1.map(option => option.length)) + 2;
+
+  const binName =
+    (config.bin &&
+    (isSetString(config.bin) ||
+      (Array.isArray(config.bin) && config.bin.length > 0 && config.bin[0]))
+      ? isSetString(config.bin)
+        ? config.bin
+        : config.bin[0]
+      : context.options.name || context.packageJson?.name) || "cli";
+  const description =
+    !command.description?.endsWith(".") && !command.description?.endsWith("?")
+      ? `${command.description}.`
+      : command.description;
+
+  await writeFile(
+    log,
+    command.entry.file,
+    `${getFileHeader()}
+
+import ${command.entry.input.name ? `{ ${command.entry.input.name} as handle }` : "handle"} from "${joinPaths(
+      relativePath(
+        findFilePath(command.entry.file),
+        findFilePath(command.entry.input.file)
+      ),
+      findFileName(command.entry.input.file).replace(
+        findFileExtension(command.entry.input.file),
+        ""
+      )
+    )}";
+import { getRuntimeInfo } from "${joinPaths(runtimeRelativePath, "env")}";
+import { colors, renderBanner } from "${joinPaths(runtimeRelativePath, "cli")}";${
+      command.children && Object.values(command.children).length > 0
+        ? Object.values(command.children)
+            .map(
+              child =>
+                `import handle${pascalCase(child.name)}, { renderUsage as render${pascalCase(child.name)}Usage } from "./${child.name}";`
+            )
+            .join("\n")
+        : ""
+    }
+
+export interface ${command.payload.name} {
+  ${command.payload.args.map(arg => `${camelCase(arg.name)}: ${arg.stringifiedType};`).join("\n  ")}
+}
+
+/**
+ * Renders the ${command.displayName} virtual command usage information.
+ *
+ * @param includeCommands - Whether to include rendering sub-commands.
+ * @returns The rendered string displaying usage information.
+ */
+export function renderUsage(includeCommands = true) {
+  return \`\${colors.bold("${command.displayName} Commands")} ${
+    command.description
+      ? `
+
+\${colors.dim("${description}")}
+`
+      : ""
+  }
+  \${colors.bold("Usage:")}
+${
+  Object.values(command.children).length > 0
+    ? Object.values(command.children)
+        .map(
+          child =>
+            `    ${kebabCase(binName)}${
+              child.entry.path.length > 0
+                ? ` ${child.entry.path
+                    .filter(Boolean)
+                    .map(part => part.replace("[", "<").replace("]", ">"))
+                    .join(" ")}`
+                : ""
+            } [options]`
+        )
+        .join("\n")
+    : ""
+}${
+      Object.values(command.children).length > 0
+        ? `\${includeCommands !== false ? \`
+  \${colors.bold("Commands:")}
+${Object.values(command.children)
+  .map(
+    child =>
+      `\${render${pascalCase(child.name)}Usage(false).split("\\n").map(line => \`    \${line}\`).join("\\n")}`
+  )
+  .join("\n\n")}\` : ""}`
+        : ""
+    }
+
+  \${colors.bold("Options:")}
+${optionsColumn1.map((option, i) => `    ${option.padEnd(column1MaxLength)}${optionsColumn2[i]}`).join(" \n")}
+\`;
+}
+
+/**
+ * The entry point for the ${command.displayName} virtual command.
+ */
+async function handler() {
+  try {
+    ${
+      Object.values(command.children).length > 0
+        ? `if (process.argv.length > ${command.entry.path.length + 2}) {
+      const command = process.argv[${command.entry.path.length + 1}];
+      if (command && !command.startsWith("-")) {
+      ${Object.values(command.children)
+        .map(
+          (child, i) =>
+            `${i === 0 ? "if" : "else if"} (command.toLowerCase() === "${child.name.toLowerCase()}") {
+          return handle${pascalCase(child.name)}();
+    } `
+        )
+        .join(" ")}
+
+        console.error(\` \${colors.red("✖")} \${colors.redBright(\`Unknown command: \${colors.bold(command || "")}\`)}\`);
+        console.log("");
+        console.log(renderUsage(true));
+        console.log("");
+
+        return;
+      }
+    }`
+        : ""
+    }
+
+    const args = parseArgs(process.argv.slice(${command.entry.path.length + 1}), {${
+      command.payload.args.filter(arg => arg.type === "boolean").length > 0
+        ? `
+      boolean: [${command.payload.args
+        .filter(arg => arg.type === "boolean")
+        .map(arg => `"${arg.name}", "${arg.aliases.join('", "')}"`)
+        .join(", ")}],`
+        : ""
+    }${
+      command.payload.args.filter(arg => arg.aliases.length > 0).length > 0
+        ? `
+      alias: {${command.payload.args
+        .map(
+          arg =>
+            `${camelCase(arg.name)}: [ "${arg.name}", "${arg.name.toUpperCase()}", ${arg.aliases
+              .map(alias => `"${alias}", "${alias.toUpperCase()}"`)
+              .join(", ")}]`
+        )
+        .join(",\n ")}},`
+        : ""
+    }
+    });
+
+    if (args["version"] || args["v"]) {
+      console.log($storm.vars.APP_VERSION);
+    } else {
+      const runtimeInfo = getRuntimeInfo();
+      if (args["no-banner"] !== true && !runtimeInfo.isCI) {
+        console.log(renderBanner("${command.displayName} Commands", "${description}"));
+        console.log("");
+      }
+
+      console.log(renderUsage(true));
+      console.log("");
+    }
+  } catch (err) {
+   console.error(\` \${colors.red("✖")} \${colors.redBright(\`Error occurred while processing ${
+     command.displayName
+   } command.\`)}\`);
+  }
+}
+
+export default handler;
+
+`
+  );
+}
+
+async function prepareCommandDefinition<TOptions extends Options = Options>(
+  log: LogFn,
+  context: Context<TOptions>,
+  command: CommandReflectionTreeBranch,
+  config: StormStackCLIPresetConfig
+) {
+  if (command.children) {
+    for (const subCommand of Object.values(command.children)) {
+      await prepareCommandDefinition(log, context, subCommand, config);
+    }
+  }
+
+  log(
+    LogLevelLabel.TRACE,
+    `Preparing the entry artifact ${command.entry.file} (${command.entry?.name ? `export: "${command.entry.name}"` : "default"})" from input "${command.entry.input.file}" (${command.entry.input.name ? `export: "${command.entry.input.name}"` : "default"})`
+  );
+
+  if (command.entry.isVirtual) {
+    return writeVirtualCommandEntry(log, context, command, config);
+  }
+
+  return writeCommandEntry(log, context, command, config);
 }
 
 async function addCommandArgReflections(
@@ -489,27 +809,98 @@ async function addCommandArgReflections(
   }
 }
 
-export async function prepareRuntime<TOptions extends Options = Options>(
+async function generateVarsCommands<TOptions extends Options = Options>(
   log: LogFn,
-  context: Context<TOptions>,
+  context: StormStackCLIPresetContext<TOptions>,
   config: StormStackCLIPresetConfig
 ) {
-  await writeFile(
-    log,
-    joinPaths(
-      context.workspaceConfig.workspaceRoot,
-      context.options.projectRoot,
-      context.artifactsDir,
-      "runtime",
-      "cli.ts"
+  if (config.manageVars === false) {
+    log(
+      LogLevelLabel.TRACE,
+      "Skipping vars command generation since `manageVars` is false."
+    );
+  } else {
+    await Promise.all([
+      writeFile(
+        log,
+        joinPaths(
+          context.workspaceConfig.workspaceRoot,
+          context.options.projectRoot,
+          context.artifactsDir,
+          "commands",
+          "vars",
+          "get",
+          "handle.ts"
+        ),
+        writeVarsGet(context)
+      ),
+      writeFile(
+        log,
+        joinPaths(
+          context.workspaceConfig.workspaceRoot,
+          context.options.projectRoot,
+          context.artifactsDir,
+          "commands",
+          "vars",
+          "set",
+          "handle.ts"
+        ),
+        writeVarsSet(context)
+      ),
+      writeFile(
+        log,
+        joinPaths(
+          context.workspaceConfig.workspaceRoot,
+          context.options.projectRoot,
+          context.artifactsDir,
+          "commands",
+          "vars",
+          "list",
+          "handle.ts"
+        ),
+        writeVarsList(context)
+      ),
+      writeFile(
+        log,
+        joinPaths(
+          context.workspaceConfig.workspaceRoot,
+          context.options.projectRoot,
+          context.artifactsDir,
+          "commands",
+          "vars",
+          "delete",
+          "handle.ts"
+        ),
+        writeVarsDelete(context)
+      )
+    ]);
+  }
+}
+
+export async function prepareRuntime<TOptions extends Options = Options>(
+  log: LogFn,
+  context: StormStackCLIPresetContext<TOptions>,
+  config: StormStackCLIPresetConfig
+) {
+  await Promise.all([
+    writeFile(
+      log,
+      joinPaths(
+        context.workspaceConfig.workspaceRoot,
+        context.options.projectRoot,
+        context.artifactsDir,
+        "runtime",
+        "cli.ts"
+      ),
+      writeRuntime(context, config)
     ),
-    writeRuntime(config)
-  );
+    generateVarsCommands(log, context, config)
+  ]);
 }
 
 export async function prepareEntry<TOptions extends Options = Options>(
   log: LogFn,
-  context: Context<TOptions>,
+  context: StormStackCLIPresetContext<TOptions>,
   config: StormStackCLIPresetConfig
 ) {
   const commandTree = await reflectCommandTree(log, context, config);
@@ -544,13 +935,16 @@ export async function prepareEntry<TOptions extends Options = Options>(
 
 ${getFileHeader()}
 
-import { colors } from "./runtime/cli";
+import { colors, renderBanner } from "./runtime/cli";
+import { getRuntimeInfo } from "./runtime/env";
 import { isError } from "@stryke/type-checks/is-error";${
       commandTree.children && Object.values(commandTree.children).length > 0
         ? Object.values(commandTree.children)
             .map(
               child =>
-                `import handle${pascalCase(child.name)}, { renderUsage as render${pascalCase(child.name)}Usage } from "./commands/${child.path.join("/")}";`
+                `import handle${pascalCase(child.name)}, { renderUsage as render${pascalCase(
+                  child.name
+                )}Usage } from "./commands/${child.entry.path.join("/")}";`
             )
             .join("\n")
         : ""
@@ -574,17 +968,30 @@ async function main() {
       }`
         )
         .join(" ")} else {
-        console.error(colors.red(\`Unknown command: \${colors.bold(command)}\`));
+        console.error(\` \${colors.red("✖")} \${colors.redBright(\`Unknown command: \${colors.bold(command || "")}\`)}\`);
       }
 
-      console.log("");
-      console.log("The following commands are available as part of the ${context.options.name} application:");
+      const runtimeInfo = getRuntimeInfo();
+      if (!runtimeInfo.isCI) {
+        console.log(renderBanner("Help Information", "Display usage details, commands, and support information for the ${context.options.name} application"));
+        console.log("");
+      }
+
+      console.log("");${
+        context.packageJson?.description
+          ? `
+      console.log("${context.packageJson?.description}");
+      console.log("");`
+          : ""
+      }
+      console.log("The following commands are available as part of the ${context.options.name} application: ");
       console.log("");
       ${
         commandTree.children && Object.values(commandTree.children).length > 0
           ? Object.values(commandTree.children)
               .map(
-                child => `console.log(render${pascalCase(child.name)}Usage());`
+                child =>
+                  `console.log(render${pascalCase(child.name)}Usage(false).split("\\n").map(line => \`  \${line}\`).join("\\n"));`
               )
               .join("\n")
           : ""
@@ -593,9 +1000,9 @@ async function main() {
     }
   } catch (err) {
     if (isError(err)) {
-      console.error(colors.red(\`Error occurred while processing command: \${err.message}\`));
+      console.error(colors.red(\` \${colors.red("✖")} \${colors.redBright(\`An error occurred while running the ${context.options.name} application: \${err.message}\`)}\`));
     } else {
-      console.error(colors.red(\`Unknown error occurred: \${err}\`));
+      console.error(colors.red(\` \${colors.red("✖")} \${colors.redBright(\`An error occurred while running the ${context.options.name} application\`)}\`));
     }
   }
 }
@@ -641,14 +1048,15 @@ declare module "storm:cli" {
   const parseArgs: (typeof import("${relativeCLIRuntimeDir}"))["parseArgs"];
   const colors: (typeof import("${relativeCLIRuntimeDir}"))["colors"];
   const getColor: (typeof import("${relativeCLIRuntimeDir}"))["getColor"];
-  const link: (typeof import("${relativeCLIRuntimeDir}"))["link"];${
+  const link: (typeof import("${relativeCLIRuntimeDir}"))["link"];
+  const renderBanner: (typeof import("${relativeCLIRuntimeDir}"))["renderBanner"];${
     config.interactive !== "never"
       ? `
   const prompt: (typeof import("${relativeCLIRuntimeDir}"))["prompt"];`
       : ""
   }
 
-  export {${config.interactive !== "never" ? " prompt," : ""} parseArgs, colors, getColor, link };
+  export {${config.interactive !== "never" ? " prompt," : ""} parseArgs, colors, getColor, link, renderBanner };
 }
 
 `

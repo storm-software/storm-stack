@@ -18,16 +18,17 @@
 
 import { LogLevelLabel } from "@storm-software/config-tools/types";
 import type { LogFn } from "@storm-stack/core/types";
-import type { Context, Options } from "@storm-stack/core/types/build";
+import type { Options } from "@storm-stack/core/types/build";
 import { esbuild } from "@storm-stack/devkit/helpers/esbuild/build";
 import { unbuild } from "@storm-stack/devkit/helpers/unbuild/build";
 import { chmodX } from "@stryke/fs/chmod-x";
 import { findFileExtension } from "@stryke/path/file-path-fns";
 import { joinPaths } from "@stryke/path/join-paths";
+import type { StormStackCLIPresetContext } from "../types/build";
 
 export async function buildApplication<TOptions extends Options = Options>(
   log: LogFn,
-  context: Context<TOptions>
+  context: StormStackCLIPresetContext<TOptions>
 ) {
   log(LogLevelLabel.TRACE, "Building the CLI application.");
 
@@ -62,7 +63,7 @@ export async function buildApplication<TOptions extends Options = Options>(
 
 export async function buildLibrary<TOptions extends Options = Options>(
   log: LogFn,
-  context: Context<TOptions>
+  context: StormStackCLIPresetContext<TOptions>
 ) {
   log(LogLevelLabel.TRACE, "Building the CLI library project.");
 
@@ -71,7 +72,7 @@ export async function buildLibrary<TOptions extends Options = Options>(
 
 export async function permissionExecutable<TOptions extends Options = Options>(
   log: LogFn,
-  context: Context<TOptions>
+  context: StormStackCLIPresetContext<TOptions>
 ) {
   if (context.options.projectType === "application") {
     const filtered = context.entry.filter(

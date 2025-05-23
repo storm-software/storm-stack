@@ -17,6 +17,7 @@
  ------------------------------------------------------------------- */
 
 import { stringifyType } from "@deepkit/type";
+import { titleCase } from "@stryke/string-format/title-case";
 import { getFileHeader } from "../../../helpers/utilities/file-header";
 import type { ResolvedDotenvType } from "../../../types/build";
 
@@ -31,9 +32,14 @@ ${env.reflection
   .sort((a, b) => a.getNameAsString().localeCompare(b.getNameAsString()))
   .map(
     item =>
-      `    ${item.getNameAsString()}${item.isActualOptional() ? "?" : ""}: ${stringifyType(item.getType())}`
+      `    /**
+     * ${item.getDescription() || titleCase(item.getNameAsString())}
+     */
+    ${item.getNameAsString()}${item.isActualOptional() ? "?" : ""}: ${stringifyType(item.getType())}
+`
   )
   .join("\n")}
+    [key: string]: any;
 }`;
 }
 
@@ -43,9 +49,11 @@ export function generateSharedDeclarations(env: ResolvedDotenvType) {
 `)}
 
 declare global {
+  type StormVariables = ${generateVariables(env)};
+
   const $storm: {
-    vars: ${generateVariables(env)}
-  }
+    vars: StormVariables;
+  };
 }
 
 export {};

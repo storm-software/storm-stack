@@ -127,7 +127,10 @@ export class Engine<TOptions extends Options = Options> {
     );
 
     this.context.resolver = createJiti(
-      this.context.workspaceConfig.workspaceRoot,
+      joinPaths(
+        this.context.workspaceConfig.workspaceRoot,
+        options.projectRoot
+      ),
       {
         interopDefault: true,
         fsCache: joinPaths(this.context.envPaths.cache, "jiti"),

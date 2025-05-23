@@ -474,7 +474,11 @@ export interface Config<
   cleanup?: CleanupFunction;
 }
 
-export interface Context<TOptions extends Options = Options> {
+export interface Context<
+  TOptions extends Options = Options,
+  TResolvedEntryTypeDefinition extends
+    ResolvedEntryTypeDefinition = ResolvedEntryTypeDefinition
+> {
   /**
    * An object containing the options provided to Storm Stack
    */
@@ -526,7 +530,7 @@ export interface Context<TOptions extends Options = Options> {
   /**
    * The entry points of the source code
    */
-  entry: ResolvedEntryTypeDefinition[];
+  entry: TResolvedEntryTypeDefinition[];
 
   /**
    * The installations required by the project

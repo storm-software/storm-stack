@@ -26,9 +26,16 @@ import {
 } from "@stryke/path/file-path-fns";
 import { joinPaths } from "@stryke/path/join-paths";
 import type { TypeDefinition } from "@stryke/types/configuration";
-import type { Context, Options } from "../../types/build";
+import type { BuildOptions } from "esbuild";
+import type { CompileOptions, Context, Options } from "../../types/build";
 import { bundle } from "../esbuild/bundle";
 import { resolvePath } from "../utilities/resolve-path";
+
+export type ResolveTypeOptions<TOptions extends Options = Options> =
+  CompileOptions &
+    Pick<TOptions, "external" | "noExternal" | "skipNodeModulesBundle"> & {
+      overrides?: Partial<BuildOptions>;
+    };
 
 /**
  * Compiles a type definition to a module.
@@ -40,9 +47,15 @@ import { resolvePath } from "../utilities/resolve-path";
 export async function resolveType<
   TOptions extends Options = Options,
   TResult = any
->(context: Context<TOptions>, entry: TypeDefinition): Promise<TResult> {
+>(
+  context: Context<TOptions>,
+  entry: TypeDefinition,
+  options: ResolveTypeOptions<TOptions> = {}
+): Promise<TResult> {
   const transpilePath = joinPaths(
-    context.envPaths.temp,
+    context.workspaceConfig.workspaceRoot,
+    context.options.projectRoot,
+    context.artifactsDir,
     "transpiled",
     findFilePath(entry.file)
   );
@@ -54,9 +67,16 @@ export async function resolveType<
     );
   }
 
-  const result = await bundle(context, path, transpilePath, {
-    write: true
-  });
+  const result = await bundle(
+    context,
+    path,
+    transpilePath,
+    {
+      ...options.overrides,
+      write: true
+    },
+    options
+  );
   if (result.errors.length > 0) {
     throw new Error(
       `Failed to transpile ${entry.file}: ${result.errors

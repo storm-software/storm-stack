@@ -85,7 +85,7 @@ catalog:
   "@stryke/unique-id": ^0.2.7
   "@stryke/url": ^0.2.0
   "@stryke/json": ^0.8.2
-  "@stryke/path": ^0.4.14
+  "@stryke/path": ^0.5.0
   "@stryke/types": ^0.8.2
   "@stryke/hash": ^0.9.3
   "@stryke/string-format": ^0.4.9

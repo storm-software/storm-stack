@@ -19,11 +19,17 @@
 import { LogLevelLabel } from "@storm-software/config-tools/types";
 import { writeFile } from "@storm-stack/core/helpers/utilities/write-file";
 import type { LogFn } from "@storm-stack/core/types";
-import type { Context, Options } from "@storm-stack/core/types/build";
+import type { Options } from "@storm-stack/core/types/build";
 import { listFiles } from "@stryke/fs/list-files";
 import { readJsonFile } from "@stryke/fs/read-file";
 import { StormJSON } from "@stryke/json/storm-json";
-import { findFileExtension, findFileName } from "@stryke/path/file-path-fns";
+import {
+  findFileExtension,
+  findFileName,
+  findFilePath,
+  findFolderName
+} from "@stryke/path/file-path-fns";
+import { resolveParentPath } from "@stryke/path/get-parent-path";
 import { isDirectory } from "@stryke/path/is-file";
 import { joinPaths } from "@stryke/path/join-paths";
 import { constantCase } from "@stryke/string-format/constant-case";
@@ -31,10 +37,11 @@ import { kebabCase } from "@stryke/string-format/kebab-case";
 import { isSetString } from "@stryke/type-checks/is-set-string";
 import { isString } from "@stryke/type-checks/is-string";
 import { defu } from "defu";
+import type { StormStackCLIPresetContext } from "../types/build";
 import type { StormStackCLIPresetConfig } from "../types/config";
 
 export async function initContext<TOptions extends Options = Options>(
-  context: Context<TOptions>,
+  context: StormStackCLIPresetContext<TOptions>,
   config: StormStackCLIPresetConfig
 ) {
   context.options.platform = "node";
@@ -78,7 +85,7 @@ export async function initContext<TOptions extends Options = Options>(
 }
 
 export async function initInstalls<TOptions extends Options = Options>(
-  context: Context<TOptions>,
+  context: StormStackCLIPresetContext<TOptions>,
   config: StormStackCLIPresetConfig
 ) {
   if (
@@ -90,7 +97,7 @@ export async function initInstalls<TOptions extends Options = Options>(
 }
 
 export async function initUnimport<TOptions extends Options = Options>(
-  context: Context<TOptions>,
+  context: StormStackCLIPresetContext<TOptions>,
   config: StormStackCLIPresetConfig
 ) {
   const imports = [
@@ -126,7 +133,7 @@ export async function initUnimport<TOptions extends Options = Options>(
 
 export async function initEntry<TOptions extends Options = Options>(
   log: LogFn,
-  context: Context<TOptions>,
+  context: StormStackCLIPresetContext<TOptions>,
   config: StormStackCLIPresetConfig
 ) {
   if (!isSetString(context.options.entry)) {
@@ -208,6 +215,8 @@ export async function initEntry<TOptions extends Options = Options>(
         input: {
           file: context.options.entry
         },
+        path: [],
+        isVirtual: false,
         output: bin
       }
     ];
@@ -245,6 +254,12 @@ export async function initEntry<TOptions extends Options = Options>(
       )
     );
 
+    const commandsDirectory = joinPaths(
+      context.options.projectRoot,
+      context.artifactsDir,
+      "commands"
+    );
+
     context.entry = Object.keys(commandsDict).reduce((ret, command) => {
       if (!commandsDict[command]) {
         log(
@@ -254,12 +269,7 @@ export async function initEntry<TOptions extends Options = Options>(
         return ret;
       }
 
-      const entryFile = joinPaths(
-        context.options.projectRoot,
-        context.artifactsDir,
-        "commands",
-        commandsDict[command]
-      );
+      const entryFile = joinPaths(commandsDirectory, commandsDict[command]);
       if (ret.some(entry => entry.file === entryFile)) {
         log(
           LogLevelLabel.WARN,
@@ -274,11 +284,209 @@ export async function initEntry<TOptions extends Options = Options>(
               commandsDict[command]
             )
           },
-          output: command
+          output: command,
+          path: findFilePath(commandsDict[command]).split("/").filter(Boolean),
+          isVirtual: false
         });
       }
 
       return ret;
     }, context.entry);
+
+    if (config.manageVars !== false) {
+      if (
+        context.entry.some(
+          entry =>
+            entry.output === "vars-get" ||
+            entry.file ===
+              joinPaths(commandsDirectory, "vars", "get", "index.ts")
+        )
+      ) {
+        throw new Error(
+          "The vars-get command already exists in the entry point. This is not valid when \`manageVars\` is not false. Please remove it from the entry point or rename it."
+        );
+      }
+
+      context.entry.push({
+        displayName: "Variable Management",
+        description:
+          "Commands for managing the configuration parameters in the variables store.",
+        file: joinPaths(commandsDirectory, "vars", "index.ts"),
+        input: {
+          file: joinPaths(commandsDirectory, "vars", "index.ts")
+        },
+        output: "vars",
+        path: ["vars"],
+        isVirtual: true
+      });
+
+      if (
+        context.entry.some(
+          entry =>
+            entry.output === "vars-get" ||
+            entry.file ===
+              joinPaths(commandsDirectory, "vars", "get", "index.ts")
+        )
+      ) {
+        throw new Error(
+          "The vars-get command already exists in the entry point. This is not valid when \`manageVars\` is not false. Please remove it from the entry point or rename it."
+        );
+      }
+
+      context.entry.push({
+        displayName: "Variables - Get",
+        file: joinPaths(commandsDirectory, "vars", "get", "index.ts"),
+        input: {
+          file: joinPaths(commandsDirectory, "vars", "get", "handle.ts")
+        },
+        output: "vars-get",
+        path: ["vars", "get", "[key]"],
+        isVirtual: false
+      });
+
+      if (
+        context.entry.some(
+          entry =>
+            entry.output === "vars-set" ||
+            entry.file ===
+              joinPaths(commandsDirectory, "vars", "set", "index.ts")
+        )
+      ) {
+        throw new Error(
+          "The vars-set command already exists in the entry point. This is not valid when \`manageVars\` is not false. Please remove it from the entry point or rename it."
+        );
+      }
+
+      context.entry.push({
+        displayName: "Variables - Set",
+        file: joinPaths(commandsDirectory, "vars", "set", "index.ts"),
+        input: {
+          file: joinPaths(commandsDirectory, "vars", "set", "handle.ts")
+        },
+        output: "vars-set",
+        path: ["vars", "set", "[key]", "[value]"],
+        isVirtual: false
+      });
+
+      if (
+        context.entry.some(
+          entry =>
+            entry.output === "vars-delete" ||
+            entry.file ===
+              joinPaths(commandsDirectory, "vars", "delete", "index.ts")
+        )
+      ) {
+        throw new Error(
+          "The vars-delete command already exists in the entry point. This is not valid when \`manageVars\` is not false. Please remove it from the entry point or rename it."
+        );
+      }
+
+      context.entry.push({
+        displayName: "Variables - Delete",
+        file: joinPaths(commandsDirectory, "vars", "delete", "index.ts"),
+        input: {
+          file: joinPaths(commandsDirectory, "vars", "delete", "handle.ts")
+        },
+        output: "vars-delete",
+        path: ["vars", "delete", "[key]"],
+        isVirtual: false
+      });
+
+      if (
+        context.entry.some(
+          entry =>
+            entry.output === "vars-list" ||
+            entry.file ===
+              joinPaths(commandsDirectory, "vars", "list", "index.ts")
+        )
+      ) {
+        throw new Error(
+          "The vars-list command already exists in the entry point. This is not valid when \`manageVars\` is not false. Please remove it from the entry point or rename it."
+        );
+      }
+
+      context.entry.push({
+        displayName: "Variables - List",
+        file: joinPaths(commandsDirectory, "vars", "list", "index.ts"),
+        input: {
+          file: joinPaths(commandsDirectory, "vars", "list", "handle.ts")
+        },
+        output: "vars-list",
+        path: ["vars", "list"],
+        isVirtual: false
+      });
+    }
+
+    context.entry = context.entry
+      .filter(
+        entry => entry.input.file !== context.options.entry && entry.output
+      )
+      .reduce((ret, entry) => {
+        let parentPath = resolveParentPath(findFilePath(entry.file))
+          .replace(context.workspaceConfig.workspaceRoot, "")
+          .replaceAll(/^\/+/g, "")
+          .replaceAll(/\/+$/g, "");
+
+        while (parentPath !== commandsDirectory) {
+          const parentFolderName = findFolderName(parentPath);
+          if (
+            !ret.some(
+              existing =>
+                findFilePath(existing.file).replaceAll(/\/+$/g, "") ===
+                parentPath
+            ) &&
+            (!parentFolderName.startsWith("[") ||
+              !parentFolderName.endsWith("]"))
+          ) {
+            ret.push({
+              file: joinPaths(parentPath, "index.ts"),
+              input: {
+                file: joinPaths(parentPath, "index.ts")
+              },
+              output: parentFolderName,
+              path: parentPath
+                .replace(commandsDirectory, "")
+                .split("/")
+                .filter(Boolean),
+              isVirtual: true
+            });
+          }
+
+          parentPath = resolveParentPath(parentPath)
+            .replace(context.workspaceConfig.workspaceRoot, "")
+            .replaceAll(/^\/+/g, "")
+            .replaceAll(/\/+$/g, "");
+        }
+
+        return ret;
+      }, context.entry);
+
+    log(
+      LogLevelLabel.TRACE,
+      `Using the following commands entry points: \n${context.entry
+        .map(
+          entry =>
+            ` - ${entry.output}: ${entry.file}${entry.isVirtual ? " (virtual)" : ""}`
+        )
+        .join("\n")}`
+    );
   }
 }
+
+// async function reflectCommandRelations<TOptions extends Options = Options>(
+//   context: Context<TOptions>
+// ): Promise<Record<string, CommandRelationsReflection>> {
+//   const relationReflections = {} as Record<string, CommandRelationsReflection>;
+//   for (const entry of context.entry.filter(
+//     entry => entry.input.file !== context.options.entry && entry.output
+//   )) {
+//     const commandId = entry.output!;
+//     relationReflections[commandId] ??= {
+//       parent: undefined,
+//       children: []
+//     } as CommandRelationsReflection;
+
+//     const commandName = findCommandName(entry);
+//     if (commandId !== commandName) {
+//       const parent = commandId.replace(commandName, "").replaceAll(/-+$/g, "");
+//       if (context.entry.some(entry => entry.output === parent)) {

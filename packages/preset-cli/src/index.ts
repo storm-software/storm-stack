@@ -19,7 +19,12 @@
 import { LogLevelLabel } from "@storm-software/config-tools/types";
 
 import { Preset } from "@storm-stack/core/preset";
-import type { Context, EngineHooks, Options } from "@storm-stack/core/types";
+import type {
+  EngineHooks,
+  Options,
+  PluginConfig
+} from "@storm-stack/core/types";
+import { isSetString } from "@stryke/type-checks/is-set-string";
 import {
   buildApplication,
   buildLibrary,
@@ -32,6 +37,7 @@ import {
   initUnimport
 } from "./helpers/init";
 import { prepareEntry, prepareRuntime, prepareTypes } from "./helpers/prepare";
+import type { StormStackCLIPresetContext } from "./types/build";
 import type { StormStackCLIPresetConfig } from "./types/config";
 
 export default class StormStackCLIPreset<
@@ -57,8 +63,22 @@ export default class StormStackCLIPreset<
           base: "crash-reports",
           envPath: "log"
         }
+      ],
+      this.#config.manageVars !== false && [
+        "@storm-stack/plugin-storage-fs",
+        {
+          namespace: "vars",
+          base:
+            isSetString(this.#config.bin) ||
+            (Array.isArray(this.#config.bin) && this.#config.bin.length > 0)
+              ? isSetString(this.#config.bin)
+                ? this.#config.bin
+                : this.#config.bin[0]
+              : undefined,
+          envPath: "config"
+        }
       ]
-    ];
+    ].filter(Boolean) as (string | PluginConfig)[];
   }
 
   public addHooks(hooks: EngineHooks<TOptions>) {
@@ -76,7 +96,7 @@ export default class StormStackCLIPreset<
     });
   }
 
-  protected async initContext(context: Context<TOptions>) {
+  protected async initContext(context: StormStackCLIPresetContext<TOptions>) {
     this.log(
       LogLevelLabel.TRACE,
       `Initializing CLI specific options for the Storm Stack project.`
@@ -85,7 +105,7 @@ export default class StormStackCLIPreset<
     await initContext(context, this.#config);
   }
 
-  protected async initInstalls(context: Context<TOptions>) {
+  protected async initInstalls(context: StormStackCLIPresetContext<TOptions>) {
     this.log(
       LogLevelLabel.TRACE,
       `Adding CLI specific dependencies to the Storm Stack project.`
@@ -94,7 +114,7 @@ export default class StormStackCLIPreset<
     await initInstalls(context, this.#config);
   }
 
-  protected async initUnimport(context: Context<TOptions>) {
+  protected async initUnimport(context: StormStackCLIPresetContext<TOptions>) {
     this.log(
       LogLevelLabel.TRACE,
       `Initializing CLI specific Unimport presets for the Storm Stack project.`
@@ -103,7 +123,7 @@ export default class StormStackCLIPreset<
     await initUnimport(context, this.#config);
   }
 
-  protected async initEntry(context: Context<TOptions>) {
+  protected async initEntry(context: StormStackCLIPresetContext<TOptions>) {
     if (context.options.projectType === "application") {
       this.log(
         LogLevelLabel.TRACE,
@@ -114,7 +134,7 @@ export default class StormStackCLIPreset<
     }
   }
 
-  protected async prepareTypes(context: Context<TOptions>) {
+  protected async prepareTypes(context: StormStackCLIPresetContext<TOptions>) {
     this.log(
       LogLevelLabel.TRACE,
       `Initializing CLI specific type definitions for the Storm Stack project.`
@@ -123,7 +143,9 @@ export default class StormStackCLIPreset<
     await prepareTypes(this.log, context, this.#config);
   }
 
-  protected async prepareRuntime(context: Context<TOptions>) {
+  protected async prepareRuntime(
+    context: StormStackCLIPresetContext<TOptions>
+  ) {
     if (context.options.projectType === "application") {
       this.log(
         LogLevelLabel.TRACE,
@@ -134,7 +156,7 @@ export default class StormStackCLIPreset<
     }
   }
 
-  protected async prepareEntry(context: Context<TOptions>) {
+  protected async prepareEntry(context: StormStackCLIPresetContext<TOptions>) {
     if (context.options.projectType === "application") {
       this.log(
         LogLevelLabel.TRACE,
@@ -145,15 +167,17 @@ export default class StormStackCLIPreset<
     }
   }
 
-  protected async buildLibrary(context: Context<TOptions>) {
+  protected async buildLibrary(context: StormStackCLIPresetContext<TOptions>) {
     return buildLibrary(this.log, context);
   }
 
-  protected async buildApplication(context: Context<TOptions>) {
+  protected async buildApplication(
+    context: StormStackCLIPresetContext<TOptions>
+  ) {
     return buildApplication(this.log, context);
   }
 
-  protected async buildComplete(context: Context<TOptions>) {
+  protected async buildComplete(context: StormStackCLIPresetContext<TOptions>) {
     return permissionExecutable(this.log, context);
   }
 }
