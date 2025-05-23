@@ -1,15 +1,16 @@
 {
   "serve": {
     "commandId": "serve",
-    "path": ["commands"],
-    "name": "commands",
-    "displayName": "Commands - Commands",
+    "name": "serve",
+    "displayName": "Serve",
     "description": "Start a server and serve the application.",
     "aliases": [],
     "entry": {
-      "file": "examples/cli-app/.storm/commands/serve.ts",
+      "file": "examples/cli-app/.storm/commands/serve/index.ts",
       "input": { "file": "examples/cli-app/src/commands/serve.ts" },
-      "output": "serve"
+      "output": "serve",
+      "path": ["serve"],
+      "isVirtual": false
     },
     "payload": {
       "name": "ServePayload",
@@ -185,19 +186,20 @@
         }
       ]
     },
-    "relations": { "parent": "serve", "children": ["serve"] }
+    "relations": { "children": [] }
   },
   "add-page": {
     "commandId": "add-page",
-    "path": ["add"],
-    "name": "add",
-    "displayName": "Add",
+    "name": "page",
+    "displayName": "Add - Page",
     "description": "Add a page to the file system.",
     "aliases": [],
     "entry": {
-      "file": "examples/cli-app/.storm/commands/add/page.ts",
+      "file": "examples/cli-app/.storm/commands/add/page/index.ts",
       "input": { "file": "examples/cli-app/src/commands/add/page.ts" },
-      "output": "add-page"
+      "output": "add-page",
+      "path": ["add", "page"],
+      "isVirtual": false
     },
     "payload": {
       "name": "AddPagePayload",
@@ -295,11 +297,10 @@
         }
       ]
     },
-    "relations": { "children": [] }
+    "relations": { "parent": "add", "children": [] }
   },
   "add": {
     "commandId": "add",
-    "path": ["add"],
     "name": "add",
     "displayName": "Add",
     "description": "Add an item to the file system.",
@@ -307,7 +308,9 @@
     "entry": {
       "file": "examples/cli-app/.storm/commands/add/index.ts",
       "input": { "file": "examples/cli-app/src/commands/add/index.ts" },
-      "output": "add"
+      "output": "add",
+      "path": ["add"],
+      "isVirtual": false
     },
     "payload": {
       "name": "AddPayload",
@@ -417,6 +420,517 @@
         }
       ]
     },
-    "relations": { "children": [] }
+    "relations": { "children": ["add-page"] }
+  },
+  "vars": {
+    "commandId": "vars",
+    "name": "vars",
+    "displayName": "Variable Management",
+    "description": "Commands for managing the configuration parameters in the variables store.",
+    "aliases": [],
+    "entry": {
+      "displayName": "Variable Management",
+      "description": "Commands for managing the configuration parameters in the variables store.",
+      "file": "examples/cli-app/.storm/commands/vars/index.ts",
+      "input": { "file": "examples/cli-app/.storm/commands/vars/index.ts" },
+      "output": "vars",
+      "path": ["vars"],
+      "isVirtual": true
+    },
+    "payload": {
+      "name": "VarsPayload",
+      "args": [
+        {
+          "name": "help",
+          "displayName": "Help",
+          "description": "Show help information.",
+          "aliases": ["h", "?"],
+          "type": "boolean",
+          "stringifiedType": "boolean",
+          "reflectionType": [{ "kind": 7 }],
+          "options": [],
+          "array": false,
+          "required": false,
+          "default": false
+        },
+        {
+          "name": "version",
+          "displayName": "Version",
+          "description": "Show the version of the application.",
+          "aliases": ["v"],
+          "type": "boolean",
+          "stringifiedType": "boolean",
+          "reflectionType": [{ "kind": 7 }],
+          "options": [],
+          "array": false,
+          "required": false,
+          "default": false
+        },
+        {
+          "name": "no-banner",
+          "displayName": "Hide Banner",
+          "description": "Hide the banner displayed while running the CLI application (will be set to true if running in a CI pipeline).",
+          "aliases": [],
+          "type": "boolean",
+          "stringifiedType": "boolean",
+          "reflectionType": [{ "kind": 7 }],
+          "options": [],
+          "array": false,
+          "required": false,
+          "default": false
+        }
+      ]
+    },
+    "relations": {
+      "children": ["vars-get", "vars-set", "vars-delete", "vars-list"]
+    }
+  },
+  "vars-get": {
+    "commandId": "vars-get",
+    "name": "get",
+    "displayName": "Variables - Get",
+    "description": "Retrieves a configuration parameter from the variables store.",
+    "aliases": [],
+    "entry": {
+      "displayName": "Variables - Get",
+      "file": "examples/cli-app/.storm/commands/vars/get/index.ts",
+      "input": {
+        "file": "examples/cli-app/.storm/commands/vars/get/handle.ts"
+      },
+      "output": "vars-get",
+      "path": ["vars", "get", "[key]"],
+      "isVirtual": false
+    },
+    "payload": {
+      "name": "VarsGetPayload",
+      "args": [
+        {
+          "name": "help",
+          "displayName": "Help",
+          "description": "Show help information.",
+          "aliases": ["h", "?"],
+          "type": "boolean",
+          "stringifiedType": "boolean",
+          "reflectionType": [{ "kind": 7 }],
+          "options": [],
+          "array": false,
+          "required": false,
+          "default": false
+        },
+        {
+          "name": "version",
+          "displayName": "Version",
+          "description": "Show the version of the application.",
+          "aliases": ["v"],
+          "type": "boolean",
+          "stringifiedType": "boolean",
+          "reflectionType": [{ "kind": 7 }],
+          "options": [],
+          "array": false,
+          "required": false,
+          "default": false
+        },
+        {
+          "name": "interactive",
+          "displayName": "Interactive",
+          "description": "Enable interactive mode (will be set to false if running in a CI pipeline).",
+          "aliases": ["i", "interact"],
+          "type": "boolean",
+          "stringifiedType": "boolean",
+          "reflectionType": [{ "kind": 7 }],
+          "options": [],
+          "array": false,
+          "required": false,
+          "default": true
+        },
+        {
+          "name": "no-interactive",
+          "displayName": "No Interactive",
+          "description": "Disable interactive mode (will be set to true if running in a CI pipeline).",
+          "aliases": ["no-interact"],
+          "type": "boolean",
+          "stringifiedType": "boolean",
+          "reflectionType": [{ "kind": 7 }],
+          "options": [],
+          "array": false,
+          "required": false,
+          "default": false
+        },
+        {
+          "name": "no-banner",
+          "displayName": "Hide Banner",
+          "description": "Hide the banner displayed while running the CLI application (will be set to true if running in a CI pipeline).",
+          "aliases": [],
+          "type": "boolean",
+          "stringifiedType": "boolean",
+          "reflectionType": [{ "kind": 7 }],
+          "options": [],
+          "array": false,
+          "required": false,
+          "default": false
+        },
+        {
+          "name": "verbose",
+          "displayName": "Verbose",
+          "description": "Enable verbose output.",
+          "aliases": ["v"],
+          "type": "boolean",
+          "stringifiedType": "boolean",
+          "reflectionType": [{ "kind": 7 }],
+          "options": [],
+          "array": false,
+          "required": false,
+          "default": false
+        },
+        {
+          "name": "key",
+          "displayName": "Key",
+          "aliases": ["k"],
+          "reflectionType": [{ "kind": 5 }],
+          "type": "string",
+          "stringifiedType": "string",
+          "description": "The key to retrieve from the variables",
+          "array": false,
+          "required": true
+        }
+      ]
+    },
+    "relations": { "parent": "vars", "children": [] }
+  },
+  "vars-set": {
+    "commandId": "vars-set",
+    "name": "set",
+    "displayName": "Variables - Set",
+    "description": "Sets a configuration parameter in the variables store.",
+    "aliases": [],
+    "entry": {
+      "displayName": "Variables - Set",
+      "file": "examples/cli-app/.storm/commands/vars/set/index.ts",
+      "input": {
+        "file": "examples/cli-app/.storm/commands/vars/set/handle.ts"
+      },
+      "output": "vars-set",
+      "path": ["vars", "set", "[key]", "[value]"],
+      "isVirtual": false
+    },
+    "payload": {
+      "name": "VarsSetPayload",
+      "args": [
+        {
+          "name": "help",
+          "displayName": "Help",
+          "description": "Show help information.",
+          "aliases": ["h", "?"],
+          "type": "boolean",
+          "stringifiedType": "boolean",
+          "reflectionType": [{ "kind": 7 }],
+          "options": [],
+          "array": false,
+          "required": false,
+          "default": false
+        },
+        {
+          "name": "version",
+          "displayName": "Version",
+          "description": "Show the version of the application.",
+          "aliases": ["v"],
+          "type": "boolean",
+          "stringifiedType": "boolean",
+          "reflectionType": [{ "kind": 7 }],
+          "options": [],
+          "array": false,
+          "required": false,
+          "default": false
+        },
+        {
+          "name": "interactive",
+          "displayName": "Interactive",
+          "description": "Enable interactive mode (will be set to false if running in a CI pipeline).",
+          "aliases": ["i", "interact"],
+          "type": "boolean",
+          "stringifiedType": "boolean",
+          "reflectionType": [{ "kind": 7 }],
+          "options": [],
+          "array": false,
+          "required": false,
+          "default": true
+        },
+        {
+          "name": "no-interactive",
+          "displayName": "No Interactive",
+          "description": "Disable interactive mode (will be set to true if running in a CI pipeline).",
+          "aliases": ["no-interact"],
+          "type": "boolean",
+          "stringifiedType": "boolean",
+          "reflectionType": [{ "kind": 7 }],
+          "options": [],
+          "array": false,
+          "required": false,
+          "default": false
+        },
+        {
+          "name": "no-banner",
+          "displayName": "Hide Banner",
+          "description": "Hide the banner displayed while running the CLI application (will be set to true if running in a CI pipeline).",
+          "aliases": [],
+          "type": "boolean",
+          "stringifiedType": "boolean",
+          "reflectionType": [{ "kind": 7 }],
+          "options": [],
+          "array": false,
+          "required": false,
+          "default": false
+        },
+        {
+          "name": "verbose",
+          "displayName": "Verbose",
+          "description": "Enable verbose output.",
+          "aliases": ["v"],
+          "type": "boolean",
+          "stringifiedType": "boolean",
+          "reflectionType": [{ "kind": 7 }],
+          "options": [],
+          "array": false,
+          "required": false,
+          "default": false
+        },
+        {
+          "name": "key",
+          "displayName": "Key",
+          "aliases": ["k"],
+          "reflectionType": [{ "kind": 5 }],
+          "type": "string",
+          "stringifiedType": "string",
+          "description": "The key to set in the variables",
+          "array": false,
+          "required": true
+        },
+        {
+          "name": "value",
+          "displayName": "Value",
+          "aliases": [],
+          "reflectionType": [{ "kind": 1 }],
+          "type": "any",
+          "stringifiedType": "any",
+          "description": "The value to set for the key",
+          "array": false,
+          "required": true
+        }
+      ]
+    },
+    "relations": { "parent": "vars", "children": [] }
+  },
+  "vars-delete": {
+    "commandId": "vars-delete",
+    "name": "delete",
+    "displayName": "Variables - Delete",
+    "description": "Deletes a configuration parameter from the variables store.",
+    "aliases": [],
+    "entry": {
+      "displayName": "Variables - Delete",
+      "file": "examples/cli-app/.storm/commands/vars/delete/index.ts",
+      "input": {
+        "file": "examples/cli-app/.storm/commands/vars/delete/handle.ts"
+      },
+      "output": "vars-delete",
+      "path": ["vars", "delete", "[key]"],
+      "isVirtual": false
+    },
+    "payload": {
+      "name": "VarsDeletePayload",
+      "args": [
+        {
+          "name": "help",
+          "displayName": "Help",
+          "description": "Show help information.",
+          "aliases": ["h", "?"],
+          "type": "boolean",
+          "stringifiedType": "boolean",
+          "reflectionType": [{ "kind": 7 }],
+          "options": [],
+          "array": false,
+          "required": false,
+          "default": false
+        },
+        {
+          "name": "version",
+          "displayName": "Version",
+          "description": "Show the version of the application.",
+          "aliases": ["v"],
+          "type": "boolean",
+          "stringifiedType": "boolean",
+          "reflectionType": [{ "kind": 7 }],
+          "options": [],
+          "array": false,
+          "required": false,
+          "default": false
+        },
+        {
+          "name": "interactive",
+          "displayName": "Interactive",
+          "description": "Enable interactive mode (will be set to false if running in a CI pipeline).",
+          "aliases": ["i", "interact"],
+          "type": "boolean",
+          "stringifiedType": "boolean",
+          "reflectionType": [{ "kind": 7 }],
+          "options": [],
+          "array": false,
+          "required": false,
+          "default": true
+        },
+        {
+          "name": "no-interactive",
+          "displayName": "No Interactive",
+          "description": "Disable interactive mode (will be set to true if running in a CI pipeline).",
+          "aliases": ["no-interact"],
+          "type": "boolean",
+          "stringifiedType": "boolean",
+          "reflectionType": [{ "kind": 7 }],
+          "options": [],
+          "array": false,
+          "required": false,
+          "default": false
+        },
+        {
+          "name": "no-banner",
+          "displayName": "Hide Banner",
+          "description": "Hide the banner displayed while running the CLI application (will be set to true if running in a CI pipeline).",
+          "aliases": [],
+          "type": "boolean",
+          "stringifiedType": "boolean",
+          "reflectionType": [{ "kind": 7 }],
+          "options": [],
+          "array": false,
+          "required": false,
+          "default": false
+        },
+        {
+          "name": "verbose",
+          "displayName": "Verbose",
+          "description": "Enable verbose output.",
+          "aliases": ["v"],
+          "type": "boolean",
+          "stringifiedType": "boolean",
+          "reflectionType": [{ "kind": 7 }],
+          "options": [],
+          "array": false,
+          "required": false,
+          "default": false
+        },
+        {
+          "name": "key",
+          "displayName": "Key",
+          "aliases": ["k"],
+          "reflectionType": [{ "kind": 5 }],
+          "type": "string",
+          "stringifiedType": "string",
+          "description": "The key to delete from the variables",
+          "array": false,
+          "required": true
+        }
+      ]
+    },
+    "relations": { "parent": "vars", "children": [] }
+  },
+  "vars-list": {
+    "commandId": "vars-list",
+    "name": "list",
+    "displayName": "Variables - List",
+    "description": "Lists all configuration parameters in the variables store.",
+    "aliases": [],
+    "entry": {
+      "displayName": "Variables - List",
+      "file": "examples/cli-app/.storm/commands/vars/list/index.ts",
+      "input": {
+        "file": "examples/cli-app/.storm/commands/vars/list/handle.ts"
+      },
+      "output": "vars-list",
+      "path": ["vars", "list"],
+      "isVirtual": false
+    },
+    "payload": {
+      "name": "VarsListPayload",
+      "args": [
+        {
+          "name": "help",
+          "displayName": "Help",
+          "description": "Show help information.",
+          "aliases": ["h", "?"],
+          "type": "boolean",
+          "stringifiedType": "boolean",
+          "reflectionType": [{ "kind": 7 }],
+          "options": [],
+          "array": false,
+          "required": false,
+          "default": false
+        },
+        {
+          "name": "version",
+          "displayName": "Version",
+          "description": "Show the version of the application.",
+          "aliases": ["v"],
+          "type": "boolean",
+          "stringifiedType": "boolean",
+          "reflectionType": [{ "kind": 7 }],
+          "options": [],
+          "array": false,
+          "required": false,
+          "default": false
+        },
+        {
+          "name": "interactive",
+          "displayName": "Interactive",
+          "description": "Enable interactive mode (will be set to false if running in a CI pipeline).",
+          "aliases": ["i", "interact"],
+          "type": "boolean",
+          "stringifiedType": "boolean",
+          "reflectionType": [{ "kind": 7 }],
+          "options": [],
+          "array": false,
+          "required": false,
+          "default": true
+        },
+        {
+          "name": "no-interactive",
+          "displayName": "No Interactive",
+          "description": "Disable interactive mode (will be set to true if running in a CI pipeline).",
+          "aliases": ["no-interact"],
+          "type": "boolean",
+          "stringifiedType": "boolean",
+          "reflectionType": [{ "kind": 7 }],
+          "options": [],
+          "array": false,
+          "required": false,
+          "default": false
+        },
+        {
+          "name": "no-banner",
+          "displayName": "Hide Banner",
+          "description": "Hide the banner displayed while running the CLI application (will be set to true if running in a CI pipeline).",
+          "aliases": [],
+          "type": "boolean",
+          "stringifiedType": "boolean",
+          "reflectionType": [{ "kind": 7 }],
+          "options": [],
+          "array": false,
+          "required": false,
+          "default": false
+        },
+        {
+          "name": "verbose",
+          "displayName": "Verbose",
+          "description": "Enable verbose output.",
+          "aliases": ["v"],
+          "type": "boolean",
+          "stringifiedType": "boolean",
+          "reflectionType": [{ "kind": 7 }],
+          "options": [],
+          "array": false,
+          "required": false,
+          "default": false
+        }
+      ]
+    },
+    "relations": { "parent": "vars", "children": [] }
   }
 }

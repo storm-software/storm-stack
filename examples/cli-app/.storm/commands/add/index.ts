@@ -9,8 +9,9 @@ import { deserialize } from "@deepkit/type";
 import handle from "../../../src/commands/add/index";
 import { AddPayload } from "../../../src/types";
 import { withContext } from "../../runtime/app";
-import { colors, prompt } from "../../runtime/cli";
+import { colors, prompt, renderBanner } from "../../runtime/cli";
 import { getRuntimeInfo } from "../../runtime/env";
+import handlePage from "./page";
 
 /**
  * Renders the Add command usage information.
@@ -21,10 +22,17 @@ import { getRuntimeInfo } from "../../runtime/env";
 export function renderUsage(includeCommands = true) {
   return `${colors.bold("Add")}
 
-  ${colors.dim("Add an item to the file system.")}
+${colors.dim("Add an item to the file system.")}
 
   ${colors.bold("Usage:")}
     examples-cli add [options] 
+    examples-cli add page [options]${
+      includeCommands !== false
+        ? `
+  ${colors.bold("Commands:")}
+    Add - Page (page)                ${colors.dim("Add a page to the file system.")}`
+        : ""
+    }
 
   ${colors.bold("Options:")}
     --help, -h, -?                   ${colors.dim("Show help information. [default: false]")} 
@@ -45,6 +53,24 @@ const handleCommand = withContext<AddPayload>(handle);
  */
 async function handler() {
   try {
+    if (process.argv.length > 3) {
+      const command = process.argv[2];
+      if (command && !command.startsWith("-")) {
+        if (command.toLowerCase() === "page") {
+          return handlePage();
+        }
+
+        console.error(
+          ` ${colors.red("✖")} ${colors.redBright(`Unknown command: ${colors.bold(command || "")}`)}`
+        );
+        console.log("");
+        console.log(renderUsage(true));
+        console.log("");
+
+        return;
+      }
+    }
+
     const args = parseArgs(process.argv.slice(2), {
       boolean: [
         "help",
@@ -89,9 +115,7 @@ async function handler() {
     if (args["version"] || args["v"]) {
       console.log($storm.vars.APP_VERSION);
     } else {
-      const consoleWidth = Math.max(process.stdout.columns - 2, 46);
       const runtimeInfo = getRuntimeInfo();
-
       const isVerbose =
         args["verbose"] ?? Boolean(process.env.EXAMPLES_CLI_VERBOSE);
       const isInteractive =
@@ -102,34 +126,12 @@ async function handler() {
         !runtimeInfo.isCI;
 
       if (args["no-banner"] !== true && !runtimeInfo.isCI) {
-        const width = Math.max(Math.min(consoleWidth, 40), 44);
-
-        const banner = [];
-        banner.push(
-          colors.cyan(
-            `┏━━━━ examples-cli ━━ v0.0.1 ${"━".repeat(width - 10 - 17)}┓`
-          )
-        );
-        banner.push(colors.cyan(`┃${" ".repeat(width)}┃`));
-        banner.push(
-          `${colors.cyan("┃")}${" ".repeat((width - 22) / 2)}${colors.whiteBright(colors.bold("Examples CLI App - Add"))}${" ".repeat((width - 22) / 2)}${colors.cyan("┃")}`
-        );
-        banner.push(colors.cyan(`┃${" ".repeat(width)}┃`));
-        banner.push(colors.cyan(`┗${"━".repeat(width)}┛`));
-
-        console.log(
-          banner
-            .map(
-              bannerline =>
-                `${" ".repeat((consoleWidth - bannerline.length) / 2)}${bannerline}${" ".repeat((consoleWidth - bannerline.length) / 2)}`
-            )
-            .join("\n")
-        );
+        console.log(renderBanner("Add", "Add an item to the file system."));
+        console.log("");
       }
 
       if (args["help"] || args["h"] || args["?"]) {
-        console.log("");
-        console.log(renderUsage());
+        console.log(renderUsage(true));
         console.log("");
       } else {
         if (isVerbose) {

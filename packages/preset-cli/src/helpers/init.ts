@@ -269,7 +269,15 @@ export async function initEntry<TOptions extends Options = Options>(
         return ret;
       }
 
-      const entryFile = joinPaths(commandsDirectory, commandsDict[command]);
+      let entryFile = joinPaths(commandsDirectory, commandsDict[command]);
+      if (findFileName(entryFile) !== "index.ts") {
+        entryFile = joinPaths(
+          findFilePath(entryFile),
+          findFileName(entryFile).replace(findFileExtension(entryFile), ""),
+          "index.ts"
+        );
+      }
+
       if (ret.some(entry => entry.file === entryFile)) {
         log(
           LogLevelLabel.WARN,
@@ -285,7 +293,11 @@ export async function initEntry<TOptions extends Options = Options>(
             )
           },
           output: command,
-          path: findFilePath(commandsDict[command]).split("/").filter(Boolean),
+          path: findFilePath(entryFile)
+            .replace(commandsDirectory, "")
+            .replaceAll(/\/+$/g, "")
+            .split("/")
+            .filter(Boolean),
           isVirtual: false
         });
       }

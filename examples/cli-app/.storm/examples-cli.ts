@@ -9,7 +9,10 @@
 
 import { isError } from "@stryke/type-checks/is-error";
 import handleAdd, { renderUsage as renderAddUsage } from "./commands/add";
-import { colors } from "./runtime/cli";
+import handleServe, { renderUsage as renderServeUsage } from "./commands/serve";
+import handleVars, { renderUsage as renderVarsUsage } from "./commands/vars";
+import { colors, renderBanner } from "./runtime/cli";
+import { getRuntimeInfo } from "./runtime/env";
 
 async function main() {
   try {
@@ -21,30 +24,69 @@ async function main() {
         command = process.argv[2];
       }
 
-      if (command.toLowerCase() === "add") {
-        return handleAdd();
+      if (command.toLowerCase() === "vars") {
+        return handleVars();
+      } else if (command.toLowerCase() === "serve") {
+        return handleServe();
       } else if (command.toLowerCase() === "add") {
         return handleAdd();
       } else {
-        console.error(colors.red(`Unknown command: ${colors.bold(command)}`));
+        console.error(
+          ` ${colors.red("✖")} ${colors.redBright(`Unknown command: ${colors.bold(command || "")}`)}`
+        );
+      }
+
+      const runtimeInfo = getRuntimeInfo();
+      if (!runtimeInfo.isCI) {
+        console.log(
+          renderBanner(
+            "Help Information",
+            "Display usage details, commands, and support information for the examples-cli-app application"
+          )
+        );
+        console.log("");
       }
 
       console.log("");
+      console.log("An example Storm Stack commandline application");
+      console.log("");
       console.log(
-        "The following commands are available as part of the examples-cli-app application:"
+        "The following commands are available as part of the examples-cli-app application: "
       );
       console.log("");
-      console.log(renderAddUsage());
-      console.log(renderAddUsage());
+      console.log(
+        renderVarsUsage(false)
+          .split("\n")
+          .map(line => `  ${line}`)
+          .join("\n")
+      );
+      console.log(
+        renderServeUsage(false)
+          .split("\n")
+          .map(line => `  ${line}`)
+          .join("\n")
+      );
+      console.log(
+        renderAddUsage(false)
+          .split("\n")
+          .map(line => `  ${line}`)
+          .join("\n")
+      );
       console.log("");
     }
   } catch (err) {
     if (isError(err)) {
       console.error(
-        colors.red(`Error occurred while processing command: ${err.message}`)
+        colors.red(
+          ` ${colors.red("✖")} ${colors.redBright(`An error occurred while running the examples-cli-app application: ${err.message}`)}`
+        )
       );
     } else {
-      console.error(colors.red(`Unknown error occurred: ${err}`));
+      console.error(
+        colors.red(
+          ` ${colors.red("✖")} ${colors.redBright(`An error occurred while running the examples-cli-app application`)}`
+        )
+      );
     }
   }
 }

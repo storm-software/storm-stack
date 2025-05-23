@@ -192,6 +192,61 @@ function stripAnsi(text: string) {
   );
 }
 
+/**
+ * Renders a CLI banner with the specified title.
+ *
+ * @param title - The title to display in the banner.
+ * @param description - The description to display in the banner.
+ * @returns The rendered banner as a string.
+ */
+export function renderBanner(title: string, description: string): string {
+  const consoleWidth = Math.max(process.stdout.columns - 2, 46);
+  const width = Math.max(
+    Math.min(consoleWidth, Math.max(title.length + 2, 40)),
+    44
+  );
+
+  const banner = [] as string[];
+  banner.push(
+    colors.cyan(`┏━━━━ examples-cli ━━ v0.0.1 ${"━".repeat(width - 10 - 17)}┓`)
+  );
+  banner.push(colors.cyan(`┃${" ".repeat(width)}┃`));
+  banner.push(
+    `${colors.cyan("┃")}${" ".repeat((width - 16) / 2)}${colors.whiteBright(colors.bold("Examples CLI App"))}${" ".repeat((width - 16) / 2)}${colors.cyan("┃")}`
+  );
+  banner.push(
+    `${colors.cyan("┃")}${" ".repeat((width - title.length) / 2)}${colors.whiteBright(colors.bold(title))}${" ".repeat((width - title.length) / 2)}${colors.cyan("┃")}`
+  );
+  banner.push(colors.cyan(`┃${" ".repeat(width)}┃`));
+  banner.push(
+    `${colors.cyan("┃")}${colors.dim(
+      description.length < width - 2
+        ? `${" ".repeat((width - description.length) / 2)}${description}${" ".repeat((width - description.length) / 2)}`
+        : description
+            .split(" ")
+            .reduce((ret, word) => {
+              const lines = ret.split("\n");
+              if (lines[lines.length - 1].length + word.length > width - 2) {
+                ret += "\n";
+              }
+
+              ret += `${word} `;
+              return ret;
+            }, "")
+            .trim()
+    )} ${colors.cyan("┃")}`
+  );
+  banner.push(colors.cyan(`┃${" ".repeat(width)}┃`));
+  banner.push(colors.cyan(`┗${"━".repeat(width)}┛`));
+
+  return banner
+    .map(
+      line =>
+        `${" ".repeat((consoleWidth - line.length) / 2)}${line}${" ".repeat((consoleWidth - line.length) / 2)}`
+    )
+    .join("\n");
+}
+
 // Command-line prompt utilities
 
 interface SelectOption {
