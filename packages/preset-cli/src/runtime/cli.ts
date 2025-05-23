@@ -18,8 +18,10 @@
 
 import { getFileHeader } from "@storm-stack/core/helpers";
 import type { Options } from "@storm-stack/core/types";
+import { stripAnsi } from "@stryke/cli/utils/strip-ansi";
 import { titleCase } from "@stryke/string-format/title-case";
-import { isSetString } from "@stryke/type-checks/is-set-string";
+import { isObject } from "@stryke/type-checks/is-object";
+import { isString } from "@stryke/type-checks/is-string";
 import type { StormStackCLIPresetContext } from "../types/build";
 import type { StormStackCLIPresetConfig } from "../types/config";
 
@@ -27,15 +29,132 @@ export function writeRuntime<TOptions extends Options = Options>(
   context: StormStackCLIPresetContext<TOptions>,
   config: StormStackCLIPresetConfig
 ) {
-  const binName =
-    (config.bin &&
-    (isSetString(config.bin) ||
-      (Array.isArray(config.bin) && config.bin.length > 0 && config.bin[0]))
-      ? isSetString(config.bin)
-        ? config.bin
-        : config.bin[0]
-      : context.options.name || context.packageJson?.name) || "cli";
-  const appTitle = titleCase(context.options.name);
+  const appTitle = titleCase(
+    (Array.isArray(config.bin) ? config.bin[0] : config.bin) ||
+      context.packageJson?.name
+  );
+
+  let author = config.author;
+  if (!author) {
+    if (context.workspaceConfig.organization) {
+      author = context.workspaceConfig.organization;
+    } else if (context.packageJson?.author) {
+      author = isString(context.packageJson.author)
+        ? context.packageJson.author
+        : context.packageJson.author?.name;
+    } else if (
+      context.packageJson?.contributors &&
+      context.packageJson.contributors.length > 0
+    ) {
+      author = isString(context.packageJson.contributors[0])
+        ? context.packageJson.contributors[0]
+        : context.packageJson.contributors[0]?.name;
+    }
+  }
+
+  if (author) {
+    author = titleCase(author);
+  }
+
+  let homepage = config.homepage;
+  if (!homepage) {
+    if (context.workspaceConfig.homepage) {
+      homepage = context.workspaceConfig.homepage;
+    } else if (context.packageJson?.homepage) {
+      homepage = context.packageJson.homepage;
+    } else if (
+      isObject(context.packageJson?.author) &&
+      context.packageJson?.author?.url
+    ) {
+      homepage = context.packageJson.author.url;
+    } else if (
+      context.packageJson?.contributors &&
+      context.packageJson.contributors.length > 0 &&
+      isObject(context.packageJson.contributors[0]) &&
+      context.packageJson.contributors[0]?.url
+    ) {
+      homepage = context.packageJson.contributors[0]?.url;
+    }
+  }
+
+  let support = config.support;
+  if (!support) {
+    if (context.workspaceConfig.support) {
+      support = context.workspaceConfig.support;
+    } else if (
+      isObject(context.packageJson?.bugs) &&
+      context.packageJson?.bugs?.url
+    ) {
+      support = context.packageJson.bugs.url;
+    }
+  }
+
+  let contact = config.contact;
+  if (!contact) {
+    if (context.workspaceConfig.contact) {
+      contact = context.workspaceConfig.contact;
+    } else if (
+      isObject(context.packageJson?.author) &&
+      context.packageJson?.author?.url
+    ) {
+      contact = context.packageJson.author.url;
+    } else if (
+      context.packageJson?.contributors &&
+      context.packageJson.contributors.length > 0 &&
+      isObject(context.packageJson.contributors[0]) &&
+      context.packageJson.contributors[0]?.url
+    ) {
+      contact = context.packageJson.contributors[0]?.url;
+    }
+  }
+
+  let docs = config.docs;
+  if (!docs) {
+    if (context.workspaceConfig.docs) {
+      docs = context.workspaceConfig.docs;
+    } else if (context.packageJson?.docs) {
+      docs = context.packageJson.docs;
+    }
+  }
+
+  let repository = config.repository;
+  if (!repository) {
+    if (context.workspaceConfig.repository) {
+      repository = context.workspaceConfig.repository;
+    } else if (context.packageJson?.repository) {
+      repository = isString(context.packageJson.repository)
+        ? context.packageJson.repository
+        : context.packageJson.repository?.url;
+    }
+  }
+
+  const footerHeader = `${appTitle} is authored and maintained by ${homepage ? `\${link("${homepage}", "${author}")}` : author}.`;
+  const footerHeaderLength = stripAnsi(footerHeader).length;
+
+  const linksColumn1 = [] as string[];
+  const linksColumn2 = [] as string[];
+  if (homepage) {
+    linksColumn1.push("Homepage:");
+    linksColumn2.push(homepage);
+  }
+  if (support) {
+    linksColumn1.push("Support:");
+    linksColumn2.push(support);
+  }
+  if (contact && contact !== homepage && contact !== support) {
+    linksColumn1.push("Contact:");
+    linksColumn2.push(contact);
+  }
+  if (docs) {
+    linksColumn1.push("Documentation:");
+    linksColumn2.push(docs);
+  }
+  if (repository) {
+    linksColumn1.push("Repository:");
+    linksColumn2.push(repository);
+  }
+
+  const linksMaxLength = Math.max(...linksColumn1.map(line => line.length)) + 2;
 
   return `${getFileHeader()}
 
@@ -236,17 +355,12 @@ export function renderBanner(title: string, description: string): string {
   const width = Math.max(Math.min(consoleWidth, Math.max(title.length + 2, 40)), 44);
 
   const banner = [] as string[];
-  banner.push(colors.cyan(\`┏━━━━ ${binName} ━━ v${
+  banner.push(colors.cyan(\`┏━━━━ ${appTitle} ━━ v${
     context.packageJson.version || "1.0.0"
   } \${"━".repeat(width - 10 - ${
-    binName.length + (context.packageJson.version?.length ?? 5)
+    appTitle.length + (context.packageJson.version?.length ?? 5)
   })}┓\`));
-  banner.push(colors.cyan(\`┃\${" ".repeat(width)}┃\`));${
-    appTitle
-      ? `
-  banner.push(\`\${colors.cyan("┃")}\${" ".repeat((width - ${appTitle.length}) / 2)}\${colors.whiteBright(colors.bold("${appTitle}"))}\${" ".repeat((width - ${appTitle.length}) / 2)}\${colors.cyan("┃")}\`);`
-      : ""
-  }
+  banner.push(colors.cyan(\`┃\${" ".repeat(width)}┃\`));
   banner.push(\`\${colors.cyan("┃")}\${" ".repeat((width - title.length) / 2)}\${colors.whiteBright(colors.bold(title))}\${" ".repeat((width - title.length) / 2)}\${colors.cyan("┃")}\`);
   banner.push(colors.cyan(\`┃\${" ".repeat(width)}┃\`));
   banner.push(\`\${colors.cyan("┃")}\${
@@ -262,11 +376,61 @@ export function renderBanner(title: string, description: string): string {
           return ret;
         }, "").trim())} \${colors.cyan("┃")}\`);
   banner.push(colors.cyan(\`┃\${" ".repeat(width)}┃\`));
-  banner.push(colors.cyan(\`┗\${"━".repeat(width)}┛\`));
+  ${
+    author
+      ? `banner.push(colors.cyan(\`┗\${"━".repeat(width - 7 - ${author.length})}━ ${homepage ? `\${link("${homepage}", "${author}")}` : author} ━━━━┛\`));`
+      : `banner.push(colors.cyan(\`┗\${"━".repeat(width)}┛\`));`
+  }
 
   return banner
     .map(line => \`\${" ".repeat((consoleWidth - line.length) / 2)}\${line}\${" ".repeat((consoleWidth - line.length) / 2)}\`)
     .join("\\n");
+}
+
+/**
+ * Renders a CLI footer with the application details
+ *
+ * @param title - The title to display in the footer.
+ * @param description - The description to display in the footer.
+ * @returns The rendered footer as a string.
+ */
+export function renderFooter(): string {
+  const consoleWidth = Math.max(process.stdout.columns - 2, 46);
+
+  let supportRow = ${
+    config.support ||
+    context.workspaceConfig.support ||
+    context.workspaceConfig?.contact ||
+    context.workspaceConfig?.repository
+      ? `\`You can reach out to the ${titleCase(
+          context.workspaceConfig?.organization || context.options.name
+        )} - Support team via \${link("${
+          config.support ||
+          context.workspaceConfig.support ||
+          context.workspaceConfig.contact ||
+          context.workspaceConfig.repository
+        }", "${
+          config.support ||
+          context.workspaceConfig.support ||
+          context.workspaceConfig.contact
+            ? `our website's ${config.support || context.workspaceConfig.support ? "support" : "contact"} page`
+            : "our repository"
+        }")}.\``
+      : ""
+  }
+  const supportRowLength = stripAnsi(supportRow).length;
+
+  const footer = [] as string[];
+  footer.push(\`\\n  \${colors.bold("Links:")}\`);
+  ${linksColumn1.map((line, i) => `\`    ${`\${colors.bold(link("${line}"))}`.padEnd(linksMaxLength)}${linksColumn2[i]}\``).join(" \n")}
+
+  footer.push("\\n");
+  footer.push(\`\${" ".repeat((consoleWidth - ${footerHeaderLength}) / 2)}${footerHeader}\${" ".repeat((consoleWidth - ${footerHeaderLength}) / 2)}\`);
+  if (supportRow) {
+    footer.push(\`\${" ".repeat((consoleWidth - supportRowLength) / 2)}\${supportRow}\${" ".repeat((consoleWidth - supportRowLength) / 2)}\`);
+  }
+
+  return footer;
 }
 
 ${

@@ -28,14 +28,34 @@ export interface StormStackCLIPresetConfig {
   interactive?: boolean | "never";
 
   /**
-   * The homepage URL of the CLI application (this is used for the help command)
+   * The homepage URL for the CLI application (this is used for the help command)
    */
   homepage?: string;
 
   /**
-   * The documentation website URL of the CLI application (this is used for the help command)
+   * The documentation website URL for the CLI application (this is used for the help command)
    */
   docs?: string;
+
+  /**
+   * The support website URL for the CLI application (this is used for the help command)
+   */
+  support?: string;
+
+  /**
+   * The contact website URL for the CLI application (this is used for the help command)
+   */
+  contact?: string;
+
+  /**
+   * The author/organization that developed or maintains the CLI application
+   */
+  author?: string;
+
+  /**
+   * The repository URL for the CLI application (this is used for the help command)
+   */
+  repository?: string;
 
   /**
    * Should the vars commands be added to the CLI?

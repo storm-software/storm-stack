@@ -40,6 +40,7 @@ import { constantCase } from "@stryke/string-format/constant-case";
 import { kebabCase } from "@stryke/string-format/kebab-case";
 import { pascalCase } from "@stryke/string-format/pascal-case";
 import { isSetString } from "@stryke/type-checks/is-set-string";
+import { writeApp } from "../runtime/app";
 import { writeRuntime } from "../runtime/cli";
 import {
   writeVarsDelete,
@@ -208,7 +209,7 @@ import ${command.entry.input.name ? `{ ${command.entry.input.name} as handle }` 
     )}";
 import { withContext } from "${joinPaths(runtimeRelativePath, "app")}";
 import { getRuntimeInfo } from "${joinPaths(runtimeRelativePath, "env")}";
-import { colors, renderBanner${config.interactive !== "never" ? ", prompt" : ""} } from "${joinPaths(runtimeRelativePath, "cli")}";${
+import { colors, renderBanner, renderFooter${config.interactive !== "never" ? ", prompt" : ""} } from "${joinPaths(runtimeRelativePath, "cli")}";${
       command.children && Object.values(command.children).length > 0
         ? Object.values(command.children)
             .map(
@@ -317,6 +318,8 @@ async function handler() {
         console.log("");
         console.log(renderUsage(true));
         console.log("");
+        console.log(renderFooter());
+        console.log("");
 
         return;
       }
@@ -369,6 +372,8 @@ async function handler() {
 
       if (args["help"] || args["h"] || args["?"]) {
         console.log(renderUsage(true));
+        console.log("");
+        console.log(renderFooter());
         console.log("");
       } else {
         if (isVerbose) {
@@ -620,7 +625,7 @@ import ${command.entry.input.name ? `{ ${command.entry.input.name} as handle }` 
       )
     )}";
 import { getRuntimeInfo } from "${joinPaths(runtimeRelativePath, "env")}";
-import { colors, renderBanner } from "${joinPaths(runtimeRelativePath, "cli")}";${
+import { colors, renderBanner, renderFooter } from "${joinPaths(runtimeRelativePath, "cli")}";${
       command.children && Object.values(command.children).length > 0
         ? Object.values(command.children)
             .map(
@@ -708,6 +713,8 @@ async function handler() {
         console.log("");
         console.log(renderUsage(true));
         console.log("");
+        console.log(renderFooter());
+        console.log("");
 
         return;
       }
@@ -748,6 +755,8 @@ async function handler() {
       }
 
       console.log(renderUsage(true));
+      console.log("");
+      console.log(renderFooter());
       console.log("");
     }
   } catch (err) {
@@ -890,6 +899,17 @@ export async function prepareRuntime<TOptions extends Options = Options>(
         context.options.projectRoot,
         context.artifactsDir,
         "runtime",
+        "app.ts"
+      ),
+      writeApp(context, config)
+    ),
+    writeFile(
+      log,
+      joinPaths(
+        context.workspaceConfig.workspaceRoot,
+        context.options.projectRoot,
+        context.artifactsDir,
+        "runtime",
         "cli.ts"
       ),
       writeRuntime(context, config)
@@ -935,7 +955,7 @@ export async function prepareEntry<TOptions extends Options = Options>(
 
 ${getFileHeader()}
 
-import { colors, renderBanner } from "./runtime/cli";
+import { colors, renderBanner, renderFooter } from "./runtime/cli";
 import { getRuntimeInfo } from "./runtime/env";
 import { isError } from "@stryke/type-checks/is-error";${
       commandTree.children && Object.values(commandTree.children).length > 0
@@ -996,6 +1016,8 @@ async function main() {
               .join("\n")
           : ""
       }
+      console.log("");
+      console.log(renderFooter());
       console.log("");
     }
   } catch (err) {

@@ -659,7 +659,7 @@
     "jiti": "catalog:",
     "magic-string": "catalog:",
     "mlly": "catalog:",
-    "nanotar": "^0.2.0",
+    "nanotar": "catalog:",
     "prettier": "catalog:",
     "typedoc": "catalog:",
     "typedoc-plugin-frontmatter": "catalog:",
