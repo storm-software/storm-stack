@@ -19,9 +19,9 @@ function getBuildInfo() {
     name: "examples-cli-app",
     packageName: "@storm-stack/examples-cli-app",
     version: "0.0.1",
-    buildId: "9NWkwOyYl7EsZ7yYiWKmrH22",
-    timestamp: 1747996725366 ? Number(1747996725366) : 0,
-    releaseId: "oEOAfuZXJdoxWk5aSWmx5clb",
+    buildId: "a4PqbF-T1ChZim7fgzKT2KtH",
+    timestamp: 1748120094194 ? Number(1748120094194) : 0,
+    releaseId: "Jlha3wKyCCXGOUm_F0bEnXnq",
     mode: "production",
     platform: "node",
     isTest,
@@ -73,12 +73,10 @@ __name(getRuntimeInfo, "getRuntimeInfo");
 getRuntimeInfo.__type = ["StormRuntimeInfo", "getRuntimeInfo", "Get the runtime information for the current application.", 'P"w!/"?#'];
 
 // examples/cli-app/.storm/runtime/error.ts
-import { StormJSON } from "@stryke/json/storm-json";
 import { isError } from "@stryke/type-checks/is-error";
 import { isFunction } from "@stryke/type-checks/is-function";
 import { isObject } from "@stryke/type-checks/is-object";
 import { isSetString } from "@stryke/type-checks/is-set-string";
-import { StormURL } from "@stryke/url/storm-url";
 function __assignType(fn, args) {
   fn.__type = args;
   return fn;
@@ -89,7 +87,7 @@ function getDefaultCode(_type) {
 }
 __name(getDefaultCode, "getDefaultCode");
 getDefaultCode.__type = ["ErrorType", "_type", "getDefaultCode", "Get the default error code for the given error type.", `P"w!2"'/#?$`];
-function getDefaultErrorNameFromErrorType(type) {
+function getDefaultErrorName(type) {
   switch (type) {
     case "not_found":
       return "Not Found Error";
@@ -107,50 +105,31 @@ function getDefaultErrorNameFromErrorType(type) {
       return "System Error";
   }
 }
-__name(getDefaultErrorNameFromErrorType, "getDefaultErrorNameFromErrorType");
-getDefaultErrorNameFromErrorType.__type = ["ErrorType", "type", "getDefaultErrorNameFromErrorType", "Get the default error name for the given error type.", 'P"w!2"&/#?$'];
-function createStormError({ code, name, type, cause, stack, data }) {
-  if (isStormError(cause)) {
-    return cause;
-  }
-  if (cause instanceof Error && cause.name === "StormError") {
-    return cause;
-  }
-  const error = new StormError({
-    name,
-    type,
-    code,
-    cause,
-    stack,
-    data
-  });
-  if (cause instanceof Error && cause.stack) {
-    error.stack = cause.stack;
-  }
-  return error;
-}
-__name(createStormError, "createStormError");
-createStormError.__type = ["StormErrorOptions", "param0", () => StormError, "createStormError", "Creates a new StormError instance", 'P"w!2"P7#/$?%'];
-function getErrorFromUnknown(cause, type = "general", data) {
+__name(getDefaultErrorName, "getDefaultErrorName");
+getDefaultErrorName.__type = ["ErrorType", "type", "getDefaultErrorName", "Get the default error name for the given error type.", 'P"w!2"&/#?$'];
+function createStormError(cause, type = "general", data) {
   if (isStormError(cause)) {
     const result = cause;
     result.data ??= data;
     return result;
   }
   if (isError(cause)) {
-    return createStormError({
+    if (isStormError(cause) || cause.name === "StormError") {
+      return cause;
+    }
+    return new StormError({
+      type,
       code: getDefaultCode(type),
       name: cause.name,
-      cause,
       stack: cause.stack,
-      type,
+      cause,
       data
     });
   }
   const causeType = typeof cause;
   if (causeType === "undefined" || causeType === "function" || cause === null) {
     return new StormError({
-      name: getDefaultErrorNameFromErrorType(type),
+      name: getDefaultErrorName(type),
       code: getDefaultCode(type),
       cause,
       type,
@@ -159,7 +138,7 @@ function getErrorFromUnknown(cause, type = "general", data) {
   }
   if (causeType !== "object") {
     return new StormError({
-      name: getDefaultErrorNameFromErrorType(type),
+      name: getDefaultErrorName(type),
       code: getDefaultCode(type),
       type,
       data
@@ -167,7 +146,7 @@ function getErrorFromUnknown(cause, type = "general", data) {
   }
   if (isObject(cause)) {
     const err = new StormError({
-      name: getDefaultErrorNameFromErrorType(type),
+      name: getDefaultErrorName(type),
       code: getDefaultCode(type),
       type,
       data
@@ -178,15 +157,15 @@ function getErrorFromUnknown(cause, type = "general", data) {
     return err;
   }
   return new StormError({
-    name: getDefaultErrorNameFromErrorType(type),
+    name: getDefaultErrorName(type),
     code: getDefaultCode(type),
     cause,
     type,
     data
   });
 }
-__name(getErrorFromUnknown, "getErrorFromUnknown");
-getErrorFromUnknown.__type = ["cause", "ErrorType", "type", () => "general", "data", () => StormError, "getErrorFromUnknown", "Gets the cause of an unknown error and returns it as a StormError", `P#2!"w"2#>$"2%8P7&/'?(`];
+__name(createStormError, "createStormError");
+createStormError.__type = ["cause", "ErrorType", "type", () => "general", "data", () => StormError, "createStormError", "Creates a new {@link StormError} instance from an unknown cause value", `P#2!"w"2#>$"2%8P7&/'?(`];
 function isStormError(value) {
   return isError(value) && isSetString(value?.code) && isSetString(value?.type) && isSetString(value?.stack);
 }
@@ -248,7 +227,7 @@ var StormError = class _StormError extends Error {
       } else {
         this.#stack = new Error("").stack;
       }
-      this.name = optionsOrMessage.name || getDefaultErrorNameFromErrorType(this.type);
+      this.name = optionsOrMessage.name || getDefaultErrorName(this.type);
       this.data = optionsOrMessage.data;
       this.cause ??= optionsOrMessage.cause;
     }
@@ -264,7 +243,7 @@ var StormError = class _StormError extends Error {
    * The cause of the error
    */
   set cause(cause) {
-    this.#cause = getErrorFromUnknown(cause, this.type, this.data);
+    this.#cause = createStormError(cause, this.type, this.data);
     if (this.#cause.stack) {
       this.#stack = this.#cause.stack;
     }
@@ -341,13 +320,12 @@ var StormError = class _StormError extends Error {
    * A URL to a page that displays the error message details
    */
   get url() {
-    const url = new StormURL("https://stormsoftware.com/errors");
-    url.paths.push(this.type.toLowerCase().replaceAll("_", "-"));
-    url.paths.push(String(this.code));
+    const url = new URL("https://stormsoftware.com/errors");
+    url.pathname = `${this.type.toLowerCase().replaceAll("_", "-")}/${String(this.code)}/`;
     if (this.params.length > 0) {
-      url.params.params = this.params;
+      url.pathname += this.params.map(__assignType((param) => encodeURI("" + param).replaceAll(/%7c/gi, "|").replaceAll("#", "%23").replaceAll("?", "%3F").replaceAll(/%252f/gi, "%2F").replaceAll("&", "%26").replaceAll("+", "%2B").replaceAll("/", "%2F"), ["param", "", 'P"2!"/"'])).join("/");
     }
-    return url.toEncoded();
+    return url.toString();
   }
   /**
    * Prints the display error message string
@@ -357,7 +335,7 @@ var StormError = class _StormError extends Error {
    */
   toDisplay(includeData = false) {
     return `${this.name && this.name !== this.constructor.name ? this.code ? `${this.name} ` : this.name : ""} ${this.code ? this.code && this.name ? `[${this.type} - ${this.code}]` : `${this.type} - ${this.code}` : this.name ? `[${this.type}]` : this.type}: Please review the details of this error at the following URL: ${this.url}${includeData && this.data ? `
-Data: ${StormJSON.stringify(this.data)}` : ""}`;
+Data: ${JSON.stringify(this.data)}` : ""}`;
   }
   /**
    * Prints the error message and stack trace
@@ -484,25 +462,45 @@ function renderBanner(title, description) {
   const consoleWidth = Math.max(process.stdout.columns - 2, 46);
   const width = Math.max(Math.min(consoleWidth, Math.max(title.length + 2, 40)), 44);
   const banner = [];
-  banner.push(colors.cyan(`\u250F\u2501\u2501\u2501\u2501 examples-cli \u2501\u2501 v0.0.1 ${"\u2501".repeat(width - 10 - 17)}\u2513`));
+  banner.push(colors.cyan(`\u250F\u2501\u2501\u2501\u2501 Examples CLI \u2501\u2501 v0.0.1 ${"\u2501".repeat(width - 10 - 17)}\u2513`));
   banner.push(colors.cyan(`\u2503${" ".repeat(width)}\u2503`));
-  banner.push(`${colors.cyan("\u2503")}${" ".repeat((width - 16) / 2)}${colors.whiteBright(colors.bold("Examples CLI App"))}${" ".repeat((width - 16) / 2)}${colors.cyan("\u2503")}`);
   banner.push(`${colors.cyan("\u2503")}${" ".repeat((width - title.length) / 2)}${colors.whiteBright(colors.bold(title))}${" ".repeat((width - title.length) / 2)}${colors.cyan("\u2503")}`);
   banner.push(colors.cyan(`\u2503${" ".repeat(width)}\u2503`));
   banner.push(`${colors.cyan("\u2503")}${colors.dim(description.length < width - 2 ? `${" ".repeat((width - description.length) / 2)}${description}${" ".repeat((width - description.length) / 2)}` : description.split(" ").reduce(__assignType2((ret, word) => {
     const lines = ret.split("\n");
-    if (lines[lines.length - 1].length + word.length > width - 2) {
+    if (lines.length > 1 && lines[lines.length - 1].length + word.length > width - 2) {
       ret += "\n";
     }
     ret += `${word} `;
     return ret;
   }, ["ret", "word", "", 'P"2!"2""/#']), "").trim())} ${colors.cyan("\u2503")}`);
   banner.push(colors.cyan(`\u2503${" ".repeat(width)}\u2503`));
-  banner.push(colors.cyan(`\u2517${"\u2501".repeat(width)}\u251B`));
+  banner.push(colors.cyan(`\u2517${"\u2501".repeat(width - 7 - 14)}\u2501 ${link("https://stormsoftware.com", "Storm Software")} \u2501\u2501\u2501\u2501\u251B`));
   return banner.map(__assignType2((line) => `${" ".repeat((consoleWidth - line.length) / 2)}${line}${" ".repeat((consoleWidth - line.length) / 2)}`, ["line", "", 'P"2!"/"'])).join("\n");
 }
 __name(renderBanner, "renderBanner");
 renderBanner.__type = ["title", "description", "renderBanner", "Renders a CLI banner with the specified title.", 'P&2!&2"&/#?$'];
+function renderFooter() {
+  const consoleWidth = Math.max(process.stdout.columns - 2, 46);
+  let supportRow = `You can reach out to the Storm Software - Support team via ${link("https://stormsoftware.com/support", "our website's support page")}.`;
+  const supportRowLength = stripAnsi(supportRow).length;
+  const footer = [];
+  footer.push(`
+  ${colors.bold("Links:")}`);
+  footer.push(`    ${colors.bold(link("Homepage:"))}https://stormsoftware.com`);
+  footer.push(`    ${colors.bold(link("Support:"))}https://stormsoftware.com/support`);
+  footer.push(`    ${colors.bold(link("Contact:"))}https://stormsoftware.com/contact`);
+  footer.push(`    ${colors.bold(link("Documentation:"))}https://stormsoftware.com/docs`);
+  footer.push(`    ${colors.bold(link("Repository:"))}https://github.com/storm-software/storm-stack`);
+  footer.push("\n");
+  footer.push(`${" ".repeat((consoleWidth - 98) / 2)}Examples CLI is authored and maintained by ${link("https://stormsoftware.com", "Storm Software")}.${" ".repeat((consoleWidth - 98) / 2)}`);
+  if (supportRow) {
+    footer.push(`${" ".repeat((consoleWidth - supportRowLength) / 2)}${supportRow}${" ".repeat((consoleWidth - supportRowLength) / 2)}`);
+  }
+  return footer.join("\n");
+}
+__name(renderFooter, "renderFooter");
+renderFooter.__type = ["renderFooter", "Renders a CLI footer with the application details", 'P&/!?"'];
 var __\u03A9SelectOption = ["label", "value", "hint", "// Command-line prompt utilities", "SelectOption", 'P&4!&4"&4#8M?$w%y'];
 var CANCEL_SYMBOL = Symbol.for("cancel");
 var __\u03A9PromptCommonOptions = ["reject", "default", "undefined", "null", "symbol", "cancel", 'Specify how to handle a cancelled prompt (e.g. by pressing Ctrl+C).\n\nDefault strategy is `"default"`.\n\n- `"default"` - Resolve the promise with the `default` value or `initial` value.\n- `"undefined`" - Resolve the promise with `undefined`.\n- `"null"` - Resolve the promise with `null`.\n- `"symbol"` - Resolve the promise with a symbol `Symbol.for("cancel")`.\n- `"reject"`  - Reject the promise with an error.', "PromptCommonOptions", `PP.!.".#.$.%J4&8?'Mw(y`];

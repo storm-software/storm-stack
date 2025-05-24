@@ -47,20 +47,7 @@ export async function initUnimport<TOptions extends Options = Options>(
   );
   context.unimportPresets = [
     {
-      imports: ["StormJSON"],
-      from: "@stryke/json"
-    },
-    {
-      imports: ["StormURL"],
-      from: "@stryke/url"
-    },
-    {
-      imports: [
-        "StormError",
-        "createStormError",
-        "isStormError",
-        "getErrorFromUnknown"
-      ],
+      imports: ["StormError", "createStormError", "isStormError"],
       from: joinPaths(runtimeDir, "error")
     },
     {

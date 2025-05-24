@@ -8,7 +8,7 @@
 import { deserialize } from "@deepkit/type";
 import handle from "handle";
 import { withContext } from "../../../runtime/app";
-import { colors, renderBanner } from "../../../runtime/cli";
+import { colors, renderBanner, renderFooter } from "../../../runtime/cli";
 import { getRuntimeInfo } from "../../../runtime/env";
 
 export interface VarsListPayload {
@@ -115,6 +115,8 @@ async function handler() {
 
       if (args["help"] || args["h"] || args["?"]) {
         console.log(renderUsage(true));
+        console.log("");
+        console.log(renderFooter());
         console.log("");
       } else {
         if (isVerbose) {

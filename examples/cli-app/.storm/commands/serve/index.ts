@@ -9,7 +9,7 @@ import { deserialize } from "@deepkit/type";
 import handle from "../../../src/commands/serve";
 import { ServePayload } from "../../../src/types";
 import { withContext } from "../../runtime/app";
-import { colors, prompt, renderBanner } from "../../runtime/cli";
+import { colors, prompt, renderBanner, renderFooter } from "../../runtime/cli";
 import { getRuntimeInfo } from "../../runtime/env";
 
 /**
@@ -126,6 +126,8 @@ async function handler() {
 
       if (args["help"] || args["h"] || args["?"]) {
         console.log(renderUsage(true));
+        console.log("");
+        console.log(renderFooter());
         console.log("");
       } else {
         if (isVerbose) {

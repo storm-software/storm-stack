@@ -58,9 +58,8 @@ declare module "storm:error" {
 
   const createStormError: (typeof import("../runtime/error"))["createStormError"];
   const isStormError: (typeof import("../runtime/error"))["isStormError"];
-  const getErrorFromUnknown: (typeof import("../runtime/error"))["getErrorFromUnknown"];
 
-  export { StormError, createStormError, getErrorFromUnknown, isStormError };
+  export { StormError, createStormError, isStormError };
 }
 
 declare module "storm:payload" {

@@ -42,7 +42,7 @@ export const STORM_ASYNC_CONTEXT = getContext<StormContext>(STORM_CONTEXT_KEY, {
  * Get the Storm context for the current application.
  *
  * @returns The Storm context for the current application.
- * @throws {StormError} If the Storm context is not available.
+ * @throws If the Storm context is not available.
  */
 export function useStorm(): StormContext {
   try {

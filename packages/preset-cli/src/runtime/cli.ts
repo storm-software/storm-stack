@@ -349,6 +349,8 @@ function stripAnsi(text: string) {
  * @param title - The title to display in the banner.
  * @param description - The description to display in the banner.
  * @returns The rendered banner as a string.
+ *
+ * @internal
  */
 export function renderBanner(title: string, description: string): string {
   const consoleWidth = Math.max(process.stdout.columns - 2, 46);
@@ -368,7 +370,7 @@ export function renderBanner(title: string, description: string): string {
       ? \`\${" ".repeat((width - description.length) / 2)}\${description}\${" ".repeat((width - description.length) / 2)}\`
       : description.split(" ").reduce((ret, word) => {
           const lines = ret.split("\\n");
-          if (lines[lines.length - 1].length + word.length > width - 2) {
+          if (lines.length > 1 && lines[lines.length - 1]!.length + word.length > width - 2) {
             ret += "\\n";
           }
 
@@ -393,6 +395,8 @@ export function renderBanner(title: string, description: string): string {
  * @param title - The title to display in the footer.
  * @param description - The description to display in the footer.
  * @returns The rendered footer as a string.
+ *
+ * @internal
  */
 export function renderFooter(): string {
   const consoleWidth = Math.max(process.stdout.columns - 2, 46);
@@ -422,7 +426,7 @@ export function renderFooter(): string {
 
   const footer = [] as string[];
   footer.push(\`\\n  \${colors.bold("Links:")}\`);
-  ${linksColumn1.map((line, i) => `\`    ${`\${colors.bold(link("${line}"))}`.padEnd(linksMaxLength)}${linksColumn2[i]}\``).join(" \n")}
+  ${linksColumn1.map((line, i) => `footer.push(\`    ${`\${colors.bold(link("${line}"))}`.padEnd(linksMaxLength)}${linksColumn2[i]}\`);`).join(" \n")}
 
   footer.push("\\n");
   footer.push(\`\${" ".repeat((consoleWidth - ${footerHeaderLength}) / 2)}${footerHeader}\${" ".repeat((consoleWidth - ${footerHeaderLength}) / 2)}\`);
@@ -430,7 +434,7 @@ export function renderFooter(): string {
     footer.push(\`\${" ".repeat((consoleWidth - supportRowLength) / 2)}\${supportRow}\${" ".repeat((consoleWidth - supportRowLength) / 2)}\`);
   }
 
-  return footer;
+  return footer.join("\\n");
 }
 
 ${

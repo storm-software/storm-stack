@@ -9,7 +9,7 @@ import { deserialize } from "@deepkit/type";
 import handle from "../../../src/commands/add/index";
 import { AddPayload } from "../../../src/types";
 import { withContext } from "../../runtime/app";
-import { colors, prompt, renderBanner } from "../../runtime/cli";
+import { colors, prompt, renderBanner, renderFooter } from "../../runtime/cli";
 import { getRuntimeInfo } from "../../runtime/env";
 import handlePage from "./page";
 
@@ -65,6 +65,8 @@ async function handler() {
         );
         console.log("");
         console.log(renderUsage(true));
+        console.log("");
+        console.log(renderFooter());
         console.log("");
 
         return;
@@ -132,6 +134,8 @@ async function handler() {
 
       if (args["help"] || args["h"] || args["?"]) {
         console.log(renderUsage(true));
+        console.log("");
+        console.log(renderFooter());
         console.log("");
       } else {
         if (isVerbose) {

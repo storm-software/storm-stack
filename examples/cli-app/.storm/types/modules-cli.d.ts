@@ -13,8 +13,7 @@ declare module "storm:cli" {
   const colors: (typeof import("../runtime/cli"))["colors"];
   const getColor: (typeof import("../runtime/cli"))["getColor"];
   const link: (typeof import("../runtime/cli"))["link"];
-  const renderBanner: (typeof import("../runtime/cli"))["renderBanner"];
   const prompt: (typeof import("../runtime/cli"))["prompt"];
 
-  export { colors,getColor,link,parseArgs,prompt,renderBanner };
+  export { colors,getColor,link,parseArgs,prompt };
 }

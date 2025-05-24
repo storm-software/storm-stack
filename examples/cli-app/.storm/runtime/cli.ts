@@ -198,6 +198,8 @@ function stripAnsi(text: string) {
  * @param title - The title to display in the banner.
  * @param description - The description to display in the banner.
  * @returns The rendered banner as a string.
+ *
+ * @internal
  */
 export function renderBanner(title: string, description: string): string {
   const consoleWidth = Math.max(process.stdout.columns - 2, 46);
@@ -208,12 +210,9 @@ export function renderBanner(title: string, description: string): string {
 
   const banner = [] as string[];
   banner.push(
-    colors.cyan(`┏━━━━ examples-cli ━━ v0.0.1 ${"━".repeat(width - 10 - 17)}┓`)
+    colors.cyan(`┏━━━━ Examples CLI ━━ v0.0.1 ${"━".repeat(width - 10 - 17)}┓`)
   );
   banner.push(colors.cyan(`┃${" ".repeat(width)}┃`));
-  banner.push(
-    `${colors.cyan("┃")}${" ".repeat((width - 16) / 2)}${colors.whiteBright(colors.bold("Examples CLI App"))}${" ".repeat((width - 16) / 2)}${colors.cyan("┃")}`
-  );
   banner.push(
     `${colors.cyan("┃")}${" ".repeat((width - title.length) / 2)}${colors.whiteBright(colors.bold(title))}${" ".repeat((width - title.length) / 2)}${colors.cyan("┃")}`
   );
@@ -226,7 +225,10 @@ export function renderBanner(title: string, description: string): string {
             .split(" ")
             .reduce((ret, word) => {
               const lines = ret.split("\n");
-              if (lines[lines.length - 1].length + word.length > width - 2) {
+              if (
+                lines.length > 1 &&
+                lines[lines.length - 1]!.length + word.length > width - 2
+              ) {
                 ret += "\n";
               }
 
@@ -237,7 +239,11 @@ export function renderBanner(title: string, description: string): string {
     )} ${colors.cyan("┃")}`
   );
   banner.push(colors.cyan(`┃${" ".repeat(width)}┃`));
-  banner.push(colors.cyan(`┗${"━".repeat(width)}┛`));
+  banner.push(
+    colors.cyan(
+      `┗${"━".repeat(width - 7 - 14)}━ ${link("https://stormsoftware.com", "Storm Software")} ━━━━┛`
+    )
+  );
 
   return banner
     .map(
@@ -245,6 +251,50 @@ export function renderBanner(title: string, description: string): string {
         `${" ".repeat((consoleWidth - line.length) / 2)}${line}${" ".repeat((consoleWidth - line.length) / 2)}`
     )
     .join("\n");
+}
+
+/**
+ * Renders a CLI footer with the application details
+ *
+ * @param title - The title to display in the footer.
+ * @param description - The description to display in the footer.
+ * @returns The rendered footer as a string.
+ *
+ * @internal
+ */
+export function renderFooter(): string {
+  const consoleWidth = Math.max(process.stdout.columns - 2, 46);
+
+  let supportRow = `You can reach out to the Storm Software - Support team via ${link("https://stormsoftware.com/support", "our website's support page")}.`;
+  const supportRowLength = stripAnsi(supportRow).length;
+
+  const footer = [] as string[];
+  footer.push(`\n  ${colors.bold("Links:")}`);
+  footer.push(`    ${colors.bold(link("Homepage:"))}https://stormsoftware.com`);
+  footer.push(
+    `    ${colors.bold(link("Support:"))}https://stormsoftware.com/support`
+  );
+  footer.push(
+    `    ${colors.bold(link("Contact:"))}https://stormsoftware.com/contact`
+  );
+  footer.push(
+    `    ${colors.bold(link("Documentation:"))}https://stormsoftware.com/docs`
+  );
+  footer.push(
+    `    ${colors.bold(link("Repository:"))}https://github.com/storm-software/storm-stack`
+  );
+
+  footer.push("\n");
+  footer.push(
+    `${" ".repeat((consoleWidth - 98) / 2)}Examples CLI is authored and maintained by ${link("https://stormsoftware.com", "Storm Software")}.${" ".repeat((consoleWidth - 98) / 2)}`
+  );
+  if (supportRow) {
+    footer.push(
+      `${" ".repeat((consoleWidth - supportRowLength) / 2)}${supportRow}${" ".repeat((consoleWidth - supportRowLength) / 2)}`
+    );
+  }
+
+  return footer.join("\n");
 }
 
 // Command-line prompt utilities

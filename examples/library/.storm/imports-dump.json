@@ -1,6 +1,4 @@
 [
-  { "from": "@stryke/json", "name": "StormJSON", "as": "StormJSON" },
-  { "from": "@stryke/url", "name": "StormURL", "as": "StormURL" },
   {
     "from": "examples/library/.storm/runtime/error",
     "name": "StormError",
@@ -15,11 +13,6 @@
     "from": "examples/library/.storm/runtime/error",
     "name": "isStormError",
     "as": "isStormError"
-  },
-  {
-    "from": "examples/library/.storm/runtime/error",
-    "name": "getErrorFromUnknown",
-    "as": "getErrorFromUnknown"
   },
   {
     "from": "examples/library/.storm/runtime/payload",

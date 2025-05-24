@@ -11,13 +11,11 @@ IStormError,
 ParsedStacktrace,
 StormErrorOptions
 } from "@storm-stack/types/error";
-import { StormJSON } from "@stryke/json/storm-json";
 import { isError } from "@stryke/type-checks/is-error";
 import { isFunction } from "@stryke/type-checks/is-function";
 import { isObject } from "@stryke/type-checks/is-object";
 import { isSetString } from "@stryke/type-checks/is-set-string";
 import type { Indexable } from "@stryke/types";
-import { StormURL } from "@stryke/url/storm-url";
 
 /**
  * Get the default error code for the given error type.
@@ -35,7 +33,7 @@ export function getDefaultCode(_type: ErrorType): number {
  * @param type - The error type.
  * @returns The default error name.
  */
-export function getDefaultErrorNameFromErrorType(type: ErrorType): string {
+export function getDefaultErrorName(type: ErrorType): string {
   switch (type) {
     case "not_found":
       return "Not Found Error";
@@ -55,51 +53,14 @@ export function getDefaultErrorNameFromErrorType(type: ErrorType): string {
 }
 
 /**
- * Creates a new StormError instance
- *
- * @param cause - The cause of the error
- * @returns The newly created StormError
- */
-export function createStormError({
-  code,
-  name,
-  type,
-  cause,
-  stack,
-  data
-}: StormErrorOptions): StormError {
-  if (isStormError(cause)) {
-    return cause;
-  }
-
-  if (cause instanceof Error && cause.name === "StormError") {
-    return cause as StormError;
-  }
-
-  const error = new StormError({
-    name,
-    type,
-    code,
-    cause,
-    stack,
-    data
-  });
-
-  // Inherit stack from error
-  if (cause instanceof Error && cause.stack) {
-    error.stack = cause.stack;
-  }
-
-  return error;
-}
-
-/**
- * Gets the cause of an unknown error and returns it as a StormError
+ * Creates a new {@link StormError} instance from an unknown cause value
  *
  * @param cause - The cause of the error in an unknown type
- * @returns The cause of the error in a StormError object or undefined
+ * @param type - The type of the error
+ * @param data - Additional data to be passed with the error
+ * @returns The cause of the error in a {@link StormError} object
  */
-export function getErrorFromUnknown(
+export function createStormError(
   cause: unknown,
   type: ErrorType = "general",
   data?: any
@@ -112,12 +73,16 @@ export function getErrorFromUnknown(
   }
 
   if (isError(cause)) {
-    return createStormError({
+    if (isStormError(cause) || cause.name === "StormError") {
+      return cause as StormError;
+    }
+
+    return new StormError({
+      type,
       code: getDefaultCode(type),
       name: cause.name,
-      cause,
       stack: cause.stack,
-      type,
+      cause,
       data
     });
   }
@@ -125,7 +90,7 @@ export function getErrorFromUnknown(
   const causeType = typeof cause;
   if (causeType === "undefined" || causeType === "function" || cause === null) {
     return new StormError({
-      name: getDefaultErrorNameFromErrorType(type),
+      name: getDefaultErrorName(type),
       code: getDefaultCode(type),
       cause,
       type,
@@ -136,7 +101,7 @@ export function getErrorFromUnknown(
   // Primitive types just get wrapped in an error
   if (causeType !== "object") {
     return new StormError({
-      name: getDefaultErrorNameFromErrorType(type),
+      name: getDefaultErrorName(type),
       code: getDefaultCode(type),
       type,
       data
@@ -146,7 +111,7 @@ export function getErrorFromUnknown(
   // If it's an object, we'll create a synthetic error
   if (isObject(cause)) {
     const err = new StormError({
-      name: getDefaultErrorNameFromErrorType(type),
+      name: getDefaultErrorName(type),
       code: getDefaultCode(type),
       type,
       data
@@ -161,7 +126,7 @@ export function getErrorFromUnknown(
   }
 
   return new StormError({
-    name: getDefaultErrorNameFromErrorType(type),
+    name: getDefaultErrorName(type),
     code: getDefaultCode(type),
     cause,
     type,
@@ -259,8 +224,7 @@ export class StormError extends Error implements IStormError {
         this.#stack = new Error("").stack;
       }
 
-      this.name =
-        optionsOrMessage.name || getDefaultErrorNameFromErrorType(this.type);
+      this.name = optionsOrMessage.name || getDefaultErrorName(this.type);
       this.data = optionsOrMessage.data;
       this.cause ??= optionsOrMessage.cause;
     }
@@ -279,7 +243,7 @@ export class StormError extends Error implements IStormError {
    * The cause of the error
    */
   public override set cause(cause: unknown) {
-    this.#cause = getErrorFromUnknown(cause, this.type, this.data);
+    this.#cause = createStormError(cause, this.type, this.data);
     if (this.#cause.stack) {
       this.#stack = this.#cause.stack;
     }
@@ -381,15 +345,25 @@ export class StormError extends Error implements IStormError {
    * A URL to a page that displays the error message details
    */
   public get url(): string {
-    const url = new StormURL($storm.vars.ERROR_URL!);
-    url.paths.push(this.type.toLowerCase().replaceAll("_", "-"));
-    url.paths.push(String(this.code));
+    const url = new URL($storm.vars.ERROR_URL!);
+    url.pathname = `${this.type.toLowerCase().replaceAll("_", "-")}/${String(this.code)}/`;
 
     if (this.params.length > 0) {
-      url.params.params = this.params;
+      url.pathname += this.params
+        .map(param =>
+          encodeURI("" + param)
+            .replaceAll(/%7c/gi, "|")
+            .replaceAll("#", "%23")
+            .replaceAll("?", "%3F")
+            .replaceAll(/%252f/gi, "%2F")
+            .replaceAll("&", "%26")
+            .replaceAll("+", "%2B")
+            .replaceAll("/", "%2F")
+        )
+        .join("/");
     }
 
-    return url.toEncoded();
+    return url.toString();
   }
 
   /**
@@ -410,7 +384,7 @@ export class StormError extends Error implements IStormError {
     }: Please review the details of this error at the following URL: ${this.url}${
       includeData && this.data
         ? `
-Data: ${StormJSON.stringify(this.data)}`
+Data: ${JSON.stringify(this.data)}`
         : ""
     }`;
   }

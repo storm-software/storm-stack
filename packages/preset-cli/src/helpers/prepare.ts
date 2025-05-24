@@ -1070,15 +1070,14 @@ declare module "storm:cli" {
   const parseArgs: (typeof import("${relativeCLIRuntimeDir}"))["parseArgs"];
   const colors: (typeof import("${relativeCLIRuntimeDir}"))["colors"];
   const getColor: (typeof import("${relativeCLIRuntimeDir}"))["getColor"];
-  const link: (typeof import("${relativeCLIRuntimeDir}"))["link"];
-  const renderBanner: (typeof import("${relativeCLIRuntimeDir}"))["renderBanner"];${
+  const link: (typeof import("${relativeCLIRuntimeDir}"))["link"];${
     config.interactive !== "never"
       ? `
   const prompt: (typeof import("${relativeCLIRuntimeDir}"))["prompt"];`
       : ""
   }
 
-  export {${config.interactive !== "never" ? " prompt," : ""} parseArgs, colors, getColor, link, renderBanner };
+  export {${config.interactive !== "never" ? " prompt," : ""} parseArgs, colors, getColor, link };
 }
 
 `

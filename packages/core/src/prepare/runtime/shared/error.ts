@@ -21,173 +21,138 @@ import { getFileHeader } from "../../../helpers/utilities/file-header";
 export function writeError() {
   return `${getFileHeader()}
 
- import { StormJSON } from "@stryke/json/storm-json";
- import { StormURL } from "@stryke/url/storm-url";
- import type {
+import type {
   ErrorMessageDetails,
   Indexable,
   MessageType
 } from "@stryke/types";
- import { isError } from "@stryke/type-checks/is-error";
- import { isFunction } from "@stryke/type-checks/is-function";
- import { isObject } from "@stryke/type-checks/is-object";
- import { isSetString } from "@stryke/type-checks/is-set-string";
- import type {
-   ErrorType,
-   IStormError,
-   ParsedStacktrace,
-   StormErrorOptions
- } from "@storm-stack/types/error";
+import { isError } from "@stryke/type-checks/is-error";
+import { isFunction } from "@stryke/type-checks/is-function";
+import { isObject } from "@stryke/type-checks/is-object";
+import { isSetString } from "@stryke/type-checks/is-set-string";
+import type {
+  ErrorType,
+  IStormError,
+  ParsedStacktrace,
+  StormErrorOptions
+} from "@storm-stack/types/error";
+
+/**
+* Get the default error code for the given error type.
+*
+* @param _type - The error type.
+* @returns The default error code.
+*/
+export function getDefaultCode(_type: ErrorType): number {
+  return 1;
+}
+
+/**
+* Get the default error name for the given error type.
+*
+* @param type - The error type.
+* @returns The default error name.
+*/
+export function getDefaultErrorName(type: ErrorType): string {
+  switch (type) {
+    case "not_found":
+      return "Not Found Error";
+    case "validation":
+      return "Validation Error";
+    case "service_unavailable":
+      return "System Unavailable Error";
+    case "action_unsupported":
+      return "Unsupported Error";
+    case "security":
+      return "Security Error";
+    case "general":
+    case "unknown":
+    default:
+      return "System Error";
+  }
+}
 
  /**
-  * Get the default error code for the given error type.
-  *
-  * @param _type - The error type.
-  * @returns The default error code.
-  */
- export function getDefaultCode(_type: ErrorType): number {
-   return 1;
- }
-
- /**
-  * Get the default error name for the given error type.
-  *
-  * @param type - The error type.
-  * @returns The default error name.
-  */
- export function getDefaultErrorNameFromErrorType(type: ErrorType): string {
-   switch (type) {
-     case "not_found":
-       return "Not Found Error";
-     case "validation":
-       return "Validation Error";
-     case "service_unavailable":
-       return "System Unavailable Error";
-     case "action_unsupported":
-       return "Unsupported Error";
-     case "security":
-       return "Security Error";
-     case "general":
-     case "unknown":
-     default:
-       return "System Error";
-   }
- }
-
- /**
-  * Creates a new StormError instance
-  *
-  * @param cause - The cause of the error
-  * @returns The newly created StormError
-  */
- export function createStormError({
-   code,
-   name,
-   type,
-   cause,
-   stack,
-   data
- }: StormErrorOptions): StormError {
-   if (isStormError(cause)) {
-     return cause;
-   }
-
-   if (cause instanceof Error && cause.name === "StormError") {
-     return cause as StormError;
-   }
-
-   const error = new StormError({
-     name,
-     type,
-     code,
-     cause,
-     stack,
-     data
-   });
-
-   // Inherit stack from error
-   if (cause instanceof Error && cause.stack) {
-     error.stack = cause.stack;
-   }
-
-   return error;
- }
-
- /**
-  * Gets the cause of an unknown error and returns it as a StormError
+  * Creates a new {@link StormError} instance from an unknown cause value
   *
   * @param cause - The cause of the error in an unknown type
-  * @returns The cause of the error in a StormError object or undefined
+  * @param type - The type of the error
+  * @param data - Additional data to be passed with the error
+  * @returns The cause of the error in a {@link StormError} object
   */
- export function getErrorFromUnknown(
-   cause: unknown,
-   type: ErrorType = "general",
-   data?: any
- ): StormError {
-   if (isStormError(cause)) {
-     const result = cause;
-     result.data ??= data;
+export function createStormError(
+  cause: unknown,
+  type: ErrorType = "general",
+  data?: any
+): StormError {
+  if (isStormError(cause)) {
+    const result = cause;
+    result.data ??= data;
 
-     return result;
-   }
+    return result;
+  }
 
-   if (isError(cause)) {
-     return createStormError({
-       code: getDefaultCode(type),
-       name: cause.name,
-       cause,
-       stack: cause.stack,
-       type,
-       data
-     });
-   }
+  if (isError(cause)) {
+    if (isStormError(cause) || cause.name === "StormError") {
+      return cause as StormError;
+    }
 
-   const causeType = typeof cause;
-   if (causeType === "undefined" || causeType === "function" || cause === null) {
-     return new StormError({
-       name: getDefaultErrorNameFromErrorType(type),
-       code: getDefaultCode(type),
-       cause,
-       type,
-       data
-     });
-   }
+    return new StormError({
+      type,
+      code: getDefaultCode(type),
+      name: cause.name,
+      stack: cause.stack,
+      cause,
+      data
+    });
+  }
 
-   // Primitive types just get wrapped in an error
-   if (causeType !== "object") {
-     return new StormError({
-       name: getDefaultErrorNameFromErrorType(type),
-       code: getDefaultCode(type),
-       type,
-       data
-     });
-   }
+  const causeType = typeof cause;
+  if (causeType === "undefined" || causeType === "function" || cause === null) {
+    return new StormError({
+      name: getDefaultErrorName(type),
+      code: getDefaultCode(type),
+      cause,
+      type,
+      data
+    });
+  }
 
-   // If it's an object, we'll create a synthetic error
-   if (isObject(cause)) {
-     const err = new StormError({
-       name: getDefaultErrorNameFromErrorType(type),
-       code: getDefaultCode(type),
-       type,
-       data
-     });
+  // Primitive types just get wrapped in an error
+  if (causeType !== "object") {
+    return new StormError({
+      name: getDefaultErrorName(type),
+      code: getDefaultCode(type),
+      type,
+      data
+    });
+  }
 
-     for (const key of Object.keys(cause)) {
-       // eslint-disable-next-line ts/no-unsafe-assignment
-       (err as Indexable)[key] = (cause as Indexable)[key];
-     }
+  // If it's an object, we'll create a synthetic error
+  if (isObject(cause)) {
+    const err = new StormError({
+      name: getDefaultErrorName(type),
+      code: getDefaultCode(type),
+      type,
+      data
+    });
 
-     return err;
-   }
+    for (const key of Object.keys(cause)) {
+      // eslint-disable-next-line ts/no-unsafe-assignment
+      (err as Indexable)[key] = (cause as Indexable)[key];
+    }
 
-   return new StormError({
-     name: getDefaultErrorNameFromErrorType(type),
-     code: getDefaultCode(type),
-     cause,
-     type,
-     data
-   });
- }
+    return err;
+  }
+
+  return new StormError({
+    name: getDefaultErrorName(type),
+    code: getDefaultCode(type),
+    cause,
+    type,
+    data
+  });
+}
 
  /**
   * Type-check to determine if \`obj\` is a \`StormError\` object
@@ -277,7 +242,7 @@ export function writeError() {
          this.#stack = new Error("").stack;
        }
 
-       this.name = optionsOrMessage.name || getDefaultErrorNameFromErrorType(this.type);
+       this.name = optionsOrMessage.name || getDefaultErrorName(this.type);
        this.data = optionsOrMessage.data;
        this.cause ??= optionsOrMessage.cause;
      }
@@ -296,7 +261,7 @@ export function writeError() {
     * The cause of the error
     */
    public override set cause(cause: unknown) {
-     this.#cause = getErrorFromUnknown(cause, this.type, this.data);
+     this.#cause = createStormError(cause, this.type, this.data);
      if (this.#cause.stack) {
        this.#stack = this.#cause.stack;
      }
@@ -399,15 +364,22 @@ export function writeError() {
    * A URL to a page that displays the error message details
    */
   public get url(): string {
-    const url = new StormURL($storm.vars.ERROR_URL!);
-    url.paths.push(this.type.toLowerCase().replaceAll("_", "-"));
-    url.paths.push(String(this.code));
+    const url = new URL($storm.vars.ERROR_URL!);
+    url.pathname = \`\${this.type.toLowerCase().replaceAll("_", "-")}/\${String(this.code)}/\`;
 
     if (this.params.length > 0) {
-      url.params.params = this.params;
+      url.pathname += this.params.map(param => encodeURI("" + param)
+        .replaceAll(/%7c/gi, "|")
+        .replaceAll("#", "%23")
+        .replaceAll("?", "%3F")
+        .replaceAll(/%252f/gi, "%2F")
+        .replaceAll("&", "%26")
+        .replaceAll("+", "%2B")
+        .replaceAll("/", "%2F")
+      ).join("/");
     }
 
-    return url.toEncoded();
+    return url.toString();
   }
 
   /**
@@ -428,7 +400,7 @@ export function writeError() {
     }: Please review the details of this error at the following URL: \${this.url}\${
       includeData && this.data
         ? \`
-Data: \${StormJSON.stringify(this.data)}\`
+Data: \${JSON.stringify(this.data)}\`
         : ""
     }\`;
   }

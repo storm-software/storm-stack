@@ -39,7 +39,7 @@ import { isError } from "@stryke/type-checks/is-error";
 import type { StormEnv } from "@storm-stack/types/env";
 import { STORM_ASYNC_CONTEXT } from "./context";
 import { getBuildInfo, getRuntimeInfo } from "./env";
-import { getErrorFromUnknown, StormError } from "./error";
+import { createStormError, StormError } from "./error";
 import { StormEvent } from "./event";
 import { uniqueId } from "./id";
 import { StormPayload } from "./payload";
@@ -142,9 +142,9 @@ export function withContext<TInput = any, TOutput = any>(
           }
 
           return StormResult.create(ret);
-        } catch (e) {
-          context.log.fatal(getErrorFromUnknown(e));
-          return StormResult.create(error);
+        } catch (err) {
+          context.log.fatal(createStormError(err));
+          return StormResult.create(err);
         }
       }
     );

@@ -33,8 +33,6 @@ export function getSharedDeps<TOptions extends Options = Options>(
 
   if (context.options.projectType === "application") {
     context.installs["@stryke/type-checks"] = "dependency";
-    context.installs["@stryke/json"] = "dependency";
-    context.installs["@stryke/url"] = "dependency";
     context.installs.unstorage = "dependency";
   }
 

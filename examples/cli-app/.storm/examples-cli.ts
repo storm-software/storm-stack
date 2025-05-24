@@ -11,7 +11,7 @@ import { isError } from "@stryke/type-checks/is-error";
 import handleAdd, { renderUsage as renderAddUsage } from "./commands/add";
 import handleServe, { renderUsage as renderServeUsage } from "./commands/serve";
 import handleVars, { renderUsage as renderVarsUsage } from "./commands/vars";
-import { colors, renderBanner } from "./runtime/cli";
+import { colors, renderBanner, renderFooter } from "./runtime/cli";
 import { getRuntimeInfo } from "./runtime/env";
 
 async function main() {
@@ -72,6 +72,8 @@ async function main() {
           .map(line => `  ${line}`)
           .join("\n")
       );
+      console.log("");
+      console.log(renderFooter());
       console.log("");
     }
   } catch (err) {

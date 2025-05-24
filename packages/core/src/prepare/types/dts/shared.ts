@@ -67,26 +67,6 @@ export function generateSharedGlobal(path: string) {
 `)}
 
 declare global {
-  const StormJSON: (typeof import("@stryke/json"))["StormJSON"];
-  type StormJSON = import("@stryke/json").StormJSON;
-
-  const StormURL: (typeof import("@stryke/url"))["StormURL"];
-  type StormURL = import("@stryke/url").StormURL;
-
-  const parseCookie: (typeof import("@stryke/http"))["parseCookie"];
-  type parseCookie = import("@stryke/http").parseCookie;
-
-  const parseSetCookie: (typeof import("@stryke/http"))["parseSetCookie"];
-  type parseSetCookie = import("@stryke/http").parseSetCookie;
-
-  const serializeCookie: (typeof import("@stryke/http"))["serializeCookie"];
-  type serializeCookie = import("@stryke/http").serializeCookie;
-
-  const splitSetCookieString: (typeof import("@stryke/http"))[
-    "splitSetCookieString"
-  ];
-  type splitSetCookieString = import("@stryke/http").splitSetCookieString;
-
   const StormLog: (typeof import("${path}/log"))["StormLog"];
   type StormLog = import("${path}/log").StormLog;
 
@@ -111,9 +91,6 @@ declare global {
 
   const createStormError: (typeof import("${path}/error"))["createStormError"];
   const isStormError: (typeof import("${path}/error"))["isStormError"];
-  const getErrorFromUnknown: (typeof import("${path}/error"))[
-    "getErrorFromUnknown"
-  ];
 
   const _StormPayload: (typeof import("${path}/payload"))["StormPayload"];
   class StormPayload<
@@ -219,15 +196,11 @@ declare module "storm:error" {
 
   const createStormError: (typeof import("${path}/error"))["createStormError"];
   const isStormError: (typeof import("${path}/error"))["isStormError"];
-  const getErrorFromUnknown: (typeof import("${path}/error"))[
-    "getErrorFromUnknown"
-  ];
 
   export {
     StormError,
     createStormError,
-    isStormError,
-    getErrorFromUnknown
+    isStormError
   };
 }
 
