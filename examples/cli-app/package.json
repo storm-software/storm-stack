@@ -20,10 +20,10 @@
   },
   "devDependencies": {
     "@storm-stack/core": "workspace:*",
-    "@storm-stack/nx": "workspace:*",
-    "@storm-stack/plugin-log-console": "workspace:*",
-    "@storm-stack/plugin-log-sentry": "workspace:*",
-    "@storm-stack/preset-cli": "workspace:*"
+    "@storm-stack/nx": "0.11.2",
+    "@storm-stack/plugin-log-console": "0.11.2",
+    "@storm-stack/plugin-log-sentry": "0.15.2",
+    "@storm-stack/preset-cli": "0.13.1"
   },
   "storm": {
     "plugins": [

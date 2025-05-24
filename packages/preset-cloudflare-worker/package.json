@@ -1,6 +1,6 @@
 {
   "name": "@storm-stack/preset-cloudflare-worker",
-  "version": "0.12.1",
+  "version": "0.12.2",
   "type": "module",
   "description": "A Storm Stack build preset for Cloudflare Workers",
   "repository": {

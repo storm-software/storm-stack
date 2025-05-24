@@ -2,6 +2,12 @@
 
 # Changelog for Storm Stack - Preset Cloudflare Worker
 
+## [0.12.2](https://github.com/storm-software/storm-stack/releases/tag/preset-cloudflare-worker%400.12.2) (2025-05-24)
+
+### Miscellaneous
+
+- **monorepo:** Update workspace package links
+
 ## [0.12.1](https://github.com/storm-software/storm-stack/releases/tag/preset-cloudflare-worker%400.12.1) (2025-05-23)
 
 ### Miscellaneous
