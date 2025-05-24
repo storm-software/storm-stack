@@ -138,7 +138,7 @@ export function withContext<TInput = any, TOutput = any>(
 
 --------------------------------------
 
-${reason.toDisplay()}
+  ${reason.toDisplay()}
 
 Application Name: ${context.name}
 Application Version: ${context.version}
