@@ -2,6 +2,17 @@
 
 # Changelog for Storm Stack - Preset Cli
 
+## [0.13.0](https://github.com/storm-software/storm-stack/releases/tag/preset-cli%400.13.0) (2025-05-24)
+
+### Features
+
+- **core:** Minimize required external depdendencies
+
+### Updated Dependencies
+
+- Updated core to 0.21.0
+- Updated core to 0.21.0
+
 ## [0.12.0](https://github.com/storm-software/storm-stack/releases/tag/preset-cli%400.12.0) (2025-05-23)
 
 ### Features

@@ -19,10 +19,10 @@
   },
   "devDependencies": {
     "@cloudflare/workers-types": "catalog:",
-    "@storm-stack/core": "0.20.0",
-    "@storm-stack/nx": "0.11.1",
-    "@storm-stack/plugin-log-console": "0.11.1",
-    "@storm-stack/preset-cloudflare-worker": "0.12.1",
+    "@storm-stack/core": "0.21.0",
+    "@storm-stack/nx": "workspace:*",
+    "@storm-stack/plugin-log-console": "workspace:*",
+    "@storm-stack/preset-cloudflare-worker": "workspace:*",
     "@stryke/types": "catalog:"
   },
   "storm": {

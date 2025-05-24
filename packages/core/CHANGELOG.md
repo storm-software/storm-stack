@@ -2,6 +2,12 @@
 
 # Changelog for Storm Stack - Core
 
+## [0.21.0](https://github.com/storm-software/storm-stack/releases/tag/core%400.21.0) (2025-05-24)
+
+### Features
+
+- **core:** Minimize required external depdendencies
+
 ## [0.20.0](https://github.com/storm-software/storm-stack/releases/tag/core%400.20.0) (2025-05-23)
 
 ### Features

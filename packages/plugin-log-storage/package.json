@@ -86,8 +86,8 @@
     }
   },
   "dependencies": {
-    "@storm-stack/core": "0.20.0",
-    "@storm-stack/devkit": "0.5.1",
+    "@storm-stack/core": "0.21.0",
+    "@storm-stack/devkit": "workspace:*",
     "unstorage": "catalog:"
   },
   "devDependencies": {
