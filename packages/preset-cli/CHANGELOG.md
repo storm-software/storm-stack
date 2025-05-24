@@ -2,6 +2,23 @@
 
 # Changelog for Storm Stack - Preset Cli
 
+## [0.12.0](https://github.com/storm-software/storm-stack/releases/tag/preset-cli%400.12.0) (2025-05-23)
+
+### Features
+
+- **cli:** Added the banner and footer to shared runtime module
+
+### Miscellaneous
+
+- **monorepo:** Update the workspace package links
+
+### Updated Dependencies
+
+- Updated devkit to 0.5.1
+- Updated devkit to 0.5.1
+- Updated core to 0.20.0
+- Updated core to 0.20.0
+
 ## [0.11.0](https://github.com/storm-software/storm-stack/releases/tag/preset-cli%400.11.0) (2025-05-23)
 
 ### Features

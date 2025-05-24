@@ -2,6 +2,12 @@
 
 # Changelog for Storm Stack - Core
 
+## [0.20.0](https://github.com/storm-software/storm-stack/releases/tag/core%400.20.0) (2025-05-23)
+
+### Features
+
+- **cli:** Added the banner and footer to shared runtime module
+
 ## [0.19.0](https://github.com/storm-software/storm-stack/releases/tag/core%400.19.0) (2025-05-23)
 
 ### Features
