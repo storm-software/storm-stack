@@ -2,6 +2,17 @@
 
 # Changelog for Storm Stack - Preset Cli
 
+## [0.14.0](https://github.com/storm-software/storm-stack/releases/tag/preset-cli%400.14.0) (2025-05-25)
+
+### Features
+
+- **preset-cli:** Update output to dynamically import child commands
+
+### Updated Dependencies
+
+- Updated core to 0.22.0
+- Updated core to 0.22.0
+
 ## [0.13.1](https://github.com/storm-software/storm-stack/releases/tag/preset-cli%400.13.1) (2025-05-24)
 
 ### Miscellaneous

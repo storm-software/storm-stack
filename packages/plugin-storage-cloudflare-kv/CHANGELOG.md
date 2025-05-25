@@ -2,6 +2,17 @@
 
 # Changelog for Storm Stack - Plugin Storage Cloudflare Kv
 
+## [0.5.0](https://github.com/storm-software/storm-stack/releases/tag/plugin-storage-cloudflare-kv%400.5.0) (2025-05-25)
+
+### Features
+
+- **preset-cli:** Update output to dynamically import child commands
+
+### Updated Dependencies
+
+- Updated core to 0.22.0
+- Updated core to 0.22.0
+
 ## [0.4.2](https://github.com/storm-software/storm-stack/releases/tag/plugin-storage-cloudflare-kv%400.4.2) (2025-05-24)
 
 ### Miscellaneous

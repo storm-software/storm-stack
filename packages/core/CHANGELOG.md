@@ -2,6 +2,12 @@
 
 # Changelog for Storm Stack - Core
 
+## [0.22.0](https://github.com/storm-software/storm-stack/releases/tag/core%400.22.0) (2025-05-25)
+
+### Features
+
+- **preset-cli:** Update output to dynamically import child commands
+
 ## [0.21.0](https://github.com/storm-software/storm-stack/releases/tag/core%400.21.0) (2025-05-24)
 
 ### Features

@@ -2,6 +2,17 @@
 
 # Changelog for Storm Stack - Plugin Storage Cloudflare R2
 
+## [0.3.0](https://github.com/storm-software/storm-stack/releases/tag/plugin-storage-cloudflare-r2%400.3.0) (2025-05-25)
+
+### Features
+
+- **preset-cli:** Update output to dynamically import child commands
+
+### Updated Dependencies
+
+- Updated core to 0.22.0
+- Updated core to 0.22.0
+
 ## [0.2.2](https://github.com/storm-software/storm-stack/releases/tag/plugin-storage-cloudflare-r2%400.2.2) (2025-05-24)
 
 ### Miscellaneous
