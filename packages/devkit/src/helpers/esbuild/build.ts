@@ -118,10 +118,7 @@ export async function esbuild<TOptions extends Options = Options>(
               "storm:storage": joinPaths(runtimeDir, "storage"),
               "storm:log": joinPaths(runtimeDir, "log"),
               "storm:payload": joinPaths(runtimeDir, "payload"),
-              "storm:result": joinPaths(runtimeDir, "result"),
-              "storm:json": "@stryke/json",
-              "storm:url": "@stryke/url",
-              "storm:http": "@stryke/http"
+              "storm:result": joinPaths(runtimeDir, "result")
             }
           );
         },
@@ -151,10 +148,7 @@ export async function esbuild<TOptions extends Options = Options>(
           "storm:storage",
           "storm:log",
           "storm:payload",
-          "storm:result",
-          "storm:json",
-          "storm:url",
-          "storm:http"
+          "storm:result"
         ],
         skipNodeModulesBundle: true
       }

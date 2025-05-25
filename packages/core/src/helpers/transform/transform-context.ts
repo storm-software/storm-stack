@@ -16,6 +16,7 @@
 
  ------------------------------------------------------------------- */
 
+import { generateCode, parseModule } from "magicast";
 import type { SourceFile } from "../../types/build";
 import { getMagicString, getString } from "../utilities/magic-string";
 
@@ -24,6 +25,15 @@ export function transformContext(source: SourceFile): SourceFile {
     source.code = getMagicString(
       getString(source.code).replaceAll("$storm", "useStorm()")
     );
+
+    const ast = parseModule(source.code.toString());
+    ast.imports.$append({
+      imported: "useStorm",
+      from: "storm:context"
+    });
+
+    const { code } = generateCode(ast);
+    source.code = getMagicString(code);
   }
 
   return source;

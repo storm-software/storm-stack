@@ -57,13 +57,13 @@ interface NewLibraryPayload {
 /**
  * New a Storm Stack library project to the current workspace.
  *
- * @param request - The request object containing the command payload
+ * @param payload - The request object containing the command payload
  */
-function handler(request: StormPayload<NewLibraryPayload>) {
-  const payload = request.data;
+function handler(payload: StormPayload<NewLibraryPayload>) {
+  const data = payload.data;
 
   $storm.log.info(
-    `Starting server on ${payload.host}:${payload.port} with compress: ${payload.compress} and loadEnv: ${payload.loadEnv}`
+    `Starting server on ${data.host}:${data.port} with compress: ${data.compress} and loadEnv: ${data.loadEnv}`
   );
 }
 

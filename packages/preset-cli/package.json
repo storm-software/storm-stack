@@ -45,7 +45,7 @@
   "dependencies": {
     "@deepkit/type": "catalog:",
     "@storm-software/config-tools": "catalog:",
-    "@storm-stack/core": "0.22.0",
+    "@storm-stack/core": "workspace:*",
     "@storm-stack/devkit": "workspace:*",
     "@stryke/cli": "catalog:",
     "@stryke/fs": "catalog:",

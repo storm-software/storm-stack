@@ -336,32 +336,6 @@ async function reflectCommandPayloads<TOptions extends Options = Options>(
   return payloadReflections;
 }
 
-// function findCommandPath(
-//   command: CommandReflection,
-//   relationsReflections: Record<string, CommandRelationsReflection>,
-//   reflections: Record<string, CommandReflection>
-// ) {
-//   const path = [] as string[];
-//   if (
-//     relationsReflections[command.commandId]?.parent &&
-//     reflections[relationsReflections[command.commandId]!.parent!]?.name &&
-//     reflections[command.commandId]?.name !==
-//       reflections[relationsReflections[command.commandId]!.parent!]?.name
-//   ) {
-//     path.push(
-//       ...findCommandPath(
-//         reflections[relationsReflections[command.commandId]!.parent!]!,
-//         relationsReflections,
-//         reflections
-//       ).map(command => kebabCase(command))
-//     );
-//   }
-
-//   path.push(command.name);
-
-//   return path;
-// }
-
 export async function reflectCommand<TOptions extends Options = Options>(
   log: LogFn,
   context: StormStackCLIPresetContext<TOptions>,
@@ -486,9 +460,10 @@ export async function reflectCommandTree<TOptions extends Options = Options>(
         ? config.bin
         : config.bin[0]
       : context.options.name || context.packageJson?.name;
+
   const tree = {
     name: appName,
-    displayName: titleCase(appName),
+    displayName: titleCase(context.options.name || appName),
     description: context.packageJson?.description,
     entry: context.entry.find(
       entry => entry.input.file === context.options.entry

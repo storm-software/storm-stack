@@ -57,13 +57,13 @@ interface PreparePayload {
 /**
  * Prepare the Storm Stack project's generated artifacts (source code, assets, etc.)
  *
- * @param request - The request object containing the command payload
+ * @param payload - The request object containing the command payload
  */
-function handler(request: StormPayload<PreparePayload>) {
-  const payload = request.data;
+function handler(payload: StormPayload<PreparePayload>) {
+  const data = payload.data;
 
   $storm.log.info(
-    `Starting server on ${payload.host}:${payload.port} with compress: ${payload.compress} and loadEnv: ${payload.loadEnv}`
+    `Starting server on ${data.host}:${data.port} with compress: ${data.compress} and loadEnv: ${data.loadEnv}`
   );
 }
 

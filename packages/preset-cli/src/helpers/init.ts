@@ -122,11 +122,7 @@ export async function initUnimport<TOptions extends Options = Options>(
   context.unimportPresets ??= [];
   context.unimportPresets.push({
     imports,
-    from: joinPaths(
-      context.options.projectRoot,
-      context.artifactsDir,
-      "runtime"
-    )
+    from: "storm:cli"
   });
 }
 

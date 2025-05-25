@@ -41,6 +41,7 @@ export async function initUnimport<TOptions extends Options = Options>(
   );
 
   const runtimeDir = joinPaths(
+    context.workspaceConfig.workspaceRoot,
     context.options.projectRoot,
     context.artifactsDir,
     "runtime"

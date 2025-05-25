@@ -16,7 +16,6 @@
 
  ------------------------------------------------------------------- */
 
-import { findFilePath, relativePath } from "@stryke/path/file-path-fns";
 import defu from "defu";
 import type { BuildOptions } from "esbuild";
 import { build as esbuild } from "esbuild";
@@ -35,7 +34,6 @@ export async function bundle<TOptions extends Options = Options>(
   options?: BundleOptions<TOptions>
 ) {
   const contextOverrides = { ...context.override };
-  delete contextOverrides.alias;
   delete contextOverrides.external;
   delete contextOverrides.noExternal;
   delete contextOverrides.skipNodeModulesBundle;
@@ -65,15 +63,6 @@ export async function bundle<TOptions extends Options = Options>(
       compilerPlugin(context, options)
     ]
   }) as BuildOptions;
-
-  esbuildOptions.alias = Object.entries(esbuildOptions.alias ?? {}).reduce(
-    (ret, [key, value]) => {
-      ret[key] = relativePath(findFilePath(entryPoint), value);
-
-      return ret;
-    },
-    {} as Record<string, string>
-  );
 
   return esbuild(esbuildOptions);
 }
