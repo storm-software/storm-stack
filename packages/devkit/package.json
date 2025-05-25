@@ -178,7 +178,7 @@
   "dependencies": {
     "@storm-software/esbuild": "catalog:",
     "@storm-software/unbuild": "catalog:",
-    "@storm-stack/core": "workspace:*",
+    "@storm-stack/core": "0.22.0",
     "@stryke/path": "catalog:",
     "@stryke/string-format": "catalog:",
     "defu": "catalog:",

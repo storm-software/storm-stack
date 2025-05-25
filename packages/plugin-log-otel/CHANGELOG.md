@@ -2,6 +2,17 @@
 
 # Changelog for Storm Stack - Plugin Log Otel
 
+## [0.13.0](https://github.com/storm-software/storm-stack/releases/tag/plugin-log-otel%400.13.0) (2025-05-25)
+
+### Features
+
+- **preset-cli:** Update output to dynamically import child commands
+
+### Updated Dependencies
+
+- Updated core to 0.22.0
+- Updated core to 0.22.0
+
 ## [0.12.2](https://github.com/storm-software/storm-stack/releases/tag/plugin-log-otel%400.12.2) (2025-05-24)
 
 ### Miscellaneous

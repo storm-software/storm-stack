@@ -2,6 +2,17 @@
 
 # Changelog for Storm Stack - Plugin Log Console
 
+## [0.12.0](https://github.com/storm-software/storm-stack/releases/tag/plugin-log-console%400.12.0) (2025-05-25)
+
+### Features
+
+- **preset-cli:** Update output to dynamically import child commands
+
+### Updated Dependencies
+
+- Updated core to 0.22.0
+- Updated core to 0.22.0
+
 ## [0.11.2](https://github.com/storm-software/storm-stack/releases/tag/plugin-log-console%400.11.2) (2025-05-24)
 
 ### Miscellaneous

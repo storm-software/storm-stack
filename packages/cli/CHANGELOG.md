@@ -2,6 +2,21 @@
 
 # Changelog for Storm Stack - Cli
 
+## [0.4.0](https://github.com/storm-software/storm-stack/releases/tag/cli%400.4.0) (2025-05-25)
+
+### Features
+
+- **preset-cli:** Update output to dynamically import child commands
+
+### Updated Dependencies
+
+- Updated plugin-log-storage to 0.14.0
+- Updated plugin-log-sentry to 0.16.0
+- Updated plugin-storage-fs to 0.4.0
+- Updated preset-cli to 0.14.0
+- Updated preset-cli to 0.14.0
+- Updated core to 0.22.0
+
 ## [0.3.1](https://github.com/storm-software/storm-stack/releases/tag/cli%400.3.1) (2025-05-24)
 
 ### Miscellaneous

@@ -2,6 +2,17 @@
 
 # Changelog for Storm Stack - Plugin Storage S3
 
+## [0.4.0](https://github.com/storm-software/storm-stack/releases/tag/plugin-storage-s3%400.4.0) (2025-05-25)
+
+### Features
+
+- **preset-cli:** Update output to dynamically import child commands
+
+### Updated Dependencies
+
+- Updated core to 0.22.0
+- Updated core to 0.22.0
+
 ## [0.3.2](https://github.com/storm-software/storm-stack/releases/tag/plugin-storage-s3%400.3.2) (2025-05-24)
 
 ### Miscellaneous
