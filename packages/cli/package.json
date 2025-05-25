@@ -1,6 +1,6 @@
 {
   "name": "@storm-stack/cli",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "type": "module",
   "description": "The command-line interface application for managing Storm Stack projects.",
   "repository": {
@@ -23,7 +23,7 @@
     "@sentry/core": "catalog:",
     "@sentry/node": "catalog:",
     "@storm-software/config-tools": "catalog:",
-    "@storm-stack/core": "workspace:*",
+    "@storm-stack/core": "0.22.1",
     "@stryke/env": "catalog:",
     "@stryke/json": "catalog:",
     "@stryke/type-checks": "catalog:",
@@ -32,11 +32,11 @@
     "unstorage": "catalog:"
   },
   "devDependencies": {
-    "@storm-stack/nx": "workspace:*",
-    "@storm-stack/plugin-log-sentry": "workspace:*",
-    "@storm-stack/plugin-log-storage": "workspace:*",
-    "@storm-stack/plugin-storage-fs": "workspace:*",
-    "@storm-stack/preset-cli": "workspace:*",
+    "@storm-stack/nx": "0.11.3",
+    "@storm-stack/plugin-log-sentry": "0.16.1",
+    "@storm-stack/plugin-log-storage": "0.14.1",
+    "@storm-stack/plugin-storage-fs": "0.4.1",
+    "@storm-stack/preset-cli": "0.14.1",
     "@storm-stack/types": "workspace:*",
     "@stryke/types": "catalog:",
     "@types/node": "catalog:"

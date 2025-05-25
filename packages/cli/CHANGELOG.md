@@ -2,6 +2,23 @@
 
 # Changelog for Storm Stack - Cli
 
+## [0.4.1](https://github.com/storm-software/storm-stack/releases/tag/cli%400.4.1) (2025-05-25)
+
+### Bug Fixes
+
+- **core:** Resolved issue with invalid runtime imports in output
+
+### Updated Dependencies
+
+- Updated plugin-log-storage to 0.14.1
+- Updated plugin-log-sentry to 0.16.1
+- Updated plugin-storage-fs to 0.4.1
+- Updated preset-cli to 0.14.1
+- Updated preset-cli to 0.14.1
+- Updated core to 0.22.1
+- Updated nx to 0.11.3
+- Updated nx to 0.11.3
+
 ## [0.4.0](https://github.com/storm-software/storm-stack/releases/tag/cli%400.4.0) (2025-05-25)
 
 ### Features
