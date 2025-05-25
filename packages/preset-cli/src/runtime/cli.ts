@@ -29,10 +29,14 @@ export function writeRuntime<TOptions extends Options = Options>(
   context: StormStackCLIPresetContext<TOptions>,
   config: StormStackCLIPresetConfig
 ) {
-  const appTitle = titleCase(
-    (Array.isArray(config.bin) ? config.bin[0] : config.bin) ||
+  let appTitle = titleCase(
+    context.options.name ||
+      (Array.isArray(config.bin) ? config.bin[0] : config.bin) ||
       context.packageJson?.name
   );
+  if (!appTitle.toLowerCase().endsWith("cli")) {
+    appTitle += " CLI";
+  }
 
   let author = config.author;
   if (!author) {
@@ -426,7 +430,14 @@ export function renderFooter(): string {
 
   const footer = [] as string[];
   footer.push(\`\\n  \${colors.bold("Links:")}\`);
-  ${linksColumn1.map((line, i) => `footer.push(\`    ${`\${colors.bold(link("${line}"))}`.padEnd(linksMaxLength)}${linksColumn2[i]}\`);`).join(" \n")}
+  ${linksColumn1
+    .map(
+      (line, i) =>
+        `footer.push(\`    ${`\${colors.bold("${line.padEnd(
+          linksMaxLength
+        )}")}`}\${link("${linksColumn2[i]}")}\`);`
+    )
+    .join(" \n")}
 
   footer.push("\\n");
   footer.push(\`\${" ".repeat((consoleWidth - ${footerHeaderLength}) / 2)}${footerHeader}\${" ".repeat((consoleWidth - ${footerHeaderLength}) / 2)}\`);

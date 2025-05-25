@@ -10,11 +10,13 @@ import handle from "handle";
 import { withContext } from "../../../runtime/app";
 import {
   colors,
+  parseArgs,
   prompt,
   renderBanner,
   renderFooter
 } from "../../../runtime/cli";
 import { getRuntimeInfo } from "../../../runtime/env";
+import { renderUsage } from "./usage";
 
 export interface VarsDeletePayload {
   help: boolean;
@@ -24,31 +26,6 @@ export interface VarsDeletePayload {
   noBanner: boolean;
   verbose: boolean;
   key: string;
-}
-
-/**
- * Renders the Variables - Delete command usage information.
- *
- * @param includeCommands - Whether to include rendering sub-commands.
- * @returns The rendered string displaying usage information.
- */
-export function renderUsage(includeCommands = true) {
-  return `${colors.bold("Variables - Delete")}
-
-${colors.dim("Deletes a configuration parameter from the variables store.")}
-
-  ${colors.bold("Usage:")}
-    examples-cli vars delete <key> [options] 
-
-  ${colors.bold("Options:")}
-    --help, -h, -?                   ${colors.dim("Show help information. [default: false]")} 
-    --version, -v                    ${colors.dim("Show the version of the application. [default: false]")} 
-    --interactive, -i, --interact    ${colors.dim("Enable interactive mode (will be set to false if running in a CI pipeline). [default: true]")} 
-    --no-interactive, --no-interact  ${colors.dim("Disable interactive mode (will be set to true if running in a CI pipeline). [default: false]")} 
-    --no-banner                      ${colors.dim("Hide the banner displayed while running the CLI application (will be set to true if running in a CI pipeline). [default: false]")} 
-    --verbose, -v                    ${colors.dim("Enable verbose output. [default: false]")} 
-    --key <key>, -k <key>            ${colors.dim("The key to delete from the variables.")}
-`;
 }
 
 const handleCommand = withContext<VarsDeletePayload>(handle);
@@ -156,21 +133,10 @@ async function handler() {
 
         if (args["key"] === undefined) {
           if (isInteractive) {
-            args["key"] = await prompt<string>(
-              "The key to delete from the variables",
-              {
-                type: "text"
-              }
-            );
-          } else {
-            args["key"] = undefined;
-            if (isVerbose) {
-              console.log(
-                colors.dim(
-                  ` > Setting the key option to undefined (via it's default value) `
-                )
-              );
-            }
+            args["key"] = await prompt<string>(`Please provide a Key value`, {
+              type: "text",
+              placeholder: "The key to delete from the variables"
+            });
           }
         }
 

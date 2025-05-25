@@ -10,11 +10,13 @@ import handle from "handle";
 import { withContext } from "../../../runtime/app";
 import {
   colors,
+  parseArgs,
   prompt,
   renderBanner,
   renderFooter
 } from "../../../runtime/cli";
 import { getRuntimeInfo } from "../../../runtime/env";
+import { renderUsage } from "./usage";
 
 export interface VarsSetPayload {
   help: boolean;
@@ -25,32 +27,6 @@ export interface VarsSetPayload {
   verbose: boolean;
   key: string;
   value: any;
-}
-
-/**
- * Renders the Variables - Set command usage information.
- *
- * @param includeCommands - Whether to include rendering sub-commands.
- * @returns The rendered string displaying usage information.
- */
-export function renderUsage(includeCommands = true) {
-  return `${colors.bold("Variables - Set")}
-
-${colors.dim("Sets a configuration parameter in the variables store.")}
-
-  ${colors.bold("Usage:")}
-    examples-cli vars set <key> <value> [options] 
-
-  ${colors.bold("Options:")}
-    --help, -h, -?                   ${colors.dim("Show help information. [default: false]")} 
-    --version, -v                    ${colors.dim("Show the version of the application. [default: false]")} 
-    --interactive, -i, --interact    ${colors.dim("Enable interactive mode (will be set to false if running in a CI pipeline). [default: true]")} 
-    --no-interactive, --no-interact  ${colors.dim("Disable interactive mode (will be set to true if running in a CI pipeline). [default: false]")} 
-    --no-banner                      ${colors.dim("Hide the banner displayed while running the CLI application (will be set to true if running in a CI pipeline). [default: false]")} 
-    --verbose, -v                    ${colors.dim("Enable verbose output. [default: false]")} 
-    --key <key>, -k <key>            ${colors.dim("The key to set in the variables.")} 
-    --value                          ${colors.dim("The value to set for the key.")}
-`;
 }
 
 const handleCommand = withContext<VarsSetPayload>(handle);
@@ -170,38 +146,19 @@ async function handler() {
 
         if (args["key"] === undefined) {
           if (isInteractive) {
-            args["key"] = await prompt<string>(
-              "The key to set in the variables",
-              {
-                type: "text"
-              }
-            );
-          } else {
-            args["key"] = undefined;
-            if (isVerbose) {
-              console.log(
-                colors.dim(
-                  ` > Setting the key option to undefined (via it's default value) `
-                )
-              );
-            }
+            args["key"] = await prompt<string>(`Please provide a Key value`, {
+              type: "text",
+              placeholder: "The key to set in the variables"
+            });
           }
         }
 
         if (args["value"] === undefined) {
           if (isInteractive) {
-            args["value"] = await prompt<any>("The value to set for the key", {
-              type: "text"
+            args["value"] = await prompt<any>(`Please provide a value`, {
+              type: "text",
+              placeholder: "The value to set for the key"
             });
-          } else {
-            args["value"] = undefined;
-            if (isVerbose) {
-              console.log(
-                colors.dim(
-                  ` > Setting the value option to undefined (via it's default value) `
-                )
-              );
-            }
           }
         }
 

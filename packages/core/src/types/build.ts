@@ -318,6 +318,13 @@ export interface TranspileOptions<TOptions extends Options = Options>
    * @defaultValue false
    */
   skipErrorsTransform?: boolean;
+
+  /**
+   * Skip the unimport transformation.
+   *
+   * @defaultValue false
+   */
+  skipUnimportTransform?: boolean;
 }
 
 export interface CompileOptions<TOptions extends Options = Options>

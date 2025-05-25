@@ -16,6 +16,7 @@
 
  ------------------------------------------------------------------- */
 
+import { kebabCase } from "@stryke/string-format/kebab-case";
 import { getFileHeader } from "../../../helpers/utilities/file-header";
 import type { Context, Options } from "../../../types/build";
 
@@ -95,8 +96,8 @@ let _envPaths!: EnvPaths;
 export function getEnvPaths(): EnvPaths {
   if (!_envPaths) {
     _envPaths = _getEnvPaths({
-      orgId: "${context.workspaceConfig?.organization || "storm-software"}",
-      appId: ${context.options.name ? `"${context.options.name}"` : "$storm.vars.APP_NAME"}
+      orgId: "${kebabCase(context.workspaceConfig?.organization || "storm-software")}",
+      appId: ${context.options.name ? `"${kebabCase(context.options.name)}"` : "$storm.vars.APP_NAME"}
     });
   }
 

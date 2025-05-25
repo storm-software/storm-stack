@@ -234,18 +234,19 @@ export class Compiler<TOptions extends Options = Options>
         await transformErrors<TOptions>(this.log, transformed, context);
       }
 
+      if (
+        !options.skipUnimportTransform &&
+        context.unimport &&
+        !transformed.id
+          .replaceAll("\\", "/")
+          .includes(joinPaths(context.artifactsDir, "runtime"))
+      ) {
+        transformed = await context.unimport.injectImports(transformed);
+      }
+
       if (this.#options.onTransform) {
         await Promise.resolve(this.#options.onTransform(context, transformed));
       }
-    }
-
-    if (
-      context.unimport &&
-      !transformed.id
-        .replaceAll("\\", "/")
-        .includes(joinPaths(context.artifactsDir, "runtime"))
-    ) {
-      transformed = await context.unimport.injectImports(transformed);
     }
 
     if (this.#options.onPostTransform) {

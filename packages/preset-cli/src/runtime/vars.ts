@@ -47,15 +47,15 @@ import { colors } from "${relativePath(
 
 export interface VarsGetPayload {
   /**
-   * The key to retrieve from the variables.
+   * The name of the variable to retrieve from the variables store.
    */
-  key: string;
+  name: string;
 }
 
 /**
  * Retrieves a configuration parameter from the variables store.
  *
- * @param payload - The payload object containing the variable key to retrieve.
+ * @param payload - The payload object containing the variable name to retrieve.
  */
 async function handler(payload: StormPayload<VarsGetPayload>) {
   const varsFile = await $storm.storage.getItem(\`vars:vars.json\`);
@@ -65,12 +65,12 @@ async function handler(payload: StormPayload<VarsGetPayload>) {
   }
 
   const vars = deserialize<StormVariables>(varsFile);
-  if (vars?.[payload.data.key] === undefined) {
-    console.error(\` \${colors.red("✖")} \${colors.redBright(\`Variable Key \\\`\${payload.data.key}\\\` not found\`)}\`);
+  if (vars?.[payload.data.name] === undefined) {
+    console.error(\` \${colors.red("✖")} \${colors.redBright(\`Variable Name \\\`\${payload.data.name}\\\` not found\`)}\`);
     return;
   }
 
-  console.log(\`\${colors.bold(\`\${payload.data.key}:\`)} \${vars[payload.data.key]}\`);
+  console.log(\`\${colors.bold(\`\${payload.data.name}:\`)} \${vars[payload.data.name]}\`);
 }
 
 export default handler;
@@ -104,12 +104,12 @@ import { colors } from "${relativePath(
 
 export interface VarsSetPayload {
   /**
-   * The key to set in the variables.
+   * The name of the variable to set in the variables store.
    */
-  key: string;
+  name: string;
 
   /**
-   * The value to set for the key.
+   * The value to set for the variable.
    */
   value: any;
 }
@@ -127,12 +127,12 @@ async function handler(payload: StormPayload<VarsSetPayload>) {
   }
 
   const vars = deserialize<StormVariables>(varsFile);
-  vars[payload.data.key] = payload.data.value;
+  vars[payload.data.name] = payload.data.value;
 
   await $storm.storage.setItem(\`vars:vars.json\`, serialize(vars));
 
   console.log("");
-  console.log(colors.dim(" > \\\`\${payload.data.key}\\\` variable set to \${payload.data.value}"));
+  console.log(colors.dim(" > \\\`\${payload.data.name}\\\` variable set to \${payload.data.value}"));
   console.log("");
 }
 
@@ -213,15 +213,15 @@ import { colors } from "${relativePath(
 
 export interface VarsDeletePayload {
   /**
-   * The key to delete from the variables.
+   * The name of the variable to delete from the variables store.
    */
-  key: string;
+  name: string;
 }
 
 /**
  * Deletes a configuration parameter from the variables store.
  *
- * @param payload - The payload object containing the variable key to delete.
+ * @param payload - The payload object containing the variable name to delete.
  */
 async function handler(payload: StormPayload<VarsDeletePayload>) {
   const varsFile = await $storm.storage.getItem(\`vars:vars.json\`);
@@ -232,11 +232,11 @@ async function handler(payload: StormPayload<VarsDeletePayload>) {
 
   const vars = deserialize<StormVariables>(varsFile);
 
-  delete vars[payload.data.key];
+  delete vars[payload.data.name];
   await $storm.storage.setItem(\`vars:vars.json\`, serialize(vars));
 
   console.log("");
-  console.log(colors.dim(" > \\\`\${payload.data.key}\\\` variable deleted"));
+  console.log(colors.dim(" > \\\`\${payload.data.name}\\\` variable deleted"));
   console.log("");
 }
 

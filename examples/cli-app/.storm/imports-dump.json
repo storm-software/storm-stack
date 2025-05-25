@@ -80,62 +80,58 @@
     "as": "StormEvent"
   },
   {
-    "from": "examples/cli-app/.storm/runtime/cli",
+    "from": "examples/cli-app/.storm/runtime",
     "name": "parseArgs",
     "as": "parseArgs"
   },
   {
-    "from": "examples/cli-app/.storm/runtime/cli",
+    "from": "examples/cli-app/.storm/runtime",
     "name": "colors",
     "as": "colors"
   },
   {
-    "from": "examples/cli-app/.storm/runtime/cli",
+    "from": "examples/cli-app/.storm/runtime",
     "name": "getColor",
     "as": "getColor"
   },
   {
-    "from": "examples/cli-app/.storm/runtime/cli",
+    "from": "examples/cli-app/.storm/runtime",
     "name": "ColorName",
     "as": "ColorName"
   },
+  { "from": "examples/cli-app/.storm/runtime", "name": "link", "as": "link" },
   {
-    "from": "examples/cli-app/.storm/runtime/cli",
-    "name": "link",
-    "as": "link"
-  },
-  {
-    "from": "examples/cli-app/.storm/runtime/cli",
+    "from": "examples/cli-app/.storm/runtime",
     "name": "LinkOptions",
     "as": "LinkOptions"
   },
   {
-    "from": "examples/cli-app/.storm/runtime/cli",
+    "from": "examples/cli-app/.storm/runtime",
     "name": "prompt",
     "as": "prompt"
   },
   {
-    "from": "examples/cli-app/.storm/runtime/cli",
+    "from": "examples/cli-app/.storm/runtime",
     "name": "PromptCommonOptions",
     "as": "PromptCommonOptions"
   },
   {
-    "from": "examples/cli-app/.storm/runtime/cli",
+    "from": "examples/cli-app/.storm/runtime",
     "name": "TextPromptOptions",
     "as": "TextPromptOptions"
   },
   {
-    "from": "examples/cli-app/.storm/runtime/cli",
+    "from": "examples/cli-app/.storm/runtime",
     "name": "ConfirmPromptOptions",
     "as": "ConfirmPromptOptions"
   },
   {
-    "from": "examples/cli-app/.storm/runtime/cli",
+    "from": "examples/cli-app/.storm/runtime",
     "name": "SelectPromptOptions",
     "as": "SelectPromptOptions"
   },
   {
-    "from": "examples/cli-app/.storm/runtime/cli",
+    "from": "examples/cli-app/.storm/runtime",
     "name": "MultiSelectPromptOptions",
     "as": "MultiSelectPromptOptions"
   }

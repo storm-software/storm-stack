@@ -8,8 +8,14 @@
 import { deserialize } from "@deepkit/type";
 import handle from "handle";
 import { withContext } from "../../../runtime/app";
-import { colors, renderBanner, renderFooter } from "../../../runtime/cli";
+import {
+  colors,
+  parseArgs,
+  renderBanner,
+  renderFooter
+} from "../../../runtime/cli";
 import { getRuntimeInfo } from "../../../runtime/env";
+import { renderUsage } from "./usage";
 
 export interface VarsListPayload {
   help: boolean;
@@ -18,30 +24,6 @@ export interface VarsListPayload {
   noInteractive: boolean;
   noBanner: boolean;
   verbose: boolean;
-}
-
-/**
- * Renders the Variables - List command usage information.
- *
- * @param includeCommands - Whether to include rendering sub-commands.
- * @returns The rendered string displaying usage information.
- */
-export function renderUsage(includeCommands = true) {
-  return `${colors.bold("Variables - List")}
-
-${colors.dim("Lists all configuration parameters in the variables store.")}
-
-  ${colors.bold("Usage:")}
-    examples-cli vars list [options] 
-
-  ${colors.bold("Options:")}
-    --help, -h, -?                   ${colors.dim("Show help information. [default: false]")} 
-    --version, -v                    ${colors.dim("Show the version of the application. [default: false]")} 
-    --interactive, -i, --interact    ${colors.dim("Enable interactive mode (will be set to false if running in a CI pipeline). [default: true]")} 
-    --no-interactive, --no-interact  ${colors.dim("Disable interactive mode (will be set to true if running in a CI pipeline). [default: false]")} 
-    --no-banner                      ${colors.dim("Hide the banner displayed while running the CLI application (will be set to true if running in a CI pipeline). [default: false]")} 
-    --verbose, -v                    ${colors.dim("Enable verbose output. [default: false]")}
-`;
 }
 
 const handleCommand = withContext<VarsListPayload>(handle);

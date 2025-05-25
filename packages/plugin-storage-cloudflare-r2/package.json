@@ -75,13 +75,13 @@
     "@ltd/j-toml": "catalog:",
     "@storm-software/config-tools": "catalog:",
     "@storm-stack/core": "workspace:*",
-    "@storm-stack/devkit": "0.5.2",
+    "@storm-stack/devkit": "workspace:*",
     "@stryke/fs": "catalog:",
     "@stryke/path": "catalog:",
     "unstorage": "catalog:"
   },
   "devDependencies": {
-    "@storm-stack/nx": "0.11.2",
+    "@storm-stack/nx": "workspace:*",
     "@types/node": "catalog:",
     "tsup": "catalog:"
   },

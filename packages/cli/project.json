@@ -10,7 +10,8 @@
       "outputs": ["{projectRoot}/.storm"],
       "executor": "@storm-stack/nx:prepare",
       "options": {
-        "entry": "{sourceRoot}"
+        "entry": "{sourceRoot}",
+        "mode": "development"
       }
     },
     "build": {
@@ -21,7 +22,8 @@
       "dependsOn": ["prepare"],
       "options": {
         "entry": "{sourceRoot}",
-        "outputPath": "dist/packages/cli"
+        "outputPath": "dist/packages/cli",
+        "mode": "development"
       }
     },
     "docs": {

@@ -498,7 +498,7 @@
         "file": "examples/cli-app/.storm/commands/vars/get/handle.ts"
       },
       "output": "vars-get",
-      "path": ["vars", "get", "[key]"],
+      "path": ["vars", "get", "[name]"],
       "isVirtual": false
     },
     "payload": {
@@ -610,7 +610,7 @@
         "file": "examples/cli-app/.storm/commands/vars/set/handle.ts"
       },
       "output": "vars-set",
-      "path": ["vars", "set", "[key]", "[value]"],
+      "path": ["vars", "set", "[name]", "[value]"],
       "isVirtual": false
     },
     "payload": {
@@ -733,7 +733,7 @@
         "file": "examples/cli-app/.storm/commands/vars/delete/handle.ts"
       },
       "output": "vars-delete",
-      "path": ["vars", "delete", "[key]"],
+      "path": ["vars", "delete", "[name]"],
       "isVirtual": false
     },
     "payload": {

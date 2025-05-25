@@ -292,10 +292,9 @@ async function reflectCommandPayloads<TOptions extends Options = Options>(
                     type,
                     stringifiedType,
                     options,
-                    description:
-                      description.endsWith(".") || description.endsWith("?")
-                        ? description.slice(0, -1)
-                        : description,
+                    description: description.endsWith(".")
+                      ? description.slice(0, -1)
+                      : description,
                     array: property.isArray(),
                     required:
                       !property.isOptional() &&
@@ -317,7 +316,8 @@ async function reflectCommandPayloads<TOptions extends Options = Options>(
                         description: `The inverse of the ${name} option.`,
                         array: false,
                         required: false,
-                        default: false
+                        default: false,
+                        isNegative: true
                       });
                     }
                   }

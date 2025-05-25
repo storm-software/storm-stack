@@ -125,8 +125,7 @@ export async function initUnimport<TOptions extends Options = Options>(
     from: joinPaths(
       context.options.projectRoot,
       context.artifactsDir,
-      "runtime",
-      "cli"
+      "runtime"
     )
   });
 }
@@ -352,7 +351,7 @@ export async function initEntry<TOptions extends Options = Options>(
           file: joinPaths(commandsDirectory, "vars", "get", "handle.ts")
         },
         output: "vars-get",
-        path: ["vars", "get", "[key]"],
+        path: ["vars", "get", "[name]"],
         isVirtual: false
       });
 
@@ -376,7 +375,7 @@ export async function initEntry<TOptions extends Options = Options>(
           file: joinPaths(commandsDirectory, "vars", "set", "handle.ts")
         },
         output: "vars-set",
-        path: ["vars", "set", "[key]", "[value]"],
+        path: ["vars", "set", "[name]", "[value]"],
         isVirtual: false
       });
 
@@ -400,7 +399,7 @@ export async function initEntry<TOptions extends Options = Options>(
           file: joinPaths(commandsDirectory, "vars", "delete", "handle.ts")
         },
         output: "vars-delete",
-        path: ["vars", "delete", "[key]"],
+        path: ["vars", "delete", "[name]"],
         isVirtual: false
       });
 

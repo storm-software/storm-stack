@@ -9,42 +9,15 @@ import { deserialize } from "@deepkit/type";
 import handle from "../../../src/commands/add/index";
 import { AddPayload } from "../../../src/types";
 import { withContext } from "../../runtime/app";
-import { colors, prompt, renderBanner, renderFooter } from "../../runtime/cli";
+import {
+  colors,
+  parseArgs,
+  prompt,
+  renderBanner,
+  renderFooter
+} from "../../runtime/cli";
 import { getRuntimeInfo } from "../../runtime/env";
-import handlePage from "./page";
-
-/**
- * Renders the Add command usage information.
- *
- * @param includeCommands - Whether to include rendering sub-commands.
- * @returns The rendered string displaying usage information.
- */
-export function renderUsage(includeCommands = true) {
-  return `${colors.bold("Add")}
-
-${colors.dim("Add an item to the file system.")}
-
-  ${colors.bold("Usage:")}
-    examples-cli add [options] 
-    examples-cli add page [options]${
-      includeCommands !== false
-        ? `
-  ${colors.bold("Commands:")}
-    Add - Page (page)                ${colors.dim("Add a page to the file system.")}`
-        : ""
-    }
-
-  ${colors.bold("Options:")}
-    --help, -h, -?                   ${colors.dim("Show help information. [default: false]")} 
-    --version, -v                    ${colors.dim("Show the version of the application. [default: false]")} 
-    --interactive, -i, --interact    ${colors.dim("Enable interactive mode (will be set to false if running in a CI pipeline). [default: true]")} 
-    --no-interactive, --no-interact  ${colors.dim("Disable interactive mode (will be set to true if running in a CI pipeline). [default: false]")} 
-    --no-banner                      ${colors.dim("Hide the banner displayed while running the CLI application (will be set to true if running in a CI pipeline). [default: false]")} 
-    --verbose, -v                    ${colors.dim("Enable verbose output. [default: false]")} 
-    --file <file>, -f <file>         ${colors.dim('The file to add to the file system. [default: "server.ts"]')} 
-    --type <type>, -t <type>         ${colors.dim('The type of the file. [default: "server"]')}
-`;
-}
+import { renderUsage } from "./usage";
 
 const handleCommand = withContext<AddPayload>(handle);
 
@@ -57,7 +30,8 @@ async function handler() {
       const command = process.argv[2];
       if (command && !command.startsWith("-")) {
         if (command.toLowerCase() === "page") {
-          return handlePage();
+          const handle = await import("./page").then(m => m.default);
+          return handle();
         }
 
         console.error(
@@ -178,42 +152,45 @@ async function handler() {
 
         if (args["file"] === undefined) {
           if (isInteractive) {
-            args["file"] = await prompt<string>(
-              "The file to add to the file system",
-              {
-                type: "text",
-                initial: "server.ts",
-                default: "server.ts"
-              }
+            args["file"] = await prompt<string>(`Please provide a File value`, {
+              type: "text",
+              initial: "server.ts",
+              default: "server.ts",
+              placeholder: "The file to add to the file system"
+            });
+          }
+        }
+
+        if (args["file"] === undefined) {
+          args["file"] = "server.ts";
+          if (isVerbose) {
+            console.log(
+              colors.dim(
+                ` > Setting the file option to "server.ts" (via it's default value) `
+              )
             );
-          } else {
-            args["file"] = "server.ts";
-            if (isVerbose) {
-              console.log(
-                colors.dim(
-                  ` > Setting the file option to "server.ts" (via it's default value) `
-                )
-              );
-            }
           }
         }
 
         if (args["type"] === undefined) {
           if (isInteractive) {
-            args["type"] = await prompt<string>("The type of the file", {
+            args["type"] = await prompt<string>(`Please provide a Type value`, {
               type: "text",
               initial: "server",
-              default: "server"
+              default: "server",
+              placeholder: "The type of the file"
             });
-          } else {
-            args["type"] = "server";
-            if (isVerbose) {
-              console.log(
-                colors.dim(
-                  ` > Setting the type option to "server" (via it's default value) `
-                )
-              );
-            }
+          }
+        }
+
+        if (args["type"] === undefined) {
+          args["type"] = "server";
+          if (isVerbose) {
+            console.log(
+              colors.dim(
+                ` > Setting the type option to "server" (via it's default value) `
+              )
+            );
           }
         }
 

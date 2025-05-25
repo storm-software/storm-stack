@@ -210,7 +210,9 @@ export function renderBanner(title: string, description: string): string {
 
   const banner = [] as string[];
   banner.push(
-    colors.cyan(`┏━━━━ Examples CLI ━━ v0.0.1 ${"━".repeat(width - 10 - 17)}┓`)
+    colors.cyan(
+      `┏━━━━ Examples CLI App CLI ━━ v0.0.1 ${"━".repeat(width - 10 - 25)}┓`
+    )
   );
   banner.push(colors.cyan(`┃${" ".repeat(width)}┃`));
   banner.push(
@@ -270,23 +272,25 @@ export function renderFooter(): string {
 
   const footer = [] as string[];
   footer.push(`\n  ${colors.bold("Links:")}`);
-  footer.push(`    ${colors.bold(link("Homepage:"))}https://stormsoftware.com`);
   footer.push(
-    `    ${colors.bold(link("Support:"))}https://stormsoftware.com/support`
+    `    ${colors.bold("Homepage:       ")}${link("https://stormsoftware.com")}`
   );
   footer.push(
-    `    ${colors.bold(link("Contact:"))}https://stormsoftware.com/contact`
+    `    ${colors.bold("Support:        ")}${link("https://stormsoftware.com/support")}`
   );
   footer.push(
-    `    ${colors.bold(link("Documentation:"))}https://stormsoftware.com/docs`
+    `    ${colors.bold("Contact:        ")}${link("https://stormsoftware.com/contact")}`
   );
   footer.push(
-    `    ${colors.bold(link("Repository:"))}https://github.com/storm-software/storm-stack`
+    `    ${colors.bold("Documentation:  ")}${link("https://stormsoftware.com/docs")}`
+  );
+  footer.push(
+    `    ${colors.bold("Repository:     ")}${link("https://github.com/storm-software/storm-stack")}`
   );
 
   footer.push("\n");
   footer.push(
-    `${" ".repeat((consoleWidth - 98) / 2)}Examples CLI is authored and maintained by ${link("https://stormsoftware.com", "Storm Software")}.${" ".repeat((consoleWidth - 98) / 2)}`
+    `${" ".repeat((consoleWidth - 106) / 2)}Examples CLI App CLI is authored and maintained by ${link("https://stormsoftware.com", "Storm Software")}.${" ".repeat((consoleWidth - 106) / 2)}`
   );
   if (supportRow) {
     footer.push(

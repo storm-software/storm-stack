@@ -19,9 +19,9 @@ function getBuildInfo() {
     name: "examples-cli-app",
     packageName: "@storm-stack/examples-cli-app",
     version: "0.0.1",
-    buildId: "H_xoKed9BoNutKHrykmRA_go",
-    timestamp: 1748126961768 ? Number(1748126961768) : 0,
-    releaseId: "F77BuG-dl6zkgoKwliOx2CB9",
+    buildId: "gNs_UrfOeeQksejYwVuJVxIT",
+    timestamp: 1748140712706 ? Number(1748140712706) : 0,
+    releaseId: "nv_-g5NDVJKQxHqFuJ6RTLKZ",
     mode: "production",
     platform: "node",
     isTest,
@@ -335,7 +335,7 @@ var StormError = class _StormError extends Error {
    */
   toDisplay(includeData = false) {
     return `${this.name && this.name !== this.constructor.name ? this.code ? `${this.name} ` : this.name : ""} ${this.code ? this.code && this.name ? `[${this.type} - ${this.code}]` : `${this.type} - ${this.code}` : this.name ? `[${this.type}]` : this.type}: Please review the details of this error at the following URL: ${this.url}${includeData && this.data ? `
-Data: ${JSON.stringify(this.data)}` : ""}`;
+Related details: ${JSON.stringify(this.data)}` : ""}`;
   }
   /**
    * Prints the error message and stack trace
@@ -462,7 +462,7 @@ function renderBanner(title, description) {
   const consoleWidth = Math.max(process.stdout.columns - 2, 46);
   const width = Math.max(Math.min(consoleWidth, Math.max(title.length + 2, 40)), 44);
   const banner = [];
-  banner.push(colors.cyan(`\u250F\u2501\u2501\u2501\u2501 Examples CLI \u2501\u2501 v0.0.1 ${"\u2501".repeat(width - 10 - 17)}\u2513`));
+  banner.push(colors.cyan(`\u250F\u2501\u2501\u2501\u2501 Examples CLI App CLI \u2501\u2501 v0.0.1 ${"\u2501".repeat(width - 10 - 25)}\u2513`));
   banner.push(colors.cyan(`\u2503${" ".repeat(width)}\u2503`));
   banner.push(`${colors.cyan("\u2503")}${" ".repeat((width - title.length) / 2)}${colors.whiteBright(colors.bold(title))}${" ".repeat((width - title.length) / 2)}${colors.cyan("\u2503")}`);
   banner.push(colors.cyan(`\u2503${" ".repeat(width)}\u2503`));
@@ -487,13 +487,13 @@ function renderFooter() {
   const footer = [];
   footer.push(`
   ${colors.bold("Links:")}`);
-  footer.push(`    ${colors.bold(link("Homepage:"))}https://stormsoftware.com`);
-  footer.push(`    ${colors.bold(link("Support:"))}https://stormsoftware.com/support`);
-  footer.push(`    ${colors.bold(link("Contact:"))}https://stormsoftware.com/contact`);
-  footer.push(`    ${colors.bold(link("Documentation:"))}https://stormsoftware.com/docs`);
-  footer.push(`    ${colors.bold(link("Repository:"))}https://github.com/storm-software/storm-stack`);
+  footer.push(`    ${colors.bold("Homepage:       ")}${link("https://stormsoftware.com")}`);
+  footer.push(`    ${colors.bold("Support:        ")}${link("https://stormsoftware.com/support")}`);
+  footer.push(`    ${colors.bold("Contact:        ")}${link("https://stormsoftware.com/contact")}`);
+  footer.push(`    ${colors.bold("Documentation:  ")}${link("https://stormsoftware.com/docs")}`);
+  footer.push(`    ${colors.bold("Repository:     ")}${link("https://github.com/storm-software/storm-stack")}`);
   footer.push("\n");
-  footer.push(`${" ".repeat((consoleWidth - 98) / 2)}Examples CLI is authored and maintained by ${link("https://stormsoftware.com", "Storm Software")}.${" ".repeat((consoleWidth - 98) / 2)}`);
+  footer.push(`${" ".repeat((consoleWidth - 106) / 2)}Examples CLI App CLI is authored and maintained by ${link("https://stormsoftware.com", "Storm Software")}.${" ".repeat((consoleWidth - 106) / 2)}`);
   if (supportRow) {
     footer.push(`${" ".repeat((consoleWidth - supportRowLength) / 2)}${supportRow}${" ".repeat((consoleWidth - supportRowLength) / 2)}`);
   }

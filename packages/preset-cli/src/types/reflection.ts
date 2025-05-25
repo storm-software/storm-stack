@@ -44,6 +44,7 @@ export interface CommandPayloadArgReflection {
   array: boolean;
   required: boolean;
   default?: any;
+  isNegative?: boolean;
 }
 
 export interface CommandPayloadReflection {

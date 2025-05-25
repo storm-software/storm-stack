@@ -11,36 +11,13 @@ import { AddPagePayload } from "../../../../src/types";
 import { withContext } from "../../../runtime/app";
 import {
   colors,
+  parseArgs,
   prompt,
   renderBanner,
   renderFooter
 } from "../../../runtime/cli";
 import { getRuntimeInfo } from "../../../runtime/env";
-
-/**
- * Renders the Add - Page command usage information.
- *
- * @param includeCommands - Whether to include rendering sub-commands.
- * @returns The rendered string displaying usage information.
- */
-export function renderUsage(includeCommands = true) {
-  return `${colors.bold("Add - Page")}
-
-${colors.dim("Add a page to the file system.")}
-
-  ${colors.bold("Usage:")}
-    examples-cli add page [options] 
-
-  ${colors.bold("Options:")}
-    --help, -h, -?                   ${colors.dim("Show help information. [default: false]")} 
-    --version, -v                    ${colors.dim("Show the version of the application. [default: false]")} 
-    --interactive, -i, --interact    ${colors.dim("Enable interactive mode (will be set to false if running in a CI pipeline). [default: true]")} 
-    --no-interactive, --no-interact  ${colors.dim("Disable interactive mode (will be set to true if running in a CI pipeline). [default: false]")} 
-    --no-banner                      ${colors.dim("Hide the banner displayed while running the CLI application (will be set to true if running in a CI pipeline). [default: false]")} 
-    --verbose, -v                    ${colors.dim("Enable verbose output. [default: false]")} 
-    --file <file>, -f <file>         ${colors.dim('The file to add to the file system. [default: "page.ts"]')}
-`;
-}
+import { renderUsage } from "./usage";
 
 const handleCommand = withContext<AddPagePayload>(handle);
 
@@ -144,23 +121,23 @@ async function handler() {
 
         if (args["file"] === undefined) {
           if (isInteractive) {
-            args["file"] = await prompt<string>(
-              "The file to add to the file system",
-              {
-                type: "text",
-                initial: "page.ts",
-                default: "page.ts"
-              }
+            args["file"] = await prompt<string>(`Please provide a File value`, {
+              type: "text",
+              initial: "page.ts",
+              default: "page.ts",
+              placeholder: "The file to add to the file system"
+            });
+          }
+        }
+
+        if (args["file"] === undefined) {
+          args["file"] = "page.ts";
+          if (isVerbose) {
+            console.log(
+              colors.dim(
+                ` > Setting the file option to "page.ts" (via it's default value) `
+              )
             );
-          } else {
-            args["file"] = "page.ts";
-            if (isVerbose) {
-              console.log(
-                colors.dim(
-                  ` > Setting the file option to "page.ts" (via it's default value) `
-                )
-              );
-            }
           }
         }
 

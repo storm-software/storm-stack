@@ -40,7 +40,7 @@ interface BuildPayload {
   compress?: boolean;
 
   /**
-   * Should the server serve compressed files?
+   * The platform to build the project for.
    *
    * @defaultValue "node"
    */

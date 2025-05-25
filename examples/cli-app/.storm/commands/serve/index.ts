@@ -9,39 +9,15 @@ import { deserialize } from "@deepkit/type";
 import handle from "../../../src/commands/serve";
 import { ServePayload } from "../../../src/types";
 import { withContext } from "../../runtime/app";
-import { colors, prompt, renderBanner, renderFooter } from "../../runtime/cli";
+import {
+  colors,
+  parseArgs,
+  prompt,
+  renderBanner,
+  renderFooter
+} from "../../runtime/cli";
 import { getRuntimeInfo } from "../../runtime/env";
-
-/**
- * Renders the Serve command usage information.
- *
- * @param includeCommands - Whether to include rendering sub-commands.
- * @returns The rendered string displaying usage information.
- */
-export function renderUsage(includeCommands = true) {
-  return `${colors.bold("Serve")}
-
-${colors.dim("Start a server and serve the application.")}
-
-  ${colors.bold("Usage:")}
-    examples-cli serve [options] 
-
-  ${colors.bold("Options:")}
-    --help, -h, -?                   ${colors.dim("Show help information. [default: false]")} 
-    --version, -v                    ${colors.dim("Show the version of the application. [default: false]")} 
-    --interactive, -i, --interact    ${colors.dim("Enable interactive mode (will be set to false if running in a CI pipeline). [default: true]")} 
-    --no-interactive, --no-interact  ${colors.dim("Disable interactive mode (will be set to true if running in a CI pipeline). [default: false]")} 
-    --no-banner                      ${colors.dim("Hide the banner displayed while running the CLI application (will be set to true if running in a CI pipeline). [default: false]")} 
-    --verbose, -v                    ${colors.dim("Enable verbose output. [default: false]")} 
-    --host <host>                    ${colors.dim('The host to bind the server to. [default: "localhost"]')} 
-    --port <port>, -p <port>         ${colors.dim("The port to bind the server to. [default: 3000]")} 
-    --compress, -c                   ${colors.dim("Should the server serve compressed files.")} 
-    --no-compress                    ${colors.dim("The inverse of the compress option. [default: false]")} 
-    --platform <platform>            ${colors.dim('Should the server serve compressed files. Valid options are: node, browser [default: "node"]')} 
-    --load-env, -l                   ${colors.dim("Should the server load environment variables from the .env file. [default: true]")} 
-    --no-load-env                    ${colors.dim("The inverse of the load-env option. [default: false]")}
-`;
-}
+import { renderUsage } from "./usage";
 
 const handleCommand = withContext<ServePayload>(handle);
 
@@ -240,150 +216,149 @@ async function handler() {
 
         if (args["host"] === undefined) {
           if (isInteractive) {
-            args["host"] = await prompt<string>(
-              "The host to bind the server to",
-              {
-                type: "text",
-                initial: "localhost",
-                default: "localhost"
-              }
+            args["host"] = await prompt<string>(`Please provide a Host value`, {
+              type: "text",
+              initial: "localhost",
+              default: "localhost",
+              placeholder: "The host to bind the server to"
+            });
+          }
+        }
+
+        if (args["host"] === undefined) {
+          args["host"] = "localhost";
+          if (isVerbose) {
+            console.log(
+              colors.dim(
+                ` > Setting the host option to "localhost" (via it's default value) `
+              )
             );
-          } else {
-            args["host"] = "localhost";
-            if (isVerbose) {
-              console.log(
-                colors.dim(
-                  ` > Setting the host option to "localhost" (via it's default value) `
-                )
-              );
-            }
           }
         }
 
         if (args["port"] === undefined) {
           if (isInteractive) {
-            args["port"] = await prompt<number>(
-              "The port to bind the server to",
-              {
-                type: "text",
-                initial: "3000",
-                default: "3000"
-              }
+            args["port"] = await prompt<number>(`Please provide a Port value`, {
+              type: "text",
+              initial: "3000",
+              default: "3000",
+              placeholder: "The port to bind the server to"
+            });
+          }
+        }
+
+        if (args["port"] === undefined) {
+          args["port"] = 3000;
+          if (isVerbose) {
+            console.log(
+              colors.dim(
+                ` > Setting the port option to 3000 (via it's default value) `
+              )
             );
-          } else {
-            args["port"] = 3000;
-            if (isVerbose) {
-              console.log(
-                colors.dim(
-                  ` > Setting the port option to 3000 (via it's default value) `
-                )
-              );
-            }
           }
         }
 
         if (args["compress"] === undefined) {
           if (isInteractive) {
             args["compress"] = await prompt<boolean>(
-              "Should the server serve compressed files",
+              `Please select a Compress value ${colors.dim("(Should the server serve compressed files)")}`,
               {
                 type: "confirm"
               }
             );
-          } else {
-            args["compress"] = undefined;
-            if (isVerbose) {
-              console.log(
-                colors.dim(
-                  ` > Setting the compress option to undefined (via it's default value) `
-                )
-              );
-            }
           }
         }
 
         if (args["no-compress"] === undefined) {
           if (isInteractive) {
             args["no-compress"] = await prompt<boolean>(
-              "The inverse of the compress option.",
+              `Please select a No Compress value ${colors.dim("(The inverse of the compress option.)")}`,
               {
                 type: "confirm",
                 initial: false
               }
             );
-          } else {
-            args["no-compress"] = false;
-            if (isVerbose) {
-              console.log(
-                colors.dim(
-                  ` > Setting the no-compress option to false (via it's default value) `
-                )
-              );
-            }
+          }
+        }
+
+        if (args["no-compress"] === undefined) {
+          args["no-compress"] = false;
+          if (isVerbose) {
+            console.log(
+              colors.dim(
+                ` > Setting the no-compress option to false (via it's default value) `
+              )
+            );
           }
         }
 
         if (args["platform"] === undefined) {
           if (isInteractive) {
             args["platform"] = await prompt<"node" | "browser">(
-              "Should the server serve compressed files",
+              `Please select a Platform value ${colors.dim("(Should the server serve compressed files)")}`,
               {
                 type: "select",
                 initial: "node",
                 options: ["node", "browser"]
               }
             );
-          } else {
-            args["platform"] = "node";
-            if (isVerbose) {
-              console.log(
-                colors.dim(
-                  ` > Setting the platform option to "node" (via it's default value) `
-                )
-              );
-            }
+          }
+        }
+
+        if (args["platform"] === undefined) {
+          args["platform"] = "node";
+          if (isVerbose) {
+            console.log(
+              colors.dim(
+                ` > Setting the platform option to "node" (via it's default value) `
+              )
+            );
           }
         }
 
         if (args["load-env"] === undefined) {
           if (isInteractive) {
             args["load-env"] = await prompt<boolean>(
-              "Should the server load environment variables from the .env file",
+              `Please select a Load Env value ${colors.dim("(Should the server load environment variables from the .env file)")}`,
               {
                 type: "confirm",
                 initial: true
               }
             );
-          } else {
-            args["load-env"] = true;
-            if (isVerbose) {
-              console.log(
-                colors.dim(
-                  ` > Setting the load-env option to true (via it's default value) `
-                )
-              );
-            }
+          }
+        }
+
+        if (args["load-env"] === undefined) {
+          args["load-env"] = true;
+          if (isVerbose) {
+            console.log(
+              colors.dim(
+                ` > Setting the load-env option to true (via it's default value) `
+              )
+            );
           }
         }
 
         if (args["no-load-env"] === undefined) {
           if (isInteractive) {
             args["no-load-env"] = await prompt<boolean>(
-              "The inverse of the load-env option.",
+              `Please select a No Load Env value ${colors.dim("(The inverse of the load-env option.)")}`,
               {
                 type: "confirm",
                 initial: false
               }
             );
-          } else {
-            args["no-load-env"] = false;
-            if (isVerbose) {
-              console.log(
-                colors.dim(
-                  ` > Setting the no-load-env option to false (via it's default value) `
-                )
-              );
-            }
+          }
+        }
+
+        if (args["no-load-env"] === undefined) {
+          args["no-load-env"] = false;
+          if (isVerbose) {
+            console.log(
+              colors.dim(
+                ` > Setting the no-load-env option to false (via it's default value) `
+              )
+            );
           }
         }
 
