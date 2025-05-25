@@ -19,9 +19,9 @@ function getBuildInfo() {
     name: "examples-cli-app",
     packageName: "@storm-stack/examples-cli-app",
     version: "0.0.1",
-    buildId: "gNs_UrfOeeQksejYwVuJVxIT",
-    timestamp: 1748140712706 ? Number(1748140712706) : 0,
-    releaseId: "nv_-g5NDVJKQxHqFuJ6RTLKZ",
+    buildId: "pjdHGA1m9j_CuxHv7fQ5Du48",
+    timestamp: 1748145905599 ? Number(1748145905599) : 0,
+    releaseId: "eb5zCDFwaMHo1au0kYKPFXZ_",
     mode: "production",
     platform: "node",
     isTest,
@@ -700,7 +700,7 @@ parseArgs.__type = ["args", "opts", "parseArgs", "// Parser is based on https://
 // examples/cli-app/.storm/commands/vars/delete/handle.ts
 import { StormPayload } from "examples/cli-app/.storm/runtime/payload";
 import { useStorm } from "examples/cli-app/.storm/runtime/context";
-var __\u03A9VarsDeletePayload = ["key", "The key to delete from the variables.", "VarsDeletePayload", 'P&4!?"Mw#y'];
+var __\u03A9VarsDeletePayload = ["name", "The name of the variable to delete from the variables store.", "VarsDeletePayload", 'P&4!?"Mw#y'];
 async function handler(payload) {
   const varsFile = await useStorm().storage.getItem(`vars:vars.json`);
   if (varsFile === void 0) {
@@ -708,10 +708,10 @@ async function handler(payload) {
     return;
   }
   const vars = (deserialize.\u03A9 = [["!"]], deserialize(varsFile));
-  delete vars[payload.data.key];
+  delete vars[payload.data.name];
   await useStorm().storage.setItem(`vars:vars.json`, serialize(vars));
   console.log("");
-  console.log(colors.dim(" > `${payload.data.key}` variable deleted"));
+  console.log(colors.dim(" > `${payload.data.name}` variable deleted"));
   console.log("");
 }
 __name(handler, "handler");

@@ -10,15 +10,15 @@ import { colors } from "../../../runtime/cli";
 
 export interface VarsGetPayload {
   /**
-   * The key to retrieve from the variables.
+   * The name of the variable to retrieve from the variables store.
    */
-  key: string;
+  name: string;
 }
 
 /**
  * Retrieves a configuration parameter from the variables store.
  *
- * @param payload - The payload object containing the variable key to retrieve.
+ * @param payload - The payload object containing the variable name to retrieve.
  */
 async function handler(payload: StormPayload<VarsGetPayload>) {
   const varsFile = await $storm.storage.getItem(`vars:vars.json`);
@@ -30,15 +30,15 @@ async function handler(payload: StormPayload<VarsGetPayload>) {
   }
 
   const vars = deserialize<StormVariables>(varsFile);
-  if (vars?.[payload.data.key] === undefined) {
+  if (vars?.[payload.data.name] === undefined) {
     console.error(
-      ` ${colors.red("✖")} ${colors.redBright(`Variable Key \`${payload.data.key}\` not found`)}`
+      ` ${colors.red("✖")} ${colors.redBright(`Variable Name \`${payload.data.name}\` not found`)}`
     );
     return;
   }
 
   console.log(
-    `${colors.bold(`${payload.data.key}:`)} ${vars[payload.data.key]}`
+    `${colors.bold(`${payload.data.name}:`)} ${vars[payload.data.name]}`
   );
 }
 

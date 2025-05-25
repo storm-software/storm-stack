@@ -28,6 +28,6 @@ ${colors.dim("Retrieves a configuration parameter from the variables store.")}
     --no-interactive, --no-interact  ${colors.dim("Disable interactive mode (will be set to true if running in a CI pipeline). [default: false]")} 
     --no-banner                      ${colors.dim("Hide the banner displayed while running the CLI application (will be set to true if running in a CI pipeline). [default: false]")} 
     --verbose, -v                    ${colors.dim("Enable verbose output. [default: false]")} 
-    --key <key>, -k <key>            ${colors.dim("The key to retrieve from the variables.")}
+    --name <name>, -n <name>         ${colors.dim("The name of the variable to retrieve from the variables store.")}
 `;
 }

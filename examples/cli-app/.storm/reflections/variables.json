@@ -251,9 +251,9 @@
   { "kind": 7 },
   {
     "kind": 32,
-    "name": "KEY",
+    "name": "NAME",
     "optional": true,
-    "description": "The key to set in the variables",
+    "description": "The name of the variable to set in the variables store",
     "type": 75
   },
   { "kind": 5 },
@@ -261,7 +261,7 @@
     "kind": 32,
     "name": "VALUE",
     "optional": true,
-    "description": "The value to set for the key",
+    "description": "The value to set for the variable",
     "type": 77
   },
   { "kind": 1 },
@@ -285,7 +285,7 @@
     "kind": 32,
     "name": "COMPRESS",
     "optional": true,
-    "description": "Should the server serve compressed files",
+    "description": "Should the server serve compressed files?",
     "type": 83
   },
   { "kind": 7 },
@@ -301,7 +301,7 @@
     "kind": 32,
     "name": "LOAD_ENV",
     "optional": true,
-    "description": "Should the server load environment variables from the .env file",
+    "description": "Should the server load environment variables from the .env file?",
     "type": 87
   },
   { "kind": 7 },

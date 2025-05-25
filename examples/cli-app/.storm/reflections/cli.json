@@ -125,7 +125,7 @@
           "reflectionType": [{ "kind": 7 }],
           "type": "boolean",
           "stringifiedType": "boolean",
-          "description": "Should the server serve compressed files",
+          "description": "Should the server serve compressed files?",
           "array": false,
           "required": false
         },
@@ -140,7 +140,8 @@
           "description": "The inverse of the compress option.",
           "array": false,
           "required": false,
-          "default": false
+          "default": false,
+          "isNegative": true
         },
         {
           "name": "platform",
@@ -154,7 +155,7 @@
           "type": "enum",
           "stringifiedType": "'node' | 'browser'",
           "options": ["node", "browser"],
-          "description": "Should the server serve compressed files",
+          "description": "Should the server serve compressed files?",
           "array": false,
           "required": false,
           "default": "\"node\""
@@ -166,7 +167,7 @@
           "reflectionType": [{ "kind": 7 }],
           "type": "boolean",
           "stringifiedType": "boolean",
-          "description": "Should the server load environment variables from the .env file",
+          "description": "Should the server load environment variables from the .env file?",
           "array": false,
           "required": false,
           "default": "true"
@@ -182,7 +183,8 @@
           "description": "The inverse of the load-env option.",
           "array": false,
           "required": false,
-          "default": false
+          "default": false,
+          "isNegative": true
         }
       ]
     },
@@ -583,13 +585,13 @@
           "default": false
         },
         {
-          "name": "key",
-          "displayName": "Key",
-          "aliases": ["k"],
+          "name": "name",
+          "displayName": "Name",
+          "aliases": ["n"],
           "reflectionType": [{ "kind": 5 }],
           "type": "string",
           "stringifiedType": "string",
-          "description": "The key to retrieve from the variables",
+          "description": "The name of the variable to retrieve from the variables store",
           "array": false,
           "required": true
         }
@@ -695,13 +697,13 @@
           "default": false
         },
         {
-          "name": "key",
-          "displayName": "Key",
-          "aliases": ["k"],
+          "name": "name",
+          "displayName": "Name",
+          "aliases": ["n"],
           "reflectionType": [{ "kind": 5 }],
           "type": "string",
           "stringifiedType": "string",
-          "description": "The key to set in the variables",
+          "description": "The name of the variable to set in the variables store",
           "array": false,
           "required": true
         },
@@ -712,7 +714,7 @@
           "reflectionType": [{ "kind": 1 }],
           "type": "any",
           "stringifiedType": "any",
-          "description": "The value to set for the key",
+          "description": "The value to set for the variable",
           "array": false,
           "required": true
         }
@@ -818,13 +820,13 @@
           "default": false
         },
         {
-          "name": "key",
-          "displayName": "Key",
-          "aliases": ["k"],
+          "name": "name",
+          "displayName": "Name",
+          "aliases": ["n"],
           "reflectionType": [{ "kind": 5 }],
           "type": "string",
           "stringifiedType": "string",
-          "description": "The key to delete from the variables",
+          "description": "The name of the variable to delete from the variables store",
           "array": false,
           "required": true
         }

@@ -10,15 +10,15 @@ import { colors } from "../../../runtime/cli";
 
 export interface VarsDeletePayload {
   /**
-   * The key to delete from the variables.
+   * The name of the variable to delete from the variables store.
    */
-  key: string;
+  name: string;
 }
 
 /**
  * Deletes a configuration parameter from the variables store.
  *
- * @param payload - The payload object containing the variable key to delete.
+ * @param payload - The payload object containing the variable name to delete.
  */
 async function handler(payload: StormPayload<VarsDeletePayload>) {
   const varsFile = await $storm.storage.getItem(`vars:vars.json`);
@@ -31,11 +31,11 @@ async function handler(payload: StormPayload<VarsDeletePayload>) {
 
   const vars = deserialize<StormVariables>(varsFile);
 
-  delete vars[payload.data.key];
+  delete vars[payload.data.name];
   await $storm.storage.setItem(`vars:vars.json`, serialize(vars));
 
   console.log("");
-  console.log(colors.dim(" > \`${payload.data.key}\` variable deleted"));
+  console.log(colors.dim(" > \`${payload.data.name}\` variable deleted"));
   console.log("");
 }
 

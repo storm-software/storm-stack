@@ -30,10 +30,10 @@ ${colors.dim("Start a server and serve the application.")}
     --verbose, -v                    ${colors.dim("Enable verbose output. [default: false]")} 
     --host <host>                    ${colors.dim('The host to bind the server to. [default: "localhost"]')} 
     --port <port>, -p <port>         ${colors.dim("The port to bind the server to. [default: 3000]")} 
-    --compress, -c                   ${colors.dim("Should the server serve compressed files.")} 
+    --compress, -c                   ${colors.dim("Should the server serve compressed files?")} 
     --no-compress                    ${colors.dim("The inverse of the compress option. [default: false]")} 
-    --platform <platform>            ${colors.dim('Should the server serve compressed files. Valid options are: node, browser [default: "node"]')} 
-    --load-env, -l                   ${colors.dim("Should the server load environment variables from the .env file. [default: true]")} 
+    --platform <platform>            ${colors.dim('Should the server serve compressed files? Valid options are: node, browser [default: "node"]')} 
+    --load-env, -l                   ${colors.dim("Should the server load environment variables from the .env file? [default: true]")} 
     --no-load-env                    ${colors.dim("The inverse of the load-env option. [default: false]")}
 `;
 }

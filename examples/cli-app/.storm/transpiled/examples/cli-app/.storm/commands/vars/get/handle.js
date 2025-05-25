@@ -19,9 +19,9 @@ function getBuildInfo() {
     name: "examples-cli-app",
     packageName: "@storm-stack/examples-cli-app",
     version: "0.0.1",
-    buildId: "gNs_UrfOeeQksejYwVuJVxIT",
-    timestamp: 1748140712706 ? Number(1748140712706) : 0,
-    releaseId: "nv_-g5NDVJKQxHqFuJ6RTLKZ",
+    buildId: "pjdHGA1m9j_CuxHv7fQ5Du48",
+    timestamp: 1748145905599 ? Number(1748145905599) : 0,
+    releaseId: "eb5zCDFwaMHo1au0kYKPFXZ_",
     mode: "production",
     platform: "node",
     isTest,
@@ -700,7 +700,7 @@ parseArgs.__type = ["args", "opts", "parseArgs", "// Parser is based on https://
 // examples/cli-app/.storm/commands/vars/get/handle.ts
 import { StormPayload } from "examples/cli-app/.storm/runtime/payload";
 import { useStorm } from "examples/cli-app/.storm/runtime/context";
-var __\u03A9VarsGetPayload = ["key", "The key to retrieve from the variables.", "VarsGetPayload", 'P&4!?"Mw#y'];
+var __\u03A9VarsGetPayload = ["name", "The name of the variable to retrieve from the variables store.", "VarsGetPayload", 'P&4!?"Mw#y'];
 async function handler(payload) {
   const varsFile = await useStorm().storage.getItem(`vars:vars.json`);
   if (varsFile === void 0) {
@@ -708,11 +708,11 @@ async function handler(payload) {
     return;
   }
   const vars = (deserialize.\u03A9 = [["!"]], deserialize(varsFile));
-  if (vars?.[payload.data.key] === void 0) {
-    console.error(` ${colors.red("\u2716")} ${colors.redBright(`Variable Key \`${payload.data.key}\` not found`)}`);
+  if (vars?.[payload.data.name] === void 0) {
+    console.error(` ${colors.red("\u2716")} ${colors.redBright(`Variable Name \`${payload.data.name}\` not found`)}`);
     return;
   }
-  console.log(`${colors.bold(`${payload.data.key}:`)} ${vars[payload.data.key]}`);
+  console.log(`${colors.bold(`${payload.data.name}:`)} ${vars[payload.data.name]}`);
 }
 __name(handler, "handler");
 handler.__type = [() => __\u03A9VarsGetPayload, () => StormPayload, "payload", "handler", "Retrieves a configuration parameter from the variables store.", 'PPn!7"2#"/$?%'];

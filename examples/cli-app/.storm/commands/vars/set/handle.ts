@@ -10,12 +10,12 @@ import { colors } from "../../../runtime/cli";
 
 export interface VarsSetPayload {
   /**
-   * The key to set in the variables.
+   * The name of the variable to set in the variables store.
    */
-  key: string;
+  name: string;
 
   /**
-   * The value to set for the key.
+   * The value to set for the variable.
    */
   value: any;
 }
@@ -35,14 +35,14 @@ async function handler(payload: StormPayload<VarsSetPayload>) {
   }
 
   const vars = deserialize<StormVariables>(varsFile);
-  vars[payload.data.key] = payload.data.value;
+  vars[payload.data.name] = payload.data.value;
 
   await $storm.storage.setItem(`vars:vars.json`, serialize(vars));
 
   console.log("");
   console.log(
     colors.dim(
-      " > \`${payload.data.key}\` variable set to ${payload.data.value}"
+      " > \`${payload.data.name}\` variable set to ${payload.data.value}"
     )
   );
   console.log("");
