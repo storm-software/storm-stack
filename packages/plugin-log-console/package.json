@@ -1,6 +1,6 @@
 {
   "name": "@storm-stack/plugin-log-console",
-  "version": "0.12.0",
+  "version": "0.12.1",
   "type": "module",
   "description": "A package containing a Storm Stack log adapter to write logs to a console",
   "repository": {

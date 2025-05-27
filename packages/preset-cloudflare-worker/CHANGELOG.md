@@ -2,6 +2,17 @@
 
 # Changelog for Storm Stack - Preset Cloudflare Worker
 
+## [0.12.3](https://github.com/storm-software/storm-stack/releases/tag/preset-cloudflare-worker%400.12.3) (2025-05-25)
+
+### Bug Fixes
+
+- **core:** Resolved issue with invalid runtime imports in output
+
+### Updated Dependencies
+
+- Updated core to 0.22.1
+- Updated core to 0.22.1
+
 ## [0.12.2](https://github.com/storm-software/storm-stack/releases/tag/preset-cloudflare-worker%400.12.2) (2025-05-24)
 
 ### Miscellaneous

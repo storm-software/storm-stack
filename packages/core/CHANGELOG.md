@@ -2,6 +2,12 @@
 
 # Changelog for Storm Stack - Core
 
+## [0.22.1](https://github.com/storm-software/storm-stack/releases/tag/core%400.22.1) (2025-05-25)
+
+### Bug Fixes
+
+- **core:** Resolved issue with invalid runtime imports in output
+
 ## [0.22.0](https://github.com/storm-software/storm-stack/releases/tag/core%400.22.0) (2025-05-25)
 
 ### Features

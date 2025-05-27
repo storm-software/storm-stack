@@ -2,6 +2,16 @@
 
 # Changelog for Storm Stack - Devkit
 
+## [0.5.3](https://github.com/storm-software/storm-stack/releases/tag/devkit%400.5.3) (2025-05-25)
+
+### Bug Fixes
+
+- **core:** Resolved issue with invalid runtime imports in output
+
+### Updated Dependencies
+
+- Updated core to 0.22.1
+
 ## [0.5.2](https://github.com/storm-software/storm-stack/releases/tag/devkit%400.5.2) (2025-05-24)
 
 ### Miscellaneous

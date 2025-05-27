@@ -23,7 +23,7 @@ try {
   await echo`${chalk.whiteBright("🔄  Updating Storm Software packages...")}`;
 
   let proc = $`pnpm update "@storm-software/*" --recursive --latest`.timeout(
-    `${30 * 60}s`
+    `${8 * 60}s`
   );
   proc.stdout.on("data", data => {
     echo`${data}`;
@@ -35,38 +35,25 @@ try {
     );
   }
 
-  // proc = $`pnpm update "@stryke/*" --recursive --latest`.timeout(`${30 * 60}s`);
-  // proc.stdout.on("data", data => {
-  //   echo`${data}`;
-  // });
-  // result = await proc;
-  // if (!result.ok) {
-  //   throw new Error(
-  //     `An error occurred while updating "stryke" packages: \n\n${result.message}\n`
-  //   );
-  // }
-
-  // proc = $`pnpm update "@cyclone-ui/*" --recursive --latest`.timeout(
-  //   `${30 * 60}s`
-  // );
-  // proc.stdout.on("data", data => {
-  //   echo`${data}`;
-  // });
-  // result = await proc;
-  // if (!result.ok) {
-  //   throw new Error(
-  //     `An error occurred while updating "cyclone-ui" packages: \n\n${result.message}\n`
-  //   );
-  // }
-
-  proc = $`pnpm update --recursive --workspace`.timeout(`${30 * 60}s`);
+  proc = $`pnpm dedupe`.timeout(`${8 * 60}s`);
   proc.stdout.on("data", data => {
     echo`${data}`;
   });
   result = await proc;
   if (!result.ok) {
     throw new Error(
-      `An error occurred while updating "cyclone-ui" packages: \n\n${result.message}\n`
+      `An error occurred while deduplicating workspace dependencies: \n\n${result.message}\n`
+    );
+  }
+
+  proc = $`pnpm update --recursive --workspace`.timeout(`${8 * 60}s`);
+  proc.stdout.on("data", data => {
+    echo`${data}`;
+  });
+  result = await proc;
+  if (!result.ok) {
+    throw new Error(
+      `An error occurred while updating workspace pnpm package links ("XX.XX.XX" -> "workspace:*"): \n\n${result.message}\n`
     );
   }
 

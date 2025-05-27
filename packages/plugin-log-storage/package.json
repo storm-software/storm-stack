@@ -1,6 +1,6 @@
 {
   "name": "@storm-stack/plugin-log-storage",
-  "version": "0.14.0",
+  "version": "0.14.1",
   "type": "module",
   "description": "A package containing a Storm Stack log adapter to write logs to storage (for example: a file system)",
   "repository": {
