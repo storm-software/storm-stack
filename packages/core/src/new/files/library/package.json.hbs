@@ -1,0 +1,27 @@
+{
+  "name": "{{ options.packageName }}",
+  "version": "0.0.1",
+  "type": "module",
+  "description": "{{ options.description }}",
+  "repository": {
+    "type": "github",
+    "url": "{{ workspaceConfig.repository }}",
+    "directory": "{{ options.projectRoot }}"
+  },
+  "private": false,
+  "dependencies": {
+    "@storm-stack/types": "workspace:*"
+  },
+  "devDependencies": {
+    "@storm-stack/core": "workspace:*",
+    "@storm-stack/devkit": "workspace:*",
+    "@stryke/types": "catalog:"
+  },
+  "storm": {
+    "name": "{{ options.name }}",
+    "projectType": "library",
+    "plugins": [
+      "@storm-stack/devkit/plugins/library"
+    ]
+  }
+}

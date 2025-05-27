@@ -28,14 +28,6 @@ export interface StormStackCLIPresetConfig {
   interactive?: boolean | "never";
 
   /**
-   * A description of the CLI application (this is used for the help command)
-   *
-   * @remarks
-   * If this option is not provided, the preset will try to use the \`description\` value from the `\package.json\` file.
-   */
-  description?: string;
-
-  /**
    * The homepage URL for the CLI application (this is used for the help command)
    *
    * @remarks

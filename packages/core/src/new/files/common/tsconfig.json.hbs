@@ -1,0 +1,10 @@
+{
+  "extends": "{{ relativeToWorkspaceRoot }}tsconfig.base.json",
+  "compilerOptions": {
+    "outDir": "{{ relativeToWorkspaceRoot }}dist/out-tsc",
+    "verbatimModuleSyntax": false
+  },
+  "include": ["src/**/*.ts", "src/**/*.js", ".storm/**/*.ts"],
+  "exclude": ["jest.config.ts", "src/**/*.spec.ts", "src/**/*.test.ts"],
+  "reflection": true
+}

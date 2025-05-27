@@ -38,6 +38,7 @@ import { createLog } from "./helpers/utilities/logger";
 import { getTsconfigFilePath } from "./helpers/utilities/tsconfig";
 import { init } from "./init";
 import { lint } from "./lint";
+import { _new } from "./new";
 import type { Plugin } from "./plugin";
 import { prepare } from "./prepare";
 import type {
@@ -196,6 +197,21 @@ export class Engine<TOptions extends Options = Options> {
     this.#initialized = true;
 
     return this.context;
+  }
+
+  /**
+   * Create a new Storm Stack project
+   */
+  public async new() {
+    if (!this.#initialized) {
+      await this.init();
+    }
+
+    this.log(LogLevelLabel.INFO, "🆕 Creating a new Storm Stack project");
+
+    await _new(this.log, this.context, this.#hooks);
+
+    this.log(LogLevelLabel.TRACE, "Storm Stack - New command completed");
   }
 
   /**

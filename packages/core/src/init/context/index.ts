@@ -21,6 +21,7 @@ import { readJsonFile } from "@stryke/fs/read-file";
 import { removeFile } from "@stryke/fs/remove-file";
 import { hashDirectory } from "@stryke/hash/hash-files";
 import { existsSync } from "@stryke/path/exists";
+import { relativeToWorkspaceRoot } from "@stryke/path/file-path-fns";
 import { joinPaths } from "@stryke/path/join-paths";
 import type { PackageJson } from "@stryke/types/package-json";
 import { nanoid } from "@stryke/unique-id/nanoid-client";
@@ -47,12 +48,31 @@ export async function initContext<TOptions extends Options = Options>(
     "package.json"
   );
   if (!existsSync(packageJsonPath)) {
-    throw new Error(
-      `Cannot find a \`package.json\` configuration file in ${context.options.projectRoot}.`
+    context.packageJson = await readJsonFile<PackageJson>(packageJsonPath);
+    context.options.name ??= context.packageJson?.name;
+    context.options.description ??= context.packageJson?.description;
+    context.workspaceConfig.repository ??=
+      typeof context.packageJson?.repository === "string"
+        ? context.packageJson.repository
+        : context.packageJson?.repository?.url;
+  } else {
+    const workspacePackageJsonPath = joinPaths(
+      context.workspaceConfig.workspaceRoot,
+      "package.json"
     );
+    context.packageJson = await readJsonFile<PackageJson>(
+      workspacePackageJsonPath
+    );
+
+    context.workspaceConfig.repository ??=
+      typeof context.packageJson?.repository === "string"
+        ? context.packageJson.repository
+        : context.packageJson?.repository?.url;
   }
-  context.packageJson = await readJsonFile<PackageJson>(packageJsonPath);
-  context.options.name ??= context.packageJson?.name;
+
+  context.relativeToWorkspaceRoot = relativeToWorkspaceRoot(
+    context.options.projectRoot
+  );
 
   const projectJsonPath = joinPaths(
     context.options.projectRoot,

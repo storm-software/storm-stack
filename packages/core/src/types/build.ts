@@ -504,6 +504,11 @@ export interface Context<
         Pick<StormWorkspaceConfig, "workspaceRoot">);
 
   /**
+   * The relative path to the Storm Stack workspace root directory
+   */
+  relativeToWorkspaceRoot: string;
+
+  /**
    * The Storm Stack artifacts directory
    */
   artifactsDir: string;
@@ -588,6 +593,12 @@ export interface Context<
 }
 
 export interface EngineHookFunctions<TOptions extends Options = Options> {
+  // New - Hooks used during the creation of a new project
+  "new:begin": (context: Context<TOptions>) => MaybePromise<void>;
+  "new:library": (context: Context<TOptions>) => MaybePromise<void>;
+  "new:application": (context: Context<TOptions>) => MaybePromise<void>;
+  "new:complete": (context: Context<TOptions>) => MaybePromise<void>;
+
   // Init - Hooks used during the initialization of the Storm Stack engine
   "init:begin": (context: Context<TOptions>) => MaybePromise<void>;
   "init:context": (context: Context<TOptions>) => MaybePromise<void>;

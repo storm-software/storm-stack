@@ -79,6 +79,19 @@ export interface ProjectConfig {
   name?: string;
 
   /**
+   * A description of the project
+   *
+   * @remarks
+   * If this option is not provided, the build process will try to use the \`description\` value from the `\package.json\` file.
+   */
+  description?: string;
+
+  /**
+   * The package name (from the \`package.json\`) for the project that will be used in the \`new\` command to create a new project based on this configuration
+   */
+  packageName?: string;
+
+  /**
    * {@inheritdoc TypeScriptBuildResolvedOptions.projectRoot}
    */
   projectRoot: string;
@@ -192,23 +205,3 @@ export type LibraryProjectConfig = ProjectConfig & {
    */
   projectType: "library";
 };
-
-// export interface AdapterProjectConfig extends ProjectConfig {
-//   /**
-//    * The type of adapter exported by the project
-//    */
-//   adapter: string;
-
-//   /**
-//    * The type of project being built
-//    */
-//   projectType: "adapter";
-
-//   /**
-//    * A file that includes code required to initialize the adapter
-//    *
-//    * @remarks
-//    * This code will be called before the application's entry point. An example usage for this would be log instrumentation setup.
-//    */
-//   init?: TypeDefinitionParameter;
-// }

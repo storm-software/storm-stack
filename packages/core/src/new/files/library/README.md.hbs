@@ -1,0 +1,56 @@
+<!-- START header -->
+<!-- END header -->
+
+# {{ options.name }} Library
+
+{{ options.description }}
+
+<!-- START doctoc -->
+<!-- END doctoc -->
+
+## Installing
+
+Using [pnpm](http://pnpm.io):
+
+```bash
+pnpm add {{ options.packageName }}
+```
+
+<details>
+  <summary>Using npm</summary>
+
+```bash
+npm install --save {{ options.packageName }}
+```
+
+</details>
+
+<details>
+  <summary>Using yarn</summary>
+
+```bash
+yarn add {{ options.packageName }}
+```
+
+</details>
+
+## Development
+
+This project is built using [Storm Stack](https://stormsoftware.com/projects/storm-stack). As a result, many of the usual
+commands are available to assist in development.
+
+### Building
+
+Run `nx run {{ options.name }}:build` to build the library.
+
+### Running unit tests
+
+Run `nx run {{ options.name }}:test` to execute the unit tests via
+[Jest](https://jestjs.io).
+
+### Linting
+
+Run `nx run {{ options.name }}:lint` to run [ESLint](https://eslint.org/) on the package.
+
+<!-- START footer -->
+<!-- END footer -->

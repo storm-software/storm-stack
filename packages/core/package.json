@@ -95,6 +95,20 @@
         "default": "./dist/init/index.js"
       }
     },
+    "./new": {
+      "import": {
+        "types": "./dist/new/index.d.ts",
+        "default": "./dist/new/index.js"
+      },
+      "require": {
+        "types": "./dist/new/index.d.cts",
+        "default": "./dist/new/index.cjs"
+      },
+      "default": {
+        "types": "./dist/new/index.d.ts",
+        "default": "./dist/new/index.js"
+      }
+    },
     "./clean": {
       "import": {
         "types": "./dist/clean/index.d.ts",
@@ -445,6 +459,9 @@
         "default": "./dist/helpers/transform/*.js"
       }
     },
+    "./files/common/*": "./dist/files/common/*",
+    "./files/library/*": "./dist/files/library/*",
+    "./files/application/*": "./dist/files/application/*",
     "./types": {
       "import": {
         "types": "./dist/types/index.d.ts",
@@ -638,7 +655,7 @@
     "@storm-software/config": "catalog:",
     "@storm-software/config-tools": "catalog:",
     "@storm-software/esbuild": "catalog:",
-    "@storm-stack/types": "0.7.0",
+    "@storm-stack/types": "workspace:*",
     "@stryke/convert": "catalog:",
     "@stryke/env": "catalog:",
     "@stryke/fs": "catalog:",

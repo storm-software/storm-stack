@@ -23,6 +23,7 @@ const config = getTsupConfig({
   entry: [
     "src/*.ts",
     "src/init/index.ts",
+    "src/new/index.ts",
     "src/clean/index.ts",
     "src/prepare/index.ts",
     "src/prepare/runtime/runtime/shared/*.ts",

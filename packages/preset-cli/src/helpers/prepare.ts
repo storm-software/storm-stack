@@ -1079,7 +1079,7 @@ export async function prepareEntry<TOptions extends Options = Options>(
     await prepareCommandDefinition(log, context, command, config);
   }
 
-  let description = config.description;
+  let description = context.options.description;
   if (!description) {
     if (context.packageJson?.description) {
       description = context.packageJson.description;
