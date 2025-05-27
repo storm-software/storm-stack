@@ -52,9 +52,9 @@ var paths = isMacOS ? {
 var build = {
   packageName: "@storm-stack/examples-cli-app",
   organization,
-  buildId: "DrZaJhkS-xzGmbONz4rPXV4V",
-  timestamp: 1748233881407 ? Number(1748233881407) : 0,
-  releaseId: "X6Y0A_nxbf7KhxwXNRixbphR",
+  buildId: "IAL1RyAlrrvBZYZJUTb1GNRv",
+  timestamp: 1748344772470 ? Number(1748344772470) : 0,
+  releaseId: "vRHmNPmXa4EPz0_5HbzLFweY",
   releaseTag: "examples-cli-app@0.0.1",
   mode,
   platform: "node",
@@ -136,7 +136,7 @@ function createStormError(cause, type = "general", data) {
     return result;
   }
   if (isError(cause)) {
-    return new StormError2({
+    return new StormError({
       type,
       code: getDefaultCode(type),
       name: cause.name,
@@ -147,7 +147,7 @@ function createStormError(cause, type = "general", data) {
   }
   const causeType = typeof cause;
   if (causeType === "undefined" || causeType === "function" || cause === null) {
-    return new StormError2({
+    return new StormError({
       name: getDefaultErrorName(type),
       code: getDefaultCode(type),
       cause,
@@ -156,7 +156,7 @@ function createStormError(cause, type = "general", data) {
     });
   }
   if (causeType !== "object") {
-    return new StormError2({
+    return new StormError({
       name: getDefaultErrorName(type),
       code: getDefaultCode(type),
       type,
@@ -164,7 +164,7 @@ function createStormError(cause, type = "general", data) {
     });
   }
   if (cause && (causeType === "object" || cause?.constructor === Object)) {
-    const err = new StormError2({
+    const err = new StormError({
       name: getDefaultErrorName(type),
       code: getDefaultCode(type),
       type,
@@ -175,7 +175,7 @@ function createStormError(cause, type = "general", data) {
     }
     return err;
   }
-  return new StormError2({
+  return new StormError({
     name: getDefaultErrorName(type),
     code: getDefaultCode(type),
     cause,
@@ -184,8 +184,8 @@ function createStormError(cause, type = "general", data) {
   });
 }
 __name(createStormError, "createStormError");
-createStormError.__type = ["cause", () => __\u03A9ErrorType, "type", () => "general", "data", () => StormError2, "createStormError", "Creates a new {@link StormError} instance from an unknown cause value", `P#2!n"2#>$"2%8P7&/'?(`];
-var StormError2 = class _StormError extends Error {
+createStormError.__type = ["cause", () => __\u03A9ErrorType, "type", () => "general", "data", () => StormError, "createStormError", "Creates a new {@link StormError} instance from an unknown cause value", `P#2!n"2#>$"2%8P7&/'?(`];
+var StormError = class _StormError extends Error {
   static {
     __name(this, "StormError");
   }
@@ -512,7 +512,7 @@ __name(isHyperlinkSupported, "isHyperlinkSupported");
 isHyperlinkSupported.__type = ["stream", () => process.stdout, "isHyperlinkSupported", "Check if the current environment supports hyperlinks in the terminal.", 'P!2!>")/#?$'];
 function link(url, text2, options = {}) {
   if (!isHyperlinkSupported(options.target === "stderr" ? process.stderr : process.stdout)) {
-    return options.fallback ? options.fallback(url, text2) : isColorSupported ? `${text2 && text2 !== url ? `${text2} at ` : ""} ${colors.underline(options.color !== false ? getColor(options.color || "blueBright")(url) : url)}` : `${text2 && text2 !== url ? `${text2} at ` : ""} ${url}`;
+    return options.fallback ? options.fallback(url, text2) : isColorSupported ? `${text2 && text2 !== url ? `${text2} at ` : ""}${colors.underline(options.color !== false ? getColor(options.color || "blueBright")(url) : url)}` : `${text2 && text2 !== url ? `${text2} at ` : ""} ${url}`;
   }
   return [
     "\x1B]",
@@ -550,7 +550,7 @@ function renderBanner(title, description) {
   const text2 = description.length < width * 0.9 ? `${" ".repeat((width - description.length) / 2)}${description}${" ".repeat((width - description.length) / 2)}` : description.split(" ").reduce(__assignType2((ret, word) => {
     const lines = ret.split("\n");
     if (lines.length !== 0 && lines[lines.length - 1].length + word.length > width * 0.9) {
-      ret += "\n";
+      ret += " \n";
     }
     ret += `${word} `;
     return ret;
@@ -570,14 +570,35 @@ function renderFooter() {
   const supportRowLength = stripAnsi(supportRow).length;
   const footer = [];
   footer.push(`
-  ${colors.bold("Links:")}`);
-  footer.push(`    ${colors.bold("Homepage:       ")}${link("https://stormsoftware.com")}`);
-  footer.push(`    ${colors.bold("Support:        ")}${link("https://stormsoftware.com/support")}`);
-  footer.push(`    ${colors.bold("Contact:        ")}${link("https://stormsoftware.com/contact")}`);
-  footer.push(`    ${colors.bold("Documentation:  ")}${link("https://stormsoftware.com/docs")}`);
-  footer.push(`    ${colors.bold("Repository:     ")}${link("https://github.com/storm-software/storm-stack")}`);
+${colors.whiteBright(colors.bold("Links:"))}`);
+  footer.push(`  ${colors.bold("Homepage:             ")}${link("https://stormsoftware.com")}`);
+  footer.push(`  ${colors.bold("Support:              ")}${link("https://stormsoftware.com/support")}`);
+  footer.push(`  ${colors.bold("Contact:              ")}${link("https://stormsoftware.com/contact")}`);
+  footer.push(`  ${colors.bold("Documentation:        ")}${link("https://stormsoftware.com/docs")}`);
+  footer.push(`  ${colors.bold("Repository:           ")}${link("https://github.com/storm-software/storm-stack")}`);
   footer.push("\n");
-  footer.push(`${" ".repeat((consoleWidth - 106) / 2)}Examples CLI App CLI is authored and maintained by ${link("https://stormsoftware.com", "Storm Software")}.${" ".repeat((consoleWidth - 106) / 2)}`);
+  if (isUnicodeSupported) {
+    const qrCodeLines = `\u2588\u2580\u2580\u2580\u2580\u2580\u2580\u2580\u2588\u2588\u2580\u2588\u2588\u2580\u2588\u2588\u2580\u2588\u2588\u2580\u2580\u2580\u2580\u2580\u2580\u2580\u2588
+\u2588 \u2588\u2580\u2580\u2580\u2588 \u2588 \u2580\u2580  \u2584 \u2584\u2584\u2588 \u2588\u2580\u2580\u2580\u2588 \u2588
+\u2588 \u2588   \u2588 \u2588\u2580\u2584\u2584\u2584\u2588\u2580   \u2588 \u2588   \u2588 \u2588
+\u2588 \u2580\u2580\u2580\u2580\u2580 \u2588 \u2584\u2580\u2584\u2580\u2584 \u2584\u2580\u2588 \u2580\u2580\u2580\u2580\u2580 \u2588
+\u2588\u2580\u2580\u2588\u2580\u2588\u2588\u2580\u2580\u2584\u2584\u2580\u2588\u2584\u2580 \u2588\u2580\u2588\u2580\u2580\u2580\u2588\u2580\u2580\u2588\u2588
+\u2588\u2588\u2584\u2584\u2584 \u2584\u2580 \u2584\u2580 \u2584\u2588\u2584 \u2588 \u2580 \u2588\u2588\u2588\u2588\u2580 \u2588
+\u2588\u2588 \u2588\u2584\u2584\u2588\u2580\u2588\u2588\u2588\u2588\u2588\u2580 \u2584\u2580 \u2580\u2580 \u2584\u2580\u2588\u2580\u2580\u2588
+\u2588\u2580\u2584\u2584 \u2580\u2584\u2580  \u2580\u2584\u2584 \u2588\u2580\u2588\u2588\u2584\u2584 \u2580\u2584 \u2588 \u2588
+\u2588\u2580 \u2588   \u2580\u2588 \u2584\u2588\u2580 \u2584 \u2588\u2580\u2580 \u2580 \u2580\u2580\u2584\u2588\u2588
+\u2588\u2580\u2580\u2580\u2580\u2580\u2580\u2580\u2588 \u2588\u2584\u2588\u2588\u2580\u2584\u2580 \u2588\u2580\u2588  \u2588\u2580 \u2588
+\u2588 \u2588\u2580\u2580\u2580\u2588 \u2588\u2588\u2588\u2588\u2584 \u2580\u2580\u2588 \u2580\u2580\u2580  \u2584\u2580\u2588\u2588
+\u2588 \u2588   \u2588 \u2588\u2584 \u2588\u2588\u2584\u2584\u2580\u2580\u2580\u2580\u2588  \u2584 \u2588\u2580\u2588
+\u2588 \u2580\u2580\u2580\u2580\u2580 \u2588 \u2580\u2580   \u2588  \u2588\u2588\u2580\u2588\u2584\u2588\u2580\u2580\u2588
+\u2580\u2580\u2580\u2580\u2580\u2580\u2580\u2580\u2580\u2580\u2580\u2580\u2580\u2580\u2580\u2580\u2580\u2580\u2580\u2580\u2580\u2580\u2580\u2580\u2580\u2580\u2580`.split("\n");
+    const qrCodeMaxLength = Math.max(...qrCodeLines.map(__assignType2((line) => line.length, ["line", "", 'P"2!"/"'])));
+    footer.push(...qrCodeLines.map(__assignType2((line) => `${" ".repeat((consoleWidth - qrCodeMaxLength) / 2)}${line}${" ".repeat((consoleWidth - qrCodeMaxLength) / 2)}`, ["line", "", 'P"2!"/"'])));
+    footer.push(`${" ".repeat((consoleWidth - 25) / 2)}${link("https://stormsoftware.com")}${" ".repeat((consoleWidth - 25) / 2)}`);
+    footer.push("\n");
+    footer.push("\n");
+  }
+  footer.push(`${" ".repeat((consoleWidth - 66) / 2)}Examples CLI App CLI is authored and maintained by Storm Software.${" ".repeat((consoleWidth - 66) / 2)}`);
   if (supportRow) {
     footer.push(`${" ".repeat((consoleWidth - supportRowLength) / 2)}${supportRow}${" ".repeat((consoleWidth - supportRowLength) / 2)}`);
   }
@@ -602,7 +623,7 @@ async function prompt(message, opts = {}) {
     }
     switch (opts.cancel) {
       case "reject": {
-        const error = new StormError2({ type: "general", code: 10 });
+        const error = new StormError({ type: "general", code: 10 });
         error.name = "ConsolaPromptCancelledError";
         if (Error.captureStackTrace) {
           Error.captureStackTrace(error, prompt);
@@ -654,7 +675,7 @@ async function prompt(message, opts = {}) {
       initialValues: opts.initial
     }).then(handleCancel);
   }
-  throw new StormError2({
+  throw new StormError({
     type: "general",
     code: 16,
     params: [opts.type]
@@ -792,7 +813,7 @@ function __assignType3(fn, args) {
 __name(__assignType3, "__assignType");
 function getRandom(array) {
   if (array === null) {
-    throw new StormError({ code: 9 });
+    throw new StormError({ type: "general", code: 9 });
   }
   for (let i = 0; i < array.length; i++) {
     array[i] = Math.floor(Math.random() * 256);
@@ -864,7 +885,7 @@ function useStorm() {
   try {
     return STORM_ASYNC_CONTEXT.use();
   } catch {
-    throw new StormError2({ type: "general", code: 12 });
+    throw new StormError({ type: "general", code: 12 });
   }
 }
 __name(useStorm, "useStorm");

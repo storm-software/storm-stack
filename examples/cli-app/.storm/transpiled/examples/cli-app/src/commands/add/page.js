@@ -67,7 +67,7 @@ function createStormError(cause, type = "general", data) {
     return result;
   }
   if (isError(cause)) {
-    return new StormError2({
+    return new StormError({
       type,
       code: getDefaultCode(type),
       name: cause.name,
@@ -78,7 +78,7 @@ function createStormError(cause, type = "general", data) {
   }
   const causeType = typeof cause;
   if (causeType === "undefined" || causeType === "function" || cause === null) {
-    return new StormError2({
+    return new StormError({
       name: getDefaultErrorName(type),
       code: getDefaultCode(type),
       cause,
@@ -87,7 +87,7 @@ function createStormError(cause, type = "general", data) {
     });
   }
   if (causeType !== "object") {
-    return new StormError2({
+    return new StormError({
       name: getDefaultErrorName(type),
       code: getDefaultCode(type),
       type,
@@ -95,7 +95,7 @@ function createStormError(cause, type = "general", data) {
     });
   }
   if (cause && (causeType === "object" || cause?.constructor === Object)) {
-    const err = new StormError2({
+    const err = new StormError({
       name: getDefaultErrorName(type),
       code: getDefaultCode(type),
       type,
@@ -106,7 +106,7 @@ function createStormError(cause, type = "general", data) {
     }
     return err;
   }
-  return new StormError2({
+  return new StormError({
     name: getDefaultErrorName(type),
     code: getDefaultCode(type),
     cause,
@@ -115,8 +115,8 @@ function createStormError(cause, type = "general", data) {
   });
 }
 __name(createStormError, "createStormError");
-createStormError.__type = ["cause", () => __\u03A9ErrorType, "type", () => "general", "data", () => StormError2, "createStormError", "Creates a new {@link StormError} instance from an unknown cause value", `P#2!n"2#>$"2%8P7&/'?(`];
-var StormError2 = class _StormError extends Error {
+createStormError.__type = ["cause", () => __\u03A9ErrorType, "type", () => "general", "data", () => StormError, "createStormError", "Creates a new {@link StormError} instance from an unknown cause value", `P#2!n"2#>$"2%8P7&/'?(`];
+var StormError = class _StormError extends Error {
   static {
     __name(this, "StormError");
   }
@@ -314,7 +314,7 @@ function useStorm() {
   try {
     return STORM_ASYNC_CONTEXT.use();
   } catch {
-    throw new StormError2({ type: "general", code: 12 });
+    throw new StormError({ type: "general", code: 12 });
   }
 }
 __name(useStorm, "useStorm");
@@ -331,7 +331,7 @@ function __assignType2(fn, args) {
 __name(__assignType2, "__assignType");
 function getRandom(array) {
   if (array === null) {
-    throw new StormError({ code: 9 });
+    throw new StormError({ type: "general", code: 9 });
   }
   for (let i = 0; i < array.length; i++) {
     array[i] = Math.floor(Math.random() * 256);

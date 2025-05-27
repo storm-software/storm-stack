@@ -14,19 +14,19 @@ import { colors } from "../../../runtime/cli";
  * @returns The rendered string displaying usage information.
  */
 export function renderUsage(includeCommands = true) {
-  return `${colors.bold("Variables - List")}
+  return `${colors.whiteBright(colors.bold("Variables - List"))}
 
-  ${colors.dim("Lists all configuration parameters in the variables store.")}
+  ${colors.gray("Lists all configuration parameters in the variables store.")}
 
-  ${colors.bold("Usage:")}
+  ${colors.whiteBright(colors.bold("Usage:"))}
     examples-cli vars list [options] 
 
-  ${colors.bold("Options:")}
-    --help, -h, -?                   ${colors.dim("Show help information. [default: false]")} 
-    --version, -v                    ${colors.dim("Show the version of the application. [default: false]")} 
-    --interactive, -i, --interact    ${colors.dim("Enable interactive mode (will be set to false if running in a CI pipeline). [default: true]")} 
-    --no-interactive, --no-interact  ${colors.dim("Disable interactive mode (will be set to true if running in a CI pipeline). [default: false]")} 
-    --no-banner                      ${colors.dim("Hide the banner displayed while running the CLI application (will be set to true if running in a CI pipeline). [default: false]")} 
-    --verbose, -v                    ${colors.dim("Enable verbose output. [default: false]")}
+  ${colors.whiteBright(colors.bold("Options:"))}
+    --help, -h, -?                   ${colors.gray("Show help information. [default: false]")} 
+    --version, -v                    ${colors.gray("Show the version of the application. [default: false]")} 
+    --interactive, -i, --interact    ${colors.gray("Enable interactive mode (will be set to false if running in a CI pipeline). [default: true]")} 
+    --no-interactive, --no-interact  ${colors.gray("Disable interactive mode (will be set to true if running in a CI pipeline). [default: false]")} 
+    --no-banner                      ${colors.gray("Hide the banner displayed while running the CLI application (will be set to true if running in a CI pipeline). [default: false]")} 
+    --verbose, -v                    ${colors.gray("Enable verbose output. [default: false]")}
 `;
 }

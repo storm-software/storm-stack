@@ -275,7 +275,7 @@ async function handler() {
         if (args["compress"] === undefined) {
           if (isPromptEnabled) {
             args["compress"] = await prompt<boolean>(
-              `Please confirm the Compress value ${colors.dim("(Should the server serve compressed files?)")}`,
+              `Please confirm the Compress value ${colors.gray("(Should the server serve compressed files?)")}`,
               {
                 type: "confirm"
               }
@@ -297,7 +297,7 @@ async function handler() {
         if (args["platform"] === undefined) {
           if (isPromptEnabled) {
             args["platform"] = await prompt<"node" | "browser">(
-              `Please select a Platform value ${colors.dim("(Should the server serve compressed files?)")}`,
+              `Please select a Platform value ${colors.gray("(Should the server serve compressed files?)")}`,
               {
                 type: "select",
                 initial: "node",
@@ -321,7 +321,7 @@ async function handler() {
         if (args["load-env"] === undefined) {
           if (isPromptEnabled) {
             args["load-env"] = await prompt<boolean>(
-              `Please confirm the Load Env value ${colors.dim("(Should the server load environment variables from the .env file?)")}`,
+              `Please confirm the Load Env value ${colors.gray("(Should the server load environment variables from the .env file?)")}`,
               {
                 type: "confirm",
                 initial: true

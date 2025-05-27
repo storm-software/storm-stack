@@ -48,11 +48,16 @@ async function main() {
         console.log("");
       }
 
+      const consoleWidth = Math.max(process.stdout.columns - 2, 80);
+      console.log(
+        `${" ".repeat((consoleWidth - 46) / 2)}An example Storm Stack commandline application${" ".repeat((consoleWidth - 46) / 2)}`
+      );
       console.log("");
-      console.log("An example Storm Stack commandline application");
       console.log("");
       console.log(
-        "The following commands are available as part of the examples-cli-app application: "
+        colors.gray(
+          "The following commands are available as part of the examples-cli-app application: "
+        )
       );
       console.log("");
       console.log(renderVarsUsage(false));

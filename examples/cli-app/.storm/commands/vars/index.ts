@@ -25,11 +25,11 @@ export interface VarsPayload {
  * @returns The rendered string displaying usage information.
  */
 export function renderUsage(includeCommands = true) {
-  return `${colors.bold("Variable Management Commands")} 
+  return `${colors.whiteBright(colors.bold("Variable Management Commands"))} 
 
-  ${colors.dim("Commands for managing the configuration parameters in the variables store.")}
+  ${colors.gray("Commands for managing the configuration parameters in the variables store.")}
 
-  ${colors.bold("Usage:")}
+  ${colors.whiteBright(colors.bold("Usage:"))}
     examples-cli vars set <name> <value> [options]
     examples-cli vars list [options]
     examples-cli vars get <name> [options]
@@ -37,7 +37,7 @@ export function renderUsage(includeCommands = true) {
       includeCommands !== false
         ? `
 
-  ${colors.bold("Commands:")}
+  ${colors.whiteBright(colors.bold("Commands:"))}
 ${renderSetUsage(false)
   .split("\n")
   .map(line => `    ${line}`)
@@ -60,10 +60,10 @@ ${renderDeleteUsage(false)
         : ""
     }
 
-  ${colors.bold("Options:")}
-    --help, -h, -?  ${colors.dim("Show help information. [default: false]")} 
-    --version, -v   ${colors.dim("Show the version of the application. [default: false]")} 
-    --no-banner     ${colors.dim("Hide the banner displayed while running the CLI application (will be set to true if running in a CI pipeline). [default: false]")}
+  ${colors.whiteBright(colors.bold("Options:"))}
+    --help, -h, -?  ${colors.gray("Show help information. [default: false]")} 
+    --version, -v   ${colors.gray("Show the version of the application. [default: false]")} 
+    --no-banner     ${colors.gray("Hide the banner displayed while running the CLI application (will be set to true if running in a CI pipeline). [default: false]")}
 `;
 }
 

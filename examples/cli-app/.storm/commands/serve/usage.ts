@@ -14,26 +14,26 @@ import { colors } from "../../runtime/cli";
  * @returns The rendered string displaying usage information.
  */
 export function renderUsage(includeCommands = true) {
-  return `${colors.bold("Serve")}
+  return `${colors.whiteBright(colors.bold("Serve"))}
 
-  ${colors.dim("Start a server and serve the application.")}
+  ${colors.gray("Start a server and serve the application.")}
 
-  ${colors.bold("Usage:")}
+  ${colors.whiteBright(colors.bold("Usage:"))}
     examples-cli serve [options] 
 
-  ${colors.bold("Options:")}
-    --help, -h, -?                   ${colors.dim("Show help information. [default: false]")} 
-    --version, -v                    ${colors.dim("Show the version of the application. [default: false]")} 
-    --interactive, -i, --interact    ${colors.dim("Enable interactive mode (will be set to false if running in a CI pipeline). [default: true]")} 
-    --no-interactive, --no-interact  ${colors.dim("Disable interactive mode (will be set to true if running in a CI pipeline). [default: false]")} 
-    --no-banner                      ${colors.dim("Hide the banner displayed while running the CLI application (will be set to true if running in a CI pipeline). [default: false]")} 
-    --verbose, -v                    ${colors.dim("Enable verbose output. [default: false]")} 
-    --host <host>                    ${colors.dim('The host to bind the server to. [default: "localhost"]')} 
-    --port <port>, -p <port>         ${colors.dim("The port to bind the server to. [default: 3000]")} 
-    --compress, -c                   ${colors.dim("Should the server serve compressed files?")} 
-    --no-compress                    ${colors.dim("The inverse of the compress option. [default: false]")} 
-    --platform <platform>            ${colors.dim('Should the server serve compressed files? Valid options are: node, browser [default: "node"]')} 
-    --load-env, -l                   ${colors.dim("Should the server load environment variables from the .env file? [default: true]")} 
-    --no-load-env                    ${colors.dim("The inverse of the load-env option. [default: false]")}
+  ${colors.whiteBright(colors.bold("Options:"))}
+    --help, -h, -?                   ${colors.gray("Show help information. [default: false]")} 
+    --version, -v                    ${colors.gray("Show the version of the application. [default: false]")} 
+    --interactive, -i, --interact    ${colors.gray("Enable interactive mode (will be set to false if running in a CI pipeline). [default: true]")} 
+    --no-interactive, --no-interact  ${colors.gray("Disable interactive mode (will be set to true if running in a CI pipeline). [default: false]")} 
+    --no-banner                      ${colors.gray("Hide the banner displayed while running the CLI application (will be set to true if running in a CI pipeline). [default: false]")} 
+    --verbose, -v                    ${colors.gray("Enable verbose output. [default: false]")} 
+    --host <host>                    ${colors.gray('The host to bind the server to. [default: "localhost"]')} 
+    --port <port>, -p <port>         ${colors.gray("The port to bind the server to. [default: 3000]")} 
+    --compress, -c                   ${colors.gray("Should the server serve compressed files?")} 
+    --no-compress                    ${colors.gray("The inverse of the compress option. [default: false]")} 
+    --platform <platform>            ${colors.gray('Should the server serve compressed files? Valid options are: node, browser [default: "node"]')} 
+    --load-env, -l                   ${colors.gray("Should the server load environment variables from the .env file? [default: true]")} 
+    --no-load-env                    ${colors.gray("The inverse of the load-env option. [default: false]")}
 `;
 }
