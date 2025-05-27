@@ -2,6 +2,18 @@
 
 # Changelog for Storm Stack - Plugin Log Otel
 
+## [0.14.0](https://github.com/storm-software/storm-stack/releases/tag/plugin-log-otel%400.14.0) (2025-05-27)
+
+### Features
+
+- **preset-cli:** Removed dependencies from generated package and implemented
+  banner and footer
+
+### Updated Dependencies
+
+- Updated core to 0.23.0
+- Updated core to 0.23.0
+
 ## [0.13.1](https://github.com/storm-software/storm-stack/releases/tag/plugin-log-otel%400.13.1) (2025-05-25)
 
 ### Bug Fixes

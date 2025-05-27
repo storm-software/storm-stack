@@ -2,6 +2,17 @@
 
 # Changelog for Storm Stack - Core
 
+## [0.23.0](https://github.com/storm-software/storm-stack/releases/tag/core%400.23.0) (2025-05-27)
+
+### Features
+
+- **preset-cli:** Removed dependencies from generated package and implemented
+  banner and footer
+
+### Updated Dependencies
+
+- Updated types to 0.7.0
+
 ## [0.22.1](https://github.com/storm-software/storm-stack/releases/tag/core%400.22.1) (2025-05-25)
 
 ### Bug Fixes

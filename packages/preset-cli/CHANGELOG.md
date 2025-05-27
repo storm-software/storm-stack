@@ -2,6 +2,23 @@
 
 # Changelog for Storm Stack - Preset Cli
 
+## [0.15.0](https://github.com/storm-software/storm-stack/releases/tag/preset-cli%400.15.0) (2025-05-27)
+
+### Features
+
+- **preset-cli:** Added the `description` confiuration option
+- **preset-cli:** Removed dependencies from generated package and implemented
+  banner and footer
+
+### Miscellaneous
+
+- **preset-cli:** Added author name to the footer of generated CLI applications
+
+### Updated Dependencies
+
+- Updated core to 0.23.0
+- Updated core to 0.23.0
+
 ## [0.14.1](https://github.com/storm-software/storm-stack/releases/tag/preset-cli%400.14.1) (2025-05-25)
 
 ### Bug Fixes

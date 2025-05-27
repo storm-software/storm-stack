@@ -2,6 +2,18 @@
 
 # Changelog for Storm Stack - Plugin Log Storage
 
+## [0.15.0](https://github.com/storm-software/storm-stack/releases/tag/plugin-log-storage%400.15.0) (2025-05-27)
+
+### Features
+
+- **preset-cli:** Removed dependencies from generated package and implemented
+  banner and footer
+
+### Updated Dependencies
+
+- Updated core to 0.23.0
+- Updated core to 0.23.0
+
 ## [0.14.1](https://github.com/storm-software/storm-stack/releases/tag/plugin-log-storage%400.14.1) (2025-05-25)
 
 ### Bug Fixes

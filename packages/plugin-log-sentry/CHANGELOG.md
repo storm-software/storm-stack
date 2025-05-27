@@ -2,6 +2,18 @@
 
 # Changelog for Storm Stack - Plugin Log Sentry
 
+## [0.17.0](https://github.com/storm-software/storm-stack/releases/tag/plugin-log-sentry%400.17.0) (2025-05-27)
+
+### Features
+
+- **preset-cli:** Removed dependencies from generated package and implemented
+  banner and footer
+
+### Updated Dependencies
+
+- Updated core to 0.23.0
+- Updated core to 0.23.0
+
 ## [0.16.1](https://github.com/storm-software/storm-stack/releases/tag/plugin-log-sentry%400.16.1) (2025-05-25)
 
 ### Bug Fixes

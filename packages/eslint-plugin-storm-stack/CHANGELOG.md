@@ -2,6 +2,13 @@
 
 # Changelog for Storm Stack - Eslint Plugin Storm Stack
 
+## [0.10.0](https://github.com/storm-software/storm-stack/releases/tag/eslint-plugin-storm-stack%400.10.0) (2025-05-27)
+
+### Features
+
+- **preset-cli:** Removed dependencies from generated package and implemented
+  banner and footer
+
 ## [0.9.0](https://github.com/storm-software/storm-stack/releases/tag/eslint-plugin-storm-stack%400.9.0) (2025-05-22)
 
 ### Features

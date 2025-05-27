@@ -2,6 +2,18 @@
 
 # Changelog for Storm Stack - Plugin Storage Fs
 
+## [0.5.0](https://github.com/storm-software/storm-stack/releases/tag/plugin-storage-fs%400.5.0) (2025-05-27)
+
+### Features
+
+- **preset-cli:** Removed dependencies from generated package and implemented
+  banner and footer
+
+### Updated Dependencies
+
+- Updated core to 0.23.0
+- Updated core to 0.23.0
+
 ## [0.4.1](https://github.com/storm-software/storm-stack/releases/tag/plugin-storage-fs%400.4.1) (2025-05-25)
 
 ### Bug Fixes

@@ -2,6 +2,13 @@
 
 # Changelog for Storm Stack - Types
 
+## [0.7.0](https://github.com/storm-software/storm-stack/releases/tag/types%400.7.0) (2025-05-27)
+
+### Features
+
+- **preset-cli:** Removed dependencies from generated package and implemented
+  banner and footer
+
 ## [0.6.0](https://github.com/storm-software/storm-stack/releases/tag/types%400.6.0) (2025-05-22)
 
 ### Features

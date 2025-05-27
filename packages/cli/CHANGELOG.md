@@ -2,6 +2,28 @@
 
 # Changelog for Storm Stack - Cli
 
+## [0.5.0](https://github.com/storm-software/storm-stack/releases/tag/cli%400.5.0) (2025-05-27)
+
+### Features
+
+- **preset-cli:** Added the `description` confiuration option
+- **preset-cli:** Removed dependencies from generated package and implemented
+  banner and footer
+
+### Miscellaneous
+
+- **preset-cli:** Added author name to the footer of generated CLI applications
+
+### Updated Dependencies
+
+- Updated plugin-log-storage to 0.15.0
+- Updated plugin-log-sentry to 0.17.0
+- Updated plugin-storage-fs to 0.5.0
+- Updated preset-cli to 0.15.0
+- Updated preset-cli to 0.15.0
+- Updated types to 0.7.0
+- Updated core to 0.23.0
+
 ## [0.4.1](https://github.com/storm-software/storm-stack/releases/tag/cli%400.4.1) (2025-05-25)
 
 ### Bug Fixes
