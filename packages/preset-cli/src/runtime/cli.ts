@@ -530,23 +530,37 @@ export function renderFooter(): string {
   footer.push("\\n");${
     homepage || docs || support || contact || repository
       ? `
+
+  footer.push("\\n");${
+    author
+      ? `
+  footer.push(\`\${" ".repeat((consoleWidth - ${
+    author.length ?? 0
+  }) / 2)}\${colors.bold("${author}")}\${" ".repeat((consoleWidth - ${
+    author.length ?? 0
+  }) / 2)}\`);`
+      : ""
+  }
+
   if (isUnicodeSupported) {
+    footer.push("\\n");
+
     const qrCodeLines = \`${renderUnicodeCompact((homepage || docs || support || contact || repository)!)}\`.split("\\n");
     const qrCodeMaxLength = Math.max(...qrCodeLines.map(line => line.length));
     footer.push(...qrCodeLines.map(line => \`\${" ".repeat((consoleWidth - qrCodeMaxLength) / 2)}\${line}\${" ".repeat((consoleWidth - qrCodeMaxLength) / 2)}\`));
-
-    footer.push(\`\${" ".repeat((consoleWidth - ${
-      (homepage || docs || support || contact || repository)?.length ?? 0
-    }) / 2)}\${link("${(homepage ||
-      docs ||
-      support ||
-      contact ||
-      repository)!}")}\${" ".repeat((consoleWidth - ${
-      (homepage || docs || support || contact || repository)?.length ?? 0
-    }) / 2)}\`);
-    footer.push("\\n");
-    footer.push("\\n");
   }
+
+  footer.push(\`\${" ".repeat((consoleWidth - ${
+    (homepage || docs || support || contact || repository)?.length ?? 0
+  }) / 2)}\${link("${(homepage ||
+    docs ||
+    support ||
+    contact ||
+    repository)!}")}\${" ".repeat((consoleWidth - ${
+    (homepage || docs || support || contact || repository)?.length ?? 0
+  }) / 2)}\`);
+  footer.push("\\n");
+  footer.push("\\n");
 `
       : ""
   }

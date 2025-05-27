@@ -52,9 +52,9 @@ var paths = isMacOS ? {
 var build = {
   packageName: "@storm-stack/examples-cli-app",
   organization,
-  buildId: "IAL1RyAlrrvBZYZJUTb1GNRv",
-  timestamp: 1748344772470 ? Number(1748344772470) : 0,
-  releaseId: "vRHmNPmXa4EPz0_5HbzLFweY",
+  buildId: "uFpanqQZ1weaZLkjIEEJ8bI0",
+  timestamp: 1748346534974 ? Number(1748346534974) : 0,
+  releaseId: "P59OGLnbxuvLpYN5ywX5n1Hg",
   releaseTag: "examples-cli-app@0.0.1",
   mode,
   platform: "node",

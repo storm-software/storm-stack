@@ -30,7 +30,8 @@ const config = getTsupConfig({
   sourcemap: true,
   dts: true,
   shims: true,
-  skipNodeModulesBundle: true
+  skipNodeModulesBundle: true,
+  noExternal: ["uqr"]
 });
 
 export default config;
