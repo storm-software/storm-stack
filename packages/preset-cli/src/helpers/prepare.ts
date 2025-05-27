@@ -1079,6 +1079,13 @@ export async function prepareEntry<TOptions extends Options = Options>(
     await prepareCommandDefinition(log, context, command, config);
   }
 
+  let description = config.description;
+  if (!description) {
+    if (context.packageJson?.description) {
+      description = context.packageJson.description;
+    }
+  }
+
   await writeFile(
     log,
     commandTree.entry.file,
@@ -1133,10 +1140,10 @@ async function main() {
       }
 
       ${
-        context.packageJson?.description
+        description
           ? `
       const consoleWidth = Math.max(process.stdout.columns - 2, 80);
-      console.log(\`\${" ".repeat((consoleWidth - ${context.packageJson.description.length}) / 2)}${context.packageJson.description}\${" ".repeat((consoleWidth - ${context.packageJson.description.length}) / 2)}\`);
+      console.log(\`\${" ".repeat((consoleWidth - ${description.length}) / 2)}${description}\${" ".repeat((consoleWidth - ${description.length}) / 2)}\`);
       console.log("");
       console.log("");`
           : ""

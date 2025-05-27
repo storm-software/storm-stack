@@ -52,9 +52,9 @@ var paths = isMacOS ? {
 var build = {
   packageName: "@storm-stack/examples-cli-app",
   organization,
-  buildId: "uFpanqQZ1weaZLkjIEEJ8bI0",
-  timestamp: 1748346534974 ? Number(1748346534974) : 0,
-  releaseId: "P59OGLnbxuvLpYN5ywX5n1Hg",
+  buildId: "IxTGuI_tOWEAfFyEgfFet1d5",
+  timestamp: 1748347834452 ? Number(1748347834452) : 0,
+  releaseId: "kzCKDnY9RTClyjbxLK9eUz3m",
   releaseTag: "examples-cli-app@0.0.1",
   mode,
   platform: "node",
@@ -577,7 +577,10 @@ ${colors.whiteBright(colors.bold("Links:"))}`);
   footer.push(`  ${colors.bold("Documentation:        ")}${link("https://stormsoftware.com/docs")}`);
   footer.push(`  ${colors.bold("Repository:           ")}${link("https://github.com/storm-software/storm-stack")}`);
   footer.push("\n");
+  footer.push("\n");
+  footer.push(`${" ".repeat((consoleWidth - 14) / 2)}${colors.bold("Storm Software")}${" ".repeat((consoleWidth - 14) / 2)}`);
   if (isUnicodeSupported) {
+    footer.push("\n");
     const qrCodeLines = `\u2588\u2580\u2580\u2580\u2580\u2580\u2580\u2580\u2588\u2588\u2580\u2588\u2588\u2580\u2588\u2588\u2580\u2588\u2588\u2580\u2580\u2580\u2580\u2580\u2580\u2580\u2588
 \u2588 \u2588\u2580\u2580\u2580\u2588 \u2588 \u2580\u2580  \u2584 \u2584\u2584\u2588 \u2588\u2580\u2580\u2580\u2588 \u2588
 \u2588 \u2588   \u2588 \u2588\u2580\u2584\u2584\u2584\u2588\u2580   \u2588 \u2588   \u2588 \u2588
@@ -594,10 +597,10 @@ ${colors.whiteBright(colors.bold("Links:"))}`);
 \u2580\u2580\u2580\u2580\u2580\u2580\u2580\u2580\u2580\u2580\u2580\u2580\u2580\u2580\u2580\u2580\u2580\u2580\u2580\u2580\u2580\u2580\u2580\u2580\u2580\u2580\u2580`.split("\n");
     const qrCodeMaxLength = Math.max(...qrCodeLines.map(__assignType2((line) => line.length, ["line", "", 'P"2!"/"'])));
     footer.push(...qrCodeLines.map(__assignType2((line) => `${" ".repeat((consoleWidth - qrCodeMaxLength) / 2)}${line}${" ".repeat((consoleWidth - qrCodeMaxLength) / 2)}`, ["line", "", 'P"2!"/"'])));
-    footer.push(`${" ".repeat((consoleWidth - 25) / 2)}${link("https://stormsoftware.com")}${" ".repeat((consoleWidth - 25) / 2)}`);
-    footer.push("\n");
-    footer.push("\n");
   }
+  footer.push(`${" ".repeat((consoleWidth - 25) / 2)}${link("https://stormsoftware.com")}${" ".repeat((consoleWidth - 25) / 2)}`);
+  footer.push("\n");
+  footer.push("\n");
   footer.push(`${" ".repeat((consoleWidth - 66) / 2)}Examples CLI App CLI is authored and maintained by Storm Software.${" ".repeat((consoleWidth - 66) / 2)}`);
   if (supportRow) {
     footer.push(`${" ".repeat((consoleWidth - supportRowLength) / 2)}${supportRow}${" ".repeat((consoleWidth - supportRowLength) / 2)}`);

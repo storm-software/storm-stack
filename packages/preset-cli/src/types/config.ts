@@ -28,32 +28,58 @@ export interface StormStackCLIPresetConfig {
   interactive?: boolean | "never";
 
   /**
+   * A description of the CLI application (this is used for the help command)
+   *
+   * @remarks
+   * If this option is not provided, the preset will try to use the \`description\` value from the `\package.json\` file.
+   */
+  description?: string;
+
+  /**
    * The homepage URL for the CLI application (this is used for the help command)
+   *
+   * @remarks
+   * If this option is not provided, the preset will try to use the \`homepage\` value from the `\storm-workspace.json\` configuration or the \`homepage\`, \`author.url\`, or \`contributors.url\` value from the `\package.json\` file.
    */
   homepage?: string;
 
   /**
    * The documentation website URL for the CLI application (this is used for the help command)
+   *
+   * @remarks
+   * If this option is not provided, the preset will try to use the \`docs\` value from the `\storm-workspace.json\` configuration or the \`docs\` value from the `\package.json\` file.
    */
   docs?: string;
 
   /**
    * The support website URL for the CLI application (this is used for the help command)
+   *
+   * @remarks
+   * If this option is not provided, the preset will try to use the \`support\` value from the `\storm-workspace.json\` configuration or the \`bugs.url\` value from the `\package.json\` file.
    */
   support?: string;
 
   /**
    * The contact website URL for the CLI application (this is used for the help command)
+   *
+   * @remarks
+   * If this option is not provided, the preset will try to use the \`contact\` value from the `\storm-workspace.json\` configuration or the \`author.url\` or \`contributors.url\` value from the `\package.json\` file.
    */
   contact?: string;
 
   /**
    * The author/organization that developed or maintains the CLI application
+   *
+   * @remarks
+   * If this option is not provided, the preset will try to use the \`author.name\` or \`contributors.name\` value from the `\package.json\` file.
    */
   author?: string;
 
   /**
    * The repository URL for the CLI application (this is used for the help command)
+   *
+   * @remarks
+   * If this option is not provided, the preset will try to use the \`repository\` value from the `\storm-workspace.json\` configuration or the \`repository.url\` value from the `\package.json\` file.
    */
   repository?: string;
 

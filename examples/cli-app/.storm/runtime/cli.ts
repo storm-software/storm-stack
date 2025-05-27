@@ -385,7 +385,15 @@ export function renderFooter(): string {
   );
 
   footer.push("\n");
+
+  footer.push("\n");
+  footer.push(
+    `${" ".repeat((consoleWidth - 14) / 2)}${colors.bold("Storm Software")}${" ".repeat((consoleWidth - 14) / 2)}`
+  );
+
   if (isUnicodeSupported) {
+    footer.push("\n");
+
     const qrCodeLines = `█▀▀▀▀▀▀▀██▀██▀██▀██▀▀▀▀▀▀▀█
 █ █▀▀▀█ █ ▀▀  ▄ ▄▄█ █▀▀▀█ █
 █ █   █ █▀▄▄▄█▀   █ █   █ █
@@ -407,13 +415,13 @@ export function renderFooter(): string {
           `${" ".repeat((consoleWidth - qrCodeMaxLength) / 2)}${line}${" ".repeat((consoleWidth - qrCodeMaxLength) / 2)}`
       )
     );
-
-    footer.push(
-      `${" ".repeat((consoleWidth - 25) / 2)}${link("https://stormsoftware.com")}${" ".repeat((consoleWidth - 25) / 2)}`
-    );
-    footer.push("\n");
-    footer.push("\n");
   }
+
+  footer.push(
+    `${" ".repeat((consoleWidth - 25) / 2)}${link("https://stormsoftware.com")}${" ".repeat((consoleWidth - 25) / 2)}`
+  );
+  footer.push("\n");
+  footer.push("\n");
 
   footer.push(
     `${" ".repeat((consoleWidth - 66) / 2)}Examples CLI App CLI is authored and maintained by Storm Software.${" ".repeat((consoleWidth - 66) / 2)}`
