@@ -160,7 +160,7 @@ export class Engine<TOptions extends Options = Options> {
       this.options,
       config,
       {
-        platform: "node",
+        platform: "neutral",
         mode: "production",
         projectType: "application",
         outputPath: joinPaths("dist", this.options.projectRoot),

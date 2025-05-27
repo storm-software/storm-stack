@@ -47,15 +47,15 @@ import fsLiteDriver from "unstorage/drivers/fs-lite";${
       this.config.envPath
         ? `
 import { join } from "node:path";
-import { getEnvPaths } from "../env";`
+import { paths } from "../env";`
         : ""
     }
 
 export default fsLiteDriver({ base: ${
       this.config.envPath
         ? this.config.base
-          ? `join(getEnvPaths().${this.config.envPath}, "${this.config.base}")`
-          : `getEnvPaths().${this.config.envPath}`
+          ? `join(paths.${this.config.envPath}, "${this.config.base}")`
+          : `paths.${this.config.envPath}`
         : this.config.base
           ? `"${this.config.base}"`
           : "undefined"

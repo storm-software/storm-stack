@@ -44,6 +44,23 @@ import { colors } from "${relativePath(
       "cli"
     )
   )}";
+import { StormPayload, StormVariables } from "${relativePath(
+    joinPaths(
+      context.workspaceConfig.workspaceRoot,
+      context.options.projectRoot,
+      context.artifactsDir,
+      "commands",
+      "vars",
+      "get"
+    ),
+    joinPaths(
+      context.workspaceConfig.workspaceRoot,
+      context.options.projectRoot,
+      context.artifactsDir,
+      "runtime",
+      "payload"
+    )
+  )}";
 
 export interface VarsGetPayload {
   /**
@@ -99,6 +116,23 @@ import { colors } from "${relativePath(
       context.artifactsDir,
       "runtime",
       "cli"
+    )
+  )}";
+import { StormPayload, StormVariables } from "${relativePath(
+    joinPaths(
+      context.workspaceConfig.workspaceRoot,
+      context.options.projectRoot,
+      context.artifactsDir,
+      "commands",
+      "vars",
+      "set"
+    ),
+    joinPaths(
+      context.workspaceConfig.workspaceRoot,
+      context.options.projectRoot,
+      context.artifactsDir,
+      "runtime",
+      "payload"
     )
   )}";
 
@@ -164,6 +198,23 @@ import { colors } from "${relativePath(
       "cli"
     )
   )}";
+import { StormPayload, StormVariables } from "${relativePath(
+    joinPaths(
+      context.workspaceConfig.workspaceRoot,
+      context.options.projectRoot,
+      context.artifactsDir,
+      "commands",
+      "vars",
+      "list"
+    ),
+    joinPaths(
+      context.workspaceConfig.workspaceRoot,
+      context.options.projectRoot,
+      context.artifactsDir,
+      "runtime",
+      "payload"
+    )
+  )}";
 
 export interface VarsListPayload {}
 
@@ -192,6 +243,7 @@ export function writeVarsDelete<TOptions extends Options = Options>(
   context: Context<TOptions>
 ) {
   return `${getFileHeader()}
+
 import { deserialize, serialize } from "@deepkit/type";
 import { colors } from "${relativePath(
     joinPaths(
@@ -208,6 +260,23 @@ import { colors } from "${relativePath(
       context.artifactsDir,
       "runtime",
       "cli"
+    )
+  )}";
+import { StormPayload, StormVariables } from "${relativePath(
+    joinPaths(
+      context.workspaceConfig.workspaceRoot,
+      context.options.projectRoot,
+      context.artifactsDir,
+      "commands",
+      "vars",
+      "delete"
+    ),
+    joinPaths(
+      context.workspaceConfig.workspaceRoot,
+      context.options.projectRoot,
+      context.artifactsDir,
+      "runtime",
+      "payload"
     )
   )}";
 

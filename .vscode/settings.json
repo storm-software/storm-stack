@@ -189,5 +189,6 @@
   },
   "commitizen.capitalizeWindowsDriveLetter": true,
   "commitizen.autoSync": false,
-  "commitizen.showOutputChannel": "always"
+  "commitizen.showOutputChannel": "always",
+  "nxConsole.generateAiAgentRules": true
 }

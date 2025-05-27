@@ -7,6 +7,7 @@
 
 import { deserialize,serialize } from "@deepkit/type";
 import { colors } from "../../../runtime/cli";
+import { StormPayload, StormVariables } from "../../../runtime/payload";
 
 export interface VarsSetPayload {
   /**
@@ -37,7 +38,10 @@ async function handler(payload: StormPayload<VarsSetPayload>) {
   const vars = deserialize<StormVariables>(varsFile);
   vars[payload.data.name] = payload.data.value;
 
-  await $storm.storage.setItem(`vars:vars.json`, serialize(vars));
+  await $storm.storage.setItem(
+    `vars:vars.json`,
+    serialize<StormVariables>(vars)
+  );
 
   console.log("");
   console.log(

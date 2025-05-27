@@ -33,8 +33,7 @@ import {
   LogRecord,
   LogSink
 } from "@storm-stack/types/log";
-import { StormError, isStormError } from "./error";
-import { isError } from "@stryke/type-checks/is-error";
+import { StormError, isError, isStormError } from "./error";
 ${context.runtime.logs.map(log => log.import || `import ${log.name} from "./logs/${log.name}";`).join("\n")}
 
 const LOG_LEVELS = [
@@ -219,7 +218,7 @@ ${context.runtime.logs.map(log => `{ logLevel: "${log.logLevel}", handle: ${log.
 ] as const;
 
 /**
- * A logger implementation. Do not use this directly; use {@link getLogger} instead. This class is exported for testing purposes.
+ * The StormLog class that's used for writing logs during Storm Stack applications.
  */
 export class StormLog implements IStormLog {
   /**

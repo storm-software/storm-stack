@@ -1,81 +1,86 @@
 [
   {
-    "from": "examples/cloudflare-worker/.storm/runtime/error",
+    "from": "/home/development/repos/storm-stack/examples/cloudflare-worker/.storm/runtime/error",
     "name": "StormError",
     "as": "StormError"
   },
   {
-    "from": "examples/cloudflare-worker/.storm/runtime/error",
+    "from": "/home/development/repos/storm-stack/examples/cloudflare-worker/.storm/runtime/error",
     "name": "createStormError",
     "as": "createStormError"
   },
   {
-    "from": "examples/cloudflare-worker/.storm/runtime/error",
+    "from": "/home/development/repos/storm-stack/examples/cloudflare-worker/.storm/runtime/error",
+    "name": "isError",
+    "as": "isError"
+  },
+  {
+    "from": "/home/development/repos/storm-stack/examples/cloudflare-worker/.storm/runtime/error",
     "name": "isStormError",
     "as": "isStormError"
   },
   {
-    "from": "examples/cloudflare-worker/.storm/runtime/payload",
+    "from": "/home/development/repos/storm-stack/examples/cloudflare-worker/.storm/runtime/payload",
     "name": "StormPayload",
     "as": "StormPayload"
   },
   {
-    "from": "examples/cloudflare-worker/.storm/runtime/result",
+    "from": "/home/development/repos/storm-stack/examples/cloudflare-worker/.storm/runtime/result",
     "name": "StormResult",
     "as": "StormResult"
   },
   {
-    "from": "examples/cloudflare-worker/.storm/runtime/log",
+    "from": "/home/development/repos/storm-stack/examples/cloudflare-worker/.storm/runtime/log",
     "name": "StormLog",
     "as": "StormLog"
   },
   {
-    "from": "examples/cloudflare-worker/.storm/runtime/id",
+    "from": "/home/development/repos/storm-stack/examples/cloudflare-worker/.storm/runtime/id",
     "name": "uniqueId",
     "as": "uniqueId"
   },
   {
-    "from": "examples/cloudflare-worker/.storm/runtime/id",
+    "from": "/home/development/repos/storm-stack/examples/cloudflare-worker/.storm/runtime/id",
     "name": "getRandom",
     "as": "getRandom"
   },
   {
-    "from": "examples/cloudflare-worker/.storm/runtime/storage",
+    "from": "/home/development/repos/storm-stack/examples/cloudflare-worker/.storm/runtime/storage",
     "name": "storage",
     "as": "storage"
   },
   {
-    "from": "examples/cloudflare-worker/.storm/runtime/app",
+    "from": "/home/development/repos/storm-stack/examples/cloudflare-worker/.storm/runtime/app",
     "name": "withContext",
     "as": "withContext"
   },
   {
-    "from": "examples/cloudflare-worker/.storm/runtime/context",
+    "from": "/home/development/repos/storm-stack/examples/cloudflare-worker/.storm/runtime/context",
     "name": "useStorm",
     "as": "useStorm"
   },
   {
-    "from": "examples/cloudflare-worker/.storm/runtime/context",
+    "from": "/home/development/repos/storm-stack/examples/cloudflare-worker/.storm/runtime/context",
     "name": "STORM_ASYNC_CONTEXT",
     "as": "STORM_ASYNC_CONTEXT"
   },
   {
-    "from": "examples/cloudflare-worker/.storm/runtime/env",
+    "from": "/home/development/repos/storm-stack/examples/cloudflare-worker/.storm/runtime/env",
     "name": "getEnvPaths",
     "as": "getEnvPaths"
   },
   {
-    "from": "examples/cloudflare-worker/.storm/runtime/env",
+    "from": "/home/development/repos/storm-stack/examples/cloudflare-worker/.storm/runtime/env",
     "name": "getBuildInfo",
     "as": "getBuildInfo"
   },
   {
-    "from": "examples/cloudflare-worker/.storm/runtime/env",
+    "from": "/home/development/repos/storm-stack/examples/cloudflare-worker/.storm/runtime/env",
     "name": "getRuntimeInfo",
     "as": "getRuntimeInfo"
   },
   {
-    "from": "examples/cloudflare-worker/.storm/runtime/event",
+    "from": "/home/development/repos/storm-stack/examples/cloudflare-worker/.storm/runtime/event",
     "name": "StormEvent",
     "as": "StormEvent"
   }

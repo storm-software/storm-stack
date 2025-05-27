@@ -46,10 +46,10 @@ export function getDotenvDefaultTypeDefinition<
     file: process.env.STORM_STACK_LOCAL
       ? joinPaths(
           context.workspaceConfig.workspaceRoot,
-          "dist/packages/types/dist/esm/src/shared/env.js"
+          "dist/packages/types/dist/esm/src/shared/vars.js"
         )
-      : "@storm-stack/types/env",
-    name: "__ΩStormEnvVariables"
+      : "@storm-stack/types/vars",
+    name: "__ΩStormBaseVariables"
   };
 }
 

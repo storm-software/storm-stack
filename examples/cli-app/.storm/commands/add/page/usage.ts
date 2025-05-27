@@ -16,7 +16,7 @@ import { colors } from "../../../runtime/cli";
 export function renderUsage(includeCommands = true) {
   return `${colors.bold("Add - Page")}
 
-${colors.dim("Add a page to the file system.")}
+  ${colors.dim("Add a page to the file system.")}
 
   ${colors.bold("Usage:")}
     examples-cli add page [options] 

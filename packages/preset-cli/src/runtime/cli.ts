@@ -22,6 +22,7 @@ import { stripAnsi } from "@stryke/cli/utils/strip-ansi";
 import { titleCase } from "@stryke/string-format/title-case";
 import { isObject } from "@stryke/type-checks/is-object";
 import { isString } from "@stryke/type-checks/is-string";
+import { renderUnicodeCompact } from "uqr";
 import type { StormStackCLIPresetContext } from "../types/build";
 import type { StormStackCLIPresetConfig } from "../types/config";
 
@@ -132,7 +133,7 @@ export function writeRuntime<TOptions extends Options = Options>(
     }
   }
 
-  const footerHeader = `${appTitle} is authored and maintained by ${homepage ? `\${link("${homepage}", "${author}")}` : author}.`;
+  const footerHeader = `${appTitle} is authored and maintained by ${author}.`;
   const footerHeaderLength = stripAnsi(footerHeader).length;
 
   const linksColumn1 = [] as string[];
@@ -158,7 +159,7 @@ export function writeRuntime<TOptions extends Options = Options>(
     linksColumn2.push(repository);
   }
 
-  const linksMaxLength = Math.max(...linksColumn1.map(line => line.length)) + 2;
+  const linksMaxLength = Math.max(...linksColumn1.map(line => line.length)) + 8;
 
   return `${getFileHeader()}
 
@@ -168,10 +169,7 @@ ${
 import { StormError } from "./error";`
     : ""
 }
-import { isHyperlinkSupported } from "@stryke/env/environment-checks";
-import { getRuntimeInfo } from "./env";
-
-const runtimeInfo = getRuntimeInfo();
+import { isColorSupported, isMinimal, hasTTY, isUnicodeSupported } from "./env";
 
 function replaceClose(
   index: number,
@@ -255,7 +253,7 @@ export type ColorName = keyof typeof colorDefs;
  * An object containing functions for coloring text. Each function corresponds to a terminal color. See {@link ColorName} for available colors.
  */
 export const colors = (
-  runtimeInfo.isColorSupported
+  isColorSupported
     ? colorDefs
     : Object.fromEntries(Object.keys(colorDefs).map(key => [key, String]))
 ) as Record<ColorName, (text: string | number) => string>;
@@ -278,7 +276,7 @@ type LinkOptions = {
   /**
    * Whether to use colored text for the link.
    *
-   * @defaultValue "cyan"
+   * @defaultValue "blueBright"
    */
   color?: ColorName | false;
 
@@ -294,6 +292,102 @@ type LinkOptions = {
    */
   fallback?: (url: string, text?: string) => string;
 };
+
+function parseVersion(versionString = "") {
+  if (/^\d{3,4}$/.test(versionString)) {
+    const match = /(\d{1,2})(\d{2})/.exec(versionString) ?? [];
+
+    return {
+      major: 0,
+      minor: Number.parseInt(match[1]!, 10),
+      patch: Number.parseInt(match[2]!, 10)
+    };
+  }
+
+  const versions = (versionString ?? "")
+    .split(".")
+    .map(n => Number.parseInt(n, 10));
+
+  return {
+    major: versions[0],
+    minor: versions[1],
+    patch: versions[2]
+  };
+}
+
+/**
+ * Check if the current environment supports hyperlinks in the terminal.
+ *
+ * @param stream - The stream to check for TTY support (default: process.stdout)
+ * @returns Whether hyperlinks are supported
+ */
+function isHyperlinkSupported(
+  stream: NodeJS.WriteStream = process.stdout
+): boolean {
+  if (process.env.FORCE_HYPERLINK) {
+    return !(
+      process.env.FORCE_HYPERLINK.length > 0 &&
+      Number.parseInt(process.env.FORCE_HYPERLINK, 10) === 0
+    );
+  }
+
+  if (process.env.NETLIFY) {
+    return true;
+  } else if (!isColorSupported || hasTTY) {
+    return false;
+  } else if ("WT_SESSION" in process.env) {
+    return true;
+  } else if (process.platform === "win32" || isMinimal || process.env.TEAMCITY_VERSION) {
+    return false;
+  } else if (process.env.TERM_PROGRAM) {
+    const version = parseVersion(process.env.TERM_PROGRAM_VERSION);
+
+    switch (process.env.TERM_PROGRAM) {
+      case "iTerm.app": {
+        if (version.major === 3) {
+          return version.minor !== undefined && version.minor >= 1;
+        }
+
+        return version.major !== undefined && version.major > 3;
+      }
+      case "WezTerm": {
+        return version.major !== undefined && version.major >= 20_200_620;
+      }
+      case "vscode": {
+        if (process.env.CURSOR_TRACE_ID) {
+          return true;
+        }
+
+        return (
+          version.minor !== undefined &&
+          version.major !== undefined &&
+          (version.major > 1 || (version.major === 1 && version.minor >= 72))
+        );
+      }
+      case "ghostty": {
+        return true;
+      }
+    }
+  }
+
+  if (process.env.VTE_VERSION) {
+    if (process.env.VTE_VERSION === "0.50.0") {
+      return false;
+    }
+
+    const version = parseVersion(process.env.VTE_VERSION);
+    return (
+      (version.major !== undefined && version.major > 0) ||
+      (version.minor !== undefined && version.minor >= 50)
+    );
+  }
+
+  if (process.env.TERM === "alacritty") {
+    return true;
+  }
+
+  return false;
+}
 
 /**
  * Create a link to a URL in the console.
@@ -315,13 +409,13 @@ export function link(
   ) {
     return options.fallback
       ? options.fallback(url, text)
-      : runtimeInfo.isColorSupported
-        ? \`\${text ? \`\${text} at \` : ""} \${colors.underline(
+      : isColorSupported
+        ? \`\${text && text !== url ? \`\${text} at \` : ""}\${colors.underline(
             options.color !== false
-              ? getColor(options.color || "cyan")(url)
+              ? getColor(options.color || "blueBright")(url)
               : url
           )}\`
-        : \`\${text ? \`\${text} at \` : ""} \${url}\`;
+        : \`\${text && text !== url ? \`\${text} at \` : ""} \${url}\`;
   }
 
   return [
@@ -357,11 +451,11 @@ function stripAnsi(text: string) {
  * @internal
  */
 export function renderBanner(title: string, description: string): string {
-  const consoleWidth = Math.max(process.stdout.columns - 2, 46);
-  const width = Math.max(Math.min(consoleWidth, Math.max(title.length + 2, 40)), 44);
+  const consoleWidth = Math.max(process.stdout.columns - 2, 80);
+  const width = Math.max(Math.min(consoleWidth, Math.max(title.length + 2, 70)), 70);
 
   const banner = [] as string[];
-  banner.push(colors.cyan(\`┏━━━━ ${appTitle} ━━ v${
+  banner.push(colors.cyan(\`┏━━━━ ${appTitle} ━ v${
     context.packageJson.version || "1.0.0"
   } \${"━".repeat(width - 10 - ${
     appTitle.length + (context.packageJson.version?.length ?? 5)
@@ -369,27 +463,31 @@ export function renderBanner(title: string, description: string): string {
   banner.push(colors.cyan(\`┃\${" ".repeat(width)}┃\`));
   banner.push(\`\${colors.cyan("┃")}\${" ".repeat((width - title.length) / 2)}\${colors.whiteBright(colors.bold(title))}\${" ".repeat((width - title.length) / 2)}\${colors.cyan("┃")}\`);
   banner.push(colors.cyan(\`┃\${" ".repeat(width)}┃\`));
-  banner.push(\`\${colors.cyan("┃")}\${
-    colors.dim(description.length < width - 2
-      ? \`\${" ".repeat((width - description.length) / 2)}\${description}\${" ".repeat((width - description.length) / 2)}\`
-      : description.split(" ").reduce((ret, word) => {
-          const lines = ret.split("\\n");
-          if (lines.length > 1 && lines[lines.length - 1]!.length + word.length > width - 2) {
-            ret += "\\n";
-          }
 
-          ret += \`\${word} \`;
-          return ret;
-        }, "").trim())} \${colors.cyan("┃")}\`);
+  const text = description.length < (width * 0.9)
+    ? \`\${" ".repeat((width - description.length) / 2)}\${description}\${" ".repeat((width - description.length) / 2)}\`
+    : description.split(" ").reduce((ret, word) => {
+        const lines = ret.split("\\n");
+        if (lines.length !== 0 && (lines[lines.length - 1]!.length + word.length > (width * 0.9))) {
+          ret += " \\n";
+        }
+
+        ret += \`\${word} \`;
+        return ret;
+      }, "");
+  for (const line of text.split("\\n") ) {
+    banner.push(\`\${colors.cyan("┃")}\${" ".repeat((width - line.length) / 2)}\${colors.gray(line)}\${" ".repeat((width - line.length) / 2)}\${colors.cyan("┃")}\`);
+  }
+
   banner.push(colors.cyan(\`┃\${" ".repeat(width)}┃\`));
   ${
     author
-      ? `banner.push(colors.cyan(\`┗\${"━".repeat(width - 7 - ${author.length})}━ ${homepage ? `\${link("${homepage}", "${author}")}` : author} ━━━━┛\`));`
+      ? `banner.push(colors.cyan(\`┗\${"━".repeat(width - 7 - ${author.length})}━ ${author} ━━━━┛\`));`
       : `banner.push(colors.cyan(\`┗\${"━".repeat(width)}┛\`));`
   }
 
   return banner
-    .map(line => \`\${" ".repeat((consoleWidth - line.length) / 2)}\${line}\${" ".repeat((consoleWidth - line.length) / 2)}\`)
+    .map(line => \`\${" ".repeat((consoleWidth - stripAnsi(line).length) / 2)}\${line}\${" ".repeat((consoleWidth - stripAnsi(line).length) / 2)}\`)
     .join("\\n");
 }
 
@@ -406,22 +504,12 @@ export function renderFooter(): string {
   const consoleWidth = Math.max(process.stdout.columns - 2, 46);
 
   let supportRow = ${
-    config.support ||
-    context.workspaceConfig.support ||
-    context.workspaceConfig?.contact ||
-    context.workspaceConfig?.repository
+    support || contact || repository
       ? `\`You can reach out to the ${titleCase(
           context.workspaceConfig?.organization || context.options.name
-        )} - Support team via \${link("${
-          config.support ||
-          context.workspaceConfig.support ||
-          context.workspaceConfig.contact ||
-          context.workspaceConfig.repository
-        }", "${
-          config.support ||
-          context.workspaceConfig.support ||
-          context.workspaceConfig.contact
-            ? `our website's ${config.support || context.workspaceConfig.support ? "support" : "contact"} page`
+        )} - Support team via \${link("${support || contact || repository}", "${
+          support || contact
+            ? `our website's ${support ? "support" : "contact"} page`
             : "our repository"
         }")}.\``
       : ""
@@ -429,17 +517,39 @@ export function renderFooter(): string {
   const supportRowLength = stripAnsi(supportRow).length;
 
   const footer = [] as string[];
-  footer.push(\`\\n  \${colors.bold("Links:")}\`);
+  footer.push(\`\\n\${colors.whiteBright(colors.bold("Links:"))}\`);
   ${linksColumn1
     .map(
       (line, i) =>
-        `footer.push(\`    ${`\${colors.bold("${line.padEnd(
+        `footer.push(\`  ${`\${colors.bold("${line.padEnd(
           linksMaxLength
         )}")}`}\${link("${linksColumn2[i]}")}\`);`
     )
     .join(" \n")}
 
-  footer.push("\\n");
+  footer.push("\\n");${
+    homepage || docs || support || contact || repository
+      ? `
+  if (isUnicodeSupported) {
+    const qrCodeLines = \`${renderUnicodeCompact((homepage || docs || support || contact || repository)!)}\`.split("\\n");
+    const qrCodeMaxLength = Math.max(...qrCodeLines.map(line => line.length));
+    footer.push(...qrCodeLines.map(line => \`\${" ".repeat((consoleWidth - qrCodeMaxLength) / 2)}\${line}\${" ".repeat((consoleWidth - qrCodeMaxLength) / 2)}\`));
+
+    footer.push(\`\${" ".repeat((consoleWidth - ${
+      (homepage || docs || support || contact || repository)?.length ?? 0
+    }) / 2)}\${link("${(homepage ||
+      docs ||
+      support ||
+      contact ||
+      repository)!}")}\${" ".repeat((consoleWidth - ${
+      (homepage || docs || support || contact || repository)?.length ?? 0
+    }) / 2)}\`);
+    footer.push("\\n");
+    footer.push("\\n");
+  }
+`
+      : ""
+  }
   footer.push(\`\${" ".repeat((consoleWidth - ${footerHeaderLength}) / 2)}${footerHeader}\${" ".repeat((consoleWidth - ${footerHeaderLength}) / 2)}\`);
   if (supportRow) {
     footer.push(\`\${" ".repeat((consoleWidth - supportRowLength) / 2)}\${supportRow}\${" ".repeat((consoleWidth - supportRowLength) / 2)}\`);

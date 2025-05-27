@@ -15,16 +15,118 @@ declare module "storm:app" {
 }
 
 declare module "storm:env" {
-  const getBuildInfo: (typeof import("../runtime/env"))["getBuildInfo"];
-  const getRuntimeInfo: (typeof import("../runtime/env"))["getRuntimeInfo"];
-  const getEnvPaths: (typeof import("../runtime/env"))["getEnvPaths"];
+  /** Detect if stdout.TTY is available */
+  export const hasTTY: boolean;
 
-  export { getBuildInfo, getEnvPaths, getRuntimeInfo };
+  /** Detect if the application is running in a CI environment */
+  export const isCI: boolean;
+
+  /** Detect the `NODE_ENV` environment variable */
+  export const mode: string;
+
+  /** Detect if the application is running in production mode */
+  export const isProduction: boolean;
+
+  /** Detect if the application is running in staging mode */
+  export const isStaging: boolean;
+
+  /** Detect if the application is running in development mode */
+  export const isDevelopment: boolean;
+
+  /** Detect if the application is running in debug mode */
+  export const isDebug: boolean;
+
+  /** Detect if the application is running in test mode */
+  export const isTest: boolean;
+
+  /** Detect if MINIMAL environment variable is set, running in CI or test or TTY is unavailable */
+  export const isMinimal: boolean;
+
+  /** Detect if the runtime platform is Windows */
+  export const isWindows: boolean;
+
+  /** Detect if the runtime platform is Linux */
+  export const isLinux: boolean;
+
+  /** Detect if the runtime platform is macOS (darwin kernel) */
+  export const isMacOS: boolean;
+
+  /** Detect if the runtime platform is interactive */
+  export const isInteractive: boolean;
+
+  /** Detect if Unicode characters are supported */
+  export const isUnicodeSupported: boolean;
+
+  /** Detect if color is supported */
+  export const isColorSupported: boolean;
+
+  /**
+   * Indicates if running in Node.js or a Node.js compatible runtime.
+   *
+   * **Note:** When running code in Bun and Deno with Node.js compatibility mode, `isNode` flag will be also `true`, indicating running in a Node.js compatible runtime.
+   */
+  export const isNode: boolean;
+
+  /** The name of the current application */
+  export const appName: string;
+
+  /** The name of the current application */
+  export const appVersion: string;
+
+  /** The organization that maintains the application */
+  export const organization: string;
+
+  /**
+   * Interface representing the static build information for the Storm application.
+   */
+  const build: StormBuildInfo;
+
+  /**
+   * Interface representing the dynamic runtime information for the Storm application.
+   */
+  const runtime: StormRuntimeInfo;
+
+  /**
+   * The environment paths for storing things like data, config, logs, and cache in the current runtime environment.
+   *
+   * @remarks
+   * On macOS, directories are generally created in `~/Library/Application Support/<name>`.
+   * On Windows, directories are generally created in `%AppData%/<name>`.
+   * On Linux, directories are generally created in `~/.config/<name>` - this is determined via the [XDG Base Directory spec](https://specifications.freedesktop.org/basedir-spec/latest/).
+   *
+   * If the `STORM_DATA_DIR`, `STORM_CONFIG_DIR`, `STORM_CACHE_DIR`, `STORM_LOG_DIR`, or `STORM_TEMP_DIR` environment variables are set, they will be used instead of the default paths.
+   */
+  const paths: StormEnvPaths;
+
+  export {
+    appName,
+    appVersion,
+    build,
+    hasTTY,
+    isCI,
+    isColorSupported,
+    isDebug,
+    isDevelopment,
+    isInteractive,
+    isLinux,
+    isMacOS,
+    isMinimal,
+    isNode,
+    isProduction,
+    isStaging,
+    isTest,
+    isUnicodeSupported,
+    isWindows,
+    mode,
+    organization,
+    paths,
+    runtime
+  };
 }
 
 declare module "storm:context" {
-  const useStorm: (typeof import("../runtime/context"))["useStorm"];
-  const STORM_ASYNC_CONTEXT: (typeof import("../runtime/context"))["STORM_ASYNC_CONTEXT"];
+  const useStorm: () => StormContext<StormVariables>;
+  const STORM_ASYNC_CONTEXT: StormContext<StormVariables>;
 
   export { STORM_ASYNC_CONTEXT, useStorm };
 }

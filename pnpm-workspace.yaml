@@ -77,9 +77,10 @@ catalog:
   "@storm-software/untyped": latest
   "@storm-software/testing-tools": latest
   "@storm-software/tsconfig": latest
+  "@storm-software/tsdoc": latest
   "@storm-software/workspace-tools": latest
-  "@stryke/env": ^0.7.0
-  "@stryke/fs": ^0.13.1
+  "@stryke/env": ^0.9.0
+  "@stryke/fs": ^0.14.0
   "@stryke/helpers": ^0.5.3
   "@stryke/http": ^0.8.1
   "@stryke/unique-id": ^0.2.7
@@ -148,6 +149,7 @@ catalog:
   unimport: ^4.2.0
   unstorage: ^1.16.0
   untyped: 1.5.2
+  uqr: ^0.1.2
   verdaccio: 6.1.2
   vite: ^6.3.4
   defu: ^6.1.4

@@ -21,21 +21,16 @@ import { getFileHeader } from "../../../helpers/utilities/file-header";
 export function writeError() {
   return `${getFileHeader()}
 
-import type {
-  ErrorMessageDetails,
-  Indexable,
-  MessageType
-} from "@stryke/types";
-import { isError } from "@stryke/type-checks/is-error";
-import { isFunction } from "@stryke/type-checks/is-function";
-import { isObject } from "@stryke/type-checks/is-object";
-import { isSetString } from "@stryke/type-checks/is-set-string";
-import type {
+import {
   ErrorType,
   IStormError,
   ParsedStacktrace,
   StormErrorOptions
 } from "@storm-stack/types/error";
+ import {
+  ErrorMessageDetails,
+  MessageType
+} from "@storm-stack/types/message";
 
 /**
 * Get the default error code for the given error type.
@@ -72,6 +67,51 @@ export function getDefaultErrorName(type: ErrorType): string {
   }
 }
 
+/**
+ * Checks if \`value\` is an {@link Error}, \`EvalError\`, \`RangeError\`, \`ReferenceError\`,
+ * \`SyntaxError\`, \`TypeError\`, or \`URIError\` object.
+ *
+ * @example
+ * \`\`\`typescript
+ * isError(new Error)
+ * // => true
+ *
+ * isError(Error)
+ * // => false
+ * \`\`\`
+ *
+ * @param value - The value to check.
+ * @returns Returns \`true\` if \`value\` is an error object, else \`false\`.
+ */
+export function isError(value: unknown): value is Error {
+  if (!value || (typeof value !== "object" && value?.constructor !== Object)) {
+    return false;
+  }
+
+  return (
+    Object.prototype.toString.call(value) === "[object Error]" ||
+    Object.prototype.toString.call(value) === "[object DOMException]" ||
+    (typeof (value as Error)?.message === "string" &&
+      typeof (value as Error)?.name === "string")
+  );
+};
+
+/**
+ * Type-check to determine if \`value\` is a {@link StormError} object
+ *
+ * @param value - the object to check
+ * @returns Returns \`true\` if \`value\` is a {@link StormError} object, else \`false\`.
+ */
+export function isStormError(value: unknown): value is StormError {
+  return (
+    isError(value) &&
+    (value as StormError)?.code !== undefined &&
+    typeof ((value as StormError)?.code) === "number" &&
+    (value as StormError)?.type !== undefined &&
+    typeof ((value as StormError)?.type) === "string"
+  );
+}
+
  /**
   * Creates a new {@link StormError} instance from an unknown cause value
   *
@@ -93,10 +133,6 @@ export function createStormError(
   }
 
   if (isError(cause)) {
-    if (isStormError(cause) || cause.name === "StormError") {
-      return cause as StormError;
-    }
-
     return new StormError({
       type,
       code: getDefaultCode(type),
@@ -129,7 +165,7 @@ export function createStormError(
   }
 
   // If it's an object, we'll create a synthetic error
-  if (isObject(cause)) {
+  if (cause && (causeType === "object" || cause?.constructor === Object)) {
     const err = new StormError({
       name: getDefaultErrorName(type),
       code: getDefaultCode(type),
@@ -139,7 +175,7 @@ export function createStormError(
 
     for (const key of Object.keys(cause)) {
       // eslint-disable-next-line ts/no-unsafe-assignment
-      (err as Indexable)[key] = (cause as Indexable)[key];
+      (err as Record<string, any>)[key] = (cause as Record<string, any>)[key];
     }
 
     return err;
@@ -153,21 +189,6 @@ export function createStormError(
     data
   });
 }
-
- /**
-  * Type-check to determine if \`obj\` is a \`StormError\` object
-  *
-  * @param value - the object to check
-  * @returns The function isStormError is returning a boolean value.
-  */
- export function isStormError(value: unknown): value is StormError {
-   return (
-     isError(value) &&
-     isSetString((value as StormError)?.code) &&
-     isSetString((value as StormError)?.type) &&
-     isSetString((value as StormError)?.stack)
-   );
- }
 
  /**
   * A wrapper around the base JavaScript Error class to be used in Storm Stack applications
@@ -217,10 +238,10 @@ export function createStormError(
   ) {
     super(
        "An error occurred during processing",
-       isSetString(optionsOrMessage) ? undefined : { cause: optionsOrMessage.cause }
+       typeof optionsOrMessage === "string" && optionsOrMessage ? undefined : { cause: optionsOrMessage.cause }
      );
 
-     if (isSetString(optionsOrMessage)) {
+     if (typeof optionsOrMessage === "string" && optionsOrMessage) {
        this.message = optionsOrMessage;
        this.type = type || "general";
        this.code = getDefaultCode(this.type);
@@ -236,7 +257,13 @@ export function createStormError(
        if (optionsOrMessage.stack) {
          this.#stack = optionsOrMessage.stack;
          // eslint-disable-next-line ts/unbound-method
-       } else if (isFunction(Error.captureStackTrace)) {
+       } else if (
+         Error.captureStackTrace instanceof Function ||
+         typeof Error.captureStackTrace === "function" ||
+         Boolean(
+           Error.captureStackTrace?.constructor && (Error.captureStackTrace as any)?.call && (Error.captureStackTrace as any)?.apply
+         )
+       ) {
          Error.captureStackTrace(this, this.constructor);
        } else {
          this.#stack = new Error("").stack;
@@ -365,10 +392,10 @@ export function createStormError(
    */
   public get url(): string {
     const url = new URL($storm.vars.ERROR_URL!);
-    url.pathname = \`\${this.type.toLowerCase().replaceAll("_", "-")}/\${String(this.code)}/\`;
+    url.pathname = \`\${this.type.toLowerCase().replaceAll("_", "-")}/\${String(this.code)}\`;
 
     if (this.params.length > 0) {
-      url.pathname += this.params.map(param => encodeURI("" + param)
+      url.pathname += \`/\${this.params.map(param => encodeURI("" + param)
         .replaceAll(/%7c/gi, "|")
         .replaceAll("#", "%23")
         .replaceAll("?", "%3F")
@@ -376,7 +403,7 @@ export function createStormError(
         .replaceAll("&", "%26")
         .replaceAll("+", "%2B")
         .replaceAll("/", "%2F")
-      ).join("/");
+      ).join("/")}\`;
     }
 
     return url.toString();
@@ -389,18 +416,23 @@ export function createStormError(
    * @returns The display error message string
    */
   public toDisplay(includeData = $storm.vars.INCLUDE_ERROR_DATA): string {
-    return \`\${this.name && this.name !== this.constructor.name ? (this.code ? \`\${this.name} \` : this.name) : ""} \${
+    return \`\${this.name && this.name !== this.constructor.name ? (this.code ? \`\${this.name} \` : this.name) : ""}\${
       this.code
         ? this.code && this.name
-          ? \`[\${this.type} - \${this.code}]\`
-          : \`\${this.type} - \${this.code}\`
+          ? \`[\${this.type.toUpperCase()}-\${this.code}]\`
+          : \`\${this.type.toUpperCase()}-\${this.code}\`
         : this.name
-          ? \`[\${this.type}]\`
-          : this.type
+          ? \`[\${this.type.toUpperCase()}]\`
+          : this.type.toUpperCase()
     }: Please review the details of this error at the following URL: \${this.url}\${
       includeData && this.data
         ? \`
 Related details: \${JSON.stringify(this.data)}\`
+        : ""
+    }\${
+      this.cause.name
+        ? \`
+Inner Error: \${this.cause.name}\${this.cause.message ? " - " + this.cause.message : ""}\`
         : ""
     }\`;
   }

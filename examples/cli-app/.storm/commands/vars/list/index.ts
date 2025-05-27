@@ -13,7 +13,7 @@ import {
   renderBanner,
   renderFooter
 } from "../../../runtime/cli";
-import { getRuntimeInfo } from "../../../runtime/env";
+import { isInteractive, isMinimal } from "../../../runtime/env";
 import handle from "./handle";
 import { renderUsage } from "./usage";
 
@@ -75,17 +75,16 @@ async function handler() {
     if (args["version"] || args["v"]) {
       console.log($storm.vars.APP_VERSION);
     } else {
-      const runtimeInfo = getRuntimeInfo();
       const isVerbose =
         args["verbose"] ?? Boolean(process.env.EXAMPLES_CLI_VERBOSE);
-      const isInteractive =
+      const isPromptEnabled =
         args["interactive"] !== false &&
         args["no-interactive"] !== true &&
         Boolean(process.env.EXAMPLES_CLI_INTERACTIVE) &&
-        runtimeInfo.isInteractive &&
-        !runtimeInfo.isCI;
+        isInteractive &&
+        !isMinimal;
 
-      if (args["no-banner"] !== true && !runtimeInfo.isCI) {
+      if (args["no-banner"] !== true && !isMinimal) {
         console.log(
           renderBanner(
             "Variables - List",
@@ -109,7 +108,7 @@ async function handler() {
           );
           console.log("");
 
-          if (isInteractive) {
+          if (isPromptEnabled) {
             console.log(colors.dim(" > Running in interactive mode..."));
           } else {
             console.log(colors.dim(" > Running in non-interactive mode..."));

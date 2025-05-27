@@ -53,7 +53,7 @@ export const externalPlugin = (
           if (match(args.path, noExternal)) {
             return;
           }
-          if (match(args.path, external)) {
+          if (match(args.path, external) || args.path.startsWith("node:")) {
             return { external: true };
           }
           // Exclude any other import that looks like a Node module
@@ -73,7 +73,7 @@ export const externalPlugin = (
           if (match(args.path, noExternal)) {
             return;
           }
-          if (match(args.path, external)) {
+          if (match(args.path, external) || args.path.startsWith("node:")) {
             return { external: true };
           }
 

@@ -16,9 +16,24 @@
 
  ------------------------------------------------------------------- */
 
-export * from "./error.js";
-export * from "./log.js";
-export * from "./message.js";
-export * from "./payload.js";
-export * from "./result.js";
-export * from "./vars.js";
+export type MessageType = "help" | "error" | "warning" | "info" | "success";
+
+export type MessageDetails<TMessageType extends MessageType = MessageType> =
+  | {
+      code: string;
+      message?: string;
+      type: TMessageType;
+      params?: Record<string, any>;
+    }
+  | {
+      code?: string;
+      message: string;
+      type: TMessageType;
+      params?: Record<string, any>;
+    };
+
+export type HelpMessageDetails = MessageDetails<"help">;
+export type ErrorMessageDetails = MessageDetails<"error">;
+export type WarningMessageDetails = MessageDetails<"warning">;
+export type InfoMessageDetails = MessageDetails<"info">;
+export type SuccessMessageDetails = MessageDetails<"success">;

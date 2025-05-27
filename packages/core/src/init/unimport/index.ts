@@ -48,7 +48,7 @@ export async function initUnimport<TOptions extends Options = Options>(
   );
   context.unimportPresets = [
     {
-      imports: ["StormError", "createStormError", "isStormError"],
+      imports: ["StormError", "createStormError", "isError", "isStormError"],
       from: joinPaths(runtimeDir, "error")
     },
     {

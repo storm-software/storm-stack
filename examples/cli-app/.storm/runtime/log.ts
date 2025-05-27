@@ -15,8 +15,7 @@ import {
   LogRecord,
   LogSink
 } from "@storm-stack/types/log";
-import { StormError, isStormError } from "./error";
-import { isError } from "@stryke/type-checks/is-error";
+import { StormError, isError, isStormError } from "./error";
 import logConsoleInfoSink from "./logs/log-console-info"; 
 import logSentryInfoSink from "./logs/log-sentry-info"; 
 
@@ -203,7 +202,7 @@ const LOG_SINKS = [
 ] as const;
 
 /**
- * A logger implementation. Do not use this directly; use {@link getLogger} instead. This class is exported for testing purposes.
+ * The StormLog class that's used for writing logs during Storm Stack applications.
  */
 export class StormLog implements IStormLog {
   /**

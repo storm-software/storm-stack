@@ -9,7 +9,6 @@ import type { ParameterizedString } from "@sentry/core";
 import { getClient } from "@sentry/core";
 import * as Sentry from "@sentry/node";
 import type { LogRecord } from "@storm-stack/types/log";
-import { StormJSON } from "@stryke/json/storm-json";
 
 /**
  * A platform-specific inspect function. In Deno, this is {@link Deno.inspect}, and in Node.js/Bun it is {@link util.inspect}. If neither is available, it falls back to {@link StormJSON.stringify}.
@@ -37,7 +36,7 @@ const inspect: (value: unknown) => string =
       ? // @ts-ignore: Node.js global
         globalThis.util.inspect
       : // eslint-disable-next-line ts/unbound-method
-        StormJSON.stringify;
+        JSON.stringify;
 
 function getParameterizedString(record: LogRecord): ParameterizedString {
   let result = "";

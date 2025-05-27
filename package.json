@@ -76,6 +76,7 @@
     "@storm-software/prettier": "catalog:",
     "@storm-software/testing-tools": "catalog:",
     "@storm-software/tsconfig": "catalog:",
+    "@storm-software/tsdoc": "catalog:",
     "@storm-software/unbuild": "catalog:",
     "@storm-software/untyped": "catalog:",
     "@storm-software/workspace-tools": "catalog:",

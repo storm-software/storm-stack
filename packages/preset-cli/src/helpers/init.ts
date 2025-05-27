@@ -46,17 +46,32 @@ export async function initContext<TOptions extends Options = Options>(
 ) {
   context.options.platform = "node";
 
-  context.override.alias ??= {};
-  context.override.alias["storm:cli"] = joinPaths(
+  const runtimeDir = joinPaths(
+    context.workspaceConfig.workspaceRoot,
     context.options.projectRoot,
     context.artifactsDir,
-    "runtime",
-    "cli.ts"
+    "runtime"
   );
 
+  context.override.alias ??= {};
+  context.override.alias["storm:app"] ??= joinPaths(runtimeDir, "app");
+  context.override.alias["storm:context"] ??= joinPaths(runtimeDir, "context");
+  context.override.alias["storm:env"] ??= joinPaths(runtimeDir, "env");
+  context.override.alias["storm:event"] ??= joinPaths(runtimeDir, "event");
+  context.override.alias["storm:cli"] = joinPaths(runtimeDir, "cli");
+
+  context.override.skipNodeModulesBundle = true;
+
+  context.override.external ??= [];
   context.override.noExternal ??= [];
   if (Array.isArray(context.override.noExternal)) {
-    context.override.noExternal.push("storm:cli");
+    context.override.noExternal.push(
+      "storm:app",
+      "storm:context",
+      "storm:env",
+      "storm:event",
+      "storm:cli"
+    );
   }
 
   context.options.dotenv ??= {};
@@ -122,7 +137,13 @@ export async function initUnimport<TOptions extends Options = Options>(
   context.unimportPresets ??= [];
   context.unimportPresets.push({
     imports,
-    from: "storm:cli"
+    from: joinPaths(
+      context.workspaceConfig.workspaceRoot,
+      context.options.projectRoot,
+      context.artifactsDir,
+      "runtime",
+      "cli"
+    )
   });
 }
 

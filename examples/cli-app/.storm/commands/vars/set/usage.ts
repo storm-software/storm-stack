@@ -16,7 +16,7 @@ import { colors } from "../../../runtime/cli";
 export function renderUsage(includeCommands = true) {
   return `${colors.bold("Variables - Set")}
 
-${colors.dim("Sets a configuration parameter in the variables store.")}
+  ${colors.dim("Sets a configuration parameter in the variables store.")}
 
   ${colors.bold("Usage:")}
     examples-cli vars set <name> <value> [options] 

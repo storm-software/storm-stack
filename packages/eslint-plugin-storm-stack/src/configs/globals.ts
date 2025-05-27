@@ -20,12 +20,10 @@ import type { ESLintGlobalsPropValue } from "@storm-software/eslint/types";
 
 export const globals = {
   $storm: "readonly",
-  StormURL: "readonly",
   StormError: "readonly",
   StormPayload: "readonly",
   StormResult: "readonly",
   StormEvent: "readonly",
-  StormJSON: "readonly",
   id: "readonly",
   getRandom: "readonly"
 } as Record<string, ESLintGlobalsPropValue>;

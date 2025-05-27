@@ -11,27 +11,6 @@ declare module "storm:init" {
   export { };
 }
 
-declare module "storm:url" {
-  const StormURL: (typeof import("@stryke/url"))["StormURL"];
-
-  export { StormURL };
-}
-
-declare module "storm:json" {
-  const StormJSON: (typeof import("@stryke/json"))["StormJSON"];
-
-  export { StormJSON };
-}
-
-declare module "storm:http" {
-  const parseCookie: (typeof import("@stryke/http"))["parseCookie"];
-  const parseSetCookie: (typeof import("@stryke/http"))["parseSetCookie"];
-  const serializeCookie: (typeof import("@stryke/http"))["serializeCookie"];
-  const splitSetCookieString: (typeof import("@stryke/http"))["splitSetCookieString"];
-
-  export { parseCookie, parseSetCookie, serializeCookie, splitSetCookieString };
-}
-
 declare module "storm:storage" {
   const storage: (typeof import("../runtime/storage"))["storage"];
 
@@ -57,9 +36,10 @@ declare module "storm:error" {
   }
 
   const createStormError: (typeof import("../runtime/error"))["createStormError"];
+  const isError: (typeof import("../runtime/error"))["isError"];
   const isStormError: (typeof import("../runtime/error"))["isStormError"];
 
-  export { StormError, createStormError, isStormError };
+  export { StormError, createStormError, isError, isStormError };
 }
 
 declare module "storm:payload" {
@@ -105,7 +85,69 @@ declare module "storm:result" {
 }
 
 declare module "storm:log" {
-  const StormLog: (typeof import("../runtime/log"))["StormLog"];
+  /**
+   * The StormLog class that's used for writing logs during Storm Stack applications.
+   */
+  class StormLog implements IStormLog {
+    public readonly filters: LogFilter[];
+
+    public lowestLogLevel: LogLevel | null;
+
+    public constructor() {}
+
+    public with(properties: Record<string, unknown>): IStormLog;
+
+    public filter(record: LogRecord): boolean;
+
+    public *sinks(level?: LogLevel): Iterable<LogSink>;
+
+    public emit(record: LogRecord, bypassSinks?: Set<LogSink>): void;
+
+    public log(
+      level: LogLevel,
+      rawMessage: string,
+      properties: Record<string, unknown> | (() => Record<string, unknown>),
+      bypassSinks?: Set<LogSink>
+    ): void;
+
+    public logLazily(
+      level: LogLevel,
+      callback: LogCallback,
+      properties: Record<string, unknown> = {}
+    ): void;
+
+    public logTemplate(
+      level: LogLevel,
+      messageTemplate: TemplateStringsArray,
+      values: unknown[],
+      properties: Record<string, unknown> = {}
+    ): void;
+
+    public debug(
+      message: TemplateStringsArray | string | LogCallback,
+      ...values: unknown[]
+    ): void;
+
+    public info(
+      message: TemplateStringsArray | string | LogCallback,
+      ...values: unknown[]
+    ): void;
+
+    public warn(
+      message: TemplateStringsArray | string | LogCallback,
+      ...values: unknown[]
+    ): void;
+
+    public error(
+      message: TemplateStringsArray | string | LogCallback | Error,
+      ...values: unknown[]
+    ): void;
+
+    public fatal(
+      message: TemplateStringsArray | string | LogCallback | Error,
+      ...values: unknown[]
+    ): void;
+  }
 
   export { StormLog };
 }

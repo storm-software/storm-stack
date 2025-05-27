@@ -16,13 +16,11 @@
 
  ------------------------------------------------------------------- */
 
-/* eslint-disable ts/consistent-type-imports */
-
 import { Storage } from "unstorage";
-import { StormEnv } from "../shared/env";
 import { IStormLog } from "../shared/log";
 import { IStormPayload } from "../shared/payload";
-import { StormBuildInfo, StormRuntimeInfo } from "./env";
+import { StormVars } from "../shared/vars";
+import { StormBuildInfo, StormEnvPaths, StormRuntimeInfo } from "./env";
 import { IStormEvent } from "./event";
 
 /**
@@ -43,13 +41,13 @@ interface Internal_StormContextStore {
 }
 
 /**
- * Interface representing the global Storm Application context.
+ * The global Storm Stack application context. This object contains information related to the current process's execution.
  *
  * @remarks
- * This object is injected into the global scope of the Storm Stack application. It can be accessed using the `storm` variable.
+ * The Storm Stack application context object is injected into the global scope of the application. It can be accessed using `$storm` or `useStorm()` in the application code.
  */
 export type StormContext<
-  TVars extends StormEnv = StormEnv,
+  TVars extends StormVars = StormVars,
   TAdditionalFields extends Record<string, any> = Record<string, any>,
   TPayload extends IStormPayload = IStormPayload
 > = TAdditionalFields & {
@@ -77,6 +75,18 @@ export type StormContext<
    * The build information for the Storm application.
    */
   readonly build: StormBuildInfo;
+
+  /**
+   * The environment paths for storing things like data, config, logs, and cache in the current runtime environment.
+   *
+   * @remarks
+   * On macOS, directories are generally created in \`~/Library/Application Support/<name>\`.
+   * On Windows, directories are generally created in \`%AppData%/<name>\`.
+   * On Linux, directories are generally created in \`~/.config/<name>\` - this is determined via the [XDG Base Directory spec](https://specifications.freedesktop.org/basedir-spec/latest/).
+   *
+   * If the \`STORM_DATA_DIR\`, \`STORM_CONFIG_DIR\`, \`STORM_CACHE_DIR\`, \`STORM_LOG_DIR\`, or \`STORM_TEMP_DIR\` environment variables are set, they will be used instead of the default paths.
+   */
+  readonly paths: StormEnvPaths;
 
   /**
    * The current payload object for the Storm application.

@@ -6,77 +6,86 @@ import { deserialize } from "@deepkit/type";
 
 // examples/cli-app/.storm/runtime/cli.ts
 import { confirm, multiselect, select, text } from "@clack/prompts";
-import { isHyperlinkSupported } from "@stryke/env/environment-checks";
 
 // examples/cli-app/.storm/runtime/env.ts
-import { isCI, isInteractive } from "@stryke/env/ci-checks";
-import { hasTTY, isColorSupported, isDebug, isDevelopment, isLinux, isMacOS, isMinimal, isProduction, isStaging, isTest, isWindows, nodeMajorVersion, nodeVersion } from "@stryke/env/environment-checks";
-import { getEnvPaths as _getEnvPaths } from "@stryke/env/get-env-paths";
-import { providerInfo } from "@stryke/env/providers";
-import { runtimeInfo as baseRuntimeInfo, isBun, isDeno, isEdgeLight, isFastly, isNetlify, isNode, isWorkerd } from "@stryke/env/runtime-checks";
-function getBuildInfo() {
-  return {
-    name: "examples-cli-app",
-    packageName: "@storm-stack/examples-cli-app",
-    version: "0.0.1",
-    buildId: "5WQRDz8WliEPyowOJVfVYIRl",
-    timestamp: 1748147275207 ? Number(1748147275207) : 0,
-    releaseId: "_rqxkVkX0KcpYY3gh7DaRZjR",
-    mode: "production",
-    platform: "node",
-    isTest,
-    isDebug: isDebug || isDevelopment,
-    isProduction,
-    isStaging,
-    isDevelopment
-  };
-}
-__name(getBuildInfo, "getBuildInfo");
-getBuildInfo.__type = ["StormBuildInfo", "getBuildInfo", "Get the build information for the current application.", 'P"w!/"?#'];
-var _envPaths;
-function getEnvPaths() {
-  if (!_envPaths) {
-    _envPaths = _getEnvPaths({
-      orgId: "storm-software",
-      appId: "examples-cli-app"
-    });
-  }
-  return _envPaths;
-}
-__name(getEnvPaths, "getEnvPaths");
-getEnvPaths.__type = ["EnvPaths", "getEnvPaths", "Get the environment paths for the current application.", 'P"w!/"?#'];
-function getRuntimeInfo() {
-  return {
-    ...baseRuntimeInfo,
-    isNode,
-    isBun,
-    isDeno,
-    isFastly,
-    isNetlify,
-    isEdgeLight,
-    isWorkerd,
-    hasTTY,
-    isWindows,
-    isLinux,
-    isMacOS,
-    isCI: isCI(),
-    isInteractive: isInteractive(),
-    isMinimal,
-    isColorSupported,
-    isServer: isNode || isDeno || isBun || isEdgeLight || isFastly || isNetlify || isWorkerd,
-    nodeVersion,
-    nodeMajorVersion,
-    provider: providerInfo
-  };
-}
-__name(getRuntimeInfo, "getRuntimeInfo");
-getRuntimeInfo.__type = ["StormRuntimeInfo", "getRuntimeInfo", "Get the runtime information for the current application.", 'P"w!/"?#'];
+import os from "node:os";
+import { basename, join } from "node:path";
+var hasTTY = Boolean(process.stdout && process.stdout.isTTY);
+var isCI = Boolean(process.env.STORM_CI || process.env.CI || process.env.CONTINUOUS_INTEGRATION || process.env.RUN_ID || process.env.AGOLA_GIT_REF || process.env.AC_APPCIRCLE || process.env.APPVEYOR || process.env.CODEBUILD || process.env.TF_BUILD || process.env.bamboo_planKey || process.env.BITBUCKET_COMMIT || process.env.BITRISE_IO || process.env.BUDDY_WORKSPACE_ID || process.env.BUILDKITE || process.env.CIRCLECI || process.env.CIRRUS_CI || process.env.CF_BUILD_ID || process.env.CM_BUILD_ID || process.env.CI_NAME || process.env.DRONE || process.env.DSARI || process.env.EARTHLY_CI || process.env.EAS_BUILD || process.env.GERRIT_PROJECT || process.env.GITEA_ACTIONS || process.env.GITHUB_ACTIONS || process.env.GITLAB_CI || process.env.GOCD || process.env.BUILDER_OUTPUT || process.env.HARNESS_BUILD_ID || process.env.JENKINS_URL || process.env.LAYERCI || process.env.MAGNUM || process.env.NETLIFY || process.env.NEVERCODE || process.env.PROW_JOB_ID || process.env.RELEASE_BUILD_ID || process.env.RENDER || process.env.SAILCI || process.env.HUDSON || process.env.SCREWDRIVER || process.env.SEMAPHORE || process.env.SOURCEHUT || process.env.STRIDER || process.env.TASK_ID || process.env.RUN_ID || process.env.TEAMCITY_VERSION || process.env.TRAVIS || process.env.VELA || process.env.NOW_BUILDER || process.env.APPCENTER_BUILD_ID || process.env.CI_XCODE_PROJECT || process.env.XCS || false);
+var mode = "production";
+var isProduction = ["prd", "prod", "production"].includes(mode.toLowerCase());
+var isStaging = ["stg", "stage", "staging"].includes(mode.toLowerCase());
+var isDevelopment = ["dev", "development"].includes(mode.toLowerCase());
+var isDebug = isDevelopment && Boolean(process.env.DEBUG);
+var isTest = isDevelopment || isStaging || ["tst", "test", "testing"].includes(mode.toLowerCase()) || Boolean(process.env.TEST);
+var isMinimal = Boolean(process.env.MINIMAL) || isCI || isTest || !hasTTY;
+var isWindows = /^win/i.test(process.platform);
+var isLinux = /^linux/i.test(process.platform);
+var isMacOS = /^darwin/i.test(process.platform);
+var isInteractive = !isMinimal && Boolean(process.stdin?.isTTY && process.env.TERM !== "dumb");
+var isUnicodeSupported = process.platform !== "win32" ? process.env.TERM !== "linux" : Boolean(process.env.WT_SESSION) || Boolean(process.env.TERMINUS_SUBLIME) || process.env.ConEmuTask === "{cmd::Cmder}" || process.env.TERM_PROGRAM === "Terminus-Sublime" || process.env.TERM_PROGRAM === "vscode" || process.env.TERM === "xterm-256color" || process.env.TERM === "alacritty" || process.env.TERM === "rxvt-unicode" || process.env.TERM === "rxvt-unicode-256color" || process.env.TERMINAL_EMULATOR === "JetBrains-JediTerm";
+var isColorSupported = !process.env.NO_COLOR && (Boolean(process.env.FORCE_COLOR) || (hasTTY || isWindows) && process.env.TERM !== "dumb");
+var isNode = globalThis.process?.release?.name === "node";
+var organization = "storm-software";
+var appName = "examples-cli-app";
+var homedir = os.homedir();
+var tmpdir = os.tmpdir();
+var paths = isMacOS ? {
+  data: process.env.STORM_DATA_DIR ? join(process.env.STORM_DATA_DIR, appName) : join(homedir, "Library", "Application Support", organization, appName),
+  config: process.env.STORM_CONFIG_DIR ? join(process.env.STORM_CONFIG_DIR, appName) : join(homedir, "Library", "Preferences", organization, appName),
+  cache: process.env.STORM_CACHE_DIR ? join(process.env.STORM_CACHE_DIR, appName) : join(homedir, "Library", "Caches", organization, appName),
+  log: process.env.STORM_LOG_DIR ? join(process.env.STORM_LOG_DIR, appName) : join(homedir, "Library", "Logs", organization, appName),
+  temp: process.env.STORM_TEMP_DIR ? join(process.env.STORM_TEMP_DIR, appName) : join(tmpdir, organization, appName)
+} : isWindows ? {
+  data: process.env.STORM_DATA_DIR ? join(process.env.STORM_DATA_DIR, appName) : join(process.env.LOCALAPPDATA || join(homedir, "AppData", "Local"), "StormSoftware", "ExamplesCLIApp", "Data"),
+  config: process.env.STORM_CONFIG_DIR ? join(process.env.STORM_CONFIG_DIR, appName) : join(process.env.APPDATA || join(homedir, "AppData", "Roaming"), "StormSoftware", "ExamplesCLIApp", "Config"),
+  cache: process.env.STORM_CACHE_DIR ? join(process.env.STORM_CACHE_DIR, appName) : join(process.env.LOCALAPPDATA || join(homedir, "AppData", "Local"), "Cache", "StormSoftware"),
+  log: process.env.STORM_LOG_DIR ? join(process.env.STORM_LOG_DIR, appName) : join(process.env.LOCALAPPDATA || join(homedir, "AppData", "Local"), "StormSoftware", "ExamplesCLIApp", "Log"),
+  temp: process.env.STORM_TEMP_DIR ? join(process.env.STORM_TEMP_DIR, appName) : join(tmpdir, "StormSoftware", "ExamplesCLIApp")
+} : {
+  data: process.env.STORM_DATA_DIR ? join(process.env.STORM_DATA_DIR, appName) : join(process.env.XDG_DATA_HOME || join(homedir, ".local", "share"), organization, appName),
+  config: process.env.STORM_CONFIG_DIR ? join(process.env.STORM_CONFIG_DIR, appName) : join(process.env.XDG_CONFIG_HOME || join(homedir, ".config"), organization, appName),
+  cache: process.env.STORM_CACHE_DIR ? join(process.env.STORM_CACHE_DIR, appName) : join(process.env.XDG_CACHE_HOME || join(homedir, ".cache"), organization, appName),
+  log: join(process.env.XDG_STATE_HOME || join(homedir, ".local", "state"), organization, appName),
+  temp: process.env.STORM_TEMP_DIR ? join(process.env.STORM_TEMP_DIR, appName) : process.env.DEVENV_RUNTIME || process.env.XDG_RUNTIME_DIR ? join(process.env.DEVENV_RUNTIME || process.env.XDG_RUNTIME_DIR, organization, appName) : join(tmpdir, basename(homedir), organization, appName)
+};
+var build = {
+  packageName: "@storm-stack/examples-cli-app",
+  organization,
+  buildId: "DrZaJhkS-xzGmbONz4rPXV4V",
+  timestamp: 1748233881407 ? Number(1748233881407) : 0,
+  releaseId: "X6Y0A_nxbf7KhxwXNRixbphR",
+  releaseTag: "examples-cli-app@0.0.1",
+  mode,
+  platform: "node",
+  isProduction,
+  isStaging,
+  isDevelopment
+};
+var runtime = {
+  isTest,
+  isDebug,
+  isNode,
+  hasTTY,
+  isWindows,
+  isLinux,
+  isMacOS,
+  isCI,
+  isInteractive,
+  isMinimal,
+  isColorSupported,
+  isUnicodeSupported,
+  isServer: isNode || build.platform === "node"
+};
+
+// packages/types/src/shared/error.ts
+var __\u03A9Error = ["name", "message", "stack", "Error", 'P&4!&4"&4#8Mw$y'];
+var __\u03A9ErrorType = ["general", "not_found", "validation", "service_unavailable", "action_unsupported", "security", "unknown", "ErrorType", `P.!.".#.$.%.&.'Jw(y`];
+var __\u03A9StormErrorOptions = ["name", "The error name.", "code", "The error code", "params", "The error message parameters.", "cause", "The error cause.", "stack", "The error stack.", () => __\u03A9ErrorType, "type", "The type of error.", '"exception"', "data", "Additional data to be included with the error.", "Interface representing the Storm error options.", "StormErrorOptions", `P&4!8?"'4#?$&F4%8?&#4'8?(&4)8?*n+4,8?->."4/8?0M?1w2y`];
+var __\u03A9ParsedStacktrace = ["column", "function", "line", "source", "ParsedStacktrace", `P'4!8&4"8'4#8&4$Mw%y`];
+var __\u03A9IStormError = [() => __\u03A9Error, "code", "The error code", "params", "The error message parameters", () => __\u03A9ErrorType, "type", "The type of error that was thrown.", "url", "A url to display the error message", "data", "Additional data to be passed with the error", 0, "cause", "The underlying cause of the error, if any. This is typically another error object that caused this error to be thrown.", "stack", "The error stack", () => __\u03A9ParsedStacktrace, "stacktrace", "The parsed stacktrace", "originalStack", "The original stacktrace", "", "toDisplay", "Returns a formatted error string that can be displayed to the user.", "__proto__", "Internal function to inherit the error", "The Storm Error interface.", "IStormError", `Pn!'4"?#&F4$?%n&4'?(&4)?*"4+8?,Pn--J4.?/&40?1n2F43?4&45?6P&/748?9"4:?;M?<w=y`];
 
 // examples/cli-app/.storm/runtime/error.ts
-import { isError } from "@stryke/type-checks/is-error";
-import { isFunction } from "@stryke/type-checks/is-function";
-import { isObject } from "@stryke/type-checks/is-object";
-import { isSetString } from "@stryke/type-checks/is-set-string";
 function __assignType(fn, args) {
   fn.__type = args;
   return fn;
@@ -86,7 +95,7 @@ function getDefaultCode(_type) {
   return 1;
 }
 __name(getDefaultCode, "getDefaultCode");
-getDefaultCode.__type = ["ErrorType", "_type", "getDefaultCode", "Get the default error code for the given error type.", `P"w!2"'/#?$`];
+getDefaultCode.__type = [() => __\u03A9ErrorType, "_type", "getDefaultCode", "Get the default error code for the given error type.", `Pn!2"'/#?$`];
 function getDefaultErrorName(type) {
   switch (type) {
     case "not_found":
@@ -106,7 +115,20 @@ function getDefaultErrorName(type) {
   }
 }
 __name(getDefaultErrorName, "getDefaultErrorName");
-getDefaultErrorName.__type = ["ErrorType", "type", "getDefaultErrorName", "Get the default error name for the given error type.", 'P"w!2"&/#?$'];
+getDefaultErrorName.__type = [() => __\u03A9ErrorType, "type", "getDefaultErrorName", "Get the default error name for the given error type.", 'Pn!2"&/#?$'];
+function isError(value) {
+  if (!value || typeof value !== "object" && value?.constructor !== Object) {
+    return false;
+  }
+  return Object.prototype.toString.call(value) === "[object Error]" || Object.prototype.toString.call(value) === "[object DOMException]" || typeof value?.message === "string" && typeof value?.name === "string";
+}
+__name(isError, "isError");
+isError.__type = ["value", "isError", "Checks if `value` is an {@link Error}, `EvalError`, `RangeError`, `ReferenceError`,\n`SyntaxError`, `TypeError`, or `URIError` object.", 'P#2!!/"?#'];
+function isStormError(value) {
+  return isError(value) && value?.code !== void 0 && typeof value?.code === "number" && value?.type !== void 0 && typeof value?.type === "string";
+}
+__name(isStormError, "isStormError");
+isStormError.__type = ["value", "isStormError", "Type-check to determine if `value` is a {@link StormError} object", 'P#2!!/"?#'];
 function createStormError(cause, type = "general", data) {
   if (isStormError(cause)) {
     const result = cause;
@@ -114,10 +136,7 @@ function createStormError(cause, type = "general", data) {
     return result;
   }
   if (isError(cause)) {
-    if (isStormError(cause) || cause.name === "StormError") {
-      return cause;
-    }
-    return new StormError({
+    return new StormError2({
       type,
       code: getDefaultCode(type),
       name: cause.name,
@@ -128,7 +147,7 @@ function createStormError(cause, type = "general", data) {
   }
   const causeType = typeof cause;
   if (causeType === "undefined" || causeType === "function" || cause === null) {
-    return new StormError({
+    return new StormError2({
       name: getDefaultErrorName(type),
       code: getDefaultCode(type),
       cause,
@@ -137,15 +156,15 @@ function createStormError(cause, type = "general", data) {
     });
   }
   if (causeType !== "object") {
-    return new StormError({
+    return new StormError2({
       name: getDefaultErrorName(type),
       code: getDefaultCode(type),
       type,
       data
     });
   }
-  if (isObject(cause)) {
-    const err = new StormError({
+  if (cause && (causeType === "object" || cause?.constructor === Object)) {
+    const err = new StormError2({
       name: getDefaultErrorName(type),
       code: getDefaultCode(type),
       type,
@@ -156,7 +175,7 @@ function createStormError(cause, type = "general", data) {
     }
     return err;
   }
-  return new StormError({
+  return new StormError2({
     name: getDefaultErrorName(type),
     code: getDefaultCode(type),
     cause,
@@ -165,13 +184,8 @@ function createStormError(cause, type = "general", data) {
   });
 }
 __name(createStormError, "createStormError");
-createStormError.__type = ["cause", "ErrorType", "type", () => "general", "data", () => StormError, "createStormError", "Creates a new {@link StormError} instance from an unknown cause value", `P#2!"w"2#>$"2%8P7&/'?(`];
-function isStormError(value) {
-  return isError(value) && isSetString(value?.code) && isSetString(value?.type) && isSetString(value?.stack);
-}
-__name(isStormError, "isStormError");
-isStormError.__type = ["value", "isStormError", "Type-check to determine if `obj` is a `StormError` object", 'P#2!!/"?#'];
-var StormError = class _StormError extends Error {
+createStormError.__type = ["cause", () => __\u03A9ErrorType, "type", () => "general", "data", () => StormError2, "createStormError", "Creates a new {@link StormError} instance from an unknown cause value", `P#2!n"2#>$"2%8P7&/'?(`];
+var StormError2 = class _StormError extends Error {
   static {
     __name(this, "StormError");
   }
@@ -207,8 +221,8 @@ var StormError = class _StormError extends Error {
    * @param type - The type of error
    */
   constructor(optionsOrMessage, type = "general") {
-    super("An error occurred during processing", isSetString(optionsOrMessage) ? void 0 : { cause: optionsOrMessage.cause });
-    if (isSetString(optionsOrMessage)) {
+    super("An error occurred during processing", typeof optionsOrMessage === "string" && optionsOrMessage ? void 0 : { cause: optionsOrMessage.cause });
+    if (typeof optionsOrMessage === "string" && optionsOrMessage) {
       this.message = optionsOrMessage;
       this.type = type || "general";
       this.code = getDefaultCode(this.type);
@@ -222,7 +236,7 @@ var StormError = class _StormError extends Error {
       }
       if (optionsOrMessage.stack) {
         this.#stack = optionsOrMessage.stack;
-      } else if (isFunction(Error.captureStackTrace)) {
+      } else if (Error.captureStackTrace instanceof Function || typeof Error.captureStackTrace === "function" || Boolean(Error.captureStackTrace?.constructor && Error.captureStackTrace?.call && Error.captureStackTrace?.apply)) {
         Error.captureStackTrace(this, this.constructor);
       } else {
         this.#stack = new Error("").stack;
@@ -320,10 +334,10 @@ var StormError = class _StormError extends Error {
    * A URL to a page that displays the error message details
    */
   get url() {
-    const url = new URL("https://stormsoftware.com/errors");
-    url.pathname = `${this.type.toLowerCase().replaceAll("_", "-")}/${String(this.code)}/`;
+    const url = new URL("https://developer.stormsoftware.com/api/errors");
+    url.pathname = `${this.type.toLowerCase().replaceAll("_", "-")}/${String(this.code)}`;
     if (this.params.length > 0) {
-      url.pathname += this.params.map(__assignType((param) => encodeURI("" + param).replaceAll(/%7c/gi, "|").replaceAll("#", "%23").replaceAll("?", "%3F").replaceAll(/%252f/gi, "%2F").replaceAll("&", "%26").replaceAll("+", "%2B").replaceAll("/", "%2F"), ["param", "", 'P"2!"/"'])).join("/");
+      url.pathname += `/${this.params.map(__assignType((param) => encodeURI("" + param).replaceAll(/%7c/gi, "|").replaceAll("#", "%23").replaceAll("?", "%3F").replaceAll(/%252f/gi, "%2F").replaceAll("&", "%26").replaceAll("+", "%2B").replaceAll("/", "%2F"), ["param", "", 'P"2!"/"'])).join("/")}`;
     }
     return url.toString();
   }
@@ -334,8 +348,9 @@ var StormError = class _StormError extends Error {
    * @returns The display error message string
    */
   toDisplay(includeData = false) {
-    return `${this.name && this.name !== this.constructor.name ? this.code ? `${this.name} ` : this.name : ""} ${this.code ? this.code && this.name ? `[${this.type} - ${this.code}]` : `${this.type} - ${this.code}` : this.name ? `[${this.type}]` : this.type}: Please review the details of this error at the following URL: ${this.url}${includeData && this.data ? `
-Related details: ${JSON.stringify(this.data)}` : ""}`;
+    return `${this.name && this.name !== this.constructor.name ? this.code ? `${this.name} ` : this.name : ""}${this.code ? this.code && this.name ? `[${this.type.toUpperCase()}-${this.code}]` : `${this.type.toUpperCase()}-${this.code}` : this.name ? `[${this.type.toUpperCase()}]` : this.type.toUpperCase()}: Please review the details of this error at the following URL: ${this.url}${includeData && this.data ? `
+Related details: ${JSON.stringify(this.data)}` : ""}${this.cause.name ? `
+Inner Error: ${this.cause.name}${this.cause.message ? " - " + this.cause.message : ""}` : ""}`;
   }
   /**
    * Prints the error message and stack trace
@@ -351,11 +366,11 @@ ${this.stack}`);
   }
   static __type = [() => Error, "__proto__", function() {
     return Error;
-  }, "#stack", "The stack trace", "IStormError", "#cause", "The inner error", "code", "The error code", "params", function() {
+  }, "#stack", "The stack trace", () => __\u03A9IStormError, "#cause", "The inner error", "code", "The error code", "params", function() {
     return [];
-  }, "The error message parameters", "ErrorType", "type", function() {
+  }, "The error message parameters", () => __\u03A9ErrorType, "type", function() {
     return "general";
-  }, "The type of error event", "data", "Additional data to be passed with the error", "StormErrorOptions", "optionsOrMessage", () => "general", "constructor", "The StormError constructor", "includeData", "toDisplay", "Prints the display error message string", "stacktrace", "toString", "Prints the error message and stack trace", "StormError", "A wrapper around the base JavaScript Error class to be used in Storm Stack applications", `P7!!3">#&3$8?%"w&3'8?('3)?*!3+>,?-"w.3/>0?1"328?3PP"w4&J25"w.2/>6"07?8!!!!!P"29&0:?;P"2<"29&0=?>5"w&x"w??@`];
+  }, "The type of error event", "data", "Additional data to be passed with the error", () => __\u03A9StormErrorOptions, "optionsOrMessage", () => __\u03A9ErrorType, () => "general", "constructor", "The StormError constructor", "includeData", "toDisplay", "Prints the display error message string", "stacktrace", "toString", "Prints the error message and stack trace", () => __\u03A9IStormError, "StormError", "A wrapper around the base JavaScript Error class to be used in Storm Stack applications", `P7!!3">#&3$8?%n&3'8?('3)?*!3+>,?-n.3/>0?1"328?3PPn4&J25n62/>7"08?9!!!!!P"2:&0;?<P"2="2:&0>??5n@x"wA?B`];
 };
 
 // examples/cli-app/.storm/runtime/cli.ts
@@ -364,7 +379,6 @@ function __assignType2(fn, args) {
   return fn;
 }
 __name(__assignType2, "__assignType");
-var runtimeInfo = getRuntimeInfo();
 function replaceClose(index, string, close, replace, head = string.slice(0, Math.max(0, index)) + replace, tail = string.slice(Math.max(0, index + close.length)), next = tail.indexOf(close)) {
   return head + (next < 0 ? tail : replaceClose(next, tail, close, replace));
 }
@@ -422,16 +436,83 @@ var colorDefs = {
   bgWhiteBright: init(107, 49)
 };
 var __\u03A9ColorName = [() => colorDefs, "ColorName", 'i!gw"y'];
-var colors = runtimeInfo.isColorSupported ? colorDefs : Object.fromEntries(Object.keys(colorDefs).map(__assignType2((key) => [key, String], ["key", "", 'P"2!"/"'])));
+var colors = isColorSupported ? colorDefs : Object.fromEntries(Object.keys(colorDefs).map(__assignType2((key) => [key, String], ["key", "", 'P"2!"/"'])));
 function getColor(color, fallback = "reset") {
   return colors[color] || colors[fallback];
 }
 __name(getColor, "getColor");
 getColor.__type = [() => __\u03A9ColorName, "color", () => __\u03A9ColorName, "fallback", () => "reset", "text", "", "getColor", "Gets a color function by name, with an option for a fallback color if the requested color is not found.", `Pn!2"n#2$>%PP&'J2&&/'/(?)`];
-var __\u03A9LinkOptions = [() => __\u03A9ColorName, false, "color", "Whether to use colored text for the link.", '"cyan"', "stdout", "stderr", "target", 'The target for the link. Can be either "stdout" or "stderr".', '"stdout"', "url", "text", "", "fallback", "A fallback function to handle the link in environments that do not support it.", "LinkOptions", `PPn!."J4#8?$>%P.&.'J4(8?)>*P&2+&2,8&/-4.8?/Mw0y`];
+var __\u03A9LinkOptions = [() => __\u03A9ColorName, false, "color", "Whether to use colored text for the link.", '"blueBright"', "stdout", "stderr", "target", 'The target for the link. Can be either "stdout" or "stderr".', '"stdout"', "url", "text", "", "fallback", "A fallback function to handle the link in environments that do not support it.", "LinkOptions", `PPn!."J4#8?$>%P.&.'J4(8?)>*P&2+&2,8&/-4.8?/Mw0y`];
+function parseVersion(versionString = "") {
+  if (/^d{3,4}$/.test(versionString)) {
+    const match = /(d{1,2})(d{2})/.exec(versionString) ?? [];
+    return {
+      major: 0,
+      minor: Number.parseInt(match[1], 10),
+      patch: Number.parseInt(match[2], 10)
+    };
+  }
+  const versions = (versionString ?? "").split(".").map(__assignType2((n) => Number.parseInt(n, 10), ["n", "", 'P"2!"/"']));
+  return {
+    major: versions[0],
+    minor: versions[1],
+    patch: versions[2]
+  };
+}
+__name(parseVersion, "parseVersion");
+parseVersion.__type = ["versionString", "parseVersion", 'P"2!"/"'];
+function isHyperlinkSupported(stream = process.stdout) {
+  if (process.env.FORCE_HYPERLINK) {
+    return !(process.env.FORCE_HYPERLINK.length > 0 && Number.parseInt(process.env.FORCE_HYPERLINK, 10) === 0);
+  }
+  if (process.env.NETLIFY) {
+    return true;
+  } else if (!isColorSupported || hasTTY) {
+    return false;
+  } else if ("WT_SESSION" in process.env) {
+    return true;
+  } else if (process.platform === "win32" || isMinimal || process.env.TEAMCITY_VERSION) {
+    return false;
+  } else if (process.env.TERM_PROGRAM) {
+    const version = parseVersion(process.env.TERM_PROGRAM_VERSION);
+    switch (process.env.TERM_PROGRAM) {
+      case "iTerm.app": {
+        if (version.major === 3) {
+          return version.minor !== void 0 && version.minor >= 1;
+        }
+        return version.major !== void 0 && version.major > 3;
+      }
+      case "WezTerm": {
+        return version.major !== void 0 && version.major >= 20200620;
+      }
+      case "vscode": {
+        if (process.env.CURSOR_TRACE_ID) {
+          return true;
+        }
+        return version.minor !== void 0 && version.major !== void 0 && (version.major > 1 || version.major === 1 && version.minor >= 72);
+      }
+      case "ghostty": {
+        return true;
+      }
+    }
+  }
+  if (process.env.VTE_VERSION) {
+    if (process.env.VTE_VERSION === "0.50.0") {
+      return false;
+    }
+    const version = parseVersion(process.env.VTE_VERSION);
+    return version.major !== void 0 && version.major > 0 || version.minor !== void 0 && version.minor >= 50;
+  }
+  if (process.env.TERM === "alacritty") {
+    return true;
+  }
+  return false;
+}
+__name(isHyperlinkSupported, "isHyperlinkSupported");
+isHyperlinkSupported.__type = ["stream", () => process.stdout, "isHyperlinkSupported", "Check if the current environment supports hyperlinks in the terminal.", 'P!2!>")/#?$'];
 function link(url, text2, options = {}) {
   if (!isHyperlinkSupported(options.target === "stderr" ? process.stderr : process.stdout)) {
-    return options.fallback ? options.fallback(url, text2) : runtimeInfo.isColorSupported ? `${text2 ? `${text2} at ` : ""} ${colors.underline(options.color !== false ? getColor(options.color || "cyan")(url) : url)}` : `${text2 ? `${text2} at ` : ""} ${url}`;
+    return options.fallback ? options.fallback(url, text2) : isColorSupported ? `${text2 && text2 !== url ? `${text2} at ` : ""} ${colors.underline(options.color !== false ? getColor(options.color || "blueBright")(url) : url)}` : `${text2 && text2 !== url ? `${text2} at ` : ""} ${url}`;
   }
   return [
     "\x1B]",
@@ -459,24 +540,27 @@ function stripAnsi(text2) {
 __name(stripAnsi, "stripAnsi");
 stripAnsi.__type = ["text", "stripAnsi", 'P&2!"/"'];
 function renderBanner(title, description) {
-  const consoleWidth = Math.max(process.stdout.columns - 2, 46);
-  const width = Math.max(Math.min(consoleWidth, Math.max(title.length + 2, 40)), 44);
+  const consoleWidth = Math.max(process.stdout.columns - 2, 80);
+  const width = Math.max(Math.min(consoleWidth, Math.max(title.length + 2, 70)), 70);
   const banner = [];
-  banner.push(colors.cyan(`\u250F\u2501\u2501\u2501\u2501 Examples CLI App CLI \u2501\u2501 v0.0.1 ${"\u2501".repeat(width - 10 - 25)}\u2513`));
+  banner.push(colors.cyan(`\u250F\u2501\u2501\u2501\u2501 Examples CLI App CLI \u2501 v0.0.1 ${"\u2501".repeat(width - 10 - 25)}\u2513`));
   banner.push(colors.cyan(`\u2503${" ".repeat(width)}\u2503`));
   banner.push(`${colors.cyan("\u2503")}${" ".repeat((width - title.length) / 2)}${colors.whiteBright(colors.bold(title))}${" ".repeat((width - title.length) / 2)}${colors.cyan("\u2503")}`);
   banner.push(colors.cyan(`\u2503${" ".repeat(width)}\u2503`));
-  banner.push(`${colors.cyan("\u2503")}${colors.dim(description.length < width - 2 ? `${" ".repeat((width - description.length) / 2)}${description}${" ".repeat((width - description.length) / 2)}` : description.split(" ").reduce(__assignType2((ret, word) => {
+  const text2 = description.length < width * 0.9 ? `${" ".repeat((width - description.length) / 2)}${description}${" ".repeat((width - description.length) / 2)}` : description.split(" ").reduce(__assignType2((ret, word) => {
     const lines = ret.split("\n");
-    if (lines.length > 1 && lines[lines.length - 1].length + word.length > width - 2) {
+    if (lines.length !== 0 && lines[lines.length - 1].length + word.length > width * 0.9) {
       ret += "\n";
     }
     ret += `${word} `;
     return ret;
-  }, ["ret", "word", "", 'P"2!"2""/#']), "").trim())} ${colors.cyan("\u2503")}`);
+  }, ["ret", "word", "", 'P"2!"2""/#']), "");
+  for (const line of text2.split("\n")) {
+    banner.push(`${colors.cyan("\u2503")}${" ".repeat((width - line.length) / 2)}${colors.gray(line)}${" ".repeat((width - line.length) / 2)}${colors.cyan("\u2503")}`);
+  }
   banner.push(colors.cyan(`\u2503${" ".repeat(width)}\u2503`));
-  banner.push(colors.cyan(`\u2517${"\u2501".repeat(width - 7 - 14)}\u2501 ${link("https://stormsoftware.com", "Storm Software")} \u2501\u2501\u2501\u2501\u251B`));
-  return banner.map(__assignType2((line) => `${" ".repeat((consoleWidth - line.length) / 2)}${line}${" ".repeat((consoleWidth - line.length) / 2)}`, ["line", "", 'P"2!"/"'])).join("\n");
+  banner.push(colors.cyan(`\u2517${"\u2501".repeat(width - 7 - 14)}\u2501 Storm Software \u2501\u2501\u2501\u2501\u251B`));
+  return banner.map(__assignType2((line) => `${" ".repeat((consoleWidth - stripAnsi(line).length) / 2)}${line}${" ".repeat((consoleWidth - stripAnsi(line).length) / 2)}`, ["line", "", 'P"2!"/"'])).join("\n");
 }
 __name(renderBanner, "renderBanner");
 renderBanner.__type = ["title", "description", "renderBanner", "Renders a CLI banner with the specified title.", 'P&2!&2"&/#?$'];
@@ -518,7 +602,7 @@ async function prompt(message, opts = {}) {
     }
     switch (opts.cancel) {
       case "reject": {
-        const error = new StormError({ type: "general", code: 10 });
+        const error = new StormError2({ type: "general", code: 10 });
         error.name = "ConsolaPromptCancelledError";
         if (Error.captureStackTrace) {
           Error.captureStackTrace(error, prompt);
@@ -570,7 +654,7 @@ async function prompt(message, opts = {}) {
       initialValues: opts.initial
     }).then(handleCancel);
   }
-  throw new StormError({
+  throw new StormError2({
     type: "general",
     code: 16,
     params: [opts.type]
@@ -697,9 +781,96 @@ function parseArgs(args, opts) {
 __name(parseArgs, "parseArgs");
 parseArgs.__type = ["args", "opts", "parseArgs", "// Parser is based on https://github.com/lukeed/mri", 'P"F2!"2""/#?$'];
 
+// packages/types/src/shared/payload.ts
+var __\u03A9IStormPayload = ["TData", "timestamp", "The timestamp of the payload.", "id", "The unique identifier for the payload.", "data", "The data of the payload.", "IStormPayload", `"c!P'4"?#&4$?%e"!4&?'Mw(y`];
+
+// examples/cli-app/.storm/runtime/id.ts
+function __assignType3(fn, args) {
+  fn.__type = args;
+  return fn;
+}
+__name(__assignType3, "__assignType");
+function getRandom(array) {
+  if (array === null) {
+    throw new StormError({ code: 9 });
+  }
+  for (let i = 0; i < array.length; i++) {
+    array[i] = Math.floor(Math.random() * 256);
+  }
+  return array;
+}
+__name(getRandom, "getRandom");
+getRandom.__type = ["array", "getRandom", "Generate a random string", 'PW2!"/"?#'];
+function uniqueId(size = 24) {
+  const randomBytes = getRandom(new Uint8Array(size));
+  return randomBytes.reduce(__assignType3((id, byte) => {
+    byte &= 63;
+    if (byte < 36) {
+      id += byte.toString(36);
+    } else if (byte < 62) {
+      id += (byte - 26).toString(36).toUpperCase();
+    } else if (byte > 62) {
+      id += "-";
+    } else {
+      id += "_";
+    }
+    return id;
+  }, ["id", "byte", "", 'P"2!"2""/#']), "");
+}
+__name(uniqueId, "uniqueId");
+uniqueId.__type = ["size", "uniqueId", "A platform agnostic version of the [nanoid](https://github.com/ai/nanoid) package with some modifications.", 'P"2!&/"?#'];
+
+// examples/cli-app/.storm/runtime/payload.ts
+var StormPayload = class {
+  static {
+    __name(this, "StormPayload");
+  }
+  /**
+   * The data associated with the payload.
+   */
+  data;
+  /**
+   * The payload identifier.
+   */
+  id = uniqueId();
+  /**
+   * The payload created timestamp.
+   */
+  timestamp = Date.now();
+  /**
+   * Create a new payload object.
+   *
+   * @param data - The payload data.
+   */
+  constructor(data) {
+    this.data = data;
+  }
+  static __type = ["TData", "data", "The data associated with the payload.", "id", function() {
+    return uniqueId();
+  }, "The payload identifier.", "timestamp", function() {
+    return Date.now();
+  }, "The payload created timestamp.", "constructor", "Create a new payload object.", () => __\u03A9IStormPayload, "StormPayload", "A base payload class used by the Storm Stack runtime.", `"c!e!!3"9?#!3$9>%?&!3'9>(?)Pe"!2""0*?+5e!!o,"x"w-?.`];
+};
+
+// examples/cli-app/.storm/runtime/context.ts
+import { AsyncLocalStorage } from "node:async_hooks";
+import { getContext } from "unctx";
+var STORM_CONTEXT_KEY = "storm-stack";
+var STORM_ASYNC_CONTEXT = (getContext.\u03A9 = [["StormContext", '"w!']], getContext(STORM_CONTEXT_KEY, {
+  asyncContext: true,
+  AsyncLocalStorage
+}));
+function useStorm() {
+  try {
+    return STORM_ASYNC_CONTEXT.use();
+  } catch {
+    throw new StormError2({ type: "general", code: 12 });
+  }
+}
+__name(useStorm, "useStorm");
+useStorm.__type = ["StormContext", "useStorm", "Get the Storm context for the current application.", 'P"w!/"?#'];
+
 // examples/cli-app/.storm/commands/vars/get/handle.ts
-import { StormPayload } from "examples/cli-app/.storm/runtime/payload";
-import { useStorm } from "examples/cli-app/.storm/runtime/context";
 var __\u03A9VarsGetPayload = ["name", "The name of the variable to retrieve from the variables store.", "VarsGetPayload", 'P&4!?"Mw#y'];
 async function handler(payload) {
   const varsFile = await useStorm().storage.getItem(`vars:vars.json`);

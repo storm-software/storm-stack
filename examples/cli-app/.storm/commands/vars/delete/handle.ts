@@ -7,6 +7,7 @@
 
 import { deserialize,serialize } from "@deepkit/type";
 import { colors } from "../../../runtime/cli";
+import { StormPayload, StormVariables } from "../../../runtime/payload";
 
 export interface VarsDeletePayload {
   /**
@@ -32,7 +33,10 @@ async function handler(payload: StormPayload<VarsDeletePayload>) {
   const vars = deserialize<StormVariables>(varsFile);
 
   delete vars[payload.data.name];
-  await $storm.storage.setItem(`vars:vars.json`, serialize(vars));
+  await $storm.storage.setItem(
+    `vars:vars.json`,
+    serialize<StormVariables>(vars)
+  );
 
   console.log("");
   console.log(colors.dim(" > \`${payload.data.name}\` variable deleted"));

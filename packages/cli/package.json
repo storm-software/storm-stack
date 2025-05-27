@@ -24,10 +24,7 @@
     "@sentry/node": "catalog:",
     "@storm-software/config-tools": "catalog:",
     "@storm-stack/core": "workspace:*",
-    "@stryke/env": "catalog:",
-    "@stryke/json": "catalog:",
-    "@stryke/type-checks": "catalog:",
-    "@stryke/url": "catalog:",
+    "@storm-stack/types": "workspace:*",
     "unctx": "catalog:",
     "unstorage": "catalog:"
   },
@@ -37,8 +34,6 @@
     "@storm-stack/plugin-log-storage": "workspace:*",
     "@storm-stack/plugin-storage-fs": "workspace:*",
     "@storm-stack/preset-cli": "workspace:*",
-    "@storm-stack/types": "workspace:*",
-    "@stryke/types": "catalog:",
     "@types/node": "catalog:"
   },
   "publishConfig": {

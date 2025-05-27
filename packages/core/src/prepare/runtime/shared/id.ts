@@ -21,6 +21,8 @@ import { getFileHeader } from "../../../helpers/utilities/file-header";
 export function writeId() {
   return `${getFileHeader()}
 
+import { StormError } from "./error";
+
 /**
  * Generate a random string
  *
@@ -29,7 +31,7 @@ export function writeId() {
  */
 export function getRandom(array: Uint8Array) {
   if (array === null) {
-    throw new StormError({ code: 9 });
+    throw new StormError({ type: "general", code: 9 });
   }
 
   // Fill the array with random values

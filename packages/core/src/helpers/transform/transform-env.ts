@@ -60,6 +60,7 @@ export async function transformEnv<TOptions extends Options = Options>(
     return source;
   }
 
+  const missingEnvNames = [] as string[];
   for (const node of nodes) {
     const envName = node.getMatch("ENV_NAME")?.text();
     if (envName) {
@@ -91,16 +92,24 @@ export async function transformEnv<TOptions extends Options = Options>(
 
         dotenvProperties.push(reflectionProperty);
       } else {
-        throw new Error(
-          `Environment variable \`${envName}\` is not defined in the dotenv type definition but is used in the code. \n\nThe following variable names are defined in the dotenv type definition: \n${varsReflection
-            .getPropertyNames()
-            .map(typeDef => ` - ${String(typeDef)} `)
-            .join(
-              "\n"
-            )} \n\nUsing the following env prefix: \n${context.dotenv.prefix.map(prefix => ` - ${prefix}`).join("\n")} \n\nPlease check your \`dotenv\` configuration option. If you are using a custom dotenv type definition, please make sure that the variable names match the ones in the code. \n\n`
-        );
+        missingEnvNames.push(envName);
       }
     }
+  }
+
+  if (missingEnvNames.length > 0) {
+    throw new Error(
+      `Environment variables are not defined in the dotenv type definition but is used in the code: \n${missingEnvNames
+        .map(name => ` - ${name}`)
+        .join(
+          "\n"
+        )} \n\nThe following variable names are defined in the dotenv type definition: \n${varsReflection
+        .getPropertyNames()
+        .map(typeDef => ` - ${String(typeDef)} `)
+        .join(
+          "\n"
+        )} \n\nUsing the following env prefix: \n${context.dotenv.prefix.map(prefix => ` - ${prefix}`).join("\n")} \n\nPlease check your \`dotenv\` configuration option. If you are using a custom dotenv type definition, please make sure that the variable names match the ones in the code. \n\n`
+    );
   }
 
   if (dotenvProperties.length !== originalLength) {
@@ -113,6 +122,11 @@ export async function transformEnv<TOptions extends Options = Options>(
     try {
       await writeDotenvProperties(log, context, "variables", dotenvProperties);
     } catch (e) {
+      log(
+        LogLevelLabel.ERROR,
+        `Error occurred adding variables from ${source.id} to variables.json.`
+      );
+
       // eslint-disable-next-line no-console
       console.error(e);
     } finally {

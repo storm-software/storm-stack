@@ -54,7 +54,8 @@
     "@stryke/string-format": "catalog:",
     "@stryke/type-checks": "catalog:",
     "defu": "catalog:",
-    "magicast": "catalog:"
+    "magicast": "catalog:",
+    "uqr": "catalog:"
   },
   "devDependencies": {
     "@stryke/types": "catalog:",

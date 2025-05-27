@@ -21,10 +21,8 @@ import { getStormConfig } from "@storm-software/eslint";
 Error.stackTraceLimit = Number.POSITIVE_INFINITY;
 
 export default getStormConfig({
-  repositoryName: "storm-stack",
+  name: "storm-stack",
   typescript: {
-    override: {
-      "ts/consistent-type-imports": "off"
-    }
+    typeImports: "off"
   }
 });

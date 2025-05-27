@@ -7,10 +7,10 @@
 
 import { join } from "node:path";
 import fsLiteDriver from "unstorage/drivers/fs-lite";
-import { getEnvPaths } from "../env";
+import { paths } from "../env";
 
 export default fsLiteDriver({
-  base: join(getEnvPaths().log, "crash-reports"),
+  base: join(paths.log, "crash-reports"),
   readOnly: false,
   noClear: false
 });

@@ -35,11 +35,10 @@ import type {
 import type {
   IStormResult
 } from "@storm-stack/types/result";
-import { isError } from "@stryke/type-checks/is-error";
-import type { StormEnv } from "@storm-stack/types/env";
+import type { StormBaseVariables } from "@storm-stack/types/vars";
 import { STORM_ASYNC_CONTEXT } from "./context";
-import { getBuildInfo, getRuntimeInfo } from "./env";
-import { createStormError, StormError } from "./error";
+import { build, runtime, paths } from "./env";
+import { createStormError, StormError, isError } from "./error";
 import { StormEvent } from "./event";
 import { uniqueId } from "./id";
 import { StormPayload } from "./payload";
@@ -57,8 +56,6 @@ export function withContext<TInput = any, TOutput = any>(
 ) {
   const name = $storm.vars.APP_NAME;
   const version = $storm.vars.APP_VERSION;
-  const build = getBuildInfo();
-  const runtime = getRuntimeInfo();
 
   const disposables = new Set<Disposable>();
   const asyncDisposables = new Set<AsyncDisposable>();
@@ -104,14 +101,15 @@ export function withContext<TInput = any, TOutput = any>(
       meta: {},
       build,
       runtime,
+      paths,
       log: log.with({ name, version, payloadId: payload.id }),
       storage,
-      vars: {} as StormEnv,
+      vars: {} as StormBaseVariables,
       emit: (_event: StormEvent) => {},
       __internal: {
         events: [] as StormEvent[]
       }
-    } as StormContext<StormEnv>;
+    } as StormContext<StormBaseVariables>;
 
     function emit(event: StormEvent) {
       context.log.debug(

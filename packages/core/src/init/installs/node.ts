@@ -31,7 +31,6 @@ export function getNodeDeps<TOptions extends Options = Options>(
   context.installs["@types/node"] = "devDependency";
 
   if (context.options.projectType === "application") {
-    context.installs["@stryke/env"] = "dependency";
     context.installs.unctx = "dependency";
   }
 

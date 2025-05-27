@@ -31,6 +31,7 @@ declare global {
   }
 
   const createStormError: (typeof import("../runtime/error"))["createStormError"];
+  const isError: (typeof import("../runtime/error"))["isError"];
   const isStormError: (typeof import("../runtime/error"))["isStormError"];
 
   const _StormPayload: (typeof import("../runtime/payload"))["StormPayload"];

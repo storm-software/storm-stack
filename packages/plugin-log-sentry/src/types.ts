@@ -16,9 +16,9 @@
 
  ------------------------------------------------------------------- */
 
-import type { StormEnv } from "@storm-stack/types/env";
+import { StormBaseVariables } from "@storm-stack/types/vars";
 
-export interface StormSentryLogEnv extends StormEnv {
+export interface StormSentryLogVariables extends StormBaseVariables {
   /**
    * The DSN for Sentry
    *

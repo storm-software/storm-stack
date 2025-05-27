@@ -28,11 +28,9 @@ export function getSharedDeps<TOptions extends Options = Options>(
   context: Context<TOptions>
 ): Record<string, "dependency" | "devDependency"> {
   context.installs ??= {};
-  context.installs["@stryke/types"] = "devDependency";
   context.installs["@storm-stack/types"] = "devDependency";
 
   if (context.options.projectType === "application") {
-    context.installs["@stryke/type-checks"] = "dependency";
     context.installs.unstorage = "dependency";
   }
 

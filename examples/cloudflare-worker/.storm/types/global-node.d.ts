@@ -27,12 +27,12 @@ declare global {
     }
   }
 
-  const getBuildInfo: (typeof import("../runtime/env"))["getBuildInfo"];
-  const getRuntimeInfo: (typeof import("../runtime/env"))["getRuntimeInfo"];
-  const getEnvPaths: (typeof import("../runtime/env"))["getEnvPaths"];
+  const build: StormBuildInfo;
+  const runtime: StormRuntimeInfo;
+  const paths: StormEnvPaths;
 
-  const useStorm: (typeof import("../runtime/context"))["useStorm"];
-  const STORM_ASYNC_CONTEXT: (typeof import("../runtime/context"))["STORM_ASYNC_CONTEXT"];
+  const useStorm: () => StormContext<StormVariables>;
+  const STORM_ASYNC_CONTEXT: StormContext<StormVariables>;
 }
 
 export {};

@@ -97,8 +97,8 @@ export async function initContext<TOptions extends Options = Options>(
     await removeFile(metaFilePath);
   }
 
+  context.options.platform ??= "neutral";
   context.override.bundle ??= true;
-  context.override.platform ??= "neutral";
   context.override.target ??= "esnext";
   context.override.format ??= "esm";
 
@@ -118,7 +118,9 @@ export async function initContext<TOptions extends Options = Options>(
   context.override.alias["storm:payload"] ??= joinPaths(runtimeDir, "payload");
   context.override.alias["storm:result"] ??= joinPaths(runtimeDir, "result");
 
+  context.override.external ??= [];
   context.override.noExternal ??= [];
+
   if (Array.isArray(context.override.noExternal)) {
     context.override.noExternal.push(
       "storm:init",

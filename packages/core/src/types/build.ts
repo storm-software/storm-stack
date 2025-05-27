@@ -18,7 +18,11 @@
 
 import type { ReflectionClass } from "@deepkit/type";
 import type { StormWorkspaceConfig } from "@storm-software/config/types";
-import type { IStormPayload, IStormResult, StormEnv } from "@storm-stack/types";
+import type {
+  IStormPayload,
+  IStormResult,
+  StormVars
+} from "@storm-stack/types";
 import type {
   CleanupFunction,
   DeserializerFunction,
@@ -466,8 +470,8 @@ export interface Config<
   TResult extends IStormResult,
   TInput = any,
   TOutput = any,
-  TContext extends StormContext<StormEnv, any, TPayload> = StormContext<
-    StormEnv,
+  TContext extends StormContext<StormVars, any, TPayload> = StormContext<
+    StormVars,
     any,
     TPayload
   >

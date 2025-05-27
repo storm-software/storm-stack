@@ -18,6 +18,7 @@
 
 import { LogLevelLabel } from "@storm-software/config-tools/types";
 import { ENV_PREFIXES } from "@stryke/env/types";
+import { kebabCase } from "@stryke/string-format/kebab-case";
 import { isString } from "@stryke/type-checks/is-string";
 import { isUndefined } from "@stryke/type-checks/is-undefined";
 import defu from "defu";
@@ -76,28 +77,24 @@ export async function initDotenv<TOptions extends Options = Options>(
       context.workspaceConfig
     ),
     {
-      APP_NAME:
+      APP_NAME: kebabCase(
         context.options.name ||
-        context.packageJson.name?.replace(
-          `/${context.workspaceConfig.namespace}`,
-          ""
-        ),
+          context.packageJson.name?.replace(
+            `/${context.workspaceConfig.namespace}`,
+            ""
+          )
+      ),
       APP_VERSION: context.packageJson.version,
       BUILD_ID: context.meta.buildId,
       BUILD_TIMESTAMP: context.meta.timestamp,
       BUILD_CHECKSUM: context.meta.checksum,
       RELEASE_ID: context.meta.releaseId,
-      RELEASE_TAG: `${context.options.name}@${context.packageJson.version}`,
+      RELEASE_TAG: `${kebabCase(context.options.name)}@${context.packageJson.version}`,
       MODE: context.options.mode,
-      ORG: context.workspaceConfig.organization,
       ORGANIZATION: context.workspaceConfig.organization,
       PLATFORM: context.options.platform,
       STACKTRACE: context.options.mode === "development",
-      ENVIRONMENT: context.options.mode,
-      DEVELOPMENT: context.options.mode === "development",
-      STAGING: context.options.mode === "staging",
-      PRODUCTION: context.options.mode === "production",
-      DEBUG: context.options.mode === "development"
+      ENVIRONMENT: context.options.mode
     }
   );
 

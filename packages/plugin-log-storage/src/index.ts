@@ -71,7 +71,6 @@ import type {
   LogLevel,
   LogRecord
 } from "@storm-stack/types/log";
-import { StormJSON } from "@stryke/json/storm-json";
 import util from "node:util";
 import { storage } from "../storage";
 
@@ -123,7 +122,7 @@ const inspect: (value: unknown, options?: { colors?: boolean }) => string =
             maxStringLength: Infinity,
             ...opts
           })
-      : v => StormJSON.stringify(v);
+      : v => JSON.stringify(v);
 
 /**
  * Get a text formatter with the specified options.  Although it's flexible

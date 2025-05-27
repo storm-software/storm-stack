@@ -76,7 +76,7 @@ async function writeCommandEntryUsage<TOptions extends Options = Options>(
   });
 
   const commandsColumn2 = Object.values(command.children).map(child => {
-    return `\${colors.dim("${child.description}")}`;
+    return `\${colors.gray("${child.description}")}`;
   });
 
   const optionsColumn1 = command.payload.args.map(arg => {
@@ -122,7 +122,7 @@ async function writeCommandEntryUsage<TOptions extends Options = Options>(
     if (arg.type === "string" || arg.type === "number" || arg.type === "enum") {
       return `${
         arg.description
-          ? `\${colors.dim("${
+          ? `\${colors.gray("${
               !arg.description?.endsWith(".") && !arg.description?.endsWith("?")
                 ? `${arg.description}.`
                 : arg.description
@@ -140,7 +140,7 @@ async function writeCommandEntryUsage<TOptions extends Options = Options>(
     } else if (arg.type === "array") {
       return `${
         arg.description
-          ? `\${colors.dim("${
+          ? `\${colors.gray("${
               !arg.description?.endsWith(".") && !arg.description?.endsWith("?")
                 ? `${arg.description}.`
                 : arg.description
@@ -159,7 +159,7 @@ async function writeCommandEntryUsage<TOptions extends Options = Options>(
 
     return `${
       arg.description
-        ? `\${colors.dim("${
+        ? `\${colors.gray("${
             !arg.description?.endsWith(".") && !arg.description?.endsWith("?")
               ? `${arg.description}.`
               : arg.description
@@ -212,15 +212,15 @@ import { colors } from "${joinPaths(runtimeRelativePath, "cli")}";${
  * @returns The rendered string displaying usage information.
  */
 export function renderUsage(includeCommands = true) {
-  return \`\${colors.bold("${command.displayName}")}${
+  return \`\${colors.whiteBright(colors.bold("${command.displayName}"))}${
     command.description
       ? `
 
-\${colors.dim("${description}")}
+  \${colors.gray("${description}")}
 `
       : ""
   }
-  \${colors.bold("Usage:")}
+  \${colors.whiteBright(colors.bold("Usage:"))}
     ${kebabCase(name)}${
       command.entry.path.length > 0
         ? ` ${command.entry.path
@@ -248,7 +248,7 @@ ${Object.values(command.children)
     }${
       Object.values(command.children).length > 0
         ? `\${includeCommands !== false ? \`
-  \${colors.bold("Commands:")}
+  \${colors.whiteBright(colors.bold("Commands:"))}
 ${commandsColumn1
   .map(
     (child, i) => `    ${child.padEnd(column1MaxLength)}${commandsColumn2[i]}`
@@ -257,7 +257,7 @@ ${commandsColumn1
         : ""
     }
 
-  \${colors.bold("Options:")}
+  \${colors.whiteBright(colors.bold("Options:"))}
 ${optionsColumn1.map((option, i) => `    ${option.padEnd(column1MaxLength)}${optionsColumn2[i]}`).join(" \n")}
 \`;
 }
@@ -301,7 +301,7 @@ import ${command.entry.input.name ? `{ ${command.entry.input.name} as handle }` 
       )
     )}";
 import { withContext } from "${joinPaths(runtimeRelativePath, "app")}";
-import { getRuntimeInfo } from "${joinPaths(runtimeRelativePath, "env")}";
+import { isInteractive, isMinimal } from "${joinPaths(runtimeRelativePath, "env")}";
 import { colors, parseArgs, renderBanner, renderFooter${config.interactive !== "never" ? ", prompt" : ""} } from "${joinPaths(runtimeRelativePath, "cli")}";
 import { deserialize, serialize } from "@deepkit/type";${
       command.payload.importPath
@@ -346,7 +346,7 @@ async function handler() {
           )
           .join(" ")}
 
-        console.error(\` \${colors.red("✖")} \${colors.redBright(\`Unknown command: \${colors.bold(command || "")}\`)}\`);
+        console.error(\` \${colors.red("✖")} \${colors.redBright(\`Unknown command: \${colors.bold(command || "<none>")}\`)}\`);
         console.log("");
         console.log(renderUsage(true));
         console.log("");
@@ -385,19 +385,18 @@ async function handler() {
     if (args["version"] || args["v"]) {
       console.log($storm.vars.APP_VERSION);
     } else {
-      const runtimeInfo = getRuntimeInfo();
       const isVerbose = args["verbose"] ?? Boolean(process.env.${constantCase(name)}_VERBOSE);
       ${
         config.interactive !== "never"
-          ? `const isInteractive = ((args["interactive"] !== false &&
+          ? `const isPromptEnabled = ((args["interactive"] !== false &&
         args["no-interactive"] !== true) &&
         Boolean(process.env.${constantCase(name)}_INTERACTIVE)) &&
-        runtimeInfo.isInteractive &&
-        !runtimeInfo.isCI;`
+        isInteractive &&
+        !isMinimal;`
           : ""
       }
 
-      if (args["no-banner"] !== true && !runtimeInfo.isCI) {
+      if (args["no-banner"] !== true && !isMinimal) {
         console.log(renderBanner("${command.displayName}", "${description}"));
         console.log("");
       }
@@ -416,7 +415,7 @@ async function handler() {
           ${
             config.interactive !== "never"
               ? `
-          if (isInteractive) {
+          if (isPromptEnabled) {
             console.log(colors.dim(" > Running in interactive mode..."));
           } else {
             console.log(colors.dim(" > Running in non-interactive mode..."));
@@ -471,7 +470,7 @@ async function handler() {
               ${
                 config.interactive !== "never" && !arg.isNegative
                   ? `
-              if (isInteractive) {
+              if (isPromptEnabled) {
                 args["${arg.name}"] = await prompt<${arg.stringifiedType}>(\`Please ${
                   arg.type === "boolean"
                     ? `confirm the ${arg.displayName} value`
@@ -502,7 +501,7 @@ async function handler() {
                     (arg.type === "enum" &&
                       arg.options &&
                       arg.options.length > 0))
-                    ? ` \${colors.dim("(${arg.description})")}`
+                    ? ` \${colors.gray("(${arg.description})")}`
                     : ""
                 }\`, {
                   type: "${arg.type === "boolean" ? "confirm" : arg.type === "enum" && arg.options && arg.options.length > 0 ? (arg.array ? "multiselect" : "select") : "text"}", ${
@@ -673,7 +672,7 @@ async function writeVirtualCommandEntry<TOptions extends Options = Options>(
     if (arg.type === "string" || arg.type === "number" || arg.type === "enum") {
       return `${
         arg.description
-          ? `\${colors.dim("${
+          ? `\${colors.gray("${
               !arg.description?.endsWith(".") && !arg.description?.endsWith("?")
                 ? `${arg.description}.`
                 : arg.description
@@ -691,7 +690,7 @@ async function writeVirtualCommandEntry<TOptions extends Options = Options>(
     } else if (arg.type === "array") {
       return `${
         arg.description
-          ? `\${colors.dim("${
+          ? `\${colors.gray("${
               !arg.description?.endsWith(".") && !arg.description?.endsWith("?")
                 ? `${arg.description}.`
                 : arg.description
@@ -710,7 +709,7 @@ async function writeVirtualCommandEntry<TOptions extends Options = Options>(
 
     return `${
       arg.description
-        ? `\${colors.dim("${
+        ? `\${colors.gray("${
             !arg.description?.endsWith(".") && !arg.description?.endsWith("?")
               ? `${arg.description}.`
               : arg.description
@@ -750,7 +749,7 @@ import ${command.entry.input.name ? `{ ${command.entry.input.name} as handle }` 
         ""
       )
     )}";
-import { getRuntimeInfo } from "${joinPaths(runtimeRelativePath, "env")}";
+import { isMinimal } from "${joinPaths(runtimeRelativePath, "env")}";
 import { colors, renderBanner, renderFooter, parseArgs } from "${joinPaths(runtimeRelativePath, "cli")}";${
       command.children && Object.values(command.children).length > 0
         ? Object.values(command.children)
@@ -774,15 +773,15 @@ export interface ${command.payload.name} {
  * @returns The rendered string displaying usage information.
  */
 export function renderUsage(includeCommands = true) {
-  return \`\${colors.bold("${command.displayName} Commands")} ${
+  return \`\${colors.whiteBright(colors.bold("${command.displayName} Commands"))} ${
     command.description
       ? `
 
-\${colors.dim("${description}")}
+  \${colors.gray("${description}")}
 `
       : ""
   }
-  \${colors.bold("Usage:")}
+  \${colors.whiteBright(colors.bold("Usage:"))}
 ${
   Object.values(command.children).length > 0
     ? Object.values(command.children)
@@ -802,7 +801,8 @@ ${
 }${
       Object.values(command.children).length > 0
         ? `\${includeCommands !== false ? \`
-  \${colors.bold("Commands:")}
+
+  \${colors.whiteBright(colors.bold("Commands:"))}
 ${Object.values(command.children)
   .map(
     child =>
@@ -812,7 +812,7 @@ ${Object.values(command.children)
         : ""
     }
 
-  \${colors.bold("Options:")}
+  \${colors.whiteBright(colors.bold("Options:"))}
 ${optionsColumn1.map((option, i) => `    ${option.padEnd(column1MaxLength)}${optionsColumn2[i]}`).join(" \n")}
 \`;
 }
@@ -841,7 +841,7 @@ async function handler() {
         )
         .join(" ")}
 
-        console.error(\` \${colors.red("✖")} \${colors.redBright(\`Unknown command: \${colors.bold(command || "")}\`)}\`);
+        console.error(\` \${colors.red("✖")} \${colors.redBright(\`Unknown command: \${colors.bold(command || "<none>")}\`)}\`);
         console.log("");
         console.log(renderUsage(true));
         console.log("");
@@ -880,8 +880,7 @@ async function handler() {
     if (args["version"] || args["v"]) {
       console.log($storm.vars.APP_VERSION);
     } else {
-      const runtimeInfo = getRuntimeInfo();
-      if (args["no-banner"] !== true && !runtimeInfo.isCI) {
+      if (args["no-banner"] !== true && !isMinimal) {
         console.log(renderBanner("${command.displayName} Commands", "${description}"));
         console.log("");
       }
@@ -1088,8 +1087,8 @@ export async function prepareEntry<TOptions extends Options = Options>(
 ${getFileHeader()}
 
 import { colors, renderBanner, renderFooter, parseArgs } from "./runtime/cli";
-import { getRuntimeInfo } from "./runtime/env";
-import { isError } from "@stryke/type-checks/is-error";${
+import { isMinimal, isUnicodeSupported } from "./runtime/env";
+import { isError, isStormError } from "./runtime/error";${
       commandTree.children && Object.values(commandTree.children).length > 0
         ? Object.values(commandTree.children)
             .map(child =>
@@ -1124,44 +1123,44 @@ async function main() {
       } `
         )
         .join(" ")} else {
-        console.error(\` \${colors.red("✖")} \${colors.redBright(\`Unknown command: \${colors.bold(command || "")}\`)}\`);
+        console.error(\` \${colors.red("✖")} \${colors.redBright(\`Unknown command: \${colors.bold(command || "<none>")}\`)}\`);
+        console.log("");
       }
 
-      const runtimeInfo = getRuntimeInfo();
-      if (!runtimeInfo.isCI) {
+      if (!isMinimal) {
         console.log(renderBanner("Help Information", "Display usage details, commands, and support information for the ${context.options.name} application"));
         console.log("");
       }
 
-      console.log("");${
+      ${
         context.packageJson?.description
           ? `
-      console.log("${context.packageJson?.description}");
+      const consoleWidth = Math.max(process.stdout.columns - 2, 80);
+      console.log(\`\${" ".repeat((consoleWidth - ${context.packageJson.description.length}) / 2)}${context.packageJson.description}\${" ".repeat((consoleWidth - ${context.packageJson.description.length}) / 2)}\`);
+      console.log("");
       console.log("");`
           : ""
       }
-      console.log("The following commands are available as part of the ${context.options.name} application: ");
-      console.log("");
-      ${
+      console.log(colors.gray("The following commands are available as part of the ${context.options.name} application: "));
+      console.log("");${
         commandTree.children && Object.values(commandTree.children).length > 0
           ? Object.values(commandTree.children)
               .map(
                 child =>
-                  `console.log(render${pascalCase(child.name)}Usage(false).split("\\n").map(line => \`  \${line}\`).join("\\n"));`
+                  `
+      console.log(render${pascalCase(child.name)}Usage(false));
+      console.log("");`
               )
               .join("\n")
           : ""
       }
+
       console.log("");
       console.log(renderFooter());
       console.log("");
     }
   } catch (err) {
-    if (isError(err)) {
-      console.error(colors.red(\` \${colors.red("✖")} \${colors.redBright(\`An error occurred while running the ${context.options.name} application: \${err.message}\`)}\`));
-    } else {
-      console.error(colors.red(\` \${colors.red("✖")} \${colors.redBright(\`An error occurred while running the ${context.options.name} application\`)}\`));
-    }
+    console.error(\` \${colors.red("✖")} \${colors.redBright(\`An error occurred while running the ${context.options.name} application: \n\n\${createStormError(err).toDisplay()}\`)}\`);
   }
 }
 

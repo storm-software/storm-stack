@@ -35,9 +35,8 @@ import type {
 import { readJsonFile } from "@stryke/fs/read-file";
 import { StormJSON } from "@stryke/json/storm-json";
 import { existsSync } from "@stryke/path/exists";
-import { findFilePath, findFolderName } from "@stryke/path/file-path-fns";
+import { findFolderName } from "@stryke/path/file-path-fns";
 import { resolveParentPath } from "@stryke/path/get-parent-path";
-import { isRelativePath } from "@stryke/path/is-file";
 import { joinPaths } from "@stryke/path/join-paths";
 import { kebabCase } from "@stryke/string-format/kebab-case";
 import { titleCase } from "@stryke/string-format/title-case";
@@ -234,29 +233,37 @@ async function reflectCommandPayloads<TOptions extends Options = Options>(
         if (
           parameter &&
           (parameter.kind === ReflectionKind.class ||
-            parameter.kind === ReflectionKind.objectLiteral) &&
-          parameter.typeArguments &&
-          parameter.typeArguments.length > 0
+            parameter.kind === ReflectionKind.objectLiteral)
         ) {
-          const payloadDataType = resolveClassType(parameter.typeArguments[0]!);
-
-          let importPath = entryModule.imports[payloadDataType.getName()]?.from;
-          if (importPath) {
-            if (isRelativePath(importPath)) {
-              importPath = joinPaths(
-                findFilePath(entry.input.file),
-                importPath
-              );
-            }
-          } else if (entryModule.exports[payloadDataType.getName()]) {
-            importPath = entry.input.file;
+          const resolvedParameter = resolveClassType(parameter);
+          if (!resolvedParameter) {
+            throw new Error(
+              `The command "${entry.output}" does not have a valid payload type.`
+            );
           }
+
+          const dataProperty = resolvedParameter.getProperty("data");
+          if (!dataProperty) {
+            throw new Error(
+              `The command "${entry.output}" does not have a "data" property in its payload.`
+            );
+          }
+
+          if (
+            dataProperty.getType().kind !== ReflectionKind.class &&
+            dataProperty.getType().kind !== ReflectionKind.objectLiteral
+          ) {
+            throw new Error(
+              `The command "${entry.output}" does not have a valid "data" property type. Expected a class or object literal, but got ${dataProperty.getKind()}.`
+            );
+          }
+
+          const resolvedProperty = resolveClassType(dataProperty.getType());
 
           const commandId = entry.output;
           payloadReflections[commandId] = {
-            name: payloadDataType.getName(),
-            importPath,
-            args: payloadDataType.getProperties().reduce(
+            name: resolvedProperty.getName(),
+            args: resolvedProperty.getProperties().reduce(
               (ret, property) => {
                 const name = kebabCase(property.getNameAsString());
                 if (!ret.some(item => item.name === name)) {

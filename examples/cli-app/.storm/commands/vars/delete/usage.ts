@@ -16,7 +16,7 @@ import { colors } from "../../../runtime/cli";
 export function renderUsage(includeCommands = true) {
   return `${colors.bold("Variables - Delete")}
 
-${colors.dim("Deletes a configuration parameter from the variables store.")}
+  ${colors.dim("Deletes a configuration parameter from the variables store.")}
 
   ${colors.bold("Usage:")}
     examples-cli vars delete <name> [options] 

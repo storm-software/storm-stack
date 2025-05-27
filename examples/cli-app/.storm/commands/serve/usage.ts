@@ -16,7 +16,7 @@ import { colors } from "../../runtime/cli";
 export function renderUsage(includeCommands = true) {
   return `${colors.bold("Serve")}
 
-${colors.dim("Start a server and serve the application.")}
+  ${colors.dim("Start a server and serve the application.")}
 
   ${colors.bold("Usage:")}
     examples-cli serve [options] 
