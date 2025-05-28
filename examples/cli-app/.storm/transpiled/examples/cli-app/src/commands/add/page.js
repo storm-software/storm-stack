@@ -265,7 +265,7 @@ var StormError = class _StormError extends Error {
    * A URL to a page that displays the error message details
    */
   get url() {
-    const url = new URL("https://development.stormsoftware.com/api/errors");
+    const url = new URL("https://development.stormsoftware.com/static/errors");
     url.pathname = `${this.type.toLowerCase().replaceAll("_", "-")}/${String(this.code)}`;
     if (this.params.length > 0) {
       url.pathname += `/${this.params.map(__assignType((param) => encodeURI("" + param).replaceAll(/%7c/gi, "|").replaceAll("#", "%23").replaceAll("?", "%3F").replaceAll(/%252f/gi, "%2F").replaceAll("&", "%26").replaceAll("+", "%2B").replaceAll("/", "%2F"), ["param", "", 'P"2!"/"'])).join("/")}`;
