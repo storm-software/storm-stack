@@ -2,6 +2,19 @@
 
 # Changelog for Storm Stack - Core
 
+## [0.24.0](https://github.com/storm-software/storm-stack/releases/tag/core%400.24.0) (2025-05-28)
+
+### Features
+
+- **core:** Patched the `deepkit` package to include the `tags` reflection for
+  TSDoc
+- **core:** Added the `error-lookup` and `commit-vars` workers
+- **core:** Added the `new` command to generate new projects
+
+### Updated Dependencies
+
+- Updated types to 0.8.0
+
 ## [0.23.0](https://github.com/storm-software/storm-stack/releases/tag/core%400.23.0) (2025-05-27)
 
 ### Features

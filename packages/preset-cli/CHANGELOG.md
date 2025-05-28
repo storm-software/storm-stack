@@ -2,6 +2,24 @@
 
 # Changelog for Storm Stack - Preset Cli
 
+## [0.16.0](https://github.com/storm-software/storm-stack/releases/tag/preset-cli%400.16.0) (2025-05-28)
+
+### Features
+
+- **core:** Added the `error-lookup` and `commit-vars` workers
+- **core:** Added the `new` command to generate new projects
+
+### Miscellaneous
+
+- **monorepo:** Update the pnpm workspace links
+
+### Updated Dependencies
+
+- Updated devkit to 0.5.4
+- Updated devkit to 0.5.4
+- Updated core to 0.24.0
+- Updated core to 0.24.0
+
 ## [0.15.0](https://github.com/storm-software/storm-stack/releases/tag/preset-cli%400.15.0) (2025-05-27)
 
 ### Features

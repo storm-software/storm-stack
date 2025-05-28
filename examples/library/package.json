@@ -10,15 +10,15 @@
   },
   "private": true,
   "dependencies": {
-    "@storm-stack/types": "workspace:*",
+    "@storm-stack/types": "0.8.0",
     "@stryke/json": "catalog:",
     "@stryke/type-checks": "catalog:",
     "@stryke/url": "catalog:"
   },
   "devDependencies": {
-    "@storm-stack/core": "workspace:*",
-    "@storm-stack/devkit": "workspace:*",
-    "@storm-stack/nx": "workspace:*",
+    "@storm-stack/core": "0.24.0",
+    "@storm-stack/devkit": "0.5.4",
+    "@storm-stack/nx": "0.12.0",
     "@stryke/types": "catalog:"
   },
   "storm": {

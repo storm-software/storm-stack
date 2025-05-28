@@ -2,6 +2,12 @@
 
 # Changelog for Storm Stack - Eslint Config Storm Stack
 
+## [0.9.1](https://github.com/storm-software/storm-stack/releases/tag/eslint-config-storm-stack%400.9.1) (2025-05-28)
+
+### Miscellaneous
+
+- **monorepo:** Update the pnpm workspace links
+
 ## [0.9.0](https://github.com/storm-software/storm-stack/releases/tag/eslint-config-storm-stack%400.9.0) (2025-05-23)
 
 ### Features

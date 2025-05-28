@@ -2,6 +2,28 @@
 
 # Changelog for Storm Stack - Cli
 
+## [0.6.0](https://github.com/storm-software/storm-stack/releases/tag/cli%400.6.0) (2025-05-28)
+
+### Features
+
+- **core:** Added the `error-lookup` and `commit-vars` workers
+
+### Miscellaneous
+
+- **monorepo:** Update the pnpm workspace links
+
+### Updated Dependencies
+
+- Updated plugin-log-storage to 0.15.1
+- Updated plugin-log-sentry to 0.17.1
+- Updated plugin-storage-fs to 0.5.1
+- Updated preset-cli to 0.16.0
+- Updated preset-cli to 0.16.0
+- Updated types to 0.8.0
+- Updated core to 0.24.0
+- Updated nx to 0.12.0
+- Updated nx to 0.12.0
+
 ## [0.5.0](https://github.com/storm-software/storm-stack/releases/tag/cli%400.5.0) (2025-05-27)
 
 ### Features

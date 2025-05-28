@@ -2,6 +2,17 @@
 
 # Changelog for Storm Stack - Devkit
 
+## [0.5.4](https://github.com/storm-software/storm-stack/releases/tag/devkit%400.5.4) (2025-05-28)
+
+### Miscellaneous
+
+- **monorepo:** Update the pnpm workspace links
+
+### Updated Dependencies
+
+- Updated types to 0.8.0
+- Updated core to 0.24.0
+
 ## [0.5.3](https://github.com/storm-software/storm-stack/releases/tag/devkit%400.5.3) (2025-05-25)
 
 ### Bug Fixes

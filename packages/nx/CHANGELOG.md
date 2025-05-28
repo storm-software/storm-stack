@@ -2,6 +2,21 @@
 
 # Changelog for Storm Stack - Nx
 
+## [0.12.0](https://github.com/storm-software/storm-stack/releases/tag/nx%400.12.0) (2025-05-28)
+
+### Features
+
+- **core:** Added the `error-lookup` and `commit-vars` workers
+
+### Miscellaneous
+
+- **monorepo:** Update the pnpm workspace links
+
+### Updated Dependencies
+
+- Updated core to 0.24.0
+- Updated core to 0.24.0
+
 ## [0.11.3](https://github.com/storm-software/storm-stack/releases/tag/nx%400.11.3) (2025-05-25)
 
 ### Bug Fixes

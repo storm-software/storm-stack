@@ -2,6 +2,14 @@
 
 # Changelog for Storm Stack - Types
 
+## [0.8.0](https://github.com/storm-software/storm-stack/releases/tag/types%400.8.0) (2025-05-28)
+
+### Features
+
+- **core:** Patched the `deepkit` package to include the `tags` reflection for
+  TSDoc
+- **core:** Added the `error-lookup` and `commit-vars` workers
+
 ## [0.7.0](https://github.com/storm-software/storm-stack/releases/tag/types%400.7.0) (2025-05-27)
 
 ### Features
