@@ -9,6 +9,9 @@
     "directory": "{{ options.projectRoot }}"
   },
   "private": false,
+  "keywords": [
+    "storm-stack"
+  ],
   "dependencies": {
     "@storm-stack/types": "workspace:*"
   },
@@ -19,5 +22,8 @@
   "storm": {
     "name": "{{ options.name }}",
     "projectType": "application"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }

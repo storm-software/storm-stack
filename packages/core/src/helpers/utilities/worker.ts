@@ -16,11 +16,25 @@
 
  ------------------------------------------------------------------- */
 
+import { LogLevelLabel } from "@storm-software/config-tools/types";
+import { defu } from "defu";
 import { Worker as JestWorker } from "jest-worker";
 import type { ChildProcess } from "node:child_process";
 import { Transform } from "node:stream";
+import { WorkerProcess } from "../../types/build";
+import { LogFn } from "../../types/config";
+import { createLog } from "./logger";
 
-type FarmOptions = ConstructorParameters<typeof JestWorker>[1];
+export type WorkerOptions = ConstructorParameters<typeof JestWorker>[1] & {
+  name?: string;
+  timeout?: number;
+  onActivity?: () => void;
+  onActivityAbort?: () => void;
+  onRestart?: (method: string, args: any[], attempts: number) => void;
+  exposedMethods: ReadonlyArray<string>;
+  enableWorkerThreads?: boolean;
+  context?: Record<string, any>;
+};
 
 const RESTARTED = Symbol("restarted");
 
@@ -33,27 +47,23 @@ const cleanupWorkers = (worker: JestWorker) => {
 };
 
 export class Worker {
-  private _worker: JestWorker | undefined;
+  #worker: JestWorker | undefined;
 
-  constructor(
-    workerPath: string,
-    options: FarmOptions & {
-      timeout?: number;
-      onActivity?: () => void;
-      onActivityAbort?: () => void;
-      onRestart?: (method: string, args: any[], attempts: number) => void;
-      logger?: Pick<typeof console, "error" | "info" | "warn">;
-      exposedMethods: ReadonlyArray<string>;
-      enableWorkerThreads?: boolean;
-    }
+  #log: LogFn;
+
+  public constructor(
+    protected workerPath: string,
+    protected options: WorkerOptions
   ) {
-    const { timeout, onRestart, logger = console, ...farmOptions } = options;
+    const { timeout, onRestart, name, context, ...farmOptions } = this.options;
+
+    this.#log = createLog(name || workerPath);
 
     let restartPromise: Promise<typeof RESTARTED>;
     let resolveRestartPromise: (arg: typeof RESTARTED) => void;
     let activeTasks = 0;
 
-    this._worker = undefined;
+    this.#worker = undefined;
 
     // ensure we end workers if they weren't before exit
     process.on("exit", () => {
@@ -61,14 +71,13 @@ export class Worker {
     });
 
     const createWorker = () => {
-      this._worker = new JestWorker(workerPath, {
+      this.#worker = new JestWorker(workerPath, {
         ...farmOptions,
         forkOptions: {
           ...farmOptions.forkOptions,
           env: {
             ...((farmOptions.forkOptions?.env ?? {}) as any),
-            ...process.env,
-            IS_NEXT_WORKER: "true"
+            ...process.env
           }
         },
         maxRetries: 0
@@ -79,7 +88,7 @@ export class Worker {
 
       /**
        * Jest Worker has two worker types, ChildProcessWorker (uses child_process) and NodeThreadWorker (uses worker_threads)
-       * Next.js uses ChildProcessWorker by default, but it can be switched to NodeThreadWorker with an experimental flag
+       * Storm Stack uses ChildProcessWorker by default, but it can be switched to NodeThreadWorker with an experimental flag
        *
        * We only want to handle ChildProcessWorker's orphan process issue, so we access the private property "_child":
        * https://github.com/facebook/jest/blob/b38d7d345a81d97d1dc3b68b8458b1837fbf19be/packages/jest-worker/src/workers/ChildProcessWorker.ts
@@ -87,14 +96,15 @@ export class Worker {
        * But this property is not available in NodeThreadWorker, so we need to check if we are using ChildProcessWorker
        */
       if (!farmOptions.enableWorkerThreads) {
-        for (const worker of ((this._worker as any)._workerPool?._workers ||
+        for (const worker of ((this.#worker as any)._workerPool?._workers ||
           []) as {
           _child?: ChildProcess;
         }[]) {
           worker._child?.on("exit", (code, signal) => {
-            if ((code || (signal && signal !== "SIGINT")) && this._worker) {
-              logger.error(
-                `Next.js build worker exited with code: ${code} and signal: ${signal}`
+            if ((code || (signal && signal !== "SIGINT")) && this.#worker) {
+              this.#log(
+                LogLevelLabel.ERROR,
+                `${this.options.name} worker exited with code: ${code} and signal: ${signal}`
               );
 
               // if a child process doesn't exit gracefully, we want to bubble up the exit code to the parent process
@@ -121,7 +131,7 @@ export class Worker {
       let aborted = false;
       const onActivityAbort = () => {
         if (!aborted) {
-          options.onActivityAbort?.();
+          this.options.onActivityAbort?.();
           aborted = true;
         }
       };
@@ -134,25 +144,31 @@ export class Worker {
         }
       });
       // Stop the activity if there's any output from the worker
-      this._worker.getStdout().pipe(abortActivityStreamOnLog);
-      this._worker.getStderr().pipe(abortActivityStreamOnLog);
+      this.#worker.getStdout().pipe(abortActivityStreamOnLog);
+      this.#worker.getStderr().pipe(abortActivityStreamOnLog);
 
       // Pipe the worker's stdout and stderr to the parent process
-      this._worker.getStdout().pipe(process.stdout);
-      this._worker.getStderr().pipe(process.stderr);
+      this.#worker.getStdout().pipe(process.stdout);
+      this.#worker.getStderr().pipe(process.stderr);
     };
     createWorker();
 
     const onHanging = () => {
-      const worker = this._worker;
-      if (!worker) return;
+      const worker = this.#worker;
+      if (!worker) {
+        return;
+      }
+
       const resolve = resolveRestartPromise;
       createWorker();
-      logger.warn(
+
+      this.#log(
+        LogLevelLabel.WARN,
         `Sending SIGTERM signal to static worker due to timeout${
           timeout ? ` of ${timeout / 1000} seconds` : ""
         }. Subsequent errors may be a result of the worker exiting.`
       );
+
       void worker.end().then(() => {
         resolve(RESTARTED);
       });
@@ -161,14 +177,21 @@ export class Worker {
     let hangingTimer: NodeJS.Timeout | false = false;
 
     const onActivity = () => {
-      if (hangingTimer) clearTimeout(hangingTimer);
-      if (options.onActivity) options.onActivity();
+      if (hangingTimer) {
+        clearTimeout(hangingTimer);
+      }
+      if (this.options.onActivity) {
+        this.options.onActivity();
+      }
 
       hangingTimer = activeTasks > 0 && setTimeout(onHanging, timeout);
     };
 
     for (const method of farmOptions.exposedMethods) {
-      if (method.startsWith("_")) continue;
+      if (method.startsWith("_")) {
+        continue;
+      }
+
       (this as any)[method] = timeout
         ? async (...args: any[]) => {
             activeTasks++;
@@ -176,13 +199,23 @@ export class Worker {
               let attempts = 0;
               for (;;) {
                 onActivity();
+
+                const params = defu(
+                  args.length > 0 && args[0] ? args[0] : {},
+                  context ?? {}
+                );
+
                 const result = await Promise.race([
                   // eslint-disable-next-line ts/no-unsafe-call
-                  (this._worker as any)[method](...args),
+                  (this.#worker as any)[method](...params),
                   restartPromise
                 ]);
-                if (result !== RESTARTED) return result;
-                if (onRestart) onRestart(method, args, ++attempts);
+                if (result !== RESTARTED) {
+                  return result;
+                }
+                if (onRestart) {
+                  onRestart(method, args, ++attempts);
+                }
               }
             } finally {
               activeTasks--;
@@ -190,27 +223,35 @@ export class Worker {
             }
           }
         : // eslint-disable-next-line ts/no-unsafe-call
-          (this._worker as any)[method].bind(this._worker);
+          (this.#worker as any)[method].bind(this.#worker);
     }
   }
 
-  async end(): ReturnType<JestWorker["end"]> {
-    const worker = this._worker;
+  public async end(): ReturnType<JestWorker["end"]> {
+    const worker = this.#worker;
     if (!worker) {
       throw new Error("Farm is ended, no more calls can be done to it");
     }
+
     cleanupWorkers(worker);
-    this._worker = undefined;
+    this.#worker = undefined;
     return worker.end();
   }
 
   /**
    * Quietly end the worker if it exists
    */
-  close(): void {
-    if (this._worker) {
-      cleanupWorkers(this._worker);
-      void this._worker.end();
+  public close(): void {
+    if (this.#worker) {
+      cleanupWorkers(this.#worker);
+      void this.#worker.end();
     }
   }
+}
+
+export function createWorker<TExposedMethods extends ReadonlyArray<string>>(
+  workerPath: string,
+  options: WorkerOptions
+): WorkerProcess<TExposedMethods> {
+  return new Worker(workerPath, options) as WorkerProcess<TExposedMethods>;
 }

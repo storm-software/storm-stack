@@ -19,65 +19,14 @@
 import { Lang, parseAsync } from "@ast-grep/napi";
 import { LogLevelLabel } from "@storm-software/config-tools/types";
 import type { ErrorType } from "@storm-stack/types/error";
-import { readJsonFile } from "@stryke/fs/read-file";
-import { deepClone } from "@stryke/helpers/deep-clone";
-import { isEqual } from "@stryke/helpers/is-equal";
-import { Mutex } from "@stryke/helpers/mutex";
-import { StormJSON } from "@stryke/json/storm-json";
-import { joinPaths } from "@stryke/path/join-paths";
-import defu from "defu";
-import { existsSync } from "node:fs";
 import type { Context, Options, SourceFile } from "../../types/build";
 import type { LogFn } from "../../types/config";
-import { writeFile } from "../utilities/write-file";
-
-const mutex = new Mutex();
-
-function getLatestErrorCode(
-  type = "general",
-  errorCodes = {} as Record<ErrorType, Record<string, string>>
-): string {
-  if (!errorCodes[type]) {
-    return "1";
-  }
-  const keys = Object.keys(errorCodes[type]);
-  if (keys.length === 0) {
-    return "1";
-  }
-
-  const errorCode = Number.parseInt(
-    keys.sort((a, b) => b.localeCompare(a))[0]!
-  );
-  if (Number.isNaN(errorCode)) {
-    return "1";
-  }
-
-  return String(errorCode + 1);
-}
 
 export async function transformErrors<TOptions extends Options = Options>(
   log: LogFn,
   source: SourceFile,
   context: Context<TOptions>
 ): Promise<SourceFile> {
-  const errorCodesFilePath = joinPaths(
-    context.workspaceConfig.workspaceRoot,
-    context.options.errorsFile!
-  );
-  let errorCodes = {} as Record<ErrorType, Record<string, string>>;
-
-  if (!existsSync(errorCodesFilePath)) {
-    log(
-      LogLevelLabel.WARN,
-      `No error codes file path exists. Writing empty file.`
-    );
-    await writeFile(log, errorCodesFilePath, StormJSON.stringify({}));
-  } else {
-    errorCodes = await readJsonFile(errorCodesFilePath);
-  }
-
-  const originalErrorCodes = deepClone(errorCodes);
-
   const ast = await parseAsync(Lang.TypeScript, source.code.toString());
   const root = ast.root();
 
@@ -144,20 +93,16 @@ export async function transformErrors<TOptions extends Options = Options>(
           }
         }
 
-        errorCodes[type] ??= {};
-        let code = Object.keys(errorCodes[type] ?? {}).find(
-          key => errorCodes[type]?.[key] === message
-        );
+        const code = await context.workers.errorLookup.find({
+          filePath: context.options.errorsFile,
+          message,
+          type
+        });
         if (!code) {
-          code = getLatestErrorCode(type, errorCodes);
-
           log(
             LogLevelLabel.INFO,
             `Found unlisted error message "${message}" in ${source.id}. Assigning it to "${type}" code #${code}.`
           );
-
-          errorCodes[type] ??= {};
-          errorCodes[type]![code] = message;
         }
 
         source.code = source.code.replaceAll(
@@ -165,26 +110,6 @@ export async function transformErrors<TOptions extends Options = Options>(
           `new StormError({ type: "${type}", code: ${code}${params.length > 0 ? ` params: [${params.join(", ")}] ` : ""} })`
         );
       }
-    }
-  }
-
-  if (!isEqual(originalErrorCodes, errorCodes)) {
-    log(
-      LogLevelLabel.INFO,
-      `Adding error messages from ${source.id} to ${context.options.errorsFile}.`
-    );
-
-    await mutex.acquire();
-    try {
-      await writeFile(
-        log,
-        errorCodesFilePath,
-        StormJSON.stringify(
-          defu(errorCodes, await readJsonFile(errorCodesFilePath))
-        )
-      );
-    } finally {
-      mutex.release();
     }
   }
 

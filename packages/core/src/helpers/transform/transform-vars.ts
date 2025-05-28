@@ -17,31 +17,18 @@
  ------------------------------------------------------------------- */
 
 import { Lang, parseAsync } from "@ast-grep/napi";
+import { ReflectionClass, ReflectionKind } from "@deepkit/type";
 import { LogLevelLabel } from "@storm-software/config-tools/types";
-import { Mutex } from "@stryke/helpers/mutex";
 import type { Context, Options, SourceFile } from "../../types/build";
 import type { LogFn } from "../../types/config";
-import {
-  resolveDotenvProperties,
-  resolveDotenvReflection
-} from "../dotenv/resolve";
-import { writeDotenvProperties } from "../dotenv/write-reflections";
+import { resolveDotenvReflection } from "../dotenv/resolve";
 
-const mutex = new Mutex();
-
-export async function transformEnv<TOptions extends Options = Options>(
+export async function transformVars<TOptions extends Options = Options>(
   log: LogFn,
   source: SourceFile,
   context: Context<TOptions>
 ): Promise<SourceFile> {
-  const varsReflection = await resolveDotenvReflection(context, "variables");
-
-  const dotenvProperties = await resolveDotenvProperties(
-    log,
-    context,
-    "variables"
-  );
-  const originalLength = dotenvProperties.length;
+  const dotenvReflection = await resolveDotenvReflection(context, "variables");
 
   const ast = await parseAsync(Lang.TypeScript, source.code.toString());
   const root = ast.root();
@@ -60,19 +47,25 @@ export async function transformEnv<TOptions extends Options = Options>(
     return source;
   }
 
+  const varsReflection = ReflectionClass.from({
+    kind: ReflectionKind.objectLiteral,
+    description: `An object containing the configuration variables used by the ${context.options.name ? `${context.options.name} application` : "application"}.`,
+    types: []
+  });
+
   const missingEnvNames = [] as string[];
   for (const node of nodes) {
     const envName = node.getMatch("ENV_NAME")?.text();
     if (envName) {
       const prefix = context.dotenv.prefix.find(pre =>
-        varsReflection.hasProperty(envName.replace(`${pre}_`, ""))
+        dotenvReflection.hasProperty(envName.replace(`${pre}_`, ""))
       );
       if (
         prefix &&
-        varsReflection.hasProperty(envName.replace(`${prefix}_`, ""))
+        dotenvReflection.hasProperty(envName.replace(`${prefix}_`, ""))
       ) {
         const name = envName.replace(`${prefix}_`, "");
-        const reflectionProperty = varsReflection.getProperty(name);
+        const dotenvProperty = dotenvReflection.getProperty(name);
 
         if (context.dotenv.replace && !node.text().startsWith("process.env.")) {
           const value =
@@ -80,8 +73,8 @@ export async function transformEnv<TOptions extends Options = Options>(
             Object.keys(context.dotenv.values ?? {}).find(key =>
               context.dotenv.prefix.find(pre => key === `${pre}_${name}`)
             ) ??
-            reflectionProperty.getDefaultValue();
-          if (reflectionProperty.isValueRequired() && value === undefined) {
+            dotenvProperty.getDefaultValue();
+          if (dotenvProperty.isValueRequired() && value === undefined) {
             throw new Error(
               `Environment variable \`${name}\` is not defined in the .env configuration files`
             );
@@ -90,7 +83,9 @@ export async function transformEnv<TOptions extends Options = Options>(
           source.code = source.code.replaceAll(node.text(), String(value));
         }
 
-        dotenvProperties.push(reflectionProperty);
+        if (!varsReflection.hasProperty(name)) {
+          varsReflection.addProperty(dotenvProperty);
+        }
       } else {
         missingEnvNames.push(envName);
       }
@@ -103,7 +98,7 @@ export async function transformEnv<TOptions extends Options = Options>(
         .map(name => ` - ${name}`)
         .join(
           "\n"
-        )} \n\nThe following variable names are defined in the dotenv type definition: \n${varsReflection
+        )} \n\nThe following variable names are defined in the dotenv type definition: \n${dotenvReflection
         .getPropertyNames()
         .map(typeDef => ` - ${String(typeDef)} `)
         .join(
@@ -112,26 +107,15 @@ export async function transformEnv<TOptions extends Options = Options>(
     );
   }
 
-  if (dotenvProperties.length !== originalLength) {
+  if (varsReflection.getProperties().length > 0) {
     log(
       LogLevelLabel.INFO,
-      `Adding environment variables from ${source.id} to variables.json.`
+      `Adding environment variables from ${source.id} to vars.json.`
     );
 
-    await mutex.acquire();
-    try {
-      await writeDotenvProperties(log, context, "variables", dotenvProperties);
-    } catch (e) {
-      log(
-        LogLevelLabel.ERROR,
-        `Error occurred adding variables from ${source.id} to variables.json.`
-      );
-
-      // eslint-disable-next-line no-console
-      console.error(e);
-    } finally {
-      mutex.release();
-    }
+    // await context.workers.commitVars.commit({
+    //   vars: varsReflection.serializeType()
+    // });
   }
 
   return source;

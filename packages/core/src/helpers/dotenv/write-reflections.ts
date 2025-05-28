@@ -29,7 +29,7 @@ import { existsSync } from "@stryke/path/exists";
 import type { Context, Options } from "../../types/build";
 import type { LogFn } from "../../types/config";
 import { writeFile } from "../utilities/write-file";
-import { getDotenvPath, getDotenvReflectionsPath } from "./resolve";
+import { getDotenvReflectionsPath, getVarsReflectionsPath } from "./resolve";
 
 export async function writeDotenvReflection<TOptions extends Options = Options>(
   log: LogFn,
@@ -37,7 +37,7 @@ export async function writeDotenvReflection<TOptions extends Options = Options>(
   reflection: ReflectionClass<any>,
   name: "variables" | "secrets"
 ) {
-  let reflectionObjectLiteral = ReflectionClass.from({
+  let reflectionObject = ReflectionClass.from({
     kind: ReflectionKind.objectLiteral,
     description: `An object containing the dotenv variables used by the ${context.options.name ? `${context.options.name} application` : "application"}.`,
     types: []
@@ -45,18 +45,18 @@ export async function writeDotenvReflection<TOptions extends Options = Options>(
 
   const varsFilePath = getDotenvReflectionsPath(context, name);
   if (existsSync(varsFilePath)) {
-    reflectionObjectLiteral = resolveClassType(
+    reflectionObject = resolveClassType(
       deserializeType(await readJsonFile<SerializedTypes>(varsFilePath))
     );
   }
 
   reflection.getProperties().map(prop => {
-    if (!reflectionObjectLiteral.hasProperty(prop.getName())) {
-      reflectionObjectLiteral.addProperty(prop.property);
+    if (!reflectionObject.hasProperty(prop.getName())) {
+      reflectionObject.addProperty(prop.property);
     }
   });
 
-  const serialized = reflectionObjectLiteral.serializeType();
+  const serialized = reflectionObject.serializeType();
 
   return writeFile(
     log,
@@ -71,7 +71,7 @@ export async function writeDotenvProperties<TOptions extends Options = Options>(
   name: "variables" | "secrets",
   properties: ReflectionProperty[]
 ) {
-  const varsFilePath = getDotenvPath(context, name);
+  const varsFilePath = getVarsReflectionsPath(context, name);
 
   let reflectionObjectLiteral = ReflectionClass.from({
     kind: ReflectionKind.objectLiteral,

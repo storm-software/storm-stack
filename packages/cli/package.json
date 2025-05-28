@@ -25,6 +25,7 @@
     "@storm-software/config-tools": "catalog:",
     "@storm-stack/core": "workspace:*",
     "@storm-stack/types": "workspace:*",
+    "defu": "catalog:",
     "unctx": "catalog:",
     "unstorage": "catalog:"
   },

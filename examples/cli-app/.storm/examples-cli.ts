@@ -33,7 +33,7 @@ async function main() {
         return handle();
       } else {
         console.error(
-          ` ${colors.red("✖")} ${colors.redBright(`Unknown command: ${colors.bold(command || "<none>")}`)}`
+          ` ${colors.red("✘")} ${colors.redBright(`Unknown command: ${colors.bold(command || "<none>")}`)}`
         );
         console.log("");
       }
@@ -75,7 +75,7 @@ async function main() {
     }
   } catch (err) {
     console.error(
-      ` ${colors.red("✖")} ${colors.redBright(`An error occurred while running the examples-cli-app application: 
+      ` ${colors.red("✘")} ${colors.redBright(`An error occurred while running the examples-cli-app application: 
 
 ${createStormError(err).toDisplay()}`)}`
     );

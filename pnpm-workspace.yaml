@@ -79,14 +79,14 @@ catalog:
   "@storm-software/tsconfig": latest
   "@storm-software/tsdoc": latest
   "@storm-software/workspace-tools": latest
-  "@stryke/env": ^0.9.0
+  "@stryke/env": ^0.9.1
   "@stryke/fs": ^0.14.0
   "@stryke/helpers": ^0.5.3
   "@stryke/http": ^0.8.1
   "@stryke/unique-id": ^0.2.7
   "@stryke/url": ^0.2.0
-  "@stryke/json": ^0.8.2
-  "@stryke/path": ^0.5.0
+  "@stryke/json": ^0.8.3
+  "@stryke/path": ^0.5.1
   "@stryke/types": ^0.8.2
   "@stryke/hash": ^0.9.3
   "@stryke/string-format": ^0.4.9
@@ -113,7 +113,6 @@ catalog:
   globals: ^15.15.0
   handlebars: ^4.7.8
   invariant: ^2.2.4
-  jest-worker: ^29.7.0
   jsonc-eslint-parser: 2.4.0
   lefthook: ^1.11.12
   log4brains: ^1.1.0
@@ -123,9 +122,10 @@ catalog:
   nanotar: ^0.2.0
   prettier: ^3.5.3
   nx: 21.0.3
-  jest: 29.7.0
-  jest-environment-jsdom: 29.7.0
-  jest-environment-node: 29.7.0
+  jest: 30.0.0-beta.3
+  jest-environment-jsdom: 30.0.0-beta.3
+  jest-environment-node: 30.0.0-beta.3
+  jest-worker: 30.0.0-beta.3
   react: 19.0.0-rc-f6cce072-20240723
   react-dom: 19.0.0-rc-f6cce072-20240723
   react-native: 0.75.4

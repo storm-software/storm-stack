@@ -346,7 +346,7 @@ async function handler() {
           )
           .join(" ")}
 
-        console.error(\` \${colors.red("✖")} \${colors.redBright(\`Unknown command: \${colors.bold(command || "<none>")}\`)}\`);
+        console.error(\` \${colors.red("✘")} \${colors.redBright(\`Unknown command: \${colors.bold(command || "<none>")}\`)}\`);
         console.log("");
         console.log(renderUsage(true));
         console.log("");
@@ -556,7 +556,7 @@ async function handler() {
       }
     }
   } catch (err) {
-   console.error(\` \${colors.red("✖")} \${colors.redBright(\`Error occurred while processing ${command.displayName} command.\`)}\`);
+   console.error(\` \${colors.red("✘")} \${colors.redBright(\`Error occurred while processing ${command.displayName} command.\`)}\`);
   }
 }
 
@@ -841,7 +841,7 @@ async function handler() {
         )
         .join(" ")}
 
-        console.error(\` \${colors.red("✖")} \${colors.redBright(\`Unknown command: \${colors.bold(command || "<none>")}\`)}\`);
+        console.error(\` \${colors.red("✘")} \${colors.redBright(\`Unknown command: \${colors.bold(command || "<none>")}\`)}\`);
         console.log("");
         console.log(renderUsage(true));
         console.log("");
@@ -891,7 +891,7 @@ async function handler() {
       console.log("");
     }
   } catch (err) {
-   console.error(\` \${colors.red("✖")} \${colors.redBright(\`Error occurred while processing ${
+   console.error(\` \${colors.red("✘")} \${colors.redBright(\`Error occurred while processing ${
      command.displayName
    } command.\`)}\`);
   }
@@ -1130,7 +1130,7 @@ async function main() {
       } `
         )
         .join(" ")} else {
-        console.error(\` \${colors.red("✖")} \${colors.redBright(\`Unknown command: \${colors.bold(command || "<none>")}\`)}\`);
+        console.error(\` \${colors.red("✘")} \${colors.redBright(\`Unknown command: \${colors.bold(command || "<none>")}\`)}\`);
         console.log("");
       }
 
@@ -1167,7 +1167,7 @@ async function main() {
       console.log("");
     }
   } catch (err) {
-    console.error(\` \${colors.red("✖")} \${colors.redBright(\`An error occurred while running the ${context.options.name} application: \n\n\${createStormError(err).toDisplay()}\`)}\`);
+    console.error(\` \${colors.red("✘")} \${colors.redBright(\`An error occurred while running the ${context.options.name} application: \n\n\${createStormError(err).toDisplay()}\`)}\`);
   }
 }
 

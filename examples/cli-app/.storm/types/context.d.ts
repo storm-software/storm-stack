@@ -391,6 +391,11 @@ declare global {
     STORM_LOG_DIR?: string
 
     /**
+     * An indicator that specifies the application is running in the local Storm Stack development environment.
+     */
+    STORM_STACK_LOCAL: boolean
+
+    /**
      * The Storm Stack application's temporary data directory.
      */
     STORM_TEMP_DIR?: string

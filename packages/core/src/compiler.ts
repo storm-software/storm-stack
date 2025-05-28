@@ -24,8 +24,8 @@ import { joinPaths } from "@stryke/path/join-paths";
 import type MagicString from "magic-string";
 import ts from "typescript";
 import { transformContext } from "./helpers/transform/transform-context";
-import { transformEnv } from "./helpers/transform/transform-env";
 import { transformErrors } from "./helpers/transform/transform-errors";
+import { transformVars } from "./helpers/transform/transform-vars";
 import { getCache, setCache } from "./helpers/utilities/cache";
 import { createLog } from "./helpers/utilities/logger";
 import { getMagicString } from "./helpers/utilities/magic-string";
@@ -227,7 +227,7 @@ export class Compiler<TOptions extends Options = Options>
       }
 
       if (!options.skipEnvTransform) {
-        transformed = await transformEnv<TOptions>(this.log, source, context);
+        transformed = await transformVars<TOptions>(this.log, source, context);
       }
 
       if (!options.skipErrorsTransform) {

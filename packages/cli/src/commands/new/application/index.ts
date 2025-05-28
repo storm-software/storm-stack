@@ -16,55 +16,33 @@
 
  ------------------------------------------------------------------- */
 
+import { Options } from "@storm-stack/core/types/build";
+import { createEngine } from "../../../helpers/create-engine";
+
 /**
  * The payload for the example CLI application.
  */
-interface NewLibraryPayload {
-  /**
-   * The host to bind the server to.
-   *
-   * @defaultValue "localhost"
-   */
-  host: string;
-
-  /**
-   * The port to bind the server to.
-   *
-   * @defaultValue 3000
-   */
-  port: number;
-
-  /**
-   * Should the server serve compressed files?
-   */
-  compress?: boolean;
-
-  /**
-   * Should the server serve compressed files?
-   *
-   * @defaultValue "node"
-   */
-  platform: "node" | "browser";
-
-  /**
-   * Should the server load environment variables from the .env file?
-   *
-   * @defaultValue true
-   */
-  loadEnv: boolean;
-}
+type NewApplicationPayload = Pick<
+  Options,
+  "name" | "projectRoot" | "packageName"
+>;
 
 /**
- * New a Storm Stack library project to the current workspace.
+ * Create a new Storm Stack application in the current workspace.
  *
- * @param payload - The request object containing the command payload
+ * @param payload - The payload object containing the details for the new application.
  */
-function handler(payload: StormPayload<NewLibraryPayload>) {
+async function handler(payload: StormPayload<NewApplicationPayload>) {
   const data = payload.data;
 
-  $storm.log.info(
-    `Starting server on ${data.host}:${data.port} with compress: ${data.compress} and loadEnv: ${data.loadEnv}`
-  );
+  const engine = await createEngine({
+    projectRoot: data.projectRoot,
+    projectType: "application"
+  });
+  engine.setIntent("new");
+
+  await engine.new();
+  await engine.finalize();
 }
 
 export default handler;

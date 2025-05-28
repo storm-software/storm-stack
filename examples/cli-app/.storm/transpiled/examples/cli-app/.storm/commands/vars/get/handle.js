@@ -52,9 +52,9 @@ var paths = isMacOS ? {
 var build = {
   packageName: "@storm-stack/examples-cli-app",
   organization,
-  buildId: "XC026hjFYNSgD7McEihNB5aD",
-  timestamp: 1748354315739 ? Number(1748354315739) : 0,
-  releaseId: "RqpVy01plVfR57rizz06z7k8",
+  buildId: "CqVU2sWcooUqegr2xf-R-iRb",
+  timestamp: 1748405397019 ? Number(1748405397019) : 0,
+  releaseId: "vJQjNHE8HIj37XqfolYoqFPe",
   releaseTag: "examples-cli-app@0.0.1",
   mode,
   platform: "node",
@@ -626,7 +626,7 @@ async function prompt(message, opts = {}) {
     }
     switch (opts.cancel) {
       case "reject": {
-        const error = new StormError({ type: "general", code: 10 });
+        const error = new StormError({ type: "general", code: 84 });
         error.name = "ConsolaPromptCancelledError";
         if (Error.captureStackTrace) {
           Error.captureStackTrace(error, prompt);
@@ -899,12 +899,12 @@ var __\u03A9VarsGetPayload = ["name", "The name of the variable to retrieve from
 async function handler(payload) {
   const varsFile = await useStorm().storage.getItem(`vars:vars.json`);
   if (varsFile === void 0) {
-    console.error(` ${colors.red("\u2716")} ${colors.redBright(`Variables file was not found`)}`);
+    console.error(` ${colors.red("\u2718")} ${colors.redBright(`Variables file was not found`)}`);
     return;
   }
   const vars = (deserialize.\u03A9 = [["!"]], deserialize(varsFile));
   if (vars?.[payload.data.name] === void 0) {
-    console.error(` ${colors.red("\u2716")} ${colors.redBright(`Variable Name \`${payload.data.name}\` not found`)}`);
+    console.error(` ${colors.red("\u2718")} ${colors.redBright(`Variable Name \`${payload.data.name}\` not found`)}`);
     return;
   }
   console.log(`${colors.bold(`${payload.data.name}:`)} ${vars[payload.data.name]}`);

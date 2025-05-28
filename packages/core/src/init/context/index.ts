@@ -47,7 +47,7 @@ export async function initContext<TOptions extends Options = Options>(
     context.options.projectRoot,
     "package.json"
   );
-  if (!existsSync(packageJsonPath)) {
+  if (existsSync(packageJsonPath)) {
     context.packageJson = await readJsonFile<PackageJson>(packageJsonPath);
     context.options.name ??= context.packageJson?.name;
     context.options.description ??= context.packageJson?.description;
@@ -55,7 +55,7 @@ export async function initContext<TOptions extends Options = Options>(
       typeof context.packageJson?.repository === "string"
         ? context.packageJson.repository
         : context.packageJson?.repository?.url;
-  } else {
+  } else if (context.commandId === "new") {
     const workspacePackageJsonPath = joinPaths(
       context.workspaceConfig.workspaceRoot,
       "package.json"
@@ -68,6 +68,10 @@ export async function initContext<TOptions extends Options = Options>(
       typeof context.packageJson?.repository === "string"
         ? context.packageJson.repository
         : context.packageJson?.repository?.url;
+  } else {
+    throw new Error(
+      `The package.json file is missing in the project root directory: ${context.options.projectRoot}. Please run the "new" command to create a new Storm Stack project.`
+    );
   }
 
   context.relativeToWorkspaceRoot = relativeToWorkspaceRoot(

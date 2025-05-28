@@ -154,7 +154,7 @@ async function handler() {
     }
   } catch (err) {
     console.error(
-      ` ${colors.red("✖")} ${colors.redBright(`Error occurred while processing Add - Page command.`)}`
+      ` ${colors.red("✘")} ${colors.redBright(`Error occurred while processing Add - Page command.`)}`
     );
   }
 }

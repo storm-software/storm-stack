@@ -106,7 +106,8 @@ export class Engine<TOptions extends Options = Options> {
         logs: [] as LogRuntimeConfig[],
         storage: [] as StorageRuntimeConfig[],
         init: [] as string[]
-      }
+      },
+      workers: {}
     } as Context<TOptions>;
 
     this.context.workspaceConfig = workspaceConfig ?? {
@@ -203,6 +204,8 @@ export class Engine<TOptions extends Options = Options> {
    * Create a new Storm Stack project
    */
   public async new() {
+    this.context.commandId ??= "new";
+
     if (!this.#initialized) {
       await this.init();
     }
@@ -218,6 +221,8 @@ export class Engine<TOptions extends Options = Options> {
    * Clean any previously prepared artifacts
    */
   public async clean() {
+    this.context.commandId ??= "clean";
+
     if (!this.#initialized) {
       await this.init();
     }
@@ -241,6 +246,8 @@ export class Engine<TOptions extends Options = Options> {
    * @param autoClean - Whether to automatically clean the previous build artifacts before preparing the project
    */
   public async prepare(autoClean = true) {
+    this.context.commandId ??= "prepare";
+
     if (!this.#initialized) {
       await this.init();
     }
@@ -268,6 +275,8 @@ export class Engine<TOptions extends Options = Options> {
    * @param autoClean - Whether to automatically clean the previous build artifacts before preparing the project
    */
   public async lint(autoPrepare = true, autoClean = true) {
+    this.context.commandId ??= "lint";
+
     if (!this.#initialized) {
       await this.init();
     }
@@ -301,6 +310,8 @@ export class Engine<TOptions extends Options = Options> {
    * @param autoClean - Whether to automatically clean the previous build artifacts before preparing the project
    */
   public async build(autoPrepare = true, autoClean = true) {
+    this.context.commandId ??= "build";
+
     if (!this.#initialized) {
       await this.init();
     }
@@ -334,6 +345,8 @@ export class Engine<TOptions extends Options = Options> {
    * @param autoClean - Whether to automatically clean the previous build artifacts before preparing the project
    */
   public async docs(autoPrepare = true, autoClean = true) {
+    this.context.commandId ??= "docs";
+
     if (!this.#initialized) {
       await this.init();
     }
@@ -373,11 +386,47 @@ export class Engine<TOptions extends Options = Options> {
    * This step includes any final processes or clean up required by Storm Stack. It will be run after each Storm Stack command.
    */
   public async finalize() {
+    this.context.commandId ??= "finalize";
+
     this.log(LogLevelLabel.TRACE, "Storm Stack finalize execution started");
 
     await finalize(this.log, this.context, this.#hooks);
 
+    await Promise.all(
+      [
+        this.context.workers.commitVars?.end(),
+        this.context.workers.errorLookup?.end()
+      ].filter(Boolean)
+    );
+
     this.log(LogLevelLabel.TRACE, "Storm Stack finalize execution completed");
+  }
+
+  /**
+   * Set the intent of the Storm Stack command
+   *
+   * @remarks
+   * This is used to set the command ID for the current command being executed.
+   *
+   * @param commandId - The command ID to set
+   */
+  public setIntent(
+    commandId:
+      | "new"
+      | "init"
+      | "prepare"
+      | "build"
+      | "lint"
+      | "docs"
+      | "clean"
+      | "finalize"
+  ) {
+    this.log(
+      LogLevelLabel.TRACE,
+      `Setting the Storm Stack command intent to "${commandId}"`
+    );
+
+    this.context.commandId = commandId;
   }
 
   /**

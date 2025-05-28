@@ -57,20 +57,14 @@ export function getDotenvReflectionsPath<TOptions extends Options = Options>(
   context: Context<TOptions>,
   name: "variables" | "secrets"
 ): string {
-  return joinPaths(getReflectionsPath(context), `${name}.json`);
+  return joinPaths(getReflectionsPath(context), "dotenv", `${name}.json`);
 }
 
-export function getDotenvPath<TOptions extends Options = Options>(
+export function getVarsReflectionsPath<TOptions extends Options = Options>(
   context: Context<TOptions>,
   name: "variables" | "secrets"
 ): string {
-  return joinPaths(
-    context.workspaceConfig.workspaceRoot,
-    context.options.projectRoot,
-    context.artifactsDir,
-    "dotenv",
-    `${name}.json`
-  );
+  return joinPaths(getReflectionsPath(context), `${name}.json`);
 }
 
 export async function resolveDotenvProperties<
@@ -80,7 +74,7 @@ export async function resolveDotenvProperties<
   context: Context<TOptions>,
   name: "variables" | "secrets"
 ): Promise<ReflectionProperty[]> {
-  const varsFilePath = getDotenvPath(context, name);
+  const varsFilePath = getVarsReflectionsPath(context, name);
 
   const reflection = ReflectionClass.from({
     kind: ReflectionKind.objectLiteral,

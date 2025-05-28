@@ -17,7 +17,6 @@
  ------------------------------------------------------------------- */
 
 import type { ExecutorContext } from "@nx/devkit";
-import { writeTrace } from "@storm-software/config-tools/logger";
 import type { StormWorkspaceConfig } from "@storm-software/config/types";
 import { withRunExecutor } from "@storm-software/workspace-tools";
 import { Engine } from "@storm-stack/core/engine";
@@ -63,16 +62,9 @@ export async function executorFn(
     workspaceConfig
   );
 
-  writeTrace("Initializing Storm Stack engine");
   await engine.init();
-
-  writeTrace("Linting Storm Stack project");
   await engine.lint(options.autoPrepare !== false, options.autoClean !== false);
-
-  writeTrace("Finalizing Storm Stack processes");
   await engine.finalize();
-
-  writeTrace("Storm Stack - Lint completed");
 
   return {
     success: true

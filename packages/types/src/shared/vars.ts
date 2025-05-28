@@ -31,6 +31,15 @@ import { LogLevel } from "./log.js";
  */
 export interface StormBaseVariables {
   /**
+   * An indicator that specifies the application is running in the local Storm Stack development environment.
+   *
+   * @defaultValue false
+   * @internal
+   * @hidden
+   */
+  STORM_STACK_LOCAL: boolean;
+
+  /**
    * The name of the application.
    *
    * @category neutral

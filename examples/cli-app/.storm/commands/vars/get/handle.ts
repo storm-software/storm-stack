@@ -25,7 +25,7 @@ async function handler(payload: StormPayload<VarsGetPayload>) {
   const varsFile = await $storm.storage.getItem(`vars:vars.json`);
   if (varsFile === undefined) {
     console.error(
-      ` ${colors.red("✖")} ${colors.redBright(`Variables file was not found`)}`
+      ` ${colors.red("✘")} ${colors.redBright(`Variables file was not found`)}`
     );
     return;
   }
@@ -33,7 +33,7 @@ async function handler(payload: StormPayload<VarsGetPayload>) {
   const vars = deserialize<StormVariables>(varsFile);
   if (vars?.[payload.data.name] === undefined) {
     console.error(
-      ` ${colors.red("✖")} ${colors.redBright(`Variable Name \`${payload.data.name}\` not found`)}`
+      ` ${colors.red("✘")} ${colors.redBright(`Variable Name \`${payload.data.name}\` not found`)}`
     );
     return;
   }

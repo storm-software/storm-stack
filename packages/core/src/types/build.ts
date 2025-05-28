@@ -44,6 +44,7 @@ import type {
 import type { PackageJson } from "@stryke/types/package-json";
 import type { TsConfigJson } from "@stryke/types/tsconfig";
 import type { Hookable } from "hookable";
+import { Worker as JestWorker } from "jest-worker";
 import type { Jiti } from "jiti";
 import type MagicString from "magic-string";
 import type { SourceMap } from "magic-string";
@@ -485,11 +486,31 @@ export interface Config<
   cleanup?: CleanupFunction;
 }
 
+export type WorkerProcess<TExposedMethods extends ReadonlyArray<string>> = {
+  [K in TExposedMethods[number]]: (data: any) => Promise<any>;
+} & {
+  close: () => void;
+  end: () => ReturnType<JestWorker["end"]>;
+};
+
 export interface Context<
   TOptions extends Options = Options,
   TResolvedEntryTypeDefinition extends
     ResolvedEntryTypeDefinition = ResolvedEntryTypeDefinition
 > {
+  /**
+   * An object containing the options provided to Storm Stack
+   */
+  commandId:
+    | "new"
+    | "init"
+    | "prepare"
+    | "build"
+    | "lint"
+    | "docs"
+    | "clean"
+    | "finalize";
+
   /**
    * An object containing the options provided to Storm Stack
    */
@@ -574,6 +595,14 @@ export interface Context<
   projectJson?: Record<string, any>;
 
   /**
+   * The message ports used to communicate with the worker processes
+   */
+  workers: {
+    errorLookup: WorkerProcess<["find"]>;
+    commitVars: WorkerProcess<["commit"]>;
+  };
+
+  /**
    * The Jiti module resolver
    */
   resolver: Jiti;
@@ -606,6 +635,7 @@ export interface EngineHookFunctions<TOptions extends Options = Options> {
   "init:tsconfig": (context: Context<TOptions>) => MaybePromise<void>;
   "init:unimport": (context: Context<TOptions>) => MaybePromise<void>;
   "init:dotenv": (context: Context<TOptions>) => MaybePromise<void>;
+  "init:workers": (context: Context<TOptions>) => MaybePromise<void>;
   "init:entry": (context: Context<TOptions>) => MaybePromise<void>;
   "init:complete": (context: Context<TOptions>) => MaybePromise<void>;
 

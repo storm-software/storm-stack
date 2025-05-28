@@ -77,13 +77,13 @@ export interface VarsGetPayload {
 async function handler(payload: StormPayload<VarsGetPayload>) {
   const varsFile = await $storm.storage.getItem(\`vars:vars.json\`);
   if (varsFile === undefined) {
-    console.error(\` \${colors.red("✖")} \${colors.redBright(\`Variables file was not found\`)}\`);
+    console.error(\` \${colors.red("✘")} \${colors.redBright(\`Variables file was not found\`)}\`);
     return;
   }
 
   const vars = deserialize<StormVariables>(varsFile);
   if (vars?.[payload.data.name] === undefined) {
-    console.error(\` \${colors.red("✖")} \${colors.redBright(\`Variable Name \\\`\${payload.data.name}\\\` not found\`)}\`);
+    console.error(\` \${colors.red("✘")} \${colors.redBright(\`Variable Name \\\`\${payload.data.name}\\\` not found\`)}\`);
     return;
   }
 
@@ -156,7 +156,7 @@ export interface VarsSetPayload {
 async function handler(payload: StormPayload<VarsSetPayload>) {
   const varsFile = await $storm.storage.getItem(\`vars:vars.json\`);
   if (varsFile === undefined) {
-    console.error(\` \${colors.red("✖")} \${colors.redBright(\`Variables file was not found\`)}\`);
+    console.error(\` \${colors.red("✘")} \${colors.redBright(\`Variables file was not found\`)}\`);
     return;
   }
 
@@ -226,7 +226,7 @@ export interface VarsListPayload {}
 async function handler(payload: StormPayload<VarsListPayload>) {
   const varsFile = await $storm.storage.getItem(\`vars:vars.json\`);
   if (varsFile === undefined) {
-    console.error(\` \${colors.red("✖")} \${colors.redBright(\`Variables file was not found\`)}\`);
+    console.error(\` \${colors.red("✘")} \${colors.redBright(\`Variables file was not found\`)}\`);
     return;
   }
 
@@ -295,7 +295,7 @@ export interface VarsDeletePayload {
 async function handler(payload: StormPayload<VarsDeletePayload>) {
   const varsFile = await $storm.storage.getItem(\`vars:vars.json\`);
   if (varsFile === undefined) {
-    console.error(\` \${colors.red("✖")} \${colors.redBright(\`Variables file was not found\`)}\`);
+    console.error(\` \${colors.red("✘")} \${colors.redBright(\`Variables file was not found\`)}\`);
     return;
   }
 

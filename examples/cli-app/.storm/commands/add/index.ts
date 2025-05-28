@@ -45,7 +45,7 @@ async function handler() {
         }
 
         console.error(
-          ` ${colors.red("✖")} ${colors.redBright(`Unknown command: ${colors.bold(command || "<none>")}`)}`
+          ` ${colors.red("✘")} ${colors.redBright(`Unknown command: ${colors.bold(command || "<none>")}`)}`
         );
         console.log("");
         console.log(renderUsage(true));
@@ -208,7 +208,7 @@ async function handler() {
     }
   } catch (err) {
     console.error(
-      ` ${colors.red("✖")} ${colors.redBright(`Error occurred while processing Add command.`)}`
+      ` ${colors.red("✘")} ${colors.redBright(`Error occurred while processing Add command.`)}`
     );
   }
 }

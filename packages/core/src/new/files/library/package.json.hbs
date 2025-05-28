@@ -9,6 +9,9 @@
     "directory": "{{ options.projectRoot }}"
   },
   "private": false,
+  "keywords": [
+    "storm-stack"
+  ],
   "dependencies": {
     "@storm-stack/types": "workspace:*"
   },
@@ -23,5 +26,8 @@
     "plugins": [
       "@storm-stack/devkit/plugins/library"
     ]
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }

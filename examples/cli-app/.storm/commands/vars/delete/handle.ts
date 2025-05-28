@@ -25,7 +25,7 @@ async function handler(payload: StormPayload<VarsDeletePayload>) {
   const varsFile = await $storm.storage.getItem(`vars:vars.json`);
   if (varsFile === undefined) {
     console.error(
-      ` ${colors.red("✖")} ${colors.redBright(`Variables file was not found`)}`
+      ` ${colors.red("✘")} ${colors.redBright(`Variables file was not found`)}`
     );
     return;
   }
