@@ -378,7 +378,7 @@ export function renderFooter(): string {
     `  ${colors.bold("Contact:              ")}${link("https://stormsoftware.com/contact")}`
   );
   footer.push(
-    `  ${colors.bold("Documentation:        ")}${link("https://stormsoftware.com/docs")}`
+    `  ${colors.bold("Documentation:        ")}${link("https://docs.stormsoftware.com/projects/storm-stack")}`
   );
   footer.push(
     `  ${colors.bold("Repository:           ")}${link("https://github.com/storm-software/storm-stack")}`

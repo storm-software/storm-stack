@@ -361,6 +361,11 @@ declare global {
     SEMAPHORE?: string
 
     /**
+     * The DSN for Sentry
+     */
+    SENTRY_DSN: string
+
+    /**
      * The sourcehut build ID. This value is set by certain CI/CD systems.
      */
     SOURCEHUT?: string

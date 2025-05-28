@@ -238,10 +238,10 @@ export function createStormError(
   ) {
     super(
        "An error occurred during processing",
-       typeof optionsOrMessage === "string" && optionsOrMessage ? undefined : { cause: optionsOrMessage.cause }
+       typeof optionsOrMessage === "string" ? undefined : { cause: optionsOrMessage?.cause }
      );
 
-     if (typeof optionsOrMessage === "string" && optionsOrMessage) {
+     if (typeof optionsOrMessage === "string") {
        this.message = optionsOrMessage;
        this.type = type || "general";
        this.code = getDefaultCode(this.type);
@@ -430,9 +430,9 @@ export function createStormError(
 Related details: \${JSON.stringify(this.data)}\`
         : ""
     }\${
-      this.cause.name
+      this.cause?.name
         ? \`
-Inner Error: \${this.cause.name}\${this.cause.message ? " - " + this.cause.message : ""}\`
+Inner Error: \${this.cause?.name}\${this.cause?.message ? " - " + this.cause?.message : ""}\`
         : ""
     }\`;
   }

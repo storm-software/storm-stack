@@ -34,8 +34,9 @@ export interface StormBaseVariables {
    * An indicator that specifies the application is running in the local Storm Stack development environment.
    *
    * @defaultValue false
+   *
    * @internal
-   * @hidden
+   * @category node
    */
   STORM_STACK_LOCAL: boolean;
 

@@ -21,7 +21,10 @@ import { ReflectionClass, ReflectionKind } from "@deepkit/type";
 import { LogLevelLabel } from "@storm-software/config-tools/types";
 import type { Context, Options, SourceFile } from "../../types/build";
 import type { LogFn } from "../../types/config";
-import { resolveDotenvReflection } from "../dotenv/resolve";
+import {
+  getVarsReflectionsPath,
+  resolveDotenvReflection
+} from "../dotenv/resolve";
 
 export async function transformVars<TOptions extends Options = Options>(
   log: LogFn,
@@ -57,22 +60,34 @@ export async function transformVars<TOptions extends Options = Options>(
   for (const node of nodes) {
     const envName = node.getMatch("ENV_NAME")?.text();
     if (envName) {
-      const prefix = context.dotenv.prefix.find(pre =>
-        dotenvReflection.hasProperty(envName.replace(`${pre}_`, ""))
+      const prefix = context.dotenv.prefix.find(
+        pre =>
+          envName &&
+          envName.startsWith(pre) &&
+          dotenvReflection.hasProperty(envName.replace(`${pre}_`, ""))
       );
-      if (
-        prefix &&
-        dotenvReflection.hasProperty(envName.replace(`${prefix}_`, ""))
-      ) {
-        const name = envName.replace(`${prefix}_`, "");
+
+      let name = envName;
+      if (prefix) {
+        name = envName.replace(`${prefix}_`, "");
+      }
+
+      if (dotenvReflection.hasProperty(name)) {
         const dotenvProperty = dotenvReflection.getProperty(name);
+        if (dotenvProperty.isIgnored()) {
+          continue;
+        }
 
         if (context.dotenv.replace && !node.text().startsWith("process.env.")) {
           const value =
             context.dotenv.values?.[name] ??
-            Object.keys(context.dotenv.values ?? {}).find(key =>
-              context.dotenv.prefix.find(pre => key === `${pre}_${name}`)
-            ) ??
+            context.dotenv.prefix.reduce((ret, pre) => {
+              if (context.dotenv.values[`${pre}_${name}`]) {
+                ret = context.dotenv.values[`${pre}_${name}`];
+              }
+
+              return ret;
+            }, undefined as any) ??
             dotenvProperty.getDefaultValue();
           if (dotenvProperty.isValueRequired() && value === undefined) {
             throw new Error(
@@ -84,10 +99,10 @@ export async function transformVars<TOptions extends Options = Options>(
         }
 
         if (!varsReflection.hasProperty(name)) {
-          varsReflection.addProperty(dotenvProperty);
+          varsReflection.addProperty(dotenvProperty.property);
         }
       } else {
-        missingEnvNames.push(envName);
+        missingEnvNames.push(name);
       }
     }
   }
@@ -113,9 +128,10 @@ export async function transformVars<TOptions extends Options = Options>(
       `Adding environment variables from ${source.id} to vars.json.`
     );
 
-    // await context.workers.commitVars.commit({
-    //   vars: varsReflection.serializeType()
-    // });
+    await context.workers.commitVars.commit({
+      filePath: getVarsReflectionsPath(context, "variables"),
+      vars: varsReflection.serializeType()
+    });
   }
 
   return source;

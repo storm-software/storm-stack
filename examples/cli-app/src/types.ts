@@ -16,8 +16,7 @@
 
  ------------------------------------------------------------------- */
 
-// eslint-disable-next-line ts/consistent-type-imports
-import { StormSentryLogEnv } from "@storm-stack/plugin-log-sentry/types";
+import { StormSentryLogVariables } from "@storm-stack/plugin-log-sentry/types";
 
 /**
  * The payload for the example CLI application.
@@ -82,4 +81,4 @@ export interface AddPagePayload {
   file: string;
 }
 
-export interface StormNodeAppEnv extends StormSentryLogEnv {}
+export interface StormCLIAppVariables extends StormSentryLogVariables {}

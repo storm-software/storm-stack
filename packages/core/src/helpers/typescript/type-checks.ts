@@ -43,7 +43,7 @@ async function loadLibFiles(): Promise<SourcesMap> {
   return lib;
 }
 
-export async function typeCheck(
+export async function typeChecks(
   log: LogFn,
   sources: SourcesMap
 ): Promise<void> {

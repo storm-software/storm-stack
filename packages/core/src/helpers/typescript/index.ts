@@ -16,5 +16,6 @@
 
  ------------------------------------------------------------------- */
 
-export * from "./emit-types";
+export * from "./isolated-decl";
 export * from "./program";
+export * from "./type-checks";

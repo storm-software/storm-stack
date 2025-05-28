@@ -77,7 +77,8 @@ export class Worker {
           ...farmOptions.forkOptions,
           env: {
             ...((farmOptions.forkOptions?.env ?? {}) as any),
-            ...process.env
+            ...process.env,
+            STORM_STACK_LOCAL: process.env.STORM_STACK_LOCAL || "0"
           }
         },
         maxRetries: 0

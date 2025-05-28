@@ -649,6 +649,7 @@
   },
   "dependencies": {
     "@ast-grep/napi": "catalog:",
+    "@deepkit/type": "catalog:",
     "@deepkit/type-compiler": "catalog:",
     "@donedeal0/superdiff": "catalog:",
     "@storm-software/build-tools": "catalog:",

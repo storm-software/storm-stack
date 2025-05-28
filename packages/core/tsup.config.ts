@@ -60,7 +60,7 @@ const config = getTsupConfig([
   {
     name: "core-workers",
     entry: ["src/helpers/workers/*.ts"],
-    format: ["esm"],
+    format: ["cjs"],
     outDir: "dist/workers",
     bundle: true,
     splitting: false,

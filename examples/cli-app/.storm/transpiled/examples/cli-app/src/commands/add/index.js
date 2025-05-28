@@ -13,7 +13,7 @@ var __\u03A9Error = ["name", "message", "stack", "Error", 'P&4!&4"&4#8Mw$y'];
 var __\u03A9ErrorType = ["general", "not_found", "validation", "service_unavailable", "action_unsupported", "security", "unknown", "ErrorType", `P.!.".#.$.%.&.'Jw(y`];
 var __\u03A9StormErrorOptions = ["name", "The error name.", "code", "The error code", "params", "The error message parameters.", "cause", "The error cause.", "stack", "The error stack.", () => __\u03A9ErrorType, "type", "The type of error.", '"exception"', "data", "Additional data to be included with the error.", "Interface representing the Storm error options.", "StormErrorOptions", `P&4!8?"'4#?$&F4%8?&#4'8?(&4)8?*n+4,8?->."4/8?0M?1w2y`];
 var __\u03A9ParsedStacktrace = ["column", "function", "line", "source", "ParsedStacktrace", `P'4!8&4"8'4#8&4$Mw%y`];
-var __\u03A9IStormError = [() => __\u03A9Error, "code", "The error code", "params", "The error message parameters", () => __\u03A9ErrorType, "type", "The type of error that was thrown.", "url", "A url to display the error message", "data", "Additional data to be passed with the error", 0, "cause", "The underlying cause of the error, if any. This is typically another error object that caused this error to be thrown.", "stack", "The error stack", () => __\u03A9ParsedStacktrace, "stacktrace", "The parsed stacktrace", "originalStack", "The original stacktrace", "", "toDisplay", "Returns a formatted error string that can be displayed to the user.", "__proto__", "Internal function to inherit the error", "The Storm Error interface.", "IStormError", `Pn!'4"?#&F4$?%n&4'?(&4)?*"4+8?,Pn--J4.?/&40?1n2F43?4&45?6P&/748?9"4:?;M?<w=y`];
+var __\u03A9IStormError = [() => __\u03A9Error, "code", "The error code", "params", "The error message parameters", () => __\u03A9ErrorType, "type", "The type of error that was thrown.", "url", "A url to display the error message", "data", "Additional data to be passed with the error", 0, "cause", "The underlying cause of the error, if any. This is typically another error object that caused this error to be thrown.", "stack", "The error stack", () => __\u03A9ParsedStacktrace, "stacktrace", "The parsed stacktrace", "originalStack", "The original stacktrace", "", "toDisplay", "Returns a formatted error string that can be displayed to the user.", "__proto__", "Internal function to inherit the error", { internal: true }, "The Storm Error interface.", "IStormError", `Pn!'4"?#&F4$?%n&4'?(&4)?*"4+8?,Pn--J4.?/&40?1n2F43?4&45?6P&/748?9"4:?;z<M?=w>y`];
 
 // examples/cli-app/.storm/runtime/error.ts
 function __assignType(fn, args) {
@@ -151,8 +151,8 @@ var StormError = class _StormError extends Error {
    * @param type - The type of error
    */
   constructor(optionsOrMessage, type = "general") {
-    super("An error occurred during processing", typeof optionsOrMessage === "string" && optionsOrMessage ? void 0 : { cause: optionsOrMessage.cause });
-    if (typeof optionsOrMessage === "string" && optionsOrMessage) {
+    super("An error occurred during processing", typeof optionsOrMessage === "string" ? void 0 : { cause: optionsOrMessage?.cause });
+    if (typeof optionsOrMessage === "string") {
       this.message = optionsOrMessage;
       this.type = type || "general";
       this.code = getDefaultCode(this.type);
@@ -264,7 +264,7 @@ var StormError = class _StormError extends Error {
    * A URL to a page that displays the error message details
    */
   get url() {
-    const url = new URL("https://developer.stormsoftware.com/api/errors");
+    const url = new URL("https://development.stormsoftware.com/api/errors");
     url.pathname = `${this.type.toLowerCase().replaceAll("_", "-")}/${String(this.code)}`;
     if (this.params.length > 0) {
       url.pathname += `/${this.params.map(__assignType((param) => encodeURI("" + param).replaceAll(/%7c/gi, "|").replaceAll("#", "%23").replaceAll("?", "%3F").replaceAll(/%252f/gi, "%2F").replaceAll("&", "%26").replaceAll("+", "%2B").replaceAll("/", "%2F"), ["param", "", 'P"2!"/"'])).join("/")}`;
@@ -279,8 +279,8 @@ var StormError = class _StormError extends Error {
    */
   toDisplay(includeData = false) {
     return `${this.name && this.name !== this.constructor.name ? this.code ? `${this.name} ` : this.name : ""}${this.code ? this.code && this.name ? `[${this.type.toUpperCase()}-${this.code}]` : `${this.type.toUpperCase()}-${this.code}` : this.name ? `[${this.type.toUpperCase()}]` : this.type.toUpperCase()}: Please review the details of this error at the following URL: ${this.url}${includeData && this.data ? `
-Related details: ${JSON.stringify(this.data)}` : ""}${this.cause.name ? `
-Inner Error: ${this.cause.name}${this.cause.message ? " - " + this.cause.message : ""}` : ""}`;
+Related details: ${JSON.stringify(this.data)}` : ""}${this.cause?.name ? `
+Inner Error: ${this.cause?.name}${this.cause?.message ? " - " + this.cause?.message : ""}` : ""}`;
   }
   /**
    * Prints the error message and stack trace

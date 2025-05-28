@@ -19,7 +19,6 @@
 import {
   deserializeType,
   merge,
-  ReflectionClass,
   resolveClassType,
   SerializedTypes,
   serializeType
@@ -49,11 +48,11 @@ export interface CommitVarsData {
 export async function commit(data: CommitVarsData): Promise<void> {
   if (!data.filePath) {
     throw new Error(
-      "Error Code file path is required to run the commit-vars worker."
+      "The variables reflection file path is required to run the commit-vars worker."
     );
   }
 
-  let varsType = ReflectionClass.from(deserializeType(data.vars)).type;
+  let varsType = resolveClassType(deserializeType(data.vars)).type;
   if (existsSync(data.filePath)) {
     const existingReflection = resolveClassType(
       deserializeType(JSON.parse(await readFile(data.filePath, "utf8")))

@@ -44,7 +44,7 @@ export async function initWorkers<TOptions extends Options = Options>(
   }
 
   context.workers.errorLookup = createWorker<["find"]>(
-    joinPaths(packagePath, "workers", "error-lookup.js"),
+    joinPaths(packagePath, "workers", "error-lookup.cjs"),
     {
       name: "error-lookup",
       numWorkers: 1,
@@ -56,7 +56,7 @@ export async function initWorkers<TOptions extends Options = Options>(
   );
 
   context.workers.commitVars = createWorker<["commit"]>(
-    joinPaths(packagePath, "workers", "commit-vars.js"),
+    joinPaths(packagePath, "workers", "commit-vars.cjs"),
     {
       name: "commit-vars",
       exposedMethods: ["commit"],
