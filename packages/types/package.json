@@ -1,6 +1,6 @@
 {
   "name": "@storm-stack/types",
-  "version": "0.8.0",
+  "version": "0.9.0",
   "description": "A package containing shared TypeScript type definitions used in Storm Stack projects.",
   "repository": {
     "type": "github",

@@ -2,6 +2,20 @@
 
 # Changelog for Storm Stack - Core
 
+## [0.25.0](https://github.com/storm-software/storm-stack/releases/tag/core%400.25.0) (2025-06-04)
+
+### Features
+
+- **core:** Improved TypeScript compiler processing
+
+### Miscellaneous
+
+- **monorepo:** Upgrade base Storm Software workspace packages
+
+### Updated Dependencies
+
+- Updated types to 0.9.0
+
 ## [0.24.0](https://github.com/storm-software/storm-stack/releases/tag/core%400.24.0) (2025-05-28)
 
 ### Features

@@ -2,6 +2,23 @@
 
 # Changelog for Storm Stack - Preset Cli
 
+## [0.17.0](https://github.com/storm-software/storm-stack/releases/tag/preset-cli%400.17.0) (2025-06-04)
+
+### Features
+
+- **core:** Improved TypeScript compiler processing
+
+### Miscellaneous
+
+- **monorepo:** Upgrade base Storm Software workspace packages
+
+### Updated Dependencies
+
+- Updated devkit to 0.6.0
+- Updated devkit to 0.6.0
+- Updated core to 0.25.0
+- Updated core to 0.25.0
+
 ## [0.16.0](https://github.com/storm-software/storm-stack/releases/tag/preset-cli%400.16.0) (2025-05-28)
 
 ### Features

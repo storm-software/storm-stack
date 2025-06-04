@@ -2,6 +2,21 @@
 
 # Changelog for Storm Stack - Devkit
 
+## [0.6.0](https://github.com/storm-software/storm-stack/releases/tag/devkit%400.6.0) (2025-06-04)
+
+### Features
+
+- **core:** Improved TypeScript compiler processing
+
+### Miscellaneous
+
+- **monorepo:** Upgrade base Storm Software workspace packages
+
+### Updated Dependencies
+
+- Updated types to 0.9.0
+- Updated core to 0.25.0
+
 ## [0.5.4](https://github.com/storm-software/storm-stack/releases/tag/devkit%400.5.4) (2025-05-28)
 
 ### Miscellaneous

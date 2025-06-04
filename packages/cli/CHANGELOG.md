@@ -2,6 +2,28 @@
 
 # Changelog for Storm Stack - Cli
 
+## [0.7.0](https://github.com/storm-software/storm-stack/releases/tag/cli%400.7.0) (2025-06-04)
+
+### Features
+
+- **core:** Improved TypeScript compiler processing
+
+### Miscellaneous
+
+- **monorepo:** Upgrade base Storm Software workspace packages
+
+### Updated Dependencies
+
+- Updated plugin-log-storage to 0.16.0
+- Updated plugin-log-sentry to 0.17.2
+- Updated plugin-storage-fs to 0.5.2
+- Updated preset-cli to 0.17.0
+- Updated preset-cli to 0.17.0
+- Updated types to 0.9.0
+- Updated core to 0.25.0
+- Updated nx to 0.12.1
+- Updated nx to 0.12.1
+
 ## [0.6.0](https://github.com/storm-software/storm-stack/releases/tag/cli%400.6.0) (2025-05-28)
 
 ### Features

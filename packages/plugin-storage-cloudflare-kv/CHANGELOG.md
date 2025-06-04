@@ -2,6 +2,20 @@
 
 # Changelog for Storm Stack - Plugin Storage Cloudflare Kv
 
+## [0.5.3](https://github.com/storm-software/storm-stack/releases/tag/plugin-storage-cloudflare-kv%400.5.3) (2025-06-04)
+
+### Miscellaneous
+
+- **monorepo:** Upgrade base Storm Software workspace packages
+
+### Updated Dependencies
+
+- Updated devkit to 0.6.0
+- Updated devkit to 0.6.0
+- Updated core to 0.25.0
+- Updated core to 0.25.0
+- Updated nx to 0.12.1
+
 ## [0.5.2](https://github.com/storm-software/storm-stack/releases/tag/plugin-storage-cloudflare-kv%400.5.2) (2025-05-28)
 
 ### Miscellaneous

@@ -2,6 +2,12 @@
 
 # Changelog for Storm Stack - Types
 
+## [0.9.0](https://github.com/storm-software/storm-stack/releases/tag/types%400.9.0) (2025-06-04)
+
+### Features
+
+- **core:** Improved TypeScript compiler processing
+
 ## [0.8.0](https://github.com/storm-software/storm-stack/releases/tag/types%400.8.0) (2025-05-28)
 
 ### Features

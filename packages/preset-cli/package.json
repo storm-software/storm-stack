@@ -1,6 +1,6 @@
 {
   "name": "@storm-stack/preset-cli",
-  "version": "0.16.0",
+  "version": "0.17.0",
   "type": "module",
   "description": "A Storm Stack build preset for Cloudflare Workers",
   "repository": {
@@ -45,8 +45,8 @@
   "dependencies": {
     "@deepkit/type": "catalog:",
     "@storm-software/config-tools": "catalog:",
-    "@storm-stack/core": "workspace:*",
-    "@storm-stack/devkit": "workspace:*",
+    "@storm-stack/core": "0.25.0",
+    "@storm-stack/devkit": "0.6.0",
     "@stryke/cli": "catalog:",
     "@stryke/fs": "catalog:",
     "@stryke/json": "catalog:",
