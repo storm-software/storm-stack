@@ -19,7 +19,6 @@
 import { LogLevelLabel } from "@storm-software/config-tools/types";
 import { joinPaths } from "@stryke/path/join-paths";
 import { resolvePackage } from "@stryke/path/resolve";
-import { getVarsReflectionsPath } from "../../helpers/dotenv/resolve";
 import { createWorker } from "../../helpers/utilities/worker";
 import type { Context, EngineHooks, Options } from "../../types/build";
 import type { LogFn } from "../../types/config";
@@ -43,27 +42,15 @@ export async function initWorkers<TOptions extends Options = Options>(
     );
   }
 
-  context.workers.errorLookup = createWorker<["find"]>(
+  context.workers.errorLookup = createWorker(
     joinPaths(packagePath, "workers", "error-lookup.cjs"),
-    {
-      name: "error-lookup",
-      numWorkers: 1,
-      exposedMethods: ["find"],
-      context: {
-        filePath: context.options.errorsFile
-      }
-    }
+    ["find"],
+    1
   );
 
-  context.workers.commitVars = createWorker<["commit"]>(
+  context.workers.commitVars = createWorker(
     joinPaths(packagePath, "workers", "commit-vars.cjs"),
-    {
-      name: "commit-vars",
-      exposedMethods: ["commit"],
-      context: {
-        filePath: getVarsReflectionsPath(context, "variables")
-      }
-    }
+    ["commit"]
   );
 
   await hooks.callHook("init:workers", context).catch((error: Error) => {

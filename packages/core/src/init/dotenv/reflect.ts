@@ -39,10 +39,16 @@ async function reflectDotenvSecrets<TOptions extends Options = Options>(
   file: string,
   name?: string
 ) {
-  const secretsType = await reflectType<TOptions>(context, {
-    file,
-    name
-  });
+  const secretsType = await reflectType<TOptions>(
+    context,
+    {
+      file,
+      name
+    },
+    {
+      skipDotenvTransform: true
+    }
+  );
 
   return resolveClassType(secretsType);
 }
@@ -55,17 +61,26 @@ async function reflectDotenvVariables<TOptions extends Options = Options>(
 ) {
   let vars: ReflectionClass<any> | undefined;
   if (file) {
-    const varsType = await reflectType<TOptions>(context, {
-      file,
-      name
-    });
+    const varsType = await reflectType<TOptions>(
+      context,
+      {
+        file: joinPaths(context.workspaceConfig.workspaceRoot, file),
+        name
+      },
+      {
+        skipDotenvTransform: true
+      }
+    );
 
     vars = resolveClassType(varsType);
   }
 
   const defaultVarsType = await reflectType<TOptions>(
     context,
-    getDotenvDefaultTypeDefinition(context)
+    getDotenvDefaultTypeDefinition(context),
+    {
+      skipDotenvTransform: true
+    }
   );
 
   const defaultVars = resolveClassType(defaultVarsType);

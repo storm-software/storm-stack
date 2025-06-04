@@ -83,7 +83,8 @@
     "81": "Environment variables are not defined in the dotenv type definition but is used in the code: %s The following variable names are defined in the dotenv type definition: %s Using the following env prefix: %s Please check your dotenv configuration option. If you are using a custom dotenv type definition, please make sure that the variable names match the ones in the code. ",
     "82": "Module not found: %s. Please check the path and try again.",
     "83": "Failed to transpile %s: %s",
-    "84": "Prompt cancelled."
+    "84": "Prompt cancelled.",
+    "85": "Cannot find the tsconfig.json configuration file at %s or %s"
   },
   "not_found": {
     "1": "The requested resource was not found.",

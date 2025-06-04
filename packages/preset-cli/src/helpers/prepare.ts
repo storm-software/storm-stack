@@ -63,12 +63,8 @@ async function writeCommandEntryUsage<TOptions extends Options = Options>(
 ) {
   const runtimeRelativePath = relativePath(
     findFilePath(command.entry.file),
-    joinPaths(
-      context.workspaceConfig.workspaceRoot,
-      context.options.projectRoot,
-      context.artifactsDir,
-      "runtime"
-    )
+    context.runtimePath,
+    false
   );
 
   const commandsColumn1 = Object.values(command.children).map(child => {
@@ -120,14 +116,12 @@ async function writeCommandEntryUsage<TOptions extends Options = Options>(
 
   const optionsColumn2 = command.payload.args.map(arg => {
     if (arg.type === "string" || arg.type === "number" || arg.type === "enum") {
-      return `${
-        arg.description
-          ? `\${colors.gray("${
-              !arg.description?.endsWith(".") && !arg.description?.endsWith("?")
-                ? `${arg.description}.`
-                : arg.description
-            }`
-          : ""
+      return `\${colors.gray("${
+        !arg.description
+          ? `The ${arg.name} command-line option.`
+          : !arg.description.endsWith(".") && !arg.description.endsWith("?")
+            ? `${arg.description}.`
+            : arg.description
       }${
         arg.type === "enum" && arg.options && arg.options.length > 0
           ? ` Valid options are: ${arg.options.join(", ")}`
@@ -138,14 +132,12 @@ async function writeCommandEntryUsage<TOptions extends Options = Options>(
           : ""
       }")}`;
     } else if (arg.type === "array") {
-      return `${
-        arg.description
-          ? `\${colors.gray("${
-              !arg.description?.endsWith(".") && !arg.description?.endsWith("?")
-                ? `${arg.description}.`
-                : arg.description
-            }`
-          : ""
+      return `\${colors.gray("${
+        !arg.description
+          ? `The ${arg.name} command-line option.`
+          : !arg.description.endsWith(".") && !arg.description.endsWith("?")
+            ? `${arg.description}.`
+            : arg.description
       }${
         arg.default !== undefined
           ? ` [default: ${
@@ -157,15 +149,13 @@ async function writeCommandEntryUsage<TOptions extends Options = Options>(
       }")}`;
     }
 
-    return `${
-      arg.description
-        ? `\${colors.gray("${
-            !arg.description?.endsWith(".") && !arg.description?.endsWith("?")
-              ? `${arg.description}.`
-              : arg.description
-          }`
-        : ""
-    }${arg.default !== undefined ? ` [default: ${arg.default}]` : ""}")}`;
+    return `${`\${colors.gray("${
+      !arg.description
+        ? `The ${arg.name} command-line option.`
+        : !arg.description.endsWith(".") && !arg.description.endsWith("?")
+          ? `${arg.description}.`
+          : arg.description
+    }`}${arg.default !== undefined ? ` [default: ${arg.default}]` : ""}")}`;
   });
 
   const column1MaxLength =
@@ -208,11 +198,11 @@ import { colors } from "${joinPaths(runtimeRelativePath, "cli")}";${
 /**
  * Renders the ${command.displayName} command usage information.
  *
- * @param includeCommands - Whether to include rendering sub-commands.
+ * @param mode - The render mode to use when displaying the usage information (either "full" or "minimal").
  * @returns The rendered string displaying usage information.
  */
-export function renderUsage(includeCommands = true) {
-  return \`\${colors.whiteBright(colors.bold("${command.displayName}"))}${
+export function renderUsage(mode: "full" | "minimal" = "full"): string {
+  return \`\${colors.whiteBright(colors.bold(\`${command.displayName}\${mode === "minimal" ? " Command" : ""}\`))}${
     command.description
       ? `
 
@@ -247,7 +237,7 @@ ${Object.values(command.children)
         : ""
     }${
       Object.values(command.children).length > 0
-        ? `\${includeCommands !== false ? \`
+        ? `\${mode === "full" ? \`
   \${colors.whiteBright(colors.bold("Commands:"))}
 ${commandsColumn1
   .map(
@@ -276,12 +266,8 @@ async function writeCommandEntryHandler<TOptions extends Options = Options>(
 ) {
   const runtimeRelativePath = relativePath(
     findFilePath(command.entry.file),
-    joinPaths(
-      context.workspaceConfig.workspaceRoot,
-      context.options.projectRoot,
-      context.artifactsDir,
-      "runtime"
-    )
+    context.runtimePath,
+    false
   );
 
   await writeFile(
@@ -348,7 +334,7 @@ async function handler() {
 
         console.error(\` \${colors.red("✘")} \${colors.redBright(\`Unknown command: \${colors.bold(command || "<none>")}\`)}\`);
         console.log("");
-        console.log(renderUsage(true));
+        console.log(renderUsage("full"));
         console.log("");
         console.log(renderFooter());
         console.log("");
@@ -397,12 +383,12 @@ async function handler() {
       }
 
       if (args["no-banner"] !== true && !isMinimal) {
-        console.log(renderBanner("${command.displayName}", "${description}"));
+        console.log(renderBanner("${command.displayName} Command", "${description}"));
         console.log("");
       }
 
       if (args["help"] || args["h"] || args["?"]) {
-        console.log(renderUsage(true));
+        console.log(renderUsage("full"));
         console.log("");
         console.log(renderFooter());
         console.log("");
@@ -621,12 +607,8 @@ async function writeVirtualCommandEntry<TOptions extends Options = Options>(
 
   const runtimeRelativePath = relativePath(
     findFilePath(command.entry.file),
-    joinPaths(
-      context.workspaceConfig.workspaceRoot,
-      context.options.projectRoot,
-      context.artifactsDir,
-      "runtime"
-    )
+    context.runtimePath,
+    false
   );
 
   const optionsColumn1 = command.payload.args.map(arg => {
@@ -769,10 +751,10 @@ export interface ${command.payload.name} {
 /**
  * Renders the ${command.displayName} virtual command usage information.
  *
- * @param includeCommands - Whether to include rendering sub-commands.
+ * @param mode - The render mode to use when displaying the usage information (either "full" or "minimal").
  * @returns The rendered string displaying usage information.
  */
-export function renderUsage(includeCommands = true) {
+export function renderUsage(mode: "full" | "minimal" = "full"): string {
   return \`\${colors.whiteBright(colors.bold("${command.displayName} Commands"))} ${
     command.description
       ? `
@@ -800,13 +782,13 @@ ${
     : ""
 }${
       Object.values(command.children).length > 0
-        ? `\${includeCommands !== false ? \`
+        ? `\${mode === "full" ? \`
 
   \${colors.whiteBright(colors.bold("Commands:"))}
 ${Object.values(command.children)
   .map(
     child =>
-      `\${render${pascalCase(child.name)}Usage(false).split("\\n").map(line => \`    \${line}\`).join("\\n")}`
+      `\${render${pascalCase(child.name)}Usage("minimal").split("\\n").map(line => \`    \${line}\`).join("\\n")}`
   )
   .join("\n\n")}\` : ""}`
         : ""
@@ -843,7 +825,7 @@ async function handler() {
 
         console.error(\` \${colors.red("✘")} \${colors.redBright(\`Unknown command: \${colors.bold(command || "<none>")}\`)}\`);
         console.log("");
-        console.log(renderUsage(true));
+        console.log(renderUsage("full"));
         console.log("");
         console.log(renderFooter());
         console.log("");
@@ -885,7 +867,7 @@ async function handler() {
         console.log("");
       }
 
-      console.log(renderUsage(true));
+      console.log(renderUsage("full"));
       console.log("");
       console.log(renderFooter());
       console.log("");
@@ -964,9 +946,7 @@ async function generateVarsCommands<TOptions extends Options = Options>(
       writeFile(
         log,
         joinPaths(
-          context.workspaceConfig.workspaceRoot,
-          context.options.projectRoot,
-          context.artifactsDir,
+          context.artifactsPath,
           "commands",
           "vars",
           "get",
@@ -977,9 +957,7 @@ async function generateVarsCommands<TOptions extends Options = Options>(
       writeFile(
         log,
         joinPaths(
-          context.workspaceConfig.workspaceRoot,
-          context.options.projectRoot,
-          context.artifactsDir,
+          context.artifactsPath,
           "commands",
           "vars",
           "set",
@@ -990,9 +968,7 @@ async function generateVarsCommands<TOptions extends Options = Options>(
       writeFile(
         log,
         joinPaths(
-          context.workspaceConfig.workspaceRoot,
-          context.options.projectRoot,
-          context.artifactsDir,
+          context.artifactsPath,
           "commands",
           "vars",
           "list",
@@ -1003,9 +979,7 @@ async function generateVarsCommands<TOptions extends Options = Options>(
       writeFile(
         log,
         joinPaths(
-          context.workspaceConfig.workspaceRoot,
-          context.options.projectRoot,
-          context.artifactsDir,
+          context.artifactsPath,
           "commands",
           "vars",
           "delete",
@@ -1025,24 +999,12 @@ export async function prepareRuntime<TOptions extends Options = Options>(
   await Promise.all([
     writeFile(
       log,
-      joinPaths(
-        context.workspaceConfig.workspaceRoot,
-        context.options.projectRoot,
-        context.artifactsDir,
-        "runtime",
-        "app.ts"
-      ),
+      joinPaths(context.runtimePath, "app.ts"),
       writeApp(context, config)
     ),
     writeFile(
       log,
-      joinPaths(
-        context.workspaceConfig.workspaceRoot,
-        context.options.projectRoot,
-        context.artifactsDir,
-        "runtime",
-        "cli.ts"
-      ),
+      joinPaths(context.runtimePath, "cli.ts"),
       writeRuntime(context, config)
     ),
     generateVarsCommands(log, context, config)
@@ -1155,7 +1117,7 @@ async function main() {
               .map(
                 child =>
                   `
-      console.log(render${pascalCase(child.name)}Usage(false));
+      console.log(render${pascalCase(child.name)}Usage("minimal"));
       console.log("");`
               )
               .join("\n")
@@ -1182,22 +1144,12 @@ export async function prepareTypes<TOptions extends Options = Options>(
   context: Context<TOptions>,
   config: StormStackCLIPresetConfig
 ) {
-  const typesDir = joinPaths(
-    context.workspaceConfig.workspaceRoot,
-    context.options.projectRoot,
-    context.artifactsDir,
-    "types"
-  );
+  const typesDir = joinPaths(context.artifactsPath, "types");
 
   const relativeCLIRuntimeDir = relativePath(
     typesDir,
-    joinPaths(
-      context.workspaceConfig.workspaceRoot,
-      context.options.projectRoot,
-      context.artifactsDir,
-      "runtime",
-      "cli"
-    )
+    joinPaths(context.runtimePath, "cli"),
+    false
   );
 
   await writeFile(

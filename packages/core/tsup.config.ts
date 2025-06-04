@@ -43,6 +43,7 @@ const config = getTsupConfig([
       "src/helpers/dotenv/*.ts",
       "src/helpers/deepkit/*.ts",
       "src/helpers/typedoc/*.ts",
+      "src/helpers/typescript/*.ts",
       "src/helpers/transform/*.ts",
       "src/unplugin/*.ts"
     ],
@@ -67,7 +68,7 @@ const config = getTsupConfig([
     treeshake: true,
     keepNames: true,
     clean: true,
-    sourcemap: false,
+    sourcemap: true,
     dts: false,
     shims: true
   }

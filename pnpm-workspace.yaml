@@ -10,14 +10,13 @@ catalog:
   '@cloudflare/workers-types': ^4.20250505.0
   '@deepkit/type': ^1.0.5
   '@deepkit/core': ^1.0.5
-  '@deepkit/type-': ^0.0.0
   '@deepkit/type-compiler': ^1.0.5
   '@donedeal0/superdiff': ^3.1.2
   '@eslint/compat': ^1.2.9
   '@eslint/config-inspector': ^0.7.1
   '@ls-lint/ls-lint': ^2.3.0
   '@ltd/j-toml': ^1.38.0
-  '@microsoft/api-extractor': ^7.52.7
+  '@microsoft/api-extractor': ^7.52.8
   '@nuxt/kit': ^3.17.1
   '@nuxt/schema': ^3.17.1
   '@opentelemetry/api-logs': ^0.200.0
@@ -62,20 +61,21 @@ catalog:
   '@storm-software/tsconfig': latest
   '@storm-software/tsdoc': latest
   '@storm-software/workspace-tools': latest
-  '@stryke/env': ^0.10.0
-  '@stryke/fs': ^0.15.0
+  '@stryke/env': ^0.12.4
+  '@stryke/fs': ^0.20.3
   '@stryke/helpers': ^0.6.0
   '@stryke/http': ^0.8.1
-  '@stryke/unique-id': ^0.2.7
+  '@stryke/unique-id': ^0.3.0
   '@stryke/url': ^0.2.0
-  '@stryke/json': ^0.8.3
-  '@stryke/path': ^0.5.1
+  '@stryke/json': ^0.9.0
+  '@stryke/path': ^0.7.4
   '@stryke/types': ^0.8.2
   '@stryke/hash': ^0.9.3
   '@stryke/string-format': ^0.4.9
   '@stryke/convert': ^0.2.0
   '@stryke/type-checks': ^0.3.3
   '@stryke/cli': ^0.11.0
+  '@stryke/capnp': ^0.2.4
   '@swc-node/register': ^1.10.10
   '@swc/core': ^1.11.22
   '@swc/wasm': ^1.11.24
@@ -83,6 +83,7 @@ catalog:
   '@typescript-eslint/scope-manager': ^8.31.1
   '@typescript-eslint/types': ^8.31.1
   '@typescript-eslint/utils': ^8.31.1
+  '@typescript/vfs': ^1.6.1
   bundle-require: ^5.1.0
   c12: ^3.0.3
   chalk-template: ^1.1.0

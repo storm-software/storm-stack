@@ -20,6 +20,7 @@ import { kebabCase } from "@stryke/string-format/kebab-case";
 import { titleCase } from "@stryke/string-format/title-case";
 import { getFileHeader } from "../../../helpers/utilities/file-header";
 import type { Context, Options } from "../../../types/build";
+import { generateVariables } from "../../types/dts/shared";
 
 export function writeEnv<TOptions extends Options = Options>(
   context: Context<TOptions>
@@ -27,6 +28,7 @@ export function writeEnv<TOptions extends Options = Options>(
   return `${getFileHeader()}
 
 import type {
+  StormEnvPaths,
   StormBuildInfo,
   StormRuntimeInfo,
   StormRuntimePaths
@@ -95,11 +97,12 @@ export const isCI = Boolean(
   false);
 
 /** Detect the \`NODE_ENV\` environment variable */
-export const mode =
-  $storm.vars.MODE ||
-  process.env.NEXT_PUBLIC_VERCEL_ENV ||
-  process.env.NODE_ENV ||
-  "production";
+export const mode = String(
+    $storm.vars.MODE ||
+    process.env.NEXT_PUBLIC_VERCEL_ENV ||
+    process.env.NODE_ENV ||
+    "production"
+  );
 
 /** Detect if the application is running in production mode */
 export const isProduction = ["prd", "prod", "production"].includes(
@@ -178,16 +181,16 @@ export const organization = "${
           .trim()
           .replace(/\s+/g, "")
       : "$storm.vars.ORGANIZATION"
-  }" || "storm-software";
+  }";
 
 /** The current application */
-export const appName = "${
+export const name = "${
     context.options.name
       ? kebabCase(context.options.name).trim().replace(/\s+/g, "")
       : "$storm.vars.APP_NAME"
   }";
 /** The current application */
-export const appVersion = "${
+export const version = "${
     context.packageJson?.version
       ? context.packageJson.version
       : "$storm.vars.APP_VERSION"
@@ -209,25 +212,25 @@ const tmpdir = os.tmpdir();
 export const paths = isMacOS
   ? {
     data: process.env.STORM_DATA_DIR
-      ? join(process.env.STORM_DATA_DIR, appName)
-      : join(homedir, "Library", "Application Support", organization, appName),
+      ? join(process.env.STORM_DATA_DIR, name)
+      : join(homedir, "Library", "Application Support", organization, name),
     config: process.env.STORM_CONFIG_DIR
-      ? join(process.env.STORM_CONFIG_DIR, appName)
-      : join(homedir, "Library", "Preferences", organization, appName),
+      ? join(process.env.STORM_CONFIG_DIR, name)
+      : join(homedir, "Library", "Preferences", organization, name),
     cache: process.env.STORM_CACHE_DIR
-      ? join(process.env.STORM_CACHE_DIR, appName)
-      : join(homedir, "Library", "Caches", organization, appName),
+      ? join(process.env.STORM_CACHE_DIR, name)
+      : join(homedir, "Library", "Caches", organization, name),
     log: process.env.STORM_LOG_DIR
-      ? join(process.env.STORM_LOG_DIR, appName)
-      : join(homedir, "Library", "Logs", organization, appName),
+      ? join(process.env.STORM_LOG_DIR, name)
+      : join(homedir, "Library", "Logs", organization, name),
     temp: process.env.STORM_TEMP_DIR
-      ? join(process.env.STORM_TEMP_DIR, appName)
-      : join(tmpdir, organization, appName)
+      ? join(process.env.STORM_TEMP_DIR, name)
+      : join(tmpdir, organization, name)
   }
     : isWindows
   ? {
     data: process.env.STORM_DATA_DIR
-      ? join(process.env.STORM_DATA_DIR, appName)
+      ? join(process.env.STORM_DATA_DIR, name)
       : join(process.env.LOCALAPPDATA || join(homedir, "AppData", "Local"), "${titleCase(
         context.workspaceConfig?.organization || "storm-software"
       )
@@ -238,7 +241,7 @@ export const paths = isMacOS
         .trim()
         .replace(/\s+/g, "")}", "Data"),
     config: process.env.STORM_CONFIG_DIR
-      ? join(process.env.STORM_CONFIG_DIR, appName)
+      ? join(process.env.STORM_CONFIG_DIR, name)
       : join(process.env.APPDATA || join(homedir, "AppData", "Roaming"), "${titleCase(
         context.workspaceConfig?.organization || "storm-software"
       )
@@ -249,14 +252,14 @@ export const paths = isMacOS
         .trim()
         .replace(/\s+/g, "")}", "Config"),
     cache: process.env.STORM_CACHE_DIR
-      ? join(process.env.STORM_CACHE_DIR, appName)
+      ? join(process.env.STORM_CACHE_DIR, name)
       : join(process.env.LOCALAPPDATA || join(homedir, "AppData", "Local"), "Cache", "${titleCase(
         context.workspaceConfig?.organization || "storm-software"
       )
         .trim()
         .replace(/\s+/g, "")}"),
     log: process.env.STORM_LOG_DIR
-      ? join(process.env.STORM_LOG_DIR, appName)
+      ? join(process.env.STORM_LOG_DIR, name)
       : join(process.env.LOCALAPPDATA || join(homedir, "AppData", "Local"), "${titleCase(
         context.workspaceConfig?.organization || "storm-software"
       )
@@ -267,7 +270,7 @@ export const paths = isMacOS
         .trim()
         .replace(/\s+/g, "")}", "Log"),
     temp: process.env.STORM_TEMP_DIR
-      ? join(process.env.STORM_TEMP_DIR, appName)
+      ? join(process.env.STORM_TEMP_DIR, name)
       : join(tmpdir, "${titleCase(
         context.workspaceConfig?.organization || "storm-software"
       )
@@ -281,40 +284,40 @@ export const paths = isMacOS
     :
   {
     data: process.env.STORM_DATA_DIR
-      ? join(process.env.STORM_DATA_DIR, appName)
+      ? join(process.env.STORM_DATA_DIR, name)
       : join(
           process.env.XDG_DATA_HOME || join(homedir, ".local", "share"),
           organization,
-          appName
+          name
         ),
     config: process.env.STORM_CONFIG_DIR
-      ? join(process.env.STORM_CONFIG_DIR, appName)
+      ? join(process.env.STORM_CONFIG_DIR, name)
       : join(
           process.env.XDG_CONFIG_HOME || join(homedir, ".config"),
           organization,
-          appName
+          name
         ),
     cache: process.env.STORM_CACHE_DIR
-      ? join(process.env.STORM_CACHE_DIR, appName)
+      ? join(process.env.STORM_CACHE_DIR, name)
       : join(
           process.env.XDG_CACHE_HOME || join(homedir, ".cache"),
           organization,
-          appName
+          name
         ),
     log: join(
       process.env.XDG_STATE_HOME || join(homedir, ".local", "state"),
       organization,
-      appName
+      name
     ),
     temp: process.env.STORM_TEMP_DIR
-      ? join(process.env.STORM_TEMP_DIR, appName)
+      ? join(process.env.STORM_TEMP_DIR, name)
       : (process.env.DEVENV_RUNTIME || process.env.XDG_RUNTIME_DIR
         ? join(
             (process.env.DEVENV_RUNTIME || process.env.XDG_RUNTIME_DIR)!,
             organization,
-            appName
+            name
           )
-        : join(tmpdir, basename(homedir), organization, appName))
+        : join(tmpdir, basename(homedir), organization, name))
   } as StormEnvPaths;
 
 /** The static build information collection */
@@ -350,6 +353,8 @@ export const runtime = {
   isUnicodeSupported,
   isServer: isNode || build.platform === "node"
 } as StormRuntimeInfo;
+
+export type StormVariables = ${generateVariables(context.dotenv.types.variables)};
 
 `;
 }

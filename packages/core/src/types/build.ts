@@ -237,8 +237,9 @@ export interface ResolvedEntryTypeDefinition extends TypeDefinition {
   output?: string;
 }
 
-export type ResolvedTsConfig = ts.ParsedCommandLine & {
+export type ParsedTypeScriptConfig = ts.ParsedCommandLine & {
   tsconfigJson: TsConfigJson;
+  tsconfigFilePath: string;
 };
 
 export interface MetaInfo {
@@ -315,7 +316,7 @@ export interface TranspileOptions<TOptions extends Options = Options>
    *
    * @defaultValue false
    */
-  skipEnvTransform?: boolean;
+  skipDotenvTransform?: boolean;
 
   /**
    * Skip the error codes formatting transformation.
@@ -532,7 +533,12 @@ export interface Context<
   /**
    * The Storm Stack artifacts directory
    */
-  artifactsDir: string;
+  artifactsPath: string;
+
+  /**
+   * The path to the Storm Stack runtime directory
+   */
+  runtimePath: string;
 
   /**
    * The metadata information
@@ -582,7 +588,7 @@ export interface Context<
   /**
    * The parsed TypeScript configuration
    */
-  tsconfig: ResolvedTsConfig;
+  tsconfig: ParsedTypeScriptConfig;
 
   /**
    * The project's package.json file content

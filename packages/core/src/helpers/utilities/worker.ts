@@ -17,6 +17,7 @@
  ------------------------------------------------------------------- */
 
 import { LogLevelLabel } from "@storm-software/config-tools/types";
+import { findFileName } from "@stryke/path/file-path-fns";
 import { defu } from "defu";
 import { Worker as JestWorker } from "jest-worker";
 import type { ChildProcess } from "node:child_process";
@@ -250,9 +251,18 @@ export class Worker {
   }
 }
 
-export function createWorker<TExposedMethods extends ReadonlyArray<string>>(
+export function createWorker<
+  TExposedMethods extends ReadonlyArray<string> = ReadonlyArray<string>
+>(
   workerPath: string,
-  options: WorkerOptions
+  exposedMethods: TExposedMethods,
+  numWorkers?: number
 ): WorkerProcess<TExposedMethods> {
-  return new Worker(workerPath, options) as WorkerProcess<TExposedMethods>;
+  return new Worker(workerPath, {
+    name: findFileName(workerPath, {
+      withExtension: false
+    }),
+    exposedMethods,
+    numWorkers
+  }) as WorkerProcess<TExposedMethods>;
 }

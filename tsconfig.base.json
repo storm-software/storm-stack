@@ -80,7 +80,8 @@
       "@storm-stack/types": ["packages/types/src/index.ts"],
       "@storm-stack/types/*": [
         "packages/types/src/*",
-        "packages/types/src/shared/*"
+        "packages/types/src/shared/*",
+        "packages/types/src/node/*"
       ],
       "eslint-config-storm-stack": [
         "packages/eslint-config-storm-stack/src/index.ts"

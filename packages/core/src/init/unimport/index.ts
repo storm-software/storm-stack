@@ -40,59 +40,53 @@ export async function initUnimport<TOptions extends Options = Options>(
     `Initializing Unimport for the Storm Stack project.`
   );
 
-  const runtimeDir = joinPaths(
-    context.workspaceConfig.workspaceRoot,
-    context.options.projectRoot,
-    context.artifactsDir,
-    "runtime"
-  );
   context.unimportPresets = [
     {
       imports: ["StormError", "createStormError", "isError", "isStormError"],
-      from: joinPaths(runtimeDir, "error")
+      from: joinPaths(context.runtimePath, "error")
     },
     {
       imports: ["StormPayload"],
-      from: joinPaths(runtimeDir, "payload")
+      from: joinPaths(context.runtimePath, "payload")
     },
     {
       imports: ["StormResult"],
-      from: joinPaths(runtimeDir, "result")
+      from: joinPaths(context.runtimePath, "result")
     },
     {
       imports: ["StormLog"],
-      from: joinPaths(runtimeDir, "log")
+      from: joinPaths(context.runtimePath, "log")
     },
     {
       imports: ["uniqueId", "getRandom"],
-      from: joinPaths(runtimeDir, "id")
+      from: joinPaths(context.runtimePath, "id")
     },
     {
       imports: ["storage"],
-      from: joinPaths(runtimeDir, "storage")
+      from: joinPaths(context.runtimePath, "storage")
     }
   ];
 
   if (context.options.platform === "node") {
     context.unimportPresets.push({
       imports: ["withContext"],
-      from: joinPaths(runtimeDir, "app")
+      from: joinPaths(context.runtimePath, "app")
     });
     context.unimportPresets.push({
       imports: ["useStorm", "STORM_ASYNC_CONTEXT"].filter(
         Boolean
       ) as InlinePreset["imports"],
-      from: joinPaths(runtimeDir, "context")
+      from: joinPaths(context.runtimePath, "context")
     });
     context.unimportPresets.push({
       imports: ["getEnvPaths", "getBuildInfo", "getRuntimeInfo"].filter(
         Boolean
       ) as InlinePreset["imports"],
-      from: joinPaths(runtimeDir, "env")
+      from: joinPaths(context.runtimePath, "env")
     });
     context.unimportPresets.push({
       imports: ["StormEvent"],
-      from: joinPaths(runtimeDir, "event")
+      from: joinPaths(context.runtimePath, "event")
     });
   }
 

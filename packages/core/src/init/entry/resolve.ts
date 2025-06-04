@@ -37,8 +37,7 @@ export function resolveEntry<TOptions extends Options = Options>(
 
   return {
     file: joinPaths(
-      options.options.projectRoot,
-      options.artifactsDir,
+      options.artifactsPath,
       `entry-${hash({ file: entryFile, name: parsed.name }, { maxLength: 24 }).replaceAll("-", "0").replaceAll("_", "1")}.ts`
     ),
     name: parsed.name

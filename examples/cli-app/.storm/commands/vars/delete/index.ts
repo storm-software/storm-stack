@@ -90,7 +90,7 @@ async function handler() {
       if (args["no-banner"] !== true && !isMinimal) {
         console.log(
           renderBanner(
-            "Variables - Delete",
+            "Variables - Delete Command",
             "Deletes a configuration parameter from the variables store."
           )
         );
@@ -98,7 +98,7 @@ async function handler() {
       }
 
       if (args["help"] || args["h"] || args["?"]) {
-        console.log(renderUsage(true));
+        console.log(renderUsage("full"));
         console.log("");
         console.log(renderFooter());
         console.log("");

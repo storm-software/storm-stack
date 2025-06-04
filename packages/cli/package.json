@@ -67,6 +67,11 @@
         }
       ]
     ],
-    "skipCache": true
+    "skipCache": true,
+    "dotenv": {
+      "types": {
+        "variables": "./src/types.ts#StormStackCLIVariables"
+      }
+    }
   }
 }

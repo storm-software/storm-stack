@@ -105,13 +105,14 @@ export async function initContext<TOptions extends Options = Options>(
     timestamp: Date.now()
   };
 
-  context.artifactsDir ??= ".storm";
-
-  const metaFilePath = joinPaths(
+  context.artifactsPath ??= joinPaths(
+    context.workspaceConfig.workspaceRoot,
     context.options.projectRoot,
-    context.artifactsDir,
-    "meta.json"
+    ".storm"
   );
+  context.runtimePath ??= joinPaths(context.artifactsPath, "runtime");
+
+  const metaFilePath = joinPaths(context.artifactsPath, "meta.json");
   try {
     if (existsSync(metaFilePath)) {
       context.persistedMeta = await readJsonFile<MetaInfo>(metaFilePath);
@@ -122,29 +123,43 @@ export async function initContext<TOptions extends Options = Options>(
   }
 
   context.options.platform ??= "neutral";
+  context.options.dts ??= joinPaths(
+    context.workspaceConfig.workspaceRoot,
+    context.options.projectRoot,
+    "storm.d.ts"
+  );
+
   context.override.bundle ??= true;
   context.override.target ??= "esnext";
   context.override.format ??= "esm";
 
-  const runtimeDir = joinPaths(
-    context.workspaceConfig.workspaceRoot,
-    context.options.projectRoot,
-    context.artifactsDir,
-    "runtime"
+  context.override.alias ??= {};
+  context.override.alias["storm:init"] ??= joinPaths(
+    context.runtimePath,
+    "init"
+  );
+  context.override.alias["storm:error"] ??= joinPaths(
+    context.runtimePath,
+    "error"
+  );
+  context.override.alias["storm:id"] ??= joinPaths(context.runtimePath, "id");
+  context.override.alias["storm:storage"] ??= joinPaths(
+    context.runtimePath,
+    "storage"
+  );
+  context.override.alias["storm:log"] ??= joinPaths(context.runtimePath, "log");
+  context.override.alias["storm:payload"] ??= joinPaths(
+    context.runtimePath,
+    "payload"
+  );
+  context.override.alias["storm:result"] ??= joinPaths(
+    context.runtimePath,
+    "result"
   );
 
-  context.override.alias ??= {};
-  context.override.alias["storm:init"] ??= joinPaths(runtimeDir, "init");
-  context.override.alias["storm:error"] ??= joinPaths(runtimeDir, "error");
-  context.override.alias["storm:id"] ??= joinPaths(runtimeDir, "id");
-  context.override.alias["storm:storage"] ??= joinPaths(runtimeDir, "storage");
-  context.override.alias["storm:log"] ??= joinPaths(runtimeDir, "log");
-  context.override.alias["storm:payload"] ??= joinPaths(runtimeDir, "payload");
-  context.override.alias["storm:result"] ??= joinPaths(runtimeDir, "result");
-
   context.override.external ??= [];
-  context.override.noExternal ??= [];
 
+  context.override.noExternal ??= [];
   if (Array.isArray(context.override.noExternal)) {
     context.override.noExternal.push(
       "storm:init",
@@ -161,13 +176,22 @@ export async function initContext<TOptions extends Options = Options>(
     context.override.platform ??= "node";
     context.override.target ??= "node22";
 
-    context.override.alias["storm:app"] ??= joinPaths(runtimeDir, "app");
+    context.override.alias["storm:app"] ??= joinPaths(
+      context.runtimePath,
+      "app"
+    );
     context.override.alias["storm:context"] ??= joinPaths(
-      runtimeDir,
+      context.runtimePath,
       "context"
     );
-    context.override.alias["storm:env"] ??= joinPaths(runtimeDir, "env");
-    context.override.alias["storm:event"] ??= joinPaths(runtimeDir, "event");
+    context.override.alias["storm:env"] ??= joinPaths(
+      context.runtimePath,
+      "env"
+    );
+    context.override.alias["storm:event"] ??= joinPaths(
+      context.runtimePath,
+      "event"
+    );
 
     if (Array.isArray(context.override.noExternal)) {
       context.override.noExternal.push(

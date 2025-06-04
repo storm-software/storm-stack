@@ -48,7 +48,7 @@ async function handler() {
           ` ${colors.red("✘")} ${colors.redBright(`Unknown command: ${colors.bold(command || "<none>")}`)}`
         );
         console.log("");
-        console.log(renderUsage(true));
+        console.log(renderUsage("full"));
         console.log("");
         console.log(renderFooter());
         console.log("");
@@ -111,12 +111,14 @@ async function handler() {
         !isMinimal;
 
       if (args["no-banner"] !== true && !isMinimal) {
-        console.log(renderBanner("Add", "Add an item to the file system."));
+        console.log(
+          renderBanner("Add Command", "Add an item to the file system.")
+        );
         console.log("");
       }
 
       if (args["help"] || args["h"] || args["?"]) {
-        console.log(renderUsage(true));
+        console.log(renderUsage("full"));
         console.log("");
         console.log(renderFooter());
         console.log("");

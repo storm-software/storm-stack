@@ -60,8 +60,7 @@ export function createUnimport<TOptions extends Options = Options>(
 
     const items = await unimport.getImports();
     const importDumpFile = joinPaths(
-      context.options.projectRoot,
-      context.artifactsDir,
+      context.artifactsPath,
       "imports-dump.json"
     );
     if (!existsSync(findFilePath(importDumpFile))) {

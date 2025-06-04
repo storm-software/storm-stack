@@ -89,13 +89,13 @@ async function handler() {
 
       if (args["no-banner"] !== true && !isMinimal) {
         console.log(
-          renderBanner("Add - Page", "Add a page to the file system.")
+          renderBanner("Add - Page Command", "Add a page to the file system.")
         );
         console.log("");
       }
 
       if (args["help"] || args["h"] || args["?"]) {
-        console.log(renderUsage(true));
+        console.log(renderUsage("full"));
         console.log("");
         console.log(renderFooter());
         console.log("");

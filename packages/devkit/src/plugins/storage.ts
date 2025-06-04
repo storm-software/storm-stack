@@ -68,9 +68,7 @@ export default abstract class StoragePlugin<
     if (context.options.projectType === "application") {
       await this.writeFile(
         joinPaths(
-          context.options.projectRoot,
-          context.artifactsDir,
-          "runtime",
+          context.runtimePath,
           "storage",
           `${this.name}-${this.config.namespace.replaceAll(".", "-").replaceAll(":", "-").replaceAll(" ", "-")}.ts`
         ),

@@ -26,6 +26,11 @@ export interface StormBuildInfo {
   packageName: string;
 
   /**
+   * The version of the application.
+   */
+  version: string;
+
+  /**
    * The unique identifier for the build.
    */
   buildId: string;

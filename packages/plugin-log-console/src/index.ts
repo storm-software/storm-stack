@@ -55,6 +55,15 @@ const logLevelStyles: Record<LogLevel, string> = {
   "fatal": "background-color: maroon; color: white;"
 };
 
+// Using \`[]\` sets the default locale properly from the system!
+// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat/DateTimeFormat#parameters
+export const DATE_TIME_FORMAT = new Intl.DateTimeFormat([], {
+	hour: '2-digit',
+	minute: '2-digit',
+	second: '2-digit',
+	hour12: false,
+});
+
 /**
  * The default console formatter.
  *
@@ -75,14 +84,9 @@ function formatter(record: LogRecord): readonly any[] {
   }
 
   const date = new Date(record.timestamp);
+
   return [
-    \`%c\${date.getUTCMonth()}/\${date.getUTCDay()}/\${date.getUTCFullYear()} \${date.getUTCHours().toString().padStart(2, "0")}:\${date
-      .getUTCMinutes()
-      .toString()
-      .padStart(
-        2,
-        "0"
-      )}:\${date.getUTCSeconds().toString().padStart(2, "0")}.\${date
+    \`%c\${DATE_TIME_FORMAT.format(date)}:\${date.getUTCSeconds().toString().padStart(2, "0")}.\${date
       .getUTCMilliseconds()
       .toString()
       .padStart(3, "0")} %c\${levelAbbreviations[record.level]}%c %c\${msg}\`,
@@ -99,23 +103,18 @@ function write(level: LogLevel, ...message: unknown[]) {
   switch (level) {
     case "fatal":
     case "error":
-      // eslint-disable-next-line ts/no-unsafe-call
       console.error(...message);
       break;
     case "warning":
-      // eslint-disable-next-line ts/no-unsafe-call
       console.warn(...message);
       break;
     case "info":
-      // eslint-disable-next-line ts/no-unsafe-call
       console.info(...message);
       break;
     case "debug":
-      // eslint-disable-next-line ts/no-unsafe-call
       console.debug(...message);
       break;
     default:
-      // eslint-disable-next-line ts/no-unsafe-call
       console.log(...message);
   }
 }
@@ -123,7 +122,7 @@ function write(level: LogLevel, ...message: unknown[]) {
 const sink = (record: LogRecord) => {
   const args = formatter(record);
   if (typeof args === "string") {
-    const msg = args.replace(/\\r?\\n$/, "");
+    const msg = String(args).replace(/\\r?\\n$/, "");
     write(record.level, msg);
   } else {
     write(record.level, ...args);

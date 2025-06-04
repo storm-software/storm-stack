@@ -66,6 +66,24 @@ jobs:
     needs:
       - start
     steps:
+   # Determine if the triggering_actor is allowed to run this action
+      # We only permit maintainers
+      # Not only is 'triggering_actor' common between the trigger events it will also change if someone re-runs an old job
+      - name: check if triggering_actor is allowed to run releases
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          COMMENTER: ${{ github.triggering_actor && github.triggering_actor || 'empty_triggering_actor' }}
+          API_ENDPOINT: /repos/${{ github.repository }}/collaborators?permission=maintain
+        shell: bash
+        run: |
+          if [ $COMMENTER = "empty_triggering_actor" ]; then exit 1; fi
+          set -o pipefail
+          if gh api "$API_ENDPOINT" --paginate --jq ".[].login" | grep -q "^$COMMENTER\$"; then
+            echo "$COMMENTER permitted to run Storm Stack releases!" && exit 0
+          else
+            echo "$COMMENTER not permitted to run Storm Stack releases" && exit 1
+          fi
+
       - name: Checkout [Pull Request]
         uses: actions/checkout@v4
         if: ${{ github.event_name == 'pull_request' }}

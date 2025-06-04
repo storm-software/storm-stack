@@ -33,9 +33,9 @@ import { build } from "./build";
 import { clean } from "./clean";
 import { docs } from "./docs";
 import { finalize } from "./finalize";
+import { getTsconfigFilePath } from "./helpers/typescript/tsconfig";
 import { loadConfig } from "./helpers/utilities/load-config";
 import { createLog } from "./helpers/utilities/logger";
-import { getTsconfigFilePath } from "./helpers/utilities/tsconfig";
 import { init } from "./init";
 import { lint } from "./lint";
 import { _new } from "./new";
@@ -166,7 +166,10 @@ export class Engine<TOptions extends Options = Options> {
         mode: "production",
         projectType: "application",
         outputPath: joinPaths("dist", this.options.projectRoot),
-        tsconfig: getTsconfigFilePath(this.context),
+        tsconfig: getTsconfigFilePath(
+          this.context.options.projectRoot,
+          this.context.options.tsconfig
+        ),
         errorsFile:
           this.context.workspaceConfig.error?.codesFile ||
           STORM_DEFAULT_ERROR_CODES_FILE
@@ -252,12 +255,7 @@ export class Engine<TOptions extends Options = Options> {
       await this.init();
     }
 
-    if (
-      existsSync(
-        joinPaths(this.context.options.projectRoot, this.context.artifactsDir)
-      ) &&
-      autoClean
-    ) {
+    if (existsSync(this.context.artifactsPath) && autoClean) {
       await this.clean();
     }
 

@@ -6,7 +6,7 @@
     "description": "Start a server and serve the application.",
     "aliases": [],
     "entry": {
-      "file": "examples/cli-app/.storm/commands/serve/index.ts",
+      "file": "/home/development/repos/storm-stack/examples/cli-app/.storm/commands/serve/index.ts",
       "input": { "file": "examples/cli-app/src/commands/serve.ts" },
       "output": "serve",
       "path": ["serve"],
@@ -196,7 +196,7 @@
     "description": "Add a page to the file system.",
     "aliases": [],
     "entry": {
-      "file": "examples/cli-app/.storm/commands/add/page/index.ts",
+      "file": "/home/development/repos/storm-stack/examples/cli-app/.storm/commands/add/page/index.ts",
       "input": { "file": "examples/cli-app/src/commands/add/page.ts" },
       "output": "add-page",
       "path": ["add", "page"],
@@ -306,7 +306,7 @@
     "description": "Add an item to the file system.",
     "aliases": [],
     "entry": {
-      "file": "examples/cli-app/.storm/commands/add/index.ts",
+      "file": "/home/development/repos/storm-stack/examples/cli-app/.storm/commands/add/index.ts",
       "input": { "file": "examples/cli-app/src/commands/add/index.ts" },
       "output": "add",
       "path": ["add"],
@@ -430,8 +430,10 @@
     "entry": {
       "displayName": "Variable Management",
       "description": "Commands for managing the configuration parameters in the variables store.",
-      "file": "examples/cli-app/.storm/commands/vars/index.ts",
-      "input": { "file": "examples/cli-app/.storm/commands/vars/index.ts" },
+      "file": "/home/development/repos/storm-stack/examples/cli-app/.storm/commands/vars/index.ts",
+      "input": {
+        "file": "/home/development/repos/storm-stack/examples/cli-app/.storm/commands/vars/index.ts"
+      },
       "output": "vars",
       "path": ["vars"],
       "isVirtual": true
@@ -492,9 +494,9 @@
     "aliases": [],
     "entry": {
       "displayName": "Variables - Get",
-      "file": "examples/cli-app/.storm/commands/vars/get/index.ts",
+      "file": "/home/development/repos/storm-stack/examples/cli-app/.storm/commands/vars/get/index.ts",
       "input": {
-        "file": "examples/cli-app/.storm/commands/vars/get/handle.ts"
+        "file": "/home/development/repos/storm-stack/examples/cli-app/.storm/commands/vars/get/handle.ts"
       },
       "output": "vars-get",
       "path": ["vars", "get", "[name]"],
@@ -604,9 +606,9 @@
     "aliases": [],
     "entry": {
       "displayName": "Variables - Set",
-      "file": "examples/cli-app/.storm/commands/vars/set/index.ts",
+      "file": "/home/development/repos/storm-stack/examples/cli-app/.storm/commands/vars/set/index.ts",
       "input": {
-        "file": "examples/cli-app/.storm/commands/vars/set/handle.ts"
+        "file": "/home/development/repos/storm-stack/examples/cli-app/.storm/commands/vars/set/handle.ts"
       },
       "output": "vars-set",
       "path": ["vars", "set", "[name]", "[value]"],
@@ -727,9 +729,9 @@
     "aliases": [],
     "entry": {
       "displayName": "Variables - Delete",
-      "file": "examples/cli-app/.storm/commands/vars/delete/index.ts",
+      "file": "/home/development/repos/storm-stack/examples/cli-app/.storm/commands/vars/delete/index.ts",
       "input": {
-        "file": "examples/cli-app/.storm/commands/vars/delete/handle.ts"
+        "file": "/home/development/repos/storm-stack/examples/cli-app/.storm/commands/vars/delete/handle.ts"
       },
       "output": "vars-delete",
       "path": ["vars", "delete", "[name]"],
@@ -839,9 +841,9 @@
     "aliases": [],
     "entry": {
       "displayName": "Variables - List",
-      "file": "examples/cli-app/.storm/commands/vars/list/index.ts",
+      "file": "/home/development/repos/storm-stack/examples/cli-app/.storm/commands/vars/list/index.ts",
       "input": {
-        "file": "examples/cli-app/.storm/commands/vars/list/handle.ts"
+        "file": "/home/development/repos/storm-stack/examples/cli-app/.storm/commands/vars/list/handle.ts"
       },
       "output": "vars-list",
       "path": ["vars", "list"],

@@ -37,7 +37,7 @@ import type {
 } from "@storm-stack/types/result";
 import type { StormBaseVariables } from "@storm-stack/types/vars";
 import { STORM_ASYNC_CONTEXT } from "./context";
-import { build, runtime, paths } from "./env";
+import { build, name, version, runtime, paths } from "./env";
 import { createStormError, StormError, isError } from "./error";
 import { StormEvent } from "./event";
 import { uniqueId } from "./id";
@@ -54,9 +54,6 @@ import { storage } from "./storage";
 export function withContext<TInput = any, TOutput = any>(
   handler: HandlerFunction<TInput, TOutput>
 ) {
-  const name = $storm.vars.APP_NAME;
-  const version = $storm.vars.APP_VERSION;
-
   const disposables = new Set<Disposable>();
   const asyncDisposables = new Set<AsyncDisposable>();
 

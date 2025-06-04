@@ -39,7 +39,7 @@ import { getConfig } from "eslint-config-storm-stack";
 Error.stackTraceLimit = Number.POSITIVE_INFINITY;
 
 export default getConfig({
-  repositoryName: "${context.workspaceConfig.name || context.name || "storm-stack"}",
+  repositoryName: "${context.workspaceConfig.name || context.options.name || "storm-stack"}",
   "storm-stack": "${type}",
 });
 `;

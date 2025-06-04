@@ -7,7 +7,8 @@
 
 import { deserialize,serialize } from "@deepkit/type";
 import { colors } from "../../../runtime/cli";
-import { StormPayload, StormVariables } from "../../../runtime/payload";
+import { StormVariables } from "../../../runtime/env";
+import { StormPayload } from "../../../runtime/payload";
 
 export interface VarsSetPayload {
   /**
@@ -46,7 +47,7 @@ async function handler(payload: StormPayload<VarsSetPayload>) {
   console.log("");
   console.log(
     colors.dim(
-      " > \`${payload.data.name}\` variable set to ${payload.data.value}"
+      ` > \`${payload.data.name}\` variable set to ${payload.data.value}`
     )
   );
   console.log("");

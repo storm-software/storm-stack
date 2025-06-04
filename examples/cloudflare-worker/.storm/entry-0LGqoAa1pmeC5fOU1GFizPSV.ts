@@ -7,7 +7,7 @@
 
 import "@cloudflare/unenv-preset/polyfill/performance";
 import { deserialize, serialize } from "@deepkit/type";
-import { handler as handle } from "../src/index";
+import { handler as handle } from "../../../../../../../examples/cloudflare-worker/src/index";
 import { wrap } from "./runtime/app";
 import { StormRequest } from "./runtime/request";
 import { StormResponse } from "./runtime/response";

@@ -10,18 +10,18 @@ import { colors } from "../../runtime/cli";
 /**
  * Renders the Add command usage information.
  *
- * @param includeCommands - Whether to include rendering sub-commands.
+ * @param mode - The render mode to use when displaying the usage information (either "full" or "minimal").
  * @returns The rendered string displaying usage information.
  */
-export function renderUsage(includeCommands = true) {
-  return `${colors.whiteBright(colors.bold("Add"))}
+export function renderUsage(mode: "full" | "minimal" = "full"): string {
+  return `${colors.whiteBright(colors.bold(`Add${mode === "minimal" ? " Command" : ""}`))}
 
   ${colors.gray("Add an item to the file system.")}
 
   ${colors.whiteBright(colors.bold("Usage:"))}
     examples-cli add [options] 
     examples-cli add page [options]${
-      includeCommands !== false
+      mode === "full"
         ? `
   ${colors.whiteBright(colors.bold("Commands:"))}
     Add - Page (page)                ${colors.gray("Add a page to the file system.")}`

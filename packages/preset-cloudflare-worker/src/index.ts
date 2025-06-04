@@ -19,18 +19,16 @@
 import { cloudflare } from "@cloudflare/unenv-preset";
 import { parse as parseToml, stringify as stringifyToml } from "@ltd/j-toml";
 import { LogLevelLabel } from "@storm-software/config-tools/types";
+import { getFileHeader, writeFile } from "@storm-stack/core/helpers";
 import {
-  getFileHeader,
   getParsedTypeScriptConfig,
-  getTsconfigFilePath,
-  writeFile
-} from "@storm-stack/core/helpers";
+  getTsconfigFilePath
+} from "@storm-stack/core/helpers/typescript";
 import {
   writeApp,
   writeContext,
   writeEvent
 } from "@storm-stack/core/prepare/runtime/node";
-
 import { Preset } from "@storm-stack/core/preset";
 import type {
   Context,
@@ -155,25 +153,31 @@ export default class StormStackCloudflareWorkerPreset<
   }
 
   protected async initTsconfig(context: Context<TOptions>) {
-    const tsconfigFilePath = getTsconfigFilePath(context);
+    const tsconfigFilePath = getTsconfigFilePath(
+      context.options.projectRoot,
+      context.options.tsconfig
+    );
 
     this.log(
       LogLevelLabel.TRACE,
       `Resolving TypeScript configuration in "${tsconfigFilePath}"`
     );
 
-    const tsconfig = await getParsedTypeScriptConfig(context);
+    const tsconfig = await getParsedTypeScriptConfig(
+      context.options.projectRoot,
+      context.options.tsconfig
+    );
     const tsconfigJson = await readJsonFile<TsConfigJson>(tsconfigFilePath);
 
     tsconfigJson.compilerOptions ??= {};
     if (
-      tsconfig.options.types &&
-      tsconfig.options.types.some(
+      tsconfigJson.compilerOptions.types &&
+      tsconfigJson.compilerOptions.types.some(
         type => type.toLowerCase() === "@cloudflare/workers-types"
       )
     ) {
       tsconfigJson.compilerOptions.types =
-        tsconfigJson.compilerOptions.types!.filter(
+        tsconfigJson.compilerOptions.types.filter(
           type => type.toLowerCase() !== "@cloudflare/workers-types"
         );
     }
@@ -200,22 +204,21 @@ export default class StormStackCloudflareWorkerPreset<
       LogLevelLabel.TRACE,
       `Preparing the TypeScript declaration (d.ts) artifacts for the Storm Stack project.`
     );
-    const runtimeDir = joinPaths(
-      context.options.projectRoot,
-      context.artifactsDir,
-      "runtime"
-    );
 
     await Promise.all([
-      writeFile(this.log, joinPaths(runtimeDir, "app.ts"), writeApp(context)),
       writeFile(
         this.log,
-        joinPaths(runtimeDir, "context.ts"),
+        joinPaths(context.runtimePath, "app.ts"),
+        writeApp(context)
+      ),
+      writeFile(
+        this.log,
+        joinPaths(context.runtimePath, "context.ts"),
         writeContext(context)
       ),
       writeFile(
         this.log,
-        joinPaths(runtimeDir, "event.ts"),
+        joinPaths(context.runtimePath, "event.ts"),
         writeEvent(context)
       )
     ]);
@@ -226,22 +229,21 @@ export default class StormStackCloudflareWorkerPreset<
       LogLevelLabel.TRACE,
       `Preparing the runtime artifacts for the Storm Stack project.`
     );
-    const runtimeDir = joinPaths(
-      context.options.projectRoot,
-      context.artifactsDir,
-      "runtime"
-    );
 
     await Promise.all([
-      writeFile(this.log, joinPaths(runtimeDir, "app.ts"), writeApp(context)),
       writeFile(
         this.log,
-        joinPaths(runtimeDir, "context.ts"),
+        joinPaths(context.runtimePath, "app.ts"),
+        writeApp(context)
+      ),
+      writeFile(
+        this.log,
+        joinPaths(context.runtimePath, "context.ts"),
         writeContext(context)
       ),
       writeFile(
         this.log,
-        joinPaths(runtimeDir, "event.ts"),
+        joinPaths(context.runtimePath, "event.ts"),
         writeEvent(context)
       )
     ]);

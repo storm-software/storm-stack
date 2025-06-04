@@ -21,6 +21,7 @@ import { LogLevelLabel } from "@storm-software/config-tools/types";
 import { readFileIfExistingSync } from "@stryke/fs/read-file";
 import { hash } from "@stryke/hash/hash";
 import { joinPaths } from "@stryke/path/join-paths";
+import { slash } from "@stryke/path/slash";
 import type MagicString from "magic-string";
 import ts from "typescript";
 import { transformContext } from "./helpers/transform/transform-context";
@@ -226,7 +227,7 @@ export class Compiler<TOptions extends Options = Options>
         transformContext(source);
       }
 
-      if (!options.skipEnvTransform) {
+      if (!options.skipDotenvTransform) {
         transformed = await transformVars<TOptions>(this.log, source, context);
       }
 
@@ -237,9 +238,17 @@ export class Compiler<TOptions extends Options = Options>
       if (
         !options.skipUnimportTransform &&
         context.unimport &&
-        !transformed.id
-          .replaceAll("\\", "/")
-          .includes(joinPaths(context.artifactsDir, "runtime"))
+        !slash(transformed.id).includes(
+          context.runtimePath
+            .replace(
+              joinPaths(
+                context.workspaceConfig.workspaceRoot,
+                context.options.projectRoot
+              ),
+              ""
+            )
+            .replace(/^\/+/g, "")
+        )
       ) {
         transformed = await context.unimport.injectImports(transformed);
       }

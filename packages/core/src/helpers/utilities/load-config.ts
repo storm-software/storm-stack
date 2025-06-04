@@ -76,9 +76,9 @@ export async function loadConfig(
   ]);
 
   return defu(
-    result[0].config,
-    result[1].config,
-    result[2].config,
-    result[3].config
+    result[0]?.config ?? {},
+    result[1]?.config ?? {},
+    result[2]?.config ?? {},
+    result[3]?.config ?? {}
   ) as ProjectConfig;
 }

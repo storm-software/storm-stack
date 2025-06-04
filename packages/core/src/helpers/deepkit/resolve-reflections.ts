@@ -28,10 +28,5 @@ import type { Context, Options } from "../../types/build";
 export function getReflectionsPath<TOptions extends Options = Options>(
   context: Context<TOptions>
 ): string {
-  return joinPaths(
-    context.workspaceConfig.workspaceRoot,
-    context.options.projectRoot,
-    context.artifactsDir,
-    "reflections"
-  );
+  return joinPaths(context.artifactsPath, "reflections");
 }

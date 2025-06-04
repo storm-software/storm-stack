@@ -21,10 +21,10 @@ export interface VarsPayload {
 /**
  * Renders the Variable Management virtual command usage information.
  *
- * @param includeCommands - Whether to include rendering sub-commands.
+ * @param mode - The render mode to use when displaying the usage information (either "full" or "minimal").
  * @returns The rendered string displaying usage information.
  */
-export function renderUsage(includeCommands = true) {
+export function renderUsage(mode: "full" | "minimal" = "full"): string {
   return `${colors.whiteBright(colors.bold("Variable Management Commands"))} 
 
   ${colors.gray("Commands for managing the configuration parameters in the variables store.")}
@@ -34,26 +34,26 @@ export function renderUsage(includeCommands = true) {
     examples-cli vars list [options]
     examples-cli vars get <name> [options]
     examples-cli vars delete <name> [options]${
-      includeCommands !== false
+      mode === "full"
         ? `
 
   ${colors.whiteBright(colors.bold("Commands:"))}
-${renderSetUsage(false)
+${renderSetUsage("minimal")
   .split("\n")
   .map(line => `    ${line}`)
   .join("\n")}
 
-${renderListUsage(false)
+${renderListUsage("minimal")
   .split("\n")
   .map(line => `    ${line}`)
   .join("\n")}
 
-${renderGetUsage(false)
+${renderGetUsage("minimal")
   .split("\n")
   .map(line => `    ${line}`)
   .join("\n")}
 
-${renderDeleteUsage(false)
+${renderDeleteUsage("minimal")
   .split("\n")
   .map(line => `    ${line}`)
   .join("\n")}`
@@ -93,7 +93,7 @@ async function handler() {
           ` ${colors.red("✘")} ${colors.redBright(`Unknown command: ${colors.bold(command || "<none>")}`)}`
         );
         console.log("");
-        console.log(renderUsage(true));
+        console.log(renderUsage("full"));
         console.log("");
         console.log(renderFooter());
         console.log("");
@@ -124,7 +124,7 @@ async function handler() {
         console.log("");
       }
 
-      console.log(renderUsage(true));
+      console.log(renderUsage("full"));
       console.log("");
       console.log(renderFooter());
       console.log("");

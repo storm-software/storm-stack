@@ -22,17 +22,23 @@ import ts from "typescript";
 import {
   getParsedTypeScriptConfig,
   getTsconfigFilePath
-} from "../../helpers/utilities/tsconfig";
+} from "../../helpers/typescript/tsconfig";
 import type { Context, Options } from "../../types/build";
 
 export async function getTsconfigChanges<TOptions extends Options = Options>(
   context: Context<TOptions>
 ): Promise<TsConfigJson> {
-  const tsconfig = await getParsedTypeScriptConfig(context);
-
-  const tsconfigJson = await readJsonFile<TsConfigJson>(
-    getTsconfigFilePath(context)
+  const tsconfig = await getParsedTypeScriptConfig(
+    context.options.projectRoot,
+    context.options.tsconfig,
+    context.options.tsconfigRaw
   );
+
+  const tsconfigFilePath = getTsconfigFilePath(
+    context.options.projectRoot,
+    context.options.tsconfig
+  );
+  const tsconfigJson = await readJsonFile<TsConfigJson>(tsconfigFilePath);
   tsconfigJson.compilerOptions ??= {};
 
   if (tsconfigJson.reflection !== true) {
@@ -56,13 +62,40 @@ export async function getTsconfigChanges<TOptions extends Options = Options>(
   //   tsconfigJson.compilerOptions.types.push("@storm-stack/types");
   // }
 
+  // if (
+  //   context.options.dts &&
+  //   !tsconfig.options.types?.some(
+  //     type =>
+  //       type ===
+  //       relativePath(
+  //         joinPaths(
+  //           context.workspaceConfig.workspaceRoot,
+  //           findFilePath(tsconfigFilePath)
+  //         ),
+  //         context.options.dts || ""
+  //       )
+  //   )
+  // ) {
+  //   tsconfigJson.compilerOptions.types ??= [];
+  //   tsconfigJson.compilerOptions.types.push(
+  //     relativePath(
+  //       joinPaths(
+  //         context.workspaceConfig.workspaceRoot,
+  //         findFilePath(tsconfigFilePath)
+  //       ),
+  //       context.options.dts
+  //     )
+  //   );
+  // }
+
   if (
-    !tsconfig.options.lib?.some(
-      lib =>
-        lib.toLowerCase() !== "esnext" &&
-        lib.toLowerCase() !== "es2021" &&
-        lib.toLowerCase() !== "es2022" &&
-        lib.toLowerCase() !== "es2023"
+    !tsconfig.options.lib?.some(lib =>
+      [
+        "lib.esnext.d.ts",
+        "lib.es2021.d.ts",
+        "lib.es2022.d.ts",
+        "lib.es2023.d.ts"
+      ].includes(lib.toLowerCase())
     )
   ) {
     tsconfigJson.compilerOptions.lib ??= [];

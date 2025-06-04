@@ -28,38 +28,19 @@ export function writeVarsGet<TOptions extends Options = Options>(
 
 import { deserialize } from "@deepkit/type";
 import { colors } from "${relativePath(
-    joinPaths(
-      context.workspaceConfig.workspaceRoot,
-      context.options.projectRoot,
-      context.artifactsDir,
-      "commands",
-      "vars",
-      "get"
-    ),
-    joinPaths(
-      context.workspaceConfig.workspaceRoot,
-      context.options.projectRoot,
-      context.artifactsDir,
-      "runtime",
-      "cli"
-    )
+    joinPaths(context.artifactsPath, "commands", "vars", "get"),
+    joinPaths(context.runtimePath, "cli"),
+    false
   )}";
-import { StormPayload, StormVariables } from "${relativePath(
-    joinPaths(
-      context.workspaceConfig.workspaceRoot,
-      context.options.projectRoot,
-      context.artifactsDir,
-      "commands",
-      "vars",
-      "get"
-    ),
-    joinPaths(
-      context.workspaceConfig.workspaceRoot,
-      context.options.projectRoot,
-      context.artifactsDir,
-      "runtime",
-      "payload"
-    )
+import { StormPayload } from "${relativePath(
+    joinPaths(context.artifactsPath, "commands", "vars", "get"),
+    joinPaths(context.runtimePath, "payload"),
+    false
+  )}";
+import { StormVariables } from "${relativePath(
+    joinPaths(context.artifactsPath, "commands", "vars", "get"),
+    joinPaths(context.runtimePath, "env"),
+    false
   )}";
 
 export interface VarsGetPayload {
@@ -102,38 +83,19 @@ export function writeVarsSet<TOptions extends Options = Options>(
 
 import { deserialize, serialize } from "@deepkit/type";
 import { colors } from "${relativePath(
-    joinPaths(
-      context.workspaceConfig.workspaceRoot,
-      context.options.projectRoot,
-      context.artifactsDir,
-      "commands",
-      "vars",
-      "set"
-    ),
-    joinPaths(
-      context.workspaceConfig.workspaceRoot,
-      context.options.projectRoot,
-      context.artifactsDir,
-      "runtime",
-      "cli"
-    )
+    joinPaths(context.artifactsPath, "commands", "vars", "set"),
+    joinPaths(context.runtimePath, "cli"),
+    false
   )}";
-import { StormPayload, StormVariables } from "${relativePath(
-    joinPaths(
-      context.workspaceConfig.workspaceRoot,
-      context.options.projectRoot,
-      context.artifactsDir,
-      "commands",
-      "vars",
-      "set"
-    ),
-    joinPaths(
-      context.workspaceConfig.workspaceRoot,
-      context.options.projectRoot,
-      context.artifactsDir,
-      "runtime",
-      "payload"
-    )
+import { StormPayload } from "${relativePath(
+    joinPaths(context.artifactsPath, "commands", "vars", "set"),
+    joinPaths(context.runtimePath, "payload"),
+    false
+  )}";
+import { StormVariables } from "${relativePath(
+    joinPaths(context.artifactsPath, "commands", "vars", "set"),
+    joinPaths(context.runtimePath, "env"),
+    false
   )}";
 
 export interface VarsSetPayload {
@@ -166,7 +128,7 @@ async function handler(payload: StormPayload<VarsSetPayload>) {
   await $storm.storage.setItem(\`vars:vars.json\`, serialize<StormVariables>(vars));
 
   console.log("");
-  console.log(colors.dim(" > \\\`\${payload.data.name}\\\` variable set to \${payload.data.value}"));
+  console.log(colors.dim(\` > \\\`\${payload.data.name}\\\` variable set to \${payload.data.value}\`));
   console.log("");
 }
 
@@ -182,38 +144,19 @@ export function writeVarsList<TOptions extends Options = Options>(
 
 import { deserialize } from "@deepkit/type";
 import { colors } from "${relativePath(
-    joinPaths(
-      context.workspaceConfig.workspaceRoot,
-      context.options.projectRoot,
-      context.artifactsDir,
-      "commands",
-      "vars",
-      "list"
-    ),
-    joinPaths(
-      context.workspaceConfig.workspaceRoot,
-      context.options.projectRoot,
-      context.artifactsDir,
-      "runtime",
-      "cli"
-    )
+    joinPaths(context.artifactsPath, "commands", "vars", "list"),
+    joinPaths(context.runtimePath, "cli"),
+    false
   )}";
-import { StormPayload, StormVariables } from "${relativePath(
-    joinPaths(
-      context.workspaceConfig.workspaceRoot,
-      context.options.projectRoot,
-      context.artifactsDir,
-      "commands",
-      "vars",
-      "list"
-    ),
-    joinPaths(
-      context.workspaceConfig.workspaceRoot,
-      context.options.projectRoot,
-      context.artifactsDir,
-      "runtime",
-      "payload"
-    )
+import { StormPayload } from "${relativePath(
+    joinPaths(context.artifactsPath, "commands", "vars", "list"),
+    joinPaths(context.runtimePath, "payload"),
+    false
+  )}";
+import { StormVariables } from "${relativePath(
+    joinPaths(context.artifactsPath, "commands", "vars", "list"),
+    joinPaths(context.runtimePath, "env"),
+    false
   )}";
 
 export interface VarsListPayload {}
@@ -246,38 +189,19 @@ export function writeVarsDelete<TOptions extends Options = Options>(
 
 import { deserialize, serialize } from "@deepkit/type";
 import { colors } from "${relativePath(
-    joinPaths(
-      context.workspaceConfig.workspaceRoot,
-      context.options.projectRoot,
-      context.artifactsDir,
-      "commands",
-      "vars",
-      "delete"
-    ),
-    joinPaths(
-      context.workspaceConfig.workspaceRoot,
-      context.options.projectRoot,
-      context.artifactsDir,
-      "runtime",
-      "cli"
-    )
+    joinPaths(context.artifactsPath, "commands", "vars", "delete"),
+    joinPaths(context.runtimePath, "cli"),
+    false
   )}";
-import { StormPayload, StormVariables } from "${relativePath(
-    joinPaths(
-      context.workspaceConfig.workspaceRoot,
-      context.options.projectRoot,
-      context.artifactsDir,
-      "commands",
-      "vars",
-      "delete"
-    ),
-    joinPaths(
-      context.workspaceConfig.workspaceRoot,
-      context.options.projectRoot,
-      context.artifactsDir,
-      "runtime",
-      "payload"
-    )
+import { StormPayload } from "${relativePath(
+    joinPaths(context.artifactsPath, "commands", "vars", "delete"),
+    joinPaths(context.runtimePath, "payload"),
+    false
+  )}";
+import { StormVariables } from "${relativePath(
+    joinPaths(context.artifactsPath, "commands", "vars", "delete"),
+    joinPaths(context.runtimePath, "env"),
+    false
   )}";
 
 export interface VarsDeletePayload {
@@ -305,7 +229,7 @@ async function handler(payload: StormPayload<VarsDeletePayload>) {
   await $storm.storage.setItem(\`vars:vars.json\`, serialize<StormVariables>(vars));
 
   console.log("");
-  console.log(colors.dim(" > \\\`\${payload.data.name}\\\` variable deleted"));
+  console.log(colors.dim(\` > \\\`\${payload.data.name}\\\` variable deleted\`));
   console.log("");
 }
 

@@ -309,7 +309,7 @@ async function lint<TOptions extends Options = Options>(
     let results = await eslint.lintFiles(
       context.tsconfig.fileNames.filter(
         fileName =>
-          !fileName.includes(context.artifactsDir) &&
+          !fileName.includes(context.artifactsPath) &&
           !fileName.includes("node_modules")
       )
     );

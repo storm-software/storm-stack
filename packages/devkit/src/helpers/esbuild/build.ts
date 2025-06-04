@@ -28,13 +28,6 @@ export async function esbuild<TOptions extends Options = Options>(
   context: Context<TOptions>,
   override: Partial<ESBuildOptions> & { alias?: Record<string, string> } = {}
 ) {
-  const runtimeDir = joinPaths(
-    context.workspaceConfig.workspaceRoot,
-    context.options.projectRoot,
-    context.artifactsDir,
-    "runtime"
-  );
-
   const buildOptions = {
     mode: context.options.mode,
     platform: context.options.platform,
@@ -108,17 +101,17 @@ export async function esbuild<TOptions extends Options = Options>(
             override?.alias ?? {},
             context.override?.alias ?? {},
             {
-              "storm:init": joinPaths(runtimeDir, "init"),
-              "storm:app": joinPaths(runtimeDir, "app"),
-              "storm:env": joinPaths(runtimeDir, "env"),
-              "storm:context": joinPaths(runtimeDir, "context"),
-              "storm:error": joinPaths(runtimeDir, "error"),
-              "storm:event": joinPaths(runtimeDir, "event"),
-              "storm:id": joinPaths(runtimeDir, "id"),
-              "storm:storage": joinPaths(runtimeDir, "storage"),
-              "storm:log": joinPaths(runtimeDir, "log"),
-              "storm:payload": joinPaths(runtimeDir, "payload"),
-              "storm:result": joinPaths(runtimeDir, "result")
+              "storm:init": joinPaths(context.runtimePath, "init"),
+              "storm:app": joinPaths(context.runtimePath, "app"),
+              "storm:env": joinPaths(context.runtimePath, "env"),
+              "storm:context": joinPaths(context.runtimePath, "context"),
+              "storm:error": joinPaths(context.runtimePath, "error"),
+              "storm:event": joinPaths(context.runtimePath, "event"),
+              "storm:id": joinPaths(context.runtimePath, "id"),
+              "storm:storage": joinPaths(context.runtimePath, "storage"),
+              "storm:log": joinPaths(context.runtimePath, "log"),
+              "storm:payload": joinPaths(context.runtimePath, "payload"),
+              "storm:result": joinPaths(context.runtimePath, "result")
             }
           );
         },

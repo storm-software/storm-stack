@@ -7,7 +7,8 @@
 
 import { deserialize,serialize } from "@deepkit/type";
 import { colors } from "../../../runtime/cli";
-import { StormPayload, StormVariables } from "../../../runtime/payload";
+import { StormVariables } from "../../../runtime/env";
+import { StormPayload } from "../../../runtime/payload";
 
 export interface VarsDeletePayload {
   /**
@@ -39,7 +40,7 @@ async function handler(payload: StormPayload<VarsDeletePayload>) {
   );
 
   console.log("");
-  console.log(colors.dim(" > \`${payload.data.name}\` variable deleted"));
+  console.log(colors.dim(` > \`${payload.data.name}\` variable deleted`));
   console.log("");
 }
 

@@ -18,4 +18,5 @@
 
 export * from "./isolated-decl";
 export * from "./program";
+export * from "./tsconfig";
 export * from "./type-checks";

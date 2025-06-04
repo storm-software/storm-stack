@@ -49,6 +49,9 @@ function getLatestErrorCode(
   return String(errorCode + 1);
 }
 
+/**
+ * Interface representing the data required to error lookup codes.
+ */
 export interface ErrorLookupData {
   /**
    * The error messages to commit

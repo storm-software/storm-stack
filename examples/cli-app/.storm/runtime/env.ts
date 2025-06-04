@@ -7,6 +7,7 @@
 
 import type {
 StormBuildInfo,
+StormEnvPaths,
 StormRuntimeInfo
 } from "@storm-stack/types/node/env";
 import os from "node:os";
@@ -74,11 +75,12 @@ export const isCI = Boolean(
 );
 
 /** Detect the `NODE_ENV` environment variable */
-export const mode =
+export const mode = String(
   $storm.vars.MODE ||
-  process.env.NEXT_PUBLIC_VERCEL_ENV ||
-  process.env.NODE_ENV ||
-  "production";
+    process.env.NEXT_PUBLIC_VERCEL_ENV ||
+    process.env.NODE_ENV ||
+    "production"
+);
 
 /** Detect if the application is running in production mode */
 export const isProduction = ["prd", "prod", "production"].includes(
@@ -152,12 +154,12 @@ export const isColorSupported =
 export const isNode = globalThis.process?.release?.name === "node";
 
 /** The organization that maintains the application */
-export const organization = "storm-software" || "storm-software";
+export const organization = "storm-software";
 
 /** The current application */
-export const appName = "examples-cli-app";
+export const name = "examples-cli-app";
 /** The current application */
-export const appVersion = "0.0.1";
+export const version = "0.0.1";
 
 const homedir = os.homedir();
 const tmpdir = os.tmpdir();
@@ -175,31 +177,25 @@ const tmpdir = os.tmpdir();
 export const paths = isMacOS
   ? {
       data: process.env.STORM_DATA_DIR
-        ? join(process.env.STORM_DATA_DIR, appName)
-        : join(
-            homedir,
-            "Library",
-            "Application Support",
-            organization,
-            appName
-          ),
+        ? join(process.env.STORM_DATA_DIR, name)
+        : join(homedir, "Library", "Application Support", organization, name),
       config: process.env.STORM_CONFIG_DIR
-        ? join(process.env.STORM_CONFIG_DIR, appName)
-        : join(homedir, "Library", "Preferences", organization, appName),
+        ? join(process.env.STORM_CONFIG_DIR, name)
+        : join(homedir, "Library", "Preferences", organization, name),
       cache: process.env.STORM_CACHE_DIR
-        ? join(process.env.STORM_CACHE_DIR, appName)
-        : join(homedir, "Library", "Caches", organization, appName),
+        ? join(process.env.STORM_CACHE_DIR, name)
+        : join(homedir, "Library", "Caches", organization, name),
       log: process.env.STORM_LOG_DIR
-        ? join(process.env.STORM_LOG_DIR, appName)
-        : join(homedir, "Library", "Logs", organization, appName),
+        ? join(process.env.STORM_LOG_DIR, name)
+        : join(homedir, "Library", "Logs", organization, name),
       temp: process.env.STORM_TEMP_DIR
-        ? join(process.env.STORM_TEMP_DIR, appName)
-        : join(tmpdir, organization, appName)
+        ? join(process.env.STORM_TEMP_DIR, name)
+        : join(tmpdir, organization, name)
     }
   : isWindows
     ? {
         data: process.env.STORM_DATA_DIR
-          ? join(process.env.STORM_DATA_DIR, appName)
+          ? join(process.env.STORM_DATA_DIR, name)
           : join(
               process.env.LOCALAPPDATA || join(homedir, "AppData", "Local"),
               "StormSoftware",
@@ -207,7 +203,7 @@ export const paths = isMacOS
               "Data"
             ),
         config: process.env.STORM_CONFIG_DIR
-          ? join(process.env.STORM_CONFIG_DIR, appName)
+          ? join(process.env.STORM_CONFIG_DIR, name)
           : join(
               process.env.APPDATA || join(homedir, "AppData", "Roaming"),
               "StormSoftware",
@@ -215,14 +211,14 @@ export const paths = isMacOS
               "Config"
             ),
         cache: process.env.STORM_CACHE_DIR
-          ? join(process.env.STORM_CACHE_DIR, appName)
+          ? join(process.env.STORM_CACHE_DIR, name)
           : join(
               process.env.LOCALAPPDATA || join(homedir, "AppData", "Local"),
               "Cache",
               "StormSoftware"
             ),
         log: process.env.STORM_LOG_DIR
-          ? join(process.env.STORM_LOG_DIR, appName)
+          ? join(process.env.STORM_LOG_DIR, name)
           : join(
               process.env.LOCALAPPDATA || join(homedir, "AppData", "Local"),
               "StormSoftware",
@@ -230,45 +226,45 @@ export const paths = isMacOS
               "Log"
             ),
         temp: process.env.STORM_TEMP_DIR
-          ? join(process.env.STORM_TEMP_DIR, appName)
+          ? join(process.env.STORM_TEMP_DIR, name)
           : join(tmpdir, "StormSoftware", "ExamplesCLIApp")
       }
     : ({
         data: process.env.STORM_DATA_DIR
-          ? join(process.env.STORM_DATA_DIR, appName)
+          ? join(process.env.STORM_DATA_DIR, name)
           : join(
               process.env.XDG_DATA_HOME || join(homedir, ".local", "share"),
               organization,
-              appName
+              name
             ),
         config: process.env.STORM_CONFIG_DIR
-          ? join(process.env.STORM_CONFIG_DIR, appName)
+          ? join(process.env.STORM_CONFIG_DIR, name)
           : join(
               process.env.XDG_CONFIG_HOME || join(homedir, ".config"),
               organization,
-              appName
+              name
             ),
         cache: process.env.STORM_CACHE_DIR
-          ? join(process.env.STORM_CACHE_DIR, appName)
+          ? join(process.env.STORM_CACHE_DIR, name)
           : join(
               process.env.XDG_CACHE_HOME || join(homedir, ".cache"),
               organization,
-              appName
+              name
             ),
         log: join(
           process.env.XDG_STATE_HOME || join(homedir, ".local", "state"),
           organization,
-          appName
+          name
         ),
         temp: process.env.STORM_TEMP_DIR
-          ? join(process.env.STORM_TEMP_DIR, appName)
+          ? join(process.env.STORM_TEMP_DIR, name)
           : process.env.DEVENV_RUNTIME || process.env.XDG_RUNTIME_DIR
             ? join(
                 (process.env.DEVENV_RUNTIME || process.env.XDG_RUNTIME_DIR)!,
                 organization,
-                appName
+                name
               )
-            : join(tmpdir, basename(homedir), organization, appName)
+            : join(tmpdir, basename(homedir), organization, name)
       } as StormEnvPaths);
 
 /** The static build information collection */
@@ -304,3 +300,507 @@ export const runtime = {
   isUnicodeSupported,
   isServer: isNode || build.platform === "node"
 } as StormRuntimeInfo;
+
+export type StormVariables = {
+  /**
+   * The appcircle build ID. This value is set by certain CI/CD systems.
+   */
+  AC_APPCIRCLE?: string;
+
+  /**
+   * The agola git reference. This value is set by certain CI/CD systems.
+   */
+  AGOLA_GIT_REF?: string;
+
+  /**
+   * The name of the application.
+   */
+  APP_NAME: string;
+
+  /**
+   * The version of the application.
+   */
+  APP_VERSION: string;
+
+  /**
+   * The appcenter build ID. This value is set by certain CI/CD systems.
+   */
+  APPCENTER_BUILD_ID?: string;
+
+  /**
+   * A variable that specifies the application data directory on Windows.
+   */
+  APPDATA?: string;
+
+  /**
+   * The appveyor build ID. This value is set by certain CI/CD systems.
+   */
+  APPVEYOR?: string;
+
+  /**
+   * The bamboo plan key. This value is set by certain CI/CD systems.
+   */
+  bamboo_planKey?: string;
+
+  /**
+   * The bitbucket commit. This value is set by certain CI/CD systems.
+   */
+  BITBUCKET_COMMIT?: string;
+
+  /**
+   * The bitrise build ID. This value is set by certain CI/CD systems.
+   */
+  BITRISE_IO?: string;
+
+  /**
+   * The buddy workspace ID. This value is set by certain CI/CD systems.
+   */
+  BUDDY_WORKSPACE_ID?: string;
+
+  /**
+   * A checksum hash created during the build.
+   */
+  BUILD_CHECKSUM: string;
+
+  /**
+   * The unique identifier for the build.
+   */
+  BUILD_ID: string;
+
+  /**
+   * The timestamp the build was ran at.
+   */
+  BUILD_TIMESTAMP: number;
+
+  /**
+   * The builder output build ID. This value is set by certain CI/CD systems.
+   */
+  BUILDER_OUTPUT?: string;
+
+  /**
+   * The buildkite build ID. This value is set by certain CI/CD systems.
+   */
+  BUILDKITE?: string;
+
+  /**
+   * The cf build ID. This value is set by certain CI/CD systems.
+   */
+  CF_BUILD_ID?: string;
+
+  /**
+   * An indicator that specifies the current runtime is a continuous integration environment.
+   */
+  CI: boolean;
+
+  /**
+   * The ci name. This value is set by certain CI/CD systems.
+   */
+  CI_NAME?: string;
+
+  /**
+   * The xcode project build ID. This value is set by certain CI/CD systems.
+   */
+  CI_XCODE_PROJECT?: string;
+
+  /**
+   * The circleci build ID. This value is set by certain CI/CD systems.
+   */
+  CIRCLECI?: string;
+
+  /**
+   * The cirrusci build ID. This value is set by certain CI/CD systems.
+   */
+  CIRRUS_CI?: string;
+
+  /**
+   * The cm build ID. This value is set by certain CI/CD systems.
+   */
+  CM_BUILD_ID?: string;
+
+  /**
+   * The codebuild build ID. This value is set by certain CI/CD systems.
+   */
+  CODEBUILD?: string;
+
+  /**
+   * The ConEmu task name. This variable is set by certain terminal emulators.
+   */
+  ConEmuTask?: string;
+
+  /**
+   * An indicator that specifies the current runtime is a continuous integration environment.
+   */
+  CONTINUOUS_INTEGRATION: boolean;
+
+  /**
+   * The cursor trace ID. This variable is set by certain terminal emulators.
+   */
+  CURSOR_TRACE_ID?: string;
+
+  /**
+   * Indicates if the application is running in debug mode.
+   */
+  DEBUG: boolean;
+
+  /**
+   * The default locale for the application.
+   */
+  DEFAULT_LOCALE: string;
+
+  /**
+   * The default timezone for the application.
+   */
+  DEFAULT_TIMEZONE: string;
+
+  /**
+   * A variable that specifies the [Devenv](https://devenv.sh/) runtime directory.
+   */
+  DEVENV_RUNTIME?: string;
+
+  /**
+   * The drone build ID. This value is set by certain CI/CD systems.
+   */
+  DRONE?: string;
+
+  /**
+   * The dsari build ID. This value is set by certain CI/CD systems.
+   */
+  DSARI?: string;
+
+  /**
+   * The earthly build ID. This value is set by certain CI/CD systems.
+   */
+  EARTHLY_CI?: string;
+
+  /**
+   * The eas build ID. This value is set by certain CI/CD systems.
+   */
+  EAS_BUILD?: string;
+
+  /**
+   * The environment the application is running in. This value will be populated with the value of `MODE` if not provided.
+   */
+  ENVIRONMENT: string;
+
+  /**
+   * An API end point to lookup error messages given an error code.
+   */
+  ERROR_URL: string;
+
+  /**
+   * An indicator that specifies the current runtime is a force color environment.
+   */
+  FORCE_COLOR: boolean;
+
+  /**
+   * An indicator that specifies the current runtime should force hyperlinks in terminal output.
+   */
+  FORCE_HYPERLINK: boolean;
+
+  /**
+   * The gerrit project. This value is set by certain CI/CD systems.
+   */
+  GERRIT_PROJECT?: string;
+
+  /**
+   * The gitea actions build ID. This value is set by certain CI/CD systems.
+   */
+  GITEA_ACTIONS?: string;
+
+  /**
+   * The github actions build ID. This value is set by certain CI/CD systems.
+   */
+  GITHUB_ACTIONS?: string;
+
+  /**
+   * The gitlab ci build ID. This value is set by certain CI/CD systems.
+   */
+  GITLAB_CI?: string;
+
+  /**
+   * The go cd build ID. This value is set by certain CI/CD systems.
+   */
+  GOCD?: string;
+
+  /**
+   * The harness build ID. This value is set by certain CI/CD systems.
+   */
+  HARNESS_BUILD_ID?: string;
+
+  /**
+   * The hudson build ID. This value is set by certain CI/CD systems.
+   */
+  HUDSON?: string;
+
+  /**
+   * Indicates if error data should be included.
+   */
+  INCLUDE_ERROR_DATA: boolean;
+
+  /**
+   * The jenkins url. This value is set by certain CI/CD systems.
+   */
+  JENKINS_URL?: string;
+
+  /**
+   * The layerci build ID. This value is set by certain CI/CD systems.
+   */
+  LAYERCI?: string;
+
+  /**
+   * A variable that specifies the current user's local application data directory on Windows.
+   */
+  LOCALAPPDATA?: string;
+
+  /**
+   * The default lowest log level to accept. If `null`, the logger will reject all records. This value only applies if `lowestLogLevel` is not provided to the `logs` configuration.
+   */
+  LOG_LEVEL?: "debug" | "info" | "warning" | "error" | "fatal" | null;
+
+  /**
+   * The magnum build ID. This value is set by certain CI/CD systems.
+   */
+  MAGNUM?: string;
+
+  /**
+   * An indicator that specifies the current runtime is a minimal environment.
+   */
+  MINIMAL: boolean;
+
+  /**
+   * The mode in which the application is running.
+   */
+  MODE: "development" | "staging" | "production";
+
+  /**
+   * The netlify build ID. This value is set by certain CI/CD systems.
+   */
+  NETLIFY?: string;
+
+  /**
+   * The nevercode build ID. This value is set by certain CI/CD systems.
+   */
+  NEVERCODE?: string;
+
+  /**
+   * An indicator that specifies the current runtime is a no color environment.
+   */
+  NO_COLOR: boolean;
+
+  /**
+   * The environment the application is running in. This variable is a duplicate of `ENVIRONMENT` to support use in external packages.
+   */
+  NODE_ENV: "development" | "staging" | "production";
+
+  /**
+   * The now builder build ID. This value is set by certain CI/CD systems.
+   */
+  NOW_BUILDER?: string;
+
+  /**
+   * The name of the organization that maintains the application.
+   */
+  ORGANIZATION: string;
+
+  /**
+   * The platform for which the application was built.
+   */
+  PLATFORM: "node" | "browser";
+
+  /**
+   * The prow job ID. This value is set by certain CI/CD systems.
+   */
+  PROW_JOB_ID?: string;
+
+  /**
+   * The release build ID. This value is set by certain CI/CD systems.
+   */
+  RELEASE_BUILD_ID?: string;
+
+  /**
+   * The unique identifier for the release.
+   */
+  RELEASE_ID: string;
+
+  /**
+   * The tag for the release. This is generally in the format of "\<APP_NAME\>\@\<APP_VERSION\>".
+   */
+  RELEASE_TAG: string;
+
+  /**
+   * The render build ID. This value is set by certain CI/CD systems.
+   */
+  RENDER?: string;
+
+  /**
+   * The unique identifier for the current run. This value is set by certain CI/CD systems.
+   */
+  RUN_ID?: string;
+
+  /**
+   * The sailci build ID. This value is set by certain CI/CD systems.
+   */
+  SAILCI?: string;
+
+  /**
+   * The screwdriver build ID. This value is set by certain CI/CD systems.
+   */
+  SCREWDRIVER?: string;
+
+  /**
+   * The semaphore build ID. This value is set by certain CI/CD systems.
+   */
+  SEMAPHORE?: string;
+
+  /**
+   * The DSN for Sentry
+   */
+  SENTRY_DSN: string;
+
+  /**
+   * The sourcehut build ID. This value is set by certain CI/CD systems.
+   */
+  SOURCEHUT?: string;
+
+  /**
+   * Indicates if error stack traces should be captured.
+   */
+  STACKTRACE: boolean;
+
+  /**
+   * The Storm Stack application's cached data directory.
+   */
+  STORM_CACHE_DIR?: string;
+
+  /**
+   * The Storm Stack application's configuration data directory.
+   */
+  STORM_CONFIG_DIR?: string;
+
+  /**
+   * The Storm Stack application's runtime data directory.
+   */
+  STORM_DATA_DIR?: string;
+
+  /**
+   * The Storm Stack application's logging directory.
+   */
+  STORM_LOG_DIR?: string;
+
+  /**
+   * An indicator that specifies the application is running in the local Storm Stack development environment.
+   */
+  STORM_STACK_LOCAL: boolean;
+
+  /**
+   * The Storm Stack application's temporary data directory.
+   */
+  STORM_TEMP_DIR?: string;
+
+  /**
+   * The strider build ID. This value is set by certain CI/CD systems.
+   */
+  STRIDER?: string;
+
+  /**
+   * The task ID. This value is set by certain CI/CD systems.
+   */
+  TASK_ID?: string;
+
+  /**
+   * The teamcity version. This value is set by certain CI/CD systems.
+   */
+  TEAMCITY_VERSION?: string;
+
+  /**
+   * The terminal type. This variable is set by certain CI/CD systems.
+   */
+  TERM?: string;
+
+  /**
+   * The terminal program name. This variable is set by certain terminal emulators.
+   */
+  TERM_PROGRAM: string;
+
+  /**
+   * The terminal program version. This variable is set by certain terminal emulators.
+   */
+  TERM_PROGRAM_VERSION: string;
+
+  /**
+   * The terminal emulator name. This variable is set by certain terminal emulators.
+   */
+  TERMINAL_EMULATOR?: string;
+
+  /**
+   * An indicator that specifies the current terminal is running Terminus Sublime. This variable is set by certain terminal emulators.
+   */
+  TERMINUS_SUBLIME?: boolean;
+
+  /**
+   * An indicator that specifies the current runtime is a test environment.
+   */
+  TEST: boolean;
+
+  /**
+   * The task force build ID. This value is set by certain CI/CD systems.
+   */
+  TF_BUILD?: string;
+
+  /**
+   * The travis build ID. This value is set by certain CI/CD systems.
+   */
+  TRAVIS?: string;
+
+  /**
+   * The vela build ID. This value is set by certain CI/CD systems.
+   */
+  VELA?: string;
+
+  /**
+   * The Vercel environment. This variable is set by Vercel when the application is running in a Vercel environment.
+   */
+  VERCEL_ENV?: string;
+
+  /**
+   * The VTE version. This variable is set by certain terminal emulators.
+   */
+  VTE_VERSION?: string;
+
+  /**
+   * The terminal emulator session ID. This variable is set by certain terminal emulators.
+   */
+  WT_SESSION?: string;
+
+  /**
+   * The xcode server build ID. This value is set by certain CI/CD systems.
+   */
+  XCS?: string;
+
+  /**
+   * A variable that specifies the cache path in the home directory on Linux systems using the XDG base directory specification.
+   */
+  XDG_CACHE_HOME?: string;
+
+  /**
+   * A variable that specifies the configuration path in the home directory on Linux systems using the XDG base directory specification.
+   */
+  XDG_CONFIG_HOME?: string;
+
+  /**
+   * A variable that specifies the data path in the home directory on Linux systems using the XDG base directory specification.
+   */
+  XDG_DATA_HOME?: string;
+
+  /**
+   * A variable that specifies the runtime directory on Linux systems using the XDG base directory specification.
+   */
+  XDG_RUNTIME_DIR?: string;
+
+  /**
+   * A variable that specifies the state directory on Linux systems using the XDG base directory specification.
+   */
+  XDG_STATE_HOME?: string;
+
+  [key: string]: any;
+};

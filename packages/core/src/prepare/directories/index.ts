@@ -33,52 +33,22 @@ export async function prepareDirectories<TOptions extends Options = Options>(
     `Preparing the artifact directories for the Storm Stack project.`
   );
 
-  if (
-    !existsSync(joinPaths(context.options.projectRoot, context.artifactsDir))
-  ) {
-    await createDirectory(
-      joinPaths(context.options.projectRoot, context.artifactsDir)
-    );
+  if (!existsSync(joinPaths(context.artifactsPath))) {
+    await createDirectory(joinPaths(context.artifactsPath));
   }
 
   if (context.options.projectType === "application") {
-    if (
-      !existsSync(
-        joinPaths(context.options.projectRoot, context.artifactsDir, "runtime")
-      )
-    ) {
-      await createDirectory(
-        joinPaths(context.options.projectRoot, context.artifactsDir, "runtime")
-      );
+    if (!existsSync(context.runtimePath)) {
+      await createDirectory(context.runtimePath);
     }
   }
 
-  if (
-    !existsSync(
-      joinPaths(context.options.projectRoot, context.artifactsDir, "types")
-    )
-  ) {
-    await createDirectory(
-      joinPaths(context.options.projectRoot, context.artifactsDir, "types")
-    );
+  if (!existsSync(joinPaths(context.artifactsPath, "types"))) {
+    await createDirectory(joinPaths(context.artifactsPath, "types"));
   }
 
-  if (
-    !existsSync(
-      joinPaths(
-        context.options.projectRoot,
-        context.artifactsDir,
-        "reflections"
-      )
-    )
-  ) {
-    await createDirectory(
-      joinPaths(
-        context.options.projectRoot,
-        context.artifactsDir,
-        "reflections"
-      )
-    );
+  if (!existsSync(joinPaths(context.artifactsPath, "reflections"))) {
+    await createDirectory(joinPaths(context.artifactsPath, "reflections"));
   }
 
   await hooks.callHook("prepare:directories", context).catch((error: Error) => {

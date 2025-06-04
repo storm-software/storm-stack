@@ -109,13 +109,16 @@ async function handler() {
 
       if (args["no-banner"] !== true && !isMinimal) {
         console.log(
-          renderBanner("Serve", "Start a server and serve the application.")
+          renderBanner(
+            "Serve Command",
+            "Start a server and serve the application."
+          )
         );
         console.log("");
       }
 
       if (args["help"] || args["h"] || args["?"]) {
-        console.log(renderUsage(true));
+        console.log(renderUsage("full"));
         console.log("");
         console.log(renderFooter());
         console.log("");

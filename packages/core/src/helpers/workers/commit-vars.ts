@@ -27,6 +27,9 @@ import { existsSync } from "@stryke/path/exists";
 import { readFile, writeFile } from "node:fs/promises";
 import { format, resolveConfig } from "prettier";
 
+/**
+ * Interface representing the data required to commit variables.
+ */
 export interface CommitVarsData {
   /**
    * The variables to commit.

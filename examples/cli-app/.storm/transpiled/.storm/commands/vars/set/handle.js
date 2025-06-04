@@ -1,18 +1,12 @@
 var __defProp = Object.defineProperty;
 var __name = (target, value) => __defProp(target, "name", { value, configurable: true });
 
-// examples/cli-app/.storm/commands/vars/list/handle.ts
-import { deserialize } from "@deepkit/type";
-
-// examples/cli-app/.storm/runtime/cli.ts
-import { confirm, multiselect, select, text } from "@clack/prompts";
-
 // examples/cli-app/.storm/runtime/env.ts
 import os from "node:os";
 import { basename, join } from "node:path";
 var hasTTY = Boolean(process.stdout && process.stdout.isTTY);
 var isCI = Boolean(process.env.STORM_CI || process.env.CI || process.env.CONTINUOUS_INTEGRATION || process.env.RUN_ID || process.env.AGOLA_GIT_REF || process.env.AC_APPCIRCLE || process.env.APPVEYOR || process.env.CODEBUILD || process.env.TF_BUILD || process.env.bamboo_planKey || process.env.BITBUCKET_COMMIT || process.env.BITRISE_IO || process.env.BUDDY_WORKSPACE_ID || process.env.BUILDKITE || process.env.CIRCLECI || process.env.CIRRUS_CI || process.env.CF_BUILD_ID || process.env.CM_BUILD_ID || process.env.CI_NAME || process.env.DRONE || process.env.DSARI || process.env.EARTHLY_CI || process.env.EAS_BUILD || process.env.GERRIT_PROJECT || process.env.GITEA_ACTIONS || process.env.GITHUB_ACTIONS || process.env.GITLAB_CI || process.env.GOCD || process.env.BUILDER_OUTPUT || process.env.HARNESS_BUILD_ID || process.env.JENKINS_URL || process.env.LAYERCI || process.env.MAGNUM || process.env.NETLIFY || process.env.NEVERCODE || process.env.PROW_JOB_ID || process.env.RELEASE_BUILD_ID || process.env.RENDER || process.env.SAILCI || process.env.HUDSON || process.env.SCREWDRIVER || process.env.SEMAPHORE || process.env.SOURCEHUT || process.env.STRIDER || process.env.TASK_ID || process.env.RUN_ID || process.env.TEAMCITY_VERSION || process.env.TRAVIS || process.env.VELA || process.env.NOW_BUILDER || process.env.APPCENTER_BUILD_ID || process.env.CI_XCODE_PROJECT || process.env.XCS || false);
-var mode = "production";
+var mode = String("production");
 var isProduction = ["prd", "prod", "production"].includes(mode.toLowerCase());
 var isStaging = ["stg", "stage", "staging"].includes(mode.toLowerCase());
 var isDevelopment = ["dev", "development"].includes(mode.toLowerCase());
@@ -27,34 +21,34 @@ var isUnicodeSupported = process.platform !== "win32" ? process.env.TERM !== "li
 var isColorSupported = !process.env.NO_COLOR && (Boolean(process.env.FORCE_COLOR) || (hasTTY || isWindows) && process.env.TERM !== "dumb");
 var isNode = globalThis.process?.release?.name === "node";
 var organization = "storm-software";
-var appName = "examples-cli-app";
+var name = "examples-cli-app";
 var homedir = os.homedir();
 var tmpdir = os.tmpdir();
 var paths = isMacOS ? {
-  data: process.env.STORM_DATA_DIR ? join(process.env.STORM_DATA_DIR, appName) : join(homedir, "Library", "Application Support", organization, appName),
-  config: process.env.STORM_CONFIG_DIR ? join(process.env.STORM_CONFIG_DIR, appName) : join(homedir, "Library", "Preferences", organization, appName),
-  cache: process.env.STORM_CACHE_DIR ? join(process.env.STORM_CACHE_DIR, appName) : join(homedir, "Library", "Caches", organization, appName),
-  log: process.env.STORM_LOG_DIR ? join(process.env.STORM_LOG_DIR, appName) : join(homedir, "Library", "Logs", organization, appName),
-  temp: process.env.STORM_TEMP_DIR ? join(process.env.STORM_TEMP_DIR, appName) : join(tmpdir, organization, appName)
+  data: process.env.STORM_DATA_DIR ? join(process.env.STORM_DATA_DIR, name) : join(homedir, "Library", "Application Support", organization, name),
+  config: process.env.STORM_CONFIG_DIR ? join(process.env.STORM_CONFIG_DIR, name) : join(homedir, "Library", "Preferences", organization, name),
+  cache: process.env.STORM_CACHE_DIR ? join(process.env.STORM_CACHE_DIR, name) : join(homedir, "Library", "Caches", organization, name),
+  log: process.env.STORM_LOG_DIR ? join(process.env.STORM_LOG_DIR, name) : join(homedir, "Library", "Logs", organization, name),
+  temp: process.env.STORM_TEMP_DIR ? join(process.env.STORM_TEMP_DIR, name) : join(tmpdir, organization, name)
 } : isWindows ? {
-  data: process.env.STORM_DATA_DIR ? join(process.env.STORM_DATA_DIR, appName) : join(process.env.LOCALAPPDATA || join(homedir, "AppData", "Local"), "StormSoftware", "ExamplesCLIApp", "Data"),
-  config: process.env.STORM_CONFIG_DIR ? join(process.env.STORM_CONFIG_DIR, appName) : join(process.env.APPDATA || join(homedir, "AppData", "Roaming"), "StormSoftware", "ExamplesCLIApp", "Config"),
-  cache: process.env.STORM_CACHE_DIR ? join(process.env.STORM_CACHE_DIR, appName) : join(process.env.LOCALAPPDATA || join(homedir, "AppData", "Local"), "Cache", "StormSoftware"),
-  log: process.env.STORM_LOG_DIR ? join(process.env.STORM_LOG_DIR, appName) : join(process.env.LOCALAPPDATA || join(homedir, "AppData", "Local"), "StormSoftware", "ExamplesCLIApp", "Log"),
-  temp: process.env.STORM_TEMP_DIR ? join(process.env.STORM_TEMP_DIR, appName) : join(tmpdir, "StormSoftware", "ExamplesCLIApp")
+  data: process.env.STORM_DATA_DIR ? join(process.env.STORM_DATA_DIR, name) : join(process.env.LOCALAPPDATA || join(homedir, "AppData", "Local"), "StormSoftware", "ExamplesCLIApp", "Data"),
+  config: process.env.STORM_CONFIG_DIR ? join(process.env.STORM_CONFIG_DIR, name) : join(process.env.APPDATA || join(homedir, "AppData", "Roaming"), "StormSoftware", "ExamplesCLIApp", "Config"),
+  cache: process.env.STORM_CACHE_DIR ? join(process.env.STORM_CACHE_DIR, name) : join(process.env.LOCALAPPDATA || join(homedir, "AppData", "Local"), "Cache", "StormSoftware"),
+  log: process.env.STORM_LOG_DIR ? join(process.env.STORM_LOG_DIR, name) : join(process.env.LOCALAPPDATA || join(homedir, "AppData", "Local"), "StormSoftware", "ExamplesCLIApp", "Log"),
+  temp: process.env.STORM_TEMP_DIR ? join(process.env.STORM_TEMP_DIR, name) : join(tmpdir, "StormSoftware", "ExamplesCLIApp")
 } : {
-  data: process.env.STORM_DATA_DIR ? join(process.env.STORM_DATA_DIR, appName) : join(process.env.XDG_DATA_HOME || join(homedir, ".local", "share"), organization, appName),
-  config: process.env.STORM_CONFIG_DIR ? join(process.env.STORM_CONFIG_DIR, appName) : join(process.env.XDG_CONFIG_HOME || join(homedir, ".config"), organization, appName),
-  cache: process.env.STORM_CACHE_DIR ? join(process.env.STORM_CACHE_DIR, appName) : join(process.env.XDG_CACHE_HOME || join(homedir, ".cache"), organization, appName),
-  log: join(process.env.XDG_STATE_HOME || join(homedir, ".local", "state"), organization, appName),
-  temp: process.env.STORM_TEMP_DIR ? join(process.env.STORM_TEMP_DIR, appName) : process.env.DEVENV_RUNTIME || process.env.XDG_RUNTIME_DIR ? join(process.env.DEVENV_RUNTIME || process.env.XDG_RUNTIME_DIR, organization, appName) : join(tmpdir, basename(homedir), organization, appName)
+  data: process.env.STORM_DATA_DIR ? join(process.env.STORM_DATA_DIR, name) : join(process.env.XDG_DATA_HOME || join(homedir, ".local", "share"), organization, name),
+  config: process.env.STORM_CONFIG_DIR ? join(process.env.STORM_CONFIG_DIR, name) : join(process.env.XDG_CONFIG_HOME || join(homedir, ".config"), organization, name),
+  cache: process.env.STORM_CACHE_DIR ? join(process.env.STORM_CACHE_DIR, name) : join(process.env.XDG_CACHE_HOME || join(homedir, ".cache"), organization, name),
+  log: join(process.env.XDG_STATE_HOME || join(homedir, ".local", "state"), organization, name),
+  temp: process.env.STORM_TEMP_DIR ? join(process.env.STORM_TEMP_DIR, name) : process.env.DEVENV_RUNTIME || process.env.XDG_RUNTIME_DIR ? join(process.env.DEVENV_RUNTIME || process.env.XDG_RUNTIME_DIR, organization, name) : join(tmpdir, basename(homedir), organization, name)
 };
 var build = {
   packageName: "@storm-stack/examples-cli-app",
   organization,
-  buildId: "ZlNf8q2HtQNPchJlVm9tA4lb",
-  timestamp: 1748452530182 ? Number(1748452530182) : 0,
-  releaseId: "NMvON_A5IcBYdgd9QaJvyel7",
+  buildId: "vN5Y2uno-KLhP9-4dm_Ex76L",
+  timestamp: 1749009315945 ? Number(1749009315945) : 0,
+  releaseId: "HvlEAyPa69oGj9f4-Rzi3zko",
   releaseTag: "examples-cli-app@0.0.1",
   mode,
   platform: "node",
@@ -77,6 +71,13 @@ var runtime = {
   isUnicodeSupported,
   isServer: isNode || build.platform === "node"
 };
+var __\u03A9StormVariables = ["AC_APPCIRCLE", "The appcircle build ID. This value is set by certain CI/CD systems.", "AGOLA_GIT_REF", "The agola git reference. This value is set by certain CI/CD systems.", "APP_NAME", "The name of the application.", "APP_VERSION", "The version of the application.", "APPCENTER_BUILD_ID", "The appcenter build ID. This value is set by certain CI/CD systems.", "APPDATA", "A variable that specifies the application data directory on Windows.", "APPVEYOR", "The appveyor build ID. This value is set by certain CI/CD systems.", "bamboo_planKey", "The bamboo plan key. This value is set by certain CI/CD systems.", "BITBUCKET_COMMIT", "The bitbucket commit. This value is set by certain CI/CD systems.", "BITRISE_IO", "The bitrise build ID. This value is set by certain CI/CD systems.", "BUDDY_WORKSPACE_ID", "The buddy workspace ID. This value is set by certain CI/CD systems.", "BUILD_CHECKSUM", "A checksum hash created during the build.", "BUILD_ID", "The unique identifier for the build.", "BUILD_TIMESTAMP", "The timestamp the build was ran at.", "BUILDER_OUTPUT", "The builder output build ID. This value is set by certain CI/CD systems.", "BUILDKITE", "The buildkite build ID. This value is set by certain CI/CD systems.", "CF_BUILD_ID", "The cf build ID. This value is set by certain CI/CD systems.", "CI", "An indicator that specifies the current runtime is a continuous integration environment.", "CI_NAME", "The ci name. This value is set by certain CI/CD systems.", "CI_XCODE_PROJECT", "The xcode project build ID. This value is set by certain CI/CD systems.", "CIRCLECI", "The circleci build ID. This value is set by certain CI/CD systems.", "CIRRUS_CI", "The cirrusci build ID. This value is set by certain CI/CD systems.", "CM_BUILD_ID", "The cm build ID. This value is set by certain CI/CD systems.", "CODEBUILD", "The codebuild build ID. This value is set by certain CI/CD systems.", "ConEmuTask", "The ConEmu task name. This variable is set by certain terminal emulators.", "CONTINUOUS_INTEGRATION", "CURSOR_TRACE_ID", "The cursor trace ID. This variable is set by certain terminal emulators.", "DEBUG", "Indicates if the application is running in debug mode.", "DEFAULT_LOCALE", "The default locale for the application.", "DEFAULT_TIMEZONE", "The default timezone for the application.", "DEVENV_RUNTIME", "A variable that specifies the [Devenv](https://devenv.sh/) runtime directory.", "DRONE", "The drone build ID. This value is set by certain CI/CD systems.", "DSARI", "The dsari build ID. This value is set by certain CI/CD systems.", "EARTHLY_CI", "The earthly build ID. This value is set by certain CI/CD systems.", "EAS_BUILD", "The eas build ID. This value is set by certain CI/CD systems.", "ENVIRONMENT", "The environment the application is running in. This value will be populated with the value of `MODE` if not provided.", "ERROR_URL", "An API end point to lookup error messages given an error code.", "FORCE_COLOR", "An indicator that specifies the current runtime is a force color environment.", "FORCE_HYPERLINK", "An indicator that specifies the current runtime should force hyperlinks in terminal output.", "GERRIT_PROJECT", "The gerrit project. This value is set by certain CI/CD systems.", "GITEA_ACTIONS", "The gitea actions build ID. This value is set by certain CI/CD systems.", "GITHUB_ACTIONS", "The github actions build ID. This value is set by certain CI/CD systems.", "GITLAB_CI", "The gitlab ci build ID. This value is set by certain CI/CD systems.", "GOCD", "The go cd build ID. This value is set by certain CI/CD systems.", "HARNESS_BUILD_ID", "The harness build ID. This value is set by certain CI/CD systems.", "HUDSON", "The hudson build ID. This value is set by certain CI/CD systems.", "INCLUDE_ERROR_DATA", "Indicates if error data should be included.", "JENKINS_URL", "The jenkins url. This value is set by certain CI/CD systems.", "LAYERCI", "The layerci build ID. This value is set by certain CI/CD systems.", "LOCALAPPDATA", "A variable that specifies the current user's local application data directory on Windows.", "debug", "info", "warning", "error", "fatal", "LOG_LEVEL", "The default lowest log level to accept. If `null`, the logger will reject all records. This value only applies if `lowestLogLevel` is not provided to the `logs` configuration.", "MAGNUM", "The magnum build ID. This value is set by certain CI/CD systems.", "MINIMAL", "An indicator that specifies the current runtime is a minimal environment.", "development", "staging", "production", "MODE", "The mode in which the application is running.", "NETLIFY", "The netlify build ID. This value is set by certain CI/CD systems.", "NEVERCODE", "The nevercode build ID. This value is set by certain CI/CD systems.", "NO_COLOR", "An indicator that specifies the current runtime is a no color environment.", "development", "staging", "production", "NODE_ENV", "The environment the application is running in. This variable is a duplicate of `ENVIRONMENT` to support use in external packages.", "NOW_BUILDER", "The now builder build ID. This value is set by certain CI/CD systems.", "ORGANIZATION", "The name of the organization that maintains the application.", "node", "browser", "PLATFORM", "The platform for which the application was built.", "PROW_JOB_ID", "The prow job ID. This value is set by certain CI/CD systems.", "RELEASE_BUILD_ID", "The release build ID. This value is set by certain CI/CD systems.", "RELEASE_ID", "The unique identifier for the release.", "RELEASE_TAG", 'The tag for the release. This is generally in the format of "\\<APP_NAME\\>\\@\\<APP_VERSION\\>".', "RENDER", "The render build ID. This value is set by certain CI/CD systems.", "RUN_ID", "The unique identifier for the current run. This value is set by certain CI/CD systems.", "SAILCI", "The sailci build ID. This value is set by certain CI/CD systems.", "SCREWDRIVER", "The screwdriver build ID. This value is set by certain CI/CD systems.", "SEMAPHORE", "The semaphore build ID. This value is set by certain CI/CD systems.", "SENTRY_DSN", "The DSN for Sentry", "SOURCEHUT", "The sourcehut build ID. This value is set by certain CI/CD systems.", "STACKTRACE", "Indicates if error stack traces should be captured.", "STORM_CACHE_DIR", "The Storm Stack application's cached data directory.", "STORM_CONFIG_DIR", "The Storm Stack application's configuration data directory.", "STORM_DATA_DIR", "The Storm Stack application's runtime data directory.", "STORM_LOG_DIR", "The Storm Stack application's logging directory.", "STORM_STACK_LOCAL", "An indicator that specifies the application is running in the local Storm Stack development environment.", "STORM_TEMP_DIR", "The Storm Stack application's temporary data directory.", "STRIDER", "The strider build ID. This value is set by certain CI/CD systems.", "TASK_ID", "The task ID. This value is set by certain CI/CD systems.", "TEAMCITY_VERSION", "The teamcity version. This value is set by certain CI/CD systems.", "TERM", "The terminal type. This variable is set by certain CI/CD systems.", "TERM_PROGRAM", "The terminal program name. This variable is set by certain terminal emulators.", "TERM_PROGRAM_VERSION", "The terminal program version. This variable is set by certain terminal emulators.", "TERMINAL_EMULATOR", "The terminal emulator name. This variable is set by certain terminal emulators.", "TERMINUS_SUBLIME", "An indicator that specifies the current terminal is running Terminus Sublime. This variable is set by certain terminal emulators.", "TEST", "An indicator that specifies the current runtime is a test environment.", "TF_BUILD", "The task force build ID. This value is set by certain CI/CD systems.", "TRAVIS", "The travis build ID. This value is set by certain CI/CD systems.", "VELA", "The vela build ID. This value is set by certain CI/CD systems.", "VERCEL_ENV", "The Vercel environment. This variable is set by Vercel when the application is running in a Vercel environment.", "VTE_VERSION", "The VTE version. This variable is set by certain terminal emulators.", "WT_SESSION", "The terminal emulator session ID. This variable is set by certain terminal emulators.", "XCS", "The xcode server build ID. This value is set by certain CI/CD systems.", "XDG_CACHE_HOME", "A variable that specifies the cache path in the home directory on Linux systems using the XDG base directory specification.", "XDG_CONFIG_HOME", "A variable that specifies the configuration path in the home directory on Linux systems using the XDG base directory specification.", "XDG_DATA_HOME", "A variable that specifies the data path in the home directory on Linux systems using the XDG base directory specification.", "XDG_RUNTIME_DIR", "A variable that specifies the runtime directory on Linux systems using the XDG base directory specification.", "XDG_STATE_HOME", "A variable that specifies the state directory on Linux systems using the XDG base directory specification.", "StormVariables", `P&4!8?"&4#8?$&4%?&&4'?(&4)8?*&4+8?,&4-8?.&4/8?0&418?2&438?4&458?6&47?8&49?:'4;?<&4=8?>&4?8?@&4A8?B)4C?D&4E8?F&4G8?H&4I8?J&4K8?L&4M8?N&4O8?P&4Q8?R)4S?D&4T8?U)4V?W&4X?Y&4Z?[&4\\8?]&4^8?_&4\`8?a&4b8?c&4d8?e&4f?g&4h?i)4j?k)4l?m&4n8?o&4p8?q&4r8?s&4t8?u&4v8?w&4x8?y&4z8?{)4|?}&4~8?\x7F&4\x808?\x81&4\x828?\x83P.\x84.\x85.\x86.\x87.\x88,J4\x898?\x8A&4\x8B8?\x8C)4\x8D?\x8EP.\x8F.\x90.\x91J4\x92?\x93&4\x948?\x95&4\x968?\x97)4\x98?\x99P.\x9A.\x9B.\x9CJ4\x9D?\x9E&4\x9F8?\xA0&4\xA1?\xA2P.\xA3.\xA4J4\xA5?\xA6&4\xA78?\xA8&4\xA98?\xAA&4\xAB?\xAC&4\xAD?\xAE&4\xAF8?\xB0&4\xB18?\xB2&4\xB38?\xB4&4\xB58?\xB6&4\xB78?\xB8&4\xB9?\xBA&4\xBB8?\xBC)4\xBD?\xBE&4\xBF8?\xC0&4\xC18?\xC2&4\xC38?\xC4&4\xC58?\xC6)4\xC7?\xC8&4\xC98?\xCA&4\xCB8?\xCC&4\xCD8?\xCE&4\xCF8?\xD0&4\xD18?\xD2&4\xD3?\xD4&4\xD5?\xD6&4\xD78?\xD8)4\xD98?\xDA)4\xDB?\xDC&4\xDD8?\xDE&4\xDF8?\xE0&4\xE18?\xE2&4\xE38?\xE4&4\xE58?\xE6&4\xE78?\xE8&4\xE98?\xEA&4\xEB8?\xEC&4\xED8?\xEE&4\xEF8?\xF0&4\xF18?\xF2&4\xF38?\xF4&"LMw\xF5y`];
+
+// examples/cli-app/.storm/commands/vars/set/handle.ts
+import { deserialize, serialize } from "@deepkit/type";
+
+// examples/cli-app/.storm/runtime/cli.ts
+import { confirm, multiselect, select, text } from "@clack/prompts";
 
 // packages/types/src/shared/error.ts
 var __\u03A9Error = ["name", "message", "stack", "Error", 'P&4!&4"&4#8Mw$y'];
@@ -461,7 +462,7 @@ function parseVersion(versionString = "") {
 }
 __name(parseVersion, "parseVersion");
 parseVersion.__type = ["versionString", "parseVersion", 'P"2!"/"'];
-function isHyperlinkSupported(stream = process.stdout) {
+function isHyperlinkSupported(_stream = process.stdout) {
   if (process.env.FORCE_HYPERLINK) {
     return !(process.env.FORCE_HYPERLINK.length > 0 && Number.parseInt(process.env.FORCE_HYPERLINK, 10) === 0);
   }
@@ -509,7 +510,7 @@ function isHyperlinkSupported(stream = process.stdout) {
   return false;
 }
 __name(isHyperlinkSupported, "isHyperlinkSupported");
-isHyperlinkSupported.__type = ["stream", () => process.stdout, "isHyperlinkSupported", "Check if the current environment supports hyperlinks in the terminal.", 'P!2!>")/#?$'];
+isHyperlinkSupported.__type = ["_stream", () => process.stdout, "isHyperlinkSupported", "Check if the current environment supports hyperlinks in the terminal.", 'P!2!>")/#?$'];
 function link(url, text2, options = {}) {
   if (!isHyperlinkSupported(options.target === "stderr" ? process.stderr : process.stdout)) {
     return options.fallback ? options.fallback(url, text2) : isColorSupported ? `${text2 && text2 !== url ? `${text2} at ` : ""}${colors.underline(options.color !== false ? getColor(options.color || "blueBright")(url) : url)}` : `${text2 && text2 !== url ? `${text2} at ` : ""} ${url}`;
@@ -540,23 +541,30 @@ function stripAnsi(text2) {
 __name(stripAnsi, "stripAnsi");
 stripAnsi.__type = ["text", "stripAnsi", 'P&2!"/"'];
 function renderBanner(title, description) {
-  const consoleWidth = Math.max(process.stdout.columns - 2, 80);
-  const width = Math.max(Math.min(consoleWidth, Math.max(title.length + 2, 70)), 70);
+  let consoleWidth = Math.max(process.stdout.columns - 2, 80);
+  if (consoleWidth % 2)
+    consoleWidth++;
+  if (title.length % 2)
+    title += " ";
+  let width = Math.max(Math.min(consoleWidth, Math.max(title.length + 2, 70)), 80);
+  if (width % 2)
+    width++;
   const banner = [];
   banner.push(colors.cyan(`\u250F\u2501\u2501\u2501\u2501 Examples CLI App CLI \u2501 v0.0.1 ${"\u2501".repeat(width - 10 - 25)}\u2513`));
   banner.push(colors.cyan(`\u2503${" ".repeat(width)}\u2503`));
-  banner.push(`${colors.cyan("\u2503")}${" ".repeat((width - title.length) / 2)}${colors.whiteBright(colors.bold(title))}${" ".repeat((width - title.length) / 2)}${colors.cyan("\u2503")}`);
+  const titlePadding = (width - title.length) / 2;
+  banner.push(`${colors.cyan("\u2503")}${" ".repeat(titlePadding)}${colors.whiteBright(colors.bold(title))}${" ".repeat(titlePadding + width - (titlePadding * 2 + title.length))}${colors.cyan("\u2503")}`);
   banner.push(colors.cyan(`\u2503${" ".repeat(width)}\u2503`));
-  const text2 = description.length < width * 0.9 ? `${" ".repeat((width - description.length) / 2)}${description}${" ".repeat((width - description.length) / 2)}` : description.split(" ").reduce(__assignType2((ret, word) => {
+  const descriptionPadding = (width - description.length) / 2;
+  for (const line of (description.length < width * 0.85 ? `${" ".repeat(descriptionPadding)}${description}${" ".repeat(descriptionPadding + width - (descriptionPadding * 2 + description.length))}` : description.split(/\s+/).reduce(__assignType2((ret, word) => {
     const lines = ret.split("\n");
-    if (lines.length !== 0 && lines[lines.length - 1].length + word.length > width * 0.9) {
+    if (lines.length !== 0 && lines[lines.length - 1].length + word.length > width * 0.85) {
       ret += " \n";
     }
-    ret += `${word} `;
-    return ret;
-  }, ["ret", "word", "", 'P"2!"2""/#']), "");
-  for (const line of text2.split("\n")) {
-    banner.push(`${colors.cyan("\u2503")}${" ".repeat((width - line.length) / 2)}${colors.gray(line)}${" ".repeat((width - line.length) / 2)}${colors.cyan("\u2503")}`);
+    return `${ret}${word} `;
+  }, ["ret", "word", "", 'P"2!"2""/#']), "")).split("\n")) {
+    const linePadding = (width - stripAnsi(line).length) / 2;
+    banner.push(`${colors.cyan("\u2503")}${" ".repeat(linePadding)}${colors.gray(line)}${" ".repeat(linePadding + width - (linePadding * 2 + stripAnsi(line).length))}${colors.cyan("\u2503")}`);
   }
   banner.push(colors.cyan(`\u2503${" ".repeat(width)}\u2503`));
   banner.push(colors.cyan(`\u2517${"\u2501".repeat(width - 7 - 14)}\u2501 Storm Software \u2501\u2501\u2501\u2501\u251B`));
@@ -569,18 +577,15 @@ function renderFooter() {
   let supportRow = `You can reach out to the Storm Software - Support team via ${link("https://stormsoftware.com/support", "our website's support page")}.`;
   const supportRowLength = stripAnsi(supportRow).length;
   const footer = [];
-  footer.push(`
-${colors.whiteBright(colors.bold("Links:"))}`);
+  footer.push(`${colors.whiteBright(colors.bold("Links:"))}`);
   footer.push(`  ${colors.bold("Homepage:             ")}${link("https://stormsoftware.com")}`);
   footer.push(`  ${colors.bold("Support:              ")}${link("https://stormsoftware.com/support")}`);
   footer.push(`  ${colors.bold("Contact:              ")}${link("https://stormsoftware.com/contact")}`);
   footer.push(`  ${colors.bold("Documentation:        ")}${link("https://docs.stormsoftware.com/projects/storm-stack")}`);
   footer.push(`  ${colors.bold("Repository:           ")}${link("https://github.com/storm-software/storm-stack")}`);
   footer.push("\n");
-  footer.push("\n");
-  footer.push(`${" ".repeat((consoleWidth - 14) / 2)}${colors.bold("Storm Software")}${" ".repeat((consoleWidth - 14) / 2)}`);
+  footer.push(`${" ".repeat((consoleWidth - 14) / 2)}${colors.bold(colors.whiteBright("Storm Software"))}${" ".repeat((consoleWidth - 14) / 2)}`);
   if (isUnicodeSupported) {
-    footer.push("\n");
     const qrCodeLines = `\u2588\u2580\u2580\u2580\u2580\u2580\u2580\u2580\u2588\u2588\u2580\u2588\u2588\u2580\u2588\u2588\u2580\u2588\u2588\u2580\u2580\u2580\u2580\u2580\u2580\u2580\u2588
 \u2588 \u2588\u2580\u2580\u2580\u2588 \u2588 \u2580\u2580  \u2584 \u2584\u2584\u2588 \u2588\u2580\u2580\u2580\u2588 \u2588
 \u2588 \u2588   \u2588 \u2588\u2580\u2584\u2584\u2584\u2588\u2580   \u2588 \u2588   \u2588 \u2588
@@ -599,7 +604,6 @@ ${colors.whiteBright(colors.bold("Links:"))}`);
     footer.push(...qrCodeLines.map(__assignType2((line) => `${" ".repeat((consoleWidth - qrCodeMaxLength) / 2)}${line}${" ".repeat((consoleWidth - qrCodeMaxLength) / 2)}`, ["line", "", 'P"2!"/"'])));
   }
   footer.push(`${" ".repeat((consoleWidth - 25) / 2)}${link("https://stormsoftware.com")}${" ".repeat((consoleWidth - 25) / 2)}`);
-  footer.push("\n");
   footer.push("\n");
   footer.push(`${" ".repeat((consoleWidth - 66) / 2)}Examples CLI App CLI is authored and maintained by Storm Software.${" ".repeat((consoleWidth - 66) / 2)}`);
   if (supportRow) {
@@ -705,7 +709,7 @@ function parseArgs(args, opts) {
   let k;
   let arr;
   let arg;
-  let name;
+  let name2;
   let val;
   const out = { _: [] };
   let i = 0;
@@ -740,12 +744,12 @@ function parseArgs(args, opts) {
   }
   if (defaults) {
     for (k in opts.default) {
-      name = typeof opts.default[k];
+      name2 = typeof opts.default[k];
       arr = opts.alias[k] = opts.alias[k] || [];
-      if (opts[name] !== void 0) {
-        opts[name].push(k);
+      if (opts[name2] !== void 0) {
+        opts[name2].push(k);
         for (i = 0; i < arr.length; i++) {
-          opts[name].push(arr[i]);
+          opts[name2].push(arr[i]);
         }
       }
     }
@@ -764,24 +768,24 @@ function parseArgs(args, opts) {
     if (j === 0) {
       out._.push(arg);
     } else if (arg.substring(j, j + 3) === "no-") {
-      name = arg.substring(j + 3);
-      if (strict && !~keys.indexOf(name)) {
+      name2 = arg.substring(j + 3);
+      if (strict && !~keys.indexOf(name2)) {
         return opts.unknown(arg);
       }
-      out[name] = false;
+      out[name2] = false;
     } else {
       for (idx = j + 1; idx < arg.length; idx++) {
         if (arg.charCodeAt(idx) === 61)
           break;
       }
-      name = arg.substring(j, idx);
+      name2 = arg.substring(j, idx);
       val = arg.substring(++idx) || i + 1 === len || `${args[i + 1]}`.charCodeAt(0) === 45 || args[++i];
-      arr = j === 2 ? [name] : name;
+      arr = j === 2 ? [name2] : name2;
       for (idx = 0; idx < arr.length; idx++) {
-        name = arr[idx];
-        if (strict && !~keys.indexOf(name))
-          return opts.unknown("-".repeat(j) + name);
-        toVal(out, name, idx + 1 < arr.length || val, opts);
+        name2 = arr[idx];
+        if (strict && !~keys.indexOf(name2))
+          return opts.unknown("-".repeat(j) + name2);
+        toVal(out, name2, idx + 1 < arr.length || val, opts);
       }
     }
   }
@@ -894,26 +898,25 @@ function useStorm() {
 __name(useStorm, "useStorm");
 useStorm.__type = ["StormContext", "useStorm", "Get the Storm context for the current application.", 'P"w!/"?#'];
 
-// examples/cli-app/.storm/commands/vars/list/handle.ts
-function __assignType4(fn, args) {
-  fn.__type = args;
-  return fn;
-}
-__name(__assignType4, "__assignType");
-var __\u03A9VarsListPayload = ["VarsListPayload", "PMw!y"];
+// examples/cli-app/.storm/commands/vars/set/handle.ts
+var __\u03A9VarsSetPayload = ["name", "The name of the variable to set in the variables store.", "value", "The value to set for the variable.", "VarsSetPayload", 'P&4!?""4#?$Mw%y'];
 async function handler(payload) {
   const varsFile = await useStorm().storage.getItem(`vars:vars.json`);
   if (varsFile === void 0) {
     console.error(` ${colors.red("\u2718")} ${colors.redBright(`Variables file was not found`)}`);
     return;
   }
-  const vars = (deserialize.\u03A9 = [["!"]], deserialize(varsFile));
-  console.log(`${Object.keys(vars).map(__assignType4((key) => `${colors.bold(key)}: ${vars[key]}`, ["key", "", 'P"2!"/"'])).join("\n")}`);
+  const vars = (deserialize.\u03A9 = [[() => __\u03A9StormVariables, "n!"]], deserialize(varsFile));
+  vars[payload.data.name] = payload.data.value;
+  await useStorm().storage.setItem(`vars:vars.json`, (serialize.\u03A9 = [[() => __\u03A9StormVariables, "n!"]], serialize(vars)));
+  console.log("");
+  console.log(colors.dim(` > \`${payload.data.name}\` variable set to ${payload.data.value}`));
+  console.log("");
 }
 __name(handler, "handler");
-handler.__type = [() => __\u03A9VarsListPayload, () => StormPayload, "payload", "handler", "Lists all configuration parameters in the variables store.", 'PPn!7"2#"/$?%'];
+handler.__type = [() => __\u03A9VarsSetPayload, () => StormPayload, "payload", "handler", "Sets a configuration parameter in the variables store.", 'PPn!7"2#"/$?%'];
 var handle_default = handler;
 export {
-  __\u03A9VarsListPayload,
+  __\u03A9VarsSetPayload,
   handle_default as default
 };

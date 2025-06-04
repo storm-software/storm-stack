@@ -10,11 +10,11 @@ import { colors } from "../../../runtime/cli";
 /**
  * Renders the Variables - Delete command usage information.
  *
- * @param includeCommands - Whether to include rendering sub-commands.
+ * @param mode - The render mode to use when displaying the usage information (either "full" or "minimal").
  * @returns The rendered string displaying usage information.
  */
-export function renderUsage(includeCommands = true) {
-  return `${colors.whiteBright(colors.bold("Variables - Delete"))}
+export function renderUsage(mode: "full" | "minimal" = "full"): string {
+  return `${colors.whiteBright(colors.bold(`Variables - Delete${mode === "minimal" ? " Command" : ""}`))}
 
   ${colors.gray("Deletes a configuration parameter from the variables store.")}
 

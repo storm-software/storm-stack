@@ -18,7 +18,6 @@
 
 import { LogLevelLabel } from "@storm-software/config-tools/types";
 import { removeDirectory } from "@stryke/fs/helpers";
-import { joinPaths } from "@stryke/path/join-paths";
 import type { Context, EngineHooks, Options } from "../../types/build";
 import type { LogFn } from "../../types/config";
 
@@ -29,13 +28,7 @@ export async function cleanArtifacts<TOptions extends Options = Options>(
 ) {
   log(LogLevelLabel.TRACE, `Cleaning the Storm Stack project artifacts.`);
 
-  await removeDirectory(
-    joinPaths(
-      context.workspaceConfig.workspaceRoot,
-      context.options.projectRoot,
-      context.artifactsDir
-    )
-  );
+  await removeDirectory(context.artifactsPath);
 
   await hooks.callHook("clean:artifacts", context).catch((error: Error) => {
     log(

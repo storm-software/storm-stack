@@ -445,6 +445,34 @@
         "default": "./dist/helpers/typedoc/*.js"
       }
     },
+    "./helpers/typescript": {
+      "import": {
+        "types": "./dist/helpers/typescript/index.d.ts",
+        "default": "./dist/helpers/typescript/index.js"
+      },
+      "require": {
+        "types": "./dist/helpers/typescript/index.d.cts",
+        "default": "./dist/helpers/typescript/index.cjs"
+      },
+      "default": {
+        "types": "./dist/helpers/typescript/index.d.ts",
+        "default": "./dist/helpers/typescript/index.js"
+      }
+    },
+    "./helpers/typescript/*": {
+      "import": {
+        "types": "./dist/helpers/typescript/*.d.ts",
+        "default": "./dist/helpers/typescript/*.js"
+      },
+      "require": {
+        "types": "./dist/helpers/typescript/*.d.cts",
+        "default": "./dist/helpers/typescript/*.cjs"
+      },
+      "default": {
+        "types": "./dist/helpers/typescript/*.d.ts",
+        "default": "./dist/helpers/typescript/*.js"
+      }
+    },
     "./helpers/transform/*": {
       "import": {
         "types": "./dist/helpers/transform/*.d.ts",
@@ -652,6 +680,7 @@
     "@deepkit/type": "catalog:",
     "@deepkit/type-compiler": "catalog:",
     "@donedeal0/superdiff": "catalog:",
+    "@microsoft/api-extractor": "catalog:",
     "@storm-software/build-tools": "catalog:",
     "@storm-software/config": "catalog:",
     "@storm-software/config-tools": "catalog:",
@@ -667,6 +696,7 @@
     "@stryke/string-format": "catalog:",
     "@stryke/type-checks": "catalog:",
     "@stryke/unique-id": "catalog:",
+    "@typescript/vfs": "catalog:",
     "c12": "catalog:",
     "chalk-template": "catalog:",
     "defu": "catalog:",

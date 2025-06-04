@@ -42,33 +42,60 @@ export async function prepareRuntime<TOptions extends Options = Options>(
     `Preparing the runtime artifacts for the Storm Stack project.`
   );
 
-  const runtimeDir = joinPaths(
-    context.options.projectRoot,
-    context.artifactsDir,
-    "runtime"
-  );
-
   const promises = [
-    writeFile(log, joinPaths(runtimeDir, "payload.ts"), writePayload()),
-    writeFile(log, joinPaths(runtimeDir, "result.ts"), writeResult()),
-    writeFile(log, joinPaths(runtimeDir, "error.ts"), writeError()),
-    writeFile(log, joinPaths(runtimeDir, "id.ts"), writeId()),
-    writeFile(log, joinPaths(runtimeDir, "log.ts"), writeLog(context), true),
-    writeFile(log, joinPaths(runtimeDir, "storage.ts"), writeStorage(context)),
-    writeFile(log, joinPaths(runtimeDir, "init.ts"), writeInit(context))
+    writeFile(
+      log,
+      joinPaths(context.runtimePath, "payload.ts"),
+      writePayload()
+    ),
+    writeFile(log, joinPaths(context.runtimePath, "result.ts"), writeResult()),
+    writeFile(log, joinPaths(context.runtimePath, "error.ts"), writeError()),
+    writeFile(log, joinPaths(context.runtimePath, "id.ts"), writeId()),
+    writeFile(
+      log,
+      joinPaths(context.runtimePath, "log.ts"),
+      writeLog(context),
+      true
+    ),
+    writeFile(
+      log,
+      joinPaths(context.runtimePath, "storage.ts"),
+      writeStorage(context)
+    ),
+    writeFile(
+      log,
+      joinPaths(context.runtimePath, "init.ts"),
+      writeInit(context)
+    )
   ];
   if (context.options.platform === "node") {
     promises.push(
-      writeFile(log, joinPaths(runtimeDir, "app.ts"), writeApp(context))
+      writeFile(
+        log,
+        joinPaths(context.runtimePath, "app.ts"),
+        writeApp(context)
+      )
     );
     promises.push(
-      writeFile(log, joinPaths(runtimeDir, "context.ts"), writeContext(context))
+      writeFile(
+        log,
+        joinPaths(context.runtimePath, "context.ts"),
+        writeContext(context)
+      )
     );
     promises.push(
-      writeFile(log, joinPaths(runtimeDir, "env.ts"), writeEnv(context))
+      writeFile(
+        log,
+        joinPaths(context.runtimePath, "env.ts"),
+        writeEnv(context)
+      )
     );
     promises.push(
-      writeFile(log, joinPaths(runtimeDir, "event.ts"), writeEvent(context))
+      writeFile(
+        log,
+        joinPaths(context.runtimePath, "event.ts"),
+        writeEvent(context)
+      )
     );
   }
 
@@ -85,4 +112,13 @@ export async function prepareRuntime<TOptions extends Options = Options>(
       { cause: error }
     );
   });
+
+  if (context.options.dts !== false) {
+    log(
+      LogLevelLabel.TRACE,
+      `Generating type declarations for runtime artifacts.`
+    );
+
+    // await generateRuntimeTypes(log, context);
+  }
 }

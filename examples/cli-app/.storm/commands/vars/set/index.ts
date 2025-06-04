@@ -92,7 +92,7 @@ async function handler() {
       if (args["no-banner"] !== true && !isMinimal) {
         console.log(
           renderBanner(
-            "Variables - Set",
+            "Variables - Set Command",
             "Sets a configuration parameter in the variables store."
           )
         );
@@ -100,7 +100,7 @@ async function handler() {
       }
 
       if (args["help"] || args["h"] || args["?"]) {
-        console.log(renderUsage(true));
+        console.log(renderUsage("full"));
         console.log("");
         console.log(renderFooter());
         console.log("");

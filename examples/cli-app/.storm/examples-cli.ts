@@ -60,13 +60,13 @@ async function main() {
         )
       );
       console.log("");
-      console.log(renderVarsUsage(false));
+      console.log(renderVarsUsage("minimal"));
       console.log("");
 
-      console.log(renderServeUsage(false));
+      console.log(renderServeUsage("minimal"));
       console.log("");
 
-      console.log(renderAddUsage(false));
+      console.log(renderAddUsage("minimal"));
       console.log("");
 
       console.log("");

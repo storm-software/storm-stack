@@ -902,7 +902,7 @@ export interface StormBaseVariables {
  * The variables used by the Storm Stack application
  */
 export type StormVars = {
-  [TKey in Uppercase<string>]: TKey extends `STORM_${infer TBaseKey}`
+  [TKey in string]: TKey extends `STORM_${infer TBaseKey}`
     ? `STORM_${TBaseKey}` extends keyof TypeScriptBuildBaseEnv
       ? TypeScriptBuildBaseEnv[`STORM_${TBaseKey}`]
       : any

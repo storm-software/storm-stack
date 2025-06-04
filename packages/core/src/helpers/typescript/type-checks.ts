@@ -17,31 +17,9 @@
  ------------------------------------------------------------------- */
 
 import { LogLevelLabel } from "@storm-software/config-tools/types";
-import { listFiles } from "@stryke/fs/list-files";
-import { readFile } from "@stryke/fs/read-file";
-import { findFileName } from "@stryke/path/file-path-fns";
-import { joinPaths } from "@stryke/path/join-paths";
-import { resolvePackage } from "@stryke/path/resolve";
 import ts from "typescript";
 import { LogFn } from "../../types/config";
-import { createMemoryProgram, SourcesMap } from "./program";
-
-async function loadLibFiles(): Promise<SourcesMap> {
-  const libLocation = await resolvePackage("typescript");
-  const libFiles = await listFiles(
-    joinPaths(libLocation!, "lib", "**", "lib.*.d.ts")
-  );
-
-  const lib: SourcesMap = new Map();
-  for (const file of libFiles) {
-    lib.set(
-      `/node_modules/typescript/lib/${findFileName(file)}`,
-      await readFile(joinPaths(libLocation!, "lib", file))
-    );
-  }
-
-  return lib;
-}
+import { createMemoryProgram, loadLibFiles, SourcesMap } from "./program";
 
 export async function typeChecks(
   log: LogFn,

@@ -318,11 +318,11 @@ function parseVersion(versionString = "") {
 /**
  * Check if the current environment supports hyperlinks in the terminal.
  *
- * @param stream - The stream to check for TTY support (default: process.stdout)
+ * @param _stream - The stream to check for TTY support (default: process.stdout)
  * @returns Whether hyperlinks are supported
  */
 function isHyperlinkSupported(
-  stream: NodeJS.WriteStream = process.stdout
+  _stream: NodeJS.WriteStream = process.stdout
 ): boolean {
   if (process.env.FORCE_HYPERLINK) {
     return !(
@@ -353,6 +353,7 @@ function isHyperlinkSupported(
       case "WezTerm": {
         return version.major !== undefined && version.major >= 20_200_620;
       }
+
       case "vscode": {
         if (process.env.CURSOR_TRACE_ID) {
           return true;
@@ -364,6 +365,7 @@ function isHyperlinkSupported(
           (version.major > 1 || (version.major === 1 && version.minor >= 72))
         );
       }
+
       case "ghostty": {
         return true;
       }
@@ -451,8 +453,13 @@ function stripAnsi(text: string) {
  * @internal
  */
 export function renderBanner(title: string, description: string): string {
-  const consoleWidth = Math.max(process.stdout.columns - 2, 80);
-  const width = Math.max(Math.min(consoleWidth, Math.max(title.length + 2, 70)), 70);
+  let consoleWidth = Math.max(process.stdout.columns - 2, 80);
+  if (consoleWidth % 2) consoleWidth++;
+
+  if (title.length % 2) title += " ";
+
+  let width = Math.max(Math.min(consoleWidth, Math.max(title.length + 2, 70)), 80);
+  if (width % 2) width++;
 
   const banner = [] as string[];
   banner.push(colors.cyan(\`┏━━━━ ${appTitle} ━ v${
@@ -461,22 +468,24 @@ export function renderBanner(title: string, description: string): string {
     appTitle.length + (context.packageJson.version?.length ?? 5)
   })}┓\`));
   banner.push(colors.cyan(\`┃\${" ".repeat(width)}┃\`));
-  banner.push(\`\${colors.cyan("┃")}\${" ".repeat((width - title.length) / 2)}\${colors.whiteBright(colors.bold(title))}\${" ".repeat((width - title.length) / 2)}\${colors.cyan("┃")}\`);
+
+  const titlePadding = (width - title.length) / 2;
+  banner.push(\`\${colors.cyan("┃")}\${" ".repeat(titlePadding)}\${colors.whiteBright(colors.bold(title))}\${" ".repeat(titlePadding + width - (titlePadding * 2 + title.length))}\${colors.cyan("┃")}\`);
   banner.push(colors.cyan(\`┃\${" ".repeat(width)}┃\`));
 
-  const text = description.length < (width * 0.9)
-    ? \`\${" ".repeat((width - description.length) / 2)}\${description}\${" ".repeat((width - description.length) / 2)}\`
-    : description.split(" ").reduce((ret, word) => {
+  const descriptionPadding = (width - description.length) / 2;
+  for (const line of (description.length < width * 0.85
+    ? \`\${" ".repeat(descriptionPadding)}\${description}\${" ".repeat(descriptionPadding + width - (descriptionPadding * 2 + description.length))}\`
+    : description.split(/\\s+/).reduce((ret, word) => {
         const lines = ret.split("\\n");
-        if (lines.length !== 0 && (lines[lines.length - 1]!.length + word.length > (width * 0.9))) {
+        if (lines.length !== 0 && (lines[lines.length - 1]!.length + word.length > width * 0.85)) {
           ret += " \\n";
         }
 
-        ret += \`\${word} \`;
-        return ret;
-      }, "");
-  for (const line of text.split("\\n") ) {
-    banner.push(\`\${colors.cyan("┃")}\${" ".repeat((width - line.length) / 2)}\${colors.gray(line)}\${" ".repeat((width - line.length) / 2)}\${colors.cyan("┃")}\`);
+        return \`\${ret}\${word} \`;
+      }, "")).split("\\n")) {
+    const linePadding = (width - stripAnsi(line).length) / 2;
+    banner.push(\`\${colors.cyan("┃")}\${" ".repeat(linePadding)}\${colors.gray(line)}\${" ".repeat(linePadding + width - (linePadding * 2 + stripAnsi(line).length))}\${colors.cyan("┃")}\`);
   }
 
   banner.push(colors.cyan(\`┃\${" ".repeat(width)}┃\`));
@@ -517,7 +526,7 @@ export function renderFooter(): string {
   const supportRowLength = stripAnsi(supportRow).length;
 
   const footer = [] as string[];
-  footer.push(\`\\n\${colors.whiteBright(colors.bold("Links:"))}\`);
+  footer.push(\`\${colors.whiteBright(colors.bold("Links:"))}\`);
   ${linksColumn1
     .map(
       (line, i) =>
@@ -530,21 +539,18 @@ export function renderFooter(): string {
   footer.push("\\n");${
     homepage || docs || support || contact || repository
       ? `
-
-  footer.push("\\n");${
-    author
-      ? `
+    ${
+      author
+        ? `
   footer.push(\`\${" ".repeat((consoleWidth - ${
     author.length ?? 0
-  }) / 2)}\${colors.bold("${author}")}\${" ".repeat((consoleWidth - ${
+  }) / 2)}\${colors.bold(colors.whiteBright("${author}"))}\${" ".repeat((consoleWidth - ${
     author.length ?? 0
   }) / 2)}\`);`
-      : ""
-  }
+        : ""
+    }
 
   if (isUnicodeSupported) {
-    footer.push("\\n");
-
     const qrCodeLines = \`${renderUnicodeCompact((homepage || docs || support || contact || repository)!)}\`.split("\\n");
     const qrCodeMaxLength = Math.max(...qrCodeLines.map(line => line.length));
     footer.push(...qrCodeLines.map(line => \`\${" ".repeat((consoleWidth - qrCodeMaxLength) / 2)}\${line}\${" ".repeat((consoleWidth - qrCodeMaxLength) / 2)}\`));
@@ -559,7 +565,6 @@ export function renderFooter(): string {
     repository)!}")}\${" ".repeat((consoleWidth - ${
     (homepage || docs || support || contact || repository)?.length ?? 0
   }) / 2)}\`);
-  footer.push("\\n");
   footer.push("\\n");
 `
       : ""

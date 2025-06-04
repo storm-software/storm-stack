@@ -58,7 +58,6 @@ pre-commit:
         - "*.scss"
         - "*.sass"
         - "*.less"
-        - "*.styl"
         - "*.stylus"
         - "*.graphql"
         - "*.gql"

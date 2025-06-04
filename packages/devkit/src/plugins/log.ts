@@ -66,9 +66,7 @@ export default abstract class LogPlugin<
     if (context.options.projectType === "application") {
       await this.writeFile(
         joinPaths(
-          context.options.projectRoot,
-          context.artifactsDir,
-          "runtime",
+          context.runtimePath,
           "logs",
           `${this.name}${this.config.namespace ? `-${this.config.namespace.replaceAll(".", "-").replaceAll(":", "-").replaceAll(" ", "-")}` : ""}-${this.config.logLevel}.ts`
         ),

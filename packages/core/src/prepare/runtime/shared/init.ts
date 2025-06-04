@@ -26,5 +26,9 @@ export function writeInit<TOptions extends Options = Options>(
 
 // Do nothing - this is a placeholder for Storm Stack plugins that do not require any initialization
 
+export default function init() {
+  // This function is intentionally left empty.
+  // It serves as a placeholder for Storm Stack plugins that do not require any initialization.
+}
 `;
 }

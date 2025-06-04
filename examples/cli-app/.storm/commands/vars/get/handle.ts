@@ -7,7 +7,8 @@
 
 import { deserialize } from "@deepkit/type";
 import { colors } from "../../../runtime/cli";
-import { StormPayload, StormVariables } from "../../../runtime/payload";
+import { StormVariables } from "../../../runtime/env";
+import { StormPayload } from "../../../runtime/payload";
 
 export interface VarsGetPayload {
   /**

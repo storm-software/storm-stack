@@ -46,19 +46,18 @@ export async function initContext<TOptions extends Options = Options>(
 ) {
   context.options.platform = "node";
 
-  const runtimeDir = joinPaths(
-    context.workspaceConfig.workspaceRoot,
-    context.options.projectRoot,
-    context.artifactsDir,
-    "runtime"
-  );
-
   context.override.alias ??= {};
-  context.override.alias["storm:app"] ??= joinPaths(runtimeDir, "app");
-  context.override.alias["storm:context"] ??= joinPaths(runtimeDir, "context");
-  context.override.alias["storm:env"] ??= joinPaths(runtimeDir, "env");
-  context.override.alias["storm:event"] ??= joinPaths(runtimeDir, "event");
-  context.override.alias["storm:cli"] = joinPaths(runtimeDir, "cli");
+  context.override.alias["storm:app"] ??= joinPaths(context.runtimePath, "app");
+  context.override.alias["storm:context"] ??= joinPaths(
+    context.runtimePath,
+    "context"
+  );
+  context.override.alias["storm:env"] ??= joinPaths(context.runtimePath, "env");
+  context.override.alias["storm:event"] ??= joinPaths(
+    context.runtimePath,
+    "event"
+  );
+  context.override.alias["storm:cli"] = joinPaths(context.runtimePath, "cli");
 
   context.override.skipNodeModulesBundle = true;
 
@@ -137,13 +136,7 @@ export async function initUnimport<TOptions extends Options = Options>(
   context.unimportPresets ??= [];
   context.unimportPresets.push({
     imports,
-    from: joinPaths(
-      context.workspaceConfig.workspaceRoot,
-      context.options.projectRoot,
-      context.artifactsDir,
-      "runtime",
-      "cli"
-    )
+    from: joinPaths(context.runtimePath, "cli")
   });
 }
 
@@ -154,7 +147,15 @@ export async function initEntry<TOptions extends Options = Options>(
 ) {
   if (!isSetString(context.options.entry)) {
     throw new Error(
-      `The entry point must be a string pointing to a directory containing the CLI application's commands. Please check your \`entry\` configuration - ${context.options.entry ? `provided: ${isString(context.options.entry) ? context.options.entry : StormJSON.stringify(context.options.entry)}` : "no entry point was provided"}.`
+      `The entry point must be a string pointing to a directory containing the CLI application's commands. Please check your \`entry\` configuration - ${
+        context.options.entry
+          ? `provided: ${
+              isString(context.options.entry)
+                ? context.options.entry
+                : StormJSON.stringify(context.options.entry)
+            }`
+          : "no entry point was provided"
+      }.`
     );
   }
 
@@ -223,11 +224,7 @@ export async function initEntry<TOptions extends Options = Options>(
       ) || "cli";
     context.entry = [
       {
-        file: joinPaths(
-          context.options.projectRoot,
-          context.artifactsDir,
-          `${bin}.ts`
-        ),
+        file: joinPaths(context.artifactsPath, `${bin}.ts`),
         input: {
           file: context.options.entry
         },
@@ -237,10 +234,19 @@ export async function initEntry<TOptions extends Options = Options>(
       }
     ];
 
+    log(
+      LogLevelLabel.TRACE,
+      "Writing the command bin configuration to the package.json file."
+    );
+
     let packageJson = context.packageJson;
     if (!packageJson) {
       packageJson = await readJsonFile(
-        joinPaths(context.options.projectRoot, "package.json")
+        joinPaths(
+          context.workspaceConfig.workspaceRoot,
+          context.options.projectRoot,
+          "package.json"
+        )
       );
     }
 
@@ -259,7 +265,11 @@ export async function initEntry<TOptions extends Options = Options>(
 
     await writeFile(
       log,
-      joinPaths(context.options.projectRoot, "package.json"),
+      joinPaths(
+        context.workspaceConfig.workspaceRoot,
+        context.options.projectRoot,
+        "package.json"
+      ),
       StormJSON.stringify(
         defu(
           {
@@ -270,10 +280,11 @@ export async function initEntry<TOptions extends Options = Options>(
       )
     );
 
-    const commandsDirectory = joinPaths(
-      context.options.projectRoot,
-      context.artifactsDir,
-      "commands"
+    const commandsDirectory = joinPaths(context.artifactsPath, "commands");
+
+    log(
+      LogLevelLabel.TRACE,
+      `Writing the following commands to the artifacts directory: ${commandsDirectory}`
     );
 
     context.entry = Object.keys(commandsDict).reduce((ret, command) => {
@@ -322,6 +333,11 @@ export async function initEntry<TOptions extends Options = Options>(
     }, context.entry);
 
     if (config.manageVars !== false) {
+      log(
+        LogLevelLabel.TRACE,
+        "Adding the variable management commands to the entry points."
+      );
+
       if (
         context.entry.some(
           entry =>
@@ -445,24 +461,22 @@ export async function initEntry<TOptions extends Options = Options>(
       });
     }
 
+    log(
+      LogLevelLabel.TRACE,
+      "Finding and adding virtual commands to the entry points."
+    );
+
     context.entry = context.entry
       .filter(
         entry => entry.input.file !== context.options.entry && entry.output
       )
       .reduce((ret, entry) => {
-        let parentPath = resolveParentPath(findFilePath(entry.file))
-          .replace(context.workspaceConfig.workspaceRoot, "")
-          .replaceAll(/^\/+/g, "")
-          .replaceAll(/\/+$/g, "");
-
+        const entryPath = findFilePath(entry.file);
+        let parentPath = resolveParentPath(entryPath);
         while (parentPath !== commandsDirectory) {
           const parentFolderName = findFolderName(parentPath);
           if (
-            !ret.some(
-              existing =>
-                findFilePath(existing.file).replaceAll(/\/+$/g, "") ===
-                parentPath
-            ) &&
+            !ret.some(existing => findFilePath(existing.file) === parentPath) &&
             (!parentFolderName.startsWith("[") ||
               !parentFolderName.endsWith("]"))
           ) {
@@ -480,10 +494,7 @@ export async function initEntry<TOptions extends Options = Options>(
             });
           }
 
-          parentPath = resolveParentPath(parentPath)
-            .replace(context.workspaceConfig.workspaceRoot, "")
-            .replaceAll(/^\/+/g, "")
-            .replaceAll(/\/+$/g, "");
+          parentPath = resolveParentPath(parentPath);
         }
 
         return ret;
@@ -500,21 +511,3 @@ export async function initEntry<TOptions extends Options = Options>(
     );
   }
 }
-
-// async function reflectCommandRelations<TOptions extends Options = Options>(
-//   context: Context<TOptions>
-// ): Promise<Record<string, CommandRelationsReflection>> {
-//   const relationReflections = {} as Record<string, CommandRelationsReflection>;
-//   for (const entry of context.entry.filter(
-//     entry => entry.input.file !== context.options.entry && entry.output
-//   )) {
-//     const commandId = entry.output!;
-//     relationReflections[commandId] ??= {
-//       parent: undefined,
-//       children: []
-//     } as CommandRelationsReflection;
-
-//     const commandName = findCommandName(entry);
-//     if (commandId !== commandName) {
-//       const parent = commandId.replace(commandName, "").replaceAll(/-+$/g, "");
-//       if (context.entry.some(entry => entry.output === parent)) {

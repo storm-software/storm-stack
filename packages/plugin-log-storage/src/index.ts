@@ -105,7 +105,6 @@ const inspect: (value: unknown, options?: { colors?: boolean }) => string =
     ? (v, opts) =>
         // @ts-ignore: Deno global
         // dnt-shim-ignore
-        // eslint-disable-next-line ts/no-unsafe-call
         globalThis.Deno.inspect(v, {
           strAbbreviateSize: Infinity,
           iterableLimit: Infinity,
@@ -236,7 +235,7 @@ const formatter: TextFormatter = getTextFormatter();
 const sink: LogSink & AsyncDisposable = (record: LogRecord) => {
   void storage.setItem(
     \`${this.config.namespace}:storm-\${new Date().toISOString().replace("T", "_").replace("Z", "")}.log\`,
-    formatter(record) as T
+    formatter(record)
   );
 };
 

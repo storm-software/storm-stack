@@ -9,5 +9,10 @@
   # https://devenv.sh/basics/
   env.DEFAULT_LOCALE = "en_US";
   env.DEFAULT_TIMEZONE = "America/New_York";
+
+  # https://devenv.sh/packages/
+  packages = [
+    pkgs.capnproto
+  ];
 }
 

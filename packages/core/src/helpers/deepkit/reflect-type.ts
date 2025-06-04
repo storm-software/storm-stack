@@ -25,6 +25,7 @@ import {
   findFilePath
 } from "@stryke/path/file-path-fns";
 import { joinPaths } from "@stryke/path/join-paths";
+import { replacePath } from "@stryke/path/replace";
 import type { TypeDefinition } from "@stryke/types/configuration";
 import type { BuildOptions } from "esbuild";
 import type { CompileOptions, Context, Options } from "../../types/build";
@@ -53,11 +54,17 @@ export async function resolveType<
   options: ResolveTypeOptions<TOptions> = {}
 ): Promise<TResult> {
   const transpilePath = joinPaths(
-    context.workspaceConfig.workspaceRoot,
-    context.options.projectRoot,
-    context.artifactsDir,
+    context.artifactsPath,
     "transpiled",
-    findFilePath(entry.file)
+    findFilePath(
+      replacePath(
+        entry.file,
+        joinPaths(
+          context.workspaceConfig.workspaceRoot,
+          context.options.projectRoot
+        )
+      )
+    )
   );
 
   const path = await resolvePath(context, entry.file);
@@ -114,11 +121,13 @@ export async function resolveType<
  *
  * @param context - The context object containing the environment paths.
  * @param entry - The type definition to compile.
+ * @param options - The options for resolving the type.
  * @returns A promise that resolves to the compiled module.
  */
 export async function reflectType<TOptions extends Options = Options>(
   context: Context<TOptions>,
-  entry: TypeDefinition
+  entry: TypeDefinition,
+  options: ResolveTypeOptions<TOptions> = {}
 ): Promise<Type> {
-  return reflect(await resolveType(context, entry));
+  return reflect(await resolveType(context, entry, options));
 }

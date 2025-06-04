@@ -22,9 +22,10 @@ import { LogLevelLabel } from "@storm-software/config-tools/types";
 import { isPackageExists } from "@stryke/fs/package-fns";
 import { readJsonFile } from "@stryke/fs/read-file";
 import { StormJSON } from "@stryke/json/storm-json";
+import { relativePath } from "@stryke/path/file-path-fns";
 import { joinPaths } from "@stryke/path/join-paths";
 import { titleCase } from "@stryke/string-format/title-case";
-import { getParsedTypeScriptConfig } from "../../helpers/utilities/tsconfig";
+import { getParsedTypeScriptConfig } from "../../helpers/typescript/tsconfig";
 import { writeFile } from "../../helpers/utilities/write-file";
 import type { Context, EngineHooks, Options } from "../../types/build";
 import type { LogFn } from "../../types/config";
@@ -61,12 +62,32 @@ export async function initTsconfig<TOptions extends Options = Options>(
   if (
     !json.include?.some(filterPattern =>
       (filterPattern as string[]).includes(
-        joinPaths(context.artifactsDir, "**/*.ts")
+        joinPaths(
+          relativePath(
+            joinPaths(
+              context.workspaceConfig.workspaceRoot,
+              context.options.projectRoot
+            ),
+            context.artifactsPath
+          ),
+          "**/*.ts"
+        )
       )
     )
   ) {
     json.include ??= [];
-    json.include.push(joinPaths(context.artifactsDir, "**/*.ts"));
+    json.include.push(
+      joinPaths(
+        relativePath(
+          joinPaths(
+            context.workspaceConfig.workspaceRoot,
+            context.options.projectRoot
+          ),
+          context.artifactsPath
+        ),
+        "**/*.ts"
+      )
+    );
   }
 
   await writeFile(log, context.options.tsconfig!, StormJSON.stringify(json));
@@ -158,7 +179,10 @@ export async function initTsconfig<TOptions extends Options = Options>(
     );
   }
 
-  context.tsconfig = await getParsedTypeScriptConfig(context);
+  context.tsconfig = await getParsedTypeScriptConfig(
+    context.options.projectRoot,
+    context.options.tsconfig
+  );
   if (!context.tsconfig) {
     throw new Error("Failed to parse the TypeScript configuration file.");
   }

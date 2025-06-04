@@ -19,7 +19,7 @@
 import { LogLevelLabel } from "@storm-software/config-tools/types";
 import { StormJSON } from "@stryke/json/storm-json";
 import { joinPaths } from "@stryke/path/join-paths";
-import { getParsedTypeScriptConfig } from "../helpers/utilities/tsconfig";
+import { getParsedTypeScriptConfig } from "../helpers/typescript/tsconfig";
 import { writeFile } from "../helpers/utilities/write-file";
 import type { Context, EngineHooks, Options } from "../types/build";
 import type { LogFn } from "../types/config";
@@ -34,7 +34,7 @@ export async function prepare<TOptions extends Options = Options>(
 ) {
   await writeFile(
     log,
-    joinPaths(context.options.projectRoot, context.artifactsDir, "meta.json"),
+    joinPaths(context.artifactsPath, "meta.json"),
     StormJSON.stringify(context.meta)
   );
   context.persistedMeta = context.meta;
@@ -95,7 +95,10 @@ export async function prepare<TOptions extends Options = Options>(
   });
 
   // Re-resolve the tsconfig to ensure it is up to date
-  context.tsconfig = await getParsedTypeScriptConfig(context);
+  context.tsconfig = await getParsedTypeScriptConfig(
+    context.options.projectRoot,
+    context.options.tsconfig
+  );
   if (!context.tsconfig) {
     throw new Error("Failed to parse the TypeScript configuration file.");
   }

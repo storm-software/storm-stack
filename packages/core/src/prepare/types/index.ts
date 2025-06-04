@@ -43,11 +43,7 @@ export async function prepareTypes<TOptions extends Options = Options>(
     `Preparing the type declarations for the Storm Stack project.`
   );
 
-  const typesDir = joinPaths(
-    context.options.projectRoot,
-    context.artifactsDir,
-    "types"
-  );
+  const typesDir = joinPaths(context.artifactsPath, "types");
   const relativeRuntimePath = relativePath(
     joinPaths(
       context.workspaceConfig.workspaceRoot,

@@ -156,11 +156,11 @@ function parseVersion(versionString = "") {
 /**
  * Check if the current environment supports hyperlinks in the terminal.
  *
- * @param stream - The stream to check for TTY support (default: process.stdout)
+ * @param _stream - The stream to check for TTY support (default: process.stdout)
  * @returns Whether hyperlinks are supported
  */
 function isHyperlinkSupported(
-  stream: NodeJS.WriteStream = process.stdout
+  _stream: NodeJS.WriteStream = process.stdout
 ): boolean {
   if (process.env.FORCE_HYPERLINK) {
     return !(
@@ -195,6 +195,7 @@ function isHyperlinkSupported(
       case "WezTerm": {
         return version.major !== undefined && version.major >= 20_200_620;
       }
+
       case "vscode": {
         if (process.env.CURSOR_TRACE_ID) {
           return true;
@@ -206,6 +207,7 @@ function isHyperlinkSupported(
           (version.major > 1 || (version.major === 1 && version.minor >= 72))
         );
       }
+
       case "ghostty": {
         return true;
       }
@@ -299,11 +301,16 @@ function stripAnsi(text: string) {
  * @internal
  */
 export function renderBanner(title: string, description: string): string {
-  const consoleWidth = Math.max(process.stdout.columns - 2, 80);
-  const width = Math.max(
+  let consoleWidth = Math.max(process.stdout.columns - 2, 80);
+  if (consoleWidth % 2) consoleWidth++;
+
+  if (title.length % 2) title += " ";
+
+  let width = Math.max(
     Math.min(consoleWidth, Math.max(title.length + 2, 70)),
-    70
+    80
   );
+  if (width % 2) width++;
 
   const banner = [] as string[];
   banner.push(
@@ -312,29 +319,31 @@ export function renderBanner(title: string, description: string): string {
     )
   );
   banner.push(colors.cyan(`┃${" ".repeat(width)}┃`));
+
+  const titlePadding = (width - title.length) / 2;
   banner.push(
-    `${colors.cyan("┃")}${" ".repeat((width - title.length) / 2)}${colors.whiteBright(colors.bold(title))}${" ".repeat((width - title.length) / 2)}${colors.cyan("┃")}`
+    `${colors.cyan("┃")}${" ".repeat(titlePadding)}${colors.whiteBright(colors.bold(title))}${" ".repeat(titlePadding + width - (titlePadding * 2 + title.length))}${colors.cyan("┃")}`
   );
   banner.push(colors.cyan(`┃${" ".repeat(width)}┃`));
 
-  const text =
-    description.length < width * 0.9
-      ? `${" ".repeat((width - description.length) / 2)}${description}${" ".repeat((width - description.length) / 2)}`
-      : description.split(" ").reduce((ret, word) => {
-          const lines = ret.split("\n");
-          if (
-            lines.length !== 0 &&
-            lines[lines.length - 1]!.length + word.length > width * 0.9
-          ) {
-            ret += " \n";
-          }
+  const descriptionPadding = (width - description.length) / 2;
+  for (const line of (description.length < width * 0.85
+    ? `${" ".repeat(descriptionPadding)}${description}${" ".repeat(descriptionPadding + width - (descriptionPadding * 2 + description.length))}`
+    : description.split(/\s+/).reduce((ret, word) => {
+        const lines = ret.split("\n");
+        if (
+          lines.length !== 0 &&
+          lines[lines.length - 1]!.length + word.length > width * 0.85
+        ) {
+          ret += " \n";
+        }
 
-          ret += `${word} `;
-          return ret;
-        }, "");
-  for (const line of text.split("\n")) {
+        return `${ret}${word} `;
+      }, "")
+  ).split("\n")) {
+    const linePadding = (width - stripAnsi(line).length) / 2;
     banner.push(
-      `${colors.cyan("┃")}${" ".repeat((width - line.length) / 2)}${colors.gray(line)}${" ".repeat((width - line.length) / 2)}${colors.cyan("┃")}`
+      `${colors.cyan("┃")}${" ".repeat(linePadding)}${colors.gray(line)}${" ".repeat(linePadding + width - (linePadding * 2 + stripAnsi(line).length))}${colors.cyan("┃")}`
     );
   }
 
@@ -367,7 +376,7 @@ export function renderFooter(): string {
   const supportRowLength = stripAnsi(supportRow).length;
 
   const footer = [] as string[];
-  footer.push(`\n${colors.whiteBright(colors.bold("Links:"))}`);
+  footer.push(`${colors.whiteBright(colors.bold("Links:"))}`);
   footer.push(
     `  ${colors.bold("Homepage:             ")}${link("https://stormsoftware.com")}`
   );
@@ -386,14 +395,11 @@ export function renderFooter(): string {
 
   footer.push("\n");
 
-  footer.push("\n");
   footer.push(
-    `${" ".repeat((consoleWidth - 14) / 2)}${colors.bold("Storm Software")}${" ".repeat((consoleWidth - 14) / 2)}`
+    `${" ".repeat((consoleWidth - 14) / 2)}${colors.bold(colors.whiteBright("Storm Software"))}${" ".repeat((consoleWidth - 14) / 2)}`
   );
 
   if (isUnicodeSupported) {
-    footer.push("\n");
-
     const qrCodeLines = `█▀▀▀▀▀▀▀██▀██▀██▀██▀▀▀▀▀▀▀█
 █ █▀▀▀█ █ ▀▀  ▄ ▄▄█ █▀▀▀█ █
 █ █   █ █▀▄▄▄█▀   █ █   █ █
@@ -420,7 +426,6 @@ export function renderFooter(): string {
   footer.push(
     `${" ".repeat((consoleWidth - 25) / 2)}${link("https://stormsoftware.com")}${" ".repeat((consoleWidth - 25) / 2)}`
   );
-  footer.push("\n");
   footer.push("\n");
 
   footer.push(
