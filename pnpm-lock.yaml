@@ -403,7 +403,7 @@ patchedDependencies:
     hash: 327074031eb01a34ab4001f356088e8e26a20a544ba0af507138fe02524f80f1
     path: patches/@deepkit__type-spec@1.0.1.patch
   '@deepkit/type@1.0.5':
-    hash: 09885fb9674270f141a5bf7269e1afeafdfe3c394d6c29fc0a4d341b4bf82ca2
+    hash: 0c0b00eb9a4d0fe97efc4b30f11feca78ce2daf28c9b9e9b46cf5777eeede367
     path: patches/@deepkit__type@1.0.5.patch
 
 importers:
@@ -584,7 +584,7 @@ importers:
         version: 2.3.1(unenv@2.0.0-rc.17)(workerd@1.20250525.0)
       '@deepkit/type':
         specifier: 'catalog:'
-        version: 1.0.5(patch_hash=09885fb9674270f141a5bf7269e1afeafdfe3c394d6c29fc0a4d341b4bf82ca2)(@deepkit/core@1.0.5)
+        version: 1.0.5(patch_hash=0c0b00eb9a4d0fe97efc4b30f11feca78ce2daf28c9b9e9b46cf5777eeede367)(@deepkit/core@1.0.5)
       '@storm-stack/types':
         specifier: workspace:*
         version: link:../../packages/types
@@ -658,7 +658,7 @@ importers:
         version: 0.10.1
       '@deepkit/type':
         specifier: 'catalog:'
-        version: 1.0.5(patch_hash=09885fb9674270f141a5bf7269e1afeafdfe3c394d6c29fc0a4d341b4bf82ca2)(@deepkit/core@1.0.5)
+        version: 1.0.5(patch_hash=0c0b00eb9a4d0fe97efc4b30f11feca78ce2daf28c9b9e9b46cf5777eeede367)(@deepkit/core@1.0.5)
       '@sentry/core':
         specifier: 'catalog:'
         version: 9.15.0
@@ -710,7 +710,7 @@ importers:
         version: 0.37.0
       '@deepkit/type':
         specifier: 'catalog:'
-        version: 1.0.5(patch_hash=09885fb9674270f141a5bf7269e1afeafdfe3c394d6c29fc0a4d341b4bf82ca2)(@deepkit/core@1.0.5)
+        version: 1.0.5(patch_hash=0c0b00eb9a4d0fe97efc4b30f11feca78ce2daf28c9b9e9b46cf5777eeede367)(@deepkit/core@1.0.5)
       '@deepkit/type-compiler':
         specifier: 'catalog:'
         version: 1.0.5(patch_hash=397906504c1feba04b220185e4c8f7150f1ab0587f764edd4fa052a62909a1d3)(rollup@4.42.0)(typescript@5.8.3)
@@ -1317,7 +1317,7 @@ importers:
     dependencies:
       '@deepkit/type':
         specifier: 'catalog:'
-        version: 1.0.5(patch_hash=09885fb9674270f141a5bf7269e1afeafdfe3c394d6c29fc0a4d341b4bf82ca2)(@deepkit/core@1.0.5)
+        version: 1.0.5(patch_hash=0c0b00eb9a4d0fe97efc4b30f11feca78ce2daf28c9b9e9b46cf5777eeede367)(@deepkit/core@1.0.5)
       '@storm-software/config-tools':
         specifier: 'catalog:'
         version: 1.172.10(magicast@0.3.5)
@@ -15530,7 +15530,7 @@ snapshots:
 
   '@deepkit/type-spec@1.0.1(patch_hash=327074031eb01a34ab4001f356088e8e26a20a544ba0af507138fe02524f80f1)': {}
 
-  '@deepkit/type@1.0.5(patch_hash=09885fb9674270f141a5bf7269e1afeafdfe3c394d6c29fc0a4d341b4bf82ca2)(@deepkit/core@1.0.5)':
+  '@deepkit/type@1.0.5(patch_hash=0c0b00eb9a4d0fe97efc4b30f11feca78ce2daf28c9b9e9b46cf5777eeede367)(@deepkit/core@1.0.5)':
     dependencies:
       '@deepkit/core': 1.0.5
       '@deepkit/type-spec': 1.0.1(patch_hash=327074031eb01a34ab4001f356088e8e26a20a544ba0af507138fe02524f80f1)
