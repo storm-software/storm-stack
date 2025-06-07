@@ -129,7 +129,7 @@
     "@storm-software/esbuild": "catalog:",
     "@storm-software/unbuild": "catalog:",
     "@storm-software/workspace-tools": "catalog:",
-    "@storm-stack/core": "0.26.0",
+    "@storm-stack/core": "0.27.0",
     "@stryke/path": "catalog:",
     "defu": "catalog:",
     "nx": "catalog:"

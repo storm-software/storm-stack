@@ -178,14 +178,14 @@
   "dependencies": {
     "@storm-software/esbuild": "catalog:",
     "@storm-software/unbuild": "catalog:",
-    "@storm-stack/core": "0.26.0",
+    "@storm-stack/core": "0.27.0",
     "@stryke/path": "catalog:",
     "@stryke/string-format": "catalog:",
     "defu": "catalog:",
     "esbuild": "catalog:"
   },
   "devDependencies": {
-    "@storm-stack/types": "0.10.0",
+    "@storm-stack/types": "0.11.0",
     "@types/node": "catalog:",
     "tsup": "catalog:"
   },

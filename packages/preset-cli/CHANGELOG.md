@@ -2,6 +2,17 @@
 
 # Changelog for Storm Stack - Preset Cli
 
+## [0.19.0](https://github.com/storm-software/storm-stack/releases/tag/preset-cli%400.19.0) (2025-06-07)
+
+### Features
+
+- **core:** Added `domain`, `permission`, and `readonly` tags to Deepkit patches
+
+### Updated Dependencies
+
+- Updated core to 0.27.0
+- Updated core to 0.27.0
+
 ## [0.18.0](https://github.com/storm-software/storm-stack/releases/tag/preset-cli%400.18.0) (2025-06-07)
 
 ### Features

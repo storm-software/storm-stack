@@ -2,6 +2,12 @@
 
 # Changelog for Storm Stack - Types
 
+## [0.11.0](https://github.com/storm-software/storm-stack/releases/tag/types%400.11.0) (2025-06-07)
+
+### Features
+
+- **core:** Added `domain`, `permission`, and `readonly` tags to Deepkit patches
+
 ## [0.10.0](https://github.com/storm-software/storm-stack/releases/tag/types%400.10.0) (2025-06-07)
 
 ### Features
