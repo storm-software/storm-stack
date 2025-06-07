@@ -19442,7 +19442,7 @@ snapshots:
   '@stryke/convert@0.1.6':
     dependencies:
       '@stryke/type-checks': 0.3.3
-      '@stryke/types': 0.8.3
+      '@stryke/types': 0.8.2
 
   '@stryke/convert@0.2.1':
     dependencies:
@@ -19525,7 +19525,7 @@ snapshots:
     dependencies:
       '@stryke/convert': 0.1.6
       '@stryke/type-checks': 0.3.3
-      '@stryke/types': 0.8.3
+      '@stryke/types': 0.8.2
 
   '@stryke/helpers@0.6.0':
     dependencies:

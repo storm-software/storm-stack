@@ -2,6 +2,16 @@
 
 # Changelog for Storm Stack - Core
 
+## [0.27.0](https://github.com/storm-software/storm-stack/releases/tag/core%400.27.0) (2025-06-07)
+
+### Features
+
+- **core:** Added `domain`, `permission`, and `readonly` tags to Deepkit patches
+
+### Updated Dependencies
+
+- Updated types to 0.11.0
+
 ## [0.26.0](https://github.com/storm-software/storm-stack/releases/tag/core%400.26.0) (2025-06-07)
 
 ### Features

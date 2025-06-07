@@ -1,6 +1,6 @@
 {
   "name": "@storm-stack/cli",
-  "version": "0.8.0",
+  "version": "0.9.0",
   "type": "module",
   "description": "The command-line interface application for managing Storm Stack projects.",
   "repository": {

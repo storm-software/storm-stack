@@ -2,6 +2,19 @@
 
 # Changelog for Storm Stack - Cli
 
+## [0.9.0](https://github.com/storm-software/storm-stack/releases/tag/cli%400.9.0) (2025-06-07)
+
+### Features
+
+- **core:** Added `domain`, `permission`, and `readonly` tags to Deepkit patches
+
+### Updated Dependencies
+
+- Updated preset-cli to 0.19.0
+- Updated preset-cli to 0.19.0
+- Updated types to 0.11.0
+- Updated core to 0.27.0
+
 ## [0.8.0](https://github.com/storm-software/storm-stack/releases/tag/cli%400.8.0) (2025-06-07)
 
 ### Features
