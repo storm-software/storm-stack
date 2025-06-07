@@ -35,7 +35,7 @@ export interface StormBaseVariables {
    *
    * @defaultValue false
    *
-   * @internal
+   * @hidden
    * @category node
    * @readonly
    */
@@ -44,6 +44,7 @@ export interface StormBaseVariables {
   /**
    * The name of the application.
    *
+   * @readonly
    * @category neutral
    */
   APP_NAME: string;
@@ -53,6 +54,7 @@ export interface StormBaseVariables {
    *
    * @defaultValue "1.0.0"
    *
+   * @readonly
    * @category neutral
    */
   APP_VERSION: string;
@@ -60,6 +62,7 @@ export interface StormBaseVariables {
   /**
    * The unique identifier for the build.
    *
+   * @readonly
    * @category neutral
    */
   BUILD_ID: string;
@@ -67,6 +70,7 @@ export interface StormBaseVariables {
   /**
    * The timestamp the build was ran at.
    *
+   * @readonly
    * @category neutral
    */
   BUILD_TIMESTAMP: number;
@@ -74,6 +78,7 @@ export interface StormBaseVariables {
   /**
    * A checksum hash created during the build.
    *
+   * @readonly
    * @category neutral
    */
   BUILD_CHECKSUM: string;
@@ -81,6 +86,7 @@ export interface StormBaseVariables {
   /**
    * The unique identifier for the release.
    *
+   * @readonly
    * @category neutral
    */
   RELEASE_ID: string;
@@ -88,6 +94,7 @@ export interface StormBaseVariables {
   /**
    * The tag for the release. This is generally in the format of "\<APP_NAME\>\@\<APP_VERSION\>".
    *
+   * @readonly
    * @category neutral
    */
   RELEASE_TAG: string;
@@ -98,6 +105,8 @@ export interface StormBaseVariables {
    * @remarks
    * This variable is used to specify the name of the organization that maintains the application. If not provided in an environment, it will try to use the value in {@link @storm-software/config-tools/StormWorkspaceConfig#organization}.
    *
+   * @alias ORG
+   * @alias ORG_ID
    * @category neutral
    */
   ORGANIZATION: string;
@@ -125,6 +134,9 @@ export interface StormBaseVariables {
    *
    * @defaultValue "production"
    *
+   * @alias ENV
+   * @alias NODE_ENV
+   * @alias VERCEL_ENV
    * @category neutral
    */
   ENVIRONMENT: string;
@@ -262,17 +274,6 @@ export interface StormBaseVariables {
   VTE_VERSION?: string;
 
   /**
-   * The environment the application is running in. This variable is a duplicate of `ENVIRONMENT` to support use in external packages.
-   *
-   * @defaultValue "production"
-   *
-   * @category neutral
-   * @deprecated Use {@link ENVIRONMENT} instead.
-   * @readonly
-   */
-  NODE_ENV: "development" | "staging" | "production";
-
-  /**
    * Indicates if error stack traces should be captured.
    *
    * @defaultValue false
@@ -331,29 +332,13 @@ export interface StormBaseVariables {
   /**
    * An indicator that specifies the current runtime is a continuous integration environment.
    *
-   * @remarks
-   * This variable is used to replace the {@link CONTINUOUS_INTEGRATION} environment variable.
-   *
    * @defaultValue false
    *
    * @title Continuous Integration
+   * @alias CONTINUOUS_INTEGRATION
    * @category neutral
    */
   CI: boolean;
-
-  /**
-   * An indicator that specifies the current runtime is a continuous integration environment.
-   *
-   * @remarks
-   * This variable is also set using the {@link CI} environment variable.
-   *
-   * @defaultValue false
-   *
-   * @category neutral
-   * @deprecated Use {@link CI} instead.
-   * @hidden
-   */
-  CONTINUOUS_INTEGRATION: boolean;
 
   /**
    * The unique identifier for the current run. This value is set by certain CI/CD systems.
@@ -746,15 +731,6 @@ export interface StormBaseVariables {
    * @readonly
    */
   XCS?: string;
-
-  /**
-   * The Vercel environment. This variable is set by Vercel when the application is running in a Vercel environment.
-   *
-   * @category node
-   * @deprecated Use {@link ENVIRONMENT} instead.
-   * @readonly
-   */
-  VERCEL_ENV?: string;
 
   /**
    * The Storm Stack application's runtime data directory.

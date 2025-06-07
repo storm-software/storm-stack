@@ -372,51 +372,53 @@ export const runtime = {
   isServer: isNode || build.platform === "node"
 } as StormRuntimeInfo;
 
-export const stormVariablesNamingStrategy = new class extends NamingStrategy {
-  public constructor() {
-      super("storm-variables");
-  }
 
-  public override getPropertyName(type: TypeProperty | TypePropertySignature, forSerializer: string): string | undefined {
-    const name = super.getPropertyName(type, forSerializer);
-    if (!name) {
-      return name;
-    }
-
-    return name.replace(/^(${context.dotenv.prefix
-      .map(prefix => `${prefix}_`)
-      .join("|")})/g, "").toUpperCase();
-  }
-};
-
-let varsFile = {} as Record<string, any>;
-if (existsSync(join(paths.config, "vars.json"))) {
-  varsFile = JSON.parse(await readFile(join(paths.config, "vars.json"), "utf8") || "{}");
-} 
-if (existsSync(join(paths.config.replace(new RegExp(\`/\${name}$\`), ""), "vars.json"))) {
-  varsFile = deserialize<StormVariables>(
-    { 
-      ...JSON.parse(
-        await readFile(join(paths.config.replace(new RegExp(\`/\${name}$\`), ""), "vars.json"), "utf8") || "{}"
-      ),
-      ...varsFile 
-    },
-    undefined,
-    serializer,
-    stormVariablesNamingStrategy
-  );
-} 
-
-export const vars = new Proxy<StormVariables>(
-  deserialize<StormVariables>(
-    process.env,
-    undefined,
-    serializer,
-    stormVariablesNamingStrategy
-  ), {
-  get(target, prop, receiver) {
-    return target[prop as keyof StormVariables] ?? varsFile[prop as keyof StormVariables];
-  }
-});
 `;
 }
+
+// export const stormVariablesNamingStrategy = new class extends NamingStrategy {
+//   public constructor() {
+//       super("storm-variables");
+//   }
+
+//   public override getPropertyName(type: TypeProperty | TypePropertySignature, forSerializer: string): string | undefined {
+//     const name = super.getPropertyName(type, forSerializer);
+//     if (!name) {
+//       return name;
+//     }
+
+//     return name.replace(/^(${context.dotenv.prefix
+//       .map(prefix => `${prefix}_`)
+//       .join("|")})/g, "").toUpperCase();
+//   }
+// };
+
+// let varsFile = {} as Record<string, any>;
+// if (existsSync(join(paths.config, "vars.json"))) {
+//   varsFile = JSON.parse(await readFile(join(paths.config, "vars.json"), "utf8") || "{}");
+// }
+// if (existsSync(join(paths.config.replace(new RegExp(\`/\${name}$\`), ""), "vars.json"))) {
+//   varsFile = deserialize<StormVariables>(
+//     {
+//       ...JSON.parse(
+//         await readFile(join(paths.config.replace(new RegExp(\`/\${name}$\`), ""), "vars.json"), "utf8") || "{}"
+//       ),
+//       ...varsFile
+//     },
+//     undefined,
+//     serializer,
+//     stormVariablesNamingStrategy
+//   );
+// }
+
+// export const vars = new Proxy<StormVariables>(
+//   deserialize<StormVariables>(
+//     process.env,
+//     undefined,
+//     serializer,
+//     stormVariablesNamingStrategy
+//   ), {
+//   get(target, prop, receiver) {
+//     return target[prop as keyof StormVariables] ?? varsFile[prop as keyof StormVariables];
+//   }
+// });

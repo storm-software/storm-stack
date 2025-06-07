@@ -32,6 +32,9 @@ export async function transformVars<TOptions extends Options = Options>(
   context: Context<TOptions>
 ): Promise<SourceFile> {
   const dotenvReflection = await resolveDotenvReflection(context, "variables");
+  const dotenvAliasProperties = dotenvReflection
+    .getProperties()
+    .filter(prop => prop.getAlias().length > 0);
 
   const ast = await parseAsync(Lang.TypeScript, source.code.toString());
   const root = ast.root();
@@ -65,7 +68,10 @@ export async function transformVars<TOptions extends Options = Options>(
         pre =>
           envName &&
           envName.startsWith(pre) &&
-          dotenvReflection.hasProperty(envName.replace(`${pre}_`, ""))
+          (dotenvReflection.hasProperty(envName.replace(`${pre}_`, "")) ||
+            dotenvAliasProperties.some(prop =>
+              prop.getAlias().includes(envName.replace(`${pre}_`, ""))
+            ))
       );
 
       let name = envName;
@@ -73,9 +79,14 @@ export async function transformVars<TOptions extends Options = Options>(
         name = envName.replace(`${prefix}_`, "");
       }
 
-      if (dotenvReflection.hasProperty(name)) {
-        const dotenvProperty = dotenvReflection.getProperty(name);
-        if (dotenvProperty.isIgnored()) {
+      if (
+        dotenvReflection.hasProperty(name) ||
+        dotenvAliasProperties.some(prop => prop.getAlias().includes(name))
+      ) {
+        const dotenvProperty = dotenvReflection.hasProperty(name)
+          ? dotenvReflection.getProperty(name)
+          : dotenvAliasProperties.find(prop => prop.getAlias().includes(name));
+        if (!dotenvProperty || dotenvProperty.isIgnored()) {
           continue;
         }
 

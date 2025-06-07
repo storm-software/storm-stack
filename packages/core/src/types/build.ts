@@ -18,19 +18,13 @@
 
 import type { ReflectionClass } from "@deepkit/type";
 import type { StormWorkspaceConfig } from "@storm-software/config/types";
+import type { IStormPayload, StormBaseVariables } from "@storm-stack/types";
 import type {
-  IStormPayload,
-  IStormResult,
-  StormBaseVariables
-} from "@storm-stack/types";
-import type {
-  CleanupFunction,
-  DeserializerFunction,
   PostprocessFunction,
   PreprocessFunction,
-  SerializerFunction,
   SetupFunction,
   StormContext,
+  TeardownFunction,
   ValidatorFunction
 } from "@storm-stack/types/node";
 import type { LogLevel } from "@storm-stack/types/shared/log";
@@ -485,8 +479,6 @@ export interface RuntimeConfig {
  */
 export interface Config<
   TPayload extends IStormPayload,
-  TResult extends IStormResult,
-  TInput = any,
   TOutput = any,
   TContext extends StormContext<
     StormBaseVariables,
@@ -495,12 +487,10 @@ export interface Config<
   > = StormContext<StormBaseVariables, any, TPayload>
 > {
   setup?: SetupFunction;
-  deserializer?: DeserializerFunction<TPayload, TInput>;
   validator?: ValidatorFunction<TPayload, TContext>;
   preprocess?: PreprocessFunction<TPayload, TContext>;
   postprocess?: PostprocessFunction<TPayload, TContext, TOutput>;
-  serializer?: SerializerFunction<TResult, TOutput>;
-  cleanup?: CleanupFunction;
+  teardown?: TeardownFunction;
 }
 
 export type WorkerProcess<TExposedMethods extends ReadonlyArray<string>> = {

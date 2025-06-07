@@ -18,7 +18,6 @@
 
 import type { IStormError } from "../shared/error.js";
 import type { IStormPayload } from "../shared/payload.js";
-import type { IStormResult } from "../shared/result.js";
 import type { StormBaseVariables } from "../shared/vars.js";
 import type { StormContext } from "./context.js";
 
@@ -48,11 +47,6 @@ export type SetupFunction = () => MaybePromise<
   IStormError | void | null | undefined
 >;
 
-export type DeserializerFunction<
-  TPayload extends IStormPayload,
-  TInput = any
-> = (input: TInput) => MaybePromise<TPayload | IStormError>;
-
 export type ValidatorFunction<
   TPayload extends IStormPayload,
   TContext extends StormContext<StormBaseVariables, any, TPayload>
@@ -76,10 +70,6 @@ export type PostprocessFunction<
   output: TOutput
 ) => MaybePromise<IStormError | void | null | undefined>;
 
-export type SerializerFunction<TResult extends IStormResult, TOutput = any> = (
-  response: TResult | IStormResult<IStormError>
-) => MaybePromise<TOutput | IStormError>;
-
-export type CleanupFunction = () => MaybePromise<
+export type TeardownFunction = () => MaybePromise<
   IStormError | void | null | undefined
 >;

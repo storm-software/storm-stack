@@ -207,7 +207,7 @@ import { colors } from "${joinPaths(runtimeRelativePath, "cli")}";${
  * @returns The rendered string displaying usage information.
  */
 export function renderUsage(mode: "full" | "minimal" = "full"): string {
-  return \`\${colors.whiteBright(colors.bold(\`${command.displayName}\${mode === "minimal" ? " Command" : ""}\`))}${
+  return \`\${colors.white(\`\${colors.whiteBright(colors.bold(\`${command.displayName}\${mode === "minimal" ? " Command" : ""}\`))}${
     command.description
       ? `
 
@@ -254,7 +254,7 @@ ${commandsColumn1
 
   \${colors.whiteBright(colors.bold("Options:"))}
 ${optionsColumn1.map((option, i) => `    ${option.padEnd(column1MaxLength)}${optionsColumn2[i]}`).join(" \n")}
-\`;
+\`)}\`;
 }
 
 `
@@ -1117,14 +1117,13 @@ import { isError, isStormError, createStormError } from "./runtime/error";${
         : ""
     }
 
-// Exit early if on an older version of Node.js (< 22)
+// Exit early if on an older version of Node.js (< ${config.minNodeVersion})
 const major = process.versions.node.split(".").map(Number)[0]!;
-if (major < 22) {
-  console.error(
-    "\\n" +
-      "${titleCase(context.options.name)} CLI requires Node.js version 22 or newer. \\n" +
-      \`You are running Node.js v\${process.versions.node}. \\n\` +
-      \`Please upgrade Node.js: \${link("https://nodejs.org/en/download/")} \\n\`,
+if (major < ${config.minNodeVersion}) {
+  console.error(\` \${colors.red("✘")} \${colors.white(\`${titleCase(context.options.name)} CLI requires Node.js version ${config.minNodeVersion} or newer.
+You are running Node.js v\${process.versions.node}.
+Please upgrade Node.js - \${link("https://nodejs.org/en/download/")}
+\`)}\`,
   );
   process.exit(1);
 }

@@ -16,7 +16,6 @@
 
  ------------------------------------------------------------------- */
 
-// eslint-disable-next-line ts/consistent-type-imports
 import { IStormPayload } from "../shared/payload";
 
 export interface IStormEvent<TEventType extends string = string, TData = any>

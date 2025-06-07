@@ -33,7 +33,7 @@ import { resolvePackage } from "@stryke/path/resolve";
 import { TsConfigJson } from "@stryke/types/tsconfig";
 import defu from "defu";
 import ts from "typescript";
-import { generateVariables } from "../../helpers/dts/shared";
+import { resolveDotenvReflection } from "../../helpers/dotenv/resolve";
 import { getParsedTypeScriptConfig } from "../../helpers/typescript/tsconfig";
 import { getFileHeader } from "../../helpers/utilities/file-header";
 import { writeFile } from "../../helpers/utilities/write-file";
@@ -317,6 +317,8 @@ declare module 'storm:${relativePath(
     );
   }
 
+  const dotenvReflection = await resolveDotenvReflection(context, "variables");
+
   await writeFile(
     log,
     dtsFile,
@@ -324,10 +326,24 @@ declare module 'storm:${relativePath(
 
 ${(await readFile(joinPaths(dtsPath, "storm-stack.d.ts")))
   .replace(/export.*__Ω.*;/g, "")
-  .replace(/^export\s*\{\s*\}\s*/g, "")
-  .replace(/^export\s*(?:declare\s*)?/gm, "")}
+  .replace(/^export\s*\{\s*\}\s*$/gm, "")
+  .replace(/^export\s*(?:declare\s*)?/gm, "")
+  .replace(
+    /: Storage(?:_\d+)?;$/gm,
+    ': import("unstorage").Storage<import("unstorage").StorageValue>;'
+  )}
 
-interface StormVariables extends StormBaseVariables ${generateVariables(context.dotenv.types.variables.reflection)}
+type StormVariables = Omit<StormBaseVariables, ${dotenvReflection
+      .getProperties()
+      .filter(item => item.isHidden() || item.isIgnored() || item.isReadonly())
+      .map(prop => `"${prop.getNameAsString()}"`)
+      .join(" | ")}> & Readonly<Pick<StormBaseVariables, ${dotenvReflection
+      .getProperties()
+      .filter(
+        item => !item.isHidden() && !item.isIgnored() && item.isReadonly()
+      )
+      .map(prop => `"${prop.getNameAsString()}"`)
+      .join(" | ")}>>;
 const $storm: StormContext<StormVariables>;
 
 ${runtimeModules.replace(/^export\s*(?:declare\s*)?/gm, "export ")}`

@@ -47,7 +47,7 @@ export default class StormStackCLIPreset<
   public constructor(config: Partial<StormStackCLIPresetConfig> = {}) {
     super("cli", "@storm-stack/preset-cli");
 
-    this.#config = config;
+    this.#config = { minNodeVersion: 20, ...config };
     this.dependencies = [
       [
         "@storm-stack/plugin-log-console",

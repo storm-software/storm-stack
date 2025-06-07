@@ -23,6 +23,13 @@ export interface StormStackCLIPresetConfig {
   bin?: string | string[];
 
   /**
+   * The lowest Node.js version that the CLI will support.
+   *
+   * @defaultValue 20
+   */
+  minNodeVersion?: 22 | 20 | 18 | 16;
+
+  /**
    * If a boolean, this will be used to determine the default value of the `interactive` flag. If `never` is specified, the CLI will not include an interactive mode.
    */
   interactive?: boolean | "never";

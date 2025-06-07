@@ -10,7 +10,7 @@ tmp
 out
 .nx
 **/.storm
-!examples/**/.storm
+# \!examples/**/.storm
 
 # build
 

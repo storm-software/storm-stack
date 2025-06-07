@@ -18,7 +18,7 @@
 
 export function getFileHeader(
   directive: string | null = "",
-  prettierIgnore = true
+  prettierIgnore = false
 ): string {
   if (directive && process.env.STORM_STACK_LOCAL) {
     directive = directive.replaceAll(

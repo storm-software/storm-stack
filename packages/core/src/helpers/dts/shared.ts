@@ -40,13 +40,43 @@ export function generateVariablesInner(reflection: ReflectionClass<any>) {
   return `
 ${reflection
   .getProperties()
-  .sort((a, b) => a.getNameAsString().localeCompare(b.getNameAsString()))
+  .filter(item => !item.isHidden() || !item.isIgnored())
+  .sort((a, b) =>
+    (a.isReadonly() && b.isReadonly()) || (!a.isReadonly() && !b.isReadonly())
+      ? a.getNameAsString().localeCompare(b.getNameAsString())
+      : a.isReadonly()
+        ? -1
+        : 1
+  )
   .map(
     item =>
       `/**
-     * ${item.getDescription() || titleCase(item.getNameAsString())}
+     * ${item.getDescription() || item.getTitle() || titleCase(item.getNameAsString())}
      *
-     * @title ${titleCase(item.getNameAsString())}
+     * @title ${item.getTitle() || titleCase(item.getNameAsString())}${
+       item.isInternal()
+         ? `
+     * @internal`
+         : ""
+     }${
+       item.isReadonly()
+         ? `
+     * @readonly`
+         : ""
+     }${
+       item.getDomain()
+         ? `
+     * @domain ${item.getDomain()}`
+         : ""
+     }${
+       item.getPermission()?.length
+         ? `
+     ${item
+       .getPermission()
+       .map(permission => `* @permission ${permission}`)
+       .join("\n")}`
+         : ""
+     }
      */
     ${item.getNameAsString()}${item.isActualOptional() ? "?" : ""}: ${stringifyType(item.getType())}
 `
