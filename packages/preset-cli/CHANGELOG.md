@@ -2,6 +2,19 @@
 
 # Changelog for Storm Stack - Preset Cli
 
+## [0.18.0](https://github.com/storm-software/storm-stack/releases/tag/preset-cli%400.18.0) (2025-06-07)
+
+### Features
+
+- **core:** Added automated generation of runtime type declarations
+
+### Updated Dependencies
+
+- Updated devkit to 0.7.0
+- Updated devkit to 0.7.0
+- Updated core to 0.26.0
+- Updated core to 0.26.0
+
 ## [0.17.0](https://github.com/storm-software/storm-stack/releases/tag/preset-cli%400.17.0) (2025-06-04)
 
 ### Features

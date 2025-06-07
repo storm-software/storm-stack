@@ -2,6 +2,17 @@
 
 # Changelog for Storm Stack - Preset Cloudflare Worker
 
+## [0.14.0](https://github.com/storm-software/storm-stack/releases/tag/preset-cloudflare-worker%400.14.0) (2025-06-07)
+
+### Features
+
+- **core:** Added automated generation of runtime type declarations
+
+### Updated Dependencies
+
+- Updated core to 0.26.0
+- Updated core to 0.26.0
+
 ## [0.13.0](https://github.com/storm-software/storm-stack/releases/tag/preset-cloudflare-worker%400.13.0) (2025-06-04)
 
 ### Features

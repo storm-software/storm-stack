@@ -2,6 +2,17 @@
 
 # Changelog for Storm Stack - Devkit
 
+## [0.7.0](https://github.com/storm-software/storm-stack/releases/tag/devkit%400.7.0) (2025-06-07)
+
+### Features
+
+- **core:** Added automated generation of runtime type declarations
+
+### Updated Dependencies
+
+- Updated types to 0.10.0
+- Updated core to 0.26.0
+
 ## [0.6.0](https://github.com/storm-software/storm-stack/releases/tag/devkit%400.6.0) (2025-06-04)
 
 ### Features
