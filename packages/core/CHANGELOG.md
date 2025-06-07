@@ -2,6 +2,16 @@
 
 # Changelog for Storm Stack - Core
 
+## [0.26.0](https://github.com/storm-software/storm-stack/releases/tag/core%400.26.0) (2025-06-07)
+
+### Features
+
+- **core:** Added automated generation of runtime type declarations
+
+### Updated Dependencies
+
+- Updated types to 0.10.0
+
 ## [0.25.0](https://github.com/storm-software/storm-stack/releases/tag/core%400.25.0) (2025-06-04)
 
 ### Features

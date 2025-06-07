@@ -2,6 +2,19 @@
 
 # Changelog for Storm Stack - Plugin Storage Fs
 
+## [0.6.0](https://github.com/storm-software/storm-stack/releases/tag/plugin-storage-fs%400.6.0) (2025-06-07)
+
+### Features
+
+- **core:** Added automated generation of runtime type declarations
+
+### Updated Dependencies
+
+- Updated devkit to 0.7.0
+- Updated devkit to 0.7.0
+- Updated core to 0.26.0
+- Updated core to 0.26.0
+
 ## [0.5.2](https://github.com/storm-software/storm-stack/releases/tag/plugin-storage-fs%400.5.2) (2025-06-04)
 
 ### Miscellaneous
