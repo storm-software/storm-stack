@@ -12,16 +12,16 @@
   "dependencies": {
     "@cloudflare/unenv-preset": "catalog:",
     "@deepkit/type": "catalog:",
-    "@storm-stack/types": "0.10.0",
+    "@storm-stack/types": "workspace:*",
     "@stryke/json": "catalog:",
     "@stryke/type-checks": "catalog:",
     "@stryke/url": "catalog:"
   },
   "devDependencies": {
-    "@storm-stack/core": "0.26.0",
-    "@storm-stack/nx": "0.13.0",
-    "@storm-stack/plugin-log-console": "0.14.0",
-    "@storm-stack/preset-cloudflare-worker": "0.14.0",
+    "@storm-stack/core": "workspace:*",
+    "@storm-stack/nx": "workspace:*",
+    "@storm-stack/plugin-log-console": "workspace:*",
+    "@storm-stack/preset-cloudflare-worker": "workspace:*",
     "@stryke/types": "catalog:",
     "wrangler": "catalog:"
   },
