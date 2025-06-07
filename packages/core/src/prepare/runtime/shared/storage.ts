@@ -22,7 +22,14 @@ import type { Context, Options } from "../../../types/build";
 export function writeStorage<TOptions extends Options = Options>(
   context: Context<TOptions>
 ) {
-  return `${getFileHeader()}
+  return `
+/**
+ * The storage module provides a unified storage interface for the Storm Stack runtime.
+ *
+ * @module storm:storage
+ */
+
+${getFileHeader()}
 
 import { createStorage } from "unstorage";
 ${context.runtime.storage

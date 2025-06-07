@@ -17,6 +17,7 @@
  ------------------------------------------------------------------- */
 
 import { Options } from "@storm-stack/core/types/build";
+import { StormPayload } from "../../../../.storm/runtime/payload";
 import { createEngine } from "../../../helpers/create-engine";
 
 /**

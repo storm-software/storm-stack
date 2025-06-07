@@ -17,11 +17,19 @@
  ------------------------------------------------------------------- */
 
 import { readJsonFile } from "@stryke/fs/read-file";
+import { loadTsConfig } from "@stryke/fs/tsconfig";
+import {
+  findFileName,
+  findFilePath,
+  relativePath
+} from "@stryke/path/file-path-fns";
+import { joinPaths } from "@stryke/path/join-paths";
 import type { TsConfigJson } from "@stryke/types/tsconfig";
 import ts from "typescript";
 import {
   getParsedTypeScriptConfig,
-  getTsconfigFilePath
+  getTsconfigFilePath,
+  isIncludeMatchFound
 } from "../../helpers/typescript/tsconfig";
 import type { Context, Options } from "../../types/build";
 
@@ -40,6 +48,9 @@ export async function getTsconfigChanges<TOptions extends Options = Options>(
   );
   const tsconfigJson = await readJsonFile<TsConfigJson>(tsconfigFilePath);
   tsconfigJson.compilerOptions ??= {};
+
+  const extendedTsconfig = await loadTsConfig(tsconfigFilePath);
+  extendedTsconfig.compilerOptions ??= {};
 
   if (tsconfigJson.reflection !== true) {
     tsconfigJson.reflection = true;
@@ -62,31 +73,40 @@ export async function getTsconfigChanges<TOptions extends Options = Options>(
   //   tsconfigJson.compilerOptions.types.push("@storm-stack/types");
   // }
 
-  // if (
-  //   context.options.dts &&
-  //   !tsconfig.options.types?.some(
-  //     type =>
-  //       type ===
-  //       relativePath(
-  //         joinPaths(
-  //           context.workspaceConfig.workspaceRoot,
-  //           findFilePath(tsconfigFilePath)
-  //         ),
-  //         context.options.dts || ""
-  //       )
-  //   )
-  // ) {
-  //   tsconfigJson.compilerOptions.types ??= [];
-  //   tsconfigJson.compilerOptions.types.push(
-  //     relativePath(
-  //       joinPaths(
-  //         context.workspaceConfig.workspaceRoot,
-  //         findFilePath(tsconfigFilePath)
-  //       ),
-  //       context.options.dts
-  //     )
-  //   );
-  // }
+  if (context.options.dts) {
+    const dtsFilePath = context.options.dts
+      ? context.options.dts.startsWith(context.workspaceConfig.workspaceRoot)
+        ? context.options.dts
+        : joinPaths(context.workspaceConfig.workspaceRoot, context.options.dts)
+      : joinPaths(
+          context.workspaceConfig.workspaceRoot,
+          context.options.projectRoot,
+          "storm.d.ts"
+        );
+    const dtsRelativePath = joinPaths(
+      relativePath(
+        joinPaths(
+          context.workspaceConfig.workspaceRoot,
+          context.options.projectRoot
+        ),
+        findFilePath(dtsFilePath)
+      ),
+      findFileName(dtsFilePath)
+    );
+
+    if (
+      !tsconfigJson.include?.some(filePattern =>
+        isIncludeMatchFound(filePattern, [
+          dtsFilePath,
+          dtsRelativePath,
+          "storm.d.ts"
+        ])
+      )
+    ) {
+      tsconfigJson.include ??= [];
+      tsconfigJson.include.push(dtsRelativePath);
+    }
+  }
 
   if (
     !tsconfig.options.lib?.some(lib =>

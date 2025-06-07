@@ -35,7 +35,7 @@ import {
   initInstalls,
   initUnimport
 } from "./helpers/init";
-import { prepareEntry, prepareRuntime, prepareTypes } from "./helpers/prepare";
+import { prepareEntry, prepareRuntime } from "./helpers/prepare";
 import type { StormStackCLIPresetContext } from "./types/build";
 import type { StormStackCLIPresetConfig } from "./types/config";
 
@@ -87,7 +87,6 @@ export default class StormStackCLIPreset<
       "init:unimport": this.initUnimport.bind(this),
       "init:entry": this.initEntry.bind(this),
       "prepare:entry": this.prepareEntry.bind(this),
-      "prepare:types": this.prepareTypes.bind(this),
       "prepare:runtime": this.prepareRuntime.bind(this),
       "build:library": this.buildLibrary.bind(this),
       "build:application": this.buildApplication.bind(this),
@@ -131,15 +130,6 @@ export default class StormStackCLIPreset<
 
       await initEntry(this.log, context, this.#config);
     }
-  }
-
-  protected async prepareTypes(context: StormStackCLIPresetContext<TOptions>) {
-    this.log(
-      LogLevelLabel.TRACE,
-      `Initializing CLI specific type definitions for the Storm Stack project.`
-    );
-
-    await prepareTypes(this.log, context, this.#config);
   }
 
   protected async prepareRuntime(

@@ -39,9 +39,14 @@ import { camelCase } from "@stryke/string-format/camel-case";
 import { constantCase } from "@stryke/string-format/constant-case";
 import { kebabCase } from "@stryke/string-format/kebab-case";
 import { pascalCase } from "@stryke/string-format/pascal-case";
+import { titleCase } from "@stryke/string-format/title-case";
 import { isSetString } from "@stryke/type-checks/is-set-string";
 import { writeApp } from "../runtime/app";
 import { writeRuntime } from "../runtime/cli";
+import {
+  writeCompletionsBash,
+  writeCompletionsZsh
+} from "../runtime/completions";
 import {
   writeVarsDelete,
   writeVarsGet,
@@ -164,7 +169,7 @@ async function writeCommandEntryUsage<TOptions extends Options = Options>(
         Math.max(...commandsColumn1.map(child => child.length)),
         Math.max(...optionsColumn1.map(option => option.length))
       ]
-    ) + 2;
+    ) + 6;
 
   await writeFile(
     log,
@@ -332,7 +337,7 @@ async function handler() {
           )
           .join(" ")}
 
-        console.error(\` \${colors.red("✘")} \${colors.redBright(\`Unknown command: \${colors.bold(command || "<none>")}\`)}\`);
+        console.error(\` \${colors.red("✘")} \${colors.white(\`Unknown command: \${colors.bold(command || "<none>")}\`)}\`);
         console.log("");
         console.log(renderUsage("full"));
         console.log("");
@@ -542,7 +547,7 @@ async function handler() {
       }
     }
   } catch (err) {
-   console.error(\` \${colors.red("✘")} \${colors.redBright(\`Error occurred while processing ${command.displayName} command.\`)}\`);
+   console.error(\` \${colors.red("✘")} \${colors.white(\`Error occurred while processing ${command.displayName} command.\`)}\`);
   }
 }
 
@@ -701,7 +706,7 @@ async function writeVirtualCommandEntry<TOptions extends Options = Options>(
   });
 
   const column1MaxLength =
-    Math.max(...optionsColumn1.map(option => option.length)) + 2;
+    Math.max(...optionsColumn1.map(option => option.length)) + 6;
 
   const binName =
     (config.bin &&
@@ -823,7 +828,7 @@ async function handler() {
         )
         .join(" ")}
 
-        console.error(\` \${colors.red("✘")} \${colors.redBright(\`Unknown command: \${colors.bold(command || "<none>")}\`)}\`);
+        console.error(\` \${colors.red("✘")} \${colors.white(\`Unknown command: \${colors.bold(command || "<none>")}\`)}\`);
         console.log("");
         console.log(renderUsage("full"));
         console.log("");
@@ -873,7 +878,7 @@ async function handler() {
       console.log("");
     }
   } catch (err) {
-   console.error(\` \${colors.red("✘")} \${colors.redBright(\`Error occurred while processing ${
+   console.error(\` \${colors.red("✘")} \${colors.white(\`Error occurred while processing ${
      command.displayName
    } command.\`)}\`);
   }
@@ -991,6 +996,44 @@ async function generateVarsCommands<TOptions extends Options = Options>(
   }
 }
 
+async function generateCompletionCommands<TOptions extends Options = Options>(
+  log: LogFn,
+  context: StormStackCLIPresetContext<TOptions>,
+  config: StormStackCLIPresetConfig
+) {
+  if (config.manageVars === false) {
+    log(
+      LogLevelLabel.TRACE,
+      "Skipping vars command generation since `manageVars` is false."
+    );
+  } else {
+    await Promise.all([
+      writeFile(
+        log,
+        joinPaths(
+          context.artifactsPath,
+          "commands",
+          "completions",
+          "bash",
+          "handle.ts"
+        ),
+        writeCompletionsBash(context, config)
+      ),
+      writeFile(
+        log,
+        joinPaths(
+          context.artifactsPath,
+          "commands",
+          "completions",
+          "zsh",
+          "handle.ts"
+        ),
+        writeCompletionsZsh(context, config)
+      )
+    ]);
+  }
+}
+
 export async function prepareRuntime<TOptions extends Options = Options>(
   log: LogFn,
   context: StormStackCLIPresetContext<TOptions>,
@@ -1007,7 +1050,8 @@ export async function prepareRuntime<TOptions extends Options = Options>(
       joinPaths(context.runtimePath, "cli.ts"),
       writeRuntime(context, config)
     ),
-    generateVarsCommands(log, context, config)
+    generateVarsCommands(log, context, config),
+    generateCompletionCommands(log, context, config)
   ]);
 }
 
@@ -1051,13 +1095,17 @@ export async function prepareEntry<TOptions extends Options = Options>(
   await writeFile(
     log,
     commandTree.entry.file,
-    `#!/usr/bin/env node
+    `#!/usr/bin/env ${
+      context.options.mode === "development"
+        ? "-S NODE_OPTIONS=--enable-source-maps node"
+        : "node"
+    }
 
 ${getFileHeader()}
 
-import { colors, renderBanner, renderFooter, parseArgs } from "./runtime/cli";
+import { colors, link, renderBanner, renderFooter, parseArgs } from "./runtime/cli";
 import { isMinimal, isUnicodeSupported } from "./runtime/env";
-import { isError, isStormError } from "./runtime/error";${
+import { isError, isStormError, createStormError } from "./runtime/error";${
       commandTree.children && Object.values(commandTree.children).length > 0
         ? Object.values(commandTree.children)
             .map(child =>
@@ -1068,6 +1116,18 @@ import { isError, isStormError } from "./runtime/error";${
             .join("\n")
         : ""
     }
+
+// Exit early if on an older version of Node.js (< 22)
+const major = process.versions.node.split(".").map(Number)[0]!;
+if (major < 22) {
+  console.error(
+    "\\n" +
+      "${titleCase(context.options.name)} CLI requires Node.js version 22 or newer. \\n" +
+      \`You are running Node.js v\${process.versions.node}. \\n\` +
+      \`Please upgrade Node.js: \${link("https://nodejs.org/en/download/")} \\n\`,
+  );
+  process.exit(1);
+}
 
 async function main() {
   try {
@@ -1092,7 +1152,7 @@ async function main() {
       } `
         )
         .join(" ")} else {
-        console.error(\` \${colors.red("✘")} \${colors.redBright(\`Unknown command: \${colors.bold(command || "<none>")}\`)}\`);
+        console.error(\` \${colors.red("✘")} \${colors.white(\`Unknown command: \${colors.bold(command || "<none>")}\`)}\`);
         console.log("");
       }
 
@@ -1129,7 +1189,7 @@ async function main() {
       console.log("");
     }
   } catch (err) {
-    console.error(\` \${colors.red("✘")} \${colors.redBright(\`An error occurred while running the ${context.options.name} application: \n\n\${createStormError(err).toDisplay()}\`)}\`);
+    console.error(\` \${colors.red("✘")} \${colors.white(\`An error occurred while running the ${context.options.name} application: \n\n\${createStormError(err).toDisplay()}\`)}\`);
   }
 }
 
@@ -1139,75 +1199,75 @@ await main();
   );
 }
 
-export async function prepareTypes<TOptions extends Options = Options>(
-  log: LogFn,
-  context: Context<TOptions>,
-  config: StormStackCLIPresetConfig
-) {
-  const typesDir = joinPaths(context.artifactsPath, "types");
+// export async function prepareTypes<TOptions extends Options = Options>(
+//   log: LogFn,
+//   context: Context<TOptions>,
+//   config: StormStackCLIPresetConfig
+// ) {
+//   const typesDir = joinPaths(context.artifactsPath, "types");
 
-  const relativeCLIRuntimeDir = relativePath(
-    typesDir,
-    joinPaths(context.runtimePath, "cli"),
-    false
-  );
+//   const relativeCLIRuntimeDir = relativePath(
+//     typesDir,
+//     joinPaths(context.runtimePath, "cli"),
+//     false
+//   );
 
-  await writeFile(
-    log,
-    joinPaths(typesDir, "modules-cli.d.ts"),
-    `${getFileHeader(`
-/// <reference types="@storm-stack/types" />
-/// <reference types="@storm-stack/types/node" />
-`)}
+//   await writeFile(
+//     log,
+//     joinPaths(typesDir, "modules-cli.d.ts"),
+//     `${getFileHeader(`
+// /// <reference types="@storm-stack/types" />
+// /// <reference types="@storm-stack/types/node" />
+// `)}
 
-declare module "storm:cli" {
-  const parseArgs: (typeof import("${relativeCLIRuntimeDir}"))["parseArgs"];
-  const colors: (typeof import("${relativeCLIRuntimeDir}"))["colors"];
-  const getColor: (typeof import("${relativeCLIRuntimeDir}"))["getColor"];
-  const link: (typeof import("${relativeCLIRuntimeDir}"))["link"];${
-    config.interactive !== "never"
-      ? `
-  const prompt: (typeof import("${relativeCLIRuntimeDir}"))["prompt"];`
-      : ""
-  }
+// declare module "storm:cli" {
+//   const parseArgs: (typeof import("${relativeCLIRuntimeDir}"))["parseArgs"];
+//   const colors: (typeof import("${relativeCLIRuntimeDir}"))["colors"];
+//   const getColor: (typeof import("${relativeCLIRuntimeDir}"))["getColor"];
+//   const link: (typeof import("${relativeCLIRuntimeDir}"))["link"];${
+//     config.interactive !== "never"
+//       ? `
+//   const prompt: (typeof import("${relativeCLIRuntimeDir}"))["prompt"];`
+//       : ""
+//   }
 
-  export {${config.interactive !== "never" ? " prompt," : ""} parseArgs, colors, getColor, link };
-}
+//   export {${config.interactive !== "never" ? " prompt," : ""} parseArgs, colors, getColor, link };
+// }
 
-`
-  );
+// `
+//   );
 
-  await writeFile(
-    log,
-    joinPaths(typesDir, "global-cli.d.ts"),
-    `${getFileHeader(`
-/// <reference types="@storm-stack/types" />
-/// <reference types="@storm-stack/types/node" />
-`)}
+//   await writeFile(
+//     log,
+//     joinPaths(typesDir, "global-cli.d.ts"),
+//     `${getFileHeader(`
+// /// <reference types="@storm-stack/types" />
+// /// <reference types="@storm-stack/types/node" />
+// `)}
 
-declare global {
-  const parseArgs: (typeof import("${relativeCLIRuntimeDir}"))["parseArgs"];
+// declare global {
+//   const parseArgs: (typeof import("${relativeCLIRuntimeDir}"))["parseArgs"];
 
-  const colors: (typeof import("${relativeCLIRuntimeDir}"))["colors"];
-  const getColor: (typeof import("${relativeCLIRuntimeDir}"))["getColor"];
-  type ColorName = import("${relativeCLIRuntimeDir}").ColorName;
+//   const colors: (typeof import("${relativeCLIRuntimeDir}"))["colors"];
+//   const getColor: (typeof import("${relativeCLIRuntimeDir}"))["getColor"];
+//   type ColorName = import("${relativeCLIRuntimeDir}").ColorName;
 
-  const link: (typeof import("${relativeCLIRuntimeDir}"))["link"];
-  type LinkOptions = import("${relativeCLIRuntimeDir}").LinkOptions;  ${
-    config.interactive !== "never"
-      ? `
+//   const link: (typeof import("${relativeCLIRuntimeDir}"))["link"];
+//   type LinkOptions = import("${relativeCLIRuntimeDir}").LinkOptions;  ${
+//     config.interactive !== "never"
+//       ? `
 
-  const prompt: (typeof import("${relativeCLIRuntimeDir}"))["prompt"];
-  type TextPromptOptions = import("${relativeCLIRuntimeDir}").TextPromptOptions;
-  type ConfirmPromptOptions = import("${relativeCLIRuntimeDir}").ConfirmPromptOptions;
-  type SelectPromptOptions = import("${relativeCLIRuntimeDir}").SelectPromptOptions;
-  type MultiSelectPromptOptions = import("${relativeCLIRuntimeDir}").MultiSelectPromptOptions;`
-      : ""
-  }
-}
+//   const prompt: (typeof import("${relativeCLIRuntimeDir}"))["prompt"];
+//   type TextPromptOptions = import("${relativeCLIRuntimeDir}").TextPromptOptions;
+//   type ConfirmPromptOptions = import("${relativeCLIRuntimeDir}").ConfirmPromptOptions;
+//   type SelectPromptOptions = import("${relativeCLIRuntimeDir}").SelectPromptOptions;
+//   type MultiSelectPromptOptions = import("${relativeCLIRuntimeDir}").MultiSelectPromptOptions;`
+//       : ""
+//   }
+// }
 
-export {};
+// export {};
 
-`
-  );
-}
+// `
+//   );
+// }

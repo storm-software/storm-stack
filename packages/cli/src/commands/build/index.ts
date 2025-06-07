@@ -17,6 +17,7 @@
  ------------------------------------------------------------------- */
 
 import { Options } from "@storm-stack/core/types/build";
+import { StormPayload } from "../../../.storm/runtime/payload";
 import { createEngine } from "../../helpers/create-engine";
 
 /**
@@ -31,6 +32,8 @@ type BuildPayload = Pick<Options, "projectRoot">;
  */
 async function handler(payload: StormPayload<BuildPayload>) {
   const data = payload.data;
+
+  $storm.log.info(`Building Storm Stack project at ${data.projectRoot}...`);
 
   const engine = await createEngine({
     projectRoot: data.projectRoot

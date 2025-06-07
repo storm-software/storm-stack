@@ -1,9 +1,34 @@
 var __defProp = Object.defineProperty;
 var __name = (target, value) => __defProp(target, "name", { value, configurable: true });
 
+// packages/types/src/shared/log.ts
+var __\u03A9LogLevel = ["debug", "info", "warning", "error", "fatal", "LogLevel", 'P.!.".#.$.%Jw&y'];
+
+// packages/types/src/shared/vars.ts
+var __\u03A9StormBaseVariables = ["STORM_STACK_LOCAL", "An indicator that specifies the application is running in the local Storm Stack development environment.", "false", { internal: true }, "APP_NAME", "The name of the application.", "APP_VERSION", "The version of the application.", '"1.0.0"', "BUILD_ID", "The unique identifier for the build.", "BUILD_TIMESTAMP", "The timestamp the build was ran at.", "BUILD_CHECKSUM", "A checksum hash created during the build.", "RELEASE_ID", "The unique identifier for the release.", "RELEASE_TAG", 'The tag for the release. This is generally in the format of "\\<APP_NAME\\>\\@\\<APP_VERSION\\>".', "ORGANIZATION", "The name of the organization that maintains the application.", "node", "browser", "PLATFORM", "The platform for which the application was built.", '"node"', "development", "staging", "production", "MODE", "The mode in which the application is running.", '"production"', "ENVIRONMENT", "The environment the application is running in. This value will be populated with the value of `MODE` if not provided.", "DEBUG", "Indicates if the application is running in debug mode.", "TEST", "An indicator that specifies the current runtime is a test environment.", "MINIMAL", "An indicator that specifies the current runtime is a minimal environment.", "NO_COLOR", "An indicator that specifies the current runtime is a no color environment.", "FORCE_COLOR", "An indicator that specifies the current runtime is a force color environment.", "FORCE_HYPERLINK", "An indicator that specifies the current runtime should force hyperlinks in terminal output.", "TERM", "The terminal type. This variable is set by certain CI/CD systems.", "TERM_PROGRAM", "The terminal program name. This variable is set by certain terminal emulators.", "TERM_PROGRAM_VERSION", "The terminal program version. This variable is set by certain terminal emulators.", "TERMINAL_EMULATOR", "The terminal emulator name. This variable is set by certain terminal emulators.", "WT_SESSION", "The terminal emulator session ID. This variable is set by certain terminal emulators.", "TERMINUS_SUBLIME", "An indicator that specifies the current terminal is running Terminus Sublime. This variable is set by certain terminal emulators.", "ConEmuTask", "The ConEmu task name. This variable is set by certain terminal emulators.", "CURSOR_TRACE_ID", "The cursor trace ID. This variable is set by certain terminal emulators.", "VTE_VERSION", "The VTE version. This variable is set by certain terminal emulators.", "development", "staging", "production", "NODE_ENV", "The environment the application is running in. This variable is a duplicate of `ENVIRONMENT` to support use in external packages.", "STACKTRACE", "Indicates if error stack traces should be captured.", "INCLUDE_ERROR_DATA", "Indicates if error data should be included.", "ERROR_URL", "A web page to lookup error messages and display additional information given an error code.", "DEFAULT_TIMEZONE", "The default timezone for the application.", '"America/New_York"', "DEFAULT_LOCALE", "The default locale for the application.", '"en_US"', () => __\u03A9LogLevel, "LOG_LEVEL", "The default lowest log level to accept. If `null`, the logger will reject all records. This value only applies if `lowestLogLevel` is not provided to the `logs` configuration.", '"info"', "CI", "An indicator that specifies the current runtime is a continuous integration environment.", "CONTINUOUS_INTEGRATION", { hidden: true }, "RUN_ID", "The unique identifier for the current run. This value is set by certain CI/CD systems.", "AGOLA_GIT_REF", "The agola git reference. This value is set by certain CI/CD systems.", "AC_APPCIRCLE", "The appcircle build ID. This value is set by certain CI/CD systems.", "APPVEYOR", "The appveyor build ID. This value is set by certain CI/CD systems.", "CODEBUILD", "The codebuild build ID. This value is set by certain CI/CD systems.", "TF_BUILD", "The task force build ID. This value is set by certain CI/CD systems.", "bamboo_planKey", "The bamboo plan key. This value is set by certain CI/CD systems.", "BITBUCKET_COMMIT", "The bitbucket commit. This value is set by certain CI/CD systems.", "BITRISE_IO", "The bitrise build ID. This value is set by certain CI/CD systems.", "BUDDY_WORKSPACE_ID", "The buddy workspace ID. This value is set by certain CI/CD systems.", "BUILDKITE", "The buildkite build ID. This value is set by certain CI/CD systems.", "CIRCLECI", "The circleci build ID. This value is set by certain CI/CD systems.", "CIRRUS_CI", "The cirrus-ci build ID. This value is set by certain CI/CD systems.", "CF_BUILD_ID", "The cf build ID. This value is set by certain CI/CD systems.", "CM_BUILD_ID", "The cm build ID. This value is set by certain CI/CD systems.", "CI_NAME", "The ci name. This value is set by certain CI/CD systems.", "DRONE", "The drone build ID. This value is set by certain CI/CD systems.", "DSARI", "The dsari build ID. This value is set by certain CI/CD systems.", "EARTHLY_CI", "The earthly build ID. This value is set by certain CI/CD systems.", "EAS_BUILD", "The eas build ID. This value is set by certain CI/CD systems.", "GERRIT_PROJECT", "The gerrit project. This value is set by certain CI/CD systems.", "GITEA_ACTIONS", "The gitea actions build ID. This value is set by certain CI/CD systems.", "GITHUB_ACTIONS", "The github actions build ID. This value is set by certain CI/CD systems.", "GITLAB_CI", "The gitlab ci build ID. This value is set by certain CI/CD systems.", "GOCD", "The go cd build ID. This value is set by certain CI/CD systems.", "BUILDER_OUTPUT", "The builder output build ID. This value is set by certain CI/CD systems.", "HARNESS_BUILD_ID", "The harness build ID. This value is set by certain CI/CD systems.", "JENKINS_URL", "The jenkins url. This value is set by certain CI/CD systems.", "LAYERCI", "The layerci build ID. This value is set by certain CI/CD systems.", "MAGNUM", "The magnum build ID. This value is set by certain CI/CD systems.", "NETLIFY", "The netlify build ID. This value is set by certain CI/CD systems.", "NEVERCODE", "The nevercode build ID. This value is set by certain CI/CD systems.", "PROW_JOB_ID", "The prow job ID. This value is set by certain CI/CD systems.", "RELEASE_BUILD_ID", "The release build ID. This value is set by certain CI/CD systems.", "RENDER", "The render build ID. This value is set by certain CI/CD systems.", "SAILCI", "The sailci build ID. This value is set by certain CI/CD systems.", "HUDSON", "The hudson build ID. This value is set by certain CI/CD systems.", "SCREWDRIVER", "The screwdriver build ID. This value is set by certain CI/CD systems.", "SEMAPHORE", "The semaphore build ID. This value is set by certain CI/CD systems.", "SOURCEHUT", "The sourcehut build ID. This value is set by certain CI/CD systems.", "STRIDER", "The strider build ID. This value is set by certain CI/CD systems.", "TASK_ID", "The task ID. This value is set by certain CI/CD systems.", "TEAMCITY_VERSION", "The teamcity version. This value is set by certain CI/CD systems.", "TRAVIS", "The travis build ID. This value is set by certain CI/CD systems.", "VELA", "The vela build ID. This value is set by certain CI/CD systems.", "NOW_BUILDER", "The now builder build ID. This value is set by certain CI/CD systems.", "APPCENTER_BUILD_ID", "The appcenter build ID. This value is set by certain CI/CD systems.", "CI_XCODE_PROJECT", "The xcode project build ID. This value is set by certain CI/CD systems.", "XCS", "The xcode server build ID. This value is set by certain CI/CD systems.", "VERCEL_ENV", "The Vercel environment. This variable is set by Vercel when the application is running in a Vercel environment.", "DATA_DIR", "The Storm Stack application's runtime data directory.", "CONFIG_DIR", "The Storm Stack application's configuration data directory.", "CACHE_DIR", "The Storm Stack application's cached data directory.", "LOG_DIR", "The Storm Stack application's logging directory.", "TEMP_DIR", "The Storm Stack application's temporary data directory.", "LOCALAPPDATA", "A variable that specifies the current user's local application data directory on Windows.", "APPDATA", "A variable that specifies the application data directory on Windows.", "XDG_DATA_HOME", "A variable that specifies the data path in the home directory on Linux systems using the XDG base directory specification.", "XDG_CONFIG_HOME", "A variable that specifies the configuration path in the home directory on Linux systems using the XDG base directory specification.", "XDG_CACHE_HOME", "A variable that specifies the cache path in the home directory on Linux systems using the XDG base directory specification.", "XDG_STATE_HOME", "A variable that specifies the state directory on Linux systems using the XDG base directory specification.", "XDG_RUNTIME_DIR", "A variable that specifies the runtime directory on Linux systems using the XDG base directory specification.", "DEVENV_RUNTIME", "A variable that specifies the [Devenv](https://devenv.sh/) runtime directory.", "The base variables used by Storm Stack applications", "StormBaseVariables", "P)4!?\">#z$&4%?&&4'?(>)&4*?+'4,?-&4.?/&40?1&42?3&44?5P.6.7J48?9>:P.;.<.=J4>??>@&4A?B>@)4C?D>#)4E?F>#)4G?H>#)4I?J>#)4K?L>#)4M?N>#&4O8?P&4Q?R&4S?T&4U8?V&4W8?X)4Y8?Z&4[8?\\&4]8?^&4_8?`P.a.b.cJ4d?e>@)4f?g>#)4h?i>#&4j?k&4l?m>n&4o?p>qPnr,J4s8?t>u)4v?w>#)4x?w>#zy&4z8?{&4|8?}&4~8?\x7F&4\x808?\x81&4\x828?\x83&4\x848?\x85&4\x868?\x87&4\x888?\x89&4\x8A8?\x8B&4\x8C8?\x8D&4\x8E8?\x8F&4\x908?\x91&4\x928?\x93&4\x948?\x95&4\x968?\x97&4\x988?\x99&4\x9A8?\x9B&4\x9C8?\x9D&4\x9E8?\x9F&4\xA08?\xA1&4\xA28?\xA3&4\xA48?\xA5&4\xA68?\xA7&4\xA88?\xA9&4\xAA8?\xAB&4\xAC8?\xAD&4\xAE8?\xAF&4\xB08?\xB1&4\xB28?\xB3&4\xB48?\xB5&4\xB68?\xB7&4\xB88?\xB9&4\xBA8?\xBB&4\xBC8?\xBD&4\xBE8?\xBF&4\xC08?\xC1&4\xC28?\xC3&4\xC48?\xC5&4\xC68?\xC7&4\xC88?\xC9&4\xCA8?\xCB&4\xCC8?\xCD&4\xCE8?\xCF&4\xD08?\xD1&4\xD28?\xD3&4\xD48?\xD5&4\xD68?\xD7&4\xD88?\xD9&4\xDA8?\xDB&4\xDC8?\xDD&4\xDE8?\xDF&4\xE08?\xE1&4\xE28?\xE3&4\xE48?\xE5&4\xE68?\xE7&4\xE88?\xE9&4\xEA8?\xEB&4\xEC8?\xED&4\xEE8?\xEF&4\xF08?\xF1&4\xF28?\xF3&4\xF48?\xF5&4\xF68?\xF7M?\xF8w\xF9y"];
+
+// examples/cli-app/.storm/runtime/vars.ts
+var __\u03A9StormVariables = [() => __\u03A9StormBaseVariables, "AC_APPCIRCLE", "The appcircle build ID. This value is set by certain CI/CD systems.", "AGOLA_GIT_REF", "The agola git reference. This value is set by certain CI/CD systems.", "APP_NAME", "The name of the application.", "APP_VERSION", "The version of the application.", "APPCENTER_BUILD_ID", "The appcenter build ID. This value is set by certain CI/CD systems.", "APPDATA", "A variable that specifies the application data directory on Windows.", "APPVEYOR", "The appveyor build ID. This value is set by certain CI/CD systems.", "bamboo_planKey", "The bamboo plan key. This value is set by certain CI/CD systems.", "BITBUCKET_COMMIT", "The bitbucket commit. This value is set by certain CI/CD systems.", "BITRISE_IO", "The bitrise build ID. This value is set by certain CI/CD systems.", "BUDDY_WORKSPACE_ID", "The buddy workspace ID. This value is set by certain CI/CD systems.", "BUILD_CHECKSUM", "A checksum hash created during the build.", "BUILD_ID", "The unique identifier for the build.", "BUILD_TIMESTAMP", "The timestamp the build was ran at.", "BUILDER_OUTPUT", "The builder output build ID. This value is set by certain CI/CD systems.", "BUILDKITE", "The buildkite build ID. This value is set by certain CI/CD systems.", "CACHE_DIR", "The Storm Stack application's cached data directory.", "CF_BUILD_ID", "The cf build ID. This value is set by certain CI/CD systems.", "CI", "An indicator that specifies the current runtime is a continuous integration environment.", "CI_NAME", "The ci name. This value is set by certain CI/CD systems.", "CI_XCODE_PROJECT", "The xcode project build ID. This value is set by certain CI/CD systems.", "CIRCLECI", "The circleci build ID. This value is set by certain CI/CD systems.", "CIRRUS_CI", "The cirrus-ci build ID. This value is set by certain CI/CD systems.", "CM_BUILD_ID", "The cm build ID. This value is set by certain CI/CD systems.", "CODEBUILD", "The codebuild build ID. This value is set by certain CI/CD systems.", "ConEmuTask", "The ConEmu task name. This variable is set by certain terminal emulators.", "CONFIG_DIR", "The Storm Stack application's configuration data directory.", "CONTINUOUS_INTEGRATION", "CURSOR_TRACE_ID", "The cursor trace ID. This variable is set by certain terminal emulators.", "DATA_DIR", "The Storm Stack application's runtime data directory.", "DEBUG", "Indicates if the application is running in debug mode.", "DEFAULT_LOCALE", "The default locale for the application.", "DEFAULT_TIMEZONE", "The default timezone for the application.", "DEVENV_RUNTIME", "A variable that specifies the [Devenv](https://devenv.sh/) runtime directory.", "DRONE", "The drone build ID. This value is set by certain CI/CD systems.", "DSARI", "The dsari build ID. This value is set by certain CI/CD systems.", "EARTHLY_CI", "The earthly build ID. This value is set by certain CI/CD systems.", "EAS_BUILD", "The eas build ID. This value is set by certain CI/CD systems.", "ENVIRONMENT", "The environment the application is running in. This value will be populated with the value of `MODE` if not provided.", "ERROR_URL", "A web page to lookup error messages and display additional information given an error code.", "FORCE_COLOR", "An indicator that specifies the current runtime is a force color environment.", "FORCE_HYPERLINK", "An indicator that specifies the current runtime should force hyperlinks in terminal output.", "GERRIT_PROJECT", "The gerrit project. This value is set by certain CI/CD systems.", "GITEA_ACTIONS", "The gitea actions build ID. This value is set by certain CI/CD systems.", "GITHUB_ACTIONS", "The github actions build ID. This value is set by certain CI/CD systems.", "GITLAB_CI", "The gitlab ci build ID. This value is set by certain CI/CD systems.", "GOCD", "The go cd build ID. This value is set by certain CI/CD systems.", "HARNESS_BUILD_ID", "The harness build ID. This value is set by certain CI/CD systems.", "HUDSON", "The hudson build ID. This value is set by certain CI/CD systems.", "INCLUDE_ERROR_DATA", "Indicates if error data should be included.", "JENKINS_URL", "The jenkins url. This value is set by certain CI/CD systems.", "LAYERCI", "The layerci build ID. This value is set by certain CI/CD systems.", "LOCALAPPDATA", "A variable that specifies the current user's local application data directory on Windows.", "LOG_DIR", "The Storm Stack application's logging directory.", "debug", "info", "warning", "error", "fatal", "LOG_LEVEL", "The default lowest log level to accept. If `null`, the logger will reject all records. This value only applies if `lowestLogLevel` is not provided to the `logs` configuration.", "MAGNUM", "The magnum build ID. This value is set by certain CI/CD systems.", "MINIMAL", "An indicator that specifies the current runtime is a minimal environment.", "development", "staging", "production", "MODE", "The mode in which the application is running.", "NETLIFY", "The netlify build ID. This value is set by certain CI/CD systems.", "NEVERCODE", "The nevercode build ID. This value is set by certain CI/CD systems.", "NO_COLOR", "An indicator that specifies the current runtime is a no color environment.", "development", "staging", "production", "NODE_ENV", "The environment the application is running in. This variable is a duplicate of `ENVIRONMENT` to support use in external packages.", "NOW_BUILDER", "The now builder build ID. This value is set by certain CI/CD systems.", "ORGANIZATION", "The name of the organization that maintains the application.", "node", "browser", "PLATFORM", "The platform for which the application was built.", "PROW_JOB_ID", "The prow job ID. This value is set by certain CI/CD systems.", "RELEASE_BUILD_ID", "The release build ID. This value is set by certain CI/CD systems.", "RELEASE_ID", "The unique identifier for the release.", "RELEASE_TAG", 'The tag for the release. This is generally in the format of "\\<APP_NAME\\>\\@\\<APP_VERSION\\>".', "RENDER", "The render build ID. This value is set by certain CI/CD systems.", "RUN_ID", "The unique identifier for the current run. This value is set by certain CI/CD systems.", "SAILCI", "The sailci build ID. This value is set by certain CI/CD systems.", "SCREWDRIVER", "The screwdriver build ID. This value is set by certain CI/CD systems.", "SEMAPHORE", "The semaphore build ID. This value is set by certain CI/CD systems.", "SENTRY_DSN", "The DSN for Sentry", "SOURCEHUT", "The sourcehut build ID. This value is set by certain CI/CD systems.", "STACKTRACE", "Indicates if error stack traces should be captured.", "STORM_STACK_LOCAL", "An indicator that specifies the application is running in the local Storm Stack development environment.", "STRIDER", "The strider build ID. This value is set by certain CI/CD systems.", "TASK_ID", "The task ID. This value is set by certain CI/CD systems.", "TEAMCITY_VERSION", "The teamcity version. This value is set by certain CI/CD systems.", "TEMP_DIR", "The Storm Stack application's temporary data directory.", "TERM", "The terminal type. This variable is set by certain CI/CD systems.", "TERM_PROGRAM", "The terminal program name. This variable is set by certain terminal emulators.", "TERM_PROGRAM_VERSION", "The terminal program version. This variable is set by certain terminal emulators.", "TERMINAL_EMULATOR", "The terminal emulator name. This variable is set by certain terminal emulators.", "TERMINUS_SUBLIME", "An indicator that specifies the current terminal is running Terminus Sublime. This variable is set by certain terminal emulators.", "TEST", "An indicator that specifies the current runtime is a test environment.", "TF_BUILD", "The task force build ID. This value is set by certain CI/CD systems.", "TRAVIS", "The travis build ID. This value is set by certain CI/CD systems.", "VELA", "The vela build ID. This value is set by certain CI/CD systems.", "VERCEL_ENV", "The Vercel environment. This variable is set by Vercel when the application is running in a Vercel environment.", "VTE_VERSION", "The VTE version. This variable is set by certain terminal emulators.", "WT_SESSION", "The terminal emulator session ID. This variable is set by certain terminal emulators.", "XCS", "The xcode server build ID. This value is set by certain CI/CD systems.", "XDG_CACHE_HOME", "A variable that specifies the cache path in the home directory on Linux systems using the XDG base directory specification.", "XDG_CONFIG_HOME", "A variable that specifies the configuration path in the home directory on Linux systems using the XDG base directory specification.", "XDG_DATA_HOME", "A variable that specifies the data path in the home directory on Linux systems using the XDG base directory specification.", "XDG_RUNTIME_DIR", "A variable that specifies the runtime directory on Linux systems using the XDG base directory specification.", "XDG_STATE_HOME", "A variable that specifies the state directory on Linux systems using the XDG base directory specification.", "StormVariables", `Pn!&4"8?#&4$8?%&4&?'&4(?)&4*8?+&4,8?-&4.8?/&408?1&428?3&448?5&468?7&48?9&4:?;'4<?=&4>8??&4@8?A&4B8?C&4D8?E)4F?G&4H8?I&4J8?K&4L8?M&4N8?O&4P8?Q&4R8?S&4T8?U&4V8?W)4X?G&4Y8?Z&4[8?\\)4]?^&4_?\`&4a?b&4c8?d&4e8?f&4g8?h&4i8?j&4k8?l&4m?n&4o?p)4q?r)4s?t&4u8?v&4w8?x&4y8?z&4{8?|&4}8?~&4\x7F8?\x80&4\x818?\x82)4\x83?\x84&4\x858?\x86&4\x878?\x88&4\x898?\x8A&4\x8B8?\x8CP.\x8D.\x8E.\x8F.\x90.\x91,J4\x928?\x93&4\x948?\x95)4\x96?\x97P.\x98.\x99.\x9AJ4\x9B?\x9C&4\x9D8?\x9E&4\x9F8?\xA0)4\xA1?\xA2P.\xA3.\xA4.\xA5J4\xA6?\xA7&4\xA88?\xA9&4\xAA?\xABP.\xAC.\xADJ4\xAE?\xAF&4\xB08?\xB1&4\xB28?\xB3&4\xB4?\xB5&4\xB6?\xB7&4\xB88?\xB9&4\xBA8?\xBB&4\xBC8?\xBD&4\xBE8?\xBF&4\xC08?\xC1&4\xC2?\xC3&4\xC48?\xC5)4\xC6?\xC7)4\xC8?\xC9&4\xCA8?\xCB&4\xCC8?\xCD&4\xCE8?\xCF&4\xD08?\xD1&4\xD28?\xD3&4\xD4?\xD5&4\xD6?\xD7&4\xD88?\xD9)4\xDA8?\xDB)4\xDC?\xDD&4\xDE8?\xDF&4\xE08?\xE1&4\xE28?\xE3&4\xE48?\xE5&4\xE68?\xE7&4\xE88?\xE9&4\xEA8?\xEB&4\xEC8?\xED&4\xEE8?\xEF&4\xF08?\xF1&4\xF28?\xF3&4\xF48?\xF5&"LMw\xF6y`];
+
+// examples/cli-app/.storm/commands/vars/delete/handle.ts
+import { deserialize as deserialize2, serialize } from "@deepkit/type";
+
+// examples/cli-app/.storm/runtime/cli.ts
+import { confirm, multiselect, select, text } from "@clack/prompts";
+
 // examples/cli-app/.storm/runtime/env.ts
+import { __\u03A9TypeProperty } from "@deepkit/type";
+import { __\u03A9TypePropertySignature } from "@deepkit/type";
+import { deserialize, NamingStrategy, serializer } from "@deepkit/type";
+import { existsSync } from "node:fs";
+import { readFile } from "node:fs/promises";
 import os from "node:os";
 import { basename, join } from "node:path";
+function __assignType(fn, args) {
+  fn.__type = args;
+  return fn;
+}
+__name(__assignType, "__assignType");
 var hasTTY = Boolean(process.stdout && process.stdout.isTTY);
 var isCI = Boolean(process.env.STORM_CI || process.env.CI || process.env.CONTINUOUS_INTEGRATION || process.env.RUN_ID || process.env.AGOLA_GIT_REF || process.env.AC_APPCIRCLE || process.env.APPVEYOR || process.env.CODEBUILD || process.env.TF_BUILD || process.env.bamboo_planKey || process.env.BITBUCKET_COMMIT || process.env.BITRISE_IO || process.env.BUDDY_WORKSPACE_ID || process.env.BUILDKITE || process.env.CIRCLECI || process.env.CIRRUS_CI || process.env.CF_BUILD_ID || process.env.CM_BUILD_ID || process.env.CI_NAME || process.env.DRONE || process.env.DSARI || process.env.EARTHLY_CI || process.env.EAS_BUILD || process.env.GERRIT_PROJECT || process.env.GITEA_ACTIONS || process.env.GITHUB_ACTIONS || process.env.GITLAB_CI || process.env.GOCD || process.env.BUILDER_OUTPUT || process.env.HARNESS_BUILD_ID || process.env.JENKINS_URL || process.env.LAYERCI || process.env.MAGNUM || process.env.NETLIFY || process.env.NEVERCODE || process.env.PROW_JOB_ID || process.env.RELEASE_BUILD_ID || process.env.RENDER || process.env.SAILCI || process.env.HUDSON || process.env.SCREWDRIVER || process.env.SEMAPHORE || process.env.SOURCEHUT || process.env.STRIDER || process.env.TASK_ID || process.env.RUN_ID || process.env.TEAMCITY_VERSION || process.env.TRAVIS || process.env.VELA || process.env.NOW_BUILDER || process.env.APPCENTER_BUILD_ID || process.env.CI_XCODE_PROJECT || process.env.XCS || false);
 var mode = String("production");
@@ -46,9 +71,9 @@ var paths = isMacOS ? {
 var build = {
   packageName: "@storm-stack/examples-cli-app",
   organization,
-  buildId: "vN5Y2uno-KLhP9-4dm_Ex76L",
-  timestamp: 1749009315945 ? Number(1749009315945) : 0,
-  releaseId: "HvlEAyPa69oGj9f4-Rzi3zko",
+  buildId: "JsPgpJxTbzX8ESk_9aeSYczo",
+  timestamp: 1749283652506,
+  releaseId: "QYDv6jK6Vru8-r1ckq0-ds5U",
   releaseTag: "examples-cli-app@0.0.1",
   mode,
   platform: "node",
@@ -71,13 +96,34 @@ var runtime = {
   isUnicodeSupported,
   isServer: isNode || build.platform === "node"
 };
-var __\u03A9StormVariables = ["AC_APPCIRCLE", "The appcircle build ID. This value is set by certain CI/CD systems.", "AGOLA_GIT_REF", "The agola git reference. This value is set by certain CI/CD systems.", "APP_NAME", "The name of the application.", "APP_VERSION", "The version of the application.", "APPCENTER_BUILD_ID", "The appcenter build ID. This value is set by certain CI/CD systems.", "APPDATA", "A variable that specifies the application data directory on Windows.", "APPVEYOR", "The appveyor build ID. This value is set by certain CI/CD systems.", "bamboo_planKey", "The bamboo plan key. This value is set by certain CI/CD systems.", "BITBUCKET_COMMIT", "The bitbucket commit. This value is set by certain CI/CD systems.", "BITRISE_IO", "The bitrise build ID. This value is set by certain CI/CD systems.", "BUDDY_WORKSPACE_ID", "The buddy workspace ID. This value is set by certain CI/CD systems.", "BUILD_CHECKSUM", "A checksum hash created during the build.", "BUILD_ID", "The unique identifier for the build.", "BUILD_TIMESTAMP", "The timestamp the build was ran at.", "BUILDER_OUTPUT", "The builder output build ID. This value is set by certain CI/CD systems.", "BUILDKITE", "The buildkite build ID. This value is set by certain CI/CD systems.", "CF_BUILD_ID", "The cf build ID. This value is set by certain CI/CD systems.", "CI", "An indicator that specifies the current runtime is a continuous integration environment.", "CI_NAME", "The ci name. This value is set by certain CI/CD systems.", "CI_XCODE_PROJECT", "The xcode project build ID. This value is set by certain CI/CD systems.", "CIRCLECI", "The circleci build ID. This value is set by certain CI/CD systems.", "CIRRUS_CI", "The cirrusci build ID. This value is set by certain CI/CD systems.", "CM_BUILD_ID", "The cm build ID. This value is set by certain CI/CD systems.", "CODEBUILD", "The codebuild build ID. This value is set by certain CI/CD systems.", "ConEmuTask", "The ConEmu task name. This variable is set by certain terminal emulators.", "CONTINUOUS_INTEGRATION", "CURSOR_TRACE_ID", "The cursor trace ID. This variable is set by certain terminal emulators.", "DEBUG", "Indicates if the application is running in debug mode.", "DEFAULT_LOCALE", "The default locale for the application.", "DEFAULT_TIMEZONE", "The default timezone for the application.", "DEVENV_RUNTIME", "A variable that specifies the [Devenv](https://devenv.sh/) runtime directory.", "DRONE", "The drone build ID. This value is set by certain CI/CD systems.", "DSARI", "The dsari build ID. This value is set by certain CI/CD systems.", "EARTHLY_CI", "The earthly build ID. This value is set by certain CI/CD systems.", "EAS_BUILD", "The eas build ID. This value is set by certain CI/CD systems.", "ENVIRONMENT", "The environment the application is running in. This value will be populated with the value of `MODE` if not provided.", "ERROR_URL", "An API end point to lookup error messages given an error code.", "FORCE_COLOR", "An indicator that specifies the current runtime is a force color environment.", "FORCE_HYPERLINK", "An indicator that specifies the current runtime should force hyperlinks in terminal output.", "GERRIT_PROJECT", "The gerrit project. This value is set by certain CI/CD systems.", "GITEA_ACTIONS", "The gitea actions build ID. This value is set by certain CI/CD systems.", "GITHUB_ACTIONS", "The github actions build ID. This value is set by certain CI/CD systems.", "GITLAB_CI", "The gitlab ci build ID. This value is set by certain CI/CD systems.", "GOCD", "The go cd build ID. This value is set by certain CI/CD systems.", "HARNESS_BUILD_ID", "The harness build ID. This value is set by certain CI/CD systems.", "HUDSON", "The hudson build ID. This value is set by certain CI/CD systems.", "INCLUDE_ERROR_DATA", "Indicates if error data should be included.", "JENKINS_URL", "The jenkins url. This value is set by certain CI/CD systems.", "LAYERCI", "The layerci build ID. This value is set by certain CI/CD systems.", "LOCALAPPDATA", "A variable that specifies the current user's local application data directory on Windows.", "debug", "info", "warning", "error", "fatal", "LOG_LEVEL", "The default lowest log level to accept. If `null`, the logger will reject all records. This value only applies if `lowestLogLevel` is not provided to the `logs` configuration.", "MAGNUM", "The magnum build ID. This value is set by certain CI/CD systems.", "MINIMAL", "An indicator that specifies the current runtime is a minimal environment.", "development", "staging", "production", "MODE", "The mode in which the application is running.", "NETLIFY", "The netlify build ID. This value is set by certain CI/CD systems.", "NEVERCODE", "The nevercode build ID. This value is set by certain CI/CD systems.", "NO_COLOR", "An indicator that specifies the current runtime is a no color environment.", "development", "staging", "production", "NODE_ENV", "The environment the application is running in. This variable is a duplicate of `ENVIRONMENT` to support use in external packages.", "NOW_BUILDER", "The now builder build ID. This value is set by certain CI/CD systems.", "ORGANIZATION", "The name of the organization that maintains the application.", "node", "browser", "PLATFORM", "The platform for which the application was built.", "PROW_JOB_ID", "The prow job ID. This value is set by certain CI/CD systems.", "RELEASE_BUILD_ID", "The release build ID. This value is set by certain CI/CD systems.", "RELEASE_ID", "The unique identifier for the release.", "RELEASE_TAG", 'The tag for the release. This is generally in the format of "\\<APP_NAME\\>\\@\\<APP_VERSION\\>".', "RENDER", "The render build ID. This value is set by certain CI/CD systems.", "RUN_ID", "The unique identifier for the current run. This value is set by certain CI/CD systems.", "SAILCI", "The sailci build ID. This value is set by certain CI/CD systems.", "SCREWDRIVER", "The screwdriver build ID. This value is set by certain CI/CD systems.", "SEMAPHORE", "The semaphore build ID. This value is set by certain CI/CD systems.", "SENTRY_DSN", "The DSN for Sentry", "SOURCEHUT", "The sourcehut build ID. This value is set by certain CI/CD systems.", "STACKTRACE", "Indicates if error stack traces should be captured.", "STORM_CACHE_DIR", "The Storm Stack application's cached data directory.", "STORM_CONFIG_DIR", "The Storm Stack application's configuration data directory.", "STORM_DATA_DIR", "The Storm Stack application's runtime data directory.", "STORM_LOG_DIR", "The Storm Stack application's logging directory.", "STORM_STACK_LOCAL", "An indicator that specifies the application is running in the local Storm Stack development environment.", "STORM_TEMP_DIR", "The Storm Stack application's temporary data directory.", "STRIDER", "The strider build ID. This value is set by certain CI/CD systems.", "TASK_ID", "The task ID. This value is set by certain CI/CD systems.", "TEAMCITY_VERSION", "The teamcity version. This value is set by certain CI/CD systems.", "TERM", "The terminal type. This variable is set by certain CI/CD systems.", "TERM_PROGRAM", "The terminal program name. This variable is set by certain terminal emulators.", "TERM_PROGRAM_VERSION", "The terminal program version. This variable is set by certain terminal emulators.", "TERMINAL_EMULATOR", "The terminal emulator name. This variable is set by certain terminal emulators.", "TERMINUS_SUBLIME", "An indicator that specifies the current terminal is running Terminus Sublime. This variable is set by certain terminal emulators.", "TEST", "An indicator that specifies the current runtime is a test environment.", "TF_BUILD", "The task force build ID. This value is set by certain CI/CD systems.", "TRAVIS", "The travis build ID. This value is set by certain CI/CD systems.", "VELA", "The vela build ID. This value is set by certain CI/CD systems.", "VERCEL_ENV", "The Vercel environment. This variable is set by Vercel when the application is running in a Vercel environment.", "VTE_VERSION", "The VTE version. This variable is set by certain terminal emulators.", "WT_SESSION", "The terminal emulator session ID. This variable is set by certain terminal emulators.", "XCS", "The xcode server build ID. This value is set by certain CI/CD systems.", "XDG_CACHE_HOME", "A variable that specifies the cache path in the home directory on Linux systems using the XDG base directory specification.", "XDG_CONFIG_HOME", "A variable that specifies the configuration path in the home directory on Linux systems using the XDG base directory specification.", "XDG_DATA_HOME", "A variable that specifies the data path in the home directory on Linux systems using the XDG base directory specification.", "XDG_RUNTIME_DIR", "A variable that specifies the runtime directory on Linux systems using the XDG base directory specification.", "XDG_STATE_HOME", "A variable that specifies the state directory on Linux systems using the XDG base directory specification.", "StormVariables", `P&4!8?"&4#8?$&4%?&&4'?(&4)8?*&4+8?,&4-8?.&4/8?0&418?2&438?4&458?6&47?8&49?:'4;?<&4=8?>&4?8?@&4A8?B)4C?D&4E8?F&4G8?H&4I8?J&4K8?L&4M8?N&4O8?P&4Q8?R)4S?D&4T8?U)4V?W&4X?Y&4Z?[&4\\8?]&4^8?_&4\`8?a&4b8?c&4d8?e&4f?g&4h?i)4j?k)4l?m&4n8?o&4p8?q&4r8?s&4t8?u&4v8?w&4x8?y&4z8?{)4|?}&4~8?\x7F&4\x808?\x81&4\x828?\x83P.\x84.\x85.\x86.\x87.\x88,J4\x898?\x8A&4\x8B8?\x8C)4\x8D?\x8EP.\x8F.\x90.\x91J4\x92?\x93&4\x948?\x95&4\x968?\x97)4\x98?\x99P.\x9A.\x9B.\x9CJ4\x9D?\x9E&4\x9F8?\xA0&4\xA1?\xA2P.\xA3.\xA4J4\xA5?\xA6&4\xA78?\xA8&4\xA98?\xAA&4\xAB?\xAC&4\xAD?\xAE&4\xAF8?\xB0&4\xB18?\xB2&4\xB38?\xB4&4\xB58?\xB6&4\xB78?\xB8&4\xB9?\xBA&4\xBB8?\xBC)4\xBD?\xBE&4\xBF8?\xC0&4\xC18?\xC2&4\xC38?\xC4&4\xC58?\xC6)4\xC7?\xC8&4\xC98?\xCA&4\xCB8?\xCC&4\xCD8?\xCE&4\xCF8?\xD0&4\xD18?\xD2&4\xD3?\xD4&4\xD5?\xD6&4\xD78?\xD8)4\xD98?\xDA)4\xDB?\xDC&4\xDD8?\xDE&4\xDF8?\xE0&4\xE18?\xE2&4\xE38?\xE4&4\xE58?\xE6&4\xE78?\xE8&4\xE98?\xEA&4\xEB8?\xEC&4\xED8?\xEE&4\xEF8?\xF0&4\xF18?\xF2&4\xF38?\xF4&"LMw\xF5y`];
-
-// examples/cli-app/.storm/commands/vars/delete/handle.ts
-import { deserialize, serialize } from "@deepkit/type";
-
-// examples/cli-app/.storm/runtime/cli.ts
-import { confirm, multiselect, select, text } from "@clack/prompts";
+var stormVariablesNamingStrategy = new class extends NamingStrategy {
+  constructor() {
+    super("storm-variables");
+  }
+  getPropertyName(type, forSerializer) {
+    const name2 = super.getPropertyName(type, forSerializer);
+    if (!name2) {
+      return name2;
+    }
+    return name2.replace(/^(VITE_|ONE_|STORM_PUBLIC_|STORM_|STORM_STACK_PUBLIC_|STORM_STACK_|NEXT_PUBLIC_|EXAMPLES_CLI_)/g, "").toUpperCase();
+  }
+  static __type = [() => NamingStrategy, "constructor", () => __\u03A9TypeProperty, () => __\u03A9TypePropertySignature, "type", "forSerializer", "getPropertyName", `P7!P"0"PPn#n$J2%&2&P&-J0'5`];
+}();
+var varsFile = {};
+if (existsSync(join(paths.config, "vars.json"))) {
+  varsFile = JSON.parse(await readFile(join(paths.config, "vars.json"), "utf8") || "{}");
+}
+if (existsSync(join(paths.config.replace(new RegExp(`/${name}$`), ""), "vars.json"))) {
+  varsFile = (deserialize.\u03A9 = [[() => __\u03A9StormVariables, "n!"]], deserialize({
+    ...JSON.parse(await readFile(join(paths.config.replace(new RegExp(`/${name}$`), ""), "vars.json"), "utf8") || "{}"),
+    ...varsFile
+  }, void 0, serializer, stormVariablesNamingStrategy));
+}
+var vars = (Proxy.\u03A9 = [[() => __\u03A9StormVariables, "n!"]], new Proxy((deserialize.\u03A9 = [[() => __\u03A9StormVariables, "n!"]], deserialize(process.env, void 0, serializer, stormVariablesNamingStrategy)), {
+  get: __assignType(/* @__PURE__ */ __name(function get(target, prop, receiver) {
+    return target[prop] ?? varsFile[prop];
+  }, "get"), ["target", "prop", "receiver", "get", 'P"2!"2""2#"/$'])
+}));
 
 // packages/types/src/shared/error.ts
 var __\u03A9Error = ["name", "message", "stack", "Error", 'P&4!&4"&4#8Mw$y'];
@@ -87,11 +133,11 @@ var __\u03A9ParsedStacktrace = ["column", "function", "line", "source", "ParsedS
 var __\u03A9IStormError = [() => __\u03A9Error, "code", "The error code", "params", "The error message parameters", () => __\u03A9ErrorType, "type", "The type of error that was thrown.", "url", "A url to display the error message", "data", "Additional data to be passed with the error", 0, "cause", "The underlying cause of the error, if any. This is typically another error object that caused this error to be thrown.", "stack", "The error stack", () => __\u03A9ParsedStacktrace, "stacktrace", "The parsed stacktrace", "originalStack", "The original stacktrace", "", "toDisplay", "Returns a formatted error string that can be displayed to the user.", "__proto__", "Internal function to inherit the error", { internal: true }, "The Storm Error interface.", "IStormError", `Pn!'4"?#&F4$?%n&4'?(&4)?*"4+8?,Pn--J4.?/&40?1n2F43?4&45?6P&/748?9"4:?;z<M?=w>y`];
 
 // examples/cli-app/.storm/runtime/error.ts
-function __assignType(fn, args) {
+function __assignType2(fn, args) {
   fn.__type = args;
   return fn;
 }
-__name(__assignType, "__assignType");
+__name(__assignType2, "__assignType");
 function getDefaultCode(_type) {
   return 1;
 }
@@ -305,7 +351,7 @@ var StormError = class _StormError extends Error {
    * @returns The stack trace string
    */
   get stack() {
-    return this.stacktrace.filter(Boolean).map(__assignType((line) => {
+    return this.stacktrace.filter(Boolean).map(__assignType2((line) => {
       return `    at ${line.function} (${line.source}:${line.line}:${line.column})`;
     }, ["line", "", 'P"2!"/"'])).join("\n");
   }
@@ -338,7 +384,7 @@ var StormError = class _StormError extends Error {
     const url = new URL("https://development.stormsoftware.com/static/errors");
     url.pathname = `${this.type.toLowerCase().replaceAll("_", "-")}/${String(this.code)}`;
     if (this.params.length > 0) {
-      url.pathname += `/${this.params.map(__assignType((param) => encodeURI("" + param).replaceAll(/%7c/gi, "|").replaceAll("#", "%23").replaceAll("?", "%3F").replaceAll(/%252f/gi, "%2F").replaceAll("&", "%26").replaceAll("+", "%2B").replaceAll("/", "%2F"), ["param", "", 'P"2!"/"'])).join("/")}`;
+      url.pathname += `/${this.params.map(__assignType2((param) => encodeURI("" + param).replaceAll(/%7c/gi, "|").replaceAll("#", "%23").replaceAll("?", "%3F").replaceAll(/%252f/gi, "%2F").replaceAll("&", "%26").replaceAll("+", "%2B").replaceAll("/", "%2F"), ["param", "", 'P"2!"/"'])).join("/")}`;
     }
     return url.toString();
   }
@@ -375,11 +421,11 @@ ${this.stack}`);
 };
 
 // examples/cli-app/.storm/runtime/cli.ts
-function __assignType2(fn, args) {
+function __assignType3(fn, args) {
   fn.__type = args;
   return fn;
 }
-__name(__assignType2, "__assignType");
+__name(__assignType3, "__assignType");
 function replaceClose(index, string, close, replace, head = string.slice(0, Math.max(0, index)) + replace, tail = string.slice(Math.max(0, index + close.length)), next = tail.indexOf(close)) {
   return head + (next < 0 ? tail : replaceClose(next, tail, close, replace));
 }
@@ -389,7 +435,7 @@ function init(open, close, replace) {
   const _open = `\x1B[${open}m`;
   const _close = `\x1B[${close}m`;
   const _replace = replace || _open;
-  return __assignType2((str) => str || !(str === "" || str === void 0) ? `${str}`.indexOf(_close, _open.length + 1) < 0 ? _open + str + _close : _open + replaceClose(`${str}`.indexOf(_close, _open.length + 1), str, _close, _replace) + _close : "", ["str", "", 'P&2!"/"']);
+  return __assignType3((str) => str || !(str === "" || str === void 0) ? `${str}`.indexOf(_close, _open.length + 1) < 0 ? _open + str + _close : _open + replaceClose(`${str}`.indexOf(_close, _open.length + 1), str, _close, _replace) + _close : "", ["str", "", 'P&2!"/"']);
 }
 __name(init, "init");
 init.__type = ["open", "close", "replace", "init", `P'2!'2"&2#8"/$`];
@@ -437,7 +483,7 @@ var colorDefs = {
   bgWhiteBright: init(107, 49)
 };
 var __\u03A9ColorName = [() => colorDefs, "ColorName", 'i!gw"y'];
-var colors = isColorSupported ? colorDefs : Object.fromEntries(Object.keys(colorDefs).map(__assignType2((key) => [key, String], ["key", "", 'P"2!"/"'])));
+var colors = isColorSupported ? colorDefs : Object.fromEntries(Object.keys(colorDefs).map(__assignType3((key) => [key, String], ["key", "", 'P"2!"/"'])));
 function getColor(color, fallback = "reset") {
   return colors[color] || colors[fallback];
 }
@@ -453,7 +499,7 @@ function parseVersion(versionString = "") {
       patch: Number.parseInt(match[2], 10)
     };
   }
-  const versions = (versionString ?? "").split(".").map(__assignType2((n) => Number.parseInt(n, 10), ["n", "", 'P"2!"/"']));
+  const versions = (versionString ?? "").split(".").map(__assignType3((n) => Number.parseInt(n, 10), ["n", "", 'P"2!"/"']));
   return {
     major: versions[0],
     minor: versions[1],
@@ -539,7 +585,7 @@ function stripAnsi(text2) {
   ].join("|"), "g"), "");
 }
 __name(stripAnsi, "stripAnsi");
-stripAnsi.__type = ["text", "stripAnsi", 'P&2!"/"'];
+stripAnsi.__type = ["text", "stripAnsi", "Strips ANSI escape codes from a string.", 'P&2!"/"?#'];
 function renderBanner(title, description) {
   let consoleWidth = Math.max(process.stdout.columns - 2, 80);
   if (consoleWidth % 2)
@@ -550,13 +596,13 @@ function renderBanner(title, description) {
   if (width % 2)
     width++;
   const banner = [];
-  banner.push(colors.cyan(`\u250F\u2501\u2501\u2501\u2501 Examples CLI App CLI \u2501 v0.0.1 ${"\u2501".repeat(width - 10 - 25)}\u2513`));
+  banner.push(colors.cyan(`\u250F\u2501\u2501\u2501\u2501 \u25CF Examples CLI App CLI \u2501 v0.0.1 ${"\u2501".repeat(width - 12 - 25)}\u2513`));
   banner.push(colors.cyan(`\u2503${" ".repeat(width)}\u2503`));
   const titlePadding = (width - title.length) / 2;
   banner.push(`${colors.cyan("\u2503")}${" ".repeat(titlePadding)}${colors.whiteBright(colors.bold(title))}${" ".repeat(titlePadding + width - (titlePadding * 2 + title.length))}${colors.cyan("\u2503")}`);
   banner.push(colors.cyan(`\u2503${" ".repeat(width)}\u2503`));
   const descriptionPadding = (width - description.length) / 2;
-  for (const line of (description.length < width * 0.85 ? `${" ".repeat(descriptionPadding)}${description}${" ".repeat(descriptionPadding + width - (descriptionPadding * 2 + description.length))}` : description.split(/\s+/).reduce(__assignType2((ret, word) => {
+  for (const line of (description.length < width * 0.85 ? `${" ".repeat(descriptionPadding)}${description}${" ".repeat(descriptionPadding + width - (descriptionPadding * 2 + description.length))}` : description.split(/\s+/).reduce(__assignType3((ret, word) => {
     const lines = ret.split("\n");
     if (lines.length !== 0 && lines[lines.length - 1].length + word.length > width * 0.85) {
       ret += " \n";
@@ -568,7 +614,7 @@ function renderBanner(title, description) {
   }
   banner.push(colors.cyan(`\u2503${" ".repeat(width)}\u2503`));
   banner.push(colors.cyan(`\u2517${"\u2501".repeat(width - 7 - 14)}\u2501 Storm Software \u2501\u2501\u2501\u2501\u251B`));
-  return banner.map(__assignType2((line) => `${" ".repeat((consoleWidth - stripAnsi(line).length) / 2)}${line}${" ".repeat((consoleWidth - stripAnsi(line).length) / 2)}`, ["line", "", 'P"2!"/"'])).join("\n");
+  return banner.map(__assignType3((line) => `${" ".repeat((consoleWidth - stripAnsi(line).length) / 2)}${line}${" ".repeat((consoleWidth - stripAnsi(line).length) / 2)}`, ["line", "", 'P"2!"/"'])).join("\n");
 }
 __name(renderBanner, "renderBanner");
 renderBanner.__type = ["title", { internal: true }, "description", { internal: true }, "renderBanner", "Renders a CLI banner with the specified title.", { internal: true }, `P&2!z"&2#z$&/%?&z'`];
@@ -600,8 +646,8 @@ function renderFooter() {
 \u2588 \u2588   \u2588 \u2588\u2584 \u2588\u2588\u2584\u2584\u2580\u2580\u2580\u2580\u2588  \u2584 \u2588\u2580\u2588
 \u2588 \u2580\u2580\u2580\u2580\u2580 \u2588 \u2580\u2580   \u2588  \u2588\u2588\u2580\u2588\u2584\u2588\u2580\u2580\u2588
 \u2580\u2580\u2580\u2580\u2580\u2580\u2580\u2580\u2580\u2580\u2580\u2580\u2580\u2580\u2580\u2580\u2580\u2580\u2580\u2580\u2580\u2580\u2580\u2580\u2580\u2580\u2580`.split("\n");
-    const qrCodeMaxLength = Math.max(...qrCodeLines.map(__assignType2((line) => line.length, ["line", "", 'P"2!"/"'])));
-    footer.push(...qrCodeLines.map(__assignType2((line) => `${" ".repeat((consoleWidth - qrCodeMaxLength) / 2)}${line}${" ".repeat((consoleWidth - qrCodeMaxLength) / 2)}`, ["line", "", 'P"2!"/"'])));
+    const qrCodeMaxLength = Math.max(...qrCodeLines.map(__assignType3((line) => line.length, ["line", "", 'P"2!"/"'])));
+    footer.push(...qrCodeLines.map(__assignType3((line) => `${" ".repeat((consoleWidth - qrCodeMaxLength) / 2)}${line}${" ".repeat((consoleWidth - qrCodeMaxLength) / 2)}`, ["line", "", 'P"2!"/"'])));
   }
   footer.push(`${" ".repeat((consoleWidth - 25) / 2)}${link("https://stormsoftware.com")}${" ".repeat((consoleWidth - 25) / 2)}`);
   footer.push("\n");
@@ -624,7 +670,7 @@ var __\u03A9PromptOptions = [() => __\u03A9TextPromptOptions, () => __\u03A9Conf
 var __\u03A9inferPromptReturnType = ["T", () => __\u03A9TextPromptOptions, () => __\u03A9ConfirmPromptOptions, () => __\u03A9SelectPromptOptions, "options", () => __\u03A9SelectOption, "options", "value", "options", () => __\u03A9MultiSelectPromptOptions, "options", "inferPromptReturnType", `l\x9E&R)Re&!.'f'f.(fRe&!.)f'fRPe%!.%f'fn&qk'3QRe$!.+fR#RPe#!n*qkMTQRPde%!pVRPe#!n$qk<bQRPde%!pjRPe#!n#qk%vQRPde%!p~RPe#!n"qk#\x8AQRb!Pde"!p\x92w,y`];
 var __\u03A9inferPromptCancelReturnType = ["T", "reject", "cancel", "default", () => __\u03A9inferPromptReturnType, "undefined", "null", "symbol", () => CANCEL_SYMBOL, () => __\u03A9inferPromptReturnType, "inferPromptCancelReturnType", `l\xAA!Re$!o%"R-R,Ri)Re$!o*"RPe#!P.(4#Mqk03QRPde%!p:RPe#!P.'4#Mqk.JQRPde%!pRRPe#!P.&4#Mqk,bQRPde%!pjRPe#!P.$4#Mqk%zQRPde%!p\x82RPe#!P."4#Mqk#\x92QRb!Pde"!p\x9Aw+y`];
 async function prompt(message, opts = {}) {
-  const handleCancel = __assignType2((value) => {
+  const handleCancel = __assignType3((value) => {
     if (typeof value !== "symbol" || value.toString() !== "Symbol(clack:cancel)") {
       return value;
     }
@@ -670,14 +716,14 @@ async function prompt(message, opts = {}) {
   if (opts.type === "select") {
     return await select({
       message,
-      options: opts.options.map(__assignType2((o) => typeof o === "string" ? { value: o, label: o } : o, ["o", "", 'P"2!"/"'])),
+      options: opts.options.map(__assignType3((o) => typeof o === "string" ? { value: o, label: o } : o, ["o", "", 'P"2!"/"'])),
       initialValue: opts.initial
     }).then(handleCancel);
   }
   if (opts.type === "multiselect") {
     return await multiselect({
       message,
-      options: opts.options.map(__assignType2((o) => typeof o === "string" ? { value: o, label: o } : o, ["o", "", 'P"2!"/"'])),
+      options: opts.options.map(__assignType3((o) => typeof o === "string" ? { value: o, label: o } : o, ["o", "", 'P"2!"/"'])),
       required: opts.required,
       initialValues: opts.initial
     }).then(handleCancel);
@@ -813,11 +859,11 @@ parseArgs.__type = ["args", "opts", "parseArgs", "// Parser is based on https://
 var __\u03A9IStormPayload = ["TData", "timestamp", "The timestamp of the payload.", "id", "The unique identifier for the payload.", "data", "The data of the payload.", "IStormPayload", `"c!P'4"?#&4$?%e"!4&?'Mw(y`];
 
 // examples/cli-app/.storm/runtime/id.ts
-function __assignType3(fn, args) {
+function __assignType4(fn, args) {
   fn.__type = args;
   return fn;
 }
-__name(__assignType3, "__assignType");
+__name(__assignType4, "__assignType");
 function getRandom(array) {
   if (array === null) {
     throw new StormError({ type: "general", code: 9 });
@@ -831,7 +877,7 @@ __name(getRandom, "getRandom");
 getRandom.__type = ["array", "getRandom", "Generate a random string", 'PW2!"/"?#'];
 function uniqueId(size = 24) {
   const randomBytes = getRandom(new Uint8Array(size));
-  return randomBytes.reduce(__assignType3((id, byte) => {
+  return randomBytes.reduce(__assignType4((id, byte) => {
     byte &= 63;
     if (byte < 36) {
       id += byte.toString(36);
@@ -901,14 +947,14 @@ useStorm.__type = ["StormContext", "useStorm", "Get the Storm context for the cu
 // examples/cli-app/.storm/commands/vars/delete/handle.ts
 var __\u03A9VarsDeletePayload = ["name", "The name of the variable to delete from the variables store.", "VarsDeletePayload", 'P&4!?"Mw#y'];
 async function handler(payload) {
-  const varsFile = await useStorm().storage.getItem(`vars:vars.json`);
-  if (varsFile === void 0) {
-    console.error(` ${colors.red("\u2718")} ${colors.redBright(`Variables file was not found`)}`);
+  const varsFile2 = await useStorm().storage.getItem(`vars:vars.json`);
+  if (varsFile2 === void 0) {
+    console.error(` ${colors.red("\u2718")} ${colors.white(`Variables file was not found`)}`);
     return;
   }
-  const vars = (deserialize.\u03A9 = [[() => __\u03A9StormVariables, "n!"]], deserialize(varsFile));
-  delete vars[payload.data.name];
-  await useStorm().storage.setItem(`vars:vars.json`, (serialize.\u03A9 = [[() => __\u03A9StormVariables, "n!"]], serialize(vars)));
+  const vars2 = (deserialize2.\u03A9 = [[() => __\u03A9StormVariables, "n!"]], deserialize2(varsFile2));
+  delete vars2[payload.data.name];
+  await useStorm().storage.setItem(`vars:vars.json`, (serialize.\u03A9 = [[() => __\u03A9StormVariables, "n!"]], serialize(vars2)));
   console.log("");
   console.log(colors.dim(` > \`${payload.data.name}\` variable deleted`));
   console.log("");

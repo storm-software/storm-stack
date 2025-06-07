@@ -19,7 +19,14 @@
 import { getFileHeader } from "../../../helpers/utilities/file-header";
 
 export function writeId() {
-  return `${getFileHeader()}
+  return `
+/**
+ * The ID module provides a set of utilities for generating unique identifiers.
+ *
+ * @module storm:id
+ */
+
+${getFileHeader()}
 
 import { StormError } from "./error";
 

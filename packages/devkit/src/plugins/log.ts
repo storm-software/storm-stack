@@ -68,7 +68,7 @@ export default abstract class LogPlugin<
         joinPaths(
           context.runtimePath,
           "logs",
-          `${this.name}${this.config.namespace ? `-${this.config.namespace.replaceAll(".", "-").replaceAll(":", "-").replaceAll(" ", "-")}` : ""}-${this.config.logLevel}.ts`
+          `${this.name.replace(/^log-/, "")}${this.config.namespace ? `-${this.config.namespace.replaceAll(".", "-").replaceAll(":", "-").replaceAll(" ", "-")}` : ""}-${this.config.logLevel}.ts`
         ),
         await Promise.resolve(this.writeSink(context))
       );
@@ -82,11 +82,11 @@ export default abstract class LogPlugin<
     );
 
     if (context.options.projectType === "application") {
-      const name = `${camelCase(`${this.name}${this.config.namespace ? `-${this.config.namespace.replaceAll(".", "-").replaceAll(":", "-").replaceAll(" ", "-")}` : ""}-${this.config.logLevel}`)}Sink`;
+      const name = `${camelCase(`${this.name.replace(/^log-/, "")}${this.config.namespace ? `-${this.config.namespace.replaceAll(".", "-").replaceAll(":", "-").replaceAll(" ", "-")}` : ""}-${this.config.logLevel}`)}Sink`;
       context.runtime.logs.push({
         name,
         logLevel: this.config.logLevel || "info",
-        import: `import ${name} from "./${joinPaths("logs", `${this.name}${this.config.namespace ? `-${this.config.namespace.replaceAll(".", "-").replaceAll(":", "-").replaceAll(" ", "-")}` : ""}-${this.config.logLevel}`)}"; `
+        import: `import ${name} from "./${joinPaths("logs", `${this.name.replace(/^log-/, "")}${this.config.namespace ? `-${this.config.namespace.replaceAll(".", "-").replaceAll(":", "-").replaceAll(" ", "-")}` : ""}-${this.config.logLevel}`)}"; `
       });
     }
   }

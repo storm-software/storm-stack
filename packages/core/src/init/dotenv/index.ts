@@ -98,6 +98,15 @@ export async function initDotenv<TOptions extends Options = Options>(
     }
   );
 
+  // Convert Storm-Ops log levels -> Storm Stack log levels
+  if (env.LOG_LEVEL === "trace" || env.LOG_LEVEL === "all") {
+    env.LOG_LEVEL = "debug";
+  } else if (env.LOG_LEVEL === "success") {
+    env.LOG_LEVEL = "info";
+  } else if (env.LOG_LEVEL === "silent") {
+    env.LOG_LEVEL = "fatal";
+  }
+
   context.dotenv.values = Object.keys(env).reduce((ret, key) => {
     let value = env[key];
     if (isString(value)) {

@@ -25,7 +25,13 @@ import { StormJSON } from "@stryke/json/storm-json";
 import { relativePath } from "@stryke/path/file-path-fns";
 import { joinPaths } from "@stryke/path/join-paths";
 import { titleCase } from "@stryke/string-format/title-case";
-import { getParsedTypeScriptConfig } from "../../helpers/typescript/tsconfig";
+import { TsConfigJson } from "@stryke/types/tsconfig";
+import chalkTemplate from "chalk-template";
+import {
+  getParsedTypeScriptConfig,
+  getTsconfigFilePath,
+  isIncludeMatchFound
+} from "../../helpers/typescript/tsconfig";
 import { writeFile } from "../../helpers/utilities/write-file";
 import type { Context, EngineHooks, Options } from "../../types/build";
 import type { LogFn } from "../../types/config";
@@ -59,35 +65,23 @@ export async function initTsconfig<TOptions extends Options = Options>(
   );
 
   const json = await getTsconfigChanges(context);
+
+  const artifactsIncludePath = joinPaths(
+    relativePath(
+      joinPaths(
+        context.workspaceConfig.workspaceRoot,
+        context.options.projectRoot
+      ),
+      context.artifactsPath
+    ),
+    "**/*.ts"
+  );
   if (
-    !json.include?.some(filterPattern =>
-      (filterPattern as string[]).includes(
-        joinPaths(
-          relativePath(
-            joinPaths(
-              context.workspaceConfig.workspaceRoot,
-              context.options.projectRoot
-            ),
-            context.artifactsPath
-          ),
-          "**/*.ts"
-        )
-      )
-    )
+    !json.include ||
+    !isIncludeMatchFound(artifactsIncludePath, json.include)
   ) {
     json.include ??= [];
-    json.include.push(
-      joinPaths(
-        relativePath(
-          joinPaths(
-            context.workspaceConfig.workspaceRoot,
-            context.options.projectRoot
-          ),
-          context.artifactsPath
-        ),
-        "**/*.ts"
-      )
-    );
+    json.include.push(artifactsIncludePath);
   }
 
   await writeFile(log, context.options.tsconfig!, StormJSON.stringify(json));
@@ -103,9 +97,23 @@ export async function initTsconfig<TOptions extends Options = Options>(
     });
   });
 
+  const tsconfigFilePath = getTsconfigFilePath(
+    context.options.projectRoot,
+    context.options.tsconfig
+  );
+  const updateTsconfigJson = await readJsonFile<TsConfigJson>(tsconfigFilePath);
+  if (
+    updateTsconfigJson?.compilerOptions?.types &&
+    Array.isArray(updateTsconfigJson.compilerOptions.types) &&
+    !updateTsconfigJson.compilerOptions.types.length
+  ) {
+    // If the types array is empty, we can safely remove it
+    delete updateTsconfigJson.compilerOptions.types;
+  }
+
   const result = getObjectDiff(
     originalTsconfigJson,
-    await readJsonFile<NonNullable<ObjectData>>(context.options.tsconfig!),
+    updateTsconfigJson as NonNullable<ObjectData>,
     {
       ignoreArrayOrder: true,
       showOnly: {
@@ -169,15 +177,21 @@ export async function initTsconfig<TOptions extends Options = Options>(
       (
         change,
         i
-      ) => `${i + 1}. ${titleCase(change.status)} the ${change.field} field:
-   - Previous: ${change.previous}
-   - Current: ${change.current}
-  `
+      ) => chalkTemplate`{bold.whiteBright ${i + 1}. ${titleCase(change.status)} the ${change.field} field: }
+  {red - Previous: ${change.previous} }
+  {green + Current: ${change.current} }
+`
     )
     .join("\n")}
   `
     );
   }
+
+  await writeFile(
+    log,
+    tsconfigFilePath,
+    StormJSON.stringify(updateTsconfigJson)
+  );
 
   context.tsconfig = await getParsedTypeScriptConfig(
     context.options.projectRoot,

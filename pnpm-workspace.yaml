@@ -17,6 +17,8 @@ catalog:
   '@ls-lint/ls-lint': ^2.3.0
   '@ltd/j-toml': ^1.38.0
   '@microsoft/api-extractor': ^7.52.8
+  '@microsoft/tsdoc': ^0.15.1
+  '@microsoft/tsdoc-config': ^0.17.1
   '@nuxt/kit': ^3.17.1
   '@nuxt/schema': ^3.17.1
   '@opentelemetry/api-logs': ^0.200.0
@@ -61,21 +63,21 @@ catalog:
   '@storm-software/tsconfig': latest
   '@storm-software/tsdoc': latest
   '@storm-software/workspace-tools': latest
-  '@stryke/env': ^0.12.4
-  '@stryke/fs': ^0.20.3
+  '@stryke/env': ^0.12.6
+  '@stryke/fs': ^0.20.6
   '@stryke/helpers': ^0.6.0
   '@stryke/http': ^0.8.1
   '@stryke/unique-id': ^0.3.0
   '@stryke/url': ^0.2.0
   '@stryke/json': ^0.9.0
-  '@stryke/path': ^0.7.4
+  '@stryke/path': ^0.7.5
   '@stryke/types': ^0.8.2
-  '@stryke/hash': ^0.9.3
+  '@stryke/hash': ^0.9.4
   '@stryke/string-format': ^0.4.9
-  '@stryke/convert': ^0.2.0
+  '@stryke/convert': ^0.2.1
   '@stryke/type-checks': ^0.3.3
   '@stryke/cli': ^0.11.0
-  '@stryke/capnp': ^0.2.4
+  '@stryke/capnp': ^0.2.6
   '@swc-node/register': ^1.10.10
   '@swc/core': ^1.11.22
   '@swc/wasm': ^1.11.24
@@ -83,7 +85,6 @@ catalog:
   '@typescript-eslint/scope-manager': ^8.31.1
   '@typescript-eslint/types': ^8.31.1
   '@typescript-eslint/utils': ^8.31.1
-  '@typescript/vfs': ^1.6.1
   bundle-require: ^5.1.0
   c12: ^3.0.3
   chalk-template: ^1.1.0
@@ -139,6 +140,7 @@ catalog:
   defu: ^6.1.4
   jiti: ^2.4.2
   eslint-flat-config-utils: 2.0.1
+  wrangler: ^4.19.1
   zod: ^3.24.4
   zod-validation-error: ^3.4.0
   zx: ^8.5.3

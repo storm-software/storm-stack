@@ -17,21 +17,8 @@
  ------------------------------------------------------------------- */
 
 import { LogLevelLabel } from "@storm-software/config-tools/types";
-import { relativePath } from "@stryke/path/file-path-fns";
-import { joinPaths } from "@stryke/path/join-paths";
-import { writeFile } from "../../helpers/utilities/write-file";
 import type { Context, EngineHooks, Options } from "../../types/build";
 import type { LogFn } from "../../types/config";
-import {
-  generateNodeDeclarations,
-  generateNodeGlobal,
-  generateNodeModules
-} from "./dts/node";
-import {
-  generateSharedDeclarations,
-  generateSharedGlobal,
-  generateSharedModules
-} from "./dts/shared";
 
 export async function prepareTypes<TOptions extends Options = Options>(
   log: LogFn,
@@ -42,75 +29,6 @@ export async function prepareTypes<TOptions extends Options = Options>(
     LogLevelLabel.TRACE,
     `Preparing the type declarations for the Storm Stack project.`
   );
-
-  const typesDir = joinPaths(context.artifactsPath, "types");
-  const relativeRuntimePath = relativePath(
-    joinPaths(
-      context.workspaceConfig.workspaceRoot,
-      context.options.projectRoot,
-      "types"
-    ),
-    joinPaths(
-      context.workspaceConfig.workspaceRoot,
-      context.options.projectRoot,
-      "runtime"
-    )
-  );
-
-  const promises = [] as Promise<void>[];
-  if (context.dotenv.types.variables.reflection) {
-    if (context.options.platform === "node") {
-      promises.push(
-        writeFile(
-          log,
-          joinPaths(typesDir, "context.d.ts"),
-          generateNodeDeclarations(context.dotenv.types.variables, context)
-        )
-      );
-    } else {
-      promises.push(
-        writeFile(
-          log,
-          joinPaths(typesDir, "vars.d.ts"),
-          generateSharedDeclarations(context.dotenv.types.variables)
-        )
-      );
-    }
-  }
-
-  promises.push(
-    writeFile(
-      log,
-      joinPaths(typesDir, "global.d.ts"),
-      generateSharedGlobal(relativeRuntimePath)
-    )
-  );
-  promises.push(
-    writeFile(
-      log,
-      joinPaths(typesDir, "modules.d.ts"),
-      generateSharedModules(relativeRuntimePath)
-    )
-  );
-
-  if (context.options.platform === "node") {
-    promises.push(
-      writeFile(
-        log,
-        joinPaths(typesDir, "global-node.d.ts"),
-        generateNodeGlobal(relativeRuntimePath, context)
-      )
-    );
-    promises.push(
-      writeFile(
-        log,
-        joinPaths(typesDir, "modules-node.d.ts"),
-        generateNodeModules(relativeRuntimePath, context)
-      )
-    );
-  }
-
-  await Promise.all(promises);
 
   await hooks.callHook("prepare:types", context).catch((error: Error) => {
     log(

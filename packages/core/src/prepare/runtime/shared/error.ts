@@ -19,7 +19,14 @@
 import { getFileHeader } from "../../../helpers/utilities/file-header";
 
 export function writeError() {
-  return `${getFileHeader()}
+  return `
+/**
+ * The Storm Stack error module provides a custom error class and utility functions to support error handling
+ *
+ * @module storm:error
+ */
+
+${getFileHeader()}
 
 import {
   ErrorType,

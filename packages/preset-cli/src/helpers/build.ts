@@ -24,7 +24,30 @@ import { unbuild } from "@storm-stack/devkit/helpers/unbuild/build";
 import { chmodX } from "@stryke/fs/chmod-x";
 import { findFileExtension } from "@stryke/path/file-path-fns";
 import { joinPaths } from "@stryke/path/join-paths";
+import { replacePath } from "@stryke/path/replace";
+import type { Plugin as ESBuildPlugin } from "esbuild";
 import type { StormStackCLIPresetContext } from "../types/build";
+
+/**
+ * ink attempts to import react-devtools-core in an ESM-unfriendly way:
+ *
+ * https://github.com/vadimdemedes/ink/blob/eab6ef07d4030606530d58d3d7be8079b4fb93bb/src/reconciler.ts#L22-L45
+ *
+ * to make this work, we have to strip the import out of the build.
+ */
+const ignoreReactDevToolsPlugin: ESBuildPlugin = {
+  name: "ignore-react-devtools",
+  setup(build) {
+    // When an import for 'react-devtools-core' is encountered,
+    // return an empty module.
+    build.onResolve({ filter: /^react-devtools-core$/ }, args => {
+      return { path: args.path, namespace: "ignore-devtools" };
+    });
+    build.onLoad({ filter: /.*/, namespace: "ignore-devtools" }, () => {
+      return { contents: "", loader: "js" };
+    });
+  }
+};
 
 export async function buildApplication<TOptions extends Options = Options>(
   log: LogFn,
@@ -39,25 +62,22 @@ export async function buildApplication<TOptions extends Options = Options>(
         (ret, entry) => {
           ret[
             entry.output ||
-              entry.input.file
-                .replace(
-                  `${context.projectJson?.sourceRoot || context.options.projectRoot}/`,
-                  ""
-                )
-                .replace(findFileExtension(entry.input.file), "") ||
-              entry.file
-                .replace(
-                  `${context.projectJson?.sourceRoot || context.options.projectRoot}/`,
-                  ""
-                )
-                .replace(findFileExtension(entry.file), "")
+              replacePath(
+                entry.input.file,
+                context.projectJson?.sourceRoot || context.options.projectRoot
+              ).replace(findFileExtension(entry.input.file), "") ||
+              replacePath(
+                entry.file,
+                context.projectJson?.sourceRoot || context.options.projectRoot
+              ).replace(findFileExtension(entry.file), "")
           ] = entry.file;
 
           return ret;
         },
         {} as Record<string, string>
       ),
-    distDir: "dist"
+    distDir: "dist",
+    esbuildPlugins: [ignoreReactDevToolsPlugin]
   });
 }
 

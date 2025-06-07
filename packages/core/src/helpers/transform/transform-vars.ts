@@ -42,7 +42,8 @@ export async function transformVars<TOptions extends Options = Options>(
       any: [
         { pattern: "$storm.vars.$ENV_NAME" },
         { pattern: "useStorm().vars.$ENV_NAME" },
-        { pattern: "process.env.$ENV_NAME" }
+        { pattern: "process.env.$ENV_NAME" },
+        { pattern: "import.meta.env.$ENV_NAME" }
       ]
     }
   });
@@ -124,7 +125,7 @@ export async function transformVars<TOptions extends Options = Options>(
 
   if (varsReflection.getProperties().length > 0) {
     log(
-      LogLevelLabel.INFO,
+      LogLevelLabel.TRACE,
       `Adding environment variables from ${source.id} to vars.json.`
     );
 

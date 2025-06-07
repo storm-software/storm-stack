@@ -22,7 +22,14 @@ import type { Context, Options } from "../../../types/build";
 export function writeContext<TOptions extends Options = Options>(
   _context: Context<TOptions>
 ) {
-  return `${getFileHeader()}
+  return `
+/**
+ * This module provides the Storm Stack context and a hook to access it in the application.
+ *
+ * @module storm:context
+ */
+
+${getFileHeader()}
 
 import { AsyncLocalStorage } from "node:async_hooks";
 import { getContext } from "unctx";

@@ -436,7 +436,13 @@ export function link(
   ].join("");
 }
 
-function stripAnsi(text: string) {
+/**
+ * Strips ANSI escape codes from a string.
+ *
+ * @param text - The string to strip ANSI codes from.
+ * @returns The string without ANSI codes.
+ */
+export function stripAnsi(text: string) {
   return text.replace(new RegExp([
     String.raw\`[\\u001B\\u009B][[\\]()#;?]*(?:(?:(?:(?:;[-a-zA-Z\\d\\/#&.:=?%@~_]+)*|[a-zA-Z\\d]+(?:;[-a-zA-Z\\d\\/#&.:=?%@~_]*)*)?\\u0007)\`,
     String.raw\`(?:(?:\\d{1,4}(?:;\\d{0,4})*)?[\\dA-PR-TZcf-nq-uy=><~]))\`
@@ -462,9 +468,9 @@ export function renderBanner(title: string, description: string): string {
   if (width % 2) width++;
 
   const banner = [] as string[];
-  banner.push(colors.cyan(\`┏━━━━ ${appTitle} ━ v${
+  banner.push(colors.cyan(\`┏━━━━ ● ${appTitle} ━ v${
     context.packageJson.version || "1.0.0"
-  } \${"━".repeat(width - 10 - ${
+  } \${"━".repeat(width - 12 - ${
     appTitle.length + (context.packageJson.version?.length ?? 5)
   })}┓\`));
   banner.push(colors.cyan(\`┃\${" ".repeat(width)}┃\`));

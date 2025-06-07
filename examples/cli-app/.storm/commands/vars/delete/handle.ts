@@ -7,8 +7,8 @@
 
 import { deserialize,serialize } from "@deepkit/type";
 import { colors } from "../../../runtime/cli";
-import { StormVariables } from "../../../runtime/env";
 import { StormPayload } from "../../../runtime/payload";
+import { StormVariables } from "../../../runtime/vars";
 
 export interface VarsDeletePayload {
   /**
@@ -26,7 +26,7 @@ async function handler(payload: StormPayload<VarsDeletePayload>) {
   const varsFile = await $storm.storage.getItem(`vars:vars.json`);
   if (varsFile === undefined) {
     console.error(
-      ` ${colors.red("✘")} ${colors.redBright(`Variables file was not found`)}`
+      ` ${colors.red("✘")} ${colors.white(`Variables file was not found`)}`
     );
     return;
   }

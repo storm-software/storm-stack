@@ -16,7 +16,6 @@
 
  ------------------------------------------------------------------- */
 
-import { TypeScriptBuildBaseEnv } from "@storm-software/build-tools/types";
 import { LogLevel } from "./log.js";
 
 /**
@@ -25,8 +24,9 @@ import { LogLevel } from "./log.js";
  * @remarks
  * This interface is used to define the environment variables, configuration options, and runtime settings used by the Storm Stack applications. It is used to provide type safety, autocompletion, and default values for the environment variables. The comments of each variable are used to provide documentation descriptions when running the \`storm docs\` command.
  *
- * @categoryDescription platform
- * The platform the variables are intended for use in.
+ * @categoryDescription Platform
+ * The name of the platform the variable is intended for use in.
+ *
  * @showCategories
  */
 export interface StormBaseVariables {
@@ -37,6 +37,7 @@ export interface StormBaseVariables {
    *
    * @internal
    * @category node
+   * @readonly
    */
   STORM_STACK_LOCAL: boolean;
 
@@ -192,6 +193,7 @@ export interface StormBaseVariables {
    * This variable is used to specify the terminal type that the application is running in. It can be used to determine how to format output for the terminal.
    *
    * @category node
+   * @readonly
    */
   TERM?: string;
 
@@ -199,7 +201,7 @@ export interface StormBaseVariables {
    * The terminal program name. This variable is set by certain terminal emulators.
    *
    * @category node
-   * @hidden
+   * @readonly
    */
   TERM_PROGRAM: string;
 
@@ -207,7 +209,7 @@ export interface StormBaseVariables {
    * The terminal program version. This variable is set by certain terminal emulators.
    *
    * @category node
-   * @hidden
+   * @readonly
    */
   TERM_PROGRAM_VERSION: string;
 
@@ -215,7 +217,7 @@ export interface StormBaseVariables {
    * The terminal emulator name. This variable is set by certain terminal emulators.
    *
    * @category node
-   * @hidden
+   * @readonly
    */
   TERMINAL_EMULATOR?: string;
 
@@ -223,7 +225,7 @@ export interface StormBaseVariables {
    * The terminal emulator session ID. This variable is set by certain terminal emulators.
    *
    * @category node
-   * @hidden
+   * @readonly
    */
   WT_SESSION?: string;
 
@@ -231,7 +233,7 @@ export interface StormBaseVariables {
    * An indicator that specifies the current terminal is running Terminus Sublime. This variable is set by certain terminal emulators.
    *
    * @category node
-   * @hidden
+   * @readonly
    */
   TERMINUS_SUBLIME?: boolean;
 
@@ -239,7 +241,7 @@ export interface StormBaseVariables {
    * The ConEmu task name. This variable is set by certain terminal emulators.
    *
    * @category node
-   * @hidden
+   * @readonly
    */
   ConEmuTask?: string;
 
@@ -247,7 +249,7 @@ export interface StormBaseVariables {
    * The cursor trace ID. This variable is set by certain terminal emulators.
    *
    * @category node
-   * @hidden
+   * @readonly
    */
   CURSOR_TRACE_ID?: string;
 
@@ -255,7 +257,7 @@ export interface StormBaseVariables {
    * The VTE version. This variable is set by certain terminal emulators.
    *
    * @category node
-   * @hidden
+   * @readonly
    */
   VTE_VERSION?: string;
 
@@ -265,8 +267,8 @@ export interface StormBaseVariables {
    * @defaultValue "production"
    *
    * @category neutral
-   * @deprecated Use `ENVIRONMENT` instead.
-   * @hidden
+   * @deprecated Use {@link ENVIRONMENT} instead.
+   * @readonly
    */
   NODE_ENV: "development" | "staging" | "production";
 
@@ -289,11 +291,12 @@ export interface StormBaseVariables {
   INCLUDE_ERROR_DATA: boolean;
 
   /**
-   * An API end point to lookup error messages given an error code.
+   * A web page to lookup error messages and display additional information given an error code.
    *
    * @remarks
-   * This variable is used to provide a URL to an API that can be used to look up error messages given an error code. This is used to provide a more user-friendly error message to the user.
+   * This variable is used to provide a URL to a page that can be used to look up error messages given an error code. This is used to provide a more user-friendly error message to the user.
    *
+   * @title Error Details URL
    * @category neutral
    */
   ERROR_URL: string;
@@ -329,10 +332,11 @@ export interface StormBaseVariables {
    * An indicator that specifies the current runtime is a continuous integration environment.
    *
    * @remarks
-   * This variable is also set using the `CONTINUOUS_INTEGRATION` environment variable.
+   * This variable is used to replace the {@link CONTINUOUS_INTEGRATION} environment variable.
    *
    * @defaultValue false
    *
+   * @title Continuous Integration
    * @category neutral
    */
   CI: boolean;
@@ -341,11 +345,12 @@ export interface StormBaseVariables {
    * An indicator that specifies the current runtime is a continuous integration environment.
    *
    * @remarks
-   * This variable is also set using the `CI` environment variable.
+   * This variable is also set using the {@link CI} environment variable.
    *
    * @defaultValue false
    *
    * @category neutral
+   * @deprecated Use {@link CI} instead.
    * @hidden
    */
   CONTINUOUS_INTEGRATION: boolean;
@@ -354,7 +359,7 @@ export interface StormBaseVariables {
    * The unique identifier for the current run. This value is set by certain CI/CD systems.
    *
    * @category node
-   * @hidden
+   * @readonly
    */
   RUN_ID?: string;
 
@@ -362,7 +367,7 @@ export interface StormBaseVariables {
    * The agola git reference. This value is set by certain CI/CD systems.
    *
    * @category node
-   * @hidden
+   * @readonly
    */
   AGOLA_GIT_REF?: string;
 
@@ -370,7 +375,7 @@ export interface StormBaseVariables {
    * The appcircle build ID. This value is set by certain CI/CD systems.
    *
    * @category node
-   * @hidden
+   * @readonly
    */
   AC_APPCIRCLE?: string;
 
@@ -378,7 +383,7 @@ export interface StormBaseVariables {
    * The appveyor build ID. This value is set by certain CI/CD systems.
    *
    * @category node
-   * @hidden
+   * @readonly
    */
   APPVEYOR?: string;
 
@@ -386,7 +391,7 @@ export interface StormBaseVariables {
    * The codebuild build ID. This value is set by certain CI/CD systems.
    *
    * @category node
-   * @hidden
+   * @readonly
    */
   CODEBUILD?: string;
 
@@ -394,7 +399,7 @@ export interface StormBaseVariables {
    * The task force build ID. This value is set by certain CI/CD systems.
    *
    * @category node
-   * @hidden
+   * @readonly
    */
   TF_BUILD?: string;
 
@@ -402,7 +407,7 @@ export interface StormBaseVariables {
    * The bamboo plan key. This value is set by certain CI/CD systems.
    *
    * @category node
-   * @hidden
+   * @readonly
    */
   bamboo_planKey?: string;
 
@@ -410,7 +415,7 @@ export interface StormBaseVariables {
    * The bitbucket commit. This value is set by certain CI/CD systems.
    *
    * @category node
-   * @hidden
+   * @readonly
    */
   BITBUCKET_COMMIT?: string;
 
@@ -418,7 +423,7 @@ export interface StormBaseVariables {
    * The bitrise build ID. This value is set by certain CI/CD systems.
    *
    * @category node
-   * @hidden
+   * @readonly
    */
   BITRISE_IO?: string;
 
@@ -426,7 +431,7 @@ export interface StormBaseVariables {
    * The buddy workspace ID. This value is set by certain CI/CD systems.
    *
    * @category node
-   * @hidden
+   * @readonly
    */
   BUDDY_WORKSPACE_ID?: string;
 
@@ -434,7 +439,7 @@ export interface StormBaseVariables {
    * The buildkite build ID. This value is set by certain CI/CD systems.
    *
    * @category node
-   * @hidden
+   * @readonly
    */
   BUILDKITE?: string;
 
@@ -442,15 +447,15 @@ export interface StormBaseVariables {
    * The circleci build ID. This value is set by certain CI/CD systems.
    *
    * @category node
-   * @hidden
+   * @readonly
    */
   CIRCLECI?: string;
 
   /**
-   * The cirrusci build ID. This value is set by certain CI/CD systems.
+   * The cirrus-ci build ID. This value is set by certain CI/CD systems.
    *
    * @category node
-   * @hidden
+   * @readonly
    */
   CIRRUS_CI?: string;
 
@@ -458,7 +463,7 @@ export interface StormBaseVariables {
    * The cf build ID. This value is set by certain CI/CD systems.
    *
    * @category node
-   * @hidden
+   * @readonly
    */
   CF_BUILD_ID?: string;
 
@@ -466,7 +471,7 @@ export interface StormBaseVariables {
    * The cm build ID. This value is set by certain CI/CD systems.
    *
    * @category node
-   * @hidden
+   * @readonly
    */
   CM_BUILD_ID?: string;
 
@@ -474,7 +479,7 @@ export interface StormBaseVariables {
    * The ci name. This value is set by certain CI/CD systems.
    *
    * @category node
-   * @hidden
+   * @readonly
    */
   CI_NAME?: string;
 
@@ -482,7 +487,7 @@ export interface StormBaseVariables {
    * The drone build ID. This value is set by certain CI/CD systems.
    *
    * @category node
-   * @hidden
+   * @readonly
    */
   DRONE?: string;
 
@@ -490,7 +495,7 @@ export interface StormBaseVariables {
    * The dsari build ID. This value is set by certain CI/CD systems.
    *
    * @category node
-   * @hidden
+   * @readonly
    */
   DSARI?: string;
 
@@ -498,7 +503,7 @@ export interface StormBaseVariables {
    * The earthly build ID. This value is set by certain CI/CD systems.
    *
    * @category node
-   * @hidden
+   * @readonly
    */
   EARTHLY_CI?: string;
 
@@ -506,7 +511,7 @@ export interface StormBaseVariables {
    * The eas build ID. This value is set by certain CI/CD systems.
    *
    * @category node
-   * @hidden
+   * @readonly
    */
   EAS_BUILD?: string;
 
@@ -514,7 +519,7 @@ export interface StormBaseVariables {
    * The gerrit project. This value is set by certain CI/CD systems.
    *
    * @category node
-   * @hidden
+   * @readonly
    */
   GERRIT_PROJECT?: string;
 
@@ -522,7 +527,7 @@ export interface StormBaseVariables {
    * The gitea actions build ID. This value is set by certain CI/CD systems.
    *
    * @category node
-   * @hidden
+   * @readonly
    */
   GITEA_ACTIONS?: string;
 
@@ -530,7 +535,7 @@ export interface StormBaseVariables {
    * The github actions build ID. This value is set by certain CI/CD systems.
    *
    * @category node
-   * @hidden
+   * @readonly
    */
   GITHUB_ACTIONS?: string;
 
@@ -538,7 +543,7 @@ export interface StormBaseVariables {
    * The gitlab ci build ID. This value is set by certain CI/CD systems.
    *
    * @category node
-   * @hidden
+   * @readonly
    */
   GITLAB_CI?: string;
 
@@ -546,7 +551,7 @@ export interface StormBaseVariables {
    * The go cd build ID. This value is set by certain CI/CD systems.
    *
    * @category node
-   * @hidden
+   * @readonly
    */
   GOCD?: string;
 
@@ -554,7 +559,7 @@ export interface StormBaseVariables {
    * The builder output build ID. This value is set by certain CI/CD systems.
    *
    * @category node
-   * @hidden
+   * @readonly
    */
   BUILDER_OUTPUT?: string;
 
@@ -562,7 +567,7 @@ export interface StormBaseVariables {
    * The harness build ID. This value is set by certain CI/CD systems.
    *
    * @category node
-   * @hidden
+   * @readonly
    */
   HARNESS_BUILD_ID?: string;
 
@@ -570,7 +575,7 @@ export interface StormBaseVariables {
    * The jenkins url. This value is set by certain CI/CD systems.
    *
    * @category node
-   * @hidden
+   * @readonly
    */
   JENKINS_URL?: string;
 
@@ -578,7 +583,7 @@ export interface StormBaseVariables {
    * The layerci build ID. This value is set by certain CI/CD systems.
    *
    * @category node
-   * @hidden
+   * @readonly
    */
   LAYERCI?: string;
 
@@ -586,7 +591,7 @@ export interface StormBaseVariables {
    * The magnum build ID. This value is set by certain CI/CD systems.
    *
    * @category node
-   * @hidden
+   * @readonly
    */
   MAGNUM?: string;
 
@@ -594,7 +599,7 @@ export interface StormBaseVariables {
    * The netlify build ID. This value is set by certain CI/CD systems.
    *
    * @category node
-   * @hidden
+   * @readonly
    */
   NETLIFY?: string;
 
@@ -602,7 +607,7 @@ export interface StormBaseVariables {
    * The nevercode build ID. This value is set by certain CI/CD systems.
    *
    * @category node
-   * @hidden
+   * @readonly
    */
   NEVERCODE?: string;
 
@@ -610,7 +615,7 @@ export interface StormBaseVariables {
    * The prow job ID. This value is set by certain CI/CD systems.
    *
    * @category node
-   * @hidden
+   * @readonly
    */
   PROW_JOB_ID?: string;
 
@@ -618,7 +623,7 @@ export interface StormBaseVariables {
    * The release build ID. This value is set by certain CI/CD systems.
    *
    * @category node
-   * @hidden
+   * @readonly
    */
   RELEASE_BUILD_ID?: string;
 
@@ -626,7 +631,7 @@ export interface StormBaseVariables {
    * The render build ID. This value is set by certain CI/CD systems.
    *
    * @category node
-   * @hidden
+   * @readonly
    */
   RENDER?: string;
 
@@ -634,7 +639,7 @@ export interface StormBaseVariables {
    * The sailci build ID. This value is set by certain CI/CD systems.
    *
    * @category node
-   * @hidden
+   * @readonly
    */
   SAILCI?: string;
 
@@ -642,7 +647,7 @@ export interface StormBaseVariables {
    * The hudson build ID. This value is set by certain CI/CD systems.
    *
    * @category node
-   * @hidden
+   * @readonly
    */
   HUDSON?: string;
 
@@ -650,7 +655,7 @@ export interface StormBaseVariables {
    * The screwdriver build ID. This value is set by certain CI/CD systems.
    *
    * @category node
-   * @hidden
+   * @readonly
    */
   SCREWDRIVER?: string;
 
@@ -658,7 +663,7 @@ export interface StormBaseVariables {
    * The semaphore build ID. This value is set by certain CI/CD systems.
    *
    * @category node
-   * @hidden
+   * @readonly
    */
   SEMAPHORE?: string;
 
@@ -666,7 +671,7 @@ export interface StormBaseVariables {
    * The sourcehut build ID. This value is set by certain CI/CD systems.
    *
    * @category node
-   * @hidden
+   * @readonly
    */
   SOURCEHUT?: string;
 
@@ -674,7 +679,7 @@ export interface StormBaseVariables {
    * The strider build ID. This value is set by certain CI/CD systems.
    *
    * @category node
-   * @hidden
+   * @readonly
    */
   STRIDER?: string;
 
@@ -682,7 +687,7 @@ export interface StormBaseVariables {
    * The task ID. This value is set by certain CI/CD systems.
    *
    * @category node
-   * @hidden
+   * @readonly
    */
   TASK_ID?: string;
 
@@ -690,7 +695,7 @@ export interface StormBaseVariables {
    * The teamcity version. This value is set by certain CI/CD systems.
    *
    * @category node
-   * @hidden
+   * @readonly
    */
   TEAMCITY_VERSION?: string;
 
@@ -698,7 +703,7 @@ export interface StormBaseVariables {
    * The travis build ID. This value is set by certain CI/CD systems.
    *
    * @category node
-   * @hidden
+   * @readonly
    */
   TRAVIS?: string;
 
@@ -706,7 +711,7 @@ export interface StormBaseVariables {
    * The vela build ID. This value is set by certain CI/CD systems.
    *
    * @category node
-   * @hidden
+   * @readonly
    */
   VELA?: string;
 
@@ -714,7 +719,7 @@ export interface StormBaseVariables {
    * The now builder build ID. This value is set by certain CI/CD systems.
    *
    * @category node
-   * @hidden
+   * @readonly
    */
   NOW_BUILDER?: string;
 
@@ -722,7 +727,7 @@ export interface StormBaseVariables {
    * The appcenter build ID. This value is set by certain CI/CD systems.
    *
    * @category node
-   * @hidden
+   * @readonly
    */
   APPCENTER_BUILD_ID?: string;
 
@@ -730,7 +735,7 @@ export interface StormBaseVariables {
    * The xcode project build ID. This value is set by certain CI/CD systems.
    *
    * @category node
-   * @hidden
+   * @readonly
    */
   CI_XCODE_PROJECT?: string;
 
@@ -738,7 +743,7 @@ export interface StormBaseVariables {
    * The xcode server build ID. This value is set by certain CI/CD systems.
    *
    * @category node
-   * @hidden
+   * @readonly
    */
   XCS?: string;
 
@@ -746,7 +751,8 @@ export interface StormBaseVariables {
    * The Vercel environment. This variable is set by Vercel when the application is running in a Vercel environment.
    *
    * @category node
-   * @hidden
+   * @deprecated Use {@link ENVIRONMENT} instead.
+   * @readonly
    */
   VERCEL_ENV?: string;
 
@@ -756,9 +762,10 @@ export interface StormBaseVariables {
    * @remarks
    * This variable is used to override the base path of the system's local application data directory. This variable is used to set the \`$storm.paths.data\` property.
    *
+   * @title Data Directory
    * @category node
    */
-  STORM_DATA_DIR?: string;
+  DATA_DIR?: string;
 
   /**
    * The Storm Stack application's configuration data directory.
@@ -766,9 +773,10 @@ export interface StormBaseVariables {
    * @remarks
    * This variable is used to override the base path of the system's local application configuration directory. This variable is used to set the \`$storm.paths.config\` property.
    *
+   * @title Configuration Directory
    * @category node
    */
-  STORM_CONFIG_DIR?: string;
+  CONFIG_DIR?: string;
 
   /**
    * The Storm Stack application's cached data directory.
@@ -776,9 +784,10 @@ export interface StormBaseVariables {
    * @remarks
    * This variable is used to override the base path of the system's local cache data directory. This variable is used to set the \`$storm.paths.cache\` property.
    *
+   * @title Cache Directory
    * @category node
    */
-  STORM_CACHE_DIR?: string;
+  CACHE_DIR?: string;
 
   /**
    * The Storm Stack application's logging directory.
@@ -786,9 +795,10 @@ export interface StormBaseVariables {
    * @remarks
    * This variable is used to override the base path of the system's local application log directory. This variable is used to set the \`$storm.paths.log\` property.
    *
+   * @title Log Directory
    * @category node
    */
-  STORM_LOG_DIR?: string;
+  LOG_DIR?: string;
 
   /**
    * The Storm Stack application's temporary data directory.
@@ -796,9 +806,10 @@ export interface StormBaseVariables {
    * @remarks
    * This variable is used to override the base path of the system's local temporary data directory. This variable is used to set the \`$storm.paths.temp\` property.
    *
+   * @title Temporary Directory
    * @category node
    */
-  STORM_TEMP_DIR?: string;
+  TEMP_DIR?: string;
 
   /**
    * A variable that specifies the current user's local application data directory on Windows.
@@ -809,6 +820,7 @@ export interface StormBaseVariables {
    * This variable is used to specify a path to application data that is specific to the current user. This variable can be used to set the \`$storm.paths.data\`, \`$storm.paths.cache\`, and \`$storm.paths.log\` properties.
    *
    * @category node
+   * @readonly
    */
   LOCALAPPDATA?: string;
 
@@ -821,6 +833,7 @@ export interface StormBaseVariables {
    * This variable is used to specify a path to application data that is specific to the current user. This variable can be used to set the \`$storm.paths.config\` property.
    *
    * @category node
+   * @readonly
    */
   APPDATA?: string;
 
@@ -833,6 +846,7 @@ export interface StormBaseVariables {
    * This variable is used to specify a path to application data that is specific to the current user. This variable can be used to set the \`$storm.paths.data\` property.
    *
    * @category node
+   * @readonly
    */
   XDG_DATA_HOME?: string;
 
@@ -845,6 +859,7 @@ export interface StormBaseVariables {
    * This variable is used to specify a path to configuration data that is specific to the current user. This variable can be used to set the \`$storm.paths.config\` property.
    *
    * @category node
+   * @readonly
    */
   XDG_CONFIG_HOME?: string;
 
@@ -857,6 +872,7 @@ export interface StormBaseVariables {
    * This variable is used to specify a path to cache data that is specific to the current user. This variable can be used to set the \`$storm.paths.cache\` property.
    *
    * @category node
+   * @readonly
    */
   XDG_CACHE_HOME?: string;
 
@@ -869,6 +885,7 @@ export interface StormBaseVariables {
    * This variable is used to specify a path to application state data that is specific to the current user. This variable can be used to set the \`$storm.paths.state\` property.
    *
    * @category node
+   * @readonly
    */
   XDG_STATE_HOME?: string;
 
@@ -881,6 +898,7 @@ export interface StormBaseVariables {
    * This variable is used to specify a path to runtime data that is specific to the current user. This variable can be used to set the \`$storm.paths.temp\` property.
    *
    * @category node
+   * @readonly
    */
   XDG_RUNTIME_DIR?: string;
 
@@ -897,14 +915,3 @@ export interface StormBaseVariables {
    */
   DEVENV_RUNTIME?: string;
 }
-
-/**
- * The variables used by the Storm Stack application
- */
-export type StormVars = {
-  [TKey in string]: TKey extends `STORM_${infer TBaseKey}`
-    ? `STORM_${TBaseKey}` extends keyof TypeScriptBuildBaseEnv
-      ? TypeScriptBuildBaseEnv[`STORM_${TBaseKey}`]
-      : any
-    : any;
-} & StormBaseVariables;

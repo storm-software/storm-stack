@@ -41,7 +41,6 @@ import { joinPaths } from "@stryke/path/join-paths";
 import { kebabCase } from "@stryke/string-format/kebab-case";
 import { titleCase } from "@stryke/string-format/title-case";
 import { isSetString } from "@stryke/type-checks/is-set-string";
-import { loadFile } from "magicast";
 import type { StormStackCLIPresetContext } from "../types/build";
 import type { StormStackCLIPresetConfig } from "../types/config";
 import type {
@@ -207,11 +206,6 @@ async function reflectCommandPayloads<TOptions extends Options = Options>(
         args: getDefaultCommandPayloadArgs(entry, config)
       };
     } else {
-      const entryModule = await loadFile(entry.input.file);
-      if (!entryModule) {
-        throw new Error(`Failure loading module AST: ${entry.input.file}`);
-      }
-
       // eslint-disable-next-line ts/no-unsafe-function-type
       const command = await resolveType<TOptions, Function>(
         context,
@@ -374,11 +368,6 @@ export async function reflectCommand<TOptions extends Options = Options>(
         LogLevelLabel.TRACE,
         `Precompiling the entry artifact ${entry.file} (${entry?.name ? `export: "${entry.name}"` : "default"})" from input "${entry.input.file}" (${entry.input.name ? `export: "${entry.input.name}"` : "default"})`
       );
-
-      const entryModule = await loadFile(entry.input.file);
-      if (!entryModule) {
-        throw new Error(`Failure loading module AST: ${entry.input.file}`);
-      }
 
       // eslint-disable-next-line ts/no-unsafe-function-type
       const command = await resolveType<TOptions, Function>(

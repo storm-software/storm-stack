@@ -16,10 +16,9 @@
 
  ------------------------------------------------------------------- */
 
-import { Storage } from "unstorage";
 import { IStormLog } from "../shared/log";
 import { IStormPayload } from "../shared/payload";
-import { StormVars } from "../shared/vars";
+import { StormBaseVariables } from "../shared/vars";
 import { StormBuildInfo, StormEnvPaths, StormRuntimeInfo } from "./env";
 import { IStormEvent } from "./event";
 
@@ -47,7 +46,7 @@ interface Internal_StormContextStore {
  * The Storm Stack application context object is injected into the global scope of the application. It can be accessed using `$storm` or `useStorm()` in the application code.
  */
 export type StormContext<
-  TVars extends StormVars = StormVars,
+  TVars extends StormBaseVariables = StormBaseVariables,
   TAdditionalFields extends Record<string, any> = Record<string, any>,
   TPayload extends IStormPayload = IStormPayload
 > = TAdditionalFields & {
@@ -106,7 +105,7 @@ export type StormContext<
   /**
    * The root [unstorage](https://unstorage.unjs.io/) storage to use for Storm Stack application.
    */
-  readonly storage: Storage;
+  readonly storage: import("unstorage").Storage;
 
   /**
    * A function to emit an event to a processing queue.

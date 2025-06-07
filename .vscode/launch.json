@@ -11,6 +11,15 @@
       "console": "integratedTerminal"
     },
     {
+      "name": "Debug Cloudflare-Worker Example Build Script",
+      "type": "node",
+      "request": "launch",
+      "program": "/nix/store/kclz9i3vq2fz8nnn947l773a95fj77z3-pnpm-10.8.0/bin/pnpm",
+      "args": ["nx", "run", "examples-cloudflare-worker:build:development"],
+      "cwd": "${workspaceFolder}",
+      "console": "integratedTerminal"
+    },
+    {
       "name": "Debug Library Example Build Script",
       "type": "node",
       "request": "launch",

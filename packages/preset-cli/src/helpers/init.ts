@@ -34,6 +34,7 @@ import { isDirectory } from "@stryke/path/is-file";
 import { joinPaths } from "@stryke/path/join-paths";
 import { constantCase } from "@stryke/string-format/constant-case";
 import { kebabCase } from "@stryke/string-format/kebab-case";
+import { titleCase } from "@stryke/string-format/title-case";
 import { isSetString } from "@stryke/type-checks/is-set-string";
 import { isString } from "@stryke/type-checks/is-string";
 import { defu } from "defu";
@@ -332,6 +333,83 @@ export async function initEntry<TOptions extends Options = Options>(
       return ret;
     }, context.entry);
 
+    log(
+      LogLevelLabel.TRACE,
+      "Adding the CLI completion commands to the entry points."
+    );
+
+    if (
+      context.entry.some(
+        entry =>
+          entry.output === "completions" ||
+          entry.file === joinPaths(commandsDirectory, "completions", "index.ts")
+      )
+    ) {
+      throw new Error(
+        "The completions command already exists in the entry point. This is not valid when \`manageVars\` is not false. Please remove it from the entry point or rename it."
+      );
+    }
+
+    context.entry.push({
+      displayName: "CLI Completions",
+      description: `Commands for generating shell completion scripts for the ${titleCase(context.options.name)}.`,
+      file: joinPaths(commandsDirectory, "completions", "index.ts"),
+      input: {
+        file: joinPaths(commandsDirectory, "completions", "index.ts")
+      },
+      output: "completions",
+      path: ["completions"],
+      isVirtual: true
+    });
+
+    if (
+      context.entry.some(
+        entry =>
+          entry.output === "completions-bash" ||
+          entry.file ===
+            joinPaths(commandsDirectory, "completions", "bash", "index.ts")
+      )
+    ) {
+      throw new Error(
+        "The completions-bash command already exists in the entry point. This is not valid when \`manageVars\` is not false. Please remove it from the entry point or rename it."
+      );
+    }
+
+    context.entry.push({
+      displayName: "CLI Completions - Bash Shell",
+      file: joinPaths(commandsDirectory, "completions", "bash", "index.ts"),
+      input: {
+        file: joinPaths(commandsDirectory, "completions", "bash", "handle.ts")
+      },
+      output: "completions-bash",
+      path: ["completions", "bash"],
+      isVirtual: false
+    });
+
+    if (
+      context.entry.some(
+        entry =>
+          entry.output === "completions-zsh" ||
+          entry.file ===
+            joinPaths(commandsDirectory, "completions", "zsh", "index.ts")
+      )
+    ) {
+      throw new Error(
+        "The completions-zsh command already exists in the entry point. This is not valid when \`manageVars\` is not false. Please remove it from the entry point or rename it."
+      );
+    }
+
+    context.entry.push({
+      displayName: "CLI Completions - Zsh Shell",
+      file: joinPaths(commandsDirectory, "completions", "zsh", "index.ts"),
+      input: {
+        file: joinPaths(commandsDirectory, "completions", "zsh", "handle.ts")
+      },
+      output: "completions-zsh",
+      path: ["completions", "zsh"],
+      isVirtual: false
+    });
+
     if (config.manageVars !== false) {
       log(
         LogLevelLabel.TRACE,
@@ -341,13 +419,12 @@ export async function initEntry<TOptions extends Options = Options>(
       if (
         context.entry.some(
           entry =>
-            entry.output === "vars-get" ||
-            entry.file ===
-              joinPaths(commandsDirectory, "vars", "get", "index.ts")
+            entry.output === "vars" ||
+            entry.file === joinPaths(commandsDirectory, "vars", "index.ts")
         )
       ) {
         throw new Error(
-          "The vars-get command already exists in the entry point. This is not valid when \`manageVars\` is not false. Please remove it from the entry point or rename it."
+          "The vars command already exists in the entry point. This is not valid when \`manageVars\` is not false. Please remove it from the entry point or rename it."
         );
       }
 

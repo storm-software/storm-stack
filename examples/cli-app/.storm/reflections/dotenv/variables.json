@@ -9,7 +9,7 @@
       153, 155, 157, 159, 161, 163, 165, 167, 169, 171, 173, 175, 177, 179, 181,
       183, 185, 187, 189, 191, 193, 195, 197, 199, 201, 203, 205, 207, 209, 211,
       213, 215, 217, 219, 221, 223, 225, 227, 229, 231, 233, 235, 237, 239, 241,
-      243, 245
+      243, 247, 251, 253
     ],
     "entityOptions": {
       "description": "An object containing the dotenv variables used by the examples-cli-app application."
@@ -170,16 +170,14 @@
     "kind": 32,
     "type": 45,
     "name": "TERM_PROGRAM",
-    "description": "The terminal program name. This variable is set by certain terminal emulators.",
-    "tags": { "hidden": true }
+    "description": "The terminal program name. This variable is set by certain terminal emulators."
   },
   { "kind": 5 },
   {
     "kind": 32,
     "type": 47,
     "name": "TERM_PROGRAM_VERSION",
-    "description": "The terminal program version. This variable is set by certain terminal emulators.",
-    "tags": { "hidden": true }
+    "description": "The terminal program version. This variable is set by certain terminal emulators."
   },
   { "kind": 5 },
   {
@@ -187,8 +185,7 @@
     "type": 49,
     "name": "TERMINAL_EMULATOR",
     "optional": true,
-    "description": "The terminal emulator name. This variable is set by certain terminal emulators.",
-    "tags": { "hidden": true }
+    "description": "The terminal emulator name. This variable is set by certain terminal emulators."
   },
   { "kind": 5 },
   {
@@ -196,8 +193,7 @@
     "type": 51,
     "name": "WT_SESSION",
     "optional": true,
-    "description": "The terminal emulator session ID. This variable is set by certain terminal emulators.",
-    "tags": { "hidden": true }
+    "description": "The terminal emulator session ID. This variable is set by certain terminal emulators."
   },
   { "kind": 5 },
   {
@@ -205,8 +201,7 @@
     "type": 53,
     "name": "TERMINUS_SUBLIME",
     "optional": true,
-    "description": "An indicator that specifies the current terminal is running Terminus Sublime. This variable is set by certain terminal emulators.",
-    "tags": { "hidden": true }
+    "description": "An indicator that specifies the current terminal is running Terminus Sublime. This variable is set by certain terminal emulators."
   },
   { "kind": 7 },
   {
@@ -214,8 +209,7 @@
     "type": 55,
     "name": "ConEmuTask",
     "optional": true,
-    "description": "The ConEmu task name. This variable is set by certain terminal emulators.",
-    "tags": { "hidden": true }
+    "description": "The ConEmu task name. This variable is set by certain terminal emulators."
   },
   { "kind": 5 },
   {
@@ -223,8 +217,7 @@
     "type": 57,
     "name": "CURSOR_TRACE_ID",
     "optional": true,
-    "description": "The cursor trace ID. This variable is set by certain terminal emulators.",
-    "tags": { "hidden": true }
+    "description": "The cursor trace ID. This variable is set by certain terminal emulators."
   },
   { "kind": 5 },
   {
@@ -232,8 +225,7 @@
     "type": 59,
     "name": "VTE_VERSION",
     "optional": true,
-    "description": "The VTE version. This variable is set by certain terminal emulators.",
-    "tags": { "hidden": true }
+    "description": "The VTE version. This variable is set by certain terminal emulators."
   },
   { "kind": 5 },
   {
@@ -241,8 +233,7 @@
     "type": 61,
     "name": "NODE_ENV",
     "description": "The environment the application is running in. This variable is a duplicate of `ENVIRONMENT` to support use in external packages.",
-    "default": "\"production\"",
-    "tags": { "hidden": true }
+    "default": "\"production\""
   },
   { "kind": 23, "types": [62, 63, 64] },
   { "kind": 13, "literal": "development" },
@@ -268,7 +259,7 @@
     "kind": 32,
     "type": 70,
     "name": "ERROR_URL",
-    "description": "An API end point to lookup error messages given an error code."
+    "description": "A web page to lookup error messages and display additional information given an error code."
   },
   { "kind": 5 },
   {
@@ -324,8 +315,7 @@
     "type": 88,
     "name": "RUN_ID",
     "optional": true,
-    "description": "The unique identifier for the current run. This value is set by certain CI/CD systems.",
-    "tags": { "hidden": true }
+    "description": "The unique identifier for the current run. This value is set by certain CI/CD systems."
   },
   { "kind": 5 },
   {
@@ -333,8 +323,7 @@
     "type": 90,
     "name": "AGOLA_GIT_REF",
     "optional": true,
-    "description": "The agola git reference. This value is set by certain CI/CD systems.",
-    "tags": { "hidden": true }
+    "description": "The agola git reference. This value is set by certain CI/CD systems."
   },
   { "kind": 5 },
   {
@@ -342,8 +331,7 @@
     "type": 92,
     "name": "AC_APPCIRCLE",
     "optional": true,
-    "description": "The appcircle build ID. This value is set by certain CI/CD systems.",
-    "tags": { "hidden": true }
+    "description": "The appcircle build ID. This value is set by certain CI/CD systems."
   },
   { "kind": 5 },
   {
@@ -351,8 +339,7 @@
     "type": 94,
     "name": "APPVEYOR",
     "optional": true,
-    "description": "The appveyor build ID. This value is set by certain CI/CD systems.",
-    "tags": { "hidden": true }
+    "description": "The appveyor build ID. This value is set by certain CI/CD systems."
   },
   { "kind": 5 },
   {
@@ -360,8 +347,7 @@
     "type": 96,
     "name": "CODEBUILD",
     "optional": true,
-    "description": "The codebuild build ID. This value is set by certain CI/CD systems.",
-    "tags": { "hidden": true }
+    "description": "The codebuild build ID. This value is set by certain CI/CD systems."
   },
   { "kind": 5 },
   {
@@ -369,8 +355,7 @@
     "type": 98,
     "name": "TF_BUILD",
     "optional": true,
-    "description": "The task force build ID. This value is set by certain CI/CD systems.",
-    "tags": { "hidden": true }
+    "description": "The task force build ID. This value is set by certain CI/CD systems."
   },
   { "kind": 5 },
   {
@@ -378,8 +363,7 @@
     "type": 100,
     "name": "bamboo_planKey",
     "optional": true,
-    "description": "The bamboo plan key. This value is set by certain CI/CD systems.",
-    "tags": { "hidden": true }
+    "description": "The bamboo plan key. This value is set by certain CI/CD systems."
   },
   { "kind": 5 },
   {
@@ -387,8 +371,7 @@
     "type": 102,
     "name": "BITBUCKET_COMMIT",
     "optional": true,
-    "description": "The bitbucket commit. This value is set by certain CI/CD systems.",
-    "tags": { "hidden": true }
+    "description": "The bitbucket commit. This value is set by certain CI/CD systems."
   },
   { "kind": 5 },
   {
@@ -396,8 +379,7 @@
     "type": 104,
     "name": "BITRISE_IO",
     "optional": true,
-    "description": "The bitrise build ID. This value is set by certain CI/CD systems.",
-    "tags": { "hidden": true }
+    "description": "The bitrise build ID. This value is set by certain CI/CD systems."
   },
   { "kind": 5 },
   {
@@ -405,8 +387,7 @@
     "type": 106,
     "name": "BUDDY_WORKSPACE_ID",
     "optional": true,
-    "description": "The buddy workspace ID. This value is set by certain CI/CD systems.",
-    "tags": { "hidden": true }
+    "description": "The buddy workspace ID. This value is set by certain CI/CD systems."
   },
   { "kind": 5 },
   {
@@ -414,8 +395,7 @@
     "type": 108,
     "name": "BUILDKITE",
     "optional": true,
-    "description": "The buildkite build ID. This value is set by certain CI/CD systems.",
-    "tags": { "hidden": true }
+    "description": "The buildkite build ID. This value is set by certain CI/CD systems."
   },
   { "kind": 5 },
   {
@@ -423,8 +403,7 @@
     "type": 110,
     "name": "CIRCLECI",
     "optional": true,
-    "description": "The circleci build ID. This value is set by certain CI/CD systems.",
-    "tags": { "hidden": true }
+    "description": "The circleci build ID. This value is set by certain CI/CD systems."
   },
   { "kind": 5 },
   {
@@ -432,8 +411,7 @@
     "type": 112,
     "name": "CIRRUS_CI",
     "optional": true,
-    "description": "The cirrusci build ID. This value is set by certain CI/CD systems.",
-    "tags": { "hidden": true }
+    "description": "The cirrus-ci build ID. This value is set by certain CI/CD systems."
   },
   { "kind": 5 },
   {
@@ -441,8 +419,7 @@
     "type": 114,
     "name": "CF_BUILD_ID",
     "optional": true,
-    "description": "The cf build ID. This value is set by certain CI/CD systems.",
-    "tags": { "hidden": true }
+    "description": "The cf build ID. This value is set by certain CI/CD systems."
   },
   { "kind": 5 },
   {
@@ -450,8 +427,7 @@
     "type": 116,
     "name": "CM_BUILD_ID",
     "optional": true,
-    "description": "The cm build ID. This value is set by certain CI/CD systems.",
-    "tags": { "hidden": true }
+    "description": "The cm build ID. This value is set by certain CI/CD systems."
   },
   { "kind": 5 },
   {
@@ -459,8 +435,7 @@
     "type": 118,
     "name": "CI_NAME",
     "optional": true,
-    "description": "The ci name. This value is set by certain CI/CD systems.",
-    "tags": { "hidden": true }
+    "description": "The ci name. This value is set by certain CI/CD systems."
   },
   { "kind": 5 },
   {
@@ -468,8 +443,7 @@
     "type": 120,
     "name": "DRONE",
     "optional": true,
-    "description": "The drone build ID. This value is set by certain CI/CD systems.",
-    "tags": { "hidden": true }
+    "description": "The drone build ID. This value is set by certain CI/CD systems."
   },
   { "kind": 5 },
   {
@@ -477,8 +451,7 @@
     "type": 122,
     "name": "DSARI",
     "optional": true,
-    "description": "The dsari build ID. This value is set by certain CI/CD systems.",
-    "tags": { "hidden": true }
+    "description": "The dsari build ID. This value is set by certain CI/CD systems."
   },
   { "kind": 5 },
   {
@@ -486,8 +459,7 @@
     "type": 124,
     "name": "EARTHLY_CI",
     "optional": true,
-    "description": "The earthly build ID. This value is set by certain CI/CD systems.",
-    "tags": { "hidden": true }
+    "description": "The earthly build ID. This value is set by certain CI/CD systems."
   },
   { "kind": 5 },
   {
@@ -495,8 +467,7 @@
     "type": 126,
     "name": "EAS_BUILD",
     "optional": true,
-    "description": "The eas build ID. This value is set by certain CI/CD systems.",
-    "tags": { "hidden": true }
+    "description": "The eas build ID. This value is set by certain CI/CD systems."
   },
   { "kind": 5 },
   {
@@ -504,8 +475,7 @@
     "type": 128,
     "name": "GERRIT_PROJECT",
     "optional": true,
-    "description": "The gerrit project. This value is set by certain CI/CD systems.",
-    "tags": { "hidden": true }
+    "description": "The gerrit project. This value is set by certain CI/CD systems."
   },
   { "kind": 5 },
   {
@@ -513,8 +483,7 @@
     "type": 130,
     "name": "GITEA_ACTIONS",
     "optional": true,
-    "description": "The gitea actions build ID. This value is set by certain CI/CD systems.",
-    "tags": { "hidden": true }
+    "description": "The gitea actions build ID. This value is set by certain CI/CD systems."
   },
   { "kind": 5 },
   {
@@ -522,8 +491,7 @@
     "type": 132,
     "name": "GITHUB_ACTIONS",
     "optional": true,
-    "description": "The github actions build ID. This value is set by certain CI/CD systems.",
-    "tags": { "hidden": true }
+    "description": "The github actions build ID. This value is set by certain CI/CD systems."
   },
   { "kind": 5 },
   {
@@ -531,8 +499,7 @@
     "type": 134,
     "name": "GITLAB_CI",
     "optional": true,
-    "description": "The gitlab ci build ID. This value is set by certain CI/CD systems.",
-    "tags": { "hidden": true }
+    "description": "The gitlab ci build ID. This value is set by certain CI/CD systems."
   },
   { "kind": 5 },
   {
@@ -540,8 +507,7 @@
     "type": 136,
     "name": "GOCD",
     "optional": true,
-    "description": "The go cd build ID. This value is set by certain CI/CD systems.",
-    "tags": { "hidden": true }
+    "description": "The go cd build ID. This value is set by certain CI/CD systems."
   },
   { "kind": 5 },
   {
@@ -549,8 +515,7 @@
     "type": 138,
     "name": "BUILDER_OUTPUT",
     "optional": true,
-    "description": "The builder output build ID. This value is set by certain CI/CD systems.",
-    "tags": { "hidden": true }
+    "description": "The builder output build ID. This value is set by certain CI/CD systems."
   },
   { "kind": 5 },
   {
@@ -558,8 +523,7 @@
     "type": 140,
     "name": "HARNESS_BUILD_ID",
     "optional": true,
-    "description": "The harness build ID. This value is set by certain CI/CD systems.",
-    "tags": { "hidden": true }
+    "description": "The harness build ID. This value is set by certain CI/CD systems."
   },
   { "kind": 5 },
   {
@@ -567,8 +531,7 @@
     "type": 142,
     "name": "JENKINS_URL",
     "optional": true,
-    "description": "The jenkins url. This value is set by certain CI/CD systems.",
-    "tags": { "hidden": true }
+    "description": "The jenkins url. This value is set by certain CI/CD systems."
   },
   { "kind": 5 },
   {
@@ -576,8 +539,7 @@
     "type": 144,
     "name": "LAYERCI",
     "optional": true,
-    "description": "The layerci build ID. This value is set by certain CI/CD systems.",
-    "tags": { "hidden": true }
+    "description": "The layerci build ID. This value is set by certain CI/CD systems."
   },
   { "kind": 5 },
   {
@@ -585,8 +547,7 @@
     "type": 146,
     "name": "MAGNUM",
     "optional": true,
-    "description": "The magnum build ID. This value is set by certain CI/CD systems.",
-    "tags": { "hidden": true }
+    "description": "The magnum build ID. This value is set by certain CI/CD systems."
   },
   { "kind": 5 },
   {
@@ -594,8 +555,7 @@
     "type": 148,
     "name": "NETLIFY",
     "optional": true,
-    "description": "The netlify build ID. This value is set by certain CI/CD systems.",
-    "tags": { "hidden": true }
+    "description": "The netlify build ID. This value is set by certain CI/CD systems."
   },
   { "kind": 5 },
   {
@@ -603,8 +563,7 @@
     "type": 150,
     "name": "NEVERCODE",
     "optional": true,
-    "description": "The nevercode build ID. This value is set by certain CI/CD systems.",
-    "tags": { "hidden": true }
+    "description": "The nevercode build ID. This value is set by certain CI/CD systems."
   },
   { "kind": 5 },
   {
@@ -612,8 +571,7 @@
     "type": 152,
     "name": "PROW_JOB_ID",
     "optional": true,
-    "description": "The prow job ID. This value is set by certain CI/CD systems.",
-    "tags": { "hidden": true }
+    "description": "The prow job ID. This value is set by certain CI/CD systems."
   },
   { "kind": 5 },
   {
@@ -621,8 +579,7 @@
     "type": 154,
     "name": "RELEASE_BUILD_ID",
     "optional": true,
-    "description": "The release build ID. This value is set by certain CI/CD systems.",
-    "tags": { "hidden": true }
+    "description": "The release build ID. This value is set by certain CI/CD systems."
   },
   { "kind": 5 },
   {
@@ -630,8 +587,7 @@
     "type": 156,
     "name": "RENDER",
     "optional": true,
-    "description": "The render build ID. This value is set by certain CI/CD systems.",
-    "tags": { "hidden": true }
+    "description": "The render build ID. This value is set by certain CI/CD systems."
   },
   { "kind": 5 },
   {
@@ -639,8 +595,7 @@
     "type": 158,
     "name": "SAILCI",
     "optional": true,
-    "description": "The sailci build ID. This value is set by certain CI/CD systems.",
-    "tags": { "hidden": true }
+    "description": "The sailci build ID. This value is set by certain CI/CD systems."
   },
   { "kind": 5 },
   {
@@ -648,8 +603,7 @@
     "type": 160,
     "name": "HUDSON",
     "optional": true,
-    "description": "The hudson build ID. This value is set by certain CI/CD systems.",
-    "tags": { "hidden": true }
+    "description": "The hudson build ID. This value is set by certain CI/CD systems."
   },
   { "kind": 5 },
   {
@@ -657,8 +611,7 @@
     "type": 162,
     "name": "SCREWDRIVER",
     "optional": true,
-    "description": "The screwdriver build ID. This value is set by certain CI/CD systems.",
-    "tags": { "hidden": true }
+    "description": "The screwdriver build ID. This value is set by certain CI/CD systems."
   },
   { "kind": 5 },
   {
@@ -666,8 +619,7 @@
     "type": 164,
     "name": "SEMAPHORE",
     "optional": true,
-    "description": "The semaphore build ID. This value is set by certain CI/CD systems.",
-    "tags": { "hidden": true }
+    "description": "The semaphore build ID. This value is set by certain CI/CD systems."
   },
   { "kind": 5 },
   {
@@ -675,8 +627,7 @@
     "type": 166,
     "name": "SOURCEHUT",
     "optional": true,
-    "description": "The sourcehut build ID. This value is set by certain CI/CD systems.",
-    "tags": { "hidden": true }
+    "description": "The sourcehut build ID. This value is set by certain CI/CD systems."
   },
   { "kind": 5 },
   {
@@ -684,8 +635,7 @@
     "type": 168,
     "name": "STRIDER",
     "optional": true,
-    "description": "The strider build ID. This value is set by certain CI/CD systems.",
-    "tags": { "hidden": true }
+    "description": "The strider build ID. This value is set by certain CI/CD systems."
   },
   { "kind": 5 },
   {
@@ -693,8 +643,7 @@
     "type": 170,
     "name": "TASK_ID",
     "optional": true,
-    "description": "The task ID. This value is set by certain CI/CD systems.",
-    "tags": { "hidden": true }
+    "description": "The task ID. This value is set by certain CI/CD systems."
   },
   { "kind": 5 },
   {
@@ -702,8 +651,7 @@
     "type": 172,
     "name": "TEAMCITY_VERSION",
     "optional": true,
-    "description": "The teamcity version. This value is set by certain CI/CD systems.",
-    "tags": { "hidden": true }
+    "description": "The teamcity version. This value is set by certain CI/CD systems."
   },
   { "kind": 5 },
   {
@@ -711,8 +659,7 @@
     "type": 174,
     "name": "TRAVIS",
     "optional": true,
-    "description": "The travis build ID. This value is set by certain CI/CD systems.",
-    "tags": { "hidden": true }
+    "description": "The travis build ID. This value is set by certain CI/CD systems."
   },
   { "kind": 5 },
   {
@@ -720,8 +667,7 @@
     "type": 176,
     "name": "VELA",
     "optional": true,
-    "description": "The vela build ID. This value is set by certain CI/CD systems.",
-    "tags": { "hidden": true }
+    "description": "The vela build ID. This value is set by certain CI/CD systems."
   },
   { "kind": 5 },
   {
@@ -729,8 +675,7 @@
     "type": 178,
     "name": "NOW_BUILDER",
     "optional": true,
-    "description": "The now builder build ID. This value is set by certain CI/CD systems.",
-    "tags": { "hidden": true }
+    "description": "The now builder build ID. This value is set by certain CI/CD systems."
   },
   { "kind": 5 },
   {
@@ -738,8 +683,7 @@
     "type": 180,
     "name": "APPCENTER_BUILD_ID",
     "optional": true,
-    "description": "The appcenter build ID. This value is set by certain CI/CD systems.",
-    "tags": { "hidden": true }
+    "description": "The appcenter build ID. This value is set by certain CI/CD systems."
   },
   { "kind": 5 },
   {
@@ -747,8 +691,7 @@
     "type": 182,
     "name": "CI_XCODE_PROJECT",
     "optional": true,
-    "description": "The xcode project build ID. This value is set by certain CI/CD systems.",
-    "tags": { "hidden": true }
+    "description": "The xcode project build ID. This value is set by certain CI/CD systems."
   },
   { "kind": 5 },
   {
@@ -756,8 +699,7 @@
     "type": 184,
     "name": "XCS",
     "optional": true,
-    "description": "The xcode server build ID. This value is set by certain CI/CD systems.",
-    "tags": { "hidden": true }
+    "description": "The xcode server build ID. This value is set by certain CI/CD systems."
   },
   { "kind": 5 },
   {
@@ -765,14 +707,13 @@
     "type": 186,
     "name": "VERCEL_ENV",
     "optional": true,
-    "description": "The Vercel environment. This variable is set by Vercel when the application is running in a Vercel environment.",
-    "tags": { "hidden": true }
+    "description": "The Vercel environment. This variable is set by Vercel when the application is running in a Vercel environment."
   },
   { "kind": 5 },
   {
     "kind": 32,
     "type": 188,
-    "name": "STORM_DATA_DIR",
+    "name": "DATA_DIR",
     "optional": true,
     "description": "The Storm Stack application's runtime data directory."
   },
@@ -780,7 +721,7 @@
   {
     "kind": 32,
     "type": 190,
-    "name": "STORM_CONFIG_DIR",
+    "name": "CONFIG_DIR",
     "optional": true,
     "description": "The Storm Stack application's configuration data directory."
   },
@@ -788,7 +729,7 @@
   {
     "kind": 32,
     "type": 192,
-    "name": "STORM_CACHE_DIR",
+    "name": "CACHE_DIR",
     "optional": true,
     "description": "The Storm Stack application's cached data directory."
   },
@@ -796,7 +737,7 @@
   {
     "kind": 32,
     "type": 194,
-    "name": "STORM_LOG_DIR",
+    "name": "LOG_DIR",
     "optional": true,
     "description": "The Storm Stack application's logging directory."
   },
@@ -804,7 +745,7 @@
   {
     "kind": 32,
     "type": 196,
-    "name": "STORM_TEMP_DIR",
+    "name": "TEMP_DIR",
     "optional": true,
     "description": "The Storm Stack application's temporary data directory."
   },
@@ -994,10 +935,30 @@
   { "kind": 7 },
   {
     "kind": 32,
+    "name": "SCRIPT",
+    "optional": true,
+    "description": "The path to write the completion script to",
+    "type": 244
+  },
+  { "kind": 23, "types": [245, 246] },
+  { "kind": 5 },
+  { "kind": 13, "literal": true },
+  {
+    "kind": 32,
+    "name": "CONFIG",
+    "optional": true,
+    "description": "The configuration file to append the completion script to",
+    "type": 248
+  },
+  { "kind": 23, "types": [249, 250] },
+  { "kind": 5 },
+  { "kind": 13, "literal": true },
+  {
+    "kind": 32,
     "name": "FILE",
     "optional": true,
     "description": "The file to add to the file system",
-    "type": 244
+    "type": 252
   },
   { "kind": 5 },
   {
@@ -1005,7 +966,7 @@
     "name": "TYPE",
     "optional": true,
     "description": "The type of the file",
-    "type": 246
+    "type": 254
   },
   { "kind": 5 }
 ]

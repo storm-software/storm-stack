@@ -1,3 +1,9 @@
+/**
+ * The Storm Stack error module provides a custom error class and utility functions to support error handling
+ *
+ * @module storm:error
+ */
+
 /* eslint-disable */
 // biome-ignore lint: disable
 // prettier-ignore

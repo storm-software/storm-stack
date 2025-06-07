@@ -21,7 +21,7 @@ import type { StormWorkspaceConfig } from "@storm-software/config/types";
 import type {
   IStormPayload,
   IStormResult,
-  StormVars
+  StormBaseVariables
 } from "@storm-stack/types";
 import type {
   CleanupFunction,
@@ -275,7 +275,7 @@ export interface CompilerOptions<TOptions extends Options = Options> {
   onPreTransform?: (
     context: Context<TOptions>,
     source: SourceFile
-  ) => MaybePromise<void>;
+  ) => MaybePromise<SourceFile>;
 
   /**
    * Transform the source file before transpilation.
@@ -287,7 +287,7 @@ export interface CompilerOptions<TOptions extends Options = Options> {
   onTransform?: (
     context: Context<TOptions>,
     sourceFile: SourceFile
-  ) => MaybePromise<void>;
+  ) => MaybePromise<SourceFile>;
 
   /**
    * Transform the source file after transpilation.
@@ -299,7 +299,7 @@ export interface CompilerOptions<TOptions extends Options = Options> {
   onPostTransform?: (
     context: Context<TOptions>,
     source: SourceFile
-  ) => MaybePromise<void>;
+  ) => MaybePromise<SourceFile>;
 }
 
 export interface TranspileOptions<TOptions extends Options = Options>
@@ -361,6 +361,22 @@ export interface ICompiler<TOptions extends Options = Options> {
    * @returns The result of the compiler.
    */
   getResult: (sourceFile: SourceFile, transpiled?: string) => CompilerResult;
+
+  /**
+   * Transform the module.
+   *
+   * @param context - The context object
+   * @param id - The name of the file to transpile
+   * @param code - The source code to transpile
+   * @param options - The transpile options
+   * @returns The transpiled module.
+   */
+  transform: (
+    context: Context<TOptions>,
+    id: string,
+    code: string | MagicString,
+    options?: TranspileOptions<TOptions>
+  ) => Promise<string>;
 
   /**
    * Transpile the module.
@@ -472,11 +488,11 @@ export interface Config<
   TResult extends IStormResult,
   TInput = any,
   TOutput = any,
-  TContext extends StormContext<StormVars, any, TPayload> = StormContext<
-    StormVars,
+  TContext extends StormContext<
+    StormBaseVariables,
     any,
     TPayload
-  >
+  > = StormContext<StormBaseVariables, any, TPayload>
 > {
   setup?: SetupFunction;
   deserializer?: DeserializerFunction<TPayload, TInput>;
@@ -625,6 +641,14 @@ export interface Context<
    * The resolved `unimport` context to be used by the compiler
    */
   unimport: UnimportContext;
+
+  /**
+   * The list of additional runtime files to be included in the build
+   *
+   * @remarks
+   * This option is used to include additional files that are not part of the source code but are required by the runtime.
+   */
+  additionalRuntimeFiles?: string[];
 }
 
 export interface EngineHookFunctions<TOptions extends Options = Options> {
@@ -647,6 +671,7 @@ export interface EngineHookFunctions<TOptions extends Options = Options> {
 
   // Clean - Hooks used during the cleaning of the Storm Stack project
   "clean:begin": (context: Context<TOptions>) => MaybePromise<void>;
+  "clean:types": (context: Context<TOptions>) => MaybePromise<void>;
   "clean:artifacts": (context: Context<TOptions>) => MaybePromise<void>;
   "clean:output": (context: Context<TOptions>) => MaybePromise<void>;
   "clean:docs": (context: Context<TOptions>) => MaybePromise<void>;
@@ -655,6 +680,7 @@ export interface EngineHookFunctions<TOptions extends Options = Options> {
   // Prepare - Hooks used during the preparation of the Storm Stack artifacts
   "prepare:begin": (context: Context<TOptions>) => MaybePromise<void>;
   "prepare:directories": (context: Context<TOptions>) => MaybePromise<void>;
+  "prepare:config": (context: Context<TOptions>) => MaybePromise<void>;
   "prepare:types": (context: Context<TOptions>) => MaybePromise<void>;
   "prepare:runtime": (context: Context<TOptions>) => MaybePromise<void>;
   "prepare:reflections": (context: Context<TOptions>) => MaybePromise<void>;

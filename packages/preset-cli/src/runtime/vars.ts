@@ -39,7 +39,7 @@ import { StormPayload } from "${relativePath(
   )}";
 import { StormVariables } from "${relativePath(
     joinPaths(context.artifactsPath, "commands", "vars", "get"),
-    joinPaths(context.runtimePath, "env"),
+    joinPaths(context.runtimePath, "vars"),
     false
   )}";
 
@@ -58,13 +58,13 @@ export interface VarsGetPayload {
 async function handler(payload: StormPayload<VarsGetPayload>) {
   const varsFile = await $storm.storage.getItem(\`vars:vars.json\`);
   if (varsFile === undefined) {
-    console.error(\` \${colors.red("✘")} \${colors.redBright(\`Variables file was not found\`)}\`);
+    console.error(\` \${colors.red("✘")} \${colors.white(\`Variables file was not found\`)}\`);
     return;
   }
 
   const vars = deserialize<StormVariables>(varsFile);
   if (vars?.[payload.data.name] === undefined) {
-    console.error(\` \${colors.red("✘")} \${colors.redBright(\`Variable Name \\\`\${payload.data.name}\\\` not found\`)}\`);
+    console.error(\` \${colors.red("✘")} \${colors.white(\`Variable Name \\\`\${payload.data.name}\\\` not found\`)}\`);
     return;
   }
 
@@ -94,7 +94,7 @@ import { StormPayload } from "${relativePath(
   )}";
 import { StormVariables } from "${relativePath(
     joinPaths(context.artifactsPath, "commands", "vars", "set"),
-    joinPaths(context.runtimePath, "env"),
+    joinPaths(context.runtimePath, "vars"),
     false
   )}";
 
@@ -118,7 +118,7 @@ export interface VarsSetPayload {
 async function handler(payload: StormPayload<VarsSetPayload>) {
   const varsFile = await $storm.storage.getItem(\`vars:vars.json\`);
   if (varsFile === undefined) {
-    console.error(\` \${colors.red("✘")} \${colors.redBright(\`Variables file was not found\`)}\`);
+    console.error(\` \${colors.red("✘")} \${colors.white(\`Variables file was not found\`)}\`);
     return;
   }
 
@@ -155,7 +155,7 @@ import { StormPayload } from "${relativePath(
   )}";
 import { StormVariables } from "${relativePath(
     joinPaths(context.artifactsPath, "commands", "vars", "list"),
-    joinPaths(context.runtimePath, "env"),
+    joinPaths(context.runtimePath, "vars"),
     false
   )}";
 
@@ -169,7 +169,7 @@ export interface VarsListPayload {}
 async function handler(payload: StormPayload<VarsListPayload>) {
   const varsFile = await $storm.storage.getItem(\`vars:vars.json\`);
   if (varsFile === undefined) {
-    console.error(\` \${colors.red("✘")} \${colors.redBright(\`Variables file was not found\`)}\`);
+    console.error(\` \${colors.red("✘")} \${colors.white(\`Variables file was not found\`)}\`);
     return;
   }
 
@@ -200,7 +200,7 @@ import { StormPayload } from "${relativePath(
   )}";
 import { StormVariables } from "${relativePath(
     joinPaths(context.artifactsPath, "commands", "vars", "delete"),
-    joinPaths(context.runtimePath, "env"),
+    joinPaths(context.runtimePath, "vars"),
     false
   )}";
 
@@ -219,7 +219,7 @@ export interface VarsDeletePayload {
 async function handler(payload: StormPayload<VarsDeletePayload>) {
   const varsFile = await $storm.storage.getItem(\`vars:vars.json\`);
   if (varsFile === undefined) {
-    console.error(\` \${colors.red("✘")} \${colors.redBright(\`Variables file was not found\`)}\`);
+    console.error(\` \${colors.red("✘")} \${colors.white(\`Variables file was not found\`)}\`);
     return;
   }
 

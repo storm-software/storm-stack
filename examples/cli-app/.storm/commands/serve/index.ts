@@ -360,7 +360,7 @@ async function handler() {
     }
   } catch (err) {
     console.error(
-      ` ${colors.red("✘")} ${colors.redBright(`Error occurred while processing Serve command.`)}`
+      ` ${colors.red("✘")} ${colors.white(`Error occurred while processing Serve command.`)}`
     );
   }
 }

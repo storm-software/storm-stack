@@ -139,11 +139,11 @@ export interface FormattedValues {
  * The inspiration and much of the original implementation for this logger was taken from the [LogTape](https://logtape.org/) project. Major thanks to that project.
  *
  * ```typescript
- * $storm.log.debug`A debug message with ${value}.`;
- * $storm.log.info`An info message with ${value}.`;
- * $storm.log.warn`A warning message with ${value}.`;
- * $storm.log.error`An error message with ${value}.`;
- * $storm.log.fatal`A fatal error message with ${value}.`;
+ * $storm.log.debug(`A debug message with ${value}.`);
+ * $storm.log.info(`An info message with ${value}.`);
+ * $storm.log.warn(`A warning message with ${value}.`);
+ * $storm.log.error(`An error message with ${value}.`);
+ * $storm.log.fatal(`A fatal error message with ${value}.`);
  * ```
  */
 export interface IStormLog {
@@ -175,7 +175,7 @@ export interface IStormLog {
    * Log a debug message. Use this as a template string prefix.
    *
    * ```typescript
-   * $storm.log.debug`A debug message with ${value}.`;
+   * $storm.log.debug(`A debug message with ${value}.`);
    * ```
    *
    * @param message - The message template strings array.
@@ -195,7 +195,7 @@ export interface IStormLog {
    * Log an informational message. Use this as a template string prefix.
    *
    * ```typescript
-   * $storm.log.info`An info message with ${value}.`;
+   * $storm.log.info(`An info message with ${value}.`);
    * ```
    *
    * @param message - The message template strings array.
@@ -215,7 +215,7 @@ export interface IStormLog {
    * Log a warning message. Use this as a template string prefix.
    *
    * ```typescript
-   * $storm.log.warn`A warning message with ${value}.`;
+   * $storm.log.warn(`A warning message with ${value}.`);
    * ```
    *
    * @param message - The message template strings array.
@@ -235,7 +235,7 @@ export interface IStormLog {
    * Log an error message. Use this as a template string prefix.
    *
    * ```typescript
-   * $storm.log.error`An error message with ${value}.`;
+   * $storm.log.error(`An error message with ${value}.`);
    * ```
    *
    * @param message - The message template strings array.
@@ -255,7 +255,7 @@ export interface IStormLog {
    * Log a fatal error message. Use this as a template string prefix.
    *
    * ```typescript
-   * $storm.log.fatal`A fatal error message with ${value}.`;
+   * $storm.log.fatal(`A fatal error message with ${value}.`);
    * ```
    *
    * @param message - The message template strings array.

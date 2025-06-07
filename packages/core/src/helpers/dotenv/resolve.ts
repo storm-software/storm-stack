@@ -111,15 +111,14 @@ export async function resolveDotenvReflection<
   name: "variables" | "secrets",
   skipContext = false
 ): Promise<ReflectionClass<any>> {
-  if (context.dotenv?.types?.[name]?.reflection && skipContext) {
+  if (context.dotenv?.types?.[name]?.reflection && !skipContext) {
     return context.dotenv?.types?.[name]?.reflection;
   }
 
   const varsFilePath = getDotenvReflectionsPath(context, name);
   if (existsSync(varsFilePath)) {
-    const varsType = deserializeType(
-      await readJsonFile<SerializedTypes>(varsFilePath)
-    );
+    const varsFileContent = await readJsonFile<SerializedTypes>(varsFilePath);
+    const varsType = deserializeType(varsFileContent);
     if (varsType) {
       const reflection = resolveClassType(varsType);
 

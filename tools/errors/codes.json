@@ -84,7 +84,16 @@
     "82": "Module not found: %s. Please check the path and try again.",
     "83": "Failed to transpile %s: %s",
     "84": "Prompt cancelled.",
-    "85": "Cannot find the tsconfig.json configuration file at %s or %s"
+    "85": "Cannot find the tsconfig.json configuration file at %s or %s",
+    "86": "API Extractor completed with %s errors and %s warnings when processing %s",
+    "87": "Unknown declaration",
+    "88": "Alias generation exceeded limit. Possible infinite loop detected.",
+    "89": "Could not resolve TypeScript package location.",
+    "90": "No TypeScript library files found.",
+    "91": "TypeScript compilation failed: %s",
+    "92": "Could not resolve @storm-stack/types package location.",
+    "93": "API Extractor completed with %s errors and %s warnings when processing @storm-stack/types package.",
+    "94": "An error occurred while preparing the configuration for the Storm Stack project"
   },
   "not_found": {
     "1": "The requested resource was not found.",
@@ -99,7 +108,8 @@
     "1": "The request was not processed due to validation errors.",
     "2": "The request was rejected due to validation errors.",
     "3": "The server cannot or will not process the request due to a client error.",
-    "4": "The request could not be understood by the server due to malformed syntax."
+    "4": "The request could not be understood by the server due to malformed syntax.",
+    "5": "Unable to deserialize the provided data to the expected type. Please check the data format for the property at path %s."
   },
   "unknown": {
     "1": "The process encountered an unknown issue that prevented it from completing the request."

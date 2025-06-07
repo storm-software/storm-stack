@@ -18,6 +18,7 @@
 
 import { parse as parseToml, stringify as stringifyToml } from "@ltd/j-toml";
 import { LogLevelLabel } from "@storm-software/config-tools/types";
+
 import { getFileHeader } from "@storm-stack/core/helpers/utilities/file-header";
 import type { Context, EngineHooks, Options } from "@storm-stack/core/types";
 import type { StoragePluginConfig } from "@storm-stack/devkit/plugins/storage";
@@ -65,7 +66,7 @@ export default class StorageCloudflareKVPlugin<
 
   public override addHooks(hooks: EngineHooks<TOptions>) {
     hooks.addHooks({
-      "prepare:deploy": this.#prepareDeploy.bind(this)
+      "prepare:config": this.prepareConfig.bind(this)
     });
 
     super.addHooks(hooks);
@@ -113,7 +114,7 @@ export default cloudflareKVHTTPDriver({
     }
   }
 
-  async #prepareDeploy(context: Context<TOptions>) {
+  protected async prepareConfig(context: Context<TOptions>) {
     if (context.options.projectType === "application" && this.config.binding) {
       this.log(
         LogLevelLabel.TRACE,

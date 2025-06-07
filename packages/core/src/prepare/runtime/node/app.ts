@@ -22,7 +22,17 @@ import type { Context, Options } from "../../../types/build";
 export function writeApp<TOptions extends Options = Options>(
   _context: Context<TOptions>
 ) {
-  return `${getFileHeader()}
+  return `
+/**
+ * A module containing a wrapper for the application entry point.
+ *
+ * @remarks
+ * This module provides a function to wrap an application entry point with the necessary context and error handling.
+ *
+ * @module storm:app
+ */
+
+${getFileHeader()}
 
 import type {
   HandlerFunction,
@@ -40,6 +50,7 @@ import { STORM_ASYNC_CONTEXT } from "./context";
 import { build, name, version, runtime, paths } from "./env";
 import { createStormError, StormError, isError } from "./error";
 import { StormEvent } from "./event";
+import { StormLog } from "./log";
 import { uniqueId } from "./id";
 import { StormPayload } from "./payload";
 import { StormResult } from "./result";

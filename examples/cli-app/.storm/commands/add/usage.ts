@@ -24,18 +24,18 @@ export function renderUsage(mode: "full" | "minimal" = "full"): string {
       mode === "full"
         ? `
   ${colors.whiteBright(colors.bold("Commands:"))}
-    Add - Page (page)                ${colors.gray("Add a page to the file system.")}`
+    Add - Page (page)                    ${colors.gray("Add a page to the file system.")}`
         : ""
     }
 
   ${colors.whiteBright(colors.bold("Options:"))}
-    --help, -h, -?                   ${colors.gray("Show help information. [default: false]")} 
-    --version, -v                    ${colors.gray("Show the version of the application. [default: false]")} 
-    --interactive, -i, --interact    ${colors.gray("Enable interactive mode (will be set to false if running in a CI pipeline). [default: true]")} 
-    --no-interactive, --no-interact  ${colors.gray("Disable interactive mode (will be set to true if running in a CI pipeline). [default: false]")} 
-    --no-banner                      ${colors.gray("Hide the banner displayed while running the CLI application (will be set to true if running in a CI pipeline). [default: false]")} 
-    --verbose, -v                    ${colors.gray("Enable verbose output. [default: false]")} 
-    --file <file>, -f <file>         ${colors.gray('The file to add to the file system. [default: "server.ts"]')} 
-    --type <type>, -t <type>         ${colors.gray('The type of the file. [default: "server"]')}
+    --help, -h, -?                       ${colors.gray("Show help information. [default: false]")} 
+    --version, -v                        ${colors.gray("Show the version of the application. [default: false]")} 
+    --interactive, -i, --interact        ${colors.gray("Enable interactive mode (will be set to false if running in a CI pipeline). [default: true]")} 
+    --no-interactive, --no-interact      ${colors.gray("Disable interactive mode (will be set to true if running in a CI pipeline). [default: false]")} 
+    --no-banner                          ${colors.gray("Hide the banner displayed while running the CLI application (will be set to true if running in a CI pipeline). [default: false]")} 
+    --verbose, -v                        ${colors.gray("Enable verbose output. [default: false]")} 
+    --file <file>, -f <file>             ${colors.gray('The file to add to the file system. [default: "server.ts"]')} 
+    --type <type>, -t <type>             ${colors.gray('The type of the file. [default: "server"]')}
 `;
 }

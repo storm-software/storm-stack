@@ -67,6 +67,8 @@ export async function init<TOptions extends Options = Options>(
           { cause: error }
         );
       });
+
+    return sourceFile;
   };
 
   const handleTransform = async (
@@ -86,6 +88,8 @@ export async function init<TOptions extends Options = Options>(
           { cause: error }
         );
       });
+
+    return sourceFile;
   };
 
   const handlePostTransform = async (
@@ -105,6 +109,8 @@ export async function init<TOptions extends Options = Options>(
           { cause: error }
         );
       });
+
+    return sourceFile;
   };
 
   context.compiler = new Compiler<TOptions>(context, {

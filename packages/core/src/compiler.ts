@@ -21,6 +21,7 @@ import { LogLevelLabel } from "@storm-software/config-tools/types";
 import { readFileIfExistingSync } from "@stryke/fs/read-file";
 import { hash } from "@stryke/hash/hash";
 import { joinPaths } from "@stryke/path/join-paths";
+import { replacePath } from "@stryke/path/replace";
 import { slash } from "@stryke/path/slash";
 import type MagicString from "magic-string";
 import ts from "typescript";
@@ -71,6 +72,83 @@ export class Compiler<TOptions extends Options = Options>
       context.envPaths.cache,
       hash(context.tsconfig.options)
     );
+  }
+
+  /**
+   * Transform the module.
+   *
+   * @param context - The compiler context.
+   * @param id - The name of the file to compile.
+   * @param code - The source code to compile.
+   * @param options - The transpile options.
+   * @returns The transpiled module.
+   */
+  public async transform(
+    context: Context<TOptions>,
+    id: string,
+    code: string | MagicString,
+    options: TranspileOptions<TOptions> = {}
+  ): Promise<string> {
+    this.log(LogLevelLabel.TRACE, `Transforming ${id}`);
+
+    let source = this.getSourceFile(id, code);
+    if (options.onPreTransform) {
+      source = await Promise.resolve(options.onPreTransform(context, source));
+    }
+
+    if (this.#options.onPreTransform) {
+      source = await Promise.resolve(
+        this.#options.onPreTransform(context, source)
+      );
+    }
+
+    if (!options.skipTransform) {
+      if (context.options.platform === "node") {
+        source = transformContext(source);
+      }
+
+      if (!options.skipDotenvTransform) {
+        source = await transformVars<TOptions>(this.log, source, context);
+      }
+
+      if (!options.skipErrorsTransform) {
+        source = await transformErrors<TOptions>(this.log, source, context);
+      }
+
+      if (
+        !options.skipUnimportTransform &&
+        context.unimport &&
+        !slash(source.id).includes(
+          replacePath(
+            context.runtimePath,
+            joinPaths(
+              context.workspaceConfig.workspaceRoot,
+              context.options.projectRoot
+            )
+          )
+        )
+      ) {
+        source = await context.unimport.injectImports(source);
+      }
+
+      if (this.#options.onTransform) {
+        source = await Promise.resolve(
+          this.#options.onTransform(context, source)
+        );
+      }
+    }
+
+    if (this.#options.onPostTransform) {
+      source = await Promise.resolve(
+        this.#options.onPostTransform(context, source)
+      );
+    }
+
+    if (options.onPostTransform) {
+      source = await Promise.resolve(options.onPostTransform(context, source));
+    }
+
+    return source.code.toString();
   }
 
   /**
@@ -213,79 +291,27 @@ export class Compiler<TOptions extends Options = Options>
       `Transpiling ${source.id} module with TypeScript compiler`
     );
 
-    let transformed = source;
-    if (options.onPreTransform) {
-      await Promise.resolve(options.onPreTransform(context, source));
-    }
-
-    if (this.#options.onPreTransform) {
-      await Promise.resolve(this.#options.onPreTransform(context, source));
-    }
-
-    if (!options.skipTransform) {
-      if (context.options.platform === "node") {
-        transformContext(source);
+    const transpiled = ts.transpileModule(
+      await this.transform(context, source.id, source.code, options),
+      {
+        compilerOptions: {
+          ...context.tsconfig.options,
+          configFilePath: context.options.tsconfig
+        },
+        fileName: source.id,
+        transformers: {
+          before: [transformer],
+          after: [declarationTransformer]
+        }
       }
-
-      if (!options.skipDotenvTransform) {
-        transformed = await transformVars<TOptions>(this.log, source, context);
-      }
-
-      if (!options.skipErrorsTransform) {
-        await transformErrors<TOptions>(this.log, transformed, context);
-      }
-
-      if (
-        !options.skipUnimportTransform &&
-        context.unimport &&
-        !slash(transformed.id).includes(
-          context.runtimePath
-            .replace(
-              joinPaths(
-                context.workspaceConfig.workspaceRoot,
-                context.options.projectRoot
-              ),
-              ""
-            )
-            .replace(/^\/+/g, "")
-        )
-      ) {
-        transformed = await context.unimport.injectImports(transformed);
-      }
-
-      if (this.#options.onTransform) {
-        await Promise.resolve(this.#options.onTransform(context, transformed));
-      }
-    }
-
-    if (this.#options.onPostTransform) {
-      await Promise.resolve(
-        this.#options.onPostTransform(context, transformed)
-      );
-    }
-
-    if (options.onPostTransform) {
-      await Promise.resolve(options.onPostTransform(context, transformed));
-    }
-
-    const transpiled = ts.transpileModule(transformed.code.toString(), {
-      compilerOptions: {
-        ...context.tsconfig.options,
-        configFilePath: context.options.tsconfig
-      },
-      fileName: transformed.id,
-      transformers: {
-        before: [transformer],
-        after: [declarationTransformer]
-      }
-    });
+    );
 
     if (transpiled === null) {
-      this.log(LogLevelLabel.ERROR, `Transform is null: ${transformed.id}`);
+      this.log(LogLevelLabel.ERROR, `Transform is null: ${source.id}`);
 
-      throw new Error(`Transform is null: ${transformed.id}`);
+      throw new Error(`Transform is null: ${source.id}`);
     } else {
-      this.log(LogLevelLabel.TRACE, `Transformed: ${transformed.id}`);
+      this.log(LogLevelLabel.TRACE, `Transformed: ${source.id}`);
     }
 
     return transpiled.outputText;

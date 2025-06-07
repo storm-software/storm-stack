@@ -1,3 +1,10 @@
+
+/**
+ * The log module provides a unified logging interface for Storm Stack applications.
+ *
+ * @module storm:log
+ */
+
 /* eslint-disable */
 // biome-ignore lint: disable
 // prettier-ignore
@@ -16,11 +23,10 @@ import {
   LogSink
 } from "@storm-stack/types/log";
 import { StormError, isError, isStormError } from "./error";
-import logConsoleInfoSink from "./logs/log-console-info"; 
-import logSentryInfoSink from "./logs/log-sentry-info"; 
+import consoleInfoSink from "./logs/console-info"; 
+import sentryInfoSink from "./logs/sentry-info"; 
 
 const LOG_LEVELS = [
-  "trace",
   "debug",
   "info",
   "warning",
@@ -61,11 +67,10 @@ export function getLevelFilter(level: LogLevel | null): LogFilter {
 }
 
 /**
- * Parses a log level from a string.
+ * Parses a {@link LogLevel | log level} from a string.
  *
- * @param level The log level as a string. This is case-insensitive.
- * @returns The log level.
- * @throws {TypeError} If the log level is invalid.
+ * @param level - The {@link LogLevel | log level} as a string. This is case-insensitive.
+ * @returns The {@link LogLevel | log level}.
  */
 export function parseLogLevel(level: string): LogLevel {
   const formattedLevel = level.toLowerCase();
@@ -83,10 +88,10 @@ export function parseLogLevel(level: string): LogLevel {
 }
 
 /**
- * Checks if a string is a valid log level. This function can be used as a type guard to narrow the type of a string to a {@link LogLevel}.
+ * Checks if a string is a valid {@link LogLevel | log level}. This function can be used as a type guard to narrow the type of a string to a {@link LogLevel}.
  *
- * @param level The log level as a string.  This is case-sensitive.
- * @returns `true` if the string is a valid log level.
+ * @param level - The {@link LogLevel | log level} as a string. This is case-sensitive.
+ * @returns `true` if the string is a valid {@link LogLevel | log level}.
  */
 export function isLogLevel(level: string): level is LogLevel {
   switch (level) {
@@ -102,10 +107,10 @@ export function isLogLevel(level: string): level is LogLevel {
 }
 
 /**
- * Compares two log levels.
+ * Compares two {@link LogLevel | log levels}.
  *
- * @param a The first log level.
- * @param b The second log level.
+ * @param a - The first {@link LogLevel | log level}.
+ * @param b - The second {@link LogLevel | log level}.
  * @returns A negative number if `a` is less than `b`, a positive number if `a` is greater than `b`, or zero if they are equal.
  */
 function compareLogLevel(a: LogLevel, b: LogLevel): number {
@@ -122,8 +127,9 @@ function compareLogLevel(a: LogLevel, b: LogLevel): number {
 
 /**
  * Parse a message template into a message template array and a values array.
- * @param template The message template.
- * @param properties The values to replace placeholders with.
+ *
+ * @param template - The message template.
+ * @param properties - The values to replace placeholders with.
  * @returns The message template array and the values array.
  */
 function parseMessageTemplate(
@@ -169,8 +175,9 @@ function parseMessageTemplate(
 
 /**
  * Render a message template with values.
- * @param template The message template.
- * @param values The message template values.
+ *
+ * @param template - The message template.
+ * @param values - The message template values.
  * @returns The message template values interleaved between the substitution values.
  */
 function renderMessage(
@@ -197,8 +204,8 @@ function renderMessage(
  * This constant is generated dynamically by the build process. Do not modify it directly.
  */
 const LOG_SINKS = [
-{ logLevel: "info", handle: logConsoleInfoSink }, 
-{ logLevel: "info", handle: logSentryInfoSink }
+{ logLevel: "info", handle: consoleInfoSink }, 
+{ logLevel: "info", handle: sentryInfoSink }
 ] as const;
 
 /**
@@ -460,14 +467,8 @@ export class StormLog implements IStormLog {
   }
 }
 
-/**
- * A logger implementation with contextual properties.  Do not use this
- * directly; use {@link IStormLog.with} instead.  This class is exported
- * for testing purposes.
- */
-export class StormLogCtx implements IStormLog {
+class StormLogCtx implements IStormLog {
   logger: StormLog;
-
   properties: Record<string, unknown>;
 
   constructor(logger: StormLog, properties: Record<string, unknown>) {

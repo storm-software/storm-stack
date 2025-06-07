@@ -43,10 +43,6 @@ export async function prepareDirectories<TOptions extends Options = Options>(
     }
   }
 
-  if (!existsSync(joinPaths(context.artifactsPath, "types"))) {
-    await createDirectory(joinPaths(context.artifactsPath, "types"));
-  }
-
   if (!existsSync(joinPaths(context.artifactsPath, "reflections"))) {
     await createDirectory(joinPaths(context.artifactsPath, "reflections"));
   }

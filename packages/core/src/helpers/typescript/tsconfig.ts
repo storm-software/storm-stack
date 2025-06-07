@@ -19,6 +19,7 @@
 import { readJsonFile } from "@stryke/fs/read-file";
 import { existsSync, joinPaths } from "@stryke/path";
 import { replacePath } from "@stryke/path/replace";
+import { FilterPattern } from "@stryke/types/file";
 import type { TsConfigJson } from "@stryke/types/tsconfig";
 import defu from "defu";
 import ts from "typescript";
@@ -36,17 +37,17 @@ export function getTsconfigFilePath(
   projectRoot: string,
   tsconfig = "tsconfig.json"
 ): string {
-  let tsconfigFilePath = joinPaths(
-    projectRoot,
-    replacePath(tsconfig, projectRoot)
-  );
+  let tsconfigFilePath = tsconfig;
   if (!existsSync(tsconfigFilePath)) {
-    tsconfigFilePath = tsconfig;
+    tsconfigFilePath = joinPaths(
+      projectRoot,
+      replacePath(tsconfig, projectRoot)
+    );
     if (!existsSync(tsconfigFilePath)) {
       throw new Error(
         `Cannot find the \`tsconfig.json\` configuration file at ${joinPaths(
           projectRoot,
-          tsconfig
+          replacePath(tsconfig, projectRoot)
         )} or ${tsconfigFilePath}`
       );
     }
@@ -56,11 +57,125 @@ export function getTsconfigFilePath(
 }
 
 /**
+ * Check if the TypeScript configuration type matches any of the provided types.
+ *
+ * @param tsconfigType - The type from the TypeScript configuration.
+ * @param types - An array of type names to check against.
+ * @returns True if the TypeScript configuration type matches any of the provided types, false otherwise.
+ */
+export function findMatch(
+  tsconfigType: string | RegExp | null,
+  types: (string | RegExp | null)[],
+  extensions: string[] = [".ts", ".tsx", ".d.ts"]
+): string | RegExp | null | undefined {
+  return types.find(
+    type =>
+      tsconfigType?.toString().toLowerCase() ===
+        type?.toString().toLowerCase() ||
+      tsconfigType?.toString().toLowerCase() ===
+        `./${type?.toString().toLowerCase()}` ||
+      `./${tsconfigType?.toString().toLowerCase()}` ===
+        type?.toString().toLowerCase() ||
+      extensions.some(
+        ext =>
+          `${tsconfigType?.toString().toLowerCase()}${ext}` ===
+            type?.toString().toLowerCase() ||
+          `${tsconfigType?.toString().toLowerCase()}${ext}` ===
+            `./${type?.toString().toLowerCase()}` ||
+          `${type?.toString().toLowerCase()}${ext}` ===
+            `./${tsconfigType?.toString().toLowerCase()}` ||
+          tsconfigType?.toString().toLowerCase() ===
+            `${type?.toString().toLowerCase()}${ext}` ||
+          tsconfigType?.toString().toLowerCase() ===
+            `./${type?.toString().toLowerCase()}${ext}` ||
+          type?.toString().toLowerCase() ===
+            `./${tsconfigType?.toString().toLowerCase()}${ext}`
+      )
+  );
+}
+
+/**
+ * Check if the TypeScript configuration type matches any of the provided types.
+ *
+ * @param tsconfigType - The type from the TypeScript configuration.
+ * @param types - An array of type names to check against.
+ * @returns True if the TypeScript configuration type matches any of the provided types, false otherwise.
+ */
+export function findIncludeMatch(
+  tsconfigType: string | RegExp | null,
+  types: (string | RegExp | null)[]
+): string | RegExp | null | undefined {
+  return findMatch(tsconfigType, types, [
+    ".ts",
+    ".tsx",
+    ".d.ts",
+    ".js",
+    ".jsx",
+    ".mjs",
+    ".cjs",
+    ".mts",
+    ".cts",
+    "/*.ts",
+    "/*.tsx",
+    "/*.d.ts",
+    "/*.js",
+    "/*.jsx",
+    "/*.mjs",
+    "/*.cjs",
+    "/*.mts",
+    "/*.cts",
+    "/**/*.ts",
+    "/**/*.tsx",
+    "/**/*.d.ts",
+    "/**/*.js",
+    "/**/*.jsx",
+    "/**/*.mjs",
+    "/**/*.cjs",
+    "/**/*.mts",
+    "/**/*.cts"
+  ]);
+}
+
+/**
+ * Check if the TypeScript configuration type matches any of the provided types.
+ *
+ * @param tsconfigType - The type from the TypeScript configuration.
+ * @param types - An array of type names to check against.
+ * @returns True if the TypeScript configuration type matches any of the provided types, false otherwise.
+ */
+export function isMatchFound(
+  tsconfigType: string | RegExp | null,
+  types: (string | RegExp | null)[]
+): boolean {
+  return findMatch(tsconfigType, types) !== undefined;
+}
+
+/**
+ * Check if the TypeScript configuration type matches any of the provided types.
+ *
+ * @param tsconfigType - The type from the TypeScript configuration.
+ * @param types - An array of type names to check against.
+ * @returns True if the TypeScript configuration type matches any of the provided types, false otherwise.
+ */
+export function isIncludeMatchFound(
+  tsconfigType: FilterPattern,
+  types: FilterPattern[]
+): boolean {
+  return (
+    findIncludeMatch(
+      tsconfigType as string | RegExp | null,
+      types as (string | RegExp | null)[]
+    ) !== undefined
+  );
+}
+
+/**
  * Get the parsed TypeScript configuration.
  *
  * @param projectRoot - The root directory of the project.
  * @param tsconfig - The path to the tsconfig.json file.
  * @param tsconfigRaw - The raw tsconfig.json content.
+ * @param excludeFiles - An array of type names to exclude from the TypeScript configuration.
  * @param host - The TypeScript parse config host.
  * @returns The resolved TypeScript configuration.
  */
@@ -68,6 +183,7 @@ export async function getParsedTypeScriptConfig(
   projectRoot: string,
   tsconfig?: string,
   tsconfigRaw: TsConfigJson = {},
+  excludeFiles = [] as (string | RegExp | null)[],
   host: ts.ParseConfigHost = ts.sys
 ): Promise<ParsedTypeScriptConfig> {
   const tsconfigFilePath = getTsconfigFilePath(projectRoot, tsconfig);
@@ -81,8 +197,20 @@ export async function getParsedTypeScriptConfig(
     );
   }
 
+  const resolvedTsconfig = tsconfigRaw
+    ? defu(tsconfigRaw, tsconfigJson)
+    : tsconfigJson;
+
+  if (excludeFiles.length > 0) {
+    resolvedTsconfig.include ??= [];
+    resolvedTsconfig.include = resolvedTsconfig.include.filter(
+      fileName =>
+        !isMatchFound(fileName as string | RegExp | null, excludeFiles)
+    );
+  }
+
   const parsedCommandLine = ts.parseJsonConfigFileContent(
-    tsconfigRaw ? defu(tsconfigRaw, tsconfigJson) : tsconfigJson,
+    resolvedTsconfig,
     host,
     projectRoot
   );

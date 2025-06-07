@@ -7,8 +7,8 @@
 
 import { deserialize } from "@deepkit/type";
 import { colors } from "../../../runtime/cli";
-import { StormVariables } from "../../../runtime/env";
 import { StormPayload } from "../../../runtime/payload";
+import { StormVariables } from "../../../runtime/vars";
 
 export interface VarsGetPayload {
   /**
@@ -26,7 +26,7 @@ async function handler(payload: StormPayload<VarsGetPayload>) {
   const varsFile = await $storm.storage.getItem(`vars:vars.json`);
   if (varsFile === undefined) {
     console.error(
-      ` ${colors.red("✘")} ${colors.redBright(`Variables file was not found`)}`
+      ` ${colors.red("✘")} ${colors.white(`Variables file was not found`)}`
     );
     return;
   }
@@ -34,7 +34,7 @@ async function handler(payload: StormPayload<VarsGetPayload>) {
   const vars = deserialize<StormVariables>(varsFile);
   if (vars?.[payload.data.name] === undefined) {
     console.error(
-      ` ${colors.red("✘")} ${colors.redBright(`Variable Name \`${payload.data.name}\` not found`)}`
+      ` ${colors.red("✘")} ${colors.white(`Variable Name \`${payload.data.name}\` not found`)}`
     );
     return;
   }

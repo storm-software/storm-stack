@@ -23,10 +23,12 @@ import { getParsedTypeScriptConfig } from "../helpers/typescript/tsconfig";
 import { writeFile } from "../helpers/utilities/write-file";
 import type { Context, EngineHooks, Options } from "../types/build";
 import type { LogFn } from "../types/config";
+import { prepareConfig } from "./config";
 import { prepareDirectories } from "./directories";
 import { prepareReflections } from "./reflections";
 import { prepareRuntime } from "./runtime";
 import { prepareTypes } from "./types";
+
 export async function prepare<TOptions extends Options = Options>(
   log: LogFn,
   context: Context<TOptions>,
@@ -52,6 +54,7 @@ export async function prepare<TOptions extends Options = Options>(
   });
 
   await prepareDirectories(log, context, hooks);
+  await prepareConfig(log, context, hooks);
   await prepareReflections(log, context, hooks);
   await prepareTypes(log, context, hooks);
 

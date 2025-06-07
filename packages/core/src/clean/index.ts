@@ -22,6 +22,7 @@ import type { LogFn } from "../types/config";
 import { cleanArtifacts } from "./artifacts";
 import { cleanDocs } from "./docs";
 import { cleanOutput } from "./output";
+import { cleanTypes } from "./types";
 
 export async function clean<TOptions extends Options = Options>(
   log: LogFn,
@@ -40,6 +41,7 @@ export async function clean<TOptions extends Options = Options>(
     );
   });
 
+  await cleanTypes(log, context, hooks);
   await cleanArtifacts(log, context, hooks);
   await cleanOutput(log, context, hooks);
   await cleanDocs(log, context, hooks);

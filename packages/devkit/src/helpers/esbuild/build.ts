@@ -19,9 +19,16 @@
 import { build } from "@storm-software/esbuild/build";
 import type { ESBuildOptions } from "@storm-software/esbuild/types";
 import { compilerPlugin } from "@storm-stack/core/helpers/esbuild/compiler-plugin";
+import { findMatch } from "@storm-stack/core/helpers/typescript/tsconfig";
 import type { Context, Options } from "@storm-stack/core/types/build";
-import { findFileExtension } from "@stryke/path/file-path-fns";
+import {
+  findFileExtension,
+  findFileName,
+  findFilePath,
+  relativePath
+} from "@stryke/path/file-path-fns";
 import { joinPaths } from "@stryke/path/join-paths";
+import { replacePath } from "@stryke/path/replace";
 import defu from "defu";
 
 export async function esbuild<TOptions extends Options = Options>(
@@ -33,7 +40,7 @@ export async function esbuild<TOptions extends Options = Options>(
     platform: context.options.platform,
     projectRoot: context.options.projectRoot,
     outputPath: context.options.outputPath,
-    tsconfig: context.options.tsconfig,
+    tsconfig: context.tsconfig.tsconfigFilePath,
     metafile: context.options.mode === "development",
     minify: context.options.mode !== "development",
     sourcemap: context.options.mode === "development",
@@ -67,24 +74,55 @@ export async function esbuild<TOptions extends Options = Options>(
       }
     ]
   } as ESBuildOptions;
+  if (context.options.dts !== false) {
+    const dtsFilePath =
+      context.options.dts ||
+      joinPaths(context.options.projectRoot, "storm.d.ts");
+
+    buildOptions.tsconfigRaw = {
+      compilerOptions: {
+        types: [
+          ...(context.tsconfig.options.types?.filter(
+            type =>
+              type !==
+              findMatch(
+                joinPaths(
+                  relativePath(
+                    findFilePath(
+                      joinPaths(
+                        context.workspaceConfig.workspaceRoot,
+                        dtsFilePath
+                      )
+                    ),
+                    joinPaths(
+                      context.workspaceConfig.workspaceRoot,
+                      context.options.projectRoot
+                    )
+                  ),
+                  findFileName(dtsFilePath)
+                ),
+                context.tsconfig.options.types ?? []
+              )
+          ) ?? []),
+          dtsFilePath
+        ]
+      }
+    } as ESBuildOptions["tsconfigRaw"];
+  }
 
   if (!override.entry) {
     buildOptions.entry = context.entry.reduce(
       (ret, entry) => {
         ret[
           entry.output ||
-            entry.input.file
-              .replace(
-                `${context.projectJson?.sourceRoot || context.options.projectRoot}/`,
-                ""
-              )
-              .replace(findFileExtension(entry.input.file), "") ||
-            entry.file
-              .replace(
-                `${context.projectJson?.sourceRoot || context.options.projectRoot}/`,
-                ""
-              )
-              .replace(findFileExtension(entry.file), "")
+            replacePath(
+              entry.input.file,
+              context.projectJson?.sourceRoot || context.options.projectRoot
+            ).replace(findFileExtension(entry.input.file), "") ||
+            replacePath(
+              entry.file,
+              context.projectJson?.sourceRoot || context.options.projectRoot
+            ).replace(findFileExtension(entry.file), "")
         ] = entry.file;
 
         return ret;

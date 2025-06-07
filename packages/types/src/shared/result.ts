@@ -16,8 +16,6 @@
 
  ------------------------------------------------------------------- */
 
-/* eslint-disable ts/consistent-type-imports */
-
 import { IStormError } from "./error.js";
 
 /**

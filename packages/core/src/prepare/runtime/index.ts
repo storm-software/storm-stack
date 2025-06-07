@@ -25,7 +25,8 @@ import { writeApp } from "./node/app";
 import { writeContext } from "./node/context";
 import { writeEnv } from "./node/env";
 import { writeEvent } from "./node/event";
-import { writePayload, writeResult } from "./shared";
+import { generateRuntimeTypes } from "./runtime-types";
+import { writePayload, writeResult, writeVars } from "./shared";
 import { writeError } from "./shared/error";
 import { writeId } from "./shared/id";
 import { writeInit } from "./shared/init";
@@ -50,6 +51,11 @@ export async function prepareRuntime<TOptions extends Options = Options>(
     ),
     writeFile(log, joinPaths(context.runtimePath, "result.ts"), writeResult()),
     writeFile(log, joinPaths(context.runtimePath, "error.ts"), writeError()),
+    writeFile(
+      log,
+      joinPaths(context.runtimePath, "vars.ts"),
+      writeVars(context)
+    ),
     writeFile(log, joinPaths(context.runtimePath, "id.ts"), writeId()),
     writeFile(
       log,
@@ -119,6 +125,6 @@ export async function prepareRuntime<TOptions extends Options = Options>(
       `Generating type declarations for runtime artifacts.`
     );
 
-    // await generateRuntimeTypes(log, context);
+    await generateRuntimeTypes(log, context);
   }
 }

@@ -19,7 +19,14 @@
 import { getFileHeader } from "../../../helpers/utilities/file-header";
 
 export function writeResult() {
-  return `${getFileHeader()}
+  return `
+/**
+ * The result module provides the {@link StormResult} class, which is used to represent the result of a payload execution.
+ *
+ * @module storm:result
+ */
+
+${getFileHeader()}
 
 import { IStormResult } from "@storm-stack/types/result";
 import { isStormError, StormError } from "./error";
@@ -36,7 +43,7 @@ export class StormResult<
    * Create a new result.
    *
    * @remarks
-   * **IMPORTANT:** This function uses the \`$storm\` context object - never use this function outside of the context wrapper/tree since the context will not be available.
+   * **IMPORTANT:** This function uses the storm context object - never use this function outside of the context wrapper/tree since the context will not be available.
    *
    * @param data - The result data
    */

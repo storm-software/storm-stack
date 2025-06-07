@@ -20,20 +20,37 @@ import { kebabCase } from "@stryke/string-format/kebab-case";
 import { titleCase } from "@stryke/string-format/title-case";
 import { getFileHeader } from "../../../helpers/utilities/file-header";
 import type { Context, Options } from "../../../types/build";
-import { generateVariables } from "../../types/dts/shared";
 
 export function writeEnv<TOptions extends Options = Options>(
   context: Context<TOptions>
 ) {
-  return `${getFileHeader()}
+  return `
+/**
+ * This module provides the runtime environment information for the Storm Stack application.
+ *
+ * @module storm:env
+ */
 
-import type {
+${getFileHeader()}
+
+import {
+  serializer,
+  deserialize,
+  TypeProperty,
+  TypePropertySignature,
+  NamingStrategy
+} from "@deepkit/type";
+import {
   StormEnvPaths,
   StormBuildInfo,
   StormRuntimeInfo,
   StormRuntimePaths
 } from "@storm-stack/types/node/env";
+import { StormVariables } from "./vars";
+import { StormError } from "./errors";
 import os from "node:os";
+import { readFile } from "node:fs/promises";
+import { existsSync } from "node:fs";
 import { join, basename } from "node:path";
 
 /** Detect if stdout.TTY is available */
@@ -98,10 +115,13 @@ export const isCI = Boolean(
 
 /** Detect the \`NODE_ENV\` environment variable */
 export const mode = String(
-    $storm.vars.MODE ||
-    process.env.NEXT_PUBLIC_VERCEL_ENV ||
+    ${
+      context.dotenv.values.MODE
+        ? `$storm.vars.MODE`
+        : `process.env.NEXT_PUBLIC_VERCEL_ENV ||
     process.env.NODE_ENV ||
-    "production"
+    "production"`
+    }
   );
 
 /** Detect if the application is running in production mode */
@@ -146,18 +166,18 @@ export const isMacOS = /^darwin/i.test(process.platform);
 export const isInteractive = !isMinimal && Boolean(process.stdin?.isTTY && process.env.TERM !== "dumb")
 
 /** Detect if Unicode characters are supported */
-export const isUnicodeSupported = process.platform !== 'win32'
-    ? process.env.TERM !== 'linux'
+export const isUnicodeSupported = process.platform !== "win32"
+    ? process.env.TERM !== "linux"
     : (Boolean(process.env.WT_SESSION)
         || Boolean(process.env.TERMINUS_SUBLIME)
-        || process.env.ConEmuTask === '{cmd::Cmder}'
-        || process.env.TERM_PROGRAM === 'Terminus-Sublime'
-        || process.env.TERM_PROGRAM === 'vscode'
-        || process.env.TERM === 'xterm-256color'
-        || process.env.TERM === 'alacritty'
-        || process.env.TERM === 'rxvt-unicode'
-        || process.env.TERM === 'rxvt-unicode-256color'
-        || process.env.TERMINAL_EMULATOR === 'JetBrains-JediTerm');
+        || process.env.ConEmuTask === "{cmd::Cmder}"
+        || process.env.TERM_PROGRAM === "Terminus-Sublime"
+        || process.env.TERM_PROGRAM === "vscode"
+        || process.env.TERM === "xterm-256color"
+        || process.env.TERM === "alacritty"
+        || process.env.TERM === "rxvt-unicode"
+        || process.env.TERM === "rxvt-unicode-256color"
+        || process.env.TERMINAL_EMULATOR === "JetBrains-JediTerm");
 
 /** Detect if color is supported */
 export const isColorSupported =
@@ -325,13 +345,11 @@ export const build = {
   packageName: "${context.packageJson?.name || context.options.name}",
   organization,
   buildId: $storm.vars.BUILD_ID!,
-  timestamp: $storm.vars.BUILD_TIMESTAMP
-    ? Number($storm.vars.BUILD_TIMESTAMP)
-    : 0,
+  timestamp: $storm.vars.BUILD_TIMESTAMP!,
   releaseId: $storm.vars.RELEASE_ID!,
   releaseTag: $storm.vars.RELEASE_TAG!,
   mode,
-  platform: ($storm.vars.PLATFORM || "node") as StormBuildInfo["platform"],
+  platform: ${context.dotenv.values.PLATFORM ? `$storm.vars.PLATFORM` : "node"} as StormBuildInfo["platform"],
   isProduction,
   isStaging,
   isDevelopment
@@ -354,7 +372,51 @@ export const runtime = {
   isServer: isNode || build.platform === "node"
 } as StormRuntimeInfo;
 
-export type StormVariables = ${generateVariables(context.dotenv.types.variables)};
+export const stormVariablesNamingStrategy = new class extends NamingStrategy {
+  public constructor() {
+      super("storm-variables");
+  }
 
+  public override getPropertyName(type: TypeProperty | TypePropertySignature, forSerializer: string): string | undefined {
+    const name = super.getPropertyName(type, forSerializer);
+    if (!name) {
+      return name;
+    }
+
+    return name.replace(/^(${context.dotenv.prefix
+      .map(prefix => `${prefix}_`)
+      .join("|")})/g, "").toUpperCase();
+  }
+};
+
+let varsFile = {} as Record<string, any>;
+if (existsSync(join(paths.config, "vars.json"))) {
+  varsFile = JSON.parse(await readFile(join(paths.config, "vars.json"), "utf8") || "{}");
+} 
+if (existsSync(join(paths.config.replace(new RegExp(\`/\${name}$\`), ""), "vars.json"))) {
+  varsFile = deserialize<StormVariables>(
+    { 
+      ...JSON.parse(
+        await readFile(join(paths.config.replace(new RegExp(\`/\${name}$\`), ""), "vars.json"), "utf8") || "{}"
+      ),
+      ...varsFile 
+    },
+    undefined,
+    serializer,
+    stormVariablesNamingStrategy
+  );
+} 
+
+export const vars = new Proxy<StormVariables>(
+  deserialize<StormVariables>(
+    process.env,
+    undefined,
+    serializer,
+    stormVariablesNamingStrategy
+  ), {
+  get(target, prop, receiver) {
+    return target[prop as keyof StormVariables] ?? varsFile[prop as keyof StormVariables];
+  }
+});
 `;
 }

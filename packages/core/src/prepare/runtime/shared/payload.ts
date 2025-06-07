@@ -19,7 +19,14 @@
 import { getFileHeader } from "../../../helpers/utilities/file-header";
 
 export function writePayload() {
-  return `${getFileHeader()}
+  return `
+/**
+ * The payload module provides a base payload class used by the Storm Stack runtime.
+ *
+ * @module storm:payload
+ */
+
+${getFileHeader()}
 
 import { uniqueId } from "./id";
 import { IStormPayload } from "@storm-stack/types/payload";

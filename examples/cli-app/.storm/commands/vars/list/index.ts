@@ -121,7 +121,7 @@ async function handler() {
     }
   } catch (err) {
     console.error(
-      ` ${colors.red("✘")} ${colors.redBright(`Error occurred while processing Variables - List command.`)}`
+      ` ${colors.red("✘")} ${colors.white(`Error occurred while processing Variables - List command.`)}`
     );
   }
 }

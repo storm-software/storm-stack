@@ -21,8 +21,9 @@ import { parse as parseToml, stringify as stringifyToml } from "@ltd/j-toml";
 import { LogLevelLabel } from "@storm-software/config-tools/types";
 import { getFileHeader, writeFile } from "@storm-stack/core/helpers";
 import {
-  getParsedTypeScriptConfig,
-  getTsconfigFilePath
+  getTsconfigFilePath,
+  isIncludeMatchFound,
+  isMatchFound
 } from "@storm-stack/core/helpers/typescript";
 import {
   writeApp,
@@ -36,6 +37,8 @@ import type {
   Options,
   PluginConfig
 } from "@storm-stack/core/types";
+import { executePackage } from "@stryke/cli/execute";
+import { createDirectory, removeDirectory } from "@stryke/fs/helpers";
 import { readFile, readJsonFile } from "@stryke/fs/read-file";
 import { removeFile } from "@stryke/fs/remove-file";
 import { StormJSON } from "@stryke/json/storm-json";
@@ -79,11 +82,13 @@ export default class StormStackCloudflareWorkerPreset<
   public addHooks(hooks: EngineHooks<TOptions>) {
     hooks.addHooks({
       "clean:complete": this.clean.bind(this),
-      "init:context": this.initOptions.bind(this),
+      "init:context": this.initContext.bind(this),
       "init:tsconfig": this.initTsconfig.bind(this),
+      "prepare:directories": this.prepareDirectories.bind(this),
+      "prepare:config": this.prepareConfig.bind(this),
+      "prepare:types": this.prepareTypes.bind(this),
       "prepare:runtime": this.prepareRuntime.bind(this),
-      "prepare:entry": this.prepareEntry.bind(this),
-      "prepare:deploy": this.prepareDeploy.bind(this)
+      "prepare:entry": this.prepareEntry.bind(this)
     });
   }
 
@@ -98,13 +103,22 @@ export default class StormStackCloudflareWorkerPreset<
         context.options.projectRoot,
         "wrangler.toml"
       );
-      if (wranglerFilePath) {
+      if (wranglerFilePath && existsSync(wranglerFilePath)) {
         await removeFile(wranglerFilePath);
       }
     }
+
+    const typesDir = joinPaths(
+      context.workspaceConfig.workspaceRoot,
+      context.options.projectRoot,
+      "types"
+    );
+    if (!existsSync(typesDir)) {
+      await removeDirectory(typesDir);
+    }
   }
 
-  protected async initOptions(context: Context<TOptions>) {
+  protected async initContext(context: Context<TOptions>) {
     this.log(
       LogLevelLabel.TRACE,
       `Resolving Storm Stack context for the project.`
@@ -114,6 +128,14 @@ export default class StormStackCloudflareWorkerPreset<
     context.override.platform = "neutral";
     context.override.format = "esm";
     context.override.target = "chrome95";
+
+    if (context.options.original.dts === undefined) {
+      context.options.dts = joinPaths(
+        context.options.projectRoot,
+        "types",
+        "storm.d.ts"
+      );
+    }
 
     context.options.external ??= [];
     context.options.external.push(
@@ -147,9 +169,13 @@ export default class StormStackCloudflareWorkerPreset<
 
       context.installs["@cloudflare/unenv-preset"] = "dependency";
       context.installs.unenv = "dependency";
-    }
+      context.installs.wrangler = "devDependency";
 
-    context.installs["@cloudflare/workers-types"] = "devDependency";
+      context.additionalRuntimeFiles ??= [];
+      context.additionalRuntimeFiles.push(
+        joinPaths(context.options.projectRoot, "types", "*.ts")
+      );
+    }
   }
 
   protected async initTsconfig(context: Context<TOptions>) {
@@ -158,39 +184,79 @@ export default class StormStackCloudflareWorkerPreset<
       context.options.tsconfig
     );
 
-    this.log(
-      LogLevelLabel.TRACE,
-      `Resolving TypeScript configuration in "${tsconfigFilePath}"`
-    );
-
-    const tsconfig = await getParsedTypeScriptConfig(
-      context.options.projectRoot,
-      context.options.tsconfig
-    );
     const tsconfigJson = await readJsonFile<TsConfigJson>(tsconfigFilePath);
 
     tsconfigJson.compilerOptions ??= {};
+    tsconfigJson.compilerOptions.types ??= [];
+
     if (
       tsconfigJson.compilerOptions.types &&
-      tsconfigJson.compilerOptions.types.some(
-        type => type.toLowerCase() === "@cloudflare/workers-types"
-      )
+      isMatchFound("node", tsconfigJson.compilerOptions.types)
     ) {
       tsconfigJson.compilerOptions.types =
         tsconfigJson.compilerOptions.types.filter(
-          type => type.toLowerCase() !== "@cloudflare/workers-types"
+          type => !isMatchFound("node", [type])
         );
     }
 
     if (
-      !tsconfig.options.types?.some(type =>
-        type.toLowerCase().includes("@cloudflare/workers-types/experimental")
+      tsconfigJson.compilerOptions.types.some(type =>
+        type.toLowerCase().startsWith("@cloudflare/workers-types")
       )
     ) {
-      tsconfigJson.compilerOptions.types ??= [];
-      tsconfigJson.compilerOptions.types.push(
-        "@cloudflare/workers-types/experimental"
+      tsconfigJson.compilerOptions.types =
+        tsconfigJson.compilerOptions.types.filter(
+          type => !type.toLowerCase().startsWith("@cloudflare/workers-types")
+        );
+    }
+
+    tsconfigJson.include ??= [];
+    if (
+      !context.options.original.dts &&
+      isIncludeMatchFound(
+        joinPaths(
+          relativePath(
+            joinPaths(
+              context.workspaceConfig.workspaceRoot,
+              context.options.projectRoot
+            ),
+            joinPaths(
+              context.workspaceConfig.workspaceRoot,
+              findFilePath(context.options.dts as string)
+            )
+          ),
+          findFileName(context.options.dts as string, {
+            withExtension: true
+          })
+        ),
+        tsconfigJson.include
+      )
+    ) {
+      tsconfigJson.include = tsconfigJson.include.filter(
+        include =>
+          !isIncludeMatchFound(
+            joinPaths(
+              relativePath(
+                joinPaths(
+                  context.workspaceConfig.workspaceRoot,
+                  context.options.projectRoot
+                ),
+                joinPaths(
+                  context.workspaceConfig.workspaceRoot,
+                  findFilePath(context.options.dts as string)
+                )
+              ),
+              findFileName(context.options.dts as string, {
+                withExtension: true
+              })
+            ),
+            [include]
+          )
       );
+    }
+
+    if (!isIncludeMatchFound("types", tsconfigJson.include)) {
+      tsconfigJson.include.push("types/*.d.ts");
     }
 
     return this.writeFile(
@@ -199,29 +265,88 @@ export default class StormStackCloudflareWorkerPreset<
     );
   }
 
+  protected async prepareDirectories(context: Context<TOptions>) {
+    this.log(
+      LogLevelLabel.TRACE,
+      `Preparing the Storm Stack directories for the Cloudflare Worker project.`
+    );
+
+    // Create the types directory if it does not exist
+    const typesDir = joinPaths(
+      context.workspaceConfig.workspaceRoot,
+      context.options.projectRoot,
+      "types"
+    );
+    if (!existsSync(typesDir)) {
+      await createDirectory(typesDir);
+    }
+  }
+
+  protected async prepareConfig(context: Context<TOptions>) {
+    if (context.options.projectType === "application") {
+      this.log(LogLevelLabel.TRACE, "Preparing the wrangler deployment file");
+
+      const wranglerFilePath = joinPaths(
+        context.options.projectRoot,
+        "wrangler.toml"
+      );
+      let wranglerFileContent = "";
+
+      if (existsSync(wranglerFilePath)) {
+        wranglerFileContent = await readFile(wranglerFilePath);
+      }
+
+      if (!wranglerFileContent) {
+        wranglerFileContent = `name = "${context.options.name}"
+compatibility_date = "${new Date().toISOString().split("T")[0]}"
+main = "${(context.entry && context.entry.length > 0 && context.entry[0] ? context.entry[0].file : "src/index.ts").replace(context.options.projectRoot, "")}"
+
+account_id = "${process.env.CLOUDFLARE_ACCOUNT_ID}"
+compatibility_flags = [ "nodejs_als" ]
+`;
+      }
+
+      const wranglerFile = parseToml(wranglerFileContent);
+
+      wranglerFile.name ??= context.options.name!;
+      wranglerFile.compatibility_date ??= new Date()
+        .toISOString()
+        .split("T")[0]!;
+      wranglerFile.main ??=
+        context.entry && context.entry.length > 0 && context.entry[0]
+          ? context.entry[0].file
+          : "src/index.ts";
+      wranglerFile.account_id ??= process.env.CLOUDFLARE_ACCOUNT_ID!;
+      wranglerFile.compatibility_flags ??= ["nodejs_als"];
+
+      return this.writeFile(
+        wranglerFilePath,
+        stringifyToml(wranglerFile, {
+          newline: "\n",
+          newlineAround: "header",
+          indent: 4,
+          forceInlineArraySpacing: 0
+        }),
+        true
+      );
+    }
+  }
+
   protected async prepareTypes(context: Context<TOptions>) {
     this.log(
       LogLevelLabel.TRACE,
-      `Preparing the TypeScript declaration (d.ts) artifacts for the Storm Stack project.`
+      `Preparing the Cloudflare TypeScript declaration (d.ts) artifact for the Storm Stack project.`
     );
 
-    await Promise.all([
-      writeFile(
-        this.log,
-        joinPaths(context.runtimePath, "app.ts"),
-        writeApp(context)
-      ),
-      writeFile(
-        this.log,
-        joinPaths(context.runtimePath, "context.ts"),
-        writeContext(context)
-      ),
-      writeFile(
-        this.log,
-        joinPaths(context.runtimePath, "event.ts"),
-        writeEvent(context)
-      )
-    ]);
+    await executePackage(
+      "wrangler",
+      [
+        "types",
+        '--path="types/cloudflare.d.ts"',
+        "--env-interface=CloudflareEnv"
+      ],
+      context.options.projectRoot
+    );
   }
 
   protected async prepareRuntime(context: Context<TOptions>) {
@@ -275,24 +400,17 @@ import ${entry.input.name ? `{ ${entry.input.name} as handle }` : "handle"} from
               ""
             )
           )}";
-import { wrap } from "./runtime/app";
+import { withContext } from "./runtime/app";
 import { deserialize, serialize } from "@deepkit/type";
-import { StormRequest } from "./runtime/request";
-import { StormResponse } from "./runtime/response";
+import { StormPayload } from "./runtime/payload";
 
-const handleRequest = wrap(
-  handle,
-  {
-    deserializer: (req: Request) => new StormRequest(
-      deserialize(req)
-    ),
-    serializer: result => StormResponse.create(serialize(result))
-  }
-);
+const handleRequest = withContext(handle);
 
 export default {
-  async fetch(req: Request) {
-    return handleRequest(req);
+  async fetch(request: Request) {
+    const result = await handleRequest(request);
+
+    return result;
   }
 }
 
@@ -300,55 +418,5 @@ export default {
         );
       })
     );
-  }
-
-  protected async prepareDeploy(context: Context<TOptions>) {
-    if (context.options.projectType === "application") {
-      this.log(LogLevelLabel.TRACE, "Preparing the wrangler deployment file");
-
-      const wranglerFilePath = joinPaths(
-        context.options.projectRoot,
-        "wrangler.toml"
-      );
-      let wranglerFileContent = "";
-
-      if (existsSync(wranglerFilePath)) {
-        wranglerFileContent = await readFile(wranglerFilePath);
-      }
-
-      if (!wranglerFileContent) {
-        wranglerFileContent = `name = "${context.options.name}"
-compatibility_date = "${new Date().toISOString().split("T")[0]}"
-main = "${(context.entry && context.entry.length > 0 && context.entry[0] ? context.entry[0].file : "src/index.ts").replace(context.options.projectRoot, "")}"
-
-account_id = "${process.env.CLOUDFLARE_ACCOUNT_ID}"
-compatibility_flags = [ "nodejs_als" ]
-`;
-      }
-
-      const wranglerFile = parseToml(wranglerFileContent);
-
-      wranglerFile.name ??= context.options.name!;
-      wranglerFile.compatibility_date ??= new Date()
-        .toISOString()
-        .split("T")[0]!;
-      wranglerFile.main ??=
-        context.entry && context.entry.length > 0 && context.entry[0]
-          ? context.entry[0].file
-          : "src/index.ts";
-      wranglerFile.account_id ??= process.env.CLOUDFLARE_ACCOUNT_ID!;
-      wranglerFile.compatibility_flags ??= ["nodejs_als"];
-
-      return this.writeFile(
-        wranglerFilePath,
-        stringifyToml(wranglerFile, {
-          newline: "\n",
-          newlineAround: "header",
-          indent: 4,
-          forceInlineArraySpacing: 0
-        }),
-        true
-      );
-    }
   }
 }

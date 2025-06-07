@@ -61,9 +61,9 @@ ${renderDeleteUsage("minimal")
     }
 
   ${colors.whiteBright(colors.bold("Options:"))}
-    --help, -h, -?  ${colors.gray("Show help information. [default: false]")} 
-    --version, -v   ${colors.gray("Show the version of the application. [default: false]")} 
-    --no-banner     ${colors.gray("Hide the banner displayed while running the CLI application (will be set to true if running in a CI pipeline). [default: false]")}
+    --help, -h, -?      ${colors.gray("Show help information. [default: false]")} 
+    --version, -v       ${colors.gray("Show the version of the application. [default: false]")} 
+    --no-banner         ${colors.gray("Hide the banner displayed while running the CLI application (will be set to true if running in a CI pipeline). [default: false]")}
 `;
 }
 
@@ -90,7 +90,7 @@ async function handler() {
         }
 
         console.error(
-          ` ${colors.red("✘")} ${colors.redBright(`Unknown command: ${colors.bold(command || "<none>")}`)}`
+          ` ${colors.red("✘")} ${colors.white(`Unknown command: ${colors.bold(command || "<none>")}`)}`
         );
         console.log("");
         console.log(renderUsage("full"));
@@ -131,7 +131,7 @@ async function handler() {
     }
   } catch (err) {
     console.error(
-      ` ${colors.red("✘")} ${colors.redBright(`Error occurred while processing Variable Management command.`)}`
+      ` ${colors.red("✘")} ${colors.white(`Error occurred while processing Variable Management command.`)}`
     );
   }
 }

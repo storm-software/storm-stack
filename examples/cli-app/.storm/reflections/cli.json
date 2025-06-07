@@ -421,6 +421,335 @@
     },
     "relations": { "children": ["add-page"] }
   },
+  "completions": {
+    "commandId": "completions",
+    "name": "completions",
+    "displayName": "CLI Completions",
+    "description": "Commands for generating shell completion scripts for the Examples CLI App.",
+    "aliases": [],
+    "entry": {
+      "displayName": "CLI Completions",
+      "description": "Commands for generating shell completion scripts for the Examples CLI App.",
+      "file": "/home/development/repos/storm-stack/examples/cli-app/.storm/commands/completions/index.ts",
+      "input": {
+        "file": "/home/development/repos/storm-stack/examples/cli-app/.storm/commands/completions/index.ts"
+      },
+      "output": "completions",
+      "path": ["completions"],
+      "isVirtual": true
+    },
+    "payload": {
+      "name": "CompletionsPayload",
+      "args": [
+        {
+          "name": "help",
+          "displayName": "Help",
+          "description": "Show help information.",
+          "aliases": ["h", "?"],
+          "type": "boolean",
+          "stringifiedType": "boolean",
+          "reflectionType": [{ "kind": 7 }],
+          "options": [],
+          "array": false,
+          "required": false,
+          "default": false
+        },
+        {
+          "name": "version",
+          "displayName": "Version",
+          "description": "Show the version of the application.",
+          "aliases": ["v"],
+          "type": "boolean",
+          "stringifiedType": "boolean",
+          "reflectionType": [{ "kind": 7 }],
+          "options": [],
+          "array": false,
+          "required": false,
+          "default": false
+        },
+        {
+          "name": "no-banner",
+          "displayName": "Hide Banner",
+          "description": "Hide the banner displayed while running the CLI application (will be set to true if running in a CI pipeline).",
+          "aliases": [],
+          "type": "boolean",
+          "stringifiedType": "boolean",
+          "reflectionType": [{ "kind": 7 }],
+          "options": [],
+          "array": false,
+          "required": false,
+          "default": false
+        }
+      ]
+    },
+    "relations": { "children": ["completions-bash", "completions-zsh"] }
+  },
+  "completions-bash": {
+    "commandId": "completions-bash",
+    "name": "bash",
+    "displayName": "CLI Completions - Bash Shell",
+    "description": "Generates a Bash shell completion script for the Examples CLI App CLI application.",
+    "aliases": [],
+    "entry": {
+      "displayName": "CLI Completions - Bash Shell",
+      "file": "/home/development/repos/storm-stack/examples/cli-app/.storm/commands/completions/bash/index.ts",
+      "input": {
+        "file": "/home/development/repos/storm-stack/examples/cli-app/.storm/commands/completions/bash/handle.ts"
+      },
+      "output": "completions-bash",
+      "path": ["completions", "bash"],
+      "isVirtual": false
+    },
+    "payload": {
+      "name": "CompletionsBashPayload",
+      "args": [
+        {
+          "name": "help",
+          "displayName": "Help",
+          "description": "Show help information.",
+          "aliases": ["h", "?"],
+          "type": "boolean",
+          "stringifiedType": "boolean",
+          "reflectionType": [{ "kind": 7 }],
+          "options": [],
+          "array": false,
+          "required": false,
+          "default": false
+        },
+        {
+          "name": "version",
+          "displayName": "Version",
+          "description": "Show the version of the application.",
+          "aliases": ["v"],
+          "type": "boolean",
+          "stringifiedType": "boolean",
+          "reflectionType": [{ "kind": 7 }],
+          "options": [],
+          "array": false,
+          "required": false,
+          "default": false
+        },
+        {
+          "name": "interactive",
+          "displayName": "Interactive",
+          "description": "Enable interactive mode (will be set to false if running in a CI pipeline).",
+          "aliases": ["i", "interact"],
+          "type": "boolean",
+          "stringifiedType": "boolean",
+          "reflectionType": [{ "kind": 7 }],
+          "options": [],
+          "array": false,
+          "required": false,
+          "default": true
+        },
+        {
+          "name": "no-interactive",
+          "displayName": "No Interactive",
+          "description": "Disable interactive mode (will be set to true if running in a CI pipeline).",
+          "aliases": ["no-interact"],
+          "type": "boolean",
+          "stringifiedType": "boolean",
+          "reflectionType": [{ "kind": 7 }],
+          "options": [],
+          "array": false,
+          "required": false,
+          "default": false
+        },
+        {
+          "name": "no-banner",
+          "displayName": "Hide Banner",
+          "description": "Hide the banner displayed while running the CLI application (will be set to true if running in a CI pipeline).",
+          "aliases": [],
+          "type": "boolean",
+          "stringifiedType": "boolean",
+          "reflectionType": [{ "kind": 7 }],
+          "options": [],
+          "array": false,
+          "required": false,
+          "default": false
+        },
+        {
+          "name": "verbose",
+          "displayName": "Verbose",
+          "description": "Enable verbose output.",
+          "aliases": ["v"],
+          "type": "boolean",
+          "stringifiedType": "boolean",
+          "reflectionType": [{ "kind": 7 }],
+          "options": [],
+          "array": false,
+          "required": false,
+          "default": false
+        },
+        {
+          "name": "script",
+          "displayName": "Script",
+          "aliases": ["s"],
+          "reflectionType": [
+            { "kind": 23, "types": [1, 2] },
+            { "kind": 5 },
+            { "kind": 13, "literal": true }
+          ],
+          "type": "enum",
+          "stringifiedType": "string | true",
+          "options": ["string", "true"],
+          "description": "The path to write the completion script to",
+          "array": false,
+          "required": false
+        },
+        {
+          "name": "config",
+          "displayName": "Config",
+          "aliases": ["c"],
+          "reflectionType": [
+            { "kind": 23, "types": [1, 2] },
+            { "kind": 5 },
+            { "kind": 13, "literal": true }
+          ],
+          "type": "enum",
+          "stringifiedType": "string | true",
+          "options": ["string", "true"],
+          "description": "The configuration file to append the completion script to",
+          "array": false,
+          "required": false
+        }
+      ]
+    },
+    "relations": { "parent": "completions", "children": [] }
+  },
+  "completions-zsh": {
+    "commandId": "completions-zsh",
+    "name": "zsh",
+    "displayName": "CLI Completions - Zsh Shell",
+    "description": "Generates a Zsh shell completion script for the Examples CLI App CLI application.",
+    "aliases": [],
+    "entry": {
+      "displayName": "CLI Completions - Zsh Shell",
+      "file": "/home/development/repos/storm-stack/examples/cli-app/.storm/commands/completions/zsh/index.ts",
+      "input": {
+        "file": "/home/development/repos/storm-stack/examples/cli-app/.storm/commands/completions/zsh/handle.ts"
+      },
+      "output": "completions-zsh",
+      "path": ["completions", "zsh"],
+      "isVirtual": false
+    },
+    "payload": {
+      "name": "CompletionsZshPayload",
+      "args": [
+        {
+          "name": "help",
+          "displayName": "Help",
+          "description": "Show help information.",
+          "aliases": ["h", "?"],
+          "type": "boolean",
+          "stringifiedType": "boolean",
+          "reflectionType": [{ "kind": 7 }],
+          "options": [],
+          "array": false,
+          "required": false,
+          "default": false
+        },
+        {
+          "name": "version",
+          "displayName": "Version",
+          "description": "Show the version of the application.",
+          "aliases": ["v"],
+          "type": "boolean",
+          "stringifiedType": "boolean",
+          "reflectionType": [{ "kind": 7 }],
+          "options": [],
+          "array": false,
+          "required": false,
+          "default": false
+        },
+        {
+          "name": "interactive",
+          "displayName": "Interactive",
+          "description": "Enable interactive mode (will be set to false if running in a CI pipeline).",
+          "aliases": ["i", "interact"],
+          "type": "boolean",
+          "stringifiedType": "boolean",
+          "reflectionType": [{ "kind": 7 }],
+          "options": [],
+          "array": false,
+          "required": false,
+          "default": true
+        },
+        {
+          "name": "no-interactive",
+          "displayName": "No Interactive",
+          "description": "Disable interactive mode (will be set to true if running in a CI pipeline).",
+          "aliases": ["no-interact"],
+          "type": "boolean",
+          "stringifiedType": "boolean",
+          "reflectionType": [{ "kind": 7 }],
+          "options": [],
+          "array": false,
+          "required": false,
+          "default": false
+        },
+        {
+          "name": "no-banner",
+          "displayName": "Hide Banner",
+          "description": "Hide the banner displayed while running the CLI application (will be set to true if running in a CI pipeline).",
+          "aliases": [],
+          "type": "boolean",
+          "stringifiedType": "boolean",
+          "reflectionType": [{ "kind": 7 }],
+          "options": [],
+          "array": false,
+          "required": false,
+          "default": false
+        },
+        {
+          "name": "verbose",
+          "displayName": "Verbose",
+          "description": "Enable verbose output.",
+          "aliases": ["v"],
+          "type": "boolean",
+          "stringifiedType": "boolean",
+          "reflectionType": [{ "kind": 7 }],
+          "options": [],
+          "array": false,
+          "required": false,
+          "default": false
+        },
+        {
+          "name": "script",
+          "displayName": "Script",
+          "aliases": ["s"],
+          "reflectionType": [
+            { "kind": 23, "types": [1, 2] },
+            { "kind": 5 },
+            { "kind": 13, "literal": true }
+          ],
+          "type": "enum",
+          "stringifiedType": "string | true",
+          "options": ["string", "true"],
+          "description": "The path to write the completion script to",
+          "array": false,
+          "required": false
+        },
+        {
+          "name": "config",
+          "displayName": "Config",
+          "aliases": ["c"],
+          "reflectionType": [
+            { "kind": 23, "types": [1, 2] },
+            { "kind": 5 },
+            { "kind": 13, "literal": true }
+          ],
+          "type": "enum",
+          "stringifiedType": "string | true",
+          "options": ["string", "true"],
+          "description": "The configuration file to append the completion script to",
+          "array": false,
+          "required": false
+        }
+      ]
+    },
+    "relations": { "parent": "completions", "children": [] }
+  },
   "vars": {
     "commandId": "vars",
     "name": "vars",

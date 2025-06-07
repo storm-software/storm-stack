@@ -54,14 +54,24 @@ export default class StorageCloudflareR2Plugin<
     }
   }
 
+  /**
+   * Adds hooks to the Storm Stack engine for the Cloudflare R2 storage plugin.
+   *
+   * @param hooks - The engine hooks to add
+   */
   public override addHooks(hooks: EngineHooks<TOptions>) {
     hooks.addHooks({
-      "prepare:deploy": this.#prepareDeploy.bind(this)
+      "prepare:config": this.prepareConfig.bind(this)
     });
 
     super.addHooks(hooks);
   }
 
+  /**
+   * Writes the storage runtime source code for the Cloudflare R2 storage plugin.
+   *
+   * @returns The source code as a string
+   */
   protected override writeStorage() {
     if (this.config.binding) {
       return `${getFileHeader()}
@@ -100,7 +110,13 @@ export default s3Driver({
     }
   }
 
-  async #prepareDeploy(context: Context<TOptions>) {
+  /**
+   * Prepares the deploy step for the Cloudflare R2 storage plugin.
+   *
+   * @param context - The resolved Storm Stack context
+   * @returns A promise that resolves when the deploy step is prepared
+   */
+  protected async prepareConfig(context: Context<TOptions>) {
     if (context.options.projectType === "application" && this.config.binding) {
       this.log(
         LogLevelLabel.TRACE,

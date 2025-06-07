@@ -122,12 +122,12 @@ export async function initContext<TOptions extends Options = Options>(
     await removeFile(metaFilePath);
   }
 
-  context.options.platform ??= "neutral";
-  context.options.dts ??= joinPaths(
-    context.workspaceConfig.workspaceRoot,
+  context.options.tsconfig ??= joinPaths(
     context.options.projectRoot,
-    "storm.d.ts"
+    "tsconfig.json"
   );
+  context.options.platform ??= "neutral";
+  context.options.dts ??= joinPaths(context.options.projectRoot, "storm.d.ts");
 
   context.override.bundle ??= true;
   context.override.target ??= "esnext";

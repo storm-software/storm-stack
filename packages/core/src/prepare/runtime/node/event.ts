@@ -22,7 +22,14 @@ import type { Context, Options } from "../../../types/build";
 export function writeEvent<TOptions extends Options = Options>(
   _context: Context<TOptions>
 ) {
-  return `${getFileHeader()}
+  return `
+/**
+ * The Storm Stack event module.
+ *
+ * @module storm:event
+ */
+
+${getFileHeader()}
 
 import type { IStormEvent } from "@storm-stack/types/node/event";
 import { StormPayload } from "./payload";
