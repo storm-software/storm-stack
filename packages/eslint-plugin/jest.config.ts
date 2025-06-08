@@ -1,0 +1,7 @@
+import { getJestConfig } from "@storm-software/testing-tools";
+
+export default getJestConfig(
+  "packages/eslint-plugin",
+  true,
+  "eslint-plugin-storm-stack"
+);

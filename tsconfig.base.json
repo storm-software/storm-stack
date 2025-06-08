@@ -85,18 +85,10 @@
         "packages/types/src/shared/*",
         "packages/types/src/node/*"
       ],
-      "eslint-config-storm-stack": [
-        "packages/eslint-config-storm-stack/src/index.ts"
-      ],
-      "eslint-config-storm-stack/*": [
-        "packages/eslint-config-storm-stack/src/*"
-      ],
-      "eslint-plugin-storm-stack": [
-        "packages/eslint-plugin-storm-stack/src/index.ts"
-      ],
-      "eslint-plugin-storm-stack/*": [
-        "packages/eslint-plugin-storm-stack/src/*"
-      ]
+      "eslint-config-storm-stack": ["packages/eslint-config/src/index.ts"],
+      "eslint-config-storm-stack/*": ["packages/eslint-config/src/*"],
+      "eslint-plugin-storm-stack": ["packages/eslint-plugin/src/index.ts"],
+      "eslint-plugin-storm-stack/*": ["packages/eslint-plugin/src/*"]
     },
     "verbatimModuleSyntax": false
   }

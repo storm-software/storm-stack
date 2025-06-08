@@ -16,25 +16,21 @@
 
  ------------------------------------------------------------------- */
 
-import { generateCode, parseModule } from "magicast";
-import type { SourceFile } from "../../types/build";
-import { getMagicString, getString } from "../utilities/magic-string";
+import { getTsupConfig } from "@storm-stack/tools-config/tsup.shared";
 
-export function transformContext(source: SourceFile): SourceFile {
-  if (getString(source.code).includes("$storm")) {
-    source.code = getMagicString(
-      getString(source.code).replaceAll("$storm", "useStorm()")
-    );
+const config = getTsupConfig({
+  name: "eslint-config",
+  entry: ["src/*.ts"],
+  format: ["esm"],
+  dts: {
+    resolve: true,
+    entry: "./src/index.ts"
+  },
+  bundle: true,
+  splitting: true,
+  clean: true,
+  shims: true,
+  external: ["eslint"]
+});
 
-    const ast = parseModule(source.code.toString());
-    ast.imports.$append({
-      imported: "useStorm",
-      from: "storm:context"
-    });
-
-    const { code } = generateCode(ast);
-    source.code = getMagicString(code);
-  }
-
-  return source;
-}
+export default config;

@@ -16,25 +16,19 @@
 
  ------------------------------------------------------------------- */
 
-import { generateCode, parseModule } from "magicast";
-import type { SourceFile } from "../../types/build";
-import { getMagicString, getString } from "../utilities/magic-string";
+import prettierConfig from "@storm-software/prettier";
+import prettier from "prettier";
 
-export function transformContext(source: SourceFile): SourceFile {
-  if (getString(source.code).includes("$storm")) {
-    source.code = getMagicString(
-      getString(source.code).replaceAll("$storm", "useStorm()")
-    );
+/** @type {import('eslint-doc-generator').GenerateOptions} */
+const config = {
+  postprocess: content =>
+    prettier.format(content, { ...prettierConfig, parser: "markdown" }),
+  configEmoji: [
+    ["base", "📋"],
+    ["recommended", "🌟"],
+    ["strict", "🔒"]
+  ],
+  ruleDocSectionInclude: ["Rule Details", "Version"]
+};
 
-    const ast = parseModule(source.code.toString());
-    ast.imports.$append({
-      imported: "useStorm",
-      from: "storm:context"
-    });
-
-    const { code } = generateCode(ast);
-    source.code = getMagicString(code);
-  }
-
-  return source;
-}
+export default config;

@@ -1,0 +1,28 @@
+{
+  "name": "eslint-config",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "library",
+  "sourceRoot": "packages/eslint-config/src",
+  "targets": {
+    "build-typegen": {
+      "executor": "nx:run-commands",
+      "dependsOn": ["clean", "^build"],
+      "options": {
+        "command": "tsx --tsconfig tsconfig.scripts.json scripts/typegen.ts",
+        "cwd": "{projectRoot}"
+      }
+    },
+    "build-base": {
+      "executor": "nx:run-commands",
+      "dependsOn": ["clean", "^build"],
+      "options": {
+        "command": "tsup-node --config=tsup.config.ts",
+        "cwd": "{projectRoot}"
+      }
+    },
+    "nx-release-publish": {
+      "executor": "@storm-software/workspace-tools:npm-publish"
+    }
+  },
+  "tags": ["platform:node"]
+}

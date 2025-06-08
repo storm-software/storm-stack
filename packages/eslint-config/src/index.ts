@@ -16,25 +16,19 @@
 
  ------------------------------------------------------------------- */
 
-import { generateCode, parseModule } from "magicast";
-import type { SourceFile } from "../../types/build";
-import { getMagicString, getString } from "../utilities/magic-string";
+/**
+ * The devkit-eslint-config library used by Storm Software for building NodeJS applications.
+ *
+ * @remarks
+ * A package containing shared ESLint configuration used by Storm Stack projects.
+ *
+ * @packageDocumentation
+ */
 
-export function transformContext(source: SourceFile): SourceFile {
-  if (getString(source.code).includes("$storm")) {
-    source.code = getMagicString(
-      getString(source.code).replaceAll("$storm", "useStorm()")
-    );
+import { getConfig } from "./preset";
 
-    const ast = parseModule(source.code.toString());
-    ast.imports.$append({
-      imported: "useStorm",
-      from: "storm:context"
-    });
+const config = getConfig({
+  "storm-stack": "recommended"
+});
 
-    const { code } = generateCode(ast);
-    source.code = getMagicString(code);
-  }
-
-  return source;
-}
+export default config;

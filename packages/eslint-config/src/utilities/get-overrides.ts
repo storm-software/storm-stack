@@ -16,25 +16,20 @@
 
  ------------------------------------------------------------------- */
 
-import { generateCode, parseModule } from "magicast";
-import type { SourceFile } from "../../types/build";
-import { getMagicString, getString } from "../utilities/magic-string";
+import { getOverrides as getBaseOverrides } from "@storm-software/eslint";
+import type { OptionsConfig as BaseOptionsConfig } from "@storm-software/eslint/types";
+import type { OptionsConfig } from "../types";
 
-export function transformContext(source: SourceFile): SourceFile {
-  if (getString(source.code).includes("$storm")) {
-    source.code = getMagicString(
-      getString(source.code).replaceAll("$storm", "useStorm()")
-    );
-
-    const ast = parseModule(source.code.toString());
-    ast.imports.$append({
-      imported: "useStorm",
-      from: "storm:context"
-    });
-
-    const { code } = generateCode(ast);
-    source.code = getMagicString(code);
-  }
-
-  return source;
+/**
+ * Get the overrides for the ESLint configuration.
+ *
+ * @param options - The options for the ESLint configuration.
+ * @param configName - The name of the configuration to get the overrides for.
+ * @returns The overrides for the ESLint configuration.
+ */
+export function getOverrides(
+  options: OptionsConfig,
+  configName: keyof OptionsConfig
+) {
+  return getBaseOverrides(options, configName as keyof BaseOptionsConfig);
 }
