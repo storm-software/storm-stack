@@ -363,6 +363,7 @@ overrides:
   '@storm-stack/core': workspace:*
   '@storm-stack/devkit': workspace:*
   '@storm-stack/biome': workspace:*
+  '@storm-stack/tsdoc': workspace:*
   '@storm-stack/plugin-log-console': workspace:*
   '@storm-stack/plugin-log-storage': workspace:*
   '@storm-stack/plugin-log-otel': workspace:*
@@ -1398,6 +1399,31 @@ importers:
       tsup:
         specifier: 'catalog:'
         version: 8.4.0(@microsoft/api-extractor@7.52.8(@types/node@22.15.24))(@swc/core@1.11.22(@swc/helpers@0.5.17))(jiti@2.4.2)(postcss@8.5.4)(tsx@4.19.4)(typescript@5.8.3)(yaml@2.8.0)
+
+  packages/tsdoc:
+    dependencies:
+      '@microsoft/api-extractor':
+        specifier: '>=7.52.0'
+        version: 7.52.8(@types/node@22.15.3)
+      '@microsoft/tsdoc':
+        specifier: '>=0.15.0'
+        version: 0.15.1
+      '@microsoft/tsdoc-config':
+        specifier: '>=0.17.0'
+        version: 0.17.1
+      '@storm-software/tsdoc':
+        specifier: 'catalog:'
+        version: 0.4.1(@microsoft/api-extractor@7.52.8(@types/node@22.15.3))(@microsoft/tsdoc-config@0.17.1)(@microsoft/tsdoc@0.15.1)
+    devDependencies:
+      '@types/node':
+        specifier: 'catalog:'
+        version: 22.15.3
+      tsup:
+        specifier: 'catalog:'
+        version: 8.4.0(@microsoft/api-extractor@7.52.8(@types/node@22.15.3))(@swc/core@1.11.22(@swc/helpers@0.5.17))(jiti@2.4.2)(postcss@8.5.4)(tsx@4.19.4)(typescript@5.8.3)(yaml@2.8.0)
+      typescript:
+        specifier: ^5.8.3
+        version: 5.8.3
 
   packages/types:
     dependencies:
@@ -26384,18 +26410,18 @@ snapshots:
       micromark-util-character: 2.1.1
       micromark-util-sanitize-uri: 2.0.1
       micromark-util-symbol: 2.0.1
-      micromark-util-types: 2.0.2
+      micromark-util-types: 2.0.1
 
   micromark-extension-gfm-footnote@2.1.0:
     dependencies:
       devlop: 1.1.0
-      micromark-core-commonmark: 2.0.3
+      micromark-core-commonmark: 2.0.2
       micromark-factory-space: 2.0.1
       micromark-util-character: 2.1.1
       micromark-util-normalize-identifier: 2.0.1
       micromark-util-sanitize-uri: 2.0.1
       micromark-util-symbol: 2.0.1
-      micromark-util-types: 2.0.2
+      micromark-util-types: 2.0.1
 
   micromark-extension-gfm-strikethrough@2.1.0:
     dependencies:
@@ -26534,7 +26560,7 @@ snapshots:
   micromark-factory-space@2.0.1:
     dependencies:
       micromark-util-character: 2.1.1
-      micromark-util-types: 2.0.2
+      micromark-util-types: 2.0.1
 
   micromark-factory-title@2.0.1:
     dependencies:
@@ -26563,7 +26589,7 @@ snapshots:
     dependencies:
       micromark-util-character: 2.1.1
       micromark-util-symbol: 2.0.1
-      micromark-util-types: 2.0.2
+      micromark-util-types: 2.0.1
 
   micromark-util-combine-extensions@2.0.1:
     dependencies:
@@ -26601,7 +26627,7 @@ snapshots:
 
   micromark-util-resolve-all@2.0.1:
     dependencies:
-      micromark-util-types: 2.0.2
+      micromark-util-types: 2.0.1
 
   micromark-util-sanitize-uri@2.0.1:
     dependencies:
@@ -26614,7 +26640,7 @@ snapshots:
       devlop: 1.1.0
       micromark-util-chunked: 2.0.1
       micromark-util-symbol: 2.0.1
-      micromark-util-types: 2.0.2
+      micromark-util-types: 2.0.1
 
   micromark-util-symbol@2.0.1: {}
 

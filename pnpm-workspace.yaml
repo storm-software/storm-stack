@@ -163,6 +163,7 @@ overrides:
   '@storm-stack/core': workspace:*
   '@storm-stack/devkit': workspace:*
   '@storm-stack/biome': workspace:*
+  '@storm-stack/tsdoc': workspace:*
   '@storm-stack/plugin-log-console': workspace:*
   '@storm-stack/plugin-log-storage': workspace:*
   '@storm-stack/plugin-log-otel': workspace:*

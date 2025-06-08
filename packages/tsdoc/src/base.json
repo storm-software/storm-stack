@@ -1,0 +1,39 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/tsdoc/v0/tsdoc.schema.json",
+  "tagDefinitions": [
+    {
+      "tagName": "@title",
+      "syntaxKind": "block"
+    },
+    {
+      "tagName": "@domain",
+      "syntaxKind": "block"
+    },
+    {
+      "tagName": "@hidden",
+      "syntaxKind": "block"
+    },
+    {
+      "tagName": "@ignore",
+      "syntaxKind": "block"
+    },
+    {
+      "tagName": "@internal",
+      "syntaxKind": "block"
+    },
+    {
+      "tagName": "@readonly",
+      "syntaxKind": "block"
+    },
+    {
+      "tagName": "@alias",
+      "syntaxKind": "block",
+      "allowMultiple": true
+    },
+    {
+      "tagName": "@permission",
+      "syntaxKind": "block",
+      "allowMultiple": true
+    }
+  ]
+}

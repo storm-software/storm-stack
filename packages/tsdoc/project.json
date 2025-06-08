@@ -1,0 +1,22 @@
+{
+  "name": "tsdoc",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "library",
+  "sourceRoot": "packages/tsdoc/src",
+  "targets": {
+    "build": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": [
+          "pnpm copyfiles LICENSE dist/packages/tsdoc",
+          "pnpm copyfiles --up=2 ./packages/tsdoc/*.md ./packages/tsdoc/package.json dist/packages/tsdoc",
+          "pnpm copyfiles --up=3 ./packages/tsdoc/src/* dist/packages/tsdoc/config"
+        ]
+      }
+    },
+    "nx-release-publish": {
+      "executor": "@storm-software/workspace-tools:npm-publish"
+    }
+  },
+  "tags": ["platform:neutral"]
+}

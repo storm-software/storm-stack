@@ -77,6 +77,8 @@
       "@storm-stack/tools-nx/*": ["tools/nx/src/*"],
       "@storm-stack/tools-scripts": ["tools/scripts/src/index.ts"],
       "@storm-stack/tools-scripts/*": ["tools/scripts/src/*"],
+      "@storm-stack/tsdoc": ["packages/tsdoc/src/index.ts"],
+      "@storm-stack/tsdoc/*": ["packages/tsdoc/src/*"],
       "@storm-stack/types": ["packages/types/src/index.ts"],
       "@storm-stack/types/*": [
         "packages/types/src/*",

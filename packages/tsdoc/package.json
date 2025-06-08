@@ -1,0 +1,85 @@
+{
+  "name": "@storm-stack/tsdoc",
+  "version": "0.0.1",
+  "type": "module",
+  "description": "Shared tsdoc configuration files used in Storm Stack projects.",
+  "repository": {
+    "type": "github",
+    "url": "https://github.com/storm-software/storm-stack.git",
+    "directory": "packages/tsdoc"
+  },
+  "homepage": "https://stormsoftware.com",
+  "bugs": {
+    "url": "https://stormsoftware.com/support",
+    "email": "support@stormsoftware.com"
+  },
+  "author": {
+    "name": "Storm Software",
+    "email": "contact@stormsoftware.com",
+    "url": "https://stormsoftware.com"
+  },
+  "maintainers": [
+    {
+      "name": "Storm Software",
+      "email": "contact@stormsoftware.com",
+      "url": "https://stormsoftware.com"
+    }
+  ],
+  "contributors": [
+    {
+      "name": "Storm Software",
+      "email": "contact@stormsoftware.com",
+      "url": "https://stormsoftware.com"
+    }
+  ],
+  "funding": {
+    "type": "github",
+    "url": "https://github.com/sponsors/storm-software"
+  },
+  "license": "Apache-2.0",
+  "private": false,
+  "exports": {
+    "./package.json": "./package.json",
+    "./base.json": "./config/base.json",
+    "./recommended.json": "./config/recommended.json"
+  },
+  "files": [
+    "config/**/*",
+    "dist/**/*"
+  ],
+  "keywords": [
+    "storm-stack",
+    "storm-software",
+    "tsdoc",
+    "typedoc",
+    "api-extractor"
+  ],
+  "peerDependencies": {
+    "@microsoft/api-extractor": ">=7.52.0",
+    "@microsoft/tsdoc": ">=0.15.0",
+    "@microsoft/tsdoc-config": ">=0.17.0"
+  },
+  "peerDependenciesMeta": {
+    "@microsoft/api-extractor": {
+      "optional": true
+    },
+    "@microsoft/tsdoc": {
+      "optional": true
+    },
+    "@microsoft/tsdoc-config": {
+      "optional": true
+    }
+  },
+  "dependencies": {
+    "@storm-software/tsdoc": "catalog:"
+  },
+  "devDependencies": {
+    "@types/node": "catalog:",
+    "tsup": "catalog:",
+    "typescript": "^5.8.3"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "sideEffects": false
+}
