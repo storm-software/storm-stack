@@ -5,11 +5,11 @@
  This code was released as part of the Storm Stack project. Storm Stack
  is maintained by Storm Software under the Apache-2.0 license, and is
  free for commercial and private use. For more information, please visit
- our licensing page at https://stormsoftware.com/projects/storm-stack/license.
+ our licensing page at https://stormsoftware.com/license.
 
  Website:                  https://stormsoftware.com
  Repository:               https://github.com/storm-software/storm-stack
- Documentation:            https://stormsoftware.com/projects/storm-stack/docs
+ Documentation:            https://docs.stormsoftware.com/projects/storm-stack
  Contact:                  https://stormsoftware.com/contact
 
  SPDX-License-Identifier:  Apache-2.0
@@ -17,6 +17,9 @@
  ------------------------------------------------------------------- */
 
 import { LogLevelLabel } from "@storm-software/config-tools/types";
+import { removeFile } from "@stryke/fs/remove-file";
+import { existsSync } from "@stryke/path/exists";
+import { getVarsReflectionsPath } from "../../helpers/dotenv/resolve";
 import { writeDotenvReflection } from "../../helpers/dotenv/write-reflections";
 import type { Context, EngineHooks, Options } from "../../types/build";
 import type { LogFn } from "../../types/config";
@@ -30,6 +33,16 @@ export async function prepareReflections<TOptions extends Options = Options>(
     LogLevelLabel.TRACE,
     `Preparing the reflection artifacts for the Storm Stack project.`
   );
+
+  const variablesReflectionFile = getVarsReflectionsPath(context, "variables");
+  if (existsSync(variablesReflectionFile)) {
+    await removeFile(variablesReflectionFile);
+  }
+
+  const secretsReflectionFile = getVarsReflectionsPath(context, "secrets");
+  if (existsSync(secretsReflectionFile)) {
+    await removeFile(secretsReflectionFile);
+  }
 
   await writeDotenvReflection(
     log,
