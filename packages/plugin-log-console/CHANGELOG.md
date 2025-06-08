@@ -2,6 +2,20 @@
 
 # Changelog for Storm Stack - Plugin Log Console
 
+## [0.14.1](https://github.com/storm-software/storm-stack/releases/tag/plugin-log-console%400.14.1) (2025-06-08)
+
+### Miscellaneous
+
+- **monorepo:** Update workspace package dependencies
+
+### Updated Dependencies
+
+- Updated devkit to 0.7.1
+- Updated devkit to 0.7.1
+- Updated core to 0.27.1
+- Updated core to 0.27.1
+- Updated nx to 0.13.1
+
 ## [0.14.0](https://github.com/storm-software/storm-stack/releases/tag/plugin-log-console%400.14.0) (2025-06-07)
 
 ### Features
