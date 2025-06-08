@@ -5,11 +5,11 @@
  This code was released as part of the Storm Stack project. Storm Stack
  is maintained by Storm Software under the Apache-2.0 license, and is
  free for commercial and private use. For more information, please visit
- our licensing page at https://stormsoftware.com/projects/storm-stack/license.
+ our licensing page at https://stormsoftware.com/license.
 
  Website:                  https://stormsoftware.com
  Repository:               https://github.com/storm-software/storm-stack
- Documentation:            https://stormsoftware.com/projects/storm-stack/docs
+ Documentation:            https://docs.stormsoftware.com/projects/storm-stack
  Contact:                  https://stormsoftware.com/contact
 
  SPDX-License-Identifier:  Apache-2.0
@@ -46,7 +46,7 @@ import {
   StormRuntimeInfo,
   StormRuntimePaths
 } from "@storm-stack/types/node/env";
-import { StormVariables } from "./vars";
+import { StormConfig } from "./config";
 import { StormError } from "./errors";
 import os from "node:os";
 import { readFile } from "node:fs/promises";
@@ -117,7 +117,7 @@ export const isCI = Boolean(
 export const mode = String(
     ${
       context.dotenv.values.MODE
-        ? `$storm.vars.MODE`
+        ? `$storm.config.MODE`
         : `process.env.NEXT_PUBLIC_VERCEL_ENV ||
     process.env.NODE_ENV ||
     "production"`
@@ -200,20 +200,20 @@ export const organization = "${
       ? kebabCase(context.workspaceConfig?.organization)
           .trim()
           .replace(/\s+/g, "")
-      : "$storm.vars.ORGANIZATION"
+      : "$storm.config.ORGANIZATION"
   }";
 
 /** The current application */
 export const name = "${
     context.options.name
       ? kebabCase(context.options.name).trim().replace(/\s+/g, "")
-      : "$storm.vars.APP_NAME"
+      : "$storm.config.APP_NAME"
   }";
 /** The current application */
 export const version = "${
     context.packageJson?.version
       ? context.packageJson.version
-      : "$storm.vars.APP_VERSION"
+      : "$storm.config.APP_VERSION"
   }";
 
 const homedir = os.homedir();
@@ -344,12 +344,12 @@ export const paths = isMacOS
 export const build = {
   packageName: "${context.packageJson?.name || context.options.name}",
   organization,
-  buildId: $storm.vars.BUILD_ID!,
-  timestamp: $storm.vars.BUILD_TIMESTAMP!,
-  releaseId: $storm.vars.RELEASE_ID!,
-  releaseTag: $storm.vars.RELEASE_TAG!,
+  buildId: $storm.config.BUILD_ID!,
+  timestamp: $storm.config.BUILD_TIMESTAMP!,
+  releaseId: $storm.config.RELEASE_ID!,
+  releaseTag: $storm.config.RELEASE_TAG!,
   mode,
-  platform: ${context.dotenv.values.PLATFORM ? `$storm.vars.PLATFORM` : "node"} as StormBuildInfo["platform"],
+  platform: ${context.dotenv.values.PLATFORM ? `$storm.config.PLATFORM` : "node"} as StormBuildInfo["platform"],
   isProduction,
   isStaging,
   isDevelopment
@@ -393,17 +393,17 @@ export const runtime = {
 //   }
 // };
 
-// let varsFile = {} as Record<string, any>;
-// if (existsSync(join(paths.config, "vars.json"))) {
-//   varsFile = JSON.parse(await readFile(join(paths.config, "vars.json"), "utf8") || "{}");
+// let configFile = {} as Record<string, any>;
+// if (existsSync(join(paths.config, "config.json"))) {
+//   configFile = JSON.parse(await readFile(join(paths.config, "config.json"), "utf8") || "{}");
 // }
-// if (existsSync(join(paths.config.replace(new RegExp(\`/\${name}$\`), ""), "vars.json"))) {
-//   varsFile = deserialize<StormVariables>(
+// if (existsSync(join(paths.config.replace(new RegExp(\`/\${name}$\`), ""), "config.json"))) {
+//   configFile = deserialize<StormConfig>(
 //     {
 //       ...JSON.parse(
-//         await readFile(join(paths.config.replace(new RegExp(\`/\${name}$\`), ""), "vars.json"), "utf8") || "{}"
+//         await readFile(join(paths.config.replace(new RegExp(\`/\${name}$\`), ""), "config.json"), "utf8") || "{}"
 //       ),
-//       ...varsFile
+//       ...configFile
 //     },
 //     undefined,
 //     serializer,
@@ -411,14 +411,14 @@ export const runtime = {
 //   );
 // }
 
-// export const vars = new Proxy<StormVariables>(
-//   deserialize<StormVariables>(
+// export const config = new Proxy<StormConfig>(
+//   deserialize<StormConfig>(
 //     process.env,
 //     undefined,
 //     serializer,
 //     stormVariablesNamingStrategy
 //   ), {
 //   get(target, prop, receiver) {
-//     return target[prop as keyof StormVariables] ?? varsFile[prop as keyof StormVariables];
+//     return target[prop as keyof StormConfig] ?? configFile[prop as keyof StormConfig];
 //   }
 // });

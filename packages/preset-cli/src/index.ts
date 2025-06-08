@@ -5,11 +5,11 @@
  This code was released as part of the Storm Stack project. Storm Stack
  is maintained by Storm Software under the Apache-2.0 license, and is
  free for commercial and private use. For more information, please visit
- our licensing page at https://stormsoftware.com/projects/storm-stack/license.
+ our licensing page at https://stormsoftware.com/license.
 
  Website:                  https://stormsoftware.com
  Repository:               https://github.com/storm-software/storm-stack
- Documentation:            https://stormsoftware.com/projects/storm-stack/docs
+ Documentation:            https://docs.stormsoftware.com/projects/storm-stack
  Contact:                  https://stormsoftware.com/contact
 
  SPDX-License-Identifier:  Apache-2.0
@@ -63,10 +63,10 @@ export default class StormStackCLIPreset<
           envPath: "log"
         }
       ],
-      this.#config.manageVars !== false && [
+      this.#config.manageConfig !== false && [
         "@storm-stack/plugin-storage-fs",
         {
-          namespace: "vars",
+          namespace: "config",
           base:
             isSetString(this.#config.bin) ||
             (Array.isArray(this.#config.bin) && this.#config.bin.length > 0)

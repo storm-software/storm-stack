@@ -5,11 +5,11 @@
  This code was released as part of the Storm Stack project. Storm Stack
  is maintained by Storm Software under the Apache-2.0 license, and is
  free for commercial and private use. For more information, please visit
- our licensing page at https://stormsoftware.com/projects/storm-stack/license.
+ our licensing page at https://stormsoftware.com/license.
 
  Website:                  https://stormsoftware.com
  Repository:               https://github.com/storm-software/storm-stack
- Documentation:            https://stormsoftware.com/projects/storm-stack/docs
+ Documentation:            https://docs.stormsoftware.com/projects/storm-stack
  Contact:                  https://stormsoftware.com/contact
 
  SPDX-License-Identifier:  Apache-2.0
@@ -47,7 +47,7 @@ export async function docsDotenv<TOptions extends Options = Options>(
     await createDirectory(outputPath);
   }
 
-  const vars = await resolveDotenvProperties(log, context, "variables");
+  const config = await resolveDotenvProperties(log, context, "config");
   const dotenvDocFile = joinPaths(outputPath, "dotenv.md");
 
   log(
@@ -66,13 +66,13 @@ Below is a list of environment variables used by the [${
       context.packageJson.name
     }](https://www.npmjs.com/package/${context.packageJson.name}) package. These values can be updated in the \`.env\` file in the root of the project.
 
-## Variables
+## Configuration Parameters
 
 The below list of environment variables are used as configuration parameters to drive the processing of the application. The data contained in these variables are **not** considered sensitive or confidential. Any values provided in these variables will be available in plain text to the public.
 
 | Name | Description | Type | Default Value | Required |
 | ---- | ----------- | ---- | ------------- | :------: |
-${vars
+${config
   .filter(property => property.getNameAsString() !== "__STORM_INJECTED__")
   .sort((a, b) => a.getNameAsString().localeCompare(b.getNameAsString()))
   .map(reflectionProperty => {

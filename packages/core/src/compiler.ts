@@ -5,11 +5,11 @@
  This code was released as part of the Storm Stack project. Storm Stack
  is maintained by Storm Software under the Apache-2.0 license, and is
  free for commercial and private use. For more information, please visit
- our licensing page at https://stormsoftware.com/projects/storm-stack/license.
+ our licensing page at https://stormsoftware.com/license.
 
  Website:                  https://stormsoftware.com
  Repository:               https://github.com/storm-software/storm-stack
- Documentation:            https://stormsoftware.com/projects/storm-stack/docs
+ Documentation:            https://docs.stormsoftware.com/projects/storm-stack
  Contact:                  https://stormsoftware.com/contact
 
  SPDX-License-Identifier:  Apache-2.0
@@ -25,9 +25,9 @@ import { replacePath } from "@stryke/path/replace";
 import { slash } from "@stryke/path/slash";
 import type MagicString from "magic-string";
 import ts from "typescript";
+import { transformConfig } from "./helpers/transform/transform-config";
 import { transformContext } from "./helpers/transform/transform-context";
 import { transformErrors } from "./helpers/transform/transform-errors";
-import { transformVars } from "./helpers/transform/transform-vars";
 import { getCache, setCache } from "./helpers/utilities/cache";
 import { createLog } from "./helpers/utilities/logger";
 import { getMagicString } from "./helpers/utilities/magic-string";
@@ -108,7 +108,7 @@ export class Compiler<TOptions extends Options = Options>
       }
 
       if (!options.skipDotenvTransform) {
-        source = await transformVars<TOptions>(this.log, source, context);
+        source = await transformConfig<TOptions>(this.log, source, context);
       }
 
       if (!options.skipErrorsTransform) {

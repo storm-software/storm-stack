@@ -5,11 +5,11 @@
  This code was released as part of the Storm Stack project. Storm Stack
  is maintained by Storm Software under the Apache-2.0 license, and is
  free for commercial and private use. For more information, please visit
- our licensing page at https://stormsoftware.com/projects/storm-stack/license.
+ our licensing page at https://stormsoftware.com/license.
 
  Website:                  https://stormsoftware.com
  Repository:               https://github.com/storm-software/storm-stack
- Documentation:            https://stormsoftware.com/projects/storm-stack/docs
+ Documentation:            https://docs.stormsoftware.com/projects/storm-stack
  Contact:                  https://stormsoftware.com/contact
 
  SPDX-License-Identifier:  Apache-2.0
@@ -224,7 +224,7 @@ const inspect: (value: unknown) => string =
 
 
 const SERVICE_NAME =
-  ${this.config.serviceName || '$storm.vars.OTEL_SERVICE_NAME || $storm.vars.APP_NAME || "storm"'};
+  ${this.config.serviceName || '$storm.config.OTEL_SERVICE_NAME || $storm.config.APP_NAME || "storm"'};
 
 const resource = resourceFromAttributes({
   [ATTR_SERVICE_NAME]: SERVICE_NAME
@@ -245,7 +245,7 @@ loggerProvider.addLogRecordProcessor(
 
 const logger = loggerProvider.getLogger(
   SERVICE_NAME,
-  $storm.vars.APP_VERSION
+  $storm.config.APP_VERSION
 );
 
 const sink = (record: LogRecord) => {

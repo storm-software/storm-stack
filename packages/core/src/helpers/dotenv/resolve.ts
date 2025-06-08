@@ -5,11 +5,11 @@
  This code was released as part of the Storm Stack project. Storm Stack
  is maintained by Storm Software under the Apache-2.0 license, and is
  free for commercial and private use. For more information, please visit
- our licensing page at https://stormsoftware.com/projects/storm-stack/license.
+ our licensing page at https://stormsoftware.com/license.
 
  Website:                  https://stormsoftware.com
  Repository:               https://github.com/storm-software/storm-stack
- Documentation:            https://stormsoftware.com/projects/storm-stack/docs
+ Documentation:            https://docs.stormsoftware.com/projects/storm-stack
  Contact:                  https://stormsoftware.com/contact
 
  SPDX-License-Identifier:  Apache-2.0
@@ -55,14 +55,14 @@ export function getDotenvDefaultTypeDefinition<
 
 export function getDotenvReflectionsPath<TOptions extends Options = Options>(
   context: Context<TOptions>,
-  name: "variables" | "secrets"
+  name: "config" | "secrets"
 ): string {
   return joinPaths(getReflectionsPath(context), "dotenv", `${name}.json`);
 }
 
-export function getVarsReflectionsPath<TOptions extends Options = Options>(
+export function getConfigReflectionsPath<TOptions extends Options = Options>(
   context: Context<TOptions>,
-  name: "variables" | "secrets"
+  name: "config" | "secrets"
 ): string {
   return joinPaths(getReflectionsPath(context), `${name}.json`);
 }
@@ -72,9 +72,9 @@ export async function resolveDotenvProperties<
 >(
   log: LogFn,
   context: Context<TOptions>,
-  name: "variables" | "secrets"
+  name: "config" | "secrets"
 ): Promise<ReflectionProperty[]> {
-  const varsFilePath = getVarsReflectionsPath(context, name);
+  const configFilePath = getConfigReflectionsPath(context, name);
 
   const reflection = ReflectionClass.from({
     kind: ReflectionKind.objectLiteral,
@@ -83,21 +83,21 @@ export async function resolveDotenvProperties<
   });
 
   try {
-    if (existsSync(varsFilePath)) {
+    if (existsSync(configFilePath)) {
       return resolveClassType(
-        deserializeType(await readJsonFile<SerializedTypes>(varsFilePath))
+        deserializeType(await readJsonFile<SerializedTypes>(configFilePath))
       ).getProperties();
     }
   } catch (e) {
     log(
       LogLevelLabel.ERROR,
-      `Failed to read the dotenv properties from "${varsFilePath}". Error: ${e}`
+      `Failed to read the dotenv properties from "${configFilePath}". Error: ${e}`
     );
   }
 
   await writeFile(
     log,
-    varsFilePath,
+    configFilePath,
     StormJSON.stringify(reflection.serializeType())
   );
 
@@ -108,23 +108,24 @@ export async function resolveDotenvReflection<
   TOptions extends Options = Options
 >(
   context: Context<TOptions>,
-  name: "variables" | "secrets",
+  name: "config" | "secrets",
   skipContext = false
 ): Promise<ReflectionClass<any>> {
   if (context.dotenv?.types?.[name]?.reflection && !skipContext) {
     return context.dotenv?.types?.[name]?.reflection;
   }
 
-  const varsFilePath = getDotenvReflectionsPath(context, name);
-  if (existsSync(varsFilePath)) {
-    const varsFileContent = await readJsonFile<SerializedTypes>(varsFilePath);
-    const varsType = deserializeType(varsFileContent);
-    if (varsType) {
-      const reflection = resolveClassType(varsType);
+  const configFilePath = getDotenvReflectionsPath(context, name);
+  if (existsSync(configFilePath)) {
+    const configFileContent =
+      await readJsonFile<SerializedTypes>(configFilePath);
+    const configType = deserializeType(configFileContent);
+    if (configType) {
+      const reflection = resolveClassType(configType);
 
       context.dotenv ??= {} as ResolvedDotenvOptions;
       context.dotenv.types ??= {
-        variables: {} as ResolvedDotenvType<ReflectionClass<any>>
+        config: {} as ResolvedDotenvType<ReflectionClass<any>>
       };
       context.dotenv.types[name] = {
         reflection
@@ -134,7 +135,7 @@ export async function resolveDotenvReflection<
     }
   } else {
     throw new Error(
-      `The dotenv reflection file "${varsFilePath}" does not exist. Please run the "prepare" command to generate the dotenv reflection file.`
+      `The dotenv reflection file "${configFilePath}" does not exist. Please run the "prepare" command to generate the dotenv reflection file.`
     );
   }
 

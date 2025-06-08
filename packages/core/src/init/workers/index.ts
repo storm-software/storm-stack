@@ -48,8 +48,8 @@ export async function initWorkers<TOptions extends Options = Options>(
     1
   );
 
-  context.workers.commitVars = createWorker(
-    joinPaths(packagePath, "workers", "commit-vars.cjs"),
+  context.workers.commitConfig = createWorker(
+    joinPaths(packagePath, "workers", "commit-config.cjs"),
     ["commit"]
   );
 

@@ -22,16 +22,16 @@ import { LogLevelLabel } from "@storm-software/config-tools/types";
 import type { Context, Options, SourceFile } from "../../types/build";
 import type { LogFn } from "../../types/config";
 import {
-  getVarsReflectionsPath,
+  getConfigReflectionsPath,
   resolveDotenvReflection
 } from "../dotenv/resolve";
 
-export async function transformVars<TOptions extends Options = Options>(
+export async function transformConfig<TOptions extends Options = Options>(
   log: LogFn,
   source: SourceFile,
   context: Context<TOptions>
 ): Promise<SourceFile> {
-  const dotenvReflection = await resolveDotenvReflection(context, "variables");
+  const dotenvReflection = await resolveDotenvReflection(context, "config");
   const dotenvAliasProperties = dotenvReflection
     .getProperties()
     .filter(prop => prop.getAlias().length > 0);
@@ -43,8 +43,8 @@ export async function transformVars<TOptions extends Options = Options>(
     rule: {
       kind: "member_expression",
       any: [
-        { pattern: "$storm.vars.$ENV_NAME" },
-        { pattern: "useStorm().vars.$ENV_NAME" },
+        { pattern: "$storm.config.$ENV_NAME" },
+        { pattern: "useStorm().config.$ENV_NAME" },
         { pattern: "process.env.$ENV_NAME" },
         { pattern: "import.meta.env.$ENV_NAME" }
       ]
@@ -54,9 +54,9 @@ export async function transformVars<TOptions extends Options = Options>(
     return source;
   }
 
-  const varsReflection = ReflectionClass.from({
+  const configReflection = ReflectionClass.from({
     kind: ReflectionKind.objectLiteral,
-    description: `An object containing the configuration variables used by the ${context.options.name ? `${context.options.name} application` : "application"}.`,
+    description: `An object containing the configuration parameters used by the ${context.options.name ? `${context.options.name} application` : "application"}.`,
     types: []
   });
 
@@ -110,8 +110,8 @@ export async function transformVars<TOptions extends Options = Options>(
           source.code = source.code.replaceAll(node.text(), String(value));
         }
 
-        if (!varsReflection.hasProperty(name)) {
-          varsReflection.addProperty(dotenvProperty.property);
+        if (!configReflection.hasProperty(name)) {
+          configReflection.addProperty(dotenvProperty.property);
         }
       } else {
         missingEnvNames.push(name);
@@ -130,19 +130,19 @@ export async function transformVars<TOptions extends Options = Options>(
         .map(typeDef => ` - ${String(typeDef)} `)
         .join(
           "\n"
-        )} \n\nUsing the following env prefix: \n${context.dotenv.prefix.map(prefix => ` - ${prefix}`).join("\n")} \n\nPlease check your \`dotenv\` configuration option. If you are using a custom dotenv type definition, please make sure that the variable names match the ones in the code. \n\n`
+        )} \n\nUsing the following env prefix: \n${context.dotenv.prefix.map(prefix => ` - ${prefix}`).join("\n")} \n\nPlease check your \`dotenv\` configuration option. If you are using a custom dotenv type definition, please make sure that the configuration names match the ones in the code. \n\n`
     );
   }
 
-  if (varsReflection.getProperties().length > 0) {
+  if (configReflection.getProperties().length > 0) {
     log(
       LogLevelLabel.TRACE,
-      `Adding environment variables from ${source.id} to vars.json.`
+      `Adding environment variables from ${source.id} to config.json.`
     );
 
-    await context.workers.commitVars.commit({
-      filePath: getVarsReflectionsPath(context, "variables"),
-      vars: varsReflection.serializeType()
+    await context.workers.commitConfig.commit({
+      filePath: getConfigReflectionsPath(context, "config"),
+      config: configReflection.serializeType()
     });
   }
 

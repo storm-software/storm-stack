@@ -39,7 +39,7 @@
 
 ### Features
 
-- **core:** Added the `error-lookup` and `commit-vars` workers
+- **core:** Added the `error-lookup` and `commit-config` workers
 
 ### Miscellaneous
 

@@ -48,11 +48,11 @@ import {
   writeCompletionsZsh
 } from "../runtime/completions";
 import {
-  writeVarsDelete,
-  writeVarsGet,
-  writeVarsList,
-  writeVarsSet
-} from "../runtime/vars";
+  writeConfigDelete,
+  writeConfigGet,
+  writeConfigList,
+  writeConfigSet
+} from "../runtime/config";
 import type { StormStackCLIPresetContext } from "../types/build";
 import type { StormStackCLIPresetConfig } from "../types/config";
 import type { CommandReflectionTreeBranch } from "../types/reflection";
@@ -374,7 +374,7 @@ async function handler() {
     });
 
     if (args["version"] || args["v"]) {
-      console.log($storm.vars.APP_VERSION);
+      console.log($storm.config.APP_VERSION);
     } else {
       const isVerbose = args["verbose"] ?? Boolean(process.env.${constantCase(name)}_VERBOSE);
       ${
@@ -865,7 +865,7 @@ async function handler() {
     });
 
     if (args["version"] || args["v"]) {
-      console.log($storm.vars.APP_VERSION);
+      console.log($storm.config.APP_VERSION);
     } else {
       if (args["no-banner"] !== true && !isMinimal) {
         console.log(renderBanner("${command.displayName} Commands", "${description}"));
@@ -936,15 +936,15 @@ async function addCommandArgReflections(
   }
 }
 
-async function generateVarsCommands<TOptions extends Options = Options>(
+async function generateConfigCommands<TOptions extends Options = Options>(
   log: LogFn,
   context: StormStackCLIPresetContext<TOptions>,
   config: StormStackCLIPresetConfig
 ) {
-  if (config.manageVars === false) {
+  if (config.manageConfig === false) {
     log(
       LogLevelLabel.TRACE,
-      "Skipping vars command generation since `manageVars` is false."
+      "Skipping config command generation since `manageConfig` is false."
     );
   } else {
     await Promise.all([
@@ -953,44 +953,44 @@ async function generateVarsCommands<TOptions extends Options = Options>(
         joinPaths(
           context.artifactsPath,
           "commands",
-          "vars",
+          "config",
           "get",
           "handle.ts"
         ),
-        writeVarsGet(context)
+        writeConfigGet(context)
       ),
       writeFile(
         log,
         joinPaths(
           context.artifactsPath,
           "commands",
-          "vars",
+          "config",
           "set",
           "handle.ts"
         ),
-        writeVarsSet(context)
+        writeConfigSet(context)
       ),
       writeFile(
         log,
         joinPaths(
           context.artifactsPath,
           "commands",
-          "vars",
+          "config",
           "list",
           "handle.ts"
         ),
-        writeVarsList(context)
+        writeConfigList(context)
       ),
       writeFile(
         log,
         joinPaths(
           context.artifactsPath,
           "commands",
-          "vars",
+          "config",
           "delete",
           "handle.ts"
         ),
-        writeVarsDelete(context)
+        writeConfigDelete(context)
       )
     ]);
   }
@@ -1001,10 +1001,10 @@ async function generateCompletionCommands<TOptions extends Options = Options>(
   context: StormStackCLIPresetContext<TOptions>,
   config: StormStackCLIPresetConfig
 ) {
-  if (config.manageVars === false) {
+  if (config.manageConfig === false) {
     log(
       LogLevelLabel.TRACE,
-      "Skipping vars command generation since `manageVars` is false."
+      "Skipping config command generation since `manageConfig` is false."
     );
   } else {
     await Promise.all([
@@ -1050,7 +1050,7 @@ export async function prepareRuntime<TOptions extends Options = Options>(
       joinPaths(context.runtimePath, "cli.ts"),
       writeRuntime(context, config)
     ),
-    generateVarsCommands(log, context, config),
+    generateConfigCommands(log, context, config),
     generateCompletionCommands(log, context, config)
   ]);
 }
@@ -1062,23 +1062,23 @@ export async function prepareEntry<TOptions extends Options = Options>(
 ) {
   const commandTree = await reflectCommandTree(log, context, config);
 
-  const varsReflection = await resolveDotenvReflection(context, "variables");
+  const configReflection = await resolveDotenvReflection(context, "config");
   for (const command of Object.values(commandTree.children)) {
     log(
       LogLevelLabel.TRACE,
       `Reflecting command arguments for "${commandTree.name}"`
     );
 
-    await addCommandArgReflections(varsReflection, command);
+    await addCommandArgReflections(configReflection, command);
   }
 
-  context.dotenv.types.variables.reflection = varsReflection;
-  await writeDotenvReflection(log, context, varsReflection, "variables");
+  context.dotenv.types.config.reflection = configReflection;
+  await writeDotenvReflection(log, context, configReflection, "config");
   await writeDotenvProperties(
     log,
     context,
-    "variables",
-    varsReflection.getProperties()
+    "config",
+    configReflection.getProperties()
   );
 
   for (const command of Object.values(commandTree.children)) {
@@ -1131,7 +1131,7 @@ Please upgrade Node.js - \${link("https://nodejs.org/en/download/")}
 async function main() {
   try {
     if (process.argv.includes("--version") || process.argv.includes("-v")) {
-      console.log($storm.vars.APP_VERSION);
+      console.log($storm.config.APP_VERSION);
     } else {
       let command = "";
       if (process.argv.length > 2 && process.argv[2]) {

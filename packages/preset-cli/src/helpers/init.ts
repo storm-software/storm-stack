@@ -5,11 +5,11 @@
  This code was released as part of the Storm Stack project. Storm Stack
  is maintained by Storm Software under the Apache-2.0 license, and is
  free for commercial and private use. For more information, please visit
- our licensing page at https://stormsoftware.com/projects/storm-stack/license.
+ our licensing page at https://stormsoftware.com/license.
 
  Website:                  https://stormsoftware.com
  Repository:               https://github.com/storm-software/storm-stack
- Documentation:            https://stormsoftware.com/projects/storm-stack/docs
+ Documentation:            https://docs.stormsoftware.com/projects/storm-stack
  Contact:                  https://stormsoftware.com/contact
 
  SPDX-License-Identifier:  Apache-2.0
@@ -346,7 +346,7 @@ export async function initEntry<TOptions extends Options = Options>(
       )
     ) {
       throw new Error(
-        "The completions command already exists in the entry point. This is not valid when \`manageVars\` is not false. Please remove it from the entry point or rename it."
+        "The completions command already exists in the entry point. This is not valid when \`manageConfig\` is not false. Please remove it from the entry point or rename it."
       );
     }
 
@@ -371,7 +371,7 @@ export async function initEntry<TOptions extends Options = Options>(
       )
     ) {
       throw new Error(
-        "The completions-bash command already exists in the entry point. This is not valid when \`manageVars\` is not false. Please remove it from the entry point or rename it."
+        "The completions-bash command already exists in the entry point. This is not valid when \`manageConfig\` is not false. Please remove it from the entry point or rename it."
       );
     }
 
@@ -395,7 +395,7 @@ export async function initEntry<TOptions extends Options = Options>(
       )
     ) {
       throw new Error(
-        "The completions-zsh command already exists in the entry point. This is not valid when \`manageVars\` is not false. Please remove it from the entry point or rename it."
+        "The completions-zsh command already exists in the entry point. This is not valid when \`manageConfig\` is not false. Please remove it from the entry point or rename it."
       );
     }
 
@@ -410,130 +410,130 @@ export async function initEntry<TOptions extends Options = Options>(
       isVirtual: false
     });
 
-    if (config.manageVars !== false) {
+    if (config.manageConfig !== false) {
       log(
         LogLevelLabel.TRACE,
-        "Adding the variable management commands to the entry points."
+        "Adding the configuration management commands to the entry points."
       );
 
       if (
         context.entry.some(
           entry =>
-            entry.output === "vars" ||
-            entry.file === joinPaths(commandsDirectory, "vars", "index.ts")
+            entry.output === "config" ||
+            entry.file === joinPaths(commandsDirectory, "config", "index.ts")
         )
       ) {
         throw new Error(
-          "The vars command already exists in the entry point. This is not valid when \`manageVars\` is not false. Please remove it from the entry point or rename it."
+          "The config command already exists in the entry point. This is not valid when \`manageConfig\` is not false. Please remove it from the entry point or rename it."
         );
       }
 
       context.entry.push({
-        displayName: "Variable Management",
+        displayName: "Configuration Management",
         description:
-          "Commands for managing the configuration parameters in the variables store.",
-        file: joinPaths(commandsDirectory, "vars", "index.ts"),
+          "Commands for managing the configuration parameters stored on the file system.",
+        file: joinPaths(commandsDirectory, "config", "index.ts"),
         input: {
-          file: joinPaths(commandsDirectory, "vars", "index.ts")
+          file: joinPaths(commandsDirectory, "config", "index.ts")
         },
-        output: "vars",
-        path: ["vars"],
+        output: "config",
+        path: ["config"],
         isVirtual: true
       });
 
       if (
         context.entry.some(
           entry =>
-            entry.output === "vars-get" ||
+            entry.output === "config-get" ||
             entry.file ===
-              joinPaths(commandsDirectory, "vars", "get", "index.ts")
+              joinPaths(commandsDirectory, "config", "get", "index.ts")
         )
       ) {
         throw new Error(
-          "The vars-get command already exists in the entry point. This is not valid when \`manageVars\` is not false. Please remove it from the entry point or rename it."
+          "The config-get command already exists in the entry point. This is not valid when \`manageConfig\` is not false. Please remove it from the entry point or rename it."
         );
       }
 
       context.entry.push({
-        displayName: "Variables - Get",
-        file: joinPaths(commandsDirectory, "vars", "get", "index.ts"),
+        displayName: "Configuration - Get",
+        file: joinPaths(commandsDirectory, "config", "get", "index.ts"),
         input: {
-          file: joinPaths(commandsDirectory, "vars", "get", "handle.ts")
+          file: joinPaths(commandsDirectory, "config", "get", "handle.ts")
         },
-        output: "vars-get",
-        path: ["vars", "get", "[name]"],
+        output: "config-get",
+        path: ["config", "get", "[name]"],
         isVirtual: false
       });
 
       if (
         context.entry.some(
           entry =>
-            entry.output === "vars-set" ||
+            entry.output === "config-set" ||
             entry.file ===
-              joinPaths(commandsDirectory, "vars", "set", "index.ts")
+              joinPaths(commandsDirectory, "config", "set", "index.ts")
         )
       ) {
         throw new Error(
-          "The vars-set command already exists in the entry point. This is not valid when \`manageVars\` is not false. Please remove it from the entry point or rename it."
+          "The config-set command already exists in the entry point. This is not valid when \`manageConfig\` is not false. Please remove it from the entry point or rename it."
         );
       }
 
       context.entry.push({
-        displayName: "Variables - Set",
-        file: joinPaths(commandsDirectory, "vars", "set", "index.ts"),
+        displayName: "Configuration - Set",
+        file: joinPaths(commandsDirectory, "config", "set", "index.ts"),
         input: {
-          file: joinPaths(commandsDirectory, "vars", "set", "handle.ts")
+          file: joinPaths(commandsDirectory, "config", "set", "handle.ts")
         },
-        output: "vars-set",
-        path: ["vars", "set", "[name]", "[value]"],
+        output: "config-set",
+        path: ["config", "set", "[name]", "[value]"],
         isVirtual: false
       });
 
       if (
         context.entry.some(
           entry =>
-            entry.output === "vars-delete" ||
+            entry.output === "config-delete" ||
             entry.file ===
-              joinPaths(commandsDirectory, "vars", "delete", "index.ts")
+              joinPaths(commandsDirectory, "config", "delete", "index.ts")
         )
       ) {
         throw new Error(
-          "The vars-delete command already exists in the entry point. This is not valid when \`manageVars\` is not false. Please remove it from the entry point or rename it."
+          "The config-delete command already exists in the entry point. This is not valid when \`manageConfig\` is not false. Please remove it from the entry point or rename it."
         );
       }
 
       context.entry.push({
-        displayName: "Variables - Delete",
-        file: joinPaths(commandsDirectory, "vars", "delete", "index.ts"),
+        displayName: "Configuration - Delete",
+        file: joinPaths(commandsDirectory, "config", "delete", "index.ts"),
         input: {
-          file: joinPaths(commandsDirectory, "vars", "delete", "handle.ts")
+          file: joinPaths(commandsDirectory, "config", "delete", "handle.ts")
         },
-        output: "vars-delete",
-        path: ["vars", "delete", "[name]"],
+        output: "config-delete",
+        path: ["config", "delete", "[name]"],
         isVirtual: false
       });
 
       if (
         context.entry.some(
           entry =>
-            entry.output === "vars-list" ||
+            entry.output === "config-list" ||
             entry.file ===
-              joinPaths(commandsDirectory, "vars", "list", "index.ts")
+              joinPaths(commandsDirectory, "config", "list", "index.ts")
         )
       ) {
         throw new Error(
-          "The vars-list command already exists in the entry point. This is not valid when \`manageVars\` is not false. Please remove it from the entry point or rename it."
+          "The config-list command already exists in the entry point. This is not valid when \`manageConfig\` is not false. Please remove it from the entry point or rename it."
         );
       }
 
       context.entry.push({
-        displayName: "Variables - List",
-        file: joinPaths(commandsDirectory, "vars", "list", "index.ts"),
+        displayName: "Configuration - List",
+        file: joinPaths(commandsDirectory, "config", "list", "index.ts"),
         input: {
-          file: joinPaths(commandsDirectory, "vars", "list", "handle.ts")
+          file: joinPaths(commandsDirectory, "config", "list", "handle.ts")
         },
-        output: "vars-list",
-        path: ["vars", "list"],
+        output: "config-list",
+        path: ["config", "list"],
         isVirtual: false
       });
     }

@@ -5,11 +5,11 @@
  This code was released as part of the Storm Stack project. Storm Stack
  is maintained by Storm Software under the Apache-2.0 license, and is
  free for commercial and private use. For more information, please visit
- our licensing page at https://stormsoftware.com/projects/storm-stack/license.
+ our licensing page at https://stormsoftware.com/license.
 
  Website:                  https://stormsoftware.com
  Repository:               https://github.com/storm-software/storm-stack
- Documentation:            https://stormsoftware.com/projects/storm-stack/docs
+ Documentation:            https://docs.stormsoftware.com/projects/storm-stack
  Contact:                  https://stormsoftware.com/contact
 
  SPDX-License-Identifier:  Apache-2.0
@@ -26,7 +26,7 @@ import { writeContext } from "./node/context";
 import { writeEnv } from "./node/env";
 import { writeEvent } from "./node/event";
 import { generateRuntimeTypes } from "./runtime-types";
-import { writePayload, writeResult, writeVars } from "./shared";
+import { writeConfig, writePayload, writeResult } from "./shared";
 import { writeError } from "./shared/error";
 import { writeId } from "./shared/id";
 import { writeInit } from "./shared/init";
@@ -53,8 +53,8 @@ export async function prepareRuntime<TOptions extends Options = Options>(
     writeFile(log, joinPaths(context.runtimePath, "error.ts"), writeError()),
     writeFile(
       log,
-      joinPaths(context.runtimePath, "vars.ts"),
-      writeVars(context)
+      joinPaths(context.runtimePath, "config.ts"),
+      writeConfig(context)
     ),
     writeFile(log, joinPaths(context.runtimePath, "id.ts"), writeId()),
     writeFile(

@@ -5,11 +5,11 @@
  This code was released as part of the Storm Stack project. Storm Stack
  is maintained by Storm Software under the Apache-2.0 license, and is
  free for commercial and private use. For more information, please visit
- our licensing page at https://stormsoftware.com/projects/storm-stack/license.
+ our licensing page at https://stormsoftware.com/license.
 
  Website:                  https://stormsoftware.com
  Repository:               https://github.com/storm-software/storm-stack
- Documentation:            https://stormsoftware.com/projects/storm-stack/docs
+ Documentation:            https://docs.stormsoftware.com/projects/storm-stack
  Contact:                  https://stormsoftware.com/contact
 
  SPDX-License-Identifier:  Apache-2.0
@@ -59,9 +59,9 @@ async function reflectDotenvVariables<TOptions extends Options = Options>(
   file?: string,
   name?: string
 ) {
-  let vars: ReflectionClass<any> | undefined;
+  let config: ReflectionClass<any> | undefined;
   if (file) {
-    const varsType = await reflectType<TOptions>(
+    const configType = await reflectType<TOptions>(
       context,
       {
         file: joinPaths(context.workspaceConfig.workspaceRoot, file),
@@ -72,10 +72,10 @@ async function reflectDotenvVariables<TOptions extends Options = Options>(
       }
     );
 
-    vars = resolveClassType(varsType);
+    config = resolveClassType(configType);
   }
 
-  const defaultVarsType = await reflectType<TOptions>(
+  const defaultConfigType = await reflectType<TOptions>(
     context,
     getDotenvDefaultTypeDefinition(context),
     {
@@ -83,18 +83,18 @@ async function reflectDotenvVariables<TOptions extends Options = Options>(
     }
   );
 
-  const defaultVars = resolveClassType(defaultVarsType);
-  if (vars) {
-    defaultVars.getProperties().forEach(prop => {
-      if (!vars!.hasProperty(prop.getName())) {
-        vars!.addProperty(prop.property);
+  const defaultConfig = resolveClassType(defaultConfigType);
+  if (config) {
+    defaultConfig.getProperties().forEach(prop => {
+      if (!config!.hasProperty(prop.getName())) {
+        config!.addProperty(prop.property);
       }
     });
   } else {
-    vars = defaultVars;
+    config = defaultConfig;
   }
 
-  return vars;
+  return config;
 }
 
 export async function reflectDotenvTypes<TOptions extends Options = Options>(
@@ -104,7 +104,7 @@ export async function reflectDotenvTypes<TOptions extends Options = Options>(
   const result = {} as ResolvedDotenvTypes;
 
   let params = {
-    variables: `${getDotenvDefaultTypeDefinition(context).file}#${getDotenvDefaultTypeDefinition(context).name}`
+    config: `${getDotenvDefaultTypeDefinition(context).file}#${getDotenvDefaultTypeDefinition(context).name}`
   } as DotenvTypeDefinitionOptions;
   if (!context.options.dotenv?.types) {
     log(
@@ -115,50 +115,50 @@ export async function reflectDotenvTypes<TOptions extends Options = Options>(
     params = isObject(context.options.dotenv.types)
       ? context.options.dotenv.types
       : {
-          variables: `${context.options.dotenv.types}#Variables`,
+          config: `${context.options.dotenv.types}#Config`,
           secrets: `${context.options.dotenv.types}#Secrets`
         };
   }
 
-  result.variables ??= {} as ResolvedDotenvType<ReflectionClass<any>>;
-  if (params.variables) {
-    result.variables.typeDefinition = parseTypeDefinition(
-      params.variables
+  result.config ??= {} as ResolvedDotenvType<ReflectionClass<any>>;
+  if (params.config) {
+    result.config.typeDefinition = parseTypeDefinition(
+      params.config
     ) as TypeDefinition;
 
     if (
-      result.variables.typeDefinition?.file &&
+      result.config.typeDefinition?.file &&
       existsSync(
         joinPaths(
           context.options.projectRoot,
-          result.variables.typeDefinition.file
+          result.config.typeDefinition.file
         )
       )
     ) {
-      result.variables.reflection = await reflectDotenvVariables(
+      result.config.reflection = await reflectDotenvVariables(
         log,
         context,
         joinPaths(
           context.options.projectRoot,
-          result.variables.typeDefinition.file
+          result.config.typeDefinition.file
         ),
-        result.variables.typeDefinition.name
+        result.config.typeDefinition.name
       );
     } else {
       log(
         LogLevelLabel.WARN,
-        "Cannot find the `dotenv.types.variables` type definition in the provided configuration."
+        "Cannot find the `dotenv.types.config` type definition in the provided configuration."
       );
 
-      result.variables.reflection = await reflectDotenvVariables(log, context);
+      result.config.reflection = await reflectDotenvVariables(log, context);
     }
   } else {
     log(
       LogLevelLabel.WARN,
-      "The `dotenv.types.variables` configuration parameter was not provided. Please ensure this is expected."
+      "The `dotenv.types.config` configuration parameter was not provided. Please ensure this is expected."
     );
 
-    result.variables.reflection = await reflectDotenvVariables(log, context);
+    result.config.reflection = await reflectDotenvVariables(log, context);
   }
 
   if (params.secrets) {
@@ -204,7 +204,7 @@ export async function reflectDotenvTypes<TOptions extends Options = Options>(
     );
   }
 
-  const varsReflection = ReflectionClass.from(result.variables.reflection);
+  const configReflection = ReflectionClass.from(result.config.reflection);
   let secretsReflection: ReflectionClass<any> | undefined;
   if (result.secrets) {
     secretsReflection = ReflectionClass.from(result.secrets.reflection);
@@ -212,7 +212,7 @@ export async function reflectDotenvTypes<TOptions extends Options = Options>(
 
   log(
     LogLevelLabel.TRACE,
-    `Resolved ${varsReflection.getProperties().length ?? 0} variable and ${secretsReflection?.getProperties().length ?? 0} secret dotenv definitions`
+    `Resolved ${configReflection.getProperties().length ?? 0} configuration parameters and ${secretsReflection?.getProperties().length ?? 0} secret dotenv definitions`
   );
 
   return result;

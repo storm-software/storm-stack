@@ -41,7 +41,7 @@
     "skipInstalls": true,
     "dotenv": {
       "types": {
-        "variables": "./src/types.ts#StormCLIAppVariables"
+        "config": "./src/types.ts#StormCLIAppVariables"
       }
     }
   }

@@ -70,7 +70,7 @@
     "skipCache": true,
     "dotenv": {
       "types": {
-        "variables": "./src/types.ts#StormStackCLIVariables"
+        "config": "./src/types.ts#StormStackCLIVariables"
       }
     }
   }

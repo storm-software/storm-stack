@@ -144,6 +144,9 @@ catalogs:
     '@storm-software/workspace-tools':
       specifier: latest
       version: 1.275.13
+    '@stryke/capnp':
+      specifier: ^0.4.2
+      version: 0.4.2
     '@stryke/cli':
       specifier: ^0.11.0
       version: 0.11.0
@@ -477,6 +480,9 @@ importers:
       '@storm-software/workspace-tools':
         specifier: 'catalog:'
         version: 1.275.13(af73979b55f37d5dd8129bc07c370cce)
+      '@stryke/capnp':
+        specifier: 'catalog:'
+        version: 0.4.2(nx@21.0.3(@swc-node/register@1.10.10(@swc/core@1.11.22(@swc/helpers@0.5.17))(@swc/types@0.1.22)(typescript@5.8.3))(@swc/core@1.11.22(@swc/helpers@0.5.17)))(typescript@5.8.3)
       '@swc-node/register':
         specifier: 'catalog:'
         version: 1.10.10(@swc/core@1.11.22(@swc/helpers@0.5.17))(@swc/types@0.1.22)(typescript@5.8.3)
@@ -557,7 +563,7 @@ importers:
         version: 0.11.0(magicast@0.3.5)(nx@21.0.3(@swc-node/register@1.10.10(@swc/core@1.11.22(@swc/helpers@0.5.17))(@swc/types@0.1.22)(typescript@5.8.3))(@swc/core@1.11.22(@swc/helpers@0.5.17)))
       '@stryke/url':
         specifier: 'catalog:'
-        version: 0.2.0
+        version: 0.2.0(magicast@0.3.5)
       unstorage:
         specifier: 'catalog:'
         version: 1.16.0(aws4fetch@1.0.20)
@@ -597,7 +603,7 @@ importers:
         version: 0.3.3
       '@stryke/url':
         specifier: 'catalog:'
-        version: 0.2.0
+        version: 0.2.0(magicast@0.3.5)
     devDependencies:
       '@storm-stack/core':
         specifier: workspace:*
@@ -631,7 +637,7 @@ importers:
         version: 0.3.3
       '@stryke/url':
         specifier: 'catalog:'
-        version: 0.2.0
+        version: 0.2.0(magicast@0.3.5)
     devDependencies:
       '@storm-stack/core':
         specifier: workspace:*
@@ -4243,7 +4249,6 @@ packages:
 
   '@ls-lint/ls-lint@2.3.0':
     resolution: {integrity: sha512-lsT5/7SxtImOIjpefC9wcoXt2lkikKhCjd6U+Q9Z6X5h2HBU/71ggt+XStdodZ0HkJGO333zDUeec7JROMCPFw==}
-    cpu: [x64, arm64, s390x, ppc64le]
     os: [darwin, linux, win32]
     hasBin: true
 
@@ -5616,6 +5621,12 @@ packages:
 
   '@storybook/csf@0.1.13':
     resolution: {integrity: sha512-7xOOwCLGB3ebM87eemep89MYRFTko+D8qE7EdAAq74lgdqRR5cOUtYWJLjO2dLtP94nqoOdHJo6MdLLKzg412Q==}
+
+  '@stryke/capnp@0.4.2':
+    resolution: {integrity: sha512-XXp4FosUBJ8JKUxcKHW+sPSOW5hTQhuoDVzSty+A2bDMI5O9wDReHgHna0a/IMUTiCMObaVnzC23bsYl5jDkFw==}
+    hasBin: true
+    peerDependencies:
+      typescript: '>=4.0.0'
 
   '@stryke/cli@0.11.0':
     resolution: {integrity: sha512-og3e3E2tOYN4A3kJNmV+BHxEHVgULMtn1q618Pm/QkSf8KpukO36KBRbZrsw/U9aF1fUgVin9mLVhVuLpkSUkA==}
@@ -7232,6 +7243,15 @@ packages:
 
   caniuse-lite@1.0.30001721:
     resolution: {integrity: sha512-cOuvmUVtKrtEaoKiO0rSc29jcjwMwX5tOHDy4MgVFEWiUXj4uBMJkwI8MDySkgXidpMiHUcviogAvFi4pA2hDQ==}
+
+  capnp-es@0.0.11:
+    resolution: {integrity: sha512-/M2sGcTIjA2UQC6mnqidCUcfGdVmXGV8DDmNRXMU0ZdiK7TmALjxzJwlLc0UQb/YNy3/xu5OgKktLede69fsnw==}
+    hasBin: true
+    peerDependencies:
+      typescript: ^5.7.3
+    peerDependenciesMeta:
+      typescript:
+        optional: true
 
   caseless@0.12.0:
     resolution: {integrity: sha512-4tYFyifaFfGacoiObjJegolkwSU4xQNGbVgUiNYVUxbQ2x2lUsFvY4hVgVzGiIe6WLOPqycWXA40l+PWsxthUw==}
@@ -19450,6 +19470,16 @@ snapshots:
     dependencies:
       type-fest: 2.19.0
 
+  '@stryke/capnp@0.4.2(nx@21.0.3(@swc-node/register@1.10.10(@swc/core@1.11.22(@swc/helpers@0.5.17))(@swc/types@0.1.22)(typescript@5.8.3))(@swc/core@1.11.22(@swc/helpers@0.5.17)))(typescript@5.8.3)':
+    dependencies:
+      '@stryke/fs': 0.20.6(magicast@0.3.5)(nx@21.0.3(@swc-node/register@1.10.10(@swc/core@1.11.22(@swc/helpers@0.5.17))(@swc/types@0.1.22)(typescript@5.8.3))(@swc/core@1.11.22(@swc/helpers@0.5.17)))
+      '@stryke/path': 0.7.5(magicast@0.3.5)
+      capnp-es: 0.0.11(typescript@5.8.3)
+      typescript: 5.8.3
+    transitivePeerDependencies:
+      - magicast
+      - nx
+
   '@stryke/cli@0.11.0(magicast@0.3.5)(nx@21.0.3(@swc-node/register@1.10.10(@swc/core@1.11.22(@swc/helpers@0.5.17))(@swc/types@0.1.22)(typescript@5.8.3))(@swc/core@1.11.22(@swc/helpers@0.5.17)))':
     dependencies:
       '@antfu/ni': 23.3.1
@@ -19613,7 +19643,7 @@ snapshots:
       - magicast
       - nx
 
-  '@stryke/url@0.2.0':
+  '@stryke/url@0.2.0(magicast@0.3.5)':
     dependencies:
       '@stryke/json': 0.8.3
       '@stryke/path': 0.4.14(magicast@0.3.5)
@@ -21477,6 +21507,10 @@ snapshots:
       lodash.uniq: 4.5.0
 
   caniuse-lite@1.0.30001721: {}
+
+  capnp-es@0.0.11(typescript@5.8.3):
+    optionalDependencies:
+      typescript: 5.8.3
 
   caseless@0.12.0: {}
 

@@ -67,7 +67,7 @@
 
 - **core:** Patched the `deepkit` package to include the `tags` reflection for
   TSDoc
-- **core:** Added the `error-lookup` and `commit-vars` workers
+- **core:** Added the `error-lookup` and `commit-config` workers
 - **core:** Added the `new` command to generate new projects
 
 ### Updated Dependencies
@@ -343,7 +343,7 @@
 
 ### Miscellaneous
 
-- **core:** Remove the `vars.json` file during preparation
+- **core:** Remove the `config.json` file during preparation
   ([70f51ab8](https://github.com/storm-software/storm-stack/commit/70f51ab8))
 - **monorepo:** Format monorepo source code
   ([3383a1a5](https://github.com/storm-software/storm-stack/commit/3383a1a5))

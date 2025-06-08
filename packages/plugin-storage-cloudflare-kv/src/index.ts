@@ -5,11 +5,11 @@
  This code was released as part of the Storm Stack project. Storm Stack
  is maintained by Storm Software under the Apache-2.0 license, and is
  free for commercial and private use. For more information, please visit
- our licensing page at https://stormsoftware.com/projects/storm-stack/license.
+ our licensing page at https://stormsoftware.com/license.
 
  Website:                  https://stormsoftware.com
  Repository:               https://github.com/storm-software/storm-stack
- Documentation:            https://stormsoftware.com/projects/storm-stack/docs
+ Documentation:            https://docs.stormsoftware.com/projects/storm-stack
  Contact:                  https://stormsoftware.com/contact
 
  SPDX-License-Identifier:  Apache-2.0
@@ -86,11 +86,11 @@ export default cloudflareKVBindingDriver({ binding: env.${this.config.binding}, 
 
 import cloudflareKVHTTPDriver from "unstorage/drivers/cloudflare-kv-http";
 
-const accountId = process.env.CLOUDFLARE_ACCOUNT_ID || $storm.vars.CLOUDFLARE_ACCOUNT_ID;
-const apiToken = process.env.CLOUDFLARE_API_TOKEN || $storm.vars.CLOUDFLARE_API_TOKEN;
-const email = process.env.CLOUDFLARE_EMAIL || $storm.vars.CLOUDFLARE_EMAIL;
-const apiKey = process.env.CLOUDFLARE_API_KEY || $storm.vars.CLOUDFLARE_API_KEY;
-const userServiceKey = process.env.CLOUDFLARE_USER_SERVICE_KEY || $storm.vars.CLOUDFLARE_USER_SERVICE_KEY;
+const accountId = process.env.CLOUDFLARE_ACCOUNT_ID || $storm.config.CLOUDFLARE_ACCOUNT_ID;
+const apiToken = process.env.CLOUDFLARE_API_TOKEN || $storm.config.CLOUDFLARE_API_TOKEN;
+const email = process.env.CLOUDFLARE_EMAIL || $storm.config.CLOUDFLARE_EMAIL;
+const apiKey = process.env.CLOUDFLARE_API_KEY || $storm.config.CLOUDFLARE_API_KEY;
+const userServiceKey = process.env.CLOUDFLARE_USER_SERVICE_KEY || $storm.config.CLOUDFLARE_USER_SERVICE_KEY;
 
 if (!accountId) {
   throw new StormError({

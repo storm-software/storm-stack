@@ -60,7 +60,7 @@
 
 ### Features
 
-- **core:** Added the `error-lookup` and `commit-vars` workers
+- **core:** Added the `error-lookup` and `commit-config` workers
 - **core:** Added the `new` command to generate new projects
 
 ### Miscellaneous

@@ -19,7 +19,7 @@
 import { LogLevelLabel } from "@storm-software/config-tools/types";
 import { removeFile } from "@stryke/fs/remove-file";
 import { existsSync } from "@stryke/path/exists";
-import { getVarsReflectionsPath } from "../../helpers/dotenv/resolve";
+import { getConfigReflectionsPath } from "../../helpers/dotenv/resolve";
 import { writeDotenvReflection } from "../../helpers/dotenv/write-reflections";
 import type { Context, EngineHooks, Options } from "../../types/build";
 import type { LogFn } from "../../types/config";
@@ -34,12 +34,12 @@ export async function prepareReflections<TOptions extends Options = Options>(
     `Preparing the reflection artifacts for the Storm Stack project.`
   );
 
-  const variablesReflectionFile = getVarsReflectionsPath(context, "variables");
-  if (existsSync(variablesReflectionFile)) {
-    await removeFile(variablesReflectionFile);
+  const configReflectionFile = getConfigReflectionsPath(context, "config");
+  if (existsSync(configReflectionFile)) {
+    await removeFile(configReflectionFile);
   }
 
-  const secretsReflectionFile = getVarsReflectionsPath(context, "secrets");
+  const secretsReflectionFile = getConfigReflectionsPath(context, "secrets");
   if (existsSync(secretsReflectionFile)) {
     await removeFile(secretsReflectionFile);
   }
@@ -47,8 +47,8 @@ export async function prepareReflections<TOptions extends Options = Options>(
   await writeDotenvReflection(
     log,
     context,
-    context.dotenv.types.variables.reflection,
-    "variables"
+    context.dotenv.types.config.reflection,
+    "config"
   );
 
   if (context.dotenv.types.secrets?.reflection) {

@@ -462,13 +462,13 @@ type PreprocessFunction<
 type SetupFunction = () => MaybePromise<IStormError | void | null | undefined>;
 
 /**
- * The base variables used by Storm Stack applications
+ * The base configuration used by Storm Stack applications
  *
  * @remarks
  * This interface is used to define the environment variables, configuration options, and runtime settings used by the Storm Stack applications. It is used to provide type safety, autocompletion, and default values for the environment variables. The comments of each variable are used to provide documentation descriptions when running the \`storm docs\` command.
  *
  * @categoryDescription Platform
- * The name of the platform the variable is intended for use in.
+ * The name of the platform the configuration parameter is intended for use in.
  *
  * @showCategories
  */
@@ -1304,7 +1304,7 @@ interface StormBuildInfo {
  * The Storm Stack application context object is injected into the global scope of the application. It can be accessed using `$storm` or `useStorm()` in the application code.
  */
 type StormContext<
-  TVars extends StormBaseVariables = StormBaseVariables,
+  TConfig extends StormBaseVariables = StormBaseVariables,
   TAdditionalFields extends Record<string, any> = Record<string, any>,
   TPayload extends IStormPayload = IStormPayload
 > = TAdditionalFields & {
@@ -1317,9 +1317,9 @@ type StormContext<
    */
   readonly version: string;
   /**
-   * The variables for the Storm application.
+   * The configuration parameters for the Storm application.
    */
-  readonly vars: TVars;
+  readonly config: TConfig;
   /**
    * The runtime information for the Storm application.
    */
@@ -1740,7 +1740,7 @@ declare module "storm:env" {
   export const runtime: StormRuntimeInfo;
 }
 
-declare module "storm:storage/fs-crash-reports" {
+declare module "storm:storage/fs-config" {
   declare const _default: import("unstorage").Driver<
     import("unstorage/drivers/fs-lite").FSStorageOptions | undefined,
     never
@@ -1748,7 +1748,7 @@ declare module "storm:storage/fs-crash-reports" {
   export default _default;
 }
 
-declare module "storm:storage/fs-vars" {
+declare module "storm:storage/fs-crash-reports" {
   declare const _default: import("unstorage").Driver<
     import("unstorage/drivers/fs-lite").FSStorageOptions | undefined,
     never

@@ -5,11 +5,11 @@
  This code was released as part of the Storm Stack project. Storm Stack
  is maintained by Storm Software under the Apache-2.0 license, and is
  free for commercial and private use. For more information, please visit
- our licensing page at https://stormsoftware.com/projects/storm-stack/license.
+ our licensing page at https://stormsoftware.com/license.
 
  Website:                  https://stormsoftware.com
  Repository:               https://github.com/storm-software/storm-stack
- Documentation:            https://stormsoftware.com/projects/storm-stack/docs
+ Documentation:            https://docs.stormsoftware.com/projects/storm-stack
  Contact:                  https://stormsoftware.com/contact
 
  SPDX-License-Identifier:  Apache-2.0
@@ -34,18 +34,18 @@ export function writeApp<TOptions extends Options = Options>(
 
 ${getFileHeader()}
 
-import type {
+import {
   HandlerFunction,
   StormContext,
   StormRuntimeParams,
 } from "@storm-stack/types/node";
-import type {
+import {
   IStormPayload
 } from "@storm-stack/types/payload";
-import type {
+import {
   IStormResult
 } from "@storm-stack/types/result";
-import type { StormBaseVariables } from "@storm-stack/types/vars";
+import { StormConfig } from "./config";
 import { STORM_ASYNC_CONTEXT } from "./context";
 import { build, name, version, runtime, paths } from "./env";
 import { createStormError, StormError, isError } from "./error";
@@ -112,12 +112,12 @@ export function withContext<TInput = any, TOutput = any>(
       paths,
       log: log.with({ name, version, payloadId: payload.id }),
       storage,
-      vars: {} as StormBaseVariables,
+      config: {} as StormConfig,
       emit: (_event: StormEvent) => {},
       __internal: {
         events: [] as StormEvent[]
       }
-    } as StormContext<StormBaseVariables>;
+    } as StormContext<StormConfig>;
 
     function emit(event: StormEvent) {
       context.log.debug(

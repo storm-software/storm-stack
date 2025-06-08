@@ -392,7 +392,7 @@ export class Engine<TOptions extends Options = Options> {
 
     await Promise.all(
       [
-        this.context.workers.commitVars?.end(),
+        this.context.workers.commitConfig?.end(),
         this.context.workers.errorLookup?.end()
       ].filter(Boolean)
     );

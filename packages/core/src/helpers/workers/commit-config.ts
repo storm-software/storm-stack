@@ -28,44 +28,44 @@ import { readFile, writeFile } from "node:fs/promises";
 import { format, resolveConfig } from "prettier";
 
 /**
- * Interface representing the data required to commit variables.
+ * Interface representing the data required to commit config.
  */
-export interface CommitVarsData {
+export interface CommitConfigData {
   /**
-   * The variables to commit.
+   * The config to commit.
    */
-  vars: SerializedTypes;
+  config: SerializedTypes;
 
   /**
-   * The file path where the variables should be committed.
+   * The file path where the config should be committed.
    */
   filePath: string;
 }
 
 /**
- * Commits the variables to the specified file path.
+ * Commits the config to the specified file path.
  *
- * @param data - The data containing variables and file path.
+ * @param data - The data containing config and file path.
  * @returns A promise that resolves when the commit is complete.
  */
-export async function commit(data: CommitVarsData): Promise<void> {
+export async function commit(data: CommitConfigData): Promise<void> {
   if (!data.filePath) {
     throw new Error(
-      "The variables reflection file path is required to run the commit-vars worker."
+      "The config reflection file path is required to run the commit-config worker."
     );
   }
 
-  let varsType = resolveClassType(deserializeType(data.vars)).type;
+  let configType = resolveClassType(deserializeType(data.config)).type;
   if (existsSync(data.filePath)) {
     const existingReflection = resolveClassType(
       deserializeType(JSON.parse(await readFile(data.filePath, "utf8")))
     );
 
-    varsType = merge([existingReflection.type, varsType]);
+    configType = merge([existingReflection.type, configType]);
   }
 
   const config = await resolveConfig(data.filePath);
-  const formatted = await format(JSON.stringify(serializeType(varsType)), {
+  const formatted = await format(JSON.stringify(serializeType(configType)), {
     ...(config ?? {}),
     filepath: data.filePath
   });

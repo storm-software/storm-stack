@@ -5,6 +5,13 @@
   "sourceRoot": "packages/core/src",
   "tags": ["platform:node"],
   "targets": {
+    "build-schema": {
+      "executor": "nx:run-commands",
+      "dependsOn": ["clean", "^build"],
+      "options": {
+        "command": "pnpm exec storm-capnpc --schema packages/core/schemas --tsconfig packages/core/tsconfig.json"
+      }
+    },
     "build-base": {
       "executor": "nx:run-commands",
       "dependsOn": ["clean", "^build"],

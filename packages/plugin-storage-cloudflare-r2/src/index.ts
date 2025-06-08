@@ -5,11 +5,11 @@
  This code was released as part of the Storm Stack project. Storm Stack
  is maintained by Storm Software under the Apache-2.0 license, and is
  free for commercial and private use. For more information, please visit
- our licensing page at https://stormsoftware.com/projects/storm-stack/license.
+ our licensing page at https://stormsoftware.com/license.
 
  Website:                  https://stormsoftware.com
  Repository:               https://github.com/storm-software/storm-stack
- Documentation:            https://stormsoftware.com/projects/storm-stack/docs
+ Documentation:            https://docs.stormsoftware.com/projects/storm-stack
  Contact:                  https://stormsoftware.com/contact
 
  SPDX-License-Identifier:  Apache-2.0
@@ -86,9 +86,9 @@ export default cloudflareR2BindingDriver({ binding: env.${this.config.binding}, 
 
 import s3Driver from "unstorage/drivers/s3";
 
-const accountId = process.env.CLOUDFLARE_ACCOUNT_ID || $storm.vars.CLOUDFLARE_ACCOUNT_ID;
-const accessKey = process.env.CLOUDFLARE_R2_ACCESS_KEY_ID || $storm.vars.CLOUDFLARE_R2_ACCESS_KEY_ID;
-const secretAccessKey = process.env.CLOUDFLARE_R2_SECRET_ACCESS_KEY || $storm.vars.CLOUDFLARE_R2_SECRET_ACCESS_KEY;
+const accountId = process.env.CLOUDFLARE_ACCOUNT_ID || $storm.config.CLOUDFLARE_ACCOUNT_ID;
+const accessKey = process.env.CLOUDFLARE_R2_ACCESS_KEY_ID || $storm.config.CLOUDFLARE_R2_ACCESS_KEY_ID;
+const secretAccessKey = process.env.CLOUDFLARE_R2_SECRET_ACCESS_KEY || $storm.config.CLOUDFLARE_R2_SECRET_ACCESS_KEY;
 
 if (!accountId) {
   throw new StormError({

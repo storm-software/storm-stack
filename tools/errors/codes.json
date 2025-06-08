@@ -93,7 +93,8 @@
     "91": "TypeScript compilation failed: %s",
     "92": "Could not resolve @storm-stack/types package location.",
     "93": "API Extractor completed with %s errors and %s warnings when processing @storm-stack/types package.",
-    "94": "An error occurred while preparing the configuration for the Storm Stack project"
+    "94": "An error occurred while preparing the configuration for the Storm Stack project",
+    "95": "Environment variables are not defined in the dotenv type definition but is used in the code: %s The following variable names are defined in the dotenv type definition: %s Using the following env prefix: %s Please check your dotenv configuration option. If you are using a custom dotenv type definition, please make sure that the configuration names match the ones in the code. "
   },
   "not_found": {
     "1": "The requested resource was not found.",

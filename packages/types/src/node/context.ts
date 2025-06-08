@@ -5,11 +5,11 @@
  This code was released as part of the Storm Stack project. Storm Stack
  is maintained by Storm Software under the Apache-2.0 license, and is
  free for commercial and private use. For more information, please visit
- our licensing page at https://stormsoftware.com/projects/storm-stack/license.
+ our licensing page at https://stormsoftware.com/license.
 
  Website:                  https://stormsoftware.com
  Repository:               https://github.com/storm-software/storm-stack
- Documentation:            https://stormsoftware.com/projects/storm-stack/docs
+ Documentation:            https://docs.stormsoftware.com/projects/storm-stack
  Contact:                  https://stormsoftware.com/contact
 
  SPDX-License-Identifier:  Apache-2.0
@@ -46,7 +46,7 @@ interface Internal_StormContextStore {
  * The Storm Stack application context object is injected into the global scope of the application. It can be accessed using `$storm` or `useStorm()` in the application code.
  */
 export type StormContext<
-  TVars extends StormBaseVariables = StormBaseVariables,
+  TConfig extends StormBaseVariables = StormBaseVariables,
   TAdditionalFields extends Record<string, any> = Record<string, any>,
   TPayload extends IStormPayload = IStormPayload
 > = TAdditionalFields & {
@@ -61,9 +61,9 @@ export type StormContext<
   readonly version: string;
 
   /**
-   * The variables for the Storm application.
+   * The configuration parameters for the Storm application.
    */
-  readonly vars: TVars;
+  readonly config: TConfig;
 
   /**
    * The runtime information for the Storm application.
