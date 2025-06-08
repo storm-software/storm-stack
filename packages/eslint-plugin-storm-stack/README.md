@@ -108,16 +108,16 @@ yarn add -D eslint-plugin-storm-stack
 🔧 Automatically fixable by the
 [`--fix` CLI option](https://eslint.org/docs/user-guide/command-line-interface#--fix).
 
-| Name                                                         | Description                                                                                          | 💼    | ⚠️  | 🚫  | 🔧  |
-| :----------------------------------------------------------- | :--------------------------------------------------------------------------------------------------- | :---- | :-- | :-- | :-- |
-| [async-prevent-default](docs/rules/async-prevent-default.md) | disallow `event.preventDefault` calls inside of async functions                                      | 🔒    | 🌟  | 📋  |     |
-| [format-error-codes](docs/rules/format-error-codes.md)       | Error messages should exist in a JSON file that's shared across the workspace when using Storm Stack | 🌟 🔒 | 📋  |     | 🔧  |
-| [if-newline](docs/rules/if-newline.md)                       | Newline after if                                                                                     | 🔒    | 🌟  | 📋  | 🔧  |
-| [no-implicit-globals](docs/rules/no-implicit-globals.md)     | disallow implicit global variables                                                                   | 🌟 🔒 | 📋  |     |     |
-| [storm-errors-only](docs/rules/storm-errors-only.md)         | Prefer usage of `StormError` class when using Storm Stack                                            | 🌟 🔒 | 📋  |     | 🔧  |
-| [storm-json-only](docs/rules/storm-json-only.md)             | Prefer usage of `StormJSON` class when using Storm Stack                                             | 🔒    | 🌟  | 📋  | 🔧  |
-| [storm-urls-only](docs/rules/storm-urls-only.md)             | Prefer usage of `StormURL` class when using Storm Stack                                              | 🔒    | 🌟  | 📋  | 🔧  |
-| [top-level-functions](docs/rules/top-level-functions.md)     | Enforce top-level functions to be declared with function keyword                                     | 🌟 🔒 | 📋  |     | 🔧  |
+| Name                                                         | Description                                                                                          | 💼    | ⚠️  | 🚫    | 🔧  |
+| :----------------------------------------------------------- | :--------------------------------------------------------------------------------------------------- | :---- | :-- | :---- | :-- |
+| [async-prevent-default](docs/rules/async-prevent-default.md) | disallow `event.preventDefault` calls inside of async functions                                      | 🔒    | 🌟  | 📋    |     |
+| [format-error-codes](docs/rules/format-error-codes.md)       | Error messages should exist in a JSON file that's shared across the workspace when using Storm Stack | 🌟 🔒 | 📋  |       | 🔧  |
+| [if-newline](docs/rules/if-newline.md)                       | Newline after if                                                                                     | 🌟 🔒 | 📋  |       | 🔧  |
+| [no-implicit-globals](docs/rules/no-implicit-globals.md)     | disallow implicit global variables                                                                   | 🌟 🔒 | 📋  |       |     |
+| [storm-errors-only](docs/rules/storm-errors-only.md)         | Prefer usage of `StormError` class when using Storm Stack                                            | 🌟 🔒 | 📋  |       | 🔧  |
+| [storm-json-only](docs/rules/storm-json-only.md)             | Prefer usage of `StormJSON` class when using Storm Stack                                             | 🔒    |     | 📋 🌟 | 🔧  |
+| [storm-urls-only](docs/rules/storm-urls-only.md)             | Prefer usage of `StormURL` class when using Storm Stack                                              | 🔒    |     | 📋 🌟 | 🔧  |
+| [top-level-functions](docs/rules/top-level-functions.md)     | Enforce top-level functions to be declared with function keyword                                     | 🌟 🔒 | 📋  |       | 🔧  |
 
 <!-- end auto-generated rules list -->
 

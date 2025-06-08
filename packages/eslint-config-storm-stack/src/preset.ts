@@ -5,11 +5,11 @@
  This code was released as part of the Storm Stack project. Storm Stack
  is maintained by Storm Software under the Apache-2.0 license, and is
  free for commercial and private use. For more information, please visit
- our licensing page at https://stormsoftware.com/projects/storm-stack/license.
+ our licensing page at https://stormsoftware.com/license.
 
  Website:                  https://stormsoftware.com
  Repository:               https://github.com/storm-software/storm-stack
- Documentation:            https://stormsoftware.com/projects/storm-stack/docs
+ Documentation:            https://docs.stormsoftware.com/projects/storm-stack
  Contact:                  https://stormsoftware.com/contact
 
  SPDX-License-Identifier:  Apache-2.0
@@ -17,7 +17,7 @@
  ------------------------------------------------------------------- */
 
 import { getStormConfig } from "@storm-software/eslint";
-import type { OptionsTypescript } from "@storm-software/eslint/types";
+import { OptionsTypescript } from "@storm-software/eslint/types";
 import defu from "defu";
 import type { Linter } from "eslint";
 import type { Awaitable, FlatConfigComposer } from "eslint-flat-config-utils";
@@ -40,7 +40,7 @@ export async function getConfig(
   ...userConfigs: Awaitable<
     | TypedFlatConfigItem
     | TypedFlatConfigItem[]
-    | FlatConfigComposer<any, any>
+    | FlatConfigComposer<object, string>
     | Linter.Config[]
   >[]
 ) {
@@ -70,6 +70,9 @@ export async function getConfig(
           ]
         }
       } as OptionsTypescript,
+      tsdoc: {
+        configFile: "@storm-stack/tsdoc/config/recommended.json"
+      },
       globals
     }),
     ...userConfigs

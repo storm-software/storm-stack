@@ -40,8 +40,8 @@
   "private": false,
   "exports": {
     "./package.json": "./package.json",
-    "./base.json": "./config/base.json",
-    "./recommended.json": "./config/recommended.json"
+    "./config/base.json": "./config/base.json",
+    "./config/recommended.json": "./config/recommended.json"
   },
   "files": [
     "config/**/*",
