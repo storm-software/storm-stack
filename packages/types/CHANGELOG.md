@@ -2,6 +2,13 @@
 
 # Changelog for Storm Stack - Types
 
+## [0.12.0](https://github.com/storm-software/storm-stack/releases/tag/types%400.12.0) (2025-06-08)
+
+### Features
+
+- **eslint-config-storm-stack:** Added Storm Stack `eslint-plugin-tsdoc`
+  configuration
+
 ## [0.11.0](https://github.com/storm-software/storm-stack/releases/tag/types%400.11.0) (2025-06-07)
 
 ### Features

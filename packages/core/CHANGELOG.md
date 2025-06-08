@@ -2,6 +2,25 @@
 
 # Changelog for Storm Stack - Core
 
+## [0.28.0](https://github.com/storm-software/storm-stack/releases/tag/core%400.28.0) (2025-06-08)
+
+### Features
+
+- **eslint-config-storm-stack:** Added Storm Stack `eslint-plugin-tsdoc`
+  configuration
+
+### Bug Fixes
+
+- **core:** Resolve issue with existing reflection files
+
+### Source Code Improvements
+
+- **eslint-plugin:** Shorten ESLint package's project names in monorepo
+
+### Updated Dependencies
+
+- Updated types to 0.12.0
+
 ## [0.27.1](https://github.com/storm-software/storm-stack/releases/tag/core%400.27.1) (2025-06-08)
 
 ### Miscellaneous

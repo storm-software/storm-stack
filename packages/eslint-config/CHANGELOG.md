@@ -1,5 +1,24 @@
 ![Storm Software](https://public.storm-cdn.com/brand-banner.png)
 
+# Changelog for Storm Stack - Eslint Config
+
+## [0.9.2](https://github.com/storm-software/storm-stack/releases/tag/eslint-config%400.9.2) (2025-06-08)
+
+### Bug Fixes
+
+- **eslint-config:** Resolved issue running the `build-typegen` target
+
+### Source Code Improvements
+
+- **eslint-plugin:** Shorten ESLint package's project names in monorepo
+
+### Updated Dependencies
+
+- Updated eslint-plugin to 0.10.1
+- Updated tsdoc to 0.1.0
+
+![Storm Software](https://public.storm-cdn.com/brand-banner.png)
+
 # Changelog for Storm Stack - Eslint Config Storm Stack
 
 ## [0.9.1](https://github.com/storm-software/storm-stack/releases/tag/eslint-config-storm-stack%400.9.1) (2025-05-28)
