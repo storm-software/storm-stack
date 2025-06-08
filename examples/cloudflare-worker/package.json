@@ -18,10 +18,10 @@
     "@stryke/url": "catalog:"
   },
   "devDependencies": {
-    "@storm-stack/core": "workspace:*",
-    "@storm-stack/nx": "workspace:*",
-    "@storm-stack/plugin-log-console": "workspace:*",
-    "@storm-stack/preset-cloudflare-worker": "workspace:*",
+    "@storm-stack/core": "0.27.1",
+    "@storm-stack/nx": "0.13.1",
+    "@storm-stack/plugin-log-console": "0.14.1",
+    "@storm-stack/preset-cloudflare-worker": "0.14.1",
     "@stryke/types": "catalog:",
     "wrangler": "catalog:"
   },
