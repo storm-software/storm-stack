@@ -1,5 +1,19 @@
 ![Storm Software](https://public.storm-cdn.com/brand-banner.png)
 
+# Changelog for Storm Stack - Eslint Plugin
+
+## [0.10.1](https://github.com/storm-software/storm-stack/releases/tag/eslint-plugin%400.10.1) (2025-06-08)
+
+### Bug Fixes
+
+- **eslint-config:** Resolved issue running the `build-typegen` target
+
+### Source Code Improvements
+
+- **eslint-plugin:** Shorten ESLint package's project names in monorepo
+
+![Storm Software](https://public.storm-cdn.com/brand-banner.png)
+
 # Changelog for Storm Stack - Eslint Plugin Storm Stack
 
 ## [0.10.0](https://github.com/storm-software/storm-stack/releases/tag/eslint-plugin-storm-stack%400.10.0) (2025-05-27)

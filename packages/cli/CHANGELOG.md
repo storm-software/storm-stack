@@ -2,6 +2,21 @@
 
 # Changelog for Storm Stack - Cli
 
+## [0.10.0](https://github.com/storm-software/storm-stack/releases/tag/cli%400.10.0) (2025-06-08)
+
+### Features
+
+- **tsdoc:** Inital check-in of the TSDoc package
+
+### Source Code Improvements
+
+- **eslint-plugin:** Shorten ESLint package's project names in monorepo
+
+### Updated Dependencies
+
+- Updated types to 0.12.0
+- Updated core to 0.28.0
+
 ## [0.9.1](https://github.com/storm-software/storm-stack/releases/tag/cli%400.9.1) (2025-06-08)
 
 ### Miscellaneous
