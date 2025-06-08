@@ -16,18 +16,14 @@
 
  ------------------------------------------------------------------- */
 
-import { readJsonFileSync } from "@stryke/fs/read-file";
-import { writeJsonFileSync } from "@stryke/fs/write-file";
 import { deepClone } from "@stryke/helpers/deep-clone";
-import { isEqual } from "@stryke/helpers/is-equal";
-import { existsSync } from "@stryke/path/exists";
-import { isSetString } from "@stryke/type-checks/is-set-string";
 import type { TSESTree } from "@typescript-eslint/utils";
 import { AST_NODE_TYPES } from "@typescript-eslint/utils";
 import type {
   RuleContext,
   RuleFixer
 } from "@typescript-eslint/utils/ts-eslint";
+import { existsSync, readFileSync, writeFileSync } from "node:fs";
 import { createEslintRule } from "../helpers/create-rule";
 
 export const RULE_NAME = "format-error-codes";
@@ -66,7 +62,8 @@ function invokeErrorExpression(
 
     if (
       node.arguments[0].type === AST_NODE_TYPES.Literal &&
-      isSetString(node.arguments[0].value)
+      typeof node.arguments[0].value === "string" &&
+      node.arguments[0].value
     ) {
       errorMessage = node.arguments[0].value;
     } else if (node.arguments[0]?.type === AST_NODE_TYPES.TemplateLiteral) {
@@ -87,10 +84,7 @@ function invokeErrorExpression(
         fix(fixer: RuleFixer) {
           let errorCodes = {} as Record<string, Record<string, string>>;
           if (existsSync(codesFile)) {
-            errorCodes =
-              readJsonFileSync<Record<string, Record<string, string>>>(
-                codesFile
-              );
+            errorCodes = JSON.parse(readFileSync(codesFile, "utf8"));
           }
           const originalErrorCodes = deepClone(errorCodes);
 
@@ -99,7 +93,8 @@ function invokeErrorExpression(
             node.arguments.length > 1 &&
             node.arguments[1] &&
             node.arguments[1].type === AST_NODE_TYPES.Literal &&
-            isSetString(node.arguments[1].value)
+            typeof node.arguments[1].value === "string" &&
+            node.arguments[1].value
           ) {
             errorType = node.arguments[1].value;
           }
@@ -132,8 +127,15 @@ function invokeErrorExpression(
             errorCodes[errorType]![errorCode] = errorMessage;
           }
 
-          if (!isEqual(originalErrorCodes, errorCodes)) {
-            writeJsonFileSync(codesFile, errorCodes);
+          if (
+            Object.keys(originalErrorCodes).length !==
+            Object.keys(errorCodes).length
+          ) {
+            writeFileSync(
+              codesFile,
+              JSON.stringify(errorCodes, null, 2),
+              "utf8"
+            );
           }
 
           return fixer.replaceText(

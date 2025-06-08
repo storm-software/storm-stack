@@ -1,4 +1,3 @@
-#!/usr/bin/env -S pnpm tsx
 /* -------------------------------------------------------------------
 
                   ⚡ Storm Software - Storm Stack
@@ -54,8 +53,7 @@ export type ConfigNames = ${configs
       .filter(Boolean)
       .map(i => `'${i}'`)
       .join(" | ")}
-    `,
-    { encoding: "utf-8" }
+    `
   );
 
   console.log(

@@ -20,17 +20,15 @@ import { getTsupConfig } from "@storm-stack/tools-config/tsup.shared";
 
 const config = getTsupConfig({
   name: "eslint-config",
-  entry: ["src/*.ts"],
+  entryPoints: ["src/*.ts"],
   format: ["esm"],
-  dts: {
-    resolve: true,
-    entry: "./src/index.ts"
-  },
+  outDir: "dist",
+  tsconfig: "./tsconfig.json",
+  dts: true,
   bundle: true,
-  splitting: true,
+  splitting: false,
   clean: true,
-  shims: true,
-  external: ["eslint"]
+  shims: true
 });
 
 export default config;

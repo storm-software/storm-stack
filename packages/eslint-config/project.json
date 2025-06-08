@@ -8,13 +8,13 @@
       "executor": "nx:run-commands",
       "dependsOn": ["clean", "^build"],
       "options": {
-        "command": "tsx --tsconfig tsconfig.scripts.json scripts/typegen.ts",
+        "command": "tsx scripts/typegen.ts",
         "cwd": "{projectRoot}"
       }
     },
     "build-base": {
       "executor": "nx:run-commands",
-      "dependsOn": ["clean", "^build"],
+      "dependsOn": ["clean", "build-typegen", "^build"],
       "options": {
         "command": "tsup-node --config=tsup.config.ts",
         "cwd": "{projectRoot}"

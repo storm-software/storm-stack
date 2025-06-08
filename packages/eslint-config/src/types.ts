@@ -23,7 +23,7 @@ import type {
   OptionsOverrides
 } from "@storm-software/eslint/types";
 import type { Linter } from "eslint";
-import type { ConfigNames, RuleOptions } from "./typegen";
+import type { ConfigNames, RuleOptions } from "./typegen.d";
 
 export type Awaitable<T> = T | Promise<T>;
 
@@ -31,7 +31,7 @@ export type Rules = RuleOptions;
 
 export type { ConfigNames };
 
-export * from "./typegen";
+export * from "./typegen.d";
 
 export type TypedFlatConfigItem = Omit<
   Linter.Config<Linter.RulesRecord & Rules>,
@@ -42,7 +42,7 @@ export type TypedFlatConfigItem = Omit<
     /**
      * An object containing a name-value mapping of plugin names to plugin objects. When `files` is specified, these plugins are only available to the matching files.
      *
-     * @see [Using plugins in your configuration](https://eslint.org/docs/latest/user-guide/configuring/configuration-files-new#using-plugins-in-your-configuration)
+     * @see https://eslint.org/docs/latest/user-guide/configuring/configuration-files-new#using-plugins-in-your-configuration
      */
     plugins?: Record<string, any>;
   };
