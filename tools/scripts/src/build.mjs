@@ -60,7 +60,7 @@ try {
 
   proc =
     $`pnpm nx run nx:build:${configuration} --outputStyle=dynamic-legacy`.timeout(
-      `${3 * 60}s`
+      `${5 * 60}s`
     );
   proc.stdout.on("data", data => {
     echo`${data}`;
@@ -74,7 +74,7 @@ try {
 
   proc =
     $`pnpm nx run-many --target=build --projects="plugin-*,preset-*" --configuration=${configuration} --outputStyle=dynamic-legacy --parallel=5`.timeout(
-      `${5 * 60}s`
+      `${8 * 60}s`
     );
   proc.stdout.on("data", data => {
     echo`${data}`;
@@ -88,7 +88,7 @@ try {
 
   proc =
     $`pnpm nx run cli:build:${configuration} --outputStyle=dynamic-legacy`.timeout(
-      `${5 * 60}s`
+      `${6 * 60}s`
     );
   proc.stdout.on("data", data => {
     echo`${data}`;
@@ -102,7 +102,7 @@ try {
 
   proc =
     $`pnpm nx run-many --target=build --projects="examples-*" --configuration=${configuration} --outputStyle=dynamic-legacy --parallel=5`.timeout(
-      `${5 * 60}s`
+      `${8 * 60}s`
     );
   proc.stdout.on("data", data => {
     echo`${data}`;
@@ -116,7 +116,7 @@ try {
 
   proc =
     $`pnpm nx run-many --target=build --exclude="@storm-stack/monorepo" --configuration=${configuration} --outputStyle=dynamic-legacy --parallel=5`.timeout(
-      `${5 * 60}s`
+      `${10 * 60}s`
     );
   proc.stdout.on("data", data => {
     echo`${data}`;

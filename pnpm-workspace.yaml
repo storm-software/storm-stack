@@ -63,21 +63,21 @@ catalog:
   '@storm-software/tsconfig': latest
   '@storm-software/tsdoc': latest
   '@storm-software/workspace-tools': latest
-  '@stryke/env': ^0.14.3
+  '@stryke/env': ^0.14.4
   '@stryke/fs': ^0.21.3
   '@stryke/helpers': ^0.6.1
   '@stryke/http': ^0.8.2
   '@stryke/unique-id': ^0.3.1
   '@stryke/url': ^0.2.1
   '@stryke/json': ^0.9.1
-  '@stryke/path': ^0.7.6
+  '@stryke/path': ^0.8.0
   '@stryke/types': ^0.8.4
   '@stryke/hash': ^0.9.4
   '@stryke/string-format': ^0.4.10
   '@stryke/convert': ^0.2.2
   '@stryke/type-checks': ^0.3.4
   '@stryke/cli': ^0.11.1
-  '@stryke/capnp': ^0.8.2
+  '@stryke/capnp': ^0.8.3
   '@swc-node/register': ^1.10.10
   '@swc/core': ^1.11.22
   '@swc/wasm': ^1.11.24
