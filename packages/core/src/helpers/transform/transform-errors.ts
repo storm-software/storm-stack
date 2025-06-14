@@ -94,8 +94,8 @@ export async function transformErrors<TOptions extends Options = Options>(
         }
 
         const code = await context.workers.errorLookup.find({
-          filePath: context.options.errorsFile,
-          message,
+          path: context.options.errorsFile,
+          text: message,
           type
         });
         if (!code) {

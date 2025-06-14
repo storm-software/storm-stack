@@ -18,7 +18,7 @@
 
 import type { ReflectionClass } from "@deepkit/type";
 import type { StormWorkspaceConfig } from "@storm-software/config/types";
-import type { IStormPayload, StormBaseVariables } from "@storm-stack/types";
+import type { IStormPayload, StormBaseConfig } from "@storm-stack/types";
 import type {
   PostprocessFunction,
   PreprocessFunction,
@@ -28,6 +28,7 @@ import type {
   ValidatorFunction
 } from "@storm-stack/types/node";
 import type { LogLevel } from "@storm-stack/types/shared/log";
+import { CapnpRPC } from "@stryke/capnp";
 import type { EnvPaths } from "@stryke/env/get-env-paths";
 import type { DotenvParseOutput } from "@stryke/env/types";
 import type { MaybePromise } from "@stryke/types/base";
@@ -42,6 +43,7 @@ import { Worker as JestWorker } from "jest-worker";
 import type { Jiti } from "jiti";
 import type MagicString from "magic-string";
 import type { SourceMap } from "magic-string";
+import { ChildProcess } from "node:child_process";
 import type ts from "typescript";
 import type { InlinePreset, Unimport } from "unimport";
 import type {
@@ -150,7 +152,7 @@ export interface ResolvedDotenvType<
    * A path to the type definition for the expected env configuration parameters. This value can include both a path to the typescript file and the name of the type definition to use separated by a `":"` or `"#"` character. For example: `"./src/types/env.ts#DotenvConfiguration"`.
    *
    * @remarks
-   * If a value is not provided for this option, the plugin will attempt to infer the type definition from the `storm.dotenv.types.variables` object in the project's `package.json` file.
+   * If a value is not provided for this option, the plugin will attempt to infer the type definition from the `storm.dotenv.types.config` object in the project's `package.json` file.
    */
   reflection: TReflection;
 
@@ -256,6 +258,11 @@ export interface MetaInfo {
    * The build timestamp
    */
   timestamp: number;
+
+  /**
+   * A hash that represents the path to the project root directory
+   */
+  projectRootHash: string;
 }
 
 export interface CompilerOptions<TOptions extends Options = Options> {
@@ -480,17 +487,23 @@ export interface RuntimeConfig {
 export interface Config<
   TPayload extends IStormPayload,
   TOutput = any,
-  TContext extends StormContext<
-    StormBaseVariables,
+  TContext extends StormContext<StormBaseConfig, any, TPayload> = StormContext<
+    StormBaseConfig,
     any,
     TPayload
-  > = StormContext<StormBaseVariables, any, TPayload>
+  >
 > {
   setup?: SetupFunction;
   validator?: ValidatorFunction<TPayload, TContext>;
   preprocess?: PreprocessFunction<TPayload, TContext>;
   postprocess?: PostprocessFunction<TPayload, TContext, TOutput>;
   teardown?: TeardownFunction;
+}
+
+export interface StormStackRPC<TClient> {
+  client: TClient;
+  process: ChildProcess;
+  rpc: CapnpRPC;
 }
 
 export type WorkerProcess<TExposedMethods extends ReadonlyArray<string>> = {
@@ -545,6 +558,11 @@ export interface Context<
    * The path to the Storm Stack runtime directory
    */
   runtimePath: string;
+
+  /**
+   * The path to a directory where the data buffers (used by the build processes) are stored
+   */
+  dataPath: string;
 
   /**
    * The metadata information
@@ -610,8 +628,8 @@ export interface Context<
    * The message ports used to communicate with the worker processes
    */
   workers: {
+    configReflection: WorkerProcess<["add", "clear"]>;
     errorLookup: WorkerProcess<["find"]>;
-    commitConfig: WorkerProcess<["commit"]>;
   };
 
   /**
@@ -657,6 +675,7 @@ export interface EngineHookFunctions<TOptions extends Options = Options> {
   "init:dotenv": (context: Context<TOptions>) => MaybePromise<void>;
   "init:workers": (context: Context<TOptions>) => MaybePromise<void>;
   "init:entry": (context: Context<TOptions>) => MaybePromise<void>;
+  "init:reflections": (context: Context<TOptions>) => MaybePromise<void>;
   "init:complete": (context: Context<TOptions>) => MaybePromise<void>;
 
   // Clean - Hooks used during the cleaning of the Storm Stack project
@@ -673,7 +692,6 @@ export interface EngineHookFunctions<TOptions extends Options = Options> {
   "prepare:config": (context: Context<TOptions>) => MaybePromise<void>;
   "prepare:types": (context: Context<TOptions>) => MaybePromise<void>;
   "prepare:runtime": (context: Context<TOptions>) => MaybePromise<void>;
-  "prepare:reflections": (context: Context<TOptions>) => MaybePromise<void>;
   "prepare:entry": (context: Context<TOptions>) => MaybePromise<void>;
   "prepare:deploy": (context: Context<TOptions>) => MaybePromise<void>;
   "prepare:misc": (context: Context<TOptions>) => MaybePromise<void>;

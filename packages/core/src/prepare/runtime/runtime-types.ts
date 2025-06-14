@@ -33,7 +33,7 @@ import { resolvePackage } from "@stryke/path/resolve";
 import { TsConfigJson } from "@stryke/types/tsconfig";
 import defu from "defu";
 import ts from "typescript";
-import { resolveDotenvReflection } from "../../helpers/dotenv/resolve";
+import { readDotenvReflection } from "../../helpers/dotenv/persistence";
 import { getParsedTypeScriptConfig } from "../../helpers/typescript/tsconfig";
 import { getFileHeader } from "../../helpers/utilities/file-header";
 import { writeFile } from "../../helpers/utilities/write-file";
@@ -317,7 +317,7 @@ declare module 'storm:${relativePath(
     );
   }
 
-  const dotenvReflection = await resolveDotenvReflection(context, "config");
+  const dotenvReflection = await readDotenvReflection(context, "config");
 
   await writeFile(
     log,
@@ -333,11 +333,11 @@ ${(await readFile(joinPaths(dtsPath, "storm-stack.d.ts")))
     ': import("unstorage").Storage<import("unstorage").StorageValue>;'
   )}
 
-type StormVariables = Omit<StormBaseVariables, ${dotenvReflection
+type StormVariables = Omit<StormBaseConfig, ${dotenvReflection
       .getProperties()
       .filter(item => item.isHidden() || item.isIgnored() || item.isReadonly())
       .map(prop => `"${prop.getNameAsString()}"`)
-      .join(" | ")}> & Readonly<Pick<StormBaseVariables, ${dotenvReflection
+      .join(" | ")}> & Readonly<Pick<StormBaseConfig, ${dotenvReflection
       .getProperties()
       .filter(
         item => !item.isHidden() && !item.isIgnored() && item.isReadonly()

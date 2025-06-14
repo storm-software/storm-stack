@@ -17,11 +17,14 @@
  ------------------------------------------------------------------- */
 
 import { LogLevelLabel } from "@storm-software/config-tools/types";
-import { readJsonFile } from "@stryke/fs/read-file";
+import { createDirectory } from "@stryke/fs/helpers";
+import { readJsonFile } from "@stryke/fs/json";
 import { removeFile } from "@stryke/fs/remove-file";
+import { hash } from "@stryke/hash/hash";
 import { hashDirectory } from "@stryke/hash/hash-files";
 import { existsSync } from "@stryke/path/exists";
 import { relativeToWorkspaceRoot } from "@stryke/path/file-path-fns";
+import { isAbsolutePath } from "@stryke/path/is-file";
 import { joinPaths } from "@stryke/path/join-paths";
 import type { PackageJson } from "@stryke/types/package-json";
 import { nanoid } from "@stryke/unique-id/nanoid-client";
@@ -102,7 +105,13 @@ export async function initContext<TOptions extends Options = Options>(
     buildId: nanoid(24),
     releaseId: nanoid(24),
     checksum,
-    timestamp: Date.now()
+    timestamp: Date.now(),
+    projectRootHash: hash(
+      joinPaths(
+        context.workspaceConfig.workspaceRoot,
+        context.options.projectRoot
+      )
+    )
   };
 
   context.artifactsPath ??= joinPaths(
@@ -112,7 +121,15 @@ export async function initContext<TOptions extends Options = Options>(
   );
   context.runtimePath ??= joinPaths(context.artifactsPath, "runtime");
 
-  const metaFilePath = joinPaths(context.artifactsPath, "meta.json");
+  context.dataPath ??= joinPaths(
+    context.envPaths.data,
+    context.meta.projectRootHash
+  );
+  if (!existsSync(context.dataPath)) {
+    await createDirectory(context.dataPath);
+  }
+
+  const metaFilePath = joinPaths(context.dataPath, "meta.json");
   try {
     if (existsSync(metaFilePath)) {
       context.persistedMeta = await readJsonFile<MetaInfo>(metaFilePath);
@@ -128,6 +145,19 @@ export async function initContext<TOptions extends Options = Options>(
   );
   context.options.platform ??= "neutral";
   context.options.dts ??= joinPaths(context.options.projectRoot, "storm.d.ts");
+  context.options.errorsFile = context.options.errorsFile
+    ? context.options.errorsFile.startsWith(
+        context.workspaceConfig.workspaceRoot
+      ) || isAbsolutePath(context.options.errorsFile)
+      ? context.options.errorsFile
+      : joinPaths(
+          context.workspaceConfig.workspaceRoot,
+          context.options.errorsFile
+        )
+    : joinPaths(
+        context.workspaceConfig.workspaceRoot,
+        "tools/errors/codes.json"
+      );
 
   context.override.bundle ??= true;
   context.override.target ??= "esnext";

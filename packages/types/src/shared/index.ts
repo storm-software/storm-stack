@@ -16,9 +16,9 @@
 
  ------------------------------------------------------------------- */
 
+export * from "./config.js";
 export * from "./error.js";
 export * from "./log.js";
 export * from "./message.js";
 export * from "./payload.js";
 export * from "./result.js";
-export * from "./vars.js";

@@ -3,18 +3,23 @@
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "projectType": "library",
   "sourceRoot": "packages/core/src",
-  "tags": ["platform:node"],
   "targets": {
     "build-schema": {
+      "cache": true,
+      "inputs": ["{projectRoot}/schemas/*.capnp"],
+      "outputs": ["{projectRoot}/schemas/*.ts"],
       "executor": "nx:run-commands",
       "dependsOn": ["clean", "^build"],
       "options": {
-        "command": "pnpm exec storm-capnpc --schema packages/core/schemas --tsconfig packages/core/tsconfig.json"
+        "commands": [
+          "pnpm exec storm-capnpc --project-root packages/core --schema ./{projectRoot}/schemas"
+        ],
+        "parallel": false
       }
     },
     "build-base": {
       "executor": "nx:run-commands",
-      "dependsOn": ["clean", "^build"],
+      "dependsOn": ["build-schema"],
       "options": {
         "command": "tsup --config=tsup.config.ts",
         "cwd": "{projectRoot}"
@@ -22,13 +27,14 @@
     },
     "build": {
       "executor": "nx:run-commands",
-      "dependsOn": ["build-base"],
+      "dependsOn": ["build-schema", "build-base"],
       "options": {
         "commands": [
           "pnpm copyfiles LICENSE dist/packages/core",
           "pnpm copyfiles --up=2 ./packages/core/*.md ./packages/core/package.json dist/packages/core",
           "pnpm copyfiles --up=4 \"./packages/core/src/new/files/**/*\" dist/packages/core/files",
           "pnpm copyfiles --up=4 \"./packages/core/dist/build/**/*\" dist/packages/core/dist",
+          "pnpm copyfiles --up=4 \"./packages/core/dist/schemas/**/*\" dist/packages/core/schemas",
           "pnpm copyfiles --up=4 \"./packages/core/dist/workers/**/*\" dist/packages/core/workers"
         ]
       }
@@ -36,5 +42,6 @@
     "nx-release-publish": {
       "executor": "@storm-software/workspace-tools:npm-publish"
     }
-  }
+  },
+  "tags": ["platform:node"]
 }

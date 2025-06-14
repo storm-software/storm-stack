@@ -16,14 +16,8 @@
 
  ------------------------------------------------------------------- */
 
-import type { ReflectionClass } from "@deepkit/type";
-import { deserializeType } from "@deepkit/type";
 import { LogLevelLabel } from "@storm-software/config-tools/types";
-import { resolveDotenvReflection } from "@storm-stack/core/helpers/dotenv/resolve";
-import {
-  writeDotenvProperties,
-  writeDotenvReflection
-} from "@storm-stack/core/helpers/dotenv/write-reflections";
+
 import { getFileHeader } from "@storm-stack/core/helpers/utilities/file-header";
 import { writeFile } from "@storm-stack/core/helpers/utilities/write-file";
 import type { Context, Options } from "@storm-stack/core/types/build";
@@ -41,6 +35,7 @@ import { kebabCase } from "@stryke/string-format/kebab-case";
 import { pascalCase } from "@stryke/string-format/pascal-case";
 import { titleCase } from "@stryke/string-format/title-case";
 import { isSetString } from "@stryke/type-checks/is-set-string";
+import { isString } from "@stryke/type-checks/is-string";
 import { writeApp } from "../runtime/app";
 import { writeRuntime } from "../runtime/cli";
 import {
@@ -207,7 +202,9 @@ import { colors } from "${joinPaths(runtimeRelativePath, "cli")}";${
  * @returns The rendered string displaying usage information.
  */
 export function renderUsage(mode: "full" | "minimal" = "full"): string {
-  return \`\${colors.white(\`\${colors.whiteBright(colors.bold(\`${command.displayName}\${mode === "minimal" ? " Command" : ""}\`))}${
+  return \`\${colors.white(\`\${colors.whiteBright(colors.bold(\`${
+    command.displayName
+  }\${mode === "minimal" ? " Command" : ""}\`))}${
     command.description
       ? `
 
@@ -914,28 +911,6 @@ async function prepareCommandDefinition<TOptions extends Options = Options>(
   return writeCommandEntry(log, context, command, config);
 }
 
-async function addCommandArgReflections(
-  reflection: ReflectionClass<any>,
-  command: CommandReflectionTreeBranch
-) {
-  command.payload.args.forEach(arg => {
-    if (!reflection.hasProperty(constantCase(arg.name))) {
-      reflection.addProperty({
-        name: constantCase(arg.name),
-        optional: true,
-        description: arg.description,
-        type: deserializeType(arg.reflectionType)
-      });
-    }
-  });
-
-  if (command.children) {
-    for (const subCommand of Object.values(command.children)) {
-      await addCommandArgReflections(reflection, subCommand);
-    }
-  }
-}
-
 async function generateConfigCommands<TOptions extends Options = Options>(
   log: LogFn,
   context: StormStackCLIPresetContext<TOptions>,
@@ -1062,33 +1037,55 @@ export async function prepareEntry<TOptions extends Options = Options>(
 ) {
   const commandTree = await reflectCommandTree(log, context, config);
 
-  const configReflection = await resolveDotenvReflection(context, "config");
-  for (const command of Object.values(commandTree.children)) {
-    log(
-      LogLevelLabel.TRACE,
-      `Reflecting command arguments for "${commandTree.name}"`
-    );
-
-    await addCommandArgReflections(configReflection, command);
-  }
-
-  context.dotenv.types.config.reflection = configReflection;
-  await writeDotenvReflection(log, context, configReflection, "config");
-  await writeDotenvProperties(
-    log,
-    context,
-    "config",
-    configReflection.getProperties()
-  );
-
   for (const command of Object.values(commandTree.children)) {
     await prepareCommandDefinition(log, context, command, config);
+  }
+
+  let appTitle = titleCase(
+    context.options.name ||
+      (Array.isArray(config.bin) ? config.bin[0] : config.bin) ||
+      context.packageJson?.name
+  );
+  if (!appTitle.toLowerCase().endsWith("cli")) {
+    appTitle += " CLI";
   }
 
   let description = context.options.description;
   if (!description) {
     if (context.packageJson?.description) {
       description = context.packageJson.description;
+    }
+    if (!description) {
+      description = `The ${appTitle.replace(/.*(?:CLI|cli)$/, "")} command line interface (CLI) application.`;
+    }
+  }
+
+  let repository = config.repository;
+  if (!repository) {
+    if (context.workspaceConfig.repository) {
+      repository = context.workspaceConfig.repository;
+    } else if (context.packageJson?.repository) {
+      repository = isString(context.packageJson.repository)
+        ? context.packageJson.repository
+        : context.packageJson.repository?.url;
+    }
+  }
+
+  let author = config.author;
+  if (!author) {
+    if (context.workspaceConfig.organization) {
+      author = context.workspaceConfig.organization;
+    } else if (context.packageJson?.author) {
+      author = isString(context.packageJson.author)
+        ? context.packageJson.author
+        : context.packageJson.author?.name;
+    } else if (
+      context.packageJson?.contributors &&
+      context.packageJson.contributors.length > 0
+    ) {
+      author = isString(context.packageJson.contributors[0])
+        ? context.packageJson.contributors[0]
+        : context.packageJson.contributors[0]?.name;
     }
   }
 
@@ -1129,6 +1126,65 @@ Please upgrade Node.js - \${link("https://nodejs.org/en/download/")}
 }
 
 async function main() {
+  ${
+    !context.packageJson.private
+      ? `
+  try {
+    /*if (config.disableUpdateCheck === 'true') {
+      return;
+    }
+
+    const currentTime = Date.now();
+
+    const configFileData = readConfigFile();
+    if (configFileData.lastUpdateCheck && currentTime - configFileData.lastUpdateCheck < 24 * 60 * 60 * 1000) {
+      return;
+    }*/
+
+    const response = await fetch("https://registry.npmjs.org/${context.packageJson.name || context.options.name}/latest");
+
+    const latestVersion = (await response.json()).version;
+    if ($storm.config.APP_VERSION === latestVersion) {
+      return;
+    }
+
+    console.warn(colors.white(\`  \${colors.bold(colors.yellow("⚠"))} \${colors.bold(\`${
+      appTitle.toLowerCase().startsWith("a") ||
+      appTitle.toLowerCase().startsWith("e") ||
+      appTitle.toLowerCase().startsWith("i") ||
+      appTitle.toLowerCase().startsWith("o") ||
+      appTitle.toLowerCase().startsWith("u") ||
+      appTitle.toLowerCase().startsWith("y")
+        ? "An"
+        : "A"
+    } ${appTitle} update is available! \${colors.red($storm.config.APP_VERSION)} 🢂 \${colors.green(latestVersion)}\`)}
+
+    Release Notes: \${link("${
+      repository
+        ? repository.replace(/\.git$/, "").replace(/^git:/, "")
+        : `https://github.com/${author}/${
+            context.workspaceConfig.namespace ||
+            context.options.name ||
+            context.packageJson.name
+          }/releases/tag/${
+            context.projectJson?.name || context.options.name
+          }@\${latestVersion}`
+    }")}
+
+    Run \${colors.bold("npm i -g ${context.packageJson.name || context.options.name}@latest")} \`));
+    console.log("");
+
+    /*updateConfigFile({
+      lastUpdateCheck: currentTime,
+    });*/
+  } catch (err) {
+    console.error(\` \${colors.red("✘")} \${colors.white(\`An error occurred while checking for ${appTitle} application updates. You can disable update check by setting configuration parameter "SKIP_UPDATE_CHECK" to true: \n\n\${createStormError(err).toDisplay()}\`)}\`);
+    console.log("");
+  }
+`
+      : ""
+  }
+
   try {
     if (process.argv.includes("--version") || process.argv.includes("-v")) {
       console.log($storm.config.APP_VERSION);
@@ -1156,7 +1212,7 @@ async function main() {
       }
 
       if (!isMinimal) {
-        console.log(renderBanner("Help Information", "Display usage details, commands, and support information for the ${context.options.name} application"));
+        console.log(renderBanner("Help Information", "Display usage details, commands, and support information for the ${appTitle} application"));
         console.log("");
       }
 
@@ -1169,7 +1225,7 @@ async function main() {
       console.log("");`
           : ""
       }
-      console.log(colors.gray("The following commands are available as part of the ${context.options.name} application: "));
+      console.log(colors.gray("The following commands are available as part of the ${appTitle} application: "));
       console.log("");${
         commandTree.children && Object.values(commandTree.children).length > 0
           ? Object.values(commandTree.children)
@@ -1188,7 +1244,7 @@ async function main() {
       console.log("");
     }
   } catch (err) {
-    console.error(\` \${colors.red("✘")} \${colors.white(\`An error occurred while running the ${context.options.name} application: \n\n\${createStormError(err).toDisplay()}\`)}\`);
+    console.error(\` \${colors.red("✘")} \${colors.white(\`An error occurred while running the ${appTitle} application: \n\n\${createStormError(err).toDisplay()}\`)}\`);
   }
 }
 

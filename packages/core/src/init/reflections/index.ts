@@ -17,35 +17,31 @@
  ------------------------------------------------------------------- */
 
 import { LogLevelLabel } from "@storm-software/config-tools/types";
-import { removeFile } from "@stryke/fs/remove-file";
-import { existsSync } from "@stryke/path/exists";
-import { getConfigReflectionsPath } from "../../helpers/dotenv/resolve";
-import { writeDotenvReflection } from "../../helpers/dotenv/write-reflections";
+import { writeDotenvReflection } from "../../helpers/dotenv/persistence";
 import type { Context, EngineHooks, Options } from "../../types/build";
 import type { LogFn } from "../../types/config";
 
-export async function prepareReflections<TOptions extends Options = Options>(
+export async function initReflections<TOptions extends Options = Options>(
   log: LogFn,
   context: Context<TOptions>,
   hooks: EngineHooks<TOptions>
 ) {
   log(
     LogLevelLabel.TRACE,
-    `Preparing the reflection artifacts for the Storm Stack project.`
+    `Initializing the reflection data for the Storm Stack project.`
   );
 
-  const configReflectionFile = getConfigReflectionsPath(context, "config");
-  if (existsSync(configReflectionFile)) {
-    await removeFile(configReflectionFile);
-  }
+  // const configReflectionFile = getDotenvReflectionsPath(context);
+  // if (existsSync(configReflectionFile)) {
+  //   await removeFile(configReflectionFile);
+  // }
 
-  const secretsReflectionFile = getConfigReflectionsPath(context, "secrets");
-  if (existsSync(secretsReflectionFile)) {
-    await removeFile(secretsReflectionFile);
-  }
+  // const secretsReflectionFile = getDotenvReflectionsPath(context, "secrets");
+  // if (existsSync(secretsReflectionFile)) {
+  //   await removeFile(secretsReflectionFile);
+  // }
 
   await writeDotenvReflection(
-    log,
     context,
     context.dotenv.types.config.reflection,
     "config"
@@ -53,21 +49,20 @@ export async function prepareReflections<TOptions extends Options = Options>(
 
   if (context.dotenv.types.secrets?.reflection) {
     await writeDotenvReflection(
-      log,
       context,
       context.dotenv.types.secrets?.reflection,
       "secrets"
     );
   }
 
-  await hooks.callHook("prepare:reflections", context).catch((error: Error) => {
+  await hooks.callHook("init:reflections", context).catch((error: Error) => {
     log(
       LogLevelLabel.ERROR,
-      `An error occurred while preparing the reflection artifacts for the Storm Stack project: ${error.message} \n${error.stack ?? ""}`
+      `An error occurred while initializing the reflection data for the Storm Stack project: ${error.message} \n${error.stack ?? ""}`
     );
 
     throw new Error(
-      "An error occurred while preparing the reflection artifacts for the Storm Stack project",
+      "An error occurred while initializing the reflection data for the Storm Stack project",
       { cause: error }
     );
   });

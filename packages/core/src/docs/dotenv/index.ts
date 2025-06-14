@@ -21,7 +21,7 @@ import { LogLevelLabel } from "@storm-software/config-tools/types";
 import { createDirectory } from "@stryke/fs/helpers";
 import { existsSync } from "@stryke/path/exists";
 import { joinPaths } from "@stryke/path/join-paths";
-import { resolveDotenvProperties } from "../../helpers/dotenv/resolve";
+import { readDotenvReflection } from "../../helpers/dotenv/persistence";
 import { writeFile } from "../../helpers/utilities/write-file";
 import type { Context, EngineHooks, Options } from "../../types/build";
 import type { LogFn } from "../../types/config";
@@ -47,7 +47,7 @@ export async function docsDotenv<TOptions extends Options = Options>(
     await createDirectory(outputPath);
   }
 
-  const config = await resolveDotenvProperties(log, context, "config");
+  const reflection = await readDotenvReflection(context, "config");
   const dotenvDocFile = joinPaths(outputPath, "dotenv.md");
 
   log(
@@ -72,7 +72,8 @@ The below list of environment variables are used as configuration parameters to 
 
 | Name | Description | Type | Default Value | Required |
 | ---- | ----------- | ---- | ------------- | :------: |
-${config
+${reflection
+  .getProperties()
   .filter(property => property.getNameAsString() !== "__STORM_INJECTED__")
   .sort((a, b) => a.getNameAsString().localeCompare(b.getNameAsString()))
   .map(reflectionProperty => {

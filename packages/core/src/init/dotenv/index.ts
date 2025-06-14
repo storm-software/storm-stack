@@ -5,11 +5,11 @@
  This code was released as part of the Storm Stack project. Storm Stack
  is maintained by Storm Software under the Apache-2.0 license, and is
  free for commercial and private use. For more information, please visit
- our licensing page at https://stormsoftware.com/projects/storm-stack/license.
+ our licensing page at https://stormsoftware.com/license.
 
  Website:                  https://stormsoftware.com
  Repository:               https://github.com/storm-software/storm-stack
- Documentation:            https://stormsoftware.com/projects/storm-stack/docs
+ Documentation:            https://docs.stormsoftware.com/projects/storm-stack
  Contact:                  https://stormsoftware.com/contact
 
  SPDX-License-Identifier:  Apache-2.0
@@ -22,6 +22,7 @@ import { kebabCase } from "@stryke/string-format/kebab-case";
 import { isString } from "@stryke/type-checks/is-string";
 import { isUndefined } from "@stryke/type-checks/is-undefined";
 import defu from "defu";
+import { writeDotenvReflection } from "../../helpers/dotenv/persistence";
 import type {
   Context,
   EngineHooks,
@@ -120,6 +121,8 @@ export async function initDotenv<TOptions extends Options = Options>(
     return ret;
   }, env);
 
+  await writeDotenvReflection(context, context.dotenv.types.config.reflection);
+
   await hooks.callHook("init:dotenv", context).catch((error: Error) => {
     log(
       LogLevelLabel.ERROR,
@@ -131,4 +134,9 @@ export async function initDotenv<TOptions extends Options = Options>(
       { cause: error }
     );
   });
+
+  log(
+    LogLevelLabel.TRACE,
+    "Initialized the dotenv configuration for the Storm Stack project."
+  );
 }

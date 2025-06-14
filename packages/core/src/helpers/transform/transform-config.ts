@@ -23,15 +23,15 @@ import type { Context, Options, SourceFile } from "../../types/build";
 import type { LogFn } from "../../types/config";
 import {
   getConfigReflectionsPath,
-  resolveDotenvReflection
-} from "../dotenv/resolve";
+  readDotenvReflection
+} from "../dotenv/persistence";
 
 export async function transformConfig<TOptions extends Options = Options>(
   log: LogFn,
   source: SourceFile,
   context: Context<TOptions>
 ): Promise<SourceFile> {
-  const dotenvReflection = await resolveDotenvReflection(context, "config");
+  const dotenvReflection = await readDotenvReflection(context, "config");
   const dotenvAliasProperties = dotenvReflection
     .getProperties()
     .filter(prop => prop.getAlias().length > 0);
@@ -60,91 +60,120 @@ export async function transformConfig<TOptions extends Options = Options>(
     types: []
   });
 
-  const missingEnvNames = [] as string[];
-  for (const node of nodes) {
-    const envName = node.getMatch("ENV_NAME")?.text();
-    if (envName) {
-      const prefix = context.dotenv.prefix.find(
-        pre =>
-          envName &&
-          envName.startsWith(pre) &&
-          (dotenvReflection.hasProperty(envName.replace(`${pre}_`, "")) ||
-            dotenvAliasProperties.some(prop =>
-              prop.getAlias().includes(envName.replace(`${pre}_`, ""))
-            ))
-      );
+  try {
+    const missingEnvNames = [] as string[];
+    for (const node of nodes) {
+      const envName = node.getMatch("ENV_NAME")?.text();
+      if (envName) {
+        const prefix = context.dotenv.prefix.find(
+          pre =>
+            envName &&
+            envName.startsWith(pre) &&
+            (dotenvReflection.hasProperty(envName.replace(`${pre}_`, "")) ||
+              dotenvAliasProperties.some(prop =>
+                prop.getAlias().includes(envName.replace(`${pre}_`, ""))
+              ))
+        );
 
-      let name = envName;
-      if (prefix) {
-        name = envName.replace(`${prefix}_`, "");
-      }
-
-      if (
-        dotenvReflection.hasProperty(name) ||
-        dotenvAliasProperties.some(prop => prop.getAlias().includes(name))
-      ) {
-        const dotenvProperty = dotenvReflection.hasProperty(name)
-          ? dotenvReflection.getProperty(name)
-          : dotenvAliasProperties.find(prop => prop.getAlias().includes(name));
-        if (!dotenvProperty || dotenvProperty.isIgnored()) {
-          continue;
+        let name = envName;
+        if (prefix) {
+          name = envName.replace(`${prefix}_`, "");
         }
 
-        if (context.dotenv.replace && !node.text().startsWith("process.env.")) {
-          const value =
-            context.dotenv.values?.[name] ??
-            context.dotenv.prefix.reduce((ret, pre) => {
-              if (context.dotenv.values[`${pre}_${name}`]) {
-                ret = context.dotenv.values[`${pre}_${name}`];
-              }
-
-              return ret;
-            }, undefined as any) ??
-            dotenvProperty.getDefaultValue();
-          if (dotenvProperty.isValueRequired() && value === undefined) {
-            throw new Error(
-              `Environment variable \`${name}\` is not defined in the .env configuration files`
-            );
+        if (
+          dotenvReflection.hasProperty(name) ||
+          dotenvAliasProperties.some(prop => prop.getAlias().includes(name))
+        ) {
+          const dotenvProperty = dotenvReflection.hasProperty(name)
+            ? dotenvReflection.getProperty(name)
+            : dotenvAliasProperties.find(prop =>
+                prop.getAlias().includes(name)
+              );
+          if (!dotenvProperty || dotenvProperty.isIgnored()) {
+            continue;
           }
 
-          source.code = source.code.replaceAll(node.text(), String(value));
-        }
+          if (
+            context.dotenv.replace &&
+            !node.text().startsWith("process.env.")
+          ) {
+            const value =
+              context.dotenv.values?.[name] ??
+              context.dotenv.prefix.reduce((ret, pre) => {
+                if (context.dotenv.values[`${pre}_${name}`]) {
+                  ret = context.dotenv.values[`${pre}_${name}`];
+                }
 
-        if (!configReflection.hasProperty(name)) {
-          configReflection.addProperty(dotenvProperty.property);
+                return ret;
+              }, undefined as any) ??
+              dotenvProperty.getDefaultValue();
+            if (dotenvProperty.isValueRequired() && value === undefined) {
+              throw new Error(
+                `Environment variable \`${name}\` is not defined in the .env configuration files`
+              );
+            }
+
+            source.code = source.code.replaceAll(node.text(), String(value));
+          }
+
+          if (!configReflection.hasProperty(name)) {
+            configReflection.addProperty(dotenvProperty.property);
+          }
+        } else if (!missingEnvNames.includes(name)) {
+          missingEnvNames.push(name);
         }
-      } else {
-        missingEnvNames.push(name);
       }
     }
-  }
 
-  if (missingEnvNames.length > 0) {
-    throw new Error(
-      `Environment variables are not defined in the dotenv type definition but is used in the code: \n${missingEnvNames
-        .map(name => ` - ${name}`)
-        .join(
-          "\n"
-        )} \n\nThe following variable names are defined in the dotenv type definition: \n${dotenvReflection
-        .getPropertyNames()
-        .map(typeDef => ` - ${String(typeDef)} `)
-        .join(
-          "\n"
-        )} \n\nUsing the following env prefix: \n${context.dotenv.prefix.map(prefix => ` - ${prefix}`).join("\n")} \n\nPlease check your \`dotenv\` configuration option. If you are using a custom dotenv type definition, please make sure that the configuration names match the ones in the code. \n\n`
-    );
-  }
+    if (missingEnvNames.length > 0) {
+      throw new Error(
+        `The following environment variables are not defined in the dotenv type definition but is used in the code: \n${missingEnvNames
+          .map(name => ` - ${name}`)
+          .join(
+            "\n"
+          )} \n\nThe following variable names are defined in the dotenv type definition: \n${dotenvReflection
+          .getPropertyNames()
+          .map(
+            typeDef =>
+              ` - ${String(typeDef)} ${
+                dotenvAliasProperties.some(
+                  prop =>
+                    prop.getNameAsString() === String(typeDef) &&
+                    prop.getAlias().length > 0
+                )
+                  ? `(Alias: ${dotenvAliasProperties
+                      ?.find(prop => prop.getNameAsString() === String(typeDef))
+                      ?.getAlias()
+                      .join(", ")})`
+                  : ""
+              }`
+          )
+          .join(
+            "\n"
+          )} \n\nUsing the following env prefix: \n${context.dotenv.prefix.map(prefix => ` - ${prefix}`).join("\n")} \n\nPlease check your \`dotenv\` configuration option. If you are using a custom dotenv type definition, please make sure that the configuration names match the ones in the code. \n\n`
+      );
+    }
 
-  if (configReflection.getProperties().length > 0) {
+    if (configReflection.getProperties().length > 0) {
+      log(
+        LogLevelLabel.TRACE,
+        `Adding environment variables from ${source.id} to config.json.`
+      );
+
+      await context.workers.configReflection.add({
+        path: getConfigReflectionsPath(context, "config"),
+        config: configReflection.serializeType()
+      });
+    }
+
+    return source;
+  } catch (error) {
     log(
-      LogLevelLabel.TRACE,
-      `Adding environment variables from ${source.id} to config.json.`
+      LogLevelLabel.ERROR,
+      `Failed to transform the configuration in ${source.id}: ${
+        (error as Error)?.message ? error.message : JSON.stringify(error)
+      } ${(error as Error)?.stack ? `\n\n${error.stack}` : ""}`
     );
-
-    await context.workers.commitConfig.commit({
-      filePath: getConfigReflectionsPath(context, "config"),
-      config: configReflection.serializeType()
-    });
+    throw error;
   }
-
-  return source;
 }

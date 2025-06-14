@@ -16,9 +16,9 @@
 
  ------------------------------------------------------------------- */
 
+import { StormBaseConfig } from "../shared/config";
 import { IStormLog } from "../shared/log";
 import { IStormPayload } from "../shared/payload";
-import { StormBaseVariables } from "../shared/vars";
 import { StormBuildInfo, StormEnvPaths, StormRuntimeInfo } from "./env";
 import { IStormEvent } from "./event";
 
@@ -46,7 +46,7 @@ interface Internal_StormContextStore {
  * The Storm Stack application context object is injected into the global scope of the application. It can be accessed using `$storm` or `useStorm()` in the application code.
  */
 export type StormContext<
-  TConfig extends StormBaseVariables = StormBaseVariables,
+  TConfig extends StormBaseConfig = StormBaseConfig,
   TAdditionalFields extends Record<string, any> = Record<string, any>,
   TPayload extends IStormPayload = IStormPayload
 > = TAdditionalFields & {

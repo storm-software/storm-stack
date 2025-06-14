@@ -447,7 +447,7 @@ interface ParsedStacktrace {
 
 type PostprocessFunction<
   TPayload extends IStormPayload,
-  TContext extends StormContext<StormBaseVariables, any, TPayload>,
+  TContext extends StormContext<StormBaseConfig, any, TPayload>,
   TOutput
 > = (
   context: TContext,
@@ -456,7 +456,7 @@ type PostprocessFunction<
 
 type PreprocessFunction<
   TPayload extends IStormPayload,
-  TContext extends StormContext<StormBaseVariables, any, TPayload>
+  TContext extends StormContext<StormBaseConfig, any, TPayload>
 > = (context: TContext) => MaybePromise<IStormError | void | null | undefined>;
 
 type SetupFunction = () => MaybePromise<IStormError | void | null | undefined>;
@@ -472,7 +472,7 @@ type SetupFunction = () => MaybePromise<IStormError | void | null | undefined>;
  *
  * @showCategories
  */
-interface StormBaseVariables {
+interface StormBaseConfig {
   /**
    * An indicator that specifies the application is running in the local Storm Stack development environment.
    *
@@ -1304,7 +1304,7 @@ interface StormBuildInfo {
  * The Storm Stack application context object is injected into the global scope of the application. It can be accessed using `$storm` or `useStorm()` in the application code.
  */
 type StormContext<
-  TConfig extends StormBaseVariables = StormBaseVariables,
+  TConfig extends StormBaseConfig = StormBaseConfig,
   TAdditionalFields extends Record<string, any> = Record<string, any>,
   TPayload extends IStormPayload = IStormPayload
 > = TAdditionalFields & {
@@ -1487,6 +1487,14 @@ interface StormRuntimeInfo {
    * Indicates if the application is running in a server environment.
    */
   isServer: boolean;
+  /**
+   * The default locale used by the application.
+   */
+  defaultLocale: string;
+  /**
+   * The default timezone used by the application.
+   */
+  defaultTimezone: string;
 }
 
 type SuccessMessageDetails = MessageDetails<"success">;
@@ -1513,13 +1521,13 @@ type ValidationDetailType = "help" | "error" | "warning" | "info" | "success";
 
 type ValidatorFunction<
   TPayload extends IStormPayload,
-  TContext extends StormContext<StormBaseVariables, any, TPayload>
+  TContext extends StormContext<StormBaseConfig, any, TPayload>
 > = (context: TContext) => MaybePromise<IStormError | void | null | undefined>;
 
 type WarningMessageDetails = MessageDetails<"warning">;
 
 type StormVariables = Omit<
-  StormBaseVariables,
+  StormBaseConfig,
   | "STORM_STACK_LOCAL"
   | "APP_NAME"
   | "APP_VERSION"
@@ -1596,7 +1604,7 @@ type StormVariables = Omit<
 > &
   Readonly<
     Pick<
-      StormBaseVariables,
+      StormBaseConfig,
       | "APP_NAME"
       | "APP_VERSION"
       | "BUILD_ID"

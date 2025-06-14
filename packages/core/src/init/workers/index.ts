@@ -30,7 +30,7 @@ export async function initWorkers<TOptions extends Options = Options>(
 ) {
   log(
     LogLevelLabel.TRACE,
-    `Initializing the workers for the Storm Stack project.`
+    `Initializing the RPC channels used by the Storm Stack build processes.`
   );
 
   const packagePath = process.env.STORM_STACK_LOCAL
@@ -44,23 +44,21 @@ export async function initWorkers<TOptions extends Options = Options>(
 
   context.workers.errorLookup = createWorker(
     joinPaths(packagePath, "workers", "error-lookup.cjs"),
-    ["find"],
-    1
+    ["find"]
   );
-
-  context.workers.commitConfig = createWorker(
-    joinPaths(packagePath, "workers", "commit-config.cjs"),
-    ["commit"]
+  context.workers.configReflection = createWorker(
+    joinPaths(packagePath, "workers", "config-reflection.cjs"),
+    ["add", "clear"]
   );
 
   await hooks.callHook("init:workers", context).catch((error: Error) => {
     log(
       LogLevelLabel.ERROR,
-      `An error occurred while initializing the workers for the Storm Stack project: ${error.message} \n${error.stack ?? ""}`
+      `An error occurred while initializing the RPC channels used by the Storm Stack build processes: ${error.message} \n${error.stack ?? ""}`
     );
 
     throw new Error(
-      "An error occurred while initializing the workers for the Storm Stack project",
+      "An error occurred while initializing the RPC channels used by the Storm Stack build processes",
       { cause: error }
     );
   });

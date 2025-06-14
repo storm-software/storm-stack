@@ -33,6 +33,7 @@ import {
   initContext,
   initEntry,
   initInstalls,
+  initReflections,
   initUnimport
 } from "./helpers/init";
 import { prepareEntry, prepareRuntime } from "./helpers/prepare";
@@ -86,6 +87,7 @@ export default class StormStackCLIPreset<
       "init:installs": this.initInstalls.bind(this),
       "init:unimport": this.initUnimport.bind(this),
       "init:entry": this.initEntry.bind(this),
+      "init:reflections": this.initReflections.bind(this),
       "prepare:entry": this.prepareEntry.bind(this),
       "prepare:runtime": this.prepareRuntime.bind(this),
       "build:library": this.buildLibrary.bind(this),
@@ -130,6 +132,17 @@ export default class StormStackCLIPreset<
 
       await initEntry(this.log, context, this.#config);
     }
+  }
+
+  protected async initReflections(
+    context: StormStackCLIPresetContext<TOptions>
+  ) {
+    this.log(
+      LogLevelLabel.TRACE,
+      `Initializing the CLI application's reflection data.`
+    );
+
+    await initReflections(this.log, context, this.#config);
   }
 
   protected async prepareRuntime(

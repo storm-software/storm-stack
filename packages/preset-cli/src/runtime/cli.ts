@@ -5,11 +5,11 @@
  This code was released as part of the Storm Stack project. Storm Stack
  is maintained by Storm Software under the Apache-2.0 license, and is
  free for commercial and private use. For more information, please visit
- our licensing page at https://stormsoftware.com/projects/storm-stack/license.
+ our licensing page at https://stormsoftware.com/license.
 
  Website:                  https://stormsoftware.com
  Repository:               https://github.com/storm-software/storm-stack
- Documentation:            https://stormsoftware.com/projects/storm-stack/docs
+ Documentation:            https://docs.stormsoftware.com/projects/storm-stack
  Contact:                  https://stormsoftware.com/contact
 
  SPDX-License-Identifier:  Apache-2.0
@@ -468,7 +468,7 @@ export function renderBanner(title: string, description: string): string {
   if (width % 2) width++;
 
   const banner = [] as string[];
-  banner.push(colors.cyan(\`┏━━━━ ● ${appTitle} ━ v${
+  banner.push(colors.cyan(\`┏━━━━ ⏺ ${appTitle} ━ v${
     context.packageJson.version || "1.0.0"
   } \${"━".repeat(width - 12 - ${
     appTitle.length + (context.packageJson.version?.length ?? 5)

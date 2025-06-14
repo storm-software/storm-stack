@@ -369,9 +369,10 @@ export const runtime = {
   isMinimal,
   isColorSupported,
   isUnicodeSupported,
-  isServer: isNode || build.platform === "node"
+  isServer: isNode || build.platform === "node",
+  defaultLocale: $storm.config.DEFAULT_LOCALE,
+  defaultTimezone: $storm.config.DEFAULT_TIMEZONE,
 } as StormRuntimeInfo;
-
 
 `;
 }

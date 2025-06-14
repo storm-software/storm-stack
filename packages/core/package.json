@@ -643,7 +643,10 @@
         "types": "./dist/unplugin/webpack.d.ts",
         "default": "./dist/unplugin/webpack.js"
       }
-    }
+    },
+    "./workers/config-reflection": "./workers/config-reflection.cjs",
+    "./workers/dotenv-reflection": "./workers/dotenv-reflection.cjs",
+    "./workers/error-message": "./workers/error-message.cjs"
   },
   "types": "dist/index.d.ts",
   "typings": "dist/index.d.ts",

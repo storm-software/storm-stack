@@ -16,9 +16,9 @@
 
  ------------------------------------------------------------------- */
 
+import type { StormBaseConfig } from "../shared/config.js";
 import type { IStormError } from "../shared/error.js";
 import type { IStormPayload } from "../shared/payload.js";
-import type { StormBaseVariables } from "../shared/vars.js";
 import type { StormContext } from "./context.js";
 
 export type ValidationDetailType =
@@ -49,12 +49,12 @@ export type SetupFunction = () => MaybePromise<
 
 export type ValidatorFunction<
   TPayload extends IStormPayload,
-  TContext extends StormContext<StormBaseVariables, any, TPayload>
+  TContext extends StormContext<StormBaseConfig, any, TPayload>
 > = (context: TContext) => MaybePromise<IStormError | void | null | undefined>;
 
 export type PreprocessFunction<
   TPayload extends IStormPayload,
-  TContext extends StormContext<StormBaseVariables, any, TPayload>
+  TContext extends StormContext<StormBaseConfig, any, TPayload>
 > = (context: TContext) => MaybePromise<IStormError | void | null | undefined>;
 
 export type HandlerFunction<TInput = any, TOutput = any> = (
@@ -63,7 +63,7 @@ export type HandlerFunction<TInput = any, TOutput = any> = (
 
 export type PostprocessFunction<
   TPayload extends IStormPayload,
-  TContext extends StormContext<StormBaseVariables, any, TPayload>,
+  TContext extends StormContext<StormBaseConfig, any, TPayload>,
   TOutput
 > = (
   context: TContext,

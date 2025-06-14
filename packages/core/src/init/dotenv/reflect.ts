@@ -24,7 +24,7 @@ import { joinPaths } from "@stryke/path/join-paths";
 import { isObject } from "@stryke/type-checks/is-object";
 import type { TypeDefinition } from "@stryke/types/configuration";
 import { reflectType } from "../../helpers/deepkit";
-import { getDotenvDefaultTypeDefinition } from "../../helpers/dotenv/resolve";
+import { getDotenvDefaultTypeDefinition } from "../../helpers/dotenv/persistence";
 import type {
   Context,
   Options,

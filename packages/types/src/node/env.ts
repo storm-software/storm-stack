@@ -175,4 +175,14 @@ export interface StormRuntimeInfo {
    * Indicates if the application is running in a server environment.
    */
   isServer: boolean;
+
+  /**
+   * The default locale used by the application.
+   */
+  defaultLocale: string;
+
+  /**
+   * The default timezone used by the application.
+   */
+  defaultTimezone: string;
 }

@@ -54,27 +54,46 @@ ${reflection
      * ${item.getDescription() || item.getTitle() || titleCase(item.getNameAsString())}
      *
      * @title ${item.getTitle() || titleCase(item.getNameAsString())}${
-       item.isInternal()
+       item.getAlias().length
          ? `
-     * @internal`
-         : ""
-     }${
-       item.isReadonly()
-         ? `
-     * @readonly`
+${item
+  .getAlias()
+  .map(alias => ` * @alias ${alias}`)
+  .join("\n")}`
          : ""
      }${
        item.getDomain()
          ? `
-     * @domain ${item.getDomain()}`
+ * @domain ${item.getDomain()}`
          : ""
      }${
-       item.getPermission()?.length
+       item.getPermission().length
          ? `
-     ${item
-       .getPermission()
-       .map(permission => `* @permission ${permission}`)
-       .join("\n")}`
+${item
+  .getPermission()
+  .map(permission => ` * @permission ${permission}`)
+  .join("\n")}`
+         : ""
+     }${
+       typeof item.getDefaultValue() !== "undefined" &&
+       item.getDefaultValue() !== ""
+         ? `
+ * @defaultValue ${item.getDefaultValue()}`
+         : ""
+     }${
+       item.isInternal()
+         ? `
+ * @internal`
+         : ""
+     }${
+       item.isReadonly()
+         ? `
+ * @readonly`
+         : ""
+     }${
+       item.isHidden()
+         ? `
+ * @hidden`
          : ""
      }
      */

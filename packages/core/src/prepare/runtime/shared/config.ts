@@ -25,9 +25,9 @@ export function writeConfig<TOptions extends Options = Options>(
 ) {
   return `${getFileHeader()}
 
-import { StormBaseVariables } from "@storm-stack/types/shared/vars";
+import { StormBaseConfig } from "@storm-stack/types/shared/config";
 
-export interface StormConfig extends StormBaseVariables ${generateConfig(
+export interface StormConfig extends StormBaseConfig ${generateConfig(
     context.dotenv.types.config.reflection
   )}
 

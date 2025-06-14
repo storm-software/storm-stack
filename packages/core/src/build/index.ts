@@ -17,7 +17,7 @@
  ------------------------------------------------------------------- */
 
 import { LogLevelLabel } from "@storm-software/config-tools/types";
-import { resolveDotenvReflection } from "../helpers/dotenv/resolve";
+import { readDotenvReflection } from "../helpers/dotenv/persistence";
 import type { Context, EngineHooks, Options } from "../types/build";
 import type { LogFn } from "../types/config";
 import { buildApplication } from "./application";
@@ -40,10 +40,9 @@ export async function build<TOptions extends Options = Options>(
     );
   });
 
-  context.dotenv.types.config.reflection = await resolveDotenvReflection(
+  context.dotenv.types.config.reflection = await readDotenvReflection(
     context,
-    "config",
-    true
+    "config"
   );
 
   if (context.options.projectType === "application") {

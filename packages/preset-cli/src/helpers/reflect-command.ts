@@ -5,11 +5,11 @@
  This code was released as part of the Storm Stack project. Storm Stack
  is maintained by Storm Software under the Apache-2.0 license, and is
  free for commercial and private use. For more information, please visit
- our licensing page at https://stormsoftware.com/projects/storm-stack/license.
+ our licensing page at https://stormsoftware.com/license.
 
  Website:                  https://stormsoftware.com
  Repository:               https://github.com/storm-software/storm-stack
- Documentation:            https://stormsoftware.com/projects/storm-stack/docs
+ Documentation:            https://docs.stormsoftware.com/projects/storm-stack
  Contact:                  https://stormsoftware.com/contact
 
  SPDX-License-Identifier:  Apache-2.0
@@ -32,9 +32,7 @@ import type {
   Options,
   ResolvedEntryTypeDefinition
 } from "@storm-stack/core/types/build";
-import { readJsonFile } from "@stryke/fs/read-file";
 import { StormJSON } from "@stryke/json/storm-json";
-import { existsSync } from "@stryke/path/exists";
 import { findFolderName } from "@stryke/path/file-path-fns";
 import { resolveParentPath } from "@stryke/path/get-parent-path";
 import { joinPaths } from "@stryke/path/join-paths";
@@ -437,16 +435,16 @@ export async function reflectCommandTree<TOptions extends Options = Options>(
   config: StormStackCLIPresetConfig
 ): Promise<CommandReflectionTree> {
   let reflections = {};
-  if (
-    context.persistedMeta?.checksum === context.meta.checksum &&
-    existsSync(joinPaths(getReflectionsPath(context), "cli.json"))
-  ) {
-    reflections = await readJsonFile(
-      joinPaths(getReflectionsPath(context), "cli.json")
-    );
-  } else {
-    reflections = await reflectCommand(log, context, config);
-  }
+  // if (
+  //   context.persistedMeta?.checksum === context.meta.checksum &&
+  //   existsSync(joinPaths(getReflectionsPath(context), "cli.json"))
+  // ) {
+  //   reflections = await readJsonFile(
+  //     joinPaths(getReflectionsPath(context), "cli.json")
+  //   );
+  // } else {
+  reflections = await reflectCommand(log, context, config);
+  // }
 
   const appName =
     config.bin &&

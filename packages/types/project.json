@@ -11,7 +11,7 @@
         "main": "packages/types/src/index.ts",
         "additionalEntryPoints": [
           "packages/types/src/shared/index.ts",
-          "packages/types/src/shared/vars.ts",
+          "packages/types/src/shared/config.ts",
           "packages/types/src/shared/error.ts",
           "packages/types/src/shared/log.ts",
           "packages/types/src/shared/payload.ts",
@@ -36,7 +36,7 @@
         "main": "packages/types/src/index.ts",
         "additionalEntryPoints": [
           "packages/types/src/shared/index.ts",
-          "packages/types/src/shared/vars.ts",
+          "packages/types/src/shared/config.ts",
           "packages/types/src/shared/error.ts",
           "packages/types/src/shared/log.ts",
           "packages/types/src/shared/payload.ts",

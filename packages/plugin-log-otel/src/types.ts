@@ -22,7 +22,7 @@ import type {
 } from "@opentelemetry/api-logs";
 import type { OTLPExporterNodeConfigBase } from "@opentelemetry/otlp-exporter-base";
 import type { LogRecordProcessor } from "@opentelemetry/sdk-logs";
-import { StormBaseVariables } from "@storm-stack/types/vars";
+import { StormBaseConfig } from "@storm-stack/types/config";
 
 /**
  * The OpenTelemetry logger provider.
@@ -107,7 +107,7 @@ export interface OpenTelemetrySinkOptions {
   serviceName?: string;
 }
 
-export interface StormOpenTelemetryLogVariables extends StormBaseVariables {
+export interface StormOpenTelemetryLogVariables extends StormBaseConfig {
   /**
    * The name of the OpenTelemetry service to use.
    *

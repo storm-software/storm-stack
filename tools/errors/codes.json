@@ -94,7 +94,13 @@
     "92": "Could not resolve @storm-stack/types package location.",
     "93": "API Extractor completed with %s errors and %s warnings when processing @storm-stack/types package.",
     "94": "An error occurred while preparing the configuration for the Storm Stack project",
-    "95": "Environment variables are not defined in the dotenv type definition but is used in the code: %s The following variable names are defined in the dotenv type definition: %s Using the following env prefix: %s Please check your dotenv configuration option. If you are using a custom dotenv type definition, please make sure that the configuration names match the ones in the code. "
+    "95": "Environment variables are not defined in the dotenv type definition but is used in the code: %s The following variable names are defined in the dotenv type definition: %s Using the following env prefix: %s Please check your dotenv configuration option. If you are using a custom dotenv type definition, please make sure that the configuration names match the ones in the code. ",
+    "96": "Invalid serialized type provided for conversion.",
+    "97": "Mismatch in length of serialized types: expected %s, got %s.",
+    "98": "An error occurred while initializing the RPC channels used by the Storm Stack build processes",
+    "99": "Unsupported serialized type kind: %s Type: %s",
+    "100": "Unsupported serialized type kind: %s",
+    "101": "The following environment variables are not defined in the dotenv type definition but is used in the code: %s The following variable names are defined in the dotenv type definition: %s Using the following env prefix: %s Please check your dotenv configuration option. If you are using a custom dotenv type definition, please make sure that the configuration names match the ones in the code. "
   },
   "not_found": {
     "1": "The requested resource was not found.",
