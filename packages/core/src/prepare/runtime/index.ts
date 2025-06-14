@@ -54,7 +54,7 @@ export async function prepareRuntime<TOptions extends Options = Options>(
     writeFile(
       log,
       joinPaths(context.runtimePath, "config.ts"),
-      writeConfig(context)
+      await writeConfig(context)
     ),
     writeFile(log, joinPaths(context.runtimePath, "id.ts"), writeId()),
     writeFile(

@@ -16,21 +16,19 @@
 
  ------------------------------------------------------------------- */
 
-import { ReflectionClass } from "@deepkit/type";
 import type { Context, Options } from "../../types/build";
 import { getFileHeader } from "../utilities";
 import { generateConfig } from "./shared";
 
-export function generateNodeDeclarations<TOptions extends Options = Options>(
-  reflection: ReflectionClass<any>,
-  _context: Context<TOptions>
-) {
+export async function generateNodeDeclarations<
+  TOptions extends Options = Options
+>(context: Context<TOptions>) {
   return `${getFileHeader(`
 /// <reference types="@storm-stack/types" />
 /// <reference types="@storm-stack/types/node" />
 `)}
 declare global {
-  type StormVariables = ${generateConfig(reflection)};
+  type StormConfig = ${await generateConfig(context)};
 
   const $storm: StormContext<StormVariables>;
 }

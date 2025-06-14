@@ -20,15 +20,15 @@ import { generateConfig } from "../../../helpers/dts/shared";
 import { getFileHeader } from "../../../helpers/utilities/file-header";
 import type { Context, Options } from "../../../types/build";
 
-export function writeConfig<TOptions extends Options = Options>(
+export async function writeConfig<TOptions extends Options = Options>(
   context: Context<TOptions>
 ) {
   return `${getFileHeader()}
 
 import { StormBaseConfig } from "@storm-stack/types/shared/config";
 
-export interface StormConfig extends StormBaseConfig ${generateConfig(
-    context.dotenv.types.config.reflection
+export interface StormConfig extends StormBaseConfig ${await generateConfig(
+    context
   )}
 
 `;

@@ -28,7 +28,6 @@ import { LogLevelLabel } from "@storm-software/config-tools/types";
 import * as capnp from "@stryke/capnp";
 import { readBufferFile, writeBufferFile } from "@stryke/fs/buffer";
 import { removeFile } from "@stryke/fs/remove-file";
-import { StormJSON } from "@stryke/json/storm-json";
 import { existsSync } from "node:fs";
 import { SerializedTypes as CapnpSerializedTypes } from "../../../../schemas/reflection";
 import {
@@ -66,8 +65,6 @@ export async function add(payload: AddPayload): Promise<void> {
       "The variables reflection file path is required to run the commit-vars worker."
     );
   }
-
-  log(LogLevelLabel.TRACE, StormJSON.stringify(payload.config));
 
   let configReflection: ReflectionClass<unknown> = ReflectionClass.from({
     kind: ReflectionKind.objectLiteral,
@@ -124,13 +121,6 @@ export async function add(payload: AddPayload): Promise<void> {
 
   await removeFile(payload.path);
   await writeBufferFile(payload.path, message.toArrayBuffer());
-
-  // const types = root._initTypes(4);
-  // types.set(0, "config");
-  // types.set(1, "secrets");
-  // types.set(2, "configReflection");
-  // types.set(3, "secretsReflection");
-  // await writeBufferFile(data.dataPath, message.toArrayBuffer());
 }
 
 /**

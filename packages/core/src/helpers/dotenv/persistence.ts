@@ -90,3 +90,16 @@ export async function writeDotenvReflection<TOptions extends Options = Options>(
     message.toArrayBuffer()
   );
 }
+
+export async function readConfigReflection<TOptions extends Options = Options>(
+  context: Context<TOptions>
+): Promise<ReflectionClass<any>> {
+  const buffer = await readBufferFile(
+    getDotenvReflectionsPath(context, "config")
+  );
+  const message = new capnp.Message(buffer, false);
+
+  return resolveClassType(
+    deserializeType(convertFromCapnp(message.getRoot(SerializedTypes).types))
+  );
+}
