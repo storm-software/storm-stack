@@ -47,6 +47,7 @@
     "@storm-software/config-tools": "catalog:",
     "@storm-stack/core": "workspace:*",
     "@storm-stack/devkit": "workspace:*",
+    "@stryke/capnp": "catalog:",
     "@stryke/cli": "catalog:",
     "@stryke/fs": "catalog:",
     "@stryke/json": "catalog:",

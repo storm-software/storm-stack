@@ -213,7 +213,7 @@ export function renderUsage(mode: "full" | "minimal" = "full"): string {
       : ""
   }
   \${colors.whiteBright(colors.bold("Usage:"))}
-    ${kebabCase(name)}${
+    $ ${kebabCase(name)}${
       command.entry.path.length > 0
         ? ` ${command.entry.path
             .filter(Boolean)
@@ -226,7 +226,7 @@ export function renderUsage(mode: "full" | "minimal" = "full"): string {
 ${Object.values(command.children)
   .map(
     child =>
-      `    ${kebabCase(name)}${
+      `    $ ${kebabCase(name)}${
         child.entry.path.length > 0
           ? ` ${child.entry.path
               .filter(Boolean)
@@ -771,7 +771,7 @@ ${
     ? Object.values(command.children)
         .map(
           child =>
-            `    ${kebabCase(binName)}${
+            `    $ ${kebabCase(binName)}${
               child.entry.path.length > 0
                 ? ` ${child.entry.path
                     .filter(Boolean)
