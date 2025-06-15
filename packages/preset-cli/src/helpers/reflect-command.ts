@@ -42,13 +42,13 @@ import { isSetString } from "@stryke/type-checks/is-set-string";
 import type { StormStackCLIPresetContext } from "../types/build";
 import type { StormStackCLIPresetConfig } from "../types/config";
 import type {
+  Command,
   CommandEntryTypeDefinition,
-  CommandPayloadArgReflection,
-  CommandPayloadReflection,
-  CommandReflection,
-  CommandReflectionTree,
-  CommandReflectionTreeBranch,
-  CommandRelationsReflection
+  CommandPayload,
+  CommandPayloadArg,
+  CommandRelations,
+  CommandTree,
+  CommandTreeBranch
 } from "../types/reflection";
 
 function findCommandName(entry: ResolvedEntryTypeDefinition) {
@@ -64,8 +64,8 @@ function findCommandName(entry: ResolvedEntryTypeDefinition) {
 
 async function reflectCommandRelations<TOptions extends Options = Options>(
   context: StormStackCLIPresetContext<TOptions>
-): Promise<Record<string, CommandRelationsReflection>> {
-  const relationReflections = {} as Record<string, CommandRelationsReflection>;
+): Promise<Record<string, CommandRelations>> {
+  const relationReflections = {} as Record<string, CommandRelations>;
   for (const entry of context.entry.filter(
     entry => entry.input.file !== context.options.entry && entry.output
   )) {
@@ -73,7 +73,7 @@ async function reflectCommandRelations<TOptions extends Options = Options>(
     relationReflections[commandId] ??= {
       parent: undefined,
       children: []
-    } as CommandRelationsReflection;
+    } as CommandRelations;
 
     const commandName = findCommandName(entry);
     if (commandId !== commandName) {
@@ -82,7 +82,7 @@ async function reflectCommandRelations<TOptions extends Options = Options>(
         relationReflections[parent] ??= {
           parent: undefined,
           children: []
-        } as CommandRelationsReflection;
+        } as CommandRelations;
         relationReflections[parent].children.push(commandId);
 
         relationReflections[commandId].parent = parent;
@@ -96,7 +96,7 @@ async function reflectCommandRelations<TOptions extends Options = Options>(
 function getDefaultCommandPayloadArgs(
   entry: CommandEntryTypeDefinition,
   config: StormStackCLIPresetConfig
-): CommandPayloadArgReflection[] {
+): CommandPayloadArg[] {
   return [
     {
       name: "help",
@@ -187,14 +187,14 @@ function getDefaultCommandPayloadArgs(
       required: false,
       default: false
     }
-  ].filter(Boolean) as CommandPayloadArgReflection[];
+  ].filter(Boolean) as CommandPayloadArg[];
 }
 
 async function reflectCommandPayloads<TOptions extends Options = Options>(
   context: StormStackCLIPresetContext<TOptions>,
   config: StormStackCLIPresetConfig
-): Promise<Record<string, CommandPayloadReflection>> {
-  const payloadReflections = {} as Record<string, CommandPayloadReflection>;
+): Promise<Record<string, CommandPayload>> {
+  const payloadReflections = {} as Record<string, CommandPayload>;
   for (const entry of context.entry.filter(
     entry => entry.input.file !== context.options.entry && entry.output
   )) {
@@ -326,7 +326,7 @@ async function reflectCommandPayloads<TOptions extends Options = Options>(
               },
               getDefaultCommandPayloadArgs(entry, config)
             )
-          } as CommandPayloadReflection;
+          } as CommandPayload;
         }
       }
     }
@@ -339,11 +339,11 @@ export async function reflectCommand<TOptions extends Options = Options>(
   log: LogFn,
   context: StormStackCLIPresetContext<TOptions>,
   config: StormStackCLIPresetConfig
-): Promise<Record<string, CommandReflection>> {
+): Promise<Record<string, Command>> {
   const relationsReflections = await reflectCommandRelations(context);
   const payloadsReflections = await reflectCommandPayloads(context, config);
 
-  const reflections = {} as Record<string, CommandReflection>;
+  const reflections = {} as Record<string, Command>;
   for (const entry of context.entry.filter(
     entry => entry.input.file !== context.options.entry
   )) {
@@ -360,7 +360,7 @@ export async function reflectCommand<TOptions extends Options = Options>(
         entry,
         payload: payloadsReflections[entry.output],
         relations: relationsReflections[entry.output]
-      } as CommandReflection;
+      } as Command;
     } else {
       log(
         LogLevelLabel.TRACE,
@@ -400,7 +400,7 @@ export async function reflectCommand<TOptions extends Options = Options>(
         entry,
         payload: payloadsReflections[commandId],
         relations
-      } as CommandReflection;
+      } as Command;
     }
   }
 
@@ -433,7 +433,7 @@ export async function reflectCommandTree<TOptions extends Options = Options>(
   log: LogFn,
   context: StormStackCLIPresetContext<TOptions>,
   config: StormStackCLIPresetConfig
-): Promise<CommandReflectionTree> {
+): Promise<CommandTree> {
   let reflections = {};
   // if (
   //   context.persistedMeta?.checksum === context.meta.checksum &&
@@ -464,7 +464,7 @@ export async function reflectCommandTree<TOptions extends Options = Options>(
     ),
     parent: null,
     children: {}
-  } as CommandReflectionTree;
+  } as CommandTree;
 
   Object.keys(reflections)
     .filter(commandId => !reflections[commandId]?.relations.parent)
@@ -475,7 +475,7 @@ export async function reflectCommandTree<TOptions extends Options = Options>(
         ...reflection,
         parent: tree,
         children: {}
-      } as CommandReflectionTreeBranch;
+      } as CommandTreeBranch;
     });
 
   Object.keys(reflections)
@@ -490,7 +490,7 @@ export async function reflectCommandTree<TOptions extends Options = Options>(
             parent,
             children: {},
             ...reflection
-          } as CommandReflectionTreeBranch;
+          } as CommandTreeBranch;
         }
       }
     });

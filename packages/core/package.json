@@ -685,7 +685,6 @@
   "dependencies": {
     "@ast-grep/napi": "catalog:",
     "@deepkit/type": "catalog:",
-    "@deepkit/type-compiler": "catalog:",
     "@donedeal0/superdiff": "catalog:",
     "@microsoft/api-extractor": "catalog:",
     "@microsoft/tsdoc-config": "catalog:",
@@ -730,7 +729,7 @@
     "@types/node": "catalog:",
     "eslint": "catalog:",
     "tsup": "catalog:",
-    "typescript": "^5.8.3"
+    "typescript": "5.9.0-dev.20250614"
   },
   "publishConfig": {
     "access": "public"

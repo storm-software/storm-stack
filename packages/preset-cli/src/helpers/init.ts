@@ -45,7 +45,7 @@ import { isString } from "@stryke/type-checks/is-string";
 import { defu } from "defu";
 import type { StormStackCLIPresetContext } from "../types/build";
 import type { StormStackCLIPresetConfig } from "../types/config";
-import { CommandReflectionTreeBranch } from "../types/reflection";
+import { CommandTreeBranch } from "../types/reflection";
 import { reflectCommandTree } from "./reflect-command";
 
 export async function initContext<TOptions extends Options = Options>(
@@ -599,7 +599,7 @@ export async function initEntry<TOptions extends Options = Options>(
 async function addCommandArgReflections<TOptions extends Options = Options>(
   context: Context<TOptions>,
   reflection: ReflectionClass<any>,
-  command: CommandReflectionTreeBranch
+  command: CommandTreeBranch
 ) {
   for (const arg of command.payload.args) {
     let name = constantCase(arg.name);

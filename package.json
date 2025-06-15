@@ -58,6 +58,7 @@
     "view-config": "pnpm exec storm-config"
   },
   "devDependencies": {
+    "@deepkit/type-compiler": "catalog:",
     "@ls-lint/ls-lint": "catalog:",
     "@nx/devkit": "catalog:",
     "@nx/eslint-plugin": "catalog:",
@@ -101,7 +102,7 @@
     "ts-jest": "catalog:",
     "ts-node": "catalog:",
     "tslib": "catalog:",
-    "typescript": "^5.8.3",
+    "typescript": "5.9.0-dev.20250614",
     "verdaccio": "catalog:",
     "zx": "catalog:"
   },

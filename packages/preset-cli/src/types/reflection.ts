@@ -27,12 +27,12 @@ export type CommandEntryTypeDefinition = ResolvedEntryTypeDefinition &
     isVirtual: boolean;
   };
 
-export interface CommandRelationsReflection {
+export interface CommandRelations {
   parent?: string;
   children: string[];
 }
 
-export interface CommandPayloadArgReflection {
+export interface CommandPayloadArg {
   name: string;
   displayName: string;
   description?: string;
@@ -47,35 +47,32 @@ export interface CommandPayloadArgReflection {
   isNegative?: boolean;
 }
 
-export interface CommandPayloadReflection {
+export interface CommandPayload {
   name: string;
   importPath?: string;
-  args: CommandPayloadArgReflection[];
+  args: CommandPayloadArg[];
 }
 
-export interface CommandReflection {
+export interface Command {
   commandId: string;
   name: string;
   displayName: string;
   description?: string;
   aliases: string[];
   entry: CommandEntryTypeDefinition;
-  payload: CommandPayloadReflection;
-  relations: CommandRelationsReflection;
+  payload: CommandPayload;
+  relations: CommandRelations;
 }
 
-export type CommandReflectionTree = Omit<
-  CommandReflection,
+export type CommandTree = Omit<
+  Command,
   "commandId" | "relations" | "payload"
 > & {
   parent: null;
-  children: Record<string, CommandReflectionTreeBranch>;
+  children: Record<string, CommandTreeBranch>;
 };
 
-export type CommandReflectionTreeBranch = Omit<
-  CommandReflection,
-  "relations"
-> & {
-  parent: CommandReflectionTree | CommandReflectionTreeBranch;
-  children: Record<string, CommandReflectionTreeBranch>;
+export type CommandTreeBranch = Omit<Command, "relations"> & {
+  parent: CommandTree | CommandTreeBranch;
+  children: Record<string, CommandTreeBranch>;
 };

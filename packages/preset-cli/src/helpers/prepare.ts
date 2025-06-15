@@ -50,14 +50,14 @@ import {
 } from "../runtime/config";
 import type { StormStackCLIPresetContext } from "../types/build";
 import type { StormStackCLIPresetConfig } from "../types/config";
-import type { CommandReflectionTreeBranch } from "../types/reflection";
+import type { CommandTreeBranch } from "../types/reflection";
 import { reflectCommandTree } from "./reflect-command";
 import { sortArgAliases } from "./utilities";
 
 async function writeCommandEntryUsage<TOptions extends Options = Options>(
   log: LogFn,
   context: Context<TOptions>,
-  command: CommandReflectionTreeBranch,
+  command: CommandTreeBranch,
   config: StormStackCLIPresetConfig,
   name: string,
   description: string
@@ -262,7 +262,7 @@ ${optionsColumn1.map((option, i) => `    ${option.padEnd(column1MaxLength)}${opt
 async function writeCommandEntryHandler<TOptions extends Options = Options>(
   log: LogFn,
   context: Context<TOptions>,
-  command: CommandReflectionTreeBranch,
+  command: CommandTreeBranch,
   config: StormStackCLIPresetConfig,
   name: string,
   description: string
@@ -558,7 +558,7 @@ export default handler;
 async function writeCommandEntry<TOptions extends Options = Options>(
   log: LogFn,
   context: Context<TOptions>,
-  command: CommandReflectionTreeBranch,
+  command: CommandTreeBranch,
   config: StormStackCLIPresetConfig
 ) {
   log(
@@ -600,7 +600,7 @@ async function writeCommandEntry<TOptions extends Options = Options>(
 async function writeVirtualCommandEntry<TOptions extends Options = Options>(
   log: LogFn,
   context: Context<TOptions>,
-  command: CommandReflectionTreeBranch,
+  command: CommandTreeBranch,
   config: StormStackCLIPresetConfig
 ) {
   log(
@@ -888,7 +888,7 @@ export default handler;
 async function prepareCommandDefinition<TOptions extends Options = Options>(
   log: LogFn,
   context: Context<TOptions>,
-  command: CommandReflectionTreeBranch,
+  command: CommandTreeBranch,
   config: StormStackCLIPresetConfig
 ) {
   if (command.children) {
