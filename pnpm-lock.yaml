@@ -563,7 +563,7 @@ importers:
         version: 0.11.1(magicast@0.3.5)(nx@21.0.3(@swc-node/register@1.10.10(@swc/core@1.11.22(@swc/helpers@0.5.17))(@swc/types@0.1.23)(typescript@5.8.3))(@swc/core@1.11.22(@swc/helpers@0.5.17)))
       '@stryke/url':
         specifier: 'catalog:'
-        version: 0.2.1(magicast@0.3.5)
+        version: 0.2.1
       unstorage:
         specifier: 'catalog:'
         version: 1.16.0(aws4fetch@1.0.20)
@@ -603,7 +603,7 @@ importers:
         version: 0.3.4
       '@stryke/url':
         specifier: 'catalog:'
-        version: 0.2.1(magicast@0.3.5)
+        version: 0.2.1
     devDependencies:
       '@storm-stack/core':
         specifier: workspace:*
@@ -637,7 +637,7 @@ importers:
         version: 0.3.4
       '@stryke/url':
         specifier: 'catalog:'
-        version: 0.2.1(magicast@0.3.5)
+        version: 0.2.1
     devDependencies:
       '@storm-stack/core':
         specifier: workspace:*
@@ -4276,6 +4276,7 @@ packages:
 
   '@ls-lint/ls-lint@2.3.0':
     resolution: {integrity: sha512-lsT5/7SxtImOIjpefC9wcoXt2lkikKhCjd6U+Q9Z6X5h2HBU/71ggt+XStdodZ0HkJGO333zDUeec7JROMCPFw==}
+    cpu: [x64, arm64, s390x, ppc64le]
     os: [darwin, linux, win32]
     hasBin: true
 
@@ -19674,7 +19675,7 @@ snapshots:
       - magicast
       - nx
 
-  '@stryke/url@0.2.1(magicast@0.3.5)':
+  '@stryke/url@0.2.1':
     dependencies:
       '@stryke/json': 0.9.1
       '@stryke/path': 0.7.6(magicast@0.3.5)
