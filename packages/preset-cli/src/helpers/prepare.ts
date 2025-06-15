@@ -52,6 +52,7 @@ import type { StormStackCLIPresetContext } from "../types/build";
 import type { StormStackCLIPresetConfig } from "../types/config";
 import type { CommandReflectionTreeBranch } from "../types/reflection";
 import { reflectCommandTree } from "./reflect-command";
+import { sortArgAliases } from "./utilities";
 
 async function writeCommandEntryUsage<TOptions extends Options = Options>(
   log: LogFn,
@@ -617,26 +618,24 @@ async function writeVirtualCommandEntry<TOptions extends Options = Options>(
     if (arg.type === "string" || arg.type === "number" || arg.type === "enum") {
       return `--${arg.name} <${arg.name}>${
         arg.aliases.length > 0
-          ? `, ${arg.aliases
+          ? `, ${sortArgAliases(arg.aliases)
               .map(alias =>
                 alias.length === 1
                   ? `-${alias} <${arg.name}>`
                   : `--${alias} <${arg.name}>`
               )
-              .sort((a, b) => b.localeCompare(a))
               .join(", ")}`
           : ""
       }`;
     } else if (arg.type === "array") {
       return `--${arg.name} <${arg.name}>...${
         arg.aliases.length > 0
-          ? `, ${arg.aliases
+          ? `, ${sortArgAliases(arg.aliases)
               .map(alias =>
                 alias.length === 1
                   ? `-${alias} <${arg.name}>...`
                   : `--${alias} <${arg.name}>...`
               )
-              .sort((a, b) => b.localeCompare(a))
               .join(", ")}`
           : ""
       }`;
@@ -644,9 +643,8 @@ async function writeVirtualCommandEntry<TOptions extends Options = Options>(
 
     return `--${arg.name}${
       arg.aliases.length > 0
-        ? `, ${arg.aliases
+        ? `, ${sortArgAliases(arg.aliases)
             .map(alias => (alias.length === 1 ? `-${alias}` : `--${alias}`))
-            .sort((a, b) => b.localeCompare(a))
             .join(", ")}`
         : ""
     }`;
