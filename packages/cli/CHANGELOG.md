@@ -2,6 +2,38 @@
 
 # Changelog for Storm Stack - Cli
 
+## [0.11.0](https://github.com/storm-software/storm-stack/releases/tag/cli%400.11.0) (2025-06-17)
+
+### Features
+
+- **core:** Added Cap’n Proto buffer persistence of TypeScript compiler
+  reflection data
+
+### Bug Fixes
+
+- **core:** Resolve issue with missing dotenv values during build process
+
+### Source Code Improvements
+
+- **core:** Rename `vars` to `config` in project references
+
+### Miscellaneous
+
+- **monorepo:** Update workspace package links
+
+### Updated Dependencies
+
+- Updated plugin-log-storage to 0.17.2
+- Updated plugin-log-sentry to 0.19.0
+- Updated plugin-storage-fs to 0.6.2
+- Updated preset-cli to 0.20.0
+- Updated preset-cli to 0.20.0
+- Updated types to 0.13.0
+- Updated core to 0.29.0
+- Updated core to 0.29.0
+- Updated nx to 0.13.2
+- Updated nx to 0.13.2
+
 ## [0.10.0](https://github.com/storm-software/storm-stack/releases/tag/cli%400.10.0) (2025-06-08)
 
 ### Features

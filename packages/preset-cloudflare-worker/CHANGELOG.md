@@ -2,6 +2,22 @@
 
 # Changelog for Storm Stack - Preset Cloudflare Worker
 
+## [0.15.0](https://github.com/storm-software/storm-stack/releases/tag/preset-cloudflare-worker%400.15.0) (2025-06-17)
+
+### Features
+
+- **core:** Added Cap’n Proto buffer persistence of TypeScript compiler
+  reflection data
+
+### Miscellaneous
+
+- **monorepo:** Update workspace package links
+
+### Updated Dependencies
+
+- Updated core to 0.29.0
+- Updated core to 0.29.0
+
 ## [0.14.1](https://github.com/storm-software/storm-stack/releases/tag/preset-cloudflare-worker%400.14.1) (2025-06-08)
 
 ### Miscellaneous

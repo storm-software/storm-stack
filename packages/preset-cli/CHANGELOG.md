@@ -2,6 +2,38 @@
 
 # Changelog for Storm Stack - Preset Cli
 
+## [0.20.0](https://github.com/storm-software/storm-stack/releases/tag/preset-cli%400.20.0) (2025-06-17)
+
+### Features
+
+- **monorepo:** Upgrade TypeScript to v5.9.0 dev release
+- **preset-cli:** Added Cap’n Proto schemas for writnig command reflections to
+  buffers
+- **core:** Added Cap’n Proto buffer persistence of TypeScript compiler
+  reflection data
+
+### Bug Fixes
+
+- **core:** Resolve issue with missing dotenv values during build process
+- **preset-cli:** Updated `@stryke/capnp` and resolved argument alias sorting
+  issue
+- **core:** Added missing `@stryke/capnp` dependency
+
+### Source Code Improvements
+
+- **core:** Rename `vars` to `config` in project references
+
+### Miscellaneous
+
+- **monorepo:** Update workspace package links
+
+### Updated Dependencies
+
+- Updated devkit to 0.7.2
+- Updated devkit to 0.7.2
+- Updated core to 0.29.0
+- Updated core to 0.29.0
+
 ## [0.19.1](https://github.com/storm-software/storm-stack/releases/tag/preset-cli%400.19.1) (2025-06-08)
 
 ### Miscellaneous

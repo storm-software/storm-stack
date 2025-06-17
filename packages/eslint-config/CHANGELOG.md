@@ -2,6 +2,20 @@
 
 # Changelog for Storm Stack - Eslint Config
 
+## [0.10.0](https://github.com/storm-software/storm-stack/releases/tag/eslint-config%400.10.0) (2025-06-17)
+
+### Features
+
+- **monorepo:** Upgrade TypeScript to v5.9.0 dev release
+
+### Source Code Improvements
+
+- **core:** Rename `vars` to `config` in project references
+
+### Updated Dependencies
+
+- Updated tsdoc to 0.2.0
+
 ## [0.9.2](https://github.com/storm-software/storm-stack/releases/tag/eslint-config%400.9.2) (2025-06-08)
 
 ### Bug Fixes

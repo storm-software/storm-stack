@@ -2,6 +2,29 @@
 
 # Changelog for Storm Stack - Plugin Log Otel
 
+## [0.16.0](https://github.com/storm-software/storm-stack/releases/tag/plugin-log-otel%400.16.0) (2025-06-17)
+
+### Features
+
+- **core:** Added Cap’n Proto buffer persistence of TypeScript compiler
+  reflection data
+
+### Source Code Improvements
+
+- **core:** Rename `vars` to `config` in project references
+
+### Miscellaneous
+
+- **monorepo:** Update workspace package links
+
+### Updated Dependencies
+
+- Updated devkit to 0.7.2
+- Updated devkit to 0.7.2
+- Updated core to 0.29.0
+- Updated core to 0.29.0
+- Updated nx to 0.13.2
+
 ## [0.15.1](https://github.com/storm-software/storm-stack/releases/tag/plugin-log-otel%400.15.1) (2025-06-08)
 
 ### Miscellaneous

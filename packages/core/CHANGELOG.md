@@ -2,6 +2,29 @@
 
 # Changelog for Storm Stack - Core
 
+## [0.29.0](https://github.com/storm-software/storm-stack/releases/tag/core%400.29.0) (2025-06-17)
+
+### Features
+
+- **monorepo:** Upgrade TypeScript to v5.9.0 dev release
+- **core:** Added Cap’n Proto buffer persistence of TypeScript compiler
+  reflection data
+
+### Bug Fixes
+
+- **core:** Resolve issue with missing dotenv values during build process
+- **core:** Added missing `@stryke/capnp` dependency
+- **core:** Resolved issue applying unused dotenv properties to `StormConfig`
+  type
+
+### Source Code Improvements
+
+- **core:** Rename `vars` to `config` in project references
+
+### Updated Dependencies
+
+- Updated types to 0.13.0
+
 ## [0.28.0](https://github.com/storm-software/storm-stack/releases/tag/core%400.28.0) (2025-06-08)
 
 ### Features

@@ -2,6 +2,21 @@
 
 # Changelog for Storm Stack - Nx
 
+## [0.13.2](https://github.com/storm-software/storm-stack/releases/tag/nx%400.13.2) (2025-06-17)
+
+### Source Code Improvements
+
+- **core:** Rename `vars` to `config` in project references
+
+### Miscellaneous
+
+- **monorepo:** Update workspace package links
+
+### Updated Dependencies
+
+- Updated core to 0.29.0
+- Updated core to 0.29.0
+
 ## [0.13.1](https://github.com/storm-software/storm-stack/releases/tag/nx%400.13.1) (2025-06-08)
 
 ### Miscellaneous

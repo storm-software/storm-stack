@@ -2,6 +2,21 @@
 
 # Changelog for Storm Stack - Devkit
 
+## [0.7.2](https://github.com/storm-software/storm-stack/releases/tag/devkit%400.7.2) (2025-06-17)
+
+### Bug Fixes
+
+- **core:** Resolve issue with missing dotenv values during build process
+
+### Miscellaneous
+
+- **monorepo:** Update workspace package links
+
+### Updated Dependencies
+
+- Updated types to 0.13.0
+- Updated core to 0.29.0
+
 ## [0.7.1](https://github.com/storm-software/storm-stack/releases/tag/devkit%400.7.1) (2025-06-08)
 
 ### Miscellaneous

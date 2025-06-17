@@ -2,6 +2,24 @@
 
 # Changelog for Storm Stack - Plugin Storage Cloudflare Kv
 
+## [0.6.2](https://github.com/storm-software/storm-stack/releases/tag/plugin-storage-cloudflare-kv%400.6.2) (2025-06-17)
+
+### Source Code Improvements
+
+- **core:** Rename `vars` to `config` in project references
+
+### Miscellaneous
+
+- **monorepo:** Update workspace package links
+
+### Updated Dependencies
+
+- Updated devkit to 0.7.2
+- Updated devkit to 0.7.2
+- Updated core to 0.29.0
+- Updated core to 0.29.0
+- Updated nx to 0.13.2
+
 ## [0.6.1](https://github.com/storm-software/storm-stack/releases/tag/plugin-storage-cloudflare-kv%400.6.1) (2025-06-08)
 
 ### Miscellaneous
