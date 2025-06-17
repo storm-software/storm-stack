@@ -4,6 +4,12 @@
   "projectType": "application",
   "sourceRoot": "examples/cloudflare-worker/src",
   "targets": {
+    "clean": {
+      "executor": "@storm-stack/nx:clean",
+      "options": {
+        "mode": "development"
+      }
+    },
     "prepare": {
       "cache": true,
       "inputs": ["typescript", "^production"],

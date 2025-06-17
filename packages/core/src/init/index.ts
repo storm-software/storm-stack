@@ -24,7 +24,6 @@ import { initContext } from "./context";
 import { initDotenv } from "./dotenv";
 import { initEntry } from "./entry";
 import { initInstalls } from "./installs";
-import { initReflections } from "./reflections";
 import { initTsconfig } from "./tsconfig";
 import { initUnimport } from "./unimport";
 import { initWorkers } from "./workers";
@@ -123,7 +122,6 @@ export async function init<TOptions extends Options = Options>(
   await initDotenv(log, context, hooks);
   await initWorkers(log, context, hooks);
   await initEntry(log, context, hooks);
-  await initReflections(log, context, hooks);
 
   await hooks.callHook("init:complete", context).catch((error: Error) => {
     log(

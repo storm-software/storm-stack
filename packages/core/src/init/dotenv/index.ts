@@ -22,7 +22,6 @@ import { kebabCase } from "@stryke/string-format/kebab-case";
 import { isString } from "@stryke/type-checks/is-string";
 import { isUndefined } from "@stryke/type-checks/is-undefined";
 import defu from "defu";
-import { writeDotenvReflection } from "../../helpers/dotenv/persistence";
 import type {
   Context,
   EngineHooks,
@@ -120,8 +119,6 @@ export async function initDotenv<TOptions extends Options = Options>(
 
     return ret;
   }, env);
-
-  await writeDotenvReflection(context, context.dotenv.types.config.reflection);
 
   await hooks.callHook("init:dotenv", context).catch((error: Error) => {
     log(

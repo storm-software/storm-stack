@@ -675,7 +675,6 @@ export interface EngineHookFunctions<TOptions extends Options = Options> {
   "init:dotenv": (context: Context<TOptions>) => MaybePromise<void>;
   "init:workers": (context: Context<TOptions>) => MaybePromise<void>;
   "init:entry": (context: Context<TOptions>) => MaybePromise<void>;
-  "init:reflections": (context: Context<TOptions>) => MaybePromise<void>;
   "init:complete": (context: Context<TOptions>) => MaybePromise<void>;
 
   // Clean - Hooks used during the cleaning of the Storm Stack project
@@ -691,8 +690,10 @@ export interface EngineHookFunctions<TOptions extends Options = Options> {
   "prepare:directories": (context: Context<TOptions>) => MaybePromise<void>;
   "prepare:config": (context: Context<TOptions>) => MaybePromise<void>;
   "prepare:types": (context: Context<TOptions>) => MaybePromise<void>;
+  "prepare:dotenv": (context: Context<TOptions>) => MaybePromise<void>;
   "prepare:runtime": (context: Context<TOptions>) => MaybePromise<void>;
   "prepare:entry": (context: Context<TOptions>) => MaybePromise<void>;
+  "prepare:reflections": (context: Context<TOptions>) => MaybePromise<void>;
   "prepare:deploy": (context: Context<TOptions>) => MaybePromise<void>;
   "prepare:misc": (context: Context<TOptions>) => MaybePromise<void>;
   "prepare:complete": (context: Context<TOptions>) => MaybePromise<void>;

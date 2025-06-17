@@ -23,7 +23,7 @@ import type { CompileOptions, Context, Options } from "../../types";
 
 export function compilerPlugin<TOptions extends Options = Options>(
   context: Context<TOptions>,
-  options?: CompileOptions
+  options: CompileOptions = {}
 ): Plugin {
   return {
     name: "storm-stack:compiler",

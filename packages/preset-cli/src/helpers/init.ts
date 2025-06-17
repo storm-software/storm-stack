@@ -16,15 +16,11 @@
 
  ------------------------------------------------------------------- */
 
-import { deserializeType, ReflectionClass } from "@deepkit/type";
 import { LogLevelLabel } from "@storm-software/config-tools/types";
-import {
-  readDotenvReflection,
-  writeDotenvReflection
-} from "@storm-stack/core/helpers/dotenv/persistence";
+
 import { writeFile } from "@storm-stack/core/helpers/utilities/write-file";
 import type { LogFn } from "@storm-stack/core/types";
-import type { Context, Options } from "@storm-stack/core/types/build";
+import type { Options } from "@storm-stack/core/types/build";
 import { readJsonFile } from "@stryke/fs/json";
 import { listFiles } from "@stryke/fs/list-files";
 import { StormJSON } from "@stryke/json/storm-json";
@@ -45,8 +41,6 @@ import { isString } from "@stryke/type-checks/is-string";
 import { defu } from "defu";
 import type { StormStackCLIPresetContext } from "../types/build";
 import type { StormStackCLIPresetConfig } from "../types/config";
-import { CommandTreeBranch } from "../types/reflection";
-import { reflectCommandTree } from "./reflect-command";
 
 export async function initContext<TOptions extends Options = Options>(
   context: StormStackCLIPresetContext<TOptions>,
@@ -594,74 +588,4 @@ export async function initEntry<TOptions extends Options = Options>(
         .join("\n")}`
     );
   }
-}
-
-async function addCommandArgReflections<TOptions extends Options = Options>(
-  context: Context<TOptions>,
-  reflection: ReflectionClass<any>,
-  command: CommandTreeBranch
-) {
-  for (const arg of command.payload.args) {
-    let name = constantCase(arg.name);
-    const aliasProperties = reflection
-      .getProperties()
-      .filter(prop => prop.getAlias().length > 0);
-
-    const prefix = context.dotenv.prefix.find(
-      pre =>
-        name &&
-        name.startsWith(pre) &&
-        (reflection.hasProperty(name.replace(`${pre}_`, "")) ||
-          aliasProperties.some(prop =>
-            prop.getAlias().includes(name.replace(`${pre}_`, ""))
-          ))
-    );
-    if (prefix) {
-      name = name.replace(`${prefix}_`, "");
-    }
-
-    if (
-      !reflection.hasProperty(name) &&
-      !aliasProperties.some(prop => prop.getAlias().includes(name))
-    ) {
-      reflection.addProperty({
-        name: constantCase(arg.name),
-        optional: true,
-        description: arg.description,
-        type: deserializeType(arg.reflectionType),
-        tags: {
-          domain: "cli",
-          alias:
-            arg.aliases.filter(alias => alias.length > 1).length > 0
-              ? arg.aliases.map(alias => constantCase(alias))
-              : undefined
-        }
-      });
-    }
-  }
-
-  if (command.children) {
-    for (const subCommand of Object.values(command.children)) {
-      await addCommandArgReflections(context, reflection, subCommand);
-    }
-  }
-}
-
-export async function initReflections<TOptions extends Options = Options>(
-  log: LogFn,
-  context: StormStackCLIPresetContext<TOptions>,
-  config: StormStackCLIPresetConfig
-) {
-  const commandTree = await reflectCommandTree(log, context, config);
-
-  const configReflection = await readDotenvReflection(context, "config");
-  for (const command of Object.values(commandTree.children)) {
-    log(
-      LogLevelLabel.TRACE,
-      `Reflecting command arguments for "${commandTree.name}"`
-    );
-
-    await addCommandArgReflections(context, configReflection, command);
-  }
-  await writeDotenvReflection(context, configReflection);
 }

@@ -21,7 +21,7 @@ import { writeDotenvReflection } from "../../helpers/dotenv/persistence";
 import type { Context, EngineHooks, Options } from "../../types/build";
 import type { LogFn } from "../../types/config";
 
-export async function initReflections<TOptions extends Options = Options>(
+export async function prepareReflections<TOptions extends Options = Options>(
   log: LogFn,
   context: Context<TOptions>,
   hooks: EngineHooks<TOptions>
@@ -30,16 +30,6 @@ export async function initReflections<TOptions extends Options = Options>(
     LogLevelLabel.TRACE,
     `Initializing the reflection data for the Storm Stack project.`
   );
-
-  // const configReflectionFile = getDotenvReflectionsPath(context);
-  // if (existsSync(configReflectionFile)) {
-  //   await removeFile(configReflectionFile);
-  // }
-
-  // const secretsReflectionFile = getDotenvReflectionsPath(context, "secrets");
-  // if (existsSync(secretsReflectionFile)) {
-  //   await removeFile(secretsReflectionFile);
-  // }
 
   await writeDotenvReflection(
     context,
@@ -55,7 +45,7 @@ export async function initReflections<TOptions extends Options = Options>(
     );
   }
 
-  await hooks.callHook("init:reflections", context).catch((error: Error) => {
+  await hooks.callHook("prepare:reflections", context).catch((error: Error) => {
     log(
       LogLevelLabel.ERROR,
       `An error occurred while initializing the reflection data for the Storm Stack project: ${error.message} \n${error.stack ?? ""}`

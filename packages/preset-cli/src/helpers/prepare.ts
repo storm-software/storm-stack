@@ -18,6 +18,11 @@
 
 import { LogLevelLabel } from "@storm-software/config-tools/types";
 
+import { deserializeType, ReflectionClass } from "@deepkit/type";
+import {
+  readDotenvReflection,
+  writeDotenvReflection
+} from "@storm-stack/core/helpers/dotenv/persistence";
 import { getFileHeader } from "@storm-stack/core/helpers/utilities/file-header";
 import { writeFile } from "@storm-stack/core/helpers/utilities/write-file";
 import type { Context, Options } from "@storm-stack/core/types/build";
@@ -1252,75 +1257,73 @@ await main();
   );
 }
 
-// export async function prepareTypes<TOptions extends Options = Options>(
-//   log: LogFn,
-//   context: Context<TOptions>,
-//   config: StormStackCLIPresetConfig
-// ) {
-//   const typesDir = joinPaths(context.artifactsPath, "types");
+async function addCommandArgReflections<TOptions extends Options = Options>(
+  context: Context<TOptions>,
+  reflection: ReflectionClass<any>,
+  command: CommandTreeBranch
+) {
+  for (const arg of command.payload.args) {
+    let name = constantCase(arg.name);
+    const aliasProperties = reflection
+      .getProperties()
+      .filter(prop => prop.getAlias().length > 0);
 
-//   const relativeCLIRuntimeDir = relativePath(
-//     typesDir,
-//     joinPaths(context.runtimePath, "cli"),
-//     false
-//   );
+    const prefix = context.dotenv.prefix.find(
+      pre =>
+        name &&
+        name.startsWith(pre) &&
+        (reflection.hasProperty(name.replace(`${pre}_`, "")) ||
+          aliasProperties.some(prop =>
+            prop.getAlias().includes(name.replace(`${pre}_`, ""))
+          ))
+    );
+    if (prefix) {
+      name = name.replace(`${prefix}_`, "");
+    }
 
-//   await writeFile(
-//     log,
-//     joinPaths(typesDir, "modules-cli.d.ts"),
-//     `${getFileHeader(`
-// /// <reference types="@storm-stack/types" />
-// /// <reference types="@storm-stack/types/node" />
-// `)}
+    if (
+      !reflection.hasProperty(name) &&
+      !aliasProperties.some(prop => prop.getAlias().includes(name))
+    ) {
+      reflection.addProperty({
+        name: constantCase(arg.name),
+        optional: true,
+        description: arg.description,
+        type: deserializeType(arg.reflectionType),
+        tags: {
+          domain: "cli",
+          alias:
+            arg.aliases.filter(alias => alias.length > 1).length > 0
+              ? arg.aliases.map(alias => constantCase(alias))
+              : undefined
+        }
+      });
+    }
+  }
 
-// declare module "storm:cli" {
-//   const parseArgs: (typeof import("${relativeCLIRuntimeDir}"))["parseArgs"];
-//   const colors: (typeof import("${relativeCLIRuntimeDir}"))["colors"];
-//   const getColor: (typeof import("${relativeCLIRuntimeDir}"))["getColor"];
-//   const link: (typeof import("${relativeCLIRuntimeDir}"))["link"];${
-//     config.interactive !== "never"
-//       ? `
-//   const prompt: (typeof import("${relativeCLIRuntimeDir}"))["prompt"];`
-//       : ""
-//   }
+  if (command.children) {
+    for (const subCommand of Object.values(command.children)) {
+      await addCommandArgReflections(context, reflection, subCommand);
+    }
+  }
+}
 
-//   export {${config.interactive !== "never" ? " prompt," : ""} parseArgs, colors, getColor, link };
-// }
+export async function prepareReflections<TOptions extends Options = Options>(
+  log: LogFn,
+  context: StormStackCLIPresetContext<TOptions>,
+  config: StormStackCLIPresetConfig
+) {
+  const commandTree = await reflectCommandTree(log, context, config);
 
-// `
-//   );
+  const configReflection = await readDotenvReflection(context, "config");
+  for (const command of Object.values(commandTree.children)) {
+    log(
+      LogLevelLabel.TRACE,
+      `Reflecting command arguments for "${commandTree.name}"`
+    );
 
-//   await writeFile(
-//     log,
-//     joinPaths(typesDir, "global-cli.d.ts"),
-//     `${getFileHeader(`
-// /// <reference types="@storm-stack/types" />
-// /// <reference types="@storm-stack/types/node" />
-// `)}
+    await addCommandArgReflections(context, configReflection, command);
+  }
 
-// declare global {
-//   const parseArgs: (typeof import("${relativeCLIRuntimeDir}"))["parseArgs"];
-
-//   const colors: (typeof import("${relativeCLIRuntimeDir}"))["colors"];
-//   const getColor: (typeof import("${relativeCLIRuntimeDir}"))["getColor"];
-//   type ColorName = import("${relativeCLIRuntimeDir}").ColorName;
-
-//   const link: (typeof import("${relativeCLIRuntimeDir}"))["link"];
-//   type LinkOptions = import("${relativeCLIRuntimeDir}").LinkOptions;  ${
-//     config.interactive !== "never"
-//       ? `
-
-//   const prompt: (typeof import("${relativeCLIRuntimeDir}"))["prompt"];
-//   type TextPromptOptions = import("${relativeCLIRuntimeDir}").TextPromptOptions;
-//   type ConfirmPromptOptions = import("${relativeCLIRuntimeDir}").ConfirmPromptOptions;
-//   type SelectPromptOptions = import("${relativeCLIRuntimeDir}").SelectPromptOptions;
-//   type MultiSelectPromptOptions = import("${relativeCLIRuntimeDir}").MultiSelectPromptOptions;`
-//       : ""
-//   }
-// }
-
-// export {};
-
-// `
-//   );
-// }
+  await writeDotenvReflection(context, configReflection);
+}

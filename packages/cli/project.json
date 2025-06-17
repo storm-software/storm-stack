@@ -4,6 +4,9 @@
   "projectType": "application",
   "sourceRoot": "packages/cli/src",
   "targets": {
+    "clean": {
+      "executor": "@storm-stack/nx:clean"
+    },
     "prepare": {
       "cache": true,
       "inputs": ["typescript", "^production"],
@@ -40,5 +43,5 @@
       "executor": "@storm-software/workspace-tools:npm-publish"
     }
   },
-  "implicitDependencies": ["nx", "preset-cli"]
+  "implicitDependencies": ["nx", "core", "preset-cli"]
 }

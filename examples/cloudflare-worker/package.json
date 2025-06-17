@@ -15,7 +15,10 @@
     "@storm-stack/types": "workspace:*",
     "@stryke/json": "catalog:",
     "@stryke/type-checks": "catalog:",
-    "@stryke/url": "catalog:"
+    "@stryke/url": "catalog:",
+    "unctx": "catalog:",
+    "unenv": "catalog:",
+    "unstorage": "catalog:"
   },
   "devDependencies": {
     "@storm-stack/core": "workspace:*",
@@ -23,6 +26,7 @@
     "@storm-stack/plugin-log-console": "workspace:*",
     "@storm-stack/preset-cloudflare-worker": "workspace:*",
     "@stryke/types": "catalog:",
+    "@types/node": "catalog:",
     "wrangler": "catalog:"
   },
   "storm": {

@@ -25,6 +25,9 @@ import type { Context, EngineHooks, Options } from "../types/build";
 import type { LogFn } from "../types/config";
 import { prepareConfig } from "./config";
 import { prepareDirectories } from "./directories";
+import { prepareDotenv } from "./dotenv";
+import { prepareEntry } from "./entry";
+import { prepareReflections } from "./reflections";
 import { prepareRuntime } from "./runtime";
 import { prepareTypes } from "./types";
 
@@ -55,11 +58,18 @@ export async function prepare<TOptions extends Options = Options>(
   await prepareDirectories(log, context, hooks);
   await prepareConfig(log, context, hooks);
   await prepareTypes(log, context, hooks);
+  await prepareDotenv(log, context, hooks);
 
   if (context.options.projectType === "application") {
     await context.unimport.dumpImports();
 
     await prepareRuntime(log, context, hooks);
+  }
+
+  await prepareReflections(log, context, hooks);
+
+  if (context.options.projectType === "application") {
+    await prepareEntry(log, context, hooks);
 
     await hooks.callHook("prepare:entry", context).catch((error: Error) => {
       log(

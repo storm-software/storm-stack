@@ -19,16 +19,28 @@
 
 import { $, chalk, echo } from "zx";
 
-// usePwsh();
-
 try {
   echo`${chalk.whiteBright("💣  Nuking the monorepo...")}`;
 
-  let proc = $`pnpm nx clear-cache`.timeout(`${5 * 60}s`);
+  let proc =
+    $`pnpm nx run-many --target=clean --all --exclude="@storm-stack/monorepo" --outputStyle=dynamic-legacy --parallel=5`.timeout(
+      `${2 * 60}s`
+    );
   proc.stdout.on("data", data => {
     echo`${data}`;
   });
   let result = await proc;
+  if (!result.ok) {
+    throw new Error(
+      `An error occurred while cleaning the monorepo projects: \n\n${result.message}\n`
+    );
+  }
+
+  proc = $`pnpm nx clear-cache`.timeout(`${5 * 60}s`);
+  proc.stdout.on("data", data => {
+    echo`${data}`;
+  });
+  result = await proc;
   if (!result.ok) {
     throw new Error(
       `An error occurred while clearing Nx cache: \n\n${result.message}\n`
