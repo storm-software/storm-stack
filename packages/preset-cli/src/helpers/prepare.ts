@@ -1097,9 +1097,10 @@ export async function prepareEntry<TOptions extends Options = Options>(
     commandTree.entry.file,
     `#!/usr/bin/env ${
       context.options.mode === "development"
-        ? "-S NODE_OPTIONS=--enable-source-maps node"
-        : "node"
-    }
+        ? "-S NODE_OPTIONS=--enable-source-maps"
+        : ""
+    } node
+
 
 ${getFileHeader()}
 
