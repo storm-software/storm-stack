@@ -1,5 +1,16 @@
 ![Storm Software](https://public.storm-cdn.com/brand-banner.png)
 
+# Changelog for Storm Stack - ESLint Config
+
+## [0.10.1](https://github.com/storm-software/storm-stack/releases/tag/eslint-config%400.10.1) (2025-06-18)
+
+### Miscellaneous
+
+- **monorepo:** Update workspace's `storm-ops` dependencies
+  ([d37bc369](https://github.com/storm-software/storm-stack/commit/d37bc369))
+
+![Storm Software](https://public.storm-cdn.com/brand-banner.png)
+
 # Changelog for Storm Stack - Eslint Config
 
 ## [0.10.0](https://github.com/storm-software/storm-stack/releases/tag/eslint-config%400.10.0) (2025-06-17)

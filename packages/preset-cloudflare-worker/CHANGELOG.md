@@ -2,6 +2,17 @@
 
 # Changelog for Storm Stack - Preset Cloudflare Worker
 
+## [0.15.1](https://github.com/storm-software/storm-stack/releases/tag/preset-cloudflare-worker%400.15.1) (2025-06-18)
+
+### Miscellaneous
+
+- **monorepo:** Update workspace's `storm-ops` dependencies
+  ([d37bc369](https://github.com/storm-software/storm-stack/commit/d37bc369))
+
+### Updated Dependencies
+
+- Updated core to 0.29.1
+
 ## [0.15.0](https://github.com/storm-software/storm-stack/releases/tag/preset-cloudflare-worker%400.15.0) (2025-06-17)
 
 ### Features

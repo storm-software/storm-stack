@@ -21,10 +21,10 @@
     "unstorage": "catalog:"
   },
   "devDependencies": {
-    "@storm-stack/core": "workspace:*",
-    "@storm-stack/nx": "workspace:*",
-    "@storm-stack/plugin-log-console": "workspace:*",
-    "@storm-stack/preset-cloudflare-worker": "workspace:*",
+    "@storm-stack/core": "0.29.1",
+    "@storm-stack/nx": "0.13.3",
+    "@storm-stack/plugin-log-console": "0.14.3",
+    "@storm-stack/preset-cloudflare-worker": "0.15.1",
     "@stryke/types": "catalog:",
     "@types/node": "catalog:",
     "wrangler": "catalog:"

@@ -1,5 +1,26 @@
 ![Storm Software](https://public.storm-cdn.com/brand-banner.png)
 
+# Changelog for Storm Stack - Preset CLI
+
+## [0.20.1](https://github.com/storm-software/storm-stack/releases/tag/preset-cli%400.20.1) (2025-06-18)
+
+### Bug Fixes
+
+- **preset-cli:** Resolve issue with the shebang generation
+  ([1eff494f](https://github.com/storm-software/storm-stack/commit/1eff494f))
+
+### Miscellaneous
+
+- **monorepo:** Update workspace's `storm-ops` dependencies
+  ([d37bc369](https://github.com/storm-software/storm-stack/commit/d37bc369))
+
+### Updated Dependencies
+
+- Updated devkit to 0.7.3
+- Updated core to 0.29.1
+
+![Storm Software](https://public.storm-cdn.com/brand-banner.png)
+
 # Changelog for Storm Stack - Preset Cli
 
 ## [0.20.0](https://github.com/storm-software/storm-stack/releases/tag/preset-cli%400.20.0) (2025-06-17)

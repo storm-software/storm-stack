@@ -2,6 +2,13 @@
 
 # Changelog for Storm Stack - Core
 
+## [0.29.1](https://github.com/storm-software/storm-stack/releases/tag/core%400.29.1) (2025-06-18)
+
+### Miscellaneous
+
+- **monorepo:** Update workspace's `storm-ops` dependencies
+  ([d37bc369](https://github.com/storm-software/storm-stack/commit/d37bc369))
+
 ## [0.29.0](https://github.com/storm-software/storm-stack/releases/tag/core%400.29.0) (2025-06-17)
 
 ### Features

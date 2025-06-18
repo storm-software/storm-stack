@@ -2,6 +2,17 @@
 
 # Changelog for Storm Stack - Devkit
 
+## [0.7.3](https://github.com/storm-software/storm-stack/releases/tag/devkit%400.7.3) (2025-06-18)
+
+### Miscellaneous
+
+- **monorepo:** Update workspace's `storm-ops` dependencies
+  ([d37bc369](https://github.com/storm-software/storm-stack/commit/d37bc369))
+
+### Updated Dependencies
+
+- Updated core to 0.29.1
+
 ## [0.7.2](https://github.com/storm-software/storm-stack/releases/tag/devkit%400.7.2) (2025-06-17)
 
 ### Bug Fixes

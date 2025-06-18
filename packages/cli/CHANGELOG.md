@@ -1,5 +1,27 @@
 ![Storm Software](https://public.storm-cdn.com/brand-banner.png)
 
+# Changelog for Storm Stack - CLI
+
+## [0.11.1](https://github.com/storm-software/storm-stack/releases/tag/cli%400.11.1) (2025-06-18)
+
+### Miscellaneous
+
+- **monorepo:** Update workspace's `storm-ops` dependencies
+  ([89065cb2](https://github.com/storm-software/storm-stack/commit/89065cb2))
+- **monorepo:** Update workspace's `storm-ops` dependencies
+  ([d37bc369](https://github.com/storm-software/storm-stack/commit/d37bc369))
+
+### Updated Dependencies
+
+- Updated plugin-log-storage to 0.17.3
+- Updated plugin-log-sentry to 0.19.1
+- Updated plugin-storage-fs to 0.6.3
+- Updated preset-cli to 0.20.1
+- Updated core to 0.29.1
+- Updated nx to 0.13.3
+
+![Storm Software](https://public.storm-cdn.com/brand-banner.png)
+
 # Changelog for Storm Stack - Cli
 
 ## [0.11.0](https://github.com/storm-software/storm-stack/releases/tag/cli%400.11.0) (2025-06-17)
