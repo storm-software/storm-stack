@@ -219,7 +219,7 @@ export function renderUsage(mode: "full" | "minimal" = "full"): string {
       : ""
   }
   \${colors.whiteBright(colors.bold("Usage:"))}
-    $ ${kebabCase(name)}${
+    \${colors.cyan(colors.bold(\`$ ${kebabCase(name)}${
       command.entry.path.length > 0
         ? ` ${command.entry.path
             .filter(Boolean)
@@ -243,7 +243,7 @@ ${Object.values(command.children)
   )
   .join("\n")}`
         : ""
-    }${
+    }\`))} ${
       Object.values(command.children).length > 0
         ? `\${mode === "full" ? \`
   \${colors.whiteBright(colors.bold("Commands:"))}
@@ -256,7 +256,7 @@ ${commandsColumn1
     }
 
   \${colors.whiteBright(colors.bold("Options:"))}
-${optionsColumn1.map((option, i) => `    ${option.padEnd(column1MaxLength)}${optionsColumn2[i]}`).join(" \n")}
+\${colors.cyan(colors.bold(\`${optionsColumn1.map((option, i) => `    ${option.padEnd(column1MaxLength)}${optionsColumn2[i]}`).join(" \n")}\`))}
 \`)}\`;
 }
 
@@ -800,7 +800,7 @@ ${Object.values(command.children)
     }
 
   \${colors.whiteBright(colors.bold("Options:"))}
-${optionsColumn1.map((option, i) => `    ${option.padEnd(column1MaxLength)}${optionsColumn2[i]}`).join(" \n")}
+\${colors.cyan(colors.bold(\`${optionsColumn1.map((option, i) => `    ${option.padEnd(column1MaxLength)}${optionsColumn2[i]}`).join(" \n")}\`))}
 \`;
 }
 
@@ -1074,7 +1074,11 @@ export async function prepareEntry<TOptions extends Options = Options>(
     }
   }
 
-  let author = config.author;
+  let author = config.author
+    ? isSetString(config.author)
+      ? config.author
+      : config.author.name
+    : undefined;
   if (!author) {
     if (context.workspaceConfig.organization) {
       author = context.workspaceConfig.organization;
@@ -1119,22 +1123,24 @@ import { isError, isStormError, createStormError } from "./runtime/error";${
     }
 
 // Exit early if on an older version of Node.js (< ${config.minNodeVersion})
-const major = process.versions.node.split(".").map(Number)[0]!;
-if (major < ${config.minNodeVersion}) {
-  console.error(\` \${colors.red("✘")} \${colors.white(\`${titleCase(context.options.name)} CLI requires Node.js version ${config.minNodeVersion} or newer.
-You are running Node.js v\${process.versions.node}.
-Please upgrade Node.js - \${link("https://nodejs.org/en/download/")}
-\`)}\`,
-  );
-  process.exit(1);
-}
+// const major = process.versions.node.split(".").map(Number)[0]!;
+// if (major < ${config.minNodeVersion}) {
+//   console.error(\` \${colors.red("✘")} \${colors.white(\`${titleCase(context.options.name)} CLI requires Node.js version ${config.minNodeVersion} or newer.
+// You are running Node.js v\${process.versions.node}.
+// Please upgrade Node.js - \${link("https://nodejs.org/en/download/")}
+// \`)}\`,
+//   );
+//   process.exit(1);
+// }
 
 async function main() {
   ${
     !context.packageJson.private
       ? `
   try {
-    /*if (config.disableUpdateCheck === 'true') {
+    /*
+
+    if (config.disableUpdateCheck) {
       return;
     }
 
@@ -1143,7 +1149,7 @@ async function main() {
     const configFileData = readConfigFile();
     if (configFileData.lastUpdateCheck && currentTime - configFileData.lastUpdateCheck < 24 * 60 * 60 * 1000) {
       return;
-    }*/
+    }
 
     const response = await fetch("https://registry.npmjs.org/${context.packageJson.name || context.options.name}/latest");
 
@@ -1178,11 +1184,13 @@ async function main() {
     Run \${colors.bold("npm i -g ${context.packageJson.name || context.options.name}@latest")} \`));
     console.log("");
 
-    /*updateConfigFile({
+    updateConfigFile({
       lastUpdateCheck: currentTime,
     });*/
   } catch (err) {
-    console.error(\` \${colors.red("✘")} \${colors.white(\`An error occurred while checking for ${appTitle} application updates. You can disable update check by setting configuration parameter "SKIP_UPDATE_CHECK" to true: \n\n\${createStormError(err).toDisplay()}\`)}\`);
+    console.error(\` \${colors.red("✘")} \${colors.white(\`An error occurred while checking for ${
+      appTitle
+    } application updates. You can disable update check by setting configuration parameter "SKIP_UPDATE_CHECK" to true: \n\n\${createStormError(err).toDisplay()}\`)}\`);
     console.log("");
   }
 `
@@ -1216,7 +1224,9 @@ async function main() {
       }
 
       if (!isMinimal) {
-        console.log(renderBanner("Help Information", "Display usage details, commands, and support information for the ${appTitle} application"));
+        console.log(renderBanner("Help Information", "Display usage details, commands, and support information for the ${
+          appTitle
+        } application"));
         console.log("");
       }
 
@@ -1224,7 +1234,9 @@ async function main() {
         description
           ? `
       const consoleWidth = Math.max(process.stdout.columns - 2, 80);
-      console.log(\`\${" ".repeat((consoleWidth - ${description.length}) / 2)}${description}\${" ".repeat((consoleWidth - ${description.length}) / 2)}\`);
+      console.log(\`\${" ".repeat((consoleWidth - ${description.length}) / 2)}${
+        description
+      }\${" ".repeat((consoleWidth - ${description.length}) / 2)}\`);
       console.log("");
       console.log("");`
           : ""
@@ -1248,7 +1260,9 @@ async function main() {
       console.log("");
     }
   } catch (err) {
-    console.error(\` \${colors.red("✘")} \${colors.white(\`An error occurred while running the ${appTitle} application: \n\n\${createStormError(err).toDisplay()}\`)}\`);
+    console.error(\` \${colors.red("✘")} \${colors.white(\`An error occurred while running the ${
+      appTitle
+    } application: \n\n\${createStormError(err).toDisplay()}\`)}\`);
   }
 }
 

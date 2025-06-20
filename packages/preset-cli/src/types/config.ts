@@ -16,6 +16,8 @@
 
  ------------------------------------------------------------------- */
 
+import type { OrganizationConfig } from "@storm-software/config/types";
+
 export interface StormStackCLIPresetConfig {
   /**
    * The name of the binary that will be generated to run the CLI
@@ -72,7 +74,7 @@ export interface StormStackCLIPresetConfig {
    * @remarks
    * If this option is not provided, the preset will try to use the \`author.name\` or \`contributors.name\` value from the `\package.json\` file.
    */
-  author?: string;
+  author?: OrganizationConfig | string;
 
   /**
    * The repository URL for the CLI application (this is used for the help command)

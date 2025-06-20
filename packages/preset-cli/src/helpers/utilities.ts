@@ -30,5 +30,5 @@ export function sortArgAliases(aliases: string[]): string[] {
   const result = aliases.filter(alias => alias.length === 1);
   result.push(...aliases.filter(alias => alias.length > 1));
 
-  return result.sort((a, b) => a.localeCompare(b));
+  return result.sort((a, b) => b.localeCompare(a));
 }

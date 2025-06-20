@@ -18,6 +18,7 @@
 
 import { kebabCase } from "@stryke/string-format/kebab-case";
 import { titleCase } from "@stryke/string-format/title-case";
+import { isSetString } from "@stryke/type-checks/is-set-string";
 import { getFileHeader } from "../../../helpers/utilities/file-header";
 import type { Context, Options } from "../../../types/build";
 
@@ -196,8 +197,14 @@ export const isNode = globalThis.process?.release?.name === "node";
 
 /** The organization that maintains the application */
 export const organization = "${
-    context.workspaceConfig?.organization
-      ? kebabCase(context.workspaceConfig?.organization)
+    context.workspaceConfig?.organization &&
+    (isSetString(context.workspaceConfig?.organization) ||
+      context.workspaceConfig?.organization?.name)
+      ? kebabCase(
+          isSetString(context.workspaceConfig?.organization)
+            ? context.workspaceConfig.organization
+            : context.workspaceConfig?.organization?.name
+        )
           .trim()
           .replace(/\s+/g, "")
       : "$storm.config.ORGANIZATION"
@@ -251,55 +258,81 @@ export const paths = isMacOS
   ? {
     data: process.env.STORM_DATA_DIR
       ? join(process.env.STORM_DATA_DIR, name)
-      : join(process.env.LOCALAPPDATA || join(homedir, "AppData", "Local"), "${titleCase(
-        context.workspaceConfig?.organization || "storm-software"
-      )
-        .trim()
-        .replace(/\s+/g, "")}", "${titleCase(
-        context.options.name || "storm-stack"
-      )
+      : join(process.env.LOCALAPPDATA || join(homedir, "AppData", "Local"), ${
+        context.workspaceConfig?.organization &&
+        (isSetString(context.workspaceConfig?.organization) ||
+          context.workspaceConfig?.organization?.name)
+          ? `"${titleCase(
+              isSetString(context.workspaceConfig?.organization)
+                ? context.workspaceConfig.organization
+                : context.workspaceConfig?.organization?.name
+            )
+              .trim()
+              .replace(/\s+/g, "")}"`
+          : "$storm.config.ORGANIZATION"
+      }, "${titleCase(context.options.name || "storm-stack")
         .trim()
         .replace(/\s+/g, "")}", "Data"),
     config: process.env.STORM_CONFIG_DIR
       ? join(process.env.STORM_CONFIG_DIR, name)
-      : join(process.env.APPDATA || join(homedir, "AppData", "Roaming"), "${titleCase(
-        context.workspaceConfig?.organization || "storm-software"
-      )
-        .trim()
-        .replace(/\s+/g, "")}", "${titleCase(
-        context.options.name || "storm-stack"
-      )
-        .trim()
-        .replace(/\s+/g, "")}", "Config"),
+      : join(process.env.APPDATA || join(homedir, "AppData", "Roaming"), ${
+        context.workspaceConfig?.organization &&
+        (isSetString(context.workspaceConfig?.organization) ||
+          context.workspaceConfig?.organization?.name)
+          ? `"${titleCase(
+              isSetString(context.workspaceConfig?.organization)
+                ? context.workspaceConfig.organization
+                : context.workspaceConfig?.organization?.name
+            )
+              .trim()
+              .replace(/\s+/g, "")}"`
+          : "$storm.config.ORGANIZATION"
+      }, "Config"),
     cache: process.env.STORM_CACHE_DIR
       ? join(process.env.STORM_CACHE_DIR, name)
-      : join(process.env.LOCALAPPDATA || join(homedir, "AppData", "Local"), "Cache", "${titleCase(
-        context.workspaceConfig?.organization || "storm-software"
-      )
-        .trim()
-        .replace(/\s+/g, "")}"),
+      : join(process.env.LOCALAPPDATA || join(homedir, "AppData", "Local"), "Cache", ${
+        context.workspaceConfig?.organization &&
+        (isSetString(context.workspaceConfig?.organization) ||
+          context.workspaceConfig?.organization?.name)
+          ? `"${titleCase(
+              isSetString(context.workspaceConfig?.organization)
+                ? context.workspaceConfig.organization
+                : context.workspaceConfig?.organization?.name
+            )
+              .trim()
+              .replace(/\s+/g, "")}"`
+          : "$storm.config.ORGANIZATION"
+      }),
     log: process.env.STORM_LOG_DIR
       ? join(process.env.STORM_LOG_DIR, name)
-      : join(process.env.LOCALAPPDATA || join(homedir, "AppData", "Local"), "${titleCase(
-        context.workspaceConfig?.organization || "storm-software"
-      )
-        .trim()
-        .replace(/\s+/g, "")}", "${titleCase(
-        context.options.name || "storm-stack"
-      )
-        .trim()
-        .replace(/\s+/g, "")}", "Log"),
+      : join(process.env.LOCALAPPDATA || join(homedir, "AppData", "Local"), ${
+        context.workspaceConfig?.organization &&
+        (isSetString(context.workspaceConfig?.organization) ||
+          context.workspaceConfig?.organization?.name)
+          ? `"${titleCase(
+              isSetString(context.workspaceConfig?.organization)
+                ? context.workspaceConfig.organization
+                : context.workspaceConfig?.organization?.name
+            )
+              .trim()
+              .replace(/\s+/g, "")}"`
+          : "$storm.config.ORGANIZATION"
+      }, "Log"),
     temp: process.env.STORM_TEMP_DIR
       ? join(process.env.STORM_TEMP_DIR, name)
-      : join(tmpdir, "${titleCase(
-        context.workspaceConfig?.organization || "storm-software"
-      )
-        .trim()
-        .replace(/\s+/g, "")}", "${titleCase(
-        context.options.name || "storm-stack"
-      )
-        .trim()
-        .replace(/\s+/g, "")}")
+      : join(tmpdir, ${
+        context.workspaceConfig?.organization &&
+        (isSetString(context.workspaceConfig?.organization) ||
+          context.workspaceConfig?.organization?.name)
+          ? `"${titleCase(
+              isSetString(context.workspaceConfig?.organization)
+                ? context.workspaceConfig.organization
+                : context.workspaceConfig?.organization?.name
+            )
+              .trim()
+              .replace(/\s+/g, "")}"`
+          : "$storm.config.ORGANIZATION"
+      })
   }
     :
   {

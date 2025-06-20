@@ -16,12 +16,15 @@
 
  ------------------------------------------------------------------- */
 
+import { OrganizationConfig } from "@storm-software/config/types";
 import { getFileHeader } from "@storm-stack/core/helpers";
 import type { Options } from "@storm-stack/core/types";
 import { stripAnsi } from "@stryke/cli/utils/strip-ansi";
 import { titleCase } from "@stryke/string-format/title-case";
 import { isObject } from "@stryke/type-checks/is-object";
+import { isSetString } from "@stryke/type-checks/is-set-string";
 import { isString } from "@stryke/type-checks/is-string";
+import defu from "defu";
 import { renderUnicodeCompact } from "uqr";
 import type { StormStackCLIPresetContext } from "../types/build";
 import type { StormStackCLIPresetConfig } from "../types/config";
@@ -39,26 +42,48 @@ export function writeRuntime<TOptions extends Options = Options>(
     appTitle += " CLI";
   }
 
-  let author = config.author;
-  if (!author) {
-    if (context.workspaceConfig.organization) {
-      author = context.workspaceConfig.organization;
-    } else if (context.packageJson?.author) {
-      author = isString(context.packageJson.author)
+  let author: OrganizationConfig | undefined;
+  if (config.author) {
+    if (isString(config.author)) {
+      author = { name: config.author };
+    } else if (isObject(config.author)) {
+      author = config.author;
+    }
+  }
+
+  if (context.workspaceConfig.organization) {
+    if (isString(context.workspaceConfig.organization) && !author?.name) {
+      author ??= {} as OrganizationConfig;
+      author.name = context.workspaceConfig.organization;
+    } else {
+      author = defu(author ?? {}, context.workspaceConfig.organization);
+    }
+  }
+
+  if (!author?.name) {
+    if (context.packageJson?.author) {
+      author ??= {} as OrganizationConfig;
+      author.name = isString(context.packageJson.author)
         ? context.packageJson.author
         : context.packageJson.author?.name;
     } else if (
       context.packageJson?.contributors &&
-      context.packageJson.contributors.length > 0
+      context.packageJson.contributors.length > 0 &&
+      context.packageJson.contributors[0] &&
+      (isSetString(context.packageJson.contributors[0]) ||
+        isSetString(context.packageJson.contributors[0].name))
     ) {
-      author = isString(context.packageJson.contributors[0])
-        ? context.packageJson.contributors[0]
-        : context.packageJson.contributors[0]?.name;
+      author ??= {} as OrganizationConfig;
+      author.name = (
+        isString(context.packageJson.contributors[0])
+          ? context.packageJson.contributors[0]
+          : context.packageJson.contributors[0].name
+      )!;
     }
   }
 
-  if (author) {
-    author = titleCase(author);
+  if (author?.name) {
+    author.name = titleCase(author.name);
   }
 
   let homepage = config.homepage;
@@ -133,7 +158,9 @@ export function writeRuntime<TOptions extends Options = Options>(
     }
   }
 
-  const footerHeader = `${appTitle} is authored and maintained by ${author}.`;
+  const footerHeader = author?.name
+    ? `${appTitle} is authored and maintained by ${author.name}.`
+    : "";
   const footerHeaderLength = stripAnsi(footerHeader).length;
 
   const linksColumn1 = [] as string[];
@@ -496,8 +523,10 @@ export function renderBanner(title: string, description: string): string {
 
   banner.push(colors.cyan(\`┃\${" ".repeat(width)}┃\`));
   ${
-    author
-      ? `banner.push(colors.cyan(\`┗\${"━".repeat(width - 7 - ${author.length})}━ ${author} ━━━━┛\`));`
+    author?.name
+      ? `banner.push(colors.cyan(\`┗\${"━".repeat(width - 7 - ${
+          author.name.length
+        })}━ ${author.name} ━━━━┛\`));`
       : `banner.push(colors.cyan(\`┗\${"━".repeat(width)}┛\`));`
   }
 
@@ -521,7 +550,13 @@ export function renderFooter(): string {
   let supportRow = ${
     support || contact || repository
       ? `\`You can reach out to the ${titleCase(
-          context.workspaceConfig?.organization || context.options.name
+          context.workspaceConfig?.organization &&
+            (isSetString(context.workspaceConfig.organization) ||
+              context.workspaceConfig.organization.name)
+            ? isSetString(context.workspaceConfig.organization)
+              ? context.workspaceConfig.organization
+              : context.workspaceConfig.organization.name
+            : context.options.name
         )} - Support team via \${link("${support || contact || repository}", "${
           support || contact
             ? `our website's ${support ? "support" : "contact"} page`
@@ -546,36 +581,61 @@ export function renderFooter(): string {
     homepage || docs || support || contact || repository
       ? `
     ${
-      author
+      author?.name
         ? `
   footer.push(\`\${" ".repeat((consoleWidth - ${
-    author.length ?? 0
-  }) / 2)}\${colors.bold(colors.whiteBright("${author}"))}\${" ".repeat((consoleWidth - ${
-    author.length ?? 0
+    author.name.length ?? 0
+  }) / 2)}\${colors.bold(colors.whiteBright("${author.name}"))}\${" ".repeat((consoleWidth - ${
+    author.name.length ?? 0
   }) / 2)}\`);`
+        : ""
+    }${
+      author?.description
+        ? `
+
+  const descriptionPadding = (consoleWidth - ${author.description.length}) / 2;
+  for (const line of (${author.description.length} < consoleWidth * 0.6
+    ? \`\${" ".repeat(descriptionPadding)}\${"${author.description}"}\${" ".repeat(descriptionPadding + consoleWidth - (descriptionPadding * 2 + ${author.description.length}))}\`
+    : "${author.description}".split(/\\s+/).reduce((ret, word) => {
+        const lines = ret.split("\\n");
+        if (lines.length !== 0 && (lines[lines.length - 1]!.length + word.length > consoleWidth * 0.6)) {
+          ret += " \\n";
+        }
+
+        return \`\${ret}\${word} \`;
+      }, "")).split("\\n")) {
+    const linePadding = (consoleWidth - stripAnsi(line).length) / 2;
+    footer.push(\`\${" ".repeat(linePadding)}\${colors.gray(line)}\${" ".repeat(linePadding + consoleWidth - (linePadding * 2 + stripAnsi(line).length))}\`);
+  }
+  footer.push("\\n");`
         : ""
     }
 
   if (isUnicodeSupported) {
-    const qrCodeLines = \`${renderUnicodeCompact((homepage || docs || support || contact || repository)!)}\`.split("\\n");
+    const qrCodeLines = \`${renderUnicodeCompact((author?.url || homepage || docs || support || contact || repository)!)}\`.split("\\n");
     const qrCodeMaxLength = Math.max(...qrCodeLines.map(line => line.length));
     footer.push(...qrCodeLines.map(line => \`\${" ".repeat((consoleWidth - qrCodeMaxLength) / 2)}\${line}\${" ".repeat((consoleWidth - qrCodeMaxLength) / 2)}\`));
   }
 
   footer.push(\`\${" ".repeat((consoleWidth - ${
-    (homepage || docs || support || contact || repository)?.length ?? 0
-  }) / 2)}\${link("${(homepage ||
+    (author?.url || homepage || docs || support || contact || repository)
+      ?.length ?? 0
+  }) / 2)}\${link("${(author?.url ||
+    homepage ||
     docs ||
     support ||
     contact ||
     repository)!}")}\${" ".repeat((consoleWidth - ${
-    (homepage || docs || support || contact || repository)?.length ?? 0
+    (author?.url || homepage || docs || support || contact || repository)
+      ?.length ?? 0
   }) / 2)}\`);
   footer.push("\\n");
 `
       : ""
   }
-  footer.push(\`\${" ".repeat((consoleWidth - ${footerHeaderLength}) / 2)}${footerHeader}\${" ".repeat((consoleWidth - ${footerHeaderLength}) / 2)}\`);
+  footer.push(\`\${" ".repeat((consoleWidth - ${footerHeaderLength}) / 2)}${
+    footerHeader
+  }\${" ".repeat((consoleWidth - ${footerHeaderLength}) / 2)}\`);
   if (supportRow) {
     footer.push(\`\${" ".repeat((consoleWidth - supportRowLength) / 2)}\${supportRow}\${" ".repeat((consoleWidth - supportRowLength) / 2)}\`);
   }

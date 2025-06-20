@@ -5,11 +5,11 @@
  This code was released as part of the Storm Stack project. Storm Stack
  is maintained by Storm Software under the Apache-2.0 license, and is
  free for commercial and private use. For more information, please visit
- our licensing page at https://stormsoftware.com/projects/storm-stack/license.
+ our licensing page at https://stormsoftware.com/license.
 
  Website:                  https://stormsoftware.com
  Repository:               https://github.com/storm-software/storm-stack
- Documentation:            https://stormsoftware.com/projects/storm-stack/docs
+ Documentation:            https://docs.stormsoftware.com/projects/storm-stack
  Contact:                  https://stormsoftware.com/contact
 
  SPDX-License-Identifier:  Apache-2.0
@@ -62,7 +62,7 @@ const homedir = os.homedir();
 export interface CompletionsBashPayload {
   /**
    * The path to write the completion script to.
-   * 
+   *
    * @remarks
    * If no extension is provided, the \`.bash\` extension will be used.
    */
@@ -70,7 +70,7 @@ export interface CompletionsBashPayload {
 
   /**
    * The configuration file to append the completion script to.
-   * 
+   *
    * @remarks
    * The generated completion script will be appended to the specified configuration file. Possible values for the configuration file include:
    * - \`~/.bashrc\`
@@ -118,8 +118,8 @@ complete -o bashdefault -o default -F _${bin}_completions ${bin}
 
   console.log("");
   if (payload.data.config) {
-    let configFile = payload.data.config === true 
-      ? "~/.bashrc" 
+    let configFile = payload.data.config === true
+      ? "~/.bashrc"
       : payload.data.config;
     if (configFile.startsWith("~")) {
       configFile = join(homedir, configFile.replace("~", ""));
@@ -134,7 +134,7 @@ complete -o bashdefault -o default -F _${bin}_completions ${bin}
     }
 
     await writeFile(
-      configFile, 
+      configFile,
       configFileContent + "\\n\\n" + stripAnsi(script),
       "utf8"
     );
@@ -145,7 +145,7 @@ complete -o bashdefault -o default -F _${bin}_completions ${bin}
       ? payload.data.script
       : "${bin}-completions.sh";
     await writeFile(
-      scriptFile, 
+      scriptFile,
       stripAnsi(script),
       "utf8"
     );
@@ -199,7 +199,7 @@ const homedir = os.homedir();
 export interface CompletionsZshPayload {
   /**
    * The path to write the completion script to.
-   * 
+   *
    * @remarks
    * If no extension is provided, the \`.zsh\` extension will be used.
    */
@@ -207,7 +207,7 @@ export interface CompletionsZshPayload {
 
   /**
    * The configuration file to append the completion script to.
-   * 
+   *
    * @remarks
    * The generated completion script will be appended to the specified configuration file. Possible values for the configuration file include:
    * - \`~/.zshrc\`
@@ -255,8 +255,8 @@ complete -o bashdefault -o default -F _${bin}_completions ${bin}
 
   console.log("");
   if (payload.data.config) {
-    let configFile = payload.data.config === true 
-      ? "~/.zshrc" 
+    let configFile = payload.data.config === true
+      ? "~/.zshrc"
       : payload.data.config;
     if (configFile.startsWith("~")) {
       configFile = join(homedir, configFile.replace("~", ""));
@@ -271,7 +271,7 @@ complete -o bashdefault -o default -F _${bin}_completions ${bin}
     }
 
     await writeFile(
-      configFile, 
+      configFile,
       configFileContent + "\\n\\n" + stripAnsi(script),
       "utf8"
     );
@@ -282,7 +282,7 @@ complete -o bashdefault -o default -F _${bin}_completions ${bin}
       ? payload.data.script
       : "${bin}-completions.zsh";
     await writeFile(
-      scriptFile, 
+      scriptFile,
       stripAnsi(script),
       "utf8"
     );
