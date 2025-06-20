@@ -1,6 +1,6 @@
 {
   "name": "@storm-stack/plugin-log-console",
-  "version": "0.14.4",
+  "version": "0.14.5",
   "type": "module",
   "description": "A package containing a Storm Stack log adapter to write logs to a console",
   "repository": {
@@ -108,11 +108,11 @@
   ],
   "dependencies": {
     "@storm-stack/core": "workspace:*",
-    "@storm-stack/devkit": "workspace:*",
+    "@storm-stack/devkit": "0.7.5",
     "@stryke/json": "catalog:"
   },
   "devDependencies": {
-    "@storm-stack/nx": "workspace:*",
+    "@storm-stack/nx": "0.13.5",
     "@types/node": "catalog:",
     "tsup": "catalog:"
   },

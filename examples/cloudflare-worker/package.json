@@ -22,9 +22,9 @@
   },
   "devDependencies": {
     "@storm-stack/core": "workspace:*",
-    "@storm-stack/nx": "workspace:*",
-    "@storm-stack/plugin-log-console": "workspace:*",
-    "@storm-stack/preset-cloudflare-worker": "workspace:*",
+    "@storm-stack/nx": "0.13.5",
+    "@storm-stack/plugin-log-console": "0.14.5",
+    "@storm-stack/preset-cloudflare-worker": "0.15.3",
     "@stryke/types": "catalog:",
     "@types/node": "catalog:",
     "wrangler": "catalog:"

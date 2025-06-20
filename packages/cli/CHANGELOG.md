@@ -2,6 +2,21 @@
 
 # Changelog for Storm Stack - CLI
 
+## [0.11.3](https://github.com/storm-software/storm-stack/releases/tag/cli%400.11.3) (2025-06-20)
+
+### Miscellaneous
+
+- **monorepo:** Update workspace package links
+  ([d9514133](https://github.com/storm-software/storm-stack/commit/d9514133))
+
+### Updated Dependencies
+
+- Updated plugin-log-storage to 0.17.5
+- Updated plugin-log-sentry to 0.19.3
+- Updated plugin-storage-fs to 0.6.5
+- Updated preset-cli to 0.22.0
+- Updated nx to 0.13.5
+
 ## [0.11.2](https://github.com/storm-software/storm-stack/releases/tag/cli%400.11.2) (2025-06-20)
 
 ### Miscellaneous

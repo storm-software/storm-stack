@@ -2,6 +2,23 @@
 
 # Changelog for Storm Stack - Preset CLI
 
+## [0.22.0](https://github.com/storm-software/storm-stack/releases/tag/preset-cli%400.22.0) (2025-06-20)
+
+### Features
+
+- **preset-cli:** Added a large console display implementation with minimum
+  lengths
+  ([d7534611](https://github.com/storm-software/storm-stack/commit/d7534611))
+
+### Miscellaneous
+
+- **monorepo:** Update workspace package links
+  ([d9514133](https://github.com/storm-software/storm-stack/commit/d9514133))
+
+### Updated Dependencies
+
+- Updated devkit to 0.7.5
+
 ## [0.21.0](https://github.com/storm-software/storm-stack/releases/tag/preset-cli%400.21.0) (2025-06-20)
 
 ### Features
