@@ -56,8 +56,13 @@ import {
 import type { StormStackCLIPresetContext } from "../types/build";
 import type { StormStackCLIPresetConfig } from "../types/config";
 import type { CommandTreeBranch } from "../types/reflection";
+import {
+  LARGE_CONSOLE_WIDTH,
+  LARGE_HELP_COLUMN_WIDTH,
+  MIN_CONSOLE_WIDTH
+} from "./constants";
 import { reflectCommandTree } from "./reflect-command";
-import { sortArgAliases } from "./utilities";
+import { extractAuthor, sortArgAliases } from "./utilities";
 
 async function writeCommandEntryUsage<TOptions extends Options = Options>(
   log: LogFn,
@@ -82,42 +87,28 @@ async function writeCommandEntryUsage<TOptions extends Options = Options>(
   });
 
   const optionsColumn1 = command.payload.args.map(arg => {
+    const names = sortArgAliases([arg.name, ...arg.aliases]);
     if (arg.type === "string" || arg.type === "number" || arg.type === "enum") {
-      return `--${arg.name} <${arg.name}>${
-        arg.aliases.length > 0
-          ? `, ${arg.aliases
-              .map(alias =>
-                alias.length === 1
-                  ? `-${alias} <${arg.name}>`
-                  : `--${alias} <${arg.name}>`
-              )
-              .sort((a, b) => b.localeCompare(a))
-              .join(", ")}`
-          : ""
-      }`;
+      return names
+        .map(name =>
+          name.length === 1
+            ? `-${name} <${arg.name}>`
+            : `--${name} <${arg.name}>`
+        )
+        .join(", ");
     } else if (arg.type === "array") {
-      return `--${arg.name} <${arg.name}>...${
-        arg.aliases.length > 0
-          ? `, ${arg.aliases
-              .map(alias =>
-                alias.length === 1
-                  ? `-${alias} <${arg.name}>...`
-                  : `--${alias} <${arg.name}>...`
-              )
-              .sort((a, b) => b.localeCompare(a))
-              .join(", ")}`
-          : ""
-      }`;
+      return names
+        .map(name =>
+          name.length === 1
+            ? `-${name} <${arg.name}>...`
+            : `--${name} <${arg.name}>...`
+        )
+        .join(", ");
     }
 
-    return `--${arg.name}${
-      arg.aliases.length > 0
-        ? `, ${arg.aliases
-            .map(alias => (alias.length === 1 ? `-${alias}` : `--${alias}`))
-            .sort((a, b) => b.localeCompare(a))
-            .join(", ")}`
-        : ""
-    }`;
+    return names
+      .map(name => (name.length === 1 ? `-${name}` : `--${name}`))
+      .join(", ");
   });
 
   const optionsColumn2 = command.payload.args.map(arg => {
@@ -161,7 +152,7 @@ async function writeCommandEntryUsage<TOptions extends Options = Options>(
         : !arg.description.endsWith(".") && !arg.description.endsWith("?")
           ? `${arg.description}.`
           : arg.description
-    }`}${arg.default !== undefined ? ` [default: ${arg.default}]` : ""}")}`;
+    }`}${arg.default !== undefined && arg.default !== false ? ` [default: ${arg.default}]` : ""}")}`;
   });
 
   const column1MaxLength =
@@ -208,9 +199,10 @@ import { colors } from "${joinPaths(runtimeRelativePath, "cli")}";${
  * @returns The rendered string displaying usage information.
  */
 export function renderUsage(mode: "full" | "minimal" = "full"): string {
-  return \`\${colors.white(\`\${colors.whiteBright(colors.bold(\`${
-    command.displayName
-  }\${mode === "minimal" ? " Command" : ""}\`))}${
+  const consoleWidth = Math.max(process.stdout.columns - 2, ${MIN_CONSOLE_WIDTH});
+  const isLargeConsole = consoleWidth >= ${LARGE_CONSOLE_WIDTH};
+
+  return \`\${colors.white(\`\${colors.whiteBright(colors.bold(\`${command.displayName.toUpperCase()}\${mode === "minimal" ? " COMMAND" : ""}\`))}${
     command.description
       ? `
 
@@ -218,7 +210,7 @@ export function renderUsage(mode: "full" | "minimal" = "full"): string {
 `
       : ""
   }
-  \${colors.whiteBright(colors.bold("Usage:"))}
+  \${colors.whiteBright(colors.bold("USAGE:"))}
     \${colors.cyan(colors.bold(\`$ ${kebabCase(name)}${
       command.entry.path.length > 0
         ? ` ${command.entry.path
@@ -246,17 +238,23 @@ ${Object.values(command.children)
     }\`))} ${
       Object.values(command.children).length > 0
         ? `\${mode === "full" ? \`
-  \${colors.whiteBright(colors.bold("Commands:"))}
+  \${colors.whiteBright(colors.bold("COMMANDS:"))}
 ${commandsColumn1
   .map(
-    (child, i) => `    ${child.padEnd(column1MaxLength)}${commandsColumn2[i]}`
+    (child, i) =>
+      `     \${isLargeConsole ? "${child}".padEnd(${LARGE_HELP_COLUMN_WIDTH}) : "${child}".padEnd(${column1MaxLength})}${commandsColumn2[i]}`
   )
   .join("\n")}\` : ""}`
         : ""
     }
 
-  \${colors.whiteBright(colors.bold("Options:"))}
-\${colors.cyan(colors.bold(\`${optionsColumn1.map((option, i) => `    ${option.padEnd(column1MaxLength)}${optionsColumn2[i]}`).join(" \n")}\`))}
+  \${colors.whiteBright(colors.bold("OPTIONS:"))}
+\${colors.cyan(colors.bold(\`${optionsColumn1
+      .map(
+        (option, i) =>
+          `    \${isLargeConsole ? "${option}".padEnd(${LARGE_HELP_COLUMN_WIDTH}) : "${option}".padEnd(${column1MaxLength})}${optionsColumn2[i]}`
+      )
+      .join(" \n")}\`))}
 \`)}\`;
 }
 
@@ -620,39 +618,28 @@ async function writeVirtualCommandEntry<TOptions extends Options = Options>(
   );
 
   const optionsColumn1 = command.payload.args.map(arg => {
+    const names = sortArgAliases([arg.name, ...arg.aliases]);
     if (arg.type === "string" || arg.type === "number" || arg.type === "enum") {
-      return `--${arg.name} <${arg.name}>${
-        arg.aliases.length > 0
-          ? `, ${sortArgAliases(arg.aliases)
-              .map(alias =>
-                alias.length === 1
-                  ? `-${alias} <${arg.name}>`
-                  : `--${alias} <${arg.name}>`
-              )
-              .join(", ")}`
-          : ""
-      }`;
+      return names
+        .map(name =>
+          name.length === 1
+            ? `-${name} <${arg.name}>`
+            : `--${name} <${arg.name}>`
+        )
+        .join(", ");
     } else if (arg.type === "array") {
-      return `--${arg.name} <${arg.name}>...${
-        arg.aliases.length > 0
-          ? `, ${sortArgAliases(arg.aliases)
-              .map(alias =>
-                alias.length === 1
-                  ? `-${alias} <${arg.name}>...`
-                  : `--${alias} <${arg.name}>...`
-              )
-              .join(", ")}`
-          : ""
-      }`;
+      return names
+        .map(name =>
+          name.length === 1
+            ? `-${name} <${arg.name}>...`
+            : `--${name} <${arg.name}>...`
+        )
+        .join(", ");
     }
 
-    return `--${arg.name}${
-      arg.aliases.length > 0
-        ? `, ${sortArgAliases(arg.aliases)
-            .map(alias => (alias.length === 1 ? `-${alias}` : `--${alias}`))
-            .join(", ")}`
-        : ""
-    }`;
+    return names
+      .map(name => (name.length === 1 ? `-${name}` : `--${name}`))
+      .join(", ");
   });
 
   const optionsColumn2 = command.payload.args.map(arg => {
@@ -702,7 +689,7 @@ async function writeVirtualCommandEntry<TOptions extends Options = Options>(
               : arg.description
           }`
         : ""
-    }${arg.default !== undefined ? ` [default: ${arg.default}]` : ""}")}`;
+    }${arg.default !== undefined && arg.default !== false ? ` [default: ${arg.default}]` : ""}")}`;
   });
 
   const column1MaxLength =
@@ -760,7 +747,10 @@ export interface ${command.payload.name} {
  * @returns The rendered string displaying usage information.
  */
 export function renderUsage(mode: "full" | "minimal" = "full"): string {
-  return \`\${colors.whiteBright(colors.bold("${command.displayName} Commands"))} ${
+  const consoleWidth = Math.max(process.stdout.columns - 2, ${MIN_CONSOLE_WIDTH});
+  const isLargeConsole = consoleWidth >= ${LARGE_CONSOLE_WIDTH};
+
+  return \`\${colors.whiteBright(colors.bold("${command.displayName.toUpperCase()} COMMANDS"))} ${
     command.description
       ? `
 
@@ -768,7 +758,7 @@ export function renderUsage(mode: "full" | "minimal" = "full"): string {
 `
       : ""
   }
-  \${colors.whiteBright(colors.bold("Usage:"))}
+  \${colors.whiteBright(colors.bold("USAGE:"))}
 ${
   Object.values(command.children).length > 0
     ? Object.values(command.children)
@@ -789,7 +779,7 @@ ${
       Object.values(command.children).length > 0
         ? `\${mode === "full" ? \`
 
-  \${colors.whiteBright(colors.bold("Commands:"))}
+  \${colors.whiteBright(colors.bold("COMMANDS:"))}
 ${Object.values(command.children)
   .map(
     child =>
@@ -799,8 +789,8 @@ ${Object.values(command.children)
         : ""
     }
 
-  \${colors.whiteBright(colors.bold("Options:"))}
-\${colors.cyan(colors.bold(\`${optionsColumn1.map((option, i) => `    ${option.padEnd(column1MaxLength)}${optionsColumn2[i]}`).join(" \n")}\`))}
+  \${colors.whiteBright(colors.bold("OPTIONS:"))}
+\${colors.cyan(colors.bold(\`${optionsColumn1.map((option, i) => `    \${isLargeConsole ? "${option}".padEnd(${LARGE_HELP_COLUMN_WIDTH}) : "${option}".padEnd(${column1MaxLength})}${optionsColumn2[i]}`).join(" \n")}\`))}
 \`;
 }
 
@@ -1074,27 +1064,7 @@ export async function prepareEntry<TOptions extends Options = Options>(
     }
   }
 
-  let author = config.author
-    ? isSetString(config.author)
-      ? config.author
-      : config.author.name
-    : undefined;
-  if (!author) {
-    if (context.workspaceConfig.organization) {
-      author = context.workspaceConfig.organization;
-    } else if (context.packageJson?.author) {
-      author = isString(context.packageJson.author)
-        ? context.packageJson.author
-        : context.packageJson.author?.name;
-    } else if (
-      context.packageJson?.contributors &&
-      context.packageJson.contributors.length > 0
-    ) {
-      author = isString(context.packageJson.contributors[0])
-        ? context.packageJson.contributors[0]
-        : context.packageJson.contributors[0]?.name;
-    }
-  }
+  const author = extractAuthor(context, config);
 
   await writeFile(
     log,
@@ -1172,7 +1142,7 @@ async function main() {
     Release Notes: \${link("${
       repository
         ? repository.replace(/\.git$/, "").replace(/^git:/, "")
-        : `https://github.com/${author}/${
+        : `https://github.com/${author?.name || "storm-software"}/${
             context.workspaceConfig.namespace ||
             context.options.name ||
             context.packageJson.name

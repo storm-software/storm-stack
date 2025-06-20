@@ -16,7 +16,6 @@
 
  ------------------------------------------------------------------- */
 
-import { OrganizationConfig } from "@storm-software/config/types";
 import { getFileHeader } from "@storm-stack/core/helpers";
 import type { Options } from "@storm-stack/core/types";
 import { stripAnsi } from "@stryke/cli/utils/strip-ansi";
@@ -24,8 +23,13 @@ import { titleCase } from "@stryke/string-format/title-case";
 import { isObject } from "@stryke/type-checks/is-object";
 import { isSetString } from "@stryke/type-checks/is-set-string";
 import { isString } from "@stryke/type-checks/is-string";
-import defu from "defu";
 import { renderUnicodeCompact } from "uqr";
+import {
+  LARGE_CONSOLE_WIDTH,
+  LARGE_HELP_COLUMN_WIDTH,
+  MIN_CONSOLE_WIDTH
+} from "../helpers/constants";
+import { extractAuthor } from "../helpers/utilities";
 import type { StormStackCLIPresetContext } from "../types/build";
 import type { StormStackCLIPresetConfig } from "../types/config";
 
@@ -42,46 +46,7 @@ export function writeRuntime<TOptions extends Options = Options>(
     appTitle += " CLI";
   }
 
-  let author: OrganizationConfig | undefined;
-  if (config.author) {
-    if (isString(config.author)) {
-      author = { name: config.author };
-    } else if (isObject(config.author)) {
-      author = config.author;
-    }
-  }
-
-  if (context.workspaceConfig.organization) {
-    if (isString(context.workspaceConfig.organization) && !author?.name) {
-      author ??= {} as OrganizationConfig;
-      author.name = context.workspaceConfig.organization;
-    } else {
-      author = defu(author ?? {}, context.workspaceConfig.organization);
-    }
-  }
-
-  if (!author?.name) {
-    if (context.packageJson?.author) {
-      author ??= {} as OrganizationConfig;
-      author.name = isString(context.packageJson.author)
-        ? context.packageJson.author
-        : context.packageJson.author?.name;
-    } else if (
-      context.packageJson?.contributors &&
-      context.packageJson.contributors.length > 0 &&
-      context.packageJson.contributors[0] &&
-      (isSetString(context.packageJson.contributors[0]) ||
-        isSetString(context.packageJson.contributors[0].name))
-    ) {
-      author ??= {} as OrganizationConfig;
-      author.name = (
-        isString(context.packageJson.contributors[0])
-          ? context.packageJson.contributors[0]
-          : context.packageJson.contributors[0].name
-      )!;
-    }
-  }
-
+  const author = extractAuthor(context, config);
   if (author?.name) {
     author.name = titleCase(author.name);
   }
@@ -545,7 +510,8 @@ export function renderBanner(title: string, description: string): string {
  * @internal
  */
 export function renderFooter(): string {
-  const consoleWidth = Math.max(process.stdout.columns - 2, 46);
+  const consoleWidth = Math.max(process.stdout.columns - 2, ${MIN_CONSOLE_WIDTH});
+  const isLargeConsole = consoleWidth >= ${LARGE_CONSOLE_WIDTH};
 
   let supportRow = ${
     support || contact || repository
@@ -567,13 +533,11 @@ export function renderFooter(): string {
   const supportRowLength = stripAnsi(supportRow).length;
 
   const footer = [] as string[];
-  footer.push(\`\${colors.whiteBright(colors.bold("Links:"))}\`);
+  footer.push(\`\${colors.whiteBright(colors.bold("LINKS:"))}\`);
   ${linksColumn1
     .map(
       (line, i) =>
-        `footer.push(\`  ${`\${colors.bold("${line.padEnd(
-          linksMaxLength
-        )}")}`}\${link("${linksColumn2[i]}")}\`);`
+        `footer.push(\`    \${isLargeConsole ? colors.bold("${line}".padEnd(${LARGE_HELP_COLUMN_WIDTH})) : colors.bold("${line}".padEnd(${linksMaxLength}))}\${link("${linksColumn2[i]}")}\`);`
     )
     .join(" \n")}
 
