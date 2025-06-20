@@ -2,6 +2,17 @@
 
 # Changelog for Storm Stack - Nx
 
+## [0.13.4](https://github.com/storm-software/storm-stack/releases/tag/nx%400.13.4) (2025-06-20)
+
+### Miscellaneous
+
+- **monorepo:** Update workspace package links
+  ([5a555a33](https://github.com/storm-software/storm-stack/commit/5a555a33))
+
+### Updated Dependencies
+
+- Updated core to 0.30.0
+
 ## [0.13.3](https://github.com/storm-software/storm-stack/releases/tag/nx%400.13.3) (2025-06-18)
 
 ### Miscellaneous

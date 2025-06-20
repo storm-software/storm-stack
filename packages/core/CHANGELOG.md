@@ -2,6 +2,14 @@
 
 # Changelog for Storm Stack - Core
 
+## [0.30.0](https://github.com/storm-software/storm-stack/releases/tag/core%400.30.0) (2025-06-20)
+
+### Features
+
+- **preset-cli:** Update the `author` configuration option to align with
+  `OrganizationConfig` from `storm-workspace.json` file
+  ([76e9d211](https://github.com/storm-software/storm-stack/commit/76e9d211))
+
 ## [0.29.1](https://github.com/storm-software/storm-stack/releases/tag/core%400.29.1) (2025-06-18)
 
 ### Miscellaneous

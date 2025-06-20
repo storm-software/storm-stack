@@ -2,6 +2,24 @@
 
 # Changelog for Storm Stack - Preset CLI
 
+## [0.21.0](https://github.com/storm-software/storm-stack/releases/tag/preset-cli%400.21.0) (2025-06-20)
+
+### Features
+
+- **preset-cli:** Update the `author` configuration option to align with
+  `OrganizationConfig` from `storm-workspace.json` file
+  ([76e9d211](https://github.com/storm-software/storm-stack/commit/76e9d211))
+
+### Miscellaneous
+
+- **monorepo:** Update workspace package links
+  ([5a555a33](https://github.com/storm-software/storm-stack/commit/5a555a33))
+
+### Updated Dependencies
+
+- Updated devkit to 0.7.4
+- Updated core to 0.30.0
+
 ## [0.20.1](https://github.com/storm-software/storm-stack/releases/tag/preset-cli%400.20.1) (2025-06-18)
 
 ### Bug Fixes
