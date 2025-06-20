@@ -1730,7 +1730,7 @@ declare module "storm:env" {
   /** The current application */
   export const name = "storm-stack";
   /** The current application */
-  export const version = "0.11.0";
+  export const version = "0.11.1";
   /**
    * The environment paths for storing things like data, config, logs, and cache in the current runtime environment.
    *
