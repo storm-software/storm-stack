@@ -278,7 +278,7 @@ interface IStormLog {
     ((callback: LogCallback) => void);
 }
 
-interface IStormPayload<TData = any> {
+interface IStormPayload<TData = object> {
   /**
    * The timestamp of the payload.
    */
@@ -1730,7 +1730,7 @@ declare module "storm:env" {
   /** The current application */
   export const name = "storm-stack";
   /** The current application */
-  export const version = "0.11.1";
+  export const version = "0.11.3";
   /**
    * The environment paths for storing things like data, config, logs, and cache in the current runtime environment.
    *
@@ -2029,7 +2029,7 @@ declare module "storm:payload" {
   /**
    * A base payload class used by the Storm Stack runtime.
    */
-  export class StormPayload<TData = any> implements IStormPayload<TData> {
+  export class StormPayload<TData = object> implements IStormPayload<TData> {
     /**
      * The data associated with the payload.
      */

@@ -18,7 +18,7 @@
 
 import { LogLevelLabel } from "@storm-software/config-tools/types";
 
-import { deserializeType, ReflectionClass } from "@deepkit/type";
+import { ReflectionClass, ReflectionKind, stringifyType } from "@deepkit/type";
 import {
   readDotenvReflection,
   writeDotenvReflection
@@ -38,9 +38,10 @@ import { camelCase } from "@stryke/string-format/camel-case";
 import { constantCase } from "@stryke/string-format/constant-case";
 import { kebabCase } from "@stryke/string-format/kebab-case";
 import { pascalCase } from "@stryke/string-format/pascal-case";
+import { snakeCase } from "@stryke/string-format/snake-case";
 import { titleCase } from "@stryke/string-format/title-case";
-import { isSetString } from "@stryke/type-checks/is-set-string";
 import { isString } from "@stryke/type-checks/is-string";
+import { readCommandTreeReflection } from "../capnp/persistence";
 import { writeApp } from "../runtime/app";
 import { writeRuntime } from "../runtime/cli";
 import {
@@ -55,23 +56,29 @@ import {
 } from "../runtime/config";
 import type { StormStackCLIPresetContext } from "../types/build";
 import type { StormStackCLIPresetConfig } from "../types/config";
-import type { CommandTreeBranch } from "../types/reflection";
+import type { Command } from "../types/reflection";
 import {
   LARGE_CONSOLE_WIDTH,
   LARGE_HELP_COLUMN_WIDTH,
   MIN_CONSOLE_WIDTH
 } from "./constants";
 import { reflectCommandTree } from "./reflect-command";
-import { extractAuthor, sortArgAliases } from "./utilities";
+import { extractAuthor, sortArgAliases, sortArgs } from "./utilities";
 
 async function writeCommandEntryUsage<TOptions extends Options = Options>(
   log: LogFn,
   context: Context<TOptions>,
-  command: CommandTreeBranch,
+  command: Command,
   config: StormStackCLIPresetConfig,
-  name: string,
   description: string
 ) {
+  log(
+    LogLevelLabel.TRACE,
+    `Preparing the command entry usage artifact ${command.entry.file} (${
+      command.entry?.name ? `export: "${command.entry.name}"` : "default"
+    })`
+  );
+
   const runtimeRelativePath = relativePath(
     findFilePath(command.entry.file),
     context.runtimePath,
@@ -79,31 +86,34 @@ async function writeCommandEntryUsage<TOptions extends Options = Options>(
   );
 
   const commandsColumn1 = Object.values(command.children).map(child => {
-    return `${child.displayName} (${child.name})`;
+    return `${child.name} (${child.name})`;
   });
 
   const commandsColumn2 = Object.values(command.children).map(child => {
-    return `\${colors.gray("${child.description}")}`;
+    return `\${colors.gray("${child.type?.getDescription() || `The ${child.title} command.`}")}`;
   });
 
-  const optionsColumn1 = command.payload.args.map(arg => {
-    const names = sortArgAliases([arg.name, ...arg.aliases]);
-    if (arg.type === "string" || arg.type === "number" || arg.type === "enum") {
-      return names
-        .map(name =>
-          name.length === 1
-            ? `-${name} <${arg.name}>`
-            : `--${name} <${arg.name}>`
-        )
-        .join(", ");
-    } else if (arg.type === "array") {
-      return names
-        .map(name =>
-          name.length === 1
-            ? `-${name} <${arg.name}>...`
-            : `--${name} <${arg.name}>...`
-        )
-        .join(", ");
+  if (!command?.payload?.args) {
+    throw new Error(
+      `Command "${command.id}" (${command.entry.file}) is missing payload.`
+    );
+  }
+
+  const optionsColumn1 = sortArgs(command.payload.args).map(arg => {
+    const names = sortArgAliases([arg.name, ...arg.type.getAlias()]);
+    if (
+      arg.type.getKind() === ReflectionKind.string ||
+      arg.type.getKind() === ReflectionKind.literal ||
+      arg.type.getKind() === ReflectionKind.number ||
+      arg.type.getKind() === ReflectionKind.enum
+    ) {
+      return `${names
+        .map(name => (name.length === 1 ? `-${name}` : `--${name}`))
+        .join(", ")} <${snakeCase(arg.name)}>`;
+    } else if (arg.type.getKind() === ReflectionKind.array) {
+      return `${names
+        .map(name => (name.length === 1 ? `-${name}` : `--${name}`))
+        .join(", ")} <${snakeCase(arg.name)}>...`;
     }
 
     return names
@@ -112,47 +122,61 @@ async function writeCommandEntryUsage<TOptions extends Options = Options>(
   });
 
   const optionsColumn2 = command.payload.args.map(arg => {
-    if (arg.type === "string" || arg.type === "number" || arg.type === "enum") {
+    if (
+      arg.type.getKind() === ReflectionKind.string ||
+      arg.type.getKind() === ReflectionKind.literal ||
+      arg.type.getKind() === ReflectionKind.number ||
+      arg.type.getKind() === ReflectionKind.enum
+    ) {
       return `\${colors.gray("${
-        !arg.description
+        !arg.type.getDescription()
           ? `The ${arg.name} command-line option.`
-          : !arg.description.endsWith(".") && !arg.description.endsWith("?")
-            ? `${arg.description}.`
-            : arg.description
+          : !arg.type.getDescription().endsWith(".") &&
+              !arg.type.getDescription().endsWith("?")
+            ? `${arg.type.getDescription()}.`
+            : arg.type.getDescription()
       }${
-        arg.type === "enum" && arg.options && arg.options.length > 0
+        arg.type.getKind() === ReflectionKind.enum &&
+        arg.options &&
+        arg.options.length > 0
           ? ` Valid options are: ${arg.options.join(", ")}`
           : ""
       }${
-        arg.default !== undefined
-          ? ` [default: ${typeof arg.default === "string" ? arg.default.replaceAll('"', '\\"') : arg.default}]`
+        arg.type.getDefaultValue() !== undefined
+          ? ` [default: ${
+              typeof arg.type.getDefaultValue() === "string"
+                ? String(arg.type.getDefaultValue()).replaceAll('"', '\\"')
+                : arg.type.getDefaultValue()
+            }]`
           : ""
       }")}`;
-    } else if (arg.type === "array") {
+    } else if (arg.type.getKind() === ReflectionKind.array) {
       return `\${colors.gray("${
-        !arg.description
+        !arg.type.getDescription()
           ? `The ${arg.name} command-line option.`
-          : !arg.description.endsWith(".") && !arg.description.endsWith("?")
-            ? `${arg.description}.`
-            : arg.description
+          : !arg.type.getDescription().endsWith(".") &&
+              !arg.type.getDescription().endsWith("?")
+            ? `${arg.type.getDescription()}.`
+            : arg.type.getDescription()
       }${
-        arg.default !== undefined
+        arg.type.getDefaultValue() !== undefined
           ? ` [default: ${
-              typeof arg.default === "string"
-                ? arg.default.replaceAll('"', '\\"')
-                : arg.default
+              typeof arg.type.getDefaultValue() === "string"
+                ? String(arg.type.getDefaultValue()).replaceAll('"', '\\"')
+                : arg.type.getDefaultValue()
             }]`
           : ""
       }")}`;
     }
 
     return `${`\${colors.gray("${
-      !arg.description
+      !arg.type.getDescription()
         ? `The ${arg.name} command-line option.`
-        : !arg.description.endsWith(".") && !arg.description.endsWith("?")
-          ? `${arg.description}.`
-          : arg.description
-    }`}${arg.default !== undefined && arg.default !== false ? ` [default: ${arg.default}]` : ""}")}`;
+        : !arg.type.getDescription().endsWith(".") &&
+            !arg.type.getDescription().endsWith("?")
+          ? `${arg.type.getDescription()}.`
+          : arg.type.getDescription()
+    }`}${arg.type.getDefaultValue() !== undefined && arg.type.getDefaultValue() !== false ? ` [default: ${arg.type.getDefaultValue()}]` : ""}")}`;
   });
 
   const column1MaxLength =
@@ -179,12 +203,12 @@ import ${command.entry.input.name ? `{ ${command.entry.input.name} as handle }` 
       )
     )}";
 import { colors } from "${joinPaths(runtimeRelativePath, "cli")}";${
-      command.payload.importPath
-        ? `import { ${command.payload.name} } from "${relativePath(
+      command.payload.import
+        ? `import { ${command.payload.import.name} } from "${relativePath(
             findFilePath(command.entry.file),
             joinPaths(
               context.workspaceConfig.workspaceRoot,
-              command.payload.importPath
+              command.payload.import.file
             )
           )}";`
         : `
@@ -193,7 +217,7 @@ import { colors } from "${joinPaths(runtimeRelativePath, "cli")}";${
     }
 
 /**
- * Renders the ${command.displayName} command usage information.
+ * Renders the ${command.title} command usage information.
  *
  * @param mode - The render mode to use when displaying the usage information (either "full" or "minimal").
  * @returns The rendered string displaying usage information.
@@ -202,8 +226,8 @@ export function renderUsage(mode: "full" | "minimal" = "full"): string {
   const consoleWidth = Math.max(process.stdout.columns - 2, ${MIN_CONSOLE_WIDTH});
   const isLargeConsole = consoleWidth >= ${LARGE_CONSOLE_WIDTH};
 
-  return \`\${colors.white(\`\${colors.whiteBright(colors.bold(\`${command.displayName.toUpperCase()}\${mode === "minimal" ? " COMMAND" : ""}\`))}${
-    command.description
+  return \`\${colors.white(\`\${colors.whiteBright(colors.bold(\`${command.title.toUpperCase()}\${mode === "minimal" ? " COMMAND:" : ""}\`))}${
+    command.type?.getDescription()
       ? `
 
   \${colors.gray("${description}")}
@@ -211,7 +235,7 @@ export function renderUsage(mode: "full" | "minimal" = "full"): string {
       : ""
   }
   \${colors.whiteBright(colors.bold("USAGE:"))}
-    \${colors.cyan(colors.bold(\`$ ${kebabCase(name)}${
+    \${colors.cyan(colors.bold(\`$ ${kebabCase(command.root.name)}${
       command.entry.path.length > 0
         ? ` ${command.entry.path
             .filter(Boolean)
@@ -224,7 +248,7 @@ export function renderUsage(mode: "full" | "minimal" = "full"): string {
 ${Object.values(command.children)
   .map(
     child =>
-      `    $ ${kebabCase(name)}${
+      `    $ ${kebabCase(command.root.name)}${
         child.entry.path.length > 0
           ? ` ${child.entry.path
               .filter(Boolean)
@@ -242,7 +266,9 @@ ${Object.values(command.children)
 ${commandsColumn1
   .map(
     (child, i) =>
-      `     \${isLargeConsole ? "${child}".padEnd(${LARGE_HELP_COLUMN_WIDTH}) : "${child}".padEnd(${column1MaxLength})}${commandsColumn2[i]}`
+      `     \${isLargeConsole ? "${child}".padEnd(${LARGE_HELP_COLUMN_WIDTH}) : "${child}".padEnd(${
+        column1MaxLength
+      })}${commandsColumn2[i]}`
   )
   .join("\n")}\` : ""}`
         : ""
@@ -252,7 +278,9 @@ ${commandsColumn1
 \${colors.cyan(colors.bold(\`${optionsColumn1
       .map(
         (option, i) =>
-          `    \${isLargeConsole ? "${option}".padEnd(${LARGE_HELP_COLUMN_WIDTH}) : "${option}".padEnd(${column1MaxLength})}${optionsColumn2[i]}`
+          `    \${isLargeConsole ? "${option}".padEnd(${LARGE_HELP_COLUMN_WIDTH}) : "${option}".padEnd(${
+            column1MaxLength
+          })}${optionsColumn2[i]}`
       )
       .join(" \n")}\`))}
 \`)}\`;
@@ -265,11 +293,21 @@ ${commandsColumn1
 async function writeCommandEntryHandler<TOptions extends Options = Options>(
   log: LogFn,
   context: Context<TOptions>,
-  command: CommandTreeBranch,
+  command: Command,
   config: StormStackCLIPresetConfig,
-  name: string,
   description: string
 ) {
+  log(
+    LogLevelLabel.TRACE,
+    `Preparing the command entry handler artifact ${command.entry.file} (${
+      command.entry?.name ? `export: "${command.entry.name}"` : "default"
+    })" from input "${command.entry.input.file}" (${
+      command.entry.input.name
+        ? `export: "${command.entry.input.name}"`
+        : "default"
+    })`
+  );
+
   const runtimeRelativePath = relativePath(
     findFilePath(command.entry.file),
     context.runtimePath,
@@ -294,28 +332,30 @@ import ${command.entry.input.name ? `{ ${command.entry.input.name} as handle }` 
     )}";
 import { withContext } from "${joinPaths(runtimeRelativePath, "app")}";
 import { isInteractive, isMinimal } from "${joinPaths(runtimeRelativePath, "env")}";
-import { colors, parseArgs, renderBanner, renderFooter${config.interactive !== "never" ? ", prompt" : ""} } from "${joinPaths(runtimeRelativePath, "cli")}";
+import { colors, parseArgs, renderBanner, renderFooter${
+      config.interactive !== "never" ? ", prompt" : ""
+    } } from "${joinPaths(runtimeRelativePath, "cli")}";
 import { deserialize, serialize } from "@deepkit/type";${
-      command.payload.importPath
-        ? `import { ${command.payload.name} } from "${relativePath(
+      command.payload.import
+        ? `import { ${command.payload.import.name} } from "${relativePath(
             findFilePath(command.entry.file),
             joinPaths(
               context.workspaceConfig.workspaceRoot,
-              command.payload.importPath
+              command.payload.import.file
             )
           )}";`
         : `
 
-export interface ${command.payload.name} {
-  ${command.payload.args.map(arg => `${camelCase(arg.name)}: ${arg.stringifiedType};`).join("\n  ")}
+export interface ${command.payload.type.getName()} {
+  ${command.payload.args.map(arg => `${camelCase(arg.name)}: ${stringifyType(arg.type.getType())};`).join("\n  ")}
 }
         `
     }
 
-const handleCommand = withContext<${command.payload.name}>(handle);
+const handleCommand = withContext<${command.payload.type.getName()}>(handle);
 
 /**
- * The entry point for the ${command.displayName} command.
+ * The entry point for the ${command.title} command.
  */
 async function handler() {
   try {
@@ -352,20 +392,24 @@ async function handler() {
     }
 
     const args = parseArgs(process.argv.slice(${command.entry.path.length + 1}), {${
-      command.payload.args.filter(arg => arg.type === "boolean").length > 0
+      command.payload.args.filter(
+        arg => arg.type.getKind() === ReflectionKind.boolean
+      ).length > 0
         ? `
       boolean: [${command.payload.args
-        .filter(arg => arg.type === "boolean")
-        .map(arg => `"${arg.name}", "${arg.aliases.join('", "')}"`)
+        .filter(arg => arg.type.getKind() === ReflectionKind.boolean)
+        .map(arg => `"${arg.name}", "${arg.type.getAlias().join('", "')}"`)
         .join(", ")}],`
         : ""
     }${
-      command.payload.args.filter(arg => arg.aliases.length > 0).length > 0
+      command.payload.args.filter(arg => arg.type.getAlias().length > 0)
+        .length > 0
         ? `
       alias: {${command.payload.args
         .map(
           arg =>
-            `${camelCase(arg.name)}: [ "${arg.name}", "${arg.name.toUpperCase()}", ${arg.aliases
+            `${camelCase(arg.name)}: [ "${arg.name}", "${arg.name.toUpperCase()}", ${arg.type
+              .getAlias()
               .map(alias => `"${alias}", "${alias.toUpperCase()}"`)
               .join(", ")}]`
         )
@@ -377,19 +421,19 @@ async function handler() {
     if (args["version"] || args["v"]) {
       console.log($storm.config.APP_VERSION);
     } else {
-      const isVerbose = args["verbose"] ?? Boolean(process.env.${constantCase(name)}_VERBOSE);
+      const isVerbose = args["verbose"] ?? Boolean(process.env.${constantCase(command.root.name)}_VERBOSE);
       ${
         config.interactive !== "never"
           ? `const isPromptEnabled = ((args["interactive"] !== false &&
         args["no-interactive"] !== true) &&
-        Boolean(process.env.${constantCase(name)}_INTERACTIVE)) &&
+        Boolean(process.env.${constantCase(command.root.name)}_INTERACTIVE)) &&
         isInteractive &&
         !isMinimal;`
           : ""
       }
 
       if (args["no-banner"] !== true && !isMinimal) {
-        console.log(renderBanner("${command.displayName} Command", "${description}"));
+        console.log(renderBanner("${command.title} Command", "${description}"));
         console.log("");
       }
 
@@ -401,7 +445,7 @@ async function handler() {
       } else {
         if (isVerbose) {
           console.log(colors.dim(\` > Writing verbose output to console - as a result of the \${args["verbose"] ? "user provided \\"verbose\\" option" : "${constantCase(
-            name
+            command.root.name
           )}_VERBOSE environment variable"} \`));
           console.log("");
           ${
@@ -431,13 +475,13 @@ async function handler() {
           )
           .map(arg => {
             return `
-            if (args["${arg.name}"] === undefined && process.env.${constantCase(name)}_${constantCase(arg.name)}) {
-              args["${arg.name}"] = process.env.${constantCase(name)}_${constantCase(arg.name)};
+            if (args["${arg.name}"] === undefined && process.env.${constantCase(command.root.name)}_${constantCase(arg.name)}) {
+              args["${arg.name}"] = process.env.${constantCase(command.root.name)}_${constantCase(arg.name)};
               if (isVerbose) {
                 console.log(colors.dim(\` > Setting the ${arg.name} option to \${process.env.${constantCase(
-                  name
+                  command.root.name
                 )}_${constantCase(arg.name)}} (via the ${constantCase(
-                  name
+                  command.root.name
                 )}_${constantCase(arg.name)} environment variable) \`));
               }
             } `;
@@ -460,61 +504,82 @@ async function handler() {
               return `
             if (args["${arg.name}"] === undefined) {
               ${
-                config.interactive !== "never" && !arg.isNegative
+                config.interactive !== "never" && !arg.isNegativeOf
                   ? `
               if (isPromptEnabled) {
-                args["${arg.name}"] = await prompt<${arg.stringifiedType}>(\`Please ${
-                  arg.type === "boolean"
-                    ? `confirm the ${arg.displayName} value`
-                    : `${arg.type === "enum" && arg.options && arg.options.length > 0 ? "select" : "provide"} ${
-                        arg.displayName.startsWith("a") ||
-                        arg.displayName.startsWith("A") ||
-                        arg.displayName.startsWith("e") ||
-                        arg.displayName.startsWith("E") ||
-                        arg.displayName.startsWith("i") ||
-                        arg.displayName.startsWith("I") ||
-                        arg.displayName.startsWith("o") ||
-                        arg.displayName.startsWith("O") ||
-                        arg.displayName.startsWith("u") ||
-                        arg.displayName.startsWith("U") ||
-                        arg.displayName.startsWith("y") ||
-                        arg.displayName.startsWith("Y")
+                args["${arg.name}"] = await prompt<${stringifyType(arg.type.getType())}>(\`Please ${
+                  arg.type.getKind() === ReflectionKind.boolean
+                    ? `confirm the ${arg.title} value`
+                    : `${arg.type.getKind() === ReflectionKind.enum && arg.options && arg.options.length > 0 ? "select" : "provide"} ${
+                        arg.title.startsWith("a") ||
+                        arg.title.startsWith("A") ||
+                        arg.title.startsWith("e") ||
+                        arg.title.startsWith("E") ||
+                        arg.title.startsWith("i") ||
+                        arg.title.startsWith("I") ||
+                        arg.title.startsWith("o") ||
+                        arg.title.startsWith("O") ||
+                        arg.title.startsWith("u") ||
+                        arg.title.startsWith("U") ||
+                        arg.title.startsWith("y") ||
+                        arg.title.startsWith("Y")
                           ? "an"
                           : "a"
                       } ${
-                        arg.displayName.toLowerCase() === "value" ||
-                        arg.displayName.toLowerCase() === "name"
-                          ? arg.displayName
-                          : `${arg.displayName} value`
+                        arg.title.toLowerCase() === "value" ||
+                        arg.title.toLowerCase() === "name"
+                          ? arg.title
+                          : `${arg.title} value`
                       }`
                 }${
-                  arg.description &&
-                  (arg.type === "boolean" ||
-                    (arg.type === "enum" &&
+                  arg.type.getDescription() &&
+                  (arg.type.getKind() === ReflectionKind.boolean ||
+                    (arg.type.getKind() === ReflectionKind.enum &&
                       arg.options &&
                       arg.options.length > 0))
-                    ? ` \${colors.gray("(${arg.description})")}`
+                    ? ` \${colors.gray("(${arg.type.getDescription()})")}`
                     : ""
                 }\`, {
-                  type: "${arg.type === "boolean" ? "confirm" : arg.type === "enum" && arg.options && arg.options.length > 0 ? (arg.array ? "multiselect" : "select") : "text"}", ${
-                    arg.default !== undefined
+                  type: "${
+                    arg.type.getKind() === ReflectionKind.boolean
+                      ? "confirm"
+                      : arg.type.getKind() === ReflectionKind.enum &&
+                          arg.options &&
+                          arg.options.length > 0
+                        ? arg.type.getKind() === ReflectionKind.array
+                          ? "multiselect"
+                          : "select"
+                        : "text"
+                  }", ${
+                    arg.type.getDefaultValue() !== undefined
                       ? `
-                      initial: ${arg.type === "number" ? `"${arg.default}"` : arg.default}, ${
-                        arg.type === "string" || arg.type === "number"
+                      initial: ${
+                        arg.type.getKind() === ReflectionKind.number
+                          ? `"${arg.type.getDefaultValue()}"`
+                          : arg.type.getDefaultValue()
+                      }, ${
+                        arg.type.getKind() === ReflectionKind.string ||
+                        arg.type.getKind() === ReflectionKind.number
                           ? `
-                      default: ${arg.type === "number" ? `"${arg.default}"` : arg.default}, `
+                      default: ${
+                        arg.type.getKind() === ReflectionKind.string
+                          ? `"${arg.type.getDefaultValue()}"`
+                          : arg.type.getDefaultValue()
+                      }, `
                           : ""
                       }`
                       : ""
                   }${
-                    arg.type !== "boolean" &&
-                    arg.type !== "enum" &&
-                    arg.description
+                    arg.type.getKind() !== ReflectionKind.boolean &&
+                    arg.type.getKind() !== ReflectionKind.enum &&
+                    arg.type.getDescription()
                       ? `
-                      placeholder: "${arg.description}", `
+                      placeholder: "${arg.type.getDescription()}", `
                       : ""
                   }${
-                    arg.type === "enum" && arg.options && arg.options.length > 0
+                    arg.type.getKind() !== ReflectionKind.enum &&
+                    arg.options &&
+                    arg.options.length > 0
                       ? `
                   options: [ ${arg.options.map(option => `"${option}"`).join(", ")} ], `
                       : ""
@@ -523,7 +588,7 @@ async function handler() {
               }
 
               ${
-                arg.default !== undefined
+                arg.type.getDefaultValue() !== undefined
                   ? `
               if (args["${arg.name}"] === undefined) { `
                   : ""
@@ -531,24 +596,24 @@ async function handler() {
                 `
                   : ""
               }${
-                arg.default !== undefined
+                arg.type.getDefaultValue() !== undefined
                   ? `
-              args["${arg.name}"] = ${arg.default};
+              args["${arg.name}"] = ${arg.type.getDefaultValue()};
               if (isVerbose) {
-                console.log(colors.dim(\` > Setting the ${arg.name} option to ${arg.default} (via it's default value) \`));
+                console.log(colors.dim(\` > Setting the ${arg.name} option to ${arg.type.getDefaultValue()} (via it's default value) \`));
               }
-            ${config.interactive !== "never" && !arg.isNegative ? " } " : ""} `
+            ${config.interactive !== "never" && !arg.isNegativeOf ? " } " : ""} `
                   : ""
               }
           } `;
             })
             .join("\n")}
 
-        await handleCommand(deserialize<${command.payload.name}>(args));
+        await handleCommand(deserialize<${command.payload.type.getName()}>(args));
       }
     }
   } catch (err) {
-   console.error(\` \${colors.red("✘")} \${colors.white(\`Error occurred while processing ${command.displayName} command.\`)}\`);
+   console.error(\` \${colors.red("✘")} \${colors.white(\`Error occurred while processing ${command.title} command.\`)}\`);
   }
 }
 
@@ -561,7 +626,7 @@ export default handler;
 async function writeCommandEntry<TOptions extends Options = Options>(
   log: LogFn,
   context: Context<TOptions>,
-  command: CommandTreeBranch,
+  command: Command,
   config: StormStackCLIPresetConfig
 ) {
   log(
@@ -569,42 +634,21 @@ async function writeCommandEntry<TOptions extends Options = Options>(
     `Preparing the command entry artifact ${command.entry.file} (${command.entry?.name ? `export: "${command.entry.name}"` : "default"})" from input "${command.entry.input.file}" (${command.entry.input.name ? `export: "${command.entry.input.name}"` : "default"})`
   );
 
-  const name =
-    (config.bin &&
-    (isSetString(config.bin) ||
-      (Array.isArray(config.bin) && config.bin.length > 0 && config.bin[0]))
-      ? isSetString(config.bin)
-        ? config.bin
-        : config.bin[0]
-      : context.options.name || context.packageJson?.name) || "cli";
   const description =
-    !command.description?.endsWith(".") && !command.description?.endsWith("?")
-      ? `${command.description}.`
-      : command.description;
+    !command.type?.getDescription()?.endsWith(".") &&
+    !command.type?.getDescription()?.endsWith("?")
+      ? `${command.type?.getDescription()}.`
+      : command.type?.getDescription();
 
-  await writeCommandEntryUsage(
-    log,
-    context,
-    command,
-    config,
-    name,
-    description
-  );
-  await writeCommandEntryHandler(
-    log,
-    context,
-    command,
-    config,
-    name,
-    description
-  );
+  await writeCommandEntryUsage(log, context, command, config, description);
+  await writeCommandEntryHandler(log, context, command, config, description);
 }
 
 async function writeVirtualCommandEntry<TOptions extends Options = Options>(
   log: LogFn,
   context: Context<TOptions>,
-  command: CommandTreeBranch,
-  config: StormStackCLIPresetConfig
+  command: Command,
+  _config: StormStackCLIPresetConfig
 ) {
   log(
     LogLevelLabel.TRACE,
@@ -617,24 +661,21 @@ async function writeVirtualCommandEntry<TOptions extends Options = Options>(
     false
   );
 
-  const optionsColumn1 = command.payload.args.map(arg => {
-    const names = sortArgAliases([arg.name, ...arg.aliases]);
-    if (arg.type === "string" || arg.type === "number" || arg.type === "enum") {
-      return names
-        .map(name =>
-          name.length === 1
-            ? `-${name} <${arg.name}>`
-            : `--${name} <${arg.name}>`
-        )
-        .join(", ");
-    } else if (arg.type === "array") {
-      return names
-        .map(name =>
-          name.length === 1
-            ? `-${name} <${arg.name}>...`
-            : `--${name} <${arg.name}>...`
-        )
-        .join(", ");
+  const optionsColumn1 = sortArgs(command.payload.args).map(arg => {
+    const names = sortArgAliases([arg.name, ...arg.type.getAlias()]);
+    if (
+      arg.type.getKind() === ReflectionKind.string ||
+      arg.type.getKind() === ReflectionKind.literal ||
+      arg.type.getKind() === ReflectionKind.number ||
+      arg.type.getKind() === ReflectionKind.enum
+    ) {
+      return `${names
+        .map(name => (name.length === 1 ? `-${name}` : `--${name}`))
+        .join(", ")} <${snakeCase(arg.name)}>`;
+    } else if (arg.type.getKind() === ReflectionKind.array) {
+      return `${names
+        .map(name => (name.length === 1 ? `-${name}` : `--${name}`))
+        .join(", ")} <${snakeCase(arg.name)}>...`;
     }
 
     return names
@@ -643,70 +684,80 @@ async function writeVirtualCommandEntry<TOptions extends Options = Options>(
   });
 
   const optionsColumn2 = command.payload.args.map(arg => {
-    if (arg.type === "string" || arg.type === "number" || arg.type === "enum") {
+    if (
+      arg.type.getKind() === ReflectionKind.string ||
+      arg.type.getKind() === ReflectionKind.literal ||
+      arg.type.getKind() === ReflectionKind.number ||
+      arg.type.getKind() === ReflectionKind.enum
+    ) {
       return `${
-        arg.description
+        arg.type.getDescription()
           ? `\${colors.gray("${
-              !arg.description?.endsWith(".") && !arg.description?.endsWith("?")
-                ? `${arg.description}.`
-                : arg.description
+              !arg.type.getDescription()?.endsWith(".") &&
+              !arg.type.getDescription()?.endsWith("?")
+                ? `${arg.type.getDescription()}.`
+                : arg.type.getDescription()
             }`
           : ""
       }${
-        arg.type === "enum" && arg.options && arg.options.length > 0
+        arg.type.getKind() === ReflectionKind.enum &&
+        arg.options &&
+        arg.options.length > 0
           ? ` Valid options are: ${arg.options.join(", ")}`
           : ""
       }${
-        arg.default !== undefined
-          ? ` [default: ${typeof arg.default === "string" ? arg.default.replaceAll('"', '\\"') : arg.default}]`
+        arg.type.getDefaultValue() !== undefined
+          ? ` [default: ${
+              typeof arg.type.getDefaultValue() === "string"
+                ? String(arg.type.getDefaultValue()).replaceAll('"', '\\"')
+                : arg.type.getDefaultValue()
+            }]`
           : ""
       }")}`;
-    } else if (arg.type === "array") {
+    } else if (arg.type.getKind() === ReflectionKind.array) {
       return `${
-        arg.description
+        arg.type.getDescription()
           ? `\${colors.gray("${
-              !arg.description?.endsWith(".") && !arg.description?.endsWith("?")
-                ? `${arg.description}.`
-                : arg.description
+              !arg.type.getDescription()?.endsWith(".") &&
+              !arg.type.getDescription()?.endsWith("?")
+                ? `${arg.type.getDescription()}.`
+                : arg.type.getDescription()
             }`
           : ""
       }${
-        arg.default !== undefined
+        arg.type.getDefaultValue() !== undefined
           ? ` [default: ${
-              typeof arg.default === "string"
-                ? arg.default.replaceAll('"', '\\"')
-                : arg.default
+              typeof arg.type.getDefaultValue() === "string"
+                ? String(arg.type.getDefaultValue()).replaceAll('"', '\\"')
+                : arg.type.getDefaultValue()
             }]`
           : ""
       }")}`;
     }
 
     return `${
-      arg.description
+      arg.type.getDescription()
         ? `\${colors.gray("${
-            !arg.description?.endsWith(".") && !arg.description?.endsWith("?")
-              ? `${arg.description}.`
-              : arg.description
+            !arg.type.getDescription()?.endsWith(".") &&
+            !arg.type.getDescription()?.endsWith("?")
+              ? `${arg.type.getDescription()}.`
+              : arg.type.getDescription()
           }`
         : ""
-    }${arg.default !== undefined && arg.default !== false ? ` [default: ${arg.default}]` : ""}")}`;
+    }${arg.type.getDefaultValue() !== undefined && arg.type.getDefaultValue() !== false ? ` [default: ${arg.type.getDefaultValue()}]` : ""}")}`;
   });
 
   const column1MaxLength =
     Math.max(...optionsColumn1.map(option => option.length)) + 6;
 
-  const binName =
-    (config.bin &&
-    (isSetString(config.bin) ||
-      (Array.isArray(config.bin) && config.bin.length > 0 && config.bin[0]))
-      ? isSetString(config.bin)
-        ? config.bin
-        : config.bin[0]
-      : context.options.name || context.packageJson?.name) || "cli";
-  const description =
-    !command.description?.endsWith(".") && !command.description?.endsWith("?")
-      ? `${command.description}.`
-      : command.description;
+  const description = !command.type?.getDescription()
+    ? `The ${command.title} set of commands used by the ${
+        command.root.title ? `${command.root.title}` : "command-line"
+      } application.`
+    : !command.type?.getDescription()?.endsWith(".") &&
+        !command.type?.getDescription()?.endsWith("?")
+      ? `${command.type?.getDescription()}.`
+      : command.type?.getDescription();
 
   await writeFile(
     log,
@@ -736,12 +787,14 @@ import { colors, renderBanner, renderFooter, parseArgs } from "${joinPaths(runti
         : ""
     }
 
-export interface ${command.payload.name} {
-  ${command.payload.args.map(arg => `${camelCase(arg.name)}: ${arg.stringifiedType};`).join("\n  ")}
+export interface ${command.payload.type.getName()} {
+  ${command.payload.args
+    .map(arg => `${camelCase(arg.name)}: ${stringifyType(arg.type.getType())};`)
+    .join("\n  ")}
 }
 
 /**
- * Renders the ${command.displayName} virtual command usage information.
+ * Renders the ${command.title} virtual command usage information.
  *
  * @param mode - The render mode to use when displaying the usage information (either "full" or "minimal").
  * @returns The rendered string displaying usage information.
@@ -750,8 +803,8 @@ export function renderUsage(mode: "full" | "minimal" = "full"): string {
   const consoleWidth = Math.max(process.stdout.columns - 2, ${MIN_CONSOLE_WIDTH});
   const isLargeConsole = consoleWidth >= ${LARGE_CONSOLE_WIDTH};
 
-  return \`\${colors.whiteBright(colors.bold("${command.displayName.toUpperCase()} COMMANDS"))} ${
-    command.description
+  return \`\${colors.whiteBright(colors.bold("${command.title.toUpperCase()} COMMANDS:"))} ${
+    command.type?.getDescription()
       ? `
 
   \${colors.gray("${description}")}
@@ -764,7 +817,7 @@ ${
     ? Object.values(command.children)
         .map(
           child =>
-            `    $ ${kebabCase(binName)}${
+            `    $ ${kebabCase(command.root.bin[0]!)}${
               child.entry.path.length > 0
                 ? ` ${child.entry.path
                     .filter(Boolean)
@@ -795,7 +848,7 @@ ${Object.values(command.children)
 }
 
 /**
- * The entry point for the ${command.displayName} virtual command.
+ * The entry point for the ${titleCase(command.name)} virtual command.
  */
 async function handler() {
   try {
@@ -832,20 +885,24 @@ async function handler() {
     }
 
     const args = parseArgs(process.argv.slice(${command.entry.path.length + 1}), {${
-      command.payload.args.filter(arg => arg.type === "boolean").length > 0
+      command.payload.args.filter(
+        arg => arg.type.getKind() === ReflectionKind.boolean
+      ).length > 0
         ? `
       boolean: [${command.payload.args
-        .filter(arg => arg.type === "boolean")
-        .map(arg => `"${arg.name}", "${arg.aliases.join('", "')}"`)
+        .filter(arg => arg.type.getKind() === ReflectionKind.boolean)
+        .map(arg => `"${arg.name}", "${arg.type.getAlias().join('", "')}"`)
         .join(", ")}],`
         : ""
     }${
-      command.payload.args.filter(arg => arg.aliases.length > 0).length > 0
+      command.payload.args.filter(arg => arg.type.getAlias().length > 0)
+        .length > 0
         ? `
       alias: {${command.payload.args
         .map(
           arg =>
-            `${camelCase(arg.name)}: [ "${arg.name}", "${arg.name.toUpperCase()}", ${arg.aliases
+            `${camelCase(arg.name)}: [ "${arg.name}", "${arg.name.toUpperCase()}", ${arg.type
+              .getAlias()
               .map(alias => `"${alias}", "${alias.toUpperCase()}"`)
               .join(", ")}]`
         )
@@ -858,7 +915,7 @@ async function handler() {
       console.log($storm.config.APP_VERSION);
     } else {
       if (args["no-banner"] !== true && !isMinimal) {
-        console.log(renderBanner("${command.displayName} Commands", "${description}"));
+        console.log(renderBanner("${command.title} Commands", "${description}"));
         console.log("");
       }
 
@@ -869,7 +926,7 @@ async function handler() {
     }
   } catch (err) {
    console.error(\` \${colors.red("✘")} \${colors.white(\`Error occurred while processing ${
-     command.displayName
+     command.title
    } command.\`)}\`);
   }
 }
@@ -883,7 +940,7 @@ export default handler;
 async function prepareCommandDefinition<TOptions extends Options = Options>(
   log: LogFn,
   context: Context<TOptions>,
-  command: CommandTreeBranch,
+  command: Command,
   config: StormStackCLIPresetConfig
 ) {
   if (command.children) {
@@ -894,7 +951,13 @@ async function prepareCommandDefinition<TOptions extends Options = Options>(
 
   log(
     LogLevelLabel.TRACE,
-    `Preparing the entry artifact ${command.entry.file} (${command.entry?.name ? `export: "${command.entry.name}"` : "default"})" from input "${command.entry.input.file}" (${command.entry.input.name ? `export: "${command.entry.input.name}"` : "default"})`
+    `Preparing the entry artifact ${command.entry.file} (${
+      command.entry?.name ? `export: "${command.entry.name}"` : "default"
+    }) from input "${command.entry.input.file}" (${
+      command.entry.input.name
+        ? `export: "${command.entry.input.name}"`
+        : "default"
+    })`
   );
 
   if (command.entry.isVirtual) {
@@ -1028,7 +1091,7 @@ export async function prepareEntry<TOptions extends Options = Options>(
   context: StormStackCLIPresetContext<TOptions>,
   config: StormStackCLIPresetConfig
 ) {
-  const commandTree = await reflectCommandTree(log, context, config);
+  const commandTree = await readCommandTreeReflection(context, config);
 
   for (const command of Object.values(commandTree.children)) {
     await prepareCommandDefinition(log, context, command, config);
@@ -1245,7 +1308,7 @@ await main();
 async function addCommandArgReflections<TOptions extends Options = Options>(
   context: Context<TOptions>,
   reflection: ReflectionClass<any>,
-  command: CommandTreeBranch
+  command: Command
 ) {
   for (const arg of command.payload.args) {
     let name = constantCase(arg.name);
@@ -1273,13 +1336,17 @@ async function addCommandArgReflections<TOptions extends Options = Options>(
       reflection.addProperty({
         name: constantCase(arg.name),
         optional: true,
-        description: arg.description,
-        type: deserializeType(arg.reflectionType),
+        description: arg.type.getDescription(),
+        type: arg.type.getType(),
+        default: arg.type.getDefaultValue(),
         tags: {
           domain: "cli",
           alias:
-            arg.aliases.filter(alias => alias.length > 1).length > 0
-              ? arg.aliases.map(alias => constantCase(alias))
+            arg.type.getAlias().filter(alias => alias.length > 1).length > 0
+              ? arg.type
+                  .getAlias()
+                  .filter(alias => alias.length > 1)
+                  .map(alias => constantCase(alias))
               : undefined
         }
       });
@@ -1304,7 +1371,7 @@ export async function prepareReflections<TOptions extends Options = Options>(
   for (const command of Object.values(commandTree.children)) {
     log(
       LogLevelLabel.TRACE,
-      `Reflecting command arguments for "${commandTree.name}"`
+      `Reflecting command arguments for "${commandTree.bin[0]}"`
     );
 
     await addCommandArgReflections(context, configReflection, command);

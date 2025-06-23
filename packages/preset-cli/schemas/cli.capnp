@@ -4,56 +4,46 @@ using import "../../core/schemas/reflection.capnp".SerializedType;
 
 struct TypeDefinition {
   file @0 :Text;
-  name @1 :Text;  # optional, use empty string if not provided
+  name @1 :Text;
 }
 
-struct CommandEntry {
-  file @0 :Text;
-  input @1 :TypeDefinition;
-  output @2 :Text;
-  path @3 :List(Text);
-  isVirtual @4 :Bool;
-}
-
-struct CommandPayloadArg {
-  type @0 :List(SerializedType);
-  options @1 :List(Text);
-  isNegative @2 :Bool;
+struct CommandEntryTypeDefinition {
+  title @0 :Text;
+  description @1 :Text;
+  file @2 :Text;
+  input @3 :TypeDefinition;
+  output @4 :Text;
+  path @5 :List(Text);
+  isVirtual @6 :Bool;
 }
 
 struct CommandPayload {
-  name @0 :Text;
-  importPath @1 :Text;
+  import @0 :TypeDefinition;
+  type @1 :List(SerializedType);
   args @2 :List(CommandPayloadArg);
-}
 
-struct CommandTree {
-  commandId @0 :Text;
-  type @1 :List(SerializedType);
-  entry @2 :CommandEntry;
-  children @3 :List(ChildCommand);
-
-  struct ChildCommand {
+  struct CommandPayloadArg {
     name @0 :Text;
-    value @1 :CommandTreeBranch;
+    isNegativeOf @1 :Text;
+    skipNegative @2 :Bool;
   }
 }
 
-struct CommandTreeBranch {
-  commandId @0 :Text;
-  type @1 :List(SerializedType);
-  entry @2 :CommandEntry;
-  payload @3 :CommandPayload;
-  parent :union {
-    root @4 :CommandTree;
-    branch @5 :CommandTreeBranch;
-  }
-  children @6 :List(ChildCommand);
+struct CommandRoot {
+  description @0 :Text;
+  entry @1 :CommandEntryTypeDefinition;
+  commands @2 :List(Command);
+}
 
-  struct ChildCommand {
-    name @0 :Text;
-    value @1 :CommandTreeBranch;
-  }
+struct Command {
+  id @0 :Text;
+  name @1 :Text;
+  title @2 :Text;
+  type @3 :List(SerializedType);
+  entry @4 :CommandEntryTypeDefinition;
+  payload @5 :CommandPayload;
+  parent @6 :Text;
+  children @7 :List(Text);
 }
 
 

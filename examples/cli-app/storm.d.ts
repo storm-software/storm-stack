@@ -278,7 +278,7 @@ interface IStormLog {
     ((callback: LogCallback) => void);
 }
 
-interface IStormPayload<TData = any> {
+interface IStormPayload<TData = object> {
   /**
    * The timestamp of the payload.
    */
@@ -2021,7 +2021,7 @@ declare module "storm:payload" {
   /**
    * A base payload class used by the Storm Stack runtime.
    */
-  export class StormPayload<TData = any> implements IStormPayload<TData> {
+  export class StormPayload<TData = object> implements IStormPayload<TData> {
     /**
      * The data associated with the payload.
      */

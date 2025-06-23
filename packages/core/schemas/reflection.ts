@@ -3203,6 +3203,26 @@ export class SerializedTypeTemplateLiteral extends $.Struct {
   }
   public override toString(): string { return "SerializedTypeTemplateLiteral_" + super.toString(); }
 }
+export class SerializedTypeOther extends $.Struct {
+  public static override readonly _capnp = {
+    displayName: "SerializedTypeOther",
+    id: "9e1048a692ff49ce",
+    size: new $.ObjectSize(8, 1),
+  };
+  get typeName(): string {
+    return $.utils.getText(0, this);
+  }
+  set typeName(value: string) {
+    $.utils.setText(0, value, this);
+  }
+  get kind(): ReflectionKind {
+    return $.utils.getUint16(0, this) as ReflectionKind;
+  }
+  set kind(value: ReflectionKind) {
+    $.utils.setUint16(0, value, this);
+  }
+  public override toString(): string { return "SerializedTypeOther_" + super.toString(); }
+}
 export const SerializedType_Type_Which = {
   SIMPLE: 0,
   LITERAL: 1,
@@ -3225,7 +3245,12 @@ export const SerializedType_Type_Which = {
   INFER: 18,
   TUPLE: 19,
   TUPLE_MEMBER: 20,
-  REST: 21
+  REST: 21,
+  /**
+* For any other type that is not explicitly defined
+*
+*/
+  OTHER: 22
 } as const;
 export type SerializedType_Type_Which = (typeof SerializedType_Type_Which)[keyof typeof SerializedType_Type_Which];
 export class SerializedType_Type extends $.Struct {
@@ -3251,6 +3276,7 @@ export class SerializedType_Type extends $.Struct {
   static readonly TUPLE = SerializedType_Type_Which.TUPLE;
   static readonly TUPLE_MEMBER = SerializedType_Type_Which.TUPLE_MEMBER;
   static readonly REST = SerializedType_Type_Which.REST;
+  static readonly OTHER = SerializedType_Type_Which.OTHER;
   public static override readonly _capnp = {
     displayName: "type",
     id: "c677d7ed4a496eab",
@@ -3804,6 +3830,35 @@ export class SerializedType_Type extends $.Struct {
   }
   set rest(value: SerializedTypeRest) {
     $.utils.setUint16(0, 21, this);
+    $.utils.copyFrom(value, $.utils.getPointer(0, this));
+  }
+  _adoptOther(value: $.Orphan<SerializedTypeOther>): void {
+    $.utils.setUint16(0, 22, this);
+    $.utils.adopt(value, $.utils.getPointer(0, this));
+  }
+  _disownOther(): $.Orphan<SerializedTypeOther> {
+    return $.utils.disown(this.other);
+  }
+  /**
+* For any other type that is not explicitly defined
+*
+*/
+  get other(): SerializedTypeOther {
+    $.utils.testWhich("other", $.utils.getUint16(0, this), 22, this);
+    return $.utils.getStruct(0, SerializedTypeOther, this);
+  }
+  _hasOther(): boolean {
+    return !$.utils.isNull($.utils.getPointer(0, this));
+  }
+  _initOther(): SerializedTypeOther {
+    $.utils.setUint16(0, 22, this);
+    return $.utils.initStructAt(0, SerializedTypeOther, this);
+  }
+  get _isOther(): boolean {
+    return $.utils.getUint16(0, this) === 22;
+  }
+  set other(value: SerializedTypeOther) {
+    $.utils.setUint16(0, 22, this);
     $.utils.copyFrom(value, $.utils.getPointer(0, this));
   }
   public override toString(): string { return "SerializedType_Type_" + super.toString(); }

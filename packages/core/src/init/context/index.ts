@@ -28,6 +28,7 @@ import { isAbsolutePath } from "@stryke/path/is-file";
 import { joinPaths } from "@stryke/path/join-paths";
 import type { PackageJson } from "@stryke/types/package-json";
 import { nanoid } from "@stryke/unique-id/nanoid-client";
+import { createVfs } from "../../helpers/utilities/vfs";
 import type {
   Context,
   EngineHooks,
@@ -139,6 +140,7 @@ export async function initContext<TOptions extends Options = Options>(
     await removeFile(metaFilePath);
   }
 
+  context.vfs = createVfs(context);
   context.options.tsconfig ??= joinPaths(
     context.options.projectRoot,
     "tsconfig.json"

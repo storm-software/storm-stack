@@ -29,6 +29,7 @@ import {
   SerializedTypeInfer,
   SerializedTypeIntersection,
   SerializedTypeLiteral,
+  SerializedTypeMethod,
   SerializedTypeMethodSignature,
   SerializedTypeObjectLiteral,
   SerializedTypeParameter,
@@ -56,8 +57,10 @@ import {
   SerializedTypeInfer as CapnpSerializedTypeInfer,
   SerializedTypeIntersection as CapnpSerializedTypeIntersection,
   SerializedTypeLiteral as CapnpSerializedTypeLiteral,
+  SerializedTypeMethod as CapnpSerializedTypeMethod,
   SerializedTypeMethodSignature as CapnpSerializedTypeMethodSignature,
   SerializedTypeObjectLiteral as CapnpSerializedTypeObjectLiteral,
+  SerializedTypeOther as CapnpSerializedTypeOther,
   SerializedTypeParameter as CapnpSerializedTypeParameter,
   SerializedTypeProperty as CapnpSerializedTypeProperty,
   SerializedTypePropertySignature as CapnpSerializedTypePropertySignature,
@@ -101,7 +104,7 @@ export function convertToCapnp(
         isSetObject(serializedType) && !isUndefined(serializedType.kind)
     )
     .forEach((serializedType, index) => {
-      convertToCapnpType(serializedType, result.get(index)._initType());
+      convertToCapnpBase(serializedType, result.get(index)._initType());
     });
 
   return result;
@@ -122,7 +125,7 @@ export function convertFromCapnp(
 
   const result = [] as SerializedTypes;
   serializedTypes.forEach(serializedType => {
-    const deserializedType = convertFromCapnpType(serializedType.type);
+    const deserializedType = convertFromCapnpBase(serializedType.type);
     result.push(deserializedType);
   });
 
@@ -135,7 +138,7 @@ export function convertFromCapnp(
  * @param result - The {@link capnp.List | list} object defined in a [Cap'n Proto](https://capnproto.org/) schema to write the converted type to
  * @param serializedType - The [Deepkit](https://deepkit.io/) {@link SerializedType | serialized type} to convert
  */
-export function convertToCapnpTypeTagsReflection(
+export function convertToCapnpTagsReflection(
   result: CapnpTagsReflection,
   serializedType?: TagsReflection
 ): CapnpTagsReflection {
@@ -183,7 +186,7 @@ export interface WithTagsReflection {
   };
 }
 
-export function convertFromCapnpTypeTagsReflection(
+export function convertFromCapnpTagsReflection(
   serializedType: WithTagsReflection
 ) {
   return serializedType._hasTags()
@@ -214,7 +217,7 @@ export function convertFromCapnpTypeTagsReflection(
  * @param result - The {@link capnp.List | list} object defined in a [Cap'n Proto](https://capnproto.org/) schema to write the converted type to
  * @param serializedType - The [Deepkit](https://deepkit.io/) {@link SerializedType | serialized type} to convert
  */
-export function convertToCapnpTypeIndexAccessOrigin(
+export function convertToCapnpIndexAccessOrigin(
   result: CapnpIndexAccessOrigin,
   serializedType?: {
     container: SerializedTypeReference;
@@ -241,7 +244,7 @@ export interface WithIndexAccessOrigin {
   };
 }
 
-export function convertFromCapnpTypeIndexAccessOrigin(
+export function convertFromCapnpIndexAccessOrigin(
   serializedType: WithIndexAccessOrigin
 ) {
   return serializedType._hasIndexAccessOrigin()
@@ -258,119 +261,122 @@ export function convertFromCapnpTypeIndexAccessOrigin(
  * @param serializedType - The [Deepkit](https://deepkit.io/) {@link SerializedType | serialized type} to convert
  * @param result - The {@link capnp.List | list} object defined in a [Cap'n Proto](https://capnproto.org/) schema to write the converted type to
  */
-export function convertToCapnpType(
+export function convertToCapnpBase(
   serializedType: SerializedType,
   result: SerializedType_Type
 ): SerializedType_Type {
   if (serializedType.kind === ReflectionKind.objectLiteral) {
     const objectLiteral = result._initObjectLiteral();
-    convertToCapnpTypeObjectLiteral(serializedType, objectLiteral);
+    convertToCapnpObjectLiteral(serializedType, objectLiteral);
   } else if (serializedType.kind === ReflectionKind.class) {
     const classType = result._initClassType();
-    convertToCapnpTypeClassType(serializedType, classType);
+    convertToCapnpClassType(serializedType, classType);
   } else if (serializedType.kind === ReflectionKind.parameter) {
     const parameter = result._initParameter();
-    convertToCapnpTypeParameter(serializedType, parameter);
+    convertToCapnpParameter(serializedType, parameter);
   } else if (serializedType.kind === ReflectionKind.function) {
     const functionType = result._initFunction();
-    convertToCapnpTypeFunction(serializedType, functionType);
+    convertToCapnpFunction(serializedType, functionType);
+  } else if (serializedType.kind === ReflectionKind.method) {
+    const methodType = result._initMethod();
+    convertToCapnpMethod(serializedType, methodType);
   } else if (serializedType.kind === ReflectionKind.infer) {
     const inferType = result._initInfer();
-    convertToCapnpTypeInfer(serializedType, inferType);
+    convertToCapnpInfer(serializedType, inferType);
   } else if (serializedType.kind === ReflectionKind.union) {
     const unionType = result._initUnion();
-    convertToCapnpTypeUnion(serializedType, unionType);
+    convertToCapnpUnion(serializedType, unionType);
   } else if (serializedType.kind === ReflectionKind.array) {
     const arrayType = result._initArray();
-    convertToCapnpTypeArray(serializedType, arrayType);
+    convertToCapnpArray(serializedType, arrayType);
   } else if (serializedType.kind === ReflectionKind.intersection) {
     const intersectionType = result._initIntersection();
-    convertToCapnpTypeIntersection(serializedType, intersectionType);
+    convertToCapnpIntersection(serializedType, intersectionType);
   } else if (serializedType.kind === ReflectionKind.enum) {
     const enumType = result._initEnum();
-    convertToCapnpTypeEnum(serializedType, enumType);
+    convertToCapnpEnum(serializedType, enumType);
   } else if (serializedType.kind === ReflectionKind.property) {
     const propertyType = result._initProperty();
-    convertToCapnpTypeProperty(serializedType, propertyType);
+    convertToCapnpProperty(serializedType, propertyType);
   } else if (serializedType.kind === ReflectionKind.tuple) {
     const tupleType = result._initTuple();
-    convertToCapnpTypeTuple(serializedType, tupleType);
+    convertToCapnpTuple(serializedType, tupleType);
   } else if (serializedType.kind === ReflectionKind.tupleMember) {
     const tupleMemberType = result._initTupleMember();
-    convertToCapnpTypeTupleMember(serializedType, tupleMemberType);
+    convertToCapnpTupleMember(serializedType, tupleMemberType);
   } else if (serializedType.kind === ReflectionKind.propertySignature) {
     const propertySignatureType = result._initPropertySignature();
-    convertToCapnpTypePropertySignature(serializedType, propertySignatureType);
+    convertToCapnpPropertySignature(serializedType, propertySignatureType);
   } else if (serializedType.kind === ReflectionKind.methodSignature) {
     const methodSignatureType = result._initMethodSignature();
-    convertToCapnpTypeMethodSignature(serializedType, methodSignatureType);
+    convertToCapnpMethodSignature(serializedType, methodSignatureType);
   } else if (serializedType.kind === ReflectionKind.literal) {
     const literalType = result._initLiteral();
-    convertToCapnpTypeLiteral(serializedType, literalType);
+    convertToCapnpLiteral(serializedType, literalType);
   } else if (
+    serializedType.kind === ReflectionKind.never ||
+    serializedType.kind === ReflectionKind.any ||
+    serializedType.kind === ReflectionKind.unknown ||
+    serializedType.kind === ReflectionKind.void ||
+    serializedType.kind === ReflectionKind.object ||
     serializedType.kind === ReflectionKind.string ||
     serializedType.kind === ReflectionKind.number ||
     serializedType.kind === ReflectionKind.boolean ||
     serializedType.kind === ReflectionKind.symbol ||
     serializedType.kind === ReflectionKind.bigint ||
-    serializedType.kind === ReflectionKind.regexp ||
     serializedType.kind === ReflectionKind.null ||
     serializedType.kind === ReflectionKind.undefined ||
-    serializedType.kind === ReflectionKind.never ||
-    serializedType.kind === ReflectionKind.any ||
-    serializedType.kind === ReflectionKind.unknown ||
-    serializedType.kind === ReflectionKind.void
+    serializedType.kind === ReflectionKind.regexp
   ) {
     const simpleType = result._initSimple();
-    convertToCapnpTypeSimple(serializedType, simpleType);
+    convertToCapnpSimple(serializedType, simpleType);
   } else {
-    throw new Error(
-      `Unsupported serialized type kind: ${
-        serializedType.kind
-      } \n\nType: ${JSON.stringify(serializedType, null, 2)}`
-    );
+    const otherType = result._initOther();
+    convertToCapnpOther(serializedType, otherType);
   }
 
   return result;
 }
 
-export function convertFromCapnpType(
+export function convertFromCapnpBase(
   serializedType: SerializedType_Type
 ): SerializedType {
   if (serializedType._isObjectLiteral) {
-    return convertFromCapnpTypeObjectLiteral(serializedType.objectLiteral);
+    return convertFromCapnpObjectLiteral(serializedType.objectLiteral);
   } else if (serializedType._isClassType) {
-    return convertFromCapnpTypeClassType(serializedType.classType);
+    return convertFromCapnpClassType(serializedType.classType);
   } else if (serializedType._isParameter) {
-    return convertFromCapnpTypeParameter(serializedType.parameter);
+    return convertFromCapnpParameter(serializedType.parameter);
   } else if (serializedType._isFunction) {
-    return convertFromCapnpTypeFunction(serializedType.function);
+    return convertFromCapnpFunction(serializedType.function);
   } else if (serializedType._isInfer) {
-    return convertFromCapnpTypeInfer(serializedType.infer);
+    return convertFromCapnpInfer(serializedType.infer);
+  } else if (serializedType._isMethod) {
+    return convertFromCapnpMethod(serializedType.method);
   } else if (serializedType._isUnion) {
-    return convertFromCapnpTypeUnion(serializedType.union);
+    return convertFromCapnpUnion(serializedType.union);
   } else if (serializedType._isArray) {
-    return convertFromCapnpTypeArray(serializedType.array);
+    return convertFromCapnpArray(serializedType.array);
   } else if (serializedType._isIntersection) {
-    return convertFromCapnpTypeIntersection(serializedType.intersection);
+    return convertFromCapnpIntersection(serializedType.intersection);
   } else if (serializedType._isEnum) {
-    return convertFromCapnpTypeEnum(serializedType.enum);
+    return convertFromCapnpEnum(serializedType.enum);
   } else if (serializedType._isProperty) {
-    return convertFromCapnpTypeProperty(serializedType.property);
+    return convertFromCapnpProperty(serializedType.property);
   } else if (serializedType._isTuple) {
-    return convertFromCapnpTypeTuple(serializedType.tuple);
+    return convertFromCapnpTuple(serializedType.tuple);
   } else if (serializedType._isTupleMember) {
-    return convertFromCapnpTypeTupleMember(serializedType.tupleMember);
+    return convertFromCapnpTupleMember(serializedType.tupleMember);
   } else if (serializedType._isPropertySignature) {
-    return convertFromCapnpTypePropertySignature(
-      serializedType.propertySignature
-    );
+    return convertFromCapnpPropertySignature(serializedType.propertySignature);
   } else if (serializedType._isMethodSignature) {
-    return convertFromCapnpTypeMethodSignature(serializedType.methodSignature);
+    return convertFromCapnpMethodSignature(serializedType.methodSignature);
   } else if (serializedType._isLiteral) {
-    return convertFromCapnpTypeLiteral(serializedType.literal);
+    return convertFromCapnpLiteral(serializedType.literal);
   } else if (serializedType._isSimple) {
-    return convertFromCapnpTypeSimple(serializedType.simple);
+    return convertFromCapnpSimple(serializedType.simple);
+  } else if (serializedType._isOther) {
+    return convertFromCapnpOther(serializedType.other);
   } else {
     throw new Error(
       `Unsupported serialized type kind: ${serializedType.toString()}`
@@ -378,7 +384,16 @@ export function convertFromCapnpType(
   }
 }
 
-export function convertFromCapnpTypeSimple(
+export function convertFromCapnpOther(
+  serializedType: CapnpSerializedTypeOther
+): SerializedType {
+  return {
+    kind: serializedType.kind,
+    typeName: serializedType.typeName || undefined
+  } as SerializedType;
+}
+
+export function convertFromCapnpSimple(
   serializedType: CapnpSimpleSerializedType
 ): SimpleSerializedType {
   const result: SimpleSerializedType = {
@@ -403,7 +418,7 @@ export function convertFromCapnpTypeSimple(
     typeArguments: serializedType._hasTypeArguments()
       ? serializedType.typeArguments.map(t => t.id)
       : undefined,
-    indexAccessOrigin: convertFromCapnpTypeIndexAccessOrigin(serializedType)
+    indexAccessOrigin: convertFromCapnpIndexAccessOrigin(serializedType)
   };
 
   if (serializedType._hasOrigin()) {
@@ -413,7 +428,20 @@ export function convertFromCapnpTypeSimple(
   return result;
 }
 
-export function convertToCapnpTypeSimple(
+export function convertToCapnpOther(
+  serializedType: {
+    kind: ReflectionKind;
+    typeName?: string;
+  },
+  result: CapnpSerializedTypeOther
+): CapnpSerializedTypeOther {
+  result.kind = serializedType.kind;
+  result.typeName = serializedType.typeName || "";
+
+  return result;
+}
+
+export function convertToCapnpSimple(
   serializedType: SimpleSerializedType,
   result: CapnpSimpleSerializedType
 ): CapnpSimpleSerializedType {
@@ -445,7 +473,7 @@ export function convertToCapnpTypeSimple(
 
   if (serializedType.indexAccessOrigin) {
     const indexAccessOrigin = result._initIndexAccessOrigin();
-    convertToCapnpTypeIndexAccessOrigin(
+    convertToCapnpIndexAccessOrigin(
       indexAccessOrigin,
       serializedType.indexAccessOrigin
     );
@@ -454,7 +482,7 @@ export function convertToCapnpTypeSimple(
   return result;
 }
 
-export function convertFromCapnpTypeLiteral(
+export function convertFromCapnpLiteral(
   serializedType: CapnpSerializedTypeLiteral
 ): SerializedTypeLiteral {
   const result: SerializedTypeLiteral = {
@@ -486,13 +514,13 @@ export function convertFromCapnpTypeLiteral(
     typeArguments: serializedType._hasTypeArguments()
       ? serializedType.typeArguments.map(t => t.id)
       : undefined,
-    indexAccessOrigin: convertFromCapnpTypeIndexAccessOrigin(serializedType)
+    indexAccessOrigin: convertFromCapnpIndexAccessOrigin(serializedType)
   };
 
   return result;
 }
 
-export function convertToCapnpTypeLiteral(
+export function convertToCapnpLiteral(
   serializedType: SerializedTypeLiteral,
   result: CapnpSerializedTypeLiteral
 ): CapnpSerializedTypeLiteral {
@@ -542,7 +570,7 @@ export function convertToCapnpTypeLiteral(
 
   if (serializedType.indexAccessOrigin) {
     const indexAccessOrigin = result._initIndexAccessOrigin();
-    convertToCapnpTypeIndexAccessOrigin(
+    convertToCapnpIndexAccessOrigin(
       indexAccessOrigin,
       serializedType.indexAccessOrigin
     );
@@ -551,7 +579,7 @@ export function convertToCapnpTypeLiteral(
   return result;
 }
 
-export function convertFromCapnpTypeMethodSignature(
+export function convertFromCapnpMethodSignature(
   serializedType: CapnpSerializedTypeMethodSignature
 ): SerializedTypeMethodSignature {
   const result: SerializedTypeMethodSignature = {
@@ -562,16 +590,16 @@ export function convertFromCapnpTypeMethodSignature(
       ? serializedType.decorators.map(d => d.id)
       : undefined,
     parameters: serializedType._hasParameters()
-      ? serializedType.parameters.map(p => convertFromCapnpTypeParameter(p))
+      ? serializedType.parameters.map(p => convertFromCapnpParameter(p))
       : [],
     return: serializedType.return.id,
-    tags: convertFromCapnpTypeTagsReflection(serializedType)
+    tags: convertFromCapnpTagsReflection(serializedType)
   };
 
   return result;
 }
 
-export function convertToCapnpTypeMethodSignature(
+export function convertToCapnpMethodSignature(
   serializedType: SerializedTypeMethodSignature,
   result: CapnpSerializedTypeMethodSignature
 ): CapnpSerializedTypeMethodSignature {
@@ -599,7 +627,7 @@ export function convertToCapnpTypeMethodSignature(
 
   if (serializedType.indexAccessOrigin) {
     const indexAccessOrigin = result._initIndexAccessOrigin();
-    convertToCapnpTypeIndexAccessOrigin(
+    convertToCapnpIndexAccessOrigin(
       indexAccessOrigin,
       serializedType.indexAccessOrigin
     );
@@ -607,13 +635,13 @@ export function convertToCapnpTypeMethodSignature(
 
   if (serializedType.tags) {
     const tags = result._initTags();
-    convertToCapnpTypeTagsReflection(tags, serializedType.tags);
+    convertToCapnpTagsReflection(tags, serializedType.tags);
   }
 
   return result;
 }
 
-export function convertFromCapnpTypePropertySignature(
+export function convertFromCapnpPropertySignature(
   serializedType: CapnpSerializedTypePropertySignature
 ): SerializedTypePropertySignature {
   const result: SerializedTypePropertySignature = {
@@ -621,7 +649,7 @@ export function convertFromCapnpTypePropertySignature(
     name: serializedType.name,
     typeName: serializedType.typeName || undefined,
     description: serializedType.description,
-    default: convertFromCapnpTypeDefault(serializedType.default),
+    default: convertFromCapnpDefault(serializedType.default),
     optional: serializedType.optional ? true : undefined,
     readonly: serializedType.readonly ? true : undefined,
     type: serializedType.type.id,
@@ -631,14 +659,14 @@ export function convertFromCapnpTypePropertySignature(
     typeArguments: serializedType._hasTypeArguments()
       ? serializedType.typeArguments.map(t => t.id)
       : undefined,
-    indexAccessOrigin: convertFromCapnpTypeIndexAccessOrigin(serializedType),
-    tags: convertFromCapnpTypeTagsReflection(serializedType)
+    indexAccessOrigin: convertFromCapnpIndexAccessOrigin(serializedType),
+    tags: convertFromCapnpTagsReflection(serializedType)
   };
 
   return result;
 }
 
-export function convertToCapnpTypeDefault(
+export function convertToCapnpDefault(
   defaultValue: any,
   result: CapnpDefaultValueReflection
 ) {
@@ -659,7 +687,7 @@ export function convertToCapnpTypeDefault(
   }
 }
 
-export function convertFromCapnpTypeDefault(
+export function convertFromCapnpDefault(
   serializedType: CapnpDefaultValueReflection
 ): any {
   if (typeof serializedType.value === "undefined") {
@@ -675,7 +703,7 @@ export function convertFromCapnpTypeDefault(
   }
 }
 
-export function convertToCapnpTypePropertySignature(
+export function convertToCapnpPropertySignature(
   serializedType: SerializedTypePropertySignature,
   result: CapnpSerializedTypePropertySignature
 ): CapnpSerializedTypePropertySignature {
@@ -688,7 +716,7 @@ export function convertToCapnpTypePropertySignature(
 
   if (typeof serializedType.default !== "undefined") {
     const defaultValue = result._initDefault();
-    convertToCapnpTypeDefault(serializedType.default, defaultValue);
+    convertToCapnpDefault(serializedType.default, defaultValue);
   }
 
   const type = result._initType();
@@ -714,7 +742,7 @@ export function convertToCapnpTypePropertySignature(
 
   if (serializedType.indexAccessOrigin) {
     const indexAccessOrigin = result._initIndexAccessOrigin();
-    convertToCapnpTypeIndexAccessOrigin(
+    convertToCapnpIndexAccessOrigin(
       indexAccessOrigin,
       serializedType.indexAccessOrigin
     );
@@ -722,13 +750,13 @@ export function convertToCapnpTypePropertySignature(
 
   if (serializedType.tags) {
     const tags = result._initTags();
-    convertToCapnpTypeTagsReflection(tags, serializedType.tags);
+    convertToCapnpTagsReflection(tags, serializedType.tags);
   }
 
   return result;
 }
 
-export function convertToCapnpTypeTupleMember(
+export function convertToCapnpTupleMember(
   serializedType: SerializedTypeTupleMember,
   result: CapnpSerializedTypeTupleMember
 ): CapnpSerializedTypeTupleMember {
@@ -758,7 +786,7 @@ export function convertToCapnpTypeTupleMember(
 
   if (serializedType.indexAccessOrigin) {
     const indexAccessOrigin = result._initIndexAccessOrigin();
-    convertToCapnpTypeIndexAccessOrigin(
+    convertToCapnpIndexAccessOrigin(
       indexAccessOrigin,
       serializedType.indexAccessOrigin
     );
@@ -767,7 +795,7 @@ export function convertToCapnpTypeTupleMember(
   return result;
 }
 
-export function convertFromCapnpTypeTupleMember(
+export function convertFromCapnpTupleMember(
   serializedType: CapnpSerializedTypeTupleMember
 ): SerializedTypeTupleMember {
   const result: SerializedTypeTupleMember = {
@@ -780,13 +808,13 @@ export function convertFromCapnpTypeTupleMember(
     typeArguments: serializedType._hasTypeArguments()
       ? serializedType.typeArguments.map(t => t.id)
       : undefined,
-    indexAccessOrigin: convertFromCapnpTypeIndexAccessOrigin(serializedType)
+    indexAccessOrigin: convertFromCapnpIndexAccessOrigin(serializedType)
   };
 
   return result;
 }
 
-export function convertToCapnpTypeTuple(
+export function convertToCapnpTuple(
   serializedType: SerializedTypeTuple,
   result: CapnpSerializedTypeTuple
 ): CapnpSerializedTypeTuple {
@@ -796,7 +824,7 @@ export function convertToCapnpTypeTuple(
   const types = result._initTypes(serializedType.types.length);
   serializedType.types.forEach((t, index) => {
     const serializedTypeType = types.get(index);
-    convertToCapnpTypeTupleMember(t, serializedTypeType);
+    convertToCapnpTupleMember(t, serializedTypeType);
   });
 
   if (serializedType.decorators?.length) {
@@ -821,7 +849,7 @@ export function convertToCapnpTypeTuple(
 
   if (serializedType.indexAccessOrigin) {
     const indexAccessOrigin = result._initIndexAccessOrigin();
-    convertToCapnpTypeIndexAccessOrigin(
+    convertToCapnpIndexAccessOrigin(
       indexAccessOrigin,
       serializedType.indexAccessOrigin
     );
@@ -830,14 +858,14 @@ export function convertToCapnpTypeTuple(
   return result;
 }
 
-export function convertFromCapnpTypeTuple(
+export function convertFromCapnpTuple(
   serializedType: CapnpSerializedTypeTuple
 ): SerializedTypeTuple {
   const result: SerializedTypeTuple = {
     kind: ReflectionKind.tuple,
     typeName: serializedType.typeName || undefined,
     types: serializedType._hasTypes()
-      ? serializedType.types.map(t => convertFromCapnpTypeTupleMember(t))
+      ? serializedType.types.map(t => convertFromCapnpTupleMember(t))
       : [],
     decorators: serializedType._hasDecorators()
       ? serializedType.decorators.map(d => d.id)
@@ -845,13 +873,13 @@ export function convertFromCapnpTypeTuple(
     typeArguments: serializedType._hasTypeArguments()
       ? serializedType.typeArguments.map(t => t.id)
       : undefined,
-    indexAccessOrigin: convertFromCapnpTypeIndexAccessOrigin(serializedType)
+    indexAccessOrigin: convertFromCapnpIndexAccessOrigin(serializedType)
   };
 
   return result;
 }
 
-export function convertToCapnpTypeProperty(
+export function convertToCapnpProperty(
   serializedType: SerializedTypeProperty,
   result: CapnpSerializedTypeProperty
 ): CapnpSerializedTypeProperty {
@@ -871,7 +899,7 @@ export function convertToCapnpTypeProperty(
 
   if (typeof serializedType.default !== "undefined") {
     const defaultValue = result._initDefault();
-    convertToCapnpTypeDefault(serializedType.default, defaultValue);
+    convertToCapnpDefault(serializedType.default, defaultValue);
   }
 
   const type = result._initType();
@@ -899,7 +927,7 @@ export function convertToCapnpTypeProperty(
 
   if (serializedType.indexAccessOrigin) {
     const indexAccessOrigin = result._initIndexAccessOrigin();
-    convertToCapnpTypeIndexAccessOrigin(
+    convertToCapnpIndexAccessOrigin(
       indexAccessOrigin,
       serializedType.indexAccessOrigin
     );
@@ -907,20 +935,20 @@ export function convertToCapnpTypeProperty(
 
   if (serializedType.tags) {
     const tags = result._initTags();
-    convertToCapnpTypeTagsReflection(tags, serializedType.tags);
+    convertToCapnpTagsReflection(tags, serializedType.tags);
   }
 
   return result;
 }
 
-export function convertFromCapnpTypeProperty(
+export function convertFromCapnpProperty(
   serializedType: CapnpSerializedTypeProperty
 ): SerializedTypeProperty {
   const result: SerializedTypeProperty = {
     kind: ReflectionKind.property,
     typeName: serializedType.typeName || undefined,
     description: serializedType.description,
-    default: convertFromCapnpTypeDefault(serializedType.default),
+    default: convertFromCapnpDefault(serializedType.default),
     optional: serializedType.optional ? true : undefined,
     readonly: serializedType.readonly ? true : undefined,
     visibility:
@@ -938,14 +966,14 @@ export function convertFromCapnpTypeProperty(
     typeArguments: serializedType._hasTypeArguments()
       ? serializedType.typeArguments.map(t => t.id)
       : undefined,
-    indexAccessOrigin: convertFromCapnpTypeIndexAccessOrigin(serializedType),
-    tags: convertFromCapnpTypeTagsReflection(serializedType)
+    indexAccessOrigin: convertFromCapnpIndexAccessOrigin(serializedType),
+    tags: convertFromCapnpTagsReflection(serializedType)
   };
 
   return result;
 }
 
-export function convertToCapnpTypeEnum(
+export function convertToCapnpEnum(
   serializedType: SerializedTypeEnum,
   result: CapnpSerializedTypeEnum
 ): CapnpSerializedTypeEnum {
@@ -977,7 +1005,7 @@ export function convertToCapnpTypeEnum(
 
   if (serializedType.indexAccessOrigin) {
     const indexAccessOrigin = result._initIndexAccessOrigin();
-    convertToCapnpTypeIndexAccessOrigin(
+    convertToCapnpIndexAccessOrigin(
       indexAccessOrigin,
       serializedType.indexAccessOrigin
     );
@@ -1001,13 +1029,13 @@ export function convertToCapnpTypeEnum(
 
   if (serializedType.tags) {
     const tags = result._initTags();
-    convertToCapnpTypeTagsReflection(tags, serializedType.tags);
+    convertToCapnpTagsReflection(tags, serializedType.tags);
   }
 
   return result;
 }
 
-export function convertFromCapnpTypeEnum(
+export function convertFromCapnpEnum(
   serializedType: CapnpSerializedTypeEnum
 ): SerializedTypeEnum {
   const result: SerializedTypeEnum = {
@@ -1032,14 +1060,14 @@ export function convertFromCapnpTypeEnum(
           {}
         )
       : {},
-    indexAccessOrigin: convertFromCapnpTypeIndexAccessOrigin(serializedType),
-    tags: convertFromCapnpTypeTagsReflection(serializedType)
+    indexAccessOrigin: convertFromCapnpIndexAccessOrigin(serializedType),
+    tags: convertFromCapnpTagsReflection(serializedType)
   };
 
   return result;
 }
 
-export function convertToCapnpTypeIntersection(
+export function convertToCapnpIntersection(
   serializedType: SerializedTypeIntersection,
   result: CapnpSerializedTypeIntersection
 ): CapnpSerializedTypeIntersection {
@@ -1074,7 +1102,7 @@ export function convertToCapnpTypeIntersection(
 
   if (serializedType.indexAccessOrigin) {
     const indexAccessOrigin = result._initIndexAccessOrigin();
-    convertToCapnpTypeIndexAccessOrigin(
+    convertToCapnpIndexAccessOrigin(
       indexAccessOrigin,
       serializedType.indexAccessOrigin
     );
@@ -1083,7 +1111,7 @@ export function convertToCapnpTypeIntersection(
   return result;
 }
 
-export function convertFromCapnpTypeIntersection(
+export function convertFromCapnpIntersection(
   serializedType: CapnpSerializedTypeIntersection
 ): SerializedTypeIntersection {
   const result: SerializedTypeIntersection = {
@@ -1098,13 +1126,13 @@ export function convertFromCapnpTypeIntersection(
     typeArguments: serializedType._hasTypeArguments()
       ? serializedType.typeArguments.map(t => t.id)
       : undefined,
-    indexAccessOrigin: convertFromCapnpTypeIndexAccessOrigin(serializedType)
+    indexAccessOrigin: convertFromCapnpIndexAccessOrigin(serializedType)
   };
 
   return result;
 }
 
-export function convertToCapnpTypeArray(
+export function convertToCapnpArray(
   serializedType: SerializedTypeArray,
   result: CapnpSerializedTypeArray
 ): CapnpSerializedTypeArray {
@@ -1136,7 +1164,7 @@ export function convertToCapnpTypeArray(
 
   if (serializedType.indexAccessOrigin) {
     const indexAccessOrigin = result._initIndexAccessOrigin();
-    convertToCapnpTypeIndexAccessOrigin(
+    convertToCapnpIndexAccessOrigin(
       indexAccessOrigin,
       serializedType.indexAccessOrigin
     );
@@ -1144,13 +1172,13 @@ export function convertToCapnpTypeArray(
 
   if (serializedType.tags) {
     const tags = result._initTags();
-    convertToCapnpTypeTagsReflection(tags, serializedType.tags);
+    convertToCapnpTagsReflection(tags, serializedType.tags);
   }
 
   return result;
 }
 
-export function convertFromCapnpTypeArray(
+export function convertFromCapnpArray(
   serializedType: CapnpSerializedTypeArray
 ): SerializedTypeArray {
   const result: SerializedTypeArray = {
@@ -1163,8 +1191,8 @@ export function convertFromCapnpTypeArray(
     typeArguments: serializedType._hasTypeArguments()
       ? serializedType.typeArguments.map(t => t.id)
       : undefined,
-    indexAccessOrigin: convertFromCapnpTypeIndexAccessOrigin(serializedType),
-    tags: convertFromCapnpTypeTagsReflection(serializedType)
+    indexAccessOrigin: convertFromCapnpIndexAccessOrigin(serializedType),
+    tags: convertFromCapnpTagsReflection(serializedType)
   };
 
   return result;
@@ -1176,7 +1204,7 @@ export function convertFromCapnpTypeArray(
  * @param result - The {@link capnp.List | list} object defined in a [Cap'n Proto](https://capnproto.org/) schema to write the converted type to
  * @param serializedType - The [Deepkit](https://deepkit.io/) {@link SerializedType | serialized type} to convert
  */
-export function convertToCapnpTypeUnion(
+export function convertToCapnpUnion(
   serializedType: SerializedTypeUnion,
   result: CapnpSerializedTypeUnion
 ): CapnpSerializedTypeUnion {
@@ -1211,7 +1239,7 @@ export function convertToCapnpTypeUnion(
 
   if (serializedType.indexAccessOrigin) {
     const indexAccessOrigin = result._initIndexAccessOrigin();
-    convertToCapnpTypeIndexAccessOrigin(
+    convertToCapnpIndexAccessOrigin(
       indexAccessOrigin,
       serializedType.indexAccessOrigin
     );
@@ -1220,7 +1248,7 @@ export function convertToCapnpTypeUnion(
   return result;
 }
 
-export function convertFromCapnpTypeUnion(
+export function convertFromCapnpUnion(
   serializedType: CapnpSerializedTypeUnion
 ): SerializedTypeUnion {
   const result: SerializedTypeUnion = {
@@ -1235,7 +1263,7 @@ export function convertFromCapnpTypeUnion(
     typeArguments: serializedType._hasTypeArguments()
       ? serializedType.typeArguments.map(t => t.id)
       : undefined,
-    indexAccessOrigin: convertFromCapnpTypeIndexAccessOrigin(serializedType)
+    indexAccessOrigin: convertFromCapnpIndexAccessOrigin(serializedType)
   };
 
   return result;
@@ -1247,7 +1275,7 @@ export function convertFromCapnpTypeUnion(
  * @param result - The {@link capnp.List | list} object defined in a [Cap'n Proto](https://capnproto.org/) schema to write the converted type to
  * @param serializedType - The [Deepkit](https://deepkit.io/) {@link SerializedType | serialized type} to convert
  */
-export function convertToCapnpTypeInfer(
+export function convertToCapnpInfer(
   serializedType: SerializedTypeInfer,
   result: CapnpSerializedTypeInfer
 ): CapnpSerializedTypeInfer {
@@ -1276,7 +1304,7 @@ export function convertToCapnpTypeInfer(
 
   if (serializedType.indexAccessOrigin) {
     const indexAccessOrigin = result._initIndexAccessOrigin();
-    convertToCapnpTypeIndexAccessOrigin(
+    convertToCapnpIndexAccessOrigin(
       indexAccessOrigin,
       serializedType.indexAccessOrigin
     );
@@ -1285,7 +1313,7 @@ export function convertToCapnpTypeInfer(
   return result;
 }
 
-export function convertFromCapnpTypeInfer(
+export function convertFromCapnpInfer(
   serializedType: CapnpSerializedTypeInfer
 ): SerializedTypeInfer {
   const result: SerializedTypeInfer = {
@@ -1297,7 +1325,7 @@ export function convertFromCapnpTypeInfer(
     typeArguments: serializedType._hasTypeArguments()
       ? serializedType.typeArguments.map(t => t.id)
       : undefined,
-    indexAccessOrigin: convertFromCapnpTypeIndexAccessOrigin(serializedType)
+    indexAccessOrigin: convertFromCapnpIndexAccessOrigin(serializedType)
   };
 
   return result;
@@ -1309,7 +1337,7 @@ export function convertFromCapnpTypeInfer(
  * @param serializedType - The [Deepkit](https://deepkit.io/) {@link SerializedType | serialized type} to convert
  * @param result - The {@link capnp.List | list} object defined in a [Cap'n Proto](https://capnproto.org/) schema to write the converted type to
  */
-export function convertToCapnpTypeFunction(
+export function convertToCapnpFunction(
   serializedType: SerializedTypeFunction,
   result: CapnpSerializedTypeFunction
 ): CapnpSerializedTypeFunction {
@@ -1339,7 +1367,7 @@ export function convertToCapnpTypeFunction(
     const parameters = result._initParameters(serializedType.parameters.length);
     serializedType.parameters.forEach((p, index) => {
       const parameter = parameters.get(index);
-      convertToCapnpTypeParameter(p, parameter);
+      convertToCapnpParameter(p, parameter);
     });
   }
 
@@ -1348,7 +1376,7 @@ export function convertToCapnpTypeFunction(
 
   if (serializedType.indexAccessOrigin) {
     const indexAccessOrigin = result._initIndexAccessOrigin();
-    convertToCapnpTypeIndexAccessOrigin(
+    convertToCapnpIndexAccessOrigin(
       indexAccessOrigin,
       serializedType.indexAccessOrigin
     );
@@ -1356,13 +1384,79 @@ export function convertToCapnpTypeFunction(
 
   if (serializedType.tags) {
     const tags = result._initTags();
-    convertToCapnpTypeTagsReflection(tags, serializedType.tags);
+    convertToCapnpTagsReflection(tags, serializedType.tags);
   }
 
   return result;
 }
 
-export function convertFromCapnpTypeFunction(
+/**
+ * Converts a Deepkit serialized type to a Cap'n Proto serialized type.
+ *
+ * @param serializedType - The [Deepkit](https://deepkit.io/) {@link SerializedType | serialized type} to convert
+ * @param result - The {@link capnp.List | list} object defined in a [Cap'n Proto](https://capnproto.org/) schema to write the converted type to
+ */
+export function convertToCapnpMethod(
+  serializedType: SerializedTypeMethod,
+  result: CapnpSerializedTypeMethod
+): CapnpSerializedTypeMethod {
+  result.name = String(serializedType.name) || "";
+  result.kind = serializedType.kind;
+  result.typeName = serializedType.typeName || "";
+  result.abstract = serializedType.abstract ?? false;
+  result.visibility =
+    serializedType.visibility === ReflectionVisibility.public
+      ? CapnpReflectionVisibility.PUBLIC
+      : serializedType.visibility === ReflectionVisibility.protected
+        ? CapnpReflectionVisibility.PROTECTED
+        : CapnpReflectionVisibility.PRIVATE;
+
+  if (serializedType.decorators?.length) {
+    const decorators = result._initDecorators(serializedType.decorators.length);
+    serializedType.decorators.forEach((d, index) => {
+      const decorator = decorators.get(index);
+      decorator.id = d;
+    });
+  }
+
+  if (serializedType.typeArguments?.length) {
+    const typeArguments = result._initTypeArguments(
+      serializedType.typeArguments.length
+    );
+    serializedType.typeArguments.forEach((t, index) => {
+      const typeArgument = typeArguments.get(index);
+      typeArgument.id = t;
+    });
+  }
+
+  if (serializedType.parameters?.length) {
+    const parameters = result._initParameters(serializedType.parameters.length);
+    serializedType.parameters.forEach((p, index) => {
+      const parameter = parameters.get(index);
+      convertToCapnpParameter(p, parameter);
+    });
+  }
+
+  const returnType = result._initReturn();
+  returnType.id = serializedType.return;
+
+  if (serializedType.indexAccessOrigin) {
+    const indexAccessOrigin = result._initIndexAccessOrigin();
+    convertToCapnpIndexAccessOrigin(
+      indexAccessOrigin,
+      serializedType.indexAccessOrigin
+    );
+  }
+
+  if (serializedType.tags) {
+    const tags = result._initTags();
+    convertToCapnpTagsReflection(tags, serializedType.tags);
+  }
+
+  return result;
+}
+
+export function convertFromCapnpFunction(
   serializedType: CapnpSerializedTypeFunction
 ): SerializedTypeFunction {
   const result: SerializedTypeFunction = {
@@ -1376,11 +1470,36 @@ export function convertFromCapnpTypeFunction(
       ? serializedType.typeArguments.map(t => t.id)
       : undefined,
     parameters: serializedType._hasParameters()
-      ? serializedType.parameters.map(p => convertFromCapnpTypeParameter(p))
+      ? serializedType.parameters.map(p => convertFromCapnpParameter(p))
       : [],
     return: serializedType.return.id,
-    indexAccessOrigin: convertFromCapnpTypeIndexAccessOrigin(serializedType),
-    tags: convertFromCapnpTypeTagsReflection(serializedType)
+    indexAccessOrigin: convertFromCapnpIndexAccessOrigin(serializedType),
+    tags: convertFromCapnpTagsReflection(serializedType)
+  };
+
+  return result;
+}
+
+function convertFromCapnpMethod(
+  serializedType: CapnpSerializedTypeMethod
+): SerializedTypeMethod {
+  const result: SerializedTypeMethod = {
+    kind: ReflectionKind.method,
+    name: serializedType.name,
+    typeName: serializedType.typeName || undefined,
+    abstract: serializedType.abstract ? true : undefined,
+    return: serializedType.return.id,
+    visibility:
+      serializedType.visibility === CapnpReflectionVisibility.PUBLIC
+        ? ReflectionVisibility.public
+        : serializedType.visibility === CapnpReflectionVisibility.PROTECTED
+          ? ReflectionVisibility.protected
+          : ReflectionVisibility.private,
+    parameters: serializedType._hasParameters()
+      ? serializedType.parameters.map(parameter =>
+          convertFromCapnpParameter(parameter)
+        )
+      : []
   };
 
   return result;
@@ -1392,7 +1511,7 @@ export function convertFromCapnpTypeFunction(
  * @param serializedType - The [Deepkit](https://deepkit.io/) {@link SerializedType | serialized type} to convert
  * @param result - The {@link capnp.List | list} object defined in a [Cap'n Proto](https://capnproto.org/) schema to write the converted type to
  */
-export function convertToCapnpTypeClassType(
+export function convertToCapnpClassType(
   serializedType: SerializedTypeClassType,
   result: CapnpSerializedTypeClassType
 ): CapnpSerializedTypeClassType {
@@ -1444,7 +1563,7 @@ export function convertToCapnpTypeClassType(
 
   if (serializedType.indexAccessOrigin) {
     const indexAccessOrigin = result._initIndexAccessOrigin();
-    convertToCapnpTypeIndexAccessOrigin(
+    convertToCapnpIndexAccessOrigin(
       indexAccessOrigin,
       serializedType.indexAccessOrigin
     );
@@ -1452,13 +1571,13 @@ export function convertToCapnpTypeClassType(
 
   if (serializedType.tags) {
     const tags = result._initTags();
-    convertToCapnpTypeTagsReflection(tags, serializedType.tags);
+    convertToCapnpTagsReflection(tags, serializedType.tags);
   }
 
   return result;
 }
 
-export function convertFromCapnpTypeClassType(
+export function convertFromCapnpClassType(
   serializedType: CapnpSerializedTypeClassType
 ): SerializedTypeClassType {
   const result: SerializedTypeClassType = {
@@ -1484,8 +1603,8 @@ export function convertFromCapnpTypeClassType(
     superClass: serializedType._hasSuperClass()
       ? serializedType.superClass.id
       : undefined,
-    indexAccessOrigin: convertFromCapnpTypeIndexAccessOrigin(serializedType),
-    tags: convertFromCapnpTypeTagsReflection(serializedType)
+    indexAccessOrigin: convertFromCapnpIndexAccessOrigin(serializedType),
+    tags: convertFromCapnpTagsReflection(serializedType)
   };
 
   return result;
@@ -1497,13 +1616,10 @@ export function convertFromCapnpTypeClassType(
  * @param serializedType - The [Deepkit](https://deepkit.io/) {@link SerializedType | serialized type} to convert
  * @param result - The {@link capnp.List | list} object defined in a [Cap'n Proto](https://capnproto.org/) schema to write the converted type to
  */
-export function convertToCapnpTypeObjectLiteral(
+export function convertToCapnpObjectLiteral(
   serializedType: SerializedTypeObjectLiteral,
   result: CapnpSerializedTypeObjectLiteral
 ): CapnpSerializedTypeObjectLiteral {
-  result.kind = serializedType.kind;
-  result.typeName = serializedType.typeName || "";
-
   if (serializedType.decorators?.length) {
     const decorators = result._initDecorators(
       serializedType.decorators?.length ?? 0
@@ -1534,7 +1650,7 @@ export function convertToCapnpTypeObjectLiteral(
 
   if (serializedType.indexAccessOrigin) {
     const indexAccessOrigin = result._initIndexAccessOrigin();
-    convertToCapnpTypeIndexAccessOrigin(
+    convertToCapnpIndexAccessOrigin(
       indexAccessOrigin,
       serializedType.indexAccessOrigin
     );
@@ -1542,13 +1658,13 @@ export function convertToCapnpTypeObjectLiteral(
 
   if (serializedType.tags) {
     const tags = result._initTags();
-    convertToCapnpTypeTagsReflection(tags, serializedType.tags);
+    convertToCapnpTagsReflection(tags, serializedType.tags);
   }
 
   return result;
 }
 
-export function convertFromCapnpTypeObjectLiteral(
+export function convertFromCapnpObjectLiteral(
   serializedType: CapnpSerializedTypeObjectLiteral
 ): SerializedTypeObjectLiteral {
   const result: SerializedTypeObjectLiteral = {
@@ -1563,8 +1679,8 @@ export function convertFromCapnpTypeObjectLiteral(
     typeArguments: serializedType._hasTypeArguments()
       ? serializedType.typeArguments.map(t => t.id)
       : undefined,
-    indexAccessOrigin: convertFromCapnpTypeIndexAccessOrigin(serializedType),
-    tags: convertFromCapnpTypeTagsReflection(serializedType)
+    indexAccessOrigin: convertFromCapnpIndexAccessOrigin(serializedType),
+    tags: convertFromCapnpTagsReflection(serializedType)
   };
 
   return result;
@@ -1576,7 +1692,7 @@ export function convertFromCapnpTypeObjectLiteral(
  * @param serializedType - The [Deepkit](https://deepkit.io/) {@link SerializedType | serialized type} to convert
  * @param result - The {@link capnp.List | list} object defined in a [Cap'n Proto](https://capnproto.org/) schema to write the converted type to
  */
-export function convertToCapnpTypeParameter(
+export function convertToCapnpParameter(
   serializedType: SerializedTypeParameter,
   result: CapnpSerializedTypeParameter
 ): CapnpSerializedTypeParameter {
@@ -1594,7 +1710,7 @@ export function convertToCapnpTypeParameter(
 
   if (typeof serializedType.default !== "undefined") {
     const defaultValue = result._initDefault();
-    convertToCapnpTypeDefault(serializedType.default, defaultValue);
+    convertToCapnpDefault(serializedType.default, defaultValue);
   }
 
   const parameterType = result._initType();
@@ -1620,7 +1736,7 @@ export function convertToCapnpTypeParameter(
 
   if (serializedType.indexAccessOrigin) {
     const indexAccessOrigin = result._initIndexAccessOrigin();
-    convertToCapnpTypeIndexAccessOrigin(
+    convertToCapnpIndexAccessOrigin(
       indexAccessOrigin,
       serializedType.indexAccessOrigin
     );
@@ -1628,20 +1744,20 @@ export function convertToCapnpTypeParameter(
 
   if (serializedType.tags) {
     const tags = result._initTags();
-    convertToCapnpTypeTagsReflection(tags, serializedType.tags);
+    convertToCapnpTagsReflection(tags, serializedType.tags);
   }
 
   return result;
 }
 
-export function convertFromCapnpTypeParameter(
+export function convertFromCapnpParameter(
   serializedType: CapnpSerializedTypeParameter
 ): SerializedTypeParameter {
   const result: SerializedTypeParameter = {
     kind: ReflectionKind.parameter,
     typeName: serializedType.typeName || undefined,
     name: serializedType.name,
-    default: convertFromCapnpTypeDefault(serializedType.default),
+    default: convertFromCapnpDefault(serializedType.default),
     optional: serializedType.optional ? true : undefined,
     readonly: serializedType.readonly ? true : undefined,
     visibility:
@@ -1657,8 +1773,8 @@ export function convertFromCapnpTypeParameter(
     typeArguments: serializedType._hasTypeArguments()
       ? serializedType.typeArguments.map(t => t.id)
       : undefined,
-    indexAccessOrigin: convertFromCapnpTypeIndexAccessOrigin(serializedType),
-    tags: convertFromCapnpTypeTagsReflection(serializedType)
+    indexAccessOrigin: convertFromCapnpIndexAccessOrigin(serializedType),
+    tags: convertFromCapnpTagsReflection(serializedType)
   };
 
   return result;

@@ -5,11 +5,11 @@
  This code was released as part of the Storm Stack project. Storm Stack
  is maintained by Storm Software under the Apache-2.0 license, and is
  free for commercial and private use. For more information, please visit
- our licensing page at https://stormsoftware.com/projects/storm-stack/license.
+ our licensing page at https://stormsoftware.com/license.
 
  Website:                  https://stormsoftware.com
  Repository:               https://github.com/storm-software/storm-stack
- Documentation:            https://stormsoftware.com/projects/storm-stack/docs
+ Documentation:            https://docs.stormsoftware.com/projects/storm-stack
  Contact:                  https://stormsoftware.com/contact
 
  SPDX-License-Identifier:  Apache-2.0
@@ -23,6 +23,7 @@ import { joinPaths } from "@stryke/path/join-paths";
 import { resolvePackage } from "@stryke/path/resolve";
 import assert from "node:assert";
 import ts from "typescript";
+import { Context, Options } from "../../types/build";
 
 export const SourcesMap = Map<string, string>;
 // eslint-disable-next-line ts/no-redeclare
@@ -54,26 +55,38 @@ export async function loadLibFiles(): Promise<SourcesMap> {
   return lib;
 }
 
-// Creates a TypeScript program from in-memory source files. Accepts a Map of
-// fully-resolved "virtual" paths to source code.
-export function createMemoryProgram(
-  sources: SourcesMap,
+/**
+ * Creates a TypeScript program from in-memory, virtual source files.
+ *
+ * @param context - The build context containing virtual file system and options.
+ * @param host - Optional custom compiler host. If not provided, a default host will be created.
+ * @param compilerOptions - Compiler options to use for the program. Defaults to TypeScript's default compiler options.
+ * @param lib - Optional additional library files to include in the program. These should be provided as a Map of file paths to their contents.
+ * @returns A TypeScript program instance that can be used for type checking, emitting, etc.
+ * @throws If the provided library files are not in the expected format or if the TypeScript package cannot be resolved.
+ */
+export function createVirtualProgram<TOptions extends Options = Options>(
+  context: Context<TOptions>,
   host?: ts.CompilerHost,
-  compilerOpts = defaultCompilerOpts,
+  compilerOptions = defaultCompilerOpts,
   // Provide additional lib files to TypeScript. These should all be prefixed with
   // `/node_modules/typescript/lib` (e.g. `/node_modules/typescript/lib/lib.esnext.d.ts`)
   lib?: SourcesMap
 ): ts.Program {
+  if (lib) {
+    context.vfs.add(lib);
+  }
+
   const sourceFiles = new Map<string, ts.SourceFile>();
-  for (const [sourcePath, source] of [...sources, ...(lib ?? [])]) {
+  for (const [filePath, fileContent] of context.vfs.entries()) {
     const sourceFile = ts.createSourceFile(
-      sourcePath,
-      source,
+      filePath,
+      fileContent.contents?.toString() || "",
       ts.ScriptTarget.ESNext,
       false,
       ts.ScriptKind.TS
     );
-    sourceFiles.set(sourcePath, sourceFile);
+    sourceFiles.set(filePath, sourceFile);
   }
 
   host ??= {
@@ -118,9 +131,7 @@ export function createMemoryProgram(
     }
   };
 
-  const rootNames = Array.from(sources.keys());
-
-  return ts.createProgram(rootNames, compilerOpts, host);
+  return ts.createProgram(context.vfs.keys(), compilerOptions, host);
 }
 
 /**

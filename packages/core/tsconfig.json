@@ -2,7 +2,7 @@
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
     "rootDir": "../..",
-    "types": ["node"],
+    "types": ["node", "vinyl"],
     "strict": false,
     "noUnusedLocals": false,
     "noUnusedParameters": false,

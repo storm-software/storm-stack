@@ -380,7 +380,11 @@ compatibility_flags = [ "nodejs_als" ]
       context.entry.map(async entry => {
         this.log(
           LogLevelLabel.TRACE,
-          `Preparing the entry artifact ${entry.file} (${entry?.name ? `export: "${entry.name}"` : "default"})" from input "${entry.input.file} (${entry.input.name ? `export: "${entry.input.name}"` : "default"})"`
+          `Preparing the entry artifact ${entry.file} (${
+            entry?.name ? `export: "${entry.name}"` : "default"
+          })" from input "${entry.input.file} (${
+            entry.input.name ? `export: "${entry.input.name}"` : "default"
+          })"`
         );
 
         return this.writeFile(
@@ -388,7 +392,9 @@ compatibility_flags = [ "nodejs_als" ]
           `${getFileHeader()}
 
 ${this.#unenv.polyfill.map(p => `import "${p}";`).join("\n")}
-import ${entry.input.name ? `{ ${entry.input.name} as handle }` : "handle"} from "${joinPaths(
+import ${
+            entry.input.name ? `{ ${entry.input.name} as handle }` : "handle"
+          } from "${joinPaths(
             relativePath(
               joinPaths(context.options.projectRoot, findFilePath(entry.file)),
               joinPaths(

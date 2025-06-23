@@ -352,7 +352,7 @@ export async function initEntry<TOptions extends Options = Options>(
     }
 
     context.entry.push({
-      displayName: "CLI Completions",
+      title: "CLI Completions",
       description: `Commands for generating shell completion scripts for the ${titleCase(context.options.name)}.`,
       file: joinPaths(commandsDirectory, "completions", "index.ts"),
       input: {
@@ -377,7 +377,7 @@ export async function initEntry<TOptions extends Options = Options>(
     }
 
     context.entry.push({
-      displayName: "CLI Completions - Bash Shell",
+      title: "CLI Completions - Bash Shell",
       file: joinPaths(commandsDirectory, "completions", "bash", "index.ts"),
       input: {
         file: joinPaths(commandsDirectory, "completions", "bash", "handle.ts")
@@ -401,7 +401,7 @@ export async function initEntry<TOptions extends Options = Options>(
     }
 
     context.entry.push({
-      displayName: "CLI Completions - Zsh Shell",
+      title: "CLI Completions - Zsh Shell",
       file: joinPaths(commandsDirectory, "completions", "zsh", "index.ts"),
       input: {
         file: joinPaths(commandsDirectory, "completions", "zsh", "handle.ts")
@@ -430,7 +430,7 @@ export async function initEntry<TOptions extends Options = Options>(
       }
 
       context.entry.push({
-        displayName: "Configuration Management",
+        title: "Configuration Management",
         description:
           "Commands for managing the configuration parameters stored on the file system.",
         file: joinPaths(commandsDirectory, "config", "index.ts"),
@@ -456,12 +456,12 @@ export async function initEntry<TOptions extends Options = Options>(
       }
 
       context.entry.push({
-        displayName: "Configuration - Get",
+        title: "Configuration - Get",
         file: joinPaths(commandsDirectory, "config", "get", "index.ts"),
         input: {
           file: joinPaths(commandsDirectory, "config", "get", "handle.ts")
         },
-        output: "config-get",
+        output: "config-get-[name]",
         path: ["config", "get", "[name]"],
         isVirtual: false
       });
@@ -480,12 +480,12 @@ export async function initEntry<TOptions extends Options = Options>(
       }
 
       context.entry.push({
-        displayName: "Configuration - Set",
+        title: "Configuration - Set",
         file: joinPaths(commandsDirectory, "config", "set", "index.ts"),
         input: {
           file: joinPaths(commandsDirectory, "config", "set", "handle.ts")
         },
-        output: "config-set",
+        output: "config-set-[name]-[value]",
         path: ["config", "set", "[name]", "[value]"],
         isVirtual: false
       });
@@ -504,12 +504,12 @@ export async function initEntry<TOptions extends Options = Options>(
       }
 
       context.entry.push({
-        displayName: "Configuration - Delete",
+        title: "Configuration - Delete",
         file: joinPaths(commandsDirectory, "config", "delete", "index.ts"),
         input: {
           file: joinPaths(commandsDirectory, "config", "delete", "handle.ts")
         },
-        output: "config-delete",
+        output: "config-delete-[name]",
         path: ["config", "delete", "[name]"],
         isVirtual: false
       });
@@ -528,7 +528,7 @@ export async function initEntry<TOptions extends Options = Options>(
       }
 
       context.entry.push({
-        displayName: "Configuration - List",
+        title: "Configuration - List",
         file: joinPaths(commandsDirectory, "config", "list", "index.ts"),
         input: {
           file: joinPaths(commandsDirectory, "config", "list", "handle.ts")

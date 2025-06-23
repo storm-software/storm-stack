@@ -21,9 +21,16 @@ import { StormPayload } from "../../../.storm/runtime/payload";
 import { createEngine } from "../../helpers/create-engine";
 
 /**
- * The payload type for the prepare command.
+ * The payload data type for the prepare command.
  */
-type PreparePayload = Pick<Options, "projectRoot">;
+interface PreparePayload {
+  /**
+   * The root directory of the Storm Stack project.
+   *
+   * @alias project
+   */
+  projectRoot: Options["projectRoot"];
+}
 
 /**
  * Prepare the build artifacts for the Storm Stack project.

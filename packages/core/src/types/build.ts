@@ -28,7 +28,6 @@ import type {
   ValidatorFunction
 } from "@storm-stack/types/node";
 import type { LogLevel } from "@storm-stack/types/shared/log";
-import { CapnpRPC } from "@stryke/capnp";
 import type { EnvPaths } from "@stryke/env/get-env-paths";
 import type { DotenvParseOutput } from "@stryke/env/types";
 import type { MaybePromise } from "@stryke/types/base";
@@ -43,9 +42,11 @@ import { Worker as JestWorker } from "jest-worker";
 import type { Jiti } from "jiti";
 import type MagicString from "magic-string";
 import type { SourceMap } from "magic-string";
-import { ChildProcess } from "node:child_process";
+import { Buffer } from "node:buffer";
+import { Stats } from "node:fs";
 import type ts from "typescript";
 import type { InlinePreset, Unimport } from "unimport";
+import Vinyl from "vinyl";
 import type {
   ApplicationProjectConfig,
   DotenvOptions,
@@ -500,10 +501,16 @@ export interface Config<
   teardown?: TeardownFunction;
 }
 
-export interface StormStackRPC<TClient> {
-  client: TClient;
-  process: ChildProcess;
-  rpc: CapnpRPC;
+export interface Renderer {
+  /**
+   * The name of the renderer
+   */
+  name: string;
+
+  /**
+   * The render function to be used by the runtime.
+   */
+  render: (context: Context) => MaybePromise<void>;
 }
 
 export type WorkerProcess<TExposedMethods extends ReadonlyArray<string>> = {
@@ -512,6 +519,136 @@ export type WorkerProcess<TExposedMethods extends ReadonlyArray<string>> = {
   close: () => void;
   end: () => ReturnType<JestWorker["end"]>;
 };
+
+export interface VirtualFileOptions {
+  /**
+   * A checksum for the file. This is a read-only property that is set when the file is created.
+   *
+   * @remarks
+   * This property is used to ensure the integrity of the file's contents and is not meant to be modified after creation.
+   */
+  checksum: string;
+
+  /**
+   * The current working directory of the file. Defaults to the `workspaceRoot` value from the {@link Context.workspaceConfig} object.
+   */
+  cwd?: string | undefined;
+
+  /**
+   * Used for relative paths. Typically where a glob starts. Defaults to the {@link cwd} value.
+   */
+  base?: string | undefined;
+
+  /**
+   * Full path to the file.
+   */
+  path?: string | undefined;
+
+  /**
+   * Stores the path history. If {@link path} and {@link history} are both passed, {@link path} is appended to {@link history}. All {@link history} paths are normalized by the {@link Vinyl.path} setter. Defaults to [ {@link path} ] if {@link path} is passed.
+   *
+   * @defaultValue `[]`
+   */
+  history?: string[] | undefined;
+
+  /**
+   * The result of an {@link stats} call. This is how you mark the file as a directory or symbolic link.
+   *
+   * @remarks
+   * See `isDirectory()`, `isSymbolic()` and {@link Stats} for more information.
+   *
+   * @see https://nodejs.org/api/fs.html#fs_class_fs_stats
+   */
+  stat?: Stats | undefined;
+
+  /**
+   * The virtual file's contents
+   *
+   * @defaultValue null
+   */
+  contents?: Buffer | NodeJS.ReadableStream | null | undefined;
+
+  /**
+   * Any custom option properties will be directly assigned to the new Vinyl object.
+   */
+  [customOption: string]: any;
+}
+
+export const __vfs__ = Symbol("virtual-file-system");
+
+export interface IVirtualFileSystem {
+  /**
+   * Adds a file to the virtual file system.
+   *
+   * @param options - The options for the virtual file, excluding the checksum.
+   */
+  set: (options: Omit<VirtualFileOptions, "checksum">) => boolean;
+
+  /**
+   * Retrieves the content of a file from the virtual file system or the filesystem.
+   *
+   * @param path - The path to the file in the virtual file system.
+   * @returns The content of the file as a string, or undefined if the file does not exist.
+   */
+  getSafe: (path: string) => string | undefined;
+
+  /**
+   * Retrieves the content of a file from the virtual file system.
+   *
+   * @param path - The path to the file in the virtual file system.
+   * @returns The content of the file as a string.
+   * @throws An error if the file does not exist in the virtual file system.
+   */
+  get: (path: string) => string;
+
+  /**
+   * Checks if a file exists in the virtual file system or the filesystem.
+   *
+   * @param path - The path to check in the virtual file system.
+   * @returns A boolean indicating whether the file exists in the virtual file system or the filesystem.
+   */
+  has: (path: string) => boolean;
+
+  /**
+   * Adds one or multiple files to the virtual file system.
+   *
+   * @param param - A string or array of strings of file paths to add to the virtual file system.
+   */
+  add: (param: string | string[] | Map<string, string>) => void;
+
+  /**
+   * Returns an array of all file paths in the virtual file system.
+   *
+   * @returns An array of strings representing the paths of all files in the virtual file system.
+   */
+  keys: () => string[];
+
+  /**
+   * Returns an array of all file objects in the virtual and physical file system.
+   *
+   * @returns An array of Vinyl objects representing the files in the virtual and physical file system.
+   */
+  values: () => Vinyl[];
+
+  /**
+   * Returns an array of entries in the virtual file system, where each entry is a tuple containing the file path and the corresponding Vinyl object.
+   *
+   * @returns An array of tuples, where each tuple contains a string (the file path) and a Vinyl object (the file).
+   */
+  entries: () => [string, Vinyl][];
+
+  /**
+   * Returns a Map of all file paths and their corresponding Vinyl objects in the virtual file system.
+   *
+   * @returns A Map where the keys are file paths (strings) and the values are Vinyl objects representing the files.
+   */
+  getVirtualMap: () => Map<string, Vinyl>;
+
+  /**
+   * A reference to the underlying Map object that stores the virtual files.
+   */
+  [__vfs__]: Map<string, Vinyl>;
+}
 
 export interface Context<
   TOptions extends Options = Options,
@@ -631,6 +768,11 @@ export interface Context<
     configReflection: WorkerProcess<["add", "clear"]>;
     errorLookup: WorkerProcess<["find"]>;
   };
+
+  /**
+   * The virtual file system manager used during the build process to reference generated runtime files
+   */
+  vfs: IVirtualFileSystem;
 
   /**
    * The Jiti module resolver

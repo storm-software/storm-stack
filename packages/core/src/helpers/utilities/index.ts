@@ -24,4 +24,5 @@ export * from "./logger";
 export * from "./magic-string";
 export * from "./resolve-path";
 export * from "./source-map";
+export * from "./vfs";
 export * from "./write-file";

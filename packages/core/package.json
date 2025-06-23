@@ -720,13 +720,15 @@
     "typedoc": "catalog:",
     "typedoc-plugin-frontmatter": "catalog:",
     "typedoc-plugin-markdown": "catalog:",
-    "unimport": "catalog:"
+    "unimport": "catalog:",
+    "vinyl": "catalog:"
   },
   "devDependencies": {
     "@microsoft/tsdoc": "catalog:",
     "@storm-software/testing-tools": "catalog:",
     "@stryke/types": "catalog:",
     "@types/node": "catalog:",
+    "@types/vinyl": "catalog:",
     "eslint": "catalog:",
     "tsup": "catalog:",
     "typescript": "5.9.0-dev.20250614"

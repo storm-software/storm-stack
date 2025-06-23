@@ -34,6 +34,7 @@ import { TsConfigJson } from "@stryke/types/tsconfig";
 import defu from "defu";
 import ts from "typescript";
 import { readDotenvReflection } from "../../helpers/dotenv/persistence";
+import { createVirtualProgram } from "../../helpers/typescript/program";
 import { getParsedTypeScriptConfig } from "../../helpers/typescript/tsconfig";
 import { getFileHeader } from "../../helpers/utilities/file-header";
 import { writeFile } from "../../helpers/utilities/write-file";
@@ -175,14 +176,11 @@ export async function generateRuntimeTypes<TOptions extends Options = Options>(
     }
   }
 
-  const program: ts.Program = ts.createProgram(
-    fileNames.map(fileName =>
-      fileName
-        .replace(context.workspaceConfig.workspaceRoot, "")
-        .replace(/^\//, "")
-    ),
-    resolvedTsconfig.options,
-    ts.createCompilerHost(resolvedTsconfig.options)
+  context.vfs.add(fileNames);
+  const program: ts.Program = createVirtualProgram(
+    context,
+    ts.createCompilerHost(resolvedTsconfig.options),
+    resolvedTsconfig.options
   );
 
   let runtimeModules = "";

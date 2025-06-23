@@ -368,6 +368,11 @@ struct SerializedTypeTemplateLiteral {
   types @5 :List(SerializedTypeReference);
 }
 
+struct SerializedTypeOther {
+  typeName @0 :Text;
+  kind @1 :ReflectionKind;
+}
+
 struct SerializedType {
   type :union {
     simple @0 :SimpleSerializedType;
@@ -392,6 +397,7 @@ struct SerializedType {
     tuple @19 :SerializedTypeTuple;
     tupleMember @20 :SerializedTypeTupleMember;
     rest @21 :SerializedTypeRest;
+    other @22 :SerializedTypeOther; # For any other type that is not explicitly defined
   }
 }
 

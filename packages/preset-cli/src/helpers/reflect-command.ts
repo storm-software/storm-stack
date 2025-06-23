@@ -19,37 +19,29 @@
 import {
   ReflectionFunction,
   ReflectionKind,
-  resolveClassType,
-  serializeType,
-  stringifyType
+  ReflectionParameter
 } from "@deepkit/type";
 import { LogLevelLabel } from "@storm-software/config-tools/types";
 import { resolveType } from "@storm-stack/core/helpers/deepkit/reflect-type";
-import { getReflectionsPath } from "@storm-stack/core/helpers/deepkit/resolve-reflections";
-import { writeFile } from "@storm-stack/core/helpers/utilities/write-file";
 import type { LogFn } from "@storm-stack/core/types";
 import type {
   Options,
   ResolvedEntryTypeDefinition
 } from "@storm-stack/core/types/build";
-import { StormJSON } from "@stryke/json/storm-json";
 import { findFolderName } from "@stryke/path/file-path-fns";
 import { resolveParentPath } from "@stryke/path/get-parent-path";
-import { joinPaths } from "@stryke/path/join-paths";
-import { kebabCase } from "@stryke/string-format/kebab-case";
 import { titleCase } from "@stryke/string-format/title-case";
-import { isSetString } from "@stryke/type-checks/is-set-string";
+import { writeCommandTreeReflection } from "../capnp/persistence";
+import { CommandPayload } from "../data/command-payload";
 import type { StormStackCLIPresetContext } from "../types/build";
 import type { StormStackCLIPresetConfig } from "../types/config";
-import type {
-  Command,
-  CommandEntryTypeDefinition,
-  CommandPayload,
-  CommandPayloadArg,
-  CommandRelations,
-  CommandTree,
-  CommandTreeBranch
-} from "../types/reflection";
+import { Command, CommandTree } from "../types/reflection";
+import {
+  findCommandInTree,
+  getAppName,
+  getAppTitle,
+  reflectPayloadBaseType
+} from "./utilities";
 
 function findCommandName(entry: ResolvedEntryTypeDefinition) {
   let name = findFolderName(entry.file);
@@ -62,7 +54,12 @@ function findCommandName(entry: ResolvedEntryTypeDefinition) {
   return name;
 }
 
-async function reflectCommandRelations<TOptions extends Options = Options>(
+interface CommandRelations {
+  parent: string | null;
+  children: string[];
+}
+
+async function reflectRelations<TOptions extends Options = Options>(
   context: StormStackCLIPresetContext<TOptions>
 ): Promise<Record<string, CommandRelations>> {
   const relationReflections = {} as Record<string, CommandRelations>;
@@ -71,21 +68,24 @@ async function reflectCommandRelations<TOptions extends Options = Options>(
   )) {
     const commandId = entry.output;
     relationReflections[commandId] ??= {
-      parent: undefined,
+      parent: null,
       children: []
     } as CommandRelations;
 
-    const commandName = findCommandName(entry);
-    if (commandId !== commandName) {
-      const parent = commandId.replace(commandName, "").replaceAll(/-+$/g, "");
-      if (context.entry.some(entry => entry.output === parent)) {
-        relationReflections[parent] ??= {
-          parent: undefined,
+    let path = entry.path;
+    while (path.length > 1) {
+      path = path
+        .filter(part => !part.startsWith("[") && !part.endsWith("]"))
+        .slice(0, -1);
+      const parentId = path.join("-");
+      if (context.entry.some(entry => entry.output === parentId)) {
+        relationReflections[commandId].parent = parentId;
+
+        relationReflections[parentId] ??= {
+          parent: null,
           children: []
         } as CommandRelations;
-        relationReflections[parent].children.push(commandId);
-
-        relationReflections[commandId].parent = parent;
+        relationReflections[parentId].children.push(commandId);
       }
     }
   }
@@ -93,104 +93,7 @@ async function reflectCommandRelations<TOptions extends Options = Options>(
   return relationReflections;
 }
 
-function getDefaultCommandPayloadArgs(
-  entry: CommandEntryTypeDefinition,
-  config: StormStackCLIPresetConfig
-): CommandPayloadArg[] {
-  return [
-    {
-      name: "help",
-      displayName: "Help",
-      description: "Show help information.",
-      aliases: ["h", "?"],
-      type: "boolean",
-      stringifiedType: "boolean",
-      reflectionType: serializeType({ kind: ReflectionKind.boolean }),
-      options: [],
-      array: false,
-      required: false,
-      default: false
-    },
-    {
-      name: "version",
-      displayName: "Version",
-      description: "Show the version of the application.",
-      aliases: ["v"],
-      type: "boolean",
-      stringifiedType: "boolean",
-      reflectionType: serializeType({ kind: ReflectionKind.boolean }),
-      options: [],
-      array: false,
-      required: false,
-      default: false
-    },
-    !entry.isVirtual &&
-      config.interactive !== "never" &&
-      config.interactive !== true && {
-        name: "interactive",
-        displayName: "Interactive",
-        description:
-          "Enable interactive mode (will be set to false if running in a CI pipeline).",
-        aliases: ["i", "interact"],
-        type: "boolean",
-        stringifiedType: "boolean",
-        reflectionType: serializeType({
-          kind: ReflectionKind.boolean
-        }),
-        options: [],
-        array: false,
-        required: false,
-        default: config.interactive !== false
-      },
-    !entry.isVirtual &&
-      config.interactive !== "never" &&
-      config.interactive !== false && {
-        name: "no-interactive",
-        displayName: "No Interactive",
-        description:
-          "Disable interactive mode (will be set to true if running in a CI pipeline).",
-        aliases: ["no-interact"],
-        type: "boolean",
-        stringifiedType: "boolean",
-        reflectionType: serializeType({
-          kind: ReflectionKind.boolean
-        }),
-        options: [],
-        array: false,
-        required: false,
-        default: false
-      },
-    {
-      name: "no-banner",
-      displayName: "Hide Banner",
-      description:
-        "Hide the banner displayed while running the CLI application (will be set to true if running in a CI pipeline).",
-      aliases: [],
-      type: "boolean",
-      stringifiedType: "boolean",
-      reflectionType: serializeType({ kind: ReflectionKind.boolean }),
-      options: [],
-      array: false,
-      required: false,
-      default: false
-    },
-    !entry.isVirtual && {
-      name: "verbose",
-      displayName: "Verbose",
-      description: "Enable verbose output.",
-      aliases: ["v"],
-      type: "boolean",
-      stringifiedType: "boolean",
-      reflectionType: serializeType({ kind: ReflectionKind.boolean }),
-      options: [],
-      array: false,
-      required: false,
-      default: false
-    }
-  ].filter(Boolean) as CommandPayloadArg[];
-}
-
-async function reflectCommandPayloads<TOptions extends Options = Options>(
+async function reflectPayloads<TOptions extends Options = Options>(
   context: StormStackCLIPresetContext<TOptions>,
   config: StormStackCLIPresetConfig
 ): Promise<Record<string, CommandPayload>> {
@@ -199,10 +102,17 @@ async function reflectCommandPayloads<TOptions extends Options = Options>(
     entry => entry.input.file !== context.options.entry && entry.output
   )) {
     if (entry.isVirtual) {
-      payloadReflections[entry.output] = {
-        name: `${titleCase(entry.output)}Payload`,
-        args: getDefaultCommandPayloadArgs(entry, config)
-      };
+      const payloadBaseType = await reflectPayloadBaseType(context);
+
+      payloadReflections[entry.output] = CommandPayload.from(
+        config,
+        {
+          entry,
+          name: findCommandName(entry),
+          title: titleCase(findCommandName(entry))
+        },
+        payloadBaseType
+      );
     } else {
       // eslint-disable-next-line ts/no-unsafe-function-type
       const command = await resolveType<TOptions, Function>(
@@ -219,148 +129,98 @@ async function reflectCommandPayloads<TOptions extends Options = Options>(
         throw new Error(`Reflection not found: ${entry.input.file}`);
       }
 
-      const parameters = commandReflection.getParameters();
-      if (parameters && parameters.length > 0) {
-        const parameter = parameters[0]?.getType();
-        if (
-          parameter &&
-          (parameter.kind === ReflectionKind.class ||
-            parameter.kind === ReflectionKind.objectLiteral)
-        ) {
-          const resolvedParameter = resolveClassType(parameter);
-          if (!resolvedParameter) {
-            throw new Error(
-              `The command "${entry.output}" does not have a valid payload type.`
-            );
-          }
-
-          const dataProperty = resolvedParameter.getProperty("data");
-          if (!dataProperty) {
-            throw new Error(
-              `The command "${entry.output}" does not have a "data" property in its payload.`
-            );
-          }
-
-          if (
-            dataProperty.getType().kind !== ReflectionKind.class &&
-            dataProperty.getType().kind !== ReflectionKind.objectLiteral
-          ) {
-            throw new Error(
-              `The command "${entry.output}" does not have a valid "data" property type. Expected a class or object literal, but got ${dataProperty.getKind()}.`
-            );
-          }
-
-          const resolvedProperty = resolveClassType(dataProperty.getType());
-
-          const commandId = entry.output;
-          payloadReflections[commandId] = {
-            name: resolvedProperty.getName(),
-            args: resolvedProperty.getProperties().reduce(
-              (ret, property) => {
-                const name = kebabCase(property.getNameAsString());
-                if (!ret.some(item => item.name === name)) {
-                  const stringifiedType = stringifyType(property.getType());
-
-                  let type = stringifiedType;
-                  let options = undefined as string[] | number[] | undefined;
-                  if (type.includes("|")) {
-                    options = type
-                      .split("|")
-                      .map(option =>
-                        option.trim().replaceAll('"', "").replaceAll("'", "")
-                      );
-                    type = "enum";
-                  }
-
-                  const aliases = [] as string[];
-                  if (
-                    name[0] &&
-                    !ret.some(item =>
-                      item.aliases.includes(name[0]!.toLowerCase())
-                    )
-                  ) {
-                    aliases.push(name[0].toLowerCase());
-                  }
-
-                  const description = property.getDescription();
-                  ret.push({
-                    name,
-                    displayName: titleCase(name),
-                    aliases,
-                    reflectionType: serializeType(property.getType()),
-                    type,
-                    stringifiedType,
-                    options,
-                    description: description.endsWith(".")
-                      ? description.slice(0, -1)
-                      : description,
-                    array: property.isArray(),
-                    required:
-                      !property.isOptional() &&
-                      property.getDefaultValue() === undefined,
-                    default: property.getDefaultValue()
-                  });
-
-                  if (type === "boolean") {
-                    const inverseName = `no-${kebabCase(name)}`;
-                    if (!ret.some(item => item.name === inverseName)) {
-                      ret.push({
-                        name: inverseName,
-                        displayName: titleCase(inverseName),
-                        aliases: [],
-                        reflectionType: serializeType(property.getType()),
-                        type: "boolean",
-                        stringifiedType: "boolean",
-                        options: [],
-                        description: `The inverse of the ${name} option.`,
-                        array: false,
-                        required: false,
-                        default: false,
-                        isNegative: true
-                      });
-                    }
-                  }
-                }
-
-                return ret;
-              },
-              getDefaultCommandPayloadArgs(entry, config)
-            )
-          } as CommandPayload;
-        }
-      }
+      const name = findCommandName(entry);
+      payloadReflections[entry.output] = CommandPayload.from(config, {
+        entry,
+        name,
+        title: titleCase(name),
+        type: commandReflection
+      });
     }
   }
 
   return payloadReflections;
 }
 
-export async function reflectCommand<TOptions extends Options = Options>(
+type CommandReflectionDefinition = Omit<
+  Command,
+  "parent" | "children" | "root"
+> & {
+  payload: CommandPayload;
+  relations: CommandRelations;
+};
+
+async function reflectCommand<TOptions extends Options = Options>(
   log: LogFn,
   context: StormStackCLIPresetContext<TOptions>,
   config: StormStackCLIPresetConfig
-): Promise<Record<string, Command>> {
-  const relationsReflections = await reflectCommandRelations(context);
-  const payloadsReflections = await reflectCommandPayloads(context, config);
+): Promise<Record<string, CommandReflectionDefinition>> {
+  const relationsReflections = await reflectRelations(context);
+  const payloadsReflections = await reflectPayloads(context, config);
 
-  const reflections = {} as Record<string, Command>;
+  const reflections = {} as Record<string, CommandReflectionDefinition>;
+
   for (const entry of context.entry.filter(
     entry => entry.input.file !== context.options.entry
   )) {
+    if (!entry.output) {
+      throw new Error(
+        `The entry "${entry.input.file}" does not have an output defined. Please ensure the entry has a valid output path.`
+      );
+    }
+
+    if (!relationsReflections[entry.output]) {
+      throw new Error(
+        `Unable to determine relation reflections for command "${entry.output}".`
+      );
+    }
+    if (!payloadsReflections[entry.output]) {
+      throw new Error(
+        `Unable to determine payload reflections for command "${entry.output}".`
+      );
+    }
+
     if (entry.isVirtual) {
-      const displayName = entry.displayName || titleCase(entry.output);
-      reflections[entry.output] = {
-        commandId: entry.output,
+      const name = findCommandName(entry);
+
+      const command = {
+        id: entry.output,
+        type: new ReflectionFunction({
+          kind: ReflectionKind.function,
+          name: "handler",
+          description: entry.description,
+          parameters: [],
+          return: {
+            kind: ReflectionKind.any
+          },
+          tags: {
+            title: entry.title || titleCase(name)
+          }
+        }),
+        title: entry.title || titleCase(name),
         name: entry.output,
-        displayName,
-        description:
-          entry.description ||
-          `A set of ${displayName} commands that can be executed in the CLI.`,
-        aliases: [],
         entry,
-        payload: payloadsReflections[entry.output],
-        relations: relationsReflections[entry.output]
-      } as Command;
+        payload: payloadsReflections[entry.output]!,
+        relations: relationsReflections[entry.output]!
+      };
+
+      command.type.parameters.push(
+        new ReflectionParameter(
+          {
+            kind: ReflectionKind.parameter,
+            name: "payload",
+            parent: command.type.type,
+            type: payloadsReflections[entry.output]!.type.type,
+            description: `The payload for the ${titleCase(name)} command.`,
+            tags: {
+              title: `Payload for ${titleCase(name)} command`
+            }
+          },
+          command.type
+        )
+      );
+
+      reflections[entry.output] = command;
     } else {
       log(
         LogLevelLabel.TRACE,
@@ -381,50 +241,20 @@ export async function reflectCommand<TOptions extends Options = Options>(
         throw new Error(`Reflection not found: ${entry.input.file}`);
       }
 
-      const commandId = entry.output;
+      const id = entry.output;
       const name = findCommandName(entry);
-      const relations = relationsReflections[commandId];
 
-      reflections[commandId] = {
-        commandId,
+      reflections[id] = {
+        id,
         name,
-        displayName: entry.displayName || titleCase(name),
-        description:
-          entry.description ||
-          (commandReflection.description &&
-          !commandReflection.description?.endsWith(".") &&
-          !commandReflection.description?.endsWith("?")
-            ? `${commandReflection.description}.`
-            : commandReflection.description),
-        aliases: [],
+        type: commandReflection,
+        title: titleCase(name),
         entry,
-        payload: payloadsReflections[commandId],
-        relations
-      } as Command;
+        payload: payloadsReflections[id]!,
+        relations: relationsReflections[id]!
+      };
     }
   }
-
-  Object.keys(reflections)
-    .filter(commandId => reflections[commandId]?.relations.parent)
-    .sort((a, b) => b.localeCompare(a))
-    .forEach(commandId => {
-      const reflection = reflections[commandId];
-
-      if (reflection?.relations.parent) {
-        const parent = reflections[reflection.relations.parent];
-        if (parent) {
-          reflection.displayName =
-            reflection.entry.displayName ||
-            titleCase(`${parent.displayName} - ${reflection.displayName}`);
-        }
-      }
-    });
-
-  await writeFile(
-    log,
-    joinPaths(getReflectionsPath(context), "cli.json"),
-    StormJSON.stringify(reflections)
-  );
 
   return reflections;
 }
@@ -434,31 +264,19 @@ export async function reflectCommandTree<TOptions extends Options = Options>(
   context: StormStackCLIPresetContext<TOptions>,
   config: StormStackCLIPresetConfig
 ): Promise<CommandTree> {
-  let reflections = {};
-  // if (
-  //   context.persistedMeta?.checksum === context.meta.checksum &&
-  //   existsSync(joinPaths(getReflectionsPath(context), "cli.json"))
-  // ) {
-  //   reflections = await readJsonFile(
-  //     joinPaths(getReflectionsPath(context), "cli.json")
-  //   );
-  // } else {
-  reflections = await reflectCommand(log, context, config);
-  // }
+  const reflections = await reflectCommand(log, context, config);
 
-  const appName =
-    config.bin &&
-    (isSetString(config.bin) ||
-      (Array.isArray(config.bin) && config.bin.length > 0 && config.bin[0]))
-      ? isSetString(config.bin)
-        ? config.bin
-        : config.bin[0]
-      : context.options.name || context.packageJson?.name;
-
+  const name = getAppName(context, config);
   const tree = {
-    name: appName,
-    displayName: titleCase(context.options.name || appName),
-    description: context.packageJson?.description,
+    name,
+    title: getAppTitle(context, config),
+    bin: config.bin
+      ? Array.isArray(config.bin)
+        ? config.bin
+        : [config.bin]
+      : [name],
+    description:
+      context.options.description || context.packageJson?.description,
     entry: context.entry.find(
       entry => entry.input.file === context.options.entry
     ),
@@ -466,34 +284,76 @@ export async function reflectCommandTree<TOptions extends Options = Options>(
     children: {}
   } as CommandTree;
 
-  Object.keys(reflections)
-    .filter(commandId => !reflections[commandId]?.relations.parent)
-    .sort((a, b) => b.localeCompare(a))
-    .forEach(commandId => {
-      const reflection = reflections[commandId];
-      tree.children[commandId] = {
-        ...reflection,
-        parent: tree,
-        children: {}
-      } as CommandTreeBranch;
-    });
+  const addCommand = (
+    tree: CommandTree,
+    reflection: CommandReflectionDefinition
+  ): Command => {
+    let command = findCommandInTree(tree, reflection.entry.path) as
+      | Command
+      | undefined;
+    if (!command) {
+      if (reflection.entry.path.length === 1) {
+        command = {
+          ...reflection,
+          parent: tree,
+          children: {},
+          root: tree
+        };
+        tree.children[command.name] = command;
+      } else {
+        let parent: Command | CommandTree = tree;
+        if (reflection.relations.parent) {
+          const parentReflection = reflections[reflection.relations.parent];
+          if (!parentReflection) {
+            throw new Error(
+              `Reflection not found for command "${
+                reflection.relations.parent
+              }" in the ${parent.name} command tree.`
+            );
+          }
 
-  Object.keys(reflections)
-    .filter(commandId => reflections[commandId]?.relations.parent)
-    .sort((a, b) => b.localeCompare(a))
-    .forEach(commandId => {
-      const reflection = reflections[commandId];
-      if (reflection?.relations.parent) {
-        const parent = tree.children[reflection.relations.parent];
-        if (parent) {
-          parent.children[commandId] = {
-            parent,
-            children: {},
-            ...reflection
-          } as CommandTreeBranch;
+          parent = addCommand(tree, parentReflection);
+        }
+
+        command = {
+          ...reflection,
+          title:
+            parent.title && parent.parent !== null
+              ? titleCase(`${parent.title} - ${reflection.title}`)
+              : reflection.title,
+          parent,
+          children: {},
+          root: tree
+        };
+
+        parent.children[command.name] = command;
+      }
+
+      if (command.type) {
+        if (reflection.entry.title) {
+          const tags = command.type.getTags();
+          tags.title = reflection.entry.title;
+
+          command.type.setTags(tags);
+        }
+
+        if (reflection.entry.description) {
+          command.type.description = reflection.entry.description;
         }
       }
+    }
+
+    return command;
+  };
+
+  Object.keys(reflections)
+    .filter(commandId => reflections[commandId])
+    .sort((a, b) => b.localeCompare(a))
+    .forEach(commandId => {
+      addCommand(tree, reflections[commandId]!);
     });
+
+  await writeCommandTreeReflection(context, tree);
 
   return tree;
 }

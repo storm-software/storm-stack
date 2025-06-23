@@ -16,7 +16,7 @@
 
  ------------------------------------------------------------------- */
 
-export interface IStormPayload<TData = any> {
+export interface IStormPayload<TData = object> {
   /**
    * The timestamp of the payload.
    */
