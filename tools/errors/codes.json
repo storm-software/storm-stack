@@ -107,7 +107,8 @@
     "105": "getExecutingFilePath not implemented.",
     "106": "A request was made for %s but there wasn't a file found in the file map. You likely have a mismatch in the compiler options for the CDN download vs the compiler program. Existing Libs: %s.",
     "107": "write not implemented",
-    "108": "Unsupported deserialized type kind: %s Type: %s"
+    "108": "Unsupported deserialized type kind: %s Type: %s",
+    "109": "An error occurred while initializing the workers used by the Storm Stack build processes"
   },
   "not_found": {
     "1": "The requested resource was not found.",

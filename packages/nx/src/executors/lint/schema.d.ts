@@ -26,14 +26,6 @@ export interface StormStackLintExecutorSchema {
  entry?: string,
 
  /**
-  * Presets
-  * 
-  * A list of presets to use during Storm Stack processing
-  * 
- */
- presets?: Array<string>,
-
- /**
   * Plugins
   * 
   * A list of plugins to use during Storm Stack processing

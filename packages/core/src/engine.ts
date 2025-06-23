@@ -177,7 +177,7 @@ export class Engine<TOptions extends Options = Options> {
     ) as Context["options"];
 
     for (const plugin of this.context.options.plugins ?? []) {
-      await this.addPlugin(plugin, false);
+      await this.addPlugin(plugin);
     }
 
     if (this.#plugins.length === 0) {
@@ -424,23 +424,22 @@ export class Engine<TOptions extends Options = Options> {
   }
 
   /**
-   * Add a Storm Stack plugin or preset to the build process
+   * Add a Storm Stack plugin used in the build process
    *
-   * @param config - The import path of the plugin or preset to add
-   * @param isPreset - Whether the plugin is a preset
+   * @param config - The import path of the plugin to add
    */
-  private async addPlugin(config: string | PluginConfig, isPreset = false) {
+  private async addPlugin(config: string | PluginConfig) {
     if (config) {
       const instance = await this.initPlugin(config);
       if (instance.dependencies) {
         for (const dependency of instance.dependencies) {
-          await this.addPlugin(dependency, false);
+          await this.addPlugin(dependency);
         }
       }
 
       this.log(
         LogLevelLabel.TRACE,
-        `Successfully loaded the "${instance.name}" ${isPreset ? "preset" : "plugin"}`
+        `Successfully loaded the "${instance.name}" plugin`
       );
 
       this.#plugins.push(instance);

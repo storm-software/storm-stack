@@ -37,15 +37,6 @@ export default defineUntypedSchema({
     },
     $default: "{sourceRoot}/index.ts"
   },
-  presets: {
-    $schema: {
-      title: "Presets",
-      type: "array",
-      description: "A list of presets to use during Storm Stack processing",
-      items: { type: "string" }
-    },
-    $default: []
-  },
   plugins: {
     $schema: {
       title: "Plugins",

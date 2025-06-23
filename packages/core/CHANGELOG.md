@@ -6,7 +6,7 @@
 
 ### Features
 
-- **preset-cli:** Added logic to persist command reflections to data directory
+- **plugin-cli:** Added logic to persist command reflections to data directory
   ([d96999c6](https://github.com/storm-software/storm-stack/commit/d96999c6))
 
 ### Updated Dependencies
@@ -17,7 +17,7 @@
 
 ### Features
 
-- **preset-cli:** Update the `author` configuration option to align with
+- **plugin-cli:** Update the `author` configuration option to align with
   `OrganizationConfig` from `storm-workspace.json` file
   ([76e9d211](https://github.com/storm-software/storm-stack/commit/76e9d211))
 
@@ -127,7 +127,7 @@
 
 ### Features
 
-- **preset-cli:** Removed dependencies from generated package and implemented
+- **plugin-cli:** Removed dependencies from generated package and implemented
   banner and footer
 
 ### Updated Dependencies
@@ -144,7 +144,7 @@
 
 ### Features
 
-- **preset-cli:** Update output to dynamically import child commands
+- **plugin-cli:** Update output to dynamically import child commands
 
 ## [0.21.0](https://github.com/storm-software/storm-stack/releases/tag/core%400.21.0) (2025-05-24)
 
@@ -162,14 +162,14 @@
 
 ### Features
 
-- **preset-cli:** Added Variable Management commands generation and positional
+- **plugin-cli:** Added Variable Management commands generation and positional
   args
 
 ## [0.18.0](https://github.com/storm-software/storm-stack/releases/tag/core%400.18.0) (2025-05-22)
 
 ### Features
 
-- **preset-cli:** Added interactive prompts and env arguments to generated
+- **plugin-cli:** Added interactive prompts and env arguments to generated
   source code
 - **cli:** Initial check-in of the CLI application
 
@@ -257,7 +257,7 @@
 
 ### Features
 
-- **preset-cli:** Added .env logic for CLI arguments
+- **plugin-cli:** Added .env logic for CLI arguments
   ([cf281d99](https://github.com/storm-software/storm-stack/commit/cf281d99))
 
 ## [0.13.1](https://github.com/storm-software/storm-stack/releases/tag/core%400.13.1) (2025-05-01)
@@ -278,7 +278,7 @@
 
 ### Bug Fixes
 
-- **preset-cli:** Resolve issue writting output directory
+- **plugin-cli:** Resolve issue writting output directory
   ([bae1fefc](https://github.com/storm-software/storm-stack/commit/bae1fefc))
 
 ## [0.12.0](https://github.com/storm-software/storm-stack/releases/tag/core%400.12.0) (2025-05-01)
@@ -361,7 +361,7 @@
 
 ### Features
 
-- **preset-cli:** Added support for the `options` argument type
+- **plugin-cli:** Added support for the `options` argument type
   ([eef96e81](https://github.com/storm-software/storm-stack/commit/eef96e81))
 
 ## [0.7.0](https://github.com/storm-software/storm-stack/releases/tag/core%400.7.0) (2025-04-25)

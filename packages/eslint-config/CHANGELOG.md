@@ -56,7 +56,7 @@
 
 ### Features
 
-- **preset-cli:** Added Variable Management commands generation and positional
+- **plugin-cli:** Added Variable Management commands generation and positional
   args
 
 ## [0.8.0](https://github.com/storm-software/storm-stack/releases/tag/eslint-config-storm-stack%400.8.0) (2025-05-13)

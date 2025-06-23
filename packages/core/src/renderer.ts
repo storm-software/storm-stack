@@ -22,67 +22,41 @@ import { createLog } from "./helpers/utilities/logger";
 import { writeFile } from "./helpers/utilities/write-file";
 import { installPackage } from "./init/installs/utilities";
 import type { Context, EngineHooks } from "./types/build";
-import type { LogFn, PluginConfig } from "./types/config";
-import type { IPlugin } from "./types/plugin";
+import type { LogFn } from "./types/config";
+import { IRenderer } from "./types/plugin";
 
 /**
- * The base class for all plugins
+ * A base class used by all Storm Stack renderers.
+ *
+ * @remarks
+ * Renderer classes are used by plugins to render generated output files during various Storm Stack processes. Some possible items rendered include (but are not limited to): source code, documentation, DevOps configuration, and deployment infrastructure/IOC.
  */
-export abstract class Plugin implements IPlugin {
+export abstract class Renderer implements IRenderer {
   /**
-   * The name of the plugin
+   * The name of the renderer
    */
   public name: string;
-
-  /**
-   * The name of the plugin
-   */
-  public installPath: string;
-
-  /**
-   * A list of plugin modules required as dependencies by the current Plugin.
-   *
-   * @remarks
-   * These plugins will be called prior to the current Plugin.
-   */
-  public dependencies = [] as Array<string | PluginConfig>;
 
   /**
    * The logger function to use
    */
   public log: LogFn;
 
-  // /**
-  //  * The renderer used by the plugin
-  //  *
-  //  * @remarks
-  //  * This is used to render generated output files during various Storm Stack processes. Some possible items rendered include (but are not limited to): source code, documentation, DevOps configuration, and deployment infrastructure/IOC.
-  //  */
-  // protected abstract renderer: Renderer;
-
   /**
-   * The constructor for the plugin
+   * The constructor for the renderer
    *
-   * @param name - The name of the plugin
-   * @param installPath - The path to install the plugin
+   * @param name - The name of the renderer
+   * @param installPath - The path to install the renderer
    */
-  public constructor(name: string, installPath?: string) {
+  public constructor(name: string) {
     this.name = name.toLowerCase();
-    if (this.name.startsWith("plugin-")) {
-      this.name = this.name.replace(/^plugin-/, "").trim();
-    } else if (this.name.endsWith("-plugin")) {
-      this.name = this.name.replace(/-plugin$/, "").trim();
+    if (this.name.startsWith("renderer-")) {
+      this.name = this.name.replace(/^renderer-/, "").trim();
+    } else if (this.name.endsWith("-renderer")) {
+      this.name = this.name.replace(/-renderer$/, "").trim();
     }
 
-    this.log = createLog(`${this.name}-plugin`);
-    this.installPath = installPath || `@storm-stack/plugin-${this.name}`;
-
-    if (!installPath) {
-      this.log(
-        LogLevelLabel.WARN,
-        `No install path parameter provided to constructor for ${this.name} plugin. Will attempt to use "${this.installPath}".`
-      );
-    }
+    this.log = createLog(`${this.name}-renderer`);
   }
 
   /**
@@ -95,7 +69,7 @@ export abstract class Plugin implements IPlugin {
    *
    * @param filepath - The file path to write the file
    * @param content - The content to write to the file
-   * @param skipFormat - Should the plugin skip formatting the `content` string with Prettier
+   * @param skipFormat - Should the renderer skip formatting the `content` string with Prettier
    */
   protected async writeFile(
     filepath: string,

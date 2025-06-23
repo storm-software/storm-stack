@@ -123,7 +123,7 @@
 
 ### Features
 
-- **preset-cli:** Added Variable Management commands generation and positional
+- **plugin-cli:** Added Variable Management commands generation and positional
   args
 
 ### Updated Dependencies
@@ -134,7 +134,7 @@
 
 ### Features
 
-- **preset-cli:** Added interactive prompts and env arguments to generated
+- **plugin-cli:** Added interactive prompts and env arguments to generated
   source code
 
 ### Updated Dependencies
