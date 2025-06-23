@@ -1,5 +1,16 @@
 ![Storm Software](https://public.storm-cdn.com/brand-banner.png)
 
+# Changelog for Storm Stack - ESLint Plugin
+
+## [0.10.2](https://github.com/storm-software/storm-stack/releases/tag/eslint-plugin%400.10.2) (2025-06-23)
+
+### Source Code Improvements
+
+- **core:** Remove references to removed `Preset` plugin types
+  ([02ede5c1](https://github.com/storm-software/storm-stack/commit/02ede5c1))
+
+![Storm Software](https://public.storm-cdn.com/brand-banner.png)
+
 # Changelog for Storm Stack - Eslint Plugin
 
 ## [0.10.1](https://github.com/storm-software/storm-stack/releases/tag/eslint-plugin%400.10.1) (2025-06-08)

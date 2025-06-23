@@ -2,6 +2,13 @@
 
 # Changelog for Storm Stack - Types
 
+## [0.14.1](https://github.com/storm-software/storm-stack/releases/tag/types%400.14.1) (2025-06-23)
+
+### Source Code Improvements
+
+- **plugin-cli:** Update name from `preset-cli` to `plugin-cli`
+  ([841adc9d](https://github.com/storm-software/storm-stack/commit/841adc9d))
+
 ## [0.14.0](https://github.com/storm-software/storm-stack/releases/tag/types%400.14.0) (2025-06-23)
 
 ### Features

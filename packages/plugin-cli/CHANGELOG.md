@@ -1,5 +1,21 @@
 ![Storm Software](https://public.storm-cdn.com/brand-banner.png)
 
+# Changelog for Storm Stack - Plugin CLI
+
+## [0.23.1](https://github.com/storm-software/storm-stack/releases/tag/plugin-cli%400.23.1) (2025-06-23)
+
+### Source Code Improvements
+
+- **plugin-cli:** Update name from `preset-cli` to `plugin-cli`
+  ([841adc9d](https://github.com/storm-software/storm-stack/commit/841adc9d))
+
+### Updated Dependencies
+
+- Updated devkit to 0.7.6
+- Updated core to 0.31.1
+
+![Storm Software](https://public.storm-cdn.com/brand-banner.png)
+
 # Changelog for Storm Stack - Preset CLI
 
 ## [0.23.0](https://github.com/storm-software/storm-stack/releases/tag/plugin-cli%400.23.0) (2025-06-23)

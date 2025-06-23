@@ -2,6 +2,21 @@
 
 # Changelog for Storm Stack - Plugin Log Storage
 
+## [0.18.1](https://github.com/storm-software/storm-stack/releases/tag/plugin-log-storage%400.18.1) (2025-06-23)
+
+### Source Code Improvements
+
+- **plugin-cloudflare-worker:** Update name from `preset-cloudflare-worker` to
+  `plugin-cloudflare-worker`
+  ([a00c64a7](https://github.com/storm-software/storm-stack/commit/a00c64a7))
+- **core:** Reduce the usage of the `Options` type parameter
+  ([ba02dc99](https://github.com/storm-software/storm-stack/commit/ba02dc99))
+
+### Updated Dependencies
+
+- Updated devkit to 0.7.6
+- Updated core to 0.31.1
+
 ## [0.18.0](https://github.com/storm-software/storm-stack/releases/tag/plugin-log-storage%400.18.0) (2025-06-23)
 
 ### Features

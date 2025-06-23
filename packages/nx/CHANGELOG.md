@@ -2,6 +2,19 @@
 
 # Changelog for Storm Stack - Nx
 
+## [0.13.6](https://github.com/storm-software/storm-stack/releases/tag/nx%400.13.6) (2025-06-23)
+
+### Source Code Improvements
+
+- **core:** Remove references to removed `Preset` plugin types
+  ([02ede5c1](https://github.com/storm-software/storm-stack/commit/02ede5c1))
+- **core:** Reduce the usage of the `Options` type parameter
+  ([ba02dc99](https://github.com/storm-software/storm-stack/commit/ba02dc99))
+
+### Updated Dependencies
+
+- Updated core to 0.31.1
+
 ## [0.13.5](https://github.com/storm-software/storm-stack/releases/tag/nx%400.13.5) (2025-06-20)
 
 ### Miscellaneous

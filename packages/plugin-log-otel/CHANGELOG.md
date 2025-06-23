@@ -2,6 +2,22 @@
 
 # Changelog for Storm Stack - Plugin Log Otel
 
+## [0.17.1](https://github.com/storm-software/storm-stack/releases/tag/plugin-log-otel%400.17.1) (2025-06-23)
+
+### Source Code Improvements
+
+- **plugin-cloudflare-worker:** Update name from `preset-cloudflare-worker` to
+  `plugin-cloudflare-worker`
+  ([a00c64a7](https://github.com/storm-software/storm-stack/commit/a00c64a7))
+- **core:** Reduce the usage of the `Options` type parameter
+  ([ba02dc99](https://github.com/storm-software/storm-stack/commit/ba02dc99))
+
+### Updated Dependencies
+
+- Updated devkit to 0.7.6
+- Updated core to 0.31.1
+- Updated nx to 0.13.6
+
 ## [0.17.0](https://github.com/storm-software/storm-stack/releases/tag/plugin-log-otel%400.17.0) (2025-06-23)
 
 ### Features

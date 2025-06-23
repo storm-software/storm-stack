@@ -2,6 +2,17 @@
 
 # Changelog for Storm Stack - ESLint Config
 
+## [0.10.2](https://github.com/storm-software/storm-stack/releases/tag/eslint-config%400.10.2) (2025-06-23)
+
+### Source Code Improvements
+
+- **core:** Remove references to removed `Preset` plugin types
+  ([02ede5c1](https://github.com/storm-software/storm-stack/commit/02ede5c1))
+
+### Updated Dependencies
+
+- Updated eslint-plugin to 0.10.2
+
 ## [0.10.1](https://github.com/storm-software/storm-stack/releases/tag/eslint-config%400.10.1) (2025-06-18)
 
 ### Miscellaneous

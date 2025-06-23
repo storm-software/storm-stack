@@ -2,6 +2,19 @@
 
 # Changelog for Storm Stack - Core
 
+## [0.31.1](https://github.com/storm-software/storm-stack/releases/tag/core%400.31.1) (2025-06-23)
+
+### Source Code Improvements
+
+- **core:** Remove references to removed `Preset` plugin types
+  ([02ede5c1](https://github.com/storm-software/storm-stack/commit/02ede5c1))
+- **core:** Reduce the usage of the `Options` type parameter
+  ([ba02dc99](https://github.com/storm-software/storm-stack/commit/ba02dc99))
+
+### Updated Dependencies
+
+- Updated types to 0.14.1
+
 ## [0.31.0](https://github.com/storm-software/storm-stack/releases/tag/core%400.31.0) (2025-06-23)
 
 ### Features
