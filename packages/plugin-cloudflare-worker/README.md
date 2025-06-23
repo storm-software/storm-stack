@@ -43,7 +43,7 @@ This package is part of the ⚡<b>Storm Stack</b> monorepo. Storm Stack packages
 
 <!-- END header -->
 
-# Storm Stack - Cloudflare Worker Preset
+# Storm Stack - Cloudflare Worker Plugin
 
 A package containing the Cloudflare Worker build preset for Storm Stack.
 
@@ -75,14 +75,14 @@ A package containing the Cloudflare Worker build preset for Storm Stack.
 Using [pnpm](http://pnpm.io):
 
 ```bash
-pnpm add -D @storm-stack/preset-cloudflare-worker
+pnpm add -D @storm-stack/plugin-cloudflare-worker
 ```
 
 <details>
   <summary>Using npm</summary>
 
 ```bash
-npm install -D @storm-stack/preset-cloudflare-worker
+npm install -D @storm-stack/plugin-cloudflare-worker
 ```
 
 </details>
@@ -91,7 +91,7 @@ npm install -D @storm-stack/preset-cloudflare-worker
   <summary>Using yarn</summary>
 
 ```bash
-yarn add -D @storm-stack/preset-cloudflare-worker
+yarn add -D @storm-stack/plugin-cloudflare-worker
 ```
 
 </details>
@@ -110,16 +110,16 @@ commands are available to assist in development.
 
 ### Building
 
-Run `nx build preset-cloudflare-worker` to build the library.
+Run `nx build plugin-cloudflare-worker` to build the library.
 
 ### Running unit tests
 
-Run `nx test preset-cloudflare-worker` to execute the unit tests via
+Run `nx test plugin-cloudflare-worker` to execute the unit tests via
 [Jest](https://jestjs.io).
 
 ### Linting
 
-Run `nx lint preset-cloudflare-worker` to run [ESLint](https://eslint.org/) on
+Run `nx lint plugin-cloudflare-worker` to run [ESLint](https://eslint.org/) on
 the package.
 
 <!-- START footer -->

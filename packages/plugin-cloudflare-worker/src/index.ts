@@ -25,16 +25,15 @@ import {
   isIncludeMatchFound,
   isMatchFound
 } from "@storm-stack/core/helpers/typescript";
+import { Plugin } from "@storm-stack/core/plugin";
 import {
   writeApp,
   writeContext,
   writeEvent
 } from "@storm-stack/core/prepare/runtime/node";
-import { Preset } from "@storm-stack/core/preset";
 import type {
   Context,
   EngineHooks,
-  Options,
   PluginConfig
 } from "@storm-stack/core/types";
 import { executePackage } from "@stryke/cli/execute";
@@ -57,9 +56,7 @@ import type { Environment } from "unenv";
 import { defineEnv } from "unenv";
 import { CLOUDFLARE_MODULES, DEFAULT_CONDITIONS } from "./helpers";
 
-export default class StormStackCloudflareWorkerPreset<
-  TOptions extends Options = Options
-> extends Preset<TOptions> {
+export default class StormStackCloudflareWorkerPlugin extends Plugin {
   #unenv: Environment;
 
   public override dependencies = [
@@ -72,7 +69,7 @@ export default class StormStackCloudflareWorkerPreset<
   ] as PluginConfig[];
 
   public constructor() {
-    super("cloudflare", "@storm-stack/preset-cloudflare-worker");
+    super("cloudflare", "@storm-stack/plugin-cloudflare-worker");
 
     const { env } = defineEnv({
       presets: [cloudflare]
@@ -80,7 +77,7 @@ export default class StormStackCloudflareWorkerPreset<
     this.#unenv = env;
   }
 
-  public addHooks(hooks: EngineHooks<TOptions>) {
+  public addHooks(hooks: EngineHooks) {
     hooks.addHooks({
       "clean:complete": this.clean.bind(this),
       "init:context": this.initContext.bind(this),
@@ -93,7 +90,7 @@ export default class StormStackCloudflareWorkerPreset<
     });
   }
 
-  protected async clean(context: Context<TOptions>) {
+  protected async clean(context: Context) {
     this.log(
       LogLevelLabel.TRACE,
       `Clean Cloudflare specific artifacts the Storm Stack project.`
@@ -119,7 +116,7 @@ export default class StormStackCloudflareWorkerPreset<
     }
   }
 
-  protected async initContext(context: Context<TOptions>) {
+  protected async initContext(context: Context) {
     this.log(
       LogLevelLabel.TRACE,
       `Resolving Storm Stack context for the project.`
@@ -179,7 +176,7 @@ export default class StormStackCloudflareWorkerPreset<
     }
   }
 
-  protected async initTsconfig(context: Context<TOptions>) {
+  protected async initTsconfig(context: Context) {
     const tsconfigFilePath = getTsconfigFilePath(
       context.options.projectRoot,
       context.options.tsconfig
@@ -261,12 +258,12 @@ export default class StormStackCloudflareWorkerPreset<
     }
 
     return this.writeFile(
-      context.options.tsconfig!,
+      context.options.tsconfig,
       StormJSON.stringify(tsconfigJson)
     );
   }
 
-  protected async prepareDirectories(context: Context<TOptions>) {
+  protected async prepareDirectories(context: Context) {
     this.log(
       LogLevelLabel.TRACE,
       `Preparing the Storm Stack directories for the Cloudflare Worker project.`
@@ -283,7 +280,7 @@ export default class StormStackCloudflareWorkerPreset<
     }
   }
 
-  protected async prepareConfig(context: Context<TOptions>) {
+  protected async prepareConfig(context: Context) {
     if (context.options.projectType === "application") {
       this.log(LogLevelLabel.TRACE, "Preparing the wrangler deployment file");
 
@@ -309,7 +306,7 @@ compatibility_flags = [ "nodejs_als" ]
 
       const wranglerFile = parseToml(wranglerFileContent);
 
-      wranglerFile.name ??= context.options.name!;
+      wranglerFile.name ??= context.options.name;
       wranglerFile.compatibility_date ??= new Date()
         .toISOString()
         .split("T")[0]!;
@@ -333,7 +330,7 @@ compatibility_flags = [ "nodejs_als" ]
     }
   }
 
-  protected async prepareTypes(context: Context<TOptions>) {
+  protected async prepareTypes(context: Context) {
     this.log(
       LogLevelLabel.TRACE,
       `Preparing the Cloudflare TypeScript declaration (d.ts) artifact for the Storm Stack project.`
@@ -350,7 +347,7 @@ compatibility_flags = [ "nodejs_als" ]
     );
   }
 
-  protected async prepareRuntime(context: Context<TOptions>) {
+  protected async prepareRuntime(context: Context) {
     this.log(
       LogLevelLabel.TRACE,
       `Preparing the runtime artifacts for the Storm Stack project.`
@@ -375,7 +372,7 @@ compatibility_flags = [ "nodejs_als" ]
     ]);
   }
 
-  protected async prepareEntry(context: Context<TOptions>) {
+  protected async prepareEntry(context: Context) {
     await Promise.all(
       context.entry.map(async entry => {
         this.log(

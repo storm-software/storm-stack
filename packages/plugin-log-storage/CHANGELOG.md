@@ -6,7 +6,7 @@
 
 ### Features
 
-- **preset-cli:** Added logic to persist command reflections to data directory
+- **plugin-cli:** Added logic to persist command reflections to data directory
   ([d96999c6](https://github.com/storm-software/storm-stack/commit/d96999c6))
 
 ### Updated Dependencies
@@ -121,7 +121,7 @@
 
 ### Features
 
-- **preset-cli:** Removed dependencies from generated package and implemented
+- **plugin-cli:** Removed dependencies from generated package and implemented
   banner and footer
 
 ### Updated Dependencies
@@ -146,7 +146,7 @@
 
 ### Features
 
-- **preset-cli:** Update output to dynamically import child commands
+- **plugin-cli:** Update output to dynamically import child commands
 
 ### Updated Dependencies
 
@@ -181,7 +181,7 @@
 
 ### Features
 
-- **preset-cli:** Added Variable Management commands generation and positional
+- **plugin-cli:** Added Variable Management commands generation and positional
   args
 
 ### Updated Dependencies
@@ -195,7 +195,7 @@
 
 ### Features
 
-- **preset-cli:** Added interactive prompts and env arguments to generated
+- **plugin-cli:** Added interactive prompts and env arguments to generated
   source code
 
 ### Updated Dependencies
@@ -412,7 +412,7 @@
 
 ### Features
 
-- **preset-cli:** Added .env logic for CLI arguments
+- **plugin-cli:** Added .env logic for CLI arguments
   ([cf281d99](https://github.com/storm-software/storm-stack/commit/cf281d99))
 
 ### Updated Dependencies
@@ -440,7 +440,7 @@
 
 ### Bug Fixes
 
-- **preset-cli:** Resolve issue writting output directory
+- **plugin-cli:** Resolve issue writting output directory
   ([bae1fefc](https://github.com/storm-software/storm-stack/commit/bae1fefc))
 
 ### Updated Dependencies
@@ -614,7 +614,7 @@
 
 ### Features
 
-- **preset-cli:** Added `log-storage` as the default logger
+- **plugin-cli:** Added `log-storage` as the default logger
   ([803cb1ff](https://github.com/storm-software/storm-stack/commit/803cb1ff))
 - **monorepo:** Added `devenv` to repository
   ([f442b14f](https://github.com/storm-software/storm-stack/commit/f442b14f))

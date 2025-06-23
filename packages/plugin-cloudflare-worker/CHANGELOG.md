@@ -1,26 +1,26 @@
 ![Storm Software](https://public.storm-cdn.com/brand-banner.png)
 
-# Changelog for Storm Stack - Preset Cloudflare Worker
+# Changelog for Storm Stack - Plugin Cloudflare Worker
 
-## [0.16.0](https://github.com/storm-software/storm-stack/releases/tag/preset-cloudflare-worker%400.16.0) (2025-06-23)
+## [0.16.0](https://github.com/storm-software/storm-stack/releases/tag/plugin-cloudflare-worker%400.16.0) (2025-06-23)
 
 ### Features
 
-- **preset-cli:** Added logic to persist command reflections to data directory
+- **plugin-cli:** Added logic to persist command reflections to data directory
   ([d96999c6](https://github.com/storm-software/storm-stack/commit/d96999c6))
 
 ### Updated Dependencies
 
 - Updated core to 0.31.0
 
-## [0.15.3](https://github.com/storm-software/storm-stack/releases/tag/preset-cloudflare-worker%400.15.3) (2025-06-20)
+## [0.15.3](https://github.com/storm-software/storm-stack/releases/tag/plugin-cloudflare-worker%400.15.3) (2025-06-20)
 
 ### Miscellaneous
 
 - **monorepo:** Update workspace package links
   ([d9514133](https://github.com/storm-software/storm-stack/commit/d9514133))
 
-## [0.15.2](https://github.com/storm-software/storm-stack/releases/tag/preset-cloudflare-worker%400.15.2) (2025-06-20)
+## [0.15.2](https://github.com/storm-software/storm-stack/releases/tag/plugin-cloudflare-worker%400.15.2) (2025-06-20)
 
 ### Miscellaneous
 
@@ -31,7 +31,7 @@
 
 - Updated core to 0.30.0
 
-## [0.15.1](https://github.com/storm-software/storm-stack/releases/tag/preset-cloudflare-worker%400.15.1) (2025-06-18)
+## [0.15.1](https://github.com/storm-software/storm-stack/releases/tag/plugin-cloudflare-worker%400.15.1) (2025-06-18)
 
 ### Miscellaneous
 
@@ -42,7 +42,7 @@
 
 - Updated core to 0.29.1
 
-## [0.15.0](https://github.com/storm-software/storm-stack/releases/tag/preset-cloudflare-worker%400.15.0) (2025-06-17)
+## [0.15.0](https://github.com/storm-software/storm-stack/releases/tag/plugin-cloudflare-worker%400.15.0) (2025-06-17)
 
 ### Features
 
@@ -58,7 +58,7 @@
 - Updated core to 0.29.0
 - Updated core to 0.29.0
 
-## [0.14.1](https://github.com/storm-software/storm-stack/releases/tag/preset-cloudflare-worker%400.14.1) (2025-06-08)
+## [0.14.1](https://github.com/storm-software/storm-stack/releases/tag/plugin-cloudflare-worker%400.14.1) (2025-06-08)
 
 ### Miscellaneous
 
@@ -69,7 +69,7 @@
 - Updated core to 0.27.1
 - Updated core to 0.27.1
 
-## [0.14.0](https://github.com/storm-software/storm-stack/releases/tag/preset-cloudflare-worker%400.14.0) (2025-06-07)
+## [0.14.0](https://github.com/storm-software/storm-stack/releases/tag/plugin-cloudflare-worker%400.14.0) (2025-06-07)
 
 ### Features
 
@@ -80,7 +80,7 @@
 - Updated core to 0.26.0
 - Updated core to 0.26.0
 
-## [0.13.0](https://github.com/storm-software/storm-stack/releases/tag/preset-cloudflare-worker%400.13.0) (2025-06-04)
+## [0.13.0](https://github.com/storm-software/storm-stack/releases/tag/plugin-cloudflare-worker%400.13.0) (2025-06-04)
 
 ### Features
 
@@ -95,7 +95,7 @@
 - Updated core to 0.25.0
 - Updated core to 0.25.0
 
-## [0.12.4](https://github.com/storm-software/storm-stack/releases/tag/preset-cloudflare-worker%400.12.4) (2025-05-28)
+## [0.12.4](https://github.com/storm-software/storm-stack/releases/tag/plugin-cloudflare-worker%400.12.4) (2025-05-28)
 
 ### Miscellaneous
 
@@ -106,7 +106,7 @@
 - Updated core to 0.24.0
 - Updated core to 0.24.0
 
-## [0.12.3](https://github.com/storm-software/storm-stack/releases/tag/preset-cloudflare-worker%400.12.3) (2025-05-25)
+## [0.12.3](https://github.com/storm-software/storm-stack/releases/tag/plugin-cloudflare-worker%400.12.3) (2025-05-25)
 
 ### Bug Fixes
 
@@ -117,13 +117,13 @@
 - Updated core to 0.22.1
 - Updated core to 0.22.1
 
-## [0.12.2](https://github.com/storm-software/storm-stack/releases/tag/preset-cloudflare-worker%400.12.2) (2025-05-24)
+## [0.12.2](https://github.com/storm-software/storm-stack/releases/tag/plugin-cloudflare-worker%400.12.2) (2025-05-24)
 
 ### Miscellaneous
 
 - **monorepo:** Update workspace package links
 
-## [0.12.1](https://github.com/storm-software/storm-stack/releases/tag/preset-cloudflare-worker%400.12.1) (2025-05-23)
+## [0.12.1](https://github.com/storm-software/storm-stack/releases/tag/plugin-cloudflare-worker%400.12.1) (2025-05-23)
 
 ### Miscellaneous
 
@@ -134,11 +134,11 @@
 - Updated core to 0.20.0
 - Updated core to 0.20.0
 
-## [0.12.0](https://github.com/storm-software/storm-stack/releases/tag/preset-cloudflare-worker%400.12.0) (2025-05-23)
+## [0.12.0](https://github.com/storm-software/storm-stack/releases/tag/plugin-cloudflare-worker%400.12.0) (2025-05-23)
 
 ### Features
 
-- **preset-cli:** Added Variable Management commands generation and positional
+- **plugin-cli:** Added Variable Management commands generation and positional
   args
 
 ### Updated Dependencies
@@ -146,11 +146,11 @@
 - Updated core to 0.19.0
 - Updated core to 0.19.0
 
-## [0.11.0](https://github.com/storm-software/storm-stack/releases/tag/preset-cloudflare-worker%400.11.0) (2025-05-22)
+## [0.11.0](https://github.com/storm-software/storm-stack/releases/tag/plugin-cloudflare-worker%400.11.0) (2025-05-22)
 
 ### Features
 
-- **preset-cli:** Added interactive prompts and env arguments to generated
+- **plugin-cli:** Added interactive prompts and env arguments to generated
   source code
 
 ### Updated Dependencies
@@ -158,13 +158,13 @@
 - Updated core to 0.18.0
 - Updated core to 0.18.0
 
-## [0.10.1](https://github.com/storm-software/storm-stack/releases/tag/preset-cloudflare-worker%400.10.1) (2025-05-13)
+## [0.10.1](https://github.com/storm-software/storm-stack/releases/tag/plugin-cloudflare-worker%400.10.1) (2025-05-13)
 
 ### Miscellaneous
 
 - **monorepo:** Update workspace package links
 
-## [0.10.0](https://github.com/storm-software/storm-stack/releases/tag/preset-cloudflare-worker%400.10.0) (2025-05-13)
+## [0.10.0](https://github.com/storm-software/storm-stack/releases/tag/plugin-cloudflare-worker%400.10.0) (2025-05-13)
 
 ### Features
 
@@ -179,7 +179,7 @@
 - Updated core to 0.17.0
 - Updated core to 0.17.0
 
-## [0.9.0](https://github.com/storm-software/storm-stack/releases/tag/preset-cloudflare-worker%400.9.0) (2025-05-13)
+## [0.9.0](https://github.com/storm-software/storm-stack/releases/tag/plugin-cloudflare-worker%400.9.0) (2025-05-13)
 
 ### Features
 
@@ -190,13 +190,13 @@
 - Updated core to 0.16.0
 - Updated core to 0.16.0
 
-## [0.8.3](https://github.com/storm-software/storm-stack/releases/tag/preset-cloudflare-worker%400.8.3) (2025-05-08)
+## [0.8.3](https://github.com/storm-software/storm-stack/releases/tag/plugin-cloudflare-worker%400.8.3) (2025-05-08)
 
 ### Miscellaneous
 
 - **monorepo:** Update workspace package links
 
-## [0.8.2](https://github.com/storm-software/storm-stack/releases/tag/preset-cloudflare-worker%400.8.2) (2025-05-08)
+## [0.8.2](https://github.com/storm-software/storm-stack/releases/tag/plugin-cloudflare-worker%400.8.2) (2025-05-08)
 
 ### Miscellaneous
 
@@ -206,14 +206,14 @@
 
 - Updated core to 0.15.1
 
-## [0.8.1](https://github.com/storm-software/storm-stack/releases/tag/preset-cloudflare-worker%400.8.1) (2025-05-06)
+## [0.8.1](https://github.com/storm-software/storm-stack/releases/tag/plugin-cloudflare-worker%400.8.1) (2025-05-06)
 
 ### Miscellaneous
 
 - **monorepo:** Added missing dependencies to packages
   ([6ce71cc6](https://github.com/storm-software/storm-stack/commit/6ce71cc6))
 
-## [0.8.0](https://github.com/storm-software/storm-stack/releases/tag/preset-cloudflare-worker%400.8.0) (2025-04-29)
+## [0.8.0](https://github.com/storm-software/storm-stack/releases/tag/plugin-cloudflare-worker%400.8.0) (2025-04-29)
 
 ### Features
 
@@ -225,21 +225,21 @@
 - **monorepo:** Update banners on source files
   ([49367b8e](https://github.com/storm-software/storm-stack/commit/49367b8e))
 
-## [0.7.2](https://github.com/storm-software/storm-stack/releases/tag/preset-cloudflare-worker%400.7.2) (2025-04-25)
+## [0.7.2](https://github.com/storm-software/storm-stack/releases/tag/plugin-cloudflare-worker%400.7.2) (2025-04-25)
 
 ### Miscellaneous
 
 - **monorepo:** Clean up the workspace package linking
   ([a046139f](https://github.com/storm-software/storm-stack/commit/a046139f))
 
-## [0.7.1](https://github.com/storm-software/storm-stack/releases/tag/preset-cloudflare-worker%400.7.1) (2025-04-25)
+## [0.7.1](https://github.com/storm-software/storm-stack/releases/tag/plugin-cloudflare-worker%400.7.1) (2025-04-25)
 
 ### Miscellaneous
 
 - **monorepo:** Update workspace configuration to use pnpm for publish
   ([c9fd85a0](https://github.com/storm-software/storm-stack/commit/c9fd85a0))
 
-## [0.5.0](https://github.com/storm-software/storm-stack/releases/tag/preset-cloudflare-worker%400.5.0) (2025-04-23)
+## [0.5.0](https://github.com/storm-software/storm-stack/releases/tag/plugin-cloudflare-worker%400.5.0) (2025-04-23)
 
 ### Features
 
@@ -251,14 +251,14 @@
 - Updated plugin-node to 0.6.0
 - Updated core to 0.6.0
 
-## [0.4.3](https://github.com/storm-software/storm-stack/releases/tag/preset-cloudflare-worker%400.4.3) (2025-04-18)
+## [0.4.3](https://github.com/storm-software/storm-stack/releases/tag/plugin-cloudflare-worker%400.4.3) (2025-04-18)
 
 ### Updated Dependencies
 
 - Updated plugin-node to 0.5.0
 - Updated core to 0.5.0
 
-## [0.4.2](https://github.com/storm-software/storm-stack/releases/tag/preset-cloudflare-worker%400.4.2) (2025-04-14)
+## [0.4.2](https://github.com/storm-software/storm-stack/releases/tag/plugin-cloudflare-worker%400.4.2) (2025-04-14)
 
 ### Miscellaneous
 
@@ -272,7 +272,7 @@
 - Updated plugin-node to 0.4.2
 - Updated core to 0.4.2
 
-## [0.4.1](https://github.com/storm-software/storm-stack/releases/tag/preset-cloudflare-worker%400.4.1) (2025-04-13)
+## [0.4.1](https://github.com/storm-software/storm-stack/releases/tag/plugin-cloudflare-worker%400.4.1) (2025-04-13)
 
 ### Miscellaneous
 
@@ -284,7 +284,7 @@
 - Updated plugin-node to 0.4.1
 - Updated core to 0.4.1
 
-## [0.4.0](https://github.com/storm-software/storm-stack/releases/tag/preset-cloudflare-worker%400.4.0) (2025-04-13)
+## [0.4.0](https://github.com/storm-software/storm-stack/releases/tag/plugin-cloudflare-worker%400.4.0) (2025-04-13)
 
 ### Features
 
@@ -303,7 +303,7 @@
 - Updated plugin-node to 0.4.0
 - Updated core to 0.4.0
 
-## [0.3.0](https://github.com/storm-software/storm-stack/releases/tag/preset-cloudflare-worker%400.3.0) (2025-04-07)
+## [0.3.0](https://github.com/storm-software/storm-stack/releases/tag/plugin-cloudflare-worker%400.3.0) (2025-04-07)
 
 ### Features
 
@@ -315,7 +315,7 @@
 - Updated plugin-node to 0.3.0
 - Updated core to 0.3.0
 
-## [0.2.0](https://github.com/storm-software/storm-stack/releases/tag/preset-cloudflare-worker%400.2.0) (2025-04-07)
+## [0.2.0](https://github.com/storm-software/storm-stack/releases/tag/plugin-cloudflare-worker%400.2.0) (2025-04-07)
 
 ### Features
 
@@ -327,7 +327,7 @@
 - Updated plugin-node to 0.2.0
 - Updated core to 0.2.0
 
-## [0.1.1](https://github.com/storm-software/storm-stack/releases/tag/preset-cloudflare-worker%400.1.1) (2025-04-07)
+## [0.1.1](https://github.com/storm-software/storm-stack/releases/tag/plugin-cloudflare-worker%400.1.1) (2025-04-07)
 
 ### Miscellaneous
 
@@ -339,7 +339,7 @@
 - Updated plugin-node to 0.1.1
 - Updated storm-stack to 0.1.1
 
-## [0.1.0](https://github.com/storm-software/storm-stack/releases/tag/preset-cloudflare-worker%400.1.0) (2025-04-07)
+## [0.1.0](https://github.com/storm-software/storm-stack/releases/tag/plugin-cloudflare-worker%400.1.0) (2025-04-07)
 
 ### Updated Dependencies
 
