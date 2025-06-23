@@ -19,7 +19,7 @@
 import { LogLevelLabel } from "@storm-software/config-tools/types";
 import { joinPaths } from "@stryke/path/join-paths";
 import { writeFile } from "../../helpers/utilities/write-file";
-import type { Context, EngineHooks, Options } from "../../types/build";
+import type { Context, EngineHooks } from "../../types/build";
 import type { LogFn } from "../../types/config";
 import { writeApp } from "./node/app";
 import { writeContext } from "./node/context";
@@ -33,10 +33,10 @@ import { writeInit } from "./shared/init";
 import { writeLog } from "./shared/log";
 import { writeStorage } from "./shared/storage";
 
-export async function prepareRuntime<TOptions extends Options = Options>(
+export async function prepareRuntime(
   log: LogFn,
-  context: Context<TOptions>,
-  hooks: EngineHooks<TOptions>
+  context: Context,
+  hooks: EngineHooks
 ) {
   log(
     LogLevelLabel.TRACE,

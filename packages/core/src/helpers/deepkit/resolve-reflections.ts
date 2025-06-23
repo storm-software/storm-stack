@@ -17,7 +17,7 @@
  ------------------------------------------------------------------- */
 
 import { joinPaths } from "@stryke/path/join-paths";
-import type { Context, Options } from "../../types/build";
+import type { Context } from "../../types/build";
 
 /**
  * Returns the path to the reflections artifact directory.
@@ -25,8 +25,6 @@ import type { Context, Options } from "../../types/build";
  * @param context - The context object containing the environment paths.
  * @returns The path to the reflections artifact directory.
  */
-export function getReflectionsPath<TOptions extends Options = Options>(
-  context: Context<TOptions>
-): string {
+export function getReflectionsPath(context: Context): string {
   return joinPaths(context.dataPath, "reflections");
 }

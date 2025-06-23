@@ -39,17 +39,14 @@ import type {
   CompilerResult,
   Context,
   ICompiler,
-  Options,
   SourceFile,
   TranspileOptions
 } from "./types/build";
 
-export class Compiler<TOptions extends Options = Options>
-  implements ICompiler<TOptions>
-{
+export class Compiler implements ICompiler {
   #cache: WeakMap<SourceFile, string> = new WeakMap();
 
-  #options: CompilerOptions<TOptions>;
+  #options: CompilerOptions;
 
   /**
    * The logger function to use
@@ -61,10 +58,7 @@ export class Compiler<TOptions extends Options = Options>
    */
   protected cacheDir: string;
 
-  constructor(
-    context: Context<TOptions>,
-    options: CompilerOptions<TOptions> = {}
-  ) {
+  constructor(context: Context, options: CompilerOptions = {}) {
     this.log = createLog("compiler", context.options);
     this.#options = options;
 
@@ -84,10 +78,10 @@ export class Compiler<TOptions extends Options = Options>
    * @returns The transpiled module.
    */
   public async transform(
-    context: Context<TOptions>,
+    context: Context,
     id: string,
     code: string | MagicString,
-    options: TranspileOptions<TOptions> = {}
+    options: TranspileOptions = {}
   ): Promise<string> {
     this.log(LogLevelLabel.TRACE, `Transforming ${id}`);
 
@@ -108,11 +102,11 @@ export class Compiler<TOptions extends Options = Options>
       }
 
       if (!options.skipDotenvTransform) {
-        source = await transformConfig<TOptions>(this.log, source, context);
+        source = await transformConfig(this.log, source, context);
       }
 
       if (!options.skipErrorsTransform) {
-        source = await transformErrors<TOptions>(this.log, source, context);
+        source = await transformErrors(this.log, source, context);
       }
 
       if (
@@ -160,10 +154,10 @@ export class Compiler<TOptions extends Options = Options>
    * @returns The transpiled module.
    */
   public async transpile(
-    context: Context<TOptions>,
+    context: Context,
     id: string,
     code: string | MagicString,
-    options: TranspileOptions<TOptions> = {}
+    options: TranspileOptions = {}
   ): Promise<string> {
     const source = this.getSourceFile(id, code);
 
@@ -179,10 +173,10 @@ export class Compiler<TOptions extends Options = Options>
    * @returns The compiled source code and source map.
    */
   public async compile(
-    context: Context<TOptions>,
+    context: Context,
     id: string,
     code: string | MagicString,
-    options: CompileOptions<TOptions> = {}
+    options: CompileOptions = {}
   ): Promise<string> {
     this.log(LogLevelLabel.TRACE, `Compiling ${id}`);
 
@@ -237,7 +231,7 @@ export class Compiler<TOptions extends Options = Options>
     return generateSourceMap(sourceFile.id, sourceFile.code, transpiled);
   }
 
-  protected async getCache(context: Context<TOptions>, sourceFile: SourceFile) {
+  protected async getCache(context: Context, sourceFile: SourceFile) {
     let cache = this.#cache.get(sourceFile);
     if (cache) {
       return cache;
@@ -256,7 +250,7 @@ export class Compiler<TOptions extends Options = Options>
   }
 
   protected async setCache(
-    context: Context<TOptions>,
+    context: Context,
     sourceFile: SourceFile,
     transpiled?: string
   ) {
@@ -282,9 +276,9 @@ export class Compiler<TOptions extends Options = Options>
    * @returns The transpiled module.
    */
   protected async transpileModule(
-    context: Context<TOptions>,
+    context: Context,
     source: SourceFile,
-    options: TranspileOptions<TOptions> = {}
+    options: TranspileOptions = {}
   ): Promise<string> {
     this.log(
       LogLevelLabel.TRACE,

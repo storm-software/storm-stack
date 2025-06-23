@@ -17,7 +17,7 @@
  ------------------------------------------------------------------- */
 
 import { LogLevelLabel } from "@storm-software/config-tools/types";
-import type { Context, EngineHooks, Options } from "@storm-stack/core/types";
+import type { Context, EngineHooks } from "@storm-stack/core/types";
 import type { LogLevel } from "@storm-stack/types/shared/log";
 import { joinPaths } from "@stryke/path/join-paths";
 import { camelCase } from "@stryke/string-format/camel-case";
@@ -29,9 +29,7 @@ export interface LogPluginConfig {
   namespace?: string;
 }
 
-export default abstract class LogPlugin<
-  TOptions extends Options = Options
-> extends LibraryPlugin<TOptions> {
+export default abstract class LogPlugin extends LibraryPlugin {
   public constructor(
     protected override config: LogPluginConfig,
     name: string,
@@ -42,7 +40,7 @@ export default abstract class LogPlugin<
     this.config.logLevel ??= "info";
   }
 
-  public override addHooks(hooks: EngineHooks<TOptions>) {
+  public override addHooks(hooks: EngineHooks) {
     super.addHooks(hooks);
 
     hooks.addHooks({
@@ -56,11 +54,9 @@ export default abstract class LogPlugin<
    *
    * @param context - The context to use
    */
-  protected abstract writeSink(
-    context: Context<TOptions>
-  ): MaybePromise<string>;
+  protected abstract writeSink(context: Context): MaybePromise<string>;
 
-  async #prepareRuntime(context: Context<TOptions>) {
+  async #prepareRuntime(context: Context) {
     this.log(LogLevelLabel.TRACE, `Prepare the Storm Stack logging project.`);
 
     if (context.options.projectType === "application") {
@@ -75,7 +71,7 @@ export default abstract class LogPlugin<
     }
   }
 
-  async #initContext(context: Context<TOptions>) {
+  async #initContext(context: Context) {
     this.log(
       LogLevelLabel.TRACE,
       `Loading the ${this.name} plugin into the context.`

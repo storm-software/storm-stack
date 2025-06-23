@@ -21,7 +21,7 @@ import { StormJSON } from "@stryke/json/storm-json";
 import { joinPaths } from "@stryke/path/join-paths";
 import { getParsedTypeScriptConfig } from "../helpers/typescript/tsconfig";
 import { writeFile } from "../helpers/utilities/write-file";
-import type { Context, EngineHooks, Options } from "../types/build";
+import type { Context, EngineHooks } from "../types/build";
 import type { LogFn } from "../types/config";
 import { prepareConfig } from "./config";
 import { prepareDirectories } from "./directories";
@@ -31,10 +31,10 @@ import { prepareReflections } from "./reflections";
 import { prepareRuntime } from "./runtime";
 import { prepareTypes } from "./types";
 
-export async function prepare<TOptions extends Options = Options>(
+export async function prepare(
   log: LogFn,
-  context: Context<TOptions>,
-  hooks: EngineHooks<TOptions>
+  context: Context,
+  hooks: EngineHooks
 ) {
   await writeFile(
     log,

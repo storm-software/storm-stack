@@ -32,11 +32,10 @@ import type { CompileOptions, Context, Options } from "../../types/build";
 import { bundle } from "../esbuild/bundle";
 import { resolvePath } from "../utilities/resolve-path";
 
-export type ResolveTypeOptions<TOptions extends Options = Options> =
-  CompileOptions &
-    Pick<TOptions, "external" | "noExternal" | "skipNodeModulesBundle"> & {
-      overrides?: Partial<BuildOptions>;
-    };
+export type ResolveTypeOptions = CompileOptions &
+  Pick<Options, "external" | "noExternal" | "skipNodeModulesBundle"> & {
+    overrides?: Partial<BuildOptions>;
+  };
 
 /**
  * Compiles a type definition to a module.
@@ -45,13 +44,10 @@ export type ResolveTypeOptions<TOptions extends Options = Options> =
  * @param entry - The type definition to compile.
  * @returns A promise that resolves to the compiled module.
  */
-export async function resolveType<
-  TOptions extends Options = Options,
-  TResult = any
->(
-  context: Context<TOptions>,
+export async function resolveType<TResult = any>(
+  context: Context,
   entry: TypeDefinition,
-  options: ResolveTypeOptions<TOptions> = {}
+  options: ResolveTypeOptions = {}
 ): Promise<TResult> {
   const transpilePath = joinPaths(
     context.artifactsPath,
@@ -124,10 +120,10 @@ export async function resolveType<
  * @param options - The options for resolving the type.
  * @returns A promise that resolves to the compiled module.
  */
-export async function reflectType<TOptions extends Options = Options>(
-  context: Context<TOptions>,
+export async function reflectType(
+  context: Context,
   entry: TypeDefinition,
-  options: ResolveTypeOptions<TOptions> = {}
+  options: ResolveTypeOptions = {}
 ): Promise<Type> {
   return reflect(await resolveType(context, entry, options));
 }

@@ -25,7 +25,6 @@ import {
 } from "@storm-stack/core/helpers/dotenv/persistence";
 import { getFileHeader } from "@storm-stack/core/helpers/utilities/file-header";
 import { writeFile } from "@storm-stack/core/helpers/utilities/write-file";
-import type { Context, Options } from "@storm-stack/core/types/build";
 import type { LogFn } from "@storm-stack/core/types/config";
 import {
   findFileExtension,
@@ -54,7 +53,7 @@ import {
   writeConfigList,
   writeConfigSet
 } from "../runtime/config";
-import type { StormStackCLIPresetContext } from "../types/build";
+import { StormStackCLIPresetContext } from "../types/build";
 import type { StormStackCLIPresetConfig } from "../types/config";
 import type { Command } from "../types/reflection";
 import {
@@ -65,9 +64,9 @@ import {
 import { reflectCommandTree } from "./reflect-command";
 import { extractAuthor, sortArgAliases, sortArgs } from "./utilities";
 
-async function writeCommandEntryUsage<TOptions extends Options = Options>(
+async function writeCommandEntryUsage(
   log: LogFn,
-  context: Context<TOptions>,
+  context: StormStackCLIPresetContext,
   command: Command,
   config: StormStackCLIPresetConfig,
   description: string
@@ -290,9 +289,9 @@ ${commandsColumn1
   );
 }
 
-async function writeCommandEntryHandler<TOptions extends Options = Options>(
+async function writeCommandEntryHandler(
   log: LogFn,
-  context: Context<TOptions>,
+  context: StormStackCLIPresetContext,
   command: Command,
   config: StormStackCLIPresetConfig,
   description: string
@@ -623,9 +622,9 @@ export default handler;
   );
 }
 
-async function writeCommandEntry<TOptions extends Options = Options>(
+async function writeCommandEntry(
   log: LogFn,
-  context: Context<TOptions>,
+  context: StormStackCLIPresetContext,
   command: Command,
   config: StormStackCLIPresetConfig
 ) {
@@ -644,9 +643,9 @@ async function writeCommandEntry<TOptions extends Options = Options>(
   await writeCommandEntryHandler(log, context, command, config, description);
 }
 
-async function writeVirtualCommandEntry<TOptions extends Options = Options>(
+async function writeVirtualCommandEntry(
   log: LogFn,
-  context: Context<TOptions>,
+  context: StormStackCLIPresetContext,
   command: Command,
   _config: StormStackCLIPresetConfig
 ) {
@@ -937,9 +936,9 @@ export default handler;
   );
 }
 
-async function prepareCommandDefinition<TOptions extends Options = Options>(
+async function prepareCommandDefinition(
   log: LogFn,
-  context: Context<TOptions>,
+  context: StormStackCLIPresetContext,
   command: Command,
   config: StormStackCLIPresetConfig
 ) {
@@ -967,9 +966,9 @@ async function prepareCommandDefinition<TOptions extends Options = Options>(
   return writeCommandEntry(log, context, command, config);
 }
 
-async function generateConfigCommands<TOptions extends Options = Options>(
+async function generateConfigCommands(
   log: LogFn,
-  context: StormStackCLIPresetContext<TOptions>,
+  context: StormStackCLIPresetContext,
   config: StormStackCLIPresetConfig
 ) {
   if (config.manageConfig === false) {
@@ -1027,9 +1026,9 @@ async function generateConfigCommands<TOptions extends Options = Options>(
   }
 }
 
-async function generateCompletionCommands<TOptions extends Options = Options>(
+async function generateCompletionCommands(
   log: LogFn,
-  context: StormStackCLIPresetContext<TOptions>,
+  context: StormStackCLIPresetContext,
   config: StormStackCLIPresetConfig
 ) {
   if (config.manageConfig === false) {
@@ -1065,9 +1064,9 @@ async function generateCompletionCommands<TOptions extends Options = Options>(
   }
 }
 
-export async function prepareRuntime<TOptions extends Options = Options>(
+export async function prepareRuntime(
   log: LogFn,
-  context: StormStackCLIPresetContext<TOptions>,
+  context: StormStackCLIPresetContext,
   config: StormStackCLIPresetConfig
 ) {
   await Promise.all([
@@ -1086,9 +1085,9 @@ export async function prepareRuntime<TOptions extends Options = Options>(
   ]);
 }
 
-export async function prepareEntry<TOptions extends Options = Options>(
+export async function prepareEntry(
   log: LogFn,
-  context: StormStackCLIPresetContext<TOptions>,
+  context: StormStackCLIPresetContext,
   config: StormStackCLIPresetConfig
 ) {
   const commandTree = await readCommandTreeReflection(context, config);
@@ -1305,8 +1304,8 @@ await main();
   );
 }
 
-async function addCommandArgReflections<TOptions extends Options = Options>(
-  context: Context<TOptions>,
+async function addCommandArgReflections(
+  context: StormStackCLIPresetContext,
   reflection: ReflectionClass<any>,
   command: Command
 ) {
@@ -1360,9 +1359,9 @@ async function addCommandArgReflections<TOptions extends Options = Options>(
   }
 }
 
-export async function prepareReflections<TOptions extends Options = Options>(
+export async function prepareReflections(
   log: LogFn,
-  context: StormStackCLIPresetContext<TOptions>,
+  context: StormStackCLIPresetContext,
   config: StormStackCLIPresetConfig
 ) {
   const commandTree = await reflectCommandTree(log, context, config);

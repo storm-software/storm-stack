@@ -23,13 +23,13 @@ import { existsSync } from "@stryke/path/exists";
 import { joinPaths } from "@stryke/path/join-paths";
 import { readDotenvReflection } from "../../helpers/dotenv/persistence";
 import { writeFile } from "../../helpers/utilities/write-file";
-import type { Context, EngineHooks, Options } from "../../types/build";
+import type { Context, EngineHooks } from "../../types/build";
 import type { LogFn } from "../../types/config";
 
-export async function docsDotenv<TOptions extends Options = Options>(
+export async function docsDotenv(
   log: LogFn,
-  context: Context<TOptions>,
-  hooks: EngineHooks<TOptions>
+  context: Context,
+  hooks: EngineHooks
 ) {
   log(
     LogLevelLabel.TRACE,

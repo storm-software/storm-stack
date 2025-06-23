@@ -20,11 +20,9 @@ import { kebabCase } from "@stryke/string-format/kebab-case";
 import { titleCase } from "@stryke/string-format/title-case";
 import { isSetString } from "@stryke/type-checks/is-set-string";
 import { getFileHeader } from "../../../helpers/utilities/file-header";
-import type { Context, Options } from "../../../types/build";
+import type { Context } from "../../../types/build";
 
-export function writeEnv<TOptions extends Options = Options>(
-  context: Context<TOptions>
-) {
+export function writeEnv(context: Context) {
   return `
 /**
  * This module provides the runtime environment information for the Storm Stack application.

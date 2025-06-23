@@ -17,11 +17,9 @@
  ------------------------------------------------------------------- */
 
 import { getFileHeader } from "../../../helpers/utilities/file-header";
-import type { Context, Options } from "../../../types/build";
+import type { Context } from "../../../types/build";
 
-export function writeStorage<TOptions extends Options = Options>(
-  context: Context<TOptions>
-) {
+export function writeStorage(context: Context) {
   return `
 /**
  * The storage module provides a unified storage interface for the Storm Stack runtime.

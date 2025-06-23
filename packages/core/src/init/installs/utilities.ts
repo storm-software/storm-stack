@@ -5,11 +5,11 @@
  This code was released as part of the Storm Stack project. Storm Stack
  is maintained by Storm Software under the Apache-2.0 license, and is
  free for commercial and private use. For more information, please visit
- our licensing page at https://stormsoftware.com/projects/storm-stack/license.
+ our licensing page at https://stormsoftware.com/license.
 
  Website:                  https://stormsoftware.com
  Repository:               https://github.com/storm-software/storm-stack
- Documentation:            https://stormsoftware.com/projects/storm-stack/docs
+ Documentation:            https://docs.stormsoftware.com/projects/storm-stack
  Contact:                  https://stormsoftware.com/contact
 
  SPDX-License-Identifier:  Apache-2.0
@@ -20,7 +20,7 @@ import { LogLevelLabel } from "@storm-software/config-tools/types";
 import { install } from "@stryke/fs/install";
 import { isPackageListed } from "@stryke/fs/package-fns";
 import { isNumber } from "@stryke/type-checks/is-number";
-import type { Context, Options } from "../../types/build";
+import type { Context } from "../../types/build";
 import type { LogFn } from "../../types/config";
 
 /**
@@ -31,9 +31,9 @@ import type { LogFn } from "../../types/config";
  * @param packageName - The name of the package to install
  * @param dev - Whether to install the package as a dev dependency
  */
-export async function installPackage<TOptions extends Options = Options>(
+export async function installPackage(
   log: LogFn,
-  context: Context<TOptions>,
+  context: Context,
   packageName: string,
   dev = false
 ) {
@@ -74,9 +74,9 @@ export async function installPackage<TOptions extends Options = Options>(
  * @param context - The resolved options
  * @param packages - The list of packages to install
  */
-export async function installPackages<TOptions extends Options = Options>(
+export async function installPackages(
   log: LogFn,
-  context: Context<TOptions>,
+  context: Context,
   packages: Array<{ name: string; dev?: boolean }>
 ) {
   return Promise.all(

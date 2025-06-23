@@ -65,7 +65,7 @@ const loadEnvDirectory = async <
   dotenv: ResolvedDotenvOptions,
   cacheDir: string,
   packageJson: PackageJson,
-  workspaceConfig: Context<TOptions>["workspaceConfig"]
+  workspaceConfig: Context["workspaceConfig"]
 ): Promise<TEnv> => {
   const [envResult, c12Result] = await Promise.all([
     loadEnvFiles<TOptions, TEnv>(options, directory, dotenv),
@@ -100,7 +100,7 @@ export const loadEnv = async <
   cacheDir: string,
   configDir: string,
   packageJson: PackageJson,
-  workspaceConfig: Context<TOptions>["workspaceConfig"]
+  workspaceConfig: Context["workspaceConfig"]
 ): Promise<TEnv> => {
   const [project, workspace, config] = await Promise.all([
     loadEnvDirectory<TOptions, TEnv>(

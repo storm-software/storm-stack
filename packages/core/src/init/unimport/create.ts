@@ -23,20 +23,12 @@ import { StormJSON } from "@stryke/json/storm-json";
 import { existsSync, findFilePath, joinPaths } from "@stryke/path/index";
 import { createUnimport as createUnimportExt } from "unimport";
 import { writeFile } from "../../helpers/utilities/write-file";
-import type {
-  Context,
-  Options,
-  SourceFile,
-  UnimportContext
-} from "../../types/build";
+import type { Context, SourceFile, UnimportContext } from "../../types/build";
 import type { LogFn } from "../../types/config";
 
 let lastImportsDump: string | undefined;
 
-export function createUnimport<TOptions extends Options = Options>(
-  log: LogFn,
-  context: Context<TOptions>
-): UnimportContext {
+export function createUnimport(log: LogFn, context: Context): UnimportContext {
   log(
     LogLevelLabel.TRACE,
     "Creating Unimport context with Storm Stack presets"

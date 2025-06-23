@@ -17,7 +17,6 @@
  ------------------------------------------------------------------- */
 
 import { getFileHeader } from "@storm-stack/core/helpers";
-import type { Options } from "@storm-stack/core/types";
 import { stripAnsi } from "@stryke/cli/utils/strip-ansi";
 import { titleCase } from "@stryke/string-format/title-case";
 import { isObject } from "@stryke/type-checks/is-object";
@@ -30,11 +29,11 @@ import {
   MIN_CONSOLE_WIDTH
 } from "../helpers/constants";
 import { extractAuthor } from "../helpers/utilities";
-import type { StormStackCLIPresetContext } from "../types/build";
+import { StormStackCLIPresetContext } from "../types/build";
 import type { StormStackCLIPresetConfig } from "../types/config";
 
-export function writeRuntime<TOptions extends Options = Options>(
-  context: StormStackCLIPresetContext<TOptions>,
+export function writeRuntime(
+  context: StormStackCLIPresetContext,
   config: StormStackCLIPresetConfig
 ) {
   let appTitle = titleCase(

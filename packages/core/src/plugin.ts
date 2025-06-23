@@ -21,16 +21,14 @@ import type { MaybePromise } from "@stryke/types/base";
 import { createLog } from "./helpers/utilities/logger";
 import { writeFile } from "./helpers/utilities/write-file";
 import { installPackage } from "./init/installs/utilities";
-import type { Context, EngineHooks, Options } from "./types/build";
+import type { Context, EngineHooks } from "./types/build";
 import type { LogFn, PluginConfig } from "./types/config";
 import type { IPlugin } from "./types/plugin";
 
 /**
  * The base class for all plugins
  */
-export abstract class Plugin<TOptions extends Options = Options>
-  implements IPlugin<TOptions>
-{
+export abstract class Plugin implements IPlugin {
   /**
    * The name of the plugin
    */
@@ -42,17 +40,25 @@ export abstract class Plugin<TOptions extends Options = Options>
   public installPath: string;
 
   /**
-   * The logger function to use
-   */
-  public log: LogFn;
-
-  /**
    * A list of plugin modules required as dependencies by the current Preset.
    *
    * @remarks
    * These plugins will be called prior to the current Preset.
    */
   public dependencies = [] as Array<string | PluginConfig>;
+
+  /**
+   * The logger function to use
+   */
+  public log: LogFn;
+
+  // /**
+  //  * The renderer used by the plugin
+  //  *
+  //  * @remarks
+  //  * This is used to render generated output files during various Storm Stack processes. Some possible items rendered include (but are not limited to): source code, documentation, DevOps configuration, and deployment infrastructure/IOC.
+  //  */
+  // protected abstract renderer: Renderer;
 
   /**
    * The constructor for the plugin
@@ -82,7 +88,7 @@ export abstract class Plugin<TOptions extends Options = Options>
   /**
    * Function to add hooks into the Storm Stack engine
    */
-  public abstract addHooks(hooks: EngineHooks<TOptions>): MaybePromise<void>;
+  public abstract addHooks(hooks: EngineHooks): MaybePromise<void>;
 
   /**
    * Writes a file to the file system
@@ -108,11 +114,7 @@ export abstract class Plugin<TOptions extends Options = Options>
    * @param packageName - The name of the package to install
    * @param dev - Whether to install the package as a dev dependency
    */
-  protected async install(
-    context: Context<TOptions>,
-    packageName: string,
-    dev = false
-  ) {
-    return installPackage<TOptions>(this.log, context, packageName, dev);
+  protected async install(context: Context, packageName: string, dev = false) {
+    return installPackage(this.log, context, packageName, dev);
   }
 }

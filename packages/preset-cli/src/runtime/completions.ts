@@ -17,16 +17,16 @@
  ------------------------------------------------------------------- */
 
 import { getFileHeader } from "@storm-stack/core/helpers/utilities/file-header";
-import { Context, Options } from "@storm-stack/core/types";
 import { relativePath } from "@stryke/path/file-path-fns";
 import { joinPaths } from "@stryke/path/join-paths";
 import { kebabCase } from "@stryke/string-format/kebab-case";
 import { titleCase } from "@stryke/string-format/title-case";
 import { isSetString } from "@stryke/type-checks/is-set-string";
+import { StormStackCLIPresetContext } from "../types/build";
 import { StormStackCLIPresetConfig } from "../types/config";
 
-export function writeCompletionsBash<TOptions extends Options = Options>(
-  context: Context<TOptions>,
+export function writeCompletionsBash(
+  context: StormStackCLIPresetContext,
   config: StormStackCLIPresetConfig
 ) {
   const bin =
@@ -163,8 +163,8 @@ export default handler;
 `;
 }
 
-export function writeCompletionsZsh<TOptions extends Options = Options>(
-  context: Context<TOptions>,
+export function writeCompletionsZsh(
+  context: StormStackCLIPresetContext,
   config: StormStackCLIPresetConfig
 ) {
   const bin =

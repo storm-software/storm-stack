@@ -20,18 +20,15 @@ import { LogLevelLabel } from "@storm-software/config-tools/types";
 import { joinPaths } from "@stryke/path/join-paths";
 import { resolvePackage } from "@stryke/path/resolve";
 import { createWorker } from "../../helpers/utilities/worker";
-import type { Context, EngineHooks, Options } from "../../types/build";
+import type { Context, EngineHooks } from "../../types/build";
 import type { LogFn } from "../../types/config";
 
-export async function initWorkers<TOptions extends Options = Options>(
+export async function initWorkers(
   log: LogFn,
-  context: Context<TOptions>,
-  hooks: EngineHooks<TOptions>
+  context: Context,
+  hooks: EngineHooks
 ) {
-  log(
-    LogLevelLabel.TRACE,
-    `Initializing the RPC channels used by the Storm Stack build processes.`
-  );
+  log(LogLevelLabel.TRACE, "Initializing the Storm Stack worker processes.");
 
   const packagePath = process.env.STORM_STACK_LOCAL
     ? joinPaths(context.workspaceConfig.workspaceRoot, "dist/packages/core")
@@ -54,11 +51,11 @@ export async function initWorkers<TOptions extends Options = Options>(
   await hooks.callHook("init:workers", context).catch((error: Error) => {
     log(
       LogLevelLabel.ERROR,
-      `An error occurred while initializing the RPC channels used by the Storm Stack build processes: ${error.message} \n${error.stack ?? ""}`
+      `An error occurred while initializing the workers used by the Storm Stack build processes: ${error.message} \n${error.stack ?? ""}`
     );
 
     throw new Error(
-      "An error occurred while initializing the RPC channels used by the Storm Stack build processes",
+      "An error occurred while initializing the workers used by the Storm Stack build processes",
       { cause: error }
     );
   });

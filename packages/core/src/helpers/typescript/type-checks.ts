@@ -18,7 +18,7 @@
 
 import { LogLevelLabel } from "@storm-software/config-tools/types";
 import ts from "typescript";
-import { Context, Options } from "../../types/build";
+import { Context } from "../../types/build";
 import { LogFn } from "../../types/config";
 import { createVirtualProgram, loadLibFiles, SourcesMap } from "./program";
 
@@ -29,9 +29,9 @@ import { createVirtualProgram, loadLibFiles, SourcesMap } from "./program";
  * @param context - The build context containing information about the current build.
  * @param sources - The source files to check.
  */
-export async function typeChecks<TOptions extends Options = Options>(
+export async function typeChecks(
   log: LogFn,
-  context: Context<TOptions>,
+  context: Context,
   sources: SourcesMap
 ): Promise<void> {
   context.vfs.add(sources);

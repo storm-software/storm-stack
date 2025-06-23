@@ -25,17 +25,16 @@ import defu from "defu";
 import type {
   Context,
   EngineHooks,
-  Options,
   ResolvedDotenvOptions
 } from "../../types/build";
 import type { LogFn } from "../../types/config";
 import { loadEnv } from "./load";
 import { reflectDotenvTypes } from "./reflect";
 
-export async function initDotenv<TOptions extends Options = Options>(
+export async function initDotenv(
   log: LogFn,
-  context: Context<TOptions>,
-  hooks: EngineHooks<TOptions>
+  context: Context,
+  hooks: EngineHooks
 ) {
   log(
     LogLevelLabel.TRACE,

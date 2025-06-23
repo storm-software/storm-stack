@@ -109,11 +109,6 @@ export interface ProjectConfig {
   platform?: "node" | "browser" | "neutral";
 
   /**
-   * A list of resolvable paths to presets used during the build process
-   */
-  presets?: Array<string | PluginConfig>;
-
-  /**
    * A list of resolvable paths to plugins used during the build process
    */
   plugins?: Array<string | PluginConfig>;

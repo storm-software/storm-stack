@@ -26,13 +26,13 @@ import { readBufferFile, writeBufferFile } from "@stryke/fs/buffer";
 import { joinPaths } from "@stryke/path/join-paths";
 import type { TypeDefinition } from "@stryke/types/configuration";
 import { SerializedTypes } from "../../../schemas/reflection";
-import type { Context, Options } from "../../types/build";
+import type { Context } from "../../types/build";
 import { getReflectionsPath } from "../deepkit/resolve-reflections";
 import { convertFromCapnp, convertToCapnp } from "../utilities/capnp";
 
-export function getDotenvDefaultTypeDefinition<
-  TOptions extends Options = Options
->(context: Context<TOptions>): TypeDefinition {
+export function getDotenvDefaultTypeDefinition(
+  context: Context
+): TypeDefinition {
   return {
     file: process.env.STORM_STACK_LOCAL
       ? joinPaths(
@@ -44,22 +44,22 @@ export function getDotenvDefaultTypeDefinition<
   };
 }
 
-export function getDotenvReflectionsPath<TOptions extends Options = Options>(
-  context: Context<TOptions>,
+export function getDotenvReflectionsPath(
+  context: Context,
   name: "config" | "secrets" = "config"
 ): string {
   return joinPaths(getReflectionsPath(context), `dotenv-${name}.bin`);
 }
 
-export function getConfigReflectionsPath<TOptions extends Options = Options>(
-  context: Context<TOptions>,
+export function getConfigReflectionsPath(
+  context: Context,
   name: "config" | "secrets"
 ): string {
   return joinPaths(getReflectionsPath(context), `${name}.bin`);
 }
 
-export async function readDotenvReflection<TOptions extends Options = Options>(
-  context: Context<TOptions>,
+export async function readDotenvReflection(
+  context: Context,
   name: "config" | "secrets" = "config"
 ): Promise<ReflectionClass<any>> {
   const buffer = await readBufferFile(getDotenvReflectionsPath(context, name));
@@ -73,8 +73,8 @@ export async function readDotenvReflection<TOptions extends Options = Options>(
   return reflection;
 }
 
-export async function writeDotenvReflection<TOptions extends Options = Options>(
-  context: Context<TOptions>,
+export async function writeDotenvReflection(
+  context: Context,
   reflection: ReflectionClass<any>,
   name: "config" | "secrets" = "config"
 ) {
@@ -91,8 +91,8 @@ export async function writeDotenvReflection<TOptions extends Options = Options>(
   );
 }
 
-export async function readConfigReflection<TOptions extends Options = Options>(
-  context: Context<TOptions>
+export async function readConfigReflection(
+  context: Context
 ): Promise<ReflectionClass<any>> {
   const buffer = await readBufferFile(
     getDotenvReflectionsPath(context, "config")

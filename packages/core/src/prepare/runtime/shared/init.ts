@@ -17,11 +17,9 @@
  ------------------------------------------------------------------- */
 
 import { getFileHeader } from "../../../helpers/utilities/file-header";
-import type { Context, Options } from "../../../types/build";
+import type { Context } from "../../../types/build";
 
-export function writeInit<TOptions extends Options = Options>(
-  _context: Context<TOptions>
-) {
+export function writeInit(_context: Context) {
   return `${getFileHeader()}
 
 // Do nothing - this is a placeholder for Storm Stack plugins that do not require any initialization

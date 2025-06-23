@@ -18,11 +18,9 @@
 
 import { generateConfig } from "../../../helpers/dts/shared";
 import { getFileHeader } from "../../../helpers/utilities/file-header";
-import type { Context, Options } from "../../../types/build";
+import type { Context } from "../../../types/build";
 
-export async function writeConfig<TOptions extends Options = Options>(
-  context: Context<TOptions>
-) {
+export async function writeConfig(context: Context) {
   return `${getFileHeader()}
 
 import { StormBaseConfig } from "@storm-stack/types/shared/config";

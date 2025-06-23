@@ -16,24 +16,25 @@
 
  ------------------------------------------------------------------- */
 
-import { Context, Options } from "@storm-stack/core/types/build";
 import * as capnp from "@stryke/capnp";
 import { readBufferFile, writeBufferFile } from "@stryke/fs/buffer";
 import { joinPaths } from "@stryke/path/join-paths";
 import { CommandRoot } from "../../schemas/cli";
+import { StormStackCLIPresetContext } from "../types/build";
 import { StormStackCLIPresetConfig } from "../types/config";
 import { CommandTree } from "../types/reflection";
 import { convertFromCapnp, convertToCapnp } from "./capnp";
 
-export function getCommandTreeReflectionPath<
-  TOptions extends Options = Options
->(context: Context<TOptions>): string {
+export function getCommandTreeReflectionPath(
+  context: StormStackCLIPresetContext
+): string {
   return joinPaths(context.dataPath, "reflections", "cli.bin");
 }
 
-export async function writeCommandTreeReflection<
-  TOptions extends Options = Options
->(context: Context<TOptions>, commandTree: CommandTree) {
+export async function writeCommandTreeReflection(
+  context: StormStackCLIPresetContext,
+  commandTree: CommandTree
+) {
   const message = new capnp.Message();
   const root = message.initRoot(CommandRoot);
 
@@ -44,10 +45,8 @@ export async function writeCommandTreeReflection<
   );
 }
 
-export async function readCommandTreeReflection<
-  TOptions extends Options = Options
->(
-  context: Context<TOptions>,
+export async function readCommandTreeReflection(
+  context: StormStackCLIPresetContext,
   config: StormStackCLIPresetConfig
 ): Promise<CommandTree> {
   const buffer = await readBufferFile(getCommandTreeReflectionPath(context));

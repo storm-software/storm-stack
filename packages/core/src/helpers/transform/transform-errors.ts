@@ -19,13 +19,13 @@
 import { Lang, parseAsync } from "@ast-grep/napi";
 import { LogLevelLabel } from "@storm-software/config-tools/types";
 import type { ErrorType } from "@storm-stack/types/error";
-import type { Context, Options, SourceFile } from "../../types/build";
+import type { Context, SourceFile } from "../../types/build";
 import type { LogFn } from "../../types/config";
 
-export async function transformErrors<TOptions extends Options = Options>(
+export async function transformErrors(
   log: LogFn,
   source: SourceFile,
-  context: Context<TOptions>
+  context: Context
 ): Promise<SourceFile> {
   const ast = await parseAsync(Lang.TypeScript, source.code.toString());
   const root = ast.root();

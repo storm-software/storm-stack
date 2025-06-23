@@ -18,13 +18,11 @@
 
 import { ReflectionClass, stringifyType } from "@deepkit/type";
 import { titleCase } from "@stryke/string-format/title-case";
-import { Context, Options } from "../../types/build";
+import { Context } from "../../types/build";
 import { readConfigReflection } from "../dotenv/persistence";
 import { getFileHeader } from "../utilities/file-header";
 
-export async function generateConfig<TOptions extends Options = Options>(
-  context: Context<TOptions>
-) {
+export async function generateConfig(context: Context) {
   const reflection = await readConfigReflection(context);
   if (!reflection) {
     return "{}";
@@ -108,9 +106,7 @@ ${item
   .join("\n")}`;
 }
 
-export async function generateSharedDeclarations<
-  TOptions extends Options = Options
->(context: Context<TOptions>) {
+export async function generateSharedDeclarations(context: Context) {
   return `${getFileHeader(`
 /// <reference types="@storm-stack/types" />
 `)}

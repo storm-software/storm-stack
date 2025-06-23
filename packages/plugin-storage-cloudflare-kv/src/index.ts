@@ -20,7 +20,7 @@ import { parse as parseToml, stringify as stringifyToml } from "@ltd/j-toml";
 import { LogLevelLabel } from "@storm-software/config-tools/types";
 
 import { getFileHeader } from "@storm-stack/core/helpers/utilities/file-header";
-import type { Context, EngineHooks, Options } from "@storm-stack/core/types";
+import type { Context, EngineHooks } from "@storm-stack/core/types";
 import type { StoragePluginConfig } from "@storm-stack/devkit/plugins/storage";
 import StoragePlugin from "@storm-stack/devkit/plugins/storage";
 import { readFile } from "@stryke/fs";
@@ -49,9 +49,7 @@ export type StorageCloudflareKVPluginConfig = StoragePluginConfig &
     minTTL: number;
   } & Omit<KVHTTPOptions, "namespaceId" | "minTTL">;
 
-export default class StorageCloudflareKVPlugin<
-  TOptions extends Options = Options
-> extends StoragePlugin<TOptions> {
+export default class StorageCloudflareKVPlugin extends StoragePlugin {
   public constructor(
     protected override config: StorageCloudflareKVPluginConfig
   ) {
@@ -64,7 +62,7 @@ export default class StorageCloudflareKVPlugin<
     this.config.minTTL ??= 60;
   }
 
-  public override addHooks(hooks: EngineHooks<TOptions>) {
+  public override addHooks(hooks: EngineHooks) {
     hooks.addHooks({
       "prepare:config": this.prepareConfig.bind(this)
     });
@@ -114,7 +112,7 @@ export default cloudflareKVHTTPDriver({
     }
   }
 
-  protected async prepareConfig(context: Context<TOptions>) {
+  protected async prepareConfig(context: Context) {
     if (context.options.projectType === "application" && this.config.binding) {
       this.log(
         LogLevelLabel.TRACE,

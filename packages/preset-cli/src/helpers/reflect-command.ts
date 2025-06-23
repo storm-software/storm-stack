@@ -24,16 +24,13 @@ import {
 import { LogLevelLabel } from "@storm-software/config-tools/types";
 import { resolveType } from "@storm-stack/core/helpers/deepkit/reflect-type";
 import type { LogFn } from "@storm-stack/core/types";
-import type {
-  Options,
-  ResolvedEntryTypeDefinition
-} from "@storm-stack/core/types/build";
+import type { ResolvedEntryTypeDefinition } from "@storm-stack/core/types/build";
 import { findFolderName } from "@stryke/path/file-path-fns";
 import { resolveParentPath } from "@stryke/path/get-parent-path";
 import { titleCase } from "@stryke/string-format/title-case";
 import { writeCommandTreeReflection } from "../capnp/persistence";
 import { CommandPayload } from "../data/command-payload";
-import type { StormStackCLIPresetContext } from "../types/build";
+import { StormStackCLIPresetContext } from "../types/build";
 import type { StormStackCLIPresetConfig } from "../types/config";
 import { Command, CommandTree } from "../types/reflection";
 import {
@@ -59,8 +56,8 @@ interface CommandRelations {
   children: string[];
 }
 
-async function reflectRelations<TOptions extends Options = Options>(
-  context: StormStackCLIPresetContext<TOptions>
+async function reflectRelations(
+  context: StormStackCLIPresetContext
 ): Promise<Record<string, CommandRelations>> {
   const relationReflections = {} as Record<string, CommandRelations>;
   for (const entry of context.entry.filter(
@@ -93,8 +90,8 @@ async function reflectRelations<TOptions extends Options = Options>(
   return relationReflections;
 }
 
-async function reflectPayloads<TOptions extends Options = Options>(
-  context: StormStackCLIPresetContext<TOptions>,
+async function reflectPayloads(
+  context: StormStackCLIPresetContext,
   config: StormStackCLIPresetConfig
 ): Promise<Record<string, CommandPayload>> {
   const payloadReflections = {} as Record<string, CommandPayload>;
@@ -115,11 +112,7 @@ async function reflectPayloads<TOptions extends Options = Options>(
       );
     } else {
       // eslint-disable-next-line ts/no-unsafe-function-type
-      const command = await resolveType<TOptions, Function>(
-        context,
-        entry.input,
-        {}
-      );
+      const command = await resolveType<Function>(context, entry.input, {});
       if (!command) {
         throw new Error(`Module not found: ${entry.input.file}`);
       }
@@ -150,9 +143,9 @@ type CommandReflectionDefinition = Omit<
   relations: CommandRelations;
 };
 
-async function reflectCommand<TOptions extends Options = Options>(
+async function reflectCommand(
   log: LogFn,
-  context: StormStackCLIPresetContext<TOptions>,
+  context: StormStackCLIPresetContext,
   config: StormStackCLIPresetConfig
 ): Promise<Record<string, CommandReflectionDefinition>> {
   const relationsReflections = await reflectRelations(context);
@@ -228,10 +221,7 @@ async function reflectCommand<TOptions extends Options = Options>(
       );
 
       // eslint-disable-next-line ts/no-unsafe-function-type
-      const command = await resolveType<TOptions, Function>(
-        context,
-        entry.input
-      );
+      const command = await resolveType<Function>(context, entry.input);
       if (!command) {
         throw new Error(`Module not found: ${entry.input.file}`);
       }
@@ -259,9 +249,9 @@ async function reflectCommand<TOptions extends Options = Options>(
   return reflections;
 }
 
-export async function reflectCommandTree<TOptions extends Options = Options>(
+export async function reflectCommandTree(
   log: LogFn,
-  context: StormStackCLIPresetContext<TOptions>,
+  context: StormStackCLIPresetContext,
   config: StormStackCLIPresetConfig
 ): Promise<CommandTree> {
   const reflections = await reflectCommand(log, context, config);

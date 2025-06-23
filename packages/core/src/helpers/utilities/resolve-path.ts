@@ -19,7 +19,7 @@
 import { existsSync } from "@stryke/path/exists";
 import { joinPaths } from "@stryke/path/join-paths";
 import { resolvePackage } from "@stryke/path/resolve";
-import type { Context, Options } from "../../types/build";
+import type { Context } from "../../types/build";
 
 /**
  * Resolves the path of a file in the workspace or project root.
@@ -28,8 +28,8 @@ import type { Context, Options } from "../../types/build";
  * @param file - The file path to resolve.
  * @returns A promise that resolves to the resolved path.
  */
-export async function resolvePath<TOptions extends Options = Options>(
-  context: Context<TOptions>,
+export async function resolvePath(
+  context: Context,
   file: string
 ): Promise<string | undefined> {
   let path = file;

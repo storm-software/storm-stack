@@ -19,14 +19,14 @@
 import { LogLevelLabel } from "@storm-software/config-tools/types";
 import { parseTypeDefinition } from "@stryke/convert/parse-type-definition";
 import { isSetString } from "@stryke/type-checks/is-set-string";
-import type { Context, EngineHooks, Options } from "../../types/build";
+import type { Context, EngineHooks } from "../../types/build";
 import type { LogFn } from "../../types/config";
 import { resolveEntry } from "./resolve";
 
-export async function initEntry<TOptions extends Options = Options>(
+export async function initEntry(
   log: LogFn,
-  context: Context<TOptions>,
-  hooks: EngineHooks<TOptions>
+  context: Context,
+  hooks: EngineHooks
 ) {
   log(
     LogLevelLabel.TRACE,

@@ -17,11 +17,9 @@
  ------------------------------------------------------------------- */
 
 import { getFileHeader } from "../../../helpers/utilities/file-header";
-import type { Context, Options } from "../../../types/build";
+import type { Context } from "../../../types/build";
 
-export function writeContext<TOptions extends Options = Options>(
-  _context: Context<TOptions>
-) {
+export function writeContext(_context: Context) {
   return `
 /**
  * This module provides the Storm Stack context and a hook to access it in the application.

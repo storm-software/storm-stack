@@ -17,14 +17,14 @@
  ------------------------------------------------------------------- */
 
 import { getFileHeader } from "@storm-stack/core/helpers/utilities/file-header";
-import type { Context, Options } from "@storm-stack/core/types/build";
 import { kebabCase } from "@stryke/string-format/kebab-case";
 import { titleCase } from "@stryke/string-format/title-case";
 import { isSetString } from "@stryke/type-checks/is-set-string";
+import { StormStackCLIPresetContext } from "../types/build";
 import type { StormStackCLIPresetConfig } from "../types/config";
 
-export function writeApp<TOptions extends Options = Options>(
-  context: Context<TOptions>,
+export function writeApp(
+  context: StormStackCLIPresetContext,
   config: StormStackCLIPresetConfig
 ) {
   return `${getFileHeader()}

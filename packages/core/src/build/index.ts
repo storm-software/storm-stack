@@ -18,16 +18,12 @@
 
 import { LogLevelLabel } from "@storm-software/config-tools/types";
 import { readDotenvReflection } from "../helpers/dotenv/persistence";
-import type { Context, EngineHooks, Options } from "../types/build";
+import type { Context, EngineHooks } from "../types/build";
 import type { LogFn } from "../types/config";
 import { buildApplication } from "./application";
 import { buildLibrary } from "./library";
 
-export async function build<TOptions extends Options = Options>(
-  log: LogFn,
-  context: Context<TOptions>,
-  hooks: EngineHooks<TOptions>
-) {
+export async function build(log: LogFn, context: Context, hooks: EngineHooks) {
   await hooks.callHook("build:begin", context).catch((error: Error) => {
     log(
       LogLevelLabel.ERROR,

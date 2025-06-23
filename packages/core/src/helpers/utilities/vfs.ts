@@ -25,7 +25,6 @@ import {
   __vfs__,
   Context,
   IVirtualFileSystem,
-  Options,
   VirtualFileOptions
 } from "../../types/build";
 
@@ -35,12 +34,10 @@ import {
  * @remarks
  * This class provides methods to manage virtual files, check their existence, retrieve their content, and manipulate the virtual file system. It allows for efficient file management and retrieval without relying on the actual file system.
  */
-export class VirtualFileSystem<TOptions extends Options = Options>
-  implements IVirtualFileSystem
-{
+export class VirtualFileSystem implements IVirtualFileSystem {
   #vfs: Map<string, Vinyl>;
 
-  #context: Context<Options>;
+  #context: Context;
 
   /**
    * Exposes the internal VFS map for advanced usage.
@@ -49,7 +46,7 @@ export class VirtualFileSystem<TOptions extends Options = Options>
     return this.#vfs;
   }
 
-  constructor(context: Context<TOptions>) {
+  constructor(context: Context) {
     this.#context = context;
     this.#vfs = new Map<string, Vinyl>();
   }
@@ -201,8 +198,6 @@ export class VirtualFileSystem<TOptions extends Options = Options>
  *
  * @returns A virtual file-system containing a map where the keys are file paths and the values are {@link Vinyl} instances.
  */
-export function createVfs<TOptions extends Options = Options>(
-  context: Context<TOptions>
-): VirtualFileSystem {
+export function createVfs(context: Context): VirtualFileSystem {
   return new VirtualFileSystem(context);
 }

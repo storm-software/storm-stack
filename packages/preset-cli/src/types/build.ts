@@ -19,5 +19,7 @@
 import type { Context, Options } from "@storm-stack/core/types";
 import { CommandEntryTypeDefinition } from "./reflection";
 
-export type StormStackCLIPresetContext<TOptions extends Options = Options> =
-  Context<TOptions, CommandEntryTypeDefinition>;
+export type StormStackCLIPresetContext = Context<
+  Options,
+  CommandEntryTypeDefinition
+>;

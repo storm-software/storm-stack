@@ -17,16 +17,13 @@
  ------------------------------------------------------------------- */
 
 import { getFileHeader } from "@storm-stack/core/helpers/utilities/file-header";
-import type { Options } from "@storm-stack/core/types";
 import type { StoragePluginConfig } from "@storm-stack/devkit/plugins/storage";
 import StoragePlugin from "@storm-stack/devkit/plugins/storage";
 import type { S3DriverOptions } from "unstorage/drivers/s3";
 
 export type StorageS3PluginPluginConfig = StoragePluginConfig & S3DriverOptions;
 
-export default class StorageS3Plugin<
-  TOptions extends Options = Options
-> extends StoragePlugin<TOptions> {
+export default class StorageS3Plugin extends StoragePlugin {
   protected override installs = {
     "aws4fetch@1.0.20": "dependency"
   } as Record<string, "dependency" | "devDependency">;

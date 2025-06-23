@@ -18,13 +18,13 @@
 
 import { LogLevelLabel } from "@storm-software/config-tools/types";
 import { writeDotenvReflection } from "../../helpers/dotenv/persistence";
-import type { Context, EngineHooks, Options } from "../../types/build";
+import type { Context, EngineHooks } from "../../types/build";
 import type { LogFn } from "../../types/config";
 
-export async function prepareDotenv<TOptions extends Options = Options>(
+export async function prepareDotenv(
   log: LogFn,
-  context: Context<TOptions>,
-  hooks: EngineHooks<TOptions>
+  context: Context,
+  hooks: EngineHooks
 ) {
   log(
     LogLevelLabel.TRACE,

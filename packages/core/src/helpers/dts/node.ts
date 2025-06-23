@@ -16,13 +16,11 @@
 
  ------------------------------------------------------------------- */
 
-import type { Context, Options } from "../../types/build";
+import type { Context } from "../../types/build";
 import { getFileHeader } from "../utilities";
 import { generateConfig } from "./shared";
 
-export async function generateNodeDeclarations<
-  TOptions extends Options = Options
->(context: Context<TOptions>) {
+export async function generateNodeDeclarations(context: Context) {
   return `${getFileHeader(`
 /// <reference types="@storm-stack/types" />
 /// <reference types="@storm-stack/types/node" />
@@ -37,10 +35,7 @@ export {};
  `;
 }
 
-export function generateNodeGlobal<TOptions extends Options = Options>(
-  path: string,
-  _context: Context<TOptions>
-) {
+export function generateNodeGlobal(path: string, _context: Context) {
   return `${getFileHeader(`
 /// <reference types="@storm-stack/types" />
 /// <reference types="@storm-stack/types/node" />
@@ -77,10 +72,7 @@ export {};
 `;
 }
 
-export function generateNodeModules<TOptions extends Options = Options>(
-  path: string,
-  _context: Context<TOptions>
-) {
+export function generateNodeModules(path: string, _context: Context) {
   return `${getFileHeader(`
 /// <reference types="@storm-stack/types" />
 /// <reference types="@storm-stack/types/node" />

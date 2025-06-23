@@ -18,7 +18,7 @@
 
 import { LogLevelLabel } from "@storm-software/config-tools/types";
 import { Compiler } from "../compiler";
-import type { Context, EngineHooks, Options, SourceFile } from "../types/build";
+import type { Context, EngineHooks, SourceFile } from "../types/build";
 import type { LogFn } from "../types/config";
 import { initContext } from "./context";
 import { initDotenv } from "./dotenv";
@@ -28,11 +28,7 @@ import { initTsconfig } from "./tsconfig";
 import { initUnimport } from "./unimport";
 import { initWorkers } from "./workers";
 
-export async function init<TOptions extends Options = Options>(
-  log: LogFn,
-  context: Context<TOptions>,
-  hooks: EngineHooks<TOptions>
-) {
+export async function init(log: LogFn, context: Context, hooks: EngineHooks) {
   await hooks.callHook("init:begin", context).catch((error: Error) => {
     log(
       LogLevelLabel.ERROR,
@@ -51,7 +47,7 @@ export async function init<TOptions extends Options = Options>(
   await initUnimport(log, context, hooks);
 
   const handlePreTransform = async (
-    context: Context<TOptions>,
+    context: Context,
     sourceFile: SourceFile
   ) => {
     await hooks
@@ -71,10 +67,7 @@ export async function init<TOptions extends Options = Options>(
     return sourceFile;
   };
 
-  const handleTransform = async (
-    context: Context<TOptions>,
-    sourceFile: SourceFile
-  ) => {
+  const handleTransform = async (context: Context, sourceFile: SourceFile) => {
     await hooks
       .callHook("build:transform", context, sourceFile)
       .catch((error: Error) => {
@@ -93,7 +86,7 @@ export async function init<TOptions extends Options = Options>(
   };
 
   const handlePostTransform = async (
-    context: Context<TOptions>,
+    context: Context,
     sourceFile: SourceFile
   ) => {
     await hooks
@@ -113,7 +106,7 @@ export async function init<TOptions extends Options = Options>(
     return sourceFile;
   };
 
-  context.compiler = new Compiler<TOptions>(context, {
+  context.compiler = new Compiler(context, {
     onPreTransform: handlePreTransform,
     onTransform: handleTransform,
     onPostTransform: handlePostTransform

@@ -5,11 +5,11 @@
  This code was released as part of the Storm Stack project. Storm Stack
  is maintained by Storm Software under the Apache-2.0 license, and is
  free for commercial and private use. For more information, please visit
- our licensing page at https://stormsoftware.com/projects/storm-stack/license.
+ our licensing page at https://stormsoftware.com/license.
 
  Website:                  https://stormsoftware.com
  Repository:               https://github.com/storm-software/storm-stack
- Documentation:            https://stormsoftware.com/projects/storm-stack/docs
+ Documentation:            https://docs.stormsoftware.com/projects/storm-stack
  Contact:                  https://stormsoftware.com/contact
 
  SPDX-License-Identifier:  Apache-2.0
@@ -21,16 +21,12 @@ import { listFiles } from "@stryke/fs/list-files";
 import { joinPaths } from "@stryke/path/join-paths";
 import { resolvePackage } from "@stryke/path/resolve";
 import { writeFile } from "../helpers/utilities/write-file";
-import type { Context, EngineHooks, Options } from "../types/build";
+import type { Context, EngineHooks } from "../types/build";
 import type { LogFn } from "../types/config";
 import { newApplication } from "./application";
 import { newLibrary } from "./library";
 
-export async function _new<TOptions extends Options = Options>(
-  log: LogFn,
-  context: Context<TOptions>,
-  hooks: EngineHooks<TOptions>
-) {
+export async function _new(log: LogFn, context: Context, hooks: EngineHooks) {
   await hooks.callHook("new:begin", context).catch((error: Error) => {
     log(
       LogLevelLabel.ERROR,

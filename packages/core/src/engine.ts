@@ -66,12 +66,12 @@ export class Engine<TOptions extends Options = Options> {
   /**
    * The engine hooks - these allow the plugins to hook into the engines processing
    */
-  #hooks!: EngineHooks<TOptions>;
+  #hooks!: EngineHooks;
 
   /**
    * The plugins provided in the options
    */
-  #plugins: Plugin<TOptions>[] = [];
+  #plugins: Plugin[] = [];
 
   /**
    * The options provided to Storm Stack
@@ -81,7 +81,7 @@ export class Engine<TOptions extends Options = Options> {
   /**
    * The resolved options provided to Storm Stack
    */
-  protected context: Context<TOptions>;
+  protected context: Context;
 
   /**
    * The logger for the plugin
@@ -144,10 +144,10 @@ export class Engine<TOptions extends Options = Options> {
   /**
    * Initialize the engine
    */
-  public async init(): Promise<Context<TOptions>> {
+  public async init(): Promise<Context> {
     this.log(LogLevelLabel.TRACE, "Initializing Storm Stack engine");
 
-    this.#hooks = createHooks<EngineHookFunctions<TOptions>>();
+    this.#hooks = createHooks<EngineHookFunctions>();
 
     const config = await loadConfig(
       this.options.projectRoot,
@@ -174,11 +174,7 @@ export class Engine<TOptions extends Options = Options> {
           this.context.workspaceConfig.error?.codesFile ||
           STORM_DEFAULT_ERROR_CODES_FILE
       }
-    ) as Context<TOptions>["options"];
-
-    for (const preset of this.context.options.presets ?? []) {
-      await this.addPlugin(preset, true);
-    }
+    ) as Context["options"];
 
     for (const plugin of this.context.options.plugins ?? []) {
       await this.addPlugin(plugin, false);
@@ -456,9 +452,7 @@ export class Engine<TOptions extends Options = Options> {
    *
    * @param plugin - The import path of the plugin to add
    */
-  private async initPlugin(
-    plugin: string | PluginConfig
-  ): Promise<Plugin<TOptions>> {
+  private async initPlugin(plugin: string | PluginConfig): Promise<Plugin> {
     const pluginConfig: PluginConfig =
       typeof plugin === "string" ? [plugin, {}] : plugin;
 
@@ -494,10 +488,10 @@ export class Engine<TOptions extends Options = Options> {
       }
     }
 
-    let pluginInstance!: Plugin<TOptions>;
+    let pluginInstance!: Plugin;
     try {
       const module = await this.context.resolver.import<{
-        default: new (config: any) => Plugin<TOptions>;
+        default: new (config: any) => Plugin;
       }>(this.context.resolver.esmResolve(pluginConfig[0]));
       const PluginConstructor = module.default;
 

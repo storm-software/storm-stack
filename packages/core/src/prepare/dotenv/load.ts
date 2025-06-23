@@ -26,11 +26,7 @@ import type { PackageJson } from "@stryke/types/package-json";
 import { loadConfig } from "c12";
 import defu from "defu";
 import { removeEnvPrefix } from "../../helpers/dotenv/source-file-env";
-import type {
-  Context,
-  Options,
-  ResolvedDotenvOptions
-} from "../../types/build";
+import type { Options, ResolvedDotenvOptions } from "../../types/build";
 
 const loadEnvFiles = async <
   TOptions extends Options = Options,
@@ -65,7 +61,7 @@ const loadEnvDirectory = async <
   dotenv: ResolvedDotenvOptions,
   cacheDir: string,
   packageJson: PackageJson,
-  workspaceConfig: Context<TOptions>["workspaceConfig"]
+  workspaceConfig: ["workspaceConfig"]
 ): Promise<TEnv> => {
   const [envResult, c12Result] = await Promise.all([
     loadEnvFiles<TOptions, TEnv>(options, directory, dotenv),
@@ -100,7 +96,7 @@ export const loadEnv = async <
   cacheDir: string,
   configDir: string,
   packageJson: PackageJson,
-  workspaceConfig: Context<TOptions>["workspaceConfig"]
+  workspaceConfig: ["workspaceConfig"]
 ): Promise<TEnv> => {
   const [project, workspace, config] = await Promise.all([
     loadEnvDirectory<TOptions, TEnv>(

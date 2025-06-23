@@ -17,13 +17,11 @@
  ------------------------------------------------------------------- */
 
 import { getFileHeader } from "@storm-stack/core/helpers";
-import type { Context, Options } from "@storm-stack/core/types";
 import { relativePath } from "@stryke/path/file-path-fns";
 import { joinPaths } from "@stryke/path/join-paths";
+import { StormStackCLIPresetContext } from "../types/build";
 
-export function writeConfigGet<TOptions extends Options = Options>(
-  context: Context<TOptions>
-) {
+export function writeConfigGet(context: StormStackCLIPresetContext) {
   return `${getFileHeader()}
 
 import { deserialize } from "@deepkit/type";
@@ -76,9 +74,7 @@ export default handler;
 `;
 }
 
-export function writeConfigSet<TOptions extends Options = Options>(
-  context: Context<TOptions>
-) {
+export function writeConfigSet(context: StormStackCLIPresetContext) {
   return `${getFileHeader()}
 
 import { deserialize, serialize } from "@deepkit/type";
@@ -137,9 +133,7 @@ export default handler;
 `;
 }
 
-export function writeConfigList<TOptions extends Options = Options>(
-  context: Context<TOptions>
-) {
+export function writeConfigList(context: StormStackCLIPresetContext) {
   return `${getFileHeader()}
 
 import { deserialize } from "@deepkit/type";
@@ -182,9 +176,7 @@ export default handler;
 `;
 }
 
-export function writeConfigDelete<TOptions extends Options = Options>(
-  context: Context<TOptions>
-) {
+export function writeConfigDelete(context: StormStackCLIPresetContext) {
   return `${getFileHeader()}
 
 import { deserialize, serialize } from "@deepkit/type";

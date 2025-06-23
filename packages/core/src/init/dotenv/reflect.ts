@@ -27,19 +27,18 @@ import { reflectType } from "../../helpers/deepkit";
 import { getDotenvDefaultTypeDefinition } from "../../helpers/dotenv/persistence";
 import type {
   Context,
-  Options,
   ResolvedDotenvType,
   ResolvedDotenvTypes
 } from "../../types/build";
 import type { DotenvTypeDefinitionOptions, LogFn } from "../../types/config";
 
-async function reflectDotenvSecrets<TOptions extends Options = Options>(
+async function reflectDotenvSecrets(
   log: LogFn,
-  context: Context<TOptions>,
+  context: Context,
   file: string,
   name?: string
 ) {
-  const secretsType = await reflectType<TOptions>(
+  const secretsType = await reflectType(
     context,
     {
       file,
@@ -53,15 +52,15 @@ async function reflectDotenvSecrets<TOptions extends Options = Options>(
   return resolveClassType(secretsType);
 }
 
-async function reflectDotenvVariables<TOptions extends Options = Options>(
+async function reflectDotenvVariables(
   log: LogFn,
-  context: Context<TOptions>,
+  context: Context,
   file?: string,
   name?: string
 ) {
   let config: ReflectionClass<any> | undefined;
   if (file) {
-    const configType = await reflectType<TOptions>(
+    const configType = await reflectType(
       context,
       {
         file: joinPaths(context.workspaceConfig.workspaceRoot, file),
@@ -75,7 +74,7 @@ async function reflectDotenvVariables<TOptions extends Options = Options>(
     config = resolveClassType(configType);
   }
 
-  const defaultConfigType = await reflectType<TOptions>(
+  const defaultConfigType = await reflectType(
     context,
     getDotenvDefaultTypeDefinition(context),
     {
@@ -97,9 +96,9 @@ async function reflectDotenvVariables<TOptions extends Options = Options>(
   return config;
 }
 
-export async function reflectDotenvTypes<TOptions extends Options = Options>(
+export async function reflectDotenvTypes(
   log: LogFn,
-  context: Context<TOptions>
+  context: Context
 ): Promise<ResolvedDotenvTypes> {
   const result = {} as ResolvedDotenvTypes;
 

@@ -5,11 +5,11 @@
  This code was released as part of the Storm Stack project. Storm Stack
  is maintained by Storm Software under the Apache-2.0 license, and is
  free for commercial and private use. For more information, please visit
- our licensing page at https://stormsoftware.com/projects/storm-stack/license.
+ our licensing page at https://stormsoftware.com/license.
 
  Website:                  https://stormsoftware.com
  Repository:               https://github.com/storm-software/storm-stack
- Documentation:            https://stormsoftware.com/projects/storm-stack/docs
+ Documentation:            https://docs.stormsoftware.com/projects/storm-stack
  Contact:                  https://stormsoftware.com/contact
 
  SPDX-License-Identifier:  Apache-2.0
@@ -20,7 +20,7 @@ import { build } from "@storm-software/esbuild/build";
 import type { ESBuildOptions } from "@storm-software/esbuild/types";
 import { compilerPlugin } from "@storm-stack/core/helpers/esbuild/compiler-plugin";
 import { findMatch } from "@storm-stack/core/helpers/typescript/tsconfig";
-import type { Context, Options } from "@storm-stack/core/types/build";
+import type { Context } from "@storm-stack/core/types/build";
 import {
   findFileExtension,
   findFileName,
@@ -31,8 +31,8 @@ import { joinPaths } from "@stryke/path/join-paths";
 import { replacePath } from "@stryke/path/replace";
 import defu from "defu";
 
-export async function esbuild<TOptions extends Options = Options>(
-  context: Context<TOptions>,
+export async function esbuild(
+  context: Context,
   override: Partial<ESBuildOptions> & { alias?: Record<string, string> } = {}
 ) {
   const buildOptions = {

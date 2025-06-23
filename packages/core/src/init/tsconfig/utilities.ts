@@ -31,10 +31,10 @@ import {
   getTsconfigFilePath,
   isIncludeMatchFound
 } from "../../helpers/typescript/tsconfig";
-import type { Context, Options } from "../../types/build";
+import type { Context } from "../../types/build";
 
-export async function getTsconfigChanges<TOptions extends Options = Options>(
-  context: Context<TOptions>
+export async function getTsconfigChanges(
+  context: Context
 ): Promise<TsConfigJson> {
   const tsconfig = await getParsedTypeScriptConfig(
     context.options.projectRoot,

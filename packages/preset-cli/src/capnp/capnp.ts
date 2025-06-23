@@ -27,7 +27,6 @@ import {
   convertFromCapnp as convertFromCapnpSerializedTypes,
   convertToCapnp as convertToCapnpSerializedTypes
 } from "@storm-stack/core/helpers/utilities/capnp";
-import { Context, Options } from "@storm-stack/core/types/build";
 import { pascalCase } from "@stryke/string-format/pascal-case";
 import { isSetString } from "@stryke/type-checks/is-set-string";
 import {
@@ -43,6 +42,7 @@ import {
   getAppName,
   getAppTitle
 } from "../helpers/utilities";
+import { StormStackCLIPresetContext } from "../types/build";
 import { StormStackCLIPresetConfig } from "../types/config";
 import {
   Command,
@@ -374,8 +374,8 @@ ${commands.map(c => `- ${c.entry.path.join("/")}`).join("\n")}
  * @returns The CLI {@link CommandTree} object converted from the Cap'n Proto serialized command tree
  * @throws If the provided command root is invalid or cannot be converted
  */
-export function convertFromCapnp<TOptions extends Options = Options>(
-  context: Context<TOptions>,
+export function convertFromCapnp(
+  context: StormStackCLIPresetContext,
   config: StormStackCLIPresetConfig,
   root: CapnpCommandRoot
 ): CommandTree {

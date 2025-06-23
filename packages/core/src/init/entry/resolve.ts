@@ -23,10 +23,10 @@ import type {
   TypeDefinition,
   TypeDefinitionParameter
 } from "@stryke/types/configuration";
-import type { Context, Options } from "../../types/build";
+import type { Context } from "../../types/build";
 
-export function resolveEntry<TOptions extends Options = Options>(
-  options: Context<TOptions>,
+export function resolveEntry(
+  options: Context,
   entry: TypeDefinitionParameter
 ): TypeDefinition {
   const parsed = parseTypeDefinition(entry)!;

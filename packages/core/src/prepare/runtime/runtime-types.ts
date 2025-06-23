@@ -38,7 +38,7 @@ import { createVirtualProgram } from "../../helpers/typescript/program";
 import { getParsedTypeScriptConfig } from "../../helpers/typescript/tsconfig";
 import { getFileHeader } from "../../helpers/utilities/file-header";
 import { writeFile } from "../../helpers/utilities/write-file";
-import { Context, Options } from "../../types/build";
+import { Context } from "../../types/build";
 import { LogFn } from "../../types/config";
 
 /**
@@ -51,10 +51,7 @@ import { LogFn } from "../../types/config";
  * @param context - The context containing options and environment paths.
  * @returns A promise that resolves when the generation is complete.
  */
-export async function generateRuntimeTypes<TOptions extends Options = Options>(
-  log: LogFn,
-  context: Context<TOptions>
-) {
+export async function generateRuntimeTypes(log: LogFn, context: Context) {
   const transformedRuntimePath = joinPaths(
     context.artifactsPath,
     "transformed"

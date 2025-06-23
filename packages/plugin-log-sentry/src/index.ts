@@ -17,13 +17,11 @@
  ------------------------------------------------------------------- */
 
 import { getFileHeader } from "@storm-stack/core/helpers/utilities/file-header";
-import type { Context, EngineHooks, Options } from "@storm-stack/core/types";
+import type { Context, EngineHooks } from "@storm-stack/core/types";
 import type { LogPluginConfig } from "@storm-stack/devkit/plugins/log";
 import LogPlugin from "@storm-stack/devkit/plugins/log";
 
-export default class LogSentryPlugin<
-  TOptions extends Options = Options
-> extends LogPlugin<TOptions> {
+export default class LogSentryPlugin extends LogPlugin {
   protected override installs = {
     "@sentry/core@^9.15.0": "dependency"
   } as Record<string, "dependency" | "devDependency">;
@@ -32,15 +30,15 @@ export default class LogSentryPlugin<
     super(config, "log-sentry-plugin", "@storm-stack/plugin-log-sentry");
   }
 
-  public override addHooks(hooks: EngineHooks<TOptions>) {
+  public override addHooks(hooks: EngineHooks) {
     hooks.addHooks({
-      "init:context": this.#initContext.bind(this)
+      "init:context": this.initContext.bind(this)
     });
 
     super.addHooks(hooks);
   }
 
-  protected override writeSink(_context: Context<TOptions>) {
+  protected override writeSink(_context: Context) {
     return `${getFileHeader()}
 
 import type { Client, ParameterizedString } from "@sentry/core";
@@ -135,7 +133,7 @@ export default sink;
    *
    * @param context - The context to initialize.
    */
-  async #initContext(context: Context<TOptions>) {
+  private async initContext(context: Context) {
     context.installs["@sentry/core@^9.15.0"] = "dependency";
 
     if (context.options.platform === "node") {

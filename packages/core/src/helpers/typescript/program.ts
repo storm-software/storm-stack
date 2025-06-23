@@ -23,7 +23,7 @@ import { joinPaths } from "@stryke/path/join-paths";
 import { resolvePackage } from "@stryke/path/resolve";
 import assert from "node:assert";
 import ts from "typescript";
-import { Context, Options } from "../../types/build";
+import { Context } from "../../types/build";
 
 export const SourcesMap = Map<string, string>;
 // eslint-disable-next-line ts/no-redeclare
@@ -65,8 +65,8 @@ export async function loadLibFiles(): Promise<SourcesMap> {
  * @returns A TypeScript program instance that can be used for type checking, emitting, etc.
  * @throws If the provided library files are not in the expected format or if the TypeScript package cannot be resolved.
  */
-export function createVirtualProgram<TOptions extends Options = Options>(
-  context: Context<TOptions>,
+export function createVirtualProgram(
+  context: Context,
   host?: ts.CompilerHost,
   compilerOptions = defaultCompilerOpts,
   // Provide additional lib files to TypeScript. These should all be prefixed with

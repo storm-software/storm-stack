@@ -19,10 +19,10 @@
 import { readFile } from "@stryke/fs/read-file";
 import { normalizeWindowsPath } from "@stryke/path/correct-path";
 import type { Plugin } from "esbuild";
-import type { CompileOptions, Context, Options } from "../../types";
+import type { CompileOptions, Context } from "../../types";
 
-export function compilerPlugin<TOptions extends Options = Options>(
-  context: Context<TOptions>,
+export function compilerPlugin(
+  context: Context,
   options: CompileOptions = {}
 ): Plugin {
   return {

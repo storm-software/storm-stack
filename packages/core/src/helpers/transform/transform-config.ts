@@ -19,17 +19,17 @@
 import { Lang, parseAsync } from "@ast-grep/napi";
 import { ReflectionClass, ReflectionKind } from "@deepkit/type";
 import { LogLevelLabel } from "@storm-software/config-tools/types";
-import type { Context, Options, SourceFile } from "../../types/build";
+import type { Context, SourceFile } from "../../types/build";
 import type { LogFn } from "../../types/config";
 import {
   getConfigReflectionsPath,
   readDotenvReflection
 } from "../dotenv/persistence";
 
-export async function transformConfig<TOptions extends Options = Options>(
+export async function transformConfig(
   log: LogFn,
   source: SourceFile,
-  context: Context<TOptions>
+  context: Context
 ): Promise<SourceFile> {
   const dotenvReflection = await readDotenvReflection(context, "config");
   const dotenvAliasProperties = dotenvReflection

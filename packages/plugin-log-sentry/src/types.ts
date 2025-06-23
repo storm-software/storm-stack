@@ -18,7 +18,7 @@
 
 import { StormBaseConfig } from "@storm-stack/types/config";
 
-export interface StormSentryLogVariables extends StormBaseConfig {
+export interface StormSentryLogConfig extends StormBaseConfig {
   /**
    * The DSN for Sentry
    *

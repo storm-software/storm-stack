@@ -266,7 +266,7 @@ export interface MetaInfo {
   projectRootHash: string;
 }
 
-export interface CompilerOptions<TOptions extends Options = Options> {
+export interface CompilerOptions {
   /**
    * Transform the source file before other transformations.
    *
@@ -275,7 +275,7 @@ export interface CompilerOptions<TOptions extends Options = Options> {
    * @returns The transformed source file
    */
   onPreTransform?: (
-    context: Context<TOptions>,
+    context: Context,
     source: SourceFile
   ) => MaybePromise<SourceFile>;
 
@@ -287,7 +287,7 @@ export interface CompilerOptions<TOptions extends Options = Options> {
    * @returns The transformed source file
    */
   onTransform?: (
-    context: Context<TOptions>,
+    context: Context,
     sourceFile: SourceFile
   ) => MaybePromise<SourceFile>;
 
@@ -299,13 +299,12 @@ export interface CompilerOptions<TOptions extends Options = Options> {
    * @returns The transformed source file
    */
   onPostTransform?: (
-    context: Context<TOptions>,
+    context: Context,
     source: SourceFile
   ) => MaybePromise<SourceFile>;
 }
 
-export interface TranspileOptions<TOptions extends Options = Options>
-  extends CompilerOptions<TOptions> {
+export interface TranspileOptions extends CompilerOptions {
   /**
    * Skip all transformations.
    *
@@ -335,8 +334,7 @@ export interface TranspileOptions<TOptions extends Options = Options>
   skipUnimportTransform?: boolean;
 }
 
-export interface CompileOptions<TOptions extends Options = Options>
-  extends TranspileOptions<TOptions> {
+export interface CompileOptions extends TranspileOptions {
   /**
    * Skip the cache.
    *
@@ -345,7 +343,7 @@ export interface CompileOptions<TOptions extends Options = Options>
   skipCache?: boolean;
 }
 
-export interface ICompiler<TOptions extends Options = Options> {
+export interface ICompiler {
   /**
    * Get the source file.
    *
@@ -374,10 +372,10 @@ export interface ICompiler<TOptions extends Options = Options> {
    * @returns The transpiled module.
    */
   transform: (
-    context: Context<TOptions>,
+    context: Context,
     id: string,
     code: string | MagicString,
-    options?: TranspileOptions<TOptions>
+    options?: TranspileOptions
   ) => Promise<string>;
 
   /**
@@ -390,10 +388,10 @@ export interface ICompiler<TOptions extends Options = Options> {
    * @returns The transpiled module.
    */
   transpile: (
-    context: Context<TOptions>,
+    context: Context,
     id: string,
     code: string | MagicString,
-    options?: CompileOptions<TOptions>
+    options?: CompileOptions
   ) => Promise<string>;
 
   /**
@@ -406,10 +404,10 @@ export interface ICompiler<TOptions extends Options = Options> {
    * @returns The compiled source code
    */
   compile: (
-    context: Context<TOptions>,
+    context: Context,
     id: string,
     code: string | MagicString,
-    options?: CompileOptions<TOptions>
+    options?: CompileOptions
   ) => Promise<string>;
 }
 
@@ -418,14 +416,14 @@ export type UnimportContext = Omit<Unimport, "injectImports"> & {
   injectImports: (source: SourceFile) => Promise<SourceFile>;
 };
 
-export type InferOptions<TOptions extends Options = Options> =
+export type InferOptions<TOptions extends Options> =
   TOptions["projectType"] extends "application"
     ? TOptions & Options<ApplicationProjectConfig>
     : TOptions["projectType"] extends "library"
       ? TOptions & Options<LibraryProjectConfig>
       : never;
 
-export type ResolvedOptions<TOptions extends Options = Options> = TOptions &
+export type ResolvedOptions<TOptions extends Options> = TOptions &
   Required<
     Pick<
       TOptions,
@@ -499,18 +497,6 @@ export interface Config<
   preprocess?: PreprocessFunction<TPayload, TContext>;
   postprocess?: PostprocessFunction<TPayload, TContext, TOutput>;
   teardown?: TeardownFunction;
-}
-
-export interface Renderer {
-  /**
-   * The name of the renderer
-   */
-  name: string;
-
-  /**
-   * The render function to be used by the runtime.
-   */
-  render: (context: Context) => MaybePromise<void>;
 }
 
 export type WorkerProcess<TExposedMethods extends ReadonlyArray<string>> = {
@@ -714,7 +700,7 @@ export interface Context<
   /**
    * The project root directory
    */
-  compiler: ICompiler<TOptions>;
+  compiler: ICompiler;
 
   /**
    * The Storm Stack environment paths
@@ -801,79 +787,77 @@ export interface Context<
   additionalRuntimeFiles?: string[];
 }
 
-export interface EngineHookFunctions<TOptions extends Options = Options> {
+export interface EngineHookFunctions {
   // New - Hooks used during the creation of a new project
-  "new:begin": (context: Context<TOptions>) => MaybePromise<void>;
-  "new:library": (context: Context<TOptions>) => MaybePromise<void>;
-  "new:application": (context: Context<TOptions>) => MaybePromise<void>;
-  "new:complete": (context: Context<TOptions>) => MaybePromise<void>;
+  "new:begin": (context: Context) => MaybePromise<void>;
+  "new:library": (context: Context) => MaybePromise<void>;
+  "new:application": (context: Context) => MaybePromise<void>;
+  "new:complete": (context: Context) => MaybePromise<void>;
 
   // Init - Hooks used during the initialization of the Storm Stack engine
-  "init:begin": (context: Context<TOptions>) => MaybePromise<void>;
-  "init:context": (context: Context<TOptions>) => MaybePromise<void>;
-  "init:installs": (context: Context<TOptions>) => MaybePromise<void>;
-  "init:tsconfig": (context: Context<TOptions>) => MaybePromise<void>;
-  "init:unimport": (context: Context<TOptions>) => MaybePromise<void>;
-  "init:dotenv": (context: Context<TOptions>) => MaybePromise<void>;
-  "init:workers": (context: Context<TOptions>) => MaybePromise<void>;
-  "init:entry": (context: Context<TOptions>) => MaybePromise<void>;
-  "init:complete": (context: Context<TOptions>) => MaybePromise<void>;
+  "init:begin": (context: Context) => MaybePromise<void>;
+  "init:context": (context: Context) => MaybePromise<void>;
+  "init:installs": (context: Context) => MaybePromise<void>;
+  "init:tsconfig": (context: Context) => MaybePromise<void>;
+  "init:unimport": (context: Context) => MaybePromise<void>;
+  "init:dotenv": (context: Context) => MaybePromise<void>;
+  "init:workers": (context: Context) => MaybePromise<void>;
+  "init:entry": (context: Context) => MaybePromise<void>;
+  "init:complete": (context: Context) => MaybePromise<void>;
 
   // Clean - Hooks used during the cleaning of the Storm Stack project
-  "clean:begin": (context: Context<TOptions>) => MaybePromise<void>;
-  "clean:types": (context: Context<TOptions>) => MaybePromise<void>;
-  "clean:artifacts": (context: Context<TOptions>) => MaybePromise<void>;
-  "clean:output": (context: Context<TOptions>) => MaybePromise<void>;
-  "clean:docs": (context: Context<TOptions>) => MaybePromise<void>;
-  "clean:complete": (context: Context<TOptions>) => MaybePromise<void>;
+  "clean:begin": (context: Context) => MaybePromise<void>;
+  "clean:types": (context: Context) => MaybePromise<void>;
+  "clean:artifacts": (context: Context) => MaybePromise<void>;
+  "clean:output": (context: Context) => MaybePromise<void>;
+  "clean:docs": (context: Context) => MaybePromise<void>;
+  "clean:complete": (context: Context) => MaybePromise<void>;
 
   // Prepare - Hooks used during the preparation of the Storm Stack artifacts
-  "prepare:begin": (context: Context<TOptions>) => MaybePromise<void>;
-  "prepare:directories": (context: Context<TOptions>) => MaybePromise<void>;
-  "prepare:config": (context: Context<TOptions>) => MaybePromise<void>;
-  "prepare:types": (context: Context<TOptions>) => MaybePromise<void>;
-  "prepare:dotenv": (context: Context<TOptions>) => MaybePromise<void>;
-  "prepare:runtime": (context: Context<TOptions>) => MaybePromise<void>;
-  "prepare:entry": (context: Context<TOptions>) => MaybePromise<void>;
-  "prepare:reflections": (context: Context<TOptions>) => MaybePromise<void>;
-  "prepare:deploy": (context: Context<TOptions>) => MaybePromise<void>;
-  "prepare:misc": (context: Context<TOptions>) => MaybePromise<void>;
-  "prepare:complete": (context: Context<TOptions>) => MaybePromise<void>;
+  "prepare:begin": (context: Context) => MaybePromise<void>;
+  "prepare:directories": (context: Context) => MaybePromise<void>;
+  "prepare:config": (context: Context) => MaybePromise<void>;
+  "prepare:types": (context: Context) => MaybePromise<void>;
+  "prepare:dotenv": (context: Context) => MaybePromise<void>;
+  "prepare:runtime": (context: Context) => MaybePromise<void>;
+  "prepare:entry": (context: Context) => MaybePromise<void>;
+  "prepare:reflections": (context: Context) => MaybePromise<void>;
+  "prepare:deploy": (context: Context) => MaybePromise<void>;
+  "prepare:misc": (context: Context) => MaybePromise<void>;
+  "prepare:complete": (context: Context) => MaybePromise<void>;
 
   // Lint - Hooks used during the linting process
-  "lint:begin": (context: Context<TOptions>) => MaybePromise<void>;
-  "lint:eslint": (context: Context<TOptions>) => MaybePromise<void>;
-  "lint:complete": (context: Context<TOptions>) => MaybePromise<void>;
+  "lint:begin": (context: Context) => MaybePromise<void>;
+  "lint:eslint": (context: Context) => MaybePromise<void>;
+  "lint:complete": (context: Context) => MaybePromise<void>;
 
   // Build - Hooks used during the build process of the Storm Stack project
-  "build:begin": (context: Context<TOptions>) => MaybePromise<void>;
+  "build:begin": (context: Context) => MaybePromise<void>;
   "build:pre-transform": (
-    context: Context<TOptions>,
+    context: Context,
     sourceFile: SourceFile
   ) => MaybePromise<void>;
   "build:transform": (
-    context: Context<TOptions>,
+    context: Context,
     sourceFile: SourceFile
   ) => MaybePromise<void>;
   "build:post-transform": (
-    context: Context<TOptions>,
+    context: Context,
     sourceFile: SourceFile
   ) => MaybePromise<void>;
-  "build:library": (context: Context<TOptions>) => MaybePromise<void>;
-  "build:application": (context: Context<TOptions>) => MaybePromise<void>;
-  "build:complete": (context: Context<TOptions>) => MaybePromise<void>;
+  "build:library": (context: Context) => MaybePromise<void>;
+  "build:application": (context: Context) => MaybePromise<void>;
+  "build:complete": (context: Context) => MaybePromise<void>;
 
   // Docs - Hooks used during the documentation generation process
-  "docs:begin": (context: Context<TOptions>) => MaybePromise<void>;
-  "docs:dotenv": (context: Context<TOptions>) => MaybePromise<void>;
-  "docs:api-reference": (context: Context<TOptions>) => MaybePromise<void>;
-  "docs:complete": (context: Context<TOptions>) => MaybePromise<void>;
+  "docs:begin": (context: Context) => MaybePromise<void>;
+  "docs:dotenv": (context: Context) => MaybePromise<void>;
+  "docs:api-reference": (context: Context) => MaybePromise<void>;
+  "docs:complete": (context: Context) => MaybePromise<void>;
 
   // Finalize - Hooks used during the finalization of the Storm Stack project
-  "finalize:begin": (context: Context<TOptions>) => MaybePromise<void>;
-  "finalize:complete": (context: Context<TOptions>) => MaybePromise<void>;
+  "finalize:begin": (context: Context) => MaybePromise<void>;
+  "finalize:complete": (context: Context) => MaybePromise<void>;
 }
 
-export type EngineHooks<TOptions extends Options = Options> = Hookable<
-  EngineHookFunctions<TOptions>
->;
+export type EngineHooks = Hookable<EngineHookFunctions>;

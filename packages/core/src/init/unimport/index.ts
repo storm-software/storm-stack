@@ -19,7 +19,7 @@
 import { LogLevelLabel } from "@storm-software/config-tools/types";
 import { joinPaths } from "@stryke/path/join-paths";
 import type { InlinePreset } from "unimport";
-import type { Context, EngineHooks, Options } from "../../types/build";
+import type { Context, EngineHooks } from "../../types/build";
 import type { LogFn } from "../../types/config";
 import { createUnimport } from "./create";
 
@@ -30,10 +30,10 @@ import { createUnimport } from "./create";
  * @param context - The context object for the project.
  * @param hooks - The hooks object for the project.
  */
-export async function initUnimport<TOptions extends Options = Options>(
+export async function initUnimport(
   log: LogFn,
-  context: Context<TOptions>,
-  hooks: EngineHooks<TOptions>
+  context: Context,
+  hooks: EngineHooks
 ) {
   log(
     LogLevelLabel.TRACE,
@@ -102,6 +102,6 @@ export async function initUnimport<TOptions extends Options = Options>(
     );
   });
 
-  context.unimport = createUnimport<TOptions>(log, context);
+  context.unimport = createUnimport(log, context);
   await context.unimport.init();
 }

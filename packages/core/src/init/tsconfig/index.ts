@@ -33,7 +33,7 @@ import {
   isIncludeMatchFound
 } from "../../helpers/typescript/tsconfig";
 import { writeFile } from "../../helpers/utilities/write-file";
-import type { Context, EngineHooks, Options } from "../../types/build";
+import type { Context, EngineHooks } from "../../types/build";
 import type { LogFn } from "../../types/config";
 import { getTsconfigChanges } from "./utilities";
 
@@ -44,10 +44,10 @@ import { getTsconfigChanges } from "./utilities";
  * @param context - The build context.
  * @param hooks - The engine hooks.
  */
-export async function initTsconfig<TOptions extends Options = Options>(
+export async function initTsconfig(
   log: LogFn,
-  context: Context<TOptions>,
-  hooks: EngineHooks<TOptions>
+  context: Context,
+  hooks: EngineHooks
 ): Promise<void> {
   log(
     LogLevelLabel.TRACE,
@@ -61,7 +61,7 @@ export async function initTsconfig<TOptions extends Options = Options>(
   }
 
   const originalTsconfigJson = await readJsonFile<NonNullable<ObjectData>>(
-    context.options.tsconfig!
+    context.options.tsconfig
   );
 
   const json = await getTsconfigChanges(context);
@@ -84,7 +84,7 @@ export async function initTsconfig<TOptions extends Options = Options>(
     json.include.push(artifactsIncludePath);
   }
 
-  await writeFile(log, context.options.tsconfig!, StormJSON.stringify(json));
+  await writeFile(log, context.options.tsconfig, StormJSON.stringify(json));
 
   await hooks.callHook("init:tsconfig", context).catch((error: Error) => {
     log(

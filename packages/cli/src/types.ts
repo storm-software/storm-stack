@@ -16,6 +16,6 @@
 
  ------------------------------------------------------------------- */
 
-import { StormSentryLogVariables } from "@storm-stack/plugin-log-sentry/types";
+import { StormSentryLogConfig } from "@storm-stack/plugin-log-sentry/types";
 
-export interface StormStackCLIVariables extends StormSentryLogVariables {}
+export interface StormStackCLIVariables extends StormSentryLogConfig {}

@@ -17,10 +17,8 @@
  ------------------------------------------------------------------- */
 
 import { LogLevelLabel } from "@storm-software/config-tools/types";
-
 import { writeFile } from "@storm-stack/core/helpers/utilities/write-file";
 import type { LogFn } from "@storm-stack/core/types";
-import type { Options } from "@storm-stack/core/types/build";
 import { readJsonFile } from "@stryke/fs/json";
 import { listFiles } from "@stryke/fs/list-files";
 import { StormJSON } from "@stryke/json/storm-json";
@@ -39,11 +37,11 @@ import { titleCase } from "@stryke/string-format/title-case";
 import { isSetString } from "@stryke/type-checks/is-set-string";
 import { isString } from "@stryke/type-checks/is-string";
 import { defu } from "defu";
-import type { StormStackCLIPresetContext } from "../types/build";
+import { StormStackCLIPresetContext } from "../types/build";
 import type { StormStackCLIPresetConfig } from "../types/config";
 
-export async function initContext<TOptions extends Options = Options>(
-  context: StormStackCLIPresetContext<TOptions>,
+export async function initContext(
+  context: StormStackCLIPresetContext,
   config: StormStackCLIPresetConfig
 ) {
   context.options.platform = "node";
@@ -100,8 +98,8 @@ export async function initContext<TOptions extends Options = Options>(
   );
 }
 
-export async function initInstalls<TOptions extends Options = Options>(
-  context: StormStackCLIPresetContext<TOptions>,
+export async function initInstalls(
+  context: StormStackCLIPresetContext,
   config: StormStackCLIPresetConfig
 ) {
   if (
@@ -112,8 +110,8 @@ export async function initInstalls<TOptions extends Options = Options>(
   }
 }
 
-export async function initUnimport<TOptions extends Options = Options>(
-  context: StormStackCLIPresetContext<TOptions>,
+export async function initUnimport(
+  context: StormStackCLIPresetContext,
   config: StormStackCLIPresetConfig
 ) {
   const imports = [
@@ -142,9 +140,9 @@ export async function initUnimport<TOptions extends Options = Options>(
   });
 }
 
-export async function initEntry<TOptions extends Options = Options>(
+export async function initEntry(
   log: LogFn,
-  context: StormStackCLIPresetContext<TOptions>,
+  context: StormStackCLIPresetContext,
   config: StormStackCLIPresetConfig
 ) {
   if (!isSetString(context.options.entry)) {

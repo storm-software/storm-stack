@@ -17,8 +17,7 @@
  ------------------------------------------------------------------- */
 
 import { LogLevelLabel } from "@storm-software/config-tools/types";
-import type { LogFn } from "@storm-stack/core/types";
-import type { Options } from "@storm-stack/core/types/build";
+import type { Context, LogFn } from "@storm-stack/core/types";
 import { esbuild } from "@storm-stack/devkit/helpers/esbuild/build";
 import { unbuild } from "@storm-stack/devkit/helpers/unbuild/build";
 import { chmodX } from "@stryke/fs/chmod-x";
@@ -26,7 +25,6 @@ import { findFileExtension } from "@stryke/path/file-path-fns";
 import { joinPaths } from "@stryke/path/join-paths";
 import { replacePath } from "@stryke/path/replace";
 import type { Plugin as ESBuildPlugin } from "esbuild";
-import type { StormStackCLIPresetContext } from "../types/build";
 
 /**
  * ink attempts to import react-devtools-core in an ESM-unfriendly way:
@@ -49,10 +47,7 @@ const ignoreReactDevToolsPlugin: ESBuildPlugin = {
   }
 };
 
-export async function buildApplication<TOptions extends Options = Options>(
-  log: LogFn,
-  context: StormStackCLIPresetContext<TOptions>
-) {
+export async function buildApplication(log: LogFn, context: Context) {
   log(LogLevelLabel.TRACE, "Building the CLI application.");
 
   await esbuild(context, {
@@ -81,19 +76,13 @@ export async function buildApplication<TOptions extends Options = Options>(
   });
 }
 
-export async function buildLibrary<TOptions extends Options = Options>(
-  log: LogFn,
-  context: StormStackCLIPresetContext<TOptions>
-) {
+export async function buildLibrary(log: LogFn, context: Context) {
   log(LogLevelLabel.TRACE, "Building the CLI library project.");
 
   await unbuild(context);
 }
 
-export async function permissionExecutable<TOptions extends Options = Options>(
-  log: LogFn,
-  context: StormStackCLIPresetContext<TOptions>
-) {
+export async function permissionExecutable(log: LogFn, context: Context) {
   if (context.options.projectType === "application") {
     const filtered = context.entry.filter(
       entry => entry.input.file === context.options.entry

@@ -19,7 +19,7 @@
 import { parse as parseToml, stringify as stringifyToml } from "@ltd/j-toml";
 import { LogLevelLabel } from "@storm-software/config-tools/types";
 import { getFileHeader } from "@storm-stack/core/helpers/utilities/file-header";
-import type { Context, EngineHooks, Options } from "@storm-stack/core/types";
+import type { Context, EngineHooks } from "@storm-stack/core/types";
 import type { StoragePluginConfig } from "@storm-stack/devkit/plugins/storage";
 import StoragePlugin from "@storm-stack/devkit/plugins/storage";
 import { readFile } from "@stryke/fs";
@@ -37,9 +37,7 @@ export type StorageCloudflareR2PluginConfig = StoragePluginConfig &
     binding?: string;
   };
 
-export default class StorageCloudflareR2Plugin<
-  TOptions extends Options = Options
-> extends StoragePlugin<TOptions> {
+export default class StorageCloudflareR2Plugin extends StoragePlugin {
   public constructor(
     protected override config: StorageCloudflareR2PluginConfig
   ) {
@@ -59,7 +57,7 @@ export default class StorageCloudflareR2Plugin<
    *
    * @param hooks - The engine hooks to add
    */
-  public override addHooks(hooks: EngineHooks<TOptions>) {
+  public override addHooks(hooks: EngineHooks) {
     hooks.addHooks({
       "prepare:config": this.prepareConfig.bind(this)
     });
@@ -116,7 +114,7 @@ export default s3Driver({
    * @param context - The resolved Storm Stack context
    * @returns A promise that resolves when the deploy step is prepared
    */
-  protected async prepareConfig(context: Context<TOptions>) {
+  protected async prepareConfig(context: Context) {
     if (context.options.projectType === "application" && this.config.binding) {
       this.log(
         LogLevelLabel.TRACE,

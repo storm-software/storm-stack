@@ -17,11 +17,9 @@
  ------------------------------------------------------------------- */
 
 import { getFileHeader } from "../../../helpers/utilities/file-header";
-import type { Context, Options } from "../../../types/build";
+import type { Context } from "../../../types/build";
 
-export function writeLog<TOptions extends Options = Options>(
-  context: Context<TOptions>
-) {
+export function writeLog(context: Context) {
   return `
 /**
  * The log module provides a unified logging interface for Storm Stack applications.

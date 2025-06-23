@@ -19,13 +19,13 @@
 import { LogLevelLabel } from "@storm-software/config-tools/types";
 import { removeDirectory } from "@stryke/fs/helpers";
 import { joinPaths } from "@stryke/path/join-paths";
-import type { Context, EngineHooks, Options } from "../../types/build";
+import type { Context, EngineHooks } from "../../types/build";
 import type { LogFn } from "../../types/config";
 
-export async function cleanOutput<TOptions extends Options = Options>(
+export async function cleanOutput(
   log: LogFn,
-  context: Context<TOptions>,
-  hooks: EngineHooks<TOptions>
+  context: Context,
+  hooks: EngineHooks
 ) {
   log(LogLevelLabel.TRACE, `Cleaning the Storm Stack project output.`);
 

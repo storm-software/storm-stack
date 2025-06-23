@@ -5,11 +5,11 @@
  This code was released as part of the Storm Stack project. Storm Stack
  is maintained by Storm Software under the Apache-2.0 license, and is
  free for commercial and private use. For more information, please visit
- our licensing page at https://stormsoftware.com/projects/storm-stack/license.
+ our licensing page at https://stormsoftware.com/license.
 
  Website:                  https://stormsoftware.com
  Repository:               https://github.com/storm-software/storm-stack
- Documentation:            https://stormsoftware.com/projects/storm-stack/docs
+ Documentation:            https://docs.stormsoftware.com/projects/storm-stack
  Contact:                  https://stormsoftware.com/contact
 
  SPDX-License-Identifier:  Apache-2.0
@@ -17,7 +17,7 @@
  ------------------------------------------------------------------- */
 
 import type { Loader, LoaderResult } from "@storm-software/unbuild/types";
-import type { Context, Options } from "@storm-stack/core/types/build";
+import type { Context } from "@storm-stack/core/types/build";
 import { transform } from "esbuild";
 
 const DECLARATION_RE = /\.d\.[cm]?ts$/;
@@ -27,9 +27,7 @@ const KNOWN_EXT_RE = /\.(?:c|m)?[jt]sx?$/;
 
 const TS_EXTS = new Set([".ts", ".mts", ".cts"]);
 
-export const getUnbuildLoader = <TOptions extends Options = Options>(
-  context: Context<TOptions>
-): Loader => {
+export const getUnbuildLoader = (context: Context): Loader => {
   return async (input, { options }) => {
     if (!KNOWN_EXT_RE.test(input.path) || DECLARATION_RE.test(input.path)) {
       return;

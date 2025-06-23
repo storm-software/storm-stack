@@ -19,13 +19,13 @@
 import { LogLevelLabel } from "@storm-software/config-tools/types";
 import { removeDirectory } from "@stryke/fs/helpers";
 import { joinPaths } from "@stryke/path/join-paths";
-import type { Context, EngineHooks, Options } from "../../types/build";
+import type { Context, EngineHooks } from "../../types/build";
 import type { LogFn } from "../../types/config";
 
-export async function cleanDocs<TOptions extends Options = Options>(
+export async function cleanDocs(
   log: LogFn,
-  context: Context<TOptions>,
-  hooks: EngineHooks<TOptions>
+  context: Context,
+  hooks: EngineHooks
 ) {
   log(
     LogLevelLabel.TRACE,
@@ -33,10 +33,7 @@ export async function cleanDocs<TOptions extends Options = Options>(
   );
 
   await removeDirectory(
-    joinPaths(
-      context.workspaceConfig.workspaceRoot,
-      context.options.outputPath!
-    )
+    joinPaths(context.workspaceConfig.workspaceRoot, context.options.outputPath)
   );
 
   await hooks.callHook("clean:docs", context).catch((error: Error) => {

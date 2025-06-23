@@ -17,7 +17,7 @@
  ------------------------------------------------------------------- */
 
 import { LogLevelLabel } from "@storm-software/config-tools/types";
-import type { Context, EngineHooks, Options } from "@storm-stack/core/types";
+import type { Context, EngineHooks } from "@storm-stack/core/types";
 import { joinPaths } from "@stryke/path/join-paths";
 import { camelCase } from "@stryke/string-format/camel-case";
 import type { MaybePromise } from "@stryke/types/base";
@@ -27,9 +27,7 @@ export interface StoragePluginConfig {
   namespace: string;
 }
 
-export default abstract class StoragePlugin<
-  TOptions extends Options = Options
-> extends LibraryPlugin<TOptions> {
+export default abstract class StoragePlugin extends LibraryPlugin {
   public constructor(
     protected override config: StoragePluginConfig,
     name: string,
@@ -44,7 +42,7 @@ export default abstract class StoragePlugin<
     }
   }
 
-  public override addHooks(hooks: EngineHooks<TOptions>) {
+  public override addHooks(hooks: EngineHooks) {
     super.addHooks(hooks);
 
     hooks.addHooks({
@@ -58,11 +56,9 @@ export default abstract class StoragePlugin<
    *
    * @param context - The context to use
    */
-  protected abstract writeStorage(
-    context: Context<TOptions>
-  ): MaybePromise<string>;
+  protected abstract writeStorage(context: Context): MaybePromise<string>;
 
-  async #prepareRuntime(context: Context<TOptions>) {
+  async #prepareRuntime(context: Context) {
     this.log(LogLevelLabel.TRACE, `Prepare the Storm Stack storage artifact.`);
 
     if (context.options.projectType === "application") {
@@ -77,7 +73,7 @@ export default abstract class StoragePlugin<
     }
   }
 
-  async #initContext(context: Context<TOptions>) {
+  async #initContext(context: Context) {
     this.log(
       LogLevelLabel.TRACE,
       `Loading the ${this.name} plugin into the context.`

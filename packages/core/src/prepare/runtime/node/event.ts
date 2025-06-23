@@ -17,11 +17,9 @@
  ------------------------------------------------------------------- */
 
 import { getFileHeader } from "../../../helpers/utilities/file-header";
-import type { Context, Options } from "../../../types/build";
+import type { Context } from "../../../types/build";
 
-export function writeEvent<TOptions extends Options = Options>(
-  _context: Context<TOptions>
-) {
+export function writeEvent(_context: Context) {
   return `
 /**
  * The Storm Stack event module.

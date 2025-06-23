@@ -25,7 +25,6 @@ import {
 } from "@deepkit/type";
 import { OrganizationConfig } from "@storm-software/config/types";
 import { reflectType } from "@storm-stack/core/helpers/deepkit/reflect-type";
-import { Context, Options } from "@storm-stack/core/types/build";
 import { joinPaths } from "@stryke/path/index";
 import { kebabCase } from "@stryke/string-format/kebab-case";
 import { titleCase } from "@stryke/string-format/title-case";
@@ -35,6 +34,7 @@ import { isString } from "@stryke/type-checks/is-string";
 import { TypeDefinition } from "@stryke/types/configuration";
 import defu from "defu";
 import { CommandPayloadArg } from "../data/command-payload";
+import { StormStackCLIPresetContext } from "../types/build";
 import { StormStackCLIPresetConfig } from "../types/config";
 import { Command, CommandTree } from "../types/reflection";
 
@@ -97,8 +97,8 @@ export function isValidMinNodeVersion(
  * @param config - The StormStackCLIPresetConfig containing author information.
  * @returns An OrganizationConfig object with the author's name.
  */
-export function extractAuthor<TOptions extends Options = Options>(
-  context: Context<TOptions>,
+export function extractAuthor(
+  context: StormStackCLIPresetContext,
   config: StormStackCLIPresetConfig = {}
 ): OrganizationConfig | undefined {
   let author: OrganizationConfig | undefined;
@@ -156,8 +156,8 @@ export function extractAuthor<TOptions extends Options = Options>(
  * @returns The application name in kebab-case format.
  * @throws An error if no valid application name is found.
  */
-export function getAppName<TOptions extends Options = Options>(
-  context: Context<TOptions>,
+export function getAppName(
+  context: StormStackCLIPresetContext,
   config: StormStackCLIPresetConfig = {}
 ): string {
   const result =
@@ -184,8 +184,8 @@ export function getAppName<TOptions extends Options = Options>(
  * @param config - The StormStackCLIPresetConfig containing binary name options.
  * @returns The application title in title-case format.
  */
-export function getAppTitle<TOptions extends Options = Options>(
-  context: Context<TOptions>,
+export function getAppTitle(
+  context: StormStackCLIPresetContext,
   config: StormStackCLIPresetConfig = {}
 ): string {
   return titleCase(context.options.name || getAppName(context, config));
@@ -292,19 +292,19 @@ export function extractCommandFunctionPayloadData(
   return ReflectionClass.from(payloadDataType);
 }
 
-export function getPayloadBaseTypeDefinition<
-  TOptions extends Options = Options
->(context: Context<TOptions>): TypeDefinition {
+export function getPayloadBaseTypeDefinition(
+  context: StormStackCLIPresetContext
+): TypeDefinition {
   return {
     file: joinPaths(context.runtimePath, "payload.ts"),
     name: "StormPayload"
   };
 }
 
-export async function reflectPayloadBaseType<
-  TOptions extends Options = Options
->(context: Context<TOptions>): Promise<ReflectionClass<any>> {
-  const defaultPayloadType = await reflectType<TOptions>(
+export async function reflectPayloadBaseType(
+  context: StormStackCLIPresetContext
+): Promise<ReflectionClass<any>> {
+  const defaultPayloadType = await reflectType(
     context,
     getPayloadBaseTypeDefinition(context),
     {

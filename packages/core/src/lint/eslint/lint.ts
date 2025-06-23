@@ -5,11 +5,11 @@
  This code was released as part of the Storm Stack project. Storm Stack
  is maintained by Storm Software under the Apache-2.0 license, and is
  free for commercial and private use. For more information, please visit
- our licensing page at https://stormsoftware.com/projects/storm-stack/license.
+ our licensing page at https://stormsoftware.com/license.
 
  Website:                  https://stormsoftware.com
  Repository:               https://github.com/storm-software/storm-stack
- Documentation:            https://stormsoftware.com/projects/storm-stack/docs
+ Documentation:            https://docs.stormsoftware.com/projects/storm-stack
  Contact:                  https://stormsoftware.com/contact
 
  SPDX-License-Identifier:  Apache-2.0
@@ -30,7 +30,7 @@ import type { LegacyESLint } from "eslint/use-at-your-own-risk";
 import path from "node:path";
 import { writeFile } from "../../helpers/utilities/write-file";
 import { installPackages } from "../../init/installs/utilities";
-import type { Context, Options } from "../../types/build";
+import type { Context } from "../../types/build";
 import type { LogFn } from "../../types/config";
 import type { LintResult } from "./format-result";
 import { formatResults } from "./format-result";
@@ -138,9 +138,9 @@ async function hasEslintConfiguration(
   return configObject;
 }
 
-async function lint<TOptions extends Options = Options>(
+async function lint(
   log: LogFn,
-  context: Context<TOptions>,
+  context: Context,
   eslintrcFile: string | null,
   {
     lintDuringBuild = false,
@@ -372,9 +372,9 @@ async function lint<TOptions extends Options = Options>(
   }
 }
 
-export async function runEslint<TOptions extends Options = Options>(
+export async function runEslint(
   log: LogFn,
-  context: Context<TOptions>,
+  context: Context,
   opts: {
     lintDuringBuild?: boolean;
     eslintOptions?: any;
@@ -475,7 +475,7 @@ export async function runEslint<TOptions extends Options = Options>(
     }
 
     // Write default ESLint config.
-    await writeDefaultEslintConfig<TOptions>(log, context, type);
+    await writeDefaultEslintConfig(log, context, type);
   }
 
   log(

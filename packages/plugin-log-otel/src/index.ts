@@ -20,7 +20,7 @@ import type { OTLPExporterNodeConfigBase } from "@opentelemetry/otlp-exporter-ba
 import type { OTLPGRPCExporterConfigNode } from "@opentelemetry/otlp-grpc-exporter-base";
 import { LogLevelLabel } from "@storm-software/config-tools/types";
 import { getFileHeader } from "@storm-stack/core/helpers/utilities/file-header";
-import type { Context, Options } from "@storm-stack/core/types";
+import type { Context } from "@storm-stack/core/types";
 import type { LogPluginConfig } from "@storm-stack/devkit/plugins/log";
 import LogPlugin from "@storm-stack/devkit/plugins/log";
 import { StormJSON } from "@stryke/json/storm-json";
@@ -37,9 +37,7 @@ export type LogOpenTelemetryPluginConfig = LogPluginConfig & {
       } & OTLPGRPCExporterConfigNode)
   );
 
-export default class LogOpenTelemetryPlugin<
-  TOptions extends Options = Options
-> extends LogPlugin<TOptions> {
+export default class LogOpenTelemetryPlugin extends LogPlugin {
   protected override installs = {
     "@opentelemetry/api-logs@^0.200.0": "dependency",
     "@opentelemetry/resources@^0.200.0": "dependency",
@@ -63,7 +61,7 @@ export default class LogOpenTelemetryPlugin<
     ] = "dependency";
   }
 
-  protected override writeSink(_context: Context<TOptions>) {
+  protected override writeSink(_context: Context) {
     return `${getFileHeader()}
 
 import type {

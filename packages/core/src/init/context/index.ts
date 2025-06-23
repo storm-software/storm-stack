@@ -29,18 +29,13 @@ import { joinPaths } from "@stryke/path/join-paths";
 import type { PackageJson } from "@stryke/types/package-json";
 import { nanoid } from "@stryke/unique-id/nanoid-client";
 import { createVfs } from "../../helpers/utilities/vfs";
-import type {
-  Context,
-  EngineHooks,
-  MetaInfo,
-  Options
-} from "../../types/build";
+import type { Context, EngineHooks, MetaInfo } from "../../types/build";
 import type { LogFn } from "../../types/config";
 
-export async function initContext<TOptions extends Options = Options>(
+export async function initContext(
   log: LogFn,
-  context: Context<TOptions>,
-  hooks: EngineHooks<TOptions>
+  context: Context,
+  hooks: EngineHooks
 ) {
   log(
     LogLevelLabel.TRACE,
@@ -53,7 +48,10 @@ export async function initContext<TOptions extends Options = Options>(
   );
   if (existsSync(packageJsonPath)) {
     context.packageJson = await readJsonFile<PackageJson>(packageJsonPath);
-    context.options.name ??= context.packageJson?.name;
+    if (context.packageJson?.name) {
+      context.options.name ??= context.packageJson?.name;
+    }
+
     context.options.description ??= context.packageJson?.description;
     context.workspaceConfig.repository ??=
       typeof context.packageJson?.repository === "string"
@@ -95,7 +93,9 @@ export async function initContext<TOptions extends Options = Options>(
       context.options.name?.startsWith("@") &&
       context.options.name.split("/").filter(Boolean).length > 1
     ) {
-      context.options.name = context.options.name.split("/").filter(Boolean)[1];
+      context.options.name = context.options.name
+        .split("/")
+        .filter(Boolean)[1]!;
     }
   }
 
