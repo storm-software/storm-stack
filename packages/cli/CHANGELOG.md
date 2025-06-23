@@ -2,6 +2,22 @@
 
 # Changelog for Storm Stack - CLI
 
+## [0.12.0](https://github.com/storm-software/storm-stack/releases/tag/cli%400.12.0) (2025-06-23)
+
+### Features
+
+- **preset-cli:** Added logic to persist command reflections to data directory
+  ([d96999c6](https://github.com/storm-software/storm-stack/commit/d96999c6))
+
+### Updated Dependencies
+
+- Updated plugin-log-storage to 0.18.0
+- Updated plugin-log-sentry to 0.20.0
+- Updated plugin-storage-fs to 0.7.0
+- Updated preset-cli to 0.23.0
+- Updated types to 0.14.0
+- Updated core to 0.31.0
+
 ## [0.11.3](https://github.com/storm-software/storm-stack/releases/tag/cli%400.11.3) (2025-06-20)
 
 ### Miscellaneous

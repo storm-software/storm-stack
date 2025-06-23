@@ -2,6 +2,17 @@
 
 # Changelog for Storm Stack - Plugin Log Storage
 
+## [0.18.0](https://github.com/storm-software/storm-stack/releases/tag/plugin-log-storage%400.18.0) (2025-06-23)
+
+### Features
+
+- **preset-cli:** Added logic to persist command reflections to data directory
+  ([d96999c6](https://github.com/storm-software/storm-stack/commit/d96999c6))
+
+### Updated Dependencies
+
+- Updated core to 0.31.0
+
 ## [0.17.5](https://github.com/storm-software/storm-stack/releases/tag/plugin-log-storage%400.17.5) (2025-06-20)
 
 ### Miscellaneous

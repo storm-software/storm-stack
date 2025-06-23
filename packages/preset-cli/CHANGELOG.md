@@ -2,6 +2,17 @@
 
 # Changelog for Storm Stack - Preset CLI
 
+## [0.23.0](https://github.com/storm-software/storm-stack/releases/tag/preset-cli%400.23.0) (2025-06-23)
+
+### Features
+
+- **preset-cli:** Added logic to persist command reflections to data directory
+  ([d96999c6](https://github.com/storm-software/storm-stack/commit/d96999c6))
+
+### Updated Dependencies
+
+- Updated core to 0.31.0
+
 ## [0.22.0](https://github.com/storm-software/storm-stack/releases/tag/preset-cli%400.22.0) (2025-06-20)
 
 ### Features

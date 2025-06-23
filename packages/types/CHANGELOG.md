@@ -2,6 +2,13 @@
 
 # Changelog for Storm Stack - Types
 
+## [0.14.0](https://github.com/storm-software/storm-stack/releases/tag/types%400.14.0) (2025-06-23)
+
+### Features
+
+- **preset-cli:** Added logic to persist command reflections to data directory
+  ([d96999c6](https://github.com/storm-software/storm-stack/commit/d96999c6))
+
 ## [0.13.0](https://github.com/storm-software/storm-stack/releases/tag/types%400.13.0) (2025-06-17)
 
 ### Features

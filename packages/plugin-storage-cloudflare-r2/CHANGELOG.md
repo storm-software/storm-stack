@@ -2,6 +2,17 @@
 
 # Changelog for Storm Stack - Plugin Storage Cloudflare R2
 
+## [0.5.0](https://github.com/storm-software/storm-stack/releases/tag/plugin-storage-cloudflare-r2%400.5.0) (2025-06-23)
+
+### Features
+
+- **preset-cli:** Added logic to persist command reflections to data directory
+  ([d96999c6](https://github.com/storm-software/storm-stack/commit/d96999c6))
+
+### Updated Dependencies
+
+- Updated core to 0.31.0
+
 ## [0.4.5](https://github.com/storm-software/storm-stack/releases/tag/plugin-storage-cloudflare-r2%400.4.5) (2025-06-20)
 
 ### Miscellaneous
