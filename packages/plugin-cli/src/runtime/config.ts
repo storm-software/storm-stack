@@ -19,9 +19,9 @@
 import { getFileHeader } from "@storm-stack/core/helpers";
 import { relativePath } from "@stryke/path/file-path-fns";
 import { joinPaths } from "@stryke/path/join-paths";
-import { StormStackCLIPresetContext } from "../types/build";
+import { StormStackCLIPluginContext } from "../types/build";
 
-export function writeConfigGet(context: StormStackCLIPresetContext) {
+export function writeConfigGet(context: StormStackCLIPluginContext) {
   return `${getFileHeader()}
 
 import { deserialize } from "@deepkit/type";
@@ -74,7 +74,7 @@ export default handler;
 `;
 }
 
-export function writeConfigSet(context: StormStackCLIPresetContext) {
+export function writeConfigSet(context: StormStackCLIPluginContext) {
   return `${getFileHeader()}
 
 import { deserialize, serialize } from "@deepkit/type";
@@ -133,7 +133,7 @@ export default handler;
 `;
 }
 
-export function writeConfigList(context: StormStackCLIPresetContext) {
+export function writeConfigList(context: StormStackCLIPluginContext) {
   return `${getFileHeader()}
 
 import { deserialize } from "@deepkit/type";
@@ -176,7 +176,7 @@ export default handler;
 `;
 }
 
-export function writeConfigDelete(context: StormStackCLIPresetContext) {
+export function writeConfigDelete(context: StormStackCLIPluginContext) {
   return `${getFileHeader()}
 
 import { deserialize, serialize } from "@deepkit/type";

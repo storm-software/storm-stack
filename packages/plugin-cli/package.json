@@ -1,12 +1,12 @@
 {
-  "name": "@storm-stack/preset-cli",
+  "name": "@storm-stack/plugin-cli",
   "version": "0.23.0",
   "type": "module",
-  "description": "A Storm Stack build preset for Cloudflare Workers",
+  "description": "A Storm Stack build plugin for Cloudflare Workers",
   "repository": {
     "type": "github",
     "url": "https://github.com/storm-software/storm-stack.git",
-    "directory": "packages/preset-cli"
+    "directory": "packages/plugin-cli"
   },
   "private": false,
   "exports": {
@@ -46,7 +46,7 @@
     "@deepkit/type": "catalog:",
     "@storm-software/config": "catalog:",
     "@storm-software/config-tools": "catalog:",
-    "@storm-stack/core": "0.31.0",
+    "@storm-stack/core": "workspace:*",
     "@storm-stack/devkit": "workspace:*",
     "@stryke/capnp": "catalog:",
     "@stryke/cli": "catalog:",

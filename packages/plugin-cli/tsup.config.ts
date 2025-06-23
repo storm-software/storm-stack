@@ -19,7 +19,7 @@
 import { getTsupConfig } from "@storm-stack/tools-config/tsup.shared";
 
 const config = getTsupConfig({
-  name: "preset-cli",
+  name: "plugin-cli",
   entry: ["src/index.ts"],
   outDir: "dist",
   bundle: true,

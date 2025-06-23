@@ -30,8 +30,8 @@ import { resolveParentPath } from "@stryke/path/get-parent-path";
 import { titleCase } from "@stryke/string-format/title-case";
 import { writeCommandTreeReflection } from "../capnp/persistence";
 import { CommandPayload } from "../data/command-payload";
-import { StormStackCLIPresetContext } from "../types/build";
-import type { StormStackCLIPresetConfig } from "../types/config";
+import { StormStackCLIPluginContext } from "../types/build";
+import type { StormStackCLIPluginConfig } from "../types/config";
 import { Command, CommandTree } from "../types/reflection";
 import {
   findCommandInTree,
@@ -57,7 +57,7 @@ interface CommandRelations {
 }
 
 async function reflectRelations(
-  context: StormStackCLIPresetContext
+  context: StormStackCLIPluginContext
 ): Promise<Record<string, CommandRelations>> {
   const relationReflections = {} as Record<string, CommandRelations>;
   for (const entry of context.entry.filter(
@@ -91,8 +91,8 @@ async function reflectRelations(
 }
 
 async function reflectPayloads(
-  context: StormStackCLIPresetContext,
-  config: StormStackCLIPresetConfig
+  context: StormStackCLIPluginContext,
+  config: StormStackCLIPluginConfig
 ): Promise<Record<string, CommandPayload>> {
   const payloadReflections = {} as Record<string, CommandPayload>;
   for (const entry of context.entry.filter(
@@ -145,8 +145,8 @@ type CommandReflectionDefinition = Omit<
 
 async function reflectCommand(
   log: LogFn,
-  context: StormStackCLIPresetContext,
-  config: StormStackCLIPresetConfig
+  context: StormStackCLIPluginContext,
+  config: StormStackCLIPluginConfig
 ): Promise<Record<string, CommandReflectionDefinition>> {
   const relationsReflections = await reflectRelations(context);
   const payloadsReflections = await reflectPayloads(context, config);
@@ -251,8 +251,8 @@ async function reflectCommand(
 
 export async function reflectCommandTree(
   log: LogFn,
-  context: StormStackCLIPresetContext,
-  config: StormStackCLIPresetConfig
+  context: StormStackCLIPluginContext,
+  config: StormStackCLIPluginConfig
 ): Promise<CommandTree> {
   const reflections = await reflectCommand(log, context, config);
 

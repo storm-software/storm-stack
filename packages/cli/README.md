@@ -45,7 +45,7 @@ This package is part of the ⚡<b>Storm Stack</b> monorepo. Storm Stack packages
 
 # Storm Stack - CLI Application
 
-A package containing the Storm Stack CLI application.
+A package containing the Storm Stack command-line interface (CLI) application.
 
 <!-- START doctoc -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->

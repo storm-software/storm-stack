@@ -29,12 +29,12 @@ import {
   MIN_CONSOLE_WIDTH
 } from "../helpers/constants";
 import { extractAuthor } from "../helpers/utilities";
-import { StormStackCLIPresetContext } from "../types/build";
-import type { StormStackCLIPresetConfig } from "../types/config";
+import { StormStackCLIPluginContext } from "../types/build";
+import type { StormStackCLIPluginConfig } from "../types/config";
 
 export function writeRuntime(
-  context: StormStackCLIPresetContext,
-  config: StormStackCLIPresetConfig
+  context: StormStackCLIPluginContext,
+  config: StormStackCLIPluginConfig
 ) {
   let appTitle = titleCase(
     context.options.name ||
@@ -575,7 +575,9 @@ export function renderFooter(): string {
     }
 
   if (isUnicodeSupported) {
-    const qrCodeLines = \`${renderUnicodeCompact((author?.url || homepage || docs || support || contact || repository)!)}\`.split("\\n");
+    const qrCodeLines = \`${renderUnicodeCompact(
+      (author?.url || homepage || docs || support || contact || repository)!
+    )}\`.split("\\n");
     const qrCodeMaxLength = Math.max(...qrCodeLines.map(line => line.length));
     footer.push(...qrCodeLines.map(line => \`\${" ".repeat((consoleWidth - qrCodeMaxLength) / 2)}\${line}\${" ".repeat((consoleWidth - qrCodeMaxLength) / 2)}\`));
   }

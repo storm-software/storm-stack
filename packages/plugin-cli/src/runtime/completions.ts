@@ -22,12 +22,12 @@ import { joinPaths } from "@stryke/path/join-paths";
 import { kebabCase } from "@stryke/string-format/kebab-case";
 import { titleCase } from "@stryke/string-format/title-case";
 import { isSetString } from "@stryke/type-checks/is-set-string";
-import { StormStackCLIPresetContext } from "../types/build";
-import { StormStackCLIPresetConfig } from "../types/config";
+import { StormStackCLIPluginContext } from "../types/build";
+import { StormStackCLIPluginConfig } from "../types/config";
 
 export function writeCompletionsBash(
-  context: StormStackCLIPresetContext,
-  config: StormStackCLIPresetConfig
+  context: StormStackCLIPluginContext,
+  config: StormStackCLIPluginConfig
 ) {
   const bin =
     kebabCase(
@@ -164,8 +164,8 @@ export default handler;
 }
 
 export function writeCompletionsZsh(
-  context: StormStackCLIPresetContext,
-  config: StormStackCLIPresetConfig
+  context: StormStackCLIPluginContext,
+  config: StormStackCLIPluginConfig
 ) {
   const bin =
     kebabCase(

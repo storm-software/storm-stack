@@ -43,7 +43,7 @@ This package is part of the ⚡<b>Storm Stack</b> monorepo. Storm Stack packages
 
 <!-- END header -->
 
-# preset-cli
+# Storm Stack - Command Line Interface (CLI) Preset
 
 A package containing a Storm Stack preset for generating CLI applications
 
@@ -52,19 +52,21 @@ A package containing a Storm Stack preset for generating CLI applications
 
 ## Table of Contents
 
-- [Installing](#installing)
-- [Reduced Package Size](#reduced-package-size)
-- [Development](#development)
-  - [Building](#building)
-  - [Running unit tests](#running-unit-tests)
-  - [Linting](#linting)
-- [Storm Workspaces](#storm-workspaces)
-- [Roadmap](#roadmap)
-- [Support](#support)
-- [License](#license)
-- [Changelog](#changelog)
-- [Contributing](#contributing)
-- [Contributors](#contributors)
+- [Storm Stack - Command Line Interface (CLI) Preset](#storm-stack---command-line-interface-cli-preset)
+  - [Table of Contents](#table-of-contents)
+  - [Installing](#installing)
+  - [Reduced Package Size](#reduced-package-size)
+  - [Development](#development)
+    - [Building](#building)
+    - [Running unit tests](#running-unit-tests)
+    - [Linting](#linting)
+  - [Storm Workspaces](#storm-workspaces)
+  - [Roadmap](#roadmap)
+  - [Support](#support)
+  - [License](#license)
+  - [Changelog](#changelog)
+  - [Contributing](#contributing)
+  - [Contributors](#contributors)
 
 <!-- END doctoc -->
 
@@ -73,14 +75,14 @@ A package containing a Storm Stack preset for generating CLI applications
 Using [pnpm](http://pnpm.io):
 
 ```bash
-pnpm add -D storm-stack/preset-cli
+pnpm add -D @storm-stack/plugin-cli
 ```
 
 <details>
   <summary>Using npm</summary>
 
 ```bash
-npm install -D storm-stack/preset-cli
+npm install -D @storm-stack/plugin-cli
 ```
 
 </details>
@@ -89,7 +91,7 @@ npm install -D storm-stack/preset-cli
   <summary>Using yarn</summary>
 
 ```bash
-yarn add -D storm-stack/preset-cli
+yarn add -D @storm-stack/plugin-cli
 ```
 
 </details>
@@ -108,16 +110,16 @@ commands are available to assist in development.
 
 ### Building
 
-Run `nx build preset-cli` to build the library.
+Run `nx build plugin-cli` to build the library.
 
 ### Running unit tests
 
-Run `nx test preset-cli` to execute the unit tests via
+Run `nx test plugin-cli` to execute the unit tests via
 [Jest](https://jestjs.io).
 
 ### Linting
 
-Run `nx lint preset-cli` to run [ESLint](https://eslint.org/) on the package.
+Run `nx lint plugin-cli` to run [ESLint](https://eslint.org/) on the package.
 
 <!-- START footer -->
 <!-- prettier-ignore-start -->

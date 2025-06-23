@@ -53,8 +53,8 @@ import {
   writeConfigList,
   writeConfigSet
 } from "../runtime/config";
-import { StormStackCLIPresetContext } from "../types/build";
-import type { StormStackCLIPresetConfig } from "../types/config";
+import { StormStackCLIPluginContext } from "../types/build";
+import type { StormStackCLIPluginConfig } from "../types/config";
 import type { Command } from "../types/reflection";
 import {
   LARGE_CONSOLE_WIDTH,
@@ -66,9 +66,9 @@ import { extractAuthor, sortArgAliases, sortArgs } from "./utilities";
 
 async function writeCommandEntryUsage(
   log: LogFn,
-  context: StormStackCLIPresetContext,
+  context: StormStackCLIPluginContext,
   command: Command,
-  config: StormStackCLIPresetConfig,
+  config: StormStackCLIPluginConfig,
   description: string
 ) {
   log(
@@ -291,9 +291,9 @@ ${commandsColumn1
 
 async function writeCommandEntryHandler(
   log: LogFn,
-  context: StormStackCLIPresetContext,
+  context: StormStackCLIPluginContext,
   command: Command,
-  config: StormStackCLIPresetConfig,
+  config: StormStackCLIPluginConfig,
   description: string
 ) {
   log(
@@ -624,9 +624,9 @@ export default handler;
 
 async function writeCommandEntry(
   log: LogFn,
-  context: StormStackCLIPresetContext,
+  context: StormStackCLIPluginContext,
   command: Command,
-  config: StormStackCLIPresetConfig
+  config: StormStackCLIPluginConfig
 ) {
   log(
     LogLevelLabel.TRACE,
@@ -645,9 +645,9 @@ async function writeCommandEntry(
 
 async function writeVirtualCommandEntry(
   log: LogFn,
-  context: StormStackCLIPresetContext,
+  context: StormStackCLIPluginContext,
   command: Command,
-  _config: StormStackCLIPresetConfig
+  _config: StormStackCLIPluginConfig
 ) {
   log(
     LogLevelLabel.TRACE,
@@ -938,9 +938,9 @@ export default handler;
 
 async function prepareCommandDefinition(
   log: LogFn,
-  context: StormStackCLIPresetContext,
+  context: StormStackCLIPluginContext,
   command: Command,
-  config: StormStackCLIPresetConfig
+  config: StormStackCLIPluginConfig
 ) {
   if (command.children) {
     for (const subCommand of Object.values(command.children)) {
@@ -968,8 +968,8 @@ async function prepareCommandDefinition(
 
 async function generateConfigCommands(
   log: LogFn,
-  context: StormStackCLIPresetContext,
-  config: StormStackCLIPresetConfig
+  context: StormStackCLIPluginContext,
+  config: StormStackCLIPluginConfig
 ) {
   if (config.manageConfig === false) {
     log(
@@ -1028,8 +1028,8 @@ async function generateConfigCommands(
 
 async function generateCompletionCommands(
   log: LogFn,
-  context: StormStackCLIPresetContext,
-  config: StormStackCLIPresetConfig
+  context: StormStackCLIPluginContext,
+  config: StormStackCLIPluginConfig
 ) {
   if (config.manageConfig === false) {
     log(
@@ -1066,8 +1066,8 @@ async function generateCompletionCommands(
 
 export async function prepareRuntime(
   log: LogFn,
-  context: StormStackCLIPresetContext,
-  config: StormStackCLIPresetConfig
+  context: StormStackCLIPluginContext,
+  config: StormStackCLIPluginConfig
 ) {
   await Promise.all([
     writeFile(
@@ -1087,8 +1087,8 @@ export async function prepareRuntime(
 
 export async function prepareEntry(
   log: LogFn,
-  context: StormStackCLIPresetContext,
-  config: StormStackCLIPresetConfig
+  context: StormStackCLIPluginContext,
+  config: StormStackCLIPluginConfig
 ) {
   const commandTree = await readCommandTreeReflection(context, config);
 
@@ -1305,7 +1305,7 @@ await main();
 }
 
 async function addCommandArgReflections(
-  context: StormStackCLIPresetContext,
+  context: StormStackCLIPluginContext,
   reflection: ReflectionClass<any>,
   command: Command
 ) {
@@ -1361,8 +1361,8 @@ async function addCommandArgReflections(
 
 export async function prepareReflections(
   log: LogFn,
-  context: StormStackCLIPresetContext,
-  config: StormStackCLIPresetConfig
+  context: StormStackCLIPluginContext,
+  config: StormStackCLIPluginConfig
 ) {
   const commandTree = await reflectCommandTree(log, context, config);
 

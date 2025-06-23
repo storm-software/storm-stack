@@ -37,12 +37,12 @@ import { titleCase } from "@stryke/string-format/title-case";
 import { isSetString } from "@stryke/type-checks/is-set-string";
 import { isString } from "@stryke/type-checks/is-string";
 import { defu } from "defu";
-import { StormStackCLIPresetContext } from "../types/build";
-import type { StormStackCLIPresetConfig } from "../types/config";
+import { StormStackCLIPluginContext } from "../types/build";
+import type { StormStackCLIPluginConfig } from "../types/config";
 
 export async function initContext(
-  context: StormStackCLIPresetContext,
-  config: StormStackCLIPresetConfig
+  context: StormStackCLIPluginContext,
+  config: StormStackCLIPluginConfig
 ) {
   context.options.platform = "node";
 
@@ -99,8 +99,8 @@ export async function initContext(
 }
 
 export async function initInstalls(
-  context: StormStackCLIPresetContext,
-  config: StormStackCLIPresetConfig
+  context: StormStackCLIPluginContext,
+  config: StormStackCLIPluginConfig
 ) {
   if (
     context.options.projectType === "application" &&
@@ -111,8 +111,8 @@ export async function initInstalls(
 }
 
 export async function initUnimport(
-  context: StormStackCLIPresetContext,
-  config: StormStackCLIPresetConfig
+  context: StormStackCLIPluginContext,
+  config: StormStackCLIPluginConfig
 ) {
   const imports = [
     "parseArgs",
@@ -142,8 +142,8 @@ export async function initUnimport(
 
 export async function initEntry(
   log: LogFn,
-  context: StormStackCLIPresetContext,
-  config: StormStackCLIPresetConfig
+  context: StormStackCLIPluginContext,
+  config: StormStackCLIPluginConfig
 ) {
   if (!isSetString(context.options.entry)) {
     throw new Error(

@@ -12,16 +12,7 @@
 
 <br />
 
-The **⚡Storm Stack** monorepo contains the
-[storm-stack](https://www.npmjs.com/package/storm-stack) package and various
-plugins and tools for building and deploying applications. At a high-level,
-Storm Stack is a system that generates artifacts and code during the build and
-deploy processes. The goal is to allow the developer to focus on the
-code/business logic, rather than the specifics around technologies, frameworks,
-or cloud providers. This is achieved by using a set of tools and plugins that
-are designed to work together. Please note: some features of Storm Stack are
-opinionated to meet the needs of Storm Software; however, it is simple to
-customize to fit any specific requirements you may have.
+The **⚡Storm Stack** monorepo contains the [storm-stack](https://www.npmjs.com/package/storm-stack) package and various plugins and tools for building and deploying applications. At a high-level, Storm Stack is a system that generates artifacts and code during the build and deploy processes. The goal is to allow the developer to focus on the code/business logic, rather than the specifics around technologies, frameworks, or cloud providers. This is achieved by using a set of tools and plugins that are designed to work together. Please note: some features of Storm Stack are opinionated to meet the needs of Storm Software; however, it is simple to customize to fit any specific requirements you may have.
 
 <h3 align="center">💻 Visit <a href="https://stormsoftware.com" target="_blank">stormsoftware.com</a> to stay up to date with this developer</h3>
 
@@ -60,9 +51,12 @@ customize to fit any specific requirements you may have.
   - [Distributed Computation Caching & Distributed Task Execution](#distributed-computation-caching--distributed-task-execution)
 - [Roadmap](#roadmap)
 - [Contributing](#contributing)
+  - [Pull Requests](#pull-requests)
+  - [Contributor License Agreement (CLA)](#contributor-license-agreement-cla)
+  - [Bug Reports](#bug-reports)
 - [Support](#support)
 - [License](#license)
-- [Contributors ✨](#contributors-)
+- [Contributors](#contributors)
 
 <!-- END doctoc -->
 
@@ -92,9 +86,9 @@ The following Storm Stack plugin packages are included in this repository:
 
 The following Storm Stack preset packages are included in this repository:
 
-- [@storm-stack/preset-cloudflare-worker](https://www.npmjs.com/package/@storm-stack/preset-cloudflare-worker) -
+- [@storm-stack/plugin-cloudflare-worker](https://www.npmjs.com/package/@storm-stack/plugin-cloudflare-worker) -
   A preset for Cloudflare Worker applications
-- [@storm-stack/preset-cli](https://www.npmjs.com/package/@storm-stack/preset-cli) -
+- [@storm-stack/plugin-cli](https://www.npmjs.com/package/@storm-stack/plugin-cli) -
   A preset for creating commandline applications
 
 ## Adapters
@@ -271,6 +265,36 @@ makes the open-source community such an amazing place to learn, inspire, and
 create. Any contributions you make will benefit everybody else and are **greatly
 appreciated**.
 
+Please read through the [contributing guidelines](.github/CONTRIBUTING.md) so you know what
+to expect in terms of development and code style. We also have a
+[Code of Conduct](.github/CODE_OF_CONDUCT.md) that we expect all contributors to
+adhere to. Please read it before contributing.
+
+<div align="right">[ <a href="#table-of-contents">Back to top ▲</a> ]</div>
+<br />
+
+## Pull Requests
+
+Before you submit a pull request (PR), please ensure all [lefthook](https://lefthook.dev/) hooks pass. These hooks will run automatically when you commit your changes.
+
+<div align="right">[ <a href="#table-of-contents">Back to top ▲</a> ]</div>
+<br />
+
+## Contributor License Agreement (CLA)
+
+If you have **not** yet signed the Contributor License Agreement (CLA), add a PR comment containing the exact text:
+
+```text
+I have read the CLA Document and I hereby sign the CLA
+```
+
+The CLA‑Assistant bot will turn the PR status green once all authors have signed.
+
+<div align="right">[ <a href="#table-of-contents">Back to top ▲</a> ]</div>
+<br />
+
+## Bug Reports
+
 Please try to create bug reports that are:
 
 - _Reproducible._ Include steps to reproduce the problem.
@@ -278,12 +302,6 @@ Please try to create bug reports that are:
   environment, etc.
 - _Unique._ Do not duplicate existing opened issues.
 - _Scoped to a Single Bug._ One bug per report.
-
-Please adhere to this project's [code of conduct](.github/CODE_OF_CONDUCT.md).
-
-You can use
-[markdownlint-cli](https://github.com/storm-software/storm-stack/markdownlint-cli)
-to check for common markdown style inconsistency.
 
 <div align="right">[ <a href="#table-of-contents">Back to top ▲</a> ]</div>
 <br />
@@ -314,7 +332,7 @@ See [LICENSE](LICENSE) for more information.
 <div align="right">[ <a href="#table-of-contents">Back to top ▲</a> ]</div>
 <br />
 
-# Contributors ✨
+# Contributors
 
 Thanks goes to these wonderful people
 ([emoji key](https://allcontributors.org/docs/en/emoji-key)):

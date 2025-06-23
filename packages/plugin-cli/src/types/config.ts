@@ -18,7 +18,7 @@
 
 import type { OrganizationConfig } from "@storm-software/config/types";
 
-export interface StormStackCLIPresetConfig {
+export interface StormStackCLIPluginConfig {
   /**
    * The name of the binary that will be generated to run the CLI
    */

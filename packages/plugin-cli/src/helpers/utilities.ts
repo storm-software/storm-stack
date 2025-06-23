@@ -34,8 +34,8 @@ import { isString } from "@stryke/type-checks/is-string";
 import { TypeDefinition } from "@stryke/types/configuration";
 import defu from "defu";
 import { CommandPayloadArg } from "../data/command-payload";
-import { StormStackCLIPresetContext } from "../types/build";
-import { StormStackCLIPresetConfig } from "../types/config";
+import { StormStackCLIPluginContext } from "../types/build";
+import { StormStackCLIPluginConfig } from "../types/config";
 import { Command, CommandTree } from "../types/reflection";
 
 /**
@@ -94,12 +94,12 @@ export function isValidMinNodeVersion(
  * Extracts the author information from the context and configuration.
  *
  * @param context - The build context containing workspace and package information.
- * @param config - The StormStackCLIPresetConfig containing author information.
+ * @param config - The StormStackCLIPluginConfig containing author information.
  * @returns An OrganizationConfig object with the author's name.
  */
 export function extractAuthor(
-  context: StormStackCLIPresetContext,
-  config: StormStackCLIPresetConfig = {}
+  context: StormStackCLIPluginContext,
+  config: StormStackCLIPluginConfig = {}
 ): OrganizationConfig | undefined {
   let author: OrganizationConfig | undefined;
   if (config.author) {
@@ -152,13 +152,13 @@ export function extractAuthor(
  * Retrieves the application name from the context and configuration.
  *
  * @param context - The build context containing workspace and package information.
- * @param config - The StormStackCLIPresetConfig containing binary name options.
+ * @param config - The StormStackCLIPluginConfig containing binary name options.
  * @returns The application name in kebab-case format.
  * @throws An error if no valid application name is found.
  */
 export function getAppName(
-  context: StormStackCLIPresetContext,
-  config: StormStackCLIPresetConfig = {}
+  context: StormStackCLIPluginContext,
+  config: StormStackCLIPluginConfig = {}
 ): string {
   const result =
     config.bin &&
@@ -181,12 +181,12 @@ export function getAppName(
  * Retrieves the application title from the context and configuration.
  *
  * @param context - The build context containing workspace and package information.
- * @param config - The StormStackCLIPresetConfig containing binary name options.
+ * @param config - The StormStackCLIPluginConfig containing binary name options.
  * @returns The application title in title-case format.
  */
 export function getAppTitle(
-  context: StormStackCLIPresetContext,
-  config: StormStackCLIPresetConfig = {}
+  context: StormStackCLIPluginContext,
+  config: StormStackCLIPluginConfig = {}
 ): string {
   return titleCase(context.options.name || getAppName(context, config));
 }
@@ -293,7 +293,7 @@ export function extractCommandFunctionPayloadData(
 }
 
 export function getPayloadBaseTypeDefinition(
-  context: StormStackCLIPresetContext
+  context: StormStackCLIPluginContext
 ): TypeDefinition {
   return {
     file: joinPaths(context.runtimePath, "payload.ts"),
@@ -302,7 +302,7 @@ export function getPayloadBaseTypeDefinition(
 }
 
 export async function reflectPayloadBaseType(
-  context: StormStackCLIPresetContext
+  context: StormStackCLIPluginContext
 ): Promise<ReflectionClass<any>> {
   const defaultPayloadType = await reflectType(
     context,

@@ -6,7 +6,7 @@
 
 ### Features
 
-- **preset-cli:** Added logic to persist command reflections to data directory
+- **plugin-cli:** Added logic to persist command reflections to data directory
   ([d96999c6](https://github.com/storm-software/storm-stack/commit/d96999c6))
 
 ## [0.13.0](https://github.com/storm-software/storm-stack/releases/tag/types%400.13.0) (2025-06-17)
@@ -58,14 +58,14 @@
 
 ### Features
 
-- **preset-cli:** Removed dependencies from generated package and implemented
+- **plugin-cli:** Removed dependencies from generated package and implemented
   banner and footer
 
 ## [0.6.0](https://github.com/storm-software/storm-stack/releases/tag/types%400.6.0) (2025-05-22)
 
 ### Features
 
-- **preset-cli:** Added interactive prompts and env arguments to generated
+- **plugin-cli:** Added interactive prompts and env arguments to generated
   source code
 
 ## [0.5.0](https://github.com/storm-software/storm-stack/releases/tag/types%400.5.0) (2025-05-13)

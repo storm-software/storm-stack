@@ -34,7 +34,7 @@ import {
   extractCommandFunctionPayload,
   extractCommandFunctionPayloadData
 } from "../helpers/utilities";
-import { StormStackCLIPresetConfig } from "../types/config";
+import { StormStackCLIPluginConfig } from "../types/config";
 import { Command, CommandEntryTypeDefinition } from "../types/reflection";
 
 export interface CommandPayloadArg {
@@ -60,7 +60,7 @@ export interface AddCommandPayloadArgProps extends TagsReflection {
 }
 
 function getDefaultCommandPayloadArgs(
-  config: StormStackCLIPresetConfig,
+  config: StormStackCLIPluginConfig,
   entry: CommandEntryTypeDefinition
 ): AddCommandPayloadArgProps[] {
   return [
@@ -148,7 +148,7 @@ export class CommandPayload {
    * @throws An error if the command type is invalid or does not conform to the expected structure.
    */
   public static from(
-    config: StormStackCLIPresetConfig,
+    config: StormStackCLIPluginConfig,
     command: Pick<Command, "name" | "title" | "entry"> &
       Partial<Pick<Command, "type">>,
     reflection?: ReflectionClass<any>

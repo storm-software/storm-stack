@@ -32,6 +32,7 @@ catalog:
   '@sentry/core': ^9.15.0
   '@sentry/node': ^9.15.0
   '@sentry/types': ^9.15.0
+  '@storm-stack/plugin-cli': 0.23.0
   '@taplo/cli': ^0.7.0
   '@types/eslint': ^9.6.1
   '@types/eslint__js': ^8.42.3
@@ -167,6 +168,8 @@ overrides:
   '@storm-stack/devkit': workspace:*
   '@storm-stack/biome': workspace:*
   '@storm-stack/tsdoc': workspace:*
+  '@storm-stack/plugin-cli': workspace:*
+  '@storm-stack/plugin-cloudflare-worker': workspace:*
   '@storm-stack/plugin-log-console': workspace:*
   '@storm-stack/plugin-log-storage': workspace:*
   '@storm-stack/plugin-log-otel': workspace:*
@@ -177,8 +180,6 @@ overrides:
   '@storm-stack/plugin-storage-s3': workspace:*
   '@storm-stack/cli': workspace:*
   '@storm-stack/nx': workspace:*
-  '@storm-stack/preset-cli': workspace:*
-  '@storm-stack/preset-cloudflare-worker': workspace:*
   '@storm-stack/tools-config': workspace:*
   '@storm-stack/tools-nx': workspace:*
   '@storm-stack/tools-readme-templates': workspace:*

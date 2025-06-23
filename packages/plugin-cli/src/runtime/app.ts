@@ -20,12 +20,12 @@ import { getFileHeader } from "@storm-stack/core/helpers/utilities/file-header";
 import { kebabCase } from "@stryke/string-format/kebab-case";
 import { titleCase } from "@stryke/string-format/title-case";
 import { isSetString } from "@stryke/type-checks/is-set-string";
-import { StormStackCLIPresetContext } from "../types/build";
-import type { StormStackCLIPresetConfig } from "../types/config";
+import { StormStackCLIPluginContext } from "../types/build";
+import type { StormStackCLIPluginConfig } from "../types/config";
 
 export function writeApp(
-  context: StormStackCLIPresetContext,
-  config: StormStackCLIPresetConfig
+  context: StormStackCLIPluginContext,
+  config: StormStackCLIPluginConfig
 ) {
   return `${getFileHeader()}
 

@@ -20,19 +20,19 @@ import * as capnp from "@stryke/capnp";
 import { readBufferFile, writeBufferFile } from "@stryke/fs/buffer";
 import { joinPaths } from "@stryke/path/join-paths";
 import { CommandRoot } from "../../schemas/cli";
-import { StormStackCLIPresetContext } from "../types/build";
-import { StormStackCLIPresetConfig } from "../types/config";
+import { StormStackCLIPluginContext } from "../types/build";
+import { StormStackCLIPluginConfig } from "../types/config";
 import { CommandTree } from "../types/reflection";
 import { convertFromCapnp, convertToCapnp } from "./capnp";
 
 export function getCommandTreeReflectionPath(
-  context: StormStackCLIPresetContext
+  context: StormStackCLIPluginContext
 ): string {
   return joinPaths(context.dataPath, "reflections", "cli.bin");
 }
 
 export async function writeCommandTreeReflection(
-  context: StormStackCLIPresetContext,
+  context: StormStackCLIPluginContext,
   commandTree: CommandTree
 ) {
   const message = new capnp.Message();
@@ -46,8 +46,8 @@ export async function writeCommandTreeReflection(
 }
 
 export async function readCommandTreeReflection(
-  context: StormStackCLIPresetContext,
-  config: StormStackCLIPresetConfig
+  context: StormStackCLIPluginContext,
+  config: StormStackCLIPluginConfig
 ): Promise<CommandTree> {
   const buffer = await readBufferFile(getCommandTreeReflectionPath(context));
   const message = new capnp.Message(buffer, false);

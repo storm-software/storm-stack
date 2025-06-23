@@ -6,7 +6,7 @@
 
 ### Features
 
-- **preset-cli:** Added logic to persist command reflections to data directory
+- **plugin-cli:** Added logic to persist command reflections to data directory
   ([d96999c6](https://github.com/storm-software/storm-stack/commit/d96999c6))
 
 ### Updated Dependencies
@@ -14,7 +14,7 @@
 - Updated plugin-log-storage to 0.18.0
 - Updated plugin-log-sentry to 0.20.0
 - Updated plugin-storage-fs to 0.7.0
-- Updated preset-cli to 0.23.0
+- Updated plugin-cli to 0.23.0
 - Updated types to 0.14.0
 - Updated core to 0.31.0
 
@@ -30,7 +30,7 @@
 - Updated plugin-log-storage to 0.17.5
 - Updated plugin-log-sentry to 0.19.3
 - Updated plugin-storage-fs to 0.6.5
-- Updated preset-cli to 0.22.0
+- Updated plugin-cli to 0.22.0
 - Updated nx to 0.13.5
 
 ## [0.11.2](https://github.com/storm-software/storm-stack/releases/tag/cli%400.11.2) (2025-06-20)
@@ -47,7 +47,7 @@
 - Updated plugin-log-storage to 0.17.4
 - Updated plugin-log-sentry to 0.19.2
 - Updated plugin-storage-fs to 0.6.4
-- Updated preset-cli to 0.21.0
+- Updated plugin-cli to 0.21.0
 - Updated core to 0.30.0
 - Updated nx to 0.13.4
 
@@ -65,7 +65,7 @@
 - Updated plugin-log-storage to 0.17.3
 - Updated plugin-log-sentry to 0.19.1
 - Updated plugin-storage-fs to 0.6.3
-- Updated preset-cli to 0.20.1
+- Updated plugin-cli to 0.20.1
 - Updated core to 0.29.1
 - Updated nx to 0.13.3
 
@@ -97,8 +97,8 @@
 - Updated plugin-log-storage to 0.17.2
 - Updated plugin-log-sentry to 0.19.0
 - Updated plugin-storage-fs to 0.6.2
-- Updated preset-cli to 0.20.0
-- Updated preset-cli to 0.20.0
+- Updated plugin-cli to 0.20.0
+- Updated plugin-cli to 0.20.0
 - Updated types to 0.13.0
 - Updated core to 0.29.0
 - Updated core to 0.29.0
@@ -131,8 +131,8 @@
 - Updated plugin-log-storage to 0.17.1
 - Updated plugin-log-sentry to 0.18.1
 - Updated plugin-storage-fs to 0.6.1
-- Updated preset-cli to 0.19.1
-- Updated preset-cli to 0.19.1
+- Updated plugin-cli to 0.19.1
+- Updated plugin-cli to 0.19.1
 - Updated core to 0.27.1
 - Updated nx to 0.13.1
 - Updated nx to 0.13.1
@@ -145,8 +145,8 @@
 
 ### Updated Dependencies
 
-- Updated preset-cli to 0.19.0
-- Updated preset-cli to 0.19.0
+- Updated plugin-cli to 0.19.0
+- Updated plugin-cli to 0.19.0
 - Updated types to 0.11.0
 - Updated core to 0.27.0
 
@@ -161,8 +161,8 @@
 - Updated plugin-log-storage to 0.17.0
 - Updated plugin-log-sentry to 0.18.0
 - Updated plugin-storage-fs to 0.6.0
-- Updated preset-cli to 0.18.0
-- Updated preset-cli to 0.18.0
+- Updated plugin-cli to 0.18.0
+- Updated plugin-cli to 0.18.0
 - Updated types to 0.10.0
 - Updated core to 0.26.0
 - Updated nx to 0.13.0
@@ -183,8 +183,8 @@
 - Updated plugin-log-storage to 0.16.0
 - Updated plugin-log-sentry to 0.17.2
 - Updated plugin-storage-fs to 0.5.2
-- Updated preset-cli to 0.17.0
-- Updated preset-cli to 0.17.0
+- Updated plugin-cli to 0.17.0
+- Updated plugin-cli to 0.17.0
 - Updated types to 0.9.0
 - Updated core to 0.25.0
 - Updated nx to 0.12.1
@@ -205,8 +205,8 @@
 - Updated plugin-log-storage to 0.15.1
 - Updated plugin-log-sentry to 0.17.1
 - Updated plugin-storage-fs to 0.5.1
-- Updated preset-cli to 0.16.0
-- Updated preset-cli to 0.16.0
+- Updated plugin-cli to 0.16.0
+- Updated plugin-cli to 0.16.0
 - Updated types to 0.8.0
 - Updated core to 0.24.0
 - Updated nx to 0.12.0
@@ -216,21 +216,21 @@
 
 ### Features
 
-- **preset-cli:** Added the `description` confiuration option
-- **preset-cli:** Removed dependencies from generated package and implemented
+- **plugin-cli:** Added the `description` confiuration option
+- **plugin-cli:** Removed dependencies from generated package and implemented
   banner and footer
 
 ### Miscellaneous
 
-- **preset-cli:** Added author name to the footer of generated CLI applications
+- **plugin-cli:** Added author name to the footer of generated CLI applications
 
 ### Updated Dependencies
 
 - Updated plugin-log-storage to 0.15.0
 - Updated plugin-log-sentry to 0.17.0
 - Updated plugin-storage-fs to 0.5.0
-- Updated preset-cli to 0.15.0
-- Updated preset-cli to 0.15.0
+- Updated plugin-cli to 0.15.0
+- Updated plugin-cli to 0.15.0
 - Updated types to 0.7.0
 - Updated core to 0.23.0
 
@@ -245,8 +245,8 @@
 - Updated plugin-log-storage to 0.14.1
 - Updated plugin-log-sentry to 0.16.1
 - Updated plugin-storage-fs to 0.4.1
-- Updated preset-cli to 0.14.1
-- Updated preset-cli to 0.14.1
+- Updated plugin-cli to 0.14.1
+- Updated plugin-cli to 0.14.1
 - Updated core to 0.22.1
 - Updated nx to 0.11.3
 - Updated nx to 0.11.3
@@ -255,15 +255,15 @@
 
 ### Features
 
-- **preset-cli:** Update output to dynamically import child commands
+- **plugin-cli:** Update output to dynamically import child commands
 
 ### Updated Dependencies
 
 - Updated plugin-log-storage to 0.14.0
 - Updated plugin-log-sentry to 0.16.0
 - Updated plugin-storage-fs to 0.4.0
-- Updated preset-cli to 0.14.0
-- Updated preset-cli to 0.14.0
+- Updated plugin-cli to 0.14.0
+- Updated plugin-cli to 0.14.0
 - Updated core to 0.22.0
 
 ## [0.3.1](https://github.com/storm-software/storm-stack/releases/tag/cli%400.3.1) (2025-05-24)
@@ -277,8 +277,8 @@
 - Updated plugin-log-storage to 0.13.2
 - Updated plugin-log-sentry to 0.15.2
 - Updated plugin-storage-fs to 0.3.2
-- Updated preset-cli to 0.13.1
-- Updated preset-cli to 0.13.1
+- Updated plugin-cli to 0.13.1
+- Updated plugin-cli to 0.13.1
 - Updated nx to 0.11.2
 - Updated nx to 0.11.2
 
@@ -297,8 +297,8 @@
 - Updated plugin-log-storage to 0.13.1
 - Updated plugin-log-sentry to 0.15.1
 - Updated plugin-storage-fs to 0.3.1
-- Updated preset-cli to 0.12.0
-- Updated preset-cli to 0.12.0
+- Updated plugin-cli to 0.12.0
+- Updated plugin-cli to 0.12.0
 - Updated core to 0.20.0
 - Updated nx to 0.11.1
 - Updated nx to 0.11.1
@@ -307,7 +307,7 @@
 
 ### Features
 
-- **preset-cli:** Added Variable Management commands generation and positional
+- **plugin-cli:** Added Variable Management commands generation and positional
   args
 
 ### Updated Dependencies
@@ -315,8 +315,8 @@
 - Updated plugin-log-storage to 0.13.0
 - Updated plugin-log-sentry to 0.15.0
 - Updated plugin-storage-fs to 0.3.0
-- Updated preset-cli to 0.11.0
-- Updated preset-cli to 0.11.0
+- Updated plugin-cli to 0.11.0
+- Updated plugin-cli to 0.11.0
 - Updated core to 0.19.0
 - Updated nx to 0.11.0
 - Updated nx to 0.11.0
@@ -325,7 +325,7 @@
 
 ### Features
 
-- **preset-cli:** Added interactive prompts and env arguments to generated
+- **plugin-cli:** Added interactive prompts and env arguments to generated
   source code
 - **cli:** Initial check-in of the CLI application
 
@@ -342,7 +342,7 @@
 
 - Updated plugin-log-storage to 0.12.0
 - Updated plugin-storage-fs to 0.2.0
-- Updated preset-cli to 0.10.0
-- Updated preset-cli to 0.10.0
+- Updated plugin-cli to 0.10.0
+- Updated plugin-cli to 0.10.0
 - Updated types to 0.6.0
 - Updated core to 0.18.0

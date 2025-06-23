@@ -36,14 +36,14 @@ import {
   prepareReflections,
   prepareRuntime
 } from "./helpers/prepare";
-import { StormStackCLIPresetContext } from "./types/build";
-import type { StormStackCLIPresetConfig } from "./types/config";
+import { StormStackCLIPluginContext } from "./types/build";
+import type { StormStackCLIPluginConfig } from "./types/config";
 
-export default class StormStackCLIPreset extends Plugin {
-  #config: StormStackCLIPresetConfig;
+export default class StormStackCLIPlugin extends Plugin {
+  #config: StormStackCLIPluginConfig;
 
-  public constructor(config: Partial<StormStackCLIPresetConfig> = {}) {
-    super("cli", "@storm-stack/preset-cli");
+  public constructor(config: Partial<StormStackCLIPluginConfig> = {}) {
+    super("cli", "@storm-stack/plugin-cli");
 
     this.#config = { minNodeVersion: 20, ...config };
     this.dependencies = [
@@ -93,7 +93,7 @@ export default class StormStackCLIPreset extends Plugin {
     });
   }
 
-  protected async initContext(context: StormStackCLIPresetContext) {
+  protected async initContext(context: StormStackCLIPluginContext) {
     this.log(
       LogLevelLabel.TRACE,
       `Initializing CLI specific options for the Storm Stack project.`
@@ -102,7 +102,7 @@ export default class StormStackCLIPreset extends Plugin {
     await initContext(context, this.#config);
   }
 
-  protected async initInstalls(context: StormStackCLIPresetContext) {
+  protected async initInstalls(context: StormStackCLIPluginContext) {
     this.log(
       LogLevelLabel.TRACE,
       `Adding CLI specific dependencies to the Storm Stack project.`
@@ -111,7 +111,7 @@ export default class StormStackCLIPreset extends Plugin {
     await initInstalls(context, this.#config);
   }
 
-  protected async initUnimport(context: StormStackCLIPresetContext) {
+  protected async initUnimport(context: StormStackCLIPluginContext) {
     this.log(
       LogLevelLabel.TRACE,
       `Initializing CLI specific Unimport presets for the Storm Stack project.`
@@ -120,7 +120,7 @@ export default class StormStackCLIPreset extends Plugin {
     await initUnimport(context, this.#config);
   }
 
-  protected async initEntry(context: StormStackCLIPresetContext) {
+  protected async initEntry(context: StormStackCLIPluginContext) {
     if (context.options.projectType === "application") {
       this.log(
         LogLevelLabel.TRACE,
@@ -131,7 +131,7 @@ export default class StormStackCLIPreset extends Plugin {
     }
   }
 
-  protected async prepareReflections(context: StormStackCLIPresetContext) {
+  protected async prepareReflections(context: StormStackCLIPluginContext) {
     this.log(
       LogLevelLabel.TRACE,
       `Initializing the CLI application's reflection data.`
@@ -140,7 +140,7 @@ export default class StormStackCLIPreset extends Plugin {
     await prepareReflections(this.log, context, this.#config);
   }
 
-  protected async prepareRuntime(context: StormStackCLIPresetContext) {
+  protected async prepareRuntime(context: StormStackCLIPluginContext) {
     if (context.options.projectType === "application") {
       this.log(
         LogLevelLabel.TRACE,
@@ -151,7 +151,7 @@ export default class StormStackCLIPreset extends Plugin {
     }
   }
 
-  protected async prepareEntry(context: StormStackCLIPresetContext) {
+  protected async prepareEntry(context: StormStackCLIPluginContext) {
     if (context.options.projectType === "application") {
       this.log(
         LogLevelLabel.TRACE,
@@ -162,15 +162,15 @@ export default class StormStackCLIPreset extends Plugin {
     }
   }
 
-  protected async buildLibrary(context: StormStackCLIPresetContext) {
+  protected async buildLibrary(context: StormStackCLIPluginContext) {
     return buildLibrary(this.log, context);
   }
 
-  protected async buildApplication(context: StormStackCLIPresetContext) {
+  protected async buildApplication(context: StormStackCLIPluginContext) {
     return buildApplication(this.log, context);
   }
 
-  protected async buildComplete(context: StormStackCLIPresetContext) {
+  protected async buildComplete(context: StormStackCLIPluginContext) {
     return permissionExecutable(this.log, context);
   }
 }

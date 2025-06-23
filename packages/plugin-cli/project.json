@@ -1,8 +1,8 @@
 {
-  "name": "preset-cli",
+  "name": "plugin-cli",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "projectType": "library",
-  "sourceRoot": "packages/preset-cli/src",
+  "sourceRoot": "packages/plugin-cli/src",
   "targets": {
     "build-schema": {
       "cache": true,
@@ -12,7 +12,7 @@
       "dependsOn": ["clean", "^build"],
       "options": {
         "commands": [
-          "pnpm exec storm-capnpc --project-root packages/preset-cli --schema ./{projectRoot}/schemas"
+          "pnpm exec storm-capnpc --project-root packages/plugin-cli --schema ./{projectRoot}/schemas"
         ],
         "parallel": false
       }
@@ -32,9 +32,9 @@
       "dependsOn": ["build-schema", "build-base"],
       "options": {
         "commands": [
-          "pnpm copyfiles LICENSE dist/packages/preset-cli",
-          "pnpm copyfiles --up=2 ./packages/preset-cli/*.md ./packages/preset-cli/package.json dist/packages/preset-cli",
-          "pnpm copyfiles --up=3 \"./packages/preset-cli/dist/**/*\" dist/packages/preset-cli/dist"
+          "pnpm copyfiles LICENSE dist/packages/plugin-cli",
+          "pnpm copyfiles --up=2 ./packages/plugin-cli/*.md ./packages/plugin-cli/package.json dist/packages/plugin-cli",
+          "pnpm copyfiles --up=3 \"./packages/plugin-cli/dist/**/*\" dist/packages/plugin-cli/dist"
         ]
       }
     },

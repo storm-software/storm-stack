@@ -42,8 +42,8 @@ import {
   getAppName,
   getAppTitle
 } from "../helpers/utilities";
-import { StormStackCLIPresetContext } from "../types/build";
-import { StormStackCLIPresetConfig } from "../types/config";
+import { StormStackCLIPluginContext } from "../types/build";
+import { StormStackCLIPluginConfig } from "../types/config";
 import {
   Command,
   CommandEntryTypeDefinition,
@@ -171,7 +171,7 @@ function convertFromCapnpCommandEntryTypeDefinition(
 
 function convertFromCapnpCommand(
   root: CapnpCommandRoot,
-  config: StormStackCLIPresetConfig,
+  config: StormStackCLIPluginConfig,
   tree: CommandTree,
   command: CapnpCommand
 ): Omit<Command, "parent"> {
@@ -369,14 +369,14 @@ ${commands.map(c => `- ${c.entry.path.join("/")}`).join("\n")}
  * Converts a Cap'n Proto serialized command root to a CLI {@link CommandTree} object.
  *
  * @param context - The build context containing workspace and package information
- * @param config - The StormStackCLIPresetConfig containing configuration options for the CLI
+ * @param config - The StormStackCLIPluginConfig containing configuration options for the CLI
  * @param root - The Cap'n Proto serialized command tree root object
  * @returns The CLI {@link CommandTree} object converted from the Cap'n Proto serialized command tree
  * @throws If the provided command root is invalid or cannot be converted
  */
 export function convertFromCapnp(
-  context: StormStackCLIPresetContext,
-  config: StormStackCLIPresetConfig,
+  context: StormStackCLIPluginContext,
+  config: StormStackCLIPluginConfig,
   root: CapnpCommandRoot
 ): CommandTree {
   if (!root) {
