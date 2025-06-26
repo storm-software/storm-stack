@@ -205,5 +205,4 @@ overrides:
 patchedDependencies:
   '@deepkit/type-compiler@1.0.5': patches/@deepkit__type-compiler@1.0.5.patch
   '@deepkit/type@1.0.5': patches/@deepkit__type@1.0.5.patch
-  '@deepkit/type-spec@1.0.1': patches/@deepkit__type-spec@1.0.1.patch
 preferWorkspacePackages: true
