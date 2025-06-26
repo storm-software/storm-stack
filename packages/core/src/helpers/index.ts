@@ -20,5 +20,7 @@ export * from "./deepkit";
 export * from "./dotenv";
 export * from "./dts";
 export * from "./esbuild";
+export * from "./transform";
 export * from "./typedoc";
+export * from "./typescript";
 export * from "./utilities";

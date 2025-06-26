@@ -96,6 +96,7 @@ catalog:
   eslint-plugin-eslint-plugin: 6.4.0
   eslint-plugin-i18n-text: 1.0.1
   eslint-rule-documentation: ^1.0.23
+  eslint-flat-config-utils: 2.1.0
   eslint-typegen: 2.1.0
   globals: ^15.15.0
   handlebars: ^4.7.8
@@ -142,7 +143,6 @@ catalog:
   vite: ^6.3.4
   defu: ^6.1.4
   jiti: ^2.4.2
-  eslint-flat-config-utils: 2.1.0
   wrangler: ^4.19.1
   zod: ^3.24.4
   zod-validation-error: ^3.4.0

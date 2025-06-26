@@ -17,8 +17,8 @@
  ------------------------------------------------------------------- */
 
 import { getWorkspaceConfig } from "@storm-software/config-tools/get-config";
-import { Engine } from "@storm-stack/core/engine";
-import { InlineConfig } from "@storm-stack/core/types/config";
+import { Engine } from "@storm-stack/core/base/engine";
+import type { InlineConfig } from "@storm-stack/core/types/config";
 
 /**
  * Creates a new instance of the Engine with the provided inline configuration and workspace configuration.

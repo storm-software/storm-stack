@@ -34,6 +34,7 @@
           "pnpm copyfiles --up=2 ./packages/core/*.md ./packages/core/package.json dist/packages/core",
           "pnpm copyfiles --up=4 \"./packages/core/src/new/files/**/*\" dist/packages/core/files",
           "pnpm copyfiles --up=4 \"./packages/core/dist/build/**/*\" dist/packages/core/dist",
+          "pnpm copyfiles --up=5 \"./packages/core/dist/build/base/*\" dist/packages/core/dist",
           "pnpm copyfiles --up=4 \"./packages/core/dist/schemas/**/*\" dist/packages/core/schemas",
           "pnpm copyfiles --up=4 \"./packages/core/dist/workers/**/*\" dist/packages/core/workers"
         ]

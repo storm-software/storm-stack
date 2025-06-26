@@ -55,8 +55,8 @@ export default abstract class LogPlugin extends LibraryPlugin {
     super.innerAddHooks(hooks);
 
     hooks.addHooks({
-      "init:context": this.initContext.bind(this),
-      "prepare:runtime": this.prepareRuntime.bind(this)
+      "init:context": this.#initContext.bind(this),
+      "prepare:runtime": this.#prepareRuntime.bind(this)
     });
   }
 
@@ -67,7 +67,7 @@ export default abstract class LogPlugin extends LibraryPlugin {
    */
   protected abstract writeSink(context: Context): MaybePromise<string>;
 
-  private async prepareRuntime(context: Context) {
+  async #prepareRuntime(context: Context) {
     this.log(LogLevelLabel.TRACE, `Prepare the Storm Stack logging project.`);
 
     if (context.options.projectType === "application") {
@@ -89,7 +89,7 @@ export default abstract class LogPlugin extends LibraryPlugin {
     }
   }
 
-  private async initContext(context: Context) {
+  async #initContext(context: Context) {
     this.log(
       LogLevelLabel.TRACE,
       `Loading the ${this.name} plugin into the context.`

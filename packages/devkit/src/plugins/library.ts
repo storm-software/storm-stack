@@ -45,11 +45,11 @@ export default class LibraryPlugin extends BasePlugin {
     super.innerAddHooks(hooks);
 
     hooks.addHooks({
-      "build:library": this.build.bind(this)
+      "build:library": this.#build.bind(this)
     });
   }
 
-  private async build(context: Context) {
+  async #build(context: Context) {
     this.log(LogLevelLabel.TRACE, `Build the Storm Stack library package.`);
 
     return unbuild(context);

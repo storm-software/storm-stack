@@ -182,8 +182,7 @@
     "@stryke/path": "catalog:",
     "@stryke/string-format": "catalog:",
     "defu": "catalog:",
-    "esbuild": "catalog:",
-    "jiti": "catalog:"
+    "esbuild": "catalog:"
   },
   "devDependencies": {
     "@storm-stack/types": "workspace:*",

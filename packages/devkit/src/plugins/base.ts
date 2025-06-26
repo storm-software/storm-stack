@@ -17,7 +17,7 @@
  ------------------------------------------------------------------- */
 
 import { LogLevelLabel } from "@storm-software/config-tools/types";
-import { Plugin } from "@storm-stack/core/plugin";
+import { Plugin } from "@storm-stack/core/base/plugin";
 import type { Context, EngineHooks } from "@storm-stack/core/types/build";
 
 /**

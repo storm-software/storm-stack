@@ -19,7 +19,7 @@
 import type { ExecutorContext } from "@nx/devkit";
 import type { StormWorkspaceConfig } from "@storm-software/config/types";
 import { withRunExecutor } from "@storm-software/workspace-tools";
-import { Engine } from "@storm-stack/core/engine";
+import { Engine } from "@storm-stack/core/base/engine";
 import type { DocsInlineConfig } from "@storm-stack/core/types";
 import defu from "defu";
 import type { StormStackDocsExecutorSchema } from "./schema";

@@ -41,58 +41,58 @@
     },
     "./engine": {
       "import": {
-        "types": "./dist/base/engine.d.ts",
-        "default": "./dist/base/engine.js"
+        "types": "./dist/engine.d.ts",
+        "default": "./dist/engine.js"
       },
       "require": {
-        "types": "./dist/base/engine.d.cts",
-        "default": "./dist/base/engine.cjs"
+        "types": "./dist/engine.d.cts",
+        "default": "./dist/engine.cjs"
       },
       "default": {
-        "types": "./dist/base/engine.d.ts",
-        "default": "./dist/base/engine.js"
+        "types": "./dist/engine.d.ts",
+        "default": "./dist/engine.js"
       }
     },
     "./compiler": {
       "import": {
-        "types": "./dist/base/compiler.d.ts",
-        "default": "./dist/base/compiler.js"
+        "types": "./dist/compiler.d.ts",
+        "default": "./dist/compiler.js"
       },
       "require": {
-        "types": "./dist/base/compiler.d.cts",
-        "default": "./dist/base/compiler.cjs"
+        "types": "./dist/compiler.d.cts",
+        "default": "./dist/compiler.cjs"
       },
       "default": {
-        "types": "./dist/base/compiler.d.ts",
-        "default": "./dist/base/compiler.js"
+        "types": "./dist/compiler.d.ts",
+        "default": "./dist/compiler.js"
       }
     },
     "./plugin": {
       "import": {
-        "types": "./dist/base/plugin.d.ts",
-        "default": "./dist/base/plugin.js"
+        "types": "./dist/plugin.d.ts",
+        "default": "./dist/plugin.js"
       },
       "require": {
-        "types": "./dist/base/plugin.d.cts",
-        "default": "./dist/base/plugin.cjs"
+        "types": "./dist/plugin.d.cts",
+        "default": "./dist/plugin.cjs"
       },
       "default": {
-        "types": "./dist/base/plugin.d.ts",
-        "default": "./dist/base/plugin.js"
+        "types": "./dist/plugin.d.ts",
+        "default": "./dist/plugin.js"
       }
     },
     "./renderer": {
       "import": {
-        "types": "./dist/base/renderer.d.ts",
-        "default": "./dist/base/renderer.js"
+        "types": "./dist/renderer.d.ts",
+        "default": "./dist/renderer.js"
       },
       "require": {
-        "types": "./dist/base/renderer.d.cts",
-        "default": "./dist/base/renderer.cjs"
+        "types": "./dist/renderer.d.cts",
+        "default": "./dist/renderer.cjs"
       },
       "default": {
-        "types": "./dist/base/renderer.d.ts",
-        "default": "./dist/base/renderer.js"
+        "types": "./dist/renderer.d.ts",
+        "default": "./dist/renderer.js"
       }
     },
     "./init": {
@@ -247,6 +247,34 @@
       "default": {
         "types": "./dist/helpers/define-config.d.ts",
         "default": "./dist/helpers/define-config.js"
+      }
+    },
+    "./base": {
+      "import": {
+        "types": "./dist/base/index.d.ts",
+        "default": "./dist/base/index.js"
+      },
+      "require": {
+        "types": "./dist/base/index.d.cts",
+        "default": "./dist/base/index.cjs"
+      },
+      "default": {
+        "types": "./dist/base/index.d.ts",
+        "default": "./dist/base/index.js"
+      }
+    },
+    "./base/*": {
+      "import": {
+        "types": "./dist/base/*.d.ts",
+        "default": "./dist/base/*.js"
+      },
+      "require": {
+        "types": "./dist/base/*.d.cts",
+        "default": "./dist/base/*.cjs"
+      },
+      "default": {
+        "types": "./dist/base/*.d.ts",
+        "default": "./dist/base/*.js"
       }
     },
     "./helpers": {

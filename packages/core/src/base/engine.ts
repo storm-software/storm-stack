@@ -184,6 +184,12 @@ export class Engine {
 
   /**
    * Create a new Storm Stack project
+   *
+   * @remarks
+   * This method will create a new Storm Stack project in the current directory.
+   *
+   * @param inlineConfig - The inline configuration for the new command
+   * @returns A promise that resolves when the project has been created
    */
   public async new(inlineConfig: NewInlineConfig = { command: "new" }) {
     if (!this.#initialized) {
@@ -199,6 +205,12 @@ export class Engine {
 
   /**
    * Clean any previously prepared artifacts
+   *
+   * @remarks
+   * This method will remove the previous Storm Stack artifacts from the project.
+   *
+   * @param inlineConfig - The inline configuration for the clean command
+   * @returns A promise that resolves when the clean command has completed
    */
   public async clean(
     inlineConfig: CleanInlineConfig | PrepareInlineConfig = { command: "clean" }
@@ -223,7 +235,8 @@ export class Engine {
    * @remarks
    * This method will create the necessary directories, and write the artifacts files to the project.
    *
-   * @param autoClean - Whether to automatically clean the previous build artifacts before preparing the project
+   * @param inlineConfig - The inline configuration for the prepare command
+   * @returns A promise that resolves when the prepare command has completed
    */
   public async prepare(
     inlineConfig:
@@ -257,6 +270,7 @@ export class Engine {
    * Lint the project
    *
    * @param inlineConfig - The inline configuration for the lint command
+   * @returns A promise that resolves when the lint command has completed
    */
   public async lint(
     inlineConfig: LintInlineConfig | BuildInlineConfig = { command: "lint" }
@@ -284,8 +298,11 @@ export class Engine {
   /**
    * Build the project
    *
-   * @param autoPrepare - Whether to automatically prepare the project if it has not been prepared
-   * @param autoClean - Whether to automatically clean the previous build artifacts before preparing the project
+   * @remarks
+   * This method will build the Storm Stack project, generating the necessary artifacts.
+   *
+   * @param inlineConfig - The inline configuration for the build command
+   * @returns A promise that resolves when the build command has completed
    */
   public async build(inlineConfig: BuildInlineConfig = { command: "build" }) {
     if (!this.#initialized) {
@@ -312,6 +329,7 @@ export class Engine {
    * Generate the documentation for the project
    *
    * @param inlineConfig - The inline configuration for the docs command
+   * @returns A promise that resolves when the documentation generation has completed
    */
   public async docs(inlineConfig: DocsInlineConfig = { command: "docs" }) {
     if (!this.#initialized) {
@@ -347,6 +365,7 @@ export class Engine {
    * This step includes any final processes or clean up required by Storm Stack. It will be run after each Storm Stack command.
    *
    * @param inlineConfig - The inline configuration for the Storm Stack engine
+   * @returns A promise that resolves when the finalization process has completed
    */
   public async finalize(inlineConfig: InlineConfig) {
     if (!this.#initialized) {
