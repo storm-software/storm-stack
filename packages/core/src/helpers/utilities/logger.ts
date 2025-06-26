@@ -19,7 +19,6 @@
 import { getLogFn, getLogLevel } from "@storm-software/config-tools/logger";
 import { LogLevelLabel } from "@storm-software/config-tools/types";
 import { getColor } from "@storm-software/config-tools/utilities/colors";
-import { StormWorkspaceConfig } from "@storm-software/config/types";
 import { noop } from "@stryke/helpers/noop";
 import chalk from "chalk";
 import type { LogFn, ResolvedOptions } from "../../types";
@@ -42,7 +41,7 @@ export const createLog = (
       ...options,
       logLevel
     })(
-      `${chalk.bold.hex(getColor(options as StormWorkspaceConfig, "brand"))(`storm-stack${name ? `:${name}` : ""} ${chalk.gray("> ")}`)}${args.join(" ")} `
+      `${chalk.bold.hex(getColor("brand", options))(`storm-stack${name ? `:${name}` : ""} ${chalk.gray("> ")}`)}${args.join(" ")} `
     );
 };
 

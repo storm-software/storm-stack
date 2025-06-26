@@ -445,11 +445,14 @@ export class Engine {
     let pluginInstance!: Plugin;
     try {
       const module = await this.context.resolver.import<{
-        default: new (log: LogFn, config: any) => Plugin;
+        default: new (config: any) => Plugin;
       }>(this.context.resolver.esmResolve(pluginConfig[0]));
-      const PluginConstructor = module.default;
 
-      pluginInstance = new PluginConstructor(this.log, pluginConfig[1]);
+      const PluginConstructor = module.default;
+      pluginInstance = new PluginConstructor({
+        ...(pluginConfig[1] ?? {}),
+        log: this.log
+      });
     } catch (error) {
       if (!isInstalled) {
         throw new Error(

@@ -16,8 +16,8 @@
 
  ------------------------------------------------------------------- */
 
+import { PluginOptions } from "@storm-stack/core/base/plugin";
 import { getFileHeader } from "@storm-stack/core/helpers/utilities/file-header";
-import { LogFn } from "@storm-stack/core/types/config";
 import type { LogPluginConfig } from "@storm-stack/devkit/plugins/log";
 import LogPlugin from "@storm-stack/devkit/plugins/log";
 
@@ -37,21 +37,18 @@ export type LogStoragePluginConfig = LogPluginConfig & {
   namespace?: string;
 };
 
-export default class LogStoragePlugin extends LogPlugin {
-  public constructor(
-    log: LogFn,
-    protected override config: LogStoragePluginConfig
-  ) {
-    super(log, config, "log-storage-plugin", "@storm-stack/plugin-log-storage");
+export default class LogStoragePlugin extends LogPlugin<LogStoragePluginConfig> {
+  public constructor(options: PluginOptions<LogStoragePluginConfig>) {
+    super(options);
 
-    this.config.useFileSystem ??= true;
-    this.config.namespace ??= "logs";
+    this.options.useFileSystem ??= true;
+    this.options.namespace ??= "logs";
 
-    if (this.config.useFileSystem) {
+    if (this.options.useFileSystem) {
       this.dependencies.push([
         "@storm-stack/plugin-storage-fs",
         {
-          namespace: this.config.namespace,
+          namespace: this.options.namespace,
           envPath: "log"
         }
       ]);
@@ -235,7 +232,7 @@ const formatter: TextFormatter = getTextFormatter();
 
 const sink: LogSink & AsyncDisposable = (record: LogRecord) => {
   void storage.setItem(
-    \`${this.config.namespace}:storm-\${new Date().toISOString().replace("T", "_").replace("Z", "")}.log\`,
+    \`${this.options.namespace}:storm-\${new Date().toISOString().replace("T", "_").replace("Z", "")}.log\`,
     formatter(record)
   );
 };

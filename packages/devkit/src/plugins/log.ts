@@ -17,7 +17,8 @@
  ------------------------------------------------------------------- */
 
 import { LogLevelLabel } from "@storm-software/config-tools/types";
-import type { Context, EngineHooks, LogFn } from "@storm-stack/core/types";
+import { PluginOptions } from "@storm-stack/core/base/plugin";
+import type { Context, EngineHooks } from "@storm-stack/core/types";
 import type { LogLevel } from "@storm-stack/types/shared/log";
 import { joinPaths } from "@stryke/path/join-paths";
 import { camelCase } from "@stryke/string-format/camel-case";
@@ -35,16 +36,12 @@ export interface LogPluginConfig {
  * @remarks
  * This class provides the foundation for creating logging plugins in Storm Stack. It handles the initialization of the plugin's context and prepares the runtime for logging sinks. Derived classes must implement the `writeSink` method to define how the logging sink should be.
  */
-export default abstract class LogPlugin extends LibraryPlugin {
-  public constructor(
-    log: LogFn,
-    protected override config: LogPluginConfig,
-    name: string,
-    installPath?: string
-  ) {
-    super(log, config, name, installPath);
-
-    this.config.logLevel ??= "info";
+export default abstract class LogPlugin<
+  TOptions extends LogPluginConfig = LogPluginConfig
+> extends LibraryPlugin<TOptions> {
+  public constructor(options: PluginOptions<TOptions>) {
+    super(options);
+    this.options.logLevel ??= "info";
   }
 
   /**
@@ -77,13 +74,13 @@ export default abstract class LogPlugin extends LibraryPlugin {
           context.runtimePath,
           "logs",
           `${this.name.replace(/^log-/, "")}${
-            this.config.namespace
-              ? `-${this.config.namespace
+            this.options.namespace
+              ? `-${this.options.namespace
                   .replaceAll(".", "-")
                   .replaceAll(":", "-")
                   .replaceAll(" ", "-")}`
               : ""
-          }-${this.config.logLevel}.ts`
+          }-${this.options.logLevel}.ts`
         ),
         await Promise.resolve(this.writeSink(context))
       );
@@ -99,28 +96,28 @@ export default abstract class LogPlugin extends LibraryPlugin {
     if (context.options.projectType === "application") {
       const name = `${camelCase(
         `${this.name.replace(/^log-/, "")}${
-          this.config.namespace
-            ? `-${this.config.namespace
+          this.options.namespace
+            ? `-${this.options.namespace
                 .replaceAll(".", "-")
                 .replaceAll(":", "-")
                 .replaceAll(" ", "-")}`
             : ""
-        }-${this.config.logLevel}`
+        }-${this.options.logLevel}`
       )}Sink`;
       if (!context.runtime.logs.some(log => log.name === name)) {
         context.runtime.logs.push({
           name,
-          logLevel: this.config.logLevel || "info",
+          logLevel: this.options.logLevel || "info",
           import: `import ${name} from "./${joinPaths(
             "logs",
             `${this.name.replace(/^log-/, "")}${
-              this.config.namespace
-                ? `-${this.config.namespace
+              this.options.namespace
+                ? `-${this.options.namespace
                     .replaceAll(".", "-")
                     .replaceAll(":", "-")
                     .replaceAll(" ", "-")}`
                 : ""
-            }-${this.config.logLevel}`
+            }-${this.options.logLevel}`
           )}"; `
         });
       }

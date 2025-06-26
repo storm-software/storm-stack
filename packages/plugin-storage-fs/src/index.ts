@@ -16,8 +16,8 @@
 
  ------------------------------------------------------------------- */
 
+import { PluginOptions } from "@storm-stack/core/base/plugin";
 import { getFileHeader } from "@storm-stack/core/helpers/utilities/file-header";
-import { LogFn } from "@storm-stack/core/types/config";
 import type { StoragePluginConfig } from "@storm-stack/devkit/plugins/storage";
 import StoragePlugin from "@storm-stack/devkit/plugins/storage";
 import type { FSStorageOptions } from "unstorage/drivers/fs-lite";
@@ -33,19 +33,16 @@ export type StorageFileSystemPluginConfig = FSStorageOptions &
     envPath?: "data" | "config" | "cache" | "log" | "temp";
   };
 
-export default class StorageFileSystemPlugin extends StoragePlugin {
-  public constructor(
-    log: LogFn,
-    protected override config: StorageFileSystemPluginConfig
-  ) {
-    super(log, config, "storage-fs-plugin", "@storm-stack/plugin-storage-fs");
+export default class StorageFileSystemPlugin extends StoragePlugin<StorageFileSystemPluginConfig> {
+  public constructor(options: PluginOptions<StorageFileSystemPluginConfig>) {
+    super(options);
   }
 
   protected override writeStorage() {
     return `${getFileHeader()}
 
 import fsLiteDriver from "unstorage/drivers/fs-lite";${
-      this.config.envPath
+      this.options.envPath
         ? `
 import { join } from "node:path";
 import { paths } from "../env";`
@@ -53,14 +50,14 @@ import { paths } from "../env";`
     }
 
 export default fsLiteDriver({ base: ${
-      this.config.envPath
-        ? this.config.base
-          ? `join(paths.${this.config.envPath}, "${this.config.base}")`
-          : `paths.${this.config.envPath}`
-        : this.config.base
-          ? `"${this.config.base}"`
+      this.options.envPath
+        ? this.options.base
+          ? `join(paths.${this.options.envPath}, "${this.options.base}")`
+          : `paths.${this.options.envPath}`
+        : this.options.base
+          ? `"${this.options.base}"`
           : "undefined"
-    }, readOnly: ${Boolean(this.config.readOnly)}, noClear: ${Boolean(this.config.noClear)} });
+    }, readOnly: ${Boolean(this.options.readOnly)}, noClear: ${Boolean(this.options.noClear)} });
 `;
   }
 }

@@ -17,8 +17,7 @@
  ------------------------------------------------------------------- */
 
 import { LogLevelLabel } from "@storm-software/config-tools/types";
-import { Plugin } from "@storm-stack/core/base/plugin";
-import { LogFn } from "@storm-stack/core/types";
+import { Plugin, PluginOptions } from "@storm-stack/core/base/plugin";
 import type { Context, EngineHooks } from "@storm-stack/core/types/build";
 
 /**
@@ -27,14 +26,16 @@ import type { Context, EngineHooks } from "@storm-stack/core/types/build";
  * @remarks
  * This class provides a structure for plugins to define their dependencies and hooks. It initializes the plugin's context with required installations.
  */
-export default class BasePlugin extends Plugin {
+export default abstract class BasePlugin<
+  TOptions extends Record<string, any> = Record<string, any>
+> extends Plugin<TOptions> {
   /**
    * A list of dependencies that are required for the plugin to work. These dependencies will be installed when Storm Stack CLI is run.
    */
   protected installs: Record<string, "dependency" | "devDependency">;
 
-  public constructor(log: LogFn, name: string, installPath?: string) {
-    super(log, name, installPath);
+  public constructor(options: PluginOptions<TOptions>) {
+    super(options);
     this.installs = {};
   }
 

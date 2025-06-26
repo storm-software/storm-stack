@@ -1730,7 +1730,7 @@ declare module "storm:env" {
   /** The current application */
   export const name = "storm-stack";
   /** The current application */
-  export const version = "0.13.0";
+  export const version = "0.14.0";
   /**
    * The environment paths for storing things like data, config, logs, and cache in the current runtime environment.
    *
@@ -1748,7 +1748,7 @@ declare module "storm:env" {
   export const runtime: StormRuntimeInfo;
 }
 
-declare module "storm:storage/fs-config" {
+declare module "storm:storage/file-system-config" {
   declare const _default: import("unstorage").Driver<
     import("unstorage/drivers/fs-lite").FSStorageOptions | undefined,
     never
@@ -1756,7 +1756,7 @@ declare module "storm:storage/fs-config" {
   export default _default;
 }
 
-declare module "storm:storage/fs-crash-reports" {
+declare module "storm:storage/file-system-crash-reports" {
   declare const _default: import("unstorage").Driver<
     import("unstorage/drivers/fs-lite").FSStorageOptions | undefined,
     never
@@ -1764,7 +1764,7 @@ declare module "storm:storage/fs-crash-reports" {
   export default _default;
 }
 
-declare module "storm:storage/fs-logs" {
+declare module "storm:storage/file-system-logs" {
   declare const _default: import("unstorage").Driver<
     import("unstorage/drivers/fs-lite").FSStorageOptions | undefined,
     never

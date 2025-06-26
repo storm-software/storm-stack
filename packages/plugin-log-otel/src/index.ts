@@ -19,8 +19,9 @@
 import type { OTLPExporterNodeConfigBase } from "@opentelemetry/otlp-exporter-base";
 import type { OTLPGRPCExporterConfigNode } from "@opentelemetry/otlp-grpc-exporter-base";
 import { LogLevelLabel } from "@storm-software/config-tools/types";
+import { PluginOptions } from "@storm-stack/core/base/plugin";
 import { getFileHeader } from "@storm-stack/core/helpers/utilities/file-header";
-import type { Context, LogFn } from "@storm-stack/core/types";
+import type { Context } from "@storm-stack/core/types";
 import type { LogPluginConfig } from "@storm-stack/devkit/plugins/log";
 import LogPlugin from "@storm-stack/devkit/plugins/log";
 import { StormJSON } from "@stryke/json/storm-json";
@@ -37,7 +38,10 @@ export type LogOpenTelemetryPluginConfig = LogPluginConfig & {
       } & OTLPGRPCExporterConfigNode)
   );
 
-export default class LogOpenTelemetryPlugin extends LogPlugin {
+/**
+ * A Storm Stack plugin for OpenTelemetry logging.
+ */
+export default class LogOpenTelemetryPlugin extends LogPlugin<LogOpenTelemetryPluginConfig> {
   protected override installs = {
     "@opentelemetry/api-logs@^0.200.0": "dependency",
     "@opentelemetry/resources@^0.200.0": "dependency",
@@ -45,14 +49,11 @@ export default class LogOpenTelemetryPlugin extends LogPlugin {
     "@opentelemetry/semantic-conventions@^1.32.0": "dependency"
   } as Record<string, "dependency" | "devDependency">;
 
-  public constructor(
-    log: LogFn,
-    protected override config: LogOpenTelemetryPluginConfig
-  ) {
-    super(log, config, "log-otel-plugin", "@storm-stack/plugin-log-otel");
+  public constructor(options: PluginOptions<LogOpenTelemetryPluginConfig>) {
+    super(options);
 
-    this.config.exporter ??= "http";
-    if (this.config.exporter === "grpc") {
+    this.options.exporter ??= "http";
+    if (this.options.exporter === "grpc") {
       this.log(
         LogLevelLabel.WARN,
         "Usage of the OpenTelemetry gRPC exporter is still in active development."
@@ -60,7 +61,7 @@ export default class LogOpenTelemetryPlugin extends LogPlugin {
     }
 
     this.installs[
-      `@opentelemetry/exporter-logs-otlp-${this.config.exporter}@^0.200.0`
+      `@opentelemetry/exporter-logs-otlp-${this.options.exporter}@^0.200.0`
     ] = "dependency";
   }
 
@@ -72,7 +73,7 @@ import type {
   LogRecord as OTLogRecord
 } from "@opentelemetry/api-logs";
 import { SeverityNumber } from "@opentelemetry/api-logs";
-import { OTLPLogExporter } from "@opentelemetry/exporter-logs-otlp-${this.config.exporter}";
+import { OTLPLogExporter } from "@opentelemetry/exporter-logs-otlp-${this.options.exporter}";
 import type { DetectedResourceAttributes } from "@opentelemetry/resources";
 import { resourceFromAttributes } from "@opentelemetry/resources";
 import {
@@ -225,7 +226,7 @@ const inspect: (value: unknown) => string =
 
 
 const SERVICE_NAME =
-  ${this.config.serviceName || '$storm.config.OTEL_SERVICE_NAME || $storm.config.APP_NAME || "storm"'};
+  ${this.options.serviceName || '$storm.config.OTEL_SERVICE_NAME || $storm.config.APP_NAME || "storm"'};
 
 const resource = resourceFromAttributes({
   [ATTR_SERVICE_NAME]: SERVICE_NAME
@@ -235,11 +236,11 @@ const loggerProvider = new LoggerProvider({ resource });
 loggerProvider.addLogRecordProcessor(
   new SimpleLogRecordProcessor(
     new OTLPLogExporter({
-        url: "${this.config.url}",
-        headers: ${StormJSON.stringify(this.config.headers)},
-        concurrencyLimit: ${this.config.concurrencyLimit ?? 10},
-        timeoutMillis: ${this.config.timeoutMillis ?? 10000},
-        compression: "${this.config.compression}"
+        url: "${this.options.url}",
+        headers: ${StormJSON.stringify(this.options.headers)},
+        concurrencyLimit: ${this.options.concurrencyLimit ?? 10},
+        timeoutMillis: ${this.options.timeoutMillis ?? 10000},
+        compression: "${this.options.compression}"
       })
   )
 );
@@ -259,14 +260,14 @@ const sink = (record: LogRecord) => {
     severityNumber,
     severityText: level,
     body: ${
-      this.config.messageType === "string"
+      this.options.messageType === "string"
         ? `convertMessageToString(message, inspect)`
-        : this.config.messageType === "array"
+        : this.options.messageType === "array"
           ? `convertMessageToArray(message, inspect)`
           : `convertMessageToCustomBodyFormat(
             message,
             inspect,
-            ${this.config.messageType}
+            ${this.options.messageType}
           )`
     },
     attributes,

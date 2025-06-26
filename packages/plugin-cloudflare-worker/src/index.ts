@@ -19,6 +19,7 @@
 import { cloudflare } from "@cloudflare/unenv-preset";
 import { parse as parseToml, stringify as stringifyToml } from "@ltd/j-toml";
 import { LogLevelLabel } from "@storm-software/config-tools/types";
+import { PluginOptions } from "@storm-stack/core/base/plugin";
 import { getFileHeader, writeFile } from "@storm-stack/core/helpers";
 import {
   getTsconfigFilePath,
@@ -33,7 +34,6 @@ import {
 import type {
   Context,
   EngineHooks,
-  LogFn,
   PluginConfig
 } from "@storm-stack/core/types";
 import BasePlugin from "@storm-stack/devkit/plugins/base";
@@ -64,7 +64,9 @@ import { CLOUDFLARE_MODULES, DEFAULT_CONDITIONS } from "./helpers";
  * @remarks
  * This plugin provides support for building and deploying Cloudflare Workers using Storm Stack. It integrates with the Wrangler CLI tool and sets up the necessary configurations and runtime files.
  */
-export default class StormStackCloudflareWorkerPlugin extends BasePlugin {
+export default class StormStackCloudflareWorkerPlugin<
+  TOptions extends Record<string, any> = Record<string, any>
+> extends BasePlugin<TOptions> {
   #unenv: Environment;
 
   public override dependencies = [
@@ -76,8 +78,8 @@ export default class StormStackCloudflareWorkerPlugin extends BasePlugin {
     ]
   ] as PluginConfig[];
 
-  public constructor(log: LogFn) {
-    super(log, "cloudflare", "@storm-stack/plugin-cloudflare-worker");
+  public constructor(options: PluginOptions<TOptions>) {
+    super(options);
 
     const { env } = defineEnv({
       presets: [cloudflare]
@@ -89,18 +91,18 @@ export default class StormStackCloudflareWorkerPlugin extends BasePlugin {
     super.innerAddHooks(hooks);
 
     hooks.addHooks({
-      "clean:complete": this.clean.bind(this),
-      "init:context": this.initContext.bind(this),
-      "init:tsconfig": this.initTsconfig.bind(this),
-      "prepare:directories": this.prepareDirectories.bind(this),
-      "prepare:config": this.prepareConfig.bind(this),
-      "prepare:types": this.prepareTypes.bind(this),
-      "prepare:runtime": this.prepareRuntime.bind(this),
-      "prepare:entry": this.prepareEntry.bind(this)
+      "clean:complete": this.#clean.bind(this),
+      "init:context": this.#initContext.bind(this),
+      "init:tsconfig": this.#initTsconfig.bind(this),
+      "prepare:directories": this.#prepareDirectories.bind(this),
+      "prepare:config": this.#prepareConfig.bind(this),
+      "prepare:types": this.#prepareTypes.bind(this),
+      "prepare:runtime": this.#prepareRuntime.bind(this),
+      "prepare:entry": this.#prepareEntry.bind(this)
     });
   }
 
-  protected async clean(context: Context) {
+  async #clean(context: Context) {
     this.log(
       LogLevelLabel.TRACE,
       `Clean Cloudflare specific artifacts the Storm Stack project.`
@@ -126,7 +128,7 @@ export default class StormStackCloudflareWorkerPlugin extends BasePlugin {
     }
   }
 
-  protected async initContext(context: Context) {
+  async #initContext(context: Context) {
     this.log(
       LogLevelLabel.TRACE,
       `Resolving Storm Stack context for the project.`
@@ -194,7 +196,7 @@ export default class StormStackCloudflareWorkerPlugin extends BasePlugin {
     }
   }
 
-  protected async initTsconfig(context: Context) {
+  async #initTsconfig(context: Context) {
     const tsconfigFilePath = getTsconfigFilePath(
       context.options.projectRoot,
       context.options.tsconfig
@@ -281,7 +283,7 @@ export default class StormStackCloudflareWorkerPlugin extends BasePlugin {
     );
   }
 
-  protected async prepareDirectories(context: Context) {
+  async #prepareDirectories(context: Context) {
     this.log(
       LogLevelLabel.TRACE,
       `Preparing the Storm Stack directories for the Cloudflare Worker project.`
@@ -298,7 +300,7 @@ export default class StormStackCloudflareWorkerPlugin extends BasePlugin {
     }
   }
 
-  protected async prepareConfig(context: Context) {
+  async #prepareConfig(context: Context) {
     if (context.options.projectType === "application") {
       this.log(LogLevelLabel.TRACE, "Preparing the wrangler deployment file");
 
@@ -359,7 +361,7 @@ compatibility_flags = [ "nodejs_als" ]
     }
   }
 
-  protected async prepareTypes(context: Context) {
+  async #prepareTypes(context: Context) {
     this.log(
       LogLevelLabel.TRACE,
       `Preparing the Cloudflare TypeScript declaration (d.ts) artifact for the Storm Stack project.`
@@ -376,7 +378,7 @@ compatibility_flags = [ "nodejs_als" ]
     );
   }
 
-  protected async prepareRuntime(context: Context) {
+  async #prepareRuntime(context: Context) {
     this.log(
       LogLevelLabel.TRACE,
       `Preparing the runtime artifacts for the Storm Stack project.`
@@ -401,7 +403,7 @@ compatibility_flags = [ "nodejs_als" ]
     ]);
   }
 
-  protected async prepareEntry(context: Context) {
+  async #prepareEntry(context: Context) {
     await Promise.all(
       context.entry.map(async entry => {
         this.log(

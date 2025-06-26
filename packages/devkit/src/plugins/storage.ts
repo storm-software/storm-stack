@@ -17,7 +17,8 @@
  ------------------------------------------------------------------- */
 
 import { LogLevelLabel } from "@storm-software/config-tools/types";
-import type { Context, EngineHooks, LogFn } from "@storm-stack/core/types";
+import { PluginOptions } from "@storm-stack/core/base/plugin";
+import type { Context, EngineHooks } from "@storm-stack/core/types";
 import { joinPaths } from "@stryke/path/join-paths";
 import { camelCase } from "@stryke/string-format/camel-case";
 import type { MaybePromise } from "@stryke/types/base";
@@ -33,16 +34,13 @@ export interface StoragePluginConfig {
  * @remarks
  * This class provides the foundation for creating storage plugins in Storm Stack. It handles the initialization of the plugin's context and prepares the runtime for storage artifacts. Derived classes must implement the `writeStorage` method to define how the storage should be written.
  */
-export default abstract class StoragePlugin extends LibraryPlugin {
-  public constructor(
-    log: LogFn,
-    protected override config: StoragePluginConfig,
-    name: string,
-    installPath?: string
-  ) {
-    super(log, config, name, installPath);
+export default abstract class StoragePlugin<
+  TOptions extends StoragePluginConfig = StoragePluginConfig
+> extends LibraryPlugin<TOptions> {
+  public constructor(options: PluginOptions<TOptions>) {
+    super(options);
 
-    if (!this.config.namespace) {
+    if (!this.options.namespace) {
       throw new Error(
         `The \`namespace\` configuration parameter was not provided to the ${this.name} plugin.`
       );
@@ -78,7 +76,7 @@ export default abstract class StoragePlugin extends LibraryPlugin {
         joinPaths(
           context.runtimePath,
           "storage",
-          `${this.name.replace(/^storage-/, "")}-${this.config.namespace.replaceAll(".", "-").replaceAll(":", "-").replaceAll(" ", "-")}.ts`
+          `${this.name.replace(/^storage-/, "")}-${this.options.namespace.replaceAll(".", "-").replaceAll(":", "-").replaceAll(" ", "-")}.ts`
         ),
         await Promise.resolve(this.writeStorage(context))
       );
@@ -92,11 +90,11 @@ export default abstract class StoragePlugin extends LibraryPlugin {
     );
 
     if (context.options.projectType === "application") {
-      const name = `${camelCase(`${this.name.replace(/^storage-/, "")}-${this.config.namespace.replaceAll(".", "-").replaceAll(":", "-").replaceAll(" ", "-")}`)}Storage`;
+      const name = `${camelCase(`${this.name.replace(/^storage-/, "")}-${this.options.namespace.replaceAll(".", "-").replaceAll(":", "-").replaceAll(" ", "-")}`)}Storage`;
       context.runtime.storage.push({
         name,
-        namespace: this.config.namespace,
-        import: `import ${name} from "./${joinPaths("storage", `${this.name.replace(/^storage-/, "")}-${this.config.namespace.replaceAll(".", "-").replaceAll(":", "-").replaceAll(" ", "-")}`)}"; `
+        namespace: this.options.namespace,
+        import: `import ${name} from "./${joinPaths("storage", `${this.name.replace(/^storage-/, "")}-${this.options.namespace.replaceAll(".", "-").replaceAll(":", "-").replaceAll(" ", "-")}`)}"; `
       });
     }
   }

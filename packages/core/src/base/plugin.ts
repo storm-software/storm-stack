@@ -17,32 +17,27 @@
  ------------------------------------------------------------------- */
 
 import { LogLevelLabel } from "@storm-software/config-tools/types";
+import { kebabCase } from "@stryke/string-format/kebab-case";
 import type { MaybePromise } from "@stryke/types/base";
-import { extendLog } from "../helpers/utilities/logger";
+import { createLog, extendLog } from "../helpers/utilities/logger";
 import { writeFile } from "../helpers/utilities/write-file";
 import { installPackage } from "../init/installs/utilities";
 import type { Context, EngineHooks } from "../types/build";
 import type { LogFn, PluginConfig } from "../types/config";
 import type { IPlugin } from "../types/plugin";
 
+export type PluginOptions<
+  TOptions extends Record<string, any> = Record<string, any>
+> = TOptions & { log?: LogFn };
+
 /**
  * The base class for all plugins
  */
-export abstract class Plugin implements IPlugin {
-  /**
-   * The logger function to use
-   */
-  log: LogFn;
-
-  /**
-   * The name of the plugin
-   */
-  public name: string;
-
-  /**
-   * The name of the plugin
-   */
-  public installPath: string;
+export abstract class Plugin<
+  TOptions extends Record<string, any> = Record<string, any>
+> implements IPlugin
+{
+  #log?: LogFn;
 
   /**
    * A list of plugin modules required as dependencies by the current Plugin.
@@ -51,6 +46,42 @@ export abstract class Plugin implements IPlugin {
    * These plugins will be called prior to the current Plugin.
    */
   public dependencies = [] as Array<string | PluginConfig>;
+
+  /**
+   * The name of the plugin
+   *
+   * @remarks
+   * This is used to identify the plugin in logs and other output.
+   */
+  public get name(): string {
+    const name = kebabCase(this.constructor.name);
+    if (name.startsWith("plugin-")) {
+      return name.replace(/^plugin-/, "").trim();
+    } else if (name.endsWith("-plugin")) {
+      return name.replace(/-plugin$/, "").trim();
+    }
+
+    return name;
+  }
+
+  /**
+   * The logger function to use
+   */
+  protected get log(): LogFn {
+    if (!this.#log) {
+      this.#log = createLog(`${this.name}-plugin`);
+    }
+
+    return this.#log;
+  }
+
+  /**
+   * The configuration options for the plugin
+   *
+   * @remarks
+   * This is used to store the configuration options for the plugin, which can be accessed by the plugin's methods.
+   */
+  protected options: TOptions;
 
   /**
    * The renderer used by the plugin
@@ -63,29 +94,21 @@ export abstract class Plugin implements IPlugin {
   /**
    * The constructor for the plugin
    *
-   * @param log - The logger function to use
-   * @param name - The name of the plugin
-   * @param installPath - The path to install the plugin
+   * @param options - The configuration options for the plugin
    */
-  public constructor(log: LogFn, name: string, installPath?: string) {
-    this.name = name.toLowerCase();
-    if (this.name.startsWith("plugin-")) {
-      this.name = this.name.replace(/^plugin-/, "").trim();
-    } else if (this.name.endsWith("-plugin")) {
-      this.name = this.name.replace(/-plugin$/, "").trim();
+  public constructor(options: PluginOptions<TOptions>) {
+    if (options.log) {
+      this.#log = extendLog(options.log, `${this.name}-plugin`);
     }
 
-    this.log = extendLog(log, `${this.name}-plugin`);
-
-    this.installPath = installPath || `@storm-stack/plugin-${this.name}`;
-    if (!installPath) {
-      this.log(
-        LogLevelLabel.WARN,
-        `No install path parameter provided to constructor for ${this.name} plugin. Will attempt to use "${this.installPath}".`
-      );
-    }
+    this.options = options;
   }
 
+  /**
+   * Adds the plugin's hooks into the engine.
+   *
+   * @param hooks - The list of engine hooks to add the plugin's hooks to.
+   */
   public async addHooks(hooks: EngineHooks) {
     this.log(LogLevelLabel.TRACE, `Adding plugin hooks into engine`);
 

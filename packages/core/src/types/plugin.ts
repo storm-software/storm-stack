@@ -45,11 +45,6 @@ export interface IPlugin {
   name: string;
 
   /**
-   * The path to install the plugin
-   */
-  installPath: string;
-
-  /**
    * A list of plugin modules required as dependencies by the current plugin.
    *
    * @remarks

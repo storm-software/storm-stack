@@ -78,7 +78,9 @@ export interface DotenvOptions extends DotenvConfiguration {
   replace?: boolean;
 }
 
-export type PluginConfig = [string, Record<string, any>];
+export type PluginConfig<
+  TOptions extends Record<string, any> = Record<string, any>
+> = [string, TOptions];
 
 export type ESBuildOverrideOptions = ExternalESBuildOptions &
   BaseESBuildOptions;

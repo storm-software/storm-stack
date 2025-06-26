@@ -1681,7 +1681,7 @@ type StormVariables = Omit<
   >;
 const $storm: StormContext<StormVariables>;
 
-declare module "storm:storage/cloudflare-kv-storage" {
+declare module "storm:storage/cloudflare-k-v-storage" {
   declare const _default: import("unstorage").Driver<
     import("unstorage/drivers/cloudflare-kv-binding").KVOptions,
     KVNamespace<string>

@@ -18,8 +18,9 @@
 
 import { parse as parseToml, stringify as stringifyToml } from "@ltd/j-toml";
 import { LogLevelLabel } from "@storm-software/config-tools/types";
+import { PluginOptions } from "@storm-stack/core/base/plugin";
 import { getFileHeader } from "@storm-stack/core/helpers/utilities/file-header";
-import type { Context, EngineHooks, LogFn } from "@storm-stack/core/types";
+import type { Context, EngineHooks } from "@storm-stack/core/types";
 import type { StoragePluginConfig } from "@storm-stack/devkit/plugins/storage";
 import StoragePlugin from "@storm-stack/devkit/plugins/storage";
 import { readFile } from "@stryke/fs";
@@ -37,19 +38,11 @@ export type StorageCloudflareR2PluginConfig = StoragePluginConfig &
     binding?: string;
   };
 
-export default class StorageCloudflareR2Plugin extends StoragePlugin {
-  public constructor(
-    log: LogFn,
-    protected override config: StorageCloudflareR2PluginConfig
-  ) {
-    super(
-      log,
-      config,
-      "storage-cloudflare-r2-plugin",
-      "@storm-stack/plugin-storage-cloudflare-r2"
-    );
+export default class StorageCloudflareR2Plugin extends StoragePlugin<StorageCloudflareR2PluginConfig> {
+  public constructor(options: PluginOptions<StorageCloudflareR2PluginConfig>) {
+    super(options);
 
-    if (this.config.binding) {
+    if (this.options.binding) {
       this.installs["aws4fetch@1.0.20"] = "dependency";
     }
   }
@@ -73,13 +66,13 @@ export default class StorageCloudflareR2Plugin extends StoragePlugin {
    * @returns The source code as a string
    */
   protected override writeStorage() {
-    if (this.config.binding) {
+    if (this.options.binding) {
       return `${getFileHeader()}
 
 import cloudflareR2BindingDriver from "unstorage/drivers/cloudflare-r2-binding";
 import { env } from "cloudflare:workers";
 
-export default cloudflareR2BindingDriver({ binding: env.${this.config.binding}, base: ${this.config.base || "undefined"} });
+export default cloudflareR2BindingDriver({ binding: env.${this.options.binding}, base: ${this.options.base || "undefined"} });
 `;
     } else {
       return `${getFileHeader()}
@@ -103,7 +96,7 @@ export default s3Driver({
   accessKeyId: accessKey,
   secretAccessKey: secretAccessKey,
   endpoint: \`https://\${accountId}.r2.cloudflarestorage.com\`,
-  bucket: "${this.config.namespace}",
+  bucket: "${this.options.namespace}",
   region: "auto",
 });
 `;
@@ -117,7 +110,7 @@ export default s3Driver({
    * @returns A promise that resolves when the configuration is prepared
    */
   protected async prepareConfig(context: Context) {
-    if (context.options.projectType === "application" && this.config.binding) {
+    if (context.options.projectType === "application" && this.options.binding) {
       this.log(
         LogLevelLabel.TRACE,
         "Writing the Cloudflare R2 binding to the wrangler file."
@@ -139,14 +132,14 @@ export default s3Driver({
       if (
         !wranglerFile.r2_buckets?.some(
           r2Bucket =>
-            r2Bucket.binding === this.config.binding &&
-            r2Bucket.bucket_name === this.config.namespace
+            r2Bucket.binding === this.options.binding &&
+            r2Bucket.bucket_name === this.options.namespace
         )
       ) {
         wranglerFile.r2_buckets ??= [];
         wranglerFile.r2_buckets.push({
-          binding: this.config.binding,
-          bucket_name: this.config.namespace
+          binding: this.options.binding,
+          bucket_name: this.options.namespace
         });
       }
 

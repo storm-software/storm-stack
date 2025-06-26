@@ -18,9 +18,10 @@
 
 import { parse as parseToml, stringify as stringifyToml } from "@ltd/j-toml";
 import { LogLevelLabel } from "@storm-software/config-tools/types";
+import { PluginOptions } from "@storm-stack/core/base/plugin";
 
 import { getFileHeader } from "@storm-stack/core/helpers/utilities/file-header";
-import type { Context, EngineHooks, LogFn } from "@storm-stack/core/types";
+import type { Context, EngineHooks } from "@storm-stack/core/types";
 import type { StoragePluginConfig } from "@storm-stack/devkit/plugins/storage";
 import StoragePlugin from "@storm-stack/devkit/plugins/storage";
 import { readFile } from "@stryke/fs";
@@ -49,37 +50,34 @@ export type StorageCloudflareKVPluginConfig = StoragePluginConfig &
     minTTL: number;
   } & Omit<KVHTTPOptions, "namespaceId" | "minTTL">;
 
-export default class StorageCloudflareKVPlugin extends StoragePlugin {
-  public constructor(
-    log: LogFn,
-    protected override config: StorageCloudflareKVPluginConfig
-  ) {
-    super(
-      log,
-      config,
-      "storage-cloudflare-kv-plugin",
-      "@storm-stack/plugin-storage-cloudflare-kv"
-    );
+export default class StorageCloudflareKVPlugin extends StoragePlugin<StorageCloudflareKVPluginConfig> {
+  public constructor(options: PluginOptions<StorageCloudflareKVPluginConfig>) {
+    super(options);
 
-    this.config.minTTL ??= 60;
+    this.options.minTTL ??= 60;
   }
 
+  /**
+   * Adds the plugin hooks to the engine hooks.
+   *
+   * @param hooks - The engine hooks to add the plugin hooks to.
+   */
   public override innerAddHooks(hooks: EngineHooks) {
     hooks.addHooks({
-      "prepare:config": this.prepareConfig.bind(this)
+      "prepare:config": this.#prepareConfig.bind(this)
     });
 
     super.innerAddHooks(hooks);
   }
 
   protected override writeStorage() {
-    if (this.config.binding) {
+    if (this.options.binding) {
       return `${getFileHeader()}
 
 import cloudflareKVBindingDriver from "unstorage/drivers/cloudflare-kv-binding";
 import { env } from "cloudflare:workers";
 
-export default cloudflareKVBindingDriver({ binding: env.${this.config.binding}, minTTL: ${this.config.minTTL ?? 60} });
+export default cloudflareKVBindingDriver({ binding: env.${this.options.binding}, minTTL: ${this.options.minTTL ?? 60} });
 `;
     } else {
       return `${getFileHeader()}
@@ -103,19 +101,19 @@ if (!apiToken && (!email || !apiKey) && !userServiceKey) {
 
 export default cloudflareKVHTTPDriver({
   accountId,
-  namespaceId: ${this.config.namespace ? `"${this.config.namespace}"` : "undefined"},
+  namespaceId: ${this.options.namespace ? `"${this.options.namespace}"` : "undefined"},
   apiToken,
   email,
   apiKey,
   userServiceKey,
-  minTTL: ${this.config.minTTL ?? 60}
+  minTTL: ${this.options.minTTL ?? 60}
 });
 `;
     }
   }
 
-  protected async prepareConfig(context: Context) {
-    if (context.options.projectType === "application" && this.config.binding) {
+  async #prepareConfig(context: Context) {
+    if (context.options.projectType === "application" && this.options.binding) {
       this.log(
         LogLevelLabel.TRACE,
         "Writing the Cloudflare KV binding to the wrangler file."
@@ -137,14 +135,14 @@ export default cloudflareKVHTTPDriver({
       if (
         !wranglerFile.kv_namespaces?.some(
           kvNamespace =>
-            kvNamespace.binding === this.config.binding &&
-            kvNamespace.id === this.config.namespace
+            kvNamespace.binding === this.options.binding &&
+            kvNamespace.id === this.options.namespace
         )
       ) {
         wranglerFile.kv_namespaces ??= [];
         wranglerFile.kv_namespaces.push({
-          binding: this.config.binding,
-          id: this.config.namespace
+          binding: this.options.binding,
+          id: this.options.namespace
         });
       }
 

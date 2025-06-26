@@ -17,8 +17,8 @@
  ------------------------------------------------------------------- */
 
 import { LogLevelLabel } from "@storm-software/config-tools/types";
-import type { Context, EngineHooks } from "@storm-stack/core/types/build";
-import { LogFn } from "@storm-stack/core/types/config";
+import { PluginOptions } from "@storm-stack/core/base/plugin";
+import { Context, EngineHooks } from "@storm-stack/core/types/build";
 import { unbuild } from "../helpers/unbuild";
 import BasePlugin from "./base";
 
@@ -28,14 +28,11 @@ import BasePlugin from "./base";
  * @remarks
  * This plugin provides the functionality to build the Storm Stack library package using Unbuild. It extends the BasePlugin class and adds hooks for the build process.
  */
-export default class LibraryPlugin extends BasePlugin {
-  public constructor(
-    log: LogFn,
-    protected config: any = {},
-    name = "library-plugin",
-    installPath = "@storm-stack/devkit/plugins/library"
-  ) {
-    super(log, name, installPath);
+export default class LibraryPlugin<
+  TOptions extends Record<string, any> = Record<string, any>
+> extends BasePlugin<TOptions> {
+  public constructor(options: PluginOptions<TOptions>) {
+    super(options);
   }
 
   /**

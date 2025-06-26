@@ -17,45 +17,64 @@
  ------------------------------------------------------------------- */
 
 import { LogLevelLabel } from "@storm-software/config-tools/types";
-import { extendLog } from "../helpers/utilities/logger";
+import { kebabCase } from "@stryke/string-format/kebab-case";
+import { createLog, extendLog } from "../helpers/utilities/logger";
 import { writeFile } from "../helpers/utilities/write-file";
 import { installPackage } from "../init/installs/utilities";
 import type { Context } from "../types/build";
 import type { LogFn } from "../types/config";
 import { IRenderer } from "../types/plugin";
 
+export type RendererProps<
+  TConfig extends Record<string, any> = Record<string, any>
+> = TConfig & { log?: LogFn };
+
 /**
- * A base class used by all Storm Stack renderers.
- *
- * @remarks
- * Renderer classes are used by plugins to render generated output files during various Storm Stack processes. Some possible items rendered include (but are not limited to): source code, documentation, DevOps configuration, and deployment infrastructure/IOC.
+ * The base class for all renderers
  */
-export abstract class Renderer implements IRenderer {
+export abstract class Renderer<
+  TConfig extends Record<string, any> = Record<string, any>
+> implements IRenderer
+{
+  #log?: LogFn;
+
   /**
    * The name of the renderer
+   *
+   * @remarks
+   * This is used to identify the renderer in logs and other output.
    */
-  public name: string;
+  public get name(): string {
+    const name = kebabCase(this.constructor.name);
+    if (name.startsWith("renderer-")) {
+      return name.replace(/^renderer-/, "").trim();
+    } else if (name.endsWith("-renderer")) {
+      return name.replace(/-renderer$/, "").trim();
+    }
+
+    return name;
+  }
 
   /**
    * The logger function to use
    */
-  public log: LogFn;
+  protected get log(): LogFn {
+    if (!this.#log) {
+      this.#log = createLog(`${this.name}-renderer`);
+    }
+
+    return this.#log;
+  }
 
   /**
    * The constructor for the renderer
    *
-   * @param log - The logger function to use
-   * @param name - The name of the renderer
+   * @param config - The configuration options for the renderer
    */
-  public constructor(log: LogFn, name: string) {
-    this.name = name.toLowerCase();
-    if (this.name.startsWith("renderer-")) {
-      this.name = this.name.replace(/^renderer-/, "").trim();
-    } else if (this.name.endsWith("-renderer")) {
-      this.name = this.name.replace(/-renderer$/, "").trim();
+  public constructor(protected config: RendererProps<TConfig>) {
+    if (this.config.log) {
+      this.#log = extendLog(this.config.log, `${this.name}-renderer`);
     }
-
-    this.log = extendLog(log, `${this.name}-renderer`);
   }
 
   /**
@@ -63,7 +82,7 @@ export abstract class Renderer implements IRenderer {
    *
    * @param filepath - The file path to write the file
    * @param content - The content to write to the file
-   * @param skipFormat - Should the renderer skip formatting the `content` string with Prettier
+   * @param skipFormat - Should the plugin skip formatting the `content` string with Prettier
    */
   protected async writeFile(
     filepath: string,

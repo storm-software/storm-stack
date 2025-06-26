@@ -16,18 +16,37 @@
 
  ------------------------------------------------------------------- */
 
+import { PluginOptions } from "@storm-stack/core/base/plugin";
 import { getFileHeader } from "@storm-stack/core/helpers/utilities/file-header";
-import type { Context, EngineHooks, LogFn } from "@storm-stack/core/types";
+import type { Context, EngineHooks } from "@storm-stack/core/types";
 import type { LogPluginConfig } from "@storm-stack/devkit/plugins/log";
 import LogPlugin from "@storm-stack/devkit/plugins/log";
 
-export default class LogSentryPlugin extends LogPlugin {
+export interface LogSentryPluginConfig extends LogPluginConfig {
+  /**
+   * The Sentry DSN to use for logging.
+   *
+   * @remarks
+   * If not provided, the plugin will try to read the `SENTRY_DSN` environment variable.
+   */
+  sentryDsn: string;
+
+  /**
+   * The environment to use for logging.
+   *
+   * @remarks
+   * If not provided, the plugin will try to read the `ENVIRONMENT` environment variable.
+   */
+  environment: string;
+}
+
+export default class LogSentryPlugin extends LogPlugin<LogSentryPluginConfig> {
   protected override installs = {
     "@sentry/core@^9.15.0": "dependency"
   } as Record<string, "dependency" | "devDependency">;
 
-  public constructor(log: LogFn, config: LogPluginConfig) {
-    super(log, config, "log-sentry-plugin", "@storm-stack/plugin-log-sentry");
+  public constructor(options: PluginOptions<LogSentryPluginConfig>) {
+    super(options);
   }
 
   public override innerAddHooks(hooks: EngineHooks) {

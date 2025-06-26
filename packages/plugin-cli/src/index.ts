@@ -17,7 +17,8 @@
  ------------------------------------------------------------------- */
 
 import { LogLevelLabel } from "@storm-software/config-tools/types";
-import type { EngineHooks, LogFn, PluginConfig } from "@storm-stack/core/types";
+import { PluginOptions } from "@storm-stack/core/base/plugin";
+import type { EngineHooks, PluginConfig } from "@storm-stack/core/types";
 import BasePlugin from "@storm-stack/devkit/plugins/base";
 import { isSetString } from "@stryke/type-checks/is-set-string";
 import {
@@ -39,16 +40,16 @@ import {
 import { StormStackCLIPluginContext } from "./types/build";
 import type { StormStackCLIPluginConfig } from "./types/config";
 
-export default class StormStackCLIPlugin extends BasePlugin {
-  #config: StormStackCLIPluginConfig;
+/**
+ * The CLI Plugin for Storm Stack projects.
+ */
+export default class StormStackCLIPlugin<
+  TOptions extends StormStackCLIPluginConfig = StormStackCLIPluginConfig
+> extends BasePlugin<TOptions> {
+  public constructor(options: PluginOptions<TOptions>) {
+    super(options);
 
-  public constructor(
-    log: LogFn,
-    config: Partial<StormStackCLIPluginConfig> = {}
-  ) {
-    super(log, "cli", "@storm-stack/plugin-cli");
-
-    this.#config = { minNodeVersion: 20, ...config };
+    this.options = { minNodeVersion: 20, ...options };
     this.dependencies = [
       [
         "@storm-stack/plugin-log-console",
@@ -64,16 +65,16 @@ export default class StormStackCLIPlugin extends BasePlugin {
           envPath: "log"
         }
       ],
-      this.#config.manageConfig !== false && [
+      this.options.manageConfig !== false && [
         "@storm-stack/plugin-storage-fs",
         {
           namespace: "config",
           base:
-            isSetString(this.#config.bin) ||
-            (Array.isArray(this.#config.bin) && this.#config.bin.length > 0)
-              ? isSetString(this.#config.bin)
-                ? this.#config.bin
-                : this.#config.bin[0]
+            isSetString(this.options.bin) ||
+            (Array.isArray(this.options.bin) && this.options.bin.length > 0)
+              ? isSetString(this.options.bin)
+                ? this.options.bin
+                : this.options.bin[0]
               : undefined,
           envPath: "config"
         }
@@ -90,97 +91,97 @@ export default class StormStackCLIPlugin extends BasePlugin {
     super.innerAddHooks(hooks);
 
     hooks.addHooks({
-      "init:context": this.initContext.bind(this),
-      "init:installs": this.initInstalls.bind(this),
-      "init:unimport": this.initUnimport.bind(this),
-      "init:entry": this.initEntry.bind(this),
-      "prepare:reflections": this.prepareReflections.bind(this),
-      "prepare:entry": this.prepareEntry.bind(this),
-      "prepare:runtime": this.prepareRuntime.bind(this),
-      "build:library": this.buildLibrary.bind(this),
-      "build:application": this.buildApplication.bind(this),
-      "build:complete": this.buildComplete.bind(this)
+      "init:context": this.#initContext.bind(this),
+      "init:installs": this.#initInstalls.bind(this),
+      "init:unimport": this.#initUnimport.bind(this),
+      "init:entry": this.#initEntry.bind(this),
+      "prepare:reflections": this.#prepareReflections.bind(this),
+      "prepare:entry": this.#prepareEntry.bind(this),
+      "prepare:runtime": this.#prepareRuntime.bind(this),
+      "build:library": this.#buildLibrary.bind(this),
+      "build:application": this.#buildApplication.bind(this),
+      "build:complete": this.#buildComplete.bind(this)
     });
   }
 
-  private async initContext(context: StormStackCLIPluginContext) {
+  async #initContext(context: StormStackCLIPluginContext) {
     this.log(
       LogLevelLabel.TRACE,
       `Initializing CLI specific options for the Storm Stack project.`
     );
 
-    await initContext(context, this.#config);
+    await initContext(context, this.options);
   }
 
-  private async initInstalls(context: StormStackCLIPluginContext) {
+  async #initInstalls(context: StormStackCLIPluginContext) {
     this.log(
       LogLevelLabel.TRACE,
       `Adding CLI specific dependencies to the Storm Stack project.`
     );
 
-    await initInstalls(context, this.#config);
+    await initInstalls(context, this.options);
   }
 
-  private async initUnimport(context: StormStackCLIPluginContext) {
+  async #initUnimport(context: StormStackCLIPluginContext) {
     this.log(
       LogLevelLabel.TRACE,
       `Initializing CLI specific Unimport presets for the Storm Stack project.`
     );
 
-    await initUnimport(context, this.#config);
+    await initUnimport(context, this.options);
   }
 
-  private async initEntry(context: StormStackCLIPluginContext) {
+  async #initEntry(context: StormStackCLIPluginContext) {
     if (context.options.projectType === "application") {
       this.log(
         LogLevelLabel.TRACE,
         `Initializing CLI application's entry point and commands.`
       );
 
-      await initEntry(this.log, context, this.#config);
+      await initEntry(this.log, context, this.options);
     }
   }
 
-  private async prepareReflections(context: StormStackCLIPluginContext) {
+  async #prepareReflections(context: StormStackCLIPluginContext) {
     this.log(
       LogLevelLabel.TRACE,
       `Initializing the CLI application's reflection data.`
     );
 
-    await prepareReflections(this.log, context, this.#config);
+    await prepareReflections(this.log, context, this.options);
   }
 
-  private async prepareRuntime(context: StormStackCLIPluginContext) {
+  async #prepareRuntime(context: StormStackCLIPluginContext) {
     if (context.options.projectType === "application") {
       this.log(
         LogLevelLabel.TRACE,
         `Preparing the CLI application's runtime artifacts.`
       );
 
-      await prepareRuntime(this.log, context, this.#config);
+      await prepareRuntime(this.log, context, this.options);
     }
   }
 
-  private async prepareEntry(context: StormStackCLIPluginContext) {
+  async #prepareEntry(context: StormStackCLIPluginContext) {
     if (context.options.projectType === "application") {
       this.log(
         LogLevelLabel.TRACE,
         `Preparing the CLI application's entry point and commands.`
       );
 
-      await prepareEntry(this.log, context, this.#config);
+      await prepareEntry(this.log, context, this.options);
     }
   }
 
-  private async buildLibrary(context: StormStackCLIPluginContext) {
+  async #buildLibrary(context: StormStackCLIPluginContext) {
     return buildLibrary(this.log, context);
   }
 
-  private async buildApplication(context: StormStackCLIPluginContext) {
+  async #buildApplication(context: StormStackCLIPluginContext) {
     return buildApplication(this.log, context);
   }
 
-  private async buildComplete(context: StormStackCLIPluginContext) {
+  async #buildComplete(context: StormStackCLIPluginContext) {
     return permissionExecutable(this.log, context);
   }
 }

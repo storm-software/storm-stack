@@ -1748,7 +1748,7 @@ declare module "storm:env" {
   export const runtime: StormRuntimeInfo;
 }
 
-declare module "storm:storage/fs-config" {
+declare module "storm:storage/file-system-config" {
   declare const _default: import("unstorage").Driver<
     import("unstorage/drivers/fs-lite").FSStorageOptions | undefined,
     never
@@ -1756,7 +1756,7 @@ declare module "storm:storage/fs-config" {
   export default _default;
 }
 
-declare module "storm:storage/fs-crash-reports" {
+declare module "storm:storage/file-system-crash-reports" {
   declare const _default: import("unstorage").Driver<
     import("unstorage/drivers/fs-lite").FSStorageOptions | undefined,
     never

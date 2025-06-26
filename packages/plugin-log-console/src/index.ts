@@ -16,14 +16,14 @@
 
  ------------------------------------------------------------------- */
 
+import { PluginOptions } from "@storm-stack/core/base/plugin";
 import { getFileHeader } from "@storm-stack/core/helpers/utilities/file-header";
-import { LogFn } from "@storm-stack/core/types/config";
 import type { LogPluginConfig } from "@storm-stack/devkit/plugins/log";
 import LogPlugin from "@storm-stack/devkit/plugins/log";
 
 export default class LogConsolePlugin extends LogPlugin {
-  public constructor(log: LogFn, config: LogPluginConfig) {
-    super(log, config, "log-console-plugin", "@storm-stack/plugin-log-console");
+  public constructor(options: PluginOptions<LogPluginConfig>) {
+    super(options);
   }
 
   protected override writeSink() {
