@@ -1,6 +1,6 @@
 {
   "name": "@storm-stack/plugin-storage-s3",
-  "version": "0.7.0",
+  "version": "0.8.0",
   "type": "module",
   "description": "A package containing a Storm Stack storage adapter to write to S3 Buckets.",
   "repository": {
@@ -74,14 +74,14 @@
   "dependencies": {
     "@ltd/j-toml": "catalog:",
     "@storm-software/config-tools": "catalog:",
-    "@storm-stack/core": "workspace:*",
-    "@storm-stack/devkit": "workspace:*",
+    "@storm-stack/core": "0.33.0",
+    "@storm-stack/devkit": "0.9.0",
     "@stryke/fs": "catalog:",
     "@stryke/path": "catalog:",
     "unstorage": "catalog:"
   },
   "devDependencies": {
-    "@storm-stack/nx": "workspace:*",
+    "@storm-stack/nx": "0.14.1",
     "@types/node": "catalog:",
     "tsup": "catalog:"
   },

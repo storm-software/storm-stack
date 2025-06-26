@@ -2,6 +2,24 @@
 
 # Changelog for Storm Stack - Plugin CLI
 
+## [0.25.0](https://github.com/storm-software/storm-stack/releases/tag/plugin-cli%400.25.0) (2025-06-26)
+
+### Features
+
+- **core:** Improved logging to include origin component name in color distinct
+  badge
+  ([4d4794c5](https://github.com/storm-software/storm-stack/commit/4d4794c5))
+
+### Miscellaneous
+
+- **monorepo:** Update workspace package links
+  ([93bf0b51](https://github.com/storm-software/storm-stack/commit/93bf0b51))
+
+### Updated Dependencies
+
+- Updated devkit to 0.9.0
+- Updated core to 0.33.0
+
 ## [0.24.0](https://github.com/storm-software/storm-stack/releases/tag/plugin-cli%400.24.0) (2025-06-26)
 
 ### Features

@@ -2,6 +2,25 @@
 
 # Changelog for Storm Stack - Plugin Log Console
 
+## [0.17.0](https://github.com/storm-software/storm-stack/releases/tag/plugin-log-console%400.17.0) (2025-06-26)
+
+### Features
+
+- **core:** Improved logging to include origin component name in color distinct
+  badge
+  ([4d4794c5](https://github.com/storm-software/storm-stack/commit/4d4794c5))
+
+### Miscellaneous
+
+- **monorepo:** Update workspace package links
+  ([93bf0b51](https://github.com/storm-software/storm-stack/commit/93bf0b51))
+
+### Updated Dependencies
+
+- Updated devkit to 0.9.0
+- Updated core to 0.33.0
+- Updated nx to 0.14.1
+
 ## [0.16.0](https://github.com/storm-software/storm-stack/releases/tag/plugin-log-console%400.16.0) (2025-06-26)
 
 ### Features

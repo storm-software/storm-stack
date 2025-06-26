@@ -2,6 +2,14 @@
 
 # Changelog for Storm Stack - Core
 
+## [0.33.0](https://github.com/storm-software/storm-stack/releases/tag/core%400.33.0) (2025-06-26)
+
+### Features
+
+- **core:** Improved logging to include origin component name in color distinct
+  badge
+  ([4d4794c5](https://github.com/storm-software/storm-stack/commit/4d4794c5))
+
 ## [0.32.0](https://github.com/storm-software/storm-stack/releases/tag/core%400.32.0) (2025-06-26)
 
 ### Features
