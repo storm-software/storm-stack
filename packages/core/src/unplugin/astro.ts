@@ -16,16 +16,16 @@
 
  ------------------------------------------------------------------- */
 
-import type { Options } from "../types";
+import type { ResolvedUserConfig } from "../types";
 import { StormStack } from "./index";
 
-const astro = (options: Options): any => ({
+const astro = (config: ResolvedUserConfig): any => ({
   name: "storm-stack",
   hooks: {
     "astro:config:setup": async (build: any) => {
       build.config.vite.plugins ||= [];
       // eslint-disable-next-line ts/no-unsafe-call
-      build.config.vite.plugins.push(StormStack.vite(options));
+      build.config.vite.plugins.push(StormStack.vite(config));
     }
   }
 });

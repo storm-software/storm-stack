@@ -16,10 +16,10 @@
 
  ------------------------------------------------------------------- */
 
-import type { Context, Options } from "@storm-stack/core/types";
+import type { Context, InlineConfig } from "@storm-stack/core/types";
 import { CommandEntryTypeDefinition } from "./reflection";
 
 export type StormStackCLIPluginContext = Context<
-  Options,
+  InlineConfig,
   CommandEntryTypeDefinition
 >;

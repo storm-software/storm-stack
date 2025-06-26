@@ -19,3 +19,5 @@
 export * from "./bundle";
 export * from "./compiler-plugin";
 export * from "./external-plugin";
+export * from "./options";
+export * from "./vfs-plugin";

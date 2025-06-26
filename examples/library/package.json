@@ -10,15 +10,15 @@
   },
   "private": true,
   "dependencies": {
-    "@storm-stack/types": "0.14.1",
+    "@storm-stack/types": "workspace:*",
     "@stryke/json": "catalog:",
     "@stryke/type-checks": "catalog:",
     "@stryke/url": "catalog:"
   },
   "devDependencies": {
-    "@storm-stack/core": "0.31.1",
-    "@storm-stack/devkit": "0.7.6",
-    "@storm-stack/nx": "0.13.6",
+    "@storm-stack/core": "workspace:*",
+    "@storm-stack/devkit": "workspace:*",
+    "@storm-stack/nx": "workspace:*",
     "@stryke/types": "catalog:"
   },
   "storm": {
@@ -26,6 +26,7 @@
       "@storm-stack/devkit/plugins/library"
     ],
     "skipCache": true,
-    "skipInstalls": true
+    "skipInstalls": true,
+    "platform": "node"
   }
 }

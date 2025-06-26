@@ -20,6 +20,12 @@ import { LogLevelLabel } from "@storm-software/config-tools/types";
 import { Plugin } from "@storm-stack/core/plugin";
 import type { Context, EngineHooks } from "@storm-stack/core/types/build";
 
+/**
+ * Base class for Storm Stack plugins.
+ *
+ * @remarks
+ * This class provides a structure for plugins to define their dependencies and hooks. It initializes the plugin's context with required installations.
+ */
 export default class BasePlugin extends Plugin {
   /**
    * A list of dependencies that are required for the plugin to work. These dependencies will be installed when Storm Stack CLI is run.
@@ -31,12 +37,22 @@ export default class BasePlugin extends Plugin {
     this.installs = {};
   }
 
-  public addHooks(hooks: EngineHooks) {
+  /**
+   * Adds the plugin's hooks to the engine.
+   *
+   * @param hooks - The engine hooks to add the plugin's hooks to.
+   */
+  public innerAddHooks(hooks: EngineHooks) {
     hooks.addHooks({
       "init:context": this.#initContext.bind(this)
     });
   }
 
+  /**
+   * Initializes the plugin's context with required installations.
+   *
+   * @param context - The context to initialize.
+   */
   async #initContext(context: Context) {
     this.log(
       LogLevelLabel.TRACE,

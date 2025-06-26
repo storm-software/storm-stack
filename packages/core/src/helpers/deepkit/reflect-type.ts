@@ -27,15 +27,9 @@ import {
 import { joinPaths } from "@stryke/path/join-paths";
 import { replacePath } from "@stryke/path/replace";
 import type { TypeDefinition } from "@stryke/types/configuration";
-import type { BuildOptions } from "esbuild";
-import type { CompileOptions, Context, Options } from "../../types/build";
-import { bundle } from "../esbuild/bundle";
+import type { Context } from "../../types/build";
+import { bundle, BundleOptions } from "../esbuild/bundle";
 import { resolvePath } from "../utilities/resolve-path";
-
-export type ResolveTypeOptions = CompileOptions &
-  Pick<Options, "external" | "noExternal" | "skipNodeModulesBundle"> & {
-    overrides?: Partial<BuildOptions>;
-  };
 
 /**
  * Compiles a type definition to a module.
@@ -47,7 +41,7 @@ export type ResolveTypeOptions = CompileOptions &
 export async function resolveType<TResult = any>(
   context: Context,
   entry: TypeDefinition,
-  options: ResolveTypeOptions = {}
+  options: BundleOptions = {}
 ): Promise<TResult> {
   const transpilePath = joinPaths(
     context.artifactsPath,
@@ -72,13 +66,13 @@ export async function resolveType<TResult = any>(
 
   const result = await bundle(
     context,
-    path,
-    transpilePath,
+    {},
     {
-      ...options.overrides,
-      write: true
-    },
-    options
+      ...options,
+      skipNodeModulesBundle: true,
+      entry: [path],
+      outputPath: transpilePath
+    }
   );
   if (result.errors.length > 0) {
     throw new Error(
@@ -123,7 +117,7 @@ export async function resolveType<TResult = any>(
 export async function reflectType(
   context: Context,
   entry: TypeDefinition,
-  options: ResolveTypeOptions = {}
+  options: BundleOptions = {}
 ): Promise<Type> {
   return reflect(await resolveType(context, entry, options));
 }

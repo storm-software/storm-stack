@@ -17,40 +17,46 @@
  ------------------------------------------------------------------- */
 
 import { LogLevelLabel } from "@storm-software/config-tools/types";
-import { STORM_DEFAULT_ERROR_CODES_FILE } from "@storm-software/config/constants";
-import type { StormWorkspaceConfig } from "@storm-software/config/types";
 import { getEnvPaths } from "@stryke/env/get-env-paths";
 import { install } from "@stryke/fs/install";
 import { isPackageExists } from "@stryke/fs/package-fns";
 import { hash } from "@stryke/hash/hash";
-import { existsSync } from "@stryke/path/exists";
+import {
+  getProjectRoot,
+  getWorkspaceRoot
+} from "@stryke/path/get-workspace-root";
 import { joinPaths } from "@stryke/path/join-paths";
 import { isNumber } from "@stryke/type-checks/is-number";
 import defu from "defu";
 import { createHooks } from "hookable";
 import { createJiti } from "jiti";
-import { build } from "./build";
-import { clean } from "./clean";
-import { docs } from "./docs";
-import { finalize } from "./finalize";
-import { getTsconfigFilePath } from "./helpers/typescript/tsconfig";
-import { loadConfig } from "./helpers/utilities/load-config";
-import { createLog } from "./helpers/utilities/logger";
-import { init } from "./init";
-import { lint } from "./lint";
-import { _new } from "./new";
-import type { Plugin } from "./plugin";
-import { prepare } from "./prepare";
+import { build } from "../build";
+import { clean } from "../clean";
+import { docs } from "../docs";
+import { finalize } from "../finalize";
+import { resolveConfig } from "../helpers/utilities/config";
+import { createLog } from "../helpers/utilities/logger";
+import { init } from "../init";
+import { lint } from "../lint";
+import { _new } from "../new";
+import { prepare } from "../prepare";
 import type {
+  BuildInlineConfig,
+  CleanInlineConfig,
   Context,
+  DocsInlineConfig,
   EngineHookFunctions,
   EngineHooks,
+  InlineConfig,
+  LintInlineConfig,
   LogFn,
-  LogRuntimeConfig,
-  Options,
+  NewInlineConfig,
   PluginConfig,
-  StorageRuntimeConfig
-} from "./types";
+  PrepareInlineConfig,
+  RuntimeConfig,
+  WorkspaceConfig
+} from "../types";
+import type { Plugin } from "./plugin";
 
 /**
  * The Storm Stack Engine class
@@ -60,7 +66,7 @@ import type {
  *
  * @public
  */
-export class Engine<TOptions extends Options = Options> {
+export class Engine {
   #initialized = false;
 
   /**
@@ -76,7 +82,7 @@ export class Engine<TOptions extends Options = Options> {
   /**
    * The options provided to Storm Stack
    */
-  protected options: TOptions;
+  // protected options: TOptions;
 
   /**
    * The resolved options provided to Storm Stack
@@ -88,36 +94,45 @@ export class Engine<TOptions extends Options = Options> {
    */
   protected log: LogFn;
 
+  /**
+   * Create a new Storm Stack Engine instance
+   *
+   * @param inlineConfig - The inline configuration for the Storm Stack engine
+   * @param workspaceConfig  - The workspace configuration for the Storm Stack engine
+   */
   public constructor(
-    options: TOptions,
-    workspaceConfig?: StormWorkspaceConfig
+    inlineConfig: InlineConfig,
+    workspaceConfig?: WorkspaceConfig
   ) {
-    this.options = options;
-    this.log = createLog("engine", options);
+    this.log = createLog("engine", inlineConfig, workspaceConfig);
+
+    const workspaceRoot = workspaceConfig?.workspaceRoot ?? getWorkspaceRoot();
+    const projectRoot = inlineConfig.root || getProjectRoot() || process.cwd();
 
     this.context = {
       options: {
-        original: options,
-        ...options
+        ...inlineConfig,
+        userConfig: {},
+        inlineConfig,
+        projectRoot
       },
-      override: {},
-      installs: {},
       runtime: {
-        logs: [] as LogRuntimeConfig[],
-        storage: [] as StorageRuntimeConfig[],
-        init: [] as string[]
-      },
+        logs: [],
+        storage: [],
+        init: []
+      } as RuntimeConfig,
+      installs: {},
       workers: {}
-    } as Context<TOptions>;
+    } as Context;
 
-    this.context.workspaceConfig = workspaceConfig ?? {
-      workspaceRoot: process.cwd()
-    };
+    this.context.workspaceConfig = defu(workspaceConfig, {
+      workspaceRoot
+    });
 
     this.context.envPaths = getEnvPaths({
       orgId: "storm-software",
       appId: "storm-stack",
-      workspaceRoot: this.context.workspaceConfig?.workspaceRoot
+      workspaceRoot
     });
     if (!this.context.envPaths.cache) {
       throw new Error("The cache directory could not be determined.");
@@ -125,56 +140,24 @@ export class Engine<TOptions extends Options = Options> {
 
     this.context.envPaths.cache = joinPaths(
       this.context.envPaths.cache,
-      hash(options.projectRoot)
+      hash(projectRoot)
     );
 
-    this.context.resolver = createJiti(
-      joinPaths(
-        this.context.workspaceConfig.workspaceRoot,
-        options.projectRoot
-      ),
-      {
-        interopDefault: true,
-        fsCache: joinPaths(this.context.envPaths.cache, "jiti"),
-        moduleCache: true
-      }
-    );
+    this.context.resolver = createJiti(joinPaths(workspaceRoot, projectRoot), {
+      interopDefault: true,
+      fsCache: joinPaths(this.context.envPaths.cache, "jiti"),
+      moduleCache: true
+    });
   }
 
   /**
    * Initialize the engine
    */
-  public async init(): Promise<Context> {
+  public async init(inlineConfig: InlineConfig): Promise<Context> {
     this.log(LogLevelLabel.TRACE, "Initializing Storm Stack engine");
 
     this.#hooks = createHooks<EngineHookFunctions>();
-
-    const config = await loadConfig(
-      this.options.projectRoot,
-      this.options.mode || "production",
-      joinPaths(this.context.envPaths.cache, "jiti")
-    );
-
-    this.context.options = defu(
-      {
-        original: this.options
-      },
-      this.options,
-      config,
-      {
-        platform: "neutral",
-        mode: "production",
-        projectType: "application",
-        outputPath: joinPaths("dist", this.options.projectRoot),
-        tsconfig: getTsconfigFilePath(
-          this.context.options.projectRoot,
-          this.context.options.tsconfig
-        ),
-        errorsFile:
-          this.context.workspaceConfig.error?.codesFile ||
-          STORM_DEFAULT_ERROR_CODES_FILE
-      }
-    ) as Context["options"];
+    this.context.options = await resolveConfig(this.context, inlineConfig);
 
     for (const plugin of this.context.options.plugins ?? []) {
       await this.addPlugin(plugin);
@@ -202,11 +185,9 @@ export class Engine<TOptions extends Options = Options> {
   /**
    * Create a new Storm Stack project
    */
-  public async new() {
-    this.context.commandId ??= "new";
-
+  public async new(inlineConfig: NewInlineConfig = { command: "new" }) {
     if (!this.#initialized) {
-      await this.init();
+      await this.init(inlineConfig);
     }
 
     this.log(LogLevelLabel.INFO, "🆕 Creating a new Storm Stack project");
@@ -219,11 +200,11 @@ export class Engine<TOptions extends Options = Options> {
   /**
    * Clean any previously prepared artifacts
    */
-  public async clean() {
-    this.context.commandId ??= "clean";
-
+  public async clean(
+    inlineConfig: CleanInlineConfig | PrepareInlineConfig = { command: "clean" }
+  ) {
     if (!this.#initialized) {
-      await this.init();
+      await this.init(inlineConfig);
     }
 
     this.log(
@@ -244,16 +225,26 @@ export class Engine<TOptions extends Options = Options> {
    *
    * @param autoClean - Whether to automatically clean the previous build artifacts before preparing the project
    */
-  public async prepare(autoClean = true) {
-    this.context.commandId ??= "prepare";
-
+  public async prepare(
+    inlineConfig:
+      | PrepareInlineConfig
+      | LintInlineConfig
+      | BuildInlineConfig
+      | DocsInlineConfig = {
+      command: "prepare"
+    }
+  ) {
     if (!this.#initialized) {
-      await this.init();
+      await this.init(inlineConfig);
     }
 
-    if (existsSync(this.context.artifactsPath) && autoClean) {
-      await this.clean();
-    }
+    // if (
+    //   existsSync(this.context.artifactsPath) &&
+    //   inlineConfig.command !== "lint" &&
+    //   inlineConfig.clean
+    // ) {
+    //   await this.clean(inlineConfig as PrepareInlineConfig);
+    // }
 
     this.log(LogLevelLabel.INFO, "Preparing the Storm Stack project");
 
@@ -265,29 +256,22 @@ export class Engine<TOptions extends Options = Options> {
   /**
    * Lint the project
    *
-   * @param autoPrepare - Whether to automatically prepare the project if it has not been prepared
-   * @param autoClean - Whether to automatically clean the previous build artifacts before preparing the project
+   * @param inlineConfig - The inline configuration for the lint command
    */
-  public async lint(autoPrepare = true, autoClean = true) {
-    this.context.commandId ??= "lint";
-
+  public async lint(
+    inlineConfig: LintInlineConfig | BuildInlineConfig = { command: "lint" }
+  ) {
     if (!this.#initialized) {
-      await this.init();
+      await this.init(inlineConfig);
     }
 
     if (this.context.persistedMeta?.checksum !== this.context.meta.checksum) {
-      if (autoPrepare) {
-        this.log(
-          LogLevelLabel.INFO,
-          "The Storm Stack project has been modified since the last time `prepare` was ran. Re-preparing the project."
-        );
+      this.log(
+        LogLevelLabel.INFO,
+        "The Storm Stack project has been modified since the last time `prepare` was ran. Re-preparing the project."
+      );
 
-        await this.prepare(autoClean);
-      } else {
-        throw new Error(
-          "The Storm Stack project has not been prepared. Please run the `prepare` command before trying to lint the project."
-        );
-      }
+      await this.prepare(inlineConfig);
     }
 
     this.log(LogLevelLabel.INFO, "Linting the Storm Stack project");
@@ -303,26 +287,18 @@ export class Engine<TOptions extends Options = Options> {
    * @param autoPrepare - Whether to automatically prepare the project if it has not been prepared
    * @param autoClean - Whether to automatically clean the previous build artifacts before preparing the project
    */
-  public async build(autoPrepare = true, autoClean = true) {
-    this.context.commandId ??= "build";
-
+  public async build(inlineConfig: BuildInlineConfig = { command: "build" }) {
     if (!this.#initialized) {
-      await this.init();
+      await this.init(inlineConfig);
     }
 
     if (this.context.persistedMeta?.checksum !== this.context.meta.checksum) {
-      if (autoPrepare) {
-        this.log(
-          LogLevelLabel.INFO,
-          "The Storm Stack project has been modified since the last time `prepare` was ran. Re-preparing the project."
-        );
+      this.log(
+        LogLevelLabel.INFO,
+        "The Storm Stack project has been modified since the last time `prepare` was ran. Re-preparing the project."
+      );
 
-        await this.prepare(autoClean);
-      } else {
-        throw new Error(
-          "The Storm Stack project has not been prepared. Please run the `prepare` command before trying to build the project."
-        );
-      }
+      await this.prepare(inlineConfig);
     }
 
     this.log(LogLevelLabel.INFO, "Building the Storm Stack project");
@@ -335,29 +311,20 @@ export class Engine<TOptions extends Options = Options> {
   /**
    * Generate the documentation for the project
    *
-   * @param autoPrepare - Whether to automatically prepare the project if it has not been prepared
-   * @param autoClean - Whether to automatically clean the previous build artifacts before preparing the project
+   * @param inlineConfig - The inline configuration for the docs command
    */
-  public async docs(autoPrepare = true, autoClean = true) {
-    this.context.commandId ??= "docs";
-
+  public async docs(inlineConfig: DocsInlineConfig = { command: "docs" }) {
     if (!this.#initialized) {
-      await this.init();
+      await this.init(inlineConfig);
     }
 
     if (this.context.persistedMeta?.checksum !== this.context.meta.checksum) {
-      if (autoPrepare) {
-        this.log(
-          LogLevelLabel.INFO,
-          "The Storm Stack project has been modified since the last time `prepare` was ran. Re-preparing the project."
-        );
+      this.log(
+        LogLevelLabel.INFO,
+        "The Storm Stack project has been modified since the last time `prepare` was ran. Re-preparing the project."
+      );
 
-        await this.prepare(autoClean);
-      } else {
-        throw new Error(
-          "The Storm Stack project has not been prepared. Please run the `prepare` command before trying to build the project."
-        );
-      }
+      await this.prepare(inlineConfig);
     }
 
     this.log(
@@ -378,49 +345,19 @@ export class Engine<TOptions extends Options = Options> {
    *
    * @remarks
    * This step includes any final processes or clean up required by Storm Stack. It will be run after each Storm Stack command.
+   *
+   * @param inlineConfig - The inline configuration for the Storm Stack engine
    */
-  public async finalize() {
-    this.context.commandId ??= "finalize";
+  public async finalize(inlineConfig: InlineConfig) {
+    if (!this.#initialized) {
+      await this.init(inlineConfig);
+    }
 
     this.log(LogLevelLabel.TRACE, "Storm Stack finalize execution started");
 
     await finalize(this.log, this.context, this.#hooks);
 
-    await Promise.all(
-      [
-        this.context.workers.errorLookup?.end(),
-        this.context.workers.configReflection?.end()
-      ].filter(Boolean)
-    );
-
     this.log(LogLevelLabel.TRACE, "Storm Stack finalize execution completed");
-  }
-
-  /**
-   * Set the intent of the Storm Stack command
-   *
-   * @remarks
-   * This is used to set the command ID for the current command being executed.
-   *
-   * @param commandId - The command ID to set
-   */
-  public setIntent(
-    commandId:
-      | "new"
-      | "init"
-      | "prepare"
-      | "build"
-      | "lint"
-      | "docs"
-      | "clean"
-      | "finalize"
-  ) {
-    this.log(
-      LogLevelLabel.TRACE,
-      `Setting the Storm Stack command intent to "${commandId}"`
-    );
-
-    this.context.commandId = commandId;
   }
 
   /**
@@ -521,6 +458,7 @@ Note: Please ensure the plugin package's default export is a class that extends 
         `The module in the build plugin package "${pluginConfig[0]}" must export a \`name\` string value.`
       );
     }
+
     if (!pluginInstance.addHooks) {
       throw new Error(
         `The build plugin "${pluginInstance.name}" must export an \`addHooks\` function.`

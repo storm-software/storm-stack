@@ -37,6 +37,13 @@ export async function finalize(
     );
   });
 
+  await Promise.all(
+    [
+      context.workers.errorLookup?.end(),
+      context.workers.configReflection?.end()
+    ].filter(Boolean)
+  );
+
   await hooks.callHook("finalize:complete", context).catch((error: Error) => {
     log(
       LogLevelLabel.ERROR,

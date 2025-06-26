@@ -18,3 +18,4 @@
 
 export * from "./build";
 export * from "./loader";
+export * from "./options";

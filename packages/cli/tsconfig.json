@@ -5,7 +5,12 @@
     "outDir": "../../dist/out-tsc",
     "verbatimModuleSyntax": false
   },
-  "include": ["src/**/*.ts", ".storm/**/*.ts", "storm.d.ts"],
+  "include": [
+    "src/**/*.ts",
+    "./storm.config.ts",
+    ".storm/**/*.ts",
+    "storm.d.ts"
+  ],
   "exclude": ["jest.config.ts", "src/**/*.spec.ts", "src/**/*.test.ts"],
   "reflection": true
 }

@@ -42,6 +42,12 @@
       "id": "#mode",
       "default": "production"
     },
+    "environment": {
+      "title": "Environment",
+      "type": "string",
+      "description": "The environment name for which the project is being built.",
+      "id": "#environment"
+    },
     "tsconfig": {
       "title": "TypeScript Configuration File",
       "type": "string",
@@ -68,25 +74,29 @@
       "description": "Skip linting the project when building",
       "id": "#skipLint"
     },
-    "silent": {
-      "title": "Silent",
-      "type": "boolean",
-      "description": "Should the build run silently - only report errors back to the user",
-      "id": "#silent",
-      "default": false
+    "logLevel": {
+      "title": "Log Level",
+      "type": "string",
+      "description": "The log level to use for the build process",
+      "enum": [
+        "error",
+        "success",
+        "silent",
+        "fatal",
+        "warn",
+        "info",
+        "debug",
+        "trace",
+        "all"
+      ],
+      "id": "#logLevel",
+      "default": "info"
     },
-    "autoPrepare": {
-      "title": "Auto Prepare",
+    "clean": {
+      "title": "Clean",
       "type": "boolean",
-      "description": "Automatically prepare the project (if required)",
-      "id": "#autoPrepare",
-      "default": true
-    },
-    "autoClean": {
-      "title": "Auto Clean",
-      "type": "boolean",
-      "description": "Automatically clean the project (if required)",
-      "id": "#autoClean",
+      "description": "Automatically clean the project's output artifacts (if required)",
+      "id": "#clean",
       "default": true
     }
   },
@@ -97,8 +107,7 @@
     "plugins": [],
     "mode": "production",
     "tsconfig": "{projectRoot}/tsconfig.json",
-    "silent": false,
-    "autoPrepare": true,
-    "autoClean": true
+    "logLevel": "info",
+    "clean": true
   }
 }

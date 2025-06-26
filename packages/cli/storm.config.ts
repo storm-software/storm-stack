@@ -1,4 +1,6 @@
-export default {
+import { defineConfig } from "@storm-stack/core/config";
+
+export default defineConfig({
   name: "Storm Stack",
   plugins: [
     [
@@ -20,10 +22,9 @@ export default {
       }
     ]
   ],
-  skipCache: true,
   dotenv: {
     types: {
       config: "./src/types.ts#StormStackCLIVariables"
     }
   }
-};
+});

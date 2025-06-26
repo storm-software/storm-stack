@@ -17,24 +17,11 @@
  ------------------------------------------------------------------- */
 
 import type { ReflectionClass } from "@deepkit/type";
-import type { StormWorkspaceConfig } from "@storm-software/config/types";
-import type { IStormPayload, StormBaseConfig } from "@storm-stack/types";
-import type {
-  PostprocessFunction,
-  PreprocessFunction,
-  SetupFunction,
-  StormContext,
-  TeardownFunction,
-  ValidatorFunction
-} from "@storm-stack/types/node";
-import type { LogLevel } from "@storm-stack/types/shared/log";
+import { LogLevel } from "@storm-stack/types/log";
 import type { EnvPaths } from "@stryke/env/get-env-paths";
 import type { DotenvParseOutput } from "@stryke/env/types";
-import type { MaybePromise } from "@stryke/types/base";
-import type {
-  TypeDefinition,
-  TypeDefinitionParameter
-} from "@stryke/types/configuration";
+import type { MaybePromise, NonUndefined } from "@stryke/types/base";
+import type { TypeDefinition } from "@stryke/types/configuration";
 import type { PackageJson } from "@stryke/types/package-json";
 import type { TsConfigJson } from "@stryke/types/tsconfig";
 import type { Hookable } from "hookable";
@@ -48,10 +35,10 @@ import type ts from "typescript";
 import type { InlinePreset, Unimport } from "unimport";
 import Vinyl from "vinyl";
 import type {
-  ApplicationProjectConfig,
   DotenvOptions,
-  LibraryProjectConfig,
-  ProjectConfig
+  InlineConfig,
+  ResolvedUserConfig,
+  WorkspaceConfig
 } from "./config";
 
 /**
@@ -88,61 +75,6 @@ export interface SourceFile {
    */
   result?: CompilerResult;
 }
-
-export type InferProjectConfig<
-  TProjectConfig extends ProjectConfig = ProjectConfig
-> = TProjectConfig["projectType"] extends "application"
-  ? ApplicationProjectConfig
-  : TProjectConfig["projectType"] extends "library"
-    ? LibraryProjectConfig
-    : ProjectConfig;
-
-/**
- * The format for providing the application entry point(s) to the build command
- */
-export type Options<TProjectConfig extends ProjectConfig = ProjectConfig> = {
-  /**
-   * {@inheritdoc TypeScriptBuildResolvedOptions.outputPath}
-   */
-  outputPath?: string;
-
-  /**
-   * The entry point(s) for the application
-   */
-  entry?: TypeDefinitionParameter | TypeDefinitionParameter[];
-
-  /**
-   * The mode to use when compiling the source code
-   *
-   * @defaultValue "production"
-   */
-  mode?: "development" | "staging" | "production";
-
-  /**
-   * Should the plugin run silently (no console output)
-   *
-   * @defaultValue false
-   */
-  silent?: boolean;
-
-  /**
-   * The path to the tsconfig file to be used by the compiler
-   *
-   * @remarks
-   * If a value is not provided, the plugin will attempt to find the `tsconfig.json` file in the project root directory. The parsed tsconfig compiler options will be merged with the {@link Options.tsconfigRaw} value (if provided).
-   *
-   * @defaultValue "\{projectRoot\}/tsconfig.json"
-   */
-  tsconfig?: string;
-
-  /**
-   * The [raw tsconfig object](https://www.typescriptlang.org/tsconfig) to be used by the compiler. This object will be merged with the `tsconfig.json` file.
-   *
-   * @remarks
-   * If populated, this option takes higher priority than `tsconfig`
-   */
-  tsconfigRaw?: TsConfigJson;
-} & InferProjectConfig<TProjectConfig>;
 
 export interface ResolvedDotenvType<
   TReflection extends ReflectionClass<any> | undefined =
@@ -416,25 +348,61 @@ export type UnimportContext = Omit<Unimport, "injectImports"> & {
   injectImports: (source: SourceFile) => Promise<SourceFile>;
 };
 
-export type InferOptions<TOptions extends Options> =
-  TOptions["projectType"] extends "application"
-    ? TOptions & Options<ApplicationProjectConfig>
-    : TOptions["projectType"] extends "library"
-      ? TOptions & Options<LibraryProjectConfig>
-      : never;
+/**
+ * The resolved options for the Storm Stack project configuration.
+ */
+export type ResolvedOptions<TInlineConfig extends InlineConfig = InlineConfig> =
+  WorkspaceConfig &
+    Omit<TInlineConfig, "root" | "type"> &
+    Required<
+      Pick<
+        TInlineConfig,
+        | "command"
+        | "name"
+        | "mode"
+        | "environment"
+        | "platform"
+        | "errorsFile"
+        | "tsconfig"
+        | "esbuild"
+        | "unbuild"
+      >
+    > & {
+      /**
+       * The configuration options that were provided inline to the Storm Stack CLI.
+       */
+      inlineConfig: TInlineConfig;
 
-export type ResolvedOptions<TOptions extends Options> = TOptions &
-  Required<
-    Pick<
-      TOptions,
-      "name" | "tsconfig" | "mode" | "outputPath" | "platform" | "errorsFile"
-    >
-  > & {
-    /**
-     *
-     */
-    original: TOptions;
-  };
+      /**
+       * The original configuration options that were provided by the user to the Storm Stack process.
+       */
+      userConfig: ResolvedUserConfig;
+
+      /**
+       * The root directory of the project.
+       */
+      projectRoot: NonUndefined<TInlineConfig["root"]>;
+
+      /**
+       * The type of project being built.
+       */
+      projectType: NonUndefined<TInlineConfig["type"]>;
+
+      /**
+       * A map of all the alias paths used in the project.
+       */
+      alias: Record<string, string>;
+
+      /**
+       * A flag indicating whether the build is for server-side rendering (SSR).
+       */
+      isSsrBuild: boolean;
+
+      /**
+       * A flag indicating whether the build is for a preview environment.
+       */
+      isPreview: boolean;
+    };
 
 export interface LogRuntimeConfig {
   /**
@@ -476,29 +444,6 @@ export interface RuntimeConfig {
   init: string[];
 }
 
-/**
- * Interface representing the attachments for a Storm application builder.
- *
- * @remarks
- * This interface defines the structure for the attachments that can be used to
- * customize the behavior of the Storm application builder.
- */
-export interface Config<
-  TPayload extends IStormPayload,
-  TOutput = any,
-  TContext extends StormContext<StormBaseConfig, any, TPayload> = StormContext<
-    StormBaseConfig,
-    any,
-    TPayload
-  >
-> {
-  setup?: SetupFunction;
-  validator?: ValidatorFunction<TPayload, TContext>;
-  preprocess?: PreprocessFunction<TPayload, TContext>;
-  postprocess?: PostprocessFunction<TPayload, TContext, TOutput>;
-  teardown?: TeardownFunction;
-}
-
 export type WorkerProcess<TExposedMethods extends ReadonlyArray<string>> = {
   [K in TExposedMethods[number]]: (data: any) => Promise<any>;
 } & {
@@ -514,6 +459,14 @@ export interface VirtualFileOptions {
    * This property is used to ensure the integrity of the file's contents and is not meant to be modified after creation.
    */
   checksum: string;
+
+  /**
+   * The unique identifier for the file. This is a read-only property that is set when the file is created.
+   *
+   * @remarks
+   * This property is used to uniquely identify the file in the virtual file system and is not meant to be modified after creation.
+   */
+  id: string;
 
   /**
    * The current working directory of the file. Defaults to the `workspaceRoot` value from the {@link Context.workspaceConfig} object.
@@ -561,6 +514,32 @@ export interface VirtualFileOptions {
 }
 
 export const __vfs__ = Symbol("virtual-file-system");
+
+export type VirtualFile = Vinyl & {
+  /**
+   * The unique identifier for the virtual file.
+   * @remarks
+   * This property is read-only and is set when the file is created.
+   */
+  name: string;
+
+  /**
+   * The checksum of the file, used to verify its integrity.
+   * @remarks
+   * This property is read-only and is set when the file is created.
+   */
+  checksum: string;
+};
+
+export interface VirtualRuntimeFile extends VirtualFile {
+  /**
+   * A flag indicating whether the file is a runtime file.
+   *
+   * @remarks
+   * This property is used to differentiate between regular files and runtime files in the virtual file system.
+   */
+  isRuntime: true;
+}
 
 export interface IVirtualFileSystem {
   /**
@@ -614,58 +593,52 @@ export interface IVirtualFileSystem {
    *
    * @returns An array of Vinyl objects representing the files in the virtual and physical file system.
    */
-  values: () => Vinyl[];
+  values: () => VirtualFile[];
 
   /**
    * Returns an array of entries in the virtual file system, where each entry is a tuple containing the file path and the corresponding Vinyl object.
    *
    * @returns An array of tuples, where each tuple contains a string (the file path) and a Vinyl object (the file).
    */
-  entries: () => [string, Vinyl][];
+  entries: () => [string, VirtualFile][];
 
   /**
    * Returns a Map of all file paths and their corresponding Vinyl objects in the virtual file system.
    *
    * @returns A Map where the keys are file paths (strings) and the values are Vinyl objects representing the files.
    */
-  getVirtualMap: () => Map<string, Vinyl>;
+  getAll: () => Map<string, VirtualFile>;
+
+  /**
+   * Returns a Map of all runtime modules in the virtual file system.
+   */
+  getRuntime: () => VirtualRuntimeFile[];
+
+  /**
+   * Returns a Map of all runtime modules in the virtual file system.
+   */
+  addRuntime: (id: string, contents: string) => VirtualRuntimeFile;
 
   /**
    * A reference to the underlying Map object that stores the virtual files.
    */
-  [__vfs__]: Map<string, Vinyl>;
+  [__vfs__]: Map<string, VirtualFile>;
 }
 
 export interface Context<
-  TOptions extends Options = Options,
+  TInlineConfig extends InlineConfig = InlineConfig,
   TResolvedEntryTypeDefinition extends
     ResolvedEntryTypeDefinition = ResolvedEntryTypeDefinition
 > {
   /**
-   * An object containing the options provided to Storm Stack
-   */
-  commandId:
-    | "new"
-    | "init"
-    | "prepare"
-    | "build"
-    | "lint"
-    | "docs"
-    | "clean"
-    | "finalize";
-
-  /**
-   * An object containing the options provided to Storm Stack
-   */
-  options: ResolvedOptions<TOptions>;
-
-  /**
    * The Storm workspace configuration
    */
-  workspaceConfig:
-    | StormWorkspaceConfig
-    | (Partial<StormWorkspaceConfig> &
-        Pick<StormWorkspaceConfig, "workspaceRoot">);
+  workspaceConfig: WorkspaceConfig;
+
+  /**
+   * An object containing the options provided to Storm Stack
+   */
+  options: ResolvedOptions<TInlineConfig>;
 
   /**
    * The relative path to the Storm Stack workspace root directory
@@ -728,11 +701,6 @@ export interface Context<
   installs: Record<string, "dependency" | "devDependency">;
 
   /**
-   * The runtime configuration
-   */
-  runtime: RuntimeConfig;
-
-  /**
    * The parsed TypeScript configuration
    */
   tsconfig: ParsedTypeScriptConfig;
@@ -766,12 +734,17 @@ export interface Context<
   resolver: Jiti;
 
   /**
-   * An object containing overridden options to be provided to the build invoked by the plugins (for example: esbuild, unbuild, vite, etc.)
-   *
-   * @remarks
-   * Any values added here will have top priority over the resolved build options
+   * The runtime configuration for the Storm Stack project
    */
-  override: Record<string, any>;
+  runtime: RuntimeConfig;
+
+  // /**
+  //  * An object containing overridden options to be provided to the build invoked by the plugins (for example: esbuild, unbuild, vite, etc.)
+  //  *
+  //  * @remarks
+  //  * Any values added here will have top priority over the resolved build options
+  //  */
+  // override: Record<string, any>;
 
   /**
    * The resolved `unimport` context to be used by the compiler
@@ -797,6 +770,7 @@ export interface EngineHookFunctions {
   // Init - Hooks used during the initialization of the Storm Stack engine
   "init:begin": (context: Context) => MaybePromise<void>;
   "init:context": (context: Context) => MaybePromise<void>;
+  "init:options": (context: Context) => MaybePromise<void>;
   "init:installs": (context: Context) => MaybePromise<void>;
   "init:tsconfig": (context: Context) => MaybePromise<void>;
   "init:unimport": (context: Context) => MaybePromise<void>;

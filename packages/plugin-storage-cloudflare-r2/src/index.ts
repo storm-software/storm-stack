@@ -57,12 +57,12 @@ export default class StorageCloudflareR2Plugin extends StoragePlugin {
    *
    * @param hooks - The engine hooks to add
    */
-  public override addHooks(hooks: EngineHooks) {
+  public override innerAddHooks(hooks: EngineHooks) {
     hooks.addHooks({
       "prepare:config": this.prepareConfig.bind(this)
     });
 
-    super.addHooks(hooks);
+    super.innerAddHooks(hooks);
   }
 
   /**
@@ -109,10 +109,10 @@ export default s3Driver({
   }
 
   /**
-   * Prepares the deploy step for the Cloudflare R2 storage plugin.
+   * Prepares the configuration for the Cloudflare R2 storage plugin.
    *
-   * @param context - The resolved Storm Stack context
-   * @returns A promise that resolves when the deploy step is prepared
+   * @param context - The Storm Stack context
+   * @returns A promise that resolves when the configuration is prepared
    */
   protected async prepareConfig(context: Context) {
     if (context.options.projectType === "application" && this.config.binding) {
@@ -134,12 +134,19 @@ export default s3Driver({
       const wranglerFile = parseToml(wranglerFileContent || "") as {
         r2_buckets?: Array<{ binding: string; bucket_name: string }>;
       };
-
-      wranglerFile.r2_buckets ??= [];
-      wranglerFile.r2_buckets.push({
-        binding: this.config.binding,
-        bucket_name: this.config.namespace
-      });
+      if (
+        !wranglerFile.r2_buckets?.some(
+          r2_bucket =>
+            r2_bucket.binding === this.config.binding &&
+            r2_bucket.bucket_name === this.config.namespace
+        )
+      ) {
+        wranglerFile.r2_buckets ??= [];
+        wranglerFile.r2_buckets.push({
+          binding: this.config.binding,
+          bucket_name: this.config.namespace
+        });
+      }
 
       return this.writeFile(
         wranglerFilePath,

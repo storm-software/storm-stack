@@ -52,14 +52,44 @@ export function getRandom(array: Uint8Array) {
 /**
  * A platform agnostic version of the [nanoid](https://github.com/ai/nanoid) package with some modifications.
  *
- * @param size - The size of the string to generate
+ * @param size - The size of the string to generate. Defaults to 21 if not provided.
  * @returns A unique identifier following the nanoid format
  */
-export function uniqueId(size = 24): string {
-  // Use our custom getRandom function to fill a Uint8Array with random values.
-  const randomBytes = getRandom(new Uint8Array(size));
+export function uniqueId(size?: number | undefined): string;
 
-  return randomBytes.reduce((id, byte) => {
+/**
+ * A platform agnostic version of the [nanoid](https://github.com/ai/nanoid) package with some modifications.
+ *
+ * @param prefix - The prefix to use for the unique identifier
+ * @param size - The size of the string to generate. Defaults to 21 if not provided.
+ * @returns A unique identifier following the nanoid format
+ */
+export function uniqueId(prefix?: string, size?: number | undefined): string;
+
+/**
+ * A platform agnostic version of the [nanoid](https://github.com/ai/nanoid) package with some modifications.
+ *
+ * @param param - The parameter to use for the unique identifier, can be a string or number
+ * @param size - The size of the string to generate. Defaults to 21 if not provided.
+ * @returns A unique identifier following the nanoid format
+ */
+export function uniqueId(param?: string | number | undefined, size?: number | undefined): string {
+  if (typeof param === "number") {
+    size = param;
+  } else if (!param || !size) {
+    size = 21; // Default size if not provided
+  }
+
+  // Use our custom getRandom function to fill a Uint8Array with random values.
+  const randomBytes = getRandom(new Uint8Array(typeof param === "string" ? size - (param.length + 1) : size));
+
+  let result = "";
+  if (typeof param === "string") {
+    // If the parameter is a string, use it as a prefix.
+    result = param + "_";
+  }
+
+  return result + randomBytes.reduce((id, byte) => {
     // It is incorrect to use bytes exceeding the alphabet size.
     // The following mask reduces the random byte in the 0-255 value
     // range to the 0-63 value range. Therefore, adding hacks, such

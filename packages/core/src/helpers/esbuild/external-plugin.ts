@@ -18,26 +18,22 @@
 
 import { match, tsconfigPathsToRegExp } from "bundle-require";
 import type { Plugin } from "esbuild";
-import type { Options } from "../../types";
+import type { ResolvedOptions } from "../../types";
 
 // Must not start with "/" or "./" or "../" or "C:\" or be the exact strings ".." or "."
 const NON_NODE_MODULE_REGEX = /^[A-Z]:[/\\]|^\.{0,2}\/|^\.{1,2}$/;
 
 export const externalPlugin = (
   options: Pick<
-    Options,
+    ResolvedOptions,
     "external" | "noExternal" | "skipNodeModulesBundle"
-  > = {},
+  >,
   tsconfigResolvePaths: Record<string, any> = {}
 ): Plugin => {
   return {
     name: "storm-stack:external",
     setup(build) {
-      const external = options.external ?? [];
-      const noExternal = options.noExternal ?? [];
-      const skipNodeModulesBundle = options.skipNodeModulesBundle ?? false;
-
-      if (skipNodeModulesBundle) {
+      if (options.skipNodeModulesBundle) {
         const resolvePatterns = tsconfigPathsToRegExp(tsconfigResolvePaths);
         build.onResolve({ filter: /.*/ }, args => {
           // Resolve `paths` from tsconfig
@@ -50,10 +46,13 @@ export const externalPlugin = (
             return;
           }
           // Respect explicit external/noExternal conditions
-          if (match(args.path, noExternal)) {
+          if (match(args.path, options.noExternal)) {
             return;
           }
-          if (match(args.path, external) || args.path.startsWith("node:")) {
+          if (
+            match(args.path, options.external) ||
+            args.path.startsWith("node:")
+          ) {
             return { external: true };
           }
           // Exclude any other import that looks like a Node module
@@ -70,10 +69,13 @@ export const externalPlugin = (
       } else {
         build.onResolve({ filter: /.*/ }, args => {
           // Respect explicit external/noExternal conditions
-          if (match(args.path, noExternal)) {
+          if (match(args.path, options.noExternal)) {
             return;
           }
-          if (match(args.path, external) || args.path.startsWith("node:")) {
+          if (
+            match(args.path, options.external) ||
+            args.path.startsWith("node:")
+          ) {
             return { external: true };
           }
 

@@ -28,11 +28,12 @@ export default defineUntypedSchema({
       "A type definition for the Storm Stack - Prepare executor schema",
     required: []
   },
-  autoClean: {
+  clean: {
     $schema: {
-      title: "Auto Clean",
+      title: "Clean",
       type: "boolean",
-      description: "Automatically clean the project (if required)"
+      description:
+        "Automatically clean the project's output artifacts (if required)"
     },
     $default: true
   }

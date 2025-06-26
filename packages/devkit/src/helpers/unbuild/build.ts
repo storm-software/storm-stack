@@ -16,11 +16,10 @@
 
  ------------------------------------------------------------------- */
 
-import type { UnbuildOptions } from "@storm-software/unbuild";
 import { build } from "@storm-software/unbuild";
 import type { Context } from "@storm-stack/core/types/build";
-import defu from "defu";
-import { getUnbuildLoader } from "./loader";
+import { UnbuildOverrideOptions } from "@storm-stack/core/types/config";
+import { resolveUnbuildOptions } from "./options";
 
 /**
  * Build the project using unbuild
@@ -30,20 +29,9 @@ import { getUnbuildLoader } from "./loader";
  */
 export async function unbuild(
   context: Context,
-  override: Partial<UnbuildOptions> = {}
+  override: Partial<UnbuildOverrideOptions> = {}
 ) {
-  return build(
-    defu(override, context.override ?? {}, {
-      projectRoot: context.options.projectRoot,
-      outputPath: context.options.outputPath || "dist",
-      platform: context.options.platform,
-      generatePackageJson: true,
-      minify: context.options.mode !== "development",
-      sourcemap: context.options.mode === "development",
-      loaders: [getUnbuildLoader(context)],
-      env: context.dotenv.values as {
-        [key: string]: string;
-      }
-    }) as UnbuildOptions
-  );
+  const options = resolveUnbuildOptions(context, override);
+
+  return build(options);
 }

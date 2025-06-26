@@ -22,7 +22,11 @@ const config = getTsupConfig([
   {
     name: "core",
     entry: [
-      "src/*.ts",
+      "src/index.ts",
+      "src/base/*.ts",
+      "src/types/*.ts",
+      "src/helpers/*.ts",
+      "src/unplugin/*.ts",
       "src/init/index.ts",
       "src/new/index.ts",
       "src/clean/index.ts",
@@ -33,8 +37,6 @@ const config = getTsupConfig([
       "src/build/index.ts",
       "src/docs/index.ts",
       "src/finalize/index.ts",
-      "src/types/*.ts",
-      "src/helpers/*.ts",
       "src/helpers/utilities/*.ts",
       "src/helpers/esbuild/*.ts",
       "src/helpers/unbuild/*.ts",
@@ -43,8 +45,7 @@ const config = getTsupConfig([
       "src/helpers/deepkit/*.ts",
       "src/helpers/typedoc/*.ts",
       "src/helpers/typescript/*.ts",
-      "src/helpers/transform/*.ts",
-      "src/unplugin/*.ts"
+      "src/helpers/transform/*.ts"
     ],
     outDir: "dist/build",
     bundle: true,

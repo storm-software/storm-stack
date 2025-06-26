@@ -25,14 +25,14 @@ import { replacePath } from "@stryke/path/replace";
 import { slash } from "@stryke/path/slash";
 import type MagicString from "magic-string";
 import ts from "typescript";
-import { transformConfig } from "./helpers/transform/transform-config";
-import { transformContext } from "./helpers/transform/transform-context";
-import { transformErrors } from "./helpers/transform/transform-errors";
-import { getCache, setCache } from "./helpers/utilities/cache";
-import { createLog } from "./helpers/utilities/logger";
-import { getMagicString } from "./helpers/utilities/magic-string";
-import { generateSourceMap } from "./helpers/utilities/source-map";
-import type { LogFn } from "./types";
+import { transformConfig } from "../helpers/transform/transform-config";
+import { transformContext } from "../helpers/transform/transform-context";
+import { transformErrors } from "../helpers/transform/transform-errors";
+import { getCache, setCache } from "../helpers/utilities/cache";
+import { createLog } from "../helpers/utilities/logger";
+import { getMagicString } from "../helpers/utilities/magic-string";
+import { generateSourceMap } from "../helpers/utilities/source-map";
+import type { LogFn } from "../types";
 import type {
   CompileOptions,
   CompilerOptions,
@@ -41,7 +41,7 @@ import type {
   ICompiler,
   SourceFile,
   TranspileOptions
-} from "./types/build";
+} from "../types/build";
 
 export class Compiler implements ICompiler {
   #cache: WeakMap<SourceFile, string> = new WeakMap();

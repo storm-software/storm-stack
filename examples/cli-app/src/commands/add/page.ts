@@ -16,19 +16,20 @@
 
  ------------------------------------------------------------------- */
 
+import { StormPayload } from "../../../.storm/runtime/payload";
 import { AddPagePayload } from "../../types";
 import addHandler from "./index";
 
 /**
  * Add a page to the file system
  *
- * @param event - The event object containing the payload
+ * @param payload - The event object containing the payload
  */
-function handler(event: StormPayload<AddPagePayload>) {
+function handler(payload: StormPayload<AddPagePayload>) {
   addHandler({
-    ...event,
+    ...payload,
     data: {
-      ...event.data,
+      ...payload.data,
       type: "page"
     }
   });

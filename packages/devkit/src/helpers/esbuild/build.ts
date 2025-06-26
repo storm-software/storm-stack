@@ -17,10 +17,14 @@
  ------------------------------------------------------------------- */
 
 import { build } from "@storm-software/esbuild/build";
-import type { ESBuildOptions } from "@storm-software/esbuild/types";
+import type { ESBuildOptions as BaseESBuildOptions } from "@storm-software/esbuild/types";
 import { compilerPlugin } from "@storm-stack/core/helpers/esbuild/compiler-plugin";
 import { findMatch } from "@storm-stack/core/helpers/typescript/tsconfig";
 import type { Context } from "@storm-stack/core/types/build";
+import {
+  ESBuildOverrideOptions,
+  UserConfig
+} from "@storm-stack/core/types/config";
 import {
   findFileExtension,
   findFileName,
@@ -33,7 +37,7 @@ import defu from "defu";
 
 export async function esbuild(
   context: Context,
-  override: Partial<ESBuildOptions> & { alias?: Record<string, string> } = {}
+  override: Partial<ESBuildOverrideOptions> = {}
 ) {
   const buildOptions = {
     mode: context.options.mode,
@@ -44,6 +48,7 @@ export async function esbuild(
     metafile: context.options.mode === "development",
     minify: context.options.mode !== "development",
     sourcemap: context.options.mode === "development",
+    generatePackageJson: context.options.esbuild.generatePackageJson,
     banner: {
       js:
         context.options.mode !== "production"
@@ -55,25 +60,8 @@ export async function esbuild(
     },
     external: context.options.external,
     noExternal: context.options.noExternal,
-    skipNodeModulesBundle: context.options.skipNodeModulesBundle,
-    assets: [
-      {
-        "input": context.options.projectRoot,
-        "glob": "README.md",
-        "output": "/"
-      },
-      {
-        "input": context.options.projectRoot,
-        "glob": "CHANGELOG.md",
-        "output": "/"
-      },
-      {
-        "input": "",
-        "glob": "LICENSE",
-        "output": "/"
-      }
-    ]
-  } as ESBuildOptions;
+    skipNodeModulesBundle: context.options.skipNodeModulesBundle
+  } as BaseESBuildOptions;
   if (context.options.dts !== false) {
     const dtsFilePath =
       context.options.dts ||
@@ -107,7 +95,7 @@ export async function esbuild(
           dtsFilePath
         ]
       }
-    } as ESBuildOptions["tsconfigRaw"];
+    } as UserConfig["tsconfigRaw"];
   }
 
   if (!override.entry) {
@@ -136,27 +124,22 @@ export async function esbuild(
       {
         esbuildOptions(options) {
           options.alias = defu(
-            override?.alias ?? {},
-            context.override?.alias ?? {},
-            {
-              "storm:init": joinPaths(context.runtimePath, "init"),
-              "storm:app": joinPaths(context.runtimePath, "app"),
-              "storm:env": joinPaths(context.runtimePath, "env"),
-              "storm:context": joinPaths(context.runtimePath, "context"),
-              "storm:error": joinPaths(context.runtimePath, "error"),
-              "storm:event": joinPaths(context.runtimePath, "event"),
-              "storm:id": joinPaths(context.runtimePath, "id"),
-              "storm:storage": joinPaths(context.runtimePath, "storage"),
-              "storm:log": joinPaths(context.runtimePath, "log"),
-              "storm:payload": joinPaths(context.runtimePath, "payload"),
-              "storm:result": joinPaths(context.runtimePath, "result")
-            }
+            override.alias ?? {},
+            context.options.alias ?? {},
+            context.vfs.getRuntime().reduce(
+              (ret, file) => {
+                ret[file.id] = file.contents?.toString() ?? "";
+
+                return ret;
+              },
+              {} as Record<string, string>
+            )
           );
         },
         esbuildPlugins: [compilerPlugin(context)]
       },
       override ?? {},
-      context.override,
+      context.options.esbuild.override,
       buildOptions,
       {
         dts: true,
@@ -168,21 +151,9 @@ export async function esbuild(
         format: "esm",
         target: "node22",
         distDir: "dist",
-        noExternal: [
-          "storm:init",
-          "storm:app",
-          "storm:context",
-          "storm:env",
-          "storm:error",
-          "storm:event",
-          "storm:id",
-          "storm:storage",
-          "storm:log",
-          "storm:payload",
-          "storm:result"
-        ],
+        // noExternal: [...context.vfs.getRuntime().map(file => file.id)],
         skipNodeModulesBundle: true
       }
-    ) as ESBuildOptions
+    ) as BaseESBuildOptions
   );
 }

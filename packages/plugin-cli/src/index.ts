@@ -17,8 +17,8 @@
  ------------------------------------------------------------------- */
 
 import { LogLevelLabel } from "@storm-software/config-tools/types";
-import { Plugin } from "@storm-stack/core/plugin";
 import type { EngineHooks, PluginConfig } from "@storm-stack/core/types";
+import BasePlugin from "@storm-stack/devkit/plugins/base";
 import { isSetString } from "@stryke/type-checks/is-set-string";
 import {
   buildApplication,
@@ -39,7 +39,7 @@ import {
 import { StormStackCLIPluginContext } from "./types/build";
 import type { StormStackCLIPluginConfig } from "./types/config";
 
-export default class StormStackCLIPlugin extends Plugin {
+export default class StormStackCLIPlugin extends BasePlugin {
   #config: StormStackCLIPluginConfig;
 
   public constructor(config: Partial<StormStackCLIPluginConfig> = {}) {
@@ -78,7 +78,14 @@ export default class StormStackCLIPlugin extends Plugin {
     ].filter(Boolean) as (string | PluginConfig)[];
   }
 
-  public addHooks(hooks: EngineHooks) {
+  /**
+   * Adds the plugin's hooks to the engine.
+   *
+   * @param hooks - The engine hooks to add the plugin's hooks to.
+   */
+  public override async innerAddHooks(hooks: EngineHooks) {
+    await super.innerAddHooks(hooks);
+
     hooks.addHooks({
       "init:context": this.initContext.bind(this),
       "init:installs": this.initInstalls.bind(this),
@@ -93,7 +100,7 @@ export default class StormStackCLIPlugin extends Plugin {
     });
   }
 
-  protected async initContext(context: StormStackCLIPluginContext) {
+  private async initContext(context: StormStackCLIPluginContext) {
     this.log(
       LogLevelLabel.TRACE,
       `Initializing CLI specific options for the Storm Stack project.`
@@ -102,7 +109,7 @@ export default class StormStackCLIPlugin extends Plugin {
     await initContext(context, this.#config);
   }
 
-  protected async initInstalls(context: StormStackCLIPluginContext) {
+  private async initInstalls(context: StormStackCLIPluginContext) {
     this.log(
       LogLevelLabel.TRACE,
       `Adding CLI specific dependencies to the Storm Stack project.`
@@ -111,7 +118,7 @@ export default class StormStackCLIPlugin extends Plugin {
     await initInstalls(context, this.#config);
   }
 
-  protected async initUnimport(context: StormStackCLIPluginContext) {
+  private async initUnimport(context: StormStackCLIPluginContext) {
     this.log(
       LogLevelLabel.TRACE,
       `Initializing CLI specific Unimport presets for the Storm Stack project.`
@@ -120,7 +127,7 @@ export default class StormStackCLIPlugin extends Plugin {
     await initUnimport(context, this.#config);
   }
 
-  protected async initEntry(context: StormStackCLIPluginContext) {
+  private async initEntry(context: StormStackCLIPluginContext) {
     if (context.options.projectType === "application") {
       this.log(
         LogLevelLabel.TRACE,
@@ -131,7 +138,7 @@ export default class StormStackCLIPlugin extends Plugin {
     }
   }
 
-  protected async prepareReflections(context: StormStackCLIPluginContext) {
+  private async prepareReflections(context: StormStackCLIPluginContext) {
     this.log(
       LogLevelLabel.TRACE,
       `Initializing the CLI application's reflection data.`
@@ -140,7 +147,7 @@ export default class StormStackCLIPlugin extends Plugin {
     await prepareReflections(this.log, context, this.#config);
   }
 
-  protected async prepareRuntime(context: StormStackCLIPluginContext) {
+  private async prepareRuntime(context: StormStackCLIPluginContext) {
     if (context.options.projectType === "application") {
       this.log(
         LogLevelLabel.TRACE,
@@ -151,7 +158,7 @@ export default class StormStackCLIPlugin extends Plugin {
     }
   }
 
-  protected async prepareEntry(context: StormStackCLIPluginContext) {
+  private async prepareEntry(context: StormStackCLIPluginContext) {
     if (context.options.projectType === "application") {
       this.log(
         LogLevelLabel.TRACE,
@@ -162,15 +169,15 @@ export default class StormStackCLIPlugin extends Plugin {
     }
   }
 
-  protected async buildLibrary(context: StormStackCLIPluginContext) {
+  private async buildLibrary(context: StormStackCLIPluginContext) {
     return buildLibrary(this.log, context);
   }
 
-  protected async buildApplication(context: StormStackCLIPluginContext) {
+  private async buildApplication(context: StormStackCLIPluginContext) {
     return buildApplication(this.log, context);
   }
 
-  protected async buildComplete(context: StormStackCLIPluginContext) {
+  private async buildComplete(context: StormStackCLIPluginContext) {
     return permissionExecutable(this.log, context);
   }
 }

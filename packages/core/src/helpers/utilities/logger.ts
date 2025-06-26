@@ -17,21 +17,31 @@
  ------------------------------------------------------------------- */
 
 import { getLogFn, getLogLevel } from "@storm-software/config-tools/logger";
-import type { LogLevelLabel } from "@storm-software/config-tools/types";
+import { LogLevelLabel } from "@storm-software/config-tools/types";
 import { noop } from "@stryke/helpers/noop";
 import chalkTemplate from "chalk-template";
-import type { LogFn, Options } from "../../types";
+import type { InlineConfig, LogFn, WorkspaceConfig } from "../../types";
 
 export const createLog = (
   name: string = "",
-  options: Partial<Pick<Options, "silent">> = {}
+  inlineConfig: Partial<Pick<InlineConfig, "logLevel" | "customLogger">> = {},
+  workspaceConfig: Partial<WorkspaceConfig> = {}
 ): LogFn => {
-  if (options.silent) {
+  const logLevel =
+    inlineConfig.logLevel || workspaceConfig.logLevel || LogLevelLabel.INFO;
+  if (logLevel === LogLevelLabel.SILENT) {
     return noop;
   }
 
+  if (inlineConfig.customLogger) {
+    return inlineConfig.customLogger;
+  }
+
   return (type: LogLevelLabel, ...args: string[]) =>
-    getLogFn(getLogLevel(type))(
+    getLogFn(getLogLevel(type), {
+      ...workspaceConfig,
+      logLevel
+    })(
       chalkTemplate`{bold.#6FCE4E storm-stack${name ? `:${name}` : ""} > }${args.join(" ")} `
     );
 };

@@ -62,12 +62,12 @@ export default class StorageCloudflareKVPlugin extends StoragePlugin {
     this.config.minTTL ??= 60;
   }
 
-  public override addHooks(hooks: EngineHooks) {
+  public override innerAddHooks(hooks: EngineHooks) {
     hooks.addHooks({
       "prepare:config": this.prepareConfig.bind(this)
     });
 
-    super.addHooks(hooks);
+    super.innerAddHooks(hooks);
   }
 
   protected override writeStorage() {
@@ -132,12 +132,19 @@ export default cloudflareKVHTTPDriver({
       const wranglerFile = parseToml(wranglerFileContent || "") as {
         kv_namespaces?: Array<{ binding: string; id: string }>;
       };
-
-      wranglerFile.kv_namespaces ??= [];
-      wranglerFile.kv_namespaces.push({
-        binding: this.config.binding,
-        id: this.config.namespace
-      });
+      if (
+        !wranglerFile.kv_namespaces?.some(
+          kv_namespace =>
+            kv_namespace.binding === this.config.binding &&
+            kv_namespace.id === this.config.namespace
+        )
+      ) {
+        wranglerFile.kv_namespaces ??= [];
+        wranglerFile.kv_namespaces.push({
+          binding: this.config.binding,
+          id: this.config.namespace
+        });
+      }
 
       return this.writeFile(
         wranglerFilePath,

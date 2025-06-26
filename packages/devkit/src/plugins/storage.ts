@@ -27,6 +27,12 @@ export interface StoragePluginConfig {
   namespace: string;
 }
 
+/**
+ * Base class for Storage plugins in Storm Stack.
+ *
+ * @remarks
+ * This class provides the foundation for creating storage plugins in Storm Stack. It handles the initialization of the plugin's context and prepares the runtime for storage artifacts. Derived classes must implement the `writeStorage` method to define how the storage should be written.
+ */
 export default abstract class StoragePlugin extends LibraryPlugin {
   public constructor(
     protected override config: StoragePluginConfig,
@@ -42,8 +48,13 @@ export default abstract class StoragePlugin extends LibraryPlugin {
     }
   }
 
-  public override addHooks(hooks: EngineHooks) {
-    super.addHooks(hooks);
+  /**
+   * Adds the plugin's hooks to the engine.
+   *
+   * @param hooks - The engine hooks to add the plugin's hooks to.
+   */
+  public override innerAddHooks(hooks: EngineHooks) {
+    super.innerAddHooks(hooks);
 
     hooks.addHooks({
       "init:context": this.#initContext.bind(this),

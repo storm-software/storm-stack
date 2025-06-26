@@ -24,7 +24,6 @@ import { hash } from "@stryke/hash/hash";
 import { hashDirectory } from "@stryke/hash/hash-files";
 import { existsSync } from "@stryke/path/exists";
 import { relativeToWorkspaceRoot } from "@stryke/path/file-path-fns";
-import { isAbsolutePath } from "@stryke/path/is-file";
 import { joinPaths } from "@stryke/path/join-paths";
 import type { PackageJson } from "@stryke/types/package-json";
 import { nanoid } from "@stryke/unique-id/nanoid-client";
@@ -48,16 +47,7 @@ export async function initContext(
   );
   if (existsSync(packageJsonPath)) {
     context.packageJson = await readJsonFile<PackageJson>(packageJsonPath);
-    if (context.packageJson?.name) {
-      context.options.name ??= context.packageJson?.name;
-    }
-
-    context.options.description ??= context.packageJson?.description;
-    context.workspaceConfig.repository ??=
-      typeof context.packageJson?.repository === "string"
-        ? context.packageJson.repository
-        : context.packageJson?.repository?.url;
-  } else if (context.commandId === "new") {
+  } else if (context.options.command === "new") {
     const workspacePackageJsonPath = joinPaths(
       context.workspaceConfig.workspaceRoot,
       "package.json"
@@ -86,17 +76,6 @@ export async function initContext(
   );
   if (existsSync(projectJsonPath)) {
     context.projectJson = await readJsonFile(projectJsonPath);
-    context.options.projectType ??= context.projectJson?.projectType;
-
-    context.options.name ??= context.projectJson?.name;
-    if (
-      context.options.name?.startsWith("@") &&
-      context.options.name.split("/").filter(Boolean).length > 1
-    ) {
-      context.options.name = context.options.name
-        .split("/")
-        .filter(Boolean)[1]!;
-    }
   }
 
   const checksum = await hashDirectory(context.options.projectRoot, {
@@ -141,104 +120,13 @@ export async function initContext(
   }
 
   context.vfs = createVfs(context);
-  context.options.tsconfig ??= joinPaths(
-    context.options.projectRoot,
-    "tsconfig.json"
-  );
-  context.options.platform ??= "neutral";
-  context.options.dts ??= joinPaths(context.options.projectRoot, "storm.d.ts");
-  context.options.errorsFile = context.options.errorsFile
-    ? context.options.errorsFile.startsWith(
-        context.workspaceConfig.workspaceRoot
-      ) || isAbsolutePath(context.options.errorsFile)
-      ? context.options.errorsFile
-      : joinPaths(
-          context.workspaceConfig.workspaceRoot,
-          context.options.errorsFile
-        )
-    : joinPaths(
-        context.workspaceConfig.workspaceRoot,
-        "tools/errors/codes.json"
-      );
-
-  context.override.bundle ??= true;
-  context.override.target ??= "esnext";
-  context.override.format ??= "esm";
-
-  context.override.alias ??= {};
-  context.override.alias["storm:init"] ??= joinPaths(
-    context.runtimePath,
-    "init"
-  );
-  context.override.alias["storm:error"] ??= joinPaths(
-    context.runtimePath,
-    "error"
-  );
-  context.override.alias["storm:id"] ??= joinPaths(context.runtimePath, "id");
-  context.override.alias["storm:storage"] ??= joinPaths(
-    context.runtimePath,
-    "storage"
-  );
-  context.override.alias["storm:log"] ??= joinPaths(context.runtimePath, "log");
-  context.override.alias["storm:payload"] ??= joinPaths(
-    context.runtimePath,
-    "payload"
-  );
-  context.override.alias["storm:result"] ??= joinPaths(
-    context.runtimePath,
-    "result"
-  );
-
-  context.override.external ??= [];
-
-  context.override.noExternal ??= [];
-  if (Array.isArray(context.override.noExternal)) {
-    context.override.noExternal.push(
-      "storm:init",
-      "storm:error",
-      "storm:id",
-      "storm:storage",
-      "storm:log",
-      "storm:payload",
-      "storm:result"
-    );
-  }
-
-  if (context.options.platform === "node") {
-    context.override.platform ??= "node";
-    context.override.target ??= "node22";
-
-    context.override.alias["storm:app"] ??= joinPaths(
-      context.runtimePath,
-      "app"
-    );
-    context.override.alias["storm:context"] ??= joinPaths(
-      context.runtimePath,
-      "context"
-    );
-    context.override.alias["storm:env"] ??= joinPaths(
-      context.runtimePath,
-      "env"
-    );
-    context.override.alias["storm:event"] ??= joinPaths(
-      context.runtimePath,
-      "event"
-    );
-
-    if (Array.isArray(context.override.noExternal)) {
-      context.override.noExternal.push(
-        "storm:app",
-        "storm:context",
-        "storm:env",
-        "storm:event"
-      );
-    }
-  }
 
   await hooks.callHook("init:context", context).catch((error: Error) => {
     log(
       LogLevelLabel.ERROR,
-      `An error occurred while initializing the context for the Storm Stack project: ${error.message} \n${error.stack ?? ""}`
+      `An error occurred while initializing the context for the Storm Stack project: ${
+        error.message
+      } \n${error.stack ?? ""}`
     );
 
     throw new Error(

@@ -25,7 +25,9 @@ import {
   __vfs__,
   Context,
   IVirtualFileSystem,
-  VirtualFileOptions
+  VirtualFile,
+  VirtualFileOptions,
+  VirtualRuntimeFile
 } from "../../types/build";
 
 /**
@@ -35,27 +37,59 @@ import {
  * This class provides methods to manage virtual files, check their existence, retrieve their content, and manipulate the virtual file system. It allows for efficient file management and retrieval without relying on the actual file system.
  */
 export class VirtualFileSystem implements IVirtualFileSystem {
-  #vfs: Map<string, Vinyl>;
+  #vfs: Map<string, VirtualFile> = new Map<string, VirtualFile>();
 
   #context: Context;
 
   /**
    * Exposes the internal VFS map for advanced usage.
    */
-  public get [__vfs__](): Map<string, Vinyl> {
+  public get [__vfs__](): Map<string, VirtualFile> {
     return this.#vfs;
   }
 
   constructor(context: Context) {
     this.#context = context;
-    this.#vfs = new Map<string, Vinyl>();
   }
 
   /**
    * Returns the internal virtual file system map.
    */
-  public getVirtualMap = (): Map<string, Vinyl> => {
+  public getAll = (): Map<string, VirtualFile> => {
     return this.#vfs;
+  };
+
+  /**
+   * Returns the internal virtual, runtime file system map.
+   */
+  public getRuntime = (): VirtualRuntimeFile[] => {
+    return this.values().filter(vm => vm.isRuntime) as VirtualRuntimeFile[];
+  };
+
+  /**
+   * Returns the internal virtual, runtime file system map.
+   *
+   * @remarks
+   * This method is used to add a runtime file to the virtual file system (VFS).
+   *
+   * @param name - The path to the runtime file.
+   * @param contents - The contents of the runtime file.
+   * @returns A Vinyl instance representing the added runtime file.
+   */
+  public addRuntime = (name: string, contents: string): VirtualRuntimeFile => {
+    const virtualFile = new Vinyl({
+      name,
+      cwd: this.#context.workspaceConfig.workspaceRoot,
+      base: this.#context.options.projectRoot,
+      path: name,
+      contents: Buffer.from(contents),
+      isRuntime: true,
+      checksum: this.#context.meta.checksum
+    });
+
+    this.set(virtualFile);
+
+    return virtualFile as unknown as VirtualRuntimeFile;
   };
 
   /**
@@ -66,8 +100,8 @@ export class VirtualFileSystem implements IVirtualFileSystem {
    */
   public has = (path: string): boolean => {
     return (
-      this.getVirtualMap().has(path) ||
-      this.getVirtualMap().has(
+      this.getAll().has(path) ||
+      this.getAll().has(
         joinPaths(this.#context.workspaceConfig.workspaceRoot, path)
       ) ||
       existsSync(path) ||
@@ -83,12 +117,13 @@ export class VirtualFileSystem implements IVirtualFileSystem {
    */
   public set = (options: Omit<VirtualFileOptions, "checksum">): boolean => {
     const virtualFile = new Vinyl({
+      name: options.path,
       cwd: this.#context.workspaceConfig.workspaceRoot,
       base: this.#context.options.projectRoot,
       ...options,
       checksum: this.#context.meta.checksum
     });
-    this.getVirtualMap().set(virtualFile.path, virtualFile);
+    this.getAll().set(virtualFile.path, virtualFile as VirtualFile);
     return true;
   };
 
@@ -100,12 +135,12 @@ export class VirtualFileSystem implements IVirtualFileSystem {
    */
   public getSafe = (path: string): string | undefined => {
     if (this.has(path)) {
-      const vfsPath = this.getVirtualMap().has(path)
+      const vfsPath = this.getAll().has(path)
         ? path
         : joinPaths(this.#context.workspaceConfig.workspaceRoot, path);
 
-      if (this.getVirtualMap().has(vfsPath)) {
-        const file = this.getVirtualMap().get(vfsPath);
+      if (this.getAll().has(vfsPath)) {
+        const file = this.getAll().get(vfsPath);
 
         return file?.content;
       } else if (
@@ -119,6 +154,7 @@ export class VirtualFileSystem implements IVirtualFileSystem {
             );
       }
     }
+
     return undefined;
   };
 
@@ -149,18 +185,42 @@ export class VirtualFileSystem implements IVirtualFileSystem {
         if (isSetString(p)) {
           const content = this.getSafe(p);
           if (content) {
-            this.getVirtualMap().set(p, new Vinyl({ path: p, content }));
+            this.getAll().set(
+              p,
+              new Vinyl({
+                name: p,
+                path: p,
+                content,
+                checksum: this.#context.meta.checksum
+              }) as VirtualFile
+            );
           }
         }
       });
     } else if (typeof param === "string") {
       const content = this.getSafe(param);
       if (content) {
-        this.getVirtualMap().set(param, new Vinyl({ path: param, content }));
+        this.getAll().set(
+          param,
+          new Vinyl({
+            name: param,
+            path: param,
+            content,
+            checksum: this.#context.meta.checksum
+          }) as VirtualFile
+        );
       }
     } else if (param instanceof Map) {
       param.forEach((content, p) => {
-        this.getVirtualMap().set(p, new Vinyl({ path: p, content }));
+        this.getAll().set(
+          p,
+          new Vinyl({
+            name: p,
+            path: p,
+            content,
+            checksum: this.#context.meta.checksum
+          }) as VirtualFile
+        );
       });
     }
   };
@@ -171,7 +231,7 @@ export class VirtualFileSystem implements IVirtualFileSystem {
    * @returns An array of file paths in the VFS.
    */
   public keys = (): string[] => {
-    return Array.from(this.getVirtualMap().keys());
+    return Array.from(this.getAll().keys());
   };
 
   /**
@@ -179,8 +239,8 @@ export class VirtualFileSystem implements IVirtualFileSystem {
    *
    * @returns An array of Vinyl instances in the VFS.
    */
-  public values = (): Vinyl[] => {
-    return Array.from(this.getVirtualMap().values());
+  public values = (): VirtualFile[] => {
+    return Array.from(this.getAll().values());
   };
 
   /**
@@ -188,8 +248,8 @@ export class VirtualFileSystem implements IVirtualFileSystem {
    *
    * @returns An array of tuples where each tuple contains a file path and its corresponding Vinyl instance.
    */
-  public entries = (): [string, Vinyl][] => {
-    return Array.from(this.getVirtualMap().entries());
+  public entries = (): [string, VirtualFile][] => {
+    return Array.from(this.getAll().entries());
   };
 }
 

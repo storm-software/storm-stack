@@ -16,11 +16,19 @@
 
  ------------------------------------------------------------------- */
 
+import { AssetGlob } from "@storm-software/build-tools/types";
 import type { LogLevelLabel } from "@storm-software/config-tools/types";
+import { StormWorkspaceConfig } from "@storm-software/config/types";
+import { ESBuildOptions as BaseESBuildOptions } from "@storm-software/esbuild/types";
+import type { UnbuildOptions as BaseUnbuildOptions } from "@storm-software/unbuild/types";
 import type {
   DotenvConfiguration,
   TypeDefinitionParameter
 } from "@stryke/types/configuration";
+import { TsConfigJson } from "@stryke/types/tsconfig";
+import { ConfigLayer, ResolvedConfig } from "c12";
+import { BuildOptions as ExternalESBuildOptions } from "esbuild";
+import { BuildOptions as ExternalUnbuildOptions } from "unbuild";
 
 export type LogFn = (type: LogLevelLabel, ...args: string[]) => void;
 
@@ -72,7 +80,51 @@ export interface DotenvOptions extends DotenvConfiguration {
 
 export type PluginConfig = [string, Record<string, any>];
 
-export interface ProjectConfig {
+export type ESBuildOverrideOptions = ExternalESBuildOptions &
+  BaseESBuildOptions;
+
+export type ESBuildOptions = Partial<
+  Omit<
+    BaseESBuildOptions,
+    | "userOptions"
+    | "tsconfig"
+    | "tsconfigRaw"
+    | "assets"
+    | "outputPath"
+    | "mode"
+    | "platform"
+    | "projectRoot"
+    | "env"
+    | "entry"
+    | "external"
+    | "noExternal"
+    | "skipNodeModulesBundle"
+  >
+> & {
+  override?: Partial<ESBuildOverrideOptions>;
+};
+
+export type UnbuildOverrideOptions = ExternalUnbuildOptions &
+  BaseUnbuildOptions;
+
+export type UnbuildOptions = Partial<
+  Omit<
+    BaseUnbuildOptions,
+    | "tsconfig"
+    | "tsconfigRaw"
+    | "assets"
+    | "outputPath"
+    | "mode"
+    | "platform"
+    | "projectRoot"
+    | "env"
+    | "entry"
+  >
+> & {
+  override?: Partial<UnbuildOverrideOptions>;
+};
+
+export interface UserConfig {
   /**
    * The name of the project
    */
@@ -87,26 +139,37 @@ export interface ProjectConfig {
   description?: string;
 
   /**
-   * The package name (from the \`package.json\`) for the project that will be used in the \`new\` command to create a new project based on this configuration
+   * The root directory of the project
    */
-  packageName?: string;
-
-  /**
-   * {@inheritdoc TypeScriptBuildResolvedOptions.projectRoot}
-   */
-  projectRoot: string;
+  root?: string;
 
   /**
    * The type of project being built
    *
    * @defaultValue "application"
    */
-  projectType?: "application" | "library";
+  type?: "application" | "library";
 
   /**
    * The platform to build the project for
+   *
+   * @defaultValue "neutral"
    */
   platform?: "node" | "browser" | "neutral";
+
+  /**
+   * Explicitly set a mode to run in. This mode will be used at various points throughout the Storm Stack processes, such as when compiling the source code.
+   *
+   * @defaultValue "production"
+   */
+  mode?: "development" | "staging" | "production";
+
+  /**
+   * The environment name for which the project is being built.
+   *
+   * @defaultValue "shared"
+   */
+  environment?: string;
 
   /**
    * A list of resolvable paths to plugins used during the build process
@@ -121,9 +184,14 @@ export interface ProjectConfig {
   /**
    * The path of the generated declaration file relative to the workspace root.
    *
-   * @defaultValue "\{\{ projectRoot \}\}/types/storm.d.ts"
+   * @defaultValue "\{\{ projectRoot \}\}/storm.d.ts"
    */
   dts?: string | false;
+
+  /**
+   * The entry point(s) for the application
+   */
+  entry?: TypeDefinitionParameter | TypeDefinitionParameter[];
 
   /**
    * Should the Storm Stack CLI processes skip installing missing packages?
@@ -150,21 +218,70 @@ export interface ProjectConfig {
   skipLint?: boolean;
 
   /**
-   * Should the esbuild processes skip the bundling of node_modules?
+   * The path to output the final compiled files to
    *
-   * @defaultValue false
+   * @remarks
+   * If a value is not provided, Storm Stack will attempt to:
+   * 1. Use the `outDir` value in the `tsconfig.json` file.
+   * 2. Use the `dist` directory in the project root directory.
+   */
+  outputPath?: string;
+
+  /**
+   * The log level to use for the Storm Stack processes.
+   *
+   * @defaultValue "info"
+   */
+  logLevel?: LogLevelLabel;
+
+  /**
+   * A custom logger function to use for logging messages
+   */
+  customLogger?: LogFn;
+
+  /**
+   * The path to the tsconfig file to be used by the compiler
+   *
+   * @remarks
+   * If a value is not provided, the plugin will attempt to find the `tsconfig.json` file in the project root directory. The parsed tsconfig compiler options will be merged with the {@link Options.tsconfigRaw} value (if provided).
+   *
+   * @defaultValue "\{projectRoot\}/tsconfig.json"
+   */
+  tsconfig?: string;
+
+  /**
+   * The [raw tsconfig object](https://www.typescriptlang.org/tsconfig) to be used by the compiler. This object will be merged with the `tsconfig.json` file.
+   *
+   * @remarks
+   * If populated, this option takes higher priority than `tsconfig`
+   */
+  tsconfigRaw?: TsConfigJson;
+
+  /**
+   * A list of modules that should always be bundled, even if they are external dependencies.
+   */
+  noExternal?: (string | RegExp)[];
+
+  /**
+   * A list of modules that should not be bundled, even if they are external dependencies.
+   *
+   * @remarks
+   * This option is useful for excluding specific modules from the bundle, such as Node.js built-in modules or other libraries that should not be bundled.
+   */
+  external?: (string | RegExp)[];
+
+  /**
+   * Should the Storm Stack CLI processes skip bundling the `node_modules` directory?
    */
   skipNodeModulesBundle?: boolean;
 
   /**
-   * A list of external packages to exclude from the bundled code
+   * A list of assets to copy to the output directory
+   *
+   * @remarks
+   * The assets can be specified as a string (path to the asset) or as an object with a `glob` property (to match multiple files). The paths are relative to the project root directory.
    */
-  external?: string[];
-
-  /**
-   * A list of packages that should be included in the bundled code
-   */
-  noExternal?: string[];
+  assets?: Array<string | AssetGlob>;
 
   /**
    * The path (relative to the workspace root) to the file that will be used to generate the errors map
@@ -175,35 +292,318 @@ export interface ProjectConfig {
    * @defaultValue "tools/errors/codes.json"
    */
   errorsFile?: string;
+
+  /**
+   * Options to override the behavior of the build process
+   */
+  esbuild?: ESBuildOptions;
+
+  /**
+   * Options to override the behavior of the unbuild process
+   */
+  unbuild?: UnbuildOptions;
 }
 
-export type ApplicationProjectConfig = ProjectConfig & {
+export type ResolvedUserConfig = UserConfig &
+  ResolvedConfig<UserConfig> & {
+    /**
+     * The path to the user configuration file, if it exists.
+     *
+     * @remarks
+     * This is typically the `storm.json`, `storm.config.js`, or `storm.config.ts` file in the project root.
+     */
+    configFile?: ConfigLayer<UserConfig>["configFile"];
+  };
+
+export interface InlineConfig extends UserConfig {
   /**
-   * The entry point for the project
+   * A string identifier for the Storm Stack command being executed
+   */
+  command: "new" | "prepare" | "build" | "lint" | "docs" | "clean";
+
+  /**
+   * The package name (from the \`package.json\`) for the project that will be used in the \`new\` command to create a new project based on this configuration
+   */
+  packageName?: string;
+
+  /**
+   * The path to the tsconfig file to be used by the compiler
    *
    * @remarks
-   * This is only used for applications. Libraries will have a separate entry point added for each file.
+   * If a value is not provided, the plugin will attempt to find the `tsconfig.json` file in the project root directory. The parsed tsconfig compiler options will be merged with the {@link Options.tsconfigRaw} value (if provided).
+   *
+   * @defaultValue "\{root\}/tsconfig.json"
+   */
+  tsconfig?: string;
+
+  /**
+   * The environment name for which the project is being built.
+   *
+   * @defaultValue "shared"
+   */
+  environment?: string;
+
+  /**
+   * The entry point(s) for the application
+   */
+  entry?: TypeDefinitionParameter | TypeDefinitionParameter[];
+}
+
+export interface NewInlineConfig extends InlineConfig {
+  /**
+   * A string identifier for the Storm Stack command being executed
+   */
+  command: "new";
+
+  /**
+   * The package name (from the \`package.json\`) for the project that will be used in the \`new\` command to create a new project based on this configuration
+   */
+  packageName?: string;
+}
+
+export interface CleanInlineConfig extends InlineConfig {
+  /**
+   * A string identifier for the Storm Stack command being executed
+   */
+  command: "clean";
+
+  /**
+   * The path to the tsconfig file to be used by the compiler
+   *
+   * @remarks
+   * If a value is not provided, the plugin will attempt to find the `tsconfig.json` file in the project root directory. The parsed tsconfig compiler options will be merged with the {@link Options.tsconfigRaw} value (if provided).
+   *
+   * @defaultValue "\{root\}/tsconfig.json"
+   */
+  tsconfig?: string;
+
+  /**
+   * The environment name for which the project is being built.
+   *
+   * @defaultValue "shared"
+   */
+  environment?: string;
+
+  /**
+   * The entry point(s) for the application
+   */
+  entry?: TypeDefinitionParameter | TypeDefinitionParameter[];
+}
+
+export interface PrepareInlineConfig extends InlineConfig {
+  /**
+   * A string identifier for the Storm Stack command being executed
+   */
+  command: "prepare";
+
+  /**
+   * The path to the tsconfig file to be used by the compiler
+   *
+   * @remarks
+   * If a value is not provided, the plugin will attempt to find the `tsconfig.json` file in the project root directory. The parsed tsconfig compiler options will be merged with the {@link Options.tsconfigRaw} value (if provided).
+   *
+   * @defaultValue "\{root\}/tsconfig.json"
+   */
+  tsconfig?: string;
+
+  /**
+   * The environment name for which the project is being built.
+   *
+   * @defaultValue "shared"
+   */
+  environment?: string;
+
+  /**
+   * The entry point(s) for the application
    */
   entry?: TypeDefinitionParameter | TypeDefinitionParameter[];
 
   /**
-   * The type of project being built
-   */
-  projectType: "application";
-};
-
-export type NodeProjectConfig = ProjectConfig & {
-  /**
-   * The platform to build the project for
+   * Should the Storm Stack CLI processes skip installing missing packages?
    *
-   * @defaultValue "node"
+   * @remarks
+   * This option is useful for CI/CD environments where the installation of packages is handled by a different process.
+   *
+   * @defaultValue false
    */
-  platform: "node";
-};
+  skipInstalls?: boolean;
 
-export type LibraryProjectConfig = ProjectConfig & {
   /**
-   * The type of project being built
+   * Should the compiler processes skip any improvements that make use of cache?
+   *
+   * @defaultValue false
    */
-  projectType: "library";
-};
+  skipCache?: boolean;
+
+  /**
+   * Should the Storm Stack CLI process clean up the project artifacts prior to running the `storm prepare` command?
+   *
+   * @defaultValue false
+   */
+  clean?: boolean;
+}
+
+export interface BuildInlineConfig extends InlineConfig {
+  /**
+   * A string identifier for the Storm Stack command being executed
+   */
+  command: "build";
+
+  /**
+   * The path to the tsconfig file to be used by the compiler
+   *
+   * @remarks
+   * If a value is not provided, the plugin will attempt to find the `tsconfig.json` file in the project root directory. The parsed tsconfig compiler options will be merged with the {@link Options.tsconfigRaw} value (if provided).
+   *
+   * @defaultValue "\{root\}/tsconfig.json"
+   */
+  tsconfig?: string;
+
+  /**
+   * The environment name for which the project is being built.
+   *
+   * @defaultValue "shared"
+   */
+  environment?: string;
+
+  /**
+   * The entry point(s) for the application
+   */
+  entry?: TypeDefinitionParameter | TypeDefinitionParameter[];
+
+  /**
+   * The output path for the compiled build artifacts
+   */
+  outputPath?: string;
+
+  /**
+   * Should the Storm Stack CLI processes skip installing missing packages?
+   *
+   * @remarks
+   * This option is useful for CI/CD environments where the installation of packages is handled by a different process.
+   *
+   * @defaultValue false
+   */
+  skipInstalls?: boolean;
+
+  /**
+   * Should the compiler processes skip any improvements that make use of cache?
+   *
+   * @defaultValue false
+   */
+  skipCache?: boolean;
+
+  /**
+   * Should linting be skipped for this project?
+   *
+   * @defaultValue false
+   */
+  skipLint?: boolean;
+
+  /**
+   * Should the Storm Stack CLI process clean up the project artifacts prior to running the `prepare` command?
+   *
+   * @defaultValue false
+   */
+  clean?: boolean;
+}
+
+export interface LintInlineConfig extends InlineConfig {
+  /**
+   * A string identifier for the Storm Stack command being executed
+   */
+  command: "lint";
+
+  /**
+   * The path to the tsconfig file to be used by the compiler
+   *
+   * @remarks
+   * If a value is not provided, the plugin will attempt to find the `tsconfig.json` file in the project root directory. The parsed tsconfig compiler options will be merged with the {@link Options.tsconfigRaw} value (if provided).
+   *
+   * @defaultValue "\{root\}/tsconfig.json"
+   */
+  tsconfig?: string;
+
+  /**
+   * The environment name for which the project is being built.
+   *
+   * @defaultValue "shared"
+   */
+  environment?: string;
+
+  /**
+   * The entry point(s) for the application
+   */
+  entry?: TypeDefinitionParameter | TypeDefinitionParameter[];
+
+  /**
+   * Should the compiler processes skip any improvements that make use of cache?
+   *
+   * @defaultValue false
+   */
+  skipCache?: boolean;
+}
+
+export interface DocsInlineConfig extends InlineConfig {
+  /**
+   * A string identifier for the Storm Stack command being executed
+   */
+  command: "docs";
+
+  /**
+   * The path to the tsconfig file to be used by the compiler
+   *
+   * @remarks
+   * If a value is not provided, the plugin will attempt to find the `tsconfig.json` file in the project root directory. The parsed tsconfig compiler options will be merged with the {@link Options.tsconfigRaw} value (if provided).
+   *
+   * @defaultValue "\{root\}/tsconfig.json"
+   */
+  tsconfig?: string;
+
+  /**
+   * The environment name for which the project is being built.
+   */
+  environment?: string;
+
+  /**
+   * The entry point(s) for the application
+   */
+  entry?: TypeDefinitionParameter | TypeDefinitionParameter[];
+
+  /**
+   * The output path for the compiled build artifacts
+   */
+  outputPath?: string;
+
+  /**
+   * Should the Storm Stack CLI processes skip installing missing packages?
+   *
+   * @remarks
+   * This option is useful for CI/CD environments where the installation of packages is handled by a different process.
+   *
+   * @defaultValue false
+   */
+  skipInstalls?: boolean;
+
+  /**
+   * Should the compiler processes skip any improvements that make use of cache?
+   *
+   * @defaultValue false
+   */
+  skipCache?: boolean;
+
+  /**
+   * Should the Storm Stack CLI process clean up the project artifacts prior to running the `prepare` command?
+   *
+   * @defaultValue false
+   */
+  clean?: boolean;
+}
+
+/**
+ * The {@link StormWorkspaceConfig | configuration} object for an entire Storm Stack workspace
+ */
+export type WorkspaceConfig =
+  | StormWorkspaceConfig
+  | (Partial<StormWorkspaceConfig> &
+      Pick<StormWorkspaceConfig, "workspaceRoot">);

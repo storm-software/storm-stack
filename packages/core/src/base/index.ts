@@ -16,7 +16,7 @@
 
  ------------------------------------------------------------------- */
 
-import { createFarmPlugin } from "unplugin";
-import { unpluginFactory } from "./index";
-
-export default createFarmPlugin(unpluginFactory);
+export * from "./compiler";
+export * from "./engine";
+export * from "./plugin";
+export * from "./renderer";

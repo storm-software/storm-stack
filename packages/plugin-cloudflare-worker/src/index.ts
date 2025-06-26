@@ -25,7 +25,6 @@ import {
   isIncludeMatchFound,
   isMatchFound
 } from "@storm-stack/core/helpers/typescript";
-import { Plugin } from "@storm-stack/core/plugin";
 import {
   writeApp,
   writeContext,
@@ -36,6 +35,7 @@ import type {
   EngineHooks,
   PluginConfig
 } from "@storm-stack/core/types";
+import BasePlugin from "@storm-stack/devkit/plugins/base";
 import { executePackage } from "@stryke/cli/execute";
 import { createDirectory, removeDirectory } from "@stryke/fs/helpers";
 import { readJsonFile } from "@stryke/fs/json";
@@ -50,13 +50,20 @@ import {
   relativePath
 } from "@stryke/path/file-path-fns";
 import { joinPaths } from "@stryke/path/join-paths";
+import { replacePath } from "@stryke/path/replace";
 import type { TsConfigJson } from "@stryke/types/tsconfig";
 import defu from "defu";
 import type { Environment } from "unenv";
 import { defineEnv } from "unenv";
 import { CLOUDFLARE_MODULES, DEFAULT_CONDITIONS } from "./helpers";
 
-export default class StormStackCloudflareWorkerPlugin extends Plugin {
+/**
+ * Storm Stack Cloudflare Worker Plugin
+ *
+ * @remarks
+ * This plugin provides support for building and deploying Cloudflare Workers using Storm Stack. It integrates with the Wrangler CLI tool and sets up the necessary configurations and runtime files.
+ */
+export default class StormStackCloudflareWorkerPlugin extends BasePlugin {
   #unenv: Environment;
 
   public override dependencies = [
@@ -77,7 +84,9 @@ export default class StormStackCloudflareWorkerPlugin extends Plugin {
     this.#unenv = env;
   }
 
-  public addHooks(hooks: EngineHooks) {
+  public override async innerAddHooks(hooks: EngineHooks) {
+    await super.innerAddHooks(hooks);
+
     hooks.addHooks({
       "clean:complete": this.clean.bind(this),
       "init:context": this.initContext.bind(this),
@@ -123,11 +132,13 @@ export default class StormStackCloudflareWorkerPlugin extends Plugin {
     );
 
     context.options.platform = "node";
-    context.override.platform = "neutral";
-    context.override.format = "esm";
-    context.override.target = "chrome95";
 
-    if (context.options.original.dts === undefined) {
+    context.options.esbuild.override ??= {};
+    context.options.esbuild.override.platform = "neutral";
+    context.options.esbuild.format = "esm";
+    context.options.esbuild.target = "chrome95";
+
+    if (context.options.userConfig.dts === undefined) {
       context.options.dts = joinPaths(
         context.options.projectRoot,
         "types",
@@ -135,23 +146,26 @@ export default class StormStackCloudflareWorkerPlugin extends Plugin {
       );
     }
 
-    context.options.external ??= [];
-    context.options.external.push(
-      ...CLOUDFLARE_MODULES,
-      ...this.#unenv.external
-    );
+    if (Array.isArray(context.options.external)) {
+      context.options.external.push(
+        ...CLOUDFLARE_MODULES,
+        ...this.#unenv.external
+      );
+    }
 
     context.options.noExternal ??= [];
     context.options.noExternal.push("@cloudflare/unenv-preset/node/console");
     context.options.noExternal.push("@cloudflare/unenv-preset/node/process");
 
     if (context.options.projectType === "application") {
-      context.override.alias = defu(
-        context.override.alias ?? {},
+      context.options.esbuild.override!.alias = defu(
+        context.options.esbuild.override?.alias ?? {},
         this.#unenv.alias
       );
 
-      context.override.inject = Object.values(this.#unenv.inject)
+      context.options.esbuild.override!.inject = Object.values(
+        this.#unenv.inject
+      )
         .filter(Boolean)
         .reduce((ret: string[], inj: string | string[]) => {
           if (typeof inj === "string" && !ret.includes(inj)) {
@@ -161,9 +175,12 @@ export default class StormStackCloudflareWorkerPlugin extends Plugin {
           }
 
           return ret;
-        }, []);
+        }, []) as string[];
 
-      context.override.conditions = [...DEFAULT_CONDITIONS, "development"];
+      context.options.esbuild.override!.conditions = [
+        ...DEFAULT_CONDITIONS,
+        "development"
+      ];
 
       context.installs["@cloudflare/unenv-preset"] = "dependency";
       context.installs.unenv = "dependency";
@@ -210,7 +227,7 @@ export default class StormStackCloudflareWorkerPlugin extends Plugin {
 
     tsconfigJson.include ??= [];
     if (
-      !context.options.original.dts &&
+      !context.options.userConfig.dts &&
       isIncludeMatchFound(
         joinPaths(
           relativePath(
@@ -294,12 +311,23 @@ export default class StormStackCloudflareWorkerPlugin extends Plugin {
         wranglerFileContent = await readFile(wranglerFilePath);
       }
 
+      const main = replacePath(
+        context.entry && context.entry.length > 0 && context.entry[0]?.file
+          ? context.entry[0].file
+          : "src/index.ts",
+        joinPaths(context.options.workspaceRoot, context.options.projectRoot)
+      );
+
       if (!wranglerFileContent) {
         wranglerFileContent = `name = "${context.options.name}"
 compatibility_date = "${new Date().toISOString().split("T")[0]}"
-main = "${(context.entry && context.entry.length > 0 && context.entry[0] ? context.entry[0].file : "src/index.ts").replace(context.options.projectRoot, "")}"
+main = "${main}"
 
-account_id = "${process.env.CLOUDFLARE_ACCOUNT_ID}"
+${
+  process.env.CLOUDFLARE_ACCOUNT_ID
+    ? `account_id = "${process.env.CLOUDFLARE_ACCOUNT_ID}"`
+    : ""
+}
 compatibility_flags = [ "nodejs_als" ]
 `;
       }
@@ -310,18 +338,18 @@ compatibility_flags = [ "nodejs_als" ]
       wranglerFile.compatibility_date ??= new Date()
         .toISOString()
         .split("T")[0]!;
-      wranglerFile.main ??=
-        context.entry && context.entry.length > 0 && context.entry[0]
-          ? context.entry[0].file
-          : "src/index.ts";
-      wranglerFile.account_id ??= process.env.CLOUDFLARE_ACCOUNT_ID!;
+      wranglerFile.main ??= main;
       wranglerFile.compatibility_flags ??= ["nodejs_als"];
+
+      if (process.env.CLOUDFLARE_ACCOUNT_ID) {
+        wranglerFile.account_id ??= process.env.CLOUDFLARE_ACCOUNT_ID!;
+      }
 
       return this.writeFile(
         wranglerFilePath,
         stringifyToml(wranglerFile, {
           newline: "\n",
-          newlineAround: "header",
+          newlineAround: "pairs",
           indent: 4,
           forceInlineArraySpacing: 0
         }),

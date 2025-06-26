@@ -20,7 +20,7 @@ import type { ExecutorContext } from "@nx/devkit";
 import type { StormWorkspaceConfig } from "@storm-software/config/types";
 import { withRunExecutor } from "@storm-software/workspace-tools";
 import { Engine } from "@storm-stack/core/engine";
-import type { Options } from "@storm-stack/core/types";
+import type { BuildInlineConfig } from "@storm-stack/core/types";
 import defu from "defu";
 import type { StormStackBuildExecutorSchema } from "./schema";
 
@@ -46,22 +46,21 @@ export async function executorFn(
     );
   }
 
-  const projectRoot =
-    context.projectsConfigurations.projects[context.projectName]!.root;
-  const projectType =
-    context.projectsConfigurations.projects[context.projectName]!.projectType;
+  const inlineConfig = defu(
+    {
+      root: context.projectsConfigurations.projects[context.projectName]!.root,
+      type: context.projectsConfigurations.projects[context.projectName]!
+        .projectType,
+      command: "build"
+    },
+    options
+  ) as BuildInlineConfig;
 
-  const engine = new Engine(
-    defu({ projectRoot, projectType }, options) as Options,
-    workspaceConfig
-  );
+  const engine = new Engine(inlineConfig, workspaceConfig);
 
-  await engine.init();
-  await engine.build(
-    options.autoPrepare !== false,
-    options.autoClean !== false
-  );
-  await engine.finalize();
+  await engine.init(inlineConfig);
+  await engine.build(inlineConfig);
+  await engine.finalize(inlineConfig);
 
   return {
     success: true

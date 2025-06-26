@@ -16,7 +16,7 @@
 
  ------------------------------------------------------------------- */
 
-import { Options } from "@storm-stack/core/types/build";
+import { PrepareInlineConfig } from "@storm-stack/core/types/config";
 import { StormPayload } from "../../../.storm/runtime/payload";
 import { createEngine } from "../../helpers/create-engine";
 
@@ -27,9 +27,12 @@ interface PreparePayload {
   /**
    * The root directory of the Storm Stack project.
    *
+   * @title Project Root
+   *
    * @alias project
+   * @alias projectRoot
    */
-  projectRoot: Options["projectRoot"];
+  root: string;
 }
 
 /**
@@ -43,13 +46,15 @@ interface PreparePayload {
 async function handler(payload: StormPayload<PreparePayload>) {
   const data = payload.data;
 
-  const engine = await createEngine({
-    projectRoot: data.projectRoot
-  });
-  engine.setIntent("prepare");
+  const inlineConfig = {
+    root: data.root,
+    command: "prepare"
+  } as PrepareInlineConfig;
 
-  await engine.prepare();
-  await engine.finalize();
+  const engine = await createEngine(inlineConfig);
+
+  await engine.prepare(inlineConfig);
+  await engine.finalize(inlineConfig);
 }
 
 export default handler;

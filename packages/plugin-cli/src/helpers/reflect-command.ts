@@ -112,7 +112,10 @@ async function reflectPayloads(
       );
     } else {
       // eslint-disable-next-line ts/no-unsafe-function-type
-      const command = await resolveType<Function>(context, entry.input, {});
+      const command = await resolveType<Function>(context, entry.input, {
+        skipNodeModulesBundle: true,
+        noExternal: context.options.noExternal
+      });
       if (!command) {
         throw new Error(`Module not found: ${entry.input.file}`);
       }

@@ -26,13 +26,14 @@ import type { PackageJson } from "@stryke/types/package-json";
 import { loadConfig } from "c12";
 import defu from "defu";
 import { removeEnvPrefix } from "../../helpers/dotenv/source-file-env";
-import type { Options, ResolvedDotenvOptions } from "../../types/build";
+import type {
+  Context,
+  ResolvedDotenvOptions,
+  ResolvedOptions
+} from "../../types/build";
 
-const loadEnvFiles = async <
-  TOptions extends Options = Options,
-  TEnv extends DotenvParseOutput = DotenvParseOutput
->(
-  options: TOptions,
+const loadEnvFiles = async <TEnv extends DotenvParseOutput = DotenvParseOutput>(
+  options: ResolvedOptions,
   cwd: string,
   dotenv: ResolvedDotenvOptions
 ): Promise<TEnv> => {
@@ -53,18 +54,17 @@ const loadEnvFiles = async <
 };
 
 const loadEnvDirectory = async <
-  TOptions extends Options = Options,
   TEnv extends DotenvParseOutput = DotenvParseOutput
 >(
   directory: string,
-  options: TOptions,
+  options: ResolvedOptions,
   dotenv: ResolvedDotenvOptions,
   cacheDir: string,
   packageJson: PackageJson,
-  workspaceConfig: ["workspaceConfig"]
+  workspaceConfig: Context["workspaceConfig"]
 ): Promise<TEnv> => {
   const [envResult, c12Result] = await Promise.all([
-    loadEnvFiles<TOptions, TEnv>(options, directory, dotenv),
+    loadEnvFiles<TEnv>(options, directory, dotenv),
     loadConfig({
       cwd: directory,
       name: "storm",
@@ -72,6 +72,7 @@ const loadEnvDirectory = async <
       defaults: {
         NAME: packageJson.name?.replace(`@${workspaceConfig.namespace}/`, ""),
         MODE: options.mode,
+        ENVIRONMENT: options.environment,
         ORG: workspaceConfig.organization
       },
       globalRc: true,
@@ -88,18 +89,17 @@ const loadEnvDirectory = async <
 };
 
 export const loadEnv = async <
-  TOptions extends Options = Options,
   TEnv extends DotenvParseOutput = DotenvParseOutput
 >(
-  options: TOptions,
+  options: ResolvedOptions,
   dotenv: ResolvedDotenvOptions,
   cacheDir: string,
   configDir: string,
   packageJson: PackageJson,
-  workspaceConfig: ["workspaceConfig"]
+  workspaceConfig: Context["workspaceConfig"]
 ): Promise<TEnv> => {
   const [project, workspace, config] = await Promise.all([
-    loadEnvDirectory<TOptions, TEnv>(
+    loadEnvDirectory<TEnv>(
       options.projectRoot,
       options,
       dotenv,
@@ -107,7 +107,7 @@ export const loadEnv = async <
       packageJson,
       workspaceConfig
     ),
-    loadEnvDirectory<TOptions, TEnv>(
+    loadEnvDirectory<TEnv>(
       workspaceConfig.workspaceRoot,
       options,
       dotenv,
@@ -115,7 +115,7 @@ export const loadEnv = async <
       packageJson,
       workspaceConfig
     ),
-    loadEnvDirectory<TOptions, TEnv>(
+    loadEnvDirectory<TEnv>(
       configDir,
       options,
       dotenv,

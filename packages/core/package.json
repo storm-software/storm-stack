@@ -41,44 +41,58 @@
     },
     "./engine": {
       "import": {
-        "types": "./dist/engine.d.ts",
-        "default": "./dist/engine.js"
+        "types": "./dist/base/engine.d.ts",
+        "default": "./dist/base/engine.js"
       },
       "require": {
-        "types": "./dist/engine.d.cts",
-        "default": "./dist/engine.cjs"
+        "types": "./dist/base/engine.d.cts",
+        "default": "./dist/base/engine.cjs"
       },
       "default": {
-        "types": "./dist/engine.d.ts",
-        "default": "./dist/engine.js"
+        "types": "./dist/base/engine.d.ts",
+        "default": "./dist/base/engine.js"
       }
     },
     "./compiler": {
       "import": {
-        "types": "./dist/compiler.d.ts",
-        "default": "./dist/compiler.js"
+        "types": "./dist/base/compiler.d.ts",
+        "default": "./dist/base/compiler.js"
       },
       "require": {
-        "types": "./dist/compiler.d.cts",
-        "default": "./dist/compiler.cjs"
+        "types": "./dist/base/compiler.d.cts",
+        "default": "./dist/base/compiler.cjs"
       },
       "default": {
-        "types": "./dist/compiler.d.ts",
-        "default": "./dist/compiler.js"
+        "types": "./dist/base/compiler.d.ts",
+        "default": "./dist/base/compiler.js"
       }
     },
     "./plugin": {
       "import": {
-        "types": "./dist/plugin.d.ts",
-        "default": "./dist/plugin.js"
+        "types": "./dist/base/plugin.d.ts",
+        "default": "./dist/base/plugin.js"
       },
       "require": {
-        "types": "./dist/plugin.d.cts",
-        "default": "./dist/plugin.cjs"
+        "types": "./dist/base/plugin.d.cts",
+        "default": "./dist/base/plugin.cjs"
       },
       "default": {
-        "types": "./dist/plugin.d.ts",
-        "default": "./dist/plugin.js"
+        "types": "./dist/base/plugin.d.ts",
+        "default": "./dist/base/plugin.js"
+      }
+    },
+    "./renderer": {
+      "import": {
+        "types": "./dist/base/renderer.d.ts",
+        "default": "./dist/base/renderer.js"
+      },
+      "require": {
+        "types": "./dist/base/renderer.d.cts",
+        "default": "./dist/base/renderer.cjs"
+      },
+      "default": {
+        "types": "./dist/base/renderer.d.ts",
+        "default": "./dist/base/renderer.js"
       }
     },
     "./init": {
@@ -219,6 +233,20 @@
       "default": {
         "types": "./dist/finalize/index.d.ts",
         "default": "./dist/finalize/index.js"
+      }
+    },
+    "./define-config": {
+      "import": {
+        "types": "./dist/helpers/define-config.d.ts",
+        "default": "./dist/helpers/define-config.js"
+      },
+      "require": {
+        "types": "./dist/helpers/define-config.d.cts",
+        "default": "./dist/helpers/define-config.cjs"
+      },
+      "default": {
+        "types": "./dist/helpers/define-config.d.ts",
+        "default": "./dist/helpers/define-config.js"
       }
     },
     "./helpers": {
@@ -546,20 +574,6 @@
         "default": "./dist/unplugin/esbuild.js"
       }
     },
-    "./farm": {
-      "import": {
-        "types": "./dist/unplugin/farm.d.ts",
-        "default": "./dist/unplugin/farm.js"
-      },
-      "require": {
-        "types": "./dist/unplugin/farm.d.cts",
-        "default": "./dist/unplugin/farm.cjs"
-      },
-      "default": {
-        "types": "./dist/unplugin/farm.d.ts",
-        "default": "./dist/unplugin/farm.js"
-      }
-    },
     "./nuxt": {
       "import": {
         "types": "./dist/unplugin/nuxt.d.ts",
@@ -692,7 +706,7 @@
     "@storm-software/config": "catalog:",
     "@storm-software/config-tools": "catalog:",
     "@storm-software/esbuild": "catalog:",
-    "@storm-stack/types": "0.14.1",
+    "@storm-stack/types": "workspace:*",
     "@stryke/capnp": "catalog:",
     "@stryke/convert": "catalog:",
     "@stryke/env": "catalog:",

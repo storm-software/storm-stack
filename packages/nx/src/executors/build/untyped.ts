@@ -17,10 +17,10 @@
  ------------------------------------------------------------------- */
 
 import { defineUntypedSchema } from "untyped";
-import stormStackBaseExecutorSchema from "../../base/base-executor.untyped";
+import stormStackPrepareExecutorSchema from "../prepare/untyped";
 
 export default defineUntypedSchema({
-  ...stormStackBaseExecutorSchema,
+  ...stormStackPrepareExecutorSchema,
   $schema: {
     id: "StormStackBuildExecutorSchema",
     title: "Storm Stack Build Executor",
@@ -28,20 +28,13 @@ export default defineUntypedSchema({
       "A type definition for the Storm Stack - Build executor schema",
     required: []
   },
-  autoPrepare: {
+  skipLint: {
     $schema: {
-      title: "Auto Prepare",
+      title: "Skip Lint",
       type: "boolean",
-      description: "Automatically prepare the project (if required)"
+      description:
+        "Skip the linting process ran prior to the build (if required)"
     },
-    $default: true
-  },
-  autoClean: {
-    $schema: {
-      title: "Auto Clean",
-      type: "boolean",
-      description: "Automatically clean the project (if required)"
-    },
-    $default: true
+    $default: false
   }
 });

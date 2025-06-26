@@ -23,7 +23,7 @@ export interface StormStackBaseExecutorSchema {
   * 
   * @format path
  */
- entry?: string,
+ entry: string,
 
  /**
   * Plugins
@@ -43,6 +43,14 @@ export interface StormStackBaseExecutorSchema {
   * @enum development,staging,production
  */
  mode?: string,
+
+ /**
+  * Environment
+  * 
+  * The environment name for which the project is being built.
+  * 
+ */
+ environment?: string,
 
  /**
   * TypeScript Configuration File
@@ -80,12 +88,14 @@ export interface StormStackBaseExecutorSchema {
  skipLint?: boolean,
 
  /**
-  * Silent
+  * Log Level
   * 
-  * Should the build run silently - only report errors back to the user
+  * The log level to use for the build process
   * 
-  * @default false
+  * @default "info"
+  * 
+  * @enum error,success,silent,fatal,warn,info,debug,trace,all
  */
- silent?: boolean,
+ logLevel?: string,
 }
 

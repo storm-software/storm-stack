@@ -18,7 +18,6 @@
 
 import { getWorkspaceConfig } from "@storm-software/config-tools/get-config";
 import { LogLevelLabel } from "@storm-software/config-tools/types";
-import type { StormWorkspaceConfig } from "@storm-software/config/types";
 import type {
   TransformResult,
   UnpluginBuildContext,
@@ -26,40 +25,47 @@ import type {
   UnpluginInstance
 } from "unplugin";
 import { createUnplugin } from "unplugin";
-import { Engine } from "../engine";
+import { Engine } from "../base/engine";
 import { createLog } from "../helpers/utilities/logger";
-import type { Context, Options } from "../types";
+import type {
+  BuildInlineConfig,
+  Context,
+  UserConfig,
+  WorkspaceConfig
+} from "../types";
 
-export type StormStackUnpluginFactory<TOptions extends Options = Options> =
-  UnpluginFactory<TOptions>;
+export type StormStackUnpluginFactory = UnpluginFactory<UserConfig>;
 
-export type StormStackUnpluginInstance<TOptions extends Options = Options> =
-  UnpluginInstance<TOptions>;
+export type StormStackUnpluginInstance = UnpluginInstance<UserConfig>;
 
-export const unpluginFactory: StormStackUnpluginFactory = <
-  TOptions extends Options = Options
->(
-  options: TOptions
+export const unpluginFactory: StormStackUnpluginFactory = (
+  userConfig: UserConfig
 ) => {
-  const log = createLog("unplugin", options);
+  const log = createLog("unplugin", userConfig);
   log(LogLevelLabel.TRACE, "Initializing Unplugin");
 
   try {
-    let workspaceConfig!: StormWorkspaceConfig;
-    let engine!: Engine<TOptions>;
+    const inlineConfig = {
+      ...userConfig,
+      command: "build"
+    } as BuildInlineConfig;
+
+    let workspaceConfig!: WorkspaceConfig;
+    let engine!: Engine;
     let context!: Context;
 
     async function buildStart(this: UnpluginBuildContext): Promise<void> {
       log(LogLevelLabel.TRACE, "Build Starting");
 
       workspaceConfig = await getWorkspaceConfig();
-      engine = new Engine(options, workspaceConfig);
+
+      engine = new Engine(inlineConfig, workspaceConfig);
 
       log(LogLevelLabel.TRACE, "Initializing Storm Stack...");
-      context = await engine.init();
+      context = await engine.init(inlineConfig);
 
       log(LogLevelLabel.TRACE, "Prepare Storm Stack project...");
-      await engine.prepare(true);
+      await engine.prepare(inlineConfig);
     }
 
     async function transform(
@@ -76,7 +82,7 @@ export const unpluginFactory: StormStackUnpluginFactory = <
 
     async function writeBundle(): Promise<void> {
       log(LogLevelLabel.TRACE, "Finalizing Storm Stack project...");
-      await engine.finalize();
+      await engine.finalize(inlineConfig);
     }
 
     return {

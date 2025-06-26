@@ -16,7 +16,7 @@
 
  ------------------------------------------------------------------- */
 
-import { Options } from "@storm-stack/core/types/build";
+import { BuildInlineConfig } from "@storm-stack/core/types/config";
 import { StormPayload } from "../../../.storm/runtime/payload";
 import { createEngine } from "../../helpers/create-engine";
 
@@ -27,9 +27,12 @@ interface BuildPayload {
   /**
    * The root directory of the Storm Stack project.
    *
+   * @title Project Root
+   *
    * @alias project
+   * @alias projectRoot
    */
-  projectRoot: Options["projectRoot"];
+  root: string;
 }
 
 /**
@@ -40,15 +43,21 @@ interface BuildPayload {
 async function handler(payload: StormPayload<BuildPayload>) {
   const data = payload.data;
 
-  $storm.log.info(`Building Storm Stack project at ${data.projectRoot}...`);
+  $storm.log.info(`Building Storm Stack project at ${data.root}...`);
 
-  const engine = await createEngine({
-    projectRoot: data.projectRoot
-  });
-  engine.setIntent("build");
+  const inlineConfig = {
+    root: data.root,
+    command: "build"
+  } as BuildInlineConfig;
 
-  await engine.build();
-  await engine.finalize();
+  const engine = await createEngine(inlineConfig);
+
+  await engine.build(inlineConfig);
+  await engine.finalize(inlineConfig);
+
+  $storm.log.info(
+    `Build completed successfully. Distribution files are located in ${data.root}/dist.`
+  );
 }
 
 export default handler;

@@ -34,7 +34,6 @@ import { TsConfigJson } from "@stryke/types/tsconfig";
 import defu from "defu";
 import ts from "typescript";
 import { readDotenvReflection } from "../../helpers/dotenv/persistence";
-import { createVirtualProgram } from "../../helpers/typescript/program";
 import { getParsedTypeScriptConfig } from "../../helpers/typescript/tsconfig";
 import { getFileHeader } from "../../helpers/utilities/file-header";
 import { writeFile } from "../../helpers/utilities/write-file";
@@ -173,19 +172,26 @@ export async function generateRuntimeTypes(log: LogFn, context: Context) {
     }
   }
 
-  context.vfs.add(fileNames);
-  const program: ts.Program = createVirtualProgram(
-    context,
-    ts.createCompilerHost(resolvedTsconfig.options),
-    resolvedTsconfig.options
+  // context.vfs.add(fileNames);
+  // const program: ts.Program = createVirtualProgram(
+  //   context,
+  //   ts.createCompilerHost(resolvedTsconfig.options),
+  //   resolvedTsconfig.options
+  // );
+
+  const program: ts.Program = ts.createProgram(
+    fileNames.map(fileName =>
+      replacePath(fileName, context.workspaceConfig.workspaceRoot)
+    ),
+    resolvedTsconfig.options,
+    ts.createCompilerHost(resolvedTsconfig.options)
   );
 
   let runtimeModules = "";
   const emitResult = program.emit(
     undefined,
-    (fileName, text, writeByteOrderMark, onError, sourceFiles, _data) => {
+    (fileName, text, _, onError, sourceFiles, _data) => {
       const sourceFile = sourceFiles?.[0];
-
       if (sourceFile?.fileName && !fileName.endsWith(".map")) {
         const sourceFileName = joinPaths(
           context.workspaceConfig.workspaceRoot,

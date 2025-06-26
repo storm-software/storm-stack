@@ -26,7 +26,7 @@ export default defineUntypedSchema({
     title: "Storm Stack Base Executor",
     description:
       "A shared/base schema type definition for Storm Stack executors",
-    required: []
+    required: ["entry"]
   },
   entry: {
     $schema: {
@@ -54,6 +54,13 @@ export default defineUntypedSchema({
       enum: ["development", "staging", "production"]
     },
     $default: "production"
+  },
+  environment: {
+    $schema: {
+      title: "Environment",
+      type: "string",
+      description: "The environment name for which the project is being built."
+    }
   },
   tsconfig: {
     $schema: {
@@ -85,13 +92,23 @@ export default defineUntypedSchema({
       description: "Skip linting the project when building"
     }
   },
-  silent: {
+  logLevel: {
     $schema: {
-      title: "Silent",
-      type: "boolean",
-      description:
-        "Should the build run silently - only report errors back to the user"
+      title: "Log Level",
+      type: "string",
+      description: "The log level to use for the build process",
+      enum: [
+        "error",
+        "success",
+        "silent",
+        "fatal",
+        "warn",
+        "info",
+        "debug",
+        "trace",
+        "all"
+      ]
     },
-    $default: false
+    $default: "info"
   }
 });

@@ -29,6 +29,12 @@ export interface LogPluginConfig {
   namespace?: string;
 }
 
+/**
+ * Base class for Log plugins in Storm Stack.
+ *
+ * @remarks
+ * This class provides the foundation for creating logging plugins in Storm Stack. It handles the initialization of the plugin's context and prepares the runtime for logging sinks. Derived classes must implement the `writeSink` method to define how the logging sink should be.
+ */
 export default abstract class LogPlugin extends LibraryPlugin {
   public constructor(
     protected override config: LogPluginConfig,
@@ -40,12 +46,17 @@ export default abstract class LogPlugin extends LibraryPlugin {
     this.config.logLevel ??= "info";
   }
 
-  public override addHooks(hooks: EngineHooks) {
-    super.addHooks(hooks);
+  /**
+   * Adds the plugin's hooks to the engine.
+   *
+   * @param hooks - The engine hooks to add the plugin's hooks to.
+   */
+  public override innerAddHooks(hooks: EngineHooks) {
+    super.innerAddHooks(hooks);
 
     hooks.addHooks({
-      "init:context": this.#initContext.bind(this),
-      "prepare:runtime": this.#prepareRuntime.bind(this)
+      "init:context": this.initContext.bind(this),
+      "prepare:runtime": this.prepareRuntime.bind(this)
     });
   }
 
@@ -56,7 +67,7 @@ export default abstract class LogPlugin extends LibraryPlugin {
    */
   protected abstract writeSink(context: Context): MaybePromise<string>;
 
-  async #prepareRuntime(context: Context) {
+  private async prepareRuntime(context: Context) {
     this.log(LogLevelLabel.TRACE, `Prepare the Storm Stack logging project.`);
 
     if (context.options.projectType === "application") {
@@ -64,26 +75,54 @@ export default abstract class LogPlugin extends LibraryPlugin {
         joinPaths(
           context.runtimePath,
           "logs",
-          `${this.name.replace(/^log-/, "")}${this.config.namespace ? `-${this.config.namespace.replaceAll(".", "-").replaceAll(":", "-").replaceAll(" ", "-")}` : ""}-${this.config.logLevel}.ts`
+          `${this.name.replace(/^log-/, "")}${
+            this.config.namespace
+              ? `-${this.config.namespace
+                  .replaceAll(".", "-")
+                  .replaceAll(":", "-")
+                  .replaceAll(" ", "-")}`
+              : ""
+          }-${this.config.logLevel}.ts`
         ),
         await Promise.resolve(this.writeSink(context))
       );
     }
   }
 
-  async #initContext(context: Context) {
+  private async initContext(context: Context) {
     this.log(
       LogLevelLabel.TRACE,
       `Loading the ${this.name} plugin into the context.`
     );
 
     if (context.options.projectType === "application") {
-      const name = `${camelCase(`${this.name.replace(/^log-/, "")}${this.config.namespace ? `-${this.config.namespace.replaceAll(".", "-").replaceAll(":", "-").replaceAll(" ", "-")}` : ""}-${this.config.logLevel}`)}Sink`;
-      context.runtime.logs.push({
-        name,
-        logLevel: this.config.logLevel || "info",
-        import: `import ${name} from "./${joinPaths("logs", `${this.name.replace(/^log-/, "")}${this.config.namespace ? `-${this.config.namespace.replaceAll(".", "-").replaceAll(":", "-").replaceAll(" ", "-")}` : ""}-${this.config.logLevel}`)}"; `
-      });
+      const name = `${camelCase(
+        `${this.name.replace(/^log-/, "")}${
+          this.config.namespace
+            ? `-${this.config.namespace
+                .replaceAll(".", "-")
+                .replaceAll(":", "-")
+                .replaceAll(" ", "-")}`
+            : ""
+        }-${this.config.logLevel}`
+      )}Sink`;
+      if (!context.runtime.logs.some(log => log.name === name)) {
+        context.runtime.logs.push({
+          name,
+          logLevel: this.config.logLevel || "info",
+          import: `import ${name} from "./${joinPaths(
+            "logs",
+            `${this.name.replace(/^log-/, "")}${
+              this.config.namespace
+                ? `-${this.config.namespace
+                    .replaceAll(".", "-")
+                    .replaceAll(":", "-")
+                    .replaceAll(" ", "-")}`
+                : ""
+            }-${this.config.logLevel}`
+          )}"; `
+        });
+      }
     }
   }
 }

@@ -18,17 +18,22 @@
 
 import { LogLevelLabel } from "@storm-software/config-tools/types";
 import type { MaybePromise } from "@stryke/types/base";
-import { createLog } from "./helpers/utilities/logger";
-import { writeFile } from "./helpers/utilities/write-file";
-import { installPackage } from "./init/installs/utilities";
-import type { Context, EngineHooks } from "./types/build";
-import type { LogFn, PluginConfig } from "./types/config";
-import type { IPlugin } from "./types/plugin";
+import { createLog } from "../helpers/utilities/logger";
+import { writeFile } from "../helpers/utilities/write-file";
+import { installPackage } from "../init/installs/utilities";
+import type { Context, EngineHooks } from "../types/build";
+import type { LogFn, PluginConfig } from "../types/config";
+import type { IPlugin } from "../types/plugin";
 
 /**
  * The base class for all plugins
  */
 export abstract class Plugin implements IPlugin {
+  /**
+   * The logger function to use
+   */
+  #log: LogFn;
+
   /**
    * The name of the plugin
    */
@@ -50,7 +55,15 @@ export abstract class Plugin implements IPlugin {
   /**
    * The logger function to use
    */
-  public log: LogFn;
+  public get log(): LogFn {
+    if (!this.#log) {
+      this.#log = createLog(`${this.name}-plugin`, {
+        logLevel: LogLevelLabel.INFO
+      });
+    }
+
+    return this.#log;
+  }
 
   // /**
   //  * The renderer used by the plugin
@@ -74,9 +87,7 @@ export abstract class Plugin implements IPlugin {
       this.name = this.name.replace(/-plugin$/, "").trim();
     }
 
-    this.log = createLog(`${this.name}-plugin`);
     this.installPath = installPath || `@storm-stack/plugin-${this.name}`;
-
     if (!installPath) {
       this.log(
         LogLevelLabel.WARN,
@@ -85,10 +96,20 @@ export abstract class Plugin implements IPlugin {
     }
   }
 
+  public async addHooks(hooks: EngineHooks) {
+    this.log(LogLevelLabel.TRACE, `Adding hooks to engine`);
+
+    hooks.addHooks({
+      "init:context": this.#initContext.bind(this)
+    });
+
+    return this.innerAddHooks(hooks);
+  }
+
   /**
    * Function to add hooks into the Storm Stack engine
    */
-  public abstract addHooks(hooks: EngineHooks): MaybePromise<void>;
+  public abstract innerAddHooks(hooks: EngineHooks): MaybePromise<void>;
 
   /**
    * Writes a file to the file system
@@ -116,5 +137,9 @@ export abstract class Plugin implements IPlugin {
    */
   protected async install(context: Context, packageName: string, dev = false) {
     return installPackage(this.log, context, packageName, dev);
+  }
+
+  async #initContext(context: Context) {
+    this.#log = createLog(`${this.name}-plugin`, context.options);
   }
 }

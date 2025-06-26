@@ -16,53 +16,48 @@
 
  ------------------------------------------------------------------- */
 
-import defu from "defu";
-import type { BuildOptions } from "esbuild";
+import { Entry } from "@storm-software/build-tools/types";
+import { ESBuildOverrideOptions } from "@storm-stack/core/types/config";
+import { isString } from "@stryke/type-checks/is-string";
 import { build as esbuild } from "esbuild";
-import type { CompileOptions, Context, Options } from "../../types/build";
-import { compilerPlugin } from "./compiler-plugin";
-import { externalPlugin } from "./external-plugin";
+import type {
+  CompileOptions,
+  Context,
+  ResolvedOptions
+} from "../../types/build";
+import { resolveExternalESBuildOptions } from "./options";
 
 export type BundleOptions = CompileOptions &
-  Pick<Options, "external" | "noExternal" | "skipNodeModulesBundle">;
+  Pick<ResolvedOptions, "external" | "noExternal" | "skipNodeModulesBundle"> & {
+    entry?: Entry;
+    outputPath?: string;
+  };
 
 export async function bundle(
   context: Context,
-  entryPoint: string,
-  outputDir: string,
-  override: Partial<BuildOptions> = {},
-  options: BundleOptions = {}
+  override: Partial<ESBuildOverrideOptions> = {},
+  bundleOptions: BundleOptions = {}
 ) {
-  const contextOverrides = { ...context.override };
-  delete contextOverrides.external;
-  delete contextOverrides.noExternal;
-  delete contextOverrides.skipNodeModulesBundle;
+  const options = await resolveExternalESBuildOptions(
+    context,
+    {
+      outdir: bundleOptions.outputPath,
+      entryPoints: bundleOptions.entry
+        ? Array.isArray(bundleOptions.entry)
+          ? bundleOptions.entry
+          : isString(bundleOptions.entry)
+            ? [bundleOptions.entry]
+            : Object.values(bundleOptions.entry)
+        : [],
+      ...override
+    },
+    bundleOptions
+  );
 
-  const esbuildOptions = defu(override ?? {}, contextOverrides, {
-    entryPoints: [entryPoint],
-    platform: "node",
-    format: "esm",
-    minify: false,
-    sourcemap: false,
-    bundle: true,
-    treeShaking: true,
-    keepNames: true,
-    splitting: false,
-    preserveSymlinks: true,
-    outdir: outputDir,
-    logLevel: "silent",
-    plugins: [
-      externalPlugin(
-        {
-          external: options.external ?? context.options.external,
-          noExternal: options.noExternal ?? context.options.noExternal,
-          skipNodeModulesBundle: options.skipNodeModulesBundle ?? true
-        },
-        context.tsconfig.options?.paths
-      ),
-      compilerPlugin(context, options)
-    ]
-  }) as BuildOptions;
-
-  return esbuild(esbuildOptions);
+  try {
+    return esbuild(options);
+  } catch (error) {
+    console.error("Error occurred while bundling:", error);
+    throw error;
+  }
 }

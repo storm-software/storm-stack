@@ -30,12 +30,12 @@ export default class LogSentryPlugin extends LogPlugin {
     super(config, "log-sentry-plugin", "@storm-stack/plugin-log-sentry");
   }
 
-  public override addHooks(hooks: EngineHooks) {
+  public override innerAddHooks(hooks: EngineHooks) {
     hooks.addHooks({
-      "init:context": this.initContext.bind(this)
+      "init:context": this.#initContext.bind(this)
     });
 
-    super.addHooks(hooks);
+    super.innerAddHooks(hooks);
   }
 
   protected override writeSink(_context: Context) {
@@ -133,7 +133,7 @@ export default sink;
    *
    * @param context - The context to initialize.
    */
-  private async initContext(context: Context) {
+  async #initContext(context: Context) {
     context.installs["@sentry/core@^9.15.0"] = "dependency";
 
     if (context.options.platform === "node") {

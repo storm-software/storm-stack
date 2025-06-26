@@ -33,7 +33,10 @@ export async function cleanDocs(
   );
 
   await removeDirectory(
-    joinPaths(context.workspaceConfig.workspaceRoot, context.options.outputPath)
+    joinPaths(
+      context.workspaceConfig.workspaceRoot,
+      context.options.outputPath || "dist/docs"
+    )
   );
 
   await hooks.callHook("clean:docs", context).catch((error: Error) => {

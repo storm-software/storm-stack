@@ -21,6 +21,12 @@ import type { Context, EngineHooks } from "@storm-stack/core/types/build";
 import { unbuild } from "../helpers/unbuild";
 import BasePlugin from "./base";
 
+/**
+ * Plugin for building the Storm Stack library package.
+ *
+ * @remarks
+ * This plugin provides the functionality to build the Storm Stack library package using Unbuild. It extends the BasePlugin class and adds hooks for the build process.
+ */
 export default class LibraryPlugin extends BasePlugin {
   public constructor(
     protected config: any = {},
@@ -30,8 +36,13 @@ export default class LibraryPlugin extends BasePlugin {
     super(name, installPath);
   }
 
-  public override addHooks(hooks: EngineHooks) {
-    super.addHooks(hooks);
+  /**
+   * Adds the plugin's hooks to the engine.
+   *
+   * @param hooks - The engine hooks to add the plugin's hooks to.
+   */
+  public override innerAddHooks(hooks: EngineHooks) {
+    super.innerAddHooks(hooks);
 
     hooks.addHooks({
       "build:library": this.build.bind(this)

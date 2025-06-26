@@ -17,13 +17,14 @@
  ------------------------------------------------------------------- */
 
 import { LogLevelLabel } from "@storm-software/config-tools/types";
-import { Compiler } from "../compiler";
+import { Compiler } from "../base/compiler";
 import type { Context, EngineHooks, SourceFile } from "../types/build";
 import type { LogFn } from "../types/config";
 import { initContext } from "./context";
 import { initDotenv } from "./dotenv";
 import { initEntry } from "./entry";
 import { initInstalls } from "./installs";
+import { initOptions } from "./options";
 import { initTsconfig } from "./tsconfig";
 import { initUnimport } from "./unimport";
 import { initWorkers } from "./workers";
@@ -42,6 +43,7 @@ export async function init(log: LogFn, context: Context, hooks: EngineHooks) {
   });
 
   await initContext(log, context, hooks);
+  await initOptions(log, context, hooks);
   await initInstalls(log, context, hooks);
   await initTsconfig(log, context, hooks);
   await initUnimport(log, context, hooks);

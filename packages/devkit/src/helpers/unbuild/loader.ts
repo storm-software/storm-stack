@@ -20,16 +20,14 @@ import type { Loader, LoaderResult } from "@storm-software/unbuild/types";
 import type { Context } from "@storm-stack/core/types/build";
 import { transform } from "esbuild";
 
-const DECLARATION_RE = /\.d\.[cm]?ts$/;
-const CM_LETTER_RE = /(?<=\.)(?:c|m)(?=[jt]s$)/;
-
-const KNOWN_EXT_RE = /\.(?:c|m)?[jt]sx?$/;
-
 const TS_EXTS = new Set([".ts", ".mts", ".cts"]);
 
 export const getUnbuildLoader = (context: Context): Loader => {
   return async (input, { options }) => {
-    if (!KNOWN_EXT_RE.test(input.path) || DECLARATION_RE.test(input.path)) {
+    if (
+      !/\.(?:c|m)?[jt]sx?$/.test(input.path) ||
+      /\.d\.[cm]?ts$/.test(input.path)
+    ) {
       return;
     }
 
@@ -38,8 +36,8 @@ export const getUnbuildLoader = (context: Context): Loader => {
     let contents = await input.getContents();
 
     // declaration
-    if (options.declaration && !input.srcPath?.match(DECLARATION_RE)) {
-      const cm = input.srcPath?.match(CM_LETTER_RE)?.[0] || "";
+    if (options.declaration && !input.srcPath?.match(/\.d\.[cm]?ts$/)) {
+      const cm = input.srcPath?.match(/(?<=\.)(?:c|m)(?=[jt]s$)/)?.[0] || "";
       const extension = `.d.${cm}ts`;
       output.push({
         contents,

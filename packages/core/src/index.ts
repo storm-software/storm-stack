@@ -25,10 +25,7 @@
  * @packageDocumentation
  */
 
-export * from "./compiler";
-export * from "./engine";
+export * from "./base";
 export * from "./helpers";
-export * from "./plugin";
-export * from "./renderer";
 export * from "./types";
 export * from "./unplugin";

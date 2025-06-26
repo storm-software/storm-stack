@@ -44,6 +44,15 @@ A list of plugins to use during Storm Stack processing
 The build mode
 
 
+## `environment`
+- **Type**: `string`
+
+> Environment
+
+
+The environment name for which the project is being built.
+
+
 ## `tsconfig`
 - **Type**: `string`
 - **Default**: `"{projectRoot}/tsconfig.json"`
@@ -74,40 +83,31 @@ Skip the cache when building
 
 ## `skipLint`
 - **Type**: `boolean`
+- **Default**: `false`
 
 > Skip Lint
 
 
-Skip linting the project when building
+Skip the linting process ran prior to the build (if required)
 
 
-## `silent`
-- **Type**: `boolean`
-- **Default**: `false`
+## `logLevel`
+- **Type**: `string`
+- **Default**: `"info"`
 
-> Silent
-
-
-Should the build run silently - only report errors back to the user
+> Log Level
 
 
-## `autoPrepare`
-- **Type**: `boolean`
-- **Default**: `true`
-
-> Auto Prepare
+The log level to use for the build process
 
 
-Automatically prepare the project (if required)
-
-
-## `autoClean`
+## `clean`
 - **Type**: `boolean`
 - **Default**: `true`
 
-> Auto Clean
+> Clean
 
 
-Automatically clean the project (if required)
+Automatically clean the project's output artifacts (if required)
 
 

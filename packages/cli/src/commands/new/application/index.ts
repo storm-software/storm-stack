@@ -16,17 +16,18 @@
 
  ------------------------------------------------------------------- */
 
-import { Options } from "@storm-stack/core/types/build";
+import { NewInlineConfig } from "@storm-stack/core/types/config";
 import { StormPayload } from "../../../../.storm/runtime/payload";
 import { createEngine } from "../../../helpers/create-engine";
 
 /**
  * The payload for the example CLI application.
  */
-type NewApplicationPayload = Pick<
-  Options,
-  "name" | "projectRoot" | "packageName"
->;
+interface NewApplicationPayload {
+  name: string;
+  root: string;
+  packageName: string;
+}
 
 /**
  * Create a new Storm Stack application in the current workspace.
@@ -36,14 +37,18 @@ type NewApplicationPayload = Pick<
 async function handler(payload: StormPayload<NewApplicationPayload>) {
   const data = payload.data;
 
-  const engine = await createEngine({
-    projectRoot: data.projectRoot,
-    projectType: "application"
-  });
-  engine.setIntent("new");
+  const inlineConfig = {
+    root: data.root,
+    name: data.name,
+    packageName: data.packageName,
+    type: "application",
+    command: "new"
+  } as NewInlineConfig;
 
-  await engine.new();
-  await engine.finalize();
+  const engine = await createEngine(inlineConfig);
+
+  await engine.new(inlineConfig);
+  await engine.finalize(inlineConfig);
 }
 
 export default handler;

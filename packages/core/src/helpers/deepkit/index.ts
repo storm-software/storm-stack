@@ -17,3 +17,4 @@
  ------------------------------------------------------------------- */
 
 export * from "./reflect-type";
+export * from "./resolve-reflections";

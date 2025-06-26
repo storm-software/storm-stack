@@ -18,11 +18,12 @@
 
 export * from "./cache";
 export * from "./capnp";
+export * from "./config";
 export * from "./file-header";
-export * from "./load-config";
 export * from "./logger";
 export * from "./magic-string";
 export * from "./resolve-path";
 export * from "./source-map";
 export * from "./vfs";
+export * from "./worker";
 export * from "./write-file";

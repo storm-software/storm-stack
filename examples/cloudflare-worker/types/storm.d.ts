@@ -1930,10 +1930,18 @@ declare module "storm:id" {
   /**
    * A platform agnostic version of the [nanoid](https://github.com/ai/nanoid) package with some modifications.
    *
-   * @param size - The size of the string to generate
+   * @param size - The size of the string to generate. Defaults to 21 if not provided.
    * @returns A unique identifier following the nanoid format
    */
-  export function uniqueId(size?: number): string;
+  export function uniqueId(size?: number | undefined): string;
+  /**
+   * A platform agnostic version of the [nanoid](https://github.com/ai/nanoid) package with some modifications.
+   *
+   * @param prefix - The prefix to use for the unique identifier
+   * @param size - The size of the string to generate. Defaults to 21 if not provided.
+   * @returns A unique identifier following the nanoid format
+   */
+  export function uniqueId(prefix?: string, size?: number | undefined): string;
 }
 
 declare module "storm:payload" {
@@ -2148,7 +2156,7 @@ declare module "storm:env" {
   /** The organization that maintains the application */
   export const organization = "storm-software";
   /** The current application */
-  export const name = "examples-cloudflare-worker";
+  export const name = "storm-stack";
   /** The current application */
   export const version = "0.0.1";
   /**

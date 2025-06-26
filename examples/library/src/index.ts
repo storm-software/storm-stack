@@ -17,6 +17,8 @@
  ------------------------------------------------------------------- */
 
 // eslint-disable-next-line ts/consistent-type-imports
+import { StormError } from "../.storm/runtime/error";
+import { StormPayload } from "../.storm/runtime/payload";
 import { ExamplePayload } from "./types";
 
 export function getCity(request: StormPayload<ExamplePayload>) {

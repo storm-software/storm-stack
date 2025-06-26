@@ -36,7 +36,8 @@ import {
   LogFilter,
   LogLevel,
   LogRecord,
-  LogSink
+  LogSink,
+  LogSinkInstance
 } from "@storm-stack/types/log";
 import { StormError, isError, isStormError } from "./error";
 ${context.runtime.logs.map(log => log.import || `import ${log.name} from "./logs/${log.name}";`).join("\n")}
@@ -218,7 +219,7 @@ function renderMessage(
  * @remarks
  * This constant is generated dynamically by the build process. Do not modify it directly.
  */
-const LOG_SINKS = [
+const LOG_SINKS: LogSinkInstance[] = [
 ${context.runtime.logs.map(log => `{ logLevel: "${log.logLevel}", handle: ${log.name} }`).join(", \n")}
 ] as const;
 

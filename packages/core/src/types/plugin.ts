@@ -60,5 +60,5 @@ export interface IPlugin {
   /**
    * Function to add hooks to the engine
    */
-  addHooks: (hooks: EngineHooks) => MaybePromise<void>;
+  innerAddHooks: (hooks: EngineHooks) => MaybePromise<void>;
 }

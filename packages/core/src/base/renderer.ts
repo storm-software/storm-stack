@@ -18,12 +18,12 @@
 
 import { LogLevelLabel } from "@storm-software/config-tools/types";
 import type { MaybePromise } from "@stryke/types/base";
-import { createLog } from "./helpers/utilities/logger";
-import { writeFile } from "./helpers/utilities/write-file";
-import { installPackage } from "./init/installs/utilities";
-import type { Context, EngineHooks } from "./types/build";
-import type { LogFn } from "./types/config";
-import { IRenderer } from "./types/plugin";
+import { createLog } from "../helpers/utilities/logger";
+import { writeFile } from "../helpers/utilities/write-file";
+import { installPackage } from "../init/installs/utilities";
+import type { Context, EngineHooks } from "../types/build";
+import type { LogFn } from "../types/config";
+import { IRenderer } from "../types/plugin";
 
 /**
  * A base class used by all Storm Stack renderers.
@@ -46,7 +46,6 @@ export abstract class Renderer implements IRenderer {
    * The constructor for the renderer
    *
    * @param name - The name of the renderer
-   * @param installPath - The path to install the renderer
    */
   public constructor(name: string) {
     this.name = name.toLowerCase();

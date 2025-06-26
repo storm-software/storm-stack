@@ -18,7 +18,7 @@
 
 import { addVitePlugin, addWebpackPlugin, defineNuxtModule } from "@nuxt/kit";
 import "@nuxt/schema";
-import type { Options } from "../types";
+import type { ResolvedUserConfig } from "../types";
 import { StormStack } from "./index";
 
 /**
@@ -34,7 +34,7 @@ import { StormStack } from "./index";
  * }
  * ```
  */
-const nuxt = defineNuxtModule<Options>({
+const nuxt = defineNuxtModule<ResolvedUserConfig>({
   meta: {
     name: "storm-stack",
     configKey: "storm"

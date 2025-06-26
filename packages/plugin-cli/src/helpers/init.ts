@@ -44,27 +44,28 @@ export async function initContext(
   context: StormStackCLIPluginContext,
   config: StormStackCLIPluginConfig
 ) {
-  context.options.platform = "node";
+  context.options.esbuild.override ??= {};
+  context.options.alias ??= {};
 
-  context.override.alias ??= {};
-  context.override.alias["storm:app"] ??= joinPaths(context.runtimePath, "app");
-  context.override.alias["storm:context"] ??= joinPaths(
+  context.options.alias["storm:app"] ??= joinPaths(context.runtimePath, "app");
+  context.options.alias["storm:context"] ??= joinPaths(
     context.runtimePath,
     "context"
   );
-  context.override.alias["storm:env"] ??= joinPaths(context.runtimePath, "env");
-  context.override.alias["storm:event"] ??= joinPaths(
+  context.options.alias["storm:env"] ??= joinPaths(context.runtimePath, "env");
+  context.options.alias["storm:event"] ??= joinPaths(
     context.runtimePath,
     "event"
   );
-  context.override.alias["storm:cli"] = joinPaths(context.runtimePath, "cli");
+  context.options.alias["storm:cli"] = joinPaths(context.runtimePath, "cli");
 
-  context.override.skipNodeModulesBundle = true;
+  context.options.platform = "node";
+  context.options.environment = "cli";
 
-  context.override.external ??= [];
-  context.override.noExternal ??= [];
-  if (Array.isArray(context.override.noExternal)) {
-    context.override.noExternal.push(
+  context.options.external ??= [];
+  context.options.noExternal ??= [];
+  if (Array.isArray(context.options.noExternal)) {
+    context.options.noExternal.push(
       "storm:app",
       "storm:context",
       "storm:env",

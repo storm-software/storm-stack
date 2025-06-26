@@ -45,6 +45,14 @@ export interface StormStackCleanExecutorSchema {
  mode?: string,
 
  /**
+  * Environment
+  * 
+  * The environment name for which the project is being built.
+  * 
+ */
+ environment?: string,
+
+ /**
   * TypeScript Configuration File
   * 
   * The path to the tsconfig file
@@ -80,12 +88,14 @@ export interface StormStackCleanExecutorSchema {
  skipLint?: boolean,
 
  /**
-  * Silent
+  * Log Level
   * 
-  * Should the build run silently - only report errors back to the user
+  * The log level to use for the build process
   * 
-  * @default false
+  * @default "info"
+  * 
+  * @enum error,success,silent,fatal,warn,info,debug,trace,all
  */
- silent?: boolean,
+ logLevel?: string,
 }
 
