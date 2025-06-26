@@ -2,6 +2,27 @@
 
 # Changelog for Storm Stack - CLI
 
+## [0.13.0](https://github.com/storm-software/storm-stack/releases/tag/cli%400.13.0) (2025-06-26)
+
+### Features
+
+- **core:** Improvements to the configuration types and processing logic
+  ([09b2edf1](https://github.com/storm-software/storm-stack/commit/09b2edf1))
+
+### Bug Fixes
+
+- **core:** Resolved issue with `base` exports in `package.json` file
+  ([1e7b7bf2](https://github.com/storm-software/storm-stack/commit/1e7b7bf2))
+
+### Updated Dependencies
+
+- Updated plugin-log-storage to 0.19.0
+- Updated plugin-log-sentry to 0.21.0
+- Updated plugin-storage-fs to 0.8.0
+- Updated plugin-cli to 0.24.0
+- Updated core to 0.32.0
+- Updated nx to 0.14.0
+
 ## [0.12.1](https://github.com/storm-software/storm-stack/releases/tag/cli%400.12.1) (2025-06-23)
 
 ### Source Code Improvements

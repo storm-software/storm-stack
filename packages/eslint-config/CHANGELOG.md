@@ -2,6 +2,13 @@
 
 # Changelog for Storm Stack - ESLint Config
 
+## [0.11.0](https://github.com/storm-software/storm-stack/releases/tag/eslint-config%400.11.0) (2025-06-26)
+
+### Features
+
+- **core:** Improvements to the configuration types and processing logic
+  ([09b2edf1](https://github.com/storm-software/storm-stack/commit/09b2edf1))
+
 ## [0.10.2](https://github.com/storm-software/storm-stack/releases/tag/eslint-config%400.10.2) (2025-06-23)
 
 ### Source Code Improvements

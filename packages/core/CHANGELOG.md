@@ -2,6 +2,18 @@
 
 # Changelog for Storm Stack - Core
 
+## [0.32.0](https://github.com/storm-software/storm-stack/releases/tag/core%400.32.0) (2025-06-26)
+
+### Features
+
+- **core:** Improvements to the configuration types and processing logic
+  ([09b2edf1](https://github.com/storm-software/storm-stack/commit/09b2edf1))
+
+### Bug Fixes
+
+- **core:** Resolved issue with `base` exports in `package.json` file
+  ([1e7b7bf2](https://github.com/storm-software/storm-stack/commit/1e7b7bf2))
+
 ## [0.31.1](https://github.com/storm-software/storm-stack/releases/tag/core%400.31.1) (2025-06-23)
 
 ### Source Code Improvements

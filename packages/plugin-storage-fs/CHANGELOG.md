@@ -2,6 +2,18 @@
 
 # Changelog for Storm Stack - Plugin Storage Fs
 
+## [0.8.0](https://github.com/storm-software/storm-stack/releases/tag/plugin-storage-fs%400.8.0) (2025-06-26)
+
+### Features
+
+- **core:** Improvements to the configuration types and processing logic
+  ([09b2edf1](https://github.com/storm-software/storm-stack/commit/09b2edf1))
+
+### Updated Dependencies
+
+- Updated devkit to 0.8.0
+- Updated core to 0.32.0
+
 ## [0.7.1](https://github.com/storm-software/storm-stack/releases/tag/plugin-storage-fs%400.7.1) (2025-06-23)
 
 ### Source Code Improvements

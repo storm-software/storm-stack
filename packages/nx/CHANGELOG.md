@@ -2,6 +2,22 @@
 
 # Changelog for Storm Stack - Nx
 
+## [0.14.0](https://github.com/storm-software/storm-stack/releases/tag/nx%400.14.0) (2025-06-26)
+
+### Features
+
+- **core:** Improvements to the configuration types and processing logic
+  ([09b2edf1](https://github.com/storm-software/storm-stack/commit/09b2edf1))
+
+### Bug Fixes
+
+- **core:** Resolved issue with `base` exports in `package.json` file
+  ([1e7b7bf2](https://github.com/storm-software/storm-stack/commit/1e7b7bf2))
+
+### Updated Dependencies
+
+- Updated core to 0.32.0
+
 ## [0.13.6](https://github.com/storm-software/storm-stack/releases/tag/nx%400.13.6) (2025-06-23)
 
 ### Source Code Improvements

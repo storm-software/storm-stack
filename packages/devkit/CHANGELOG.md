@@ -2,6 +2,22 @@
 
 # Changelog for Storm Stack - Devkit
 
+## [0.8.0](https://github.com/storm-software/storm-stack/releases/tag/devkit%400.8.0) (2025-06-26)
+
+### Features
+
+- **core:** Improvements to the configuration types and processing logic
+  ([09b2edf1](https://github.com/storm-software/storm-stack/commit/09b2edf1))
+
+### Bug Fixes
+
+- **core:** Resolved issue with `base` exports in `package.json` file
+  ([1e7b7bf2](https://github.com/storm-software/storm-stack/commit/1e7b7bf2))
+
+### Updated Dependencies
+
+- Updated core to 0.32.0
+
 ## [0.7.6](https://github.com/storm-software/storm-stack/releases/tag/devkit%400.7.6) (2025-06-23)
 
 ### Source Code Improvements

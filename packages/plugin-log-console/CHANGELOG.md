@@ -2,6 +2,19 @@
 
 # Changelog for Storm Stack - Plugin Log Console
 
+## [0.16.0](https://github.com/storm-software/storm-stack/releases/tag/plugin-log-console%400.16.0) (2025-06-26)
+
+### Features
+
+- **core:** Improvements to the configuration types and processing logic
+  ([09b2edf1](https://github.com/storm-software/storm-stack/commit/09b2edf1))
+
+### Updated Dependencies
+
+- Updated devkit to 0.8.0
+- Updated core to 0.32.0
+- Updated nx to 0.14.0
+
 ## [0.15.1](https://github.com/storm-software/storm-stack/releases/tag/plugin-log-console%400.15.1) (2025-06-23)
 
 ### Source Code Improvements
