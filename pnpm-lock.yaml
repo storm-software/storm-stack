@@ -24,6 +24,9 @@ catalogs:
     '@deepkit/type-compiler':
       specifier: 1.0.5
       version: 1.0.5
+    '@deepkit/type-spec':
+      specifier: 1.0.1
+      version: 1.0.1
     '@donedeal0/superdiff':
       specifier: ^3.1.2
       version: 3.1.2
@@ -412,6 +415,9 @@ patchedDependencies:
   '@deepkit/type-compiler@1.0.5':
     hash: 4b946ee8c0c62ba9317ff4fb77b3dc738c21d9943e8571b31b7f0b0fed0acbdc
     path: patches/@deepkit__type-compiler@1.0.5.patch
+  '@deepkit/type-spec@1.0.1':
+    hash: 327074031eb01a34ab4001f356088e8e26a20a544ba0af507138fe02524f80f1
+    path: patches/@deepkit__type-spec@1.0.1.patch
   '@deepkit/type@1.0.5':
     hash: 7a527d7fb92c5697a6a95cd468c917d39c24a6974d4c1d0b7da192ebc0552097
     path: patches/@deepkit__type@1.0.5.patch
@@ -423,6 +429,9 @@ importers:
       '@deepkit/type-compiler':
         specifier: 'catalog:'
         version: 1.0.5(patch_hash=4b946ee8c0c62ba9317ff4fb77b3dc738c21d9943e8571b31b7f0b0fed0acbdc)(rollup@4.44.1)(typescript@5.9.0-dev.20250614)
+      '@deepkit/type-spec':
+        specifier: 'catalog:'
+        version: 1.0.1(patch_hash=327074031eb01a34ab4001f356088e8e26a20a544ba0af507138fe02524f80f1)
       '@ls-lint/ls-lint':
         specifier: 'catalog:'
         version: 2.3.0
@@ -15638,7 +15647,7 @@ snapshots:
 
   '@deepkit/type-compiler@1.0.5(patch_hash=4b946ee8c0c62ba9317ff4fb77b3dc738c21d9943e8571b31b7f0b0fed0acbdc)(rollup@4.44.1)(typescript@5.9.0-dev.20250614)':
     dependencies:
-      '@deepkit/type-spec': 1.0.1
+      '@deepkit/type-spec': 1.0.1(patch_hash=327074031eb01a34ab4001f356088e8e26a20a544ba0af507138fe02524f80f1)
       '@marcj/ts-clone-node': 2.2.0(typescript@5.9.0-dev.20250614)
       '@rollup/pluginutils': 5.2.0(rollup@4.44.1)
       '@typescript/vfs': 1.5.0
@@ -15651,12 +15660,12 @@ snapshots:
       - rollup
       - supports-color
 
-  '@deepkit/type-spec@1.0.1': {}
+  '@deepkit/type-spec@1.0.1(patch_hash=327074031eb01a34ab4001f356088e8e26a20a544ba0af507138fe02524f80f1)': {}
 
   '@deepkit/type@1.0.5(patch_hash=7a527d7fb92c5697a6a95cd468c917d39c24a6974d4c1d0b7da192ebc0552097)(@deepkit/core@1.0.5)':
     dependencies:
       '@deepkit/core': 1.0.5
-      '@deepkit/type-spec': 1.0.1
+      '@deepkit/type-spec': 1.0.1(patch_hash=327074031eb01a34ab4001f356088e8e26a20a544ba0af507138fe02524f80f1)
       '@types/uuid': 8.3.4
       buffer: 5.7.1
       uuid: 8.3.2

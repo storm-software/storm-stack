@@ -59,6 +59,7 @@
   },
   "devDependencies": {
     "@deepkit/type-compiler": "catalog:",
+    "@deepkit/type-spec": "catalog:",
     "@ls-lint/ls-lint": "catalog:",
     "@nx/devkit": "catalog:",
     "@nx/eslint-plugin": "catalog:",

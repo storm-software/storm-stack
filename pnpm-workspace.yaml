@@ -11,6 +11,9 @@ catalog:
   '@deepkit/core': 1.0.5
   '@deepkit/type': 1.0.5
   '@deepkit/type-compiler': 1.0.5
+  '@deepkit/type-s': ^0.0.0
+  '@deepkit/type-sp': ^0.0.0
+  '@deepkit/type-spe': ^0.0.0
   '@deepkit/type-spec': 1.0.1
   '@donedeal0/superdiff': ^3.1.2
   '@eslint/compat': ^1.2.9
@@ -205,4 +208,5 @@ overrides:
 patchedDependencies:
   '@deepkit/type-compiler@1.0.5': patches/@deepkit__type-compiler@1.0.5.patch
   '@deepkit/type@1.0.5': patches/@deepkit__type@1.0.5.patch
+  '@deepkit/type-spec@1.0.1': patches/@deepkit__type-spec@1.0.1.patch
 preferWorkspacePackages: true
