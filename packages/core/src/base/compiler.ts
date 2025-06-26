@@ -29,7 +29,7 @@ import { transformConfig } from "../helpers/transform/transform-config";
 import { transformContext } from "../helpers/transform/transform-context";
 import { transformErrors } from "../helpers/transform/transform-errors";
 import { getCache, setCache } from "../helpers/utilities/cache";
-import { createLog } from "../helpers/utilities/logger";
+import { extendLog } from "../helpers/utilities/logger";
 import { getMagicString } from "../helpers/utilities/magic-string";
 import { generateSourceMap } from "../helpers/utilities/source-map";
 import type { LogFn } from "../types";
@@ -58,8 +58,8 @@ export class Compiler implements ICompiler {
    */
   protected cacheDir: string;
 
-  constructor(context: Context, options: CompilerOptions = {}) {
-    this.log = createLog("compiler", context.options);
+  constructor(log: LogFn, context: Context, options: CompilerOptions = {}) {
+    this.log = extendLog(log, "compiler");
     this.#options = options;
 
     this.cacheDir = joinPaths(

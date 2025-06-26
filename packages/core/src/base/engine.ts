@@ -104,8 +104,6 @@ export class Engine {
     inlineConfig: InlineConfig,
     workspaceConfig?: WorkspaceConfig
   ) {
-    this.log = createLog("engine", inlineConfig, workspaceConfig);
-
     const workspaceRoot = workspaceConfig?.workspaceRoot ?? getWorkspaceRoot();
     const projectRoot = inlineConfig.root || getProjectRoot() || process.cwd();
 
@@ -154,10 +152,11 @@ export class Engine {
    * Initialize the engine
    */
   public async init(inlineConfig: InlineConfig): Promise<Context> {
-    this.log(LogLevelLabel.TRACE, "Initializing Storm Stack engine");
-
     this.#hooks = createHooks<EngineHookFunctions>();
     this.context.options = await resolveConfig(this.context, inlineConfig);
+
+    this.log = createLog("", this.context.options);
+    this.log(LogLevelLabel.TRACE, "Initializing Storm Stack engine");
 
     for (const plugin of this.context.options.plugins ?? []) {
       await this.addPlugin(plugin);
@@ -446,11 +445,11 @@ export class Engine {
     let pluginInstance!: Plugin;
     try {
       const module = await this.context.resolver.import<{
-        default: new (config: any) => Plugin;
+        default: new (log: LogFn, config: any) => Plugin;
       }>(this.context.resolver.esmResolve(pluginConfig[0]));
       const PluginConstructor = module.default;
 
-      pluginInstance = new PluginConstructor(pluginConfig[1]);
+      pluginInstance = new PluginConstructor(this.log, pluginConfig[1]);
     } catch (error) {
       if (!isInstalled) {
         throw new Error(

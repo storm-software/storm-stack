@@ -33,6 +33,7 @@ import {
 import type {
   Context,
   EngineHooks,
+  LogFn,
   PluginConfig
 } from "@storm-stack/core/types";
 import BasePlugin from "@storm-stack/devkit/plugins/base";
@@ -75,8 +76,8 @@ export default class StormStackCloudflareWorkerPlugin extends BasePlugin {
     ]
   ] as PluginConfig[];
 
-  public constructor() {
-    super("cloudflare", "@storm-stack/plugin-cloudflare-worker");
+  public constructor(log: LogFn) {
+    super(log, "cloudflare", "@storm-stack/plugin-cloudflare-worker");
 
     const { env } = defineEnv({
       presets: [cloudflare]
@@ -84,8 +85,8 @@ export default class StormStackCloudflareWorkerPlugin extends BasePlugin {
     this.#unenv = env;
   }
 
-  public override async innerAddHooks(hooks: EngineHooks) {
-    await super.innerAddHooks(hooks);
+  public override innerAddHooks(hooks: EngineHooks) {
+    super.innerAddHooks(hooks);
 
     hooks.addHooks({
       "clean:complete": this.clean.bind(this),
@@ -158,12 +159,12 @@ export default class StormStackCloudflareWorkerPlugin extends BasePlugin {
     context.options.noExternal.push("@cloudflare/unenv-preset/node/process");
 
     if (context.options.projectType === "application") {
-      context.options.esbuild.override!.alias = defu(
+      context.options.esbuild.override.alias = defu(
         context.options.esbuild.override?.alias ?? {},
         this.#unenv.alias
       );
 
-      context.options.esbuild.override!.inject = Object.values(
+      context.options.esbuild.override.inject = Object.values(
         this.#unenv.inject
       )
         .filter(Boolean)
@@ -177,7 +178,7 @@ export default class StormStackCloudflareWorkerPlugin extends BasePlugin {
           return ret;
         }, []) as string[];
 
-      context.options.esbuild.override!.conditions = [
+      context.options.esbuild.override.conditions = [
         ...DEFAULT_CONDITIONS,
         "development"
       ];
@@ -342,7 +343,7 @@ compatibility_flags = [ "nodejs_als" ]
       wranglerFile.compatibility_flags ??= ["nodejs_als"];
 
       if (process.env.CLOUDFLARE_ACCOUNT_ID) {
-        wranglerFile.account_id ??= process.env.CLOUDFLARE_ACCOUNT_ID!;
+        wranglerFile.account_id ??= process.env.CLOUDFLARE_ACCOUNT_ID;
       }
 
       return this.writeFile(

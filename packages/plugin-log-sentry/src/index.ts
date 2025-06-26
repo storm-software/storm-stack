@@ -17,7 +17,7 @@
  ------------------------------------------------------------------- */
 
 import { getFileHeader } from "@storm-stack/core/helpers/utilities/file-header";
-import type { Context, EngineHooks } from "@storm-stack/core/types";
+import type { Context, EngineHooks, LogFn } from "@storm-stack/core/types";
 import type { LogPluginConfig } from "@storm-stack/devkit/plugins/log";
 import LogPlugin from "@storm-stack/devkit/plugins/log";
 
@@ -26,8 +26,8 @@ export default class LogSentryPlugin extends LogPlugin {
     "@sentry/core@^9.15.0": "dependency"
   } as Record<string, "dependency" | "devDependency">;
 
-  public constructor(config: LogPluginConfig) {
-    super(config, "log-sentry-plugin", "@storm-stack/plugin-log-sentry");
+  public constructor(log: LogFn, config: LogPluginConfig) {
+    super(log, config, "log-sentry-plugin", "@storm-stack/plugin-log-sentry");
   }
 
   public override innerAddHooks(hooks: EngineHooks) {

@@ -747,7 +747,7 @@
     "@stryke/type-checks": "catalog:",
     "@stryke/unique-id": "catalog:",
     "c12": "catalog:",
-    "chalk-template": "catalog:",
+    "chalk": "catalog:",
     "defu": "catalog:",
     "diff-match-patch": "catalog:",
     "esbuild": "catalog:",

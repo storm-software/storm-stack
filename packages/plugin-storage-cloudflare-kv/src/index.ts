@@ -20,7 +20,7 @@ import { parse as parseToml, stringify as stringifyToml } from "@ltd/j-toml";
 import { LogLevelLabel } from "@storm-software/config-tools/types";
 
 import { getFileHeader } from "@storm-stack/core/helpers/utilities/file-header";
-import type { Context, EngineHooks } from "@storm-stack/core/types";
+import type { Context, EngineHooks, LogFn } from "@storm-stack/core/types";
 import type { StoragePluginConfig } from "@storm-stack/devkit/plugins/storage";
 import StoragePlugin from "@storm-stack/devkit/plugins/storage";
 import { readFile } from "@stryke/fs";
@@ -51,9 +51,11 @@ export type StorageCloudflareKVPluginConfig = StoragePluginConfig &
 
 export default class StorageCloudflareKVPlugin extends StoragePlugin {
   public constructor(
+    log: LogFn,
     protected override config: StorageCloudflareKVPluginConfig
   ) {
     super(
+      log,
       config,
       "storage-cloudflare-kv-plugin",
       "@storm-stack/plugin-storage-cloudflare-kv"
@@ -134,9 +136,9 @@ export default cloudflareKVHTTPDriver({
       };
       if (
         !wranglerFile.kv_namespaces?.some(
-          kv_namespace =>
-            kv_namespace.binding === this.config.binding &&
-            kv_namespace.id === this.config.namespace
+          kvNamespace =>
+            kvNamespace.binding === this.config.binding &&
+            kvNamespace.id === this.config.namespace
         )
       ) {
         wranglerFile.kv_namespaces ??= [];

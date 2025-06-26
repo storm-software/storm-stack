@@ -20,7 +20,7 @@ import type { OTLPExporterNodeConfigBase } from "@opentelemetry/otlp-exporter-ba
 import type { OTLPGRPCExporterConfigNode } from "@opentelemetry/otlp-grpc-exporter-base";
 import { LogLevelLabel } from "@storm-software/config-tools/types";
 import { getFileHeader } from "@storm-stack/core/helpers/utilities/file-header";
-import type { Context } from "@storm-stack/core/types";
+import type { Context, LogFn } from "@storm-stack/core/types";
 import type { LogPluginConfig } from "@storm-stack/devkit/plugins/log";
 import LogPlugin from "@storm-stack/devkit/plugins/log";
 import { StormJSON } from "@stryke/json/storm-json";
@@ -45,8 +45,11 @@ export default class LogOpenTelemetryPlugin extends LogPlugin {
     "@opentelemetry/semantic-conventions@^1.32.0": "dependency"
   } as Record<string, "dependency" | "devDependency">;
 
-  public constructor(protected override config: LogOpenTelemetryPluginConfig) {
-    super(config, "log-otel-plugin", "@storm-stack/plugin-log-otel");
+  public constructor(
+    log: LogFn,
+    protected override config: LogOpenTelemetryPluginConfig
+  ) {
+    super(log, config, "log-otel-plugin", "@storm-stack/plugin-log-otel");
 
     this.config.exporter ??= "http";
     if (this.config.exporter === "grpc") {

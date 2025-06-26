@@ -17,7 +17,7 @@
  ------------------------------------------------------------------- */
 
 import { LogLevelLabel } from "@storm-software/config-tools/types";
-import type { Context, EngineHooks } from "@storm-stack/core/types";
+import type { Context, EngineHooks, LogFn } from "@storm-stack/core/types";
 import { joinPaths } from "@stryke/path/join-paths";
 import { camelCase } from "@stryke/string-format/camel-case";
 import type { MaybePromise } from "@stryke/types/base";
@@ -35,11 +35,12 @@ export interface StoragePluginConfig {
  */
 export default abstract class StoragePlugin extends LibraryPlugin {
   public constructor(
+    log: LogFn,
     protected override config: StoragePluginConfig,
     name: string,
     installPath?: string
   ) {
-    super(config, name, installPath);
+    super(log, config, name, installPath);
 
     if (!this.config.namespace) {
       throw new Error(

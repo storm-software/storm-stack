@@ -17,6 +17,7 @@
  ------------------------------------------------------------------- */
 
 import { getFileHeader } from "@storm-stack/core/helpers/utilities/file-header";
+import { LogFn } from "@storm-stack/core/types/config";
 import type { StoragePluginConfig } from "@storm-stack/devkit/plugins/storage";
 import StoragePlugin from "@storm-stack/devkit/plugins/storage";
 import type { S3DriverOptions } from "unstorage/drivers/s3";
@@ -28,8 +29,11 @@ export default class StorageS3Plugin extends StoragePlugin {
     "aws4fetch@1.0.20": "dependency"
   } as Record<string, "dependency" | "devDependency">;
 
-  public constructor(protected override config: StorageS3PluginPluginConfig) {
-    super(config, "storage-s3-plugin", "@storm-stack/plugin-storage-s3");
+  public constructor(
+    log: LogFn,
+    protected override config: StorageS3PluginPluginConfig
+  ) {
+    super(log, config, "storage-s3-plugin", "@storm-stack/plugin-storage-s3");
   }
 
   protected override writeStorage() {

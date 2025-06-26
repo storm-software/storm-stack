@@ -18,6 +18,7 @@
 
 import { LogLevelLabel } from "@storm-software/config-tools/types";
 import { Plugin } from "@storm-stack/core/base/plugin";
+import { LogFn } from "@storm-stack/core/types";
 import type { Context, EngineHooks } from "@storm-stack/core/types/build";
 
 /**
@@ -32,8 +33,8 @@ export default class BasePlugin extends Plugin {
    */
   protected installs: Record<string, "dependency" | "devDependency">;
 
-  public constructor(name: string, installPath?: string) {
-    super(name, installPath);
+  public constructor(log: LogFn, name: string, installPath?: string) {
+    super(log, name, installPath);
     this.installs = {};
   }
 

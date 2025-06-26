@@ -738,14 +738,6 @@ export interface Context<
    */
   runtime: RuntimeConfig;
 
-  // /**
-  //  * An object containing overridden options to be provided to the build invoked by the plugins (for example: esbuild, unbuild, vite, etc.)
-  //  *
-  //  * @remarks
-  //  * Any values added here will have top priority over the resolved build options
-  //  */
-  // override: Record<string, any>;
-
   /**
    * The resolved `unimport` context to be used by the compiler
    */

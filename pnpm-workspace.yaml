@@ -89,6 +89,8 @@ catalog:
   '@typescript-eslint/utils': ^8.31.1
   bundle-require: ^5.1.0
   c12: ^3.0.3
+  chalk: ^5.4.1
+  chalk-: ^0.0.0
   chalk-template: ^1.1.0
   diff-match-patch: ^1.0.5
   eslint: ^9.26.0

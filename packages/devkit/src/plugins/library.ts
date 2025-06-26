@@ -18,6 +18,7 @@
 
 import { LogLevelLabel } from "@storm-software/config-tools/types";
 import type { Context, EngineHooks } from "@storm-stack/core/types/build";
+import { LogFn } from "@storm-stack/core/types/config";
 import { unbuild } from "../helpers/unbuild";
 import BasePlugin from "./base";
 
@@ -29,11 +30,12 @@ import BasePlugin from "./base";
  */
 export default class LibraryPlugin extends BasePlugin {
   public constructor(
+    log: LogFn,
     protected config: any = {},
     name = "library-plugin",
     installPath = "@storm-stack/devkit/plugins/library"
   ) {
-    super(name, installPath);
+    super(log, name, installPath);
   }
 
   /**

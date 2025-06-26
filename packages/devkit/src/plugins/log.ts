@@ -17,7 +17,7 @@
  ------------------------------------------------------------------- */
 
 import { LogLevelLabel } from "@storm-software/config-tools/types";
-import type { Context, EngineHooks } from "@storm-stack/core/types";
+import type { Context, EngineHooks, LogFn } from "@storm-stack/core/types";
 import type { LogLevel } from "@storm-stack/types/shared/log";
 import { joinPaths } from "@stryke/path/join-paths";
 import { camelCase } from "@stryke/string-format/camel-case";
@@ -37,11 +37,12 @@ export interface LogPluginConfig {
  */
 export default abstract class LogPlugin extends LibraryPlugin {
   public constructor(
+    log: LogFn,
     protected override config: LogPluginConfig,
     name: string,
     installPath?: string
   ) {
-    super(config, name, installPath);
+    super(log, config, name, installPath);
 
     this.config.logLevel ??= "info";
   }

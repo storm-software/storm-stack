@@ -17,11 +17,10 @@
  ------------------------------------------------------------------- */
 
 import { LogLevelLabel } from "@storm-software/config-tools/types";
-import type { MaybePromise } from "@stryke/types/base";
-import { createLog } from "../helpers/utilities/logger";
+import { extendLog } from "../helpers/utilities/logger";
 import { writeFile } from "../helpers/utilities/write-file";
 import { installPackage } from "../init/installs/utilities";
-import type { Context, EngineHooks } from "../types/build";
+import type { Context } from "../types/build";
 import type { LogFn } from "../types/config";
 import { IRenderer } from "../types/plugin";
 
@@ -45,9 +44,10 @@ export abstract class Renderer implements IRenderer {
   /**
    * The constructor for the renderer
    *
+   * @param log - The logger function to use
    * @param name - The name of the renderer
    */
-  public constructor(name: string) {
+  public constructor(log: LogFn, name: string) {
     this.name = name.toLowerCase();
     if (this.name.startsWith("renderer-")) {
       this.name = this.name.replace(/^renderer-/, "").trim();
@@ -55,13 +55,8 @@ export abstract class Renderer implements IRenderer {
       this.name = this.name.replace(/-renderer$/, "").trim();
     }
 
-    this.log = createLog(`${this.name}-renderer`);
+    this.log = extendLog(log, `${this.name}-renderer`);
   }
-
-  /**
-   * Function to add hooks into the Storm Stack engine
-   */
-  public abstract addHooks(hooks: EngineHooks): MaybePromise<void>;
 
   /**
    * Writes a file to the file system

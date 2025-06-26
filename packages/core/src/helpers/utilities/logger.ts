@@ -18,30 +18,61 @@
 
 import { getLogFn, getLogLevel } from "@storm-software/config-tools/logger";
 import { LogLevelLabel } from "@storm-software/config-tools/types";
+import { getColor } from "@storm-software/config-tools/utilities/colors";
+import { StormWorkspaceConfig } from "@storm-software/config/types";
 import { noop } from "@stryke/helpers/noop";
-import chalkTemplate from "chalk-template";
-import type { InlineConfig, LogFn, WorkspaceConfig } from "../../types";
+import chalk from "chalk";
+import type { LogFn, ResolvedOptions } from "../../types";
 
 export const createLog = (
   name: string = "",
-  inlineConfig: Partial<Pick<InlineConfig, "logLevel" | "customLogger">> = {},
-  workspaceConfig: Partial<WorkspaceConfig> = {}
+  options: Partial<ResolvedOptions> = {}
 ): LogFn => {
-  const logLevel =
-    inlineConfig.logLevel || workspaceConfig.logLevel || LogLevelLabel.INFO;
+  const logLevel = options.logLevel || LogLevelLabel.INFO;
   if (logLevel === LogLevelLabel.SILENT) {
     return noop;
   }
 
-  if (inlineConfig.customLogger) {
-    return inlineConfig.customLogger;
+  if (options.customLogger) {
+    return options.customLogger;
   }
 
   return (type: LogLevelLabel, ...args: string[]) =>
     getLogFn(getLogLevel(type), {
-      ...workspaceConfig,
+      ...options,
       logLevel
     })(
-      chalkTemplate`{bold.#6FCE4E storm-stack${name ? `:${name}` : ""} > }${args.join(" ")} `
+      `${chalk.bold.hex(getColor(options as StormWorkspaceConfig, "brand"))(`storm-stack${name ? `:${name}` : ""} ${chalk.gray("> ")}`)}${args.join(" ")} `
+    );
+};
+
+const BADGE_COLORS = [
+  "#00A0DD",
+  "#6FCE4E",
+  "#FBBF24",
+  "#F43F5E",
+  "#3B82F6",
+  "#A855F7",
+  "#F472B6",
+  "#F59E42",
+  "#10B981",
+  "#EF4444",
+  "#8B5CF6",
+  "#F472B6",
+  "#22D3EE",
+  "#EAB308",
+  "#84CC16",
+  "#F87171",
+  "#0EA5E9",
+  "#D946EF",
+  "#FACC15",
+  "#34D399"
+] as const;
+
+export const extendLog = (logFn: LogFn, name: string): LogFn => {
+  return (type: LogLevelLabel, ...args: string[]) =>
+    logFn(
+      type,
+      ` ${chalk.inverse.hex(BADGE_COLORS[+name % BADGE_COLORS.length] || BADGE_COLORS[0])(` ${name} `)}  ${args.join(" ")} `
     );
 };

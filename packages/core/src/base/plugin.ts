@@ -18,7 +18,7 @@
 
 import { LogLevelLabel } from "@storm-software/config-tools/types";
 import type { MaybePromise } from "@stryke/types/base";
-import { createLog } from "../helpers/utilities/logger";
+import { extendLog } from "../helpers/utilities/logger";
 import { writeFile } from "../helpers/utilities/write-file";
 import { installPackage } from "../init/installs/utilities";
 import type { Context, EngineHooks } from "../types/build";
@@ -32,7 +32,7 @@ export abstract class Plugin implements IPlugin {
   /**
    * The logger function to use
    */
-  #log: LogFn;
+  log: LogFn;
 
   /**
    * The name of the plugin
@@ -53,39 +53,29 @@ export abstract class Plugin implements IPlugin {
   public dependencies = [] as Array<string | PluginConfig>;
 
   /**
-   * The logger function to use
+   * The renderer used by the plugin
+   *
+   * @remarks
+   * This is used to render generated output files during various Storm Stack processes. Some possible items rendered include (but are not limited to): source code, documentation, DevOps configuration, and deployment infrastructure/IOC.
    */
-  public get log(): LogFn {
-    if (!this.#log) {
-      this.#log = createLog(`${this.name}-plugin`, {
-        logLevel: LogLevelLabel.INFO
-      });
-    }
-
-    return this.#log;
-  }
-
-  // /**
-  //  * The renderer used by the plugin
-  //  *
-  //  * @remarks
-  //  * This is used to render generated output files during various Storm Stack processes. Some possible items rendered include (but are not limited to): source code, documentation, DevOps configuration, and deployment infrastructure/IOC.
-  //  */
   // protected abstract renderer: Renderer;
 
   /**
    * The constructor for the plugin
    *
+   * @param log - The logger function to use
    * @param name - The name of the plugin
    * @param installPath - The path to install the plugin
    */
-  public constructor(name: string, installPath?: string) {
+  public constructor(log: LogFn, name: string, installPath?: string) {
     this.name = name.toLowerCase();
     if (this.name.startsWith("plugin-")) {
       this.name = this.name.replace(/^plugin-/, "").trim();
     } else if (this.name.endsWith("-plugin")) {
       this.name = this.name.replace(/-plugin$/, "").trim();
     }
+
+    this.log = extendLog(log, `${this.name}-plugin`);
 
     this.installPath = installPath || `@storm-stack/plugin-${this.name}`;
     if (!installPath) {
@@ -97,7 +87,7 @@ export abstract class Plugin implements IPlugin {
   }
 
   public async addHooks(hooks: EngineHooks) {
-    this.log(LogLevelLabel.TRACE, `Adding hooks to engine`);
+    this.log(LogLevelLabel.TRACE, `Adding plugin hooks into engine`);
 
     hooks.addHooks({
       "init:context": this.#initContext.bind(this)
@@ -139,7 +129,5 @@ export abstract class Plugin implements IPlugin {
     return installPackage(this.log, context, packageName, dev);
   }
 
-  async #initContext(context: Context) {
-    this.#log = createLog(`${this.name}-plugin`, context.options);
-  }
+  async #initContext(_context: Context) {}
 }

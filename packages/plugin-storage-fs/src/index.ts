@@ -17,6 +17,7 @@
  ------------------------------------------------------------------- */
 
 import { getFileHeader } from "@storm-stack/core/helpers/utilities/file-header";
+import { LogFn } from "@storm-stack/core/types/config";
 import type { StoragePluginConfig } from "@storm-stack/devkit/plugins/storage";
 import StoragePlugin from "@storm-stack/devkit/plugins/storage";
 import type { FSStorageOptions } from "unstorage/drivers/fs-lite";
@@ -33,8 +34,11 @@ export type StorageFileSystemPluginConfig = FSStorageOptions &
   };
 
 export default class StorageFileSystemPlugin extends StoragePlugin {
-  public constructor(protected override config: StorageFileSystemPluginConfig) {
-    super(config, "storage-fs-plugin", "@storm-stack/plugin-storage-fs");
+  public constructor(
+    log: LogFn,
+    protected override config: StorageFileSystemPluginConfig
+  ) {
+    super(log, config, "storage-fs-plugin", "@storm-stack/plugin-storage-fs");
   }
 
   protected override writeStorage() {

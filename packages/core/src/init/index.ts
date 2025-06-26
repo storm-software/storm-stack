@@ -108,7 +108,7 @@ export async function init(log: LogFn, context: Context, hooks: EngineHooks) {
     return sourceFile;
   };
 
-  context.compiler = new Compiler(context, {
+  context.compiler = new Compiler(log, context, {
     onPreTransform: handlePreTransform,
     onTransform: handleTransform,
     onPostTransform: handlePostTransform

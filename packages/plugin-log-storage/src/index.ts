@@ -17,6 +17,7 @@
  ------------------------------------------------------------------- */
 
 import { getFileHeader } from "@storm-stack/core/helpers/utilities/file-header";
+import { LogFn } from "@storm-stack/core/types/config";
 import type { LogPluginConfig } from "@storm-stack/devkit/plugins/log";
 import LogPlugin from "@storm-stack/devkit/plugins/log";
 
@@ -37,8 +38,11 @@ export type LogStoragePluginConfig = LogPluginConfig & {
 };
 
 export default class LogStoragePlugin extends LogPlugin {
-  public constructor(protected override config: LogStoragePluginConfig) {
-    super(config, "log-storage-plugin", "@storm-stack/plugin-log-storage");
+  public constructor(
+    log: LogFn,
+    protected override config: LogStoragePluginConfig
+  ) {
+    super(log, config, "log-storage-plugin", "@storm-stack/plugin-log-storage");
 
     this.config.useFileSystem ??= true;
     this.config.namespace ??= "logs";

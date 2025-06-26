@@ -17,7 +17,7 @@
  ------------------------------------------------------------------- */
 
 import { LogLevelLabel } from "@storm-software/config-tools/types";
-import type { EngineHooks, PluginConfig } from "@storm-stack/core/types";
+import type { EngineHooks, LogFn, PluginConfig } from "@storm-stack/core/types";
 import BasePlugin from "@storm-stack/devkit/plugins/base";
 import { isSetString } from "@stryke/type-checks/is-set-string";
 import {
@@ -42,8 +42,11 @@ import type { StormStackCLIPluginConfig } from "./types/config";
 export default class StormStackCLIPlugin extends BasePlugin {
   #config: StormStackCLIPluginConfig;
 
-  public constructor(config: Partial<StormStackCLIPluginConfig> = {}) {
-    super("cli", "@storm-stack/plugin-cli");
+  public constructor(
+    log: LogFn,
+    config: Partial<StormStackCLIPluginConfig> = {}
+  ) {
+    super(log, "cli", "@storm-stack/plugin-cli");
 
     this.#config = { minNodeVersion: 20, ...config };
     this.dependencies = [
@@ -83,8 +86,8 @@ export default class StormStackCLIPlugin extends BasePlugin {
    *
    * @param hooks - The engine hooks to add the plugin's hooks to.
    */
-  public override async innerAddHooks(hooks: EngineHooks) {
-    await super.innerAddHooks(hooks);
+  public override innerAddHooks(hooks: EngineHooks) {
+    super.innerAddHooks(hooks);
 
     hooks.addHooks({
       "init:context": this.initContext.bind(this),

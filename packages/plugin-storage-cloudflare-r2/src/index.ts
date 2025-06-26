@@ -19,7 +19,7 @@
 import { parse as parseToml, stringify as stringifyToml } from "@ltd/j-toml";
 import { LogLevelLabel } from "@storm-software/config-tools/types";
 import { getFileHeader } from "@storm-stack/core/helpers/utilities/file-header";
-import type { Context, EngineHooks } from "@storm-stack/core/types";
+import type { Context, EngineHooks, LogFn } from "@storm-stack/core/types";
 import type { StoragePluginConfig } from "@storm-stack/devkit/plugins/storage";
 import StoragePlugin from "@storm-stack/devkit/plugins/storage";
 import { readFile } from "@stryke/fs";
@@ -39,9 +39,11 @@ export type StorageCloudflareR2PluginConfig = StoragePluginConfig &
 
 export default class StorageCloudflareR2Plugin extends StoragePlugin {
   public constructor(
+    log: LogFn,
     protected override config: StorageCloudflareR2PluginConfig
   ) {
     super(
+      log,
       config,
       "storage-cloudflare-r2-plugin",
       "@storm-stack/plugin-storage-cloudflare-r2"
@@ -136,9 +138,9 @@ export default s3Driver({
       };
       if (
         !wranglerFile.r2_buckets?.some(
-          r2_bucket =>
-            r2_bucket.binding === this.config.binding &&
-            r2_bucket.bucket_name === this.config.namespace
+          r2Bucket =>
+            r2Bucket.binding === this.config.binding &&
+            r2Bucket.bucket_name === this.config.namespace
         )
       ) {
         wranglerFile.r2_buckets ??= [];
