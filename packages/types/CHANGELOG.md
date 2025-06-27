@@ -2,6 +2,13 @@
 
 # Changelog for Storm Stack - Types
 
+## [0.14.2](https://github.com/storm-software/storm-stack/releases/tag/types%400.14.2) (2025-06-27)
+
+### Bug Fixes
+
+- **monorepo:** Resolve issue with Deepkit package patch versions
+  ([f9da4723](https://github.com/storm-software/storm-stack/commit/f9da4723))
+
 ## [0.14.1](https://github.com/storm-software/storm-stack/releases/tag/types%400.14.1) (2025-06-23)
 
 ### Source Code Improvements

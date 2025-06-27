@@ -2,6 +2,17 @@
 
 # Changelog for Storm Stack - Nx
 
+## [0.14.2](https://github.com/storm-software/storm-stack/releases/tag/nx%400.14.2) (2025-06-27)
+
+### Source Code Improvements
+
+- **core:** Improved organization of `Plugin` options and structure
+  ([03a46c10](https://github.com/storm-software/storm-stack/commit/03a46c10))
+
+### Updated Dependencies
+
+- Updated core to 0.33.1
+
 ## [0.14.1](https://github.com/storm-software/storm-stack/releases/tag/nx%400.14.1) (2025-06-26)
 
 ### Miscellaneous

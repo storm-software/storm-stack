@@ -2,6 +2,22 @@
 
 # Changelog for Storm Stack - Core
 
+## [0.33.1](https://github.com/storm-software/storm-stack/releases/tag/core%400.33.1) (2025-06-27)
+
+### Bug Fixes
+
+- **monorepo:** Resolve issue with Deepkit package patch versions
+  ([f9da4723](https://github.com/storm-software/storm-stack/commit/f9da4723))
+
+### Source Code Improvements
+
+- **core:** Improved organization of `Plugin` options and structure
+  ([03a46c10](https://github.com/storm-software/storm-stack/commit/03a46c10))
+
+### Updated Dependencies
+
+- Updated types to 0.14.2
+
 ## [0.33.0](https://github.com/storm-software/storm-stack/releases/tag/core%400.33.0) (2025-06-26)
 
 ### Features

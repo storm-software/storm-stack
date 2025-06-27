@@ -2,6 +2,19 @@
 
 # Changelog for Storm Stack - Plugin Log Sentry
 
+## [0.22.1](https://github.com/storm-software/storm-stack/releases/tag/plugin-log-sentry%400.22.1) (2025-06-27)
+
+### Source Code Improvements
+
+- **core:** Improved organization of `Plugin` options and structure
+  ([03a46c10](https://github.com/storm-software/storm-stack/commit/03a46c10))
+
+### Updated Dependencies
+
+- Updated devkit to 0.9.1
+- Updated core to 0.33.1
+- Updated nx to 0.14.2
+
 ## [0.22.0](https://github.com/storm-software/storm-stack/releases/tag/plugin-log-sentry%400.22.0) (2025-06-26)
 
 ### Features

@@ -2,6 +2,17 @@
 
 # Changelog for Storm Stack - ESLint Config
 
+## [0.11.1](https://github.com/storm-software/storm-stack/releases/tag/eslint-config%400.11.1) (2025-06-27)
+
+### Bug Fixes
+
+- **monorepo:** Resolve issue with Deepkit package patch versions
+  ([f9da4723](https://github.com/storm-software/storm-stack/commit/f9da4723))
+
+### Updated Dependencies
+
+- Updated tsdoc to 0.2.1
+
 ## [0.11.0](https://github.com/storm-software/storm-stack/releases/tag/eslint-config%400.11.0) (2025-06-26)
 
 ### Features
