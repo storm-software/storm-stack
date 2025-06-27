@@ -43,6 +43,20 @@
       "console": "integratedTerminal"
     },
     {
+      "name": "Debug Storm Stack Types Build Script",
+      "type": "node",
+      "request": "launch",
+      "program": "/nix/store/kclz9i3vq2fz8nnn947l773a95fj77z3-pnpm-10.8.0/bin/pnpm",
+      "args": [
+        "nx",
+        "run",
+        "types:build:development",
+        "--outputStyle=dynamic-legacy"
+      ],
+      "cwd": "${workspaceFolder}",
+      "console": "integratedTerminal"
+    },
+    {
       "name": "Attach",
       "port": 9229,
       "request": "attach",

@@ -205,6 +205,9 @@ overrides:
   postcss: '>=8.4.47'
   shell-quote: '>=1.8.1'
   simple-git: '>=3.27.0'
+  "@deepkit/type-spec": "1.0.1"
+  "@deepkit/type": "1.0.5"
+  "@deepkit/type-compiler": "1.0.5"
 patchedDependencies:
   '@deepkit/type-compiler@1.0.5': patches/@deepkit__type-compiler@1.0.5.patch
   '@deepkit/type@1.0.5': patches/@deepkit__type@1.0.5.patch

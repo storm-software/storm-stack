@@ -29,22 +29,22 @@ index 1412bf9397ad36dc45ddb65b4c42fde9fa850401..edc486502008cb96694c97adcbeb207a
  //# sourceMappingURL=type.js.map
 \ No newline at end of file
 diff --git a/dist/cjs/src/type.js.map b/dist/cjs/src/type.js.map
-index 7e91689df1f46f77a9dae490d61fa4efe5637bd2..8e37299624a14f623f0ab670cdfe273142210877 100644
+index 7e91689df1f46f77a9dae490d61fa4efe5637bd2..ab29aba6bbdf42c1f67a3b524c98fbe7884c3cd6 100644
 --- a/dist/cjs/src/type.js.map
 +++ b/dist/cjs/src/type.js.map
 @@ -1 +1 @@
 -{"version":3,"file":"type.js","sourceRoot":"","sources":["../../../src/type.ts"],"names":[],"mappings":";AAAA;;;;;;;;GAQG;;;AASH;;;GAGG;AACH,IAAY,eAcX;AAdD,WAAY,eAAe;IACvB,2DAAO,CAAA;IAEP,qDAAI,CAAA;IACJ,uDAAK,CAAA;IACL,uDAAK,CAAA;IAEL,uDAAK,CAAA;IACL,yDAAM,CAAA;IACN,yDAAM,CAAA;IAEN,uDAAK,CAAA;IACL,2DAAO,CAAA;IACP,2DAAO,CAAA;AACX,CAAC,EAdW,eAAe,+BAAf,eAAe,QAc1B;AAED;;;;GAIG;AACH,IAAY,YAoMX;AApMD,WAAY,YAAY;IACpB,iDAAK,CAAA;IACL,6CAAG,CAAA;IACH,qDAAO,CAAA;IACP,+CAAI,CAAA;IACJ,mDAAM,CAAA;IAEN,mDAAM,CAAA;IACN,mDAAM,CAAA;IACN,6DAAW,CAAA;IACX,qDAAO,CAAA;IACP,mDAAM,CAAA;IAEN,oDAAM,CAAA;IACN,gDAAI,CAAA;IACJ,0DAAS,CAAA;IAET;;;;;;OAMG;IACH,sDAAO,CAAA;IAEP;;;;;;OAMG;IACH,wDAAQ,CAAA;IAER;;;;OAIG;IACH,oDAAM,CAAA;IACN,sEAAe,CAAA;IAEf,0DAAS,CAAA;IAET;;;;OAIG;IACH,wDAAQ,CAAA;IACR,0EAAiB,CAAA;IAEjB;;;;OAIG;IACH,kDAAK,CAAA;IAEL;;;;;;;;;OASG;IACH,gEAAY,CAAA;IAEZ;;OAEG;IACH,oEAAc,CAAA;IAEd;;OAEG;IACH,wDAAQ,CAAA;IACR,wDAAQ,CAAA;IAER,+BAA+B;IAC/B,oDAAM,CAAA;IACN,sDAAO,CAAA;IACP,0DAAS,CAAA;IACT,wDAAQ,CAAA;IACR,gEAAY,CAAA;IACZ,8DAAW,CAAA;IACX,gDAAI,CAAA;IAEJ,oDAAM,CAAA;IAEN,gDAAI,CAAA;IACJ,4DAAU,CAAA;IAEV,8CAAG,CAAA;IACH,8CAAG,CAAA;IAEH;;;;OAIG;IACH,kDAAK,CAAA;IACL,kDAAK,CAAA;IACL,8DAAW,CAAA;IACX,wEAAgB,CAAA;IAEhB,kDAAK,CAAA;IACL,gEAAY,CAAA;IAEZ,oEAAc,CAAA;IACd,kEAAa,CAAA;IACb,4DAAU,CAAA;IACV,4CAAE,CAAA;IAEF,kDAAK,CAAA;IACL,0DAAS,CAAA;IACT,oDAAM,CAAA;IAEN,sEAAe,CAAA;IAEf,qDAAqD;IACrD,gDAAI,CAAA;IAEJ,yFAAyF;IACzF,0DAAS,CAAA;IACT,0EAAiB,CAAA;IACjB,4DAAU,CAAA;IACV,4DAAU,CAAA;IACV,8DAAW,CAAA;IACX,4DAAU,CAAA;IACV,8DAAW,CAAA;IACX,gEAAY,CAAA;IACZ,gEAAY,CAAA;IACZ,kEAAa,CAAA;IACb,8DAAW,CAAA;IAEX,sDAAO,CAAA;IAEP,4IAA4I;IAC5I,8CAAG,CAAA;IACH,kEAAa,CAAA;IACb,gFAAoB,CAAA;IACpB,8CAAG,CAAA;IACH,kDAAK,CAAA;IAEL,8DAAW,CAAA;IACX,kDAAK,CAAA;IACL,kDAAK,CAAA;IACL,oDAAM,CAAA;IAEN,0DAAS,CAAA;IACT,kEAAa,CAAA;IACb,gDAAI,CAAA;IACJ,gDAAI,CAAA;IACJ,oDAAM,CAAA;IACN,4DAAU,CAAA;IACV,4DAAU,CAAA;IAEV,sDAAO,CAAA;IAEP,kDAAK,CAAA;IAEL,oDAAM,CAAA;IACN,8DAAW,CAAA;IAEX,0EAAiB,CAAA;IAEjB,kEAAa,CAAA;IAEb;;;;;;;OAOG;IACH,wDAAQ,CAAA;IAER;;;;;;;;;OASG;IACH,4DAAU,CAAA;IAEV,sDAAO,CAAA;AACX,CAAC,EApMW,YAAY,4BAAZ,YAAY,QAoMvB"}
 \ No newline at end of file
-+{"version":3,"file":"type.js","sourceRoot":"","sources":["../../../src/type.ts"],"names":[],"mappings":"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"}
++{"version":3,"file":"type.js","sourceRoot":"","sources":["../../../src/type.ts"],"names":[],"mappings":"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"}
 \ No newline at end of file
 diff --git a/dist/cjs/tsconfig.tsbuildinfo b/dist/cjs/tsconfig.tsbuildinfo
-index 7422a90e87dcfb4ff1225e1f20fd5c5591643150..6ca10c27ec526442dd624e25d05a03a35e582e98 100644
+index 7422a90e87dcfb4ff1225e1f20fd5c5591643150..e7d8cfa0d8df82c8b05546d2f84227e063d24a60 100644
 --- a/dist/cjs/tsconfig.tsbuildinfo
 +++ b/dist/cjs/tsconfig.tsbuildinfo
 @@ -1 +1 @@
 -{"fileNames":["../../../../node_modules/typescript/lib/lib.es5.d.ts","../../../../node_modules/typescript/lib/lib.es2015.d.ts","../../../../node_modules/typescript/lib/lib.es2016.d.ts","../../../../node_modules/typescript/lib/lib.es2017.d.ts","../../../../node_modules/typescript/lib/lib.es2018.d.ts","../../../../node_modules/typescript/lib/lib.es2019.d.ts","../../../../node_modules/typescript/lib/lib.es2020.d.ts","../../../../node_modules/typescript/lib/lib.dom.d.ts","../../../../node_modules/typescript/lib/lib.dom.iterable.d.ts","../../../../node_modules/typescript/lib/lib.dom.asynciterable.d.ts","../../../../node_modules/typescript/lib/lib.webworker.importscripts.d.ts","../../../../node_modules/typescript/lib/lib.scripthost.d.ts","../../../../node_modules/typescript/lib/lib.es2015.core.d.ts","../../../../node_modules/typescript/lib/lib.es2015.collection.d.ts","../../../../node_modules/typescript/lib/lib.es2015.generator.d.ts","../../../../node_modules/typescript/lib/lib.es2015.iterable.d.ts","../../../../node_modules/typescript/lib/lib.es2015.promise.d.ts","../../../../node_modules/typescript/lib/lib.es2015.proxy.d.ts","../../../../node_modules/typescript/lib/lib.es2015.reflect.d.ts","../../../../node_modules/typescript/lib/lib.es2015.symbol.d.ts","../../../../node_modules/typescript/lib/lib.es2015.symbol.wellknown.d.ts","../../../../node_modules/typescript/lib/lib.es2016.array.include.d.ts","../../../../node_modules/typescript/lib/lib.es2016.intl.d.ts","../../../../node_modules/typescript/lib/lib.es2017.arraybuffer.d.ts","../../../../node_modules/typescript/lib/lib.es2017.date.d.ts","../../../../node_modules/typescript/lib/lib.es2017.object.d.ts","../../../../node_modules/typescript/lib/lib.es2017.sharedmemory.d.ts","../../../../node_modules/typescript/lib/lib.es2017.string.d.ts","../../../../node_modules/typescript/lib/lib.es2017.intl.d.ts","../../../../node_modules/typescript/lib/lib.es2017.typedarrays.d.ts","../../../../node_modules/typescript/lib/lib.es2018.asyncgenerator.d.ts","../../../../node_modules/typescript/lib/lib.es2018.asynciterable.d.ts","../../../../node_modules/typescript/lib/lib.es2018.intl.d.ts","../../../../node_modules/typescript/lib/lib.es2018.promise.d.ts","../../../../node_modules/typescript/lib/lib.es2018.regexp.d.ts","../../../../node_modules/typescript/lib/lib.es2019.array.d.ts","../../../../node_modules/typescript/lib/lib.es2019.object.d.ts","../../../../node_modules/typescript/lib/lib.es2019.string.d.ts","../../../../node_modules/typescript/lib/lib.es2019.symbol.d.ts","../../../../node_modules/typescript/lib/lib.es2019.intl.d.ts","../../../../node_modules/typescript/lib/lib.es2020.bigint.d.ts","../../../../node_modules/typescript/lib/lib.es2020.date.d.ts","../../../../node_modules/typescript/lib/lib.es2020.promise.d.ts","../../../../node_modules/typescript/lib/lib.es2020.sharedmemory.d.ts","../../../../node_modules/typescript/lib/lib.es2020.string.d.ts","../../../../node_modules/typescript/lib/lib.es2020.symbol.wellknown.d.ts","../../../../node_modules/typescript/lib/lib.es2020.intl.d.ts","../../../../node_modules/typescript/lib/lib.es2020.number.d.ts","../../../../node_modules/typescript/lib/lib.decorators.d.ts","../../../../node_modules/typescript/lib/lib.decorators.legacy.d.ts","../../../../node_modules/typescript/lib/lib.es2020.full.d.ts","../../src/type.ts","../../index.ts"],"fileIdsList":[[52]],"fileInfos":[{"version":"e41c290ef7dd7dab3493e6cbe5909e0148edf4a8dad0271be08edec368a0f7b9","affectsGlobalScope":true,"impliedFormat":1},{"version":"45b7ab580deca34ae9729e97c13cfd999df04416a79116c3bfb483804f85ded4","impliedFormat":1},{"version":"3facaf05f0c5fc569c5649dd359892c98a85557e3e0c847964caeb67076f4d75","impliedFormat":1},{"version":"e44bb8bbac7f10ecc786703fe0a6a4b952189f908707980ba8f3c8975a760962","impliedFormat":1},{"version":"5e1c4c362065a6b95ff952c0eab010f04dcd2c3494e813b493ecfd4fcb9fc0d8","impliedFormat":1},{"version":"68d73b4a11549f9c0b7d352d10e91e5dca8faa3322bfb77b661839c42b1ddec7","impliedFormat":1},{"version":"5efce4fc3c29ea84e8928f97adec086e3dc876365e0982cc8479a07954a3efd4","impliedFormat":1},{"version":"4fd3f3422b2d2a3dfd5cdd0f387b3a8ec45f006c6ea896a4cb41264c2100bb2c","affectsGlobalScope":true,"impliedFormat":1},{"version":"69e65d976bf166ce4a9e6f6c18f94d2424bf116e90837ace179610dbccad9b42","affectsGlobalScope":true,"impliedFormat":1},{"version":"d7a3c8b952931daebdfc7a2897c53c0a1c73624593fa070e46bd537e64dcd20a","affectsGlobalScope":true,"impliedFormat":1},{"version":"80e18897e5884b6723488d4f5652167e7bb5024f946743134ecc4aa4ee731f89","affectsGlobalScope":true,"impliedFormat":1},{"version":"cd034f499c6cdca722b60c04b5b1b78e058487a7085a8e0d6fb50809947ee573","affectsGlobalScope":true,"impliedFormat":1},{"version":"c57796738e7f83dbc4b8e65132f11a377649c00dd3eee333f672b8f0a6bea671","affectsGlobalScope":true,"impliedFormat":1},{"version":"dc2df20b1bcdc8c2d34af4926e2c3ab15ffe1160a63e58b7e09833f616efff44","affectsGlobalScope":true,"impliedFormat":1},{"version":"515d0b7b9bea2e31ea4ec968e9edd2c39d3eebf4a2d5cbd04e88639819ae3b71","affectsGlobalScope":true,"impliedFormat":1},{"version":"62bb211266ee48b2d0edf0d8d1b191f0c24fc379a82bd4c1692a082c540bc6b1","affectsGlobalScope":true,"impliedFormat":1},{"version":"0dc1e7ceda9b8b9b455c3a2d67b0412feab00bd2f66656cd8850e8831b08b537","affectsGlobalScope":true,"impliedFormat":1},{"version":"ce691fb9e5c64efb9547083e4a34091bcbe5bdb41027e310ebba8f7d96a98671","affectsGlobalScope":true,"impliedFormat":1},{"version":"8d697a2a929a5fcb38b7a65594020fcef05ec1630804a33748829c5ff53640d0","affectsGlobalScope":true,"impliedFormat":1},{"version":"4ff2a353abf8a80ee399af572debb8faab2d33ad38c4b4474cff7f26e7653b8d","affectsGlobalScope":true,"impliedFormat":1},{"version":"936e80ad36a2ee83fc3caf008e7c4c5afe45b3cf3d5c24408f039c1d47bdc1df","affectsGlobalScope":true,"impliedFormat":1},{"version":"d15bea3d62cbbdb9797079416b8ac375ae99162a7fba5de2c6c505446486ac0a","affectsGlobalScope":true,"impliedFormat":1},{"version":"68d18b664c9d32a7336a70235958b8997ebc1c3b8505f4f1ae2b7e7753b87618","affectsGlobalScope":true,"impliedFormat":1},{"version":"eb3d66c8327153d8fa7dd03f9c58d351107fe824c79e9b56b462935176cdf12a","affectsGlobalScope":true,"impliedFormat":1},{"version":"38f0219c9e23c915ef9790ab1d680440d95419ad264816fa15009a8851e79119","affectsGlobalScope":true,"impliedFormat":1},{"version":"69ab18c3b76cd9b1be3d188eaf8bba06112ebbe2f47f6c322b5105a6fbc45a2e","affectsGlobalScope":true,"impliedFormat":1},{"version":"fef8cfad2e2dc5f5b3d97a6f4f2e92848eb1b88e897bb7318cef0e2820bceaab","affectsGlobalScope":true,"impliedFormat":1},{"version":"2f11ff796926e0832f9ae148008138ad583bd181899ab7dd768a2666700b1893","affectsGlobalScope":true,"impliedFormat":1},{"version":"4de680d5bb41c17f7f68e0419412ca23c98d5749dcaaea1896172f06435891fc","affectsGlobalScope":true,"impliedFormat":1},{"version":"954296b30da6d508a104a3a0b5d96b76495c709785c1d11610908e63481ee667","affectsGlobalScope":true,"impliedFormat":1},{"version":"ac9538681b19688c8eae65811b329d3744af679e0bdfa5d842d0e32524c73e1c","affectsGlobalScope":true,"impliedFormat":1},{"version":"0a969edff4bd52585473d24995c5ef223f6652d6ef46193309b3921d65dd4376","affectsGlobalScope":true,"impliedFormat":1},{"version":"9e9fbd7030c440b33d021da145d3232984c8bb7916f277e8ffd3dc2e3eae2bdb","affectsGlobalScope":true,"impliedFormat":1},{"version":"811ec78f7fefcabbda4bfa93b3eb67d9ae166ef95f9bff989d964061cbf81a0c","affectsGlobalScope":true,"impliedFormat":1},{"version":"717937616a17072082152a2ef351cb51f98802fb4b2fdabd32399843875974ca","affectsGlobalScope":true,"impliedFormat":1},{"version":"d7e7d9b7b50e5f22c915b525acc5a49a7a6584cf8f62d0569e557c5cfc4b2ac2","affectsGlobalScope":true,"impliedFormat":1},{"version":"71c37f4c9543f31dfced6c7840e068c5a5aacb7b89111a4364b1d5276b852557","affectsGlobalScope":true,"impliedFormat":1},{"version":"576711e016cf4f1804676043e6a0a5414252560eb57de9faceee34d79798c850","affectsGlobalScope":true,"impliedFormat":1},{"version":"89c1b1281ba7b8a96efc676b11b264de7a8374c5ea1e6617f11880a13fc56dc6","affectsGlobalScope":true,"impliedFormat":1},{"version":"74f7fa2d027d5b33eb0471c8e82a6c87216223181ec31247c357a3e8e2fddc5b","affectsGlobalScope":true,"impliedFormat":1},{"version":"f1e2a172204962276504466a6393426d2ca9c54894b1ad0a6c9dad867a65f876","affectsGlobalScope":true,"impliedFormat":1},{"version":"063600664504610fe3e99b717a1223f8b1900087fab0b4cad1496a114744f8df","affectsGlobalScope":true,"impliedFormat":1},{"version":"934019d7e3c81950f9a8426d093458b65d5aff2c7c1511233c0fd5b941e608ab","affectsGlobalScope":true,"impliedFormat":1},{"version":"52ada8e0b6e0482b728070b7639ee42e83a9b1c22d205992756fe020fd9f4a47","affectsGlobalScope":true,"impliedFormat":1},{"version":"3bdefe1bfd4d6dee0e26f928f93ccc128f1b64d5d501ff4a8cf3c6371200e5e6","affectsGlobalScope":true,"impliedFormat":1},{"version":"59fb2c069260b4ba00b5643b907ef5d5341b167e7d1dbf58dfd895658bda2867","affectsGlobalScope":true,"impliedFormat":1},{"version":"639e512c0dfc3fad96a84caad71b8834d66329a1f28dc95e3946c9b58176c73a","affectsGlobalScope":true,"impliedFormat":1},{"version":"368af93f74c9c932edd84c58883e736c9e3d53cec1fe24c0b0ff451f529ceab1","affectsGlobalScope":true,"impliedFormat":1},{"version":"8e7f8264d0fb4c5339605a15daadb037bf238c10b654bb3eee14208f860a32ea","affectsGlobalScope":true,"impliedFormat":1},{"version":"782dec38049b92d4e85c1585fbea5474a219c6984a35b004963b00beb1aab538","affectsGlobalScope":true,"impliedFormat":1},{"version":"1305d1e76ca44e30fb8b2b8075fa522b83f60c0bcf5d4326a9d2cf79b53724f8","impliedFormat":1},{"version":"d66c96b73be8bd21c905beb06d75efd101b4e69dee04f11ba5e7d7a8908c0683","signature":"04ad7f4a76339aff3e37651d3777b1b065b19c3f5d368e44633da92b3b72ade3"},{"version":"dcc3be585040c6c79b06a24270718cc79af84dc555d29fd4dac3aa23590d44fc","signature":"bd8305ea3955dad684e52167c0c6f0bf7970cb8a9a3c9e73fc4d597120d5ec27"}],"root":[52,53],"options":{"composite":true,"declaration":true,"emitDecoratorMetadata":true,"esModuleInterop":true,"experimentalDecorators":true,"module":1,"noFallthroughCasesInSwitch":true,"noImplicitReturns":true,"outDir":"./","sourceMap":true,"strict":true,"target":7},"referencedMap":[[53,1]],"latestChangedDtsFile":"./index.d.ts","version":"5.7.3"}
 \ No newline at end of file
-+{"fileNames":["../../../../../.pnpm/typescript@5.8.3/node_modules/typescript/lib/lib.es5.d.ts","../../../../../.pnpm/typescript@5.8.3/node_modules/typescript/lib/lib.es2015.d.ts","../../../../../.pnpm/typescript@5.8.3/node_modules/typescript/lib/lib.es2016.d.ts","../../../../../.pnpm/typescript@5.8.3/node_modules/typescript/lib/lib.es2017.d.ts","../../../../../.pnpm/typescript@5.8.3/node_modules/typescript/lib/lib.es2018.d.ts","../../../../../.pnpm/typescript@5.8.3/node_modules/typescript/lib/lib.es2019.d.ts","../../../../../.pnpm/typescript@5.8.3/node_modules/typescript/lib/lib.es2020.d.ts","../../../../../.pnpm/typescript@5.8.3/node_modules/typescript/lib/lib.dom.d.ts","../../../../../.pnpm/typescript@5.8.3/node_modules/typescript/lib/lib.dom.iterable.d.ts","../../../../../.pnpm/typescript@5.8.3/node_modules/typescript/lib/lib.dom.asynciterable.d.ts","../../../../../.pnpm/typescript@5.8.3/node_modules/typescript/lib/lib.webworker.importscripts.d.ts","../../../../../.pnpm/typescript@5.8.3/node_modules/typescript/lib/lib.scripthost.d.ts","../../../../../.pnpm/typescript@5.8.3/node_modules/typescript/lib/lib.es2015.core.d.ts","../../../../../.pnpm/typescript@5.8.3/node_modules/typescript/lib/lib.es2015.collection.d.ts","../../../../../.pnpm/typescript@5.8.3/node_modules/typescript/lib/lib.es2015.generator.d.ts","../../../../../.pnpm/typescript@5.8.3/node_modules/typescript/lib/lib.es2015.iterable.d.ts","../../../../../.pnpm/typescript@5.8.3/node_modules/typescript/lib/lib.es2015.promise.d.ts","../../../../../.pnpm/typescript@5.8.3/node_modules/typescript/lib/lib.es2015.proxy.d.ts","../../../../../.pnpm/typescript@5.8.3/node_modules/typescript/lib/lib.es2015.reflect.d.ts","../../../../../.pnpm/typescript@5.8.3/node_modules/typescript/lib/lib.es2015.symbol.d.ts","../../../../../.pnpm/typescript@5.8.3/node_modules/typescript/lib/lib.es2015.symbol.wellknown.d.ts","../../../../../.pnpm/typescript@5.8.3/node_modules/typescript/lib/lib.es2016.array.include.d.ts","../../../../../.pnpm/typescript@5.8.3/node_modules/typescript/lib/lib.es2016.intl.d.ts","../../../../../.pnpm/typescript@5.8.3/node_modules/typescript/lib/lib.es2017.arraybuffer.d.ts","../../../../../.pnpm/typescript@5.8.3/node_modules/typescript/lib/lib.es2017.date.d.ts","../../../../../.pnpm/typescript@5.8.3/node_modules/typescript/lib/lib.es2017.object.d.ts","../../../../../.pnpm/typescript@5.8.3/node_modules/typescript/lib/lib.es2017.sharedmemory.d.ts","../../../../../.pnpm/typescript@5.8.3/node_modules/typescript/lib/lib.es2017.string.d.ts","../../../../../.pnpm/typescript@5.8.3/node_modules/typescript/lib/lib.es2017.intl.d.ts","../../../../../.pnpm/typescript@5.8.3/node_modules/typescript/lib/lib.es2017.typedarrays.d.ts","../../../../../.pnpm/typescript@5.8.3/node_modules/typescript/lib/lib.es2018.asyncgenerator.d.ts","../../../../../.pnpm/typescript@5.8.3/node_modules/typescript/lib/lib.es2018.asynciterable.d.ts","../../../../../.pnpm/typescript@5.8.3/node_modules/typescript/lib/lib.es2018.intl.d.ts","../../../../../.pnpm/typescript@5.8.3/node_modules/typescript/lib/lib.es2018.promise.d.ts","../../../../../.pnpm/typescript@5.8.3/node_modules/typescript/lib/lib.es2018.regexp.d.ts","../../../../../.pnpm/typescript@5.8.3/node_modules/typescript/lib/lib.es2019.array.d.ts","../../../../../.pnpm/typescript@5.8.3/node_modules/typescript/lib/lib.es2019.object.d.ts","../../../../../.pnpm/typescript@5.8.3/node_modules/typescript/lib/lib.es2019.string.d.ts","../../../../../.pnpm/typescript@5.8.3/node_modules/typescript/lib/lib.es2019.symbol.d.ts","../../../../../.pnpm/typescript@5.8.3/node_modules/typescript/lib/lib.es2019.intl.d.ts","../../../../../.pnpm/typescript@5.8.3/node_modules/typescript/lib/lib.es2020.bigint.d.ts","../../../../../.pnpm/typescript@5.8.3/node_modules/typescript/lib/lib.es2020.date.d.ts","../../../../../.pnpm/typescript@5.8.3/node_modules/typescript/lib/lib.es2020.promise.d.ts","../../../../../.pnpm/typescript@5.8.3/node_modules/typescript/lib/lib.es2020.sharedmemory.d.ts","../../../../../.pnpm/typescript@5.8.3/node_modules/typescript/lib/lib.es2020.string.d.ts","../../../../../.pnpm/typescript@5.8.3/node_modules/typescript/lib/lib.es2020.symbol.wellknown.d.ts","../../../../../.pnpm/typescript@5.8.3/node_modules/typescript/lib/lib.es2020.intl.d.ts","../../../../../.pnpm/typescript@5.8.3/node_modules/typescript/lib/lib.es2020.number.d.ts","../../../../../.pnpm/typescript@5.8.3/node_modules/typescript/lib/lib.decorators.d.ts","../../../../../.pnpm/typescript@5.8.3/node_modules/typescript/lib/lib.decorators.legacy.d.ts","../../../../../.pnpm/typescript@5.8.3/node_modules/typescript/lib/lib.es2020.full.d.ts","../../src/type.ts","../../index.ts"],"fileIdsList":[[52]],"fileInfos":[{"version":"69684132aeb9b5642cbcd9e22dff7818ff0ee1aa831728af0ecf97d3364d5546","affectsGlobalScope":true,"impliedFormat":1},{"version":"45b7ab580deca34ae9729e97c13cfd999df04416a79116c3bfb483804f85ded4","impliedFormat":1},{"version":"3facaf05f0c5fc569c5649dd359892c98a85557e3e0c847964caeb67076f4d75","impliedFormat":1},{"version":"e44bb8bbac7f10ecc786703fe0a6a4b952189f908707980ba8f3c8975a760962","impliedFormat":1},{"version":"5e1c4c362065a6b95ff952c0eab010f04dcd2c3494e813b493ecfd4fcb9fc0d8","impliedFormat":1},{"version":"68d73b4a11549f9c0b7d352d10e91e5dca8faa3322bfb77b661839c42b1ddec7","impliedFormat":1},{"version":"5efce4fc3c29ea84e8928f97adec086e3dc876365e0982cc8479a07954a3efd4","impliedFormat":1},{"version":"092c2bfe125ce69dbb1223c85d68d4d2397d7d8411867b5cc03cec902c233763","affectsGlobalScope":true,"impliedFormat":1},{"version":"07f073f19d67f74d732b1adea08e1dc66b1b58d77cb5b43931dee3d798a2fd53","affectsGlobalScope":true,"impliedFormat":1},{"version":"d7a3c8b952931daebdfc7a2897c53c0a1c73624593fa070e46bd537e64dcd20a","affectsGlobalScope":true,"impliedFormat":1},{"version":"80e18897e5884b6723488d4f5652167e7bb5024f946743134ecc4aa4ee731f89","affectsGlobalScope":true,"impliedFormat":1},{"version":"cd034f499c6cdca722b60c04b5b1b78e058487a7085a8e0d6fb50809947ee573","affectsGlobalScope":true,"impliedFormat":1},{"version":"c57796738e7f83dbc4b8e65132f11a377649c00dd3eee333f672b8f0a6bea671","affectsGlobalScope":true,"impliedFormat":1},{"version":"dc2df20b1bcdc8c2d34af4926e2c3ab15ffe1160a63e58b7e09833f616efff44","affectsGlobalScope":true,"impliedFormat":1},{"version":"515d0b7b9bea2e31ea4ec968e9edd2c39d3eebf4a2d5cbd04e88639819ae3b71","affectsGlobalScope":true,"impliedFormat":1},{"version":"0559b1f683ac7505ae451f9a96ce4c3c92bdc71411651ca6ddb0e88baaaad6a3","affectsGlobalScope":true,"impliedFormat":1},{"version":"0dc1e7ceda9b8b9b455c3a2d67b0412feab00bd2f66656cd8850e8831b08b537","affectsGlobalScope":true,"impliedFormat":1},{"version":"ce691fb9e5c64efb9547083e4a34091bcbe5bdb41027e310ebba8f7d96a98671","affectsGlobalScope":true,"impliedFormat":1},{"version":"8d697a2a929a5fcb38b7a65594020fcef05ec1630804a33748829c5ff53640d0","affectsGlobalScope":true,"impliedFormat":1},{"version":"4ff2a353abf8a80ee399af572debb8faab2d33ad38c4b4474cff7f26e7653b8d","affectsGlobalScope":true,"impliedFormat":1},{"version":"936e80ad36a2ee83fc3caf008e7c4c5afe45b3cf3d5c24408f039c1d47bdc1df","affectsGlobalScope":true,"impliedFormat":1},{"version":"d15bea3d62cbbdb9797079416b8ac375ae99162a7fba5de2c6c505446486ac0a","affectsGlobalScope":true,"impliedFormat":1},{"version":"68d18b664c9d32a7336a70235958b8997ebc1c3b8505f4f1ae2b7e7753b87618","affectsGlobalScope":true,"impliedFormat":1},{"version":"eb3d66c8327153d8fa7dd03f9c58d351107fe824c79e9b56b462935176cdf12a","affectsGlobalScope":true,"impliedFormat":1},{"version":"38f0219c9e23c915ef9790ab1d680440d95419ad264816fa15009a8851e79119","affectsGlobalScope":true,"impliedFormat":1},{"version":"69ab18c3b76cd9b1be3d188eaf8bba06112ebbe2f47f6c322b5105a6fbc45a2e","affectsGlobalScope":true,"impliedFormat":1},{"version":"fef8cfad2e2dc5f5b3d97a6f4f2e92848eb1b88e897bb7318cef0e2820bceaab","affectsGlobalScope":true,"impliedFormat":1},{"version":"2f11ff796926e0832f9ae148008138ad583bd181899ab7dd768a2666700b1893","affectsGlobalScope":true,"impliedFormat":1},{"version":"4de680d5bb41c17f7f68e0419412ca23c98d5749dcaaea1896172f06435891fc","affectsGlobalScope":true,"impliedFormat":1},{"version":"954296b30da6d508a104a3a0b5d96b76495c709785c1d11610908e63481ee667","affectsGlobalScope":true,"impliedFormat":1},{"version":"ac9538681b19688c8eae65811b329d3744af679e0bdfa5d842d0e32524c73e1c","affectsGlobalScope":true,"impliedFormat":1},{"version":"0a969edff4bd52585473d24995c5ef223f6652d6ef46193309b3921d65dd4376","affectsGlobalScope":true,"impliedFormat":1},{"version":"9e9fbd7030c440b33d021da145d3232984c8bb7916f277e8ffd3dc2e3eae2bdb","affectsGlobalScope":true,"impliedFormat":1},{"version":"811ec78f7fefcabbda4bfa93b3eb67d9ae166ef95f9bff989d964061cbf81a0c","affectsGlobalScope":true,"impliedFormat":1},{"version":"717937616a17072082152a2ef351cb51f98802fb4b2fdabd32399843875974ca","affectsGlobalScope":true,"impliedFormat":1},{"version":"d7e7d9b7b50e5f22c915b525acc5a49a7a6584cf8f62d0569e557c5cfc4b2ac2","affectsGlobalScope":true,"impliedFormat":1},{"version":"71c37f4c9543f31dfced6c7840e068c5a5aacb7b89111a4364b1d5276b852557","affectsGlobalScope":true,"impliedFormat":1},{"version":"576711e016cf4f1804676043e6a0a5414252560eb57de9faceee34d79798c850","affectsGlobalScope":true,"impliedFormat":1},{"version":"89c1b1281ba7b8a96efc676b11b264de7a8374c5ea1e6617f11880a13fc56dc6","affectsGlobalScope":true,"impliedFormat":1},{"version":"74f7fa2d027d5b33eb0471c8e82a6c87216223181ec31247c357a3e8e2fddc5b","affectsGlobalScope":true,"impliedFormat":1},{"version":"d6d7ae4d1f1f3772e2a3cde568ed08991a8ae34a080ff1151af28b7f798e22ca","affectsGlobalScope":true,"impliedFormat":1},{"version":"063600664504610fe3e99b717a1223f8b1900087fab0b4cad1496a114744f8df","affectsGlobalScope":true,"impliedFormat":1},{"version":"934019d7e3c81950f9a8426d093458b65d5aff2c7c1511233c0fd5b941e608ab","affectsGlobalScope":true,"impliedFormat":1},{"version":"52ada8e0b6e0482b728070b7639ee42e83a9b1c22d205992756fe020fd9f4a47","affectsGlobalScope":true,"impliedFormat":1},{"version":"3bdefe1bfd4d6dee0e26f928f93ccc128f1b64d5d501ff4a8cf3c6371200e5e6","affectsGlobalScope":true,"impliedFormat":1},{"version":"59fb2c069260b4ba00b5643b907ef5d5341b167e7d1dbf58dfd895658bda2867","affectsGlobalScope":true,"impliedFormat":1},{"version":"639e512c0dfc3fad96a84caad71b8834d66329a1f28dc95e3946c9b58176c73a","affectsGlobalScope":true,"impliedFormat":1},{"version":"368af93f74c9c932edd84c58883e736c9e3d53cec1fe24c0b0ff451f529ceab1","affectsGlobalScope":true,"impliedFormat":1},{"version":"8e7f8264d0fb4c5339605a15daadb037bf238c10b654bb3eee14208f860a32ea","affectsGlobalScope":true,"impliedFormat":1},{"version":"782dec38049b92d4e85c1585fbea5474a219c6984a35b004963b00beb1aab538","affectsGlobalScope":true,"impliedFormat":1},{"version":"1305d1e76ca44e30fb8b2b8075fa522b83f60c0bcf5d4326a9d2cf79b53724f8","impliedFormat":1},{"version":"45bac5b9f2e0d79f2c5b7a54d7747b3346d0422730f1c147e9321e085b55cde0","signature":"320217defa5f5efc928f9dd07135cc90086a76f56305174a4748ac24a42fa033","impliedFormat":1},{"version":"dcc3be585040c6c79b06a24270718cc79af84dc555d29fd4dac3aa23590d44fc","signature":"bd8305ea3955dad684e52167c0c6f0bf7970cb8a9a3c9e73fc4d597120d5ec27","impliedFormat":1}],"root":[52,53],"options":{"composite":true,"declaration":true,"emitDecoratorMetadata":true,"esModuleInterop":true,"experimentalDecorators":true,"module":1,"noFallthroughCasesInSwitch":true,"noImplicitReturns":true,"outDir":"./","sourceMap":true,"strict":true,"target":7},"referencedMap":[[53,1]],"latestChangedDtsFile":"./index.d.ts","version":"5.8.3"}
++{"fileNames":["../../../../../.pnpm/typescript@5.8.3/node_modules/typescript/lib/lib.es5.d.ts","../../../../../.pnpm/typescript@5.8.3/node_modules/typescript/lib/lib.es2015.d.ts","../../../../../.pnpm/typescript@5.8.3/node_modules/typescript/lib/lib.es2016.d.ts","../../../../../.pnpm/typescript@5.8.3/node_modules/typescript/lib/lib.es2017.d.ts","../../../../../.pnpm/typescript@5.8.3/node_modules/typescript/lib/lib.es2018.d.ts","../../../../../.pnpm/typescript@5.8.3/node_modules/typescript/lib/lib.es2019.d.ts","../../../../../.pnpm/typescript@5.8.3/node_modules/typescript/lib/lib.es2020.d.ts","../../../../../.pnpm/typescript@5.8.3/node_modules/typescript/lib/lib.dom.d.ts","../../../../../.pnpm/typescript@5.8.3/node_modules/typescript/lib/lib.dom.iterable.d.ts","../../../../../.pnpm/typescript@5.8.3/node_modules/typescript/lib/lib.dom.asynciterable.d.ts","../../../../../.pnpm/typescript@5.8.3/node_modules/typescript/lib/lib.webworker.importscripts.d.ts","../../../../../.pnpm/typescript@5.8.3/node_modules/typescript/lib/lib.scripthost.d.ts","../../../../../.pnpm/typescript@5.8.3/node_modules/typescript/lib/lib.es2015.core.d.ts","../../../../../.pnpm/typescript@5.8.3/node_modules/typescript/lib/lib.es2015.collection.d.ts","../../../../../.pnpm/typescript@5.8.3/node_modules/typescript/lib/lib.es2015.generator.d.ts","../../../../../.pnpm/typescript@5.8.3/node_modules/typescript/lib/lib.es2015.iterable.d.ts","../../../../../.pnpm/typescript@5.8.3/node_modules/typescript/lib/lib.es2015.promise.d.ts","../../../../../.pnpm/typescript@5.8.3/node_modules/typescript/lib/lib.es2015.proxy.d.ts","../../../../../.pnpm/typescript@5.8.3/node_modules/typescript/lib/lib.es2015.reflect.d.ts","../../../../../.pnpm/typescript@5.8.3/node_modules/typescript/lib/lib.es2015.symbol.d.ts","../../../../../.pnpm/typescript@5.8.3/node_modules/typescript/lib/lib.es2015.symbol.wellknown.d.ts","../../../../../.pnpm/typescript@5.8.3/node_modules/typescript/lib/lib.es2016.array.include.d.ts","../../../../../.pnpm/typescript@5.8.3/node_modules/typescript/lib/lib.es2016.intl.d.ts","../../../../../.pnpm/typescript@5.8.3/node_modules/typescript/lib/lib.es2017.arraybuffer.d.ts","../../../../../.pnpm/typescript@5.8.3/node_modules/typescript/lib/lib.es2017.date.d.ts","../../../../../.pnpm/typescript@5.8.3/node_modules/typescript/lib/lib.es2017.object.d.ts","../../../../../.pnpm/typescript@5.8.3/node_modules/typescript/lib/lib.es2017.sharedmemory.d.ts","../../../../../.pnpm/typescript@5.8.3/node_modules/typescript/lib/lib.es2017.string.d.ts","../../../../../.pnpm/typescript@5.8.3/node_modules/typescript/lib/lib.es2017.intl.d.ts","../../../../../.pnpm/typescript@5.8.3/node_modules/typescript/lib/lib.es2017.typedarrays.d.ts","../../../../../.pnpm/typescript@5.8.3/node_modules/typescript/lib/lib.es2018.asyncgenerator.d.ts","../../../../../.pnpm/typescript@5.8.3/node_modules/typescript/lib/lib.es2018.asynciterable.d.ts","../../../../../.pnpm/typescript@5.8.3/node_modules/typescript/lib/lib.es2018.intl.d.ts","../../../../../.pnpm/typescript@5.8.3/node_modules/typescript/lib/lib.es2018.promise.d.ts","../../../../../.pnpm/typescript@5.8.3/node_modules/typescript/lib/lib.es2018.regexp.d.ts","../../../../../.pnpm/typescript@5.8.3/node_modules/typescript/lib/lib.es2019.array.d.ts","../../../../../.pnpm/typescript@5.8.3/node_modules/typescript/lib/lib.es2019.object.d.ts","../../../../../.pnpm/typescript@5.8.3/node_modules/typescript/lib/lib.es2019.string.d.ts","../../../../../.pnpm/typescript@5.8.3/node_modules/typescript/lib/lib.es2019.symbol.d.ts","../../../../../.pnpm/typescript@5.8.3/node_modules/typescript/lib/lib.es2019.intl.d.ts","../../../../../.pnpm/typescript@5.8.3/node_modules/typescript/lib/lib.es2020.bigint.d.ts","../../../../../.pnpm/typescript@5.8.3/node_modules/typescript/lib/lib.es2020.date.d.ts","../../../../../.pnpm/typescript@5.8.3/node_modules/typescript/lib/lib.es2020.promise.d.ts","../../../../../.pnpm/typescript@5.8.3/node_modules/typescript/lib/lib.es2020.sharedmemory.d.ts","../../../../../.pnpm/typescript@5.8.3/node_modules/typescript/lib/lib.es2020.string.d.ts","../../../../../.pnpm/typescript@5.8.3/node_modules/typescript/lib/lib.es2020.symbol.wellknown.d.ts","../../../../../.pnpm/typescript@5.8.3/node_modules/typescript/lib/lib.es2020.intl.d.ts","../../../../../.pnpm/typescript@5.8.3/node_modules/typescript/lib/lib.es2020.number.d.ts","../../../../../.pnpm/typescript@5.8.3/node_modules/typescript/lib/lib.decorators.d.ts","../../../../../.pnpm/typescript@5.8.3/node_modules/typescript/lib/lib.decorators.legacy.d.ts","../../../../../.pnpm/typescript@5.8.3/node_modules/typescript/lib/lib.es2020.full.d.ts","../../src/type.ts","../../index.ts"],"fileIdsList":[[52]],"fileInfos":[{"version":"69684132aeb9b5642cbcd9e22dff7818ff0ee1aa831728af0ecf97d3364d5546","affectsGlobalScope":true,"impliedFormat":1},{"version":"45b7ab580deca34ae9729e97c13cfd999df04416a79116c3bfb483804f85ded4","impliedFormat":1},{"version":"3facaf05f0c5fc569c5649dd359892c98a85557e3e0c847964caeb67076f4d75","impliedFormat":1},{"version":"e44bb8bbac7f10ecc786703fe0a6a4b952189f908707980ba8f3c8975a760962","impliedFormat":1},{"version":"5e1c4c362065a6b95ff952c0eab010f04dcd2c3494e813b493ecfd4fcb9fc0d8","impliedFormat":1},{"version":"68d73b4a11549f9c0b7d352d10e91e5dca8faa3322bfb77b661839c42b1ddec7","impliedFormat":1},{"version":"5efce4fc3c29ea84e8928f97adec086e3dc876365e0982cc8479a07954a3efd4","impliedFormat":1},{"version":"092c2bfe125ce69dbb1223c85d68d4d2397d7d8411867b5cc03cec902c233763","affectsGlobalScope":true,"impliedFormat":1},{"version":"07f073f19d67f74d732b1adea08e1dc66b1b58d77cb5b43931dee3d798a2fd53","affectsGlobalScope":true,"impliedFormat":1},{"version":"d7a3c8b952931daebdfc7a2897c53c0a1c73624593fa070e46bd537e64dcd20a","affectsGlobalScope":true,"impliedFormat":1},{"version":"80e18897e5884b6723488d4f5652167e7bb5024f946743134ecc4aa4ee731f89","affectsGlobalScope":true,"impliedFormat":1},{"version":"cd034f499c6cdca722b60c04b5b1b78e058487a7085a8e0d6fb50809947ee573","affectsGlobalScope":true,"impliedFormat":1},{"version":"c57796738e7f83dbc4b8e65132f11a377649c00dd3eee333f672b8f0a6bea671","affectsGlobalScope":true,"impliedFormat":1},{"version":"dc2df20b1bcdc8c2d34af4926e2c3ab15ffe1160a63e58b7e09833f616efff44","affectsGlobalScope":true,"impliedFormat":1},{"version":"515d0b7b9bea2e31ea4ec968e9edd2c39d3eebf4a2d5cbd04e88639819ae3b71","affectsGlobalScope":true,"impliedFormat":1},{"version":"0559b1f683ac7505ae451f9a96ce4c3c92bdc71411651ca6ddb0e88baaaad6a3","affectsGlobalScope":true,"impliedFormat":1},{"version":"0dc1e7ceda9b8b9b455c3a2d67b0412feab00bd2f66656cd8850e8831b08b537","affectsGlobalScope":true,"impliedFormat":1},{"version":"ce691fb9e5c64efb9547083e4a34091bcbe5bdb41027e310ebba8f7d96a98671","affectsGlobalScope":true,"impliedFormat":1},{"version":"8d697a2a929a5fcb38b7a65594020fcef05ec1630804a33748829c5ff53640d0","affectsGlobalScope":true,"impliedFormat":1},{"version":"4ff2a353abf8a80ee399af572debb8faab2d33ad38c4b4474cff7f26e7653b8d","affectsGlobalScope":true,"impliedFormat":1},{"version":"936e80ad36a2ee83fc3caf008e7c4c5afe45b3cf3d5c24408f039c1d47bdc1df","affectsGlobalScope":true,"impliedFormat":1},{"version":"d15bea3d62cbbdb9797079416b8ac375ae99162a7fba5de2c6c505446486ac0a","affectsGlobalScope":true,"impliedFormat":1},{"version":"68d18b664c9d32a7336a70235958b8997ebc1c3b8505f4f1ae2b7e7753b87618","affectsGlobalScope":true,"impliedFormat":1},{"version":"eb3d66c8327153d8fa7dd03f9c58d351107fe824c79e9b56b462935176cdf12a","affectsGlobalScope":true,"impliedFormat":1},{"version":"38f0219c9e23c915ef9790ab1d680440d95419ad264816fa15009a8851e79119","affectsGlobalScope":true,"impliedFormat":1},{"version":"69ab18c3b76cd9b1be3d188eaf8bba06112ebbe2f47f6c322b5105a6fbc45a2e","affectsGlobalScope":true,"impliedFormat":1},{"version":"fef8cfad2e2dc5f5b3d97a6f4f2e92848eb1b88e897bb7318cef0e2820bceaab","affectsGlobalScope":true,"impliedFormat":1},{"version":"2f11ff796926e0832f9ae148008138ad583bd181899ab7dd768a2666700b1893","affectsGlobalScope":true,"impliedFormat":1},{"version":"4de680d5bb41c17f7f68e0419412ca23c98d5749dcaaea1896172f06435891fc","affectsGlobalScope":true,"impliedFormat":1},{"version":"954296b30da6d508a104a3a0b5d96b76495c709785c1d11610908e63481ee667","affectsGlobalScope":true,"impliedFormat":1},{"version":"ac9538681b19688c8eae65811b329d3744af679e0bdfa5d842d0e32524c73e1c","affectsGlobalScope":true,"impliedFormat":1},{"version":"0a969edff4bd52585473d24995c5ef223f6652d6ef46193309b3921d65dd4376","affectsGlobalScope":true,"impliedFormat":1},{"version":"9e9fbd7030c440b33d021da145d3232984c8bb7916f277e8ffd3dc2e3eae2bdb","affectsGlobalScope":true,"impliedFormat":1},{"version":"811ec78f7fefcabbda4bfa93b3eb67d9ae166ef95f9bff989d964061cbf81a0c","affectsGlobalScope":true,"impliedFormat":1},{"version":"717937616a17072082152a2ef351cb51f98802fb4b2fdabd32399843875974ca","affectsGlobalScope":true,"impliedFormat":1},{"version":"d7e7d9b7b50e5f22c915b525acc5a49a7a6584cf8f62d0569e557c5cfc4b2ac2","affectsGlobalScope":true,"impliedFormat":1},{"version":"71c37f4c9543f31dfced6c7840e068c5a5aacb7b89111a4364b1d5276b852557","affectsGlobalScope":true,"impliedFormat":1},{"version":"576711e016cf4f1804676043e6a0a5414252560eb57de9faceee34d79798c850","affectsGlobalScope":true,"impliedFormat":1},{"version":"89c1b1281ba7b8a96efc676b11b264de7a8374c5ea1e6617f11880a13fc56dc6","affectsGlobalScope":true,"impliedFormat":1},{"version":"74f7fa2d027d5b33eb0471c8e82a6c87216223181ec31247c357a3e8e2fddc5b","affectsGlobalScope":true,"impliedFormat":1},{"version":"d6d7ae4d1f1f3772e2a3cde568ed08991a8ae34a080ff1151af28b7f798e22ca","affectsGlobalScope":true,"impliedFormat":1},{"version":"063600664504610fe3e99b717a1223f8b1900087fab0b4cad1496a114744f8df","affectsGlobalScope":true,"impliedFormat":1},{"version":"934019d7e3c81950f9a8426d093458b65d5aff2c7c1511233c0fd5b941e608ab","affectsGlobalScope":true,"impliedFormat":1},{"version":"52ada8e0b6e0482b728070b7639ee42e83a9b1c22d205992756fe020fd9f4a47","affectsGlobalScope":true,"impliedFormat":1},{"version":"3bdefe1bfd4d6dee0e26f928f93ccc128f1b64d5d501ff4a8cf3c6371200e5e6","affectsGlobalScope":true,"impliedFormat":1},{"version":"59fb2c069260b4ba00b5643b907ef5d5341b167e7d1dbf58dfd895658bda2867","affectsGlobalScope":true,"impliedFormat":1},{"version":"639e512c0dfc3fad96a84caad71b8834d66329a1f28dc95e3946c9b58176c73a","affectsGlobalScope":true,"impliedFormat":1},{"version":"368af93f74c9c932edd84c58883e736c9e3d53cec1fe24c0b0ff451f529ceab1","affectsGlobalScope":true,"impliedFormat":1},{"version":"8e7f8264d0fb4c5339605a15daadb037bf238c10b654bb3eee14208f860a32ea","affectsGlobalScope":true,"impliedFormat":1},{"version":"782dec38049b92d4e85c1585fbea5474a219c6984a35b004963b00beb1aab538","affectsGlobalScope":true,"impliedFormat":1},{"version":"1305d1e76ca44e30fb8b2b8075fa522b83f60c0bcf5d4326a9d2cf79b53724f8","impliedFormat":1},{"version":"2aec9bd05d338947f2084bc1b26d23deec86665366d2b9cedd1f308f1285cec0","signature":"320217defa5f5efc928f9dd07135cc90086a76f56305174a4748ac24a42fa033","impliedFormat":1},{"version":"dcc3be585040c6c79b06a24270718cc79af84dc555d29fd4dac3aa23590d44fc","signature":"bd8305ea3955dad684e52167c0c6f0bf7970cb8a9a3c9e73fc4d597120d5ec27","impliedFormat":1}],"root":[52,53],"options":{"composite":true,"declaration":true,"emitDecoratorMetadata":true,"esModuleInterop":true,"experimentalDecorators":true,"module":1,"noFallthroughCasesInSwitch":true,"noImplicitReturns":true,"outDir":"./","sourceMap":true,"strict":true,"target":7},"referencedMap":[[53,1]],"latestChangedDtsFile":"./index.d.ts","version":"5.8.3"}
 \ No newline at end of file
 diff --git a/dist/esm/index.js b/dist/esm/index.js
 index e8e6a2e127ab70899ce15f8bca559b3687ddef6f..81d9dff927efceb26272d135697d34818fd0e87c 100644
@@ -155,36 +155,471 @@ index d1fc4072161a57bb5d5f0ef86bd8c2165890fe00..edc486502008cb96694c97adcbeb207a
  //# sourceMappingURL=type.js.map
 \ No newline at end of file
 diff --git a/dist/esm/src/type.js.map b/dist/esm/src/type.js.map
-index 7b239573925517e128a9d9994be649d1f0681eba..8e37299624a14f623f0ab670cdfe273142210877 100644
+index 7b239573925517e128a9d9994be649d1f0681eba..ab29aba6bbdf42c1f67a3b524c98fbe7884c3cd6 100644
 --- a/dist/esm/src/type.js.map
 +++ b/dist/esm/src/type.js.map
 @@ -1 +1 @@
 -{"version":3,"file":"type.js","sourceRoot":"","sources":["../../../src/type.ts"],"names":[],"mappings":"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"}
 \ No newline at end of file
-+{"version":3,"file":"type.js","sourceRoot":"","sources":["../../../src/type.ts"],"names":[],"mappings":"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"}
++{"version":3,"file":"type.js","sourceRoot":"","sources":["../../../src/type.ts"],"names":[],"mappings":"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"}
 \ No newline at end of file
 diff --git a/dist/esm/tsconfig.esm.tsbuildinfo b/dist/esm/tsconfig.esm.tsbuildinfo
-index b1437f7d27b206a0f04a36d5af1bb3040511bb23..52ac72b30db7baa2d7bd53b3e9f09960819d8786 100644
+index b1437f7d27b206a0f04a36d5af1bb3040511bb23..262f738bfab024278e6a9ca39884b1d111af29aa 100644
 --- a/dist/esm/tsconfig.esm.tsbuildinfo
 +++ b/dist/esm/tsconfig.esm.tsbuildinfo
 @@ -1 +1 @@
 -{"fileNames":["../../../../node_modules/typescript/lib/lib.es5.d.ts","../../../../node_modules/typescript/lib/lib.es2015.d.ts","../../../../node_modules/typescript/lib/lib.es2016.d.ts","../../../../node_modules/typescript/lib/lib.es2017.d.ts","../../../../node_modules/typescript/lib/lib.es2018.d.ts","../../../../node_modules/typescript/lib/lib.es2019.d.ts","../../../../node_modules/typescript/lib/lib.es2020.d.ts","../../../../node_modules/typescript/lib/lib.dom.d.ts","../../../../node_modules/typescript/lib/lib.dom.iterable.d.ts","../../../../node_modules/typescript/lib/lib.dom.asynciterable.d.ts","../../../../node_modules/typescript/lib/lib.webworker.importscripts.d.ts","../../../../node_modules/typescript/lib/lib.scripthost.d.ts","../../../../node_modules/typescript/lib/lib.es2015.core.d.ts","../../../../node_modules/typescript/lib/lib.es2015.collection.d.ts","../../../../node_modules/typescript/lib/lib.es2015.generator.d.ts","../../../../node_modules/typescript/lib/lib.es2015.iterable.d.ts","../../../../node_modules/typescript/lib/lib.es2015.promise.d.ts","../../../../node_modules/typescript/lib/lib.es2015.proxy.d.ts","../../../../node_modules/typescript/lib/lib.es2015.reflect.d.ts","../../../../node_modules/typescript/lib/lib.es2015.symbol.d.ts","../../../../node_modules/typescript/lib/lib.es2015.symbol.wellknown.d.ts","../../../../node_modules/typescript/lib/lib.es2016.array.include.d.ts","../../../../node_modules/typescript/lib/lib.es2016.intl.d.ts","../../../../node_modules/typescript/lib/lib.es2017.arraybuffer.d.ts","../../../../node_modules/typescript/lib/lib.es2017.date.d.ts","../../../../node_modules/typescript/lib/lib.es2017.object.d.ts","../../../../node_modules/typescript/lib/lib.es2017.sharedmemory.d.ts","../../../../node_modules/typescript/lib/lib.es2017.string.d.ts","../../../../node_modules/typescript/lib/lib.es2017.intl.d.ts","../../../../node_modules/typescript/lib/lib.es2017.typedarrays.d.ts","../../../../node_modules/typescript/lib/lib.es2018.asyncgenerator.d.ts","../../../../node_modules/typescript/lib/lib.es2018.asynciterable.d.ts","../../../../node_modules/typescript/lib/lib.es2018.intl.d.ts","../../../../node_modules/typescript/lib/lib.es2018.promise.d.ts","../../../../node_modules/typescript/lib/lib.es2018.regexp.d.ts","../../../../node_modules/typescript/lib/lib.es2019.array.d.ts","../../../../node_modules/typescript/lib/lib.es2019.object.d.ts","../../../../node_modules/typescript/lib/lib.es2019.string.d.ts","../../../../node_modules/typescript/lib/lib.es2019.symbol.d.ts","../../../../node_modules/typescript/lib/lib.es2019.intl.d.ts","../../../../node_modules/typescript/lib/lib.es2020.bigint.d.ts","../../../../node_modules/typescript/lib/lib.es2020.date.d.ts","../../../../node_modules/typescript/lib/lib.es2020.promise.d.ts","../../../../node_modules/typescript/lib/lib.es2020.sharedmemory.d.ts","../../../../node_modules/typescript/lib/lib.es2020.string.d.ts","../../../../node_modules/typescript/lib/lib.es2020.symbol.wellknown.d.ts","../../../../node_modules/typescript/lib/lib.es2020.intl.d.ts","../../../../node_modules/typescript/lib/lib.es2020.number.d.ts","../../../../node_modules/typescript/lib/lib.decorators.d.ts","../../../../node_modules/typescript/lib/lib.decorators.legacy.d.ts","../../../../node_modules/typescript/lib/lib.es2020.full.d.ts","../../src/type.ts","../../index.ts"],"fileIdsList":[[52]],"fileInfos":[{"version":"e41c290ef7dd7dab3493e6cbe5909e0148edf4a8dad0271be08edec368a0f7b9","affectsGlobalScope":true,"impliedFormat":1},{"version":"45b7ab580deca34ae9729e97c13cfd999df04416a79116c3bfb483804f85ded4","impliedFormat":1},{"version":"3facaf05f0c5fc569c5649dd359892c98a85557e3e0c847964caeb67076f4d75","impliedFormat":1},{"version":"e44bb8bbac7f10ecc786703fe0a6a4b952189f908707980ba8f3c8975a760962","impliedFormat":1},{"version":"5e1c4c362065a6b95ff952c0eab010f04dcd2c3494e813b493ecfd4fcb9fc0d8","impliedFormat":1},{"version":"68d73b4a11549f9c0b7d352d10e91e5dca8faa3322bfb77b661839c42b1ddec7","impliedFormat":1},{"version":"5efce4fc3c29ea84e8928f97adec086e3dc876365e0982cc8479a07954a3efd4","impliedFormat":1},{"version":"4fd3f3422b2d2a3dfd5cdd0f387b3a8ec45f006c6ea896a4cb41264c2100bb2c","affectsGlobalScope":true,"impliedFormat":1},{"version":"69e65d976bf166ce4a9e6f6c18f94d2424bf116e90837ace179610dbccad9b42","affectsGlobalScope":true,"impliedFormat":1},{"version":"d7a3c8b952931daebdfc7a2897c53c0a1c73624593fa070e46bd537e64dcd20a","affectsGlobalScope":true,"impliedFormat":1},{"version":"80e18897e5884b6723488d4f5652167e7bb5024f946743134ecc4aa4ee731f89","affectsGlobalScope":true,"impliedFormat":1},{"version":"cd034f499c6cdca722b60c04b5b1b78e058487a7085a8e0d6fb50809947ee573","affectsGlobalScope":true,"impliedFormat":1},{"version":"c57796738e7f83dbc4b8e65132f11a377649c00dd3eee333f672b8f0a6bea671","affectsGlobalScope":true,"impliedFormat":1},{"version":"dc2df20b1bcdc8c2d34af4926e2c3ab15ffe1160a63e58b7e09833f616efff44","affectsGlobalScope":true,"impliedFormat":1},{"version":"515d0b7b9bea2e31ea4ec968e9edd2c39d3eebf4a2d5cbd04e88639819ae3b71","affectsGlobalScope":true,"impliedFormat":1},{"version":"62bb211266ee48b2d0edf0d8d1b191f0c24fc379a82bd4c1692a082c540bc6b1","affectsGlobalScope":true,"impliedFormat":1},{"version":"0dc1e7ceda9b8b9b455c3a2d67b0412feab00bd2f66656cd8850e8831b08b537","affectsGlobalScope":true,"impliedFormat":1},{"version":"ce691fb9e5c64efb9547083e4a34091bcbe5bdb41027e310ebba8f7d96a98671","affectsGlobalScope":true,"impliedFormat":1},{"version":"8d697a2a929a5fcb38b7a65594020fcef05ec1630804a33748829c5ff53640d0","affectsGlobalScope":true,"impliedFormat":1},{"version":"4ff2a353abf8a80ee399af572debb8faab2d33ad38c4b4474cff7f26e7653b8d","affectsGlobalScope":true,"impliedFormat":1},{"version":"936e80ad36a2ee83fc3caf008e7c4c5afe45b3cf3d5c24408f039c1d47bdc1df","affectsGlobalScope":true,"impliedFormat":1},{"version":"d15bea3d62cbbdb9797079416b8ac375ae99162a7fba5de2c6c505446486ac0a","affectsGlobalScope":true,"impliedFormat":1},{"version":"68d18b664c9d32a7336a70235958b8997ebc1c3b8505f4f1ae2b7e7753b87618","affectsGlobalScope":true,"impliedFormat":1},{"version":"eb3d66c8327153d8fa7dd03f9c58d351107fe824c79e9b56b462935176cdf12a","affectsGlobalScope":true,"impliedFormat":1},{"version":"38f0219c9e23c915ef9790ab1d680440d95419ad264816fa15009a8851e79119","affectsGlobalScope":true,"impliedFormat":1},{"version":"69ab18c3b76cd9b1be3d188eaf8bba06112ebbe2f47f6c322b5105a6fbc45a2e","affectsGlobalScope":true,"impliedFormat":1},{"version":"fef8cfad2e2dc5f5b3d97a6f4f2e92848eb1b88e897bb7318cef0e2820bceaab","affectsGlobalScope":true,"impliedFormat":1},{"version":"2f11ff796926e0832f9ae148008138ad583bd181899ab7dd768a2666700b1893","affectsGlobalScope":true,"impliedFormat":1},{"version":"4de680d5bb41c17f7f68e0419412ca23c98d5749dcaaea1896172f06435891fc","affectsGlobalScope":true,"impliedFormat":1},{"version":"954296b30da6d508a104a3a0b5d96b76495c709785c1d11610908e63481ee667","affectsGlobalScope":true,"impliedFormat":1},{"version":"ac9538681b19688c8eae65811b329d3744af679e0bdfa5d842d0e32524c73e1c","affectsGlobalScope":true,"impliedFormat":1},{"version":"0a969edff4bd52585473d24995c5ef223f6652d6ef46193309b3921d65dd4376","affectsGlobalScope":true,"impliedFormat":1},{"version":"9e9fbd7030c440b33d021da145d3232984c8bb7916f277e8ffd3dc2e3eae2bdb","affectsGlobalScope":true,"impliedFormat":1},{"version":"811ec78f7fefcabbda4bfa93b3eb67d9ae166ef95f9bff989d964061cbf81a0c","affectsGlobalScope":true,"impliedFormat":1},{"version":"717937616a17072082152a2ef351cb51f98802fb4b2fdabd32399843875974ca","affectsGlobalScope":true,"impliedFormat":1},{"version":"d7e7d9b7b50e5f22c915b525acc5a49a7a6584cf8f62d0569e557c5cfc4b2ac2","affectsGlobalScope":true,"impliedFormat":1},{"version":"71c37f4c9543f31dfced6c7840e068c5a5aacb7b89111a4364b1d5276b852557","affectsGlobalScope":true,"impliedFormat":1},{"version":"576711e016cf4f1804676043e6a0a5414252560eb57de9faceee34d79798c850","affectsGlobalScope":true,"impliedFormat":1},{"version":"89c1b1281ba7b8a96efc676b11b264de7a8374c5ea1e6617f11880a13fc56dc6","affectsGlobalScope":true,"impliedFormat":1},{"version":"74f7fa2d027d5b33eb0471c8e82a6c87216223181ec31247c357a3e8e2fddc5b","affectsGlobalScope":true,"impliedFormat":1},{"version":"f1e2a172204962276504466a6393426d2ca9c54894b1ad0a6c9dad867a65f876","affectsGlobalScope":true,"impliedFormat":1},{"version":"063600664504610fe3e99b717a1223f8b1900087fab0b4cad1496a114744f8df","affectsGlobalScope":true,"impliedFormat":1},{"version":"934019d7e3c81950f9a8426d093458b65d5aff2c7c1511233c0fd5b941e608ab","affectsGlobalScope":true,"impliedFormat":1},{"version":"52ada8e0b6e0482b728070b7639ee42e83a9b1c22d205992756fe020fd9f4a47","affectsGlobalScope":true,"impliedFormat":1},{"version":"3bdefe1bfd4d6dee0e26f928f93ccc128f1b64d5d501ff4a8cf3c6371200e5e6","affectsGlobalScope":true,"impliedFormat":1},{"version":"59fb2c069260b4ba00b5643b907ef5d5341b167e7d1dbf58dfd895658bda2867","affectsGlobalScope":true,"impliedFormat":1},{"version":"639e512c0dfc3fad96a84caad71b8834d66329a1f28dc95e3946c9b58176c73a","affectsGlobalScope":true,"impliedFormat":1},{"version":"368af93f74c9c932edd84c58883e736c9e3d53cec1fe24c0b0ff451f529ceab1","affectsGlobalScope":true,"impliedFormat":1},{"version":"8e7f8264d0fb4c5339605a15daadb037bf238c10b654bb3eee14208f860a32ea","affectsGlobalScope":true,"impliedFormat":1},{"version":"782dec38049b92d4e85c1585fbea5474a219c6984a35b004963b00beb1aab538","affectsGlobalScope":true,"impliedFormat":1},{"version":"1305d1e76ca44e30fb8b2b8075fa522b83f60c0bcf5d4326a9d2cf79b53724f8","impliedFormat":1},{"version":"d66c96b73be8bd21c905beb06d75efd101b4e69dee04f11ba5e7d7a8908c0683","signature":"04ad7f4a76339aff3e37651d3777b1b065b19c3f5d368e44633da92b3b72ade3"},{"version":"dcc3be585040c6c79b06a24270718cc79af84dc555d29fd4dac3aa23590d44fc","signature":"bd8305ea3955dad684e52167c0c6f0bf7970cb8a9a3c9e73fc4d597120d5ec27"}],"root":[52,53],"options":{"composite":true,"declaration":true,"emitDecoratorMetadata":true,"esModuleInterop":true,"experimentalDecorators":true,"module":6,"noFallthroughCasesInSwitch":true,"noImplicitReturns":true,"outDir":"./","sourceMap":true,"strict":true,"target":7},"referencedMap":[[53,1]],"latestChangedDtsFile":"./index.d.ts","version":"5.7.3"}
 \ No newline at end of file
-+{"fileNames":["../../../../../.pnpm/typescript@5.8.3/node_modules/typescript/lib/lib.es5.d.ts","../../../../../.pnpm/typescript@5.8.3/node_modules/typescript/lib/lib.es2015.d.ts","../../../../../.pnpm/typescript@5.8.3/node_modules/typescript/lib/lib.es2016.d.ts","../../../../../.pnpm/typescript@5.8.3/node_modules/typescript/lib/lib.es2017.d.ts","../../../../../.pnpm/typescript@5.8.3/node_modules/typescript/lib/lib.es2018.d.ts","../../../../../.pnpm/typescript@5.8.3/node_modules/typescript/lib/lib.es2019.d.ts","../../../../../.pnpm/typescript@5.8.3/node_modules/typescript/lib/lib.es2020.d.ts","../../../../../.pnpm/typescript@5.8.3/node_modules/typescript/lib/lib.dom.d.ts","../../../../../.pnpm/typescript@5.8.3/node_modules/typescript/lib/lib.dom.iterable.d.ts","../../../../../.pnpm/typescript@5.8.3/node_modules/typescript/lib/lib.dom.asynciterable.d.ts","../../../../../.pnpm/typescript@5.8.3/node_modules/typescript/lib/lib.webworker.importscripts.d.ts","../../../../../.pnpm/typescript@5.8.3/node_modules/typescript/lib/lib.scripthost.d.ts","../../../../../.pnpm/typescript@5.8.3/node_modules/typescript/lib/lib.es2015.core.d.ts","../../../../../.pnpm/typescript@5.8.3/node_modules/typescript/lib/lib.es2015.collection.d.ts","../../../../../.pnpm/typescript@5.8.3/node_modules/typescript/lib/lib.es2015.generator.d.ts","../../../../../.pnpm/typescript@5.8.3/node_modules/typescript/lib/lib.es2015.iterable.d.ts","../../../../../.pnpm/typescript@5.8.3/node_modules/typescript/lib/lib.es2015.promise.d.ts","../../../../../.pnpm/typescript@5.8.3/node_modules/typescript/lib/lib.es2015.proxy.d.ts","../../../../../.pnpm/typescript@5.8.3/node_modules/typescript/lib/lib.es2015.reflect.d.ts","../../../../../.pnpm/typescript@5.8.3/node_modules/typescript/lib/lib.es2015.symbol.d.ts","../../../../../.pnpm/typescript@5.8.3/node_modules/typescript/lib/lib.es2015.symbol.wellknown.d.ts","../../../../../.pnpm/typescript@5.8.3/node_modules/typescript/lib/lib.es2016.array.include.d.ts","../../../../../.pnpm/typescript@5.8.3/node_modules/typescript/lib/lib.es2016.intl.d.ts","../../../../../.pnpm/typescript@5.8.3/node_modules/typescript/lib/lib.es2017.arraybuffer.d.ts","../../../../../.pnpm/typescript@5.8.3/node_modules/typescript/lib/lib.es2017.date.d.ts","../../../../../.pnpm/typescript@5.8.3/node_modules/typescript/lib/lib.es2017.object.d.ts","../../../../../.pnpm/typescript@5.8.3/node_modules/typescript/lib/lib.es2017.sharedmemory.d.ts","../../../../../.pnpm/typescript@5.8.3/node_modules/typescript/lib/lib.es2017.string.d.ts","../../../../../.pnpm/typescript@5.8.3/node_modules/typescript/lib/lib.es2017.intl.d.ts","../../../../../.pnpm/typescript@5.8.3/node_modules/typescript/lib/lib.es2017.typedarrays.d.ts","../../../../../.pnpm/typescript@5.8.3/node_modules/typescript/lib/lib.es2018.asyncgenerator.d.ts","../../../../../.pnpm/typescript@5.8.3/node_modules/typescript/lib/lib.es2018.asynciterable.d.ts","../../../../../.pnpm/typescript@5.8.3/node_modules/typescript/lib/lib.es2018.intl.d.ts","../../../../../.pnpm/typescript@5.8.3/node_modules/typescript/lib/lib.es2018.promise.d.ts","../../../../../.pnpm/typescript@5.8.3/node_modules/typescript/lib/lib.es2018.regexp.d.ts","../../../../../.pnpm/typescript@5.8.3/node_modules/typescript/lib/lib.es2019.array.d.ts","../../../../../.pnpm/typescript@5.8.3/node_modules/typescript/lib/lib.es2019.object.d.ts","../../../../../.pnpm/typescript@5.8.3/node_modules/typescript/lib/lib.es2019.string.d.ts","../../../../../.pnpm/typescript@5.8.3/node_modules/typescript/lib/lib.es2019.symbol.d.ts","../../../../../.pnpm/typescript@5.8.3/node_modules/typescript/lib/lib.es2019.intl.d.ts","../../../../../.pnpm/typescript@5.8.3/node_modules/typescript/lib/lib.es2020.bigint.d.ts","../../../../../.pnpm/typescript@5.8.3/node_modules/typescript/lib/lib.es2020.date.d.ts","../../../../../.pnpm/typescript@5.8.3/node_modules/typescript/lib/lib.es2020.promise.d.ts","../../../../../.pnpm/typescript@5.8.3/node_modules/typescript/lib/lib.es2020.sharedmemory.d.ts","../../../../../.pnpm/typescript@5.8.3/node_modules/typescript/lib/lib.es2020.string.d.ts","../../../../../.pnpm/typescript@5.8.3/node_modules/typescript/lib/lib.es2020.symbol.wellknown.d.ts","../../../../../.pnpm/typescript@5.8.3/node_modules/typescript/lib/lib.es2020.intl.d.ts","../../../../../.pnpm/typescript@5.8.3/node_modules/typescript/lib/lib.es2020.number.d.ts","../../../../../.pnpm/typescript@5.8.3/node_modules/typescript/lib/lib.decorators.d.ts","../../../../../.pnpm/typescript@5.8.3/node_modules/typescript/lib/lib.decorators.legacy.d.ts","../../../../../.pnpm/typescript@5.8.3/node_modules/typescript/lib/lib.es2020.full.d.ts","../../src/type.ts","../../index.ts"],"fileIdsList":[[52]],"fileInfos":[{"version":"69684132aeb9b5642cbcd9e22dff7818ff0ee1aa831728af0ecf97d3364d5546","affectsGlobalScope":true,"impliedFormat":1},{"version":"45b7ab580deca34ae9729e97c13cfd999df04416a79116c3bfb483804f85ded4","impliedFormat":1},{"version":"3facaf05f0c5fc569c5649dd359892c98a85557e3e0c847964caeb67076f4d75","impliedFormat":1},{"version":"e44bb8bbac7f10ecc786703fe0a6a4b952189f908707980ba8f3c8975a760962","impliedFormat":1},{"version":"5e1c4c362065a6b95ff952c0eab010f04dcd2c3494e813b493ecfd4fcb9fc0d8","impliedFormat":1},{"version":"68d73b4a11549f9c0b7d352d10e91e5dca8faa3322bfb77b661839c42b1ddec7","impliedFormat":1},{"version":"5efce4fc3c29ea84e8928f97adec086e3dc876365e0982cc8479a07954a3efd4","impliedFormat":1},{"version":"092c2bfe125ce69dbb1223c85d68d4d2397d7d8411867b5cc03cec902c233763","affectsGlobalScope":true,"impliedFormat":1},{"version":"07f073f19d67f74d732b1adea08e1dc66b1b58d77cb5b43931dee3d798a2fd53","affectsGlobalScope":true,"impliedFormat":1},{"version":"d7a3c8b952931daebdfc7a2897c53c0a1c73624593fa070e46bd537e64dcd20a","affectsGlobalScope":true,"impliedFormat":1},{"version":"80e18897e5884b6723488d4f5652167e7bb5024f946743134ecc4aa4ee731f89","affectsGlobalScope":true,"impliedFormat":1},{"version":"cd034f499c6cdca722b60c04b5b1b78e058487a7085a8e0d6fb50809947ee573","affectsGlobalScope":true,"impliedFormat":1},{"version":"c57796738e7f83dbc4b8e65132f11a377649c00dd3eee333f672b8f0a6bea671","affectsGlobalScope":true,"impliedFormat":1},{"version":"dc2df20b1bcdc8c2d34af4926e2c3ab15ffe1160a63e58b7e09833f616efff44","affectsGlobalScope":true,"impliedFormat":1},{"version":"515d0b7b9bea2e31ea4ec968e9edd2c39d3eebf4a2d5cbd04e88639819ae3b71","affectsGlobalScope":true,"impliedFormat":1},{"version":"0559b1f683ac7505ae451f9a96ce4c3c92bdc71411651ca6ddb0e88baaaad6a3","affectsGlobalScope":true,"impliedFormat":1},{"version":"0dc1e7ceda9b8b9b455c3a2d67b0412feab00bd2f66656cd8850e8831b08b537","affectsGlobalScope":true,"impliedFormat":1},{"version":"ce691fb9e5c64efb9547083e4a34091bcbe5bdb41027e310ebba8f7d96a98671","affectsGlobalScope":true,"impliedFormat":1},{"version":"8d697a2a929a5fcb38b7a65594020fcef05ec1630804a33748829c5ff53640d0","affectsGlobalScope":true,"impliedFormat":1},{"version":"4ff2a353abf8a80ee399af572debb8faab2d33ad38c4b4474cff7f26e7653b8d","affectsGlobalScope":true,"impliedFormat":1},{"version":"936e80ad36a2ee83fc3caf008e7c4c5afe45b3cf3d5c24408f039c1d47bdc1df","affectsGlobalScope":true,"impliedFormat":1},{"version":"d15bea3d62cbbdb9797079416b8ac375ae99162a7fba5de2c6c505446486ac0a","affectsGlobalScope":true,"impliedFormat":1},{"version":"68d18b664c9d32a7336a70235958b8997ebc1c3b8505f4f1ae2b7e7753b87618","affectsGlobalScope":true,"impliedFormat":1},{"version":"eb3d66c8327153d8fa7dd03f9c58d351107fe824c79e9b56b462935176cdf12a","affectsGlobalScope":true,"impliedFormat":1},{"version":"38f0219c9e23c915ef9790ab1d680440d95419ad264816fa15009a8851e79119","affectsGlobalScope":true,"impliedFormat":1},{"version":"69ab18c3b76cd9b1be3d188eaf8bba06112ebbe2f47f6c322b5105a6fbc45a2e","affectsGlobalScope":true,"impliedFormat":1},{"version":"fef8cfad2e2dc5f5b3d97a6f4f2e92848eb1b88e897bb7318cef0e2820bceaab","affectsGlobalScope":true,"impliedFormat":1},{"version":"2f11ff796926e0832f9ae148008138ad583bd181899ab7dd768a2666700b1893","affectsGlobalScope":true,"impliedFormat":1},{"version":"4de680d5bb41c17f7f68e0419412ca23c98d5749dcaaea1896172f06435891fc","affectsGlobalScope":true,"impliedFormat":1},{"version":"954296b30da6d508a104a3a0b5d96b76495c709785c1d11610908e63481ee667","affectsGlobalScope":true,"impliedFormat":1},{"version":"ac9538681b19688c8eae65811b329d3744af679e0bdfa5d842d0e32524c73e1c","affectsGlobalScope":true,"impliedFormat":1},{"version":"0a969edff4bd52585473d24995c5ef223f6652d6ef46193309b3921d65dd4376","affectsGlobalScope":true,"impliedFormat":1},{"version":"9e9fbd7030c440b33d021da145d3232984c8bb7916f277e8ffd3dc2e3eae2bdb","affectsGlobalScope":true,"impliedFormat":1},{"version":"811ec78f7fefcabbda4bfa93b3eb67d9ae166ef95f9bff989d964061cbf81a0c","affectsGlobalScope":true,"impliedFormat":1},{"version":"717937616a17072082152a2ef351cb51f98802fb4b2fdabd32399843875974ca","affectsGlobalScope":true,"impliedFormat":1},{"version":"d7e7d9b7b50e5f22c915b525acc5a49a7a6584cf8f62d0569e557c5cfc4b2ac2","affectsGlobalScope":true,"impliedFormat":1},{"version":"71c37f4c9543f31dfced6c7840e068c5a5aacb7b89111a4364b1d5276b852557","affectsGlobalScope":true,"impliedFormat":1},{"version":"576711e016cf4f1804676043e6a0a5414252560eb57de9faceee34d79798c850","affectsGlobalScope":true,"impliedFormat":1},{"version":"89c1b1281ba7b8a96efc676b11b264de7a8374c5ea1e6617f11880a13fc56dc6","affectsGlobalScope":true,"impliedFormat":1},{"version":"74f7fa2d027d5b33eb0471c8e82a6c87216223181ec31247c357a3e8e2fddc5b","affectsGlobalScope":true,"impliedFormat":1},{"version":"d6d7ae4d1f1f3772e2a3cde568ed08991a8ae34a080ff1151af28b7f798e22ca","affectsGlobalScope":true,"impliedFormat":1},{"version":"063600664504610fe3e99b717a1223f8b1900087fab0b4cad1496a114744f8df","affectsGlobalScope":true,"impliedFormat":1},{"version":"934019d7e3c81950f9a8426d093458b65d5aff2c7c1511233c0fd5b941e608ab","affectsGlobalScope":true,"impliedFormat":1},{"version":"52ada8e0b6e0482b728070b7639ee42e83a9b1c22d205992756fe020fd9f4a47","affectsGlobalScope":true,"impliedFormat":1},{"version":"3bdefe1bfd4d6dee0e26f928f93ccc128f1b64d5d501ff4a8cf3c6371200e5e6","affectsGlobalScope":true,"impliedFormat":1},{"version":"59fb2c069260b4ba00b5643b907ef5d5341b167e7d1dbf58dfd895658bda2867","affectsGlobalScope":true,"impliedFormat":1},{"version":"639e512c0dfc3fad96a84caad71b8834d66329a1f28dc95e3946c9b58176c73a","affectsGlobalScope":true,"impliedFormat":1},{"version":"368af93f74c9c932edd84c58883e736c9e3d53cec1fe24c0b0ff451f529ceab1","affectsGlobalScope":true,"impliedFormat":1},{"version":"8e7f8264d0fb4c5339605a15daadb037bf238c10b654bb3eee14208f860a32ea","affectsGlobalScope":true,"impliedFormat":1},{"version":"782dec38049b92d4e85c1585fbea5474a219c6984a35b004963b00beb1aab538","affectsGlobalScope":true,"impliedFormat":1},{"version":"1305d1e76ca44e30fb8b2b8075fa522b83f60c0bcf5d4326a9d2cf79b53724f8","impliedFormat":1},{"version":"45bac5b9f2e0d79f2c5b7a54d7747b3346d0422730f1c147e9321e085b55cde0","signature":"320217defa5f5efc928f9dd07135cc90086a76f56305174a4748ac24a42fa033","impliedFormat":1},{"version":"dcc3be585040c6c79b06a24270718cc79af84dc555d29fd4dac3aa23590d44fc","signature":"bd8305ea3955dad684e52167c0c6f0bf7970cb8a9a3c9e73fc4d597120d5ec27","impliedFormat":1}],"root":[52,53],"options":{"composite":true,"declaration":true,"emitDecoratorMetadata":true,"esModuleInterop":true,"experimentalDecorators":true,"module":6,"noFallthroughCasesInSwitch":true,"noImplicitReturns":true,"outDir":"./","sourceMap":true,"strict":true,"target":7},"referencedMap":[[53,1]],"latestChangedDtsFile":"./index.d.ts","version":"5.8.3"}
++{"fileNames":["../../../../../.pnpm/typescript@5.8.3/node_modules/typescript/lib/lib.es5.d.ts","../../../../../.pnpm/typescript@5.8.3/node_modules/typescript/lib/lib.es2015.d.ts","../../../../../.pnpm/typescript@5.8.3/node_modules/typescript/lib/lib.es2016.d.ts","../../../../../.pnpm/typescript@5.8.3/node_modules/typescript/lib/lib.es2017.d.ts","../../../../../.pnpm/typescript@5.8.3/node_modules/typescript/lib/lib.es2018.d.ts","../../../../../.pnpm/typescript@5.8.3/node_modules/typescript/lib/lib.es2019.d.ts","../../../../../.pnpm/typescript@5.8.3/node_modules/typescript/lib/lib.es2020.d.ts","../../../../../.pnpm/typescript@5.8.3/node_modules/typescript/lib/lib.dom.d.ts","../../../../../.pnpm/typescript@5.8.3/node_modules/typescript/lib/lib.dom.iterable.d.ts","../../../../../.pnpm/typescript@5.8.3/node_modules/typescript/lib/lib.dom.asynciterable.d.ts","../../../../../.pnpm/typescript@5.8.3/node_modules/typescript/lib/lib.webworker.importscripts.d.ts","../../../../../.pnpm/typescript@5.8.3/node_modules/typescript/lib/lib.scripthost.d.ts","../../../../../.pnpm/typescript@5.8.3/node_modules/typescript/lib/lib.es2015.core.d.ts","../../../../../.pnpm/typescript@5.8.3/node_modules/typescript/lib/lib.es2015.collection.d.ts","../../../../../.pnpm/typescript@5.8.3/node_modules/typescript/lib/lib.es2015.generator.d.ts","../../../../../.pnpm/typescript@5.8.3/node_modules/typescript/lib/lib.es2015.iterable.d.ts","../../../../../.pnpm/typescript@5.8.3/node_modules/typescript/lib/lib.es2015.promise.d.ts","../../../../../.pnpm/typescript@5.8.3/node_modules/typescript/lib/lib.es2015.proxy.d.ts","../../../../../.pnpm/typescript@5.8.3/node_modules/typescript/lib/lib.es2015.reflect.d.ts","../../../../../.pnpm/typescript@5.8.3/node_modules/typescript/lib/lib.es2015.symbol.d.ts","../../../../../.pnpm/typescript@5.8.3/node_modules/typescript/lib/lib.es2015.symbol.wellknown.d.ts","../../../../../.pnpm/typescript@5.8.3/node_modules/typescript/lib/lib.es2016.array.include.d.ts","../../../../../.pnpm/typescript@5.8.3/node_modules/typescript/lib/lib.es2016.intl.d.ts","../../../../../.pnpm/typescript@5.8.3/node_modules/typescript/lib/lib.es2017.arraybuffer.d.ts","../../../../../.pnpm/typescript@5.8.3/node_modules/typescript/lib/lib.es2017.date.d.ts","../../../../../.pnpm/typescript@5.8.3/node_modules/typescript/lib/lib.es2017.object.d.ts","../../../../../.pnpm/typescript@5.8.3/node_modules/typescript/lib/lib.es2017.sharedmemory.d.ts","../../../../../.pnpm/typescript@5.8.3/node_modules/typescript/lib/lib.es2017.string.d.ts","../../../../../.pnpm/typescript@5.8.3/node_modules/typescript/lib/lib.es2017.intl.d.ts","../../../../../.pnpm/typescript@5.8.3/node_modules/typescript/lib/lib.es2017.typedarrays.d.ts","../../../../../.pnpm/typescript@5.8.3/node_modules/typescript/lib/lib.es2018.asyncgenerator.d.ts","../../../../../.pnpm/typescript@5.8.3/node_modules/typescript/lib/lib.es2018.asynciterable.d.ts","../../../../../.pnpm/typescript@5.8.3/node_modules/typescript/lib/lib.es2018.intl.d.ts","../../../../../.pnpm/typescript@5.8.3/node_modules/typescript/lib/lib.es2018.promise.d.ts","../../../../../.pnpm/typescript@5.8.3/node_modules/typescript/lib/lib.es2018.regexp.d.ts","../../../../../.pnpm/typescript@5.8.3/node_modules/typescript/lib/lib.es2019.array.d.ts","../../../../../.pnpm/typescript@5.8.3/node_modules/typescript/lib/lib.es2019.object.d.ts","../../../../../.pnpm/typescript@5.8.3/node_modules/typescript/lib/lib.es2019.string.d.ts","../../../../../.pnpm/typescript@5.8.3/node_modules/typescript/lib/lib.es2019.symbol.d.ts","../../../../../.pnpm/typescript@5.8.3/node_modules/typescript/lib/lib.es2019.intl.d.ts","../../../../../.pnpm/typescript@5.8.3/node_modules/typescript/lib/lib.es2020.bigint.d.ts","../../../../../.pnpm/typescript@5.8.3/node_modules/typescript/lib/lib.es2020.date.d.ts","../../../../../.pnpm/typescript@5.8.3/node_modules/typescript/lib/lib.es2020.promise.d.ts","../../../../../.pnpm/typescript@5.8.3/node_modules/typescript/lib/lib.es2020.sharedmemory.d.ts","../../../../../.pnpm/typescript@5.8.3/node_modules/typescript/lib/lib.es2020.string.d.ts","../../../../../.pnpm/typescript@5.8.3/node_modules/typescript/lib/lib.es2020.symbol.wellknown.d.ts","../../../../../.pnpm/typescript@5.8.3/node_modules/typescript/lib/lib.es2020.intl.d.ts","../../../../../.pnpm/typescript@5.8.3/node_modules/typescript/lib/lib.es2020.number.d.ts","../../../../../.pnpm/typescript@5.8.3/node_modules/typescript/lib/lib.decorators.d.ts","../../../../../.pnpm/typescript@5.8.3/node_modules/typescript/lib/lib.decorators.legacy.d.ts","../../../../../.pnpm/typescript@5.8.3/node_modules/typescript/lib/lib.es2020.full.d.ts","../../src/type.ts","../../index.ts"],"fileIdsList":[[52]],"fileInfos":[{"version":"69684132aeb9b5642cbcd9e22dff7818ff0ee1aa831728af0ecf97d3364d5546","affectsGlobalScope":true,"impliedFormat":1},{"version":"45b7ab580deca34ae9729e97c13cfd999df04416a79116c3bfb483804f85ded4","impliedFormat":1},{"version":"3facaf05f0c5fc569c5649dd359892c98a85557e3e0c847964caeb67076f4d75","impliedFormat":1},{"version":"e44bb8bbac7f10ecc786703fe0a6a4b952189f908707980ba8f3c8975a760962","impliedFormat":1},{"version":"5e1c4c362065a6b95ff952c0eab010f04dcd2c3494e813b493ecfd4fcb9fc0d8","impliedFormat":1},{"version":"68d73b4a11549f9c0b7d352d10e91e5dca8faa3322bfb77b661839c42b1ddec7","impliedFormat":1},{"version":"5efce4fc3c29ea84e8928f97adec086e3dc876365e0982cc8479a07954a3efd4","impliedFormat":1},{"version":"092c2bfe125ce69dbb1223c85d68d4d2397d7d8411867b5cc03cec902c233763","affectsGlobalScope":true,"impliedFormat":1},{"version":"07f073f19d67f74d732b1adea08e1dc66b1b58d77cb5b43931dee3d798a2fd53","affectsGlobalScope":true,"impliedFormat":1},{"version":"d7a3c8b952931daebdfc7a2897c53c0a1c73624593fa070e46bd537e64dcd20a","affectsGlobalScope":true,"impliedFormat":1},{"version":"80e18897e5884b6723488d4f5652167e7bb5024f946743134ecc4aa4ee731f89","affectsGlobalScope":true,"impliedFormat":1},{"version":"cd034f499c6cdca722b60c04b5b1b78e058487a7085a8e0d6fb50809947ee573","affectsGlobalScope":true,"impliedFormat":1},{"version":"c57796738e7f83dbc4b8e65132f11a377649c00dd3eee333f672b8f0a6bea671","affectsGlobalScope":true,"impliedFormat":1},{"version":"dc2df20b1bcdc8c2d34af4926e2c3ab15ffe1160a63e58b7e09833f616efff44","affectsGlobalScope":true,"impliedFormat":1},{"version":"515d0b7b9bea2e31ea4ec968e9edd2c39d3eebf4a2d5cbd04e88639819ae3b71","affectsGlobalScope":true,"impliedFormat":1},{"version":"0559b1f683ac7505ae451f9a96ce4c3c92bdc71411651ca6ddb0e88baaaad6a3","affectsGlobalScope":true,"impliedFormat":1},{"version":"0dc1e7ceda9b8b9b455c3a2d67b0412feab00bd2f66656cd8850e8831b08b537","affectsGlobalScope":true,"impliedFormat":1},{"version":"ce691fb9e5c64efb9547083e4a34091bcbe5bdb41027e310ebba8f7d96a98671","affectsGlobalScope":true,"impliedFormat":1},{"version":"8d697a2a929a5fcb38b7a65594020fcef05ec1630804a33748829c5ff53640d0","affectsGlobalScope":true,"impliedFormat":1},{"version":"4ff2a353abf8a80ee399af572debb8faab2d33ad38c4b4474cff7f26e7653b8d","affectsGlobalScope":true,"impliedFormat":1},{"version":"936e80ad36a2ee83fc3caf008e7c4c5afe45b3cf3d5c24408f039c1d47bdc1df","affectsGlobalScope":true,"impliedFormat":1},{"version":"d15bea3d62cbbdb9797079416b8ac375ae99162a7fba5de2c6c505446486ac0a","affectsGlobalScope":true,"impliedFormat":1},{"version":"68d18b664c9d32a7336a70235958b8997ebc1c3b8505f4f1ae2b7e7753b87618","affectsGlobalScope":true,"impliedFormat":1},{"version":"eb3d66c8327153d8fa7dd03f9c58d351107fe824c79e9b56b462935176cdf12a","affectsGlobalScope":true,"impliedFormat":1},{"version":"38f0219c9e23c915ef9790ab1d680440d95419ad264816fa15009a8851e79119","affectsGlobalScope":true,"impliedFormat":1},{"version":"69ab18c3b76cd9b1be3d188eaf8bba06112ebbe2f47f6c322b5105a6fbc45a2e","affectsGlobalScope":true,"impliedFormat":1},{"version":"fef8cfad2e2dc5f5b3d97a6f4f2e92848eb1b88e897bb7318cef0e2820bceaab","affectsGlobalScope":true,"impliedFormat":1},{"version":"2f11ff796926e0832f9ae148008138ad583bd181899ab7dd768a2666700b1893","affectsGlobalScope":true,"impliedFormat":1},{"version":"4de680d5bb41c17f7f68e0419412ca23c98d5749dcaaea1896172f06435891fc","affectsGlobalScope":true,"impliedFormat":1},{"version":"954296b30da6d508a104a3a0b5d96b76495c709785c1d11610908e63481ee667","affectsGlobalScope":true,"impliedFormat":1},{"version":"ac9538681b19688c8eae65811b329d3744af679e0bdfa5d842d0e32524c73e1c","affectsGlobalScope":true,"impliedFormat":1},{"version":"0a969edff4bd52585473d24995c5ef223f6652d6ef46193309b3921d65dd4376","affectsGlobalScope":true,"impliedFormat":1},{"version":"9e9fbd7030c440b33d021da145d3232984c8bb7916f277e8ffd3dc2e3eae2bdb","affectsGlobalScope":true,"impliedFormat":1},{"version":"811ec78f7fefcabbda4bfa93b3eb67d9ae166ef95f9bff989d964061cbf81a0c","affectsGlobalScope":true,"impliedFormat":1},{"version":"717937616a17072082152a2ef351cb51f98802fb4b2fdabd32399843875974ca","affectsGlobalScope":true,"impliedFormat":1},{"version":"d7e7d9b7b50e5f22c915b525acc5a49a7a6584cf8f62d0569e557c5cfc4b2ac2","affectsGlobalScope":true,"impliedFormat":1},{"version":"71c37f4c9543f31dfced6c7840e068c5a5aacb7b89111a4364b1d5276b852557","affectsGlobalScope":true,"impliedFormat":1},{"version":"576711e016cf4f1804676043e6a0a5414252560eb57de9faceee34d79798c850","affectsGlobalScope":true,"impliedFormat":1},{"version":"89c1b1281ba7b8a96efc676b11b264de7a8374c5ea1e6617f11880a13fc56dc6","affectsGlobalScope":true,"impliedFormat":1},{"version":"74f7fa2d027d5b33eb0471c8e82a6c87216223181ec31247c357a3e8e2fddc5b","affectsGlobalScope":true,"impliedFormat":1},{"version":"d6d7ae4d1f1f3772e2a3cde568ed08991a8ae34a080ff1151af28b7f798e22ca","affectsGlobalScope":true,"impliedFormat":1},{"version":"063600664504610fe3e99b717a1223f8b1900087fab0b4cad1496a114744f8df","affectsGlobalScope":true,"impliedFormat":1},{"version":"934019d7e3c81950f9a8426d093458b65d5aff2c7c1511233c0fd5b941e608ab","affectsGlobalScope":true,"impliedFormat":1},{"version":"52ada8e0b6e0482b728070b7639ee42e83a9b1c22d205992756fe020fd9f4a47","affectsGlobalScope":true,"impliedFormat":1},{"version":"3bdefe1bfd4d6dee0e26f928f93ccc128f1b64d5d501ff4a8cf3c6371200e5e6","affectsGlobalScope":true,"impliedFormat":1},{"version":"59fb2c069260b4ba00b5643b907ef5d5341b167e7d1dbf58dfd895658bda2867","affectsGlobalScope":true,"impliedFormat":1},{"version":"639e512c0dfc3fad96a84caad71b8834d66329a1f28dc95e3946c9b58176c73a","affectsGlobalScope":true,"impliedFormat":1},{"version":"368af93f74c9c932edd84c58883e736c9e3d53cec1fe24c0b0ff451f529ceab1","affectsGlobalScope":true,"impliedFormat":1},{"version":"8e7f8264d0fb4c5339605a15daadb037bf238c10b654bb3eee14208f860a32ea","affectsGlobalScope":true,"impliedFormat":1},{"version":"782dec38049b92d4e85c1585fbea5474a219c6984a35b004963b00beb1aab538","affectsGlobalScope":true,"impliedFormat":1},{"version":"1305d1e76ca44e30fb8b2b8075fa522b83f60c0bcf5d4326a9d2cf79b53724f8","impliedFormat":1},{"version":"2aec9bd05d338947f2084bc1b26d23deec86665366d2b9cedd1f308f1285cec0","signature":"320217defa5f5efc928f9dd07135cc90086a76f56305174a4748ac24a42fa033","impliedFormat":1},{"version":"dcc3be585040c6c79b06a24270718cc79af84dc555d29fd4dac3aa23590d44fc","signature":"bd8305ea3955dad684e52167c0c6f0bf7970cb8a9a3c9e73fc4d597120d5ec27","impliedFormat":1}],"root":[52,53],"options":{"composite":true,"declaration":true,"emitDecoratorMetadata":true,"esModuleInterop":true,"experimentalDecorators":true,"module":6,"noFallthroughCasesInSwitch":true,"noImplicitReturns":true,"outDir":"./","sourceMap":true,"strict":true,"target":7},"referencedMap":[[53,1]],"latestChangedDtsFile":"./index.d.ts","version":"5.8.3"}
 \ No newline at end of file
 diff --git a/src/type.ts b/src/type.ts
-index cc93d99679a6612d2dbf31b44b8e7d106f5a9c47..df47a4e4085fa1230588d868de16f9e11e4afb32 100644
+index cc93d99679a6612d2dbf31b44b8e7d106f5a9c47..c7c37ad1f132bf47076ecc8f862d95349f33aac0 100644
 --- a/src/type.ts
 +++ b/src/type.ts
-@@ -236,4 +236,9 @@ export enum ReflectionOp {
-     implements, //pops one type from the stack and assigns it to the latest class on the stack as `implements` type.
+@@ -9,10 +9,10 @@
+  */
  
-     nominal, //marks the last type on the stack as nominal. (used at the end of class/interface/type alias programs).
+ export const enum MappedModifier {
+-    optional = 1 << 0,
+-    removeOptional = 1 << 1,
+-    readonly = 1 << 2,
+-    removeReadonly = 1 << 3,
++  optional = 1 << 0,
++  removeOptional = 1 << 1,
++  readonly = 1 << 2,
++  removeReadonly = 1 << 3
+ }
+ 
+ /**
+@@ -20,19 +20,19 @@ export const enum MappedModifier {
+  * new types a check is required for all code using `TypeNumberBrand`.
+  */
+ export enum TypeNumberBrand {
+-    integer,
++  integer,
+ 
+-    int8,
+-    int16,
+-    int32,
++  int8,
++  int16,
++  int32,
+ 
+-    uint8,
+-    uint16,
+-    uint32,
++  uint8,
++  uint16,
++  uint32,
+ 
+-    float,
+-    float32,
+-    float64,
++  float,
++  float32,
++  float64
+ }
+ 
+ /**
+@@ -41,199 +41,204 @@ export enum TypeNumberBrand {
+  * (which is '~' and the last char that can be represented without \x. The next 127 is '\x7F').
+  */
+ export enum ReflectionOp {
+-    never,
+-    any,
+-    unknown,
+-    void,
+-    object,
+-
+-    string,
+-    number,
+-    numberBrand,
+-    boolean,
+-    bigint,
+-
+-    symbol,
+-    null,
+-    undefined,
+-
+-    /**
+-     * The literal type of string, number, or boolean.
+-     *
+-     * This OP has 1 parameter. The next byte is the absolute address of the literal on the stack, which is the actual literal value.
+-     *
+-     * Pushes a function type.
+-     */
+-    literal,
+-
+-    /**
+-     * This OP pops all types on the current stack frame.
+-     *
+-     * This OP has 1 parameter. The next byte is the absolute address of a string|number|symbol entry on the stack.
+-     *
+-     * Pushes a function type.
+-     */
+-    function,
+-
+-    /**
+-     * This OP pops all types on the current stack frame.
+-     *
+-     * Pushes a method type.
+-     */
+-    method,
+-    methodSignature, //has 1 parameter, reference to stack for its property name
+-
+-    parameter,
+-
+-    /**
+-     * This OP pops the latest type entry on the stack.
+-     *
+-     * Pushes a property type.
+-     */
+-    property,
+-    propertySignature, //has 1 parameter, reference to stack for its property name
+-
+-    /**
+-     * This OP pops all types on the current stack frame. Those types should be method|property.
+-     *
+-     * Pushes a TypeClass onto the stack.
+-     */
+-    class,
+-
+-    /**
+-     * If a class extends another class with generics, this OP represents the generic type arguments of the super class.
+-     *
+-     * e.g. `class A extends B<string, boolean>`, string and boolean are on the stack and classExtends pops() them, and then assigns to A.extendsTypeArguments = [string, boolean].
+-     *
+-     * This is only emitted when the class that is currently being described actually extends another class and uses generics.
+-     *
+-     * This OP has 1 argument and pops x types from the stack. X is the first argument.
+-     * Expects a TypeClass on the stack.
+-     */
+-    classExtends,
+-
+-    /**
+-     * This OP has 1 parameter, the stack entry to the actual class symbol.
+-     */
+-    classReference,
+-
+-    /**
+-     * Marks the last entry in the stack as optional. Used for method|property. Equal to the QuestionMark operator in a property assignment.
+-     */
+-    optional,
+-    readonly,
+-
+-    //modifiers for property|method
+-    public,
+-    private,
+-    protected,
+-    abstract,
+-    defaultValue,
+-    description,
+-    rest,
+-
+-    regexp,
+-
+-    enum,
+-    enumMember, //has one argument, the name.
+-
+-    set,
+-    map,
+-
+-    /**
+-     * Pops the latest stack entry and uses it as T for an array type.
+-     *
+-     * Pushes an array type.
+-     */
+-    array,
+-    tuple,
+-    tupleMember,
+-    namedTupleMember, //has one argument, the name.
+-
+-    union, //pops frame. requires frame start when stack can be dirty.
+-    intersection,
+-
+-    indexSignature,
+-    objectLiteral,
+-    mappedType, //2 parameters: functionPointer and modifier.
+-    in,
+-
+-    frame, //creates a new stack frame
+-    moveFrame, //pop() as T, pops the current stack frame, push(T)
+-    return,
+-
+-    templateLiteral,
+-
+-    //special instructions that exist to emit less output
+-    date,
+-
+-    //those typed array OPs are here only to reduce runtime code overhead when used in types.
+-    int8Array,
+-    uint8ClampedArray,
+-    uint8Array,
+-    int16Array,
+-    uint16Array,
+-    int32Array,
+-    uint32Array,
+-    float32Array,
+-    float64Array,
+-    bigInt64Array,
+-    arrayBuffer,
+-
+-    promise,
+-
+-    // pointer, //parameter is a number referencing an entry in the stack, relative to the very beginning (0). pushes that entry onto the stack.
+-    arg, //@deprecated. parameter is a number referencing an entry in the stack, relative to the beginning of the current frame, *-1. pushes that entry onto the stack. this is related to the calling convention.
+-    typeParameter, //generic type parameter, e.g. T in a generic. has 1 parameter: reference to the name.
+-    typeParameterDefault, //generic type parameter with a default value, e.g. T in a generic. has 1 parameter: reference to the name. pop() for the default value
+-    var, //reserve a new variable in the stack
+-    loads, //pushes to the stack a referenced value in the stack. has 2 parameters: <frame> <index>, frame is a negative offset to the frame, and index the index of the stack entry withing the referenced frame
+-
+-    indexAccess, //T['string'], 2 items on the stack
+-    keyof, //keyof operator
+-    infer, //2 params, like `loads`
+-    typeof, //1 parameter that points to a function returning the runtime value from which we need to extract the type
+-
+-    condition,
+-    jumpCondition, //@deprecated. used when INFER is used in `extends` conditional branch. 2 args: left program, right program
+-    jump, //jump to an address
+-    call, //has one parameter, the next program address. creates a new stack frame with current program address as first stack entry, and jumps back to that + 1.
+-    inline,
+-    inlineCall,
+-    distribute,//has one parameter, the co-routine program index.
+-
+-    extends, //X extends Y in a conditional type, XY popped from the stack, pushes boolean on the stack
+-
+-    widen, //widens the type on the stack, .e.g 'asd' => string, 34 => number, etc. this is necessary for infer runtime data, and widen if necessary (object member or non-contained literal)
+-
+-    static,
+-    mappedType2, //same as mappedType2 but the given functionPointer returns a tuple [type, name]
+-
+-    functionReference, //Same as classReference but for functions
+-
+-    callSignature, //Same as function but for call signatures (in object literals)
+-
+-    /**
+-     * Assign for Enum, Interface, Class, and TypeAlias declaration at the very end
+-     * of the program the typeName. This is so that we have type names available even
+-     * if the JS code is minified.
+-     *
+-     * his operator also assigns originTypes to the type, as it acts as the finalization
+-     * step of a type.
+-     */
+-    typeName, //has one parameter, the index of the stack entry that contains the type name. Uses current head of the stack as type and assigns typeName to it.
+-
+-    /**
+-     * If a class implement an interface or type,
+-     *
+-     * e.g. `class A implements B`, then B is on the stack and implements pops() it, and then assigns to A.implements = [B].
+-     *
+-     * This is only emitted when the class that is currently being described actually implements something.
+-     *
+-     * This OP has 1 argument and pops x types from the stack. X is the first argument.
+-     * Expects a TypeClass on the stack.
+-     */
+-    implements, //pops one type from the stack and assigns it to the latest class on the stack as `implements` type.
+-
+-    nominal, //marks the last type on the stack as nominal. (used at the end of class/interface/type alias programs).
++  never,
++  any,
++  unknown,
++  void,
++  object,
 +
-+    /**
-+     * Custom Storm Software operators
-+     */
-+    tags
++  string,
++  number,
++  numberBrand,
++  boolean,
++  bigint,
++
++  symbol,
++  null,
++  undefined,
++
++  /**
++   * The literal type of string, number, or boolean.
++   *
++   * This OP has 1 parameter. The next byte is the absolute address of the literal on the stack, which is the actual literal value.
++   *
++   * Pushes a function type.
++   */
++  literal,
++
++  /**
++   * This OP pops all types on the current stack frame.
++   *
++   * This OP has 1 parameter. The next byte is the absolute address of a string|number|symbol entry on the stack.
++   *
++   * Pushes a function type.
++   */
++  function,
++
++  /**
++   * This OP pops all types on the current stack frame.
++   *
++   * Pushes a method type.
++   */
++  method,
++  methodSignature, //has 1 parameter, reference to stack for its property name
++
++  parameter,
++
++  /**
++   * This OP pops the latest type entry on the stack.
++   *
++   * Pushes a property type.
++   */
++  property,
++  propertySignature, //has 1 parameter, reference to stack for its property name
++
++  /**
++   * This OP pops all types on the current stack frame. Those types should be method|property.
++   *
++   * Pushes a TypeClass onto the stack.
++   */
++  class,
++
++  /**
++   * If a class extends another class with generics, this OP represents the generic type arguments of the super class.
++   *
++   * e.g. `class A extends B<string, boolean>`, string and boolean are on the stack and classExtends pops() them, and then assigns to A.extendsTypeArguments = [string, boolean].
++   *
++   * This is only emitted when the class that is currently being described actually extends another class and uses generics.
++   *
++   * This OP has 1 argument and pops x types from the stack. X is the first argument.
++   * Expects a TypeClass on the stack.
++   */
++  classExtends,
++
++  /**
++   * This OP has 1 parameter, the stack entry to the actual class symbol.
++   */
++  classReference,
++
++  /**
++   * Marks the last entry in the stack as optional. Used for method|property. Equal to the QuestionMark operator in a property assignment.
++   */
++  optional,
++  readonly,
++
++  //modifiers for property|method
++  public,
++  private,
++  protected,
++  abstract,
++  defaultValue,
++  description,
++  rest,
++
++  regexp,
++
++  enum,
++  enumMember, //has one argument, the name.
++
++  set,
++  map,
++
++  /**
++   * Pops the latest stack entry and uses it as T for an array type.
++   *
++   * Pushes an array type.
++   */
++  array,
++  tuple,
++  tupleMember,
++  namedTupleMember, //has one argument, the name.
++
++  union, //pops frame. requires frame start when stack can be dirty.
++  intersection,
++
++  indexSignature,
++  objectLiteral,
++  mappedType, //2 parameters: functionPointer and modifier.
++  in,
++
++  frame, //creates a new stack frame
++  moveFrame, //pop() as T, pops the current stack frame, push(T)
++  return,
++
++  templateLiteral,
++
++  //special instructions that exist to emit less output
++  date,
++
++  //those typed array OPs are here only to reduce runtime code overhead when used in types.
++  int8Array,
++  uint8ClampedArray,
++  uint8Array,
++  int16Array,
++  uint16Array,
++  int32Array,
++  uint32Array,
++  float32Array,
++  float64Array,
++  bigInt64Array,
++  arrayBuffer,
++
++  promise,
++
++  // pointer, //parameter is a number referencing an entry in the stack, relative to the very beginning (0). pushes that entry onto the stack.
++  arg, //@deprecated. parameter is a number referencing an entry in the stack, relative to the beginning of the current frame, *-1. pushes that entry onto the stack. this is related to the calling convention.
++  typeParameter, //generic type parameter, e.g. T in a generic. has 1 parameter: reference to the name.
++  typeParameterDefault, //generic type parameter with a default value, e.g. T in a generic. has 1 parameter: reference to the name. pop() for the default value
++  var, //reserve a new variable in the stack
++  loads, //pushes to the stack a referenced value in the stack. has 2 parameters: <frame> <index>, frame is a negative offset to the frame, and index the index of the stack entry withing the referenced frame
++
++  indexAccess, //T['string'], 2 items on the stack
++  keyof, //keyof operator
++  infer, //2 params, like `loads`
++  typeof, //1 parameter that points to a function returning the runtime value from which we need to extract the type
++
++  condition,
++  jumpCondition, //@deprecated. used when INFER is used in `extends` conditional branch. 2 args: left program, right program
++  jump, //jump to an address
++  call, //has one parameter, the next program address. creates a new stack frame with current program address as first stack entry, and jumps back to that + 1.
++  inline,
++  inlineCall,
++  distribute, //has one parameter, the co-routine program index.
++
++  extends, //X extends Y in a conditional type, XY popped from the stack, pushes boolean on the stack
++
++  widen, //widens the type on the stack, .e.g 'asd' => string, 34 => number, etc. this is necessary for infer runtime data, and widen if necessary (object member or non-contained literal)
++
++  static,
++  mappedType2, //same as mappedType2 but the given functionPointer returns a tuple [type, name]
++
++  functionReference, //Same as classReference but for functions
++
++  callSignature, //Same as function but for call signatures (in object literals)
++
++  /**
++   * Assign for Enum, Interface, Class, and TypeAlias declaration at the very end
++   * of the program the typeName. This is so that we have type names available even
++   * if the JS code is minified.
++   *
++   * his operator also assigns originTypes to the type, as it acts as the finalization
++   * step of a type.
++   */
++  typeName, //has one parameter, the index of the stack entry that contains the type name. Uses current head of the stack as type and assigns typeName to it.
++
++  /**
++   * If a class implement an interface or type,
++   *
++   * e.g. `class A implements B`, then B is on the stack and implements pops() it, and then assigns to A.implements = [B].
++   *
++   * This is only emitted when the class that is currently being described actually implements something.
++   *
++   * This OP has 1 argument and pops x types from the stack. X is the first argument.
++   * Expects a TypeClass on the stack.
++   */
++  implements, //pops one type from the stack and assigns it to the latest class on the stack as `implements` type.
++
++  nominal, //marks the last type on the stack as nominal. (used at the end of class/interface/type alias programs).
++
++  /**
++   * Custom Storm Software operators
++   */
++  tags
  }
 diff --git a/tsconfig.json b/tsconfig.json
 index 77ec85c2982a58710ecc0c52918f687279185422..a61cbcf783fa77a83d150db6816c7e91050ae201 100644
