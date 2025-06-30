@@ -43,7 +43,7 @@
   "types": "dist/index.d.ts",
   "typings": "dist/index.d.ts",
   "dependencies": {
-    "@deepkit/type": "1.0.5",
+    "@deepkit/type": "1.0.15",
     "@storm-software/config": "catalog:",
     "@storm-software/config-tools": "catalog:",
     "@storm-stack/core": "0.33.1",
