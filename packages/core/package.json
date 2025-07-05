@@ -693,13 +693,13 @@
   "types": "dist/index.d.ts",
   "typings": "dist/index.d.ts",
   "peerDependencies": {
-    "@nuxt/kit": "^3.17.1",
-    "@nuxt/schema": "^3.17.1",
-    "@rspack/cli": "^1.3.8",
+    "@nuxt/kit": "^3.17.6",
+    "@nuxt/schema": "^3.17.6",
+    "@rspack/cli": "^1.4.4",
     "@storm-software/tsdoc": "*",
-    "rollup": "^4.40.1",
-    "vite": "^6.3.4",
-    "webpack": "^5.99.7"
+    "rollup": "^4.44.2",
+    "vite": "^6.3.5",
+    "webpack": "^5.99.9"
   },
   "peerDependenciesMeta": {
     "@nuxt/kit": {
@@ -726,7 +726,7 @@
   },
   "dependencies": {
     "@ast-grep/napi": "catalog:",
-    "@deepkit/type": "1.0.5",
+    "@deepkit/type": "1.0.15",
     "@donedeal0/superdiff": "catalog:",
     "@microsoft/api-extractor": "catalog:",
     "@microsoft/tsdoc-config": "catalog:",
