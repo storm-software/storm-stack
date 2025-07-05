@@ -21,7 +21,7 @@
   ],
   "dependencies": {
     "@clack/prompts": "catalog:",
-    "@deepkit/type": "1.0.5",
+    "@deepkit/type": "1.0.15",
     "@sentry/core": "catalog:",
     "@sentry/node": "catalog:",
     "@storm-software/config-tools": "catalog:",
