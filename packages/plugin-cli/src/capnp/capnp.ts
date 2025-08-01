@@ -5,7 +5,7 @@
  This code was released as part of the Storm Stack project. Storm Stack
  is maintained by Storm Software under the Apache-2.0 license, and is
  free for commercial and private use. For more information, please visit
- our licensing page at https://stormsoftware.com/license.
+ our licensing page at https://stormsoftware.com/licenses/projects/storm-stack.
 
  Website:                  https://stormsoftware.com
  Repository:               https://github.com/storm-software/storm-stack
@@ -26,7 +26,7 @@ import {
 import {
   convertFromCapnp as convertFromCapnpSerializedTypes,
   convertToCapnp as convertToCapnpSerializedTypes
-} from "@storm-stack/core/helpers/utilities/capnp";
+} from "@storm-stack/core/lib/capnp";
 import { pascalCase } from "@stryke/string-format/pascal-case";
 import { isSetString } from "@stryke/type-checks/is-set-string";
 import {
@@ -43,7 +43,7 @@ import {
   getAppTitle
 } from "../helpers/utilities";
 import { StormStackCLIPluginContext } from "../types/build";
-import { StormStackCLIPluginConfig } from "../types/config";
+import { CLIPluginConfig } from "../types/config";
 import {
   Command,
   CommandEntryTypeDefinition,
@@ -171,7 +171,7 @@ function convertFromCapnpCommandEntryTypeDefinition(
 
 function convertFromCapnpCommand(
   root: CapnpCommandRoot,
-  config: StormStackCLIPluginConfig,
+  config: CLIPluginConfig,
   tree: CommandTree,
   command: CapnpCommand
 ): Omit<Command, "parent"> {
@@ -376,7 +376,7 @@ ${commands.map(c => `- ${c.entry.path.join("/")}`).join("\n")}
  */
 export function convertFromCapnp(
   context: StormStackCLIPluginContext,
-  config: StormStackCLIPluginConfig,
+  config: CLIPluginConfig,
   root: CapnpCommandRoot
 ): CommandTree {
   if (!root) {

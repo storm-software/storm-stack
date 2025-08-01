@@ -5,7 +5,7 @@
  This code was released as part of the Storm Stack project. Storm Stack
  is maintained by Storm Software under the Apache-2.0 license, and is
  free for commercial and private use. For more information, please visit
- our licensing page at https://stormsoftware.com/license.
+ our licensing page at https://stormsoftware.com/licenses/projects/storm-stack.
 
  Website:                  https://stormsoftware.com
  Repository:               https://github.com/storm-software/storm-stack
@@ -18,9 +18,9 @@
 
 import { parse as parseToml, stringify as stringifyToml } from "@ltd/j-toml";
 import { LogLevelLabel } from "@storm-software/config-tools/types";
-import { PluginOptions } from "@storm-stack/core/base/plugin";
-import { getFileHeader } from "@storm-stack/core/helpers/utilities/file-header";
+import { getFileHeader } from "@storm-stack/core/lib/utilities/file-header";
 import type { Context, EngineHooks } from "@storm-stack/core/types";
+import type { PluginOptions } from "@storm-stack/core/types/plugin";
 import type { StoragePluginConfig } from "@storm-stack/devkit/plugins/storage";
 import StoragePlugin from "@storm-stack/devkit/plugins/storage";
 import { readFile } from "@stryke/fs";
@@ -43,7 +43,7 @@ export default class StorageCloudflareR2Plugin extends StoragePlugin<StorageClou
     super(options);
 
     if (this.options.binding) {
-      this.installs["aws4fetch@1.0.20"] = "dependency";
+      this.packageDeps["aws4fetch@1.0.20"] = "dependency";
     }
   }
 
@@ -52,12 +52,12 @@ export default class StorageCloudflareR2Plugin extends StoragePlugin<StorageClou
    *
    * @param hooks - The engine hooks to add
    */
-  public override innerAddHooks(hooks: EngineHooks) {
+  public override addHooks(hooks: EngineHooks) {
     hooks.addHooks({
       "prepare:config": this.prepareConfig.bind(this)
     });
 
-    super.innerAddHooks(hooks);
+    super.addHooks(hooks);
   }
 
   /**
@@ -72,12 +72,15 @@ export default class StorageCloudflareR2Plugin extends StoragePlugin<StorageClou
 import cloudflareR2BindingDriver from "unstorage/drivers/cloudflare-r2-binding";
 import { env } from "cloudflare:workers";
 
-export default cloudflareR2BindingDriver({ binding: env.${this.options.binding}, base: ${this.options.base || "undefined"} });
+export default cloudflareR2BindingDriver({ binding: env.${
+        this.options.binding
+      }, base: ${this.options.base || "undefined"} });
 `;
     } else {
       return `${getFileHeader()}
 
 import s3Driver from "unstorage/drivers/s3";
+import { StormError } from "storm:error";
 
 const accountId = process.env.CLOUDFLARE_ACCOUNT_ID || $storm.config.CLOUDFLARE_ACCOUNT_ID;
 const accessKey = process.env.CLOUDFLARE_R2_ACCESS_KEY_ID || $storm.config.CLOUDFLARE_R2_ACCESS_KEY_ID;
@@ -92,13 +95,15 @@ if (!accessKey && !secretAccessKey) {
   throw new StormError({ type: "general", code: 15 });
 }
 
-export default s3Driver({
+export const adapter = s3Driver({
   accessKeyId: accessKey,
   secretAccessKey: secretAccessKey,
   endpoint: \`https://\${accountId}.r2.cloudflarestorage.com\`,
   bucket: "${this.options.namespace}",
   region: "auto",
 });
+
+export default adapter;
 `;
     }
   }
@@ -143,7 +148,7 @@ export default s3Driver({
         });
       }
 
-      return this.writeFile(
+      return context.vfs.writeFileToDisk(
         wranglerFilePath,
         stringifyToml(wranglerFile, {
           newline: "\n",
@@ -151,7 +156,7 @@ export default s3Driver({
           indent: 4,
           forceInlineArraySpacing: 0
         }),
-        true
+        { skipFormat: true }
       );
     }
   }

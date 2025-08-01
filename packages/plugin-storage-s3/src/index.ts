@@ -16,8 +16,8 @@
 
  ------------------------------------------------------------------- */
 
-import { PluginOptions } from "@storm-stack/core/base/plugin";
-import { getFileHeader } from "@storm-stack/core/helpers/utilities/file-header";
+import { getFileHeader } from "@storm-stack/core/lib/utilities/file-header";
+import type { PluginOptions } from "@storm-stack/core/types/plugin";
 import type { StoragePluginConfig } from "@storm-stack/devkit/plugins/storage";
 import StoragePlugin from "@storm-stack/devkit/plugins/storage";
 import type { S3DriverOptions } from "unstorage/drivers/s3";
@@ -25,7 +25,7 @@ import type { S3DriverOptions } from "unstorage/drivers/s3";
 export type StorageS3PluginPluginConfig = StoragePluginConfig & S3DriverOptions;
 
 export default class StorageS3Plugin extends StoragePlugin<StorageS3PluginPluginConfig> {
-  protected override installs = {
+  protected override packageDeps = {
     "aws4fetch@1.0.20": "dependency"
   } as Record<string, "dependency" | "devDependency">;
 
@@ -45,13 +45,15 @@ if (!accessKey && !secretAccessKey) {
   throw new StormError({ type: "general", code: 15 });
 }
 
-export default s3Driver({
+export const adapter s3Driver({
   accessKeyId: accessKey,
   secretAccessKey: secretAccessKey,
   endpoint: \`https://s3.${this.options.region}.amazonaws.com/\`,
   bucket: "${this.options.bucket}",
   region: "${this.options.region}",
 });
+
+export default adapter;
 `;
   }
 }

@@ -5,19 +5,19 @@
   "sourceRoot": "examples/cli-app/src",
   "targets": {
     "clean": {
+      "cache": false,
       "executor": "@storm-stack/nx:clean",
       "options": {
-        "mode": "development"
+        "outputPath": "dist/examples/cli-app"
       }
     },
     "prepare": {
       "cache": true,
       "inputs": ["typescript", "^production"],
-      "outputs": ["{options.outputPath}"],
+      "outputs": ["{projectRoot}/.storm"],
       "executor": "@storm-stack/nx:prepare",
       "options": {
         "entry": "{sourceRoot}/commands",
-        "outputPath": "dist/examples/cli-app",
         "mode": "development"
       }
     },
@@ -31,6 +31,16 @@
         "entry": "{sourceRoot}/commands",
         "outputPath": "dist/examples/cli-app",
         "mode": "development"
+      }
+    },
+    "docs": {
+      "cache": true,
+      "inputs": ["typescript", "^production"],
+      "outputs": ["{projectRoot}/docs"],
+      "executor": "@storm-stack/nx:docs",
+      "dependsOn": ["prepare", "build"],
+      "options": {
+        "entry": "{sourceRoot}/commands"
       }
     }
   }

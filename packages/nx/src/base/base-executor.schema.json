@@ -41,8 +41,7 @@
         "staging",
         "production"
       ],
-      "id": "#mode",
-      "default": "production"
+      "id": "#mode"
     },
     "environment": {
       "title": "Environment",
@@ -91,8 +90,7 @@
         "trace",
         "all"
       ],
-      "id": "#logLevel",
-      "default": "info"
+      "id": "#logLevel"
     }
   },
   "type": "object",
@@ -100,8 +98,6 @@
     "outputPath": "dist/{projectRoot}",
     "entry": "{sourceRoot}/index.ts",
     "plugins": [],
-    "mode": "production",
-    "tsconfig": "{projectRoot}/tsconfig.json",
-    "logLevel": "info"
+    "tsconfig": "{projectRoot}/tsconfig.json"
   }
 }

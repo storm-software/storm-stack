@@ -5,21 +5,24 @@
   "sourceRoot": "packages/types/src",
   "targets": {
     "build-cjs": {
-      "cache": false,
+      "cache": true,
+      "inputs": ["typescript", "^production"],
+      "outputs": ["{workspaceRoot}/dist/{projectRoot}/dist/cjs"],
       "executor": "@nx/js:tsc",
       "options": {
         "main": "packages/types/src/index.ts",
         "additionalEntryPoints": [
           "packages/types/src/shared/index.ts",
           "packages/types/src/shared/config.ts",
+          "packages/types/src/shared/date.ts",
           "packages/types/src/shared/error.ts",
           "packages/types/src/shared/log.ts",
           "packages/types/src/shared/payload.ts",
           "packages/types/src/shared/message.ts",
-          "packages/types/src/shared/result.ts",
           "packages/types/src/node/index.ts",
           "packages/types/src/node/event.ts",
           "packages/types/src/node/env.ts",
+          "packages/types/src/node/result.ts",
           "packages/types/src/node/context.ts",
           "packages/types/src/node/app.ts"
         ],
@@ -30,21 +33,24 @@
       }
     },
     "build-esm": {
-      "cache": false,
+      "cache": true,
+      "inputs": ["typescript", "^production"],
+      "outputs": ["{workspaceRoot}/dist/{projectRoot}/dist/esm"],
       "executor": "@nx/js:tsc",
       "options": {
         "main": "packages/types/src/index.ts",
         "additionalEntryPoints": [
           "packages/types/src/shared/index.ts",
           "packages/types/src/shared/config.ts",
+          "packages/types/src/shared/date.ts",
           "packages/types/src/shared/error.ts",
           "packages/types/src/shared/log.ts",
           "packages/types/src/shared/payload.ts",
           "packages/types/src/shared/message.ts",
-          "packages/types/src/shared/result.ts",
           "packages/types/src/node/index.ts",
           "packages/types/src/node/event.ts",
           "packages/types/src/node/env.ts",
+          "packages/types/src/node/result.ts",
           "packages/types/src/node/context.ts",
           "packages/types/src/node/app.ts"
         ],

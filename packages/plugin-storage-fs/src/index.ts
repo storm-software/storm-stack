@@ -16,8 +16,8 @@
 
  ------------------------------------------------------------------- */
 
-import { PluginOptions } from "@storm-stack/core/base/plugin";
-import { getFileHeader } from "@storm-stack/core/helpers/utilities/file-header";
+import { getFileHeader } from "@storm-stack/core/lib/utilities/file-header";
+import type { PluginOptions } from "@storm-stack/core/types/plugin";
 import type { StoragePluginConfig } from "@storm-stack/devkit/plugins/storage";
 import StoragePlugin from "@storm-stack/devkit/plugins/storage";
 import type { FSStorageOptions } from "unstorage/drivers/fs-lite";
@@ -45,11 +45,11 @@ import fsLiteDriver from "unstorage/drivers/fs-lite";${
       this.options.envPath
         ? `
 import { join } from "node:path";
-import { paths } from "../env";`
+import { paths } from "storm:env";`
         : ""
     }
 
-export default fsLiteDriver({ base: ${
+export const adapter = fsLiteDriver({ base: ${
       this.options.envPath
         ? this.options.base
           ? `join(paths.${this.options.envPath}, "${this.options.base}")`
@@ -57,7 +57,11 @@ export default fsLiteDriver({ base: ${
         : this.options.base
           ? `"${this.options.base}"`
           : "undefined"
-    }, readOnly: ${Boolean(this.options.readOnly)}, noClear: ${Boolean(this.options.noClear)} });
+    }, readOnly: ${Boolean(this.options.readOnly)}, noClear: ${Boolean(
+      this.options.noClear
+    )} });
+
+export default adapter;
 `;
   }
 }

@@ -5,7 +5,7 @@
  This code was released as part of the Storm Stack project. Storm Stack
  is maintained by Storm Software under the Apache-2.0 license, and is
  free for commercial and private use. For more information, please visit
- our licensing page at https://stormsoftware.com/license.
+ our licensing page at https://stormsoftware.com/licenses/projects/storm-stack.
 
  Website:                  https://stormsoftware.com
  Repository:               https://github.com/storm-software/storm-stack
@@ -17,8 +17,9 @@
  ------------------------------------------------------------------- */
 
 import type { MaybePromise } from "@stryke/types/base";
-import type { Context, EngineHooks } from "./build";
-import type { PluginConfig } from "./config";
+import type { EngineHooks } from "./build";
+import type { LogFn, PluginConfig } from "./config";
+import { Context } from "./context";
 
 export type RendererFunction = (
   context: Context,
@@ -31,18 +32,83 @@ export type RendererFunction = (
  * @remarks
  * A utility class used by plugins to render generated output files during various Storm Stack processes. Some possible items rendered include (but are not limited to): source code, documentation, DevOps configuration, and deployment infrastructure/IOC.
  */
-export interface IRenderer {
+export interface RendererInterface {
   /**
    * The name of the renderer
    */
   name: string;
+
+  /**
+   * A list of [npm](https://www.npmjs.com/) dependency packages that are required for the rendered output to work.
+   *
+   * @remarks
+   * These dependencies will be installed and added to the project's `package.json` file when the Storm Stack initialization process is run.
+   */
+  getPackageDeps: () => Record<string, "dependency" | "devDependency">;
 }
 
-export interface IPlugin {
+export interface PluginBaseConfig {
+  /**
+   * A list of packages that are required by the generated output of the plugin.
+   */
+  packageDeps?: Record<string, "dependency" | "devDependency">;
+
+  // /**
+  //  * An object containing custom renderers that can override the default renderers used by the plugin.
+  //  */
+  // renderers?: Record<string, RendererFunction>;
+}
+
+export type PluginOptions<TConfig extends PluginBaseConfig = PluginBaseConfig> =
+  TConfig & {
+    /**
+     * A function used to log messages during the plugin's execution.
+     *
+     * @remarks
+     * This option is provided by the {@link Engine} during the plugin's initialization.
+     */
+    log?: LogFn;
+  };
+
+export interface PluginInterface<
+  TConfig extends PluginBaseConfig = PluginBaseConfig
+> {
   /**
    * The name of the plugin
    */
   name: string;
+
+  /**
+   * The identifier for the plugin used in the {@link isSame} method
+   *
+   * @remarks
+   * Child plugins can override this to provide a more or less specific identifier.
+   */
+  identifier: string;
+
+  /**
+   * A list of primary keys for the plugin's options.
+   *
+   * @remarks
+   * This is used to identify when two instances of the plugin are the same and can be de-duplicated.
+   */
+  primaryKeys: any[];
+
+  /**
+   * Returns true if the plugin is a singleton. Singleton plugins can only be instantiated once (so whenever other plugins specify them as dependencies, they will be de-duplicated).
+   *
+   * @remarks
+   * A plugin is considered a singleton if it has zero primary key option fields defined.
+   */
+  isSingleton: boolean;
+
+  /**
+   * The configuration options for the plugin
+   *
+   * @remarks
+   * This is used to store the configuration options for the plugin, which can be accessed by the plugin's methods.
+   */
+  options: PluginOptions<TConfig>;
 
   /**
    * A list of plugin modules required as dependencies by the current plugin.
@@ -53,7 +119,20 @@ export interface IPlugin {
   dependencies?: Array<string | PluginConfig>;
 
   /**
-   * Function to add hooks to the engine
+   * Adds hooks to the engine's hook system.
+   *
+   * @param hooks - The hooks to add to the engine.
    */
-  innerAddHooks: (hooks: EngineHooks) => MaybePromise<void>;
+  addHooks: (hooks: EngineHooks) => void;
+
+  /**
+   * Checks if the current plugin is the same as another plugin.
+   *
+   * @remarks
+   * This is used to identify when two instances of the plugin are the same and can be de-duplicated.
+   *
+   * @param plugin - The other plugin to compare against.
+   * @returns `true` if the two plugins are the same, `false` otherwise.
+   */
+  isSame: (plugin: PluginInterface) => boolean;
 }

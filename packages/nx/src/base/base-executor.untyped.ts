@@ -52,8 +52,7 @@ export default defineUntypedSchema({
       type: "string",
       description: "The build mode",
       enum: ["development", "staging", "production"]
-    },
-    $default: "production"
+    }
   },
   environment: {
     $schema: {
@@ -108,7 +107,6 @@ export default defineUntypedSchema({
         "trace",
         "all"
       ]
-    },
-    $default: "info"
+    }
   }
 });

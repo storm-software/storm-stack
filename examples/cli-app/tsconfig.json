@@ -3,10 +3,10 @@
   "compilerOptions": {
     "types": ["node"],
     "outDir": "../../dist/out-tsc",
-    "verbatimModuleSyntax": false,
-    "sourceMap": true
+    "sourceMap": true,
+    "verbatimModuleSyntax": false
   },
-  "include": ["src/**/*.ts", "src/**/*.js", ".storm/**/*.ts", "storm.d.ts"],
+  "include": ["src/**/*.ts", "src/**/*.js", "storm.d.ts"],
   "exclude": ["jest.config.ts", "src/**/*.spec.ts", "src/**/*.test.ts"],
   "reflection": true
 }

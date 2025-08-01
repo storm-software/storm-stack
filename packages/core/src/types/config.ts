@@ -5,7 +5,7 @@
  This code was released as part of the Storm Stack project. Storm Stack
  is maintained by Storm Software under the Apache-2.0 license, and is
  free for commercial and private use. For more information, please visit
- our licensing page at https://stormsoftware.com/license.
+ our licensing page at https://stormsoftware.com/licenses/projects/storm-stack.
 
  Website:                  https://stormsoftware.com
  Repository:               https://github.com/storm-software/storm-stack
@@ -16,71 +16,27 @@
 
  ------------------------------------------------------------------- */
 
+import { transformAsync } from "@babel/core";
 import { AssetGlob } from "@storm-software/build-tools/types";
 import type { LogLevelLabel } from "@storm-software/config-tools/types";
 import { StormWorkspaceConfig } from "@storm-software/config/types";
 import { ESBuildOptions as BaseESBuildOptions } from "@storm-software/esbuild/types";
 import type { UnbuildOptions as BaseUnbuildOptions } from "@storm-software/unbuild/types";
-import type {
-  DotenvConfiguration,
-  TypeDefinitionParameter
-} from "@stryke/types/configuration";
+import type { TypeDefinitionParameter } from "@stryke/types/configuration";
 import { TsConfigJson } from "@stryke/types/tsconfig";
 import { ConfigLayer, ResolvedConfig } from "c12";
 import { BuildOptions as ExternalESBuildOptions } from "esbuild";
 import { BuildOptions as ExternalUnbuildOptions } from "unbuild";
+import { BabelPluginItem } from "./babel";
 
 export type LogFn = (type: LogLevelLabel, ...args: string[]) => void;
 
-export interface DotenvTypeDefinitionOptions {
-  /**
-   * A path to the type definition for the expected env configuration parameters. This value can include both a path to the typescript file and the name of the type definition to use separated by a `":"` or `"#"` character. For example: `"./src/types/env.ts#DotenvConfiguration"`.
-   *
-   * @remarks
-   * If a value is not provided for this option, the plugin will attempt to infer the type definition from the `storm.dotenv.types.variables` object in the project's `package.json` file.
-   */
-  config?: TypeDefinitionParameter;
-
-  /**
-   * A path to the type definition for the expected env secret parameters. This value can include both a path to the typescript file and the name of the type definition to use separated by a `":"` or `"#"` character. For example: `"./src/types/env.ts#DotenvSecrets"`.
-   *
-   * @remarks
-   * If a value is not provided for this option, the plugin will attempt to infer the type definition from the `storm.dotenv.types.secrets` object in the project's `package.json` file.
-   */
-  secrets?: TypeDefinitionParameter;
-}
-
-export interface DotenvOptions extends DotenvConfiguration {
-  /**
-   * The type definitions for the environment variables
-   *
-   * @remarks
-   * If a value is not provided for this option, the plugin will attempt to infer the type definition from the `storm.dotenv.types` object in the project's `package.json` file.
-   */
-  types?: DotenvTypeDefinitionOptions | string;
-
-  /**
-   * An additional prefix (or list of additional prefixes) to apply to the environment variables
-   *
-   * @remarks
-   * By default, the plugin will use the `STORM_` prefix. This option is useful for avoiding conflicts with other environment variables.
-   */
-  prefix?: string | string[];
-
-  /**
-   * Should the plugin replace the env variables in the source code with their values?
-   *
-   * @remarks
-   * This option is set to `true` when building an application project.
-   *
-   * @defaultValue false
-   */
-  replace?: boolean;
-}
-
+/**
+ * A configuration tuple for a Storm Stack plugin.
+ */
 export type PluginConfig<
-  TOptions extends Record<string, any> = Record<string, any>
-> = [string, TOptions];
+  TProps extends Record<string, any> = Record<string, any>
+> = [string, TProps];
 
 export type ESBuildOverrideOptions = ExternalESBuildOptions &
   BaseESBuildOptions;
@@ -126,6 +82,52 @@ export type UnbuildOptions = Partial<
   override?: Partial<UnbuildOverrideOptions>;
 };
 
+export type BabelConfig = Parameters<typeof transformAsync>[1] & {
+  /**
+   * The Babel plugins to be used during the build process
+   */
+  plugins?: BabelPluginItem[];
+
+  /**
+   * The Babel presets to be used during the build process
+   */
+  presets?: BabelPluginItem[];
+};
+
+export interface OutputConfig {
+  /**
+   * The path to output the final compiled files to
+   *
+   * @remarks
+   * If a value is not provided, Storm Stack will attempt to:
+   * 1. Use the `outDir` value in the `tsconfig.json` file.
+   * 2. Use the `dist` directory in the project root directory.
+   */
+  outputPath?: string;
+
+  /**
+   * The format of the output files
+   *
+   * @defaultValue "memory"
+   */
+  outputMode?: "memory" | "fs";
+
+  /**
+   * The path of the generated declaration file relative to the workspace root.
+   *
+   * @defaultValue "\{\{ projectRoot \}\}/storm.d.ts"
+   */
+  dts?: string | false;
+
+  /**
+   * A list of assets to copy to the output directory
+   *
+   * @remarks
+   * The assets can be specified as a string (path to the asset) or as an object with a `glob` property (to match multiple files). The paths are relative to the project root directory.
+   */
+  assets?: Array<string | AssetGlob>;
+}
+
 export interface UserConfig {
   /**
    * The name of the project
@@ -146,11 +148,40 @@ export interface UserConfig {
   root?: string;
 
   /**
+   * The root directory of the project's source code
+   *
+   * @defaultValue "\{root\}/src"
+   */
+  sourceRoot?: string;
+
+  /**
+   * A directory containing override templates used for generating the runtime files.
+   *
+   * @remarks
+   * This option is useful for specifying custom templates for the generated runtime files.
+   *
+   * @defaultValue "\{root\}/templates"
+   */
+  templates?: string;
+
+  /**
    * The type of project being built
    *
    * @defaultValue "application"
    */
   type?: "application" | "library";
+
+  /**
+   * The log level to use for the Storm Stack processes.
+   *
+   * @defaultValue "info"
+   */
+  logLevel?: LogLevelLabel;
+
+  /**
+   * A custom logger function to use for logging messages
+   */
+  customLogger?: LogFn;
 
   /**
    * The platform to build the project for
@@ -177,18 +208,6 @@ export interface UserConfig {
    * A list of resolvable paths to plugins used during the build process
    */
   plugins?: Array<string | PluginConfig>;
-
-  /**
-   * Options to control .env file processing
-   */
-  dotenv?: DotenvOptions;
-
-  /**
-   * The path of the generated declaration file relative to the workspace root.
-   *
-   * @defaultValue "\{\{ projectRoot \}\}/storm.d.ts"
-   */
-  dts?: string | false;
 
   /**
    * The entry point(s) for the application
@@ -220,26 +239,9 @@ export interface UserConfig {
   skipLint?: boolean;
 
   /**
-   * The path to output the final compiled files to
-   *
-   * @remarks
-   * If a value is not provided, Storm Stack will attempt to:
-   * 1. Use the `outDir` value in the `tsconfig.json` file.
-   * 2. Use the `dist` directory in the project root directory.
+   * Configuration for the output of the build process
    */
-  outputPath?: string;
-
-  /**
-   * The log level to use for the Storm Stack processes.
-   *
-   * @defaultValue "info"
-   */
-  logLevel?: LogLevelLabel;
-
-  /**
-   * A custom logger function to use for logging messages
-   */
-  customLogger?: LogFn;
+  output?: OutputConfig;
 
   /**
    * The path to the tsconfig file to be used by the compiler
@@ -278,24 +280,6 @@ export interface UserConfig {
   skipNodeModulesBundle?: boolean;
 
   /**
-   * A list of assets to copy to the output directory
-   *
-   * @remarks
-   * The assets can be specified as a string (path to the asset) or as an object with a `glob` property (to match multiple files). The paths are relative to the project root directory.
-   */
-  assets?: Array<string | AssetGlob>;
-
-  /**
-   * The path (relative to the workspace root) to the file that will be used to generate the errors map
-   *
-   * @remarks
-   * This file will be generated by the Babel plugin (if it doesn't already exist) and will contain list of error codes/messages that can be thrown by the application.
-   *
-   * @defaultValue "tools/errors/codes.json"
-   */
-  errorsFile?: string;
-
-  /**
    * Options to override the behavior of the build process
    */
   esbuild?: ESBuildOptions;
@@ -304,6 +288,11 @@ export interface UserConfig {
    * Options to override the behavior of the unbuild process
    */
   unbuild?: UnbuildOptions;
+
+  /**
+   * The Babel configuration options to use for the build process
+   */
+  babel?: BabelConfig;
 }
 
 export type ResolvedUserConfig = UserConfig &
@@ -317,6 +306,17 @@ export type ResolvedUserConfig = UserConfig &
     configFile?: ConfigLayer<UserConfig>["configFile"];
   };
 
+/**
+ * The {@link StormWorkspaceConfig | configuration} object for an entire Storm Stack workspace
+ */
+export type WorkspaceConfig =
+  | StormWorkspaceConfig
+  | (Partial<StormWorkspaceConfig> &
+      Pick<StormWorkspaceConfig, "workspaceRoot">);
+
+/**
+ * The configuration provided while executing Storm Stack commands.
+ */
 export interface InlineConfig extends UserConfig {
   /**
    * A string identifier for the Storm Stack command being executed
@@ -601,11 +601,3 @@ export interface DocsInlineConfig extends InlineConfig {
    */
   clean?: boolean;
 }
-
-/**
- * The {@link StormWorkspaceConfig | configuration} object for an entire Storm Stack workspace
- */
-export type WorkspaceConfig =
-  | StormWorkspaceConfig
-  | (Partial<StormWorkspaceConfig> &
-      Pick<StormWorkspaceConfig, "workspaceRoot">);

@@ -5,7 +5,7 @@
  This code was released as part of the Storm Stack project. Storm Stack
  is maintained by Storm Software under the Apache-2.0 license, and is
  free for commercial and private use. For more information, please visit
- our licensing page at https://stormsoftware.com/license.
+ our licensing page at https://stormsoftware.com/licenses/projects/storm-stack.
 
  Website:                  https://stormsoftware.com
  Repository:               https://github.com/storm-software/storm-stack
@@ -19,9 +19,9 @@
 import type { OTLPExporterNodeConfigBase } from "@opentelemetry/otlp-exporter-base";
 import type { OTLPGRPCExporterConfigNode } from "@opentelemetry/otlp-grpc-exporter-base";
 import { LogLevelLabel } from "@storm-software/config-tools/types";
-import { PluginOptions } from "@storm-stack/core/base/plugin";
-import { getFileHeader } from "@storm-stack/core/helpers/utilities/file-header";
+import { getFileHeader } from "@storm-stack/core/lib/utilities";
 import type { Context } from "@storm-stack/core/types";
+import type { PluginOptions } from "@storm-stack/core/types/plugin";
 import type { LogPluginConfig } from "@storm-stack/devkit/plugins/log";
 import LogPlugin from "@storm-stack/devkit/plugins/log";
 import { StormJSON } from "@stryke/json/storm-json";
@@ -42,7 +42,7 @@ export type LogOpenTelemetryPluginConfig = LogPluginConfig & {
  * A Storm Stack plugin for OpenTelemetry logging.
  */
 export default class LogOpenTelemetryPlugin extends LogPlugin<LogOpenTelemetryPluginConfig> {
-  protected override installs = {
+  protected override packageDeps = {
     "@opentelemetry/api-logs@^0.200.0": "dependency",
     "@opentelemetry/resources@^0.200.0": "dependency",
     "@opentelemetry/sdk-logs@^0.200.0": "dependency",
@@ -60,12 +60,12 @@ export default class LogOpenTelemetryPlugin extends LogPlugin<LogOpenTelemetryPl
       );
     }
 
-    this.installs[
+    this.packageDeps[
       `@opentelemetry/exporter-logs-otlp-${this.options.exporter}@^0.200.0`
     ] = "dependency";
   }
 
-  protected override writeSink(_context: Context) {
+  protected override writeAdapter(_context: Context) {
     return `${getFileHeader()}
 
 import type {
@@ -73,7 +73,9 @@ import type {
   LogRecord as OTLogRecord
 } from "@opentelemetry/api-logs";
 import { SeverityNumber } from "@opentelemetry/api-logs";
-import { OTLPLogExporter } from "@opentelemetry/exporter-logs-otlp-${this.options.exporter}";
+import { OTLPLogExporter } from "@opentelemetry/exporter-logs-otlp-${
+      this.options.exporter
+    }";
 import type { DetectedResourceAttributes } from "@opentelemetry/resources";
 import { resourceFromAttributes } from "@opentelemetry/resources";
 import {
@@ -81,13 +83,13 @@ import {
   SimpleLogRecordProcessor
 } from "@opentelemetry/sdk-logs";
 import { ATTR_SERVICE_NAME } from "@opentelemetry/semantic-conventions";
-import type { LogRecord, LogSink } from "@storm-stack/types/log";
+import { LogRecord, LogAdapter } from "@storm-stack/types/log";
 import { StormJSON } from "@stryke/json/storm-json";
-import type {
+import {
   BodyFormatter,
   ILoggerProvider,
   ObjectRenderer,
-  OpenTelemetrySinkOptions
+  OpenTelemetryAdapterOptions
 } from "@storm-stack/plugin-log-otel/types";
 
 function mapLevelToSeverityNumber(level: string): number {
@@ -250,7 +252,7 @@ const logger = loggerProvider.getLogger(
   $storm.config.APP_VERSION
 );
 
-const sink = (record: LogRecord) => {
+export const adapter = (record: LogRecord) => {
   const { level, message, timestamp, properties } = record;
 
   const severityNumber = mapLevelToSeverityNumber(level);
@@ -277,10 +279,10 @@ const sink = (record: LogRecord) => {
 
 if (loggerProvider.shutdown != null) {
   const shutdown = loggerProvider.shutdown.bind(loggerProvider);
-  sink[Symbol.asyncDispose] = shutdown;
+  adapter[Symbol.asyncDispose] = shutdown;
 }
 
-export default sink;
+export default adapter;
 `;
   }
 }

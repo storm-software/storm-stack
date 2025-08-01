@@ -1069,6 +1069,11 @@ export interface RuleOptions {
    */
   'no-trailing-spaces'?: Linter.RuleEntry<NoTrailingSpaces>
   /**
+   * Disallow `let` or `var` variables that are read but never assigned
+   * @see https://eslint.org/docs/latest/rules/no-unassigned-vars
+   */
+  'no-unassigned-vars'?: Linter.RuleEntry<[]>
+  /**
    * Disallow the use of undeclared variables unless mentioned in `/*global *\/` comments
    * @see https://eslint.org/docs/latest/rules/no-undef
    */
@@ -1192,7 +1197,7 @@ export interface RuleOptions {
    * Disallow unnecessary escape characters
    * @see https://eslint.org/docs/latest/rules/no-useless-escape
    */
-  'no-useless-escape'?: Linter.RuleEntry<[]>
+  'no-useless-escape'?: Linter.RuleEntry<NoUselessEscape>
   /**
    * Disallow renaming import, export, and destructured assignments to the same name
    * @see https://eslint.org/docs/latest/rules/no-useless-rename
@@ -1711,6 +1716,7 @@ type _FuncNamesValue = ("always" | "as-needed" | "never")
 // ----- func-style -----
 type FuncStyle = []|[("declaration" | "expression")]|[("declaration" | "expression"), {
   allowArrowFunctions?: boolean
+  allowTypeAnnotation?: boolean
   overrides?: {
     namedExports?: ("declaration" | "expression" | "ignore")
   }
@@ -2320,6 +2326,8 @@ type MaxNestedCallbacks = []|[(number | {
 type MaxParams = []|[(number | {
   maximum?: number
   max?: number
+  
+  countVoidThis?: boolean
 })]
 // ----- max-statements -----
 type MaxStatements = []|[(number | {
@@ -2383,6 +2391,7 @@ type NoConstantCondition = []|[{
 // ----- no-duplicate-imports -----
 type NoDuplicateImports = []|[{
   includeExports?: boolean
+  allowSeparateTypeImports?: boolean
 }]
 // ----- no-else-return -----
 type NoElseReturn = []|[{
@@ -2486,6 +2495,10 @@ type NoMagicNumbers = []|[{
   ignoreArrayIndexes?: boolean
   ignoreDefaultValues?: boolean
   ignoreClassFieldInitialValues?: boolean
+  ignoreEnums?: boolean
+  ignoreNumericLiteralTypes?: boolean
+  ignoreReadonlyClassProperties?: boolean
+  ignoreTypeIndexes?: boolean
 }]
 // ----- no-misleading-character-class -----
 type NoMisleadingCharacterClass = []|[{
@@ -2618,9 +2631,11 @@ type NoSequences = []|[{
 // ----- no-shadow -----
 type NoShadow = []|[{
   builtinGlobals?: boolean
-  hoist?: ("all" | "functions" | "never")
+  hoist?: ("all" | "functions" | "never" | "types" | "functions-and-types")
   allow?: string[]
   ignoreOnInitialization?: boolean
+  ignoreTypeValueShadow?: boolean
+  ignoreFunctionTypeParameterNameValueShadow?: boolean
 }]
 // ----- no-shadow-restricted-names -----
 type NoShadowRestrictedNames = []|[{
@@ -2698,10 +2713,17 @@ type NoUseBeforeDefine = []|[("nofunc" | {
   classes?: boolean
   variables?: boolean
   allowNamedExports?: boolean
+  enums?: boolean
+  typedefs?: boolean
+  ignoreTypeReferences?: boolean
 })]
 // ----- no-useless-computed-key -----
 type NoUselessComputedKey = []|[{
   enforceForClassMembers?: boolean
+}]
+// ----- no-useless-escape -----
+type NoUselessEscape = []|[{
+  allowRegexCharacters?: string[]
 }]
 // ----- no-useless-rename -----
 type NoUselessRename = []|[{

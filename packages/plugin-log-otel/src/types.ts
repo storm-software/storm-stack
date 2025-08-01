@@ -5,7 +5,7 @@
  This code was released as part of the Storm Stack project. Storm Stack
  is maintained by Storm Software under the Apache-2.0 license, and is
  free for commercial and private use. For more information, please visit
- our licensing page at https://stormsoftware.com/license.
+ our licensing page at https://stormsoftware.com/licenses/projects/storm-stack.
 
  Website:                  https://stormsoftware.com
  Repository:               https://github.com/storm-software/storm-stack
@@ -60,9 +60,9 @@ export type Message = (string | null | undefined)[];
 export type BodyFormatter = (message: Message) => AnyValue;
 
 /**
- * Options for creating an OpenTelemetry sink.
+ * Options for creating an OpenTelemetry adapter.
  */
-export interface OpenTelemetrySinkOptions {
+export interface OpenTelemetryAdapterOptions {
   /**
    * The OpenTelemetry logger provider to use.
    */
@@ -107,7 +107,7 @@ export interface OpenTelemetrySinkOptions {
   serviceName?: string;
 }
 
-export interface StormOpenTelemetryLogVariables extends StormBaseConfig {
+export interface StormOpenTelemetryLogConfig extends StormBaseConfig {
   /**
    * The name of the OpenTelemetry service to use.
    *

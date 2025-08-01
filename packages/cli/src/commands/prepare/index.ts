@@ -5,7 +5,7 @@
  This code was released as part of the Storm Stack project. Storm Stack
  is maintained by Storm Software under the Apache-2.0 license, and is
  free for commercial and private use. For more information, please visit
- our licensing page at https://stormsoftware.com/license.
+ our licensing page at https://stormsoftware.com/licenses/projects/storm-stack.
 
  Website:                  https://stormsoftware.com
  Repository:               https://github.com/storm-software/storm-stack
@@ -17,7 +17,8 @@
  ------------------------------------------------------------------- */
 
 import { PrepareInlineConfig } from "@storm-stack/core/types/config";
-import { StormPayload } from "../../../.storm/runtime/payload";
+import { StormError } from "storm:error";
+import { StormPayload } from "storm:payload";
 import { createEngine } from "../../helpers/create-engine";
 
 /**
@@ -45,6 +46,11 @@ interface PreparePayload {
  */
 async function handler(payload: StormPayload<PreparePayload>) {
   const data = payload.data;
+  if (!data.root) {
+    throw new StormError({
+      code: 1
+    });
+  }
 
   const inlineConfig = {
     root: data.root,

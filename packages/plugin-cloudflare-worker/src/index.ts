@@ -5,7 +5,7 @@
  This code was released as part of the Storm Stack project. Storm Stack
  is maintained by Storm Software under the Apache-2.0 license, and is
  free for commercial and private use. For more information, please visit
- our licensing page at https://stormsoftware.com/license.
+ our licensing page at https://stormsoftware.com/licenses/projects/storm-stack.
 
  Website:                  https://stormsoftware.com
  Repository:               https://github.com/storm-software/storm-stack
@@ -19,24 +19,18 @@
 import { cloudflare } from "@cloudflare/unenv-preset";
 import { parse as parseToml, stringify as stringifyToml } from "@ltd/j-toml";
 import { LogLevelLabel } from "@storm-software/config-tools/types";
-import { PluginOptions } from "@storm-stack/core/base/plugin";
-import { getFileHeader, writeFile } from "@storm-stack/core/helpers";
+import { Plugin } from "@storm-stack/core/base/plugin";
 import {
   getTsconfigFilePath,
   isIncludeMatchFound,
   isMatchFound
-} from "@storm-stack/core/helpers/typescript";
-import {
-  writeApp,
-  writeContext,
-  writeEvent
-} from "@storm-stack/core/prepare/runtime/node";
-import type {
-  Context,
-  EngineHooks,
-  PluginConfig
-} from "@storm-stack/core/types";
-import BasePlugin from "@storm-stack/devkit/plugins/base";
+} from "@storm-stack/core/lib/typescript/tsconfig";
+import { getFileHeader } from "@storm-stack/core/lib/utilities/file-header";
+import { writeFile } from "@storm-stack/core/lib/utilities/write-file";
+import type { EngineHooks } from "@storm-stack/core/types/build";
+import type { Context } from "@storm-stack/core/types/context";
+import type { PluginOptions } from "@storm-stack/core/types/plugin";
+import { NodePluginConfig } from "@storm-stack/plugin-node/types";
 import { executePackage } from "@stryke/cli/execute";
 import { createDirectory, removeDirectory } from "@stryke/fs/helpers";
 import { readJsonFile } from "@stryke/fs/json";
@@ -56,7 +50,11 @@ import type { TsConfigJson } from "@stryke/types/tsconfig";
 import defu from "defu";
 import type { Environment } from "unenv";
 import { defineEnv } from "unenv";
-import { CLOUDFLARE_MODULES, DEFAULT_CONDITIONS } from "./helpers";
+import {
+  CLOUDFLARE_MODULES,
+  CLOUDFLARE_TYPES_DECLARATION,
+  DEFAULT_CONDITIONS
+} from "./helpers";
 
 /**
  * Storm Stack Cloudflare Worker Plugin
@@ -65,21 +63,14 @@ import { CLOUDFLARE_MODULES, DEFAULT_CONDITIONS } from "./helpers";
  * This plugin provides support for building and deploying Cloudflare Workers using Storm Stack. It integrates with the Wrangler CLI tool and sets up the necessary configurations and runtime files.
  */
 export default class StormStackCloudflareWorkerPlugin<
-  TOptions extends Record<string, any> = Record<string, any>
-> extends BasePlugin<TOptions> {
+  TConfig extends NodePluginConfig = NodePluginConfig
+> extends Plugin<TConfig> {
   #unenv: Environment;
 
-  public override dependencies = [
-    [
-      "@storm-stack/plugin-log-console",
-      {
-        logLevel: "info"
-      }
-    ]
-  ] as PluginConfig[];
-
-  public constructor(options: PluginOptions<TOptions>) {
+  public constructor(options: PluginOptions<TConfig>) {
     super(options);
+
+    this.dependencies = [["@storm-stack/plugin-node", this.options]];
 
     const { env } = defineEnv({
       presets: [cloudflare]
@@ -87,16 +78,20 @@ export default class StormStackCloudflareWorkerPlugin<
     this.#unenv = env;
   }
 
-  public override innerAddHooks(hooks: EngineHooks) {
-    super.innerAddHooks(hooks);
+  /**
+   * Adds hooks to the Storm Stack engine for the Cloudflare Worker plugin.
+   *
+   * @param hooks - The engine hooks to add
+   */
+  public override addHooks(hooks: EngineHooks) {
+    super.addHooks(hooks);
 
     hooks.addHooks({
       "clean:complete": this.#clean.bind(this),
-      "init:context": this.#initContext.bind(this),
+      "init:options": this.#initOptions.bind(this),
       "init:tsconfig": this.#initTsconfig.bind(this),
-      "prepare:directories": this.#prepareDirectories.bind(this),
+      "prepare:begin": this.#prepareDirectories.bind(this),
       "prepare:config": this.#prepareConfig.bind(this),
-      "prepare:types": this.#prepareTypes.bind(this),
       "prepare:runtime": this.#prepareRuntime.bind(this),
       "prepare:entry": this.#prepareEntry.bind(this)
     });
@@ -119,7 +114,7 @@ export default class StormStackCloudflareWorkerPlugin<
     }
 
     const typesDir = joinPaths(
-      context.workspaceConfig.workspaceRoot,
+      context.options.workspaceRoot,
       context.options.projectRoot,
       "types"
     );
@@ -128,7 +123,7 @@ export default class StormStackCloudflareWorkerPlugin<
     }
   }
 
-  async #initContext(context: Context) {
+  async #initOptions(context: Context) {
     this.log(
       LogLevelLabel.TRACE,
       `Resolving Storm Stack context for the project.`
@@ -141,8 +136,8 @@ export default class StormStackCloudflareWorkerPlugin<
     context.options.esbuild.format = "esm";
     context.options.esbuild.target = "chrome95";
 
-    if (context.options.userConfig.dts === undefined) {
-      context.options.dts = joinPaths(
+    if (context.options.userConfig.output?.dts === undefined) {
+      context.options.output.dts = joinPaths(
         context.options.projectRoot,
         "types",
         "storm.d.ts"
@@ -185,9 +180,9 @@ export default class StormStackCloudflareWorkerPlugin<
         "development"
       ];
 
-      context.installs["@cloudflare/unenv-preset"] = "dependency";
-      context.installs.unenv = "dependency";
-      context.installs.wrangler = "devDependency";
+      context.packageDeps["@cloudflare/unenv-preset"] = "dependency";
+      context.packageDeps.unenv = "dependency";
+      context.packageDeps.wrangler = "devDependency";
 
       context.additionalRuntimeFiles ??= [];
       context.additionalRuntimeFiles.push(
@@ -207,14 +202,17 @@ export default class StormStackCloudflareWorkerPlugin<
     tsconfigJson.compilerOptions ??= {};
     tsconfigJson.compilerOptions.types ??= [];
 
+    if (!isMatchFound("node", tsconfigJson.compilerOptions.types)) {
+      tsconfigJson.compilerOptions.types.push("node");
+    }
+
     if (
-      tsconfigJson.compilerOptions.types &&
-      isMatchFound("node", tsconfigJson.compilerOptions.types)
+      !isMatchFound(
+        CLOUDFLARE_TYPES_DECLARATION,
+        tsconfigJson.compilerOptions.types
+      )
     ) {
-      tsconfigJson.compilerOptions.types =
-        tsconfigJson.compilerOptions.types.filter(
-          type => !isMatchFound("node", [type])
-        );
+      tsconfigJson.compilerOptions.types.push(CLOUDFLARE_TYPES_DECLARATION);
     }
 
     if (
@@ -230,20 +228,20 @@ export default class StormStackCloudflareWorkerPlugin<
 
     tsconfigJson.include ??= [];
     if (
-      !context.options.userConfig.dts &&
+      !context.options.userConfig.output?.dts &&
       isIncludeMatchFound(
         joinPaths(
           relativePath(
             joinPaths(
-              context.workspaceConfig.workspaceRoot,
+              context.options.workspaceRoot,
               context.options.projectRoot
             ),
             joinPaths(
-              context.workspaceConfig.workspaceRoot,
-              findFilePath(context.options.dts as string)
+              context.options.workspaceRoot,
+              findFilePath(context.options.output.dts as string)
             )
           ),
-          findFileName(context.options.dts as string, {
+          findFileName(context.options.output.dts as string, {
             withExtension: true
           })
         ),
@@ -256,15 +254,15 @@ export default class StormStackCloudflareWorkerPlugin<
             joinPaths(
               relativePath(
                 joinPaths(
-                  context.workspaceConfig.workspaceRoot,
+                  context.options.workspaceRoot,
                   context.options.projectRoot
                 ),
                 joinPaths(
-                  context.workspaceConfig.workspaceRoot,
-                  findFilePath(context.options.dts as string)
+                  context.options.workspaceRoot,
+                  findFilePath(context.options.output.dts as string)
                 )
               ),
-              findFileName(context.options.dts as string, {
+              findFileName(context.options.output.dts as string, {
                 withExtension: true
               })
             ),
@@ -277,7 +275,8 @@ export default class StormStackCloudflareWorkerPlugin<
       tsconfigJson.include.push("types/*.d.ts");
     }
 
-    return this.writeFile(
+    return writeFile(
+      this.log,
       context.options.tsconfig,
       StormJSON.stringify(tsconfigJson)
     );
@@ -291,7 +290,7 @@ export default class StormStackCloudflareWorkerPlugin<
 
     // Create the types directory if it does not exist
     const typesDir = joinPaths(
-      context.workspaceConfig.workspaceRoot,
+      context.options.workspaceRoot,
       context.options.projectRoot,
       "types"
     );
@@ -348,59 +347,44 @@ compatibility_flags = [ "nodejs_als" ]
         wranglerFile.account_id ??= process.env.CLOUDFLARE_ACCOUNT_ID;
       }
 
-      return this.writeFile(
+      await context.vfs.writeFileToDisk(
         wranglerFilePath,
         stringifyToml(wranglerFile, {
           newline: "\n",
-          newlineAround: "pairs",
+          newlineAround: "header",
           indent: 4,
           forceInlineArraySpacing: 0
         }),
-        true
+        { skipFormat: true }
+      );
+
+      this.log(
+        LogLevelLabel.TRACE,
+        `Preparing the Cloudflare TypeScript declaration (d.ts) artifact for the Storm Stack project.`
+      );
+
+      await executePackage(
+        "wrangler",
+        [
+          "types",
+          `--path="${CLOUDFLARE_TYPES_DECLARATION}"`,
+          "--env-interface=CloudflareEnv"
+        ],
+        context.options.projectRoot
       );
     }
   }
 
-  async #prepareTypes(context: Context) {
-    this.log(
-      LogLevelLabel.TRACE,
-      `Preparing the Cloudflare TypeScript declaration (d.ts) artifact for the Storm Stack project.`
-    );
-
-    await executePackage(
-      "wrangler",
-      [
-        "types",
-        '--path="types/cloudflare.d.ts"',
-        "--env-interface=CloudflareEnv"
-      ],
-      context.options.projectRoot
-    );
-  }
-
-  async #prepareRuntime(context: Context) {
+  /**
+   * Prepares the runtime artifacts for the Storm Stack project.
+   *
+   * @param _context - The Storm Stack context
+   */
+  async #prepareRuntime(_context: Context) {
     this.log(
       LogLevelLabel.TRACE,
       `Preparing the runtime artifacts for the Storm Stack project.`
     );
-
-    await Promise.all([
-      writeFile(
-        this.log,
-        joinPaths(context.runtimePath, "app.ts"),
-        writeApp(context)
-      ),
-      writeFile(
-        this.log,
-        joinPaths(context.runtimePath, "context.ts"),
-        writeContext(context)
-      ),
-      writeFile(
-        this.log,
-        joinPaths(context.runtimePath, "event.ts"),
-        writeEvent(context)
-      )
-    ]);
   }
 
   async #prepareEntry(context: Context) {
@@ -415,7 +399,7 @@ compatibility_flags = [ "nodejs_als" ]
           })"`
         );
 
-        return this.writeFile(
+        return context.vfs.writeFile(
           entry.file,
           `${getFileHeader()}
 
@@ -431,13 +415,13 @@ import ${
               )
             ),
             findFileName(entry.input.file).replace(
-              findFileExtension(entry.input.file),
+              findFileExtension(entry.input.file) || "",
               ""
             )
           )}";
-import { withContext } from "./runtime/app";
+import { withContext } from "storm:app";
 import { deserialize, serialize } from "@deepkit/type";
-import { StormPayload } from "./runtime/payload";
+import { StormPayload } from "storm:payload";
 
 const handleRequest = withContext(handle);
 

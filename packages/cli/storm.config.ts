@@ -5,7 +5,7 @@
  This code was released as part of the Storm Stack project. Storm Stack
  is maintained by Storm Software under the Apache-2.0 license, and is
  free for commercial and private use. For more information, please visit
- our licensing page at https://stormsoftware.com/license.
+ our licensing page at https://stormsoftware.com/licenses/projects/storm-stack.
 
  Website:                  https://stormsoftware.com
  Repository:               https://github.com/storm-software/storm-stack
@@ -16,15 +16,21 @@
 
  ------------------------------------------------------------------- */
 
-import { defineConfig } from "@storm-stack/core/helpers/utilities/config";
+import { defineConfig } from "@storm-stack/core/define-config";
 
 export default defineConfig({
   name: "Storm Stack",
+  skipCache: true,
   plugins: [
     [
       "@storm-stack/plugin-cli",
       {
-        bin: ["storm", "storm-stack"]
+        bin: ["storm", "storm-stack"],
+        dotenv: {
+          types: {
+            config: "./src/types.ts#StormStackCLIConfig"
+          }
+        }
       }
     ],
     [
@@ -39,10 +45,5 @@ export default defineConfig({
         logLevel: "error"
       }
     ]
-  ],
-  dotenv: {
-    types: {
-      config: "./src/types.ts#StormStackCLIVariables"
-    }
-  }
+  ]
 });

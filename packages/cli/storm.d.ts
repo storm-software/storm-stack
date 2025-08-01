@@ -41,8 +41,8 @@ interface FormattedValues {
 }
 
 type HandlerFunction<TInput = any, TOutput = any> = (
-  payload: IStormPayload<TInput>
-) => MaybePromise<TOutput | IStormError>;
+  payload: StormPayloadInterface<TInput>
+) => MaybePromise<TOutput | StormErrorInterface>;
 
 type HelpMessageDetails = MessageDetails<"help">;
 
@@ -62,265 +62,25 @@ declare interface Internal_StormContextStore {
    *
    * @internal
    */
-  events: IStormEvent[];
+  events: StormEventInterface[];
 }
 
 /**
- * The Storm Error interface.
- */
-interface IStormError extends Error {
-  /**
-   * The error code
-   */
-  code: number;
-  /**
-   * The error message parameters
-   */
-  params: string[];
-  /**
-   * The type of error that was thrown.
-   */
-  type: ErrorType;
-  /**
-   * A url to display the error message
-   */
-  url: string;
-  /**
-   * Additional data to be passed with the error
-   */
-  data?: any;
-  /**
-   * The underlying cause of the error, if any. This is typically another error object that caused this error to be thrown.
-   */
-  cause: IStormError | undefined;
-  /**
-   * The error stack
-   *
-   * @remarks
-   * This is overridden in `StormError` to be a parsed stacktrace
-   */
-  stack: string;
-  /**
-   * The parsed stacktrace
-   */
-  stacktrace: ParsedStacktrace[];
-  /**
-   * The original stacktrace
-   */
-  originalStack: string;
-  /**
-   * Returns a formatted error string that can be displayed to the user.
-   */
-  toDisplay: () => string;
-  /**
-   * Internal function to inherit the error
-   *
-   * @internal
-   */
-  __proto__: any;
-}
-
-interface IStormEvent<TEventType extends string = string, TData = any>
-  extends IStormPayload<TData> {
-  /**
-   * The unique identifier for the payload.
-   */
-  payloadId: string;
-  /**
-   * The type of the event.
-   */
-  type: TEventType;
-  /**
-   * The version of the event.
-   */
-  version: string;
-  /**
-   * The event label.
-   *
-   * @remarks
-   * The label format is "\{type\}-v\{version\}"
-   */
-  label: string;
-}
-
-/**
- * A logger interface. It provides methods to log messages at different severity levels.
+ * A adapter is a function that accepts a log record and prints it somewhere.
  *
- * @remarks
- * The inspiration and much of the original implementation for this logger was taken from the [LogTape](https://logtape.org/) project. Major thanks to that project.
- *
- * ```typescript
- * $storm.log.debug(`A debug message with ${value}.`);
- * $storm.log.info(`An info message with ${value}.`);
- * $storm.log.warn(`A warning message with ${value}.`);
- * $storm.log.error(`An error message with ${value}.`);
- * $storm.log.fatal(`A fatal error message with ${value}.`);
- * ```
+ * @param record - The log record to adapter.
  */
-interface IStormLog {
-  /**
-   * Get a logger with contextual properties. This is useful for log multiple messages with the shared set of properties.
-   *
-   * ```typescript
-   * const ctx = $storm.log.with({ foo: 123, bar: "abc" });
-   * ctx.info("A message with {foo} and {bar}.");
-   * ctx.warn("Another message with {foo}, {bar}, and {baz}.", { baz: true });
-   * ```
-   *
-   * The above code is equivalent to:
-   *
-   * ```typescript
-   * $storm.log.info("A message with {foo} and {bar}.", { foo: 123, bar: "abc" });
-   * $storm.log.warn(
-   *   "Another message with {foo}, {bar}, and {baz}.",
-   *   { foo: 123, bar: "abc", baz: true },
-   * );
-   * ```
-   *
-   * @param properties - The properties to add to the logger.
-   * @returns A logger with the specified properties.
-   */
-  with: (properties: Record<string, unknown>) => IStormLog;
-  /**
-   * Log a debug message. Use this as a template string prefix.
-   *
-   * ```typescript
-   * $storm.log.debug(`A debug message with ${value}.`);
-   * ```
-   *
-   * @param message - The message template strings array.
-   * @param values - The message template values.
-   */
-  debug: ((
-    message: TemplateStringsArray,
-    ...values: readonly unknown[]
-  ) => void) &
-    ((
-      message: string,
-      properties?: Record<string, unknown> | (() => Record<string, unknown>)
-    ) => void) &
-    ((callback: LogCallback) => void);
-  /**
-   * Log an informational message. Use this as a template string prefix.
-   *
-   * ```typescript
-   * $storm.log.info(`An info message with ${value}.`);
-   * ```
-   *
-   * @param message - The message template strings array.
-   * @param values - The message template values.
-   */
-  info: ((
-    message: TemplateStringsArray,
-    ...values: readonly unknown[]
-  ) => void) &
-    ((
-      message: string,
-      properties?: Record<string, unknown> | (() => Record<string, unknown>)
-    ) => void) &
-    ((callback: LogCallback) => void);
-  /**
-   * Log a warning message. Use this as a template string prefix.
-   *
-   * ```typescript
-   * $storm.log.warn(`A warning message with ${value}.`);
-   * ```
-   *
-   * @param message - The message template strings array.
-   * @param values - The message template values.
-   */
-  warn: ((
-    message: TemplateStringsArray,
-    ...values: readonly unknown[]
-  ) => void) &
-    ((
-      message: string,
-      properties?: Record<string, unknown> | (() => Record<string, unknown>)
-    ) => void) &
-    ((callback: LogCallback) => void);
-  /**
-   * Log an error message. Use this as a template string prefix.
-   *
-   * ```typescript
-   * $storm.log.error(`An error message with ${value}.`);
-   * ```
-   *
-   * @param message - The message template strings array.
-   * @param values - The message template values.
-   */
-  error: ((
-    message: TemplateStringsArray | Error,
-    ...values: readonly unknown[]
-  ) => void) &
-    ((
-      message: string,
-      properties?: Record<string, unknown> | (() => Record<string, unknown>)
-    ) => void) &
-    ((callback: LogCallback) => void);
-  /**
-   * Log a fatal error message. Use this as a template string prefix.
-   *
-   * ```typescript
-   * $storm.log.fatal(`A fatal error message with ${value}.`);
-   * ```
-   *
-   * @param message - The message template strings array.
-   * @param values - The message template values.
-   */
-  fatal: ((
-    message: TemplateStringsArray | Error,
-    ...values: readonly unknown[]
-  ) => void) &
-    ((
-      message: string,
-      properties?: Record<string, unknown> | (() => Record<string, unknown>)
-    ) => void) &
-    ((callback: LogCallback) => void);
-}
+type LogAdapter = (record: LogRecord) => void;
 
-interface IStormPayload<TData = object> {
+interface LogAdapterInstance {
   /**
-   * The timestamp of the payload.
+   * The log adapter function.
    */
-  timestamp: number;
+  handle: LogAdapter;
   /**
-   * The unique identifier for the payload.
+   * The lowest log level for the adapter to accept.
    */
-  id: string;
-  /**
-   * The data of the payload.
-   */
-  data: TData;
-}
-
-/**
- * A Storm result interface. It represents the structure of a result returned by the Storm Stack runtime.
- *
- * @remarks
- * The `IStormResult` interface is used to standardize the structure of results returned by the Storm Stack runtime.
- * It includes properties for the request ID, data, error information, timestamp, and success status.
- */
-interface IStormResult<TData extends any | IStormError = any | IStormError> {
-  /**
-   * The unique identifier for the payload.
-   */
-  payloadId: string;
-  /**
-   * The result meta.
-   */
-  meta: Record<string, any>;
-  /**
-   * The data of the result.
-   */
-  data: TData;
-  /**
-   * The timestamp of the result.
-   */
-  timestamp: number;
-  /**
-   * An indicator of whether the result was successful.
-   */
-  success: boolean;
+  logLevel: LogLevel;
 }
 
 /**
@@ -333,10 +93,10 @@ type LogCallback = (prefix: LogTemplatePrefix) => unknown[];
 
 /**
  * A filter is a function that accepts a log record and returns `true` if the
- * record should be passed to the sink.
+ * record should be passed to the adapter.
  *
  * @param record - The log record to filter.
- * @returns `true` if the record should be passed to the sink.
+ * @returns `true` if the record should be passed to the adapter.
  */
 type LogFilter = (record: LogRecord) => boolean;
 
@@ -351,7 +111,7 @@ type LogFilterLike = LogFilter | LogLevel | null;
  */
 type LogLevel = "debug" | "info" | "warning" | "error" | "fatal";
 
-const LogLevel: {
+declare const LogLevel: {
   DEBUG: LogLevel;
   INFO: LogLevel;
   WARNING: LogLevel;
@@ -388,24 +148,6 @@ interface LogRecord {
    * The extra properties of the log record.
    */
   readonly properties: Record<string, unknown>;
-}
-
-/**
- * A sink is a function that accepts a log record and prints it somewhere.
- *
- * @param record - The log record to sink.
- */
-type LogSink = (record: LogRecord) => void;
-
-interface LogSinkInstance {
-  /**
-   * The log sink function.
-   */
-  handle: LogSink;
-  /**
-   * The lowest log level for the sink to accept.
-   */
-  logLevel: LogLevel;
 }
 
 /**
@@ -446,20 +188,24 @@ interface ParsedStacktrace {
 }
 
 type PostprocessFunction<
-  TPayload extends IStormPayload,
+  TPayload extends StormPayloadInterface,
   TContext extends StormContext<StormBaseConfig, any, TPayload>,
   TOutput
 > = (
   context: TContext,
   output: TOutput
-) => MaybePromise<IStormError | void | null | undefined>;
+) => MaybePromise<StormErrorInterface | void | null | undefined>;
 
 type PreprocessFunction<
-  TPayload extends IStormPayload,
+  TPayload extends StormPayloadInterface,
   TContext extends StormContext<StormBaseConfig, any, TPayload>
-> = (context: TContext) => MaybePromise<IStormError | void | null | undefined>;
+> = (
+  context: TContext
+) => MaybePromise<StormErrorInterface | void | null | undefined>;
 
-type SetupFunction = () => MaybePromise<IStormError | void | null | undefined>;
+type SetupFunction = () => MaybePromise<
+  StormErrorInterface | void | null | undefined
+>;
 
 /**
  * The base configuration used by Storm Stack applications
@@ -482,7 +228,7 @@ interface StormBaseConfig {
    * @category node
    * @readonly
    */
-  STORM_STACK_LOCAL: boolean;
+  STORM_STACK_LOCAL?: boolean;
   /**
    * The name of the application.
    *
@@ -1284,6 +1030,10 @@ interface StormBuildInfo {
    */
   platform: "node" | "browser" | "neutral";
   /**
+   * The environment in which the application is running.
+   */
+  environment: string;
+  /**
    * Indicates if the application is running in a production environment.
    */
   isProduction: boolean;
@@ -1306,7 +1056,7 @@ interface StormBuildInfo {
 type StormContext<
   TConfig extends StormBaseConfig = StormBaseConfig,
   TAdditionalFields extends Record<string, any> = Record<string, any>,
-  TPayload extends IStormPayload = IStormPayload
+  TPayload extends StormPayloadInterface = StormPayloadInterface
 > = TAdditionalFields & {
   /**
    * The name of the Storm application.
@@ -1317,10 +1067,6 @@ type StormContext<
    */
   readonly version: string;
   /**
-   * The configuration parameters for the Storm application.
-   */
-  readonly config: TConfig;
-  /**
    * The runtime information for the Storm application.
    */
   readonly runtime: StormRuntimeInfo;
@@ -1328,6 +1074,14 @@ type StormContext<
    * The build information for the Storm application.
    */
   readonly build: StormBuildInfo;
+  /**
+   * The configuration parameters for the Storm application.
+   */
+  readonly config: TConfig;
+  /**
+   * A virtual object representing the configuration parameters for the Storm application at build time. The Storm Stack build process will replace this object with the actual configuration parameters at build time.
+   */
+  readonly dotenv: TConfig;
   /**
    * The environment paths for storing things like data, config, logs, and cache in the current runtime environment.
    *
@@ -1350,7 +1104,7 @@ type StormContext<
   /**
    * The root application logger for the Storm Stack application.
    */
-  readonly log: IStormLog;
+  readonly log: StormLogInterface;
   /**
    * The root [unstorage](https://unstorage.unjs.io/) storage to use for Storm Stack application.
    */
@@ -1360,7 +1114,9 @@ type StormContext<
   /**
    * A function to emit an event to a processing queue.
    */
-  emit: <TEvent extends IStormEvent<string, any>>(event: TEvent) => void;
+  emit: <TEvent extends StormEventInterface<string, any>>(
+    event: TEvent
+  ) => void;
   /**
    * A store that exists on the StormContext for internal use.
    *
@@ -1371,6 +1127,592 @@ type StormContext<
    */
   __internal: Internal_StormContextStore;
 };
+
+interface StormDateFormats<TFormatToken = string> {
+  /** Localized full date @example "Jan 1, 2019" */
+  fullDate: TFormatToken;
+  /** Partially localized full date with weekday, useful for text-to-speech accessibility @example "Tuesday, January 1, 2019" */
+  fullDateWithWeekday: TFormatToken;
+  /** Date format string with month and day of month @example "1 January" */
+  normalDate: TFormatToken;
+  /** Date format string with weekday, month and day of month @example "Wed, Jan 1" */
+  normalDateWithWeekday: TFormatToken;
+  /** Shorter day format @example "Jan 1" */
+  shortDate: TFormatToken;
+  /** Year format string @example "2019" */
+  year: TFormatToken;
+  /** Month format string @example "January" */
+  month: TFormatToken;
+  /** Short month format string @example "Jan" */
+  monthShort: TFormatToken;
+  /** Month with year format string @example "January 2018" */
+  monthAndYear: TFormatToken;
+  /** Month with date format string @example "January 1" */
+  monthAndDate: TFormatToken;
+  /** Weekday format string @example "Wednesday" */
+  weekday: TFormatToken;
+  /** Short weekday format string @example "Wed" */
+  weekdayShort: TFormatToken;
+  /** Day format string @example "1" */
+  dayOfMonth: TFormatToken;
+  /** Hours format string @example "11" */
+  hours12h: TFormatToken;
+  /** Hours format string @example "23" */
+  hours24h: TFormatToken;
+  /** Minutes format string @example "44" */
+  minutes: TFormatToken;
+  /** Seconds format string @example "00" */
+  seconds: TFormatToken;
+  /** Full time localized format string @example "11:44 PM" for US, "23:44" for Europe */
+  fullTime: TFormatToken;
+  /** Not localized full time format string @example "11:44 PM" */
+  fullTime12h: TFormatToken;
+  /** Not localized full time format string @example "23:44" */
+  fullTime24h: TFormatToken;
+  /** Date & time format string with localized time @example "Jan 1, 2018 11:44 PM" */
+  fullDateTime: TFormatToken;
+  /** Not localized date & Time format 12h @example "Jan 1, 2018 11:44 PM" */
+  fullDateTime12h: TFormatToken;
+  /** Not localized date & Time format 24h @example "Jan 1, 2018 23:44" */
+  fullDateTime24h: TFormatToken;
+  /** Localized keyboard input friendly date format @example "02/13/2020 */
+  keyboardDate: TFormatToken;
+  /** Localized keyboard input friendly date/time format @example "02/13/2020 23:44" */
+  keyboardDateTime: TFormatToken;
+  /** Partially localized keyboard input friendly date/time 12h format @example "02/13/2020 11:44 PM" */
+  keyboardDateTime12h: TFormatToken;
+  /** Partially localized keyboard input friendly date/time 24h format @example "02/13/2020 23:44" */
+  keyboardDateTime24h: TFormatToken;
+}
+
+/**
+ * Interface for date utility functions used in the Storm Stack.
+ *
+ * @typeParam TDate - The date object type used by the underlying date library.
+ * @typeParam TLocale - The locale type used by the underlying date library.
+ *
+ * @remarks
+ * This interface defines a contract for date manipulation and formatting utilities, abstracting over different date libraries (such as [Moment.js](https://momentjs.com/), [Day.js](https://day.js.org/), etc.). It provides methods for creating, parsing, comparing, and formatting dates, as well as manipulating date components and handling localization.
+ */
+interface StormDateInterface<TDate, TLocale> {
+  /**
+   * The set of date formats supported by the utility.
+   */
+  formats: StormDateFormats<any>;
+  /**
+   * The current locale object, if available.
+   */
+  locale?: TLocale;
+  /**
+   * The [Moment.js](https://momentjs.com/) instance, if using [Moment.js](https://momentjs.com/) as the underlying library.
+   */
+  moment?: any;
+  /**
+   * The [Day.js](https://day.js.org/) instance, if using [Day.js](https://day.js.org/) as the underlying library.
+   */
+  dayjs?: any;
+  /**
+   * Name of the currently used date library.
+   */
+  lib: string;
+  /**
+   * Create a new `Date` object with the underlying library.
+   *
+   * @remarks
+   * This method supports some of the standard input sources like ISO strings so you can pass the string directly as `date("2024-01-10T14:30:00Z")`, and javascript `Date` objects `date(new Date())`. If `null` is passed `null` will be returned.
+   *
+   * @param value - The value to create a date object from. Can be a string, number, or JavaScript Date object.
+   * @returns A date object of type `TDate` or `null` if the input is `null`.
+   */
+  date: <
+    TArg = undefined,
+    TResultingDate = TArg extends null
+      ? null
+      : TArg extends undefined
+        ? TDate
+        : TDate | null
+  >(
+    value?: TArg
+  ) => TResultingDate;
+  /**
+   * Creates a date object from a JavaScript Date object.
+   *
+   * @remarks
+   * This method is used to create a date object from a JavaScript Date object. It is useful for converting JavaScript Date objects to the date library's date objects.
+   */
+  toJsDate: (value: TDate) => Date;
+  /**
+   * Creates a date object from an ISO string.
+   *
+   * @remarks
+   * This method is used to create a date object from an ISO string. It is useful for parsing dates from strings.
+   */
+  parseISO: (isString: string) => TDate;
+  /**
+   * Converts a date object to an ISO string.
+   *
+   * @remarks
+   * This method is used to convert a date object to an ISO string. It is useful for serializing dates to strings.
+   */
+  toISO: (value: TDate) => string;
+  /**
+   * Creates a date object from a string using the specified format.
+   *
+   * @remarks
+   * This method is used to create a date object from a string using the specified format. It is useful for parsing dates from strings with custom formats.
+   */
+  parse: (value: string, format: string) => TDate | null;
+  /**
+   * Returns the current locale code.
+   *
+   * @returns The current locale code.
+   */
+  getCurrentLocaleCode: () => string;
+  /**
+   * Returns an indicator if the current locale is using a 12-hour cycle.
+   *
+   * @returns `true` if the current locale is using a 12-hour cycle, otherwise `false`.
+   */
+  is12HourCycleInCurrentLocale: () => boolean;
+  /**
+   * Returns user readable format (taking into account localized format tokens), useful to render helper text for input (e.g. placeholder). If helper can not be created and for [Luxon](https://moment.github.io/luxon/#/) always returns empty string.
+   *
+   * @param format - The format string to use.
+   * @returns The user readable format string.
+   */
+  getFormatHelperText: (format: string) => string;
+  /**
+   * Checks if the value is null.
+   *
+   * @param value - The value to check.
+   * @returns `true` if the value is null, otherwise `false`.
+   */
+  isNull: (value: TDate | null) => boolean;
+  /**
+   * Checks if the value is valid.
+   *
+   * @param value - The value to check.
+   * @returns `true` if the value is valid, otherwise `false`.
+   */
+  isValid: (value: any) => boolean;
+  /**
+   * Returns the difference between two dates.
+   *
+   * @param value - The first date to compare.
+   * @param comparing - The second date to compare.
+   * @param unit - The unit of time to use for the comparison.
+   * @returns The difference between the two dates in the specified unit.
+   */
+  getDiff: (value: TDate, comparing: TDate | string, unit?: Unit) => number;
+  /**
+   * Checks if two values are equal.
+   *
+   * @param value - The first value to compare.
+   * @param comparing - The second value to compare.
+   * @returns `true` if the two values are equal, otherwise `false`.
+   */
+  isEqual: (value: any, comparing: any) => boolean;
+  /**
+   * Checks if two dates are the same day.
+   *
+   * @param value - The first date to compare.
+   * @param comparing - The second date to compare.
+   * @returns `true` if the two dates are the same day, otherwise `false`.
+   */
+  isSameDay: (value: TDate, comparing: TDate) => boolean;
+  /**
+   * Checks if two dates are the same month.
+   *
+   * @param value - The first date to compare.
+   * @param comparing - The second date to compare.
+   * @returns `true` if the two dates are the same month, otherwise `false`.
+   */
+  isSameMonth: (value: TDate, comparing: TDate) => boolean;
+  /**
+   * Checks if two dates are the same year.
+   *
+   * @param value - The first date to compare.
+   * @param comparing - The second date to compare.
+   * @returns `true` if the two dates are the same year, otherwise `false`.
+   */
+  isSameYear: (value: TDate, comparing: TDate) => boolean;
+  /**
+   * Checks if two dates are the same hour.
+   *
+   * @param value - The first date to compare.
+   * @param comparing - The second date to compare.
+   * @returns `true` if the two dates are the same hour, otherwise `false`.
+   */
+  isSameHour: (value: TDate, comparing: TDate) => boolean;
+  /**
+   * Checks if two dates are after each other.
+   *
+   * @param value - The first date to compare.
+   * @param comparing - The second date to compare.
+   * @returns `true` if the first date is after the second date, otherwise `false`.
+   */
+  isAfter: (value: TDate, comparing: TDate) => boolean;
+  /**
+   * Checks if two dates are after each other on the same day.
+   *
+   * @param value - The first date to compare.
+   * @param comparing - The second date to compare.
+   * @returns `true` if the first date is after the second date on the same day, otherwise `false`.
+   */
+  isAfterDay: (value: TDate, comparing: TDate) => boolean;
+  /**
+   * Checks if two dates are after each other on the same month.
+   *
+   * @param value - The first date to compare.
+   * @param comparing - The second date to compare.
+   * @returns `true` if the first date is after the second date on the same month, otherwise `false`.
+   */
+  isAfterMonth: (value: TDate, comparing: TDate) => boolean;
+  /**
+   * Checks if two dates are after each other on the same year.
+   *
+   * @param value - The first date to compare.
+   * @param comparing - The second date to compare.
+   * @returns `true` if the first date is after the second date on the same year, otherwise `false`.
+   */
+  isAfterYear: (value: TDate, comparing: TDate) => boolean;
+  /**
+   * Checks if two dates are before each other.
+   *
+   * @param value - The first date to compare.
+   * @param comparing - The second date to compare.
+   * @returns `true` if the first date is before the second date, otherwise `false`.
+   */
+  isBefore: (value: TDate, comparing: TDate) => boolean;
+  /**
+   * Checks if two dates are before each other on the same day.
+   *
+   * @param value - The first date to compare.
+   * @param comparing - The second date to compare.
+   * @returns `true` if the first date is before the second date on the same day, otherwise `false`.
+   */
+  isBeforeDay: (value: TDate, comparing: TDate) => boolean;
+  /**
+   * Checks if two dates are before each other on the same month.
+   *
+   * @param value - The first date to compare.
+   * @param comparing - The second date to compare.
+   * @returns `true` if the first date is before the second date on the same month, otherwise `false`.
+   */
+  isBeforeMonth: (value: TDate, comparing: TDate) => boolean;
+  /**
+   * Checks if two dates are before each other on the same year.
+   *
+   * @param value - The first date to compare.
+   * @param comparing - The second date to compare.
+   * @returns `true` if the first date is before the second date on the same year, otherwise `false`.
+   */
+  isBeforeYear: (value: TDate, comparing: TDate) => boolean;
+  /**
+   * Checks if a date is within a specific range.
+   *
+   * @param value - The date to check.
+   * @param range - The range to check against.
+   * @returns `true` if the date is within the range, otherwise `false`.
+   */
+  isWithinRange: (value: TDate, range: [TDate, TDate]) => boolean;
+  /**
+   * Gets the start of the year for a given date.
+   *
+   * @param value - The date to get the start of the year for.
+   * @returns The start of the year for the given date.
+   */
+  startOfYear: (value: TDate) => TDate;
+  /**
+   * Gets the end of the year for a given date.
+   *
+   * @param value - The date to get the end of the year for.
+   * @returns The end of the year for the given date.
+   */
+  endOfYear: (value: TDate) => TDate;
+  /**
+   * Gets the start of the month for a given date.
+   *
+   * @param value - The date to get the start of the month for.
+   * @returns The start of the month for the given date.
+   */
+  startOfMonth: (value: TDate) => TDate;
+  /**
+   * Gets the end of the month for a given date.
+   *
+   * @param value - The date to get the end of the month for.
+   * @returns The end of the month for the given date.
+   */
+  endOfMonth: (value: TDate) => TDate;
+  /**
+   * Gets the start of the week for a given date.
+   *
+   * @param value - The date to get the start of the week for.
+   * @returns The start of the week for the given date.
+   */
+  startOfWeek: (value: TDate) => TDate;
+  /**
+   * Gets the end of the week for a given date.
+   *
+   * @param value - The date to get the end of the week for.
+   * @returns The end of the week for the given date.
+   */
+  endOfWeek: (value: TDate) => TDate;
+  /**
+   * Adds a specified number of seconds to a date.
+   *
+   * @param value - The date to add seconds to.
+   * @param count - The number of seconds to add.
+   * @returns The new date with the seconds added.
+   */
+  addSeconds: (value: TDate, count: number) => TDate;
+  /**
+   * Adds a specified number of minutes to a date.
+   *
+   * @param value - The date to add minutes to.
+   * @param count - The number of minutes to add.
+   * @returns The new date with the minutes added.
+   */
+  addMinutes: (value: TDate, count: number) => TDate;
+  /**
+   * Adds a specified number of hours to a date.
+   *
+   * @param value - The date to add hours to.
+   * @param count - The number of hours to add.
+   * @returns The new date with the hours added.
+   */
+  addHours: (value: TDate, count: number) => TDate;
+  /**
+   * Adds a specified number of days to a date.
+   *
+   * @param value - The date to add days to.
+   * @param count - The number of days to add.
+   * @returns The new date with the days added.
+   */
+  addDays: (value: TDate, count: number) => TDate;
+  /**
+   * Adds a specified number of weeks to a date.
+   *
+   * @param value - The date to add weeks to.
+   * @param count - The number of weeks to add.
+   * @returns The new date with the weeks added.
+   */
+  addWeeks: (value: TDate, count: number) => TDate;
+  /**
+   * Adds a specified number of months to a date.
+   *
+   * @param value - The date to add months to.
+   * @param count - The number of months to add.
+   * @returns The new date with the months added.
+   */
+  addMonths: (value: TDate, count: number) => TDate;
+  /**
+   * Adds a specified number of years to a date.
+   *
+   * @param value - The date to add years to.
+   * @param count - The number of years to add.
+   * @returns The new date with the years added.
+   */
+  addYears: (value: TDate, count: number) => TDate;
+  /**
+   * Gets the start of the day for a given date.
+   *
+   * @param value - The date to get the start of the day for.
+   * @returns The start of the day for the given date.
+   */
+  startOfDay: (value: TDate) => TDate;
+  /**
+   * Gets the end of the day for a given date.
+   *
+   * @param value - The date to get the end of the day for.
+   * @returns The end of the day for the given date.
+   */
+  endOfDay: (value: TDate) => TDate;
+  /**
+   * Formats a date using a predefined format key.
+   *
+   * @param value - The date to format.
+   * @param formatKey - The key of the format to use.
+   * @returns The formatted date string.
+   */
+  format: (value: TDate, formatKey: keyof StormDateFormats) => string;
+  /**
+   * Formats a date using a custom format string.
+   *
+   * @param value - The date to format.
+   * @param formatString - The format string to use.
+   * @returns The formatted date string.
+   */
+  formatByString: (value: TDate, formatString: string) => string;
+  /**
+   * Formats a number as a string, possibly applying localization.
+   *
+   * @param numberToFormat - The number string to format.
+   * @returns The formatted number string.
+   */
+  formatNumber: (numberToFormat: string) => string;
+  /**
+   * Gets the hours component of a date.
+   *
+   * @param value - The date to extract hours from.
+   * @returns The hours component.
+   */
+  getHours: (value: TDate) => number;
+  /**
+   * Sets the hours component of a date.
+   *
+   * @param value - The date to set hours on.
+   * @param count - The hours value to set.
+   * @returns The new date with the hours set.
+   */
+  setHours: (value: TDate, count: number) => TDate;
+  /**
+   * Gets the minutes component of a date.
+   *
+   * @param value - The date to extract minutes from.
+   * @returns The minutes component.
+   */
+  getMinutes: (value: TDate) => number;
+  /**
+   * Sets the minutes component of a date.
+   *
+   * @param value - The date to set minutes on.
+   * @param count - The minutes value to set.
+   * @returns The new date with the minutes set.
+   */
+  setMinutes: (value: TDate, count: number) => TDate;
+  /**
+   * Gets the seconds component of a date.
+   *
+   * @param value - The date to extract seconds from.
+   * @returns The seconds component.
+   */
+  getSeconds: (value: TDate) => number;
+  /**
+   * Sets the seconds component of a date.
+   *
+   * @param value - The date to set seconds on.
+   * @param count - The seconds value to set.
+   * @returns The new date with the seconds set.
+   */
+  setSeconds: (value: TDate, count: number) => TDate;
+  /**
+   * Gets the day of the month from a date.
+   *
+   * @param value - The date to extract the day from.
+   * @returns The day of the month.
+   */
+  getDate: (value: TDate) => number;
+  /**
+   * Sets the day of the month on a date.
+   *
+   * @param value - The date to set the day on.
+   * @param count - The day of the month to set.
+   * @returns The new date with the day set.
+   */
+  setDate: (value: TDate, count: number) => TDate;
+  /**
+   * Gets the week number for a given date.
+   *
+   * @param value - The date to get the week number for.
+   * @returns The week number.
+   */
+  getWeek: (value: TDate) => number;
+  /**
+   * Gets the month component of a date (0-based).
+   *
+   * @param value - The date to extract the month from.
+   * @returns The month component (0 = January, 11 = December).
+   */
+  getMonth: (value: TDate) => number;
+  /**
+   * Gets the number of days in the month for a given date.
+   *
+   * @param value - The date to get the number of days in the month for.
+   * @returns The number of days in the month.
+   */
+  getDaysInMonth: (value: TDate) => number;
+  /**
+   * Sets the month component of a date (0-based).
+   *
+   * @param value - The date to set the month on.
+   * @param count - The month to set (0 = January, 11 = December).
+   * @returns The new date with the month set.
+   */
+  setMonth: (value: TDate, count: number) => TDate;
+  /**
+   * Gets the date representing the next month.
+   *
+   * @param value - The date to get the next month for.
+   * @returns The date in the next month.
+   */
+  getNextMonth: (value: TDate) => TDate;
+  /**
+   * Gets the date representing the previous month.
+   *
+   * @param value - The date to get the previous month for.
+   * @returns The date in the previous month.
+   */
+  getPreviousMonth: (value: TDate) => TDate;
+  /**
+   * Gets an array of dates representing each month in the year of the given date.
+   *
+   * @param value - The date to get the month array for.
+   * @returns An array of dates, one for each month.
+   */
+  getMonthArray: (value: TDate) => TDate[];
+  /**
+   * Gets the year component of a date.
+   *
+   * @param value - The date to extract the year from.
+   * @returns The year component.
+   */
+  getYear: (value: TDate) => number;
+  /**
+   * Sets the year component of a date.
+   *
+   * @param value - The date to set the year on.
+   * @param count - The year to set.
+   * @returns The new date with the year set.
+   */
+  setYear: (value: TDate, count: number) => TDate;
+  /**
+   * Merges the date part of one date with the time part of another date.
+   *
+   * @param date - The date to take the date part from.
+   * @param time - The date to take the time part from.
+   * @returns The merged date and time.
+   */
+  mergeDateAndTime: (date: TDate, time: TDate) => TDate;
+  /**
+   * Gets the names of the weekdays in the current locale.
+   *
+   * @returns An array of weekday names.
+   */
+  getWeekdays: () => string[];
+  /**
+   * Gets a 2D array representing the weeks in the month of the given date.
+   *
+   * @param date - The date to get the week array for.
+   * @returns A 2D array of dates, grouped by week.
+   */
+  getWeekArray: (date: TDate) => TDate[][];
+  /**
+   * Gets an array of dates representing the range of years between two dates.
+   *
+   * @param start - The start date of the range.
+   * @param end - The end date of the range.
+   * @returns An array of dates, one for each year in the range.
+   */
+  getYearRange: (start: TDate, end: TDate) => TDate[];
+  /**
+   * Gets the localized string for "am" or "pm".
+   *
+   * @param meridiem - Either "am" or "pm".
+   * @returns The localized meridiem string.
+   */
+  getMeridiemText: (meridiem: "am" | "pm") => string;
+}
 
 /**
  * The environment paths for storing things like data, config, logs, and cache in the current runtime environment.
@@ -1388,6 +1730,61 @@ interface StormEnvPaths {
   cache: string;
   log: string;
   temp: string;
+}
+
+/**
+ * The Storm Error interface.
+ */
+interface StormErrorInterface extends Error {
+  /**
+   * The error code
+   */
+  code: number;
+  /**
+   * The error message parameters
+   */
+  params: string[];
+  /**
+   * The type of error that was thrown.
+   */
+  type: ErrorType;
+  /**
+   * A url to display the error message
+   */
+  url: string;
+  /**
+   * Additional data to be passed with the error
+   */
+  data?: any;
+  /**
+   * The underlying cause of the error, if any. This is typically another error object that caused this error to be thrown.
+   */
+  cause: StormErrorInterface | undefined;
+  /**
+   * The error stack
+   *
+   * @remarks
+   * This is overridden in `StormError` to be a parsed stacktrace
+   */
+  stack: string;
+  /**
+   * The parsed stacktrace
+   */
+  stacktrace: ParsedStacktrace[];
+  /**
+   * The original stacktrace
+   */
+  originalStack: string;
+  /**
+   * Returns a formatted error string that can be displayed to the user.
+   */
+  toDisplay: () => string;
+  /**
+   * Internal function to inherit the error
+   *
+   * @internal
+   */
+  __proto__: any;
 }
 
 /**
@@ -1424,6 +1821,220 @@ interface StormErrorOptions {
    * Additional data to be included with the error.
    */
   data?: any;
+}
+
+/**
+ * Interface representing a Storm event.
+ *
+ * @template TEventType - The type of the event.
+ * @template TData - The data associated with the event.
+ */
+interface StormEventInterface<TEventType extends string = string, TData = any>
+  extends StormPayloadInterface<TData> {
+  /**
+   * The unique identifier for the payload.
+   */
+  payloadId: string;
+  /**
+   * The type of the event.
+   */
+  type: TEventType;
+  /**
+   * The version of the event.
+   */
+  version: string;
+  /**
+   * The event label.
+   *
+   * @remarks
+   * The label format is "\{type\}-v\{version\}"
+   */
+  label: string;
+}
+
+/**
+ * A logger interface. It provides methods to log messages at different severity levels.
+ *
+ * @remarks
+ * The inspiration and much of the original implementation for this logger was taken from the [LogTape](https://logtape.org/) project. Major thanks to that project.
+ *
+ * ```typescript
+ * $storm.log.debug(`A debug message with ${value}.`);
+ * $storm.log.info(`An info message with ${value}.`);
+ * $storm.log.warn(`A warning message with ${value}.`);
+ * $storm.log.error(`An error message with ${value}.`);
+ * $storm.log.fatal(`A fatal error message with ${value}.`);
+ * ```
+ */
+interface StormLogInterface {
+  /**
+   * Get a logger with contextual properties. This is useful for log multiple messages with the shared set of properties.
+   *
+   * ```typescript
+   * const ctx = $storm.log.with({ foo: 123, bar: "abc" });
+   * ctx.info("A message with {foo} and {bar}.");
+   * ctx.warn("Another message with {foo}, {bar}, and {baz}.", { baz: true });
+   * ```
+   *
+   * The above code is equivalent to:
+   *
+   * ```typescript
+   * $storm.log.info("A message with {foo} and {bar}.", { foo: 123, bar: "abc" });
+   * $storm.log.warn(
+   *   "Another message with {foo}, {bar}, and {baz}.",
+   *   { foo: 123, bar: "abc", baz: true },
+   * );
+   * ```
+   *
+   * @param properties - The properties to add to the logger.
+   * @returns A logger with the specified properties.
+   */
+  with: (properties: Record<string, unknown>) => StormLogInterface;
+  /**
+   * Log a debug message. Use this as a template string prefix.
+   *
+   * ```typescript
+   * $storm.log.debug(`A debug message with ${value}.`);
+   * ```
+   *
+   * @param message - The message template strings array.
+   * @param values - The message template values.
+   */
+  debug: ((
+    message: TemplateStringsArray,
+    ...values: readonly unknown[]
+  ) => void) &
+    ((
+      message: string,
+      properties?: Record<string, unknown> | (() => Record<string, unknown>)
+    ) => void) &
+    ((callback: LogCallback) => void);
+  /**
+   * Log an informational message. Use this as a template string prefix.
+   *
+   * ```typescript
+   * $storm.log.info(`An info message with ${value}.`);
+   * ```
+   *
+   * @param message - The message template strings array.
+   * @param values - The message template values.
+   */
+  info: ((
+    message: TemplateStringsArray,
+    ...values: readonly unknown[]
+  ) => void) &
+    ((
+      message: string,
+      properties?: Record<string, unknown> | (() => Record<string, unknown>)
+    ) => void) &
+    ((callback: LogCallback) => void);
+  /**
+   * Log a warning message. Use this as a template string prefix.
+   *
+   * ```typescript
+   * $storm.log.warn(`A warning message with ${value}.`);
+   * ```
+   *
+   * @param message - The message template strings array.
+   * @param values - The message template values.
+   */
+  warn: ((
+    message: TemplateStringsArray,
+    ...values: readonly unknown[]
+  ) => void) &
+    ((
+      message: string,
+      properties?: Record<string, unknown> | (() => Record<string, unknown>)
+    ) => void) &
+    ((callback: LogCallback) => void);
+  /**
+   * Log an error message. Use this as a template string prefix.
+   *
+   * ```typescript
+   * $storm.log.error(`An error message with ${value}.`);
+   * ```
+   *
+   * @param message - The message template strings array.
+   * @param values - The message template values.
+   */
+  error: ((
+    message: TemplateStringsArray | Error,
+    ...values: readonly unknown[]
+  ) => void) &
+    ((
+      message: string,
+      properties?: Record<string, unknown> | (() => Record<string, unknown>)
+    ) => void) &
+    ((callback: LogCallback) => void);
+  /**
+   * Log a fatal error message. Use this as a template string prefix.
+   *
+   * ```typescript
+   * $storm.log.fatal(`A fatal error message with ${value}.`);
+   * ```
+   *
+   * @param message - The message template strings array.
+   * @param values - The message template values.
+   */
+  fatal: ((
+    message: TemplateStringsArray | Error,
+    ...values: readonly unknown[]
+  ) => void) &
+    ((
+      message: string,
+      properties?: Record<string, unknown> | (() => Record<string, unknown>)
+    ) => void) &
+    ((callback: LogCallback) => void);
+}
+
+/**
+ * Interface representing a Storm payload.
+ */
+interface StormPayloadInterface<TData = Record<string, any>> {
+  /**
+   * The timestamp of the payload.
+   */
+  timestamp: number;
+  /**
+   * The unique identifier for the payload.
+   */
+  id: string;
+  /**
+   * The data of the payload.
+   */
+  data: TData;
+}
+
+/**
+ * A Storm result interface. It represents the structure of a result returned by the Storm Stack runtime.
+ *
+ * @remarks
+ * The `StormResultInterface` interface is used to standardize the structure of results returned by the Storm Stack runtime.
+ * It includes properties for the request ID, data, error information, timestamp, and success status.
+ */
+interface StormResultInterface<
+  TData extends any | StormErrorInterface = any | StormErrorInterface
+> {
+  /**
+   * The unique identifier for the payload.
+   */
+  payloadId: string;
+  /**
+   * The result meta.
+   */
+  meta: Record<string, any>;
+  /**
+   * The data of the result.
+   */
+  data: TData;
+  /**
+   * The timestamp of the result.
+   */
+  timestamp: number;
+  /**
+   * An indicator of whether the result was successful.
+   */
+  success: boolean;
 }
 
 /**
@@ -1500,8 +2111,19 @@ interface StormRuntimeInfo {
 type SuccessMessageDetails = MessageDetails<"success">;
 
 type TeardownFunction = () => MaybePromise<
-  IStormError | void | null | undefined
+  StormErrorInterface | void | null | undefined
 >;
+
+type Unit =
+  | "years"
+  | "quarters"
+  | "months"
+  | "weeks"
+  | "days"
+  | "hours"
+  | "minutes"
+  | "seconds"
+  | "milliseconds";
 
 type ValidationDetail =
   | {
@@ -1520,13 +2142,1635 @@ type ValidationDetail =
 type ValidationDetailType = "help" | "error" | "warning" | "info" | "success";
 
 type ValidatorFunction<
-  TPayload extends IStormPayload,
+  TPayload extends StormPayloadInterface,
   TContext extends StormContext<StormBaseConfig, any, TPayload>
-> = (context: TContext) => MaybePromise<IStormError | void | null | undefined>;
+> = (
+  context: TContext
+) => MaybePromise<StormErrorInterface | void | null | undefined>;
 
 type WarningMessageDetails = MessageDetails<"warning">;
 
-type StormVariables = Omit<
+declare module "storm:config" {
+  /**
+   * A type definition representing the Storm Stack configuration.
+   *
+   * @remarks
+   * This interface extends the base configuration interface and includes additional properties specific to the Storm Stack application being built.
+   */
+  export interface StormConfig extends StormBaseConfig {
+    /**
+     * The appcircle build ID. This value is set by certain CI/CD systems.
+     *
+     * @title Ac Appcircle
+     * @readonly
+     */
+    AC_APPCIRCLE?: string;
+    /**
+     * The agola git reference. This value is set by certain CI/CD systems.
+     *
+     * @title Agola Git Ref
+     * @readonly
+     */
+    AGOLA_GIT_REF?: string;
+    /**
+     * The name of the application.
+     *
+     * @title App Name
+     * @readonly
+     */
+    APP_NAME: string;
+    /**
+     * The version of the application.
+     *
+     * @title App Version
+     * @defaultValue 1.0.0
+     * @readonly
+     */
+    APP_VERSION: string;
+    /**
+     * The appcenter build ID. This value is set by certain CI/CD systems.
+     *
+     * @title Appcenter Build ID
+     * @readonly
+     */
+    APPCENTER_BUILD_ID?: string;
+    /**
+     * A variable that specifies the application data directory on Windows.
+     *
+     * @title Appdata
+     * @readonly
+     */
+    APPDATA?: string;
+    /**
+     * The appveyor build ID. This value is set by certain CI/CD systems.
+     *
+     * @title Appveyor
+     * @readonly
+     */
+    APPVEYOR?: string;
+    /**
+     * The bamboo plan key. This value is set by certain CI/CD systems.
+     *
+     * @title Bamboo Plankey
+     * @readonly
+     */
+    bamboo_planKey?: string;
+    /**
+     * The bitbucket commit. This value is set by certain CI/CD systems.
+     *
+     * @title Bitbucket Commit
+     * @readonly
+     */
+    BITBUCKET_COMMIT?: string;
+    /**
+     * The bitrise build ID. This value is set by certain CI/CD systems.
+     *
+     * @title Bitrise Io
+     * @readonly
+     */
+    BITRISE_IO?: string;
+    /**
+     * The buddy workspace ID. This value is set by certain CI/CD systems.
+     *
+     * @title Buddy Workspace ID
+     * @readonly
+     */
+    BUDDY_WORKSPACE_ID?: string;
+    /**
+     * A checksum hash created during the build.
+     *
+     * @title Build Checksum
+     * @readonly
+     */
+    BUILD_CHECKSUM: string;
+    /**
+     * The unique identifier for the build.
+     *
+     * @title Build ID
+     * @readonly
+     */
+    BUILD_ID: string;
+    /**
+     * The timestamp the build was ran at.
+     *
+     * @title Build Timestamp
+     * @readonly
+     */
+    BUILD_TIMESTAMP: number;
+    /**
+     * The builder output build ID. This value is set by certain CI/CD systems.
+     *
+     * @title Builder Output
+     * @readonly
+     */
+    BUILDER_OUTPUT?: string;
+    /**
+     * The buildkite build ID. This value is set by certain CI/CD systems.
+     *
+     * @title Buildkite
+     * @readonly
+     */
+    BUILDKITE?: string;
+    /**
+     * The cf build ID. This value is set by certain CI/CD systems.
+     *
+     * @title Cf Build ID
+     * @readonly
+     */
+    CF_BUILD_ID?: string;
+    /**
+     * The ci name. This value is set by certain CI/CD systems.
+     *
+     * @title CI Name
+     * @readonly
+     */
+    CI_NAME?: string;
+    /**
+     * The xcode project build ID. This value is set by certain CI/CD systems.
+     *
+     * @title CI Xcode Project
+     * @readonly
+     */
+    CI_XCODE_PROJECT?: string;
+    /**
+     * The circleci build ID. This value is set by certain CI/CD systems.
+     *
+     * @title Circleci
+     * @readonly
+     */
+    CIRCLECI?: string;
+    /**
+     * The cirrus-ci build ID. This value is set by certain CI/CD systems.
+     *
+     * @title Cirrus CI
+     * @readonly
+     */
+    CIRRUS_CI?: string;
+    /**
+     * The cm build ID. This value is set by certain CI/CD systems.
+     *
+     * @title Cm Build ID
+     * @readonly
+     */
+    CM_BUILD_ID?: string;
+    /**
+     * The codebuild build ID. This value is set by certain CI/CD systems.
+     *
+     * @title Codebuild
+     * @readonly
+     */
+    CODEBUILD?: string;
+    /**
+     * The ConEmu task name. This variable is set by certain terminal emulators.
+     *
+     * @title Conemutask
+     * @readonly
+     */
+    ConEmuTask?: string;
+    /**
+     * The cursor trace ID. This variable is set by certain terminal emulators.
+     *
+     * @title Cursor Trace ID
+     * @readonly
+     */
+    CURSOR_TRACE_ID?: string;
+    /**
+     * The drone build ID. This value is set by certain CI/CD systems.
+     *
+     * @title Drone
+     * @readonly
+     */
+    DRONE?: string;
+    /**
+     * The dsari build ID. This value is set by certain CI/CD systems.
+     *
+     * @title Dsari
+     * @readonly
+     */
+    DSARI?: string;
+    /**
+     * The earthly build ID. This value is set by certain CI/CD systems.
+     *
+     * @title Earthly CI
+     * @readonly
+     */
+    EARTHLY_CI?: string;
+    /**
+     * The eas build ID. This value is set by certain CI/CD systems.
+     *
+     * @title Eas Build
+     * @readonly
+     */
+    EAS_BUILD?: string;
+    /**
+     * The gerrit project. This value is set by certain CI/CD systems.
+     *
+     * @title Gerrit Project
+     * @readonly
+     */
+    GERRIT_PROJECT?: string;
+    /**
+     * The gitea actions build ID. This value is set by certain CI/CD systems.
+     *
+     * @title Gitea Actions
+     * @readonly
+     */
+    GITEA_ACTIONS?: string;
+    /**
+     * The github actions build ID. This value is set by certain CI/CD systems.
+     *
+     * @title Github Actions
+     * @readonly
+     */
+    GITHUB_ACTIONS?: string;
+    /**
+     * The gitlab ci build ID. This value is set by certain CI/CD systems.
+     *
+     * @title Gitlab CI
+     * @readonly
+     */
+    GITLAB_CI?: string;
+    /**
+     * The go cd build ID. This value is set by certain CI/CD systems.
+     *
+     * @title Gocd
+     * @readonly
+     */
+    GOCD?: string;
+    /**
+     * The harness build ID. This value is set by certain CI/CD systems.
+     *
+     * @title Harness Build ID
+     * @readonly
+     */
+    HARNESS_BUILD_ID?: string;
+    /**
+     * The hudson build ID. This value is set by certain CI/CD systems.
+     *
+     * @title Hudson
+     * @readonly
+     */
+    HUDSON?: string;
+    /**
+     * The jenkins url. This value is set by certain CI/CD systems.
+     *
+     * @title Jenkins URL
+     * @readonly
+     */
+    JENKINS_URL?: string;
+    /**
+     * The layerci build ID. This value is set by certain CI/CD systems.
+     *
+     * @title Layerci
+     * @readonly
+     */
+    LAYERCI?: string;
+    /**
+     * A variable that specifies the current user's local application data directory on Windows.
+     *
+     * @title Localappdata
+     * @readonly
+     */
+    LOCALAPPDATA?: string;
+    /**
+     * The magnum build ID. This value is set by certain CI/CD systems.
+     *
+     * @title Magnum
+     * @readonly
+     */
+    MAGNUM?: string;
+    /**
+     * The netlify build ID. This value is set by certain CI/CD systems.
+     *
+     * @title Netlify
+     * @readonly
+     */
+    NETLIFY?: string;
+    /**
+     * The nevercode build ID. This value is set by certain CI/CD systems.
+     *
+     * @title Nevercode
+     * @readonly
+     */
+    NEVERCODE?: string;
+    /**
+     * The now builder build ID. This value is set by certain CI/CD systems.
+     *
+     * @title Now Builder
+     * @readonly
+     */
+    NOW_BUILDER?: string;
+    /**
+     * The prow job ID. This value is set by certain CI/CD systems.
+     *
+     * @title Prow Job ID
+     * @readonly
+     */
+    PROW_JOB_ID?: string;
+    /**
+     * The release build ID. This value is set by certain CI/CD systems.
+     *
+     * @title Release Build ID
+     * @readonly
+     */
+    RELEASE_BUILD_ID?: string;
+    /**
+     * The unique identifier for the release.
+     *
+     * @title Release ID
+     * @readonly
+     */
+    RELEASE_ID: string;
+    /**
+     * The tag for the release. This is generally in the format of "\<APP_NAME\>\@\<APP_VERSION\>".
+     *
+     * @title Release Tag
+     * @readonly
+     */
+    RELEASE_TAG: string;
+    /**
+     * The render build ID. This value is set by certain CI/CD systems.
+     *
+     * @title Render
+     * @readonly
+     */
+    RENDER?: string;
+    /**
+     * The unique identifier for the current run. This value is set by certain CI/CD systems.
+     *
+     * @title Run ID
+     * @readonly
+     */
+    RUN_ID?: string;
+    /**
+     * The sailci build ID. This value is set by certain CI/CD systems.
+     *
+     * @title Sailci
+     * @readonly
+     */
+    SAILCI?: string;
+    /**
+     * The screwdriver build ID. This value is set by certain CI/CD systems.
+     *
+     * @title Screwdriver
+     * @readonly
+     */
+    SCREWDRIVER?: string;
+    /**
+     * The semaphore build ID. This value is set by certain CI/CD systems.
+     *
+     * @title Semaphore
+     * @readonly
+     */
+    SEMAPHORE?: string;
+    /**
+     * The sourcehut build ID. This value is set by certain CI/CD systems.
+     *
+     * @title Sourcehut
+     * @readonly
+     */
+    SOURCEHUT?: string;
+    /**
+     * An indicator that specifies the application is running in the local Storm Stack development environment.
+     *
+     * @title Storm Stack Local
+     * @defaultValue true
+     * @readonly
+     * @hidden
+     */
+    STORM_STACK_LOCAL?: boolean;
+    /**
+     * The strider build ID. This value is set by certain CI/CD systems.
+     *
+     * @title Strider
+     * @readonly
+     */
+    STRIDER?: string;
+    /**
+     * The task ID. This value is set by certain CI/CD systems.
+     *
+     * @title Task ID
+     * @readonly
+     */
+    TASK_ID?: string;
+    /**
+     * The teamcity version. This value is set by certain CI/CD systems.
+     *
+     * @title Teamcity Version
+     * @readonly
+     */
+    TEAMCITY_VERSION?: string;
+    /**
+     * The terminal type. This variable is set by certain CI/CD systems.
+     *
+     * @title Term
+     * @readonly
+     */
+    TERM?: string;
+    /**
+     * The terminal program name. This variable is set by certain terminal emulators.
+     *
+     * @title Term Program
+     * @readonly
+     */
+    TERM_PROGRAM: string;
+    /**
+     * The terminal program version. This variable is set by certain terminal emulators.
+     *
+     * @title Term Program Version
+     * @readonly
+     */
+    TERM_PROGRAM_VERSION: string;
+    /**
+     * The terminal emulator name. This variable is set by certain terminal emulators.
+     *
+     * @title Terminal Emulator
+     * @readonly
+     */
+    TERMINAL_EMULATOR?: string;
+    /**
+     * An indicator that specifies the current terminal is running Terminus Sublime. This variable is set by certain terminal emulators.
+     *
+     * @title Terminus Sublime
+     * @readonly
+     */
+    TERMINUS_SUBLIME?: boolean;
+    /**
+     * The task force build ID. This value is set by certain CI/CD systems.
+     *
+     * @title Tf Build
+     * @readonly
+     */
+    TF_BUILD?: string;
+    /**
+     * The travis build ID. This value is set by certain CI/CD systems.
+     *
+     * @title Travis
+     * @readonly
+     */
+    TRAVIS?: string;
+    /**
+     * The vela build ID. This value is set by certain CI/CD systems.
+     *
+     * @title Vela
+     * @readonly
+     */
+    VELA?: string;
+    /**
+     * The VTE version. This variable is set by certain terminal emulators.
+     *
+     * @title Vte Version
+     * @readonly
+     */
+    VTE_VERSION?: string;
+    /**
+     * The terminal emulator session ID. This variable is set by certain terminal emulators.
+     *
+     * @title Wt Session
+     * @readonly
+     */
+    WT_SESSION?: string;
+    /**
+     * The xcode server build ID. This value is set by certain CI/CD systems.
+     *
+     * @title Xcs
+     * @readonly
+     */
+    XCS?: string;
+    /**
+     * A variable that specifies the cache path in the home directory on Linux systems using the XDG base directory specification.
+     *
+     * @title Xdg Cache Home
+     * @readonly
+     */
+    XDG_CACHE_HOME?: string;
+    /**
+     * A variable that specifies the configuration path in the home directory on Linux systems using the XDG base directory specification.
+     *
+     * @title Xdg Config Home
+     * @readonly
+     */
+    XDG_CONFIG_HOME?: string;
+    /**
+     * A variable that specifies the data path in the home directory on Linux systems using the XDG base directory specification.
+     *
+     * @title Xdg Data Home
+     * @readonly
+     */
+    XDG_DATA_HOME?: string;
+    /**
+     * A variable that specifies the runtime directory on Linux systems using the XDG base directory specification.
+     *
+     * @title Xdg Runtime Dir
+     * @readonly
+     */
+    XDG_RUNTIME_DIR?: string;
+    /**
+     * A variable that specifies the state directory on Linux systems using the XDG base directory specification.
+     *
+     * @title Xdg State Home
+     * @readonly
+     */
+    XDG_STATE_HOME?: string;
+    /**
+     * The Storm Stack application's cached data directory.
+     *
+     * @title Cache Directory
+     */
+    CACHE_DIR?: string;
+    /**
+     * An indicator that specifies the current runtime is a continuous integration environment.
+     *
+     * @title Continuous Integration
+     * @alias CONTINUOUS_INTEGRATION
+     * @defaultValue true
+     */
+    CI: boolean;
+    /**
+     * The Storm Stack application's configuration data directory.
+     *
+     * @title Configuration Directory
+     */
+    CONFIG_DIR?: string;
+    /**
+     * The Storm Stack application's runtime data directory.
+     *
+     * @title Data Directory
+     */
+    DATA_DIR?: string;
+    /**
+     * Indicates if the application is running in debug mode.
+     *
+     * @title Debug
+     * @defaultValue true
+     */
+    DEBUG: boolean;
+    /**
+     * The default locale for the application.
+     *
+     * @title Default Locale
+     * @defaultValue en_US
+     */
+    DEFAULT_LOCALE: string;
+    /**
+     * The default timezone for the application.
+     *
+     * @title Default Timezone
+     * @defaultValue America/New_York
+     */
+    DEFAULT_TIMEZONE: string;
+    /**
+     * A variable that specifies the [Devenv](https://devenv.sh/) runtime directory.
+     *
+     * @title Devenv Runtime
+     */
+    DEVENV_RUNTIME?: string;
+    /**
+     * The environment the application is running in. This value will be populated with the value of `MODE` if not provided.
+     *
+     * @title Environment
+     * @alias ENV
+     * @alias VERCEL_ENV
+     * @defaultValue production
+     */
+    ENVIRONMENT: string;
+    /**
+     * A web page to lookup error messages and display additional information given an error code.
+     *
+     * @title Error Details URL
+     */
+    ERROR_URL: string;
+    /**
+     * An indicator that specifies the current runtime is a force color environment.
+     *
+     * @title Force Color
+     * @defaultValue true
+     */
+    FORCE_COLOR: boolean;
+    /**
+     * An indicator that specifies the current runtime should force hyperlinks in terminal output.
+     *
+     * @title Force Hyperlink
+     * @defaultValue true
+     */
+    FORCE_HYPERLINK: boolean;
+    /**
+     * Indicates if error data should be included.
+     *
+     * @title Include Error Data
+     * @defaultValue true
+     */
+    INCLUDE_ERROR_DATA: boolean;
+    /**
+     * The Storm Stack application's logging directory.
+     *
+     * @title Log Directory
+     */
+    LOG_DIR?: string;
+    /**
+     * The default lowest log level to accept. If `null`, the logger will reject all records. This value only applies if `lowestLogLevel` is not provided to the `logs` configuration.
+     *
+     * @title Log Level
+     * @defaultValue info
+     */
+    LOG_LEVEL?: "debug" | "info" | "warning" | "error" | "fatal" | null;
+    /**
+     * An indicator that specifies the current runtime is a minimal environment.
+     *
+     * @title Minimal
+     * @defaultValue true
+     */
+    MINIMAL: boolean;
+    /**
+     * The mode in which the application is running.
+     *
+     * @title Mode
+     * @defaultValue production
+     */
+    MODE: "development" | "staging" | "production";
+    /**
+     * An indicator that specifies the current runtime is a no color environment.
+     *
+     * @title No Color
+     * @defaultValue true
+     */
+    NO_COLOR: boolean;
+    /**
+     * The name of the organization that maintains the application.
+     *
+     * @title Organization
+     * @alias ORG
+     */
+    ORGANIZATION: string;
+    /**
+       * The mode used for outputting results.
+    - `memory`: Generated source code is stored in a virtual file system to reduce boilerplate.
+    - `fs`: Outputs generated results to the local file system.
+       *
+       * @title Output Mode
+    * @defaultValue memory
+       */
+    OUTPUT_MODE?: "memory" | "fs";
+    /**
+     * The platform for which the application was built.
+     *
+     * @title Platform
+     * @defaultValue node
+     */
+    PLATFORM: "node" | "browser";
+    /**
+     * The DSN for Sentry
+     *
+     * @title Sentry DSN
+     */
+    SENTRY_DSN: string;
+    /**
+     * Indicates if error stack traces should be captured.
+     *
+     * @title Stacktrace
+     * @defaultValue true
+     */
+    STACKTRACE: boolean;
+    /**
+     * The Storm Stack application's temporary data directory.
+     *
+     * @title Temporary Directory
+     */
+    TEMP_DIR?: string;
+    /**
+     * An indicator that specifies the current runtime is a test environment.
+     *
+     * @title Test
+     * @defaultValue true
+     */
+    TEST: boolean;
+    [key: string]: any;
+  }
+  /**
+   * A global configuration object containing the Storm Stack configuration.
+   */
+  export const config: StormConfig;
+  export type __ΩStormConfig = any[];
+}
+
+declare module "storm:error" {
+  /**
+   * The Storm Stack error module provides a custom error class and utility functions to support error handling
+   *
+   * @module storm:error
+   */
+
+  /**
+   * Get the default error code for the given error type.
+   *
+   * @param _ - The error type.
+   * @returns The default error code.
+   */
+  export function getDefaultCode(_: ErrorType): number;
+  /**
+   * Get the default error name for the given error type.
+   *
+   * @param type - The error type.
+   * @returns The default error name.
+   */
+  export function getDefaultErrorName(type: ErrorType): string;
+  /**
+   * Checks if `value` is an {@link Error}, `EvalError`, `RangeError`, `ReferenceError`,
+   * `SyntaxError`, `TypeError`, or `URIError` object.
+   *
+   * @example
+   * ```typescript
+   * isError(new Error)
+   * // => true
+   *
+   * isError(Error)
+   * // => false
+   * ```
+   *
+   * @param value - The value to check.
+   * @returns Returns `true` if `value` is an error object, else `false`.
+   */
+  export function isError(value: unknown): value is Error;
+  /**
+   * Type-check to determine if `value` is a {@link StormError} object
+   *
+   * @param value - the object to check
+   * @returns Returns `true` if `value` is a {@link StormError} object, else `false`.
+   */
+  export function isStormError(value: unknown): value is StormError;
+  /**
+   * Creates a new {@link StormError} instance from an unknown cause value
+   *
+   * @param cause - The cause of the error in an unknown type
+   * @param type - The type of the error
+   * @param data - Additional data to be passed with the error
+   * @returns The cause of the error in a {@link StormError} object
+   */
+  export function createStormError(
+    cause: unknown,
+    type?: ErrorType,
+    data?: any
+  ): StormError;
+  /**
+   * A wrapper around the base JavaScript Error class to be used in Storm Stack applications
+   */
+  export class StormError extends Error implements StormErrorInterface {
+    __proto__: ErrorConstructor;
+    /**
+     * The error code
+     */
+    code: number;
+    /**
+     * The error message parameters
+     */
+    params: string[];
+    /**
+     * The type of error event
+     */
+    type: ErrorType;
+    /**
+     * Additional data to be passed with the error
+     */
+    data?: any;
+    /**
+     * The StormError constructor
+     *
+     * @param options - The options for the error
+     * @param type - The type of error
+     */
+    constructor(optionsOrMessage: StormErrorOptions | string, type?: ErrorType);
+    /**
+     * The cause of the error
+     */
+    get cause(): StormErrorInterface | undefined;
+    /**
+     * The cause of the error
+     */
+    set cause(cause: unknown);
+    /**
+     * The parsed stack traces from the raw stack string
+     *
+     * @returns The parsed stack traces
+     */
+    get stacktrace(): ParsedStacktrace[];
+    /**
+     * Prints a displayable/formatted stack trace
+     *
+     * @returns The stack trace string
+     */
+    get stack(): string;
+    /**
+     * Store the stack trace
+     */
+    set stack(stack: string);
+    /**
+     * The unformatted stack trace
+     *
+     * @returns The stack trace string
+     */
+    get originalStack(): string;
+    /**
+     * The unformatted stack trace
+     *
+     * @returns The stack trace string
+     */
+    set originalStack(stack: string);
+    /**
+     * A URL to a page that displays the error message details
+     */
+    get url(): string;
+    /**
+     * Prints the display error message string
+     *
+     * @param includeData - Whether to include the data in the error message
+     * @returns The display error message string
+     */
+    toDisplay(includeData?: boolean): string;
+    /**
+     * Prints the error message and stack trace
+     *
+     * @param stacktrace - Whether to include the stack trace in the error message
+     * @param includeData - Whether to include the data in the error message
+     * @returns The error message and stack trace string
+     */
+    toString(stacktrace?: boolean, includeData?: boolean): string;
+  }
+}
+
+declare module "storm:log/console-info" {
+  export const DATE_TIME_FORMAT: Intl.DateTimeFormat;
+  export const adapter: (record: LogRecord) => void;
+  export default adapter;
+}
+
+declare module "storm:id" {
+  /**
+   * The ID module provides a set of utilities for generating unique identifiers.
+   *
+   * @module storm:id
+   */
+  /**
+   * Generate a random string
+   *
+   * @param array - The array to fill with random values
+   * @returns The array filled with random values
+   */
+  export function getRandom(array: Uint8Array): Uint8Array<ArrayBufferLike>;
+  /**
+   * A platform agnostic version of the [nanoid](https://github.com/ai/nanoid) package with some modifications.
+   *
+   * @param size - The size of the string to generate. Defaults to 21 if not provided.
+   * @returns A unique identifier following the nanoid format
+   */
+  export function uniqueId(size?: number | undefined): string;
+  /**
+   * A platform agnostic version of the [nanoid](https://github.com/ai/nanoid) package with some modifications.
+   *
+   * @param prefix - The prefix to use for the unique identifier
+   * @param size - The size of the string to generate. Defaults to 21 if not provided.
+   * @returns A unique identifier following the nanoid format
+   */
+  export function uniqueId(prefix?: string, size?: number | undefined): string;
+}
+
+declare module "storm:context" {
+  /**
+   * This module provides the Storm Stack context and a hook to access it in the application.
+   *
+   * @module storm:context
+   */
+
+  export const STORM_ASYNC_CONTEXT: UseContext<StormContext<StormConfig>>;
+  /**
+   * Get the Storm context for the current application.
+   *
+   * @returns The Storm context for the current application.
+   * @throws If the Storm context is not available.
+   */
+  export function useStorm(): StormContext<StormConfig>;
+}
+
+declare module "storm:log/sentry-error" {
+  export const adapter: (record: LogRecord) => void;
+  export default adapter;
+}
+
+declare module "storm:env" {
+  /**
+   * This module provides the runtime environment information for the Storm Stack application.
+   *
+   * @module storm:env
+   */
+
+  /** Detect if stdout.TTY is available */
+  export const hasTTY: boolean;
+  /** Detect if the application is running in a CI environment */
+  export const isCI: boolean;
+  /** Detect the `NODE_ENV` environment variable */
+  export const mode: string;
+  /** Detect if the application is running in production mode */
+  export const isProduction: boolean;
+  /** Detect if the application is running in staging mode */
+  export const isStaging: boolean;
+  /** Detect if the application is running in development mode */
+  export const isDevelopment: boolean;
+  /** Detect if the application is running in debug mode */
+  export const isDebug: boolean;
+  /** Detect if the application is running in test mode */
+  export const isTest: boolean;
+  /** Detect if MINIMAL environment variable is set, running in CI or test or TTY is unavailable */
+  export const isMinimal: boolean;
+  /** Detect if the runtime platform is Windows */
+  export const isWindows: boolean;
+  /** Detect if the runtime platform is Linux */
+  export const isLinux: boolean;
+  /** Detect if the runtime platform is macOS (darwin kernel) */
+  export const isMacOS: boolean;
+  /** Detect if the runtime platform is interactive */
+  export const isInteractive: boolean;
+  /** Detect if Unicode characters are supported */
+  export const isUnicodeSupported: boolean;
+  /** Detect if color is supported */
+  export const isColorSupported: boolean;
+  /**
+   * Indicates if running in Node.js or a Node.js compatible runtime.
+   *
+   * @remarks
+   * When running code in Bun and Deno with Node.js compatibility mode, `isNode` flag will be also `true`, indicating running in a Node.js compatible runtime.
+   */
+  export const isNode: boolean;
+  /** The organization that maintains the application */
+  export const organization = "storm-software";
+  /** The current application */
+  export const name = "storm-stack";
+  /** The current application */
+  export const version = "0.14.1";
+  /**
+   * The environment paths for storing things like data, config, logs, and cache in the current runtime environment.
+   *
+   * @remarks
+   * On macOS, directories are generally created in `~/Library/Application Support/<name>`.
+   * On Windows, directories are generally created in `%AppData%/<name>`.
+   * On Linux, directories are generally created in `~/.config/<name>` - this is determined via the [XDG Base Directory spec](https://specifications.freedesktop.org/basedir-spec/latest/).
+   *
+   * If the `STORM_DATA_DIR`, `STORM_CONFIG_DIR`, `STORM_CACHE_DIR`, `STORM_LOG_DIR`, or `STORM_TEMP_DIR` environment variables are set, they will be used instead of the default paths.
+   */
+  export const paths: StormEnvPaths;
+  /** The static build information collection */
+  export const build: StormBuildInfo;
+  /** The dynamic runtime information collection */
+  export const runtime: StormRuntimeInfo;
+}
+
+declare module "storm:storage/file-system-config" {
+  export const adapter: import("unstorage").Driver<
+    import("unstorage/drivers/fs-lite").FSStorageOptions | undefined,
+    never
+  >;
+  export default adapter;
+}
+
+declare module "storm:storage/file-system-crash-reports" {
+  export const adapter: import("unstorage").Driver<
+    import("unstorage/drivers/fs-lite").FSStorageOptions | undefined,
+    never
+  >;
+  export default adapter;
+}
+
+declare module "storm:storage/file-system-logs" {
+  export const adapter: import("unstorage").Driver<
+    import("unstorage/drivers/fs-lite").FSStorageOptions | undefined,
+    never
+  >;
+  export default adapter;
+}
+
+declare module "storm:storage" {
+  /**
+   * The storage module provides a unified storage interface for the Storm Stack runtime.
+   *
+   * @module storm:storage
+   */
+  export const storage: import("unstorage").Storage<
+    import("unstorage").StorageValue
+  >;
+}
+
+declare module "storm:log/storage-logs-info" {
+  /**
+   * Get a text formatter with the specified options.  Although it's flexible
+   * enough to create a custom formatter, if you want more control, you can
+   * create a custom formatter that satisfies the {@link TextFormatter} type
+   * instead.
+   *
+   * For more information on the options, see {@link TextFormatterOptions}.
+   *
+   * By default, the formatter formats log records as follows:
+   *
+   * ```
+   * 2023-11-14 22:13:20.000 +00:00 [INFO] Hello, world!
+   * ```
+   * @param options - The options for the text formatter.
+   * @returns The text formatter.
+   */
+  export function getTextFormatter(
+    options?: TextFormatterOptions
+  ): TextFormatter;
+  const adapter: LogAdapter & AsyncDisposable;
+  export default adapter;
+}
+
+declare module "storm:log" {
+  /**
+   * The log module provides a unified logging interface for Storm Stack applications.
+   *
+   * @module storm:log
+   */
+
+  /**
+   * Returns a filter that accepts log records with the specified level.
+   *
+   * @param level - The level to filter by. If `null`, the filter will reject all records.
+   * @returns The filter.
+   */
+  export function getLevelFilter(level: LogLevel | null): LogFilter;
+  /**
+   * Parses a {@link LogLevel | log level} from a string.
+   *
+   * @param level - The {@link LogLevel | log level} as a string. This is case-insensitive.
+   * @returns The {@link LogLevel | log level}.
+   */
+  export function parseLogLevel(level: string): LogLevel;
+  /**
+   * Checks if a string is a valid {@link LogLevel | log level}. This function can be used as a type guard to narrow the type of a string to a {@link LogLevel}.
+   *
+   * @param level - The {@link LogLevel | log level} as a string. This is case-sensitive.
+   * @returns `true` if the string is a valid {@link LogLevel | log level}.
+   */
+  export function isLogLevel(level: string): level is LogLevel;
+  /**
+   * The StormLog class that's used for writing logs during Storm Stack applications.
+   */
+  export class StormLog implements StormLogInterface {
+    /**
+     * The list of filters applied to log records.
+     *
+     * @remarks
+     * Filters are functions that take a {@link LogRecord} and return a boolean indicating whether the record should be logged. You can add custom filters to this list to control which log records are emitted.
+     */
+    readonly filters: LogFilter[];
+    /**
+     * The lowest log level that will be logged by this logger.
+     *
+     * @remarks
+     * This is set to the value of the `LOG_LEVEL` configuration parameter.
+     *
+     * @defaultValue "info"
+     */
+    lowestLogLevel: LogLevel | null;
+    /**
+     * Create a new StormLog instance.
+     *
+     * @remarks
+     * This constructor initializes the logger with an empty filter list and sets the lowest log level to `null`.
+     */
+    constructor();
+    /**
+     * Generates a new {@link StormLogCtx} instance and adds properties to the logger context.
+     *
+     * @remarks
+     * This method allows you to create a new logger context with additional properties. The properties will be merged with the existing properties in the logger context.
+     *
+     * @param properties - The properties to add to the logger context.
+     * @returns A new {@link StormLogCtx} instance with the merged properties.
+     */
+    with(properties: Record<string, unknown>): StormLogInterface;
+    /**
+     * Filters log records based on the logger's filters.
+     *
+     * @param record - The log record to filter.
+     * @returns Whether the log record passes all filters.
+     */
+    filter(record: LogRecord): boolean;
+    /**
+     * Returns an async iterable of log adapters that match the specified log level.
+     *
+     * @param level - The log level to filter adapters by.
+     * @returns An iterable of log adapters that match the specified log level.
+     */
+    adapters(level?: LogLevel): Iterable<LogAdapter>;
+    /**
+     * Emits a log record to all registered adapters that match the record's log level.
+     *
+     * @param record - The log record to emit.
+     * @param bypassAdapters - A set of adapters to bypass when emitting the record.
+     */
+    emit(record: LogRecord, bypassAdapters?: Set<LogAdapter>): void;
+    /**
+     * Logs a message at the specified log level.
+     *
+     * @param level - The log level to use.
+     * @param rawMessage - The raw message to log.
+     * @param properties - The properties to include with the log message.
+     * @param bypassAdapters - A set of adapters to bypass when emitting the log message.
+     */
+    log(
+      level: LogLevel,
+      rawMessage: string,
+      properties: Record<string, unknown> | (() => Record<string, unknown>),
+      bypassAdapters?: Set<LogAdapter>
+    ): void;
+    /**
+     * Logs a message lazily at the specified log level.
+     *
+     * @param level - The log level to use.
+     * @param callback - A callback function that returns the message to log.
+     * @param properties - The properties to include with the log message.
+     */
+    logLazily(
+      level: LogLevel,
+      callback: LogCallback,
+      properties?: Record<string, unknown>
+    ): void;
+    /**
+     * Logs a message template at the specified log level.
+     *
+     * @param level - The log level to use.
+     * @param messageTemplate - The message template to log.
+     * @param values - The values to interpolate into the message template.
+     * @param properties - The properties to include with the log message.
+     */
+    logTemplate(
+      level: LogLevel,
+      messageTemplate: TemplateStringsArray,
+      values: unknown[],
+      properties?: Record<string, unknown>
+    ): void;
+    /**
+     * Logs a debug message.
+     *
+     * @param message - The message to log. Can be a string, a template string, or a callback function that returns the message.
+     * @param values - The values to interpolate into the message template.
+     */
+    debug(
+      message: TemplateStringsArray | string | LogCallback,
+      ...values: unknown[]
+    ): void;
+    /**
+     * Logs an info message.
+     *
+     * @param message - The message to log. Can be a string, a template string, or a callback function that returns the message.
+     * @param values - The values to interpolate into the message template.
+     */
+    info(
+      message: TemplateStringsArray | string | LogCallback,
+      ...values: unknown[]
+    ): void;
+    /**
+     * Logs a warning message.
+     *
+     * @param message - The message to log. Can be a string, a template string, or a callback function that returns the message.
+     * @param values - The values to interpolate into the message template.
+     */
+    warn(
+      message: TemplateStringsArray | string | LogCallback,
+      ...values: unknown[]
+    ): void;
+    /**
+     * Logs an error message.
+     *
+     * @param message - The message to log. Can be a string, a template string, or a callback function that returns the message.
+     * @param values - The values to interpolate into the message template.
+     */
+    error(
+      message: TemplateStringsArray | string | LogCallback | Error,
+      ...values: unknown[]
+    ): void;
+    /**
+     * Logs a fatal message.
+     *
+     * @param message - The message to log. Can be a string, a template string, or a callback function that returns the message.
+     * @param values - The values to interpolate into the message template.
+     */
+    fatal(
+      message: TemplateStringsArray | string | LogCallback | Error,
+      ...values: unknown[]
+    ): void;
+    protected getStore(): Record<string, unknown>;
+  }
+}
+
+declare module "storm:payload" {
+  /**
+   * The payload module provides a base payload class used by the Storm Stack runtime.
+   *
+   * @module storm:payload
+   */
+
+  /**
+   * A base payload class used by the Storm Stack runtime.
+   */
+  export class StormPayload<TData = Record<string, any>>
+    implements StormPayloadInterface<TData>
+  {
+    /**
+     * The data associated with the payload.
+     */
+    readonly data: TData;
+    /**
+     * The payload identifier.
+     */
+    readonly id: string;
+    /**
+     * The payload created timestamp.
+     */
+    readonly timestamp: number;
+    /**
+     * Create a new payload object.
+     *
+     * @param data - The payload data.
+     */
+    constructor(data: TData);
+  }
+}
+
+declare module "storm:cli" {
+  const colorDefs: {
+    reset: (str: string) => string;
+    bold: (str: string) => string;
+    dim: (str: string) => string;
+    italic: (str: string) => string;
+    underline: (str: string) => string;
+    inverse: (str: string) => string;
+    hidden: (str: string) => string;
+    strikethrough: (str: string) => string;
+    black: (str: string) => string;
+    red: (str: string) => string;
+    green: (str: string) => string;
+    yellow: (str: string) => string;
+    blue: (str: string) => string;
+    magenta: (str: string) => string;
+    cyan: (str: string) => string;
+    white: (str: string) => string;
+    gray: (str: string) => string;
+    bgBlack: (str: string) => string;
+    bgRed: (str: string) => string;
+    bgGreen: (str: string) => string;
+    bgYellow: (str: string) => string;
+    bgBlue: (str: string) => string;
+    bgMagenta: (str: string) => string;
+    bgCyan: (str: string) => string;
+    bgWhite: (str: string) => string;
+    blackBright: (str: string) => string;
+    redBright: (str: string) => string;
+    greenBright: (str: string) => string;
+    yellowBright: (str: string) => string;
+    blueBright: (str: string) => string;
+    magentaBright: (str: string) => string;
+    cyanBright: (str: string) => string;
+    whiteBright: (str: string) => string;
+    bgBlackBright: (str: string) => string;
+    bgRedBright: (str: string) => string;
+    bgGreenBright: (str: string) => string;
+    bgYellowBright: (str: string) => string;
+    bgBlueBright: (str: string) => string;
+    bgMagentaBright: (str: string) => string;
+    bgCyanBright: (str: string) => string;
+    bgWhiteBright: (str: string) => string;
+  };
+  export type ColorName = keyof typeof colorDefs;
+  /**
+   * An object containing functions for coloring text. Each function corresponds to a terminal color. See {@link ColorName} for available colors.
+   */
+  export const colors: Record<ColorName, (text: string | number) => string>;
+  /**
+   * Gets a color function by name, with an option for a fallback color if the requested color is not found.
+   *
+   * @param color - The name of the color function to get. See {@link ColorName}.
+   * @param fallback - The name of the fallback color function if the requested color is not found. See {@link ColorName}.
+   * @returns The color function that corresponds to the requested color, or the fallback color function.
+   */
+  export function getColor(
+    color: ColorName,
+    fallback?: ColorName
+  ): (text: string | number) => string;
+  type LinkOptions = {
+    /**
+     * Whether to use colored text for the link.
+     *
+     * @defaultValue "blueBright"
+     */
+    color?: ColorName | false;
+    /**
+     * The target for the link. Can be either "stdout" or "stderr".
+     *
+     * @defaultValue "stdout"
+     */
+    target?: "stdout" | "stderr";
+    /**
+     * A fallback function to handle the link in environments that do not support it.
+     */
+    fallback?: (url: string, text?: string) => string;
+  };
+  /**
+   * Create a link to a URL in the console.
+   *
+   * @param url - The URL to link to.
+   * @param text - The text to display for the link. If not provided, the URL will be used as the text.
+   * @param options - Options to use when formatting the link.
+   * @returns A terminal link
+   */
+  export function link(
+    url: string,
+    text?: string,
+    options?: LinkOptions
+  ): string;
+  /**
+   * Strips ANSI escape codes from a string.
+   *
+   * @param text - The string to strip ANSI codes from.
+   * @returns The string without ANSI codes.
+   */
+  export function stripAnsi(text: string): string;
+  /**
+   * Renders a CLI banner with the specified title.
+   *
+   * @param title - The title to display in the banner.
+   * @param description - The description to display in the banner.
+   * @returns The rendered banner as a string.
+   *
+   * @internal
+   */
+  export function renderBanner(title: string, description: string): string;
+  /**
+   * Renders a CLI footer with the application details
+   *
+   * @param title - The title to display in the footer.
+   * @param description - The description to display in the footer.
+   * @returns The rendered footer as a string.
+   *
+   * @internal
+   */
+  export function renderFooter(): string;
+  interface SelectOption {
+    label: string;
+    value: string;
+    hint?: string;
+  }
+  const CANCEL_SYMBOL: unique symbol;
+  interface PromptCommonOptions {
+    /**
+     * Specify how to handle a cancelled prompt (e.g. by pressing Ctrl+C).
+     *
+     * Default strategy is `"default"`.
+     *
+     * - `"default"` - Resolve the promise with the `default` value or `initial` value.
+     * - `"undefined`" - Resolve the promise with `undefined`.
+     * - `"null"` - Resolve the promise with `null`.
+     * - `"symbol"` - Resolve the promise with a symbol `Symbol.for("cancel")`.
+     * - `"reject"`  - Reject the promise with an error.
+     */
+    cancel?: "reject" | "default" | "undefined" | "null" | "symbol";
+  }
+  export type TextPromptOptions = PromptCommonOptions & {
+    /**
+     * Specifies the prompt type as text.
+     *
+     * @defaultValue "text"
+     */
+    type?: "text";
+    /**
+     * The default text value.
+     */
+    default?: string;
+    /**
+     * A placeholder text displayed in the prompt.
+     */
+    placeholder?: string;
+    /**
+     * The initial text value.
+     */
+    initial?: string;
+  };
+  export type ConfirmPromptOptions = PromptCommonOptions & {
+    /**
+     * Specifies the prompt type as confirm.
+     */
+    type: "confirm";
+    /**
+     * The initial value for the confirm prompt.
+     */
+    initial?: boolean;
+  };
+  export type SelectPromptOptions = PromptCommonOptions & {
+    /**
+     * Specifies the prompt type as select.
+     */
+    type: "select";
+    /**
+     * The initial value for the select prompt.
+     */
+    initial?: string;
+    /**
+     * The options to select from. See {@link SelectOption}.
+     */
+    options: (string | SelectOption)[];
+  };
+  export type MultiSelectPromptOptions = PromptCommonOptions & {
+    /**
+     * Specifies the prompt type as multiselect.
+     */
+    type: "multiselect";
+    /**
+     * The options to select from. See {@link SelectOption}.
+     */
+    initial?: string[];
+    /**
+     * The options to select from. See {@link SelectOption}.
+     */
+    options: (string | SelectOption)[];
+    /**
+     * Whether the prompt requires at least one selection.
+     */
+    required?: boolean;
+  };
+  /**
+   * Defines a combined type for all prompt options.
+   */
+  export type PromptOptions =
+    | TextPromptOptions
+    | ConfirmPromptOptions
+    | SelectPromptOptions
+    | MultiSelectPromptOptions;
+  type inferPromptReturnType<T extends PromptOptions> =
+    T extends TextPromptOptions
+      ? string
+      : T extends ConfirmPromptOptions
+        ? boolean
+        : T extends SelectPromptOptions
+          ? T["options"][number] extends SelectOption
+            ? T["options"][number]["value"]
+            : T["options"][number]
+          : T extends MultiSelectPromptOptions
+            ? T["options"]
+            : unknown;
+  type inferPromptCancelReturnType<T extends PromptOptions> = T extends {
+    cancel: "reject";
+  }
+    ? never
+    : T extends {
+          cancel: "default";
+        }
+      ? inferPromptReturnType<T>
+      : T extends {
+            cancel: "undefined";
+          }
+        ? undefined
+        : T extends {
+              cancel: "null";
+            }
+          ? null
+          : T extends {
+                cancel: "symbol";
+              }
+            ? typeof CANCEL_SYMBOL
+            : inferPromptReturnType<T>;
+  /**
+   * Asynchronously prompts the user for input based on specified options.
+   * Supports text, confirm, select and multi-select prompts.
+   *
+   * @param message - The message to display in the prompt.
+   * @param opts - The prompt options. See {@link PromptOptions}.
+   * @returns A promise that resolves with the user's response, the type of which is inferred from the options. See {@link inferPromptReturnType}.
+   */
+  export function prompt<
+    _ = any,
+    __ = any,
+    T extends PromptOptions = TextPromptOptions
+  >(
+    message: string,
+    opts?: PromptOptions
+  ): Promise<inferPromptReturnType<T> | inferPromptCancelReturnType<T>>;
+  export function parseArgs(args: any[], opts: any): any;
+  export {};
+  export type __ΩColorName = any[];
+  export type __ΩTextPromptOptions = any[];
+  export type __ΩConfirmPromptOptions = any[];
+  export type __ΩSelectPromptOptions = any[];
+  export type __ΩMultiSelectPromptOptions = any[];
+  export type __ΩPromptOptions = any[];
+}
+
+declare module "storm:event" {
+  /**
+   * The Storm Stack event module.
+   *
+   * @module storm:event
+   */
+
+  /**
+   * A base event class used by the Storm Stack runtime.
+   */
+  export class StormEvent<TEventType extends string = string, TEventData = any>
+    extends StormPayload<TEventData>
+    implements StormEventInterface<TEventType, TEventData>
+  {
+    /**
+     * The payload identifier.
+     */
+    readonly payloadId: string;
+    /**
+     * The event type.
+     */
+    readonly type: TEventType;
+    /**
+     * The event version.
+     */
+    readonly version: string;
+    /**
+     * The event label.
+     *
+     * @remarks
+     * The label format is "{type}-v{version}"
+     */
+    get label(): string;
+    /**
+     * Creates a new event.
+     *
+     * @param type - The event type.
+     * @param data - The event data.
+     */
+    constructor(type: TEventType, data: TEventData);
+  }
+}
+
+declare module "storm:result" {
+  /**
+   * The result module provides the {@link StormResult} class, which is used to represent the result of a payload execution.
+   *
+   * @module storm:result
+   */
+
+  /**
+   * A base result class used by the Storm Stack runtime.
+   */
+  export class StormResult<TData extends any | StormError = any | StormError>
+    implements StormResultInterface<TData>
+  {
+    /**
+     * Create a new result.
+     *
+     * @remarks
+     * **IMPORTANT:** This function uses the storm context object - never use this function outside of the context wrapper/tree since the context will not be available.
+     *
+     * @param data - The result data
+     */
+    static create<TData>(data: TData): StormResult<TData>;
+    /**
+     * The result meta.
+     */
+    readonly meta: Record<string, any>;
+    /**
+     * The result data.
+     */
+    data: TData;
+    /**
+     * The payload identifier.
+     */
+    readonly payloadId: string;
+    /**
+     * The response created timestamp.
+     */
+    readonly timestamp: number;
+    /**
+     * An indicator of whether the response was successful.
+     */
+    get success(): boolean;
+    /**
+     * Create a new result.
+     *
+     * @param payloadId - The payload identifier.
+     * @param meta - The current context's metadata.
+     * @param data - The result data
+     */
+    constructor(payloadId: string, meta: Record<string, any>, data: TData);
+  }
+}
+
+declare module "storm:app" {
+  /**
+   * Wrap an application entry point with the necessary context and error handling.
+   *
+   * @param handler - The handler function for the application.
+   * @returns A function that takes an payload and returns a result or a promise of a result.
+   */
+  export function withContext<TInput = any, TOutput = any>(
+    handler: HandlerFunction<TInput, TOutput>
+  ): (input: TInput) => Promise<void>;
+}
+
+type StormDotenv = Omit<
   StormBaseConfig,
   | "STORM_STACK_LOCAL"
   | "APP_NAME"
@@ -1679,823 +3923,5 @@ type StormVariables = Omit<
       | "XDG_RUNTIME_DIR"
     >
   >;
-const $storm: StormContext<StormVariables>;
 
-declare module "storm:env" {
-  /**
-   * This module provides the runtime environment information for the Storm Stack application.
-   *
-   * @module storm:env
-   */
-
-  /** Detect if stdout.TTY is available */
-  export const hasTTY: boolean;
-  /** Detect if the application is running in a CI environment */
-  export const isCI: boolean;
-  /** Detect the `NODE_ENV` environment variable */
-  export const mode: string;
-  /** Detect if the application is running in production mode */
-  export const isProduction: boolean;
-  /** Detect if the application is running in staging mode */
-  export const isStaging: boolean;
-  /** Detect if the application is running in development mode */
-  export const isDevelopment: boolean;
-  /** Detect if the application is running in debug mode */
-  export const isDebug: boolean;
-  /** Detect if the application is running in test mode */
-  export const isTest: boolean;
-  /** Detect if MINIMAL environment variable is set, running in CI or test or TTY is unavailable */
-  export const isMinimal: boolean;
-  /** Detect if the runtime platform is Windows */
-  export const isWindows: boolean;
-  /** Detect if the runtime platform is Linux */
-  export const isLinux: boolean;
-  /** Detect if the runtime platform is macOS (darwin kernel) */
-  export const isMacOS: boolean;
-  /** Detect if the runtime platform is interactive */
-  export const isInteractive: boolean;
-  /** Detect if Unicode characters are supported */
-  export const isUnicodeSupported: boolean;
-  /** Detect if color is supported */
-  export const isColorSupported: boolean;
-  /**
-   * Indicates if running in Node.js or a Node.js compatible runtime.
-   *
-   * @remarks
-   * When running code in Bun and Deno with Node.js compatibility mode, `isNode` flag will be also `true`, indicating running in a Node.js compatible runtime.
-   */
-  export const isNode: boolean;
-  /** The organization that maintains the application */
-  export const organization = "storm-software";
-  /** The current application */
-  export const name = "storm-stack";
-  /** The current application */
-  export const version = "0.14.0";
-  /**
-   * The environment paths for storing things like data, config, logs, and cache in the current runtime environment.
-   *
-   * @remarks
-   * On macOS, directories are generally created in `~/Library/Application Support/<name>`.
-   * On Windows, directories are generally created in `%AppData%/<name>`.
-   * On Linux, directories are generally created in `~/.config/<name>` - this is determined via the [XDG Base Directory spec](https://specifications.freedesktop.org/basedir-spec/latest/).
-   *
-   * If the `STORM_DATA_DIR`, `STORM_CONFIG_DIR`, `STORM_CACHE_DIR`, `STORM_LOG_DIR`, or `STORM_TEMP_DIR` environment variables are set, they will be used instead of the default paths.
-   */
-  export const paths: StormEnvPaths;
-  /** The static build information collection */
-  export const build: StormBuildInfo;
-  /** The dynamic runtime information collection */
-  export const runtime: StormRuntimeInfo;
-}
-
-declare module "storm:storage/file-system-config" {
-  declare const _default: import("unstorage").Driver<
-    import("unstorage/drivers/fs-lite").FSStorageOptions | undefined,
-    never
-  >;
-  export default _default;
-}
-
-declare module "storm:storage/file-system-crash-reports" {
-  declare const _default: import("unstorage").Driver<
-    import("unstorage/drivers/fs-lite").FSStorageOptions | undefined,
-    never
-  >;
-  export default _default;
-}
-
-declare module "storm:storage/file-system-logs" {
-  declare const _default: import("unstorage").Driver<
-    import("unstorage/drivers/fs-lite").FSStorageOptions | undefined,
-    never
-  >;
-  export default _default;
-}
-
-declare module "storm:storage" {
-  /**
-   * The storage module provides a unified storage interface for the Storm Stack runtime.
-   *
-   * @module storm:storage
-   */
-  export const storage: import("unstorage").Storage<
-    import("unstorage").StorageValue
-  >;
-}
-
-declare module "storm:error" {
-  /**
-   * The Storm Stack error module provides a custom error class and utility functions to support error handling
-   *
-   * @module storm:error
-   */
-
-  /**
-   * Get the default error code for the given error type.
-   *
-   * @param _type - The error type.
-   * @returns The default error code.
-   */
-  export function getDefaultCode(_type: ErrorType): number;
-  /**
-   * Get the default error name for the given error type.
-   *
-   * @param type - The error type.
-   * @returns The default error name.
-   */
-  export function getDefaultErrorName(type: ErrorType): string;
-  /**
-   * Checks if `value` is an {@link Error}, `EvalError`, `RangeError`, `ReferenceError`,
-   * `SyntaxError`, `TypeError`, or `URIError` object.
-   *
-   * @example
-   * ```typescript
-   * isError(new Error)
-   * // => true
-   *
-   * isError(Error)
-   * // => false
-   * ```
-   *
-   * @param value - The value to check.
-   * @returns Returns `true` if `value` is an error object, else `false`.
-   */
-  export function isError(value: unknown): value is Error;
-  /**
-   * Type-check to determine if `value` is a {@link StormError} object
-   *
-   * @param value - the object to check
-   * @returns Returns `true` if `value` is a {@link StormError} object, else `false`.
-   */
-  export function isStormError(value: unknown): value is StormError;
-  /**
-   * Creates a new {@link StormError} instance from an unknown cause value
-   *
-   * @param cause - The cause of the error in an unknown type
-   * @param type - The type of the error
-   * @param data - Additional data to be passed with the error
-   * @returns The cause of the error in a {@link StormError} object
-   */
-  export function createStormError(
-    cause: unknown,
-    type?: ErrorType,
-    data?: any
-  ): StormError;
-  /**
-   * A wrapper around the base JavaScript Error class to be used in Storm Stack applications
-   */
-  export class StormError extends Error implements IStormError {
-    __proto__: ErrorConstructor;
-    /**
-     * The error code
-     */
-    code: number;
-    /**
-     * The error message parameters
-     */
-    params: string[];
-    /**
-     * The type of error event
-     */
-    type: ErrorType;
-    /**
-     * Additional data to be passed with the error
-     */
-    data?: any;
-    /**
-     * The StormError constructor
-     *
-     * @param options - The options for the error
-     * @param type - The type of error
-     */
-    constructor(optionsOrMessage: StormErrorOptions | string, type?: ErrorType);
-    /**
-     * The cause of the error
-     */
-    get cause(): IStormError | undefined;
-    /**
-     * The cause of the error
-     */
-    set cause(cause: unknown);
-    /**
-     * The parsed stack traces from the raw stack string
-     *
-     * @returns The parsed stack traces
-     */
-    get stacktrace(): ParsedStacktrace[];
-    /**
-     * Prints a displayable/formatted stack trace
-     *
-     * @returns The stack trace string
-     */
-    get stack(): string;
-    /**
-     * Store the stack trace
-     */
-    set stack(stack: string);
-    /**
-     * The unformatted stack trace
-     *
-     * @returns The stack trace string
-     */
-    get originalStack(): string;
-    /**
-     * The unformatted stack trace
-     *
-     * @returns The stack trace string
-     */
-    set originalStack(stack: string);
-    /**
-     * A URL to a page that displays the error message details
-     */
-    get url(): string;
-    /**
-     * Prints the display error message string
-     *
-     * @param includeData - Whether to include the data in the error message
-     * @returns The display error message string
-     */
-    toDisplay(includeData?: boolean): string;
-    /**
-     * Prints the error message and stack trace
-     *
-     * @param stacktrace - Whether to include the stack trace in the error message
-     * @param includeData - Whether to include the data in the error message
-     * @returns The error message and stack trace string
-     */
-    toString(stacktrace?: boolean, includeData?: boolean): string;
-  }
-}
-
-declare module "storm:context" {
-  /**
-   * This module provides the Storm Stack context and a hook to access it in the application.
-   *
-   * @module storm:context
-   */
-
-  export const STORM_ASYNC_CONTEXT: import("unctx").UseContext<StormContext>;
-  /**
-   * Get the Storm context for the current application.
-   *
-   * @returns The Storm context for the current application.
-   * @throws If the Storm context is not available.
-   */
-  export function useStorm(): StormContext;
-}
-
-declare module "storm:result" {
-  /**
-   * The result module provides the {@link StormResult} class, which is used to represent the result of a payload execution.
-   *
-   * @module storm:result
-   */
-
-  /**
-   * A base result class used by the Storm Stack runtime.
-   */
-  export class StormResult<TData extends any | StormError = any | StormError>
-    implements IStormResult<TData>
-  {
-    /**
-     * Create a new result.
-     *
-     * @remarks
-     * **IMPORTANT:** This function uses the storm context object - never use this function outside of the context wrapper/tree since the context will not be available.
-     *
-     * @param data - The result data
-     */
-    static create<TData>(data: TData): StormResult<TData>;
-    /**
-     * The result meta.
-     */
-    readonly meta: Record<string, any>;
-    /**
-     * The result data.
-     */
-    data: TData;
-    /**
-     * The payload identifier.
-     */
-    readonly payloadId: string;
-    /**
-     * The response created timestamp.
-     */
-    readonly timestamp: number;
-    /**
-     * An indicator of whether the response was successful.
-     */
-    get success(): boolean;
-    /**
-     * Create a new result.
-     *
-     * @param payloadId - The payload identifier.
-     * @param meta - The current context's metadata.
-     * @param data - The result data
-     */
-    constructor(payloadId: string, meta: Record<string, any>, data: TData);
-  }
-}
-
-declare module "storm:id" {
-  /**
-   * The ID module provides a set of utilities for generating unique identifiers.
-   *
-   * @module storm:id
-   */
-  /**
-   * Generate a random string
-   *
-   * @param array - The array to fill with random values
-   * @returns The array filled with random values
-   */
-  export function getRandom(array: Uint8Array): Uint8Array<ArrayBufferLike>;
-  /**
-   * A platform agnostic version of the [nanoid](https://github.com/ai/nanoid) package with some modifications.
-   *
-   * @param size - The size of the string to generate. Defaults to 21 if not provided.
-   * @returns A unique identifier following the nanoid format
-   */
-  export function uniqueId(size?: number | undefined): string;
-  /**
-   * A platform agnostic version of the [nanoid](https://github.com/ai/nanoid) package with some modifications.
-   *
-   * @param prefix - The prefix to use for the unique identifier
-   * @param size - The size of the string to generate. Defaults to 21 if not provided.
-   * @returns A unique identifier following the nanoid format
-   */
-  export function uniqueId(prefix?: string, size?: number | undefined): string;
-}
-
-declare module "storm:payload" {
-  /**
-   * The payload module provides a base payload class used by the Storm Stack runtime.
-   *
-   * @module storm:payload
-   */
-
-  /**
-   * A base payload class used by the Storm Stack runtime.
-   */
-  export class StormPayload<TData = object> implements IStormPayload<TData> {
-    /**
-     * The data associated with the payload.
-     */
-    readonly data: TData;
-    /**
-     * The payload identifier.
-     */
-    readonly id: string;
-    /**
-     * The payload created timestamp.
-     */
-    readonly timestamp: number;
-    /**
-     * Create a new payload object.
-     *
-     * @param data - The payload data.
-     */
-    constructor(data: TData);
-  }
-}
-
-declare module "storm:logs/console-info" {
-  export const DATE_TIME_FORMAT: Intl.DateTimeFormat;
-  declare const sink: (record: LogRecord) => void;
-  export default sink;
-}
-
-declare module "storm:logs/sentry-error" {
-  declare const sink: (record: LogRecord) => void;
-  export default sink;
-}
-
-declare module "storm:logs/storage-logs-info" {
-  /**
-   * Get a text formatter with the specified options.  Although it's flexible
-   * enough to create a custom formatter, if you want more control, you can
-   * create a custom formatter that satisfies the {@link TextFormatter} type
-   * instead.
-   *
-   * For more information on the options, see {@link TextFormatterOptions}.
-   *
-   * By default, the formatter formats log records as follows:
-   *
-   * ```
-   * 2023-11-14 22:13:20.000 +00:00 [INFO] Hello, world!
-   * ```
-   * @param options - The options for the text formatter.
-   * @returns The text formatter.
-   */
-  export function getTextFormatter(
-    options?: TextFormatterOptions
-  ): TextFormatter;
-  declare const sink: LogSink & AsyncDisposable;
-  export default sink;
-}
-
-declare module "storm:log" {
-  /**
-   * The log module provides a unified logging interface for Storm Stack applications.
-   *
-   * @module storm:log
-   */
-
-  /**
-   * Returns a filter that accepts log records with the specified level.
-   *
-   * @param level - The level to filter by. If `null`, the filter will reject all records.
-   * @returns The filter.
-   */
-  export function getLevelFilter(level: LogLevel | null): LogFilter;
-  /**
-   * Parses a {@link LogLevel | log level} from a string.
-   *
-   * @param level - The {@link LogLevel | log level} as a string. This is case-insensitive.
-   * @returns The {@link LogLevel | log level}.
-   */
-  export function parseLogLevel(level: string): LogLevel;
-  /**
-   * Checks if a string is a valid {@link LogLevel | log level}. This function can be used as a type guard to narrow the type of a string to a {@link LogLevel}.
-   *
-   * @param level - The {@link LogLevel | log level} as a string. This is case-sensitive.
-   * @returns `true` if the string is a valid {@link LogLevel | log level}.
-   */
-  export function isLogLevel(level: string): level is LogLevel;
-  /**
-   * The StormLog class that's used for writing logs during Storm Stack applications.
-   */
-  export class StormLog implements IStormLog {
-    readonly filters: LogFilter[];
-    lowestLogLevel: LogLevel | null;
-    constructor();
-    with(properties: Record<string, unknown>): IStormLog;
-    filter(record: LogRecord): boolean;
-    sinks(level?: LogLevel): Iterable<LogSink>;
-    emit(record: LogRecord, bypassSinks?: Set<LogSink>): void;
-    log(
-      level: LogLevel,
-      rawMessage: string,
-      properties: Record<string, unknown> | (() => Record<string, unknown>),
-      bypassSinks?: Set<LogSink>
-    ): void;
-    logLazily(
-      level: LogLevel,
-      callback: LogCallback,
-      properties?: Record<string, unknown>
-    ): void;
-    logTemplate(
-      level: LogLevel,
-      messageTemplate: TemplateStringsArray,
-      values: unknown[],
-      properties?: Record<string, unknown>
-    ): void;
-    debug(
-      message: TemplateStringsArray | string | LogCallback,
-      ...values: unknown[]
-    ): void;
-    info(
-      message: TemplateStringsArray | string | LogCallback,
-      ...values: unknown[]
-    ): void;
-    warn(
-      message: TemplateStringsArray | string | LogCallback,
-      ...values: unknown[]
-    ): void;
-    error(
-      message: TemplateStringsArray | string | LogCallback | Error,
-      ...values: unknown[]
-    ): void;
-    fatal(
-      message: TemplateStringsArray | string | LogCallback | Error,
-      ...values: unknown[]
-    ): void;
-    protected getStore(): Record<string, unknown>;
-  }
-}
-
-declare module "storm:init" {
-  export default function init(): void;
-}
-
-declare module "storm:event" {
-  /**
-   * The Storm Stack event module.
-   *
-   * @module storm:event
-   */
-
-  /**
-   * A base event class used by the Storm Stack runtime.
-   */
-  export class StormEvent<TEventType extends string = string, TEventData = any>
-    extends StormPayload<TEventData>
-    implements IStormEvent<TEventType, TEventData>
-  {
-    /**
-     * The payload identifier.
-     */
-    readonly payloadId: string;
-    /**
-     * The event type.
-     */
-    readonly type: TEventType;
-    /**
-     * The event version.
-     */
-    readonly version: string;
-    /**
-     * The event label.
-     *
-     * @remarks
-     * The label format is "{type}-v{version}"
-     */
-    get label(): string;
-    /**
-     * Creates a new event.
-     *
-     * @param type - The event type.
-     * @param data - The event data.
-     */
-    constructor(type: TEventType, data: TEventData);
-  }
-}
-
-declare module "storm:cli" {
-  declare const colorDefs: {
-    reset: (str: string) => string;
-    bold: (str: string) => string;
-    dim: (str: string) => string;
-    italic: (str: string) => string;
-    underline: (str: string) => string;
-    inverse: (str: string) => string;
-    hidden: (str: string) => string;
-    strikethrough: (str: string) => string;
-    black: (str: string) => string;
-    red: (str: string) => string;
-    green: (str: string) => string;
-    yellow: (str: string) => string;
-    blue: (str: string) => string;
-    magenta: (str: string) => string;
-    cyan: (str: string) => string;
-    white: (str: string) => string;
-    gray: (str: string) => string;
-    bgBlack: (str: string) => string;
-    bgRed: (str: string) => string;
-    bgGreen: (str: string) => string;
-    bgYellow: (str: string) => string;
-    bgBlue: (str: string) => string;
-    bgMagenta: (str: string) => string;
-    bgCyan: (str: string) => string;
-    bgWhite: (str: string) => string;
-    blackBright: (str: string) => string;
-    redBright: (str: string) => string;
-    greenBright: (str: string) => string;
-    yellowBright: (str: string) => string;
-    blueBright: (str: string) => string;
-    magentaBright: (str: string) => string;
-    cyanBright: (str: string) => string;
-    whiteBright: (str: string) => string;
-    bgBlackBright: (str: string) => string;
-    bgRedBright: (str: string) => string;
-    bgGreenBright: (str: string) => string;
-    bgYellowBright: (str: string) => string;
-    bgBlueBright: (str: string) => string;
-    bgMagentaBright: (str: string) => string;
-    bgCyanBright: (str: string) => string;
-    bgWhiteBright: (str: string) => string;
-  };
-  export type ColorName = keyof typeof colorDefs;
-  /**
-   * An object containing functions for coloring text. Each function corresponds to a terminal color. See {@link ColorName} for available colors.
-   */
-  export const colors: Record<ColorName, (text: string | number) => string>;
-  /**
-   * Gets a color function by name, with an option for a fallback color if the requested color is not found.
-   *
-   * @param color - The name of the color function to get. See {@link ColorName}.
-   * @param fallback - The name of the fallback color function if the requested color is not found. See {@link ColorName}.
-   * @returns The color function that corresponds to the requested color, or the fallback color function.
-   */
-  export function getColor(
-    color: ColorName,
-    fallback?: ColorName
-  ): (text: string | number) => string;
-  type LinkOptions = {
-    /**
-     * Whether to use colored text for the link.
-     *
-     * @defaultValue "blueBright"
-     */
-    color?: ColorName | false;
-    /**
-     * The target for the link. Can be either "stdout" or "stderr".
-     *
-     * @defaultValue "stdout"
-     */
-    target?: "stdout" | "stderr";
-    /**
-     * A fallback function to handle the link in environments that do not support it.
-     */
-    fallback?: (url: string, text?: string) => string;
-  };
-  /**
-   * Create a link to a URL in the console.
-   *
-   * @param url - The URL to link to.
-   * @param text - The text to display for the link. If not provided, the URL will be used as the text.
-   * @param options - Options to use when formatting the link.
-   * @returns A terminal link
-   */
-  export function link(
-    url: string,
-    text?: string,
-    options?: LinkOptions
-  ): string;
-  /**
-   * Strips ANSI escape codes from a string.
-   *
-   * @param text - The string to strip ANSI codes from.
-   * @returns The string without ANSI codes.
-   */
-  export function stripAnsi(text: string): string;
-  /**
-   * Renders a CLI banner with the specified title.
-   *
-   * @param title - The title to display in the banner.
-   * @param description - The description to display in the banner.
-   * @returns The rendered banner as a string.
-   *
-   * @internal
-   */
-  export function renderBanner(title: string, description: string): string;
-  /**
-   * Renders a CLI footer with the application details
-   *
-   * @param title - The title to display in the footer.
-   * @param description - The description to display in the footer.
-   * @returns The rendered footer as a string.
-   *
-   * @internal
-   */
-  export function renderFooter(): string;
-  interface SelectOption {
-    label: string;
-    value: string;
-    hint?: string;
-  }
-  declare const CANCEL_SYMBOL: unique symbol;
-  interface PromptCommonOptions {
-    /**
-     * Specify how to handle a cancelled prompt (e.g. by pressing Ctrl+C).
-     *
-     * Default strategy is `"default"`.
-     *
-     * - `"default"` - Resolve the promise with the `default` value or `initial` value.
-     * - `"undefined`" - Resolve the promise with `undefined`.
-     * - `"null"` - Resolve the promise with `null`.
-     * - `"symbol"` - Resolve the promise with a symbol `Symbol.for("cancel")`.
-     * - `"reject"`  - Reject the promise with an error.
-     */
-    cancel?: "reject" | "default" | "undefined" | "null" | "symbol";
-  }
-  export type TextPromptOptions = PromptCommonOptions & {
-    /**
-     * Specifies the prompt type as text.
-     *
-     * @defaultValue "text"
-     */
-    type?: "text";
-    /**
-     * The default text value.
-     */
-    default?: string;
-    /**
-     * A placeholder text displayed in the prompt.
-     */
-    placeholder?: string;
-    /**
-     * The initial text value.
-     */
-    initial?: string;
-  };
-  export type ConfirmPromptOptions = PromptCommonOptions & {
-    /**
-     * Specifies the prompt type as confirm.
-     */
-    type: "confirm";
-    /**
-     * The initial value for the confirm prompt.
-     */
-    initial?: boolean;
-  };
-  export type SelectPromptOptions = PromptCommonOptions & {
-    /**
-     * Specifies the prompt type as select.
-     */
-    type: "select";
-    /**
-     * The initial value for the select prompt.
-     */
-    initial?: string;
-    /**
-     * The options to select from. See {@link SelectOption}.
-     */
-    options: (string | SelectOption)[];
-  };
-  export type MultiSelectPromptOptions = PromptCommonOptions & {
-    /**
-     * Specifies the prompt type as multiselect.
-     */
-    type: "multiselect";
-    /**
-     * The options to select from. See {@link SelectOption}.
-     */
-    initial?: string[];
-    /**
-     * The options to select from. See {@link SelectOption}.
-     */
-    options: (string | SelectOption)[];
-    /**
-     * Whether the prompt requires at least one selection.
-     */
-    required?: boolean;
-  };
-  /**
-   * Defines a combined type for all prompt options.
-   */
-  export type PromptOptions =
-    | TextPromptOptions
-    | ConfirmPromptOptions
-    | SelectPromptOptions
-    | MultiSelectPromptOptions;
-  type inferPromptReturnType<T extends PromptOptions> =
-    T extends TextPromptOptions
-      ? string
-      : T extends ConfirmPromptOptions
-        ? boolean
-        : T extends SelectPromptOptions
-          ? T["options"][number] extends SelectOption
-            ? T["options"][number]["value"]
-            : T["options"][number]
-          : T extends MultiSelectPromptOptions
-            ? T["options"]
-            : unknown;
-  type inferPromptCancelReturnType<T extends PromptOptions> = T extends {
-    cancel: "reject";
-  }
-    ? never
-    : T extends {
-          cancel: "default";
-        }
-      ? inferPromptReturnType<T>
-      : T extends {
-            cancel: "undefined";
-          }
-        ? undefined
-        : T extends {
-              cancel: "null";
-            }
-          ? null
-          : T extends {
-                cancel: "symbol";
-              }
-            ? typeof CANCEL_SYMBOL
-            : inferPromptReturnType<T>;
-  /**
-   * Asynchronously prompts the user for input based on specified options.
-   * Supports text, confirm, select and multi-select prompts.
-   *
-   * @param message - The message to display in the prompt.
-   * @param opts - The prompt options. See {@link PromptOptions}.
-   * @returns A promise that resolves with the user's response, the type of which is inferred from the options. See {@link inferPromptReturnType}.
-   */
-  export function prompt<
-    _ = any,
-    __ = any,
-    T extends PromptOptions = TextPromptOptions
-  >(
-    message: string,
-    opts?: PromptOptions
-  ): Promise<inferPromptReturnType<T> | inferPromptCancelReturnType<T>>;
-  export function parseArgs(args: any[], opts: any): any;
-  export {};
-  export type __ΩColorName = any[];
-  export type __ΩTextPromptOptions = any[];
-  export type __ΩConfirmPromptOptions = any[];
-  export type __ΩSelectPromptOptions = any[];
-  export type __ΩMultiSelectPromptOptions = any[];
-  export type __ΩPromptOptions = any[];
-}
-
-declare module "storm:app" {
-  /**
-   * Wrap an application entry point with the necessary context and error handling.
-   *
-   * @param handler - The handler function for the application.
-   * @returns A function that takes an payload and returns a result or a promise of a result.
-   */
-  export function withContext<TInput = any, TOutput = any>(
-    handler: HandlerFunction<TInput, TOutput>
-  ): (input: TInput) => Promise<void>;
-}
+declare const $storm: StormContext<StormDotenv>;

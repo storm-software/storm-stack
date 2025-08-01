@@ -5,7 +5,7 @@
  This code was released as part of the Storm Stack project. Storm Stack
  is maintained by Storm Software under the Apache-2.0 license, and is
  free for commercial and private use. For more information, please visit
- our licensing page at https://stormsoftware.com/license.
+ our licensing page at https://stormsoftware.com/licenses/projects/storm-stack.
 
  Website:                  https://stormsoftware.com
  Repository:               https://github.com/storm-software/storm-stack
@@ -16,15 +16,9 @@
 
  ------------------------------------------------------------------- */
 
+import { ReflectionKind, stringifyType } from "@deepkit/type";
 import { LogLevelLabel } from "@storm-software/config-tools/types";
-
-import { ReflectionClass, ReflectionKind, stringifyType } from "@deepkit/type";
-import {
-  readDotenvReflection,
-  writeDotenvReflection
-} from "@storm-stack/core/helpers/dotenv/persistence";
-import { getFileHeader } from "@storm-stack/core/helpers/utilities/file-header";
-import { writeFile } from "@storm-stack/core/helpers/utilities/write-file";
+import { getFileHeader } from "@storm-stack/core/lib/utilities/file-header";
 import type { LogFn } from "@storm-stack/core/types/config";
 import {
   findFileExtension,
@@ -40,35 +34,31 @@ import { pascalCase } from "@stryke/string-format/pascal-case";
 import { snakeCase } from "@stryke/string-format/snake-case";
 import { titleCase } from "@stryke/string-format/title-case";
 import { isString } from "@stryke/type-checks/is-string";
-import { readCommandTreeReflection } from "../capnp/persistence";
-import { writeApp } from "../runtime/app";
-import { writeRuntime } from "../runtime/cli";
 import {
   writeCompletionsBash,
   writeCompletionsZsh
-} from "../runtime/completions";
+} from "../templates/completions";
 import {
   writeConfigDelete,
   writeConfigGet,
   writeConfigList,
   writeConfigSet
-} from "../runtime/config";
+} from "../templates/config";
 import { StormStackCLIPluginContext } from "../types/build";
-import type { StormStackCLIPluginConfig } from "../types/config";
-import type { Command } from "../types/reflection";
+import type { CLIPluginConfig } from "../types/config";
+import type { Command, CommandTree } from "../types/reflection";
 import {
   LARGE_CONSOLE_WIDTH,
   LARGE_HELP_COLUMN_WIDTH,
   MIN_CONSOLE_WIDTH
 } from "./constants";
-import { reflectCommandTree } from "./reflect-command";
 import { extractAuthor, sortArgAliases, sortArgs } from "./utilities";
 
 async function writeCommandEntryUsage(
   log: LogFn,
   context: StormStackCLIPluginContext,
   command: Command,
-  config: StormStackCLIPluginConfig,
+  config: CLIPluginConfig,
   description: string
 ) {
   log(
@@ -76,12 +66,6 @@ async function writeCommandEntryUsage(
     `Preparing the command entry usage artifact ${command.entry.file} (${
       command.entry?.name ? `export: "${command.entry.name}"` : "default"
     })`
-  );
-
-  const runtimeRelativePath = relativePath(
-    findFilePath(command.entry.file),
-    context.runtimePath,
-    false
   );
 
   const commandsColumn1 = Object.values(command.children).map(child => {
@@ -175,7 +159,12 @@ async function writeCommandEntryUsage(
             !arg.type.getDescription().endsWith("?")
           ? `${arg.type.getDescription()}.`
           : arg.type.getDescription()
-    }`}${arg.type.getDefaultValue() !== undefined && arg.type.getDefaultValue() !== false ? ` [default: ${arg.type.getDefaultValue()}]` : ""}")}`;
+    }`}${
+      arg.type.getDefaultValue() !== undefined &&
+      arg.type.getDefaultValue() !== false
+        ? ` [default: ${arg.type.getDefaultValue()}]`
+        : ""
+    }")}`;
   });
 
   const column1MaxLength =
@@ -186,27 +175,26 @@ async function writeCommandEntryUsage(
       ]
     ) + 6;
 
-  await writeFile(
-    log,
+  await context.vfs.writeEntryFile(
     command.entry.file.replace(findFileName(command.entry.file), "usage.ts"),
     `${getFileHeader()}
 
-import ${command.entry.input.name ? `{ ${command.entry.input.name} as handle }` : "handle"} from "./${joinPaths(
+import ${command.entry.input.name ? `{ ${command.entry.input.name} as handle }` : "handle"} from "${joinPaths(
       relativePath(
         findFilePath(command.entry.file),
         findFilePath(command.entry.input.file)
       ),
       findFileName(command.entry.input.file).replace(
-        findFileExtension(command.entry.input.file),
+        findFileExtension(command.entry.input.file) || "",
         ""
       )
     )}";
-import { colors } from "${joinPaths(runtimeRelativePath, "cli")}";${
+import { colors } from "storm:cli";${
       command.payload.import
         ? `import { ${command.payload.import.name} } from "${relativePath(
             findFilePath(command.entry.file),
             joinPaths(
-              context.workspaceConfig.workspaceRoot,
+              context.options.workspaceRoot,
               command.payload.import.file
             )
           )}";`
@@ -293,7 +281,7 @@ async function writeCommandEntryHandler(
   log: LogFn,
   context: StormStackCLIPluginContext,
   command: Command,
-  config: StormStackCLIPluginConfig,
+  config: CLIPluginConfig,
   description: string
 ) {
   log(
@@ -307,39 +295,36 @@ async function writeCommandEntryHandler(
     })`
   );
 
-  const runtimeRelativePath = relativePath(
-    findFilePath(command.entry.file),
-    context.runtimePath,
-    false
-  );
-
-  await writeFile(
-    log,
+  await context.vfs.writeEntryFile(
     command.entry.file,
     `${getFileHeader()}
 
 import { renderUsage } from "./usage";
-import ${command.entry.input.name ? `{ ${command.entry.input.name} as handle }` : "handle"} from "./${joinPaths(
+import ${
+      command.entry.input.name
+        ? `{ ${command.entry.input.name} as handle }`
+        : "handle"
+    } from "${joinPaths(
       relativePath(
         findFilePath(command.entry.file),
         findFilePath(command.entry.input.file)
       ),
       findFileName(command.entry.input.file).replace(
-        findFileExtension(command.entry.input.file),
+        findFileExtension(command.entry.input.file) || "",
         ""
       )
     )}";
-import { withContext } from "${joinPaths(runtimeRelativePath, "app")}";
-import { isInteractive, isMinimal } from "${joinPaths(runtimeRelativePath, "env")}";
+import { withContext } from "storm:app";
+import { isInteractive, isMinimal } from "storm:env";
 import { colors, parseArgs, renderBanner, renderFooter${
       config.interactive !== "never" ? ", prompt" : ""
-    } } from "${joinPaths(runtimeRelativePath, "cli")}";
+    } } from "storm:cli";
 import { deserialize, serialize } from "@deepkit/type";${
       command.payload.import
         ? `import { ${command.payload.import.name} } from "${relativePath(
             findFilePath(command.entry.file),
             joinPaths(
-              context.workspaceConfig.workspaceRoot,
+              context.options.workspaceRoot,
               command.payload.import.file
             )
           )}";`
@@ -626,7 +611,7 @@ async function writeCommandEntry(
   log: LogFn,
   context: StormStackCLIPluginContext,
   command: Command,
-  config: StormStackCLIPluginConfig
+  config: CLIPluginConfig
 ) {
   log(
     LogLevelLabel.TRACE,
@@ -647,17 +632,11 @@ async function writeVirtualCommandEntry(
   log: LogFn,
   context: StormStackCLIPluginContext,
   command: Command,
-  _config: StormStackCLIPluginConfig
+  _config: CLIPluginConfig
 ) {
   log(
     LogLevelLabel.TRACE,
     `Preparing the virtual command entry artifact ${command.entry.file} (${command.entry?.name ? `export: "${command.entry.name}"` : "default"})" from input "${command.entry.input.file}" (${command.entry.input.name ? `export: "${command.entry.input.name}"` : "default"})`
-  );
-
-  const runtimeRelativePath = relativePath(
-    findFilePath(command.entry.file),
-    context.runtimePath,
-    false
   );
 
   const optionsColumn1 = sortArgs(command.payload.args).map(arg => {
@@ -758,23 +737,22 @@ async function writeVirtualCommandEntry(
       ? `${command.type?.getDescription()}.`
       : command.type?.getDescription();
 
-  await writeFile(
-    log,
+  await context.vfs.writeEntryFile(
     command.entry.file,
     `${getFileHeader()}
 
-import ${command.entry.input.name ? `{ ${command.entry.input.name} as handle }` : "handle"} from "./${joinPaths(
+import ${command.entry.input.name ? `{ ${command.entry.input.name} as handle }` : "handle"} from "${joinPaths(
       relativePath(
         findFilePath(command.entry.file),
         findFilePath(command.entry.input.file)
       ),
       findFileName(command.entry.input.file).replace(
-        findFileExtension(command.entry.input.file),
+        findFileExtension(command.entry.input.file) || "",
         ""
       )
     )}";
-import { isMinimal } from "${joinPaths(runtimeRelativePath, "env")}";
-import { colors, renderBanner, renderFooter, parseArgs } from "${joinPaths(runtimeRelativePath, "cli")}";${
+import { isMinimal } from "storm:env";
+import { colors, renderBanner, renderFooter, parseArgs } from "storm:cli";${
       command.children && Object.values(command.children).length > 0
         ? Object.values(command.children)
             .map(child =>
@@ -940,7 +918,7 @@ async function prepareCommandDefinition(
   log: LogFn,
   context: StormStackCLIPluginContext,
   command: Command,
-  config: StormStackCLIPluginConfig
+  config: CLIPluginConfig
 ) {
   if (command.children) {
     for (const subCommand of Object.values(command.children)) {
@@ -966,10 +944,10 @@ async function prepareCommandDefinition(
   return writeCommandEntry(log, context, command, config);
 }
 
-async function generateConfigCommands(
+export async function generateConfigCommands(
   log: LogFn,
   context: StormStackCLIPluginContext,
-  config: StormStackCLIPluginConfig
+  config: CLIPluginConfig
 ) {
   if (config.manageConfig === false) {
     log(
@@ -978,58 +956,30 @@ async function generateConfigCommands(
     );
   } else {
     await Promise.all([
-      writeFile(
-        log,
-        joinPaths(
-          context.artifactsPath,
-          "commands",
-          "config",
-          "get",
-          "handle.ts"
-        ),
+      context.vfs.writeEntryFile(
+        joinPaths(context.entryPath, "config", "get", "handle.ts"),
         writeConfigGet(context)
       ),
-      writeFile(
-        log,
-        joinPaths(
-          context.artifactsPath,
-          "commands",
-          "config",
-          "set",
-          "handle.ts"
-        ),
+      context.vfs.writeEntryFile(
+        joinPaths(context.entryPath, "config", "set", "handle.ts"),
         writeConfigSet(context)
       ),
-      writeFile(
-        log,
-        joinPaths(
-          context.artifactsPath,
-          "commands",
-          "config",
-          "list",
-          "handle.ts"
-        ),
+      context.vfs.writeEntryFile(
+        joinPaths(context.entryPath, "config", "list", "handle.ts"),
         writeConfigList(context)
       ),
-      writeFile(
-        log,
-        joinPaths(
-          context.artifactsPath,
-          "commands",
-          "config",
-          "delete",
-          "handle.ts"
-        ),
+      context.vfs.writeEntryFile(
+        joinPaths(context.entryPath, "config", "delete", "handle.ts"),
         writeConfigDelete(context)
       )
     ]);
   }
 }
 
-async function generateCompletionCommands(
+export async function generateCompletionCommands(
   log: LogFn,
   context: StormStackCLIPluginContext,
-  config: StormStackCLIPluginConfig
+  config: CLIPluginConfig
 ) {
   if (config.manageConfig === false) {
     log(
@@ -1038,59 +988,25 @@ async function generateCompletionCommands(
     );
   } else {
     await Promise.all([
-      writeFile(
-        log,
-        joinPaths(
-          context.artifactsPath,
-          "commands",
-          "completions",
-          "bash",
-          "handle.ts"
-        ),
+      context.vfs.writeEntryFile(
+        joinPaths(context.entryPath, "completions", "bash", "handle.ts"),
         writeCompletionsBash(context, config)
       ),
-      writeFile(
-        log,
-        joinPaths(
-          context.artifactsPath,
-          "commands",
-          "completions",
-          "zsh",
-          "handle.ts"
-        ),
+      context.vfs.writeEntryFile(
+        joinPaths(context.entryPath, "completions", "zsh", "handle.ts"),
         writeCompletionsZsh(context, config)
       )
     ]);
   }
 }
 
-export async function prepareRuntime(
-  log: LogFn,
-  context: StormStackCLIPluginContext,
-  config: StormStackCLIPluginConfig
-) {
-  await Promise.all([
-    writeFile(
-      log,
-      joinPaths(context.runtimePath, "app.ts"),
-      writeApp(context, config)
-    ),
-    writeFile(
-      log,
-      joinPaths(context.runtimePath, "cli.ts"),
-      writeRuntime(context, config)
-    ),
-    generateConfigCommands(log, context, config),
-    generateCompletionCommands(log, context, config)
-  ]);
-}
-
 export async function prepareEntry(
   log: LogFn,
   context: StormStackCLIPluginContext,
-  config: StormStackCLIPluginConfig
-) {
-  const commandTree = await readCommandTreeReflection(context, config);
+  config: CLIPluginConfig,
+  commandTree: CommandTree
+): Promise<CommandTree> {
+  // const commandTree = await readCommandTreeReflection(context, config);
 
   for (const command of Object.values(commandTree.children)) {
     await prepareCommandDefinition(log, context, command, config);
@@ -1117,8 +1033,8 @@ export async function prepareEntry(
 
   let repository = config.repository;
   if (!repository) {
-    if (context.workspaceConfig.repository) {
-      repository = context.workspaceConfig.repository;
+    if (context.options.repository) {
+      repository = context.options.repository;
     } else if (context.packageJson?.repository) {
       repository = isString(context.packageJson.repository)
         ? context.packageJson.repository
@@ -1128,8 +1044,7 @@ export async function prepareEntry(
 
   const author = extractAuthor(context, config);
 
-  await writeFile(
-    log,
+  await context.vfs.writeEntryFile(
     commandTree.entry.file,
     `#!/usr/bin/env ${
       context.options.mode === "development"
@@ -1137,18 +1052,17 @@ export async function prepareEntry(
         : ""
     } node
 
-
 ${getFileHeader()}
 
-import { colors, link, renderBanner, renderFooter, parseArgs } from "./runtime/cli";
-import { isMinimal, isUnicodeSupported } from "./runtime/env";
-import { isError, isStormError, createStormError } from "./runtime/error";${
+import { colors, link, renderBanner, renderFooter, parseArgs } from "storm:cli";
+import { isMinimal, isUnicodeSupported } from "storm:env";
+import { isError, isStormError, createStormError } from "storm:error";${
       commandTree.children && Object.values(commandTree.children).length > 0
         ? Object.values(commandTree.children)
             .map(child =>
               child.entry.isVirtual
-                ? `import handle${pascalCase(child.name)}, { renderUsage as render${pascalCase(child.name)}Usage } from "./commands/${child.entry.path.join("/")}";`
-                : `import { renderUsage as render${pascalCase(child.name)}Usage } from "./commands/${child.entry.path.join("/")}/usage";`
+                ? `import handle${pascalCase(child.name)}, { renderUsage as render${pascalCase(child.name)}Usage } from "./entry/${child.entry.path.join("/")}";`
+                : `import { renderUsage as render${pascalCase(child.name)}Usage } from "./entry/${child.entry.path.join("/")}/usage";`
             )
             .join("\n")
         : ""
@@ -1205,7 +1119,7 @@ async function main() {
       repository
         ? repository.replace(/\.git$/, "").replace(/^git:/, "")
         : `https://github.com/${author?.name || "storm-software"}/${
-            context.workspaceConfig.namespace ||
+            context.options.namespace ||
             context.options.name ||
             context.packageJson.name
           }/releases/tag/${
@@ -1245,7 +1159,7 @@ async function main() {
         ${
           child.entry.isVirtual
             ? `return handle${pascalCase(child.name)}();`
-            : `const handle = await import("./commands/${child.entry.path.join("/")}").then(m => m.default);
+            : `const handle = await import("./entry/${child.entry.path.join("/")}").then(m => m.default);
         return handle();`
         }
       } `
@@ -1302,25 +1216,28 @@ await main();
 
 `
   );
+
+  return commandTree;
 }
 
-async function addCommandArgReflections(
+export async function addCommandArgReflections(
   context: StormStackCLIPluginContext,
-  reflection: ReflectionClass<any>,
   command: Command
 ) {
   for (const arg of command.payload.args) {
     let name = constantCase(arg.name);
-    const aliasProperties = reflection
-      .getProperties()
+    const aliasProperties = context.reflections.configDotenv
+      ?.getProperties()
       .filter(prop => prop.getAlias().length > 0);
 
-    const prefix = context.dotenv.prefix.find(
+    const prefix = context.options.dotenv.prefix.find(
       pre =>
         name &&
         name.startsWith(pre) &&
-        (reflection.hasProperty(name.replace(`${pre}_`, "")) ||
-          aliasProperties.some(prop =>
+        (context.reflections.configDotenv?.hasProperty(
+          name.replace(`${pre}_`, "")
+        ) ??
+          aliasProperties?.some(prop =>
             prop.getAlias().includes(name.replace(`${pre}_`, ""))
           ))
     );
@@ -1329,10 +1246,10 @@ async function addCommandArgReflections(
     }
 
     if (
-      !reflection.hasProperty(name) &&
-      !aliasProperties.some(prop => prop.getAlias().includes(name))
+      !context.reflections.configDotenv?.hasProperty(name) &&
+      !aliasProperties?.some(prop => prop.getAlias().includes(name))
     ) {
-      reflection.addProperty({
+      context.reflections.configDotenv?.addProperty({
         name: constantCase(arg.name),
         optional: true,
         description: arg.type.getDescription(),
@@ -1354,27 +1271,7 @@ async function addCommandArgReflections(
 
   if (command.children) {
     for (const subCommand of Object.values(command.children)) {
-      await addCommandArgReflections(context, reflection, subCommand);
+      await addCommandArgReflections(context, subCommand);
     }
   }
-}
-
-export async function prepareReflections(
-  log: LogFn,
-  context: StormStackCLIPluginContext,
-  config: StormStackCLIPluginConfig
-) {
-  const commandTree = await reflectCommandTree(log, context, config);
-
-  const configReflection = await readDotenvReflection(context, "config");
-  for (const command of Object.values(commandTree.children)) {
-    log(
-      LogLevelLabel.TRACE,
-      `Reflecting command arguments for "${commandTree.bin[0]}"`
-    );
-
-    await addCommandArgReflections(context, configReflection, command);
-  }
-
-  await writeDotenvReflection(context, configReflection);
 }

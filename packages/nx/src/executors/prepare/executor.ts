@@ -49,6 +49,14 @@ export async function executorFn(
   const inlineConfig = defu(
     {
       root: context.projectsConfigurations.projects[context.projectName]!.root,
+      sourceRoot:
+        context.projectsConfigurations.projects[context.projectName]!
+          .sourceRoot,
+      output: {
+        outputPath:
+          context.projectsConfigurations.projects[context.projectName]!.targets
+            ?.build?.options?.outputPath
+      },
       type: context.projectsConfigurations.projects[context.projectName]!
         .projectType,
       command: "prepare"
@@ -75,7 +83,6 @@ export default withRunExecutor<StormStackPrepareExecutorSchema>(
     hooks: {
       applyDefaultOptions: (options: StormStackPrepareExecutorSchema) => {
         options.entry ??= "{sourceRoot}/index.ts";
-        options.mode ??= "production";
 
         return options;
       }

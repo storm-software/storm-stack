@@ -42,11 +42,19 @@
   },
   "types": "dist/index.d.ts",
   "typings": "dist/index.d.ts",
+  "peerDependencies": {
+    "@storm-stack/plugin-node": "*"
+  },
+  "peerDependenciesMeta": {
+    "@storm-stack/plugin-node": {
+      "optional": false
+    }
+  },
   "dependencies": {
     "@cloudflare/unenv-preset": "catalog:",
     "@ltd/j-toml": "catalog:",
     "@storm-software/config-tools": "catalog:",
-    "@storm-stack/core": "0.33.1",
+    "@storm-stack/core": "workspace:*",
     "@stryke/fs": "catalog:",
     "@stryke/json": "catalog:",
     "@stryke/path": "catalog:",

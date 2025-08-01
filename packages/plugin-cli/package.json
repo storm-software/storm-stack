@@ -42,14 +42,31 @@
   },
   "types": "dist/index.d.ts",
   "typings": "dist/index.d.ts",
+  "peerDependencies": {
+    "@storm-stack/plugin-log-console": "*",
+    "@storm-stack/plugin-node": "*",
+    "@storm-stack/plugin-storage-fs": "*"
+  },
+  "peerDependenciesMeta": {
+    "@storm-stack/plugin-log-console": {
+      "optional": false
+    },
+    "@storm-stack/plugin-node": {
+      "optional": false
+    },
+    "@storm-stack/plugin-storage-fs": {
+      "optional": false
+    }
+  },
   "dependencies": {
-    "@deepkit/type": "1.0.5",
+    "@deepkit/type": "catalog:",
     "@storm-software/config": "catalog:",
     "@storm-software/config-tools": "catalog:",
-    "@storm-stack/core": "0.33.1",
-    "@storm-stack/devkit": "0.9.1",
+    "@storm-stack/core": "workspace:*",
+    "@storm-stack/devkit": "workspace:*",
     "@stryke/capnp": "catalog:",
     "@stryke/cli": "catalog:",
+    "@stryke/convert": "catalog:",
     "@stryke/fs": "catalog:",
     "@stryke/helpers": "catalog:",
     "@stryke/json": "catalog:",
@@ -57,7 +74,6 @@
     "@stryke/string-format": "catalog:",
     "@stryke/type-checks": "catalog:",
     "defu": "catalog:",
-    "magicast": "catalog:",
     "uqr": "catalog:"
   },
   "devDependencies": {

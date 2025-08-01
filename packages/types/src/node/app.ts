@@ -5,7 +5,7 @@
  This code was released as part of the Storm Stack project. Storm Stack
  is maintained by Storm Software under the Apache-2.0 license, and is
  free for commercial and private use. For more information, please visit
- our licensing page at https://stormsoftware.com/license.
+ our licensing page at https://stormsoftware.com/licenses/projects/storm-stack.
 
  Website:                  https://stormsoftware.com
  Repository:               https://github.com/storm-software/storm-stack
@@ -17,8 +17,8 @@
  ------------------------------------------------------------------- */
 
 import type { StormBaseConfig } from "../shared/config.js";
-import type { IStormError } from "../shared/error.js";
-import type { IStormPayload } from "../shared/payload.js";
+import type { StormErrorInterface } from "../shared/error.js";
+import type { StormPayloadInterface } from "../shared/payload.js";
 import type { StormContext } from "./context.js";
 
 export type ValidationDetailType =
@@ -44,32 +44,36 @@ export type ValidationDetail =
 type MaybePromise<T> = T | Promise<T>;
 
 export type SetupFunction = () => MaybePromise<
-  IStormError | void | null | undefined
+  StormErrorInterface | void | null | undefined
 >;
 
 export type ValidatorFunction<
-  TPayload extends IStormPayload,
+  TPayload extends StormPayloadInterface,
   TContext extends StormContext<StormBaseConfig, any, TPayload>
-> = (context: TContext) => MaybePromise<IStormError | void | null | undefined>;
+> = (
+  context: TContext
+) => MaybePromise<StormErrorInterface | void | null | undefined>;
 
 export type PreprocessFunction<
-  TPayload extends IStormPayload,
+  TPayload extends StormPayloadInterface,
   TContext extends StormContext<StormBaseConfig, any, TPayload>
-> = (context: TContext) => MaybePromise<IStormError | void | null | undefined>;
+> = (
+  context: TContext
+) => MaybePromise<StormErrorInterface | void | null | undefined>;
 
 export type HandlerFunction<TInput = any, TOutput = any> = (
-  payload: IStormPayload<TInput>
-) => MaybePromise<TOutput | IStormError>;
+  payload: StormPayloadInterface<TInput>
+) => MaybePromise<TOutput | StormErrorInterface>;
 
 export type PostprocessFunction<
-  TPayload extends IStormPayload,
+  TPayload extends StormPayloadInterface,
   TContext extends StormContext<StormBaseConfig, any, TPayload>,
   TOutput
 > = (
   context: TContext,
   output: TOutput
-) => MaybePromise<IStormError | void | null | undefined>;
+) => MaybePromise<StormErrorInterface | void | null | undefined>;
 
 export type TeardownFunction = () => MaybePromise<
-  IStormError | void | null | undefined
+  StormErrorInterface | void | null | undefined
 >;

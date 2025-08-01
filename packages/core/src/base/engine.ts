@@ -5,7 +5,7 @@
  This code was released as part of the Storm Stack project. Storm Stack
  is maintained by Storm Software under the Apache-2.0 license, and is
  free for commercial and private use. For more information, please visit
- our licensing page at https://stormsoftware.com/license.
+ our licensing page at https://stormsoftware.com/licenses/projects/storm-stack.
 
  Website:                  https://stormsoftware.com
  Repository:               https://github.com/storm-software/storm-stack
@@ -17,29 +17,21 @@
  ------------------------------------------------------------------- */
 
 import { LogLevelLabel } from "@storm-software/config-tools/types";
-import { getEnvPaths } from "@stryke/env/get-env-paths";
 import { install } from "@stryke/fs/install";
 import { isPackageExists } from "@stryke/fs/package-fns";
-import { hash } from "@stryke/hash/hash";
-import {
-  getProjectRoot,
-  getWorkspaceRoot
-} from "@stryke/path/get-workspace-root";
-import { joinPaths } from "@stryke/path/join-paths";
 import { isNumber } from "@stryke/type-checks/is-number";
+import chalk from "chalk";
 import defu from "defu";
 import { createHooks } from "hookable";
-import { createJiti } from "jiti";
-import { build } from "../build";
-import { clean } from "../clean";
-import { docs } from "../docs";
-import { finalize } from "../finalize";
-import { resolveConfig } from "../helpers/utilities/config";
-import { createLog } from "../helpers/utilities/logger";
-import { init } from "../init";
-import { lint } from "../lint";
-import { _new } from "../new";
-import { prepare } from "../prepare";
+import { build } from "../commands/build";
+import { clean } from "../commands/clean";
+import { docs } from "../commands/docs";
+import { finalize } from "../commands/finalize";
+import { init } from "../commands/init";
+import { lint } from "../commands/lint";
+import { _new } from "../commands/new";
+import { prepare } from "../commands/prepare";
+import { createContext, getChecksum, getPersistedMeta } from "../lib/context";
 import type {
   BuildInlineConfig,
   CleanInlineConfig,
@@ -49,13 +41,11 @@ import type {
   EngineHooks,
   InlineConfig,
   LintInlineConfig,
-  LogFn,
   NewInlineConfig,
-  PluginConfig,
   PrepareInlineConfig,
-  RuntimeConfig,
   WorkspaceConfig
 } from "../types";
+import { PluginConfig } from "../types/config";
 import type { Plugin } from "./plugin";
 
 /**
@@ -90,92 +80,49 @@ export class Engine {
   protected context: Context;
 
   /**
-   * The logger for the plugin
-   */
-  protected log: LogFn;
-
-  /**
    * Create a new Storm Stack Engine instance
    *
    * @param inlineConfig - The inline configuration for the Storm Stack engine
    * @param workspaceConfig  - The workspace configuration for the Storm Stack engine
    */
   public constructor(
-    inlineConfig: InlineConfig,
-    workspaceConfig?: WorkspaceConfig
-  ) {
-    const workspaceRoot = workspaceConfig?.workspaceRoot ?? getWorkspaceRoot();
-    const projectRoot = inlineConfig.root || getProjectRoot() || process.cwd();
-
-    this.context = {
-      options: {
-        ...inlineConfig,
-        userConfig: {},
-        inlineConfig,
-        projectRoot
-      },
-      runtime: {
-        logs: [],
-        storage: [],
-        init: []
-      } as RuntimeConfig,
-      installs: {},
-      workers: {}
-    } as Context;
-
-    this.context.workspaceConfig = defu(workspaceConfig, {
-      workspaceRoot
-    });
-
-    this.context.envPaths = getEnvPaths({
-      orgId: "storm-software",
-      appId: "storm-stack",
-      workspaceRoot
-    });
-    if (!this.context.envPaths.cache) {
-      throw new Error("The cache directory could not be determined.");
-    }
-
-    this.context.envPaths.cache = joinPaths(
-      this.context.envPaths.cache,
-      hash(projectRoot)
-    );
-
-    this.context.resolver = createJiti(joinPaths(workspaceRoot, projectRoot), {
-      interopDefault: true,
-      fsCache: joinPaths(this.context.envPaths.cache, "jiti"),
-      moduleCache: true
-    });
-  }
+    private inlineConfig: InlineConfig,
+    private workspaceConfig?: WorkspaceConfig
+  ) {}
 
   /**
    * Initialize the engine
    */
   public async init(inlineConfig: InlineConfig): Promise<Context> {
     this.#hooks = createHooks<EngineHookFunctions>();
-    this.context.options = await resolveConfig(this.context, inlineConfig);
+    this.context = await createContext(
+      defu(inlineConfig, this.inlineConfig),
+      this.workspaceConfig
+    );
 
-    this.log = createLog("", this.context.options);
-    this.log(LogLevelLabel.TRACE, "Initializing Storm Stack engine");
+    this.context.log(LogLevelLabel.TRACE, "Initializing Storm Stack engine");
 
     for (const plugin of this.context.options.plugins ?? []) {
       await this.addPlugin(plugin);
     }
 
     if (this.#plugins.length === 0) {
-      this.log(
+      this.context.log(
         LogLevelLabel.WARN,
         "No Storm Stack plugins or presets were specified in the options. Please ensure this is correct, as it is generally not recommended."
       );
     } else {
       for (const plugin of this.#plugins) {
-        await Promise.resolve(plugin.addHooks(this.#hooks));
+        plugin.addHooks(this.#hooks);
       }
     }
 
-    await init(this.log, this.context, this.#hooks);
+    await init(this.context, this.#hooks);
 
-    this.log(LogLevelLabel.INFO, "Storm Stack engine has been initialized");
+    this.context.log(
+      LogLevelLabel.INFO,
+      "Storm Stack engine has been initialized"
+    );
     this.#initialized = true;
 
     return this.context;
@@ -195,11 +142,17 @@ export class Engine {
       await this.init(inlineConfig);
     }
 
-    this.log(LogLevelLabel.INFO, "🆕 Creating a new Storm Stack project");
+    this.context.log(
+      LogLevelLabel.INFO,
+      "🆕 Creating a new Storm Stack project"
+    );
 
-    await _new(this.log, this.context, this.#hooks);
+    await _new(this.context, this.#hooks);
 
-    this.log(LogLevelLabel.TRACE, "Storm Stack - New command completed");
+    this.context.log(
+      LogLevelLabel.TRACE,
+      "Storm Stack - New command completed"
+    );
   }
 
   /**
@@ -218,14 +171,17 @@ export class Engine {
       await this.init(inlineConfig);
     }
 
-    this.log(
+    this.context.log(
       LogLevelLabel.INFO,
       "🧹 Cleaning the previous Storm Stack artifacts"
     );
 
-    await clean(this.log, this.context, this.#hooks);
+    await clean(this.context, this.#hooks);
 
-    this.log(LogLevelLabel.TRACE, "Storm Stack - Clean command completed");
+    this.context.log(
+      LogLevelLabel.TRACE,
+      "Storm Stack - Clean command completed"
+    );
   }
 
   /**
@@ -258,11 +214,11 @@ export class Engine {
     //   await this.clean(inlineConfig as PrepareInlineConfig);
     // }
 
-    this.log(LogLevelLabel.INFO, "Preparing the Storm Stack project");
+    this.context.log(LogLevelLabel.INFO, "Preparing the Storm Stack project");
 
-    await prepare(this.log, this.context, this.#hooks);
+    await prepare(this.context, this.#hooks);
 
-    this.log(LogLevelLabel.TRACE, "Storm Stack preparation completed");
+    this.context.log(LogLevelLabel.TRACE, "Storm Stack preparation completed");
   }
 
   /**
@@ -279,7 +235,7 @@ export class Engine {
     }
 
     if (this.context.persistedMeta?.checksum !== this.context.meta.checksum) {
-      this.log(
+      this.context.log(
         LogLevelLabel.INFO,
         "The Storm Stack project has been modified since the last time `prepare` was ran. Re-preparing the project."
       );
@@ -287,11 +243,11 @@ export class Engine {
       await this.prepare(inlineConfig);
     }
 
-    this.log(LogLevelLabel.INFO, "Linting the Storm Stack project");
+    this.context.log(LogLevelLabel.INFO, "Linting the Storm Stack project");
 
-    await lint(this.log, this.context, this.#hooks);
+    await lint(this.context, this.#hooks);
 
-    this.log(LogLevelLabel.TRACE, "Storm Stack linting completed");
+    this.context.log(LogLevelLabel.TRACE, "Storm Stack linting completed");
   }
 
   /**
@@ -308,8 +264,11 @@ export class Engine {
       await this.init(inlineConfig);
     }
 
-    if (this.context.persistedMeta?.checksum !== this.context.meta.checksum) {
-      this.log(
+    const persistedMeta = await getPersistedMeta(this.context);
+    const checksum = await getChecksum(this.context.options.projectRoot);
+
+    if (persistedMeta?.checksum !== checksum) {
+      this.context.log(
         LogLevelLabel.INFO,
         "The Storm Stack project has been modified since the last time `prepare` was ran. Re-preparing the project."
       );
@@ -317,11 +276,11 @@ export class Engine {
       await this.prepare(inlineConfig);
     }
 
-    this.log(LogLevelLabel.INFO, "Building the Storm Stack project");
+    this.context.log(LogLevelLabel.INFO, "Building the Storm Stack project");
 
-    await build(this.log, this.context, this.#hooks);
+    await build(this.context, this.#hooks);
 
-    this.log(LogLevelLabel.TRACE, "Storm Stack build completed");
+    this.context.log(LogLevelLabel.TRACE, "Storm Stack build completed");
   }
 
   /**
@@ -336,7 +295,7 @@ export class Engine {
     }
 
     if (this.context.persistedMeta?.checksum !== this.context.meta.checksum) {
-      this.log(
+      this.context.log(
         LogLevelLabel.INFO,
         "The Storm Stack project has been modified since the last time `prepare` was ran. Re-preparing the project."
       );
@@ -344,14 +303,14 @@ export class Engine {
       await this.prepare(inlineConfig);
     }
 
-    this.log(
+    this.context.log(
       LogLevelLabel.INFO,
       "Generating documentation for the Storm Stack project"
     );
 
-    await docs(this.log, this.context, this.#hooks);
+    await docs(this.context, this.#hooks);
 
-    this.log(
+    this.context.log(
       LogLevelLabel.TRACE,
       "Storm Stack documentation generation completed"
     );
@@ -371,11 +330,17 @@ export class Engine {
       await this.init(inlineConfig);
     }
 
-    this.log(LogLevelLabel.TRACE, "Storm Stack finalize execution started");
+    this.context.log(
+      LogLevelLabel.TRACE,
+      "Storm Stack finalize execution started"
+    );
 
-    await finalize(this.log, this.context, this.#hooks);
+    await finalize(this.context, this.#hooks);
 
-    this.log(LogLevelLabel.TRACE, "Storm Stack finalize execution completed");
+    this.context.log(
+      LogLevelLabel.TRACE,
+      "Storm Stack finalize execution completed"
+    );
   }
 
   /**
@@ -386,15 +351,19 @@ export class Engine {
   private async addPlugin(config: string | PluginConfig) {
     if (config) {
       const instance = await this.initPlugin(config);
+      if (!instance) {
+        return;
+      }
+
       if (instance.dependencies) {
         for (const dependency of instance.dependencies) {
           await this.addPlugin(dependency);
         }
       }
 
-      this.log(
-        LogLevelLabel.TRACE,
-        `Successfully loaded the "${instance.name}" plugin`
+      this.context.log(
+        LogLevelLabel.DEBUG,
+        `Successfully initialized the ${chalk.bold.cyanBright(instance.name)} plugin`
       );
 
       this.#plugins.push(instance);
@@ -406,7 +375,9 @@ export class Engine {
    *
    * @param plugin - The import path of the plugin to add
    */
-  private async initPlugin(plugin: string | PluginConfig): Promise<Plugin> {
+  private async initPlugin(
+    plugin: string | PluginConfig
+  ): Promise<Plugin | null> {
     const pluginConfig: PluginConfig =
       typeof plugin === "string" ? [plugin, {}] : plugin;
 
@@ -421,12 +392,12 @@ export class Engine {
 
     const isInstalled = isPackageExists(installPath, {
       paths: [
-        this.context.workspaceConfig.workspaceRoot,
+        this.context.options.workspaceConfig.workspaceRoot,
         this.context.options.projectRoot
       ]
     });
     if (!isInstalled && this.context.options.skipInstalls !== true) {
-      this.log(
+      this.context.log(
         LogLevelLabel.WARN,
         `The plugin package "${installPath}" is not installed. It will be installed automatically.`
       );
@@ -435,7 +406,7 @@ export class Engine {
         cwd: this.context.options.projectRoot
       });
       if (isNumber(result.exitCode) && result.exitCode > 0) {
-        this.log(LogLevelLabel.ERROR, result.stderr);
+        this.context.log(LogLevelLabel.ERROR, result.stderr);
         throw new Error(
           `An error occurred while installing the build plugin package "${installPath}" `
         );
@@ -451,7 +422,7 @@ export class Engine {
       const PluginConstructor = module.default;
       pluginInstance = new PluginConstructor({
         ...(pluginConfig[1] ?? {}),
-        log: this.log
+        log: this.context.log
       });
     } catch (error) {
       if (!isInstalled) {
@@ -463,7 +434,7 @@ export class Engine {
           `An error occurred while importing the build plugin package "${pluginConfig[0]}":
 ${error.message}
 
-Note: Please ensure the plugin package's default export is a class that extends \`Plugin\` with a constructor that excepts zero arguments.`
+Note: Please ensure the plugin package's default export is a class that extends \`Plugin\` with a constructor that excepts a single arguments of type \`PluginOptions\`.`
         );
       }
     }
@@ -482,13 +453,21 @@ Note: Please ensure the plugin package's default export is a class that extends 
 
     if (!pluginInstance.addHooks) {
       throw new Error(
-        `The build plugin "${pluginInstance.name}" must export an \`addHooks\` function.`
+        `The module in the build plugin package "${pluginConfig[0]}" must export a \`addHooks\` function value.`
       );
     }
 
-    this.log(
+    if (this.#plugins.some(plugin => plugin.isSame(pluginInstance))) {
+      this.context.log(
+        LogLevelLabel.TRACE,
+        `Duplicate ${chalk.bold.cyanBright(pluginInstance.name)} plugin dependency detected - Skipping initialization.`
+      );
+      return null;
+    }
+
+    this.context.log(
       LogLevelLabel.TRACE,
-      `Successfully initialized the "${pluginInstance.name}" plugin`
+      `Initializing the ${chalk.bold.cyanBright(pluginInstance.name)} plugin...`
     );
 
     return pluginInstance;

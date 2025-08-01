@@ -5,7 +5,7 @@
  This code was released as part of the Storm Stack project. Storm Stack
  is maintained by Storm Software under the Apache-2.0 license, and is
  free for commercial and private use. For more information, please visit
- our licensing page at https://stormsoftware.com/license.
+ our licensing page at https://stormsoftware.com/licenses/projects/storm-stack.
 
  Website:                  https://stormsoftware.com
  Repository:               https://github.com/storm-software/storm-stack
@@ -17,10 +17,10 @@
  ------------------------------------------------------------------- */
 
 import { StormBaseConfig } from "../shared/config";
-import { IStormLog } from "../shared/log";
-import { IStormPayload } from "../shared/payload";
+import { StormLogInterface } from "../shared/log";
+import { StormPayloadInterface } from "../shared/payload";
 import { StormBuildInfo, StormEnvPaths, StormRuntimeInfo } from "./env";
-import { IStormEvent } from "./event";
+import { StormEventInterface } from "./event";
 
 /**
  * A store that exists on the StormContext for internal use.
@@ -30,13 +30,14 @@ import { IStormEvent } from "./event";
  *
  * @internal
  */
+// eslint-disable-next-line ts/naming-convention
 interface Internal_StormContextStore {
   /**
    * List of events that have been emitted
    *
    * @internal
    */
-  events: IStormEvent[];
+  events: StormEventInterface[];
 }
 
 /**
@@ -48,7 +49,7 @@ interface Internal_StormContextStore {
 export type StormContext<
   TConfig extends StormBaseConfig = StormBaseConfig,
   TAdditionalFields extends Record<string, any> = Record<string, any>,
-  TPayload extends IStormPayload = IStormPayload
+  TPayload extends StormPayloadInterface = StormPayloadInterface
 > = TAdditionalFields & {
   /**
    * The name of the Storm application.
@@ -61,11 +62,6 @@ export type StormContext<
   readonly version: string;
 
   /**
-   * The configuration parameters for the Storm application.
-   */
-  readonly config: TConfig;
-
-  /**
    * The runtime information for the Storm application.
    */
   readonly runtime: StormRuntimeInfo;
@@ -74,6 +70,16 @@ export type StormContext<
    * The build information for the Storm application.
    */
   readonly build: StormBuildInfo;
+
+  /**
+   * The configuration parameters for the Storm application.
+   */
+  readonly config: TConfig;
+
+  /**
+   * A virtual object representing the configuration parameters for the Storm application at build time. The Storm Stack build process will replace this object with the actual configuration parameters at build time.
+   */
+  readonly dotenv: TConfig;
 
   /**
    * The environment paths for storing things like data, config, logs, and cache in the current runtime environment.
@@ -100,7 +106,7 @@ export type StormContext<
   /**
    * The root application logger for the Storm Stack application.
    */
-  readonly log: IStormLog;
+  readonly log: StormLogInterface;
 
   /**
    * The root [unstorage](https://unstorage.unjs.io/) storage to use for Storm Stack application.
@@ -110,7 +116,9 @@ export type StormContext<
   /**
    * A function to emit an event to a processing queue.
    */
-  emit: <TEvent extends IStormEvent<string, any>>(event: TEvent) => void;
+  emit: <TEvent extends StormEventInterface<string, any>>(
+    event: TEvent
+  ) => void;
 
   /**
    * A store that exists on the StormContext for internal use.

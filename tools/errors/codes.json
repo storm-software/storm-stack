@@ -110,7 +110,12 @@
     "108": "Unsupported deserialized type kind: %s Type: %s",
     "109": "An error occurred while initializing the workers used by the Storm Stack build processes",
     "110": "The `storm finalize` command was invoked before the Storm Stack engine was initialized.",
-    "111": "An error occurred while initializing the options for the Storm Stack project"
+    "111": "An error occurred while initializing the options for the Storm Stack project",
+    "112": "An error occurred while importing the build plugin package \"%s\":\n%s\n\nNote: Please ensure the plugin package's default export is a class that extends Plugin with a constructor that excepts a single arguments of type PluginOptions.",
+    "113": "The module in the build plugin package \"%s\" must export a addHooks function value.",
+    "114": "Could not read dotenv reflection for config.",
+    "115": "Transformed path for runtime file %s does not exist: %s",
+    "116": "Virtual file system error: Runtime file not found for path \"%s\"."
   },
   "not_found": {
     "1": "The requested resource was not found.",

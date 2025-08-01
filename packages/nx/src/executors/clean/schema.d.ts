@@ -38,7 +38,6 @@ export interface StormStackCleanExecutorSchema {
   * 
   * The build mode
   * 
-  * @default "production"
   * 
   * @enum development,staging,production
  */
@@ -92,7 +91,6 @@ export interface StormStackCleanExecutorSchema {
   * 
   * The log level to use for the build process
   * 
-  * @default "info"
   * 
   * @enum error,success,silent,fatal,warn,info,debug,trace,all
  */

@@ -5,7 +5,7 @@
  This code was released as part of the Storm Stack project. Storm Stack
  is maintained by Storm Software under the Apache-2.0 license, and is
  free for commercial and private use. For more information, please visit
- our licensing page at https://stormsoftware.com/license.
+ our licensing page at https://stormsoftware.com/licenses/projects/storm-stack.
 
  Website:                  https://stormsoftware.com
  Repository:               https://github.com/storm-software/storm-stack
@@ -49,6 +49,14 @@ export async function executorFn(
   const inlineConfig = defu(
     {
       root: context.projectsConfigurations.projects[context.projectName]!.root,
+      sourceRoot:
+        context.projectsConfigurations.projects[context.projectName]!
+          .sourceRoot,
+      output: {
+        outputPath:
+          context.projectsConfigurations.projects[context.projectName]!.targets
+            ?.build?.options?.outputPath
+      },
       type: context.projectsConfigurations.projects[context.projectName]!
         .projectType,
       command: "build"
@@ -75,7 +83,6 @@ export default withRunExecutor<StormStackBuildExecutorSchema>(
     hooks: {
       applyDefaultOptions: (options: StormStackBuildExecutorSchema) => {
         options.entry ??= "{sourceRoot}/index.ts";
-        options.mode ??= "production";
 
         return options;
       }

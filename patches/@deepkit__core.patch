@@ -1,0 +1,31 @@
+diff --git a/tsconfig.json b/tsconfig.json
+index 447a4012f7fefee42b3434660d38348d12ef5a1e..2d3847b62fba4e2012978d4daa5b056d2bd59cfa 100644
+--- a/tsconfig.json
++++ b/tsconfig.json
+@@ -15,22 +15,11 @@
+     "outDir": "./dist/cjs",
+     "declaration": true,
+     "composite": true,
+-    "lib": [
+-      "es2020",
+-      "es2022.error"
+-    ],
+-    "types": [
+-      "dot-prop",
+-      "node"
+-    ]
++    "lib": ["es2020", "es2022.error"],
++    "types": ["dot-prop", "node"]
+   },
+   "reflection": true,
+-  "include": [
+-    "src",
+-    "index.ts"
+-  ],
+-  "exclude": [
+-    "tests"
+-  ],
++  "include": ["src", "index.ts"],
++  "exclude": ["tests"],
+   "references": []
+ }

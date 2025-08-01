@@ -5,7 +5,7 @@
  This code was released as part of the Storm Stack project. Storm Stack
  is maintained by Storm Software under the Apache-2.0 license, and is
  free for commercial and private use. For more information, please visit
- our licensing page at https://stormsoftware.com/license.
+ our licensing page at https://stormsoftware.com/licenses/projects/storm-stack.
 
  Website:                  https://stormsoftware.com
  Repository:               https://github.com/storm-software/storm-stack
@@ -17,10 +17,14 @@
  ------------------------------------------------------------------- */
 
 import { LogLevelLabel } from "@storm-software/config-tools/types";
-import { PluginOptions } from "@storm-stack/core/base/plugin";
-import { Context, EngineHooks } from "@storm-stack/core/types/build";
-import { unbuild } from "../helpers/unbuild";
-import BasePlugin from "./base";
+import { Plugin } from "@storm-stack/core/base/plugin";
+import { unbuild } from "@storm-stack/core/lib/unbuild";
+import { EngineHooks } from "@storm-stack/core/types/build";
+import { Context } from "@storm-stack/core/types/context";
+import {
+  PluginBaseConfig,
+  PluginOptions
+} from "@storm-stack/core/types/plugin";
 
 /**
  * Plugin for building the Storm Stack library package.
@@ -29,25 +33,36 @@ import BasePlugin from "./base";
  * This plugin provides the functionality to build the Storm Stack library package using Unbuild. It extends the BasePlugin class and adds hooks for the build process.
  */
 export default class LibraryPlugin<
-  TOptions extends Record<string, any> = Record<string, any>
-> extends BasePlugin<TOptions> {
-  public constructor(options: PluginOptions<TOptions>) {
+  TConfig extends PluginBaseConfig = PluginBaseConfig
+> extends Plugin<TConfig> {
+  /**
+   * The constructor for the plugin
+   *
+   * @param options - The configuration options for the plugin
+   */
+  public constructor(options: PluginOptions<TConfig>) {
     super(options);
   }
 
   /**
-   * Adds the plugin's hooks to the engine.
+   * Adds hooks to the engine's hook system.
    *
-   * @param hooks - The engine hooks to add the plugin's hooks to.
+   * @param hooks - The hooks to add to the engine.
    */
-  public override innerAddHooks(hooks: EngineHooks) {
-    super.innerAddHooks(hooks);
+  public override addHooks(hooks: EngineHooks) {
+    super.addHooks(hooks);
 
     hooks.addHooks({
       "build:library": this.#build.bind(this)
     });
   }
 
+  /**
+   * Builds the Storm Stack library package.
+   *
+   * @param context - The build context.
+   * @returns A promise that resolves when the build is complete.
+   */
   async #build(context: Context) {
     this.log(LogLevelLabel.TRACE, `Build the Storm Stack library package.`);
 

@@ -5,7 +5,7 @@
  This code was released as part of the Storm Stack project. Storm Stack
  is maintained by Storm Software under the Apache-2.0 license, and is
  free for commercial and private use. For more information, please visit
- our licensing page at https://stormsoftware.com/license.
+ our licensing page at https://stormsoftware.com/licenses/projects/storm-stack.
 
  Website:                  https://stormsoftware.com
  Repository:               https://github.com/storm-software/storm-stack
@@ -22,16 +22,16 @@ import {
   ReflectionParameter
 } from "@deepkit/type";
 import { LogLevelLabel } from "@storm-software/config-tools/types";
-import { resolveType } from "@storm-stack/core/helpers/deepkit/reflect-type";
-import type { LogFn } from "@storm-stack/core/types";
+import { resolveType } from "@storm-stack/core/lib/deepkit/reflect-type";
 import type { ResolvedEntryTypeDefinition } from "@storm-stack/core/types/build";
+import type { LogFn } from "@storm-stack/core/types/config";
 import { findFolderName } from "@stryke/path/file-path-fns";
 import { resolveParentPath } from "@stryke/path/get-parent-path";
 import { titleCase } from "@stryke/string-format/title-case";
 import { writeCommandTreeReflection } from "../capnp/persistence";
 import { CommandPayload } from "../data/command-payload";
 import { StormStackCLIPluginContext } from "../types/build";
-import type { StormStackCLIPluginConfig } from "../types/config";
+import type { CLIPluginConfig } from "../types/config";
 import { Command, CommandTree } from "../types/reflection";
 import {
   findCommandInTree,
@@ -92,7 +92,7 @@ async function reflectRelations(
 
 async function reflectPayloads(
   context: StormStackCLIPluginContext,
-  config: StormStackCLIPluginConfig
+  config: CLIPluginConfig
 ): Promise<Record<string, CommandPayload>> {
   const payloadReflections = {} as Record<string, CommandPayload>;
   for (const entry of context.entry.filter(
@@ -114,7 +114,8 @@ async function reflectPayloads(
       // eslint-disable-next-line ts/no-unsafe-function-type
       const command = await resolveType<Function>(context, entry.input, {
         skipNodeModulesBundle: true,
-        noExternal: context.options.noExternal
+        noExternal: context.options.noExternal,
+        external: ["@storm-stack/core"]
       });
       if (!command) {
         throw new Error(`Module not found: ${entry.input.file}`);
@@ -149,7 +150,7 @@ type CommandReflectionDefinition = Omit<
 async function reflectCommand(
   log: LogFn,
   context: StormStackCLIPluginContext,
-  config: StormStackCLIPluginConfig
+  config: CLIPluginConfig
 ): Promise<Record<string, CommandReflectionDefinition>> {
   const relationsReflections = await reflectRelations(context);
   const payloadsReflections = await reflectPayloads(context, config);
@@ -224,7 +225,11 @@ async function reflectCommand(
       );
 
       // eslint-disable-next-line ts/no-unsafe-function-type
-      const command = await resolveType<Function>(context, entry.input);
+      const command = await resolveType<Function>(context, entry.input, {
+        skipNodeModulesBundle: true,
+        noExternal: context.options.noExternal,
+        external: ["@storm-stack/core"]
+      });
       if (!command) {
         throw new Error(`Module not found: ${entry.input.file}`);
       }
@@ -255,7 +260,7 @@ async function reflectCommand(
 export async function reflectCommandTree(
   log: LogFn,
   context: StormStackCLIPluginContext,
-  config: StormStackCLIPluginConfig
+  config: CLIPluginConfig
 ): Promise<CommandTree> {
   const reflections = await reflectCommand(log, context, config);
 

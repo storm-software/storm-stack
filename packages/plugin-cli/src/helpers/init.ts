@@ -5,7 +5,7 @@
  This code was released as part of the Storm Stack project. Storm Stack
  is maintained by Storm Software under the Apache-2.0 license, and is
  free for commercial and private use. For more information, please visit
- our licensing page at https://stormsoftware.com/license.
+ our licensing page at https://stormsoftware.com/licenses/projects/storm-stack.
 
  Website:                  https://stormsoftware.com
  Repository:               https://github.com/storm-software/storm-stack
@@ -17,8 +17,10 @@
  ------------------------------------------------------------------- */
 
 import { LogLevelLabel } from "@storm-software/config-tools/types";
-import { writeFile } from "@storm-stack/core/helpers/utilities/write-file";
-import type { LogFn } from "@storm-stack/core/types";
+import { isMatchFound } from "@storm-stack/core/lib/typescript/tsconfig";
+import { writeFile } from "@storm-stack/core/lib/utilities/write-file";
+import type { LogFn } from "@storm-stack/core/types/config";
+import { toArray } from "@stryke/convert/to-array";
 import { readJsonFile } from "@stryke/fs/json";
 import { listFiles } from "@stryke/fs/list-files";
 import { StormJSON } from "@stryke/json/storm-json";
@@ -36,115 +38,87 @@ import { kebabCase } from "@stryke/string-format/kebab-case";
 import { titleCase } from "@stryke/string-format/title-case";
 import { isSetString } from "@stryke/type-checks/is-set-string";
 import { isString } from "@stryke/type-checks/is-string";
+import { TsConfigJson } from "@stryke/types/tsconfig";
 import { defu } from "defu";
 import { StormStackCLIPluginContext } from "../types/build";
-import type { StormStackCLIPluginConfig } from "../types/config";
+import type { CLIPluginConfig } from "../types/config";
 
-export async function initContext(
+export async function initOptions(
   context: StormStackCLIPluginContext,
-  config: StormStackCLIPluginConfig
+  config: CLIPluginConfig
 ) {
   context.options.esbuild.override ??= {};
-  context.options.alias ??= {};
-
-  context.options.alias["storm:app"] ??= joinPaths(context.runtimePath, "app");
-  context.options.alias["storm:context"] ??= joinPaths(
-    context.runtimePath,
-    "context"
-  );
-  context.options.alias["storm:env"] ??= joinPaths(context.runtimePath, "env");
-  context.options.alias["storm:event"] ??= joinPaths(
-    context.runtimePath,
-    "event"
-  );
-  context.options.alias["storm:cli"] = joinPaths(context.runtimePath, "cli");
-
   context.options.platform = "node";
   context.options.environment = "cli";
 
-  context.options.external ??= [];
-  context.options.noExternal ??= [];
-  if (Array.isArray(context.options.noExternal)) {
-    context.options.noExternal.push(
-      "storm:app",
-      "storm:context",
-      "storm:env",
-      "storm:event",
-      "storm:cli"
-    );
-  }
-
-  context.options.dotenv ??= {};
-  context.options.dotenv.prefix = (
-    !context.options.dotenv.prefix
-      ? []
-      : Array.isArray(context.options.dotenv.prefix)
-        ? context.options.dotenv.prefix
-        : [context.options.dotenv.prefix]
-  ).reduce(
-    (ret, prefix) => {
-      const prefixName = constantCase(prefix.replace(/_$/, ""));
-      if (prefixName && !ret.includes(prefixName)) {
-        ret.push(prefixName);
-      }
-
-      return ret;
-    },
-    (!config.bin
-      ? []
-      : typeof config.bin === "string"
-        ? [config.bin]
-        : config.bin
-    ).map(bin => constantCase(bin))
-  );
+  context.options.dotenv.prefix = toArray(config.bin)
+    .reduce(
+      (ret, bin) => {
+        const prefix = constantCase(bin);
+        if (!ret.includes(prefix)) {
+          ret.push(prefix);
+        }
+        return ret;
+      },
+      toArray(context.options.dotenv.prefix ?? [])
+    )
+    .filter(Boolean);
 }
 
 export async function initInstalls(
   context: StormStackCLIPluginContext,
-  config: StormStackCLIPluginConfig
+  config: CLIPluginConfig
 ) {
   if (
     context.options.projectType === "application" &&
     config.interactive !== "never"
   ) {
-    context.installs["@clack/prompts@0.10.1"] = "dependency";
+    context.packageDeps["@clack/prompts@0.10.1"] = "dependency";
   }
 }
 
-export async function initUnimport(
+export async function initTsconfig(
   context: StormStackCLIPluginContext,
-  config: StormStackCLIPluginConfig
+  _config: CLIPluginConfig
 ) {
-  const imports = [
-    "parseArgs",
-    "colors",
-    "getColor",
-    "ColorName",
-    "link",
-    "LinkOptions"
-  ];
-  if (config.interactive !== "never") {
-    imports.push(
-      "prompt",
-      "PromptCommonOptions",
-      "TextPromptOptions",
-      "ConfirmPromptOptions",
-      "SelectPromptOptions",
-      "MultiSelectPromptOptions"
-    );
+  const tsconfigJson = await readJsonFile<TsConfigJson>(
+    context.tsconfig.tsconfigFilePath
+  );
+
+  tsconfigJson.compilerOptions ??= {};
+  tsconfigJson.compilerOptions.types ??= [];
+
+  if (context.tsconfig.options.sourceMap !== true) {
+    tsconfigJson.compilerOptions.sourceMap = true;
   }
 
-  context.unimportPresets ??= [];
-  context.unimportPresets.push({
-    imports,
-    from: joinPaths(context.runtimePath, "cli")
-  });
+  if (context.tsconfig.options.resolveJsonModule !== true) {
+    tsconfigJson.compilerOptions.resolveJsonModule = true;
+  }
+
+  if (context.tsconfig.options.allowJs !== true) {
+    tsconfigJson.compilerOptions.allowJs = true;
+  }
+
+  if (
+    !tsconfigJson.compilerOptions.types ||
+    !isMatchFound("node", tsconfigJson.compilerOptions.types)
+  ) {
+    tsconfigJson.compilerOptions.types ??= [];
+    tsconfigJson.compilerOptions.types.push("node");
+  }
+
+  return writeFile(
+    context.log,
+    context.tsconfig.tsconfigFilePath,
+    StormJSON.stringify(tsconfigJson)
+  );
 }
 
 export async function initEntry(
   log: LogFn,
   context: StormStackCLIPluginContext,
-  config: StormStackCLIPluginConfig
+  config: CLIPluginConfig
 ) {
   if (!isSetString(context.options.entry)) {
     throw new Error(
@@ -161,7 +135,7 @@ export async function initEntry(
   }
 
   const commandsDir = joinPaths(
-    context.workspaceConfig.workspaceRoot,
+    context.options.workspaceRoot,
     context.options.entry
   );
   if (!isDirectory(commandsDir)) {
@@ -176,7 +150,9 @@ export async function initEntry(
       (ret, file) => {
         const filePath = file.replace(commandsDir, "").replaceAll(/^\/+/g, "");
         ret[
-          filePath.replace(findFileExtension(filePath), "").replaceAll("/", "-")
+          filePath
+            .replace(findFileExtension(filePath) || "", "")
+            .replaceAll("/", "-")
         ] = filePath;
         return ret;
       },
@@ -244,7 +220,7 @@ export async function initEntry(
     if (!packageJson) {
       packageJson = await readJsonFile(
         joinPaths(
-          context.workspaceConfig.workspaceRoot,
+          context.options.workspaceRoot,
           context.options.projectRoot,
           "package.json"
         )
@@ -258,7 +234,7 @@ export async function initEntry(
           ret[kebabCase(binName)] = `${joinPaths("dist", bin)}.mjs`;
           return ret;
         },
-        binConfig as Record<string, string>
+        {} as Record<string, string>
       );
     } else {
       binConfig[kebabCase(bin)] = `${joinPaths("dist", bin)}.mjs`;
@@ -267,7 +243,7 @@ export async function initEntry(
     await writeFile(
       log,
       joinPaths(
-        context.workspaceConfig.workspaceRoot,
+        context.options.workspaceRoot,
         context.options.projectRoot,
         "package.json"
       ),
@@ -281,11 +257,9 @@ export async function initEntry(
       )
     );
 
-    const commandsDirectory = joinPaths(context.artifactsPath, "commands");
-
     log(
       LogLevelLabel.TRACE,
-      `Writing the following commands to the artifacts directory: ${commandsDirectory}`
+      `Writing the following commands to the artifacts directory: ${context.entryPath}`
     );
 
     context.entry = Object.keys(commandsDict).reduce((ret, command) => {
@@ -297,11 +271,14 @@ export async function initEntry(
         return ret;
       }
 
-      let entryFile = joinPaths(commandsDirectory, commandsDict[command]);
+      let entryFile = joinPaths(context.entryPath, commandsDict[command]);
       if (findFileName(entryFile) !== "index.ts") {
         entryFile = joinPaths(
           findFilePath(entryFile),
-          findFileName(entryFile).replace(findFileExtension(entryFile), ""),
+          findFileName(entryFile).replace(
+            findFileExtension(entryFile) || "",
+            ""
+          ),
           "index.ts"
         );
       }
@@ -322,7 +299,7 @@ export async function initEntry(
           },
           output: command,
           path: findFilePath(entryFile)
-            .replace(commandsDirectory, "")
+            .replace(context.entryPath, "")
             .replaceAll(/\/+$/g, "")
             .split("/")
             .filter(Boolean),
@@ -342,7 +319,7 @@ export async function initEntry(
       context.entry.some(
         entry =>
           entry.output === "completions" ||
-          entry.file === joinPaths(commandsDirectory, "completions", "index.ts")
+          entry.file === joinPaths(context.entryPath, "completions", "index.ts")
       )
     ) {
       throw new Error(
@@ -353,9 +330,9 @@ export async function initEntry(
     context.entry.push({
       title: "CLI Completions",
       description: `Commands for generating shell completion scripts for the ${titleCase(context.options.name)}.`,
-      file: joinPaths(commandsDirectory, "completions", "index.ts"),
+      file: joinPaths(context.entryPath, "completions", "index.ts"),
       input: {
-        file: joinPaths(commandsDirectory, "completions", "index.ts")
+        file: joinPaths(context.entryPath, "completions", "index.ts")
       },
       output: "completions",
       path: ["completions"],
@@ -367,7 +344,7 @@ export async function initEntry(
         entry =>
           entry.output === "completions-bash" ||
           entry.file ===
-            joinPaths(commandsDirectory, "completions", "bash", "index.ts")
+            joinPaths(context.entryPath, "completions", "bash", "index.ts")
       )
     ) {
       throw new Error(
@@ -377,9 +354,9 @@ export async function initEntry(
 
     context.entry.push({
       title: "CLI Completions - Bash Shell",
-      file: joinPaths(commandsDirectory, "completions", "bash", "index.ts"),
+      file: joinPaths(context.entryPath, "completions", "bash", "index.ts"),
       input: {
-        file: joinPaths(commandsDirectory, "completions", "bash", "handle.ts")
+        file: joinPaths(context.entryPath, "completions", "bash", "handle.ts")
       },
       output: "completions-bash",
       path: ["completions", "bash"],
@@ -391,7 +368,7 @@ export async function initEntry(
         entry =>
           entry.output === "completions-zsh" ||
           entry.file ===
-            joinPaths(commandsDirectory, "completions", "zsh", "index.ts")
+            joinPaths(context.entryPath, "completions", "zsh", "index.ts")
       )
     ) {
       throw new Error(
@@ -401,9 +378,9 @@ export async function initEntry(
 
     context.entry.push({
       title: "CLI Completions - Zsh Shell",
-      file: joinPaths(commandsDirectory, "completions", "zsh", "index.ts"),
+      file: joinPaths(context.entryPath, "completions", "zsh", "index.ts"),
       input: {
-        file: joinPaths(commandsDirectory, "completions", "zsh", "handle.ts")
+        file: joinPaths(context.entryPath, "completions", "zsh", "handle.ts")
       },
       output: "completions-zsh",
       path: ["completions", "zsh"],
@@ -420,7 +397,7 @@ export async function initEntry(
         context.entry.some(
           entry =>
             entry.output === "config" ||
-            entry.file === joinPaths(commandsDirectory, "config", "index.ts")
+            entry.file === joinPaths(context.entryPath, "config", "index.ts")
         )
       ) {
         throw new Error(
@@ -432,9 +409,9 @@ export async function initEntry(
         title: "Configuration Management",
         description:
           "Commands for managing the configuration parameters stored on the file system.",
-        file: joinPaths(commandsDirectory, "config", "index.ts"),
+        file: joinPaths(context.entryPath, "config", "index.ts"),
         input: {
-          file: joinPaths(commandsDirectory, "config", "index.ts")
+          file: joinPaths(context.entryPath, "config", "index.ts")
         },
         output: "config",
         path: ["config"],
@@ -446,7 +423,7 @@ export async function initEntry(
           entry =>
             entry.output === "config-get" ||
             entry.file ===
-              joinPaths(commandsDirectory, "config", "get", "index.ts")
+              joinPaths(context.entryPath, "config", "get", "index.ts")
         )
       ) {
         throw new Error(
@@ -456,9 +433,9 @@ export async function initEntry(
 
       context.entry.push({
         title: "Configuration - Get",
-        file: joinPaths(commandsDirectory, "config", "get", "index.ts"),
+        file: joinPaths(context.entryPath, "config", "get", "index.ts"),
         input: {
-          file: joinPaths(commandsDirectory, "config", "get", "handle.ts")
+          file: joinPaths(context.entryPath, "config", "get", "handle.ts")
         },
         output: "config-get-[name]",
         path: ["config", "get", "[name]"],
@@ -470,7 +447,7 @@ export async function initEntry(
           entry =>
             entry.output === "config-set" ||
             entry.file ===
-              joinPaths(commandsDirectory, "config", "set", "index.ts")
+              joinPaths(context.entryPath, "config", "set", "index.ts")
         )
       ) {
         throw new Error(
@@ -480,9 +457,9 @@ export async function initEntry(
 
       context.entry.push({
         title: "Configuration - Set",
-        file: joinPaths(commandsDirectory, "config", "set", "index.ts"),
+        file: joinPaths(context.entryPath, "config", "set", "index.ts"),
         input: {
-          file: joinPaths(commandsDirectory, "config", "set", "handle.ts")
+          file: joinPaths(context.entryPath, "config", "set", "handle.ts")
         },
         output: "config-set-[name]-[value]",
         path: ["config", "set", "[name]", "[value]"],
@@ -494,7 +471,7 @@ export async function initEntry(
           entry =>
             entry.output === "config-delete" ||
             entry.file ===
-              joinPaths(commandsDirectory, "config", "delete", "index.ts")
+              joinPaths(context.entryPath, "config", "delete", "index.ts")
         )
       ) {
         throw new Error(
@@ -504,9 +481,9 @@ export async function initEntry(
 
       context.entry.push({
         title: "Configuration - Delete",
-        file: joinPaths(commandsDirectory, "config", "delete", "index.ts"),
+        file: joinPaths(context.entryPath, "config", "delete", "index.ts"),
         input: {
-          file: joinPaths(commandsDirectory, "config", "delete", "handle.ts")
+          file: joinPaths(context.entryPath, "config", "delete", "handle.ts")
         },
         output: "config-delete-[name]",
         path: ["config", "delete", "[name]"],
@@ -518,7 +495,7 @@ export async function initEntry(
           entry =>
             entry.output === "config-list" ||
             entry.file ===
-              joinPaths(commandsDirectory, "config", "list", "index.ts")
+              joinPaths(context.entryPath, "config", "list", "index.ts")
         )
       ) {
         throw new Error(
@@ -528,9 +505,9 @@ export async function initEntry(
 
       context.entry.push({
         title: "Configuration - List",
-        file: joinPaths(commandsDirectory, "config", "list", "index.ts"),
+        file: joinPaths(context.entryPath, "config", "list", "index.ts"),
         input: {
-          file: joinPaths(commandsDirectory, "config", "list", "handle.ts")
+          file: joinPaths(context.entryPath, "config", "list", "handle.ts")
         },
         output: "config-list",
         path: ["config", "list"],
@@ -550,7 +527,7 @@ export async function initEntry(
       .reduce((ret, entry) => {
         const entryPath = findFilePath(entry.file);
         let parentPath = resolveParentPath(entryPath);
-        while (parentPath !== commandsDirectory) {
+        while (parentPath !== context.entryPath) {
           const parentFolderName = findFolderName(parentPath);
           if (
             !ret.some(existing => findFilePath(existing.file) === parentPath) &&
@@ -564,7 +541,7 @@ export async function initEntry(
               },
               output: parentFolderName,
               path: parentPath
-                .replace(commandsDirectory, "")
+                .replace(context.entryPath, "")
                 .split("/")
                 .filter(Boolean),
               isVirtual: true

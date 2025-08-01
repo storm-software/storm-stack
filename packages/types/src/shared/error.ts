@@ -5,7 +5,7 @@
  This code was released as part of the Storm Stack project. Storm Stack
  is maintained by Storm Software under the Apache-2.0 license, and is
  free for commercial and private use. For more information, please visit
- our licensing page at https://stormsoftware.com/license.
+ our licensing page at https://stormsoftware.com/licenses/projects/storm-stack.
 
  Website:                  https://stormsoftware.com
  Repository:               https://github.com/storm-software/storm-stack
@@ -80,7 +80,7 @@ export interface ParsedStacktrace {
 /**
  * The Storm Error interface.
  */
-export interface IStormError extends Error {
+export interface StormErrorInterface extends Error {
   /**
    * The error code
    */
@@ -109,7 +109,7 @@ export interface IStormError extends Error {
   /**
    * The underlying cause of the error, if any. This is typically another error object that caused this error to be thrown.
    */
-  cause: IStormError | undefined;
+  cause: StormErrorInterface | undefined;
 
   /**
    * The error stack

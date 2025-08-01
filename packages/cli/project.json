@@ -5,7 +5,11 @@
   "sourceRoot": "packages/cli/src",
   "targets": {
     "clean": {
-      "executor": "@storm-stack/nx:clean"
+      "cache": false,
+      "executor": "@storm-stack/nx:clean",
+      "options": {
+        "outputPath": "dist/packages/cli"
+      }
     },
     "prepare": {
       "cache": true,

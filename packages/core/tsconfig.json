@@ -2,13 +2,11 @@
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
     "rootDir": "../..",
-    "types": ["node", "vinyl"],
+    "types": ["node"],
     "strict": false,
-    "noUnusedLocals": false,
-    "noUnusedParameters": false,
     "outDir": "../../dist/out-tsc"
   },
-  "include": ["src/**/*.ts", "schemas/**/*.ts", "tsup.config.ts"],
+  "include": ["src/**/*.ts", "types/*.d.ts", "tsup.config.ts"],
   "exclude": ["jest.config.ts", "src/**/*.spec.ts", "src/**/*.test.ts"],
-  "reflection": false
+  "reflection": true
 }

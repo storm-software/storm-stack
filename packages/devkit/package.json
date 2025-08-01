@@ -68,6 +68,20 @@
         "default": "./dist/index.js"
       }
     },
+    "./types": {
+      "import": {
+        "types": "./dist/types.d.ts",
+        "default": "./dist/types.js"
+      },
+      "require": {
+        "types": "./dist/types.d.cts",
+        "default": "./dist/types.cjs"
+      },
+      "default": {
+        "types": "./dist/types.d.ts",
+        "default": "./dist/types.js"
+      }
+    },
     "./plugins": {
       "import": {
         "types": "./dist/plugins/index.d.ts",
@@ -96,74 +110,60 @@
         "default": "./dist/plugins/*.js"
       }
     },
-    "./helpers": {
+    "./babel": {
       "import": {
-        "types": "./dist/helpers/index.d.ts",
-        "default": "./dist/helpers/index.js"
+        "types": "./dist/babel/index.d.ts",
+        "default": "./dist/babel/index.js"
       },
       "require": {
-        "types": "./dist/helpers/index.d.cts",
-        "default": "./dist/helpers/index.cjs"
+        "types": "./dist/babel/index.d.cts",
+        "default": "./dist/babel/index.cjs"
       },
       "default": {
-        "types": "./dist/helpers/index.d.ts",
-        "default": "./dist/helpers/index.js"
+        "types": "./dist/babel/index.d.ts",
+        "default": "./dist/babel/index.js"
       }
     },
-    "./helpers/esbuild": {
+    "./babel/*": {
       "import": {
-        "types": "./dist/helpers/esbuild/index.d.ts",
-        "default": "./dist/helpers/esbuild/index.js"
+        "types": "./dist/babel/*.d.ts",
+        "default": "./dist/babel/*.js"
       },
       "require": {
-        "types": "./dist/helpers/esbuild/index.d.cts",
-        "default": "./dist/helpers/esbuild/index.cjs"
+        "types": "./dist/babel/*.d.cts",
+        "default": "./dist/babel/*.cjs"
       },
       "default": {
-        "types": "./dist/helpers/esbuild/index.d.ts",
-        "default": "./dist/helpers/esbuild/index.js"
+        "types": "./dist/babel/*.d.ts",
+        "default": "./dist/babel/*.js"
       }
     },
-    "./helpers/esbuild/*": {
+    "./templates": {
       "import": {
-        "types": "./dist/helpers/esbuild/*.d.ts",
-        "default": "./dist/helpers/esbuild/*.js"
+        "types": "./dist/templates/index.d.ts",
+        "default": "./dist/templates/index.js"
       },
       "require": {
-        "types": "./dist/helpers/esbuild/*.d.cts",
-        "default": "./dist/helpers/esbuild/*.cjs"
+        "types": "./dist/templates/index.d.cts",
+        "default": "./dist/templates/index.cjs"
       },
       "default": {
-        "types": "./dist/helpers/esbuild/*.d.ts",
-        "default": "./dist/helpers/esbuild/*.js"
+        "types": "./dist/templates/index.d.ts",
+        "default": "./dist/templates/index.js"
       }
     },
-    "./helpers/unbuild": {
+    "./templates/*": {
       "import": {
-        "types": "./dist/helpers/unbuild/index.d.ts",
-        "default": "./dist/helpers/unbuild/index.js"
+        "types": "./dist/templates/*.d.ts",
+        "default": "./dist/templates/*.js"
       },
       "require": {
-        "types": "./dist/helpers/unbuild/index.d.cts",
-        "default": "./dist/helpers/unbuild/index.cjs"
+        "types": "./dist/templates/*.d.cts",
+        "default": "./dist/templates/*.cjs"
       },
       "default": {
-        "types": "./dist/helpers/unbuild/index.d.ts",
-        "default": "./dist/helpers/unbuild/index.js"
-      }
-    },
-    "./helpers/unbuild/*": {
-      "import": {
-        "types": "./dist/helpers/unbuild/*.d.ts",
-        "default": "./dist/helpers/unbuild/*.js"
-      },
-      "require": {
-        "types": "./dist/helpers/unbuild/*.d.cts",
-        "default": "./dist/helpers/unbuild/*.cjs"
-      },
-      "default": {
-        "types": "./dist/helpers/unbuild/*.d.ts",
-        "default": "./dist/helpers/unbuild/*.js"
+        "types": "./dist/templates/*.d.ts",
+        "default": "./dist/templates/*.js"
       }
     }
   },
@@ -176,18 +176,24 @@
     "devkit"
   ],
   "dependencies": {
+    "@alloy-js/core": "catalog:",
+    "@alloy-js/typescript": "catalog:",
+    "@babel/helper-plugin-utils": "catalog:",
+    "@storm-software/config-tools": "catalog:",
     "@storm-software/esbuild": "catalog:",
     "@storm-software/unbuild": "catalog:",
-    "@storm-stack/core": "0.33.1",
+    "@storm-stack/core": "workspace:*",
     "@stryke/path": "catalog:",
     "@stryke/string-format": "catalog:",
     "defu": "catalog:",
-    "esbuild": "catalog:"
+    "esbuild": "catalog:",
+    "jiti": "catalog:"
   },
   "devDependencies": {
-    "@storm-stack/types": "0.14.2",
+    "@storm-stack/types": "workspace:*",
     "@types/node": "catalog:",
-    "tsup": "catalog:"
+    "tsup": "catalog:",
+    "typescript": "5.9.0-beta"
   },
   "publishConfig": {
     "access": "public"

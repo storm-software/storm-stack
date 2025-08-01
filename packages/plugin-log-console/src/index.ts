@@ -5,7 +5,7 @@
  This code was released as part of the Storm Stack project. Storm Stack
  is maintained by Storm Software under the Apache-2.0 license, and is
  free for commercial and private use. For more information, please visit
- our licensing page at https://stormsoftware.com/license.
+ our licensing page at https://stormsoftware.com/licenses/projects/storm-stack.
 
  Website:                  https://stormsoftware.com
  Repository:               https://github.com/storm-software/storm-stack
@@ -16,8 +16,8 @@
 
  ------------------------------------------------------------------- */
 
-import { PluginOptions } from "@storm-stack/core/base/plugin";
-import { getFileHeader } from "@storm-stack/core/helpers/utilities/file-header";
+import { getFileHeader } from "@storm-stack/core/lib/utilities/file-header";
+import type { PluginOptions } from "@storm-stack/core/types/plugin";
 import type { LogPluginConfig } from "@storm-stack/devkit/plugins/log";
 import LogPlugin from "@storm-stack/devkit/plugins/log";
 
@@ -26,10 +26,10 @@ export default class LogConsolePlugin extends LogPlugin {
     super(options);
   }
 
-  protected override writeSink() {
+  protected override writeAdapter() {
     return `${getFileHeader()}
 
-import type { LogLevel, LogRecord } from "@storm-stack/types/log";
+import { LogLevel, LogRecord } from "@storm-stack/types/log";
 
 /**
  * The severity level abbreviations.
@@ -117,7 +117,7 @@ function write(level: LogLevel, ...message: unknown[]) {
   }
 }
 
-const sink = (record: LogRecord) => {
+export const adapter = (record: LogRecord) => {
   const args = formatter(record);
   if (typeof args === "string") {
     const msg = String(args).replace(/\\r?\\n$/, "");
@@ -127,7 +127,7 @@ const sink = (record: LogRecord) => {
   }
 };
 
-export default sink;
+export default adapter;
   `;
   }
 }

@@ -74,16 +74,17 @@
   "dependencies": {
     "@ltd/j-toml": "catalog:",
     "@storm-software/config-tools": "catalog:",
-    "@storm-stack/core": "0.33.1",
-    "@storm-stack/devkit": "0.9.1",
+    "@storm-stack/core": "workspace:*",
+    "@storm-stack/devkit": "workspace:*",
     "@stryke/fs": "catalog:",
     "@stryke/path": "catalog:",
     "unstorage": "catalog:"
   },
   "devDependencies": {
-    "@storm-stack/nx": "0.14.2",
+    "@storm-stack/nx": "workspace:*",
     "@types/node": "catalog:",
-    "tsup": "catalog:"
+    "tsup": "catalog:",
+    "typescript": "5.9.0-beta"
   },
   "publishConfig": {
     "access": "public"

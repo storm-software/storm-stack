@@ -5,7 +5,7 @@
  This code was released as part of the Storm Stack project. Storm Stack
  is maintained by Storm Software under the Apache-2.0 license, and is
  free for commercial and private use. For more information, please visit
- our licensing page at https://stormsoftware.com/license.
+ our licensing page at https://stormsoftware.com/licenses/projects/storm-stack.
 
  Website:                  https://stormsoftware.com
  Repository:               https://github.com/storm-software/storm-stack
@@ -127,13 +127,15 @@ export const createNodesV2: CreateNodesV2<StormStackToolsPluginOptions> = [
               "{projectRoot}/*.md",
               "{projectRoot}/package.json"
             ],
-            outputs: ["{workspaceRoot}/dist/{projectRoot}"],
+            outputs: [`{workspaceRoot}/dist/${relativeRoot}`],
             executor: "nx:run-commands",
             dependsOn: ["build-base"],
             options: {
               commands: [
                 `pnpm copyfiles LICENSE dist/${relativeRoot}`,
-                `pnpm copyfiles --up=2 ./${relativeRoot}/*.md ./${relativeRoot}/package.json dist/${relativeRoot}`,
+                `pnpm copyfiles --up=2 ./${relativeRoot}/*.md ./${
+                  relativeRoot
+                }/package.json dist/${relativeRoot}`,
                 `pnpm copyfiles --up=3 "./${relativeRoot}/dist/**/*" dist/${relativeRoot}/dist`
               ]
             }

@@ -12,6 +12,9 @@
     "davidanson.vscode-markdownlint",
     "mikestead.dotenv",
     "bbenoist.nix",
-    "antfu.pnpm-catalog-lens"
+    "antfu.pnpm-catalog-lens",
+    "redhat.vscode-yaml",
+    "tamasfe.even-better-toml",
+    "griimick.vhs"
   ]
 }

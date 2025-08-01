@@ -5,7 +5,7 @@
  This code was released as part of the Storm Stack project. Storm Stack
  is maintained by Storm Software under the Apache-2.0 license, and is
  free for commercial and private use. For more information, please visit
- our licensing page at https://stormsoftware.com/license.
+ our licensing page at https://stormsoftware.com/licenses/projects/storm-stack.
 
  Website:                  https://stormsoftware.com
  Repository:               https://github.com/storm-software/storm-stack
@@ -86,18 +86,18 @@ export interface LogRecord {
 }
 
 /**
- * A sink is a function that accepts a log record and prints it somewhere.
+ * A adapter is a function that accepts a log record and prints it somewhere.
  *
- * @param record - The log record to sink.
+ * @param record - The log record to adapter.
  */
-export type LogSink = (record: LogRecord) => void;
+export type LogAdapter = (record: LogRecord) => void;
 
 /**
  * A filter is a function that accepts a log record and returns `true` if the
- * record should be passed to the sink.
+ * record should be passed to the adapter.
  *
  * @param record - The log record to filter.
- * @returns `true` if the record should be passed to the sink.
+ * @returns `true` if the record should be passed to the adapter.
  */
 export type LogFilter = (record: LogRecord) => boolean;
 
@@ -146,7 +146,7 @@ export interface FormattedValues {
  * $storm.log.fatal(`A fatal error message with ${value}.`);
  * ```
  */
-export interface IStormLog {
+export interface StormLogInterface {
   /**
    * Get a logger with contextual properties. This is useful for log multiple messages with the shared set of properties.
    *
@@ -169,7 +169,7 @@ export interface IStormLog {
    * @param properties - The properties to add to the logger.
    * @returns A logger with the specified properties.
    */
-  with: (properties: Record<string, unknown>) => IStormLog;
+  with: (properties: Record<string, unknown>) => StormLogInterface;
 
   /**
    * Log a debug message. Use this as a template string prefix.
@@ -272,14 +272,14 @@ export interface IStormLog {
     ((callback: LogCallback) => void);
 }
 
-export interface LogSinkInstance {
+export interface LogAdapterInstance {
   /**
-   * The log sink function.
+   * The log adapter function.
    */
-  handle: LogSink;
+  handle: LogAdapter;
 
   /**
-   * The lowest log level for the sink to accept.
+   * The lowest log level for the adapter to accept.
    */
   logLevel: LogLevel;
 }

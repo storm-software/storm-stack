@@ -36,7 +36,6 @@ A list of plugins to use during Storm Stack processing
 
 ## `mode`
 - **Type**: `string`
-- **Default**: `"production"`
 
 > Mode
 
@@ -92,7 +91,6 @@ Skip linting the project when building
 
 ## `logLevel`
 - **Type**: `string`
-- **Default**: `"info"`
 
 > Log Level
 

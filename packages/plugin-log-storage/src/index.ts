@@ -5,7 +5,7 @@
  This code was released as part of the Storm Stack project. Storm Stack
  is maintained by Storm Software under the Apache-2.0 license, and is
  free for commercial and private use. For more information, please visit
- our licensing page at https://stormsoftware.com/license.
+ our licensing page at https://stormsoftware.com/licenses/projects/storm-stack.
 
  Website:                  https://stormsoftware.com
  Repository:               https://github.com/storm-software/storm-stack
@@ -16,8 +16,8 @@
 
  ------------------------------------------------------------------- */
 
-import { PluginOptions } from "@storm-stack/core/base/plugin";
-import { getFileHeader } from "@storm-stack/core/helpers/utilities/file-header";
+import { getFileHeader } from "@storm-stack/core/lib/utilities/file-header";
+import type { PluginOptions } from "@storm-stack/core/types/plugin";
 import type { LogPluginConfig } from "@storm-stack/devkit/plugins/log";
 import LogPlugin from "@storm-stack/devkit/plugins/log";
 
@@ -55,22 +55,22 @@ export default class LogStoragePlugin extends LogPlugin<LogStoragePluginConfig> 
     }
   }
 
-  protected override writeSink() {
+  protected override writeAdapter() {
     return `${getFileHeader()}
 
-import type { LogRecord, LogSink } from "@storm-stack/types/log";
-import type { StorageValue } from "unstorage";
-import type {
+import { LogRecord, LogAdapter } from "@storm-stack/types/log";
+import { StorageValue } from "unstorage";
+import {
   TextFormatter,
   TextFormatterOptions
 } from "@storm-stack/plugin-log-storage/types";
-import type {
+import {
   FormattedValues,
   LogLevel,
   LogRecord
 } from "@storm-stack/types/log";
 import util from "node:util";
-import { storage } from "../storage";
+import { storage } from "storm:storage";
 
 /**
  * The severity level abbreviations.
@@ -230,16 +230,16 @@ export function getTextFormatter(
  */
 const formatter: TextFormatter = getTextFormatter();
 
-const sink: LogSink & AsyncDisposable = (record: LogRecord) => {
+const adapter: LogAdapter & AsyncDisposable = (record: LogRecord) => {
   void storage.setItem(
     \`${this.options.namespace}:storm-\${new Date().toISOString().replace("T", "_").replace("Z", "")}.log\`,
     formatter(record)
   );
 };
 
-sink[Symbol.asyncDispose] = async () => storage.dispose();
+adapter[Symbol.asyncDispose] = async () => storage.dispose();
 
-export default sink;
+export default adapter;
 `;
   }
 }

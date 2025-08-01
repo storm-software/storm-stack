@@ -5,7 +5,7 @@
  This code was released as part of the Storm Stack project. Storm Stack
  is maintained by Storm Software under the Apache-2.0 license, and is
  free for commercial and private use. For more information, please visit
- our licensing page at https://stormsoftware.com/license.
+ our licensing page at https://stormsoftware.com/licenses/projects/storm-stack.
 
  Website:                  https://stormsoftware.com
  Repository:               https://github.com/storm-software/storm-stack
@@ -18,4 +18,13 @@
 
 import { StormSentryLogConfig } from "@storm-stack/plugin-log-sentry/types";
 
-export interface StormStackCLIVariables extends StormSentryLogConfig {}
+export interface StormStackCLIConfig extends StormSentryLogConfig {
+  /**
+   * The mode used for outputting results.
+   * - `memory`: Generated source code is stored in a virtual file system to reduce boilerplate.
+   * - `fs`: Outputs generated results to the local file system.
+   *
+   * @defaultValue "memory"
+   */
+  OUTPUT_MODE?: "memory" | "fs";
+}

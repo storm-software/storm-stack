@@ -5,7 +5,7 @@
  This code was released as part of the Storm Stack project. Storm Stack
  is maintained by Storm Software under the Apache-2.0 license, and is
  free for commercial and private use. For more information, please visit
- our licensing page at https://stormsoftware.com/license.
+ our licensing page at https://stormsoftware.com/licenses/projects/storm-stack.
 
  Website:                  https://stormsoftware.com
  Repository:               https://github.com/storm-software/storm-stack
@@ -18,10 +18,9 @@
 
 import { parse as parseToml, stringify as stringifyToml } from "@ltd/j-toml";
 import { LogLevelLabel } from "@storm-software/config-tools/types";
-import { PluginOptions } from "@storm-stack/core/base/plugin";
-
-import { getFileHeader } from "@storm-stack/core/helpers/utilities/file-header";
+import { getFileHeader } from "@storm-stack/core/lib/utilities/file-header";
 import type { Context, EngineHooks } from "@storm-stack/core/types";
+import type { PluginOptions } from "@storm-stack/core/types/plugin";
 import type { StoragePluginConfig } from "@storm-stack/devkit/plugins/storage";
 import StoragePlugin from "@storm-stack/devkit/plugins/storage";
 import { readFile } from "@stryke/fs";
@@ -62,12 +61,12 @@ export default class StorageCloudflareKVPlugin extends StoragePlugin<StorageClou
    *
    * @param hooks - The engine hooks to add the plugin hooks to.
    */
-  public override innerAddHooks(hooks: EngineHooks) {
+  public override addHooks(hooks: EngineHooks) {
     hooks.addHooks({
       "prepare:config": this.#prepareConfig.bind(this)
     });
 
-    super.innerAddHooks(hooks);
+    super.addHooks(hooks);
   }
 
   protected override writeStorage() {
@@ -77,12 +76,15 @@ export default class StorageCloudflareKVPlugin extends StoragePlugin<StorageClou
 import cloudflareKVBindingDriver from "unstorage/drivers/cloudflare-kv-binding";
 import { env } from "cloudflare:workers";
 
-export default cloudflareKVBindingDriver({ binding: env.${this.options.binding}, minTTL: ${this.options.minTTL ?? 60} });
+export default cloudflareKVBindingDriver({ binding: env.${
+        this.options.binding
+      }, minTTL: ${this.options.minTTL ?? 60} });
 `;
     } else {
       return `${getFileHeader()}
 
 import cloudflareKVHTTPDriver from "unstorage/drivers/cloudflare-kv-http";
+import { StormError } from "storm:error";
 
 const accountId = process.env.CLOUDFLARE_ACCOUNT_ID || $storm.config.CLOUDFLARE_ACCOUNT_ID;
 const apiToken = process.env.CLOUDFLARE_API_TOKEN || $storm.config.CLOUDFLARE_API_TOKEN;
@@ -99,7 +101,7 @@ if (!apiToken && (!email || !apiKey) && !userServiceKey) {
   throw new StormError({ type: "general", code: 14 });
 }
 
-export default cloudflareKVHTTPDriver({
+export const adapter cloudflareKVHTTPDriver({
   accountId,
   namespaceId: ${this.options.namespace ? `"${this.options.namespace}"` : "undefined"},
   apiToken,
@@ -108,6 +110,8 @@ export default cloudflareKVHTTPDriver({
   userServiceKey,
   minTTL: ${this.options.minTTL ?? 60}
 });
+
+export default adapter;
 `;
     }
   }
@@ -146,7 +150,7 @@ export default cloudflareKVHTTPDriver({
         });
       }
 
-      return this.writeFile(
+      return context.vfs.writeFileToDisk(
         wranglerFilePath,
         stringifyToml(wranglerFile, {
           newline: "\n",
@@ -154,7 +158,7 @@ export default cloudflareKVHTTPDriver({
           indent: 4,
           forceInlineArraySpacing: 0
         }),
-        true
+        { skipFormat: true }
       );
     }
   }

@@ -56,10 +56,6 @@
 - Updated devkit to 0.7.6
 - Updated core to 0.31.1
 
-![Storm Software](https://public.storm-cdn.com/brand-banner.png)
-
-# Changelog for Storm Stack - Preset CLI
-
 ## [0.23.0](https://github.com/storm-software/storm-stack/releases/tag/plugin-cli%400.23.0) (2025-06-23)
 
 ### Features
@@ -122,10 +118,6 @@
 
 - Updated devkit to 0.7.3
 - Updated core to 0.29.1
-
-![Storm Software](https://public.storm-cdn.com/brand-banner.png)
-
-# Changelog for Storm Stack - Preset Cli
 
 ## [0.20.0](https://github.com/storm-software/storm-stack/releases/tag/plugin-cli%400.20.0) (2025-06-17)
 

@@ -5,7 +5,7 @@
  This code was released as part of the Storm Stack project. Storm Stack
  is maintained by Storm Software under the Apache-2.0 license, and is
  free for commercial and private use. For more information, please visit
- our licensing page at https://stormsoftware.com/license.
+ our licensing page at https://stormsoftware.com/licenses/projects/storm-stack.
 
  Website:                  https://stormsoftware.com
  Repository:               https://github.com/storm-software/storm-stack
@@ -16,9 +16,9 @@
 
  ------------------------------------------------------------------- */
 
-import { PluginOptions } from "@storm-stack/core/base/plugin";
-import { getFileHeader } from "@storm-stack/core/helpers/utilities/file-header";
+import { getFileHeader } from "@storm-stack/core/lib/utilities/file-header";
 import type { Context, EngineHooks } from "@storm-stack/core/types";
+import type { PluginOptions } from "@storm-stack/core/types/plugin";
 import type { LogPluginConfig } from "@storm-stack/devkit/plugins/log";
 import LogPlugin from "@storm-stack/devkit/plugins/log";
 
@@ -41,29 +41,30 @@ export interface LogSentryPluginConfig extends LogPluginConfig {
 }
 
 export default class LogSentryPlugin extends LogPlugin<LogSentryPluginConfig> {
-  protected override installs = {
-    "@sentry/core@^9.15.0": "dependency"
-  } as Record<string, "dependency" | "devDependency">;
-
   public constructor(options: PluginOptions<LogSentryPluginConfig>) {
     super(options);
   }
 
-  public override innerAddHooks(hooks: EngineHooks) {
+  /**
+   * Adds hooks to the Storm Stack engine for the Sentry plugin.
+   *
+   * @param hooks - The engine hooks to add
+   */
+  public override addHooks(hooks: EngineHooks) {
     hooks.addHooks({
-      "init:context": this.#initContext.bind(this)
+      "init:install": this.#initInstall.bind(this)
     });
 
-    super.innerAddHooks(hooks);
+    super.addHooks(hooks);
   }
 
-  protected override writeSink(_context: Context) {
+  protected override writeAdapter(_context: Context) {
     return `${getFileHeader()}
 
 import type { Client, ParameterizedString } from "@sentry/core";
 import { getClient } from "@sentry/core";
 import * as Sentry from "@sentry/node";
-import type { LogRecord, LogSink } from "@storm-stack/types/log";
+import { LogRecord, LogAdapter } from "@storm-stack/types/log";
 
 /**
  * A platform-specific inspect function. In Deno, this is {@link Deno.inspect}, and in Node.js/Bun it is {@link util.inspect}. If neither is available, it falls back to {@link StormJSON.stringify}.
@@ -120,18 +121,18 @@ function getParameterizedString(record: LogRecord): ParameterizedString {
 }
 
 Sentry.init({
-  dsn: $storm.config.SENTRY_DSN,
-  environment: $storm.config.ENVIRONMENT,
-  release: $storm.config.RELEASE_TAG,
-  debug: !!$storm.config.DEBUG,
+  dsn: $storm.dotenv.SENTRY_DSN,
+  environment: $storm.dotenv.ENVIRONMENT,
+  release: $storm.dotenv.RELEASE_TAG,
+  debug: !!$storm.dotenv.DEBUG,
   enabled: true,
-  attachStacktrace: !!$storm.config.STACKTRACE,
+  attachStacktrace: !!$storm.dotenv.STACKTRACE,
   sendClientReports: true
 });
 
 const client = getClient();
 
-const sink = (record: LogRecord) => {
+export const adapter = (record: LogRecord) => {
   if (record.level === "error" || record.level === "fatal") {
     client?.captureException(getParameterizedString(record), {
       data: record.properties
@@ -143,7 +144,7 @@ const sink = (record: LogRecord) => {
   });
 };
 
-export default sink;
+export default adapter;
 `;
   }
 
@@ -152,11 +153,11 @@ export default sink;
    *
    * @param context - The context to initialize.
    */
-  async #initContext(context: Context) {
-    context.installs["@sentry/core@^9.15.0"] = "dependency";
+  async #initInstall(context: Context) {
+    context.packageDeps["@sentry/core@^9.15.0"] = "dependency";
 
     if (context.options.platform === "node") {
-      context.installs["@sentry/node@^9.15.0"] = "dependency";
+      context.packageDeps["@sentry/node@^9.15.0"] = "dependency";
     }
   }
 }

@@ -90,14 +90,16 @@
     }
   },
   "dependencies": {
-    "@storm-stack/core": "0.33.1",
-    "@storm-stack/devkit": "0.9.1",
+    "@deepkit/type": "catalog:",
+    "@storm-stack/core": "workspace:*",
+    "@storm-stack/devkit": "workspace:*",
     "@stryke/json": "catalog:"
   },
   "devDependencies": {
-    "@storm-stack/nx": "0.14.2",
+    "@storm-stack/nx": "workspace:*",
     "@types/node": "catalog:",
-    "tsup": "catalog:"
+    "tsup": "catalog:",
+    "typescript": "5.9.0-beta"
   },
   "publishConfig": {
     "access": "public"

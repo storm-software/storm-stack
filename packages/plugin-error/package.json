@@ -1,0 +1,165 @@
+{
+  "name": "@storm-stack/plugin-error",
+  "version": "0.0.1",
+  "type": "module",
+  "description": "A package containing a Storm Stack base plugin for managing error messages through an external JSON file.",
+  "repository": {
+    "type": "github",
+    "url": "https://github.com/storm-software/storm-stack.git",
+    "directory": "packages/plugin-error"
+  },
+  "homepage": "https://stormsoftware.com",
+  "bugs": {
+    "url": "https://stormsoftware.com/support",
+    "email": "support@stormsoftware.com"
+  },
+  "author": {
+    "name": "Storm Software",
+    "email": "contact@stormsoftware.com",
+    "url": "https://stormsoftware.com"
+  },
+  "maintainers": [
+    {
+      "name": "Storm Software",
+      "email": "contact@stormsoftware.com",
+      "url": "https://stormsoftware.com"
+    }
+  ],
+  "contributors": [
+    {
+      "name": "Storm Software",
+      "email": "contact@stormsoftware.com",
+      "url": "https://stormsoftware.com"
+    }
+  ],
+  "funding": {
+    "type": "github",
+    "url": "https://github.com/sponsors/storm-software"
+  },
+  "license": "Apache-2.0",
+  "private": false,
+  "exports": {
+    "./package.json": "./package.json",
+    ".": {
+      "import": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      },
+      "require": {
+        "types": "./dist/index.d.cts",
+        "default": "./dist/index.cjs"
+      },
+      "default": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      }
+    },
+    "./index": {
+      "import": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      },
+      "require": {
+        "types": "./dist/index.d.cts",
+        "default": "./dist/index.cjs"
+      },
+      "default": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      }
+    },
+    "./plugin": {
+      "import": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      },
+      "require": {
+        "types": "./dist/index.d.cts",
+        "default": "./dist/index.cjs"
+      },
+      "default": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      }
+    },
+    "./types": {
+      "import": {
+        "types": "./dist/types.d.ts",
+        "default": "./dist/types.js"
+      },
+      "require": {
+        "types": "./dist/types.d.cts",
+        "default": "./dist/types.cjs"
+      },
+      "default": {
+        "types": "./dist/types.d.ts",
+        "default": "./dist/types.js"
+      }
+    },
+    "./templates": {
+      "import": {
+        "types": "./dist/templates/index.d.ts",
+        "default": "./dist/templates/index.js"
+      },
+      "require": {
+        "types": "./dist/templates/index.d.cts",
+        "default": "./dist/templates/index.cjs"
+      },
+      "default": {
+        "types": "./dist/templates/index.d.ts",
+        "default": "./dist/templates/index.js"
+      }
+    },
+    "./templates/*": {
+      "import": {
+        "types": "./dist/templates/*.d.ts",
+        "default": "./dist/templates/*.js"
+      },
+      "require": {
+        "types": "./dist/templates/*.d.cts",
+        "default": "./dist/templates/*.cjs"
+      },
+      "default": {
+        "types": "./dist/templates/*.d.ts",
+        "default": "./dist/templates/*.js"
+      }
+    }
+  },
+  "files": [
+    "dist/**/*"
+  ],
+  "keywords": [
+    "storm-stack",
+    "storm-software",
+    "storm-stack-plugin"
+  ],
+  "peerDependencies": {
+    "@storm-stack/plugin-dotenv": "*"
+  },
+  "peerDependenciesMeta": {
+    "@storm-stack/plugin-dotenv": {
+      "optional": false
+    }
+  },
+  "dependencies": {
+    "@babel/generator": "catalog:",
+    "@babel/helper-module-imports": "catalog:",
+    "@deepkit/type": "catalog:",
+    "@storm-software/config": "catalog:",
+    "@storm-software/config-tools": "catalog:",
+    "@storm-stack/core": "workspace:*",
+    "@storm-stack/devkit": "workspace:*",
+    "@stryke/json": "catalog:",
+    "@stryke/path": "catalog:",
+    "@stryke/string-format": "catalog:"
+  },
+  "devDependencies": {
+    "@storm-stack/nx": "workspace:*",
+    "@types/node": "catalog:",
+    "tsup": "catalog:",
+    "typescript": "5.9.0-beta"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

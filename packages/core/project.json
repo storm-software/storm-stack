@@ -27,7 +27,7 @@
     },
     "build": {
       "executor": "nx:run-commands",
-      "dependsOn": ["build-schema", "build-base"],
+      "dependsOn": ["build-base"],
       "options": {
         "commands": [
           "pnpm copyfiles LICENSE dist/packages/core",

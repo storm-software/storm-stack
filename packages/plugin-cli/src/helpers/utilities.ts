@@ -5,7 +5,7 @@
  This code was released as part of the Storm Stack project. Storm Stack
  is maintained by Storm Software under the Apache-2.0 license, and is
  free for commercial and private use. For more information, please visit
- our licensing page at https://stormsoftware.com/license.
+ our licensing page at https://stormsoftware.com/licenses/projects/storm-stack.
 
  Website:                  https://stormsoftware.com
  Repository:               https://github.com/storm-software/storm-stack
@@ -24,7 +24,7 @@ import {
   Type
 } from "@deepkit/type";
 import { OrganizationConfig } from "@storm-software/config/types";
-import { reflectType } from "@storm-stack/core/helpers/deepkit/reflect-type";
+import { reflectType } from "@storm-stack/core/lib/deepkit/reflect-type";
 import { joinPaths } from "@stryke/path/index";
 import { kebabCase } from "@stryke/string-format/kebab-case";
 import { titleCase } from "@stryke/string-format/title-case";
@@ -35,7 +35,7 @@ import { TypeDefinition } from "@stryke/types/configuration";
 import defu from "defu";
 import { CommandPayloadArg } from "../data/command-payload";
 import { StormStackCLIPluginContext } from "../types/build";
-import { StormStackCLIPluginConfig } from "../types/config";
+import { CLIPluginConfig } from "../types/config";
 import { Command, CommandTree } from "../types/reflection";
 
 /**
@@ -99,7 +99,7 @@ export function isValidMinNodeVersion(
  */
 export function extractAuthor(
   context: StormStackCLIPluginContext,
-  config: StormStackCLIPluginConfig = {}
+  config: CLIPluginConfig = {}
 ): OrganizationConfig | undefined {
   let author: OrganizationConfig | undefined;
   if (config.author) {
@@ -110,12 +110,12 @@ export function extractAuthor(
     }
   }
 
-  if (context.workspaceConfig.organization) {
-    if (isString(context.workspaceConfig.organization) && !author?.name) {
+  if (context.options.organization) {
+    if (isString(context.options.organization) && !author?.name) {
       author ??= {} as OrganizationConfig;
-      author.name = context.workspaceConfig.organization;
+      author.name = context.options.organization;
     } else {
-      author = defu(author ?? {}, context.workspaceConfig.organization);
+      author = defu(author ?? {}, context.options.organization);
     }
   }
 
@@ -158,7 +158,7 @@ export function extractAuthor(
  */
 export function getAppName(
   context: StormStackCLIPluginContext,
-  config: StormStackCLIPluginConfig = {}
+  config: CLIPluginConfig = {}
 ): string {
   const result =
     config.bin &&
@@ -186,7 +186,7 @@ export function getAppName(
  */
 export function getAppTitle(
   context: StormStackCLIPluginContext,
-  config: StormStackCLIPluginConfig = {}
+  config: CLIPluginConfig = {}
 ): string {
   return titleCase(context.options.name || getAppName(context, config));
 }
@@ -262,7 +262,7 @@ export function extractCommandFunctionPayloadData(
       `Command method payloads must be of type 'StormPayload'. ${
         !payload
           ? "No payload type provided."
-          : `Provided payload is the incorrect type: ${payload.getClassName()}`
+          : `Provided payload is the incorrect type: '${payload.getName()}'.`
       }.`
     );
   }
@@ -272,7 +272,8 @@ export function extractCommandFunctionPayloadData(
     !payloadDataType ||
     (payloadDataType.kind !== ReflectionKind.objectLiteral &&
       payloadDataType.kind !== ReflectionKind.class &&
-      payloadDataType.kind !== ReflectionKind.object)
+      payloadDataType.kind !== ReflectionKind.object &&
+      payloadDataType.kind !== ReflectionKind.any)
   ) {
     throw new Error(
       `Command method payloads must be of type 'StormPayload', received: ${
@@ -308,7 +309,9 @@ export async function reflectPayloadBaseType(
     context,
     getPayloadBaseTypeDefinition(context),
     {
-      skipDotenvTransform: true
+      skipNodeModulesBundle: true,
+      noExternal: context.options.noExternal,
+      external: ["@storm-stack/core"]
     }
   );
 

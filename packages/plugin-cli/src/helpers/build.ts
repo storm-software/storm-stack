@@ -5,7 +5,7 @@
  This code was released as part of the Storm Stack project. Storm Stack
  is maintained by Storm Software under the Apache-2.0 license, and is
  free for commercial and private use. For more information, please visit
- our licensing page at https://stormsoftware.com/license.
+ our licensing page at https://stormsoftware.com/licenses/projects/storm-stack.
 
  Website:                  https://stormsoftware.com
  Repository:               https://github.com/storm-software/storm-stack
@@ -17,9 +17,10 @@
  ------------------------------------------------------------------- */
 
 import { LogLevelLabel } from "@storm-software/config-tools/types";
-import type { Context, LogFn } from "@storm-stack/core/types";
-import { esbuild } from "@storm-stack/devkit/helpers/esbuild/build";
-import { unbuild } from "@storm-stack/devkit/helpers/unbuild/build";
+import { esbuild } from "@storm-stack/core/lib/esbuild/build";
+import { unbuild } from "@storm-stack/core/lib/unbuild/build";
+import type { Context } from "@storm-stack/core/types";
+import { LogFn } from "@storm-stack/core/types/config";
 import { chmodX } from "@stryke/fs/chmod-x";
 import { findFileExtension } from "@stryke/path/file-path-fns";
 import { joinPaths } from "@stryke/path/join-paths";
@@ -60,11 +61,11 @@ export async function buildApplication(log: LogFn, context: Context) {
               replacePath(
                 entry.input.file,
                 context.projectJson?.sourceRoot || context.options.projectRoot
-              ).replace(findFileExtension(entry.input.file), "") ||
+              ).replace(findFileExtension(entry.input.file) || "", "") ||
               replacePath(
                 entry.file,
                 context.projectJson?.sourceRoot || context.options.projectRoot
-              ).replace(findFileExtension(entry.file), "")
+              ).replace(findFileExtension(entry.file) || "", "")
           ] = entry.file;
 
           return ret;
@@ -93,8 +94,8 @@ export async function permissionExecutable(log: LogFn, context: Context) {
     }
 
     const executablePath = joinPaths(
-      context.workspaceConfig.workspaceRoot,
-      context.options.outputPath || "dist",
+      context.options.workspaceRoot,
+      context.options.output.outputPath || "dist",
       "dist",
       `${filtered[0]?.output}.mjs`
     );

@@ -8,6 +8,35 @@
     "url": "https://github.com/storm-software/storm-stack.git",
     "directory": "packages/core"
   },
+  "homepage": "https://stormsoftware.com",
+  "bugs": {
+    "url": "https://stormsoftware.com/support",
+    "email": "support@stormsoftware.com"
+  },
+  "author": {
+    "name": "Storm Software",
+    "email": "contact@stormsoftware.com",
+    "url": "https://stormsoftware.com"
+  },
+  "maintainers": [
+    {
+      "name": "Storm Software",
+      "email": "contact@stormsoftware.com",
+      "url": "https://stormsoftware.com"
+    }
+  ],
+  "contributors": [
+    {
+      "name": "Storm Software",
+      "email": "contact@stormsoftware.com",
+      "url": "https://stormsoftware.com"
+    }
+  ],
+  "funding": {
+    "type": "github",
+    "url": "https://github.com/sponsors/storm-software"
+  },
+  "license": "Apache-2.0",
   "private": false,
   "exports": {
     "./package.json": "./package.json",
@@ -39,214 +68,46 @@
         "default": "./dist/index.js"
       }
     },
-    "./engine": {
-      "import": {
-        "types": "./dist/engine.d.ts",
-        "default": "./dist/engine.js"
-      },
-      "require": {
-        "types": "./dist/engine.d.cts",
-        "default": "./dist/engine.cjs"
-      },
-      "default": {
-        "types": "./dist/engine.d.ts",
-        "default": "./dist/engine.js"
-      }
-    },
-    "./compiler": {
-      "import": {
-        "types": "./dist/compiler.d.ts",
-        "default": "./dist/compiler.js"
-      },
-      "require": {
-        "types": "./dist/compiler.d.cts",
-        "default": "./dist/compiler.cjs"
-      },
-      "default": {
-        "types": "./dist/compiler.d.ts",
-        "default": "./dist/compiler.js"
-      }
-    },
-    "./plugin": {
-      "import": {
-        "types": "./dist/plugin.d.ts",
-        "default": "./dist/plugin.js"
-      },
-      "require": {
-        "types": "./dist/plugin.d.cts",
-        "default": "./dist/plugin.cjs"
-      },
-      "default": {
-        "types": "./dist/plugin.d.ts",
-        "default": "./dist/plugin.js"
-      }
-    },
-    "./renderer": {
-      "import": {
-        "types": "./dist/renderer.d.ts",
-        "default": "./dist/renderer.js"
-      },
-      "require": {
-        "types": "./dist/renderer.d.cts",
-        "default": "./dist/renderer.cjs"
-      },
-      "default": {
-        "types": "./dist/renderer.d.ts",
-        "default": "./dist/renderer.js"
-      }
-    },
-    "./init": {
-      "import": {
-        "types": "./dist/init/index.d.ts",
-        "default": "./dist/init/index.js"
-      },
-      "require": {
-        "types": "./dist/init/index.d.cts",
-        "default": "./dist/init/index.cjs"
-      },
-      "default": {
-        "types": "./dist/init/index.d.ts",
-        "default": "./dist/init/index.js"
-      }
-    },
-    "./new": {
-      "import": {
-        "types": "./dist/new/index.d.ts",
-        "default": "./dist/new/index.js"
-      },
-      "require": {
-        "types": "./dist/new/index.d.cts",
-        "default": "./dist/new/index.cjs"
-      },
-      "default": {
-        "types": "./dist/new/index.d.ts",
-        "default": "./dist/new/index.js"
-      }
-    },
-    "./clean": {
-      "import": {
-        "types": "./dist/clean/index.d.ts",
-        "default": "./dist/clean/index.js"
-      },
-      "require": {
-        "types": "./dist/clean/index.d.cts",
-        "default": "./dist/clean/index.cjs"
-      },
-      "default": {
-        "types": "./dist/clean/index.d.ts",
-        "default": "./dist/clean/index.js"
-      }
-    },
-    "./prepare": {
-      "import": {
-        "types": "./dist/prepare/index.d.ts",
-        "default": "./dist/prepare/index.js"
-      },
-      "require": {
-        "types": "./dist/prepare/index.d.cts",
-        "default": "./dist/prepare/index.cjs"
-      },
-      "default": {
-        "types": "./dist/prepare/index.d.ts",
-        "default": "./dist/prepare/index.js"
-      }
-    },
-    "./prepare/runtime/runtime/shared/*": {
-      "import": {
-        "types": "./dist/prepare/runtime/runtime/shared/*.d.ts",
-        "default": "./dist/prepare/runtime/runtime/shared/*.js"
-      },
-      "require": {
-        "types": "./dist/prepare/runtime/runtime/shared/*.d.cts",
-        "default": "./dist/prepare/runtime/runtime/shared/*.cjs"
-      },
-      "default": {
-        "types": "./dist/prepare/runtime/runtime/shared/*.d.ts",
-        "default": "./dist/prepare/runtime/runtime/shared/*.js"
-      }
-    },
-    "./prepare/runtime/runtime/node/*": {
-      "import": {
-        "types": "./dist/prepare/runtime/runtime/node/*.d.ts",
-        "default": "./dist/prepare/runtime/runtime/node/*.js"
-      },
-      "require": {
-        "types": "./dist/prepare/runtime/runtime/node/*.d.cts",
-        "default": "./dist/prepare/runtime/runtime/node/*.cjs"
-      },
-      "default": {
-        "types": "./dist/prepare/runtime/runtime/node/*.d.ts",
-        "default": "./dist/prepare/runtime/runtime/node/*.js"
-      }
-    },
-    "./lint": {
-      "import": {
-        "types": "./dist/lint/index.d.ts",
-        "default": "./dist/lint/index.js"
-      },
-      "require": {
-        "types": "./dist/lint/index.d.cts",
-        "default": "./dist/lint/index.cjs"
-      },
-      "default": {
-        "types": "./dist/lint/index.d.ts",
-        "default": "./dist/lint/index.js"
-      }
-    },
-    "./build": {
-      "import": {
-        "types": "./dist/build/index.d.ts",
-        "default": "./dist/build/index.js"
-      },
-      "require": {
-        "types": "./dist/build/index.d.cts",
-        "default": "./dist/build/index.cjs"
-      },
-      "default": {
-        "types": "./dist/build/index.d.ts",
-        "default": "./dist/build/index.js"
-      }
-    },
-    "./docs": {
-      "import": {
-        "types": "./dist/docs/index.d.ts",
-        "default": "./dist/docs/index.js"
-      },
-      "require": {
-        "types": "./dist/docs/index.d.cts",
-        "default": "./dist/docs/index.cjs"
-      },
-      "default": {
-        "types": "./dist/docs/index.d.ts",
-        "default": "./dist/docs/index.js"
-      }
-    },
-    "./finalize": {
-      "import": {
-        "types": "./dist/finalize/index.d.ts",
-        "default": "./dist/finalize/index.js"
-      },
-      "require": {
-        "types": "./dist/finalize/index.d.cts",
-        "default": "./dist/finalize/index.cjs"
-      },
-      "default": {
-        "types": "./dist/finalize/index.d.ts",
-        "default": "./dist/finalize/index.js"
-      }
-    },
     "./define-config": {
       "import": {
-        "types": "./dist/helpers/define-config.d.ts",
-        "default": "./dist/helpers/define-config.js"
+        "types": "./dist/define-config.d.ts",
+        "default": "./dist/define-config.js"
       },
       "require": {
-        "types": "./dist/helpers/define-config.d.cts",
-        "default": "./dist/helpers/define-config.cjs"
+        "types": "./dist/define-config.d.cts",
+        "default": "./dist/define-config.cjs"
       },
       "default": {
-        "types": "./dist/helpers/define-config.d.ts",
-        "default": "./dist/helpers/define-config.js"
+        "types": "./dist/define-config.d.ts",
+        "default": "./dist/define-config.js"
+      }
+    },
+    "./types": {
+      "import": {
+        "types": "./dist/types/index.d.ts",
+        "default": "./dist/types/index.js"
+      },
+      "require": {
+        "types": "./dist/types/index.d.cts",
+        "default": "./dist/types/index.cjs"
+      },
+      "default": {
+        "types": "./dist/types/index.d.ts",
+        "default": "./dist/types/index.js"
+      }
+    },
+    "./types/*": {
+      "import": {
+        "types": "./dist/types/*.d.ts",
+        "default": "./dist/types/*.js"
+      },
+      "require": {
+        "types": "./dist/types/*.d.cts",
+        "default": "./dist/types/*.cjs"
+      },
+      "default": {
+        "types": "./dist/types/*.d.ts",
+        "default": "./dist/types/*.js"
       }
     },
     "./base": {
@@ -277,303 +138,459 @@
         "default": "./dist/base/*.js"
       }
     },
-    "./helpers": {
+    "./engine": {
       "import": {
-        "types": "./dist/helpers/index.d.ts",
-        "default": "./dist/helpers/index.js"
+        "types": "./dist/base/engine.d.ts",
+        "default": "./dist/base/engine.js"
       },
       "require": {
-        "types": "./dist/helpers/index.d.cts",
-        "default": "./dist/helpers/index.cjs"
+        "types": "./dist/base/engine.d.cts",
+        "default": "./dist/base/engine.cjs"
       },
       "default": {
-        "types": "./dist/helpers/index.d.ts",
-        "default": "./dist/helpers/index.js"
+        "types": "./dist/base/engine.d.ts",
+        "default": "./dist/base/engine.js"
       }
     },
-    "./helpers/*": {
+    "./compiler": {
       "import": {
-        "types": "./dist/helpers/*.d.ts",
-        "default": "./dist/helpers/*.js"
+        "types": "./dist/base/compiler.d.ts",
+        "default": "./dist/base/compiler.js"
       },
       "require": {
-        "types": "./dist/helpers/*.d.cts",
-        "default": "./dist/helpers/*.cjs"
+        "types": "./dist/base/compiler.d.cts",
+        "default": "./dist/base/compiler.cjs"
       },
       "default": {
-        "types": "./dist/helpers/*.d.ts",
-        "default": "./dist/helpers/*.js"
+        "types": "./dist/base/compiler.d.ts",
+        "default": "./dist/base/compiler.js"
       }
     },
-    "./helpers/utilities": {
+    "./plugin": {
       "import": {
-        "types": "./dist/helpers/utilities/index.d.ts",
-        "default": "./dist/helpers/utilities/index.js"
+        "types": "./dist/base/plugin.d.ts",
+        "default": "./dist/base/plugin.js"
       },
       "require": {
-        "types": "./dist/helpers/utilities/index.d.cts",
-        "default": "./dist/helpers/utilities/index.cjs"
+        "types": "./dist/base/plugin.d.cts",
+        "default": "./dist/base/plugin.cjs"
       },
       "default": {
-        "types": "./dist/helpers/utilities/index.d.ts",
-        "default": "./dist/helpers/utilities/index.js"
+        "types": "./dist/base/plugin.d.ts",
+        "default": "./dist/base/plugin.js"
       }
     },
-    "./helpers/utilities/*": {
+    "./init": {
       "import": {
-        "types": "./dist/helpers/utilities/*.d.ts",
-        "default": "./dist/helpers/utilities/*.js"
+        "types": "./dist/commands/init/index.d.ts",
+        "default": "./dist/commands/init/index.js"
       },
       "require": {
-        "types": "./dist/helpers/utilities/*.d.cts",
-        "default": "./dist/helpers/utilities/*.cjs"
+        "types": "./dist/commands/init/index.d.cts",
+        "default": "./dist/commands/init/index.cjs"
       },
       "default": {
-        "types": "./dist/helpers/utilities/*.d.ts",
-        "default": "./dist/helpers/utilities/*.js"
+        "types": "./dist/commands/init/index.d.ts",
+        "default": "./dist/commands/init/index.js"
       }
     },
-    "./helpers/dts": {
+    "./new": {
       "import": {
-        "types": "./dist/helpers/dts/index.d.ts",
-        "default": "./dist/helpers/dts/index.js"
+        "types": "./dist/commands/new/index.d.ts",
+        "default": "./dist/commands/new/index.js"
       },
       "require": {
-        "types": "./dist/helpers/dts/index.d.cts",
-        "default": "./dist/helpers/dts/index.cjs"
+        "types": "./dist/commands/new/index.d.cts",
+        "default": "./dist/commands/new/index.cjs"
       },
       "default": {
-        "types": "./dist/helpers/dts/index.d.ts",
-        "default": "./dist/helpers/dts/index.js"
+        "types": "./dist/commands/new/index.d.ts",
+        "default": "./dist/commands/new/index.js"
       }
     },
-    "./helpers/dts/*": {
+    "./clean": {
       "import": {
-        "types": "./dist/helpers/dts/*.d.ts",
-        "default": "./dist/helpers/dts/*.js"
+        "types": "./dist/commands/clean/index.d.ts",
+        "default": "./dist/commands/clean/index.js"
       },
       "require": {
-        "types": "./dist/helpers/dts/*.d.cts",
-        "default": "./dist/helpers/dts/*.cjs"
+        "types": "./dist/commands/clean/index.d.cts",
+        "default": "./dist/commands/clean/index.cjs"
       },
       "default": {
-        "types": "./dist/helpers/dts/*.d.ts",
-        "default": "./dist/helpers/dts/*.js"
+        "types": "./dist/commands/clean/index.d.ts",
+        "default": "./dist/commands/clean/index.js"
       }
     },
-    "./helpers/dotenv": {
+    "./prepare": {
       "import": {
-        "types": "./dist/helpers/dotenv/index.d.ts",
-        "default": "./dist/helpers/dotenv/index.js"
+        "types": "./dist/commands/prepare/index.d.ts",
+        "default": "./dist/commands/prepare/index.js"
       },
       "require": {
-        "types": "./dist/helpers/dotenv/index.d.cts",
-        "default": "./dist/helpers/dotenv/index.cjs"
+        "types": "./dist/commands/prepare/index.d.cts",
+        "default": "./dist/commands/prepare/index.cjs"
       },
       "default": {
-        "types": "./dist/helpers/dotenv/index.d.ts",
-        "default": "./dist/helpers/dotenv/index.js"
+        "types": "./dist/commands/prepare/index.d.ts",
+        "default": "./dist/commands/prepare/index.js"
       }
     },
-    "./helpers/dotenv/*": {
+    "./prepare/runtime/runtime/shared/*": {
       "import": {
-        "types": "./dist/helpers/dotenv/*.d.ts",
-        "default": "./dist/helpers/dotenv/*.js"
+        "types": "./dist/commands/prepare/runtime/runtime/shared/*.d.ts",
+        "default": "./dist/commands/prepare/runtime/runtime/shared/*.js"
       },
       "require": {
-        "types": "./dist/helpers/dotenv/*.d.cts",
-        "default": "./dist/helpers/dotenv/*.cjs"
+        "types": "./dist/commands/prepare/runtime/runtime/shared/*.d.cts",
+        "default": "./dist/commands/prepare/runtime/runtime/shared/*.cjs"
       },
       "default": {
-        "types": "./dist/helpers/dotenv/*.d.ts",
-        "default": "./dist/helpers/dotenv/*.js"
+        "types": "./dist/commands/prepare/runtime/runtime/shared/*.d.ts",
+        "default": "./dist/commands/prepare/runtime/runtime/shared/*.js"
       }
     },
-    "./helpers/deepkit": {
+    "./prepare/runtime/runtime/node/*": {
       "import": {
-        "types": "./dist/helpers/deepkit/index.d.ts",
-        "default": "./dist/helpers/deepkit/index.js"
+        "types": "./dist/commands/prepare/runtime/runtime/node/*.d.ts",
+        "default": "./dist/commands/prepare/runtime/runtime/node/*.js"
       },
       "require": {
-        "types": "./dist/helpers/deepkit/index.d.cts",
-        "default": "./dist/helpers/deepkit/index.cjs"
+        "types": "./dist/commands/prepare/runtime/runtime/node/*.d.cts",
+        "default": "./dist/commands/prepare/runtime/runtime/node/*.cjs"
       },
       "default": {
-        "types": "./dist/helpers/deepkit/index.d.ts",
-        "default": "./dist/helpers/deepkit/index.js"
+        "types": "./dist/commands/prepare/runtime/runtime/node/*.d.ts",
+        "default": "./dist/commands/prepare/runtime/runtime/node/*.js"
       }
     },
-    "./helpers/deepkit/*": {
+    "./lint": {
       "import": {
-        "types": "./dist/helpers/deepkit/*.d.ts",
-        "default": "./dist/helpers/deepkit/*.js"
+        "types": "./dist/commands/lint/index.d.ts",
+        "default": "./dist/commands/lint/index.js"
       },
       "require": {
-        "types": "./dist/helpers/deepkit/*.d.cts",
-        "default": "./dist/helpers/deepkit/*.cjs"
+        "types": "./dist/commands/lint/index.d.cts",
+        "default": "./dist/commands/lint/index.cjs"
       },
       "default": {
-        "types": "./dist/helpers/deepkit/*.d.ts",
-        "default": "./dist/helpers/deepkit/*.js"
+        "types": "./dist/commands/lint/index.d.ts",
+        "default": "./dist/commands/lint/index.js"
       }
     },
-    "./helpers/esbuild": {
+    "./build": {
       "import": {
-        "types": "./dist/helpers/esbuild/index.d.ts",
-        "default": "./dist/helpers/esbuild/index.js"
+        "types": "./dist/commands/build/index.d.ts",
+        "default": "./dist/commands/build/index.js"
       },
       "require": {
-        "types": "./dist/helpers/esbuild/index.d.cts",
-        "default": "./dist/helpers/esbuild/index.cjs"
+        "types": "./dist/commands/build/index.d.cts",
+        "default": "./dist/commands/build/index.cjs"
       },
       "default": {
-        "types": "./dist/helpers/esbuild/index.d.ts",
-        "default": "./dist/helpers/esbuild/index.js"
+        "types": "./dist/commands/build/index.d.ts",
+        "default": "./dist/commands/build/index.js"
       }
     },
-    "./helpers/esbuild/*": {
+    "./docs": {
       "import": {
-        "types": "./dist/helpers/esbuild/*.d.ts",
-        "default": "./dist/helpers/esbuild/*.js"
+        "types": "./dist/commands/docs/index.d.ts",
+        "default": "./dist/commands/docs/index.js"
       },
       "require": {
-        "types": "./dist/helpers/esbuild/*.d.cts",
-        "default": "./dist/helpers/esbuild/*.cjs"
+        "types": "./dist/commands/docs/index.d.cts",
+        "default": "./dist/commands/docs/index.cjs"
       },
       "default": {
-        "types": "./dist/helpers/esbuild/*.d.ts",
-        "default": "./dist/helpers/esbuild/*.js"
+        "types": "./dist/commands/docs/index.d.ts",
+        "default": "./dist/commands/docs/index.js"
       }
     },
-    "./helpers/unbuild": {
+    "./finalize": {
       "import": {
-        "types": "./dist/helpers/unbuild/index.d.ts",
-        "default": "./dist/helpers/unbuild/index.js"
+        "types": "./dist/commands/finalize/index.d.ts",
+        "default": "./dist/commands/finalize/index.js"
       },
       "require": {
-        "types": "./dist/helpers/unbuild/index.d.cts",
-        "default": "./dist/helpers/unbuild/index.cjs"
+        "types": "./dist/commands/finalize/index.d.cts",
+        "default": "./dist/commands/finalize/index.cjs"
       },
       "default": {
-        "types": "./dist/helpers/unbuild/index.d.ts",
-        "default": "./dist/helpers/unbuild/index.js"
+        "types": "./dist/commands/finalize/index.d.ts",
+        "default": "./dist/commands/finalize/index.js"
       }
     },
-    "./helpers/unbuild/*": {
+    "./lib": {
       "import": {
-        "types": "./dist/helpers/unbuild/*.d.ts",
-        "default": "./dist/helpers/unbuild/*.js"
+        "types": "./dist/lib/index.d.ts",
+        "default": "./dist/lib/index.js"
       },
       "require": {
-        "types": "./dist/helpers/unbuild/*.d.cts",
-        "default": "./dist/helpers/unbuild/*.cjs"
+        "types": "./dist/lib/index.d.cts",
+        "default": "./dist/lib/index.cjs"
       },
       "default": {
-        "types": "./dist/helpers/unbuild/*.d.ts",
-        "default": "./dist/helpers/unbuild/*.js"
+        "types": "./dist/lib/index.d.ts",
+        "default": "./dist/lib/index.js"
       }
     },
-    "./helpers/typedoc": {
+    "./lib/*": {
       "import": {
-        "types": "./dist/helpers/typedoc/index.d.ts",
-        "default": "./dist/helpers/typedoc/index.js"
+        "types": "./dist/lib/*.d.ts",
+        "default": "./dist/lib/*.js"
       },
       "require": {
-        "types": "./dist/helpers/typedoc/index.d.cts",
-        "default": "./dist/helpers/typedoc/index.cjs"
+        "types": "./dist/lib/*.d.cts",
+        "default": "./dist/lib/*.cjs"
       },
       "default": {
-        "types": "./dist/helpers/typedoc/index.d.ts",
-        "default": "./dist/helpers/typedoc/index.js"
+        "types": "./dist/lib/*.d.ts",
+        "default": "./dist/lib/*.js"
       }
     },
-    "./helpers/typedoc/*": {
+    "./lib/babel": {
       "import": {
-        "types": "./dist/helpers/typedoc/*.d.ts",
-        "default": "./dist/helpers/typedoc/*.js"
+        "types": "./dist/lib/babel/index.d.ts",
+        "default": "./dist/lib/babel/index.js"
       },
       "require": {
-        "types": "./dist/helpers/typedoc/*.d.cts",
-        "default": "./dist/helpers/typedoc/*.cjs"
+        "types": "./dist/lib/babel/index.d.cts",
+        "default": "./dist/lib/babel/index.cjs"
       },
       "default": {
-        "types": "./dist/helpers/typedoc/*.d.ts",
-        "default": "./dist/helpers/typedoc/*.js"
+        "types": "./dist/lib/babel/index.d.ts",
+        "default": "./dist/lib/babel/index.js"
       }
     },
-    "./helpers/typescript": {
+    "./lib/babel/*": {
       "import": {
-        "types": "./dist/helpers/typescript/index.d.ts",
-        "default": "./dist/helpers/typescript/index.js"
+        "types": "./dist/lib/babel/*.d.ts",
+        "default": "./dist/lib/babel/*.js"
       },
       "require": {
-        "types": "./dist/helpers/typescript/index.d.cts",
-        "default": "./dist/helpers/typescript/index.cjs"
+        "types": "./dist/lib/babel/*.d.cts",
+        "default": "./dist/lib/babel/*.cjs"
       },
       "default": {
-        "types": "./dist/helpers/typescript/index.d.ts",
-        "default": "./dist/helpers/typescript/index.js"
+        "types": "./dist/lib/babel/*.d.ts",
+        "default": "./dist/lib/babel/*.js"
       }
     },
-    "./helpers/typescript/*": {
+    "./lib/dotenv": {
       "import": {
-        "types": "./dist/helpers/typescript/*.d.ts",
-        "default": "./dist/helpers/typescript/*.js"
+        "types": "./dist/lib/dotenv/index.d.ts",
+        "default": "./dist/lib/dotenv/index.js"
       },
       "require": {
-        "types": "./dist/helpers/typescript/*.d.cts",
-        "default": "./dist/helpers/typescript/*.cjs"
+        "types": "./dist/lib/dotenv/index.d.cts",
+        "default": "./dist/lib/dotenv/index.cjs"
       },
       "default": {
-        "types": "./dist/helpers/typescript/*.d.ts",
-        "default": "./dist/helpers/typescript/*.js"
+        "types": "./dist/lib/dotenv/index.d.ts",
+        "default": "./dist/lib/dotenv/index.js"
       }
     },
-    "./helpers/transform/*": {
+    "./lib/dotenv/*": {
       "import": {
-        "types": "./dist/helpers/transform/*.d.ts",
-        "default": "./dist/helpers/transform/*.js"
+        "types": "./dist/lib/dotenv/*.d.ts",
+        "default": "./dist/lib/dotenv/*.js"
       },
       "require": {
-        "types": "./dist/helpers/transform/*.d.cts",
-        "default": "./dist/helpers/transform/*.cjs"
+        "types": "./dist/lib/dotenv/*.d.cts",
+        "default": "./dist/lib/dotenv/*.cjs"
       },
       "default": {
-        "types": "./dist/helpers/transform/*.d.ts",
-        "default": "./dist/helpers/transform/*.js"
+        "types": "./dist/lib/dotenv/*.d.ts",
+        "default": "./dist/lib/dotenv/*.js"
       }
     },
+    "./lib/deepkit": {
+      "import": {
+        "types": "./dist/lib/deepkit/index.d.ts",
+        "default": "./dist/lib/deepkit/index.js"
+      },
+      "require": {
+        "types": "./dist/lib/deepkit/index.d.cts",
+        "default": "./dist/lib/deepkit/index.cjs"
+      },
+      "default": {
+        "types": "./dist/lib/deepkit/index.d.ts",
+        "default": "./dist/lib/deepkit/index.js"
+      }
+    },
+    "./lib/deepkit/*": {
+      "import": {
+        "types": "./dist/lib/deepkit/*.d.ts",
+        "default": "./dist/lib/deepkit/*.js"
+      },
+      "require": {
+        "types": "./dist/lib/deepkit/*.d.cts",
+        "default": "./dist/lib/deepkit/*.cjs"
+      },
+      "default": {
+        "types": "./dist/lib/deepkit/*.d.ts",
+        "default": "./dist/lib/deepkit/*.js"
+      }
+    },
+    "./lib/esbuild": {
+      "import": {
+        "types": "./dist/lib/esbuild/index.d.ts",
+        "default": "./dist/lib/esbuild/index.js"
+      },
+      "require": {
+        "types": "./dist/lib/esbuild/index.d.cts",
+        "default": "./dist/lib/esbuild/index.cjs"
+      },
+      "default": {
+        "types": "./dist/lib/esbuild/index.d.ts",
+        "default": "./dist/lib/esbuild/index.js"
+      }
+    },
+    "./lib/esbuild/*": {
+      "import": {
+        "types": "./dist/lib/esbuild/*.d.ts",
+        "default": "./dist/lib/esbuild/*.js"
+      },
+      "require": {
+        "types": "./dist/lib/esbuild/*.d.cts",
+        "default": "./dist/lib/esbuild/*.cjs"
+      },
+      "default": {
+        "types": "./dist/lib/esbuild/*.d.ts",
+        "default": "./dist/lib/esbuild/*.js"
+      }
+    },
+    "./lib/typedoc": {
+      "import": {
+        "types": "./dist/lib/typedoc/index.d.ts",
+        "default": "./dist/lib/typedoc/index.js"
+      },
+      "require": {
+        "types": "./dist/lib/typedoc/index.d.cts",
+        "default": "./dist/lib/typedoc/index.cjs"
+      },
+      "default": {
+        "types": "./dist/lib/typedoc/index.d.ts",
+        "default": "./dist/lib/typedoc/index.js"
+      }
+    },
+    "./lib/typedoc/*": {
+      "import": {
+        "types": "./dist/lib/typedoc/*.d.ts",
+        "default": "./dist/lib/typedoc/*.js"
+      },
+      "require": {
+        "types": "./dist/lib/typedoc/*.d.cts",
+        "default": "./dist/lib/typedoc/*.cjs"
+      },
+      "default": {
+        "types": "./dist/lib/typedoc/*.d.ts",
+        "default": "./dist/lib/typedoc/*.js"
+      }
+    },
+    "./lib/typescript": {
+      "import": {
+        "types": "./dist/lib/typescript/index.d.ts",
+        "default": "./dist/lib/typescript/index.js"
+      },
+      "require": {
+        "types": "./dist/lib/typescript/index.d.cts",
+        "default": "./dist/lib/typescript/index.cjs"
+      },
+      "default": {
+        "types": "./dist/lib/typescript/index.d.ts",
+        "default": "./dist/lib/typescript/index.js"
+      }
+    },
+    "./lib/typescript/*": {
+      "import": {
+        "types": "./dist/lib/typescript/*.d.ts",
+        "default": "./dist/lib/typescript/*.js"
+      },
+      "require": {
+        "types": "./dist/lib/typescript/*.d.cts",
+        "default": "./dist/lib/typescript/*.cjs"
+      },
+      "default": {
+        "types": "./dist/lib/typescript/*.d.ts",
+        "default": "./dist/lib/typescript/*.js"
+      }
+    },
+    "./lib/unbuild": {
+      "import": {
+        "types": "./dist/lib/unbuild/index.d.ts",
+        "default": "./dist/lib/unbuild/index.js"
+      },
+      "require": {
+        "types": "./dist/lib/unbuild/index.d.cts",
+        "default": "./dist/lib/unbuild/index.cjs"
+      },
+      "default": {
+        "types": "./dist/lib/unbuild/index.d.ts",
+        "default": "./dist/lib/unbuild/index.js"
+      }
+    },
+    "./lib/unbuild/*": {
+      "import": {
+        "types": "./dist/lib/unbuild/*.d.ts",
+        "default": "./dist/lib/unbuild/*.js"
+      },
+      "require": {
+        "types": "./dist/lib/unbuild/*.d.cts",
+        "default": "./dist/lib/unbuild/*.cjs"
+      },
+      "default": {
+        "types": "./dist/lib/unbuild/*.d.ts",
+        "default": "./dist/lib/unbuild/*.js"
+      }
+    },
+    "./lib/utilities": {
+      "import": {
+        "types": "./dist/lib/utilities/index.d.ts",
+        "default": "./dist/lib/utilities/index.js"
+      },
+      "require": {
+        "types": "./dist/lib/utilities/index.d.cts",
+        "default": "./dist/lib/utilities/index.cjs"
+      },
+      "default": {
+        "types": "./dist/lib/utilities/index.d.ts",
+        "default": "./dist/lib/utilities/index.js"
+      }
+    },
+    "./lib/utilities/*": {
+      "import": {
+        "types": "./dist/lib/utilities/*.d.ts",
+        "default": "./dist/lib/utilities/*.js"
+      },
+      "require": {
+        "types": "./dist/lib/utilities/*.d.cts",
+        "default": "./dist/lib/utilities/*.cjs"
+      },
+      "default": {
+        "types": "./dist/lib/utilities/*.d.ts",
+        "default": "./dist/lib/utilities/*.js"
+      }
+    },
+    "./schemas/*": {
+      "import": {
+        "types": "./schemas/*.d.ts",
+        "default": "./schemas/*.js"
+      },
+      "require": {
+        "types": "./schemas/*.d.cts",
+        "default": "./schemas/*.cjs"
+      },
+      "default": {
+        "types": "./schemas/*.d.ts",
+        "default": "./schemas/*.js"
+      }
+    },
+    "./workers/config-reflection": "./workers/config-reflection.cjs",
+    "./workers/error-message": "./workers/error-message.cjs",
     "./files/common/*": "./dist/files/common/*",
     "./files/library/*": "./dist/files/library/*",
     "./files/application/*": "./dist/files/application/*",
-    "./types": {
-      "import": {
-        "types": "./dist/types/index.d.ts",
-        "default": "./dist/types/index.js"
-      },
-      "require": {
-        "types": "./dist/types/index.d.cts",
-        "default": "./dist/types/index.cjs"
-      },
-      "default": {
-        "types": "./dist/types/index.d.ts",
-        "default": "./dist/types/index.js"
-      }
-    },
-    "./types/*": {
-      "import": {
-        "types": "./dist/types/*.d.ts",
-        "default": "./dist/types/*.js"
-      },
-      "require": {
-        "types": "./dist/types/*.d.cts",
-        "default": "./dist/types/*.cjs"
-      },
-      "default": {
-        "types": "./dist/types/*.d.ts",
-        "default": "./dist/types/*.js"
-      }
-    },
     "./astro": {
       "import": {
         "types": "./dist/unplugin/astro.d.ts",
@@ -685,18 +702,40 @@
         "types": "./dist/unplugin/webpack.d.ts",
         "default": "./dist/unplugin/webpack.js"
       }
-    },
-    "./workers/config-reflection": "./workers/config-reflection.cjs",
-    "./workers/dotenv-reflection": "./workers/dotenv-reflection.cjs",
-    "./workers/error-message": "./workers/error-message.cjs"
+    }
   },
   "types": "dist/index.d.ts",
   "typings": "dist/index.d.ts",
+  "files": [
+    "dist/**/*",
+    "schemas/*",
+    "workers/*"
+  ],
+  "keywords": [
+    "storm-stack",
+    "storm-software",
+    "unplugin",
+    "typedoc",
+    "typescript",
+    "deepkit",
+    "dotenv",
+    "babel",
+    "esbuild",
+    "unbuild",
+    "nuxt",
+    "vite",
+    "rollup",
+    "rspack",
+    "webpack",
+    "astro"
+  ],
   "peerDependencies": {
     "@nuxt/kit": "^3.17.1",
     "@nuxt/schema": "^3.17.1",
     "@rspack/cli": "^1.3.8",
     "@storm-software/tsdoc": "*",
+    "astro": "^3.0.0",
+    "rolldown": "^1.0.0-beta.23",
     "rollup": "^4.40.1",
     "vite": "^6.3.4",
     "webpack": "^5.99.7"
@@ -708,13 +747,19 @@
     "@nuxt/schema": {
       "optional": true
     },
+    "@rspack/cli": {
+      "optional": true
+    },
     "@storm-software/tsdoc": {
       "optional": true
     },
-    "rollup": {
+    "astro": {
       "optional": true
     },
-    "rspack": {
+    "rolldown": {
+      "optional": true
+    },
+    "rollup": {
       "optional": true
     },
     "vite": {
@@ -725,8 +770,20 @@
     }
   },
   "dependencies": {
-    "@ast-grep/napi": "catalog:",
-    "@deepkit/type": "1.0.5",
+    "@babel/core": "catalog:",
+    "@babel/generator": "catalog:",
+    "@babel/helper-module-imports": "catalog:",
+    "@babel/helper-plugin-utils": "catalog:",
+    "@babel/parser": "catalog:",
+    "@babel/plugin-syntax-typescript": "catalog:",
+    "@babel/preset-typescript": "catalog:",
+    "@babel/template": "catalog:",
+    "@babel/traverse": "catalog:",
+    "@babel/types": "catalog:",
+    "@deepkit/core": "catalog:",
+    "@deepkit/type": "catalog:",
+    "@deepkit/type-compiler": "catalog:",
+    "@deepkit/type-spec": "catalog:",
     "@donedeal0/superdiff": "catalog:",
     "@microsoft/api-extractor": "catalog:",
     "@microsoft/tsdoc-config": "catalog:",
@@ -734,7 +791,7 @@
     "@storm-software/config": "catalog:",
     "@storm-software/config-tools": "catalog:",
     "@storm-software/esbuild": "catalog:",
-    "@storm-stack/types": "0.14.2",
+    "@storm-stack/types": "workspace:*",
     "@stryke/capnp": "catalog:",
     "@stryke/convert": "catalog:",
     "@stryke/env": "catalog:",
@@ -746,6 +803,8 @@
     "@stryke/string-format": "catalog:",
     "@stryke/type-checks": "catalog:",
     "@stryke/unique-id": "catalog:",
+    "babel-dead-code-elimination": "catalog:",
+    "bundle-require": "catalog:",
     "c12": "catalog:",
     "chalk": "catalog:",
     "defu": "catalog:",
@@ -755,25 +814,27 @@
     "jest-worker": "catalog:",
     "jiti": "catalog:",
     "magic-string": "catalog:",
-    "magicast": "catalog:",
-    "mlly": "catalog:",
+    "memfs": "catalog:",
     "nanotar": "catalog:",
     "prettier": "catalog:",
     "typedoc": "catalog:",
     "typedoc-plugin-frontmatter": "catalog:",
     "typedoc-plugin-markdown": "catalog:",
     "unimport": "catalog:",
-    "vinyl": "catalog:"
+    "unionfs": "catalog:"
   },
   "devDependencies": {
     "@microsoft/tsdoc": "catalog:",
     "@storm-software/testing-tools": "catalog:",
     "@stryke/types": "catalog:",
+    "@types/babel__core": "catalog:",
+    "@types/babel__helper-module-imports": "catalog:",
+    "@types/babel__traverse": "catalog:",
     "@types/node": "catalog:",
-    "@types/vinyl": "catalog:",
     "eslint": "catalog:",
+    "minimatch": "catalog:",
     "tsup": "catalog:",
-    "typescript": "5.8.3"
+    "typescript": "5.9.0-beta"
   },
   "publishConfig": {
     "access": "public"

@@ -5,7 +5,7 @@
  This code was released as part of the Storm Stack project. Storm Stack
  is maintained by Storm Software under the Apache-2.0 license, and is
  free for commercial and private use. For more information, please visit
- our licensing page at https://stormsoftware.com/license.
+ our licensing page at https://stormsoftware.com/projects/storm-stack/license.
 
  Website:                  https://stormsoftware.com
  Repository:               https://github.com/storm-software/storm-stack
@@ -26,13 +26,10 @@ import type {
 } from "unplugin";
 import { createUnplugin } from "unplugin";
 import { Engine } from "../base/engine";
-import { createLog } from "../helpers/utilities/logger";
-import type {
-  BuildInlineConfig,
-  Context,
-  UserConfig,
-  WorkspaceConfig
-} from "../types";
+import { createLog } from "../lib/logger";
+import { getSourceFile } from "../lib/utilities/source-file";
+import type { BuildInlineConfig, Context, WorkspaceConfig } from "../types";
+import type { UserConfig } from "../types/config";
 
 export type StormStackUnpluginFactory = UnpluginFactory<UserConfig>;
 
@@ -75,7 +72,7 @@ export const unpluginFactory: StormStackUnpluginFactory = (
       log(LogLevelLabel.TRACE, "Running Transform");
 
       return context.compiler.getResult(
-        context.compiler.getSourceFile(id, code),
+        getSourceFile(id, code),
         await context.compiler.compile(context, id, code)
       );
     }

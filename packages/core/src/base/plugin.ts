@@ -5,7 +5,7 @@
  This code was released as part of the Storm Stack project. Storm Stack
  is maintained by Storm Software under the Apache-2.0 license, and is
  free for commercial and private use. For more information, please visit
- our licensing page at https://stormsoftware.com/license.
+ our licensing page at https://stormsoftware.com/licenses/projects/storm-stack.
 
  Website:                  https://stormsoftware.com
  Repository:               https://github.com/storm-software/storm-stack
@@ -18,24 +18,23 @@
 
 import { LogLevelLabel } from "@storm-software/config-tools/types";
 import { kebabCase } from "@stryke/string-format/kebab-case";
-import type { MaybePromise } from "@stryke/types/base";
-import { createLog, extendLog } from "../helpers/utilities/logger";
-import { writeFile } from "../helpers/utilities/write-file";
-import { installPackage } from "../init/installs/utilities";
-import type { Context, EngineHooks } from "../types/build";
+import { titleCase } from "@stryke/string-format/title-case";
+import { createLog, extendLog } from "../lib/logger";
+import type { EngineHooks } from "../types/build";
 import type { LogFn, PluginConfig } from "../types/config";
-import type { IPlugin } from "../types/plugin";
-
-export type PluginOptions<
-  TOptions extends Record<string, any> = Record<string, any>
-> = TOptions & { log?: LogFn };
+import { Context } from "../types/context";
+import type {
+  PluginBaseConfig,
+  PluginInterface,
+  PluginOptions
+} from "../types/plugin";
 
 /**
  * The base class for all plugins
  */
 export abstract class Plugin<
-  TOptions extends Record<string, any> = Record<string, any>
-> implements IPlugin
+  TConfig extends PluginBaseConfig = PluginBaseConfig
+> implements PluginInterface<TConfig>
 {
   #log?: LogFn;
 
@@ -46,6 +45,19 @@ export abstract class Plugin<
    * These plugins will be called prior to the current Plugin.
    */
   public dependencies = [] as Array<string | PluginConfig>;
+
+  /**
+   * The configuration options for the plugin
+   *
+   * @remarks
+   * This is used to store the configuration options for the plugin, which can be accessed by the plugin's methods.
+   */
+  public options: PluginOptions<TConfig>;
+
+  /**
+   * A list of dependencies that are required for the plugin to work. These dependencies will be installed when Storm Stack CLI is run.
+   */
+  protected packageDeps: Record<string, "dependency" | "devDependency"> = {};
 
   /**
    * The name of the plugin
@@ -65,92 +77,131 @@ export abstract class Plugin<
   }
 
   /**
+   * The identifier for the plugin used in the {@link isSame} method
+   *
+   * @remarks
+   * Child plugins can override this to provide a more or less specific identifier.
+   */
+  public get identifier(): string {
+    return this.name;
+  }
+
+  /**
+   * The primary keys for the plugin's options.
+   *
+   * @remarks
+   * This is used to identify when a two instances of the plugin are the same and can be de-duplicated.
+   */
+  public get primaryKeys(): any[] {
+    return this.primaryKeyFields.map(
+      primaryKeyField => (this.options as any)[primaryKeyField]
+    );
+  }
+
+  /**
+   * Returns true if the plugin is a singleton. Singleton plugins can only be instantiated once (so whenever other plugins specify them as dependencies, they will be de-duplicated).
+   *
+   * @remarks
+   * A plugin is considered a singleton if it has zero primary key option fields defined.
+   */
+  public get isSingleton(): boolean {
+    return this.primaryKeyFields.length === 0;
+  }
+
+  /**
+   * A list of primary keys for the plugin's options.
+   *
+   * @remarks
+   * This is used to identify when a two instances of the plugin are the same and can be de-duplicated.
+   */
+  protected get primaryKeyFields(): string[] {
+    return [];
+  }
+
+  /**
    * The logger function to use
    */
   protected get log(): LogFn {
     if (!this.#log) {
-      this.#log = createLog(`${this.name}-plugin`);
+      this.#log = this.options.log
+        ? extendLog(this.options.log, `${titleCase(this.name)} Plugin`)
+        : createLog(`${titleCase(this.name)} Plugin`);
     }
 
     return this.#log;
   }
 
   /**
-   * The configuration options for the plugin
-   *
-   * @remarks
-   * This is used to store the configuration options for the plugin, which can be accessed by the plugin's methods.
-   */
-  protected options: TOptions;
-
-  /**
-   * The renderer used by the plugin
-   *
-   * @remarks
-   * This is used to render generated output files during various Storm Stack processes. Some possible items rendered include (but are not limited to): source code, documentation, DevOps configuration, and deployment infrastructure/IOC.
-   */
-  // protected abstract renderer: Renderer;
-
-  /**
    * The constructor for the plugin
    *
    * @param options - The configuration options for the plugin
    */
-  public constructor(options: PluginOptions<TOptions>) {
-    if (options.log) {
-      this.#log = extendLog(options.log, `${this.name}-plugin`);
-    }
-
+  public constructor(options: PluginOptions<TConfig>) {
     this.options = options;
   }
 
   /**
-   * Adds the plugin's hooks into the engine.
+   * Checks if the current plugin is the same as another plugin based on primary key fields.
    *
-   * @param hooks - The list of engine hooks to add the plugin's hooks to.
+   * @param plugin - The plugin to compare with.
+   * @returns `true` if the plugins are the same, `false` otherwise.
    */
-  public async addHooks(hooks: EngineHooks) {
-    this.log(LogLevelLabel.TRACE, `Adding plugin hooks into engine`);
+  public isSame(plugin: PluginInterface): boolean {
+    return (
+      this.identifier === plugin.identifier &&
+      (plugin.isSingleton ||
+        this.primaryKeyFields.every(
+          primaryKeyField =>
+            (this.options as any)[primaryKeyField] ===
+            (plugin.options as any)[primaryKeyField]
+        ))
+    );
+  }
 
+  /**
+   * Adds hooks to the engine's hook system.
+   *
+   * @param hooks - The hooks to add to the engine.
+   */
+  public addHooks(hooks: EngineHooks) {
     hooks.addHooks({
-      "init:context": this.#initContext.bind(this)
+      "init:begin": this.#initBegin.bind(this)
     });
-
-    return this.innerAddHooks(hooks);
   }
 
   /**
-   * Function to add hooks into the Storm Stack engine
-   */
-  public abstract innerAddHooks(hooks: EngineHooks): MaybePromise<void>;
-
-  /**
-   * Writes a file to the file system
+   * Initializes the plugin's context with required installations.
    *
-   * @param filepath - The file path to write the file
-   * @param content - The content to write to the file
-   * @param skipFormat - Should the plugin skip formatting the `content` string with Prettier
+   * @param context - The context to initialize.
    */
-  protected async writeFile(
-    filepath: string,
-    content: string,
-    skipFormat = false
-  ) {
-    this.log(LogLevelLabel.TRACE, `Writing file ${filepath} to disk`);
+  async #initBegin(context: Context) {
+    this.log(
+      LogLevelLabel.TRACE,
+      `Adding required installations for the project.`
+    );
 
-    return writeFile(this.log, filepath, content, skipFormat);
+    if (Object.keys(this.packageDeps).length > 0) {
+      Object.keys(this.packageDeps).forEach(dependency => {
+        if (
+          this.packageDeps[dependency] &&
+          (this.packageDeps[dependency] === "devDependency" ||
+            context.options.projectType === "application")
+        ) {
+          if (
+            dependency.lastIndexOf("@") > 0 &&
+            dependency.substring(0, dependency.lastIndexOf("@")) in
+              context.packageDeps
+          ) {
+            // Remove the existing dependency if it does not include the version
+            // This is a workaround for the fact that we cannot install the same package with different versions
+            delete context.packageDeps[
+              dependency.substring(0, dependency.lastIndexOf("@"))
+            ];
+          }
+
+          context.packageDeps[dependency] = this.packageDeps[dependency];
+        }
+      });
+    }
   }
-
-  /**
-   * Installs a package if it is not already installed.
-   *
-   * @param context - The resolved Storm Stack context
-   * @param packageName - The name of the package to install
-   * @param dev - Whether to install the package as a dev dependency
-   */
-  protected async install(context: Context, packageName: string, dev = false) {
-    return installPackage(this.log, context, packageName, dev);
-  }
-
-  async #initContext(_context: Context) {}
 }

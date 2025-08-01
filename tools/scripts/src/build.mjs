@@ -6,7 +6,7 @@
  This code was released as part of the Storm Stack project. Storm Stack
  is maintained by Storm Software under the Apache-2.0 license, and is
  free for commercial and private use. For more information, please visit
- our licensing page at https://stormsoftware.com/license.
+ our licensing page at https://stormsoftware.com/licenses/projects/storm-stack.
 
  Website:                  https://stormsoftware.com
  Repository:               https://github.com/storm-software/storm-stack
@@ -28,6 +28,17 @@ try {
       configuration = "development";
     } else {
       configuration = "production";
+    }
+  }
+
+  let filter = argv.filter;
+  if (!filter) {
+    if (argv.cli) {
+      filter = "cli";
+    } else if (argv.plugins) {
+      filter = "plugins";
+    } else {
+      filter = "all";
     }
   }
 
@@ -72,60 +83,66 @@ try {
     );
   }
 
-  proc =
-    $`pnpm nx run-many --target=build --projects="plugin-*,preset-*" --configuration=${configuration} --outputStyle=dynamic-legacy --parallel=5`.timeout(
-      `${8 * 60}s`
-    );
-  proc.stdout.on("data", data => {
-    echo`${data}`;
-  });
-  result = await proc;
-  if (!result.ok) {
-    throw new Error(
-      `An error occurred while building the monorepo's plugins and presets in ${configuration} mode: \n\n${result.message}\n`
-    );
-  }
+  if (filter === "plugin" || filter === "cli" || filter === "all") {
+    proc =
+      $`pnpm nx run-many --target=build --projects="plugin-*" --configuration=${configuration} --outputStyle=dynamic-legacy --parallel=5`.timeout(
+        `${8 * 60}s`
+      );
+    proc.stdout.on("data", data => {
+      echo`${data}`;
+    });
+    result = await proc;
+    if (!result.ok) {
+      throw new Error(
+        `An error occurred while building the monorepo's plugins and presets in ${configuration} mode: \n\n${result.message}\n`
+      );
+    }
 
-  proc =
-    $`pnpm nx run cli:build:${configuration} --outputStyle=dynamic-legacy`.timeout(
-      `${6 * 60}s`
-    );
-  proc.stdout.on("data", data => {
-    echo`${data}`;
-  });
-  result = await proc;
-  if (!result.ok) {
-    throw new Error(
-      `An error occurred while building the CLI application in ${configuration} mode: \n\n${result.message}\n`
-    );
-  }
+    if (filter === "cli" || filter === "all") {
+      proc =
+        $`pnpm nx run cli:build:${configuration} --outputStyle=dynamic-legacy`.timeout(
+          `${10 * 60}s`
+        );
+      proc.stdout.on("data", data => {
+        echo`${data}`;
+      });
+      result = await proc;
+      if (!result.ok) {
+        throw new Error(
+          `An error occurred while building the CLI application in ${configuration} mode: \n\n${result.message}\n`
+        );
+      }
 
-  proc =
-    $`pnpm nx run-many --target=build --projects="examples-*" --configuration=${configuration} --outputStyle=dynamic-legacy --parallel=5`.timeout(
-      `${8 * 60}s`
-    );
-  proc.stdout.on("data", data => {
-    echo`${data}`;
-  });
-  result = await proc;
-  if (!result.ok) {
-    throw new Error(
-      `An error occurred while building the monorepo's examples in ${configuration} mode: \n\n${result.message}\n`
-    );
-  }
+      if (filter === "all") {
+        proc =
+          $`pnpm nx run-many --target=build --projects="examples-*" --configuration=${configuration} --outputStyle=dynamic-legacy --parallel=5`.timeout(
+            `${8 * 60}s`
+          );
+        proc.stdout.on("data", data => {
+          echo`${data}`;
+        });
+        result = await proc;
+        if (!result.ok) {
+          throw new Error(
+            `An error occurred while building the monorepo's examples in ${configuration} mode: \n\n${result.message}\n`
+          );
+        }
 
-  proc =
-    $`pnpm nx run-many --target=build --exclude="@storm-stack/monorepo" --configuration=${configuration} --outputStyle=dynamic-legacy --parallel=5`.timeout(
-      `${10 * 60}s`
-    );
-  proc.stdout.on("data", data => {
-    echo`${data}`;
-  });
-  result = await proc;
-  if (!result.ok) {
-    throw new Error(
-      `An error occurred while building the monorepo in ${configuration} mode: \n\n${result.message}\n`
-    );
+        proc =
+          $`pnpm nx run-many --target=build --exclude="@storm-stack/monorepo" --configuration=${configuration} --outputStyle=dynamic-legacy --parallel=5`.timeout(
+            `${10 * 60}s`
+          );
+        proc.stdout.on("data", data => {
+          echo`${data}`;
+        });
+        result = await proc;
+        if (!result.ok) {
+          throw new Error(
+            `An error occurred while building the monorepo in ${configuration} mode: \n\n${result.message}\n`
+          );
+        }
+      }
+    }
   }
 
   echo`${chalk.green(`Successfully built the monorepo in ${configuration} mode!`)}`;
