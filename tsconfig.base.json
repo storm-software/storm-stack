@@ -36,6 +36,8 @@
       ],
       "@storm-stack/plugin-crypto": ["packages/plugin-crypto/src/index.ts"],
       "@storm-stack/plugin-crypto/*": ["packages/plugin-crypto/src/*"],
+      "@storm-stack/plugin-date": ["packages/plugin-date/src/index.ts"],
+      "@storm-stack/plugin-date/*": ["packages/plugin-date/src/*"],
       "@storm-stack/plugin-dotenv": ["packages/plugin-dotenv/src/index.ts"],
       "@storm-stack/plugin-dotenv/*": ["packages/plugin-dotenv/src/*"],
       "@storm-stack/plugin-error": ["packages/plugin-error/src/index.ts"],

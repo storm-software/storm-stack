@@ -101,7 +101,6 @@ currently two classes of adapters available:
 - Log Adapters - adapters that provide logging and reporting functionality for
   the application. The following log adapters packages are included in the
   repository:
-
   - [@storm-stack/log-console](https://www.npmjs.com/package/@storm-stack/log-console) -
     A package containing functionality to write log messages to the console
   - [@storm-stack/log-sentry](https://www.npmjs.com/package/@storm-stack/log-sentry) -
