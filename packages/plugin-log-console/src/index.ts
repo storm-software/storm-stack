@@ -84,10 +84,12 @@ function formatter(record: LogRecord): readonly any[] {
   const date = new Date(record.timestamp);
 
   return [
-    \`%c\${DATE_TIME_FORMAT.format(date)}:\${date.getUTCSeconds().toString().padStart(2, "0")}.\${date
-      .getUTCMilliseconds()
-      .toString()
-      .padStart(3, "0")} %c\${levelAbbreviations[record.level]}%c %c\${msg}\`,
+    \`%c\${DATE_TIME_FORMAT.format(date)}:\${date.getUTCSeconds().toString().padStart(2, "0")}.\${
+      date
+        .getUTCMilliseconds()
+        .toString()
+        .padStart(3, "0")
+    } %c\${levelAbbreviations[record.level]}%c %c\${msg}\`,
     "color: gray;",
     logLevelStyles[record.level],
     "background-color: default;",
@@ -128,6 +130,7 @@ export const adapter = (record: LogRecord) => {
 };
 
 export default adapter;
+
   `;
   }
 }

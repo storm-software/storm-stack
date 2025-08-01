@@ -312,11 +312,19 @@ export interface StormBaseConfig {
   DEFAULT_TIMEZONE: string;
 
   /**
+   * The current locale used in the application.
+   *
+   * @category neutral
+   */
+  LOCALE: string;
+
+  /**
    * The default locale for the application.
    *
    * @defaultValue "en_US"
    *
    * @category neutral
+   * @readonly
    */
   DEFAULT_LOCALE: string;
 

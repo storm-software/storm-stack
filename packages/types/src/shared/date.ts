@@ -16,7 +16,10 @@
 
  ------------------------------------------------------------------- */
 
-export interface StormDateFormats<TFormatToken = string> {
+/**
+ * The various types of date formats used in Storm Stack applications.
+ */
+export interface DateFormats<TFormatToken = string> {
   /** Localized full date @example "Jan 1, 2019" */
   fullDate: TFormatToken;
   /** Partially localized full date with weekday, useful for text-to-speech accessibility @example "Tuesday, January 1, 2019" */
@@ -73,7 +76,13 @@ export interface StormDateFormats<TFormatToken = string> {
   keyboardDateTime24h: TFormatToken;
 }
 
-export type Unit =
+/**
+ * Represents the time unit types used in date manipulation.
+ *
+ * @remarks
+ * This type is used to specify the unit of time when performing operations like adding or subtracting time from a date.
+ */
+export type TimeUnit =
   | "years"
   | "quarters"
   | "months"
@@ -85,7 +94,7 @@ export type Unit =
   | "milliseconds";
 
 // interface ConstructorOptions<TLocale> {
-//   formats?: Partial<StormDateFormats>;
+//   formats?: Partial<DateFormats>;
 //   locale?: TLocale;
 //   instance?: any;
 // }
@@ -103,7 +112,7 @@ export interface StormDateInterface<TDate, TLocale> {
   /**
    * The set of date formats supported by the utility.
    */
-  formats: StormDateFormats<any>;
+  formats: DateFormats<any>;
 
   /**
    * The current locale object, if available.
@@ -123,7 +132,7 @@ export interface StormDateInterface<TDate, TLocale> {
   /**
    * Name of the currently used date library.
    */
-  lib: string;
+  type: string;
 
   /**
    * Create a new `Date` object with the underlying library.
@@ -134,7 +143,7 @@ export interface StormDateInterface<TDate, TLocale> {
    * @param value - The value to create a date object from. Can be a string, number, or JavaScript Date object.
    * @returns A date object of type `TDate` or `null` if the input is `null`.
    */
-  date: <
+  createDate: <
     TArg = undefined,
     TResultingDate = TArg extends null
       ? null
@@ -223,7 +232,7 @@ export interface StormDateInterface<TDate, TLocale> {
    * @param unit - The unit of time to use for the comparison.
    * @returns The difference between the two dates in the specified unit.
    */
-  getDiff: (value: TDate, comparing: TDate | string, unit?: Unit) => number;
+  getDiff: (value: TDate, comparing: TDate | string, unit?: TimeUnit) => number;
 
   /**
    * Checks if two values are equal.
@@ -485,7 +494,7 @@ export interface StormDateInterface<TDate, TLocale> {
    * @param formatKey - The key of the format to use.
    * @returns The formatted date string.
    */
-  format: (value: TDate, formatKey: keyof StormDateFormats) => string;
+  format: (value: TDate, formatKey: keyof DateFormats) => string;
 
   /**
    * Formats a date using a custom format string.

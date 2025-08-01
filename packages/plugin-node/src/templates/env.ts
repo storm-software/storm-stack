@@ -403,7 +403,7 @@ export const runtime = {
   isColorSupported,
   isUnicodeSupported,
   isServer: isNode || build.platform === "node",
-  defaultLocale: config.DEFAULT_LOCALE,
+  locale: config.LOCALE || $storm.dotenv.DEFAULT_LOCALE,
   defaultTimezone: config.DEFAULT_TIMEZONE,
 } as StormRuntimeInfo;
 

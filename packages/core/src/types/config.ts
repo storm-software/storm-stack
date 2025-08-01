@@ -20,7 +20,10 @@ import { transformAsync } from "@babel/core";
 import { AssetGlob } from "@storm-software/build-tools/types";
 import type { LogLevelLabel } from "@storm-software/config-tools/types";
 import { StormWorkspaceConfig } from "@storm-software/config/types";
-import { ESBuildOptions as BaseESBuildOptions } from "@storm-software/esbuild/types";
+import {
+  ESBuildOptions as BaseESBuildOptions,
+  MaybePromise
+} from "@storm-software/esbuild/types";
 import type { UnbuildOptions as BaseUnbuildOptions } from "@storm-software/unbuild/types";
 import type { TypeDefinitionParameter } from "@stryke/types/configuration";
 import { TsConfigJson } from "@stryke/types/tsconfig";
@@ -28,8 +31,22 @@ import { ConfigLayer, ResolvedConfig } from "c12";
 import { BuildOptions as ExternalESBuildOptions } from "esbuild";
 import { BuildOptions as ExternalUnbuildOptions } from "unbuild";
 import { BabelPluginItem } from "./babel";
+import { Context } from "./context";
 
 export type LogFn = (type: LogLevelLabel, ...args: string[]) => void;
+
+export type Template = (
+  context: Context,
+  ...args: any[]
+) => MaybePromise<string>;
+
+/**
+ * The {@link StormWorkspaceConfig | configuration} object for an entire Storm Stack workspace
+ */
+export type WorkspaceConfig =
+  | StormWorkspaceConfig
+  | (Partial<StormWorkspaceConfig> &
+      Pick<StormWorkspaceConfig, "workspaceRoot">);
 
 /**
  * A configuration tuple for a Storm Stack plugin.
@@ -128,7 +145,7 @@ export interface OutputConfig {
   assets?: Array<string | AssetGlob>;
 }
 
-export interface UserConfig {
+export type UserConfig = Partial<Omit<WorkspaceConfig, "workspaceRoot">> & {
   /**
    * The name of the project
    */
@@ -293,7 +310,7 @@ export interface UserConfig {
    * The Babel configuration options to use for the build process
    */
   babel?: BabelConfig;
-}
+};
 
 export type ResolvedUserConfig = UserConfig &
   ResolvedConfig<UserConfig> & {
@@ -307,17 +324,9 @@ export type ResolvedUserConfig = UserConfig &
   };
 
 /**
- * The {@link StormWorkspaceConfig | configuration} object for an entire Storm Stack workspace
- */
-export type WorkspaceConfig =
-  | StormWorkspaceConfig
-  | (Partial<StormWorkspaceConfig> &
-      Pick<StormWorkspaceConfig, "workspaceRoot">);
-
-/**
  * The configuration provided while executing Storm Stack commands.
  */
-export interface InlineConfig extends UserConfig {
+export type InlineConfig = UserConfig & {
   /**
    * A string identifier for the Storm Stack command being executed
    */
@@ -349,9 +358,9 @@ export interface InlineConfig extends UserConfig {
    * The entry point(s) for the application
    */
   entry?: TypeDefinitionParameter | TypeDefinitionParameter[];
-}
+};
 
-export interface NewInlineConfig extends InlineConfig {
+export type NewInlineConfig = InlineConfig & {
   /**
    * A string identifier for the Storm Stack command being executed
    */
@@ -361,9 +370,9 @@ export interface NewInlineConfig extends InlineConfig {
    * The package name (from the \`package.json\`) for the project that will be used in the \`new\` command to create a new project based on this configuration
    */
   packageName?: string;
-}
+};
 
-export interface CleanInlineConfig extends InlineConfig {
+export type CleanInlineConfig = InlineConfig & {
   /**
    * A string identifier for the Storm Stack command being executed
    */
@@ -390,9 +399,9 @@ export interface CleanInlineConfig extends InlineConfig {
    * The entry point(s) for the application
    */
   entry?: TypeDefinitionParameter | TypeDefinitionParameter[];
-}
+};
 
-export interface PrepareInlineConfig extends InlineConfig {
+export type PrepareInlineConfig = InlineConfig & {
   /**
    * A string identifier for the Storm Stack command being executed
    */
@@ -443,9 +452,9 @@ export interface PrepareInlineConfig extends InlineConfig {
    * @defaultValue false
    */
   clean?: boolean;
-}
+};
 
-export interface BuildInlineConfig extends InlineConfig {
+export type BuildInlineConfig = InlineConfig & {
   /**
    * A string identifier for the Storm Stack command being executed
    */
@@ -508,9 +517,9 @@ export interface BuildInlineConfig extends InlineConfig {
    * @defaultValue false
    */
   clean?: boolean;
-}
+};
 
-export interface LintInlineConfig extends InlineConfig {
+export type LintInlineConfig = InlineConfig & {
   /**
    * A string identifier for the Storm Stack command being executed
    */
@@ -544,9 +553,9 @@ export interface LintInlineConfig extends InlineConfig {
    * @defaultValue false
    */
   skipCache?: boolean;
-}
+};
 
-export interface DocsInlineConfig extends InlineConfig {
+export type DocsInlineConfig = InlineConfig & {
   /**
    * A string identifier for the Storm Stack command being executed
    */
@@ -600,4 +609,4 @@ export interface DocsInlineConfig extends InlineConfig {
    * @defaultValue false
    */
   clean?: boolean;
-}
+};
