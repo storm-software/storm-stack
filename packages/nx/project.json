@@ -36,7 +36,7 @@
         "commands": [
           "pnpm copyfiles LICENSE dist/packages/nx",
           "pnpm copyfiles --up=2 ./packages/nx/*.md ./packages/nx/executors.json ./packages/nx/generators.json ./packages/nx/package.json dist/packages/nx",
-          "pnpm copyfiles --up=3 \"./packages/nx/src/executors/**/*.json\" \"./packages/nx/src/executors/**/*.d.ts\" \"./packages/nx/src/generators/**/*.json\" \"./packages/nx/src/generators/**/*.d.ts\" packages/nx/dist/src",
+          "pnpm copyfiles --up=3 \"./packages/nx/src/executors/*/schema.json\" \"./packages/nx/src/executors/*/schema.d.ts\" \"./packages/nx/src/generators/*/schema.json\" \"./packages/nx/src/generators/*/schema.d.ts\" dist/packages/nx/dist/src",
           "pnpm copyfiles --up=4 \"./packages/nx/src/**/*.md\" dist/packages/nx/docs/api",
           "pnpm copyfiles --up=3 \"./packages/nx/dist/**/*\" dist/packages/nx/dist"
         ]

@@ -142,7 +142,11 @@
         "types": "./dist/src/generators/*/generator.d.ts",
         "default": "./dist/src/generators/*/generator.js"
       }
-    }
+    },
+    "./generators/*/generator.js": "./dist/src/generators/*/generator.js",
+    "./generators/*/executors.js": "./dist/src/executors/*/executor.js",
+    "./generators/*/generator.mjs": "./dist/src/generators/*/generator.mjs",
+    "./generators/*/executors.mjs": "./dist/src/executors/*/executor.mjs"
   },
   "typings": "dist/index.d.ts",
   "dependencies": {

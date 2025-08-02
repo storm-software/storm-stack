@@ -94,6 +94,7 @@
     "jest": "catalog:",
     "jest-environment-jsdom": "catalog:",
     "jest-environment-node": "catalog:",
+    "jest-util": "catalog:",
     "lefthook": "catalog:",
     "log4brains": "catalog:",
     "nx": "catalog:",
