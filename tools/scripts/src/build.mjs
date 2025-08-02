@@ -83,6 +83,17 @@ try {
     );
   }
 
+  proc = $`pnpm nx reset --onlyDaemon`.timeout(`${2 * 60}s`);
+  proc.stdout.on("data", data => {
+    echo`${data}`;
+  });
+  result = await proc;
+  if (!result.ok) {
+    throw new Error(
+      `An error occurred while resetting the Nx daemon process: \n\n${result.message}\n`
+    );
+  }
+
   if (filter === "plugin" || filter === "cli" || filter === "all") {
     proc =
       $`pnpm nx run-many --target=build --projects="plugin-*" --configuration=${configuration} --outputStyle=dynamic-legacy --parallel=5`.timeout(

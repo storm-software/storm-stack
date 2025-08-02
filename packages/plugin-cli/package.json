@@ -74,6 +74,7 @@
     "@stryke/string-format": "catalog:",
     "@stryke/type-checks": "catalog:",
     "defu": "catalog:",
+    "tinycolor2": "catalog:",
     "uqr": "catalog:"
   },
   "devDependencies": {

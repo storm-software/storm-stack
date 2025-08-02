@@ -40,6 +40,9 @@
           "namespace": "storage"
         }
       ]
-    ]
+    ],
+    "output": {
+      "outputMode": "fs"
+    }
   }
 }

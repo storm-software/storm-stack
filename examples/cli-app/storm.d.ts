@@ -2166,114 +2166,6 @@ type ValidatorFunction<
 
 type WarningMessageDetails = MessageDetails<"warning">;
 
-declare module "storm:date" {
-  /**
-   * The Storm Stack date module provides utility functions for date manipulation and formatting
-   *
-   * @module storm:date
-   */
-
-  export const formats: DateFormats;
-  export const locale: Locale;
-  /**
-   * Creates a date object using the provided value.
-   *
-   * @remarks
-   * This function creates a date object using the provided value. If the value is `null`, it returns `null`. If the value is `undefined`, it returns the current date. If the value is a string, it parses the string as a date. If the value is a number, it treats it as a timestamp. If the value is a date object, it returns the date object.
-   *
-   * @example
-   * ```ts
-   * import { createDate } from "storm:date";
-   *
-   * const date = createDate("2023-10-01");
-   * console.log(date.format("YYYY-MM-DD")); // Outputs: 2023-10-01
-   * ```
-   *
-   * @param value - The value to create the date object from.
-   * @returns A date object or `null` if the value is `null`.
-   */
-  export function createDate<
-    TArg = undefined,
-    TResultingDate = TArg extends null
-      ? null
-      : TArg extends undefined
-        ? Date
-        : Date | null
-  >(value?: TArg): TResultingDate;
-  export const type = "date-fns";
-  export function is12HourCycleInCurrentLocale(): boolean;
-  export function getFormatHelperText(format: string): string;
-  export function parseISO(isoString: string): Date;
-  export function toISO(value: Date): string;
-  export function getCurrentLocaleCode(): string;
-  export function addSeconds(value: Date, count: number): Date;
-  export function addMinutes(value: Date, count: number): Date;
-  export function addHours(value: Date, count: number): Date;
-  export function addDays(value: Date, count: number): Date;
-  export function addWeeks(value: Date, count: number): Date;
-  export function addMonths(value: Date, count: number): Date;
-  export function addYears(value: Date, count: number): Date;
-  export function isValid(value: any): boolean;
-  export function getDiff(
-    value: Date,
-    comparing: Date | string,
-    unit?: TimeUnit
-  ): number;
-  export function isAfter(value: Date, comparing: Date): boolean;
-  export function isBefore(value: Date, comparing: Date): boolean;
-  export function startOfDay(value: Date): Date;
-  export function endOfDay(value: Date): Date;
-  export function getHours(value: Date): number;
-  export function setHours(value: Date, count: number): Date;
-  export function setMinutes(value: Date, count: number): Date;
-  export function getSeconds(value: Date): number;
-  export function setSeconds(value: Date, count: number): Date;
-  export function isSameDay(value: Date, comparing: Date): boolean;
-  export function isSameMonth(value: Date, comparing: Date): boolean;
-  export function isSameYear(value: Date, comparing: Date): boolean;
-  export function isSameHour(value: Date, comparing: Date): boolean;
-  export function startOfYear(value: Date): Date;
-  export function endOfYear(value: Date): Date;
-  export function startOfMonth(value: Date): Date;
-  export function endOfMonth(value: Date): Date;
-  export function startOfWeek(value: Date): Date;
-  export function endOfWeek(value: Date): Date;
-  export function getYear(value: Date): number;
-  export function setYear(value: Date, count: number): Date;
-  export function toJsDate(value: Date): Date;
-  export function parse(value: string, formatString: string): Date | null;
-  export function format(date: Date, formatKey: keyof DateFormats): string;
-  export function formatByString(date: Date, formatString: string): string;
-  export function isEqual(date: any, comparing: any): boolean;
-  export function isNull(date: Date): date is never;
-  export function isAfterDay(date: Date, value: Date): boolean;
-  export function isBeforeDay(date: Date, value: Date): boolean;
-  export function isBeforeYear(date: Date, value: Date): boolean;
-  export function isBeforeMonth(value: Date, comparing: Date): boolean;
-  export function isAfterMonth(value: Date, comparing: Date): boolean;
-  export function isAfterYear(date: Date, value: Date): boolean;
-  export function isWithinRange(
-    date: Date,
-    [start, end]: [Date, Date]
-  ): boolean;
-  export function formatNumber(numberToFormat: string): string;
-  export function getMinutes(date: Date): number;
-  export function getDate(date: Date): number;
-  export function setDate(date: Date, count: number): Date;
-  export function getWeek(date: Date): number;
-  export function getMonth(date: Date): number;
-  export function getDaysInMonth(date: Date): number;
-  export function setMonth(date: Date, count: number): Date;
-  export function getMeridiemText(meridiem: "am" | "pm"): "AM" | "PM";
-  export function getNextMonth(date: Date): Date;
-  export function getPreviousMonth(date: Date): Date;
-  export function getMonthArray(date: Date): Date[];
-  export function mergeDateAndTime(date: Date, time: Date): Date;
-  export function getWeekdays(): string[];
-  export function getWeekArray(date: Date): Date[][];
-  export function getYearRange(start: Date, end: Date): Date[];
-}
-
 declare module "storm:config" {
   /**
    * A type definition representing the Storm Stack configuration.
@@ -2973,6 +2865,114 @@ declare module "storm:config" {
    */
   export const config: StormConfig;
   export type __ΩStormConfig = any[];
+}
+
+declare module "storm:date" {
+  /**
+   * The Storm Stack date module provides utility functions for date manipulation and formatting
+   *
+   * @module storm:date
+   */
+
+  export const formats: DateFormats;
+  export const locale: Locale;
+  /**
+   * Creates a date object using the provided value.
+   *
+   * @remarks
+   * This function creates a date object using the provided value. If the value is `null`, it returns `null`. If the value is `undefined`, it returns the current date. If the value is a string, it parses the string as a date. If the value is a number, it treats it as a timestamp. If the value is a date object, it returns the date object.
+   *
+   * @example
+   * ```ts
+   * import { createDate } from "storm:date";
+   *
+   * const date = createDate("2023-10-01");
+   * console.log(date.format("YYYY-MM-DD")); // Outputs: 2023-10-01
+   * ```
+   *
+   * @param value - The value to create the date object from.
+   * @returns A date object or `null` if the value is `null`.
+   */
+  export function createDate<
+    TArg = undefined,
+    TResultingDate = TArg extends null
+      ? null
+      : TArg extends undefined
+        ? Date
+        : Date | null
+  >(value?: TArg): TResultingDate;
+  export const type = "date-fns";
+  export function is12HourCycleInCurrentLocale(): boolean;
+  export function getFormatHelperText(format: string): string;
+  export function parseISO(isoString: string): Date;
+  export function toISO(value: Date): string;
+  export function getCurrentLocaleCode(): string;
+  export function addSeconds(value: Date, count: number): Date;
+  export function addMinutes(value: Date, count: number): Date;
+  export function addHours(value: Date, count: number): Date;
+  export function addDays(value: Date, count: number): Date;
+  export function addWeeks(value: Date, count: number): Date;
+  export function addMonths(value: Date, count: number): Date;
+  export function addYears(value: Date, count: number): Date;
+  export function isValid(value: any): boolean;
+  export function getDiff(
+    value: Date,
+    comparing: Date | string,
+    unit?: TimeUnit
+  ): number;
+  export function isAfter(value: Date, comparing: Date): boolean;
+  export function isBefore(value: Date, comparing: Date): boolean;
+  export function startOfDay(value: Date): Date;
+  export function endOfDay(value: Date): Date;
+  export function getHours(value: Date): number;
+  export function setHours(value: Date, count: number): Date;
+  export function setMinutes(value: Date, count: number): Date;
+  export function getSeconds(value: Date): number;
+  export function setSeconds(value: Date, count: number): Date;
+  export function isSameDay(value: Date, comparing: Date): boolean;
+  export function isSameMonth(value: Date, comparing: Date): boolean;
+  export function isSameYear(value: Date, comparing: Date): boolean;
+  export function isSameHour(value: Date, comparing: Date): boolean;
+  export function startOfYear(value: Date): Date;
+  export function endOfYear(value: Date): Date;
+  export function startOfMonth(value: Date): Date;
+  export function endOfMonth(value: Date): Date;
+  export function startOfWeek(value: Date): Date;
+  export function endOfWeek(value: Date): Date;
+  export function getYear(value: Date): number;
+  export function setYear(value: Date, count: number): Date;
+  export function toJsDate(value: Date): Date;
+  export function parse(value: string, formatString: string): Date | null;
+  export function format(date: Date, formatKey: keyof DateFormats): string;
+  export function formatByString(date: Date, formatString: string): string;
+  export function isEqual(date: any, comparing: any): boolean;
+  export function isNull(date: Date): date is never;
+  export function isAfterDay(date: Date, value: Date): boolean;
+  export function isBeforeDay(date: Date, value: Date): boolean;
+  export function isBeforeYear(date: Date, value: Date): boolean;
+  export function isBeforeMonth(value: Date, comparing: Date): boolean;
+  export function isAfterMonth(value: Date, comparing: Date): boolean;
+  export function isAfterYear(date: Date, value: Date): boolean;
+  export function isWithinRange(
+    date: Date,
+    [start, end]: [Date, Date]
+  ): boolean;
+  export function formatNumber(numberToFormat: string): string;
+  export function getMinutes(date: Date): number;
+  export function getDate(date: Date): number;
+  export function setDate(date: Date, count: number): Date;
+  export function getWeek(date: Date): number;
+  export function getMonth(date: Date): number;
+  export function getDaysInMonth(date: Date): number;
+  export function setMonth(date: Date, count: number): Date;
+  export function getMeridiemText(meridiem: "am" | "pm"): "AM" | "PM";
+  export function getNextMonth(date: Date): Date;
+  export function getPreviousMonth(date: Date): Date;
+  export function getMonthArray(date: Date): Date[];
+  export function mergeDateAndTime(date: Date, time: Date): Date;
+  export function getWeekdays(): string[];
+  export function getWeekArray(date: Date): Date[][];
+  export function getYearRange(start: Date, end: Date): Date[];
 }
 
 declare module "storm:error" {

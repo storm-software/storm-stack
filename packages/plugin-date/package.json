@@ -166,6 +166,7 @@
     "@storm-software/config-tools": "catalog:",
     "@storm-stack/core": "workspace:*",
     "@storm-stack/devkit": "workspace:*",
+    "@storm-stack/plugin-dotenv": "workspace:*",
     "@stryke/capnp": "catalog:",
     "@stryke/env": "catalog:",
     "@stryke/fs": "catalog:",
