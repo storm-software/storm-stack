@@ -3546,13 +3546,15 @@ declare module "storm:cli" {
     /**
      * Specify how to handle a cancelled prompt (e.g. by pressing Ctrl+C).
      *
-     * Default strategy is `"default"`.
-     *
+     * @remarks
+     * The list of valid cancel strategies include:
      * - `"default"` - Resolve the promise with the `default` value or `initial` value.
      * - `"undefined`" - Resolve the promise with `undefined`.
      * - `"null"` - Resolve the promise with `null`.
      * - `"symbol"` - Resolve the promise with a symbol `Symbol.for("cancel")`.
      * - `"reject"`  - Reject the promise with an error.
+     *
+     * @defaultValue "default"
      */
     cancel?: "reject" | "default" | "undefined" | "null" | "symbol";
   }

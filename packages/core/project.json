@@ -18,6 +18,9 @@
       }
     },
     "build-base": {
+      "cache": true,
+      "inputs": ["typescript", "^production"],
+      "outputs": ["{projectRoot}/dist"],
       "executor": "nx:run-commands",
       "dependsOn": ["build-schema"],
       "options": {
@@ -26,6 +29,9 @@
       }
     },
     "build": {
+      "cache": true,
+      "inputs": ["typescript", "^production"],
+      "outputs": ["{workspaceRoot}/dist/{projectRoot}"],
       "executor": "nx:run-commands",
       "dependsOn": ["build-base"],
       "options": {

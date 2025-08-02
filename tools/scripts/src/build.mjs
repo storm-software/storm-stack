@@ -56,7 +56,7 @@ try {
   }
 
   proc =
-    $`pnpm nx run types:build:${configuration} --outputStyle=dynamic-legacy`.timeout(
+    $`pnpm nx run types:build:${configuration} --outputStyle=dynamic-legacy --parallel=5`.timeout(
       `${3 * 60}s`
     );
   proc.stdout.on("data", data => {
@@ -70,7 +70,7 @@ try {
   }
 
   proc =
-    $`pnpm nx run nx:build:${configuration} --outputStyle=dynamic-legacy`.timeout(
+    $`pnpm nx run nx:build:${configuration} --outputStyle=dynamic-legacy --parallel=5`.timeout(
       `${5 * 60}s`
     );
   proc.stdout.on("data", data => {
@@ -111,7 +111,7 @@ try {
 
     if (filter === "cli" || filter === "all") {
       proc =
-        $`pnpm nx run cli:build:${configuration} --outputStyle=dynamic-legacy`.timeout(
+        $`pnpm nx run cli:build:${configuration} --outputStyle=dynamic-legacy --parallel=5`.timeout(
           `${10 * 60}s`
         );
       proc.stdout.on("data", data => {

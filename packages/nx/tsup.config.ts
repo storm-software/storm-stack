@@ -32,6 +32,7 @@ const config = getTsupConfig({
   platform: "node",
   bundle: true,
   splitting: true,
+  treeshake: true,
   dts: true,
   shims: true,
   clean: false,
