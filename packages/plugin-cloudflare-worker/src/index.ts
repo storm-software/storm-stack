@@ -184,9 +184,15 @@ export default class StormStackCloudflareWorkerPlugin<
       context.packageDeps.unenv = "dependency";
       context.packageDeps.wrangler = "devDependency";
 
+      context.runtimeDtsFilePath = joinPaths(
+        context.options.projectRoot,
+        "types",
+        "storm.d.ts"
+      );
+
       context.additionalRuntimeFiles ??= [];
       context.additionalRuntimeFiles.push(
-        joinPaths(context.options.projectRoot, "types", "*.ts")
+        joinPaths(findFilePath(context.runtimeDtsFilePath), "*.ts")
       );
     }
   }
