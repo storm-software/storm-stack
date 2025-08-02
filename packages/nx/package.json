@@ -47,16 +47,16 @@
     },
     "./plugin": {
       "import": {
-        "types": "./dist/plugin/index.d.mts",
-        "default": "./dist/plugin/index.mjs"
+        "types": "./dist/plugin.d.mts",
+        "default": "./dist/plugin.mjs"
       },
       "require": {
-        "types": "./dist/plugin/index.d.ts",
-        "default": "./dist/plugin/index.js"
+        "types": "./dist/plugin.d.ts",
+        "default": "./dist/plugin.js"
       },
       "default": {
-        "types": "./dist/plugin/index.d.ts",
-        "default": "./dist/plugin/index.js"
+        "types": "./dist/plugin.d.ts",
+        "default": "./dist/plugin.js"
       }
     },
     "./executors": {
@@ -115,10 +115,34 @@
         "default": "./dist/src/generators/*/untyped.js"
       }
     },
-    "./executors/*/executor.js": "./dist/src/executors/*/executor.js",
-    "./executors/*/executor.mjs": "./dist/src/executors/*/executor.mjs",
-    "./generators/*/generator.js": "./dist/src/generators/*/generator.js",
-    "./generators/*/generator.mjs": "./dist/src/generators/*/generator.mjs"
+    "./executors/*/executor": {
+      "import": {
+        "types": "./dist/src/executors/*/executor.d.mts",
+        "default": "./dist/src/executors/*/executor.mjs"
+      },
+      "require": {
+        "types": "./dist/src/executors/*/executor.d.ts",
+        "default": "./dist/src/executors/*/executor.js"
+      },
+      "default": {
+        "types": "./dist/src/executors/*/executor.d.ts",
+        "default": "./dist/src/executors/*/executor.js"
+      }
+    },
+    "./generators/*/generator": {
+      "import": {
+        "types": "./dist/src/generators/*/generator.d.mts",
+        "default": "./dist/src/generators/*/generator.mjs"
+      },
+      "require": {
+        "types": "./dist/src/generators/*/generator.d.ts",
+        "default": "./dist/src/generators/*/generator.js"
+      },
+      "default": {
+        "types": "./dist/src/generators/*/generator.d.ts",
+        "default": "./dist/src/generators/*/generator.js"
+      }
+    }
   },
   "typings": "dist/index.d.ts",
   "dependencies": {
