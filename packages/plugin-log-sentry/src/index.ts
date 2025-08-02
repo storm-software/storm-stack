@@ -124,9 +124,9 @@ Sentry.init({
   dsn: $storm.dotenv.SENTRY_DSN,
   environment: $storm.dotenv.ENVIRONMENT,
   release: $storm.dotenv.RELEASE_TAG,
-  debug: !!$storm.dotenv.DEBUG,
+  debug: $storm.dotenv.DEBUG,
   enabled: true,
-  attachStacktrace: !!$storm.dotenv.STACKTRACE,
+  attachStacktrace: $storm.dotenv.STACKTRACE,
   sendClientReports: true
 });
 

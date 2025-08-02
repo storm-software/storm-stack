@@ -29,13 +29,9 @@ import {
   MIN_CONSOLE_WIDTH
 } from "../helpers/constants";
 import { extractAuthor } from "../helpers/utilities";
-import { StormStackCLIPluginContext } from "../types/build";
-import type { CLIPluginConfig } from "../types/config";
+import type { CLIPluginConfig, CLIPluginContext } from "../types/config";
 
-export function CLIModule(
-  context: StormStackCLIPluginContext,
-  config: CLIPluginConfig
-) {
+export function CLIModule(context: CLIPluginContext, config: CLIPluginConfig) {
   let appTitle = titleCase(
     context.options.name ||
       (Array.isArray(config.bin) ? config.bin[0] : config.bin) ||
@@ -50,11 +46,9 @@ export function CLIModule(
     author.name = titleCase(author.name);
   }
 
-  let homepage = config.homepage;
+  let homepage = context.options.homepage;
   if (!homepage) {
-    if (context.options.homepage) {
-      homepage = context.options.homepage;
-    } else if (context.packageJson?.homepage) {
+    if (context.packageJson?.homepage) {
       homepage = context.packageJson.homepage;
     } else if (
       isObject(context.packageJson?.author) &&
@@ -71,23 +65,16 @@ export function CLIModule(
     }
   }
 
-  let support = config.support;
+  let support = context.options.support;
   if (!support) {
-    if (context.options.support) {
-      support = context.options.support;
-    } else if (
-      isObject(context.packageJson?.bugs) &&
-      context.packageJson?.bugs?.url
-    ) {
+    if (isObject(context.packageJson?.bugs) && context.packageJson?.bugs?.url) {
       support = context.packageJson.bugs.url;
     }
   }
 
-  let contact = config.contact;
+  let contact = context.options.contact;
   if (!contact) {
-    if (context.options.contact) {
-      contact = context.options.contact;
-    } else if (
+    if (
       isObject(context.packageJson?.author) &&
       context.packageJson?.author?.url
     ) {
@@ -102,20 +89,16 @@ export function CLIModule(
     }
   }
 
-  let docs = config.docs;
+  let docs = context.options.docs;
   if (!docs) {
-    if (context.options.docs) {
-      docs = context.options.docs;
-    } else if (context.packageJson?.docs) {
+    if (context.packageJson?.docs) {
       docs = context.packageJson.docs;
     }
   }
 
-  let repository = config.repository;
+  let repository = context.options.repository;
   if (!repository) {
-    if (context.options.repository) {
-      repository = context.options.repository;
-    } else if (context.packageJson?.repository) {
+    if (context.packageJson?.repository) {
       repository = isString(context.packageJson.repository)
         ? context.packageJson.repository
         : context.packageJson.repository?.url;
@@ -151,6 +134,12 @@ export function CLIModule(
   }
 
   const linksMaxLength = Math.max(...linksColumn1.map(line => line.length)) + 8;
+
+  if (!(author?.url || homepage || docs || support || contact || repository)) {
+    throw new Error(
+      "No homepage, support, contact, documentation or repository URL provided in the Storm Stack configuration."
+    );
+  }
 
   return `${getFileHeader()}
 
@@ -546,19 +535,19 @@ export function renderFooter(): string {
     ${
       author?.name
         ? `
-  footer.push(\`\${" ".repeat((consoleWidth - ${
+  footer.push(\`\${" ".repeat(Math.max((consoleWidth - ${
     author.name.length ?? 0
-  }) / 2)}\${colors.bold(colors.whiteBright("${author.name}"))}\${" ".repeat((consoleWidth - ${
+  }) / 2, 10))}\${colors.bold(colors.whiteBright("${author.name}"))}\${" ".repeat(Math.max((consoleWidth - ${
     author.name.length ?? 0
-  }) / 2)}\`);`
+  }) / 2, 0))}\`);`
         : ""
     }${
       author?.description
         ? `
 
-  const descriptionPadding = (consoleWidth - ${author.description.length}) / 2;
+  const descriptionPadding = Math.max((consoleWidth - ${author.description.length}) / 2, 10);
   for (const line of (${author.description.length} < consoleWidth * 0.6
-    ? \`\${" ".repeat(descriptionPadding)}\${"${author.description}"}\${" ".repeat(descriptionPadding + consoleWidth - (descriptionPadding * 2 + ${author.description.length}))}\`
+    ? \`\${" ".repeat(descriptionPadding)}\${colors.gray("${author.description}")}\${" ".repeat(Math.max(descriptionPadding + consoleWidth - (descriptionPadding * 2 + ${author.description.length}), 0))}\`
     : "${author.description}".split(/\\s+/).reduce((ret, word) => {
         const lines = ret.split("\\n");
         if (lines.length !== 0 && (lines[lines.length - 1]!.length + word.length > consoleWidth * 0.6)) {
@@ -567,8 +556,8 @@ export function renderFooter(): string {
 
         return \`\${ret}\${word} \`;
       }, "")).split("\\n")) {
-    const linePadding = (consoleWidth - stripAnsi(line).length) / 2;
-    footer.push(\`\${" ".repeat(linePadding)}\${colors.gray(line)}\${" ".repeat(linePadding + consoleWidth - (linePadding * 2 + stripAnsi(line).length))}\`);
+    const linePadding = Math.max((consoleWidth - stripAnsi(line).length) / 2, 10);
+    footer.push(\`\${" ".repeat(linePadding)}\${colors.gray(line)}\${" ".repeat(Math.max(linePadding + consoleWidth - (linePadding * 2 + stripAnsi(line).length), 0))}\`);
   }
   footer.push("\\n");`
         : ""
@@ -579,30 +568,28 @@ export function renderFooter(): string {
       (author?.url || homepage || docs || support || contact || repository)!
     )}\`.split("\\n");
     const qrCodeMaxLength = Math.max(...qrCodeLines.map(line => line.length));
-    footer.push(...qrCodeLines.map(line => \`\${" ".repeat((consoleWidth - qrCodeMaxLength) / 2)}\${line}\${" ".repeat((consoleWidth - qrCodeMaxLength) / 2)}\`));
+    footer.push(...qrCodeLines.map(line => \`\${" ".repeat(Math.max((consoleWidth - qrCodeMaxLength) / 2, 15))}\${line}\${" ".repeat(Math.max((consoleWidth - qrCodeMaxLength) / 2, 0))}\`));
   }
 
-  footer.push(\`\${" ".repeat((consoleWidth - ${
+  footer.push(\`\${" ".repeat(Math.max((consoleWidth - ${
     (author?.url || homepage || docs || support || contact || repository)
       ?.length ?? 0
-  }) / 2)}\${link("${(author?.url ||
+  }) / 2, 10))}\${link("${(author?.url ||
     homepage ||
     docs ||
     support ||
     contact ||
-    repository)!}")}\${" ".repeat((consoleWidth - ${
+    repository)!}")}\${" ".repeat(Math.max((consoleWidth - ${
     (author?.url || homepage || docs || support || contact || repository)
       ?.length ?? 0
-  }) / 2)}\`);
+  }) / 2, 0))}\`);
   footer.push("\\n");
 `
       : ""
   }
-  footer.push(\`\${" ".repeat((consoleWidth - ${footerHeaderLength}) / 2)}${
-    footerHeader
-  }\${" ".repeat((consoleWidth - ${footerHeaderLength}) / 2)}\`);
+  footer.push(\`\${" ".repeat(Math.max((consoleWidth - ${footerHeaderLength}) / 2, 10))}${footerHeader}\${" ".repeat(Math.max((consoleWidth - ${footerHeaderLength}) / 2, 0))}\`);
   if (supportRow) {
-    footer.push(\`\${" ".repeat((consoleWidth - supportRowLength) / 2)}\${supportRow}\${" ".repeat((consoleWidth - supportRowLength) / 2)}\`);
+    footer.push(\`\${" ".repeat(Math.max((consoleWidth - supportRowLength) / 2, 10))}\${supportRow}\${" ".repeat(Math.max((consoleWidth - supportRowLength) / 2, 0))}\`);
   }
 
   return footer.join("\\n");
@@ -624,13 +611,15 @@ interface PromptCommonOptions {
   /**
    * Specify how to handle a cancelled prompt (e.g. by pressing Ctrl+C).
    *
-   * Default strategy is \`"default"\`.
-   *
+   * @remarks
+   * The list of valid cancel strategies include:
    * - \`"default"\` - Resolve the promise with the \`default\` value or \`initial\` value.
    * - \`"undefined\`" - Resolve the promise with \`undefined\`.
    * - \`"null"\` - Resolve the promise with \`null\`.
    * - \`"symbol"\` - Resolve the promise with a symbol \`Symbol.for("cancel")\`.
    * - \`"reject"\`  - Reject the promise with an error.
+   *
+   * @defaultValue "default"
    */
   cancel?: "reject" | "default" | "undefined" | "null" | "symbol";
 }

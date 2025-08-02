@@ -53,7 +53,7 @@ export type WorkspaceConfig =
  */
 export type PluginConfig<
   TProps extends Record<string, any> = Record<string, any>
-> = [string, TProps];
+> = [string, TProps | undefined];
 
 export type ESBuildOverrideOptions = ExternalESBuildOptions &
   BaseESBuildOptions;

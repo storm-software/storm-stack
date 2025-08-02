@@ -20,11 +20,10 @@ import { getFileHeader } from "@storm-stack/core/lib/utilities/file-header";
 import { kebabCase } from "@stryke/string-format/kebab-case";
 import { titleCase } from "@stryke/string-format/title-case";
 import { isSetString } from "@stryke/type-checks/is-set-string";
-import { StormStackCLIPluginContext } from "../types/build";
-import { CLIPluginConfig } from "../types/config";
+import { CLIPluginConfig, CLIPluginContext } from "../types/config";
 
 export function writeCompletionsBash(
-  context: StormStackCLIPluginContext,
+  context: CLIPluginContext,
   config: CLIPluginConfig
 ) {
   const bin =
@@ -154,7 +153,7 @@ export default handler;
 }
 
 export function writeCompletionsZsh(
-  context: StormStackCLIPluginContext,
+  context: CLIPluginContext,
   config: CLIPluginConfig
 ) {
   const bin =

@@ -67,7 +67,7 @@ export default declareBabel(
         .filter(prop => prop.getAlias().length > 0);
 
       if (node.name) {
-        const prefix = context.options.dotenv.prefix.find(
+        const prefix = context.options.plugins.dotenv.prefix.find(
           pre =>
             node.name &&
             node.name.startsWith(pre) &&
@@ -110,17 +110,17 @@ export default declareBabel(
             context.reflections.config!.addProperty(dotenvProperty.property);
           }
 
-          if (context.options.dotenv.inject && isInjectable) {
-            let value = context.options.dotenv.values?.[name];
+          if (context.options.plugins.dotenv.inject && isInjectable) {
+            let value = context.options.plugins.dotenv.values?.[name];
             if (value === undefined) {
-              const prefix = context.options.dotenv.prefix.find(pre => {
-                return context.options.dotenv.values[
+              const prefix = context.options.plugins.dotenv.prefix.find(pre => {
+                return context.options.plugins.dotenv.values[
                   `${pre.replace(/_$/g, "")}_${name}`
                 ];
               });
               if (prefix) {
                 value =
-                  context.options.dotenv.values[
+                  context.options.plugins.dotenv.values[
                     `${prefix.replace(/_$/g, "")}_${name}`
                   ];
               }
@@ -161,7 +161,7 @@ export default declareBabel(
       )
       .join(
         "\n"
-      )} \n\nUsing the following env prefix: \n${context.options.dotenv.prefix
+      )} \n\nUsing the following env prefix: \n${context.options.plugins.dotenv.prefix
       .map(prefix => ` - ${prefix}`)
       .join(
         "\n"

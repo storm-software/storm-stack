@@ -76,9 +76,20 @@ export default class CryptoPlugin<
       `Initializing the Cryptography plugin options for the Storm Stack project.`
     );
 
-    context.options.encryptionKey = this.options.encryptionKey;
-    context.options.dotenv.values.ENCRYPTION_KEY =
-      context.options.encryptionKey;
+    if (
+      !context.options.plugins.crypto.encryptionKey &&
+      !context.options.plugins.dotenv.values.ENCRYPTION_KEY &&
+      !this.options.encryptionKey
+    ) {
+      throw new Error(
+        "The `encryptionKey` option is required for the Crypto plugin. Please provide it in your Storm Stack configuration or as an environment variable."
+      );
+    }
+
+    context.options.plugins.crypto.encryptionKey ??= (this.options
+      .encryptionKey || context.options.plugins.dotenv.values.ENCRYPTION_KEY)!;
+    context.options.plugins.dotenv.values.ENCRYPTION_KEY =
+      context.options.plugins.crypto.encryptionKey;
   }
 
   /**

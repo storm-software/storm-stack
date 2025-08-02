@@ -30,7 +30,8 @@ import {
   ResolvedOptions
 } from "./build";
 import { CompilerInterface, SourceFile } from "./compiler";
-import type { InlineConfig, LogFn } from "./config";
+import type { LogFn } from "./config";
+import { PluginOptions } from "./plugin";
 import { VirtualFileSystemInterface } from "./vfs";
 
 export interface LogRuntimeConfig {
@@ -130,14 +131,14 @@ export type UnimportContext = Omit<Unimport, "injectImports"> & {
 };
 
 export interface Context<
-  TExtraOptions = unknown,
+  TPluginsOptions extends Record<string, any> = Record<string, any>,
   TResolvedEntryTypeDefinition extends
     ResolvedEntryTypeDefinition = ResolvedEntryTypeDefinition
 > {
   /**
    * An object containing the options provided to Storm Stack
    */
-  options: ResolvedOptions<TExtraOptions>;
+  options: ResolvedOptions<TPluginsOptions>;
 
   /**
    * A logging function for the Storm Stack engine
@@ -285,14 +286,17 @@ export interface SerializedVirtualFileSystem {
 }
 
 export type SerializedContext<
-  TInlineConfig extends InlineConfig = InlineConfig,
+  TPluginsOptions extends Record<string, PluginOptions> = Record<
+    string,
+    PluginOptions
+  >,
   TResolvedEntryTypeDefinition extends
     ResolvedEntryTypeDefinition = ResolvedEntryTypeDefinition
 > = Record<"log" | "workers" | "resolver" | "compiler" | "unimport", null> & {
   /**
    * An object containing the options provided to Storm Stack
    */
-  options: ResolvedOptions<TInlineConfig>;
+  options: ResolvedOptions<TPluginsOptions>;
 
   /**
    * A logging function for the Storm Stack engine

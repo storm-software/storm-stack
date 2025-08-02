@@ -19,7 +19,7 @@
 import { StormPayload } from "storm:payload";
 import { ExamplePayload } from "./types";
 
-export async function handler(payload: StormPayload<Request>) {
+export async function handler(payload: StormPayload<Request<ExamplePayload>>) {
   const data = await payload.data.json<ExamplePayload>();
 
   return data?.address.city;

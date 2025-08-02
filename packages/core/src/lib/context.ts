@@ -206,7 +206,8 @@ export async function createContext<TContext extends Context = Context>(
       },
       inlineConfig,
       projectRoot,
-      workspaceConfig: resolvedWorkspaceConfig
+      workspaceConfig: resolvedWorkspaceConfig,
+      plugins: {} as ResolvedOptions["plugins"]
     },
     log: createLog(
       options.name ?? null,

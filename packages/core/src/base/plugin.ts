@@ -17,8 +17,10 @@
  ------------------------------------------------------------------- */
 
 import { LogLevelLabel } from "@storm-software/config-tools/types";
+import { camelCase } from "@stryke/string-format/camel-case";
 import { kebabCase } from "@stryke/string-format/kebab-case";
 import { titleCase } from "@stryke/string-format/title-case";
+import defu from "defu";
 import { createLog, extendLog } from "../lib/logger";
 import type { EngineHooks } from "../types/build";
 import type { LogFn, PluginConfig } from "../types/config";
@@ -60,13 +62,21 @@ export abstract class Plugin<
   protected packageDeps: Record<string, "dependency" | "devDependency"> = {};
 
   /**
+   * A property to override the plugin's {@link name} field.
+   *
+   * @remarks
+   * This is useful for plugins that need to have a different name than the default one derived from the class name.
+   */
+  protected overrideName?: string;
+
+  /**
    * The name of the plugin
    *
    * @remarks
-   * This is used to identify the plugin in logs and other output.
+   * This is used to identify the plugin's name used in {@link Context.options}, logs, and other output.
    */
   public get name(): string {
-    const name = kebabCase(this.constructor.name);
+    const name = this.overrideName || kebabCase(this.constructor.name);
     if (name.startsWith("plugin-")) {
       return name.replace(/^plugin-/, "").trim();
     } else if (name.endsWith("-plugin")) {
@@ -80,10 +90,10 @@ export abstract class Plugin<
    * The identifier for the plugin used in the {@link isSame} method
    *
    * @remarks
-   * Child plugins can override this to provide a more or less specific identifier.
+   * Child plugins can override this to provide a more or less specific identifier. This is used to identify the plugin's options in {@link Context.options}.
    */
   public get identifier(): string {
-    return this.name;
+    return camelCase(this.name);
   }
 
   /**
@@ -179,6 +189,12 @@ export abstract class Plugin<
       LogLevelLabel.TRACE,
       `Adding required installations for the project.`
     );
+
+    this.options = defu(
+      this.options,
+      context.options.plugins[this.identifier] ?? {},
+      context.options.plugins[this.name] ?? {}
+    ) as PluginOptions<TConfig>;
 
     if (Object.keys(this.packageDeps).length > 0) {
       Object.keys(this.packageDeps).forEach(dependency => {

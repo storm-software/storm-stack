@@ -51,15 +51,10 @@ export default class NodePlugin<
   public constructor(options: PluginOptions<TConfig>) {
     super(options);
 
-    this.options.logging ??= {};
-    this.options.logging.console ??= {
-      logLevel: "info"
-    };
-
     this.dependencies = [
-      ["@storm-stack/plugin-dotenv", this.options.dotenv ?? {}],
-      ["@storm-stack/plugin-error", this.options.error ?? {}],
-      ["@storm-stack/plugin-log-console", this.options.logging.console]
+      ["@storm-stack/plugin-dotenv", this.options.dotenv],
+      ["@storm-stack/plugin-error", this.options.error],
+      ["@storm-stack/plugin-log-console", this.options.logs?.console]
     ];
 
     this.packageDeps = {};
@@ -101,8 +96,8 @@ export default class NodePlugin<
     context.options.babel.plugins ??= [];
     context.options.babel.plugins.push(BabelPlugin);
 
-    context.options.logging ??= this.options
-      .logging as NodePluginContextOptions["logging"];
+    context.options.plugins.logs ??= this.options
+      .logs as NodePluginContextOptions["logs"];
   }
 
   /**

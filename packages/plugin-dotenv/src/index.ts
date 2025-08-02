@@ -102,7 +102,7 @@ export default class DotenvPlugin<
     context.options.babel.plugins ??= [];
     context.options.babel.plugins.push(BabelPlugin);
 
-    context.options.dotenv ??= {
+    context.options.plugins.dotenv ??= {
       types: {}
     } as ResolvedDotenvOptions;
 
@@ -111,23 +111,24 @@ export default class DotenvPlugin<
         getDotenvDefaultTypeDefinition(context).name
       }`
     } as DotenvTypeDefinitionParameters;
-    if (!this.options.types) {
+    if (!context.options.plugins.dotenv.types) {
       this.log(
         LogLevelLabel.WARN,
         "No environment variable type definitions were provided in the `dotenv.types` configuration."
       );
     } else {
-      params = isObject(this.options.types)
-        ? this.options.types
+      params = isObject(context.options.plugins.dotenv.types)
+        ? context.options.plugins.dotenv.types
         : {
-            config: `${this.options.types}#Config`,
-            secrets: `${this.options.types}#Secrets`
+            config: `${String(context.options.plugins.dotenv.types)}#Config`,
+            secrets: `${String(context.options.plugins.dotenv.types)}#Secrets`
           };
     }
 
     if (params.config) {
-      context.options.dotenv.types ??= {} as ReflectedDotenvTypeDefinitions;
-      context.options.dotenv.types.config = parseTypeDefinition(
+      context.options.plugins.dotenv.types ??=
+        {} as ReflectedDotenvTypeDefinitions;
+      context.options.plugins.dotenv.types.config = parseTypeDefinition(
         params.config
       ) as TypeDefinition;
     } else {
@@ -138,19 +139,20 @@ export default class DotenvPlugin<
     }
 
     if (params.secrets) {
-      context.options.dotenv.types ??= {} as ReflectedDotenvTypeDefinitions;
-      context.options.dotenv.types.secrets = parseTypeDefinition(
+      context.options.plugins.dotenv.types ??=
+        {} as ReflectedDotenvTypeDefinitions;
+      context.options.plugins.dotenv.types.secrets = parseTypeDefinition(
         params.secrets
       ) as TypeDefinition;
-      if (!context.options.dotenv.types.secrets?.file) {
+      if (!context.options.plugins.dotenv.types.secrets?.file) {
         throw new Error(
           "Invalid type definition for secrets found in `dotenv.types.secrets` of the provided configuration."
         );
       }
     }
 
-    context.options.dotenv.prefix = toArray(
-      context.options.dotenv.prefix ?? ([] as string[])
+    context.options.plugins.dotenv.prefix = toArray(
+      context.options.plugins.dotenv.prefix ?? ([] as string[])
     ).reduce(
       (ret, prefix) => {
         const formattedPrefix = constantCase(prefix);
@@ -163,19 +165,20 @@ export default class DotenvPlugin<
       [...ENV_PREFIXES] as string[]
     );
 
-    context.options.dotenv.prefix = context.options.dotenv.prefix.reduce(
-      (ret, prefix) => {
+    context.options.plugins.dotenv.prefix =
+      context.options.plugins.dotenv.prefix.reduce((ret, prefix) => {
         if (!ret.includes(prefix.replace(/_$/g, ""))) {
           ret.push(prefix.replace(/_$/g, ""));
         }
         return ret;
-      },
-      [] as string[]
-    );
+      }, [] as string[]);
 
-    context.options.dotenv.inject =
-      this.options.inject ?? context.options.projectType === "application";
-    context.options.dotenv.values = await loadEnv(context, this.options);
+    context.options.plugins.dotenv.inject ??=
+      context.options.projectType === "application";
+    context.options.plugins.dotenv.values = await loadEnv(
+      context,
+      context.options.plugins.dotenv
+    );
   }
 
   protected async initReflections(context: DotenvPluginContext) {
@@ -203,11 +206,11 @@ export default class DotenvPlugin<
       );
     } else {
       if (
-        context.options.dotenv.types.config?.file &&
+        context.options.plugins.dotenv.types.config?.file &&
         existsSync(
           joinPaths(
             context.options.projectRoot,
-            context.options.dotenv.types.config.file
+            context.options.plugins.dotenv.types.config.file
           )
         )
       ) {
@@ -215,20 +218,20 @@ export default class DotenvPlugin<
           context,
           joinPaths(
             context.options.projectRoot,
-            context.options.dotenv.types.config.file
+            context.options.plugins.dotenv.types.config.file
           ),
-          context.options.dotenv.types.config.name
+          context.options.plugins.dotenv.types.config.name
         );
       } else {
         context.reflections.configDotenv = await reflectDotenvConfig(context);
       }
 
       if (
-        context.options.dotenv.types.secrets &&
+        context.options.plugins.dotenv.types.secrets &&
         existsSync(
           joinPaths(
             context.options.projectRoot,
-            context.options.dotenv.types.secrets.file
+            context.options.plugins.dotenv.types.secrets.file
           )
         )
       ) {
@@ -236,9 +239,9 @@ export default class DotenvPlugin<
           context,
           joinPaths(
             context.options.projectRoot,
-            context.options.dotenv.types.secrets.file
+            context.options.plugins.dotenv.types.secrets.file
           ),
-          context.options.dotenv.types.secrets.name
+          context.options.plugins.dotenv.types.secrets.name
         );
       }
 

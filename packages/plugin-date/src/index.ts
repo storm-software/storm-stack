@@ -47,6 +47,7 @@ export default class DatePlugin<
     super(options);
 
     this.packageDeps = {};
+    this.dependencies = [["@storm-stack/plugin-dotenv", options.dotenv]];
   }
 
   /**
@@ -77,29 +78,28 @@ export default class DatePlugin<
       `Initializing the Date plugin options for the Storm Stack project.`
     );
 
-    context.options.date ??= {
+    context.options.plugins.date ??= {
       type: "date-fns"
     } as ResolvedDateOptions;
-    context.options.date.type ??= "date-fns";
 
     if (
       !["date-fns", "dayjs", "luxon", "moment"].includes(
-        context.options.date.type
+        context.options.plugins.date.type
       )
     ) {
       this.log(
         LogLevelLabel.WARN,
-        `Invalid date library type "${context.options.date.type}" specified. Defaulting to "date-fns".`
+        `Invalid date library type "${context.options.plugins.date.type}" specified. Defaulting to "date-fns".`
       );
-      context.options.date.type = "date-fns";
+      context.options.plugins.date.type = "date-fns";
     }
 
     this.log(
       LogLevelLabel.DEBUG,
-      `Using date library: ${context.options.date.type}`
+      `Using date library: ${context.options.plugins.date.type}`
     );
 
-    this.packageDeps[context.options.date.type] = "dependency";
+    this.packageDeps[context.options.plugins.date.type] = "dependency";
   }
 
   /**
@@ -114,7 +114,7 @@ export default class DatePlugin<
     );
 
     let dateTemplate!: Template;
-    switch (context.options.date.type) {
+    switch (context.options.plugins.date.type) {
       case "dayjs":
         dateTemplate = DayjsModule;
         break;

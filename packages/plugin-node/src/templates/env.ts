@@ -115,7 +115,7 @@ export const isCI = Boolean(
 /** Detect the \`NODE_ENV\` environment variable */
 export const mode = String(
     ${
-      context.options.dotenv.values.MODE
+      context.options.plugins.dotenv.values.MODE
         ? `config.MODE`
         : `process.env.NEXT_PUBLIC_VERCEL_ENV ||
     process.env.NODE_ENV ||
@@ -382,7 +382,7 @@ export const build = {
   releaseTag: $storm.dotenv.RELEASE_TAG!,
   mode,
   environment: $storm.dotenv.ENVIRONMENT!,
-  platform: ${context.options.dotenv.values.PLATFORM ? `$storm.dotenv.PLATFORM` : "node"} as StormBuildInfo["platform"],
+  platform: ${context.options.plugins.dotenv.values.PLATFORM ? `$storm.dotenv.PLATFORM` : "node"} as StormBuildInfo["platform"],
   isProduction,
   isStaging,
   isDevelopment

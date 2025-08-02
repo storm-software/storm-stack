@@ -34,8 +34,7 @@ import { isString } from "@stryke/type-checks/is-string";
 import { TypeDefinition } from "@stryke/types/configuration";
 import defu from "defu";
 import { CommandPayloadArg } from "../data/command-payload";
-import { StormStackCLIPluginContext } from "../types/build";
-import { CLIPluginConfig } from "../types/config";
+import { CLIPluginConfig, CLIPluginContext } from "../types/config";
 import { Command, CommandTree } from "../types/reflection";
 
 /**
@@ -98,7 +97,7 @@ export function isValidMinNodeVersion(
  * @returns An OrganizationConfig object with the author's name.
  */
 export function extractAuthor(
-  context: StormStackCLIPluginContext,
+  context: CLIPluginContext,
   config: CLIPluginConfig = {}
 ): OrganizationConfig | undefined {
   let author: OrganizationConfig | undefined;
@@ -157,7 +156,7 @@ export function extractAuthor(
  * @throws An error if no valid application name is found.
  */
 export function getAppName(
-  context: StormStackCLIPluginContext,
+  context: CLIPluginContext,
   config: CLIPluginConfig = {}
 ): string {
   const result =
@@ -185,7 +184,7 @@ export function getAppName(
  * @returns The application title in title-case format.
  */
 export function getAppTitle(
-  context: StormStackCLIPluginContext,
+  context: CLIPluginContext,
   config: CLIPluginConfig = {}
 ): string {
   return titleCase(context.options.name || getAppName(context, config));
@@ -294,7 +293,7 @@ export function extractCommandFunctionPayloadData(
 }
 
 export function getPayloadBaseTypeDefinition(
-  context: StormStackCLIPluginContext
+  context: CLIPluginContext
 ): TypeDefinition {
   return {
     file: joinPaths(context.runtimePath, "payload.ts"),
@@ -303,7 +302,7 @@ export function getPayloadBaseTypeDefinition(
 }
 
 export async function reflectPayloadBaseType(
-  context: StormStackCLIPluginContext
+  context: CLIPluginContext
 ): Promise<ReflectionClass<any>> {
   const defaultPayloadType = await reflectType(
     context,

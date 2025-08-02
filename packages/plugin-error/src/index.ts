@@ -25,7 +25,11 @@ import { isAbsolutePath } from "@stryke/path/is-file";
 import { joinPaths } from "@stryke/path/join-paths";
 import BabelPlugin from "./babel/plugin";
 import { ErrorModule } from "./templates/error";
-import { ErrorPluginConfig, ErrorPluginContext } from "./types";
+import {
+  ErrorPluginConfig,
+  ErrorPluginContext,
+  ErrorPluginContextOptions
+} from "./types";
 
 /**
  * Storm Stack - Error plugin.
@@ -84,21 +88,24 @@ export default class ErrorPlugin<
       }
     ]);
 
-    this.options.codesFile = this.options.codesFile
-      ? this.options.codesFile.startsWith(context.options.workspaceRoot) ||
-        isAbsolutePath(this.options.codesFile)
-        ? this.options.codesFile
-        : joinPaths(context.options.workspaceRoot, this.options.codesFile)
-      : context.options.error?.codesFile ||
-        joinPaths(
-          context.options.workspaceRoot,
-          STORM_DEFAULT_ERROR_CODES_FILE
-        );
-    this.options.url ??= context.options.error?.url;
+    context.options.plugins.error ??= {} as ErrorPluginContextOptions["error"];
+
+    context.options.plugins.error.codesFile ??=
+      this.options.codesFile ||
+      context.options.error?.codesFile ||
+      STORM_DEFAULT_ERROR_CODES_FILE;
+    if (!isAbsolutePath(context.options.plugins.error.codesFile)) {
+      context.options.plugins.error.codesFile = joinPaths(
+        context.options.workspaceRoot,
+        context.options.plugins.error.codesFile
+      );
+    }
+    context.options.plugins.error.url ??=
+      this.options.url || context.options.error?.url;
 
     context.options.error = {
-      codesFile: this.options.codesFile,
-      url: this.options.url
+      codesFile: context.options.plugins.error.codesFile,
+      url: context.options.plugins.error.url
     };
   }
 

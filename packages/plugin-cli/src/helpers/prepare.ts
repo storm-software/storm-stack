@@ -44,8 +44,7 @@ import {
   writeConfigList,
   writeConfigSet
 } from "../templates/config";
-import { StormStackCLIPluginContext } from "../types/build";
-import type { CLIPluginConfig } from "../types/config";
+import type { CLIPluginConfig, CLIPluginContext } from "../types/config";
 import type { Command, CommandTree } from "../types/reflection";
 import {
   LARGE_CONSOLE_WIDTH,
@@ -56,7 +55,7 @@ import { extractAuthor, sortArgAliases, sortArgs } from "./utilities";
 
 async function writeCommandEntryUsage(
   log: LogFn,
-  context: StormStackCLIPluginContext,
+  context: CLIPluginContext,
   command: Command,
   config: CLIPluginConfig,
   description: string
@@ -279,7 +278,7 @@ ${commandsColumn1
 
 async function writeCommandEntryHandler(
   log: LogFn,
-  context: StormStackCLIPluginContext,
+  context: CLIPluginContext,
   command: Command,
   config: CLIPluginConfig,
   description: string
@@ -609,7 +608,7 @@ export default handler;
 
 async function writeCommandEntry(
   log: LogFn,
-  context: StormStackCLIPluginContext,
+  context: CLIPluginContext,
   command: Command,
   config: CLIPluginConfig
 ) {
@@ -630,7 +629,7 @@ async function writeCommandEntry(
 
 async function writeVirtualCommandEntry(
   log: LogFn,
-  context: StormStackCLIPluginContext,
+  context: CLIPluginContext,
   command: Command,
   _config: CLIPluginConfig
 ) {
@@ -916,7 +915,7 @@ export default handler;
 
 async function prepareCommandDefinition(
   log: LogFn,
-  context: StormStackCLIPluginContext,
+  context: CLIPluginContext,
   command: Command,
   config: CLIPluginConfig
 ) {
@@ -946,7 +945,7 @@ async function prepareCommandDefinition(
 
 export async function generateConfigCommands(
   log: LogFn,
-  context: StormStackCLIPluginContext,
+  context: CLIPluginContext,
   config: CLIPluginConfig
 ) {
   if (config.manageConfig === false) {
@@ -978,7 +977,7 @@ export async function generateConfigCommands(
 
 export async function generateCompletionCommands(
   log: LogFn,
-  context: StormStackCLIPluginContext,
+  context: CLIPluginContext,
   config: CLIPluginConfig
 ) {
   if (config.manageConfig === false) {
@@ -1002,7 +1001,7 @@ export async function generateCompletionCommands(
 
 export async function prepareEntry(
   log: LogFn,
-  context: StormStackCLIPluginContext,
+  context: CLIPluginContext,
   config: CLIPluginConfig,
   commandTree: CommandTree
 ): Promise<CommandTree> {
@@ -1031,7 +1030,7 @@ export async function prepareEntry(
     }
   }
 
-  let repository = config.repository;
+  let repository = context.options.repository;
   if (!repository) {
     if (context.options.repository) {
       repository = context.options.repository;
@@ -1221,7 +1220,7 @@ await main();
 }
 
 export async function addCommandArgReflections(
-  context: StormStackCLIPluginContext,
+  context: CLIPluginContext,
   command: Command
 ) {
   for (const arg of command.payload.args) {
@@ -1230,7 +1229,7 @@ export async function addCommandArgReflections(
       ?.getProperties()
       .filter(prop => prop.getAlias().length > 0);
 
-    const prefix = context.options.dotenv.prefix.find(
+    const prefix = context.options.plugins.dotenv.prefix.find(
       pre =>
         name &&
         name.startsWith(pre) &&

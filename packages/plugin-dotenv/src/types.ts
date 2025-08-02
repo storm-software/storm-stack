@@ -130,7 +130,11 @@ export type ResolvedDotenvOptions = Required<
   values: DotenvParseOutput;
 };
 
-export type DotenvPluginContext = Context<{ dotenv: ResolvedDotenvOptions }>;
+export interface DotenvPluginContextOptions {
+  dotenv: ResolvedDotenvOptions;
+}
+
+export type DotenvPluginContext = Context<DotenvPluginContextOptions>;
 
 export type DotenvBabelPluginState = BabelPluginState<
   BabelPluginOptions,

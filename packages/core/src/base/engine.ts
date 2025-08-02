@@ -19,7 +19,9 @@
 import { LogLevelLabel } from "@storm-software/config-tools/types";
 import { install } from "@stryke/fs/install";
 import { isPackageExists } from "@stryke/fs/package-fns";
+import { camelCase } from "@stryke/string-format/camel-case";
 import { isNumber } from "@stryke/type-checks/is-number";
+import { isSetObject } from "@stryke/type-checks/is-set-object";
 import chalk from "chalk";
 import defu from "defu";
 import { createHooks } from "hookable";
@@ -102,7 +104,7 @@ export class Engine {
 
     this.context.log(LogLevelLabel.TRACE, "Initializing Storm Stack engine");
 
-    for (const plugin of this.context.options.plugins ?? []) {
+    for (const plugin of this.context.options.userConfig.plugins ?? []) {
       await this.addPlugin(plugin);
     }
 
@@ -451,17 +453,50 @@ Note: Please ensure the plugin package's default export is a class that extends 
       );
     }
 
+    if (!pluginInstance.identifier) {
+      throw new Error(
+        `The module in the build plugin package "${pluginConfig[0]}" must export a \`identifier\` string value.`
+      );
+    }
+
     if (!pluginInstance.addHooks) {
       throw new Error(
         `The module in the build plugin package "${pluginConfig[0]}" must export a \`addHooks\` function value.`
       );
     }
 
-    if (this.#plugins.some(plugin => plugin.isSame(pluginInstance))) {
+    pluginInstance.options ??= pluginConfig[1] ?? {};
+
+    this.context.options.plugins[pluginInstance.identifier] = defu(
+      pluginInstance.options ?? {},
+      isSetObject(this.context.options.plugins[pluginInstance.identifier])
+        ? this.context.options.plugins[pluginInstance.identifier]
+        : {},
+      camelCase(pluginInstance.name) !== camelCase(pluginInstance.identifier) &&
+        isSetObject(this.context.options.plugins[pluginInstance.name])
+        ? this.context.options.plugins[pluginInstance.name]
+        : {}
+    );
+
+    pluginInstance.options =
+      this.context.options.plugins[pluginInstance.identifier];
+
+    const duplicatePlugin = this.#plugins.find(plugin =>
+      plugin.isSame(pluginInstance)
+    );
+    if (duplicatePlugin) {
       this.context.log(
         LogLevelLabel.TRACE,
-        `Duplicate ${chalk.bold.cyanBright(pluginInstance.name)} plugin dependency detected - Skipping initialization.`
+        `Duplicate ${chalk.bold.cyanBright(duplicatePlugin.identifier)} plugin dependency detected - Skipping initialization.`
       );
+
+      duplicatePlugin.options = defu(
+        duplicatePlugin.options ?? {},
+        this.context.options.plugins[pluginInstance.identifier]
+      );
+      this.context.options.plugins[duplicatePlugin.identifier] =
+        duplicatePlugin.options;
+
       return null;
     }
 

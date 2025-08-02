@@ -17,9 +17,9 @@
  ------------------------------------------------------------------- */
 
 import { getFileHeader } from "@storm-stack/core/lib";
-import { StormStackCLIPluginContext } from "../types/build";
+import { CLIPluginContext } from "../types/config";
 
-export function writeConfigGet(_context: StormStackCLIPluginContext) {
+export function writeConfigGet(_context: CLIPluginContext) {
   return `${getFileHeader()}
 
 import { deserialize } from "@deepkit/type";
@@ -60,7 +60,7 @@ export default handler;
 `;
 }
 
-export function writeConfigSet(_context: StormStackCLIPluginContext) {
+export function writeConfigSet(_context: CLIPluginContext) {
   return `${getFileHeader()}
 
 import { deserialize, serialize } from "@deepkit/type";
@@ -107,7 +107,7 @@ export default handler;
 `;
 }
 
-export function writeConfigList(_context: StormStackCLIPluginContext) {
+export function writeConfigList(_context: CLIPluginContext) {
   return `${getFileHeader()}
 
 import { deserialize } from "@deepkit/type";
@@ -138,7 +138,7 @@ export default handler;
 `;
 }
 
-export function writeConfigDelete(_context: StormStackCLIPluginContext) {
+export function writeConfigDelete(_context: CLIPluginContext) {
   return `${getFileHeader()}
 
 import { deserialize, serialize } from "@deepkit/type";

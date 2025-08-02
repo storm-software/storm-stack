@@ -40,18 +40,30 @@ import { isSetString } from "@stryke/type-checks/is-set-string";
 import { isString } from "@stryke/type-checks/is-string";
 import { TsConfigJson } from "@stryke/types/tsconfig";
 import { defu } from "defu";
-import { StormStackCLIPluginContext } from "../types/build";
-import type { CLIPluginConfig } from "../types/config";
+import type {
+  CLIPluginConfig,
+  CLIPluginContext,
+  CLIPluginContextOptions
+} from "../types/config";
 
 export async function initOptions(
-  context: StormStackCLIPluginContext,
+  context: CLIPluginContext,
   config: CLIPluginConfig
 ) {
   context.options.esbuild.override ??= {};
   context.options.platform = "node";
   context.options.environment = "cli";
 
-  context.options.dotenv.prefix = toArray(config.bin)
+  context.options.plugins.cli ??= {} as CLIPluginContextOptions["cli"];
+
+  context.options.plugins.cli.bin ??= config.bin
+    ? toArray(config.bin)
+    : [context.options.name];
+  context.options.plugins.cli.minNodeVersion ??= config.minNodeVersion ?? 20;
+  context.options.plugins.cli.interactive ??= config.interactive ?? true;
+  context.options.plugins.cli.author ??= config.author;
+
+  context.options.plugins.dotenv.prefix = toArray(config.bin)
     .reduce(
       (ret, bin) => {
         const prefix = constantCase(bin);
@@ -60,13 +72,13 @@ export async function initOptions(
         }
         return ret;
       },
-      toArray(context.options.dotenv.prefix ?? [])
+      toArray(context.options.plugins.dotenv.prefix ?? [])
     )
     .filter(Boolean);
 }
 
 export async function initInstalls(
-  context: StormStackCLIPluginContext,
+  context: CLIPluginContext,
   config: CLIPluginConfig
 ) {
   if (
@@ -78,7 +90,7 @@ export async function initInstalls(
 }
 
 export async function initTsconfig(
-  context: StormStackCLIPluginContext,
+  context: CLIPluginContext,
   _config: CLIPluginConfig
 ) {
   const tsconfigJson = await readJsonFile<TsConfigJson>(
@@ -117,7 +129,7 @@ export async function initTsconfig(
 
 export async function initEntry(
   log: LogFn,
-  context: StormStackCLIPluginContext,
+  context: CLIPluginContext,
   config: CLIPluginConfig
 ) {
   if (!isSetString(context.options.entry)) {

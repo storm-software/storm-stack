@@ -73,8 +73,10 @@ export type ResolvedBabelOptions = Omit<BabelConfig, "plugins" | "presets"> &
 /**
  * The resolved options for the Storm Stack project configuration.
  */
-export type ResolvedOptions<TExtraOptions = unknown> = WorkspaceConfig &
-  Omit<InlineConfig, "root" | "type" | "babel" | "output"> &
+export type ResolvedOptions<
+  TPluginsOptions extends Record<string, any> = Record<string, any>
+> = WorkspaceConfig &
+  Omit<InlineConfig, "root" | "type" | "babel" | "output" | "plugins"> &
   Required<
     Pick<
       InlineConfig,
@@ -88,8 +90,7 @@ export type ResolvedOptions<TExtraOptions = unknown> = WorkspaceConfig &
       | "esbuild"
       | "unbuild"
     >
-  > &
-  TExtraOptions & {
+  > & {
     /**
      * The configuration options that were provided inline to the Storm Stack CLI.
      */
@@ -141,6 +142,14 @@ export type ResolvedOptions<TExtraOptions = unknown> = WorkspaceConfig &
      * A flag indicating whether the build is for a preview environment.
      */
     isPreview: boolean;
+
+    /**
+     * The expected plugins options for the Storm Stack project.
+     *
+     * @remarks
+     * This is a record of plugin identifiers to their respective options. This field is populated by the Storm Stack engine during both plugin initialization and the `init` command.
+     */
+    plugins: TPluginsOptions;
   };
 
 export interface EngineHookFunctions {

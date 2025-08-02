@@ -16,8 +16,13 @@
 
  ------------------------------------------------------------------- */
 
-import type { OrganizationConfig } from "@storm-software/config/types";
-import { NodePluginConfig } from "@storm-stack/plugin-node/types";
+import { WorkspaceConfig } from "@storm-stack/core/types/config";
+import { Context } from "@storm-stack/core/types/context";
+import {
+  NodePluginConfig,
+  NodePluginContextOptions
+} from "@storm-stack/plugin-node/types";
+import { CommandEntryTypeDefinition } from "./reflection";
 
 export interface CLIPluginConfig extends NodePluginConfig {
   /**
@@ -38,52 +43,12 @@ export interface CLIPluginConfig extends NodePluginConfig {
   interactive?: boolean | "never";
 
   /**
-   * The homepage URL for the CLI application (this is used for the help command)
-   *
-   * @remarks
-   * If this option is not provided, the preset will try to use the \`homepage\` value from the `\storm-workspace.json\` configuration or the \`homepage\`, \`author.url\`, or \`contributors.url\` value from the `\package.json\` file.
-   */
-  homepage?: string;
-
-  /**
-   * The documentation website URL for the CLI application (this is used for the help command)
-   *
-   * @remarks
-   * If this option is not provided, the preset will try to use the \`docs\` value from the `\storm-workspace.json\` configuration or the \`docs\` value from the `\package.json\` file.
-   */
-  docs?: string;
-
-  /**
-   * The support website URL for the CLI application (this is used for the help command)
-   *
-   * @remarks
-   * If this option is not provided, the preset will try to use the \`support\` value from the `\storm-workspace.json\` configuration or the \`bugs.url\` value from the `\package.json\` file.
-   */
-  support?: string;
-
-  /**
-   * The contact website URL for the CLI application (this is used for the help command)
-   *
-   * @remarks
-   * If this option is not provided, the preset will try to use the \`contact\` value from the `\storm-workspace.json\` configuration or the \`author.url\` or \`contributors.url\` value from the `\package.json\` file.
-   */
-  contact?: string;
-
-  /**
    * The author/organization that developed or maintains the CLI application
    *
    * @remarks
-   * If this option is not provided, the preset will try to use the \`author.name\` or \`contributors.name\` value from the `\package.json\` file.
+   * This can be a string or an object with `name`, `email`, and `url` properties. If this option is not provided, the preset will try to use the \`author.name\` or \`contributors.name\` value from the `\package.json\` file. If not found in the `package.json`, it will try to find it in {@link WorkspaceConfig.organization}.
    */
-  author?: OrganizationConfig | string;
-
-  /**
-   * The repository URL for the CLI application (this is used for the help command)
-   *
-   * @remarks
-   * If this option is not provided, the preset will try to use the \`repository\` value from the `\storm-workspace.json\` configuration or the \`repository.url\` value from the `\package.json\` file.
-   */
-  repository?: string;
+  author?: WorkspaceConfig["organization"];
 
   /**
    * Should the config commands be added to the CLI?
@@ -95,3 +60,13 @@ export interface CLIPluginConfig extends NodePluginConfig {
    */
   manageConfig?: boolean;
 }
+
+export interface CLIPluginContextOptions extends NodePluginContextOptions {
+  cli: Required<Omit<CLIPluginConfig, "dotenv" | "error" | "logs" | "author">> &
+    Pick<CLIPluginConfig, "author">;
+}
+
+export type CLIPluginContext = Context<
+  CLIPluginContextOptions,
+  CommandEntryTypeDefinition
+>;

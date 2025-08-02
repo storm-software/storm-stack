@@ -53,7 +53,7 @@ export interface CryptoPluginConfig extends PluginBaseConfig {
 }
 
 export interface CryptoPluginContextOptions {
-  encryptionKey?: string;
+  crypto: Required<Omit<CryptoPluginConfig, "dotenv" | "error">>;
   dotenv: ResolvedDotenvOptions;
   error: ErrorPluginConfig;
 }

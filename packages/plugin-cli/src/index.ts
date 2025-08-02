@@ -47,8 +47,7 @@ import {
 import { reflectCommandTree } from "./helpers/reflect-command";
 import { AppModule } from "./templates/app";
 import { CLIModule } from "./templates/cli";
-import { StormStackCLIPluginContext } from "./types/build";
-import type { CLIPluginConfig } from "./types/config";
+import type { CLIPluginConfig, CLIPluginContext } from "./types/config";
 
 /**
  * The CLI Plugin for Storm Stack projects.
@@ -113,7 +112,7 @@ export default class CLIPlugin<
    *
    * @param context - The context to initialize the plugin with.
    */
-  protected async initOptions(context: StormStackCLIPluginContext) {
+  protected async initOptions(context: CLIPluginContext) {
     this.log(
       LogLevelLabel.TRACE,
       `Initializing CLI specific options for the Storm Stack project.`
@@ -127,7 +126,7 @@ export default class CLIPlugin<
    *
    * @param context - The context to initialize the installation with.
    */
-  protected async initInstall(context: StormStackCLIPluginContext) {
+  protected async initInstall(context: CLIPluginContext) {
     this.log(
       LogLevelLabel.TRACE,
       `Adding CLI specific dependencies to the Storm Stack project.`
@@ -141,7 +140,7 @@ export default class CLIPlugin<
    *
    * @param context - The context to initialize the TypeScript configuration with.
    */
-  protected async initTsconfig(context: StormStackCLIPluginContext) {
+  protected async initTsconfig(context: CLIPluginContext) {
     this.log(
       LogLevelLabel.TRACE,
       `Initializing TypeScript configuration for the Storm Stack project.`
@@ -155,7 +154,7 @@ export default class CLIPlugin<
    *
    * @param context - The context to initialize the entry point with.
    */
-  protected async initEntry(context: StormStackCLIPluginContext) {
+  protected async initEntry(context: CLIPluginContext) {
     if (context.options.projectType === "application") {
       this.log(
         LogLevelLabel.TRACE,
@@ -171,7 +170,7 @@ export default class CLIPlugin<
    *
    * @param _context - The context to initialize the reflections with.
    */
-  protected async initReflections(_context: StormStackCLIPluginContext) {
+  protected async initReflections(_context: CLIPluginContext) {
     this.log(
       LogLevelLabel.TRACE,
       `Initializing the CLI application's reflection data.`
@@ -183,7 +182,7 @@ export default class CLIPlugin<
    *
    * @param context - The context to prepare the runtime with.
    */
-  protected async prepareRuntime(context: StormStackCLIPluginContext) {
+  protected async prepareRuntime(context: CLIPluginContext) {
     if (context.options.projectType === "application") {
       this.log(
         LogLevelLabel.TRACE,
@@ -210,7 +209,7 @@ export default class CLIPlugin<
    *
    * @param context - The context to prepare the entry point with.
    */
-  protected async prepareEntry(context: StormStackCLIPluginContext) {
+  protected async prepareEntry(context: CLIPluginContext) {
     if (context.options.projectType === "application") {
       this.log(
         LogLevelLabel.TRACE,
@@ -273,7 +272,7 @@ export default class CLIPlugin<
    *
    * @param context - The context to build the library with.
    */
-  protected async buildLibrary(context: StormStackCLIPluginContext) {
+  protected async buildLibrary(context: CLIPluginContext) {
     return buildLibrary(this.log, context);
   }
 
@@ -282,7 +281,7 @@ export default class CLIPlugin<
    *
    * @param context - The context to build the application with.
    */
-  protected async buildApplication(context: StormStackCLIPluginContext) {
+  protected async buildApplication(context: CLIPluginContext) {
     return buildApplication(this.log, context);
   }
 
@@ -291,7 +290,7 @@ export default class CLIPlugin<
    *
    * @param context - The context to build the complete application with.
    */
-  protected async buildComplete(context: StormStackCLIPluginContext) {
+  protected async buildComplete(context: CLIPluginContext) {
     return permissionExecutable(this.log, context);
   }
 }

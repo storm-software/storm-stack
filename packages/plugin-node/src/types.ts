@@ -43,7 +43,7 @@ export interface NodePluginConfig extends PluginBaseConfig {
   /**
    * Options for the logging plugin(s).
    */
-  logging?: Record<string, LogPluginConfig> & {
+  logs?: Record<string, LogPluginConfig> & {
     console?: LogPluginConfig;
   };
 }
@@ -51,7 +51,7 @@ export interface NodePluginConfig extends PluginBaseConfig {
 export interface NodePluginContextOptions {
   dotenv: ResolvedDotenvOptions;
   error: ErrorPluginConfig;
-  logging: Record<string, LogPluginConfig> & {
+  logs: Record<string, LogPluginConfig> & {
     console: LogPluginConfig;
   };
 }

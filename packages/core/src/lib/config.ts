@@ -246,9 +246,6 @@ export async function resolveConfig(
       unbuild: {
         override: {},
         loaders: []
-      },
-      dotenv: {
-        additionalFiles: []
       }
     }
   ) as ResolvedOptions;
@@ -293,6 +290,13 @@ export async function resolveConfig(
   );
 
   context.options = resolvedOptions;
+
+  context.options.userConfig!.plugins = mergedUserConfig.plugins ?? [];
+  context.options.plugins = {
+    dotenv: {
+      additionalFiles: []
+    }
+  };
 
   return resolvedOptions;
 }
