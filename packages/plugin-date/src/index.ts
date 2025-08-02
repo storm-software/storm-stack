@@ -83,7 +83,7 @@ export default class DatePlugin<
     context.options.date.type ??= "date-fns";
 
     if (
-      !["dayjs", "date-fns", "luxon", "moment"].includes(
+      !["date-fns", "dayjs", "luxon", "moment"].includes(
         context.options.date.type
       )
     ) {

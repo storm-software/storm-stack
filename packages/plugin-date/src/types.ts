@@ -19,7 +19,7 @@
 import { Context } from "@storm-stack/core/types/context";
 import { PluginBaseConfig } from "@storm-stack/core/types/plugin";
 
-export type DateLibraryType = "dayjs" | "date-fns" | "luxon" | "moment";
+export type DateLibraryType = "date-fns" | "dayjs" | "luxon" | "moment";
 
 export type DatePluginConfig = PluginBaseConfig & {
   /**
@@ -27,12 +27,12 @@ export type DatePluginConfig = PluginBaseConfig & {
    *
    * @remarks
    * This value is used to determine which date library to use for date manipulation. It can be one of the following:
-   * - [dayjs](https://day.js.org/)
    * - [date-fns](https://date-fns.org/)
+   * - [dayjs](https://day.js.org/)
    * - [luxon](https://moment.github.io/luxon/)
    * - [moment](https://momentjs.com/).
    *
-   * @defaultValue "dayjs"
+   * @defaultValue "date-fns"
    */
   type?: DateLibraryType;
 };

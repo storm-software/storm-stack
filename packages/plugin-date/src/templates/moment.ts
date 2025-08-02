@@ -44,7 +44,7 @@ import {
 
 type Moment = defaultMoment.Moment;
 
-const defaultFormats: DateFormats = {
+export const formats: DateFormats = {
   normalDateWithWeekday: "ddd, MMM D",
   normalDate: "D MMMM",
   shortDate: "MMM D",
