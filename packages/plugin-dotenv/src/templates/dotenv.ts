@@ -17,22 +17,21 @@
  ------------------------------------------------------------------- */
 
 import { ReflectionClass, stringifyType } from "@deepkit/type";
-import { stringifyValue } from "@storm-stack/core/lib/deepkit/utilities";
 import { getFileHeader } from "@storm-stack/core/lib/utilities/file-header";
 import type { Context } from "@storm-stack/core/types/context";
 import { titleCase } from "@stryke/string-format/title-case";
 import { readConfigReflection } from "../helpers/persistence";
 
 /**
- * Generates the Storm Stack configuration file.
+ * Generates the Storm Stack dotenv file.
  *
  * @param context - The build context containing runtime information.
- * @returns A string representing the configuration file content.
+ * @returns A string representing the dotenv file content.
  */
-export async function ConfigModule(context: Context) {
+export async function DotenvModule(context: Context) {
   return `${getFileHeader()}
 
-import { StormBaseConfig } from "@storm-stack/types/shared/config";
+import { StormBaseConfig } from "@storm-stack/types/shared/dotenv";
 
 /**
  * A type definition representing the Storm Stack configuration.
@@ -44,99 +43,94 @@ export interface StormConfig extends StormBaseConfig ${await generateConfigInter
     context
   )}
 
-/**
- * A global configuration object containing the Storm Stack configuration.
- */
-export const config = ${await generateConfig(context)} as StormConfig;
-
 `;
 }
 
-async function generateConfig(context: Context) {
-  const reflection = await readConfigReflection(context);
-  if (!reflection) {
-    return "{}";
-  }
+// async function generateConfig(context: Context) {
+//   const reflection = await readConfigReflection(context);
+//   if (!reflection) {
+//     return "{}";
+//   }
 
-  return `{
-  ${innerGenerateConfig(reflection)}
-}`;
-}
+//   return `{
+//   ${innerGenerateConfig(reflection)}
+// }`;
+// }
 
-function innerGenerateConfig(reflection: ReflectionClass<any>) {
-  if (!reflection) {
-    return "";
-  }
+// function innerGenerateConfig(reflection: ReflectionClass<any>) {
+//   if (!reflection) {
+//     return "";
+//   }
 
-  return `
-${reflection
-  .getProperties()
-  .filter(item => !item.isHidden() && !item.isIgnored() && item.hasDefault())
-  .sort((a, b) =>
-    (a.isReadonly() && b.isReadonly()) || (!a.isReadonly() && !b.isReadonly())
-      ? a.getNameAsString().localeCompare(b.getNameAsString())
-      : a.isReadonly()
-        ? -1
-        : 1
-  )
-  .map(
-    item =>
-      `/**
-     * ${
-       item.getDescription() ||
-       item.getTitle() ||
-       titleCase(item.getNameAsString())
-     }
-     *
-     * @title ${item.getTitle() || titleCase(item.getNameAsString())}${
-       item.getAlias().length
-         ? `
-${item
-  .getAlias()
-  .map(alias => ` * @alias ${alias}`)
-  .join("\n")}`
-         : ""
-     }${
-       item.getDomain()
-         ? `
- * @domain ${item.getDomain()}`
-         : ""
-     }${
-       item.getPermission().length
-         ? `
-${item
-  .getPermission()
-  .map(permission => ` * @permission ${permission}`)
-  .join("\n")}`
-         : ""
-     }${
-       typeof item.getDefaultValue() !== "undefined" &&
-       item.getDefaultValue() !== ""
-         ? `
- * @defaultValue ${item.getDefaultValue()}`
-         : ""
-     }${
-       item.isInternal()
-         ? `
- * @internal`
-         : ""
-     }${
-       item.isReadonly()
-         ? `
- * @readonly`
-         : ""
-     }${
-       item.isHidden()
-         ? `
- * @hidden`
-         : ""
-     }
-     */
-    ${item.getNameAsString()}: ${stringifyValue(item)},
-`
-  )
-  .join("\n")}`;
-}
+//   return `
+// ${reflection
+//   .getProperties()
+//   .filter(item => !item.isHidden() && !item.isIgnored() && item.hasDefault())
+//   .sort((a, b) =>
+//     (a.isReadonly() && b.isReadonly()) || (!a.isReadonly() && !b.isReadonly())
+//       ? a.getNameAsString().localeCompare(b.getNameAsString())
+//       : a.isReadonly()
+//         ? -1
+//         : 1
+//   )
+//   .map(
+//     item =>
+//       `/**
+//      * ${
+//        item.getDescription() ||
+//        item.getTitle() ||
+//        titleCase(item.getNameAsString())
+//      }
+//      *
+//      * @title ${item.getTitle() || titleCase(item.getNameAsString())}${
+//        item.getAlias().length
+//          ? `
+// ${item
+//   .getAlias()
+//   .map(alias => ` * @alias ${alias}`)
+//   .join("\n")}`
+//          : ""
+//      }${
+//        item.getDomain()
+//          ? `
+//  * @domain ${item.getDomain()}`
+//          : ""
+//      }${
+//        item.getPermission().length
+//          ? `
+// ${item
+//   .getPermission()
+//   .map(permission => ` * @permission ${permission}`)
+//   .join("\n")}`
+//          : ""
+//      }${
+//        typeof item.getDefaultValue() !== "undefined" &&
+//        item.getDefaultValue() !== ""
+//          ? `
+//  * @defaultValue ${item.getDefaultValue()}`
+//          : ""
+//      }${
+//        item.isInternal()
+//          ? `
+//  * @internal`
+//          : ""
+//      }${
+//        item.isReadonly()
+//          ? `
+//  * @readonly`
+//          : ""
+//      }${
+//        item.isHidden()
+//          ? `
+//  * @hidden`
+//          : ""
+//      }
+//      */
+//     ${item.getNameAsString()}: ${stringifyValue(item)},
+// `
+//   )
+//   .join("\n")}`;
+// }
 
 export async function generateConfigInterface(context: Context) {
   const reflection = await readConfigReflection(context);

@@ -17,7 +17,7 @@
  ------------------------------------------------------------------- */
 
 import { getFileHeader } from "@storm-stack/core/lib/utilities/file-header";
-import type { Context } from "@storm-stack/core/types/context";
+import { DatePluginContext } from "../types";
 
 /**
  * Generates the Storm Stack configuration file.
@@ -25,7 +25,7 @@ import type { Context } from "@storm-stack/core/types/context";
  * @param context - The build context containing runtime information.
  * @returns A string representing the configuration file content.
  */
-export async function DateFnsModule(context: Context) {
+export async function DateFnsModule(context: DatePluginContext) {
   return `
 /**
  * The Storm Stack date module provides utility functions for date manipulation and formatting
@@ -79,9 +79,10 @@ import { isValid as dateFnsIsValid } from "date-fns/isValid";
 import { isWithinInterval } from "date-fns/isWithinInterval";
 import { Locale } from "date-fns/locale";
 import { ${
-    context.options.locale?.replaceAll("-", "") || "enUS"
+    context.options.plugins.dotenv.values.DEFAULT_LOCALE?.replaceAll("-", "") ||
+    "enUS"
   } as defaultLocale } from "date-fns/locale/${
-    context.options.locale || "en-US"
+    context.options.plugins.dotenv.values.DEFAULT_LOCALE || "en-US"
   }";
 import { parse as dateFnsParse } from "date-fns/parse";
 import { parseISO as dateFnsParseISO } from "date-fns/parseISO";
@@ -210,7 +211,7 @@ export function toISO(value: Date) {
 }
 
 export function getCurrentLocaleCode() {
-  return locale?.code || "en-US";
+  return locale?.code || $storm.dotenv.DEFAULT_LOCALE;
 }
 
 export function addSeconds(value: Date, count: number) {

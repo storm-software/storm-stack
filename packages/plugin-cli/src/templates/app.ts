@@ -44,7 +44,7 @@ import type {
 import type {
   StormResultInterface
 } from "@storm-stack/types/result";
-import { StormConfig, config } from "storm:config";
+import { StormConfig } from "storm:dotenv";
 import {
   name,
   version,
@@ -128,7 +128,7 @@ export function withContext<TInput = any, TOutput = any>(
       paths,
       log: log.with({ name, version, payloadId: payload.id }),
       storage,
-      config,
+      config: {} as StormConfig,
       dotenv: {} as StormConfig, // This object is only used at compile time, so we can leave it empty here.
       emit: (_event: StormEvent) => {},
       __internal: {

@@ -182,9 +182,9 @@ export interface StormRuntimeInfo {
   isServer: boolean;
 
   /**
-   * The current locale used by the application.
+   * The default locale used by the application.
    */
-  locale: string;
+  defaultLocale: string;
 
   /**
    * The default timezone used by the application.

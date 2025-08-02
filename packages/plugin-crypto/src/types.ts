@@ -23,7 +23,7 @@ import {
   ResolvedDotenvOptions
 } from "@storm-stack/plugin-dotenv/types";
 import { ErrorPluginConfig } from "@storm-stack/plugin-error/types";
-import { StormBaseConfig } from "@storm-stack/types/config";
+import { StormBaseConfig } from "@storm-stack/types/dotenv";
 
 export interface StormCryptoConfig extends StormBaseConfig {
   /**

@@ -39,9 +39,9 @@ export function getDotenvDefaultTypeDefinition(
     file: process.env.STORM_STACK_LOCAL
       ? joinPaths(
           context.options.workspaceConfig.workspaceRoot,
-          "dist/packages/types/dist/esm/src/shared/config.js"
+          "dist/packages/types/dist/esm/src/shared/dotenv.js"
         )
-      : "@storm-stack/types/config",
+      : "@storm-stack/types/dotenv",
     name: "__ΩStormBaseConfig"
   };
 }

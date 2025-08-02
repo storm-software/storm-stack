@@ -42,7 +42,7 @@ import {
   writeDotenvReflection
 } from "./helpers/persistence";
 import { reflectDotenvConfig, reflectDotenvSecrets } from "./helpers/reflect";
-import { ConfigModule } from "./templates/config";
+import { DotenvModule } from "./templates/dotenv";
 import {
   DotenvPluginConfig,
   DotenvPluginContext,
@@ -294,13 +294,13 @@ export default class DotenvPlugin<
   protected async prepareRuntime(context: DotenvPluginContext) {
     this.log(
       LogLevelLabel.TRACE,
-      `Preparing the configuration runtime artifacts for the Storm Stack project.`
+      `Preparing the dotenv runtime artifacts for the Storm Stack project.`
     );
 
     await context.vfs.writeRuntimeFile(
-      "config",
-      joinPaths(context.runtimePath, "config.ts"),
-      await ConfigModule(context)
+      "dotenv",
+      joinPaths(context.runtimePath, "dotenv.ts"),
+      await DotenvModule(context)
     );
   }
 

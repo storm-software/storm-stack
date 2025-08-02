@@ -30,8 +30,7 @@ import { resolveParentPath } from "@stryke/path/get-parent-path";
 import { titleCase } from "@stryke/string-format/title-case";
 import { writeCommandTreeReflection } from "../capnp/persistence";
 import { CommandPayload } from "../data/command-payload";
-import { StormStackCLIPluginContext } from "../types/build";
-import type { CLIPluginConfig } from "../types/config";
+import type { CLIPluginConfig, CLIPluginContext } from "../types/config";
 import { Command, CommandTree } from "../types/reflection";
 import {
   findCommandInTree,
@@ -57,7 +56,7 @@ interface CommandRelations {
 }
 
 async function reflectRelations(
-  context: StormStackCLIPluginContext
+  context: CLIPluginContext
 ): Promise<Record<string, CommandRelations>> {
   const relationReflections = {} as Record<string, CommandRelations>;
   for (const entry of context.entry.filter(
@@ -91,7 +90,7 @@ async function reflectRelations(
 }
 
 async function reflectPayloads(
-  context: StormStackCLIPluginContext,
+  context: CLIPluginContext,
   config: CLIPluginConfig
 ): Promise<Record<string, CommandPayload>> {
   const payloadReflections = {} as Record<string, CommandPayload>;
@@ -149,7 +148,7 @@ type CommandReflectionDefinition = Omit<
 
 async function reflectCommand(
   log: LogFn,
-  context: StormStackCLIPluginContext,
+  context: CLIPluginContext,
   config: CLIPluginConfig
 ): Promise<Record<string, CommandReflectionDefinition>> {
   const relationsReflections = await reflectRelations(context);
@@ -259,7 +258,7 @@ async function reflectCommand(
 
 export async function reflectCommandTree(
   log: LogFn,
-  context: StormStackCLIPluginContext,
+  context: CLIPluginContext,
   config: CLIPluginConfig
 ): Promise<CommandTree> {
   const reflections = await reflectCommand(log, context, config);

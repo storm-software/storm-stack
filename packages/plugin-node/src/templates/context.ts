@@ -36,7 +36,7 @@ import {
   StormContext,
 } from "@storm-stack/types/node/context";
 import { StormError } from "storm:error";
-import { StormConfig } from "storm:config";
+import { StormConfig } from "storm:dotenv";
 
 export const STORM_ASYNC_CONTEXT: UseContext<StormContext<StormConfig>> = getContext<StormContext<StormConfig>>(
   "storm-stack", {

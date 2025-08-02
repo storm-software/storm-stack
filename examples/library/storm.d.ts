@@ -530,13 +530,7 @@ interface StormBaseConfig {
    */
   DEFAULT_TIMEZONE: string;
   /**
-   * The current locale used in the application.
-   *
-   * @category neutral
-   */
-  LOCALE: string;
-  /**
-   * The default locale for the application.
+   * The default locale to be used in the application.
    *
    * @defaultValue "en_US"
    *
@@ -2109,9 +2103,9 @@ interface StormRuntimeInfo {
    */
   isServer: boolean;
   /**
-   * The current locale used by the application.
+   * The default locale used by the application.
    */
-  locale: string;
+  defaultLocale: string;
   /**
    * The default timezone used by the application.
    */

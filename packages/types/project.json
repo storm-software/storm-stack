@@ -13,7 +13,7 @@
         "main": "packages/types/src/index.ts",
         "additionalEntryPoints": [
           "packages/types/src/shared/index.ts",
-          "packages/types/src/shared/config.ts",
+          "packages/types/src/shared/dotenv.ts",
           "packages/types/src/shared/date.ts",
           "packages/types/src/shared/error.ts",
           "packages/types/src/shared/log.ts",
@@ -41,7 +41,7 @@
         "main": "packages/types/src/index.ts",
         "additionalEntryPoints": [
           "packages/types/src/shared/index.ts",
-          "packages/types/src/shared/config.ts",
+          "packages/types/src/shared/dotenv.ts",
           "packages/types/src/shared/date.ts",
           "packages/types/src/shared/error.ts",
           "packages/types/src/shared/log.ts",

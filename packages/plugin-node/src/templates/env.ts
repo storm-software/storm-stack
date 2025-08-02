@@ -45,7 +45,6 @@ import {
   StormRuntimeInfo,
   StormRuntimePaths
 } from "@storm-stack/types/node/env";
-import { StormConfig, config } from "storm:config";
 import { StormError } from "storm:errors";
 import os from "node:os";
 import { readFile } from "node:fs/promises";
@@ -116,7 +115,7 @@ export const isCI = Boolean(
 export const mode = String(
     ${
       context.options.plugins.dotenv.values.MODE
-        ? `config.MODE`
+        ? `$storm.dotenv.MODE`
         : `process.env.NEXT_PUBLIC_VERCEL_ENV ||
     process.env.NODE_ENV ||
     "production"`
@@ -205,7 +204,7 @@ export const organization = "${
         )
           .trim()
           .replace(/\s+/g, "")
-      : "config.ORGANIZATION"
+      : "$storm.dotenv.ORGANIZATION"
   }";
 
 /** The current application */
@@ -267,7 +266,7 @@ export const paths = isMacOS
             )
               .trim()
               .replace(/\s+/g, "")}"`
-          : "config.ORGANIZATION"
+          : "$storm.dotenv.ORGANIZATION"
       }, "${titleCase(context.options.name || "storm-stack")
         .trim()
         .replace(/\s+/g, "")}", "Data"),
@@ -284,7 +283,7 @@ export const paths = isMacOS
             )
               .trim()
               .replace(/\s+/g, "")}"`
-          : "config.ORGANIZATION"
+          : "$storm.dotenv.ORGANIZATION"
       }, "Config"),
     cache: process.env.STORM_CACHE_DIR
       ? join(process.env.STORM_CACHE_DIR, name)
@@ -299,7 +298,7 @@ export const paths = isMacOS
             )
               .trim()
               .replace(/\s+/g, "")}"`
-          : "config.ORGANIZATION"
+          : "$storm.dotenv.ORGANIZATION"
       }),
     log: process.env.STORM_LOG_DIR
       ? join(process.env.STORM_LOG_DIR, name)
@@ -314,7 +313,7 @@ export const paths = isMacOS
             )
               .trim()
               .replace(/\s+/g, "")}"`
-          : "config.ORGANIZATION"
+          : "$storm.dotenv.ORGANIZATION"
       }, "Log"),
     temp: process.env.STORM_TEMP_DIR
       ? join(process.env.STORM_TEMP_DIR, name)
@@ -329,7 +328,7 @@ export const paths = isMacOS
             )
               .trim()
               .replace(/\s+/g, "")}"`
-          : "config.ORGANIZATION"
+          : "$storm.dotenv.ORGANIZATION"
       })
   }
     :
@@ -403,8 +402,8 @@ export const runtime = {
   isColorSupported,
   isUnicodeSupported,
   isServer: isNode || build.platform === "node",
-  locale: config.LOCALE || $storm.dotenv.DEFAULT_LOCALE,
-  defaultTimezone: config.DEFAULT_TIMEZONE,
+  defaultLocale: $storm.dotenv.DEFAULT_LOCALE,
+  defaultTimezone: $storm.dotenv.DEFAULT_TIMEZONE,
 } as StormRuntimeInfo;
 
 `;

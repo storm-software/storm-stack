@@ -530,13 +530,7 @@ interface StormBaseConfig {
    */
   DEFAULT_TIMEZONE: string;
   /**
-   * The current locale used in the application.
-   *
-   * @category neutral
-   */
-  LOCALE: string;
-  /**
-   * The default locale for the application.
+   * The default locale to be used in the application.
    *
    * @defaultValue "en_US"
    *
@@ -2109,9 +2103,9 @@ interface StormRuntimeInfo {
    */
   isServer: boolean;
   /**
-   * The current locale used by the application.
+   * The default locale used by the application.
    */
-  locale: string;
+  defaultLocale: string;
   /**
    * The default timezone used by the application.
    */
@@ -2166,7 +2160,7 @@ type ValidatorFunction<
 
 type WarningMessageDetails = MessageDetails<"warning">;
 
-declare module "storm:config" {
+declare module "storm:dotenv" {
   /**
    * A type definition representing the Storm Stack configuration.
    *
@@ -2351,7 +2345,7 @@ declare module "storm:config" {
      */
     CURSOR_TRACE_ID?: string;
     /**
-     * The default locale for the application.
+     * The default locale to be used in the application.
      *
      * @title Default Locale
      * @defaultValue en_US
@@ -2779,12 +2773,6 @@ declare module "storm:config" {
      */
     INCLUDE_ERROR_DATA: boolean;
     /**
-     * The current locale used in the application.
-     *
-     * @title Locale
-     */
-    LOCALE: string;
-    /**
      * The Storm Stack application's logging directory.
      *
      * @title Log Directory
@@ -2860,10 +2848,6 @@ declare module "storm:config" {
     TEST: boolean;
     [key: string]: any;
   }
-  /**
-   * A global configuration object containing the Storm Stack configuration.
-   */
-  export const config: StormConfig;
   export type __ΩStormConfig = any[];
 }
 

@@ -16,7 +16,7 @@
 
  ------------------------------------------------------------------- */
 
-import { StormBaseConfig } from "../shared/config";
+import { StormBaseConfig } from "../shared/dotenv";
 import { StormLogInterface } from "../shared/log";
 import { StormPayloadInterface } from "../shared/payload";
 import { StormBuildInfo, StormEnvPaths, StormRuntimeInfo } from "./env";

@@ -16,9 +16,34 @@
 
  ------------------------------------------------------------------- */
 
-export * from "./date.js";
-export * from "./dotenv.js";
-export * from "./error.js";
-export * from "./log.js";
-export * from "./message.js";
-export * from "./payload.js";
+import { defineConfig } from "@storm-stack/core/define-config";
+
+export default defineConfig({
+  name: "Storm Stack",
+  skipCache: true,
+  plugins: [
+    [
+      "@storm-stack/plugin-cli",
+      {
+        bin: ["storm", "storm-stack"],
+        dotenv: {
+          types: {
+            config: "./src/types.ts#StormStackCLIConfig"
+          }
+        }
+      }
+    ],
+    [
+      "@storm-stack/plugin-log-storage",
+      {
+        logLevel: "info"
+      }
+    ],
+    [
+      "@storm-stack/plugin-log-sentry",
+      {
+        logLevel: "error"
+      }
+    ]
+  ]
+});

@@ -25,7 +25,7 @@ export function writeConfigGet(_context: CLIPluginContext) {
 import { deserialize } from "@deepkit/type";
 import { colors } from "storm:cli";
 import { StormPayload } from "storm:payload";
-import { StormConfig } from "storm:config";
+import { StormConfig } from "storm:dotenv";
 
 export interface ConfigGetPayload {
   /**
@@ -66,7 +66,7 @@ export function writeConfigSet(_context: CLIPluginContext) {
 import { deserialize, serialize } from "@deepkit/type";
 import { colors } from "storm:cli";
 import { StormPayload } from "storm:payload";
-import { StormConfig } from "storm:config";
+import { StormConfig } from "storm:dotenv";
 
 export interface ConfigSetPayload {
   /**
@@ -113,7 +113,7 @@ export function writeConfigList(_context: CLIPluginContext) {
 import { deserialize } from "@deepkit/type";
 import { colors } from "storm:cli";
 import { StormPayload } from "storm:payload";
-import { StormConfig } from "storm:config";
+import { StormConfig } from "storm:dotenv";
 
 export interface ConfigListPayload {}
 
@@ -144,7 +144,7 @@ export function writeConfigDelete(_context: CLIPluginContext) {
 import { deserialize, serialize } from "@deepkit/type";
 import { colors } from "storm:cli";
 import { StormPayload } from "storm:payload";
-import { StormConfig } from "storm:config";
+import { StormConfig } from "storm:dotenv";
 
 export interface ConfigDeletePayload {
   /**

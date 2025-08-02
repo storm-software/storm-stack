@@ -43,7 +43,7 @@ import {
 import {
   StormResultInterface
 } from "@storm-stack/types/result";
-import { StormConfig, config } from "storm:config";
+import { StormConfig, config } from "storm:dotenv";
 import { STORM_ASYNC_CONTEXT } from "storm:context";
 import { build, name, version, runtime, paths } from "storm:env";
 import { createStormError, StormError, isError } from "storm:error";
@@ -110,7 +110,7 @@ export function withContext<TInput = any, TOutput = any>(
       paths,
       log: log.with({ name, version, payloadId: payload.id }),
       storage,
-      config,
+      config: {} as StormConfig,
       dotenv: {} as StormConfig, // This object is only used at compile time, so we can leave it empty here.
       emit: (_event: StormEvent) => {},
       __internal: {

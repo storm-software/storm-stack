@@ -16,7 +16,7 @@
 
  ------------------------------------------------------------------- */
 
-import { StormBaseConfig } from "@storm-stack/types/config";
+import { StormBaseConfig } from "@storm-stack/types/dotenv";
 
 export interface StormSentryLogConfig extends StormBaseConfig {
   /**

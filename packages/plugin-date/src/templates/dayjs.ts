@@ -22,10 +22,10 @@ import type { Context } from "@storm-stack/core/types/context";
 /**
  * Generates the Storm Stack configuration file.
  *
- * @param context - The build context containing runtime information.
+ * @param _context - The build context containing runtime information.
  * @returns A string representing the configuration file content.
  */
-export async function DayjsModule(context: Context) {
+export async function DayjsModule(_context: Context) {
   return `
 /**
  * The Storm Stack date module provides utility functions for date manipulation and formatting
@@ -97,7 +97,7 @@ export const formats: DateFormats = {
   keyboardDateTime24h: "L HH:mm",
 };
 
-export const locale = "${context.options.locale || "en-US"}";
+export let locale = $storm.dotenv.DEFAULT_LOCALE;
 
 export const dayjs = withLocale(defaultDayjs, locale);
 
@@ -137,11 +137,11 @@ export function createDate<
 
 export function is12HourCycleInCurrentLocale() {
   /* istanbul ignore next */
-  return /A|a/.test(dayjs.Ls[dayjs.locale() || "en"]?.formats?.LT ?? "");
+  return /A|a/.test(dayjs.Ls[dayjs.locale() || $storm.dotenv.DEFAULT_LOCALE]?.formats?.LT ?? "");
 };
 
 export function getCurrentLocaleCode() {
-  return dayjs.locale() || "en";
+  return dayjs.locale() || $storm.dotenv.DEFAULT_LOCALE;
 };
 
 export function getFormatHelperText(format: string) {
@@ -156,7 +156,7 @@ export function getFormatHelperText(format: string) {
         if (firstCharacter === "L") {
           /* istanbul ignore next */
           return (
-            dayjs.Ls[dayjs.locale() || "en"]?.formats[
+            dayjs.Ls[dayjs.locale() || $storm.dotenv.DEFAULT_LOCALE]?.formats[
               token as keyof ILocale["formats"]
             ] ?? token
           );

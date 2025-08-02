@@ -16,7 +16,7 @@
 
  ------------------------------------------------------------------- */
 
-import type { StormBaseConfig } from "../shared/config.js";
+import type { StormBaseConfig } from "../shared/dotenv.js";
 import type { StormErrorInterface } from "../shared/error.js";
 import type { StormPayloadInterface } from "../shared/payload.js";
 import type { StormContext } from "./context.js";

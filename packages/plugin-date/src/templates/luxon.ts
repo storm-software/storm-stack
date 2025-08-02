@@ -22,10 +22,10 @@ import type { Context } from "@storm-stack/core/types/context";
 /**
  * Generates the Storm Stack configuration file.
  *
- * @param context - The build context containing runtime information.
+ * @param _context - The build context containing runtime information.
  * @returns A string representing the configuration file content.
  */
-export async function LuxonModule(context: Context) {
+export async function LuxonModule(_context: Context) {
   return `
 /**
  * The Storm Stack date module provides utility functions for date manipulation and formatting
@@ -72,7 +72,7 @@ export const formats: DateFormats = {
   year: "yyyy",
 };
 
-export const locale = "${context.options.locale || "en-US"}";
+export let locale = $storm.dotenv.DEFAULT_LOCALE;
 
 export const type = "luxon";
 
