@@ -5,7 +5,6 @@
   "sourceRoot": "packages/cli/src",
   "targets": {
     "clean": {
-      "cache": false,
       "executor": "@storm-stack/nx:clean",
       "options": {
         "outputPath": "dist/packages/cli"
@@ -16,9 +15,21 @@
       "inputs": ["typescript", "^production"],
       "outputs": ["{projectRoot}/.storm"],
       "executor": "@storm-stack/nx:prepare",
+      "defaultConfiguration": "production",
       "options": {
-        "entry": "{sourceRoot}/commands",
-        "mode": "development"
+        "entry": "{sourceRoot}/commands"
+      },
+      "configurations": {
+        "production": {
+          "mode": "production"
+        },
+        "staging": {
+          "mode": "staging"
+        },
+        "development": {
+          "mode": "development",
+          "skipCache": true
+        }
       }
     },
     "build": {
@@ -27,10 +38,22 @@
       "outputs": ["{options.outputPath}"],
       "executor": "@storm-stack/nx:build",
       "dependsOn": ["prepare"],
+      "defaultConfiguration": "production",
       "options": {
         "entry": "{sourceRoot}/commands",
-        "outputPath": "dist/packages/cli",
-        "mode": "development"
+        "outputPath": "dist/packages/cli"
+      },
+      "configurations": {
+        "production": {
+          "mode": "production"
+        },
+        "staging": {
+          "mode": "staging"
+        },
+        "development": {
+          "mode": "development",
+          "skipCache": true
+        }
       }
     },
     "docs": {
@@ -39,13 +62,26 @@
       "outputs": ["{projectRoot}/docs"],
       "executor": "@storm-stack/nx:docs",
       "dependsOn": ["prepare", "build"],
+      "defaultConfiguration": "production",
       "options": {
-        "entry": "{sourceRoot}/commands"
+        "entry": "{sourceRoot}/commands",
+        "outputPath": "dist/packages/cli"
+      },
+      "configurations": {
+        "production": {
+          "mode": "production"
+        },
+        "staging": {
+          "mode": "staging"
+        },
+        "development": {
+          "mode": "development",
+          "skipCache": true
+        }
       }
     },
     "nx-release-publish": {
       "executor": "@storm-software/workspace-tools:npm-publish"
     }
-  },
-  "implicitDependencies": ["nx", "core", "plugin-cli"]
+  }
 }

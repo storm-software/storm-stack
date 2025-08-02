@@ -25,7 +25,7 @@ const config = getTsupConfig({
     "./executors.ts",
     "./generators.ts",
     "./plugin.ts",
-    "./src/base/base-executor.ts",
+    "./src/base/*.ts",
     "./src/executors/*/executor.ts",
     "./src/executors/*/untyped.ts",
     "./src/generators/*/generator.ts",

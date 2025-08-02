@@ -43,7 +43,7 @@ import { readTargetsFromPackageJson } from "nx/src/utils/package-json.js";
 
 /* eslint-disable no-console */
 
-export const PLUGIN_NAME = "storm-stack/nx";
+export const name = "@storm-stack/nx/config";
 
 const stormConfigGlob =
   "**/{package.json,storm.json,storm.config.json,storm.jsonc,storm.config.jsonc,storm.json5,storm.config.json5,storm.yaml,storm.config.yaml,storm.yml,storm.config.yml,storm.toml,storm.config.toml,storm.js,storm.config.js,storm.ts,storm.config.ts,storm.mjs,storm.config.mjs,storm.cjs,storm.config.cjs,storm.mts,storm.config.mts,storm.cts,storm.config.cts}";
@@ -331,7 +331,7 @@ export const createNodesV2: CreateNodesV2<StormStackNxPluginOptions> = [
             }
           };
 
-          setDefaultProjectTags(projectConfig, PLUGIN_NAME);
+          setDefaultProjectTags(projectConfig, name);
           addProjectTag(
             projectConfig,
             "storm-stack" as ProjectTagVariant,
