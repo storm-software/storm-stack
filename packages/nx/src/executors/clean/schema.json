@@ -12,23 +12,13 @@
       "id": "#outputPath",
       "default": "dist/{projectRoot}"
     },
-    "entry": {
-      "title": "Entry File",
+    "tsconfig": {
+      "title": "TypeScript Configuration File",
       "type": "string",
       "format": "path",
-      "description": "The entry file or files to build",
-      "id": "#entry",
-      "default": "{sourceRoot}/index.ts"
-    },
-    "plugins": {
-      "title": "Plugins",
-      "type": "array",
-      "description": "A list of plugins to use during Storm Stack processing",
-      "items": {
-        "type": "string"
-      },
-      "id": "#plugins",
-      "default": []
+      "description": "The path to the tsconfig file",
+      "id": "#tsconfig",
+      "default": "{projectRoot}/tsconfig.json"
     },
     "mode": {
       "title": "Mode",
@@ -41,37 +31,11 @@
       ],
       "id": "#mode"
     },
-    "environment": {
-      "title": "Environment",
-      "type": "string",
-      "description": "The environment name for which the project is being built.",
-      "id": "#environment"
-    },
-    "tsconfig": {
-      "title": "TypeScript Configuration File",
-      "type": "string",
-      "format": "path",
-      "description": "The path to the tsconfig file",
-      "id": "#tsconfig",
-      "default": "{projectRoot}/tsconfig.json"
-    },
     "skipInstalls": {
       "title": "Skip Installs",
       "type": "boolean",
       "description": "Skip installing dependencies during prepare stage",
       "id": "#skipInstalls"
-    },
-    "skipCache": {
-      "title": "Skip Cache",
-      "type": "boolean",
-      "description": "Skip the cache when building",
-      "id": "#skipCache"
-    },
-    "skipLint": {
-      "title": "Skip Lint",
-      "type": "boolean",
-      "description": "Skip linting the project when building",
-      "id": "#skipLint"
     },
     "logLevel": {
       "title": "Log Level",
@@ -94,8 +58,6 @@
   "type": "object",
   "default": {
     "outputPath": "dist/{projectRoot}",
-    "entry": "{sourceRoot}/index.ts",
-    "plugins": [],
     "tsconfig": "{projectRoot}/tsconfig.json"
   }
 }

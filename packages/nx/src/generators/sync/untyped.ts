@@ -17,33 +17,22 @@
  ------------------------------------------------------------------- */
 
 import { defineUntypedSchema } from "untyped";
-import stormStackPrepareExecutorSchema from "../prepare/untyped";
 
 export default defineUntypedSchema({
-  ...stormStackPrepareExecutorSchema,
   $schema: {
-    id: "StormStackBuildExecutorSchema",
-    title: "Storm Stack Build Executor",
+    id: "StormStackSyncGeneratorSchema",
+    title: "Storm Stack Sync Generator",
     description:
-      "A type definition for the Storm Stack - Build executor schema",
-    required: ["entry"]
+      "A type definition for the Storm Stack - Sync generator's options",
+    required: []
   },
-  entry: {
+  outOfSyncMessage: {
     $schema: {
-      title: "Entry File",
+      title: "Out of Sync Message",
       type: "string",
-      format: "path",
-      description: "The entry file or files to build"
-    },
-    $default: "{sourceRoot}/index.ts"
-  },
-  skipLint: {
-    $schema: {
-      title: "Skip Lint",
-      type: "boolean",
       description:
-        "Skip the linting process ran prior to the build (if required)"
+        "The message to display when the project is out of sync with the legal-message.txt file"
     },
-    $default: false
+    $default: "The legal-message.txt file needs to be created"
   }
 });

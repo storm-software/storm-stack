@@ -16,13 +16,13 @@
 
  ------------------------------------------------------------------- */
 
-export { executorFn as stormStackBuildExecutor } from "./src/executors/build/executor";
-export type { StormStackBuildExecutorSchema } from "./src/executors/build/schema.d";
-export { executorFn as stormStackCleanExecutor } from "./src/executors/clean/executor";
-export type { StormStackCleanExecutorSchema } from "./src/executors/clean/schema.d";
-export { executorFn as stormStackDocsExecutor } from "./src/executors/docs/executor";
-export type { StormStackDocsExecutorSchema } from "./src/executors/docs/schema.d";
-export { executorFn as stormStackLintExecutor } from "./src/executors/lint/executor";
-export type { StormStackLintExecutorSchema } from "./src/executors/lint/schema.d";
-export { executorFn as stormStackPrepareExecutor } from "./src/executors/prepare/executor";
-export type { StormStackPrepareExecutorSchema } from "./src/executors/prepare/schema.d";
+export { default as build } from "./src/executors/build/executor";
+export type { StormStackBuildExecutorSchema } from "./src/executors/build/schema";
+export { default as clean } from "./src/executors/clean/executor";
+export type { StormStackCleanExecutorSchema } from "./src/executors/clean/schema";
+export { default as docs } from "./src/executors/docs/executor";
+export type { StormStackDocsExecutorSchema } from "./src/executors/docs/schema";
+export { default as lint } from "./src/executors/lint/executor";
+export type { StormStackLintExecutorSchema } from "./src/executors/lint/schema";
+export { default as prepare } from "./src/executors/prepare/executor";
+export type { StormStackPrepareExecutorSchema } from "./src/executors/prepare/schema";

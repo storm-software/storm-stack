@@ -23,13 +23,18 @@ const config = getTsupConfig({
   entry: [
     "./index.ts",
     "./executors.ts",
-    "./src/plugin/index.ts",
+    "./generators.ts",
+    "./plugin.ts",
+    "./src/base/base-executor.ts",
     "./src/executors/*/executor.ts",
-    "./src/executors/*/untyped.ts"
+    "./src/executors/*/untyped.ts",
+    "./src/generators/*/generator.ts",
+    "./src/generators/*/untyped.ts"
   ],
   outDir: "dist",
   format: ["cjs", "esm"],
   platform: "node",
+  target: "node22",
   bundle: true,
   splitting: true,
   treeshake: true,

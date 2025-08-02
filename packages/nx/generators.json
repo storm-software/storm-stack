@@ -2,5 +2,13 @@
   "$schema": "https://json-schema.org/schema",
   "name": "storm-stack",
   "version": "0.0.1",
-  "generators": {}
+  "generators": {
+    "typescript-sync": {
+      "factory": "./dist/src/generators/sync/generator",
+      "schema": "./dist/src/generators/sync/schema.json",
+      "description": "Synchronize Storm Stack projects based on the project graph",
+      "alias": ["sync"],
+      "hidden": true
+    }
+  }
 }

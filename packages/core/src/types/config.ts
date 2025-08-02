@@ -323,6 +323,14 @@ export type ResolvedUserConfig = UserConfig &
     configFile?: ConfigLayer<UserConfig>["configFile"];
   };
 
+export type StormStackCommand =
+  | "new"
+  | "prepare"
+  | "build"
+  | "lint"
+  | "docs"
+  | "clean";
+
 /**
  * The configuration provided while executing Storm Stack commands.
  */
@@ -330,7 +338,7 @@ export type InlineConfig = UserConfig & {
   /**
    * A string identifier for the Storm Stack command being executed
    */
-  command: "new" | "prepare" | "build" | "lint" | "docs" | "clean";
+  command: StormStackCommand;
 
   /**
    * The package name (from the \`package.json\`) for the project that will be used in the \`new\` command to create a new project based on this configuration

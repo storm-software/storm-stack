@@ -5,7 +5,7 @@
  This code was released as part of the Storm Stack project. Storm Stack
  is maintained by Storm Software under the Apache-2.0 license, and is
  free for commercial and private use. For more information, please visit
- our licensing page at https://stormsoftware.com/license.
+ our licensing page at https://stormsoftware.com/licenses/projects/storm-stack.
 
  Website:                  https://stormsoftware.com
  Repository:               https://github.com/storm-software/storm-stack
@@ -16,77 +16,31 @@
 
  ------------------------------------------------------------------- */
 
-import type { ExecutorContext } from "@nx/devkit";
-import type { StormWorkspaceConfig } from "@storm-software/config/types";
-import { withRunExecutor } from "@storm-software/workspace-tools";
+import { PromiseExecutor } from "@nx/devkit";
+import { BaseExecutorResult } from "@storm-software/workspace-tools/types";
 import { Engine } from "@storm-stack/core/base/engine";
-import type { DocsInlineConfig } from "@storm-stack/core/types";
-import defu from "defu";
+import { DocsInlineConfig } from "@storm-stack/core/types/config";
+import {
+  StormStackExecutorContext,
+  withStormStackExecutor
+} from "../../base/base-executor";
 import type { StormStackDocsExecutorSchema } from "./schema";
 
 export async function executorFn(
-  options: StormStackDocsExecutorSchema,
-  context: ExecutorContext,
-  workspaceConfig: StormWorkspaceConfig
-) {
-  if (!context.projectName) {
-    throw new Error(
-      "The executor requires `projectName` on the context object."
-    );
-  }
-
-  if (
-    !context.projectName ||
-    !context.projectsConfigurations?.projects ||
-    !context.projectsConfigurations.projects[context.projectName] ||
-    !context.projectsConfigurations.projects[context.projectName]?.root
-  ) {
-    throw new Error(
-      "The executor requires `projectsConfigurations` on the context object."
-    );
-  }
-
-  const inlineConfig = defu(
-    {
-      root: context.projectsConfigurations.projects[context.projectName]!.root,
-      sourceRoot:
-        context.projectsConfigurations.projects[context.projectName]!
-          .sourceRoot,
-      output: {
-        outputPath:
-          context.projectsConfigurations.projects[context.projectName]!.targets
-            ?.build?.options?.outputPath
-      },
-      type: context.projectsConfigurations.projects[context.projectName]!
-        .projectType,
-      command: "docs"
-    },
-    options
-  ) as DocsInlineConfig;
-
-  const engine = new Engine(inlineConfig, workspaceConfig);
-
-  await engine.init(inlineConfig);
-  await engine.docs(inlineConfig);
-  await engine.finalize(inlineConfig);
+  context: StormStackExecutorContext<"docs", StormStackDocsExecutorSchema>,
+  engine: Engine
+): Promise<BaseExecutorResult> {
+  await engine.docs(context.inlineConfig as DocsInlineConfig);
 
   return {
     success: true
   };
 }
 
-export default withRunExecutor<StormStackDocsExecutorSchema>(
-  "Storm Stack - Docs executor",
-  executorFn,
-  {
-    skipReadingConfig: false,
-    hooks: {
-      applyDefaultOptions: (options: StormStackDocsExecutorSchema) => {
-        options.entry ??= "{sourceRoot}/index.ts";
-        options.mode ??= "production";
+const executor: PromiseExecutor<StormStackDocsExecutorSchema> =
+  withStormStackExecutor<"docs", StormStackDocsExecutorSchema>(
+    "docs",
+    executorFn
+  );
 
-        return options;
-      }
-    }
-  }
-);
+export default executor;

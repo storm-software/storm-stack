@@ -5,7 +5,7 @@
  This code was released as part of the Storm Stack project. Storm Stack
  is maintained by Storm Software under the Apache-2.0 license, and is
  free for commercial and private use. For more information, please visit
- our licensing page at https://stormsoftware.com/license.
+ our licensing page at https://stormsoftware.com/licenses/projects/storm-stack.
 
  Website:                  https://stormsoftware.com
  Repository:               https://github.com/storm-software/storm-stack
@@ -16,76 +16,43 @@
 
  ------------------------------------------------------------------- */
 
-import type { ExecutorContext } from "@nx/devkit";
-import type { StormWorkspaceConfig } from "@storm-software/config/types";
-import { withRunExecutor } from "@storm-software/workspace-tools";
+import { PromiseExecutor } from "@nx/devkit";
+import { BaseExecutorResult } from "@storm-software/workspace-tools/types";
 import { Engine } from "@storm-stack/core/base/engine";
-import type { PrepareInlineConfig } from "@storm-stack/core/types";
+import { PrepareInlineConfig } from "@storm-stack/core/types/config";
 import defu from "defu";
+import {
+  StormStackExecutorContext,
+  withStormStackExecutor
+} from "../../base/base-executor";
 import type { StormStackPrepareExecutorSchema } from "./schema";
 
 export async function executorFn(
-  options: StormStackPrepareExecutorSchema,
-  context: ExecutorContext,
-  workspaceConfig: StormWorkspaceConfig
-) {
-  if (!context.projectName) {
-    throw new Error(
-      "The executor requires `projectName` on the context object."
-    );
-  }
-
-  if (
-    !context.projectName ||
-    !context.projectsConfigurations?.projects ||
-    !context.projectsConfigurations.projects[context.projectName] ||
-    !context.projectsConfigurations.projects[context.projectName]?.root
-  ) {
-    throw new Error(
-      "The executor requires `projectsConfigurations` on the context object."
-    );
-  }
-
-  const inlineConfig = defu(
-    {
-      root: context.projectsConfigurations.projects[context.projectName]!.root,
-      sourceRoot:
-        context.projectsConfigurations.projects[context.projectName]!
-          .sourceRoot,
-      output: {
-        outputPath:
-          context.projectsConfigurations.projects[context.projectName]!.targets
-            ?.build?.options?.outputPath
+  context: StormStackExecutorContext<
+    "prepare",
+    StormStackPrepareExecutorSchema
+  >,
+  engine: Engine
+): Promise<BaseExecutorResult> {
+  await engine.prepare(
+    defu(
+      {
+        clean: context.options.clean,
+        skipCache: context.options.skipCache
       },
-      type: context.projectsConfigurations.projects[context.projectName]!
-        .projectType,
-      command: "prepare"
-    },
-    options
-  ) as PrepareInlineConfig;
-
-  const engine = new Engine(inlineConfig, workspaceConfig);
-
-  await engine.init(inlineConfig);
-  await engine.prepare(inlineConfig);
-  await engine.finalize(inlineConfig);
+      context.inlineConfig
+    ) as PrepareInlineConfig
+  );
 
   return {
     success: true
   };
 }
 
-export default withRunExecutor<StormStackPrepareExecutorSchema>(
-  "Storm Stack - Prepare executor",
-  executorFn,
-  {
-    skipReadingConfig: false,
-    hooks: {
-      applyDefaultOptions: (options: StormStackPrepareExecutorSchema) => {
-        options.entry ??= "{sourceRoot}/index.ts";
+const executor: PromiseExecutor<StormStackPrepareExecutorSchema> =
+  withStormStackExecutor<"prepare", StormStackPrepareExecutorSchema>(
+    "prepare",
+    executorFn
+  );
 
-        return options;
-      }
-    }
-  }
-);
+export default executor;

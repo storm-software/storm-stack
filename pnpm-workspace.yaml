@@ -161,7 +161,7 @@ catalog:
   verdaccio: 6.1.2
   vite: ^6.3.4
   defu: ^6.1.4
-  jiti: ^2.4.2
+  jiti: catalog
   wrangler: ^4.19.1
   zx: ^8.5.3
 linkWorkspacePackages: true

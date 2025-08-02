@@ -15,23 +15,15 @@ export interface StormStackBuildExecutorSchema {
  outputPath?: string,
 
  /**
-  * Entry File
+  * TypeScript Configuration File
   * 
-  * The entry file or files to build
+  * The path to the tsconfig file
   * 
-  * @default "{sourceRoot}/index.ts"
+  * @default "{projectRoot}/tsconfig.json"
   * 
   * @format path
  */
- entry?: string,
-
- /**
-  * Plugins
-  * 
-  * A list of plugins to use during Storm Stack processing
-  * 
- */
- plugins?: Array<string>,
+ tsconfig?: string,
 
  /**
   * Mode
@@ -44,48 +36,12 @@ export interface StormStackBuildExecutorSchema {
  mode?: string,
 
  /**
-  * Environment
-  * 
-  * The environment name for which the project is being built.
-  * 
- */
- environment?: string,
-
- /**
-  * TypeScript Configuration File
-  * 
-  * The path to the tsconfig file
-  * 
-  * @default "{projectRoot}/tsconfig.json"
-  * 
-  * @format path
- */
- tsconfig?: string,
-
- /**
   * Skip Installs
   * 
   * Skip installing dependencies during prepare stage
   * 
  */
  skipInstalls?: boolean,
-
- /**
-  * Skip Cache
-  * 
-  * Skip the cache when building
-  * 
- */
- skipCache?: boolean,
-
- /**
-  * Skip Lint
-  * 
-  * Skip the linting process ran prior to the build (if required)
-  * 
-  * @default false
- */
- skipLint?: boolean,
 
  /**
   * Log Level
@@ -98,12 +54,39 @@ export interface StormStackBuildExecutorSchema {
  logLevel?: string,
 
  /**
+  * Skip Cache
+  * 
+  * Skip the cache when building
+  * 
+ */
+ skipCache?: boolean,
+
+ /**
   * Clean
   * 
   * Automatically clean the project's output artifacts (if required)
   * 
-  * @default true
  */
  clean?: boolean,
+
+ /**
+  * Entry File
+  * 
+  * The entry file or files to build
+  * 
+  * @default "{sourceRoot}/index.ts"
+  * 
+  * @format path
+ */
+ entry: string,
+
+ /**
+  * Skip Lint
+  * 
+  * Skip the linting process ran prior to the build (if required)
+  * 
+  * @default false
+ */
+ skipLint?: boolean,
 }
 

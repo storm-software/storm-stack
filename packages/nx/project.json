@@ -29,7 +29,7 @@
     "build": {
       "cache": true,
       "inputs": ["typescript", "^production"],
-      "outputs": ["{workspaceRoot}/dist/{projectRoot}"],
+      "outputs": ["{workspaceRoot}/dist/packages/nx"],
       "executor": "nx:run-commands",
       "dependsOn": ["build-base", "build-untyped"],
       "options": {

@@ -1,0 +1,19 @@
+{
+  "id": "#",
+  "title": "Storm Stack Sync Generator",
+  "description": "A type definition for the Storm Stack - Sync generator's options",
+  "required": [],
+  "properties": {
+    "outOfSyncMessage": {
+      "title": "Out of Sync Message",
+      "type": "string",
+      "description": "The message to display when the project is out of sync with the legal-message.txt file",
+      "id": "#outOfSyncMessage",
+      "default": "The legal-message.txt file needs to be created"
+    }
+  },
+  "type": "object",
+  "default": {
+    "outOfSyncMessage": "The legal-message.txt file needs to be created"
+  }
+}

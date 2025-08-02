@@ -3404,7 +3404,7 @@ declare module "storm:env" {
   /** The organization that maintains the application */
   export const organization = "storm-software";
   /** The current application */
-  export const name = "examples-cli-app";
+  export const name = "storm-stack";
   /** The current application */
   export const version = "0.0.1";
   /**

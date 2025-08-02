@@ -27,12 +27,13 @@ import { isFunction } from "@stryke/type-checks/is-function";
 import { isSetObject } from "@stryke/type-checks/is-set-object";
 import { loadConfig as loadConfigC12 } from "c12";
 import defu from "defu";
-import type { JitiOptions } from "jiti";
+import type { Jiti } from "jiti";
 import { ResolvedOptions } from "../types/build";
 import type {
   InlineConfig,
   OutputConfig,
-  ResolvedUserConfig
+  ResolvedUserConfig,
+  StormStackCommand
 } from "../types/config";
 import { Context } from "../types/context";
 import { getTsconfigFilePath } from "./typescript/tsconfig";
@@ -47,26 +48,18 @@ export type PartiallyResolvedContext = {
 /**
  * Loads the user configuration file for the project.
  *
- * @param context - The context containing options and environment paths.
  * @param projectRoot - The root directory of the project.
+ * @param jiti - An instance of Jiti to resolve modules from
+ * @param command - The {@link StormStackCommand} string associated with the current running process
  * @param mode - The mode in which the project is running (default is "production").
- * @param cacheDir - Optional cache directory for Jiti.
  * @returns A promise that resolves to the resolved user configuration.
  */
 export async function loadUserConfigFile(
-  context: PartiallyResolvedContext,
   projectRoot: string,
-  mode: string = "production",
-  cacheDir?: string
+  jiti: Jiti,
+  command?: StormStackCommand,
+  mode?: string
 ): Promise<ResolvedUserConfig> {
-  let jitiOptions: JitiOptions | undefined;
-  if (cacheDir) {
-    jitiOptions = {
-      fsCache: cacheDir,
-      moduleCache: true
-    };
-  }
-
   let resolvedUserConfig: Partial<ResolvedUserConfig> = {};
 
   const resolvedUserConfigFile = existsSync(
@@ -81,16 +74,14 @@ export async function loadUserConfigFile(
           ? joinPaths(projectRoot, "storm.config.mjs")
           : undefined;
   if (resolvedUserConfigFile) {
-    const resolved = await context.resolver.import(
-      context.resolver.esmResolve(resolvedUserConfigFile)
-    );
+    const resolved = await jiti.import(jiti.esmResolve(resolvedUserConfigFile));
     if (resolved) {
       let config = {};
       if (isFunction(resolved)) {
         config = await Promise.resolve(
           resolved({
-            command: context.options.command,
-            mode,
+            command,
+            mode: mode || "production",
             isSsrBuild: false,
             isPreview: false
           })
@@ -115,36 +106,24 @@ export async function loadUserConfigFile(
       globalRc: true,
       packageJson: true,
       dotenv: true,
-      jitiOptions
+      jiti
     }),
     loadConfigC12({
       cwd: projectRoot,
-      name: "storm",
-      configFile: "storm",
+      name: "storm.config",
       rcFile: false,
       globalRc: false,
       packageJson: false,
       dotenv: false,
-      jitiOptions
+      jiti
     }),
     loadConfigC12({
       cwd: projectRoot,
       name: "storm-stack",
       envName: mode,
       globalRc: true,
-      packageJson: ["storm-stack", "stormStack"],
-      dotenv: true,
-      jitiOptions
-    }),
-    loadConfigC12({
-      cwd: projectRoot,
-      name: "storm-stack",
-      configFile: "storm-stack",
-      rcFile: false,
-      globalRc: false,
-      packageJson: false,
-      dotenv: false,
-      jitiOptions
+      packageJson: "stormStack",
+      jiti
     })
   ]);
 
@@ -152,8 +131,7 @@ export async function loadUserConfigFile(
     resolvedUserConfig,
     isSetObject(result[0]?.config) ? { ...result[0].config, ...result[0] } : {},
     isSetObject(result[1]?.config) ? { ...result[1].config, ...result[1] } : {},
-    isSetObject(result[2]?.config) ? { ...result[2].config, ...result[2] } : {},
-    isSetObject(result[3]?.config) ? { ...result[3].config, ...result[3] } : {}
+    isSetObject(result[2]?.config) ? { ...result[2].config, ...result[2] } : {}
   ) as ResolvedUserConfig;
 }
 
@@ -200,10 +178,10 @@ export async function resolveConfig(
     "production";
 
   const resolvedUserConfig = await loadUserConfigFile(
-    context,
     resolvedProjectRoot,
-    mode,
-    joinPaths(context.envPaths.cache, "jiti")
+    context.resolver,
+    context.options.command,
+    mode
   );
 
   const workspaceConfig = { ...context.options.workspaceConfig };

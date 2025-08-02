@@ -21,22 +21,23 @@ import { defineConfig } from "@storm-stack/core/define-config";
 export default defineConfig({
   name: "Storm Stack",
   skipCache: true,
+  skipInstalls: true,
   plugins: [
     [
-      "@storm-stack/plugin-cli",
+      "@storm-stack/plugin-date",
       {
-        bin: ["storm", "storm-stack"],
-        dotenv: {
-          types: {
-            config: "./src/types.ts#StormStackCLIConfig"
-          }
-        }
+        type: "date-fns"
       }
     ],
     [
-      "@storm-stack/plugin-log-storage",
+      "@storm-stack/plugin-cli",
       {
-        logLevel: "info"
+        bin: "examples-cli",
+        dotenv: {
+          types: {
+            config: "./src/types.ts#StormCLIAppConfig"
+          }
+        }
       }
     ],
     [
@@ -45,5 +46,8 @@ export default defineConfig({
         logLevel: "error"
       }
     ]
-  ]
+  ],
+  output: {
+    outputMode: "fs"
+  }
 });

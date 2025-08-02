@@ -16,31 +16,8 @@
 
  ------------------------------------------------------------------- */
 
-import { defineUntypedSchema } from "untyped";
-import stormStackBaseExecutorSchema from "../../base/base-executor.untyped";
-
-export default defineUntypedSchema({
-  ...stormStackBaseExecutorSchema,
-  $schema: {
-    id: "StormStackPrepareExecutorSchema",
-    title: "Storm Stack Prepare Executor",
-    description:
-      "A type definition for the Storm Stack - Prepare executor schema",
-    required: []
-  },
-  skipCache: {
-    $schema: {
-      title: "Skip Cache",
-      type: "boolean",
-      description: "Skip the cache when building"
-    }
-  },
-  clean: {
-    $schema: {
-      title: "Clean",
-      type: "boolean",
-      description:
-        "Automatically clean the project's output artifacts (if required)"
-    }
-  }
-});
+export {
+  default as sync,
+  generatorFn as syncGenerator
+} from "./src/generators/sync/generator";
+export type { StormStackSyncGeneratorSchema } from "./src/generators/sync/schema";

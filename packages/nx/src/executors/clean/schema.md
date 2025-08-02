@@ -14,24 +14,14 @@
 The output path for the build
 
 
-## `entry`
+## `tsconfig`
 - **Type**: `string`
-- **Default**: `"{sourceRoot}/index.ts"`
+- **Default**: `"{projectRoot}/tsconfig.json"`
 
-> Entry File
-
-
-The entry file or files to build
+> TypeScript Configuration File
 
 
-## `plugins`
-- **Type**: `array`
-- **Default**: `[]`
-
-> Plugins
-
-
-A list of plugins to use during Storm Stack processing
+The path to the tsconfig file
 
 
 ## `mode`
@@ -43,25 +33,6 @@ A list of plugins to use during Storm Stack processing
 The build mode
 
 
-## `environment`
-- **Type**: `string`
-
-> Environment
-
-
-The environment name for which the project is being built.
-
-
-## `tsconfig`
-- **Type**: `string`
-- **Default**: `"{projectRoot}/tsconfig.json"`
-
-> TypeScript Configuration File
-
-
-The path to the tsconfig file
-
-
 ## `skipInstalls`
 - **Type**: `boolean`
 
@@ -69,24 +40,6 @@ The path to the tsconfig file
 
 
 Skip installing dependencies during prepare stage
-
-
-## `skipCache`
-- **Type**: `boolean`
-
-> Skip Cache
-
-
-Skip the cache when building
-
-
-## `skipLint`
-- **Type**: `boolean`
-
-> Skip Lint
-
-
-Skip linting the project when building
 
 
 ## `logLevel`

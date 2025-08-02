@@ -16,69 +16,31 @@
 
  ------------------------------------------------------------------- */
 
-import type { ExecutorContext } from "@nx/devkit";
-import type { StormWorkspaceConfig } from "@storm-software/config/types";
-import { withRunExecutor } from "@storm-software/workspace-tools";
+import { PromiseExecutor } from "@nx/devkit";
+import { BaseExecutorResult } from "@storm-software/workspace-tools/types";
 import { Engine } from "@storm-stack/core/base/engine";
-import type { CleanInlineConfig } from "@storm-stack/core/types";
-import defu from "defu";
+import { CleanInlineConfig } from "@storm-stack/core/types/config";
+import {
+  StormStackExecutorContext,
+  withStormStackExecutor
+} from "../../base/base-executor";
 import type { StormStackCleanExecutorSchema } from "./schema";
 
 export async function executorFn(
-  options: StormStackCleanExecutorSchema,
-  context: ExecutorContext,
-  workspaceConfig: StormWorkspaceConfig
-) {
-  if (!context.projectName) {
-    throw new Error(
-      "The executor requires `projectName` on the context object."
-    );
-  }
-
-  if (
-    !context.projectName ||
-    !context.projectsConfigurations?.projects ||
-    !context.projectsConfigurations.projects[context.projectName] ||
-    !context.projectsConfigurations.projects[context.projectName]?.root
-  ) {
-    throw new Error(
-      "The executor requires `projectsConfigurations` on the context object."
-    );
-  }
-
-  const inlineConfig = defu(
-    {
-      root: context.projectsConfigurations.projects[context.projectName]!.root,
-      sourceRoot:
-        context.projectsConfigurations.projects[context.projectName]!
-          .sourceRoot,
-      output: {
-        outputPath:
-          context.projectsConfigurations.projects[context.projectName]!.targets
-            ?.build?.options?.outputPath
-      },
-      type: context.projectsConfigurations.projects[context.projectName]!
-        .projectType,
-      command: "clean"
-    },
-    options
-  ) as CleanInlineConfig;
-
-  const engine = new Engine(inlineConfig, workspaceConfig);
-
-  await engine.init(inlineConfig);
-  await engine.clean(inlineConfig);
-  await engine.finalize(inlineConfig);
+  context: StormStackExecutorContext<"clean", StormStackCleanExecutorSchema>,
+  engine: Engine
+): Promise<BaseExecutorResult> {
+  await engine.clean(context.inlineConfig as CleanInlineConfig);
 
   return {
     success: true
   };
 }
 
-export default withRunExecutor<StormStackCleanExecutorSchema>(
-  "Storm Stack - Clean executor",
-  executorFn,
-  {
-    skipReadingConfig: false
-  }
-);
+const executor: PromiseExecutor<StormStackCleanExecutorSchema> =
+  withStormStackExecutor<"clean", StormStackCleanExecutorSchema>(
+    "clean",
+    executorFn
+  );
+
+export default executor;

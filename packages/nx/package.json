@@ -132,6 +132,7 @@
     "@storm-stack/core": "workspace:*",
     "@stryke/path": "catalog:",
     "defu": "catalog:",
+    "jiti": "catalog:",
     "nx": "catalog:"
   },
   "devDependencies": {
@@ -146,5 +147,6 @@
   "publishConfig": {
     "access": "public"
   },
-  "executors": "./executors.json"
+  "executors": "./executors.json",
+  "generators": "./generators.json"
 }

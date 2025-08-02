@@ -16,31 +16,28 @@
 
  ------------------------------------------------------------------- */
 
-import { PromiseExecutor } from "@nx/devkit";
-import { BaseExecutorResult } from "@storm-software/workspace-tools/types";
+import { getWorkspaceConfig } from "@storm-software/config-tools/get-config";
 import { Engine } from "@storm-stack/core/base/engine";
-import { LintInlineConfig } from "@storm-stack/core/types";
-import {
-  StormStackExecutorContext,
-  withStormStackExecutor
-} from "../../base/base-executor";
-import type { StormStackLintExecutorSchema } from "./schema";
+import type {
+  InlineConfig,
+  WorkspaceConfig
+} from "@storm-stack/core/types/config";
 
-export async function executorFn(
-  context: StormStackExecutorContext<"lint", StormStackLintExecutorSchema>,
-  engine: Engine
-): Promise<BaseExecutorResult> {
-  await engine.lint(context.inlineConfig as LintInlineConfig);
-
-  return {
-    success: true
-  };
-}
-
-const executor: PromiseExecutor<StormStackLintExecutorSchema> =
-  withStormStackExecutor<"lint", StormStackLintExecutorSchema>(
-    "lint",
-    executorFn
+/**
+ * Creates a new instance of the Engine with the provided inline configuration and workspace configuration.
+ *
+ * @param inlineConfig - The inline config to initialize the Engine.
+ * @returns A promise that resolves to the initialized Engine instance.
+ */
+export async function createEngine(
+  inlineConfig: InlineConfig,
+  workspaceConfig?: WorkspaceConfig
+): Promise<Engine> {
+  const engine = new Engine(
+    inlineConfig,
+    workspaceConfig ?? (await getWorkspaceConfig())
   );
+  await engine.init(inlineConfig);
 
-export default executor;
+  return engine;
+}

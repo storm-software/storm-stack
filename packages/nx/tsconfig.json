@@ -1,9 +1,16 @@
 {
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
+    "target": "ESNext",
+    "lib": ["ESNext"],
+    "moduleDetection": "force",
     "rootDir": "../..",
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
     "types": ["node"],
-    "outDir": "../../dist/out-tsc"
+    "outDir": "../../dist/out-tsc",
+    "skipDefaultLibCheck": true,
+    "skipLibCheck": true
   },
   "include": [
     "executors.ts",
@@ -11,7 +18,7 @@
     "index.ts",
     "src/**/*.ts",
     "src/**/*.d.ts",
-    "src/**/*.json",
+    "**/*.json",
     "tsup.config.ts"
   ],
   "exclude": [

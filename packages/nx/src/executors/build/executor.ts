@@ -16,76 +16,46 @@
 
  ------------------------------------------------------------------- */
 
-import type { ExecutorContext } from "@nx/devkit";
-import type { StormWorkspaceConfig } from "@storm-software/config/types";
-import { withRunExecutor } from "@storm-software/workspace-tools";
+import { PromiseExecutor } from "@nx/devkit";
+import { BaseExecutorResult } from "@storm-software/workspace-tools/types";
 import { Engine } from "@storm-stack/core/base/engine";
-import type { BuildInlineConfig } from "@storm-stack/core/types";
+import { BuildInlineConfig } from "@storm-stack/core/types";
+import { joinPaths } from "@stryke/path/join-paths";
 import defu from "defu";
+import {
+  StormStackExecutorContext,
+  withStormStackExecutor
+} from "../../base/base-executor";
 import type { StormStackBuildExecutorSchema } from "./schema";
 
 export async function executorFn(
-  options: StormStackBuildExecutorSchema,
-  context: ExecutorContext,
-  workspaceConfig: StormWorkspaceConfig
-) {
-  if (!context.projectName) {
-    throw new Error(
-      "The executor requires `projectName` on the context object."
-    );
-  }
-
-  if (
-    !context.projectName ||
-    !context.projectsConfigurations?.projects ||
-    !context.projectsConfigurations.projects[context.projectName] ||
-    !context.projectsConfigurations.projects[context.projectName]?.root
-  ) {
-    throw new Error(
-      "The executor requires `projectsConfigurations` on the context object."
-    );
-  }
-
-  const inlineConfig = defu(
-    {
-      root: context.projectsConfigurations.projects[context.projectName]!.root,
-      sourceRoot:
-        context.projectsConfigurations.projects[context.projectName]!
-          .sourceRoot,
-      output: {
-        outputPath:
-          context.projectsConfigurations.projects[context.projectName]!.targets
-            ?.build?.options?.outputPath
+  context: StormStackExecutorContext<"build", StormStackBuildExecutorSchema>,
+  engine: Engine
+): Promise<BaseExecutorResult> {
+  await engine.build(
+    defu(
+      {
+        entry: context.options.entry,
+        clean: context.options.clean,
+        skipCache: context.options.skipCache,
+        skipLint: context.options.skipLint
       },
-      type: context.projectsConfigurations.projects[context.projectName]!
-        .projectType,
-      command: "build"
-    },
-    options
-  ) as BuildInlineConfig;
-
-  const engine = new Engine(inlineConfig, workspaceConfig);
-
-  await engine.init(inlineConfig);
-  await engine.build(inlineConfig);
-  await engine.finalize(inlineConfig);
+      context.inlineConfig,
+      {
+        entry: joinPaths(context.root, "index.ts")
+      }
+    ) as BuildInlineConfig
+  );
 
   return {
     success: true
   };
 }
 
-export default withRunExecutor<StormStackBuildExecutorSchema>(
-  "Storm Stack - Build executor",
-  executorFn,
-  {
-    skipReadingConfig: false,
-    hooks: {
-      applyDefaultOptions: (options: StormStackBuildExecutorSchema) => {
-        options.entry ??= "{sourceRoot}/index.ts";
+const executor: PromiseExecutor<StormStackBuildExecutorSchema> =
+  withStormStackExecutor<"build", StormStackBuildExecutorSchema>(
+    "build",
+    executorFn
+  );
 
-        return options;
-      }
-    }
-  }
-);
+export default executor;

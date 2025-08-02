@@ -26,37 +26,5 @@
     "@storm-stack/plugin-date": "workspace:*",
     "@storm-stack/plugin-log-console": "workspace:*",
     "@storm-stack/plugin-log-sentry": "workspace:*"
-  },
-  "storm": {
-    "plugins": [
-      [
-        "@storm-stack/plugin-date",
-        {
-          "type": "date-fns"
-        }
-      ],
-      [
-        "@storm-stack/plugin-cli",
-        {
-          "bin": "examples-cli",
-          "dotenv": {
-            "types": {
-              "config": "./src/types.ts#StormCLIAppConfig"
-            }
-          }
-        }
-      ],
-      [
-        "@storm-stack/plugin-log-sentry",
-        {
-          "logLevel": "error"
-        }
-      ]
-    ],
-    "skipCache": true,
-    "skipInstalls": true,
-    "output": {
-      "outputMode": "fs"
-    }
   }
 }
