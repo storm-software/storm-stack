@@ -25,7 +25,8 @@ import {
 } from "@storm-software/workspace-tools/types";
 import {
   getProjectConfigFromProjectRoot,
-  getProjectRoot
+  getProjectRoot,
+  getRoot
 } from "@storm-software/workspace-tools/utils/plugin-helpers";
 import {
   addProjectTag,
@@ -33,6 +34,7 @@ import {
 } from "@storm-software/workspace-tools/utils/project-tags";
 import type { PackageJson } from "@stryke/types/package-json";
 import type { TsConfigJson } from "@stryke/types/tsconfig";
+import defu from "defu";
 import { readNxJson } from "nx/src/config/nx-json.js";
 import type { ProjectConfiguration } from "nx/src/config/workspace-json-project-json.js";
 import type { PackageJson as PackageJsonNx } from "nx/src/utils/package-json.js";
@@ -47,41 +49,59 @@ export const name = "storm-stack/tools/plugin";
 export interface StormStackToolsPluginOptions {}
 
 export const createNodesV2: CreateNodesV2<StormStackToolsPluginOptions> = [
-  "packages/{plugin-*,preset-*}/project.json",
-  async (configFiles, options, context): Promise<CreateNodesResultV2> => {
+  "packages/plugin-*/package.json",
+  async (configFiles, optionsV2, contextV2): Promise<CreateNodesResultV2> => {
     return createNodesFromFiles(
       (configFile, options, context) => {
         try {
           const projectRoot = getProjectRoot(configFile, context.workspaceRoot);
           if (!projectRoot) {
-            console.error(
-              `[storm-stack/plugin]: project.json file must be located in the project root directory: ${configFile}`
+            console.warn(
+              `[${name}]: project.json file must be located in the project root directory: ${configFile}`
             );
+
             return {};
           }
+
+          const root = getRoot(projectRoot, context);
 
           const packageJson = readJsonFile<PackageJson>(
             joinPaths(projectRoot, "package.json")
           );
           if (!packageJson) {
-            console.error(
-              `[storm-stack/plugin]: No package.json found in project root: ${projectRoot}`
+            console.warn(
+              `[${name}]: No package.json found in project root: ${projectRoot}`
             );
+
             return {};
           }
 
-          const project = getProjectConfigFromProjectRoot(
+          const projectConfig = getProjectConfigFromProjectRoot(
             projectRoot,
             packageJson
           );
+
+          const projectName =
+            projectConfig.name ||
+            (packageJson.name?.includes("/")
+              ? packageJson.name.split("/").pop()
+              : packageJson.name);
+          if (!projectName) {
+            console.warn(
+              `[${name}]: No name could be found for the project: ${projectRoot}`
+            );
+
+            return {};
+          }
 
           const tsconfigJson = readJsonFile<TsConfigJson>(
             joinPaths(projectRoot, "tsconfig.json")
           );
           if (!tsconfigJson) {
-            console.error(
-              `[storm-stack/plugin]: No tsconfig.json found in project root: ${projectRoot}`
+            console.warn(
+              `[${name}]: No tsconfig.json found in project root: ${projectRoot}`
             );
+
             return {};
           }
 
@@ -92,16 +112,6 @@ export const createNodesV2: CreateNodesV2<StormStackToolsPluginOptions> = [
               projectRoot,
               context.workspaceRoot
             );
-
-          let relativeRoot = projectRoot
-            .replaceAll("\\", "/")
-            .replace(context.workspaceRoot.replaceAll("\\", "/"), "");
-          while (relativeRoot.startsWith(".")) {
-            relativeRoot = relativeRoot.slice(1);
-          }
-          while (relativeRoot.startsWith("/")) {
-            relativeRoot = relativeRoot.slice(1);
-          }
 
           targets["build-base"] ??= {
             cache: true,
@@ -115,7 +125,7 @@ export const createNodesV2: CreateNodesV2<StormStackToolsPluginOptions> = [
             dependsOn: ["^build"],
             options: {
               command: 'tsup-node --config="tsup.config.ts"',
-              cwd: relativeRoot
+              cwd: root
             }
           };
 
@@ -127,59 +137,69 @@ export const createNodesV2: CreateNodesV2<StormStackToolsPluginOptions> = [
               "{projectRoot}/*.md",
               "{projectRoot}/package.json"
             ],
-            outputs: [`{workspaceRoot}/dist/${relativeRoot}`],
+            outputs: [`{workspaceRoot}/dist/${root}`],
             executor: "nx:run-commands",
             dependsOn: ["build-base"],
             options: {
               commands: [
-                `pnpm copyfiles LICENSE dist/${relativeRoot}`,
-                `pnpm copyfiles --up=2 ./${relativeRoot}/*.md ./${
-                  relativeRoot
-                }/package.json dist/${relativeRoot}`,
-                `pnpm copyfiles --up=3 "./${relativeRoot}/dist/**/*" dist/${relativeRoot}/dist`
+                `pnpm copyfiles LICENSE dist/${root}`,
+                `pnpm copyfiles --up=2 ./${root}/*.md ./${
+                  root
+                }/package.json dist/${root}`,
+                `pnpm copyfiles --up=3 "./${root}/dist/**/*" dist/${root}/dist`
               ]
             }
           };
 
-          setDefaultProjectTags(project, name);
+          setDefaultProjectTags(projectConfig, name);
           addProjectTag(
-            project,
+            projectConfig,
             ProjectTagVariant.PLATFORM,
             ProjectTagPlatformValue.NODE,
             {
               overwrite: true
             }
           );
-          addProjectScopeTag(project, StormStackProjectTagScopeValue.PLUGIN);
+          addProjectScopeTag(
+            projectConfig,
+            StormStackProjectTagScopeValue.PLUGIN
+          );
 
-          if (!project?.implicitDependencies?.includes("core")) {
-            project.implicitDependencies ??= [];
-            project.implicitDependencies.push("core");
+          const implicitDependencies = [] as string[];
+          if (!projectConfig?.implicitDependencies?.includes("core")) {
+            implicitDependencies.push("core");
           }
-          if (!project?.implicitDependencies?.includes("devkit")) {
-            project.implicitDependencies ??= [];
-            project.implicitDependencies.push("devkit");
+          if (!projectConfig?.implicitDependencies?.includes("devkit")) {
+            implicitDependencies.push("devkit");
           }
 
-          return project?.name
-            ? {
-                projects: {
-                  [project.name]: {
-                    ...project,
-                    root: relativeRoot,
-                    targets
-                  }
+          console.log(`[${name}]: ${root} / ${projectRoot}`);
+
+          return {
+            projects: {
+              [root]: defu(
+                {
+                  projectType: "library"
+                },
+                projectConfig,
+                {
+                  root,
+                  sourceRoot: joinPaths(root, "src"),
+                  targets,
+                  implicitDependencies
                 }
-              }
-            : {};
-        } catch (error_) {
-          console.error(`[storm-stack/plugin]: ${JSON.stringify(error_)}`);
+              )
+            }
+          };
+        } catch (error) {
+          console.error(`[${name}]: ${JSON.stringify(error)}`);
+
           return {};
         }
       },
       configFiles,
-      options ?? {},
-      context
+      optionsV2 ?? {},
+      contextV2
     );
   }
 ];

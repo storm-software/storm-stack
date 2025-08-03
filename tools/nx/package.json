@@ -96,6 +96,8 @@
     "sullivanpj"
   ],
   "dependencies": {
+    "@storm-software/workspace-tools": "catalog:",
+    "@stryke/path": "catalog:",
     "defu": "catalog:"
   },
   "devDependencies": {

@@ -42,20 +42,18 @@ export const ReflectionKind = {
   INFER: 34,
   CALL_SIGNATURE: 35
 } as const;
-export type ReflectionKind =
-  (typeof ReflectionKind)[keyof typeof ReflectionKind];
+export type ReflectionKind = (typeof ReflectionKind)[keyof typeof ReflectionKind];
 export const ReflectionVisibility = {
   PUBLIC: 0,
   PROTECTED: 1,
   PRIVATE: 2
 } as const;
-export type ReflectionVisibility =
-  (typeof ReflectionVisibility)[keyof typeof ReflectionVisibility];
+export type ReflectionVisibility = (typeof ReflectionVisibility)[keyof typeof ReflectionVisibility];
 export class TagsReflection extends $.Struct {
   public static override readonly _capnp = {
     displayName: "TagsReflection",
     id: "ab7e31d6b834bbf8",
-    size: new $.ObjectSize(8, 4)
+    size: new $.ObjectSize(8, 4),
   };
   _adoptAlias(value: $.Orphan<$.List<string>>): void {
     $.utils.adopt(value, $.utils.getPointer(0, this));
@@ -129,9 +127,7 @@ export class TagsReflection extends $.Struct {
   set domain(value: string) {
     $.utils.setText(3, value, this);
   }
-  public override toString(): string {
-    return "TagsReflection_" + super.toString();
-  }
+  public override toString(): string { return "TagsReflection_" + super.toString(); }
 }
 export const DefaultValueReflection_Value_Which = {
   UNDEFINED: 0,
@@ -140,8 +136,7 @@ export const DefaultValueReflection_Value_Which = {
   FLOAT: 3,
   STRING: 4
 } as const;
-export type DefaultValueReflection_Value_Which =
-  (typeof DefaultValueReflection_Value_Which)[keyof typeof DefaultValueReflection_Value_Which];
+export type DefaultValueReflection_Value_Which = (typeof DefaultValueReflection_Value_Which)[keyof typeof DefaultValueReflection_Value_Which];
 export class DefaultValueReflection_Value extends $.Struct {
   static readonly UNDEFINED = DefaultValueReflection_Value_Which.UNDEFINED;
   static readonly BOOLEAN = DefaultValueReflection_Value_Which.BOOLEAN;
@@ -151,7 +146,7 @@ export class DefaultValueReflection_Value extends $.Struct {
   public static override readonly _capnp = {
     displayName: "value",
     id: "8748135e0497fe81",
-    size: new $.ObjectSize(16, 1)
+    size: new $.ObjectSize(16, 1),
   };
   get _isUndefined(): boolean {
     return $.utils.getUint16(0, this) === 0;
@@ -203,9 +198,7 @@ export class DefaultValueReflection_Value extends $.Struct {
     $.utils.setUint16(0, 4, this);
     $.utils.setText(0, value, this);
   }
-  public override toString(): string {
-    return "DefaultValueReflection_Value_" + super.toString();
-  }
+  public override toString(): string { return "DefaultValueReflection_Value_" + super.toString(); }
   which(): DefaultValueReflection_Value_Which {
     return $.utils.getUint16(0, this) as DefaultValueReflection_Value_Which;
   }
@@ -214,7 +207,7 @@ export class DefaultValueReflection extends $.Struct {
   public static override readonly _capnp = {
     displayName: "DefaultValueReflection",
     id: "96fe6f07954197c9",
-    size: new $.ObjectSize(16, 1)
+    size: new $.ObjectSize(16, 1),
   };
   get value(): DefaultValueReflection_Value {
     return $.utils.getAs(DefaultValueReflection_Value, this);
@@ -222,15 +215,13 @@ export class DefaultValueReflection extends $.Struct {
   _initValue(): DefaultValueReflection_Value {
     return $.utils.getAs(DefaultValueReflection_Value, this);
   }
-  public override toString(): string {
-    return "DefaultValueReflection_" + super.toString();
-  }
+  public override toString(): string { return "DefaultValueReflection_" + super.toString(); }
 }
 export class SerializedTypeReference extends $.Struct {
   public static override readonly _capnp = {
     displayName: "SerializedTypeReference",
     id: "a83d8a28b5e80f3a",
-    size: new $.ObjectSize(8, 0)
+    size: new $.ObjectSize(8, 0),
   };
   get id(): number {
     return $.utils.getUint32(0, this);
@@ -238,15 +229,13 @@ export class SerializedTypeReference extends $.Struct {
   set id(value: number) {
     $.utils.setUint32(0, value, this);
   }
-  public override toString(): string {
-    return "SerializedTypeReference_" + super.toString();
-  }
+  public override toString(): string { return "SerializedTypeReference_" + super.toString(); }
 }
 export class IndexAccessOrigin extends $.Struct {
   public static override readonly _capnp = {
     displayName: "IndexAccessOrigin",
     id: "ca50b18186c87afe",
-    size: new $.ObjectSize(0, 2)
+    size: new $.ObjectSize(0, 2),
   };
   _adoptContainer(value: $.Orphan<SerializedTypeReference>): void {
     $.utils.adopt(value, $.utils.getPointer(0, this));
@@ -284,15 +273,13 @@ export class IndexAccessOrigin extends $.Struct {
   set index(value: SerializedTypeReference) {
     $.utils.copyFrom(value, $.utils.getPointer(1, this));
   }
-  public override toString(): string {
-    return "IndexAccessOrigin_" + super.toString();
-  }
+  public override toString(): string { return "IndexAccessOrigin_" + super.toString(); }
 }
 export class EntityOptions_EntityIndexOptions extends $.Struct {
   public static override readonly _capnp = {
     displayName: "EntityIndexOptions",
     id: "de584ad10b7c5004",
-    size: new $.ObjectSize(0, 2)
+    size: new $.ObjectSize(0, 2),
   };
   _adoptNames(value: $.Orphan<$.List<string>>): void {
     $.utils.adopt(value, $.utils.getPointer(0, this));
@@ -313,25 +300,23 @@ export class EntityOptions_EntityIndexOptions extends $.Struct {
     $.utils.copyFrom(value, $.utils.getPointer(0, this));
   }
   /**
-   * JSON stringified options
-   *
-   */
+* JSON stringified options
+*
+*/
   get options(): string {
     return $.utils.getText(1, this);
   }
   set options(value: string) {
     $.utils.setText(1, value, this);
   }
-  public override toString(): string {
-    return "EntityOptions_EntityIndexOptions_" + super.toString();
-  }
+  public override toString(): string { return "EntityOptions_EntityIndexOptions_" + super.toString(); }
 }
 export class EntityOptions extends $.Struct {
   static readonly EntityIndexOptions = EntityOptions_EntityIndexOptions;
   public static override readonly _capnp = {
     displayName: "EntityOptions",
     id: "948d2d02cf676d60",
-    size: new $.ObjectSize(8, 5)
+    size: new $.ObjectSize(8, 5),
   };
   static _Indexes: $.ListCtor<EntityOptions_EntityIndexOptions>;
   get name(): string {
@@ -364,9 +349,7 @@ export class EntityOptions extends $.Struct {
   set singleTableInheritance(value: boolean) {
     $.utils.setBit(0, value, this);
   }
-  _adoptIndexes(
-    value: $.Orphan<$.List<EntityOptions_EntityIndexOptions>>
-  ): void {
+  _adoptIndexes(value: $.Orphan<$.List<EntityOptions_EntityIndexOptions>>): void {
     $.utils.adopt(value, $.utils.getPointer(4, this));
   }
   _disownIndexes(): $.Orphan<$.List<EntityOptions_EntityIndexOptions>> {
@@ -384,15 +367,13 @@ export class EntityOptions extends $.Struct {
   set indexes(value: $.List<EntityOptions_EntityIndexOptions>) {
     $.utils.copyFrom(value, $.utils.getPointer(4, this));
   }
-  public override toString(): string {
-    return "EntityOptions_" + super.toString();
-  }
+  public override toString(): string { return "EntityOptions_" + super.toString(); }
 }
 export class SerializedTypeObjectLiteral extends $.Struct {
   public static override readonly _capnp = {
     displayName: "SerializedTypeObjectLiteral",
     id: "8b56235ad9bcb2b1",
-    size: new $.ObjectSize(8, 6)
+    size: new $.ObjectSize(8, 6),
   };
   static _TypeArguments: $.ListCtor<SerializedTypeReference>;
   static _Decorators: $.ListCtor<SerializedTypeReference>;
@@ -416,12 +397,7 @@ export class SerializedTypeObjectLiteral extends $.Struct {
     return !$.utils.isNull($.utils.getPointer(1, this));
   }
   _initTypeArguments(length: number): $.List<SerializedTypeReference> {
-    return $.utils.initList(
-      1,
-      SerializedTypeObjectLiteral._TypeArguments,
-      length,
-      this
-    );
+    return $.utils.initList(1, SerializedTypeObjectLiteral._TypeArguments, length, this);
   }
   set typeArguments(value: $.List<SerializedTypeReference>) {
     $.utils.copyFrom(value, $.utils.getPointer(1, this));
@@ -457,12 +433,7 @@ export class SerializedTypeObjectLiteral extends $.Struct {
     return !$.utils.isNull($.utils.getPointer(3, this));
   }
   _initDecorators(length: number): $.List<SerializedTypeReference> {
-    return $.utils.initList(
-      3,
-      SerializedTypeObjectLiteral._Decorators,
-      length,
-      this
-    );
+    return $.utils.initList(3, SerializedTypeObjectLiteral._Decorators, length, this);
   }
   set decorators(value: $.List<SerializedTypeReference>) {
     $.utils.copyFrom(value, $.utils.getPointer(3, this));
@@ -486,12 +457,7 @@ export class SerializedTypeObjectLiteral extends $.Struct {
     return !$.utils.isNull($.utils.getPointer(4, this));
   }
   _initTypes(length: number): $.List<SerializedTypeReference> {
-    return $.utils.initList(
-      4,
-      SerializedTypeObjectLiteral._Types,
-      length,
-      this
-    );
+    return $.utils.initList(4, SerializedTypeObjectLiteral._Types, length, this);
   }
   set types(value: $.List<SerializedTypeReference>) {
     $.utils.copyFrom(value, $.utils.getPointer(4, this));
@@ -514,15 +480,13 @@ export class SerializedTypeObjectLiteral extends $.Struct {
   set tags(value: TagsReflection) {
     $.utils.copyFrom(value, $.utils.getPointer(5, this));
   }
-  public override toString(): string {
-    return "SerializedTypeObjectLiteral_" + super.toString();
-  }
+  public override toString(): string { return "SerializedTypeObjectLiteral_" + super.toString(); }
 }
 export class SerializedTypeClassType extends $.Struct {
   public static override readonly _capnp = {
     displayName: "SerializedTypeClassType",
     id: "9855392bf9c48b25",
-    size: new $.ObjectSize(8, 11)
+    size: new $.ObjectSize(8, 11),
   };
   static _TypeArguments: $.ListCtor<SerializedTypeReference>;
   static _Decorators: $.ListCtor<SerializedTypeReference>;
@@ -548,12 +512,7 @@ export class SerializedTypeClassType extends $.Struct {
     return !$.utils.isNull($.utils.getPointer(1, this));
   }
   _initTypeArguments(length: number): $.List<SerializedTypeReference> {
-    return $.utils.initList(
-      1,
-      SerializedTypeClassType._TypeArguments,
-      length,
-      this
-    );
+    return $.utils.initList(1, SerializedTypeClassType._TypeArguments, length, this);
   }
   set typeArguments(value: $.List<SerializedTypeReference>) {
     $.utils.copyFrom(value, $.utils.getPointer(1, this));
@@ -589,12 +548,7 @@ export class SerializedTypeClassType extends $.Struct {
     return !$.utils.isNull($.utils.getPointer(3, this));
   }
   _initDecorators(length: number): $.List<SerializedTypeReference> {
-    return $.utils.initList(
-      3,
-      SerializedTypeClassType._Decorators,
-      length,
-      this
-    );
+    return $.utils.initList(3, SerializedTypeClassType._Decorators, length, this);
   }
   set decorators(value: $.List<SerializedTypeReference>) {
     $.utils.copyFrom(value, $.utils.getPointer(3, this));
@@ -623,9 +577,7 @@ export class SerializedTypeClassType extends $.Struct {
   set classType(value: string) {
     $.utils.setText(5, value, this);
   }
-  _adoptExtendsArguments(
-    value: $.Orphan<$.List<SerializedTypeReference>>
-  ): void {
+  _adoptExtendsArguments(value: $.Orphan<$.List<SerializedTypeReference>>): void {
     $.utils.adopt(value, $.utils.getPointer(6, this));
   }
   _disownExtendsArguments(): $.Orphan<$.List<SerializedTypeReference>> {
@@ -638,12 +590,7 @@ export class SerializedTypeClassType extends $.Struct {
     return !$.utils.isNull($.utils.getPointer(6, this));
   }
   _initExtendsArguments(length: number): $.List<SerializedTypeReference> {
-    return $.utils.initList(
-      6,
-      SerializedTypeClassType._ExtendsArguments,
-      length,
-      this
-    );
+    return $.utils.initList(6, SerializedTypeClassType._ExtendsArguments, length, this);
   }
   set extendsArguments(value: $.List<SerializedTypeReference>) {
     $.utils.copyFrom(value, $.utils.getPointer(6, this));
@@ -661,12 +608,7 @@ export class SerializedTypeClassType extends $.Struct {
     return !$.utils.isNull($.utils.getPointer(7, this));
   }
   _initArguments(length: number): $.List<SerializedTypeReference> {
-    return $.utils.initList(
-      7,
-      SerializedTypeClassType._Arguments,
-      length,
-      this
-    );
+    return $.utils.initList(7, SerializedTypeClassType._Arguments, length, this);
   }
   set arguments(value: $.List<SerializedTypeReference>) {
     $.utils.copyFrom(value, $.utils.getPointer(7, this));
@@ -725,15 +667,13 @@ export class SerializedTypeClassType extends $.Struct {
   set tags(value: TagsReflection) {
     $.utils.copyFrom(value, $.utils.getPointer(10, this));
   }
-  public override toString(): string {
-    return "SerializedTypeClassType_" + super.toString();
-  }
+  public override toString(): string { return "SerializedTypeClassType_" + super.toString(); }
 }
 export class SerializedTypeParameter extends $.Struct {
   public static override readonly _capnp = {
     displayName: "SerializedTypeParameter",
     id: "fcbaa08bb97b8b1a",
-    size: new $.ObjectSize(8, 8)
+    size: new $.ObjectSize(8, 8),
   };
   static _TypeArguments: $.ListCtor<SerializedTypeReference>;
   static _Decorators: $.ListCtor<SerializedTypeReference>;
@@ -756,12 +696,7 @@ export class SerializedTypeParameter extends $.Struct {
     return !$.utils.isNull($.utils.getPointer(1, this));
   }
   _initTypeArguments(length: number): $.List<SerializedTypeReference> {
-    return $.utils.initList(
-      1,
-      SerializedTypeParameter._TypeArguments,
-      length,
-      this
-    );
+    return $.utils.initList(1, SerializedTypeParameter._TypeArguments, length, this);
   }
   set typeArguments(value: $.List<SerializedTypeReference>) {
     $.utils.copyFrom(value, $.utils.getPointer(1, this));
@@ -797,12 +732,7 @@ export class SerializedTypeParameter extends $.Struct {
     return !$.utils.isNull($.utils.getPointer(3, this));
   }
   _initDecorators(length: number): $.List<SerializedTypeReference> {
-    return $.utils.initList(
-      3,
-      SerializedTypeParameter._Decorators,
-      length,
-      this
-    );
+    return $.utils.initList(3, SerializedTypeParameter._Decorators, length, this);
   }
   set decorators(value: $.List<SerializedTypeReference>) {
     $.utils.copyFrom(value, $.utils.getPointer(3, this));
@@ -891,15 +821,13 @@ export class SerializedTypeParameter extends $.Struct {
   set tags(value: TagsReflection) {
     $.utils.copyFrom(value, $.utils.getPointer(7, this));
   }
-  public override toString(): string {
-    return "SerializedTypeParameter_" + super.toString();
-  }
+  public override toString(): string { return "SerializedTypeParameter_" + super.toString(); }
 }
 export class SerializedTypeMethod extends $.Struct {
   public static override readonly _capnp = {
     displayName: "SerializedTypeMethod",
     id: "8b5eff6d9ec2fb06",
-    size: new $.ObjectSize(8, 8)
+    size: new $.ObjectSize(8, 8),
   };
   static _TypeArguments: $.ListCtor<SerializedTypeReference>;
   static _Decorators: $.ListCtor<SerializedTypeReference>;
@@ -923,12 +851,7 @@ export class SerializedTypeMethod extends $.Struct {
     return !$.utils.isNull($.utils.getPointer(1, this));
   }
   _initTypeArguments(length: number): $.List<SerializedTypeReference> {
-    return $.utils.initList(
-      1,
-      SerializedTypeMethod._TypeArguments,
-      length,
-      this
-    );
+    return $.utils.initList(1, SerializedTypeMethod._TypeArguments, length, this);
   }
   set typeArguments(value: $.List<SerializedTypeReference>) {
     $.utils.copyFrom(value, $.utils.getPointer(1, this));
@@ -1059,15 +982,13 @@ export class SerializedTypeMethod extends $.Struct {
   set return(value: SerializedTypeReference) {
     $.utils.copyFrom(value, $.utils.getPointer(7, this));
   }
-  public override toString(): string {
-    return "SerializedTypeMethod_" + super.toString();
-  }
+  public override toString(): string { return "SerializedTypeMethod_" + super.toString(); }
 }
 export class SerializedTypeProperty extends $.Struct {
   public static override readonly _capnp = {
     displayName: "SerializedTypeProperty",
     id: "91d9dbea2037f78b",
-    size: new $.ObjectSize(8, 9)
+    size: new $.ObjectSize(8, 9),
   };
   static _TypeArguments: $.ListCtor<SerializedTypeReference>;
   static _Decorators: $.ListCtor<SerializedTypeReference>;
@@ -1090,12 +1011,7 @@ export class SerializedTypeProperty extends $.Struct {
     return !$.utils.isNull($.utils.getPointer(1, this));
   }
   _initTypeArguments(length: number): $.List<SerializedTypeReference> {
-    return $.utils.initList(
-      1,
-      SerializedTypeProperty._TypeArguments,
-      length,
-      this
-    );
+    return $.utils.initList(1, SerializedTypeProperty._TypeArguments, length, this);
   }
   set typeArguments(value: $.List<SerializedTypeReference>) {
     $.utils.copyFrom(value, $.utils.getPointer(1, this));
@@ -1131,12 +1047,7 @@ export class SerializedTypeProperty extends $.Struct {
     return !$.utils.isNull($.utils.getPointer(3, this));
   }
   _initDecorators(length: number): $.List<SerializedTypeReference> {
-    return $.utils.initList(
-      3,
-      SerializedTypeProperty._Decorators,
-      length,
-      this
-    );
+    return $.utils.initList(3, SerializedTypeProperty._Decorators, length, this);
   }
   set decorators(value: $.List<SerializedTypeReference>) {
     $.utils.copyFrom(value, $.utils.getPointer(3, this));
@@ -1237,15 +1148,13 @@ export class SerializedTypeProperty extends $.Struct {
   set default(value: DefaultValueReflection) {
     $.utils.copyFrom(value, $.utils.getPointer(8, this));
   }
-  public override toString(): string {
-    return "SerializedTypeProperty_" + super.toString();
-  }
+  public override toString(): string { return "SerializedTypeProperty_" + super.toString(); }
 }
 export class SerializedTypeFunction extends $.Struct {
   public static override readonly _capnp = {
     displayName: "SerializedTypeFunction",
     id: "9130bccd82dfcfd4",
-    size: new $.ObjectSize(8, 8)
+    size: new $.ObjectSize(8, 8),
   };
   static _TypeArguments: $.ListCtor<SerializedTypeReference>;
   static _Decorators: $.ListCtor<SerializedTypeReference>;
@@ -1269,12 +1178,7 @@ export class SerializedTypeFunction extends $.Struct {
     return !$.utils.isNull($.utils.getPointer(1, this));
   }
   _initTypeArguments(length: number): $.List<SerializedTypeReference> {
-    return $.utils.initList(
-      1,
-      SerializedTypeFunction._TypeArguments,
-      length,
-      this
-    );
+    return $.utils.initList(1, SerializedTypeFunction._TypeArguments, length, this);
   }
   set typeArguments(value: $.List<SerializedTypeReference>) {
     $.utils.copyFrom(value, $.utils.getPointer(1, this));
@@ -1310,12 +1214,7 @@ export class SerializedTypeFunction extends $.Struct {
     return !$.utils.isNull($.utils.getPointer(3, this));
   }
   _initDecorators(length: number): $.List<SerializedTypeReference> {
-    return $.utils.initList(
-      3,
-      SerializedTypeFunction._Decorators,
-      length,
-      this
-    );
+    return $.utils.initList(3, SerializedTypeFunction._Decorators, length, this);
   }
   set decorators(value: $.List<SerializedTypeReference>) {
     $.utils.copyFrom(value, $.utils.getPointer(3, this));
@@ -1387,12 +1286,7 @@ export class SerializedTypeFunction extends $.Struct {
     return !$.utils.isNull($.utils.getPointer(6, this));
   }
   _initParameters(length: number): $.List<SerializedTypeParameter> {
-    return $.utils.initList(
-      6,
-      SerializedTypeFunction._Parameters,
-      length,
-      this
-    );
+    return $.utils.initList(6, SerializedTypeFunction._Parameters, length, this);
   }
   set parameters(value: $.List<SerializedTypeParameter>) {
     $.utils.copyFrom(value, $.utils.getPointer(6, this));
@@ -1415,15 +1309,13 @@ export class SerializedTypeFunction extends $.Struct {
   set return(value: SerializedTypeReference) {
     $.utils.copyFrom(value, $.utils.getPointer(7, this));
   }
-  public override toString(): string {
-    return "SerializedTypeFunction_" + super.toString();
-  }
+  public override toString(): string { return "SerializedTypeFunction_" + super.toString(); }
 }
 export class SerializedTypePromise extends $.Struct {
   public static override readonly _capnp = {
     displayName: "SerializedTypePromise",
     id: "e9b0cbe936a42398",
-    size: new $.ObjectSize(8, 4)
+    size: new $.ObjectSize(8, 4),
   };
   static _TypeArguments: $.ListCtor<SerializedTypeReference>;
   static _Decorators: $.ListCtor<SerializedTypeReference>;
@@ -1446,12 +1338,7 @@ export class SerializedTypePromise extends $.Struct {
     return !$.utils.isNull($.utils.getPointer(1, this));
   }
   _initTypeArguments(length: number): $.List<SerializedTypeReference> {
-    return $.utils.initList(
-      1,
-      SerializedTypePromise._TypeArguments,
-      length,
-      this
-    );
+    return $.utils.initList(1, SerializedTypePromise._TypeArguments, length, this);
   }
   set typeArguments(value: $.List<SerializedTypeReference>) {
     $.utils.copyFrom(value, $.utils.getPointer(1, this));
@@ -1504,15 +1391,13 @@ export class SerializedTypePromise extends $.Struct {
   set abstract(value: boolean) {
     $.utils.setBit(16, value, this);
   }
-  public override toString(): string {
-    return "SerializedTypePromise_" + super.toString();
-  }
+  public override toString(): string { return "SerializedTypePromise_" + super.toString(); }
 }
 export class SerializedTypeEnumEntry extends $.Struct {
   public static override readonly _capnp = {
     displayName: "SerializedTypeEnumEntry",
     id: "d5bcb8b7c49ba556",
-    size: new $.ObjectSize(0, 2)
+    size: new $.ObjectSize(0, 2),
   };
   get name(): string {
     return $.utils.getText(0, this);
@@ -1526,15 +1411,13 @@ export class SerializedTypeEnumEntry extends $.Struct {
   set value(value: string) {
     $.utils.setText(1, value, this);
   }
-  public override toString(): string {
-    return "SerializedTypeEnumEntry_" + super.toString();
-  }
+  public override toString(): string { return "SerializedTypeEnumEntry_" + super.toString(); }
 }
 export class SerializedTypeEnum extends $.Struct {
   public static override readonly _capnp = {
     displayName: "SerializedTypeEnum",
     id: "d7d36f0ae79e3841",
-    size: new $.ObjectSize(8, 8)
+    size: new $.ObjectSize(8, 8),
   };
   static _TypeArguments: $.ListCtor<SerializedTypeReference>;
   static _Decorators: $.ListCtor<SerializedTypeReference>;
@@ -1677,15 +1560,13 @@ export class SerializedTypeEnum extends $.Struct {
   set tags(value: TagsReflection) {
     $.utils.copyFrom(value, $.utils.getPointer(7, this));
   }
-  public override toString(): string {
-    return "SerializedTypeEnum_" + super.toString();
-  }
+  public override toString(): string { return "SerializedTypeEnum_" + super.toString(); }
 }
 export class SerializedTypeUnion extends $.Struct {
   public static override readonly _capnp = {
     displayName: "SerializedTypeUnion",
     id: "a9ae4c95e41ff4ab",
-    size: new $.ObjectSize(8, 5)
+    size: new $.ObjectSize(8, 5),
   };
   static _TypeArguments: $.ListCtor<SerializedTypeReference>;
   static _Decorators: $.ListCtor<SerializedTypeReference>;
@@ -1709,12 +1590,7 @@ export class SerializedTypeUnion extends $.Struct {
     return !$.utils.isNull($.utils.getPointer(1, this));
   }
   _initTypeArguments(length: number): $.List<SerializedTypeReference> {
-    return $.utils.initList(
-      1,
-      SerializedTypeUnion._TypeArguments,
-      length,
-      this
-    );
+    return $.utils.initList(1, SerializedTypeUnion._TypeArguments, length, this);
   }
   set typeArguments(value: $.List<SerializedTypeReference>) {
     $.utils.copyFrom(value, $.utils.getPointer(1, this));
@@ -1779,15 +1655,13 @@ export class SerializedTypeUnion extends $.Struct {
   set types(value: $.List<SerializedTypeReference>) {
     $.utils.copyFrom(value, $.utils.getPointer(4, this));
   }
-  public override toString(): string {
-    return "SerializedTypeUnion_" + super.toString();
-  }
+  public override toString(): string { return "SerializedTypeUnion_" + super.toString(); }
 }
 export class SerializedTypeIntersection extends $.Struct {
   public static override readonly _capnp = {
     displayName: "SerializedTypeIntersection",
     id: "9ae42bd17511c09b",
-    size: new $.ObjectSize(8, 5)
+    size: new $.ObjectSize(8, 5),
   };
   static _TypeArguments: $.ListCtor<SerializedTypeReference>;
   static _Decorators: $.ListCtor<SerializedTypeReference>;
@@ -1811,12 +1685,7 @@ export class SerializedTypeIntersection extends $.Struct {
     return !$.utils.isNull($.utils.getPointer(1, this));
   }
   _initTypeArguments(length: number): $.List<SerializedTypeReference> {
-    return $.utils.initList(
-      1,
-      SerializedTypeIntersection._TypeArguments,
-      length,
-      this
-    );
+    return $.utils.initList(1, SerializedTypeIntersection._TypeArguments, length, this);
   }
   set typeArguments(value: $.List<SerializedTypeReference>) {
     $.utils.copyFrom(value, $.utils.getPointer(1, this));
@@ -1852,12 +1721,7 @@ export class SerializedTypeIntersection extends $.Struct {
     return !$.utils.isNull($.utils.getPointer(3, this));
   }
   _initDecorators(length: number): $.List<SerializedTypeReference> {
-    return $.utils.initList(
-      3,
-      SerializedTypeIntersection._Decorators,
-      length,
-      this
-    );
+    return $.utils.initList(3, SerializedTypeIntersection._Decorators, length, this);
   }
   set decorators(value: $.List<SerializedTypeReference>) {
     $.utils.copyFrom(value, $.utils.getPointer(3, this));
@@ -1886,15 +1750,13 @@ export class SerializedTypeIntersection extends $.Struct {
   set types(value: $.List<SerializedTypeReference>) {
     $.utils.copyFrom(value, $.utils.getPointer(4, this));
   }
-  public override toString(): string {
-    return "SerializedTypeIntersection_" + super.toString();
-  }
+  public override toString(): string { return "SerializedTypeIntersection_" + super.toString(); }
 }
 export class SerializedTypeArray extends $.Struct {
   public static override readonly _capnp = {
     displayName: "SerializedTypeArray",
     id: "97d1d75240151501",
-    size: new $.ObjectSize(8, 6)
+    size: new $.ObjectSize(8, 6),
   };
   static _TypeArguments: $.ListCtor<SerializedTypeReference>;
   static _Decorators: $.ListCtor<SerializedTypeReference>;
@@ -1917,12 +1779,7 @@ export class SerializedTypeArray extends $.Struct {
     return !$.utils.isNull($.utils.getPointer(1, this));
   }
   _initTypeArguments(length: number): $.List<SerializedTypeReference> {
-    return $.utils.initList(
-      1,
-      SerializedTypeArray._TypeArguments,
-      length,
-      this
-    );
+    return $.utils.initList(1, SerializedTypeArray._TypeArguments, length, this);
   }
   set typeArguments(value: $.List<SerializedTypeReference>) {
     $.utils.copyFrom(value, $.utils.getPointer(1, this));
@@ -2005,15 +1862,13 @@ export class SerializedTypeArray extends $.Struct {
   set tags(value: TagsReflection) {
     $.utils.copyFrom(value, $.utils.getPointer(5, this));
   }
-  public override toString(): string {
-    return "SerializedTypeArray_" + super.toString();
-  }
+  public override toString(): string { return "SerializedTypeArray_" + super.toString(); }
 }
 export class SerializedTypeIndexSignature extends $.Struct {
   public static override readonly _capnp = {
     displayName: "SerializedTypeIndexSignature",
     id: "93e335e2756821d8",
-    size: new $.ObjectSize(8, 6)
+    size: new $.ObjectSize(8, 6),
   };
   static _TypeArguments: $.ListCtor<SerializedTypeReference>;
   static _Decorators: $.ListCtor<SerializedTypeReference>;
@@ -2030,22 +1885,13 @@ export class SerializedTypeIndexSignature extends $.Struct {
     return $.utils.disown(this.typeArguments);
   }
   get typeArguments(): $.List<SerializedTypeReference> {
-    return $.utils.getList(
-      1,
-      SerializedTypeIndexSignature._TypeArguments,
-      this
-    );
+    return $.utils.getList(1, SerializedTypeIndexSignature._TypeArguments, this);
   }
   _hasTypeArguments(): boolean {
     return !$.utils.isNull($.utils.getPointer(1, this));
   }
   _initTypeArguments(length: number): $.List<SerializedTypeReference> {
-    return $.utils.initList(
-      1,
-      SerializedTypeIndexSignature._TypeArguments,
-      length,
-      this
-    );
+    return $.utils.initList(1, SerializedTypeIndexSignature._TypeArguments, length, this);
   }
   set typeArguments(value: $.List<SerializedTypeReference>) {
     $.utils.copyFrom(value, $.utils.getPointer(1, this));
@@ -2081,12 +1927,7 @@ export class SerializedTypeIndexSignature extends $.Struct {
     return !$.utils.isNull($.utils.getPointer(3, this));
   }
   _initDecorators(length: number): $.List<SerializedTypeReference> {
-    return $.utils.initList(
-      3,
-      SerializedTypeIndexSignature._Decorators,
-      length,
-      this
-    );
+    return $.utils.initList(3, SerializedTypeIndexSignature._Decorators, length, this);
   }
   set decorators(value: $.List<SerializedTypeReference>) {
     $.utils.copyFrom(value, $.utils.getPointer(3, this));
@@ -2133,15 +1974,13 @@ export class SerializedTypeIndexSignature extends $.Struct {
   set type(value: SerializedTypeReference) {
     $.utils.copyFrom(value, $.utils.getPointer(5, this));
   }
-  public override toString(): string {
-    return "SerializedTypeIndexSignature_" + super.toString();
-  }
+  public override toString(): string { return "SerializedTypeIndexSignature_" + super.toString(); }
 }
 export class SerializedTypePropertySignature extends $.Struct {
   public static override readonly _capnp = {
     displayName: "SerializedTypePropertySignature",
     id: "9bc1cebd2ca1569a",
-    size: new $.ObjectSize(8, 9)
+    size: new $.ObjectSize(8, 9),
   };
   static _TypeArguments: $.ListCtor<SerializedTypeReference>;
   static _Decorators: $.ListCtor<SerializedTypeReference>;
@@ -2158,22 +1997,13 @@ export class SerializedTypePropertySignature extends $.Struct {
     return $.utils.disown(this.typeArguments);
   }
   get typeArguments(): $.List<SerializedTypeReference> {
-    return $.utils.getList(
-      1,
-      SerializedTypePropertySignature._TypeArguments,
-      this
-    );
+    return $.utils.getList(1, SerializedTypePropertySignature._TypeArguments, this);
   }
   _hasTypeArguments(): boolean {
     return !$.utils.isNull($.utils.getPointer(1, this));
   }
   _initTypeArguments(length: number): $.List<SerializedTypeReference> {
-    return $.utils.initList(
-      1,
-      SerializedTypePropertySignature._TypeArguments,
-      length,
-      this
-    );
+    return $.utils.initList(1, SerializedTypePropertySignature._TypeArguments, length, this);
   }
   set typeArguments(value: $.List<SerializedTypeReference>) {
     $.utils.copyFrom(value, $.utils.getPointer(1, this));
@@ -2203,22 +2033,13 @@ export class SerializedTypePropertySignature extends $.Struct {
     return $.utils.disown(this.decorators);
   }
   get decorators(): $.List<SerializedTypeReference> {
-    return $.utils.getList(
-      3,
-      SerializedTypePropertySignature._Decorators,
-      this
-    );
+    return $.utils.getList(3, SerializedTypePropertySignature._Decorators, this);
   }
   _hasDecorators(): boolean {
     return !$.utils.isNull($.utils.getPointer(3, this));
   }
   _initDecorators(length: number): $.List<SerializedTypeReference> {
-    return $.utils.initList(
-      3,
-      SerializedTypePropertySignature._Decorators,
-      length,
-      this
-    );
+    return $.utils.initList(3, SerializedTypePropertySignature._Decorators, length, this);
   }
   set decorators(value: $.List<SerializedTypeReference>) {
     $.utils.copyFrom(value, $.utils.getPointer(3, this));
@@ -2307,15 +2128,13 @@ export class SerializedTypePropertySignature extends $.Struct {
   set tags(value: TagsReflection) {
     $.utils.copyFrom(value, $.utils.getPointer(8, this));
   }
-  public override toString(): string {
-    return "SerializedTypePropertySignature_" + super.toString();
-  }
+  public override toString(): string { return "SerializedTypePropertySignature_" + super.toString(); }
 }
 export class SerializedTypeMethodSignature extends $.Struct {
   public static override readonly _capnp = {
     displayName: "SerializedTypeMethodSignature",
     id: "e25a2cc39d5930c8",
-    size: new $.ObjectSize(8, 8)
+    size: new $.ObjectSize(8, 8),
   };
   static _TypeArguments: $.ListCtor<SerializedTypeReference>;
   static _Decorators: $.ListCtor<SerializedTypeReference>;
@@ -2333,22 +2152,13 @@ export class SerializedTypeMethodSignature extends $.Struct {
     return $.utils.disown(this.typeArguments);
   }
   get typeArguments(): $.List<SerializedTypeReference> {
-    return $.utils.getList(
-      1,
-      SerializedTypeMethodSignature._TypeArguments,
-      this
-    );
+    return $.utils.getList(1, SerializedTypeMethodSignature._TypeArguments, this);
   }
   _hasTypeArguments(): boolean {
     return !$.utils.isNull($.utils.getPointer(1, this));
   }
   _initTypeArguments(length: number): $.List<SerializedTypeReference> {
-    return $.utils.initList(
-      1,
-      SerializedTypeMethodSignature._TypeArguments,
-      length,
-      this
-    );
+    return $.utils.initList(1, SerializedTypeMethodSignature._TypeArguments, length, this);
   }
   set typeArguments(value: $.List<SerializedTypeReference>) {
     $.utils.copyFrom(value, $.utils.getPointer(1, this));
@@ -2384,12 +2194,7 @@ export class SerializedTypeMethodSignature extends $.Struct {
     return !$.utils.isNull($.utils.getPointer(3, this));
   }
   _initDecorators(length: number): $.List<SerializedTypeReference> {
-    return $.utils.initList(
-      3,
-      SerializedTypeMethodSignature._Decorators,
-      length,
-      this
-    );
+    return $.utils.initList(3, SerializedTypeMethodSignature._Decorators, length, this);
   }
   set decorators(value: $.List<SerializedTypeReference>) {
     $.utils.copyFrom(value, $.utils.getPointer(3, this));
@@ -2425,12 +2230,7 @@ export class SerializedTypeMethodSignature extends $.Struct {
     return !$.utils.isNull($.utils.getPointer(5, this));
   }
   _initParameters(length: number): $.List<SerializedTypeParameter> {
-    return $.utils.initList(
-      5,
-      SerializedTypeMethodSignature._Parameters,
-      length,
-      this
-    );
+    return $.utils.initList(5, SerializedTypeMethodSignature._Parameters, length, this);
   }
   set parameters(value: $.List<SerializedTypeParameter>) {
     $.utils.copyFrom(value, $.utils.getPointer(5, this));
@@ -2471,15 +2271,13 @@ export class SerializedTypeMethodSignature extends $.Struct {
   set tags(value: TagsReflection) {
     $.utils.copyFrom(value, $.utils.getPointer(7, this));
   }
-  public override toString(): string {
-    return "SerializedTypeMethodSignature_" + super.toString();
-  }
+  public override toString(): string { return "SerializedTypeMethodSignature_" + super.toString(); }
 }
 export class SerializedTypeTypeParameter extends $.Struct {
   public static override readonly _capnp = {
     displayName: "SerializedTypeTypeParameter",
     id: "81210361a54d5d71",
-    size: new $.ObjectSize(8, 5)
+    size: new $.ObjectSize(8, 5),
   };
   static _TypeArguments: $.ListCtor<SerializedTypeReference>;
   static _Decorators: $.ListCtor<SerializedTypeReference>;
@@ -2502,12 +2300,7 @@ export class SerializedTypeTypeParameter extends $.Struct {
     return !$.utils.isNull($.utils.getPointer(1, this));
   }
   _initTypeArguments(length: number): $.List<SerializedTypeReference> {
-    return $.utils.initList(
-      1,
-      SerializedTypeTypeParameter._TypeArguments,
-      length,
-      this
-    );
+    return $.utils.initList(1, SerializedTypeTypeParameter._TypeArguments, length, this);
   }
   set typeArguments(value: $.List<SerializedTypeReference>) {
     $.utils.copyFrom(value, $.utils.getPointer(1, this));
@@ -2543,12 +2336,7 @@ export class SerializedTypeTypeParameter extends $.Struct {
     return !$.utils.isNull($.utils.getPointer(3, this));
   }
   _initDecorators(length: number): $.List<SerializedTypeReference> {
-    return $.utils.initList(
-      3,
-      SerializedTypeTypeParameter._Decorators,
-      length,
-      this
-    );
+    return $.utils.initList(3, SerializedTypeTypeParameter._Decorators, length, this);
   }
   set decorators(value: $.List<SerializedTypeReference>) {
     $.utils.copyFrom(value, $.utils.getPointer(3, this));
@@ -2565,15 +2353,13 @@ export class SerializedTypeTypeParameter extends $.Struct {
   set name(value: string) {
     $.utils.setText(4, value, this);
   }
-  public override toString(): string {
-    return "SerializedTypeTypeParameter_" + super.toString();
-  }
+  public override toString(): string { return "SerializedTypeTypeParameter_" + super.toString(); }
 }
 export class SerializedTypeInfer extends $.Struct {
   public static override readonly _capnp = {
     displayName: "SerializedTypeInfer",
     id: "91c6dd1e13f2b14d",
-    size: new $.ObjectSize(8, 4)
+    size: new $.ObjectSize(8, 4),
   };
   static _TypeArguments: $.ListCtor<SerializedTypeReference>;
   static _Decorators: $.ListCtor<SerializedTypeReference>;
@@ -2596,12 +2382,7 @@ export class SerializedTypeInfer extends $.Struct {
     return !$.utils.isNull($.utils.getPointer(1, this));
   }
   _initTypeArguments(length: number): $.List<SerializedTypeReference> {
-    return $.utils.initList(
-      1,
-      SerializedTypeInfer._TypeArguments,
-      length,
-      this
-    );
+    return $.utils.initList(1, SerializedTypeInfer._TypeArguments, length, this);
   }
   set typeArguments(value: $.List<SerializedTypeReference>) {
     $.utils.copyFrom(value, $.utils.getPointer(1, this));
@@ -2648,15 +2429,13 @@ export class SerializedTypeInfer extends $.Struct {
   set kind(value: ReflectionKind) {
     $.utils.setUint16(0, value, this);
   }
-  public override toString(): string {
-    return "SerializedTypeInfer_" + super.toString();
-  }
+  public override toString(): string { return "SerializedTypeInfer_" + super.toString(); }
 }
 export class SerializedTypeTupleMember extends $.Struct {
   public static override readonly _capnp = {
     displayName: "SerializedTypeTupleMember",
     id: "e21c2a18d0d56fdf",
-    size: new $.ObjectSize(8, 6)
+    size: new $.ObjectSize(8, 6),
   };
   static _TypeArguments: $.ListCtor<SerializedTypeReference>;
   static _Decorators: $.ListCtor<SerializedTypeReference>;
@@ -2679,12 +2458,7 @@ export class SerializedTypeTupleMember extends $.Struct {
     return !$.utils.isNull($.utils.getPointer(1, this));
   }
   _initTypeArguments(length: number): $.List<SerializedTypeReference> {
-    return $.utils.initList(
-      1,
-      SerializedTypeTupleMember._TypeArguments,
-      length,
-      this
-    );
+    return $.utils.initList(1, SerializedTypeTupleMember._TypeArguments, length, this);
   }
   set typeArguments(value: $.List<SerializedTypeReference>) {
     $.utils.copyFrom(value, $.utils.getPointer(1, this));
@@ -2720,12 +2494,7 @@ export class SerializedTypeTupleMember extends $.Struct {
     return !$.utils.isNull($.utils.getPointer(3, this));
   }
   _initDecorators(length: number): $.List<SerializedTypeReference> {
-    return $.utils.initList(
-      3,
-      SerializedTypeTupleMember._Decorators,
-      length,
-      this
-    );
+    return $.utils.initList(3, SerializedTypeTupleMember._Decorators, length, this);
   }
   set decorators(value: $.List<SerializedTypeReference>) {
     $.utils.copyFrom(value, $.utils.getPointer(3, this));
@@ -2766,15 +2535,13 @@ export class SerializedTypeTupleMember extends $.Struct {
   set name(value: string) {
     $.utils.setText(5, value, this);
   }
-  public override toString(): string {
-    return "SerializedTypeTupleMember_" + super.toString();
-  }
+  public override toString(): string { return "SerializedTypeTupleMember_" + super.toString(); }
 }
 export class SerializedTypeTuple extends $.Struct {
   public static override readonly _capnp = {
     displayName: "SerializedTypeTuple",
     id: "eb7501eb1ee4fb6d",
-    size: new $.ObjectSize(8, 5)
+    size: new $.ObjectSize(8, 5),
   };
   static _TypeArguments: $.ListCtor<SerializedTypeReference>;
   static _Decorators: $.ListCtor<SerializedTypeReference>;
@@ -2798,12 +2565,7 @@ export class SerializedTypeTuple extends $.Struct {
     return !$.utils.isNull($.utils.getPointer(1, this));
   }
   _initTypeArguments(length: number): $.List<SerializedTypeReference> {
-    return $.utils.initList(
-      1,
-      SerializedTypeTuple._TypeArguments,
-      length,
-      this
-    );
+    return $.utils.initList(1, SerializedTypeTuple._TypeArguments, length, this);
   }
   set typeArguments(value: $.List<SerializedTypeReference>) {
     $.utils.copyFrom(value, $.utils.getPointer(1, this));
@@ -2868,15 +2630,13 @@ export class SerializedTypeTuple extends $.Struct {
   set types(value: $.List<SerializedTypeTupleMember>) {
     $.utils.copyFrom(value, $.utils.getPointer(4, this));
   }
-  public override toString(): string {
-    return "SerializedTypeTuple_" + super.toString();
-  }
+  public override toString(): string { return "SerializedTypeTuple_" + super.toString(); }
 }
 export class SerializedTypeRest extends $.Struct {
   public static override readonly _capnp = {
     displayName: "SerializedTypeRest",
     id: "f9e684a435cce5d1",
-    size: new $.ObjectSize(8, 5)
+    size: new $.ObjectSize(8, 5),
   };
   static _TypeArguments: $.ListCtor<SerializedTypeReference>;
   static _Decorators: $.ListCtor<SerializedTypeReference>;
@@ -2964,15 +2724,13 @@ export class SerializedTypeRest extends $.Struct {
   set type(value: SerializedTypeReference) {
     $.utils.copyFrom(value, $.utils.getPointer(4, this));
   }
-  public override toString(): string {
-    return "SerializedTypeRest_" + super.toString();
-  }
+  public override toString(): string { return "SerializedTypeRest_" + super.toString(); }
 }
 export class SimpleSerializedType extends $.Struct {
   public static override readonly _capnp = {
     displayName: "SimpleSerializedType",
     id: "80f983e4b811c3ca",
-    size: new $.ObjectSize(8, 5)
+    size: new $.ObjectSize(8, 5),
   };
   static _TypeArguments: $.ListCtor<SerializedTypeReference>;
   static _Decorators: $.ListCtor<SerializedTypeReference>;
@@ -2995,12 +2753,7 @@ export class SimpleSerializedType extends $.Struct {
     return !$.utils.isNull($.utils.getPointer(1, this));
   }
   _initTypeArguments(length: number): $.List<SerializedTypeReference> {
-    return $.utils.initList(
-      1,
-      SimpleSerializedType._TypeArguments,
-      length,
-      this
-    );
+    return $.utils.initList(1, SimpleSerializedType._TypeArguments, length, this);
   }
   set typeArguments(value: $.List<SerializedTypeReference>) {
     $.utils.copyFrom(value, $.utils.getPointer(1, this));
@@ -3065,20 +2818,18 @@ export class SimpleSerializedType extends $.Struct {
   set origin(value: SerializedTypeReference) {
     $.utils.copyFrom(value, $.utils.getPointer(4, this));
   }
-  public override toString(): string {
-    return "SimpleSerializedType_" + super.toString();
-  }
+  public override toString(): string { return "SimpleSerializedType_" + super.toString(); }
 }
 export class SerializedTypeLiteralSymbol extends $.Struct {
   public static override readonly _capnp = {
     displayName: "SerializedTypeLiteralSymbol",
     id: "f3dd6a3c6054bd55",
-    size: new $.ObjectSize(0, 2)
+    size: new $.ObjectSize(0, 2),
   };
   /**
-   * "symbol"
-   *
-   */
+* "symbol"
+*
+*/
   get type(): string {
     return $.utils.getText(0, this);
   }
@@ -3091,20 +2842,18 @@ export class SerializedTypeLiteralSymbol extends $.Struct {
   set name(value: string) {
     $.utils.setText(1, value, this);
   }
-  public override toString(): string {
-    return "SerializedTypeLiteralSymbol_" + super.toString();
-  }
+  public override toString(): string { return "SerializedTypeLiteralSymbol_" + super.toString(); }
 }
 export class SerializedTypeLiteralBigInt extends $.Struct {
   public static override readonly _capnp = {
     displayName: "SerializedTypeLiteralBigInt",
     id: "821a872d8be30bb2",
-    size: new $.ObjectSize(0, 2)
+    size: new $.ObjectSize(0, 2),
   };
   /**
-   * "bigint"
-   *
-   */
+* "bigint"
+*
+*/
   get type(): string {
     return $.utils.getText(0, this);
   }
@@ -3117,20 +2866,18 @@ export class SerializedTypeLiteralBigInt extends $.Struct {
   set value(value: string) {
     $.utils.setText(1, value, this);
   }
-  public override toString(): string {
-    return "SerializedTypeLiteralBigInt_" + super.toString();
-  }
+  public override toString(): string { return "SerializedTypeLiteralBigInt_" + super.toString(); }
 }
 export class SerializedTypeLiteralRegex extends $.Struct {
   public static override readonly _capnp = {
     displayName: "SerializedTypeLiteralRegex",
     id: "cc89f97b47927d99",
-    size: new $.ObjectSize(0, 2)
+    size: new $.ObjectSize(0, 2),
   };
   /**
-   * "regex"
-   *
-   */
+* "regex"
+*
+*/
   get type(): string {
     return $.utils.getText(0, this);
   }
@@ -3143,9 +2890,7 @@ export class SerializedTypeLiteralRegex extends $.Struct {
   set regex(value: string) {
     $.utils.setText(1, value, this);
   }
-  public override toString(): string {
-    return "SerializedTypeLiteralRegex_" + super.toString();
-  }
+  public override toString(): string { return "SerializedTypeLiteralRegex_" + super.toString(); }
 }
 export const SerializedTypeLiteral_Literal_Which = {
   SYMBOL: 0,
@@ -3155,8 +2900,7 @@ export const SerializedTypeLiteral_Literal_Which = {
   BIGINT: 4,
   REGEX: 5
 } as const;
-export type SerializedTypeLiteral_Literal_Which =
-  (typeof SerializedTypeLiteral_Literal_Which)[keyof typeof SerializedTypeLiteral_Literal_Which];
+export type SerializedTypeLiteral_Literal_Which = (typeof SerializedTypeLiteral_Literal_Which)[keyof typeof SerializedTypeLiteral_Literal_Which];
 export class SerializedTypeLiteral_Literal extends $.Struct {
   static readonly SYMBOL = SerializedTypeLiteral_Literal_Which.SYMBOL;
   static readonly STRING = SerializedTypeLiteral_Literal_Which.STRING;
@@ -3167,7 +2911,7 @@ export class SerializedTypeLiteral_Literal extends $.Struct {
   public static override readonly _capnp = {
     displayName: "literal",
     id: "e4f0538973f3909f",
-    size: new $.ObjectSize(16, 5)
+    size: new $.ObjectSize(16, 5),
   };
   _adoptSymbol(value: $.Orphan<SerializedTypeLiteralSymbol>): void {
     $.utils.setUint16(2, 0, this);
@@ -3277,9 +3021,7 @@ export class SerializedTypeLiteral_Literal extends $.Struct {
     $.utils.setUint16(2, 5, this);
     $.utils.copyFrom(value, $.utils.getPointer(4, this));
   }
-  public override toString(): string {
-    return "SerializedTypeLiteral_Literal_" + super.toString();
-  }
+  public override toString(): string { return "SerializedTypeLiteral_Literal_" + super.toString(); }
   which(): SerializedTypeLiteral_Literal_Which {
     return $.utils.getUint16(2, this) as SerializedTypeLiteral_Literal_Which;
   }
@@ -3288,7 +3030,7 @@ export class SerializedTypeLiteral extends $.Struct {
   public static override readonly _capnp = {
     displayName: "SerializedTypeLiteral",
     id: "b876ba24d27d88c8",
-    size: new $.ObjectSize(16, 5)
+    size: new $.ObjectSize(16, 5),
   };
   static _TypeArguments: $.ListCtor<SerializedTypeReference>;
   static _Decorators: $.ListCtor<SerializedTypeReference>;
@@ -3311,12 +3053,7 @@ export class SerializedTypeLiteral extends $.Struct {
     return !$.utils.isNull($.utils.getPointer(1, this));
   }
   _initTypeArguments(length: number): $.List<SerializedTypeReference> {
-    return $.utils.initList(
-      1,
-      SerializedTypeLiteral._TypeArguments,
-      length,
-      this
-    );
+    return $.utils.initList(1, SerializedTypeLiteral._TypeArguments, length, this);
   }
   set typeArguments(value: $.List<SerializedTypeReference>) {
     $.utils.copyFrom(value, $.utils.getPointer(1, this));
@@ -3369,15 +3106,13 @@ export class SerializedTypeLiteral extends $.Struct {
   _initLiteral(): SerializedTypeLiteral_Literal {
     return $.utils.getAs(SerializedTypeLiteral_Literal, this);
   }
-  public override toString(): string {
-    return "SerializedTypeLiteral_" + super.toString();
-  }
+  public override toString(): string { return "SerializedTypeLiteral_" + super.toString(); }
 }
 export class SerializedTypeTemplateLiteral extends $.Struct {
   public static override readonly _capnp = {
     displayName: "SerializedTypeTemplateLiteral",
     id: "8dd6c284d46cc265",
-    size: new $.ObjectSize(8, 5)
+    size: new $.ObjectSize(8, 5),
   };
   static _TypeArguments: $.ListCtor<SerializedTypeReference>;
   static _Decorators: $.ListCtor<SerializedTypeReference>;
@@ -3395,22 +3130,13 @@ export class SerializedTypeTemplateLiteral extends $.Struct {
     return $.utils.disown(this.typeArguments);
   }
   get typeArguments(): $.List<SerializedTypeReference> {
-    return $.utils.getList(
-      1,
-      SerializedTypeTemplateLiteral._TypeArguments,
-      this
-    );
+    return $.utils.getList(1, SerializedTypeTemplateLiteral._TypeArguments, this);
   }
   _hasTypeArguments(): boolean {
     return !$.utils.isNull($.utils.getPointer(1, this));
   }
   _initTypeArguments(length: number): $.List<SerializedTypeReference> {
-    return $.utils.initList(
-      1,
-      SerializedTypeTemplateLiteral._TypeArguments,
-      length,
-      this
-    );
+    return $.utils.initList(1, SerializedTypeTemplateLiteral._TypeArguments, length, this);
   }
   set typeArguments(value: $.List<SerializedTypeReference>) {
     $.utils.copyFrom(value, $.utils.getPointer(1, this));
@@ -3446,12 +3172,7 @@ export class SerializedTypeTemplateLiteral extends $.Struct {
     return !$.utils.isNull($.utils.getPointer(3, this));
   }
   _initDecorators(length: number): $.List<SerializedTypeReference> {
-    return $.utils.initList(
-      3,
-      SerializedTypeTemplateLiteral._Decorators,
-      length,
-      this
-    );
+    return $.utils.initList(3, SerializedTypeTemplateLiteral._Decorators, length, this);
   }
   set decorators(value: $.List<SerializedTypeReference>) {
     $.utils.copyFrom(value, $.utils.getPointer(3, this));
@@ -3475,25 +3196,18 @@ export class SerializedTypeTemplateLiteral extends $.Struct {
     return !$.utils.isNull($.utils.getPointer(4, this));
   }
   _initTypes(length: number): $.List<SerializedTypeReference> {
-    return $.utils.initList(
-      4,
-      SerializedTypeTemplateLiteral._Types,
-      length,
-      this
-    );
+    return $.utils.initList(4, SerializedTypeTemplateLiteral._Types, length, this);
   }
   set types(value: $.List<SerializedTypeReference>) {
     $.utils.copyFrom(value, $.utils.getPointer(4, this));
   }
-  public override toString(): string {
-    return "SerializedTypeTemplateLiteral_" + super.toString();
-  }
+  public override toString(): string { return "SerializedTypeTemplateLiteral_" + super.toString(); }
 }
 export class SerializedTypeOther extends $.Struct {
   public static override readonly _capnp = {
     displayName: "SerializedTypeOther",
     id: "9e1048a692ff49ce",
-    size: new $.ObjectSize(8, 1)
+    size: new $.ObjectSize(8, 1),
   };
   get typeName(): string {
     return $.utils.getText(0, this);
@@ -3507,9 +3221,7 @@ export class SerializedTypeOther extends $.Struct {
   set kind(value: ReflectionKind) {
     $.utils.setUint16(0, value, this);
   }
-  public override toString(): string {
-    return "SerializedTypeOther_" + super.toString();
-  }
+  public override toString(): string { return "SerializedTypeOther_" + super.toString(); }
 }
 export const SerializedType_Type_Which = {
   SIMPLE: 0,
@@ -3535,13 +3247,12 @@ export const SerializedType_Type_Which = {
   TUPLE_MEMBER: 20,
   REST: 21,
   /**
-   * For any other type that is not explicitly defined
-   *
-   */
+* For any other type that is not explicitly defined
+*
+*/
   OTHER: 22
 } as const;
-export type SerializedType_Type_Which =
-  (typeof SerializedType_Type_Which)[keyof typeof SerializedType_Type_Which];
+export type SerializedType_Type_Which = (typeof SerializedType_Type_Which)[keyof typeof SerializedType_Type_Which];
 export class SerializedType_Type extends $.Struct {
   static readonly SIMPLE = SerializedType_Type_Which.SIMPLE;
   static readonly LITERAL = SerializedType_Type_Which.LITERAL;
@@ -3558,8 +3269,7 @@ export class SerializedType_Type extends $.Struct {
   static readonly ARRAY = SerializedType_Type_Which.ARRAY;
   static readonly OBJECT_LITERAL = SerializedType_Type_Which.OBJECT_LITERAL;
   static readonly INDEX_SIGNATURE = SerializedType_Type_Which.INDEX_SIGNATURE;
-  static readonly PROPERTY_SIGNATURE =
-    SerializedType_Type_Which.PROPERTY_SIGNATURE;
+  static readonly PROPERTY_SIGNATURE = SerializedType_Type_Which.PROPERTY_SIGNATURE;
   static readonly METHOD_SIGNATURE = SerializedType_Type_Which.METHOD_SIGNATURE;
   static readonly TYPE_PARAMETER = SerializedType_Type_Which.TYPE_PARAMETER;
   static readonly INFER = SerializedType_Type_Which.INFER;
@@ -3570,7 +3280,7 @@ export class SerializedType_Type extends $.Struct {
   public static override readonly _capnp = {
     displayName: "type",
     id: "c677d7ed4a496eab",
-    size: new $.ObjectSize(8, 1)
+    size: new $.ObjectSize(8, 1),
   };
   _adoptSimple(value: $.Orphan<SimpleSerializedType>): void {
     $.utils.setUint16(0, 0, this);
@@ -3947,9 +3657,7 @@ export class SerializedType_Type extends $.Struct {
     $.utils.setUint16(0, 14, this);
     $.utils.copyFrom(value, $.utils.getPointer(0, this));
   }
-  _adoptPropertySignature(
-    value: $.Orphan<SerializedTypePropertySignature>
-  ): void {
+  _adoptPropertySignature(value: $.Orphan<SerializedTypePropertySignature>): void {
     $.utils.setUint16(0, 15, this);
     $.utils.adopt(value, $.utils.getPointer(0, this));
   }
@@ -3957,12 +3665,7 @@ export class SerializedType_Type extends $.Struct {
     return $.utils.disown(this.propertySignature);
   }
   get propertySignature(): SerializedTypePropertySignature {
-    $.utils.testWhich(
-      "propertySignature",
-      $.utils.getUint16(0, this),
-      15,
-      this
-    );
+    $.utils.testWhich("propertySignature", $.utils.getUint16(0, this), 15, this);
     return $.utils.getStruct(0, SerializedTypePropertySignature, this);
   }
   _hasPropertySignature(): boolean {
@@ -4137,9 +3840,9 @@ export class SerializedType_Type extends $.Struct {
     return $.utils.disown(this.other);
   }
   /**
-   * For any other type that is not explicitly defined
-   *
-   */
+* For any other type that is not explicitly defined
+*
+*/
   get other(): SerializedTypeOther {
     $.utils.testWhich("other", $.utils.getUint16(0, this), 22, this);
     return $.utils.getStruct(0, SerializedTypeOther, this);
@@ -4158,9 +3861,7 @@ export class SerializedType_Type extends $.Struct {
     $.utils.setUint16(0, 22, this);
     $.utils.copyFrom(value, $.utils.getPointer(0, this));
   }
-  public override toString(): string {
-    return "SerializedType_Type_" + super.toString();
-  }
+  public override toString(): string { return "SerializedType_Type_" + super.toString(); }
   which(): SerializedType_Type_Which {
     return $.utils.getUint16(0, this) as SerializedType_Type_Which;
   }
@@ -4169,7 +3870,7 @@ export class SerializedType extends $.Struct {
   public static override readonly _capnp = {
     displayName: "SerializedType",
     id: "96856dcc2dd3d58f",
-    size: new $.ObjectSize(8, 1)
+    size: new $.ObjectSize(8, 1),
   };
   get type(): SerializedType_Type {
     return $.utils.getAs(SerializedType_Type, this);
@@ -4177,15 +3878,13 @@ export class SerializedType extends $.Struct {
   _initType(): SerializedType_Type {
     return $.utils.getAs(SerializedType_Type, this);
   }
-  public override toString(): string {
-    return "SerializedType_" + super.toString();
-  }
+  public override toString(): string { return "SerializedType_" + super.toString(); }
 }
 export class SerializedTypes extends $.Struct {
   public static override readonly _capnp = {
     displayName: "SerializedTypes",
     id: "ac55398ab0ef4958",
-    size: new $.ObjectSize(0, 1)
+    size: new $.ObjectSize(0, 1),
   };
   static _Types: $.ListCtor<SerializedType>;
   _adoptTypes(value: $.Orphan<$.List<SerializedType>>): void {
@@ -4206,41 +3905,25 @@ export class SerializedTypes extends $.Struct {
   set types(value: $.List<SerializedType>) {
     $.utils.copyFrom(value, $.utils.getPointer(0, this));
   }
-  public override toString(): string {
-    return "SerializedTypes_" + super.toString();
-  }
+  public override toString(): string { return "SerializedTypes_" + super.toString(); }
 }
 EntityOptions._Indexes = $.CompositeList(EntityOptions_EntityIndexOptions);
-SerializedTypeObjectLiteral._TypeArguments = $.CompositeList(
-  SerializedTypeReference
-);
-SerializedTypeObjectLiteral._Decorators = $.CompositeList(
-  SerializedTypeReference
-);
+SerializedTypeObjectLiteral._TypeArguments = $.CompositeList(SerializedTypeReference);
+SerializedTypeObjectLiteral._Decorators = $.CompositeList(SerializedTypeReference);
 SerializedTypeObjectLiteral._Types = $.CompositeList(SerializedTypeReference);
-SerializedTypeClassType._TypeArguments = $.CompositeList(
-  SerializedTypeReference
-);
+SerializedTypeClassType._TypeArguments = $.CompositeList(SerializedTypeReference);
 SerializedTypeClassType._Decorators = $.CompositeList(SerializedTypeReference);
-SerializedTypeClassType._ExtendsArguments = $.CompositeList(
-  SerializedTypeReference
-);
+SerializedTypeClassType._ExtendsArguments = $.CompositeList(SerializedTypeReference);
 SerializedTypeClassType._Arguments = $.CompositeList(SerializedTypeReference);
 SerializedTypeClassType._Types = $.CompositeList(SerializedTypeReference);
-SerializedTypeParameter._TypeArguments = $.CompositeList(
-  SerializedTypeReference
-);
+SerializedTypeParameter._TypeArguments = $.CompositeList(SerializedTypeReference);
 SerializedTypeParameter._Decorators = $.CompositeList(SerializedTypeReference);
 SerializedTypeMethod._TypeArguments = $.CompositeList(SerializedTypeReference);
 SerializedTypeMethod._Decorators = $.CompositeList(SerializedTypeReference);
 SerializedTypeMethod._Parameters = $.CompositeList(SerializedTypeParameter);
-SerializedTypeProperty._TypeArguments = $.CompositeList(
-  SerializedTypeReference
-);
+SerializedTypeProperty._TypeArguments = $.CompositeList(SerializedTypeReference);
 SerializedTypeProperty._Decorators = $.CompositeList(SerializedTypeReference);
-SerializedTypeFunction._TypeArguments = $.CompositeList(
-  SerializedTypeReference
-);
+SerializedTypeFunction._TypeArguments = $.CompositeList(SerializedTypeReference);
 SerializedTypeFunction._Decorators = $.CompositeList(SerializedTypeReference);
 SerializedTypeFunction._Parameters = $.CompositeList(SerializedTypeParameter);
 SerializedTypePromise._TypeArguments = $.CompositeList(SerializedTypeReference);
@@ -4251,50 +3934,24 @@ SerializedTypeEnum._EnumEntries = $.CompositeList(SerializedTypeEnumEntry);
 SerializedTypeUnion._TypeArguments = $.CompositeList(SerializedTypeReference);
 SerializedTypeUnion._Decorators = $.CompositeList(SerializedTypeReference);
 SerializedTypeUnion._Types = $.CompositeList(SerializedTypeReference);
-SerializedTypeIntersection._TypeArguments = $.CompositeList(
-  SerializedTypeReference
-);
-SerializedTypeIntersection._Decorators = $.CompositeList(
-  SerializedTypeReference
-);
+SerializedTypeIntersection._TypeArguments = $.CompositeList(SerializedTypeReference);
+SerializedTypeIntersection._Decorators = $.CompositeList(SerializedTypeReference);
 SerializedTypeIntersection._Types = $.CompositeList(SerializedTypeReference);
 SerializedTypeArray._TypeArguments = $.CompositeList(SerializedTypeReference);
 SerializedTypeArray._Decorators = $.CompositeList(SerializedTypeReference);
-SerializedTypeIndexSignature._TypeArguments = $.CompositeList(
-  SerializedTypeReference
-);
-SerializedTypeIndexSignature._Decorators = $.CompositeList(
-  SerializedTypeReference
-);
-SerializedTypePropertySignature._TypeArguments = $.CompositeList(
-  SerializedTypeReference
-);
-SerializedTypePropertySignature._Decorators = $.CompositeList(
-  SerializedTypeReference
-);
-SerializedTypeMethodSignature._TypeArguments = $.CompositeList(
-  SerializedTypeReference
-);
-SerializedTypeMethodSignature._Decorators = $.CompositeList(
-  SerializedTypeReference
-);
-SerializedTypeMethodSignature._Parameters = $.CompositeList(
-  SerializedTypeParameter
-);
-SerializedTypeTypeParameter._TypeArguments = $.CompositeList(
-  SerializedTypeReference
-);
-SerializedTypeTypeParameter._Decorators = $.CompositeList(
-  SerializedTypeReference
-);
+SerializedTypeIndexSignature._TypeArguments = $.CompositeList(SerializedTypeReference);
+SerializedTypeIndexSignature._Decorators = $.CompositeList(SerializedTypeReference);
+SerializedTypePropertySignature._TypeArguments = $.CompositeList(SerializedTypeReference);
+SerializedTypePropertySignature._Decorators = $.CompositeList(SerializedTypeReference);
+SerializedTypeMethodSignature._TypeArguments = $.CompositeList(SerializedTypeReference);
+SerializedTypeMethodSignature._Decorators = $.CompositeList(SerializedTypeReference);
+SerializedTypeMethodSignature._Parameters = $.CompositeList(SerializedTypeParameter);
+SerializedTypeTypeParameter._TypeArguments = $.CompositeList(SerializedTypeReference);
+SerializedTypeTypeParameter._Decorators = $.CompositeList(SerializedTypeReference);
 SerializedTypeInfer._TypeArguments = $.CompositeList(SerializedTypeReference);
 SerializedTypeInfer._Decorators = $.CompositeList(SerializedTypeReference);
-SerializedTypeTupleMember._TypeArguments = $.CompositeList(
-  SerializedTypeReference
-);
-SerializedTypeTupleMember._Decorators = $.CompositeList(
-  SerializedTypeReference
-);
+SerializedTypeTupleMember._TypeArguments = $.CompositeList(SerializedTypeReference);
+SerializedTypeTupleMember._Decorators = $.CompositeList(SerializedTypeReference);
 SerializedTypeTuple._TypeArguments = $.CompositeList(SerializedTypeReference);
 SerializedTypeTuple._Decorators = $.CompositeList(SerializedTypeReference);
 SerializedTypeTuple._Types = $.CompositeList(SerializedTypeTupleMember);
@@ -4304,11 +3961,7 @@ SimpleSerializedType._TypeArguments = $.CompositeList(SerializedTypeReference);
 SimpleSerializedType._Decorators = $.CompositeList(SerializedTypeReference);
 SerializedTypeLiteral._TypeArguments = $.CompositeList(SerializedTypeReference);
 SerializedTypeLiteral._Decorators = $.CompositeList(SerializedTypeReference);
-SerializedTypeTemplateLiteral._TypeArguments = $.CompositeList(
-  SerializedTypeReference
-);
-SerializedTypeTemplateLiteral._Decorators = $.CompositeList(
-  SerializedTypeReference
-);
+SerializedTypeTemplateLiteral._TypeArguments = $.CompositeList(SerializedTypeReference);
+SerializedTypeTemplateLiteral._Decorators = $.CompositeList(SerializedTypeReference);
 SerializedTypeTemplateLiteral._Types = $.CompositeList(SerializedTypeReference);
 SerializedTypes._Types = $.CompositeList(SerializedType);

@@ -21,7 +21,6 @@
     "unstorage": "catalog:"
   },
   "devDependencies": {
-    "@cloudflare/workers-types": "catalog:",
     "@storm-stack/core": "workspace:*",
     "@storm-stack/nx": "workspace:*",
     "@storm-stack/plugin-cloudflare-worker": "workspace:*",

@@ -47,16 +47,16 @@
     },
     "./plugin": {
       "import": {
-        "types": "./dist/plugin.d.mts",
-        "default": "./dist/plugin.mjs"
+        "types": "./dist/src/plugin/index.d.mts",
+        "default": "./dist/src/plugin/index.mjs"
       },
       "require": {
-        "types": "./dist/plugin.d.ts",
-        "default": "./dist/plugin.js"
+        "types": "./dist/src/plugin/index.d.ts",
+        "default": "./dist/src/plugin/index.js"
       },
       "default": {
-        "types": "./dist/plugin.d.ts",
-        "default": "./dist/plugin.js"
+        "types": "./dist/src/plugin/index.d.ts",
+        "default": "./dist/src/plugin/index.js"
       }
     },
     "./executors": {
@@ -158,7 +158,10 @@
     "@storm-software/unbuild": "catalog:",
     "@storm-software/workspace-tools": "catalog:",
     "@storm-stack/core": "workspace:*",
+    "@stryke/fs": "catalog:",
     "@stryke/path": "catalog:",
+    "@stryke/string-format": "catalog:",
+    "@stryke/type-checks": "catalog:",
     "defu": "catalog:",
     "jiti": "catalog:",
     "nx": "catalog:"

@@ -24,9 +24,9 @@ try {
   echo`${chalk.whiteBright("⚙️  Bootstrapping the monorepo...")}`;
 
   await build({
-    entryPoints: ["tools/nx/src/plugins/plugin.ts"],
+    entryPoints: ["tools/nx/src/plugin/index.ts"],
     target: "node22",
-    outdir: "dist/plugins",
+    outdir: "dist/tools/nx/plugin",
     tsconfig: "tools/nx/tsconfig.json",
     packages: "bundle",
     external: ["nx", "@nx/*"],
