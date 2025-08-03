@@ -61,6 +61,7 @@ export async function initOptions(
     : [context.options.name];
   context.options.plugins.cli.minNodeVersion ??= config.minNodeVersion ?? 20;
   context.options.plugins.cli.interactive ??= config.interactive ?? true;
+  context.options.plugins.cli.title ??= config.title!;
   context.options.plugins.cli.author ??= config.author;
 
   context.options.plugins.dotenv.prefix = toArray(config.bin)

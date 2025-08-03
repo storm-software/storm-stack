@@ -2,7 +2,7 @@
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
     "rootDir": "../..",
-    "types": ["node", "@cloudflare/workers-types/experimental"],
+    "types": ["node"],
     "strict": false,
     "outDir": "../../dist/out-tsc"
   },

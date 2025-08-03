@@ -17,6 +17,7 @@
  ------------------------------------------------------------------- */
 
 import { getWorkspaceConfig } from "@storm-software/config-tools/get-config";
+import { getColorConfig } from "@storm-software/config-tools/utilities/colors";
 import { existsSync } from "@stryke/path/exists";
 import {
   getProjectRoot,
@@ -268,6 +269,7 @@ export async function resolveConfig(
   );
 
   context.options = resolvedOptions;
+  context.options.colors = getColorConfig(resolvedOptions);
 
   context.options.userConfig!.plugins = mergedUserConfig.plugins ?? [];
   context.options.plugins = {

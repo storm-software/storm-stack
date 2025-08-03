@@ -75,7 +75,8 @@ export type ResolvedBabelOptions = Omit<BabelConfig, "plugins" | "presets"> &
  */
 export type ResolvedOptions<
   TPluginsOptions extends Record<string, any> = Record<string, any>
-> = WorkspaceConfig &
+> = Omit<WorkspaceConfig, "colors"> &
+  Required<Pick<WorkspaceConfig, "colors">> &
   Omit<InlineConfig, "root" | "type" | "babel" | "output" | "plugins"> &
   Required<
     Pick<

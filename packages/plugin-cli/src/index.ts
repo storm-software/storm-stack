@@ -232,11 +232,6 @@ export default class CLIPlugin<
         `Writing the CLI application entry points.`
       );
 
-      // const commandTree = await readCommandTreeReflection(
-      //   context,
-      //   this.options
-      // );
-
       context.reflections.configDotenv = await readDotenvReflection(
         context,
         "config"

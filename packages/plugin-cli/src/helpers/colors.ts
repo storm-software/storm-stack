@@ -16,35 +16,19 @@
 
  ------------------------------------------------------------------- */
 
-import { defineConfig } from "@storm-stack/core/define-config";
+import { getColorConfig as getColorConfigBase } from "@storm-software/config-tools/utilities/colors";
+import { ColorConfig } from "@storm-software/config/types";
+import { CLIPluginContext } from "../types/config";
 
-export default defineConfig({
-  name: "Storm Stack",
-  skipCache: true,
-  plugins: [
-    [
-      "@storm-stack/plugin-cli",
-      {
-        title: "Storm",
-        bin: ["storm", "storm-stack"],
-        dotenv: {
-          types: {
-            config: "./src/types.ts#StormStackCLIConfig"
-          }
-        }
-      }
-    ],
-    [
-      "@storm-stack/plugin-log-storage",
-      {
-        logLevel: "info"
-      }
-    ],
-    [
-      "@storm-stack/plugin-log-sentry",
-      {
-        logLevel: "error"
-      }
-    ]
-  ]
-});
+/**
+ * Gets the color configuration for the CLI plugin.
+ *
+ * @param context - The CLI plugin context.
+ * @returns The color configuration.
+ *
+ * @remarks
+ * This function retrieves the color configuration from the plugin options, allowing for customization of colors in the CLI application.
+ */
+export function getColorConfig(context: CLIPluginContext): ColorConfig {
+  return getColorConfigBase(context.options);
+}

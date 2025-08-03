@@ -364,7 +364,6 @@ async function handler() {
         console.error(\` \${colors.red("✘")} \${colors.white(\`Unknown command: \${colors.bold(command || "<none>")}\`)}\`);
         console.log("");
         console.log(renderUsage("full"));
-        console.log("");
         console.log(renderFooter());
         console.log("");
 
@@ -422,7 +421,6 @@ async function handler() {
 
       if (args["help"] || args["h"] || args["?"]) {
         console.log(renderUsage("full"));
-        console.log("");
         console.log(renderFooter());
         console.log("");
       } else {
@@ -850,7 +848,6 @@ async function handler() {
         console.error(\` \${colors.red("✘")} \${colors.white(\`Unknown command: \${colors.bold(command || "<none>")}\`)}\`);
         console.log("");
         console.log(renderUsage("full"));
-        console.log("");
         console.log(renderFooter());
         console.log("");
 
@@ -896,7 +893,6 @@ async function handler() {
       }
 
       console.log(renderUsage("full"));
-      console.log("");
       console.log(renderFooter());
       console.log("");
     }
@@ -1186,21 +1182,19 @@ async function main() {
       console.log("");`
           : ""
       }
-      console.log(colors.gray("The following commands are available as part of the ${appTitle} application: "));
-      console.log("");${
+      console.log(colors.gray("The following commands are available as part of the ${appTitle} application: "));${
         commandTree.children && Object.values(commandTree.children).length > 0
           ? Object.values(commandTree.children)
               .map(
                 child =>
                   `
-      console.log(render${pascalCase(child.name)}Usage("minimal"));
-      console.log("");`
+      console.log("");
+      console.log(render${pascalCase(child.name)}Usage("minimal"));`
               )
               .join("\n")
           : ""
       }
 
-      console.log("");
       console.log(renderFooter());
       console.log("");
     }

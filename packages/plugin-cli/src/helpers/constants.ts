@@ -18,5 +18,7 @@
 
 export const MIN_CONSOLE_WIDTH = 80;
 
+export const MIN_BANNER_WIDTH = 72;
+
 export const LARGE_CONSOLE_WIDTH = 160;
 export const LARGE_HELP_COLUMN_WIDTH = 40;

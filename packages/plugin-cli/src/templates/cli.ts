@@ -16,20 +16,29 @@
 
  ------------------------------------------------------------------- */
 
+import { getGradient } from "@storm-software/config-tools/utilities/colors";
 import { getFileHeader } from "@storm-stack/core/lib";
 import { stripAnsi } from "@stryke/cli/utils/strip-ansi";
 import { titleCase } from "@stryke/string-format/title-case";
 import { isObject } from "@stryke/type-checks/is-object";
+import { isSetObject } from "@stryke/type-checks/is-set-object";
 import { isSetString } from "@stryke/type-checks/is-set-string";
 import { isString } from "@stryke/type-checks/is-string";
+import { render } from "cfonts";
 import { renderUnicodeCompact } from "uqr";
 import {
   LARGE_CONSOLE_WIDTH,
   LARGE_HELP_COLUMN_WIDTH,
+  MIN_BANNER_WIDTH,
   MIN_CONSOLE_WIDTH
 } from "../helpers/constants";
 import { extractAuthor } from "../helpers/utilities";
-import type { CLIPluginConfig, CLIPluginContext } from "../types/config";
+import type {
+  BannerTitleConfig,
+  CFontResultObject,
+  CLIPluginConfig,
+  CLIPluginContext
+} from "../types/config";
 
 export function CLIModule(context: CLIPluginContext, config: CLIPluginConfig) {
   let appTitle = titleCase(
@@ -37,6 +46,9 @@ export function CLIModule(context: CLIPluginContext, config: CLIPluginConfig) {
       (Array.isArray(config.bin) ? config.bin[0] : config.bin) ||
       context.packageJson?.name
   );
+
+  context.options.plugins.cli.title ??= appTitle;
+
   if (!appTitle.toLowerCase().endsWith("cli")) {
     appTitle += " CLI";
   }
@@ -139,6 +151,36 @@ export function CLIModule(context: CLIPluginContext, config: CLIPluginConfig) {
     throw new Error(
       "No homepage, support, contact, documentation or repository URL provided in the Storm Stack configuration."
     );
+  }
+
+  let title = context.options.plugins.cli.title;
+  if (title !== false) {
+    const titleConfig = {
+      font: "slick",
+      align: "center",
+      // background: "transparent",
+      independentGradient: false,
+      transitionGradient: false,
+      rawMode: false,
+      env: "node"
+    } as BannerTitleConfig;
+
+    if (isSetObject(context.options.colors)) {
+      titleConfig.gradient = getGradient(
+        context.options.colors as Parameters<typeof getGradient>[0]
+      );
+    } else {
+      titleConfig.colors = ["system"];
+    }
+
+    const result = render(titleCase(title), titleConfig) as
+      | CFontResultObject
+      | boolean;
+    if (isSetObject(result) && result.string) {
+      title = result.string;
+    } else {
+      title = false;
+    }
   }
 
   return `${getFileHeader()}
@@ -440,12 +482,18 @@ export function stripAnsi(text: string) {
  */
 export function renderBanner(title: string, description: string): string {
   let consoleWidth = Math.max(process.stdout.columns - 2, 80);
-  if (consoleWidth % 2) consoleWidth++;
+  if (consoleWidth % 2) {
+    consoleWidth++;
+  }
 
-  if (title.length % 2) title += " ";
+  if (title.length % 2) {
+    title += " ";
+  }
 
-  let width = Math.max(Math.min(consoleWidth, Math.max(title.length + 2, 70)), 80);
-  if (width % 2) width++;
+  let width = Math.max(Math.min(consoleWidth, Math.max(title.length + 2, ${MIN_BANNER_WIDTH - 8})), ${MIN_BANNER_WIDTH});
+  if (width % 2) {
+    width++;
+  }
 
   const banner = [] as string[];
   banner.push(colors.cyan(\`┏━━━━ ⏺ ${appTitle} ━ v${
@@ -483,9 +531,17 @@ export function renderBanner(title: string, description: string): string {
       : `banner.push(colors.cyan(\`┗\${"━".repeat(width)}┛\`));`
   }
 
-  return banner
+  return \`${
+    title
+      ? `
+${title}
+
+`
+      : ""
+  }\${banner
     .map(line => \`\${" ".repeat((consoleWidth - stripAnsi(line).length) / 2)}\${line}\${" ".repeat((consoleWidth - stripAnsi(line).length) / 2)}\`)
-    .join("\\n");
+    .join("\\n")}
+\`;
 }
 
 /**
@@ -521,15 +577,20 @@ export function renderFooter(): string {
   const supportRowLength = stripAnsi(supportRow).length;
 
   const footer = [] as string[];
+
+  footer.push("");
+  footer.push(colors.cyan(colors.bold(\`\${" ".repeat(Math.max((consoleWidth - (consoleWidth * 0.75)) / 2, 10))}\${"━".repeat(consoleWidth * 0.75)}\${" ".repeat(Math.max((consoleWidth - (consoleWidth * 0.75)) / 2, 10))}\`)));
+  footer.push("");
+
   footer.push(\`\${colors.whiteBright(colors.bold("LINKS:"))}\`);
   ${linksColumn1
     .map(
       (line, i) =>
-        `footer.push(\`    \${isLargeConsole ? colors.bold("${line}".padEnd(${LARGE_HELP_COLUMN_WIDTH})) : colors.bold("${line}".padEnd(${linksMaxLength}))}\${link("${linksColumn2[i]}")}\`);`
+        `footer.push(\`   \${isLargeConsole ? colors.bold("${line}".padEnd(${LARGE_HELP_COLUMN_WIDTH})) : colors.bold("${line}".padEnd(${linksMaxLength}))}\${link("${linksColumn2[i]}")}\`);`
     )
     .join(" \n")}
 
-  footer.push("\\n");${
+  footer.push("");${
     homepage || docs || support || contact || repository
       ? `
     ${
@@ -539,7 +600,7 @@ export function renderFooter(): string {
     author.name.length ?? 0
   }) / 2, 10))}\${colors.bold(colors.whiteBright("${author.name}"))}\${" ".repeat(Math.max((consoleWidth - ${
     author.name.length ?? 0
-  }) / 2, 0))}\`);`
+  }) / 2, 10))}\`);`
         : ""
     }${
       author?.description
@@ -547,7 +608,7 @@ export function renderFooter(): string {
 
   const descriptionPadding = Math.max((consoleWidth - ${author.description.length}) / 2, 10);
   for (const line of (${author.description.length} < consoleWidth * 0.6
-    ? \`\${" ".repeat(descriptionPadding)}\${colors.gray("${author.description}")}\${" ".repeat(Math.max(descriptionPadding + consoleWidth - (descriptionPadding * 2 + ${author.description.length}), 0))}\`
+    ? \`\${" ".repeat(descriptionPadding)}\${colors.gray("${author.description}")}\${" ".repeat(Math.max(descriptionPadding + consoleWidth - (descriptionPadding * 2 + ${author.description.length}), 10))}\`
     : "${author.description}".split(/\\s+/).reduce((ret, word) => {
         const lines = ret.split("\\n");
         if (lines.length !== 0 && (lines[lines.length - 1]!.length + word.length > consoleWidth * 0.6)) {
@@ -557,9 +618,9 @@ export function renderFooter(): string {
         return \`\${ret}\${word} \`;
       }, "")).split("\\n")) {
     const linePadding = Math.max((consoleWidth - stripAnsi(line).length) / 2, 10);
-    footer.push(\`\${" ".repeat(linePadding)}\${colors.gray(line)}\${" ".repeat(Math.max(linePadding + consoleWidth - (linePadding * 2 + stripAnsi(line).length), 0))}\`);
+    footer.push(\`\${" ".repeat(linePadding)}\${colors.gray(line)}\${" ".repeat(Math.max(linePadding + consoleWidth - (linePadding * 2 + stripAnsi(line).length), 10))}\`);
   }
-  footer.push("\\n");`
+  footer.push("");`
         : ""
     }
 
@@ -568,7 +629,7 @@ export function renderFooter(): string {
       (author?.url || homepage || docs || support || contact || repository)!
     )}\`.split("\\n");
     const qrCodeMaxLength = Math.max(...qrCodeLines.map(line => line.length));
-    footer.push(...qrCodeLines.map(line => \`\${" ".repeat(Math.max((consoleWidth - qrCodeMaxLength) / 2, 15))}\${line}\${" ".repeat(Math.max((consoleWidth - qrCodeMaxLength) / 2, 0))}\`));
+    footer.push(...qrCodeLines.map(line => \`\${" ".repeat(Math.max((consoleWidth - qrCodeMaxLength) / 2, 15))}\${line}\${" ".repeat(Math.max((consoleWidth - qrCodeMaxLength) / 2, 15))}\`));
   }
 
   footer.push(\`\${" ".repeat(Math.max((consoleWidth - ${
@@ -582,14 +643,14 @@ export function renderFooter(): string {
     repository)!}")}\${" ".repeat(Math.max((consoleWidth - ${
     (author?.url || homepage || docs || support || contact || repository)
       ?.length ?? 0
-  }) / 2, 0))}\`);
-  footer.push("\\n");
+  }) / 2, 10))}\`);
+  footer.push("");
 `
       : ""
   }
-  footer.push(\`\${" ".repeat(Math.max((consoleWidth - ${footerHeaderLength}) / 2, 10))}${footerHeader}\${" ".repeat(Math.max((consoleWidth - ${footerHeaderLength}) / 2, 0))}\`);
+  footer.push(\`\${" ".repeat(Math.max((consoleWidth - ${footerHeaderLength}) / 2, 10))}${footerHeader}\${" ".repeat(Math.max((consoleWidth - ${footerHeaderLength}) / 2, 10))}\`);
   if (supportRow) {
-    footer.push(\`\${" ".repeat(Math.max((consoleWidth - supportRowLength) / 2, 10))}\${supportRow}\${" ".repeat(Math.max((consoleWidth - supportRowLength) / 2, 0))}\`);
+    footer.push(\`\${" ".repeat(Math.max((consoleWidth - supportRowLength) / 2, 10))}\${supportRow}\${" ".repeat(Math.max((consoleWidth - supportRowLength) / 2, 10))}\`);
   }
 
   return footer.join("\\n");
@@ -761,8 +822,7 @@ export async function prompt<
 
     switch (opts.cancel) {
       case "reject": {
-        const error = new Error("Prompt cancelled.");
-        error.name = "ConsolaPromptCancelledError";
+        const error = new Error("Prompt cancelled by user");
         if (Error.captureStackTrace) {
           Error.captureStackTrace(error, prompt);
         }

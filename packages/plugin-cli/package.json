@@ -73,6 +73,7 @@
     "@stryke/path": "catalog:",
     "@stryke/string-format": "catalog:",
     "@stryke/type-checks": "catalog:",
+    "cfonts": "catalog:",
     "defu": "catalog:",
     "tinycolor2": "catalog:",
     "uqr": "catalog:"

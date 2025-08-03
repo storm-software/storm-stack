@@ -43,6 +43,14 @@ export interface CLIPluginConfig extends NodePluginConfig {
   interactive?: boolean | "never";
 
   /**
+   * The title to display in the banner of the CLI application
+   *
+   * @remarks
+   * This will be displayed in a large font in the CLI banner. If left undefined, the title will default to the value in {@link Context.options.name}. If set to `false`, the title will not be displayed.
+   */
+  title?: string | false;
+
+  /**
    * The author/organization that developed or maintains the CLI application
    *
    * @remarks
@@ -70,3 +78,24 @@ export type CLIPluginContext = Context<
   CLIPluginContextOptions,
   CommandEntryTypeDefinition
 >;
+
+export interface BannerTitleConfig {
+  font: string;
+  align: "left" | "center" | "right";
+  colors?: string[];
+  background?: string;
+  letterSpacing?: number;
+  lineHeight?: number;
+  space?: boolean;
+  gradient?: string[];
+  independentGradient?: boolean;
+  transitionGradient?: boolean;
+  rawMode?: boolean;
+  env?: "node" | "browser";
+}
+
+export interface CFontResultObject {
+  string: string;
+  width: number;
+  height: number;
+}
