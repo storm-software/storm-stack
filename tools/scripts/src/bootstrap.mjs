@@ -17,36 +17,35 @@
 
  ------------------------------------------------------------------- */
 
-import { build } from "esbuild";
-import { $, chalk, echo } from "zx";
+import { chalk, echo } from "zx";
 
 try {
   echo`${chalk.whiteBright("⚙️  Bootstrapping the monorepo...")}`;
 
-  await build({
-    entryPoints: ["tools/nx/src/plugin/index.ts"],
-    target: "node22",
-    outdir: "dist/tools/nx/plugin",
-    tsconfig: "tools/nx/tsconfig.json",
-    packages: "bundle",
-    external: ["nx", "@nx/*"],
-    logLevel: "info",
-    bundle: true,
-    minify: false,
-    format: "esm",
-    platform: "node"
-  });
+  // await build({
+  //   entryPoints: ["tools/nx/src/plugin/index.ts"],
+  //   target: "node22",
+  //   outdir: "dist/tools/nx/plugin",
+  //   tsconfig: "tools/nx/tsconfig.json",
+  //   packages: "bundle",
+  //   external: ["nx", "@nx/*"],
+  //   logLevel: "info",
+  //   bundle: true,
+  //   minify: false,
+  //   format: "esm",
+  //   platform: "node"
+  // });
 
-  const proc = $`pnpm nx reset --onlyDaemon`.timeout(`${2 * 60}s`);
-  proc.stdout.on("data", data => {
-    echo`${data}`;
-  });
-  const result = await proc;
-  if (!result.ok) {
-    throw new Error(
-      `An error occurred while resetting the Nx daemon process: \n\n${result.message}\n`
-    );
-  }
+  // const proc = $`pnpm nx reset --onlyDaemon`.timeout(`${2 * 60}s`);
+  // proc.stdout.on("data", data => {
+  //   echo`${data}`;
+  // });
+  // const result = await proc;
+  // if (!result.ok) {
+  //   throw new Error(
+  //     `An error occurred while resetting the Nx daemon process: \n\n${result.message}\n`
+  //   );
+  // }
 
   echo`${chalk.green("Completed monorepo bootstrapping successfully!")}`;
 } catch (error) {

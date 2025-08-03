@@ -49,7 +49,7 @@ export const name = "storm-stack/tools/plugin";
 export interface StormStackToolsPluginOptions {}
 
 export const createNodesV2: CreateNodesV2<StormStackToolsPluginOptions> = [
-  "packages/plugin-*/package.json",
+  "packages/plugin-*/project.json",
   async (configFiles, optionsV2, contextV2): Promise<CreateNodesResultV2> => {
     return createNodesFromFiles(
       (configFile, options, context) => {
