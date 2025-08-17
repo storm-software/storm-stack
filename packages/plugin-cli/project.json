@@ -4,23 +4,9 @@
   "projectType": "library",
   "sourceRoot": "packages/plugin-cli/src",
   "targets": {
-    "build-schema": {
-      "cache": true,
-      "inputs": ["{projectRoot}/schemas/*.capnp"],
-      "outputs": ["{projectRoot}/schemas/*.ts"],
-      "executor": "nx:run-commands",
-      "dependsOn": ["clean", "^build"],
-      "options": {
-        "commands": [
-          "pnpm exec storm-capnpc --project-root packages/plugin-cli --schema ./{projectRoot}/schemas"
-        ],
-        "parallel": false
-      }
-    },
     "build-base": {
       "cache": true,
       "executor": "nx:run-commands",
-      "dependsOn": ["build-schema"],
       "options": {
         "command": "tsup-node --config=tsup.config.ts",
         "cwd": "{projectRoot}"
@@ -29,7 +15,7 @@
     "build": {
       "cache": true,
       "executor": "nx:run-commands",
-      "dependsOn": ["build-schema", "build-base"],
+      "dependsOn": ["build-base"],
       "options": {
         "commands": [
           "pnpm copyfiles LICENSE dist/packages/plugin-cli",

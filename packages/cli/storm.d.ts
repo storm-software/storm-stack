@@ -2530,14 +2530,14 @@ declare module "storm:config" {
      * Build Identifier
      *
      * @title Build Identifier
-     * @defaultValue 936bbf07-7df4-49f9-8524-20731e66878e
+     * @defaultValue d1c10553-4742-41e6-9abf-dd9879f76609
      */
     BUILD_ID: string;
     /**
      * Build Timestamp
      *
      * @title Build Timestamp
-     * @defaultValue 2025-08-17T02:44:14.348Z
+     * @defaultValue 2025-08-17T03:59:00.237Z
      */
     BUILD_TIMESTAMP: string;
     /**
@@ -2858,7 +2858,7 @@ declare module "storm:config" {
      *
      * @title Mode
      * @alias NODE_ENV
-     * @defaultValue production
+     * @defaultValue development
      */
     MODE: "development" | "staging" | "production";
     /**
@@ -2919,7 +2919,7 @@ declare module "storm:config" {
      *
      * @title Node Env
      * @alias MODE
-     * @defaultValue production
+     * @defaultValue development
      */
     NODE_ENV: "development" | "staging" | "production";
     /**
@@ -2991,7 +2991,7 @@ declare module "storm:config" {
      * Release Identifier
      *
      * @title Release Identifier
-     * @defaultValue 6bbf077d-f489-4945-a420-731e66878ed2
+     * @defaultValue c1055347-42f1-46da-bfdd-9879f7660965
      */
     RELEASE_ID: string;
     /**
