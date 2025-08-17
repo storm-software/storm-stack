@@ -16,9 +16,11 @@
 
  ------------------------------------------------------------------- */
 
+export * from "./babel";
 export * from "./build";
 export * from "./compiler";
 export * from "./config";
 export * from "./context";
 export * from "./plugin";
+export * from "./tsconfig";
 export * from "./vfs";

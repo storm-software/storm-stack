@@ -17,6 +17,7 @@
  ------------------------------------------------------------------- */
 
 import { ReflectionClass, SerializedTypes } from "@deepkit/type";
+import { SerializedTypes as CapnpSerializedTypes } from "@storm-stack/core/schemas/reflection";
 import { LogLevel } from "@storm-stack/types/log";
 import { EnvPaths } from "@stryke/env/get-env-paths";
 import { PackageJson } from "@stryke/types/package-json";
@@ -24,14 +25,11 @@ import { Worker as JestWorker } from "jest-worker";
 import { Jiti } from "jiti";
 import { DirectoryJSON } from "memfs";
 import { Unimport } from "unimport";
-import {
-  ParsedTypeScriptConfig,
-  ResolvedEntryTypeDefinition,
-  ResolvedOptions
-} from "./build";
+import { ResolvedEntryTypeDefinition, ResolvedOptions } from "./build";
 import { CompilerInterface, SourceFile } from "./compiler";
 import type { LogFn } from "./config";
 import { PluginOptions } from "./plugin";
+import { ParsedTypeScriptConfig } from "./tsconfig";
 import { VirtualFileSystemInterface } from "./vfs";
 
 export interface LogRuntimeConfig {
@@ -130,8 +128,24 @@ export type UnimportContext = Omit<Unimport, "injectImports"> & {
   refreshRuntimeImports: () => Promise<void>;
 };
 
+export type Reflection<T extends Record<string, any> = Record<string, any>> =
+  ReflectionClass<T> & {
+    dataBuffer?: ArrayBuffer;
+    messageRoot?: CapnpSerializedTypes;
+  };
+export type ReflectionRecord<
+  T extends Record<string, any> = Record<string, any>
+> = Record<string, Reflection<T>>;
+
+export interface ContextReflectionRecord<
+  T extends Record<string, any> = Record<string, any>
+> extends Record<string, Reflection<T> | ContextReflectionRecord<T>> {}
+
 export interface Context<
   TPluginsOptions extends Record<string, any> = Record<string, any>,
+  TReflections extends { [P in keyof unknown]: ReflectionRecord } = {
+    [P in keyof unknown]: ReflectionRecord;
+  },
   TResolvedEntryTypeDefinition extends
     ResolvedEntryTypeDefinition = ResolvedEntryTypeDefinition
 > {
@@ -151,7 +165,7 @@ export interface Context<
    * @remarks
    * These reflections are used by plugins to store data that will be passed around the Storm Stack processes. Please note: these values are not persisted to disk by default.
    */
-  reflections: Record<string, ReflectionClass<any>>;
+  reflections: TReflections;
 
   /**
    * The metadata information

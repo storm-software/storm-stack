@@ -26,12 +26,12 @@ import {
 } from "@storm-software/esbuild/types";
 import type { UnbuildOptions as BaseUnbuildOptions } from "@storm-software/unbuild/types";
 import type { TypeDefinitionParameter } from "@stryke/types/configuration";
-import { TsConfigJson } from "@stryke/types/tsconfig";
 import { ConfigLayer, ResolvedConfig } from "c12";
 import { BuildOptions as ExternalESBuildOptions } from "esbuild";
 import { BuildOptions as ExternalUnbuildOptions } from "unbuild";
 import { BabelPluginItem } from "./babel";
 import { Context } from "./context";
+import { TSConfig } from "./tsconfig";
 
 export type LogFn = (type: LogLevelLabel, ...args: string[]) => void;
 
@@ -145,7 +145,9 @@ export interface OutputConfig {
   assets?: Array<string | AssetGlob>;
 }
 
-export type UserConfig = Partial<Omit<WorkspaceConfig, "workspaceRoot">> & {
+export type UserConfig = Partial<
+  Omit<WorkspaceConfig, "workspaceRoot" | "logLevel">
+> & {
   /**
    * The name of the project
    */
@@ -193,7 +195,7 @@ export type UserConfig = Partial<Omit<WorkspaceConfig, "workspaceRoot">> & {
    *
    * @defaultValue "info"
    */
-  logLevel?: LogLevelLabel;
+  logLevel?: LogLevelLabel | null;
 
   /**
    * A custom logger function to use for logging messages
@@ -271,12 +273,14 @@ export type UserConfig = Partial<Omit<WorkspaceConfig, "workspaceRoot">> & {
   tsconfig?: string;
 
   /**
-   * The [raw tsconfig object](https://www.typescriptlang.org/tsconfig) to be used by the compiler. This object will be merged with the `tsconfig.json` file.
+   * The raw {@link TSConfig} object to be used by the compiler. This object will be merged with the `tsconfig.json` file.
+   *
+   * @see https://www.typescriptlang.org/tsconfig
    *
    * @remarks
    * If populated, this option takes higher priority than `tsconfig`
    */
-  tsconfigRaw?: TsConfigJson;
+  tsconfigRaw?: TSConfig;
 
   /**
    * A list of modules that should always be bundled, even if they are external dependencies.

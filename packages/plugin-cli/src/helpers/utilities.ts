@@ -34,8 +34,8 @@ import { isString } from "@stryke/type-checks/is-string";
 import { TypeDefinition } from "@stryke/types/configuration";
 import defu from "defu";
 import { CommandPayloadArg } from "../data/command-payload";
-import { CLIPluginConfig, CLIPluginContext } from "../types/config";
-import { Command, CommandTree } from "../types/reflection";
+import { CLIPluginContext, CLIPluginOptions } from "../types/config";
+import { CommandTree, CommandTreeBranch } from "../types/reflection";
 
 /**
  * Sorts command argument aliases, placing single-character aliases first, followed by multi-character aliases, and then sorting them alphabetically.
@@ -93,19 +93,17 @@ export function isValidMinNodeVersion(
  * Extracts the author information from the context and configuration.
  *
  * @param context - The build context containing workspace and package information.
- * @param config - The StormStackCLIPluginConfig containing author information.
  * @returns An OrganizationConfig object with the author's name.
  */
 export function extractAuthor(
-  context: CLIPluginContext,
-  config: CLIPluginConfig = {}
+  context: CLIPluginContext
 ): OrganizationConfig | undefined {
   let author: OrganizationConfig | undefined;
-  if (config.author) {
-    if (isString(config.author)) {
-      author = { name: config.author };
-    } else if (isObject(config.author)) {
-      author = config.author;
+  if (context.options.plugins.cli.author) {
+    if (isString(context.options.plugins.cli.author)) {
+      author = { name: context.options.plugins.cli.author };
+    } else if (isObject(context.options.plugins.cli.author)) {
+      author = context.options.plugins.cli.author;
     }
   }
 
@@ -157,7 +155,7 @@ export function extractAuthor(
  */
 export function getAppName(
   context: CLIPluginContext,
-  config: CLIPluginConfig = {}
+  config: CLIPluginOptions = {}
 ): string {
   const result =
     config.bin &&
@@ -185,7 +183,7 @@ export function getAppName(
  */
 export function getAppTitle(
   context: CLIPluginContext,
-  config: CLIPluginConfig = {}
+  config: CLIPluginOptions = {}
 ): string {
   return titleCase(context.options.name || getAppName(context, config));
 }
@@ -325,9 +323,9 @@ export async function reflectPayloadBaseType(
 }
 
 export function findCommandInTree(
-  tree: CommandTree | Command,
+  tree: CommandTree | CommandTreeBranch,
   path: string[]
-): CommandTree | Command | undefined {
+): CommandTree | CommandTreeBranch | undefined {
   if (path.length === 0) {
     return tree;
   } else if (path.length === 1) {
@@ -342,15 +340,17 @@ export function findCommandInTree(
   return undefined;
 }
 
-export function flattenCommandTree(tree: CommandTree | Command): Command[] {
-  let commands: Command[] = [];
+export function flattenCommandTree(
+  tree: CommandTree | CommandTreeBranch
+): CommandTreeBranch[] {
+  let commands: CommandTreeBranch[] = [];
   Object.values(tree.children).forEach(child => {
-    if (!commands.some(cmd => cmd.id === child.id)) {
+    if (!commands.some(cmd => cmd.command.id === child.command.id)) {
       commands.push(child);
     }
 
     commands = flattenCommandTree(child).reduce((ret, cmd) => {
-      if (!ret.some(existingCmd => existingCmd.id === cmd.id)) {
+      if (!ret.some(existingCmd => existingCmd.command.id === cmd.command.id)) {
         ret.push(cmd);
       }
       return ret;

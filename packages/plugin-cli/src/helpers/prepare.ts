@@ -38,14 +38,8 @@ import {
   writeCompletionsBash,
   writeCompletionsZsh
 } from "../templates/completions";
-import {
-  writeConfigDelete,
-  writeConfigGet,
-  writeConfigList,
-  writeConfigSet
-} from "../templates/config";
-import type { CLIPluginConfig, CLIPluginContext } from "../types/config";
-import type { Command, CommandTree } from "../types/reflection";
+import type { CLIPluginContext } from "../types/config";
+import type { CommandTree, CommandTreeBranch } from "../types/reflection";
 import {
   LARGE_CONSOLE_WIDTH,
   LARGE_HELP_COLUMN_WIDTH,
@@ -56,32 +50,32 @@ import { extractAuthor, sortArgAliases, sortArgs } from "./utilities";
 async function writeCommandEntryUsage(
   log: LogFn,
   context: CLIPluginContext,
-  command: Command,
-  config: CLIPluginConfig,
-  description: string
+  cmd: CommandTreeBranch
 ) {
+  const command = cmd.command;
   log(
     LogLevelLabel.TRACE,
-    `Preparing the command entry usage artifact ${command.entry.file} (${
-      command.entry?.name ? `export: "${command.entry.name}"` : "default"
+    `Preparing the command entry usage artifact ${command.file} (${
+      command?.name ? `export: "${command.name}"` : "default"
     })`
   );
 
-  const commandsColumn1 = Object.values(command.children).map(child => {
-    return `${child.name} (${child.name})`;
+  const commandsColumn1 = Object.values(cmd.children).map(child => {
+    return `${child.command.name} (${child.command.name})`;
   });
 
-  const commandsColumn2 = Object.values(command.children).map(child => {
-    return `\${colors.gray("${child.type?.getDescription() || `The ${child.title} command.`}")}`;
+  const commandsColumn2 = Object.values(cmd.children).map(child => {
+    return `\${colors.gray("${child.command.description}")}`;
   });
 
-  if (!command?.payload?.args) {
+  const payload = command.payload;
+  if (!payload?.args || payload.args.length === 0) {
     throw new Error(
-      `Command "${command.id}" (${command.entry.file}) is missing payload.`
+      `Command "${command.id}" (${command.file}) is missing payload.`
     );
   }
 
-  const optionsColumn1 = sortArgs(command.payload.args).map(arg => {
+  const optionsColumn1 = sortArgs(payload.args).map(arg => {
     const names = sortArgAliases([arg.name, ...arg.type.getAlias()]);
     if (
       arg.type.getKind() === ReflectionKind.string ||
@@ -103,7 +97,7 @@ async function writeCommandEntryUsage(
       .join(", ");
   });
 
-  const optionsColumn2 = command.payload.args.map(arg => {
+  const optionsColumn2 = sortArgs(payload.args).map(arg => {
     if (
       arg.type.getKind() === ReflectionKind.string ||
       arg.type.getKind() === ReflectionKind.literal ||
@@ -175,31 +169,28 @@ async function writeCommandEntryUsage(
     ) + 6;
 
   await context.vfs.writeEntryFile(
-    command.entry.file.replace(findFileName(command.entry.file), "usage.ts"),
+    command.file.replace(findFileName(command.file), "usage.ts"),
     `${getFileHeader()}
 
-import ${command.entry.input.name ? `{ ${command.entry.input.name} as handle }` : "handle"} from "${joinPaths(
+import ${command.input.name ? `{ ${command.input.name} as handle }` : "handle"} from "./${joinPaths(
       relativePath(
-        findFilePath(command.entry.file),
-        findFilePath(command.entry.input.file)
+        findFilePath(command.file),
+        findFilePath(command.input.file)
       ),
-      findFileName(command.entry.input.file).replace(
-        findFileExtension(command.entry.input.file) || "",
+      findFileName(command.input.file).replace(
+        findFileExtension(command.input.file) || "",
         ""
       )
     )}";
 import { colors } from "storm:cli";${
-      command.payload.import
-        ? `import { ${command.payload.import.name} } from "${relativePath(
-            findFilePath(command.entry.file),
-            joinPaths(
-              context.options.workspaceRoot,
-              command.payload.import.file
-            )
+      payload.import
+        ? `import { ${payload.import.name} } from "${relativePath(
+            findFilePath(command.file),
+            joinPaths(context.options.workspaceRoot, payload.import.file)
           )}";`
         : `
 
-        `
+`
     }
 
 /**
@@ -213,30 +204,30 @@ export function renderUsage(mode: "full" | "minimal" = "full"): string {
   const isLargeConsole = consoleWidth >= ${LARGE_CONSOLE_WIDTH};
 
   return \`\${colors.white(\`\${colors.whiteBright(colors.bold(\`${command.title.toUpperCase()}\${mode === "minimal" ? " COMMAND:" : ""}\`))}${
-    command.type?.getDescription()
+    command.description
       ? `
 
-  \${colors.gray("${description}")}
+  \${colors.gray("${command.description}")}
 `
       : ""
   }
   \${colors.whiteBright(colors.bold("USAGE:"))}
-    \${colors.cyan(colors.bold(\`$ ${kebabCase(command.root.name)}${
-      command.entry.path.length > 0
-        ? ` ${command.entry.path
+    \${colors.cyan(colors.bold(\`$ ${kebabCase(cmd.root.bin[0])}${
+      command.path.length > 0
+        ? ` ${command.path
             .filter(Boolean)
             .map(part => part.replace("[", "<").replace("]", ">"))
             .join(" ")}`
         : ""
     } [options] ${
-      Object.values(command.children).length > 0
+      Object.values(cmd.children).length > 0
         ? `
-${Object.values(command.children)
+${Object.values(cmd.children)
   .map(
     child =>
-      `    $ ${kebabCase(command.root.name)}${
-        child.entry.path.length > 0
-          ? ` ${child.entry.path
+      `    $ ${kebabCase(child.root.bin[0])}${
+        child.command.path.length > 0
+          ? ` ${child.command.path
               .filter(Boolean)
               .map(part => part.replace("[", "<").replace("]", ">"))
               .join(" ")}`
@@ -246,7 +237,7 @@ ${Object.values(command.children)
   .join("\n")}`
         : ""
     }\`))} ${
-      Object.values(command.children).length > 0
+      Object.values(cmd.children).length > 0
         ? `\${mode === "full" ? \`
   \${colors.whiteBright(colors.bold("COMMANDS:"))}
 ${commandsColumn1
@@ -279,89 +270,84 @@ ${commandsColumn1
 async function writeCommandEntryHandler(
   log: LogFn,
   context: CLIPluginContext,
-  command: Command,
-  config: CLIPluginConfig,
-  description: string
+  cmd: CommandTreeBranch
 ) {
+  const command = cmd.command;
+  const payload = command.payload;
+
   log(
     LogLevelLabel.TRACE,
-    `Preparing the command entry handler artifact ${command.entry.file} (${
-      command.entry?.name ? `export: "${command.entry.name}"` : "default"
-    })" from input "${command.entry.input.file}" (${
-      command.entry.input.name
-        ? `export: "${command.entry.input.name}"`
-        : "default"
+    `Preparing the command entry handler artifact ${command.file} (${
+      command.name ? `export: "${command.name}"` : "default"
+    })" from input "${command.input.file}" (${
+      command.input.name ? `export: "${command.input.name}"` : "default"
     })`
   );
 
   await context.vfs.writeEntryFile(
-    command.entry.file,
+    command.file,
     `${getFileHeader()}
 
 import { renderUsage } from "./usage";
 import ${
-      command.entry.input.name
-        ? `{ ${command.entry.input.name} as handle }`
-        : "handle"
-    } from "${joinPaths(
+      command.input.name ? `{ ${command.input.name} as handle }` : "handle"
+    } from "./${joinPaths(
       relativePath(
-        findFilePath(command.entry.file),
-        findFilePath(command.entry.input.file)
+        findFilePath(command.file),
+        findFilePath(command.input.file)
       ),
-      findFileName(command.entry.input.file).replace(
-        findFileExtension(command.entry.input.file) || "",
+      findFileName(command.input.file).replace(
+        findFileExtension(command.input.file) || "",
         ""
       )
     )}";
-import { withContext } from "storm:app";
-import { isInteractive, isMinimal } from "storm:env";
-import { colors, parseArgs, renderBanner, renderFooter${
-      config.interactive !== "never" ? ", prompt" : ""
+import { StormPayload } from "storm:payload";
+import { CLIBasePayloadData, colors, parseArgs, renderBanner, renderFooter${
+      context.options.plugins.cli.interactive !== "never" ? ", prompt" : ""
     } } from "storm:cli";
 import { deserialize, serialize } from "@deepkit/type";${
-      command.payload.import
-        ? `import { ${command.payload.import.name} } from "${relativePath(
-            findFilePath(command.entry.file),
-            joinPaths(
-              context.options.workspaceRoot,
-              command.payload.import.file
-            )
+      payload.import
+        ? `import { ${payload.import.name} } from "${relativePath(
+            findFilePath(command.file),
+            joinPaths(context.options.workspaceRoot, payload.import.file)
           )}";`
         : `
 
-export interface ${command.payload.type.getName()} {
-  ${command.payload.args.map(arg => `${camelCase(arg.name)}: ${stringifyType(arg.type.getType())};`).join("\n  ")}
+export interface ${payload.type.getName()} extends CLIBasePayloadData {
+  ${payload.args
+    .map(arg => `${camelCase(arg.name)}: ${stringifyType(arg.type.getType())};`)
+    .join("\n  ")}
 }
         `
     }
 
-const handleCommand = withContext<${command.payload.type.getName()}>(handle);
-
 /**
  * The entry point for the ${command.title} command.
  */
-async function handler() {
+async function handler(payload: StormPayload<${payload.type.getName()}>) {
   try {
     ${
-      Object.values(command.children).length > 0
-        ? `if (process.argv.length > ${command.entry.path.length + 2}) {
-      const command = process.argv[${command.entry.path.length + 1}];
+      Object.values(cmd.children).length > 0
+        ? `if (payload.data.argv.length > ${command.path.length + 2}) {
+      const command = payload.data.argv[${command.path.length + 1}];
       if (command && !command.startsWith("-")) {
-        ${Object.values(command.children)
+        ${Object.values(cmd.children)
           .map(
             (child, i) =>
-              `${i === 0 ? "if" : "else if"} (command.toLowerCase() === "${child.name.toLowerCase()}") {
+              `${i === 0 ? "if" : "else if"} (command.toLowerCase() === "${child.command.name.toLowerCase()}") {
           ${
-            child.entry.isVirtual
-              ? `return handle${pascalCase(child.name)}();`
-              : `const handle = await import("./${child.name}").then(m => m.default);
+            child.command.isVirtual
+              ? `return handle${pascalCase(child.command.name)}();`
+              : `const handle = await import("./${
+                  child.command.name
+                }").then(m => m.default);
           return handle();`
           }
         } `
           )
           .join(" ")}
 
-        console.error(\` \${colors.red("✘")} \${colors.white(\`Unknown command: \${colors.bold(command || "<none>")}\`)}\`);
+        console.error(\` \${colors.red("✘")}  \${colors.white(\`Unknown command: \${colors.bold(command || "<none>")}\`)}\`);
         console.log("");
         console.log(renderUsage("full"));
         console.log(renderFooter());
@@ -373,26 +359,66 @@ async function handler() {
         : ""
     }
 
-    const args = parseArgs(process.argv.slice(${command.entry.path.length + 1}), {${
-      command.payload.args.filter(
-        arg => arg.type.getKind() === ReflectionKind.boolean
-      ).length > 0
+    const args = parseArgs(payload.data.argv.slice(${command.path.length + 1}), {${
+      payload.args.filter(arg => arg.type.getKind() === ReflectionKind.boolean)
+        .length > 0
         ? `
-      boolean: [${command.payload.args
-        .filter(arg => arg.type.getKind() === ReflectionKind.boolean)
-        .map(arg => `"${arg.name}", "${arg.type.getAlias().join('", "')}"`)
+      boolean: [${payload.args
+        .filter(
+          arg => arg.name && arg.type.getKind() === ReflectionKind.boolean
+        )
+        .map(
+          arg =>
+            `${arg.name ? `"${arg.name}"` : ""}${
+              arg.type.getAlias().length > 0
+                ? `, ${arg.type
+                    .getAlias()
+                    .map(alias => `"${alias}"`)
+                    .join(", ")}`
+                : ""
+            }`
+        )
         .join(", ")}],`
         : ""
     }${
-      command.payload.args.filter(arg => arg.type.getAlias().length > 0)
-        .length > 0
+      payload.args.filter(arg => arg.type.getAlias().length > 0).length > 0
         ? `
-      alias: {${command.payload.args
+      alias: {${payload.args
         .map(
           arg =>
-            `${camelCase(arg.name)}: [ "${arg.name}", "${arg.name.toUpperCase()}", ${arg.type
+            `${camelCase(arg.name)}: [${
+              camelCase(arg.name) !== arg.name ? ` "${arg.name}",` : ""
+            }${
+              camelCase(arg.name) !== pascalCase(arg.name) &&
+              arg.name !== pascalCase(arg.name)
+                ? ` "${pascalCase(arg.name)}",`
+                : ""
+            } ${
+              camelCase(arg.name) !== arg.name.toUpperCase() &&
+              arg.name !== arg.name.toUpperCase() &&
+              pascalCase(arg.name) !== arg.name.toUpperCase()
+                ? ` "${arg.name.toUpperCase()}",`
+                : ""
+            } ${arg.type
               .getAlias()
-              .map(alias => `"${alias}", "${alias.toUpperCase()}"`)
+              .filter(Boolean)
+              .map(
+                alias =>
+                  `"${alias}",${
+                    alias !== camelCase(alias) ? ` "${camelCase(alias)}",` : ""
+                  }${
+                    alias !== pascalCase(alias) &&
+                    camelCase(alias) !== pascalCase(alias)
+                      ? ` "${pascalCase(alias)}",`
+                      : ""
+                  } ${
+                    alias !== alias.toUpperCase() &&
+                    camelCase(alias) !== alias.toUpperCase() &&
+                    pascalCase(alias) !== alias.toUpperCase()
+                      ? ` "${alias.toUpperCase()}",`
+                      : ""
+                  }`
+              )
               .join(", ")}]`
         )
         .join(",\n ")}},`
@@ -401,21 +427,21 @@ async function handler() {
     });
 
     if (args["version"] || args["v"]) {
-      console.log($storm.config.APP_VERSION);
+      console.log($storm.env.version);
     } else {
-      const isVerbose = args["verbose"] ?? Boolean(process.env.${constantCase(command.root.name)}_VERBOSE);
+      const isVerbose = args["verbose"] ?? Boolean($storm.config.VERBOSE);
       ${
-        config.interactive !== "never"
+        context.options.plugins.cli.interactive !== "never"
           ? `const isPromptEnabled = ((args["interactive"] !== false &&
         args["no-interactive"] !== true) &&
-        Boolean(process.env.${constantCase(command.root.name)}_INTERACTIVE)) &&
-        isInteractive &&
-        !isMinimal;`
+        Boolean($storm.config.INTERACTIVE)) &&
+        $storm.env.isInteractive &&
+        !$storm.env.isMinimal;`
           : ""
       }
 
-      if (args["no-banner"] !== true && !isMinimal) {
-        console.log(renderBanner("${command.title} Command", "${description}"));
+      if (args["no-banner"] !== true && !$storm.env.isMinimal) {
+        console.log(renderBanner("${command.title} Command", "${command.description}"));
         console.log("");
       }
 
@@ -426,11 +452,11 @@ async function handler() {
       } else {
         if (isVerbose) {
           console.log(colors.dim(\` > Writing verbose output to console - as a result of the \${args["verbose"] ? "user provided \\"verbose\\" option" : "${constantCase(
-            command.root.name
+            cmd.root.name
           )}_VERBOSE environment variable"} \`));
           console.log("");
           ${
-            config.interactive !== "never"
+            context.options.plugins.cli.interactive !== "never"
               ? `
           if (isPromptEnabled) {
             console.log(colors.dim(" > Running in interactive mode..."));
@@ -442,7 +468,7 @@ async function handler() {
           }
         }
 
-        ${Object.values(command.payload.args)
+        ${Object.values(payload.args)
           .filter(
             arg =>
               ![
@@ -456,20 +482,20 @@ async function handler() {
           )
           .map(arg => {
             return `
-            if (args["${arg.name}"] === undefined && process.env.${constantCase(command.root.name)}_${constantCase(arg.name)}) {
-              args["${arg.name}"] = process.env.${constantCase(command.root.name)}_${constantCase(arg.name)};
+            if (args["${arg.name}"] === undefined && $storm.config.${constantCase(arg.name)}) {
+              args["${arg.name}"] = $storm.config.${constantCase(arg.name)};
               if (isVerbose) {
-                console.log(colors.dim(\` > Setting the ${arg.name} option to \${process.env.${constantCase(
-                  command.root.name
-                )}_${constantCase(arg.name)}} (via the ${constantCase(
-                  command.root.name
+                console.log(colors.dim(\` > Setting the ${arg.name} option to \${$storm.config.${constantCase(
+                  arg.name
+                )}} (via the ${constantCase(
+                  cmd.root.name
                 )}_${constantCase(arg.name)} environment variable) \`));
               }
             } `;
           })
           .join("\n")}
 
-          ${Object.values(command.payload.args)
+          ${Object.values(payload.args)
             .filter(
               arg =>
                 ![
@@ -485,7 +511,8 @@ async function handler() {
               return `
             if (args["${arg.name}"] === undefined) {
               ${
-                config.interactive !== "never" && !arg.isNegativeOf
+                context.options.plugins.cli.interactive !== "never" &&
+                !arg.isNegativeOf
                   ? `
               if (isPromptEnabled) {
                 args["${arg.name}"] = await prompt<${stringifyType(arg.type.getType())}>(\`Please ${
@@ -583,18 +610,24 @@ async function handler() {
               if (isVerbose) {
                 console.log(colors.dim(\` > Setting the ${arg.name} option to ${arg.type.getDefaultValue()} (via it's default value) \`));
               }
-            ${config.interactive !== "never" && !arg.isNegativeOf ? " } " : ""} `
+            ${
+              context.options.plugins.cli.interactive !== "never" &&
+              !arg.isNegativeOf
+                ? " } "
+                : ""
+            } `
                   : ""
               }
           } `;
             })
             .join("\n")}
 
-        await handleCommand(deserialize<${command.payload.type.getName()}>(args));
+        payload.merge(deserialize<${payload.type.getName()}>(args));
+        await handle(payload);
       }
     }
   } catch (err) {
-   console.error(\` \${colors.red("✘")} \${colors.white(\`Error occurred while processing ${command.title} command.\`)}\`);
+   console.error(\` \${colors.red("✘")}  \${colors.white(\`Error occurred while processing ${command.title} command.\`)}\`);
   }
 }
 
@@ -607,36 +640,40 @@ export default handler;
 async function writeCommandEntry(
   log: LogFn,
   context: CLIPluginContext,
-  command: Command,
-  config: CLIPluginConfig
+  cmd: CommandTreeBranch
 ) {
+  const command = cmd.command;
   log(
     LogLevelLabel.TRACE,
-    `Preparing the command entry artifact ${command.entry.file} (${command.entry?.name ? `export: "${command.entry.name}"` : "default"})" from input "${command.entry.input.file}" (${command.entry.input.name ? `export: "${command.entry.input.name}"` : "default"})`
+    `Preparing the command entry artifact ${command.file} (${
+      command?.name ? `export: "${command.name}"` : "default"
+    })" from input "${command.input.file}" (${
+      command.input.name ? `export: "${command.input.name}"` : "default"
+    })`
   );
 
-  const description =
-    !command.type?.getDescription()?.endsWith(".") &&
-    !command.type?.getDescription()?.endsWith("?")
-      ? `${command.type?.getDescription()}.`
-      : command.type?.getDescription();
-
-  await writeCommandEntryUsage(log, context, command, config, description);
-  await writeCommandEntryHandler(log, context, command, config, description);
+  await writeCommandEntryUsage(log, context, cmd);
+  await writeCommandEntryHandler(log, context, cmd);
 }
 
 async function writeVirtualCommandEntry(
   log: LogFn,
   context: CLIPluginContext,
-  command: Command,
-  _config: CLIPluginConfig
+  cmd: CommandTreeBranch
 ) {
+  const command = cmd.command;
+  const payload = command.payload;
+
   log(
     LogLevelLabel.TRACE,
-    `Preparing the virtual command entry artifact ${command.entry.file} (${command.entry?.name ? `export: "${command.entry.name}"` : "default"})" from input "${command.entry.input.file}" (${command.entry.input.name ? `export: "${command.entry.input.name}"` : "default"})`
+    `Preparing the virtual command entry artifact ${command.file} (${
+      command?.name ? `export: "${command.name}"` : "default"
+    })" from input "${command.input.file}" (${
+      command.input.name ? `export: "${command.input.name}"` : "default"
+    })`
   );
 
-  const optionsColumn1 = sortArgs(command.payload.args).map(arg => {
+  const optionsColumn1 = sortArgs(payload.args).map(arg => {
     const names = sortArgAliases([arg.name, ...arg.type.getAlias()]);
     if (
       arg.type.getKind() === ReflectionKind.string ||
@@ -658,7 +695,7 @@ async function writeVirtualCommandEntry(
       .join(", ");
   });
 
-  const optionsColumn2 = command.payload.args.map(arg => {
+  const optionsColumn2 = sortArgs(payload.args).map(arg => {
     if (
       arg.type.getKind() === ReflectionKind.string ||
       arg.type.getKind() === ReflectionKind.literal ||
@@ -719,50 +756,52 @@ async function writeVirtualCommandEntry(
               : arg.type.getDescription()
           }`
         : ""
-    }${arg.type.getDefaultValue() !== undefined && arg.type.getDefaultValue() !== false ? ` [default: ${arg.type.getDefaultValue()}]` : ""}")}`;
+    }${
+      arg.type.getDefaultValue() !== undefined &&
+      arg.type.getDefaultValue() !== false
+        ? ` [default: ${arg.type.getDefaultValue()}]`
+        : ""
+    }")}`;
   });
 
   const column1MaxLength =
     Math.max(...optionsColumn1.map(option => option.length)) + 6;
 
-  const description = !command.type?.getDescription()
-    ? `The ${command.title} set of commands used by the ${
-        command.root.title ? `${command.root.title}` : "command-line"
-      } application.`
-    : !command.type?.getDescription()?.endsWith(".") &&
-        !command.type?.getDescription()?.endsWith("?")
-      ? `${command.type?.getDescription()}.`
-      : command.type?.getDescription();
-
   await context.vfs.writeEntryFile(
-    command.entry.file,
+    command.file,
     `${getFileHeader()}
 
-import ${command.entry.input.name ? `{ ${command.entry.input.name} as handle }` : "handle"} from "${joinPaths(
+import ${command.input.name ? `{ ${command.input.name} as handle }` : "handle"} from "./${joinPaths(
       relativePath(
-        findFilePath(command.entry.file),
-        findFilePath(command.entry.input.file)
+        findFilePath(command.file),
+        findFilePath(command.input.file)
       ),
-      findFileName(command.entry.input.file).replace(
-        findFileExtension(command.entry.input.file) || "",
+      findFileName(command.input.file).replace(
+        findFileExtension(command.input.file) || "",
         ""
       )
     )}";
-import { isMinimal } from "storm:env";
-import { colors, renderBanner, renderFooter, parseArgs } from "storm:cli";${
-      command.children && Object.values(command.children).length > 0
-        ? Object.values(command.children)
+import { StormPayload } from "storm:payload";
+import { CLIBasePayloadData, colors, renderBanner, renderFooter, parseArgs } from "storm:cli";${
+      cmd.children && Object.values(cmd.children).length > 0
+        ? Object.values(cmd.children)
             .map(child =>
-              child.entry.isVirtual
-                ? `import handle${pascalCase(child.name)}, { renderUsage as render${pascalCase(child.name)}Usage } from "./${child.name}";`
-                : `import { renderUsage as render${pascalCase(child.name)}Usage } from "./${child.name}/usage";`
+              child.command.isVirtual
+                ? `import handle${pascalCase(
+                    child.command.name
+                  )}, { renderUsage as render${pascalCase(
+                    child.command.name
+                  )}Usage } from "./${child.command.name}";`
+                : `import { renderUsage as render${pascalCase(
+                    child.command.name
+                  )}Usage } from "./${child.command.name}/usage";`
             )
             .join("\n")
         : ""
     }
 
-export interface ${command.payload.type.getName()} {
-  ${command.payload.args
+export interface ${payload.type.getName()} extends CLIBasePayloadData {
+  ${payload.args
     .map(arg => `${camelCase(arg.name)}: ${stringifyType(arg.type.getType())};`)
     .join("\n  ")}
 }
@@ -778,22 +817,22 @@ export function renderUsage(mode: "full" | "minimal" = "full"): string {
   const isLargeConsole = consoleWidth >= ${LARGE_CONSOLE_WIDTH};
 
   return \`\${colors.whiteBright(colors.bold("${command.title.toUpperCase()} COMMANDS:"))} ${
-    command.type?.getDescription()
+    command.description
       ? `
 
-  \${colors.gray("${description}")}
+  \${colors.gray("${command.description}")}
 `
       : ""
   }
   \${colors.whiteBright(colors.bold("USAGE:"))}
 ${
-  Object.values(command.children).length > 0
-    ? Object.values(command.children)
+  Object.values(cmd.children).length > 0
+    ? Object.values(cmd.children)
         .map(
           child =>
-            `    $ ${kebabCase(command.root.bin[0]!)}${
-              child.entry.path.length > 0
-                ? ` ${child.entry.path
+            `    $ ${kebabCase(cmd.root.bin[0])}${
+              child.command.path.length > 0
+                ? ` ${child.command.path
                     .filter(Boolean)
                     .map(part => part.replace("[", "<").replace("]", ">"))
                     .join(" ")}`
@@ -803,49 +842,58 @@ ${
         .join("\n")
     : ""
 }${
-      Object.values(command.children).length > 0
+      Object.values(cmd.children).length > 0
         ? `\${mode === "full" ? \`
 
   \${colors.whiteBright(colors.bold("COMMANDS:"))}
-${Object.values(command.children)
+${Object.values(cmd.children)
   .map(
     child =>
-      `\${render${pascalCase(child.name)}Usage("minimal").split("\\n").map(line => \`    \${line}\`).join("\\n")}`
+      `\${render${pascalCase(
+        child.command.name
+      )}Usage("minimal").split("\\n").map(line => \`    \${line}\`).join("\\n")}`
   )
   .join("\n\n")}\` : ""}`
         : ""
     }
 
   \${colors.whiteBright(colors.bold("OPTIONS:"))}
-\${colors.cyan(colors.bold(\`${optionsColumn1.map((option, i) => `    \${isLargeConsole ? "${option}".padEnd(${LARGE_HELP_COLUMN_WIDTH}) : "${option}".padEnd(${column1MaxLength})}${optionsColumn2[i]}`).join(" \n")}\`))}
+\${colors.cyan(colors.bold(\`${optionsColumn1
+      .map(
+        (option, i) =>
+          `    \${isLargeConsole ? "${option}".padEnd(${
+            LARGE_HELP_COLUMN_WIDTH
+          }) : "${option}".padEnd(${column1MaxLength})}${optionsColumn2[i]}`
+      )
+      .join(" \n")}\`))}
 \`;
 }
 
 /**
- * The entry point for the ${titleCase(command.name)} virtual command.
+ * The entry point for the ${command.title} virtual command.
  */
-async function handler() {
+async function handler(payload: StormPayload<${payload.type.getName()}>) {
   try {
     ${
-      Object.values(command.children).length > 0
-        ? `if (process.argv.length > ${command.entry.path.length + 2}) {
-      const command = process.argv[${command.entry.path.length + 1}];
+      Object.values(cmd.children).length > 0
+        ? `if (payload.data.argv.length > ${command.path.length + 2}) {
+      const command = payload.data.argv[${command.path.length + 1}];
       if (command && !command.startsWith("-")) {
-      ${Object.values(command.children)
+      ${Object.values(cmd.children)
         .map(
           (child, i) =>
-            `${i === 0 ? "if" : "else if"} (command.toLowerCase() === "${child.name.toLowerCase()}") {
+            `${i === 0 ? "if" : "else if"} (command.toLowerCase() === "${child.command.name.toLowerCase()}") {
           ${
-            child.entry.isVirtual
-              ? `return handle${pascalCase(child.name)}();`
-              : `const handle = await import("./${child.name}").then(m => m.default);
-          return handle();`
+            child.command.isVirtual
+              ? `return handle${pascalCase(child.command.name)}(payload);`
+              : `const handle = await import("./${child.command.name}").then(m => m.default);
+          return handle(payload);`
           }
         } `
         )
         .join(" ")}
 
-        console.error(\` \${colors.red("✘")} \${colors.white(\`Unknown command: \${colors.bold(command || "<none>")}\`)}\`);
+        console.error(\` \${colors.red("✘")}  \${colors.white(\`Unknown command: \${colors.bold(command || "<none>")}\`)}\`);
         console.log("");
         console.log(renderUsage("full"));
         console.log(renderFooter());
@@ -857,26 +905,52 @@ async function handler() {
         : ""
     }
 
-    const args = parseArgs(process.argv.slice(${command.entry.path.length + 1}), {${
-      command.payload.args.filter(
-        arg => arg.type.getKind() === ReflectionKind.boolean
-      ).length > 0
+    const args = parseArgs(payload.data.argv.slice(${command.path.length + 1}), {${
+      payload.args.filter(arg => arg.type.getKind() === ReflectionKind.boolean)
+        .length > 0
         ? `
-      boolean: [${command.payload.args
-        .filter(arg => arg.type.getKind() === ReflectionKind.boolean)
-        .map(arg => `"${arg.name}", "${arg.type.getAlias().join('", "')}"`)
+      boolean: [${payload.args
+        .filter(
+          arg => arg.name && arg.type.getKind() === ReflectionKind.boolean
+        )
+        .map(
+          arg =>
+            `${arg.name ? `"${arg.name}"` : ""}${
+              arg.type.getAlias().length > 0
+                ? `, ${arg.type
+                    .getAlias()
+                    .map(alias => `"${alias}"`)
+                    .join(", ")}`
+                : ""
+            }`
+        )
         .join(", ")}],`
         : ""
     }${
-      command.payload.args.filter(arg => arg.type.getAlias().length > 0)
-        .length > 0
+      payload.args.filter(arg => arg.type.getAlias().length > 0).length > 0
         ? `
-      alias: {${command.payload.args
+      alias: {${payload.args
         .map(
           arg =>
-            `${camelCase(arg.name)}: [ "${arg.name}", "${arg.name.toUpperCase()}", ${arg.type
+            `${camelCase(arg.name)}: [${
+              camelCase(arg.name) !== arg.name ? ` "${arg.name}",` : ""
+            }${
+              camelCase(arg.name) !== pascalCase(arg.name)
+                ? ` "${pascalCase(arg.name)}",`
+                : ""
+            } "${arg.name.toUpperCase()}", ${arg.type
               .getAlias()
-              .map(alias => `"${alias}", "${alias.toUpperCase()}"`)
+              .filter(Boolean)
+              .map(
+                alias =>
+                  `"${alias}",${
+                    alias !== camelCase(alias) ? ` "${camelCase(alias)}",` : ""
+                  }${
+                    alias !== pascalCase(alias)
+                      ? ` "${pascalCase(alias)}",`
+                      : ""
+                  } "${alias.toUpperCase()}"`
+              )
               .join(", ")}]`
         )
         .join(",\n ")}},`
@@ -885,10 +959,12 @@ async function handler() {
     });
 
     if (args["version"] || args["v"]) {
-      console.log($storm.config.APP_VERSION);
+      console.log($storm.env.version);
     } else {
-      if (args["no-banner"] !== true && !isMinimal) {
-        console.log(renderBanner("${command.title} Commands", "${description}"));
+      if (args["no-banner"] !== true && !$storm.env.isMinimal) {
+        console.log(renderBanner("${command.title} Commands", "${
+          command.description
+        }"));
         console.log("");
       }
 
@@ -897,7 +973,7 @@ async function handler() {
       console.log("");
     }
   } catch (err) {
-   console.error(\` \${colors.red("✘")} \${colors.white(\`Error occurred while processing ${
+   console.error(\` \${colors.red("✘")}  \${colors.white(\`Error occurred while processing ${
      command.title
    } command.\`)}\`);
   }
@@ -912,106 +988,98 @@ export default handler;
 async function prepareCommandDefinition(
   log: LogFn,
   context: CLIPluginContext,
-  command: Command,
-  config: CLIPluginConfig
+  cmd: CommandTreeBranch
 ) {
-  if (command.children) {
-    for (const subCommand of Object.values(command.children)) {
-      await prepareCommandDefinition(log, context, subCommand, config);
+  if (cmd.children) {
+    for (const subCommand of Object.values(cmd.children)) {
+      await prepareCommandDefinition(log, context, subCommand);
     }
   }
 
+  const command = cmd.command;
+
   log(
     LogLevelLabel.TRACE,
-    `Preparing the entry artifact ${command.entry.file} (${
-      command.entry?.name ? `export: "${command.entry.name}"` : "default"
-    }) from input "${command.entry.input.file}" (${
-      command.entry.input.name
-        ? `export: "${command.entry.input.name}"`
-        : "default"
+    `Preparing the entry artifact ${command.file} (${
+      command?.name ? `export: "${command.name}"` : "default"
+    }) from input "${command.input.file}" (${
+      command.input.name ? `export: "${command.input.name}"` : "default"
     })`
   );
 
-  if (command.entry.isVirtual) {
-    return writeVirtualCommandEntry(log, context, command, config);
+  if (command.isVirtual) {
+    return writeVirtualCommandEntry(log, context, cmd);
   }
 
-  return writeCommandEntry(log, context, command, config);
+  return writeCommandEntry(log, context, cmd);
 }
 
-export async function generateConfigCommands(
-  log: LogFn,
-  context: CLIPluginContext,
-  config: CLIPluginConfig
-) {
-  if (config.manageConfig === false) {
-    log(
-      LogLevelLabel.TRACE,
-      "Skipping config command generation since `manageConfig` is false."
-    );
-  } else {
-    await Promise.all([
-      context.vfs.writeEntryFile(
-        joinPaths(context.entryPath, "config", "get", "handle.ts"),
-        writeConfigGet(context)
-      ),
-      context.vfs.writeEntryFile(
-        joinPaths(context.entryPath, "config", "set", "handle.ts"),
-        writeConfigSet(context)
-      ),
-      context.vfs.writeEntryFile(
-        joinPaths(context.entryPath, "config", "list", "handle.ts"),
-        writeConfigList(context)
-      ),
-      context.vfs.writeEntryFile(
-        joinPaths(context.entryPath, "config", "delete", "handle.ts"),
-        writeConfigDelete(context)
-      )
-    ]);
-  }
-}
+// export async function generateConfigCommands(
+//   log: LogFn,
+//   context: CLIPluginContext,
+//   config: CLIPluginOptions
+// ) {
+//   if (config.manageConfig === false) {
+//     log(
+//       LogLevelLabel.TRACE,
+//       "Skipping config command generation since `manageConfig` is false."
+//     );
+//   } else {
+//     await Promise.all([
+//       context.vfs.writeEntryFile(
+//         joinPaths(context.entryPath, "config", "get", "handle.ts"),
+//         writeConfigGet(context)
+//       ),
+//       context.vfs.writeEntryFile(
+//         joinPaths(context.entryPath, "config", "set", "handle.ts"),
+//         writeConfigSet(context)
+//       ),
+//       context.vfs.writeEntryFile(
+//         joinPaths(context.entryPath, "config", "list", "handle.ts"),
+//         writeConfigList(context)
+//       ),
+//       context.vfs.writeEntryFile(
+//         joinPaths(context.entryPath, "config", "delete", "handle.ts"),
+//         writeConfigDelete(context)
+//       )
+//     ]);
+//   }
+// }
 
 export async function generateCompletionCommands(
   log: LogFn,
-  context: CLIPluginContext,
-  config: CLIPluginConfig
+  context: CLIPluginContext
 ) {
-  if (config.manageConfig === false) {
-    log(
-      LogLevelLabel.TRACE,
-      "Skipping config command generation since `manageConfig` is false."
-    );
-  } else {
-    await Promise.all([
-      context.vfs.writeEntryFile(
-        joinPaths(context.entryPath, "completions", "bash", "handle.ts"),
-        writeCompletionsBash(context, config)
-      ),
-      context.vfs.writeEntryFile(
-        joinPaths(context.entryPath, "completions", "zsh", "handle.ts"),
-        writeCompletionsZsh(context, config)
-      )
-    ]);
-  }
+  log(LogLevelLabel.TRACE, "Generating completion commands entry points.");
+
+  await Promise.all([
+    context.vfs.writeEntryFile(
+      joinPaths(context.entryPath, "completions", "bash", "handle.ts"),
+      writeCompletionsBash(context, context.options.plugins.cli)
+    ),
+    context.vfs.writeEntryFile(
+      joinPaths(context.entryPath, "completions", "zsh", "handle.ts"),
+      writeCompletionsZsh(context, context.options.plugins.cli)
+    )
+  ]);
 }
 
 export async function prepareEntry(
   log: LogFn,
   context: CLIPluginContext,
-  config: CLIPluginConfig,
   commandTree: CommandTree
 ): Promise<CommandTree> {
-  // const commandTree = await readCommandTreeReflection(context, config);
-
   for (const command of Object.values(commandTree.children)) {
-    await prepareCommandDefinition(log, context, command, config);
+    await prepareCommandDefinition(log, context, command);
   }
 
   let appTitle = titleCase(
     context.options.name ||
-      (Array.isArray(config.bin) ? config.bin[0] : config.bin) ||
+      (Array.isArray(context.options.plugins.cli.bin)
+        ? context.options.plugins.cli.bin[0]
+        : context.options.plugins.cli.bin) ||
       context.packageJson?.name
-  );
+  )!;
   if (!appTitle.toLowerCase().endsWith("cli")) {
     appTitle += " CLI";
   }
@@ -1037,7 +1105,7 @@ export async function prepareEntry(
     }
   }
 
-  const author = extractAuthor(context, config);
+  const author = extractAuthor(context);
 
   await context.vfs.writeEntryFile(
     commandTree.entry.file,
@@ -1049,24 +1117,33 @@ export async function prepareEntry(
 
 ${getFileHeader()}
 
+import { createCLI } from "storm:app";
 import { colors, link, renderBanner, renderFooter, parseArgs } from "storm:cli";
-import { isMinimal, isUnicodeSupported } from "storm:env";
 import { isError, isStormError, createStormError } from "storm:error";${
       commandTree.children && Object.values(commandTree.children).length > 0
         ? Object.values(commandTree.children)
             .map(child =>
-              child.entry.isVirtual
-                ? `import handle${pascalCase(child.name)}, { renderUsage as render${pascalCase(child.name)}Usage } from "./entry/${child.entry.path.join("/")}";`
-                : `import { renderUsage as render${pascalCase(child.name)}Usage } from "./entry/${child.entry.path.join("/")}/usage";`
+              child.command.isVirtual
+                ? `import handle${pascalCase(
+                    child.command.name
+                  )}, { renderUsage as render${pascalCase(
+                    child.command.name
+                  )}Usage } from "./entry/${child.command.path.join("/")}";`
+                : `import { renderUsage as render${pascalCase(
+                    child.command.name
+                  )}Usage } from "./entry/${child.command.path.join(
+                    "/"
+                  )}/usage";`
             )
             .join("\n")
         : ""
     }
 
-// Exit early if on an older version of Node.js (< ${config.minNodeVersion})
+
+// Exit early if on an older version of Node.js (< ${context.options.plugins.cli.minNodeVersion})
 // const major = process.versions.node.split(".").map(Number)[0]!;
-// if (major < ${config.minNodeVersion}) {
-//   console.error(\` \${colors.red("✘")} \${colors.white(\`${titleCase(context.options.name)} CLI requires Node.js version ${config.minNodeVersion} or newer.
+// if (major < ${context.options.plugins.cli.minNodeVersion}) {
+//   console.error(\` \${colors.red("✘")}  \${colors.white(\`${titleCase(context.options.name)} CLI requires Node.js version ${context.options.plugins.cli.minNodeVersion} or newer.
 // You are running Node.js v\${process.versions.node}.
 // Please upgrade Node.js - \${link("https://nodejs.org/en/download/")}
 // \`)}\`,
@@ -1074,10 +1151,11 @@ import { isError, isStormError, createStormError } from "storm:error";${
 //   process.exit(1);
 // }
 
-async function main() {
-  ${
-    !context.packageJson.private
-      ? `
+const main = createCLI(async (payload) => {
+
+${
+  !context.packageJson.private
+    ? `
   try {
     /*
 
@@ -1095,7 +1173,7 @@ async function main() {
     const response = await fetch("https://registry.npmjs.org/${context.packageJson.name || context.options.name}/latest");
 
     const latestVersion = (await response.json()).version;
-    if ($storm.config.APP_VERSION === latestVersion) {
+    if ($storm.env.version === latestVersion) {
       return;
     }
 
@@ -1108,7 +1186,7 @@ async function main() {
       appTitle.toLowerCase().startsWith("y")
         ? "An"
         : "A"
-    } ${appTitle} update is available! \${colors.red($storm.config.APP_VERSION)} 🢂 \${colors.green(latestVersion)}\`)}
+    } ${appTitle} update is available! \${colors.red($storm.env.version)} 🢂 \${colors.green(latestVersion)}\`)}
 
     Release Notes: \${link("${
       repository
@@ -1129,42 +1207,44 @@ async function main() {
       lastUpdateCheck: currentTime,
     });*/
   } catch (err) {
-    console.error(\` \${colors.red("✘")} \${colors.white(\`An error occurred while checking for ${
+    console.error(\` \${colors.red("✘")}  \${colors.white(\`An error occurred while checking for ${
       appTitle
     } application updates. You can disable update check by setting configuration parameter "SKIP_UPDATE_CHECK" to true: \n\n\${createStormError(err).toDisplay()}\`)}\`);
     console.log("");
   }
-`
-      : ""
-  }
+  `
+    : ""
+}
 
   try {
-    if (process.argv.includes("--version") || process.argv.includes("-v")) {
-      console.log($storm.config.APP_VERSION);
+    if (payload.data.argv.includes("--version") || payload.data.argv.includes("-v")) {
+      console.log($storm.env.version);
     } else {
       let command = "";
-      if (process.argv.length > 2 && process.argv[2]) {
-        command = process.argv[2];
+      if (payload.data.argv.length > 2 && payload.data.argv[2]) {
+        command = payload.data.argv[2];
       }
 
       ${Object.values(commandTree.children)
         .map(
           (child, i) =>
-            `${i === 0 ? "if" : "else if"} (command.toLowerCase() === "${child.name.toLowerCase()}") {
+            `${i === 0 ? "if" : "else if"} (command.toLowerCase() === "${child.command.name.toLowerCase()}") {
         ${
-          child.entry.isVirtual
-            ? `return handle${pascalCase(child.name)}();`
-            : `const handle = await import("./entry/${child.entry.path.join("/")}").then(m => m.default);
-        return handle();`
+          child.command.isVirtual
+            ? `return handle${pascalCase(child.command.name)}(payload);`
+            : `const handle = await import("./entry/${child.command.path.join(
+                "/"
+              )}").then(m => m.default);
+        return handle(payload);`
         }
       } `
         )
         .join(" ")} else {
-        console.error(\` \${colors.red("✘")} \${colors.white(\`Unknown command: \${colors.bold(command || "<none>")}\`)}\`);
+        console.error(\` \${colors.red("✘")}  \${colors.white(\`Unknown command: \${colors.bold(command || "<none>")}\`)}\`);
         console.log("");
       }
 
-      if (!isMinimal) {
+      if (!$storm.env.isMinimal) {
         console.log(renderBanner("Help Information", "Display usage details, commands, and support information for the ${
           appTitle
         } application"));
@@ -1182,6 +1262,11 @@ async function main() {
       console.log("");`
           : ""
       }
+
+      console.log(colors.cyan(\`\${" ".repeat(Math.max((consoleWidth - (consoleWidth * 0.75)) / 2, 10))}\${"━".repeat(consoleWidth * 0.75)}\${" ".repeat(Math.max((consoleWidth - (consoleWidth * 0.75)) / 2, 10))}\`));
+      console.log("");
+      console.log("");
+
       console.log(colors.gray("The following commands are available as part of the ${appTitle} application: "));${
         commandTree.children && Object.values(commandTree.children).length > 0
           ? Object.values(commandTree.children)
@@ -1189,7 +1274,7 @@ async function main() {
                 child =>
                   `
       console.log("");
-      console.log(render${pascalCase(child.name)}Usage("minimal"));`
+      console.log(render${pascalCase(child.command.name)}Usage("minimal"));`
               )
               .join("\n")
           : ""
@@ -1199,13 +1284,13 @@ async function main() {
       console.log("");
     }
   } catch (err) {
-    console.error(\` \${colors.red("✘")} \${colors.white(\`An error occurred while running the ${
+    console.error(\` \${colors.red("✘")}  \${colors.white(\`An error occurred while running the ${
       appTitle
     } application: \n\n\${createStormError(err).toDisplay()}\`)}\`);
   }
-}
+});
 
-await main();
+main({ argv: process.argv });
 
 `
   );
@@ -1215,55 +1300,63 @@ await main();
 
 export async function addCommandArgReflections(
   context: CLIPluginContext,
-  command: Command
+  cmd: CommandTreeBranch
 ) {
-  for (const arg of command.payload.args) {
+  const payload = cmd.command.payload;
+  if (!payload) {
+    throw new Error(`Command ${cmd.command.id}'s payload is missing`);
+  }
+
+  for (const arg of payload.args) {
     let name = constantCase(arg.name);
-    const aliasProperties = context.reflections.configDotenv
-      ?.getProperties()
-      .filter(prop => prop.getAlias().length > 0);
+    if (name) {
+      const aliasProperties = context.reflections.config.params
+        ?.getProperties()
+        .filter(prop => prop.getAlias().length > 0);
 
-    const prefix = context.options.plugins.dotenv.prefix.find(
-      pre =>
-        name &&
-        name.startsWith(pre) &&
-        (context.reflections.configDotenv?.hasProperty(
-          name.replace(`${pre}_`, "")
-        ) ??
-          aliasProperties?.some(prop =>
-            prop.getAlias().includes(name.replace(`${pre}_`, ""))
-          ))
-    );
-    if (prefix) {
-      name = name.replace(`${prefix}_`, "");
-    }
+      const prefix = context.options.plugins.config.prefix.find(
+        pre =>
+          name &&
+          name.startsWith(pre) &&
+          (context.reflections.config.params?.hasProperty(
+            name.replace(`${pre}_`, "")
+          ) ??
+            aliasProperties?.some(prop =>
+              prop.getAlias().includes(name.replace(`${pre}_`, ""))
+            ))
+      );
+      if (prefix) {
+        name = name.replace(`${prefix}_`, "");
+      }
 
-    if (
-      !context.reflections.configDotenv?.hasProperty(name) &&
-      !aliasProperties?.some(prop => prop.getAlias().includes(name))
-    ) {
-      context.reflections.configDotenv?.addProperty({
-        name: constantCase(arg.name),
-        optional: true,
-        description: arg.type.getDescription(),
-        type: arg.type.getType(),
-        default: arg.type.getDefaultValue(),
-        tags: {
-          domain: "cli",
-          alias:
-            arg.type.getAlias().filter(alias => alias.length > 1).length > 0
-              ? arg.type
-                  .getAlias()
-                  .filter(alias => alias.length > 1)
-                  .map(alias => constantCase(alias))
-              : undefined
-        }
-      });
+      if (
+        !context.reflections.config.params?.hasProperty(name) &&
+        !aliasProperties?.some(prop => prop.getAlias().includes(name))
+      ) {
+        context.reflections.config.params?.addProperty({
+          name,
+          optional: true,
+          description: arg.type.getDescription(),
+          type: arg.type.getType(),
+          default: arg.type.getDefaultValue(),
+          tags: {
+            domain: "cli",
+            alias:
+              arg.type.getAlias().filter(alias => alias && alias.length > 1)
+                .length > 0
+                ? arg.type
+                    .getAlias()
+                    .filter(alias => alias && alias.length > 1)
+                    .map(alias => constantCase(alias))
+                : undefined
+          }
+        });
+      }
     }
   }
 
-  if (command.children) {
-    for (const subCommand of Object.values(command.children)) {
+  if (cmd.children) {
+    for (const subCommand of Object.values(cmd.children)) {
       await addCommandArgReflections(context, subCommand);
     }
   }

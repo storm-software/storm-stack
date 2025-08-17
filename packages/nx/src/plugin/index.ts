@@ -41,6 +41,7 @@ import { isError } from "@stryke/type-checks/is-error";
 import type { PackageJson } from "@stryke/types/package-json";
 import defu from "defu";
 import { createJiti } from "jiti";
+import { join } from "node:path";
 import { readNxJson } from "nx/src/config/nx-json.js";
 import type { ProjectConfiguration } from "nx/src/config/workspace-json-project-json.js";
 import type { PackageJson as PackageJsonNx } from "nx/src/utils/package-json.js";
@@ -248,6 +249,19 @@ export const createNodesV2: CreateNodesV2<StormStackNxPluginOptions> = [
                 mode: "development",
                 skipCache: true
               }
+            }
+          };
+
+          targets["type-check"] ??= {
+            cache: true,
+            inputs: ["typescript", "^production"],
+            outputs: ["{workspaceRoot}/dist/{projectRoot}"],
+            executor: "nx:run-commands",
+            dependsOn: ["^type-check", "^build"],
+            options: {
+              command: `pnpm exec tsc --noEmit --pretty --project ${
+                userConfig.tsconfig || join(projectConfig.root, "tsconfig.json")
+              }`
             }
           };
 

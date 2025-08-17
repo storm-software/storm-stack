@@ -22,7 +22,8 @@ const config = getTsupConfig({
   name: "devkit",
   entry: [
     "src/index.ts",
-    "src/templates/*.ts",
+    "src/helpers/**/*.ts",
+    "src/templates/**/*.ts",
     "src/plugins/*.ts",
     "src/babel/*.ts"
   ],

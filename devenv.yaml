@@ -9,3 +9,4 @@ inputs:
     url: github:nixos/nixpkgs/nixpkgs-unstable
 imports:
   - storm-ops/devenv-modules/base
+  - storm-ops/devenv-modules/vhs

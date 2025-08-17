@@ -16,12 +16,12 @@
 
  ------------------------------------------------------------------- */
 
-import { NodePath, PluginObject, PluginPass } from "@babel/core";
+import { NodePath, PluginAPI, PluginObject, PluginPass } from "@babel/core";
 import type * as t from "@babel/types";
 import { ErrorType } from "@storm-stack/types/shared/error";
-import { CompilerOptions, TransformOptions } from "./compiler";
+import { CompilerOptions } from "./compiler";
 import { LogFn } from "./config";
-import { Context, SerializedContext } from "./context";
+import { Context } from "./context";
 
 export interface ErrorMessageNode {
   message: string;
@@ -44,59 +44,77 @@ export interface DefaultImportDefinition {
 export type ImportDefinition = NamedImportDefinition | DefaultImportDefinition;
 
 export interface SerializedBabelPluginOptions {
-  options: TransformOptions;
+  options: CompilerOptions;
 }
 
 export interface BabelPluginOptions {
-  options: TransformOptions;
-  context: SerializedContext;
+  options: CompilerOptions;
 }
 
 export interface BabelPluginState<
-  TOptions extends BabelPluginOptions = BabelPluginOptions,
-  TContext extends Context = Context
+  TOptions extends BabelPluginOptions = BabelPluginOptions
 > {
   log: LogFn;
   options: TOptions;
-  context: TContext;
 }
 
 export type BabelPluginPass<
   TOptions extends BabelPluginOptions = BabelPluginOptions,
-  TState extends BabelPluginState<TOptions> = BabelPluginState<TOptions>
+  TState = unknown
 > = PluginPass<TOptions> & TState;
 
 export type BabelPlugin<
   TOptions extends BabelPluginOptions = BabelPluginOptions,
-  TState extends BabelPluginState<TOptions> = BabelPluginState<TOptions>
-> = PluginObject<BabelPluginPass<TOptions, TState>>;
+  TContext extends Context = Context,
+  TState = unknown
+> = ((
+  context: TContext
+) => (options: {
+  name: string;
+  log: LogFn;
+  api: PluginAPI;
+  options: TOptions;
+  context: TContext;
+  dirname: string;
+}) => PluginObject<TOptions & BabelPluginPass<TOptions, TState>>) & {
+  _name?: string;
+};
 
 export type BabelPluginTarget<
   TOptions extends BabelPluginOptions = BabelPluginOptions,
-  TState extends BabelPluginState<TOptions> = BabelPluginState<TOptions>
-  // eslint-disable-next-line ts/no-unsafe-function-type
-> = BabelPlugin<TOptions, TState> | string | object | Function;
+  TContext extends Context = Context,
+  TState = unknown
+> =
+  | BabelPlugin<TOptions, TContext, TState>
+  | PluginObject<BabelPluginPass<TOptions, TState>>
+  | string
+  | object;
 
 export type BabelPluginItem<
   TOptions extends BabelPluginOptions = BabelPluginOptions,
-  TState extends BabelPluginState<TOptions> = BabelPluginState<TOptions>
+  TContext extends Context = Context,
+  TState = unknown
 > =
-  | BabelPluginTarget<TOptions, TState>
+  | BabelPluginTarget<TOptions, TContext, TState>
   | [
-      BabelPluginTarget<TOptions, TState>,
-      Omit<TOptions, "options" | "context"> | undefined | null
+      BabelPluginTarget<TOptions, TContext, TState>,
+      Omit<TOptions, "options"> | undefined | null
     ]
   | [
-      BabelPluginTarget<TOptions, TState>,
-      Omit<TOptions, "options" | "context"> | undefined | null,
+      BabelPluginTarget<TOptions, TContext, TState>,
+      Omit<TOptions, "options"> | undefined | null,
       CompilerOptions | undefined | null
     ];
 
 export type ResolvedBabelPluginItem<
   TOptions extends BabelPluginOptions = BabelPluginOptions,
-  TState extends BabelPluginState<TOptions> = BabelPluginState<TOptions>
+  TContext extends Context = Context,
+  TState = unknown
 > = [
-  BabelPlugin<TOptions, TState> | BabelPluginTarget,
+  (
+    | BabelPlugin<TOptions, TContext, TState>
+    | BabelPluginTarget<TOptions, TContext, TState>
+  ),
   TOptions,
   CompilerOptions | undefined | null
 ];

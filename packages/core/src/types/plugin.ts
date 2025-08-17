@@ -47,7 +47,7 @@ export interface RendererInterface {
   getPackageDeps: () => Record<string, "dependency" | "devDependency">;
 }
 
-export interface PluginBaseConfig {
+export interface PluginBaseOptions {
   /**
    * A list of packages that are required by the generated output of the plugin.
    */
@@ -59,19 +59,21 @@ export interface PluginBaseConfig {
   // renderers?: Record<string, RendererFunction>;
 }
 
-export type PluginOptions<TConfig extends PluginBaseConfig = PluginBaseConfig> =
-  TConfig & {
-    /**
-     * A function used to log messages during the plugin's execution.
-     *
-     * @remarks
-     * This option is provided by the {@link Engine} during the plugin's initialization.
-     */
-    log?: LogFn;
-  };
+export type PluginOptions<
+  TOptions extends PluginBaseOptions = PluginBaseOptions
+> = TOptions & {
+  /**
+   * A function used to log messages during the plugin's execution.
+   *
+   * @remarks
+   * This option is provided by the {@link Engine} during the plugin's initialization.
+   */
+  log?: LogFn;
+};
 
 export interface PluginInterface<
-  TConfig extends PluginBaseConfig = PluginBaseConfig
+  TOptions extends PluginBaseOptions = PluginBaseOptions,
+  TContext extends Context = Context
 > {
   /**
    * The name of the plugin
@@ -108,7 +110,7 @@ export interface PluginInterface<
    * @remarks
    * This is used to store the configuration options for the plugin, which can be accessed by the plugin's methods.
    */
-  options: PluginOptions<TConfig>;
+  options: PluginOptions<TOptions>;
 
   /**
    * A list of plugin modules required as dependencies by the current plugin.
@@ -123,7 +125,7 @@ export interface PluginInterface<
    *
    * @param hooks - The hooks to add to the engine.
    */
-  addHooks: (hooks: EngineHooks) => void;
+  addHooks: (hooks: EngineHooks<TContext>) => void;
 
   /**
    * Checks if the current plugin is the same as another plugin.

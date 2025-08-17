@@ -21,9 +21,9 @@ import { kebabCase } from "@stryke/string-format/kebab-case";
 import { titleCase } from "@stryke/string-format/title-case";
 import { isObject } from "@stryke/type-checks/is-object";
 import { isSetString } from "@stryke/type-checks/is-set-string";
-import type { CLIPluginConfig, CLIPluginContext } from "../types/config";
+import type { CLIPluginContext } from "../types/config";
 
-export function AppModule(context: CLIPluginContext, _config: CLIPluginConfig) {
+export function AppModule(context: CLIPluginContext) {
   let support = context.options.support;
   if (!support) {
     if (isObject(context.packageJson?.bugs) && context.packageJson?.bugs?.url) {
@@ -33,34 +33,13 @@ export function AppModule(context: CLIPluginContext, _config: CLIPluginConfig) {
 
   return `${getFileHeader()}
 
-import type {
-  HandlerFunction,
-  StormContext,
-  StormRuntimeParams,
-} from "@storm-stack/types/node";
-import type {
-  StormPayloadInterface
-} from "@storm-stack/types/payload";
-import type {
-  StormResultInterface
-} from "@storm-stack/types/result";
-import { StormConfig } from "storm:dotenv";
-import {
-  name,
-  version,
-  build,
-  runtime,
-  paths
-} from "storm:env";
- import { STORM_ASYNC_CONTEXT } from "storm:context";
-import { createStormError, StormError, isError } from "storm:error";
-import { StormEvent } from "storm:event";
-import { uniqueId } from "storm:id";
-import { StormPayload } from "storm:payload";
+import type { HandlerFunction } from "@storm-stack/types/node";
 import { StormResult } from "storm:result";
-import { StormLog } from "storm:log";
-import { storage } from "storm:storage";
-import { link, colors } from "storm:cli";
+import { StormPayload } from "storm:payload";
+import { format, formats } from "storm:date";
+import { withContext, StormContext } from "storm:context";
+import { createStormError, StormError, isError, isStormError } from "storm:error";
+import { link, colors, CLIBasePayloadData } from "storm:cli";
 import os from "node:os";
 import { join } from "node:path";
 import { spinner } from "@clack/prompts";
@@ -71,104 +50,35 @@ import { spinner } from "@clack/prompts";
  * @param handler - The handler function for the application.
  * @returns A function that takes an payload and returns a result or a promise of a result.
  */
-export function withContext<TInput = any, TOutput = any>(
+export function createCLI<TInput extends CLIBasePayloadData = CLIBasePayloadData, TOutput = any>(
   handler: HandlerFunction<TInput, TOutput>
-) {
-  const disposables = new Set<Disposable>();
-  const asyncDisposables = new Set<AsyncDisposable>();
-
-  let isExitComplete = false;
-  async function handleExit(): Promise<void> {
-    if (isExitComplete) {
-      return;
-    }
-
-    await storage.dispose();
-
-    for (const disposable of disposables) {
-      disposable[Symbol.dispose]();
-    }
-    disposables.clear();
-
-    const promises = [] as PromiseLike<void>[];
-    for (const disposable of asyncDisposables) {
-      promises.push(disposable[Symbol.asyncDispose]());
-      asyncDisposables.delete(disposable);
-    }
-    await Promise.all(promises);
-
-    isExitComplete = true;
-  }
-
-  const log = new StormLog();
-  for (const adapter of log.adapters()) {
-    if (Symbol.asyncDispose in adapter) {
-      asyncDisposables.add(adapter as AsyncDisposable);
-    }
-    if (Symbol.dispose in adapter) {
-      disposables.add(adapter as Disposable);
-    }
-  }
-
-  if ("process" in globalThis && !("Deno" in globalThis)) {
-    // eslint-disable-next-line ts/no-misused-promises
-    process.on("exit", handleExit);
-  }
-
-  return async function wrapper(input: TInput) {
-    const payload = new StormPayload<TInput>(input);
-
-    const context = {
-      name,
-      version,
-      payload,
-      meta: {},
-      build,
-      runtime,
-      paths,
-      log: log.with({ name, version, payloadId: payload.id }),
-      storage,
-      config: {} as StormConfig,
-      dotenv: {} as StormConfig, // This object is only used at compile time, so we can leave it empty here.
-      emit: (_event: StormEvent) => {},
-      __internal: {
-        events: [] as StormEvent[]
-      }
-    } as StormContext<StormConfig>;
-
-    function emit(event: StormEvent) {
-      context.log.debug(
-        \`The \${event.label} event was emitted by the application.\`,
-        {
-          event
-        }
-      );
-
-      context.__internal.events.push(event);
-    }
-    context.emit = emit;
-
-    async function handleShutdown(reason?: StormError) {
+): ((input: TInput) => Promise<StormResult<StormError | unknown>>) {
+  let isShutdown = false;
+  return withContext(async (payload: StormPayload<TInput>) => {
+    async function handleShutdown(result: StormError | unknown) {
       try {
-        if (isExitComplete) {
+        if (isShutdown) {
           return;
         }
+
+        isShutdown = true;
 
         const s = spinner();
         s.start("Terminating the application. Please wait to ensure no data is lost...");
 
-        if (reason) {
-          context.log.fatal(reason, {
-            name: context.name,
-            version: context.build.version,
-            build: context.build.buildId,
-            release: context.build.releaseId,
-            tag: context.build.releaseTag,
-            mode: context.build.mode,
-            os: JSON.stringify({ type: os.type(), release: os.release(), platform: os.platform() }),
+        if (isStormError(result)) {
+          $storm.log.fatal(result, {
+            name: $storm.name,
+            version: $storm.version,
+            checksum: "${context.meta.checksum}",
+            build: $storm.env.buildId,
+            release: $storm.env.releaseId,
+            tag: $storm.env.releaseTag,
+            mode: $storm.env.mode,
+            os: JSON.stringify({ type: os.type(), release: os.release(), platform: os.platform() }, null, 1),
           });
 
-          await context.storage.setItem(\`crash-reports:${kebabCase(
+          await $storm.storage.setItem(\`crash-reports:${kebabCase(
             context.options.name
           )}-\${payload.id}.log\`, \`${titleCase(
             context.options.name
@@ -176,16 +86,17 @@ export function withContext<TInput = any, TOutput = any>(
 
 --------------------------------------
 
-  \${reason.toDisplay()}
+  \${result.toDisplay()}
 
-Application Name: \${context.name}
-Application Version: \${context.version}
-Timestamp: \${new Date().toISOString()}
+Application Name: \${$storm.name}
+Application Version: \${$storm.version}
+Checksum: "${context.meta.checksum}",
+Crash Time: \${format(new Date(), "keyboardDateTime12h")}
 Payload ID: \${payload.id}
-Build: \${context.build.buildId}
-Release: \${context.build.releaseId}
-Tag: \${context.build.releaseTag}
-Mode: \${context.build.mode}
+Build: \${$storm.env.buildId}
+Release: \${$storm.env.releaseId}
+Tag: \${$storm.env.releaseTag}
+Mode: \${$storm.env.mode}
 Operating System: \${os.type()} \${os.release()} \${os.platform()}
 
 --------------------------------------
@@ -210,13 +121,23 @@ This crash report was generated by the ${titleCase(
           \`);
         }
 
-        await handleExit();
+        for (const disposable of $storm.disposables) {
+          disposable[Symbol.dispose]();
+        }
+        $storm.disposables.clear();
+
+        const promises = [] as PromiseLike<void>[];
+        for (const disposable of $storm.asyncDisposables) {
+          promises.push(disposable[Symbol.asyncDispose]());
+          $storm.asyncDisposables.delete(disposable);
+        }
+        await Promise.all(promises);
 
         s.stop("Completed terminating the application");
         console.log("");
 
-        if (reason) {
-          console.log(colors.dim(\`A crash report was generated \${link(\`file://\${join(paths.log, \`${kebabCase(
+        if (result) {
+          console.log(colors.dim(\`A crash report was generated \${link(\`file://\${join($storm.env.paths.log, \`${kebabCase(
             context.options.name
           )}-\${payload.id}.log\`)}\`, "locally on your file system")}. Please include these details when reporting any issues with this software. ${
             support || context.options?.contact || context.options?.repository
@@ -242,71 +163,66 @@ This crash report was generated by the ${titleCase(
           console.log("");
         }
 
-        process.exit(reason ? 1 : 0);
+        return result;
       } catch (err) {
-        context.log.error("Shutdown process failed to complete", {
-          reason,
+        $storm.log.error("Shutdown process failed to complete", {
+          result,
           error: err
         });
 
         console.log("");
-        console.error(\` \${colors.red("✘")} \${colors.white("The shutdown process failed to complete. Please check the application logs for more details.")}\`);
+        console.error(\` \${colors.red("✘")}  \${colors.white("The shutdown process failed to complete. Please check the application logs for more details.")}\`);
         console.log("");
 
-        process.exit(1);
+        return createStormError(err);
       }
     }
 
-    for (const type of ["unhandledRejection", "uncaughtException"]) {
-      process.on(type, err => {
-        console.log("");
-        console.error(\` \${colors.red("✘")} \${colors.white("A fatal error caused the application to crash ")}\`);
-        console.log("");
+    let result!: unknown | StormError;
+    try {
+      if ("process" in globalThis && !("Deno" in globalThis)) {
+        // eslint-disable-next-line ts/no-misused-promises
+        process.on("exit", handleShutdown);
+      }
 
-        void handleShutdown(createStormError(err));
-      });
-    }
+      for (const type of ["unhandledRejection", "uncaughtException"]) {
+        process.on(type, err => {
+          console.log("");
+          console.error(\` \${colors.red("✘")}  \${colors.white("A fatal error caused the application to crash ")}\`);
+          console.log("");
 
-    for (const type of ["SIGTERM", "SIGINT", "SIGUSR2"]) {
-      process.once(type, () => {
-        console.log("");
-        console.log(colors.dim(" > The application was terminated by the user "));
-        console.log("");
+          void handleShutdown(createStormError(err));
+        });
+      }
 
-        void handleShutdown();
-      });
-    }
+      for (const type of ["SIGTERM", "SIGINT", "SIGUSR2"]) {
+        process.once(type, () => {
+          console.log("");
+          console.log(colors.dim(" > The application was terminated by the user"));
+          console.log("");
 
-    context.log.debug("Starting the application handler process.", {
-      payload
-    });
-
-    const result = await STORM_ASYNC_CONTEXT.callAsync(
-      context,
-      async () => {
-        try {
-          const ret = await Promise.resolve(
-            handler(payload)
+          void handleShutdown(
+            new StormError({
+              code: 7,
+              type: "general"
+            })
           );
-          if (isError(ret)) {
-            context.log.error(ret);
-            return StormResult.create(ret);
-          }
-
-          return StormResult.create(ret);
-        } catch (err) {
-          await handleShutdown(createStormError(err));
-          return StormResult.create(err);
-        }
+        });
       }
-    );
 
-    context.log.debug("The application handler process has completed.", {
-      result
-    });
+      const ret = await Promise.resolve(
+        handler(payload)
+      );
+      if (isError(ret)) {
+        $storm.log.error(ret);
+        result = createStormError(ret);
+      }
+    } catch (err) {
+      result = createStormError(err);
+    }
 
-    await handleShutdown();
-  };
+    return handleShutdown(result);
+  });
 }
 `;
 }

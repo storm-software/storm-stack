@@ -72,7 +72,7 @@ export const formats: DateFormats = {
   year: "yyyy",
 };
 
-export let locale = $storm.dotenv.DEFAULT_LOCALE;
+export let locale = $storm.config.static.DEFAULT_LOCALE;
 
 export const type = "luxon";
 

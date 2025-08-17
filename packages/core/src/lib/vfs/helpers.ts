@@ -247,14 +247,11 @@ export interface CheckAbsoluteOptions {
  *
  * @param request - The request path to check.
  * @param vfs - The file system module to use for checking file existence.
- * @param options - Options to specify the type of path to check (file or directory).
  * @returns The file path if it exists, otherwise false.
  */
 export function checkAbsolute(
-  context: Context,
   request: string,
-  vfs: VirtualFileSystemInterface,
-  _options: CheckAbsoluteOptions = {}
+  vfs: VirtualFileSystemInterface
 ): string | false {
   // if it's not a absolute path
   if (!isAbsolutePath(request)) {

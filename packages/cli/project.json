@@ -56,6 +56,13 @@
         }
       }
     },
+    "docs-vhs": {
+      "executor": "nx:run-commands",
+      "dependsOn": ["prepare", "build"],
+      "options": {
+        "command": "vhs packages/cli/docs/storm-demo.tape --output packages/cli/docs/storm-demo.gif"
+      }
+    },
     "docs": {
       "cache": true,
       "inputs": ["typescript", "^production"],

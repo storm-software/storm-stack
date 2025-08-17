@@ -19,33 +19,35 @@
 import { LogLevelLabel } from "@storm-software/config-tools/types";
 import { STORM_DEFAULT_ERROR_CODES_FILE } from "@storm-software/config/constants";
 import { Plugin } from "@storm-stack/core/base/plugin";
+import { addPluginFilter } from "@storm-stack/core/lib/babel/helpers";
 import type { EngineHooks } from "@storm-stack/core/types/build";
 import { PluginOptions } from "@storm-stack/core/types/plugin";
 import { isAbsolutePath } from "@stryke/path/is-file";
 import { joinPaths } from "@stryke/path/join-paths";
-import BabelPlugin from "./babel/plugin";
+import StormErrorBabelPlugin from "./babel/plugin";
 import { ErrorModule } from "./templates/error";
 import {
-  ErrorPluginConfig,
   ErrorPluginContext,
-  ErrorPluginContextOptions
+  ErrorPluginOptions,
+  ResolvedErrorPluginOptions
 } from "./types";
 
 /**
  * Storm Stack - Error plugin.
  */
 export default class ErrorPlugin<
-  TConfig extends ErrorPluginConfig = ErrorPluginConfig
-> extends Plugin<TConfig> {
+  TOptions extends ErrorPluginOptions = ErrorPluginOptions,
+  TContext extends ErrorPluginContext = ErrorPluginContext
+> extends Plugin<TOptions, TContext> {
   /**
    * The constructor for the plugin
    *
    * @param options - The configuration options for the plugin
    */
-  public constructor(options: PluginOptions<TConfig>) {
+  public constructor(options: PluginOptions<TOptions>) {
     super(options);
 
-    this.dependencies = [["@storm-stack/plugin-dotenv", options.dotenv ?? {}]];
+    this.dependencies = [["@storm-stack/plugin-config", options.config ?? {}]];
 
     this.packageDeps = {};
   }
@@ -55,7 +57,7 @@ export default class ErrorPlugin<
    *
    * @param hooks - The hooks to add to the engine.
    */
-  public override addHooks(hooks: EngineHooks) {
+  public override addHooks(hooks: EngineHooks<TContext>) {
     super.addHooks(hooks);
 
     hooks.addHooks({
@@ -72,23 +74,22 @@ export default class ErrorPlugin<
    *
    * @param context - The context of the current build.
    */
-  protected initOptions(context: ErrorPluginContext) {
+  protected initOptions(context: TContext) {
     this.log(
       LogLevelLabel.TRACE,
       `Initializing the Error plugin options for the Storm Stack project.`
     );
 
     context.options.babel.plugins ??= [];
-    context.options.babel.plugins.push([
-      BabelPlugin,
-      {},
-      {
-        filter: sourceFile =>
-          !context.vfs.isMatchingRuntimeId("error", sourceFile.id)
-      }
-    ]);
+    context.options.babel.plugins.push(
+      addPluginFilter(
+        context,
+        StormErrorBabelPlugin,
+        sourceFile => !context.vfs.isMatchingRuntimeId("error", sourceFile.id)
+      )
+    );
 
-    context.options.plugins.error ??= {} as ErrorPluginContextOptions["error"];
+    context.options.plugins.error ??= {} as ResolvedErrorPluginOptions;
 
     context.options.plugins.error.codesFile ??=
       this.options.codesFile ||
@@ -114,7 +115,7 @@ export default class ErrorPlugin<
    *
    * @param context - The context to initialize.
    */
-  protected async prepareRuntime(context: ErrorPluginContext) {
+  protected async prepareRuntime(context: TContext) {
     this.log(
       LogLevelLabel.TRACE,
       `Preparing the StormError runtime artifacts for the Storm Stack project.`

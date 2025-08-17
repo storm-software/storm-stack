@@ -34,12 +34,16 @@
       "@storm-stack/plugin-cloudflare-worker/*": [
         "packages/plugin-cloudflare-worker/src/*"
       ],
-      "@storm-stack/plugin-crypto": ["packages/plugin-crypto/src/index.ts"],
-      "@storm-stack/plugin-crypto/*": ["packages/plugin-crypto/src/*"],
+      "@storm-stack/plugin-config": ["packages/plugin-config/src/index.ts"],
+      "@storm-stack/plugin-config/*": ["packages/plugin-config/src/*"],
       "@storm-stack/plugin-date": ["packages/plugin-date/src/index.ts"],
       "@storm-stack/plugin-date/*": ["packages/plugin-date/src/*"],
-      "@storm-stack/plugin-dotenv": ["packages/plugin-dotenv/src/index.ts"],
-      "@storm-stack/plugin-dotenv/*": ["packages/plugin-dotenv/src/*"],
+      "@storm-stack/plugin-node-config": [
+        "packages/plugin-node-config/src/index.ts"
+      ],
+      "@storm-stack/plugin-node-config/*": [
+        "packages/plugin-node-config/src/*"
+      ],
       "@storm-stack/plugin-error": ["packages/plugin-error/src/index.ts"],
       "@storm-stack/plugin-error/*": ["packages/plugin-error/src/*"],
       "@storm-stack/plugin-log-console": [

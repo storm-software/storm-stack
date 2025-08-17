@@ -21,16 +21,15 @@ import { defineConfig } from "@storm-stack/core/define-config";
 export default defineConfig({
   name: "Storm Stack",
   skipCache: true,
+  mode: "development",
   plugins: [
     [
       "@storm-stack/plugin-cli",
       {
         title: "Storm",
         bin: ["storm", "storm-stack"],
-        dotenv: {
-          types: {
-            config: "./src/types.ts#StormStackCLIConfig"
-          }
+        config: {
+          types: "./src/types.ts#StormStackCLIConfig"
         }
       }
     ],
@@ -46,5 +45,15 @@ export default defineConfig({
         logLevel: "error"
       }
     ]
-  ]
+  ],
+  noExternal: ["@deepkit/*", "@storm-stack/core"],
+  tsconfigRaw: {
+    reflectionLevel: "verbose"
+  },
+  esbuild: {
+    format: "cjs"
+  },
+  output: {
+    outputMode: "fs"
+  }
 });

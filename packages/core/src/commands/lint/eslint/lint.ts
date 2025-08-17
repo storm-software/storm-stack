@@ -138,10 +138,10 @@ async function hasEslintConfiguration(
   return configObject;
 }
 
-async function lint(
+const lint = async (
   log: LogFn,
   context: Context,
-  eslintrcFile: string | null,
+  eslintConfigPath: string | null,
   {
     lintDuringBuild = false,
     eslintOptions = null,
@@ -165,7 +165,7 @@ async function lint(
       isError: boolean;
       eventInfo: EventLintCheckCompleted;
     }
-> {
+> => {
   try {
     // Load ESLint after we're sure it exists:
     await installPackages(context, [
@@ -192,9 +192,9 @@ async function lint(
     );
 
     // If V9 config was found, use flat config, or else use legacy.
-    const useFlatConfig = eslintrcFile
-      ? // eslintrcFile is absolute path
-        findFileName(eslintrcFile).startsWith("eslint.config.")
+    const useFlatConfig = eslintConfigPath
+      ? // eslintConfigPath is absolute path
+        findFileName(eslintConfigPath).startsWith("eslint.config.")
       : false;
 
     let ESLint!: typeof FlatESLint | typeof LegacyESLint;
@@ -251,7 +251,7 @@ async function lint(
     const stormStackRulesEnabled = new Map<string, Severity>();
 
     for (const configFile of [
-      eslintrcFile,
+      eslintConfigPath,
       joinPaths(context.options.projectRoot, "package.json")
     ]) {
       if (!configFile) continue;
@@ -310,8 +310,8 @@ async function lint(
           !fileName.includes("node_modules")
       )
     );
-    let selectedFormatter = null as FlatESLint.Formatter | null;
 
+    let selectedFormatter = null as FlatESLint.Formatter | null;
     if (options.fix) {
       await ESLint.outputFixes(results);
     }
@@ -326,8 +326,7 @@ async function lint(
     const formattedResult = await formatResults(
       context.options.projectRoot,
       results,
-      // eslint-disable-next-line ts/unbound-method
-      selectedFormatter?.format
+      selectedFormatter?.format?.bind(selectedFormatter)
     );
     const lintEnd = process.hrtime(lintStart);
     const totalWarnings = results.reduce(
@@ -367,7 +366,7 @@ async function lint(
       throw err;
     }
   }
-}
+};
 
 export async function runEslint(
   context: Context,

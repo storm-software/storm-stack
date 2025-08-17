@@ -18,6 +18,7 @@
 
 import { getFileHeader } from "@storm-stack/core/lib/utilities/file-header";
 import type { Context } from "@storm-stack/core/types/context";
+import { pascalCase } from "@stryke/string-format/pascal-case";
 
 /**
  * The log module provides a unified logging interface for Storm Stack applications.
@@ -47,7 +48,10 @@ import {
 } from "@storm-stack/types/log";
 import { StormError, isError, isStormError } from "storm:error";
 ${context.runtime.logs
-  .map(log => `import ${log.name} from "storm:${log.fileName}";`)
+  .map(
+    log =>
+      `import create${pascalCase(log.name)}Adapter from "storm:${log.fileName}";`
+  )
   .filter(Boolean)
   .join("\n")}
 
@@ -66,7 +70,7 @@ const LOG_LEVELS = [
  * @returns The filter.
  */
 export function getLevelFilter(level: LogLevel | null): LogFilter {
-  if (level == null) {
+  if (!level) {
     return () => false;
   } else if (level === "fatal") {
     return (record: LogRecord) => record.level === "fatal";
@@ -223,16 +227,6 @@ function renderMessage(
 }
 
 /**
- * The log adapters added by Storm Stack plugins.
- *
- * @remarks
- * This constant is generated dynamically by the build process. Do not modify it directly.
- */
-const LOG_ADAPTERS: LogAdapterInstance[] = [
-${context.runtime.logs.map(log => `{ logLevel: "${log.logLevel}", handle: ${log.name} }`).join(", \n")}
-];
-
-/**
  * The StormLog class that's used for writing logs during Storm Stack applications.
  */
 export class StormLog implements StormLogInterface {
@@ -242,6 +236,14 @@ export class StormLog implements StormLogInterface {
    * @internal
    */
   #storage = {} as Record<string, unknown>;
+
+  /**
+   * The log adapters added by Storm Stack plugins.
+   *
+   * @remarks
+   * This constant is generated dynamically by the build process. Do not modify it directly.
+   */
+  #adapters = [] as LogAdapterInstance[];
 
   /**
    * The list of filters applied to log records.
@@ -268,6 +270,14 @@ export class StormLog implements StormLogInterface {
    * This constructor initializes the logger with an empty filter list and sets the lowest log level to \`null\`.
    */
   public constructor() {
+    ${context.runtime.logs
+      .map(
+        log =>
+          `this.#adapters.push({ logLevel: "${log.logLevel}", handle: create${pascalCase(log.name)}Adapter });`
+      )
+      .filter(Boolean)
+      .join("\n")}
+
     this.filters = [];
   }
 
@@ -314,7 +324,7 @@ export class StormLog implements StormLogInterface {
       return;
     }
 
-    for (const adapter of LOG_ADAPTERS.filter(
+    for (const adapter of this.#adapters.filter(
       adapter =>
         compareLogLevel(level ?? this.lowestLogLevel ?? "info", adapter.logLevel) <
         0
@@ -425,7 +435,8 @@ export class StormLog implements StormLogInterface {
           throw new StormError({ type: "general", code: 10 });
         }
       }
-      return [msg, rawMessage];
+
+      return [msg ?? [], rawMessage];
     }
     this.emit({
       level,

@@ -25,7 +25,7 @@ export function writeConfigGet(_context: CLIPluginContext) {
 import { deserialize } from "@deepkit/type";
 import { colors } from "storm:cli";
 import { StormPayload } from "storm:payload";
-import { StormConfig } from "storm:dotenv";
+import { StormConfig } from "storm:config";
 
 export interface ConfigGetPayload {
   /**
@@ -42,13 +42,13 @@ export interface ConfigGetPayload {
 async function handler(payload: StormPayload<ConfigGetPayload>) {
   const configFile = await $storm.storage.getItem(\`config:config.json\`);
   if (configFile === undefined) {
-    console.error(\` \${colors.red("✘")} \${colors.white(\`Configuration file was not found\`)}\`);
+    console.error(\` \${colors.red("✘")}  \${colors.white(\`Configuration file was not found\`)}\`);
     return;
   }
 
   const config = deserialize<StormConfig>(configFile);
   if (config?.[payload.data.name] === undefined) {
-    console.error(\` \${colors.red("✘")} \${colors.white(\`Variable Name \\\`\${payload.data.name}\\\` not found\`)}\`);
+    console.error(\` \${colors.red("✘")}  \${colors.white(\`Variable Name \\\`\${payload.data.name}\\\` not found\`)}\`);
     return;
   }
 
@@ -66,7 +66,7 @@ export function writeConfigSet(_context: CLIPluginContext) {
 import { deserialize, serialize } from "@deepkit/type";
 import { colors } from "storm:cli";
 import { StormPayload } from "storm:payload";
-import { StormConfig } from "storm:dotenv";
+import { StormConfig } from "storm:config";
 
 export interface ConfigSetPayload {
   /**
@@ -88,7 +88,7 @@ export interface ConfigSetPayload {
 async function handler(payload: StormPayload<ConfigSetPayload>) {
   const configFile = await $storm.storage.getItem(\`config:config.json\`);
   if (configFile === undefined) {
-    console.error(\` \${colors.red("✘")} \${colors.white(\`Configuration file was not found\`)}\`);
+    console.error(\` \${colors.red("✘")}  \${colors.white(\`Configuration file was not found\`)}\`);
     return;
   }
 
@@ -113,7 +113,7 @@ export function writeConfigList(_context: CLIPluginContext) {
 import { deserialize } from "@deepkit/type";
 import { colors } from "storm:cli";
 import { StormPayload } from "storm:payload";
-import { StormConfig } from "storm:dotenv";
+import { StormConfig } from "storm:config";
 
 export interface ConfigListPayload {}
 
@@ -125,7 +125,7 @@ export interface ConfigListPayload {}
 async function handler(payload: StormPayload<ConfigListPayload>) {
   const configFile = await $storm.storage.getItem(\`config:config.json\`);
   if (configFile === undefined) {
-    console.error(\` \${colors.red("✘")} \${colors.white(\`Configuration file was not found\`)}\`);
+    console.error(\` \${colors.red("✘")}  \${colors.white(\`Configuration file was not found\`)}\`);
     return;
   }
 
@@ -144,7 +144,7 @@ export function writeConfigDelete(_context: CLIPluginContext) {
 import { deserialize, serialize } from "@deepkit/type";
 import { colors } from "storm:cli";
 import { StormPayload } from "storm:payload";
-import { StormConfig } from "storm:dotenv";
+import { StormConfig } from "storm:config";
 
 export interface ConfigDeletePayload {
   /**
@@ -161,7 +161,7 @@ export interface ConfigDeletePayload {
 async function handler(payload: StormPayload<ConfigDeletePayload>) {
   const configFile = await $storm.storage.getItem(\`config:config.json\`);
   if (configFile === undefined) {
-    console.error(\` \${colors.red("✘")} \${colors.white(\`Configuration file was not found\`)}\`);
+    console.error(\` \${colors.red("✘")}  \${colors.white(\`Configuration file was not found\`)}\`);
     return;
   }
 

@@ -19,19 +19,28 @@
 /**
  * Interface representing a Storm payload.
  */
-export interface StormPayloadInterface<TData = Record<string, any>> {
+export interface StormPayloadInterface<
+  TData extends Record<string, any> = Record<string, any>
+> {
   /**
    * The timestamp of the payload.
    */
-  timestamp: number;
+  readonly timestamp: number;
 
   /**
    * The unique identifier for the payload.
    */
-  id: string;
+  readonly id: string;
 
   /**
-   * The data of the payload.
+   * The data associated with the payload.
    */
-  data: TData;
+  readonly data: TData;
+
+  /**
+   * Merges the given data into the payload.
+   *
+   * @param data - The data to merge into the payload.
+   */
+  merge: (data: Partial<TData>) => void;
 }

@@ -16,29 +16,43 @@
 
  ------------------------------------------------------------------- */
 
-import type { PluginAPI } from "@babel/core";
+import type { PluginAPI, PluginObject } from "@babel/core";
 import {
   BabelPlugin,
   BabelPluginOptions,
-  BabelPluginState
+  BabelPluginPass
 } from "@storm-stack/core/types/babel";
 import { LogFn } from "@storm-stack/core/types/config";
+import { Context } from "@storm-stack/core/types/context";
 
 export interface BabelPluginBuilderParams<
   TOptions extends BabelPluginOptions = BabelPluginOptions,
-  TState extends BabelPluginState<TOptions> = BabelPluginState<TOptions>
+  TContext extends Context = Context
 > {
   name: string;
   log: LogFn;
   api: PluginAPI;
   options: TOptions;
-  state: TState;
+  context: TContext;
   dirname: string;
 }
 
 export type BabelPluginBuilder<
   TOptions extends BabelPluginOptions = BabelPluginOptions,
-  TState extends BabelPluginState<TOptions> = BabelPluginState<TOptions>
+  TContext extends Context = Context,
+  TState = unknown
 > = (
-  params: BabelPluginBuilderParams<TOptions, TState>
-) => BabelPlugin<TOptions, TState>;
+  params: BabelPluginBuilderParams<TOptions, TContext>
+) => PluginObject<TOptions & BabelPluginPass<TOptions, TState>>;
+
+export type DeclareReturn<
+  TOptions extends BabelPluginOptions = BabelPluginOptions,
+  TState = unknown
+> = PluginObject<TOptions & BabelPluginPass<TOptions, TState>>;
+
+export type DeclareBabelPluginReturn<
+  TOptions extends BabelPluginOptions = BabelPluginOptions,
+  TContext extends Context = Context,
+  TState = unknown
+> = Omit<BabelPlugin<TOptions, TContext, TState>, "_name"> &
+  Required<Pick<BabelPlugin<TOptions, TContext, TState>, "_name">>;

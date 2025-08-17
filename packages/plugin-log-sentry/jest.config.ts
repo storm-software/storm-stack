@@ -1,3 +1,7 @@
-import { getJestConfig } from "@storm-software/testing-tools";
+import { declarePackage } from "@storm-software/testing-tools";
 
-export default getJestConfig("packages/plugin-log-sentry", true, "plugin-log-sentry");
+export default declarePackage({
+  projectRoot: "packages/plugin-log-sentry",
+  isNode: true,
+  displayName: "plugin-log-sentry"
+});

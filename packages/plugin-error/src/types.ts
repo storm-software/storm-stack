@@ -17,13 +17,13 @@
  ------------------------------------------------------------------- */
 
 import { Context } from "@storm-stack/core/types/context";
-import { PluginBaseConfig } from "@storm-stack/core/types/plugin";
+import { PluginBaseOptions } from "@storm-stack/core/types/plugin";
 import {
-  DotenvPluginConfig,
-  DotenvPluginContextOptions
-} from "@storm-stack/plugin-dotenv/types";
+  ConfigPluginOptions,
+  ResolvedConfigPluginOptions
+} from "@storm-stack/plugin-config/types";
 
-export interface ErrorPluginConfig extends PluginBaseConfig {
+export interface ErrorPluginOptions extends PluginBaseOptions {
   /**
    * The path (relative to the workspace root) to the file that will be used to generate the errors map
    *
@@ -40,15 +40,19 @@ export interface ErrorPluginConfig extends PluginBaseConfig {
   url?: string;
 
   /**
-   * Options for the dotenv plugin.
+   * Options for the config plugin.
    */
-  dotenv?: DotenvPluginConfig;
+  config?: ConfigPluginOptions;
 }
 
-export interface ErrorPluginContextOptions extends DotenvPluginContextOptions {
-  error: Required<Omit<ErrorPluginConfig, "dotenv" | "url">> &
-    Pick<ErrorPluginConfig, "url">;
-  dotenv: DotenvPluginContextOptions["dotenv"];
+export type ResolvedErrorPluginOptions = Required<
+  Omit<ErrorPluginOptions, "config" | "url">
+> &
+  Pick<ErrorPluginOptions, "url">;
+
+export interface ErrorPluginContextOptions {
+  error: ResolvedErrorPluginOptions;
+  config: ResolvedConfigPluginOptions;
 }
 
 export type ErrorPluginContext = Context<ErrorPluginContextOptions>;

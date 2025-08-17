@@ -24,8 +24,25 @@ import { createEngine } from "../../../helpers/create-engine";
  * The payload for the example CLI application.
  */
 interface NewLibraryPayload {
+  /**
+   * The name of the library.
+   *
+   * @ignore
+   */
   name: string;
+
+  /**
+   * The root directory of the Storm Stack project.
+   *
+   * @ignore
+   */
   root: string;
+
+  /**
+   * The name of the library.
+   *
+   * @ignore
+   */
   packageName: string;
 }
 

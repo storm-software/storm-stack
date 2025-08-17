@@ -17,14 +17,163 @@
  ------------------------------------------------------------------- */
 
 import { WorkspaceConfig } from "@storm-stack/core/types/config";
-import { Context } from "@storm-stack/core/types/context";
 import {
-  NodePluginConfig,
-  NodePluginContextOptions
+  Context,
+  Reflection,
+  ReflectionRecord
+} from "@storm-stack/core/types/context";
+import { ConfigPluginReflectionRecord } from "@storm-stack/plugin-config/types";
+import { DatePluginOptions } from "@storm-stack/plugin-date/types";
+import {
+  NodePluginContextOptions,
+  NodePluginOptions
 } from "@storm-stack/plugin-node/types";
 import { CommandEntryTypeDefinition } from "./reflection";
 
-export interface CLIPluginConfig extends NodePluginConfig {
+export interface CLITitleOptions {
+  /**
+   * The title to display in the banner of the CLI application.
+   *
+   * @remarks
+   * This will be displayed in a large font in the CLI banner. If left undefined, the title will default to the value in {@link Context.options.name}. If set to `false`, the title will not be displayed.
+   */
+  text: string;
+
+  /**
+   * The font to use for the application title in the banner of the CLI.
+   *
+   * @remarks
+   * Valid options include those allowed by the [cfont](https://www.npmjs.com/package/cfont) package:
+   * - `block`       [colors: 2] _(default)_
+   *     ![block font style](https://raw.githubusercontent.com/dominikwilkowski/cfonts/released/img/block.png)
+   * - `slick`       [colors: 2]
+   *     ![slick font style](https://raw.githubusercontent.com/dominikwilkowski/cfonts/released/img/slick.png)
+   * - `tiny`        [colors: 1]
+   *     ![tiny font style](https://raw.githubusercontent.com/dominikwilkowski/cfonts/released/img/tiny.png)
+   * - `grid`        [colors: 2]
+   *     ![grid font style](https://raw.githubusercontent.com/dominikwilkowski/cfonts/released/img/grid.png)
+   * - `pallet`      [colors: 2]
+   *     ![pallet font style](https://raw.githubusercontent.com/dominikwilkowski/cfonts/released/img/pallet.png)
+   * - `shade`       [colors: 2]
+   *     ![shade font style](https://raw.githubusercontent.com/dominikwilkowski/cfonts/released/img/shade.png)
+   * - `chrome`      [colors: 3]
+   *     ![chrome font style](https://raw.githubusercontent.com/dominikwilkowski/cfonts/released/img/chrome.png)
+   * - `simple`      [colors: 1]
+   *     ![simple font style](https://raw.githubusercontent.com/dominikwilkowski/cfonts/released/img/simple.png)
+   * - `simpleBlock` [colors: 1]
+   *     ![simple-block font style](https://raw.githubusercontent.com/dominikwilkowski/cfonts/released/img/simple-block.png)
+   * - `3d`          [colors: 2]
+   *     ![3d font style](https://raw.githubusercontent.com/dominikwilkowski/cfonts/released/img/3d.png)
+   * - `simple3d`    [colors: 1]
+   *     ![simple-3d font style](https://raw.githubusercontent.com/dominikwilkowski/cfonts/released/img/simple-3d.png)
+   * - `huge`        [colors: 2]
+   *     ![huge font style](https://raw.githubusercontent.com/dominikwilkowski/cfonts/released/img/huge.png)
+   *
+   * @defaultValue "block"
+   */
+  font:
+    | "block"
+    | "slick"
+    | "tiny"
+    | "grid"
+    | "pallet"
+    | "shade"
+    | "chrome"
+    | "simple"
+    | "simpleBlock"
+    | "3d"
+    | "simple3d"
+    | "huge";
+
+  /**
+   * The alignment of the title in the banner.
+   *
+   * @defaultValue "center"
+   */
+  align: "left" | "center" | "right";
+
+  /**
+   * The colors to use for the banner title text.
+   *
+   * @remarks
+   * The below colors are supported as input values:
+   * - system - The `system` color falls back to the system color of your terminal.
+   * - black
+   * - red
+   * - green
+   * - yellow
+   * - blue
+   * - magenta
+   * - cyan
+   * - white
+   * - gray
+   * - redBright
+   * - greenBright
+   * - yellowBright
+   * - blueBright
+   * - magentaBright
+   * - cyanBright
+   * - whiteBright
+   *
+   * @defaultValue ["system"]
+   */
+  colors?: string[];
+
+  /**
+   * The background color of the banner title.
+   *
+   * @defaultValue "transparent"
+   */
+  background?: string;
+
+  /**
+   * The letter spacing of the title text.
+   *
+   * @remarks
+   * This value is in pixels and can be a negative number to reduce the spacing between letters.
+   *
+   * @defaultValue 1
+   */
+  letterSpacing?: number;
+
+  /**
+   * The line height of the title text.
+   *
+   * @remarks
+   * This value is in pixels and can be a negative number to reduce the spacing between lines.
+   *
+   * @defaultValue 1.2
+   */
+  lineHeight?: number;
+
+  /**
+   * Set a gradient over the title text.
+   *
+   * @remarks
+   * The gradient requires two colors, a start color and an end color from left to right
+   *
+   * @defaultValue false
+   */
+  gradient?: false | string[];
+
+  /**
+   * If true, the title will be displayed in independent gradient mode.
+   *
+   * @remarks
+   * This means that each letter will have its own gradient color.
+   *
+   * @defaultValue false
+   */
+  independentGradient?: boolean;
+}
+
+export interface CFontResultObject {
+  string: string;
+  width: number;
+  height: number;
+}
+
+export interface CLIPluginOptions extends NodePluginOptions {
   /**
    * The name of the binary that will be generated to run the CLI
    */
@@ -48,7 +197,7 @@ export interface CLIPluginConfig extends NodePluginConfig {
    * @remarks
    * This will be displayed in a large font in the CLI banner. If left undefined, the title will default to the value in {@link Context.options.name}. If set to `false`, the title will not be displayed.
    */
-  title?: string | false;
+  title?: CLITitleOptions | string | false;
 
   /**
    * The author/organization that developed or maintains the CLI application
@@ -59,43 +208,31 @@ export interface CLIPluginConfig extends NodePluginConfig {
   author?: WorkspaceConfig["organization"];
 
   /**
-   * Should the config commands be added to the CLI?
-   *
-   * @remarks
-   * This will add the `config` commands to the CLI that will allow you to view and edit the configuration state.
-   *
-   * @defaultValue true
+   * The configuration for the date plugin.
    */
-  manageConfig?: boolean;
+  date?: DatePluginOptions;
 }
 
 export interface CLIPluginContextOptions extends NodePluginContextOptions {
-  cli: Required<Omit<CLIPluginConfig, "dotenv" | "error" | "logs" | "author">> &
-    Pick<CLIPluginConfig, "author">;
+  cli: Required<
+    Omit<CLIPluginOptions, "config" | "error" | "logs" | "author">
+  > &
+    Pick<CLIPluginOptions, "author">;
+}
+
+export interface CLICommandReflectionProperties {
+  payload: Reflection<any>;
+  result: Reflection<any>;
+}
+
+export interface CLIPluginReflectionRecord
+  extends ConfigPluginReflectionRecord {
+  payloads: ReflectionRecord;
+  cli: ReflectionRecord<CLICommandReflectionProperties>;
 }
 
 export type CLIPluginContext = Context<
   CLIPluginContextOptions,
+  CLIPluginReflectionRecord,
   CommandEntryTypeDefinition
 >;
-
-export interface BannerTitleConfig {
-  font: string;
-  align: "left" | "center" | "right";
-  colors?: string[];
-  background?: string;
-  letterSpacing?: number;
-  lineHeight?: number;
-  space?: boolean;
-  gradient?: string[];
-  independentGradient?: boolean;
-  transitionGradient?: boolean;
-  rawMode?: boolean;
-  env?: "node" | "browser";
-}
-
-export interface CFontResultObject {
-  string: string;
-  width: number;
-  height: number;
-}

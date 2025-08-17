@@ -53,13 +53,13 @@ catalog:
   "@types/react": npm:types-react@rc
   "@types/react-dom": npm:types-react-dom@rc
   "@types/node": ^22.15.3
-  "@nx/devkit": ^21.3.11
-  "@nx/eslint-plugin": ^21.3.11
-  "@nx/jest": ^21.3.11
-  "@nx/js": ^21.3.11
-  "@nx/plugin": ^21.3.11
-  "@nx/react": ^21.3.11
-  "@nx/workspace": ^21.3.11
+  "@nx/devkit": 21.3.11
+  "@nx/eslint-plugin": 21.3.11
+  "@nx/jest": 21.3.11
+  "@nx/js": 21.3.11
+  "@nx/plugin": 21.3.11
+  "@nx/react": 21.3.11
+  "@nx/workspace": 21.3.11
   "@storm-software/build-tools": latest
   "@storm-software/config": latest
   "@storm-software/config-tools": latest
@@ -76,21 +76,21 @@ catalog:
   "@storm-software/tsconfig": latest
   "@storm-software/tsdoc": latest
   "@storm-software/workspace-tools": latest
-  "@stryke/env": ^0.15.9
-  "@stryke/fs": ^0.22.8
-  "@stryke/helpers": ^0.7.0
-  "@stryke/http": ^0.8.4
+  "@stryke/env": ^0.17.1
+  "@stryke/fs": ^0.23.3
+  "@stryke/helpers": ^0.7.2
+  "@stryke/http": ^0.8.5
   "@stryke/unique-id": ^0.3.3
-  "@stryke/url": ^0.2.3
-  "@stryke/json": ^0.9.2
-  "@stryke/path": ^0.12.0
-  "@stryke/types": ^0.8.6
+  "@stryke/url": ^0.2.4
+  "@stryke/json": ^0.9.3
+  "@stryke/path": ^0.12.4
+  "@stryke/types": ^0.8.9
   "@stryke/hash": ^0.10.0
-  "@stryke/string-format": ^0.5.2
+  "@stryke/string-format": ^0.9.0
   "@stryke/convert": ^0.3.0
-  "@stryke/type-checks": ^0.3.6
-  "@stryke/cli": ^0.12.2
-  "@stryke/capnp": 0.9.11
+  "@stryke/type-checks": ^0.3.8
+  "@stryke/cli": ^0.12.3
+  "@stryke/capnp": 0.10.8
   "@swc-node/register": ^1.10.10
   "@swc/core": ^1.11.22
   "@swc/wasm": ^1.11.24
@@ -114,7 +114,7 @@ catalog:
   eslint-rule-documentation: ^1.0.23
   eslint-flat-config-utils: 2.1.0
   eslint-typegen: 2.1.0
-  fs-monkey: ^1.1.0
+  github-slugger: ^2.0.0
   globals: ^15.15.0
   handlebars: ^4.7.8
   jest-util: 30.0.5
@@ -125,9 +125,8 @@ catalog:
   memfs: ^4.17.2
   minimatch: ^10.0.3
   nanotar: ^0.2.0
-  pirates: ^4.0.7
   prettier: 3.6.2
-  nx: ^21.3.11
+  nx: 21.3.11
   jest: 30.0.4
   jest-environment-jsdom: 30.0.4
   jest-environment-node: 30.0.0-beta.3
@@ -146,8 +145,8 @@ catalog:
   tsx: ^4.19.4
   typedoc: 0.25.12
   typedoc-plugin-frontmatter: ^1.3.0
-  typedoc-plugin-markdown: 3.17.1
-  esbuild: 0.25.3
+  typedoc-plugin-markdown: 4.0.0-next.20
+  esbuild: ^0.25.9
   rollup: ^4.40.1
   rolldown: ^1.0.0-beta.8
   unbuild: ^3.5.0
@@ -186,11 +185,11 @@ overrides:
   "@storm-stack/devkit": workspace:*
   "@storm-stack/biome": workspace:*
   "@storm-stack/tsdoc": workspace:*
-  "@storm-stack/plugin-crypto": workspace:*
+  "@storm-stack/plugin-config": workspace:*
   "@storm-stack/plugin-date": workspace:*
-  "@storm-stack/plugin-dotenv": workspace:*
   "@storm-stack/plugin-error": workspace:*
   "@storm-stack/plugin-node": workspace:*
+  "@storm-stack/plugin-node-config": workspace:*
   "@storm-stack/plugin-cli": workspace:*
   "@storm-stack/plugin-cloudflare-worker": workspace:*
   "@storm-stack/plugin-log-console": workspace:*

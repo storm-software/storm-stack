@@ -18,7 +18,7 @@
 
 import { NodePath, PluginAPI, PluginPass } from "@babel/core";
 import { declare } from "@babel/helper-plugin-utils";
-import type * as BabelTypes from "@babel/types";
+import * as t from "@babel/types";
 import { BabelPluginOptions } from "../../../types/babel";
 import { Context } from "../../../types/context";
 import { isImportCall } from "../module";
@@ -30,10 +30,10 @@ type ModuleResolverPluginPass = PluginPass<BabelPluginOptions> & {
 };
 
 function resolveModulePath(
-  nodePath: NodePath<BabelTypes.StringLiteral>,
+  nodePath: NodePath<t.StringLiteral>,
   state: ModuleResolverPluginPass
 ) {
-  if (!state.api.types.isStringLiteral(nodePath.node)) {
+  if (!t.isStringLiteral(nodePath.node)) {
     return;
   }
 
@@ -43,7 +43,7 @@ function resolveModulePath(
   const resolvedPath = state.context?.vfs.resolvePath(sourcePath);
   if (resolvedPath) {
     nodePath.replaceWith(
-      state.api.types.stringLiteral(
+      t.stringLiteral(
         // Remove the file extension if it exists
         resolvedPath.replace(/\.(?:ts|mts|cts)x?$/, "")
       )
@@ -79,11 +79,11 @@ function matchesPattern(
 ) {
   const { node } = calleePath;
 
-  if (state.api.types.isMemberExpression(node)) {
+  if (t.isMemberExpression(node)) {
     return calleePath.matchesPattern(pattern);
   }
 
-  if (!state.api.types.isIdentifier(node) || pattern.includes(".")) {
+  if (!t.isIdentifier(node) || pattern.includes(".")) {
     return false;
   }
 
@@ -94,7 +94,7 @@ function matchesPattern(
 
 const importVisitors = {
   CallExpression: (
-    nodePath: NodePath<BabelTypes.CallExpression>,
+    nodePath: NodePath<t.CallExpression>,
     state: ModuleResolverPluginPass
   ) => {
     if (state.moduleResolverVisited.has(nodePath)) {
@@ -107,19 +107,19 @@ const importVisitors = {
       TRANSFORM_FUNCTIONS.some(pattern =>
         matchesPattern(state, calleePath, pattern)
       ) ||
-      isImportCall(state.api.types, nodePath)
+      isImportCall(nodePath)
     ) {
       state.moduleResolverVisited.add(nodePath);
       resolveModulePath(
-        nodePath.get("arguments.0") as NodePath<BabelTypes.StringLiteral>,
+        nodePath.get("arguments.0") as NodePath<t.StringLiteral>,
         state
       );
     }
   },
   // eslint-disable-next-line ts/naming-convention
-  "ImportDeclaration|ExportDeclaration": (
+  "ImportDeclaration|ExportDeclaration|ExportAllDeclaration": (
     nodePath: NodePath<
-      BabelTypes.ImportDeclaration | BabelTypes.ExportDeclaration
+      t.ImportDeclaration | t.ExportDeclaration | t.ExportAllDeclaration
     >,
     state: ModuleResolverPluginPass
   ) => {
@@ -132,8 +132,8 @@ const importVisitors = {
   }
 };
 
-export const ModuleResolverPlugin = (context: Context) =>
-  declare((api: PluginAPI) => {
+export function ModuleResolverPlugin(context: Context) {
+  return declare(function builder(api: PluginAPI) {
     let moduleResolverVisited = new Set();
 
     return {
@@ -151,7 +151,7 @@ export const ModuleResolverPlugin = (context: Context) =>
       visitor: {
         Program: {
           enter(
-            programPath: NodePath<BabelTypes.Program>,
+            programPath: NodePath<t.Program>,
             state: PluginPass<BabelPluginOptions>
           ) {
             programPath.traverse(importVisitors, {
@@ -177,3 +177,4 @@ export const ModuleResolverPlugin = (context: Context) =>
       }
     };
   });
+}

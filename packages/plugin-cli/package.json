@@ -43,11 +43,15 @@
   "types": "dist/index.d.ts",
   "typings": "dist/index.d.ts",
   "peerDependencies": {
+    "@storm-stack/plugin-date": "*",
     "@storm-stack/plugin-log-console": "*",
     "@storm-stack/plugin-node": "*",
     "@storm-stack/plugin-storage-fs": "*"
   },
   "peerDependenciesMeta": {
+    "@storm-stack/plugin-date": {
+      "optional": false
+    },
     "@storm-stack/plugin-log-console": {
       "optional": false
     },

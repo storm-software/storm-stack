@@ -31,6 +31,8 @@ interface BuildPayload {
    *
    * @alias project
    * @alias projectRoot
+   *
+   * @ignore
    */
   root: string;
 }
@@ -43,7 +45,7 @@ interface BuildPayload {
 async function handler(payload: StormPayload<BuildPayload>) {
   const data = payload.data;
 
-  $storm.log.info(`Building Storm Stack project at ${data.root}...`);
+  $storm.log.info`Building Storm Stack project at ${data.root}...`;
 
   const inlineConfig = {
     root: data.root,

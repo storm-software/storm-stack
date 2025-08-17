@@ -74,7 +74,7 @@ export const formats: DateFormats = {
   keyboardDateTime24h: "L HH:mm",
 };
 
-export let locale = $storm.dotenv.DEFAULT_LOCALE;
+export let locale = $storm.config.static.DEFAULT_LOCALE;
 
 export const type = "moment";
 

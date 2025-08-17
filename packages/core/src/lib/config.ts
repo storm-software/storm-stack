@@ -17,7 +17,7 @@
  ------------------------------------------------------------------- */
 
 import { getWorkspaceConfig } from "@storm-software/config-tools/get-config";
-import { getColorConfig } from "@storm-software/config-tools/utilities/colors";
+import { getColors } from "@storm-software/config-tools/utilities/colors";
 import { existsSync } from "@stryke/path/exists";
 import {
   getProjectRoot,
@@ -269,11 +269,21 @@ export async function resolveConfig(
   );
 
   context.options = resolvedOptions;
-  context.options.colors = getColorConfig(resolvedOptions);
+  context.options.colors = getColors(resolvedOptions);
+
+  context.options.logLevel =
+    context.options.logLevel === "silent"
+      ? null
+      : context.options.logLevel === "success"
+        ? "info"
+        : context.options.logLevel === "trace" ||
+            context.options.logLevel === "all"
+          ? "debug"
+          : context.options.logLevel;
 
   context.options.userConfig!.plugins = mergedUserConfig.plugins ?? [];
   context.options.plugins = {
-    dotenv: {
+    config: {
       additionalFiles: []
     }
   };

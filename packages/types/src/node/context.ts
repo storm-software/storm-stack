@@ -16,14 +16,14 @@
 
  ------------------------------------------------------------------- */
 
-import { StormBaseConfig } from "../shared/dotenv";
+import { StormPayloadInterface, StormStorageInterface } from "../shared";
+import { StormConfigInterface } from "../shared/config";
 import { StormLogInterface } from "../shared/log";
-import { StormPayloadInterface } from "../shared/payload";
-import { StormBuildInfo, StormEnvPaths, StormRuntimeInfo } from "./env";
+import { StormEnvInterface } from "./env";
 import { StormEventInterface } from "./event";
 
 /**
- * A store that exists on the StormContext for internal use.
+ * A store that exists on the {@link StormContextInterface} for internal use.
  *
  * @remarks
  * Please do not use this in application code as it is likely to change
@@ -41,16 +41,48 @@ interface Internal_StormContextStore {
 }
 
 /**
+ * The configuration parameters for the Storm application.
+ *
+ * @internal
+ */
+export type StormConfigContext<
+  TConfig extends StormConfigInterface = StormConfigInterface
+> = TConfig & {
+  /**
+   * A virtual object representing the configuration parameters for the Storm application at build time. The Storm Stack build process will inject this object's values with the actual configuration parameters at build time.
+   *
+   * @example
+   * ```typescript
+   * // "$storm.config.static.CONFIG_ITEM" will be replaced with the actual value at build time
+   * const value = $storm.config.static.CONFIG_ITEM;
+   *
+   * const someNumber = $storm.config.static.SOME_NUMBER;
+   * // const someNumber = 42;
+   *
+   * const someString = $storm.config.static.SOME_STRING;
+   * // const someString = "Hello, World!";
+   *
+   * const someBoolean = $storm.config.static.SOME_BOOLEAN;
+   * // const someBoolean = true;
+   * ```
+   *
+   * @remarks
+   * A static representation of the configuration thats used to inject data into the application code at build time. This object will can provide type safety and autocompletion for the configuration values when used in the application code. **The values on this object will not exist at runtime.**
+   */
+  static: TConfig;
+};
+
+/**
  * The global Storm Stack application context. This object contains information related to the current process's execution.
  *
  * @remarks
  * The Storm Stack application context object is injected into the global scope of the application. It can be accessed using `$storm` or `useStorm()` in the application code.
  */
-export type StormContext<
-  TConfig extends StormBaseConfig = StormBaseConfig,
-  TAdditionalFields extends Record<string, any> = Record<string, any>,
-  TPayload extends StormPayloadInterface = StormPayloadInterface
-> = TAdditionalFields & {
+export interface StormContextInterface<
+  TConfig extends StormConfigInterface = StormConfigInterface,
+  TEnv extends StormEnvInterface = StormEnvInterface,
+  TMeta extends Record<string, any> = Record<string, any>
+> {
   /**
    * The name of the Storm application.
    */
@@ -62,63 +94,51 @@ export type StormContext<
   readonly version: string;
 
   /**
-   * The runtime information for the Storm application.
+   * The current meta object.
    */
-  readonly runtime: StormRuntimeInfo;
+  readonly meta: TMeta;
 
   /**
-   * The build information for the Storm application.
+   * The unique ID for the current request.
    */
-  readonly build: StormBuildInfo;
+  readonly payload: StormPayloadInterface;
+
+  /**
+   * The environment information for the Storm application.
+   */
+  env: TEnv;
 
   /**
    * The configuration parameters for the Storm application.
    */
-  readonly config: TConfig;
-
-  /**
-   * A virtual object representing the configuration parameters for the Storm application at build time. The Storm Stack build process will replace this object with the actual configuration parameters at build time.
-   */
-  readonly dotenv: TConfig;
-
-  /**
-   * The environment paths for storing things like data, config, logs, and cache in the current runtime environment.
-   *
-   * @remarks
-   * On macOS, directories are generally created in \`~/Library/Application Support/<name>\`.
-   * On Windows, directories are generally created in \`%AppData%/<name>\`.
-   * On Linux, directories are generally created in \`~/.config/<name>\` - this is determined via the [XDG Base Directory spec](https://specifications.freedesktop.org/basedir-spec/latest/).
-   *
-   * If the \`STORM_DATA_DIR\`, \`STORM_CONFIG_DIR\`, \`STORM_CACHE_DIR\`, \`STORM_LOG_DIR\`, or \`STORM_TEMP_DIR\` environment variables are set, they will be used instead of the default paths.
-   */
-  readonly paths: StormEnvPaths;
-
-  /**
-   * The current payload object for the Storm application.
-   */
-  readonly payload: TPayload;
-
-  /**
-   * The current meta object.
-   */
-  readonly meta: Record<string, any>;
+  config: StormConfigContext<TConfig>;
 
   /**
    * The root application logger for the Storm Stack application.
    */
-  readonly log: StormLogInterface;
+  log: StormLogInterface;
 
   /**
-   * The root [unstorage](https://unstorage.unjs.io/) storage to use for Storm Stack application.
+   * The {@link StormStorageInterface} instance used by the Storm Stack application.
    */
-  readonly storage: import("unstorage").Storage;
+  storage: StormStorageInterface;
 
   /**
    * A function to emit an event to a processing queue.
    */
-  emit: <TEvent extends StormEventInterface<string, any>>(
+  emit: <TEvent extends StormEventInterface<string, Record<string, any>>>(
     event: TEvent
   ) => void;
+
+  /**
+   * A set of disposable resources to clean up when the context is no longer needed.
+   */
+  disposables: Set<Disposable>;
+
+  /**
+   * A set of asynchronous disposable resources to clean up when the context is no longer needed.
+   */
+  asyncDisposables: Set<AsyncDisposable>;
 
   /**
    * A store that exists on the StormContext for internal use.
@@ -129,4 +149,4 @@ export type StormContext<
    * @internal
    */
   __internal: Internal_StormContextStore;
-};
+}

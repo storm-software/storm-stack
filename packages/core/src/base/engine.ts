@@ -20,6 +20,7 @@ import { LogLevelLabel } from "@storm-software/config-tools/types";
 import { install } from "@stryke/fs/install";
 import { isPackageExists } from "@stryke/fs/package-fns";
 import { camelCase } from "@stryke/string-format/camel-case";
+import { isError } from "@stryke/type-checks/is-error";
 import { isNumber } from "@stryke/type-checks/is-number";
 import { isSetObject } from "@stryke/type-checks/is-set-object";
 import chalk from "chalk";
@@ -79,7 +80,7 @@ export class Engine {
   /**
    * The resolved options provided to Storm Stack
    */
-  protected context: Context;
+  protected context!: Context;
 
   /**
    * Create a new Storm Stack Engine instance
@@ -434,7 +435,7 @@ export class Engine {
       } else {
         throw new Error(
           `An error occurred while importing the build plugin package "${pluginConfig[0]}":
-${error.message}
+${isError(error) ? error.message : String(error)}
 
 Note: Please ensure the plugin package's default export is a class that extends \`Plugin\` with a constructor that excepts a single arguments of type \`PluginOptions\`.`
         );
@@ -477,7 +478,6 @@ Note: Please ensure the plugin package's default export is a class that extends 
         ? this.context.options.plugins[pluginInstance.name]
         : {}
     );
-
     pluginInstance.options =
       this.context.options.plugins[pluginInstance.identifier];
 

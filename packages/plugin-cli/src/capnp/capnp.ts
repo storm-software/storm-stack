@@ -43,7 +43,7 @@ import {
   getAppTitle
 } from "../helpers/utilities";
 import { StormStackCLIPluginContext } from "../types/build";
-import { CLIPluginConfig } from "../types/config";
+import { CLIPluginOptions } from "../types/config";
 import {
   Command,
   CommandEntryTypeDefinition,
@@ -171,7 +171,7 @@ function convertFromCapnpCommandEntryTypeDefinition(
 
 function convertFromCapnpCommand(
   root: CapnpCommandRoot,
-  config: CLIPluginConfig,
+  config: CLIPluginOptions,
   tree: CommandTree,
   command: CapnpCommand
 ): Omit<Command, "parent"> {
@@ -356,7 +356,7 @@ ${commands.map(c => `- ${c.entry.path.join("/")}`).join("\n")}
       tree,
       root,
       commands,
-      commands.find(c => c.id === capnpCommand.parent)!
+      commands.find(c => c.id === capnpCommand.parent)
     );
 
     parent.children[command.name] = command;
@@ -376,7 +376,7 @@ ${commands.map(c => `- ${c.entry.path.join("/")}`).join("\n")}
  */
 export function convertFromCapnp(
   context: StormStackCLIPluginContext,
-  config: CLIPluginConfig,
+  config: CLIPluginOptions,
   root: CapnpCommandRoot
 ): CommandTree {
   if (!root) {

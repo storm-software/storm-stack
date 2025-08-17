@@ -18,6 +18,7 @@
 
 import {
   ReflectionClass,
+  ReflectionFunction,
   ReflectionKind,
   ReflectionProperty,
   ReflectionVisibility,
@@ -25,17 +26,21 @@ import {
   TagsReflection,
   Type
 } from "@deepkit/type";
+import { camelCase } from "@stryke/string-format/camel-case";
+import { constantCase } from "@stryke/string-format/constant-case";
 import { kebabCase } from "@stryke/string-format/kebab-case";
 import { pascalCase } from "@stryke/string-format/pascal-case";
 import { titleCase } from "@stryke/string-format/title-case";
+import { isUndefined } from "@stryke/type-checks/is-undefined";
 import { TypeDefinition } from "@stryke/types/configuration";
 import defu from "defu";
+import { findCommandName } from "../helpers/reflect-command";
 import {
   extractCommandFunctionPayload,
   extractCommandFunctionPayloadData
 } from "../helpers/utilities";
-import { CLIPluginConfig } from "../types/config";
-import { Command, CommandEntryTypeDefinition } from "../types/reflection";
+import { CLIPluginContext, CLIPluginOptions } from "../types/config";
+import { CommandEntryTypeDefinition } from "../types/reflection";
 
 export interface CommandPayloadArg {
   name: string;
@@ -50,9 +55,9 @@ export interface AddCommandPayloadArgProps extends TagsReflection {
   name: string;
   default?: any;
   optional?: boolean;
-  readonly?: true | undefined;
-  description?: string | undefined;
-  visibility?: ReflectionVisibility | undefined;
+  readonly?: true;
+  description?: string;
+  visibility?: ReflectionVisibility;
   type?: Type;
   tags?: TagsReflection;
   isNegativeOf?: string;
@@ -60,7 +65,7 @@ export interface AddCommandPayloadArgProps extends TagsReflection {
 }
 
 function getDefaultCommandPayloadArgs(
-  config: CLIPluginConfig,
+  options: CLIPluginOptions,
   entry: CommandEntryTypeDefinition
 ): AddCommandPayloadArgProps[] {
   return [
@@ -85,8 +90,8 @@ function getDefaultCommandPayloadArgs(
       skipNegative: true
     },
     !entry.isVirtual &&
-      config.interactive !== "never" &&
-      config.interactive !== true && {
+      options.interactive !== "never" &&
+      options.interactive !== true && {
         name: "interactive",
         title: "Interactive",
         description:
@@ -94,11 +99,11 @@ function getDefaultCommandPayloadArgs(
         alias: ["i", "interact"],
         type: { kind: ReflectionKind.boolean },
         optional: true,
-        default: config.interactive !== false
+        default: options.interactive !== false
       },
     !entry.isVirtual &&
-      config.interactive !== "never" &&
-      config.interactive !== false && {
+      options.interactive !== "never" &&
+      options.interactive !== false && {
         name: "no-interactive",
         title: "Non-Interactive",
         description:
@@ -114,7 +119,6 @@ function getDefaultCommandPayloadArgs(
       title: "Hide Banner",
       description:
         "Hide the banner displayed while running the CLI application (will be set to true if running in a CI pipeline).",
-      alias: [],
       type: { kind: ReflectionKind.boolean },
       optional: true,
       default: false,
@@ -124,7 +128,6 @@ function getDefaultCommandPayloadArgs(
       name: "verbose",
       title: "Verbose",
       description: "Enable verbose output.",
-      alias: ["v"],
       type: { kind: ReflectionKind.boolean },
       optional: true,
       default: false,
@@ -143,39 +146,81 @@ export class CommandPayload {
   /**
    * Creates a new CommandPayload instance.
    *
-   * @param config - The configuration for the Storm Stack CLI preset.
-   * @param command - The command that this payload is associated with.
+   * @param context - The CLI plugin context.
+   * @param entry - The command entry definition.
+   * @param reflection - The reflection information for the command.
+   * @returns A new CommandPayload instance.
    * @throws An error if the command type is invalid or does not conform to the expected structure.
    */
   public static from(
-    config: CLIPluginConfig,
-    command: Pick<Command, "name" | "title" | "entry"> &
-      Partial<Pick<Command, "type">>,
-    reflection?: ReflectionClass<any>
+    context: CLIPluginContext,
+    entry: CommandEntryTypeDefinition,
+    // eslint-disable-next-line ts/no-unsafe-function-type
+    reflection: ReflectionClass<any> | ReflectionFunction | Function
   ): CommandPayload {
+    const name = findCommandName(entry);
+    const title = entry.title || titleCase(name);
+
     let type = new ReflectionClass({
       kind: ReflectionKind.objectLiteral,
-      description: `The payload data types for the ${
-        command.title || titleCase(command.name)
-      } CLI command.`,
+      description: `The payload data types for the ${title} CLI command.`,
       types: []
     });
-    if (reflection) {
-      if (
-        reflection.getClassName() === "StormPayload" &&
-        reflection.hasProperty("data")
-      ) {
-        type = extractCommandFunctionPayloadData(reflection);
-      } else {
-        type = reflection;
+
+    if (
+      (reflection as ReflectionClass<any>)?.type?.kind &&
+      ((reflection as ReflectionClass<any>)?.type?.kind ===
+        ReflectionKind.class ||
+        (reflection as ReflectionClass<any>)?.type?.kind ===
+          ReflectionKind.objectLiteral)
+    ) {
+      const reflectionClass = ReflectionClass.from(
+        reflection as ReflectionClass<any>
+      );
+      if (!reflectionClass) {
+        throw new Error(`Reflection not found: ${entry.input.file}`);
       }
-    } else if (command.type) {
-      type = extractCommandFunctionPayload(command.type);
+
+      if (
+        reflectionClass.getClassName() === "StormPayload" &&
+        reflectionClass.hasProperty("data")
+      ) {
+        type = extractCommandFunctionPayloadData(reflectionClass);
+      } else if (reflectionClass.hasProperty("payload")) {
+        const payloadType = reflectionClass.getProperty("payload").getType();
+        if (
+          payloadType.kind !== ReflectionKind.class &&
+          payloadType.kind !== ReflectionKind.objectLiteral
+        ) {
+          throw new Error(
+            `Payload for ${title} must be of type objectLiteral or class, instead received: ${payloadType.kind}`
+          );
+        }
+
+        type = ReflectionClass.from(payloadType);
+      } else {
+        type = reflectionClass;
+      }
+    } else {
+      let commandReflection = reflection as ReflectionFunction;
+      if (!(reflection as ReflectionFunction)?.type?.kind) {
+        // eslint-disable-next-line ts/no-unsafe-function-type
+        commandReflection = ReflectionFunction.from(reflection as Function);
+      }
+
+      if (!commandReflection) {
+        throw new Error(`Reflection not found: ${entry.input.file}`);
+      }
+
+      type = extractCommandFunctionPayload(commandReflection);
     }
 
-    const result = new CommandPayload(command, type);
+    const result = new CommandPayload(context, entry, type);
 
-    const defaultArgs = getDefaultCommandPayloadArgs(config, command.entry);
+    const defaultArgs = getDefaultCommandPayloadArgs(
+      context.options.plugins.cli,
+      entry
+    );
 
     type.getProperties().forEach(arg => {
       const matchingDefaultArg = defaultArgs.find(
@@ -193,6 +238,13 @@ export class CommandPayload {
             description: arg.getDescription(),
             visibility: arg.getVisibility(),
             type: arg.getType(),
+            alias: arg.getAlias(),
+            domain: arg.getDomain() || "cli",
+            title: arg.getTitle() || titleCase(arg.getNameAsString()),
+            permission: arg.getPermission(),
+            hidden: arg.isHidden(),
+            ignore: arg.isIgnored(),
+            internal: arg.isInternal(),
             tags: arg.getTags()
           },
           matchingDefaultArg ?? {}
@@ -204,6 +256,22 @@ export class CommandPayload {
       .filter(arg => !result.find(arg.name))
       .forEach(arg => {
         result.add(arg);
+      });
+
+    result.type
+      .getProperties()
+      .filter(
+        prop =>
+          prop.getNameAsString() &&
+          !context.reflections.config.types.params.hasProperty(
+            constantCase(prop.getNameAsString())
+          )
+      )
+      .forEach(prop => {
+        context.reflections.config.types.params.addProperty({
+          ...prop,
+          name: constantCase(prop.getNameAsString())
+        });
       });
 
     return result;
@@ -234,53 +302,56 @@ export class CommandPayload {
    */
   public get args(): readonly CommandPayloadArg[] {
     return (
-      this.#args.map(arg => {
-        let type!: ReflectionProperty;
-        if (this.type.hasProperty(arg.name)) {
-          type = this.type.getProperty(arg.name);
-        } else {
-          const title = titleCase(arg.name);
-          type = this.type.addProperty({
-            name: arg.name,
-            description: `The ${title} command-line option for the ${
-              this.command.title || titleCase(this.command.name)
-            } command.`,
-            type: {
-              kind: ReflectionKind.string
-            },
-            optional: true,
-            tags: {
-              title
-            }
-          });
-        }
+      this.#args
+        .filter(arg => arg.name)
+        .map(arg => {
+          let type!: ReflectionProperty;
+          if (this.type.hasProperty(camelCase(arg.name))) {
+            type = this.type.getProperty(camelCase(arg.name));
+          } else {
+            const title = titleCase(arg.name);
+            type = this.type.addProperty({
+              name: arg.name,
+              description: `The ${title} command-line option for the ${
+                this.entry.title || titleCase(this.entry.name)
+              } command.`,
+              type: {
+                kind: ReflectionKind.string
+              },
+              optional: true,
+              tags: {
+                domain: "cli",
+                title
+              }
+            });
+          }
 
-        const stringifiedType = stringifyType(type.getType());
+          const stringifiedType = stringifyType(type.getType());
 
-        let options = [] as string[];
-        if (stringifiedType.includes("|")) {
-          options = stringifiedType
-            .split("|")
-            .map(option =>
-              option.trim().replaceAll('"', "").replaceAll("'", "")
-            );
-        }
+          let options = [] as string[];
+          if (stringifiedType.includes("|")) {
+            options = stringifiedType
+              .split("|")
+              .map(option =>
+                option.trim().replaceAll('"', "").replaceAll("'", "")
+              );
+          }
 
-        return {
-          name: kebabCase(arg.name),
-          title: type.getTitle() || titleCase(arg.name),
-          type,
-          options,
-          isNegativeOf: arg.isNegativeOf,
-          skipNegative: arg.skipNegative
-        };
-      }) ?? []
+          return {
+            name: kebabCase(arg.name),
+            title: type.getTitle() || titleCase(arg.name),
+            type,
+            options,
+            isNegativeOf: arg.isNegativeOf,
+            skipNegative: arg.skipNegative
+          };
+        }) ?? []
     );
   }
 
   private constructor(
-    protected command: Pick<Command, "name" | "title" | "entry"> &
-      Partial<Pick<Command, "type">>,
+    protected context: CLIPluginContext,
+    protected entry: CommandEntryTypeDefinition,
     public type: ReflectionClass<any>
   ) {
     this.#args = [];
@@ -294,19 +365,27 @@ export class CommandPayload {
    * @throws An error if an argument with the same name already exists in the command payload.
    */
   public add = (arg: AddCommandPayloadArgProps) => {
-    if (!this.find(arg.name)) {
-      if (
-        arg.type?.kind === ReflectionKind.boolean &&
-        !arg.isNegativeOf &&
-        !arg.skipNegative
-      ) {
-        const inverseName = `no-${kebabCase(arg.name)}`;
-        if (!this.args.some(a => a.name === inverseName)) {
+    if (arg.name && !this.find(arg.name)) {
+      if (arg.type?.kind === ReflectionKind.boolean && !arg.skipNegative) {
+        if (!arg.isNegativeOf) {
+          const inverseName = `no-${kebabCase(arg.name)}`;
+          if (!this.args.some(a => a.name === inverseName)) {
+            this.add({
+              name: inverseName,
+              title: titleCase(inverseName),
+              description: `The inverse of the ${arg.name} option.`,
+              default: false,
+              optional: true,
+              isNegativeOf: arg.name,
+              skipNegative: true
+            });
+          }
+        } else if (arg.isNegativeOf) {
           this.add({
-            name: inverseName,
-            title: titleCase(inverseName),
+            name: arg.isNegativeOf,
+            title: titleCase(arg.isNegativeOf),
             description: `The inverse of the ${arg.name} option.`,
-            default: false,
+            default: !isUndefined(arg.default) ? !arg.default : undefined,
             optional: true,
             isNegativeOf: arg.name,
             skipNegative: true
@@ -315,12 +394,12 @@ export class CommandPayload {
       }
 
       this.#args.push({
-        name: arg.name,
+        name: kebabCase(arg.name),
         isNegativeOf: arg.isNegativeOf,
-        skipNegative: !!(arg.isNegativeOf || arg.skipNegative)
+        skipNegative: Boolean(arg.isNegativeOf || arg.skipNegative)
       });
 
-      if (!this.type.hasProperty(arg.name)) {
+      if (!this.type.hasProperty(camelCase(arg.name))) {
         const title = arg.title ? arg.title : titleCase(arg.name);
         const type: Type = arg.type ?? {
           kind: ReflectionKind.string
@@ -332,9 +411,10 @@ export class CommandPayload {
 
         this.type.addProperty({
           description: `The ${title} command-line option for the ${
-            this.command.title || titleCase(this.command.name)
+            this.entry.title || titleCase(this.entry.name)
           } command.`,
           ...arg,
+          name: camelCase(arg.name),
           optional: arg.optional !== false ? true : undefined,
           type,
           tags: {
@@ -349,6 +429,40 @@ export class CommandPayload {
             title
           }
         });
+      }
+
+      if (
+        !this.context.reflections.config.types.params.hasProperty(
+          constantCase(arg.name)
+        )
+      ) {
+        const title = arg.title ? arg.title : titleCase(arg.name);
+        const type: Type = arg.type ?? {
+          kind: ReflectionKind.string
+        };
+
+        if (arg.isNegativeOf) {
+          type.kind = ReflectionKind.boolean;
+        }
+
+        if (!arg.ignore) {
+          this.context.reflections.config.types.params.addProperty({
+            ...arg,
+            optional: arg.optional !== false ? true : undefined,
+            name: constantCase(arg.name),
+            type,
+            tags: {
+              ...arg.tags,
+              hidden: arg.hidden,
+              internal: arg.internal,
+              alias: arg.alias,
+              readonly: arg.readonly,
+              permission: arg.permission,
+              domain: "cli",
+              title
+            }
+          });
+        }
       }
     }
   };

@@ -21,14 +21,14 @@ import { LogLevelLabel } from "@storm-software/config-tools/types";
 import { getFileHeader } from "@storm-stack/core/lib/utilities/file-header";
 import type { Context, EngineHooks } from "@storm-stack/core/types";
 import type { PluginOptions } from "@storm-stack/core/types/plugin";
-import type { StoragePluginConfig } from "@storm-stack/devkit/plugins/storage";
+import type { StoragePluginOptions } from "@storm-stack/devkit/plugins/storage";
 import StoragePlugin from "@storm-stack/devkit/plugins/storage";
 import { readFile } from "@stryke/fs";
 import { existsSync, joinPaths } from "@stryke/path";
 import type { KVOptions } from "unstorage/drivers/cloudflare-kv-binding";
 import type { KVHTTPOptions } from "unstorage/drivers/cloudflare-kv-http";
 
-export type StorageCloudflareKVPluginConfig = StoragePluginConfig &
+export type StorageCloudflareKVPluginOptions = StoragePluginOptions &
   Omit<KVOptions, "binding"> & {
     /**
      * The binding name for the Cloudflare KV.
@@ -49,8 +49,8 @@ export type StorageCloudflareKVPluginConfig = StoragePluginConfig &
     minTTL: number;
   } & Omit<KVHTTPOptions, "namespaceId" | "minTTL">;
 
-export default class StorageCloudflareKVPlugin extends StoragePlugin<StorageCloudflareKVPluginConfig> {
-  public constructor(options: PluginOptions<StorageCloudflareKVPluginConfig>) {
+export default class StorageCloudflareKVPlugin extends StoragePlugin<StorageCloudflareKVPluginOptions> {
+  public constructor(options: PluginOptions<StorageCloudflareKVPluginOptions>) {
     super(options);
 
     this.options.minTTL ??= 60;
@@ -73,45 +73,86 @@ export default class StorageCloudflareKVPlugin extends StoragePlugin<StorageClou
     if (this.options.binding) {
       return `${getFileHeader()}
 
+import type { StorageAdapter } from "@storm-stack/types/storage";
 import cloudflareKVBindingDriver from "unstorage/drivers/cloudflare-kv-binding";
 import { env } from "cloudflare:workers";
 
-export default cloudflareKVBindingDriver({ binding: env.${
-        this.options.binding
-      }, minTTL: ${this.options.minTTL ?? 60} });
+/**
+ * Create an [Cloudflare KV](https://developers.cloudflare.com/kv/) storage adapter.
+ *
+ * @see [Cloudflare KV Documentation](https://developers.cloudflare.com/kv/)
+ *
+ * @returns The Cloudflare KV {@link StorageAdapter | storage adapter}.
+ */
+function createAdapter(): StorageAdapter {
+  const adapter = cloudflareKVBindingDriver({ binding: env.${
+    this.options.binding
+  }, minTTL: ${this.options.minTTL ?? 60} }) as StorageAdapter;
+  adapter[Symbol.asyncDispose] = async () => {
+    if (adapter.dispose && typeof adapter.dispose === "function") {
+      await Promise.resolve(adapter.dispose());
+    }
+  };
+
+  return adapter;
+}
+
+export default createAdapter;
+
 `;
     } else {
       return `${getFileHeader()}
 
+import type { StorageAdapter } from "@storm-stack/types/storage";
 import cloudflareKVHTTPDriver from "unstorage/drivers/cloudflare-kv-http";
 import { StormError } from "storm:error";
 
-const accountId = process.env.CLOUDFLARE_ACCOUNT_ID || $storm.config.CLOUDFLARE_ACCOUNT_ID;
-const apiToken = process.env.CLOUDFLARE_API_TOKEN || $storm.config.CLOUDFLARE_API_TOKEN;
-const email = process.env.CLOUDFLARE_EMAIL || $storm.config.CLOUDFLARE_EMAIL;
-const apiKey = process.env.CLOUDFLARE_API_KEY || $storm.config.CLOUDFLARE_API_KEY;
-const userServiceKey = process.env.CLOUDFLARE_USER_SERVICE_KEY || $storm.config.CLOUDFLARE_USER_SERVICE_KEY;
+/**
+ * Create an [Cloudflare KV](https://developers.cloudflare.com/kv/) storage adapter.
+ *
+ * @see [Cloudflare KV Documentation](https://developers.cloudflare.com/kv/)
+ *
+ * @returns The Cloudflare KV {@link StorageAdapter | storage adapter}.
+ */
+function createAdapter(): StorageAdapter {
+  const accountId = $storm.config.CLOUDFLARE_ACCOUNT_ID;
+  const apiToken = $storm.config.CLOUDFLARE_API_TOKEN;
+  const email = $storm.config.CLOUDFLARE_EMAIL;
+  const apiKey = $storm.config.CLOUDFLARE_API_KEY;
+  const userServiceKey = $storm.config.CLOUDFLARE_USER_SERVICE_KEY;
 
-if (!accountId) {
-  throw new StormError({
-    type: "general", code: 13, params: ["Cloudflare KV storage"]
-  });
+  if (!accountId) {
+    throw new StormError({
+      type: "general", code: 13, params: ["Cloudflare KV storage"]
+    });
+  }
+
+  if (!apiToken && (!email || !apiKey) && !userServiceKey) {
+    throw new StormError({ type: "general", code: 14 });
+  }
+
+  export const adapter = cloudflareKVHTTPDriver({
+    accountId,
+    namespaceId: ${
+      this.options.namespace ? `"${this.options.namespace}"` : "undefined"
+    },
+    apiToken,
+    email,
+    apiKey,
+    userServiceKey,
+    minTTL: ${this.options.minTTL ?? 60}
+  }) as StorageAdapter;
+  adapter[Symbol.asyncDispose] = async () => {
+    if (adapter.dispose && typeof adapter.dispose === "function") {
+      await Promise.resolve(adapter.dispose());
+    }
+  };
+
+  return adapter;
 }
-if (!apiToken && (!email || !apiKey) && !userServiceKey) {
-  throw new StormError({ type: "general", code: 14 });
-}
 
-export const adapter cloudflareKVHTTPDriver({
-  accountId,
-  namespaceId: ${this.options.namespace ? `"${this.options.namespace}"` : "undefined"},
-  apiToken,
-  email,
-  apiKey,
-  userServiceKey,
-  minTTL: ${this.options.minTTL ?? 60}
-});
+export default createAdapter;
 
-export default adapter;
 `;
     }
   }

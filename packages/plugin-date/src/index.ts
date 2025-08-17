@@ -27,27 +27,28 @@ import { DayjsModule } from "./templates/dayjs";
 import { LuxonModule } from "./templates/luxon";
 import { MomentModule } from "./templates/moment";
 import {
-  DatePluginConfig,
   DatePluginContext,
-  ResolvedDateOptions
+  DatePluginOptions,
+  ResolvedDatePluginOptions
 } from "./types";
 
 /**
  * Storm Stack - Date plugin.
  */
 export default class DatePlugin<
-  TConfig extends DatePluginConfig = DatePluginConfig
-> extends Plugin<TConfig> {
+  TOptions extends DatePluginOptions = DatePluginOptions,
+  TContext extends DatePluginContext = DatePluginContext
+> extends Plugin<TOptions, TContext> {
   /**
    * The constructor for the plugin
    *
    * @param options - The configuration options for the plugin
    */
-  public constructor(options: PluginOptions<TConfig>) {
+  public constructor(options: PluginOptions<TOptions>) {
     super(options);
 
     this.packageDeps = {};
-    this.dependencies = [["@storm-stack/plugin-dotenv", options.dotenv]];
+    this.dependencies = [["@storm-stack/plugin-config", options.config]];
   }
 
   /**
@@ -55,7 +56,7 @@ export default class DatePlugin<
    *
    * @param hooks - The hooks to add to the engine.
    */
-  public override addHooks(hooks: EngineHooks) {
+  public override addHooks(hooks: EngineHooks<TContext>) {
     super.addHooks(hooks);
 
     hooks.addHooks({
@@ -72,7 +73,7 @@ export default class DatePlugin<
    *
    * @param context - The context of the current build.
    */
-  protected async initOptions(context: DatePluginContext) {
+  protected async initOptions(context: TContext) {
     this.log(
       LogLevelLabel.TRACE,
       `Initializing the Date plugin options for the Storm Stack project.`
@@ -80,17 +81,21 @@ export default class DatePlugin<
 
     context.options.plugins.date ??= {
       type: "date-fns"
-    } as ResolvedDateOptions;
+    } as ResolvedDatePluginOptions;
 
     if (
+      !context.options.plugins.date.type ||
       !["date-fns", "dayjs", "luxon", "moment"].includes(
         context.options.plugins.date.type
       )
     ) {
-      this.log(
-        LogLevelLabel.WARN,
-        `Invalid date library type "${context.options.plugins.date.type}" specified. Defaulting to "date-fns".`
-      );
+      if (context.options.plugins.date.type) {
+        this.log(
+          LogLevelLabel.WARN,
+          `Invalid date library type "${context.options.plugins.date.type}" specified. Defaulting to "date-fns".`
+        );
+      }
+
       context.options.plugins.date.type = "date-fns";
     }
 
@@ -107,7 +112,7 @@ export default class DatePlugin<
    *
    * @param context - The context to initialize.
    */
-  protected async prepareRuntime(context: DatePluginContext) {
+  protected async prepareRuntime(context: TContext) {
     this.log(
       LogLevelLabel.TRACE,
       `Preparing the date runtime artifacts for the Storm Stack project.`

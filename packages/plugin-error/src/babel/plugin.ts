@@ -27,8 +27,8 @@ import {
   BabelPluginState
 } from "@storm-stack/core/types/babel";
 import { declareBabel } from "@storm-stack/devkit/babel/declare-babel";
-import { BabelPluginBuilderParams } from "@storm-stack/devkit/types";
 import { ErrorType } from "@storm-stack/types/shared/error";
+import { ErrorPluginContext } from "../types";
 
 const ERROR_CLASSES = [
   "Error",
@@ -72,292 +72,284 @@ export type ErrorBabelPluginState = BabelPluginState<BabelPluginOptions> & {
 };
 
 /*
- * The Storm Stack Babel Plugin
+ * The Storm Stack Error Babel Plugin
  *
  * @param babel - The Babel core module
  * @returns The Babel plugin object
  */
-export default declareBabel(
-  "error",
-  ({
-    log
-  }: BabelPluginBuilderParams<BabelPluginOptions, ErrorBabelPluginState>) => {
-    function requiresImport(
-      pass: BabelPluginPass<BabelPluginOptions, ErrorBabelPluginState>
-    ): boolean {
-      return !listImports(pass.file.ast).includes("storm:error");
-    }
+export default declareBabel<
+  BabelPluginOptions,
+  ErrorPluginContext,
+  ErrorBabelPluginState
+>("error", ({ log }) => {
+  function requiresImport(
+    pass: BabelPluginPass<BabelPluginOptions, ErrorBabelPluginState>
+  ): boolean {
+    return !listImports(pass.file.ast).includes("storm:error");
+  }
 
-    function extractErrorMessage(
-      node: t.Expression | t.SpreadElement | t.ArgumentPlaceholder
-    ): ExtractedErrorMessage | undefined {
-      let result: ExtractedErrorMessage | undefined;
+  function extractErrorMessage(
+    node: t.Expression | t.SpreadElement | t.ArgumentPlaceholder
+  ): ExtractedErrorMessage | undefined {
+    let result: ExtractedErrorMessage | undefined;
 
-      if (t.isStringLiteral(node)) {
-        result = {
-          message: node.value,
-          params: []
-        };
-      } else if (t.isTemplateLiteral(node)) {
-        const parts = [] as string[];
-        for (let i = 0; i < node.quasis.length; i++) {
-          const elementNode = node.quasis[i];
-          if (!t.isTemplateElement(elementNode) || !elementNode.value.cooked) {
-            throw new Error(
-              `Unsupported type provided as template element ${node.type}`
-            );
-          }
-
-          parts.push(elementNode.value.cooked);
+    if (t.isStringLiteral(node)) {
+      result = {
+        message: node.value,
+        params: []
+      };
+    } else if (t.isTemplateLiteral(node)) {
+      const parts = [] as string[];
+      for (let i = 0; i < node.quasis.length; i++) {
+        const elementNode = node.quasis[i];
+        if (!t.isTemplateElement(elementNode) || !elementNode.value.cooked) {
+          throw new Error(
+            `Unsupported type provided as template element ${node.type}`
+          );
         }
 
-        result = {
-          message: parts.join("%s"),
-          params: node.expressions.map(expr => generate(expr).code)
-        };
-      } else if (t.isBinaryExpression(node)) {
-        if (node.operator !== "+") {
-          throw new Error(`Unsupported binary operator ${node.operator}`);
-        }
-        if (!t.isExpression(node.left)) {
-          throw new Error(`Unsupported left operand ${node.left.type}`);
-        }
-
-        const leftResult = extractErrorMessage(node.left);
-        const rightResult = extractErrorMessage(node.right);
-        if (!leftResult && !rightResult) {
-          return undefined;
-        }
-
-        return {
-          message: (leftResult?.message ?? "") + (rightResult?.message ?? ""),
-          params: (leftResult?.params ?? []).concat(rightResult?.params ?? [])
-        };
-      } else if (!t.isObjectExpression(node)) {
-        throw new Error(
-          `Unsupported type provided as error message ${node.type}`
-        );
+        parts.push(elementNode.value.cooked);
       }
 
-      return result;
+      result = {
+        message: parts.join("%s"),
+        params: node.expressions.map(expr => generate(expr).code)
+      };
+    } else if (t.isBinaryExpression(node)) {
+      if (node.operator !== "+") {
+        throw new Error(`Unsupported binary operator ${node.operator}`);
+      }
+      if (!t.isExpression(node.left)) {
+        throw new Error(`Unsupported left operand ${node.left.type}`);
+      }
+
+      const leftResult = extractErrorMessage(node.left);
+      const rightResult = extractErrorMessage(node.right);
+      if (!leftResult && !rightResult) {
+        return undefined;
+      }
+
+      return {
+        message: (leftResult?.message ?? "") + (rightResult?.message ?? ""),
+        params: (leftResult?.params ?? []).concat(rightResult?.params ?? [])
+      };
+    } else if (!t.isObjectExpression(node)) {
+      throw new Error(
+        `Unsupported type provided as error message ${node.type}`
+      );
     }
 
-    function extractErrorType(
-      node: t.Expression | t.SpreadElement | t.ArgumentPlaceholder
-    ): ErrorType | undefined {
-      if (t.isStringLiteral(node)) {
-        return node.value as ErrorType;
-      } else if (t.isObjectExpression(node)) {
-        const property = node.properties.find(
-          prop =>
-            t.isObjectProperty(prop) &&
-            t.isIdentifier(prop.key) &&
-            prop.key.name === "type" &&
-            prop.value &&
-            t.isStringLiteral(prop.value)
-        );
+    return result;
+  }
+
+  function extractErrorType(
+    node: t.Expression | t.SpreadElement | t.ArgumentPlaceholder
+  ): ErrorType | undefined {
+    if (t.isStringLiteral(node)) {
+      return node.value as ErrorType;
+    } else if (t.isObjectExpression(node)) {
+      const property = node.properties.find(
+        prop =>
+          t.isObjectProperty(prop) &&
+          t.isIdentifier(prop.key) &&
+          prop.key.name === "type" &&
+          prop.value &&
+          t.isStringLiteral(prop.value)
+      );
+      if (
+        property &&
+        t.isObjectProperty(property) &&
+        t.isStringLiteral(property.value)
+      ) {
+        return property.value.value as ErrorType;
+      }
+    }
+
+    return undefined;
+  }
+
+  return {
+    visitor: {
+      NewExpression(
+        path: NodePath<t.NewExpression>,
+        pass: BabelPluginPass<BabelPluginOptions, ErrorBabelPluginState>
+      ) {
         if (
-          property &&
-          t.isObjectProperty(property) &&
-          t.isStringLiteral(property.value)
+          ERROR_CLASSES.some(name => path.get("callee").isIdentifier({ name }))
         ) {
-          return property.value.value as ErrorType;
-        }
-      }
-
-      return undefined;
-    }
-
-    return {
-      visitor: {
-        NewExpression(
-          path: NodePath<t.NewExpression>,
-          pass: BabelPluginPass<BabelPluginOptions, ErrorBabelPluginState>
-        ) {
-          if (
-            ERROR_CLASSES.some(name =>
-              path.get("callee").isIdentifier({ name })
-            )
-          ) {
-            if (path.node.arguments.length > 0 && path.node.arguments[0]) {
-              const errorMessage = extractErrorMessage(path.node.arguments[0]);
-              if (errorMessage) {
-                let errorType: ErrorType | undefined;
-                if (path.node.arguments.length > 1 && path.node.arguments[1]) {
-                  const errorType = extractErrorType(path.node.arguments[1]);
-                  if (errorType && !ERROR_TYPES.includes(errorType)) {
-                    throw new Error(
-                      `Unsupported error type provided: ${errorType}`
-                    );
-                  }
-                }
-
-                pass.errorMessages ??= [];
-                pass.errorMessages.push({
-                  message: errorMessage.message,
-                  params: errorMessage.params,
-                  type: errorType
-                });
-
-                if (requiresImport(pass)) {
-                  log(
-                    LogLevelLabel.TRACE,
-                    `Adding import for storm:error module.`
-                  );
-
-                  (
-                    path.scope.getProgramParent().path as NodePath<t.Program>
-                  ).unshiftContainer(
-                    "body",
-                    getImport("storm:error", "StormError")
+          if (path.node.arguments.length > 0 && path.node.arguments[0]) {
+            const errorMessage = extractErrorMessage(path.node.arguments[0]);
+            if (errorMessage) {
+              let errorType: ErrorType | undefined;
+              if (path.node.arguments.length > 1 && path.node.arguments[1]) {
+                const errorType = extractErrorType(path.node.arguments[1]);
+                if (errorType && !ERROR_TYPES.includes(errorType)) {
+                  throw new Error(
+                    `Unsupported error type provided: ${errorType}`
                   );
                 }
               }
-            }
-          }
-        },
-        CallExpression(
-          path: NodePath<t.CallExpression>,
-          pass: BabelPluginPass<BabelPluginOptions, ErrorBabelPluginState>
-        ) {
-          if (
-            ERROR_CLASSES.some(name =>
-              path.get("callee").isIdentifier({ name })
-            )
-          ) {
-            if (path.node.arguments.length > 0 && path.node.arguments[0]) {
-              const errorMessage = extractErrorMessage(path.node.arguments[0]);
-              if (errorMessage) {
-                let errorType: ErrorType | undefined;
-                if (path.node.arguments.length > 1 && path.node.arguments[1]) {
-                  const errorType = extractErrorType(path.node.arguments[1]);
-                  if (errorType && !ERROR_TYPES.includes(errorType)) {
-                    throw new Error(
-                      `Unsupported error type provided: ${errorType}`
-                    );
-                  }
-                }
 
-                pass.errorMessages ??= [];
-                pass.errorMessages.push({
-                  message: errorMessage.message,
-                  params: errorMessage.params,
-                  type: errorType
-                });
+              pass.errorMessages ??= [];
+              pass.errorMessages.push({
+                message: errorMessage.message,
+                params: errorMessage.params,
+                type: errorType
+              });
 
-                if (requiresImport(pass)) {
-                  log(
-                    LogLevelLabel.TRACE,
-                    `Adding import for storm:error module.`
-                  );
+              if (requiresImport(pass)) {
+                log(
+                  LogLevelLabel.TRACE,
+                  `Adding import for storm:error module.`
+                );
 
-                  (
-                    path.scope.getProgramParent().path as NodePath<t.Program>
-                  ).unshiftContainer(
-                    "body",
-                    getImport("storm:error", "StormError")
-                  );
-                }
+                (
+                  path.scope.getProgramParent().path as NodePath<t.Program>
+                ).unshiftContainer(
+                  "body",
+                  getImport("storm:error", "StormError")
+                );
               }
             }
-          }
-        },
-        ReferencedIdentifier(
-          path: NodePath<t.Identifier>,
-          pass: BabelPluginPass<BabelPluginOptions, ErrorBabelPluginState>
-        ) {
-          if (
-            path.isReferencedIdentifier({ name: "StormError" }) &&
-            !requiresImport(pass)
-          ) {
-            (
-              path.scope.getProgramParent().path as NodePath<t.Program>
-            ).unshiftContainer("body", getImport("storm:error", "StormError"));
           }
         }
       },
-      async post(
-        this: BabelPluginPass<BabelPluginOptions, ErrorBabelPluginState>,
-        _file: File
+      CallExpression(
+        path: NodePath<t.CallExpression>,
+        pass: BabelPluginPass<BabelPluginOptions, ErrorBabelPluginState>
       ) {
-        log(
-          LogLevelLabel.TRACE,
-          `Post-processing the Storm Stack error plugin.`
-        );
+        if (
+          ERROR_CLASSES.some(name => path.get("callee").isIdentifier({ name }))
+        ) {
+          if (path.node.arguments.length > 0 && path.node.arguments[0]) {
+            const errorMessage = extractErrorMessage(path.node.arguments[0]);
+            if (errorMessage) {
+              let errorType: ErrorType | undefined;
+              if (path.node.arguments.length > 1 && path.node.arguments[1]) {
+                const errorType = extractErrorType(path.node.arguments[1]);
+                if (errorType && !ERROR_TYPES.includes(errorType)) {
+                  throw new Error(
+                    `Unsupported error type provided: ${errorType}`
+                  );
+                }
+              }
 
-        // if (this.configReflection.getProperties().length > 0) {
-        //  this.log(
-        //     LogLevelLabel.TRACE,
-        //     `Adding environment variables from ${
-        //       this.filename || "unknown file"
-        //     } to config.json.`
-        //   );
+              pass.errorMessages ??= [];
+              pass.errorMessages.push({
+                message: errorMessage.message,
+                params: errorMessage.params,
+                type: errorType
+              });
 
-        //   let existingReflection: ReflectionClass<unknown> =
-        //     ReflectionClass.from({
-        //       kind: ReflectionKind.objectLiteral,
-        //       description: `An object containing the dotenv variables used by the application.`,
-        //       types: []
-        //     });
+              if (requiresImport(pass)) {
+                log(
+                  LogLevelLabel.TRACE,
+                  `Adding import for storm:error module.`
+                );
 
-        //   const reflectionPath = getConfigReflectionsPath(
-        //     this.context,
-        //     "config"
-        //   );
-        //   if (reflectionPath && existsSync(reflectionPath)) {
-        //     this.log(
-        //       LogLevelLabel.TRACE,
-        //       `Config reflection file found at ${reflectionPath}, reading existing reflection.`
-        //     );
-
-        //     existingReflection = resolveClassType(
-        //       deserializeType(
-        //         convertFromCapnp(
-        //           new capnp.Message(
-        //             await readBufferFile(reflectionPath),
-        //             false
-        //           ).getRoot(CapnpSerializedTypes).types
-        //         )
-        //       )
-        //     );
-        //   }
-
-        //   this.log(
-        //     LogLevelLabel.TRACE,
-        //     `Adding new variables to config reflection at ${reflectionPath}.`
-        //   );
-
-        //   existingReflection
-        //     .getProperties()
-        //     .filter(
-        //       property => !this.configReflection.hasProperty(property.name)
-        //     )
-        //     .forEach(property => {
-        //       this.configReflection.addProperty({
-        //         ...property,
-        //         name: property.getName(),
-        //         description:
-        //           property.getDescription() ?? `The ${property.name} variable.`,
-        //         default: property.getDefaultValue(),
-        //         optional: property.isOptional() ? true : undefined,
-        //         readonly: property.isReadonly() ? true : undefined,
-        //         visibility: property.getVisibility(),
-        //         type: property.getType(),
-        //         tags: property.getTags()
-        //       } as Parameters<typeof existingReflection.addProperty>[0]);
-        //     });
-
-        //   const serialized = this.configReflection.serializeType();
-
-        //   const message = new capnp.Message();
-        //   const root = message.initRoot(CapnpSerializedTypes);
-
-        //   convertToCapnp(serialized, root._initTypes(serialized.length));
-
-        //   await removeFile(reflectionPath);
-        //   await writeBufferFile(reflectionPath, message.toArrayBuffer());
-        // }
+                (
+                  path.scope.getProgramParent().path as NodePath<t.Program>
+                ).unshiftContainer(
+                  "body",
+                  getImport("storm:error", "StormError")
+                );
+              }
+            }
+          }
+        }
+      },
+      ReferencedIdentifier(
+        path: NodePath<t.Identifier>,
+        pass: BabelPluginPass<BabelPluginOptions, ErrorBabelPluginState>
+      ) {
+        if (
+          path.isReferencedIdentifier({ name: "StormError" }) &&
+          !requiresImport(pass)
+        ) {
+          (
+            path.scope.getProgramParent().path as NodePath<t.Program>
+          ).unshiftContainer("body", getImport("storm:error", "StormError"));
+        }
       }
-    };
-  }
-);
+    },
+    async post(
+      this: BabelPluginPass<BabelPluginOptions, ErrorBabelPluginState>,
+      _file: File
+    ) {
+      log(LogLevelLabel.TRACE, "Post-processing the Storm Stack error plugin.");
+
+      // if (this.configReflection.getProperties().length > 0) {
+      //  this.log(
+      //     LogLevelLabel.TRACE,
+      //     `Adding environment variables from ${
+      //       this.filename || "unknown file"
+      //     } to config.json.`
+      //   );
+
+      //   let existingReflection: ReflectionClass<unknown> =
+      //     ReflectionClass.from({
+      //       kind: ReflectionKind.objectLiteral,
+      //       description: `An object containing the dotenv variables used by the application.`,
+      //       types: []
+      //     });
+
+      //   const reflectionPath = getConfigReflectionsPath(
+      //     this.context,
+      //     "config"
+      //   );
+      //   if (reflectionPath && existsSync(reflectionPath)) {
+      //     this.log(
+      //       LogLevelLabel.TRACE,
+      //       `Config reflection file found at ${reflectionPath}, reading existing reflection.`
+      //     );
+
+      //     existingReflection = resolveClassType(
+      //       deserializeType(
+      //         convertFromCapnp(
+      //           new capnp.Message(
+      //             await readBufferFile(reflectionPath),
+      //             false
+      //           ).getRoot(CapnpSerializedTypes).types
+      //         )
+      //       )
+      //     );
+      //   }
+
+      //   this.log(
+      //     LogLevelLabel.TRACE,
+      //     `Adding new variables to config reflection at ${reflectionPath}.`
+      //   );
+
+      //   existingReflection
+      //     .getProperties()
+      //     .filter(
+      //       property => !this.configReflection.hasProperty(property.name)
+      //     )
+      //     .forEach(property => {
+      //       this.configReflection.addProperty({
+      //         ...property,
+      //         name: property.getName(),
+      //         description:
+      //           property.getDescription() ?? `The ${property.name} variable.`,
+      //         default: property.getDefaultValue(),
+      //         optional: property.isOptional() ? true : undefined,
+      //         readonly: property.isReadonly() ? true : undefined,
+      //         visibility: property.getVisibility(),
+      //         type: property.getType(),
+      //         tags: property.getTags()
+      //       } as Parameters<typeof existingReflection.addProperty>[0]);
+      //     });
+
+      //   const serialized = this.configReflection.serializeType();
+
+      //   const message = new capnp.Message();
+      //   const root = message.initRoot(CapnpSerializedTypes);
+
+      //   convertToCapnp(serialized, root._initTypes(serialized.length));
+
+      //   await removeFile(reflectionPath);
+      //   await writeBufferFile(reflectionPath, message.toArrayBuffer());
+      // }
+    }
+  };
+});

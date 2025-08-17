@@ -68,11 +68,7 @@ export function createUnimport(context: Context): UnimportContext {
           `Processing exports from runtime file: ${id}`
         );
 
-        const ast = parseAst({
-          code: contents
-        });
-
-        const importNames = listExports(ast).filter(
+        const importNames = listExports(parseAst(contents)).filter(
           importName =>
             !presets.some(
               preset =>

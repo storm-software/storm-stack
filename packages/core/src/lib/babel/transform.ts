@@ -22,41 +22,15 @@ import { isParentPath } from "@stryke/path/is-parent-path";
 import { joinPaths } from "@stryke/path/join-paths";
 import { resolvePackage } from "@stryke/path/resolve";
 import { isFunction } from "@stryke/type-checks/is-function";
-import { isSetObject } from "@stryke/type-checks/is-set-object";
 import { isSetString } from "@stryke/type-checks/is-set-string";
+import chalk from "chalk";
 import { defu } from "defu";
-import {
-  BabelPlugin,
-  BabelPluginItem,
-  ResolvedBabelPluginItem
-} from "../../types/babel";
-import { SourceFile, TransformOptions } from "../../types/compiler";
+import { BabelPlugin, ResolvedBabelPluginItem } from "../../types/babel";
+import { CompilerOptions, SourceFile } from "../../types/compiler";
 import { LogFn } from "../../types/config";
 import { Context } from "../../types/context";
-import { serializeContext } from "../context";
 import { getMagicString, getString } from "../utilities/source-file";
-
-function getPluginName(plugin: BabelPluginItem): string | undefined {
-  return isSetString(plugin)
-    ? plugin
-    : isSetObject(plugin) && (plugin as BabelPlugin).name
-      ? (plugin as BabelPlugin).name
-      : Array.isArray(plugin)
-        ? getPluginName(plugin[0])
-        : undefined;
-}
-
-function isDuplicatePlugin(
-  plugins: BabelPluginItem[],
-  plugin: BabelPluginItem
-): boolean {
-  return !!(
-    getPluginName(plugin) &&
-    plugins.some(
-      existing => getPluginName(existing[0]) === getPluginName(plugin)
-    )
-  );
-}
+import { getPluginName, isDuplicatePlugin } from "./helpers";
 
 /**
  * Transform the code using the Storm Stack Babel plugin.
@@ -71,7 +45,7 @@ export async function transform(
   log: LogFn,
   context: Context,
   source: SourceFile,
-  options: TransformOptions = {}
+  options: CompilerOptions = {}
 ): Promise<SourceFile> {
   try {
     const corePath = process.env.STORM_STACK_LOCAL
@@ -108,8 +82,6 @@ export async function transform(
       return sourceFile;
     }
 
-    const ctx = serializeContext(context);
-
     const plugins = babelOptions.plugins.reduce<ResolvedBabelPluginItem[]>(
       (ret, plugin) => {
         if (!isDuplicatePlugin(ret, plugin)) {
@@ -122,31 +94,36 @@ export async function transform(
               !plugin[2].filter(sourceFile)
             ) {
               log(
-                LogLevelLabel.TRACE,
-                `Skipping Babel plugin ${getPluginName(plugin)} for ${sourceFile.id}`
+                LogLevelLabel.DEBUG,
+                `Skipping filtered Babel plugin ${chalk.bold.cyanBright(
+                  getPluginName(plugin) || "unnamed"
+                )} for ${sourceFile.id}`
               );
               return ret;
             }
 
             ret.push([
-              plugin[0],
+              isFunction(plugin[0]) ? plugin[0](context) : plugin[0],
               {
                 ...(plugin.length > 1 && plugin[1] ? plugin[1] : {}),
-                options,
-                context: ctx
+                options
               },
               plugin.length > 2 ? plugin[2] : undefined
             ] as ResolvedBabelPluginItem);
           } else {
             ret.push([
-              plugin,
+              isFunction(plugin) ? plugin(context) : plugin,
               {
-                options,
-                context: ctx
+                options
               },
               undefined
             ] as ResolvedBabelPluginItem);
           }
+        } else {
+          log(
+            LogLevelLabel.INFO,
+            `Skipping duplicate Babel plugin ${getPluginName(plugin)} for ${sourceFile.id}`
+          );
         }
 
         return ret;
@@ -165,31 +142,34 @@ export async function transform(
               !preset[2].filter(sourceFile)
             ) {
               log(
-                LogLevelLabel.TRACE,
-                `Skipping Babel preset ${getPluginName(preset)} for ${sourceFile.id}`
+                LogLevelLabel.INFO,
+                `Skipping filtered Babel preset ${getPluginName(preset)} for ${sourceFile.id}`
               );
               return ret;
             }
 
             ret.push([
-              preset[0],
+              isFunction(preset[0]) ? preset[0](context) : preset[0],
               {
                 ...(preset.length > 1 && preset[1] ? preset[1] : {}),
-                options,
-                context: ctx
+                options
               },
               preset.length > 2 ? preset[2] : undefined
             ] as ResolvedBabelPluginItem);
           } else {
             ret.push([
-              preset,
+              isFunction(preset) ? preset(context) : preset,
               {
-                options,
-                context: ctx
+                options
               },
               undefined
             ] as ResolvedBabelPluginItem);
           }
+        } else {
+          log(
+            LogLevelLabel.INFO,
+            `Skipping duplicate Babel preset ${getPluginName(preset)} for ${sourceFile.id}`
+          );
         }
 
         return ret;
@@ -223,42 +203,22 @@ export async function transform(
           plugins: [
             "@babel/plugin-syntax-typescript",
             ...plugins.map(plugin => {
-              if (Array.isArray(plugin) && plugin.length > 0) {
-                return [
-                  plugin[0],
-                  defu(plugin.length > 1 && plugin[1] ? plugin[1] : {}, {
-                    options,
-                    context: ctx
-                  })
-                ];
-              }
-
               return [
                 plugin[0],
-                {
-                  options,
-                  context: ctx
-                }
+                defu(plugin.length > 1 && plugin[1] ? plugin[1] : {}, {
+                  options
+                }),
+                (plugin[0] as BabelPlugin)?.name
               ];
             })
           ],
           presets: presets.map(preset => {
-            if (Array.isArray(preset) && preset.length > 0) {
-              return [
-                preset[0],
-                defu(preset.length > 1 && preset[1] ? preset[1] : {}, {
-                  options,
-                  context: ctx
-                })
-              ];
-            }
-
             return [
               preset[0],
-              {
-                options,
-                context: ctx
-              }
+              defu(preset.length > 1 && preset[1] ? preset[1] : {}, {
+                options
+              }),
+              (preset[0] as BabelPlugin)?.name
             ];
           })
         },
@@ -272,12 +232,16 @@ export async function transform(
         {
           highlightCode: true,
           code: true,
-          ast: true,
+          ast: false,
+          cloneInputAst: false,
           comments: true,
           sourceType: "module",
           configFile: false,
           babelrc: false,
-          envName: context.options.environment
+          envName: context.options.mode,
+          caller: {
+            name: "storm-stack"
+          }
         }
       ) as Parameters<typeof transformAsync>[1]
     );
@@ -310,24 +274,6 @@ export async function transform(
       );
     }
 
-    // if (nodes.length > 1) {
-    //   for (const node of nodes) {
-    //     const result = await context.workers.errorLookup.find({
-    //       path: context.options.errorsFile,
-    //       message: node.message,
-    //       type: node.type
-    //     });
-
-    //     node.path.replaceExpressionWithStatements(
-    //       toArray(template.ast`
-    //       new StormError({ type: "${result.type}", code: ${result.code}${
-    //         node.params.length > 0 ? ` params: [${node.params.join(", ")}] ` : ""
-    //       } })
-    //     `)
-    //     );
-    //   }
-    // }
-
     return sourceFile;
   } catch (error) {
     context.log(
@@ -336,7 +282,9 @@ export async function transform(
         error?.message
           ? isSetString(error.message)
             ? error.message.length > 5000
-              ? `${(error.message as string).slice(0, 5000)}...`
+              ? `${(error.message as string).slice(0, 5000)}... ${(
+                  error.message as string
+                ).slice(-100)}`
               : error.message
             : error.message
           : "Unknown error"

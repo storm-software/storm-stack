@@ -33,10 +33,8 @@ export default defineConfig({
       "@storm-stack/plugin-cli",
       {
         bin: "examples-cli",
-        dotenv: {
-          types: {
-            config: "./src/types.ts#StormCLIAppConfig"
-          }
+        config: {
+          types: "./src/types.ts#StormCLIAppConfig"
         }
       }
     ],

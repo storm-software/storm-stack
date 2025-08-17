@@ -18,7 +18,7 @@
 
 import { NodePath } from "@babel/core";
 import { ParseResult } from "@babel/parser";
-import * as BabelTypes from "@babel/types";
+import * as t from "@babel/types";
 import { isString } from "@stryke/type-checks/is-string";
 import { parseAst } from "./ast";
 
@@ -29,7 +29,7 @@ import { parseAst } from "./ast";
  * @param key - The name of the export to find (e.g., "default" or a named export).
  * @returns The declaration of the export if found, otherwise undefined.
  */
-export function findExport(ast: ParseResult<BabelTypes.File>, key: string) {
+export function findExport(ast: ParseResult<t.File>, key: string) {
   const type =
     key === "default" ? "ExportDefaultDeclaration" : "ExportNamedDeclaration";
 
@@ -58,8 +58,8 @@ export function findExport(ast: ParseResult<BabelTypes.File>, key: string) {
  * @param codeOrAst - The parsed Babel AST result containing the program body.
  * @returns An array of export names, including "default" for default exports.
  */
-export function listExports(codeOrAst: ParseResult<BabelTypes.File> | string) {
-  const ast = isString(codeOrAst) ? parseAst({ code: codeOrAst }) : codeOrAst;
+export function listExports(codeOrAst: ParseResult<t.File> | string) {
+  const ast = isString(codeOrAst) ? parseAst(codeOrAst) : codeOrAst;
 
   return ast.program.body
     .flatMap(i => {
@@ -86,9 +86,7 @@ export function listExports(codeOrAst: ParseResult<BabelTypes.File> | string) {
  * @param ast - The parsed Babel AST result containing the program body.
  * @returns An array of import names, including "default" for default imports.
  */
-export function listImports(
-  ast: ParseResult<BabelTypes.File> | BabelTypes.File
-) {
+export function listImports(ast: ParseResult<t.File> | t.File) {
   return ast.program.body
     .flatMap(i => {
       if (i.type === "ImportDeclaration") {
@@ -111,10 +109,9 @@ export function listImports(
 }
 
 export function isImportCall(
-  types: typeof BabelTypes,
-  calleePath: NodePath<BabelTypes.CallExpression | BabelTypes.NewExpression>
+  calleePath: NodePath<t.CallExpression | t.NewExpression>
 ) {
-  return types.isImport(calleePath.node.callee);
+  return t.isImport(calleePath.node.callee);
 }
 
 /**
@@ -129,14 +126,9 @@ export function getImport(
   specifier: string,
   name: string,
   named?: string
-): BabelTypes.ImportDeclaration {
-  return BabelTypes.importDeclaration(
-    [
-      BabelTypes.importSpecifier(
-        BabelTypes.identifier(name),
-        BabelTypes.stringLiteral(named || name)
-      )
-    ],
-    BabelTypes.stringLiteral(specifier)
+): t.ImportDeclaration {
+  return t.importDeclaration(
+    [t.importSpecifier(t.identifier(name), t.stringLiteral(named || name))],
+    t.stringLiteral(specifier)
   );
 }

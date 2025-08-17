@@ -161,12 +161,19 @@
     "storm-software",
     "storm-stack-plugin"
   ],
+  "peerDependencies": {
+    "@storm-stack/plugin-config": "*"
+  },
+  "peerDependenciesMeta": {
+    "@storm-stack/plugin-config": {
+      "optional": false
+    }
+  },
   "dependencies": {
     "@deepkit/type": "catalog:",
     "@storm-software/config-tools": "catalog:",
     "@storm-stack/core": "workspace:*",
     "@storm-stack/devkit": "workspace:*",
-    "@storm-stack/plugin-dotenv": "workspace:*",
     "@stryke/capnp": "catalog:",
     "@stryke/env": "catalog:",
     "@stryke/fs": "catalog:",
@@ -178,8 +185,7 @@
   "devDependencies": {
     "@storm-stack/nx": "workspace:*",
     "@types/node": "catalog:",
-    "tsup": "catalog:",
-    "typescript": "5.9.0-beta"
+    "tsup": "catalog:"
   },
   "publishConfig": {
     "access": "public"

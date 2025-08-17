@@ -202,37 +202,52 @@ export function createStormError(
   * A wrapper around the base JavaScript Error class to be used in Storm Stack applications
   */
  export class StormError extends Error implements StormErrorInterface {
-   __proto__ = Error;
+  /**
+   * Internal function to inherit the {@link Error} prototype.
+   *
+   * @internal
+   */
+  __proto__: Error;
 
-   /**
-    * The stack trace
-    */
-   #stack?: string;
+  /**
+  * The stack trace
+  */
+  #stack?: string;
 
-   /**
-    * The inner error
-    */
-   #cause?: StormErrorInterface;
+  /**
+  * The inner error
+  */
+  #cause?: StormErrorInterface;
 
-   /**
-    * The error code
-    */
-   public code: number;
+  /**
+  * The error code
+  */
+  public code: number;
 
-   /**
-    * The error message parameters
-    */
-   public params = [] as string[];
+  /**
+  * The error message parameters
+  */
+  public params = [] as string[];
 
-   /**
-    * The type of error event
-    */
-   public type: ErrorType = "general";
+  /**
+  * The type of error event
+  */
+  public type: ErrorType = "general";
 
-   /**
-    * Additional data to be passed with the error
-    */
-   public data?: any;
+  /**
+  * Additional data to be passed with the error
+  */
+  public data?: any;
+
+  /**
+   * The name of the error
+   */
+  readonly [Symbol.name]: string = this.name;
+
+  /**
+   * The string tag for the error
+   */
+  readonly [Symbol.toStringTag]: string = "StormError";
 
   /**
    * The StormError constructor
@@ -360,27 +375,27 @@ export function createStormError(
      return stacktrace;
    }
 
-   /**
-    * Prints a displayable/formatted stack trace
-    *
-    * @returns The stack trace string
-    */
-   public override get stack(): string {
-     return this.stacktrace
-       .filter(Boolean)
-       .map(line => {
-         return \`    at \${line.function} (\${line.source}:\${line.line}:\${line.column})\`;
-       })
-       .join("\\n");
-   }
 
    /**
-    * Store the stack trace
-    */
-   public override set stack(stack: string) {
-     this.#stack = stack;
-   }
+   * Prints a displayable/formatted stack trace
+   *
+   * @returns The stack trace string
+   */
+  public override get stack(): string {
+    return this.stacktrace
+      .filter(Boolean)
+      .map(line => {
+        return \`    at \${line.function} (\${line.source}:\${line.line}:\${line.column})\`;
+      })
+      .join("\\n");
+  }
 
+  /**
+   * Store the stack trace
+   */
+  public override set stack(stack: string) {
+    this.#stack = stack;
+  }
 
   /**
    * The unformatted stack trace
@@ -404,7 +419,7 @@ export function createStormError(
    * A URL to a page that displays the error message details
    */
   public get url(): string {
-    const url = new URL($storm.dotenv.ERROR_URL!);
+    const url = new URL($storm.config.static.ERROR_URL!);
     url.pathname = \`\${this.type.toLowerCase().replaceAll("_", "-")}/\${String(this.code)}\`;
 
     if (this.params.length > 0) {
@@ -428,7 +443,7 @@ export function createStormError(
    * @param includeData - Whether to include the data in the error message
    * @returns The display error message string
    */
-  public toDisplay(includeData = $storm.dotenv.INCLUDE_ERROR_DATA): string {
+  public toDisplay(includeData = $storm.config.static.INCLUDE_ERROR_DATA): string {
     return \`\${this.name && this.name !== this.constructor.name ? (this.code ? \`\${this.name} \` : this.name) : ""}\${
       this.code
         ? this.code && this.name
@@ -450,25 +465,56 @@ Inner Error: \${this.cause?.name}\${this.cause?.message ? " - " + this.cause?.me
     }\`;
   }
 
-   /**
-    * Prints the error message and stack trace
-    *
-    * @param stacktrace - Whether to include the stack trace in the error message
-    * @param includeData - Whether to include the data in the error message
-    * @returns The error message and stack trace string
-    */
-   public override toString(
-     stacktrace = $storm.dotenv.STACKTRACE,
-     includeData = $storm.dotenv.INCLUDE_ERROR_DATA
-   ): string {
-     return (
-       this.toDisplay(includeData) +
-       (stacktrace
-         ? ""
-         : \` \nStack Trace: \n\${this.stack}\`)
-     );
-   }
- }
+  /**
+  * Prints the error message and stack trace
+  *
+  * @param stacktrace - Whether to include the stack trace in the error message
+  * @param includeData - Whether to include the data in the error message
+  * @returns The error message and stack trace string
+  */
+  public override toString(
+    stacktrace = $storm.config.static.STACKTRACE,
+    includeData = $storm.config.static.INCLUDE_ERROR_DATA
+  ): string {
+    return (
+      this.toDisplay(includeData) +
+      (stacktrace
+        ? ""
+        : \` \nStack Trace: \n\${this.stack}\`)
+    );
+  }
 
-   `;
+  /**
+   * Converts a StormError object to a string.
+   */
+  [Symbol.toPrimitive](hint: "default"): string;
+  /**
+   * Converts a StormError object to a string.
+   */
+  [Symbol.toPrimitive](hint: "string"): string;
+  /**
+   * Converts a StormError object to a number.
+   */
+  [Symbol.toPrimitive](hint: "number"): number;
+  /**
+   * Converts a StormError object to a string or number.
+   *
+   * @param hint The strings "number", "string", or "default" to specify what primitive to return.
+   *
+   * @throws {TypeError} If 'hint' was given something other than "number", "string", or "default".
+   * @returns A number if 'hint' was "number", a string if 'hint' was "string" or "default".
+   */
+  [Symbol.toPrimitive](hint: string): string | number {
+    switch (hint) {
+      case "number":
+        return this.code;
+      case "string":
+      case "default":
+      default:
+        return this.message;
+    }
+  }
+}
+
+`;
 }

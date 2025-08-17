@@ -4,5 +4,6 @@
     "module": "ESNext"
   },
   "include": ["src/**/*.ts"],
-  "reflection": true
+  "reflection": true,
+  "reflectionLevel": "verbose"
 }

@@ -38,8 +38,7 @@ import { useStorm } from "storm:context";
  */
 export class StormResult<
   TData extends any | StormError = any | StormError
-> implements StormResultInterface<TData>
-{
+> implements StormResultInterface<TData> {
   /**
    * Create a new result.
    *

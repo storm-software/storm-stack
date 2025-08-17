@@ -17,32 +17,27 @@
  ------------------------------------------------------------------- */
 
 import { getFileHeader } from "@storm-stack/core/lib/utilities/file-header";
-import type { Context, EngineHooks } from "@storm-stack/core/types";
+import type { EngineHooks } from "@storm-stack/core/types";
 import type { PluginOptions } from "@storm-stack/core/types/plugin";
-import type { LogPluginConfig } from "@storm-stack/devkit/plugins/log";
 import LogPlugin from "@storm-stack/devkit/plugins/log";
+import { LogSentryPluginContext, LogSentryPluginOptions } from "./types";
 
-export interface LogSentryPluginConfig extends LogPluginConfig {
+/**
+ * A plugin for logging errors to Sentry.
+ */
+export default class LogSentryPlugin extends LogPlugin<
+  LogSentryPluginOptions,
+  LogSentryPluginContext
+> {
   /**
-   * The Sentry DSN to use for logging.
+   * Creates an instance of the Sentry logging plugin.
    *
-   * @remarks
-   * If not provided, the plugin will try to read the `SENTRY_DSN` environment variable.
+   * @param options - The plugin options.
    */
-  sentryDsn: string;
-
-  /**
-   * The environment to use for logging.
-   *
-   * @remarks
-   * If not provided, the plugin will try to read the `ENVIRONMENT` environment variable.
-   */
-  environment: string;
-}
-
-export default class LogSentryPlugin extends LogPlugin<LogSentryPluginConfig> {
-  public constructor(options: PluginOptions<LogSentryPluginConfig>) {
+  public constructor(options: PluginOptions<LogSentryPluginOptions>) {
     super(options);
+
+    this.dependencies = [["@storm-stack/plugin-config", options ?? {}]];
   }
 
   /**
@@ -50,18 +45,68 @@ export default class LogSentryPlugin extends LogPlugin<LogSentryPluginConfig> {
    *
    * @param hooks - The engine hooks to add
    */
-  public override addHooks(hooks: EngineHooks) {
+  public override addHooks(hooks: EngineHooks<LogSentryPluginContext>) {
     hooks.addHooks({
+      "init:options": this.#initOptions.bind(this),
       "init:install": this.#initInstall.bind(this)
+      // "init:reflections": this.initReflections.bind(this)
     });
 
     super.addHooks(hooks);
   }
 
-  protected override writeAdapter(_context: Context) {
+  /**
+   * Initializes the options for the Sentry plugin.
+   *
+   * @param context - The context to initialize.
+   */
+  async #initOptions(context: LogSentryPluginContext) {
+    context.options.plugins.config.parsed.SENTRY_DSN ||=
+      context.options.plugins.sentry.dsn;
+  }
+
+  /**
+   * Initializes the reflections for the Sentry plugin.
+   *
+   * @param context - The context to initialize.
+   */
+  // async initReflections(context: LogSentryPluginContext) {
+  //   if (!context.reflections.config.types.params.hasProperty("SENTRY_DSN")) {
+  //     context.reflections.config.types.params.addProperty({
+  //       name: "SENTRY_DSN",
+  //       optional: true,
+  //       readonly: true,
+  //       description: "The DSN for Sentry, used to send logs to Sentry.",
+  //       visibility: ReflectionVisibility.public,
+  //       type: {
+  //         kind: ReflectionKind.string
+  //       },
+  //       default: context.options.plugins.config.parsed.SENTRY_DSN,
+  //       tags: {
+  //         domain: "logging",
+  //         title: "Sentry DSN",
+  //         readonly: true
+  //       }
+  //     });
+
+  //     await writeConfigTypeReflection(
+  //       context,
+  //       context.reflections.config.types.params,
+  //       "params"
+  //     );
+  //   }
+  // }
+
+  /**
+   * Writes the adapter code for the Sentry plugin.
+   *
+   * @param _context - The context to use for writing the adapter.
+   * @returns The adapter code as a string.
+   */
+  protected override writeAdapter(_context: LogSentryPluginContext) {
     return `${getFileHeader()}
 
-import type { Client, ParameterizedString } from "@sentry/core";
+import type { ParameterizedString } from "@sentry/core";
 import { getClient } from "@sentry/core";
 import * as Sentry from "@sentry/node";
 import { LogRecord, LogAdapter } from "@storm-stack/types/log";
@@ -120,31 +165,51 @@ function getParameterizedString(record: LogRecord): ParameterizedString {
   return result;
 }
 
-Sentry.init({
-  dsn: $storm.dotenv.SENTRY_DSN,
-  environment: $storm.dotenv.ENVIRONMENT,
-  release: $storm.dotenv.RELEASE_TAG,
-  debug: $storm.dotenv.DEBUG,
-  enabled: true,
-  attachStacktrace: $storm.dotenv.STACKTRACE,
-  sendClientReports: true
-});
-
-const client = getClient();
-
-export const adapter = (record: LogRecord) => {
-  if (record.level === "error" || record.level === "fatal") {
-    client?.captureException(getParameterizedString(record), {
-      data: record.properties
-    });
-  }
-
-  client?.captureMessage(getParameterizedString(record), record.level, {
-    data: record.properties
+/**
+ * Creates a new [Sentry](https://sentry.io/) logging adapter.
+ *
+ * @returns The created {@link LogAdapter}.
+ */
+function createAdapter(): LogAdapter {
+  Sentry.init({
+    dsn: $storm.config.SENTRY_DSN,
+    environment: $storm.env.mode,
+    release: $storm.config.static.RELEASE_TAG,
+    debug: $storm.env.isDebug,
+    enabled: true,
+    attachStacktrace: $storm.config.STACKTRACE,
+    sendClientReports: true,
+    sendDefaultPii: true
   });
-};
 
-export default adapter;
+  const client = getClient();
+  const adapter = (record: LogRecord) => {
+    const { level, properties } = record;
+
+    if (client) {
+      if (level === "error" || level === "fatal") {
+        client.captureException(getParameterizedString(record), {
+          data: properties
+        });
+      }
+
+      client.captureMessage(getParameterizedString(record), level, {
+        data: properties
+      });
+    }
+  };
+  adapter[Symbol.asyncDispose] = async () => {
+    if (client) {
+      await client.flush(2000);
+      await client.close();
+    }
+  };
+
+  return adapter;
+}
+
+export default createAdapter;
+
 `;
   }
 
@@ -153,7 +218,7 @@ export default adapter;
    *
    * @param context - The context to initialize.
    */
-  async #initInstall(context: Context) {
+  async #initInstall(context: LogSentryPluginContext) {
     context.packageDeps["@sentry/core@^9.15.0"] = "dependency";
 
     if (context.options.platform === "node") {

@@ -32,6 +32,8 @@ interface PreparePayload {
    *
    * @alias project
    * @alias projectRoot
+   *
+   * @ignore
    */
   root: string;
 }

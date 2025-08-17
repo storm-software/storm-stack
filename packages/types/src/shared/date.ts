@@ -20,59 +20,193 @@
  * The various types of date formats used in Storm Stack applications.
  */
 export interface DateFormats<TFormatToken = string> {
-  /** Localized full date @example "Jan 1, 2019" */
+  /**
+   * Localized full date
+   *
+   * @example "Jan 1, 2019"
+   */
   fullDate: TFormatToken;
-  /** Partially localized full date with weekday, useful for text-to-speech accessibility @example "Tuesday, January 1, 2019" */
+
+  /**
+   * Partially localized full date with weekday, useful for text-to-speech accessibility
+   *
+   * @example "Tuesday, January 1, 2019"
+   */
   fullDateWithWeekday: TFormatToken;
-  /** Date format string with month and day of month @example "1 January" */
+
+  /**
+   * Date format string with month and day of month
+   *
+   * @example "1 January"
+   */
   normalDate: TFormatToken;
-  /** Date format string with weekday, month and day of month @example "Wed, Jan 1" */
+
+  /**
+   * Date format string with weekday, month and day of month
+   *
+   * @example "Wed, Jan 1"
+   */
   normalDateWithWeekday: TFormatToken;
-  /** Shorter day format @example "Jan 1" */
+
+  /**
+   * Shorter day format
+   *
+   * @example "Jan 1"
+   */
   shortDate: TFormatToken;
-  /** Year format string @example "2019" */
+
+  /**
+   * Year format string
+   *
+   * @example "2019"
+   */
   year: TFormatToken;
-  /** Month format string @example "January" */
+
+  /**
+   * Month format string
+   *
+   * @example "January"
+   */
   month: TFormatToken;
-  /** Short month format string @example "Jan" */
+
+  /**
+   * Short month format string
+   *
+   * @example "Jan"
+   */
   monthShort: TFormatToken;
-  /** Month with year format string @example "January 2018" */
+
+  /**
+   * Month with year format string
+   *
+   * @example "January 2018"
+   */
   monthAndYear: TFormatToken;
-  /** Month with date format string @example "January 1" */
+
+  /**
+   * Month with date format string
+   *
+   * @example "January 1"
+   */
   monthAndDate: TFormatToken;
-  /** Weekday format string @example "Wednesday" */
+
+  /**
+   * Weekday format string
+   *
+   * @example "Wednesday"
+   */
   weekday: TFormatToken;
-  /** Short weekday format string @example "Wed" */
+
+  /**
+   * Short weekday format string
+   *
+   * @example "Wed"
+   */
   weekdayShort: TFormatToken;
-  /** Day format string @example "1" */
+
+  /**
+   * Day format string
+   *
+   * @example "1"
+   */
   dayOfMonth: TFormatToken;
-  /** Hours format string @example "11" */
+
+  /**
+   * Hours format string
+   *
+   * @example "11"
+   */
   hours12h: TFormatToken;
-  /** Hours format string @example "23" */
+
+  /**
+   * Hours format string
+   *
+   * @example "23"
+   */
   hours24h: TFormatToken;
-  /** Minutes format string @example "44" */
+
+  /**
+   * Minutes format string
+   *
+   * @example "44"
+   */
   minutes: TFormatToken;
-  /** Seconds format string @example "00" */
+
+  /**
+   * Seconds format string
+   *
+   * @example "00"
+   */
   seconds: TFormatToken;
-  /** Full time localized format string @example "11:44 PM" for US, "23:44" for Europe */
+
+  /**
+   * Full time localized format string
+   *
+   * @example "11:44 PM" for US, "23:44" for Europe
+   */
   fullTime: TFormatToken;
-  /** Not localized full time format string @example "11:44 PM" */
+
+  /**
+   * Not localized full time format string
+   *
+   * @example "11:44 PM"
+   */
   fullTime12h: TFormatToken;
-  /** Not localized full time format string @example "23:44" */
+
+  /**
+   * Not localized full time format string
+   *
+   * @example "23:44"
+   */
   fullTime24h: TFormatToken;
-  /** Date & time format string with localized time @example "Jan 1, 2018 11:44 PM" */
+
+  /**
+   * Date & time format string with localized time
+   *
+   * @example "Jan 1, 2018 11:44 PM"
+   */
   fullDateTime: TFormatToken;
-  /** Not localized date & Time format 12h @example "Jan 1, 2018 11:44 PM" */
+
+  /**
+   * Not localized date & Time format 12h
+   *
+   * @example "Jan 1, 2018 11:44 PM"
+   */
   fullDateTime12h: TFormatToken;
-  /** Not localized date & Time format 24h @example "Jan 1, 2018 23:44" */
+
+  /**
+   * Not localized date & Time format 24h
+   *
+   * @example "Jan 1, 2018 23:44"
+   */
   fullDateTime24h: TFormatToken;
-  /** Localized keyboard input friendly date format @example "02/13/2020 */
+
+  /**
+   * Localized keyboard input friendly date format
+   *
+   * @example "02/13/2020"
+   */
   keyboardDate: TFormatToken;
-  /** Localized keyboard input friendly date/time format @example "02/13/2020 23:44" */
+
+  /**
+   * Localized keyboard input friendly date/time format
+   *
+   * @example "02/13/2020 23:44"
+   */
   keyboardDateTime: TFormatToken;
-  /** Partially localized keyboard input friendly date/time 12h format @example "02/13/2020 11:44 PM" */
+
+  /**
+   * Partially localized keyboard input friendly date/time 12h format
+   *
+   * @example "02/13/2020 11:44 PM"
+   */
   keyboardDateTime12h: TFormatToken;
-  /** Partially localized keyboard input friendly date/time 24h format @example "02/13/2020 23:44" */
+
+  /**
+   * Partially localized keyboard input friendly date/time 24h format
+   *
+   * @example "02/13/2020 23:44"
+   */
   keyboardDateTime24h: TFormatToken;
 }
 

@@ -22,7 +22,7 @@ import { Buffer } from "node:buffer";
 import { readFile } from "node:fs/promises";
 import { CommandRoot } from "../../schemas/cli";
 import { StormStackCLIPluginContext } from "../types/build";
-import { CLIPluginConfig } from "../types/config";
+import { CLIPluginOptions } from "../types/config";
 import { CommandTree } from "../types/reflection";
 import { convertFromCapnp, convertToCapnp } from "./capnp";
 
@@ -52,7 +52,7 @@ export async function writeCommandTreeReflection(
 
 export async function readCommandTreeReflection(
   context: StormStackCLIPluginContext,
-  config: CLIPluginConfig
+  config: CLIPluginOptions
 ): Promise<CommandTree> {
   const result = await readFile(getCommandTreeReflectionPath(context));
   const buffer = result.buffer.slice(

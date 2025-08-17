@@ -18,4 +18,5 @@
 
 export * from "./reflect-type";
 export * from "./resolve-reflections";
+export * from "./transformer";
 export * from "./utilities";

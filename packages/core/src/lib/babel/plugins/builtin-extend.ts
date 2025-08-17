@@ -19,7 +19,7 @@
 import { NodePath, PluginAPI, PluginPass } from "@babel/core";
 import { declare } from "@babel/helper-plugin-utils";
 import template from "@babel/template";
-import * as BabelTypes from "@babel/types";
+import * as t from "@babel/types";
 import { toArray } from "@stryke/convert";
 import { BabelPluginOptions } from "../../../types/babel";
 
@@ -112,10 +112,8 @@ export const BuiltinExtendPlugin = declare<
   return {
     name: "storm-stack:builtin-extend",
     visitor: {
-      Class(
-        path: NodePath<BabelTypes.ClassDeclaration | BabelTypes.ClassExpression>
-      ) {
-        const globals = toArray(options.globals);
+      Class(path: NodePath<t.ClassDeclaration | t.ClassExpression>) {
+        const globals = toArray<string>(options.globals);
         if (!globals.includes("Error")) {
           globals.push("Error");
         }
@@ -129,12 +127,9 @@ export const BuiltinExtendPlugin = declare<
         }
 
         if (
-          path.scope.hasBinding(
-            (superClass.node as BabelTypes.Identifier)?.name,
-            {
-              noGlobals: true
-            }
-          )
+          path.scope.hasBinding((superClass.node as t.Identifier)?.name, {
+            noGlobals: true
+          })
         ) {
           return;
         }
@@ -147,12 +142,10 @@ export const BuiltinExtendPlugin = declare<
           HELPER: name
         });
         (
-          path.scope.getProgramParent().path as NodePath<BabelTypes.Program>
+          path.scope.getProgramParent().path as NodePath<t.Program>
         ).unshiftContainer("body", helper);
 
-        superClass.replaceWith(
-          BabelTypes.callExpression(name, [superClass.node])
-        );
+        superClass.replaceWith(t.callExpression(name, [superClass.node]));
       }
     }
   };

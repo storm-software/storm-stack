@@ -25,6 +25,7 @@ import {
   BuildOptions as ExternalESBuildOptions
 } from "esbuild";
 import type { ResolvedOptions } from "../../types/build";
+import { CompilerOptions } from "../../types/compiler";
 import { ESBuildOverrideOptions } from "../../types/config";
 import type { Context } from "../../types/context";
 import { compilerPlugin } from "./compiler-plugin";
@@ -39,11 +40,11 @@ export type BundleOptions = Pick<
   ResolvedOptions,
   "external" | "noExternal" | "skipNodeModulesBundle"
 > & {
-  skipTransforms?: boolean;
   entry?: Entry;
   outputPath?: string;
   alias?: Record<string, string>;
   override?: Partial<ESBuildOverrideOptions>;
+  compiler?: CompilerOptions;
 };
 
 /**
@@ -65,10 +66,10 @@ export async function bundle(
           noExternal: bundleOptions.noExternal,
           skipNodeModulesBundle: bundleOptions.skipNodeModulesBundle
         }),
-        bundleOptions.skipTransforms === true
-          ? transpilerPlugin(context)
-          : compilerPlugin(context)
-      ]
+        bundleOptions.compiler?.skipAllTransforms === true
+          ? transpilerPlugin(context, bundleOptions.compiler)
+          : compilerPlugin(context, bundleOptions.compiler)
+      ].filter(Boolean)
     },
     resolveESBuildOptions(
       context,

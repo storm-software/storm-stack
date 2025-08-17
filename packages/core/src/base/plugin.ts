@@ -26,7 +26,7 @@ import type { EngineHooks } from "../types/build";
 import type { LogFn, PluginConfig } from "../types/config";
 import { Context } from "../types/context";
 import type {
-  PluginBaseConfig,
+  PluginBaseOptions,
   PluginInterface,
   PluginOptions
 } from "../types/plugin";
@@ -35,10 +35,13 @@ import type {
  * The base class for all plugins
  */
 export abstract class Plugin<
-  TConfig extends PluginBaseConfig = PluginBaseConfig
-> implements PluginInterface<TConfig>
+  TOptions extends PluginBaseOptions = PluginBaseOptions,
+  TContext extends Context = Context
+> implements PluginInterface<TOptions>
 {
   #log?: LogFn;
+
+  #primaryKeyFields: string[] = [];
 
   /**
    * A list of plugin modules required as dependencies by the current Plugin.
@@ -54,7 +57,7 @@ export abstract class Plugin<
    * @remarks
    * This is used to store the configuration options for the plugin, which can be accessed by the plugin's methods.
    */
-  public options: PluginOptions<TConfig>;
+  public options: PluginOptions<TOptions>;
 
   /**
    * A list of dependencies that are required for the plugin to work. These dependencies will be installed when Storm Stack CLI is run.
@@ -67,7 +70,9 @@ export abstract class Plugin<
    * @remarks
    * This is useful for plugins that need to have a different name than the default one derived from the class name.
    */
-  protected overrideName?: string;
+  protected get overrideName(): string | undefined {
+    return undefined;
+  }
 
   /**
    * The name of the plugin
@@ -76,24 +81,15 @@ export abstract class Plugin<
    * This is used to identify the plugin's name used in {@link Context.options}, logs, and other output.
    */
   public get name(): string {
-    const name = this.overrideName || kebabCase(this.constructor.name);
+    let name = kebabCase(this.overrideName || this.constructor.name);
     if (name.startsWith("plugin-")) {
-      return name.replace(/^plugin-/, "").trim();
-    } else if (name.endsWith("-plugin")) {
-      return name.replace(/-plugin$/, "").trim();
+      name = name.replace(/^plugin-/g, "").trim();
+    }
+    if (name.endsWith("-plugin")) {
+      name = name.replace(/-plugin$/g, "").trim();
     }
 
     return name;
-  }
-
-  /**
-   * The identifier for the plugin used in the {@link isSame} method
-   *
-   * @remarks
-   * Child plugins can override this to provide a more or less specific identifier. This is used to identify the plugin's options in {@link Context.options}.
-   */
-  public get identifier(): string {
-    return camelCase(this.name);
   }
 
   /**
@@ -125,7 +121,19 @@ export abstract class Plugin<
    * This is used to identify when a two instances of the plugin are the same and can be de-duplicated.
    */
   protected get primaryKeyFields(): string[] {
-    return [];
+    return this.#primaryKeyFields ?? [];
+  }
+
+  /**
+   * The identifier for the plugin used in the {@link isSame} method
+   *
+   * @remarks
+   * Child plugins can override this to provide a more or less specific identifier. This is used to identify the plugin's options in {@link Context.options}.
+   */
+  public get identifier(): string {
+    return camelCase(
+      `${this.name}${this.isSingleton ? "" : `-${this.primaryKeys.join("-")}`}`
+    );
   }
 
   /**
@@ -146,8 +154,22 @@ export abstract class Plugin<
    *
    * @param options - The configuration options for the plugin
    */
-  public constructor(options: PluginOptions<TConfig>) {
+  public constructor(options: PluginOptions<TOptions>) {
     this.options = options;
+
+    // try {
+    //   this.#primaryKeyFields = ReflectionClass.from<TOptions>()
+    //     .getPrimaries()
+    //     .map(property => property.name)
+    //     .toSorted();
+    // } catch (error) {
+    //   this.log(
+    //     LogLevelLabel.ERROR,
+    //     `Failed to get primary key of plugin options: ${error.message}`
+    //   );
+
+    //   this.#primaryKeyFields = [];
+    // }
   }
 
   /**
@@ -158,13 +180,8 @@ export abstract class Plugin<
    */
   public isSame(plugin: PluginInterface): boolean {
     return (
-      this.identifier === plugin.identifier &&
-      (plugin.isSingleton ||
-        this.primaryKeyFields.every(
-          primaryKeyField =>
-            (this.options as any)[primaryKeyField] ===
-            (plugin.options as any)[primaryKeyField]
-        ))
+      this.identifier === plugin.identifier ||
+      (this.name === plugin.name && this.isSingleton && plugin.isSingleton)
     );
   }
 
@@ -173,7 +190,7 @@ export abstract class Plugin<
    *
    * @param hooks - The hooks to add to the engine.
    */
-  public addHooks(hooks: EngineHooks) {
+  public addHooks(hooks: EngineHooks<TContext>) {
     hooks.addHooks({
       "init:begin": this.#initBegin.bind(this)
     });
@@ -184,7 +201,7 @@ export abstract class Plugin<
    *
    * @param context - The context to initialize.
    */
-  async #initBegin(context: Context) {
+  async #initBegin(context: TContext) {
     this.log(
       LogLevelLabel.TRACE,
       `Adding required installations for the project.`
@@ -192,9 +209,8 @@ export abstract class Plugin<
 
     this.options = defu(
       this.options,
-      context.options.plugins[this.identifier] ?? {},
-      context.options.plugins[this.name] ?? {}
-    ) as PluginOptions<TConfig>;
+      context.options.plugins[this.identifier] ?? {}
+    ) as PluginOptions<TOptions>;
 
     if (Object.keys(this.packageDeps).length > 0) {
       Object.keys(this.packageDeps).forEach(dependency => {

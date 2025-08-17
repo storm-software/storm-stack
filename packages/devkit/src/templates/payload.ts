@@ -36,19 +36,15 @@ export function PayloadModule(_context: Context) {
 ${getFileHeader()}
 
 import { uniqueId } from "storm:id";
+import { StormError } from "storm:error";
 import { StormPayloadInterface } from "@storm-stack/types/payload";
 
 /**
  * A base payload class used by the Storm Stack runtime.
  */
 export class StormPayload<
-  TData = Record<string, any>
+  TData extends Record<string, any> = Record<string, any>
 > implements StormPayloadInterface<TData> {
-  /**
-   * The data associated with the payload.
-   */
-  public readonly data: TData;
-
   /**
    * The payload identifier.
    */
@@ -60,15 +56,29 @@ export class StormPayload<
   public readonly timestamp = Date.now();
 
   /**
+   * The payload data.
+   */
+  readonly data: TData;
+
+  /**
    * Create a new payload object.
    *
-   * @param data - The payload data.
+   * @param data - The payload input data.
    */
   public constructor(
     data: TData
   ) {
     this.data = data;
   }
+
+  /**
+   * Merges the given data into the payload.
+   *
+   * @param data - The data to merge into the payload.
+   */
+  public merge(data: Partial<TData>) {
+    Object.assign(this.data, data);
+  };
 }
   `;
 }

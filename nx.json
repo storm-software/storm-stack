@@ -10,7 +10,12 @@
     }
   },
   "plugins": [
-    "@storm-software/workspace-tools/plugins/typescript",
+    {
+      "plugin": "@storm-software/workspace-tools/plugins/typescript",
+      "options": {
+        "enableTypeCheck": true
+      }
+    },
     "@storm-software/workspace-tools/plugins/typescript/untyped",
     "@storm-software/workspace-tools/plugins/typescript/tsup"
   ]

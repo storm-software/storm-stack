@@ -18,18 +18,18 @@
 
 import { getFileHeader } from "@storm-stack/core/lib/utilities/file-header";
 import type { PluginOptions } from "@storm-stack/core/types/plugin";
-import type { LogPluginConfig } from "@storm-stack/devkit/plugins/log";
+import type { LogPluginOptions } from "@storm-stack/devkit/plugins/log";
 import LogPlugin from "@storm-stack/devkit/plugins/log";
 
 export default class LogConsolePlugin extends LogPlugin {
-  public constructor(options: PluginOptions<LogPluginConfig>) {
+  public constructor(options: PluginOptions<LogPluginOptions>) {
     super(options);
   }
 
   protected override writeAdapter() {
     return `${getFileHeader()}
 
-import { LogLevel, LogRecord } from "@storm-stack/types/log";
+import { LogLevel, LogRecord, LogAdapter } from "@storm-stack/types/log";
 
 /**
  * The severity level abbreviations.
@@ -119,17 +119,26 @@ function write(level: LogLevel, ...message: unknown[]) {
   }
 }
 
-export const adapter = (record: LogRecord) => {
-  const args = formatter(record);
-  if (typeof args === "string") {
-    const msg = String(args).replace(/\\r?\\n$/, "");
-    write(record.level, msg);
-  } else {
-    write(record.level, ...args);
-  }
-};
+/**
+ * Creates a new [console](https://developer.mozilla.org/en-US/docs/Web/API/console) logging adapter.
+ *
+ * @returns The created logging adapter.
+ */
+function createAdapter(): LogAdapter {
+  const adapter = (record: LogRecord) => {
+    const args = formatter(record);
+    if (typeof args === "string") {
+      const msg = String(args).replace(/\\r?\\n$/, "");
+      write(record.level, msg);
+    } else {
+      write(record.level, ...args);
+    }
+  };
 
-export default adapter;
+  return adapter;
+}
+
+export default createAdapter;
 
   `;
   }

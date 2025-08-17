@@ -135,9 +135,9 @@ export interface StormErrorInterface extends Error {
   toDisplay: () => string;
 
   /**
-   * Internal function to inherit the error
+   * Internal function to inherit the {@link Error} prototype.
    *
    * @internal
    */
-  __proto__: any;
+  __proto__: Error;
 }

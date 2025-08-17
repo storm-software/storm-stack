@@ -30,7 +30,7 @@ import { writeFile } from "@storm-stack/core/lib/utilities/write-file";
 import type { EngineHooks } from "@storm-stack/core/types/build";
 import type { Context } from "@storm-stack/core/types/context";
 import type { PluginOptions } from "@storm-stack/core/types/plugin";
-import { NodePluginConfig } from "@storm-stack/plugin-node/types";
+import { NodePluginOptions } from "@storm-stack/plugin-node/types";
 import { executePackage } from "@stryke/cli/execute";
 import { createDirectory, removeDirectory } from "@stryke/fs/helpers";
 import { readJsonFile } from "@stryke/fs/json";
@@ -62,12 +62,12 @@ import {
  * @remarks
  * This plugin provides support for building and deploying Cloudflare Workers using Storm Stack. It integrates with the Wrangler CLI tool and sets up the necessary configurations and runtime files.
  */
-export default class StormStackCloudflareWorkerPlugin<
-  TConfig extends NodePluginConfig = NodePluginConfig
-> extends Plugin<TConfig> {
+export default class CloudflareWorkerPlugin<
+  TOptions extends NodePluginOptions = NodePluginOptions
+> extends Plugin<TOptions> {
   #unenv: Environment;
 
-  public constructor(options: PluginOptions<TConfig>) {
+  public constructor(options: PluginOptions<TOptions>) {
     super(options);
 
     this.dependencies = [["@storm-stack/plugin-node", this.options]];
@@ -425,7 +425,7 @@ import ${
               ""
             )
           )}";
-import { withContext } from "storm:app";
+import { withContext } from "storm:context";
 import { deserialize, serialize } from "@deepkit/type";
 import { StormPayload } from "storm:payload";
 

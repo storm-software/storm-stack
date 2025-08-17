@@ -810,6 +810,7 @@
     "defu": "catalog:",
     "diff-match-patch": "catalog:",
     "esbuild": "catalog:",
+    "github-slugger": "catalog:",
     "handlebars": "catalog:",
     "jest-worker": "catalog:",
     "jiti": "catalog:",
@@ -833,8 +834,7 @@
     "@types/node": "catalog:",
     "eslint": "catalog:",
     "minimatch": "catalog:",
-    "tsup": "catalog:",
-    "typescript": "5.9.0-beta"
+    "tsup": "catalog:"
   },
   "publishConfig": {
     "access": "public"

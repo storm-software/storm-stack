@@ -87,7 +87,25 @@ export interface StormBuildInfo {
    * Indicates if the application is running in a development environment.
    */
   isDevelopment: boolean;
+
+  /**
+   * Indicates if the application is running in debug mode.
+   */
+  isDebug: boolean;
+
+  /**
+   * Indicates if the application is running in a test environment.
+   */
+  isTest: boolean;
 }
+
+/**
+ * The environment paths for storing things like data, config, logs, and cache in the current runtime environment.
+ *
+ * @remarks
+ * These environment path types are accessed in the {@link StormEnvPaths} type.
+ */
+export type StormEnvPathType = "data" | "config" | "cache" | "log" | "temp";
 
 /**
  * The environment paths for storing things like data, config, logs, and cache in the current runtime environment.
@@ -99,95 +117,192 @@ export interface StormBuildInfo {
  *
  * If the \`STORM_DATA_DIR\`, \`STORM_CONFIG_DIR\`, \`STORM_CACHE_DIR\`, \`STORM_LOG_DIR\`, or \`STORM_TEMP_DIR\` environment variables are set, they will be used instead of the default paths.
  */
-export interface StormEnvPaths {
-  data: string;
-  config: string;
-  cache: string;
-  log: string;
-  temp: string;
-}
+export type StormEnvPaths = Record<StormEnvPathType, string>;
 
 /**
- * Interface representing the dynamic runtime information for the Storm application.
+ * Interface representing the environment information for the Storm application.
+ *
+ * @remarks
+ * The environment information includes information about the current runtime environment, such as the operating system, architecture, and other relevant details.
  */
-export interface StormRuntimeInfo {
+export interface StormEnvInterface {
   /**
-   * Indicates if the application is running in debug mode.
-   */
-  isDebug: boolean;
-
-  /**
-   * Indicates if the application is running in a test environment.
-   */
-  isTest: boolean;
-
-  /**
-   * Indicates if the application is running on Node.js.
-   */
-  isNode: boolean;
-
-  /**
-   * Indicates if the application is running on a Windows operating system.
-   */
-  isWindows: boolean;
-
-  /**
-   * Indicates if the application is running on a Linux operating system.
-   */
-  isLinux: boolean;
-
-  /**
-   * Indicates if the application is running on a macOS operating system.
-   */
-  isMacOS: boolean;
-
-  /**
-   * Indicates if the application is running in a Continuous Integration (CI) environment.
-   */
-  isCI: boolean;
-
-  /**
-   * Indicates if the current process is interactive
-   *
-   * @see https://github.com/sindresorhus/is-interactive/blob/dc8037ae1a61d828cfb42761c345404055b1e036/index.js
-   *
-   * @remarks
-   * Checks `stdin` for our prompts - It checks that the stream is TTY, not a dumb terminal
-   */
-  isInteractive: boolean;
-
-  /**
-   * Indicates if the application has a TTY (teletypewriter) interface.
+   * Indicates if the current process has a TTY (interactive terminal) available.
    */
   hasTTY: boolean;
 
   /**
-   * Indicates if the application is running in a minimal environment.
+   * A boolean indicator specifying if the application is running in a Continuous Integration (CI) environment.
+   */
+  isCI: boolean;
+
+  /**
+   * The current runtime mode to determine the behavior of the application in different environments.
+   *
+   * @remarks
+   * The `mode` is typically set based on the deployment environment and can affect configuration, logging, and feature flags. Valid values for the `mode` are:
+   * - `"development"`: Used for local development and testing.
+   * - `"staging"`: Used for staging environments that closely mirror production.
+   * - `"production"`: Used for live production environments.
+   */
+  mode: "development" | "staging" | "production";
+
+  /**
+   * The environment name as specified in the plugin context.
+   */
+  environment: string;
+
+  /**
+   * A boolean indicator specifying if running in production mode.
+   */
+  isProduction: boolean;
+
+  /**
+   * A boolean indicator specifying if running in staging mode.
+   */
+  isStaging: boolean;
+
+  /**
+   * A boolean indicator specifying if running in development mode.
+   */
+  isDevelopment: boolean;
+
+  /**
+   * A boolean indicator specifying if running in debug mode (typically development with debug enabled).
+   */
+  isDebug: boolean;
+
+  /**
+   * A boolean indicator specifying if running in test mode or under test conditions.
+   */
+  isTest: boolean;
+
+  /**
+   * A boolean indicator specifying if running in a minimal environment (e.g., CI, test, or no TTY).
    */
   isMinimal: boolean;
 
   /**
-   * Indicates if Unicode characters are supported in the terminal.
+   * A boolean indicator specifying if the runtime platform is Windows.
    */
-  isUnicodeSupported: boolean;
+  isWindows: boolean;
 
   /**
-   * Indicates if color output is supported in the terminal.
+   * A boolean indicator specifying if the runtime platform is Linux.
    */
-  isColorSupported: boolean;
+  isLinux: boolean;
 
   /**
-   * Indicates if the application is running in a server environment.
+   * A boolean indicator specifying if the runtime platform is macOS.
+   */
+  isMacOS: boolean;
+
+  /**
+   * A boolean indicator specifying if running in Node.js or a Node.js-compatible runtime.
+   */
+  isNode: boolean;
+
+  /**
+   * A boolean indicator specifying if running in a server environment (Node.js or specified platform).
    */
   isServer: boolean;
 
   /**
-   * The default locale used by the application.
+   * A boolean indicator specifying if the environment supports interactive input/output.
+   */
+  isInteractive: boolean;
+
+  /**
+   * A boolean indicator specifying if the terminal supports Unicode characters.
+   */
+  isUnicodeSupported: boolean;
+
+  /**
+   * A boolean indicator specifying if the terminal supports colored output.
+   */
+  isColorSupported: boolean;
+
+  /**
+   * An object describing the color support level for stdout and stderr streams.
+   */
+  supportsColor: {
+    stdout:
+      | boolean
+      | number
+      | {
+          level: number;
+          hasBasic: boolean;
+          has256: boolean;
+          has16m: boolean;
+        };
+    stderr:
+      | boolean
+      | number
+      | {
+          level: number;
+          hasBasic: boolean;
+          has256: boolean;
+          has16m: boolean;
+        };
+  };
+
+  /**
+   * The name of the organization maintaining the application.
+   */
+  organization: string;
+
+  /**
+   * The application name.
+   */
+  name: string;
+
+  /**
+   * The package name from package.json or the application name.
+   */
+  packageName: string;
+
+  /**
+   * The current application version.
+   */
+  version: string;
+
+  /**
+   * The build identifier for the current release.
+   */
+  buildId: string;
+
+  /**
+   * The build or release timestamp.
+   */
+  timestamp: number;
+
+  /**
+   * The release identifier.
+   */
+  releaseId: string;
+
+  /**
+   * A tag combining the application name and version.
+   */
+  releaseTag: string;
+
+  /**
+   * The default locale for the application.
    */
   defaultLocale: string;
 
   /**
-   * The default timezone used by the application.
+   * The default timezone for the application.
    */
   defaultTimezone: string;
+
+  /**
+   * The runtime platform (e.g., "node", "web", etc.).
+   */
+  platform: StormBuildInfo["platform"];
+
+  /**
+   * An object containing standardized paths for data, config, cache, logs, and temp files, adapted to the current OS and environment variables.
+   */
+  paths: StormEnvPaths;
 }

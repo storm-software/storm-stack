@@ -16,7 +16,6 @@
 
  ------------------------------------------------------------------- */
 
-export * from "./app";
 export * from "./context";
 export * from "./env";
 export * from "./event";

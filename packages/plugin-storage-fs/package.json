@@ -69,9 +69,9 @@
     "unstorage": "catalog:"
   },
   "devDependencies": {
+    "@storm-stack/types": "workspace:*",
     "@types/node": "catalog:",
-    "tsup": "catalog:",
-    "typescript": "5.9.0-beta"
+    "tsup": "catalog:"
   },
   "publishConfig": {
     "access": "public"

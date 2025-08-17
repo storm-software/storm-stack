@@ -1,7 +1,7 @@
 {
   "name": "@storm-stack/cli",
   "version": "0.14.1",
-  "type": "module",
+  "type": "commonjs",
   "description": "The command-line interface application for managing Storm Stack projects.",
   "repository": {
     "type": "github",
@@ -10,8 +10,8 @@
   },
   "private": false,
   "bin": {
-    "storm-stack": "dist/storm.mjs",
-    "storm": "dist/storm.mjs"
+    "storm-stack": "dist/storm.js",
+    "storm": "dist/storm.js"
   },
   "keywords": [
     "cli",
@@ -27,6 +27,7 @@
     "@storm-software/config-tools": "catalog:",
     "@storm-stack/core": "workspace:*",
     "@storm-stack/types": "workspace:*",
+    "date-fns": "catalog:",
     "defu": "catalog:",
     "unctx": "catalog:",
     "unstorage": "catalog:"

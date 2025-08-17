@@ -30,12 +30,11 @@ import { getCache, setCache } from "../lib/utilities/cache";
 import { getSourceFile, getString } from "../lib/utilities/source-file";
 import { generateSourceMap } from "../lib/utilities/source-map";
 import {
-  CompileOptions,
   CompilerInterface,
   CompilerOptions,
   CompilerResult,
   SourceFile,
-  TranspileOptions
+  TranspilerOptions
 } from "../types/compiler";
 import { LogFn } from "../types/config";
 import { Context } from "../types/context";
@@ -86,7 +85,7 @@ export class Compiler implements CompilerInterface {
     context: Context,
     fileName: string,
     code: string | MagicString,
-    options: TranspileOptions = {}
+    options: CompilerOptions = {}
   ): Promise<string> {
     if (await this.shouldSkip(context, fileName, code)) {
       this.log(LogLevelLabel.TRACE, `Skipping transform for ${fileName}`);
@@ -171,14 +170,15 @@ export class Compiler implements CompilerInterface {
   public async transpile(
     context: Context,
     id: string,
-    code: string | MagicString
+    code: string | MagicString,
+    options: TranspilerOptions = {}
   ): Promise<string> {
     this.log(
       LogLevelLabel.TRACE,
       `Transpiling ${id} module with TypeScript compiler`
     );
 
-    const transpiled = transpile(context, id, getString(code));
+    const transpiled = transpile(context, id, getString(code), options);
     if (transpiled === null) {
       this.log(LogLevelLabel.ERROR, `Transform is null: ${id}`);
 
@@ -202,7 +202,7 @@ export class Compiler implements CompilerInterface {
     context: Context,
     id: string,
     code: string | MagicString,
-    options: CompileOptions = {}
+    options: CompilerOptions = {}
   ): Promise<string> {
     this.log(LogLevelLabel.TRACE, `Compiling ${id}`);
 
@@ -226,7 +226,7 @@ export class Compiler implements CompilerInterface {
         options
       );
 
-      compiled = await this.transpile(context, id, transformed);
+      compiled = await this.transpile(context, id, transformed, options);
       await this.setCache(context, source, compiled);
     }
 

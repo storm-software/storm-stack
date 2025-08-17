@@ -20,10 +20,9 @@ import { readJsonFileSync } from "@stryke/fs/json";
 import { existsSync, joinPaths } from "@stryke/path";
 import { replacePath } from "@stryke/path/replace";
 import { FilterPattern } from "@stryke/types/file";
-import type { TsConfigJson } from "@stryke/types/tsconfig";
 import defu from "defu";
 import ts from "typescript";
-import { ParsedTypeScriptConfig } from "../../types/build";
+import { ParsedTypeScriptConfig, TSConfig } from "../../types/tsconfig";
 
 /**
  * Get the path to the tsconfig.json file.
@@ -183,11 +182,11 @@ export function getParsedTypeScriptConfig(
   workspaceRoot: string,
   projectRoot: string,
   tsconfig?: string,
-  tsconfigRaw: TsConfigJson = {},
+  tsconfigRaw: TSConfig = {},
   host: ts.ParseConfigHost = ts.sys
 ): ParsedTypeScriptConfig {
   const tsconfigFilePath = getTsconfigFilePath(projectRoot, tsconfig);
-  const tsconfigJson = readJsonFileSync<TsConfigJson>(tsconfigFilePath);
+  const tsconfigJson = readJsonFileSync<TSConfig>(tsconfigFilePath);
   if (!tsconfigJson) {
     throw new Error(
       `Cannot find the \`tsconfig.json\` configuration file at ${joinPaths(

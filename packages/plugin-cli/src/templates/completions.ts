@@ -20,11 +20,11 @@ import { getFileHeader } from "@storm-stack/core/lib/utilities/file-header";
 import { kebabCase } from "@stryke/string-format/kebab-case";
 import { titleCase } from "@stryke/string-format/title-case";
 import { isSetString } from "@stryke/type-checks/is-set-string";
-import { CLIPluginConfig, CLIPluginContext } from "../types/config";
+import { CLIPluginContext, CLIPluginOptions } from "../types/config";
 
 export function writeCompletionsBash(
   context: CLIPluginContext,
-  config: CLIPluginConfig
+  config: CLIPluginOptions
 ) {
   const bin =
     kebabCase(
@@ -39,7 +39,7 @@ export function writeCompletionsBash(
 
   return `${getFileHeader()}
 
-import { colors, stripAnsi } from "storm:cli";
+import { colors, stripAnsi, CLIBasePayloadData } from "storm:cli";
 import { StormPayload } from "storm:payload";
 import { readFile, writeFile } from "node:fs/promises";
 import { existsSync } from "node:fs";
@@ -48,12 +48,14 @@ import os from "node:os";
 
 const homedir = os.homedir();
 
-export interface CompletionsBashPayload {
+export interface CompletionsBashPayload extends CLIBasePayloadData {
   /**
    * The path to write the completion script to.
    *
    * @remarks
    * If no extension is provided, the \`.bash\` extension will be used.
+   *
+   * @ignore
    */
   script?: string | true;
 
@@ -64,6 +66,8 @@ export interface CompletionsBashPayload {
    * The generated completion script will be appended to the specified configuration file. Possible values for the configuration file include:
    * - \`~/.bashrc\`
    * - \`~/.bash_profile\`
+   *
+   * @ignore
    */
   config?: string | true;
 }
@@ -154,7 +158,7 @@ export default handler;
 
 export function writeCompletionsZsh(
   context: CLIPluginContext,
-  config: CLIPluginConfig
+  config: CLIPluginOptions
 ) {
   const bin =
     kebabCase(
@@ -168,7 +172,7 @@ export function writeCompletionsZsh(
     ) || "storm";
 
   return `${getFileHeader()}
-import { colors, stripAnsi } from "storm:cli";
+import { colors, stripAnsi, CLIBasePayloadData } from "storm:cli";
 import { StormPayload } from "storm:payload";
 import { readFile, writeFile } from "node:fs/promises";
 import { existsSync } from "node:fs";
@@ -177,12 +181,14 @@ import os from "node:os";
 
 const homedir = os.homedir();
 
-export interface CompletionsZshPayload {
+export interface CompletionsZshPayload extends CLIBasePayloadData {
   /**
    * The path to write the completion script to.
    *
    * @remarks
    * If no extension is provided, the \`.zsh\` extension will be used.
+   *
+   * @ignore
    */
   script?: string | true;
 
@@ -193,6 +199,8 @@ export interface CompletionsZshPayload {
    * The generated completion script will be appended to the specified configuration file. Possible values for the configuration file include:
    * - \`~/.zshrc\`
    * - \`~/.zprofile\`
+   *
+   * @ignore
    */
   config?: string | true;
 }

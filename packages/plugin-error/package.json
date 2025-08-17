@@ -134,14 +134,15 @@
     "storm-stack-plugin"
   ],
   "peerDependencies": {
-    "@storm-stack/plugin-dotenv": "*"
+    "@storm-stack/plugin-config": "*"
   },
   "peerDependenciesMeta": {
-    "@storm-stack/plugin-dotenv": {
+    "@storm-stack/plugin-config": {
       "optional": false
     }
   },
   "dependencies": {
+    "@babel/core": "catalog:",
     "@babel/generator": "catalog:",
     "@babel/helper-module-imports": "catalog:",
     "@deepkit/type": "catalog:",
@@ -156,8 +157,7 @@
   "devDependencies": {
     "@storm-stack/nx": "workspace:*",
     "@types/node": "catalog:",
-    "tsup": "catalog:",
-    "typescript": "5.9.0-beta"
+    "tsup": "catalog:"
   },
   "publishConfig": {
     "access": "public"

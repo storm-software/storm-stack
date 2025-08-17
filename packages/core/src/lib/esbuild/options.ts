@@ -106,12 +106,12 @@ export function resolveESBuildOptions(
     {
       platform: "neutral",
       format: "esm",
-      minify: false,
+      minify: true,
       sourcemap: false,
       bundle: true,
       treeShaking: true,
       keepNames: true,
-      splitting: false,
+      splitting: true,
       logLevel: "silent"
     }
   ) as ExternalESBuildOptions;

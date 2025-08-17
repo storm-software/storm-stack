@@ -22,11 +22,11 @@ import { LogLevelLabel } from "@storm-software/config-tools/types";
 import { getFileHeader } from "@storm-stack/core/lib/utilities";
 import type { Context } from "@storm-stack/core/types";
 import type { PluginOptions } from "@storm-stack/core/types/plugin";
-import type { LogPluginConfig } from "@storm-stack/devkit/plugins/log";
+import type { LogPluginOptions } from "@storm-stack/devkit/plugins/log";
 import LogPlugin from "@storm-stack/devkit/plugins/log";
 import { StormJSON } from "@stryke/json/storm-json";
 
-export type LogOpenTelemetryPluginConfig = LogPluginConfig & {
+export type LogOpenTelemetryPluginConfig = LogPluginOptions & {
   serviceName?: string;
   messageType?: "string" | "array" | string;
 } & (
@@ -226,63 +226,71 @@ const inspect: (value: unknown) => string =
       : // eslint-disable-next-line ts/unbound-method
         StormJSON.stringify;
 
+/**
+ * Creates a new [OpenTelemetry](https://opentelemetry.io/) logging adapter.
+ *
+ * @returns The created logging adapter.
+ */
+function createAdapter(): LogAdapter {
+  const SERVICE_NAME =
+    ${this.options.serviceName} || $storm.config.OTEL_SERVICE_NAME || $storm.env.name;
 
-const SERVICE_NAME =
-  ${this.options.serviceName || '$storm.config.OTEL_SERVICE_NAME || $storm.config.APP_NAME || "storm"'};
+  const resource = resourceFromAttributes({
+    [ATTR_SERVICE_NAME]: SERVICE_NAME
+  } as DetectedResourceAttributes);
 
-const resource = resourceFromAttributes({
-  [ATTR_SERVICE_NAME]: SERVICE_NAME
-} as DetectedResourceAttributes);
+  const loggerProvider = new LoggerProvider({ resource });
+  loggerProvider.addLogRecordProcessor(
+    new SimpleLogRecordProcessor(
+      new OTLPLogExporter({
+          url: "${this.options.url}",
+          headers: ${StormJSON.stringify(this.options.headers)},
+          concurrencyLimit: ${this.options.concurrencyLimit ?? 10},
+          timeoutMillis: ${this.options.timeoutMillis ?? 10000},
+          compression: "${this.options.compression}"
+        })
+    )
+  );
 
-const loggerProvider = new LoggerProvider({ resource });
-loggerProvider.addLogRecordProcessor(
-  new SimpleLogRecordProcessor(
-    new OTLPLogExporter({
-        url: "${this.options.url}",
-        headers: ${StormJSON.stringify(this.options.headers)},
-        concurrencyLimit: ${this.options.concurrencyLimit ?? 10},
-        timeoutMillis: ${this.options.timeoutMillis ?? 10000},
-        compression: "${this.options.compression}"
-      })
-  )
-);
+  const logger = loggerProvider.getLogger(
+    SERVICE_NAME,
+    $storm.env.version
+  );
 
-const logger = loggerProvider.getLogger(
-  SERVICE_NAME,
-  $storm.config.APP_VERSION
-);
+  const adapter = (record: LogRecord) => {
+    const { level, message, timestamp, properties } = record;
 
-export const adapter = (record: LogRecord) => {
-  const { level, message, timestamp, properties } = record;
+    const severityNumber = mapLevelToSeverityNumber(level);
+    const attributes = convertToAttributes(properties, inspect);
 
-  const severityNumber = mapLevelToSeverityNumber(level);
-  const attributes = convertToAttributes(properties, inspect);
+    logger.emit({
+      severityNumber,
+      severityText: level,
+      body: ${
+        this.options.messageType === "string"
+          ? `convertMessageToString(message, inspect)`
+          : this.options.messageType === "array"
+            ? `convertMessageToArray(message, inspect)`
+            : `convertMessageToCustomBodyFormat(
+              message,
+              inspect,
+              ${this.options.messageType}
+            )`
+      },
+      attributes,
+      timestamp: new Date(timestamp)
+    } satisfies OTLogRecord);
+  };
 
-  logger.emit({
-    severityNumber,
-    severityText: level,
-    body: ${
-      this.options.messageType === "string"
-        ? `convertMessageToString(message, inspect)`
-        : this.options.messageType === "array"
-          ? `convertMessageToArray(message, inspect)`
-          : `convertMessageToCustomBodyFormat(
-            message,
-            inspect,
-            ${this.options.messageType}
-          )`
-    },
-    attributes,
-    timestamp: new Date(timestamp)
-  } satisfies OTLogRecord);
-};
+  if (loggerProvider.shutdown != null) {
+    adapter[Symbol.asyncDispose] = loggerProvider.shutdown.bind(loggerProvider);
+  }
 
-if (loggerProvider.shutdown != null) {
-  const shutdown = loggerProvider.shutdown.bind(loggerProvider);
-  adapter[Symbol.asyncDispose] = shutdown;
+  return adapter;
 }
 
-export default adapter;
+export default createAdapter;
+
 `;
   }
 }

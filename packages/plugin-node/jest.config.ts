@@ -1,7 +1,7 @@
-import { getJestConfig } from "@storm-software/testing-tools";
+import { declarePackage } from "@storm-software/testing-tools";
 
-export default getJestConfig(
-  "packages/plugin-node",
-  true,
-  "@storm-stack/plugin-node"
-);
+export default declarePackage({
+  displayName: "plugin-node",
+  projectRoot: "packages/plugin-node",
+  isNode: true
+});

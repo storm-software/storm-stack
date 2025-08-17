@@ -22,7 +22,7 @@ import { Plugin } from "@storm-stack/core/base/plugin";
 import type {
   Context,
   EngineHooks,
-  PluginBaseConfig
+  PluginBaseOptions
 } from "@storm-stack/core/types";
 import { PluginOptions } from "@storm-stack/core/types/plugin";
 import { joinPaths } from "@stryke/path/join-paths";
@@ -30,7 +30,7 @@ import { camelCase } from "@stryke/string-format/camel-case";
 import { kebabCase } from "@stryke/string-format/kebab-case";
 import type { MaybePromise } from "@stryke/types/base";
 
-export interface StoragePluginConfig extends PluginBaseConfig {
+export interface StoragePluginOptions extends PluginBaseOptions {
   namespace: string & PrimaryKey;
 }
 
@@ -41,8 +41,9 @@ export interface StoragePluginConfig extends PluginBaseConfig {
  * This class provides the foundation for creating storage plugins in Storm Stack. It handles the initialization of the plugin's context and prepares the runtime for storage artifacts. Derived classes must implement the `writeStorage` method to define how the storage should be written.
  */
 export default abstract class StoragePlugin<
-  TConfig extends StoragePluginConfig = StoragePluginConfig
-> extends Plugin<TConfig> {
+  TOptions extends StoragePluginOptions = StoragePluginOptions,
+  TContext extends Context = Context
+> extends Plugin<TOptions, TContext> {
   /**
    * A list of primary keys for the plugin's options.
    *
@@ -53,18 +54,15 @@ export default abstract class StoragePlugin<
     return ["namespace"];
   }
 
-  protected get storageName() {
-    return `${this.name.replace(/^storage-/, "")}${
-      this.options.namespace
-        ? `-${this.options.namespace
-            .replaceAll(".", "-")
-            .replaceAll(":", "-")
-            .replaceAll(" ", "-")}`
-        : ""
-    }`;
+  protected override get overrideName() {
+    return `${kebabCase(this.constructor.name)
+      .replace(/^storage-/g, "")
+      .replace(/-storage$/g, "")
+      .replace(/^plugin-/g, "")
+      .replace(/-plugin$/g, "")}-${kebabCase(this.options.namespace)}`;
   }
 
-  public constructor(options: PluginOptions<TConfig>) {
+  public constructor(options: PluginOptions<TOptions>) {
     super(options);
 
     if (!this.options.namespace) {
@@ -81,7 +79,7 @@ export default abstract class StoragePlugin<
    *
    * @param hooks - The engine hooks to add the plugin's hooks to.
    */
-  public override addHooks(hooks: EngineHooks) {
+  public override addHooks(hooks: EngineHooks<TContext>) {
     super.addHooks(hooks);
 
     hooks.addHooks({
@@ -95,16 +93,13 @@ export default abstract class StoragePlugin<
    *
    * @param context - The context to use
    */
-  protected abstract writeStorage(context: Context): MaybePromise<string>;
+  protected abstract writeStorage(context: TContext): MaybePromise<string>;
 
-  async #prepareRuntime(context: Context) {
+  async #prepareRuntime(context: TContext) {
     this.log(LogLevelLabel.TRACE, `Prepare the Storm Stack storage artifact.`);
 
     if (context.options.projectType === "application") {
-      const namespace = this.options.namespace
-        ?.replaceAll(".", "-")
-        .replaceAll(":", "-")
-        .replaceAll(" ", "-");
+      const namespace = this.overrideName;
       if (!namespace) {
         throw new Error(
           `The namespace for the ${
@@ -114,29 +109,25 @@ export default abstract class StoragePlugin<
       }
 
       await context.vfs.writeRuntimeFile(
-        `storage/${kebabCase(this.storageName)}`,
-        joinPaths(
-          context.runtimePath,
-          "storage",
-          `${kebabCase(this.storageName)}.ts`
-        ),
+        `storage/${this.overrideName}`,
+        joinPaths(context.runtimePath, "storage", `${this.overrideName}.ts`),
         await Promise.resolve(this.writeStorage(context))
       );
     }
   }
 
-  async #initComplete(context: Context) {
+  async #initComplete(context: TContext) {
     this.log(
       LogLevelLabel.TRACE,
       `Loading the ${this.name} plugin into the context.`
     );
 
     if (context.options.projectType === "application") {
-      const name = `${camelCase(this.storageName)}Storage`;
+      const name = `${camelCase(this.overrideName)}Storage`;
       context.runtime.storage.push({
         name,
         namespace: this.options.namespace,
-        fileName: joinPaths("storage", kebabCase(this.storageName))
+        fileName: joinPaths("storage", kebabCase(this.overrideName))
       });
     }
   }

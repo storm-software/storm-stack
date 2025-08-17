@@ -24,6 +24,7 @@ import { toArray } from "@stryke/convert/to-array";
 import { readJsonFile } from "@stryke/fs/json";
 import { listFiles } from "@stryke/fs/list-files";
 import { StormJSON } from "@stryke/json/storm-json";
+import { existsSync } from "@stryke/path/exists";
 import {
   findFileExtension,
   findFileName,
@@ -41,30 +42,38 @@ import { isString } from "@stryke/type-checks/is-string";
 import { TsConfigJson } from "@stryke/types/tsconfig";
 import { defu } from "defu";
 import type {
-  CLIPluginConfig,
   CLIPluginContext,
-  CLIPluginContextOptions
+  CLIPluginContextOptions,
+  CLIPluginOptions
 } from "../types/config";
+import {
+  getCommandReflectionsPath,
+  readAllCommandsReflection
+} from "./persistence";
 
 export async function initOptions(
   context: CLIPluginContext,
-  config: CLIPluginConfig
+  options: CLIPluginOptions
 ) {
-  context.options.esbuild.override ??= {};
   context.options.platform = "node";
   context.options.environment = "cli";
+  context.options.skipNodeModulesBundle = true;
+
+  context.options.esbuild.override ??= {};
+  context.options.esbuild.target ??= "esnext";
+  context.options.esbuild.format ??= "esm";
 
   context.options.plugins.cli ??= {} as CLIPluginContextOptions["cli"];
 
-  context.options.plugins.cli.bin ??= config.bin
-    ? toArray(config.bin)
+  context.options.plugins.cli.bin ??= options.bin
+    ? toArray(options.bin)
     : [context.options.name];
-  context.options.plugins.cli.minNodeVersion ??= config.minNodeVersion ?? 20;
-  context.options.plugins.cli.interactive ??= config.interactive ?? true;
-  context.options.plugins.cli.title ??= config.title!;
-  context.options.plugins.cli.author ??= config.author;
+  context.options.plugins.cli.minNodeVersion ??= options.minNodeVersion ?? 20;
+  context.options.plugins.cli.interactive ??= options.interactive ?? true;
+  context.options.plugins.cli.title ??= options.title!;
+  context.options.plugins.cli.author ??= options.author;
 
-  context.options.plugins.dotenv.prefix = toArray(config.bin)
+  context.options.plugins.config.prefix = toArray(options.bin)
     .reduce(
       (ret, bin) => {
         const prefix = constantCase(bin);
@@ -73,27 +82,21 @@ export async function initOptions(
         }
         return ret;
       },
-      toArray(context.options.plugins.dotenv.prefix ?? [])
+      toArray(context.options.plugins.config.prefix ?? [])
     )
     .filter(Boolean);
 }
 
-export async function initInstalls(
-  context: CLIPluginContext,
-  config: CLIPluginConfig
-) {
+export async function initInstalls(context: CLIPluginContext) {
   if (
     context.options.projectType === "application" &&
-    config.interactive !== "never"
+    context.options.plugins.cli.interactive !== "never"
   ) {
     context.packageDeps["@clack/prompts@0.10.1"] = "dependency";
   }
 }
 
-export async function initTsconfig(
-  context: CLIPluginContext,
-  _config: CLIPluginConfig
-) {
+export async function initTsconfig(context: CLIPluginContext) {
   const tsconfigJson = await readJsonFile<TsConfigJson>(
     context.tsconfig.tsconfigFilePath
   );
@@ -128,11 +131,7 @@ export async function initTsconfig(
   );
 }
 
-export async function initEntry(
-  log: LogFn,
-  context: CLIPluginContext,
-  config: CLIPluginConfig
-) {
+export async function initEntry(log: LogFn, context: CLIPluginContext) {
   if (!isSetString(context.options.entry)) {
     throw new Error(
       `The entry point must be a string pointing to a directory containing the CLI application's commands. Please check your \`entry\` configuration - ${
@@ -202,14 +201,14 @@ export async function initEntry(
 
     const bin =
       kebabCase(
-        config.bin &&
-          (isSetString(config.bin) ||
-            (Array.isArray(config.bin) &&
-              config.bin.length > 0 &&
-              config.bin[0]))
-          ? isSetString(config.bin)
-            ? config.bin
-            : config.bin[0]
+        context.options.plugins.cli.bin &&
+          (isSetString(context.options.plugins.cli.bin) ||
+            (Array.isArray(context.options.plugins.cli.bin) &&
+              context.options.plugins.cli.bin.length > 0 &&
+              context.options.plugins.cli.bin[0]))
+          ? isSetString(context.options.plugins.cli.bin)
+            ? context.options.plugins.cli.bin
+            : context.options.plugins.cli.bin[0]
           : context.options.name || context.packageJson?.name
       ) || "cli";
     context.entry = [
@@ -241,16 +240,26 @@ export async function initEntry(
     }
 
     let binConfig = {};
-    if (config.bin && Array.isArray(config.bin) && config.bin.length > 0) {
-      binConfig = config.bin.reduce(
+    if (
+      context.options.plugins.cli.bin &&
+      Array.isArray(context.options.plugins.cli.bin) &&
+      context.options.plugins.cli.bin.length > 0
+    ) {
+      binConfig = context.options.plugins.cli.bin.reduce(
         (ret, binName) => {
-          ret[kebabCase(binName)] = `${joinPaths("dist", bin)}.mjs`;
+          ret[kebabCase(binName)] =
+            context.options.esbuild.format === "esm"
+              ? `${joinPaths("dist", bin)}.mjs`
+              : `${joinPaths("dist", bin)}.js`;
           return ret;
         },
         {} as Record<string, string>
       );
     } else {
-      binConfig[kebabCase(bin)] = `${joinPaths("dist", bin)}.mjs`;
+      binConfig[kebabCase(bin)] =
+        context.options.esbuild.format === "esm"
+          ? `${joinPaths("dist", bin)}.mjs`
+          : `${joinPaths("dist", bin)}.js`;
     }
 
     await writeFile(
@@ -400,133 +409,133 @@ export async function initEntry(
       isVirtual: false
     });
 
-    if (config.manageConfig !== false) {
-      log(
-        LogLevelLabel.TRACE,
-        "Adding the configuration management commands to the entry points."
-      );
+    // if (config.manageConfig !== false) {
+    //   log(
+    //     LogLevelLabel.TRACE,
+    //     "Adding the configuration management commands to the entry points."
+    //   );
 
-      if (
-        context.entry.some(
-          entry =>
-            entry.output === "config" ||
-            entry.file === joinPaths(context.entryPath, "config", "index.ts")
-        )
-      ) {
-        throw new Error(
-          "The config command already exists in the entry point. This is not valid when \`manageConfig\` is not false. Please remove it from the entry point or rename it."
-        );
-      }
+    //   if (
+    //     context.entry.some(
+    //       entry =>
+    //         entry.output === "config" ||
+    //         entry.file === joinPaths(context.entryPath, "config", "index.ts")
+    //     )
+    //   ) {
+    //     throw new Error(
+    //       "The config command already exists in the entry point. This is not valid when \`manageConfig\` is not false. Please remove it from the entry point or rename it."
+    //     );
+    //   }
 
-      context.entry.push({
-        title: "Configuration Management",
-        description:
-          "Commands for managing the configuration parameters stored on the file system.",
-        file: joinPaths(context.entryPath, "config", "index.ts"),
-        input: {
-          file: joinPaths(context.entryPath, "config", "index.ts")
-        },
-        output: "config",
-        path: ["config"],
-        isVirtual: true
-      });
+    //   context.entry.push({
+    //     title: "Configuration Management",
+    //     description:
+    //       "Commands for managing the configuration parameters stored on the file system.",
+    //     file: joinPaths(context.entryPath, "config", "index.ts"),
+    //     input: {
+    //       file: joinPaths(context.entryPath, "config", "index.ts")
+    //     },
+    //     output: "config",
+    //     path: ["config"],
+    //     isVirtual: true
+    //   });
 
-      if (
-        context.entry.some(
-          entry =>
-            entry.output === "config-get" ||
-            entry.file ===
-              joinPaths(context.entryPath, "config", "get", "index.ts")
-        )
-      ) {
-        throw new Error(
-          "The config-get command already exists in the entry point. This is not valid when \`manageConfig\` is not false. Please remove it from the entry point or rename it."
-        );
-      }
+    //   if (
+    //     context.entry.some(
+    //       entry =>
+    //         entry.output === "config-get" ||
+    //         entry.file ===
+    //           joinPaths(context.entryPath, "config", "get", "index.ts")
+    //     )
+    //   ) {
+    //     throw new Error(
+    //       "The config-get command already exists in the entry point. This is not valid when \`manageConfig\` is not false. Please remove it from the entry point or rename it."
+    //     );
+    //   }
 
-      context.entry.push({
-        title: "Configuration - Get",
-        file: joinPaths(context.entryPath, "config", "get", "index.ts"),
-        input: {
-          file: joinPaths(context.entryPath, "config", "get", "handle.ts")
-        },
-        output: "config-get-[name]",
-        path: ["config", "get", "[name]"],
-        isVirtual: false
-      });
+    //   context.entry.push({
+    //     title: "Configuration - Get",
+    //     file: joinPaths(context.entryPath, "config", "get", "index.ts"),
+    //     input: {
+    //       file: joinPaths(context.entryPath, "config", "get", "handle.ts")
+    //     },
+    //     output: "config-get-[name]",
+    //     path: ["config", "get", "[name]"],
+    //     isVirtual: false
+    //   });
 
-      if (
-        context.entry.some(
-          entry =>
-            entry.output === "config-set" ||
-            entry.file ===
-              joinPaths(context.entryPath, "config", "set", "index.ts")
-        )
-      ) {
-        throw new Error(
-          "The config-set command already exists in the entry point. This is not valid when \`manageConfig\` is not false. Please remove it from the entry point or rename it."
-        );
-      }
+    //   if (
+    //     context.entry.some(
+    //       entry =>
+    //         entry.output === "config-set" ||
+    //         entry.file ===
+    //           joinPaths(context.entryPath, "config", "set", "index.ts")
+    //     )
+    //   ) {
+    //     throw new Error(
+    //       "The config-set command already exists in the entry point. This is not valid when \`manageConfig\` is not false. Please remove it from the entry point or rename it."
+    //     );
+    //   }
 
-      context.entry.push({
-        title: "Configuration - Set",
-        file: joinPaths(context.entryPath, "config", "set", "index.ts"),
-        input: {
-          file: joinPaths(context.entryPath, "config", "set", "handle.ts")
-        },
-        output: "config-set-[name]-[value]",
-        path: ["config", "set", "[name]", "[value]"],
-        isVirtual: false
-      });
+    //   context.entry.push({
+    //     title: "Configuration - Set",
+    //     file: joinPaths(context.entryPath, "config", "set", "index.ts"),
+    //     input: {
+    //       file: joinPaths(context.entryPath, "config", "set", "handle.ts")
+    //     },
+    //     output: "config-set-[name]-[value]",
+    //     path: ["config", "set", "[name]", "[value]"],
+    //     isVirtual: false
+    //   });
 
-      if (
-        context.entry.some(
-          entry =>
-            entry.output === "config-delete" ||
-            entry.file ===
-              joinPaths(context.entryPath, "config", "delete", "index.ts")
-        )
-      ) {
-        throw new Error(
-          "The config-delete command already exists in the entry point. This is not valid when \`manageConfig\` is not false. Please remove it from the entry point or rename it."
-        );
-      }
+    //   if (
+    //     context.entry.some(
+    //       entry =>
+    //         entry.output === "config-delete" ||
+    //         entry.file ===
+    //           joinPaths(context.entryPath, "config", "delete", "index.ts")
+    //     )
+    //   ) {
+    //     throw new Error(
+    //       "The config-delete command already exists in the entry point. This is not valid when \`manageConfig\` is not false. Please remove it from the entry point or rename it."
+    //     );
+    //   }
 
-      context.entry.push({
-        title: "Configuration - Delete",
-        file: joinPaths(context.entryPath, "config", "delete", "index.ts"),
-        input: {
-          file: joinPaths(context.entryPath, "config", "delete", "handle.ts")
-        },
-        output: "config-delete-[name]",
-        path: ["config", "delete", "[name]"],
-        isVirtual: false
-      });
+    //   context.entry.push({
+    //     title: "Configuration - Delete",
+    //     file: joinPaths(context.entryPath, "config", "delete", "index.ts"),
+    //     input: {
+    //       file: joinPaths(context.entryPath, "config", "delete", "handle.ts")
+    //     },
+    //     output: "config-delete-[name]",
+    //     path: ["config", "delete", "[name]"],
+    //     isVirtual: false
+    //   });
 
-      if (
-        context.entry.some(
-          entry =>
-            entry.output === "config-list" ||
-            entry.file ===
-              joinPaths(context.entryPath, "config", "list", "index.ts")
-        )
-      ) {
-        throw new Error(
-          "The config-list command already exists in the entry point. This is not valid when \`manageConfig\` is not false. Please remove it from the entry point or rename it."
-        );
-      }
+    //   if (
+    //     context.entry.some(
+    //       entry =>
+    //         entry.output === "config-list" ||
+    //         entry.file ===
+    //           joinPaths(context.entryPath, "config", "list", "index.ts")
+    //     )
+    //   ) {
+    //     throw new Error(
+    //       "The config-list command already exists in the entry point. This is not valid when \`manageConfig\` is not false. Please remove it from the entry point or rename it."
+    //     );
+    //   }
 
-      context.entry.push({
-        title: "Configuration - List",
-        file: joinPaths(context.entryPath, "config", "list", "index.ts"),
-        input: {
-          file: joinPaths(context.entryPath, "config", "list", "handle.ts")
-        },
-        output: "config-list",
-        path: ["config", "list"],
-        isVirtual: false
-      });
-    }
+    //   context.entry.push({
+    //     title: "Configuration - List",
+    //     file: joinPaths(context.entryPath, "config", "list", "index.ts"),
+    //     input: {
+    //       file: joinPaths(context.entryPath, "config", "list", "handle.ts")
+    //     },
+    //     output: "config-list",
+    //     path: ["config", "list"],
+    //     isVirtual: false
+    //   });
+    // }
 
     log(
       LogLevelLabel.TRACE,
@@ -576,5 +585,21 @@ export async function initEntry(
         )
         .join("\n")}`
     );
+  }
+}
+
+export async function initReflections(log: LogFn, context: CLIPluginContext) {
+  if (
+    context.options.command !== "prepare" &&
+    context.persistedMeta?.checksum === context.meta.checksum &&
+    existsSync(getCommandReflectionsPath(context)) &&
+    (await listFiles(getCommandReflectionsPath(context))).length > 0
+  ) {
+    log(
+      LogLevelLabel.TRACE,
+      `Skipping reflection initialization as the meta checksum has not changed.`
+    );
+
+    context.reflections.cli = await readAllCommandsReflection(context);
   }
 }

@@ -35,7 +35,7 @@ import { joinPaths } from "@stryke/path/join-paths";
 import { resolvePackage } from "@stryke/path/resolve";
 import { kebabCase } from "@stryke/string-format/kebab-case";
 import { PackageJson } from "@stryke/types/package-json";
-import { nanoid } from "@stryke/unique-id/nanoid-client";
+import { uuid } from "@stryke/unique-id/uuid";
 import defu from "defu";
 import { DirectoryJSON } from "memfs";
 import {
@@ -43,6 +43,7 @@ import {
   Context,
   InlineConfig,
   MetaInfo,
+  Reflection,
   ResolvedOptions,
   RuntimeConfig,
   SerializedContext,
@@ -170,8 +171,8 @@ export async function createContext<TContext extends Context = Context>(
 
   const checksum = await getChecksum(projectRoot);
   const meta = {
-    buildId: nanoid(24),
-    releaseId: nanoid(24),
+    buildId: uuid(),
+    releaseId: uuid(),
     checksum,
     timestamp: Date.now(),
     projectRootHash: hash(joinPaths(workspaceRoot, projectRoot), {
@@ -230,7 +231,6 @@ export async function createContext<TContext extends Context = Context>(
       storage: [],
       init: []
     } as RuntimeConfig,
-    dotenv: {},
     packageDeps: {},
     workers: {} as TContext["workers"],
     reflections: {},
@@ -336,7 +336,8 @@ export function serializeContext(context: Context): SerializedContext {
     unimport: null,
     reflections: Object.entries(context.reflections).reduce(
       (ret, [key, reflection]) => {
-        ret[key] = reflection.serializeType();
+        ret[key] = (reflection as Reflection)?.serializeType();
+
         return ret;
       },
       {}

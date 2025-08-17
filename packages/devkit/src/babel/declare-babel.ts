@@ -16,28 +16,13 @@
 
  ------------------------------------------------------------------- */
 
-import { PluginAPI, PluginObject, PluginPass } from "@babel/core";
 import { declare } from "@babel/helper-plugin-utils";
 import { LogLevelLabel } from "@storm-software/config-tools/types";
-import { deserializeContext } from "@storm-stack/core/lib/context";
-import { createLog, extendLog } from "@storm-stack/core/lib/logger";
-import {
-  BabelPluginOptions,
-  BabelPluginState
-} from "@storm-stack/core/types/babel";
-import { BabelPluginBuilder } from "../types";
-
-export interface DeclareBabelReturn<
-  TOptions extends BabelPluginOptions = BabelPluginOptions,
-  TState extends BabelPluginState<TOptions> = BabelPluginState<TOptions>
-> {
-  (
-    api: PluginAPI,
-    options: TOptions,
-    dirname: string
-  ): PluginObject<TState & PluginPass<object>>;
-  name: string;
-}
+import { extendLog } from "@storm-stack/core/lib/logger";
+import { BabelPluginOptions } from "@storm-stack/core/types/babel";
+import { Context } from "@storm-stack/core/types/context";
+import chalk from "chalk";
+import { BabelPluginBuilder, DeclareBabelPluginReturn } from "../types";
 
 /**
  * Declare a Babel plugin using the provided builder function.
@@ -48,40 +33,41 @@ export interface DeclareBabelReturn<
  */
 export function declareBabel<
   TOptions extends BabelPluginOptions = BabelPluginOptions,
-  TState extends BabelPluginState<TOptions> = BabelPluginState<TOptions>
+  TContext extends Context = Context,
+  TState = unknown
 >(
   name: string,
-  builder: BabelPluginBuilder<TOptions, TState>
-): DeclareBabelReturn<TOptions, TState> {
-  const result = declare<TState, TOptions>((api, options, dirname) => {
-    api.cache.using(() => options.context.meta.checksum);
-    api.env(options.context.options.environment);
+  builder: BabelPluginBuilder<TOptions, TContext, TState>
+): DeclareBabelPluginReturn<TOptions, TContext, TState> {
+  const plugin = (context: TContext) => {
+    return declare<TOptions, TOptions>((api, options, dirname) => {
+      api.cache.using(() => context.meta.checksum);
 
-    const state = {
-      options,
-      context: deserializeContext(options.context, "babel-plugin")
-    } as TState;
+      const log = extendLog(context.log, name);
+      log(
+        LogLevelLabel.TRACE,
+        `Initializing the ${chalk.bold.cyanBright(name)} Babel plugin`
+      );
 
-    state.context.log = createLog("babel-plugin", {
-      logLevel: state.context.options.logLevel
-    });
-
-    const log = extendLog(state.context.log, name);
-    log(LogLevelLabel.TRACE, `Initializing Babel plugin - ${dirname}`);
-
-    return {
-      ...builder({
+      const result = builder({
         log,
         name,
         api,
         options,
-        state,
+        context,
         dirname
-      }),
-      name: `storm-stack:${name}`
-    };
-  }) as DeclareBabelReturn<TOptions, TState>;
-  result.name ??= name;
+      });
+      result.name = name;
 
-  return result;
+      log(
+        LogLevelLabel.TRACE,
+        `Completed initialization of the ${chalk.bold.cyanBright(name)} Babel plugin`
+      );
+
+      return result;
+    });
+  };
+  plugin._name = name;
+
+  return plugin;
 }

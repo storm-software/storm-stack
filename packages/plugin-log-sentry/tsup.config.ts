@@ -17,14 +17,15 @@
  ------------------------------------------------------------------- */
 
 import { getTsupConfig } from "@storm-stack/tools-config/tsup.shared";
+import { Options } from "tsup";
 
-const config = getTsupConfig({
+const config: Options = getTsupConfig({
   name: "plugin-log-sentry",
   entry: ["src/index.ts", "src/types.ts"],
   outDir: "dist",
   bundle: true,
-  splitting: false,
-  treeshake: false,
+  splitting: true,
+  treeshake: true,
   keepNames: true,
   clean: true,
   sourcemap: false,

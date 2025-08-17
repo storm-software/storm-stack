@@ -30,14 +30,31 @@ export function EventModule(_context: Context) {
 ${getFileHeader()}
 
 import { StormEventInterface } from "@storm-stack/types/node/event";
-import { StormPayload } from "storm:payload";
+import { uniqueId } from "storm:id";
 import { useStorm } from "storm:context";
 
 /**
  * A base event class used by the Storm Stack runtime.
  */
-export class StormEvent<TEventType extends string = string, TEventData = any>
-  extends StormPayload<TEventData> implements StormEventInterface<TEventType, TEventData> {
+export class StormEvent<
+  TEventType extends string = string,
+  TData extends Record<string, any> = Record<string, any>
+> implements StormEventInterface<TEventType, TData> {
+  /**
+   * The event timestamp.
+   */
+  public readonly timestamp: number = Date.now();
+
+  /**
+   * The event identifier.
+   */
+  public readonly id: string = uniqueId();
+
+  /**
+   * The event data object.
+   */
+  public readonly data: TData;
+
   /**
    * The payload identifier.
    */
@@ -71,10 +88,10 @@ export class StormEvent<TEventType extends string = string, TEventData = any>
    */
   public constructor(
     type: TEventType,
-    data: TEventData
+    data: TData
   ) {
-    super(data);
     this.type = type;
+    this.data = data;
   }
 }`;
 }

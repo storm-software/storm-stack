@@ -19,14 +19,12 @@
 import { LogLevelLabel } from "@storm-software/config-tools/types";
 import { Plugin } from "@storm-stack/core/base/plugin";
 import type { EngineHooks } from "@storm-stack/core/types";
-import { PluginConfig } from "@storm-stack/core/types/config";
 import { PluginOptions } from "@storm-stack/core/types/plugin";
 import {
-  readDotenvReflection,
-  writeDotenvReflection
-} from "@storm-stack/plugin-dotenv/helpers/persistence";
+  readConfigTypeReflection,
+  writeConfigTypeReflection
+} from "@storm-stack/plugin-config/helpers/persistence";
 import { joinPaths } from "@stryke/path/join-paths";
-import { isSetString } from "@stryke/type-checks/is-set-string";
 import {
   buildApplication,
   buildLibrary,
@@ -36,31 +34,34 @@ import {
   initEntry,
   initInstalls,
   initOptions,
+  initReflections,
   initTsconfig
 } from "./helpers/init";
 import {
   addCommandArgReflections,
   generateCompletionCommands,
-  generateConfigCommands,
   prepareEntry
 } from "./helpers/prepare";
 import { reflectCommandTree } from "./helpers/reflect-command";
 import { AppModule } from "./templates/app";
 import { CLIModule } from "./templates/cli";
-import type { CLIPluginConfig, CLIPluginContext } from "./types/config";
+import type { CLIPluginContext, CLIPluginOptions } from "./types/config";
 
 /**
  * The CLI Plugin for Storm Stack projects.
  */
 export default class CLIPlugin<
-  TConfig extends CLIPluginConfig = CLIPluginConfig
-> extends Plugin<TConfig> {
-  public constructor(options: PluginOptions<TConfig>) {
+  TOptions extends CLIPluginOptions = CLIPluginOptions,
+  TContext extends CLIPluginContext = CLIPluginContext
+> extends Plugin<TOptions, TContext> {
+  public constructor(options: PluginOptions<TOptions>) {
     super(options);
 
     this.options = { minNodeVersion: 20, ...options };
     this.dependencies = [
       ["@storm-stack/plugin-node", this.options],
+      ["@storm-stack/plugin-node-config", this.options.config],
+      ["@storm-stack/plugin-date", this.options.date],
       [
         "@storm-stack/plugin-storage-fs",
         {
@@ -68,22 +69,8 @@ export default class CLIPlugin<
           base: "crash-reports",
           envPath: "log"
         }
-      ],
-      this.options.manageConfig !== false && [
-        "@storm-stack/plugin-storage-fs",
-        {
-          namespace: "config",
-          base:
-            isSetString(this.options.bin) ||
-            (Array.isArray(this.options.bin) && this.options.bin.length > 0)
-              ? isSetString(this.options.bin)
-                ? this.options.bin
-                : this.options.bin[0]
-              : undefined,
-          envPath: "config"
-        }
       ]
-    ].filter(Boolean) as (string | PluginConfig)[];
+    ];
   }
 
   /**
@@ -91,7 +78,7 @@ export default class CLIPlugin<
    *
    * @param hooks - The engine hooks to add the plugin's hooks to.
    */
-  public override addHooks(hooks: EngineHooks) {
+  public override addHooks(hooks: EngineHooks<TContext>) {
     super.addHooks(hooks);
 
     hooks.addHooks({
@@ -112,7 +99,7 @@ export default class CLIPlugin<
    *
    * @param context - The context to initialize the plugin with.
    */
-  protected async initOptions(context: CLIPluginContext) {
+  protected async initOptions(context: TContext) {
     this.log(
       LogLevelLabel.TRACE,
       `Initializing CLI specific options for the Storm Stack project.`
@@ -126,13 +113,13 @@ export default class CLIPlugin<
    *
    * @param context - The context to initialize the installation with.
    */
-  protected async initInstall(context: CLIPluginContext) {
+  protected async initInstall(context: TContext) {
     this.log(
       LogLevelLabel.TRACE,
       `Adding CLI specific dependencies to the Storm Stack project.`
     );
 
-    await initInstalls(context, this.options);
+    await initInstalls(context);
   }
 
   /**
@@ -140,13 +127,13 @@ export default class CLIPlugin<
    *
    * @param context - The context to initialize the TypeScript configuration with.
    */
-  protected async initTsconfig(context: CLIPluginContext) {
+  protected async initTsconfig(context: TContext) {
     this.log(
       LogLevelLabel.TRACE,
       `Initializing TypeScript configuration for the Storm Stack project.`
     );
 
-    await initTsconfig(context, this.options);
+    await initTsconfig(context);
   }
 
   /**
@@ -154,27 +141,29 @@ export default class CLIPlugin<
    *
    * @param context - The context to initialize the entry point with.
    */
-  protected async initEntry(context: CLIPluginContext) {
+  protected async initEntry(context: TContext) {
     if (context.options.projectType === "application") {
       this.log(
         LogLevelLabel.TRACE,
         `Initializing CLI application's entry point and commands.`
       );
 
-      await initEntry(this.log, context, this.options);
+      await initEntry(this.log, context);
     }
   }
 
   /**
    * Initializes the reflection data for the CLI application.
    *
-   * @param _context - The context to initialize the reflections with.
+   * @param context - The context to initialize the reflections with.
    */
-  protected async initReflections(_context: CLIPluginContext) {
+  protected async initReflections(context: TContext) {
     this.log(
       LogLevelLabel.TRACE,
       `Initializing the CLI application's reflection data.`
     );
+
+    await initReflections(this.log, context);
   }
 
   /**
@@ -182,7 +171,7 @@ export default class CLIPlugin<
    *
    * @param context - The context to prepare the runtime with.
    */
-  protected async prepareRuntime(context: CLIPluginContext) {
+  protected async prepareRuntime(context: TContext) {
     if (context.options.projectType === "application") {
       this.log(
         LogLevelLabel.TRACE,
@@ -193,12 +182,12 @@ export default class CLIPlugin<
         context.vfs.writeRuntimeFile(
           "app",
           joinPaths(context.runtimePath, "app.ts"),
-          AppModule(context, this.options)
+          AppModule(context)
         ),
         context.vfs.writeRuntimeFile(
           "cli",
           joinPaths(context.runtimePath, "cli.ts"),
-          CLIModule(context, this.options)
+          CLIModule(context)
         )
       ]);
     }
@@ -209,7 +198,7 @@ export default class CLIPlugin<
    *
    * @param context - The context to prepare the entry point with.
    */
-  protected async prepareEntry(context: CLIPluginContext) {
+  protected async prepareEntry(context: TContext) {
     if (context.options.projectType === "application") {
       this.log(
         LogLevelLabel.TRACE,
@@ -217,28 +206,24 @@ export default class CLIPlugin<
       );
 
       await Promise.all([
-        generateConfigCommands(this.log, context, this.options),
-        generateCompletionCommands(this.log, context, this.options)
+        // generateConfigCommands(this.log, context, this.options),
+        generateCompletionCommands(this.log, context)
       ]);
 
-      const commandTree = await reflectCommandTree(
-        this.log,
-        context,
-        this.options
-      );
+      const commandTree = await reflectCommandTree(this.log, context);
 
       this.log(
         LogLevelLabel.TRACE,
         `Writing the CLI application entry points.`
       );
 
-      context.reflections.configDotenv = await readDotenvReflection(
+      context.reflections.config.types.params = await readConfigTypeReflection(
         context,
-        "config"
+        "params"
       );
 
       const originalNumberOfProperties =
-        context.reflections.configDotenv?.getProperties().length || 0;
+        context.reflections.config.types.params?.getProperties().length || 0;
 
       for (const command of Object.values(commandTree.children)) {
         await addCommandArgReflections(context, command);
@@ -247,18 +232,18 @@ export default class CLIPlugin<
       this.log(
         LogLevelLabel.TRACE,
         `Adding ${
-          (context.reflections.configDotenv?.getProperties().length || 0) -
+          (context.reflections.config.params?.getProperties().length || 0) -
           originalNumberOfProperties
-        } dotenv properties for the CLI commands.`
+        } config properties for the CLI commands.`
       );
 
-      await writeDotenvReflection(
+      await writeConfigTypeReflection(
         context,
-        context.reflections.configDotenv,
-        "config"
+        context.reflections.config.params,
+        "params"
       );
 
-      await prepareEntry(this.log, context, this.options, commandTree);
+      await prepareEntry(this.log, context, commandTree);
     }
   }
 
@@ -267,7 +252,7 @@ export default class CLIPlugin<
    *
    * @param context - The context to build the library with.
    */
-  protected async buildLibrary(context: CLIPluginContext) {
+  protected async buildLibrary(context: TContext) {
     return buildLibrary(this.log, context);
   }
 
@@ -276,7 +261,7 @@ export default class CLIPlugin<
    *
    * @param context - The context to build the application with.
    */
-  protected async buildApplication(context: CLIPluginContext) {
+  protected async buildApplication(context: TContext) {
     return buildApplication(this.log, context);
   }
 
@@ -285,7 +270,7 @@ export default class CLIPlugin<
    *
    * @param context - The context to build the complete application with.
    */
-  protected async buildComplete(context: CLIPluginContext) {
+  protected async buildComplete(context: TContext) {
     return permissionExecutable(this.log, context);
   }
 }

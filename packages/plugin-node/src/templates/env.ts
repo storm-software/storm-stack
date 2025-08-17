@@ -22,7 +22,71 @@ import { titleCase } from "@stryke/string-format/title-case";
 import { isSetString } from "@stryke/type-checks/is-set-string";
 import { NodePluginContext } from "../types";
 
+/**
+ * Generates a TypeScript module that provides runtime environment information for a Storm Stack application.
+ *
+ * @param context - The plugin context containing configuration, metadata, and package information.
+ * @returns A string containing the TypeScript source code for the environment module.
+ *
+ * @remarks
+ * The generated module exposes detailed information about the application's runtime environment, including platform, color support, CI detection, and standardized paths for data, config, cache, logs, and temp files.
+ *
+ * The returned module includes the following properties:
+ *
+ * - `hasTTY`: Indicates if the current process has a TTY (interactive terminal) available.
+ * - `isCI`: True if the application is running in a Continuous Integration (CI) environment.
+ * - `mode`: The current runtime mode, such as "development", "staging", or "production".
+ * - `environment`: The environment name as specified in the plugin context.
+ * - `isProduction`: True if running in production mode.
+ * - `isStaging`: True if running in staging mode.
+ * - `isDevelopment`: True if running in development mode.
+ * - `isDebug`: True if running in debug mode (typically development with debug enabled).
+ * - `isTest`: True if running in test mode or under test conditions.
+ * - `isMinimal`: True if running in a minimal environment (e.g., CI, test, or no TTY).
+ * - `isWindows`: True if the runtime platform is Windows.
+ * - `isLinux`: True if the runtime platform is Linux.
+ * - `isMacOS`: True if the runtime platform is macOS.
+ * - `isNode`: True if running in Node.js or a Node.js-compatible runtime.
+ * - `isServer`: True if running in a server environment (Node.js or specified platform).
+ * - `isInteractive`: True if the environment supports interactive input/output.
+ * - `isUnicodeSupported`: True if the terminal supports Unicode characters.
+ * - `isColorSupported`: True if the terminal supports colored output.
+ * - `supportsColor`: An object describing the color support level for stdout and stderr streams.
+ * - `organization`: The name of the organization maintaining the application.
+ * - `name`: The application name.
+ * - `packageName`: The package name from package.json or the application name.
+ * - `version`: The current application version.
+ * - `buildId`: The build identifier for the current release.
+ * - `timestamp`: The build or release timestamp.
+ * - `releaseId`: The release identifier.
+ * - `releaseTag`: A tag combining the application name and version.
+ * - `defaultLocale`: The default locale for the application.
+ * - `defaultTimezone`: The default timezone for the application.
+ * - `platform`: The runtime platform (e.g., "node", "web", etc.).
+ * - `paths`: An object containing standardized paths for data, config, cache, logs, and temp files, adapted to the current OS and environment variables.
+ *
+ * @example
+ * ```typescript
+ * import { createEnvironment } from "./env";
+ * const env = createEnvironment();
+ * console.log(env.isProduction); // true or false
+ * ```
+ */
 export function EnvModule(context: NodePluginContext) {
+  const name = kebabCase(context.options.name).trim().replace(/\s+/g, "");
+  const organization =
+    context.options?.organization &&
+    (isSetString(context.options?.organization) ||
+      context.options?.organization?.name)
+      ? kebabCase(
+          isSetString(context.options?.organization)
+            ? context.options.organization
+            : context.options?.organization?.name
+        )
+          ?.trim()
+          .replace(/\s+/g, "")
+      : name;
+
   return `
 /**
  * This module provides the runtime environment information for the Storm Stack application.
@@ -33,425 +97,469 @@ export function EnvModule(context: NodePluginContext) {
 ${getFileHeader()}
 
 import {
-  serializer,
-  deserialize,
-  TypeProperty,
-  TypePropertySignature,
-  NamingStrategy
-} from "@deepkit/type";
-import {
-  StormEnvPaths,
   StormBuildInfo,
-  StormRuntimeInfo,
-  StormRuntimePaths
+  StormEnvPaths,
+  StormEnvInterface
 } from "@storm-stack/types/node/env";
-import { StormError } from "storm:errors";
+import process from "node:process";
 import os from "node:os";
+import tty from "node:tty";
 import { readFile } from "node:fs/promises";
 import { existsSync } from "node:fs";
 import { join, basename } from "node:path";
 
-/** Detect if stdout.TTY is available */
-export const hasTTY = Boolean(process.stdout && process.stdout.isTTY);
-
-/** Detect if the application is running in a CI environment */
-export const isCI = Boolean(
-  process.env.STORM_CI ||
-  process.env.CI ||
-  process.env.CONTINUOUS_INTEGRATION ||
-  process.env.RUN_ID ||
-  process.env.AGOLA_GIT_REF ||
-  process.env.AC_APPCIRCLE ||
-  process.env.APPVEYOR ||
-  process.env.CODEBUILD ||
-  process.env.TF_BUILD ||
-  process.env.bamboo_planKey ||
-  process.env.BITBUCKET_COMMIT ||
-  process.env.BITRISE_IO ||
-  process.env.BUDDY_WORKSPACE_ID ||
-  process.env.BUILDKITE ||
-  process.env.CIRCLECI ||
-  process.env.CIRRUS_CI ||
-  process.env.CF_BUILD_ID ||
-  process.env.CM_BUILD_ID ||
-  process.env.CI_NAME ||
-  process.env.DRONE ||
-  process.env.DSARI ||
-  process.env.EARTHLY_CI ||
-  process.env.EAS_BUILD ||
-  process.env.GERRIT_PROJECT ||
-  process.env.GITEA_ACTIONS ||
-  process.env.GITHUB_ACTIONS ||
-  process.env.GITLAB_CI ||
-  process.env.GOCD ||
-  process.env.BUILDER_OUTPUT ||
-  process.env.HARNESS_BUILD_ID ||
-  process.env.JENKINS_URL ||
-  process.env.LAYERCI ||
-  process.env.MAGNUM ||
-  process.env.NETLIFY ||
-  process.env.NEVERCODE ||
-  process.env.PROW_JOB_ID ||
-  process.env.RELEASE_BUILD_ID ||
-  process.env.RENDER ||
-  process.env.SAILCI ||
-  process.env.HUDSON ||
-  process.env.SCREWDRIVER ||
-  process.env.SEMAPHORE ||
-  process.env.SOURCEHUT ||
-  process.env.STRIDER ||
-  process.env.TASK_ID ||
-  process.env.RUN_ID ||
-  process.env.TEAMCITY_VERSION ||
-  process.env.TRAVIS ||
-  process.env.VELA ||
-  process.env.NOW_BUILDER ||
-  process.env.APPCENTER_BUILD_ID ||
-  process.env.CI_XCODE_PROJECT ||
-  process.env.XCS ||
-  false);
-
-/** Detect the \`NODE_ENV\` environment variable */
-export const mode = String(
-    ${
-      context.options.plugins.dotenv.values.MODE
-        ? `$storm.dotenv.MODE`
-        : `process.env.NEXT_PUBLIC_VERCEL_ENV ||
-    process.env.NODE_ENV ||
-    "production"`
-    }
-  );
-
-/** Detect if the application is running in production mode */
-export const isProduction = ["prd", "prod", "production"].includes(
-  mode.toLowerCase()
-);
-
-/** Detect if the application is running in staging mode */
-export const isStaging = ["stg", "stage", "staging"].includes(
-  mode.toLowerCase()
-);
-
-/** Detect if the application is running in development mode */
-export const isDevelopment = ["dev", "development"].includes(
-  mode.toLowerCase()
-);
-
-/** Detect if the application is running in debug mode */
-export const isDebug = isDevelopment && Boolean(process.env.DEBUG);
-
-/** Detect if the application is running in test mode */
-export const isTest =
-  isDevelopment ||
-  isStaging ||
-  ["tst", "test", "testing"].includes(mode.toLowerCase()) ||
-  Boolean(process.env.TEST);
-
-/** Detect if MINIMAL environment variable is set, running in CI or test or TTY is unavailable */
-export const isMinimal =
-  Boolean(process.env.MINIMAL) || isCI || isTest || !hasTTY;
+/**
+ * Checks if a specific flag is present in the command line arguments.
+ *
+ * @see {@link https://github.com/sindresorhus/has-flag/blob/main/index.js}
+ *
+ * @param flag - The flag to check for, e.g., "color", "no-color".
+ * @param argv - The command line arguments to check against. Defaults to global Deno args or process args.
+ * @returns True if the flag is present, false otherwise.
+ */
+export function hasFlag(
+  flag: string,
+  argv: string[] = globalThis.Deno ? globalThis.Deno.args : process.argv
+) {
+	const position = argv.indexOf(flag.startsWith("-") ? "" : (flag.length === 1 ? "-" : "--") + flag);
+  return position !== -1 && argv.indexOf("--") === -1 || position < argv.indexOf("--");
+}
 
 /** Detect if the runtime platform is Windows */
-export const isWindows = /^win/i.test(process.platform);
-
-/** Detect if the runtime platform is Linux */
-export const isLinux = /^linux/i.test(process.platform);
-
-/** Detect if the runtime platform is macOS (darwin kernel) */
-export const isMacOS = /^darwin/i.test(process.platform);
-
-/** Detect if the runtime platform is interactive */
-export const isInteractive = !isMinimal && Boolean(process.stdin?.isTTY && process.env.TERM !== "dumb")
-
-/** Detect if Unicode characters are supported */
-export const isUnicodeSupported = process.platform !== "win32"
-    ? process.env.TERM !== "linux"
-    : (Boolean(process.env.WT_SESSION)
-        || Boolean(process.env.TERMINUS_SUBLIME)
-        || process.env.ConEmuTask === "{cmd::Cmder}"
-        || process.env.TERM_PROGRAM === "Terminus-Sublime"
-        || process.env.TERM_PROGRAM === "vscode"
-        || process.env.TERM === "xterm-256color"
-        || process.env.TERM === "alacritty"
-        || process.env.TERM === "rxvt-unicode"
-        || process.env.TERM === "rxvt-unicode-256color"
-        || process.env.TERMINAL_EMULATOR === "JetBrains-JediTerm");
-
-/** Detect if color is supported */
-export const isColorSupported =
-  !process.env.NO_COLOR &&
-  (Boolean(process.env.FORCE_COLOR) ||
-    ((hasTTY || isWindows) &&
-      process.env.TERM !== "dumb"));
+const isWindows = /^win/i.test(process.platform);
 
 /**
- * Indicates if running in Node.js or a Node.js compatible runtime.
- *
- * @remarks
- * When running code in Bun and Deno with Node.js compatibility mode, \`isNode\` flag will be also \`true\`, indicating running in a Node.js compatible runtime.
+ * Options for getting the color support level.
  */
-export const isNode = globalThis.process?.release?.name === "node";
+export type GetColorSupportLevelOptions = {
+  streamIsTTY?: boolean;
+  sniffFlags?: boolean;
+};
 
-/** The organization that maintains the application */
-export const organization = "${
-    context.options?.organization &&
-    (isSetString(context.options?.organization) ||
-      context.options?.organization?.name)
-      ? kebabCase(
-          isSetString(context.options?.organization)
-            ? context.options.organization
-            : context.options?.organization?.name
+/**
+ * Determines the color support level of the terminal.
+ *
+ * @param stream - The stream to check availability of (e.g., process.stdout).
+ * @param options - Options for the color detection.
+ * @returns The color support level (0 = no color, 1 = basic, 2 = 256 colors, 3 = true color).
+ */
+export function getColorSupportLevel(stream, options?: GetColorSupportLevelOptions) {
+  const { streamIsTTY = true, sniffFlags = true } = options || {};
+
+  let forceColor: number | undefined;
+  if ($storm.config.FORCE_COLOR !== undefined) {
+    forceColor = !$storm.config.FORCE_COLOR
+      ? 0
+      : typeof $storm.config.FORCE_COLOR === "boolean"
+      ? 1
+      : typeof $storm.config.FORCE_COLOR === "number" &&
+        [0, 1, 2, 3].includes(Math.min($storm.config.FORCE_COLOR as number, 3))
+      ? Math.min($storm.config.FORCE_COLOR as number, 3)
+      : undefined;
+  }
+
+  if (sniffFlags !== false && forceColor === undefined) {
+    forceColor = hasFlag("no-color") ||
+      hasFlag("no-colors") ||
+      hasFlag("color=false") ||
+      hasFlag("color=never")
+    ? 0
+    : hasFlag("color") ||
+      hasFlag("colors") ||
+      hasFlag("color=true") ||
+      hasFlag("color=always")
+    ? 1
+    : 0;
+  }
+
+  if (forceColor === 0) {
+		return 0;
+	}
+
+	if (sniffFlags) {
+		if (hasFlag("color=16m") ||
+			hasFlag("color=full") ||
+			hasFlag("color=truecolor")) {
+			return 3;
+		}
+
+		if (hasFlag("color=256")) {
+			return 2;
+		}
+	}
+
+  const level = $storm.config.TF_BUILD || $storm.config.AGENT_NAME
+    ? 1
+    : stream &&
+        !(streamIsTTY || (stream && stream.isTTY)) &&
+        forceColor === undefined
+      ? 0
+      : $storm.config.TERM === "dumb"
+        ? forceColor || 0
+        : isWindows
+          ? Number(os.release().split(".")[0]) >= 10 &&
+            Number(os.release().split(".")[2]) >= 10_586
+            ? Number(os.release().split(".")[2]) >= 14_931
+              ? 3
+              : 2
+            : 1
+          : $storm.config.CI
+            ? $storm.config.GITHUB_ACTIONS || $storm.config.GITEA_ACTIONS || $storm.config.CIRCLECI
+              ? 3
+              : $storm.config.TRAVIS ||
+                  $storm.config.APPVEYOR ||
+                  $storm.config.GITLAB_CI ||
+                  $storm.config.BUILDKITE ||
+                  $storm.config.DRONE ||
+                  $storm.config.CI_NAME === "codeship"
+                ? 1
+                : forceColor || 0
+            : $storm.config.TEAMCITY_VERSION
+              ? /^(?:9\.0*[1-9]\d*\.|\d{2,}\.)/.test($storm.config.TEAMCITY_VERSION as string)
+                ? 1
+                : 0
+              : $storm.config.COLORTERM === "truecolor" ||
+                  $storm.config.TERM === "xterm-kitty"
+                ? 3
+                : $storm.config.TERM_PROGRAM
+                  ? $storm.config.TERM_PROGRAM === "iTerm.app"
+                    ? Number.parseInt(
+                        ($storm.config.TERM_PROGRAM_VERSION || "").split(".")[0] as string,
+                        10
+                      ) >= 3
+                      ? 3
+                      : 2
+                    : $storm.config.TERM_PROGRAM === "Apple_Terminal"
+                      ? 2
+                      : 0
+                  : /-256(?:color)?$/i.test($storm.config.TERM as string)
+                    ? 2
+                    : /^screen|^xterm|^vt100|^vt220|^rxvt|color|ansi|cygwin|linux/i.test(
+                          $storm.config.TERM as string
+                        )
+                      ? 1
+                      : Boolean($storm.config.COLORTERM as string);
+
+	return typeof level === "boolean" || level === 0
+    ? false
+    : {
+        level,
+        hasBasic: true,
+        has256: level >= 2,
+        has16m: level >= 3,
+	    };
+}
+
+/**
+ * Generate a list of variables that describe the current application's runtime environment.
+ *
+ * @returns An object containing the runtime environment details.
+ */
+export function createEnvironment(): StormEnvInterface {
+  /** Detect if stdout.TTY is available */
+  const hasTTY = Boolean(process.stdout && process.stdout.isTTY);
+
+  /** Detect if the application is running in a CI environment */
+  const isCI = Boolean(
+    $storm.config.CI ||
+    $storm.config.RUN_ID ||
+    $storm.config.AGOLA_GIT_REF ||
+    $storm.config.AC_APPCIRCLE ||
+    $storm.config.APPVEYOR ||
+    $storm.config.CODEBUILD ||
+    $storm.config.TF_BUILD ||
+    $storm.config.bamboo_planKey ||
+    $storm.config.BITBUCKET_COMMIT ||
+    $storm.config.BITRISE_IO ||
+    $storm.config.BUDDY_WORKSPACE_ID ||
+    $storm.config.BUILDKITE ||
+    $storm.config.CIRCLECI ||
+    $storm.config.CIRRUS_CI ||
+    $storm.config.CF_BUILD_ID ||
+    $storm.config.CM_BUILD_ID ||
+    $storm.config.CI_NAME ||
+    $storm.config.DRONE ||
+    $storm.config.DSARI ||
+    $storm.config.EARTHLY_CI ||
+    $storm.config.EAS_BUILD ||
+    $storm.config.GERRIT_PROJECT ||
+    $storm.config.GITEA_ACTIONS ||
+    $storm.config.GITHUB_ACTIONS ||
+    $storm.config.GITLAB_CI ||
+    $storm.config.GOCD ||
+    $storm.config.BUILDER_OUTPUT ||
+    $storm.config.HARNESS_BUILD_ID ||
+    $storm.config.JENKINS_URL ||
+    $storm.config.LAYERCI ||
+    $storm.config.MAGNUM ||
+    $storm.config.NETLIFY ||
+    $storm.config.NEVERCODE ||
+    $storm.config.PROW_JOB_ID ||
+    $storm.config.RELEASE_BUILD_ID ||
+    $storm.config.RENDER ||
+    $storm.config.SAILCI ||
+    $storm.config.HUDSON ||
+    $storm.config.SCREWDRIVER ||
+    $storm.config.SEMAPHORE ||
+    $storm.config.SOURCEHUT ||
+    $storm.config.STRIDER ||
+    $storm.config.TASK_ID ||
+    $storm.config.RUN_ID ||
+    $storm.config.TEAMCITY_VERSION ||
+    $storm.config.TRAVIS ||
+    $storm.config.VELA ||
+    $storm.config.NOW_BUILDER ||
+    $storm.config.APPCENTER_BUILD_ID ||
+    $storm.config.CI_XCODE_PROJECT ||
+    $storm.config.XCS || false
+  );
+
+  /**
+   * Detect the \`mode\` of the current runtime environment.
+   *
+   * @remarks
+   * The \`mode\` is determined by the \`MODE\` environment variable, or falls back to the \`NEXT_PUBLIC_VERCEL_ENV\`, \`NODE_ENV\`, or defaults to \`production\`. While the value can potentially be any string, Storm Software generally only allows a value in the following list:
+   * - \`production\`
+   * - \`staging\`
+   * - \`development\`
+   */
+  const mode = String($storm.config.MODE ||
+    ${
+      context.options.plugins.config.parsed.MODE
+        ? "$storm.config.static.MODE"
+        : "$storm.config.static.NEXT_PUBLIC_VERCEL_ENV"
+    }
+  ) || String($storm.config.NODE_ENV) || "production";
+
+  /** Detect if the application is running in production mode */
+  const isProduction = ["prd", "prod", "production"].includes(
+    mode.toLowerCase()
+  );
+
+  /** Detect if the application is running in staging mode */
+  const isStaging = ["stg", "stage", "staging"].includes(
+    mode.toLowerCase()
+  );
+
+  /** Detect if the application is running in development mode */
+  const isDevelopment = ["dev", "development"].includes(
+    mode.toLowerCase()
+  );
+
+  /** Detect if the application is running in debug mode */
+  const isDebug = isDevelopment && Boolean($storm.config.DEBUG);
+
+  /** Detect if the application is running in test mode */
+  const isTest =
+    isDevelopment ||
+    isStaging ||
+    ["tst", "test", "testing"].includes(mode.toLowerCase()) ||
+    Boolean($storm.config.TEST);
+
+  /** Detect if MINIMAL environment variable is set, running in CI or test or TTY is unavailable */
+  const isMinimal =
+    Boolean($storm.config.MINIMAL) || isCI || isTest || !hasTTY;
+
+  /** Detect if the runtime platform is Linux */
+  const isLinux = /^linux/i.test(process.platform);
+
+  /** Detect if the runtime platform is macOS (darwin kernel) */
+  const isMacOS = /^darwin/i.test(process.platform);
+
+  /** Detect if the runtime platform is interactive */
+  const isInteractive = !isMinimal && Boolean(process.stdin?.isTTY && $storm.config.TERM !== "dumb");
+
+  /** Detect if Unicode characters are supported */
+  const isUnicodeSupported = Boolean(
+    !isWindows
+      ? $storm.config.TERM !== "linux"
+      : (
+          Boolean($storm.config.WT_SESSION) ||
+          Boolean($storm.config.TERMINUS_SUBLIME) ||
+          $storm.config.ConEmuTask === "{cmd::Cmder}" ||
+          $storm.config.TERM_PROGRAM === "Terminus-Sublime" ||
+          $storm.config.TERM_PROGRAM === "vscode" ||
+          $storm.config.TERM === "xterm-256color" ||
+          $storm.config.TERM === "alacritty" ||
+          $storm.config.TERM === "rxvt-unicode" ||
+          $storm.config.TERM === "rxvt-unicode-256color" ||
+          $storm.config.TERMINAL_EMULATOR === "JetBrains-JediTerm"
         )
-          .trim()
-          .replace(/\s+/g, "")
-      : "$storm.dotenv.ORGANIZATION"
-  }";
+  );
 
-/** The current application */
-export const name = "${
-    context.options.name
-      ? kebabCase(context.options.name).trim().replace(/\s+/g, "")
-      : "$storm.dotenv.APP_NAME"
-  }";
-/** The current application */
-export const version = "${
+  /**
+   * Detect if color is supported
+   */
+  const isColorSupported = Boolean(
+    !hasFlag("no-color") &&
+    !hasFlag("no-colors") &&
+    !hasFlag("color=false") &&
+    !hasFlag("color=never") &&
+    !$storm.config.NO_COLOR &&
+    (hasFlag("color") ||
+        hasFlag("colors") ||
+        hasFlag("color=true") ||
+        hasFlag("color=always") ||
+        $storm.config.FORCE_COLOR) ||
+        ((hasTTY || isWindows) && $storm.config.TERM !== "dumb")
+  );
+
+  const supportsColor = {
+    stdout: getColorSupportLevel({ isTTY: tty.isatty(1) }),
+    stderr: getColorSupportLevel({ isTTY: tty.isatty(2) }),
+  };
+
+  /**
+   * Indicates if running in Node.js or a Node.js compatible runtime.
+   *
+   * @remarks
+   * When running code in Bun and Deno with Node.js compatibility mode, \`isNode\` flag will be also \`true\`, indicating running in a Node.js compatible runtime.
+   */
+  const isNode = globalThis.process?.release?.name === "node";
+
+  /** The organization that maintains the application */
+  const organization = "${organization}";
+
+  /**
+   * The current application name
+   */
+  const name = "${name}";
+
+  /**
+   * The current application version
+   */
+  const version = "${
     context.packageJson?.version
       ? context.packageJson.version
-      : "$storm.dotenv.APP_VERSION"
+      : "$storm.config.static.APP_VERSION"
   }";
 
-const homedir = os.homedir();
-const tmpdir = os.tmpdir();
+  const homedir = os.homedir();
+  const tmpdir = os.tmpdir();
 
-/**
- * The environment paths for storing things like data, config, logs, and cache in the current runtime environment.
- *
- * @remarks
- * On macOS, directories are generally created in \`~/Library/Application Support/<name>\`.
- * On Windows, directories are generally created in \`%AppData%/<name>\`.
- * On Linux, directories are generally created in \`~/.config/<name>\` - this is determined via the [XDG Base Directory spec](https://specifications.freedesktop.org/basedir-spec/latest/).
- *
- * If the \`STORM_DATA_DIR\`, \`STORM_CONFIG_DIR\`, \`STORM_CACHE_DIR\`, \`STORM_LOG_DIR\`, or \`STORM_TEMP_DIR\` environment variables are set, they will be used instead of the default paths.
- */
-export const paths = isMacOS
-  ? {
-    data: process.env.STORM_DATA_DIR
-      ? join(process.env.STORM_DATA_DIR, name)
-      : join(homedir, "Library", "Application Support", organization, name),
-    config: process.env.STORM_CONFIG_DIR
-      ? join(process.env.STORM_CONFIG_DIR, name)
-      : join(homedir, "Library", "Preferences", organization, name),
-    cache: process.env.STORM_CACHE_DIR
-      ? join(process.env.STORM_CACHE_DIR, name)
-      : join(homedir, "Library", "Caches", organization, name),
-    log: process.env.STORM_LOG_DIR
-      ? join(process.env.STORM_LOG_DIR, name)
-      : join(homedir, "Library", "Logs", organization, name),
-    temp: process.env.STORM_TEMP_DIR
-      ? join(process.env.STORM_TEMP_DIR, name)
-      : join(tmpdir, organization, name)
-  }
-    : isWindows
-  ? {
-    data: process.env.STORM_DATA_DIR
-      ? join(process.env.STORM_DATA_DIR, name)
-      : join(process.env.LOCALAPPDATA || join(homedir, "AppData", "Local"), ${
-        context.options?.organization &&
-        (isSetString(context.options?.organization) ||
-          context.options?.organization?.name)
-          ? `"${titleCase(
-              isSetString(context.options?.organization)
-                ? context.options.organization
-                : context.options?.organization?.name
-            )
-              .trim()
-              .replace(/\s+/g, "")}"`
-          : "$storm.dotenv.ORGANIZATION"
-      }, "${titleCase(context.options.name || "storm-stack")
-        .trim()
-        .replace(/\s+/g, "")}", "Data"),
-    config: process.env.STORM_CONFIG_DIR
-      ? join(process.env.STORM_CONFIG_DIR, name)
-      : join(process.env.APPDATA || join(homedir, "AppData", "Roaming"), ${
-        context.options?.organization &&
-        (isSetString(context.options?.organization) ||
-          context.options?.organization?.name)
-          ? `"${titleCase(
-              isSetString(context.options?.organization)
-                ? context.options.organization
-                : context.options?.organization?.name
-            )
-              .trim()
-              .replace(/\s+/g, "")}"`
-          : "$storm.dotenv.ORGANIZATION"
-      }, "Config"),
-    cache: process.env.STORM_CACHE_DIR
-      ? join(process.env.STORM_CACHE_DIR, name)
-      : join(process.env.LOCALAPPDATA || join(homedir, "AppData", "Local"), "Cache", ${
-        context.options?.organization &&
-        (isSetString(context.options?.organization) ||
-          context.options?.organization?.name)
-          ? `"${titleCase(
-              isSetString(context.options?.organization)
-                ? context.options.organization
-                : context.options?.organization?.name
-            )
-              .trim()
-              .replace(/\s+/g, "")}"`
-          : "$storm.dotenv.ORGANIZATION"
-      }),
-    log: process.env.STORM_LOG_DIR
-      ? join(process.env.STORM_LOG_DIR, name)
-      : join(process.env.LOCALAPPDATA || join(homedir, "AppData", "Local"), ${
-        context.options?.organization &&
-        (isSetString(context.options?.organization) ||
-          context.options?.organization?.name)
-          ? `"${titleCase(
-              isSetString(context.options?.organization)
-                ? context.options.organization
-                : context.options?.organization?.name
-            )
-              .trim()
-              .replace(/\s+/g, "")}"`
-          : "$storm.dotenv.ORGANIZATION"
-      }, "Log"),
-    temp: process.env.STORM_TEMP_DIR
-      ? join(process.env.STORM_TEMP_DIR, name)
-      : join(tmpdir, ${
-        context.options?.organization &&
-        (isSetString(context.options?.organization) ||
-          context.options?.organization?.name)
-          ? `"${titleCase(
-              isSetString(context.options?.organization)
-                ? context.options.organization
-                : context.options?.organization?.name
-            )
-              .trim()
-              .replace(/\s+/g, "")}"`
-          : "$storm.dotenv.ORGANIZATION"
-      })
-  }
-    :
-  {
-    data: process.env.STORM_DATA_DIR
-      ? join(process.env.STORM_DATA_DIR, name)
-      : join(
-          process.env.XDG_DATA_HOME || join(homedir, ".local", "share"),
-          organization,
+  /**
+   * The environment paths for storing things like data, config, logs, and cache in the current runtime environment.
+   *
+   * @remarks
+   * On macOS, directories are generally created in \`~/Library/Application Support/<name>\`.
+   * On Windows, directories are generally created in \`%AppData%/<name>\`.
+   * On Linux, directories are generally created in \`~/.config/<name>\` - this is determined via the [XDG Base Directory spec](https://specifications.freedesktop.org/basedir-spec/latest/).
+   *
+   * If the \`DATA_DIR\`, \`CONFIG_DIR\`, \`CACHE_DIR\`, \`LOG_DIR\`, or \`TEMP_DIR\` environment variables are set, they will be used instead of the default paths.
+   */
+  const paths = isMacOS
+    ? {
+      data: $storm.config.DATA_DIR
+        ? join($storm.config.DATA_DIR!, "${titleCase(name)}")
+        : join(homedir, "Library", "Application Support", "${titleCase(organization)}", "${titleCase(name)}"),
+      config: $storm.config.CONFIG_DIR
+        ? join($storm.config.CONFIG_DIR!, "${titleCase(name)}")
+        : join(homedir, "Library", "Preferences", "${titleCase(organization)}", "${titleCase(name)}"),
+      cache: $storm.config.CACHE_DIR
+        ? join($storm.config.CACHE_DIR!, "${titleCase(name)}")
+        : join(homedir, "Library", "Caches", "${titleCase(organization)}", "${titleCase(name)}"),
+      log: $storm.config.LOG_DIR
+        ? join($storm.config.LOG_DIR!, "${titleCase(name)}")
+        : join(homedir, "Library", "Logs", "${titleCase(organization)}", "${titleCase(name)}"),
+      temp: $storm.config.TEMP_DIR
+        ? join($storm.config.TEMP_DIR!, "${titleCase(name)}")
+        : join(tmpdir, "${titleCase(organization)}", "${titleCase(name)}")
+    }
+      : isWindows
+    ? {
+      data: $storm.config.DATA_DIR
+        ? join($storm.config.DATA_DIR!, "${titleCase(name)}")
+        : join($storm.config.LOCALAPPDATA || join(homedir, "AppData", "Local"), "${titleCase(organization)}", "${titleCase(
           name
-        ),
-    config: process.env.STORM_CONFIG_DIR
-      ? join(process.env.STORM_CONFIG_DIR, name)
-      : join(
-          process.env.XDG_CONFIG_HOME || join(homedir, ".config"),
-          organization,
+        )}", "Data"),
+      config: $storm.config.CONFIG_DIR
+        ? join($storm.config.CONFIG_DIR!, "${titleCase(name)}")
+        : join($storm.config.APPDATA || join(homedir, "AppData", "Roaming"), "${titleCase(organization)}", "${titleCase(
           name
-        ),
-    cache: process.env.STORM_CACHE_DIR
-      ? join(process.env.STORM_CACHE_DIR, name)
-      : join(
-          process.env.XDG_CACHE_HOME || join(homedir, ".cache"),
-          organization,
+        )}", "Config"),
+      cache: $storm.config.CACHE_DIR
+        ? join($storm.config.CACHE_DIR!, "${titleCase(name)}")
+        : join($storm.config.LOCALAPPDATA || join(homedir, "AppData", "Local"), "Cache", "${titleCase(organization)}", "${titleCase(
           name
-        ),
-    log: join(
-      process.env.XDG_STATE_HOME || join(homedir, ".local", "state"),
-      organization,
-      name
-    ),
-    temp: process.env.STORM_TEMP_DIR
-      ? join(process.env.STORM_TEMP_DIR, name)
-      : (process.env.DEVENV_RUNTIME || process.env.XDG_RUNTIME_DIR
-        ? join(
-            (process.env.DEVENV_RUNTIME || process.env.XDG_RUNTIME_DIR)!,
-            organization,
-            name
-          )
-        : join(tmpdir, basename(homedir), organization, name))
+        )}"),
+      log: $storm.config.LOG_DIR
+        ? join($storm.config.LOG_DIR!, "${titleCase(name)}")
+        : join($storm.config.LOCALAPPDATA || join(homedir, "AppData", "Local"), "${titleCase(organization)}", "${titleCase(
+          name
+        )}", "Log"),
+      temp: $storm.config.TEMP_DIR
+        ? join($storm.config.TEMP_DIR!, "${titleCase(name)}")
+        : join(tmpdir, "${titleCase(organization)}", "${titleCase(name)}")
+    }
+      :
+    {
+      data: $storm.config.DATA_DIR
+        ? join($storm.config.DATA_DIR!, "${kebabCase(name)}")
+        : join(
+            $storm.config.XDG_DATA_HOME || join(homedir, ".local", "share"),
+            "${kebabCase(organization)}",
+            "${kebabCase(name)}"
+          ),
+      config: $storm.config.CONFIG_DIR
+        ? join($storm.config.CONFIG_DIR!, "${kebabCase(name)}")
+        : join(
+            $storm.config.XDG_CONFIG_HOME || join(homedir, ".config"),
+            "${kebabCase(organization)}",
+            "${kebabCase(name)}"
+          ),
+      cache: $storm.config.CACHE_DIR
+        ? join($storm.config.CACHE_DIR!, "${kebabCase(name)}")
+        : join($storm.config.XDG_CACHE_HOME || join(homedir, ".cache"), "${kebabCase(organization)}", "${kebabCase(
+          name
+        )}"),
+      log: $storm.config.LOG_DIR
+        ? join($storm.config.LOG_DIR!, "${kebabCase(name)}")
+        : join($storm.config.XDG_STATE_HOME || join(homedir, ".local", "state"), "${kebabCase(organization)}", "${kebabCase(
+          name
+        )}"),
+      temp: $storm.config.TEMP_DIR
+        ? join($storm.config.TEMP_DIR!, "${kebabCase(name)}")
+        : ($storm.config.DEVENV_RUNTIME || $storm.config.XDG_RUNTIME_DIR
+            ? join(($storm.config.DEVENV_RUNTIME || $storm.config.XDG_RUNTIME_DIR)!, "${kebabCase(organization)}", "${kebabCase(
+              name
+            )}")
+            : join(tmpdir, basename(homedir), "${kebabCase(organization)}", "${kebabCase(name)}"))
   } as StormEnvPaths;
 
-/** The static build information collection */
-export const build = {
-  packageName: "${context.packageJson?.name || context.options.name}",
-  version,
-  organization,
-  buildId: $storm.dotenv.BUILD_ID!,
-  timestamp: $storm.dotenv.BUILD_TIMESTAMP!,
-  releaseId: $storm.dotenv.RELEASE_ID!,
-  releaseTag: $storm.dotenv.RELEASE_TAG!,
-  mode,
-  environment: $storm.dotenv.ENVIRONMENT!,
-  platform: ${context.options.plugins.dotenv.values.PLATFORM ? `$storm.dotenv.PLATFORM` : "node"} as StormBuildInfo["platform"],
-  isProduction,
-  isStaging,
-  isDevelopment
-} as StormBuildInfo;
-
-/** The dynamic runtime information collection */
-export const runtime = {
-  isTest,
-  isDebug,
-  isNode,
-  hasTTY,
-  isWindows,
-  isLinux,
-  isMacOS,
-  isCI,
-  isInteractive,
-  isMinimal,
-  isColorSupported,
-  isUnicodeSupported,
-  isServer: isNode || build.platform === "node",
-  defaultLocale: $storm.dotenv.DEFAULT_LOCALE,
-  defaultTimezone: $storm.dotenv.DEFAULT_TIMEZONE,
-} as StormRuntimeInfo;
+  return {
+    hasTTY,
+    isCI,
+    mode: isDevelopment ? "development" : isStaging ? "staging" : "production",
+    environment: "${context.options.environment}",
+    isProduction,
+    isStaging,
+    isDevelopment,
+    isDebug,
+    isTest,
+    isMinimal,
+    isWindows,
+    isLinux,
+    isMacOS,
+    isNode,
+    isServer: isNode || "${context.options.platform}" === "node",
+    isInteractive,
+    isUnicodeSupported,
+    isColorSupported,
+    supportsColor,
+    organization,
+    name,
+    packageName: "${context.packageJson?.name || name}",
+    version,
+    buildId: "${context.meta.buildId}",
+    timestamp: ${context.meta.timestamp},
+    releaseId: "${context.meta.releaseId}",
+    releaseTag: \`${name}@\${version}\`,
+    defaultLocale: $storm.config.DEFAULT_LOCALE!,
+    defaultTimezone: $storm.config.DEFAULT_TIMEZONE!,
+    platform: ($storm.config.PLATFORM || "${context.options.platform}") as StormBuildInfo["platform"],
+    paths
+  };
+}
 
 `;
 }
-
-// export const stormVariablesNamingStrategy = new class extends NamingStrategy {
-//   public constructor() {
-//       super("storm-variables");
-//   }
-
-//   public override getPropertyName(type: TypeProperty | TypePropertySignature, forSerializer: string): string | undefined {
-//     const name = super.getPropertyName(type, forSerializer);
-//     if (!name) {
-//       return name;
-//     }
-
-//     return name.replace(/^(${context.dotenv.prefix
-//       .map(prefix => `${prefix}_`)
-//       .join("|")})/g, "").toUpperCase();
-//   }
-// };
-
-// let configFile = {} as Record<string, any>;
-// if (existsSync(join(paths.config, "config.json"))) {
-//   configFile = JSON.parse(await readFile(join(paths.config, "config.json"), "utf8") || "{}");
-// }
-// if (existsSync(join(paths.config.replace(new RegExp(\`/\${name}$\`), ""), "config.json"))) {
-//   configFile = deserialize<StormConfig>(
-//     {
-//       ...JSON.parse(
-//         await readFile(join(paths.config.replace(new RegExp(\`/\${name}$\`), ""), "config.json"), "utf8") || "{}"
-//       ),
-//       ...configFile
-//     },
-//     undefined,
-//     serializer,
-//     stormVariablesNamingStrategy
-//   );
-// }
-
-// export const config = new Proxy<StormConfig>(
-//   deserialize<StormConfig>(
-//     process.env,
-//     undefined,
-//     serializer,
-//     stormVariablesNamingStrategy
-//   ), {
-//   get(target, prop, receiver) {
-//     return target[prop as keyof StormConfig] ?? configFile[prop as keyof StormConfig];
-//   }
-// });

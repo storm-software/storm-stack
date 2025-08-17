@@ -53,10 +53,13 @@ export async function resolveType<TResult = any>(
           sourcemap: false,
           splitting: false,
           treeShaking: false
+        },
+        compiler: {
+          reflectionLevel: "verbose"
         }
       },
       options
-    )
+    ) as BundleOptions
   );
   if (result.errors.length > 0) {
     throw new Error(
@@ -81,8 +84,6 @@ export async function resolveType<TResult = any>(
 
   const resolvedTypes = await Promise.all(
     result.outputFiles.map(async outputFile => {
-      // await context.vfs.writeFile(outputFile.path, outputFile.text);
-
       const resolved = (await context.resolver.evalModule(outputFile.text, {
         filename: outputFile.path,
         forceTranspile: true

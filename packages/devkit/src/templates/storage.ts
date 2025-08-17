@@ -18,6 +18,8 @@
 
 import { getFileHeader } from "@storm-stack/core/lib/utilities/file-header";
 import type { Context } from "@storm-stack/core/types/context";
+import { camelCase } from "@stryke/string-format/camel-case";
+import { pascalCase } from "@stryke/string-format/pascal-case";
 
 /**
  * The storage module provides a unified storage interface for the Storm Stack runtime.
@@ -35,18 +37,45 @@ export function StorageModule(context: Context) {
 
 ${getFileHeader()}
 
-import { createStorage } from "unstorage";
+import { createStorage as createUnstorage } from "unstorage";
+import { StormStorageInterface } from "@storm-stack/types/storage";
 ${context.runtime.storage
-  .map(storage => `import ${storage.name} from "storm:${storage.fileName}";`)
+  .map(
+    storage =>
+      `import create${pascalCase(storage.name)}Adapter from "storm:${storage.fileName}";`
+  )
   .filter(Boolean)
   .join("\n")}
 
-export const storage = createStorage();
 
-${context.runtime.storage
-  .map(storage => {
-    return `storage.mount("${storage.namespace}", ${storage.name});`;
-  })
-  .join("\n")}
+/**
+ * Creates a new storage instance.
+ *
+ * @remarks
+ * This function initializes the storage with all configured adapters.
+ *
+ * @returns The {@link StormStorageInterface} storage instance with each storage adapter loaded into a slice of it's total state.
+ */
+export function createStorage(): StormStorageInterface {
+  const storage = createUnstorage() as StormStorageInterface;
+
+  ${context.runtime.storage
+    .map(storage => {
+      return `
+  // Initialize the ${storage.namespace} storage adapter
+  const ${camelCase(storage.name)}Adapter = create${pascalCase(storage.name)}Adapter();
+  storage.mount("${storage.namespace}", ${camelCase(storage.name)}Adapter);
+`;
+    })
+    .join("\n")}
+
+
+  storage[Symbol.asyncDispose] = async () => {
+    await storage.dispose();
+  };
+
+  return storage;
+}
+
 `;
 }

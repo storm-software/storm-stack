@@ -22,10 +22,6 @@ import type { ParseResult, ParserOptions } from "@babel/parser";
 import { parse } from "@babel/parser";
 import type * as t from "@babel/types";
 
-export type ParseAstOptions = ParserOptions & {
-  code: string;
-};
-
 /**
  * Parse the given code into an AST.
  *
@@ -34,8 +30,8 @@ export type ParseAstOptions = ParserOptions & {
  * @returns The parsed AST.
  */
 export function parseAst(
-  code,
-  opts: Omit<ParseAstOptions, "code"> = {}
+  code: string,
+  opts: ParserOptions = {}
 ): ParseResult<t.File> {
   return parse(code, {
     plugins: ["typescript"],
@@ -51,8 +47,9 @@ if ("default" in generate) {
   generate = generate.default as typeof generate;
 }
 
-type GenerateFromAstOptions = GeneratorOptions &
+export type GenerateFromAstOptions = GeneratorOptions &
   Required<Pick<GeneratorOptions, "sourceFileName" | "filename">>;
+
 export function generateFromAst(
   ast: t.Node,
   opts?: GenerateFromAstOptions

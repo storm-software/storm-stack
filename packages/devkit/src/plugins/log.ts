@@ -21,7 +21,7 @@ import { LogLevelLabel } from "@storm-software/config-tools/types";
 import { Plugin } from "@storm-stack/core/base/plugin";
 import type { Context, EngineHooks } from "@storm-stack/core/types";
 import {
-  PluginBaseConfig,
+  PluginBaseOptions,
   PluginOptions
 } from "@storm-stack/core/types/plugin";
 import type { LogLevel } from "@storm-stack/types/shared/log";
@@ -30,7 +30,7 @@ import { camelCase } from "@stryke/string-format/camel-case";
 import { kebabCase } from "@stryke/string-format/kebab-case";
 import type { MaybePromise } from "@stryke/types/base";
 
-export interface LogPluginConfig extends PluginBaseConfig {
+export interface LogPluginOptions extends PluginBaseOptions {
   logLevel?: LogLevel & PrimaryKey;
   namespace?: string & PrimaryKey;
 }
@@ -42,8 +42,9 @@ export interface LogPluginConfig extends PluginBaseConfig {
  * This class provides the foundation for creating logging plugins in Storm Stack. It handles the initialization of the plugin's context and prepares the runtime for logging adapters. Derived classes must implement the `writeAdapter` method to define how the logging adapter should be.
  */
 export default abstract class LogPlugin<
-  TConfig extends LogPluginConfig = LogPluginConfig
-> extends Plugin<TConfig> {
+  TOptions extends LogPluginOptions = LogPluginOptions,
+  TContext extends Context = Context
+> extends Plugin<TOptions, TContext> {
   /**
    * A list of primary keys for the plugin's options.
    *
@@ -51,21 +52,10 @@ export default abstract class LogPlugin<
    * This is used to identify when two instances of the plugin are the same and can be de-duplicated.
    */
   protected override get primaryKeyFields(): string[] {
-    return ["logLevel", "namespace"];
+    return ["namespace", "logLevel"];
   }
 
-  protected get logName() {
-    return `${this.name.replace(/^log-/, "")}${
-      this.options.namespace
-        ? `-${this.options.namespace
-            .replaceAll(".", "-")
-            .replaceAll(":", "-")
-            .replaceAll(" ", "-")}`
-        : ""
-    }-${this.options.logLevel}`;
-  }
-
-  public constructor(options: PluginOptions<TConfig>) {
+  public constructor(options: PluginOptions<TOptions>) {
     super(options);
     this.options.logLevel ??= "info";
   }
@@ -75,7 +65,7 @@ export default abstract class LogPlugin<
    *
    * @param hooks - The engine hooks to add the plugin's hooks to.
    */
-  public override addHooks(hooks: EngineHooks) {
+  public override addHooks(hooks: EngineHooks<TContext>) {
     super.addHooks(hooks);
 
     hooks.addHooks({
@@ -89,39 +79,46 @@ export default abstract class LogPlugin<
    *
    * @param context - The context to use
    */
-  protected abstract writeAdapter(context: Context): MaybePromise<string>;
+  protected abstract writeAdapter(context: TContext): MaybePromise<string>;
 
-  async #prepareRuntime(context: Context) {
+  async #prepareRuntime(context: TContext) {
     this.log(LogLevelLabel.TRACE, `Prepare the Storm Stack logging project.`);
 
     if (context.options.projectType === "application") {
       if (!this.options.logLevel) {
         throw new Error(
-          `The namespace for the ${this.name} plugin is not defined. Please set the namespace option in the plugin configuration.`
+          `The namespace for the ${this.identifier} plugin is not defined. Please set the namespace option in the plugin configuration.`
         );
       }
 
       await context.vfs.writeRuntimeFile(
-        `log/${kebabCase(this.logName)}`,
-        joinPaths(context.runtimePath, "log", `${kebabCase(this.logName)}.ts`),
+        `log/${kebabCase(this.identifier).replace(/^log-/g, "")}`,
+        joinPaths(
+          context.runtimePath,
+          "log",
+          `${kebabCase(this.identifier).replace(/^log-/g, "")}.ts`
+        ),
         await Promise.resolve(this.writeAdapter(context))
       );
     }
   }
 
-  async #initComplete(context: Context) {
+  async #initComplete(context: TContext) {
     this.log(
       LogLevelLabel.TRACE,
-      `Loading the ${this.name} plugin into the context.`
+      `Loading the ${this.identifier} plugin into the context.`
     );
 
     if (context.options.projectType === "application") {
-      const name = camelCase(this.logName);
+      const name = camelCase(this.identifier);
       if (!context.runtime.logs.some(log => log.name === name)) {
         context.runtime.logs.push({
           name,
-          logLevel: this.options.logLevel || "info",
-          fileName: joinPaths("log", kebabCase(this.logName))
+          logLevel: this.options.logLevel ?? "info",
+          fileName: joinPaths(
+            "log",
+            kebabCase(this.identifier).replace(/^log-/g, "")
+          )
         });
       }
     }

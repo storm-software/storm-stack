@@ -19,13 +19,10 @@
 import { LogLevelLabel } from "@storm-software/config-tools/types";
 import { esbuild } from "@storm-stack/core/lib/esbuild/build";
 import { unbuild } from "@storm-stack/core/lib/unbuild/build";
-import type { Context } from "@storm-stack/core/types";
 import { LogFn } from "@storm-stack/core/types/config";
 import { chmodX } from "@stryke/fs/chmod-x";
-import { findFileExtension } from "@stryke/path/file-path-fns";
 import { joinPaths } from "@stryke/path/join-paths";
-import { replacePath } from "@stryke/path/replace";
-import type { Plugin as ESBuildPlugin } from "esbuild";
+import { CLIPluginContext } from "../types/config";
 
 /**
  * ink attempts to import react-devtools-core in an ESM-unfriendly way:
@@ -34,21 +31,21 @@ import type { Plugin as ESBuildPlugin } from "esbuild";
  *
  * to make this work, we have to strip the import out of the build.
  */
-const ignoreReactDevToolsPlugin: ESBuildPlugin = {
-  name: "ignore-react-devtools",
-  setup(build) {
-    // When an import for 'react-devtools-core' is encountered,
-    // return an empty module.
-    build.onResolve({ filter: /^react-devtools-core$/ }, args => {
-      return { path: args.path, namespace: "ignore-devtools" };
-    });
-    build.onLoad({ filter: /.*/, namespace: "ignore-devtools" }, () => {
-      return { contents: "", loader: "js" };
-    });
-  }
-};
+// const IgnoreReactDevToolsPlugin: ESBuildPlugin = {
+//   name: "ignore-react-devtools",
+//   setup(build) {
+//     // When an import for 'react-devtools-core' is encountered,
+//     // return an empty module.
+//     build.onResolve({ filter: /^react-devtools-core$/ }, args => {
+//       return { path: args.path, namespace: "ignore-devtools" };
+//     });
+//     build.onLoad({ filter: /.*/, namespace: "ignore-devtools" }, () => {
+//       return { contents: "", loader: "js" };
+//     });
+//   }
+// };
 
-export async function buildApplication(log: LogFn, context: Context) {
+export async function buildApplication(log: LogFn, context: CLIPluginContext) {
   log(LogLevelLabel.TRACE, "Building the CLI application.");
 
   await esbuild(context, {
@@ -56,34 +53,27 @@ export async function buildApplication(log: LogFn, context: Context) {
       .filter(entry => entry.input.file === context.options.entry)
       .reduce(
         (ret, entry) => {
-          ret[
-            entry.output ||
-              replacePath(
-                entry.input.file,
-                context.projectJson?.sourceRoot || context.options.projectRoot
-              ).replace(findFileExtension(entry.input.file) || "", "") ||
-              replacePath(
-                entry.file,
-                context.projectJson?.sourceRoot || context.options.projectRoot
-              ).replace(findFileExtension(entry.file) || "", "")
-          ] = entry.file;
+          ret[entry.output] = entry.file;
 
           return ret;
         },
         {} as Record<string, string>
       ),
-    distDir: "dist",
-    esbuildPlugins: [ignoreReactDevToolsPlugin]
+    platform: "node",
+    skipNodeModulesBundle: true
   });
 }
 
-export async function buildLibrary(log: LogFn, context: Context) {
+export async function buildLibrary(log: LogFn, context: CLIPluginContext) {
   log(LogLevelLabel.TRACE, "Building the CLI library project.");
 
   await unbuild(context);
 }
 
-export async function permissionExecutable(log: LogFn, context: Context) {
+export async function permissionExecutable(
+  log: LogFn,
+  context: CLIPluginContext
+) {
   if (context.options.projectType === "application") {
     const filtered = context.entry.filter(
       entry => entry.input.file === context.options.entry
@@ -97,7 +87,9 @@ export async function permissionExecutable(log: LogFn, context: Context) {
       context.options.workspaceRoot,
       context.options.output.outputPath || "dist",
       "dist",
-      `${filtered[0]?.output}.mjs`
+      context.options.esbuild.format === "esm"
+        ? `${filtered[0]?.output}.mjs`
+        : `${filtered[0]?.output}.js`
     );
 
     log(

@@ -16,8 +16,8 @@
 
  ------------------------------------------------------------------- */
 
-import { getColorConfig as getColorConfigBase } from "@storm-software/config-tools/utilities/colors";
-import { ColorConfig } from "@storm-software/config/types";
+import { getColors as getColorsBase } from "@storm-software/config-tools/utilities/colors";
+import { Colors } from "@storm-software/config/types";
 import { CLIPluginContext } from "../types/config";
 
 /**
@@ -29,6 +29,6 @@ import { CLIPluginContext } from "../types/config";
  * @remarks
  * This function retrieves the color configuration from the plugin options, allowing for customization of colors in the CLI application.
  */
-export function getColorConfig(context: CLIPluginContext): ColorConfig {
-  return getColorConfigBase(context.options);
+export function getColors(context: CLIPluginContext): Colors {
+  return getColorsBase(context.options);
 }

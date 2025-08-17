@@ -16,10 +16,8 @@
 
  ------------------------------------------------------------------- */
 
-import type { StormBaseConfig } from "../shared/dotenv.js";
 import type { StormErrorInterface } from "../shared/error.js";
 import type { StormPayloadInterface } from "../shared/payload.js";
-import type { StormContext } from "./context.js";
 
 export type ValidationDetailType =
   | "help"
@@ -43,37 +41,40 @@ export type ValidationDetail =
 
 type MaybePromise<T> = T | Promise<T>;
 
-export type SetupFunction = () => MaybePromise<
-  StormErrorInterface | void | null | undefined
->;
+// export type SetupFunction = () => MaybePromise<
+//   StormErrorInterface | void | null | undefined
+// >;
 
-export type ValidatorFunction<
-  TPayload extends StormPayloadInterface,
-  TContext extends StormContext<StormBaseConfig, any, TPayload>
+// export type ValidatorFunction<
+//   TPayload extends StormPayloadInterface,
+//   TContext extends StormContext
+// > = (
+//   context: TContext
+// ) => MaybePromise<StormErrorInterface | void | null | undefined>;
+
+// export type PreprocessFunction<
+//   TPayload extends StormPayloadInterface,
+//   TContext extends StormContext
+// > = (
+//   context: TContext
+// ) => MaybePromise<StormErrorInterface | void | null | undefined>;
+
+export type HandlerFunction<
+  TInput extends Record<string, any> = Record<string, any>,
+  TOutput = any
 > = (
-  context: TContext
-) => MaybePromise<StormErrorInterface | void | null | undefined>;
-
-export type PreprocessFunction<
-  TPayload extends StormPayloadInterface,
-  TContext extends StormContext<StormBaseConfig, any, TPayload>
-> = (
-  context: TContext
-) => MaybePromise<StormErrorInterface | void | null | undefined>;
-
-export type HandlerFunction<TInput = any, TOutput = any> = (
   payload: StormPayloadInterface<TInput>
 ) => MaybePromise<TOutput | StormErrorInterface>;
 
-export type PostprocessFunction<
-  TPayload extends StormPayloadInterface,
-  TContext extends StormContext<StormBaseConfig, any, TPayload>,
-  TOutput
-> = (
-  context: TContext,
-  output: TOutput
-) => MaybePromise<StormErrorInterface | void | null | undefined>;
+// export type PostprocessFunction<
+//   TPayload extends StormPayloadInterface,
+//   TContext extends StormContext,
+//   TOutput
+// > = (
+//   context: TContext,
+//   output: TOutput
+// ) => MaybePromise<StormErrorInterface | void | null | undefined>;
 
-export type TeardownFunction = () => MaybePromise<
-  StormErrorInterface | void | null | undefined
->;
+// export type TeardownFunction = () => MaybePromise<
+//   StormErrorInterface | void | null | undefined
+// >;

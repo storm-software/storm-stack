@@ -39,8 +39,8 @@ const defaultOptions: TsupOptions = {
   }
 };
 
-export const getTsupConfig = (options: TsupOptions | TsupOptions[]) =>
-  Array.isArray(options)
+export function getTsupConfig(options: TsupOptions | TsupOptions[]) {
+  return Array.isArray(options)
     ? defineConfig(
         options.map(option => ({
           ...defaultOptions,
@@ -59,3 +59,4 @@ export const getTsupConfig = (options: TsupOptions | TsupOptions[]) =>
         },
         ...options
       });
+}

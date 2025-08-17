@@ -20,48 +20,7 @@ import { MaybePromise } from "@stryke/types/base";
 import MagicString, { SourceMap } from "magic-string";
 import { ResolvedBabelOptions } from "./build";
 import { Context } from "./context";
-
-export interface TransformOptions {
-  /**
-   * Skip all transformations.
-   *
-   * @defaultValue false
-   */
-  skipAllTransforms?: boolean;
-
-  /**
-   * Skip the \`$storm\` context transformation.
-   *
-   * @defaultValue false
-   */
-  skipTransformContext?: boolean;
-
-  /**
-   * Skip the .env environment variable transformation.
-   *
-   * @defaultValue false
-   */
-  skipTransformConfig?: boolean;
-
-  /**
-   * Skip the error codes formatting transformation.
-   *
-   * @defaultValue false
-   */
-  skipTransformErrors?: boolean;
-
-  /**
-   * Skip the unimport transformation.
-   *
-   * @defaultValue false
-   */
-  skipTransformUnimport?: boolean;
-
-  /**
-   * Override the Babel options for the transformation.
-   */
-  babel?: Partial<ResolvedBabelOptions>;
-}
+import { ReflectionLevel, ReflectionMode } from "./tsconfig";
 
 /**
  * The result of the compiler
@@ -98,7 +57,30 @@ export interface SourceFile {
   result?: CompilerResult;
 }
 
-export interface CompilerOptions {
+export interface TranspilerOptions {
+  /**
+   * The reflection mode to use for the transformation.
+   *
+   * @defaultValue "default"
+   */
+  reflectionMode?: ReflectionMode;
+
+  /**
+   * The reflection level to use for the transformation.
+   *
+   * @defaultValue "minimal"
+   */
+  reflectionLevel?: ReflectionLevel;
+}
+
+export interface CompilerOptions extends TranspilerOptions {
+  /**
+   * Skip the cache.
+   *
+   * @defaultValue false
+   */
+  skipCache?: boolean;
+
   /**
    * Transform the source file before other transformations.
    *
@@ -130,17 +112,25 @@ export interface CompilerOptions {
    * @returns Whether the source file should be compiled
    */
   filter?: (sourceFile: SourceFile) => boolean;
-}
 
-export type TranspileOptions = TransformOptions & CompilerOptions;
-
-export interface CompileOptions extends TranspileOptions {
   /**
-   * Skip the cache.
+   * Skip all transformations.
    *
    * @defaultValue false
    */
-  skipCache?: boolean;
+  skipAllTransforms?: boolean;
+
+  /**
+   * Skip the unimport transformation.
+   *
+   * @defaultValue false
+   */
+  skipTransformUnimport?: boolean;
+
+  /**
+   * Override the Babel options for the transformation.
+   */
+  babel?: Partial<ResolvedBabelOptions>;
 }
 
 export interface CompilerInterface {
@@ -152,22 +142,6 @@ export interface CompilerInterface {
    * @returns The result of the compiler.
    */
   getResult: (sourceFile: SourceFile, transpiled?: string) => CompilerResult;
-
-  /**
-   * Transform the module.
-   *
-   * @param context - The context object
-   * @param id - The name of the file to transpile
-   * @param code - The source code to transpile
-   * @param options - The transpile options
-   * @returns The transpiled module.
-   */
-  transform: (
-    context: Context,
-    id: string,
-    code: string | MagicString,
-    options?: TranspileOptions
-  ) => Promise<string>;
 
   /**
    * Transpile the module.
@@ -182,7 +156,23 @@ export interface CompilerInterface {
     context: Context,
     id: string,
     code: string | MagicString,
-    options?: CompileOptions
+    options?: TranspilerOptions
+  ) => Promise<string>;
+
+  /**
+   * Transform the module.
+   *
+   * @param context - The context object
+   * @param id - The name of the file to transpile
+   * @param code - The source code to transpile
+   * @param options - The transpile options
+   * @returns The transpiled module.
+   */
+  transform: (
+    context: Context,
+    id: string,
+    code: string | MagicString,
+    options?: CompilerOptions
   ) => Promise<string>;
 
   /**
@@ -198,6 +188,6 @@ export interface CompilerInterface {
     context: Context,
     id: string,
     code: string | MagicString,
-    options?: CompileOptions
+    options?: CompilerOptions
   ) => Promise<string>;
 }

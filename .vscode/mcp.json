@@ -1,9 +1,5 @@
 {
   "servers": {
-    "nx-mcp": {
-      "type": "sse",
-      "url": "http://localhost:9053/sse"
-    },
     "github-mcp": {
       "type": "sse",
       "url": "https://api.github.com/sse"

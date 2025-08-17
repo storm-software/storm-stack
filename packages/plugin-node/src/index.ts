@@ -18,41 +18,44 @@
 
 import { LogLevelLabel } from "@storm-software/config-tools/types";
 import { Plugin } from "@storm-stack/core/base/plugin";
+import { addPluginFilter } from "@storm-stack/core/lib/babel/helpers";
 import type { EngineHooks } from "@storm-stack/core/types/build";
+import { SourceFile } from "@storm-stack/core/types/compiler";
 import { PluginOptions } from "@storm-stack/core/types/plugin";
 import { IdModule } from "@storm-stack/devkit/templates/id";
 import { LogModule } from "@storm-stack/devkit/templates/log";
 import { PayloadModule } from "@storm-stack/devkit/templates/payload";
 import { StorageModule } from "@storm-stack/devkit/templates/storage";
+import { readConfigTypeReflection } from "@storm-stack/plugin-config/helpers/persistence";
 import { joinPaths } from "@stryke/path/join-paths";
 import BabelPlugin from "./babel/plugin";
-import { AppModule } from "./templates/app";
 import { ContextModule } from "./templates/context";
 import { EnvModule } from "./templates/env";
 import { EventModule } from "./templates/event";
 import { ResultModule } from "./templates/result";
 import {
-  NodePluginConfig,
   NodePluginContext,
-  NodePluginContextOptions
+  NodePluginContextOptions,
+  NodePluginOptions
 } from "./types";
 
 /**
  * NodeJs Storm Stack plugin.
  */
 export default class NodePlugin<
-  TConfig extends NodePluginConfig = NodePluginConfig
-> extends Plugin<TConfig> {
+  TOptions extends NodePluginOptions = NodePluginOptions,
+  TContext extends NodePluginContext = NodePluginContext
+> extends Plugin<TOptions, TContext> {
   /**
    * The constructor for the plugin
    *
    * @param options - The configuration options for the plugin
    */
-  public constructor(options: PluginOptions<TConfig>) {
+  public constructor(options: PluginOptions<TOptions>) {
     super(options);
 
     this.dependencies = [
-      ["@storm-stack/plugin-dotenv", this.options.dotenv],
+      ["@storm-stack/plugin-config", this.options.config],
       ["@storm-stack/plugin-error", this.options.error],
       ["@storm-stack/plugin-log-console", this.options.logs?.console]
     ];
@@ -65,12 +68,13 @@ export default class NodePlugin<
    *
    * @param hooks - The hooks to add to the engine.
    */
-  public override addHooks(hooks: EngineHooks) {
+  public override addHooks(hooks: EngineHooks<TContext>) {
     super.addHooks(hooks);
 
     hooks.addHooks({
       "init:options": this.initOptions.bind(this),
-      "prepare:runtime": this.prepareRuntime.bind(this)
+      "prepare:runtime": this.prepareRuntime.bind(this),
+      "prepare:types": this.prepareTypes.bind(this)
     });
   }
 
@@ -82,11 +86,13 @@ export default class NodePlugin<
    *
    * @param context - The context of the current build.
    */
-  protected initOptions(context: NodePluginContext) {
+  protected initOptions(context: TContext) {
     this.log(
       LogLevelLabel.TRACE,
       `Initializing the NodeJs plugin options for the Storm Stack project.`
     );
+
+    this.packageDeps["@stryke/string-format"] = "dependency";
 
     context.options.platform = "node";
     context.options.esbuild.target = "node22";
@@ -94,6 +100,12 @@ export default class NodePlugin<
     context.options.esbuild.override ??= {};
 
     context.options.babel.plugins ??= [];
+    context.options.babel.plugins = addPluginFilter(
+      context,
+      context.options.babel.plugins,
+      sourceFile => !context.vfs.isMatchingRuntimeId("context", sourceFile.id),
+      "error"
+    );
     context.options.babel.plugins.push(BabelPlugin);
 
     context.options.plugins.logs ??= this.options
@@ -105,7 +117,7 @@ export default class NodePlugin<
    *
    * @param context - The context to initialize.
    */
-  protected async prepareRuntime(context: NodePluginContext) {
+  protected async prepareRuntime(context: TContext) {
     this.log(
       LogLevelLabel.TRACE,
       `Preparing the NodeJs runtime artifacts for the Storm Stack project.`
@@ -133,11 +145,6 @@ export default class NodePlugin<
         PayloadModule(context)
       ),
       context.vfs.writeRuntimeFile(
-        "app",
-        joinPaths(context.runtimePath, "app.ts"),
-        AppModule(context)
-      ),
-      context.vfs.writeRuntimeFile(
         "context",
         joinPaths(context.runtimePath, "context.ts"),
         ContextModule(context)
@@ -160,5 +167,28 @@ export default class NodePlugin<
     ];
 
     await Promise.all(promises);
+  }
+
+  /**
+   * Returns the type definition for the plugin.
+   *
+   * @returns The type definition for the plugin.
+   */
+  protected async prepareTypes(context: TContext, sourceFile: SourceFile) {
+    this.log(
+      LogLevelLabel.TRACE,
+      `Completing final preparations for the Storm Stack projects type definitions.`
+    );
+
+    const configReflection = await readConfigTypeReflection(context, "params");
+    if (!configReflection) {
+      throw new Error("Could not read config reflection.");
+    }
+
+    sourceFile.code.append(`
+
+declare const $storm: import("storm:context").StormContext;
+
+`);
   }
 }

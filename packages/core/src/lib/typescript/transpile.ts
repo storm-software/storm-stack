@@ -16,9 +16,13 @@
 
  ------------------------------------------------------------------- */
 
-import { declarationTransformer, transformer } from "@deepkit/type-compiler";
 import ts from "typescript";
+import { TranspilerOptions } from "../../types/compiler";
 import { Context } from "../../types/context";
+import {
+  createDeclarationTransformer,
+  createTransformer
+} from "../deepkit/transformer";
 
 /**
  * Transpile TypeScript code using the provided context and options.
@@ -31,8 +35,12 @@ import { Context } from "../../types/context";
 export function transpile(
   context: Context,
   id: string,
-  code: string
+  code: string,
+  options: TranspilerOptions = {}
 ): ts.TranspileOutput {
+  const transformer = createTransformer(context, options);
+  const declarationTransformer = createDeclarationTransformer(context, options);
+
   return ts.transpileModule(code, {
     compilerOptions: {
       ...context.tsconfig.options,

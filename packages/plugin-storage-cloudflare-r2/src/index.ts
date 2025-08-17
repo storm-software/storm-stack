@@ -21,13 +21,13 @@ import { LogLevelLabel } from "@storm-software/config-tools/types";
 import { getFileHeader } from "@storm-stack/core/lib/utilities/file-header";
 import type { Context, EngineHooks } from "@storm-stack/core/types";
 import type { PluginOptions } from "@storm-stack/core/types/plugin";
-import type { StoragePluginConfig } from "@storm-stack/devkit/plugins/storage";
+import type { StoragePluginOptions } from "@storm-stack/devkit/plugins/storage";
 import StoragePlugin from "@storm-stack/devkit/plugins/storage";
 import { readFile } from "@stryke/fs";
 import { existsSync, joinPaths } from "@stryke/path";
 import type { CloudflareR2Options } from "unstorage/drivers/cloudflare-r2-binding";
 
-export type StorageCloudflareR2PluginConfig = StoragePluginConfig &
+export type StorageCloudflareR2PluginConfig = StoragePluginOptions &
   Omit<CloudflareR2Options, "binding"> & {
     /**
      * The binding name for the Cloudflare R2.
@@ -69,41 +69,80 @@ export default class StorageCloudflareR2Plugin extends StoragePlugin<StorageClou
     if (this.options.binding) {
       return `${getFileHeader()}
 
+import type { StorageAdapter } from "@storm-stack/types/storage";
 import cloudflareR2BindingDriver from "unstorage/drivers/cloudflare-r2-binding";
 import { env } from "cloudflare:workers";
 
-export default cloudflareR2BindingDriver({ binding: env.${
-        this.options.binding
-      }, base: ${this.options.base || "undefined"} });
+/**
+ * Create an [Cloudflare R2](https://developers.cloudflare.com/r2/) storage adapter.
+ *
+ * @see [Cloudflare R2 Documentation](https://developers.cloudflare.com/r2/)
+ *
+ * @returns The Cloudflare R2 {@link StorageAdapter | storage adapter}.
+ */
+function createAdapter(): StorageAdapter {
+  const adapter = cloudflareR2BindingDriver({ binding: env.${
+    this.options.binding
+  }, base: ${this.options.base || "undefined"} }) as StorageAdapter;
+  adapter[Symbol.asyncDispose] = async () => {
+    if (adapter.dispose && typeof adapter.dispose === "function") {
+      await Promise.resolve(adapter.dispose());
+    }
+  };
+
+  return adapter;
+}
+
+export default createAdapter;
+
 `;
     } else {
       return `${getFileHeader()}
 
+import type { StorageAdapter } from "@storm-stack/types/storage";
 import s3Driver from "unstorage/drivers/s3";
 import { StormError } from "storm:error";
 
-const accountId = process.env.CLOUDFLARE_ACCOUNT_ID || $storm.config.CLOUDFLARE_ACCOUNT_ID;
-const accessKey = process.env.CLOUDFLARE_R2_ACCESS_KEY_ID || $storm.config.CLOUDFLARE_R2_ACCESS_KEY_ID;
-const secretAccessKey = process.env.CLOUDFLARE_R2_SECRET_ACCESS_KEY || $storm.config.CLOUDFLARE_R2_SECRET_ACCESS_KEY;
+/**
+ * Create an [Cloudflare R2](https://developers.cloudflare.com/r2/) storage adapter.
+ *
+ * @see [Cloudflare R2 Documentation](https://developers.cloudflare.com/r2/)
+ *
+ * @returns The Cloudflare R2 {@link StorageAdapter | storage adapter}.
+ */
+function createAdapter(): StorageAdapter {
+  const accountId = $storm.config.CLOUDFLARE_ACCOUNT_ID;
+  const accessKey = $storm.config.CLOUDFLARE_R2_ACCESS_KEY_ID;
+  const secretAccessKey = $storm.config.CLOUDFLARE_R2_SECRET_ACCESS_KEY;
 
-if (!accountId) {
-  throw new StormError({
-    type: "general", code: 13, params: ["Cloudflare R2 storage"]
-  });
+  if (!accountId) {
+    throw new StormError({
+      type: "general", code: 13, params: ["Cloudflare R2 storage"]
+    });
+  }
+
+  if (!accessKey && !secretAccessKey) {
+    throw new StormError({ type: "general", code: 15 });
+  }
+
+  const adapter = s3Driver({
+    accessKeyId: accessKey,
+    secretAccessKey: secretAccessKey,
+    endpoint: \`https://\${accountId}.r2.cloudflarestorage.com\`,
+    bucket: "${this.options.namespace}",
+    region: "auto",
+  }) as StorageAdapter;
+  adapter[Symbol.asyncDispose] = async () => {
+    if (adapter.dispose && typeof adapter.dispose === "function") {
+      await Promise.resolve(adapter.dispose());
+    }
+  };
+
+  return adapter;
 }
-if (!accessKey && !secretAccessKey) {
-  throw new StormError({ type: "general", code: 15 });
-}
 
-export const adapter = s3Driver({
-  accessKeyId: accessKey,
-  secretAccessKey: secretAccessKey,
-  endpoint: \`https://\${accountId}.r2.cloudflarestorage.com\`,
-  bucket: "${this.options.namespace}",
-  region: "auto",
-});
+export default createAdapter;
 
-export default adapter;
 `;
     }
   }

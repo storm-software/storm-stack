@@ -22,7 +22,7 @@ import { unbuild } from "@storm-stack/core/lib/unbuild";
 import { EngineHooks } from "@storm-stack/core/types/build";
 import { Context } from "@storm-stack/core/types/context";
 import {
-  PluginBaseConfig,
+  PluginBaseOptions,
   PluginOptions
 } from "@storm-stack/core/types/plugin";
 
@@ -33,14 +33,15 @@ import {
  * This plugin provides the functionality to build the Storm Stack library package using Unbuild. It extends the BasePlugin class and adds hooks for the build process.
  */
 export default class LibraryPlugin<
-  TConfig extends PluginBaseConfig = PluginBaseConfig
-> extends Plugin<TConfig> {
+  TOptions extends PluginBaseOptions = PluginBaseOptions,
+  TContext extends Context = Context
+> extends Plugin<TOptions, TContext> {
   /**
    * The constructor for the plugin
    *
    * @param options - The configuration options for the plugin
    */
-  public constructor(options: PluginOptions<TConfig>) {
+  public constructor(options: PluginOptions<TOptions>) {
     super(options);
   }
 
@@ -49,7 +50,7 @@ export default class LibraryPlugin<
    *
    * @param hooks - The hooks to add to the engine.
    */
-  public override addHooks(hooks: EngineHooks) {
+  public override addHooks(hooks: EngineHooks<TContext>) {
     super.addHooks(hooks);
 
     hooks.addHooks({
@@ -63,7 +64,7 @@ export default class LibraryPlugin<
    * @param context - The build context.
    * @returns A promise that resolves when the build is complete.
    */
-  async #build(context: Context) {
+  async #build(context: TContext) {
     this.log(LogLevelLabel.TRACE, `Build the Storm Stack library package.`);
 
     return unbuild(context);

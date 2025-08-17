@@ -18,10 +18,10 @@
 
 import { getFileHeader } from "@storm-stack/core/lib/utilities/file-header";
 import type { PluginOptions } from "@storm-stack/core/types/plugin";
-import type { LogPluginConfig } from "@storm-stack/devkit/plugins/log";
+import type { LogPluginOptions } from "@storm-stack/devkit/plugins/log";
 import LogPlugin from "@storm-stack/devkit/plugins/log";
 
-export type LogStoragePluginConfig = LogPluginConfig & {
+export type LogStoragePluginOptions = LogPluginOptions & {
   /**
    * Whether to use the file system storage driver.
    *
@@ -37,8 +37,8 @@ export type LogStoragePluginConfig = LogPluginConfig & {
   namespace?: string;
 };
 
-export default class LogStoragePlugin extends LogPlugin<LogStoragePluginConfig> {
-  public constructor(options: PluginOptions<LogStoragePluginConfig>) {
+export default class LogStoragePlugin extends LogPlugin<LogStoragePluginOptions> {
+  public constructor(options: PluginOptions<LogStoragePluginOptions>) {
     super(options);
 
     this.options.useFileSystem ??= true;
@@ -70,7 +70,6 @@ import {
   LogRecord
 } from "@storm-stack/types/log";
 import util from "node:util";
-import { storage } from "storm:storage";
 
 /**
  * The severity level abbreviations.
@@ -230,16 +229,26 @@ export function getTextFormatter(
  */
 const formatter: TextFormatter = getTextFormatter();
 
-const adapter: LogAdapter & AsyncDisposable = (record: LogRecord) => {
-  void storage.setItem(
-    \`${this.options.namespace}:storm-\${new Date().toISOString().replace("T", "_").replace("Z", "")}.log\`,
-    formatter(record)
-  );
-};
 
-adapter[Symbol.asyncDispose] = async () => storage.dispose();
+/**
+ * Creates a new [Unstorage](https://unstorage.dev/) logging adapter.
+ *
+ * @returns The created logging adapter.
+ */
+function createAdapter(): LogAdapter {
+  const adapter: LogAdapter & AsyncDisposable = (record: LogRecord) => {
+    void $storm.storage.setItem(
+      \`${this.options.namespace}:storm-\${new Date().toISOString().replace("T", "_").replace("Z", "")}.log\`,
+      formatter(record)
+    );
+  };
+  adapter[Symbol.asyncDispose] = async () => $storm.storage.unmount("${this.options.namespace}");
 
-export default adapter;
+  return adapter;
+}
+
+export default createAdapter;
+
 `;
   }
 }

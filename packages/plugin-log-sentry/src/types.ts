@@ -16,9 +16,18 @@
 
  ------------------------------------------------------------------- */
 
-import { StormBaseConfig } from "@storm-stack/types/dotenv";
+import { Context } from "@storm-stack/core/types/context";
+import { LogPluginOptions } from "@storm-stack/devkit/plugins/log";
+import {
+  ConfigPluginContextOptions,
+  ConfigPluginReflectionRecord
+} from "@storm-stack/plugin-config/types";
+import { StormConfigInterface } from "@storm-stack/types/config";
 
-export interface StormSentryLogConfig extends StormBaseConfig {
+/**
+ * Configuration options for the Sentry logging plugin.
+ */
+export interface StormSentryLogConfig extends StormConfigInterface {
   /**
    * The DSN for Sentry
    *
@@ -27,3 +36,23 @@ export interface StormSentryLogConfig extends StormBaseConfig {
    */
   SENTRY_DSN: string;
 }
+
+export interface LogSentryPluginOptions extends LogPluginOptions {
+  /**
+   * The Sentry DSN to use for logging.
+   *
+   * @remarks
+   * If not provided, the plugin will try to read the `SENTRY_DSN` environment variable.
+   */
+  dsn: string;
+}
+
+export interface LogSentryPluginContextOptions
+  extends ConfigPluginContextOptions {
+  sentry: LogSentryPluginOptions;
+}
+
+export type LogSentryPluginContext = Context<
+  LogSentryPluginContextOptions,
+  ConfigPluginReflectionRecord
+>;

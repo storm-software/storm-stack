@@ -21,44 +21,48 @@ import {
   BabelPluginState
 } from "@storm-stack/core/types/babel";
 import type { Context } from "@storm-stack/core/types/context";
-import { PluginBaseConfig } from "@storm-stack/core/types/plugin";
-import { LogPluginConfig } from "@storm-stack/devkit/plugins/log";
+import { PluginBaseOptions } from "@storm-stack/core/types/plugin";
+import { LogPluginOptions } from "@storm-stack/devkit/plugins/log";
+import {
+  ConfigPluginOptions,
+  ConfigPluginReflectionRecord,
+  ResolvedConfigPluginOptions
+} from "@storm-stack/plugin-config/types";
 import type {
-  DotenvPluginConfig,
-  ResolvedDotenvOptions
-} from "@storm-stack/plugin-dotenv/types";
-import type { ErrorPluginConfig } from "@storm-stack/plugin-error/types";
+  ErrorPluginOptions,
+  ResolvedErrorPluginOptions
+} from "@storm-stack/plugin-error/types";
 
-export interface NodePluginConfig extends PluginBaseConfig {
+export interface NodePluginOptions extends PluginBaseOptions {
   /**
-   * Options for the dotenv plugin.
+   * Options for the config plugin.
    */
-  dotenv?: DotenvPluginConfig;
+  config?: ConfigPluginOptions;
 
   /**
    * Options for the error plugin.
    */
-  error?: Omit<ErrorPluginConfig, "dotenv">;
+  error?: Omit<ErrorPluginOptions, "config">;
 
   /**
    * Options for the logging plugin(s).
    */
-  logs?: Record<string, LogPluginConfig> & {
-    console?: LogPluginConfig;
+  logs?: Record<string, LogPluginOptions> & {
+    console?: LogPluginOptions;
   };
 }
 
 export interface NodePluginContextOptions {
-  dotenv: ResolvedDotenvOptions;
-  error: ErrorPluginConfig;
-  logs: Record<string, LogPluginConfig> & {
-    console: LogPluginConfig;
+  config: ResolvedConfigPluginOptions;
+  error: ResolvedErrorPluginOptions;
+  logs: Record<string, LogPluginOptions> & {
+    console: LogPluginOptions;
   };
 }
 
-export type NodePluginContext = Context<NodePluginContextOptions>;
-
-export type NodeBabelPluginState = BabelPluginState<
-  BabelPluginOptions,
-  NodePluginContext
+export type NodePluginContext = Context<
+  NodePluginContextOptions,
+  ConfigPluginReflectionRecord
 >;
+
+export type NodeBabelPluginState = BabelPluginState<BabelPluginOptions>;

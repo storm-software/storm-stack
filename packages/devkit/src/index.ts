@@ -17,6 +17,7 @@
  ------------------------------------------------------------------- */
 
 export * from "./babel";
+export * from "./helpers";
 export * from "./plugins";
 export * from "./templates";
 export * from "./types";

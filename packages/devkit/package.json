@@ -82,6 +82,20 @@
         "default": "./dist/types.js"
       }
     },
+    "./helpers/*": {
+      "import": {
+        "types": "./dist/helpers/*.d.ts",
+        "default": "./dist/helpers/*.js"
+      },
+      "require": {
+        "types": "./dist/helpers/*.d.cts",
+        "default": "./dist/helpers/*.cjs"
+      },
+      "default": {
+        "types": "./dist/helpers/*.d.ts",
+        "default": "./dist/helpers/*.js"
+      }
+    },
     "./plugins": {
       "import": {
         "types": "./dist/plugins/index.d.ts",
@@ -165,6 +179,20 @@
         "types": "./dist/templates/*.d.ts",
         "default": "./dist/templates/*.js"
       }
+    },
+    "./templates/helpers/*": {
+      "import": {
+        "types": "./dist/templates/helpers/*.d.ts",
+        "default": "./dist/templates/helpers/*.js"
+      },
+      "require": {
+        "types": "./dist/templates/helpers/*.d.cts",
+        "default": "./dist/templates/helpers/*.cjs"
+      },
+      "default": {
+        "types": "./dist/templates/helpers/*.d.ts",
+        "default": "./dist/templates/helpers/*.js"
+      }
     }
   },
   "files": [
@@ -178,13 +206,22 @@
   "dependencies": {
     "@alloy-js/core": "catalog:",
     "@alloy-js/typescript": "catalog:",
+    "@babel/core": "catalog:",
     "@babel/helper-plugin-utils": "catalog:",
+    "@deepkit/core": "catalog:",
+    "@deepkit/type": "catalog:",
     "@storm-software/config-tools": "catalog:",
     "@storm-software/esbuild": "catalog:",
     "@storm-software/unbuild": "catalog:",
     "@storm-stack/core": "workspace:*",
+    "@stryke/convert": "catalog:",
+    "@stryke/helpers": "catalog:",
+    "@stryke/json": "catalog:",
     "@stryke/path": "catalog:",
     "@stryke/string-format": "catalog:",
+    "@stryke/type-checks": "catalog:",
+    "@stryke/unique-id": "catalog:",
+    "chalk": "catalog:",
     "defu": "catalog:",
     "esbuild": "catalog:",
     "jiti": "catalog:"
@@ -192,8 +229,7 @@
   "devDependencies": {
     "@storm-stack/types": "workspace:*",
     "@types/node": "catalog:",
-    "tsup": "catalog:",
-    "typescript": "5.9.0-beta"
+    "tsup": "catalog:"
   },
   "publishConfig": {
     "access": "public"

@@ -93,6 +93,16 @@ export interface LogRecord {
 export type LogAdapter = (record: LogRecord) => void;
 
 /**
+ * A factory function that creates a log adapter.
+ *
+ * @remarks
+ * The created log adapter will be used to log messages in the application. This function is expected to be the default export of the log plugin's module.
+ *
+ * @returns The created {@link LogAdapter}.
+ */
+export type LogAdapterFactory = () => LogAdapter;
+
+/**
  * A filter is a function that accepts a log record and returns `true` if the
  * record should be passed to the adapter.
  *

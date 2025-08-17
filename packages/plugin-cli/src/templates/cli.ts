@@ -16,8 +16,12 @@
 
  ------------------------------------------------------------------- */
 
-import { getGradient } from "@storm-software/config-tools/utilities/colors";
+import {
+  getColor,
+  getGradient
+} from "@storm-software/config-tools/utilities/colors";
 import { getFileHeader } from "@storm-stack/core/lib";
+import { WorkspaceConfig } from "@storm-stack/core/types/config";
 import { stripAnsi } from "@stryke/cli/utils/strip-ansi";
 import { titleCase } from "@stryke/string-format/title-case";
 import { isObject } from "@stryke/type-checks/is-object";
@@ -25,6 +29,7 @@ import { isSetObject } from "@stryke/type-checks/is-set-object";
 import { isSetString } from "@stryke/type-checks/is-set-string";
 import { isString } from "@stryke/type-checks/is-string";
 import { render } from "cfonts";
+import { defu } from "defu";
 import { renderUnicodeCompact } from "uqr";
 import {
   LARGE_CONSOLE_WIDTH,
@@ -33,27 +38,28 @@ import {
   MIN_CONSOLE_WIDTH
 } from "../helpers/constants";
 import { extractAuthor } from "../helpers/utilities";
-import type {
-  BannerTitleConfig,
-  CFontResultObject,
-  CLIPluginConfig,
-  CLIPluginContext
-} from "../types/config";
+import type { CFontResultObject, CLIPluginContext } from "../types/config";
 
-export function CLIModule(context: CLIPluginContext, config: CLIPluginConfig) {
+export function CLIModule(context: CLIPluginContext) {
   let appTitle = titleCase(
     context.options.name ||
-      (Array.isArray(config.bin) ? config.bin[0] : config.bin) ||
+      (Array.isArray(context.options.plugins.cli.bin)
+        ? context.options.plugins.cli.bin[0]
+        : context.options.plugins.cli.bin) ||
       context.packageJson?.name
   );
+  if (!appTitle) {
+    throw new Error(
+      "No application name provided in the Storm Stack configuration."
+    );
+  }
 
   context.options.plugins.cli.title ??= appTitle;
-
   if (!appTitle.toLowerCase().endsWith("cli")) {
     appTitle += " CLI";
   }
 
-  const author = extractAuthor(context, config);
+  const author = extractAuthor(context);
   if (author?.name) {
     author.name = titleCase(author.name);
   }
@@ -153,45 +159,61 @@ export function CLIModule(context: CLIPluginContext, config: CLIPluginConfig) {
     );
   }
 
-  let title = context.options.plugins.cli.title;
-  if (title !== false) {
-    const titleConfig = {
-      font: "slick",
-      align: "center",
-      // background: "transparent",
-      independentGradient: false,
-      transitionGradient: false,
-      rawMode: false,
-      env: "node"
-    } as BannerTitleConfig;
+  let bannerTitle: string | undefined;
+  if (context.options.plugins.cli.title) {
+    const brandColor = getColor(
+      "brand",
+      context.options.colors as Partial<Pick<WorkspaceConfig, "colors">>
+    );
+    const gradient = getGradient(
+      context.options.colors as Parameters<typeof getGradient>[0]
+    );
 
-    if (isSetObject(context.options.colors)) {
-      titleConfig.gradient = getGradient(
-        context.options.colors as Parameters<typeof getGradient>[0]
-      );
-    } else {
-      titleConfig.colors = ["system"];
-    }
-
-    const result = render(titleCase(title), titleConfig) as
-      | CFontResultObject
-      | boolean;
+    const result = render(
+      isSetString(context.options.plugins.cli.title)
+        ? titleCase(context.options.plugins.cli.title)
+        : titleCase(context.options.plugins.cli.title.text),
+      defu(
+        isSetObject(context.options.plugins.cli.title)
+          ? context.options.plugins.cli.title
+          : {},
+        {
+          font: "slick",
+          align: "center",
+          colors: [brandColor],
+          // background: "transparent",
+          gradient: gradient && gradient.length > 0 ? gradient : undefined,
+          independentGradient: false,
+          transitionGradient: gradient && gradient.length > 0,
+          rawMode: false,
+          env: "node"
+        }
+      )
+    ) as CFontResultObject | boolean;
     if (isSetObject(result) && result.string) {
-      title = result.string;
-    } else {
-      title = false;
+      bannerTitle = result.string;
     }
   }
 
-  return `${getFileHeader()}
+  return `
+/**
+ * The CLI module provides a unified command-line interface for the Storm Stack runtime.
+ *
+ * @module storm:cli
+ */
+
+${getFileHeader()}
 
 ${
-  config.interactive !== "never"
+  context.options.plugins.cli.interactive !== "never"
     ? `import { confirm, multiselect, select, text } from "@clack/prompts";
 import { StormError } from "storm:error";`
     : ""
 }
-import { isColorSupported, isMinimal, hasTTY, isUnicodeSupported } from "storm:env";
+
+export type CLIBasePayloadData = {
+  argv: string[];
+};
 
 function replaceClose(
   index: number,
@@ -275,10 +297,17 @@ export type ColorName = keyof typeof colorDefs;
  * An object containing functions for coloring text. Each function corresponds to a terminal color. See {@link ColorName} for available colors.
  */
 export const colors = (
-  isColorSupported
+  $storm.config.static.NO_COLOR
     ? colorDefs
     : Object.fromEntries(Object.keys(colorDefs).map(key => [key, String]))
 ) as Record<ColorName, (text: string | number) => string>;
+
+export const AnsiLevelMapping = [
+	'ansi',
+	'ansi',
+	'ansi256',
+	'ansi16m',
+];
 
 /**
  * Gets a color function by name, with an option for a fallback color if the requested color is not found.
@@ -346,25 +375,22 @@ function parseVersion(versionString = "") {
 function isHyperlinkSupported(
   _stream: NodeJS.WriteStream = process.stdout
 ): boolean {
-  if (process.env.FORCE_HYPERLINK) {
-    return !(
-      process.env.FORCE_HYPERLINK.length > 0 &&
-      Number.parseInt(process.env.FORCE_HYPERLINK, 10) === 0
-    );
+  if ($storm.config.FORCE_HYPERLINK) {
+    return true;
   }
 
-  if (process.env.NETLIFY) {
+  if ($storm.config.NETLIFY) {
     return true;
-  } else if (!isColorSupported || hasTTY) {
+  } else if (!$storm.env.isColorSupported || $storm.env.hasTTY) {
     return false;
-  } else if ("WT_SESSION" in process.env) {
+  } else if ($storm.config.WT_SESSION) {
     return true;
-  } else if (process.platform === "win32" || isMinimal || process.env.TEAMCITY_VERSION) {
+  } else if ($storm.env.isWindows || $storm.env.isMinimal || $storm.config.TEAMCITY_VERSION) {
     return false;
-  } else if (process.env.TERM_PROGRAM) {
-    const version = parseVersion(process.env.TERM_PROGRAM_VERSION);
+  } else if ($storm.config.TERM_PROGRAM) {
+    const version = parseVersion($storm.config.TERM_PROGRAM_VERSION);
 
-    switch (process.env.TERM_PROGRAM) {
+    switch ($storm.config.TERM_PROGRAM) {
       case "iTerm.app": {
         if (version.major === 3) {
           return version.minor !== undefined && version.minor >= 1;
@@ -377,7 +403,7 @@ function isHyperlinkSupported(
       }
 
       case "vscode": {
-        if (process.env.CURSOR_TRACE_ID) {
+        if ($storm.config.CURSOR_TRACE_ID) {
           return true;
         }
 
@@ -394,19 +420,19 @@ function isHyperlinkSupported(
     }
   }
 
-  if (process.env.VTE_VERSION) {
-    if (process.env.VTE_VERSION === "0.50.0") {
+  if ($storm.config.VTE_VERSION) {
+    if ($storm.config.VTE_VERSION === "0.50.0") {
       return false;
     }
 
-    const version = parseVersion(process.env.VTE_VERSION);
+    const version = parseVersion($storm.config.VTE_VERSION);
     return (
       (version.major !== undefined && version.major > 0) ||
       (version.minor !== undefined && version.minor >= 50)
     );
   }
 
-  if (process.env.TERM === "alacritty") {
+  if ($storm.config.TERM === "alacritty") {
     return true;
   }
 
@@ -433,7 +459,7 @@ export function link(
   ) {
     return options.fallback
       ? options.fallback(url, text)
-      : isColorSupported
+      : $storm.env.isColorSupported
         ? \`\${text && text !== url ? \`\${text} at \` : ""}\${colors.underline(
             options.color !== false
               ? getColor(options.color || "blueBright")(url)
@@ -532,9 +558,9 @@ export function renderBanner(title: string, description: string): string {
   }
 
   return \`${
-    title
+    bannerTitle
       ? `
-${title}
+${bannerTitle}
 
 `
       : ""
@@ -554,7 +580,9 @@ ${title}
  * @internal
  */
 export function renderFooter(): string {
-  const consoleWidth = Math.max(process.stdout.columns - 2, ${MIN_CONSOLE_WIDTH});
+  const consoleWidth = Math.max(process.stdout.columns - 2, ${
+    MIN_CONSOLE_WIDTH
+  });
   const isLargeConsole = consoleWidth >= ${LARGE_CONSOLE_WIDTH};
 
   let supportRow = ${
@@ -579,17 +607,22 @@ export function renderFooter(): string {
   const footer = [] as string[];
 
   footer.push("");
-  footer.push(colors.cyan(colors.bold(\`\${" ".repeat(Math.max((consoleWidth - (consoleWidth * 0.75)) / 2, 10))}\${"━".repeat(consoleWidth * 0.75)}\${" ".repeat(Math.max((consoleWidth - (consoleWidth * 0.75)) / 2, 10))}\`)));
+  footer.push(colors.cyan(\`\${" ".repeat(Math.max((consoleWidth - (consoleWidth * 0.75)) / 2, 10))}\${"━".repeat(consoleWidth * 0.75)}\${" ".repeat(Math.max((consoleWidth - (consoleWidth * 0.75)) / 2, 10))}\`));
   footer.push("");
 
   footer.push(\`\${colors.whiteBright(colors.bold("LINKS:"))}\`);
   ${linksColumn1
     .map(
       (line, i) =>
-        `footer.push(\`   \${isLargeConsole ? colors.bold("${line}".padEnd(${LARGE_HELP_COLUMN_WIDTH})) : colors.bold("${line}".padEnd(${linksMaxLength}))}\${link("${linksColumn2[i]}")}\`);`
+        `footer.push(\`   \${isLargeConsole ? colors.cyan("${line}".padEnd(${
+          LARGE_HELP_COLUMN_WIDTH
+        })) : "${line}".padEnd(${
+          linksMaxLength
+        })}\${link("${linksColumn2[i]}")}\`);`
     )
     .join(" \n")}
 
+  footer.push("");
   footer.push("");${
     homepage || docs || support || contact || repository
       ? `
@@ -598,7 +631,9 @@ export function renderFooter(): string {
         ? `
   footer.push(\`\${" ".repeat(Math.max((consoleWidth - ${
     author.name.length ?? 0
-  }) / 2, 10))}\${colors.bold(colors.whiteBright("${author.name}"))}\${" ".repeat(Math.max((consoleWidth - ${
+  }) / 2, 10))}\${colors.bold(colors.whiteBright("${
+    author.name
+  }"))}\${" ".repeat(Math.max((consoleWidth - ${
     author.name.length ?? 0
   }) / 2, 10))}\`);`
         : ""
@@ -606,9 +641,15 @@ export function renderFooter(): string {
       author?.description
         ? `
 
-  const descriptionPadding = Math.max((consoleWidth - ${author.description.length}) / 2, 10);
+  const descriptionPadding = Math.max((consoleWidth - ${
+    author.description.length
+  }) / 2, 10);
   for (const line of (${author.description.length} < consoleWidth * 0.6
-    ? \`\${" ".repeat(descriptionPadding)}\${colors.gray("${author.description}")}\${" ".repeat(Math.max(descriptionPadding + consoleWidth - (descriptionPadding * 2 + ${author.description.length}), 10))}\`
+    ? \`\${" ".repeat(descriptionPadding)}\${colors.gray("${
+      author.description
+    }")}\${" ".repeat(Math.max(descriptionPadding + consoleWidth - (descriptionPadding * 2 + ${
+      author.description.length
+    }), 10))}\`
     : "${author.description}".split(/\\s+/).reduce((ret, word) => {
         const lines = ret.split("\\n");
         if (lines.length !== 0 && (lines[lines.length - 1]!.length + word.length > consoleWidth * 0.6)) {
@@ -624,7 +665,7 @@ export function renderFooter(): string {
         : ""
     }
 
-  if (isUnicodeSupported) {
+  if ($storm.env.isUnicodeSupported) {
     const qrCodeLines = \`${renderUnicodeCompact(
       (author?.url || homepage || docs || support || contact || repository)!
     )}\`.split("\\n");
@@ -648,16 +689,16 @@ export function renderFooter(): string {
 `
       : ""
   }
-  footer.push(\`\${" ".repeat(Math.max((consoleWidth - ${footerHeaderLength}) / 2, 10))}${footerHeader}\${" ".repeat(Math.max((consoleWidth - ${footerHeaderLength}) / 2, 10))}\`);
+  footer.push(colors.gray(\`\${" ".repeat(Math.max((consoleWidth - ${footerHeaderLength}) / 2, 10))}${footerHeader}\${" ".repeat(Math.max((consoleWidth - ${footerHeaderLength}) / 2, 10))}\`));
   if (supportRow) {
-    footer.push(\`\${" ".repeat(Math.max((consoleWidth - supportRowLength) / 2, 10))}\${supportRow}\${" ".repeat(Math.max((consoleWidth - supportRowLength) / 2, 10))}\`);
+    footer.push(colors.gray(\`\${" ".repeat(Math.max((consoleWidth - supportRowLength) / 2, 10))}\${supportRow}\${" ".repeat(Math.max((consoleWidth - supportRowLength) / 2, 10))}\`));
   }
 
   return footer.join("\\n");
 }
 
 ${
-  config.interactive !== "never"
+  context.options.plugins.cli.interactive !== "never"
     ? `// Command-line prompt utilities
 
 interface SelectOption {

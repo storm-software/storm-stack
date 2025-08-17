@@ -35,7 +35,7 @@ export async function DateFnsModule(context: DatePluginContext) {
 
 ${getFileHeader()}
 
-import { DateFormats, TimeUnit } from "@storm-stack/types/shared/date";
+import { DateFormats, TimeUnit } from "@storm-stack/types/date";
 import { addDays as dateFnsAddDays } from "date-fns/addDays";
 import { addHours as dateFnsAddHours } from "date-fns/addHours";
 import { addMinutes as dateFnsAddMinutes } from "date-fns/addMinutes";
@@ -79,10 +79,10 @@ import { isValid as dateFnsIsValid } from "date-fns/isValid";
 import { isWithinInterval } from "date-fns/isWithinInterval";
 import { Locale } from "date-fns/locale";
 import { ${
-    context.options.plugins.dotenv.values.DEFAULT_LOCALE?.replaceAll("-", "") ||
+    context.options.plugins.config.parsed.DEFAULT_LOCALE?.replaceAll("-", "") ||
     "enUS"
   } as defaultLocale } from "date-fns/locale/${
-    context.options.plugins.dotenv.values.DEFAULT_LOCALE || "en-US"
+    context.options.plugins.config.parsed.DEFAULT_LOCALE || "en-US"
   }";
 import { parse as dateFnsParse } from "date-fns/parse";
 import { parseISO as dateFnsParseISO } from "date-fns/parseISO";
@@ -211,7 +211,7 @@ export function toISO(value: Date) {
 }
 
 export function getCurrentLocaleCode() {
-  return locale?.code || $storm.dotenv.DEFAULT_LOCALE;
+  return locale?.code || $storm.config.static.DEFAULT_LOCALE;
 }
 
 export function addSeconds(value: Date, count: number) {

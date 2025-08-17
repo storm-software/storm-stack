@@ -79,7 +79,8 @@
   ],
   "peerDependencies": {
     "@sentry/core": "catalog:",
-    "@sentry/node": "catalog:"
+    "@sentry/node": "catalog:",
+    "@storm-stack/plugin-config": "*"
   },
   "peerDependenciesMeta": {
     "@sentry/core": {
@@ -87,6 +88,9 @@
     },
     "@sentry/node": {
       "optional": true
+    },
+    "@storm-stack/plugin-config": {
+      "optional": false
     }
   },
   "dependencies": {
@@ -99,7 +103,7 @@
     "@storm-stack/nx": "workspace:*",
     "@types/node": "catalog:",
     "tsup": "catalog:",
-    "typescript": "5.9.0-beta"
+    "typescript": "6.0.0-dev.20250810"
   },
   "publishConfig": {
     "access": "public"

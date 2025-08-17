@@ -18,11 +18,10 @@
 
 /* eslint-disable ts/naming-convention */
 
+import { LogLevelLabel } from "@storm-software/config-tools/types";
 import type { MaybePromise, NonUndefined } from "@stryke/types/base";
 import type { TypeDefinition } from "@stryke/types/configuration";
-import type { TsConfigJson } from "@stryke/types/tsconfig";
 import type { Hookable } from "hookable";
-import ts from "typescript";
 import { SourceFile } from "./compiler";
 import type {
   BabelConfig,
@@ -45,11 +44,6 @@ export interface ResolvedEntryTypeDefinition extends TypeDefinition {
    */
   output?: string;
 }
-
-export type ParsedTypeScriptConfig = ts.ParsedCommandLine & {
-  tsconfigJson: TsConfigJson;
-  tsconfigFilePath: string;
-};
 
 export type ConfigEnv = Pick<
   ResolvedOptions,
@@ -75,9 +69,12 @@ export type ResolvedBabelOptions = Omit<BabelConfig, "plugins" | "presets"> &
  */
 export type ResolvedOptions<
   TPluginsOptions extends Record<string, any> = Record<string, any>
-> = Omit<WorkspaceConfig, "colors"> &
+> = Omit<WorkspaceConfig, "colors" | "logLevel"> &
   Required<Pick<WorkspaceConfig, "colors">> &
-  Omit<InlineConfig, "root" | "type" | "babel" | "output" | "plugins"> &
+  Omit<
+    InlineConfig,
+    "root" | "type" | "babel" | "output" | "plugins" | "logLevel"
+  > &
   Required<
     Pick<
       InlineConfig,
@@ -135,6 +132,13 @@ export type ResolvedOptions<
     projectType: NonUndefined<InlineConfig["type"]>;
 
     /**
+     * The log level to use for the Storm Stack processes.
+     *
+     * @defaultValue "info"
+     */
+    logLevel?: LogLevelLabel | null;
+
+    /**
      * A flag indicating whether the build is for server-side rendering (SSR).
      */
     isSsrBuild: boolean;
@@ -153,72 +157,74 @@ export type ResolvedOptions<
     plugins: TPluginsOptions;
   };
 
-export interface EngineHookFunctions {
+export interface EngineHookFunctions<TContext extends Context = Context> {
   // New - Hooks used during the creation of a new project
-  "new:begin": (context: Context) => MaybePromise<void>;
-  "new:library": (context: Context) => MaybePromise<void>;
-  "new:application": (context: Context) => MaybePromise<void>;
-  "new:complete": (context: Context) => MaybePromise<void>;
+  "new:begin": (context: TContext) => MaybePromise<void>;
+  "new:library": (context: TContext) => MaybePromise<void>;
+  "new:application": (context: TContext) => MaybePromise<void>;
+  "new:complete": (context: TContext) => MaybePromise<void>;
 
   // Init - Hooks used during the initialization of the Storm Stack engine
-  "init:begin": (context: Context) => MaybePromise<void>;
-  "init:options": (context: Context) => MaybePromise<void>;
-  "init:install": (context: Context) => MaybePromise<void>;
-  "init:tsconfig": (context: Context) => MaybePromise<void>;
-  "init:entry": (context: Context) => MaybePromise<void>;
-  "init:reflections": (context: Context) => MaybePromise<void>;
-  "init:complete": (context: Context) => MaybePromise<void>;
+  "init:begin": (context: TContext) => MaybePromise<void>;
+  "init:options": (context: TContext) => MaybePromise<void>;
+  "init:install": (context: TContext) => MaybePromise<void>;
+  "init:tsconfig": (context: TContext) => MaybePromise<void>;
+  "init:entry": (context: TContext) => MaybePromise<void>;
+  "init:reflections": (context: TContext) => MaybePromise<void>;
+  "init:complete": (context: TContext) => MaybePromise<void>;
 
   // Clean - Hooks used during the cleaning of the Storm Stack project
-  "clean:begin": (context: Context) => MaybePromise<void>;
-  "clean:output": (context: Context) => MaybePromise<void>;
-  "clean:docs": (context: Context) => MaybePromise<void>;
-  "clean:complete": (context: Context) => MaybePromise<void>;
+  "clean:begin": (context: TContext) => MaybePromise<void>;
+  "clean:output": (context: TContext) => MaybePromise<void>;
+  "clean:docs": (context: TContext) => MaybePromise<void>;
+  "clean:complete": (context: TContext) => MaybePromise<void>;
 
   // Prepare - Hooks used during the preparation of the Storm Stack artifacts
-  "prepare:begin": (context: Context) => MaybePromise<void>;
-  "prepare:config": (context: Context) => MaybePromise<void>;
-  "prepare:runtime": (context: Context) => MaybePromise<void>;
-  "prepare:entry": (context: Context) => MaybePromise<void>;
+  "prepare:begin": (context: TContext) => MaybePromise<void>;
+  "prepare:config": (context: TContext) => MaybePromise<void>;
+  "prepare:runtime": (context: TContext) => MaybePromise<void>;
+  "prepare:entry": (context: TContext) => MaybePromise<void>;
   "prepare:types": (
-    context: Context,
+    context: TContext,
     sourceFile: SourceFile
   ) => MaybePromise<void>;
-  "prepare:deploy": (context: Context) => MaybePromise<void>;
-  "prepare:complete": (context: Context) => MaybePromise<void>;
+  "prepare:deploy": (context: TContext) => MaybePromise<void>;
+  "prepare:complete": (context: TContext) => MaybePromise<void>;
 
   // Lint - Hooks used during the linting process
-  "lint:begin": (context: Context) => MaybePromise<void>;
-  "lint:types": (context: Context) => MaybePromise<void>;
-  "lint:eslint": (context: Context) => MaybePromise<void>;
-  "lint:complete": (context: Context) => MaybePromise<void>;
+  "lint:begin": (context: TContext) => MaybePromise<void>;
+  "lint:types": (context: TContext) => MaybePromise<void>;
+  "lint:eslint": (context: TContext) => MaybePromise<void>;
+  "lint:complete": (context: TContext) => MaybePromise<void>;
 
   // Build - Hooks used during the build process of the Storm Stack project
-  "build:begin": (context: Context) => MaybePromise<void>;
+  "build:begin": (context: TContext) => MaybePromise<void>;
   "build:pre-transform": (
-    context: Context,
+    context: TContext,
     sourceFile: SourceFile
   ) => MaybePromise<void>;
   "build:transform": (
-    context: Context,
+    context: TContext,
     sourceFile: SourceFile
   ) => MaybePromise<void>;
   "build:post-transform": (
-    context: Context,
+    context: TContext,
     sourceFile: SourceFile
   ) => MaybePromise<void>;
-  "build:library": (context: Context) => MaybePromise<void>;
-  "build:application": (context: Context) => MaybePromise<void>;
-  "build:complete": (context: Context) => MaybePromise<void>;
+  "build:library": (context: TContext) => MaybePromise<void>;
+  "build:application": (context: TContext) => MaybePromise<void>;
+  "build:complete": (context: TContext) => MaybePromise<void>;
 
   // Docs - Hooks used during the documentation generation process
-  "docs:begin": (context: Context) => MaybePromise<void>;
-  "docs:api-reference": (context: Context) => MaybePromise<void>;
-  "docs:complete": (context: Context) => MaybePromise<void>;
+  "docs:begin": (context: TContext) => MaybePromise<void>;
+  "docs:api-reference": (context: TContext) => MaybePromise<void>;
+  "docs:complete": (context: TContext) => MaybePromise<void>;
 
   // Finalize - Hooks used during the finalization of the Storm Stack project
-  "finalize:begin": (context: Context) => MaybePromise<void>;
-  "finalize:complete": (context: Context) => MaybePromise<void>;
+  "finalize:begin": (context: TContext) => MaybePromise<void>;
+  "finalize:complete": (context: TContext) => MaybePromise<void>;
 }
 
-export type EngineHooks = Hookable<EngineHookFunctions>;
+export type EngineHooks<TContext extends Context = Context> = Hookable<
+  EngineHookFunctions<TContext>
+>;

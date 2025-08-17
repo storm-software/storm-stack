@@ -17,15 +17,15 @@
  ------------------------------------------------------------------- */
 
 import { Context } from "@storm-stack/core/types/context";
-import { PluginBaseConfig } from "@storm-stack/core/types/plugin";
+import { PluginBaseOptions } from "@storm-stack/core/types/plugin";
 import {
-  DotenvPluginConfig,
-  ResolvedDotenvOptions
-} from "@storm-stack/plugin-dotenv/types";
+  ConfigPluginOptions,
+  ResolvedConfigPluginOptions
+} from "@storm-stack/plugin-config/types";
 
 export type DateLibraryType = "date-fns" | "dayjs" | "luxon" | "moment";
 
-export interface DatePluginConfig extends PluginBaseConfig {
+export interface DatePluginOptions extends PluginBaseOptions {
   /**
    * The type of date library to use
    *
@@ -41,16 +41,18 @@ export interface DatePluginConfig extends PluginBaseConfig {
   type?: DateLibraryType;
 
   /**
-   * Options for the dotenv plugin.
+   * Options for the config plugin.
    */
-  dotenv?: DotenvPluginConfig;
+  config?: ConfigPluginOptions;
 }
 
-export type ResolvedDateOptions = Required<Omit<DatePluginConfig, "dotenv">>;
+export type ResolvedDatePluginOptions = Required<
+  Omit<DatePluginOptions, "config">
+>;
 
 export interface DatePluginContextOptions {
-  date: Required<Omit<DatePluginConfig, "dotenv">>;
-  dotenv: ResolvedDotenvOptions;
+  date: Required<Omit<DatePluginOptions, "config">>;
+  config: ResolvedConfigPluginOptions;
 }
 
 export type DatePluginContext = Context<DatePluginContextOptions>;

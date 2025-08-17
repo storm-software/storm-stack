@@ -16,7 +16,9 @@
 
  ------------------------------------------------------------------- */
 
+import defu from "defu";
 import type { Plugin } from "esbuild";
+import { CompilerOptions } from "../../types/compiler";
 import type { Context } from "../../types/context";
 import { ModuleResolverPlugin } from "../babel/plugins/module-resolver";
 
@@ -26,7 +28,10 @@ import { ModuleResolverPlugin } from "../babel/plugins/module-resolver";
  * @param context - The base context containing TypeScript configuration and options.
  * @returns An esbuild plugin that transpiles TypeScript files.
  */
-export function transpilerPlugin(context: Context): Plugin {
+export function transpilerPlugin(
+  context: Context,
+  options: CompilerOptions = {}
+): Plugin {
   const handleLoad = async args => {
     if (args.path) {
       const resolvedPath = context.vfs.resolvePath(args.path);
@@ -40,7 +45,7 @@ export function transpilerPlugin(context: Context): Plugin {
           context,
           resolvedPath,
           contents,
-          {
+          defu(options, {
             skipTransformUnimport: true,
             babel: {
               plugins: [
@@ -48,7 +53,7 @@ export function transpilerPlugin(context: Context): Plugin {
                 ...context.options.babel.plugins
               ]
             }
-          }
+          })
         );
 
         return {

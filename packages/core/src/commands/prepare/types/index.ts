@@ -73,10 +73,7 @@ export async function prepareTypes(context: Context, hooks: EngineHooks) {
           {
             skipTransformUnimport: true,
             babel: {
-              plugins: [
-                ModuleResolverPlugin(context),
-                ...context.options.babel.plugins
-              ]
+              plugins: [ModuleResolverPlugin, ...context.options.babel.plugins]
             }
           }
         );
@@ -305,6 +302,7 @@ declare module "${context.vfs.resolveId(sourceFile.fileName)}" {
 
 ${(await context.vfs.readFile(untrimmedFilePath))!
   .replace(/export.*__Ω.*;/g, "")
+  .replace(/__Ω/g, "")
   .replace(/^export\s*\{\s*\}\s*$/gm, "")
   .replace(/^export\s*(?:declare\s*)?interface\s*/gm, "interface ")
   .replace(/^export\s*(?:declare\s*)?type\s*/gm, "type ")

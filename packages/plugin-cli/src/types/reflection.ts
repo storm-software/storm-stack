@@ -16,9 +16,8 @@
 
  ------------------------------------------------------------------- */
 
-import { ReflectionFunction } from "@deepkit/type";
 import { ResolvedEntryTypeDefinition } from "@storm-stack/core/types/build";
-import { CommandPayload } from "../data/command-payload";
+import { Command } from "../data/command";
 
 export type CommandEntryTypeDefinition = ResolvedEntryTypeDefinition &
   Required<Pick<ResolvedEntryTypeDefinition, "output">> & {
@@ -28,25 +27,27 @@ export type CommandEntryTypeDefinition = ResolvedEntryTypeDefinition &
     isVirtual: boolean;
   };
 
-export interface CommandTreeBranch {
-  name: string;
-  entry: CommandEntryTypeDefinition;
-  parent: null | CommandTree | Command;
-  children: Record<string, Command>;
+export interface CommandTreeItem {
+  parent: null | CommandTreeItem;
+  children: Record<string, CommandTreeBranch>;
 }
 
-export interface CommandTree extends CommandTreeBranch {
+export interface CommandTree extends CommandTreeItem {
+  name: string;
   title: string;
   bin: string[];
+  entry: CommandEntryTypeDefinition;
   description?: string;
   parent: null;
 }
 
-export interface Command extends CommandTreeBranch {
-  id: string;
-  title: string;
-  type: ReflectionFunction;
-  payload: CommandPayload;
-  parent: CommandTree | Command;
+export interface CommandTreeBranch extends CommandTreeItem {
+  command: Command;
+  parent: CommandTree | CommandTreeBranch;
   root: CommandTree;
+}
+
+export interface CommandRelations {
+  parent: string | null;
+  children: string[];
 }

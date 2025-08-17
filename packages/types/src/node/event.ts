@@ -16,27 +16,40 @@
 
  ------------------------------------------------------------------- */
 
-import { StormPayloadInterface } from "../shared/payload";
-
 /**
  * Interface representing a Storm event.
  *
- * @template TEventType - The type of the event.
+ * @template TType - The type of the event.
  * @template TData - The data associated with the event.
  */
 export interface StormEventInterface<
-  TEventType extends string = string,
-  TData = any
-> extends StormPayloadInterface<TData> {
+  TType extends string = string,
+  TData extends Record<string, any> = Record<string, any>
+> {
   /**
-   * The unique identifier for the payload.
+   * The timestamp of the event.
+   */
+  timestamp: number;
+
+  /**
+   * The unique identifier for the event.
+   */
+  id: string;
+
+  /**
+   * The event data object.
+   */
+  data: TData;
+
+  /**
+   * The unique identifier for the current payload.
    */
   payloadId: string;
 
   /**
    * The type of the event.
    */
-  type: TEventType;
+  type: TType;
 
   /**
    * The version of the event.
