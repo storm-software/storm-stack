@@ -1,3 +1,39 @@
+![Storm Software's logo banner](https://public.storm-cdn.com/brand-banner.png)
+
+# Changelog for Storm Stack - Core
+
+## [0.34.0](https://github.com/storm-software/storm-stack/releases/tag/core%400.34.0) (2025-08-17)
+
+### Features
+
+- **core:** Reorganized plugin packages and added runtime dynamic configuration
+  ([c6d97d9f](https://github.com/storm-software/storm-stack/commit/c6d97d9f))
+- **plugin-cli:** Added the `title` plugin option and console section separators
+  ([6cdd60b2](https://github.com/storm-software/storm-stack/commit/6cdd60b2))
+- **nx:** Implemented logic to add `inputs` and `outputs` for the generated
+  tasks
+  ([7fc96f27](https://github.com/storm-software/storm-stack/commit/7fc96f27))
+- **nx:** Added `sync` generator and `UserConfig` resolver to plugin
+  ([af91789b](https://github.com/storm-software/storm-stack/commit/af91789b))
+- **core:** Added the `plugins` node to context to share plugin configurations
+  ([21fc43ed](https://github.com/storm-software/storm-stack/commit/21fc43ed))
+- **core:** Major update to allow virtual output and plugin structure
+  ([c9b6252d](https://github.com/storm-software/storm-stack/commit/c9b6252d))
+
+### Bug Fixes
+
+- **nx:** Resolved issue with missing `generators.json` file in build package
+  ([2c6e8f05](https://github.com/storm-software/storm-stack/commit/2c6e8f05))
+
+### Miscellaneous
+
+- **types:** Updates to the format of the `date` and `env` modules
+  ([672b717f](https://github.com/storm-software/storm-stack/commit/672b717f))
+
+### Updated Dependencies
+
+- Updated types to 0.15.0
+
 ![Storm Software](https://public.storm-cdn.com/brand-banner.png)
 
 # Changelog for Storm Stack - Core

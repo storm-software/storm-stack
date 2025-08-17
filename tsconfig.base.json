@@ -38,12 +38,6 @@
       "@storm-stack/plugin-config/*": ["packages/plugin-config/src/*"],
       "@storm-stack/plugin-date": ["packages/plugin-date/src/index.ts"],
       "@storm-stack/plugin-date/*": ["packages/plugin-date/src/*"],
-      "@storm-stack/plugin-node-config": [
-        "packages/plugin-node-config/src/index.ts"
-      ],
-      "@storm-stack/plugin-node-config/*": [
-        "packages/plugin-node-config/src/*"
-      ],
       "@storm-stack/plugin-error": ["packages/plugin-error/src/index.ts"],
       "@storm-stack/plugin-error/*": ["packages/plugin-error/src/*"],
       "@storm-stack/plugin-log-console": [
@@ -65,6 +59,12 @@
         "packages/plugin-log-storage/src/*"
       ],
       "@storm-stack/plugin-node": ["packages/plugin-node/src/index.ts"],
+      "@storm-stack/plugin-node-config": [
+        "packages/plugin-node-config/src/index.ts"
+      ],
+      "@storm-stack/plugin-node-config/*": [
+        "packages/plugin-node-config/src/*"
+      ],
       "@storm-stack/plugin-node/*": ["packages/plugin-node/src/*"],
       "@storm-stack/plugin-storage-cloudflare-kv": [
         "packages/plugin-storage-cloudflare-kv/src/index.ts"

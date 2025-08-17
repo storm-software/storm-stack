@@ -1,6 +1,6 @@
 {
   "name": "@storm-stack/plugin-node-config",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "type": "module",
   "description": "A package containing a Storm Stack base plugin for managing error messages through an external JSON file.",
   "repository": {
@@ -155,15 +155,15 @@
     "@deepkit/type": "catalog:",
     "@storm-software/config": "catalog:",
     "@storm-software/config-tools": "catalog:",
-    "@storm-stack/core": "workspace:*",
-    "@storm-stack/devkit": "workspace:*",
+    "@storm-stack/core": "0.34.0",
+    "@storm-stack/devkit": "0.10.0",
     "@stryke/capnp": "catalog:",
     "@stryke/json": "catalog:",
     "@stryke/path": "catalog:",
     "@stryke/string-format": "catalog:"
   },
   "devDependencies": {
-    "@storm-stack/nx": "workspace:*",
+    "@storm-stack/nx": "0.15.0",
     "@types/node": "catalog:",
     "tsup": "catalog:"
   },

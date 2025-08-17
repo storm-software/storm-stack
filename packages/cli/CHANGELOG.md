@@ -1,3 +1,51 @@
+![Storm Software's logo banner](https://public.storm-cdn.com/brand-banner.png)
+
+# Changelog for Storm Stack - CLI
+
+## [0.15.0](https://github.com/storm-software/storm-stack/releases/tag/cli%400.15.0) (2025-08-17)
+
+### Features
+
+- **core:** Reorganized plugin packages and added runtime dynamic configuration
+  ([c6d97d9f](https://github.com/storm-software/storm-stack/commit/c6d97d9f))
+- **plugin-cli:** Added the `title` plugin option and console section separators
+  ([6cdd60b2](https://github.com/storm-software/storm-stack/commit/6cdd60b2))
+- **nx:** Added `sync` generator and `UserConfig` resolver to plugin
+  ([af91789b](https://github.com/storm-software/storm-stack/commit/af91789b))
+- **plugin-date:** Initial check-in of the Date plugin package
+  ([96ef9620](https://github.com/storm-software/storm-stack/commit/96ef9620))
+- **core:** Major update to allow virtual output and plugin structure
+  ([c9b6252d](https://github.com/storm-software/storm-stack/commit/c9b6252d))
+
+### Bug Fixes
+
+- **nx:** Resolved issue with invalid `name` export in plugin
+  ([80d8e1a2](https://github.com/storm-software/storm-stack/commit/80d8e1a2))
+- **nx:** Resolved issue with missing `generators.json` file in build package
+  ([2c6e8f05](https://github.com/storm-software/storm-stack/commit/2c6e8f05))
+
+### Miscellaneous
+
+- **nx:** Cleaned up the `project.json` configuration files
+  ([18ad4ff3](https://github.com/storm-software/storm-stack/commit/18ad4ff3))
+- **plugin-cli:** Remove unused schema files
+  ([937dcfc6](https://github.com/storm-software/storm-stack/commit/937dcfc6))
+- **cli:** Added the `nx` project as a `implicitDependencies`
+  ([120279fc](https://github.com/storm-software/storm-stack/commit/120279fc))
+- **core:** Renamed `storm:config` module to `storm:dotenv` so the former can be
+  used later
+  ([649345d9](https://github.com/storm-software/storm-stack/commit/649345d9))
+
+### Updated Dependencies
+
+- Updated plugin-log-storage to 0.21.0
+- Updated plugin-log-sentry to 0.23.0
+- Updated plugin-storage-fs to 0.10.0
+- Updated plugin-cli to 0.26.0
+- Updated types to 0.15.0
+- Updated core to 0.34.0
+- Updated nx to 0.15.0
+
 ![Storm Software](https://public.storm-cdn.com/brand-banner.png)
 
 # Changelog for Storm Stack - CLI

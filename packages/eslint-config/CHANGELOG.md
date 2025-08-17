@@ -1,3 +1,21 @@
+![Storm Software's logo banner](https://public.storm-cdn.com/brand-banner.png)
+
+# Changelog for Storm Stack - ESLint Config
+
+## [0.12.0](https://github.com/storm-software/storm-stack/releases/tag/eslint-config%400.12.0) (2025-08-17)
+
+### Features
+
+- **core:** Reorganized plugin packages and added runtime dynamic configuration
+  ([c6d97d9f](https://github.com/storm-software/storm-stack/commit/c6d97d9f))
+- **core:** Major update to allow virtual output and plugin structure
+  ([c9b6252d](https://github.com/storm-software/storm-stack/commit/c9b6252d))
+
+### Updated Dependencies
+
+- Updated eslint-plugin to 0.10.3
+- Updated tsdoc to 0.3.0
+
 ![Storm Software](https://public.storm-cdn.com/brand-banner.png)
 
 # Changelog for Storm Stack - ESLint Config

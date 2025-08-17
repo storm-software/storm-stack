@@ -1,3 +1,38 @@
+![Storm Software's logo banner](https://public.storm-cdn.com/brand-banner.png)
+
+# Changelog for Storm Stack - Plugin CLI
+
+## [0.26.0](https://github.com/storm-software/storm-stack/releases/tag/plugin-cli%400.26.0) (2025-08-17)
+
+### Features
+
+- **core:** Reorganized plugin packages and added runtime dynamic configuration
+  ([c6d97d9f](https://github.com/storm-software/storm-stack/commit/c6d97d9f))
+- **plugin-cli:** Added the `title` plugin option and console section separators
+  ([6cdd60b2](https://github.com/storm-software/storm-stack/commit/6cdd60b2))
+- **core:** Added the `plugins` node to context to share plugin configurations
+  ([21fc43ed](https://github.com/storm-software/storm-stack/commit/21fc43ed))
+- **core:** Major update to allow virtual output and plugin structure
+  ([c9b6252d](https://github.com/storm-software/storm-stack/commit/c9b6252d))
+
+### Bug Fixes
+
+- **monorepo:** Resolve issue with monorepo build script
+  ([4d38825b](https://github.com/storm-software/storm-stack/commit/4d38825b))
+
+### Miscellaneous
+
+- **plugin-cli:** Remove unused schema files
+  ([937dcfc6](https://github.com/storm-software/storm-stack/commit/937dcfc6))
+- **core:** Renamed `storm:config` module to `storm:dotenv` so the former can be
+  used later
+  ([649345d9](https://github.com/storm-software/storm-stack/commit/649345d9))
+
+### Updated Dependencies
+
+- Updated devkit to 0.10.0
+- Updated core to 0.34.0
+
 ![Storm Software](https://public.storm-cdn.com/brand-banner.png)
 
 # Changelog for Storm Stack - Plugin CLI

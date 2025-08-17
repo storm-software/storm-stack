@@ -1,3 +1,47 @@
+![Storm Software's logo banner](https://public.storm-cdn.com/brand-banner.png)
+
+# Changelog for Storm Stack - Nx
+
+## [0.15.0](https://github.com/storm-software/storm-stack/releases/tag/nx%400.15.0) (2025-08-17)
+
+### Features
+
+- **core:** Reorganized plugin packages and added runtime dynamic configuration
+  ([c6d97d9f](https://github.com/storm-software/storm-stack/commit/c6d97d9f))
+- **nx:** Implemented logic to add `inputs` and `outputs` for the generated
+  tasks
+  ([7fc96f27](https://github.com/storm-software/storm-stack/commit/7fc96f27))
+- **nx:** Added `sync` generator and `UserConfig` resolver to plugin
+  ([af91789b](https://github.com/storm-software/storm-stack/commit/af91789b))
+- **core:** Major update to allow virtual output and plugin structure
+  ([c9b6252d](https://github.com/storm-software/storm-stack/commit/c9b6252d))
+
+### Bug Fixes
+
+- **nx:** Ensure the wildcard characters are properly escaped in CLI command
+  ([7c39ca72](https://github.com/storm-software/storm-stack/commit/7c39ca72))
+- **nx:** Resolve issues with post-build artifact copy
+  ([7f40eecf](https://github.com/storm-software/storm-stack/commit/7f40eecf))
+- **nx:** Resolved issue with invalid `name` export in plugin
+  ([80d8e1a2](https://github.com/storm-software/storm-stack/commit/80d8e1a2))
+- **nx:** Resolve issue with missing files in distribution
+  ([c63a1660](https://github.com/storm-software/storm-stack/commit/c63a1660))
+- **nx:** Resolved issue with copying `schema.json` assets in build package
+  ([b0b6d589](https://github.com/storm-software/storm-stack/commit/b0b6d589))
+- **nx:** Resolved issue with invalid dependency versions
+  ([88051f61](https://github.com/storm-software/storm-stack/commit/88051f61))
+- **nx:** Resolved issue with missing `generators.json` file in build package
+  ([2c6e8f05](https://github.com/storm-software/storm-stack/commit/2c6e8f05))
+
+### Miscellaneous
+
+- **nx:** Cleaned up the `project.json` configuration files
+  ([18ad4ff3](https://github.com/storm-software/storm-stack/commit/18ad4ff3))
+
+### Updated Dependencies
+
+- Updated core to 0.34.0
+
 ![Storm Software](https://public.storm-cdn.com/brand-banner.png)
 
 # Changelog for Storm Stack - Nx

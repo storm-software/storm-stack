@@ -1,3 +1,15 @@
+![Storm Software's logo banner](https://public.storm-cdn.com/brand-banner.png)
+
+# Changelog for Storm Stack - ESLint Plugin
+
+## [0.10.3](https://github.com/storm-software/storm-stack/releases/tag/eslint-plugin%400.10.3) (2025-08-17)
+
+### Miscellaneous
+
+- **core:** Renamed `storm:config` module to `storm:dotenv` so the former can be
+  used later
+  ([649345d9](https://github.com/storm-software/storm-stack/commit/649345d9))
+
 ![Storm Software](https://public.storm-cdn.com/brand-banner.png)
 
 # Changelog for Storm Stack - ESLint Plugin
