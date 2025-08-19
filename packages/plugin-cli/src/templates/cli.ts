@@ -31,6 +31,7 @@ import { isString } from "@stryke/type-checks/is-string";
 import { render } from "cfonts";
 import { defu } from "defu";
 import { renderUnicodeCompact } from "uqr";
+import { getStyles } from "../helpers/ansi-utils";
 import {
   LARGE_CONSOLE_WIDTH,
   LARGE_HELP_COLUMN_WIDTH,
@@ -195,6 +196,8 @@ export function CLIModule(context: CLIPluginContext) {
     }
   }
 
+  const styles = getStyles();
+
   return `
 /**
  * The CLI module provides a unified command-line interface for the Storm Stack runtime.
@@ -215,97 +218,28 @@ export type CLIRequestData = {
   argv: string[];
 };
 
-function replaceClose(
-  index: number,
-  string: string,
-  close: string,
-  replace: string,
-  head = string.slice(0, Math.max(0, index)) + replace,
-  tail = string.slice(Math.max(0, index + close.length)),
-  next = tail.indexOf(close)
-): string {
-  return head + (next < 0 ? tail : replaceClose(next, tail, close, replace));
-}
-
-function init(open: number, close: number, replace?: string) {
-  const _open = \`\\u001B[\${open}m\`;
-  const _close = \`\\u001B[\${close}m\`;
-  const _replace = replace || _open;
-
-  return (str: string) =>
-    str || !(str === "" || str === undefined)
-      ? \`\${str}\`.indexOf(_close, _open.length + 1) < 0
-        ? _open + str + _close
-        : _open +
-          replaceClose(
-            \`\${str}\`.indexOf(_close, _open.length + 1),
-            str,
-            _close,
-            _replace
-          ) +
-          _close
-      : "";
-}
-
-const colorDefs = {
-  reset: init(0, 0),
-  bold: init(1, 22, "\\u001B[22m\\u001B[1m"),
-  dim: init(2, 22, "\\u001B[22m\\u001B[2m"),
-  italic: init(3, 23),
-  underline: init(4, 24),
-  inverse: init(7, 27),
-  hidden: init(8, 28),
-  strikethrough: init(9, 29),
-  black: init(30, 39),
-  red: init(31, 39),
-  green: init(32, 39),
-  yellow: init(33, 39),
-  blue: init(34, 39),
-  magenta: init(35, 39),
-  cyan: init(36, 39),
-  white: init(37, 39),
-  gray: init(90, 39),
-  bgBlack: init(40, 49),
-  bgRed: init(41, 49),
-  bgGreen: init(42, 49),
-  bgYellow: init(43, 49),
-  bgBlue: init(44, 49),
-  bgMagenta: init(45, 49),
-  bgCyan: init(46, 49),
-  bgWhite: init(47, 49),
-  blackBright: init(90, 39),
-  redBright: init(91, 39),
-  greenBright: init(92, 39),
-  yellowBright: init(93, 39),
-  blueBright: init(94, 39),
-  magentaBright: init(95, 39),
-  cyanBright: init(96, 39),
-  whiteBright: init(97, 39),
-  bgBlackBright: init(100, 49),
-  bgRedBright: init(101, 49),
-  bgGreenBright: init(102, 49),
-  bgYellowBright: init(103, 49),
-  bgBlueBright: init(104, 49),
-  bgMagentaBright: init(105, 49),
-  bgCyanBright: init(106, 49),
-  bgWhiteBright: init(107, 49)
+const ansiEscapes = {
+  ${Object.keys(styles)
+    .filter(style => styles[style].open && styles[style].close)
+    .map(style => {
+      return `${style}: (text: string | number) => \`${styles[style].open}\${text}${styles[style].close}\``;
+    })
+    .join(",\n  ")}
 };
 
-export type ColorName = keyof typeof colorDefs;
-export type ColorFn = (text: string | number) => string;
-export type Colors = Record<ColorName, ColorFn>;
+export type ColorName = keyof typeof ansiEscapes;
 
 /**
  * An object containing functions for coloring text. Each function corresponds to a terminal color. See {@link ColorName} for available colors.
  */
-export const colors = new Proxy<Colors>({} as Colors, {
-  get(_, prop: string) {
+export const colors = new Proxy(ansiEscapes, {
+  get(target, prop: string) {
     try {
-      if ($storm.config.NO_COLOR && prop in colorDefs) {
-        return colorDefs[prop];
+      if (!$storm.env.isColorSupported) {
+        return (text: string | number) => String(text);
       }
 
-      return (text: string | number) => String(text);
+      return target[prop];
     } catch {
       return (text: string | number) => String(text);
     }
@@ -471,20 +405,7 @@ export function link(
         : \`\${text && text !== url ? \`\${text} at \` : ""} \${url}\`;
   }
 
-  return [
-    "\\u001B]",
-    "8",
-    ";",
-    ";",
-    url,
-    "\\u0007",
-    text || url,
-    "\\u001B]",
-    "8",
-    ";",
-    ";",
-    "\\u0007"
-  ].join("");
+  return \`\\u001B]8;;\${url}\\u0007\${text || url}\\u001B]8;;\\u0007\`;
 }
 
 /**
