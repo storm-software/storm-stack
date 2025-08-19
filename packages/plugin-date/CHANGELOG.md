@@ -2,6 +2,19 @@
 
 # Changelog for Storm Stack - Plugin Date
 
+## [0.2.0](https://github.com/storm-software/storm-stack/releases/tag/plugin-date%400.2.0) (2025-08-19)
+
+### Features
+
+- **core:** Update context to use runtime configuration values
+  ([1026697d](https://github.com/storm-software/storm-stack/commit/1026697d))
+
+### Updated Dependencies
+
+- Updated devkit to 0.11.0
+- Updated core to 0.35.0
+- Updated nx to 0.16.0
+
 ## [0.1.0](https://github.com/storm-software/storm-stack/releases/tag/plugin-date%400.1.0) (2025-08-17)
 
 ### Features

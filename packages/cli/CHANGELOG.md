@@ -2,6 +2,23 @@
 
 # Changelog for Storm Stack - CLI
 
+## [0.16.0](https://github.com/storm-software/storm-stack/releases/tag/cli%400.16.0) (2025-08-19)
+
+### Features
+
+- **core:** Update context to use runtime configuration values
+  ([1026697d](https://github.com/storm-software/storm-stack/commit/1026697d))
+
+### Updated Dependencies
+
+- Updated plugin-log-storage to 0.22.0
+- Updated plugin-log-sentry to 0.24.0
+- Updated plugin-storage-fs to 0.11.0
+- Updated plugin-cli to 0.27.0
+- Updated types to 0.16.0
+- Updated core to 0.35.0
+- Updated nx to 0.16.0
+
 ## [0.15.0](https://github.com/storm-software/storm-stack/releases/tag/cli%400.15.0) (2025-08-17)
 
 ### Features

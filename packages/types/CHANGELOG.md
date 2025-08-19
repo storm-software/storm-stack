@@ -2,6 +2,13 @@
 
 # Changelog for Storm Stack - Types
 
+## [0.16.0](https://github.com/storm-software/storm-stack/releases/tag/types%400.16.0) (2025-08-19)
+
+### Features
+
+- **core:** Update context to use runtime configuration values
+  ([1026697d](https://github.com/storm-software/storm-stack/commit/1026697d))
+
 ## [0.15.0](https://github.com/storm-software/storm-stack/releases/tag/types%400.15.0) (2025-08-17)
 
 ### Features

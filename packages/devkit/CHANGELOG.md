@@ -2,6 +2,18 @@
 
 # Changelog for Storm Stack - Devkit
 
+## [0.11.0](https://github.com/storm-software/storm-stack/releases/tag/devkit%400.11.0) (2025-08-19)
+
+### Features
+
+- **core:** Update context to use runtime configuration values
+  ([1026697d](https://github.com/storm-software/storm-stack/commit/1026697d))
+
+### Updated Dependencies
+
+- Updated types to 0.16.0
+- Updated core to 0.35.0
+
 ## [0.10.0](https://github.com/storm-software/storm-stack/releases/tag/devkit%400.10.0) (2025-08-17)
 
 ### Features
