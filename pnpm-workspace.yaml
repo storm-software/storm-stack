@@ -53,13 +53,13 @@ catalog:
   "@types/react": npm:types-react@rc
   "@types/react-dom": npm:types-react-dom@rc
   "@types/node": ^22.15.3
-  "@nx/devkit": 21.3.11
-  "@nx/eslint-plugin": 21.3.11
-  "@nx/jest": 21.3.11
-  "@nx/js": 21.3.11
-  "@nx/plugin": 21.3.11
-  "@nx/react": 21.3.11
-  "@nx/workspace": 21.3.11
+  "@nx/devkit": 21.4.0
+  "@nx/eslint-plugin": 21.4.0
+  "@nx/jest": 21.4.0
+  "@nx/js": 21.4.0
+  "@nx/plugin": 21.4.0
+  "@nx/react": 21.4.0
+  "@nx/workspace": 21.4.0
   "@storm-software/build-tools": latest
   "@storm-software/config": latest
   "@storm-software/config-tools": latest
@@ -126,7 +126,7 @@ catalog:
   minimatch: ^10.0.3
   nanotar: ^0.2.0
   prettier: 3.6.2
-  nx: 21.3.11
+  nx: 21.4.0
   jest: 30.0.4
   jest-environment-jsdom: 30.0.4
   jest-environment-node: 30.0.0-beta.3

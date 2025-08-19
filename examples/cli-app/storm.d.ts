@@ -2161,14 +2161,14 @@ declare module "storm:config" {
      * Build Identifier
      *
      * @title Build Identifier
-     * @defaultValue bab7ad1e-a033-454d-b2ac-82ff817c7e58
+     * @defaultValue 1efce5db-53ca-4ad0-8f03-0b60f6b2b475
      */
     BUILD_ID: string;
     /**
      * Build Timestamp
      *
      * @title Build Timestamp
-     * @defaultValue 2025-08-19T09:08:52.477Z
+     * @defaultValue 2025-08-19T22:14:49.547Z
      */
     BUILD_TIMESTAMP: string;
     /**
@@ -2644,7 +2644,7 @@ declare module "storm:config" {
      * Release Identifier
      *
      * @title Release Identifier
-     * @defaultValue b7ad1ea0-3335-4d72-ac82-ff817c7e58c4
+     * @defaultValue fce5db53-caca-400f-830b-60f6b2b47543
      */
     RELEASE_ID: string;
     /**
@@ -3796,56 +3796,104 @@ declare module "storm:cli" {
   export type CLIRequestData = {
     argv: string[];
   };
-  const colorDefs: {
-    reset: (str: string) => string;
-    bold: (str: string) => string;
-    dim: (str: string) => string;
-    italic: (str: string) => string;
-    underline: (str: string) => string;
-    inverse: (str: string) => string;
-    hidden: (str: string) => string;
-    strikethrough: (str: string) => string;
-    black: (str: string) => string;
-    red: (str: string) => string;
-    green: (str: string) => string;
-    yellow: (str: string) => string;
-    blue: (str: string) => string;
-    magenta: (str: string) => string;
-    cyan: (str: string) => string;
-    white: (str: string) => string;
-    gray: (str: string) => string;
-    bgBlack: (str: string) => string;
-    bgRed: (str: string) => string;
-    bgGreen: (str: string) => string;
-    bgYellow: (str: string) => string;
-    bgBlue: (str: string) => string;
-    bgMagenta: (str: string) => string;
-    bgCyan: (str: string) => string;
-    bgWhite: (str: string) => string;
-    blackBright: (str: string) => string;
-    redBright: (str: string) => string;
-    greenBright: (str: string) => string;
-    yellowBright: (str: string) => string;
-    blueBright: (str: string) => string;
-    magentaBright: (str: string) => string;
-    cyanBright: (str: string) => string;
-    whiteBright: (str: string) => string;
-    bgBlackBright: (str: string) => string;
-    bgRedBright: (str: string) => string;
-    bgGreenBright: (str: string) => string;
-    bgYellowBright: (str: string) => string;
-    bgBlueBright: (str: string) => string;
-    bgMagentaBright: (str: string) => string;
-    bgCyanBright: (str: string) => string;
-    bgWhiteBright: (str: string) => string;
+  const ansiEscapes: {
+    reset: (text: string | number) => string;
+    bold: (text: string | number) => string;
+    dim: (text: string | number) => string;
+    italic: (text: string | number) => string;
+    underline: (text: string | number) => string;
+    overline: (text: string | number) => string;
+    inverse: (text: string | number) => string;
+    hidden: (text: string | number) => string;
+    strikethrough: (text: string | number) => string;
+    black: (text: string | number) => string;
+    red: (text: string | number) => string;
+    green: (text: string | number) => string;
+    yellow: (text: string | number) => string;
+    blue: (text: string | number) => string;
+    magenta: (text: string | number) => string;
+    cyan: (text: string | number) => string;
+    white: (text: string | number) => string;
+    blackBright: (text: string | number) => string;
+    gray: (text: string | number) => string;
+    grey: (text: string | number) => string;
+    redBright: (text: string | number) => string;
+    greenBright: (text: string | number) => string;
+    yellowBright: (text: string | number) => string;
+    blueBright: (text: string | number) => string;
+    magentaBright: (text: string | number) => string;
+    cyanBright: (text: string | number) => string;
+    whiteBright: (text: string | number) => string;
+    bgBlack: (text: string | number) => string;
+    bgRed: (text: string | number) => string;
+    bgGreen: (text: string | number) => string;
+    bgYellow: (text: string | number) => string;
+    bgBlue: (text: string | number) => string;
+    bgMagenta: (text: string | number) => string;
+    bgCyan: (text: string | number) => string;
+    bgWhite: (text: string | number) => string;
+    bgBlackBright: (text: string | number) => string;
+    bgGray: (text: string | number) => string;
+    bgGrey: (text: string | number) => string;
+    bgRedBright: (text: string | number) => string;
+    bgGreenBright: (text: string | number) => string;
+    bgYellowBright: (text: string | number) => string;
+    bgBlueBright: (text: string | number) => string;
+    bgMagentaBright: (text: string | number) => string;
+    bgCyanBright: (text: string | number) => string;
+    bgWhiteBright: (text: string | number) => string;
   };
-  export type ColorName = keyof typeof colorDefs;
-  export type ColorFn = (text: string | number) => string;
-  export type Colors = Record<ColorName, ColorFn>;
+  export type ColorName = keyof typeof ansiEscapes;
   /**
    * An object containing functions for coloring text. Each function corresponds to a terminal color. See {@link ColorName} for available colors.
    */
-  export const colors: Colors;
+  export const colors: {
+    reset: (text: string | number) => string;
+    bold: (text: string | number) => string;
+    dim: (text: string | number) => string;
+    italic: (text: string | number) => string;
+    underline: (text: string | number) => string;
+    overline: (text: string | number) => string;
+    inverse: (text: string | number) => string;
+    hidden: (text: string | number) => string;
+    strikethrough: (text: string | number) => string;
+    black: (text: string | number) => string;
+    red: (text: string | number) => string;
+    green: (text: string | number) => string;
+    yellow: (text: string | number) => string;
+    blue: (text: string | number) => string;
+    magenta: (text: string | number) => string;
+    cyan: (text: string | number) => string;
+    white: (text: string | number) => string;
+    blackBright: (text: string | number) => string;
+    gray: (text: string | number) => string;
+    grey: (text: string | number) => string;
+    redBright: (text: string | number) => string;
+    greenBright: (text: string | number) => string;
+    yellowBright: (text: string | number) => string;
+    blueBright: (text: string | number) => string;
+    magentaBright: (text: string | number) => string;
+    cyanBright: (text: string | number) => string;
+    whiteBright: (text: string | number) => string;
+    bgBlack: (text: string | number) => string;
+    bgRed: (text: string | number) => string;
+    bgGreen: (text: string | number) => string;
+    bgYellow: (text: string | number) => string;
+    bgBlue: (text: string | number) => string;
+    bgMagenta: (text: string | number) => string;
+    bgCyan: (text: string | number) => string;
+    bgWhite: (text: string | number) => string;
+    bgBlackBright: (text: string | number) => string;
+    bgGray: (text: string | number) => string;
+    bgGrey: (text: string | number) => string;
+    bgRedBright: (text: string | number) => string;
+    bgGreenBright: (text: string | number) => string;
+    bgYellowBright: (text: string | number) => string;
+    bgBlueBright: (text: string | number) => string;
+    bgMagentaBright: (text: string | number) => string;
+    bgCyanBright: (text: string | number) => string;
+    bgWhiteBright: (text: string | number) => string;
+  };
   /**
    * Gets a color function by name, with an option for a fallback color if the requested color is not found.
    *
@@ -4060,8 +4108,6 @@ declare module "storm:cli" {
   export {};
   export type __ΩCLIRequestData = any[];
   export type __ΩColorName = any[];
-  export type __ΩColorFn = any[];
-  export type __ΩColors = any[];
   export type __ΩTextPromptOptions = any[];
   export type __ΩConfirmPromptOptions = any[];
   export type __ΩSelectPromptOptions = any[];
