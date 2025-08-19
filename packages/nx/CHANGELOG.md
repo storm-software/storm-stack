@@ -2,6 +2,17 @@
 
 # Changelog for Storm Stack - Nx
 
+## [0.16.0](https://github.com/storm-software/storm-stack/releases/tag/nx%400.16.0) (2025-08-19)
+
+### Features
+
+- **core:** Update context to use runtime configuration values
+  ([1026697d](https://github.com/storm-software/storm-stack/commit/1026697d))
+
+### Updated Dependencies
+
+- Updated core to 0.35.0
+
 ## [0.15.0](https://github.com/storm-software/storm-stack/releases/tag/nx%400.15.0) (2025-08-17)
 
 ### Features

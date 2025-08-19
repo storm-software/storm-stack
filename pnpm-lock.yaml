@@ -887,7 +887,7 @@ importers:
         version: 1.4.11(@rspack/core@1.4.11(@swc/helpers@0.5.17))(@types/express@4.17.23)(webpack@5.101.3(@swc/core@1.12.11(@swc/helpers@0.5.17))(esbuild@0.25.9))
       '@storm-software/build-tools':
         specifier: 'catalog:'
-        version: 0.153.6(@nx/devkit@21.4.0(nx@21.3.11(@swc-node/register@1.10.10(@swc/core@1.12.11(@swc/helpers@0.5.17))(@swc/types@0.1.24)(typescript@6.0.0-dev.20250810))(@swc/core@1.12.11(@swc/helpers@0.5.17))))(@nx/js@21.4.0(@babel/traverse@8.0.0-beta.1)(@swc-node/register@1.10.10(@swc/core@1.12.11(@swc/helpers@0.5.17))(@swc/types@0.1.24)(typescript@6.0.0-dev.20250810))(@swc/core@1.12.11(@swc/helpers@0.5.17))(nx@21.3.11(@swc-node/register@1.10.10(@swc/core@1.12.11(@swc/helpers@0.5.17))(@swc/types@0.1.24)(typescript@6.0.0-dev.20250810))(@swc/core@1.12.11(@swc/helpers@0.5.17)))(verdaccio@6.1.2(typanion@3.14.0)))(@swc/helpers@0.5.17)(nx@21.3.11(@swc-node/register@1.10.10(@swc/core@1.12.11(@swc/helpers@0.5.17))(@swc/types@0.1.24)(typescript@6.0.0-dev.20250810))(@swc/core@1.12.11(@swc/helpers@0.5.17)))(typescript@6.0.0-dev.20250810)
+        version: 0.153.6(@nx/devkit@21.4.0(nx@21.4.0(@swc-node/register@1.10.10(@swc/core@1.12.11(@swc/helpers@0.5.17))(@swc/types@0.1.24)(typescript@6.0.0-dev.20250810))(@swc/core@1.12.11(@swc/helpers@0.5.17))))(@nx/js@21.4.0(@babel/traverse@8.0.0-beta.1)(@swc-node/register@1.10.10(@swc/core@1.12.11(@swc/helpers@0.5.17))(@swc/types@0.1.24)(typescript@6.0.0-dev.20250810))(@swc/core@1.12.11(@swc/helpers@0.5.17))(nx@21.4.0(@swc-node/register@1.10.10(@swc/core@1.12.11(@swc/helpers@0.5.17))(@swc/types@0.1.24)(typescript@6.0.0-dev.20250810))(@swc/core@1.12.11(@swc/helpers@0.5.17)))(verdaccio@6.1.2(typanion@3.14.0)))(@swc/helpers@0.5.17)(nx@21.4.0(@swc-node/register@1.10.10(@swc/core@1.12.11(@swc/helpers@0.5.17))(@swc/types@0.1.24)(typescript@6.0.0-dev.20250810))(@swc/core@1.12.11(@swc/helpers@0.5.17)))(typescript@6.0.0-dev.20250810)
       '@storm-software/config':
         specifier: 'catalog:'
         version: 1.128.6
@@ -896,7 +896,7 @@ importers:
         version: 1.180.7
       '@storm-software/esbuild':
         specifier: 'catalog:'
-        version: 0.47.7(@babel/traverse@8.0.0-beta.1)(@microsoft/api-extractor@7.52.8(@types/node@22.16.2))(@swc-node/register@1.10.10(@swc/core@1.12.11(@swc/helpers@0.5.17))(@swc/types@0.1.24)(typescript@6.0.0-dev.20250810))(@swc/core@1.12.11(@swc/helpers@0.5.17))(@swc/helpers@0.5.17)(jiti@2.4.2)(nx@21.3.11(@swc-node/register@1.10.10(@swc/core@1.12.11(@swc/helpers@0.5.17))(@swc/types@0.1.24)(typescript@6.0.0-dev.20250810))(@swc/core@1.12.11(@swc/helpers@0.5.17)))(postcss@8.5.6)(tsx@4.20.3)(typescript@6.0.0-dev.20250810)(verdaccio@6.1.2(typanion@3.14.0))(yaml@2.8.1)
+        version: 0.47.7(@babel/traverse@8.0.0-beta.1)(@microsoft/api-extractor@7.52.8(@types/node@22.16.2))(@swc-node/register@1.10.10(@swc/core@1.12.11(@swc/helpers@0.5.17))(@swc/types@0.1.24)(typescript@6.0.0-dev.20250810))(@swc/core@1.12.11(@swc/helpers@0.5.17))(@swc/helpers@0.5.17)(jiti@2.4.2)(nx@21.4.0(@swc-node/register@1.10.10(@swc/core@1.12.11(@swc/helpers@0.5.17))(@swc/types@0.1.24)(typescript@6.0.0-dev.20250810))(@swc/core@1.12.11(@swc/helpers@0.5.17)))(postcss@8.5.6)(tsx@4.20.3)(typescript@6.0.0-dev.20250810)(verdaccio@6.1.2(typanion@3.14.0))(yaml@2.8.1)
       '@storm-software/tsdoc':
         specifier: '*'
         version: 0.8.6(@microsoft/api-extractor@7.52.8(@types/node@22.16.2))(@microsoft/tsdoc-config@0.17.1)(@microsoft/tsdoc@0.15.1)
@@ -905,19 +905,19 @@ importers:
         version: link:../types
       '@stryke/capnp':
         specifier: 'catalog:'
-        version: 0.10.8(nx@21.3.11(@swc-node/register@1.10.10(@swc/core@1.12.11(@swc/helpers@0.5.17))(@swc/types@0.1.24)(typescript@6.0.0-dev.20250810))(@swc/core@1.12.11(@swc/helpers@0.5.17)))(typescript@6.0.0-dev.20250810)
+        version: 0.10.8(nx@21.4.0(@swc-node/register@1.10.10(@swc/core@1.12.11(@swc/helpers@0.5.17))(@swc/types@0.1.24)(typescript@6.0.0-dev.20250810))(@swc/core@1.12.11(@swc/helpers@0.5.17)))(typescript@6.0.0-dev.20250810)
       '@stryke/convert':
         specifier: 'catalog:'
         version: 0.3.0
       '@stryke/env':
         specifier: 'catalog:'
-        version: 0.17.1(nx@21.3.11(@swc-node/register@1.10.10(@swc/core@1.12.11(@swc/helpers@0.5.17))(@swc/types@0.1.24)(typescript@6.0.0-dev.20250810))(@swc/core@1.12.11(@swc/helpers@0.5.17)))
+        version: 0.17.1(nx@21.4.0(@swc-node/register@1.10.10(@swc/core@1.12.11(@swc/helpers@0.5.17))(@swc/types@0.1.24)(typescript@6.0.0-dev.20250810))(@swc/core@1.12.11(@swc/helpers@0.5.17)))
       '@stryke/fs':
         specifier: 'catalog:'
-        version: 0.23.3(nx@21.3.11(@swc-node/register@1.10.10(@swc/core@1.12.11(@swc/helpers@0.5.17))(@swc/types@0.1.24)(typescript@6.0.0-dev.20250810))(@swc/core@1.12.11(@swc/helpers@0.5.17)))
+        version: 0.23.3(nx@21.4.0(@swc-node/register@1.10.10(@swc/core@1.12.11(@swc/helpers@0.5.17))(@swc/types@0.1.24)(typescript@6.0.0-dev.20250810))(@swc/core@1.12.11(@swc/helpers@0.5.17)))
       '@stryke/hash':
         specifier: 'catalog:'
-        version: 0.10.0(nx@21.3.11(@swc-node/register@1.10.10(@swc/core@1.12.11(@swc/helpers@0.5.17))(@swc/types@0.1.24)(typescript@6.0.0-dev.20250810))(@swc/core@1.12.11(@swc/helpers@0.5.17)))
+        version: 0.10.0(nx@21.4.0(@swc-node/register@1.10.10(@swc/core@1.12.11(@swc/helpers@0.5.17))(@swc/types@0.1.24)(typescript@6.0.0-dev.20250810))(@swc/core@1.12.11(@swc/helpers@0.5.17)))
       '@stryke/helpers':
         specifier: 'catalog:'
         version: 0.7.2
@@ -935,7 +935,7 @@ importers:
         version: 0.3.8
       '@stryke/unique-id':
         specifier: 'catalog:'
-        version: 0.3.3(nx@21.3.11(@swc-node/register@1.10.10(@swc/core@1.12.11(@swc/helpers@0.5.17))(@swc/types@0.1.24)(typescript@6.0.0-dev.20250810))(@swc/core@1.12.11(@swc/helpers@0.5.17)))
+        version: 0.3.3(nx@21.4.0(@swc-node/register@1.10.10(@swc/core@1.12.11(@swc/helpers@0.5.17))(@swc/types@0.1.24)(typescript@6.0.0-dev.20250810))(@swc/core@1.12.11(@swc/helpers@0.5.17)))
       astro:
         specifier: ^3.0.0
         version: 3.6.5(@types/node@22.16.2)(terser@5.43.1)(typescript@6.0.0-dev.20250810)
@@ -1017,7 +1017,7 @@ importers:
         version: 0.15.1
       '@storm-software/testing-tools':
         specifier: 'catalog:'
-        version: 1.115.6(@nx/jest@21.3.11(@babel/traverse@8.0.0-beta.1)(@swc-node/register@1.10.10(@swc/core@1.12.11(@swc/helpers@0.5.17))(@swc/types@0.1.24)(typescript@6.0.0-dev.20250810))(@swc/core@1.12.11(@swc/helpers@0.5.17))(@types/node@22.16.2)(babel-plugin-macros@3.1.0)(nx@21.3.11(@swc-node/register@1.10.10(@swc/core@1.12.11(@swc/helpers@0.5.17))(@swc/types@0.1.24)(typescript@6.0.0-dev.20250810))(@swc/core@1.12.11(@swc/helpers@0.5.17)))(ts-node@10.9.2(@swc/core@1.12.11(@swc/helpers@0.5.17))(@types/node@22.16.2)(typescript@6.0.0-dev.20250810))(typescript@6.0.0-dev.20250810)(verdaccio@6.1.2(typanion@3.14.0)))(jest@30.0.4(@types/node@22.16.2)(babel-plugin-macros@3.1.0)(ts-node@10.9.2(@swc/core@1.12.11(@swc/helpers@0.5.17))(@types/node@22.16.2)(typescript@6.0.0-dev.20250810)))
+        version: 1.115.6(@nx/jest@21.3.11(@babel/traverse@8.0.0-beta.1)(@swc-node/register@1.10.10(@swc/core@1.12.11(@swc/helpers@0.5.17))(@swc/types@0.1.24)(typescript@6.0.0-dev.20250810))(@swc/core@1.12.11(@swc/helpers@0.5.17))(@types/node@22.16.2)(babel-plugin-macros@3.1.0)(nx@21.4.0(@swc-node/register@1.10.10(@swc/core@1.12.11(@swc/helpers@0.5.17))(@swc/types@0.1.24)(typescript@6.0.0-dev.20250810))(@swc/core@1.12.11(@swc/helpers@0.5.17)))(ts-node@10.9.2(@swc/core@1.12.11(@swc/helpers@0.5.17))(@types/node@22.16.2)(typescript@6.0.0-dev.20250810))(typescript@6.0.0-dev.20250810)(verdaccio@6.1.2(typanion@3.14.0)))(jest@30.0.4(@types/node@22.16.2)(babel-plugin-macros@3.1.0)(ts-node@10.9.2(@swc/core@1.12.11(@swc/helpers@0.5.17))(@types/node@22.16.2)(typescript@6.0.0-dev.20250810)))
       '@stryke/types':
         specifier: 'catalog:'
         version: 0.8.9
@@ -20429,12 +20429,12 @@ snapshots:
       - typescript
       - verdaccio
 
-  '@nx/jest@21.3.11(@babel/traverse@8.0.0-beta.1)(@swc-node/register@1.10.10(@swc/core@1.12.11(@swc/helpers@0.5.17))(@swc/types@0.1.24)(typescript@6.0.0-dev.20250810))(@swc/core@1.12.11(@swc/helpers@0.5.17))(@types/node@22.16.2)(babel-plugin-macros@3.1.0)(nx@21.3.11(@swc-node/register@1.10.10(@swc/core@1.12.11(@swc/helpers@0.5.17))(@swc/types@0.1.24)(typescript@6.0.0-dev.20250810))(@swc/core@1.12.11(@swc/helpers@0.5.17)))(ts-node@10.9.2(@swc/core@1.12.11(@swc/helpers@0.5.17))(@types/node@22.16.2)(typescript@6.0.0-dev.20250810))(typescript@6.0.0-dev.20250810)(verdaccio@6.1.2(typanion@3.14.0))':
+  '@nx/jest@21.3.11(@babel/traverse@8.0.0-beta.1)(@swc-node/register@1.10.10(@swc/core@1.12.11(@swc/helpers@0.5.17))(@swc/types@0.1.24)(typescript@6.0.0-dev.20250810))(@swc/core@1.12.11(@swc/helpers@0.5.17))(@types/node@22.16.2)(babel-plugin-macros@3.1.0)(nx@21.4.0(@swc-node/register@1.10.10(@swc/core@1.12.11(@swc/helpers@0.5.17))(@swc/types@0.1.24)(typescript@6.0.0-dev.20250810))(@swc/core@1.12.11(@swc/helpers@0.5.17)))(ts-node@10.9.2(@swc/core@1.12.11(@swc/helpers@0.5.17))(@types/node@22.16.2)(typescript@6.0.0-dev.20250810))(typescript@6.0.0-dev.20250810)(verdaccio@6.1.2(typanion@3.14.0))':
     dependencies:
       '@jest/reporters': 30.0.5
       '@jest/test-result': 30.0.5
-      '@nx/devkit': 21.3.11(nx@21.3.11(@swc-node/register@1.10.10(@swc/core@1.12.11(@swc/helpers@0.5.17))(@swc/types@0.1.24)(typescript@6.0.0-dev.20250810))(@swc/core@1.12.11(@swc/helpers@0.5.17)))
-      '@nx/js': 21.3.11(@babel/traverse@8.0.0-beta.1)(@swc-node/register@1.10.10(@swc/core@1.12.11(@swc/helpers@0.5.17))(@swc/types@0.1.24)(typescript@6.0.0-dev.20250810))(@swc/core@1.12.11(@swc/helpers@0.5.17))(nx@21.3.11(@swc-node/register@1.10.10(@swc/core@1.12.11(@swc/helpers@0.5.17))(@swc/types@0.1.24)(typescript@6.0.0-dev.20250810))(@swc/core@1.12.11(@swc/helpers@0.5.17)))(verdaccio@6.1.2(typanion@3.14.0))
+      '@nx/devkit': 21.3.11(nx@21.4.0(@swc-node/register@1.10.10(@swc/core@1.12.11(@swc/helpers@0.5.17))(@swc/types@0.1.24)(typescript@6.0.0-dev.20250810))(@swc/core@1.12.11(@swc/helpers@0.5.17)))
+      '@nx/js': 21.3.11(@babel/traverse@8.0.0-beta.1)(@swc-node/register@1.10.10(@swc/core@1.12.11(@swc/helpers@0.5.17))(@swc/types@0.1.24)(typescript@6.0.0-dev.20250810))(@swc/core@1.12.11(@swc/helpers@0.5.17))(nx@21.4.0(@swc-node/register@1.10.10(@swc/core@1.12.11(@swc/helpers@0.5.17))(@swc/types@0.1.24)(typescript@6.0.0-dev.20250810))(@swc/core@1.12.11(@swc/helpers@0.5.17)))(verdaccio@6.1.2(typanion@3.14.0))
       '@phenomnomnominal/tsquery': 5.0.1(typescript@6.0.0-dev.20250810)
       identity-obj-proxy: 3.0.0
       jest-config: 30.0.5(@types/node@22.16.2)(babel-plugin-macros@3.1.0)(ts-node@10.9.2(@swc/core@1.12.11(@swc/helpers@0.5.17))(@types/node@22.16.2)(typescript@6.0.0-dev.20250810))
@@ -20584,7 +20584,7 @@ snapshots:
       - nx
       - supports-color
 
-  '@nx/js@21.3.11(@babel/traverse@8.0.0-beta.1)(@swc-node/register@1.10.10(@swc/core@1.12.11(@swc/helpers@0.5.17))(@swc/types@0.1.24)(typescript@6.0.0-dev.20250810))(@swc/core@1.12.11(@swc/helpers@0.5.17))(nx@21.3.11(@swc-node/register@1.10.10(@swc/core@1.12.11(@swc/helpers@0.5.17))(@swc/types@0.1.24)(typescript@6.0.0-dev.20250810))(@swc/core@1.12.11(@swc/helpers@0.5.17)))(verdaccio@6.1.2(typanion@3.14.0))':
+  '@nx/js@21.3.11(@babel/traverse@8.0.0-beta.1)(@swc-node/register@1.10.10(@swc/core@1.12.11(@swc/helpers@0.5.17))(@swc/types@0.1.24)(typescript@6.0.0-dev.20250810))(@swc/core@1.12.11(@swc/helpers@0.5.17))(nx@21.4.0(@swc-node/register@1.10.10(@swc/core@1.12.11(@swc/helpers@0.5.17))(@swc/types@0.1.24)(typescript@6.0.0-dev.20250810))(@swc/core@1.12.11(@swc/helpers@0.5.17)))(verdaccio@6.1.2(typanion@3.14.0))':
     dependencies:
       '@babel/core': 7.28.3
       '@babel/plugin-proposal-decorators': 7.28.0(@babel/core@7.28.3)
@@ -20593,7 +20593,7 @@ snapshots:
       '@babel/preset-env': 7.28.3(@babel/core@7.28.3)
       '@babel/preset-typescript': 7.27.1(@babel/core@7.28.3)
       '@babel/runtime': 7.28.3
-      '@nx/devkit': 21.3.11(nx@21.3.11(@swc-node/register@1.10.10(@swc/core@1.12.11(@swc/helpers@0.5.17))(@swc/types@0.1.24)(typescript@6.0.0-dev.20250810))(@swc/core@1.12.11(@swc/helpers@0.5.17)))
+      '@nx/devkit': 21.3.11(nx@21.4.0(@swc-node/register@1.10.10(@swc/core@1.12.11(@swc/helpers@0.5.17))(@swc/types@0.1.24)(typescript@6.0.0-dev.20250810))(@swc/core@1.12.11(@swc/helpers@0.5.17)))
       '@nx/workspace': 21.3.11(@swc-node/register@1.10.10(@swc/core@1.12.11(@swc/helpers@0.5.17))(@swc/types@0.1.24)(typescript@6.0.0-dev.20250810))(@swc/core@1.12.11(@swc/helpers@0.5.17))
       '@zkochan/js-yaml': 0.0.7
       babel-plugin-const-enum: 1.2.0(@babel/core@7.28.3)
@@ -20789,7 +20789,7 @@ snapshots:
       - nx
       - supports-color
 
-  '@nx/js@21.4.0(@babel/traverse@8.0.0-beta.1)(@swc-node/register@1.10.10(@swc/core@1.12.11(@swc/helpers@0.5.17))(@swc/types@0.1.24)(typescript@6.0.0-dev.20250810))(@swc/core@1.12.11(@swc/helpers@0.5.17))(nx@21.3.11(@swc-node/register@1.10.10(@swc/core@1.12.11(@swc/helpers@0.5.17))(@swc/types@0.1.24)(typescript@6.0.0-dev.20250810))(@swc/core@1.12.11(@swc/helpers@0.5.17)))(verdaccio@6.1.2(typanion@3.14.0))':
+  '@nx/js@21.4.0(@babel/traverse@8.0.0-beta.1)(@swc-node/register@1.10.10(@swc/core@1.12.11(@swc/helpers@0.5.17))(@swc/types@0.1.24)(typescript@6.0.0-dev.20250810))(@swc/core@1.12.11(@swc/helpers@0.5.17))(nx@21.4.0(@swc-node/register@1.10.10(@swc/core@1.12.11(@swc/helpers@0.5.17))(@swc/types@0.1.24)(typescript@6.0.0-dev.20250810))(@swc/core@1.12.11(@swc/helpers@0.5.17)))(verdaccio@6.1.2(typanion@3.14.0))':
     dependencies:
       '@babel/core': 7.28.3
       '@babel/plugin-proposal-decorators': 7.28.0(@babel/core@7.28.3)
@@ -20798,7 +20798,7 @@ snapshots:
       '@babel/preset-env': 7.28.3(@babel/core@7.28.3)
       '@babel/preset-typescript': 7.27.1(@babel/core@7.28.3)
       '@babel/runtime': 7.28.3
-      '@nx/devkit': 21.4.0(nx@21.3.11(@swc-node/register@1.10.10(@swc/core@1.12.11(@swc/helpers@0.5.17))(@swc/types@0.1.24)(typescript@6.0.0-dev.20250810))(@swc/core@1.12.11(@swc/helpers@0.5.17)))
+      '@nx/devkit': 21.4.0(nx@21.4.0(@swc-node/register@1.10.10(@swc/core@1.12.11(@swc/helpers@0.5.17))(@swc/types@0.1.24)(typescript@6.0.0-dev.20250810))(@swc/core@1.12.11(@swc/helpers@0.5.17)))
       '@nx/workspace': 21.4.0(@swc-node/register@1.10.10(@swc/core@1.12.11(@swc/helpers@0.5.17))(@swc/types@0.1.24)(typescript@6.0.0-dev.20250810))(@swc/core@1.12.11(@swc/helpers@0.5.17))
       '@zkochan/js-yaml': 0.0.7
       babel-plugin-const-enum: 1.2.0(@babel/core@7.28.3)
@@ -21948,20 +21948,6 @@ snapshots:
     transitivePeerDependencies:
       - '@swc/helpers'
 
-  '@storm-software/build-tools@0.153.6(@nx/devkit@21.4.0(nx@21.3.11(@swc-node/register@1.10.10(@swc/core@1.12.11(@swc/helpers@0.5.17))(@swc/types@0.1.24)(typescript@6.0.0-dev.20250810))(@swc/core@1.12.11(@swc/helpers@0.5.17))))(@nx/js@21.4.0(@babel/traverse@8.0.0-beta.1)(@swc-node/register@1.10.10(@swc/core@1.12.11(@swc/helpers@0.5.17))(@swc/types@0.1.24)(typescript@6.0.0-dev.20250810))(@swc/core@1.12.11(@swc/helpers@0.5.17))(nx@21.3.11(@swc-node/register@1.10.10(@swc/core@1.12.11(@swc/helpers@0.5.17))(@swc/types@0.1.24)(typescript@6.0.0-dev.20250810))(@swc/core@1.12.11(@swc/helpers@0.5.17)))(verdaccio@6.1.2(typanion@3.14.0)))(@swc/helpers@0.5.17)(nx@21.3.11(@swc-node/register@1.10.10(@swc/core@1.12.11(@swc/helpers@0.5.17))(@swc/types@0.1.24)(typescript@6.0.0-dev.20250810))(@swc/core@1.12.11(@swc/helpers@0.5.17)))(typescript@6.0.0-dev.20250810)':
-    dependencies:
-      '@nx/devkit': 21.4.0(nx@21.3.11(@swc-node/register@1.10.10(@swc/core@1.12.11(@swc/helpers@0.5.17))(@swc/types@0.1.24)(typescript@6.0.0-dev.20250810))(@swc/core@1.12.11(@swc/helpers@0.5.17)))
-      '@nx/js': 21.4.0(@babel/traverse@8.0.0-beta.1)(@swc-node/register@1.10.10(@swc/core@1.12.11(@swc/helpers@0.5.17))(@swc/types@0.1.24)(typescript@6.0.0-dev.20250810))(@swc/core@1.12.11(@swc/helpers@0.5.17))(nx@21.3.11(@swc-node/register@1.10.10(@swc/core@1.12.11(@swc/helpers@0.5.17))(@swc/types@0.1.24)(typescript@6.0.0-dev.20250810))(@swc/core@1.12.11(@swc/helpers@0.5.17)))(verdaccio@6.1.2(typanion@3.14.0))
-      '@swc/core': 1.7.26(@swc/helpers@0.5.17)
-      glob: 11.0.3
-      nx: 21.3.11(@swc-node/register@1.10.10(@swc/core@1.12.11(@swc/helpers@0.5.17))(@swc/types@0.1.24)(typescript@6.0.0-dev.20250810))(@swc/core@1.12.11(@swc/helpers@0.5.17))
-      resolve: 1.22.8
-      resolve-from: 5.0.0
-      rollup: 4.46.3
-      typescript: 6.0.0-dev.20250810
-    transitivePeerDependencies:
-      - '@swc/helpers'
-
   '@storm-software/build-tools@0.153.6(@nx/devkit@21.4.0(nx@21.3.11(@swc-node/register@1.10.10(@swc/core@1.7.26(@swc/helpers@0.5.17))(@swc/types@0.1.24)(typescript@6.0.0-dev.20250810))(@swc/core@1.7.26(@swc/helpers@0.5.17))))(@nx/js@21.4.0(@babel/traverse@7.28.3)(@swc-node/register@1.10.10(@swc/core@1.7.26(@swc/helpers@0.5.17))(@swc/types@0.1.24)(typescript@6.0.0-dev.20250810))(@swc/core@1.7.26(@swc/helpers@0.5.17))(nx@21.3.11(@swc-node/register@1.10.10(@swc/core@1.7.26(@swc/helpers@0.5.17))(@swc/types@0.1.24)(typescript@6.0.0-dev.20250810))(@swc/core@1.7.26(@swc/helpers@0.5.17)))(verdaccio@6.1.2(typanion@3.14.0)))(@swc/helpers@0.5.17)(nx@21.3.11(@swc-node/register@1.10.10(@swc/core@1.7.26(@swc/helpers@0.5.17))(@swc/types@0.1.24)(typescript@6.0.0-dev.20250810))(@swc/core@1.7.26(@swc/helpers@0.5.17)))(typescript@6.0.0-dev.20250810)':
     dependencies:
       '@nx/devkit': 21.4.0(nx@21.3.11(@swc-node/register@1.10.10(@swc/core@1.7.26(@swc/helpers@0.5.17))(@swc/types@0.1.24)(typescript@6.0.0-dev.20250810))(@swc/core@1.7.26(@swc/helpers@0.5.17)))
@@ -21980,6 +21966,20 @@ snapshots:
     dependencies:
       '@nx/devkit': 21.4.0(nx@21.4.0(@swc-node/register@1.10.10(@swc/core@1.12.11(@swc/helpers@0.5.17))(@swc/types@0.1.24)(typescript@6.0.0-dev.20250810))(@swc/core@1.12.11(@swc/helpers@0.5.17)))
       '@nx/js': 21.4.0(@babel/traverse@7.28.3)(@swc-node/register@1.10.10(@swc/core@1.12.11(@swc/helpers@0.5.17))(@swc/types@0.1.24)(typescript@6.0.0-dev.20250810))(@swc/core@1.12.11(@swc/helpers@0.5.17))(nx@21.4.0(@swc-node/register@1.10.10(@swc/core@1.12.11(@swc/helpers@0.5.17))(@swc/types@0.1.24)(typescript@6.0.0-dev.20250810))(@swc/core@1.12.11(@swc/helpers@0.5.17)))(verdaccio@6.1.2(typanion@3.14.0))
+      '@swc/core': 1.7.26(@swc/helpers@0.5.17)
+      glob: 11.0.3
+      nx: 21.4.0(@swc-node/register@1.10.10(@swc/core@1.12.11(@swc/helpers@0.5.17))(@swc/types@0.1.24)(typescript@6.0.0-dev.20250810))(@swc/core@1.12.11(@swc/helpers@0.5.17))
+      resolve: 1.22.8
+      resolve-from: 5.0.0
+      rollup: 4.46.3
+      typescript: 6.0.0-dev.20250810
+    transitivePeerDependencies:
+      - '@swc/helpers'
+
+  '@storm-software/build-tools@0.153.6(@nx/devkit@21.4.0(nx@21.4.0(@swc-node/register@1.10.10(@swc/core@1.12.11(@swc/helpers@0.5.17))(@swc/types@0.1.24)(typescript@6.0.0-dev.20250810))(@swc/core@1.12.11(@swc/helpers@0.5.17))))(@nx/js@21.4.0(@babel/traverse@8.0.0-beta.1)(@swc-node/register@1.10.10(@swc/core@1.12.11(@swc/helpers@0.5.17))(@swc/types@0.1.24)(typescript@6.0.0-dev.20250810))(@swc/core@1.12.11(@swc/helpers@0.5.17))(nx@21.4.0(@swc-node/register@1.10.10(@swc/core@1.12.11(@swc/helpers@0.5.17))(@swc/types@0.1.24)(typescript@6.0.0-dev.20250810))(@swc/core@1.12.11(@swc/helpers@0.5.17)))(verdaccio@6.1.2(typanion@3.14.0)))(@swc/helpers@0.5.17)(nx@21.4.0(@swc-node/register@1.10.10(@swc/core@1.12.11(@swc/helpers@0.5.17))(@swc/types@0.1.24)(typescript@6.0.0-dev.20250810))(@swc/core@1.12.11(@swc/helpers@0.5.17)))(typescript@6.0.0-dev.20250810)':
+    dependencies:
+      '@nx/devkit': 21.4.0(nx@21.4.0(@swc-node/register@1.10.10(@swc/core@1.12.11(@swc/helpers@0.5.17))(@swc/types@0.1.24)(typescript@6.0.0-dev.20250810))(@swc/core@1.12.11(@swc/helpers@0.5.17)))
+      '@nx/js': 21.4.0(@babel/traverse@8.0.0-beta.1)(@swc-node/register@1.10.10(@swc/core@1.12.11(@swc/helpers@0.5.17))(@swc/types@0.1.24)(typescript@6.0.0-dev.20250810))(@swc/core@1.12.11(@swc/helpers@0.5.17))(nx@21.4.0(@swc-node/register@1.10.10(@swc/core@1.12.11(@swc/helpers@0.5.17))(@swc/types@0.1.24)(typescript@6.0.0-dev.20250810))(@swc/core@1.12.11(@swc/helpers@0.5.17)))(verdaccio@6.1.2(typanion@3.14.0))
       '@swc/core': 1.7.26(@swc/helpers@0.5.17)
       glob: 11.0.3
       nx: 21.4.0(@swc-node/register@1.10.10(@swc/core@1.12.11(@swc/helpers@0.5.17))(@swc/types@0.1.24)(typescript@6.0.0-dev.20250810))(@swc/core@1.12.11(@swc/helpers@0.5.17))
@@ -22149,11 +22149,11 @@ snapshots:
       - verdaccio
       - yaml
 
-  '@storm-software/esbuild@0.47.7(@babel/traverse@8.0.0-beta.1)(@microsoft/api-extractor@7.52.8(@types/node@22.16.2))(@swc-node/register@1.10.10(@swc/core@1.12.11(@swc/helpers@0.5.17))(@swc/types@0.1.24)(typescript@6.0.0-dev.20250810))(@swc/core@1.12.11(@swc/helpers@0.5.17))(@swc/helpers@0.5.17)(jiti@2.4.2)(nx@21.3.11(@swc-node/register@1.10.10(@swc/core@1.12.11(@swc/helpers@0.5.17))(@swc/types@0.1.24)(typescript@6.0.0-dev.20250810))(@swc/core@1.12.11(@swc/helpers@0.5.17)))(postcss@8.5.6)(tsx@4.20.3)(typescript@6.0.0-dev.20250810)(verdaccio@6.1.2(typanion@3.14.0))(yaml@2.8.1)':
+  '@storm-software/esbuild@0.47.7(@babel/traverse@8.0.0-beta.1)(@microsoft/api-extractor@7.52.8(@types/node@22.16.2))(@swc-node/register@1.10.10(@swc/core@1.12.11(@swc/helpers@0.5.17))(@swc/types@0.1.24)(typescript@6.0.0-dev.20250810))(@swc/core@1.12.11(@swc/helpers@0.5.17))(@swc/helpers@0.5.17)(jiti@2.4.2)(nx@21.4.0(@swc-node/register@1.10.10(@swc/core@1.12.11(@swc/helpers@0.5.17))(@swc/types@0.1.24)(typescript@6.0.0-dev.20250810))(@swc/core@1.12.11(@swc/helpers@0.5.17)))(postcss@8.5.6)(tsx@4.20.3)(typescript@6.0.0-dev.20250810)(verdaccio@6.1.2(typanion@3.14.0))(yaml@2.8.1)':
     dependencies:
-      '@nx/devkit': 21.4.0(nx@21.3.11(@swc-node/register@1.10.10(@swc/core@1.12.11(@swc/helpers@0.5.17))(@swc/types@0.1.24)(typescript@6.0.0-dev.20250810))(@swc/core@1.12.11(@swc/helpers@0.5.17)))
-      '@nx/js': 21.4.0(@babel/traverse@8.0.0-beta.1)(@swc-node/register@1.10.10(@swc/core@1.12.11(@swc/helpers@0.5.17))(@swc/types@0.1.24)(typescript@6.0.0-dev.20250810))(@swc/core@1.12.11(@swc/helpers@0.5.17))(nx@21.3.11(@swc-node/register@1.10.10(@swc/core@1.12.11(@swc/helpers@0.5.17))(@swc/types@0.1.24)(typescript@6.0.0-dev.20250810))(@swc/core@1.12.11(@swc/helpers@0.5.17)))(verdaccio@6.1.2(typanion@3.14.0))
-      '@storm-software/build-tools': 0.153.6(@nx/devkit@21.4.0(nx@21.3.11(@swc-node/register@1.10.10(@swc/core@1.12.11(@swc/helpers@0.5.17))(@swc/types@0.1.24)(typescript@6.0.0-dev.20250810))(@swc/core@1.12.11(@swc/helpers@0.5.17))))(@nx/js@21.4.0(@babel/traverse@8.0.0-beta.1)(@swc-node/register@1.10.10(@swc/core@1.12.11(@swc/helpers@0.5.17))(@swc/types@0.1.24)(typescript@6.0.0-dev.20250810))(@swc/core@1.12.11(@swc/helpers@0.5.17))(nx@21.3.11(@swc-node/register@1.10.10(@swc/core@1.12.11(@swc/helpers@0.5.17))(@swc/types@0.1.24)(typescript@6.0.0-dev.20250810))(@swc/core@1.12.11(@swc/helpers@0.5.17)))(verdaccio@6.1.2(typanion@3.14.0)))(@swc/helpers@0.5.17)(nx@21.3.11(@swc-node/register@1.10.10(@swc/core@1.12.11(@swc/helpers@0.5.17))(@swc/types@0.1.24)(typescript@6.0.0-dev.20250810))(@swc/core@1.12.11(@swc/helpers@0.5.17)))(typescript@6.0.0-dev.20250810)
+      '@nx/devkit': 21.4.0(nx@21.4.0(@swc-node/register@1.10.10(@swc/core@1.12.11(@swc/helpers@0.5.17))(@swc/types@0.1.24)(typescript@6.0.0-dev.20250810))(@swc/core@1.12.11(@swc/helpers@0.5.17)))
+      '@nx/js': 21.4.0(@babel/traverse@8.0.0-beta.1)(@swc-node/register@1.10.10(@swc/core@1.12.11(@swc/helpers@0.5.17))(@swc/types@0.1.24)(typescript@6.0.0-dev.20250810))(@swc/core@1.12.11(@swc/helpers@0.5.17))(nx@21.4.0(@swc-node/register@1.10.10(@swc/core@1.12.11(@swc/helpers@0.5.17))(@swc/types@0.1.24)(typescript@6.0.0-dev.20250810))(@swc/core@1.12.11(@swc/helpers@0.5.17)))(verdaccio@6.1.2(typanion@3.14.0))
+      '@storm-software/build-tools': 0.153.6(@nx/devkit@21.4.0(nx@21.4.0(@swc-node/register@1.10.10(@swc/core@1.12.11(@swc/helpers@0.5.17))(@swc/types@0.1.24)(typescript@6.0.0-dev.20250810))(@swc/core@1.12.11(@swc/helpers@0.5.17))))(@nx/js@21.4.0(@babel/traverse@8.0.0-beta.1)(@swc-node/register@1.10.10(@swc/core@1.12.11(@swc/helpers@0.5.17))(@swc/types@0.1.24)(typescript@6.0.0-dev.20250810))(@swc/core@1.12.11(@swc/helpers@0.5.17))(nx@21.4.0(@swc-node/register@1.10.10(@swc/core@1.12.11(@swc/helpers@0.5.17))(@swc/types@0.1.24)(typescript@6.0.0-dev.20250810))(@swc/core@1.12.11(@swc/helpers@0.5.17)))(verdaccio@6.1.2(typanion@3.14.0)))(@swc/helpers@0.5.17)(nx@21.4.0(@swc-node/register@1.10.10(@swc/core@1.12.11(@swc/helpers@0.5.17))(@swc/types@0.1.24)(typescript@6.0.0-dev.20250810))(@swc/core@1.12.11(@swc/helpers@0.5.17)))(typescript@6.0.0-dev.20250810)
       '@storm-software/config': 1.128.6
       '@storm-software/config-tools': 1.180.7
       chokidar: 4.0.3
@@ -22513,9 +22513,9 @@ snapshots:
       defu: 6.1.4
       jest: 30.0.4(@types/node@22.16.2)(babel-plugin-macros@3.1.0)(ts-node@10.9.2(@swc/core@1.7.26(@swc/helpers@0.5.17))(@types/node@22.16.2)(typescript@6.0.0-dev.20250810))
 
-  '@storm-software/testing-tools@1.115.6(@nx/jest@21.3.11(@babel/traverse@8.0.0-beta.1)(@swc-node/register@1.10.10(@swc/core@1.12.11(@swc/helpers@0.5.17))(@swc/types@0.1.24)(typescript@6.0.0-dev.20250810))(@swc/core@1.12.11(@swc/helpers@0.5.17))(@types/node@22.16.2)(babel-plugin-macros@3.1.0)(nx@21.3.11(@swc-node/register@1.10.10(@swc/core@1.12.11(@swc/helpers@0.5.17))(@swc/types@0.1.24)(typescript@6.0.0-dev.20250810))(@swc/core@1.12.11(@swc/helpers@0.5.17)))(ts-node@10.9.2(@swc/core@1.12.11(@swc/helpers@0.5.17))(@types/node@22.16.2)(typescript@6.0.0-dev.20250810))(typescript@6.0.0-dev.20250810)(verdaccio@6.1.2(typanion@3.14.0)))(jest@30.0.4(@types/node@22.16.2)(babel-plugin-macros@3.1.0)(ts-node@10.9.2(@swc/core@1.12.11(@swc/helpers@0.5.17))(@types/node@22.16.2)(typescript@6.0.0-dev.20250810)))':
+  '@storm-software/testing-tools@1.115.6(@nx/jest@21.3.11(@babel/traverse@8.0.0-beta.1)(@swc-node/register@1.10.10(@swc/core@1.12.11(@swc/helpers@0.5.17))(@swc/types@0.1.24)(typescript@6.0.0-dev.20250810))(@swc/core@1.12.11(@swc/helpers@0.5.17))(@types/node@22.16.2)(babel-plugin-macros@3.1.0)(nx@21.4.0(@swc-node/register@1.10.10(@swc/core@1.12.11(@swc/helpers@0.5.17))(@swc/types@0.1.24)(typescript@6.0.0-dev.20250810))(@swc/core@1.12.11(@swc/helpers@0.5.17)))(ts-node@10.9.2(@swc/core@1.12.11(@swc/helpers@0.5.17))(@types/node@22.16.2)(typescript@6.0.0-dev.20250810))(typescript@6.0.0-dev.20250810)(verdaccio@6.1.2(typanion@3.14.0)))(jest@30.0.4(@types/node@22.16.2)(babel-plugin-macros@3.1.0)(ts-node@10.9.2(@swc/core@1.12.11(@swc/helpers@0.5.17))(@types/node@22.16.2)(typescript@6.0.0-dev.20250810)))':
     dependencies:
-      '@nx/jest': 21.3.11(@babel/traverse@8.0.0-beta.1)(@swc-node/register@1.10.10(@swc/core@1.12.11(@swc/helpers@0.5.17))(@swc/types@0.1.24)(typescript@6.0.0-dev.20250810))(@swc/core@1.12.11(@swc/helpers@0.5.17))(@types/node@22.16.2)(babel-plugin-macros@3.1.0)(nx@21.3.11(@swc-node/register@1.10.10(@swc/core@1.12.11(@swc/helpers@0.5.17))(@swc/types@0.1.24)(typescript@6.0.0-dev.20250810))(@swc/core@1.12.11(@swc/helpers@0.5.17)))(ts-node@10.9.2(@swc/core@1.12.11(@swc/helpers@0.5.17))(@types/node@22.16.2)(typescript@6.0.0-dev.20250810))(typescript@6.0.0-dev.20250810)(verdaccio@6.1.2(typanion@3.14.0))
+      '@nx/jest': 21.3.11(@babel/traverse@8.0.0-beta.1)(@swc-node/register@1.10.10(@swc/core@1.12.11(@swc/helpers@0.5.17))(@swc/types@0.1.24)(typescript@6.0.0-dev.20250810))(@swc/core@1.12.11(@swc/helpers@0.5.17))(@types/node@22.16.2)(babel-plugin-macros@3.1.0)(nx@21.4.0(@swc-node/register@1.10.10(@swc/core@1.12.11(@swc/helpers@0.5.17))(@swc/types@0.1.24)(typescript@6.0.0-dev.20250810))(@swc/core@1.12.11(@swc/helpers@0.5.17)))(ts-node@10.9.2(@swc/core@1.12.11(@swc/helpers@0.5.17))(@types/node@22.16.2)(typescript@6.0.0-dev.20250810))(typescript@6.0.0-dev.20250810)(verdaccio@6.1.2(typanion@3.14.0))
       defu: 6.1.4
       jest: 30.0.4(@types/node@22.16.2)(babel-plugin-macros@3.1.0)(ts-node@10.9.2(@swc/core@1.12.11(@swc/helpers@0.5.17))(@types/node@22.16.2)(typescript@6.0.0-dev.20250810))
 
@@ -22759,6 +22759,18 @@ snapshots:
       - magicast
       - nx
 
+  '@stryke/capnp@0.10.8(nx@21.4.0(@swc-node/register@1.10.10(@swc/core@1.12.11(@swc/helpers@0.5.17))(@swc/types@0.1.24)(typescript@6.0.0-dev.20250810))(@swc/core@1.12.11(@swc/helpers@0.5.17)))(typescript@6.0.0-dev.20250810)':
+    dependencies:
+      '@stryke/fs': 0.23.4(nx@21.4.0(@swc-node/register@1.10.10(@swc/core@1.12.11(@swc/helpers@0.5.17))(@swc/types@0.1.24)(typescript@6.0.0-dev.20250810))(@swc/core@1.12.11(@swc/helpers@0.5.17)))
+      '@stryke/path': 0.12.4
+      defu: 6.1.4
+      hex2dec: 1.1.2
+      nanotar: 0.2.0
+      typescript: 6.0.0-dev.20250810
+    transitivePeerDependencies:
+      - magicast
+      - nx
+
   '@stryke/cli@0.12.3(nx@21.3.11(@swc-node/register@1.10.10(@swc/core@1.12.11(@swc/helpers@0.5.17))(@swc/types@0.1.24)(typescript@6.0.0-dev.20250810))(@swc/core@1.12.11(@swc/helpers@0.5.17)))':
     dependencies:
       '@antfu/ni': 23.3.1
@@ -22814,7 +22826,18 @@ snapshots:
       - magicast
       - nx
 
-  '@stryke/fs@0.21.3(nx@21.3.11(@swc-node/register@1.10.10(@swc/core@1.12.11(@swc/helpers@0.5.17))(@swc/types@0.1.24)(typescript@6.0.0-dev.20250810))(@swc/core@1.12.11(@swc/helpers@0.5.17)))':
+  '@stryke/env@0.17.1(nx@21.4.0(@swc-node/register@1.10.10(@swc/core@1.12.11(@swc/helpers@0.5.17))(@swc/types@0.1.24)(typescript@6.0.0-dev.20250810))(@swc/core@1.12.11(@swc/helpers@0.5.17)))':
+    dependencies:
+      '@dotenvx/dotenvx': 1.35.0
+      '@stryke/fs': 0.23.3(nx@21.4.0(@swc-node/register@1.10.10(@swc/core@1.12.11(@swc/helpers@0.5.17))(@swc/types@0.1.24)(typescript@6.0.0-dev.20250810))(@swc/core@1.12.11(@swc/helpers@0.5.17)))
+      '@stryke/path': 0.12.4
+      '@stryke/string-format': 0.9.1
+      defu: 6.1.4
+    transitivePeerDependencies:
+      - magicast
+      - nx
+
+  '@stryke/fs@0.21.3(nx@21.4.0(@swc-node/register@1.10.10(@swc/core@1.12.11(@swc/helpers@0.5.17))(@swc/types@0.1.24)(typescript@6.0.0-dev.20250810))(@swc/core@1.12.11(@swc/helpers@0.5.17)))':
     dependencies:
       '@antfu/install-pkg': 1.1.0
       '@ltd/j-toml': 1.38.0
@@ -22831,7 +22854,7 @@ snapshots:
       nanotar: 0.2.0
       semver: 7.7.1
     optionalDependencies:
-      nx: 21.3.11(@swc-node/register@1.10.10(@swc/core@1.12.11(@swc/helpers@0.5.17))(@swc/types@0.1.24)(typescript@6.0.0-dev.20250810))(@swc/core@1.12.11(@swc/helpers@0.5.17))
+      nx: 21.4.0(@swc-node/register@1.10.10(@swc/core@1.12.11(@swc/helpers@0.5.17))(@swc/types@0.1.24)(typescript@6.0.0-dev.20250810))(@swc/core@1.12.11(@swc/helpers@0.5.17))
     transitivePeerDependencies:
       - magicast
 
@@ -22856,7 +22879,7 @@ snapshots:
     transitivePeerDependencies:
       - magicast
 
-  '@stryke/fs@0.22.9(nx@21.3.11(@swc-node/register@1.10.10(@swc/core@1.12.11(@swc/helpers@0.5.17))(@swc/types@0.1.24)(typescript@6.0.0-dev.20250810))(@swc/core@1.12.11(@swc/helpers@0.5.17)))':
+  '@stryke/fs@0.22.9(nx@21.4.0(@swc-node/register@1.10.10(@swc/core@1.12.11(@swc/helpers@0.5.17))(@swc/types@0.1.24)(typescript@6.0.0-dev.20250810))(@swc/core@1.12.11(@swc/helpers@0.5.17)))':
     dependencies:
       '@antfu/install-pkg': 1.1.0
       '@ltd/j-toml': 1.38.0
@@ -22873,7 +22896,7 @@ snapshots:
       nanotar: 0.2.0
       semver: 7.7.1
     optionalDependencies:
-      nx: 21.3.11(@swc-node/register@1.10.10(@swc/core@1.12.11(@swc/helpers@0.5.17))(@swc/types@0.1.24)(typescript@6.0.0-dev.20250810))(@swc/core@1.12.11(@swc/helpers@0.5.17))
+      nx: 21.4.0(@swc-node/register@1.10.10(@swc/core@1.12.11(@swc/helpers@0.5.17))(@swc/types@0.1.24)(typescript@6.0.0-dev.20250810))(@swc/core@1.12.11(@swc/helpers@0.5.17))
     transitivePeerDependencies:
       - magicast
 
@@ -22961,18 +22984,39 @@ snapshots:
     transitivePeerDependencies:
       - magicast
 
-  '@stryke/hash@0.10.0(nx@21.3.11(@swc-node/register@1.10.10(@swc/core@1.12.11(@swc/helpers@0.5.17))(@swc/types@0.1.24)(typescript@6.0.0-dev.20250810))(@swc/core@1.12.11(@swc/helpers@0.5.17)))':
+  '@stryke/fs@0.23.4(nx@21.4.0(@swc-node/register@1.10.10(@swc/core@1.12.11(@swc/helpers@0.5.17))(@swc/types@0.1.24)(typescript@6.0.0-dev.20250810))(@swc/core@1.12.11(@swc/helpers@0.5.17)))':
     dependencies:
-      '@stryke/fs': 0.22.9(nx@21.3.11(@swc-node/register@1.10.10(@swc/core@1.12.11(@swc/helpers@0.5.17))(@swc/types@0.1.24)(typescript@6.0.0-dev.20250810))(@swc/core@1.12.11(@swc/helpers@0.5.17)))
+      '@antfu/install-pkg': 1.1.0
+      '@ltd/j-toml': 1.38.0
+      '@stryke/convert': 0.3.1
+      '@stryke/json': 0.9.3
+      '@stryke/path': 0.12.4
+      '@stryke/type-checks': 0.3.8
+      '@stryke/types': 0.8.9
+      '@zkochan/js-yaml': 0.0.7
+      chalk: 5.4.1
+      defu: 6.1.4
+      glob: 11.0.3
+      mlly: 1.7.4
+      nanotar: 0.2.0
+      semver: 7.7.1
+    optionalDependencies:
+      nx: 21.4.0(@swc-node/register@1.10.10(@swc/core@1.12.11(@swc/helpers@0.5.17))(@swc/types@0.1.24)(typescript@6.0.0-dev.20250810))(@swc/core@1.12.11(@swc/helpers@0.5.17))
+    transitivePeerDependencies:
+      - magicast
+
+  '@stryke/hash@0.10.0(nx@21.4.0(@swc-node/register@1.10.10(@swc/core@1.12.11(@swc/helpers@0.5.17))(@swc/types@0.1.24)(typescript@6.0.0-dev.20250810))(@swc/core@1.12.11(@swc/helpers@0.5.17)))':
+    dependencies:
+      '@stryke/fs': 0.22.9(nx@21.4.0(@swc-node/register@1.10.10(@swc/core@1.12.11(@swc/helpers@0.5.17))(@swc/types@0.1.24)(typescript@6.0.0-dev.20250810))(@swc/core@1.12.11(@swc/helpers@0.5.17)))
       js-xxhash: 4.0.0
       ohash: 2.0.11
     transitivePeerDependencies:
       - magicast
       - nx
 
-  '@stryke/hash@0.9.7(nx@21.3.11(@swc-node/register@1.10.10(@swc/core@1.12.11(@swc/helpers@0.5.17))(@swc/types@0.1.24)(typescript@6.0.0-dev.20250810))(@swc/core@1.12.11(@swc/helpers@0.5.17)))':
+  '@stryke/hash@0.9.7(nx@21.4.0(@swc-node/register@1.10.10(@swc/core@1.12.11(@swc/helpers@0.5.17))(@swc/types@0.1.24)(typescript@6.0.0-dev.20250810))(@swc/core@1.12.11(@swc/helpers@0.5.17)))':
     dependencies:
-      '@stryke/fs': 0.21.3(nx@21.3.11(@swc-node/register@1.10.10(@swc/core@1.12.11(@swc/helpers@0.5.17))(@swc/types@0.1.24)(typescript@6.0.0-dev.20250810))(@swc/core@1.12.11(@swc/helpers@0.5.17)))
+      '@stryke/fs': 0.21.3(nx@21.4.0(@swc-node/register@1.10.10(@swc/core@1.12.11(@swc/helpers@0.5.17))(@swc/types@0.1.24)(typescript@6.0.0-dev.20250810))(@swc/core@1.12.11(@swc/helpers@0.5.17)))
       js-xxhash: 4.0.0
       ohash: 2.0.11
     transitivePeerDependencies:
@@ -23042,9 +23086,9 @@ snapshots:
 
   '@stryke/types@0.8.9': {}
 
-  '@stryke/unique-id@0.3.3(nx@21.3.11(@swc-node/register@1.10.10(@swc/core@1.12.11(@swc/helpers@0.5.17))(@swc/types@0.1.24)(typescript@6.0.0-dev.20250810))(@swc/core@1.12.11(@swc/helpers@0.5.17)))':
+  '@stryke/unique-id@0.3.3(nx@21.4.0(@swc-node/register@1.10.10(@swc/core@1.12.11(@swc/helpers@0.5.17))(@swc/types@0.1.24)(typescript@6.0.0-dev.20250810))(@swc/core@1.12.11(@swc/helpers@0.5.17)))':
     dependencies:
-      '@stryke/hash': 0.9.7(nx@21.3.11(@swc-node/register@1.10.10(@swc/core@1.12.11(@swc/helpers@0.5.17))(@swc/types@0.1.24)(typescript@6.0.0-dev.20250810))(@swc/core@1.12.11(@swc/helpers@0.5.17)))
+      '@stryke/hash': 0.9.7(nx@21.4.0(@swc-node/register@1.10.10(@swc/core@1.12.11(@swc/helpers@0.5.17))(@swc/types@0.1.24)(typescript@6.0.0-dev.20250810))(@swc/core@1.12.11(@swc/helpers@0.5.17)))
     transitivePeerDependencies:
       - magicast
       - nx

@@ -2,6 +2,17 @@
 
 # Changelog for Storm Stack - ESLint Config
 
+## [0.13.0](https://github.com/storm-software/storm-stack/releases/tag/eslint-config%400.13.0) (2025-08-19)
+
+### Features
+
+- **core:** Update context to use runtime configuration values
+  ([1026697d](https://github.com/storm-software/storm-stack/commit/1026697d))
+
+### Updated Dependencies
+
+- Updated eslint-plugin to 0.11.0
+
 ## [0.12.0](https://github.com/storm-software/storm-stack/releases/tag/eslint-config%400.12.0) (2025-08-17)
 
 ### Features
