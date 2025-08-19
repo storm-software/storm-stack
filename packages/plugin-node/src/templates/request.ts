@@ -20,50 +20,50 @@ import { getFileHeader } from "@storm-stack/core/lib/utilities/file-header";
 import { Context } from "@storm-stack/core/types/context";
 
 /**
- * The payload module provides a base payload class used by the Storm Stack runtime.
+ * The request module provides a base request class used by the Storm Stack runtime.
  *
  * @param _context - The context of the Storm Stack runtime, which includes configurations and utilities.
- * @returns A string representing the payload module code.
+ * @returns A string representing the request module code.
  */
-export function PayloadModule(_context: Context) {
+export function RequestModule(_context: Context) {
   return `
 /**
- * The payload module provides a base payload class used by the Storm Stack runtime.
+ * The request module provides a base request class used by the Storm Stack runtime.
  *
- * @module storm:payload
+ * @module storm:request
  */
 
 ${getFileHeader()}
 
 import { uniqueId } from "storm:id";
 import { StormError } from "storm:error";
-import { StormPayloadInterface } from "@storm-stack/types/payload";
+import { StormRequestInterface } from "@storm-stack/types/node/request";
 
 /**
- * A base payload class used by the Storm Stack runtime.
+ * A base request class used by the Storm Stack runtime.
  */
-export class StormPayload<
+export class StormRequest<
   TData extends Record<string, any> = Record<string, any>
-> implements StormPayloadInterface<TData> {
+> implements StormRequestInterface<TData> {
   /**
-   * The payload identifier.
+   * The request identifier.
    */
   public readonly id = uniqueId();
 
   /**
-   * The payload created timestamp.
+   * The request created timestamp.
    */
   public readonly timestamp = Date.now();
 
   /**
-   * The payload data.
+   * The request data.
    */
   readonly data: TData;
 
   /**
-   * Create a new payload object.
+   * Create a new request object.
    *
-   * @param data - The payload input data.
+   * @param data - The request input data.
    */
   public constructor(
     data: TData
@@ -72,9 +72,9 @@ export class StormPayload<
   }
 
   /**
-   * Merges the given data into the payload.
+   * Merges the given data into the request.
    *
-   * @param data - The data to merge into the payload.
+   * @param data - The data to merge into the request.
    */
   public merge(data: Partial<TData>) {
     Object.assign(this.data, data);

@@ -38,7 +38,7 @@ export function StorageModule(context: Context) {
 ${getFileHeader()}
 
 import { createStorage as createUnstorage } from "unstorage";
-import { StormStorageInterface } from "@storm-stack/types/storage";
+import { StormStorageInterface } from "@storm-stack/types/shared/storage";
 ${context.runtime.storage
   .map(
     storage =>

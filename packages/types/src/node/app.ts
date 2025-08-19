@@ -17,7 +17,7 @@
  ------------------------------------------------------------------- */
 
 import type { StormErrorInterface } from "../shared/error.js";
-import type { StormPayloadInterface } from "../shared/payload.js";
+import type { StormRequestInterface } from "./request.js";
 
 export type ValidationDetailType =
   | "help"
@@ -63,7 +63,7 @@ export type HandlerFunction<
   TInput extends Record<string, any> = Record<string, any>,
   TOutput = any
 > = (
-  payload: StormPayloadInterface<TInput>
+  request: StormRequestInterface<TInput>
 ) => MaybePromise<TOutput | StormErrorInterface>;
 
 // export type PostprocessFunction<

@@ -24,10 +24,10 @@ export function writeConfigGet(_context: CLIPluginContext) {
 
 import { deserialize } from "@deepkit/type";
 import { colors } from "storm:cli";
-import { StormPayload } from "storm:payload";
+import { StormRequest } from "storm:request";
 import { StormConfig } from "storm:config";
 
-export interface ConfigGetPayload {
+export interface ConfigGetRequest {
   /**
    * The name of the configuration to retrieve from the configuration store.
    */
@@ -37,9 +37,9 @@ export interface ConfigGetPayload {
 /**
  * Retrieves a configuration parameter from the configuration store.
  *
- * @param payload - The payload object containing the configuration name to retrieve.
+ * @param request - The request object containing the configuration name to retrieve.
  */
-async function handler(payload: StormPayload<ConfigGetPayload>) {
+async function handler(request: StormRequest<ConfigGetRequest>) {
   const configFile = await $storm.storage.getItem(\`config:config.json\`);
   if (configFile === undefined) {
     console.error(\` \${colors.red("✘")}  \${colors.white(\`Configuration file was not found\`)}\`);
@@ -47,12 +47,12 @@ async function handler(payload: StormPayload<ConfigGetPayload>) {
   }
 
   const config = deserialize<StormConfig>(configFile);
-  if (config?.[payload.data.name] === undefined) {
-    console.error(\` \${colors.red("✘")}  \${colors.white(\`Variable Name \\\`\${payload.data.name}\\\` not found\`)}\`);
+  if (config?.[request.data.name] === undefined) {
+    console.error(\` \${colors.red("✘")}  \${colors.white(\`Variable Name \\\`\${request.data.name}\\\` not found\`)}\`);
     return;
   }
 
-  console.log(\`\${colors.bold(\`\${payload.data.name}:\`)} \${config[payload.data.name]}\`);
+  console.log(\`\${colors.bold(\`\${request.data.name}:\`)} \${config[request.data.name]}\`);
 }
 
 export default handler;
@@ -65,10 +65,10 @@ export function writeConfigSet(_context: CLIPluginContext) {
 
 import { deserialize, serialize } from "@deepkit/type";
 import { colors } from "storm:cli";
-import { StormPayload } from "storm:payload";
+import { StormRequest } from "storm:request";
 import { StormConfig } from "storm:config";
 
-export interface ConfigSetPayload {
+export interface ConfigSetRequest {
   /**
    * The name of the configuration to set in the configuration store.
    */
@@ -83,9 +83,9 @@ export interface ConfigSetPayload {
 /**
  * Sets a configuration parameter in the configuration store.
  *
- * @param payload - The payload object containing the config key and value to set.
+ * @param request - The request object containing the config key and value to set.
  */
-async function handler(payload: StormPayload<ConfigSetPayload>) {
+async function handler(request: StormRequest<ConfigSetRequest>) {
   const configFile = await $storm.storage.getItem(\`config:config.json\`);
   if (configFile === undefined) {
     console.error(\` \${colors.red("✘")}  \${colors.white(\`Configuration file was not found\`)}\`);
@@ -93,12 +93,12 @@ async function handler(payload: StormPayload<ConfigSetPayload>) {
   }
 
   const config = deserialize<StormConfig>(configFile);
-  config[payload.data.name] = payload.data.value;
+  config[request.data.name] = request.data.value;
 
   await $storm.storage.setItem(\`config:config.json\`, serialize<StormConfig>(config));
 
   console.log("");
-  console.log(colors.dim(\` > \\\`\${payload.data.name}\\\` configuration set to \${payload.data.value}\`));
+  console.log(colors.dim(\` > \\\`\${request.data.name}\\\` configuration set to \${request.data.value}\`));
   console.log("");
 }
 
@@ -112,17 +112,17 @@ export function writeConfigList(_context: CLIPluginContext) {
 
 import { deserialize } from "@deepkit/type";
 import { colors } from "storm:cli";
-import { StormPayload } from "storm:payload";
+import { StormRequest } from "storm:request";
 import { StormConfig } from "storm:config";
 
-export interface ConfigListPayload {}
+export interface ConfigListRequest {}
 
 /**
  * Lists all configuration parameters in the configuration store.
  *
- * @param payload - The payload object containing the config key to retrieve.
+ * @param request - The request object containing the config key to retrieve.
  */
-async function handler(payload: StormPayload<ConfigListPayload>) {
+async function handler(request: StormRequest<ConfigListRequest>) {
   const configFile = await $storm.storage.getItem(\`config:config.json\`);
   if (configFile === undefined) {
     console.error(\` \${colors.red("✘")}  \${colors.white(\`Configuration file was not found\`)}\`);
@@ -143,10 +143,10 @@ export function writeConfigDelete(_context: CLIPluginContext) {
 
 import { deserialize, serialize } from "@deepkit/type";
 import { colors } from "storm:cli";
-import { StormPayload } from "storm:payload";
+import { StormRequest } from "storm:request";
 import { StormConfig } from "storm:config";
 
-export interface ConfigDeletePayload {
+export interface ConfigDeleteRequest {
   /**
    * The name of the configuration to delete from the configuration store.
    */
@@ -156,9 +156,9 @@ export interface ConfigDeletePayload {
 /**
  * Deletes a configuration parameter from the configuration store.
  *
- * @param payload - The payload object containing the configuration name to delete.
+ * @param request - The request object containing the configuration name to delete.
  */
-async function handler(payload: StormPayload<ConfigDeletePayload>) {
+async function handler(request: StormRequest<ConfigDeleteRequest>) {
   const configFile = await $storm.storage.getItem(\`config:config.json\`);
   if (configFile === undefined) {
     console.error(\` \${colors.red("✘")}  \${colors.white(\`Configuration file was not found\`)}\`);
@@ -167,11 +167,11 @@ async function handler(payload: StormPayload<ConfigDeletePayload>) {
 
   const config = deserialize<StormConfig>(configFile);
 
-  delete config[payload.data.name];
+  delete config[request.data.name];
   await $storm.storage.setItem(\`config:config.json\`, serialize<StormConfig>(config));
 
   console.log("");
-  console.log(colors.dim(\` > \\\`\${payload.data.name}\\\` configuration deleted\`));
+  console.log(colors.dim(\` > \\\`\${request.data.name}\\\` configuration deleted\`));
   console.log("");
 }
 

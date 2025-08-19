@@ -85,7 +85,7 @@ export function stringifyValue(type: Type, value: any): string {
                 ? stringifyStringValue(StormJSON.stringify(value))
                 : type.kind === ReflectionKind.object ||
                     type.kind === ReflectionKind.objectLiteral
-                  ? stringifyStringValue(StormJSON.stringify(value))
+                  ? StormJSON.stringify(value)
                   : type.kind === ReflectionKind.property ||
                       type.kind === ReflectionKind.parameter
                     ? stringifyValue(type.type, value)

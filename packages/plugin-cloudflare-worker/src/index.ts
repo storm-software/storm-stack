@@ -427,7 +427,7 @@ import ${
           )}";
 import { withContext } from "storm:context";
 import { deserialize, serialize } from "@deepkit/type";
-import { StormPayload } from "storm:payload";
+import { StormRequest } from "storm:request";
 
 const handleRequest = withContext(handle);
 

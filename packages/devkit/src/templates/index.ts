@@ -20,5 +20,4 @@ export * from "./crypto";
 export * from "./helpers";
 export * from "./id";
 export * from "./log";
-export * from "./payload";
 export * from "./storage";

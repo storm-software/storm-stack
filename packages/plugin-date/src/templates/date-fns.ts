@@ -35,7 +35,7 @@ export async function DateFnsModule(context: DatePluginContext) {
 
 ${getFileHeader()}
 
-import { DateFormats, TimeUnit } from "@storm-stack/types/date";
+import { DateFormats, TimeUnit } from "@storm-stack/types/shared/date";
 import { addDays as dateFnsAddDays } from "date-fns/addDays";
 import { addHours as dateFnsAddHours } from "date-fns/addHours";
 import { addMinutes as dateFnsAddMinutes } from "date-fns/addMinutes";

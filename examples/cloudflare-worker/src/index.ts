@@ -16,11 +16,10 @@
 
  ------------------------------------------------------------------- */
 
-import { StormPayload } from "storm:payload";
-import { ExamplePayload } from "./types";
+import { ExampleRequest } from "./types";
 
-export async function handler(payload: StormPayload<Request<ExamplePayload>>) {
-  const data = await payload.data.json<ExamplePayload>();
+export async function handler(request: StormRequest<Request<ExampleRequest>>) {
+  const data = await request.data.json<ExampleRequest>();
 
   return data?.address.city;
 }

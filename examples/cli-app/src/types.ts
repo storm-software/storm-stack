@@ -19,9 +19,9 @@
 import { StormSentryLogConfig } from "@storm-stack/plugin-log-sentry/types";
 
 /**
- * The payload for the example CLI application.
+ * The request for the example CLI application.
  */
-export interface ServePayload {
+export interface ServeRequest {
   /**
    * The host to bind the server to.
    *
@@ -56,7 +56,7 @@ export interface ServePayload {
   loadEnv: boolean;
 }
 
-export interface AddPayload {
+export interface AddRequest {
   /**
    * The file to add to the file system.
    *
@@ -72,7 +72,7 @@ export interface AddPayload {
   type: string;
 }
 
-export interface AddPagePayload {
+export interface AddPageRequest {
   /**
    * The file to add to the file system.
    *

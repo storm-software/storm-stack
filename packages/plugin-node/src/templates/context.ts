@@ -18,9 +18,8 @@
 
 import { getFileHeader } from "@storm-stack/core/lib/utilities/file-header";
 import type { Context } from "@storm-stack/core/types/context";
-import { kebabCase } from "@stryke/string-format/kebab-case";
 
-export function ContextModule(context: Context) {
+export function ContextModule(_context: Context) {
   return `
 /**
  * This module provides the Storm Stack context and a hook to access it in the application.
@@ -30,34 +29,67 @@ export function ContextModule(context: Context) {
 
 ${getFileHeader()}
 
-import {
-  StormContextInterface,
-  StormConfigContext,
-} from "@storm-stack/types/node/context";
-import { StormEnvInterface } from "@storm-stack/types/env";
-import { HandlerFunction } from "@storm-stack/types/app";
-import { StormResultInterface } from "@storm-stack/types/result";
-import { StormStorageInterface } from "@storm-stack/types/storage";
-import { StormLogInterface } from "@storm-stack/types/log";
+import { StormNodeEnv } from "@storm-stack/types/node/env";
+import { HandlerFunction } from "@storm-stack/types/node/app";
+import { StormResultInterface } from "@storm-stack/types/node/result";
+import { StormStorageInterface } from "@storm-stack/types/shared/storage";
+import { StormLogInterface } from "@storm-stack/types/shared/log";
 import { AsyncLocalStorage } from "node:async_hooks";
 import { getContext } from "unctx";
 import type { UseContext } from "unctx";
 import { createConfig, StormConfig } from "storm:config";
-import { createEnvironment } from "storm:env";
+import { createEnv } from "storm:env";
 import { createStorage } from "storm:storage";
 import { createStormError, StormError, isError } from "storm:error";
 import { StormEvent } from "storm:event";
 import { StormLog } from "storm:log";
-import { StormPayload } from "storm:payload";
+import { StormRequest } from "storm:request";
 import { StormResult } from "storm:result";
 
-export type StormContext = StormContextInterface<
-  StormConfig,
-  StormEnvInterface
->;
+export interface StormContext {
+  /**
+   * The context metadata.
+   */
+  meta: Record<string, any>;
 
-export const STORM_ASYNC_CONTEXT: UseContext<StormContext> = getContext<StormContext>(
-  "storm-stack", {
+  /**
+   * The request object for the current Storm Stack application.
+   */
+  request: StormRequest
+
+  /**
+   * Environment/runtime specific application data.
+   */
+  env: import("@storm-stack/types/node/env").StormNodeEnv
+
+  /**
+   * The root application logger for the Storm Stack application.
+   */
+  log: import("@storm-stack/types/shared/log").StormLogInterface
+
+  /**
+   * The {@link StormStorageInterface} instance used by the Storm Stack application.
+   */
+  storage: import("@storm-stack/types/shared/storage").StormStorageInterface
+
+  /**
+   * The configuration parameters for the Storm application.
+   */
+  config: import("@storm-stack/types/shared/config").StormConfigInterface & Record<string, any>;
+
+  /**
+   * A set of disposable resources to clean up when the context is no longer needed.
+   */
+  readonly disposables: Set<Disposable>
+
+  /**
+   * A set of asynchronous disposable resources to clean up when the context is no longer needed.
+   */
+  readonly asyncDisposables: Set<AsyncDisposable>
+}
+
+const STORM_ASYNC_CONTEXT: UseContext<StormContext> = getContext<StormContext>(
+  "__storm-stack__", {
   asyncContext: true,
   AsyncLocalStorage
 });
@@ -83,7 +115,7 @@ export function useStorm(): StormContext {
  * Wrap an application entry point with the necessary context and error handling.
  *
  * @param handler - The handler function for the application.
- * @returns A function that takes an payload and returns a result or a promise of a result.
+ * @returns A function that takes an request and returns a result or a promise of a result.
  */
 export function withContext<
   TInput extends Record<string, any> = Record<string, any>,
@@ -92,56 +124,46 @@ export function withContext<
   handler: HandlerFunction<TInput, TOutput>
 ) {
   return async function wrapper(input: TInput): Promise<StormResult<TOutput | StormError>> {
-    const payload = new StormPayload<TInput>(input);
+    const request = new StormRequest<TInput>(input);
 
     const context = {
-      name: "${kebabCase(context.options.name)}",
-      version: "${
-        context.packageJson?.version
-          ? context.packageJson.version
-          : "$storm.config.static.APP_VERSION"
-      }",
-      meta: {},
-      env: {} as StormEnvInterface,
-      config: {} as StormConfigContext<StormConfig>,
+      meta: {} as Record<string, any>,
       storage: {} as StormStorageInterface,
       log: {} as StormLogInterface,
-      payload,
+      env: {} as StormNodeEnv,
+      config: {} as StormConfig,
+      request,
       disposables: new Set<Disposable>(),
       asyncDisposables: new Set<AsyncDisposable>(),
-      emit(event: StormEvent) {},
-      __internal: {
-        events: [] as StormEvent[]
-      }
     } as StormContext;
 
-    function emit(event: StormEvent) {
-      context.log.debug(
-        \`The \${event.label} event was emitted by the application.\`,
-        {
-          event
-        }
-      );
+    // function emit(event: StormEvent) {
+    //   context.log.debug(
+    //     \`The \${event.label} event was emitted by the application.\`,
+    //     {
+    //       event
+    //     }
+    //   );
 
-      context.__internal.events.push(event);
-    }
-    context.emit = emit;
+    //   context.__internal.events.push(event);
+    // }
+    // context.emit = emit;
 
     const result = await STORM_ASYNC_CONTEXT.callAsync(
       context,
       async () => {
         try {
-          context.config = await createConfig() as StormConfigContext<StormConfig>;
-          context.env = createEnvironment();
+          context.config = await createConfig();
+          context.env = createEnv();
 
           context.storage = createStorage();
           context.asyncDisposables.add(context.storage);
 
           const log = new StormLog();
           context.log = log.with({
-            name: context.name,
-            version: context.version,
-            payloadId: context.payload.id
+            name: context.env.name,
+            version: context.env.version,
+            requestId: context.request.id
           });
 
           for (const adapter of log.adapters()) {
@@ -154,11 +176,11 @@ export function withContext<
           }
 
           context.log.debug("Starting the application handler process.", {
-            payload
+            request
           });
 
           const ret = await Promise.resolve(
-            handler(payload)
+            handler(request)
           );
           if (isError(ret)) {
             context.log.error(ret);
@@ -167,12 +189,20 @@ export function withContext<
 
           return StormResult.create(ret);
         } catch (err) {
-          context.log.fatal(new StormError(err));
+          console.error(err);
+          if (context.log) {
+            context.log.fatal(createStormError(err));
+          }
+
           return StormResult.create(err);
         } finally {
-          context.log.debug("The application handler process has completed.", {
-            result
-          });
+          if (context.log) {
+            context.log.debug("The application handler process has completed.", {
+              result
+            });
+          } else {
+            console.log("The application handler process has completed.");
+          }
         }
       }
     );

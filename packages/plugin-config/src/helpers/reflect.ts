@@ -25,7 +25,7 @@ import {
   TypeObjectLiteral
 } from "@deepkit/type";
 import { reflectType } from "@storm-stack/core/lib/deepkit";
-import { StormConfigInterface } from "@storm-stack/types/config";
+import { StormConfigInterface } from "@storm-stack/types/shared/config";
 import { joinPaths } from "@stryke/path/join-paths";
 import { titleCase } from "@stryke/string-format/title-case";
 import { ConfigPluginContext } from "../types";
@@ -87,6 +87,8 @@ export interface CreateConfigParamsReflectionOptions {
 }
 
 export class StormBaseConfig implements StormConfigInterface {
+  static: any;
+
   APP_NAME: string;
 
   APP_VERSION: string;

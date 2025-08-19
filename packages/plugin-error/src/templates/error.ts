@@ -34,11 +34,11 @@ import {
   StormErrorInterface,
   ParsedStacktrace,
   StormErrorOptions
-} from "@storm-stack/types/error";
+} from "@storm-stack/types/shared/error";
 import {
   ErrorMessageDetails,
   MessageType
-} from "@storm-stack/types/message";
+} from "@storm-stack/types/shared/message";
 
 /**
 * Get the default error code for the given error type.

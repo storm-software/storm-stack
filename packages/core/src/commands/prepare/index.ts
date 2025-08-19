@@ -18,7 +18,6 @@
 
 import { LogLevelLabel } from "@storm-software/config-tools/types";
 import { createDirectory } from "@stryke/fs/helpers";
-import { StormJSON } from "@stryke/json/storm-json";
 import { existsSync } from "@stryke/path/exists";
 import { joinPaths } from "@stryke/path/join-paths";
 import { writeMetaFile } from "../../lib/context";
@@ -42,7 +41,15 @@ export async function prepare(context: Context, hooks: EngineHooks) {
   await writeFile(
     context.log,
     joinPaths(context.dataPath, "meta.json"),
-    StormJSON.stringify(context.meta)
+    JSON.stringify(
+      {
+        ...context.meta,
+        runtimeIdMap: JSON.stringify(context.meta.runtimeIdMap),
+        virtualFiles: JSON.stringify(context.meta.virtualFiles)
+      },
+      null,
+      2
+    )
   );
   context.persistedMeta = context.meta;
 

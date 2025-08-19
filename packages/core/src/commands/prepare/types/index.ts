@@ -57,9 +57,6 @@ export async function prepareTypes(context: Context, hooks: EngineHooks) {
 
   await context.vfs.rm(context.runtimeDtsFilePath);
 
-  // await removeDirectory(outputPath);
-  // await removeFile(dtsFilePath);
-
   context.log(LogLevelLabel.TRACE, "Transforming runtime files.");
 
   const runtimeFiles = await Promise.all(
@@ -113,7 +110,31 @@ export async function prepareTypes(context: Context, hooks: EngineHooks) {
     "Parsing TypeScript configuration for the Storm Stack project."
   );
 
-  // context.vfs[__VFS_INIT__]();
+  const sourceFileDts = getSourceFile(
+    context.runtimeDtsFilePath,
+    `${getFileHeader(null, false)}
+
+`
+  );
+
+  await hooks
+    .callHook("prepare:types", context, sourceFileDts)
+    .catch((error: Error) => {
+      context.log(
+        LogLevelLabel.ERROR,
+        `An error occurred while preparing the TypeScript definitions for the Storm Stack project: ${error.message} \n${error.stack ?? ""}`
+      );
+
+      throw new Error(
+        "An error occurred while preparing the TypeScript definitions for the Storm Stack project",
+        { cause: error }
+      );
+    });
+
+  await context.vfs.writeFileToDisk(
+    sourceFileDts.id,
+    getString(sourceFileDts.code)
+  );
 
   const resolvedTsconfig = getParsedTypeScriptConfig(
     context.options.workspaceRoot,
@@ -210,8 +231,8 @@ declare module "${context.vfs.resolveId(sourceFile.fileName)}" {
   if (diagnosticMessage) {
     throw new Error(
       `TypeScript compilation failed: \n\n${
-        diagnosticMessage.length > 2500
-          ? `${diagnosticMessage.slice(0, 2500)}...`
+        diagnosticMessage.length > 5000
+          ? `${diagnosticMessage.slice(0, 5000)}...`
           : diagnosticMessage
       }`
     );
@@ -300,9 +321,12 @@ declare module "${context.vfs.resolveId(sourceFile.fileName)}" {
     context.runtimeDtsFilePath,
     `${getFileHeader(null, false)}
 
+// This file is an augmentation to the built-in StormContext interface
+// Thus cannot contain any top-level imports
+// <https://www.typescriptlang.org/docs/handbook/declaration-merging.html#module-augmentation>
+
 ${(await context.vfs.readFile(untrimmedFilePath))!
-  .replace(/export.*__Ω.*;/g, "")
-  .replace(/__Ω/g, "")
+  .replace(/\s*export.*__Ω.*;/g, "")
   .replace(/^export\s*\{\s*\}\s*$/gm, "")
   .replace(/^export\s*(?:declare\s*)?interface\s*/gm, "interface ")
   .replace(/^export\s*(?:declare\s*)?type\s*/gm, "type ")

@@ -17,13 +17,13 @@
  ------------------------------------------------------------------- */
 
 import { NewInlineConfig } from "@storm-stack/core/types/config";
-import { StormPayload } from "storm:payload";
+import { StormRequest } from "storm:request";
 import { createEngine } from "../../../helpers/create-engine";
 
 /**
- * The payload for the example CLI application.
+ * The request for the example CLI application.
  */
-interface NewLibraryPayload {
+interface NewLibraryRequest {
   /**
    * The name of the library.
    *
@@ -49,10 +49,10 @@ interface NewLibraryPayload {
 /**
  * Create a new Storm Stack library in the current workspace.
  *
- * @param payload - The payload object containing the details for the new library.
+ * @param request - The request object containing the details for the new library.
  */
-async function handler(payload: StormPayload<NewLibraryPayload>) {
-  const data = payload.data;
+async function handler(request: StormRequest<NewLibraryRequest>) {
+  const data = request.data;
 
   const inlineConfig = {
     root: data.root,

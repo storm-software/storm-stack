@@ -16,7 +16,7 @@
 
  ------------------------------------------------------------------- */
 
-export interface ExamplePayload {
+export interface ExampleRequest {
   /**
    * The name of the person.
    */

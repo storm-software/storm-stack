@@ -68,14 +68,14 @@ async function writeCommandEntryUsage(
     return `\${colors.gray("${child.command.description}")}`;
   });
 
-  const payload = command.payload;
-  if (!payload?.args || payload.args.length === 0) {
+  const request = command.request;
+  if (!request?.args || request.args.length === 0) {
     throw new Error(
-      `Command "${command.id}" (${command.file}) is missing payload.`
+      `Command "${command.id}" (${command.file}) is missing request.`
     );
   }
 
-  const optionsColumn1 = sortArgs(payload.args).map(arg => {
+  const optionsColumn1 = sortArgs(request.args).map(arg => {
     const names = sortArgAliases([arg.name, ...arg.type.getAlias()]);
     if (
       arg.type.getKind() === ReflectionKind.string ||
@@ -97,7 +97,7 @@ async function writeCommandEntryUsage(
       .join(", ");
   });
 
-  const optionsColumn2 = sortArgs(payload.args).map(arg => {
+  const optionsColumn2 = sortArgs(request.args).map(arg => {
     if (
       arg.type.getKind() === ReflectionKind.string ||
       arg.type.getKind() === ReflectionKind.literal ||
@@ -183,10 +183,10 @@ import ${command.input.name ? `{ ${command.input.name} as handle }` : "handle"} 
       )
     )}";
 import { colors } from "storm:cli";${
-      payload.import
-        ? `import { ${payload.import.name} } from "${relativePath(
+      request.import
+        ? `import { ${request.import.name} } from "${relativePath(
             findFilePath(command.file),
-            joinPaths(context.options.workspaceRoot, payload.import.file)
+            joinPaths(context.options.workspaceRoot, request.import.file)
           )}";`
         : `
 
@@ -273,7 +273,7 @@ async function writeCommandEntryHandler(
   cmd: CommandTreeBranch
 ) {
   const command = cmd.command;
-  const payload = command.payload;
+  const request = command.request;
 
   log(
     LogLevelLabel.TRACE,
@@ -301,20 +301,20 @@ import ${
         ""
       )
     )}";
-import { StormPayload } from "storm:payload";
-import { CLIBasePayloadData, colors, parseArgs, renderBanner, renderFooter${
+import { StormRequest } from "storm:request";
+import { CLIRequestData, colors, parseArgs, renderBanner, renderFooter${
       context.options.plugins.cli.interactive !== "never" ? ", prompt" : ""
     } } from "storm:cli";
 import { deserialize, serialize } from "@deepkit/type";${
-      payload.import
-        ? `import { ${payload.import.name} } from "${relativePath(
+      request.import
+        ? `import { ${request.import.name} } from "${relativePath(
             findFilePath(command.file),
-            joinPaths(context.options.workspaceRoot, payload.import.file)
+            joinPaths(context.options.workspaceRoot, request.import.file)
           )}";`
         : `
 
-export interface ${payload.type.getName()} extends CLIBasePayloadData {
-  ${payload.args
+export interface ${request.type.getName()} extends CLIRequestData {
+  ${request.args
     .map(arg => `${camelCase(arg.name)}: ${stringifyType(arg.type.getType())};`)
     .join("\n  ")}
 }
@@ -324,12 +324,12 @@ export interface ${payload.type.getName()} extends CLIBasePayloadData {
 /**
  * The entry point for the ${command.title} command.
  */
-async function handler(payload: StormPayload<${payload.type.getName()}>) {
+async function handler(request: StormRequest<${request.type.getName()}>) {
   try {
     ${
       Object.values(cmd.children).length > 0
-        ? `if (payload.data.argv.length > ${command.path.length + 2}) {
-      const command = payload.data.argv[${command.path.length + 1}];
+        ? `if (request.data.args.length > ${command.path.length + 2}) {
+      const command = request.data.args[${command.path.length + 1}];
       if (command && !command.startsWith("-")) {
         ${Object.values(cmd.children)
           .map(
@@ -359,11 +359,11 @@ async function handler(payload: StormPayload<${payload.type.getName()}>) {
         : ""
     }
 
-    const args = parseArgs(payload.data.argv.slice(${command.path.length + 1}), {${
-      payload.args.filter(arg => arg.type.getKind() === ReflectionKind.boolean)
+    const args = parseArgs(request.data.args.slice(${command.path.length + 1}), {${
+      request.args.filter(arg => arg.type.getKind() === ReflectionKind.boolean)
         .length > 0
         ? `
-      boolean: [${payload.args
+      boolean: [${request.args
         .filter(
           arg => arg.name && arg.type.getKind() === ReflectionKind.boolean
         )
@@ -381,9 +381,9 @@ async function handler(payload: StormPayload<${payload.type.getName()}>) {
         .join(", ")}],`
         : ""
     }${
-      payload.args.filter(arg => arg.type.getAlias().length > 0).length > 0
+      request.args.filter(arg => arg.type.getAlias().length > 0).length > 0
         ? `
-      alias: {${payload.args
+      alias: {${request.args
         .map(
           arg =>
             `${camelCase(arg.name)}: [${
@@ -468,7 +468,7 @@ async function handler(payload: StormPayload<${payload.type.getName()}>) {
           }
         }
 
-        ${Object.values(payload.args)
+        ${Object.values(request.args)
           .filter(
             arg =>
               ![
@@ -495,7 +495,7 @@ async function handler(payload: StormPayload<${payload.type.getName()}>) {
           })
           .join("\n")}
 
-          ${Object.values(payload.args)
+          ${Object.values(request.args)
             .filter(
               arg =>
                 ![
@@ -622,8 +622,8 @@ async function handler(payload: StormPayload<${payload.type.getName()}>) {
             })
             .join("\n")}
 
-        payload.merge(deserialize<${payload.type.getName()}>(args));
-        await handle(payload);
+        request.merge(deserialize<${request.type.getName()}>(args));
+        await handle(request);
       }
     }
   } catch (err) {
@@ -662,7 +662,7 @@ async function writeVirtualCommandEntry(
   cmd: CommandTreeBranch
 ) {
   const command = cmd.command;
-  const payload = command.payload;
+  const request = command.request;
 
   log(
     LogLevelLabel.TRACE,
@@ -673,7 +673,7 @@ async function writeVirtualCommandEntry(
     })`
   );
 
-  const optionsColumn1 = sortArgs(payload.args).map(arg => {
+  const optionsColumn1 = sortArgs(request.args).map(arg => {
     const names = sortArgAliases([arg.name, ...arg.type.getAlias()]);
     if (
       arg.type.getKind() === ReflectionKind.string ||
@@ -695,7 +695,7 @@ async function writeVirtualCommandEntry(
       .join(", ");
   });
 
-  const optionsColumn2 = sortArgs(payload.args).map(arg => {
+  const optionsColumn2 = sortArgs(request.args).map(arg => {
     if (
       arg.type.getKind() === ReflectionKind.string ||
       arg.type.getKind() === ReflectionKind.literal ||
@@ -781,8 +781,8 @@ import ${command.input.name ? `{ ${command.input.name} as handle }` : "handle"} 
         ""
       )
     )}";
-import { StormPayload } from "storm:payload";
-import { CLIBasePayloadData, colors, renderBanner, renderFooter, parseArgs } from "storm:cli";${
+import { StormRequest } from "storm:request";
+import { CLIRequestData, colors, renderBanner, renderFooter, parseArgs } from "storm:cli";${
       cmd.children && Object.values(cmd.children).length > 0
         ? Object.values(cmd.children)
             .map(child =>
@@ -800,8 +800,8 @@ import { CLIBasePayloadData, colors, renderBanner, renderFooter, parseArgs } fro
         : ""
     }
 
-export interface ${payload.type.getName()} extends CLIBasePayloadData {
-  ${payload.args
+export interface ${request.type.getName()} extends CLIRequestData {
+  ${request.args
     .map(arg => `${camelCase(arg.name)}: ${stringifyType(arg.type.getType())};`)
     .join("\n  ")}
 }
@@ -872,12 +872,12 @@ ${Object.values(cmd.children)
 /**
  * The entry point for the ${command.title} virtual command.
  */
-async function handler(payload: StormPayload<${payload.type.getName()}>) {
+async function handler(request: StormRequest<${request.type.getName()}>) {
   try {
     ${
       Object.values(cmd.children).length > 0
-        ? `if (payload.data.argv.length > ${command.path.length + 2}) {
-      const command = payload.data.argv[${command.path.length + 1}];
+        ? `if (request.data.args.length > ${command.path.length + 2}) {
+      const command = request.data.args[${command.path.length + 1}];
       if (command && !command.startsWith("-")) {
       ${Object.values(cmd.children)
         .map(
@@ -885,9 +885,9 @@ async function handler(payload: StormPayload<${payload.type.getName()}>) {
             `${i === 0 ? "if" : "else if"} (command.toLowerCase() === "${child.command.name.toLowerCase()}") {
           ${
             child.command.isVirtual
-              ? `return handle${pascalCase(child.command.name)}(payload);`
+              ? `return handle${pascalCase(child.command.name)}(request);`
               : `const handle = await import("./${child.command.name}").then(m => m.default);
-          return handle(payload);`
+          return handle(request);`
           }
         } `
         )
@@ -905,11 +905,11 @@ async function handler(payload: StormPayload<${payload.type.getName()}>) {
         : ""
     }
 
-    const args = parseArgs(payload.data.argv.slice(${command.path.length + 1}), {${
-      payload.args.filter(arg => arg.type.getKind() === ReflectionKind.boolean)
+    const args = parseArgs(request.data.args.slice(${command.path.length + 1}), {${
+      request.args.filter(arg => arg.type.getKind() === ReflectionKind.boolean)
         .length > 0
         ? `
-      boolean: [${payload.args
+      boolean: [${request.args
         .filter(
           arg => arg.name && arg.type.getKind() === ReflectionKind.boolean
         )
@@ -927,9 +927,9 @@ async function handler(payload: StormPayload<${payload.type.getName()}>) {
         .join(", ")}],`
         : ""
     }${
-      payload.args.filter(arg => arg.type.getAlias().length > 0).length > 0
+      request.args.filter(arg => arg.type.getAlias().length > 0).length > 0
         ? `
-      alias: {${payload.args
+      alias: {${request.args
         .map(
           arg =>
             `${camelCase(arg.name)}: [${
@@ -1117,7 +1117,7 @@ export async function prepareEntry(
 
 ${getFileHeader()}
 
-import { createCLI } from "storm:app";
+import { createCLIApp } from "storm:app";
 import { colors, link, renderBanner, renderFooter, parseArgs } from "storm:cli";
 import { isError, isStormError, createStormError } from "storm:error";${
       commandTree.children && Object.values(commandTree.children).length > 0
@@ -1151,7 +1151,7 @@ import { isError, isStormError, createStormError } from "storm:error";${
 //   process.exit(1);
 // }
 
-const main = createCLI(async (payload) => {
+const main = createCLIApp(async (request) => {
 
 ${
   !context.packageJson.private
@@ -1217,12 +1217,12 @@ ${
 }
 
   try {
-    if (payload.data.argv.includes("--version") || payload.data.argv.includes("-v")) {
+    if (request.data.args.includes("--version") || request.data.args.includes("-v")) {
       console.log($storm.env.version);
     } else {
       let command = "";
-      if (payload.data.argv.length > 2 && payload.data.argv[2]) {
-        command = payload.data.argv[2];
+      if (request.data.args.length > 2 && request.data.args[2]) {
+        command = request.data.args[2];
       }
 
       ${Object.values(commandTree.children)
@@ -1231,11 +1231,11 @@ ${
             `${i === 0 ? "if" : "else if"} (command.toLowerCase() === "${child.command.name.toLowerCase()}") {
         ${
           child.command.isVirtual
-            ? `return handle${pascalCase(child.command.name)}(payload);`
+            ? `return handle${pascalCase(child.command.name)}(request);`
             : `const handle = await import("./entry/${child.command.path.join(
                 "/"
               )}").then(m => m.default);
-        return handle(payload);`
+        return handle(request);`
         }
       } `
         )
@@ -1290,7 +1290,7 @@ ${
   }
 });
 
-main({ argv: process.argv });
+main({ args: process.argv });
 
 `
   );
@@ -1302,12 +1302,12 @@ export async function addCommandArgReflections(
   context: CLIPluginContext,
   cmd: CommandTreeBranch
 ) {
-  const payload = cmd.command.payload;
-  if (!payload) {
-    throw new Error(`Command ${cmd.command.id}'s payload is missing`);
+  const request = cmd.command.request;
+  if (!request) {
+    throw new Error(`Command ${cmd.command.id}'s request is missing`);
   }
 
-  for (const arg of payload.args) {
+  for (const arg of request.args) {
     let name = constantCase(arg.name);
     if (name) {
       const aliasProperties = context.reflections.config.params

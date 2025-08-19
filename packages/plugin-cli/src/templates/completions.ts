@@ -39,8 +39,8 @@ export function writeCompletionsBash(
 
   return `${getFileHeader()}
 
-import { colors, stripAnsi, CLIBasePayloadData } from "storm:cli";
-import { StormPayload } from "storm:payload";
+import { colors, stripAnsi, CLIRequestData } from "storm:cli";
+import { StormRequest } from "storm:request";
 import { readFile, writeFile } from "node:fs/promises";
 import { existsSync } from "node:fs";
 import { join } from "node:path";
@@ -48,7 +48,7 @@ import os from "node:os";
 
 const homedir = os.homedir();
 
-export interface CompletionsBashPayload extends CLIBasePayloadData {
+export interface CompletionsBashRequest extends CLIRequestData {
   /**
    * The path to write the completion script to.
    *
@@ -75,9 +75,9 @@ export interface CompletionsBashPayload extends CLIBasePayloadData {
 /**
  * Generates a Bash shell completion script for the ${titleCase(context.options.name)} CLI application.
  *
- * @param payload - The payload object optionally containing a script output file or a config file.
+ * @param request - The request object optionally containing a script output file or a config file.
  */
-async function handler(payload: StormPayload<CompletionsBashPayload>) {
+async function handler(request: StormRequest<CompletionsBashRequest>) {
   const executablePath = process.argv[1] || "${bin}";
   const script = colors.white(\`
 \${colors.dim("###-begin-${bin}-completions-###")}
@@ -110,10 +110,10 @@ complete -o bashdefault -o default -F _${bin}_completions ${bin}
 \`);
 
   console.log("");
-  if (payload.data.config) {
-    let configFile = payload.data.config === true
+  if (request.data.config) {
+    let configFile = request.data.config === true
       ? "~/.bashrc"
-      : payload.data.config;
+      : request.data.config;
     if (configFile.startsWith("~")) {
       configFile = join(homedir, configFile.replace("~", ""));
     }
@@ -133,9 +133,9 @@ complete -o bashdefault -o default -F _${bin}_completions ${bin}
     );
 
     console.log(colors.dim(\` > Bash completion script appended to \${configFile} configuration\`));
-  } else if (payload.data.script) {
-    const scriptFile = typeof payload.data.script === "string"
-      ? payload.data.script
+  } else if (request.data.script) {
+    const scriptFile = typeof request.data.script === "string"
+      ? request.data.script
       : "${bin}-completions.sh";
     await writeFile(
       scriptFile,
@@ -172,8 +172,8 @@ export function writeCompletionsZsh(
     ) || "storm";
 
   return `${getFileHeader()}
-import { colors, stripAnsi, CLIBasePayloadData } from "storm:cli";
-import { StormPayload } from "storm:payload";
+import { colors, stripAnsi, CLIRequestData } from "storm:cli";
+import { StormRequest } from "storm:request";
 import { readFile, writeFile } from "node:fs/promises";
 import { existsSync } from "node:fs";
 import { join } from "node:path";
@@ -181,7 +181,7 @@ import os from "node:os";
 
 const homedir = os.homedir();
 
-export interface CompletionsZshPayload extends CLIBasePayloadData {
+export interface CompletionsZshRequest extends CLIRequestData {
   /**
    * The path to write the completion script to.
    *
@@ -208,9 +208,9 @@ export interface CompletionsZshPayload extends CLIBasePayloadData {
 /**
  * Generates a Zsh shell completion script for the ${titleCase(context.options.name)} CLI application.
  *
- * @param payload - The payload object optionally containing a script output file or a config file.
+ * @param request - The request object optionally containing a script output file or a config file.
  */
-async function handler(payload: StormPayload<CompletionsZshPayload>) {
+async function handler(request: StormRequest<CompletionsZshRequest>) {
   const executablePath = process.argv[1] || "${bin}";
   const script = colors.white(\`
 \${colors.dim("#compdef")} \${colors.bold("${bin}")}
@@ -243,10 +243,10 @@ complete -o bashdefault -o default -F _${bin}_completions ${bin}
 \`);
 
   console.log("");
-  if (payload.data.config) {
-    let configFile = payload.data.config === true
+  if (request.data.config) {
+    let configFile = request.data.config === true
       ? "~/.zshrc"
-      : payload.data.config;
+      : request.data.config;
     if (configFile.startsWith("~")) {
       configFile = join(homedir, configFile.replace("~", ""));
     }
@@ -266,9 +266,9 @@ complete -o bashdefault -o default -F _${bin}_completions ${bin}
     );
 
     console.log(colors.dim(\` > Zsh completion script added to \${configFile}\`));
-  } else if (payload.data.script) {
-    const scriptFile = typeof payload.data.script === "string"
-      ? payload.data.script
+  } else if (request.data.script) {
+    const scriptFile = typeof request.data.script === "string"
+      ? request.data.script
       : "${bin}-completions.zsh";
     await writeFile(
       scriptFile,

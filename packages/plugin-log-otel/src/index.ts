@@ -83,7 +83,7 @@ import {
   SimpleLogRecordProcessor
 } from "@opentelemetry/sdk-logs";
 import { ATTR_SERVICE_NAME } from "@opentelemetry/semantic-conventions";
-import { LogRecord, LogAdapter } from "@storm-stack/types/log";
+import { LogRecord, LogAdapter } from "@storm-stack/types/shared/log";
 import { StormJSON } from "@stryke/json/storm-json";
 import {
   BodyFormatter,

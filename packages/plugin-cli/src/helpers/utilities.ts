@@ -33,7 +33,7 @@ import { isSetString } from "@stryke/type-checks/is-set-string";
 import { isString } from "@stryke/type-checks/is-string";
 import { TypeDefinition } from "@stryke/types/configuration";
 import defu from "defu";
-import { CommandPayloadArg } from "../data/command-payload";
+import { CommandRequestArg } from "../data/command-request";
 import { CLIPluginContext, CLIPluginOptions } from "../types/config";
 import { CommandTree, CommandTreeBranch } from "../types/reflection";
 
@@ -55,8 +55,8 @@ export function sortArgAliases(aliases: string[]): string[] {
 }
 
 export function sortArgs(
-  args: CommandPayloadArg[] | readonly CommandPayloadArg[]
-): CommandPayloadArg[] {
+  args: CommandRequestArg[] | readonly CommandRequestArg[]
+): CommandRequestArg[] {
   if (!args || args.length === 0) {
     return [];
   }
@@ -74,7 +74,7 @@ export function sortArgs(
       }
 
       return ret;
-    }, [] as CommandPayloadArg[]);
+    }, [] as CommandRequestArg[]);
 }
 
 /**
@@ -189,13 +189,13 @@ export function getAppTitle(
 }
 
 /**
- * Extracts the command payload type from a given method or function type.
+ * Extracts the command request type from a given method or function type.
  *
- * @param type - The Type to extract the command payload from.
- * @returns A ReflectionClass representing the command payload type.
+ * @param type - The Type to extract the command request from.
+ * @returns A ReflectionClass representing the command request type.
  * @throws An error if the provided type is invalid or does not conform to the expected structure.
  */
-export function extractCommandPayload(type: Type): ReflectionClass<any> {
+export function extractCommandRequest(type: Type): ReflectionClass<any> {
   if (
     !type ||
     (type.kind !== ReflectionKind.method &&
@@ -215,96 +215,96 @@ export function extractCommandPayload(type: Type): ReflectionClass<any> {
     !functionType.getParameters()[0]
   ) {
     throw new Error(
-      "Command methods must have at least one parameter defined for the payload."
+      "Command methods must have at least one parameter defined for the request."
     );
   }
 
-  return extractCommandFunctionPayload(functionType);
+  return extractCommandFunctionRequest(functionType);
 }
 
 /**
- * Extracts the command payload type from a given ReflectionFunction.
+ * Extracts the command request type from a given ReflectionFunction.
  *
- * @param type - The ReflectionFunction to extract the command payload from.
- * @returns A ReflectionClass representing the command payload type.
- * @throws An error if the provided function does not have a valid payload structure.
+ * @param type - The ReflectionFunction to extract the command request from.
+ * @returns A ReflectionClass representing the command request type.
+ * @throws An error if the provided function does not have a valid request structure.
  */
-export function extractCommandFunctionPayload(
+export function extractCommandFunctionRequest(
   type: ReflectionFunction
 ): ReflectionClass<any> {
   if (type.getParameters().length === 0 || !type.getParameters()[0]) {
     throw new Error(
-      "Command methods must have at least one parameter defined for the payload."
+      "Command methods must have at least one parameter defined for the request."
     );
   }
 
   const param = type.getParameters()[0]!;
 
-  return extractCommandFunctionPayloadData(param.getType());
+  return extractCommandFunctionRequestData(param.getType());
 }
 
 /**
- * Extracts the command payload type from a given ReflectionFunction.
+ * Extracts the command request type from a given ReflectionFunction.
  *
- * @param payloadType - The ReflectionFunction to extract the command payload from.
- * @returns A ReflectionClass representing the command payload type.
- * @throws An error if the provided function does not have a valid payload structure.
+ * @param requestType - The ReflectionFunction to extract the command request from.
+ * @returns A ReflectionClass representing the command request type.
+ * @throws An error if the provided function does not have a valid request structure.
  */
-export function extractCommandFunctionPayloadData(
-  payloadType: Type | ReflectionClass<any>
+export function extractCommandFunctionRequestData(
+  requestType: Type | ReflectionClass<any>
 ): ReflectionClass<any> {
-  const payload = ReflectionClass.from(payloadType);
-  if (!payload || !payload.hasProperty("data")) {
+  const request = ReflectionClass.from(requestType);
+  if (!request || !request.hasProperty("data")) {
     throw new Error(
-      `Command method payloads must be of type 'StormPayload'. ${
-        !payload
-          ? "No payload type provided."
-          : `Provided payload is the incorrect type: '${payload.getName()}'.`
+      `Command method requests must be of type 'StormRequest'. ${
+        !request
+          ? "No request type provided."
+          : `Provided request is the incorrect type: '${request.getName()}'.`
       }.`
     );
   }
 
-  const payloadDataType = payload.getProperty("data").getType();
+  const requestDataType = request.getProperty("data").getType();
   if (
-    !payloadDataType ||
-    (payloadDataType.kind !== ReflectionKind.objectLiteral &&
-      payloadDataType.kind !== ReflectionKind.class &&
-      payloadDataType.kind !== ReflectionKind.object &&
-      payloadDataType.kind !== ReflectionKind.any)
+    !requestDataType ||
+    (requestDataType.kind !== ReflectionKind.objectLiteral &&
+      requestDataType.kind !== ReflectionKind.class &&
+      requestDataType.kind !== ReflectionKind.object &&
+      requestDataType.kind !== ReflectionKind.any)
   ) {
     throw new Error(
-      `Command method payloads must be of type 'StormPayload', received: ${
-        payloadDataType.typeName || payloadDataType.kind
+      `Command method requests must be of type 'StormRequest', received: ${
+        requestDataType.typeName || requestDataType.kind
       }.`
     );
   }
 
-  if (payloadDataType.kind === ReflectionKind.object) {
+  if (requestDataType.kind === ReflectionKind.object) {
     return new ReflectionClass({
       kind: ReflectionKind.objectLiteral,
-      description: "Command payload data",
+      description: "Command request data",
       types: []
     });
   }
 
-  return ReflectionClass.from(payloadDataType);
+  return ReflectionClass.from(requestDataType);
 }
 
-export function getPayloadBaseTypeDefinition(
+export function getRequestBaseTypeDefinition(
   context: CLIPluginContext
 ): TypeDefinition {
   return {
-    file: joinPaths(context.runtimePath, "payload.ts"),
-    name: "StormPayload"
+    file: joinPaths(context.runtimePath, "request.ts"),
+    name: "StormRequest"
   };
 }
 
-export async function reflectPayloadBaseType(
+export async function reflectRequestBaseType(
   context: CLIPluginContext
 ): Promise<ReflectionClass<any>> {
-  const defaultPayloadType = await reflectType(
+  const defaultRequestType = await reflectType(
     context,
-    getPayloadBaseTypeDefinition(context),
+    getRequestBaseTypeDefinition(context),
     {
       skipNodeModulesBundle: true,
       noExternal: context.options.noExternal,
@@ -312,14 +312,14 @@ export async function reflectPayloadBaseType(
     }
   );
 
-  const payloadType = resolveClassType(defaultPayloadType);
-  if (!payloadType || !payloadType.hasProperty("data")) {
+  const requestType = resolveClassType(defaultRequestType);
+  if (!requestType || !requestType.hasProperty("data")) {
     throw new Error(
-      "The command method's first argument must have a type of \`StormPayload\`. The type representing the application's command-line arguments should be provided as the type parameter."
+      "The command method's first argument must have a type of \`StormRequest\`. The type representing the application's command-line arguments should be provided as the type parameter."
     );
   }
 
-  return payloadType;
+  return requestType;
 }
 
 export function findCommandInTree(

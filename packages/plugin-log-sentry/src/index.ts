@@ -109,7 +109,7 @@ export default class LogSentryPlugin extends LogPlugin<
 import type { ParameterizedString } from "@sentry/core";
 import { getClient } from "@sentry/core";
 import * as Sentry from "@sentry/node";
-import { LogRecord, LogAdapter } from "@storm-stack/types/log";
+import { LogRecord, LogAdapter } from "@storm-stack/types/shared/log";
 
 /**
  * A platform-specific inspect function. In Deno, this is {@link Deno.inspect}, and in Node.js/Bun it is {@link util.inspect}. If neither is available, it falls back to {@link StormJSON.stringify}.

@@ -16,16 +16,16 @@
 
  ------------------------------------------------------------------- */
 
-import { StormPayload } from "storm:payload";
-import { AddPayload } from "../../types";
+import { StormRequest } from "storm:request";
+import { AddRequest } from "../../types";
 
 /**
  * Add an item to the file system
  *
- * @param payload - The event object containing the payload
+ * @param request - The event object containing the request
  */
-function handler(payload: StormPayload<AddPayload>) {
-  const data = payload.data;
+function handler(request: StormRequest<AddRequest>) {
+  const data = request.data;
 
   $storm.log.info(`Adding ${data.type} to file system on ${data.file}`);
 }

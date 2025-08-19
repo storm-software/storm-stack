@@ -56,9 +56,9 @@ export class StormEvent<
   public readonly data: TData;
 
   /**
-   * The payload identifier.
+   * The request identifier.
    */
-  public readonly payloadId: string = useStorm().payload.id;
+  public readonly requestId: string = useStorm().request.id;
 
   /**
    * The event type.

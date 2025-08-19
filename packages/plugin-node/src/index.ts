@@ -24,7 +24,6 @@ import { SourceFile } from "@storm-stack/core/types/compiler";
 import { PluginOptions } from "@storm-stack/core/types/plugin";
 import { IdModule } from "@storm-stack/devkit/templates/id";
 import { LogModule } from "@storm-stack/devkit/templates/log";
-import { PayloadModule } from "@storm-stack/devkit/templates/payload";
 import { StorageModule } from "@storm-stack/devkit/templates/storage";
 import { readConfigTypeReflection } from "@storm-stack/plugin-config/helpers/persistence";
 import { joinPaths } from "@stryke/path/join-paths";
@@ -32,6 +31,7 @@ import BabelPlugin from "./babel/plugin";
 import { ContextModule } from "./templates/context";
 import { EnvModule } from "./templates/env";
 import { EventModule } from "./templates/event";
+import { RequestModule } from "./templates/request";
 import { ResultModule } from "./templates/result";
 import {
   NodePluginContext,
@@ -140,9 +140,9 @@ export default class NodePlugin<
         StorageModule(context)
       ),
       context.vfs.writeRuntimeFile(
-        "payload",
-        joinPaths(context.runtimePath, "payload.ts"),
-        PayloadModule(context)
+        "request",
+        joinPaths(context.runtimePath, "request.ts"),
+        RequestModule(context)
       ),
       context.vfs.writeRuntimeFile(
         "context",

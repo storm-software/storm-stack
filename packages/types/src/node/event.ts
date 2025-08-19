@@ -42,9 +42,9 @@ export interface StormEventInterface<
   data: TData;
 
   /**
-   * The unique identifier for the current payload.
+   * The unique identifier for the current request.
    */
-  payloadId: string;
+  requestId: string;
 
   /**
    * The type of the event.

@@ -193,6 +193,30 @@ export default class CLIPlugin<
     }
   }
 
+  //   /**
+  //    * Returns the type definition for the plugin.
+  //    *
+  //    * @returns The type definition for the plugin.
+  //    */
+  //   protected async prepareTypes(context: TContext, sourceFile: SourceFile) {
+  //     this.log(
+  //       LogLevelLabel.TRACE,
+  //       `Completing final preparations for the Storm Stack projects type definitions.`
+  //     );
+
+  //     const configReflection = await readConfigTypeReflection(context, "params");
+  //     if (!configReflection) {
+  //       throw new Error("Could not read config reflection.");
+  //     }
+
+  //     sourceFile.code.append(`
+  // interface StormContext {
+  //   cli: import("./.storm/runtime/cli").CLIApi;
+  // }
+
+  // `);
+  //   }
+
   /**
    * Prepares the entry point for the CLI application.
    *

@@ -1,4 +1,4 @@
-{ pkgs, inputs, ... }:
+{ pkgs, config, ... }:
 {
   name = "storm-software/storm-stack";
 
@@ -10,9 +10,13 @@
   env.DEFAULT_LOCALE = "en_US";
   env.DEFAULT_TIMEZONE = "America/New_York";
 
+  # https://secretspec.dev/quick-start/
+  env.SENTRY_DSN = config.secretspec.secrets.SENTRY_DSN;
+
   # https://devenv.sh/packages/
   packages = [
     pkgs.capnproto
+    pkgs.secretspec
   ];
 }
 

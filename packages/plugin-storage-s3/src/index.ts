@@ -37,7 +37,7 @@ export default class StorageS3Plugin extends StoragePlugin<StorageS3PluginPlugin
   protected override writeStorage() {
     return `${getFileHeader()}
 
-import type { StorageAdapter } from "@storm-stack/types/storage";
+import type { StorageAdapter } from "@storm-stack/types/shared/storage";
 import s3Driver from "unstorage/drivers/s3";
 import { StormError } from "storm:error";
 

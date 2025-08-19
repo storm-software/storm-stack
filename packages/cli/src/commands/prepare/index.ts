@@ -18,13 +18,13 @@
 
 import { PrepareInlineConfig } from "@storm-stack/core/types/config";
 import { StormError } from "storm:error";
-import { StormPayload } from "storm:payload";
+import { StormRequest } from "storm:request";
 import { createEngine } from "../../helpers/create-engine";
 
 /**
- * The payload data type for the prepare command.
+ * The request data type for the prepare command.
  */
-interface PreparePayload {
+interface PrepareRequest {
   /**
    * The root directory of the Storm Stack project.
    *
@@ -44,14 +44,12 @@ interface PreparePayload {
  * @remarks
  * This command prepares the Storm Stack project by creating the necessary directories and writing the artifacts files to the project so that it can be built later.
  *
- * @param payload - The payload object containing the parameters for the prepare command.
+ * @param request - The request object containing the parameters for the prepare command.
  */
-async function handler(payload: StormPayload<PreparePayload>) {
-  const data = payload.data;
+async function handler(request: StormRequest<PrepareRequest>) {
+  const data = request.data;
   if (!data.root) {
-    throw new StormError({
-      code: 1
-    });
+    throw new StormError({ code: 1 });
   }
 
   const inlineConfig = {

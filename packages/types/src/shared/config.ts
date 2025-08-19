@@ -31,6 +31,32 @@ import { LogLevel } from "./log.js";
  */
 export interface StormConfigInterface {
   /**
+   * A virtual object representing the configuration parameters for the Storm application at build time. The Storm Stack build process will inject this object's values with the actual configuration parameters at build time.
+   *
+   * @example
+   * ```typescript
+   * // "$storm.config.static.CONFIG_ITEM" will be replaced with the actual value at build time
+   * const value = $storm.config.static.CONFIG_ITEM;
+   *
+   * const someNumber = $storm.config.static.SOME_NUMBER;
+   * // const someNumber = 42;
+   *
+   * const someString = $storm.config.static.SOME_STRING;
+   * // const someString = "Hello, World!";
+   *
+   * const someBoolean = $storm.config.static.SOME_BOOLEAN;
+   * // const someBoolean = true;
+   * ```
+   *
+   * @remarks
+   * A static representation of the configuration thats used to inject data into the application code at build time. This object will can provide type safety and autocompletion for the configuration values when used in the application code. **The values on this object will not exist at runtime.**
+   *
+   * @internal
+   * @readonly
+   */
+  readonly static: any;
+
+  /**
    * An indicator that specifies the application is running in the local Storm Stack development environment.
    *
    * @defaultValue false

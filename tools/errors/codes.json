@@ -40,7 +40,7 @@
     "38": "An error occured while finishing generation of documentation for the Storm Stack project",
     "39": "An error occured while finishing the finalize process for the Storm Stack project",
     "40": "An error occured while finishing the lint process for the Storm Stack project",
-    "41": "Attempted to access `StormPayload` data before it has been set. The data property can not be used until the `input` is validated/deserialized and the `set` method is called to assign data.",
+    "41": "Attempted to access `StormRequest` data before it has been set. The data property can not be used until the `input` is validated/deserialized and the `set` method is called to assign data.",
     "42": "An error occured while finishing the new process to add a Storm Stack project",
     "43": "An error occured while creating deployment artifacts",
     "44": "An error occured while finishing the clean process for the Storm Stack project",

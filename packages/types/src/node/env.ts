@@ -16,88 +16,7 @@
 
  ------------------------------------------------------------------- */
 
-/**
- * Interface representing the static build information for the Storm application.
- */
-export interface StormBuildInfo {
-  /**
-   * The package name of the application.
-   */
-  packageName: string;
-
-  /**
-   * The version of the application.
-   */
-  version: string;
-
-  /**
-   * The unique identifier for the build.
-   */
-  buildId: string;
-
-  /**
-   * The timestamp for the build.
-   */
-  timestamp: number;
-
-  /**
-   * The unique identifier for the release.
-   */
-  releaseId: string;
-
-  /**
-   * The tag associated with the release.
-   *
-   * @remarks
-   * This is in the format of "\<APP_NAME\>\@\<APP_VERSION\>".
-   */
-  releaseTag: string;
-
-  /**
-   * The name of the organization that maintains the application.
-   */
-  organization: string;
-
-  /**
-   * The mode in which the application is running (e.g., 'development', 'staging', 'production').
-   */
-  mode: "development" | "staging" | "production";
-
-  /**
-   * The platform for which the application was built.
-   */
-  platform: "node" | "browser" | "neutral";
-
-  /**
-   * The environment in which the application is running.
-   */
-  environment: string;
-
-  /**
-   * Indicates if the application is running in a production environment.
-   */
-  isProduction: boolean;
-
-  /**
-   * Indicates if the application is running in a staging environment.
-   */
-  isStaging: boolean;
-
-  /**
-   * Indicates if the application is running in a development environment.
-   */
-  isDevelopment: boolean;
-
-  /**
-   * Indicates if the application is running in debug mode.
-   */
-  isDebug: boolean;
-
-  /**
-   * Indicates if the application is running in a test environment.
-   */
-  isTest: boolean;
-}
+import { StormEnv } from "../shared/env";
 
 /**
  * The environment paths for storing things like data, config, logs, and cache in the current runtime environment.
@@ -125,107 +44,76 @@ export type StormEnvPaths = Record<StormEnvPathType, string>;
  * @remarks
  * The environment information includes information about the current runtime environment, such as the operating system, architecture, and other relevant details.
  */
-export interface StormEnvInterface {
+export interface StormNodeEnv extends StormEnv {
   /**
-   * Indicates if the current process has a TTY (interactive terminal) available.
+   * The platform for which the application was built.
    */
-  hasTTY: boolean;
-
-  /**
-   * A boolean indicator specifying if the application is running in a Continuous Integration (CI) environment.
-   */
-  isCI: boolean;
-
-  /**
-   * The current runtime mode to determine the behavior of the application in different environments.
-   *
-   * @remarks
-   * The `mode` is typically set based on the deployment environment and can affect configuration, logging, and feature flags. Valid values for the `mode` are:
-   * - `"development"`: Used for local development and testing.
-   * - `"staging"`: Used for staging environments that closely mirror production.
-   * - `"production"`: Used for live production environments.
-   */
-  mode: "development" | "staging" | "production";
+  readonly platform: "node" | "browser" | "neutral";
 
   /**
    * The environment name as specified in the plugin context.
    */
-  environment: string;
+  readonly environment: string;
 
   /**
-   * A boolean indicator specifying if running in production mode.
+   * Indicates if the current process has a TTY (interactive terminal) available.
    */
-  isProduction: boolean;
+  readonly hasTTY: boolean;
 
   /**
-   * A boolean indicator specifying if running in staging mode.
+   * A boolean indicator specifying if the application is running in a Continuous Integration (CI) environment.
    */
-  isStaging: boolean;
-
-  /**
-   * A boolean indicator specifying if running in development mode.
-   */
-  isDevelopment: boolean;
-
-  /**
-   * A boolean indicator specifying if running in debug mode (typically development with debug enabled).
-   */
-  isDebug: boolean;
-
-  /**
-   * A boolean indicator specifying if running in test mode or under test conditions.
-   */
-  isTest: boolean;
+  readonly isCI: boolean;
 
   /**
    * A boolean indicator specifying if running in a minimal environment (e.g., CI, test, or no TTY).
    */
-  isMinimal: boolean;
+  readonly isMinimal: boolean;
 
   /**
    * A boolean indicator specifying if the runtime platform is Windows.
    */
-  isWindows: boolean;
+  readonly isWindows: boolean;
 
   /**
    * A boolean indicator specifying if the runtime platform is Linux.
    */
-  isLinux: boolean;
+  readonly isLinux: boolean;
 
   /**
    * A boolean indicator specifying if the runtime platform is macOS.
    */
-  isMacOS: boolean;
+  readonly isMacOS: boolean;
 
   /**
    * A boolean indicator specifying if running in Node.js or a Node.js-compatible runtime.
    */
-  isNode: boolean;
+  readonly isNode: boolean;
 
   /**
    * A boolean indicator specifying if running in a server environment (Node.js or specified platform).
    */
-  isServer: boolean;
+  readonly isServer: boolean;
 
   /**
    * A boolean indicator specifying if the environment supports interactive input/output.
    */
-  isInteractive: boolean;
+  readonly isInteractive: boolean;
 
   /**
    * A boolean indicator specifying if the terminal supports Unicode characters.
    */
-  isUnicodeSupported: boolean;
+  readonly isUnicodeSupported: boolean;
 
   /**
    * A boolean indicator specifying if the terminal supports colored output.
    */
-  isColorSupported: boolean;
+  readonly isColorSupported: boolean;
 
   /**
    * An object describing the color support level for stdout and stderr streams.
    */
-  supportsColor: {
+  readonly supportsColor: {
     stdout:
       | boolean
       | number
@@ -249,60 +137,35 @@ export interface StormEnvInterface {
   /**
    * The name of the organization maintaining the application.
    */
-  organization: string;
-
-  /**
-   * The application name.
-   */
-  name: string;
+  readonly organization: string;
 
   /**
    * The package name from package.json or the application name.
    */
-  packageName: string;
-
-  /**
-   * The current application version.
-   */
-  version: string;
+  readonly packageName: string;
 
   /**
    * The build identifier for the current release.
    */
-  buildId: string;
+  readonly buildId: string;
 
   /**
    * The build or release timestamp.
    */
-  timestamp: number;
+  readonly timestamp: number;
 
   /**
    * The release identifier.
    */
-  releaseId: string;
+  readonly releaseId: string;
 
   /**
    * A tag combining the application name and version.
    */
-  releaseTag: string;
-
-  /**
-   * The default locale for the application.
-   */
-  defaultLocale: string;
-
-  /**
-   * The default timezone for the application.
-   */
-  defaultTimezone: string;
-
-  /**
-   * The runtime platform (e.g., "node", "web", etc.).
-   */
-  platform: StormBuildInfo["platform"];
+  readonly releaseTag: string;
 
   /**
    * An object containing standardized paths for data, config, cache, logs, and temp files, adapted to the current OS and environment variables.
    */
-  paths: StormEnvPaths;
+  readonly paths: StormEnvPaths;
 }

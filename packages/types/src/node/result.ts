@@ -29,9 +29,9 @@ export interface StormResultInterface<
   TData extends any | StormErrorInterface = any | StormErrorInterface
 > {
   /**
-   * The unique identifier for the payload.
+   * The unique identifier for the request.
    */
-  payloadId: string;
+  requestId: string;
 
   /**
    * The result meta.

@@ -211,7 +211,7 @@ import { StormError } from "storm:error";`
     : ""
 }
 
-export type CLIBasePayloadData = {
+export type CLIRequestData = {
   argv: string[];
 };
 
@@ -292,22 +292,25 @@ const colorDefs = {
 };
 
 export type ColorName = keyof typeof colorDefs;
+export type ColorFn = (text: string | number) => string;
+export type Colors = Record<ColorName, ColorFn>;
 
 /**
  * An object containing functions for coloring text. Each function corresponds to a terminal color. See {@link ColorName} for available colors.
  */
-export const colors = (
-  $storm.config.static.NO_COLOR
-    ? colorDefs
-    : Object.fromEntries(Object.keys(colorDefs).map(key => [key, String]))
-) as Record<ColorName, (text: string | number) => string>;
+export const colors = new Proxy<Colors>({} as Colors, {
+  get(_, prop: string) {
+    try {
+      if ($storm.config.NO_COLOR && prop in colorDefs) {
+        return colorDefs[prop];
+      }
 
-export const AnsiLevelMapping = [
-	'ansi',
-	'ansi',
-	'ansi256',
-	'ansi16m',
-];
+      return (text: string | number) => String(text);
+    } catch {
+      return (text: string | number) => String(text);
+    }
+  }
+});
 
 /**
  * Gets a color function by name, with an option for a fallback color if the requested color is not found.

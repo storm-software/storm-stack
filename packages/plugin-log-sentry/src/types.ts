@@ -22,7 +22,7 @@ import {
   ConfigPluginContextOptions,
   ConfigPluginReflectionRecord
 } from "@storm-stack/plugin-config/types";
-import { StormConfigInterface } from "@storm-stack/types/config";
+import { StormConfigInterface } from "@storm-stack/types/shared/config";
 
 /**
  * Configuration options for the Sentry logging plugin.

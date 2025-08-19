@@ -58,7 +58,7 @@ export default class LogStoragePlugin extends LogPlugin<LogStoragePluginOptions>
   protected override writeAdapter() {
     return `${getFileHeader()}
 
-import { LogRecord, LogAdapter } from "@storm-stack/types/log";
+import { LogRecord, LogAdapter } from "@storm-stack/types/shared/log";
 import { StorageValue } from "unstorage";
 import {
   TextFormatter,
@@ -68,7 +68,7 @@ import {
   FormattedValues,
   LogLevel,
   LogRecord
-} from "@storm-stack/types/log";
+} from "@storm-stack/types/shared/log";
 import util from "node:util";
 
 /**

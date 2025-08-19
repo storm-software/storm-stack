@@ -30,24 +30,24 @@ import {
 } from "../types/reflection";
 import { findCommandInTree, getAppName, getAppTitle } from "./utilities";
 
-// async function reflectPayloads(
+// async function reflects(
 //   context: CLIPluginContext
-// ): Promise<Record<string, CommandPayload>> {
-//   const payloadReflections = {} as Record<string, CommandPayload>;
+// ): Promise<Record<string, Command>> {
+//   const Reflections = {} as Record<string, Command>;
 //   for (const entry of context.entry.filter(
 //     entry => entry.input.file !== context.options.entry && entry.output
 //   )) {
 //     if (entry.isVirtual) {
-//       const payloadBaseType = await reflectPayloadBaseType(context);
+//       const BaseType = await reflectBaseType(context);
 
-//       payloadReflections[entry.output] = CommandPayload.from(
+//       Reflections[entry.output] = Command.from(
 //         context,
 //         {
 //           entry,
 //           name: findCommandName(entry),
 //           title: titleCase(findCommandName(entry))
 //         },
-//         payloadBaseType
+//         BaseType
 //       );
 //     } else {
 //       // eslint-disable-next-line ts/no-unsafe-function-type
@@ -75,7 +75,7 @@ import { findCommandInTree, getAppName, getAppTitle } from "./utilities";
 //       }
 
 //       const name = findCommandName(entry);
-//       payloadReflections[entry.output] = CommandPayload.from(context, {
+//       Reflections[entry.output] = Command.from(context, {
 //         entry,
 //         name,
 //         title: titleCase(name),
@@ -84,14 +84,14 @@ import { findCommandInTree, getAppName, getAppTitle } from "./utilities";
 //     }
 //   }
 
-//   return payloadReflections;
+//   return Reflections;
 // }
 
 // type CommandReflectionDefinition = Omit<
 //   Command,
 //   "parent" | "children" | "root"
 // > & {
-//   payload: CommandPayload;
+//   : Command;
 //   relations: CommandRelations;
 // };
 
@@ -100,7 +100,7 @@ import { findCommandInTree, getAppName, getAppTitle } from "./utilities";
 //   context: CLIPluginContext
 // ): Promise<Record<string, CommandReflectionDefinition>> {
 //   const relationsReflections = await reflectRelations(context);
-//   const payloadsReflections = await reflectPayloads(context);
+//   const sReflections = await reflects(context);
 
 //   const reflections = {} as Record<string, CommandReflectionDefinition>;
 
@@ -142,7 +142,7 @@ import { findCommandInTree, getAppName, getAppTitle } from "./utilities";
 //         title: entry.title || titleCase(name),
 //         name: entry.output,
 //         entry,
-//         payload: payloadsReflections[entry.output]!,
+//         : sReflections[entry.output]!,
 //         relations: relationsReflections[entry.output]!
 //       };
 
@@ -150,12 +150,12 @@ import { findCommandInTree, getAppName, getAppTitle } from "./utilities";
 //         new ReflectionParameter(
 //           {
 //             kind: ReflectionKind.parameter,
-//             name: "payload",
+//             name: "",
 //             parent: command.type.type,
-//             type: payloadsReflections[entry.output]!.type.type,
-//             description: `The payload for the ${titleCase(name)} command.`,
+//             type: sReflections[entry.output]!.type.type,
+//             description: `The  for the ${titleCase(name)} command.`,
 //             tags: {
-//               title: `Payload for ${titleCase(name)} command`
+//               title: ` for ${titleCase(name)} command`
 //             }
 //           },
 //           command.type
@@ -193,7 +193,7 @@ import { findCommandInTree, getAppName, getAppTitle } from "./utilities";
 //         type: commandReflection,
 //         title: titleCase(name),
 //         entry,
-//         payload: payloadsReflections[id]!,
+//         : sReflections[id]!,
 //         relations: relationsReflections[id]!
 //       };
 //     }

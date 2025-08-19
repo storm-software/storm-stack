@@ -16,16 +16,16 @@
 
  ------------------------------------------------------------------- */
 
-import { StormPayload } from "storm:payload";
-import { ServePayload } from "../types";
+import { StormRequest } from "storm:request";
+import { ServeRequest } from "../types";
 
 /**
  * Start a server and serve the application
  *
- * @param payload - The event object containing the payload
+ * @param request - The event object containing the request
  */
-function handler(payload: StormPayload<ServePayload>) {
-  const data = payload.data;
+function handler(request: StormRequest<ServeRequest>) {
+  const data = request.data;
 
   $storm.log.info(
     `Starting server on ${data.host}:${data.port} with compress: ${data.compress} and loadEnv: ${data.loadEnv}`

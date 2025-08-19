@@ -36,13 +36,13 @@ import { TypeDefinition } from "@stryke/types/configuration";
 import defu from "defu";
 import { findCommandName } from "../helpers/reflect-command";
 import {
-  extractCommandFunctionPayload,
-  extractCommandFunctionPayloadData
+  extractCommandFunctionRequest,
+  extractCommandFunctionRequestData
 } from "../helpers/utilities";
 import { CLIPluginContext, CLIPluginOptions } from "../types/config";
 import { CommandEntryTypeDefinition } from "../types/reflection";
 
-export interface CommandPayloadArg {
+export interface CommandRequestArg {
   name: string;
   title: string;
   type: ReflectionProperty;
@@ -51,7 +51,7 @@ export interface CommandPayloadArg {
   skipNegative?: boolean;
 }
 
-export interface AddCommandPayloadArgProps extends TagsReflection {
+export interface AddCommandRequestArgProps extends TagsReflection {
   name: string;
   default?: any;
   optional?: boolean;
@@ -64,10 +64,10 @@ export interface AddCommandPayloadArgProps extends TagsReflection {
   skipNegative?: boolean;
 }
 
-function getDefaultCommandPayloadArgs(
+function getDefaultCommandRequestArgs(
   options: CLIPluginOptions,
   entry: CommandEntryTypeDefinition
-): AddCommandPayloadArgProps[] {
+): AddCommandRequestArgProps[] {
   return [
     {
       name: "help",
@@ -133,23 +133,23 @@ function getDefaultCommandPayloadArgs(
       default: false,
       skipNegative: true
     }
-  ].filter(Boolean) as AddCommandPayloadArgProps[];
+  ].filter(Boolean) as AddCommandRequestArgProps[];
 }
 
 /**
- * A wrapper class for command payloads in a CLI application.
+ * A wrapper class for command requests in a CLI application.
  *
  * @remarks
- * This class is used to define the structure of command payloads, including their arguments and types.
+ * This class is used to define the structure of command requests, including their arguments and types.
  */
-export class CommandPayload {
+export class CommandRequest {
   /**
-   * Creates a new CommandPayload instance.
+   * Creates a new CommandRequest instance.
    *
    * @param context - The CLI plugin context.
    * @param entry - The command entry definition.
    * @param reflection - The reflection information for the command.
-   * @returns A new CommandPayload instance.
+   * @returns A new CommandRequest instance.
    * @throws An error if the command type is invalid or does not conform to the expected structure.
    */
   public static from(
@@ -157,128 +157,134 @@ export class CommandPayload {
     entry: CommandEntryTypeDefinition,
     // eslint-disable-next-line ts/no-unsafe-function-type
     reflection: ReflectionClass<any> | ReflectionFunction | Function
-  ): CommandPayload {
-    const name = findCommandName(entry);
-    const title = entry.title || titleCase(name);
+  ): CommandRequest {
+    try {
+      const name = findCommandName(entry);
+      const title = entry.title || titleCase(name);
 
-    let type = new ReflectionClass({
-      kind: ReflectionKind.objectLiteral,
-      description: `The payload data types for the ${title} CLI command.`,
-      types: []
-    });
-
-    if (
-      (reflection as ReflectionClass<any>)?.type?.kind &&
-      ((reflection as ReflectionClass<any>)?.type?.kind ===
-        ReflectionKind.class ||
-        (reflection as ReflectionClass<any>)?.type?.kind ===
-          ReflectionKind.objectLiteral)
-    ) {
-      const reflectionClass = ReflectionClass.from(
-        reflection as ReflectionClass<any>
-      );
-      if (!reflectionClass) {
-        throw new Error(`Reflection not found: ${entry.input.file}`);
-      }
+      let type = new ReflectionClass({
+        kind: ReflectionKind.objectLiteral,
+        description: `The request data types for the ${title} CLI command.`,
+        types: []
+      });
 
       if (
-        reflectionClass.getClassName() === "StormPayload" &&
-        reflectionClass.hasProperty("data")
+        (reflection as ReflectionClass<any>)?.type?.kind &&
+        ((reflection as ReflectionClass<any>)?.type?.kind ===
+          ReflectionKind.class ||
+          (reflection as ReflectionClass<any>)?.type?.kind ===
+            ReflectionKind.objectLiteral)
       ) {
-        type = extractCommandFunctionPayloadData(reflectionClass);
-      } else if (reflectionClass.hasProperty("payload")) {
-        const payloadType = reflectionClass.getProperty("payload").getType();
-        if (
-          payloadType.kind !== ReflectionKind.class &&
-          payloadType.kind !== ReflectionKind.objectLiteral
-        ) {
-          throw new Error(
-            `Payload for ${title} must be of type objectLiteral or class, instead received: ${payloadType.kind}`
-          );
+        const reflectionClass = ReflectionClass.from(
+          reflection as ReflectionClass<any>
+        );
+        if (!reflectionClass) {
+          throw new Error(`Reflection not found: ${entry.input.file}`);
         }
 
-        type = ReflectionClass.from(payloadType);
+        if (
+          reflectionClass.getClassName() === "StormRequest" &&
+          reflectionClass.hasProperty("data")
+        ) {
+          type = extractCommandFunctionRequestData(reflectionClass);
+        } else if (reflectionClass.hasProperty("request")) {
+          const requestType = reflectionClass.getProperty("request").getType();
+          if (
+            requestType.kind !== ReflectionKind.class &&
+            requestType.kind !== ReflectionKind.objectLiteral
+          ) {
+            throw new Error(
+              `Request for ${title} must be of type objectLiteral or class, instead received: ${requestType.kind}`
+            );
+          }
+
+          type = ReflectionClass.from(requestType);
+        } else {
+          type = reflectionClass;
+        }
       } else {
-        type = reflectionClass;
+        let commandReflection = reflection as ReflectionFunction;
+        if (!(reflection as ReflectionFunction)?.type?.kind) {
+          // eslint-disable-next-line ts/no-unsafe-function-type
+          commandReflection = ReflectionFunction.from(reflection as Function);
+        }
+
+        if (!commandReflection) {
+          throw new Error(`Reflection not found: ${entry.input.file}`);
+        }
+
+        type = extractCommandFunctionRequest(commandReflection);
       }
-    } else {
-      let commandReflection = reflection as ReflectionFunction;
-      if (!(reflection as ReflectionFunction)?.type?.kind) {
-        // eslint-disable-next-line ts/no-unsafe-function-type
-        commandReflection = ReflectionFunction.from(reflection as Function);
-      }
 
-      if (!commandReflection) {
-        throw new Error(`Reflection not found: ${entry.input.file}`);
-      }
+      const result = new CommandRequest(context, entry, type);
 
-      type = extractCommandFunctionPayload(commandReflection);
-    }
-
-    const result = new CommandPayload(context, entry, type);
-
-    const defaultArgs = getDefaultCommandPayloadArgs(
-      context.options.plugins.cli,
-      entry
-    );
-
-    type.getProperties().forEach(arg => {
-      const matchingDefaultArg = defaultArgs.find(
-        defaultArg => defaultArg.name === arg.getNameAsString()
+      const defaultArgs = getDefaultCommandRequestArgs(
+        context.options.plugins.cli,
+        entry
       );
 
-      result.add(
-        defu(
-          {
-            ...arg,
-            name: arg.getNameAsString(),
-            default: arg.getDefaultValue(),
-            optional: arg.isOptional(),
-            readonly: arg.isReadonly() ? true : undefined,
-            description: arg.getDescription(),
-            visibility: arg.getVisibility(),
-            type: arg.getType(),
-            alias: arg.getAlias(),
-            domain: arg.getDomain() || "cli",
-            title: arg.getTitle() || titleCase(arg.getNameAsString()),
-            permission: arg.getPermission(),
-            hidden: arg.isHidden(),
-            ignore: arg.isIgnored(),
-            internal: arg.isInternal(),
-            tags: arg.getTags()
-          },
-          matchingDefaultArg ?? {}
-        )
-      );
-    });
+      type.getProperties().forEach(arg => {
+        const matchingDefaultArg = defaultArgs.find(
+          defaultArg => defaultArg.name === arg.getNameAsString()
+        );
 
-    defaultArgs
-      .filter(arg => !result.find(arg.name))
-      .forEach(arg => {
-        result.add(arg);
-      });
-
-    result.type
-      .getProperties()
-      .filter(
-        prop =>
-          prop.getNameAsString() &&
-          !context.reflections.config.types.params.hasProperty(
-            constantCase(prop.getNameAsString())
+        result.add(
+          defu(
+            {
+              ...arg,
+              name: arg.getNameAsString(),
+              default: arg.getDefaultValue(),
+              optional: arg.isOptional(),
+              readonly: arg.isReadonly() ? true : undefined,
+              description: arg.getDescription(),
+              visibility: arg.getVisibility(),
+              type: arg.getType(),
+              alias: arg.getAlias(),
+              domain: arg.getDomain() || "cli",
+              title: arg.getTitle() || titleCase(arg.getNameAsString()),
+              permission: arg.getPermission(),
+              hidden: arg.isHidden(),
+              ignore: arg.isIgnored(),
+              internal: arg.isInternal(),
+              tags: arg.getTags()
+            },
+            matchingDefaultArg ?? {}
           )
-      )
-      .forEach(prop => {
-        context.reflections.config.types.params.addProperty({
-          ...prop,
-          name: constantCase(prop.getNameAsString())
-        });
+        );
       });
 
-    return result;
+      defaultArgs
+        .filter(arg => !result.find(arg.name))
+        .forEach(arg => {
+          result.add(arg);
+        });
+
+      result.type
+        .getProperties()
+        .filter(
+          prop =>
+            prop.getNameAsString() &&
+            !context.reflections.config.types.params.hasProperty(
+              constantCase(prop.getNameAsString())
+            )
+        )
+        .forEach(prop => {
+          context.reflections.config.types.params.addProperty({
+            ...prop,
+            name: constantCase(prop.getNameAsString())
+          });
+        });
+
+      return result;
+    } catch (error) {
+      throw new Error(
+        `Failed to create CommandRequest for ${entry.input.file}: ${error.message}`
+      );
+    }
   }
 
   /**
-   * The arguments for the command payload.
+   * The arguments for the command request.
    *
    * @remarks
    * Each argument is represented as an object with a name and a command Id indicating if it is negative.
@@ -290,17 +296,17 @@ export class CommandPayload {
   }> = [];
 
   /**
-   * The import path for the payload type, if it is defined in a separate file.
+   * The import path for the request type, if it is defined in a separate file.
    *
    * @remarks
-   * If not defined, the payload type is defined in the same file as the command.
+   * If not defined, the request type is defined in the same file as the command.
    */
   public import?: TypeDefinition;
 
   /**
-   * The list of arguments for the command payload.
+   * The list of arguments for the command request.
    */
-  public get args(): readonly CommandPayloadArg[] {
+  public get args(): readonly CommandRequestArg[] {
     return (
       this.#args
         .filter(arg => arg.name)
@@ -359,12 +365,12 @@ export class CommandPayload {
   }
 
   /**
-   * Adds a new argument to the command payload.
+   * Adds a new argument to the command request.
    *
    * @param arg - The properties of the argument to add.
-   * @throws An error if an argument with the same name already exists in the command payload.
+   * @throws An error if an argument with the same name already exists in the command request.
    */
-  public add = (arg: AddCommandPayloadArgProps) => {
+  public add = (arg: AddCommandRequestArgProps) => {
     if (arg.name && !this.find(arg.name)) {
       if (arg.type?.kind === ReflectionKind.boolean && !arg.skipNegative) {
         if (!arg.isNegativeOf) {
@@ -468,12 +474,12 @@ export class CommandPayload {
   };
 
   /**
-   * Finds an argument in the command payload by its name.
+   * Finds an argument in the command request by its name.
    *
    * @param name - The name of the argument to find.
-   * @returns The CommandPayloadArg if found, otherwise undefined.
+   * @returns The CommandRequestArg if found, otherwise undefined.
    */
-  public find = (name: string): CommandPayloadArg | undefined => {
+  public find = (name: string): CommandRequestArg | undefined => {
     return this.args.find(
       arg =>
         this.areNamesEqual(arg, name) ||
@@ -481,7 +487,7 @@ export class CommandPayload {
     );
   };
 
-  private areNamesEqual = (arg: CommandPayloadArg, name: string): boolean => {
+  private areNamesEqual = (arg: CommandRequestArg, name: string): boolean => {
     const argName = arg.type.getNameAsString();
 
     return (

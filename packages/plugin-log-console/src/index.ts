@@ -29,7 +29,7 @@ export default class LogConsolePlugin extends LogPlugin {
   protected override writeAdapter() {
     return `${getFileHeader()}
 
-import { LogLevel, LogRecord, LogAdapter } from "@storm-stack/types/log";
+import { LogLevel, LogRecord, LogAdapter } from "@storm-stack/types/shared/log";
 
 /**
  * The severity level abbreviations.

@@ -213,7 +213,7 @@
     "@storm-software/config-tools": "catalog:",
     "@storm-software/esbuild": "catalog:",
     "@storm-software/unbuild": "catalog:",
-    "@storm-stack/core": "0.34.0",
+    "@storm-stack/core": "workspace:*",
     "@stryke/convert": "catalog:",
     "@stryke/helpers": "catalog:",
     "@stryke/json": "catalog:",
@@ -227,7 +227,7 @@
     "jiti": "catalog:"
   },
   "devDependencies": {
-    "@storm-stack/types": "0.15.0",
+    "@storm-stack/types": "workspace:*",
     "@types/node": "catalog:",
     "tsup": "catalog:"
   },

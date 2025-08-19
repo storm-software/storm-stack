@@ -45,7 +45,7 @@ import {
   LogRecord,
   LogAdapter,
   LogAdapterInstance
-} from "@storm-stack/types/log";
+} from "@storm-stack/types/shared/log";
 import { StormError, isError, isStormError } from "storm:error";
 ${context.runtime.logs
   .map(

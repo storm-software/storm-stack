@@ -19,4 +19,5 @@
 export * from "./context";
 export * from "./env";
 export * from "./event";
+export * from "./request";
 export * from "./result";

@@ -22,14 +22,14 @@ import { Context } from "@storm-stack/core/types";
 export function ResultModule(_context: Context) {
   return `
 /**
- * The result module provides the {@link StormResult} class, which is used to represent the result of a payload execution.
+ * The result module provides the {@link StormResult} class, which is used to represent the result of a request execution.
  *
  * @module storm:result
  */
 
 ${getFileHeader()}
 
-import { StormResultInterface } from "@storm-stack/types/result";
+import { StormResultInterface } from "@storm-stack/types/node/result";
 import { isStormError, StormError } from "storm:error";
 import { useStorm } from "storm:context";
 
@@ -51,7 +51,7 @@ export class StormResult<
     data: TData
   ): StormResult<TData> {
     return new StormResult(
-      useStorm().payload.id,
+      useStorm().request.id,
       useStorm().meta,
       data
     );
@@ -68,9 +68,9 @@ export class StormResult<
   public data: TData;
 
   /**
-   * The payload identifier.
+   * The request identifier.
    */
-  public readonly payloadId: string;
+  public readonly requestId: string;
 
   /**
    * The response created timestamp.
@@ -87,16 +87,16 @@ export class StormResult<
   /**
    * Create a new result.
    *
-   * @param payloadId - The payload identifier.
+   * @param requestId - The request identifier.
    * @param meta - The current context's metadata.
    * @param data - The result data
    */
   public constructor(
-    payloadId: string,
+    requestId: string,
     meta: Record<string, any>,
     data: TData
   ) {
-    this.payloadId = payloadId;
+    this.requestId = requestId;
     this.meta = meta;
     this.data = data;
   }

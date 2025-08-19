@@ -42,6 +42,21 @@ export async function ConfigSetupModule(
   context: ConfigPluginContext
 ): Promise<string> {
   const reflection = await readConfigTypeReflection(context);
+  reflection.addProperty({
+    name: "static",
+    readonly: true,
+    description:
+      "Static configuration properties - this value is not dynamic and cannot be changed at runtime.",
+    type: {
+      kind: ReflectionKind.objectLiteral,
+      types: []
+    },
+    default: {},
+    tags: {
+      internal: true,
+      readonly: true
+    }
+  });
 
   reflection.getProperties().forEach(prop => {
     const aliases = prop.getAlias();
@@ -95,7 +110,7 @@ export async function ConfigSetupModule(
   TypeProperty,
   TypePropertySignature
 } from "@deepkit/type";
-import { StormConfigInterface } from "@storm-stack/types/config";
+import { StormConfigInterface } from "@storm-stack/types/shared/config";
 
 ${generateTypeScriptInterface(reflection, {
   overrideName: "StormConfigBase",

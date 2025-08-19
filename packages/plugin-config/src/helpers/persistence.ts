@@ -45,7 +45,7 @@ export function getConfigDefaultTypeDefinition(
           context.options.workspaceConfig.workspaceRoot,
           "dist/packages/types/dist/esm/src/shared/config.js"
         )
-      : "@storm-stack/types/config",
+      : "@storm-stack/types/shared/config",
     name: "__ΩStormConfigInterface"
   };
 }

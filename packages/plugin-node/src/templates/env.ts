@@ -97,9 +97,8 @@ export function EnvModule(context: NodePluginContext) {
 ${getFileHeader()}
 
 import {
-  StormBuildInfo,
+  StormNodeEnv,
   StormEnvPaths,
-  StormEnvInterface
 } from "@storm-stack/types/node/env";
 import process from "node:process";
 import os from "node:os";
@@ -255,7 +254,7 @@ export function getColorSupportLevel(stream, options?: GetColorSupportLevelOptio
  *
  * @returns An object containing the runtime environment details.
  */
-export function createEnvironment(): StormEnvInterface {
+export function createEnv(): StormNodeEnv {
   /** Detect if stdout.TTY is available */
   const hasTTY = Boolean(process.stdout && process.stdout.isTTY);
 
@@ -329,7 +328,7 @@ export function createEnvironment(): StormEnvInterface {
         ? "$storm.config.static.MODE"
         : "$storm.config.static.NEXT_PUBLIC_VERCEL_ENV"
     }
-  ) || String($storm.config.NODE_ENV) || "production";
+  ) || "production";
 
   /** Detect if the application is running in production mode */
   const isProduction = ["prd", "prod", "production"].includes(
@@ -556,7 +555,7 @@ export function createEnvironment(): StormEnvInterface {
     releaseTag: \`${name}@\${version}\`,
     defaultLocale: $storm.config.DEFAULT_LOCALE!,
     defaultTimezone: $storm.config.DEFAULT_TIMEZONE!,
-    platform: ($storm.config.PLATFORM || "${context.options.platform}") as StormBuildInfo["platform"],
+    platform: ($storm.config.PLATFORM || "${context.options.platform}") as "node" | "neutral" | "browser",
     paths
   };
 }

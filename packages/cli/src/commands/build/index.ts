@@ -17,13 +17,13 @@
  ------------------------------------------------------------------- */
 
 import { BuildInlineConfig } from "@storm-stack/core/types/config";
-import { StormPayload } from "storm:payload";
+import { StormRequest } from "storm:request";
 import { createEngine } from "../../helpers/create-engine";
 
 /**
- * The payload data type for the build command.
+ * The request data type for the build command.
  */
-interface BuildPayload {
+interface BuildRequest {
   /**
    * The root directory of the Storm Stack project.
    *
@@ -40,10 +40,10 @@ interface BuildPayload {
 /**
  * Build a Storm Stack project and assemble the distribution files.
  *
- * @param payload - The payload object containing the parameters for the build command.
+ * @param request - The request object containing the parameters for the build command.
  */
-async function handler(payload: StormPayload<BuildPayload>) {
-  const data = payload.data;
+async function handler(request: StormRequest<BuildRequest>) {
+  const data = request.data;
 
   $storm.log.info`Building Storm Stack project at ${data.root}...`;
 

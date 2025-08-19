@@ -48,7 +48,7 @@ import fsLiteDriver from "unstorage/drivers/fs-lite";${
 import { join } from "node:path";`
         : ""
     }
-import type { StorageAdapter } from "@storm-stack/types/storage";
+import type { StorageAdapter } from "@storm-stack/types/shared/storage";
 
 function createAdapter(): StorageAdapter {
   const adapter = fsLiteDriver({ base: ${

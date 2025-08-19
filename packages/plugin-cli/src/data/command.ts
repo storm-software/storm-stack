@@ -28,19 +28,19 @@ import { titleCase } from "@stryke/string-format/title-case";
 import { TypeDefinition } from "@stryke/types/configuration";
 import { writeCommandReflection } from "../helpers/persistence";
 import { findCommandName } from "../helpers/reflect-command";
-import { getAppTitle, reflectPayloadBaseType } from "../helpers/utilities";
+import { getAppTitle, reflectRequestBaseType } from "../helpers/utilities";
 import { CLIPluginContext } from "../types/config";
 import {
   CommandEntryTypeDefinition,
   CommandRelations
 } from "../types/reflection";
-import { CommandPayload } from "./command-payload";
+import { CommandRequest } from "./command-request";
 
 /**
- * A wrapper class for command payloads in a CLI application.
+ * A wrapper class for command requests in a CLI application.
  *
  * @remarks
- * This class is used to define the structure of command payloads, including their arguments and types.
+ * This class is used to define the structure of command requests, including their arguments and types.
  */
 export class Command {
   /**
@@ -79,16 +79,16 @@ export class Command {
         throw new Error(`Reflection not found: ${entry.input.file}`);
       }
 
-      if (!type.hasProperty("payload")) {
+      if (!type.hasProperty("request")) {
         throw new Error(
-          `Payload property not found in command type: ${entry.input.file}`
+          `Request property not found in command type: ${entry.input.file}`
         );
       }
     } else {
       let commandReflection!: ReflectionFunction;
       if (!reflection) {
         if (entry.isVirtual) {
-          const payloadBaseType = await reflectPayloadBaseType(context);
+          const requestBaseType = await reflectRequestBaseType(context);
 
           commandReflection = new ReflectionFunction({
             kind: ReflectionKind.function,
@@ -104,14 +104,14 @@ export class Command {
           const parameter = new ReflectionParameter(
             {
               kind: ReflectionKind.parameter,
-              name: "payload",
+              name: "request",
               parent: commandReflection.type,
-              description: `The payload data required by the ${
+              description: `The request data required by the ${
                 title
               } command to execute.`,
-              type: payloadBaseType.type,
+              type: requestBaseType.type,
               tags: {
-                title: `${title} Command Payload`,
+                title: `${title} Command Request`,
                 domain: "cli"
               }
             },
@@ -169,7 +169,7 @@ export class Command {
         throw new Error(`Invalid command reflection type: ${entry.input.file}`);
       }
 
-      const payload = CommandPayload.from(context, entry, commandReflection);
+      const request = CommandRequest.from(context, entry, commandReflection);
 
       type = new ReflectionClass({
         kind: ReflectionKind.objectLiteral,
@@ -181,13 +181,13 @@ export class Command {
         }
       });
       type.addProperty({
-        name: "payload",
-        description: `The payload data required by the ${
+        name: "request",
+        description: `The request data required by the ${
           title
         } command to execute.`,
-        type: payload.type.type,
+        type: request.type.type,
         tags: {
-          title: `${title} Command Payload`,
+          title: `${title} Command Request`,
           domain: "cli"
         }
       });
@@ -237,7 +237,7 @@ export class Command {
   #overrideTitle: string | undefined;
 
   #type: ReflectionClass<{
-    payload: ReflectionClass<any>;
+    request: ReflectionClass<any>;
     result: ReflectionClass<any>;
   }>;
 
@@ -301,20 +301,20 @@ export class Command {
   }
 
   public get type(): ReflectionClass<{
-    payload: ReflectionClass<any>;
+    request: ReflectionClass<any>;
     result: ReflectionClass<any>;
   }> {
     return this.#type;
   }
 
   /**
-   * The payload data structure for the command.
+   * The request data structure for the command.
    */
-  public get payload(): CommandPayload {
-    return CommandPayload.from(
+  public get request(): CommandRequest {
+    return CommandRequest.from(
       this.context,
       this.entry,
-      ReflectionClass.from(this.type.getProperty("payload").getType())
+      ReflectionClass.from(this.type.getProperty("request").getType())
     );
   }
 
@@ -330,7 +330,7 @@ export class Command {
     protected entry: CommandEntryTypeDefinition,
     relations: CommandRelations,
     type: ReflectionClass<{
-      payload: ReflectionClass<any>;
+      request: ReflectionClass<any>;
       result: ReflectionClass<any>;
     }>
   ) {

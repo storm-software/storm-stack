@@ -221,13 +221,13 @@ export interface CLIPluginContextOptions extends NodePluginContextOptions {
 }
 
 export interface CLICommandReflectionProperties {
-  payload: Reflection<any>;
+  request: Reflection<any>;
   result: Reflection<any>;
 }
 
 export interface CLIPluginReflectionRecord
   extends ConfigPluginReflectionRecord {
-  payloads: ReflectionRecord;
+  requests: ReflectionRecord;
   cli: ReflectionRecord<CLICommandReflectionProperties>;
 }
 
