@@ -11,4 +11,4 @@ imports:
   - storm-ops/devenv-modules/base
   - storm-ops/devenv-modules/vhs
 secretspec:
-  enable: true
+  enable: false

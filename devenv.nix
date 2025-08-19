@@ -11,7 +11,7 @@
   env.DEFAULT_TIMEZONE = "America/New_York";
 
   # https://secretspec.dev/quick-start/
-  env.SENTRY_DSN = config.secretspec.secrets.SENTRY_DSN;
+  # env.SENTRY_DSN = config.secretspec.secrets.SENTRY_DSN;
 
   # https://devenv.sh/packages/
   packages = [
