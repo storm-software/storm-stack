@@ -26,7 +26,12 @@ export default defineConfig({
     [
       "@storm-stack/plugin-cli",
       {
-        title: "Storm",
+        title: {
+          text: "Storm Stack",
+          font: "tiny",
+          colors: ["cyan"],
+          gradient: false
+        },
         bin: ["storm", "storm-stack"],
         config: {
           types: "./src/types.ts#StormStackCLIConfig"

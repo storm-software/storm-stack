@@ -179,10 +179,8 @@ export function CLIModule(context: CLIPluginContext) {
           ? context.options.plugins.cli.title
           : {},
         {
-          font: "slick",
-          align: "center",
+          font: "tiny",
           colors: [brandColor],
-          // background: "transparent",
           gradient: gradient && gradient.length > 0 ? gradient : undefined,
           independentGradient: false,
           transitionGradient: gradient && gradient.length > 0,
@@ -195,6 +193,15 @@ export function CLIModule(context: CLIPluginContext) {
       bannerTitle = result.string;
     }
   }
+
+  const bannerTitleMaxLength = bannerTitle
+    ? Math.max(
+        ...bannerTitle
+          .split("\n")
+          .filter(line => line.trim().length > 0)
+          .map(line => stripAnsi(line).length)
+      )
+    : 0;
 
   const styles = getStyles();
 
@@ -440,7 +447,9 @@ export function renderBanner(title: string, description: string): string {
     title += " ";
   }
 
-  let width = Math.max(Math.min(consoleWidth, Math.max(title.length + 2, ${MIN_BANNER_WIDTH - 8})), ${MIN_BANNER_WIDTH});
+  let width = Math.max(Math.min(consoleWidth, Math.max(title.length + 2,${
+    bannerTitleMaxLength ? ` ${bannerTitleMaxLength + 2},` : ""
+  } ${MIN_BANNER_WIDTH - 8})), ${MIN_BANNER_WIDTH});
   if (width % 2) {
     width++;
   }
@@ -451,7 +460,23 @@ export function renderBanner(title: string, description: string): string {
   } \${"━".repeat(width - 12 - ${
     appTitle.length + (context.packageJson.version?.length ?? 5)
   })}┓\`));
-  banner.push(colors.cyan(\`┃\${" ".repeat(width)}┃\`));
+  ${
+    bannerTitle
+      ? `
+  const bannerTitlePadding = (width - ${bannerTitleMaxLength}) / 2;
+  ${bannerTitle
+    .split("\n")
+    .map(
+      line =>
+        `  banner.push(\`\${colors.cyan("┃")}\${" ".repeat(bannerTitlePadding)}\${"${
+          line
+        }"}\${" ".repeat(bannerTitlePadding + width - (bannerTitlePadding * 2 + ${
+          stripAnsi(line).length
+        }))}\${colors.cyan("┃")}\`);`
+    )
+    .join("\n")}`
+      : `  banner.push(colors.cyan(\`┃\${" ".repeat(width)}┃\`));`
+  }
 
   const titlePadding = (width - title.length) / 2;
   banner.push(\`\${colors.cyan("┃")}\${" ".repeat(titlePadding)}\${colors.whiteBright(colors.bold(title))}\${" ".repeat(titlePadding + width - (titlePadding * 2 + title.length))}\${colors.cyan("┃")}\`);
@@ -481,17 +506,7 @@ export function renderBanner(title: string, description: string): string {
       : `banner.push(colors.cyan(\`┗\${"━".repeat(width)}┛\`));`
   }
 
-  return \`${
-    bannerTitle
-      ? `
-${bannerTitle}
-
-`
-      : ""
-  }\${banner
-    .map(line => \`\${" ".repeat((consoleWidth - stripAnsi(line).length) / 2)}\${line}\${" ".repeat((consoleWidth - stripAnsi(line).length) / 2)}\`)
-    .join("\\n")}
-\`;
+  return banner.map(line => \`\${" ".repeat((consoleWidth - stripAnsi(line).length) / 2)}\${line}\${" ".repeat((consoleWidth - stripAnsi(line).length) / 2)}\`).join("\\n");
 }
 
 /**

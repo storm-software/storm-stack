@@ -1263,10 +1263,6 @@ ${
           : ""
       }
 
-      console.log(colors.cyan(\`\${" ".repeat(Math.max((consoleWidth - (consoleWidth * 0.75)) / 2, 10))}\${"━".repeat(consoleWidth * 0.75)}\${" ".repeat(Math.max((consoleWidth - (consoleWidth * 0.75)) / 2, 10))}\`));
-      console.log("");
-      console.log("");
-
       console.log(colors.gray("The following commands are available as part of the ${appTitle} application: "));${
         commandTree.children && Object.values(commandTree.children).length > 0
           ? Object.values(commandTree.children)

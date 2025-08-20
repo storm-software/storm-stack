@@ -69,7 +69,7 @@ export interface CLITitleOptions {
    * - `huge`        [colors: 2]
    *     ![huge font style](https://raw.githubusercontent.com/dominikwilkowski/cfonts/released/img/huge.png)
    *
-   * @defaultValue "block"
+   * @defaultValue "tiny"
    */
   font:
     | "block"

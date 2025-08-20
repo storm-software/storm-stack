@@ -142,8 +142,8 @@ export abstract class Plugin<
   protected get log(): LogFn {
     if (!this.#log) {
       this.#log = this.options.log
-        ? extendLog(this.options.log, `${titleCase(this.name)} Plugin`)
-        : createLog(`${titleCase(this.name)} Plugin`);
+        ? extendLog(this.options.log, titleCase(`${this.name} Plugin`))
+        : createLog(titleCase(`${this.name} Plugin`));
     }
 
     return this.#log;
