@@ -406,8 +406,6 @@ interface StormConfigInterface {
   /**
    * An indicator that specifies the application is running in the local Storm Stack development environment.
    *
-   * @defaultValue false
-   *
    * @hidden
    * @readonly
    * @category node
@@ -506,15 +504,11 @@ interface StormConfigInterface {
   /**
    * Indicates if the application is running in debug mode.
    *
-   * @defaultValue false
-   *
    * @category neutral
    */
   DEBUG: boolean;
   /**
    * An indicator that specifies the current runtime is a test environment.
-   *
-   * @defaultValue false
    *
    * @category neutral
    */
@@ -522,15 +516,11 @@ interface StormConfigInterface {
   /**
    * An indicator that specifies the current runtime is a minimal environment.
    *
-   * @defaultValue false
-   *
    * @category node
    */
   MINIMAL: boolean;
   /**
    * An indicator that specifies the current runtime is a no color environment.
-   *
-   * @defaultValue false
    *
    * @category node
    */
@@ -538,21 +528,17 @@ interface StormConfigInterface {
   /**
    * An indicator that specifies the current runtime is a force color environment.
    *
-   * @defaultValue false
-   *
    * @category node
    */
   FORCE_COLOR: boolean | number;
   /**
-   * An indicator that specifies the current runtime should force hyperlinks in terminal output.
-   *
-   * @remarks
-   * This variable is used to force hyperlinks in terminal output, even if the terminal does not support them. This is useful for debugging and development purposes.
-   *
-   * @defaultValue false
-   *
-   * @category node
-   */
+     * An indicator that specifies the current runtime should force hyperlinks in terminal output.
+     *
+     * @remarks
+     * This variable is used to force hyperlinks in terminal output, even if the terminal does not support them. This is useful for debugging and development purposes.
+
+     * @category node
+     */
   FORCE_HYPERLINK: boolean | number;
   /**
    * The name of the agent running the application. This variable is set by certain CI/CD systems.
@@ -637,14 +623,12 @@ interface StormConfigInterface {
   /**
    * Indicates if error stack traces should be captured.
    *
-   * @defaultValue false
    * @category neutral
    */
   STACKTRACE: boolean;
   /**
    * Indicates if error data should be included.
    *
-   * @defaultValue false
    * @category neutral
    */
   INCLUDE_ERROR_DATA: boolean;
@@ -682,8 +666,6 @@ interface StormConfigInterface {
   LOG_LEVEL?: LogLevel | null;
   /**
    * An indicator that specifies the current runtime is a continuous integration environment.
-   *
-   * @defaultValue false
    *
    * @title Continuous Integration
    * @alias CONTINUOUS_INTEGRATION
@@ -2090,7 +2072,7 @@ declare module "storm:config" {
      * App Version
      *
      * @title App Version
-     * @defaultValue 0.15.0
+     * @defaultValue 0.16.0
      */
     APP_VERSION: string;
     /**
@@ -2161,14 +2143,14 @@ declare module "storm:config" {
      * Build Identifier
      *
      * @title Build Identifier
-     * @defaultValue 2635762d-12cd-4f31-9b46-56ac29569e22
+     * @defaultValue fae79d6d-3229-4955-b620-a4b3bc56def9
      */
     BUILD_ID: string;
     /**
      * Build Timestamp
      *
      * @title Build Timestamp
-     * @defaultValue 2025-08-19T22:14:12.776Z
+     * @defaultValue 2025-08-20T02:31:16.985Z
      */
     BUILD_TIMESTAMP: string;
     /**
@@ -2200,7 +2182,7 @@ declare module "storm:config" {
      *
      * @title Continuous Integration
      * @alias CONTINUOUS_INTEGRATION
-     * @defaultValue true
+     * @defaultValue false
      */
     CI: boolean;
     /**
@@ -2270,7 +2252,7 @@ declare module "storm:config" {
      *
      * @title Continuous Integration
      * @alias CI
-     * @defaultValue true
+     * @defaultValue false
      */
     CONTINUOUS_INTEGRATION: boolean;
     /**
@@ -2428,7 +2410,7 @@ declare module "storm:config" {
      * Include Error Data
      *
      * @title Include Error Data
-     * @defaultValue true
+     * @defaultValue false
      */
     INCLUDE_ERROR_DATA: boolean;
     /**
@@ -2480,7 +2462,7 @@ declare module "storm:config" {
      * Minimal
      *
      * @title Minimal
-     * @defaultValue true
+     * @defaultValue false
      */
     MINIMAL: boolean;
     /**
@@ -2523,7 +2505,7 @@ declare module "storm:config" {
      * No Color
      *
      * @title No Color
-     * @defaultValue true
+     * @defaultValue false
      */
     NO_COLOR: boolean;
     /**
@@ -2621,14 +2603,14 @@ declare module "storm:config" {
      * Release Identifier
      *
      * @title Release Identifier
-     * @defaultValue 35762d12-cd6f-419b-8656-ac29569e222c
+     * @defaultValue e79d6d32-2939-4576-a0a4-b3bc56def986
      */
     RELEASE_ID: string;
     /**
      * Release Tag
      *
      * @title Release Tag
-     * @defaultValue storm-stack@0.15.0
+     * @defaultValue storm-stack@0.16.0
      */
     RELEASE_TAG: string;
     /**
@@ -2700,7 +2682,6 @@ declare module "storm:config" {
      * Storm Stack Local
      *
      * @title Storm Stack Local
-     * @defaultValue true
      */
     STORM_STACK_LOCAL?: boolean;
     /**
@@ -2762,7 +2743,7 @@ declare module "storm:config" {
      * Test
      *
      * @title Test
-     * @defaultValue true
+     * @defaultValue false
      */
     TEST: boolean;
     /**
@@ -3386,8 +3367,7 @@ declare module "storm:context" {
     /**
      * The configuration parameters for the Storm application.
      */
-    config: import("@storm-stack/types/shared/config").StormConfigInterface &
-      Record<string, any>;
+    config: StormConfig & Record<string, any>;
     /**
      * A set of disposable resources to clean up when the context is no longer needed.
      */

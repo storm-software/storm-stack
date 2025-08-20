@@ -106,14 +106,14 @@
     }
   },
   "dependencies": {
-    "@storm-stack/core": "0.35.0",
-    "@storm-stack/devkit": "0.11.0",
+    "@storm-stack/core": "workspace:*",
+    "@storm-stack/devkit": "workspace:*",
     "@stryke/json": "catalog:"
   },
   "devDependencies": {
     "@opentelemetry/otlp-exporter-base": "catalog:",
     "@opentelemetry/otlp-grpc-exporter-base": "catalog:",
-    "@storm-stack/nx": "0.16.0",
+    "@storm-stack/nx": "workspace:*",
     "@types/node": "catalog:",
     "tsup": "catalog:"
   },

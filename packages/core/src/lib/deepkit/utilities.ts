@@ -67,7 +67,7 @@ export function stringifyValue(type: Type, value: any): string {
     : isNull(value)
       ? "null"
       : type.kind === ReflectionKind.boolean
-        ? Boolean(String(value).trim().toLowerCase()) === true
+        ? String(value).trim().toLowerCase() === "true"
           ? "true"
           : "false"
         : type.kind === ReflectionKind.string ||

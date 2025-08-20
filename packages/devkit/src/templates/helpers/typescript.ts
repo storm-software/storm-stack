@@ -17,7 +17,7 @@
  ------------------------------------------------------------------- */
 
 import { ReflectionClass, stringifyType } from "@deepkit/type";
-import { stringifyDefaultValue } from "@storm-stack/core/lib/deepkit/utilities";
+import { stringifyValue } from "@storm-stack/core/lib/deepkit/utilities";
 import { camelCase } from "@stryke/string-format/camel-case";
 import { pascalCase } from "@stryke/string-format/pascal-case";
 import { titleCase } from "@stryke/string-format/title-case";
@@ -249,9 +249,9 @@ export const ${camelCase(options.overrideName || reflection.getName())}${
       : ""
   }
   */
-  ${item.getNameAsString()}: ${stringifyDefaultValue(
-    item,
-    options.defaultValues?.[item.getNameAsString()] ||
+  ${item.getNameAsString()}: ${stringifyValue(
+    item.getType(),
+    options.defaultValues?.[item.getNameAsString()] ??
       (item.hasDefault() ? item.getDefaultValue() : undefined)
   )}`
     )

@@ -75,7 +75,7 @@ export interface StormContext {
   /**
    * The configuration parameters for the Storm application.
    */
-  config: import("@storm-stack/types/shared/config").StormConfigInterface & Record<string, any>;
+  config: StormConfig & Record<string, any>;
 
   /**
    * A set of disposable resources to clean up when the context is no longer needed.

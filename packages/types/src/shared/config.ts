@@ -59,8 +59,6 @@ export interface StormConfigInterface {
   /**
    * An indicator that specifies the application is running in the local Storm Stack development environment.
    *
-   * @defaultValue false
-   *
    * @hidden
    * @readonly
    * @category node
@@ -171,16 +169,12 @@ export interface StormConfigInterface {
   /**
    * Indicates if the application is running in debug mode.
    *
-   * @defaultValue false
-   *
    * @category neutral
    */
   DEBUG: boolean;
 
   /**
    * An indicator that specifies the current runtime is a test environment.
-   *
-   * @defaultValue false
    *
    * @category neutral
    */
@@ -189,8 +183,6 @@ export interface StormConfigInterface {
   /**
    * An indicator that specifies the current runtime is a minimal environment.
    *
-   * @defaultValue false
-   *
    * @category node
    */
   MINIMAL: boolean;
@@ -198,16 +190,12 @@ export interface StormConfigInterface {
   /**
    * An indicator that specifies the current runtime is a no color environment.
    *
-   * @defaultValue false
-   *
    * @category node
    */
   NO_COLOR: boolean;
 
   /**
    * An indicator that specifies the current runtime is a force color environment.
-   *
-   * @defaultValue false
    *
    * @category node
    */
@@ -218,9 +206,7 @@ export interface StormConfigInterface {
    *
    * @remarks
    * This variable is used to force hyperlinks in terminal output, even if the terminal does not support them. This is useful for debugging and development purposes.
-   *
-   * @defaultValue false
-   *
+
    * @category node
    */
   FORCE_HYPERLINK: boolean | number;
@@ -319,7 +305,6 @@ export interface StormConfigInterface {
   /**
    * Indicates if error stack traces should be captured.
    *
-   * @defaultValue false
    * @category neutral
    */
   STACKTRACE: boolean;
@@ -327,7 +312,6 @@ export interface StormConfigInterface {
   /**
    * Indicates if error data should be included.
    *
-   * @defaultValue false
    * @category neutral
    */
   INCLUDE_ERROR_DATA: boolean;
@@ -370,8 +354,6 @@ export interface StormConfigInterface {
 
   /**
    * An indicator that specifies the current runtime is a continuous integration environment.
-   *
-   * @defaultValue false
    *
    * @title Continuous Integration
    * @alias CONTINUOUS_INTEGRATION

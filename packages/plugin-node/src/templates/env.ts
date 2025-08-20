@@ -346,18 +346,21 @@ export function createEnv(): StormNodeEnv {
   );
 
   /** Detect if the application is running in debug mode */
-  const isDebug = isDevelopment && Boolean($storm.config.DEBUG);
+  const isDebug = Boolean(
+    isDevelopment && $storm.config.DEBUG
+  );
 
   /** Detect if the application is running in test mode */
   const isTest =
-    isDevelopment ||
-    isStaging ||
-    ["tst", "test", "testing"].includes(mode.toLowerCase()) ||
-    Boolean($storm.config.TEST);
+    Boolean(
+      ["tst", "test", "testing"].includes(mode.toLowerCase()) ||
+      $storm.config.TEST
+    );
 
   /** Detect if MINIMAL environment variable is set, running in CI or test or TTY is unavailable */
-  const isMinimal =
-    Boolean($storm.config.MINIMAL) || isCI || isTest || !hasTTY;
+  const isMinimal = Boolean(
+    $storm.config.MINIMAL || isCI || isTest || !hasTTY
+  );
 
   /** Detect if the runtime platform is Linux */
   const isLinux = /^linux/i.test(process.platform);
@@ -366,7 +369,9 @@ export function createEnv(): StormNodeEnv {
   const isMacOS = /^darwin/i.test(process.platform);
 
   /** Detect if the runtime platform is interactive */
-  const isInteractive = !isMinimal && Boolean(process.stdin?.isTTY && $storm.config.TERM !== "dumb");
+  const isInteractive = Boolean(
+    !isMinimal && process.stdin?.isTTY && $storm.config.TERM !== "dumb"
+  );
 
   /** Detect if Unicode characters are supported */
   const isUnicodeSupported = Boolean(

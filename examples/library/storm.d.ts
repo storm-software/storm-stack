@@ -406,8 +406,6 @@ interface StormConfigInterface {
   /**
    * An indicator that specifies the application is running in the local Storm Stack development environment.
    *
-   * @defaultValue false
-   *
    * @hidden
    * @readonly
    * @category node
@@ -506,15 +504,11 @@ interface StormConfigInterface {
   /**
    * Indicates if the application is running in debug mode.
    *
-   * @defaultValue false
-   *
    * @category neutral
    */
   DEBUG: boolean;
   /**
    * An indicator that specifies the current runtime is a test environment.
-   *
-   * @defaultValue false
    *
    * @category neutral
    */
@@ -522,15 +516,11 @@ interface StormConfigInterface {
   /**
    * An indicator that specifies the current runtime is a minimal environment.
    *
-   * @defaultValue false
-   *
    * @category node
    */
   MINIMAL: boolean;
   /**
    * An indicator that specifies the current runtime is a no color environment.
-   *
-   * @defaultValue false
    *
    * @category node
    */
@@ -538,21 +528,17 @@ interface StormConfigInterface {
   /**
    * An indicator that specifies the current runtime is a force color environment.
    *
-   * @defaultValue false
-   *
    * @category node
    */
   FORCE_COLOR: boolean | number;
   /**
-   * An indicator that specifies the current runtime should force hyperlinks in terminal output.
-   *
-   * @remarks
-   * This variable is used to force hyperlinks in terminal output, even if the terminal does not support them. This is useful for debugging and development purposes.
-   *
-   * @defaultValue false
-   *
-   * @category node
-   */
+     * An indicator that specifies the current runtime should force hyperlinks in terminal output.
+     *
+     * @remarks
+     * This variable is used to force hyperlinks in terminal output, even if the terminal does not support them. This is useful for debugging and development purposes.
+
+     * @category node
+     */
   FORCE_HYPERLINK: boolean | number;
   /**
    * The name of the agent running the application. This variable is set by certain CI/CD systems.
@@ -637,14 +623,12 @@ interface StormConfigInterface {
   /**
    * Indicates if error stack traces should be captured.
    *
-   * @defaultValue false
    * @category neutral
    */
   STACKTRACE: boolean;
   /**
    * Indicates if error data should be included.
    *
-   * @defaultValue false
    * @category neutral
    */
   INCLUDE_ERROR_DATA: boolean;
@@ -682,8 +666,6 @@ interface StormConfigInterface {
   LOG_LEVEL?: LogLevel | null;
   /**
    * An indicator that specifies the current runtime is a continuous integration environment.
-   *
-   * @defaultValue false
    *
    * @title Continuous Integration
    * @alias CONTINUOUS_INTEGRATION
