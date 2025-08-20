@@ -203,7 +203,7 @@ export function CLIModule(context: CLIPluginContext) {
       )
     : 0;
 
-  const styles = getStyles();
+  const styles = getStyles(context);
 
   return `
 /**
@@ -225,33 +225,38 @@ export type CLIRequestData = {
   argv: string[];
 };
 
-const ansiEscapes = {
-  ${Object.keys(styles)
-    .filter(style => styles[style].open && styles[style].close)
-    .map(style => {
-      return `${style}: (text: string | number) => \`${styles[style].open}\${text}${styles[style].close}\``;
-    })
-    .join(",\n  ")}
-};
-
-export type ColorName = keyof typeof ansiEscapes;
+export type ColorName = ${Object.keys(styles.ansi16)
+    .map(style => `"${style}"`)
+    .join(" | ")};
 
 /**
  * An object containing functions for coloring text. Each function corresponds to a terminal color. See {@link ColorName} for available colors.
  */
-export const colors = new Proxy(ansiEscapes, {
-  get(target, prop: string) {
+export const colors: Record<ColorName, (text: string | number) => string> = {
+  ${Object.keys(styles.ansi16)
+    .map(
+      style =>
+        `
+  ${style}(text: string | number) {
     try {
-      if (!$storm.env.isColorSupported) {
-        return (text: string | number) => String(text);
+      if (!$storm.env.isColorSupported || !$storm.env.supportsColor.stdout) {
+        return String(text);
       }
 
-      return target[prop];
+      if ($storm.env.supportsColor.stdout === 1) {
+        return \`${styles.ansi16[style].open}\${text}${styles.ansi16[style].close}\`;
+      } else if ($storm.env.supportsColor.stdout === 2) {
+        return \`${styles.ansi256[style].open}\${text}${styles.ansi256[style].close}\`;
+      }
+
+      return \`${styles.ansi16m[style].open}\${text}${styles.ansi16m[style].close}\`;
     } catch {
-      return (text: string | number) => String(text);
+      return String(text);
     }
-  }
-});
+  }`
+    )
+    .join(",\n  ")}
+}
 
 /**
  * Gets a color function by name, with an option for a fallback color if the requested color is not found.
@@ -455,7 +460,7 @@ export function renderBanner(title: string, description: string): string {
   }
 
   const banner = [] as string[];
-  banner.push(colors.cyan(\`┏━━━━ ⏺ ${appTitle} ━ v${
+  banner.push(colors.brand(\`┏━━━━ ⏺ ${appTitle} ━ v${
     context.packageJson.version || "1.0.0"
   } \${"━".repeat(width - 12 - ${
     appTitle.length + (context.packageJson.version?.length ?? 5)
@@ -468,19 +473,19 @@ export function renderBanner(title: string, description: string): string {
     .split("\n")
     .map(
       line =>
-        `  banner.push(\`\${colors.cyan("┃")}\${" ".repeat(bannerTitlePadding)}\${"${
+        `  banner.push(\`\${colors.brand("┃")}\${" ".repeat(bannerTitlePadding)}\${"${
           line
         }"}\${" ".repeat(bannerTitlePadding + width - (bannerTitlePadding * 2 + ${
           stripAnsi(line).length
-        }))}\${colors.cyan("┃")}\`);`
+        }))}\${colors.brand("┃")}\`);`
     )
     .join("\n")}`
-      : `  banner.push(colors.cyan(\`┃\${" ".repeat(width)}┃\`));`
+      : `  banner.push(colors.brand(\`┃\${" ".repeat(width)}┃\`));`
   }
 
   const titlePadding = (width - title.length) / 2;
-  banner.push(\`\${colors.cyan("┃")}\${" ".repeat(titlePadding)}\${colors.whiteBright(colors.bold(title))}\${" ".repeat(titlePadding + width - (titlePadding * 2 + title.length))}\${colors.cyan("┃")}\`);
-  banner.push(colors.cyan(\`┃\${" ".repeat(width)}┃\`));
+  banner.push(\`\${colors.brand("┃")}\${" ".repeat(titlePadding)}\${colors.whiteBright(colors.bold(title))}\${" ".repeat(titlePadding + width - (titlePadding * 2 + title.length))}\${colors.brand("┃")}\`);
+  banner.push(colors.brand(\`┃\${" ".repeat(width)}┃\`));
 
   const descriptionPadding = (width - description.length) / 2;
   for (const line of (description.length < width * 0.85
@@ -494,16 +499,16 @@ export function renderBanner(title: string, description: string): string {
         return \`\${ret}\${word} \`;
       }, "")).split("\\n")) {
     const linePadding = (width - stripAnsi(line).length) / 2;
-    banner.push(\`\${colors.cyan("┃")}\${" ".repeat(linePadding)}\${colors.gray(line)}\${" ".repeat(linePadding + width - (linePadding * 2 + stripAnsi(line).length))}\${colors.cyan("┃")}\`);
+    banner.push(\`\${colors.brand("┃")}\${" ".repeat(linePadding)}\${colors.gray(line)}\${" ".repeat(linePadding + width - (linePadding * 2 + stripAnsi(line).length))}\${colors.brand("┃")}\`);
   }
 
-  banner.push(colors.cyan(\`┃\${" ".repeat(width)}┃\`));
+  banner.push(colors.brand(\`┃\${" ".repeat(width)}┃\`));
   ${
     author?.name
-      ? `banner.push(colors.cyan(\`┗\${"━".repeat(width - 7 - ${
+      ? `banner.push(colors.brand(\`┗\${"━".repeat(width - 7 - ${
           author.name.length
         })}━ ${author.name} ━━━━┛\`));`
-      : `banner.push(colors.cyan(\`┗\${"━".repeat(width)}┛\`));`
+      : `banner.push(colors.brand(\`┗\${"━".repeat(width)}┛\`));`
   }
 
   return banner.map(line => \`\${" ".repeat((consoleWidth - stripAnsi(line).length) / 2)}\${line}\${" ".repeat((consoleWidth - stripAnsi(line).length) / 2)}\`).join("\\n");
@@ -546,18 +551,18 @@ export function renderFooter(): string {
   const footer = [] as string[];
 
   footer.push("");
-  footer.push(colors.cyan(\`\${" ".repeat(Math.max((consoleWidth - (consoleWidth * 0.75)) / 2, 10))}\${"━".repeat(consoleWidth * 0.75)}\${" ".repeat(Math.max((consoleWidth - (consoleWidth * 0.75)) / 2, 10))}\`));
+  footer.push(colors.brand(\`\${" ".repeat(Math.max((consoleWidth - (consoleWidth * 0.75)) / 2, 10))}\${"━".repeat(consoleWidth * 0.75)}\${" ".repeat(Math.max((consoleWidth - (consoleWidth * 0.75)) / 2, 10))}\`));
   footer.push("");
 
   footer.push(\`\${colors.whiteBright(colors.bold("LINKS:"))}\`);
   ${linksColumn1
     .map(
       (line, i) =>
-        `footer.push(\`   \${isLargeConsole ? colors.cyan("${line}".padEnd(${
+        `footer.push(\`   \${colors.brand(isLargeConsole ? "${line}".padEnd(${
           LARGE_HELP_COLUMN_WIDTH
-        })) : "${line}".padEnd(${
+        }) : "${line}".padEnd(${
           linksMaxLength
-        })}\${link("${linksColumn2[i]}")}\`);`
+        }))}\${link("${linksColumn2[i]}")}\`);`
     )
     .join(" \n")}
 
@@ -609,9 +614,9 @@ export function renderFooter(): string {
       (author?.url || homepage || docs || support || contact || repository)!
     )}\`.split("\\n");
     const qrCodeMaxLength = Math.max(...qrCodeLines.map(line => line.length));
-    footer.push(...qrCodeLines.map(line => \`\${" ".repeat(Math.max((consoleWidth - qrCodeMaxLength) / 2, 15))}\${line}\${" ".repeat(Math.max((consoleWidth - qrCodeMaxLength) / 2, 15))}\`));
+    footer.push(...qrCodeLines.map(line => \`\${" ".repeat(Math.max((consoleWidth - qrCodeMaxLength) / 2, 15))}\${colors.brand(line)}\${" ".repeat(Math.max((consoleWidth - qrCodeMaxLength) / 2, 15))}\`));
   }
-
+fffffffffffffffffffffffffffffffffffffffff
   footer.push(\`\${" ".repeat(Math.max((consoleWidth - ${
     (author?.url || homepage || docs || support || contact || repository)
       ?.length ?? 0

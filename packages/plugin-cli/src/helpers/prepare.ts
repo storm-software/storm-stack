@@ -203,7 +203,7 @@ export function renderUsage(mode: "full" | "minimal" = "full"): string {
   const consoleWidth = Math.max(process.stdout.columns - 2, ${MIN_CONSOLE_WIDTH});
   const isLargeConsole = consoleWidth >= ${LARGE_CONSOLE_WIDTH};
 
-  return \`\${colors.white(\`\${colors.whiteBright(colors.bold(\`${command.title.toUpperCase()}\${mode === "minimal" ? " COMMAND:" : ""}\`))}${
+  return \`\${colors.whiteBright(colors.bold(\`${command.title.toUpperCase()}\${mode === "minimal" ? " COMMAND:" : ""}\`))}${
     command.description
       ? `
 
@@ -212,7 +212,7 @@ export function renderUsage(mode: "full" | "minimal" = "full"): string {
       : ""
   }
   \${colors.whiteBright(colors.bold("USAGE:"))}
-    \${colors.cyan(colors.bold(\`$ ${kebabCase(cmd.root.bin[0])}${
+    \${colors.brand(\`$ ${kebabCase(cmd.root.bin[0])}${
       command.path.length > 0
         ? ` ${command.path
             .filter(Boolean)
@@ -236,7 +236,7 @@ ${Object.values(cmd.children)
   )
   .join("\n")}`
         : ""
-    }\`))} ${
+    }\`)} ${
       Object.values(cmd.children).length > 0
         ? `\${mode === "full" ? \`
   \${colors.whiteBright(colors.bold("COMMANDS:"))}
@@ -252,15 +252,14 @@ ${commandsColumn1
     }
 
   \${colors.whiteBright(colors.bold("OPTIONS:"))}
-\${colors.cyan(colors.bold(\`${optionsColumn1
-      .map(
-        (option, i) =>
-          `    \${isLargeConsole ? "${option}".padEnd(${LARGE_HELP_COLUMN_WIDTH}) : "${option}".padEnd(${
-            column1MaxLength
-          })}${optionsColumn2[i]}`
-      )
-      .join(" \n")}\`))}
-\`)}\`;
+${optionsColumn1
+  .map(
+    (option, i) =>
+      `    \${colors.brand(isLargeConsole ? "${option}".padEnd(${LARGE_HELP_COLUMN_WIDTH}) : "${option}".padEnd(${
+        column1MaxLength
+      }))}${optionsColumn2[i]}`
+  )
+  .join(" \n")}\`;
 }
 
 `
@@ -830,14 +829,14 @@ ${
     ? Object.values(cmd.children)
         .map(
           child =>
-            `    $ ${kebabCase(cmd.root.bin[0])}${
+            `\${colors.brand(\`    $ ${kebabCase(cmd.root.bin[0])}${
               child.command.path.length > 0
                 ? ` ${child.command.path
                     .filter(Boolean)
                     .map(part => part.replace("[", "<").replace("]", ">"))
                     .join(" ")}`
                 : ""
-            } [options]`
+            } [options] \`)}`
         )
         .join("\n")
     : ""
@@ -858,14 +857,14 @@ ${Object.values(cmd.children)
     }
 
   \${colors.whiteBright(colors.bold("OPTIONS:"))}
-\${colors.cyan(colors.bold(\`${optionsColumn1
-      .map(
-        (option, i) =>
-          `    \${isLargeConsole ? "${option}".padEnd(${
-            LARGE_HELP_COLUMN_WIDTH
-          }) : "${option}".padEnd(${column1MaxLength})}${optionsColumn2[i]}`
-      )
-      .join(" \n")}\`))}
+${optionsColumn1
+  .map(
+    (option, i) =>
+      `    \${colors.brand(isLargeConsole ? "${option}".padEnd(${
+        LARGE_HELP_COLUMN_WIDTH
+      }) : "${option}".padEnd(${column1MaxLength}))}${optionsColumn2[i]}`
+  )
+  .join(" \n")}
 \`;
 }
 
@@ -1255,9 +1254,7 @@ ${
         description
           ? `
       const consoleWidth = Math.max(process.stdout.columns - 2, 80);
-      console.log(\`\${" ".repeat((consoleWidth - ${description.length}) / 2)}${
-        description
-      }\${" ".repeat((consoleWidth - ${description.length}) / 2)}\`);
+      console.log(\`\${" ".repeat((consoleWidth - ${description.length}) / 2)}\${colors.brand("${description}")}\${" ".repeat((consoleWidth - ${description.length}) / 2)}\`);
       console.log("");
       console.log("");`
           : ""

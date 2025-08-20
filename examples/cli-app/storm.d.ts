@@ -2143,14 +2143,14 @@ declare module "storm:config" {
      * Build Identifier
      *
      * @title Build Identifier
-     * @defaultValue 91773640-c77c-49fe-9e15-1758de2238a3
+     * @defaultValue c0041a09-667d-48e2-9737-820f4024b0bf
      */
     BUILD_ID: string;
     /**
      * Build Timestamp
      *
      * @title Build Timestamp
-     * @defaultValue 2025-08-20T04:56:17.966Z
+     * @defaultValue 2025-08-20T08:53:52.991Z
      */
     BUILD_TIMESTAMP: string;
     /**
@@ -2626,7 +2626,7 @@ declare module "storm:config" {
      * Release Identifier
      *
      * @title Release Identifier
-     * @defaultValue 773640c7-7ca9-4e5e-9517-58de2238a31c
+     * @defaultValue 041a0966-7d98-42d7-b782-0f4024b0bfc2
      */
     RELEASE_ID: string;
     /**
@@ -3776,104 +3776,82 @@ declare module "storm:cli" {
   export type CLIRequestData = {
     argv: string[];
   };
-  const ansiEscapes: {
-    reset: (text: string | number) => string;
-    bold: (text: string | number) => string;
-    dim: (text: string | number) => string;
-    italic: (text: string | number) => string;
-    underline: (text: string | number) => string;
-    overline: (text: string | number) => string;
-    inverse: (text: string | number) => string;
-    hidden: (text: string | number) => string;
-    strikethrough: (text: string | number) => string;
-    black: (text: string | number) => string;
-    red: (text: string | number) => string;
-    green: (text: string | number) => string;
-    yellow: (text: string | number) => string;
-    blue: (text: string | number) => string;
-    magenta: (text: string | number) => string;
-    cyan: (text: string | number) => string;
-    white: (text: string | number) => string;
-    blackBright: (text: string | number) => string;
-    gray: (text: string | number) => string;
-    grey: (text: string | number) => string;
-    redBright: (text: string | number) => string;
-    greenBright: (text: string | number) => string;
-    yellowBright: (text: string | number) => string;
-    blueBright: (text: string | number) => string;
-    magentaBright: (text: string | number) => string;
-    cyanBright: (text: string | number) => string;
-    whiteBright: (text: string | number) => string;
-    bgBlack: (text: string | number) => string;
-    bgRed: (text: string | number) => string;
-    bgGreen: (text: string | number) => string;
-    bgYellow: (text: string | number) => string;
-    bgBlue: (text: string | number) => string;
-    bgMagenta: (text: string | number) => string;
-    bgCyan: (text: string | number) => string;
-    bgWhite: (text: string | number) => string;
-    bgBlackBright: (text: string | number) => string;
-    bgGray: (text: string | number) => string;
-    bgGrey: (text: string | number) => string;
-    bgRedBright: (text: string | number) => string;
-    bgGreenBright: (text: string | number) => string;
-    bgYellowBright: (text: string | number) => string;
-    bgBlueBright: (text: string | number) => string;
-    bgMagentaBright: (text: string | number) => string;
-    bgCyanBright: (text: string | number) => string;
-    bgWhiteBright: (text: string | number) => string;
-  };
-  export type ColorName = keyof typeof ansiEscapes;
+  export type ColorName =
+    | "reset"
+    | "bold"
+    | "dim"
+    | "italic"
+    | "underline"
+    | "overline"
+    | "inverse"
+    | "hidden"
+    | "strikethrough"
+    | "black"
+    | "red"
+    | "green"
+    | "yellow"
+    | "blue"
+    | "magenta"
+    | "cyan"
+    | "white"
+    | "blackBright"
+    | "gray"
+    | "grey"
+    | "redBright"
+    | "greenBright"
+    | "yellowBright"
+    | "blueBright"
+    | "magentaBright"
+    | "cyanBright"
+    | "whiteBright"
+    | "bgBlack"
+    | "bgRed"
+    | "bgGreen"
+    | "bgYellow"
+    | "bgBlue"
+    | "bgMagenta"
+    | "bgCyan"
+    | "bgWhite"
+    | "bgBlackBright"
+    | "bgGray"
+    | "bgGrey"
+    | "bgRedBright"
+    | "bgGreenBright"
+    | "bgYellowBright"
+    | "bgBlueBright"
+    | "bgMagentaBright"
+    | "bgCyanBright"
+    | "bgWhiteBright"
+    | "background"
+    | "bgBackground"
+    | "foreground"
+    | "bgForeground"
+    | "brand"
+    | "bgBrand"
+    | "alternate"
+    | "bgAlternate"
+    | "help"
+    | "bgHelp"
+    | "success"
+    | "bgSuccess"
+    | "info"
+    | "bgInfo"
+    | "warning"
+    | "bgWarning"
+    | "danger"
+    | "bgDanger"
+    | "fatal"
+    | "bgFatal"
+    | "link"
+    | "bgLink"
+    | "positive"
+    | "bgPositive"
+    | "negative"
+    | "bgNegative";
   /**
    * An object containing functions for coloring text. Each function corresponds to a terminal color. See {@link ColorName} for available colors.
    */
-  export const colors: {
-    reset: (text: string | number) => string;
-    bold: (text: string | number) => string;
-    dim: (text: string | number) => string;
-    italic: (text: string | number) => string;
-    underline: (text: string | number) => string;
-    overline: (text: string | number) => string;
-    inverse: (text: string | number) => string;
-    hidden: (text: string | number) => string;
-    strikethrough: (text: string | number) => string;
-    black: (text: string | number) => string;
-    red: (text: string | number) => string;
-    green: (text: string | number) => string;
-    yellow: (text: string | number) => string;
-    blue: (text: string | number) => string;
-    magenta: (text: string | number) => string;
-    cyan: (text: string | number) => string;
-    white: (text: string | number) => string;
-    blackBright: (text: string | number) => string;
-    gray: (text: string | number) => string;
-    grey: (text: string | number) => string;
-    redBright: (text: string | number) => string;
-    greenBright: (text: string | number) => string;
-    yellowBright: (text: string | number) => string;
-    blueBright: (text: string | number) => string;
-    magentaBright: (text: string | number) => string;
-    cyanBright: (text: string | number) => string;
-    whiteBright: (text: string | number) => string;
-    bgBlack: (text: string | number) => string;
-    bgRed: (text: string | number) => string;
-    bgGreen: (text: string | number) => string;
-    bgYellow: (text: string | number) => string;
-    bgBlue: (text: string | number) => string;
-    bgMagenta: (text: string | number) => string;
-    bgCyan: (text: string | number) => string;
-    bgWhite: (text: string | number) => string;
-    bgBlackBright: (text: string | number) => string;
-    bgGray: (text: string | number) => string;
-    bgGrey: (text: string | number) => string;
-    bgRedBright: (text: string | number) => string;
-    bgGreenBright: (text: string | number) => string;
-    bgYellowBright: (text: string | number) => string;
-    bgBlueBright: (text: string | number) => string;
-    bgMagentaBright: (text: string | number) => string;
-    bgCyanBright: (text: string | number) => string;
-    bgWhiteBright: (text: string | number) => string;
-  };
+  export const colors: Record<ColorName, (text: string | number) => string>;
   /**
    * Gets a color function by name, with an option for a fallback color if the requested color is not found.
    *
