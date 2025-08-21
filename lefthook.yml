@@ -8,21 +8,6 @@ colors: true
 no_tty: false
 min_version: 1.5.0
 
-pre-install:
-  commands:
-    validate:
-      glob: "**/*.*"
-      run: pnpm exec storm-pre-install
-
-prepare:
-  commands:
-    validate:
-      glob: "**/*.*"
-      run: pnpm exec storm-prepare
-    plugins:
-      glob: "**/*.*"
-      run: pnpm exec zx tools/scripts/src/bootstrap.mjs
-
 pre-commit:
   piped: true
   commands:
@@ -34,8 +19,8 @@ pre-commit:
       glob: "**/{lefthook.yml,biome.json}"
       run: pnpm exec storm-prepare
     validate:
-      glob: '**/*'
-      run: 'pnpm exec storm-pre-commit {staged_files}'
+      glob: "**/*"
+      run: "pnpm exec storm-pre-commit {staged_files}"
       stage_fixed: true
     lint:
       glob:
@@ -97,8 +82,7 @@ pre-push:
       run: pnpm exec storm-lint codeowners
     lint-github-actions:
       glob: ".github/workflows/*.*"
-      run:
-        zizmor --offline --config="./tools/config/zizmor.yml" .github/workflows/
+      run: zizmor --offline --config="./tools/config/zizmor.yml" .github/workflows/
     sherif:
       glob:
         - "*.js"
@@ -115,8 +99,7 @@ pre-push:
       stage_fixed: true
     readme:
       glob: "**/*"
-      run:
-        'pnpm exec storm-git readme --templates="tools/readme-templates"
+      run: 'pnpm exec storm-git readme --templates="tools/readme-templates"
         --project="@storm-stack/monorepo" '
       stage_fixed: true
     format:

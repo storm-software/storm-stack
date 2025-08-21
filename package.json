@@ -49,6 +49,7 @@
     "nuke": "pnpm exec zx tools/scripts/src/nuke.mjs",
     "nx": "nx",
     "postinstall": "pnpm bootstrap",
+    "preinstall": "pnpm exec storm-pre-install",
     "push": "git push origin main:main",
     "release": "pnpm exec zx tools/scripts/src/release.mjs",
     "sherif": "pnpm exec sherif -f -i typescript -i react -i react-dom",
