@@ -375,14 +375,14 @@ export function formatMessage(
 
   const maxLine = Math.max(Math.max(...banner.map(line => stripAnsi(line).length)), ${MIN_MESSAGE_WIDTH});
   banner.forEach((line, i) => {
-    banner[i] = \` \${colorFn("│")}  \${colors.white(line)}\${" ".repeat(maxLine - stripAnsi(line).length)}  \${colorFn("│")}\`;
+    banner[i] = \` \${colorFn("│")} \${colors.white(line)}\${" ".repeat(maxLine - stripAnsi(line).length)} \${colorFn("│")}\`;
   });
 
-  banner.unshift(colorFn(\` ╭── \${icon ? icon + " " : ""}\${title} ─\${"─".repeat(maxLine - (icon ? icon.length + 1 : 0) - title.length - 2)}─╮\`));
+  banner.unshift(colorFn(\` ╭── \${icon ? icon + " " : ""}\${title} ─\${"─".repeat(maxLine - (icon ? icon.length + 1 : 0) - title.length - 4)}─╮\`));
   banner.unshift("");
 
   const timestamp = format(new Date(), "keyboardDateTime12h");
-  banner.push(colorFn(\` ╰─\${"─".repeat(maxLine - timestamp.length - 2)}─ \${timestamp} ──╯\`));
+  banner.push(colorFn(\` ╰─\${"─".repeat(maxLine - timestamp.length - 4)}─ \${timestamp} ──╯\`));
   banner.push("");
 
   return banner.join("\\n");
