@@ -45,6 +45,16 @@ export interface LogSentryPluginOptions extends LogPluginOptions {
    * If not provided, the plugin will try to read the `SENTRY_DSN` environment variable.
    */
   dsn: string;
+
+  /**
+   * Whether notification messages will be sent to Sentry.
+   *
+   * @remarks
+   * If the current `mode` is set to "development", this value will be set to `false` automatically. This functionality can be overridden by manually setting this option to `true`.
+   *
+   * @defaultValue true
+   */
+  enabled?: boolean;
 }
 
 export interface LogSentryPluginContextOptions
