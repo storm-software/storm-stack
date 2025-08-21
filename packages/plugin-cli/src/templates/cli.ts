@@ -35,8 +35,10 @@ import { getStyles } from "../helpers/ansi-utils";
 import {
   LARGE_CONSOLE_WIDTH,
   LARGE_HELP_COLUMN_WIDTH,
+  MAX_MESSAGE_WIDTH,
   MIN_BANNER_WIDTH,
-  MIN_CONSOLE_WIDTH
+  MIN_CONSOLE_WIDTH,
+  MIN_MESSAGE_WIDTH
 } from "../helpers/constants";
 import { extractAuthor } from "../helpers/utilities";
 import type { CFontResultObject, CLIPluginContext } from "../types/config";
@@ -214,12 +216,13 @@ export function CLIModule(context: CLIPluginContext) {
 
 ${getFileHeader()}
 
-${
-  context.options.plugins.cli.interactive !== "never"
-    ? `import { confirm, multiselect, select, text } from "@clack/prompts";
-import { StormError } from "storm:error";`
-    : ""
-}
+import { StormError, isStormError } from "storm:error";
+import { format } from "storm:date";${
+    context.options.plugins.cli.interactive !== "never"
+      ? `
+import { confirm, multiselect, select, text } from "@clack/prompts";`
+      : ""
+  }
 
 export type CLIRequestData = {
   argv: string[];
@@ -228,6 +231,57 @@ export type CLIRequestData = {
 export type ColorName = ${Object.keys(styles.ansi16)
     .map(style => `"${style}"`)
     .join(" | ")};
+
+/**
+ * Applies ANSI escape codes to a string.
+ *
+ * @remarks
+ * Split text by /\\\\u001b[\\[|\\]][0-9;]*m/ and wrap non-ANSI parts with open/close
+ *
+ * \`\`\`typescript
+ *
+ * const result = applyAnsi("Hello\\\\u001b[31mWorld\\\\u001b[0mAgain", "\\\\u001b[36m", "\\\\u001b[39");
+ * console.log(result); // "\\\\u001b[36mHello\\\\u001b[39\\\\u001b[31mWorld\\\\u001b[0m\\\\u001b[36mAgain\\\\u001b[39"
+ * \`\`\`
+ *
+ * @param text - The text to apply ANSI codes to.
+ * @param open - The opening ANSI code.
+ * @param close - The closing ANSI code.
+ * @returns The text with ANSI codes applied.
+ */
+function applyAnsi(text: string | number, open: string, close: string) {
+  const str = String(text);
+  const ansiRe = /\\\\u001b[\\[|\\]][0-9;]*m/g;
+  const ansiExact = /^\\\\u001b[\\[|\\]][0-9;]*m$/;
+
+  const tokens: string[] = [];
+  let last = 0;
+  let match: RegExpExecArray | null;
+
+  while ((match = ansiRe.exec(str)) !== null) {
+    if (match.index > last) tokens.push(str.slice(last, match.index));
+    tokens.push(match[0]);
+    last = match.index + match[0].length;
+  }
+  if (last < str.length) tokens.push(str.slice(last));
+
+  let result = "";
+  for (let i = 0; i < tokens.length; i++) {
+    const seg = tokens[i]!;
+    if (ansiExact.test(seg)) {
+      result += seg;
+      continue;
+    }
+    if (!seg) continue;
+
+    const prevIsAnsi = i > 0 && ansiExact.test(tokens[i - 1]!);
+    const nextIsAnsi = i + 1 < tokens.length && ansiExact.test(tokens[i + 1]!);
+
+    result += prevIsAnsi && nextIsAnsi ? seg : \`\${open}\${seg}\${close}\`;
+  }
+
+  return result;
+}
 
 /**
  * An object containing functions for coloring text. Each function corresponds to a terminal color. See {@link ColorName} for available colors.
@@ -244,12 +298,12 @@ export const colors: Record<ColorName, (text: string | number) => string> = {
       }
 
       if ($storm.env.supportsColor.stdout === 1) {
-        return \`${styles.ansi16[style].open}\${text}${styles.ansi16[style].close}\`;
+        return applyAnsi(text, "${styles.ansi16[style].open}", "${styles.ansi16[style].close}");
       } else if ($storm.env.supportsColor.stdout === 2) {
-        return \`${styles.ansi256[style].open}\${text}${styles.ansi256[style].close}\`;
+        return applyAnsi(text, "${styles.ansi256[style].open}", "${styles.ansi256[style].close}");
       }
 
-      return \`${styles.ansi16m[style].open}\${text}${styles.ansi16m[style].close}\`;
+      return applyAnsi(text, "${styles.ansi16m[style].open}", "${styles.ansi16m[style].close}");
     } catch {
       return String(text);
     }
@@ -272,11 +326,123 @@ export function getColor(
   return colors[color] || colors[fallback];
 }
 
+/**
+ * Formats a message for display in the CLI.
+ *
+ * @param text - The message text to format.
+ * @param color - The color to use for the message (default: "brand").
+ * @param title - The title to use for the message (default: "Message").
+ * @param icon - An optional icon to display with the message.
+ * @returns The formatted message string.
+ */
+export function formatMessage(
+  text: string,
+  color: ColorName = "brand",
+  title = "Message",
+  icon?: string
+) {
+  const colorFn = getColor(color);
+
+  const banner = [] as string[];
+  const last = text.split(/ +/).reduce((ret, word, i) => {
+    if (word.includes("\\n")) {
+      const lines = word.split("\\n");
+
+      if (lines[0] && stripAnsi(lines[0]).length + stripAnsi(ret).length > ${MAX_MESSAGE_WIDTH} - 9) {
+        banner.push(ret);
+        ret = lines[0];
+      } else {
+        ret = \`\${ret ? \`\${ret} \` : ""}\${lines[0]}\`;
+      }
+
+      if (lines.length > 1) {
+        banner.push(ret);
+        banner.push(...lines.slice(1, -1));
+        ret = lines[lines.length - 1] || "";
+      }
+    } else if (stripAnsi(ret).length + stripAnsi(word).length > ${MAX_MESSAGE_WIDTH} - 9) {
+      banner.push(ret);
+      ret = word;
+    } else {
+      ret = \`\${ret ? \`\${ret} \` : ""}\${word}\`;
+    }
+
+    return ret;
+  }, "");
+  if (last) {
+    banner.push(last);
+  }
+
+  const maxLine = Math.max(Math.max(...banner.map(line => stripAnsi(line).length)), ${MIN_MESSAGE_WIDTH});
+  banner.forEach((line, i) => {
+    banner[i] = \` \${colorFn("│")}  \${colors.white(line)}\${" ".repeat(maxLine - stripAnsi(line).length)}  \${colorFn("│")}\`;
+  });
+
+  banner.unshift(colorFn(\` ╭── \${icon ? icon + " " : ""}\${title} ─\${"─".repeat(maxLine - (icon ? icon.length + 1 : 0) - title.length - 2)}─╮\`));
+  banner.unshift("");
+
+  const timestamp = format(new Date(), "keyboardDateTime12h");
+  banner.push(colorFn(\` ╰─\${"─".repeat(maxLine - timestamp.length - 2)}─ \${timestamp} ──╯\`));
+  banner.push("");
+
+  return banner.join("\\n");
+}
+
+/**
+ * Shows an error message in the CLI.
+ *
+ * @param details - The error details to display.
+ */
+export function showError(details: string | Error) {
+  const text = isStormError(details) ? details.toDisplay() : typeof details === "string" ? details : details.message;
+  if (!text) {
+    return;
+  }
+
+  console.error(formatMessage(text, "danger", "Error", "✘"));
+}
+
+/**
+ * Shows a warning message in the CLI.
+ *
+ * @param details - The warning details to display.
+ */
+export function showWarning(text: string) {
+  console.warn(formatMessage(text, "warning", "Warning", "⚠"));
+}
+
+/**
+ * Shows a info message in the CLI.
+ *
+ * @param details - The info details to display.
+ */
+export function showInfo(text: string) {
+  console.info(formatMessage(text, "info", "Info", "ℹ"));
+}
+
+/**
+ * Shows a help message in the CLI.
+ *
+ * @param details - The help details to display.
+ */
+export function showHelp(text: string) {
+  console.info(formatMessage(text, "help", "Help", "★"));
+}
+
+/**
+ * Shows a success message in the CLI.
+ *
+ * @param details - The success details to display.
+ */
+export function showSuccess(text: string) {
+  console.info(formatMessage(text, "success", "Success", "✔"));
+}
+
 type LinkOptions = {
   /**
    * Whether to use colored text for the link.
    *
-   * @defaultValue "blueBright"
+   * @defaultValue "link"
    */
   color?: ColorName | false;
 
@@ -411,7 +577,7 @@ export function link(
       : $storm.env.isColorSupported
         ? \`\${text && text !== url ? \`\${text} at \` : ""}\${colors.underline(
             options.color !== false
-              ? getColor(options.color || "blueBright")(url)
+              ? getColor(options.color || "link")(url)
               : url
           )}\`
         : \`\${text && text !== url ? \`\${text} at \` : ""} \${url}\`;
@@ -616,7 +782,7 @@ export function renderFooter(): string {
     const qrCodeMaxLength = Math.max(...qrCodeLines.map(line => line.length));
     footer.push(...qrCodeLines.map(line => \`\${" ".repeat(Math.max((consoleWidth - qrCodeMaxLength) / 2, 15))}\${colors.brand(line)}\${" ".repeat(Math.max((consoleWidth - qrCodeMaxLength) / 2, 15))}\`));
   }
-fffffffffffffffffffffffffffffffffffffffff
+
   footer.push(\`\${" ".repeat(Math.max((consoleWidth - ${
     (author?.url || homepage || docs || support || contact || repository)
       ?.length ?? 0

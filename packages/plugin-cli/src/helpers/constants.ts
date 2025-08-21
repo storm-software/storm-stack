@@ -22,3 +22,6 @@ export const MIN_BANNER_WIDTH = 72;
 
 export const LARGE_CONSOLE_WIDTH = 160;
 export const LARGE_HELP_COLUMN_WIDTH = 40;
+
+export const MAX_MESSAGE_WIDTH = 100;
+export const MIN_MESSAGE_WIDTH = 24;

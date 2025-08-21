@@ -301,7 +301,7 @@ import ${
       )
     )}";
 import { StormRequest } from "storm:request";
-import { CLIRequestData, colors, parseArgs, renderBanner, renderFooter${
+import { CLIRequestData, showError, colors, parseArgs, renderBanner, renderFooter${
       context.options.plugins.cli.interactive !== "never" ? ", prompt" : ""
     } } from "storm:cli";
 import { deserialize, serialize } from "@deepkit/type";${
@@ -346,7 +346,7 @@ async function handler(request: StormRequest<${request.type.getName()}>) {
           )
           .join(" ")}
 
-        console.error(\` \${colors.red("✘")}  \${colors.white(\`Unknown command: \${colors.bold(command || "<none>")}\`)}\`);
+        showError(\`Unknown command: \${colors.bold(command || "<none>")}\`);
         console.log("");
         console.log(renderUsage("full"));
         console.log(renderFooter());
@@ -626,7 +626,7 @@ async function handler(request: StormRequest<${request.type.getName()}>) {
       }
     }
   } catch (err) {
-   console.error(\` \${colors.red("✘")}  \${colors.white(\`Error occurred while processing ${command.title} command.\`)}\`);
+   showError(\`An error occurred while processing ${command.title} command: \n\n\${createStormError(err).toDisplay()}\`);
   }
 }
 
@@ -892,7 +892,7 @@ async function handler(request: StormRequest<${request.type.getName()}>) {
         )
         .join(" ")}
 
-        console.error(\` \${colors.red("✘")}  \${colors.white(\`Unknown command: \${colors.bold(command || "<none>")}\`)}\`);
+        showError(\`Unknown command: \${colors.bold(command || "<none>")}\`);
         console.log("");
         console.log(renderUsage("full"));
         console.log(renderFooter());
@@ -972,9 +972,7 @@ async function handler(request: StormRequest<${request.type.getName()}>) {
       console.log("");
     }
   } catch (err) {
-   console.error(\` \${colors.red("✘")}  \${colors.white(\`Error occurred while processing ${
-     command.title
-   } command.\`)}\`);
+   showError(\`An error occurred while processing ${command.title} command: \n\n\${createStormError(err).toDisplay()}\`);
   }
 }
 
@@ -1117,7 +1115,7 @@ export async function prepareEntry(
 ${getFileHeader()}
 
 import { createCLIApp } from "storm:app";
-import { colors, link, renderBanner, renderFooter, parseArgs } from "storm:cli";
+import { colors, showError, link, renderBanner, renderFooter, parseArgs } from "storm:cli";
 import { isError, isStormError, createStormError } from "storm:error";${
       commandTree.children && Object.values(commandTree.children).length > 0
         ? Object.values(commandTree.children)
@@ -1138,19 +1136,17 @@ import { isError, isStormError, createStormError } from "storm:error";${
         : ""
     }
 
-
-// Exit early if on an older version of Node.js (< ${context.options.plugins.cli.minNodeVersion})
-// const major = process.versions.node.split(".").map(Number)[0]!;
-// if (major < ${context.options.plugins.cli.minNodeVersion}) {
-//   console.error(\` \${colors.red("✘")}  \${colors.white(\`${titleCase(context.options.name)} CLI requires Node.js version ${context.options.plugins.cli.minNodeVersion} or newer.
-// You are running Node.js v\${process.versions.node}.
-// Please upgrade Node.js - \${link("https://nodejs.org/en/download/")}
-// \`)}\`,
-//   );
-//   process.exit(1);
-// }
-
 const main = createCLIApp(async (request) => {
+
+  // Exit early if on an older version of Node.js (< ${context.options.plugins.cli.minNodeVersion})
+  const major = process.versions.node.split(".").map(Number)[0]!;
+  if (major < ${context.options.plugins.cli.minNodeVersion}) {
+    showError(\`${titleCase(context.options.name)} CLI requires Node.js version ${context.options.plugins.cli.minNodeVersion} or higher.
+
+You are currently running Node.js v\${process.versions.node}.
+Please upgrade Node.js at \${link("https://nodejs.org/en/download/")}\`);
+    process.exit(1);
+  }
 
 ${
   !context.packageJson.private
@@ -1206,9 +1202,9 @@ ${
       lastUpdateCheck: currentTime,
     });*/
   } catch (err) {
-    console.error(\` \${colors.red("✘")}  \${colors.white(\`An error occurred while checking for ${
+    showError(\`An error occurred while checking for ${
       appTitle
-    } application updates. You can disable update check by setting configuration parameter "SKIP_UPDATE_CHECK" to true: \n\n\${createStormError(err).toDisplay()}\`)}\`);
+    } application updates: \n\n\${createStormError(err).toDisplay()}\n\nNote: You can disable this update check by setting the "SKIP_UPDATE_CHECK" configuration to true.\`);
     console.log("");
   }
   `
@@ -1239,7 +1235,7 @@ ${
       } `
         )
         .join(" ")} else {
-        console.error(\` \${colors.red("✘")}  \${colors.white(\`Unknown command: \${colors.bold(command || "<none>")}\`)}\`);
+        showError(\`Unknown command: \${colors.bold(command || "<none>")}\`);
         console.log("");
       }
 
@@ -1277,9 +1273,7 @@ ${
       console.log("");
     }
   } catch (err) {
-    console.error(\` \${colors.red("✘")}  \${colors.white(\`An error occurred while running the ${
-      appTitle
-    } application: \n\n\${createStormError(err).toDisplay()}\`)}\`);
+    showError(\`An error occurred while running the ${appTitle} application: \n\n\${createStormError(err).toDisplay()}\`);
   }
 });
 

@@ -184,7 +184,7 @@ export interface CLIPluginOptions extends NodePluginOptions {
    *
    * @defaultValue 20
    */
-  minNodeVersion?: 22 | 20 | 18 | 16;
+  minNodeVersion?: 24 | 22 | 20 | 18 | 16;
 
   /**
    * If a boolean, this will be used to determine the default value of the `interactive` flag. If `never` is specified, the CLI will not include an interactive mode.
