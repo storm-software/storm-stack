@@ -420,8 +420,8 @@ export function createStormError(
    */
   public get url(): string {
     const url = new URL($storm.config.static.ERROR_URL!);
-    url.pathname = \`\${this.type.toLowerCase().replaceAll("_", "-")}/\${String(this.code)}\`;
 
+    url.pathname = (url.pathname ? url.pathname.replace(/\\/*$/, "") : "") + \`/\${this.type.toLowerCase().replaceAll("_", "-")}/\${String(this.code)}\`;
     if (this.params.length > 0) {
       url.pathname += \`/\${this.params.map(param => encodeURI("" + param)
         .replaceAll(/%7c/gi, "|")
@@ -455,7 +455,7 @@ export function createStormError(
     }: Please review the details of this error at the following URL: \${this.url}\${
       includeData && this.data
         ? \`
-Related details: \${JSON.stringify(this.data)}\`
+Related details: \${JSON.stringify(this.data, null, 2)}\`
         : ""
     }\${
       this.cause?.name
