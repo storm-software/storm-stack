@@ -2,6 +2,22 @@
 
 # Changelog for Storm Stack - Nx
 
+## [0.16.1](https://github.com/storm-software/storm-stack/releases/tag/nx%400.16.1) (2025-08-24)
+
+### Bug Fixes
+
+- **core:** Resolve issue with applying default values
+  ([84814d40](https://github.com/storm-software/storm-stack/commit/84814d40))
+
+### Miscellaneous
+
+- **monorepo:** Update README markdown files
+  ([4384b109](https://github.com/storm-software/storm-stack/commit/4384b109))
+
+### Updated Dependencies
+
+- Updated core to 0.35.1
+
 ## [0.16.0](https://github.com/storm-software/storm-stack/releases/tag/nx%400.16.0) (2025-08-19)
 
 ### Features

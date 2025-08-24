@@ -2,6 +2,26 @@
 
 # Changelog for Storm Stack - Core
 
+## [0.35.1](https://github.com/storm-software/storm-stack/releases/tag/core%400.35.1) (2025-08-24)
+
+### Bug Fixes
+
+- **plugin-cli:** Resolve issue with banner display width
+  ([fbea3f48](https://github.com/storm-software/storm-stack/commit/fbea3f48))
+- **plugin-cli:** Resolved issues with the CLI banner title display
+  ([85f17808](https://github.com/storm-software/storm-stack/commit/85f17808))
+- **core:** Resolve issue with applying default values
+  ([84814d40](https://github.com/storm-software/storm-stack/commit/84814d40))
+
+### Miscellaneous
+
+- **monorepo:** Update README markdown files
+  ([4384b109](https://github.com/storm-software/storm-stack/commit/4384b109))
+
+### Updated Dependencies
+
+- Updated types to 0.16.1
+
 ## [0.35.0](https://github.com/storm-software/storm-stack/releases/tag/core%400.35.0) (2025-08-19)
 
 ### Features

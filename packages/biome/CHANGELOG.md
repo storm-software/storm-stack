@@ -1,3 +1,19 @@
+![Storm Software's logo banner](https://public.storm-cdn.com/brand-banner.png)
+
+# Changelog for Storm Stack - Biome
+
+## [0.1.6](https://github.com/storm-software/storm-stack/releases/tag/biome%400.1.6) (2025-08-24)
+
+### Bug Fixes
+
+- **biome:** Resolve issue with invalid `globals` configuration
+  ([6a0b3682](https://github.com/storm-software/storm-stack/commit/6a0b3682))
+
+### Miscellaneous
+
+- **monorepo:** Update README markdown files
+  ([4384b109](https://github.com/storm-software/storm-stack/commit/4384b109))
+
 ![Storm Software](https://public.storm-cdn.com/brand-banner.png)
 
 # Changelog for Storm Stack - Biome

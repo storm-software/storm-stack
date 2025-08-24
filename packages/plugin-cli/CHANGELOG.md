@@ -2,6 +2,38 @@
 
 # Changelog for Storm Stack - Plugin CLI
 
+## [0.28.0](https://github.com/storm-software/storm-stack/releases/tag/plugin-cli%400.28.0) (2025-08-24)
+
+### Features
+
+- **plugin-cli:** Added the `show` message banner display utility functions
+  ([956bdbd7](https://github.com/storm-software/storm-stack/commit/956bdbd7))
+- **plugin-cli:** Added ASNI console styling for custom, user-provided colors
+  ([1c276c89](https://github.com/storm-software/storm-stack/commit/1c276c89))
+
+### Bug Fixes
+
+- **plugin-cli:** Resolve issue with banner display width
+  ([fbea3f48](https://github.com/storm-software/storm-stack/commit/fbea3f48))
+- **plugin-cli:** Resolved issues with the CLI banner title display
+  ([85f17808](https://github.com/storm-software/storm-stack/commit/85f17808))
+- **core:** Resolve issue with applying default values
+  ([84814d40](https://github.com/storm-software/storm-stack/commit/84814d40))
+
+### Miscellaneous
+
+- **monorepo:** Update README markdown files
+  ([4384b109](https://github.com/storm-software/storm-stack/commit/4384b109))
+- **plugin-cli:** Reduce padding in message banners
+  ([13cf63bd](https://github.com/storm-software/storm-stack/commit/13cf63bd))
+- **plugin-cli:** Clean up the ASNI style generators
+  ([638b476b](https://github.com/storm-software/storm-stack/commit/638b476b))
+
+### Updated Dependencies
+
+- Updated devkit to 0.11.1
+- Updated core to 0.35.1
+
 ## [0.27.0](https://github.com/storm-software/storm-stack/releases/tag/plugin-cli%400.27.0) (2025-08-19)
 
 ### Features

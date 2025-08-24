@@ -2,6 +2,41 @@
 
 # Changelog for Storm Stack - CLI
 
+## [0.17.0](https://github.com/storm-software/storm-stack/releases/tag/cli%400.17.0) (2025-08-24)
+
+### Features
+
+- **plugin-cli:** Added ASNI console styling for custom, user-provided colors
+  ([1c276c89](https://github.com/storm-software/storm-stack/commit/1c276c89))
+
+### Bug Fixes
+
+- **plugin-cli:** Resolve issue with banner display width
+  ([fbea3f48](https://github.com/storm-software/storm-stack/commit/fbea3f48))
+- **plugin-cli:** Resolved issues with the CLI banner title display
+  ([85f17808](https://github.com/storm-software/storm-stack/commit/85f17808))
+- **core:** Resolve issue with applying default values
+  ([84814d40](https://github.com/storm-software/storm-stack/commit/84814d40))
+
+### Miscellaneous
+
+- **monorepo:** Update README markdown files
+  ([4384b109](https://github.com/storm-software/storm-stack/commit/4384b109))
+- **monorepo:** Update `pnpm-lock.yaml` file
+  ([42242e95](https://github.com/storm-software/storm-stack/commit/42242e95))
+- **monorepo:** Update Nx to v21.4.0
+  ([4959b94e](https://github.com/storm-software/storm-stack/commit/4959b94e))
+
+### Updated Dependencies
+
+- Updated plugin-log-storage to 0.22.1
+- Updated plugin-log-sentry to 0.25.0
+- Updated plugin-storage-fs to 0.11.1
+- Updated plugin-cli to 0.28.0
+- Updated types to 0.16.1
+- Updated core to 0.35.1
+- Updated nx to 0.16.1
+
 ## [0.16.0](https://github.com/storm-software/storm-stack/releases/tag/cli%400.16.0) (2025-08-19)
 
 ### Features

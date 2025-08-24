@@ -2,6 +2,29 @@
 
 # Changelog for Storm Stack - Plugin Log Sentry
 
+## [0.25.0](https://github.com/storm-software/storm-stack/releases/tag/plugin-log-sentry%400.25.0) (2025-08-24)
+
+### Features
+
+- **plugin-log-sentry:** Added the `enabled` configuration option
+  ([dbba3c6a](https://github.com/storm-software/storm-stack/commit/dbba3c6a))
+
+### Bug Fixes
+
+- **core:** Resolve issue with applying default values
+  ([84814d40](https://github.com/storm-software/storm-stack/commit/84814d40))
+
+### Miscellaneous
+
+- **monorepo:** Update README markdown files
+  ([4384b109](https://github.com/storm-software/storm-stack/commit/4384b109))
+
+### Updated Dependencies
+
+- Updated devkit to 0.11.1
+- Updated core to 0.35.1
+- Updated nx to 0.16.1
+
 ## [0.24.0](https://github.com/storm-software/storm-stack/releases/tag/plugin-log-sentry%400.24.0) (2025-08-19)
 
 ### Features

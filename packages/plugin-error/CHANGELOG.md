@@ -2,6 +2,31 @@
 
 # Changelog for Storm Stack - Plugin Error
 
+## [0.3.0](https://github.com/storm-software/storm-stack/releases/tag/plugin-error%400.3.0) (2025-08-24)
+
+### Features
+
+- **plugin-error:** Added the `id` field to the Error object
+  ([e2cadfa4](https://github.com/storm-software/storm-stack/commit/e2cadfa4))
+
+### Bug Fixes
+
+- **plugin-error:** Resolved issue with error URL path formatting
+  ([7dfbf438](https://github.com/storm-software/storm-stack/commit/7dfbf438))
+- **core:** Resolve issue with applying default values
+  ([84814d40](https://github.com/storm-software/storm-stack/commit/84814d40))
+
+### Miscellaneous
+
+- **monorepo:** Update README markdown files
+  ([4384b109](https://github.com/storm-software/storm-stack/commit/4384b109))
+
+### Updated Dependencies
+
+- Updated devkit to 0.11.1
+- Updated core to 0.35.1
+- Updated nx to 0.16.1
+
 ## [0.2.0](https://github.com/storm-software/storm-stack/releases/tag/plugin-error%400.2.0) (2025-08-19)
 
 ### Features

@@ -2,6 +2,15 @@
 
 # Changelog for Storm Stack - ESLint Plugin
 
+## [0.11.1](https://github.com/storm-software/storm-stack/releases/tag/eslint-plugin%400.11.1) (2025-08-24)
+
+### Miscellaneous
+
+- **monorepo:** Update README markdown files
+  ([4384b109](https://github.com/storm-software/storm-stack/commit/4384b109))
+- **eslint-plugin:** Format package source files
+  ([0b378cf4](https://github.com/storm-software/storm-stack/commit/0b378cf4))
+
 ## [0.11.0](https://github.com/storm-software/storm-stack/releases/tag/eslint-plugin%400.11.0) (2025-08-19)
 
 ### Features
