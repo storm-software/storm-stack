@@ -43,22 +43,28 @@ A package containing tools for managing a Storm workspace. It includes various
 
 <!-- START doctoc -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
-
 ## Table of Contents
 
 - [Installing](#installing)
 - [Executors](#executors)
-- [clean](#clean)
+- [Storm Stack Clean Executor](#storm-stack-clean-executor)
   - [Example](#example)
-- [prepare](#prepare)
+  - [Options](#options)
+- [Storm Stack Prepare Executor](#storm-stack-prepare-executor)
   - [Example](#example-1)
-- [lint](#lint)
+  - [Options](#options-1)
+- [Storm Stack Lint Executor](#storm-stack-lint-executor)
   - [Example](#example-2)
-- [build](#build)
+  - [Options](#options-2)
+- [Storm Stack Build Executor](#storm-stack-build-executor)
   - [Example](#example-3)
-- [docs](#docs)
+  - [Options](#options-3)
+- [Storm Stack Docs Executor](#storm-stack-docs-executor)
   - [Example](#example-4)
+  - [Options](#options-4)
 - [Generators](#generators)
+- [Storm Stack Sync Generator](#storm-stack-sync-generator)
+  - [Options](#options-5)
 - [Building](#building)
 - [Running unit tests](#running-unit-tests)
 - [Storm Workspaces](#storm-workspaces)
@@ -111,9 +117,9 @@ the workspace's projects:
 <!-- markdownlint-disable -->
 
 
-## clean
+## Storm Stack Clean Executor
 
-An executor used to run the Storm Stack - Clean process
+A type definition for the Storm Stack - Clean executor schema
 
 ### Example 
 
@@ -125,11 +131,24 @@ nx run my-project:clean
 
 **Please note:** _The clean executor should be included in the desired projects's `project.json` file._ 
 
+### Options
+
+The following executor options are available:
+
+| Option    | Type   | Description   | Default   | 
+| --------- | ------ | ------------- | --------- | 
+| outputPath      | `string`    | The output path for the build     | "dist/{projectRoot}"     | 
+ | tsconfig      | `string`    | The path to the tsconfig file     | "{projectRoot}/tsconfig.json"     | 
+ | mode      | "development" \| "staging" \| "production"     | The build mode     |     | 
+ | skipInstalls      | `boolean`    | Skip installing dependencies during prepare stage     |     | 
+ | logLevel      | "error" \| "success" \| "silent" \| "fatal" \| "warn" \| "info" \| "debug" \| "trace" \| "all"     | The log level to use for the build process     |     | 
 
 
-## prepare
 
-An executor used to run the Storm Stack - Prepare process
+
+## Storm Stack Prepare Executor
+
+A type definition for the Storm Stack - Prepare executor schema
 
 ### Example 
 
@@ -141,11 +160,26 @@ nx run my-project:prepare
 
 **Please note:** _The prepare executor should be included in the desired projects's `project.json` file._ 
 
+### Options
+
+The following executor options are available:
+
+| Option    | Type   | Description   | Default   | 
+| --------- | ------ | ------------- | --------- | 
+| outputPath      | `string`    | The output path for the build     | "dist/{projectRoot}"     | 
+ | tsconfig      | `string`    | The path to the tsconfig file     | "{projectRoot}/tsconfig.json"     | 
+ | mode      | "development" \| "staging" \| "production"     | The build mode     |     | 
+ | skipInstalls      | `boolean`    | Skip installing dependencies during prepare stage     |     | 
+ | logLevel      | "error" \| "success" \| "silent" \| "fatal" \| "warn" \| "info" \| "debug" \| "trace" \| "all"     | The log level to use for the build process     |     | 
+ | skipCache      | `boolean`    | Skip the cache when building     |     | 
+ | clean      | `boolean`    | Automatically clean the project's output artifacts (if required)     |     | 
 
 
-## lint
 
-An executor used to run the Storm Stack - Lint process
+
+## Storm Stack Lint Executor
+
+A type definition for the Storm Stack - Lint executor schema
 
 ### Example 
 
@@ -157,11 +191,26 @@ nx run my-project:lint
 
 **Please note:** _The lint executor should be included in the desired projects's `project.json` file._ 
 
+### Options
+
+The following executor options are available:
+
+| Option    | Type   | Description   | Default   | 
+| --------- | ------ | ------------- | --------- | 
+| outputPath      | `string`    | The output path for the build     | "dist/{projectRoot}"     | 
+ | tsconfig      | `string`    | The path to the tsconfig file     | "{projectRoot}/tsconfig.json"     | 
+ | mode      | "development" \| "staging" \| "production"     | The build mode     |     | 
+ | skipInstalls      | `boolean`    | Skip installing dependencies during prepare stage     |     | 
+ | logLevel      | "error" \| "success" \| "silent" \| "fatal" \| "warn" \| "info" \| "debug" \| "trace" \| "all"     | The log level to use for the build process     |     | 
+ | skipCache      | `boolean`    | Skip the cache when building     |     | 
+ | clean      | `boolean`    | Automatically clean the project's output artifacts (if required)     |     | 
 
 
-## build
 
-An executor used to run the Storm Stack - Build process
+
+## Storm Stack Build Executor
+
+A type definition for the Storm Stack - Build executor schema
 
 ### Example 
 
@@ -171,13 +220,32 @@ This executor can be used by executing the following in a command line utility:
 nx run my-project:build
 ```
 
-**Please note:** _The build executor should be included in the desired projects's `project.json` file._ 
+**Please note:** _The build executor should be included in the desired projects's `project.json` file.All required options must be included in the `options` property of the json._ 
+
+### Options
+
+The following executor options are available:
+
+| Option    | Type   | Description   | Default   | 
+| --------- | ------ | ------------- | --------- | 
+| outputPath      | `string`    | The output path for the build     | "dist/{projectRoot}"     | 
+ | tsconfig      | `string`    | The path to the tsconfig file     | "{projectRoot}/tsconfig.json"     | 
+ | mode      | "development" \| "staging" \| "production"     | The build mode     |     | 
+ | skipInstalls      | `boolean`    | Skip installing dependencies during prepare stage     |     | 
+ | logLevel      | "error" \| "success" \| "silent" \| "fatal" \| "warn" \| "info" \| "debug" \| "trace" \| "all"     | The log level to use for the build process     |     | 
+ | skipCache      | `boolean`    | Skip the cache when building     |     | 
+ | clean      | `boolean`    | Automatically clean the project's output artifacts (if required)     |     | 
+ | **entry \***    | `string`    | The entry file or files to build     | "{sourceRoot}/index.ts"     | 
+ | skipLint      | `boolean`    | Skip the linting process ran prior to the build (if required)     |     | 
+
+
+**Please note:** _Option names followed by \* above are required, and must be provided to run the executor._ 
 
 
 
-## docs
+## Storm Stack Docs Executor
 
-An executor used to run the Storm Stack - Docs process
+A type definition for the Storm Stack - Docs executor schema
 
 ### Example 
 
@@ -188,6 +256,21 @@ nx run my-project:docs
 ```
 
 **Please note:** _The docs executor should be included in the desired projects's `project.json` file._ 
+
+### Options
+
+The following executor options are available:
+
+| Option    | Type   | Description   | Default   | 
+| --------- | ------ | ------------- | --------- | 
+| outputPath      | `string`    | The output path for the build     | "dist/{projectRoot}"     | 
+ | tsconfig      | `string`    | The path to the tsconfig file     | "{projectRoot}/tsconfig.json"     | 
+ | mode      | "development" \| "staging" \| "production"     | The build mode     |     | 
+ | skipInstalls      | `boolean`    | Skip installing dependencies during prepare stage     |     | 
+ | logLevel      | "error" \| "success" \| "silent" \| "fatal" \| "warn" \| "info" \| "debug" \| "trace" \| "all"     | The log level to use for the build process     |     | 
+ | skipCache      | `boolean`    | Skip the cache when building     |     | 
+ | clean      | `boolean`    | Automatically clean the project's output artifacts (if required)     |     | 
+
 
 
 
@@ -204,6 +287,21 @@ management:
 <!-- START generators -->
 <!-- prettier-ignore-start -->
 <!-- markdownlint-disable -->
+
+
+## Storm Stack Sync Generator
+
+A type definition for the Storm Stack - Sync generator's options
+
+### Options
+
+The following executor options are available:
+
+| Option    | Type   | Description   | Default   | 
+| --------- | ------ | ------------- | --------- | 
+| outOfSyncMessage      | `string`    | The message to display when the project is out of sync with the legal-message.txt file     | "The legal-message.txt file needs to be created"     | 
+
+
 
 
 <!-- markdownlint-restore -->
