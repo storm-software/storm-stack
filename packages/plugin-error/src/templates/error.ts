@@ -297,7 +297,28 @@ export function createStormError(
        this.cause ??= optionsOrMessage.cause;
      }
 
+     if (this.cause?.stack) {
+       this.#stack = this.cause.stack;
+     }
+
      Object.setPrototypeOf(this, StormError.prototype);
+   }
+
+   /**
+    * A string that uniquely identifies the error
+    *
+    * @remarks
+    * The \`id\` property is a string that uniquely identifies the error. This string is generated based off the error type and code.
+    *
+    * @example
+    * \`\`\`typescript
+    * const error = new StormError({ code: 110 }, "custom");
+    * console.log(error.id); // "CUSTOM-110"
+    * \`\`\`
+    *
+    */
+   public get id(): string {
+     return \`\${this.type.toUpperCase()}\${this.code !== undefined ? \`-\${this.code}\` : ""}\`;
    }
 
    /**
@@ -325,7 +346,7 @@ export function createStormError(
    public get stacktrace(): ParsedStacktrace[] {
      const stacktrace: ParsedStacktrace[] = [];
      if (this.#stack) {
-       for (const line of this.#stack.split("\\n")) {
+       for (const line of this.#stack.split("\\n").filter(Boolean).slice(1)) {
          const parsed =
            (new RegExp(\`^\\s+at (?:(?<function>[^)]+) \\()?(?<source>[^)]+)\\)?$\`, "u")
            .exec(line)
@@ -447,12 +468,13 @@ export function createStormError(
     return \`\${this.name && this.name !== this.constructor.name ? (this.code ? \`\${this.name} \` : this.name) : ""}\${
       this.code
         ? this.code && this.name
-          ? \`[\${this.type.toUpperCase()}-\${this.code}]\`
-          : \`\${this.type.toUpperCase()}-\${this.code}\`
+          ? \`[\${this.id}]\`
+          : this.id
         : this.name
-          ? \`[\${this.type.toUpperCase()}]\`
-          : this.type.toUpperCase()
-    }: Please review the details of this error at the following URL: \${this.url}\${
+          ? \`[\${this.id}]\`
+          : this.id
+    }: Please review the details of this error at the following URL: \${this.url}
+\${
       includeData && this.data
         ? \`
 Related details: \${JSON.stringify(this.data, null, 2)}\`
@@ -476,12 +498,7 @@ Inner Error: \${this.cause?.name}\${this.cause?.message ? " - " + this.cause?.me
     stacktrace = $storm.config.static.STACKTRACE,
     includeData = $storm.config.static.INCLUDE_ERROR_DATA
   ): string {
-    return (
-      this.toDisplay(includeData) +
-      (stacktrace
-        ? ""
-        : \` \nStack Trace: \n\${this.stack}\`)
-    );
+    return \`\${this.toDisplay(includeData)}\${stacktrace ? \`\\n\\nStack Trace:\\n\${this.stack}\` : ""}\`;
   }
 
   /**
@@ -511,7 +528,7 @@ Inner Error: \${this.cause?.name}\${this.cause?.message ? " - " + this.cause?.me
       case "string":
       case "default":
       default:
-        return this.message;
+        return this.id;
     }
   }
 }
