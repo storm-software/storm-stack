@@ -301,12 +301,12 @@ export async function resolveConfig(
  * @returns The default environment name.
  */
 export function defaultEnvironmentName(options: ResolvedOptions) {
-  // if (options.isSsrBuild) {
-  //   return "ssr";
-  // }
-  // if (options.isPreview) {
-  //   return "preview";
-  // }
+  if (options.isSsrBuild) {
+    return "ssr";
+  }
+  if (options.isPreview) {
+    return "preview";
+  }
   if (options.platform === "node" || options.isSsrBuild) {
     return "server";
   }

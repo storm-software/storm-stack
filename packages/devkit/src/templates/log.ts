@@ -547,7 +547,7 @@ export class StormLog implements StormLogInterface {
     ...values: unknown[]
   ): void {
     if (isStormError(message)) {
-      this.log("error", message.toDisplay(), {
+      this.log("error", message.toString(), {
         error: message,
         ...((values[0] ?? {}) as Record<string, unknown>)
       });
@@ -576,7 +576,7 @@ export class StormLog implements StormLogInterface {
     ...values: unknown[]
   ): void {
     if (isStormError(message)) {
-      this.log("fatal", message.toDisplay(), {
+      this.log("fatal", message.toString(), {
         error: message,
         ...((values[0] ?? {}) as Record<string, unknown>)
       });
@@ -691,7 +691,7 @@ class StormLogCtx implements StormLogInterface {
     ...values: unknown[]
   ): void {
     if (isStormError(message)) {
-      this.log("error", message.toDisplay(), {
+      this.log("error", message.toString(), {
         error: message,
         ...((values[0] ?? {}) as Record<string, unknown>)
       });
@@ -714,7 +714,7 @@ class StormLogCtx implements StormLogInterface {
     ...values: unknown[]
   ): void {
     if (isStormError(message)) {
-      this.log("fatal", message.toDisplay(), {
+      this.log("fatal", message.toString(), {
         error: message,
         ...((values[0] ?? {}) as Record<string, unknown>)
       });

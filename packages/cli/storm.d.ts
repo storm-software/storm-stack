@@ -2143,14 +2143,14 @@ declare module "storm:config" {
      * Build Identifier
      *
      * @title Build Identifier
-     * @defaultValue bd90081c-e605-44e9-8818-85b427ec266c
+     * @defaultValue 50a76994-141b-4837-912d-4ac1d11409af
      */
     BUILD_ID: string;
     /**
      * Build Timestamp
      *
      * @title Build Timestamp
-     * @defaultValue 2025-08-20T08:53:03.910Z
+     * @defaultValue 2025-08-24T03:32:09.492Z
      */
     BUILD_TIMESTAMP: string;
     /**
@@ -2271,7 +2271,7 @@ declare module "storm:config" {
      * Debug
      *
      * @title Debug
-     * @defaultValue false
+     * @defaultValue true
      */
     DEBUG: boolean;
     /**
@@ -2603,7 +2603,7 @@ declare module "storm:config" {
      * Release Identifier
      *
      * @title Release Identifier
-     * @defaultValue 90081ce6-0514-4908-9885-b427ec266ca0
+     * @defaultValue a7699414-1be8-47d1-ad4a-c1d11409afd9
      */
     RELEASE_ID: string;
     /**
@@ -2675,7 +2675,7 @@ declare module "storm:config" {
      * Stacktrace
      *
      * @title Stacktrace
-     * @defaultValue false
+     * @defaultValue true
      */
     STACKTRACE: boolean;
     /**
@@ -3044,6 +3044,20 @@ declare module "storm:error" {
      * @param type - The type of error
      */
     constructor(optionsOrMessage: StormErrorOptions | string, type?: ErrorType);
+    /**
+     * A string that uniquely identifies the error
+     *
+     * @remarks
+     * The `id` property is a string that uniquely identifies the error. This string is generated based off the error type and code.
+     *
+     * @example
+     * ```typescript
+     * const error = new StormError({ code: 110 }, "custom");
+     * console.log(error.id); // "CUSTOM-110"
+     * ```
+     *
+     */
+    get id(): string;
     /**
      * The cause of the error
      */
@@ -3873,11 +3887,57 @@ declare module "storm:cli" {
     color: ColorName,
     fallback?: ColorName
   ): (text: string | number) => string;
+  /**
+   * Formats a message for display in the CLI.
+   *
+   * @param text - The message text to format.
+   * @param color - The color to use for the message (default: "brand").
+   * @param title - The title to use for the message (default: "Message").
+   * @param icon - An optional icon to display with the message.
+   * @returns The formatted message string.
+   */
+  export function formatMessage(
+    text: string,
+    color?: ColorName,
+    title?: string,
+    icon?: string,
+    stretch?: boolean
+  ): string;
+  /**
+   * Shows an error message in the CLI.
+   *
+   * @param details - The error details to display.
+   */
+  export function showError(details: string | Error): void;
+  /**
+   * Shows a warning message in the CLI.
+   *
+   * @param details - The warning details to display.
+   */
+  export function showWarning(text: string): void;
+  /**
+   * Shows a info message in the CLI.
+   *
+   * @param details - The info details to display.
+   */
+  export function showInfo(text: string): void;
+  /**
+   * Shows a help message in the CLI.
+   *
+   * @param details - The help details to display.
+   */
+  export function showHelp(text: string): void;
+  /**
+   * Shows a success message in the CLI.
+   *
+   * @param details - The success details to display.
+   */
+  export function showSuccess(text: string): void;
   type LinkOptions = {
     /**
      * Whether to use colored text for the link.
      *
-     * @defaultValue "blueBright"
+     * @defaultValue "link"
      */
     color?: ColorName | false;
     /**

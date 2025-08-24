@@ -301,6 +301,7 @@ import ${
       )
     )}";
 import { StormRequest } from "storm:request";
+import { createStormError } from "storm:error";
 import { CLIRequestData, showError, colors, parseArgs, renderBanner, renderFooter${
       context.options.plugins.cli.interactive !== "never" ? ", prompt" : ""
     } } from "storm:cli";
@@ -322,150 +323,176 @@ export interface ${request.type.getName()} extends CLIRequestData {
 
 /**
  * The entry point for the ${command.title} command.
+ *
+ * @param request - The request object containing the command arguments.
  */
 async function handler(request: StormRequest<${request.type.getName()}>) {
-  try {
-    ${
-      Object.values(cmd.children).length > 0
-        ? `if (request.data.args.length > ${command.path.length + 2}) {
-      const command = request.data.args[${command.path.length + 1}];
-      if (command && !command.startsWith("-")) {
-        ${Object.values(cmd.children)
-          .map(
-            (child, i) =>
-              `${i === 0 ? "if" : "else if"} (command.toLowerCase() === "${child.command.name.toLowerCase()}") {
-          ${
-            child.command.isVirtual
-              ? `return handle${pascalCase(child.command.name)}();`
-              : `const handle = await import("./${
-                  child.command.name
-                }").then(m => m.default);
-          return handle();`
-          }
-        } `
-          )
-          .join(" ")}
-
-        showError(\`Unknown command: \${colors.bold(command || "<none>")}\`);
-        console.log("");
-        console.log(renderUsage("full"));
-        console.log(renderFooter());
-        console.log("");
-
-        return;
-      }
-    }`
-        : ""
-    }
-
-    const args = parseArgs(request.data.args.slice(${command.path.length + 1}), {${
-      request.args.filter(arg => arg.type.getKind() === ReflectionKind.boolean)
-        .length > 0
-        ? `
-      boolean: [${request.args
-        .filter(
-          arg => arg.name && arg.type.getKind() === ReflectionKind.boolean
-        )
+  ${
+    Object.values(cmd.children).length > 0
+      ? `if (request.data.args.length > ${command.path.length + 2}) {
+    const command = request.data.args[${command.path.length + 1}];
+    if (command && !command.startsWith("-")) {
+      ${Object.values(cmd.children)
         .map(
-          arg =>
-            `${arg.name ? `"${arg.name}"` : ""}${
-              arg.type.getAlias().length > 0
-                ? `, ${arg.type
-                    .getAlias()
-                    .map(alias => `"${alias}"`)
-                    .join(", ")}`
-                : ""
-            }`
-        )
-        .join(", ")}],`
-        : ""
-    }${
-      request.args.filter(arg => arg.type.getAlias().length > 0).length > 0
-        ? `
-      alias: {${request.args
-        .map(
-          arg =>
-            `${camelCase(arg.name)}: [${
-              camelCase(arg.name) !== arg.name ? ` "${arg.name}",` : ""
-            }${
-              camelCase(arg.name) !== pascalCase(arg.name) &&
-              arg.name !== pascalCase(arg.name)
-                ? ` "${pascalCase(arg.name)}",`
-                : ""
-            } ${
-              camelCase(arg.name) !== arg.name.toUpperCase() &&
-              arg.name !== arg.name.toUpperCase() &&
-              pascalCase(arg.name) !== arg.name.toUpperCase()
-                ? ` "${arg.name.toUpperCase()}",`
-                : ""
-            } ${arg.type
-              .getAlias()
-              .filter(Boolean)
-              .map(
-                alias =>
-                  `"${alias}",${
-                    alias !== camelCase(alias) ? ` "${camelCase(alias)}",` : ""
-                  }${
-                    alias !== pascalCase(alias) &&
-                    camelCase(alias) !== pascalCase(alias)
-                      ? ` "${pascalCase(alias)}",`
-                      : ""
-                  } ${
-                    alias !== alias.toUpperCase() &&
-                    camelCase(alias) !== alias.toUpperCase() &&
-                    pascalCase(alias) !== alias.toUpperCase()
-                      ? ` "${alias.toUpperCase()}",`
-                      : ""
-                  }`
-              )
-              .join(", ")}]`
-        )
-        .join(",\n ")}},`
-        : ""
-    }
-    });
-
-    if (args["version"] || args["v"]) {
-      console.log($storm.env.version);
-    } else {
-      const isVerbose = args["verbose"] ?? Boolean($storm.config.VERBOSE);
-      ${
-        context.options.plugins.cli.interactive !== "never"
-          ? `const isPromptEnabled = ((args["interactive"] !== false &&
-        args["no-interactive"] !== true) &&
-        Boolean($storm.config.INTERACTIVE)) &&
-        $storm.env.isInteractive &&
-        !$storm.env.isMinimal;`
-          : ""
-      }
-
-      if (args["no-banner"] !== true && !$storm.env.isMinimal) {
-        console.log(renderBanner("${command.title} Command", "${command.description}"));
-        console.log("");
-      }
-
-      if (args["help"] || args["h"] || args["?"]) {
-        console.log(renderUsage("full"));
-        console.log(renderFooter());
-        console.log("");
-      } else {
-        if (isVerbose) {
-          console.log(colors.dim(\` > Writing verbose output to console - as a result of the \${args["verbose"] ? "user provided \\"verbose\\" option" : "${constantCase(
-            cmd.root.name
-          )}_VERBOSE environment variable"} \`));
-          console.log("");
-          ${
-            context.options.plugins.cli.interactive !== "never"
-              ? `
-          if (isPromptEnabled) {
-            console.log(colors.dim(" > Running in interactive mode..."));
-          } else {
-            console.log(colors.dim(" > Running in non-interactive mode..."));
-          }
-          console.log("");  `
-              : ""
-          }
+          (child, i) =>
+            `${i === 0 ? "if" : "else if"} (command.toLowerCase() === "${child.command.name.toLowerCase()}") {
+        ${
+          child.command.isVirtual
+            ? `return handle${pascalCase(child.command.name)}();`
+            : `const handle = await import("./${
+                child.command.name
+              }").then(m => m.default);
+        return handle();`
         }
+      } `
+        )
+        .join(" ")}
+
+      showError(\`Unknown command: \${colors.bold(command || "<none>")}\`);
+      console.log("");
+      console.log(renderUsage("full"));
+      console.log(renderFooter());
+      console.log("");
+
+      return;
+    }
+  }`
+      : ""
+  }
+
+  const args = parseArgs(request.data.args.slice(${command.path.length + 1}), {${
+    request.args.filter(arg => arg.type.getKind() === ReflectionKind.boolean)
+      .length > 0
+      ? `
+    boolean: [${request.args
+      .filter(arg => arg.name && arg.type.getKind() === ReflectionKind.boolean)
+      .map(
+        arg =>
+          `${arg.name ? `"${arg.name}"` : ""}${
+            arg.type.getAlias().length > 0
+              ? `, ${arg.type
+                  .getAlias()
+                  .map(alias => `"${alias}"`)
+                  .join(", ")}`
+              : ""
+          }`
+      )
+      .join(", ")}],`
+      : ""
+  }${
+    request.args.filter(arg => arg.type.getAlias().length > 0).length > 0
+      ? `
+    alias: {${request.args
+      .map(
+        arg =>
+          `${camelCase(arg.name)}: [${
+            camelCase(arg.name) !== arg.name ? ` "${arg.name}",` : ""
+          }${
+            camelCase(arg.name) !== pascalCase(arg.name) &&
+            arg.name !== pascalCase(arg.name)
+              ? ` "${pascalCase(arg.name)}",`
+              : ""
+          } ${
+            camelCase(arg.name) !== arg.name.toUpperCase() &&
+            arg.name !== arg.name.toUpperCase() &&
+            pascalCase(arg.name) !== arg.name.toUpperCase()
+              ? ` "${arg.name.toUpperCase()}",`
+              : ""
+          } ${arg.type
+            .getAlias()
+            .filter(Boolean)
+            .map(
+              alias =>
+                `"${alias}",${
+                  alias !== camelCase(alias) ? ` "${camelCase(alias)}",` : ""
+                }${
+                  alias !== pascalCase(alias) &&
+                  camelCase(alias) !== pascalCase(alias)
+                    ? ` "${pascalCase(alias)}",`
+                    : ""
+                } ${
+                  alias !== alias.toUpperCase() &&
+                  camelCase(alias) !== alias.toUpperCase() &&
+                  pascalCase(alias) !== alias.toUpperCase()
+                    ? ` "${alias.toUpperCase()}",`
+                    : ""
+                }`
+            )
+            .join(", ")}]`
+      )
+      .join(",\n ")}},`
+      : ""
+  }
+  });
+
+  if (args["version"] || args["v"]) {
+    console.log($storm.env.version);
+  } else {
+    const isVerbose = args["verbose"] ?? Boolean($storm.config.VERBOSE);
+    ${
+      context.options.plugins.cli.interactive !== "never"
+        ? `const isPromptEnabled = ((args["interactive"] !== false &&
+      args["no-interactive"] !== true) &&
+      Boolean($storm.config.INTERACTIVE)) &&
+      $storm.env.isInteractive &&
+      !$storm.env.isMinimal;`
+        : ""
+    }
+
+    if (args["no-banner"] !== true && !$storm.env.isMinimal) {
+      console.log(renderBanner("${command.title} Command", "${command.description}"));
+      console.log("");
+    }
+
+    if (args["help"] || args["h"] || args["?"]) {
+      console.log(renderUsage("full"));
+      console.log(renderFooter());
+      console.log("");
+    } else {
+      if (isVerbose) {
+        console.log(colors.dim(\` > Writing verbose output to console - as a result of the \${args["verbose"] ? "user provided \\"verbose\\" option" : "${constantCase(
+          cmd.root.name
+        )}_VERBOSE environment variable"} \`));
+        console.log("");
+        ${
+          context.options.plugins.cli.interactive !== "never"
+            ? `
+        if (isPromptEnabled) {
+          console.log(colors.dim(" > Running in interactive mode..."));
+        } else {
+          console.log(colors.dim(" > Running in non-interactive mode..."));
+        }
+        console.log("");  `
+            : ""
+        }
+      }
+
+      ${Object.values(request.args)
+        .filter(
+          arg =>
+            ![
+              "help",
+              "version",
+              "interactive",
+              "no-interactive",
+              "verbose",
+              "no-banner"
+            ].includes(arg.name)
+        )
+        .map(arg => {
+          return `
+          if (args["${arg.name}"] === undefined && $storm.config.${constantCase(arg.name)}) {
+            args["${arg.name}"] = $storm.config.${constantCase(arg.name)};
+            if (isVerbose) {
+              console.log(colors.dim(\` > Setting the ${arg.name} option to \${$storm.config.${constantCase(
+                arg.name
+              )}} (via the ${constantCase(
+                cmd.root.name
+              )}_${constantCase(arg.name)} environment variable) \`));
+            }
+          } `;
+        })
+        .join("\n")}
 
         ${Object.values(request.args)
           .filter(
@@ -481,152 +508,122 @@ async function handler(request: StormRequest<${request.type.getName()}>) {
           )
           .map(arg => {
             return `
-            if (args["${arg.name}"] === undefined && $storm.config.${constantCase(arg.name)}) {
-              args["${arg.name}"] = $storm.config.${constantCase(arg.name)};
-              if (isVerbose) {
-                console.log(colors.dim(\` > Setting the ${arg.name} option to \${$storm.config.${constantCase(
-                  arg.name
-                )}} (via the ${constantCase(
-                  cmd.root.name
-                )}_${constantCase(arg.name)} environment variable) \`));
-              }
-            } `;
-          })
-          .join("\n")}
-
-          ${Object.values(request.args)
-            .filter(
-              arg =>
-                ![
-                  "help",
-                  "version",
-                  "interactive",
-                  "no-interactive",
-                  "verbose",
-                  "no-banner"
-                ].includes(arg.name)
-            )
-            .map(arg => {
-              return `
-            if (args["${arg.name}"] === undefined) {
-              ${
-                context.options.plugins.cli.interactive !== "never" &&
-                !arg.isNegativeOf
-                  ? `
-              if (isPromptEnabled) {
-                args["${arg.name}"] = await prompt<${stringifyType(arg.type.getType())}>(\`Please ${
-                  arg.type.getKind() === ReflectionKind.boolean
-                    ? `confirm the ${arg.title} value`
-                    : `${arg.type.getKind() === ReflectionKind.enum && arg.options && arg.options.length > 0 ? "select" : "provide"} ${
-                        arg.title.startsWith("a") ||
-                        arg.title.startsWith("A") ||
-                        arg.title.startsWith("e") ||
-                        arg.title.startsWith("E") ||
-                        arg.title.startsWith("i") ||
-                        arg.title.startsWith("I") ||
-                        arg.title.startsWith("o") ||
-                        arg.title.startsWith("O") ||
-                        arg.title.startsWith("u") ||
-                        arg.title.startsWith("U") ||
-                        arg.title.startsWith("y") ||
-                        arg.title.startsWith("Y")
-                          ? "an"
-                          : "a"
-                      } ${
-                        arg.title.toLowerCase() === "value" ||
-                        arg.title.toLowerCase() === "name"
-                          ? arg.title
-                          : `${arg.title} value`
-                      }`
-                }${
-                  arg.type.getDescription() &&
-                  (arg.type.getKind() === ReflectionKind.boolean ||
-                    (arg.type.getKind() === ReflectionKind.enum &&
-                      arg.options &&
-                      arg.options.length > 0))
-                    ? ` \${colors.gray("(${arg.type.getDescription()})")}`
-                    : ""
-                }\`, {
-                  type: "${
-                    arg.type.getKind() === ReflectionKind.boolean
-                      ? "confirm"
-                      : arg.type.getKind() === ReflectionKind.enum &&
-                          arg.options &&
-                          arg.options.length > 0
-                        ? arg.type.getKind() === ReflectionKind.array
-                          ? "multiselect"
-                          : "select"
-                        : "text"
-                  }", ${
-                    arg.type.getDefaultValue() !== undefined
-                      ? `
-                      initial: ${
-                        arg.type.getKind() === ReflectionKind.number
-                          ? `"${arg.type.getDefaultValue()}"`
-                          : arg.type.getDefaultValue()
-                      }, ${
-                        arg.type.getKind() === ReflectionKind.string ||
-                        arg.type.getKind() === ReflectionKind.number
-                          ? `
-                      default: ${
-                        arg.type.getKind() === ReflectionKind.string
-                          ? `"${arg.type.getDefaultValue()}"`
-                          : arg.type.getDefaultValue()
-                      }, `
-                          : ""
-                      }`
-                      : ""
-                  }${
-                    arg.type.getKind() !== ReflectionKind.boolean &&
-                    arg.type.getKind() !== ReflectionKind.enum &&
-                    arg.type.getDescription()
-                      ? `
-                      placeholder: "${arg.type.getDescription()}", `
-                      : ""
-                  }${
-                    arg.type.getKind() !== ReflectionKind.enum &&
-                    arg.options &&
-                    arg.options.length > 0
-                      ? `
-                  options: [ ${arg.options.map(option => `"${option}"`).join(", ")} ], `
-                      : ""
-                  }
-                });
-              }
-
-              ${
-                arg.type.getDefaultValue() !== undefined
-                  ? `
-              if (args["${arg.name}"] === undefined) { `
-                  : ""
-              }
-                `
-                  : ""
-              }${
-                arg.type.getDefaultValue() !== undefined
-                  ? `
-              args["${arg.name}"] = ${arg.type.getDefaultValue()};
-              if (isVerbose) {
-                console.log(colors.dim(\` > Setting the ${arg.name} option to ${arg.type.getDefaultValue()} (via it's default value) \`));
-              }
+          if (args["${arg.name}"] === undefined) {
             ${
               context.options.plugins.cli.interactive !== "never" &&
               !arg.isNegativeOf
-                ? " } "
-                : ""
-            } `
+                ? `
+            if (isPromptEnabled) {
+              args["${arg.name}"] = await prompt<${stringifyType(arg.type.getType())}>(\`Please ${
+                arg.type.getKind() === ReflectionKind.boolean
+                  ? `confirm the ${arg.title} value`
+                  : `${arg.type.getKind() === ReflectionKind.enum && arg.options && arg.options.length > 0 ? "select" : "provide"} ${
+                      arg.title.startsWith("a") ||
+                      arg.title.startsWith("A") ||
+                      arg.title.startsWith("e") ||
+                      arg.title.startsWith("E") ||
+                      arg.title.startsWith("i") ||
+                      arg.title.startsWith("I") ||
+                      arg.title.startsWith("o") ||
+                      arg.title.startsWith("O") ||
+                      arg.title.startsWith("u") ||
+                      arg.title.startsWith("U") ||
+                      arg.title.startsWith("y") ||
+                      arg.title.startsWith("Y")
+                        ? "an"
+                        : "a"
+                    } ${
+                      arg.title.toLowerCase() === "value" ||
+                      arg.title.toLowerCase() === "name"
+                        ? arg.title
+                        : `${arg.title} value`
+                    }`
+              }${
+                arg.type.getDescription() &&
+                (arg.type.getKind() === ReflectionKind.boolean ||
+                  (arg.type.getKind() === ReflectionKind.enum &&
+                    arg.options &&
+                    arg.options.length > 0))
+                  ? ` \${colors.gray("(${arg.type.getDescription()})")}`
                   : ""
-              }
-          } `;
-            })
-            .join("\n")}
+              }\`, {
+                type: "${
+                  arg.type.getKind() === ReflectionKind.boolean
+                    ? "confirm"
+                    : arg.type.getKind() === ReflectionKind.enum &&
+                        arg.options &&
+                        arg.options.length > 0
+                      ? arg.type.getKind() === ReflectionKind.array
+                        ? "multiselect"
+                        : "select"
+                      : "text"
+                }", ${
+                  arg.type.getDefaultValue() !== undefined
+                    ? `
+                    initial: ${
+                      arg.type.getKind() === ReflectionKind.number
+                        ? `"${arg.type.getDefaultValue()}"`
+                        : arg.type.getDefaultValue()
+                    }, ${
+                      arg.type.getKind() === ReflectionKind.string ||
+                      arg.type.getKind() === ReflectionKind.number
+                        ? `
+                    default: ${
+                      arg.type.getKind() === ReflectionKind.string
+                        ? `"${arg.type.getDefaultValue()}"`
+                        : arg.type.getDefaultValue()
+                    }, `
+                        : ""
+                    }`
+                    : ""
+                }${
+                  arg.type.getKind() !== ReflectionKind.boolean &&
+                  arg.type.getKind() !== ReflectionKind.enum &&
+                  arg.type.getDescription()
+                    ? `
+                    placeholder: "${arg.type.getDescription()}", `
+                    : ""
+                }${
+                  arg.type.getKind() !== ReflectionKind.enum &&
+                  arg.options &&
+                  arg.options.length > 0
+                    ? `
+                options: [ ${arg.options.map(option => `"${option}"`).join(", ")} ], `
+                    : ""
+                }
+              });
+            }
 
-        request.merge(deserialize<${request.type.getName()}>(args));
-        await handle(request);
-      }
+            ${
+              arg.type.getDefaultValue() !== undefined
+                ? `
+            if (args["${arg.name}"] === undefined) { `
+                : ""
+            }
+              `
+                : ""
+            }${
+              arg.type.getDefaultValue() !== undefined
+                ? `
+            args["${arg.name}"] = ${arg.type.getDefaultValue()};
+            if (isVerbose) {
+              console.log(colors.dim(\` > Setting the ${arg.name} option to ${arg.type.getDefaultValue()} (via it's default value) \`));
+            }
+          ${
+            context.options.plugins.cli.interactive !== "never" &&
+            !arg.isNegativeOf
+              ? " } "
+              : ""
+          } `
+                : ""
+            }
+        } `;
+          })
+          .join("\n")}
+
+      request.merge(deserialize<${request.type.getName()}>(args));
+      await handle(request);
     }
-  } catch (err) {
-   showError(\`An error occurred while processing ${command.title} command: \n\n\${createStormError(err).toDisplay()}\`);
   }
 }
 
@@ -872,107 +869,99 @@ ${optionsColumn1
  * The entry point for the ${command.title} virtual command.
  */
 async function handler(request: StormRequest<${request.type.getName()}>) {
-  try {
-    ${
-      Object.values(cmd.children).length > 0
-        ? `if (request.data.args.length > ${command.path.length + 2}) {
-      const command = request.data.args[${command.path.length + 1}];
-      if (command && !command.startsWith("-")) {
-      ${Object.values(cmd.children)
-        .map(
-          (child, i) =>
-            `${i === 0 ? "if" : "else if"} (command.toLowerCase() === "${child.command.name.toLowerCase()}") {
-          ${
-            child.command.isVirtual
-              ? `return handle${pascalCase(child.command.name)}(request);`
-              : `const handle = await import("./${child.command.name}").then(m => m.default);
-          return handle(request);`
-          }
-        } `
-        )
-        .join(" ")}
+  ${
+    Object.values(cmd.children).length > 0
+      ? `if (request.data.args.length > ${command.path.length + 2}) {
+    const command = request.data.args[${command.path.length + 1}];
+    if (command && !command.startsWith("-")) {
+    ${Object.values(cmd.children)
+      .map(
+        (child, i) =>
+          `${i === 0 ? "if" : "else if"} (command.toLowerCase() === "${child.command.name.toLowerCase()}") {
+        ${
+          child.command.isVirtual
+            ? `return handle${pascalCase(child.command.name)}(request);`
+            : `const handle = await import("./${child.command.name}").then(m => m.default);
+        return handle(request);`
+        }
+      } `
+      )
+      .join(" ")}
 
-        showError(\`Unknown command: \${colors.bold(command || "<none>")}\`);
-        console.log("");
-        console.log(renderUsage("full"));
-        console.log(renderFooter());
-        console.log("");
-
-        return;
-      }
-    }`
-        : ""
-    }
-
-    const args = parseArgs(request.data.args.slice(${command.path.length + 1}), {${
-      request.args.filter(arg => arg.type.getKind() === ReflectionKind.boolean)
-        .length > 0
-        ? `
-      boolean: [${request.args
-        .filter(
-          arg => arg.name && arg.type.getKind() === ReflectionKind.boolean
-        )
-        .map(
-          arg =>
-            `${arg.name ? `"${arg.name}"` : ""}${
-              arg.type.getAlias().length > 0
-                ? `, ${arg.type
-                    .getAlias()
-                    .map(alias => `"${alias}"`)
-                    .join(", ")}`
-                : ""
-            }`
-        )
-        .join(", ")}],`
-        : ""
-    }${
-      request.args.filter(arg => arg.type.getAlias().length > 0).length > 0
-        ? `
-      alias: {${request.args
-        .map(
-          arg =>
-            `${camelCase(arg.name)}: [${
-              camelCase(arg.name) !== arg.name ? ` "${arg.name}",` : ""
-            }${
-              camelCase(arg.name) !== pascalCase(arg.name)
-                ? ` "${pascalCase(arg.name)}",`
-                : ""
-            } "${arg.name.toUpperCase()}", ${arg.type
-              .getAlias()
-              .filter(Boolean)
-              .map(
-                alias =>
-                  `"${alias}",${
-                    alias !== camelCase(alias) ? ` "${camelCase(alias)}",` : ""
-                  }${
-                    alias !== pascalCase(alias)
-                      ? ` "${pascalCase(alias)}",`
-                      : ""
-                  } "${alias.toUpperCase()}"`
-              )
-              .join(", ")}]`
-        )
-        .join(",\n ")}},`
-        : ""
-    }
-    });
-
-    if (args["version"] || args["v"]) {
-      console.log($storm.env.version);
-    } else {
-      if (args["no-banner"] !== true && !$storm.env.isMinimal) {
-        console.log(renderBanner("${command.title} Commands", "${
-          command.description
-        }"));
-        console.log("");
-      }
-
+      showError(\`Unknown command: \${colors.bold(command || "<none>")}\`);
+      console.log("");
       console.log(renderUsage("full"));
       console.log(renderFooter());
       console.log("");
+
+      return;
     }
-  } catch (err) {
-   showError(\`An error occurred while processing ${command.title} command: \n\n\${createStormError(err).toDisplay()}\`);
+  }`
+      : ""
+  }
+
+  const args = parseArgs(request.data.args.slice(${command.path.length + 1}), {${
+    request.args.filter(arg => arg.type.getKind() === ReflectionKind.boolean)
+      .length > 0
+      ? `
+    boolean: [${request.args
+      .filter(arg => arg.name && arg.type.getKind() === ReflectionKind.boolean)
+      .map(
+        arg =>
+          `${arg.name ? `"${arg.name}"` : ""}${
+            arg.type.getAlias().length > 0
+              ? `, ${arg.type
+                  .getAlias()
+                  .map(alias => `"${alias}"`)
+                  .join(", ")}`
+              : ""
+          }`
+      )
+      .join(", ")}],`
+      : ""
+  }${
+    request.args.filter(arg => arg.type.getAlias().length > 0).length > 0
+      ? `
+    alias: {${request.args
+      .map(
+        arg =>
+          `${camelCase(arg.name)}: [${
+            camelCase(arg.name) !== arg.name ? ` "${arg.name}",` : ""
+          }${
+            camelCase(arg.name) !== pascalCase(arg.name)
+              ? ` "${pascalCase(arg.name)}",`
+              : ""
+          } "${arg.name.toUpperCase()}", ${arg.type
+            .getAlias()
+            .filter(Boolean)
+            .map(
+              alias =>
+                `"${alias}",${
+                  alias !== camelCase(alias) ? ` "${camelCase(alias)}",` : ""
+                }${
+                  alias !== pascalCase(alias) ? ` "${pascalCase(alias)}",` : ""
+                } "${alias.toUpperCase()}"`
+            )
+            .join(", ")}]`
+      )
+      .join(",\n ")}},`
+      : ""
+  }
+  });
+
+  if (args["version"] || args["v"]) {
+    console.log($storm.env.version);
+  } else {
+    if (args["no-banner"] !== true && !$storm.env.isMinimal) {
+      console.log(renderBanner("${command.title} Commands", "${
+        command.description
+      }"));
+      console.log("");
+    }
+
+    console.log(renderUsage("full"));
+    console.log(renderFooter());
+    console.log("");
   }
 }
 
@@ -1145,7 +1134,7 @@ const main = createCLIApp(async (request) => {
 
 You are currently running Node.js v\${process.versions.node}.
 Please upgrade Node.js at \${link("https://nodejs.org/en/download/")}\`);
-    process.exit(1);
+    return;
   }
 
 ${
@@ -1204,76 +1193,74 @@ ${
   } catch (err) {
     showError(\`An error occurred while checking for ${
       appTitle
-    } application updates: \n\n\${createStormError(err).toDisplay()}\n\nNote: You can disable this update check by setting the "SKIP_UPDATE_CHECK" configuration to true.\`);
+    } application updates: \n\n\${createStormError(err).toString()}\n\nNote: You can disable this update check by setting the "SKIP_UPDATE_CHECK" configuration to true.\`);
     console.log("");
   }
   `
     : ""
 }
 
-  try {
-    if (request.data.args.includes("--version") || request.data.args.includes("-v")) {
-      console.log($storm.env.version);
-    } else {
-      let command = "";
-      if (request.data.args.length > 2 && request.data.args[2]) {
-        command = request.data.args[2];
-      }
+  if (request.data.args.includes("--version") || request.data.args.includes("-v")) {
+    console.log($storm.env.version);
+  } else {
+    let command = "";
+    if (request.data.args.length > 2 && request.data.args[2]) {
+      command = request.data.args[2];
+    }
 
-      ${Object.values(commandTree.children)
-        .map(
-          (child, i) =>
-            `${i === 0 ? "if" : "else if"} (command.toLowerCase() === "${child.command.name.toLowerCase()}") {
-        ${
-          child.command.isVirtual
-            ? `return handle${pascalCase(child.command.name)}(request);`
-            : `const handle = await import("./entry/${child.command.path.join(
-                "/"
-              )}").then(m => m.default);
-        return handle(request);`
-        }
-      } `
-        )
-        .join(" ")} else {
-        showError(\`Unknown command: \${colors.bold(command || "<none>")}\`);
-        console.log("");
-      }
-
-      if (!$storm.env.isMinimal) {
-        console.log(renderBanner("Help Information", "Display usage details, commands, and support information for the ${
-          appTitle
-        } application"));
-        console.log("");
-      }
-
+    ${Object.values(commandTree.children)
+      .map(
+        (child, i) =>
+          `${i === 0 ? "if" : "else if"} (command.toLowerCase() === "${child.command.name.toLowerCase()}") {
       ${
-        description
-          ? `
-      const consoleWidth = Math.max(process.stdout.columns - 2, 80);
-      console.log(\`\${" ".repeat((consoleWidth - ${description.length}) / 2)}\${colors.brand("${description}")}\${" ".repeat((consoleWidth - ${description.length}) / 2)}\`);
-      console.log("");
-      console.log("");`
-          : ""
+        child.command.isVirtual
+          ? `return handle${pascalCase(child.command.name)}(request);`
+          : `const handle = await import("./entry/${child.command.path.join(
+              "/"
+            )}").then(m => m.default);
+      return handle(request);`
       }
-
-      console.log(colors.gray("The following commands are available as part of the ${appTitle} application: "));${
-        commandTree.children && Object.values(commandTree.children).length > 0
-          ? Object.values(commandTree.children)
-              .map(
-                child =>
-                  `
-      console.log("");
-      console.log(render${pascalCase(child.command.name)}Usage("minimal"));`
-              )
-              .join("\n")
-          : ""
-      }
-
-      console.log(renderFooter());
+    } `
+      )
+      .join(" ")} else {
+      showError(\`Unknown command: \${colors.bold(command || "<none>")}\`);
       console.log("");
     }
-  } catch (err) {
-    showError(\`An error occurred while running the ${appTitle} application: \n\n\${createStormError(err).toDisplay()}\`);
+
+    if (!$storm.env.isMinimal) {
+      console.log(renderBanner("Help Information", "Display usage details, commands, and support information for the ${
+        appTitle
+      } application"));
+      console.log("");
+    }
+
+    ${
+      description
+        ? `
+    const consoleWidth = Math.max(process.stdout.columns - 2, 80);
+    console.log(\`\${" ".repeat((consoleWidth - ${description.length}) / 2)}\${colors.brand("${
+      description
+    }")}\${" ".repeat((consoleWidth - ${description.length}) / 2)}\`);
+    console.log("");
+    console.log("");`
+        : ""
+    }
+
+    console.log(colors.gray("The following commands are available as part of the ${appTitle} application: "));${
+      commandTree.children && Object.values(commandTree.children).length > 0
+        ? Object.values(commandTree.children)
+            .map(
+              child =>
+                `
+    console.log("");
+    console.log(render${pascalCase(child.command.name)}Usage("minimal"));`
+            )
+            .join("\n")
+        : ""
+    }
+
+    console.log(renderFooter());
+    console.log("");
   }
 });
 

@@ -2134,14 +2134,14 @@ declare module "storm:config" {
      * Build Identifier
      *
      * @title Build Identifier
-     * @defaultValue 992946e9-7b41-4062-bbf8-0d4750964b0b
+     * @defaultValue 9122531f-b063-4f88-bff0-7c5cb9540be4
      */
     BUILD_ID: string;
     /**
      * Build Timestamp
      *
      * @title Build Timestamp
-     * @defaultValue 2025-08-20T08:32:43.044Z
+     * @defaultValue 2025-08-23T21:10:54.710Z
      */
     BUILD_TIMESTAMP: string;
     /**
@@ -2513,7 +2513,7 @@ declare module "storm:config" {
      * Release Identifier
      *
      * @title Release Identifier
-     * @defaultValue 2946e97b-4140-423b-b80d-4750964b0b57
+     * @defaultValue 22531fb0-634f-48ff-b07c-5cb9540be44a
      */
     RELEASE_ID: string;
     /**
@@ -2887,6 +2887,20 @@ declare module "storm:error" {
      * @param type - The type of error
      */
     constructor(optionsOrMessage: StormErrorOptions | string, type?: ErrorType);
+    /**
+     * A string that uniquely identifies the error
+     *
+     * @remarks
+     * The `id` property is a string that uniquely identifies the error. This string is generated based off the error type and code.
+     *
+     * @example
+     * ```typescript
+     * const error = new StormError({ code: 110 }, "custom");
+     * console.log(error.id); // "CUSTOM-110"
+     * ```
+     *
+     */
+    get id(): string;
     /**
      * The cause of the error
      */

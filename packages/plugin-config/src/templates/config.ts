@@ -19,16 +19,15 @@
 import {
   ReflectionClass,
   ReflectionKind,
-  ReflectionProperty,
-  stringifyType
+  ReflectionProperty
 } from "@deepkit/type";
-import { stringifyDefaultValue } from "@storm-stack/core/lib/deepkit/utilities";
 import { getFileHeader } from "@storm-stack/core/lib/utilities/file-header";
 import {
   generateTypeScriptInterface,
   generateTypeScriptObject
 } from "@storm-stack/devkit/templates/helpers/typescript";
 import { titleCase } from "@stryke/string-format/title-case";
+import { loadConfigFromContext } from "../helpers/load";
 import { readConfigTypeReflection } from "../helpers/persistence";
 import { ConfigPluginContext } from "../types";
 
@@ -124,7 +123,8 @@ export type StormConfig = {
 };
 
 ${generateTypeScriptObject(configInstance, {
-  overrideExtends: "StormConfigBase"
+  overrideExtends: "StormConfigBase",
+  defaultValues: loadConfigFromContext(context, process.env)
 })}
 
 /**
@@ -316,244 +316,4 @@ export function configSet(
     target["${propertyName}"] = newValue;
     return true;
   }`;
-}
-
-export async function generateConfig(context: ConfigPluginContext) {
-  const reflection = await readConfigTypeReflection(context);
-  if (!reflection) {
-    return "{}";
-  }
-
-  return `{
-  ${innerGenerateConfig(context, reflection)}
-}`;
-}
-
-function innerGenerateConfig(
-  context: ConfigPluginContext,
-  reflection: ReflectionClass<any>
-) {
-  if (!reflection) {
-    return "";
-  }
-
-  const configWithAlias = reflection
-    .getProperties()
-    .filter(prop => prop.getAlias().length > 0);
-
-  return `
-${reflection
-  .getProperties()
-  .filter(
-    item =>
-      !item.isIgnored() &&
-      (item.hasDefault() ||
-        context.options.plugins.config.parsed[item.getNameAsString()] ||
-        configWithAlias.some(
-          prop =>
-            prop.getAlias().includes(item.getNameAsString()) &&
-            (context.options.plugins.config.parsed[prop.getNameAsString()] !==
-              undefined ||
-              prop
-                .getAlias()
-                .some(
-                  alias =>
-                    context.options.plugins.config.parsed[alias] !== undefined
-                ))
-        ))
-  )
-  .sort((a, b) =>
-    (a.isReadonly() && b.isReadonly()) || (!a.isReadonly() && !b.isReadonly())
-      ? a.getNameAsString().localeCompare(b.getNameAsString())
-      : a.isReadonly()
-        ? -1
-        : 1
-  )
-  .map(
-    item =>
-      `/**
-     * ${
-       item.getDescription() ||
-       item.getTitle() ||
-       titleCase(item.getNameAsString())
-     }
-     *
-     * @title ${item.getTitle() || titleCase(item.getNameAsString())}${
-       item.getAlias().length
-         ? `
-${item
-  .getAlias()
-  .map(alias => ` * @alias ${alias}`)
-  .join("\n")}`
-         : ""
-     }${
-       item.getDomain()
-         ? `
- * @domain ${item.getDomain()}`
-         : ""
-     }${
-       item.getPermission().length
-         ? `
-${item
-  .getPermission()
-  .map(permission => ` * @permission ${permission}`)
-  .join("\n")}`
-         : ""
-     }${
-       typeof item.getDefaultValue() !== "undefined" &&
-       item.getDefaultValue() !== ""
-         ? `
- * @defaultValue ${item.getDefaultValue()}`
-         : ""
-     }${
-       item.isInternal()
-         ? `
- * @internal`
-         : ""
-     }${
-       item.isReadonly()
-         ? `
- * @readonly`
-         : ""
-     }${
-       item.isHidden()
-         ? `
- * @hidden`
-         : ""
-     }
-     */
-    ${item.getNameAsString()}: ${stringifyDefaultValue(
-      item,
-      item.hasDefault()
-        ? item.getDefaultValue()
-        : context.options.plugins.config.parsed[item.getNameAsString()] !==
-            undefined
-          ? context.options.plugins.config.parsed[item.getNameAsString()]
-          : configWithAlias.reduce(
-              (ret, prop) => {
-                if (prop.getAlias().includes(item.getNameAsString())) {
-                  return context.options.plugins.config.parsed[
-                    prop.getNameAsString()
-                  ] !== undefined
-                    ? context.options.plugins.config.parsed[
-                        prop.getNameAsString()
-                      ]
-                    : prop
-                        .getAlias()
-                        .reverse()
-                        .reduce((innerRet, alias) => {
-                          if (
-                            context.options.plugins.config.parsed[alias] !==
-                            undefined
-                          ) {
-                            return context.options.plugins.config.parsed[alias];
-                          }
-
-                          return innerRet;
-                        }, ret);
-                }
-
-                return ret;
-              },
-              context.reflections.config.params?.hasProperty(
-                item.getNameAsString()
-              ) &&
-                context.reflections.config.params
-                  ?.getProperty(item.getNameAsString())
-                  ?.hasDefault()
-                ? context.reflections.config.params
-                    ?.getProperty(item.getNameAsString())
-                    .getDefaultValue()
-                : undefined
-            )
-    )},
-`
-  )
-  .join("\n")}`;
-}
-
-export async function generateConfigInterface(context: ConfigPluginContext) {
-  const reflection = await readConfigTypeReflection(context);
-  if (!reflection) {
-    return "{}";
-  }
-
-  return `{
-  ${innerGenerateConfigInterface(reflection)}
-
-  [key: string]: any;
-}`;
-}
-
-export function innerGenerateConfigInterface(reflection: ReflectionClass<any>) {
-  if (!reflection) {
-    return "";
-  }
-
-  return `
-${reflection
-  .getProperties()
-  .filter(item => !item.isHidden() || !item.isIgnored())
-  .sort((a, b) =>
-    (a.isReadonly() && b.isReadonly()) || (!a.isReadonly() && !b.isReadonly())
-      ? a.getNameAsString().localeCompare(b.getNameAsString())
-      : a.isReadonly()
-        ? -1
-        : 1
-  )
-  .map(
-    item =>
-      `/**
-     * ${item.getDescription() || item.getTitle() || titleCase(item.getNameAsString())}
-     *
-     * @title ${item.getTitle() || titleCase(item.getNameAsString())}${
-       item.getAlias().length
-         ? `
-${item
-  .getAlias()
-  .map(alias => ` * @alias ${alias}`)
-  .join("\n")}`
-         : ""
-     }${
-       item.getDomain()
-         ? `
- * @domain ${item.getDomain()}`
-         : ""
-     }${
-       item.getPermission().length
-         ? `
-${item
-  .getPermission()
-  .map(permission => ` * @permission ${permission}`)
-  .join("\n")}`
-         : ""
-     }${
-       typeof item.getDefaultValue() !== "undefined" &&
-       item.getDefaultValue() !== ""
-         ? `
- * @defaultValue ${item.getDefaultValue()}`
-         : ""
-     }${
-       item.isInternal()
-         ? `
- * @internal`
-         : ""
-     }${
-       item.isReadonly()
-         ? `
- * @readonly`
-         : ""
-     }${
-       item.isHidden()
-         ? `
- * @hidden`
-         : ""
-     }
-     */
-    ${item.getNameAsString()}${
-      item.isActualOptional() ? "?" : ""
-    }: ${stringifyType(item.getType())}
-`
-  )
-  .join("\n")}`;
 }
