@@ -12,7 +12,22 @@
 
 <br />
 
-The **⚡Storm Stack** monorepo contains the [storm-stack](https://www.npmjs.com/package/storm-stack) package and various plugins and tools for building and deploying applications. At a high-level, Storm Stack is a system that generates artifacts and code during the build and deploy processes. The goal is to allow the developer to focus on the code/business logic, rather than the specifics around technologies, frameworks, or cloud providers. This is achieved by using a set of tools and plugins that are designed to work together. Please note: some features of Storm Stack are opinionated to meet the needs of Storm Software; however, it is simple to customize to fit any specific requirements you may have.
+At a high-level, **⚡ Storm Stack** is a system that generates code and other artifacts during the build and deploy processes via TypeScript transformers and static code analysis. Many modern code generation tools require you to explicitly define the structure and behavior of your code in separate schema files and/or configurations, which can be time-consuming and error-prone. Some tools even require you to learn a new SDL or write boilerplate code to wire everything together. **Storm Stack does not require any extra work - you just write your code the way you normally would, and Storm Stack does the rest**.
+
+**The goal is to allow the developer to focus on the actual application/business logic, rather than the specifics around technologies, frameworks, or cloud providers.** This is achieved by using a set of powerful tools and extensible plugins that are designed to work together.
+
+Storm Stack is largely built on top of [Deepkit](https://deepkit.io/), so our projects benefit from access to very small bytecode type definitions at runtime. **This means you have builtin serialization, deserialization, or validation logic without writing any additional code (with greatly improved performance and reduced bundle sizes when compared to popular packages like Zod, Yup, class-validator, and Valibot)**.
+
+The Storm Stack monorepo contains the [Storm Stack engine](https://www.npmjs.com/package/@storm-stack/core) package and various plugins and tools to help developers using the framework. More details can be found below in the [Features](#features) section.
+
+<!-- prettier-ignore-start -->
+<!-- markdownlint-disable -->
+
+> [!NOTE] 
+> Some features of Storm Stack are opinionated to meet the needs of [Storm Software](https://stormsoftware.com); however, it should be simple to customize the behavior to fit any specific requirements you may have. If you believe any plugins include logic that should be split out into separate packages, please feel free to submit a pull request or open an issue, and we will be happy to discuss it.
+
+<!-- markdownlint-restore -->
+<!-- prettier-ignore-end -->
 
 <h3 align="center">💻 Visit <a href="https://stormsoftware.com" target="_blank">stormsoftware.com</a> to stay up to date with this developer</h3>
 
@@ -35,10 +50,26 @@ The **⚡Storm Stack** monorepo contains the [storm-stack](https://www.npmjs.com
 
 - [Features](#features)
   - [Engine](#engine)
+    - [@storm-stack/core](#storm-stackcore)
+    - [@storm-stack/cli](#storm-stackcli)
   - [Plugins](#plugins)
-  - [Presets](#presets)
-  - [Adapters](#adapters)
+    - [@storm-stack/plugin-config](#storm-stackplugin-config)
+    - [@storm-stack/plugin-date](#storm-stackplugin-date)
+    - [@storm-stack/plugin-node](#storm-stackplugin-node)
+    - [@storm-stack/plugin-node-config](#storm-stackplugin-node-config)
+    - [@storm-stack/plugin-cloudflare-worker](#storm-stackplugin-cloudflare-worker)
+    - [@storm-stack/plugin-cli](#storm-stackplugin-cli)
+    - [@storm-stack/plugin-log-console](#storm-stackplugin-log-console)
+    - [@storm-stack/plugin-log-sentry](#storm-stackplugin-log-sentry)
+    - [@storm-stack/plugin-log-otel](#storm-stackplugin-log-otel)
+    - [@storm-stack/plugin-log-storage](#storm-stackplugin-log-storage)
   - [Development Tools](#development-tools)
+    - [@storm-stack/devkit](#storm-stackdevkit)
+    - [@storm-stack/nx](#storm-stacknx)
+    - [@storm-stack/eslint-plugin](#storm-stackeslint-plugin)
+    - [@storm-stack/eslint-config](#storm-stackeslint-config)
+    - [@storm-stack/biome](#storm-stackbiome)
+    - [@storm-stack/tsdoc](#storm-stacktsdoc)
 - [Environment Configuration Help](#environment-configuration-help)
 - [Local Development](#local-development)
   - [Build](#build)
@@ -48,7 +79,7 @@ The **⚡Storm Stack** monorepo contains the [storm-stack](https://www.npmjs.com
   - [Running End-to-End Tests](#running-end-to-end-tests)
   - [Understand your workspace](#understand-your-workspace)
 - [☁ Nx Cloud](#-nx-cloud)
-  - [Distributed Computation Caching & Distributed Task Execution](#distributed-computation-caching--distributed-task-execution)
+  - [Distributed Computation Caching \& Distributed Task Execution](#distributed-computation-caching--distributed-task-execution)
 - [Roadmap](#roadmap)
 - [Contributing](#contributing)
   - [Pull Requests](#pull-requests)
@@ -64,74 +95,205 @@ The **⚡Storm Stack** monorepo contains the [storm-stack](https://www.npmjs.com
 
 # Features
 
+The core functionality of Storm Stack is built around the concept of a "stack" of tools and services that work together seamlessly. This includes everything from code generation and transformation to deployment and monitoring.
+
 The following sections outline some of the features/publishable content included
 in this repository.
 
 ## Engine
 
+The _Storm Stack Engine_ is an actual class that drives the Storm Stack pipeline's commands; however, the phrase is also often used to describe the base packages containing the core architecture (primarily the [@storm-stack/core](https://www.npmjs.com/package/@storm-stack/core) and [@storm-stack/cli](https://www.npmjs.com/package/@storm-stack/cli) packages).
+
+### [@storm-stack/core](https://www.npmjs.com/package/@storm-stack/core)
+
 The [@storm-stack/core](https://www.npmjs.com/package/@storm-stack/core) package
-includes the Storm Stack engine and CLI used to drive the build and deploy
-processes.
+includes the Storm Stack engine - used to drive the Storm Stack pipeline's commands.
+
+The following features are included in the package:
+
+- The `Engine` class - responsible for orchestrating the various stages of the Storm Stack pipeline. This can be used as a sort of API for driving the processes from an external tool or service.
+- Extensible architecture that allows for easy integration of new tools and services.
+- Utilities and helpers for working with the Storm Stack ecosystem.
+- Various build plugins (supported by [unplugin](https://github.com/unjs/unplugin)) that allow you to benefit from Storm Stack's features, such as code generation, transformation, and deployment, while using an external build system.
+
+Some of the supported build systems with existing plugins are:
+
+- [Vite](https://vitejs.dev/)
+- [ESBuild](https://esbuild.github.io/)
+- [Webpack](https://webpack.js.org/)
+- [Rollup](https://rollupjs.org/)
+
+### [@storm-stack/cli](https://www.npmjs.com/package/@storm-stack/cli)
+
+This package provides a binary to interact with the Storm Stack engine via a [command-line interface](https://en.wikipedia.org/wiki/Command-line_interface).
+
+The following features are included in the package:
+
+- Inclusion of required commands and options for Storm Stack development.
+- Utilities for managing local project dependencies and scripts.
+- Integration with the Storm Stack ecosystem for seamless project management.
 
 ## Plugins
 
 The following Storm Stack plugin packages are included in this repository:
 
-- [@storm-stack/plugin-node](https://www.npmjs.com/package/@storm-stack/plugin-node) -
-  A plugin for Node.js applications
-- [@storm-stack/plugin-http](https://www.npmjs.com/package/@storm-stack/plugin-http) -
-  A plugin that adds Http helper types, classes, and functions to a project
+### [@storm-stack/plugin-config](https://www.npmjs.com/package/@storm-stack/plugin-config)
 
-## Presets
+A plugin to generate TypeScript definitions, apply static parameter values, and encourage best practices for managing configuration in Storm Stack applications.
 
-The following Storm Stack preset packages are included in this repository:
+The plugin provides a set of utilities for working with configuration files, including:
 
-- [@storm-stack/plugin-cloudflare-worker](https://www.npmjs.com/package/@storm-stack/plugin-cloudflare-worker) -
-  A preset for Cloudflare Worker applications
-- [@storm-stack/plugin-cli](https://www.npmjs.com/package/@storm-stack/plugin-cli) -
-  A preset for creating commandline applications
+- TypeScript definition generation for configuration schemas.
+- `$storm.config.static.<parameter>` object is used to apply static configuration parameter values at build time for improved type safety.
+- Logic to determine all used configuration parameters so that they can be validated and documented later.
+- Best practice recommendations for organizing and managing configuration.
+- The `storm:config` builtin runtime module, which contains the `StormConfig` type definition and related utilities for working with configuration.
 
-## Adapters
+### [@storm-stack/plugin-date](https://www.npmjs.com/package/@storm-stack/plugin-date)
 
-An application developed with Storm Stack can include a set of adapters that are
-used to abstract the underlying technology. This allows the application to be
-built and deployed to different platforms without changing the code. There are
-currently two classes of adapters available:
+A plugin package that injects a consistent interface into the application for working with dates across some popular JavaScript libraries, such as `date-fns`, `dayjs`, `luxon`, and `moment.js`. **Never feel the pressure to choose a date library again!**
 
-- Log Adapters - adapters that provide logging and reporting functionality for
-  the application. The following log adapters packages are included in the
-  repository:
-  - [@storm-stack/log-console](https://www.npmjs.com/package/@storm-stack/log-console) -
-    A package containing functionality to write log messages to the console
-  - [@storm-stack/log-sentry](https://www.npmjs.com/package/@storm-stack/log-sentry) -
-    A package containing functionality to write log messages to
-    [sentry](https://sentry.io)
-  - [@storm-stack/log-otel](https://www.npmjs.com/package/@storm-stack/log-otel) -
-    A package containing functionality to write log messages to an
-    [OpenTelemetry](https://opentelemetry.io/) collector
-  - [@storm-stack/log-storage](https://www.npmjs.com/package/@storm-stack/log-storage) -
-    A package containing functionality to write log messages to a specified
-    storage type
-  - [@storm-stack/log-stream](https://www.npmjs.com/package/@storm-stack/log-stream) -
-    A package containing functionality to write log messages to streams
+This plugin was inspired by (and largely lifted from) [date-io](https://github.com/dmtrKovalenko/date-io), which provides a similar interface for date manipulation. The key difference is that this plugin will inject the date manipulation logic into the application at build time, rather than at runtime, allowing for more consistent and performant code.
 
-- File System Adapters - adapters used to abstract away the process of writing
-  or reading from the file system
+Huge thanks to [dmtrKovalenko](https://github.com/dmtrKovalenko) for their work on date-io.
+
+### [@storm-stack/plugin-node](https://www.npmjs.com/package/@storm-stack/plugin-node)
+
+A plugin to provide a set of utilities and best practices for building Node.js applications with Storm Stack.
+
+The following features are included in the package:
+
+- The `$storm` context object, which provides access to various utilities and services at runtime.
+- The `storm:context` builtin runtime module, which contains the `StormContext` type definition, the `useStorm` hook to access the context (if using the `$storm` object feels uncomfortable), and other related utilities.
+- The `storm:env` builtin runtime module, which can be imported directly to access information about the runtime environment.
+- The `storm:request` builtin runtime module, which contains the `StormRequest` class to package information about the incoming request.
+- The `storm:result` builtin runtime module, which contains the `StormResult` class to package information about the outgoing response.
+- The `storm:event` builtin runtime module, which contains the `StormEvent` class to package information about events that occur in the application.
+
+### [@storm-stack/plugin-node-config](https://www.npmjs.com/package/@storm-stack/plugin-node-config)
+
+A plugin that builds off of [@storm-stack/plugin-config](https://www.npmjs.com/package/@storm-stack/plugin-config) to provide the ability to manage configuration parameters in Node.js applications at runtime.
+
+The following features are included in the package:
+
+- The `$storm.config.<parameter>` object, which provides access to various configuration utilities and services at runtime.
+- The `storm:config` builtin runtime module, which contains the `StormConfig` type definition and helpers for reading/updating configuration parameters at runtime.
+
+### [@storm-stack/plugin-cloudflare-worker](https://www.npmjs.com/package/@storm-stack/plugin-cloudflare-worker)
+
+A plugin that provides utilities and best practices for building Cloudflare Worker applications with Storm Stack. Key features include:
+
+The following features are included in the package:
+
+- The `$storm` context object for accessing runtime utilities and services.
+- Built-in modules for environment, request, result, and event handling tailored for Cloudflare Workers.
+- Preset configuration for seamless deployment to the Cloudflare platform.
+
+### [@storm-stack/plugin-cli](https://www.npmjs.com/package/@storm-stack/plugin-cli)
+
+A plugin for creating command-line applications using Storm Stack.
+
+The following features are included in the package:
+
+- CLI scaffolding and context management via the `$storm` object.
+- Utilities for parsing arguments, handling input/output, and managing CLI commands.
+- Built-in modules for environment and event handling in CLI contexts.
+
+### [@storm-stack/plugin-log-console](https://www.npmjs.com/package/@storm-stack/plugin-log-console)
+
+Provides logging functionality for Storm Stack applications by writing log messages to the console.
+
+The following features are included in the package:
+
+- Console-based log adapter for development and debugging.
+- Integration with the Storm Stack logging system for consistent log formatting.
+
+### [@storm-stack/plugin-log-sentry](https://www.npmjs.com/package/@storm-stack/plugin-log-sentry)
+
+Enables logging to [Sentry](https://sentry.io) for error tracking and monitoring.
+
+The following features are included in the package:
+
+- Sentry log adapter for capturing errors and events.
+- Configuration options for Sentry DSN and environment.
+
+### [@storm-stack/plugin-log-otel](https://www.npmjs.com/package/@storm-stack/plugin-log-otel)
+
+Provides logging to [OpenTelemetry](https://opentelemetry.io/) collectors for distributed tracing and monitoring.
+
+The following features are included in the package:
+
+- OpenTelemetry log adapter for exporting traces and metrics.
+- Integration with Storm Stack's logging and event system.
+
+### [@storm-stack/plugin-log-storage](https://www.npmjs.com/package/@storm-stack/plugin-log-storage)
+
+Allows log messages to be written to a specified storage type (e.g., file system, cloud storage).
+
+The following features are included in the package:
+
+- Storage log adapter for persistent log management.
+- Configurable storage backends and retention policies.
 
 ## Development Tools
 
 The following packages are included in this repository to assist with the
 development/repository management process and are available for use in any
-application:
+application.
 
-- A [Nx](https://nx.dev/) plugin to manage monorepos using Storm Stack to build
-  and deploy applications
-- An [ESLint](https://eslint.org/) plugin to format code ensuring it's high
-  quality
-- An [ESLint](https://eslint.org/) shared configuration to ensure code quality
-  and consistency
-- A [Biome](https://biomejs.dev/) shared configuration to include required
-  globals and rules
+### [@storm-stack/devkit](https://www.npmjs.com/package/@storm-stack/devkit)
+
+A set of base plugins, shared templates, and helpful utilities for extending Storm Stack.
+
+The following features are included in the package:
+
+- Multiple base plugins for common functionality that could be extended or customized in a personal plugin to meet your specific needs.
+- Shared template files for generating boilerplate code.
+
+### [@storm-stack/nx](https://www.npmjs.com/package/@storm-stack/nx)
+
+An [Nx](https://nx.dev/) plugin to manage monorepos using Storm Stack for building and deploying applications.
+
+The following features are included in the package:
+
+- Nx generators and executors tailored for Storm Stack workflows.
+- Enhanced project graph visualization and dependency management.
+
+### [@storm-stack/eslint-plugin](https://www.npmjs.com/package/@storm-stack/eslint-plugin)
+
+An [ESLint](https://eslint.org/) plugin to enforce code quality and best practices in Storm Stack projects.
+
+The following features are included in the package:
+
+- Custom ESLint rules for Storm Stack conventions.
+- Integration with shared configuration for consistency across packages.
+
+### [@storm-stack/eslint-config](https://www.npmjs.com/package/@storm-stack/eslint-config)
+
+A shared [ESLint](https://eslint.org/) configuration for Storm Stack repositories.
+
+The following features are included in the package:
+
+- Predefined rulesets for JavaScript/TypeScript projects.
+- Easy integration with ESLint for consistent code style.
+
+### [@storm-stack/biome](https://www.npmjs.com/package/@storm-stack/biome)
+
+A shared [Biome](https://biomejs.dev/) configuration for Storm Stack projects.
+
+The following features are included in the package:
+
+- Pre-configured Biome settings for formatting and linting.
+- Inclusion of required globals and rules for Storm Stack development.
+
+### [@storm-stack/tsdoc](https://www.npmjs.com/package/@storm-stack/tsdoc)
+
+A shared [TSDoc](https://tsdoc.org/) configuration for Storm Stack projects. 
+
+The following features are included in the package:
+
+- Pre-configured TSDoc settings for consistent documentation.
+- Inclusion of required tags and rules for Storm Stack development.
 
 <br />
 <div align="center">

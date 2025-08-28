@@ -1,7 +1,7 @@
 {
   "name": "@storm-stack/monorepo",
   "version": "0.0.1",
-  "description": "⚡ The storm-stack monorepo contains utility applications, tools, and various libraries to create modern and scalable web applications.",
+  "description": "⚡ A system to generate code and other artifacts during the build and deploy processes via TypeScript transformers and static code analysis.",
   "repository": {
     "type": "github",
     "url": "https://github.com/storm-software/storm-stack.git"
