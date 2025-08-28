@@ -260,7 +260,7 @@ export function createStormError(
     type: ErrorType = "general"
   ) {
     super(
-       "An error occurred during processing",
+       "A runtime error occurred during processing",
        typeof optionsOrMessage === "string" ? undefined : { cause: optionsOrMessage?.cause }
      );
 
@@ -295,10 +295,6 @@ export function createStormError(
        this.name = optionsOrMessage.name || getDefaultErrorName(this.type);
        this.data = optionsOrMessage.data;
        this.cause ??= optionsOrMessage.cause;
-     }
-
-     if (this.cause?.stack) {
-       this.#stack = this.cause.stack;
      }
 
      Object.setPrototypeOf(this, StormError.prototype);
@@ -344,56 +340,58 @@ export function createStormError(
     * @returns The parsed stack traces
     */
    public get stacktrace(): ParsedStacktrace[] {
-     const stacktrace: ParsedStacktrace[] = [];
-     if (this.#stack) {
-       for (const line of this.#stack.split("\\n").filter(Boolean).slice(1)) {
-         const parsed =
-           (new RegExp(\`^\\s+at (?:(?<function>[^)]+) \\()?(?<source>[^)]+)\\)?$\`, "u")
-           .exec(line)
-           ?.groups) as
-             | Partial<Record<keyof ParsedStacktrace, string>>
-             | undefined;
-         if (!parsed) {
-           continue;
-         }
+      let stack = this.cause?.originalStack || this.originalStack;
 
-         if (!parsed.source) {
-           continue;
-         }
+      const stacktrace: ParsedStacktrace[] = [];
+      if (stack) {
+        for (const line of stack.split("\\n").filter(line => /^\\s*at\\s/.test(line))) {
+          const parsed =
+            (new RegExp(\`^\\s+at (?:(?<function>[^)]+) \\()?(?<source>[^)]+)\\)?$\`, "u")
+            .exec(line)
+            ?.groups) as
+              | Partial<Record<keyof ParsedStacktrace, string>>
+              | undefined;
+          if (!parsed) {
+            continue;
+          }
 
-         const parsedSource =
-           /^(?<source>.+):(?<line>\\d+):(?<column>\\d+)$/u.exec(
-             parsed.source
-           )?.groups;
-         if (parsedSource) {
-           Object.assign(parsed, parsedSource);
-         }
+          if (!parsed.source) {
+            continue;
+          }
 
-         if (
-           /^[/\\\\](?![/\\\\])|^[/\\\\]{2}(?!\\.)|^[a-z]:[/\\\\]/i.test(parsed.source)
-         ) {
-           parsed.source = \`file://\${parsed.source}\`;
-         }
+          const parsedSource =
+            /^(?<source>.+):(?<line>\\d+):(?<column>\\d+)$/u.exec(
+              parsed.source
+            )?.groups;
+          if (parsedSource) {
+            Object.assign(parsed, parsedSource);
+          }
 
-         ${
-           context.options.platform !== "node"
-             ? `if (parsed.source === import.meta.url) {
-           continue;
-         }`
-             : ""
-         }
+          if (
+            /^[/\\\\](?![/\\\\])|^[/\\\\]{2}(?!\\.)|^[a-z]:[/\\\\]/i.test(parsed.source)
+          ) {
+            parsed.source = \`file://\${parsed.source}\`;
+          }
 
-         for (const key of ["line", "column"] as const) {
-           if (parsed[key]) {
-             parsed[key] = Number(parsed[key]).toString();
-           }
-         }
+          ${
+            context.options.platform !== "node"
+              ? `if (parsed.source === import.meta.url) {
+            continue;
+          }`
+              : ""
+          }
 
-         stacktrace.push(parsed as ParsedStacktrace);
-       }
-     }
+          for (const key of ["line", "column"] as const) {
+            if (parsed[key]) {
+              parsed[key] = Number(parsed[key]).toString();
+            }
+          }
 
-     return stacktrace;
+          stacktrace.push(parsed as ParsedStacktrace);
+        }
+      }
+
+      return stacktrace;
    }
 
 
@@ -406,7 +404,7 @@ export function createStormError(
     return this.stacktrace
       .filter(Boolean)
       .map(line => {
-        return \`    at \${line.function} (\${line.source}:\${line.line}:\${line.column})\`;
+        return \`\\tat \${line.function || "<Anonymous>"} (\${line.source}, Line: \${line.line})\`;
       })
       .join("\\n");
   }
@@ -477,12 +475,14 @@ export function createStormError(
 \${
       includeData && this.data
         ? \`
-Related details: \${JSON.stringify(this.data, null, 2)}\`
+Related details:
+\${JSON.stringify(this.data, null, 2)}\`
         : ""
     }\${
       this.cause?.name
         ? \`
-Inner Error: \${this.cause?.name}\${this.cause?.message ? " - " + this.cause?.message : ""}\`
+Inner Error:
+\${this.cause?.name}\${this.cause?.message ? " - " + this.cause?.message : ""}\`
         : ""
     }\`;
   }

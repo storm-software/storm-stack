@@ -45,6 +45,7 @@ import type {
   InlineConfig,
   LintInlineConfig,
   NewInlineConfig,
+  PluginConfigTuple,
   PrepareInlineConfig,
   WorkspaceConfig
 } from "../types";
@@ -103,7 +104,7 @@ export class Engine {
       this.workspaceConfig
     );
 
-    this.context.log(LogLevelLabel.TRACE, "Initializing Storm Stack engine");
+    this.context.log(LogLevelLabel.TRACE, "⚙️ Initializing Storm Stack engine");
 
     for (const plugin of this.context.options.userConfig.plugins ?? []) {
       await this.addPlugin(plugin);
@@ -217,7 +218,10 @@ export class Engine {
     //   await this.clean(inlineConfig as PrepareInlineConfig);
     // }
 
-    this.context.log(LogLevelLabel.INFO, "Preparing the Storm Stack project");
+    this.context.log(
+      LogLevelLabel.INFO,
+      "🏗️ Preparing the Storm Stack project"
+    );
 
     await prepare(this.context, this.#hooks);
 
@@ -246,7 +250,7 @@ export class Engine {
       await this.prepare(inlineConfig);
     }
 
-    this.context.log(LogLevelLabel.INFO, "Linting the Storm Stack project");
+    this.context.log(LogLevelLabel.INFO, "📋 Linting the Storm Stack project");
 
     await lint(this.context, this.#hooks);
 
@@ -279,7 +283,7 @@ export class Engine {
       await this.prepare(inlineConfig);
     }
 
-    this.context.log(LogLevelLabel.INFO, "Building the Storm Stack project");
+    this.context.log(LogLevelLabel.INFO, "📦 Building the Storm Stack project");
 
     await build(this.context, this.#hooks);
 
@@ -381,8 +385,12 @@ export class Engine {
   private async initPlugin(
     plugin: string | PluginConfig
   ): Promise<Plugin | null> {
-    const pluginConfig: PluginConfig =
-      typeof plugin === "string" ? [plugin, {}] : plugin;
+    const pluginConfig: PluginConfigTuple =
+      typeof plugin === "string"
+        ? [plugin, {}]
+        : Array.isArray(plugin)
+          ? plugin
+          : [plugin.plugin, plugin.props];
 
     let installPath = pluginConfig[0];
     if (

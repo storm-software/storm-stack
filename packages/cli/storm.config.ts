@@ -51,12 +51,9 @@ export default defineConfig({
       }
     ]
   ],
-  noExternal: ["@deepkit/*", "@storm-stack/core"],
-  tsconfigRaw: {
-    reflectionLevel: "verbose"
-  },
+  noExternal: ["@storm-stack/core"],
   esbuild: {
-    format: "cjs"
+    format: "esm"
   },
   output: {
     outputMode: "fs"

@@ -237,7 +237,7 @@ export class VirtualFileSystem implements VirtualFileSystemInterface {
         serialized?.virtualFiles &&
         Object.keys(serialized.virtualFiles).length > 0
       ) {
-        this.#virtualFS = new Volume(serialized.virtualFiles);
+        this.#virtualFS = Volume.fromJSON(serialized.virtualFiles);
       }
 
       if (!this.#virtualFS.existsSync(this.#context.artifactsPath)) {

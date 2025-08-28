@@ -37,7 +37,7 @@ const config = getTsupConfig([
       "src/commands/*/index.ts",
       "src/unplugin/*.ts"
     ],
-    outDir: "dist/build",
+    outDir: "dist",
     bundle: true,
     splitting: true,
     treeshake: true,
@@ -45,8 +45,10 @@ const config = getTsupConfig([
     clean: true,
     sourcemap: true,
     dts: true,
-    shims: false,
+    shims: true,
     noExternal: [
+      "memfs",
+      "@deepkit/core",
       "@deepkit/type-spec",
       "@deepkit/type-compiler",
       "@deepkit/type"

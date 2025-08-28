@@ -3,9 +3,9 @@
   "compilerOptions": {
     "types": ["node"],
     "strict": true,
-    "outDir": "../../dist/out-tsc",
     "verbatimModuleSyntax": false
   },
   "include": ["src/**/*.ts"],
-  "reflection": true
+  "reflection": true,
+  "reflectionLevel": "verbose"
 }

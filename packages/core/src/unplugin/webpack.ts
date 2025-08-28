@@ -38,5 +38,6 @@ import { StormStack } from "./index";
  * ```
  */
 const webpack = StormStack.webpack;
+
 export default webpack;
 export { webpack as "module.exports" };

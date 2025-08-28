@@ -35,8 +35,13 @@ import { StormResultInterface } from "@storm-stack/types/node/result";
 import { StormStorageInterface } from "@storm-stack/types/shared/storage";
 import { StormLogInterface } from "@storm-stack/types/shared/log";
 import { AsyncLocalStorage } from "node:async_hooks";
-import { getContext } from "unctx";
-import type { UseContext } from "unctx";
+import type {
+  UseContext,
+  ContextOptions,
+  ContextNamespace,
+  OnAsyncRestore,
+  OnAsyncLeave
+} from "@storm-stack/plugin-node/types/context";
 import { createConfig, StormConfig } from "storm:config";
 import { createEnv } from "storm:env";
 import { createStorage } from "storm:storage";
@@ -55,22 +60,22 @@ export interface StormContext {
   /**
    * The request object for the current Storm Stack application.
    */
-  request: StormRequest
+  request: StormRequest;
 
   /**
    * Environment/runtime specific application data.
    */
-  env: import("@storm-stack/types/node/env").StormNodeEnv
+  env: import("@storm-stack/types/node/env").StormNodeEnv;
 
   /**
    * The root application logger for the Storm Stack application.
    */
-  log: import("@storm-stack/types/shared/log").StormLogInterface
+  log: import("@storm-stack/types/shared/log").StormLogInterface;
 
   /**
    * The {@link StormStorageInterface} instance used by the Storm Stack application.
    */
-  storage: import("@storm-stack/types/shared/storage").StormStorageInterface
+  storage: import("@storm-stack/types/shared/storage").StormStorageInterface;
 
   /**
    * The configuration parameters for the Storm application.
@@ -80,35 +85,171 @@ export interface StormContext {
   /**
    * A set of disposable resources to clean up when the context is no longer needed.
    */
-  readonly disposables: Set<Disposable>
+  readonly disposables: Set<Disposable>;
 
   /**
    * A set of asynchronous disposable resources to clean up when the context is no longer needed.
    */
-  readonly asyncDisposables: Set<AsyncDisposable>
+  readonly asyncDisposables: Set<AsyncDisposable>;
 }
 
-const STORM_ASYNC_CONTEXT: UseContext<StormContext> = getContext<StormContext>(
-  "__storm-stack__", {
-  asyncContext: true,
-  AsyncLocalStorage
-});
+/* eslint-disable */
+const _globalThis = (
+  typeof globalThis !== "undefined"
+    ? globalThis
+    : typeof self !== "undefined"
+      ? self
+      : typeof global !== "undefined"
+        ? global
+        : typeof window !== "undefined"
+          ? window
+          : {}
+) as typeof globalThis;
+/* eslint-enable */
+
+const asyncHandlers: Set<OnAsyncLeave> =
+  (_globalThis as any)["__storm_async_handlers__"] ||
+  ((_globalThis as any)["__storm_async_handlers__"] = new Set());
+
+/**
+ * Create a new context.
+ *
+ * @param options - The options to use for the context.
+ * @returns A new context.
+ */
+function createContext<T = any>(
+  options: ContextOptions = {},
+): UseContext<T> {
+  let currentInstance: T | undefined;
+  let isSingleton = false;
+
+  const checkConflict = (instance: T | undefined) => {
+    if (currentInstance && currentInstance !== instance) {
+      throw new Error("Context conflict");
+    }
+  };
+
+  // Async context support
+  let als: AsyncLocalStorage<any>;
+  if (options.asyncContext) {
+    const _AsyncLocalStorage: typeof AsyncLocalStorage<any> =
+      options.AsyncLocalStorage || (globalThis as any).AsyncLocalStorage;
+    if (_AsyncLocalStorage) {
+      als = new _AsyncLocalStorage();
+    } else {
+      console.warn("\`AsyncLocalStorage\` is not provided.");
+    }
+  }
+
+  const _getCurrentInstance = () => {
+    // TODO: Investigate better solution to make sure currentInstance is in sync with AsyncLocalStorage
+    // https://github.com/unjs/unctx/issues/100
+    if (als /* && currentInstance === undefined */) {
+      const instance = als.getStore();
+      if (instance !== undefined) {
+        return instance;
+      }
+    }
+    return currentInstance;
+  };
+
+  return {
+    use: () => {
+      const _instance = _getCurrentInstance();
+      if (_instance === undefined) {
+        throw new Error(
+          \`The Storm context is not available. Make sure to use \\\`$storm\\\` and \\\`useStorm\\\` within a Storm Stack application (must be wrapped with \\\`withContext\\\`).\`
+        );
+      }
+      return _instance;
+    },
+    tryUse: () => {
+      return _getCurrentInstance();
+    },
+    set: (instance: T | undefined, replace?: boolean) => {
+      if (!replace) {
+        checkConflict(instance);
+      }
+      currentInstance = instance;
+      isSingleton = true;
+    },
+    unset: () => {
+      currentInstance = undefined;
+      isSingleton = false;
+    },
+    call: (instance: T, callback) => {
+      checkConflict(instance);
+      currentInstance = instance;
+      try {
+        return als ? als.run(instance, callback) : callback();
+      } finally {
+        if (!isSingleton) {
+          currentInstance = undefined;
+        }
+      }
+    },
+    async callAsync(instance: T, callback) {
+      currentInstance = instance;
+      const onRestore: OnAsyncRestore = () => {
+        currentInstance = instance;
+      };
+      const onLeave: OnAsyncLeave = () =>
+        currentInstance === instance ? onRestore : undefined;
+
+      asyncHandlers.add(onLeave);
+
+      try {
+        const result = als ? als.run(instance, callback) : callback();
+        if (!isSingleton) {
+          currentInstance = undefined;
+        }
+        return await result;
+      } finally {
+        asyncHandlers.delete(onLeave);
+      }
+    },
+  };
+}
+
+/**
+ * Create a new context namespace.
+ *
+ * @param defaultOptions - The default options to use for the context.
+ * @returns A new context namespace.
+ */
+function createNamespace<T = any>(
+  defaultOptions: ContextOptions = {
+    asyncContext: true,
+    AsyncLocalStorage
+  }
+) {
+  const contexts: Record<string, UseContext<T>> = {};
+
+  return {
+    get(key: string, options: ContextOptions = {}) {
+      if (!contexts[key]) {
+        contexts[key] = createContext({ ...defaultOptions, ...options });
+      }
+      return contexts[key] as UseContext<T>;
+    },
+  };
+}
+
+const namespace: ContextNamespace =
+  (_globalThis as any)["__storm__"] ||
+  ((_globalThis as any)["__storm__"] = createNamespace());
+
+const STORM_CONTEXT_KEY = "__storm_global__";
 
 /**
  * Get the Storm context for the current application.
  *
+ * @param options - The options to use when getting the context.
  * @returns The Storm context for the current application.
  * @throws If the Storm context is not available.
  */
-export function useStorm(): StormContext {
-  try {
-    return STORM_ASYNC_CONTEXT.use();
-  } catch(error) {
-    throw new Error(
-      \`The Storm context is not available. Make sure to use \\\`$storm\\\` and \\\`useStorm\\\` within a Storm Stack application (must be wrapped with \\\`withContext\\\`): \${error.message}\`,
-      { cause: error }
-    );
-  }
+export function useStorm(options: ContextOptions = {}): StormContext {
+  return namespace.get<StormContext>(STORM_CONTEXT_KEY, options).use();
 }
 
 /**
@@ -149,7 +290,7 @@ export function withContext<
     // }
     // context.emit = emit;
 
-    const result = await STORM_ASYNC_CONTEXT.callAsync(
+    const result = await namespace.get<StormContext>(STORM_CONTEXT_KEY).callAsync(
       context,
       async () => {
         try {

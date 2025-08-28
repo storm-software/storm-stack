@@ -16,14 +16,14 @@
 
  ------------------------------------------------------------------- */
 
+import { OrganizationConfig } from "@storm-software/config/types";
 import {
   ReflectionClass,
   ReflectionFunction,
   ReflectionKind,
   resolveClassType,
   Type
-} from "@deepkit/type";
-import { OrganizationConfig } from "@storm-software/config/types";
+} from "@storm-stack/core/deepkit";
 import { reflectType } from "@storm-stack/core/lib/deepkit/reflect-type";
 import { joinPaths } from "@stryke/path/index";
 import { kebabCase } from "@stryke/string-format/kebab-case";
@@ -306,9 +306,8 @@ export async function reflectRequestBaseType(
     context,
     getRequestBaseTypeDefinition(context),
     {
-      skipNodeModulesBundle: true,
-      noExternal: context.options.noExternal,
-      external: ["@storm-stack/core"]
+      external: context.options.external,
+      noExternal: context.options.noExternal
     }
   );
 

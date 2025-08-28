@@ -238,7 +238,7 @@ const formatter: TextFormatter = getTextFormatter();
 function createAdapter(): LogAdapter {
   const adapter: LogAdapter & AsyncDisposable = (record: LogRecord) => {
     void $storm.storage.setItem(
-      \`${this.options.namespace}:storm-\${new Date().toISOString().replace("T", "_").replace("Z", "")}.log\`,
+      \`${this.options.namespace}:storm-\${new Date().toISOString().replace("T", "-").replace("Z", "")}.log\`,
       formatter(record)
     );
   };

@@ -170,10 +170,9 @@
     }
   },
   "dependencies": {
-    "@deepkit/type": "catalog:",
     "@storm-software/config-tools": "catalog:",
-    "@storm-stack/core": "0.35.1",
-    "@storm-stack/devkit": "0.11.1",
+    "@storm-stack/core": "workspace:*",
+    "@storm-stack/devkit": "workspace:*",
     "@stryke/capnp": "catalog:",
     "@stryke/env": "catalog:",
     "@stryke/fs": "catalog:",
@@ -183,7 +182,7 @@
     "@stryke/types": "catalog:"
   },
   "devDependencies": {
-    "@storm-stack/nx": "0.16.1",
+    "@storm-stack/nx": "workspace:*",
     "@types/node": "catalog:",
     "tsup": "catalog:"
   },

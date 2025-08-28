@@ -37,7 +37,7 @@ import {
   NodePluginContext,
   NodePluginContextOptions,
   NodePluginOptions
-} from "./types";
+} from "./types/plugin";
 
 /**
  * NodeJs Storm Stack plugin.
@@ -93,6 +93,7 @@ export default class NodePlugin<
     );
 
     this.packageDeps["@stryke/string-format"] = "dependency";
+    this.packageDeps["@types/node"] = "devDependency";
 
     context.options.platform = "node";
     context.options.esbuild.target = "node22";

@@ -208,6 +208,20 @@ export interface DateFormats<TFormatToken = string> {
    * @example "02/13/2020 23:44"
    */
   keyboardDateTime24h: TFormatToken;
+
+  /**
+   * System-friendly date/time 24h format for scenarios such as traces and logging
+   *
+   * @example "02/13/2020 23:44:55.666"
+   */
+  systemDateTime: TFormatToken;
+
+  /**
+   * System-friendly date/time format for scenarios such as file suffixes or URLs
+   *
+   * @example "02-13-2020_23-44-55-666"
+   */
+  filePathDateTime: TFormatToken;
 }
 
 /**

@@ -16,9 +16,13 @@
 
  ------------------------------------------------------------------- */
 
-import { ReflectionClass, ReflectionKind, stringifyType } from "@deepkit/type";
 import { LogLevelLabel } from "@storm-software/config-tools/types";
 import { Plugin } from "@storm-stack/core/base/plugin";
+import {
+  ReflectionClass,
+  ReflectionKind,
+  stringifyType
+} from "@storm-stack/core/deepkit";
 import { writeFile } from "@storm-stack/core/lib/utilities/write-file";
 import type { EngineHooks } from "@storm-stack/core/types/build";
 import { PluginOptions } from "@storm-stack/core/types/plugin";

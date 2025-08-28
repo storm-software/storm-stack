@@ -21,7 +21,7 @@ import {
   ReflectionParameter,
   ReflectionProperty,
   Type
-} from "@deepkit/type";
+} from "@storm-stack/core/deepkit";
 import { getUnionTypes } from "@storm-stack/core/lib/deepkit/utilities";
 import { Context } from "@storm-stack/core/types";
 import { capnpc } from "@stryke/capnp/compile";

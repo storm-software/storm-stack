@@ -22,7 +22,7 @@ import { CLIPluginContext } from "../types/config";
 export function writeConfigGet(_context: CLIPluginContext) {
   return `${getFileHeader()}
 
-import { deserialize } from "@deepkit/type";
+import { deserialize } from "@storm-stack/core/deepkit";
 import { colors } from "storm:cli";
 import { StormRequest } from "storm:request";
 import { StormConfig } from "storm:config";
@@ -63,7 +63,7 @@ export default handler;
 export function writeConfigSet(_context: CLIPluginContext) {
   return `${getFileHeader()}
 
-import { deserialize, serialize } from "@deepkit/type";
+import { deserialize, serialize } from "@storm-stack/core/deepkit";
 import { colors } from "storm:cli";
 import { StormRequest } from "storm:request";
 import { StormConfig } from "storm:config";
@@ -110,7 +110,7 @@ export default handler;
 export function writeConfigList(_context: CLIPluginContext) {
   return `${getFileHeader()}
 
-import { deserialize } from "@deepkit/type";
+import { deserialize } from "@storm-stack/core/deepkit";
 import { colors } from "storm:cli";
 import { StormRequest } from "storm:request";
 import { StormConfig } from "storm:config";
@@ -141,7 +141,7 @@ export default handler;
 export function writeConfigDelete(_context: CLIPluginContext) {
   return `${getFileHeader()}
 
-import { deserialize, serialize } from "@deepkit/type";
+import { deserialize, serialize } from "@storm-stack/core/deepkit";
 import { colors } from "storm:cli";
 import { StormRequest } from "storm:request";
 import { StormConfig } from "storm:config";

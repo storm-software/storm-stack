@@ -103,11 +103,11 @@
   "dependencies": {
     "@storm-software/config-tools": "catalog:",
     "@storm-software/eslint": "catalog:",
-    "@storm-stack/tsdoc": "0.3.1",
+    "@storm-stack/tsdoc": "workspace:*",
     "@stryke/fs": "catalog:",
     "defu": "catalog:",
     "eslint-flat-config-utils": "catalog:",
-    "eslint-plugin-storm-stack": "0.11.1"
+    "eslint-plugin-storm-stack": "workspace:*"
   },
   "devDependencies": {
     "@types/node": "catalog:",

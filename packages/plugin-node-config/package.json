@@ -152,18 +152,17 @@
   "dependencies": {
     "@babel/generator": "catalog:",
     "@babel/helper-module-imports": "catalog:",
-    "@deepkit/type": "catalog:",
     "@storm-software/config": "catalog:",
     "@storm-software/config-tools": "catalog:",
-    "@storm-stack/core": "0.35.1",
-    "@storm-stack/devkit": "0.11.1",
+    "@storm-stack/core": "workspace:*",
+    "@storm-stack/devkit": "workspace:*",
     "@stryke/capnp": "catalog:",
     "@stryke/json": "catalog:",
     "@stryke/path": "catalog:",
     "@stryke/string-format": "catalog:"
   },
   "devDependencies": {
-    "@storm-stack/nx": "0.16.1",
+    "@storm-stack/nx": "workspace:*",
     "@types/node": "catalog:",
     "tsup": "catalog:"
   },

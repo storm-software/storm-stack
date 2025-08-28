@@ -25,6 +25,7 @@ import { Worker as JestWorker } from "jest-worker";
 import { Jiti } from "jiti";
 import { DirectoryJSON } from "memfs";
 import { Unimport } from "unimport";
+import { UnpluginContextMeta } from "unplugin";
 import { ResolvedEntryTypeDefinition, ResolvedOptions } from "./build";
 import { CompilerInterface, SourceFile } from "./compiler";
 import type { LogFn } from "./config";
@@ -119,7 +120,7 @@ export interface MetaInfo {
   /**
    * A mapping of virtual file paths to their corresponding file contents
    */
-  virtualFiles: DirectoryJSON<string | null>;
+  virtualFiles: Record<string, string | null>;
 }
 
 export type UnimportContext = Omit<Unimport, "injectImports"> & {
@@ -284,6 +285,16 @@ export interface Context<
    * The resolved `unimport` context to be used by the compiler
    */
   unimport: UnimportContext;
+
+  /**
+   * Metadata for the unplugin instance
+   *
+   * @see https://unplugin.unjs.io
+   *
+   * @remarks
+   * An object containing metadata about the [unplugin](https://unplugin.unjs.io) instance, such as the framework or bundler being used. **Note:** This metadata is only available when using the Storm Stack plugin in another build process (for example: Vite).
+   */
+  unplugin?: UnpluginContextMeta;
 
   /**
    * The list of additional runtime files to be included in the build

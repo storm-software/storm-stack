@@ -43,8 +43,7 @@ export function transpile(
 
   return ts.transpileModule(code, {
     compilerOptions: {
-      ...context.tsconfig.options,
-      configFilePath: context.tsconfig.tsconfigFilePath
+      ...context.tsconfig.options
     },
     fileName: id,
     transformers: {

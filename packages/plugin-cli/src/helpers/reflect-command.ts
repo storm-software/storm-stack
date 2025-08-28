@@ -16,6 +16,7 @@
 
  ------------------------------------------------------------------- */
 
+import { LogLevelLabel } from "@storm-software/config-tools/types";
 import type { ResolvedEntryTypeDefinition } from "@storm-stack/core/types/build";
 import type { LogFn } from "@storm-stack/core/types/config";
 import { writeConfigTypeReflection } from "@storm-stack/plugin-config/helpers/persistence";
@@ -29,184 +30,6 @@ import {
   CommandTreeBranch
 } from "../types/reflection";
 import { findCommandInTree, getAppName, getAppTitle } from "./utilities";
-
-// async function reflects(
-//   context: CLIPluginContext
-// ): Promise<Record<string, Command>> {
-//   const Reflections = {} as Record<string, Command>;
-//   for (const entry of context.entry.filter(
-//     entry => entry.input.file !== context.options.entry && entry.output
-//   )) {
-//     if (entry.isVirtual) {
-//       const BaseType = await reflectBaseType(context);
-
-//       Reflections[entry.output] = Command.from(
-//         context,
-//         {
-//           entry,
-//           name: findCommandName(entry),
-//           title: titleCase(findCommandName(entry))
-//         },
-//         BaseType
-//       );
-//     } else {
-//       // eslint-disable-next-line ts/no-unsafe-function-type
-//       const command = await resolveType<Function>(context, entry.input, {
-//         outputPath: context.options.workspaceRoot,
-//         skipNodeModulesBundle: true,
-//         noExternal: context.options.noExternal,
-//         external: ["@storm-stack/core"],
-//         override: {
-//           treeShaking: false
-//         },
-//         compiler: {
-//           babel: {
-//             plugins: [ModuleResolverPlugin(context)]
-//           }
-//         }
-//       });
-//       if (!command) {
-//         throw new Error(`Module not found: ${entry.input.file}`);
-//       }
-
-//       const commandReflection = ReflectionFunction.from(command);
-//       if (!commandReflection) {
-//         throw new Error(`Reflection not found: ${entry.input.file}`);
-//       }
-
-//       const name = findCommandName(entry);
-//       Reflections[entry.output] = Command.from(context, {
-//         entry,
-//         name,
-//         title: titleCase(name),
-//         type: commandReflection
-//       });
-//     }
-//   }
-
-//   return Reflections;
-// }
-
-// type CommandReflectionDefinition = Omit<
-//   Command,
-//   "parent" | "children" | "root"
-// > & {
-//   : Command;
-//   relations: CommandRelations;
-// };
-
-// async function reflectCommand(
-//   log: LogFn,
-//   context: CLIPluginContext
-// ): Promise<Record<string, CommandReflectionDefinition>> {
-//   const relationsReflections = await reflectRelations(context);
-//   const sReflections = await reflects(context);
-
-//   const reflections = {} as Record<string, CommandReflectionDefinition>;
-
-//   for (const entry of context.entry.filter(
-//     entry => entry.input.file !== context.options.entry
-//   )) {
-//     if (!entry.output) {
-//       throw new Error(
-//         `The entry "${entry.input.file}" does not have an output defined. Please ensure the entry has a valid output path.`
-//       );
-//     }
-
-//     if (!relationsReflections[entry.output]) {
-//       throw new Error(
-//         `Unable to determine relation reflections for command "${entry.output}".`
-//       );
-//     }
-
-//     const command = await Command.from(
-//       context,
-//       entry,
-//       relationsReflections[entry.output]!
-//     );
-
-//     if (entry.isVirtual) {
-//       const name = findCommandName(entry);
-
-//       const command = {
-//         id: entry.output,
-//         type: new ReflectionFunction({
-//           kind: ReflectionKind.function,
-//           name: "handler",
-//           description: entry.description,
-//           parameters: [],
-//           return: {
-//             kind: ReflectionKind.any
-//           }
-//         }),
-//         title: entry.title || titleCase(name),
-//         name: entry.output,
-//         entry,
-//         : sReflections[entry.output]!,
-//         relations: relationsReflections[entry.output]!
-//       };
-
-//       command.type.parameters.push(
-//         new ReflectionParameter(
-//           {
-//             kind: ReflectionKind.parameter,
-//             name: "",
-//             parent: command.type.type,
-//             type: sReflections[entry.output]!.type.type,
-//             description: `The  for the ${titleCase(name)} command.`,
-//             tags: {
-//               title: ` for ${titleCase(name)} command`
-//             }
-//           },
-//           command.type
-//         )
-//       );
-
-//       reflections[entry.output] = command;
-//     } else {
-//       log(
-//         LogLevelLabel.TRACE,
-//         `Precompiling the entry artifact ${entry.file} (${entry?.name ? `export: "${entry.name}"` : "default"})" from input "${entry.input.file}" (${entry.input.name ? `export: "${entry.input.name}"` : "default"})`
-//       );
-
-//       // eslint-disable-next-line ts/no-unsafe-function-type
-//       const command = await resolveType<Function>(context, entry.input, {
-//         skipNodeModulesBundle: true,
-//         noExternal: context.options.noExternal,
-//         external: ["@storm-stack/core"]
-//       });
-//       if (!command) {
-//         throw new Error(`Module not found: ${entry.input.file}`);
-//       }
-
-//       const commandReflection = ReflectionFunction.from(command);
-//       if (!commandReflection) {
-//         throw new Error(`Reflection not found: ${entry.input.file}`);
-//       }
-
-//       const id = entry.output;
-//       const name = findCommandName(entry);
-
-//       reflections[id] = {
-//         id,
-//         name,
-//         type: commandReflection,
-//         title: titleCase(name),
-//         entry,
-//         : sReflections[id]!,
-//         relations: relationsReflections[id]!
-//       };
-//     }
-//   }
-
-//   await writeConfigTypeReflection(
-//     context,
-//     context.reflections.config.types.params,
-//     "params"
-//   );
-
-//   return reflections;
-// }
 
 export function findCommandName(entry: ResolvedEntryTypeDefinition) {
   let name = findFolderName(entry.file);
@@ -257,6 +80,8 @@ export async function reflectCommandTree(
   log: LogFn,
   context: CLIPluginContext
 ): Promise<CommandTree> {
+  log(LogLevelLabel.TRACE, "Reflecting the CLI command tree schema");
+
   const relationsReflections = await reflectRelations(context);
 
   const reflections = {} as Record<string, Command>;

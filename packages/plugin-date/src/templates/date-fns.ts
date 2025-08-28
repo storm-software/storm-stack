@@ -113,6 +113,8 @@ export const formats: DateFormats = {
   keyboardDateTime: "P p",
   keyboardDateTime12h: "P hh:mm aa",
   keyboardDateTime24h: "P HH:mm",
+  systemDateTime: "P HH:mm:ss.SSS",
+  filePathDateTime: "P_HH-mm-ss-SSS",
   minutes: "mm",
   month: "LLLL",
   monthAndDate: "MMMM d",

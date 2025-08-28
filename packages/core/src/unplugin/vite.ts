@@ -30,7 +30,7 @@ import { StormStack } from "./index";
  * @example
  * ```ts
  * // vite.config.ts
- * import StormStack from 'storm-stack/vite'
+ * import StormStack from '@storm-stack/core/vite'
  *
  * export default defineConfig({
  *   plugins: [StormStack()],
@@ -38,5 +38,6 @@ import { StormStack } from "./index";
  * ```
  */
 const vite = StormStack.vite;
+
 export default vite;
 export { vite as "module.exports" };

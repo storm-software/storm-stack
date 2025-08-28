@@ -44,22 +44,19 @@ catalog:
   "@sentry/node": ^9.15.0
   "@sentry/types": ^9.15.0
   "@taplo/cli": ^0.7.0
-  "@types/babel__core": ^7.20.5
-  "@types/babel__helper-module-imports": 7.18.3
-  "@types/babel__traverse": ^7.20.7
   "@types/eslint": ^9.6.1
   "@types/eslint__js": ^8.42.3
   "@types/jest": 30.0.0
-  "@types/react": npm:types-react@rc
-  "@types/react-dom": npm:types-react-dom@rc
+  "@types/react": npm:@types/react@ts5.9
+  "@types/react-dom": npm:@types/react-dom@ts5.9
   "@types/node": ^22.15.3
-  "@nx/devkit": 21.4.0
-  "@nx/eslint-plugin": 21.4.0
-  "@nx/jest": 21.4.0
-  "@nx/js": 21.4.0
-  "@nx/plugin": 21.4.0
-  "@nx/react": 21.4.0
-  "@nx/workspace": 21.4.0
+  "@nx/devkit": ^21.4.1
+  "@nx/eslint-plugin": ^21.4.1
+  "@nx/jest": ^21.4.1
+  "@nx/js": ^21.4.1
+  "@nx/plugin": ^21.4.1
+  "@nx/react": ^21.4.1
+  "@nx/workspace": ^21.4.1
   "@storm-software/build-tools": latest
   "@storm-software/config": latest
   "@storm-software/config-tools": latest
@@ -117,7 +114,6 @@ catalog:
   github-slugger: ^2.0.0
   globals: ^15.15.0
   handlebars: ^4.7.8
-  jest-util: 30.0.5
   jsonc-eslint-parser: 2.4.0
   lefthook: ^1.11.12
   log4brains: ^1.1.0
@@ -126,13 +122,14 @@ catalog:
   minimatch: ^10.0.3
   nanotar: ^0.2.0
   prettier: 3.6.2
-  nx: 21.4.0
-  jest: 30.0.4
-  jest-environment-jsdom: 30.0.4
-  jest-environment-node: 30.0.0-beta.3
-  jest-worker: 30.0.0-beta.3
-  react: 19.0.0-rc-f6cce072-20240723
-  react-dom: 19.0.0-rc-f6cce072-20240723
+  nx: ^21.4.1
+  jest: 30.0.5
+  jest-environment-jsdom: 30.0.5
+  jest-environment-node: 30.0.5
+  jest-worker: 30.0.5
+  jest-util: 30.0.5
+  react: 19.2.0-canary-4123f6b7-20250826
+  react-dom: 19.2.0-canary-4123f6b7-20250826
   react-native: 0.75.4
   sherif: ^1.5.0
   tinycolor2: ^1.1.1
@@ -150,7 +147,6 @@ catalog:
   rollup: ^4.40.1
   rolldown: ^1.0.0-beta.8
   unbuild: ^3.5.0
-  unctx: ^2.4.1
   unenv: npm:unenv-nightly
   unimport: ^4.2.0
   unionfs: ^4.5.4
@@ -163,7 +159,6 @@ catalog:
   jiti: ^2.4.2
   wrangler: ^4.19.1
   zx: ^8.5.3
-
 linkWorkspacePackages: true
 onlyBuiltDependencies:
   - "@biomejs/biome"
@@ -174,6 +169,7 @@ onlyBuiltDependencies:
   - esbuild
   - lefthook
   - nx
+  - oxc-resolver
   - protobufjs
   - sharp
   - unrs-resolver

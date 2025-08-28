@@ -59,7 +59,6 @@ export function compilerPlugin(
           resolvedPath,
           contents,
           defu(options, {
-            skipTransformUnimport: true,
             babel: {
               plugins: [
                 ModuleResolverPlugin(context),

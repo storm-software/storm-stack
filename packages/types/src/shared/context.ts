@@ -22,17 +22,12 @@ import { StormLogInterface } from "../shared/log";
 import { StormEnv } from "./env";
 
 /**
- * An interface that allows plugins and custom application code to apply scope specific context data and functionality to the {@link StormGlobalContext} object.
- */
-export interface StormBindings {}
-
-/**
  * The global Storm Stack application context. This object contains information related to the current process's execution.
  *
  * @remarks
  * The Storm Stack application context object is injected into the global scope of the application. It can be accessed using `$storm` or `useStorm()` in the application code.
  */
-export interface StormContext extends StormBindings {
+export interface StormContext {
   /**
    * The context metadata.
    */
@@ -57,16 +52,6 @@ export interface StormContext extends StormBindings {
    * The configuration parameters for the Storm application.
    */
   config: StormConfigInterface;
-
-  /**
-   * A set of disposable resources to clean up when the context is no longer needed.
-   */
-  readonly disposables: Set<Disposable>;
-
-  /**
-   * A set of asynchronous disposable resources to clean up when the context is no longer needed.
-   */
-  readonly asyncDisposables: Set<AsyncDisposable>;
 
   [key: string]: any;
 }

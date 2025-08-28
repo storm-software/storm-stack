@@ -141,7 +141,7 @@
   },
   "devDependencies": {
     "@storm-software/build-tools": "catalog:",
-    "typescript": "6.0.0-dev.20250810"
+    "typescript": "^5.9.2"
   },
   "publishConfig": {
     "access": "public"

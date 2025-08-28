@@ -19,10 +19,8 @@
 import { LogLevelLabel } from "@storm-software/config-tools/types";
 import { createDirectory } from "@stryke/fs/helpers";
 import { existsSync } from "@stryke/path/exists";
-import { joinPaths } from "@stryke/path/join-paths";
 import { writeMetaFile } from "../../lib/context";
 import { getParsedTypeScriptConfig } from "../../lib/typescript/tsconfig";
-import { writeFile } from "../../lib/utilities/write-file";
 import type { EngineHooks } from "../../types/build";
 import type { Context } from "../../types/context";
 import { prepareConfig } from "./config";
@@ -38,19 +36,7 @@ import { prepareTypes } from "./types";
  * @param hooks - The engine hooks.
  */
 export async function prepare(context: Context, hooks: EngineHooks) {
-  await writeFile(
-    context.log,
-    joinPaths(context.dataPath, "meta.json"),
-    JSON.stringify(
-      {
-        ...context.meta,
-        runtimeIdMap: JSON.stringify(context.meta.runtimeIdMap),
-        virtualFiles: JSON.stringify(context.meta.virtualFiles)
-      },
-      null,
-      2
-    )
-  );
+  await writeMetaFile(context);
   context.persistedMeta = context.meta;
 
   await hooks.callHook("prepare:begin", context).catch((error: Error) => {

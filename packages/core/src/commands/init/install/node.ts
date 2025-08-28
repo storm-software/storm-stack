@@ -30,9 +30,5 @@ export function getNodeDeps(
   context.packageDeps ??= {};
   context.packageDeps["@types/node"] = "devDependency";
 
-  if (context.options.projectType === "application") {
-    context.packageDeps.unctx = "dependency";
-  }
-
   return context.packageDeps;
 }

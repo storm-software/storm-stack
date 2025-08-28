@@ -248,18 +248,18 @@ export async function initEntry(log: LogFn, context: CLIPluginContext) {
       binConfig = context.options.plugins.cli.bin.reduce(
         (ret, binName) => {
           ret[kebabCase(binName)] =
-            context.options.esbuild.format === "esm"
-              ? `${joinPaths("dist", bin)}.mjs`
-              : `${joinPaths("dist", bin)}.js`;
+            context.options.esbuild.format === "cjs"
+              ? `${joinPaths("dist", bin)}.js`
+              : `${joinPaths("dist", bin)}.mjs`;
           return ret;
         },
         {} as Record<string, string>
       );
     } else {
       binConfig[kebabCase(bin)] =
-        context.options.esbuild.format === "esm"
-          ? `${joinPaths("dist", bin)}.mjs`
-          : `${joinPaths("dist", bin)}.js`;
+        context.options.esbuild.format === "cjs"
+          ? `${joinPaths("dist", bin)}.js`
+          : `${joinPaths("dist", bin)}.mjs`;
     }
 
     await writeFile(

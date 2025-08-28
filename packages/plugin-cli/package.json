@@ -63,11 +63,10 @@
     }
   },
   "dependencies": {
-    "@deepkit/type": "catalog:",
     "@storm-software/config": "catalog:",
     "@storm-software/config-tools": "catalog:",
-    "@storm-stack/core": "0.35.1",
-    "@storm-stack/devkit": "0.11.1",
+    "@storm-stack/core": "workspace:*",
+    "@storm-stack/devkit": "workspace:*",
     "@stryke/capnp": "catalog:",
     "@stryke/cli": "catalog:",
     "@stryke/convert": "catalog:",

@@ -27,5 +27,6 @@ export * from "./typedoc";
 export * from "./typescript";
 export * from "./unbuild";
 export * from "./unimport";
+export * from "./unplugin";
 export * from "./utilities";
 export * from "./vfs/virtual-file-system";

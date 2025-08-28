@@ -12,6 +12,6 @@
     "@types/node": "catalog:",
     "rimraf": "catalog:",
     "tsup": "catalog:",
-    "typescript": "6.0.0-dev.20250810"
+    "typescript": "^5.9.2"
   }
 }

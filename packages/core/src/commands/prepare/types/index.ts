@@ -343,6 +343,7 @@ ${runtimeModules}`
         ""
       )
       .replaceAll("#private;", "")
+      .replace(/__Ω/g, "")
   );
 
   await hooks

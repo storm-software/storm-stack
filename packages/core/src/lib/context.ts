@@ -16,7 +16,6 @@
 
  ------------------------------------------------------------------- */
 
-import { deserializeType, ReflectionClass } from "@deepkit/type";
 import { LogLevelLabel } from "@storm-software/config-tools/types";
 import { getEnvPaths } from "@stryke/env/get-env-paths";
 import { readJsonFile } from "@stryke/fs/json";
@@ -24,7 +23,6 @@ import { listFiles } from "@stryke/fs/list-files";
 import { removeFile } from "@stryke/fs/remove-file";
 import { hash } from "@stryke/hash/hash";
 import { hashDirectory } from "@stryke/hash/hash-files";
-import { StormJSON } from "@stryke/json/storm-json";
 import { existsSync } from "@stryke/path/exists";
 import { relativeToWorkspaceRoot } from "@stryke/path/file-path-fns";
 import {
@@ -38,6 +36,7 @@ import { PackageJson } from "@stryke/types/package-json";
 import { uuid } from "@stryke/unique-id/uuid";
 import defu from "defu";
 import { DirectoryJSON } from "memfs";
+import { deserializeType, ReflectionClass } from "../deepkit";
 import {
   __VFS_VIRTUAL__,
   Context,
@@ -97,6 +96,12 @@ export async function getChecksum(path: string): Promise<string> {
   });
 }
 
+/**
+ * Retrieves the persisted meta information from the context's data path.
+ *
+ * @param context - The build context.
+ * @returns A promise that resolves to the persisted meta information, or undefined if not found.
+ */
 export async function getPersistedMeta(
   context: Context
 ): Promise<MetaInfo | undefined> {
@@ -308,15 +313,6 @@ export async function createContext<TContext extends Context = Context>(
     );
   }
 
-  // context.workers.errorLookup = createWorker(
-  //   joinPaths(packagePath, "workers", "error-lookup.cjs"),
-  //   ["find"]
-  // );
-  // context.workers.configReflection = createWorker(
-  //   joinPaths(packagePath, "workers", "config-reflection.cjs"),
-  //   ["add", "clear"]
-  // );
-
   return context;
 }
 
@@ -347,13 +343,7 @@ export function serializeContext(context: Context): SerializedContext {
       tsconfigJson: context.tsconfig.tsconfigJson
     },
     vfs: {
-      runtimeIdMap: context.vfs.runtimeIdMap
-        .entries()
-        .reduce((ret, [key, value]) => {
-          ret[key] = value;
-
-          return ret;
-        }, {}),
+      runtimeIdMap: Object.fromEntries(context.vfs.runtimeIdMap.entries()),
       virtualFiles: context.vfs[__VFS_VIRTUAL__].toJSON(context.artifactsPath)
     }
   };
@@ -419,19 +409,16 @@ export async function writeMetaFile(context: Context): Promise<void> {
     `Writing runtime metadata to ${metaFilePath}`
   );
 
-  context.meta.runtimeIdMap = context.vfs.runtimeIdMap.entries().reduce(
-    (map, [id, path]) => {
-      map[id] = path;
-      return map;
-    },
-    {} as Record<string, string>
-  );
-  context.meta.virtualFiles = context.vfs[__VFS_VIRTUAL__].toJSON(
-    context.artifactsPath
-  );
-
-  return context.vfs.writeFileToDisk(
+  await context.vfs.writeFileToDisk(
     metaFilePath,
-    StormJSON.stringify(context.meta)
+    JSON.stringify(
+      {
+        ...context.meta,
+        runtimeIdMap: Object.fromEntries(context.vfs.runtimeIdMap.entries()),
+        virtualFiles: context.vfs[__VFS_VIRTUAL__].toJSON(context.artifactsPath)
+      },
+      null,
+      2
+    )
   );
 }

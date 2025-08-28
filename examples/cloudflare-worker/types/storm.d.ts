@@ -174,6 +174,18 @@ interface DateFormats<TFormatToken = string> {
    * @example "02/13/2020 23:44"
    */
   keyboardDateTime24h: TFormatToken;
+  /**
+   * System-friendly date/time 24h format for scenarios such as traces and logging
+   *
+   * @example "02/13/2020 23:44:55.666"
+   */
+  systemDateTime: TFormatToken;
+  /**
+   * System-friendly date/time format for scenarios such as file suffixes or URLs
+   *
+   * @example "02-13-2020_23-44-55-666"
+   */
+  filePathDateTime: TFormatToken;
 }
 
 type ErrorMessageDetails = MessageDetails<"error">;
@@ -362,15 +374,10 @@ type StorageAdapter = Driver & AsyncDisposable;
 type StorageAdapterFactory = () => StorageAdapter;
 
 /**
- * An interface that allows plugins and custom application code to apply scope specific context data and functionality to the {@link StormGlobalContext} object.
- */
-interface StormBindings {}
-
-/**
  * The base configuration used by Storm Stack applications
  *
  * @remarks
- * This interface is used to define the environment variables, configuration options, and runtime settings used by the Storm Stack applications. It is used to provide type safety, autocompletion, and default values for the environment variables. The comments of each variable are used to provide documentation descriptions when running the \`storm docs\` command.
+ * This interface is used to define the environment variables, configuration options, and runtime settings used by Storm Stack applications. It is used to provide type safety, autocompletion, and default values for the environment variables. The comments of each variable are used to provide documentation descriptions when running the \`storm docs\` command.
  *
  * @categoryDescription Platform
  * The name of the platform the configuration parameter is intended for use in.
@@ -379,45 +386,20 @@ interface StormBindings {}
  */
 interface StormConfigInterface {
   /**
-   * A virtual object representing the configuration parameters for the Storm application at build time. The Storm Stack build process will inject this object's values with the actual configuration parameters at build time.
-   *
-   * @example
-   * ```typescript
-   * // "$storm.config.static.CONFIG_ITEM" will be replaced with the actual value at build time
-   * const value = $storm.config.static.CONFIG_ITEM;
-   *
-   * const someNumber = $storm.config.static.SOME_NUMBER;
-   * // const someNumber = 42;
-   *
-   * const someString = $storm.config.static.SOME_STRING;
-   * // const someString = "Hello, World!";
-   *
-   * const someBoolean = $storm.config.static.SOME_BOOLEAN;
-   * // const someBoolean = true;
-   * ```
-   *
-   * @remarks
-   * A static representation of the configuration thats used to inject data into the application code at build time. This object will can provide type safety and autocompletion for the configuration values when used in the application code. **The values on this object will not exist at runtime.**
-   *
-   * @internal
-   * @readonly
-   */
-  readonly static: any;
-  /**
    * An indicator that specifies the application is running in the local Storm Stack development environment.
    *
    * @hidden
    * @readonly
    * @category node
    */
-  STORM_STACK_LOCAL?: boolean;
+  readonly STORM_STACK_LOCAL?: boolean;
   /**
    * The name of the application.
    *
    * @readonly
    * @category neutral
    */
-  APP_NAME: string;
+  readonly APP_NAME: string;
   /**
    * The version of the application.
    *
@@ -426,42 +408,42 @@ interface StormConfigInterface {
    * @readonly
    * @category neutral
    */
-  APP_VERSION: string;
+  readonly APP_VERSION: string;
   /**
    * The unique identifier for the build.
    *
    * @readonly
    * @category neutral
    */
-  BUILD_ID: string;
+  readonly BUILD_ID: string;
   /**
    * The timestamp the build was ran at.
    *
    * @readonly
    * @category neutral
    */
-  BUILD_TIMESTAMP: string;
+  readonly BUILD_TIMESTAMP: string;
   /**
    * A checksum hash created during the build.
    *
    * @readonly
    * @category neutral
    */
-  BUILD_CHECKSUM: string;
+  readonly BUILD_CHECKSUM: string;
   /**
    * The unique identifier for the release.
    *
    * @readonly
    * @category neutral
    */
-  RELEASE_ID: string;
+  readonly RELEASE_ID: string;
   /**
    * The tag for the release. This is generally in the format of "\<APP_NAME\>\@\<APP_VERSION\>".
    *
    * @readonly
    * @category neutral
    */
-  RELEASE_TAG: string;
+  readonly RELEASE_TAG: string;
   /**
    * The name of the organization that maintains the application.
    *
@@ -546,14 +528,14 @@ interface StormConfigInterface {
    * @readonly
    * @category neutral
    */
-  AGENT_NAME?: string;
+  readonly AGENT_NAME?: string;
   /**
    * The color terminal type. This variable is set by certain terminal emulators.
    *
    * @readonly
    * @category node
    */
-  COLORTERM?: string;
+  readonly COLORTERM?: string;
   /**
    * The terminal type. This variable is set by certain CI/CD systems.
    *
@@ -563,63 +545,63 @@ interface StormConfigInterface {
    * @readonly
    * @category node
    */
-  TERM?: string;
+  readonly TERM?: string;
   /**
    * The terminal program name. This variable is set by certain terminal emulators.
    *
    * @readonly
    * @category node
    */
-  TERM_PROGRAM?: string;
+  readonly TERM_PROGRAM?: string;
   /**
    * The terminal program version. This variable is set by certain terminal emulators.
    *
    * @readonly
    * @category node
    */
-  TERM_PROGRAM_VERSION?: string;
+  readonly TERM_PROGRAM_VERSION?: string;
   /**
    * The terminal emulator name. This variable is set by certain terminal emulators.
    *
    * @readonly
    * @category node
    */
-  TERMINAL_EMULATOR?: string;
+  readonly TERMINAL_EMULATOR?: string;
   /**
    * The terminal emulator session ID. This variable is set by certain terminal emulators.
    *
    * @readonly
    * @category node
    */
-  WT_SESSION?: string;
+  readonly WT_SESSION?: string;
   /**
    * An indicator that specifies the current terminal is running Terminus Sublime. This variable is set by certain terminal emulators.
    *
    * @readonly
    * @category node
    */
-  TERMINUS_SUBLIME?: boolean;
+  readonly TERMINUS_SUBLIME?: boolean;
   /**
    * The ConEmu task name. This variable is set by certain terminal emulators.
    *
    * @readonly
    * @category node
    */
-  ConEmuTask?: string;
+  readonly ConEmuTask?: string;
   /**
    * The cursor trace ID. This variable is set by certain terminal emulators.
    *
    * @readonly
    * @category node
    */
-  CURSOR_TRACE_ID?: string;
+  readonly CURSOR_TRACE_ID?: string;
   /**
    * The VTE version. This variable is set by certain terminal emulators.
    *
    * @readonly
    * @category node
    */
-  VTE_VERSION?: string;
+  readonly VTE_VERSION?: string;
   /**
    * Indicates if error stack traces should be captured.
    *
@@ -653,7 +635,6 @@ interface StormConfigInterface {
    * The default locale to be used in the application.
    *
    * @defaultValue "en_US"
-   * @readonly
    * @category neutral
    */
   DEFAULT_LOCALE: string;
@@ -661,6 +642,7 @@ interface StormConfigInterface {
    * The default lowest log level to accept. If `null`, the logger will reject all records. This value only applies if `lowestLogLevel` is not provided to the `logs` configuration.
    *
    * @defaultValue "info"
+   *
    * @category neutral
    */
   LOG_LEVEL?: LogLevel | null;
@@ -678,343 +660,350 @@ interface StormConfigInterface {
    * @readonly
    * @category node
    */
-  RUN_ID?: string;
+  readonly RUN_ID?: string;
   /**
    * The agola git reference. This value is set by certain CI/CD systems.
    *
    * @readonly
    * @category node
    */
-  AGOLA_GIT_REF?: string;
+  readonly AGOLA_GIT_REF?: string;
   /**
    * The appcircle build ID. This value is set by certain CI/CD systems.
    *
    * @readonly
    * @category node
    */
-  AC_APPCIRCLE?: string;
+  readonly AC_APPCIRCLE?: string;
   /**
    * The appveyor build ID. This value is set by certain CI/CD systems.
    *
    * @readonly
    * @category node
    */
-  APPVEYOR?: string;
+  readonly APPVEYOR?: string;
   /**
    * The codebuild build ID. This value is set by certain CI/CD systems.
    *
    * @readonly
    * @category node
    */
-  CODEBUILD?: string;
+  readonly CODEBUILD?: string;
   /**
    * The task force build ID. This value is set by certain CI/CD systems.
    *
    * @readonly
    * @category node
    */
-  TF_BUILD?: string;
+  readonly TF_BUILD?: string;
   /**
    * The bamboo plan key. This value is set by certain CI/CD systems.
    *
    * @readonly
    * @category node
    */
-  bamboo_planKey?: string;
+  readonly bamboo_planKey?: string;
   /**
    * The bitbucket commit. This value is set by certain CI/CD systems.
    *
    * @readonly
    * @category node
    */
-  BITBUCKET_COMMIT?: string;
+  readonly BITBUCKET_COMMIT?: string;
   /**
    * The bitrise build ID. This value is set by certain CI/CD systems.
    *
    * @readonly
    * @category node
    */
-  BITRISE_IO?: string;
+  readonly BITRISE_IO?: string;
   /**
    * The buddy workspace ID. This value is set by certain CI/CD systems.
    *
    * @readonly
    * @category node
    */
-  BUDDY_WORKSPACE_ID?: string;
+  readonly BUDDY_WORKSPACE_ID?: string;
   /**
    * The buildkite build ID. This value is set by certain CI/CD systems.
    *
    * @readonly
    * @category node
    */
-  BUILDKITE?: string;
+  readonly BUILDKITE?: string;
   /**
    * The circleci build ID. This value is set by certain CI/CD systems.
    *
    * @readonly
    * @category node
    */
-  CIRCLECI?: string;
+  readonly CIRCLECI?: string;
   /**
    * The cirrus-ci build ID. This value is set by certain CI/CD systems.
    *
    * @readonly
    * @category node
    */
-  CIRRUS_CI?: string;
+  readonly CIRRUS_CI?: string;
   /**
    * The cf build ID. This value is set by certain CI/CD systems.
    *
    * @readonly
    * @category node
    */
-  CF_BUILD_ID?: string;
+  readonly CF_BUILD_ID?: string;
   /**
    * The cm build ID. This value is set by certain CI/CD systems.
    *
    * @readonly
    * @category node
    */
-  CM_BUILD_ID?: string;
+  readonly CM_BUILD_ID?: string;
   /**
    * The ci name. This value is set by certain CI/CD systems.
    *
    * @readonly
    * @category node
    */
-  CI_NAME?: string;
+  readonly CI_NAME?: string;
   /**
    * The drone build ID. This value is set by certain CI/CD systems.
    *
    * @readonly
    * @category node
    */
-  DRONE?: string;
+  readonly DRONE?: string;
   /**
    * The dsari build ID. This value is set by certain CI/CD systems.
    *
    * @readonly
    * @category node
    */
-  DSARI?: string;
+  readonly DSARI?: string;
   /**
    * The earthly build ID. This value is set by certain CI/CD systems.
    *
    * @readonly
    * @category node
    */
-  EARTHLY_CI?: string;
+  readonly EARTHLY_CI?: string;
   /**
    * The eas build ID. This value is set by certain CI/CD systems.
    *
    * @readonly
    * @category node
    */
-  EAS_BUILD?: string;
+  readonly EAS_BUILD?: string;
   /**
    * The gerrit project. This value is set by certain CI/CD systems.
    *
    * @readonly
    * @category node
    */
-  GERRIT_PROJECT?: string;
+  readonly GERRIT_PROJECT?: string;
   /**
    * The gitea actions build ID. This value is set by certain CI/CD systems.
    *
    * @readonly
    * @category node
    */
-  GITEA_ACTIONS?: string;
+  readonly GITEA_ACTIONS?: string;
   /**
    * The github actions build ID. This value is set by certain CI/CD systems.
    *
    * @readonly
    * @category node
    */
-  GITHUB_ACTIONS?: string;
+  readonly GITHUB_ACTIONS?: string;
   /**
    * The gitlab ci build ID. This value is set by certain CI/CD systems.
    *
    * @readonly
    * @category node
    */
-  GITLAB_CI?: string;
+  readonly GITLAB_CI?: string;
   /**
    * The go cd build ID. This value is set by certain CI/CD systems.
    *
    * @readonly
    * @category node
    */
-  GOCD?: string;
+  readonly GOCD?: string;
   /**
    * The builder output build ID. This value is set by certain CI/CD systems.
    *
    * @readonly
    * @category node
    */
-  BUILDER_OUTPUT?: string;
+  readonly BUILDER_OUTPUT?: string;
   /**
    * The harness build ID. This value is set by certain CI/CD systems.
    *
    * @readonly
    * @category node
    */
-  HARNESS_BUILD_ID?: string;
+  readonly HARNESS_BUILD_ID?: string;
   /**
    * The jenkins url. This value is set by certain CI/CD systems.
    *
    * @readonly
    * @category node
    */
-  JENKINS_URL?: string;
+  readonly JENKINS_URL?: string;
   /**
    * The layerci build ID. This value is set by certain CI/CD systems.
    *
    * @readonly
    * @category node
    */
-  LAYERCI?: string;
+  readonly LAYERCI?: string;
   /**
    * The magnum build ID. This value is set by certain CI/CD systems.
    *
    * @readonly
    * @category node
    */
-  MAGNUM?: string;
+  readonly MAGNUM?: string;
   /**
    * The netlify build ID. This value is set by certain CI/CD systems.
    *
    * @readonly
    * @category node
    */
-  NETLIFY?: string;
+  readonly NETLIFY?: string;
   /**
    * The nevercode build ID. This value is set by certain CI/CD systems.
    *
    * @readonly
    * @category node
    */
-  NEVERCODE?: string;
+  readonly NEVERCODE?: string;
   /**
    * The prow job ID. This value is set by certain CI/CD systems.
    *
    * @readonly
    * @category node
    */
-  PROW_JOB_ID?: string;
+  readonly PROW_JOB_ID?: string;
   /**
    * The release build ID. This value is set by certain CI/CD systems.
    *
    * @readonly
    * @category node
    */
-  RELEASE_BUILD_ID?: string;
+  readonly RELEASE_BUILD_ID?: string;
   /**
    * The render build ID. This value is set by certain CI/CD systems.
    *
    * @readonly
    * @category node
    */
-  RENDER?: string;
+  readonly RENDER?: string;
   /**
    * The sailci build ID. This value is set by certain CI/CD systems.
    *
    * @readonly
    * @category node
    */
-  SAILCI?: string;
+  readonly SAILCI?: string;
   /**
    * The hudson build ID. This value is set by certain CI/CD systems.
    *
    * @readonly
    * @category node
    */
-  HUDSON?: string;
+  readonly HUDSON?: string;
   /**
    * The screwdriver build ID. This value is set by certain CI/CD systems.
    *
    * @readonly
    * @category node
    */
-  SCREWDRIVER?: string;
+  readonly SCREWDRIVER?: string;
   /**
    * The semaphore build ID. This value is set by certain CI/CD systems.
    *
    * @readonly
    * @category node
    */
-  SEMAPHORE?: string;
+  readonly SEMAPHORE?: string;
   /**
    * The sourcehut build ID. This value is set by certain CI/CD systems.
    *
    * @readonly
    * @category node
    */
-  SOURCEHUT?: string;
+  readonly SOURCEHUT?: string;
+  /**
+   * The spaceship build ID. This value is set by certain CI/CD systems.
+   *
+   * @readonly
+   * @category node
+   */
+  readonly SPACESHIP_CI?: string;
   /**
    * The strider build ID. This value is set by certain CI/CD systems.
    *
    * @readonly
    * @category node
    */
-  STRIDER?: string;
+  readonly STRIDER?: string;
   /**
    * The task ID. This value is set by certain CI/CD systems.
    *
    * @readonly
    * @category node
    */
-  TASK_ID?: string;
+  readonly TASK_ID?: string;
   /**
    * The teamcity version. This value is set by certain CI/CD systems.
    *
    * @readonly
    * @category node
    */
-  TEAMCITY_VERSION?: string;
+  readonly TEAMCITY_VERSION?: string;
   /**
    * The travis build ID. This value is set by certain CI/CD systems.
    *
    * @readonly
    * @category node
    */
-  TRAVIS?: string;
+  readonly TRAVIS?: string;
   /**
    * The vela build ID. This value is set by certain CI/CD systems.
    *
    * @readonly
    * @category node
    */
-  VELA?: string;
+  readonly VELA?: string;
   /**
    * The now builder build ID. This value is set by certain CI/CD systems.
    *
    * @readonly
    * @category node
    */
-  NOW_BUILDER?: string;
+  readonly NOW_BUILDER?: string;
   /**
    * The appcenter build ID. This value is set by certain CI/CD systems.
    *
    * @readonly
    * @category node
    */
-  APPCENTER_BUILD_ID?: string;
+  readonly APPCENTER_BUILD_ID?: string;
   /**
    * The xcode project build ID. This value is set by certain CI/CD systems.
    *
    * @readonly
    * @category node
    */
-  CI_XCODE_PROJECT?: string;
+  readonly CI_XCODE_PROJECT?: string;
   /**
    * The xcode server build ID. This value is set by certain CI/CD systems.
    *
    * @readonly
    * @category node
    */
-  XCS?: string;
+  readonly XCS?: string;
   /**
    * The Storm Stack application's runtime data directory.
    *
@@ -1076,7 +1065,7 @@ interface StormConfigInterface {
    * @readonly
    * @category node
    */
-  LOCALAPPDATA?: string;
+  readonly LOCALAPPDATA?: string;
   /**
    * A variable that specifies the application data directory on Windows.
    *
@@ -1088,7 +1077,7 @@ interface StormConfigInterface {
    * @readonly
    * @category node
    */
-  APPDATA?: string;
+  readonly APPDATA?: string;
   /**
    * A variable that specifies the data path in the home directory on Linux systems using the XDG base directory specification.
    *
@@ -1100,7 +1089,7 @@ interface StormConfigInterface {
    * @readonly
    * @category node
    */
-  XDG_DATA_HOME?: string;
+  readonly XDG_DATA_HOME?: string;
   /**
    * A variable that specifies the configuration path in the home directory on Linux systems using the XDG base directory specification.
    *
@@ -1112,7 +1101,7 @@ interface StormConfigInterface {
    * @readonly
    * @category node
    */
-  XDG_CONFIG_HOME?: string;
+  readonly XDG_CONFIG_HOME?: string;
   /**
    * A variable that specifies the cache path in the home directory on Linux systems using the XDG base directory specification.
    *
@@ -1124,7 +1113,7 @@ interface StormConfigInterface {
    * @readonly
    * @category node
    */
-  XDG_CACHE_HOME?: string;
+  readonly XDG_CACHE_HOME?: string;
   /**
    * A variable that specifies the state directory on Linux systems using the XDG base directory specification.
    *
@@ -1136,7 +1125,7 @@ interface StormConfigInterface {
    * @readonly
    * @category node
    */
-  XDG_STATE_HOME?: string;
+  readonly XDG_STATE_HOME?: string;
   /**
    * A variable that specifies the runtime directory on Linux systems using the XDG base directory specification.
    *
@@ -1148,7 +1137,7 @@ interface StormConfigInterface {
    * @readonly
    * @category node
    */
-  XDG_RUNTIME_DIR?: string;
+  readonly XDG_RUNTIME_DIR?: string;
   /**
    * A variable that specifies the [Devenv](https://devenv.sh/) runtime directory.
    *
@@ -1169,7 +1158,7 @@ interface StormConfigInterface {
  * @remarks
  * The Storm Stack application context object is injected into the global scope of the application. It can be accessed using `$storm` or `useStorm()` in the application code.
  */
-interface StormContext extends StormBindings {
+interface StormContext {
   /**
    * The context metadata.
    */
@@ -1190,14 +1179,6 @@ interface StormContext extends StormBindings {
    * The configuration parameters for the Storm application.
    */
   config: StormConfigInterface;
-  /**
-   * A set of disposable resources to clean up when the context is no longer needed.
-   */
-  readonly disposables: Set<Disposable>;
-  /**
-   * A set of asynchronous disposable resources to clean up when the context is no longer needed.
-   */
-  readonly asyncDisposables: Set<AsyncDisposable>;
   [key: string]: any;
 }
 
@@ -2050,126 +2031,13 @@ declare module "storm:config" {
    */
   export interface StormConfigBase extends StormConfigInterface {
     /**
-     * Ac Appcircle
-     *
-     * @title Ac Appcircle
-     */
-    AC_APPCIRCLE?: string;
-    /**
-     * Agent Name
-     *
-     * @title Agent Name
-     */
-    AGENT_NAME?: string;
-    /**
-     * Agola Git Ref
-     *
-     * @title Agola Git Ref
-     */
-    AGOLA_GIT_REF?: string;
-    /**
-     * App Name
-     *
-     * @title App Name
-     * @defaultValue examples-cloudflare-worker
-     */
-    APP_NAME: string;
-    /**
-     * App Version
-     *
-     * @title App Version
-     * @defaultValue 0.0.1
-     */
-    APP_VERSION: string;
-    /**
-     * Appcenter Build Identifier
-     *
-     * @title Appcenter Build Identifier
-     */
-    APPCENTER_BUILD_ID?: string;
-    /**
-     * Appdata
-     *
-     * @title Appdata
-     */
-    APPDATA?: string;
-    /**
-     * Appveyor
-     *
-     * @title Appveyor
-     */
-    APPVEYOR?: string;
-    /**
-     * Bamboo Plan Key
-     *
-     * @title Bamboo Plan Key
-     */
-    bamboo_planKey?: string;
-    /**
-     * Bitbucket Commit
-     *
-     * @title Bitbucket Commit
-     */
-    BITBUCKET_COMMIT?: string;
-    /**
-     * Bitrise Input/Output
-     *
-     * @title Bitrise Input/Output
-     */
-    BITRISE_IO?: string;
-    /**
-     * Buddy Workspace Identifier
-     *
-     * @title Buddy Workspace Identifier
-     */
-    BUDDY_WORKSPACE_ID?: string;
-    /**
-     * Build Checksum
-     *
-     * @title Build Checksum
-     * @defaultValue RBNvo1WzZ4oRRq0W9-hknpT7T8If536D
-     */
-    BUILD_CHECKSUM: string;
-    /**
-     * Build Identifier
-     *
-     * @title Build Identifier
-     * @defaultValue 9122531f-b063-4f88-bff0-7c5cb9540be4
-     */
-    BUILD_ID: string;
-    /**
-     * Build Timestamp
-     *
-     * @title Build Timestamp
-     * @defaultValue 2025-08-23T21:10:54.710Z
-     */
-    BUILD_TIMESTAMP: string;
-    /**
-     * Builder Output
-     *
-     * @title Builder Output
-     */
-    BUILDER_OUTPUT?: string;
-    /**
-     * Buildkite
-     *
-     * @title Buildkite
-     */
-    BUILDKITE?: string;
-    /**
-     * Cache Directory
+     * The Storm Stack application's cached data directory.
      *
      * @title Cache Directory
      */
     CACHE_DIR?: string;
     /**
-     * Cf Build Identifier
-     *
-     * @title Cf Build Identifier
-     */
-    CF_BUILD_ID?: string;
-    /**
-     * Continuous Integration
+     * An indicator that specifies the current runtime is a continuous integration environment.
      *
      * @title Continuous Integration
      * @alias CONTINUOUS_INTEGRATION
@@ -2177,62 +2045,13 @@ declare module "storm:config" {
      */
     CI: boolean;
     /**
-     * Continuous Integration Name
-     *
-     * @title Continuous Integration Name
-     */
-    CI_NAME?: string;
-    /**
-     * Continuous Integration Xcode Project
-     *
-     * @title Continuous Integration Xcode Project
-     */
-    CI_XCODE_PROJECT?: string;
-    /**
-     * Circleci
-     *
-     * @title Circleci
-     */
-    CIRCLECI?: string;
-    /**
-     * Cirrus Continuous Integration
-     *
-     * @title Cirrus Continuous Integration
-     */
-    CIRRUS_CI?: string;
-    /**
-     * Cm Build Identifier
-     *
-     * @title Cm Build Identifier
-     */
-    CM_BUILD_ID?: string;
-    /**
-     * Codebuild
-     *
-     * @title Codebuild
-     */
-    CODEBUILD?: string;
-    /**
-     * Colorterm
-     *
-     * @title Colorterm
-     * @defaultValue truecolor
-     */
-    COLORTERM?: string;
-    /**
-     * Con Emu Task
-     *
-     * @title Con Emu Task
-     */
-    ConEmuTask?: string;
-    /**
-     * Configuration Directory
+     * The Storm Stack application's configuration data directory.
      *
      * @title Configuration Directory
      */
     CONFIG_DIR?: string;
     /**
-     * Continuous Integration
+     * An indicator that specifies the current runtime is a continuous integration environment.
      *
      * @title Continuous Integration
      * @alias CI
@@ -2240,467 +2059,569 @@ declare module "storm:config" {
      */
     CONTINUOUS_INTEGRATION: boolean;
     /**
-     * Cursor Trace Identifier
-     *
-     * @title Cursor Trace Identifier
-     */
-    CURSOR_TRACE_ID?: string;
-    /**
-     * Data Directory
+     * The Storm Stack application's runtime data directory.
      *
      * @title Data Directory
      */
     DATA_DIR?: string;
     /**
-     * Debug
+     * Indicates if the application is running in debug mode.
      *
-     * @title Debug
+     * @title DEBUG
      * @defaultValue true
      */
     DEBUG: boolean;
     /**
-     * Default Locale
+     * The default locale to be used in the application.
      *
-     * @title Default Locale
+     * @title DEFAULT LOCALE
      * @defaultValue en-US
      */
     DEFAULT_LOCALE: string;
     /**
-     * Default Timezone
+     * The default timezone for the application.
      *
-     * @title Default Timezone
+     * @title DEFAULT TIMEZONE
      * @defaultValue America/New_York
      */
     DEFAULT_TIMEZONE: string;
     /**
-     * DevEnv Runtime
+     * A variable that specifies the [Devenv](https://devenv.sh/) runtime directory.
      *
-     * @title DevEnv Runtime
-     * @defaultValue /tmp/devenv-b08757d
+     * @title Devenv RUNTIME
+     * @defaultValue /run/user/1001/devenv-a024b62
      */
     DEVENV_RUNTIME?: string;
     /**
-     * Drone
+     * The environment the application is running in. This value will be populated with the value of `MODE` if not provided.
      *
-     * @title Drone
-     */
-    DRONE?: string;
-    /**
-     * Dsari
-     *
-     * @title Dsari
-     */
-    DSARI?: string;
-    /**
-     * Earthly Continuous Integration
-     *
-     * @title Earthly Continuous Integration
-     */
-    EARTHLY_CI?: string;
-    /**
-     * Eas Build
-     *
-     * @title Eas Build
-     */
-    EAS_BUILD?: string;
-    /**
-     * Env
-     *
-     * @title Env
+     * @title ENVIRONMENT
      * @alias ENVIRONMENT
      * @defaultValue shared
      */
     ENV: string;
     /**
-     * Environment
+     * The environment the application is running in. This value will be populated with the value of `MODE` if not provided.
      *
-     * @title Environment
+     * @title ENVIRONMENT
      * @alias ENV
      * @defaultValue shared
      */
     ENVIRONMENT: string;
     /**
-     * Error Details URL
+     * A web page to lookup error messages and display additional information given an error code.
      *
      * @title Error Details URL
      * @defaultValue https://developer.stormsoftware.com/static/errors
      */
     ERROR_URL: string;
     /**
-     * Force Color
+     * An indicator that specifies the current runtime is a force color environment.
      *
-     * @title Force Color
+     * @title FORCE COLOR
      * @defaultValue true
      */
     FORCE_COLOR: boolean | number;
     /**
-     * Force Hyperlink
+     * An indicator that specifies the current runtime should force hyperlinks in terminal output.
      *
-     * @title Force Hyperlink
+     * @title FORCE HYPERLINK
      * @defaultValue false
      */
     FORCE_HYPERLINK: boolean | number;
     /**
-     * Gerrit Project
+     * Indicates if error data should be included.
      *
-     * @title Gerrit Project
-     */
-    GERRIT_PROJECT?: string;
-    /**
-     * Gitea Actions
-     *
-     * @title Gitea Actions
-     */
-    GITEA_ACTIONS?: string;
-    /**
-     * Github Actions
-     *
-     * @title Github Actions
-     */
-    GITHUB_ACTIONS?: string;
-    /**
-     * Gitlab Continuous Integration
-     *
-     * @title Gitlab Continuous Integration
-     */
-    GITLAB_CI?: string;
-    /**
-     * Gocd
-     *
-     * @title Gocd
-     */
-    GOCD?: string;
-    /**
-     * Harness Build Identifier
-     *
-     * @title Harness Build Identifier
-     */
-    HARNESS_BUILD_ID?: string;
-    /**
-     * Hudson
-     *
-     * @title Hudson
-     */
-    HUDSON?: string;
-    /**
-     * Include Error Data
-     *
-     * @title Include Error Data
+     * @title INCLUDE ERROR DATA
      * @defaultValue false
      */
     INCLUDE_ERROR_DATA: boolean;
     /**
-     * Jenkins Uniform Resource Locator
-     *
-     * @title Jenkins Uniform Resource Locator
-     */
-    JENKINS_URL?: string;
-    /**
-     * Layerci
-     *
-     * @title Layerci
-     */
-    LAYERCI?: string;
-    /**
-     * Localappdata
-     *
-     * @title Localappdata
-     */
-    LOCALAPPDATA?: string;
-    /**
-     * Log Directory
+     * The Storm Stack application's logging directory.
      *
      * @title Log Directory
      */
     LOG_DIR?: string;
     /**
-     * Log Level
+     * The default lowest log level to accept. If `null`, the logger will reject all records. This value only applies if `lowestLogLevel` is not provided to the `logs` configuration.
      *
-     * @title Log Level
+     * @title LOG LEVEL
      * @defaultValue debug
      */
     LOG_LEVEL?: "debug" | "info" | "warning" | "error" | "fatal" | null;
     /**
-     * Magnum
+     * An indicator that specifies the current runtime is a minimal environment.
      *
-     * @title Magnum
-     */
-    MAGNUM?: string;
-    /**
-     * Minimal
-     *
-     * @title Minimal
+     * @title MINIMAL
      * @defaultValue false
      */
     MINIMAL: boolean;
     /**
-     * Mode
+     * The mode in which the application is running.
      *
-     * @title Mode
+     * @title MODE
      * @alias NODE_ENV
-     * @defaultValue production
+     * @defaultValue development
      */
     MODE: "development" | "staging" | "production";
     /**
-     * Netlify
+     * An indicator that specifies the current runtime is a no color environment.
      *
-     * @title Netlify
-     */
-    NETLIFY?: string;
-    /**
-     * Nevercode
-     *
-     * @title Nevercode
-     */
-    NEVERCODE?: string;
-    /**
-     * No Color
-     *
-     * @title No Color
+     * @title NO COLOR
      * @defaultValue false
      */
     NO_COLOR: boolean;
     /**
-     * Node Env
+     * The mode in which the application is running.
      *
-     * @title Node Env
+     * @title MODE
      * @alias MODE
-     * @defaultValue production
+     * @defaultValue development
      */
     NODE_ENV: "development" | "staging" | "production";
     /**
-     * Now Builder
+     * The name of the organization that maintains the application.
      *
-     * @title Now Builder
-     */
-    NOW_BUILDER?: string;
-    /**
-     * Org
-     *
-     * @title Org
+     * @title ORGANIZATION
      * @alias ORGANIZATION
      * @defaultValue storm-software
      */
     ORG: string;
     /**
-     * Organization
+     * The name of the organization that maintains the application.
      *
-     * @title Organization
+     * @title ORGANIZATION
      * @alias ORG
      * @defaultValue storm-software
      */
     ORGANIZATION: string;
     /**
-     * Platform
+     * The platform for which the application was built.
      *
-     * @title Platform
+     * @title PLATFORM
      * @defaultValue node
      */
     PLATFORM: "node" | "neutral" | "browser";
     /**
-     * Prow Job Identifier
+     * Indicates if error stack traces should be captured.
      *
-     * @title Prow Job Identifier
-     */
-    PROW_JOB_ID?: string;
-    /**
-     * Release Build Identifier
-     *
-     * @title Release Build Identifier
-     */
-    RELEASE_BUILD_ID?: string;
-    /**
-     * Release Identifier
-     *
-     * @title Release Identifier
-     * @defaultValue 22531fb0-634f-48ff-b07c-5cb9540be44a
-     */
-    RELEASE_ID: string;
-    /**
-     * Release Tag
-     *
-     * @title Release Tag
-     * @defaultValue examples-cloudflare-worker@0.0.1
-     */
-    RELEASE_TAG: string;
-    /**
-     * Render
-     *
-     * @title Render
-     */
-    RENDER?: string;
-    /**
-     * Run Identifier
-     *
-     * @title Run Identifier
-     */
-    RUN_ID?: string;
-    /**
-     * Sailci
-     *
-     * @title Sailci
-     */
-    SAILCI?: string;
-    /**
-     * Screwdriver
-     *
-     * @title Screwdriver
-     */
-    SCREWDRIVER?: string;
-    /**
-     * Semaphore
-     *
-     * @title Semaphore
-     */
-    SEMAPHORE?: string;
-    /**
-     * Sourcehut
-     *
-     * @title Sourcehut
-     */
-    SOURCEHUT?: string;
-    /**
-     * Stacktrace
-     *
-     * @title Stacktrace
+     * @title STACKTRACE
      * @defaultValue true
      */
     STACKTRACE: boolean;
     /**
-     * Storm Stack Local
-     *
-     * @title Storm Stack Local
-     */
-    STORM_STACK_LOCAL?: boolean;
-    /**
-     * Strider
-     *
-     * @title Strider
-     */
-    STRIDER?: string;
-    /**
-     * Task Identifier
-     *
-     * @title Task Identifier
-     */
-    TASK_ID?: string;
-    /**
-     * Teamcity Version
-     *
-     * @title Teamcity Version
-     */
-    TEAMCITY_VERSION?: string;
-    /**
-     * Temporary Directory
+     * The Storm Stack application's temporary data directory.
      *
      * @title Temporary Directory
      */
     TEMP_DIR?: string;
     /**
-     * Term
+     * An indicator that specifies the current runtime is a test environment.
      *
-     * @title Term
-     * @defaultValue xterm-256color
-     */
-    TERM?: string;
-    /**
-     * Term Program
-     *
-     * @title Term Program
-     */
-    TERM_PROGRAM?: string;
-    /**
-     * Term Program Version
-     *
-     * @title Term Program Version
-     */
-    TERM_PROGRAM_VERSION?: string;
-    /**
-     * Terminal Emulator
-     *
-     * @title Terminal Emulator
-     */
-    TERMINAL_EMULATOR?: string;
-    /**
-     * Terminus Sublime
-     *
-     * @title Terminus Sublime
-     */
-    TERMINUS_SUBLIME?: boolean;
-    /**
-     * Test
-     *
-     * @title Test
+     * @title TEST
      * @defaultValue false
      */
     TEST: boolean;
     /**
-     * Tf Build
+     * The appcircle build ID. This value is set by certain CI/CD systems.
      *
-     * @title Tf Build
+     * @title AC APPCIRCLE
+     * @readonly
      */
-    TF_BUILD?: string;
+    readonly AC_APPCIRCLE?: string;
     /**
-     * Travis
+     * The name of the agent running the application. This variable is set by certain CI/CD systems.
      *
-     * @title Travis
+     * @title AGENT NAME
+     * @readonly
      */
-    TRAVIS?: string;
+    readonly AGENT_NAME?: string;
     /**
-     * Vela
+     * The agola git reference. This value is set by certain CI/CD systems.
      *
-     * @title Vela
+     * @title AGOLA GIT REF
+     * @readonly
      */
-    VELA?: string;
+    readonly AGOLA_GIT_REF?: string;
     /**
-     * Vte Version
+     * The name of the application.
      *
-     * @title Vte Version
+     * @title APP NAME
+     * @defaultValue examples-cloudflare-worker
+     * @readonly
      */
-    VTE_VERSION?: string;
+    readonly APP_NAME: string;
     /**
-     * Wt Session
+     * The version of the application.
      *
-     * @title Wt Session
+     * @title APP VERSION
+     * @defaultValue 0.0.1
+     * @readonly
      */
-    WT_SESSION?: string;
+    readonly APP_VERSION: string;
     /**
-     * Xcs
+     * The appcenter build ID. This value is set by certain CI/CD systems.
      *
-     * @title Xcs
+     * @title APPCENTER BUILD Identifier
+     * @readonly
      */
-    XCS?: string;
+    readonly APPCENTER_BUILD_ID?: string;
     /**
-     * Cross-Desktop Group Cache Home
+     * A variable that specifies the application data directory on Windows.
      *
-     * @title Cross-Desktop Group Cache Home
+     * @title APPDATA
+     * @readonly
      */
-    XDG_CACHE_HOME?: string;
+    readonly APPDATA?: string;
     /**
-     * Cross-Desktop Group Config Home
+     * The appveyor build ID. This value is set by certain CI/CD systems.
      *
-     * @title Cross-Desktop Group Config Home
+     * @title APPVEYOR
+     * @readonly
      */
-    XDG_CONFIG_HOME?: string;
+    readonly APPVEYOR?: string;
     /**
-     * Cross-Desktop Group Data Home
+     * The bamboo plan key. This value is set by certain CI/CD systems.
      *
-     * @title Cross-Desktop Group Data Home
+     * @title Bamboo Plan Key
+     * @readonly
      */
-    XDG_DATA_HOME?: string;
+    readonly bamboo_planKey?: string;
     /**
-     * Cross-Desktop Group Runtime Dir
+     * The bitbucket commit. This value is set by certain CI/CD systems.
      *
-     * @title Cross-Desktop Group Runtime Dir
-     * @defaultValue /run/user/1001
+     * @title BITBUCKET COMMIT
+     * @readonly
      */
-    XDG_RUNTIME_DIR?: string;
+    readonly BITBUCKET_COMMIT?: string;
     /**
-     * Cross-Desktop Group State Home
+     * The bitrise build ID. This value is set by certain CI/CD systems.
      *
-     * @title Cross-Desktop Group State Home
+     * @title BITRISE Input/Output
+     * @readonly
      */
-    XDG_STATE_HOME?: string;
+    readonly BITRISE_IO?: string;
+    /**
+     * The buddy workspace ID. This value is set by certain CI/CD systems.
+     *
+     * @title BUDDY WORKSPACE Identifier
+     * @readonly
+     */
+    readonly BUDDY_WORKSPACE_ID?: string;
+    /**
+     * A checksum hash created during the build.
+     *
+     * @title BUILD CHECKSUM
+     * @defaultValue RBNvo1WzZ4oRRq0W9-hknpT7T8If536D
+     * @readonly
+     */
+    readonly BUILD_CHECKSUM: string;
+    /**
+     * The unique identifier for the build.
+     *
+     * @title BUILD Identifier
+     * @defaultValue 4781ed16-cd20-4420-8c07-68f9aa144d96
+     * @readonly
+     */
+    readonly BUILD_ID: string;
+    /**
+     * The timestamp the build was ran at.
+     *
+     * @title BUILD TIMESTAMP
+     * @defaultValue 2025-08-27T20:28:48.770Z
+     * @readonly
+     */
+    readonly BUILD_TIMESTAMP: string;
+    /**
+     * The builder output build ID. This value is set by certain CI/CD systems.
+     *
+     * @title BUILDER OUTPUT
+     * @readonly
+     */
+    readonly BUILDER_OUTPUT?: string;
+    /**
+     * The buildkite build ID. This value is set by certain CI/CD systems.
+     *
+     * @title BUILDKITE
+     * @readonly
+     */
+    readonly BUILDKITE?: string;
+    /**
+     * The cf build ID. This value is set by certain CI/CD systems.
+     *
+     * @title CF BUILD Identifier
+     * @readonly
+     */
+    readonly CF_BUILD_ID?: string;
+    /**
+     * The ci name. This value is set by certain CI/CD systems.
+     *
+     * @title Continuous Integration NAME
+     * @readonly
+     */
+    readonly CI_NAME?: string;
+    /**
+     * The xcode project build ID. This value is set by certain CI/CD systems.
+     *
+     * @title Continuous Integration XCODE PROJECT
+     * @readonly
+     */
+    readonly CI_XCODE_PROJECT?: string;
+    /**
+     * The circleci build ID. This value is set by certain CI/CD systems.
+     *
+     * @title CIRCLECI
+     * @readonly
+     */
+    readonly CIRCLECI?: string;
+    /**
+     * The cirrus-ci build ID. This value is set by certain CI/CD systems.
+     *
+     * @title CIRRUS Continuous Integration
+     * @readonly
+     */
+    readonly CIRRUS_CI?: string;
+    /**
+     * The cm build ID. This value is set by certain CI/CD systems.
+     *
+     * @title CM BUILD Identifier
+     * @readonly
+     */
+    readonly CM_BUILD_ID?: string;
+    /**
+     * The codebuild build ID. This value is set by certain CI/CD systems.
+     *
+     * @title CODEBUILD
+     * @readonly
+     */
+    readonly CODEBUILD?: string;
+    /**
+     * The color terminal type. This variable is set by certain terminal emulators.
+     *
+     * @title COLORTERM
+     * @defaultValue truecolor
+     * @readonly
+     */
+    readonly COLORTERM?: string;
+    /**
+     * The ConEmu task name. This variable is set by certain terminal emulators.
+     *
+     * @title Con Emu Task
+     * @readonly
+     */
+    readonly ConEmuTask?: string;
+    /**
+     * The cursor trace ID. This variable is set by certain terminal emulators.
+     *
+     * @title CURSOR TRACE Identifier
+     * @readonly
+     */
+    readonly CURSOR_TRACE_ID?: string;
+    /**
+     * The drone build ID. This value is set by certain CI/CD systems.
+     *
+     * @title DRONE
+     * @readonly
+     */
+    readonly DRONE?: string;
+    /**
+     * The dsari build ID. This value is set by certain CI/CD systems.
+     *
+     * @title DSARI
+     * @readonly
+     */
+    readonly DSARI?: string;
+    /**
+     * The earthly build ID. This value is set by certain CI/CD systems.
+     *
+     * @title EARTHLY Continuous Integration
+     * @readonly
+     */
+    readonly EARTHLY_CI?: string;
+    /**
+     * The eas build ID. This value is set by certain CI/CD systems.
+     *
+     * @title EAS BUILD
+     * @readonly
+     */
+    readonly EAS_BUILD?: string;
+    /**
+     * The gerrit project. This value is set by certain CI/CD systems.
+     *
+     * @title GERRIT PROJECT
+     * @readonly
+     */
+    readonly GERRIT_PROJECT?: string;
+    /**
+     * The gitea actions build ID. This value is set by certain CI/CD systems.
+     *
+     * @title GITEA ACTIONS
+     * @readonly
+     */
+    readonly GITEA_ACTIONS?: string;
+    /**
+     * The github actions build ID. This value is set by certain CI/CD systems.
+     *
+     * @title GITHUB ACTIONS
+     * @readonly
+     */
+    readonly GITHUB_ACTIONS?: string;
+    /**
+     * The gitlab ci build ID. This value is set by certain CI/CD systems.
+     *
+     * @title GITLAB Continuous Integration
+     * @readonly
+     */
+    readonly GITLAB_CI?: string;
+    /**
+     * The go cd build ID. This value is set by certain CI/CD systems.
+     *
+     * @title GOCD
+     * @readonly
+     */
+    readonly GOCD?: string;
+    /**
+     * The harness build ID. This value is set by certain CI/CD systems.
+     *
+     * @title HARNESS BUILD Identifier
+     * @readonly
+     */
+    readonly HARNESS_BUILD_ID?: string;
+    /**
+     * The hudson build ID. This value is set by certain CI/CD systems.
+     *
+     * @title HUDSON
+     * @readonly
+     */
+    readonly HUDSON?: string;
+    /**
+     * The jenkins url. This value is set by certain CI/CD systems.
+     *
+     * @title JENKINS Uniform Resource Locator
+     * @readonly
+     */
+    readonly JENKINS_URL?: string;
+    /**
+     * The layerci build ID. This value is set by certain CI/CD systems.
+     *
+     * @title LAYERCI
+     * @readonly
+     */
+    readonly LAYERCI?: string;
+    /**
+     * A variable that specifies the current user's local application data directory on Windows.
+     *
+     * @title LOCALAPPDATA
+     * @readonly
+     */
+    readonly LOCALAPPDATA?: string;
+    /**
+     * The magnum build ID. This value is set by certain CI/CD systems.
+     *
+     * @title MAGNUM
+     * @readonly
+     */
+    readonly MAGNUM?: string;
+    /**
+     * The netlify build ID. This value is set by certain CI/CD systems.
+     *
+     * @title NETLIFY
+     * @readonly
+     */
+    readonly NETLIFY?: string;
+    /**
+     * The nevercode build ID. This value is set by certain CI/CD systems.
+     *
+     * @title NEVERCODE
+     * @readonly
+     */
+    readonly NEVERCODE?: string;
+    /**
+     * The now builder build ID. This value is set by certain CI/CD systems.
+     *
+     * @title NOW BUILDER
+     * @readonly
+     */
+    readonly NOW_BUILDER?: string;
+    /**
+     * The prow job ID. This value is set by certain CI/CD systems.
+     *
+     * @title PROW JOB Identifier
+     * @readonly
+     */
+    readonly PROW_JOB_ID?: string;
+    /**
+     * The release build ID. This value is set by certain CI/CD systems.
+     *
+     * @title RELEASE BUILD Identifier
+     * @readonly
+     */
+    readonly RELEASE_BUILD_ID?: string;
+    /**
+     * The unique identifier for the release.
+     *
+     * @title RELEASE Identifier
+     * @defaultValue 81ed16cd-2044-408c-8768-f9aa144d96da
+     * @readonly
+     */
+    readonly RELEASE_ID: string;
+    /**
+     * The tag for the release. This is generally in the format of "\<APP_NAME\>\@\<APP_VERSION\>".
+     *
+     * @title RELEASE TAG
+     * @defaultValue examples-cloudflare-worker@0.0.1
+     * @readonly
+     */
+    readonly RELEASE_TAG: string;
+    /**
+     * The render build ID. This value is set by certain CI/CD systems.
+     *
+     * @title RENDER
+     * @readonly
+     */
+    readonly RENDER?: string;
+    /**
+     * The unique identifier for the current run. This value is set by certain CI/CD systems.
+     *
+     * @title RUN Identifier
+     * @readonly
+     */
+    readonly RUN_ID?: string;
+    /**
+     * The sailci build ID. This value is set by certain CI/CD systems.
+     *
+     * @title SAILCI
+     * @readonly
+     */
+    readonly SAILCI?: string;
+    /**
+     * The screwdriver build ID. This value is set by certain CI/CD systems.
+     *
+     * @title SCREWDRIVER
+     * @readonly
+     */
+    readonly SCREWDRIVER?: string;
+    /**
+     * The semaphore build ID. This value is set by certain CI/CD systems.
+     *
+     * @title SEMAPHORE
+     * @readonly
+     */
+    readonly SEMAPHORE?: string;
+    /**
+     * The sourcehut build ID. This value is set by certain CI/CD systems.
+     *
+     * @title SOURCEHUT
+     * @readonly
+     */
+    readonly SOURCEHUT?: string;
+    /**
+     * The spaceship build ID. This value is set by certain CI/CD systems.
+     *
+     * @title SPACESHIP Continuous Integration
+     * @readonly
+     */
+    readonly SPACESHIP_CI?: string;
     /**
      * Static configuration properties - this value is not dynamic and cannot be changed at runtime.
      *
@@ -2710,6 +2631,148 @@ declare module "storm:config" {
      * @readonly
      */
     readonly static: {};
+    /**
+     * An indicator that specifies the application is running in the local Storm Stack development environment.
+     *
+     * @title STORM STACK LOCAL
+     * @readonly
+     */
+    readonly STORM_STACK_LOCAL?: boolean;
+    /**
+     * The strider build ID. This value is set by certain CI/CD systems.
+     *
+     * @title STRIDER
+     * @readonly
+     */
+    readonly STRIDER?: string;
+    /**
+     * The task ID. This value is set by certain CI/CD systems.
+     *
+     * @title TASK Identifier
+     * @readonly
+     */
+    readonly TASK_ID?: string;
+    /**
+     * The teamcity version. This value is set by certain CI/CD systems.
+     *
+     * @title TEAMCITY VERSION
+     * @readonly
+     */
+    readonly TEAMCITY_VERSION?: string;
+    /**
+     * The terminal type. This variable is set by certain CI/CD systems.
+     *
+     * @title TERM
+     * @defaultValue xterm-256color
+     * @readonly
+     */
+    readonly TERM?: string;
+    /**
+     * The terminal program name. This variable is set by certain terminal emulators.
+     *
+     * @title TERM PROGRAM
+     * @readonly
+     */
+    readonly TERM_PROGRAM?: string;
+    /**
+     * The terminal program version. This variable is set by certain terminal emulators.
+     *
+     * @title TERM PROGRAM VERSION
+     * @readonly
+     */
+    readonly TERM_PROGRAM_VERSION?: string;
+    /**
+     * The terminal emulator name. This variable is set by certain terminal emulators.
+     *
+     * @title TERMINAL EMULATOR
+     * @readonly
+     */
+    readonly TERMINAL_EMULATOR?: string;
+    /**
+     * An indicator that specifies the current terminal is running Terminus Sublime. This variable is set by certain terminal emulators.
+     *
+     * @title TERMINUS SUBLIME
+     * @readonly
+     */
+    readonly TERMINUS_SUBLIME?: boolean;
+    /**
+     * The task force build ID. This value is set by certain CI/CD systems.
+     *
+     * @title TF BUILD
+     * @readonly
+     */
+    readonly TF_BUILD?: string;
+    /**
+     * The travis build ID. This value is set by certain CI/CD systems.
+     *
+     * @title TRAVIS
+     * @readonly
+     */
+    readonly TRAVIS?: string;
+    /**
+     * The vela build ID. This value is set by certain CI/CD systems.
+     *
+     * @title VELA
+     * @readonly
+     */
+    readonly VELA?: string;
+    /**
+     * The VTE version. This variable is set by certain terminal emulators.
+     *
+     * @title VTE VERSION
+     * @readonly
+     */
+    readonly VTE_VERSION?: string;
+    /**
+     * The terminal emulator session ID. This variable is set by certain terminal emulators.
+     *
+     * @title WT SESSION
+     * @readonly
+     */
+    readonly WT_SESSION?: string;
+    /**
+     * The xcode server build ID. This value is set by certain CI/CD systems.
+     *
+     * @title XCS
+     * @readonly
+     */
+    readonly XCS?: string;
+    /**
+     * A variable that specifies the cache path in the home directory on Linux systems using the XDG base directory specification.
+     *
+     * @title Cross-Desktop Group CACHE HOME
+     * @readonly
+     */
+    readonly XDG_CACHE_HOME?: string;
+    /**
+     * A variable that specifies the configuration path in the home directory on Linux systems using the XDG base directory specification.
+     *
+     * @title Cross-Desktop Group CONFIG HOME
+     * @readonly
+     */
+    readonly XDG_CONFIG_HOME?: string;
+    /**
+     * A variable that specifies the data path in the home directory on Linux systems using the XDG base directory specification.
+     *
+     * @title Cross-Desktop Group DATA HOME
+     * @readonly
+     */
+    readonly XDG_DATA_HOME?: string;
+    /**
+     * A variable that specifies the runtime directory on Linux systems using the XDG base directory specification.
+     *
+     * @title Cross-Desktop Group RUNTIME DIR
+     * @defaultValue /run/user/1001
+     * @readonly
+     */
+    readonly XDG_RUNTIME_DIR?: string;
+    /**
+     * A variable that specifies the state directory on Linux systems using the XDG base directory specification.
+     *
+     * @title Cross-Desktop Group STATE HOME
+     * @readonly
+     */
+    readonly XDG_STATE_HOME?: string;
   }
   export type StormConfig = {
     [Key in keyof StormConfigBase as
@@ -2787,8 +2850,8 @@ declare module "storm:config" {
   export function createConfig(
     runtimeConfig?: Partial<StormConfig>
   ): Promise<StormConfig>;
-  export type __ΩStormConfigBase = any[];
-  export type __ΩStormConfig = any[];
+  export type StormConfigBase = any[];
+  export type StormConfig = any[];
 }
 
 declare module "storm:error" {
@@ -3063,7 +3126,7 @@ declare module "storm:env" {
    * @returns An object containing the runtime environment details.
    */
   export function createEnv(): StormNodeEnv;
-  export type __ΩGetColorSupportLevelOptions = any[];
+  export type GetColorSupportLevelOptions = any[];
 }
 
 declare module "storm:request" {
@@ -3234,10 +3297,11 @@ declare module "storm:context" {
   /**
    * Get the Storm context for the current application.
    *
+   * @param options - The options to use when getting the context.
    * @returns The Storm context for the current application.
    * @throws If the Storm context is not available.
    */
-  export function useStorm(): StormContext;
+  export function useStorm(options?: ContextOptions): StormContext;
   /**
    * Wrap an application entry point with the necessary context and error handling.
    *
@@ -3250,7 +3314,7 @@ declare module "storm:context" {
   >(
     handler: HandlerFunction<TInput, TOutput>
   ): (input: TInput) => Promise<StormResult<TOutput | StormError>>;
-  export type __ΩStormContext = any[];
+  export type StormContext = any[];
 }
 
 declare module "storm:log" {

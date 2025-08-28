@@ -19,6 +19,19 @@
 import type { ResolvedUserConfig } from "../types/config";
 import { StormStack } from "./index";
 
+/**
+ * Astro plugin
+ *
+ * @example
+ * ```js
+ * // astro.config.js
+ * import StormStack from 'storm-stack/astro'
+ *
+ * default export {
+ *  plugins: [StormStack()],
+ * }
+ * ```
+ */
 const astro = (config: ResolvedUserConfig): any => ({
   name: "storm-stack",
   hooks: {

@@ -21,7 +21,12 @@ import type { Options } from "tsup";
 
 const config = getTsupConfig({
   name: "plugin-node",
-  entry: ["src/index.ts", "src/renderers/*.ts", "src/babel/*.ts"],
+  entry: [
+    "src/index.ts",
+    "src/types/*.ts",
+    "src/renderers/*.ts",
+    "src/babel/*.ts"
+  ],
   outDir: "dist",
   bundle: true,
   splitting: true,

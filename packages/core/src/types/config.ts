@@ -29,6 +29,7 @@ import type { TypeDefinitionParameter } from "@stryke/types/configuration";
 import { ConfigLayer, ResolvedConfig } from "c12";
 import { BuildOptions as ExternalESBuildOptions } from "esbuild";
 import { BuildOptions as ExternalUnbuildOptions } from "unbuild";
+import { UnpluginContextMeta } from "unplugin";
 import { BabelPluginItem } from "./babel";
 import { Context } from "./context";
 import { TSConfig } from "./tsconfig";
@@ -51,9 +52,26 @@ export type WorkspaceConfig =
 /**
  * A configuration tuple for a Storm Stack plugin.
  */
-export type PluginConfig<
+export type PluginConfigTuple<
   TProps extends Record<string, any> = Record<string, any>
 > = [string, TProps | undefined];
+
+/**
+ * A configuration object for a Storm Stack plugin.
+ */
+export interface PluginConfigObject<
+  TProps extends Record<string, any> = Record<string, any>
+> {
+  plugin: string;
+  props?: TProps;
+}
+
+/**
+ * A configuration tuple for a Storm Stack plugin.
+ */
+export type PluginConfig<
+  TProps extends Record<string, any> = Record<string, any>
+> = PluginConfigTuple<TProps> | PluginConfigObject<TProps>;
 
 export type ESBuildOverrideOptions = ExternalESBuildOptions &
   BaseESBuildOptions;
@@ -530,6 +548,18 @@ export type BuildInlineConfig = InlineConfig & {
    */
   clean?: boolean;
 };
+
+export interface UnpluginBuildInlineConfig extends BuildInlineConfig {
+  /**
+   * Metadata for the unplugin instance
+   *
+   * @see https://unplugin.unjs.io
+   *
+   * @remarks
+   * An object containing metadata about the [unplugin](https://unplugin.unjs.io) instance, such as the framework or bundler being used. **Note:** This metadata is only available when using the Storm Stack plugin in another build process (for example: Vite).
+   */
+  unplugin: UnpluginContextMeta;
+}
 
 export type LintInlineConfig = InlineConfig & {
   /**

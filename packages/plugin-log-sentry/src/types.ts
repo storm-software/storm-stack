@@ -22,12 +22,11 @@ import {
   ConfigPluginContextOptions,
   ConfigPluginReflectionRecord
 } from "@storm-stack/plugin-config/types";
-import { StormConfigInterface } from "@storm-stack/types/shared/config";
 
 /**
  * Configuration options for the Sentry logging plugin.
  */
-export interface StormSentryLogConfig extends StormConfigInterface {
+export interface StormSentryLogConfig {
   /**
    * The DSN for Sentry
    *

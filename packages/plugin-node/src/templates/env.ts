@@ -20,7 +20,7 @@ import { getFileHeader } from "@storm-stack/core/lib/utilities/file-header";
 import { kebabCase } from "@stryke/string-format/kebab-case";
 import { titleCase } from "@stryke/string-format/title-case";
 import { isSetString } from "@stryke/type-checks/is-set-string";
-import { NodePluginContext } from "../types";
+import { NodePluginContext } from "../types/plugin";
 
 /**
  * Generates a TypeScript module that provides runtime environment information for a Storm Stack application.

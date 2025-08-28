@@ -74,7 +74,7 @@ export function stringifyValue(type: Type, value: any): string {
             (type.kind === ReflectionKind.literal && isString(type.literal))
           ? stringifyStringValue(value)
           : type.kind === ReflectionKind.enum
-            ? getEnumType(type).kind === ReflectionKind.string
+            ? getEnumReflectionType(type).kind === ReflectionKind.string
               ? stringifyStringValue(value)
               : `${String(value)}`
             : type.kind === ReflectionKind.union
@@ -98,7 +98,7 @@ export function stringifyValue(type: Type, value: any): string {
  * @param type - The {@link TypeEnum} to evaluate.
  * @returns A string representation of the primitive type.
  */
-export function getEnumType(type: Type): TypeString | TypeNumber {
+export function getEnumReflectionType(type: Type): TypeString | TypeNumber {
   if (type.kind !== ReflectionKind.enum) {
     throw new Error(`Expected a TypeEnum, but received ${type.kind}.`);
   }

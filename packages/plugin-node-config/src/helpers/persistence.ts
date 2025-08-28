@@ -20,7 +20,7 @@ import {
   deserializeType,
   ReflectionClass,
   resolveClassType
-} from "@deepkit/type";
+} from "@storm-stack/core/deepkit";
 import { convertFromCapnp, convertToCapnp } from "@storm-stack/core/lib/capnp";
 import { getReflectionsPath } from "@storm-stack/core/lib/deepkit/resolve-reflections";
 import { SerializedTypes } from "@storm-stack/core/schemas/reflection";

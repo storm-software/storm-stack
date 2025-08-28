@@ -25,7 +25,7 @@ import {
   stringifyType,
   TagsReflection,
   Type
-} from "@deepkit/type";
+} from "@storm-stack/core/deepkit";
 import { camelCase } from "@stryke/string-format/camel-case";
 import { constantCase } from "@stryke/string-format/constant-case";
 import { kebabCase } from "@stryke/string-format/kebab-case";
@@ -264,6 +264,10 @@ export class CommandRequest {
         .filter(
           prop =>
             prop.getNameAsString() &&
+            prop.getNameAsString().toLowerCase() !== "argv" &&
+            prop.getNameAsString().toLowerCase() !== "help" &&
+            prop.getNameAsString().toLowerCase() !== "version" &&
+            !prop.isIgnored() &&
             !context.reflections.config.types.params.hasProperty(
               constantCase(prop.getNameAsString())
             )
@@ -271,7 +275,13 @@ export class CommandRequest {
         .forEach(prop => {
           context.reflections.config.types.params.addProperty({
             ...prop,
-            name: constantCase(prop.getNameAsString())
+            name: constantCase(prop.getNameAsString()),
+            default:
+              prop.getKind() === ReflectionKind.string && prop.getDefaultValue()
+                ? String(prop.getDefaultValue())
+                    .replaceAll('"', "")
+                    .replaceAll("'", "")
+                : prop.getDefaultValue()
           });
         });
 

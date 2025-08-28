@@ -240,7 +240,6 @@ export type ColorName = ${Object.keys(styles.ansi16)
  * Split text by /\\\\u001b[\\[|\\]][0-9;]*m/ and wrap non-ANSI parts with open/close
  *
  * \`\`\`typescript
- *
  * const result = applyAnsi("Hello\\\\u001b[31mWorld\\\\u001b[0mAgain", "\\\\u001b[36m", "\\\\u001b[39");
  * console.log(result); // "\\\\u001b[36mHello\\\\u001b[39\\\\u001b[31mWorld\\\\u001b[0m\\\\u001b[36mAgain\\\\u001b[39"
  * \`\`\`
@@ -333,38 +332,51 @@ export function getColor(
   return colors[color] || colors[fallback];
 }
 
-function splitWordByCharacter(
-  maxWidth: number,
+function splitLineByCharacter(
+  maxLineLength: number,
   banner: string[],
-  word: string,
-  character: string
-): string {
-  let result = word;
-  if (result.includes(character)) {
-    while (stripAnsi(result).length > maxWidth) {
-      const splits = result.split(character);
-      let currentWord = "";
-      while (splits.length && stripAnsi(currentWord + splits[0]).length + 1 < maxWidth) {
-        currentWord += (splits.shift() || "") + character;
+  line: string,
+  splitCharacters: string[]
+) {
+  let currentLine = line;
+  let result = "";
+  for (const character of splitCharacters) {
+    for (const segment of currentLine.split(character)) {
+      if (stripAnsi(result + segment).length >= maxLineLength) {
+        banner.push(result);
+        result = character + segment;
+      } else {
+        result += (result ? character : "") + segment;
       }
-      banner.push(currentWord);
-      result = splits.join(character);
     }
+
+    currentLine = currentLine.slice(currentLine.lastIndexOf(character));
   }
+
+  // result += currentLine;
+  // if (stripAnsi(result).length >= maxLineLength && new RegExp(\`[\${splitCharacters.join("|")}]\`).test(currentLine)) {
+  //   result = splitLineByCharacter(maxLineLength, banner, result, splitCharacters);
+  // }
 
   return result;
 }
 
-function splitWord(maxWidth: number, banner: string[], word: string) {
-  let result = splitWordByCharacter(maxWidth, banner, word, "/");
-  if (stripAnsi(result).length > maxWidth) {
-    result = splitWordByCharacter(maxWidth, banner, result, ".");
-    if (stripAnsi(result).length > maxWidth) {
-      result = splitWordByCharacter(maxWidth, banner, result, ",");
-    }
+function splitLine(maxLineLength: number, banner: string[], line: string) {
+  if (stripAnsi(line).length < maxLineLength) {
+    return line;
   }
 
-  return stripAnsi(result).length > maxWidth ? \`\${result.substring(0, maxWidth - 13)}...\` : result;
+  let result = splitLineByCharacter(maxLineLength, banner, line, [" "]);
+  if (stripAnsi(result).length >= maxLineLength) {
+    result = splitLineByCharacter(
+      maxLineLength,
+      banner,
+      result,
+      ["/", "\\\\", ".", ",", "-", ":", "|", "@", "+"]
+    );
+  }
+
+  return stripAnsi(result).length > maxLineLength ? \`\${result.substring(0, Math.max(maxLineLength - 12, 12))}...\` : result;
 }
 
 /**
@@ -383,7 +395,7 @@ export function formatMessage(
   icon?: string,
   stretch = true
 ) {
-  let maxWidth = stretch ? process.stdout.columns - 6 : Math.min(process.stdout.columns - 6, ${MAX_MESSAGE_WIDTH});
+  let maxWidth = stretch ? process.stdout.columns - 6 : Math.max(Math.min(process.stdout.columns - 6, ${MAX_MESSAGE_WIDTH}), ${MIN_BANNER_WIDTH});
   if (maxWidth % 2) {
     maxWidth++;
   }
@@ -391,53 +403,39 @@ export function formatMessage(
   const colorFn = getColor(color);
 
   const banner = [] as string[];
-  const last = text.split(/ +/).reduce((ret, word, i) => {
-    if (word.includes("\\n")) {
-      const lines = word.split("\\n");
-      if (lines[0] && stripAnsi(lines[0]).length + stripAnsi(ret).length > maxWidth - 9) {
-        banner.push(ret);
-        ret = lines[0];
-      } else {
-        ret = \`\${ret ? \`\${ret} \` : ""}\${lines[0]}\`;
-      }
-
-      if (lines.length > 1) {
-        banner.push(ret);
-        banner.push(...lines.slice(1, -1));
-        ret = lines[lines.length - 1] || "";
-      }
-    } else if (stripAnsi(ret).length + stripAnsi(word).length > maxWidth - 9) {
-      banner.push(ret);
-      if (stripAnsi(word).length > maxWidth - 9) {
-        ret = splitWord(maxWidth - 9, banner, word);
-      } else {
-        ret = word;
-      }
-    } else {
-      ret = \`\${ret ? \`\${ret} \` : ""}\${word}\`;
-    }
-
-    return ret;
-  }, "");
-  if (last) {
-    banner.push(last);
+  for (const line of text.split("\\n")) {
+    banner.push(splitLine(maxWidth, banner, line));
   }
 
   const maxLine = stretch ? maxWidth : Math.max(Math.max(...banner.map(line => stripAnsi(line).length)), ${
     MIN_MESSAGE_WIDTH
   });
   banner.forEach((line, i) => {
-    banner[i] = \` \${colorFn("│")} \${colors.white(line)}\${" ".repeat(maxLine - stripAnsi(line).length)} \${colorFn("│")}\`;
+    banner[i] = \` \${colorFn("│")} \${colors.white(line)}\${" ".repeat(Math.max(maxLine - stripAnsi(line).length, 0))} \${colorFn("│")}\`;
   });
 
-  banner.unshift(colorFn(\` ╭── \${icon ? icon + " " : ""}\${title} ─\${"─".repeat(maxLine - (icon ? icon.length + 1 : 0) - title.length - 4)}─╮\`));
+  banner.unshift(colorFn(\` ╭── \${icon ? icon + " " : ""}\${title} ─\${"─".repeat(Math.max(maxLine - (icon ? icon.length + 1 : 0) - title.length - 4, 0))}─╮\`));
   banner.unshift("");
 
   const timestamp = format(new Date(), "keyboardDateTime12h");
-  banner.push(colorFn(\` ╰─\${"─".repeat(maxLine - timestamp.length - 4)}─ \${timestamp} ──╯\`));
+  banner.push(colorFn(\` ╰─\${"─".repeat(Math.max(maxLine - timestamp.length - 4, 0))}─ \${timestamp} ──╯\`));
   banner.push("");
 
   return banner.join("\\n");
+}
+
+/**
+ * Shows a fatal error message in the CLI.
+ *
+ * @param details - The fatal error details to display.
+ */
+export function showFatal(details: string | Error) {
+  const text = isStormError(details) ? details.toString() : typeof details === "string" ? details : details.message;
+  if (!text) {
+    return;
+  }
+
+  console.error(formatMessage(text, "fatal", "Fatal Error", "✘"));
 }
 
 /**

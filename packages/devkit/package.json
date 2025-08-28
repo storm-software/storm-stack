@@ -208,12 +208,11 @@
     "@alloy-js/typescript": "catalog:",
     "@babel/core": "catalog:",
     "@babel/helper-plugin-utils": "catalog:",
-    "@deepkit/core": "catalog:",
-    "@deepkit/type": "catalog:",
     "@storm-software/config-tools": "catalog:",
     "@storm-software/esbuild": "catalog:",
     "@storm-software/unbuild": "catalog:",
-    "@storm-stack/core": "0.35.1",
+    "@storm-stack/core": "workspace:*",
+    "@storm-stack/types": "workspace:*",
     "@stryke/convert": "catalog:",
     "@stryke/helpers": "catalog:",
     "@stryke/json": "catalog:",
@@ -227,7 +226,6 @@
     "jiti": "catalog:"
   },
   "devDependencies": {
-    "@storm-stack/types": "0.16.1",
     "@types/node": "catalog:",
     "tsup": "catalog:"
   },

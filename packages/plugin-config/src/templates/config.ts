@@ -20,7 +20,7 @@ import {
   ReflectionClass,
   ReflectionKind,
   ReflectionProperty
-} from "@deepkit/type";
+} from "@storm-stack/core/deepkit";
 import { getFileHeader } from "@storm-stack/core/lib/utilities/file-header";
 import {
   generateTypeScriptInterface,
@@ -76,7 +76,7 @@ export async function ConfigSetupModule(
             .getAlias()
             .filter(a => a !== alias)
             .concat(prop.name),
-          title: prop.getTitle(),
+          title: prop.getTitle() || titleCase(prop.name),
           readonly: prop.isReadonly(),
           permission: prop.getPermission(),
           domain: prop.getDomain()
@@ -97,6 +97,8 @@ export async function ConfigSetupModule(
   );
   configInstance.name = "initialConfig";
 
+  const defaultValues = loadConfigFromContext(context, process.env);
+
   return `import {
   Type,
   stringify,
@@ -108,12 +110,13 @@ export async function ConfigSetupModule(
   Serializer,
   TypeProperty,
   TypePropertySignature
-} from "@deepkit/type";
+} from "@storm-stack/core/deepkit";
 import { StormConfigInterface } from "@storm-stack/types/shared/config";
 
 ${generateTypeScriptInterface(reflection, {
   overrideName: "StormConfigBase",
-  overrideExtends: "StormConfigInterface"
+  overrideExtends: "StormConfigInterface",
+  defaultValues
 })}
 
 export type StormConfig = {
@@ -124,7 +127,7 @@ export type StormConfig = {
 
 ${generateTypeScriptObject(configInstance, {
   overrideExtends: "StormConfigBase",
-  defaultValues: loadConfigFromContext(context, process.env)
+  defaultValues
 })}
 
 /**

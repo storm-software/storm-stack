@@ -39,16 +39,14 @@ export function writeCompletionsBash(
 
   return `${getFileHeader()}
 
-import { colors, stripAnsi, CLIRequestData } from "storm:cli";
+import { colors, stripAnsi, CLIRequestData, showSuccess } from "storm:cli";
 import { StormRequest } from "storm:request";
 import { readFile, writeFile } from "node:fs/promises";
 import { existsSync } from "node:fs";
 import { join } from "node:path";
 import os from "node:os";
 
-const homedir = os.homedir();
-
-export interface CompletionsBashRequest extends CLIRequestData {
+interface CompletionsBashRequest extends CLIRequestData {
   /**
    * The path to write the completion script to.
    *
@@ -78,26 +76,29 @@ export interface CompletionsBashRequest extends CLIRequestData {
  * @param request - The request object optionally containing a script output file or a config file.
  */
 async function handler(request: StormRequest<CompletionsBashRequest>) {
-  const executablePath = process.argv[1] || "${bin}";
-  const script = colors.white(\`
-\${colors.dim("###-begin-${bin}-completions-###")}
+  const executablePath = request.data.argv[1] || "${bin}";
 
-\${colors.dim(\`# \${colors.bold("${titleCase(context.options.name)} Bash CLI command completion script")}
+  const script = colors.white(\`
+\${colors.gray("###-begin-${bin}-completions-###")}
+
+\${colors.gray(\`
+# \${colors.bold("${titleCase(context.options.name)} Bash CLI command completion script")}
 #
-# \${colors.bold("Installation:")} \${executablePath} completions bash --config ~/.bashrc or \${executablePath} completions bash --script or  \${executablePath} completions bash >> ~/.bashrc or \${executablePath} completions bash >> ~/.bash_profile on OSX. \`)}
-\${colors.bold("_${bin}_completions()")}
+# \${colors.bold("Installation:")} \${executablePath} completions bash --config ~/.bashrc or \${executablePath} completions bash --script or  \${executablePath} completions bash >> ~/.bashrc or \${executablePath} completions bash >> ~/.bash_profile on OSX. \`
+)}
+\${colors.brand("_${bin}_completions()")}
 {
     local cur_word args type_list
 
     cur_word="\\\${COMP_WORDS[COMP_CWORD]}"
     args=("\\\${COMP_WORDS[@]}")
 
-    \${colors.dim("# Ask ${titleCase(context.options.name)} CLI to generate completions.")}
+    \${colors.gray("# Ask ${titleCase(context.options.name)} CLI to generate completions.")}
     mapfile -t type_list < <(\${executablePath} --get-completions "\\\${args[@]}")
     mapfile -t COMPREPLY < <(compgen -W "$( printf '%q ' "\\\${type_list[@]}" )" -- "\\\${cur_word}" |
         awk '/ / { print "\\\\""$0"\\\\"" } /^[^ ]+$/ { print $0 }')
 
-    \${colors.dim("# if no match was found, fall back to filename completion")}
+    \${colors.gray("# if no match was found, fall back to filename completion")}
     if [ \\\${#COMPREPLY[@]} -eq 0 ]; then
       COMPREPLY=()
     fi
@@ -106,7 +107,7 @@ async function handler(request: StormRequest<CompletionsBashRequest>) {
 }
 complete -o bashdefault -o default -F _${bin}_completions ${bin}
 
-\${colors.dim("###-end-${bin}-completions-###")}
+\${colors.gray("###-end-${bin}-completions-###")}
 \`);
 
   console.log("");
@@ -115,7 +116,7 @@ complete -o bashdefault -o default -F _${bin}_completions ${bin}
       ? "~/.bashrc"
       : request.data.config;
     if (configFile.startsWith("~")) {
-      configFile = join(homedir, configFile.replace("~", ""));
+      configFile = join(os.homedir(), configFile.replace("~", ""));
     }
 
     let configFileContent = "";
@@ -132,7 +133,7 @@ complete -o bashdefault -o default -F _${bin}_completions ${bin}
       "utf8"
     );
 
-    console.log(colors.dim(\` > Bash completion script appended to \${configFile} configuration\`));
+    showSuccess(\`Bash completion script added to \${configFile}!\`);
   } else if (request.data.script) {
     const scriptFile = typeof request.data.script === "string"
       ? request.data.script
@@ -143,7 +144,7 @@ complete -o bashdefault -o default -F _${bin}_completions ${bin}
       "utf8"
     );
 
-    console.log(colors.dim(\` > Bash completion script written to \${scriptFile}\`));
+    showSuccess(\`Bash completion script written to \${scriptFile}!\`);
   } else {
     console.log(script);
   }
@@ -152,7 +153,6 @@ complete -o bashdefault -o default -F _${bin}_completions ${bin}
 }
 
 export default handler;
-
 `;
 }
 
@@ -172,16 +172,15 @@ export function writeCompletionsZsh(
     ) || "storm";
 
   return `${getFileHeader()}
-import { colors, stripAnsi, CLIRequestData } from "storm:cli";
+
+import { colors, stripAnsi, CLIRequestData, showSuccess } from "storm:cli";
 import { StormRequest } from "storm:request";
 import { readFile, writeFile } from "node:fs/promises";
 import { existsSync } from "node:fs";
 import { join } from "node:path";
 import os from "node:os";
 
-const homedir = os.homedir();
-
-export interface CompletionsZshRequest extends CLIRequestData {
+interface CompletionsZshRequest extends CLIRequestData {
   /**
    * The path to write the completion script to.
    *
@@ -211,15 +210,18 @@ export interface CompletionsZshRequest extends CLIRequestData {
  * @param request - The request object optionally containing a script output file or a config file.
  */
 async function handler(request: StormRequest<CompletionsZshRequest>) {
-  const executablePath = process.argv[1] || "${bin}";
-  const script = colors.white(\`
-\${colors.dim("#compdef")} \${colors.bold("${bin}")}
-\${colors.dim("###-begin-${bin}-completions-###")}
+  const executablePath = request.data.argv[1] || "${bin}";
 
-\${colors.dim(\`# \${colors.bold("${titleCase(context.options.name)} Zsh CLI command completion script")}
+  const script = colors.white(\`
+\${colors.gray(\`#compdef \${colors.bold("${bin}")}\`)}
+\${colors.gray("###-begin-${bin}-completions-###")}
+
+\${colors.gray(\`
+# \${colors.bold("${titleCase(context.options.name)} Zsh CLI command completion script")}
 #
-# \${colors.bold("Installation:")} \${executablePath} completions zsh --config ~/.zshrc or \${executablePath} completions zsh --script or \${executablePath} completions zsh >> ~/.zshrc or \${executablePath} completions zsh >> ~/.zprofile on OSX. \`)}
-\${colors.bold("_${bin}_completions()")}
+# \${colors.bold("Installation:")} \${executablePath} completions zsh --config ~/.zshrc or \${executablePath} completions zsh --script or \${executablePath} completions zsh >> ~/.zshrc or \${executablePath} completions zsh >> ~/.zprofile on OSX. \`
+)}
+\${colors.brand("_${bin}_completions()")}
 {
   local reply
   local si=$IFS
@@ -232,14 +234,14 @@ async function handler(request: StormRequest<CompletionsZshRequest>) {
   fi
 }
 
-if [[ "'\\\${zsh_eval_context[-1]}" == "loadautofunc" ]]; then
+if [[ "\\\${zsh_eval_context[-1]}" == "loadautofunc" ]]; then
   _${bin}_completions "$@"
 else
   compdef _${bin}_completions ${bin}
 fi
 complete -o bashdefault -o default -F _${bin}_completions ${bin}
 
-\${colors.dim("###-end-${bin}-completions-###")}
+\${colors.gray("###-end-${bin}-completions-###")}
 \`);
 
   console.log("");
@@ -248,7 +250,7 @@ complete -o bashdefault -o default -F _${bin}_completions ${bin}
       ? "~/.zshrc"
       : request.data.config;
     if (configFile.startsWith("~")) {
-      configFile = join(homedir, configFile.replace("~", ""));
+      configFile = join(os.homedir(), configFile.replace("~", ""));
     }
 
     let configFileContent = "";
@@ -265,7 +267,7 @@ complete -o bashdefault -o default -F _${bin}_completions ${bin}
       "utf8"
     );
 
-    console.log(colors.dim(\` > Zsh completion script added to \${configFile}\`));
+    showSuccess(\`Zsh completion script added to \${configFile}!\`);
   } else if (request.data.script) {
     const scriptFile = typeof request.data.script === "string"
       ? request.data.script
@@ -276,7 +278,7 @@ complete -o bashdefault -o default -F _${bin}_completions ${bin}
       "utf8"
     );
 
-    console.log(colors.dim(\` > Zsh completion script written to \${scriptFile}\`));
+    showSuccess(\`Zsh completion script written to \${scriptFile}!\`);
   } else {
     console.log(script);
   }
@@ -285,6 +287,5 @@ complete -o bashdefault -o default -F _${bin}_completions ${bin}
 }
 
 export default handler;
-
-  `;
+`;
 }

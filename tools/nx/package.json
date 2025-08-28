@@ -108,7 +108,7 @@
     "eslint-flat-config-utils": "catalog:",
     "nx": "catalog:",
     "tsup": "catalog:",
-    "typescript": "6.0.0-dev.20250810"
+    "typescript": "^5.9.2"
   },
   "executors": "./executors.json",
   "generators": "./generators.json"

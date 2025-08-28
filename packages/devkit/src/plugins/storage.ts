@@ -16,9 +16,9 @@
 
  ------------------------------------------------------------------- */
 
-import { PrimaryKey } from "@deepkit/type";
 import { LogLevelLabel } from "@storm-software/config-tools/types";
 import { Plugin } from "@storm-stack/core/base/plugin";
+import { PrimaryKey } from "@storm-stack/core/deepkit";
 import type {
   Context,
   EngineHooks,

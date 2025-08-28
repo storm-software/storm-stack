@@ -16,8 +16,8 @@
 
  ------------------------------------------------------------------- */
 
-import { ReflectionKind, stringifyType } from "@deepkit/type";
 import { LogLevelLabel } from "@storm-software/config-tools/types";
+import { ReflectionKind, stringifyType } from "@storm-stack/core/deepkit";
 import { getFileHeader } from "@storm-stack/core/lib/utilities/file-header";
 import type { LogFn } from "@storm-stack/core/types/config";
 import {
@@ -182,7 +182,7 @@ import ${command.input.name ? `{ ${command.input.name} as handle }` : "handle"} 
         ""
       )
     )}";
-import { colors } from "storm:cli";${
+import { colors, showError } from "storm:cli";${
       request.import
         ? `import { ${request.import.name} } from "${relativePath(
             findFilePath(command.file),
@@ -305,7 +305,7 @@ import { createStormError } from "storm:error";
 import { CLIRequestData, showError, colors, parseArgs, renderBanner, renderFooter${
       context.options.plugins.cli.interactive !== "never" ? ", prompt" : ""
     } } from "storm:cli";
-import { deserialize, serialize } from "@deepkit/type";${
+import { deserialize, serialize } from "@storm-stack/core/deepkit";${
       request.import
         ? `import { ${request.import.name} } from "${relativePath(
             findFilePath(command.file),
@@ -778,7 +778,7 @@ import ${command.input.name ? `{ ${command.input.name} as handle }` : "handle"} 
       )
     )}";
 import { StormRequest } from "storm:request";
-import { CLIRequestData, colors, renderBanner, renderFooter, parseArgs } from "storm:cli";${
+import { CLIRequestData, colors, renderBanner, renderFooter, parseArgs, showError } from "storm:cli";${
       cmd.children && Object.values(cmd.children).length > 0
         ? Object.values(cmd.children)
             .map(child =>
@@ -1104,7 +1104,15 @@ export async function prepareEntry(
 ${getFileHeader()}
 
 import { createCLIApp } from "storm:app";
-import { colors, showError, link, renderBanner, renderFooter, parseArgs } from "storm:cli";
+import {
+  colors,
+  showError,
+  showHelp,
+  link,
+  renderBanner,
+  renderFooter,
+  parseArgs
+} from "storm:cli";
 import { isError, isStormError, createStormError } from "storm:error";${
       commandTree.children && Object.values(commandTree.children).length > 0
         ? Object.values(commandTree.children)
@@ -1193,7 +1201,8 @@ ${
   } catch (err) {
     showError(\`An error occurred while checking for ${
       appTitle
-    } application updates: \n\n\${createStormError(err).toString()}\n\nNote: You can disable this update check by setting the "SKIP_UPDATE_CHECK" configuration to true.\`);
+    } application updates: \n\n\${createStormError(err).toString()}\`);
+    showHelp("You can disable this update check by setting the \\\`SKIP_UPDATE_CHECK\\\` configuration parameter to true.");
     console.log("");
   }
   `
@@ -1264,7 +1273,7 @@ ${
   }
 });
 
-main({ args: process.argv });
+${context.options.esbuild.format === "cjs" ? "void" : "await"} main({ args: process.argv });
 
 `
   );

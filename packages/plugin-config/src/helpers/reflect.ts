@@ -23,7 +23,7 @@ import {
   resolveClassType,
   TypeClass,
   TypeObjectLiteral
-} from "@deepkit/type";
+} from "@storm-stack/core/deepkit";
 import { reflectType } from "@storm-stack/core/lib/deepkit";
 import { StormConfigInterface } from "@storm-stack/types/shared/config";
 import { joinPaths } from "@stryke/path/join-paths";

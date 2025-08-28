@@ -72,6 +72,8 @@ export const formats: DateFormats = {
   keyboardDateTime: "L LT",
   keyboardDateTime12h: "L hh:mm A",
   keyboardDateTime24h: "L HH:mm",
+  systemDateTime: "L HH:mm:ss.SSS",
+  filePathDateTime: "L_HH-mm-ss-SSS"
 };
 
 export let locale = $storm.config.static.DEFAULT_LOCALE;

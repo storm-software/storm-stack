@@ -94,7 +94,7 @@ export async function transform(
               !plugin[2].filter(sourceFile)
             ) {
               log(
-                LogLevelLabel.DEBUG,
+                LogLevelLabel.TRACE,
                 `Skipping filtered Babel plugin ${chalk.bold.cyanBright(
                   getPluginName(plugin) || "unnamed"
                 )} for ${sourceFile.id}`

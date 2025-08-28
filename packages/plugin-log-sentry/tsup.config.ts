@@ -17,9 +17,8 @@
  ------------------------------------------------------------------- */
 
 import { getTsupConfig } from "@storm-stack/tools-config/tsup.shared";
-import { Options } from "tsup";
 
-const config: Options = getTsupConfig({
+const config = getTsupConfig({
   name: "plugin-log-sentry",
   entry: ["src/index.ts", "src/types.ts"],
   outDir: "dist",

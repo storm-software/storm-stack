@@ -16,7 +16,7 @@
 
  ------------------------------------------------------------------- */
 
-import { Volume } from "memfs/lib/volume";
+import type { Volume } from "memfs";
 import {
   MakeDirectoryOptions as FsMakeDirectoryOptions,
   WriteFileOptions as FsWriteFileOptions,

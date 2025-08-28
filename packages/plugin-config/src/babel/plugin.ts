@@ -18,13 +18,13 @@
 
 import { File, NodePath } from "@babel/core";
 import * as t from "@babel/types";
+import { LogLevelLabel } from "@storm-software/config-tools/types";
 import {
   deserializeType,
   ReflectionClass,
   ReflectionKind,
   resolveClassType
-} from "@deepkit/type";
-import { LogLevelLabel } from "@storm-software/config-tools/types";
+} from "@storm-stack/core/deepkit";
 import { convertFromCapnp } from "@storm-stack/core/lib/capnp";
 import { stringifyDefaultValue } from "@storm-stack/core/lib/deepkit/utilities";
 import { SerializedTypes as CapnpSerializedTypes } from "@storm-stack/core/schemas/reflection";

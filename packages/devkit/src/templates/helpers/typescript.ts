@@ -16,15 +16,16 @@
 
  ------------------------------------------------------------------- */
 
-import { ReflectionClass, stringifyType } from "@deepkit/type";
+import { ReflectionClass, stringifyType } from "@storm-stack/core/deepkit";
 import { stringifyValue } from "@storm-stack/core/lib/deepkit/utilities";
 import { camelCase } from "@stryke/string-format/camel-case";
 import { pascalCase } from "@stryke/string-format/pascal-case";
 import { titleCase } from "@stryke/string-format/title-case";
 
-export interface GenerateTypeScriptInterfaceOptions {
+export interface GenerateTypeScriptInterfaceOptions<T> {
   overrideName?: string;
   overrideExtends?: string | false;
+  defaultValues?: Partial<T>;
 }
 
 /**
@@ -33,9 +34,9 @@ export interface GenerateTypeScriptInterfaceOptions {
  * @param reflection - The reflection class to generate the interface for.
  * @returns A string containing the TypeScript interface definition.
  */
-export function generateTypeScriptInterface(
-  reflection: ReflectionClass<any>,
-  options: GenerateTypeScriptInterfaceOptions = {}
+export function generateTypeScriptInterface<T>(
+  reflection: ReflectionClass<T>,
+  options: GenerateTypeScriptInterfaceOptions<T> = {}
 ): string {
   if (!reflection) {
     return "";

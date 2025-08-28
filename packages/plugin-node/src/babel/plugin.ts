@@ -22,7 +22,7 @@ import { getImport } from "@storm-stack/core/lib/babel/module";
 import { BabelPluginOptions } from "@storm-stack/core/types/babel";
 import { declareBabel } from "@storm-stack/devkit/babel/declare-babel";
 import { BabelPluginBuilderParams } from "@storm-stack/devkit/types";
-import { NodePluginContext } from "../types";
+import { NodePluginContext } from "../types/plugin";
 
 /*
  * The Storm Stack Babel Plugin

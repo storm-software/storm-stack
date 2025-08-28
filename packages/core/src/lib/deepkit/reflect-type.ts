@@ -48,6 +48,7 @@ export async function resolveType<TResult = any>(
     defu(
       {
         entry: [path],
+        noExternal: ["@storm-stack/core"],
         override: {
           write: false,
           sourcemap: false,

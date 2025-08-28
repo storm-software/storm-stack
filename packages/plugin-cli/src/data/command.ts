@@ -22,7 +22,7 @@ import {
   ReflectionKind,
   ReflectionParameter,
   Type
-} from "@deepkit/type";
+} from "@storm-stack/core/deepkit";
 import { resolveType } from "@storm-stack/core/lib/deepkit/reflect-type";
 import { titleCase } from "@stryke/string-format/title-case";
 import { TypeDefinition } from "@stryke/types/configuration";

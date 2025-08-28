@@ -81,7 +81,6 @@ export async function esbuild(
             ? "\n//  ⚡  Built with Storm Stack \n"
             : " "
       },
-      reflectionLevel: "minimal",
       minify: context.options.mode !== "development",
       metafile: context.options.mode === "development",
       sourcemap: context.options.mode === "development",
@@ -107,19 +106,7 @@ export async function esbuild(
 
           opts.alias = defu(
             opts.alias ?? {},
-            Array.from(context.vfs.runtimeIdMap.keys()).reduce(
-              (ret, id) => {
-                if (
-                  context.vfs.runtimeIdMap.has(id) &&
-                  context.vfs.runtimeIdMap.get(id)
-                ) {
-                  ret[id] = context.vfs.runtimeIdMap.get(id)!;
-                }
-
-                return ret;
-              },
-              {} as Record<string, string>
-            )
+            Object.fromEntries(context.vfs.runtimeIdMap.entries())
           );
         },
         esbuildPlugins: [

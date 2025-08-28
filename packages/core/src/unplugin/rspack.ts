@@ -32,5 +32,6 @@ import { StormStack } from "./index";
  * ```
  */
 const rspack = StormStack.rspack;
+
 export default rspack;
 export { rspack as "module.exports" };
