@@ -41,16 +41,16 @@
     },
     "./plugin": {
       "import": {
-        "types": "./dist/index.d.ts",
-        "default": "./dist/index.js"
+        "types": "./dist/plugin.d.ts",
+        "default": "./dist/plugin.js"
       },
       "require": {
-        "types": "./dist/index.d.cts",
-        "default": "./dist/index.cjs"
+        "types": "./dist/plugin.d.cts",
+        "default": "./dist/plugin.cjs"
       },
       "default": {
-        "types": "./dist/index.d.ts",
-        "default": "./dist/index.js"
+        "types": "./dist/plugin.d.ts",
+        "default": "./dist/plugin.js"
       }
     }
   },

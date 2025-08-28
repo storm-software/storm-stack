@@ -38,6 +38,20 @@
         "types": "./dist/index.d.ts",
         "default": "./dist/index.js"
       }
+    },
+    "./plugin": {
+      "import": {
+        "types": "./dist/plugin.d.ts",
+        "default": "./dist/plugin.js"
+      },
+      "require": {
+        "types": "./dist/plugin.d.cts",
+        "default": "./dist/plugin.cjs"
+      },
+      "default": {
+        "types": "./dist/plugin.d.ts",
+        "default": "./dist/plugin.js"
+      }
     }
   },
   "types": "dist/index.d.ts",

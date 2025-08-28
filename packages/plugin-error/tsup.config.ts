@@ -21,7 +21,12 @@ import type { Options } from "tsup";
 
 const config = getTsupConfig({
   name: "plugin-error",
-  entry: ["src/index.ts", "src/templates/*.ts", "src/babel/*.ts"],
+  entry: [
+    "src/index.ts",
+    "src/plugin.ts",
+    "src/templates/*.ts",
+    "src/babel/*.ts"
+  ],
   outDir: "dist",
   bundle: true,
   splitting: true,

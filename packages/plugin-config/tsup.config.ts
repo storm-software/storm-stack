@@ -22,6 +22,7 @@ const config = getTsupConfig({
   name: "plugin-config",
   entry: [
     "src/index.ts",
+    "src/plugin.ts",
     "src/helpers/*.ts",
     "src/templates/*.ts",
     "src/babel/*.ts"

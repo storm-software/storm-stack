@@ -2084,7 +2084,7 @@ declare module "storm:config" {
      * Indicates if the application is running in debug mode.
      *
      * @title DEBUG
-     * @defaultValue false
+     * @defaultValue true
      */
     DEBUG: boolean;
     /**
@@ -2318,7 +2318,7 @@ declare module "storm:config" {
      * Indicates if error stack traces should be captured.
      *
      * @title STACKTRACE
-     * @defaultValue false
+     * @defaultValue true
      */
     STACKTRACE: boolean;
     /**
@@ -2448,7 +2448,7 @@ declare module "storm:config" {
      * The unique identifier for the build.
      *
      * @title BUILD Identifier
-     * @defaultValue 26b2cf5e-3945-4498-ab0f-18da7cf9ea94
+     * @defaultValue f12997a9-80aa-4458-afca-7ac566d2cf16
      * @readonly
      */
     readonly BUILD_ID: string;
@@ -2456,7 +2456,7 @@ declare module "storm:config" {
      * The timestamp the build was ran at.
      *
      * @title BUILD TIMESTAMP
-     * @defaultValue 2025-08-28T02:32:48.984Z
+     * @defaultValue 2025-08-28T03:55:18.063Z
      * @readonly
      */
     readonly BUILD_TIMESTAMP: string;
@@ -2689,7 +2689,7 @@ declare module "storm:config" {
      * The unique identifier for the release.
      *
      * @title RELEASE Identifier
-     * @defaultValue b2cf5e39-4564-48eb-8f18-da7cf9ea94cc
+     * @defaultValue 2997a980-aa74-486f-8a7a-c566d2cf1662
      * @readonly
      */
     readonly RELEASE_ID: string;

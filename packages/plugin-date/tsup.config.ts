@@ -20,7 +20,7 @@ import { getTsupConfig } from "@storm-stack/tools-config/tsup.shared";
 
 const config = getTsupConfig({
   name: "plugin-date",
-  entry: ["src/index.ts", "src/templates/*.ts"],
+  entry: ["src/index.ts", "src/plugin.ts", "src/templates/*.ts"],
   outDir: "dist",
   bundle: true,
   splitting: true,

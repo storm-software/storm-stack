@@ -21,7 +21,7 @@ import type { Options } from "tsup";
 
 const config = getTsupConfig({
   name: "plugin-cli",
-  entry: ["src/index.ts"],
+  entry: ["src/index.ts", "src/plugin.ts"],
   outDir: "dist",
   bundle: true,
   splitting: false,
