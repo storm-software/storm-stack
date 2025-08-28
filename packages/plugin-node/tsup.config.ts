@@ -28,15 +28,6 @@ const config = getTsupConfig({
     "src/renderers/*.ts",
     "src/babel/*.ts"
   ],
-  outDir: "dist",
-  bundle: true,
-  splitting: true,
-  treeshake: true,
-  keepNames: true,
-  clean: true,
-  sourcemap: true,
-  dts: true,
-  shims: true,
   skipNodeModulesBundle: true
 }) as Options;
 

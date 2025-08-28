@@ -22,15 +22,6 @@ import type { Options } from "tsup";
 const config = getTsupConfig({
   name: "plugin-cli",
   entry: ["src/index.ts", "src/plugin.ts"],
-  outDir: "dist",
-  bundle: true,
-  splitting: false,
-  treeshake: true,
-  keepNames: true,
-  clean: true,
-  sourcemap: true,
-  dts: true,
-  shims: true,
   skipNodeModulesBundle: true,
   noExternal: ["uqr"]
 }) as Options;

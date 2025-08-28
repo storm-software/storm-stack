@@ -26,16 +26,7 @@ const config = getTsupConfig({
     "src/plugin.ts",
     "src/templates/*.ts",
     "src/babel/*.ts"
-  ],
-  outDir: "dist",
-  bundle: true,
-  splitting: true,
-  treeshake: true,
-  keepNames: true,
-  clean: true,
-  sourcemap: true,
-  dts: true,
-  shims: true
+  ]
 }) as Options;
 
 export default config;

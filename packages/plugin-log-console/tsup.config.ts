@@ -20,16 +20,7 @@ import { getTsupConfig } from "@storm-stack/tools-config/tsup.shared";
 
 const config = getTsupConfig({
   name: "plugin-log-console",
-  entry: ["src/index.ts", "src/plugin.ts"],
-  outDir: "dist",
-  bundle: true,
-  splitting: true,
-  treeshake: true,
-  keepNames: true,
-  clean: true,
-  sourcemap: true,
-  dts: true,
-  shims: true
+  entry: ["src/index.ts", "src/plugin.ts"]
 });
 
 export default config;

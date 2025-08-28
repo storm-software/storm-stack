@@ -38,14 +38,6 @@ const config = getTsupConfig([
       "src/unplugin/*.ts"
     ],
     outDir: "dist",
-    bundle: true,
-    splitting: true,
-    treeshake: true,
-    keepNames: true,
-    clean: true,
-    sourcemap: true,
-    dts: true,
-    shims: true,
     noExternal: [
       "memfs",
       "@deepkit/core",
@@ -58,15 +50,7 @@ const config = getTsupConfig([
   {
     name: "core-schemas",
     entry: ["schemas/*.ts"],
-    outDir: "dist/schemas",
-    bundle: true,
-    splitting: true,
-    treeshake: true,
-    keepNames: true,
-    clean: true,
-    sourcemap: true,
-    dts: true,
-    shims: true
+    outDir: "dist/schemas"
   }
 ]);
 

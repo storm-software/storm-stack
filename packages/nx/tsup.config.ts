@@ -31,15 +31,6 @@ const config = getTsupConfig({
     "./src/generators/*/generator.ts",
     "./src/generators/*/untyped.ts"
   ],
-  outDir: "dist",
-  format: ["cjs", "esm"],
-  platform: "node",
-  target: "node22",
-  bundle: true,
-  splitting: true,
-  treeshake: true,
-  dts: true,
-  shims: true,
   clean: false,
   skipNodeModulesBundle: true
 });
