@@ -11,12 +11,14 @@ catalog:
   "@babel/helper-plugin-utils": 8.0.0-beta.1
   "@babel/parser": 8.0.0-beta.1
   "@babel/plugin-syntax-typescript": 8.0.0-beta.1
+  "@babel/plugin-syntax-jsx": 8.0.0-beta.1
   "@babel/preset-typescript": 8.0.0-beta.1
+  "@babel/preset-react": 8.0.0-beta.1
   "@babel/template": 8.0.0-beta.1
   "@babel/traverse": 8.0.0-beta.1
   "@babel/types": 8.0.0-beta.1
   "@biomejs/biome": ^1.9.4
-  "@clack/prompts": ^0.11.0
+  "@clack/prompts": ^0.10.1
   "@cloudflare/unenv-preset": 2.3.1
   "@deepkit/core": 1.0.5
   "@deepkit/type": 1.0.5
@@ -73,25 +75,26 @@ catalog:
   "@storm-software/tsconfig": latest
   "@storm-software/tsdoc": latest
   "@storm-software/workspace-tools": latest
-  "@stryke/env": ^0.17.1
-  "@stryke/fs": ^0.23.3
+  "@stryke/env": ^0.17.6
+  "@stryke/fs": ^0.25.0
   "@stryke/helpers": ^0.7.2
   "@stryke/http": ^0.8.5
   "@stryke/unique-id": ^0.3.3
   "@stryke/url": ^0.2.4
   "@stryke/json": ^0.9.3
-  "@stryke/path": ^0.12.4
+  "@stryke/path": ^0.12.5
   "@stryke/types": ^0.8.9
   "@stryke/hash": ^0.10.0
-  "@stryke/string-format": ^0.9.0
+  "@stryke/string-format": ^0.10.0
   "@stryke/convert": ^0.3.0
-  "@stryke/type-checks": ^0.3.8
+  "@stryke/type-checks": ^0.3.9
   "@stryke/cli": ^0.12.3
-  "@stryke/capnp": 0.10.8
+  "@stryke/capnp": 0.10.12
   "@swc-node/register": ^1.10.10
   "@swc/core": ^1.11.22
   "@swc/wasm": ^1.11.24
   "@swc/helpers": ^0.5.17
+  "@types/semver": ^7.7.0
   "@typescript-eslint/scope-manager": ^8.31.1
   "@typescript-eslint/types": ^8.31.1
   "@typescript-eslint/utils": ^8.31.1

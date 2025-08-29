@@ -12,13 +12,13 @@
 
 <br />
 
-At a high-level, **⚡ Storm Stack** is a system that generates code and other artifacts during the build and deploy processes via TypeScript transformers and static code analysis. Many modern code generation tools require you to explicitly define the structure and behavior of your code in separate schema files and/or configurations, which can be time-consuming and error-prone. Some tools even require you to learn a new SDL or write boilerplate code to wire everything together. **Storm Stack does not require any extra work - you just write your code the way you normally would, and Storm Stack does the rest**.
+At a high-level, **⚡ Storm Stack** is a toolchain system that generates code and other artifacts during the build and deploy processes via TypeScript transformers and static code analysis. Many modern code generation tools require you to explicitly define the structure and behavior of your code in separate schema files and/or configurations, which can be time-consuming and error-prone. Some tools even require you to learn a new SDL or write boilerplate code to wire everything together. **Storm Stack does not require any extra work - you just write your code the way you normally would, and Storm Stack does the rest**.
 
 **The goal is to allow the developer to focus on the actual application/business logic, rather than the specifics around technologies, frameworks, or cloud providers.** This is achieved by using a set of powerful tools and extensible plugins that are designed to work together.
 
 Storm Stack is largely built on top of [Deepkit](https://deepkit.io/), so our projects benefit from access to very small bytecode type definitions at runtime. **This means you have builtin serialization, deserialization, or validation logic without writing any additional code (with greatly improved performance and reduced bundle sizes when compared to popular packages like Zod, Yup, class-validator, and Valibot)**.
 
-The Storm Stack monorepo contains the [Storm Stack engine](https://www.npmjs.com/package/@storm-stack/core) package and various plugins and tools to help developers using the framework. More details can be found below in the [Features](#features) section.
+The Storm Stack monorepo contains the [Storm Stack engine](https://www.npmjs.com/package/@storm-stack/core) package and various plugins and tools to help developers using the toolchain. More details can be found below in the [Features](#features) section.
 
 <!-- prettier-ignore-start -->
 <!-- markdownlint-disable -->
@@ -79,7 +79,7 @@ The Storm Stack monorepo contains the [Storm Stack engine](https://www.npmjs.com
   - [Running End-to-End Tests](#running-end-to-end-tests)
   - [Understand your workspace](#understand-your-workspace)
 - [☁ Nx Cloud](#-nx-cloud)
-  - [Distributed Computation Caching \& Distributed Task Execution](#distributed-computation-caching--distributed-task-execution)
+  - [Distributed Computation Caching & Distributed Task Execution](#distributed-computation-caching--distributed-task-execution)
 - [Roadmap](#roadmap)
 - [Contributing](#contributing)
   - [Pull Requests](#pull-requests)
@@ -97,8 +97,7 @@ The Storm Stack monorepo contains the [Storm Stack engine](https://www.npmjs.com
 
 The core functionality of Storm Stack is built around the concept of a "stack" of tools and services that work together seamlessly. This includes everything from code generation and transformation to deployment and monitoring.
 
-The following sections outline some of the features/publishable content included
-in this repository.
+The following sections outline some of the features/publishable content included in this repository.
 
 ## Engine
 
@@ -288,7 +287,7 @@ The following features are included in the package:
 
 ### [@storm-stack/tsdoc](https://www.npmjs.com/package/@storm-stack/tsdoc)
 
-A shared [TSDoc](https://tsdoc.org/) configuration for Storm Stack projects. 
+A shared [TSDoc](https://tsdoc.org/) configuration for Storm Stack projects.
 
 The following features are included in the package:
 

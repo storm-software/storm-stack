@@ -17,10 +17,17 @@
  ------------------------------------------------------------------- */
 
 import { LogLevelLabel } from "@storm-software/config-tools/types";
+import { isValidRange } from "@stryke/fs/semver-fns";
 import { camelCase } from "@stryke/string-format/camel-case";
 import { kebabCase } from "@stryke/string-format/kebab-case";
+import {
+  getPackageName,
+  getPackageVersion
+} from "@stryke/string-format/package";
 import { titleCase } from "@stryke/string-format/title-case";
+import { isObject } from "@stryke/type-checks/is-object";
 import defu from "defu";
+import { subset } from "semver";
 import { createLog, extendLog } from "../lib/logger";
 import type { EngineHooks } from "../types/build";
 import type { LogFn, PluginConfig } from "../types/config";
@@ -28,7 +35,8 @@ import { Context } from "../types/context";
 import type {
   PluginBaseOptions,
   PluginInterface,
-  PluginOptions
+  PluginOptions,
+  PluginPackageDependencies
 } from "../types/plugin";
 
 /**
@@ -62,7 +70,7 @@ export abstract class Plugin<
   /**
    * A list of dependencies that are required for the plugin to work. These dependencies will be installed when Storm Stack CLI is run.
    */
-  protected packageDeps: Record<string, "dependency" | "devDependency"> = {};
+  protected packageDeps: PluginPackageDependencies = {};
 
   /**
    * A property to override the plugin's {@link name} field.
@@ -213,27 +221,62 @@ export abstract class Plugin<
     ) as PluginOptions<TOptions>;
 
     if (Object.keys(this.packageDeps).length > 0) {
-      Object.keys(this.packageDeps).forEach(dependency => {
-        if (
-          this.packageDeps[dependency] &&
-          (this.packageDeps[dependency] === "devDependency" ||
-            context.options.projectType === "application")
-        ) {
-          if (
-            dependency.lastIndexOf("@") > 0 &&
-            dependency.substring(0, dependency.lastIndexOf("@")) in
-              context.packageDeps
-          ) {
-            // Remove the existing dependency if it does not include the version
-            // This is a workaround for the fact that we cannot install the same package with different versions
-            delete context.packageDeps[
-              dependency.substring(0, dependency.lastIndexOf("@"))
-            ];
+      context.packageDeps = Object.entries(
+        this.packageDeps
+      ).reduce<PluginPackageDependencies>((ret, [dependency, value]) => {
+        const packageName = getPackageName(dependency);
+
+        const currentVersion =
+          getPackageVersion(dependency) ||
+          (isObject(value) ? value.version : undefined);
+        const currentType = isObject(value) ? value.type : value;
+
+        const match = Object.keys(ret).find(
+          dep => getPackageName(dep) === packageName
+        );
+        if (match) {
+          const matchedVersion =
+            getPackageVersion(match) ||
+            (isObject(ret[match]) ? ret[match].version : undefined);
+          const matchedType = isObject(ret[match])
+            ? ret[match].type
+            : ret[match];
+
+          const type =
+            currentType === "dependency" || matchedType === "dependency"
+              ? "dependency"
+              : currentType || matchedType;
+
+          if (currentVersion || matchedVersion) {
+            if (!currentVersion || !isValidRange(currentVersion)) {
+              ret[packageName] = {
+                version: matchedVersion,
+                type
+              };
+            } else if (!matchedVersion || !isValidRange(matchedVersion)) {
+              ret[packageName] = {
+                version: currentVersion,
+                type
+              };
+            } else {
+              ret[packageName] = {
+                version: subset(matchedVersion, currentVersion)
+                  ? matchedVersion
+                  : currentVersion,
+                type
+              };
+            }
           }
 
-          context.packageDeps[dependency] = this.packageDeps[dependency];
+          if (match !== packageName) {
+            delete ret[match];
+          }
+        } else {
+          ret[dependency] = value;
         }
-      });
+
+        return ret;
+      }, {} as PluginPackageDependencies);
     }
   }
 }

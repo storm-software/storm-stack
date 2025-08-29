@@ -17,6 +17,7 @@
  ------------------------------------------------------------------- */
 
 import type { MaybePromise } from "@stryke/types/base";
+import { Range } from "semver";
 import type { EngineHooks } from "./build";
 import type { LogFn, PluginConfig } from "./config";
 import { Context } from "./context";
@@ -44,14 +45,24 @@ export interface RendererInterface {
    * @remarks
    * These dependencies will be installed and added to the project's `package.json` file when the Storm Stack initialization process is run.
    */
-  getPackageDeps: () => Record<string, "dependency" | "devDependency">;
+  getPackageDeps: () => PluginPackageDependencies;
 }
+
+export type PluginPackageDependencyMeta =
+  | "dependency"
+  | "devDependency"
+  | { version?: string | Range; type?: "dependency" | "devDependency" };
+
+export type PluginPackageDependencies = Record<
+  string,
+  PluginPackageDependencyMeta
+>;
 
 export interface PluginBaseOptions {
   /**
    * A list of packages that are required by the generated output of the plugin.
    */
-  packageDeps?: Record<string, "dependency" | "devDependency">;
+  packageDeps?: PluginPackageDependencies;
 
   // /**
   //  * An object containing custom renderers that can override the default renderers used by the plugin.

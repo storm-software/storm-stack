@@ -29,7 +29,7 @@ import { UnpluginContextMeta } from "unplugin";
 import { ResolvedEntryTypeDefinition, ResolvedOptions } from "./build";
 import { CompilerInterface, SourceFile } from "./compiler";
 import type { LogFn } from "./config";
-import { PluginOptions } from "./plugin";
+import { PluginOptions, PluginPackageDependencies } from "./plugin";
 import { ParsedTypeScriptConfig } from "./tsconfig";
 import { VirtualFileSystemInterface } from "./vfs";
 
@@ -236,7 +236,7 @@ export interface Context<
   /**
    * The installations required by the project
    */
-  packageDeps: Record<string, "dependency" | "devDependency">;
+  packageDeps: PluginPackageDependencies;
 
   /**
    * The parsed TypeScript configuration
@@ -381,7 +381,7 @@ export type SerializedContext<
   /**
    * The installations required by the project
    */
-  packageDeps: Record<string, "dependency" | "devDependency">;
+  packageDeps: PluginPackageDependencies;
 
   /**
    * The parsed TypeScript configuration

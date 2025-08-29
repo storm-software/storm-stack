@@ -2084,7 +2084,7 @@ declare module "storm:config" {
      * Indicates if the application is running in debug mode.
      *
      * @title DEBUG
-     * @defaultValue true
+     * @defaultValue false
      */
     DEBUG: boolean;
     /**
@@ -2318,7 +2318,7 @@ declare module "storm:config" {
      * Indicates if error stack traces should be captured.
      *
      * @title STACKTRACE
-     * @defaultValue true
+     * @defaultValue false
      */
     STACKTRACE: boolean;
     /**
@@ -2448,7 +2448,7 @@ declare module "storm:config" {
      * The unique identifier for the build.
      *
      * @title BUILD Identifier
-     * @defaultValue f12997a9-80aa-4458-afca-7ac566d2cf16
+     * @defaultValue cf1f0695-4f6c-4358-9ad0-111f1e00cec5
      * @readonly
      */
     readonly BUILD_ID: string;
@@ -2456,7 +2456,7 @@ declare module "storm:config" {
      * The timestamp the build was ran at.
      *
      * @title BUILD TIMESTAMP
-     * @defaultValue 2025-08-28T03:55:18.063Z
+     * @defaultValue 2025-08-29T22:04:07.307Z
      * @readonly
      */
     readonly BUILD_TIMESTAMP: string;
@@ -2689,7 +2689,7 @@ declare module "storm:config" {
      * The unique identifier for the release.
      *
      * @title RELEASE Identifier
-     * @defaultValue 2997a980-aa74-486f-8a7a-c566d2cf1662
+     * @defaultValue 1f06954f-6c83-48da-9011-1f1e00cec5b3
      * @readonly
      */
     readonly RELEASE_ID: string;
@@ -2766,6 +2766,13 @@ declare module "storm:config" {
      * @readonly
      */
     readonly STORM_STACK_LOCAL?: boolean;
+    /**
+     * An indicator used to skip version checks for installed packages.
+     *
+     * @title STORM STACK SKIP VERSION CHECK
+     * @readonly
+     */
+    readonly STORM_STACK_SKIP_VERSION_CHECK?: boolean;
     /**
      * The strider build ID. This value is set by certain CI/CD systems.
      *

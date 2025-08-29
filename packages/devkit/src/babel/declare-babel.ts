@@ -42,6 +42,7 @@ export function declareBabel<
   const plugin = (context: TContext) => {
     return declare<TOptions, TOptions>((api, options, dirname) => {
       api.cache.using(() => context.meta.checksum);
+      api.assertVersion("^8.0.0-0");
 
       const log = extendLog(context.log, name);
       log(

@@ -27,4 +27,9 @@ export interface StormStackCLIConfig extends StormSentryLogConfig {
    * @defaultValue "memory"
    */
   OUTPUT_MODE?: "memory" | "fs";
+
+  /**
+   * An indicator used to skip version checks for installed packages.
+   */
+  readonly STORM_STACK_SKIP_VERSION_CHECK?: boolean;
 }

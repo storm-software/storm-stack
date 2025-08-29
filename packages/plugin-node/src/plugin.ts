@@ -92,8 +92,11 @@ export default class NodePlugin<
       `Initializing the NodeJs plugin options for the Storm Stack project.`
     );
 
-    this.packageDeps["@stryke/string-format"] = "dependency";
-    this.packageDeps["@types/node"] = "devDependency";
+    this.packageDeps["@stryke/string-format"] = { type: "dependency" };
+    this.packageDeps["@types/node"] = {
+      type: "devDependency",
+      version: "^22.15.0"
+    };
 
     context.options.platform = "node";
     context.options.esbuild.target = "node22";

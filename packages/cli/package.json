@@ -25,10 +25,10 @@
     "@sentry/node": "catalog:",
     "@storm-software/config-tools": "catalog:",
     "@storm-stack/core": "workspace:*",
-    "@storm-stack/types": "workspace:*",
     "@stryke/fs": "catalog:",
     "date-fns": "catalog:",
     "defu": "catalog:",
+    "minimatch": "catalog:",
     "unstorage": "catalog:"
   },
   "devDependencies": {
@@ -37,6 +37,7 @@
     "@storm-stack/plugin-log-sentry": "workspace:*",
     "@storm-stack/plugin-log-storage": "workspace:*",
     "@storm-stack/plugin-storage-fs": "workspace:*",
+    "@storm-stack/types": "workspace:*",
     "@types/node": "catalog:"
   },
   "publishConfig": {

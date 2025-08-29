@@ -180,9 +180,15 @@ export default class CloudflareWorkerPlugin<
         "development"
       ];
 
-      context.packageDeps["@cloudflare/unenv-preset"] = "dependency";
-      context.packageDeps.unenv = "dependency";
-      context.packageDeps.wrangler = "devDependency";
+      context.packageDeps["@cloudflare/unenv-preset"] = {
+        "type": "dependency",
+        "version": "^2.3.1"
+      };
+      context.packageDeps.unenv = { "type": "dependency", "version": "^2.3.1" };
+      context.packageDeps.wrangler = {
+        "type": "devDependency",
+        "version": "^4.33.1"
+      };
 
       context.runtimeDtsFilePath = joinPaths(
         context.options.projectRoot,
@@ -221,6 +227,7 @@ export default class CloudflareWorkerPlugin<
       tsconfigJson.compilerOptions.types.push(CLOUDFLARE_TYPES_DECLARATION);
     }
 
+    // Remove Cloudflare Workers types (we're going to generate our own types)
     if (
       tsconfigJson.compilerOptions.types.some(type =>
         type.toLowerCase().startsWith("@cloudflare/workers-types")

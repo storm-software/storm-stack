@@ -17,9 +17,17 @@
  ------------------------------------------------------------------- */
 
 import { LogLevelLabel } from "@storm-software/config-tools/types";
+import { isValidRange } from "@stryke/fs/semver-fns";
+import {
+  getPackageName,
+  getPackageVersion,
+  hasPackageVersion
+} from "@stryke/string-format/package";
+import { isSetObject } from "@stryke/type-checks/is-set-object";
+import { isSetString } from "@stryke/type-checks/is-set-string";
+import { isString } from "@stryke/type-checks/is-string";
 import type { EngineHooks } from "../../../types/build";
 import { Context } from "../../../types/context";
-import { getNodeDeps } from "./node";
 import { getSharedDeps } from "./shared";
 import { installPackage } from "./utilities";
 
@@ -39,16 +47,6 @@ export async function initInstall(
   );
 
   context.packageDeps = getSharedDeps(context);
-  if (context.options.platform === "node") {
-    const installs = getNodeDeps(context);
-    context.packageDeps = Object.keys(installs).reduce((ret, key) => {
-      if (installs[key] && ret[key] !== "dependency") {
-        ret[key] = installs[key];
-      }
-
-      return ret;
-    }, context.packageDeps);
-  }
 
   await hooks.callHook("init:install", context).catch((error: Error) => {
     context.log(
@@ -66,11 +64,39 @@ export async function initInstall(
     `The following packages must be installed as dependencies: \n${Object.keys(
       context.packageDeps
     )
-      .map(key => ` - ${key} (${context.packageDeps[key]})`)
+      .map(
+        key =>
+          ` - ${getPackageName(key)}${
+            hasPackageVersion(key) ||
+            (isSetObject(context.packageDeps[key]) &&
+              isSetString(context.packageDeps[key].version))
+              ? ` v${
+                  isSetObject(context.packageDeps[key]) &&
+                  isSetString(context.packageDeps[key].version)
+                    ? context.packageDeps[key].version
+                    : getPackageVersion(key)
+                }`
+              : ""
+          } (${
+            (isString(context.packageDeps[key])
+              ? context.packageDeps[key]
+              : context.packageDeps[key]?.type) || "dependency"
+          })`
+      )
       .join("\n")}`
   );
 
   for (const [key, value] of Object.entries(context.packageDeps)) {
-    await installPackage(context, key, value === "devDependency");
+    const version =
+      (isSetObject(value) && isValidRange(value.version) && value.version) ||
+      getPackageVersion(key);
+
+    await installPackage(
+      context,
+      version
+        ? `${getPackageName(key)}@${String(version)}`
+        : getPackageName(key),
+      (isSetString(value) ? value : value.type) === "devDependency"
+    );
   }
 }

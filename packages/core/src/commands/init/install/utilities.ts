@@ -18,7 +18,16 @@
 
 import { LogLevelLabel } from "@storm-software/config-tools/types";
 import { install } from "@stryke/fs/install";
-import { isPackageListed } from "@stryke/fs/package-fns";
+import {
+  doesPackageMatch,
+  getPackageListing,
+  isPackageListed
+} from "@stryke/fs/package-fns";
+import {
+  getPackageName,
+  getPackageVersion,
+  hasPackageVersion
+} from "@stryke/string-format/package";
 import { isNumber } from "@stryke/type-checks/is-number";
 import type { Context } from "../../../types/context";
 
@@ -34,12 +43,14 @@ export async function installPackage(
   packageName: string,
   dev = false
 ) {
-  const isInstalled = await isPackageListed(
-    packageName,
-    context.options.projectRoot
-  );
-  if (!isInstalled) {
-    if (context.options.skipInstalls !== true) {
+  const isListed = await isPackageListed(packageName, {
+    cwd: context.options.projectRoot
+  });
+  if (!isListed) {
+    if (
+      context.options.skipInstalls !== true &&
+      !process.env.STORM_STACK_LOCAL
+    ) {
       context.log(
         LogLevelLabel.WARN,
         `The package "${packageName}" is not installed. It will be installed automatically.`
@@ -60,6 +71,34 @@ export async function installPackage(
         LogLevelLabel.WARN,
         `The package "${packageName}" is not installed. Since the "skipInstalls" option is set to true, it will not be installed automatically.`
       );
+    }
+  } else if (
+    hasPackageVersion(packageName) &&
+    !process.env.STORM_STACK_SKIP_VERSION_CHECK
+  ) {
+    const isMatching = await doesPackageMatch(
+      getPackageName(packageName),
+      getPackageVersion(packageName)!,
+      context.options.projectRoot
+    );
+    if (!isMatching) {
+      const packageListing = await getPackageListing(
+        getPackageName(packageName),
+        {
+          cwd: context.options.projectRoot
+        }
+      );
+      if (
+        !packageListing?.version.startsWith("catalog:") &&
+        !packageListing?.version.startsWith("workspace:")
+      ) {
+        context.log(
+          LogLevelLabel.WARN,
+          `The package "${getPackageName(packageName)}" is installed but does not match the expected version ${getPackageVersion(
+            packageName
+          )} (installed version: ${packageListing?.version || "<Unknown>"}). Please ensure this is intentional before proceeding. Note: You can skip this validation with the "STORM_STACK_SKIP_VERSION_CHECK" environment variable.`
+        );
+      }
     }
   }
 }

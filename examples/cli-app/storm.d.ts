@@ -2025,21 +2025,6 @@ declare module "storm:config" {
    */
   export interface StormConfigBase extends StormConfigInterface {
     /**
-     * ARGV
-     *
-     * @title ARGV
-     * @domain cli
-     */
-    ARGV?: Array<string>;
-    /**
-     * The inverse of the no-banner option.
-     *
-     * @title BANNER
-     * @domain cli
-     * @defaultValue true
-     */
-    BANNER?: boolean;
-    /**
      * The Storm Stack application's cached data directory.
      *
      * @title Cache Directory
@@ -2053,20 +2038,6 @@ declare module "storm:config" {
      * @defaultValue false
      */
     CI: boolean;
-    /**
-     * Should the server serve compressed files?
-     *
-     * @title COMPRESS
-     * @domain cli
-     */
-    COMPRESS?: boolean;
-    /**
-     * The configuration file to append the completion script to.
-     *
-     * @title CONFIG
-     * @domain cli
-     */
-    CONFIG?: string | true;
     /**
      * The Storm Stack application's configuration data directory.
      *
@@ -2139,14 +2110,6 @@ declare module "storm:config" {
      */
     ERROR_URL: string;
     /**
-     * The file to add to the file system.
-     *
-     * @title FILE
-     * @domain cli
-     * @defaultValue server.ts
-     */
-    FILE?: string;
-    /**
      * An indicator that specifies the current runtime is a force color environment.
      *
      * @title FORCE COLOR
@@ -2161,44 +2124,12 @@ declare module "storm:config" {
      */
     FORCE_HYPERLINK: boolean | number;
     /**
-     * Show help information.
-     *
-     * @title HELP
-     * @domain cli
-     * @defaultValue false
-     */
-    HELP?: boolean;
-    /**
-     * The host to bind the server to.
-     *
-     * @title HOST
-     * @domain cli
-     * @defaultValue localhost
-     */
-    HOST?: string;
-    /**
      * Indicates if error data should be included.
      *
      * @title INCLUDE ERROR DATA
      * @defaultValue false
      */
     INCLUDE_ERROR_DATA: boolean;
-    /**
-     * The inverse of the no-interactive option.
-     *
-     * @title INTERACTIVE
-     * @domain cli
-     * @defaultValue true
-     */
-    INTERACTIVE?: boolean;
-    /**
-     * Should the server load environment variables from the .env file?
-     *
-     * @title LOAD ENV
-     * @domain cli
-     * @defaultValue true
-     */
-    LOAD_ENV?: boolean;
     /**
      * The Storm Stack application's logging directory.
      *
@@ -2228,54 +2159,12 @@ declare module "storm:config" {
      */
     MODE: "development" | "staging" | "production";
     /**
-     * Hide the banner displayed while running the CLI application (will be set to true if running in a CI pipeline).
-     *
-     * @title NO BANNER
-     * @domain cli
-     * @defaultValue false
-     */
-    NO_BANNER?: boolean;
-    /**
      * An indicator that specifies the current runtime is a no color environment.
      *
      * @title NO COLOR
      * @defaultValue false
      */
     NO_COLOR: boolean;
-    /**
-     * The inverse of the compress option.
-     *
-     * @title NO COMPRESS
-     * @domain cli
-     * @defaultValue false
-     */
-    NO_COMPRESS?: boolean;
-    /**
-     * Disable interactive mode (will be set to true if running in a CI pipeline).
-     *
-     * @title NO INTERACTIVE
-     * @alias NO_INTERACTIVE
-     * @domain cli
-     * @defaultValue false
-     */
-    NO_INTERACT?: boolean;
-    /**
-     * Disable interactive mode (will be set to true if running in a CI pipeline).
-     *
-     * @title NO INTERACTIVE
-     * @alias NO_INTERACT
-     * @domain cli
-     * @defaultValue false
-     */
-    NO_INTERACTIVE?: boolean;
-    /**
-     * The inverse of the loadEnv option.
-     *
-     * @title NO LOAD ENV
-     * @domain cli
-     * @defaultValue false
-     */
-    NO_LOAD_ENV?: boolean;
     /**
      * The mode in which the application is running.
      *
@@ -2308,21 +2197,6 @@ declare module "storm:config" {
      */
     PLATFORM: "node" | "neutral" | "browser";
     /**
-     * The port to bind the server to.
-     *
-     * @title PORT
-     * @domain cli
-     * @defaultValue 3000
-     */
-    PORT?: number;
-    /**
-     * The path to write the completion script to.
-     *
-     * @title SCRIPT
-     * @domain cli
-     */
-    SCRIPT?: string | true;
-    /**
      * The DSN for Sentry
      *
      * @title SENTRY Data Source Name
@@ -2349,30 +2223,6 @@ declare module "storm:config" {
      * @defaultValue false
      */
     TEST: boolean;
-    /**
-     * The type of the file.
-     *
-     * @title TYPE
-     * @domain cli
-     * @defaultValue server
-     */
-    TYPE?: string;
-    /**
-     * Enable verbose output.
-     *
-     * @title VERBOSE
-     * @domain cli
-     * @defaultValue false
-     */
-    VERBOSE?: boolean;
-    /**
-     * Show the version of the application.
-     *
-     * @title VERSION
-     * @domain cli
-     * @defaultValue false
-     */
-    VERSION?: boolean;
     /**
      * The appcircle build ID. This value is set by certain CI/CD systems.
      *
@@ -2471,7 +2321,7 @@ declare module "storm:config" {
      * The unique identifier for the build.
      *
      * @title BUILD Identifier
-     * @defaultValue 3d04ac16-d72d-4c49-a297-71cd9a41c6d5
+     * @defaultValue d95f0cad-f2a8-45df-b98c-464ba2c68549
      * @readonly
      */
     readonly BUILD_ID: string;
@@ -2479,7 +2329,7 @@ declare module "storm:config" {
      * The timestamp the build was ran at.
      *
      * @title BUILD TIMESTAMP
-     * @defaultValue 2025-08-28T03:56:06.023Z
+     * @defaultValue 2025-08-29T22:02:01.167Z
      * @readonly
      */
     readonly BUILD_TIMESTAMP: string;
@@ -2712,7 +2562,7 @@ declare module "storm:config" {
      * The unique identifier for the release.
      *
      * @title RELEASE Identifier
-     * @defaultValue 04ac16d7-2d7c-49e2-9771-cd9a41c6d528
+     * @defaultValue 5f0cadf2-a8f5-4f79-8c46-4ba2c6854945
      * @readonly
      */
     readonly RELEASE_ID: string;

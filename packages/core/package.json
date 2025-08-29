@@ -843,6 +843,7 @@
     "@storm-software/testing-tools": "catalog:",
     "@stryke/types": "catalog:",
     "@types/node": "catalog:",
+    "@types/semver": "catalog:",
     "eslint": "catalog:",
     "minimatch": "catalog:",
     "tsup": "catalog:",

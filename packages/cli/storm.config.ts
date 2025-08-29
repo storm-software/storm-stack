@@ -51,7 +51,7 @@ export default defineConfig({
       }
     ]
   ],
-  noExternal: ["@storm-stack/core"],
+  external: ["@storm-stack/core"],
   esbuild: {
     format: "esm"
   },

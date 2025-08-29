@@ -17,6 +17,7 @@
  ------------------------------------------------------------------- */
 
 import type { Context } from "../../../types/context";
+import { PluginPackageDependencies } from "../../../types/plugin";
 
 /**
  * Get the shared dependencies for the project.
@@ -24,14 +25,12 @@ import type { Context } from "../../../types/context";
  * @param context - The context object containing the options.
  * @returns An object containing the shared dependencies and their types.
  */
-export function getSharedDeps(
-  context: Context
-): Record<string, "dependency" | "devDependency"> {
+export function getSharedDeps(context: Context): PluginPackageDependencies {
   context.packageDeps ??= {};
-  context.packageDeps["@storm-stack/types"] = "devDependency";
+  context.packageDeps["@storm-stack/types"] = { type: "devDependency" };
 
   if (context.options.projectType === "application") {
-    context.packageDeps.unstorage = "dependency";
+    context.packageDeps.unstorage = { type: "dependency" };
   }
 
   return context.packageDeps;

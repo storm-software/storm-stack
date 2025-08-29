@@ -92,7 +92,10 @@ export async function initInstalls(context: CLIPluginContext) {
     context.options.projectType === "application" &&
     context.options.plugins.cli.interactive !== "never"
   ) {
-    context.packageDeps["@clack/prompts@0.10.1"] = "dependency";
+    context.packageDeps["@clack/prompts"] = {
+      type: "dependency",
+      version: "^0.10.1"
+    };
   }
 }
 

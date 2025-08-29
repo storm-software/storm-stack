@@ -1,7 +1,7 @@
 {
   "name": "@storm-stack/monorepo",
   "version": "0.0.1",
-  "description": "⚡ A system to generate code and other artifacts during the build and deploy processes via TypeScript transformers and static code analysis.",
+  "description": "⚡ A toolchain to generate code and other artifacts during the build and deploy processes via TypeScript transformers and static code analysis.",
   "repository": {
     "type": "github",
     "url": "https://github.com/storm-software/storm-stack.git"
@@ -57,6 +57,7 @@
     "view-config": "pnpm exec storm-config"
   },
   "devDependencies": {
+    "@babel/plugin-syntax-typescript": "catalog:",
     "@deepkit/type-compiler": "catalog:",
     "@deepkit/type-spec": "catalog:",
     "@ls-lint/ls-lint": "catalog:",
@@ -84,7 +85,6 @@
     "@stryke/capnp": "catalog:",
     "@swc-node/register": "catalog:",
     "@swc/core": "catalog:",
-    "@swc/helpers": "catalog:",
     "@taplo/cli": "catalog:",
     "@types/jest": "catalog:",
     "@types/node": "catalog:",
