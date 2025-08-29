@@ -2,6 +2,13 @@
 
 # Changelog for Storm Stack - Types
 
+## [0.17.0](https://github.com/storm-software/storm-stack/releases/tag/types%400.17.0) (2025-08-29)
+
+### Features
+
+- **core:** Bundle `deepkit` packages into separate exports
+  ([7caead22](https://github.com/storm-software/storm-stack/commit/7caead22))
+
 ## [0.16.1](https://github.com/storm-software/storm-stack/releases/tag/types%400.16.1) (2025-08-24)
 
 ### Bug Fixes

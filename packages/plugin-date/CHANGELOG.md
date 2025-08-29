@@ -2,6 +2,29 @@
 
 # Changelog for Storm Stack - Plugin Date
 
+## [0.3.0](https://github.com/storm-software/storm-stack/releases/tag/plugin-date%400.3.0) (2025-08-29)
+
+### Features
+
+- **core:** Added the ability to explicitly specify required dependency versions
+  in plugins
+  ([a66d894b](https://github.com/storm-software/storm-stack/commit/a66d894b))
+- **core:** Update plugin packages to include an optional `plugin` export
+  ([f52f0bc0](https://github.com/storm-software/storm-stack/commit/f52f0bc0))
+- **core:** Bundle `deepkit` packages into separate exports
+  ([7caead22](https://github.com/storm-software/storm-stack/commit/7caead22))
+
+### Miscellaneous
+
+- **monorepo:** Consolidate duplicate build config to shared tools package
+  ([faa5c167](https://github.com/storm-software/storm-stack/commit/faa5c167))
+
+### Updated Dependencies
+
+- Updated devkit to 0.12.0
+- Updated core to 0.36.0
+- Updated nx to 0.17.0
+
 ## [0.2.1](https://github.com/storm-software/storm-stack/releases/tag/plugin-date%400.2.1) (2025-08-24)
 
 ### Bug Fixes

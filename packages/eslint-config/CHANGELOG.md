@@ -2,6 +2,18 @@
 
 # Changelog for Storm Stack - ESLint Config
 
+## [0.14.0](https://github.com/storm-software/storm-stack/releases/tag/eslint-config%400.14.0) (2025-08-29)
+
+### Features
+
+- **core:** Bundle `deepkit` packages into separate exports
+  ([7caead22](https://github.com/storm-software/storm-stack/commit/7caead22))
+
+### Miscellaneous
+
+- **monorepo:** Consolidate duplicate build config to shared tools package
+  ([faa5c167](https://github.com/storm-software/storm-stack/commit/faa5c167))
+
 ## [0.13.1](https://github.com/storm-software/storm-stack/releases/tag/eslint-config%400.13.1) (2025-08-24)
 
 ### Bug Fixes

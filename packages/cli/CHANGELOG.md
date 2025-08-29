@@ -2,6 +2,33 @@
 
 # Changelog for Storm Stack - CLI
 
+## [0.18.0](https://github.com/storm-software/storm-stack/releases/tag/cli%400.18.0) (2025-08-29)
+
+### Features
+
+- **core:** Added the ability to explicitly specify required dependency versions
+  in plugins
+  ([a66d894b](https://github.com/storm-software/storm-stack/commit/a66d894b))
+- **core:** Update plugin packages to include an optional `plugin` export
+  ([f52f0bc0](https://github.com/storm-software/storm-stack/commit/f52f0bc0))
+- **core:** Bundle `deepkit` packages into separate exports
+  ([7caead22](https://github.com/storm-software/storm-stack/commit/7caead22))
+
+### Bug Fixes
+
+- **cli:** Resolve issue with accidental check-in of generated gif file
+  ([1f4104cc](https://github.com/storm-software/storm-stack/commit/1f4104cc))
+
+### Updated Dependencies
+
+- Updated plugin-log-storage to 0.23.0
+- Updated plugin-log-sentry to 0.26.0
+- Updated plugin-storage-fs to 0.12.0
+- Updated plugin-cli to 0.29.0
+- Updated types to 0.17.0
+- Updated core to 0.36.0
+- Updated nx to 0.17.0
+
 ## [0.17.0](https://github.com/storm-software/storm-stack/releases/tag/cli%400.17.0) (2025-08-24)
 
 ### Features

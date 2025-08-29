@@ -2,6 +2,26 @@
 
 # Changelog for Storm Stack - Devkit
 
+## [0.12.0](https://github.com/storm-software/storm-stack/releases/tag/devkit%400.12.0) (2025-08-29)
+
+### Features
+
+- **core:** Added the ability to explicitly specify required dependency versions
+  in plugins
+  ([a66d894b](https://github.com/storm-software/storm-stack/commit/a66d894b))
+- **core:** Bundle `deepkit` packages into separate exports
+  ([7caead22](https://github.com/storm-software/storm-stack/commit/7caead22))
+
+### Miscellaneous
+
+- **monorepo:** Consolidate duplicate build config to shared tools package
+  ([faa5c167](https://github.com/storm-software/storm-stack/commit/faa5c167))
+
+### Updated Dependencies
+
+- Updated types to 0.17.0
+- Updated core to 0.36.0
+
 ## [0.11.1](https://github.com/storm-software/storm-stack/releases/tag/devkit%400.11.1) (2025-08-24)
 
 ### Bug Fixes
