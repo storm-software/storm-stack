@@ -744,15 +744,15 @@
     "astro"
   ],
   "peerDependencies": {
-    "@nuxt/kit": "^3.17.1",
-    "@nuxt/schema": "^3.17.1",
-    "@rspack/cli": "^1.3.8",
+    "@nuxt/kit": "^3.18.1",
+    "@nuxt/schema": "^3.18.1",
+    "@rspack/cli": "^1.5.1",
     "@storm-software/tsdoc": "*",
     "astro": "^3.0.0",
-    "rolldown": "^1.0.0-beta.23",
-    "rollup": "^4.40.1",
-    "vite": "^6.3.4",
-    "webpack": "^5.99.7"
+    "rolldown": "^1.0.0-beta.34",
+    "rollup": "^4.49.0",
+    "vite": "^6.3.5",
+    "webpack": "^5.101.3"
   },
   "peerDependenciesMeta": {
     "@nuxt/kit": {
@@ -805,7 +805,7 @@
     "@storm-software/config": "catalog:",
     "@storm-software/config-tools": "catalog:",
     "@storm-software/esbuild": "catalog:",
-    "@storm-stack/types": "0.18.0",
+    "@storm-stack/types": "0.34.0",
     "@stryke/capnp": "catalog:",
     "@stryke/convert": "catalog:",
     "@stryke/env": "catalog:",

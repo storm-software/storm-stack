@@ -212,7 +212,7 @@
     "@storm-software/esbuild": "catalog:",
     "@storm-software/unbuild": "catalog:",
     "@storm-stack/core": "0.36.1",
-    "@storm-stack/types": "0.18.0",
+    "@storm-stack/types": "0.34.0",
     "@stryke/convert": "catalog:",
     "@stryke/helpers": "catalog:",
     "@stryke/json": "catalog:",
