@@ -107,7 +107,7 @@
     "@stryke/fs": "catalog:",
     "defu": "catalog:",
     "eslint-flat-config-utils": "catalog:",
-    "eslint-plugin-storm-stack": "workspace:*"
+    "eslint-plugin-storm-stack": "0.12.0"
   },
   "devDependencies": {
     "@types/node": "catalog:",

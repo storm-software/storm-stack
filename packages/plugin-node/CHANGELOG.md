@@ -2,6 +2,25 @@
 
 # Changelog for Storm Stack - Plugin Node
 
+## [0.17.0](https://github.com/storm-software/storm-stack/releases/tag/plugin-node%400.17.0) (2025-08-30)
+
+### Features
+
+- **core:** Renamed the `StormResult` definition to `StormResponse`
+  ([4a17c22d](https://github.com/storm-software/storm-stack/commit/4a17c22d))
+
+### Miscellaneous
+
+- **monorepo:** Update workspace package links
+  ([3a786529](https://github.com/storm-software/storm-stack/commit/3a786529))
+
+### Updated Dependencies
+
+- Updated devkit to 0.12.1
+- Updated types to 0.18.0
+- Updated core to 0.36.1
+- Updated nx to 0.17.1
+
 ## [0.16.0](https://github.com/storm-software/storm-stack/releases/tag/plugin-node%400.16.0) (2025-08-29)
 
 ### Features

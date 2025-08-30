@@ -2,6 +2,22 @@
 
 # Changelog for Storm Stack - Plugin Cloudflare Worker
 
+## [0.23.0](https://github.com/storm-software/storm-stack/releases/tag/plugin-cloudflare-worker%400.23.0) (2025-08-30)
+
+### Features
+
+- **core:** Renamed the `StormResult` definition to `StormResponse`
+  ([4a17c22d](https://github.com/storm-software/storm-stack/commit/4a17c22d))
+
+### Miscellaneous
+
+- **monorepo:** Update workspace package links
+  ([3a786529](https://github.com/storm-software/storm-stack/commit/3a786529))
+
+### Updated Dependencies
+
+- Updated core to 0.36.1
+
 ## [0.22.0](https://github.com/storm-software/storm-stack/releases/tag/plugin-cloudflare-worker%400.22.0) (2025-08-29)
 
 ### Features

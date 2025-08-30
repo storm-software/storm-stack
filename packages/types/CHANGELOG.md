@@ -2,6 +2,13 @@
 
 # Changelog for Storm Stack - Types
 
+## [0.18.0](https://github.com/storm-software/storm-stack/releases/tag/types%400.18.0) (2025-08-30)
+
+### Features
+
+- **types:** Added the `browser` types for use in client packages
+  ([de6b8390](https://github.com/storm-software/storm-stack/commit/de6b8390))
+
 ## [0.17.0](https://github.com/storm-software/storm-stack/releases/tag/types%400.17.0) (2025-08-29)
 
 ### Features

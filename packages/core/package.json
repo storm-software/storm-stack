@@ -1,6 +1,6 @@
 {
   "name": "@storm-stack/core",
-  "version": "0.36.0",
+  "version": "0.36.1",
   "type": "module",
   "description": "A build toolkit and runtime used by Storm Software in TypeScript applications",
   "repository": {
@@ -805,7 +805,7 @@
     "@storm-software/config": "catalog:",
     "@storm-software/config-tools": "catalog:",
     "@storm-software/esbuild": "catalog:",
-    "@storm-stack/types": "workspace:*",
+    "@storm-stack/types": "0.18.0",
     "@stryke/capnp": "catalog:",
     "@stryke/convert": "catalog:",
     "@stryke/env": "catalog:",

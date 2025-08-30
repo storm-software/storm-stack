@@ -1,6 +1,6 @@
 {
   "name": "@storm-stack/devkit",
-  "version": "0.12.0",
+  "version": "0.12.1",
   "type": "module",
   "description": "A collection of tools and utilities for developing Storm Stack plugins and presets.",
   "repository": {
@@ -211,8 +211,8 @@
     "@storm-software/config-tools": "catalog:",
     "@storm-software/esbuild": "catalog:",
     "@storm-software/unbuild": "catalog:",
-    "@storm-stack/core": "workspace:*",
-    "@storm-stack/types": "workspace:*",
+    "@storm-stack/core": "0.36.1",
+    "@storm-stack/types": "0.18.0",
     "@stryke/convert": "catalog:",
     "@stryke/helpers": "catalog:",
     "@stryke/json": "catalog:",

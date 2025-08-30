@@ -2,6 +2,13 @@
 
 # Changelog for Storm Stack - ESLint Plugin
 
+## [0.12.0](https://github.com/storm-software/storm-stack/releases/tag/eslint-plugin%400.12.0) (2025-08-30)
+
+### Features
+
+- **core:** Renamed the `StormResult` definition to `StormResponse`
+  ([4a17c22d](https://github.com/storm-software/storm-stack/commit/4a17c22d))
+
 ## [0.11.1](https://github.com/storm-software/storm-stack/releases/tag/eslint-plugin%400.11.1) (2025-08-24)
 
 ### Miscellaneous
