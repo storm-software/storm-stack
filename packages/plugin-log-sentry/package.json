@@ -94,12 +94,12 @@
     }
   },
   "dependencies": {
-    "@storm-stack/core": "0.36.0",
-    "@storm-stack/devkit": "0.12.0",
+    "@storm-stack/core": "workspace:*",
+    "@storm-stack/devkit": "workspace:*",
     "@stryke/json": "catalog:"
   },
   "devDependencies": {
-    "@storm-stack/nx": "0.17.0",
+    "@storm-stack/nx": "workspace:*",
     "@types/node": "catalog:",
     "tsup": "catalog:",
     "typescript": "^5.9.2"
