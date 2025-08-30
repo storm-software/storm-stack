@@ -124,6 +124,34 @@
         "types": "./dist/esm/src/node/*.d.ts",
         "default": "./dist/esm/src/node/*.js"
       }
+    },
+    "./browser": {
+      "import": {
+        "types": "./dist/esm/src/browser/index.d.ts",
+        "default": "./dist/esm/src/browser/index.js"
+      },
+      "require": {
+        "types": "./dist/cjs/src/browser/index.d.ts",
+        "default": "./dist/cjs/src/browser/index.js"
+      },
+      "default": {
+        "types": "./dist/esm/src/browser/index.d.ts",
+        "default": "./dist/esm/src/browser/index.js"
+      }
+    },
+    "./browser/*": {
+      "import": {
+        "types": "./dist/esm/src/browser/*.d.ts",
+        "default": "./dist/esm/src/browser/*.js"
+      },
+      "require": {
+        "types": "./dist/cjs/src/browser/*.d.ts",
+        "default": "./dist/cjs/src/browser/*.js"
+      },
+      "default": {
+        "types": "./dist/esm/src/browser/*.d.ts",
+        "default": "./dist/esm/src/browser/*.js"
+      }
     }
   },
   "types": "./dist/cjs/src/index.d.ts",

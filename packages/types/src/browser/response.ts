@@ -19,13 +19,13 @@
 import { StormErrorInterface } from "../shared/error.js";
 
 /**
- * A Storm result interface. It represents the structure of a result returned by the Storm Stack runtime.
+ * A Storm response interface. It represents the structure of a response returned by the Storm Stack runtime.
  *
  * @remarks
- * The `StormResultInterface` interface is used to standardize the structure of results returned by the Storm Stack runtime.
+ * The `StormResponseInterface` interface is used to standardize the structure of responses returned by the Storm Stack runtime.
  * It includes properties for the request ID, data, error information, timestamp, and success status.
  */
-export interface StormResultInterface<
+export interface StormResponseInterface<
   TData extends any | StormErrorInterface = any | StormErrorInterface
 > {
   /**
@@ -34,22 +34,22 @@ export interface StormResultInterface<
   requestId: string;
 
   /**
-   * The result meta.
+   * The response meta.
    */
   meta: Record<string, any>;
 
   /**
-   * The data of the result.
+   * The data of the response.
    */
   data: TData;
 
   /**
-   * The timestamp of the result.
+   * The timestamp of the response.
    */
   timestamp: number;
 
   /**
-   * An indicator of whether the result was successful.
+   * An indicator of whether the response was successful.
    */
   success: boolean;
 }

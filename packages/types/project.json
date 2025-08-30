@@ -24,9 +24,12 @@
           "packages/types/src/node/index.ts",
           "packages/types/src/node/event.ts",
           "packages/types/src/node/env.ts",
-          "packages/types/src/node/result.ts",
+          "packages/types/src/node/response.ts",
           "packages/types/src/node/request.ts",
-          "packages/types/src/node/app.ts"
+          "packages/types/src/node/app.ts",
+          "packages/types/src/browser/index.ts",
+          "packages/types/src/browser/response.ts",
+          "packages/types/src/browser/request.ts"
         ],
         "outputPath": "packages/types/dist/cjs",
         "tsConfig": "packages/types/tsconfig.cjs.json",
@@ -54,9 +57,12 @@
           "packages/types/src/node/index.ts",
           "packages/types/src/node/event.ts",
           "packages/types/src/node/env.ts",
-          "packages/types/src/node/result.ts",
+          "packages/types/src/node/response.ts",
           "packages/types/src/node/request.ts",
-          "packages/types/src/node/app.ts"
+          "packages/types/src/node/app.ts",
+          "packages/types/src/browser/index.ts",
+          "packages/types/src/browser/response.ts",
+          "packages/types/src/browser/request.ts"
         ],
         "outputPath": "packages/types/dist/esm",
         "tsConfig": "packages/types/tsconfig.esm.json",
