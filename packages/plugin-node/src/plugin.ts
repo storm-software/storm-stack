@@ -32,7 +32,7 @@ import { ContextModule } from "./templates/context";
 import { EnvModule } from "./templates/env";
 import { EventModule } from "./templates/event";
 import { RequestModule } from "./templates/request";
-import { ResultModule } from "./templates/result";
+import { ResponseModule } from "./templates/response";
 import {
   NodePluginContext,
   NodePluginContextOptions,
@@ -144,11 +144,6 @@ export default class NodePlugin<
         StorageModule(context)
       ),
       context.vfs.writeRuntimeFile(
-        "request",
-        joinPaths(context.runtimePath, "request.ts"),
-        RequestModule(context)
-      ),
-      context.vfs.writeRuntimeFile(
         "context",
         joinPaths(context.runtimePath, "context.ts"),
         ContextModule(context)
@@ -164,9 +159,14 @@ export default class NodePlugin<
         EventModule(context)
       ),
       context.vfs.writeRuntimeFile(
-        "result",
-        joinPaths(context.runtimePath, "result.ts"),
-        ResultModule(context)
+        "request",
+        joinPaths(context.runtimePath, "request.ts"),
+        RequestModule(context)
+      ),
+      context.vfs.writeRuntimeFile(
+        "response",
+        joinPaths(context.runtimePath, "response.ts"),
+        ResponseModule(context)
       )
     ];
 

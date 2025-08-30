@@ -166,7 +166,7 @@ The following features are included in the package:
 - The `storm:context` builtin runtime module, which contains the `StormContext` type definition, the `useStorm` hook to access the context (if using the `$storm` object feels uncomfortable), and other related utilities.
 - The `storm:env` builtin runtime module, which can be imported directly to access information about the runtime environment.
 - The `storm:request` builtin runtime module, which contains the `StormRequest` class to package information about the incoming request.
-- The `storm:result` builtin runtime module, which contains the `StormResult` class to package information about the outgoing response.
+- The `storm:response` builtin runtime module, which contains the `StormResponse` class to package information about the outgoing response.
 - The `storm:event` builtin runtime module, which contains the `StormEvent` class to package information about events that occur in the application.
 
 ### [@storm-stack/plugin-node-config](https://www.npmjs.com/package/@storm-stack/plugin-node-config)

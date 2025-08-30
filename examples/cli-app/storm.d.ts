@@ -2025,6 +2025,21 @@ declare module "storm:config" {
    */
   export interface StormConfigBase extends StormConfigInterface {
     /**
+     * ARGV
+     *
+     * @title ARGV
+     * @domain cli
+     */
+    ARGV?: Array<string>;
+    /**
+     * The inverse of the no-banner option.
+     *
+     * @title BANNER
+     * @domain cli
+     * @defaultValue true
+     */
+    BANNER?: boolean;
+    /**
      * The Storm Stack application's cached data directory.
      *
      * @title Cache Directory
@@ -2038,6 +2053,20 @@ declare module "storm:config" {
      * @defaultValue false
      */
     CI: boolean;
+    /**
+     * Should the server serve compressed files?
+     *
+     * @title COMPRESS
+     * @domain cli
+     */
+    COMPRESS?: boolean;
+    /**
+     * The configuration file to append the completion script to.
+     *
+     * @title CONFIG
+     * @domain cli
+     */
+    CONFIG?: string | true;
     /**
      * The Storm Stack application's configuration data directory.
      *
@@ -2110,6 +2139,14 @@ declare module "storm:config" {
      */
     ERROR_URL: string;
     /**
+     * The file to add to the file system.
+     *
+     * @title FILE
+     * @domain cli
+     * @defaultValue server.ts
+     */
+    FILE?: string;
+    /**
      * An indicator that specifies the current runtime is a force color environment.
      *
      * @title FORCE COLOR
@@ -2124,12 +2161,44 @@ declare module "storm:config" {
      */
     FORCE_HYPERLINK: boolean | number;
     /**
+     * Show help information.
+     *
+     * @title HELP
+     * @domain cli
+     * @defaultValue false
+     */
+    HELP?: boolean;
+    /**
+     * The host to bind the server to.
+     *
+     * @title HOST
+     * @domain cli
+     * @defaultValue localhost
+     */
+    HOST?: string;
+    /**
      * Indicates if error data should be included.
      *
      * @title INCLUDE ERROR DATA
      * @defaultValue false
      */
     INCLUDE_ERROR_DATA: boolean;
+    /**
+     * The inverse of the no-interactive option.
+     *
+     * @title INTERACTIVE
+     * @domain cli
+     * @defaultValue true
+     */
+    INTERACTIVE?: boolean;
+    /**
+     * Should the server load environment variables from the .env file?
+     *
+     * @title LOAD ENV
+     * @domain cli
+     * @defaultValue true
+     */
+    LOAD_ENV?: boolean;
     /**
      * The Storm Stack application's logging directory.
      *
@@ -2159,12 +2228,54 @@ declare module "storm:config" {
      */
     MODE: "development" | "staging" | "production";
     /**
+     * Hide the banner displayed while running the CLI application (will be set to true if running in a CI pipeline).
+     *
+     * @title NO BANNER
+     * @domain cli
+     * @defaultValue false
+     */
+    NO_BANNER?: boolean;
+    /**
      * An indicator that specifies the current runtime is a no color environment.
      *
      * @title NO COLOR
      * @defaultValue false
      */
     NO_COLOR: boolean;
+    /**
+     * The inverse of the compress option.
+     *
+     * @title NO COMPRESS
+     * @domain cli
+     * @defaultValue false
+     */
+    NO_COMPRESS?: boolean;
+    /**
+     * Disable interactive mode (will be set to true if running in a CI pipeline).
+     *
+     * @title NO INTERACTIVE
+     * @alias NO_INTERACTIVE
+     * @domain cli
+     * @defaultValue false
+     */
+    NO_INTERACT?: boolean;
+    /**
+     * Disable interactive mode (will be set to true if running in a CI pipeline).
+     *
+     * @title NO INTERACTIVE
+     * @alias NO_INTERACT
+     * @domain cli
+     * @defaultValue false
+     */
+    NO_INTERACTIVE?: boolean;
+    /**
+     * The inverse of the loadEnv option.
+     *
+     * @title NO LOAD ENV
+     * @domain cli
+     * @defaultValue false
+     */
+    NO_LOAD_ENV?: boolean;
     /**
      * The mode in which the application is running.
      *
@@ -2197,6 +2308,21 @@ declare module "storm:config" {
      */
     PLATFORM: "node" | "neutral" | "browser";
     /**
+     * The port to bind the server to.
+     *
+     * @title PORT
+     * @domain cli
+     * @defaultValue 3000
+     */
+    PORT?: number;
+    /**
+     * The path to write the completion script to.
+     *
+     * @title SCRIPT
+     * @domain cli
+     */
+    SCRIPT?: string | true;
+    /**
      * The DSN for Sentry
      *
      * @title SENTRY Data Source Name
@@ -2223,6 +2349,30 @@ declare module "storm:config" {
      * @defaultValue false
      */
     TEST: boolean;
+    /**
+     * The type of the file.
+     *
+     * @title TYPE
+     * @domain cli
+     * @defaultValue server
+     */
+    TYPE?: string;
+    /**
+     * Enable verbose output.
+     *
+     * @title VERBOSE
+     * @domain cli
+     * @defaultValue false
+     */
+    VERBOSE?: boolean;
+    /**
+     * Show the version of the application.
+     *
+     * @title VERSION
+     * @domain cli
+     * @defaultValue false
+     */
+    VERSION?: boolean;
     /**
      * The appcircle build ID. This value is set by certain CI/CD systems.
      *
@@ -2321,7 +2471,7 @@ declare module "storm:config" {
      * The unique identifier for the build.
      *
      * @title BUILD Identifier
-     * @defaultValue d95f0cad-f2a8-45df-b98c-464ba2c68549
+     * @defaultValue 44f2ef65-9c3f-4dcd-98ba-9b4942c1f903
      * @readonly
      */
     readonly BUILD_ID: string;
@@ -2329,7 +2479,7 @@ declare module "storm:config" {
      * The timestamp the build was ran at.
      *
      * @title BUILD TIMESTAMP
-     * @defaultValue 2025-08-29T22:02:01.167Z
+     * @defaultValue 2025-08-30T00:19:27.438Z
      * @readonly
      */
     readonly BUILD_TIMESTAMP: string;
@@ -2562,7 +2712,7 @@ declare module "storm:config" {
      * The unique identifier for the release.
      *
      * @title RELEASE Identifier
-     * @defaultValue 5f0cadf2-a8f5-4f79-8c46-4ba2c6854945
+     * @defaultValue f2ef659c-3fdd-4d98-ba9b-4942c1f90391
      * @readonly
      */
     readonly RELEASE_ID: string;
@@ -3309,34 +3459,34 @@ declare module "storm:request" {
   }
 }
 
-declare module "storm:result" {
+declare module "storm:response" {
   /**
-   * The result module provides the {@link StormResult} class, which is used to represent the result of a request execution.
+   * The response module provides the {@link StormResponse} class, which is used to represent the response of a request execution.
    *
-   * @module storm:result
+   * @module storm:response
    */
 
   /**
-   * A base result class used by the Storm Stack runtime.
+   * A base response class used by the Storm Stack runtime.
    */
-  export class StormResult<TData extends any | StormError = any | StormError>
-    implements StormResultInterface<TData>
+  export class StormResponse<TData extends any | StormError = any | StormError>
+    implements StormResponseInterface<TData>
   {
     /**
-     * Create a new result.
+     * Create a new response.
      *
      * @remarks
      * **IMPORTANT:** This function uses the storm context object - never use this function outside of the context wrapper/tree since the context will not be available.
      *
-     * @param data - The result data
+     * @param data - The response data
      */
-    static create<TData>(data: TData): StormResult<TData>;
+    static create<TData>(data: TData): StormResponse<TData>;
     /**
-     * The result meta.
+     * The response meta.
      */
     readonly meta: Record<string, any>;
     /**
-     * The result data.
+     * The response data.
      */
     data: TData;
     /**
@@ -3352,11 +3502,11 @@ declare module "storm:result" {
      */
     get success(): boolean;
     /**
-     * Create a new result.
+     * Create a new response.
      *
      * @param requestId - The request identifier.
      * @param meta - The current context's metadata.
-     * @param data - The result data
+     * @param data - The response data
      */
     constructor(requestId: string, meta: Record<string, any>, data: TData);
   }
@@ -3443,14 +3593,14 @@ declare module "storm:context" {
    * Wrap an application entry point with the necessary context and error handling.
    *
    * @param handler - The handler function for the application.
-   * @returns A function that takes an request and returns a result or a promise of a result.
+   * @returns A function that takes an request and returns a response or a promise of a response.
    */
   export function withContext<
     TInput extends Record<string, any> = Record<string, any>,
     TOutput = any
   >(
     handler: HandlerFunction<TInput, TOutput>
-  ): (input: TInput) => Promise<StormResult<TOutput | StormError>>;
+  ): (input: TInput) => Promise<StormResponse<TOutput | StormError>>;
   export type StormContext = any[];
 }
 
@@ -4058,14 +4208,14 @@ declare module "storm:app" {
    * Wrap an application entry point with the necessary context and error handling.
    *
    * @param handler - The handler function for the application.
-   * @returns A function that takes an request and returns a result or a promise of a result.
+   * @returns A function that takes an request and returns a response or a promise of a response.
    */
   export function createCLIApp<
     TInput extends CLIRequestData = CLIRequestData,
     TOutput = any
   >(
     handler: HandlerFunction<TInput, TOutput>
-  ): (input: TInput) => Promise<StormResult<StormError | unknown>>;
+  ): (input: TInput) => Promise<StormResponse<StormError | unknown>>;
 }
 
 declare const $storm: import("storm:context").StormContext;

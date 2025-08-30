@@ -440,9 +440,9 @@ const handleRequest = withContext(handle);
 
 export default {
   async fetch(request: Request) {
-    const result = await handleRequest(request);
+    const response = await handleRequest(request);
 
-    return result;
+    return response;
   }
 }
 

@@ -2320,7 +2320,7 @@ declare module "storm:config" {
      * The unique identifier for the build.
      *
      * @title BUILD Identifier
-     * @defaultValue 61a98807-32ca-459b-970a-91f6e264d200
+     * @defaultValue d54283f5-f035-4e46-b1e4-7ffadfadd84a
      * @readonly
      */
     readonly BUILD_ID: string;
@@ -2328,7 +2328,7 @@ declare module "storm:config" {
      * The timestamp the build was ran at.
      *
      * @title BUILD TIMESTAMP
-     * @defaultValue 2025-08-29T22:01:34.713Z
+     * @defaultValue 2025-08-30T00:19:27.527Z
      * @readonly
      */
     readonly BUILD_TIMESTAMP: string;
@@ -2561,7 +2561,7 @@ declare module "storm:config" {
      * The unique identifier for the release.
      *
      * @title RELEASE Identifier
-     * @defaultValue a9880732-ca85-4bd7-8a91-f6e264d20027
+     * @defaultValue 4283f5f0-358e-46b1-a47f-fadfadd84a4f
      * @readonly
      */
     readonly RELEASE_ID: string;
@@ -3170,34 +3170,34 @@ declare module "storm:request" {
   }
 }
 
-declare module "storm:result" {
+declare module "storm:response" {
   /**
-   * The result module provides the {@link StormResult} class, which is used to represent the result of a request execution.
+   * The response module provides the {@link StormResponse} class, which is used to represent the response of a request execution.
    *
-   * @module storm:result
+   * @module storm:response
    */
 
   /**
-   * A base result class used by the Storm Stack runtime.
+   * A base response class used by the Storm Stack runtime.
    */
-  export class StormResult<TData extends any | StormError = any | StormError>
-    implements StormResultInterface<TData>
+  export class StormResponse<TData extends any | StormError = any | StormError>
+    implements StormResponseInterface<TData>
   {
     /**
-     * Create a new result.
+     * Create a new response.
      *
      * @remarks
      * **IMPORTANT:** This function uses the storm context object - never use this function outside of the context wrapper/tree since the context will not be available.
      *
-     * @param data - The result data
+     * @param data - The response data
      */
-    static create<TData>(data: TData): StormResult<TData>;
+    static create<TData>(data: TData): StormResponse<TData>;
     /**
-     * The result meta.
+     * The response meta.
      */
     readonly meta: Record<string, any>;
     /**
-     * The result data.
+     * The response data.
      */
     data: TData;
     /**
@@ -3213,11 +3213,11 @@ declare module "storm:result" {
      */
     get success(): boolean;
     /**
-     * Create a new result.
+     * Create a new response.
      *
      * @param requestId - The request identifier.
      * @param meta - The current context's metadata.
-     * @param data - The result data
+     * @param data - The response data
      */
     constructor(requestId: string, meta: Record<string, any>, data: TData);
   }
@@ -3306,14 +3306,14 @@ declare module "storm:context" {
    * Wrap an application entry point with the necessary context and error handling.
    *
    * @param handler - The handler function for the application.
-   * @returns A function that takes an request and returns a result or a promise of a result.
+   * @returns A function that takes an request and returns a response or a promise of a response.
    */
   export function withContext<
     TInput extends Record<string, any> = Record<string, any>,
     TOutput = any
   >(
     handler: HandlerFunction<TInput, TOutput>
-  ): (input: TInput) => Promise<StormResult<TOutput | StormError>>;
+  ): (input: TInput) => Promise<StormResponse<TOutput | StormError>>;
   export type StormContext = any[];
 }
 

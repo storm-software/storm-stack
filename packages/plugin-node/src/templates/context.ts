@@ -31,7 +31,6 @@ ${getFileHeader()}
 
 import { StormNodeEnv } from "@storm-stack/types/node/env";
 import { HandlerFunction } from "@storm-stack/types/node/app";
-import { StormResultInterface } from "@storm-stack/types/node/result";
 import { StormStorageInterface } from "@storm-stack/types/shared/storage";
 import { StormLogInterface } from "@storm-stack/types/shared/log";
 import { AsyncLocalStorage } from "node:async_hooks";
@@ -49,7 +48,7 @@ import { createStormError, StormError, isError } from "storm:error";
 import { StormEvent } from "storm:event";
 import { StormLog } from "storm:log";
 import { StormRequest } from "storm:request";
-import { StormResult } from "storm:result";
+import { StormResponse } from "storm:response";
 
 export interface StormContext {
   /**
@@ -256,7 +255,7 @@ export function useStorm(options: ContextOptions = {}): StormContext {
  * Wrap an application entry point with the necessary context and error handling.
  *
  * @param handler - The handler function for the application.
- * @returns A function that takes an request and returns a result or a promise of a result.
+ * @returns A function that takes an request and returns a response or a promise of a response.
  */
 export function withContext<
   TInput extends Record<string, any> = Record<string, any>,
@@ -264,7 +263,7 @@ export function withContext<
 >(
   handler: HandlerFunction<TInput, TOutput>
 ) {
-  return async function wrapper(input: TInput): Promise<StormResult<TOutput | StormError>> {
+  return async function wrapper(input: TInput): Promise<StormResponse<TOutput | StormError>> {
     const request = new StormRequest<TInput>(input);
 
     const context = {
@@ -290,7 +289,7 @@ export function withContext<
     // }
     // context.emit = emit;
 
-    const result = await namespace.get<StormContext>(STORM_CONTEXT_KEY).callAsync(
+    const response = await namespace.get<StormContext>(STORM_CONTEXT_KEY).callAsync(
       context,
       async () => {
         try {
@@ -325,21 +324,21 @@ export function withContext<
           );
           if (isError(ret)) {
             context.log.error(ret);
-            return StormResult.create(ret);
+            return StormResponse.create(ret);
           }
 
-          return StormResult.create(ret);
+          return StormResponse.create(ret);
         } catch (err) {
           console.error(err);
           if (context.log) {
             context.log.fatal(createStormError(err));
           }
 
-          return StormResult.create(err);
+          return StormResponse.create(err);
         } finally {
           if (context.log) {
             context.log.debug("The application handler process has completed.", {
-              result
+              response
             });
           } else {
             console.log("The application handler process has completed.");
@@ -348,7 +347,7 @@ export function withContext<
       }
     );
 
-    return result;
+    return response;
   };
 }
 

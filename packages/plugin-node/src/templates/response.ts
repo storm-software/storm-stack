@@ -19,38 +19,38 @@
 import { getFileHeader } from "@storm-stack/core/lib/utilities/file-header";
 import { Context } from "@storm-stack/core/types";
 
-export function ResultModule(_context: Context) {
+export function ResponseModule(_context: Context) {
   return `
 /**
- * The result module provides the {@link StormResult} class, which is used to represent the result of a request execution.
+ * The response module provides the {@link StormResponse} class, which is used to represent the response of a request execution.
  *
- * @module storm:result
+ * @module storm:response
  */
 
 ${getFileHeader()}
 
-import { StormResultInterface } from "@storm-stack/types/node/result";
+import { StormResponseInterface } from "@storm-stack/types/node/response";
 import { isStormError, StormError } from "storm:error";
 import { useStorm } from "storm:context";
 
 /**
- * A base result class used by the Storm Stack runtime.
+ * A base response class used by the Storm Stack runtime.
  */
-export class StormResult<
+export class StormResponse<
   TData extends any | StormError = any | StormError
-> implements StormResultInterface<TData> {
+> implements StormResponseInterface<TData> {
   /**
-   * Create a new result.
+   * Create a new response.
    *
    * @remarks
    * **IMPORTANT:** This function uses the storm context object - never use this function outside of the context wrapper/tree since the context will not be available.
    *
-   * @param data - The result data
+   * @param data - The response data
    */
   public static create<TData>(
     data: TData
-  ): StormResult<TData> {
-    return new StormResult(
+  ): StormResponse<TData> {
+    return new StormResponse(
       useStorm().request.id,
       useStorm().meta,
       data
@@ -58,12 +58,12 @@ export class StormResult<
   }
 
   /**
-   * The result meta.
+   * The response meta.
    */
   public readonly meta: Record<string, any>;
 
   /**
-   * The result data.
+   * The response data.
    */
   public data: TData;
 
@@ -85,11 +85,11 @@ export class StormResult<
   }
 
   /**
-   * Create a new result.
+   * Create a new response.
    *
    * @param requestId - The request identifier.
    * @param meta - The current context's metadata.
-   * @param data - The result data
+   * @param data - The response data
    */
   public constructor(
     requestId: string,

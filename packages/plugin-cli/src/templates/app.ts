@@ -38,7 +38,7 @@ export function AppModule(context: CLIPluginContext) {
   return `${getFileHeader()}
 
 import type { HandlerFunction } from "@storm-stack/types/node/app";
-import { StormResult } from "storm:result";
+import { StormResponse } from "storm:response";
 import { StormRequest } from "storm:request";
 import { format, formats } from "storm:date";
 import { withContext, StormContext } from "storm:context";
@@ -52,11 +52,11 @@ import { spinner } from "@clack/prompts";
  * Wrap an application entry point with the necessary context and error handling.
  *
  * @param handler - The handler function for the application.
- * @returns A function that takes an request and returns a result or a promise of a result.
+ * @returns A function that takes an request and returns a response or a promise of a response.
  */
 export function createCLIApp<TInput extends CLIRequestData = CLIRequestData, TOutput = any>(
   handler: HandlerFunction<TInput, TOutput>
-): ((input: TInput) => Promise<StormResult<StormError | unknown>>) {
+): ((input: TInput) => Promise<StormResponse<StormError | unknown>>) {
   let isShutdown = false;
   return withContext(async (request: StormRequest<TInput>) => {
     async function handleShutdown(exception?: StormError | unknown) {

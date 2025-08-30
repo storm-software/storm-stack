@@ -2084,7 +2084,7 @@ declare module "storm:config" {
      * Indicates if the application is running in debug mode.
      *
      * @title DEBUG
-     * @defaultValue false
+     * @defaultValue true
      */
     DEBUG: boolean;
     /**
@@ -2318,7 +2318,7 @@ declare module "storm:config" {
      * Indicates if error stack traces should be captured.
      *
      * @title STACKTRACE
-     * @defaultValue false
+     * @defaultValue true
      */
     STACKTRACE: boolean;
     /**
@@ -2383,7 +2383,7 @@ declare module "storm:config" {
      * The version of the application.
      *
      * @title APP VERSION
-     * @defaultValue 0.17.0
+     * @defaultValue 0.18.0
      * @readonly
      */
     readonly APP_VERSION: string;
@@ -2448,7 +2448,7 @@ declare module "storm:config" {
      * The unique identifier for the build.
      *
      * @title BUILD Identifier
-     * @defaultValue cf1f0695-4f6c-4358-9ad0-111f1e00cec5
+     * @defaultValue c19bd1c6-562a-4ec4-933b-2f837eccd828
      * @readonly
      */
     readonly BUILD_ID: string;
@@ -2456,7 +2456,7 @@ declare module "storm:config" {
      * The timestamp the build was ran at.
      *
      * @title BUILD TIMESTAMP
-     * @defaultValue 2025-08-29T22:04:07.307Z
+     * @defaultValue 2025-08-30T00:18:49.359Z
      * @readonly
      */
     readonly BUILD_TIMESTAMP: string;
@@ -2689,7 +2689,7 @@ declare module "storm:config" {
      * The unique identifier for the release.
      *
      * @title RELEASE Identifier
-     * @defaultValue 1f06954f-6c83-48da-9011-1f1e00cec5b3
+     * @defaultValue 9bd1c656-2a0e-4413-bb2f-837eccd828eb
      * @readonly
      */
     readonly RELEASE_ID: string;
@@ -2697,7 +2697,7 @@ declare module "storm:config" {
      * The tag for the release. This is generally in the format of "\<APP_NAME\>\@\<APP_VERSION\>".
      *
      * @title RELEASE TAG
-     * @defaultValue storm-stack@0.17.0
+     * @defaultValue storm-stack@0.18.0
      * @readonly
      */
     readonly RELEASE_TAG: string;
@@ -3334,34 +3334,34 @@ declare module "storm:request" {
   }
 }
 
-declare module "storm:result" {
+declare module "storm:response" {
   /**
-   * The result module provides the {@link StormResult} class, which is used to represent the result of a request execution.
+   * The response module provides the {@link StormResponse} class, which is used to represent the response of a request execution.
    *
-   * @module storm:result
+   * @module storm:response
    */
 
   /**
-   * A base result class used by the Storm Stack runtime.
+   * A base response class used by the Storm Stack runtime.
    */
-  export class StormResult<TData extends any | StormError = any | StormError>
-    implements StormResultInterface<TData>
+  export class StormResponse<TData extends any | StormError = any | StormError>
+    implements StormResponseInterface<TData>
   {
     /**
-     * Create a new result.
+     * Create a new response.
      *
      * @remarks
      * **IMPORTANT:** This function uses the storm context object - never use this function outside of the context wrapper/tree since the context will not be available.
      *
-     * @param data - The result data
+     * @param data - The response data
      */
-    static create<TData>(data: TData): StormResult<TData>;
+    static create<TData>(data: TData): StormResponse<TData>;
     /**
-     * The result meta.
+     * The response meta.
      */
     readonly meta: Record<string, any>;
     /**
-     * The result data.
+     * The response data.
      */
     data: TData;
     /**
@@ -3377,11 +3377,11 @@ declare module "storm:result" {
      */
     get success(): boolean;
     /**
-     * Create a new result.
+     * Create a new response.
      *
      * @param requestId - The request identifier.
      * @param meta - The current context's metadata.
-     * @param data - The result data
+     * @param data - The response data
      */
     constructor(requestId: string, meta: Record<string, any>, data: TData);
   }
@@ -3473,14 +3473,14 @@ declare module "storm:context" {
    * Wrap an application entry point with the necessary context and error handling.
    *
    * @param handler - The handler function for the application.
-   * @returns A function that takes an request and returns a result or a promise of a result.
+   * @returns A function that takes an request and returns a response or a promise of a response.
    */
   export function withContext<
     TInput extends Record<string, any> = Record<string, any>,
     TOutput = any
   >(
     handler: HandlerFunction<TInput, TOutput>
-  ): (input: TInput) => Promise<StormResult<TOutput | StormError>>;
+  ): (input: TInput) => Promise<StormResponse<TOutput | StormError>>;
   export type StormContext = any[];
 }
 
@@ -4225,14 +4225,14 @@ declare module "storm:app" {
    * Wrap an application entry point with the necessary context and error handling.
    *
    * @param handler - The handler function for the application.
-   * @returns A function that takes an request and returns a result or a promise of a result.
+   * @returns A function that takes an request and returns a response or a promise of a response.
    */
   export function createCLIApp<
     TInput extends CLIRequestData = CLIRequestData,
     TOutput = any
   >(
     handler: HandlerFunction<TInput, TOutput>
-  ): (input: TInput) => Promise<StormResult<StormError | unknown>>;
+  ): (input: TInput) => Promise<StormResponse<StormError | unknown>>;
 }
 
 declare const $storm: import("storm:context").StormContext;
