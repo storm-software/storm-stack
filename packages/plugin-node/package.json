@@ -172,7 +172,7 @@
     "@storm-software/config-tools": "catalog:",
     "@storm-stack/core": "0.36.1",
     "@storm-stack/devkit": "0.12.1",
-    "@storm-stack/types": "0.18.0",
+    "@storm-stack/types": "0.34.0",
     "@stryke/convert": "catalog:",
     "@stryke/json": "catalog:",
     "@stryke/path": "catalog:",
