@@ -2,6 +2,21 @@
 
 # Changelog for Storm Stack - Core
 
+## [0.37.0](https://github.com/storm-software/storm-stack/releases/tag/core%400.37.0) (2025-09-04)
+
+### Features
+
+- **plugin-config:** Consolidated the configuration parameter functionality into
+  one plugin
+  ([30e512e8](https://github.com/storm-software/storm-stack/commit/30e512e8))
+- **core:** Update type declarations, engine, and plugins to support many
+  different build tools
+  ([9b5bb774](https://github.com/storm-software/storm-stack/commit/9b5bb774))
+
+### Updated Dependencies
+
+- Updated types to 0.19.0
+
 ## [0.36.1](https://github.com/storm-software/storm-stack/releases/tag/core%400.36.1) (2025-08-30)
 
 ### Miscellaneous

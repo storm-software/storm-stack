@@ -1,6 +1,6 @@
 {
   "name": "@storm-stack/plugin-cli",
-  "version": "0.30.0",
+  "version": "0.31.0",
   "type": "module",
   "description": "A Storm Stack build plugin for Cloudflare Workers",
   "repository": {
@@ -79,8 +79,8 @@
   "dependencies": {
     "@storm-software/config": "catalog:",
     "@storm-software/config-tools": "catalog:",
-    "@storm-stack/core": "workspace:*",
-    "@storm-stack/devkit": "workspace:*",
+    "@storm-stack/core": "0.37.0",
+    "@storm-stack/devkit": "0.13.0",
     "@stryke/capnp": "catalog:",
     "@stryke/cli": "catalog:",
     "@stryke/convert": "catalog:",

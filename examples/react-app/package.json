@@ -10,7 +10,7 @@
   },
   "private": true,
   "dependencies": {
-    "@storm-stack/types": "workspace:*",
+    "@storm-stack/types": "0.19.0",
     "date-fns": "catalog:",
     "react": "catalog:",
     "react-dom": "catalog:",
@@ -18,12 +18,12 @@
     "vite": "catalog:"
   },
   "devDependencies": {
-    "@storm-stack/core": "workspace:*",
-    "@storm-stack/nx": "workspace:*",
-    "@storm-stack/plugin-cli": "workspace:*",
-    "@storm-stack/plugin-date": "workspace:*",
-    "@storm-stack/plugin-log-console": "workspace:*",
-    "@storm-stack/plugin-log-sentry": "workspace:*",
+    "@storm-stack/core": "0.37.0",
+    "@storm-stack/nx": "0.18.0",
+    "@storm-stack/plugin-cli": "0.31.0",
+    "@storm-stack/plugin-date": "0.4.0",
+    "@storm-stack/plugin-log-console": "0.21.0",
+    "@storm-stack/plugin-log-sentry": "0.27.0",
     "@types/react": "catalog:",
     "@types/react-dom": "catalog:"
   }

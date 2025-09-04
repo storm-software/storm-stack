@@ -2,6 +2,26 @@
 
 # Changelog for Storm Stack - Plugin Error
 
+## [0.5.0](https://github.com/storm-software/storm-stack/releases/tag/plugin-error%400.5.0) (2025-09-04)
+
+### Features
+
+- **plugin-react:** Added React plugin to assist in client application
+  development
+  ([81f25ed7](https://github.com/storm-software/storm-stack/commit/81f25ed7))
+- **plugin-config:** Consolidated the configuration parameter functionality into
+  one plugin
+  ([30e512e8](https://github.com/storm-software/storm-stack/commit/30e512e8))
+- **core:** Update type declarations, engine, and plugins to support many
+  different build tools
+  ([9b5bb774](https://github.com/storm-software/storm-stack/commit/9b5bb774))
+
+### Updated Dependencies
+
+- Updated devkit to 0.13.0
+- Updated core to 0.37.0
+- Updated nx to 0.18.0
+
 ## [0.4.1](https://github.com/storm-software/storm-stack/releases/tag/plugin-error%400.4.1) (2025-08-30)
 
 ### Miscellaneous

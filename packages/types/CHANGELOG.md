@@ -2,6 +2,17 @@
 
 # Changelog for Storm Stack - Types
 
+## [0.19.0](https://github.com/storm-software/storm-stack/releases/tag/types%400.19.0) (2025-09-04)
+
+### Features
+
+- **plugin-react:** Added React plugin to assist in client application
+  development
+  ([81f25ed7](https://github.com/storm-software/storm-stack/commit/81f25ed7))
+- **core:** Update type declarations, engine, and plugins to support many
+  different build tools
+  ([9b5bb774](https://github.com/storm-software/storm-stack/commit/9b5bb774))
+
 ## [0.18.0](https://github.com/storm-software/storm-stack/releases/tag/types%400.18.0) (2025-08-30)
 
 ### Features

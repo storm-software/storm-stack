@@ -2,6 +2,19 @@
 
 # Changelog for Storm Stack - Plugin Cloudflare Worker
 
+## [0.24.0](https://github.com/storm-software/storm-stack/releases/tag/plugin-cloudflare-worker%400.24.0) (2025-09-04)
+
+### Features
+
+- **core:** Update type declarations, engine, and plugins to support many
+  different build tools
+  ([9b5bb774](https://github.com/storm-software/storm-stack/commit/9b5bb774))
+
+### Updated Dependencies
+
+- Updated types to 0.19.0
+- Updated core to 0.37.0
+
 ## [0.23.0](https://github.com/storm-software/storm-stack/releases/tag/plugin-cloudflare-worker%400.23.0) (2025-08-30)
 
 ### Features

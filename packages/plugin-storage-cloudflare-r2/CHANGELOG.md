@@ -2,6 +2,23 @@
 
 # Changelog for Storm Stack - Plugin Storage Cloudflare R2
 
+## [0.11.0](https://github.com/storm-software/storm-stack/releases/tag/plugin-storage-cloudflare-r2%400.11.0) (2025-09-04)
+
+### Features
+
+- **plugin-config:** Consolidated the configuration parameter functionality into
+  one plugin
+  ([30e512e8](https://github.com/storm-software/storm-stack/commit/30e512e8))
+- **core:** Update type declarations, engine, and plugins to support many
+  different build tools
+  ([9b5bb774](https://github.com/storm-software/storm-stack/commit/9b5bb774))
+
+### Updated Dependencies
+
+- Updated devkit to 0.13.0
+- Updated core to 0.37.0
+- Updated nx to 0.18.0
+
 ## [0.10.1](https://github.com/storm-software/storm-stack/releases/tag/plugin-storage-cloudflare-r2%400.10.1) (2025-08-30)
 
 ### Miscellaneous

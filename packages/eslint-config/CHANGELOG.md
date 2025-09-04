@@ -2,6 +2,14 @@
 
 # Changelog for Storm Stack - ESLint Config
 
+## [0.15.0](https://github.com/storm-software/storm-stack/releases/tag/eslint-config%400.15.0) (2025-09-04)
+
+### Features
+
+- **core:** Update type declarations, engine, and plugins to support many
+  different build tools
+  ([9b5bb774](https://github.com/storm-software/storm-stack/commit/9b5bb774))
+
 ## [0.14.0](https://github.com/storm-software/storm-stack/releases/tag/eslint-config%400.14.0) (2025-08-29)
 
 ### Features
