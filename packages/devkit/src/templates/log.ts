@@ -50,7 +50,7 @@ import { StormError, isError, isStormError } from "storm:error";
 ${context.runtime.logs
   .map(
     log =>
-      `import create${pascalCase(log.name)}Adapter from "storm:${log.fileName}";`
+      `import create${pascalCase(log.namespace)}LogAdapter from "storm:${log.fileName}";`
   )
   .filter(Boolean)
   .join("\n")}
@@ -261,7 +261,7 @@ export class StormLog implements StormLogInterface {
    *
    * @defaultValue "info"
    */
-  public lowestLogLevel: LogLevel | null = $storm.config.LOG_LEVEL || LogLevel.INFO;
+  public lowestLogLevel: LogLevel | null = $storm.config.LOG_LEVEL;
 
   /**
    * Create a new StormLog instance.
@@ -273,7 +273,7 @@ export class StormLog implements StormLogInterface {
     ${context.runtime.logs
       .map(
         log =>
-          `this.#adapters.push({ logLevel: "${log.logLevel}", handle: create${pascalCase(log.name)}Adapter });`
+          `this.#adapters.push({ logLevel: "${log.logLevel}", handle: create${pascalCase(log.namespace)}LogAdapter });`
       )
       .filter(Boolean)
       .join("\n")}

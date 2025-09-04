@@ -39,6 +39,11 @@ export interface LogRuntimeConfig {
   name: string;
 
   /**
+   * The storage id to be used by the runtime.
+   */
+  namespace: string;
+
+  /**
    * The lowest log level for the driver to accept.
    */
   logLevel: LogLevel;
@@ -54,7 +59,7 @@ export interface LogRuntimeConfig {
 
 export interface StorageRuntimeConfig {
   /**
-   * The name of the storage to be used by the runtime.
+   * The name of the log adapter to be used by the runtime.
    */
   name: string;
 

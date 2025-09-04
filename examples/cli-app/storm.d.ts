@@ -1158,9 +1158,12 @@ interface StormConfigInterface {
  * @remarks
  * The Storm Stack application context object is injected into the global scope of the application. It can be accessed using `$storm` or `useStorm()` in the application code.
  */
-interface StormContext {
+interface StormContextInterface {
   /**
    * The context metadata.
+   *
+   * @remarks
+   * This metadata can be used to store information about the current request, user, or any other relevant data. It is mutable and can be changed during the request lifecycle.
    */
   meta: Record<string, any>;
   /**
@@ -2019,6 +2022,12 @@ type WarningMessageDetails = MessageDetails<"warning">;
 
 declare module "storm:config" {
   /**
+   * The Storm Stack configuration module provides an interface to define configuration parameters.
+   *
+   * @module storm:config
+   */
+
+  /**
    * Interface for Storm Config Base.
    *
    * @title Object
@@ -2209,7 +2218,7 @@ declare module "storm:config" {
      * The default lowest log level to accept. If `null`, the logger will reject all records. This value only applies if `lowestLogLevel` is not provided to the `logs` configuration.
      *
      * @title LOG LEVEL
-     * @defaultValue debug
+     * @defaultValue info
      */
     LOG_LEVEL?: "debug" | "info" | "warning" | "error" | "fatal" | null;
     /**
@@ -2471,7 +2480,7 @@ declare module "storm:config" {
      * The unique identifier for the build.
      *
      * @title BUILD Identifier
-     * @defaultValue 44f2ef65-9c3f-4dcd-98ba-9b4942c1f903
+     * @defaultValue 97ef3fea-d162-41c2-bd14-a9ba3371f3f0
      * @readonly
      */
     readonly BUILD_ID: string;
@@ -2479,7 +2488,7 @@ declare module "storm:config" {
      * The timestamp the build was ran at.
      *
      * @title BUILD TIMESTAMP
-     * @defaultValue 2025-08-30T00:19:27.438Z
+     * @defaultValue 2025-09-04T13:20:35.145Z
      * @readonly
      */
     readonly BUILD_TIMESTAMP: string;
@@ -2712,7 +2721,7 @@ declare module "storm:config" {
      * The unique identifier for the release.
      *
      * @title RELEASE Identifier
-     * @defaultValue f2ef659c-3fdd-4d98-ba9b-4942c1f90391
+     * @defaultValue ef3fead1-6241-42fd-94a9-ba3371f3f01f
      * @readonly
      */
     readonly RELEASE_ID: string;
@@ -2773,15 +2782,6 @@ declare module "storm:config" {
      * @readonly
      */
     readonly SPACESHIP_CI?: string;
-    /**
-     * Static configuration properties - this value is not dynamic and cannot be changed at runtime.
-     *
-     * @title Static
-     * @defaultValue [object Object]
-     * @internal
-     * @readonly
-     */
-    readonly static: {};
     /**
      * An indicator that specifies the application is running in the local Storm Stack development environment.
      *
@@ -2928,14 +2928,14 @@ declare module "storm:config" {
   export type StormConfig = {
     [Key in keyof StormConfigBase as
       | Key
-      | `EXAMPLES_CLI_${Key}`
-      | `NEXT_PUBLIC_${Key}`
+      | `VITE_${Key}`
       | `ONE_${Key}`
       | `STORM_PUBLIC_${Key}`
+      | `STORM_${Key}`
       | `STORM_STACK_PUBLIC_${Key}`
       | `STORM_STACK_${Key}`
-      | `STORM_${Key}`
-      | `VITE_${Key}`]: StormConfigBase[Key];
+      | `NEXT_PUBLIC_${Key}`
+      | `EXAMPLES_CLI_${Key}`]: StormConfigBase[Key];
   };
   /**
    * The initial configuration state for the Storm Stack project..
@@ -2991,46 +2991,17 @@ declare module "storm:config" {
     StormConfigBase
   >;
   /**
-   * Retrieves a configuration parameter from the configuration store.
-   *
-   * @remarks
-   * This function retrieves a configuration parameter from the Storm Stack configuration store. It deserializes the configuration file and returns the value of the specified key.
-   *
-   * @param key - The name of the configuration to retrieve.
-   * @returns A promise that resolves to the value of the configuration parameter.
-   * @throws {StormError} If the configuration file is not found or the configuration key does not exist.
-   */
-  /**
-   * Set a configuration parameter in the configuration store.
-   *
-   * @remarks
-   * This function sets a configuration parameter in the Storm Stack configuration store. It serializes the updated configuration and saves it to the storage.
-   *
-   * @param key - The name of the configuration to set.
-   * @param value - The value to set for the configuration parameter.
-   */
-  /**
-   * Delete a configuration parameter from the configuration store.
-   *
-   * @param key - The name of the configuration to delete.
-   */
-  /**
-   * Retrieves all configuration parameters in the configuration store.
-   *
-   * @returns An object containing all configuration parameters.
-   */
-  /**
    * Initializes the Storm Stack configuration module.
    *
    * @remarks
-   * This function initializes the Storm Stack configuration module by ensuring the configuration directory exists and creating a default configuration file if it does not exist.
+   * This function initializes the Storm Stack configuration object.
    *
-   * @param runtimeConfig - The dynamic/runtime configuration - this should include the current environment variables.
-   * @returns A promise that resolves when the configuration module is initialized.
+   * @param environmentConfig - The dynamic/runtime configuration - this could include the current environment variables or any other environment-specific settings provided by the runtime.
+   * @returns The initialized Storm Stack configuration object.
    */
   export function createConfig(
-    runtimeConfig?: Partial<StormConfig>
-  ): Promise<StormConfig>;
+    environmentConfig?: Partial<StormConfig>
+  ): StormConfig;
   export type StormConfigBase = any[];
   export type StormConfig = any[];
 }
@@ -3512,12 +3483,7 @@ declare module "storm:response" {
   }
 }
 
-declare module "storm:storage/file-system-config" {
-  function createAdapter(): StorageAdapter;
-  export default createAdapter;
-}
-
-declare module "storm:storage/file-system-crash-reports" {
+declare module "storm:storage/crash-reports" {
   function createAdapter(): StorageAdapter;
   export default createAdapter;
 }
@@ -3547,7 +3513,13 @@ declare module "storm:context" {
    * @module storm:context
    */
 
-  export interface StormContext {
+  /**
+   * The global Storm context for the current application.
+   *
+   * @remarks
+   * This interface extends the base Storm context interface with additional properties specific to the NodeJs application.
+   */
+  export interface StormContext extends StormContextInterface {
     /**
      * The context metadata.
      */

@@ -532,22 +532,22 @@ function parseVersion(versionString = "") {
 function isHyperlinkSupported(
   _stream: NodeJS.WriteStream = process.stdout
 ): boolean {
-  if ($storm.config.FORCE_HYPERLINK) {
+  if (Boolean(process.env.FORCE_HYPERLINK)) {
     return true;
   }
 
-  if ($storm.config.NETLIFY) {
+  if (Boolean(process.env.NETLIFY)) {
     return true;
   } else if (!$storm.env.isColorSupported || $storm.env.hasTTY) {
     return false;
-  } else if ($storm.config.WT_SESSION) {
+  } else if (Boolean(process.env.WT_SESSION)) {
     return true;
-  } else if ($storm.env.isWindows || $storm.env.isMinimal || $storm.config.TEAMCITY_VERSION) {
+  } else if ($storm.env.isWindows || $storm.env.isMinimal || Boolean(process.env.TEAMCITY_VERSION)) {
     return false;
-  } else if ($storm.config.TERM_PROGRAM) {
-    const version = parseVersion($storm.config.TERM_PROGRAM_VERSION);
+  } else if (Boolean(process.env.TERM_PROGRAM)) {
+    const version = parseVersion(process.env.TERM_PROGRAM_VERSION);
 
-    switch ($storm.config.TERM_PROGRAM) {
+    switch (String(process.env.TERM_PROGRAM)) {
       case "iTerm.app": {
         if (version.major === 3) {
           return version.minor !== undefined && version.minor >= 1;
@@ -560,7 +560,7 @@ function isHyperlinkSupported(
       }
 
       case "vscode": {
-        if ($storm.config.CURSOR_TRACE_ID) {
+        if (Boolean(process.env.CURSOR_TRACE_ID)) {
           return true;
         }
 
@@ -577,19 +577,19 @@ function isHyperlinkSupported(
     }
   }
 
-  if ($storm.config.VTE_VERSION) {
-    if ($storm.config.VTE_VERSION === "0.50.0") {
+  if (Boolean(process.env.VTE_VERSION)) {
+    if (process.env.VTE_VERSION === "0.50.0") {
       return false;
     }
 
-    const version = parseVersion($storm.config.VTE_VERSION);
+    const version = parseVersion(process.env.VTE_VERSION);
     return (
       (version.major !== undefined && version.major > 0) ||
       (version.minor !== undefined && version.minor >= 50)
     );
   }
 
-  if ($storm.config.TERM === "alacritty") {
+  if (String(process.env.TERM) === "alacritty") {
     return true;
   }
 

@@ -59,14 +59,12 @@ export interface LogSentryPluginOptions extends LogPluginOptions {
   enabled?: boolean;
 }
 
-export type ResolvedLogSentryPluginOptions = Required<LogSentryPluginOptions>;
-
-export type LogSentryPluginResolvedOptions =
-  LogPluginResolvedOptions<ResolvedLogSentryPluginOptions> & {
-    config: ConfigPluginResolvedOptions["config"];
-  };
+export type LogSentryPluginResolvedOptions = LogPluginResolvedOptions<
+  Required<LogSentryPluginOptions>
+> &
+  ConfigPluginResolvedOptions;
 
 export type LogSentryPluginContext<
   TOptions extends
-    ResolvedLogSentryPluginOptions = ResolvedLogSentryPluginOptions
+    LogSentryPluginResolvedOptions = LogSentryPluginResolvedOptions
 > = LogPluginContext<TOptions, ConfigPluginReflectionRecord>;

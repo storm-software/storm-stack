@@ -42,7 +42,7 @@ import { StormStorageInterface } from "@storm-stack/types/shared/storage";
 ${context.runtime.storage
   .map(
     storage =>
-      `import create${pascalCase(storage.name)}Adapter from "storm:${storage.fileName}";`
+      `import create${pascalCase(storage.namespace)}StorageAdapter from "storm:${storage.fileName}";`
   )
   .filter(Boolean)
   .join("\n")}
@@ -63,8 +63,8 @@ export function createStorage(): StormStorageInterface {
     .map(storage => {
       return `
   // Initialize the ${storage.namespace} storage adapter
-  const ${camelCase(storage.name)}Adapter = create${pascalCase(storage.name)}Adapter();
-  storage.mount("${storage.namespace}", ${camelCase(storage.name)}Adapter);
+  const ${camelCase(storage.namespace)}StorageAdapter = create${pascalCase(storage.namespace)}StorageAdapter();
+  storage.mount("${storage.namespace}", ${camelCase(storage.namespace)}StorageAdapter);
 `;
     })
     .join("\n")}

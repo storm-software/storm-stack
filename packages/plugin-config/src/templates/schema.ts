@@ -16,7 +16,21 @@
 
  ------------------------------------------------------------------- */
 
-export * from "./helpers";
-export * from "./plugin";
-export * from "./templates";
-export * from "./types";
+import { generateCapnp } from "@storm-stack/devkit/templates/helpers/capnp";
+import { readConfigTypeReflection } from "../helpers/persistence";
+import { ConfigPluginContext } from "../types";
+
+/**
+ * Generates the configuration schema for the Config plugin.
+ *
+ * @param context - The context of the Config plugin.
+ * @returns The generated configuration schema.
+ */
+export async function generateSchema(context: ConfigPluginContext) {
+  const reflection = await readConfigTypeReflection(context);
+  if (!reflection) {
+    throw new Error("No schema reflection found in context.");
+  }
+
+  return generateCapnp(context, reflection, { name: "ConfigSchema" });
+}

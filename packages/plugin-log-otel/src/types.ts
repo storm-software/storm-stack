@@ -26,8 +26,7 @@ import type { LogRecordProcessor } from "@opentelemetry/sdk-logs";
 import {
   LogPluginContext,
   LogPluginOptions,
-  LogPluginResolvedOptions,
-  ResolvedLogPluginOptions
+  LogPluginResolvedOptions
 } from "@storm-stack/devkit/types/plugins";
 import { ConfigPluginResolvedOptions } from "@storm-stack/plugin-config/types";
 import { StormConfigInterface } from "@storm-stack/types/shared/config";
@@ -120,26 +119,25 @@ export interface StormOpenTelemetryLogConfig extends StormConfigInterface {
   OTEL_SERVICE_NAME?: string;
 }
 
-export type ResolvedLogOpenTelemetryPluginOptions = Required<
-  Pick<
-    LogOpenTelemetryPluginOptions,
-    "exporter" | "diagnostics" | "messageType" | "serviceName"
-  >
-> &
-  ResolvedLogPluginOptions &
-  (
-    | ({
-        exporter: "http" | "proto";
-      } & OTLPExporterNodeConfigBase)
-    | ({
-        exporter: "grpc";
-      } & OTLPGRPCExporterConfigNode)
-  );
+export type ResolvedLogOpenTelemetryPluginOptions = LogPluginResolvedOptions<
+  Required<
+    Pick<
+      LogOpenTelemetryPluginOptions,
+      "exporter" | "diagnostics" | "messageType" | "serviceName"
+    >
+  > &
+    (
+      | ({
+          exporter: "http" | "proto";
+        } & OTLPExporterNodeConfigBase)
+      | ({
+          exporter: "grpc";
+        } & OTLPGRPCExporterConfigNode)
+    )
+>;
 
 export type LogOpenTelemetryPluginResolvedOptions =
-  LogPluginResolvedOptions<ResolvedLogOpenTelemetryPluginOptions> & {
-    config: ConfigPluginResolvedOptions["config"];
-  };
+  ResolvedLogOpenTelemetryPluginOptions & ConfigPluginResolvedOptions;
 
 export type LogOpenTelemetryPluginContext<
   TOptions extends

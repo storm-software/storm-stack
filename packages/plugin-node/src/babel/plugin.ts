@@ -18,7 +18,7 @@
 
 import { NodePath } from "@babel/core";
 import * as t from "@babel/types";
-import { getImport } from "@storm-stack/core/lib/babel/module";
+import { addImport } from "@storm-stack/core/lib/babel/module";
 import { BabelPluginOptions } from "@storm-stack/core/types/babel";
 import { declareBabel } from "@storm-stack/devkit/babel/declare-babel";
 import { BabelPluginBuilderParams } from "@storm-stack/devkit/types";
@@ -45,9 +45,11 @@ export default declareBabel(
           if (path.node.name === "$storm") {
             path.replaceWith(t.callExpression(t.identifier("useStorm"), []));
 
-            (
-              path.scope.getProgramParent().path as NodePath<t.Program>
-            ).unshiftContainer("body", getImport("storm:context", "useStorm"));
+            addImport(path, {
+              module: "storm:context",
+              name: "useStorm",
+              imported: "useStorm"
+            });
           }
         }
       }

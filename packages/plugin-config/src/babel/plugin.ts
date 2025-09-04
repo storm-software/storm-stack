@@ -181,27 +181,11 @@ export default declareBabel<
         pass: ConfigBabelPluginPass
       ) {
         if (
-          path.get("object").get("property").isIdentifier({ name: "static" }) &&
-          ((path
-            .get("object")
-            .get("object")
-            .get("property")
-            .isIdentifier({ name: "config" }) &&
-            path
-              .get("object")
-              .get("object")
-              .get("object")
-              .isCallExpression({
-                callee: { name: "useStorm", type: "Identifier" }
-              })) ||
-            path
-              .get("object")
-              .get("object")
-              .get("object")
-              .isIdentifier({ name: "$storm" })) &&
+          path.get("object").get("property").isIdentifier({ name: "config" }) &&
+          path.get("object").get("object").isIdentifier({ name: "$storm" }) &&
           path.get("property").isIdentifier()
         ) {
-          // $storm.config.static.CONFIG_NAME / useStorm().config.static.CONFIG_NAME
+          // $storm.config.CONFIG_NAME
 
           const identifier = path.get("property").node as t.Identifier;
           const value = extractConfig(identifier, pass, true);
@@ -210,15 +194,15 @@ export default declareBabel<
           }
         } else if (
           path.get("object").get("property").isIdentifier({ name: "config" }) &&
-          (path
+          path
             .get("object")
             .get("object")
             .isCallExpression({
               callee: { name: "useStorm", type: "Identifier" }
-            }) ||
-            path.get("object").get("object").isIdentifier({ name: "$storm" }))
+            }) &&
+          path.get("property").isIdentifier()
         ) {
-          // $storm.config.CONFIG_NAME / useStorm().config.CONFIG_NAME
+          // useStorm().config.CONFIG_NAME
 
           const identifier = path.get("property").node as t.Identifier;
           const value = extractConfig(identifier, pass, false);
@@ -237,13 +221,13 @@ export default declareBabel<
             return;
           }
 
-          const value = extractConfig(identifier, pass, false);
+          extractConfig(identifier, pass, false);
 
-          path.replaceWithSourceString(
-            `${value !== undefined ? "(" : ""}useStorm().config.${
-              identifier.name
-            }${value !== undefined ? ` || ${value})` : ""}`
-          );
+          // path.replaceWithSourceString(
+          //   `${value !== undefined ? "(" : ""}useStorm().config.${
+          //     identifier.name
+          //   }${value !== undefined ? ` || ${value})` : ""}`
+          // );
         } else if (
           path.get("object").get("property").isIdentifier({ name: "env" }) &&
           path.get("object").get("object").isMetaProperty() &&
@@ -256,13 +240,13 @@ export default declareBabel<
             return;
           }
 
-          const value = extractConfig(identifier, pass, false);
+          extractConfig(identifier, pass, false);
 
-          path.replaceWithSourceString(
-            `${value !== undefined ? "(" : ""}useStorm().config.${
-              identifier.name
-            }${value !== undefined ? ` || ${value})` : ""}`
-          );
+          // path.replaceWithSourceString(
+          //   `${value !== undefined ? "(" : ""}useStorm().config.${
+          //     identifier.name
+          //   }${value !== undefined ? ` || ${value})` : ""}`
+          // );
         }
       }
     },

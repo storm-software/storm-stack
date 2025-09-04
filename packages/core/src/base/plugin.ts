@@ -140,7 +140,9 @@ export abstract class Plugin<
    */
   public get identifier(): string {
     return camelCase(
-      `${this.name}${this.isSingleton ? "" : `-${this.primaryKeys.join("-")}`}`
+      `${this.primaryKeys.includes(this.name) ? "" : this.name}${
+        this.isSingleton ? "" : `-${this.primaryKeys.join("-")}`
+      }`
     );
   }
 

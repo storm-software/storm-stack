@@ -60,9 +60,8 @@ export default class LogSentryPlugin<
    * @param context - The context to initialize.
    */
   async #initOptions(context: TContext) {
-    context.options.plugins.sentry ??= {} as LogSentryPluginOptions;
     context.options.plugins.config.parsed.SENTRY_DSN ||=
-      context.options.plugins.sentry.dsn;
+      this.getOptions(context).dsn;
   }
 
   /**
@@ -174,7 +173,7 @@ function createAdapter(): LogAdapter {
   Sentry.init({
     dsn: $storm.config.SENTRY_DSN,
     environment: $storm.env.mode,
-    release: $storm.config.static.RELEASE_TAG,
+    release: $storm.config.RELEASE_TAG,
     debug: $storm.env.isDebug,
     enabled: ${
       this.getOptions(context).enabled === true ||

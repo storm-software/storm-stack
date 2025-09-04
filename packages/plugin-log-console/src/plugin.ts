@@ -19,14 +19,17 @@
 import { getFileHeader } from "@storm-stack/core/lib/utilities/file-header";
 import type { PluginOptions } from "@storm-stack/core/types/plugin";
 import LogPlugin from "@storm-stack/devkit/plugins/log";
-import type { LogPluginOptions } from "@storm-stack/devkit/types/plugins";
+import { LogConsolePluginContext, LogConsolePluginOptions } from "./types";
 
-export default class LogConsolePlugin extends LogPlugin {
-  public constructor(options: PluginOptions<LogPluginOptions>) {
+export default class LogConsolePlugin<
+  TContext extends LogConsolePluginContext = LogConsolePluginContext,
+  TOptions extends LogConsolePluginOptions = LogConsolePluginOptions
+> extends LogPlugin<TContext, TOptions> {
+  public constructor(options: PluginOptions<TOptions>) {
     super(options);
   }
 
-  protected override writeAdapter() {
+  protected override writeAdapter(context: TContext) {
     return `${getFileHeader()}
 
 import { LogLevel, LogRecord, LogAdapter } from "@storm-stack/types/shared/log";
@@ -129,7 +132,7 @@ function createAdapter(): LogAdapter {
     const args = formatter(record);
     if (typeof args === "string") {
       const msg = String(args).replace(/\\r?\\n$/, "");
-      write(record.level, msg);
+      write(record.level, ${this.getOptions(context).prefix ? `\`[${this.getOptions(context).prefix}]: \${msg}\`` : "msg"});
     } else {
       write(record.level, ...args);
     }

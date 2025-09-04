@@ -1273,7 +1273,13 @@ ${
   }
 });
 
-${context.options.build.format === "cjs" ? "void" : "await"} main({ args: process.argv });
+${
+  context.options.variant === "standalone" &&
+  context.options.projectType === "application" &&
+  context.options.build.format === "cjs"
+    ? "void"
+    : "await"
+} main({ args: process.argv });
 
 `
   );

@@ -197,7 +197,6 @@ overrides:
   "@storm-stack/plugin-date": workspace:*
   "@storm-stack/plugin-error": workspace:*
   "@storm-stack/plugin-node": workspace:*
-  "@storm-stack/plugin-node-config": workspace:*
   "@storm-stack/plugin-cli": workspace:*
   "@storm-stack/plugin-cloudflare-worker": workspace:*
   "@storm-stack/plugin-log-console": workspace:*

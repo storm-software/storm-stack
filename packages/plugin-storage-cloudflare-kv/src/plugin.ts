@@ -42,6 +42,8 @@ export default class StorageCloudflareKVPlugin<
     super(options);
 
     this.options.minTTL ??= 60;
+
+    this.dependencies = [["@storm-stack/plugin-config", options.config ?? {}]];
   }
 
   /**

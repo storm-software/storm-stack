@@ -26,37 +26,31 @@ import { LogLevel } from "@storm-stack/types/shared/log";
 
 export interface LogPluginOptions extends PluginBaseOptions {
   logLevel?: LogLevel;
-  namespace: string;
+  namespace?: string;
 }
 
-export type ResolvedLogPluginOptions<
-  TOptions extends LogPluginOptions = LogPluginOptions
-> = Required<TOptions>;
+export type ResolvedLogPluginOptions = Required<
+  Pick<LogPluginOptions, "logLevel" | "namespace">
+> &
+  PluginBaseOptions;
 
 export type LogPluginResolvedOptions<
-  TOptions extends ResolvedLogPluginOptions = ResolvedLogPluginOptions,
-  TPluginOptions extends Record<string, any> = Record<string, any>
-> = Record<TOptions["namespace"], ResolvedLogPluginOptions<TOptions>> &
-  TPluginOptions;
+  TOptions extends Record<string, any> = Record<string, any>
+> = Record<TOptions["namespace"], TOptions & ResolvedLogPluginOptions>;
 
 export type LogPluginContext<
-  TOptions extends ResolvedLogPluginOptions = ResolvedLogPluginOptions,
+  TOptions extends LogPluginResolvedOptions = LogPluginResolvedOptions,
   TReflections extends { [P in keyof unknown]: ReflectionRecord } = object,
   TEntry extends ResolvedEntryTypeDefinition = ResolvedEntryTypeDefinition
-> = Context<
-  ResolvedOptions<LogPluginResolvedOptions<TOptions>>,
-  TReflections,
-  TEntry
->;
+> = Context<ResolvedOptions<TOptions>, TReflections, TEntry>;
 
 export interface StoragePluginOptions extends PluginBaseOptions {
   namespace: string;
 }
 
 export type StoragePluginResolvedOptions<
-  TOptions extends StoragePluginOptions = StoragePluginOptions,
-  TPluginOptions extends Record<string, any> = Record<string, any>
-> = Record<TOptions["namespace"], TOptions> & TPluginOptions;
+  TOptions extends StoragePluginOptions = StoragePluginOptions
+> = Record<TOptions["namespace"], TOptions>;
 
 export type StoragePluginContext<
   TOptions extends StoragePluginOptions = StoragePluginOptions,

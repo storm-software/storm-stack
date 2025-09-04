@@ -134,7 +134,7 @@ export interface TextFormatterOptions {
   format?: (values: FormattedValues) => string;
 }
 
-export type LogStoragePluginOptions = LogPluginOptions & {
+export type LogStoragePluginOptions = Omit<LogPluginOptions, "namespace"> & {
   /**
    * Whether to use the file system storage driver.
    *
@@ -150,12 +150,11 @@ export type LogStoragePluginOptions = LogPluginOptions & {
   namespace?: string;
 };
 
-export type ResolvedLogStoragePluginOptions = Required<LogStoragePluginOptions>;
-
-export type LogStoragePluginResolvedOptions =
-  LogPluginResolvedOptions<ResolvedLogStoragePluginOptions>;
+export type LogStoragePluginResolvedOptions = LogPluginResolvedOptions<
+  Required<LogStoragePluginOptions>
+>;
 
 export type LogStoragePluginContext<
   TOptions extends
-    ResolvedLogStoragePluginOptions = ResolvedLogStoragePluginOptions
+    LogStoragePluginResolvedOptions = LogStoragePluginResolvedOptions
 > = LogPluginContext<TOptions>;

@@ -56,7 +56,6 @@ The Storm Stack monorepo contains the [Storm Stack engine](https://www.npmjs.com
     - [@storm-stack/plugin-config](#storm-stackplugin-config)
     - [@storm-stack/plugin-date](#storm-stackplugin-date)
     - [@storm-stack/plugin-node](#storm-stackplugin-node)
-    - [@storm-stack/plugin-node-config](#storm-stackplugin-node-config)
     - [@storm-stack/plugin-cloudflare-worker](#storm-stackplugin-cloudflare-worker)
     - [@storm-stack/plugin-cli](#storm-stackplugin-cli)
     - [@storm-stack/plugin-log-console](#storm-stackplugin-log-console)
@@ -146,7 +145,7 @@ The plugin provides a set of utilities for working with configuration files, inc
 - `$storm.config.<parameter>` object is used to apply static configuration parameter values at build time with automatic type generation for improved type safety.
 - Logic to determine all used configuration parameters so that they can be validated and documented later.
 - Best practice recommendations for organizing and managing configuration.
-- The `storm:config` builtin runtime module, which contains the `StormConfig` type definition and related utilities for working with configuration.
+- The `storm:config` builtin runtime module, which contains the `StormConfig` type definition and related utilities for working with configuration parameters at runtime.
 
 ### [@storm-stack/plugin-date](https://www.npmjs.com/package/@storm-stack/plugin-date)
 
@@ -168,15 +167,6 @@ The following features are included in the package:
 - The `storm:request` builtin runtime module, which contains the `StormRequest` class to package information about the incoming request.
 - The `storm:response` builtin runtime module, which contains the `StormResponse` class to package information about the outgoing response.
 - The `storm:event` builtin runtime module, which contains the `StormEvent` class to package information about events that occur in the application.
-
-### [@storm-stack/plugin-node-config](https://www.npmjs.com/package/@storm-stack/plugin-node-config)
-
-A plugin that builds off of [@storm-stack/plugin-config](https://www.npmjs.com/package/@storm-stack/plugin-config) to provide the ability to manage configuration parameters in Node.js applications at runtime.
-
-The following features are included in the package:
-
-- The `$storm.config.<parameter>` object, which provides access to various configuration utilities and services at runtime.
-- The `storm:config` builtin runtime module, which contains the `StormConfig` type definition and helpers for reading/updating configuration parameters at runtime.
 
 ### [@storm-stack/plugin-cloudflare-worker](https://www.npmjs.com/package/@storm-stack/plugin-cloudflare-worker)
 

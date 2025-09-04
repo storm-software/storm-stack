@@ -99,7 +99,7 @@ export const formats: DateFormats = {
   filePathDateTime: "L_HH-mm-ss-SSS"
 };
 
-export let locale = $storm.config.static.DEFAULT_LOCALE;
+export let locale = $storm.config.DEFAULT_LOCALE;
 
 export const dayjs = withLocale(defaultDayjs, locale);
 
@@ -139,11 +139,11 @@ export function createDate<
 
 export function is12HourCycleInCurrentLocale() {
   /* istanbul ignore next */
-  return /A|a/.test(dayjs.Ls[dayjs.locale() || $storm.config.static.DEFAULT_LOCALE]?.formats?.LT ?? "");
+  return /A|a/.test(dayjs.Ls[dayjs.locale() || $storm.configT_LOCALE]?.formats?.LT ?? "");
 };
 
 export function getCurrentLocaleCode() {
-  return dayjs.locale() || $storm.config.static.DEFAULT_LOCALE;
+  return dayjs.locale() || $storm.config.DEFAULT_LOCALE;
 };
 
 export function getFormatHelperText(format: string) {
@@ -158,7 +158,7 @@ export function getFormatHelperText(format: string) {
         if (firstCharacter === "L") {
           /* istanbul ignore next */
           return (
-            dayjs.Ls[dayjs.locale() || $storm.config.static.DEFAULT_LOCALE]?.formats[
+            dayjs.Ls[dayjs.locale() || $storm.config.DEFAULT_LOCALE]?.formats[
               token as keyof ILocale["formats"]
             ] ?? token
           );

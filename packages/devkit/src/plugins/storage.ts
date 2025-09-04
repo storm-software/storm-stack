@@ -46,24 +46,20 @@ export default abstract class StoragePlugin<
     return ["namespace"];
   }
 
-  protected override get overrideName() {
-    return `${kebabCase(this.constructor.name)
-      .replace(/^storage-/g, "")
-      .replace(/-storage$/g, "")
-      .replace(/^plugin-/g, "")
-      .replace(/-plugin$/g, "")}-${kebabCase(this.options.namespace)}`;
+  /**
+   * A property to override the plugin's {@link name} field.
+   *
+   * @remarks
+   * This is useful for plugins that need to have a different name than the default one derived from the class name.
+   */
+  protected override get overrideName(): string {
+    return this.options.namespace;
   }
 
   public constructor(options: PluginOptions<TOptions>) {
     super(options);
 
-    if (!this.options.namespace) {
-      throw new Error(
-        `The \`namespace\` configuration parameter was not provided to the ${
-          this.name
-        } plugin.`
-      );
-    }
+    this.options.namespace ??= this.name;
   }
 
   /**
@@ -101,8 +97,12 @@ export default abstract class StoragePlugin<
       }
 
       await context.vfs.writeRuntimeFile(
-        `storage/${this.overrideName}`,
-        joinPaths(context.runtimePath, "storage", `${this.overrideName}.ts`),
+        `storage/${kebabCase(this.identifier)}`,
+        joinPaths(
+          context.runtimePath,
+          "storage",
+          `${kebabCase(this.identifier)}.ts`
+        ),
         await Promise.resolve(this.writeStorage(context))
       );
     }
@@ -111,15 +111,15 @@ export default abstract class StoragePlugin<
   async #initComplete(context: TContext) {
     this.log(
       LogLevelLabel.TRACE,
-      `Loading the ${this.name} plugin into the context.`
+      `Loading the ${this.identifier} plugin into the context.`
     );
 
     if (context.options.projectType === "application") {
-      const name = `${camelCase(this.overrideName)}Storage`;
+      const name = `${camelCase(this.identifier)}Storage`;
       context.runtime.storage.push({
         name,
         namespace: this.getOptions(context).namespace,
-        fileName: joinPaths("storage", kebabCase(this.overrideName))
+        fileName: joinPaths("storage", kebabCase(this.identifier))
       });
     }
   }

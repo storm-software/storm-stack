@@ -64,9 +64,13 @@
     "storm-stack-storage-plugin"
   ],
   "peerDependencies": {
+    "@storm-stack/plugin-config": "*",
     "aws4fetch": "^1.0.20"
   },
   "peerDependenciesMeta": {
+    "@storm-stack/plugin-config": {
+      "optional": false
+    },
     "aws4fetch": {
       "optional": true
     }

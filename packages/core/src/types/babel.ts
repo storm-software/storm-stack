@@ -117,3 +117,21 @@ export type ResolvedBabelPluginItem<
   TOptions,
   CompilerOptions | undefined | null
 ];
+
+/**
+ * A non-local import specifier represents an import that is not defined within the current module.
+ *
+ * @example
+ * ```typescript
+ * import { bar as baz } from 'foo';
+ * // { name: 'baz', module: 'foo', imported: 'bar' }
+ * ```
+ *
+ * @remarks
+ * It captures the details of an import statement, including the local name used in the module, the source module from which it is imported, and the original name of the export in the source module.
+ */
+export interface ImportSpecifier {
+  name: string;
+  module: string;
+  imported: string;
+}

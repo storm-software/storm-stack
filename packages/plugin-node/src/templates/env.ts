@@ -144,16 +144,17 @@ export type GetColorSupportLevelOptions = {
  */
 export function getColorSupportLevel(stream, options?: GetColorSupportLevelOptions) {
   const { streamIsTTY = true, sniffFlags = true } = options || {};
+  const forceColorConfig = process.env.FORCE_COLOR;
 
-  let forceColor: number | undefined;
-  if ($storm.config.FORCE_COLOR !== undefined) {
-    forceColor = !$storm.config.FORCE_COLOR
+  let forceColor: number | undefined = undefined;
+  if (forceColorConfig !== undefined) {
+    forceColor = !forceColorConfig
       ? 0
-      : typeof $storm.config.FORCE_COLOR === "boolean"
+      : typeof forceColorConfig === "boolean"
       ? 1
-      : typeof $storm.config.FORCE_COLOR === "number" &&
-        [0, 1, 2, 3].includes(Math.min($storm.config.FORCE_COLOR as number, 3))
-      ? Math.min($storm.config.FORCE_COLOR as number, 3)
+      : typeof forceColorConfig === "number" &&
+        [0, 1, 2, 3].includes(Math.min(forceColorConfig as number, 3))
+      ? Math.min(forceColorConfig as number, 3)
       : undefined;
   }
 
@@ -187,13 +188,13 @@ export function getColorSupportLevel(stream, options?: GetColorSupportLevelOptio
 		}
 	}
 
-  const level = $storm.config.TF_BUILD || $storm.config.AGENT_NAME
+  const level = Boolean(process.env.TF_BUILD) || Boolean(process.env.AGENT_NAME)
     ? 1
     : stream &&
         !(streamIsTTY || (stream && stream.isTTY)) &&
         forceColor === undefined
       ? 0
-      : $storm.config.TERM === "dumb"
+      : process.env.TERM === "dumb"
         ? forceColor || 0
         : isWindows
           ? Number(os.release().split(".")[0]) >= 10 &&
@@ -202,42 +203,44 @@ export function getColorSupportLevel(stream, options?: GetColorSupportLevelOptio
               ? 3
               : 2
             : 1
-          : $storm.config.CI
-            ? $storm.config.GITHUB_ACTIONS || $storm.config.GITEA_ACTIONS || $storm.config.CIRCLECI
+          : Boolean(process.env.CI)
+            ? Boolean(process.env.GITHUB_ACTIONS) ||
+              Boolean(process.env.GITEA_ACTIONS) ||
+              Boolean(process.env.CIRCLECI)
               ? 3
-              : $storm.config.TRAVIS ||
-                  $storm.config.APPVEYOR ||
-                  $storm.config.GITLAB_CI ||
-                  $storm.config.BUILDKITE ||
-                  $storm.config.DRONE ||
-                  $storm.config.CI_NAME === "codeship"
+              : Boolean(process.env.TRAVIS) ||
+                Boolean(process.env.APPVEYOR) ||
+                Boolean(process.env.GITLAB_CI) ||
+                Boolean(process.env.BUILDKITE) ||
+                Boolean(process.env.DRONE) ||
+                process.env.CI_NAME === "codeship"
                 ? 1
                 : forceColor || 0
-            : $storm.config.TEAMCITY_VERSION
-              ? /^(?:9\.0*[1-9]\d*\.|\d{2,}\.)/.test($storm.config.TEAMCITY_VERSION as string)
+            : Boolean(process.env.TEAMCITY_VERSION)
+              ? /^(?:9\.0*[1-9]\d*\.|\d{2,}\.)/.test(String(process.env.TEAMCITY_VERSION) || "")
                 ? 1
                 : 0
-              : $storm.config.COLORTERM === "truecolor" ||
-                  $storm.config.TERM === "xterm-kitty"
+              : String(process.env.COLORTERM) === "truecolor" ||
+                  process.env.TERM === "xterm-kitty"
                 ? 3
-                : $storm.config.TERM_PROGRAM
-                  ? $storm.config.TERM_PROGRAM === "iTerm.app"
+                : Boolean(process.env.TERM_PROGRAM)
+                  ? process.env.TERM_PROGRAM === "iTerm.app"
                     ? Number.parseInt(
-                        ($storm.config.TERM_PROGRAM_VERSION || "").split(".")[0] as string,
+                        (process.env.TERM_PROGRAM_VERSION || "").split(".")[0] as string,
                         10
                       ) >= 3
                       ? 3
                       : 2
-                    : $storm.config.TERM_PROGRAM === "Apple_Terminal"
+                    : process.env.TERM_PROGRAM === "Apple_Terminal"
                       ? 2
                       : 0
-                  : /-256(?:color)?$/i.test($storm.config.TERM as string)
+                  : /-256(?:color)?$/i.test(process.env.TERM || "")
                     ? 2
                     : /^screen|^xterm|^vt100|^vt220|^rxvt|color|ansi|cygwin|linux/i.test(
-                          $storm.config.TERM as string
+                          process.env.TERM || ""
                         )
                       ? 1
-                      : Boolean($storm.config.COLORTERM as string);
+                      : Boolean(process.env.COLORTERM);
 
 	return typeof level === "boolean" || level === 0
     ? false
@@ -260,57 +263,57 @@ export function createEnv(): StormNodeEnv {
 
   /** Detect if the application is running in a CI environment */
   const isCI = Boolean(
-    $storm.config.CI ||
-    $storm.config.RUN_ID ||
-    $storm.config.AGOLA_GIT_REF ||
-    $storm.config.AC_APPCIRCLE ||
-    $storm.config.APPVEYOR ||
-    $storm.config.CODEBUILD ||
-    $storm.config.TF_BUILD ||
-    $storm.config.bamboo_planKey ||
-    $storm.config.BITBUCKET_COMMIT ||
-    $storm.config.BITRISE_IO ||
-    $storm.config.BUDDY_WORKSPACE_ID ||
-    $storm.config.BUILDKITE ||
-    $storm.config.CIRCLECI ||
-    $storm.config.CIRRUS_CI ||
-    $storm.config.CF_BUILD_ID ||
-    $storm.config.CM_BUILD_ID ||
-    $storm.config.CI_NAME ||
-    $storm.config.DRONE ||
-    $storm.config.DSARI ||
-    $storm.config.EARTHLY_CI ||
-    $storm.config.EAS_BUILD ||
-    $storm.config.GERRIT_PROJECT ||
-    $storm.config.GITEA_ACTIONS ||
-    $storm.config.GITHUB_ACTIONS ||
-    $storm.config.GITLAB_CI ||
-    $storm.config.GOCD ||
-    $storm.config.BUILDER_OUTPUT ||
-    $storm.config.HARNESS_BUILD_ID ||
-    $storm.config.JENKINS_URL ||
-    $storm.config.LAYERCI ||
-    $storm.config.MAGNUM ||
-    $storm.config.NETLIFY ||
-    $storm.config.NEVERCODE ||
-    $storm.config.PROW_JOB_ID ||
-    $storm.config.RELEASE_BUILD_ID ||
-    $storm.config.RENDER ||
-    $storm.config.SAILCI ||
-    $storm.config.HUDSON ||
-    $storm.config.SCREWDRIVER ||
-    $storm.config.SEMAPHORE ||
-    $storm.config.SOURCEHUT ||
-    $storm.config.STRIDER ||
-    $storm.config.TASK_ID ||
-    $storm.config.RUN_ID ||
-    $storm.config.TEAMCITY_VERSION ||
-    $storm.config.TRAVIS ||
-    $storm.config.VELA ||
-    $storm.config.NOW_BUILDER ||
-    $storm.config.APPCENTER_BUILD_ID ||
-    $storm.config.CI_XCODE_PROJECT ||
-    $storm.config.XCS || false
+    process.env.CI ||
+    process.env.RUN_ID ||
+    process.env.AGOLA_GIT_REF ||
+    process.env.AC_APPCIRCLE ||
+    process.env.APPVEYOR ||
+    process.env.CODEBUILD ||
+    process.env.TF_BUILD ||
+    process.env.bamboo_planKey ||
+    process.env.BITBUCKET_COMMIT ||
+    process.env.BITRISE_IO ||
+    process.env.BUDDY_WORKSPACE_ID ||
+    process.env.BUILDKITE ||
+    process.env.CIRCLECI ||
+    process.env.CIRRUS_CI ||
+    process.env.CF_BUILD_ID ||
+    process.env.CM_BUILD_ID ||
+    process.env.CI_NAME ||
+    process.env.DRONE ||
+    process.env.DSARI ||
+    process.env.EARTHLY_CI ||
+    process.env.EAS_BUILD ||
+    process.env.GERRIT_PROJECT ||
+    process.env.GITEA_ACTIONS ||
+    process.env.GITHUB_ACTIONS ||
+    process.env.GITLAB_CI ||
+    process.env.GOCD ||
+    process.env.BUILDER_OUTPUT ||
+    process.env.HARNESS_BUILD_ID ||
+    process.env.JENKINS_URL ||
+    process.env.LAYERCI ||
+    process.env.MAGNUM ||
+    process.env.NETLIFY ||
+    process.env.NEVERCODE ||
+    process.env.PROW_JOB_ID ||
+    process.env.RELEASE_BUILD_ID ||
+    process.env.RENDER ||
+    process.env.SAILCI ||
+    process.env.HUDSON ||
+    process.env.SCREWDRIVER ||
+    process.env.SEMAPHORE ||
+    process.env.SOURCEHUT ||
+    process.env.STRIDER ||
+    process.env.TASK_ID ||
+    process.env.RUN_ID ||
+    process.env.TEAMCITY_VERSION ||
+    process.env.TRAVIS ||
+    process.env.VELA ||
+    process.env.NOW_BUILDER ||
+    process.env.APPCENTER_BUILD_ID ||
+    process.env.CI_XCODE_PROJECT ||
+    process.env.XCS || false
   );
 
   /**
@@ -322,13 +325,8 @@ export function createEnv(): StormNodeEnv {
    * - \`staging\`
    * - \`development\`
    */
-  const mode = String($storm.config.MODE ||
-    ${
-      context.options.plugins.config.parsed.MODE
-        ? "$storm.config.static.MODE"
-        : "$storm.config.static.NEXT_PUBLIC_VERCEL_ENV"
-    }
-  ) || "production";
+  const mode = String($storm.config.MODE) ||
+    "production";
 
   /** Detect if the application is running in production mode */
   const isProduction = ["prd", "prod", "production"].includes(
@@ -359,7 +357,7 @@ export function createEnv(): StormNodeEnv {
 
   /** Detect if MINIMAL environment variable is set, running in CI or test or TTY is unavailable */
   const isMinimal = Boolean(
-    $storm.config.MINIMAL || isCI || isTest || !hasTTY
+    process.env.MINIMAL || isCI || isTest || !hasTTY
   );
 
   /** Detect if the runtime platform is Linux */
@@ -370,24 +368,24 @@ export function createEnv(): StormNodeEnv {
 
   /** Detect if the runtime platform is interactive */
   const isInteractive = Boolean(
-    !isMinimal && process.stdin?.isTTY && $storm.config.TERM !== "dumb"
+    !isMinimal && process.stdin?.isTTY && process.env.TERM !== "dumb"
   );
 
   /** Detect if Unicode characters are supported */
   const isUnicodeSupported = Boolean(
     !isWindows
-      ? $storm.config.TERM !== "linux"
+      ? process.env.TERM !== "linux"
       : (
-          Boolean($storm.config.WT_SESSION) ||
-          Boolean($storm.config.TERMINUS_SUBLIME) ||
-          $storm.config.ConEmuTask === "{cmd::Cmder}" ||
-          $storm.config.TERM_PROGRAM === "Terminus-Sublime" ||
-          $storm.config.TERM_PROGRAM === "vscode" ||
-          $storm.config.TERM === "xterm-256color" ||
-          $storm.config.TERM === "alacritty" ||
-          $storm.config.TERM === "rxvt-unicode" ||
-          $storm.config.TERM === "rxvt-unicode-256color" ||
-          $storm.config.TERMINAL_EMULATOR === "JetBrains-JediTerm"
+          Boolean(process.env.WT_SESSION) ||
+          Boolean(process.env.TERMINUS_SUBLIME) ||
+          process.env.ConEmuTask === "{cmd::Cmder}" ||
+          process.env.TERM_PROGRAM === "Terminus-Sublime" ||
+          process.env.TERM_PROGRAM === "vscode" ||
+          process.env.TERM === "xterm-256color" ||
+          process.env.TERM === "alacritty" ||
+          process.env.TERM === "rxvt-unicode" ||
+          process.env.TERM === "rxvt-unicode-256color" ||
+          process.env.TERMINAL_EMULATOR === "JetBrains-JediTerm"
         )
   );
 
@@ -399,13 +397,13 @@ export function createEnv(): StormNodeEnv {
     !hasFlag("no-colors") &&
     !hasFlag("color=false") &&
     !hasFlag("color=never") &&
-    !$storm.config.NO_COLOR &&
+    !process.env.NO_COLOR &&
     (hasFlag("color") ||
         hasFlag("colors") ||
         hasFlag("color=true") ||
         hasFlag("color=always") ||
-        $storm.config.FORCE_COLOR) ||
-        ((hasTTY || isWindows) && $storm.config.TERM !== "dumb")
+        process.env.FORCE_COLOR) ||
+        ((hasTTY || isWindows) && process.env.TERM !== "dumb")
   );
 
   const supportsColor = {
@@ -435,7 +433,7 @@ export function createEnv(): StormNodeEnv {
   const version = "${
     context.packageJson?.version
       ? context.packageJson.version
-      : "$storm.config.static.APP_VERSION"
+      : "$storm.config.APP_VERSION"
   }";
 
   const homedir = os.homedir();
@@ -453,78 +451,78 @@ export function createEnv(): StormNodeEnv {
    */
   const paths = isMacOS
     ? {
-      data: $storm.config.DATA_DIR
-        ? join($storm.config.DATA_DIR!, "${titleCase(name)}")
+      data: String($storm.config.DATA_DIR)
+        ? join(String($storm.config.DATA_DIR), "${titleCase(name)}")
         : join(homedir, "Library", "Application Support", "${titleCase(organization)}", "${titleCase(name)}"),
-      config: $storm.config.CONFIG_DIR
-        ? join($storm.config.CONFIG_DIR!, "${titleCase(name)}")
+      config: String($storm.config.CONFIG_DIR)
+        ? join(String($storm.config.CONFIG_DIR), "${titleCase(name)}")
         : join(homedir, "Library", "Preferences", "${titleCase(organization)}", "${titleCase(name)}"),
-      cache: $storm.config.CACHE_DIR
-        ? join($storm.config.CACHE_DIR!, "${titleCase(name)}")
+      cache: String($storm.config.CACHE_DIR)
+        ? join(String($storm.config.CACHE_DIR), "${titleCase(name)}")
         : join(homedir, "Library", "Caches", "${titleCase(organization)}", "${titleCase(name)}"),
-      log: $storm.config.LOG_DIR
-        ? join($storm.config.LOG_DIR!, "${titleCase(name)}")
+      log: String($storm.config.LOG_DIR)
+        ? join(String($storm.config.LOG_DIR), "${titleCase(name)}")
         : join(homedir, "Library", "Logs", "${titleCase(organization)}", "${titleCase(name)}"),
-      temp: $storm.config.TEMP_DIR
-        ? join($storm.config.TEMP_DIR!, "${titleCase(name)}")
+      temp: String($storm.config.TEMP_DIR)
+        ? join(String($storm.config.TEMP_DIR), "${titleCase(name)}")
         : join(tmpdir, "${titleCase(organization)}", "${titleCase(name)}")
     }
       : isWindows
     ? {
-      data: $storm.config.DATA_DIR
-        ? join($storm.config.DATA_DIR!, "${titleCase(name)}")
-        : join($storm.config.LOCALAPPDATA || join(homedir, "AppData", "Local"), "${titleCase(organization)}", "${titleCase(
+      data: String($storm.config.DATA_DIR)
+        ? join(String($storm.config.DATA_DIR), "${titleCase(name)}")
+        : join(process.env.LOCALAPPDATA || join(homedir, "AppData", "Local"), "${titleCase(organization)}", "${titleCase(
           name
         )}", "Data"),
-      config: $storm.config.CONFIG_DIR
+      config: String($storm.config.CONFIG_DIR)
         ? join($storm.config.CONFIG_DIR!, "${titleCase(name)}")
-        : join($storm.config.APPDATA || join(homedir, "AppData", "Roaming"), "${titleCase(organization)}", "${titleCase(
+        : join(process.env.APPDATA || join(homedir, "AppData", "Roaming"), "${titleCase(organization)}", "${titleCase(
           name
         )}", "Config"),
-      cache: $storm.config.CACHE_DIR
-        ? join($storm.config.CACHE_DIR!, "${titleCase(name)}")
-        : join($storm.config.LOCALAPPDATA || join(homedir, "AppData", "Local"), "Cache", "${titleCase(organization)}", "${titleCase(
+      cache: String($storm.config.CACHE_DIR)
+        ? join(String($storm.config.CACHE_DIR), "${titleCase(name)}")
+        : join(process.env.LOCALAPPDATA || join(homedir, "AppData", "Local"), "Cache", "${titleCase(organization)}", "${titleCase(
           name
         )}"),
-      log: $storm.config.LOG_DIR
-        ? join($storm.config.LOG_DIR!, "${titleCase(name)}")
-        : join($storm.config.LOCALAPPDATA || join(homedir, "AppData", "Local"), "${titleCase(organization)}", "${titleCase(
+      log: String($storm.config.LOG_DIR)
+        ? join(String($storm.config.LOG_DIR), "${titleCase(name)}")
+        : join(process.env.LOCALAPPDATA || join(homedir, "AppData", "Local"), "${titleCase(organization)}", "${titleCase(
           name
         )}", "Log"),
-      temp: $storm.config.TEMP_DIR
-        ? join($storm.config.TEMP_DIR!, "${titleCase(name)}")
+      temp: String($storm.config.TEMP_DIR)
+        ? join(String($storm.config.TEMP_DIR), "${titleCase(name)}")
         : join(tmpdir, "${titleCase(organization)}", "${titleCase(name)}")
     }
       :
     {
-      data: $storm.config.DATA_DIR
-        ? join($storm.config.DATA_DIR!, "${kebabCase(name)}")
+      data: String($storm.config.DATA_DIR)
+        ? join(String($storm.config.DATA_DIR), "${kebabCase(name)}")
         : join(
-            $storm.config.XDG_DATA_HOME || join(homedir, ".local", "share"),
+            process.env.XDG_DATA_HOME || join(homedir, ".local", "share"),
             "${kebabCase(organization)}",
             "${kebabCase(name)}"
           ),
-      config: $storm.config.CONFIG_DIR
-        ? join($storm.config.CONFIG_DIR!, "${kebabCase(name)}")
+      config: String($storm.config.CONFIG_DIR)
+        ? join(String($storm.config.CONFIG_DIR), "${kebabCase(name)}")
         : join(
-            $storm.config.XDG_CONFIG_HOME || join(homedir, ".config"),
+            process.env.XDG_CONFIG_HOME || join(homedir, ".config"),
             "${kebabCase(organization)}",
             "${kebabCase(name)}"
           ),
-      cache: $storm.config.CACHE_DIR
-        ? join($storm.config.CACHE_DIR!, "${kebabCase(name)}")
-        : join($storm.config.XDG_CACHE_HOME || join(homedir, ".cache"), "${kebabCase(organization)}", "${kebabCase(
+      cache: String($storm.config.CACHE_DIR)
+        ? join(String($storm.config.CACHE_DIR), "${kebabCase(name)}")
+        : join(process.env.XDG_CACHE_HOME || join(homedir, ".cache"), "${kebabCase(organization)}", "${kebabCase(
           name
         )}"),
-      log: $storm.config.LOG_DIR
-        ? join($storm.config.LOG_DIR!, "${kebabCase(name)}")
-        : join($storm.config.XDG_STATE_HOME || join(homedir, ".local", "state"), "${kebabCase(organization)}", "${kebabCase(
+      log: String($storm.config.LOG_DIR)
+        ? join(String($storm.config.LOG_DIR), "${kebabCase(name)}")
+        : join(process.env.XDG_STATE_HOME || join(homedir, ".local", "state"), "${kebabCase(organization)}", "${kebabCase(
           name
         )}"),
-      temp: $storm.config.TEMP_DIR
-        ? join($storm.config.TEMP_DIR!, "${kebabCase(name)}")
-        : ($storm.config.DEVENV_RUNTIME || $storm.config.XDG_RUNTIME_DIR
-            ? join(($storm.config.DEVENV_RUNTIME || $storm.config.XDG_RUNTIME_DIR)!, "${kebabCase(organization)}", "${kebabCase(
+      temp: String($storm.config.TEMP_DIR)
+        ? join(String($storm.config.TEMP_DIR), "${kebabCase(name)}")
+        : (process.env.DEVENV_RUNTIME || process.env.XDG_RUNTIME_DIR
+            ? join((process.env.DEVENV_RUNTIME || process.env.XDG_RUNTIME_DIR)!, "${kebabCase(organization)}", "${kebabCase(
               name
             )}")
             : join(tmpdir, basename(homedir), "${kebabCase(organization)}", "${kebabCase(name)}"))
@@ -560,7 +558,7 @@ export function createEnv(): StormNodeEnv {
     releaseTag: \`${name}@\${version}\`,
     defaultLocale: $storm.config.DEFAULT_LOCALE!,
     defaultTimezone: $storm.config.DEFAULT_TIMEZONE!,
-    platform: ($storm.config.PLATFORM || "${context.options.platform}") as "node" | "neutral" | "browser",
+    platform: "${context.options.platform}" as "node" | "neutral" | "browser",
     paths
   };
 }

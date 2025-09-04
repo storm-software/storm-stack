@@ -215,7 +215,6 @@ export function getTextFormatter(
  */
 const formatter: TextFormatter = getTextFormatter();
 
-
 /**
  * Creates a new [Unstorage](https://unstorage.dev/) logging adapter.
  *

@@ -54,7 +54,10 @@ export default class NodePlugin<
     this.dependencies = [
       ["@storm-stack/plugin-config", this.options.config],
       ["@storm-stack/plugin-error", this.options.error],
-      ["@storm-stack/plugin-log-console", this.options.logs?.console]
+      [
+        "@storm-stack/plugin-log-console",
+        { namespace: "console", ...this.options.console }
+      ]
     ];
 
     this.packageDeps = {};

@@ -16,6 +16,7 @@
 
  ------------------------------------------------------------------- */
 
+import { StormRequest } from "storm:request";
 import { ExampleRequest } from "./types";
 
 export async function handler(request: StormRequest<Request<ExampleRequest>>) {

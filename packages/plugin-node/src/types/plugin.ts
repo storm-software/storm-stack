@@ -23,7 +23,6 @@ import {
 import { ResolvedOptions } from "@storm-stack/core/types/build";
 import type { Context } from "@storm-stack/core/types/context";
 import { PluginBaseOptions } from "@storm-stack/core/types/plugin";
-import { LogPluginOptions } from "@storm-stack/devkit/types/plugins";
 import {
   ConfigPluginOptions,
   ConfigPluginReflectionRecord
@@ -32,6 +31,10 @@ import type {
   ErrorPluginOptions,
   ErrorPluginResolvedOptions
 } from "@storm-stack/plugin-error/types";
+import {
+  LogConsolePluginOptions,
+  LogConsolePluginResolvedOptions
+} from "@storm-stack/plugin-log-console/types";
 
 export interface NodePluginOptions extends PluginBaseOptions {
   /**
@@ -45,18 +48,14 @@ export interface NodePluginOptions extends PluginBaseOptions {
   error?: Omit<ErrorPluginOptions, "config">;
 
   /**
-   * Options for the logging plugin(s).
+   * Options for the console log plugin.
    */
-  logs?: Record<string, LogPluginOptions> & {
-    console?: LogPluginOptions;
-  };
+  console?: LogConsolePluginOptions;
 }
 
-export interface NodePluginResolvedOptions extends ErrorPluginResolvedOptions {
-  logs: Record<string, LogPluginOptions> & {
-    console: LogPluginOptions;
-  };
-}
+export interface NodePluginResolvedOptions
+  extends ErrorPluginResolvedOptions,
+    LogConsolePluginResolvedOptions {}
 
 export type NodePluginContext<
   TOptions extends NodePluginResolvedOptions = NodePluginResolvedOptions

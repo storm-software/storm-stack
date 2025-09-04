@@ -1,3 +1,7 @@
-import { getJestConfig } from "@storm-software/testing-tools";
+import { declarePackage } from "@storm-software/testing-tools";
 
-export default getJestConfig("packages/plugin-storage-cloudflare-r2", true, "plugin-storage-cloudflare-r2");
+export default declarePackage({
+  projectRoot: "packages/plugin-storage-cloudflare-r2",
+  isNode: true,
+  displayName: "plugin-storage-cloudflare-r2"
+});

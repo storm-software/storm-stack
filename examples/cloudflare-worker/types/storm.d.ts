@@ -1158,9 +1158,12 @@ interface StormConfigInterface {
  * @remarks
  * The Storm Stack application context object is injected into the global scope of the application. It can be accessed using `$storm` or `useStorm()` in the application code.
  */
-interface StormContext {
+interface StormContextInterface {
   /**
    * The context metadata.
+   *
+   * @remarks
+   * This metadata can be used to store information about the current request, user, or any other relevant data. It is mutable and can be changed during the request lifecycle.
    */
   meta: Record<string, any>;
   /**
@@ -2019,7 +2022,7 @@ type WarningMessageDetails = MessageDetails<"warning">;
 
 declare module "storm:config" {
   /**
-   * The Storm Stack config module provides a unified interface for managing configuration settings.
+   * The Storm Stack configuration module provides an interface to define configuration parameters.
    *
    * @module storm:config
    */
@@ -2146,7 +2149,7 @@ declare module "storm:config" {
      * The default lowest log level to accept. If `null`, the logger will reject all records. This value only applies if `lowestLogLevel` is not provided to the `logs` configuration.
      *
      * @title LOG LEVEL
-     * @defaultValue debug
+     * @defaultValue info
      */
     LOG_LEVEL?: "debug" | "info" | "warning" | "error" | "fatal" | null;
     /**
@@ -2320,7 +2323,7 @@ declare module "storm:config" {
      * The unique identifier for the build.
      *
      * @title BUILD Identifier
-     * @defaultValue d54283f5-f035-4e46-b1e4-7ffadfadd84a
+     * @defaultValue 8ad1c7a8-91e4-4fc7-9f73-52cea4f1d399
      * @readonly
      */
     readonly BUILD_ID: string;
@@ -2328,7 +2331,7 @@ declare module "storm:config" {
      * The timestamp the build was ran at.
      *
      * @title BUILD TIMESTAMP
-     * @defaultValue 2025-08-30T00:19:27.527Z
+     * @defaultValue 2025-09-04T13:20:35.129Z
      * @readonly
      */
     readonly BUILD_TIMESTAMP: string;
@@ -2561,7 +2564,7 @@ declare module "storm:config" {
      * The unique identifier for the release.
      *
      * @title RELEASE Identifier
-     * @defaultValue 4283f5f0-358e-46b1-a47f-fadfadd84a4f
+     * @defaultValue d1c7a891-e44f-47df-b352-cea4f1d39940
      * @readonly
      */
     readonly RELEASE_ID: string;
@@ -2622,15 +2625,6 @@ declare module "storm:config" {
      * @readonly
      */
     readonly SPACESHIP_CI?: string;
-    /**
-     * Static configuration properties - this value is not dynamic and cannot be changed at runtime.
-     *
-     * @title Static
-     * @defaultValue [object Object]
-     * @internal
-     * @readonly
-     */
-    readonly static: {};
     /**
      * An indicator that specifies the application is running in the local Storm Stack development environment.
      *
@@ -2842,388 +2836,19 @@ declare module "storm:config" {
    * Initializes the Storm Stack configuration module.
    *
    * @remarks
-   * This function initializes the Storm Stack configuration module by ensuring the configuration directory exists and creating a default configuration file if it does not exist.
+   * This function initializes the Storm Stack configuration object.
    *
-   * @param runtimeConfig - The dynamic/runtime configuration - this should include the current environment variables.
-   * @returns A promise that resolves when the configuration module is initialized.
+   * @param environmentConfig - The dynamic/runtime configuration - this could include the current environment variables or any other environment-specific settings provided by the runtime.
+   * @returns The initialized Storm Stack configuration object.
    */
   export function createConfig(
-    runtimeConfig?: Partial<StormConfig>
-  ): Promise<StormConfig>;
+    environmentConfig?: Partial<StormConfig>
+  ): StormConfig;
   export type StormConfigBase = any[];
   export type StormConfig = any[];
 }
 
-declare module "storm:error" {
-  /**
-   * The Storm Stack error module provides a custom error class and utility functions to support error handling
-   *
-   * @module storm:error
-   */
-
-  /**
-   * Get the default error code for the given error type.
-   *
-   * @param _ - The error type.
-   * @returns The default error code.
-   */
-  export function getDefaultCode(_: ErrorType): number;
-  /**
-   * Get the default error name for the given error type.
-   *
-   * @param type - The error type.
-   * @returns The default error name.
-   */
-  export function getDefaultErrorName(type: ErrorType): string;
-  /**
-   * Checks if `value` is an {@link Error}, `EvalError`, `RangeError`, `ReferenceError`,
-   * `SyntaxError`, `TypeError`, or `URIError` object.
-   *
-   * @example
-   * ```typescript
-   * isError(new Error)
-   * // => true
-   *
-   * isError(Error)
-   * // => false
-   * ```
-   *
-   * @param value - The value to check.
-   * @returns Returns `true` if `value` is an error object, else `false`.
-   */
-  export function isError(value: unknown): value is Error;
-  /**
-   * Type-check to determine if `value` is a {@link StormError} object
-   *
-   * @param value - the object to check
-   * @returns Returns `true` if `value` is a {@link StormError} object, else `false`.
-   */
-  export function isStormError(value: unknown): value is StormError;
-  /**
-   * Creates a new {@link StormError} instance from an unknown cause value
-   *
-   * @param cause - The cause of the error in an unknown type
-   * @param type - The type of the error
-   * @param data - Additional data to be passed with the error
-   * @returns The cause of the error in a {@link StormError} object
-   */
-  export function createStormError(
-    cause: unknown,
-    type?: ErrorType,
-    data?: any
-  ): StormError;
-  /**
-   * A wrapper around the base JavaScript Error class to be used in Storm Stack applications
-   */
-  export class StormError extends Error implements StormErrorInterface {
-    readonly [Symbol.name]: string;
-    /**
-     * Internal function to inherit the {@link Error} prototype.
-     *
-     * @internal
-     */
-    __proto__: Error;
-    /**
-     * The error code
-     */
-    code: number;
-    /**
-     * The error message parameters
-     */
-    params: string[];
-    /**
-     * The type of error event
-     */
-    type: ErrorType;
-    /**
-     * Additional data to be passed with the error
-     */
-    data?: any;
-    /**
-     * The string tag for the error
-     */
-    readonly [Symbol.toStringTag]: string;
-    /**
-     * The StormError constructor
-     *
-     * @param options - The options for the error
-     * @param type - The type of error
-     */
-    constructor(optionsOrMessage: StormErrorOptions | string, type?: ErrorType);
-    /**
-     * A string that uniquely identifies the error
-     *
-     * @remarks
-     * The `id` property is a string that uniquely identifies the error. This string is generated based off the error type and code.
-     *
-     * @example
-     * ```typescript
-     * const error = new StormError({ code: 110 }, "custom");
-     * console.log(error.id); // "CUSTOM-110"
-     * ```
-     *
-     */
-    get id(): string;
-    /**
-     * The cause of the error
-     */
-    get cause(): StormErrorInterface | undefined;
-    /**
-     * The cause of the error
-     */
-    set cause(cause: unknown);
-    /**
-     * The parsed stack traces from the raw stack string
-     *
-     * @returns The parsed stack traces
-     */
-    get stacktrace(): ParsedStacktrace[];
-    /**
-     * Prints a displayable/formatted stack trace
-     *
-     * @returns The stack trace string
-     */
-    get stack(): string;
-    /**
-     * Store the stack trace
-     */
-    set stack(stack: string);
-    /**
-     * The unformatted stack trace
-     *
-     * @returns The stack trace string
-     */
-    get originalStack(): string;
-    /**
-     * The unformatted stack trace
-     *
-     * @returns The stack trace string
-     */
-    set originalStack(stack: string);
-    /**
-     * A URL to a page that displays the error message details
-     */
-    get url(): string;
-    /**
-     * Prints the display error message string
-     *
-     * @param includeData - Whether to include the data in the error message
-     * @returns The display error message string
-     */
-    toDisplay(includeData?: boolean): string;
-    /**
-     * Prints the error message and stack trace
-     *
-     * @param stacktrace - Whether to include the stack trace in the error message
-     * @param includeData - Whether to include the data in the error message
-     * @returns The error message and stack trace string
-     */
-    toString(stacktrace?: boolean, includeData?: boolean): string;
-    /**
-     * Converts a StormError object to a string.
-     */
-    [Symbol.toPrimitive](hint: "default"): string;
-    /**
-     * Converts a StormError object to a string.
-     */
-    [Symbol.toPrimitive](hint: "string"): string;
-    /**
-     * Converts a StormError object to a number.
-     */
-    [Symbol.toPrimitive](hint: "number"): number;
-  }
-}
-
-declare module "storm:log/console-info" {
-  export const DATE_TIME_FORMAT: Intl.DateTimeFormat;
-  /**
-   * Creates a new [console](https://developer.mozilla.org/en-US/docs/Web/API/console) logging adapter.
-   *
-   * @returns The created logging adapter.
-   */
-  function createAdapter(): LogAdapter;
-  export default createAdapter;
-}
-
-declare module "storm:id" {
-  /**
-   * The ID module provides a set of utilities for generating unique identifiers.
-   *
-   * @module storm:id
-   */
-  /**
-   * Generate a random string
-   *
-   * @param array - The array to fill with random values
-   * @returns The array filled with random values
-   */
-  export function getRandom(array: Uint8Array): Uint8Array<ArrayBufferLike>;
-  /**
-   * A platform agnostic version of the [nanoid](https://github.com/ai/nanoid) package with some modifications.
-   *
-   * @param size - The size of the string to generate. Defaults to 21 if not provided.
-   * @returns A unique identifier following the nanoid format
-   */
-  export function uniqueId(size?: number | undefined): string;
-  /**
-   * A platform agnostic version of the [nanoid](https://github.com/ai/nanoid) package with some modifications.
-   *
-   * @param prefix - The prefix to use for the unique identifier
-   * @param size - The size of the string to generate. Defaults to 21 if not provided.
-   * @returns A unique identifier following the nanoid format
-   */
-  export function uniqueId(prefix?: string, size?: number | undefined): string;
-}
-
-declare module "storm:env" {
-  /**
-   * This module provides the runtime environment information for the Storm Stack application.
-   *
-   * @module storm:env
-   */
-
-  /**
-   * Checks if a specific flag is present in the command line arguments.
-   *
-   * @see {@link https://github.com/sindresorhus/has-flag/blob/main/index.js}
-   *
-   * @param flag - The flag to check for, e.g., "color", "no-color".
-   * @param argv - The command line arguments to check against. Defaults to global Deno args or process args.
-   * @returns True if the flag is present, false otherwise.
-   */
-  export function hasFlag(flag: string, argv?: string[]): boolean;
-  /**
-   * Options for getting the color support level.
-   */
-  export type GetColorSupportLevelOptions = {
-    streamIsTTY?: boolean;
-    sniffFlags?: boolean;
-  };
-  /**
-   * Determines the color support level of the terminal.
-   *
-   * @param stream - The stream to check availability of (e.g., process.stdout).
-   * @param options - Options for the color detection.
-   * @returns The color support level (0 = no color, 1 = basic, 2 = 256 colors, 3 = true color).
-   */
-  export function getColorSupportLevel(
-    stream: any,
-    options?: GetColorSupportLevelOptions
-  ):
-    | false
-    | 0
-    | 2
-    | 3
-    | {
-        level: number;
-        hasBasic: boolean;
-        has256: boolean;
-        has16m: boolean;
-      };
-  /**
-   * Generate a list of variables that describe the current application's runtime environment.
-   *
-   * @returns An object containing the runtime environment details.
-   */
-  export function createEnv(): StormNodeEnv;
-  export type GetColorSupportLevelOptions = any[];
-}
-
-declare module "storm:request" {
-  /**
-   * The request module provides a base request class used by the Storm Stack runtime.
-   *
-   * @module storm:request
-   */
-
-  /**
-   * A base request class used by the Storm Stack runtime.
-   */
-  export class StormRequest<
-    TData extends Record<string, any> = Record<string, any>
-  > implements StormRequestInterface<TData>
-  {
-    /**
-     * The request identifier.
-     */
-    readonly id: string;
-    /**
-     * The request created timestamp.
-     */
-    readonly timestamp: number;
-    /**
-     * The request data.
-     */
-    readonly data: TData;
-    /**
-     * Create a new request object.
-     *
-     * @param data - The request input data.
-     */
-    constructor(data: TData);
-    /**
-     * Merges the given data into the request.
-     *
-     * @param data - The data to merge into the request.
-     */
-    merge(data: Partial<TData>): void;
-  }
-}
-
-declare module "storm:response" {
-  /**
-   * The response module provides the {@link StormResponse} class, which is used to represent the response of a request execution.
-   *
-   * @module storm:response
-   */
-
-  /**
-   * A base response class used by the Storm Stack runtime.
-   */
-  export class StormResponse<TData extends any | StormError = any | StormError>
-    implements StormResponseInterface<TData>
-  {
-    /**
-     * Create a new response.
-     *
-     * @remarks
-     * **IMPORTANT:** This function uses the storm context object - never use this function outside of the context wrapper/tree since the context will not be available.
-     *
-     * @param data - The response data
-     */
-    static create<TData>(data: TData): StormResponse<TData>;
-    /**
-     * The response meta.
-     */
-    readonly meta: Record<string, any>;
-    /**
-     * The response data.
-     */
-    data: TData;
-    /**
-     * The request identifier.
-     */
-    readonly requestId: string;
-    /**
-     * The response created timestamp.
-     */
-    readonly timestamp: number;
-    /**
-     * An indicator of whether the response was successful.
-     */
-    get success(): boolean;
-    /**
-     * Create a new response.
-     *
-     * @param requestId - The request identifier.
-     * @param meta - The current context's metadata.
-     * @param data - The response data
-     */
-    constructor(requestId: string, meta: Record<string, any>, data: TData);
-  }
-}
-
-declare module "storm:storage/cloudflare-kv-storage" {
+declare module "storm:storage/storage" {
   /**
    * Create an [Cloudflare KV](https://developers.cloudflare.com/kv/) storage adapter.
    *
@@ -3234,323 +2859,3 @@ declare module "storm:storage/cloudflare-kv-storage" {
   function createAdapter(): StorageAdapter;
   export default createAdapter;
 }
-
-declare module "storm:storage" {
-  /**
-   * The storage module provides a unified storage interface for the Storm Stack runtime.
-   *
-   * @module storm:storage
-   */
-
-  /**
-   * Creates a new storage instance.
-   *
-   * @remarks
-   * This function initializes the storage with all configured adapters.
-   *
-   * @returns The {@link StormStorageInterface} storage instance with each storage adapter loaded into a slice of it's total state.
-   */
-  export function createStorage(): StormStorageInterface;
-}
-
-declare module "storm:context" {
-  /**
-   * This module provides the Storm Stack context and a hook to access it in the application.
-   *
-   * @module storm:context
-   */
-
-  export interface StormContext {
-    /**
-     * The context metadata.
-     */
-    meta: Record<string, any>;
-    /**
-     * The request object for the current Storm Stack application.
-     */
-    request: StormRequest;
-    /**
-     * Environment/runtime specific application data.
-     */
-    env: import("@storm-stack/types/node/env").StormNodeEnv;
-    /**
-     * The root application logger for the Storm Stack application.
-     */
-    log: import("@storm-stack/types/shared/log").StormLogInterface;
-    /**
-     * The {@link StormStorageInterface} instance used by the Storm Stack application.
-     */
-    storage: import("@storm-stack/types/shared/storage").StormStorageInterface;
-    /**
-     * The configuration parameters for the Storm application.
-     */
-    config: StormConfig & Record<string, any>;
-    /**
-     * A set of disposable resources to clean up when the context is no longer needed.
-     */
-    readonly disposables: Set<Disposable>;
-    /**
-     * A set of asynchronous disposable resources to clean up when the context is no longer needed.
-     */
-    readonly asyncDisposables: Set<AsyncDisposable>;
-  }
-  /**
-   * Get the Storm context for the current application.
-   *
-   * @param options - The options to use when getting the context.
-   * @returns The Storm context for the current application.
-   * @throws If the Storm context is not available.
-   */
-  export function useStorm(options?: ContextOptions): StormContext;
-  /**
-   * Wrap an application entry point with the necessary context and error handling.
-   *
-   * @param handler - The handler function for the application.
-   * @returns A function that takes an request and returns a response or a promise of a response.
-   */
-  export function withContext<
-    TInput extends Record<string, any> = Record<string, any>,
-    TOutput = any
-  >(
-    handler: HandlerFunction<TInput, TOutput>
-  ): (input: TInput) => Promise<StormResponse<TOutput | StormError>>;
-  export type StormContext = any[];
-}
-
-declare module "storm:log" {
-  /**
-   * The log module provides a unified logging interface for Storm Stack applications.
-   *
-   * @module storm:log
-   */
-
-  /**
-   * Returns a filter that accepts log records with the specified level.
-   *
-   * @param level - The level to filter by. If `null`, the filter will reject all records.
-   * @returns The filter.
-   */
-  export function getLevelFilter(level: LogLevel | null): LogFilter;
-  /**
-   * Parses a {@link LogLevel | log level} from a string.
-   *
-   * @param level - The {@link LogLevel | log level} as a string. This is case-insensitive.
-   * @returns The {@link LogLevel | log level}.
-   */
-  export function parseLogLevel(level: string): LogLevel;
-  /**
-   * Checks if a string is a valid {@link LogLevel | log level}. This function can be used as a type guard to narrow the type of a string to a {@link LogLevel}.
-   *
-   * @param level - The {@link LogLevel | log level} as a string. This is case-sensitive.
-   * @returns `true` if the string is a valid {@link LogLevel | log level}.
-   */
-  export function isLogLevel(level: string): level is LogLevel;
-  /**
-   * The StormLog class that's used for writing logs during Storm Stack applications.
-   */
-  export class StormLog implements StormLogInterface {
-    /**
-     * The list of filters applied to log records.
-     *
-     * @remarks
-     * Filters are functions that take a {@link LogRecord} and return a boolean indicating whether the record should be logged. You can add custom filters to this list to control which log records are emitted.
-     */
-    readonly filters: LogFilter[];
-    /**
-     * The lowest log level that will be logged by this logger.
-     *
-     * @remarks
-     * This is set to the value of the `LOG_LEVEL` configuration parameter.
-     *
-     * @defaultValue "info"
-     */
-    lowestLogLevel: LogLevel | null;
-    /**
-     * Create a new StormLog instance.
-     *
-     * @remarks
-     * This constructor initializes the logger with an empty filter list and sets the lowest log level to `null`.
-     */
-    constructor();
-    /**
-     * Generates a new {@link StormLogCtx} instance and adds properties to the logger context.
-     *
-     * @remarks
-     * This method allows you to create a new logger context with additional properties. The properties will be merged with the existing properties in the logger context.
-     *
-     * @param properties - The properties to add to the logger context.
-     * @returns A new {@link StormLogCtx} instance with the merged properties.
-     */
-    with(properties: Record<string, unknown>): StormLogInterface;
-    /**
-     * Filters log records based on the logger's filters.
-     *
-     * @param record - The log record to filter.
-     * @returns Whether the log record passes all filters.
-     */
-    filter(record: LogRecord): boolean;
-    /**
-     * Returns an async iterable of log adapters that match the specified log level.
-     *
-     * @param level - The log level to filter adapters by.
-     * @returns An iterable of log adapters that match the specified log level.
-     */
-    adapters(level?: LogLevel): Iterable<LogAdapter>;
-    /**
-     * Emits a log record to all registered adapters that match the record's log level.
-     *
-     * @param record - The log record to emit.
-     * @param bypassAdapters - A set of adapters to bypass when emitting the record.
-     */
-    emit(record: LogRecord, bypassAdapters?: Set<LogAdapter>): void;
-    /**
-     * Logs a message at the specified log level.
-     *
-     * @param level - The log level to use.
-     * @param rawMessage - The raw message to log.
-     * @param properties - The properties to include with the log message.
-     * @param bypassAdapters - A set of adapters to bypass when emitting the log message.
-     */
-    log(
-      level: LogLevel,
-      rawMessage: string,
-      properties: Record<string, unknown> | (() => Record<string, unknown>),
-      bypassAdapters?: Set<LogAdapter>
-    ): void;
-    /**
-     * Logs a message lazily at the specified log level.
-     *
-     * @param level - The log level to use.
-     * @param callback - A callback function that returns the message to log.
-     * @param properties - The properties to include with the log message.
-     */
-    logLazily(
-      level: LogLevel,
-      callback: LogCallback,
-      properties?: Record<string, unknown>
-    ): void;
-    /**
-     * Logs a message template at the specified log level.
-     *
-     * @param level - The log level to use.
-     * @param messageTemplate - The message template to log.
-     * @param values - The values to interpolate into the message template.
-     * @param properties - The properties to include with the log message.
-     */
-    logTemplate(
-      level: LogLevel,
-      messageTemplate: TemplateStringsArray,
-      values: unknown[],
-      properties?: Record<string, unknown>
-    ): void;
-    /**
-     * Logs a debug message.
-     *
-     * @param message - The message to log. Can be a string, a template string, or a callback function that returns the message.
-     * @param values - The values to interpolate into the message template.
-     */
-    debug(
-      message: TemplateStringsArray | string | LogCallback,
-      ...values: unknown[]
-    ): void;
-    /**
-     * Logs an info message.
-     *
-     * @param message - The message to log. Can be a string, a template string, or a callback function that returns the message.
-     * @param values - The values to interpolate into the message template.
-     */
-    info(
-      message: TemplateStringsArray | string | LogCallback,
-      ...values: unknown[]
-    ): void;
-    /**
-     * Logs a warning message.
-     *
-     * @param message - The message to log. Can be a string, a template string, or a callback function that returns the message.
-     * @param values - The values to interpolate into the message template.
-     */
-    warn(
-      message: TemplateStringsArray | string | LogCallback,
-      ...values: unknown[]
-    ): void;
-    /**
-     * Logs an error message.
-     *
-     * @param message - The message to log. Can be a string, a template string, or a callback function that returns the message.
-     * @param values - The values to interpolate into the message template.
-     */
-    error(
-      message: TemplateStringsArray | string | LogCallback | Error,
-      ...values: unknown[]
-    ): void;
-    /**
-     * Logs a fatal message.
-     *
-     * @param message - The message to log. Can be a string, a template string, or a callback function that returns the message.
-     * @param values - The values to interpolate into the message template.
-     */
-    fatal(
-      message: TemplateStringsArray | string | LogCallback | Error,
-      ...values: unknown[]
-    ): void;
-    protected getStore(): Record<string, unknown>;
-  }
-}
-
-declare module "storm:event" {
-  /**
-   * The Storm Stack event module.
-   *
-   * @module storm:event
-   */
-
-  /**
-   * A base event class used by the Storm Stack runtime.
-   */
-  export class StormEvent<
-    TEventType extends string = string,
-    TData extends Record<string, any> = Record<string, any>
-  > implements StormEventInterface<TEventType, TData>
-  {
-    /**
-     * The event timestamp.
-     */
-    readonly timestamp: number;
-    /**
-     * The event identifier.
-     */
-    readonly id: string;
-    /**
-     * The event data object.
-     */
-    readonly data: TData;
-    /**
-     * The request identifier.
-     */
-    readonly requestId: string;
-    /**
-     * The event type.
-     */
-    readonly type: TEventType;
-    /**
-     * The event version.
-     */
-    readonly version: string;
-    /**
-     * The event label.
-     *
-     * @remarks
-     * The label format is "{type}-v{version}"
-     */
-    get label(): string;
-    /**
-     * Creates a new event.
-     *
-     * @param type - The event type.
-     * @param data - The event data.
-     */
-    constructor(type: TEventType, data: TData);
-  }
-}
-
-declare const $storm: import("storm:context").StormContext;

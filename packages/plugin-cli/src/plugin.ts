@@ -60,7 +60,6 @@ export default class CLIPlugin<
     this.options = { minNodeVersion: 20, ...options };
     this.dependencies = [
       ["@storm-stack/plugin-node", this.options],
-      ["@storm-stack/plugin-node-config", this.options.config],
       ["@storm-stack/plugin-date", this.options.date],
       [
         "@storm-stack/plugin-storage-fs",

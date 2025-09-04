@@ -43,7 +43,17 @@ export default abstract class LogPlugin<
    * This is used to identify when two instances of the plugin are the same and can be de-duplicated.
    */
   protected override get primaryKeyFields(): string[] {
-    return ["namespace"];
+    return ["namespace", "logLevel"];
+  }
+
+  /**
+   * A property to override the plugin's {@link name} field.
+   *
+   * @remarks
+   * This is useful for plugins that need to have a different name than the default one derived from the class name.
+   */
+  protected override get overrideName(): string {
+    return this.constructor.name.replace(/^Log/, "").replace(/Plugin$/, "");
   }
 
   /**
@@ -53,7 +63,9 @@ export default abstract class LogPlugin<
    */
   public constructor(options: PluginOptions<TOptions>) {
     super(options);
+
     this.options.logLevel ??= "info";
+    this.options.namespace ??= this.name;
   }
 
   /**
@@ -88,11 +100,11 @@ export default abstract class LogPlugin<
       }
 
       await context.vfs.writeRuntimeFile(
-        `log/${kebabCase(this.identifier).replace(/^log-/g, "")}`,
+        `log/${kebabCase(this.identifier)}`,
         joinPaths(
           context.runtimePath,
           "log",
-          `${kebabCase(this.identifier).replace(/^log-/g, "")}.ts`
+          `${kebabCase(this.identifier)}.ts`
         ),
         await Promise.resolve(this.writeAdapter(context))
       );
@@ -106,15 +118,13 @@ export default abstract class LogPlugin<
     );
 
     if (context.options.projectType === "application") {
-      const name = camelCase(this.identifier);
+      const name = `${camelCase(this.identifier)}Storage`;
       if (!context.runtime.logs.some(log => log.name === name)) {
         context.runtime.logs.push({
           name,
+          namespace: this.getOptions(context).namespace!,
           logLevel: this.options.logLevel ?? "info",
-          fileName: joinPaths(
-            "log",
-            kebabCase(this.identifier).replace(/^log-/g, "")
-          )
+          fileName: joinPaths("log", kebabCase(this.identifier))
         });
       }
     }

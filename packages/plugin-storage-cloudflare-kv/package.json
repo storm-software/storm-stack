@@ -63,6 +63,14 @@
     "storm-stack-plugin",
     "storm-stack-storage-plugin"
   ],
+  "peerDependencies": {
+    "@storm-stack/plugin-config": "*"
+  },
+  "peerDependenciesMeta": {
+    "@storm-stack/plugin-config": {
+      "optional": false
+    }
+  },
   "dependencies": {
     "@ltd/j-toml": "catalog:",
     "@storm-software/config-tools": "catalog:",

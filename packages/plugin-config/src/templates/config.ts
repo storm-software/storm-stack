@@ -28,8 +28,36 @@ import {
 } from "@storm-stack/devkit/templates/helpers/typescript";
 import { titleCase } from "@stryke/string-format/title-case";
 import { loadConfigFromContext } from "../helpers/load";
-import { readConfigTypeReflection } from "../helpers/persistence";
+import { createTemplateReflection } from "../helpers/template-helpers";
 import { ConfigPluginContext } from "../types";
+
+/**
+ * Generates the configuration typescript definition for the Storm Stack project.
+ *
+ * @param context - The context for the configuration module, which includes options and runtime information.
+ * @returns The generated configuration module as a string.
+ */
+export async function ConfigTypeDefinition(
+  context: ConfigPluginContext,
+  reflection: ReflectionClass<any>
+): Promise<string> {
+  const defaultValues = loadConfigFromContext(context, process.env);
+
+  return `
+${generateTypeScriptInterface(reflection, {
+  overrideName: "StormConfigBase",
+  overrideExtends: "StormConfigInterface",
+  defaultValues
+})}
+
+export type StormConfig = {
+  [Key in keyof StormConfigBase as Key ${context.options.plugins.config.prefix
+    .map(prefix => `| \`${prefix.replace(/_$/g, "")}_\${Key}\``)
+    .join(" ")}]: StormConfigBase[Key];
+};
+
+`;
+}
 
 /**
  * Generates the configuration module for the Storm Stack project.
@@ -37,53 +65,10 @@ import { ConfigPluginContext } from "../types";
  * @param context - The context for the configuration module, which includes options and runtime information.
  * @returns The generated configuration module as a string.
  */
-export async function ConfigSetupModule(
+export async function ConfigModule(
   context: ConfigPluginContext
 ): Promise<string> {
-  const reflection = await readConfigTypeReflection(context);
-  reflection.addProperty({
-    name: "static",
-    readonly: true,
-    description:
-      "Static configuration properties - this value is not dynamic and cannot be changed at runtime.",
-    type: {
-      kind: ReflectionKind.objectLiteral,
-      types: []
-    },
-    default: {},
-    tags: {
-      internal: true,
-      readonly: true
-    }
-  });
-
-  reflection.getProperties().forEach(prop => {
-    const aliases = prop.getAlias();
-    aliases.filter(Boolean).forEach(alias => {
-      reflection.addProperty({
-        name: alias,
-        optional: prop.isOptional() ? true : undefined,
-        readonly: prop.isReadonly() ? true : undefined,
-        description: prop.getDescription(),
-        visibility: prop.getVisibility(),
-        type: prop.getType(),
-        default: prop.getDefaultValue(),
-        tags: {
-          hidden: prop.isHidden(),
-          ignore: prop.isIgnored(),
-          internal: prop.isInternal(),
-          alias: prop
-            .getAlias()
-            .filter(a => a !== alias)
-            .concat(prop.name),
-          title: prop.getTitle() || titleCase(prop.name),
-          readonly: prop.isReadonly(),
-          permission: prop.getPermission(),
-          domain: prop.getDomain()
-        }
-      });
-    });
-  });
+  const reflection = await createTemplateReflection(context, "params");
 
   const configInstance = new ReflectionClass(
     {
@@ -100,6 +85,14 @@ export async function ConfigSetupModule(
   const defaultValues = loadConfigFromContext(context, process.env);
 
   return `
+/**
+ * The Storm Stack configuration module provides an interface to define configuration parameters.
+ *
+ * @module storm:config
+ */
+
+${getFileHeader()}
+
 import {
   Type,
   stringify,
@@ -114,17 +107,7 @@ import {
 } from "@storm-stack/core/deepkit";
 import { StormConfigInterface } from "@storm-stack/types/config";
 
-${generateTypeScriptInterface(reflection, {
-  overrideName: "StormConfigBase",
-  overrideExtends: "StormConfigInterface",
-  defaultValues
-})}
-
-export type StormConfig = {
-  [Key in keyof StormConfigBase as Key ${context.options.plugins.config.prefix
-    .map(prefix => `| \`${prefix.replace(/_$/g, "")}_\${Key}\``)
-    .join(" ")}]: StormConfigBase[Key];
-};
+${await ConfigTypeDefinition(context, reflection)}
 
 ${generateTypeScriptObject(configInstance, {
   overrideExtends: "StormConfigBase",
@@ -192,31 +175,6 @@ export const serializeConfig = serializeFunction<StormConfigBase>(configSerializ
  */
 export const deserializeConfig = deserializeFunction<StormConfigBase>(configSerializer);
 
-`;
-}
-
-/**
- * Generates the configuration module for the Storm Stack project.
- *
- * @param context - The context for the configuration module, which includes options and runtime information.
- * @returns The generated configuration module as a string.
- */
-export async function ConfigModule(
-  context: ConfigPluginContext
-): Promise<string> {
-  const reflection = await readConfigTypeReflection(context);
-
-  return `
-/**
- * The Storm Stack config module provides a unified interface for managing configuration settings.
- *
- * @module storm:config
- */
-
-${getFileHeader()}
-
-${await ConfigSetupModule(context)}
-
 /**
  * Initializes the Storm Stack configuration module.
  *
@@ -232,8 +190,8 @@ export function createConfig(environmentConfig = {} as Partial<StormConfig>): St
     ...environmentConfig
   });
 
-  return new Proxy<StormConfigBase>(
-    config,
+  return new Proxy<StormConfig>(
+    config as StormConfig,
     {
       get: (target: StormConfigBase, propertyName: string) => {
         ${reflection
@@ -264,10 +222,10 @@ export function createConfig(environmentConfig = {} as Partial<StormConfig>): St
         return false;
       },
     }
-  ) as StormConfig;
+  );
 }
 
-   `;
+`;
 }
 
 export function configPropertyConditional(

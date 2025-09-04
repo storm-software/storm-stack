@@ -20,6 +20,7 @@ import { NodePath } from "@babel/core";
 import { ParseResult } from "@babel/parser";
 import * as t from "@babel/types";
 import { isString } from "@stryke/type-checks/is-string";
+import { ImportSpecifier } from "../../types/babel";
 import { parseAst } from "./ast";
 
 /**
@@ -131,4 +132,75 @@ export function getImport(
     [t.importSpecifier(t.identifier(name), t.stringLiteral(named || name))],
     t.stringLiteral(specifier)
   );
+}
+
+/**
+ * Adds an import to the program if it doesn't already exist.
+ *
+ * @param path - The current NodePath in the AST.
+ * @param specifier - The import specifier.
+ */
+export function addImport(path: NodePath<any>, specifier: ImportSpecifier) {
+  addImportsToProgram(
+    path.scope.getProgramParent().path as NodePath<t.Program>,
+    specifier
+  );
+}
+
+/*
+ * Matches `import { ... } from <moduleName>;`
+ * but not `import * as React from <moduleName>;`
+ *         `import type { Foo } from <moduleName>;`
+ */
+function isNonNamespacedImport(
+  importDeclPath: NodePath<t.ImportDeclaration>
+): boolean {
+  return (
+    importDeclPath
+      .get("specifiers")
+      .every(specifier => specifier.isImportSpecifier()) &&
+    importDeclPath.node.importKind !== "type" &&
+    importDeclPath.node.importKind !== "typeof"
+  );
+}
+
+function getExistingImports(
+  program: NodePath<t.Program>
+): Map<string, NodePath<t.ImportDeclaration>> {
+  const existingImports = new Map<string, NodePath<t.ImportDeclaration>>();
+  program.traverse({
+    ImportDeclaration(path) {
+      if (isNonNamespacedImport(path)) {
+        existingImports.set(path.node.source.value, path);
+      }
+    }
+  });
+  return existingImports;
+}
+
+export function addImportsToProgram(
+  path: NodePath<t.Program>,
+  specifier: ImportSpecifier
+): void {
+  const existingImports = getExistingImports(path);
+
+  /**
+   * If an existing import of this module exists (ie \`import \{ ... \} from
+   * '<moduleName>'\`), inject new imported specifiers into the list of
+   * destructured variables.
+   */
+  if (!existingImports.get(specifier.module)) {
+    path.unshiftContainer(
+      "body",
+      t.importDeclaration(
+        [
+          t.importSpecifier(
+            t.identifier(specifier.name),
+            t.identifier(specifier.imported)
+          )
+        ],
+        t.stringLiteral(specifier.module)
+      )
+    );
+  }
 }

@@ -213,7 +213,7 @@ export function toISO(value: Date) {
 }
 
 export function getCurrentLocaleCode() {
-  return locale?.code || $storm.config.static.DEFAULT_LOCALE;
+  return locale?.code || $storm.config.DEFAULT_LOCALE;
 }
 
 export function addSeconds(value: Date, count: number) {

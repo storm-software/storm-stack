@@ -90,7 +90,8 @@ export default class LogOpenTelemetryPlugin<
     const options = this.getOptions(context);
     options.messageType ??= "string";
     options.exporter ??= "http";
-    options.serviceName ??= process.env.OTEL_SERVICE_NAME || "unknown-service";
+    options.serviceName ??=
+      process.env.OTEL_SERVICE_NAME || options.namespace || "unknown-service";
   }
 
   protected override writeAdapter(context: TContext) {

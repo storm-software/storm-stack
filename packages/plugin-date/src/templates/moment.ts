@@ -76,7 +76,7 @@ export const formats: DateFormats = {
   filePathDateTime: "L_HH-mm-ss-SSS"
 };
 
-export let locale = $storm.config.static.DEFAULT_LOCALE;
+export let locale = $storm.config.DEFAULT_LOCALE;
 
 export const type = "moment";
 
