@@ -66,9 +66,4 @@ export interface StormRequestInterface<
    * The data associated with the request.
    */
   readonly data: TData;
-
-  /**
-   * The body of the request.
-   */
-  readonly json: StormRequestJSONObject;
 }

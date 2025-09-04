@@ -1,0 +1,47 @@
+{
+  "name": "examples-react-app",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "sourceRoot": "examples/react-app/src",
+  "targets": {
+    "clean": {
+      "cache": false,
+      "executor": "@storm-stack/nx:clean",
+      "options": {
+        "outputPath": "dist/examples/react-app"
+      }
+    },
+    "prepare": {
+      "cache": true,
+      "inputs": ["typescript", "^production"],
+      "outputs": ["{projectRoot}/.storm"],
+      "executor": "@storm-stack/nx:prepare",
+      "options": {
+        "entry": "{sourceRoot}/src/test.tsx",
+        "mode": "development"
+      }
+    },
+    "build": {
+      "cache": true,
+      "inputs": ["typescript", "^production"],
+      "outputs": ["{options.outputPath}"],
+      "executor": "@storm-stack/nx:build",
+      "dependsOn": ["prepare"],
+      "options": {
+        "entry": "{sourceRoot}/src/test.tsx",
+        "outputPath": "dist/examples/react-app",
+        "mode": "development"
+      }
+    },
+    "docs": {
+      "cache": true,
+      "inputs": ["typescript", "^production"],
+      "outputs": ["{projectRoot}/docs"],
+      "executor": "@storm-stack/nx:docs",
+      "dependsOn": ["prepare", "build"],
+      "options": {
+        "entry": "{sourceRoot}/src/test.tsx"
+      }
+    }
+  }
+}

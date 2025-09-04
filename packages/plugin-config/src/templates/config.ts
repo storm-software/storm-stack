@@ -63,10 +63,12 @@ export type StormConfig = {
  * Generates the configuration module for the Storm Stack project.
  *
  * @param context - The context for the configuration module, which includes options and runtime information.
+ * @param environmentConfig - The dynamic/runtime configuration - this could include the current environment variables or any other environment-specific settings provided by the runtime.
  * @returns The generated configuration module as a string.
  */
 export async function ConfigModule(
-  context: ConfigPluginContext
+  context: ConfigPluginContext,
+  environmentConfig?: string
 ): Promise<string> {
   const reflection = await createTemplateReflection(context, "params");
 
@@ -184,14 +186,14 @@ export const deserializeConfig = deserializeFunction<StormConfigBase>(configSeri
  * @param environmentConfig - The dynamic/runtime configuration - this could include the current environment variables or any other environment-specific settings provided by the runtime.
  * @returns The initialized Storm Stack configuration object.
  */
-export function createConfig(environmentConfig = {} as Partial<StormConfig>): StormConfig {
-  const config = deserializeConfig({
-    ...initialConfig,
-    ...environmentConfig
-  });
-
+export function createConfig(environmentConfig = ${
+    environmentConfig || "{}"
+  } as Partial<StormConfig>): StormConfig {
   return new Proxy<StormConfig>(
-    config as StormConfig,
+    deserializeConfig({
+      ...initialConfig,
+      ...environmentConfig
+    }) as StormConfig,
     {
       get: (target: StormConfigBase, propertyName: string) => {
         ${reflection
@@ -224,7 +226,12 @@ export function createConfig(environmentConfig = {} as Partial<StormConfig>): St
     }
   );
 }
-
+${
+  environmentConfig
+    ? `
+export const config = createConfig();`
+    : ""
+}
 `;
 }
 

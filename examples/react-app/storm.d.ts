@@ -1997,7 +1997,7 @@ interface StormLogInterface {
  * @remarks
  * This interface adds the ability to initialize the storage adapters and provides a consistent API for interacting with the storage layer.
  */
-type StormStorageInterface = Storage_2 & AsyncDisposable;
+type StormStorageInterface = Storage & AsyncDisposable;
 
 type SuccessMessageDetails = MessageDetails<"success">;
 
@@ -2034,21 +2034,6 @@ declare module "storm:config" {
    */
   export interface StormConfigBase extends StormConfigInterface {
     /**
-     * ARGV
-     *
-     * @title ARGV
-     * @domain cli
-     */
-    ARGV?: Array<string>;
-    /**
-     * The inverse of the no-banner option.
-     *
-     * @title BANNER
-     * @domain cli
-     * @defaultValue true
-     */
-    BANNER?: boolean;
-    /**
      * The Storm Stack application's cached data directory.
      *
      * @title Cache Directory
@@ -2062,20 +2047,6 @@ declare module "storm:config" {
      * @defaultValue false
      */
     CI: boolean;
-    /**
-     * Should the server serve compressed files?
-     *
-     * @title COMPRESS
-     * @domain cli
-     */
-    COMPRESS?: boolean;
-    /**
-     * The configuration file to append the completion script to.
-     *
-     * @title CONFIG
-     * @domain cli
-     */
-    CONFIG?: string | true;
     /**
      * The Storm Stack application's configuration data directory.
      *
@@ -2129,7 +2100,7 @@ declare module "storm:config" {
      *
      * @title ENVIRONMENT
      * @alias ENVIRONMENT
-     * @defaultValue cli
+     * @defaultValue shared
      */
     ENV: string;
     /**
@@ -2137,7 +2108,7 @@ declare module "storm:config" {
      *
      * @title ENVIRONMENT
      * @alias ENV
-     * @defaultValue cli
+     * @defaultValue shared
      */
     ENVIRONMENT: string;
     /**
@@ -2147,14 +2118,6 @@ declare module "storm:config" {
      * @defaultValue https://developer.stormsoftware.com/static/errors
      */
     ERROR_URL: string;
-    /**
-     * The file to add to the file system.
-     *
-     * @title FILE
-     * @domain cli
-     * @defaultValue server.ts
-     */
-    FILE?: string;
     /**
      * An indicator that specifies the current runtime is a force color environment.
      *
@@ -2170,44 +2133,12 @@ declare module "storm:config" {
      */
     FORCE_HYPERLINK: boolean | number;
     /**
-     * Show help information.
-     *
-     * @title HELP
-     * @domain cli
-     * @defaultValue false
-     */
-    HELP?: boolean;
-    /**
-     * The host to bind the server to.
-     *
-     * @title HOST
-     * @domain cli
-     * @defaultValue localhost
-     */
-    HOST?: string;
-    /**
      * Indicates if error data should be included.
      *
      * @title INCLUDE ERROR DATA
      * @defaultValue false
      */
     INCLUDE_ERROR_DATA: boolean;
-    /**
-     * The inverse of the no-interactive option.
-     *
-     * @title INTERACTIVE
-     * @domain cli
-     * @defaultValue true
-     */
-    INTERACTIVE?: boolean;
-    /**
-     * Should the server load environment variables from the .env file?
-     *
-     * @title LOAD ENV
-     * @domain cli
-     * @defaultValue true
-     */
-    LOAD_ENV?: boolean;
     /**
      * The Storm Stack application's logging directory.
      *
@@ -2237,54 +2168,12 @@ declare module "storm:config" {
      */
     MODE: "development" | "staging" | "production";
     /**
-     * Hide the banner displayed while running the CLI application (will be set to true if running in a CI pipeline).
-     *
-     * @title NO BANNER
-     * @domain cli
-     * @defaultValue false
-     */
-    NO_BANNER?: boolean;
-    /**
      * An indicator that specifies the current runtime is a no color environment.
      *
      * @title NO COLOR
      * @defaultValue false
      */
     NO_COLOR: boolean;
-    /**
-     * The inverse of the compress option.
-     *
-     * @title NO COMPRESS
-     * @domain cli
-     * @defaultValue false
-     */
-    NO_COMPRESS?: boolean;
-    /**
-     * Disable interactive mode (will be set to true if running in a CI pipeline).
-     *
-     * @title NO INTERACTIVE
-     * @alias NO_INTERACTIVE
-     * @domain cli
-     * @defaultValue false
-     */
-    NO_INTERACT?: boolean;
-    /**
-     * Disable interactive mode (will be set to true if running in a CI pipeline).
-     *
-     * @title NO INTERACTIVE
-     * @alias NO_INTERACT
-     * @domain cli
-     * @defaultValue false
-     */
-    NO_INTERACTIVE?: boolean;
-    /**
-     * The inverse of the loadEnv option.
-     *
-     * @title NO LOAD ENV
-     * @domain cli
-     * @defaultValue false
-     */
-    NO_LOAD_ENV?: boolean;
     /**
      * The mode in which the application is running.
      *
@@ -2313,31 +2202,9 @@ declare module "storm:config" {
      * The platform for which the application was built.
      *
      * @title PLATFORM
-     * @defaultValue node
+     * @defaultValue browser
      */
     PLATFORM: "node" | "neutral" | "browser";
-    /**
-     * The port to bind the server to.
-     *
-     * @title PORT
-     * @domain cli
-     * @defaultValue 3000
-     */
-    PORT?: number;
-    /**
-     * The path to write the completion script to.
-     *
-     * @title SCRIPT
-     * @domain cli
-     */
-    SCRIPT?: string | true;
-    /**
-     * The DSN for Sentry
-     *
-     * @title SENTRY Data Source Name
-     * @defaultValue https://422613d2ab720f78a55b0a668d900535@o4506752415301632.ingest.us.sentry.io/4509857043709952
-     */
-    SENTRY_DSN: string;
     /**
      * Indicates if error stack traces should be captured.
      *
@@ -2358,30 +2225,6 @@ declare module "storm:config" {
      * @defaultValue false
      */
     TEST: boolean;
-    /**
-     * The type of the file.
-     *
-     * @title TYPE
-     * @domain cli
-     * @defaultValue server
-     */
-    TYPE?: string;
-    /**
-     * Enable verbose output.
-     *
-     * @title VERBOSE
-     * @domain cli
-     * @defaultValue false
-     */
-    VERBOSE?: boolean;
-    /**
-     * Show the version of the application.
-     *
-     * @title VERSION
-     * @domain cli
-     * @defaultValue false
-     */
-    VERSION?: boolean;
     /**
      * The appcircle build ID. This value is set by certain CI/CD systems.
      *
@@ -2407,7 +2250,7 @@ declare module "storm:config" {
      * The name of the application.
      *
      * @title APP NAME
-     * @defaultValue storm-stack
+     * @defaultValue examples-react-app
      * @readonly
      */
     readonly APP_NAME: string;
@@ -2480,7 +2323,7 @@ declare module "storm:config" {
      * The unique identifier for the build.
      *
      * @title BUILD Identifier
-     * @defaultValue 27e9df00-c76d-43fc-be41-49d0dc6ee83b
+     * @defaultValue b16d6a4d-2295-4188-bdaa-0e0e97946ae2
      * @readonly
      */
     readonly BUILD_ID: string;
@@ -2488,7 +2331,7 @@ declare module "storm:config" {
      * The timestamp the build was ran at.
      *
      * @title BUILD TIMESTAMP
-     * @defaultValue 2025-09-04T15:09:37.092Z
+     * @defaultValue 2025-09-04T15:09:37.161Z
      * @readonly
      */
     readonly BUILD_TIMESTAMP: string;
@@ -2721,7 +2564,7 @@ declare module "storm:config" {
      * The unique identifier for the release.
      *
      * @title RELEASE Identifier
-     * @defaultValue e9df00c7-6dd3-4cfe-8149-d0dc6ee83beb
+     * @defaultValue 6d6a4d22-9531-487d-aa0e-0e97946ae2c1
      * @readonly
      */
     readonly RELEASE_ID: string;
@@ -2729,7 +2572,7 @@ declare module "storm:config" {
      * The tag for the release. This is generally in the format of "\<APP_NAME\>\@\<APP_VERSION\>".
      *
      * @title RELEASE TAG
-     * @defaultValue storm-stack@0.0.1
+     * @defaultValue examples-react-app@0.0.1
      * @readonly
      */
     readonly RELEASE_TAG: string;
@@ -2928,17 +2771,16 @@ declare module "storm:config" {
   export type StormConfig = {
     [Key in keyof StormConfigBase as
       | Key
-      | `VITE_${Key}`
+      | `NEXT_PUBLIC_${Key}`
       | `ONE_${Key}`
       | `STORM_PUBLIC_${Key}`
-      | `STORM_${Key}`
       | `STORM_STACK_PUBLIC_${Key}`
       | `STORM_STACK_${Key}`
-      | `NEXT_PUBLIC_${Key}`
-      | `EXAMPLES_CLI_${Key}`]: StormConfigBase[Key];
+      | `STORM_${Key}`
+      | `VITE_${Key}`]: StormConfigBase[Key];
   };
   /**
-   * The initial configuration state for the Storm Stack project..
+   * The initial configuration state for the Examples React App project..
    */
   export const initialConfig: StormConfigBase;
   /**
@@ -3002,6 +2844,7 @@ declare module "storm:config" {
   export function createConfig(
     environmentConfig?: Partial<StormConfig>
   ): StormConfig;
+  export const config: StormConfig;
   export type StormConfigBase = any[];
   export type StormConfig = any[];
 }
@@ -3335,257 +3178,6 @@ declare module "storm:id" {
   export function uniqueId(prefix?: string, size?: number | undefined): string;
 }
 
-declare module "storm:env" {
-  /**
-   * This module provides the runtime environment information for the Storm Stack application.
-   *
-   * @module storm:env
-   */
-
-  /**
-   * Checks if a specific flag is present in the command line arguments.
-   *
-   * @see {@link https://github.com/sindresorhus/has-flag/blob/main/index.js}
-   *
-   * @param flag - The flag to check for, e.g., "color", "no-color".
-   * @param argv - The command line arguments to check against. Defaults to global Deno args or process args.
-   * @returns True if the flag is present, false otherwise.
-   */
-  export function hasFlag(flag: string, argv?: string[]): boolean;
-  /**
-   * Options for getting the color support level.
-   */
-  export type GetColorSupportLevelOptions = {
-    streamIsTTY?: boolean;
-    sniffFlags?: boolean;
-  };
-  /**
-   * Determines the color support level of the terminal.
-   *
-   * @param stream - The stream to check availability of (e.g., process.stdout).
-   * @param options - Options for the color detection.
-   * @returns The color support level (0 = no color, 1 = basic, 2 = 256 colors, 3 = true color).
-   */
-  export function getColorSupportLevel(
-    stream: any,
-    options?: GetColorSupportLevelOptions
-  ):
-    | false
-    | 0
-    | 2
-    | 3
-    | {
-        level: number;
-        hasBasic: boolean;
-        has256: boolean;
-        has16m: boolean;
-      };
-  /**
-   * Generate a list of variables that describe the current application's runtime environment.
-   *
-   * @returns An object containing the runtime environment details.
-   */
-  export function createEnv(): StormNodeEnv;
-  export type GetColorSupportLevelOptions = any[];
-}
-
-declare module "storm:request" {
-  /**
-   * The request module provides a base request class used by the Storm Stack runtime.
-   *
-   * @module storm:request
-   */
-
-  /**
-   * A base request class used by the Storm Stack runtime.
-   */
-  export class StormRequest<
-    TData extends Record<string, any> = Record<string, any>
-  > implements StormRequestInterface<TData>
-  {
-    /**
-     * The request identifier.
-     */
-    readonly id: string;
-    /**
-     * The request created timestamp.
-     */
-    readonly timestamp: number;
-    /**
-     * The request data.
-     */
-    readonly data: TData;
-    /**
-     * Create a new request object.
-     *
-     * @param data - The request input data.
-     */
-    constructor(data: TData);
-    /**
-     * Merges the given data into the request.
-     *
-     * @param data - The data to merge into the request.
-     */
-    merge(data: Partial<TData>): void;
-  }
-}
-
-declare module "storm:response" {
-  /**
-   * The response module provides the {@link StormResponse} class, which is used to represent the response of a request execution.
-   *
-   * @module storm:response
-   */
-
-  /**
-   * A base response class used by the Storm Stack runtime.
-   */
-  export class StormResponse<TData extends any | StormError = any | StormError>
-    implements StormResponseInterface<TData>
-  {
-    /**
-     * Create a new response.
-     *
-     * @remarks
-     * **IMPORTANT:** This function uses the storm context object - never use this function outside of the context wrapper/tree since the context will not be available.
-     *
-     * @param data - The response data
-     */
-    static create<TData>(data: TData): StormResponse<TData>;
-    /**
-     * The response meta.
-     */
-    readonly meta: Record<string, any>;
-    /**
-     * The response data.
-     */
-    data: TData;
-    /**
-     * The request identifier.
-     */
-    readonly requestId: string;
-    /**
-     * The response created timestamp.
-     */
-    readonly timestamp: number;
-    /**
-     * An indicator of whether the response was successful.
-     */
-    get success(): boolean;
-    /**
-     * Create a new response.
-     *
-     * @param requestId - The request identifier.
-     * @param meta - The current context's metadata.
-     * @param data - The response data
-     */
-    constructor(requestId: string, meta: Record<string, any>, data: TData);
-  }
-}
-
-declare module "storm:storage/crash-reports" {
-  function createAdapter(): StorageAdapter;
-  export default createAdapter;
-}
-
-declare module "storm:storage" {
-  /**
-   * The storage module provides a unified storage interface for the Storm Stack runtime.
-   *
-   * @module storm:storage
-   */
-
-  /**
-   * Creates a new storage instance.
-   *
-   * @remarks
-   * This function initializes the storage with all configured adapters.
-   *
-   * @returns The {@link StormStorageInterface} storage instance with each storage adapter loaded into a slice of it's total state.
-   */
-  export function createStorage(): StormStorageInterface;
-}
-
-declare module "storm:context" {
-  /**
-   * This module provides the Storm Stack context and a hook to access it in the application.
-   *
-   * @module storm:context
-   */
-
-  /**
-   * The global Storm context for the current application.
-   *
-   * @remarks
-   * This interface extends the base Storm context interface with additional properties specific to the NodeJs application.
-   */
-  export interface StormContext extends StormContextInterface {
-    /**
-     * The context metadata.
-     */
-    meta: Record<string, any>;
-    /**
-     * The request object for the current Storm Stack application.
-     */
-    request: StormRequest;
-    /**
-     * Environment/runtime specific application data.
-     */
-    env: import("@storm-stack/types/node/env").StormNodeEnv;
-    /**
-     * The root application logger for the Storm Stack application.
-     */
-    log: import("@storm-stack/types/shared/log").StormLogInterface;
-    /**
-     * The {@link StormStorageInterface} instance used by the Storm Stack application.
-     */
-    storage: import("@storm-stack/types/shared/storage").StormStorageInterface;
-    /**
-     * The configuration parameters for the Storm application.
-     */
-    config: StormConfig & Record<string, any>;
-    /**
-     * A set of disposable resources to clean up when the context is no longer needed.
-     */
-    readonly disposables: Set<Disposable>;
-    /**
-     * A set of asynchronous disposable resources to clean up when the context is no longer needed.
-     */
-    readonly asyncDisposables: Set<AsyncDisposable>;
-  }
-  /**
-   * Get the Storm context for the current application.
-   *
-   * @param options - The options to use when getting the context.
-   * @returns The Storm context for the current application.
-   * @throws If the Storm context is not available.
-   */
-  export function useStorm(options?: ContextOptions): StormContext;
-  /**
-   * Wrap an application entry point with the necessary context and error handling.
-   *
-   * @param handler - The handler function for the application.
-   * @returns A function that takes an request and returns a response or a promise of a response.
-   */
-  export function withContext<
-    TInput extends Record<string, any> = Record<string, any>,
-    TOutput = any
-  >(
-    handler: HandlerFunction<TInput, TOutput>
-  ): (input: TInput) => Promise<StormResponse<TOutput | StormError>>;
-  export type StormContext = any[];
-}
-
-declare module "storm:log/sentry-error" {
-  /**
-   * Creates a new [Sentry](https://sentry.io/) logging adapter.
-   *
-   * @returns The created {@link LogAdapter}.
-   */
-  function createAdapter(): LogAdapter;
-  export default createAdapter;
-}
-
 declare module "storm:log" {
   /**
    * The log module provides a unified logging interface for Storm Stack applications.
@@ -3766,428 +3358,194 @@ declare module "storm:log" {
   }
 }
 
-declare module "storm:event" {
+declare module "storm:storage" {
   /**
-   * The Storm Stack event module.
+   * The storage module provides a unified storage interface for the Storm Stack runtime.
    *
-   * @module storm:event
+   * @module storm:storage
    */
 
   /**
-   * A base event class used by the Storm Stack runtime.
+   * Creates a new storage instance.
+   *
+   * @remarks
+   * This function initializes the storage with all configured adapters.
+   *
+   * @returns The {@link StormStorageInterface} storage instance with each storage adapter loaded into a slice of it's total state.
    */
-  export class StormEvent<
-    TEventType extends string = string,
+  export function createStorage(): StormStorageInterface;
+}
+
+declare module "storm:env" {
+  /**
+   * This module provides the runtime environment information for the Storm Stack application.
+   *
+   * @module storm:env
+   */
+  /**
+   * Detect the `mode` of the current runtime environment.
+   *
+   * @remarks
+   * The `mode` is determined by the `MODE` environment variable, or falls back to the `NEXT_PUBLIC_VERCEL_ENV`, `NODE_ENV`, or defaults to `production`. While the value can potentially be any string, Storm Software generally only allows a value in the following list:
+   * - `production`
+   * - `staging`
+   * - `development`
+   */
+  export const mode: "production" | "staging" | "development";
+  /** Detect if the application is running in production mode */
+  export const isProduction: boolean;
+  /** Detect if the application is running in staging mode */
+  export const isStaging: boolean;
+  /** Detect if the application is running in development mode */
+  export const isDevelopment: boolean;
+  /** Detect if the application is running in debug mode */
+  export const isDebug: boolean;
+  /** Detect if the application is running in test mode */
+  export const isTest: boolean;
+  /** Determine if the application is running on the server */
+  export const isServer = false;
+  /** The organization that maintains the application */
+  export const organization = "examples-react-app";
+  /**
+   * The current application name
+   */
+  export const name = "examples-react-app";
+  /**
+   * The current application version
+   */
+  export const version = "0.0.1";
+  /**
+   * The current application environment
+   */
+  export const environment = "shared";
+  /** Detect if the application is running in debug mode */
+  export const defaultLocale = "en-US";
+  /** Detect if the application is running in debug mode */
+  export const defaultTimezone = "America/New_York";
+}
+
+declare module "storm:context" {
+  /**
+   * This module provides the Storm Stack context and a hook to access it in the application.
+   *
+   * @module storm:context
+   */
+
+  /**
+   * The global Storm context for the current application.
+   *
+   * @remarks
+   * This interface extends the base Storm context interface with additional properties specific to the React application.
+   */
+  export interface StormContext extends StormContextInterface {
+    /**
+     * The configuration parameters for the Storm application.
+     */
+    config: StormConfig;
+  }
+  /**
+   * The Storm context provider component, which wraps the application and provides the Storm context to its children.
+   *
+   * @param props - The component props.
+   * @returns The Storm context provider component.
+   */
+  export function StormContextProvider(
+    props: PropsWithChildren<{}>
+  ): import("react/jsx-runtime").JSX.Element;
+  /**
+   * Get the Storm context for the current application.
+   *
+   * @returns The Storm context for the current application.
+   * @throws If the Storm context is not available.
+   */
+  export function useStorm(): StormContext;
+  export type StormContext = any[];
+}
+
+declare module "storm:request" {
+  /**
+   * The request module provides a base request class used by the Storm Stack runtime.
+   *
+   * @module storm:request
+   */
+
+  /**
+   * A base request class used by the Storm Stack runtime.
+   */
+  export class StormRequest<
     TData extends Record<string, any> = Record<string, any>
-  > implements StormEventInterface<TEventType, TData>
+  > implements StormRequestInterface<TData>
   {
     /**
-     * The event timestamp.
-     */
-    readonly timestamp: number;
-    /**
-     * The event identifier.
+     * The request identifier.
      */
     readonly id: string;
     /**
-     * The event data object.
+     * The request created timestamp.
+     */
+    readonly timestamp: number;
+    /**
+     * The request data.
      */
     readonly data: TData;
+    /**
+     * Create a new request object.
+     *
+     * @param data - The request input data.
+     */
+    constructor(data: TData);
+  }
+}
+
+declare module "storm:response" {
+  /**
+   * The response module provides the {@link StormResponse} class, which is used to represent the response of a request execution.
+   *
+   * @module storm:response
+   */
+
+  /**
+   * A base response class used by the Storm Stack runtime.
+   */
+  export class StormResponse<TData extends any | StormError = any | StormError>
+    implements StormResponseInterface<TData>
+  {
+    /**
+     * Create a new response.
+     *
+     * @remarks
+     * **IMPORTANT:** This function uses the storm context object - never use this function outside of the context wrapper/tree since the context will not be available.
+     *
+     * @param data - The response data
+     */
+    static create<TData>(data: TData): StormResponse<TData>;
+    /**
+     * The response meta.
+     */
+    readonly meta: Record<string, any>;
+    /**
+     * The response data.
+     */
+    data: TData;
     /**
      * The request identifier.
      */
     readonly requestId: string;
     /**
-     * The event type.
+     * The response created timestamp.
      */
-    readonly type: TEventType;
+    readonly timestamp: number;
     /**
-     * The event version.
+     * An indicator of whether the response was successful.
      */
-    readonly version: string;
+    get success(): boolean;
     /**
-     * The event label.
+     * Create a new response.
      *
-     * @remarks
-     * The label format is "{type}-v{version}"
+     * @param requestId - The request identifier.
+     * @param meta - The current context's metadata.
+     * @param data - The response data
      */
-    get label(): string;
-    /**
-     * Creates a new event.
-     *
-     * @param type - The event type.
-     * @param data - The event data.
-     */
-    constructor(type: TEventType, data: TData);
+    constructor(requestId: string, meta: Record<string, any>, data: TData);
   }
 }
-
-declare module "storm:cli" {
-  export type CLIRequestData = {
-    argv: string[];
-  };
-  export type ColorName =
-    | "reset"
-    | "bold"
-    | "dim"
-    | "italic"
-    | "underline"
-    | "overline"
-    | "inverse"
-    | "hidden"
-    | "strikethrough"
-    | "black"
-    | "red"
-    | "green"
-    | "yellow"
-    | "blue"
-    | "magenta"
-    | "cyan"
-    | "white"
-    | "blackBright"
-    | "gray"
-    | "grey"
-    | "redBright"
-    | "greenBright"
-    | "yellowBright"
-    | "blueBright"
-    | "magentaBright"
-    | "cyanBright"
-    | "whiteBright"
-    | "bgBlack"
-    | "bgRed"
-    | "bgGreen"
-    | "bgYellow"
-    | "bgBlue"
-    | "bgMagenta"
-    | "bgCyan"
-    | "bgWhite"
-    | "bgBlackBright"
-    | "bgGray"
-    | "bgGrey"
-    | "bgRedBright"
-    | "bgGreenBright"
-    | "bgYellowBright"
-    | "bgBlueBright"
-    | "bgMagentaBright"
-    | "bgCyanBright"
-    | "bgWhiteBright"
-    | "background"
-    | "bgBackground"
-    | "foreground"
-    | "bgForeground"
-    | "brand"
-    | "bgBrand"
-    | "alternate"
-    | "bgAlternate"
-    | "help"
-    | "bgHelp"
-    | "success"
-    | "bgSuccess"
-    | "info"
-    | "bgInfo"
-    | "warning"
-    | "bgWarning"
-    | "danger"
-    | "bgDanger"
-    | "fatal"
-    | "bgFatal"
-    | "link"
-    | "bgLink"
-    | "positive"
-    | "bgPositive"
-    | "negative"
-    | "bgNegative";
-  /**
-   * An object containing functions for coloring text. Each function corresponds to a terminal color. See {@link ColorName} for available colors.
-   */
-  export const colors: Record<ColorName, (text: string | number) => string>;
-  /**
-   * Gets a color function by name, with an option for a fallback color if the requested color is not found.
-   *
-   * @param color - The name of the color function to get. See {@link ColorName}.
-   * @param fallback - The name of the fallback color function if the requested color is not found. See {@link ColorName}.
-   * @returns The color function that corresponds to the requested color, or the fallback color function.
-   */
-  export function getColor(
-    color: ColorName,
-    fallback?: ColorName
-  ): (text: string | number) => string;
-  /**
-   * Formats a message for display in the CLI.
-   *
-   * @param text - The message text to format.
-   * @param color - The color to use for the message (default: "brand").
-   * @param title - The title to use for the message (default: "Message").
-   * @param icon - An optional icon to display with the message.
-   * @returns The formatted message string.
-   */
-  export function formatMessage(
-    text: string,
-    color?: ColorName,
-    title?: string,
-    icon?: string,
-    stretch?: boolean
-  ): string;
-  /**
-   * Shows a fatal error message in the CLI.
-   *
-   * @param details - The fatal error details to display.
-   */
-  export function showFatal(details: string | Error): void;
-  /**
-   * Shows an error message in the CLI.
-   *
-   * @param details - The error details to display.
-   */
-  export function showError(details: string | Error): void;
-  /**
-   * Shows a warning message in the CLI.
-   *
-   * @param details - The warning details to display.
-   */
-  export function showWarning(text: string): void;
-  /**
-   * Shows a info message in the CLI.
-   *
-   * @param details - The info details to display.
-   */
-  export function showInfo(text: string): void;
-  /**
-   * Shows a help message in the CLI.
-   *
-   * @param details - The help details to display.
-   */
-  export function showHelp(text: string): void;
-  /**
-   * Shows a success message in the CLI.
-   *
-   * @param details - The success details to display.
-   */
-  export function showSuccess(text: string): void;
-  type LinkOptions = {
-    /**
-     * Whether to use colored text for the link.
-     *
-     * @defaultValue "link"
-     */
-    color?: ColorName | false;
-    /**
-     * The target for the link. Can be either "stdout" or "stderr".
-     *
-     * @defaultValue "stdout"
-     */
-    target?: "stdout" | "stderr";
-    /**
-     * A fallback function to handle the link in environments that do not support it.
-     */
-    fallback?: (url: string, text?: string) => string;
-  };
-  /**
-   * Create a link to a URL in the console.
-   *
-   * @param url - The URL to link to.
-   * @param text - The text to display for the link. If not provided, the URL will be used as the text.
-   * @param options - Options to use when formatting the link.
-   * @returns A terminal link
-   */
-  export function link(
-    url: string,
-    text?: string,
-    options?: LinkOptions
-  ): string;
-  /**
-   * Strips ANSI escape codes from a string.
-   *
-   * @param text - The string to strip ANSI codes from.
-   * @returns The string without ANSI codes.
-   */
-  export function stripAnsi(text: string): string;
-  /**
-   * Renders a CLI banner with the specified title.
-   *
-   * @param title - The title to display in the banner.
-   * @param description - The description to display in the banner.
-   * @returns The rendered banner as a string.
-   *
-   * @internal
-   */
-  export function renderBanner(title: string, description: string): string;
-  /**
-   * Renders a CLI footer with the application details
-   *
-   * @param title - The title to display in the footer.
-   * @param description - The description to display in the footer.
-   * @returns The rendered footer as a string.
-   *
-   * @internal
-   */
-  export function renderFooter(): string;
-  interface SelectOption {
-    label: string;
-    value: string;
-    hint?: string;
-  }
-  const CANCEL_SYMBOL: unique symbol;
-  interface PromptCommonOptions {
-    /**
-     * Specify how to handle a cancelled prompt (e.g. by pressing Ctrl+C).
-     *
-     * @remarks
-     * The list of valid cancel strategies include:
-     * - `"default"` - Resolve the promise with the `default` value or `initial` value.
-     * - `"undefined`" - Resolve the promise with `undefined`.
-     * - `"null"` - Resolve the promise with `null`.
-     * - `"symbol"` - Resolve the promise with a symbol `Symbol.for("cancel")`.
-     * - `"reject"`  - Reject the promise with an error.
-     *
-     * @defaultValue "default"
-     */
-    cancel?: "reject" | "default" | "undefined" | "null" | "symbol";
-  }
-  export type TextPromptOptions = PromptCommonOptions & {
-    /**
-     * Specifies the prompt type as text.
-     *
-     * @defaultValue "text"
-     */
-    type?: "text";
-    /**
-     * The default text value.
-     */
-    default?: string;
-    /**
-     * A placeholder text displayed in the prompt.
-     */
-    placeholder?: string;
-    /**
-     * The initial text value.
-     */
-    initial?: string;
-  };
-  export type ConfirmPromptOptions = PromptCommonOptions & {
-    /**
-     * Specifies the prompt type as confirm.
-     */
-    type: "confirm";
-    /**
-     * The initial value for the confirm prompt.
-     */
-    initial?: boolean;
-  };
-  export type SelectPromptOptions = PromptCommonOptions & {
-    /**
-     * Specifies the prompt type as select.
-     */
-    type: "select";
-    /**
-     * The initial value for the select prompt.
-     */
-    initial?: string;
-    /**
-     * The options to select from. See {@link SelectOption}.
-     */
-    options: (string | SelectOption)[];
-  };
-  export type MultiSelectPromptOptions = PromptCommonOptions & {
-    /**
-     * Specifies the prompt type as multiselect.
-     */
-    type: "multiselect";
-    /**
-     * The options to select from. See {@link SelectOption}.
-     */
-    initial?: string[];
-    /**
-     * The options to select from. See {@link SelectOption}.
-     */
-    options: (string | SelectOption)[];
-    /**
-     * Whether the prompt requires at least one selection.
-     */
-    required?: boolean;
-  };
-  /**
-   * Defines a combined type for all prompt options.
-   */
-  export type PromptOptions =
-    | TextPromptOptions
-    | ConfirmPromptOptions
-    | SelectPromptOptions
-    | MultiSelectPromptOptions;
-  type inferPromptReturnType<T extends PromptOptions> =
-    T extends TextPromptOptions
-      ? string
-      : T extends ConfirmPromptOptions
-        ? boolean
-        : T extends SelectPromptOptions
-          ? T["options"][number] extends SelectOption
-            ? T["options"][number]["value"]
-            : T["options"][number]
-          : T extends MultiSelectPromptOptions
-            ? T["options"]
-            : unknown;
-  type inferPromptCancelReturnType<T extends PromptOptions> = T extends {
-    cancel: "reject";
-  }
-    ? never
-    : T extends {
-          cancel: "default";
-        }
-      ? inferPromptReturnType<T>
-      : T extends {
-            cancel: "undefined";
-          }
-        ? undefined
-        : T extends {
-              cancel: "null";
-            }
-          ? null
-          : T extends {
-                cancel: "symbol";
-              }
-            ? typeof CANCEL_SYMBOL
-            : inferPromptReturnType<T>;
-  /**
-   * Asynchronously prompts the user for input based on specified options.
-   * Supports text, confirm, select and multi-select prompts.
-   *
-   * @param message - The message to display in the prompt.
-   * @param opts - The prompt options. See {@link PromptOptions}.
-   * @returns A promise that resolves with the user's response, the type of which is inferred from the options. See {@link inferPromptReturnType}.
-   */
-  export function prompt<
-    _ = any,
-    __ = any,
-    T extends PromptOptions = TextPromptOptions
-  >(
-    message: string,
-    opts?: PromptOptions
-  ): Promise<inferPromptReturnType<T> | inferPromptCancelReturnType<T>>;
-  export function parseArgs(args: any[], opts: any): any;
-  export {};
-  export type CLIRequestData = any[];
-  export type ColorName = any[];
-  export type TextPromptOptions = any[];
-  export type ConfirmPromptOptions = any[];
-  export type SelectPromptOptions = any[];
-  export type MultiSelectPromptOptions = any[];
-  export type PromptOptions = any[];
-}
-
-declare module "storm:app" {
-  /**
-   * Wrap an application entry point with the necessary context and error handling.
-   *
-   * @param handler - The handler function for the application.
-   * @returns A function that takes an request and returns a response or a promise of a response.
-   */
-  export function createCLIApp<
-    TInput extends CLIRequestData = CLIRequestData,
-    TOutput = any
-  >(
-    handler: HandlerFunction<TInput, TOutput>
-  ): (input: TInput) => Promise<StormResponse<StormError | unknown>>;
-}
-
-declare const $storm: import("storm:context").StormContext;

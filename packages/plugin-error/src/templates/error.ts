@@ -281,13 +281,13 @@ export function createStormError(
          this.#stack = optionsOrMessage.stack;
          // eslint-disable-next-line ts/unbound-method
        } else if (
-         Error.captureStackTrace instanceof Function ||
-         typeof Error.captureStackTrace === "function" ||
+         (Error as any).captureStackTrace instanceof Function ||
+         typeof (Error as any).captureStackTrace === "function" ||
          Boolean(
-           Error.captureStackTrace?.constructor && (Error.captureStackTrace as any)?.call && (Error.captureStackTrace as any)?.apply
+           (Error as any).captureStackTrace?.constructor && (Error as any).captureStackTrace?.call && (Error as any).captureStackTrace?.apply
          )
        ) {
-         Error.captureStackTrace(this, this.constructor);
+         (Error as any).captureStackTrace(this, this.constructor);
        } else {
          this.#stack = new Error("").stack;
        }

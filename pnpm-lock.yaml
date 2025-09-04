@@ -432,6 +432,9 @@ catalogs:
     verdaccio:
       specifier: 6.1.2
       version: 6.1.2
+    vite:
+      specifier: ^6.3.4
+      version: 6.3.5
     wrangler:
       specifier: ^4.19.1
       version: 4.33.0
@@ -770,6 +773,9 @@ importers:
       unstorage:
         specifier: 'catalog:'
         version: 1.17.0(aws4fetch@1.0.20)
+      vite:
+        specifier: 'catalog:'
+        version: 6.3.5(@types/node@22.18.0)(jiti@2.5.1)(terser@5.44.0)(tsx@4.20.5)(yaml@2.8.1)
     devDependencies:
       '@storm-stack/core':
         specifier: workspace:*
@@ -5200,7 +5206,6 @@ packages:
 
   '@ls-lint/ls-lint@2.3.1':
     resolution: {integrity: sha512-vPe6IDByQnQRTxcAYjTxrmga/tSIui50VBFTB5KIJWY3OOFmxE2VtymjeSEfQfiMbhZV/ZPAqYy2lt8pZFQ0Rw==}
-    cpu: [x64, arm64, s390x, ppc64le]
     os: [darwin, linux, win32]
     hasBin: true
 
