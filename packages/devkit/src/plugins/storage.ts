@@ -18,21 +18,13 @@
 
 import { LogLevelLabel } from "@storm-software/config-tools/types";
 import { Plugin } from "@storm-stack/core/base/plugin";
-import { PrimaryKey } from "@storm-stack/core/deepkit";
-import type {
-  Context,
-  EngineHooks,
-  PluginBaseOptions
-} from "@storm-stack/core/types";
+import type { EngineHooks } from "@storm-stack/core/types";
 import { PluginOptions } from "@storm-stack/core/types/plugin";
 import { joinPaths } from "@stryke/path/join-paths";
 import { camelCase } from "@stryke/string-format/camel-case";
 import { kebabCase } from "@stryke/string-format/kebab-case";
 import type { MaybePromise } from "@stryke/types/base";
-
-export interface StoragePluginOptions extends PluginBaseOptions {
-  namespace: string & PrimaryKey;
-}
+import { StoragePluginContext, StoragePluginOptions } from "../types/plugins";
 
 /**
  * Base class for Storage plugins in Storm Stack.
@@ -41,9 +33,9 @@ export interface StoragePluginOptions extends PluginBaseOptions {
  * This class provides the foundation for creating storage plugins in Storm Stack. It handles the initialization of the plugin's context and prepares the runtime for storage artifacts. Derived classes must implement the `writeStorage` method to define how the storage should be written.
  */
 export default abstract class StoragePlugin<
-  TOptions extends StoragePluginOptions = StoragePluginOptions,
-  TContext extends Context = Context
-> extends Plugin<TOptions, TContext> {
+  TContext extends StoragePluginContext = StoragePluginContext,
+  TOptions extends StoragePluginOptions = StoragePluginOptions
+> extends Plugin<TContext, TOptions> {
   /**
    * A list of primary keys for the plugin's options.
    *
@@ -126,7 +118,7 @@ export default abstract class StoragePlugin<
       const name = `${camelCase(this.overrideName)}Storage`;
       context.runtime.storage.push({
         name,
-        namespace: this.options.namespace,
+        namespace: this.getOptions(context).namespace,
         fileName: joinPaths("storage", kebabCase(this.overrideName))
       });
     }

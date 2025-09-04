@@ -19,38 +19,26 @@
 import { parse as parseToml, stringify as stringifyToml } from "@ltd/j-toml";
 import { LogLevelLabel } from "@storm-software/config-tools/types";
 import { getFileHeader } from "@storm-stack/core/lib/utilities/file-header";
-import type { Context, EngineHooks } from "@storm-stack/core/types";
+import type { EngineHooks } from "@storm-stack/core/types";
 import type { PluginOptions } from "@storm-stack/core/types/plugin";
-import type { StoragePluginOptions } from "@storm-stack/devkit/plugins/storage";
 import StoragePlugin from "@storm-stack/devkit/plugins/storage";
 import { readFile } from "@stryke/fs";
 import { existsSync, joinPaths } from "@stryke/path";
-import type { KVOptions } from "unstorage/drivers/cloudflare-kv-binding";
-import type { KVHTTPOptions } from "unstorage/drivers/cloudflare-kv-http";
+import {
+  StorageCloudflareKVPluginContext,
+  StorageCloudflareKVPluginOptions
+} from "./types";
 
-export type StorageCloudflareKVPluginOptions = StoragePluginOptions &
-  Omit<KVOptions, "binding"> & {
-    /**
-     * The binding name for the Cloudflare KV.
-     *
-     * @remarks
-     * This is used to access the Cloudflare KV binding in the worker.
-     */
-    binding?: string;
-
-    /**
-     * The minimum TTL for the Cloudflare KV.
-     *
-     * @remarks
-     * This is used to set the minimum TTL for the Cloudflare KV.
-     *
-     * @defaultValue 60
-     */
-    minTTL: number;
-  } & Omit<KVHTTPOptions, "namespaceId" | "minTTL">;
-
-export default class StorageCloudflareKVPlugin extends StoragePlugin<StorageCloudflareKVPluginOptions> {
-  public constructor(options: PluginOptions<StorageCloudflareKVPluginOptions>) {
+/**
+ * Cloudflare KV Storage Plugin
+ */
+export default class StorageCloudflareKVPlugin<
+  TContext extends
+    StorageCloudflareKVPluginContext = StorageCloudflareKVPluginContext,
+  TOptions extends
+    StorageCloudflareKVPluginOptions = StorageCloudflareKVPluginOptions
+> extends StoragePlugin<TContext, TOptions> {
+  public constructor(options: PluginOptions<TOptions>) {
     super(options);
 
     this.options.minTTL ??= 60;
@@ -61,7 +49,7 @@ export default class StorageCloudflareKVPlugin extends StoragePlugin<StorageClou
    *
    * @param hooks - The engine hooks to add the plugin hooks to.
    */
-  public override addHooks(hooks: EngineHooks) {
+  public override addHooks(hooks: EngineHooks<TContext>) {
     hooks.addHooks({
       "prepare:config": this.#prepareConfig.bind(this)
     });
@@ -69,8 +57,8 @@ export default class StorageCloudflareKVPlugin extends StoragePlugin<StorageClou
     super.addHooks(hooks);
   }
 
-  protected override writeStorage() {
-    if (this.options.binding) {
+  protected override writeStorage(context: TContext) {
+    if (this.getOptions(context).binding) {
       return `${getFileHeader()}
 
 import type { StorageAdapter } from "@storm-stack/types/shared/storage";
@@ -86,8 +74,8 @@ import { env } from "cloudflare:workers";
  */
 function createAdapter(): StorageAdapter {
   const adapter = cloudflareKVBindingDriver({ binding: env.${
-    this.options.binding
-  }, minTTL: ${this.options.minTTL ?? 60} }) as StorageAdapter;
+    this.getOptions(context).binding
+  }, minTTL: ${this.getOptions(context).minTTL ?? 60} }) as StorageAdapter;
   adapter[Symbol.asyncDispose] = async () => {
     if (adapter.dispose && typeof adapter.dispose === "function") {
       await Promise.resolve(adapter.dispose());
@@ -131,16 +119,18 @@ function createAdapter(): StorageAdapter {
     throw new StormError({ type: "general", code: 14 });
   }
 
-  export const adapter = cloudflareKVHTTPDriver({
+  const adapter = cloudflareKVHTTPDriver({
     accountId,
     namespaceId: ${
-      this.options.namespace ? `"${this.options.namespace}"` : "undefined"
+      this.getOptions(context).namespace
+        ? `"${this.getOptions(context).namespace}"`
+        : "undefined"
     },
     apiToken,
     email,
     apiKey,
     userServiceKey,
-    minTTL: ${this.options.minTTL ?? 60}
+    minTTL: ${this.getOptions(context).minTTL ?? 60}
   }) as StorageAdapter;
   adapter[Symbol.asyncDispose] = async () => {
     if (adapter.dispose && typeof adapter.dispose === "function") {
@@ -157,8 +147,11 @@ export default createAdapter;
     }
   }
 
-  async #prepareConfig(context: Context) {
-    if (context.options.projectType === "application" && this.options.binding) {
+  async #prepareConfig(context: TContext) {
+    if (
+      context.options.projectType === "application" &&
+      this.getOptions(context).binding
+    ) {
       this.log(
         LogLevelLabel.TRACE,
         "Writing the Cloudflare KV binding to the wrangler file."
@@ -180,14 +173,14 @@ export default createAdapter;
       if (
         !wranglerFile.kv_namespaces?.some(
           kvNamespace =>
-            kvNamespace.binding === this.options.binding &&
-            kvNamespace.id === this.options.namespace
+            kvNamespace.binding === this.getOptions(context).binding &&
+            kvNamespace.id === this.getOptions(context).namespace
         )
       ) {
         wranglerFile.kv_namespaces ??= [];
         wranglerFile.kv_namespaces.push({
-          binding: this.options.binding,
-          id: this.options.namespace
+          binding: this.getOptions(context).binding!,
+          id: this.getOptions(context).namespace
         });
       }
 

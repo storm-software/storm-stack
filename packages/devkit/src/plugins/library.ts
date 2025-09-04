@@ -33,9 +33,9 @@ import {
  * This plugin provides the functionality to build the Storm Stack library package using Unbuild. It extends the BasePlugin class and adds hooks for the build process.
  */
 export default class LibraryPlugin<
-  TOptions extends PluginBaseOptions = PluginBaseOptions,
-  TContext extends Context = Context
-> extends Plugin<TOptions, TContext> {
+  TContext extends Context = Context,
+  TOptions extends PluginBaseOptions = PluginBaseOptions
+> extends Plugin<TContext, TOptions> {
   /**
    * The constructor for the plugin
    *

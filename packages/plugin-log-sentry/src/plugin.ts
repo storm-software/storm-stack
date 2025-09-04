@@ -25,10 +25,9 @@ import { LogSentryPluginContext, LogSentryPluginOptions } from "./types";
 /**
  * A plugin for logging errors to Sentry.
  */
-export default class LogSentryPlugin extends LogPlugin<
-  LogSentryPluginOptions,
-  LogSentryPluginContext
-> {
+export default class LogSentryPlugin<
+  TContext extends LogSentryPluginContext = LogSentryPluginContext
+> extends LogPlugin<TContext, LogSentryPluginOptions> {
   /**
    * Creates an instance of the Sentry logging plugin.
    *
@@ -60,7 +59,7 @@ export default class LogSentryPlugin extends LogPlugin<
    *
    * @param context - The context to initialize.
    */
-  async #initOptions(context: LogSentryPluginContext) {
+  async #initOptions(context: TContext) {
     context.options.plugins.sentry ??= {} as LogSentryPluginOptions;
     context.options.plugins.config.parsed.SENTRY_DSN ||=
       context.options.plugins.sentry.dsn;
@@ -104,7 +103,7 @@ export default class LogSentryPlugin extends LogPlugin<
    * @param context - The context to use for writing the adapter.
    * @returns The adapter code as a string.
    */
-  protected override writeAdapter(context: LogSentryPluginContext) {
+  protected override writeAdapter(context: TContext) {
     return `${getFileHeader()}
 
 import type { ParameterizedString } from "@sentry/core";
@@ -178,7 +177,7 @@ function createAdapter(): LogAdapter {
     release: $storm.config.static.RELEASE_TAG,
     debug: $storm.env.isDebug,
     enabled: ${
-      context.options.plugins.sentry.enabled === true ||
+      this.getOptions(context).enabled === true ||
       context.options.mode !== "development"
         ? "true"
         : "false"

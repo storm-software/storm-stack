@@ -19,16 +19,39 @@
 /* eslint-disable ts/naming-convention */
 
 import { LogLevelLabel } from "@storm-software/config-tools/types";
-import type { MaybePromise, NonUndefined } from "@stryke/types/base";
+import type {
+  DeepPartial,
+  MaybePromise,
+  NonUndefined
+} from "@stryke/types/base";
 import type { TypeDefinition } from "@stryke/types/configuration";
+import { BuildOptions, Loader, PluginBuild } from "esbuild";
 import type { Hookable } from "hookable";
+import {
+  HmrContext,
+  IndexHtmlTransformResult,
+  ModuleNode,
+  PreviewServer,
+  ResolvedConfig,
+  ViteDevServer
+} from "vite";
 import { SourceFile } from "./compiler";
 import type {
   BabelConfig,
+  ESBuildUserConfig,
   InlineConfig,
   OutputConfig,
   ResolvedUserConfig,
+  RolldownUserConfig,
+  RollupUserConfig,
+  RspackUserConfig,
+  StandaloneApplicationUserConfig,
+  StandaloneLibraryUserConfig,
+  TsupUserConfig,
+  UnbuildUserConfig,
   UserConfig,
+  ViteUserConfig,
+  WebpackUserConfig,
   WorkspaceConfig
 } from "./config";
 import { Context } from "./context";
@@ -50,13 +73,17 @@ export type ConfigEnv = Pick<
   "command" | "mode" | "environment" | "isSsrBuild" | "isPreview"
 >;
 
-export type UserConfigFnObject = (env: ConfigEnv) => UserConfig;
-export type UserConfigFnPromise = (env: ConfigEnv) => Promise<UserConfig>;
-export type UserConfigFn = (env: ConfigEnv) => UserConfig | Promise<UserConfig>;
+export type UserConfigFnObject = (env: ConfigEnv) => DeepPartial<UserConfig>;
+export type UserConfigFnPromise = (
+  env: ConfigEnv
+) => Promise<DeepPartial<UserConfig>>;
+export type UserConfigFn = (
+  env: ConfigEnv
+) => UserConfig | Promise<DeepPartial<UserConfig>>;
 
 export type UserConfigExport =
-  | UserConfig
-  | Promise<UserConfig>
+  | DeepPartial<UserConfig>
+  | Promise<DeepPartial<UserConfig>>
   | UserConfigFnObject
   | UserConfigFnPromise
   | UserConfigFn;
@@ -67,42 +94,92 @@ export type ResolvedBabelOptions = Omit<BabelConfig, "plugins" | "presets"> &
 /**
  * The resolved options for the Storm Stack project configuration.
  */
-export type ResolvedOptions<
+export type BaseResolvedOptions<
+  TUserConfig extends UserConfig = UserConfig,
   TPluginsOptions extends Record<string, any> = Record<string, any>
-> = Omit<WorkspaceConfig, "colors" | "logLevel"> &
-  Required<Pick<WorkspaceConfig, "colors">> &
+> = Omit<WorkspaceConfig, "logLevel" | "name"> &
+  Required<Pick<WorkspaceConfig, "workspaceRoot" | "colors">> &
   Omit<
-    InlineConfig,
-    "root" | "type" | "babel" | "output" | "plugins" | "logLevel"
+    TUserConfig,
+    | "name"
+    | "templates"
+    | "mode"
+    | "environment"
+    | "name"
+    | "templates"
+    | "mode"
+    | "environment"
+    | "platform"
+    | "tsconfig"
+    | "build"
+    | "override"
+    | "root"
+    | "variant"
+    | "type"
+    | "babel"
+    | "output"
+    | "plugins"
+    | "logLevel"
   > &
   Required<
     Pick<
-      InlineConfig,
-      | "command"
+      TUserConfig,
       | "name"
       | "templates"
       | "mode"
       | "environment"
       | "platform"
       | "tsconfig"
-      | "esbuild"
-      | "unbuild"
+      | "build"
+      | "override"
     >
   > & {
     /**
      * The configuration options that were provided inline to the Storm Stack CLI.
      */
-    inlineConfig: InlineConfig;
+    inlineConfig: InlineConfig<TUserConfig>;
 
     /**
      * The original configuration options that were provided by the user to the Storm Stack process.
      */
-    userConfig: ResolvedUserConfig;
+    userConfig: ResolvedUserConfig<TUserConfig>;
 
     /**
      * The Storm workspace configuration
      */
     workspaceConfig: WorkspaceConfig;
+
+    /**
+     * A string identifier for the Storm Stack command being executed.
+     */
+    command: NonUndefined<InlineConfig<TUserConfig>["command"]>;
+
+    /**
+     * The build variant being used by the Storm Stack engine.
+     */
+    variant: NonUndefined<TUserConfig["variant"]>;
+
+    /**
+     * The type of project being built.
+     */
+    projectType: NonUndefined<TUserConfig["type"]>;
+
+    /**
+     * The root directory of the workspace
+     */
+    workspaceRoot: NonUndefined<WorkspaceConfig["workspaceRoot"]>;
+
+    /**
+     * The root directory of the project.
+     */
+    projectRoot: NonUndefined<TUserConfig["root"]>;
+
+    /**
+     * The root directory of the project's source code
+     *
+     * @defaultValue "\{projectRoot\}/src"
+     */
+    sourceRoot: NonUndefined<TUserConfig["sourceRoot"]>;
 
     /**
      * The Babel configuration options to use for the build process
@@ -115,30 +192,6 @@ export type ResolvedOptions<
     output: Required<OutputConfig>;
 
     /**
-     * The root directory of the project.
-     */
-    projectRoot: NonUndefined<InlineConfig["root"]>;
-
-    /**
-     * The root directory of the project's source code
-     *
-     * @defaultValue "\{root\}/src"
-     */
-    sourceRoot: NonUndefined<InlineConfig["sourceRoot"]>;
-
-    /**
-     * The type of project being built.
-     */
-    projectType: NonUndefined<InlineConfig["type"]>;
-
-    /**
-     * The log level to use for the Storm Stack processes.
-     *
-     * @defaultValue "info"
-     */
-    logLevel?: LogLevelLabel | null;
-
-    /**
      * A flag indicating whether the build is for server-side rendering (SSR).
      */
     isSsrBuild: boolean;
@@ -149,6 +202,13 @@ export type ResolvedOptions<
     isPreview: boolean;
 
     /**
+     * The log level to use for the Storm Stack processes.
+     *
+     * @defaultValue "info"
+     */
+    logLevel: LogLevelLabel | null;
+
+    /**
      * The expected plugins options for the Storm Stack project.
      *
      * @remarks
@@ -156,6 +216,220 @@ export type ResolvedOptions<
      */
     plugins: TPluginsOptions;
   };
+
+export type ViteResolvedOptions<
+  TPluginsOptions extends Record<string, any> = Record<string, any>
+> = BaseResolvedOptions<ViteUserConfig, TPluginsOptions> & {
+  /**
+   * The configuration options that were provided inline to the Storm Stack CLI.
+   */
+  inlineConfig: InlineConfig<ViteUserConfig>;
+
+  /**
+   * The original configuration options that were provided by the user to the Storm Stack process.
+   */
+  userConfig: ResolvedUserConfig<ViteUserConfig>;
+
+  /**
+   * The build variant being used by the Storm Stack engine.
+   */
+  variant: "vite";
+};
+
+export type WebpackResolvedOptions<
+  TPluginsOptions extends Record<string, any> = Record<string, any>
+> = BaseResolvedOptions<WebpackUserConfig, TPluginsOptions> & {
+  /**
+   * The configuration options that were provided inline to the Storm Stack CLI.
+   */
+  inlineConfig: InlineConfig<WebpackUserConfig>;
+
+  /**
+   * The original configuration options that were provided by the user to the Storm Stack process.
+   */
+  userConfig: ResolvedUserConfig<WebpackUserConfig>;
+
+  /**
+   * The build variant being used by the Storm Stack engine.
+   */
+  variant: "webpack";
+};
+
+export type RspackResolvedOptions<
+  TPluginsOptions extends Record<string, any> = Record<string, any>
+> = BaseResolvedOptions<RspackUserConfig, TPluginsOptions> & {
+  /**
+   * The configuration options that were provided inline to the Storm Stack CLI.
+   */
+  inlineConfig: InlineConfig<RspackUserConfig>;
+
+  /**
+   * The original configuration options that were provided by the user to the Storm Stack process.
+   */
+  userConfig: ResolvedUserConfig<RspackUserConfig>;
+
+  /**
+   * The build variant being used by the Storm Stack engine.
+   */
+  variant: "rspack";
+};
+
+export type ESBuildResolvedOptions<
+  TPluginsOptions extends Record<string, any> = Record<string, any>
+> = BaseResolvedOptions<ESBuildUserConfig, TPluginsOptions> & {
+  /**
+   * The configuration options that were provided inline to the Storm Stack CLI.
+   */
+  inlineConfig: InlineConfig<ESBuildUserConfig>;
+
+  /**
+   * The original configuration options that were provided by the user to the Storm Stack process.
+   */
+  userConfig: ResolvedUserConfig<ESBuildUserConfig>;
+
+  /**
+   * The build variant being used by the Storm Stack engine.
+   */
+  variant: "esbuild";
+};
+
+export type RollupResolvedOptions<
+  TPluginsOptions extends Record<string, any> = Record<string, any>
+> = BaseResolvedOptions<RollupUserConfig, TPluginsOptions> & {
+  /**
+   * The configuration options that were provided inline to the Storm Stack CLI.
+   */
+  inlineConfig: InlineConfig<RollupUserConfig>;
+
+  /**
+   * The original configuration options that were provided by the user to the Storm Stack process.
+   */
+  userConfig: ResolvedUserConfig<RollupUserConfig>;
+
+  /**
+   * The build variant being used by the Storm Stack engine.
+   */
+  variant: "rollup";
+};
+
+export type RolldownResolvedOptions<
+  TPluginsOptions extends Record<string, any> = Record<string, any>
+> = BaseResolvedOptions<RolldownUserConfig, TPluginsOptions> & {
+  /**
+   * The configuration options that were provided inline to the Storm Stack CLI.
+   */
+  inlineConfig: InlineConfig<RolldownUserConfig>;
+
+  /**
+   * The original configuration options that were provided by the user to the Storm Stack process.
+   */
+  userConfig: ResolvedUserConfig<RolldownUserConfig>;
+
+  /**
+   * The build variant being used by the Storm Stack engine.
+   */
+  variant: "rolldown";
+};
+
+export type TsupResolvedOptions<
+  TPluginsOptions extends Record<string, any> = Record<string, any>
+> = BaseResolvedOptions<TsupUserConfig, TPluginsOptions> & {
+  /**
+   * The configuration options that were provided inline to the Storm Stack CLI.
+   */
+  inlineConfig: InlineConfig<TsupUserConfig>;
+
+  /**
+   * The original configuration options that were provided by the user to the Storm Stack process.
+   */
+  userConfig: ResolvedUserConfig<TsupUserConfig>;
+
+  /**
+   * The build variant being used by the Storm Stack engine.
+   */
+  variant: "tsup";
+};
+
+export type UnbuildResolvedOptions<
+  TPluginsOptions extends Record<string, any> = Record<string, any>
+> = BaseResolvedOptions<UnbuildUserConfig, TPluginsOptions> & {
+  /**
+   * The configuration options that were provided inline to the Storm Stack CLI.
+   */
+  inlineConfig: InlineConfig<UnbuildUserConfig>;
+
+  /**
+   * The original configuration options that were provided by the user to the Storm Stack process.
+   */
+  userConfig: ResolvedUserConfig<UnbuildUserConfig>;
+
+  /**
+   * The build variant being used by the Storm Stack engine.
+   */
+  variant: "unbuild";
+};
+
+export type StandaloneApplicationResolvedOptions<
+  TPluginsOptions extends Record<string, any> = Record<string, any>
+> = BaseResolvedOptions<StandaloneApplicationUserConfig, TPluginsOptions> & {
+  /**
+   * The configuration options that were provided inline to the Storm Stack CLI.
+   */
+  inlineConfig: InlineConfig<StandaloneApplicationUserConfig>;
+
+  /**
+   * The original configuration options that were provided by the user to the Storm Stack process.
+   */
+  userConfig: ResolvedUserConfig<StandaloneApplicationUserConfig>;
+
+  /**
+   * The build variant being used by the Storm Stack engine.
+   */
+  variant: "standalone";
+
+  /**
+   * The type of project being built.
+   */
+  projectType: "application";
+};
+
+export type StandaloneLibraryResolvedOptions<
+  TPluginsOptions extends Record<string, any> = Record<string, any>
+> = BaseResolvedOptions<StandaloneLibraryUserConfig, TPluginsOptions> & {
+  /**
+   * The configuration options that were provided inline to the Storm Stack CLI.
+   */
+  inlineConfig: InlineConfig<StandaloneLibraryUserConfig>;
+
+  /**
+   * The original configuration options that were provided by the user to the Storm Stack process.
+   */
+  userConfig: ResolvedUserConfig<StandaloneLibraryUserConfig>;
+
+  /**
+   * The build variant being used by the Storm Stack engine.
+   */
+  variant: "standalone";
+
+  /**
+   * The type of project being built.
+   */
+  projectType: "library";
+};
+
+export type ResolvedOptions<
+  TPluginsOptions extends Record<string, any> = Record<string, any>
+> =
+  | WebpackResolvedOptions<TPluginsOptions>
+  | RspackResolvedOptions<TPluginsOptions>
+  | ViteResolvedOptions<TPluginsOptions>
+  | ESBuildResolvedOptions<TPluginsOptions>
+  | UnbuildResolvedOptions<TPluginsOptions>
+  | TsupResolvedOptions<TPluginsOptions>
+  | RolldownResolvedOptions<TPluginsOptions>
+  | RollupResolvedOptions<TPluginsOptions>
+  | StandaloneApplicationResolvedOptions<TPluginsOptions>
+  | StandaloneLibraryResolvedOptions<TPluginsOptions>;
 
 export interface EngineHookFunctions<TContext extends Context = Context> {
   // New - Hooks used during the creation of a new project
@@ -223,6 +497,56 @@ export interface EngineHookFunctions<TContext extends Context = Context> {
   // Finalize - Hooks used during the finalization of the Storm Stack project
   "finalize:begin": (context: TContext) => MaybePromise<void>;
   "finalize:complete": (context: TContext) => MaybePromise<void>;
+
+  // Vite - Hooks used during the Vite process
+  "vite:config": (context: TContext) => MaybePromise<void>;
+  "vite:configResolved": (
+    context: TContext,
+    config: ResolvedConfig
+  ) => MaybePromise<void>;
+  "vite:configureServer": (
+    context: TContext,
+    server: ViteDevServer
+  ) => MaybePromise<void>;
+  "vite:configurePreviewServer": (
+    context: TContext,
+    server: PreviewServer
+  ) => MaybePromise<void>;
+  "vite:transformIndexHtml": (
+    context: TContext,
+    params: {
+      html: string;
+      path: string;
+      filename: string;
+      server?: ViteDevServer;
+      bundle?: import("rollup").OutputBundle;
+      chunk?: import("rollup").OutputChunk;
+      result?: IndexHtmlTransformResult;
+    }
+  ) => MaybePromise<void>;
+  "vite:handleHotUpdate": (
+    context: TContext,
+    params: HmrContext & { modules: ModuleNode[] }
+  ) => MaybePromise<void>;
+
+  // ESBuild - Hooks used during the ESBuild process
+  "esbuild:setup": (
+    context: TContext,
+    build: PluginBuild
+  ) => MaybePromise<void>;
+  "esbuild:config": (context: TContext, options: BuildOptions) => void;
+  "esbuild:configureServer": (
+    context: TContext,
+    server: ViteDevServer
+  ) => MaybePromise<void>;
+  "esbuild:loader": (
+    context: TContext,
+    params: {
+      code: string;
+      id: string;
+      result?: Loader;
+    }
+  ) => MaybePromise<void>;
 }
 
 export type EngineHooks<TContext extends Context = Context> = Hookable<

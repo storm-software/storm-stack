@@ -18,26 +18,12 @@
 
 import { getFileHeader } from "@storm-stack/core/lib/utilities/file-header";
 import type { PluginOptions } from "@storm-stack/core/types/plugin";
-import type { LogPluginOptions } from "@storm-stack/devkit/plugins/log";
 import LogPlugin from "@storm-stack/devkit/plugins/log";
+import { LogStoragePluginContext, LogStoragePluginOptions } from "./types";
 
-export type LogStoragePluginOptions = LogPluginOptions & {
-  /**
-   * Whether to use the file system storage driver.
-   *
-   * @defaultValue true
-   */
-  useFileSystem?: boolean;
-
-  /**
-   * The storage ID to use for the log storage.
-   *
-   * @defaultValue "logs"
-   */
-  namespace?: string;
-};
-
-export default class LogStoragePlugin extends LogPlugin<LogStoragePluginOptions> {
+export default class LogStoragePlugin<
+  TContext extends LogStoragePluginContext = LogStoragePluginContext
+> extends LogPlugin<TContext, LogStoragePluginOptions> {
   public constructor(options: PluginOptions<LogStoragePluginOptions>) {
     super(options);
 
@@ -55,7 +41,7 @@ export default class LogStoragePlugin extends LogPlugin<LogStoragePluginOptions>
     }
   }
 
-  protected override writeAdapter() {
+  protected override writeAdapter(context: TContext) {
     return `${getFileHeader()}
 
 import { LogRecord, LogAdapter } from "@storm-stack/types/shared/log";
@@ -238,11 +224,11 @@ const formatter: TextFormatter = getTextFormatter();
 function createAdapter(): LogAdapter {
   const adapter: LogAdapter & AsyncDisposable = (record: LogRecord) => {
     void $storm.storage.setItem(
-      \`${this.options.namespace}:storm-\${new Date().toISOString().replace("T", "-").replace("Z", "")}.log\`,
+      \`${this.getOptions(context).namespace}:storm-\${new Date().toISOString().replace("T", "-").replace("Z", "")}.log\`,
       formatter(record)
     );
   };
-  adapter[Symbol.asyncDispose] = async () => $storm.storage.unmount("${this.options.namespace}");
+  adapter[Symbol.asyncDispose] = async () => $storm.storage.unmount("${this.getOptions(context).namespace}");
 
   return adapter;
 }

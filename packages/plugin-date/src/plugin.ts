@@ -36,9 +36,9 @@ import {
  * Storm Stack - Date plugin.
  */
 export default class DatePlugin<
-  TOptions extends DatePluginOptions = DatePluginOptions,
-  TContext extends DatePluginContext = DatePluginContext
-> extends Plugin<TOptions, TContext> {
+  TContext extends DatePluginContext = DatePluginContext,
+  TOptions extends DatePluginOptions = DatePluginOptions
+> extends Plugin<TContext, TOptions> {
   /**
    * The constructor for the plugin
    *

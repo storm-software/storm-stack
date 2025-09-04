@@ -28,7 +28,10 @@ import { lintTypes } from "./types";
  * @param context - The build context.
  * @param hooks - The engine hooks.
  */
-export async function lint(context: Context, hooks: EngineHooks) {
+export async function lint<TContext extends Context = Context>(
+  context: TContext,
+  hooks: EngineHooks<TContext>
+) {
   await hooks.callHook("lint:begin", context).catch((error: Error) => {
     context.log(
       LogLevelLabel.ERROR,

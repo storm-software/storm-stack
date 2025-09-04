@@ -36,7 +36,10 @@ import { initTsconfig } from "./tsconfig";
  * @param hooks - The engine hooks to call during initialization.
  * @returns A promise that resolves when the initialization is complete.
  */
-export async function init(context: Context, hooks: EngineHooks) {
+export async function init<TContext extends Context = Context>(
+  context: TContext,
+  hooks: EngineHooks<TContext>
+) {
   await hooks.callHook("init:begin", context).catch((error: Error) => {
     context.log(
       LogLevelLabel.ERROR,
@@ -57,7 +60,7 @@ export async function init(context: Context, hooks: EngineHooks) {
   await initTsconfig(context, hooks);
 
   const handlePreTransform = async (
-    context: Context,
+    context: TContext,
     sourceFile: SourceFile
   ) => {
     await hooks
@@ -78,7 +81,7 @@ export async function init(context: Context, hooks: EngineHooks) {
   };
 
   const handlePostTransform = async (
-    context: Context,
+    context: TContext,
     sourceFile: SourceFile
   ) => {
     await hooks

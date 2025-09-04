@@ -16,8 +16,8 @@
 
  ------------------------------------------------------------------- */
 
-import type { ResolvedUserConfig } from "../types/config";
-import { StormStack } from "./index";
+import { ViteResolvedOptions } from "../types";
+import StormStackVite from "./vite";
 
 /**
  * Astro plugin
@@ -25,23 +25,26 @@ import { StormStack } from "./index";
  * @example
  * ```js
  * // astro.config.js
- * import StormStack from 'storm-stack/astro'
+ * import StormStack from '@storm-stack/core/astro'
  *
  * default export {
  *  plugins: [StormStack()],
  * }
  * ```
  */
-const astro = (config: ResolvedUserConfig): any => ({
+export const astro = (
+  config: Partial<Omit<ViteResolvedOptions["userConfig"], "variant">>
+): any => ({
   name: "storm-stack",
   hooks: {
     // eslint-disable-next-line ts/naming-convention
     "astro:config:setup": async (build: any) => {
       build.config.vite.plugins ||= [];
       // eslint-disable-next-line ts/no-unsafe-call
-      build.config.vite.plugins.push(StormStack.vite(config));
+      build.config.vite.plugins.push(StormStackVite(config));
     }
   }
 });
 
 export default astro;
+export { astro as "module.exports" };

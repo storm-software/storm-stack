@@ -1059,7 +1059,7 @@ export function convertFromCapnpEnum(
             ret[key] = value.value;
             return ret;
           },
-          {}
+          {} as Record<string, string>
         )
       : {},
     indexAccessOrigin: convertFromCapnpIndexAccessOrigin(serializedType),
@@ -1203,8 +1203,8 @@ export function convertFromCapnpArray(
 /**
  * Converts a Deepkit serialized type to a Cap'n Proto serialized type.
  *
- * @param result - The {@link capnp.List | list} object defined in a [Cap'n Proto](https://capnproto.org/) schema to write the converted type to
  * @param serializedType - The [Deepkit](https://deepkit.io/) {@link SerializedType | serialized type} to convert
+ * @param result - The {@link capnp.List | list} object defined in a [Cap'n Proto](https://capnproto.org/) schema to write the converted type to
  */
 export function convertToCapnpUnion(
   serializedType: SerializedTypeUnion,
@@ -1274,8 +1274,8 @@ export function convertFromCapnpUnion(
 /**
  * Converts a Deepkit serialized type to a Cap'n Proto serialized type.
  *
+ * @param serializedType - The [Deepkit](https://deepkit.io/) {@link SerializedType | serialized type} to convert.
  * @param result - The {@link capnp.List | list} object defined in a [Cap'n Proto](https://capnproto.org/) schema to write the converted type to
- * @param serializedType - The [Deepkit](https://deepkit.io/) {@link SerializedType | serialized type} to convert
  */
 export function convertToCapnpInfer(
   serializedType: SerializedTypeInfer,

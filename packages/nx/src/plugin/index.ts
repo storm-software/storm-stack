@@ -74,7 +74,10 @@ export const createNodesV2: CreateNodesV2<StormStackNxPluginOptions> = [
     return createNodesFromFiles(
       async (configFile, options, context) => {
         try {
-          const projectRoot = getProjectRoot(configFile, context.workspaceRoot);
+          const projectRoot = getProjectRoot(
+            configFile,
+            contextV2.workspaceRoot
+          );
           if (!projectRoot) {
             console.error(
               `[${name}]: package.json and Storm Stack configuration files (i.e. storm.config.ts) must be located in the project root directory: ${configFile}`
@@ -88,13 +91,13 @@ export const createNodesV2: CreateNodesV2<StormStackNxPluginOptions> = [
           const cacheDir = joinPaths(
             envPaths.cache,
             "projects",
-            hash(joinPaths(context.workspaceRoot, projectRoot), {
+            hash(joinPaths(contextV2.workspaceRoot, projectRoot), {
               maxLength: PROJECT_ROOT_HASH_LENGTH
             })
           );
 
           const jiti = createJiti(
-            joinPaths(context.workspaceRoot, projectRoot),
+            joinPaths(contextV2.workspaceRoot, projectRoot),
             {
               interopDefault: true,
               fsCache: joinPaths(cacheDir, "jiti"),

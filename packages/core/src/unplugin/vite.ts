@@ -16,13 +16,12 @@
 
  ------------------------------------------------------------------- */
 
-/**
- * This entry file is for Vite plugin.
- *
- * @module
- */
-
-import { StormStack } from "./index";
+import defu from "defu";
+import { createVitePlugin } from "unplugin";
+import { ConfigEnv, UserConfig } from "vite";
+import { resolveViteOptions } from "../lib/vite/options";
+import { ViteResolvedOptions } from "../types/build";
+import { createUnpluginFactory } from "./core/factory";
 
 /**
  * Vite plugin
@@ -37,7 +36,31 @@ import { StormStack } from "./index";
  * })
  * ```
  */
-const vite = StormStack.vite;
+export const vite = createVitePlugin(
+  createUnpluginFactory<ViteResolvedOptions>({
+    framework: "vite",
+    decorate: (engine, plugin) => {
+      return {
+        ...plugin,
+        vite: {
+          config: (config: UserConfig, env: ConfigEnv) => {
+            engine.context.options.isPreview = !!env.isPreview;
+            engine.context.options.isSsrBuild = !!env.isSsrBuild;
+            engine.context.options.mode =
+              env.mode === "development" ? "development" : "production";
+
+            engine.context.options.build = resolveViteOptions(
+              engine.context,
+              defu(engine.context.options.override, config)
+            );
+
+            return engine.context.options.build;
+          }
+        }
+      };
+    }
+  })
+);
 
 export default vite;
 export { vite as "module.exports" };

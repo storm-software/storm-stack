@@ -21,6 +21,7 @@ import { Plugin } from "@storm-stack/core/base/plugin";
 import { addPluginFilter } from "@storm-stack/core/lib/babel/helpers";
 import type { EngineHooks } from "@storm-stack/core/types/build";
 import { SourceFile } from "@storm-stack/core/types/compiler";
+import { ESBuildOptions } from "@storm-stack/core/types/config";
 import { PluginOptions } from "@storm-stack/core/types/plugin";
 import { IdModule } from "@storm-stack/devkit/templates/id";
 import { LogModule } from "@storm-stack/devkit/templates/log";
@@ -33,19 +34,15 @@ import { EnvModule } from "./templates/env";
 import { EventModule } from "./templates/event";
 import { RequestModule } from "./templates/request";
 import { ResponseModule } from "./templates/response";
-import {
-  NodePluginContext,
-  NodePluginContextOptions,
-  NodePluginOptions
-} from "./types/plugin";
+import { NodePluginContext, NodePluginOptions } from "./types/plugin";
 
 /**
  * NodeJs Storm Stack plugin.
  */
 export default class NodePlugin<
-  TOptions extends NodePluginOptions = NodePluginOptions,
-  TContext extends NodePluginContext = NodePluginContext
-> extends Plugin<TOptions, TContext> {
+  TContext extends NodePluginContext = NodePluginContext,
+  TOptions extends NodePluginOptions = NodePluginOptions
+> extends Plugin<TContext, TOptions> {
   /**
    * The constructor for the plugin
    *
@@ -99,9 +96,17 @@ export default class NodePlugin<
     };
 
     context.options.platform = "node";
-    context.options.esbuild.target = "node22";
+    context.options.build ??= {} as ESBuildOptions;
+    context.options.override ??= {} as ESBuildOptions;
 
-    context.options.esbuild.override ??= {};
+    if (
+      context.options.variant === "tsup" ||
+      context.options.variant === "esbuild"
+    ) {
+      context.options.build.target = "node22";
+    }
+
+    context.options.override ??= {};
 
     context.options.babel.plugins ??= [];
     context.options.babel.plugins = addPluginFilter(
@@ -111,9 +116,6 @@ export default class NodePlugin<
       "error"
     );
     context.options.babel.plugins.push(BabelPlugin);
-
-    context.options.plugins.logs ??= this.options
-      .logs as NodePluginContextOptions["logs"];
   }
 
   /**

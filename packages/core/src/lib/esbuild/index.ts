@@ -17,7 +17,6 @@
  ------------------------------------------------------------------- */
 
 export * from "./build";
-export * from "./bundle";
 export * from "./compiler-plugin";
 export * from "./constants";
 export * from "./deepkit-plugin";

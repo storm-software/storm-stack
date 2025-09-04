@@ -30,7 +30,6 @@ import { writeFile } from "@storm-stack/core/lib/utilities/write-file";
 import type { EngineHooks } from "@storm-stack/core/types/build";
 import type { Context } from "@storm-stack/core/types/context";
 import type { PluginOptions } from "@storm-stack/core/types/plugin";
-import { NodePluginOptions } from "@storm-stack/plugin-node/types";
 import { executePackage } from "@stryke/cli/execute";
 import { createDirectory, removeDirectory } from "@stryke/fs/helpers";
 import { readJsonFile } from "@stryke/fs/json";
@@ -48,13 +47,21 @@ import { joinPaths } from "@stryke/path/join-paths";
 import { replacePath } from "@stryke/path/replace";
 import type { TsConfigJson } from "@stryke/types/tsconfig";
 import defu from "defu";
+import { BuildOptions as ExternalESBuildOptions } from "esbuild";
+import { TsupOptions } from "packages/core/dist";
+import { Format } from "tsup";
 import type { Environment } from "unenv";
 import { defineEnv } from "unenv";
+import { ResolveOptions } from "vite";
 import {
   CLOUDFLARE_MODULES,
   CLOUDFLARE_TYPES_DECLARATION,
   DEFAULT_CONDITIONS
 } from "./helpers";
+import {
+  CloudflareWorkerPluginContext,
+  CloudflareWorkerPluginOptions
+} from "./types/plugin";
 
 /**
  * Storm Stack Cloudflare Worker Plugin
@@ -63,14 +70,14 @@ import {
  * This plugin provides support for building and deploying Cloudflare Workers using Storm Stack. It integrates with the Wrangler CLI tool and sets up the necessary configurations and runtime files.
  */
 export default class CloudflareWorkerPlugin<
-  TOptions extends NodePluginOptions = NodePluginOptions
-> extends Plugin<TOptions> {
+  TContext extends
+    CloudflareWorkerPluginContext = CloudflareWorkerPluginContext,
+  TOptions extends CloudflareWorkerPluginOptions = CloudflareWorkerPluginOptions
+> extends Plugin<TContext, TOptions> {
   #unenv: Environment;
 
   public constructor(options: PluginOptions<TOptions>) {
     super(options);
-
-    this.dependencies = [["@storm-stack/plugin-node", this.options]];
 
     const { env } = defineEnv({
       presets: [cloudflare]
@@ -83,7 +90,7 @@ export default class CloudflareWorkerPlugin<
    *
    * @param hooks - The engine hooks to add
    */
-  public override addHooks(hooks: EngineHooks) {
+  public override addHooks(hooks: EngineHooks<TContext>) {
     super.addHooks(hooks);
 
     hooks.addHooks({
@@ -123,7 +130,7 @@ export default class CloudflareWorkerPlugin<
     }
   }
 
-  async #initOptions(context: Context) {
+  async #initOptions(context: TContext) {
     this.log(
       LogLevelLabel.TRACE,
       `Resolving Storm Stack context for the project.`
@@ -131,10 +138,18 @@ export default class CloudflareWorkerPlugin<
 
     context.options.platform = "node";
 
-    context.options.esbuild.override ??= {};
-    context.options.esbuild.override.platform = "neutral";
-    context.options.esbuild.format = "esm";
-    context.options.esbuild.target = "chrome95";
+    context.options.override ??= {};
+    if (
+      context.options.variant === "esbuild" ||
+      context.options.variant === "tsup" ||
+      context.options.variant === "standalone"
+    ) {
+      context.options.override.platform = "neutral";
+      // context.options.build.format = "esm";
+      context.options.build.target = "chrome95";
+    } else if (context.options.variant === "vite") {
+      context.options.override.esbuild = { format: "esm", target: "chrome95" };
+    }
 
     if (context.options.userConfig.output?.dts === undefined) {
       context.options.output.dts = joinPaths(
@@ -156,29 +171,71 @@ export default class CloudflareWorkerPlugin<
     context.options.noExternal.push("@cloudflare/unenv-preset/node/process");
 
     if (context.options.projectType === "application") {
-      context.options.esbuild.override.alias = defu(
-        context.options.esbuild.override?.alias ?? {},
-        this.#unenv.alias
-      );
-
-      context.options.esbuild.override.inject = Object.values(
-        this.#unenv.inject
-      )
-        .filter(Boolean)
-        .reduce((ret: string[], inj: string | string[]) => {
-          if (typeof inj === "string" && !ret.includes(inj)) {
-            ret.push(inj);
-          } else if (Array.isArray(inj)) {
-            ret.push(...inj.filter(i => !ret.includes(i)));
+      if (
+        context.options.variant === "tsup" ||
+        context.options.variant === "standalone"
+      ) {
+        context.options.build.esbuildOptions = (
+          options: ExternalESBuildOptions,
+          ctx: {
+            format: Format;
           }
+        ) => {
+          (context.options.build as TsupOptions).esbuildOptions?.(options, ctx);
 
-          return ret;
-        }, []) as string[];
+          options.conditions = defu(
+            [...DEFAULT_CONDITIONS, "development"],
+            options.conditions ?? []
+          );
+          options.alias = defu(options.alias ?? {}, this.#unenv.alias);
+        };
 
-      context.options.esbuild.override.conditions = [
-        ...DEFAULT_CONDITIONS,
-        "development"
-      ];
+        context.options.build.inject = Object.values(this.#unenv.inject)
+          .filter(Boolean)
+          .reduce((ret: string[], inj: string | string[]) => {
+            if (typeof inj === "string" && !ret.includes(inj)) {
+              ret.push(inj);
+            } else if (Array.isArray(inj)) {
+              ret.push(...inj.filter(i => !ret.includes(i)));
+            }
+
+            return ret;
+          }, []) as string[];
+      } else if (context.options.variant === "esbuild") {
+        context.options.build.alias = defu(
+          context.options.build?.alias ?? {},
+          this.#unenv.alias
+        );
+
+        context.options.build.inject = Object.values(this.#unenv.inject)
+          .filter(Boolean)
+          .reduce((ret: string[], inj: string | string[]) => {
+            if (typeof inj === "string" && !ret.includes(inj)) {
+              ret.push(inj);
+            } else if (Array.isArray(inj)) {
+              ret.push(...inj.filter(i => !ret.includes(i)));
+            }
+
+            return ret;
+          }, []) as string[];
+
+        context.options.build.conditions = [
+          ...DEFAULT_CONDITIONS,
+          "development"
+        ];
+      } else if (context.options.variant === "vite") {
+        context.options.build.resolve ??= {} as ResolveOptions;
+        context.options.build.resolve.alias = defu(
+          context.options.build.resolve?.alias ?? {},
+          this.#unenv.alias
+        );
+        context.options.build.resolve.conditions = [
+          ...DEFAULT_CONDITIONS,
+          "development"
+        ];
+
+        context.options.build.define = this.#unenv.inject;
+      }
 
       context.packageDeps["@cloudflare/unenv-preset"] = {
         "type": "dependency",
@@ -203,7 +260,7 @@ export default class CloudflareWorkerPlugin<
     }
   }
 
-  async #initTsconfig(context: Context) {
+  async #initTsconfig(context: TContext) {
     const tsconfigFilePath = getTsconfigFilePath(
       context.options.projectRoot,
       context.options.tsconfig
@@ -295,7 +352,7 @@ export default class CloudflareWorkerPlugin<
     );
   }
 
-  async #prepareDirectories(context: Context) {
+  async #prepareDirectories(context: TContext) {
     this.log(
       LogLevelLabel.TRACE,
       `Preparing the Storm Stack directories for the Cloudflare Worker project.`
@@ -312,7 +369,7 @@ export default class CloudflareWorkerPlugin<
     }
   }
 
-  async #prepareConfig(context: Context) {
+  async #prepareConfig(context: TContext) {
     if (context.options.projectType === "application") {
       this.log(LogLevelLabel.TRACE, "Preparing the wrangler deployment file");
 
@@ -393,14 +450,14 @@ compatibility_flags = [ "nodejs_als" ]
    *
    * @param _context - The Storm Stack context
    */
-  async #prepareRuntime(_context: Context) {
+  async #prepareRuntime(_context: TContext) {
     this.log(
       LogLevelLabel.TRACE,
       `Preparing the runtime artifacts for the Storm Stack project.`
     );
   }
 
-  async #prepareEntry(context: Context) {
+  async #prepareEntry(context: TContext) {
     await Promise.all(
       context.entry.map(async entry => {
         this.log(

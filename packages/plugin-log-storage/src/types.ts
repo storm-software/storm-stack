@@ -16,6 +16,11 @@
 
  ------------------------------------------------------------------- */
 
+import {
+  LogPluginContext,
+  LogPluginOptions,
+  LogPluginResolvedOptions
+} from "@storm-stack/devkit/types/plugins";
 import type {
   FormattedValues,
   LogLevel,
@@ -128,3 +133,29 @@ export interface TextFormatterOptions {
    */
   format?: (values: FormattedValues) => string;
 }
+
+export type LogStoragePluginOptions = LogPluginOptions & {
+  /**
+   * Whether to use the file system storage driver.
+   *
+   * @defaultValue true
+   */
+  useFileSystem?: boolean;
+
+  /**
+   * The storage ID to use for the log storage.
+   *
+   * @defaultValue "logs"
+   */
+  namespace?: string;
+};
+
+export type ResolvedLogStoragePluginOptions = Required<LogStoragePluginOptions>;
+
+export type LogStoragePluginResolvedOptions =
+  LogPluginResolvedOptions<ResolvedLogStoragePluginOptions>;
+
+export type LogStoragePluginContext<
+  TOptions extends
+    ResolvedLogStoragePluginOptions = ResolvedLogStoragePluginOptions
+> = LogPluginContext<TOptions>;

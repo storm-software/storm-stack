@@ -142,7 +142,7 @@ ${error.stack}`
 
         return { success: false };
       } finally {
-        await engine.finalize(inlineConfig);
+        await engine.finalize();
       }
     },
     {

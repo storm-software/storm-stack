@@ -22,7 +22,7 @@ import { extendLog } from "@storm-stack/core/lib/logger";
 import { BabelPluginOptions } from "@storm-stack/core/types/babel";
 import { Context } from "@storm-stack/core/types/context";
 import chalk from "chalk";
-import { BabelPluginBuilder, DeclareBabelPluginReturn } from "../types";
+import { BabelPluginBuilder, DeclareBabelPluginReturn } from "../types/babel";
 
 /**
  * Declare a Babel plugin using the provided builder function.

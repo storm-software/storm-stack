@@ -19,7 +19,7 @@
 import type { MaybePromise } from "@stryke/types/base";
 import { Range } from "semver";
 import type { EngineHooks } from "./build";
-import type { LogFn, PluginConfig } from "./config";
+import type { BuildVariant, LogFn, PluginConfig, ProjectType } from "./config";
 import { Context } from "./context";
 
 export type RendererFunction = (
@@ -82,10 +82,27 @@ export type PluginOptions<
   log?: LogFn;
 };
 
+export interface BuilderId {
+  /**
+   * The variant of the build process.
+   */
+  variant: BuildVariant;
+
+  /**
+   * The project type for the build process.
+   */
+  projectType?: ProjectType;
+}
+
 export interface PluginInterface<
-  TOptions extends PluginBaseOptions = PluginBaseOptions,
-  TContext extends Context = Context
+  TContext extends Context = Context,
+  TOptions extends PluginBaseOptions = PluginBaseOptions
 > {
+  /**
+   * The builder ID for the plugin (if specified)
+   */
+  builderId?: BuilderId;
+
   /**
    * The name of the plugin
    */
@@ -147,5 +164,5 @@ export interface PluginInterface<
    * @param plugin - The other plugin to compare against.
    * @returns `true` if the two plugins are the same, `false` otherwise.
    */
-  isSame: (plugin: PluginInterface) => boolean;
+  isSame: (plugin: PluginInterface<TContext, TOptions>) => boolean;
 }

@@ -16,7 +16,9 @@
 
  ------------------------------------------------------------------- */
 
-import { StormStack } from "./index";
+import { createRspackPlugin } from "unplugin";
+import { RspackResolvedOptions } from "../types/build";
+import { createUnpluginFactory } from "./core/factory";
 
 /**
  * Rspack plugin
@@ -31,7 +33,9 @@ import { StormStack } from "./index";
  * }
  * ```
  */
-const rspack = StormStack.rspack;
+export const rspack = createRspackPlugin(
+  createUnpluginFactory<RspackResolvedOptions>()
+);
 
 export default rspack;
 export { rspack as "module.exports" };

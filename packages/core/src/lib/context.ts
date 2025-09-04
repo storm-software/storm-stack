@@ -36,16 +36,12 @@ import { PackageJson } from "@stryke/types/package-json";
 import { uuid } from "@stryke/unique-id/uuid";
 import defu from "defu";
 import { DirectoryJSON } from "memfs";
-import { deserializeType, ReflectionClass } from "../deepkit";
 import {
   __VFS_VIRTUAL__,
   Context,
-  InlineConfig,
   MetaInfo,
-  Reflection,
   ResolvedOptions,
   RuntimeConfig,
-  SerializedContext,
   WorkspaceConfig
 } from "../types";
 import { PartiallyResolvedContext, resolveConfig } from "./config";
@@ -134,13 +130,15 @@ export async function getPersistedMeta(
  * @param options - Additional options for creating the context.
  * @returns The created context.
  */
-export async function createContext<TContext extends Context = Context>(
-  inlineConfig: InlineConfig,
+export async function createContext<
+  TOptions extends ResolvedOptions = ResolvedOptions
+>(
+  inlineConfig: TOptions["inlineConfig"],
   workspaceConfig?: WorkspaceConfig,
   options: CreateContextOptions = {}
-): Promise<TContext> {
+): Promise<Context<TOptions>> {
   const workspaceRoot = workspaceConfig?.workspaceRoot ?? getWorkspaceRoot();
-  const projectRoot = inlineConfig.root || getProjectRoot() || process.cwd();
+  const projectRoot = (inlineConfig.root ?? getProjectRoot()) || process.cwd();
 
   const resolvedWorkspaceConfig = defu(workspaceConfig, {
     workspaceRoot
@@ -213,11 +211,13 @@ export async function createContext<TContext extends Context = Context>(
       inlineConfig,
       projectRoot,
       workspaceConfig: resolvedWorkspaceConfig,
-      plugins: {} as ResolvedOptions["plugins"]
+      plugins: {}
     },
     log: createLog(
       options.name ?? null,
-      defu(inlineConfig, resolvedWorkspaceConfig) as Partial<ResolvedOptions>
+      defu(inlineConfig, resolvedWorkspaceConfig) as Parameters<
+        typeof createLog
+      >[1]
     ),
     meta,
     envPaths,
@@ -237,7 +237,6 @@ export async function createContext<TContext extends Context = Context>(
       init: []
     } as RuntimeConfig,
     packageDeps: {},
-    workers: {} as TContext["workers"],
     reflections: {},
     resolver: createResolver({
       workspaceRoot,
@@ -245,15 +244,16 @@ export async function createContext<TContext extends Context = Context>(
       cacheDir: envPaths.cache
     }),
     relativeToWorkspaceRoot: relativeToWorkspaceRoot(projectRoot)
-  } as PartiallyResolvedContext;
+  } as unknown as PartiallyResolvedContext<TOptions>;
 
-  partiallyResolvedContext.options = await resolveConfig(
+  const resolvedOptions = await resolveConfig<TOptions>(
     partiallyResolvedContext,
     inlineConfig,
     undefined,
     projectRoot
   );
-  const context = partiallyResolvedContext as TContext;
+  const context = partiallyResolvedContext as Context<TOptions>;
+  context.options = resolvedOptions;
 
   context.dataPath = joinPaths(
     context.envPaths.data,
@@ -312,85 +312,6 @@ export async function createContext<TContext extends Context = Context>(
       "Could not resolve the Storm Stack core package. Please ensure it is installed."
     );
   }
-
-  return context;
-}
-
-/**
- * Serializes the context to a format suitable for sending over the network.
- *
- * @param context - The context to serialize.
- * @returns The serialized context.
- */
-export function serializeContext(context: Context): SerializedContext {
-  return {
-    ...context,
-    log: null,
-    workers: null,
-    resolver: null,
-    compiler: null,
-    unimport: null,
-    reflections: Object.entries(context.reflections).reduce(
-      (ret, [key, reflection]) => {
-        ret[key] = (reflection as Reflection)?.serializeType();
-
-        return ret;
-      },
-      {}
-    ),
-    tsconfig: {
-      tsconfigFilePath: context.tsconfig.tsconfigFilePath,
-      tsconfigJson: context.tsconfig.tsconfigJson
-    },
-    vfs: {
-      runtimeIdMap: Object.fromEntries(context.vfs.runtimeIdMap.entries()),
-      virtualFiles: context.vfs[__VFS_VIRTUAL__].toJSON(context.artifactsPath)
-    }
-  };
-}
-
-/**
- * Deserializes the context from a serialized format.
- *
- * @param serialized - The serialized context.
- * @param logName - The name of the log to use for the context.
- * @returns The deserialized context.
- */
-export function deserializeContext(
-  serialized: SerializedContext,
-  logName: string | null = null
-): Context {
-  const context = {
-    ...serialized,
-    log: createLog(logName, serialized.options),
-    reflections: Object.keys(serialized.reflections).reduce(
-      (ret, key) => {
-        ret[key] = ReflectionClass.from(
-          deserializeType(serialized.reflections[key])
-        );
-        return ret;
-      },
-      {} as Record<string, ReflectionClass<any>>
-    ),
-    resolver: createResolver({
-      workspaceRoot: serialized.options.workspaceRoot,
-      projectRoot: serialized.options.projectRoot,
-      cacheDir: serialized.envPaths.cache
-    }),
-    vfs: {} as Context["vfs"],
-    compiler: {} as Context["compiler"],
-    tsconfig: {} as Context["tsconfig"],
-    workers: {} as Context["workers"],
-    unimport: {} as Context["unimport"]
-  } as Context;
-
-  context.vfs = restoreVfs(context, serialized.vfs);
-  context.tsconfig = getParsedTypeScriptConfig(
-    context.options.workspaceRoot,
-    serialized.options.projectRoot,
-    serialized.tsconfig.tsconfigFilePath,
-    serialized.tsconfig.tsconfigJson
-  );
 
   return context;
 }

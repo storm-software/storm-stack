@@ -99,7 +99,8 @@ export async function ConfigSetupModule(
 
   const defaultValues = loadConfigFromContext(context, process.env);
 
-  return `import {
+  return `
+import {
   Type,
   stringify,
   serializer,
@@ -111,7 +112,7 @@ export async function ConfigSetupModule(
   TypeProperty,
   TypePropertySignature
 } from "@storm-stack/core/deepkit";
-import { StormConfigInterface } from "@storm-stack/types/shared/config";
+import { StormConfigInterface } from "@storm-stack/types/config";
 
 ${generateTypeScriptInterface(reflection, {
   overrideName: "StormConfigBase",
@@ -191,7 +192,7 @@ export const serializeConfig = serializeFunction<StormConfigBase>(configSerializ
  */
 export const deserializeConfig = deserializeFunction<StormConfigBase>(configSerializer);
 
-   `;
+`;
 }
 
 /**
@@ -214,22 +215,21 @@ export async function ConfigModule(
 
 ${getFileHeader()}
 
-import { env } from 'node:process';
 ${await ConfigSetupModule(context)}
 
 /**
  * Initializes the Storm Stack configuration module.
  *
  * @remarks
- * This function initializes the Storm Stack configuration module by ensuring the configuration directory exists and creating a default configuration file if it does not exist.
+ * This function initializes the Storm Stack configuration object.
  *
- * @param runtimeConfig - The dynamic/runtime configuration - this should include the current environment variables.
- * @returns A promise that resolves when the configuration module is initialized.
+ * @param environmentConfig - The dynamic/runtime configuration - this could include the current environment variables or any other environment-specific settings provided by the runtime.
+ * @returns The initialized Storm Stack configuration object.
  */
-export async function createConfig(runtimeConfig = env as Partial<StormConfig>): Promise<StormConfig> {
+export function createConfig(environmentConfig = {} as Partial<StormConfig>): StormConfig {
   const config = deserializeConfig({
     ...initialConfig,
-    ...runtimeConfig
+    ...environmentConfig
   });
 
   return new Proxy<StormConfigBase>(

@@ -17,6 +17,10 @@
  ------------------------------------------------------------------- */
 
 import {
+  ResolvedEntryTypeDefinition,
+  ResolvedOptions
+} from "@storm-stack/core/types";
+import {
   BabelPluginOptions,
   BabelPluginPass,
   BabelPluginState
@@ -111,7 +115,7 @@ export type ResolvedConfigPluginOptions = Required<
   parsed: DotenvParseOutput;
 };
 
-export interface ConfigPluginContextOptions {
+export interface ConfigPluginResolvedOptions {
   config: ResolvedConfigPluginOptions;
 }
 
@@ -128,10 +132,13 @@ export interface ConfigPluginReflectionRecord {
   };
 }
 
-export type ConfigPluginContext = Context<
-  ConfigPluginContextOptions,
-  ConfigPluginReflectionRecord
->;
+export type ConfigPluginContext<
+  TOptions extends
+    ResolvedOptions<ConfigPluginResolvedOptions> = ResolvedOptions<ConfigPluginResolvedOptions>,
+  TReflections extends
+    ConfigPluginReflectionRecord = ConfigPluginReflectionRecord,
+  TEntry extends ResolvedEntryTypeDefinition = ResolvedEntryTypeDefinition
+> = Context<TOptions, TReflections, TEntry>;
 
 export type ConfigBabelPluginState = BabelPluginState<BabelPluginOptions>;
 

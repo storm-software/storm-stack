@@ -17,9 +17,11 @@
  ------------------------------------------------------------------- */
 
 import { LogLevelLabel } from "@storm-software/config-tools/types";
+import { DEFAULT_COLOR_CONFIG } from "@storm-software/config-tools/utilities/colors";
+import { SingleThemeColors } from "@storm-software/config/types";
 import { isMatchFound } from "@storm-stack/core/lib/typescript/tsconfig";
 import { writeFile } from "@storm-stack/core/lib/utilities/write-file";
-import type { LogFn } from "@storm-stack/core/types/config";
+import type { InferBuildOptions, LogFn } from "@storm-stack/core/types/config";
 import { toArray } from "@stryke/convert/to-array";
 import { readJsonFile } from "@stryke/fs/json";
 import { listFiles } from "@stryke/fs/list-files";
@@ -37,14 +39,15 @@ import { joinPaths } from "@stryke/path/join-paths";
 import { constantCase } from "@stryke/string-format/constant-case";
 import { kebabCase } from "@stryke/string-format/kebab-case";
 import { titleCase } from "@stryke/string-format/title-case";
+import { isSetObject } from "@stryke/type-checks/is-set-object";
 import { isSetString } from "@stryke/type-checks/is-set-string";
 import { isString } from "@stryke/type-checks/is-string";
 import { TsConfigJson } from "@stryke/types/tsconfig";
 import { defu } from "defu";
 import type {
   CLIPluginContext,
-  CLIPluginContextOptions,
-  CLIPluginOptions
+  CLIPluginOptions,
+  CLIPluginResolvedOptions
 } from "../types/config";
 import {
   getCommandReflectionsPath,
@@ -59,11 +62,18 @@ export async function initOptions(
   context.options.environment = "cli";
   context.options.skipNodeModulesBundle = true;
 
-  context.options.esbuild.override ??= {};
-  context.options.esbuild.target ??= "esnext";
-  context.options.esbuild.format ??= "esm";
+  context.options.override ??= {};
+  context.options.build.target ??= "esnext";
 
-  context.options.plugins.cli ??= {} as CLIPluginContextOptions["cli"];
+  if (context.options.projectType === "application") {
+    const build = context.options.build as InferBuildOptions<
+      "standalone",
+      "application"
+    >;
+    build.format ??= "esm";
+  }
+
+  context.options.plugins.cli ??= {} as CLIPluginResolvedOptions["cli"];
 
   context.options.plugins.cli.bin ??= options.bin
     ? toArray(options.bin)
@@ -72,6 +82,16 @@ export async function initOptions(
   context.options.plugins.cli.interactive ??= options.interactive ?? true;
   context.options.plugins.cli.title ??= options.title!;
   context.options.plugins.cli.author ??= options.author;
+  context.options.plugins.cli.colors = defu(
+    (isSetObject(options.colors?.dark)
+      ? options.colors.dark
+      : options.colors) ?? {},
+    context.options.plugins.cli.colors ?? {},
+    (isSetObject(context.options.workspaceConfig.colors?.dark)
+      ? context.options.workspaceConfig.colors.dark
+      : context.options.workspaceConfig.colors) ?? {},
+    DEFAULT_COLOR_CONFIG.dark
+  ) as SingleThemeColors;
 
   context.options.plugins.config.prefix = toArray(options.bin)
     .reduce(
@@ -244,6 +264,7 @@ export async function initEntry(log: LogFn, context: CLIPluginContext) {
 
     let binConfig = {};
     if (
+      context.options.projectType === "application" &&
       context.options.plugins.cli.bin &&
       Array.isArray(context.options.plugins.cli.bin) &&
       context.options.plugins.cli.bin.length > 0
@@ -251,16 +272,25 @@ export async function initEntry(log: LogFn, context: CLIPluginContext) {
       binConfig = context.options.plugins.cli.bin.reduce(
         (ret, binName) => {
           ret[kebabCase(binName)] =
-            context.options.esbuild.format === "cjs"
+            context.options.projectType === "application" &&
+            (context.options.variant === "standalone" ||
+              context.options.variant === "esbuild" ||
+              context.options.variant === "tsup") &&
+            context.options.build.format === "cjs"
               ? `${joinPaths("dist", bin)}.js`
               : `${joinPaths("dist", bin)}.mjs`;
+
           return ret;
         },
         {} as Record<string, string>
       );
     } else {
       binConfig[kebabCase(bin)] =
-        context.options.esbuild.format === "cjs"
+        context.options.projectType === "application" &&
+        (context.options.variant === "standalone" ||
+          context.options.variant === "esbuild" ||
+          context.options.variant === "tsup") &&
+        context.options.build.format === "cjs"
           ? `${joinPaths("dist", bin)}.js`
           : `${joinPaths("dist", bin)}.mjs`;
     }

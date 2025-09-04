@@ -16,32 +16,25 @@
 
  ------------------------------------------------------------------- */
 
-import type { OTLPExporterNodeConfigBase } from "@opentelemetry/otlp-exporter-base";
-import type { OTLPGRPCExporterConfigNode } from "@opentelemetry/otlp-grpc-exporter-base";
 import { LogLevelLabel } from "@storm-software/config-tools/types";
 import { getFileHeader } from "@storm-stack/core/lib/utilities";
-import type { Context } from "@storm-stack/core/types";
+import type { EngineHooks } from "@storm-stack/core/types";
 import type { PluginOptions } from "@storm-stack/core/types/plugin";
-import type { LogPluginOptions } from "@storm-stack/devkit/plugins/log";
 import LogPlugin from "@storm-stack/devkit/plugins/log";
 import { StormJSON } from "@stryke/json/storm-json";
-
-export type LogOpenTelemetryPluginConfig = LogPluginOptions & {
-  serviceName?: string;
-  messageType?: "string" | "array" | string;
-} & (
-    | ({
-        exporter?: "http" | "proto";
-      } & OTLPExporterNodeConfigBase)
-    | ({
-        exporter: "grpc";
-      } & OTLPGRPCExporterConfigNode)
-  );
+import {
+  LogOpenTelemetryPluginContext,
+  LogOpenTelemetryPluginOptions
+} from "./types";
 
 /**
  * A Storm Stack plugin for OpenTelemetry logging.
  */
-export default class LogOpenTelemetryPlugin extends LogPlugin<LogOpenTelemetryPluginConfig> {
+export default class LogOpenTelemetryPlugin<
+  TOptions extends
+    LogOpenTelemetryPluginOptions = LogOpenTelemetryPluginOptions,
+  TContext extends LogOpenTelemetryPluginContext = LogOpenTelemetryPluginContext
+> extends LogPlugin<TContext, TOptions> {
   protected override packageDeps = {
     "@opentelemetry/api-logs@^0.200.0": "dependency",
     "@opentelemetry/resources@^0.200.0": "dependency",
@@ -49,8 +42,10 @@ export default class LogOpenTelemetryPlugin extends LogPlugin<LogOpenTelemetryPl
     "@opentelemetry/semantic-conventions@^1.32.0": "dependency"
   } as Record<string, "dependency" | "devDependency">;
 
-  public constructor(options: PluginOptions<LogOpenTelemetryPluginConfig>) {
+  public constructor(options: PluginOptions<TOptions>) {
     super(options);
+
+    this.dependencies = [["@storm-stack/plugin-config", options ?? {}]];
 
     this.options.exporter ??= "http";
     if (this.options.exporter === "grpc") {
@@ -65,7 +60,40 @@ export default class LogOpenTelemetryPlugin extends LogPlugin<LogOpenTelemetryPl
     ] = "dependency";
   }
 
-  protected override writeAdapter(_context: Context) {
+  /**
+   * Adds hooks to the engine's hook system.
+   *
+   * @param hooks - The hooks to add to the engine.
+   */
+  public override addHooks(hooks: EngineHooks<TContext>) {
+    super.addHooks(hooks);
+
+    hooks.addHooks({
+      "init:options": this.initOptions.bind(this)
+    });
+  }
+
+  /**
+   * Initializes the plugin's options.
+   *
+   * @remarks
+   * This method is called during the initialization phase of the plugin. It can be used to set default options or modify existing ones.
+   *
+   * @param context - The context of the current build.
+   */
+  protected initOptions(context: TContext) {
+    this.log(
+      LogLevelLabel.TRACE,
+      `Initializing the OpenTelemetry Log plugin options for the Storm Stack project.`
+    );
+
+    const options = this.getOptions(context);
+    options.messageType ??= "string";
+    options.exporter ??= "http";
+    options.serviceName ??= process.env.OTEL_SERVICE_NAME || "unknown-service";
+  }
+
+  protected override writeAdapter(context: TContext) {
     return `${getFileHeader()}
 
 import type {
@@ -74,7 +102,7 @@ import type {
 } from "@opentelemetry/api-logs";
 import { SeverityNumber } from "@opentelemetry/api-logs";
 import { OTLPLogExporter } from "@opentelemetry/exporter-logs-otlp-${
-      this.options.exporter
+      this.getOptions(context).exporter
     }";
 import type { DetectedResourceAttributes } from "@opentelemetry/resources";
 import { resourceFromAttributes } from "@opentelemetry/resources";
@@ -233,7 +261,7 @@ const inspect: (value: unknown) => string =
  */
 function createAdapter(): LogAdapter {
   const SERVICE_NAME =
-    ${this.options.serviceName} || $storm.config.OTEL_SERVICE_NAME || $storm.env.name;
+    ${this.getOptions(context).serviceName} || $storm.config.OTEL_SERVICE_NAME || $storm.env.name;
 
   const resource = resourceFromAttributes({
     [ATTR_SERVICE_NAME]: SERVICE_NAME
@@ -243,11 +271,11 @@ function createAdapter(): LogAdapter {
   loggerProvider.addLogRecordProcessor(
     new SimpleLogRecordProcessor(
       new OTLPLogExporter({
-          url: "${this.options.url}",
-          headers: ${StormJSON.stringify(this.options.headers)},
-          concurrencyLimit: ${this.options.concurrencyLimit ?? 10},
-          timeoutMillis: ${this.options.timeoutMillis ?? 10000},
-          compression: "${this.options.compression}"
+          url: "${this.getOptions(context).url}",
+          headers: ${StormJSON.stringify(this.getOptions(context).headers)},
+          concurrencyLimit: ${this.getOptions(context).concurrencyLimit ?? 10},
+          timeoutMillis: ${this.getOptions(context).timeoutMillis ?? 10000},
+          compression: "${this.getOptions(context).compression}"
         })
     )
   );
@@ -267,14 +295,14 @@ function createAdapter(): LogAdapter {
       severityNumber,
       severityText: level,
       body: ${
-        this.options.messageType === "string"
+        this.getOptions(context).messageType === "string"
           ? `convertMessageToString(message, inspect)`
-          : this.options.messageType === "array"
+          : this.getOptions(context).messageType === "array"
             ? `convertMessageToArray(message, inspect)`
             : `convertMessageToCustomBodyFormat(
               message,
               inspect,
-              ${this.options.messageType}
+              ${this.getOptions(context).messageType}
             )`
       },
       attributes,

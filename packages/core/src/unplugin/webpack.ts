@@ -16,13 +16,9 @@
 
  ------------------------------------------------------------------- */
 
-/**
- * This entry file is for webpack plugin.
- *
- * @module
- */
-
-import { StormStack } from "./index";
+import { createWebpackPlugin } from "unplugin";
+import { WebpackResolvedOptions } from "../types/build";
+import { createUnpluginFactory } from "./core/factory";
 
 /**
  * Webpack plugin
@@ -30,14 +26,16 @@ import { StormStack } from "./index";
  * @example
  * ```js
  * // webpack.config.js
- * import StormStack from 'storm-stack/webpack'
+ * import StormStack from '@storm-stack/core/webpack'
  *
  * default export {
  *  plugins: [StormStack()],
  * }
  * ```
  */
-const webpack = StormStack.webpack;
+export const webpack = createWebpackPlugin(
+  createUnpluginFactory<WebpackResolvedOptions>()
+);
 
 export default webpack;
 export { webpack as "module.exports" };

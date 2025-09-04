@@ -18,23 +18,22 @@
 
 import { getFileHeader } from "@storm-stack/core/lib/utilities/file-header";
 import type { PluginOptions } from "@storm-stack/core/types/plugin";
-import type { StoragePluginOptions } from "@storm-stack/devkit/plugins/storage";
 import StoragePlugin from "@storm-stack/devkit/plugins/storage";
-import type { S3DriverOptions } from "unstorage/drivers/s3";
+import { StorageS3PluginContext, StorageS3PluginOptions } from "./types";
 
-export type StorageS3PluginPluginOptions = StoragePluginOptions &
-  S3DriverOptions;
-
-export default class StorageS3Plugin extends StoragePlugin<StorageS3PluginPluginOptions> {
+export default class StorageS3Plugin<
+  TContext extends StorageS3PluginContext = StorageS3PluginContext,
+  TOptions extends StorageS3PluginOptions = StorageS3PluginOptions
+> extends StoragePlugin<TContext, TOptions> {
   protected override packageDeps = {
     "aws4fetch@1.0.20": "dependency"
   } as Record<string, "dependency" | "devDependency">;
 
-  public constructor(options: PluginOptions<StorageS3PluginPluginOptions>) {
+  public constructor(options: PluginOptions<TOptions>) {
     super(options);
   }
 
-  protected override writeStorage() {
+  protected override writeStorage(context: TContext) {
     return `${getFileHeader()}
 
 import type { StorageAdapter } from "@storm-stack/types/shared/storage";
@@ -52,8 +51,8 @@ function createAdapter(): StorageAdapter {
   const accessKey = $storm.config.AWS_ACCESS_KEY_ID;
   const secretAccessKey = $storm.config.AWS_SECRET_ACCESS_KEY;
   const region = ${
-    this.options.region
-      ? `"${this.options.region}"`
+    this.getOptions(context).region
+      ? `"${this.getOptions(context).region}"`
       : "$storm.config.AWS_REGION"
   };
 
@@ -65,7 +64,7 @@ function createAdapter(): StorageAdapter {
     accessKeyId: accessKey,
     secretAccessKey: secretAccessKey,
     endpoint: \`https://s3.\${region}.amazonaws.com/\`,
-    bucket: "${this.options.bucket}",
+    bucket: "${this.getOptions(context).bucket}",
     region,
   }) as StorageAdapter;
   adapter[Symbol.asyncDispose] = async () => {

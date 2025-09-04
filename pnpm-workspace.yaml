@@ -45,20 +45,29 @@ catalog:
   "@sentry/core": ^9.15.0
   "@sentry/node": ^9.15.0
   "@sentry/types": ^9.15.0
+  "@stryke/": ^0.0.0
+  "@stryke/t": ^0.0.0
+  "@stryke/ty": ^0.0.0
+  "@stryke/typ": ^0.0.0
+  "@stryke/type": ^0.0.0
+  "@stryke/typer": ^0.0.0
+  "@stryke/y": ^0.0.0
   "@taplo/cli": ^0.7.0
+  "@type/react": ^0.0.0
+  "@type/react-dom": ^0.0.0
   "@types/eslint": ^9.6.1
   "@types/eslint__js": ^8.42.3
   "@types/jest": 30.0.0
   "@types/react": npm:@types/react@ts5.9
   "@types/react-dom": npm:@types/react-dom@ts5.9
   "@types/node": ^22.15.3
-  "@nx/devkit": ^21.4.1
-  "@nx/eslint-plugin": ^21.4.1
-  "@nx/jest": ^21.4.1
-  "@nx/js": ^21.4.1
-  "@nx/plugin": ^21.4.1
-  "@nx/react": ^21.4.1
-  "@nx/workspace": ^21.4.1
+  "@nx/devkit": 21.4.1
+  "@nx/eslint-plugin": 21.4.1
+  "@nx/jest": 21.4.1
+  "@nx/js": 21.4.1
+  "@nx/plugin": 21.4.1
+  "@nx/react": 21.4.1
+  "@nx/workspace": 21.4.1
   "@storm-software/build-tools": latest
   "@storm-software/config": latest
   "@storm-software/config-tools": latest
@@ -125,7 +134,7 @@ catalog:
   minimatch: ^10.0.3
   nanotar: ^0.2.0
   prettier: 3.6.2
-  nx: ^21.4.1
+  nx: 21.4.1
   jest: 30.0.5
   jest-environment-jsdom: 30.0.5
   jest-environment-node: 30.0.5
@@ -195,6 +204,7 @@ overrides:
   "@storm-stack/plugin-log-storage": workspace:*
   "@storm-stack/plugin-log-otel": workspace:*
   "@storm-stack/plugin-log-sentry": workspace:*
+  "@storm-stack/plugin-react": workspace:*
   "@storm-stack/plugin-storage-fs": workspace:*
   "@storm-stack/plugin-storage-cloudflare-kv": workspace:*
   "@storm-stack/plugin-storage-cloudflare-r2": workspace:*

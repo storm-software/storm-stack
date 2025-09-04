@@ -156,7 +156,7 @@ try {
     }
   }
 
-  echo`${chalk.green(`Successfully built the monorepo in ${configuration} mode!`)}`;
+  echo`${chalk.green(`✅  Successfully built the monorepo in ${configuration} mode!`)}`;
 } catch (error) {
   echo`${chalk.red(error?.message ? error.message : "A failure occurred while building the monorepo")}`;
 

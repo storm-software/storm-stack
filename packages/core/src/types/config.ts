@@ -17,19 +17,26 @@
  ------------------------------------------------------------------- */
 
 import { transformAsync } from "@babel/core";
+import type { Configuration as ExternalRspackOptions } from "@rspack/core";
 import { AssetGlob } from "@storm-software/build-tools/types";
 import type { LogLevelLabel } from "@storm-software/config-tools/types";
 import { StormWorkspaceConfig } from "@storm-software/config/types";
 import {
-  ESBuildOptions as BaseESBuildOptions,
+  ESBuildOptions as ExternalTsupOptions,
   MaybePromise
 } from "@storm-software/esbuild/types";
-import type { UnbuildOptions as BaseUnbuildOptions } from "@storm-software/unbuild/types";
+import type { UnbuildOptions as ExternalUnbuildOptions } from "@storm-software/unbuild/types";
 import type { TypeDefinitionParameter } from "@stryke/types/configuration";
 import { ConfigLayer, ResolvedConfig } from "c12";
-import { BuildOptions as ExternalESBuildOptions } from "esbuild";
-import { BuildOptions as ExternalUnbuildOptions } from "unbuild";
-import { UnpluginContextMeta } from "unplugin";
+import type { BuildOptions as ExternalESBuildOptions } from "esbuild";
+import type { RolldownOptions as ExternalRolldownOptions } from "rolldown";
+import type { RollupOptions as ExternalRollupOptions } from "rollup";
+import type { UnpluginContextMeta } from "unplugin";
+import type {
+  InlineConfig as ExternalViteInlineConfig,
+  UserConfig as ExternalViteUserConfig
+} from "vite";
+import type { Configuration as ExternalWebpackOptions } from "webpack";
 import { BabelPluginItem } from "./babel";
 import { Context } from "./context";
 import { TSConfig } from "./tsconfig";
@@ -44,10 +51,8 @@ export type Template = (
 /**
  * The {@link StormWorkspaceConfig | configuration} object for an entire Storm Stack workspace
  */
-export type WorkspaceConfig =
-  | StormWorkspaceConfig
-  | (Partial<StormWorkspaceConfig> &
-      Pick<StormWorkspaceConfig, "workspaceRoot">);
+export type WorkspaceConfig = Partial<StormWorkspaceConfig> &
+  Required<Pick<StormWorkspaceConfig, "workspaceRoot">>;
 
 /**
  * A configuration tuple for a Storm Stack plugin.
@@ -73,12 +78,47 @@ export type PluginConfig<
   TProps extends Record<string, any> = Record<string, any>
 > = PluginConfigTuple<TProps> | PluginConfigObject<TProps>;
 
-export type ESBuildOverrideOptions = ExternalESBuildOptions &
-  BaseESBuildOptions;
+export type ESBuildConfig = Omit<
+  ExternalESBuildOptions,
+  | "entryPoints"
+  | "sourceRoot"
+  | "platform"
+  | "outdir"
+  | "env"
+  | "assets"
+  | "external"
+  | "tsconfig"
+  | "tsconfigRaw"
+>;
+export type ESBuildOptions = ExternalESBuildOptions;
 
-export type ESBuildOptions = Partial<
+export type ViteConfig = Omit<
+  ExternalViteUserConfig,
+  "entry" | "entryPoints" | "tsconfig" | "tsconfigRaw"
+>;
+export type ViteOptions = ExternalViteInlineConfig;
+
+export type WebpackConfig = Omit<
+  ExternalWebpackOptions,
+  "name" | "entry" | "entryPoints" | "tsconfig" | "tsconfigRaw"
+>;
+export type WebpackOptions = ExternalWebpackOptions;
+
+export type RspackConfig = Omit<
+  ExternalRspackOptions,
+  "name" | "entry" | "entryPoints" | "tsconfig" | "tsconfigRaw"
+>;
+export type RspackOptions = ExternalRspackOptions;
+
+export type RollupConfig = ExternalRollupOptions;
+export type RollupOptions = ExternalRollupOptions;
+
+export type RolldownConfig = ExternalRolldownOptions;
+export type RolldownOptions = ExternalRolldownOptions;
+
+export type TsupConfig = Partial<
   Omit<
-    BaseESBuildOptions,
+    ExternalTsupOptions,
     | "userOptions"
     | "tsconfig"
     | "tsconfigRaw"
@@ -89,20 +129,21 @@ export type ESBuildOptions = Partial<
     | "projectRoot"
     | "env"
     | "entry"
+    | "entryPoints"
     | "external"
     | "noExternal"
     | "skipNodeModulesBundle"
   >
-> & {
-  override?: Partial<ESBuildOverrideOptions>;
-};
+>;
 
-export type UnbuildOverrideOptions = ExternalUnbuildOptions &
-  BaseUnbuildOptions;
+export type StandaloneApplicationBuildConfig = TsupConfig;
 
-export type UnbuildOptions = Partial<
+export type TsupOptions = ExternalTsupOptions;
+export type StandaloneApplicationBuildOptions = TsupOptions;
+
+export type UnbuildConfig = Partial<
   Omit<
-    BaseUnbuildOptions,
+    ExternalUnbuildOptions,
     | "tsconfig"
     | "tsconfigRaw"
     | "assets"
@@ -112,10 +153,14 @@ export type UnbuildOptions = Partial<
     | "projectRoot"
     | "env"
     | "entry"
+    | "entryPoints"
   >
-> & {
-  override?: Partial<UnbuildOverrideOptions>;
-};
+>;
+
+export type StandaloneLibraryBuildConfig = UnbuildConfig;
+
+export type UnbuildOptions = ExternalUnbuildOptions;
+export type StandaloneLibraryBuildOptions = UnbuildOptions;
 
 export type BabelConfig = Parameters<typeof transformAsync>[1] & {
   /**
@@ -148,7 +193,7 @@ export interface OutputConfig {
   outputMode?: "memory" | "fs";
 
   /**
-   * The path of the generated declaration file relative to the workspace root.
+   * The path of the generated runtime declaration file relative to the workspace root.
    *
    * @defaultValue "\{\{ projectRoot \}\}/storm.d.ts"
    */
@@ -163,9 +208,92 @@ export interface OutputConfig {
   assets?: Array<string | AssetGlob>;
 }
 
-export type UserConfig = Partial<
-  Omit<WorkspaceConfig, "workspaceRoot" | "logLevel">
-> & {
+export type ProjectType = "application" | "library";
+
+export type UnpluginBuildVariant =
+  | "webpack"
+  | "rspack"
+  | "esbuild"
+  | "rollup"
+  | "rolldown"
+  | "vite";
+
+export type BuildVariant =
+  | UnpluginBuildVariant
+  | "standalone"
+  | "tsup"
+  | "unbuild";
+
+export type InferBuildConfig<
+  TBuildVariant extends BuildVariant = BuildVariant,
+  TProjectType extends ProjectType = ProjectType
+> = TBuildVariant extends "webpack"
+  ? WebpackOptions
+  : TBuildVariant extends "rspack"
+    ? RspackOptions
+    : TBuildVariant extends "esbuild"
+      ? ESBuildConfig
+      : TBuildVariant extends "rollup"
+        ? RollupOptions
+        : TBuildVariant extends "rolldown"
+          ? RolldownOptions
+          : TBuildVariant extends "vite"
+            ? ViteConfig
+            : TBuildVariant extends "tsup"
+              ? TsupConfig
+              : TBuildVariant extends "unbuild"
+                ? UnbuildConfig
+                : TProjectType extends "library"
+                  ? StandaloneLibraryBuildConfig
+                  : StandaloneApplicationBuildConfig;
+
+export type InferBuildOptionsOverride<
+  TBuildVariant extends BuildVariant = BuildVariant,
+  TProjectType extends ProjectType = ProjectType
+> = TBuildVariant extends "webpack"
+  ? Partial<WebpackOptions>
+  : TBuildVariant extends "rspack"
+    ? Partial<RspackOptions>
+    : TBuildVariant extends "esbuild"
+      ? Partial<ESBuildOptions>
+      : TBuildVariant extends "rollup"
+        ? Partial<RollupOptions>
+        : TBuildVariant extends "rolldown"
+          ? Partial<RolldownOptions>
+          : TBuildVariant extends "vite"
+            ? Partial<ViteOptions>
+            : TBuildVariant extends "tsup"
+              ? Partial<TsupOptions>
+              : TBuildVariant extends "unbuild"
+                ? Partial<UnbuildOptions>
+                : TProjectType extends "library"
+                  ? Partial<StandaloneLibraryBuildOptions>
+                  : Partial<StandaloneApplicationBuildOptions>;
+
+export type InferBuildOptions<
+  TBuildVariant extends BuildVariant = BuildVariant,
+  TProjectType extends ProjectType = ProjectType
+> = TBuildVariant extends "webpack"
+  ? WebpackOptions
+  : TBuildVariant extends "rspack"
+    ? RspackOptions
+    : TBuildVariant extends "esbuild"
+      ? ESBuildOptions
+      : TBuildVariant extends "rollup"
+        ? RollupOptions
+        : TBuildVariant extends "rolldown"
+          ? RolldownOptions
+          : TBuildVariant extends "vite"
+            ? ViteOptions
+            : TBuildVariant extends "tsup"
+              ? TsupOptions
+              : TBuildVariant extends "unbuild"
+                ? UnbuildOptions
+                : TProjectType extends "library"
+                  ? StandaloneLibraryBuildOptions
+                  : StandaloneApplicationBuildOptions;
+
+export interface CommonUserConfig {
   /**
    * The name of the project
    */
@@ -178,6 +306,13 @@ export type UserConfig = Partial<
    * If this option is not provided, the build process will try to use the \`description\` value from the `\package.json\` file.
    */
   description?: string;
+
+  /**
+   * The type of project being built
+   *
+   * @defaultValue "application"
+   */
+  type?: ProjectType;
 
   /**
    * The root directory of the project
@@ -200,13 +335,6 @@ export type UserConfig = Partial<
    * @defaultValue "\{root\}/templates"
    */
   templates?: string;
-
-  /**
-   * The type of project being built
-   *
-   * @defaultValue "application"
-   */
-  type?: "application" | "library";
 
   /**
    * The log level to use for the Storm Stack processes.
@@ -319,31 +447,243 @@ export type UserConfig = Partial<
   skipNodeModulesBundle?: boolean;
 
   /**
-   * Options to override the behavior of the build process
-   */
-  esbuild?: ESBuildOptions;
-
-  /**
-   * Options to override the behavior of the unbuild process
-   */
-  unbuild?: UnbuildOptions;
-
-  /**
    * The Babel configuration options to use for the build process
    */
   babel?: BabelConfig;
-};
+}
 
-export type ResolvedUserConfig = UserConfig &
-  ResolvedConfig<UserConfig> & {
-    /**
-     * The path to the user configuration file, if it exists.
-     *
-     * @remarks
-     * This is typically the `storm.json`, `storm.config.js`, or `storm.config.ts` file in the project root.
-     */
-    configFile?: ConfigLayer<UserConfig>["configFile"];
-  };
+export interface WebpackUserConfig extends CommonUserConfig {
+  /**
+   * The build variant being used by the Storm Stack engine.
+   */
+  variant: "webpack";
+
+  /**
+   * Options to to provide to the build process
+   */
+  build?: WebpackConfig;
+
+  /**
+   * A set of options similar to {@link UserConfig.build}, except they will not be merged with the default/plugin provided options.
+   *
+   * @remarks
+   * The options provided here will take precedence over any other options that might be set.
+   */
+  override?: Partial<WebpackOptions>;
+}
+
+export interface RspackUserConfig extends CommonUserConfig {
+  /**
+   * The build variant being used by the Storm Stack engine.
+   */
+  variant: "rspack";
+
+  /**
+   * Options to to provide to the build process
+   */
+  build?: RspackConfig;
+
+  /**
+   * A set of options similar to {@link UserConfig.build}, except they will not be merged with the default/plugin provided options.
+   *
+   * @remarks
+   * The options provided here will take precedence over any other options that might be set.
+   */
+  override?: Partial<RspackOptions>;
+}
+
+export interface RollupUserConfig extends CommonUserConfig {
+  /**
+   * The build variant being used by the Storm Stack engine.
+   */
+  variant: "rollup";
+
+  /**
+   * Options to to provide to the build process
+   */
+  build?: RollupConfig;
+
+  /**
+   * A set of options similar to {@link UserConfig.build}, except they will not be merged with the default/plugin provided options.
+   *
+   * @remarks
+   * The options provided here will take precedence over any other options that might be set.
+   */
+  override?: Partial<RollupOptions>;
+}
+
+export interface RolldownUserConfig extends CommonUserConfig {
+  /**
+   * The build variant being used by the Storm Stack engine.
+   */
+  variant: "rolldown";
+
+  /**
+   * Options to to provide to the build process
+   */
+  build?: RolldownConfig;
+
+  /**
+   * A set of options similar to {@link UserConfig.build}, except they will not be merged with the default/plugin provided options.
+   *
+   * @remarks
+   * The options provided here will take precedence over any other options that might be set.
+   */
+  override?: Partial<RolldownOptions>;
+}
+
+export interface ViteUserConfig extends CommonUserConfig {
+  /**
+   * The build variant being used by the Storm Stack engine.
+   */
+  variant: "vite";
+
+  /**
+   * Options to to provide to the build process
+   */
+  build?: ViteConfig;
+
+  /**
+   * A set of options similar to {@link UserConfig.build}, except they will not be merged with the default/plugin provided options.
+   *
+   * @remarks
+   * The options provided here will take precedence over any other options that might be set.
+   */
+  override?: Partial<ViteOptions>;
+}
+
+export interface ESBuildUserConfig extends CommonUserConfig {
+  /**
+   * The build variant being used by the Storm Stack engine.
+   */
+  variant: "esbuild";
+
+  /**
+   * Options to to provide to the build process
+   */
+  build?: ESBuildConfig;
+
+  /**
+   * A set of options similar to {@link UserConfig.build}, except they will not be merged with the default/plugin provided options.
+   *
+   * @remarks
+   * The options provided here will take precedence over any other options that might be set.
+   */
+  override?: Partial<ESBuildOptions>;
+}
+
+export interface UnbuildUserConfig extends CommonUserConfig {
+  /**
+   * The build variant being used by the Storm Stack engine.
+   */
+  variant: "unbuild";
+
+  /**
+   * Options to to provide to the build process
+   */
+  build?: UnbuildConfig;
+
+  /**
+   * A set of options similar to {@link UserConfig.build}, except they will not be merged with the default/plugin provided options.
+   *
+   * @remarks
+   * The options provided here will take precedence over any other options that might be set.
+   */
+  override?: Partial<UnbuildOptions>;
+}
+
+export interface TsupUserConfig extends CommonUserConfig {
+  /**
+   * The build variant being used by the Storm Stack engine.
+   */
+  variant: "tsup";
+
+  /**
+   * Options to to provide to the build process
+   */
+  build?: TsupConfig;
+
+  /**
+   * A set of options similar to {@link UserConfig.build}, except they will not be merged with the default/plugin provided options.
+   *
+   * @remarks
+   * The options provided here will take precedence over any other options that might be set.
+   */
+  override?: Partial<TsupOptions>;
+}
+
+export interface StandaloneCommonUserConfig extends CommonUserConfig {
+  /**
+   * The build variant being used by the Storm Stack engine.
+   */
+  variant: "standalone";
+}
+
+export interface StandaloneLibraryUserConfig
+  extends StandaloneCommonUserConfig {
+  /**
+   * The type of project being built
+   */
+  type: "library";
+
+  /**
+   * Options to to provide to the build process
+   */
+  build?: StandaloneLibraryBuildConfig;
+
+  /**
+   * A set of options similar to {@link UserConfig.build}, except they will not be merged with the default/plugin provided options.
+   *
+   * @remarks
+   * The options provided here will take precedence over any other options that might be set.
+   */
+  override?: Partial<StandaloneLibraryBuildOptions>;
+}
+
+export interface StandaloneApplicationUserConfig
+  extends StandaloneCommonUserConfig {
+  /**
+   * The type of project being built
+   */
+  type: "application";
+
+  /**
+   * Options to to provide to the build process
+   */
+  build?: StandaloneApplicationBuildConfig;
+
+  /**
+   * A set of options similar to {@link UserConfig.build}, except they will not be merged with the default/plugin provided options.
+   *
+   * @remarks
+   * The options provided here will take precedence over any other options that might be set.
+   */
+  override?: Partial<StandaloneApplicationBuildOptions>;
+}
+
+export type UserConfig =
+  | WebpackUserConfig
+  | RspackUserConfig
+  | ViteUserConfig
+  | ESBuildUserConfig
+  | UnbuildUserConfig
+  | TsupUserConfig
+  | RolldownUserConfig
+  | RollupUserConfig
+  | StandaloneApplicationUserConfig
+  | StandaloneLibraryUserConfig;
+
+export type ResolvedUserConfig<TUserConfig extends UserConfig = UserConfig> =
+  TUserConfig &
+    ResolvedConfig<TUserConfig> & {
+      /**
+       * The path to the user configuration file, if it exists.
+       *
+       * @remarks
+       * This is typically the `storm.json`, `storm.config.js`, or `storm.config.ts` file in the project root.
+       */
+      configFile?: ConfigLayer<TUserConfig>["configFile"];
+    };
 
 export type StormStackCommand =
   | "new"
@@ -356,39 +696,41 @@ export type StormStackCommand =
 /**
  * The configuration provided while executing Storm Stack commands.
  */
-export type InlineConfig = UserConfig & {
-  /**
-   * A string identifier for the Storm Stack command being executed
-   */
-  command: StormStackCommand;
+export type InlineConfig<TUserConfig extends UserConfig = UserConfig> =
+  Partial<TUserConfig> &
+    Partial<Omit<WorkspaceConfig, "logLevel">> & {
+      /**
+       * A string identifier for the Storm Stack command being executed
+       */
+      command: StormStackCommand;
 
-  /**
-   * The package name (from the \`package.json\`) for the project that will be used in the \`new\` command to create a new project based on this configuration
-   */
-  packageName?: string;
+      /**
+       * The package name (from the \`package.json\`) for the project that will be used in the \`new\` command to create a new project based on this configuration
+       */
+      packageName?: string;
 
-  /**
-   * The path to the tsconfig file to be used by the compiler
-   *
-   * @remarks
-   * If a value is not provided, the plugin will attempt to find the `tsconfig.json` file in the project root directory. The parsed tsconfig compiler options will be merged with the {@link Options.tsconfigRaw} value (if provided).
-   *
-   * @defaultValue "\{root\}/tsconfig.json"
-   */
-  tsconfig?: string;
+      /**
+       * The path to the tsconfig file to be used by the compiler
+       *
+       * @remarks
+       * If a value is not provided, the plugin will attempt to find the `tsconfig.json` file in the project root directory. The parsed tsconfig compiler options will be merged with the {@link Options.tsconfigRaw} value (if provided).
+       *
+       * @defaultValue "\{root\}/tsconfig.json"
+       */
+      tsconfig?: string;
 
-  /**
-   * The environment name for which the project is being built.
-   *
-   * @defaultValue "shared"
-   */
-  environment?: string;
+      /**
+       * The environment name for which the project is being built.
+       *
+       * @defaultValue "shared"
+       */
+      environment?: string;
 
-  /**
-   * The entry point(s) for the application
-   */
-  entry?: TypeDefinitionParameter | TypeDefinitionParameter[];
-};
+      /**
+       * The entry point(s) for the application
+       */
+      entry?: TypeDefinitionParameter | TypeDefinitionParameter[];
+    };
 
 export type NewInlineConfig = InlineConfig & {
   /**
@@ -431,135 +773,120 @@ export type CleanInlineConfig = InlineConfig & {
   entry?: TypeDefinitionParameter | TypeDefinitionParameter[];
 };
 
-export type PrepareInlineConfig = InlineConfig & {
-  /**
-   * A string identifier for the Storm Stack command being executed
-   */
-  command: "prepare";
+export type PrepareInlineConfig<TUserConfig extends UserConfig = UserConfig> =
+  InlineConfig<TUserConfig> & {
+    /**
+     * A string identifier for the Storm Stack command being executed
+     */
+    command: "prepare";
 
-  /**
-   * The path to the tsconfig file to be used by the compiler
-   *
-   * @remarks
-   * If a value is not provided, the plugin will attempt to find the `tsconfig.json` file in the project root directory. The parsed tsconfig compiler options will be merged with the {@link Options.tsconfigRaw} value (if provided).
-   *
-   * @defaultValue "\{root\}/tsconfig.json"
-   */
-  tsconfig?: string;
+    /**
+     * The path to the tsconfig file to be used by the compiler
+     *
+     * @remarks
+     * If a value is not provided, the plugin will attempt to find the `tsconfig.json` file in the project root directory. The parsed tsconfig compiler options will be merged with the {@link Options.tsconfigRaw} value (if provided).
+     *
+     * @defaultValue "\{root\}/tsconfig.json"
+     */
+    tsconfig?: string;
 
-  /**
-   * The environment name for which the project is being built.
-   *
-   * @defaultValue "shared"
-   */
-  environment?: string;
+    /**
+     * The environment name for which the project is being built.
+     *
+     * @defaultValue "shared"
+     */
+    environment?: string;
 
-  /**
-   * The entry point(s) for the application
-   */
-  entry?: TypeDefinitionParameter | TypeDefinitionParameter[];
+    /**
+     * The entry point(s) for the application
+     */
+    entry?: TypeDefinitionParameter | TypeDefinitionParameter[];
 
-  /**
-   * Should the Storm Stack CLI processes skip installing missing packages?
-   *
-   * @remarks
-   * This option is useful for CI/CD environments where the installation of packages is handled by a different process.
-   *
-   * @defaultValue false
-   */
-  skipInstalls?: boolean;
+    /**
+     * Should the Storm Stack CLI processes skip installing missing packages?
+     *
+     * @remarks
+     * This option is useful for CI/CD environments where the installation of packages is handled by a different process.
+     *
+     * @defaultValue false
+     */
+    skipInstalls?: boolean;
 
-  /**
-   * Should the compiler processes skip any improvements that make use of cache?
-   *
-   * @defaultValue false
-   */
-  skipCache?: boolean;
+    /**
+     * Should the compiler processes skip any improvements that make use of cache?
+     *
+     * @defaultValue false
+     */
+    skipCache?: boolean;
 
-  /**
-   * Should the Storm Stack CLI process clean up the project artifacts prior to running the `storm prepare` command?
-   *
-   * @defaultValue false
-   */
-  clean?: boolean;
-};
+    /**
+     * Should the Storm Stack CLI process clean up the project artifacts prior to running the `storm prepare` command?
+     *
+     * @defaultValue false
+     */
+    clean?: boolean;
+  };
 
-export type BuildInlineConfig = InlineConfig & {
-  /**
-   * A string identifier for the Storm Stack command being executed
-   */
-  command: "build";
+export type BuildInlineConfig<TUserConfig extends UserConfig = UserConfig> =
+  InlineConfig<TUserConfig> & {
+    /**
+     * A string identifier for the Storm Stack command being executed
+     */
+    command: "build";
 
-  /**
-   * The path to the tsconfig file to be used by the compiler
-   *
-   * @remarks
-   * If a value is not provided, the plugin will attempt to find the `tsconfig.json` file in the project root directory. The parsed tsconfig compiler options will be merged with the {@link Options.tsconfigRaw} value (if provided).
-   *
-   * @defaultValue "\{root\}/tsconfig.json"
-   */
-  tsconfig?: string;
+    /**
+     * The path to the tsconfig file to be used by the compiler
+     *
+     * @remarks
+     * If a value is not provided, the plugin will attempt to find the `tsconfig.json` file in the project root directory. The parsed tsconfig compiler options will be merged with the {@link Options.tsconfigRaw} value (if provided).
+     *
+     * @defaultValue "\{root\}/tsconfig.json"
+     */
+    tsconfig?: string;
 
-  /**
-   * The environment name for which the project is being built.
-   *
-   * @defaultValue "shared"
-   */
-  environment?: string;
+    /**
+     * The environment name for which the project is being built.
+     *
+     * @defaultValue "shared"
+     */
+    environment?: string;
 
-  /**
-   * The entry point(s) for the application
-   */
-  entry?: TypeDefinitionParameter | TypeDefinitionParameter[];
+    /**
+     * The entry point(s) for the application
+     */
+    entry?: TypeDefinitionParameter | TypeDefinitionParameter[];
 
-  /**
-   * The output path for the compiled build artifacts
-   */
-  outputPath?: string;
+    /**
+     * Should the Storm Stack CLI processes skip installing missing packages?
+     *
+     * @remarks
+     * This option is useful for CI/CD environments where the installation of packages is handled by a different process.
+     *
+     * @defaultValue false
+     */
+    skipInstalls?: boolean;
 
-  /**
-   * Should the Storm Stack CLI processes skip installing missing packages?
-   *
-   * @remarks
-   * This option is useful for CI/CD environments where the installation of packages is handled by a different process.
-   *
-   * @defaultValue false
-   */
-  skipInstalls?: boolean;
+    /**
+     * Should the compiler processes skip any improvements that make use of cache?
+     *
+     * @defaultValue false
+     */
+    skipCache?: boolean;
 
-  /**
-   * Should the compiler processes skip any improvements that make use of cache?
-   *
-   * @defaultValue false
-   */
-  skipCache?: boolean;
+    /**
+     * Should the Storm Stack CLI process clean up the project artifacts prior to running the `storm prepare` command?
+     *
+     * @defaultValue false
+     */
+    clean?: boolean;
 
-  /**
-   * Should linting be skipped for this project?
-   *
-   * @defaultValue false
-   */
-  skipLint?: boolean;
-
-  /**
-   * Should the Storm Stack CLI process clean up the project artifacts prior to running the `prepare` command?
-   *
-   * @defaultValue false
-   */
-  clean?: boolean;
-};
-
-export interface UnpluginBuildInlineConfig extends BuildInlineConfig {
-  /**
-   * Metadata for the unplugin instance
-   *
-   * @see https://unplugin.unjs.io
-   *
-   * @remarks
-   * An object containing metadata about the [unplugin](https://unplugin.unjs.io) instance, such as the framework or bundler being used. **Note:** This metadata is only available when using the Storm Stack plugin in another build process (for example: Vite).
-   */
-  unplugin: UnpluginContextMeta;
-}
+    /**
+     * Should linting be skipped for this project?
+     *
+     * @defaultValue false
+     */
+    skipLint?: boolean;
+  };
 
 export type LintInlineConfig = InlineConfig & {
   /**
@@ -651,4 +978,13 @@ export type DocsInlineConfig = InlineConfig & {
    * @defaultValue false
    */
   clean?: boolean;
+};
+
+export type UnpluginBuildInlineConfig<
+  TUserConfig extends UserConfig = UserConfig
+> = BuildInlineConfig<TUserConfig> & {
+  /**
+   * The meta information for the unplugin context
+   */
+  unplugin: UnpluginContextMeta;
 };

@@ -92,16 +92,15 @@ export type BabelPluginTarget<
 
 export type BabelPluginItem<
   TOptions extends BabelPluginOptions = BabelPluginOptions,
-  TContext extends Context = Context,
   TState = unknown
 > =
-  | BabelPluginTarget<TOptions, TContext, TState>
+  | BabelPluginTarget<TOptions, Context, TState>
   | [
-      BabelPluginTarget<TOptions, TContext, TState>,
+      BabelPluginTarget<TOptions, Context, TState>,
       Omit<TOptions, "options"> | undefined | null
     ]
   | [
-      BabelPluginTarget<TOptions, TContext, TState>,
+      BabelPluginTarget<TOptions, Context, TState>,
       Omit<TOptions, "options"> | undefined | null,
       CompilerOptions | undefined | null
     ];

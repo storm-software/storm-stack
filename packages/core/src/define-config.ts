@@ -16,6 +16,7 @@
 
  ------------------------------------------------------------------- */
 
+import { DeepPartial } from "@stryke/types/base";
 import {
   UserConfigExport,
   UserConfigFn,
@@ -30,8 +31,12 @@ import type { UserConfig } from "./types/config";
  * @remarks
  * The function accepts a direct {@link UserConfig} object, or a function that returns it. The function receives a {@link ConfigEnv} object.
  */
-export function defineConfig(config: UserConfig): UserConfig;
-export function defineConfig(config: Promise<UserConfig>): Promise<UserConfig>;
+export function defineConfig(
+  config: DeepPartial<UserConfig>
+): DeepPartial<UserConfig>;
+export function defineConfig(
+  config: Promise<DeepPartial<UserConfig>>
+): Promise<DeepPartial<UserConfig>>;
 export function defineConfig(config: UserConfigFnObject): UserConfigFnObject;
 export function defineConfig(config: UserConfigFnPromise): UserConfigFnPromise;
 export function defineConfig(config: UserConfigFn): UserConfigFn;

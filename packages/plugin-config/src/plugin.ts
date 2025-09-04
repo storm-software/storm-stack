@@ -60,9 +60,9 @@ import {
  * Storm Stack - Config plugin.
  */
 export default class ConfigPlugin<
-  TOptions extends ConfigPluginOptions = ConfigPluginOptions,
-  TContext extends ConfigPluginContext = ConfigPluginContext
-> extends Plugin<TOptions, TContext> {
+  TContext extends ConfigPluginContext = ConfigPluginContext,
+  TOptions extends ConfigPluginOptions = ConfigPluginOptions
+> extends Plugin<TContext, TOptions> {
   /**
    * The constructor for the plugin
    *
@@ -86,7 +86,8 @@ export default class ConfigPlugin<
       "init:options": this.initOptions.bind(this),
       "init:reflections": this.initReflections.bind(this),
       "prepare:runtime": this.prepareRuntime.bind(this),
-      "docs:api-reference": this.docsApiReference.bind(this)
+      "docs:api-reference": this.docsApiReference.bind(this),
+      "vite:config": this.viteConfig.bind(this)
     });
   }
 
@@ -461,5 +462,16 @@ ${reflection
   .join("\n")}
 `
     );
+  }
+
+  protected viteConfig(context: TContext) {
+    this.log(
+      LogLevelLabel.TRACE,
+      "Writing Vite configuration for the Storm Stack project artifacts."
+    );
+
+    return {
+      envPrefix: context.options.plugins.config.prefix
+    };
   }
 }

@@ -64,12 +64,12 @@
     "storm-stack-storage-plugin"
   ],
   "dependencies": {
-    "@storm-stack/core": "0.36.1",
-    "@storm-stack/devkit": "0.12.1",
+    "@storm-stack/core": "workspace:*",
+    "@storm-stack/devkit": "workspace:*",
     "unstorage": "catalog:"
   },
   "devDependencies": {
-    "@storm-stack/types": "0.18.0",
+    "@storm-stack/types": "workspace:*",
     "@types/node": "catalog:",
     "tsup": "catalog:"
   },

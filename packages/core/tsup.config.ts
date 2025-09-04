@@ -29,9 +29,12 @@ const config = getTsupConfig([
       "src/lib/babel/*.ts",
       "src/lib/deepkit/*.ts",
       "src/lib/esbuild/*.ts",
+      "src/lib/tsup/*.ts",
       "src/lib/typedoc/*.ts",
       "src/lib/typescript/*.ts",
       "src/lib/unbuild/*.ts",
+      "src/lib/unplugin/*.ts",
+      "src/lib/vite/*.ts",
       "src/lib/utilities/*.ts",
       "src/lib/vfs/*.ts",
       "src/commands/*/index.ts",
@@ -51,6 +54,11 @@ const config = getTsupConfig([
     name: "core-schemas",
     entry: ["schemas/*.ts"],
     outDir: "dist/schemas"
+  },
+  {
+    name: "core-deepkit",
+    entry: ["src/deepkit.ts"],
+    outDir: "dist/deepkit"
   }
 ]);
 

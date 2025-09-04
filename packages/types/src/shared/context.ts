@@ -27,9 +27,12 @@ import { StormEnv } from "./env";
  * @remarks
  * The Storm Stack application context object is injected into the global scope of the application. It can be accessed using `$storm` or `useStorm()` in the application code.
  */
-export interface StormContext {
+export interface StormContextInterface {
   /**
    * The context metadata.
+   *
+   * @remarks
+   * This metadata can be used to store information about the current request, user, or any other relevant data. It is mutable and can be changed during the request lifecycle.
    */
   meta: Record<string, any>;
 

@@ -17,6 +17,25 @@
  ------------------------------------------------------------------- */
 
 import { createRolldownPlugin } from "unplugin";
-import { unpluginFactory } from "./index";
+import { RolldownResolvedOptions } from "../types";
+import { createUnpluginFactory } from "./core/factory";
 
-export default createRolldownPlugin(unpluginFactory);
+/**
+ * Rollup plugin
+ *
+ * @example
+ * ```ts
+ * // rollup.config.ts
+ * import StormStack from '@storm-stack/core/rollup'
+ *
+ * export default defineConfig({
+ *   plugins: [StormStack()],
+ * })
+ * ```
+ */
+export const rolldown = createRolldownPlugin(
+  createUnpluginFactory<RolldownResolvedOptions>()
+);
+
+export default rolldown;
+export { rolldown as "module.exports" };

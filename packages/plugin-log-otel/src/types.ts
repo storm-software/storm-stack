@@ -21,7 +21,15 @@ import type {
   LoggerProvider as LoggerProviderBase
 } from "@opentelemetry/api-logs";
 import type { OTLPExporterNodeConfigBase } from "@opentelemetry/otlp-exporter-base";
+import { OTLPGRPCExporterConfigNode } from "@opentelemetry/otlp-grpc-exporter-base/build/src/types";
 import type { LogRecordProcessor } from "@opentelemetry/sdk-logs";
+import {
+  LogPluginContext,
+  LogPluginOptions,
+  LogPluginResolvedOptions,
+  ResolvedLogPluginOptions
+} from "@storm-stack/devkit/types/plugins";
+import { ConfigPluginResolvedOptions } from "@storm-stack/plugin-config/types";
 import { StormConfigInterface } from "@storm-stack/types/shared/config";
 
 /**
@@ -62,50 +70,45 @@ export type BodyFormatter = (message: Message) => AnyValue;
 /**
  * Options for creating an OpenTelemetry adapter.
  */
-export interface OpenTelemetryAdapterOptions {
+export type LogOpenTelemetryPluginOptions = LogPluginOptions & {
   /**
    * The OpenTelemetry logger provider to use.
    */
   loggerProvider?: ILoggerProvider;
 
   /**
-   * The way to render the message in the log record.  If `"string"`,
-   * the message is rendered as a single string with the values are
-   * interpolated into the message.  If `"array"`, the message is
-   * rendered as an array of strings.  `"string"` by default.
+   * The way to render the message in the log record.
    *
-   * Or even fully customizable with a {@link BodyFormatter} function.
+   * @remarks
+   * If `"string"`, the message is rendered as a single string with the values are interpolated into the message. If `"array"`, the message is rendered as an array of strings. If any other string is provided, it is considered a {@link BodyFormatter} function name.
+   *
+   * @defaultValue "string"
    */
-  messageType?: "string" | "array" | BodyFormatter;
-
-  /**
-   * The way to render the object in the log record.  If `"json"`,
-   * the object is rendered as a JSON string.  If `"inspect"`,
-   * the object is rendered using `util.inspect` in Node.js/Bun, or
-   * `Deno.inspect` in Deno.  `"inspect"` by default.
-   */
-  objectRenderer?: ObjectRenderer;
+  messageType?: "string" | "array" | string;
 
   /**
    * Whether to log diagnostics.  Diagnostic logs are logged to
    * the `["storm", "meta", "otel"]` category.
-   * Turned off by default.
+   *
+   * @defaultValue false
    */
   diagnostics?: boolean;
 
   /**
-   * The OpenTelemetry OTLP exporter configuration to use.
-   * Ignored if `loggerProvider` is provided.
-   */
-  otlpExporterConfig?: OTLPExporterNodeConfigBase;
-
-  /**
-   * The service name to use.  If not provided, the service name is
-   * taken from the `OTEL_SERVICE_NAME` environment variable.
-   * Ignored if `loggerProvider` is provided.
+   * The service name to use. If not provided, the service name is taken from the `OTEL_SERVICE_NAME` environment variable.
+   *
+   * @remarks
+   * Ignored if {@link LogOpenTelemetryPluginOptions.loggerProvider} is provided.
    */
   serviceName?: string;
-}
+} & (
+    | ({
+        exporter?: "http" | "proto";
+      } & OTLPExporterNodeConfigBase)
+    | ({
+        exporter: "grpc";
+      } & OTLPGRPCExporterConfigNode)
+  );
 
 export interface StormOpenTelemetryLogConfig extends StormConfigInterface {
   /**
@@ -116,3 +119,29 @@ export interface StormOpenTelemetryLogConfig extends StormConfigInterface {
    */
   OTEL_SERVICE_NAME?: string;
 }
+
+export type ResolvedLogOpenTelemetryPluginOptions = Required<
+  Pick<
+    LogOpenTelemetryPluginOptions,
+    "exporter" | "diagnostics" | "messageType" | "serviceName"
+  >
+> &
+  ResolvedLogPluginOptions &
+  (
+    | ({
+        exporter: "http" | "proto";
+      } & OTLPExporterNodeConfigBase)
+    | ({
+        exporter: "grpc";
+      } & OTLPGRPCExporterConfigNode)
+  );
+
+export type LogOpenTelemetryPluginResolvedOptions =
+  LogPluginResolvedOptions<ResolvedLogOpenTelemetryPluginOptions> & {
+    config: ConfigPluginResolvedOptions["config"];
+  };
+
+export type LogOpenTelemetryPluginContext<
+  TOptions extends
+    ResolvedLogOpenTelemetryPluginOptions = ResolvedLogOpenTelemetryPluginOptions
+> = LogPluginContext<TOptions>;

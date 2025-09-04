@@ -36,7 +36,6 @@ export function RequestModule(_context: Context) {
 ${getFileHeader()}
 
 import { uniqueId } from "storm:id";
-import { StormError } from "storm:error";
 import { StormRequestInterface } from "@storm-stack/types/node/request";
 
 /**

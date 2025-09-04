@@ -51,9 +51,9 @@ import type { CLIPluginContext, CLIPluginOptions } from "./types/config";
  * The CLI Plugin for Storm Stack projects.
  */
 export default class CLIPlugin<
-  TOptions extends CLIPluginOptions = CLIPluginOptions,
-  TContext extends CLIPluginContext = CLIPluginContext
-> extends Plugin<TOptions, TContext> {
+  TContext extends CLIPluginContext = CLIPluginContext,
+  TOptions extends CLIPluginOptions = CLIPluginOptions
+> extends Plugin<TContext, TOptions> {
   public constructor(options: PluginOptions<TOptions>) {
     super(options);
 

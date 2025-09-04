@@ -43,12 +43,11 @@ import type {
   DocsInlineConfig,
   EngineHookFunctions,
   EngineHooks,
-  InlineConfig,
   LintInlineConfig,
   NewInlineConfig,
   PluginConfigTuple,
   PrepareInlineConfig,
-  WorkspaceConfig
+  ResolvedOptions
 } from "../types";
 import { PluginConfig } from "../types/config";
 import type { Plugin } from "./plugin";
@@ -61,76 +60,46 @@ import type { Plugin } from "./plugin";
  *
  * @public
  */
-export class Engine {
-  #initialized = false;
+export class Engine<TOptions extends ResolvedOptions = ResolvedOptions> {
+  /**
+   * The Storm Stack context
+   */
+  #context!: Context<TOptions>;
 
   /**
    * The engine hooks - these allow the plugins to hook into the engines processing
    */
-  #hooks!: EngineHooks;
+  #hooks!: EngineHooks<Context<TOptions>>;
 
   /**
    * The plugins provided in the options
    */
-  #plugins: Plugin[] = [];
+  #plugins: Plugin<Context<TOptions>>[] = [];
 
   /**
-   * The options provided to Storm Stack
+   * The Storm Stack context
    */
-  // protected options: TOptions;
-
-  /**
-   * The resolved options provided to Storm Stack
-   */
-  protected context!: Context;
+  public get context() {
+    return this.#context;
+  }
 
   /**
    * Create a new Storm Stack Engine instance
    *
    * @param inlineConfig - The inline configuration for the Storm Stack engine
-   * @param workspaceConfig  - The workspace configuration for the Storm Stack engine
    */
-  public constructor(
-    private inlineConfig: InlineConfig,
-    private workspaceConfig?: WorkspaceConfig
-  ) {}
+  private constructor(private inlineConfig: TOptions["inlineConfig"]) {}
 
   /**
    * Initialize the engine
    */
-  public async init(inlineConfig: InlineConfig): Promise<Context> {
-    this.#hooks = createHooks<EngineHookFunctions>();
-    this.context = await createContext(
-      defu(inlineConfig, this.inlineConfig),
-      this.workspaceConfig
-    );
+  public static async create<
+    TOptions extends ResolvedOptions = ResolvedOptions
+  >(inlineConfig: TOptions["inlineConfig"]): Promise<Engine<TOptions>> {
+    const engine = new Engine<TOptions>(inlineConfig);
+    await engine.init();
 
-    this.context.log(LogLevelLabel.TRACE, "⚙️ Initializing Storm Stack engine");
-
-    for (const plugin of this.context.options.userConfig.plugins ?? []) {
-      await this.addPlugin(plugin);
-    }
-
-    if (this.#plugins.length === 0) {
-      this.context.log(
-        LogLevelLabel.WARN,
-        "No Storm Stack plugins or presets were specified in the options. Please ensure this is correct, as it is generally not recommended."
-      );
-    } else {
-      for (const plugin of this.#plugins) {
-        plugin.addHooks(this.#hooks);
-      }
-    }
-
-    await init(this.context, this.#hooks);
-
-    this.context.log(
-      LogLevelLabel.INFO,
-      "Storm Stack engine has been initialized"
-    );
-    this.#initialized = true;
-
-    return this.context;
+    return engine;
   }
 
   /**
@@ -142,19 +111,15 @@ export class Engine {
    * @param inlineConfig - The inline configuration for the new command
    * @returns A promise that resolves when the project has been created
    */
-  public async new(inlineConfig: NewInlineConfig = { command: "new" }) {
-    if (!this.#initialized) {
-      await this.init(inlineConfig);
-    }
-
-    this.context.log(
+  public async new(_inlineConfig: NewInlineConfig = { command: "new" }) {
+    this.#context.log(
       LogLevelLabel.INFO,
       "🆕 Creating a new Storm Stack project"
     );
 
-    await _new(this.context, this.#hooks);
+    await _new(this.#context, this.#hooks);
 
-    this.context.log(
+    this.#context.log(
       LogLevelLabel.TRACE,
       "Storm Stack - New command completed"
     );
@@ -170,20 +135,18 @@ export class Engine {
    * @returns A promise that resolves when the clean command has completed
    */
   public async clean(
-    inlineConfig: CleanInlineConfig | PrepareInlineConfig = { command: "clean" }
-  ) {
-    if (!this.#initialized) {
-      await this.init(inlineConfig);
+    _inlineConfig: CleanInlineConfig | PrepareInlineConfig = {
+      command: "clean"
     }
-
-    this.context.log(
+  ) {
+    this.#context.log(
       LogLevelLabel.INFO,
       "🧹 Cleaning the previous Storm Stack artifacts"
     );
 
-    await clean(this.context, this.#hooks);
+    await clean(this.#context, this.#hooks);
 
-    this.context.log(
+    this.#context.log(
       LogLevelLabel.TRACE,
       "Storm Stack - Clean command completed"
     );
@@ -199,7 +162,7 @@ export class Engine {
    * @returns A promise that resolves when the prepare command has completed
    */
   public async prepare(
-    inlineConfig:
+    _inlineConfig:
       | PrepareInlineConfig
       | LintInlineConfig
       | BuildInlineConfig
@@ -207,10 +170,6 @@ export class Engine {
       command: "prepare"
     }
   ) {
-    if (!this.#initialized) {
-      await this.init(inlineConfig);
-    }
-
     // if (
     //   existsSync(this.context.artifactsPath) &&
     //   inlineConfig.command !== "lint" &&
@@ -219,14 +178,14 @@ export class Engine {
     //   await this.clean(inlineConfig as PrepareInlineConfig);
     // }
 
-    this.context.log(
+    this.#context.log(
       LogLevelLabel.INFO,
       "🏗️ Preparing the Storm Stack project"
     );
 
-    await prepare(this.context, this.#hooks);
+    await prepare(this.#context, this.#hooks);
 
-    this.context.log(LogLevelLabel.TRACE, "Storm Stack preparation completed");
+    this.#context.log(LogLevelLabel.TRACE, "Storm Stack preparation completed");
   }
 
   /**
@@ -238,12 +197,8 @@ export class Engine {
   public async lint(
     inlineConfig: LintInlineConfig | BuildInlineConfig = { command: "lint" }
   ) {
-    if (!this.#initialized) {
-      await this.init(inlineConfig);
-    }
-
-    if (this.context.persistedMeta?.checksum !== this.context.meta.checksum) {
-      this.context.log(
+    if (this.#context.persistedMeta?.checksum !== this.#context.meta.checksum) {
+      this.#context.log(
         LogLevelLabel.INFO,
         "The Storm Stack project has been modified since the last time `prepare` was ran. Re-preparing the project."
       );
@@ -251,11 +206,11 @@ export class Engine {
       await this.prepare(inlineConfig);
     }
 
-    this.context.log(LogLevelLabel.INFO, "📋 Linting the Storm Stack project");
+    this.#context.log(LogLevelLabel.INFO, "📋 Linting the Storm Stack project");
 
-    await lint(this.context, this.#hooks);
+    await lint(this.#context, this.#hooks);
 
-    this.context.log(LogLevelLabel.TRACE, "Storm Stack linting completed");
+    this.#context.log(LogLevelLabel.TRACE, "Storm Stack linting completed");
   }
 
   /**
@@ -268,15 +223,11 @@ export class Engine {
    * @returns A promise that resolves when the build command has completed
    */
   public async build(inlineConfig: BuildInlineConfig = { command: "build" }) {
-    if (!this.#initialized) {
-      await this.init(inlineConfig);
-    }
-
-    const persistedMeta = await getPersistedMeta(this.context);
-    const checksum = await getChecksum(this.context.options.projectRoot);
+    const persistedMeta = await getPersistedMeta(this.#context);
+    const checksum = await getChecksum(this.#context.options.projectRoot);
 
     if (persistedMeta?.checksum !== checksum) {
-      this.context.log(
+      this.#context.log(
         LogLevelLabel.INFO,
         "The Storm Stack project has been modified since the last time `prepare` was ran. Re-preparing the project."
       );
@@ -284,11 +235,14 @@ export class Engine {
       await this.prepare(inlineConfig);
     }
 
-    this.context.log(LogLevelLabel.INFO, "📦 Building the Storm Stack project");
+    this.#context.log(
+      LogLevelLabel.INFO,
+      "📦 Building the Storm Stack project"
+    );
 
-    await build(this.context, this.#hooks);
+    await build(this.#context, this.#hooks);
 
-    this.context.log(LogLevelLabel.TRACE, "Storm Stack build completed");
+    this.#context.log(LogLevelLabel.TRACE, "Storm Stack build completed");
   }
 
   /**
@@ -298,12 +252,8 @@ export class Engine {
    * @returns A promise that resolves when the documentation generation has completed
    */
   public async docs(inlineConfig: DocsInlineConfig = { command: "docs" }) {
-    if (!this.#initialized) {
-      await this.init(inlineConfig);
-    }
-
-    if (this.context.persistedMeta?.checksum !== this.context.meta.checksum) {
-      this.context.log(
+    if (this.#context.persistedMeta?.checksum !== this.#context.meta.checksum) {
+      this.#context.log(
         LogLevelLabel.INFO,
         "The Storm Stack project has been modified since the last time `prepare` was ran. Re-preparing the project."
       );
@@ -311,14 +261,14 @@ export class Engine {
       await this.prepare(inlineConfig);
     }
 
-    this.context.log(
+    this.#context.log(
       LogLevelLabel.INFO,
       "Generating documentation for the Storm Stack project"
     );
 
-    await docs(this.context, this.#hooks);
+    await docs(this.#context, this.#hooks);
 
-    this.context.log(
+    this.#context.log(
       LogLevelLabel.TRACE,
       "Storm Stack documentation generation completed"
     );
@@ -330,24 +280,54 @@ export class Engine {
    * @remarks
    * This step includes any final processes or clean up required by Storm Stack. It will be run after each Storm Stack command.
    *
-   * @param inlineConfig - The inline configuration for the Storm Stack engine
    * @returns A promise that resolves when the finalization process has completed
    */
-  public async finalize(inlineConfig: InlineConfig) {
-    if (!this.#initialized) {
-      await this.init(inlineConfig);
-    }
-
-    this.context.log(
+  public async finalize() {
+    this.#context.log(
       LogLevelLabel.TRACE,
       "Storm Stack finalize execution started"
     );
 
-    await finalize(this.context, this.#hooks);
+    await finalize(this.#context, this.#hooks);
 
-    this.context.log(
+    this.#context.log(
       LogLevelLabel.TRACE,
       "Storm Stack finalize execution completed"
+    );
+  }
+
+  /**
+   * Initialize the engine
+   */
+  private async init() {
+    this.#hooks = createHooks<EngineHookFunctions<Context<TOptions>>>();
+    this.#context = await createContext(this.inlineConfig);
+
+    this.#context.log(
+      LogLevelLabel.TRACE,
+      "⚙️ Initializing Storm Stack engine"
+    );
+
+    for (const plugin of this.#context.options.userConfig.plugins ?? []) {
+      await this.addPlugin(plugin);
+    }
+
+    if (this.#plugins.length === 0) {
+      this.#context.log(
+        LogLevelLabel.WARN,
+        "No Storm Stack plugins or presets were specified in the options. Please ensure this is correct, as it is generally not recommended."
+      );
+    } else {
+      for (const plugin of this.#plugins) {
+        plugin.addHooks(this.#hooks);
+      }
+    }
+
+    await init(this.#context, this.#hooks);
+
+    this.#context.log(
+      LogLevelLabel.INFO,
+      "Storm Stack engine has been initialized"
     );
   }
 
@@ -369,7 +349,7 @@ export class Engine {
         }
       }
 
-      this.context.log(
+      this.#context.log(
         LogLevelLabel.DEBUG,
         `Successfully initialized the ${chalk.bold.cyanBright(instance.name)} plugin`
       );
@@ -404,21 +384,21 @@ export class Engine {
 
     const isInstalled = isPackageExists(installPath, {
       paths: [
-        this.context.options.workspaceConfig.workspaceRoot,
-        this.context.options.projectRoot
+        this.#context.options.workspaceConfig.workspaceRoot,
+        this.#context.options.projectRoot
       ]
     });
-    if (!isInstalled && this.context.options.skipInstalls !== true) {
-      this.context.log(
+    if (!isInstalled && this.#context.options.skipInstalls !== true) {
+      this.#context.log(
         LogLevelLabel.WARN,
         `The plugin package "${installPath}" is not installed. It will be installed automatically.`
       );
 
       const result = await install(installPath, {
-        cwd: this.context.options.projectRoot
+        cwd: this.#context.options.projectRoot
       });
       if (isNumber(result.exitCode) && result.exitCode > 0) {
-        this.context.log(LogLevelLabel.ERROR, result.stderr);
+        this.#context.log(LogLevelLabel.ERROR, result.stderr);
         throw new Error(
           `An error occurred while installing the build plugin package "${installPath}" `
         );
@@ -428,29 +408,29 @@ export class Engine {
     let pluginInstance!: Plugin;
     try {
       // First check if the package has a "plugin" subdirectory - @scope/package/plugin
-      const module = await this.context.resolver.import<{
+      const module = await this.#context.resolver.import<{
         plugin?: new (config: any) => Plugin;
         default: new (config: any) => Plugin;
       }>(
-        this.context.resolver.esmResolve(joinPaths(pluginConfig[0], "plugin"))
+        this.#context.resolver.esmResolve(joinPaths(pluginConfig[0], "plugin"))
       );
 
       const PluginConstructor = module.plugin ?? module.default;
       pluginInstance = new PluginConstructor({
         ...(pluginConfig[1] ?? {}),
-        log: this.context.log
+        log: this.#context.log
       });
     } catch (error) {
       try {
-        const module = await this.context.resolver.import<{
+        const module = await this.#context.resolver.import<{
           plugin?: new (config: any) => Plugin;
           default: new (config: any) => Plugin;
-        }>(this.context.resolver.esmResolve(pluginConfig[0]));
+        }>(this.#context.resolver.esmResolve(pluginConfig[0]));
 
         const PluginConstructor = module.plugin ?? module.default;
         pluginInstance = new PluginConstructor({
           ...(pluginConfig[1] ?? {}),
-          log: this.context.log
+          log: this.#context.log
         });
       } catch {
         if (!isInstalled) {
@@ -494,39 +474,39 @@ Note: Please ensure the plugin package's default export is a class that extends 
 
     pluginInstance.options ??= pluginConfig[1] ?? {};
 
-    this.context.options.plugins[pluginInstance.identifier] = defu(
+    this.#context.options.plugins[pluginInstance.identifier] = defu(
       pluginInstance.options ?? {},
-      isSetObject(this.context.options.plugins[pluginInstance.identifier])
-        ? this.context.options.plugins[pluginInstance.identifier]
+      isSetObject(this.#context.options.plugins[pluginInstance.identifier])
+        ? this.#context.options.plugins[pluginInstance.identifier]
         : {},
       camelCase(pluginInstance.name) !== camelCase(pluginInstance.identifier) &&
-        isSetObject(this.context.options.plugins[pluginInstance.name])
-        ? this.context.options.plugins[pluginInstance.name]
+        isSetObject(this.#context.options.plugins[pluginInstance.name])
+        ? this.#context.options.plugins[pluginInstance.name]
         : {}
     );
     pluginInstance.options =
-      this.context.options.plugins[pluginInstance.identifier];
+      this.#context.options.plugins[pluginInstance.identifier];
 
     const duplicatePlugin = this.#plugins.find(plugin =>
       plugin.isSame(pluginInstance)
     );
     if (duplicatePlugin) {
-      this.context.log(
+      this.#context.log(
         LogLevelLabel.TRACE,
         `Duplicate ${chalk.bold.cyanBright(duplicatePlugin.identifier)} plugin dependency detected - Skipping initialization.`
       );
 
       duplicatePlugin.options = defu(
         duplicatePlugin.options ?? {},
-        this.context.options.plugins[pluginInstance.identifier]
+        this.#context.options.plugins[pluginInstance.identifier]
       );
-      this.context.options.plugins[duplicatePlugin.identifier] =
+      this.#context.options.plugins[duplicatePlugin.identifier] =
         duplicatePlugin.options;
 
       return null;
     }
 
-    this.context.log(
+    this.#context.log(
       LogLevelLabel.TRACE,
       `Initializing the ${chalk.bold.cyanBright(pluginInstance.name)} plugin...`
     );

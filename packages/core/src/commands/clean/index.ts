@@ -28,7 +28,10 @@ import { cleanOutput } from "./output";
  * @param context - The build context.
  * @param hooks - The engine hooks.
  */
-export async function clean(context: Context, hooks: EngineHooks) {
+export async function clean<TContext extends Context = Context>(
+  context: TContext,
+  hooks: EngineHooks<TContext>
+) {
   await hooks.callHook("clean:begin", context).catch((error: Error) => {
     context.log(
       LogLevelLabel.ERROR,

@@ -52,9 +52,6 @@ export default defineConfig({
     ]
   ],
   external: ["@storm-stack/core"],
-  esbuild: {
-    format: "esm"
-  },
   output: {
     outputMode: "fs"
   }

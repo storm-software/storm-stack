@@ -20,37 +20,49 @@ import { findFileExtension } from "@stryke/path/file-path-fns";
 import { replacePath } from "@stryke/path/replace";
 import { isString } from "@stryke/type-checks/is-string";
 import defu from "defu";
-import { BuildOptions as ExternalESBuildOptions } from "esbuild";
 import { BundleOptions } from ".";
 import type { ResolvedEntryTypeDefinition } from "../../types/build";
-import { ESBuildOverrideOptions } from "../../types/config";
+import { ESBuildConfig, ESBuildOptions, TsupConfig } from "../../types/config";
 import { Context } from "../../types/context";
 
+/**
+ * Resolves the entry options for esbuild.
+ *
+ * @param context - The build context.
+ * @param entryPoints - The entry points to resolve.
+ * @returns The resolved entry options.
+ */
 export function resolveEsbuildEntryOptions(
   context: Context,
   entryPoints: ResolvedEntryTypeDefinition[] | string[]
-): ExternalESBuildOptions["entryPoints"] {
+): ESBuildOptions["entryPoints"] {
   return entryPoints.reduce(
     (ret, entry) => {
       if (isString(entry)) {
         ret[
-          replacePath(entry, context.options.workspaceRoot).replace(
-            findFileExtension(entry) || "",
-            ""
-          )
-        ] = replacePath(entry, context.options.workspaceRoot);
+          replacePath(
+            entry,
+            context.options.sourceRoot || context.options.projectRoot
+          ).replace(findFileExtension(entry) || "", "")
+        ] = replacePath(
+          entry,
+          context.options.sourceRoot || context.options.projectRoot
+        );
       } else {
         ret[
           entry.output ||
             replacePath(
               entry.input.file,
-              context.options.workspaceRoot
+              context.options.sourceRoot || context.options.projectRoot
             ).replace(findFileExtension(entry.input.file) || "", "") ||
-            replacePath(entry.file, context.options.workspaceRoot).replace(
-              findFileExtension(entry.file) || "",
-              ""
-            )
-        ] = replacePath(entry.file, context.options.workspaceRoot);
+            replacePath(
+              entry.file,
+              context.options.sourceRoot || context.options.projectRoot
+            ).replace(findFileExtension(entry.file) || "", "")
+        ] = replacePath(
+          entry.file,
+          context.options.sourceRoot || context.options.projectRoot
+        );
       }
 
       return ret;
@@ -59,13 +71,20 @@ export function resolveEsbuildEntryOptions(
   );
 }
 
+/**
+ * Resolves the esbuild options.
+ *
+ * @param context - The build context.
+ * @param options - The user-defined options.
+ * @param bundleOptions - The bundle options.
+ * @returns The resolved esbuild options.
+ */
 export function resolveESBuildOptions(
   context: Context,
-  override: Partial<ESBuildOverrideOptions> = {},
+  options: Partial<ESBuildOptions> = {},
   bundleOptions: BundleOptions = {}
-): ExternalESBuildOptions {
-  const result = defu(
-    override ?? {},
+): ESBuildOptions {
+  return defu(
     {
       alias: bundleOptions.alias,
       sourcemap: false
@@ -84,25 +103,28 @@ export function resolveESBuildOptions(
       )
     },
     bundleOptions.override ?? {},
-    context.options.esbuild.override ?? {},
+    context.options.variant === "esbuild" ? context.options.override : {},
     {
       platform: context.options.platform,
-      format: context.options.esbuild.format,
-      target: context.options.esbuild.target,
-      globalName: context.options.esbuild.globalName,
+      format: options?.format,
+      target: options?.target,
+      globalName: options?.globalName,
       minify: context.options.mode !== "development",
       metafile: context.options.mode === "development",
       sourcemap: context.options.mode === "development",
-      bundle: context.options.esbuild.bundle,
-      treeShaking: context.options.esbuild.treeshake,
-      keepNames: context.options.esbuild.keepNames,
-      splitting: context.options.esbuild.splitting,
+      bundle: options?.bundle,
+      treeShaking:
+        Boolean((context.options.build as TsupConfig)?.treeshake) ||
+        (context.options.build as ESBuildConfig)?.treeShaking,
+      keepNames: options?.keepNames,
+      splitting: options?.splitting,
       outdir: context.options.output.outputPath,
       tsconfig: context.tsconfig.tsconfigFilePath,
-      banner: context.options.esbuild.banner,
-      footer: context.options.esbuild.footer,
-      plugins: context.options.esbuild.plugins
+      banner: options?.banner,
+      footer: options?.footer,
+      plugins: options?.plugins
     },
+    context.options.variant === "esbuild" ? context.options.build : {},
     {
       platform: "neutral",
       format: "esm",
@@ -114,7 +136,5 @@ export function resolveESBuildOptions(
       splitting: true,
       logLevel: "silent"
     }
-  ) as ExternalESBuildOptions;
-
-  return result;
+  ) as ESBuildOptions;
 }

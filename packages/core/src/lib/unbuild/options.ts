@@ -16,23 +16,25 @@
 
  ------------------------------------------------------------------- */
 
-import type { UnbuildOptions as BaseUnbuildOptions } from "@storm-software/unbuild/types";
 import { joinPaths } from "@stryke/path/join-paths";
 import { isObject } from "@stryke/type-checks/is-object";
 import defu from "defu";
-import { UnbuildOverrideOptions } from "../../types/config";
+import { UnbuildOptions } from "../../types/config";
 import { Context } from "../../types/context";
 import { resolveESBuildOptions } from "../esbuild/options";
 import { getUnbuildLoader } from "./loader";
 
 export function resolveUnbuildOptions(
   context: Context,
-  override: Partial<UnbuildOverrideOptions> = {}
-): BaseUnbuildOptions {
-  const result = defu(
+  override: Partial<UnbuildOptions> = {}
+): UnbuildOptions {
+  return defu(
     override,
-    context.options.unbuild.override ?? {},
-    { ...context.options.unbuild, override: undefined },
+    context.options.variant === "unbuild" ||
+      (context.options.variant === "standalone" &&
+        context.options.projectType === "library")
+      ? context.options.override
+      : {},
     {
       projectName: context.options.name,
       name: context.options.name,
@@ -49,7 +51,6 @@ export function resolveUnbuildOptions(
 
         return ret;
       }, context.options.external ?? []),
-      alias: context.options.unbuild.alias,
       debug: context.options.mode === "development",
       minify: context.options.mode !== "development",
       sourcemap: context.options.mode === "development",
@@ -63,6 +64,11 @@ export function resolveUnbuildOptions(
         esbuild: resolveESBuildOptions(context)
       }
     },
+    context.options.variant === "unbuild" ||
+      (context.options.variant === "standalone" &&
+        context.options.projectType === "library")
+      ? context.options.build
+      : {},
     {
       dts: true,
       clean: false,
@@ -79,7 +85,5 @@ export function resolveUnbuildOptions(
           ? "\n//  ⚡  Built with Storm Stack \n"
           : " "
     }
-  ) as unknown;
-
-  return result as BaseUnbuildOptions;
+  ) as any;
 }

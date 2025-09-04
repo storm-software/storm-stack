@@ -20,17 +20,17 @@ import {
   BabelPluginOptions,
   BabelPluginState
 } from "@storm-stack/core/types/babel";
+import { ResolvedOptions } from "@storm-stack/core/types/build";
 import type { Context } from "@storm-stack/core/types/context";
 import { PluginBaseOptions } from "@storm-stack/core/types/plugin";
-import { LogPluginOptions } from "@storm-stack/devkit/plugins/log";
+import { LogPluginOptions } from "@storm-stack/devkit/types/plugins";
 import {
   ConfigPluginOptions,
-  ConfigPluginReflectionRecord,
-  ResolvedConfigPluginOptions
+  ConfigPluginReflectionRecord
 } from "@storm-stack/plugin-config/types";
 import type {
   ErrorPluginOptions,
-  ResolvedErrorPluginOptions
+  ErrorPluginResolvedOptions
 } from "@storm-stack/plugin-error/types";
 
 export interface NodePluginOptions extends PluginBaseOptions {
@@ -52,17 +52,14 @@ export interface NodePluginOptions extends PluginBaseOptions {
   };
 }
 
-export interface NodePluginContextOptions {
-  config: ResolvedConfigPluginOptions;
-  error: ResolvedErrorPluginOptions;
+export interface NodePluginResolvedOptions extends ErrorPluginResolvedOptions {
   logs: Record<string, LogPluginOptions> & {
     console: LogPluginOptions;
   };
 }
 
-export type NodePluginContext = Context<
-  NodePluginContextOptions,
-  ConfigPluginReflectionRecord
->;
+export type NodePluginContext<
+  TOptions extends NodePluginResolvedOptions = NodePluginResolvedOptions
+> = Context<ResolvedOptions<TOptions>, ConfigPluginReflectionRecord>;
 
 export type NodeBabelPluginState = BabelPluginState<BabelPluginOptions>;

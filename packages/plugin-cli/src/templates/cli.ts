@@ -16,12 +16,8 @@
 
  ------------------------------------------------------------------- */
 
-import {
-  getColor,
-  getGradient
-} from "@storm-software/config-tools/utilities/colors";
+import { getGradient } from "@storm-software/config-tools/utilities/colors";
 import { getFileHeader } from "@storm-stack/core/lib";
-import { WorkspaceConfig } from "@storm-stack/core/types/config";
 import { stripAnsi } from "@stryke/cli/utils/strip-ansi";
 import { titleCase } from "@stryke/string-format/title-case";
 import { isObject } from "@stryke/type-checks/is-object";
@@ -165,12 +161,8 @@ export function CLIModule(context: CLIPluginContext) {
 
   let bannerTitle: string | undefined;
   if (context.options.plugins.cli.title) {
-    const brandColor = getColor(
-      "brand",
-      context.options.colors as Partial<Pick<WorkspaceConfig, "colors">>
-    );
     const gradient = getGradient(
-      context.options.colors as Parameters<typeof getGradient>[0]
+      context.options.plugins.cli.colors as Parameters<typeof getGradient>[0]
     );
 
     const result = render(
@@ -183,7 +175,7 @@ export function CLIModule(context: CLIPluginContext) {
           : {},
         {
           font: "tiny",
-          colors: [brandColor],
+          colors: [context.options.plugins.cli.colors.brand],
           gradient: gradient && gradient.length > 0 ? gradient : undefined,
           independentGradient: false,
           transitionGradient: gradient && gradient.length > 0,

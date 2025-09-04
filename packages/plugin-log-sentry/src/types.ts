@@ -16,11 +16,14 @@
 
  ------------------------------------------------------------------- */
 
-import { Context } from "@storm-stack/core/types/context";
-import { LogPluginOptions } from "@storm-stack/devkit/plugins/log";
 import {
-  ConfigPluginContextOptions,
-  ConfigPluginReflectionRecord
+  LogPluginContext,
+  LogPluginOptions,
+  LogPluginResolvedOptions
+} from "@storm-stack/devkit/types/plugins";
+import {
+  ConfigPluginReflectionRecord,
+  ConfigPluginResolvedOptions
 } from "@storm-stack/plugin-config/types";
 
 /**
@@ -56,12 +59,14 @@ export interface LogSentryPluginOptions extends LogPluginOptions {
   enabled?: boolean;
 }
 
-export interface LogSentryPluginContextOptions
-  extends ConfigPluginContextOptions {
-  sentry: LogSentryPluginOptions;
-}
+export type ResolvedLogSentryPluginOptions = Required<LogSentryPluginOptions>;
 
-export type LogSentryPluginContext = Context<
-  LogSentryPluginContextOptions,
-  ConfigPluginReflectionRecord
->;
+export type LogSentryPluginResolvedOptions =
+  LogPluginResolvedOptions<ResolvedLogSentryPluginOptions> & {
+    config: ConfigPluginResolvedOptions["config"];
+  };
+
+export type LogSentryPluginContext<
+  TOptions extends
+    ResolvedLogSentryPluginOptions = ResolvedLogSentryPluginOptions
+> = LogPluginContext<TOptions, ConfigPluginReflectionRecord>;

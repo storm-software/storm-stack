@@ -16,7 +16,51 @@
 
  ------------------------------------------------------------------- */
 
+import { isUndefined } from "@stryke/type-checks/is-undefined";
+import { BuildOptions } from "esbuild";
 import { createEsbuildPlugin } from "unplugin";
-import { unpluginFactory } from "./index";
+import { resolveESBuildOptions } from "../lib/esbuild/options";
+import { ESBuildResolvedOptions } from "../types";
+import { createUnpluginFactory } from "./core/factory";
 
-export default createEsbuildPlugin(unpluginFactory);
+/**
+ * ESBuild plugin
+ *
+ * @example
+ * ```js
+ * // esbuild.config.js
+ * import StormStack from '@storm-stack/core/esbuild'
+ *
+ * default export {
+ *  plugins: [StormStack()],
+ * }
+ * ```
+ */
+export const esbuild = createEsbuildPlugin(
+  createUnpluginFactory<ESBuildResolvedOptions>({
+    framework: "esbuild",
+    decorate: (engine, plugin) => {
+      return {
+        ...plugin,
+        esbuild: {
+          config: (options: BuildOptions) => {
+            const opts = resolveESBuildOptions(engine.context, options);
+            for (const key in opts) {
+              if (
+                isUndefined(options[key as keyof BuildOptions]) &&
+                !isUndefined(opts[key as keyof BuildOptions])
+              ) {
+                options[key as keyof BuildOptions] = opts[
+                  key as keyof BuildOptions
+                ] as any;
+              }
+            }
+          }
+        }
+      };
+    }
+  })
+);
+
+export default esbuild;
+export { esbuild as "module.exports" };

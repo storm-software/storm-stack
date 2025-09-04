@@ -43,9 +43,9 @@ import type {
  * The base class for all plugins
  */
 export abstract class Plugin<
-  TOptions extends PluginBaseOptions = PluginBaseOptions,
-  TContext extends Context = Context
-> implements PluginInterface<TOptions>
+  TContext extends Context = Context,
+  TOptions extends PluginBaseOptions = PluginBaseOptions
+> implements PluginInterface<TContext, TOptions>
 {
   #log?: LogFn;
 
@@ -202,6 +202,19 @@ export abstract class Plugin<
     hooks.addHooks({
       "init:begin": this.#initBegin.bind(this)
     });
+  }
+
+  /**
+   * Gets the resolved options for the plugin.
+   *
+   * @param context - The context to use
+   * @returns The resolved options for the plugin
+   */
+  protected getOptions(context: TContext): TOptions {
+    context.options.plugins ??= {};
+    context.options.plugins[this.identifier] ??= {} as TOptions;
+
+    return context.options.plugins[this.identifier] as TOptions;
   }
 
   /**

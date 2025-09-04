@@ -21,7 +21,7 @@ import { reflect } from "@deepkit/type";
 import type { TypeDefinition } from "@stryke/types/configuration";
 import defu from "defu";
 import type { Context } from "../../types/context";
-import { bundle, BundleOptions } from "../esbuild/bundle";
+import { BundleOptions, esbuild } from "../esbuild/build";
 import { resolvePath } from "../utilities/resolve-path";
 
 /**
@@ -43,7 +43,7 @@ export async function resolveType<TResult = any>(
     );
   }
 
-  const result = await bundle(
+  const result = await esbuild(
     context,
     defu(
       {

@@ -18,32 +18,33 @@
 
 import { getFileHeader } from "@storm-stack/core/lib/utilities/file-header";
 import type { PluginOptions } from "@storm-stack/core/types/plugin";
-import type { StoragePluginOptions } from "@storm-stack/devkit/plugins/storage";
 import StoragePlugin from "@storm-stack/devkit/plugins/storage";
-import { StormEnvPathType } from "@storm-stack/types/node/env";
-import type { FSStorageOptions } from "unstorage/drivers/fs-lite";
+import {
+  StorageFileSystemPluginContext,
+  StorageFileSystemPluginOptions
+} from "./types";
 
-export type StorageFileSystemPluginConfig = FSStorageOptions &
-  StoragePluginOptions & {
-    /**
-     * The environment path to use for the storage.
-     *
-     * @remarks
-     * These environment paths are returned using the \`\@stryke/env\` package.
-     */
-    envPath?: StormEnvPathType;
-  };
-
-export default class StorageFileSystemPlugin extends StoragePlugin<StorageFileSystemPluginConfig> {
-  public constructor(options: PluginOptions<StorageFileSystemPluginConfig>) {
+export default class StorageFileSystemPlugin<
+  TContext extends
+    StorageFileSystemPluginContext = StorageFileSystemPluginContext,
+  TOptions extends
+    StorageFileSystemPluginOptions = StorageFileSystemPluginOptions
+> extends StoragePlugin<TContext, TOptions> {
+  public constructor(options: PluginOptions<TOptions>) {
     super(options);
   }
 
-  protected override writeStorage() {
+  /**
+   * Writes the storage configuration to a file.
+   *
+   * @param context - The plugin context.
+   * @returns The storage configuration as a string.
+   */
+  protected override writeStorage(context: TContext) {
     return `${getFileHeader()}
 
 import fsLiteDriver from "unstorage/drivers/fs-lite";${
-      this.options.envPath
+      this.getOptions(context).envPath
         ? `
 import { join } from "node:path";`
         : ""
@@ -52,15 +53,15 @@ import type { StorageAdapter } from "@storm-stack/types/shared/storage";
 
 function createAdapter(): StorageAdapter {
   const adapter = fsLiteDriver({ base: ${
-    this.options.envPath
-      ? this.options.base
-        ? `join($storm.env.paths.${this.options.envPath}, "${this.options.base}")`
-        : `$storm.env.paths.${this.options.envPath}`
-      : this.options.base
-        ? `"${this.options.base}"`
+    this.getOptions(context).envPath
+      ? this.getOptions(context).base
+        ? `join($storm.env.paths.${this.getOptions(context).envPath}, "${this.getOptions(context).base}")`
+        : `$storm.env.paths.${this.getOptions(context).envPath}`
+      : this.getOptions(context).base
+        ? `"${this.getOptions(context).base}"`
         : "undefined"
-  }, readOnly: ${Boolean(this.options.readOnly)}, noClear: ${Boolean(
-    this.options.noClear
+  }, readOnly: ${Boolean(this.getOptions(context).readOnly)}, noClear: ${Boolean(
+    this.getOptions(context).noClear
   )} }) as StorageAdapter;
   adapter[Symbol.asyncDispose] = async () => {
     if (adapter.dispose && typeof adapter.dispose === "function") {

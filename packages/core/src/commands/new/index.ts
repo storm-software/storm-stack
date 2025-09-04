@@ -32,7 +32,10 @@ import { newLibrary } from "./library";
  * @param context - The build context.
  * @param hooks - The engine hooks.
  */
-export async function _new(context: Context, hooks: EngineHooks) {
+export async function _new<TContext extends Context = Context>(
+  context: TContext,
+  hooks: EngineHooks<TContext>
+) {
   await hooks.callHook("new:begin", context).catch((error: Error) => {
     context.log(
       LogLevelLabel.ERROR,

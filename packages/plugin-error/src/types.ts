@@ -16,11 +16,12 @@
 
  ------------------------------------------------------------------- */
 
+import { ResolvedOptions } from "@storm-stack/core/types/build";
 import { Context } from "@storm-stack/core/types/context";
 import { PluginBaseOptions } from "@storm-stack/core/types/plugin";
 import {
   ConfigPluginOptions,
-  ResolvedConfigPluginOptions
+  ConfigPluginResolvedOptions
 } from "@storm-stack/plugin-config/types";
 
 export interface ErrorPluginOptions extends PluginBaseOptions {
@@ -45,14 +46,12 @@ export interface ErrorPluginOptions extends PluginBaseOptions {
   config?: ConfigPluginOptions;
 }
 
-export type ResolvedErrorPluginOptions = Required<
-  Omit<ErrorPluginOptions, "config" | "url">
-> &
-  Pick<ErrorPluginOptions, "url">;
-
-export interface ErrorPluginContextOptions {
-  error: ResolvedErrorPluginOptions;
-  config: ResolvedConfigPluginOptions;
+export interface ErrorPluginResolvedOptions {
+  error: Required<Omit<ErrorPluginOptions, "config" | "url">> &
+    Pick<ErrorPluginOptions, "url">;
+  config: ConfigPluginResolvedOptions["config"];
 }
 
-export type ErrorPluginContext = Context<ErrorPluginContextOptions>;
+export type ErrorPluginContext = Context<
+  ResolvedOptions<ErrorPluginResolvedOptions>
+>;

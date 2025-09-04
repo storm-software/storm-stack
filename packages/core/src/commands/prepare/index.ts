@@ -35,7 +35,10 @@ import { prepareTypes } from "./types";
  * @param context - The build context.
  * @param hooks - The engine hooks.
  */
-export async function prepare(context: Context, hooks: EngineHooks) {
+export async function prepare<TContext extends Context = Context>(
+  context: TContext,
+  hooks: EngineHooks<TContext>
+) {
   await writeMetaFile(context);
   context.persistedMeta = context.meta;
 

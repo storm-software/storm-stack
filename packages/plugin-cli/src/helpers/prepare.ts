@@ -1273,7 +1273,7 @@ ${
   }
 });
 
-${context.options.esbuild.format === "cjs" ? "void" : "await"} main({ args: process.argv });
+${context.options.build.format === "cjs" ? "void" : "await"} main({ args: process.argv });
 
 `
   );

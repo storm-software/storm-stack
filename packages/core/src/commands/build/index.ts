@@ -22,7 +22,10 @@ import { Context } from "../../types/context";
 import { buildApplication } from "./application";
 import { buildLibrary } from "./library";
 
-export async function build(context: Context, hooks: EngineHooks) {
+export async function build<TContext extends Context = Context>(
+  context: TContext,
+  hooks: EngineHooks<TContext>
+) {
   await hooks.callHook("build:begin", context).catch((error: Error) => {
     context.log(
       LogLevelLabel.ERROR,

@@ -79,7 +79,7 @@ The Storm Stack monorepo contains the [Storm Stack engine](https://www.npmjs.com
   - [Running End-to-End Tests](#running-end-to-end-tests)
   - [Understand your workspace](#understand-your-workspace)
 - [☁ Nx Cloud](#-nx-cloud)
-  - [Distributed Computation Caching & Distributed Task Execution](#distributed-computation-caching--distributed-task-execution)
+  - [Distributed Computation Caching \& Distributed Task Execution](#distributed-computation-caching--distributed-task-execution)
 - [Roadmap](#roadmap)
 - [Contributing](#contributing)
   - [Pull Requests](#pull-requests)
@@ -143,7 +143,7 @@ A plugin to generate TypeScript definitions, apply static parameter values, and 
 The plugin provides a set of utilities for working with configuration files, including:
 
 - TypeScript definition generation for configuration schemas.
-- `$storm.config.static.<parameter>` object is used to apply static configuration parameter values at build time for improved type safety.
+- `$storm.config.<parameter>` object is used to apply static configuration parameter values at build time with automatic type generation for improved type safety.
 - Logic to determine all used configuration parameters so that they can be validated and documented later.
 - Best practice recommendations for organizing and managing configuration.
 - The `storm:config` builtin runtime module, which contains the `StormConfig` type definition and related utilities for working with configuration.

@@ -20,7 +20,7 @@ import { getTsupConfig } from "@storm-stack/tools-config/tsup.shared";
 
 const config = getTsupConfig({
   name: "plugin-storage-s3",
-  entry: ["src/index.ts", "src/plugin.ts"],
+  entry: ["src/*.ts"],
   skipNodeModulesBundle: true
 });
 

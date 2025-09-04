@@ -29,16 +29,16 @@ import { ErrorModule } from "./templates/error";
 import {
   ErrorPluginContext,
   ErrorPluginOptions,
-  ResolvedErrorPluginOptions
+  ErrorPluginResolvedOptions
 } from "./types";
 
 /**
  * Storm Stack - Error plugin.
  */
 export default class ErrorPlugin<
-  TOptions extends ErrorPluginOptions = ErrorPluginOptions,
-  TContext extends ErrorPluginContext = ErrorPluginContext
-> extends Plugin<TOptions, TContext> {
+  TContext extends ErrorPluginContext = ErrorPluginContext,
+  TOptions extends ErrorPluginOptions = ErrorPluginOptions
+> extends Plugin<TContext, TOptions> {
   /**
    * The constructor for the plugin
    *
@@ -89,11 +89,10 @@ export default class ErrorPlugin<
       )
     );
 
-    context.options.plugins.error ??= {} as ResolvedErrorPluginOptions;
-
+    context.options.plugins.error ??= {} as ErrorPluginResolvedOptions["error"];
     context.options.plugins.error.codesFile ??=
       this.options.codesFile ||
-      context.options.error?.codesFile ||
+      context.options.workspaceConfig.error?.codesFile ||
       STORM_DEFAULT_ERROR_CODES_FILE;
     if (!isAbsolutePath(context.options.plugins.error.codesFile)) {
       context.options.plugins.error.codesFile = joinPaths(
@@ -102,9 +101,9 @@ export default class ErrorPlugin<
       );
     }
     context.options.plugins.error.url ??=
-      this.options.url || context.options.error?.url;
+      this.options.url || context.options.workspaceConfig.error?.url;
 
-    context.options.error = {
+    context.options.workspaceConfig.error = {
       codesFile: context.options.plugins.error.codesFile,
       url: context.options.plugins.error.url
     };

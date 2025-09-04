@@ -16,6 +16,9 @@
 
  ------------------------------------------------------------------- */
 
+import { ResolvedOptions } from "@storm-stack/core/types/build";
+import { Context } from "@storm-stack/core/types/context";
+import { LogPluginOptions } from "@storm-stack/devkit/types/plugins";
 import type { LogRecord } from "@storm-stack/types/shared/log";
 
 /**
@@ -44,3 +47,17 @@ export interface ConsoleAdapterOptions {
    */
   console?: Console;
 }
+
+export interface LogConsolePluginOptions extends LogPluginOptions {
+  /**
+   * The prefix to add to log messages.
+   */
+  prefix?: string;
+}
+
+export type LogConsolePluginResolvedOptions =
+  ResolvedOptions<LogConsolePluginOptions>;
+
+export type LogConsolePluginContext<
+  TOptions extends LogConsolePluginOptions = LogConsolePluginOptions
+> = Context<ResolvedOptions<TOptions>>;

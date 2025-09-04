@@ -70,21 +70,12 @@ export async function initOptions(context: Context, hooks: EngineHooks) {
     "tsconfig.json"
   );
 
-  context.options.esbuild.override ??= {};
+  context.options.override ??= {};
   context.options.external ??= [];
   context.options.noExternal ??= [];
 
-  context.options.esbuild.target ??= "esnext";
-  context.options.esbuild.format ??= "esm";
+  context.options.variant ??= "standalone";
   context.options.environment ??= defaultEnvironmentName(context.options);
-
-  // context.options.babel.plugins.unshift([
-  //   BabelPluginStormStack,
-  //   null,
-  //   {
-  //     onPostTransform: handlePostTransform
-  //   }
-  // ]);
 
   await hooks.callHook("init:options", context).catch((error: Error) => {
     context.log(
@@ -99,6 +90,20 @@ export async function initOptions(context: Context, hooks: EngineHooks) {
       { cause: error }
     );
   });
+
+  if (
+    context.options.variant === "esbuild" ||
+    context.options.variant === "tsup" ||
+    context.options.variant === "standalone"
+  ) {
+    context.options.build.target ??= "esnext";
+    if (
+      context.options.variant !== "standalone" ||
+      context.options.projectType === "application"
+    ) {
+      context.options.build.format ??= "esm";
+    }
+  }
 
   context.log(
     LogLevelLabel.TRACE,

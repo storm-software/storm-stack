@@ -16,6 +16,11 @@
 
  ------------------------------------------------------------------- */
 
+import { SingleThemeColors } from "@storm-software/config/types";
+import {
+  StandaloneApplicationResolvedOptions,
+  StandaloneLibraryResolvedOptions
+} from "@storm-stack/core/types/build";
 import { WorkspaceConfig } from "@storm-stack/core/types/config";
 import {
   Context,
@@ -25,8 +30,8 @@ import {
 import { ConfigPluginReflectionRecord } from "@storm-stack/plugin-config/types";
 import { DatePluginOptions } from "@storm-stack/plugin-date/types";
 import {
-  NodePluginContextOptions,
-  NodePluginOptions
+  NodePluginOptions,
+  NodePluginResolvedOptions
 } from "@storm-stack/plugin-node/types";
 import { CommandEntryTypeDefinition } from "./reflection";
 
@@ -208,12 +213,17 @@ export interface CLIPluginOptions extends NodePluginOptions {
   author?: WorkspaceConfig["organization"];
 
   /**
+   * The colors to use for the CLI application.
+   */
+  colors?: SingleThemeColors;
+
+  /**
    * The configuration for the date plugin.
    */
   date?: DatePluginOptions;
 }
 
-export interface CLIPluginContextOptions extends NodePluginContextOptions {
+export interface CLIPluginResolvedOptions extends NodePluginResolvedOptions {
   cli: Required<
     Omit<CLIPluginOptions, "config" | "error" | "logs" | "author">
   > &
@@ -232,7 +242,8 @@ export interface CLIPluginReflectionRecord
 }
 
 export type CLIPluginContext = Context<
-  CLIPluginContextOptions,
+  | StandaloneApplicationResolvedOptions<CLIPluginResolvedOptions>
+  | StandaloneLibraryResolvedOptions<CLIPluginResolvedOptions>,
   CLIPluginReflectionRecord,
   CommandEntryTypeDefinition
 >;

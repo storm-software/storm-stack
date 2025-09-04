@@ -17,7 +17,6 @@
  ------------------------------------------------------------------- */
 
 import { getWorkspaceConfig } from "@storm-software/config-tools/get-config";
-import { getColors } from "@storm-software/config-tools/utilities/colors";
 import { existsSync } from "@stryke/path/exists";
 import {
   getProjectRoot,
@@ -29,22 +28,26 @@ import { isSetObject } from "@stryke/type-checks/is-set-object";
 import { loadConfig as loadConfigC12 } from "c12";
 import defu from "defu";
 import type { Jiti } from "jiti";
-import { ResolvedOptions } from "../types/build";
+import { ResolvedOptions } from "../types";
 import type {
-  InlineConfig,
   OutputConfig,
   ResolvedUserConfig,
-  StormStackCommand
+  StormStackCommand,
+  UserConfig,
+  WorkspaceConfig
 } from "../types/config";
 import { Context } from "../types/context";
 import { getTsconfigFilePath } from "./typescript/tsconfig";
 
-export type PartiallyResolvedContext = {
-  options: Partial<Context["options"]>;
-} & Omit<
-  Context,
+export type PartiallyResolvedContext<
+  TOptions extends ResolvedOptions = ResolvedOptions
+> = Omit<
+  Context<TOptions>,
   "options" | "tsconfig" | "entry" | "vfs" | "compiler" | "unimport"
->;
+> &
+  Partial<Context<TOptions>> & {
+    options: TOptions;
+  };
 
 /**
  * Loads the user configuration file for the project.
@@ -92,7 +95,7 @@ export async function loadUserConfigFile(
       if (isSetObject(config)) {
         resolvedUserConfig = {
           ...config,
-          config,
+          config: config as UserConfig,
           configFile: resolvedUserConfigFile
         };
       }
@@ -145,68 +148,61 @@ export async function loadUserConfigFile(
  * @param projectRoot - The root directory of the project.
  * @returns A promise that resolves to the resolved project configuration options.
  */
-export async function resolveConfig(
-  context: PartiallyResolvedContext,
-  inlineConfig: InlineConfig,
-  userConfig?: ResolvedUserConfig,
+export async function resolveConfig<
+  TOptions extends ResolvedOptions = ResolvedOptions
+>(
+  context: PartiallyResolvedContext<TOptions>,
+  inlineConfig: TOptions["inlineConfig"],
+  userConfig?: TOptions["userConfig"],
   projectRoot?: string
-): Promise<ResolvedOptions> {
+): Promise<TOptions> {
   const resolvedProjectRoot =
     projectRoot ||
     inlineConfig.root ||
     userConfig?.root ||
     getProjectRoot() ||
     process.cwd();
-  const workspaceRoot =
-    context.options.workspaceConfig?.workspaceRoot ?? getWorkspaceRoot();
 
-  if (!context.options.workspaceConfig) {
-    const workspaceConfig = await getWorkspaceConfig();
-    context.options.workspaceConfig = defu(workspaceConfig, {
-      workspaceRoot
-    });
-  }
-  if (!context.options.workspaceConfig?.workspaceRoot) {
+  const workspaceConfig = defu(await getWorkspaceConfig(), {
+    workspaceRoot:
+      context.options.workspaceConfig?.workspaceRoot ?? getWorkspaceRoot()
+  }) as WorkspaceConfig;
+  if (!workspaceConfig) {
     throw new Error(
       "The workspace root could not be determined. Please ensure you are in a Storm Stack project."
     );
   }
 
-  const mode =
-    inlineConfig.mode ||
-    userConfig?.mode ||
-    context.options.workspaceConfig?.mode ||
-    "production";
-
-  const resolvedUserConfig = await loadUserConfigFile(
-    resolvedProjectRoot,
-    context.resolver,
-    context.options.command,
-    mode
+  const mergedUserConfig = defu(
+    { config: userConfig ?? {} },
+    await loadUserConfigFile(
+      resolvedProjectRoot,
+      context.resolver,
+      context.options.command,
+      inlineConfig.mode ||
+        userConfig?.mode ||
+        context.options.workspaceConfig?.mode ||
+        "production"
+    )
   );
 
-  const workspaceConfig = { ...context.options.workspaceConfig };
-  delete workspaceConfig.name;
-
-  const mergedUserConfig = defu(userConfig ?? {}, resolvedUserConfig);
   const resolvedOptions = defu(
     {
       inlineConfig,
       userConfig: mergedUserConfig,
+      workspaceConfig,
       projectRoot: resolvedProjectRoot,
-      workspaceConfig: context.options.workspaceConfig
+      workspaceRoot: workspaceConfig.workspaceRoot
     },
     inlineConfig,
-    mergedUserConfig.config ?? {},
+    mergedUserConfig.config ?? ({} as TOptions),
     {
       ...context.options,
-      mode,
       tsconfig: getTsconfigFilePath(
         resolvedProjectRoot,
-        context.options.tsconfig || "tsconfig.json"
+        context.options.tsconfig ?? "tsconfig.json"
       )
     },
-    workspaceConfig,
     {
       platform: "neutral",
       mode: "production",
@@ -219,15 +215,10 @@ export async function resolveConfig(
         plugins: [],
         presets: []
       },
-      esbuild: {
-        override: {}
-      },
-      unbuild: {
-        override: {},
-        loaders: []
-      }
+      build: {},
+      override: {}
     }
-  ) as ResolvedOptions;
+  ) as any;
 
   resolvedOptions.output = defu(
     resolvedOptions.output ?? {},
@@ -237,7 +228,7 @@ export async function resolveConfig(
     },
     {
       outputPath:
-        resolvedProjectRoot === workspaceRoot
+        resolvedProjectRoot === workspaceConfig.workspaceRoot
           ? "dist"
           : joinPaths("dist", resolvedProjectRoot),
       outputMode: "memory",
@@ -269,8 +260,6 @@ export async function resolveConfig(
   );
 
   context.options = resolvedOptions;
-  context.options.colors = getColors(resolvedOptions);
-
   context.options.logLevel =
     context.options.logLevel === "silent"
       ? null
@@ -281,7 +270,8 @@ export async function resolveConfig(
           ? "debug"
           : context.options.logLevel;
 
-  context.options.userConfig!.plugins = mergedUserConfig.plugins ?? [];
+  context.options.userConfig ??= {} as any;
+  context.options.userConfig.plugins = mergedUserConfig.plugins ?? [];
   context.options.plugins = {
     config: {
       additionalFiles: []

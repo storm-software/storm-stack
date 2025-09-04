@@ -16,7 +16,7 @@
 
  ------------------------------------------------------------------- */
 
-import { ReflectionClass, SerializedTypes } from "@deepkit/type";
+import { ReflectionClass } from "@deepkit/type";
 import { SerializedTypes as CapnpSerializedTypes } from "@storm-stack/core/schemas/reflection";
 import { LogLevel } from "@storm-stack/types/shared/log";
 import { EnvPaths } from "@stryke/env/get-env-paths";
@@ -25,11 +25,10 @@ import { Worker as JestWorker } from "jest-worker";
 import { Jiti } from "jiti";
 import { DirectoryJSON } from "memfs";
 import { Unimport } from "unimport";
-import { UnpluginContextMeta } from "unplugin";
 import { ResolvedEntryTypeDefinition, ResolvedOptions } from "./build";
 import { CompilerInterface, SourceFile } from "./compiler";
 import type { LogFn } from "./config";
-import { PluginOptions, PluginPackageDependencies } from "./plugin";
+import { PluginPackageDependencies } from "./plugin";
 import { ParsedTypeScriptConfig } from "./tsconfig";
 import { VirtualFileSystemInterface } from "./vfs";
 
@@ -143,17 +142,16 @@ export interface ContextReflectionRecord<
 > extends Record<string, Reflection<T> | ContextReflectionRecord<T>> {}
 
 export interface Context<
-  TPluginsOptions extends Record<string, any> = Record<string, any>,
+  TOptions extends ResolvedOptions = ResolvedOptions,
   TReflections extends { [P in keyof unknown]: ReflectionRecord } = {
     [P in keyof unknown]: ReflectionRecord;
   },
-  TResolvedEntryTypeDefinition extends
-    ResolvedEntryTypeDefinition = ResolvedEntryTypeDefinition
+  TEntry extends ResolvedEntryTypeDefinition = ResolvedEntryTypeDefinition
 > {
   /**
    * An object containing the options provided to Storm Stack
    */
-  options: ResolvedOptions<TPluginsOptions>;
+  options: TOptions;
 
   /**
    * A logging function for the Storm Stack engine
@@ -231,7 +229,7 @@ export interface Context<
   /**
    * The entry points of the source code
    */
-  entry: TResolvedEntryTypeDefinition[];
+  entry: TEntry[];
 
   /**
    * The installations required by the project
@@ -239,27 +237,19 @@ export interface Context<
   packageDeps: PluginPackageDependencies;
 
   /**
-   * The parsed TypeScript configuration
+   * The parsed TypeScript configuration from the `tsconfig.json` file
    */
   tsconfig: ParsedTypeScriptConfig;
 
   /**
-   * The project's package.json file content
+   * The project's `package.json` file content
    */
   packageJson: PackageJson;
 
   /**
-   * The project's project.json file content
+   * The project's `project.json` file content
    */
   projectJson?: Record<string, any>;
-
-  /**
-   * The message ports used to communicate with the worker processes
-   */
-  workers: {
-    configReflection: WorkerProcess<["add", "clear"]>;
-    errorLookup: WorkerProcess<["find"]>;
-  };
 
   /**
    * The virtual file system manager used during the build process to reference generated runtime files
@@ -287,16 +277,6 @@ export interface Context<
   unimport: UnimportContext;
 
   /**
-   * Metadata for the unplugin instance
-   *
-   * @see https://unplugin.unjs.io
-   *
-   * @remarks
-   * An object containing metadata about the [unplugin](https://unplugin.unjs.io) instance, such as the framework or bundler being used. **Note:** This metadata is only available when using the Storm Stack plugin in another build process (for example: Vite).
-   */
-  unplugin?: UnpluginContextMeta;
-
-  /**
    * The list of additional runtime files to be included in the build
    *
    * @remarks
@@ -309,110 +289,3 @@ export interface SerializedVirtualFileSystem {
   runtimeIdMap: Record<string, string>;
   virtualFiles: DirectoryJSON<string | null>;
 }
-
-export type SerializedContext<
-  TPluginsOptions extends Record<string, PluginOptions> = Record<
-    string,
-    PluginOptions
-  >,
-  TResolvedEntryTypeDefinition extends
-    ResolvedEntryTypeDefinition = ResolvedEntryTypeDefinition
-> = Record<"log" | "workers" | "resolver" | "compiler" | "unimport", null> & {
-  /**
-   * An object containing the options provided to Storm Stack
-   */
-  options: ResolvedOptions<TPluginsOptions>;
-
-  /**
-   * A logging function for the Storm Stack engine
-   */
-  reflections: Record<string, SerializedTypes>;
-
-  /**
-   * The metadata information
-   */
-  meta: MetaInfo;
-
-  /**
-   * The metadata information currently written to disk
-   */
-  persistedMeta?: MetaInfo;
-
-  /**
-   * The relative path to the Storm Stack workspace root directory
-   */
-  relativeToWorkspaceRoot: string;
-
-  /**
-   * The Storm Stack artifacts directory
-   */
-  artifactsPath: string;
-
-  /**
-   * The path to the Storm Stack runtime directory
-   */
-  runtimePath: string;
-
-  /**
-   * The path to a directory where the reflection data buffers (used by the build processes) are stored
-   */
-  dataPath: string;
-
-  /**
-   * The path to a directory where the project cache (used by the build processes) is stored
-   */
-  cachePath: string;
-
-  /**
-   * The Storm Stack environment paths
-   */
-  envPaths: EnvPaths;
-
-  /**
-   * The runtime file generation template files discovered
-   */
-  templates: string[];
-
-  /**
-   * The entry points of the source code
-   */
-  entry: TResolvedEntryTypeDefinition[];
-
-  /**
-   * The installations required by the project
-   */
-  packageDeps: PluginPackageDependencies;
-
-  /**
-   * The parsed TypeScript configuration
-   */
-  tsconfig: Pick<ParsedTypeScriptConfig, "tsconfigJson" | "tsconfigFilePath">;
-
-  /**
-   * The project's package.json file content
-   */
-  packageJson: PackageJson;
-
-  /**
-   * The project's project.json file content
-   */
-  projectJson?: Record<string, any>;
-
-  /**
-   * The virtual file system manager used during the build process to reference generated runtime files
-   */
-  vfs: SerializedVirtualFileSystem;
-
-  /**
-   * The runtime configuration for the Storm Stack project
-   */
-  runtime: RuntimeConfig;
-
-  /**
-   * The list of additional runtime files to be included in the build
-   *
-   * @remarks
-   * This option is used to include additional files that are not part of the source code but are required by the runtime.
-   */
-  additionalRuntimeFiles?: string[];
-};

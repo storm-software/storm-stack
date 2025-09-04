@@ -33,6 +33,7 @@ import { StormNodeEnv } from "@storm-stack/types/node/env";
 import { HandlerFunction } from "@storm-stack/types/node/app";
 import { StormStorageInterface } from "@storm-stack/types/shared/storage";
 import { StormLogInterface } from "@storm-stack/types/shared/log";
+import { StormContextInterface } from "@storm-stack/types/shared/context";
 import { AsyncLocalStorage } from "node:async_hooks";
 import type {
   UseContext,
@@ -45,12 +46,17 @@ import { createConfig, StormConfig } from "storm:config";
 import { createEnv } from "storm:env";
 import { createStorage } from "storm:storage";
 import { createStormError, StormError, isError } from "storm:error";
-import { StormEvent } from "storm:event";
 import { StormLog } from "storm:log";
 import { StormRequest } from "storm:request";
 import { StormResponse } from "storm:response";
 
-export interface StormContext {
+/**
+ * The global Storm context for the current application.
+ *
+ * @remarks
+ * This interface extends the base Storm context interface with additional properties specific to the NodeJs application.
+ */
+export interface StormContext extends StormContextInterface {
   /**
    * The context metadata.
    */

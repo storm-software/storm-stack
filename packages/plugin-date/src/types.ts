@@ -16,6 +16,7 @@
 
  ------------------------------------------------------------------- */
 
+import { ResolvedOptions } from "@storm-stack/core/types/build";
 import { Context } from "@storm-stack/core/types/context";
 import { PluginBaseOptions } from "@storm-stack/core/types/plugin";
 import {
@@ -50,9 +51,12 @@ export type ResolvedDatePluginOptions = Required<
   Omit<DatePluginOptions, "config">
 >;
 
-export interface DatePluginContextOptions {
+export interface DatePluginResolvedOptions {
   date: Required<Omit<DatePluginOptions, "config">>;
   config: ResolvedConfigPluginOptions;
 }
 
-export type DatePluginContext = Context<DatePluginContextOptions>;
+export type DatePluginContext<
+  TOptions extends
+    ResolvedOptions<DatePluginResolvedOptions> = ResolvedOptions<DatePluginResolvedOptions>
+> = Context<TOptions>;

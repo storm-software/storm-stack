@@ -18,22 +18,13 @@
 
 import { LogLevelLabel } from "@storm-software/config-tools/types";
 import { Plugin } from "@storm-stack/core/base/plugin";
-import { PrimaryKey } from "@storm-stack/core/deepkit";
-import type { Context, EngineHooks } from "@storm-stack/core/types";
-import {
-  PluginBaseOptions,
-  PluginOptions
-} from "@storm-stack/core/types/plugin";
-import type { LogLevel } from "@storm-stack/types/shared/log";
+import type { EngineHooks } from "@storm-stack/core/types";
+import { PluginOptions } from "@storm-stack/core/types/plugin";
 import { joinPaths } from "@stryke/path/join-paths";
 import { camelCase } from "@stryke/string-format/camel-case";
 import { kebabCase } from "@stryke/string-format/kebab-case";
 import type { MaybePromise } from "@stryke/types/base";
-
-export interface LogPluginOptions extends PluginBaseOptions {
-  logLevel?: LogLevel & PrimaryKey;
-  namespace?: string & PrimaryKey;
-}
+import { LogPluginContext, LogPluginOptions } from "../types/plugins";
 
 /**
  * Base class for Log plugins in Storm Stack.
@@ -42,9 +33,9 @@ export interface LogPluginOptions extends PluginBaseOptions {
  * This class provides the foundation for creating logging plugins in Storm Stack. It handles the initialization of the plugin's context and prepares the runtime for logging adapters. Derived classes must implement the `writeAdapter` method to define how the logging adapter should be.
  */
 export default abstract class LogPlugin<
-  TOptions extends LogPluginOptions = LogPluginOptions,
-  TContext extends Context = Context
-> extends Plugin<TOptions, TContext> {
+  TContext extends LogPluginContext = LogPluginContext,
+  TOptions extends LogPluginOptions = LogPluginOptions
+> extends Plugin<TContext, TOptions> {
   /**
    * A list of primary keys for the plugin's options.
    *
@@ -52,9 +43,14 @@ export default abstract class LogPlugin<
    * This is used to identify when two instances of the plugin are the same and can be de-duplicated.
    */
   protected override get primaryKeyFields(): string[] {
-    return ["namespace", "logLevel"];
+    return ["namespace"];
   }
 
+  /**
+   * Creates an instance of the log plugin.
+   *
+   * @param options - The options for the log plugin.
+   */
   public constructor(options: PluginOptions<TOptions>) {
     super(options);
     this.options.logLevel ??= "info";

@@ -19,27 +19,26 @@
 import { parse as parseToml, stringify as stringifyToml } from "@ltd/j-toml";
 import { LogLevelLabel } from "@storm-software/config-tools/types";
 import { getFileHeader } from "@storm-stack/core/lib/utilities/file-header";
-import type { Context, EngineHooks } from "@storm-stack/core/types";
+import type { EngineHooks } from "@storm-stack/core/types";
 import type { PluginOptions } from "@storm-stack/core/types/plugin";
-import type { StoragePluginOptions } from "@storm-stack/devkit/plugins/storage";
 import StoragePlugin from "@storm-stack/devkit/plugins/storage";
 import { readFile } from "@stryke/fs";
 import { existsSync, joinPaths } from "@stryke/path";
-import type { CloudflareR2Options } from "unstorage/drivers/cloudflare-r2-binding";
+import {
+  StorageCloudflareR2PluginContext,
+  StorageCloudflareR2PluginOptions
+} from "./types";
 
-export type StorageCloudflareR2PluginConfig = StoragePluginOptions &
-  Omit<CloudflareR2Options, "binding"> & {
-    /**
-     * The binding name for the Cloudflare R2.
-     *
-     * @remarks
-     * This is used to access the Cloudflare R2 binding in the worker.
-     */
-    binding?: string;
-  };
-
-export default class StorageCloudflareR2Plugin extends StoragePlugin<StorageCloudflareR2PluginConfig> {
-  public constructor(options: PluginOptions<StorageCloudflareR2PluginConfig>) {
+/**
+ * Cloudflare R2 storage plugin for Storm Stack.
+ */
+export default class StorageCloudflareR2Plugin<
+  TContext extends
+    StorageCloudflareR2PluginContext = StorageCloudflareR2PluginContext,
+  TOptions extends
+    StorageCloudflareR2PluginOptions = StorageCloudflareR2PluginOptions
+> extends StoragePlugin<TContext, TOptions> {
+  public constructor(options: PluginOptions<TOptions>) {
     super(options);
 
     if (this.options.binding) {
@@ -52,7 +51,7 @@ export default class StorageCloudflareR2Plugin extends StoragePlugin<StorageClou
    *
    * @param hooks - The engine hooks to add
    */
-  public override addHooks(hooks: EngineHooks) {
+  public override addHooks(hooks: EngineHooks<TContext>) {
     hooks.addHooks({
       "prepare:config": this.prepareConfig.bind(this)
     });
@@ -65,8 +64,8 @@ export default class StorageCloudflareR2Plugin extends StoragePlugin<StorageClou
    *
    * @returns The source code as a string
    */
-  protected override writeStorage() {
-    if (this.options.binding) {
+  protected override writeStorage(context: TContext) {
+    if (this.getOptions(context).binding) {
       return `${getFileHeader()}
 
 import type { StorageAdapter } from "@storm-stack/types/shared/storage";
@@ -82,8 +81,8 @@ import { env } from "cloudflare:workers";
  */
 function createAdapter(): StorageAdapter {
   const adapter = cloudflareR2BindingDriver({ binding: env.${
-    this.options.binding
-  }, base: ${this.options.base || "undefined"} }) as StorageAdapter;
+    this.getOptions(context).binding
+  }, base: ${this.getOptions(context).base || "undefined"} }) as StorageAdapter;
   adapter[Symbol.asyncDispose] = async () => {
     if (adapter.dispose && typeof adapter.dispose === "function") {
       await Promise.resolve(adapter.dispose());
@@ -112,7 +111,7 @@ import { StormError } from "storm:error";
  */
 function createAdapter(): StorageAdapter {
   const accountId = $storm.config.CLOUDFLARE_ACCOUNT_ID;
-  const accessKey = $storm.config.CLOUDFLARE_R2_ACCESS_KEY_ID;
+  const accessKeyId = $storm.config.CLOUDFLARE_R2_ACCESS_KEY_ID;
   const secretAccessKey = $storm.config.CLOUDFLARE_R2_SECRET_ACCESS_KEY;
 
   if (!accountId) {
@@ -121,15 +120,15 @@ function createAdapter(): StorageAdapter {
     });
   }
 
-  if (!accessKey && !secretAccessKey) {
+  if (!accessKeyId && !secretAccessKey) {
     throw new StormError({ type: "general", code: 15 });
   }
 
   const adapter = s3Driver({
-    accessKeyId: accessKey,
-    secretAccessKey: secretAccessKey,
+    accessKeyId,
+    secretAccessKey,
     endpoint: \`https://\${accountId}.r2.cloudflarestorage.com\`,
-    bucket: "${this.options.namespace}",
+    bucket: "${this.getOptions(context).namespace}",
     region: "auto",
   }) as StorageAdapter;
   adapter[Symbol.asyncDispose] = async () => {
@@ -153,8 +152,11 @@ export default createAdapter;
    * @param context - The Storm Stack context
    * @returns A promise that resolves when the configuration is prepared
    */
-  protected async prepareConfig(context: Context) {
-    if (context.options.projectType === "application" && this.options.binding) {
+  protected async prepareConfig(context: TContext) {
+    if (
+      context.options.projectType === "application" &&
+      this.getOptions(context).binding
+    ) {
       this.log(
         LogLevelLabel.TRACE,
         "Writing the Cloudflare R2 binding to the wrangler file."
@@ -176,14 +178,14 @@ export default createAdapter;
       if (
         !wranglerFile.r2_buckets?.some(
           r2Bucket =>
-            r2Bucket.binding === this.options.binding &&
-            r2Bucket.bucket_name === this.options.namespace
+            r2Bucket.binding === this.getOptions(context).binding &&
+            r2Bucket.bucket_name === this.getOptions(context).namespace
         )
       ) {
         wranglerFile.r2_buckets ??= [];
         wranglerFile.r2_buckets.push({
-          binding: this.options.binding,
-          bucket_name: this.options.namespace
+          binding: this.getOptions(context).binding!,
+          bucket_name: this.getOptions(context).namespace
         });
       }
 

@@ -1158,9 +1158,12 @@ interface StormConfigInterface {
  * @remarks
  * The Storm Stack application context object is injected into the global scope of the application. It can be accessed using `$storm` or `useStorm()` in the application code.
  */
-interface StormContext {
+interface StormContextInterface {
   /**
    * The context metadata.
+   *
+   * @remarks
+   * This metadata can be used to store information about the current request, user, or any other relevant data. It is mutable and can be changed during the request lifecycle.
    */
   meta: Record<string, any>;
   /**
@@ -2084,7 +2087,7 @@ declare module "storm:config" {
      * Indicates if the application is running in debug mode.
      *
      * @title DEBUG
-     * @defaultValue true
+     * @defaultValue false
      */
     DEBUG: boolean;
     /**
@@ -2178,7 +2181,7 @@ declare module "storm:config" {
      * The default lowest log level to accept. If `null`, the logger will reject all records. This value only applies if `lowestLogLevel` is not provided to the `logs` configuration.
      *
      * @title LOG LEVEL
-     * @defaultValue debug
+     * @defaultValue info
      */
     LOG_LEVEL?: "debug" | "info" | "warning" | "error" | "fatal" | null;
     /**
@@ -2318,7 +2321,7 @@ declare module "storm:config" {
      * Indicates if error stack traces should be captured.
      *
      * @title STACKTRACE
-     * @defaultValue true
+     * @defaultValue false
      */
     STACKTRACE: boolean;
     /**
@@ -2383,7 +2386,7 @@ declare module "storm:config" {
      * The version of the application.
      *
      * @title APP VERSION
-     * @defaultValue 0.18.0
+     * @defaultValue 0.19.0
      * @readonly
      */
     readonly APP_VERSION: string;
@@ -2448,7 +2451,7 @@ declare module "storm:config" {
      * The unique identifier for the build.
      *
      * @title BUILD Identifier
-     * @defaultValue c19bd1c6-562a-4ec4-933b-2f837eccd828
+     * @defaultValue f4851e53-8e9d-404a-a048-aa4d455da78d
      * @readonly
      */
     readonly BUILD_ID: string;
@@ -2456,7 +2459,7 @@ declare module "storm:config" {
      * The timestamp the build was ran at.
      *
      * @title BUILD TIMESTAMP
-     * @defaultValue 2025-08-30T00:18:49.359Z
+     * @defaultValue 2025-09-04T05:52:52.146Z
      * @readonly
      */
     readonly BUILD_TIMESTAMP: string;
@@ -2689,7 +2692,7 @@ declare module "storm:config" {
      * The unique identifier for the release.
      *
      * @title RELEASE Identifier
-     * @defaultValue 9bd1c656-2a0e-4413-bb2f-837eccd828eb
+     * @defaultValue 851e538e-9d90-4a60-88aa-4d455da78dab
      * @readonly
      */
     readonly RELEASE_ID: string;
@@ -2697,7 +2700,7 @@ declare module "storm:config" {
      * The tag for the release. This is generally in the format of "\<APP_NAME\>\@\<APP_VERSION\>".
      *
      * @title RELEASE TAG
-     * @defaultValue storm-stack@0.18.0
+     * @defaultValue storm-stack@0.19.0
      * @readonly
      */
     readonly RELEASE_TAG: string;
@@ -3198,17 +3201,6 @@ declare module "storm:error" {
   }
 }
 
-declare module "storm:log/console-info" {
-  export const DATE_TIME_FORMAT: Intl.DateTimeFormat;
-  /**
-   * Creates a new [console](https://developer.mozilla.org/en-US/docs/Web/API/console) logging adapter.
-   *
-   * @returns The created logging adapter.
-   */
-  function createAdapter(): LogAdapter;
-  export default createAdapter;
-}
-
 declare module "storm:id" {
   /**
    * The ID module provides a set of utilities for generating unique identifiers.
@@ -3427,7 +3419,13 @@ declare module "storm:context" {
    * @module storm:context
    */
 
-  export interface StormContext {
+  /**
+   * The global Storm context for the current application.
+   *
+   * @remarks
+   * This interface extends the base Storm context interface with additional properties specific to the NodeJs application.
+   */
+  export interface StormContext extends StormContextInterface {
     /**
      * The context metadata.
      */
@@ -3484,7 +3482,18 @@ declare module "storm:context" {
   export type StormContext = any[];
 }
 
-declare module "storm:log/sentry-error" {
+declare module "storm:log/console" {
+  export const DATE_TIME_FORMAT: Intl.DateTimeFormat;
+  /**
+   * Creates a new [console](https://developer.mozilla.org/en-US/docs/Web/API/console) logging adapter.
+   *
+   * @returns The created logging adapter.
+   */
+  function createAdapter(): LogAdapter;
+  export default createAdapter;
+}
+
+declare module "storm:log/sentry" {
   /**
    * Creates a new [Sentry](https://sentry.io/) logging adapter.
    *
@@ -3494,7 +3503,7 @@ declare module "storm:log/sentry-error" {
   export default createAdapter;
 }
 
-declare module "storm:log/storage-logs-info" {
+declare module "storm:log/storage-logs" {
   /**
    * Get a text formatter with the specified options.  Although it's flexible
    * enough to create a custom formatter, if you want more control, you can

@@ -17,7 +17,7 @@
  ------------------------------------------------------------------- */
 
 import { LogLevelLabel } from "@storm-software/config-tools/types";
-import { esbuild } from "@storm-stack/core/lib/esbuild/build";
+import { tsup } from "@storm-stack/core/lib/tsup/build";
 import { unbuild } from "@storm-stack/core/lib/unbuild/build";
 import { LogFn } from "@storm-stack/core/types/config";
 import { chmodX } from "@stryke/fs/chmod-x";
@@ -48,7 +48,7 @@ import { CLIPluginContext } from "../types/config";
 export async function buildApplication(log: LogFn, context: CLIPluginContext) {
   log(LogLevelLabel.TRACE, "Building the CLI application.");
 
-  await esbuild(context, {
+  await tsup(context, {
     entry: context.entry
       .filter(entry => entry.input.file === context.options.entry)
       .reduce(
@@ -59,7 +59,6 @@ export async function buildApplication(log: LogFn, context: CLIPluginContext) {
         },
         {} as Record<string, string>
       ),
-    platform: "node",
     skipNodeModulesBundle: true
   });
 }
@@ -87,7 +86,7 @@ export async function permissionExecutable(
       context.options.workspaceRoot,
       context.options.output.outputPath || "dist",
       "dist",
-      context.options.esbuild.format === "esm"
+      context.options.build.format === "esm"
         ? `${filtered[0]?.output}.mjs`
         : `${filtered[0]?.output}.js`
     );

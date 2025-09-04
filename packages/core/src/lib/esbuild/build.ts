@@ -16,109 +16,92 @@
 
  ------------------------------------------------------------------- */
 
-import { build } from "@storm-software/esbuild/build";
-import type { ESBuildOptions as BaseESBuildOptions } from "@storm-software/esbuild/types";
-import { findFileExtension } from "@stryke/path/file-path-fns";
-import { replacePath } from "@stryke/path/replace";
-import { isFunction } from "@stryke/type-checks/is-function";
+import { Entry } from "@storm-software/build-tools/types";
+import { LogLevelLabel } from "@storm-software/config-tools/types";
+import { isString } from "@stryke/type-checks/is-string";
 import defu from "defu";
-import { BuildOptions } from "esbuild";
-import { Format } from "tsup";
-import { ESBuildOverrideOptions } from "../../types/config";
-import { Context } from "../../types/context";
+import { build } from "esbuild";
+import type { ResolvedOptions } from "../../types/build";
+import { CompilerOptions } from "../../types/compiler";
+import { ESBuildOptions } from "../../types/config";
+import type { Context } from "../../types/context";
 import { compilerPlugin } from "./compiler-plugin";
+import { resolveEsbuildEntryOptions, resolveESBuildOptions } from "./options";
 import { resolverPlugin } from "./resolver-plugin";
+import { transpilerPlugin } from "./transpiler-plugin";
 
 /**
- * Build the project using esbuild
- *
- * @param context - The context of the build
- * @param override - The override options for the build
+ * Options for the bundling process using esbuild. This type extends the ResolvedOptions type to include additional properties specific to the bundling process.
  */
-export async function esbuild(
-  context: Context,
-  override: Partial<ESBuildOverrideOptions> = {}
-) {
-  const options = defu(
-    override ?? {},
-    context.options.esbuild.override,
-    {
-      entry: context.entry.reduce(
-        (ret, entry) => {
-          ret[
-            entry.output ||
-              replacePath(
-                entry.input.file,
-                context.projectJson?.sourceRoot || context.options.projectRoot
-              ).replace(findFileExtension(entry.input.file) || "", "") ||
-              replacePath(
-                entry.file,
-                context.projectJson?.sourceRoot || context.options.projectRoot
-              ).replace(findFileExtension(entry.file) || "", "")
-          ] = entry.file;
+export type BundleOptions = Pick<
+  ResolvedOptions,
+  "external" | "noExternal" | "skipNodeModulesBundle"
+> & {
+  entry?: Entry;
+  outputPath?: string;
+  alias?: Record<string, string>;
+  override?: Partial<ESBuildOptions>;
+  compiler?: CompilerOptions;
+};
 
-          return ret;
-        },
-        {} as Record<string, string>
-      ),
-      assets: context.options.output.assets,
-      outputPath: context.options.output.outputPath,
-      mode: context.options.mode,
-      platform: context.options.platform,
-      projectRoot: context.options.projectRoot,
-      sourceRoot: context.options.sourceRoot,
-      tsconfig: context.tsconfig.tsconfigFilePath,
-      tsconfigRaw: context.tsconfig.tsconfigJson,
-      external: context.options.external,
-      noExternal: context.options.noExternal,
-      skipNodeModulesBundle: context.options.skipNodeModulesBundle
-    },
-    context.options.esbuild,
-    {
-      banner: {
-        js:
-          context.options.mode !== "production"
-            ? "\n//  ⚡  Built with Storm Stack \n"
-            : " "
-      },
-      minify: context.options.mode !== "development",
-      metafile: context.options.mode === "development",
-      sourcemap: context.options.mode === "development",
-      dts: context.options.projectType !== "application",
-      noExternal: Array.from(context.vfs.runtimeIdMap.keys())
-    }
-  ) as BaseESBuildOptions;
-
-  await build(
-    defu(
+/**
+ * Bundles the specified entry points using [esbuild](https://esbuild.github.io/).
+ *
+ * @param context - Base context for the bundling process.
+ * @param options - Additional options for the bundling process.
+ * @returns The result of the bundling process.
+ */
+export async function esbuild(context: Context, options: BundleOptions = {}) {
+  try {
+    const opts = resolveESBuildOptions(
+      context,
       {
-        config: false,
-        clean: true,
-        esbuildOptions(
-          opts: BuildOptions,
-          ctx: {
-            format: Format;
-          }
-        ) {
-          if (isFunction(options.esbuildOptions)) {
-            options.esbuildOptions(opts, ctx);
-          }
-
-          opts.alias = defu(
-            opts.alias ?? {},
-            Object.fromEntries(context.vfs.runtimeIdMap.entries())
-          );
-        },
-        esbuildPlugins: [
-          resolverPlugin(context, {
-            external: options.external,
-            noExternal: options.noExternal,
-            skipNodeModulesBundle: options.skipNodeModulesBundle
-          }),
-          compilerPlugin(context)
-        ]
+        outdir: options.outputPath,
+        bundle: true
       },
       options
-    )
-  );
+    );
+
+    return await build(
+      defu(
+        {
+          entryPoints: resolveEsbuildEntryOptions(
+            context,
+            options.entry
+              ? Array.isArray(options.entry)
+                ? options.entry
+                : isString(options.entry)
+                  ? [options.entry]
+                  : Object.values(options.entry)
+              : []
+          ),
+          plugins: [
+            resolverPlugin(context, {
+              external:
+                opts.external ?? options.external ?? context.options.external,
+              noExternal: options.noExternal ?? context.options.noExternal,
+              skipNodeModulesBundle:
+                options.skipNodeModulesBundle ??
+                context.options.skipNodeModulesBundle
+            }),
+            options.compiler?.skipAllTransforms === true
+              ? transpilerPlugin(context, options.compiler)
+              : compilerPlugin(context, options.compiler)
+          ].filter(Boolean)
+        },
+        opts
+      )
+    );
+  } catch (error) {
+    context.log(
+      LogLevelLabel.ERROR,
+      (error as Error)?.message
+        ? `An error occurred while running esbuild: ${
+            (error as Error)?.message
+          }`
+        : "An error occurred while running esbuild"
+    );
+
+    throw error;
+  }
 }

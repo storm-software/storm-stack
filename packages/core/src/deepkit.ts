@@ -16,5 +16,7 @@
 
  ------------------------------------------------------------------- */
 
+// Re-exporting Deepkit modules
+
 export * from "@deepkit/core";
 export * from "@deepkit/type";

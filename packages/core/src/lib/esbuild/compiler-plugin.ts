@@ -17,7 +17,7 @@
  ------------------------------------------------------------------- */
 
 import defu from "defu";
-import type { Plugin } from "esbuild";
+import type { OnLoadArgs, Plugin } from "esbuild";
 import type { CompilerOptions } from "../../types/compiler";
 import { Context } from "../../types/context";
 import { ModuleResolverPlugin } from "../babel/plugins/module-resolver";
@@ -35,7 +35,7 @@ export function compilerPlugin(
 ): Plugin {
   const cache = new Map<string, string>();
 
-  const handleLoad = async args => {
+  const handleLoad = async (args: OnLoadArgs) => {
     if (args.path) {
       const resolvedPath = context.vfs.resolvePath(args.path, {
         type: "file"

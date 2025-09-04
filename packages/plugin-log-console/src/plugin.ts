@@ -18,8 +18,8 @@
 
 import { getFileHeader } from "@storm-stack/core/lib/utilities/file-header";
 import type { PluginOptions } from "@storm-stack/core/types/plugin";
-import type { LogPluginOptions } from "@storm-stack/devkit/plugins/log";
 import LogPlugin from "@storm-stack/devkit/plugins/log";
+import type { LogPluginOptions } from "@storm-stack/devkit/types/plugins";
 
 export default class LogConsolePlugin extends LogPlugin {
   public constructor(options: PluginOptions<LogPluginOptions>) {

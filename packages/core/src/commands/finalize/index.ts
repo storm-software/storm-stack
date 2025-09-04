@@ -27,7 +27,10 @@ import { __VFS_REVERT__ } from "../../types/vfs";
  * @param context - The build context.
  * @param hooks - The engine hooks.
  */
-export async function finalize(context: Context, hooks: EngineHooks) {
+export async function finalize<TContext extends Context = Context>(
+  context: TContext,
+  hooks: EngineHooks<TContext>
+) {
   await hooks.callHook("finalize:begin", context).catch((error: Error) => {
     context.log(
       LogLevelLabel.ERROR,
@@ -39,13 +42,6 @@ export async function finalize(context: Context, hooks: EngineHooks) {
       { cause: error }
     );
   });
-
-  await Promise.all(
-    [
-      context.workers.errorLookup?.end(),
-      context.workers.configReflection?.end()
-    ].filter(Boolean)
-  );
 
   await hooks.callHook("finalize:complete", context).catch((error: Error) => {
     context.log(

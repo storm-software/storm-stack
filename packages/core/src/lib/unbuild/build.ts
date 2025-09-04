@@ -17,7 +17,7 @@
  ------------------------------------------------------------------- */
 
 import { build } from "@storm-software/unbuild";
-import { UnbuildOverrideOptions } from "../../types/config";
+import { UnbuildOptions } from "../../types/config";
 import type { Context } from "../../types/context";
 import { resolveUnbuildOptions } from "./options";
 
@@ -29,7 +29,7 @@ import { resolveUnbuildOptions } from "./options";
  */
 export async function unbuild(
   context: Context,
-  override: Partial<UnbuildOverrideOptions> = {}
+  override: Partial<UnbuildOptions> = {}
 ) {
   const options = resolveUnbuildOptions(context, override);
 

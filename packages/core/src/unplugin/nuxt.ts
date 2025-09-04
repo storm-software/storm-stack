@@ -18,8 +18,9 @@
 
 import { addVitePlugin, addWebpackPlugin, defineNuxtModule } from "@nuxt/kit";
 import "@nuxt/schema";
-import type { ResolvedUserConfig } from "../types/config";
-import { StormStack } from "./index";
+import type { ViteUserConfig, WebpackUserConfig } from "../types/config";
+import StormStackVite from "./vite";
+import StormStackWebpack from "./webpack";
 
 /**
  * Nuxt plugin
@@ -27,23 +28,26 @@ import { StormStack } from "./index";
  * @example
  * ```js
  * // nuxt.config.js
- * import StormStack from 'storm-stack/nuxt'
+ * import StormStack from '@storm-stack/core/nuxt'
  *
  * default export {
  *  plugins: [StormStack()],
  * }
  * ```
  */
-const nuxt = defineNuxtModule<ResolvedUserConfig>({
+export const nuxt = defineNuxtModule<
+  Omit<ViteUserConfig & WebpackUserConfig, "variant">
+>({
   meta: {
     name: "storm-stack",
     configKey: "storm"
   },
   defaults: {},
   setup(options, _nuxt) {
-    addVitePlugin(() => StormStack.vite(options));
-    addWebpackPlugin(() => StormStack.webpack(options));
+    addVitePlugin(() => StormStackVite(options));
+    addWebpackPlugin(() => StormStackWebpack(options));
   }
 });
+
 export default nuxt;
 export { nuxt as "module.exports" };
