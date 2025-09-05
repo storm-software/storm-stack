@@ -69,7 +69,7 @@ try {
     );
   }
 
-  echo`${chalk.green("✅  Successfully updated Storm Software package dependencies and re-linked workspace packages")}\n\n`;
+  echo`${chalk.green("✅ Successfully updated Storm Software package dependencies and re-linked workspace packages")}\n\n`;
 } catch (error) {
   echo`${chalk.red(
     error?.message ??

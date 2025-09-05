@@ -47,7 +47,7 @@ try {
     );
   }
 
-  echo`${chalk.green("✅  Completed monorepo bootstrapping successfully!")}`;
+  echo`${chalk.green("✅ Completed monorepo bootstrapping successfully!")}`;
 } catch (error) {
   echo`${chalk.red(error?.message ? error.message : "A failure occurred while bootstrapping the monorepo")}`;
 

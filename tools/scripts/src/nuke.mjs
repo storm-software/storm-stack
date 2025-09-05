@@ -93,7 +93,7 @@ try {
     );
   }
 
-  echo`${chalk.green("✅  Successfully nuked the cache, node modules, and build folders \n\n")}`;
+  echo`${chalk.green("✅ Successfully nuked the cache, node modules, and build folders \n\n")}`;
 } catch (error) {
   echo`${chalk.red(error?.message ? error.message : "A failure occurred while nuking the monorepo")}`;
 }

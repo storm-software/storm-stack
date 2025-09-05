@@ -60,7 +60,7 @@ try {
     );
   }
 
-  echo`${chalk.green("✅  Successfully released Storm Stack packages")}`;
+  echo`${chalk.green("✅ Successfully released Storm Stack packages")}`;
 } catch (error) {
   echo`${chalk.red(error?.message ? error.message : "A failure occurred while releasing Storm Stack packages")}`;
 

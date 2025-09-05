@@ -20,10 +20,7 @@
   "devDependencies": {
     "@storm-stack/core": "workspace:*",
     "@storm-stack/nx": "workspace:*",
-    "@storm-stack/plugin-cli": "workspace:*",
-    "@storm-stack/plugin-date": "workspace:*",
-    "@storm-stack/plugin-log-console": "workspace:*",
-    "@storm-stack/plugin-log-sentry": "workspace:*",
+    "@storm-stack/plugin-react": "workspace:*",
     "@types/react": "catalog:",
     "@types/react-dom": "catalog:"
   }

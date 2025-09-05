@@ -13,6 +13,7 @@ out
 # \!examples/**/.storm
 
 # build
+examples/**/storm.d.ts
 
 # dependencies
 node_modules
