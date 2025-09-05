@@ -16,6 +16,7 @@
 
  ------------------------------------------------------------------- */
 
+import { PluginConfig } from "@cloudflare/vite-plugin";
 import {
   Context,
   ReflectionRecord,
@@ -34,6 +35,20 @@ export type CloudflareWorkerPluginOptions = PluginBaseOptions & {
    * The name of the Cloudflare Worker.
    */
   workerId?: string;
+
+  /**
+   * The path to the Cloudflare configuration file (wrangler.toml).
+   *
+   * @defaultValue "\{projectRoot\}/wrangler.toml"
+   */
+  configPath?: string;
+
+  /**
+   * Configuration options for the [Vite Cloudflare plugin](https://github.com/cloudflare/workers-sdk/blob/main/packages/vite-plugin-cloudflare).
+   *
+   * @see [Vite Cloudflare Plugin Documentation](https://developers.cloudflare.com/workers/vite-plugin/)
+   */
+  cloudflareVitePlugin?: PluginConfig | false;
 };
 
 export interface CloudflareWorkerPluginResolvedOptions {

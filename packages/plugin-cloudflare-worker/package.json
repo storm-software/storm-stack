@@ -86,9 +86,10 @@
   "typings": "dist/index.d.ts",
   "dependencies": {
     "@cloudflare/unenv-preset": "catalog:",
+    "@cloudflare/vite-plugin": "catalog:",
     "@ltd/j-toml": "catalog:",
     "@storm-software/config-tools": "catalog:",
-    "@storm-stack/core": "0.39.0",
+    "@storm-stack/core": "workspace:*",
     "@storm-stack/types": "workspace:*",
     "@stryke/fs": "catalog:",
     "@stryke/json": "catalog:",

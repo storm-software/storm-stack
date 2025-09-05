@@ -16,7 +16,8 @@
 
  ------------------------------------------------------------------- */
 
-import { cloudflare } from "@cloudflare/unenv-preset";
+import { cloudflare as cloudflareEnv } from "@cloudflare/unenv-preset";
+import { cloudflare as cloudflareVitePlugin } from "@cloudflare/vite-plugin";
 import { parse as parseToml, stringify as stringifyToml } from "@ltd/j-toml";
 import { LogLevelLabel } from "@storm-software/config-tools/types";
 import { Plugin } from "@storm-stack/core/base/plugin";
@@ -27,9 +28,11 @@ import {
 } from "@storm-stack/core/lib/typescript/tsconfig";
 import { getFileHeader } from "@storm-stack/core/lib/utilities/file-header";
 import { writeFile } from "@storm-stack/core/lib/utilities/write-file";
-import type { EngineHooks } from "@storm-stack/core/types/build";
+import type {
+  EngineHooks,
+  ViteConfigHookParams
+} from "@storm-stack/core/types/build";
 import { TsupOptions } from "@storm-stack/core/types/config";
-import type { Context } from "@storm-stack/core/types/context";
 import type { PluginOptions } from "@storm-stack/core/types/plugin";
 import { executePackage } from "@stryke/cli/execute";
 import { createDirectory, removeDirectory } from "@stryke/fs/helpers";
@@ -80,7 +83,7 @@ export default class CloudflareWorkerPlugin<
     super(options);
 
     const { env } = defineEnv({
-      presets: [cloudflare]
+      presets: [cloudflareEnv]
     });
     this.#unenv = env;
   }
@@ -100,23 +103,20 @@ export default class CloudflareWorkerPlugin<
       "prepare:begin": this.#prepareDirectories.bind(this),
       "prepare:config": this.#prepareConfig.bind(this),
       "prepare:runtime": this.#prepareRuntime.bind(this),
-      "prepare:entry": this.#prepareEntry.bind(this)
+      "prepare:entry": this.#prepareEntry.bind(this),
+      "vite:config": this.#viteConfig.bind(this)
     });
   }
 
-  async #clean(context: Context) {
+  async #clean(context: TContext) {
     this.log(
       LogLevelLabel.TRACE,
       `Clean Cloudflare specific artifacts the Storm Stack project.`
     );
 
     if (context.options.projectType === "application") {
-      const wranglerFilePath = joinPaths(
-        context.options.projectRoot,
-        "wrangler.toml"
-      );
-      if (wranglerFilePath && existsSync(wranglerFilePath)) {
-        await removeFile(wranglerFilePath);
+      if (existsSync(this.getOptions(context).configPath!)) {
+        await removeFile(this.getOptions(context).configPath!);
       }
     }
 
@@ -134,6 +134,13 @@ export default class CloudflareWorkerPlugin<
     this.log(
       LogLevelLabel.TRACE,
       `Resolving Storm Stack context for the project.`
+    );
+
+    context.options.plugins.cloudflare ??=
+      {} as Required<CloudflareWorkerPluginOptions>;
+    context.options.plugins.cloudflare.configPath ??= joinPaths(
+      context.options.projectRoot,
+      "wrangler.toml"
     );
 
     context.options.platform = "node";
@@ -373,14 +380,12 @@ export default class CloudflareWorkerPlugin<
     if (context.options.projectType === "application") {
       this.log(LogLevelLabel.TRACE, "Preparing the wrangler deployment file");
 
-      const wranglerFilePath = joinPaths(
-        context.options.projectRoot,
-        "wrangler.toml"
-      );
       let wranglerFileContent = "";
 
-      if (existsSync(wranglerFilePath)) {
-        wranglerFileContent = await readFile(wranglerFilePath);
+      if (existsSync(this.getOptions(context).configPath!)) {
+        wranglerFileContent = await readFile(
+          this.getOptions(context).configPath!
+        );
       }
 
       const main = replacePath(
@@ -418,7 +423,7 @@ compatibility_flags = [ "nodejs_als" ]
       }
 
       await context.vfs.writeFileToDisk(
-        wranglerFilePath,
+        this.getOptions(context).configPath!,
         stringifyToml(wranglerFile, {
           newline: "\n",
           newlineAround: "header",
@@ -507,5 +512,24 @@ export default {
         );
       })
     );
+  }
+
+  /**
+   * Configures Vite to use the Cloudflare plugin.
+   *
+   * @param context - The current build context.
+   * @param params - The Vite config hook parameters.
+   */
+  async #viteConfig(context: TContext, params: ViteConfigHookParams) {
+    if (this.getOptions(context).cloudflareVitePlugin !== false) {
+      params.config.plugins ??= [];
+      params.config.plugins.push(
+        cloudflareVitePlugin(
+          defu(this.getOptions(context).cloudflareVitePlugin || {}, {
+            configPath: this.getOptions(context).configPath!
+          })
+        )
+      );
+    }
   }
 }
