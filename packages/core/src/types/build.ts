@@ -29,6 +29,7 @@ import { BuildOptions, Loader, PluginBuild } from "esbuild";
 import type { Hookable } from "hookable";
 import {
   HmrContext,
+  IndexHtmlTransformContext,
   IndexHtmlTransformResult,
   ModuleNode,
   PreviewServer,
@@ -50,6 +51,7 @@ import type {
   TsupUserConfig,
   UnbuildUserConfig,
   UserConfig,
+  ViteOptions,
   ViteUserConfig,
   WebpackUserConfig,
   WorkspaceConfig
@@ -499,45 +501,44 @@ export interface EngineHookFunctions<TContext extends Context = Context> {
   "finalize:complete": (context: TContext) => MaybePromise<void>;
 
   // Vite - Hooks used during the Vite process
-  "vite:config": (context: TContext) => MaybePromise<void>;
+  "vite:config": (
+    context: TContext,
+    params: { config: ViteOptions; env: { mode: string; command: string } }
+  ) => MaybePromise<void>;
   "vite:configResolved": (
     context: TContext,
-    config: ResolvedConfig
+    params: { config: ResolvedConfig }
   ) => MaybePromise<void>;
   "vite:configureServer": (
     context: TContext,
-    server: ViteDevServer
+    params: { server: ViteDevServer }
   ) => MaybePromise<void>;
   "vite:configurePreviewServer": (
     context: TContext,
-    server: PreviewServer
+    params: { server: PreviewServer }
   ) => MaybePromise<void>;
   "vite:transformIndexHtml": (
     context: TContext,
     params: {
       html: string;
-      path: string;
-      filename: string;
-      server?: ViteDevServer;
-      bundle?: import("rollup").OutputBundle;
-      chunk?: import("rollup").OutputChunk;
-      result?: IndexHtmlTransformResult;
+      ctx: IndexHtmlTransformContext;
+      result?: IndexHtmlTransformResult | null;
     }
   ) => MaybePromise<void>;
   "vite:handleHotUpdate": (
     context: TContext,
-    params: HmrContext & { modules: ModuleNode[] }
+    params: { ctx: HmrContext; result?: ModuleNode[] | null }
   ) => MaybePromise<void>;
 
   // ESBuild - Hooks used during the ESBuild process
   "esbuild:setup": (
     context: TContext,
-    build: PluginBuild
+    params: { build: PluginBuild }
   ) => MaybePromise<void>;
   "esbuild:config": (context: TContext, options: BuildOptions) => void;
   "esbuild:configureServer": (
     context: TContext,
-    server: ViteDevServer
+    params: { server: ViteDevServer }
   ) => MaybePromise<void>;
   "esbuild:loader": (
     context: TContext,

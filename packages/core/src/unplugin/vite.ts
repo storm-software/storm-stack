@@ -18,7 +18,14 @@
 
 import defu from "defu";
 import { createVitePlugin } from "unplugin";
-import { ConfigEnv, UserConfig } from "vite";
+import {
+  ConfigEnv,
+  HmrContext,
+  IndexHtmlTransformResult,
+  ModuleNode,
+  ResolvedConfig,
+  UserConfig
+} from "vite";
 import { resolveViteOptions } from "../lib/vite/options";
 import { ViteResolvedOptions } from "../types/build";
 import { createUnpluginFactory } from "./core/factory";
@@ -43,18 +50,70 @@ export const vite = createVitePlugin(
       return {
         ...plugin,
         vite: {
-          config: (config: UserConfig, env: ConfigEnv) => {
+          async config(config: UserConfig, env: ConfigEnv) {
             engine.context.options.isPreview = !!env.isPreview;
             engine.context.options.isSsrBuild = !!env.isSsrBuild;
             engine.context.options.mode =
               env.mode === "development" ? "development" : "production";
 
-            engine.context.options.build = resolveViteOptions(
+            const resolvedOptions = resolveViteOptions(
               engine.context,
               defu(engine.context.options.override, config)
             );
 
-            return engine.context.options.build;
+            await engine.hooks.callHook("vite:config", engine.context, {
+              config: resolvedOptions,
+              env
+            });
+
+            return resolvedOptions;
+          },
+          async configResolved(config: ResolvedConfig) {
+            await engine.hooks.callHook("vite:configResolved", engine.context, {
+              config
+            });
+          },
+          async configureServer(server) {
+            await engine.hooks.callHook(
+              "vite:configureServer",
+              engine.context,
+              { server }
+            );
+          },
+          async configurePreviewServer(server) {
+            await engine.hooks.callHook(
+              "vite:configurePreviewServer",
+              engine.context,
+              { server }
+            );
+          },
+          async transformIndexHtml(html, ctx) {
+            const result: IndexHtmlTransformResult | null = null;
+            await engine.hooks.callHook(
+              "vite:transformIndexHtml",
+              engine.context,
+              {
+                html,
+                ctx,
+                result
+              }
+            );
+
+            if (result) {
+              return result;
+            }
+          },
+          async handleHotUpdate(ctx: HmrContext) {
+            const result: ModuleNode[] | null = null;
+            await engine.hooks.callHook(
+              "vite:handleHotUpdate",
+              engine.context,
+              { ctx, result }
+            );
+
+            if (result) {
+              return result;
+            }
           }
         }
       };

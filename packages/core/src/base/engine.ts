@@ -84,6 +84,13 @@ export class Engine<TOptions extends ResolvedOptions = ResolvedOptions> {
   }
 
   /**
+   * The Storm Stack engine hooks
+   */
+  public get hooks() {
+    return this.#hooks;
+  }
+
+  /**
    * Create a new Storm Stack Engine instance
    *
    * @param inlineConfig - The inline configuration for the Storm Stack engine
