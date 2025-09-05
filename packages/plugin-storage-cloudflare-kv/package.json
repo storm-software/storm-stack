@@ -74,15 +74,15 @@
   "dependencies": {
     "@ltd/j-toml": "catalog:",
     "@storm-software/config-tools": "catalog:",
-    "@storm-stack/core": "0.39.0",
-    "@storm-stack/devkit": "0.14.1",
+    "@storm-stack/core": "workspace:*",
+    "@storm-stack/devkit": "workspace:*",
     "@stryke/fs": "catalog:",
     "@stryke/json": "catalog:",
     "@stryke/path": "catalog:",
     "unstorage": "catalog:"
   },
   "devDependencies": {
-    "@storm-stack/nx": "0.19.1",
+    "@storm-stack/nx": "workspace:*",
     "@stryke/types": "catalog:",
     "@types/node": "catalog:",
     "tsup": "catalog:"
