@@ -16,11 +16,16 @@
 
  ------------------------------------------------------------------- */
 
+import BabelPluginJSX from "@babel/plugin-syntax-jsx";
 import { LogLevelLabel } from "@storm-software/config-tools/types";
 import { Plugin } from "@storm-stack/core/base/plugin";
 import { addPluginFilter } from "@storm-stack/core/lib/babel/helpers";
+import { resolveBabelOptions } from "@storm-stack/core/lib/babel/options";
 import { writeFile } from "@storm-stack/core/lib/utilities/write-file";
-import type { EngineHooks } from "@storm-stack/core/types/build";
+import type {
+  EngineHooks,
+  ViteConfigHookParams
+} from "@storm-stack/core/types/build";
 import { PluginOptions } from "@storm-stack/core/types/plugin";
 import { IdModule } from "@storm-stack/devkit/templates/id";
 import { LogModule } from "@storm-stack/devkit/templates/log";
@@ -30,6 +35,9 @@ import { readJsonFile } from "@stryke/fs/json";
 import { StormJSON } from "@stryke/json";
 import { joinPaths } from "@stryke/path/join-paths";
 import { TsConfigJson } from "@stryke/types/tsconfig";
+import viteReactPlugin, { BabelOptions } from "@vitejs/plugin-react";
+import BabelPluginReactCompiler from "babel-plugin-react-compiler";
+import defu from "defu";
 import BabelPlugin from "./babel/plugin";
 import { ContextModule } from "./templates/context";
 import { EnvModule } from "./templates/env";
@@ -74,7 +82,8 @@ export default class ReactPlugin<
 
     hooks.addHooks({
       "init:options": this.initOptions.bind(this),
-      "prepare:runtime": this.prepareRuntime.bind(this)
+      "prepare:runtime": this.prepareRuntime.bind(this),
+      "vite:config": this.viteConfig.bind(this)
     });
   }
 
@@ -118,7 +127,22 @@ export default class ReactPlugin<
       "error"
     );
     context.options.babel.plugins.push(BabelPlugin);
-    context.options.babel.plugins.unshift("@babel/plugin-syntax-jsx");
+    context.options.babel.plugins.unshift([
+      BabelPluginJSX,
+      {
+        runtime: this.options.jsxRuntime ?? "automatic",
+        importSource: this.options.jsxImportSource ?? "react"
+      }
+    ]);
+    if (this.getOptions(context).compiler !== false) {
+      context.options.babel.plugins.push([
+        BabelPluginReactCompiler,
+        defu(this.getOptions(context).compiler ?? {}, {
+          development: context.options.mode === "development",
+          target: "19"
+        })
+      ]);
+    }
   }
 
   /**
@@ -205,5 +229,28 @@ export default class ReactPlugin<
     ];
 
     await Promise.all(promises);
+  }
+
+  /**
+   * Configures Vite to use the React plugin.
+   *
+   * @param context - The current build context.
+   * @param params - The Vite config hook parameters.
+   */
+  protected async viteConfig(context: TContext, params: ViteConfigHookParams) {
+    params.config.plugins ??= [];
+
+    const babel = (await resolveBabelOptions(
+      context,
+      this.log
+    )) as BabelOptions;
+
+    params.config.plugins.unshift(
+      viteReactPlugin({
+        babel,
+        jsxImportSource: this.getOptions(context).jsxImportSource,
+        jsxRuntime: this.getOptions(context).jsxRuntime
+      })
+    );
   }
 }

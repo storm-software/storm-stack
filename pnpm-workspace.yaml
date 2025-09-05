@@ -108,7 +108,9 @@ catalog:
   "@typescript-eslint/types": ^8.31.1
   "@typescript-eslint/utils": ^8.31.1
   "@typescript/vfs": ^1.6.1
+  "@vitejs/plugin-react": ^5.0.2
   babel-dead-code-elimination: ^1.0.10
+  babel-plugin-react-compiler: 19.1.0-rc.3
   bundle-require: ^5.1.0
   c12: ^3.0.3
   cfonts: ^3.3.0

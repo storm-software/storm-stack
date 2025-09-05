@@ -178,7 +178,10 @@
     "@stryke/json": "catalog:",
     "@stryke/path": "catalog:",
     "@stryke/string-format": "catalog:",
-    "@stryke/type-checks": "catalog:"
+    "@stryke/type-checks": "catalog:",
+    "@vitejs/plugin-react": "catalog:",
+    "babel-plugin-react-compiler": "catalog:",
+    "defu": "catalog:"
   },
   "devDependencies": {
     "@storm-stack/nx": "workspace:*",

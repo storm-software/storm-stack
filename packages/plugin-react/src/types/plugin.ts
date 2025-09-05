@@ -35,8 +35,39 @@ import {
   LogConsolePluginOptions,
   LogConsolePluginResolvedOptions
 } from "@storm-stack/plugin-log-console/types";
+import { PluginOptions } from "babel-plugin-react-compiler";
 
 export interface ReactPluginOptions extends PluginBaseOptions {
+  /**
+   * Control where the JSX factory is imported from.
+   *
+   * @see https://esbuild.github.io/api/#jsx-import-source
+   *
+   * @defaultValue "react"
+   */
+  jsxImportSource?: string;
+
+  /**
+   * Control how JSX is transformed.
+   *
+   * @remarks
+   * Skipping React import with classic runtime is not supported from v4
+   *
+   * @defaultValue "automatic"
+   */
+  jsxRuntime?: "classic" | "automatic";
+
+  /**
+   * Options provided to the [React Compiler](https://npmjs.com/package/babel-plugin-react-compiler).
+   *
+   * @see https://github.com/facebook/react/blob/main/compiler/packages/babel-plugin-react-compiler/src/Entrypoint/Options.ts#L55
+   * @see https://react.dev/blog/2025/04/21/react-compiler-rc
+   *
+   * @remarks
+   * Set to `false` to disable the React Compiler. By default, the React Compiler is enabled and target is set to React 19.
+   */
+  compiler?: PluginOptions | false;
+
   /**
    * Options for the config plugin.
    */
