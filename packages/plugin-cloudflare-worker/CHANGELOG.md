@@ -2,6 +2,17 @@
 
 # Changelog for Storm Stack - Plugin Cloudflare Worker
 
+## [0.25.0](https://github.com/storm-software/storm-stack/releases/tag/plugin-cloudflare-worker%400.25.0) (2025-09-05)
+
+### Features
+
+- **core:** Split out `deepkit` exports into self-contained runtime build
+  ([0a0ae40c](https://github.com/storm-software/storm-stack/commit/0a0ae40c))
+
+### Updated Dependencies
+
+- Updated core to 0.38.0
+
 ## [0.24.0](https://github.com/storm-software/storm-stack/releases/tag/plugin-cloudflare-worker%400.24.0) (2025-09-04)
 
 ### Features

@@ -2,6 +2,13 @@
 
 # Changelog for Storm Stack - Core
 
+## [0.38.0](https://github.com/storm-software/storm-stack/releases/tag/core%400.38.0) (2025-09-05)
+
+### Features
+
+- **core:** Split out `deepkit` exports into self-contained runtime build
+  ([0a0ae40c](https://github.com/storm-software/storm-stack/commit/0a0ae40c))
+
 ## [0.37.0](https://github.com/storm-software/storm-stack/releases/tag/core%400.37.0) (2025-09-04)
 
 ### Features

@@ -2,6 +2,20 @@
 
 # Changelog for Storm Stack - Plugin Log Otel
 
+## [0.24.0](https://github.com/storm-software/storm-stack/releases/tag/plugin-log-otel%400.24.0) (2025-09-05)
+
+### Features
+
+- **core:** Split out `deepkit` exports into self-contained runtime build
+  ([0a0ae40c](https://github.com/storm-software/storm-stack/commit/0a0ae40c))
+
+### Updated Dependencies
+
+- Updated plugin-config to 0.5.0
+- Updated devkit to 0.14.0
+- Updated core to 0.38.0
+- Updated nx to 0.19.0
+
 ## [0.23.0](https://github.com/storm-software/storm-stack/releases/tag/plugin-log-otel%400.23.0) (2025-09-04)
 
 ### Features

@@ -2,6 +2,18 @@
 
 # Changelog for Storm Stack - Plugin CLI
 
+## [0.32.0](https://github.com/storm-software/storm-stack/releases/tag/plugin-cli%400.32.0) (2025-09-05)
+
+### Features
+
+- **core:** Split out `deepkit` exports into self-contained runtime build
+  ([0a0ae40c](https://github.com/storm-software/storm-stack/commit/0a0ae40c))
+
+### Updated Dependencies
+
+- Updated devkit to 0.14.0
+- Updated core to 0.38.0
+
 ## [0.31.0](https://github.com/storm-software/storm-stack/releases/tag/plugin-cli%400.31.0) (2025-09-04)
 
 ### Features

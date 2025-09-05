@@ -2,6 +2,22 @@
 
 # Changelog for Storm Stack - CLI
 
+## [0.21.0](https://github.com/storm-software/storm-stack/releases/tag/cli%400.21.0) (2025-09-05)
+
+### Features
+
+- **core:** Split out `deepkit` exports into self-contained runtime build
+  ([0a0ae40c](https://github.com/storm-software/storm-stack/commit/0a0ae40c))
+
+### Updated Dependencies
+
+- Updated plugin-log-storage to 0.25.0
+- Updated plugin-log-sentry to 0.28.0
+- Updated plugin-storage-fs to 0.14.0
+- Updated plugin-cli to 0.32.0
+- Updated core to 0.38.0
+- Updated nx to 0.19.0
+
 ## [0.20.0](https://github.com/storm-software/storm-stack/releases/tag/cli%400.20.0) (2025-09-04)
 
 ### Features
