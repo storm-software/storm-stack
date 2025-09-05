@@ -16,9 +16,9 @@
 
  ------------------------------------------------------------------- */
 
+import { Engine } from "@storm-stack/core/base/engine";
 import { NewInlineConfig } from "@storm-stack/core/types/config";
 import { StormRequest } from "storm:request";
-import { createEngine } from "../../../helpers/create-engine";
 
 /**
  * The request for the example CLI application.
@@ -62,10 +62,10 @@ async function handler(request: StormRequest<NewLibraryRequest>) {
     command: "new"
   } as NewInlineConfig;
 
-  const engine = await createEngine(inlineConfig);
+  const engine = await Engine.create(inlineConfig);
 
   await engine.new(inlineConfig);
-  await engine.finalize(inlineConfig);
+  await engine.finalize();
 }
 
 export default handler;

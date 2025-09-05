@@ -16,9 +16,9 @@
 
  ------------------------------------------------------------------- */
 
+import { Engine } from "@storm-stack/core/base/engine";
 import { BuildInlineConfig } from "@storm-stack/core/types/config";
 import { StormRequest } from "storm:request";
-import { createEngine } from "../../helpers/create-engine";
 
 /**
  * The request data type for the build command.
@@ -52,10 +52,10 @@ async function handler(request: StormRequest<BuildRequest>) {
     command: "build"
   } as BuildInlineConfig;
 
-  const engine = await createEngine(inlineConfig);
+  const engine = await Engine.create(inlineConfig);
 
   await engine.build(inlineConfig);
-  await engine.finalize(inlineConfig);
+  await engine.finalize();
 
   $storm.log.info(
     `Build completed successfully. Distribution files are located in ${data.root}/dist.`

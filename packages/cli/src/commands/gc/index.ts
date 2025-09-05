@@ -16,9 +16,9 @@
 
  ------------------------------------------------------------------- */
 
+import { Engine } from "@storm-stack/core/base/engine";
 import { CleanInlineConfig } from "@storm-stack/core/types";
 import { StormRequest } from "storm:request";
-import { createEngine } from "../../helpers/create-engine";
 
 /**
  * The request data type for the garbage collection command.
@@ -55,10 +55,10 @@ async function handler(request: StormRequest<GarbageCollectionRequest>) {
     command: "clean"
   } as CleanInlineConfig;
 
-  const engine = await createEngine(inlineConfig);
+  const engine = await Engine.create(inlineConfig);
 
   await engine.clean(inlineConfig);
-  await engine.finalize(inlineConfig);
+  await engine.finalize();
 
   $storm.log.info(`Garbage collection completed successfully.`);
 }

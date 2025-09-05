@@ -16,10 +16,10 @@
 
  ------------------------------------------------------------------- */
 
+import { Engine } from "@storm-stack/core/base/engine";
 import { PrepareInlineConfig } from "@storm-stack/core/types/config";
 import { StormError } from "storm:error";
 import { StormRequest } from "storm:request";
-import { createEngine } from "../../helpers/create-engine";
 
 /**
  * The request data type for the prepare command.
@@ -57,10 +57,10 @@ async function handler(request: StormRequest<PrepareRequest>) {
     command: "prepare"
   } as PrepareInlineConfig;
 
-  const engine = await createEngine(inlineConfig);
+  const engine = await Engine.create(inlineConfig);
 
   await engine.prepare(inlineConfig);
-  await engine.finalize(inlineConfig);
+  await engine.finalize();
 }
 
 export default handler;
