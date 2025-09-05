@@ -23,4 +23,6 @@ export * from "./config";
 export * from "./context";
 export * from "./plugin";
 export * from "./tsconfig";
+export * from "./typedoc";
+export * from "./unplugin";
 export * from "./vfs";

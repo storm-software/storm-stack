@@ -27,6 +27,4 @@
 
 export * from "./base";
 export * from "./define-config";
-export * from "./lib";
 export * from "./types";
-export * from "./unplugin";

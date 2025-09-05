@@ -18,5 +18,4 @@
 
 // Re-exporting Deepkit modules
 
-export * from "@deepkit/core";
-export * from "@deepkit/type";
+export * from "@deepkit/type-spec";

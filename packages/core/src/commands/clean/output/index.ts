@@ -17,9 +17,9 @@
  ------------------------------------------------------------------- */
 
 import { LogLevelLabel } from "@storm-software/config-tools/types";
-import { Context } from "@storm-stack/core/types/context";
 import { joinPaths } from "@stryke/path/join-paths";
 import type { EngineHooks } from "../../../types/build";
+import { Context } from "../../../types/context";
 
 /**
  * Cleans the Storm Stack project output by removing generated files and directories.

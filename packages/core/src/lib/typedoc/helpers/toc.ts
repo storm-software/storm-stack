@@ -23,7 +23,7 @@ import type {
   ReflectionGroup
 } from "typedoc";
 import { ReflectionKind } from "typedoc";
-import type StormStackMarkdownTheme from "./theme";
+import { StormStackMarkdownTheme } from "./markdown-theme";
 
 export function escapeChars(str: string) {
   return str

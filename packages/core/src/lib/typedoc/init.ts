@@ -16,18 +16,21 @@
 
  ------------------------------------------------------------------- */
 
+import { findFileName } from "@stryke/path/file-path-fns";
+import { joinPaths } from "@stryke/path/join-paths";
 import { writeFile } from "node:fs/promises";
-import { dirname, resolve, sep } from "node:path";
-import { fileURLToPath } from "node:url";
+import { sep } from "node:path";
 import {
   Application,
   Converter,
+  PackageJsonReader,
   PageEvent,
+  ProjectReflection,
   ReflectionKind,
-  TSConfigReader
+  TSConfigReader,
+  TypeDocReader
 } from "typedoc";
-
-const __dirname = dirname(fileURLToPath(import.meta.url));
+import { Context } from "../../types/context";
 
 const objectToFrontmatter = (object: Record<string, any> = {}) =>
   Object.entries(object)
@@ -49,6 +52,7 @@ const onRendererPageEnd =
     if (!event.contents) {
       return;
     } else if (/README\.md$/.test(event.url)) {
+      // eslint-disable-next-line ts/no-unsafe-call
       event.preventDefault();
       return;
     }
@@ -173,41 +177,85 @@ const removeTrailingSlash = (pathString = "") =>
     ? pathString.slice(0, pathString.length - 1)
     : pathString;
 
-export const initAstroTypedoc = async ({
-  baseUrl = "/docs/",
-  entryPoints
-}: {
+export interface InitTypedocOptions {
+  outputPath: string;
   baseUrl?: string;
   entryPoints?: Array<{ name: string; path: string }>;
-}) => {
+}
+
+export interface GenerateDocsOptions {
+  frontmatter?: Record<string, any>;
+  outputPath?: string;
+  project: ProjectReflection;
+}
+
+/**
+ * Initialize Typedoc with the given options.
+ *
+ * @param context - The Storm Stack context
+ * @param options - Options to initialize Typedoc with
+ * @returns An object containing methods to generate docs, generate navigation JSON, and get reflections.
+ */
+export const initTypedoc = async (
+  context: Context,
+  options: InitTypedocOptions
+) => {
+  const { baseUrl = "/docs/", outputPath } = options;
+
+  const entryPoints =
+    options.entryPoints ??
+    context.entry.map(entry => ({
+      name:
+        entry.name ||
+        entry.output ||
+        findFileName(entry.file, {
+          withExtension: false
+        }),
+      path: joinPaths(context.options.projectRoot, entry.file)
+    }));
+
   // Hack to make sure entrypoints will be loaded
-  await writeFile(
-    resolve(__dirname, "./tsconfig.generic.json"),
-    JSON.stringify({
-      compilerOptions: {
-        baseUrl: ".",
-        paths: entryPoints?.reduce((paths, { name, path }) => {
-          if (name) {
-            paths[name] = [path];
-          }
+  // await writeFile(
+  //   resolve(__dirname, "./tsconfig.generic.json"),
+  //   JSON.stringify({
+  //     compilerOptions: {
+  //       baseUrl: ".",
+  //       paths: entryPoints?.reduce((paths, { name, path }) => {
+  //         if (name) {
+  //           paths[name] = [path];
+  //         }
 
-          return paths;
-        }, {})
-      },
-      include: entryPoints?.map(e => e.path)
-    })
+  //         return paths;
+  //       }, {})
+  //     },
+  //     include: entryPoints?.map(e => e.path)
+  //   })
+  // );
+
+  const app = await Application.bootstrapWithPlugins(
+    {
+      ...typedocConfig,
+      ...markdownPluginConfig,
+      gitRevision: context.options.branch || "main",
+      tsconfig: context.tsconfig.tsconfigFilePath,
+      exclude: context.tsconfig.tsconfigJson.exclude?.filter(
+        Boolean
+      ) as string[],
+      out: outputPath,
+      basePath: baseUrl,
+      entryPoints: entryPoints?.map(e => e.path),
+      plugin: [
+        "typedoc-plugin-markdown",
+        "@storm-stack/core/lib/typedoc/plugin"
+      ],
+      theme: "storm-stack",
+      readme: "none",
+      excludePrivate: true,
+      hideGenerator: true
+      // tsconfig: resolve(__dirname, "./tsconfig.generic.json")
+    },
+    [new TypeDocReader(), new PackageJsonReader(), new TSConfigReader()]
   );
-
-  const app = await Application.bootstrapWithPlugins({
-    ...typedocConfig,
-    ...markdownPluginConfig,
-    basePath: baseUrl,
-    entryPoints: entryPoints?.map(e => e.path),
-    plugin: ["typedoc-plugin-markdown", resolve(__dirname, "./theme.js")],
-    readme: "none",
-    theme: "custom-markdown-theme",
-    tsconfig: resolve(__dirname, "./tsconfig.generic.json")
-  });
 
   app.options.addReader(new TSConfigReader());
   app.converter.on(
@@ -216,16 +264,13 @@ export const initAstroTypedoc = async ({
   );
 
   const getReflections = async () => app.convert();
-  const generateDocs = async ({
-    frontmatter,
-    outputFolder = "src/pages/docs",
-    project
-  }) => {
+  const generateDocs = async (opts: GenerateDocsOptions) => {
+    const { outputPath: outputFolder, project, frontmatter } = opts;
     app.renderer.on(PageEvent.END, onRendererPageEnd(frontmatter));
 
-    await app.generateDocs(project, outputFolder);
+    await app.generateDocs(project, outputFolder || outputPath);
   };
-  const generateNavigationJSON = async (project, outputFolder) => {
+  const generateNavigationJSON = async (project, outputFolder = outputPath) => {
     const navigation = buildNavigationFromProjectReflection(baseUrl, project);
 
     await writeFile(
@@ -235,10 +280,11 @@ export const initAstroTypedoc = async ({
   };
 
   return {
+    app,
     generateDocs,
     generateNavigationJSON,
     getReflections
   };
 };
 
-export default initAstroTypedoc;
+export default initTypedoc;

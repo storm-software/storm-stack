@@ -20,7 +20,7 @@ import {
   ReflectionClass,
   ReflectionKind,
   ReflectionProperty
-} from "@storm-stack/core/deepkit";
+} from "@storm-stack/core/deepkit/type";
 import { getFileHeader } from "@storm-stack/core/lib/utilities/file-header";
 import {
   generateTypeScriptInterface,
@@ -106,7 +106,7 @@ import {
   Serializer,
   TypeProperty,
   TypePropertySignature
-} from "@storm-stack/core/deepkit";
+} from "@storm-stack/core/deepkit/type";
 import { StormConfigInterface } from "@storm-stack/types/config";
 
 ${await ConfigTypeDefinition(context, reflection)}

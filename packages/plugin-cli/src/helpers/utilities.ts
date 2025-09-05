@@ -23,7 +23,7 @@ import {
   ReflectionKind,
   resolveClassType,
   Type
-} from "@storm-stack/core/deepkit";
+} from "@storm-stack/core/deepkit/type";
 import { reflectType } from "@storm-stack/core/lib/deepkit/reflect-type";
 import { joinPaths } from "@stryke/path/index";
 import { kebabCase } from "@stryke/string-format/kebab-case";

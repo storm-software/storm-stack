@@ -16,7 +16,7 @@
 
  ------------------------------------------------------------------- */
 
-import { ReflectionClass, stringifyType } from "@storm-stack/core/deepkit";
+import { ReflectionClass, stringifyType } from "@storm-stack/core/deepkit/type";
 import { stringifyValue } from "@storm-stack/core/lib/deepkit/utilities";
 import { camelCase } from "@stryke/string-format/camel-case";
 import { pascalCase } from "@stryke/string-format/pascal-case";

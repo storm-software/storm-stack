@@ -20,7 +20,7 @@ import { LogLevelLabel } from "@storm-software/config-tools/types";
 import { createDirectory, removeDirectory } from "@stryke/fs/helpers";
 import { existsSync } from "@stryke/path/exists";
 import { joinPaths } from "@stryke/path/join-paths";
-import typedoc from "typedoc";
+import { initTypedoc } from "../../../lib/typedoc/init";
 import type { EngineHooks } from "../../../types/build";
 import { Context } from "../../../types/context";
 
@@ -50,35 +50,13 @@ export async function docsApiReference(context: Context, hooks: EngineHooks) {
 
   await createDirectory(outputPath);
 
-  const app = await typedoc.Application.bootstrapWithPlugins(
-    {
-      plugin: [
-        "typedoc-plugin-markdown",
-        "typedoc-plugin-frontmatter",
-        "@storm-stack/core/lib/typedoc"
-      ],
-      theme: "storm-stack",
-      hideGenerator: true,
-      readme: "none",
-      excludePrivate: true,
-      gitRevision: context.options.branch || "main",
-      entryPoints: context.entry.map(entry =>
-        joinPaths(context.options.projectRoot, entry.file)
-      ),
-      tsconfig: context.options.tsconfig,
-      exclude: context.tsconfig?.raw?.exclude,
-      out: outputPath
-    },
-    [
-      new typedoc.TypeDocReader(),
-      new typedoc.PackageJsonReader(),
-      new typedoc.TSConfigReader()
-    ]
-  );
+  const { generateDocs, getReflections } = await initTypedoc(context, {
+    outputPath
+  });
 
-  const project = await app.convert();
+  const project = await getReflections();
   if (project) {
-    await app.generateDocs(project, outputPath);
+    await generateDocs({ project });
   }
 
   await hooks.callHook("docs:api-reference", context).catch((error: Error) => {

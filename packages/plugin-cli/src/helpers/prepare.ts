@@ -17,7 +17,7 @@
  ------------------------------------------------------------------- */
 
 import { LogLevelLabel } from "@storm-software/config-tools/types";
-import { ReflectionKind, stringifyType } from "@storm-stack/core/deepkit";
+import { ReflectionKind, stringifyType } from "@storm-stack/core/deepkit/type";
 import { getFileHeader } from "@storm-stack/core/lib/utilities/file-header";
 import type { LogFn } from "@storm-stack/core/types/config";
 import {
@@ -305,7 +305,7 @@ import { createStormError } from "storm:error";
 import { CLIRequestData, showError, colors, parseArgs, renderBanner, renderFooter${
       context.options.plugins.cli.interactive !== "never" ? ", prompt" : ""
     } } from "storm:cli";
-import { deserialize, serialize } from "@storm-stack/core/deepkit";${
+import { deserialize, serialize } from "@storm-stack/core/deepkit/type";${
       request.import
         ? `import { ${request.import.name} } from "${relativePath(
             findFilePath(command.file),

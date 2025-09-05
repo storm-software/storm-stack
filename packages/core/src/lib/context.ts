@@ -36,6 +36,7 @@ import { PackageJson } from "@stryke/types/package-json";
 import { uuid } from "@stryke/unique-id/uuid";
 import defu from "defu";
 import { DirectoryJSON } from "memfs";
+import { createVfs, restoreVfs } from "../base/vfs/virtual-file-system";
 import {
   __VFS_VIRTUAL__,
   Context,
@@ -48,7 +49,6 @@ import { PartiallyResolvedContext, resolveConfig } from "./config";
 import { createLog } from "./logger";
 import { createResolver } from "./resolver";
 import { getParsedTypeScriptConfig } from "./typescript/tsconfig";
-import { createVfs, restoreVfs } from "./vfs/virtual-file-system";
 
 export interface CreateContextOptions {
   name?: string;

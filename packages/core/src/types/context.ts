@@ -17,7 +17,6 @@
  ------------------------------------------------------------------- */
 
 import { ReflectionClass } from "@deepkit/type";
-import { SerializedTypes as CapnpSerializedTypes } from "@storm-stack/core/schemas/reflection";
 import { LogLevel } from "@storm-stack/types/shared/log";
 import { EnvPaths } from "@stryke/env/get-env-paths";
 import { PackageJson } from "@stryke/types/package-json";
@@ -25,6 +24,7 @@ import { Worker as JestWorker } from "jest-worker";
 import { Jiti } from "jiti";
 import { DirectoryJSON } from "memfs";
 import { Unimport } from "unimport";
+import type { SerializedTypes as CapnpSerializedTypes } from "../../schemas/reflection";
 import { ResolvedEntryTypeDefinition, ResolvedOptions } from "./build";
 import { CompilerInterface, SourceFile } from "./compiler";
 import type { LogFn } from "./config";

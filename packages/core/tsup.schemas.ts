@@ -16,10 +16,13 @@
 
  ------------------------------------------------------------------- */
 
-export * from "./build";
-export * from "./compiler-plugin";
-export * from "./constants";
-export * from "./options";
-export * from "./resolver-plugin";
-export * from "./transpiler-plugin";
-export * from "./vfs-plugin";
+import { getTsupConfig } from "@storm-stack/tools-config/tsup.shared";
+
+const config = getTsupConfig({
+  name: "core-schemas",
+  entry: ["schemas/*.ts"],
+  outDir: "dist/schemas",
+  clean: false
+});
+
+export default config;

@@ -18,30 +18,27 @@
 
 import { slug } from "github-slugger";
 import path from "node:path";
-import type { Reflection, Renderer } from "typedoc";
-import { MarkdownPageEvent } from "typedoc-plugin-markdown/dist/plugin/events";
+import type { Reflection } from "typedoc";
 import {
   MarkdownTheme,
   MarkdownThemeRenderContext
-} from "typedoc-plugin-markdown/dist/theme";
+} from "typedoc-plugin-markdown";
+import { MarkdownPageEvent } from "../../../types/typedoc";
 
 const externalLinkRegex = /^\w+:/;
 
-interface LoadApp {
-  renderer: Renderer;
-}
+export class StormStackMarkdownTheme extends MarkdownTheme {
+  public hideInPageTOC = false;
 
-export function load(app: LoadApp): void {
-  app.renderer.defineTheme("custom-markdown-theme", CustomMarkdownTheme);
-}
-
-export class CustomMarkdownTheme extends MarkdownTheme {
   public override getRenderContext(pageEvent: MarkdownPageEvent<Reflection>) {
-    return new CustomMarkdownThemeContext(pageEvent, this.application.options);
+    return new StormStackMarkdownThemeContext(
+      pageEvent,
+      this.application.options
+    );
   }
 }
 
-class CustomMarkdownThemeContext extends MarkdownThemeRenderContext {
+class StormStackMarkdownThemeContext extends MarkdownThemeRenderContext {
   public override relativeURL: (
     url: string | undefined | null
   ) => string | null = (url: string | undefined | null): string | null => {
@@ -67,6 +64,7 @@ class CustomMarkdownThemeContext extends MarkdownThemeRenderContext {
       name: string;
     }
 
+    // eslint-disable-next-line ts/no-unsafe-call
     const basePath: string = this.options.getValue("basePath");
     const basePathParsed: BasePathParsed = path.parse(basePath);
     const baseUrl: string = basePath.replace(basePathParsed.root, "/");

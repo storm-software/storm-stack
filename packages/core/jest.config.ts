@@ -1,3 +1,7 @@
-import { getJestConfig } from "@storm-software/testing-tools";
+import { declarePackage } from "@storm-software/testing-tools";
 
-export default getJestConfig("packages/core", true, "core");
+export default declarePackage({
+  projectRoot: "packages/core",
+  isNode: true,
+  displayName: "core"
+});

@@ -147,14 +147,14 @@
     "@babel/helper-module-imports": "catalog:",
     "@storm-software/config": "catalog:",
     "@storm-software/config-tools": "catalog:",
-    "@storm-stack/core": "0.37.0",
-    "@storm-stack/devkit": "0.13.0",
+    "@storm-stack/core": "workspace:*",
+    "@storm-stack/devkit": "workspace:*",
     "@stryke/json": "catalog:",
     "@stryke/path": "catalog:",
     "@stryke/string-format": "catalog:"
   },
   "devDependencies": {
-    "@storm-stack/nx": "0.18.0",
+    "@storm-stack/nx": "workspace:*",
     "@types/node": "catalog:",
     "tsup": "catalog:"
   },

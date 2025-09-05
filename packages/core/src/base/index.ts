@@ -19,3 +19,4 @@
 export * from "./compiler";
 export * from "./engine";
 export * from "./plugin";
+export * from "./vfs/virtual-file-system";

@@ -24,7 +24,7 @@ import {
   ReflectionClass,
   ReflectionKind,
   resolveClassType
-} from "@storm-stack/core/deepkit";
+} from "@storm-stack/core/deepkit/type";
 import { convertFromCapnp } from "@storm-stack/core/lib/capnp";
 import { stringifyDefaultValue } from "@storm-stack/core/lib/deepkit/utilities";
 import { SerializedTypes as CapnpSerializedTypes } from "@storm-stack/core/schemas/reflection";

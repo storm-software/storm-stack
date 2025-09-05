@@ -16,10 +16,42 @@
 
  ------------------------------------------------------------------- */
 
-export * from "./build";
-export * from "./compiler-plugin";
-export * from "./constants";
-export * from "./options";
-export * from "./resolver-plugin";
-export * from "./transpiler-plugin";
-export * from "./vfs-plugin";
+import {
+  Event,
+  ProjectReflection,
+  Reflection,
+  RenderTemplate,
+  UrlMapping
+} from "typedoc";
+import { NavigationItem } from "typedoc-plugin-markdown";
+
+/**
+ * Extends the RendererEvent from TypeDoc to expose navigation property.
+ */
+export interface MarkdownRendererEvent extends Event {
+  readonly project: ProjectReflection;
+
+  readonly outputDirectory: string;
+
+  urls?: UrlMapping<Reflection>[];
+
+  navigation: NavigationItem[];
+
+  createPageEvent: <Model>(
+    mapping: UrlMapping<Model>
+  ) => [RenderTemplate<MarkdownPageEvent<Model>>, MarkdownPageEvent<Model>];
+}
+
+export interface MarkdownPageEvent<out Model = unknown> extends Event {
+  project: ProjectReflection;
+
+  filename: string;
+
+  url: string;
+
+  contents: string;
+
+  pageHeadings: any;
+
+  readonly model: Model;
+}

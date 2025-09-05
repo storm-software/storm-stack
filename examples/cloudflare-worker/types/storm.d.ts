@@ -2323,7 +2323,7 @@ declare module "storm:config" {
      * The unique identifier for the build.
      *
      * @title BUILD Identifier
-     * @defaultValue ef2e9180-7037-4418-a918-5180cbc88c5f
+     * @defaultValue 6a67d19a-943d-421b-b7ac-0b064e9c3652
      * @readonly
      */
     readonly BUILD_ID: string;
@@ -2331,7 +2331,7 @@ declare module "storm:config" {
      * The timestamp the build was ran at.
      *
      * @title BUILD TIMESTAMP
-     * @defaultValue 2025-09-04T14:38:38.658Z
+     * @defaultValue 2025-09-05T08:21:27.607Z
      * @readonly
      */
     readonly BUILD_TIMESTAMP: string;
@@ -2564,7 +2564,7 @@ declare module "storm:config" {
      * The unique identifier for the release.
      *
      * @title RELEASE Identifier
-     * @defaultValue 2e918070-3754-48e9-9851-80cbc88c5f3a
+     * @defaultValue 67d19a94-3d32-4b77-ac0b-064e9c365249
      * @readonly
      */
     readonly RELEASE_ID: string;

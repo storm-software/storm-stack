@@ -22,7 +22,7 @@ import {
   ReflectionClass,
   ReflectionKind,
   stringifyType
-} from "@storm-stack/core/deepkit";
+} from "@storm-stack/core/deepkit/type";
 import { writeFile } from "@storm-stack/core/lib/utilities/write-file";
 import type { EngineHooks } from "@storm-stack/core/types/build";
 import { PluginOptions } from "@storm-stack/core/types/plugin";

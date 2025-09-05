@@ -16,8 +16,8 @@
 
  ------------------------------------------------------------------- */
 
+import { getClassName } from "@storm-stack/core/deepkit/core";
 import {
-  getClassName,
   memberNameToString,
   ReflectionClass,
   ReflectionKind,
@@ -27,7 +27,7 @@ import {
   TypeEnum,
   TypeLiteral,
   TypeUnion
-} from "@storm-stack/core/deepkit";
+} from "@storm-stack/core/deepkit/type";
 import { kindToName } from "@storm-stack/core/lib/deepkit/utilities";
 import { getBaseFileHeader } from "@storm-stack/core/lib/utilities/file-header";
 import { Context } from "@storm-stack/core/types";

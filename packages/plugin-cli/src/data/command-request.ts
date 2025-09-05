@@ -25,7 +25,7 @@ import {
   stringifyType,
   TagsReflection,
   Type
-} from "@storm-stack/core/deepkit";
+} from "@storm-stack/core/deepkit/type";
 import { camelCase } from "@stryke/string-format/camel-case";
 import { constantCase } from "@stryke/string-format/constant-case";
 import { kebabCase } from "@stryke/string-format/kebab-case";

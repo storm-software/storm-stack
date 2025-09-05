@@ -38,6 +38,7 @@ import fs, {
 } from "node:fs";
 import { format, resolveConfig } from "prettier";
 import { IFS, IUnionFs, Union } from "unionfs";
+import { extendLog } from "../../lib/logger";
 import { LogFn } from "../../types/config";
 import { Context, SerializedVirtualFileSystem } from "../../types/context";
 import {
@@ -56,7 +57,6 @@ import {
   WriteFileOptions,
   WriteRuntimeFileOptions
 } from "../../types/vfs";
-import { extendLog } from "../logger";
 import { checkVariants, cloneFS, patchFS, toFilePath } from "./helpers";
 
 /**

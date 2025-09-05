@@ -22,43 +22,48 @@ const config = getTsupConfig([
   {
     name: "core",
     entry: [
-      "src/*.ts",
+      "src/index.ts",
+      "src/define-config.ts",
       "src/base/*.ts",
+      "src/base/vfs/*.ts",
       "src/types/*.ts",
+      "src/commands/*/index.ts",
+      "src/unplugin/*.ts"
+    ],
+    outDir: "dist",
+    clean: false,
+    noExternal: ["memfs", "@deepkit/type-compiler"],
+    skipNodeModulesBundle: true
+  },
+  {
+    name: "core-lib",
+    entry: [
       "src/lib/*.ts",
       "src/lib/babel/*.ts",
       "src/lib/deepkit/*.ts",
       "src/lib/esbuild/*.ts",
       "src/lib/tsup/*.ts",
       "src/lib/typedoc/*.ts",
+      "src/lib/typedoc/helpers/*.ts",
       "src/lib/typescript/*.ts",
       "src/lib/unbuild/*.ts",
       "src/lib/unplugin/*.ts",
       "src/lib/vite/*.ts",
-      "src/lib/utilities/*.ts",
-      "src/lib/vfs/*.ts",
-      "src/commands/*/index.ts",
-      "src/unplugin/*.ts"
+      "src/lib/utilities/*.ts"
     ],
-    outDir: "dist",
-    noExternal: [
-      "memfs",
-      "@deepkit/core",
-      "@deepkit/type-spec",
-      "@deepkit/type-compiler",
-      "@deepkit/type"
-    ],
+    outDir: "dist/lib",
+    clean: false,
+    noExternal: ["@deepkit/type-compiler"],
     skipNodeModulesBundle: true
   },
   {
-    name: "core-schemas",
-    entry: ["schemas/*.ts"],
-    outDir: "dist/schemas"
-  },
-  {
     name: "core-deepkit",
-    entry: ["src/deepkit.ts"],
-    outDir: "dist/deepkit"
+    entry: ["src/deepkit/*.ts"],
+    outDir: "dist/deepkit",
+    platform: "neutral",
+    target: "esnext",
+    clean: false,
+    noExternal: ["@deepkit/core", "@deepkit/type", "@deepkit/type-spec"]
   }
 ]);
 

@@ -16,7 +16,7 @@
 
  ------------------------------------------------------------------- */
 
-import { RUNTIME_PREFIX } from "../vfs/virtual-file-system";
+import { RUNTIME_PREFIX } from "../../base/vfs/virtual-file-system";
 
 export const RESOLVE_NAMESPACE = "storm-stack";
 export const VIRTUAL_FILE_FILTER_REGEX = new RegExp(

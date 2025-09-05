@@ -16,10 +16,13 @@
 
  ------------------------------------------------------------------- */
 
-export * from "./build";
-export * from "./compiler-plugin";
-export * from "./constants";
-export * from "./options";
-export * from "./resolver-plugin";
-export * from "./transpiler-plugin";
-export * from "./vfs-plugin";
+import type { Renderer } from "typedoc";
+import { StormStackMarkdownTheme } from "./helpers/markdown-theme";
+
+interface LoadApp {
+  renderer: Renderer;
+}
+
+export function load(app: LoadApp): void {
+  app.renderer.defineTheme("storm-stack", StormStackMarkdownTheme);
+}

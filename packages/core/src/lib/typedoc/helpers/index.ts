@@ -16,10 +16,6 @@
 
  ------------------------------------------------------------------- */
 
-export * from "./build";
-export * from "./compiler-plugin";
-export * from "./constants";
-export * from "./options";
-export * from "./resolver-plugin";
-export * from "./transpiler-plugin";
-export * from "./vfs-plugin";
+export * from "./comment";
+export * from "./markdown-theme";
+export * from "./toc";

@@ -82,20 +82,6 @@
         "default": "./dist/define-config.js"
       }
     },
-    "./deepkit": {
-      "import": {
-        "types": "./dist/deepkit.d.ts",
-        "default": "./dist/deepkit.js"
-      },
-      "require": {
-        "types": "./dist/deepkit.d.cts",
-        "default": "./dist/deepkit.cjs"
-      },
-      "default": {
-        "types": "./dist/deepkit.d.ts",
-        "default": "./dist/deepkit.js"
-      }
-    },
     "./types": {
       "import": {
         "types": "./dist/types/index.d.ts",
@@ -122,6 +108,20 @@
       "default": {
         "types": "./dist/types/*.d.ts",
         "default": "./dist/types/*.js"
+      }
+    },
+    "./deepkit/*": {
+      "import": {
+        "types": "./dist/deepkit/*.d.ts",
+        "default": "./dist/deepkit/*.js"
+      },
+      "require": {
+        "types": "./dist/deepkit/*.d.cts",
+        "default": "./dist/deepkit/*.cjs"
+      },
+      "default": {
+        "types": "./dist/deepkit/*.d.ts",
+        "default": "./dist/deepkit/*.js"
       }
     },
     "./base": {
@@ -390,34 +390,6 @@
         "default": "./dist/lib/babel/*.js"
       }
     },
-    "./lib/dotenv": {
-      "import": {
-        "types": "./dist/lib/dotenv/index.d.ts",
-        "default": "./dist/lib/dotenv/index.js"
-      },
-      "require": {
-        "types": "./dist/lib/dotenv/index.d.cts",
-        "default": "./dist/lib/dotenv/index.cjs"
-      },
-      "default": {
-        "types": "./dist/lib/dotenv/index.d.ts",
-        "default": "./dist/lib/dotenv/index.js"
-      }
-    },
-    "./lib/dotenv/*": {
-      "import": {
-        "types": "./dist/lib/dotenv/*.d.ts",
-        "default": "./dist/lib/dotenv/*.js"
-      },
-      "require": {
-        "types": "./dist/lib/dotenv/*.d.cts",
-        "default": "./dist/lib/dotenv/*.cjs"
-      },
-      "default": {
-        "types": "./dist/lib/dotenv/*.d.ts",
-        "default": "./dist/lib/dotenv/*.js"
-      }
-    },
     "./lib/deepkit": {
       "import": {
         "types": "./dist/lib/deepkit/index.d.ts",
@@ -528,6 +500,20 @@
       "default": {
         "types": "./dist/lib/typedoc/*.d.ts",
         "default": "./dist/lib/typedoc/*.js"
+      }
+    },
+    "./lib/typedoc/helpers/*": {
+      "import": {
+        "types": "./dist/lib/typedoc/helpers/*.d.ts",
+        "default": "./dist/lib/typedoc/helpers/*.js"
+      },
+      "require": {
+        "types": "./dist/lib/typedoc/helpers/*.d.cts",
+        "default": "./dist/lib/typedoc/helpers/*.cjs"
+      },
+      "default": {
+        "types": "./dist/lib/typedoc/helpers/*.d.ts",
+        "default": "./dist/lib/typedoc/helpers/*.js"
       }
     },
     "./lib/typescript": {
@@ -865,7 +851,7 @@
     "@storm-software/config": "catalog:",
     "@storm-software/config-tools": "catalog:",
     "@storm-software/esbuild": "catalog:",
-    "@storm-stack/types": "0.19.0",
+    "@storm-stack/types": "workspace:*",
     "@stryke/capnp": "catalog:",
     "@stryke/convert": "catalog:",
     "@stryke/env": "catalog:",

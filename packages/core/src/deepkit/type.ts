@@ -16,10 +16,6 @@
 
  ------------------------------------------------------------------- */
 
-export * from "./build";
-export * from "./compiler-plugin";
-export * from "./constants";
-export * from "./options";
-export * from "./resolver-plugin";
-export * from "./transpiler-plugin";
-export * from "./vfs-plugin";
+// Re-exporting Deepkit modules
+
+export * from "@deepkit/type";

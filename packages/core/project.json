@@ -4,7 +4,7 @@
   "projectType": "library",
   "sourceRoot": "packages/core/src",
   "targets": {
-    "build-schema": {
+    "generate-schemas": {
       "cache": true,
       "inputs": ["{projectRoot}/schemas/*.capnp"],
       "outputs": ["{projectRoot}/schemas/*.ts"],
@@ -17,12 +17,22 @@
         "parallel": false
       }
     },
+    "build-schemas": {
+      "cache": true,
+      "inputs": ["{projectRoot}/schemas/*.ts"],
+      "outputs": ["{projectRoot}/dist/schemas"],
+      "executor": "nx:run-commands",
+      "dependsOn": ["generate-schemas"],
+      "options": {
+        "command": "tsup --config=tsup.schemas.ts",
+        "cwd": "{projectRoot}"
+      }
+    },
     "build-base": {
       "cache": true,
       "inputs": ["typescript", "^production"],
       "outputs": ["{projectRoot}/dist"],
       "executor": "nx:run-commands",
-      "dependsOn": ["build-schema"],
       "options": {
         "command": "tsup --config=tsup.config.ts",
         "cwd": "{projectRoot}"
@@ -30,10 +40,10 @@
     },
     "build": {
       "cache": true,
-      "inputs": ["typescript", "^production"],
+      "inputs": ["{projectRoot}/dist"],
       "outputs": ["{workspaceRoot}/dist/{projectRoot}"],
       "executor": "nx:run-commands",
-      "dependsOn": ["build-base"],
+      "dependsOn": ["build-base", "build-schemas"],
       "options": {
         "commands": [
           "pnpm copyfiles LICENSE dist/packages/core",

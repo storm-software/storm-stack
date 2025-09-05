@@ -3408,8 +3408,8 @@ packages:
   '@emotion/hash@0.8.0':
     resolution: {integrity: sha512-kBJtf7PH6aWwZ6fka3zQ0p6SBYzx4fl1LoZXE2RrnYST9Xljm7WfKJrU4g/Xr3Beg72MLrp1AWNUmuYJTL7Cow==}
 
-  '@envelop/core@5.3.0':
-    resolution: {integrity: sha512-xvUkOWXI8JsG2OOnqiI2tOkEc52wbmIqWORr7yGc8B8E53Oh1MMGGGck4mbR80s25LnHVzfNIiIlNkuDgZRuuA==}
+  '@envelop/core@5.3.1':
+    resolution: {integrity: sha512-n29V3vRqXvPcG76C8zE482LQykk0P66zv1mjpk7aHeGe9qnh8AzB/RvoX5SVFwApJQPp0ixob8NoYXg4FHKMGA==}
     engines: {node: '>=18.0.0'}
 
   '@envelop/instrumentation@1.0.0':
@@ -5206,7 +5206,6 @@ packages:
 
   '@ls-lint/ls-lint@2.3.1':
     resolution: {integrity: sha512-vPe6IDByQnQRTxcAYjTxrmga/tSIui50VBFTB5KIJWY3OOFmxE2VtymjeSEfQfiMbhZV/ZPAqYy2lt8pZFQ0Rw==}
-    cpu: [x64, arm64, s390x, ppc64le]
     os: [darwin, linux, win32]
     hasBin: true
 
@@ -8436,8 +8435,8 @@ packages:
   caniuse-api@3.0.0:
     resolution: {integrity: sha512-bsTwuIg/BZZK/vreVTYYbSWoe2F+71P7K5QGEX+pT250DZbfU1MQ5prOKpPR+LL6uWKK3KMwMCAS74QB3Um1uw==}
 
-  caniuse-lite@1.0.30001739:
-    resolution: {integrity: sha512-y+j60d6ulelrNSwpPyrHdl+9mJnQzHBr08xm48Qno0nSk4h3Qojh+ziv2qE6rXf4k3tadF4o1J/1tAbVm1NtnA==}
+  caniuse-lite@1.0.30001740:
+    resolution: {integrity: sha512-X6I2FZW2KjXKkAgsGgTwRmQXOcN0c7HtPR80KgJVj9LJi29be++fbf7JRPBnNXuzyJEW2ToGIpZ6JZeqqIwO0Q==}
 
   caseless@0.12.0:
     resolution: {integrity: sha512-4tYFyifaFfGacoiObjJegolkwSU4xQNGbVgUiNYVUxbQ2x2lUsFvY4hVgVzGiIe6WLOPqycWXA40l+PWsxthUw==}
@@ -18044,7 +18043,7 @@ snapshots:
 
   '@emotion/hash@0.8.0': {}
 
-  '@envelop/core@5.3.0':
+  '@envelop/core@5.3.1':
     dependencies:
       '@envelop/instrumentation': 1.0.0
       '@envelop/types': 5.2.1
@@ -18817,13 +18816,13 @@ snapshots:
 
   '@graphql-tools/executor-common@0.0.4(graphql@16.11.0)':
     dependencies:
-      '@envelop/core': 5.3.0
+      '@envelop/core': 5.3.1
       '@graphql-tools/utils': 10.9.1(graphql@16.11.0)
       graphql: 16.11.0
 
   '@graphql-tools/executor-common@0.0.6(graphql@16.11.0)':
     dependencies:
-      '@envelop/core': 5.3.0
+      '@envelop/core': 5.3.1
       '@graphql-tools/utils': 10.9.1(graphql@16.11.0)
       graphql: 16.11.0
 
@@ -19904,7 +19903,7 @@ snapshots:
   '@modern-js/utils@2.68.2':
     dependencies:
       '@swc/helpers': 0.5.17
-      caniuse-lite: 1.0.30001739
+      caniuse-lite: 1.0.30001740
       lodash: 4.17.21
       rslog: 1.2.11
 
@@ -23043,7 +23042,7 @@ snapshots:
 
   '@types/minimatch@6.0.0':
     dependencies:
-      minimatch: 9.0.3
+      minimatch: 10.0.3
 
   '@types/ms@2.1.0': {}
 
@@ -24089,7 +24088,7 @@ snapshots:
   autoprefixer@10.4.21(postcss@8.5.6):
     dependencies:
       browserslist: 4.25.4
-      caniuse-lite: 1.0.30001739
+      caniuse-lite: 1.0.30001740
       fraction.js: 4.3.7
       normalize-range: 0.1.2
       picocolors: 1.1.1
@@ -24455,7 +24454,7 @@ snapshots:
 
   browserslist@4.16.6:
     dependencies:
-      caniuse-lite: 1.0.30001739
+      caniuse-lite: 1.0.30001740
       colorette: 1.4.0
       electron-to-chromium: 1.5.214
       escalade: 3.2.0
@@ -24463,7 +24462,7 @@ snapshots:
 
   browserslist@4.25.4:
     dependencies:
-      caniuse-lite: 1.0.30001739
+      caniuse-lite: 1.0.30001740
       electron-to-chromium: 1.5.214
       node-releases: 2.0.19
       update-browserslist-db: 1.1.3(browserslist@4.25.4)
@@ -24594,11 +24593,11 @@ snapshots:
   caniuse-api@3.0.0:
     dependencies:
       browserslist: 4.25.4
-      caniuse-lite: 1.0.30001739
+      caniuse-lite: 1.0.30001740
       lodash.memoize: 4.1.2
       lodash.uniq: 4.5.0
 
-  caniuse-lite@1.0.30001739: {}
+  caniuse-lite@1.0.30001740: {}
 
   caseless@0.12.0: {}
 
@@ -25332,7 +25331,7 @@ snapshots:
 
   cssnano-preset-simple@2.0.0(postcss@8.5.6):
     dependencies:
-      caniuse-lite: 1.0.30001739
+      caniuse-lite: 1.0.30001740
       postcss: 8.5.6
 
   cssnano-simple@2.0.0(postcss@8.5.6):
@@ -30720,7 +30719,7 @@ snapshots:
       browserify-zlib: 0.2.0
       browserslist: 4.16.6
       buffer: 5.6.0
-      caniuse-lite: 1.0.30001739
+      caniuse-lite: 1.0.30001740
       chalk: 2.4.2
       chokidar: 3.5.1
       constants-browserify: 1.0.0

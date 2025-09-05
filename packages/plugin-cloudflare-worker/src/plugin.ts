@@ -28,6 +28,7 @@ import {
 import { getFileHeader } from "@storm-stack/core/lib/utilities/file-header";
 import { writeFile } from "@storm-stack/core/lib/utilities/write-file";
 import type { EngineHooks } from "@storm-stack/core/types/build";
+import { TsupOptions } from "@storm-stack/core/types/config";
 import type { Context } from "@storm-stack/core/types/context";
 import type { PluginOptions } from "@storm-stack/core/types/plugin";
 import { executePackage } from "@stryke/cli/execute";
@@ -48,7 +49,6 @@ import { replacePath } from "@stryke/path/replace";
 import type { TsConfigJson } from "@stryke/types/tsconfig";
 import defu from "defu";
 import { BuildOptions as ExternalESBuildOptions } from "esbuild";
-import { TsupOptions } from "packages/core/dist";
 import { Format } from "tsup";
 import type { Environment } from "unenv";
 import { defineEnv } from "unenv";
@@ -490,7 +490,7 @@ import ${
             )
           )}";
 import { withContext } from "storm:context";
-import { deserialize, serialize } from "@storm-stack/core/deepkit";
+import { deserialize, serialize } from "@storm-stack/core/deepkit/type";
 import { StormRequest } from "storm:request";
 
 const handleRequest = withContext(handle);

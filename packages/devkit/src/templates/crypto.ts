@@ -29,8 +29,7 @@ export function CryptoModule(_context: Context): string {
 
 ${getFileHeader()}
 
-import { serialize } from "@storm-stack/core/deepkit";
-
+import { serialize } from "@storm-stack/core/deepkit/type";
 import { xchacha20poly1305 } from "@noble/ciphers/chacha";
 import { bytesToHex, hexToBytes, utf8ToBytes } from "@noble/ciphers/utils";
 import { randomBytes } from '@noble/ciphers/utils.js';
