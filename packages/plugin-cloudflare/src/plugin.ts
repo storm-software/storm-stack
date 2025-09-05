@@ -62,8 +62,8 @@ import {
   DEFAULT_CONDITIONS
 } from "./helpers";
 import {
-  CloudflareWorkerPluginContext,
-  CloudflareWorkerPluginOptions
+  CloudflarePluginContext,
+  CloudflarePluginOptions
 } from "./types/plugin";
 
 /**
@@ -72,10 +72,9 @@ import {
  * @remarks
  * This plugin provides support for building and deploying Cloudflare Workers using Storm Stack. It integrates with the Wrangler CLI tool and sets up the necessary configurations and runtime files.
  */
-export default class CloudflareWorkerPlugin<
-  TContext extends
-    CloudflareWorkerPluginContext = CloudflareWorkerPluginContext,
-  TOptions extends CloudflareWorkerPluginOptions = CloudflareWorkerPluginOptions
+export default class CloudflarePlugin<
+  TContext extends CloudflarePluginContext = CloudflarePluginContext,
+  TOptions extends CloudflarePluginOptions = CloudflarePluginOptions
 > extends Plugin<TContext, TOptions> {
   #unenv: Environment;
 
@@ -137,7 +136,7 @@ export default class CloudflareWorkerPlugin<
     );
 
     context.options.plugins.cloudflare ??=
-      {} as Required<CloudflareWorkerPluginOptions>;
+      {} as Required<CloudflarePluginOptions>;
     context.options.plugins.cloudflare.configPath ??= joinPaths(
       context.options.projectRoot,
       "wrangler.toml"
@@ -156,6 +155,20 @@ export default class CloudflareWorkerPlugin<
       context.options.build.target = "chrome95";
     } else if (context.options.variant === "vite") {
       context.options.override.esbuild = { format: "esm", target: "chrome95" };
+
+      context.options.build.build ??= {};
+      context.options.build.build.target = "chrome95";
+
+      if (this.getOptions(context).cloudflareVitePlugin !== false) {
+        context.options.build.plugins ??= [];
+        context.options.build.plugins.push(
+          ...cloudflareVitePlugin(
+            defu(this.getOptions(context).cloudflareVitePlugin ?? {}, {
+              configPath: this.getOptions(context).configPath!
+            })
+          )
+        );
+      }
     }
 
     if (context.options.userConfig.output?.dts === undefined) {
@@ -524,8 +537,8 @@ export default {
     if (this.getOptions(context).cloudflareVitePlugin !== false) {
       params.config.plugins ??= [];
       params.config.plugins.push(
-        cloudflareVitePlugin(
-          defu(this.getOptions(context).cloudflareVitePlugin || {}, {
+        ...cloudflareVitePlugin(
+          defu(this.getOptions(context).cloudflareVitePlugin ?? {}, {
             configPath: this.getOptions(context).configPath!
           })
         )

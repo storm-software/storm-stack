@@ -1,12 +1,12 @@
 {
-  "name": "@storm-stack/plugin-cloudflare-worker",
+  "name": "@storm-stack/plugin-cloudflare",
   "version": "0.25.1",
   "type": "module",
-  "description": "A Storm Stack build plugin for Cloudflare Workers",
+  "description": "A Storm Stack plugin for managing deployments to Cloudflare",
   "repository": {
     "type": "github",
     "url": "https://github.com/storm-software/storm-stack.git",
-    "directory": "packages/plugin-cloudflare-worker"
+    "directory": "packages/plugin-cloudflare"
   },
   "private": false,
   "exports": {

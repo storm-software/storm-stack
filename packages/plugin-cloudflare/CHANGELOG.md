@@ -1,6 +1,6 @@
 ![Storm Software's logo banner](https://public.storm-cdn.com/brand-banner.png)
 
-# Changelog for Storm Stack - Plugin Cloudflare Worker
+# Changelog for Storm Stack - Plugin Cloudflare
 
 ## [0.25.1](https://github.com/storm-software/storm-stack/releases/tag/plugin-cloudflare-worker%400.25.1) (2025-09-05)
 

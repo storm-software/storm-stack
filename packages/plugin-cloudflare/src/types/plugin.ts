@@ -25,7 +25,7 @@ import {
 } from "@storm-stack/core/types";
 import { PluginBaseOptions } from "@storm-stack/core/types/plugin";
 
-export type CloudflareWorkerPluginOptions = PluginBaseOptions & {
+export type CloudflarePluginOptions = PluginBaseOptions & {
   /**
    * The Cloudflare account ID.
    */
@@ -37,7 +37,7 @@ export type CloudflareWorkerPluginOptions = PluginBaseOptions & {
   workerId?: string;
 
   /**
-   * The path to the Cloudflare configuration file (wrangler.toml).
+   * The path to the Cloudflare configuration file (wrangler.toml, wrangler.json, or wrangler.jsonc).
    *
    * @defaultValue "\{projectRoot\}/wrangler.toml"
    */
@@ -51,13 +51,13 @@ export type CloudflareWorkerPluginOptions = PluginBaseOptions & {
   cloudflareVitePlugin?: PluginConfig | false;
 };
 
-export interface CloudflareWorkerPluginResolvedOptions {
-  cloudflare: Required<CloudflareWorkerPluginOptions>;
+export interface CloudflarePluginResolvedOptions {
+  cloudflare: Required<CloudflarePluginOptions>;
 }
 
-export type CloudflareWorkerPluginContext<
+export type CloudflarePluginContext<
   TOptions extends
-    ResolvedOptions<CloudflareWorkerPluginResolvedOptions> = ResolvedOptions<CloudflareWorkerPluginResolvedOptions>,
+    ResolvedOptions<CloudflarePluginResolvedOptions> = ResolvedOptions<CloudflarePluginResolvedOptions>,
   // eslint-disable-next-line ts/no-empty-object-type
   TReflections extends { [P in keyof unknown]: ReflectionRecord } = {},
   TEntry extends ResolvedEntryTypeDefinition = ResolvedEntryTypeDefinition

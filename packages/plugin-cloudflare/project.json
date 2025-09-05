@@ -1,8 +1,8 @@
 {
-  "name": "plugin-cloudflare-worker",
+  "name": "plugin-cloudflare",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "projectType": "library",
-  "sourceRoot": "packages/plugin-cloudflare-worker/src",
+  "sourceRoot": "packages/plugin-cloudflare/src",
   "targets": {
     "build-base": {
       "executor": "nx:run-commands",
@@ -17,9 +17,9 @@
       "dependsOn": ["build-base"],
       "options": {
         "commands": [
-          "pnpm copyfiles LICENSE dist/packages/plugin-cloudflare-worker",
-          "pnpm copyfiles --up=2 ./packages/plugin-cloudflare-worker/*.md ./packages/plugin-cloudflare-worker/package.json dist/packages/plugin-cloudflare-worker",
-          "pnpm copyfiles --up=3 \"./packages/plugin-cloudflare-worker/dist/**/*\" dist/packages/plugin-cloudflare-worker/dist"
+          "pnpm copyfiles LICENSE dist/packages/plugin-cloudflare",
+          "pnpm copyfiles --up=2 ./packages/plugin-cloudflare/*.md ./packages/plugin-cloudflare/package.json dist/packages/plugin-cloudflare",
+          "pnpm copyfiles --up=3 \"./packages/plugin-cloudflare/dist/**/*\" dist/packages/plugin-cloudflare/dist"
         ]
       }
     },

@@ -23,7 +23,7 @@ import { StormConfigInterface } from "@storm-stack/types/shared/config";
  *
  * @extends StormConfigInterface
  */
-export interface StormCloudflareWorkerConfig extends StormConfigInterface {
+export interface StormCloudflareConfig extends StormConfigInterface {
   /**
    * The Cloudflare account ID associated with the worker.
    */

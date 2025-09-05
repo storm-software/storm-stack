@@ -19,9 +19,8 @@
 import { getTsupConfig } from "@storm-stack/tools-config/tsup.shared";
 
 const config = getTsupConfig({
-  name: "plugin-cloudflare-worker",
+  name: "plugin-cloudflare",
   entry: ["src/*.ts", "src/types/*.ts"],
-  noExternal: ["@cloudflare/vite-plugin"],
   skipNodeModulesBundle: true
 });
 

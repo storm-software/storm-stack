@@ -43,27 +43,30 @@ This package is part of the ⚡<b>Storm Stack</b> monorepo. Storm Stack packages
 
 <!-- END header -->
 
-# Storm Stack - Cloudflare Worker Plugin
+# Storm Stack - Cloudflare Plugin
 
-A package containing the Cloudflare Worker build preset for Storm Stack.
+The Storm Stack plugin for managing deployments to Cloudflare.
 
 <!-- START doctoc -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+
 ## Table of Contents
 
-- [Installing](#installing)
-- [Reduced Package Size](#reduced-package-size)
-- [Development](#development)
-  - [Building](#building)
-  - [Running unit tests](#running-unit-tests)
-  - [Linting](#linting)
-- [Storm Workspaces](#storm-workspaces)
-- [Roadmap](#roadmap)
-- [Support](#support)
-- [License](#license)
-- [Changelog](#changelog)
-- [Contributing](#contributing)
-- [Contributors](#contributors)
+- [Storm Stack - Cloudflare Plugin](#storm-stack---cloudflare-plugin)
+  - [Table of Contents](#table-of-contents)
+  - [Installing](#installing)
+  - [Reduced Package Size](#reduced-package-size)
+  - [Development](#development)
+    - [Building](#building)
+    - [Running unit tests](#running-unit-tests)
+    - [Linting](#linting)
+  - [Storm Workspaces](#storm-workspaces)
+  - [Roadmap](#roadmap)
+  - [Support](#support)
+  - [License](#license)
+  - [Changelog](#changelog)
+  - [Contributing](#contributing)
+  - [Contributors](#contributors)
 
 <!-- END doctoc -->
 
@@ -74,14 +77,14 @@ A package containing the Cloudflare Worker build preset for Storm Stack.
 Using [pnpm](http://pnpm.io):
 
 ```bash
-pnpm add -D @storm-stack/plugin-cloudflare-worker
+pnpm add -D @storm-stack/plugin-cloudflare
 ```
 
 <details>
   <summary>Using npm</summary>
 
 ```bash
-npm install -D @storm-stack/plugin-cloudflare-worker
+npm install -D @storm-stack/plugin-cloudflare
 ```
 
 </details>
@@ -90,7 +93,7 @@ npm install -D @storm-stack/plugin-cloudflare-worker
   <summary>Using yarn</summary>
 
 ```bash
-yarn add -D @storm-stack/plugin-cloudflare-worker
+yarn add -D @storm-stack/plugin-cloudflare
 ```
 
 </details>
@@ -109,17 +112,17 @@ commands are available to assist in development.
 
 ### Building
 
-Run `nx build plugin-cloudflare-worker` to build the library.
+Run `nx build plugin-cloudflare` to build the library.
 
 ### Running unit tests
 
-Run `nx test plugin-cloudflare-worker` to execute the unit tests via
+Run `nx test plugin-cloudflare` to execute the unit tests via
 [Jest](https://jestjs.io).
 
 ### Linting
 
-Run `nx lint plugin-cloudflare-worker` to run [ESLint](https://eslint.org/) on
-the package.
+Run `nx lint plugin-cloudflare` to run [ESLint](https://eslint.org/) on the
+package.
 
 <!-- START footer -->
 <!-- prettier-ignore-start -->
