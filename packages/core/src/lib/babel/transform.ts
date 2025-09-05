@@ -23,14 +23,16 @@ import { joinPaths } from "@stryke/path/join-paths";
 import { resolvePackage } from "@stryke/path/resolve";
 import { isFunction } from "@stryke/type-checks/is-function";
 import { isSetString } from "@stryke/type-checks/is-set-string";
-import chalk from "chalk";
 import { defu } from "defu";
-import { BabelPlugin, ResolvedBabelPluginItem } from "../../types/babel";
 import { CompilerOptions, SourceFile } from "../../types/compiler";
 import { LogFn } from "../../types/config";
 import { Context } from "../../types/context";
 import { getMagicString, getString } from "../utilities/source-file";
-import { getPluginName, isDuplicatePlugin } from "./helpers";
+import {
+  resolveBabelInputOptions,
+  resolveBabelPlugins,
+  resolveBabelPresets
+} from "./options";
 
 /**
  * Transform the code using the Storm Stack Babel plugin.
@@ -66,14 +68,17 @@ export async function transform(
       return sourceFile;
     }
 
-    const babelOptions = { ...context.options.babel, ...options.babel };
+    const opts = defu(context.options.babel ?? {}, options ?? {});
+
+    const plugins = resolveBabelPlugins(log, context, sourceFile, opts);
+    const presets = resolveBabelPresets(log, context, sourceFile, opts);
+
     if (
-      !babelOptions ||
-      (!babelOptions.plugins && !babelOptions.presets) ||
-      (Array.isArray(babelOptions.plugins) &&
-        babelOptions.plugins.length === 0 &&
-        Array.isArray(babelOptions.presets) &&
-        babelOptions.presets.length === 0)
+      (!plugins && !presets) ||
+      (Array.isArray(plugins) &&
+        plugins.length === 0 &&
+        Array.isArray(presets) &&
+        presets.length === 0)
     ) {
       log(
         LogLevelLabel.WARN,
@@ -81,101 +86,6 @@ export async function transform(
       );
       return sourceFile;
     }
-
-    const plugins = babelOptions.plugins.reduce<ResolvedBabelPluginItem[]>(
-      (ret, plugin) => {
-        if (!isDuplicatePlugin(ret, plugin)) {
-          if (Array.isArray(plugin) && plugin.length > 0 && plugin[0]) {
-            if (
-              plugin.length > 2 &&
-              plugin[2] &&
-              isFunction(plugin[2].filter) &&
-              // eslint-disable-next-line ts/no-unsafe-call
-              !plugin[2].filter(sourceFile)
-            ) {
-              log(
-                LogLevelLabel.TRACE,
-                `Skipping filtered Babel plugin ${chalk.bold.cyanBright(
-                  getPluginName(plugin) || "unnamed"
-                )} for ${sourceFile.id}`
-              );
-              return ret;
-            }
-
-            ret.push([
-              isFunction(plugin[0]) ? plugin[0](context) : plugin[0],
-              {
-                ...(plugin.length > 1 && plugin[1] ? plugin[1] : {}),
-                options
-              },
-              plugin.length > 2 ? plugin[2] : undefined
-            ] as ResolvedBabelPluginItem);
-          } else {
-            ret.push([
-              isFunction(plugin) ? plugin(context) : plugin,
-              {
-                options
-              },
-              undefined
-            ] as ResolvedBabelPluginItem);
-          }
-        } else {
-          log(
-            LogLevelLabel.INFO,
-            `Skipping duplicate Babel plugin ${getPluginName(plugin)} for ${sourceFile.id}`
-          );
-        }
-
-        return ret;
-      },
-      []
-    );
-    const presets = babelOptions.presets.reduce<ResolvedBabelPluginItem[]>(
-      (ret, preset) => {
-        if (!isDuplicatePlugin(ret, preset)) {
-          if (Array.isArray(preset) && preset.length > 0 && preset[0]) {
-            if (
-              preset.length > 2 &&
-              preset[2] &&
-              isFunction(preset[2].filter) &&
-              // eslint-disable-next-line ts/no-unsafe-call
-              !preset[2].filter(sourceFile)
-            ) {
-              log(
-                LogLevelLabel.INFO,
-                `Skipping filtered Babel preset ${getPluginName(preset)} for ${sourceFile.id}`
-              );
-              return ret;
-            }
-
-            ret.push([
-              isFunction(preset[0]) ? preset[0](context) : preset[0],
-              {
-                ...(preset.length > 1 && preset[1] ? preset[1] : {}),
-                options
-              },
-              preset.length > 2 ? preset[2] : undefined
-            ] as ResolvedBabelPluginItem);
-          } else {
-            ret.push([
-              isFunction(preset) ? preset(context) : preset,
-              {
-                options
-              },
-              undefined
-            ] as ResolvedBabelPluginItem);
-          }
-        } else {
-          log(
-            LogLevelLabel.INFO,
-            `Skipping duplicate Babel preset ${getPluginName(preset)} for ${sourceFile.id}`
-          );
-        }
-
-        return ret;
-      },
-      []
-    );
 
     for (const plugin of plugins.filter(plugin =>
       isFunction(plugin[2]?.onPreTransform)
@@ -199,50 +109,9 @@ export async function transform(
       getString(sourceFile.code),
       defu(
         {
-          filename: sourceFile.id,
-          plugins: [
-            "@babel/plugin-syntax-typescript",
-            ...plugins.map(plugin => {
-              return [
-                plugin[0],
-                defu(plugin.length > 1 && plugin[1] ? plugin[1] : {}, {
-                  options
-                }),
-                (plugin[0] as BabelPlugin)?.name
-              ];
-            })
-          ],
-          presets: presets.map(preset => {
-            return [
-              preset[0],
-              defu(preset.length > 1 && preset[1] ? preset[1] : {}, {
-                options
-              }),
-              (preset[0] as BabelPlugin)?.name
-            ];
-          })
+          filename: sourceFile.id
         },
-        babelOptions
-          ? {
-              ...babelOptions,
-              plugins: [],
-              presets: []
-            }
-          : {},
-        {
-          highlightCode: true,
-          code: true,
-          ast: false,
-          cloneInputAst: false,
-          comments: true,
-          sourceType: "module",
-          configFile: false,
-          babelrc: false,
-          envName: context.options.mode,
-          caller: {
-            name: "storm-stack"
-          }
-        }
+        resolveBabelInputOptions(context, opts, plugins, presets)
       ) as Parameters<typeof transformAsync>[1]
     );
     if (!result?.code) {

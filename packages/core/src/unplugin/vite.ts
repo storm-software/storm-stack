@@ -23,11 +23,11 @@ import {
   HmrContext,
   IndexHtmlTransformResult,
   ModuleNode,
-  ResolvedConfig,
-  UserConfig
+  ResolvedConfig
 } from "vite";
 import { resolveViteOptions } from "../lib/vite/options";
 import { ViteResolvedOptions } from "../types/build";
+import { ViteConfig } from "../types/config";
 import { createUnpluginFactory } from "./core/factory";
 
 /**
@@ -50,7 +50,7 @@ export const vite = createVitePlugin(
       return {
         ...plugin,
         vite: {
-          async config(config: UserConfig, env: ConfigEnv) {
+          async config(config: ViteConfig, env: ConfigEnv) {
             engine.context.options.isPreview = !!env.isPreview;
             engine.context.options.isSsrBuild = !!env.isSsrBuild;
             engine.context.options.mode =

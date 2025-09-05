@@ -433,6 +433,34 @@ export type ResolvedOptions<
   | StandaloneApplicationResolvedOptions<TPluginsOptions>
   | StandaloneLibraryResolvedOptions<TPluginsOptions>;
 
+export interface ViteConfigHookParams {
+  config: ViteOptions;
+  env: { mode: string; command: string };
+}
+
+export interface ViteConfigResolvedHookParams {
+  config: ResolvedConfig;
+}
+
+export interface ViteConfigureServerHookParams {
+  server: ViteDevServer;
+}
+
+export interface ViteConfigurePreviewServerHookParams {
+  server: PreviewServer;
+}
+
+export interface ViteTransformIndexHtmlHookParams {
+  html: string;
+  ctx: IndexHtmlTransformContext;
+  result?: IndexHtmlTransformResult | null;
+}
+
+export interface ViteHandleHotUpdateHookParams {
+  ctx: HmrContext;
+  result?: ModuleNode[] | null;
+}
+
 export interface EngineHookFunctions<TContext extends Context = Context> {
   // New - Hooks used during the creation of a new project
   "new:begin": (context: TContext) => MaybePromise<void>;
@@ -503,31 +531,27 @@ export interface EngineHookFunctions<TContext extends Context = Context> {
   // Vite - Hooks used during the Vite process
   "vite:config": (
     context: TContext,
-    params: { config: ViteOptions; env: { mode: string; command: string } }
+    params: ViteConfigHookParams
   ) => MaybePromise<void>;
   "vite:configResolved": (
     context: TContext,
-    params: { config: ResolvedConfig }
+    params: ViteConfigResolvedHookParams
   ) => MaybePromise<void>;
   "vite:configureServer": (
     context: TContext,
-    params: { server: ViteDevServer }
+    params: ViteConfigureServerHookParams
   ) => MaybePromise<void>;
   "vite:configurePreviewServer": (
     context: TContext,
-    params: { server: PreviewServer }
+    params: ViteConfigurePreviewServerHookParams
   ) => MaybePromise<void>;
   "vite:transformIndexHtml": (
     context: TContext,
-    params: {
-      html: string;
-      ctx: IndexHtmlTransformContext;
-      result?: IndexHtmlTransformResult | null;
-    }
+    params: ViteTransformIndexHtmlHookParams
   ) => MaybePromise<void>;
   "vite:handleHotUpdate": (
     context: TContext,
-    params: { ctx: HmrContext; result?: ModuleNode[] | null }
+    params: ViteHandleHotUpdateHookParams
   ) => MaybePromise<void>;
 
   // ESBuild - Hooks used during the ESBuild process

@@ -16,7 +16,13 @@
 
  ------------------------------------------------------------------- */
 
-import { NodePath, PluginAPI, PluginObject, PluginPass } from "@babel/core";
+import type {
+  InputOptions,
+  NodePath,
+  PluginAPI,
+  PluginObject,
+  PluginPass
+} from "@babel/core";
 import type * as t from "@babel/types";
 import { ErrorType } from "@storm-stack/types/shared/error";
 import { CompilerOptions } from "./compiler";
@@ -117,6 +123,11 @@ export type ResolvedBabelPluginItem<
   TOptions,
   CompilerOptions | undefined | null
 ];
+
+export type BabelInputOptions = Omit<
+  InputOptions & Required<Pick<InputOptions, "presets" | "plugins">>,
+  "filename" | "root" | "sourceFileName" | "sourceMaps" | "inputSourceMap"
+>;
 
 /**
  * A non-local import specifier represents an import that is not defined within the current module.
