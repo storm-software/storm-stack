@@ -113,5 +113,16 @@ export const defaultLocale = $storm.config.DEFAULT_LOCALE;
 /** Detect if the application is running in debug mode */
 export const defaultTimezone = $storm.config.DEFAULT_TIMEZONE;
 
+/**
+ * A gating function to determine if the optimized [React compiler](https://react.dev/reference/react-compiler) source code should be used.
+ *
+ * @see https://react.dev/reference/react-compiler/gating
+ *
+ * @returns A boolean indicating if the React compiler should be used.
+ */
+export function shouldUseOptimizedReact() {
+  return !$storm.config.DISABLE_REACT_COMPILER && !isDevelopment;
+}
+
 `;
 }

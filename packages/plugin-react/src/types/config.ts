@@ -16,27 +16,16 @@
 
  ------------------------------------------------------------------- */
 
-import { defineConfig } from "@storm-stack/core/define-config";
+import { StormConfigInterface } from "@storm-stack/types/shared/config";
 
-export default defineConfig({
-  skipCache: true,
-  plugins: [
-    [
-      "@storm-stack/plugin-date",
-      {
-        type: "date-fns"
-      }
-    ],
-    [
-      "@storm-stack/plugin-react",
-      {
-        config: {
-          types: "./src/types.ts#ExampleReactAppConfig"
-        }
-      }
-    ]
-  ],
-  output: {
-    outputMode: "fs"
-  }
-});
+/**
+ * Configuration options for the Storm React plugin.
+ */
+export interface StormReactConfig extends StormConfigInterface {
+  /**
+   * A gating indicator to determine if the optimized [React compiler](https://react.dev/reference/react-compiler) source code should be used.
+   *
+   * @see https://react.dev/reference/react-compiler/gating
+   */
+  DISABLE_REACT_COMPILER: boolean;
+}

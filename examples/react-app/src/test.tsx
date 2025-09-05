@@ -16,9 +16,9 @@
 
  ------------------------------------------------------------------- */
 
-import { ComponentWithProps } from "react";
+import { ComponentProps } from "react";
 
-export default function SamplePage(props: ComponentWithProps<any>) {
+export default function SamplePage(props: ComponentProps<any>) {
   const { children } = props;
 
   return <div>{children}</div>;

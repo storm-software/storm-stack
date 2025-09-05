@@ -35,7 +35,9 @@ import {
   LogConsolePluginOptions,
   LogConsolePluginResolvedOptions
 } from "@storm-stack/plugin-log-console/types";
-import { PluginOptions } from "babel-plugin-react-compiler";
+import { PluginOptions as ExternalReactCompilerOptions } from "babel-plugin-react-compiler";
+
+export type ReactCompilerOptions = Omit<ExternalReactCompilerOptions, "logger">;
 
 export interface ReactPluginOptions extends PluginBaseOptions {
   /**
@@ -66,7 +68,7 @@ export interface ReactPluginOptions extends PluginBaseOptions {
    * @remarks
    * Set to `false` to disable the React Compiler. By default, the React Compiler is enabled and target is set to React 19.
    */
-  compiler?: PluginOptions | false;
+  compiler?: ReactCompilerOptions | false;
 
   /**
    * Options for the config plugin.
@@ -86,7 +88,13 @@ export interface ReactPluginOptions extends PluginBaseOptions {
 
 export interface ReactPluginResolvedOptions
   extends ErrorPluginResolvedOptions,
-    LogConsolePluginResolvedOptions {}
+    LogConsolePluginResolvedOptions {
+  react: Required<
+    Pick<ReactPluginOptions, "jsxImportSource" | "jsxRuntime">
+  > & {
+    compiler: ExternalReactCompilerOptions | false;
+  };
+}
 
 export type ReactPluginContext<
   TOptions extends ReactPluginResolvedOptions = ReactPluginResolvedOptions

@@ -20,6 +20,7 @@ import { LogLevelLabel } from "@storm-software/config-tools/types";
 import { Plugin } from "@storm-stack/core/base/plugin";
 import { addPluginFilter } from "@storm-stack/core/lib/babel/helpers";
 import { resolveBabelOptions } from "@storm-stack/core/lib/babel/options";
+import { isMatchFound } from "@storm-stack/core/lib/typescript/tsconfig";
 import { writeFile } from "@storm-stack/core/lib/utilities/write-file";
 import { vite } from "@storm-stack/core/lib/vite/build";
 import type {
@@ -36,6 +37,10 @@ import { StormJSON } from "@stryke/json";
 import { joinPaths } from "@stryke/path/join-paths";
 import { TsConfigJson } from "@stryke/types/tsconfig";
 import viteReactPlugin, { BabelOptions } from "@vitejs/plugin-react";
+import {
+  LoggerEvent,
+  PluginOptions as ReactCompilerOptions
+} from "babel-plugin-react-compiler";
 import defu from "defu";
 import BabelPlugin from "./babel/plugin";
 import { ContextModule } from "./templates/context";
@@ -60,11 +65,11 @@ export default class ReactPlugin<
     super(options);
 
     this.dependencies = [
-      ["@storm-stack/plugin-config", this.options.config],
-      ["@storm-stack/plugin-error", this.options.error],
+      ["@storm-stack/plugin-config", this.options.config ?? {}],
+      ["@storm-stack/plugin-error", this.options.error ?? {}],
       [
         "@storm-stack/plugin-log-console",
-        { namespace: "console", ...this.options.console }
+        { namespace: "console", ...(this.options.console ?? {}) }
       ]
     ];
 
@@ -95,7 +100,7 @@ export default class ReactPlugin<
    *
    * @param context - The context of the current build.
    */
-  protected initOptions(context: TContext) {
+  protected async initOptions(context: TContext) {
     this.log(
       LogLevelLabel.TRACE,
       `Initializing the React plugin options for the Storm Stack project.`
@@ -115,6 +120,72 @@ export default class ReactPlugin<
     context.options.variant ??= "vite";
     context.options.platform = "browser";
 
+    const tsconfigJson = await readJsonFile<TsConfigJson>(
+      context.options.tsconfig
+    );
+
+    context.options.plugins.react.jsxRuntime ??= "automatic";
+    context.options.plugins.react.jsxImportSource ??=
+      tsconfigJson.compilerOptions?.jsxImportSource || "react";
+
+    if (context.options.plugins.react.compiler !== false) {
+      context.options.plugins.react.compiler = defu(
+        context.options.plugins.react.compiler ?? {},
+        {
+          target: "19",
+          compilationMode: "infer",
+          gating: {
+            source: "storm:env",
+            importSpecifierName: "shouldUseOptimizedReact"
+          },
+          enableReanimatedCheck: true,
+          logger: {
+            logEvent: (filename: string | null, event: LoggerEvent) => {
+              this.log(
+                event.kind === "CompileSuccess"
+                  ? LogLevelLabel.SUCCESS
+                  : event.kind === "AutoDepsEligible" ||
+                      event.kind === "AutoDepsDecorations"
+                    ? LogLevelLabel.INFO
+                    : event.kind === "CompileSkip" ||
+                        event.kind === "CompileDiagnostic"
+                      ? LogLevelLabel.DEBUG
+                      : event.kind === "Timing"
+                        ? LogLevelLabel.TRACE
+                        : LogLevelLabel.ERROR,
+                `(${filename}) ${
+                  event.kind === "CompileSuccess"
+                    ? `React Compiler Success`
+                    : event.kind === "AutoDepsEligible"
+                      ? `React AutoDeps Eligible - ${
+                          event.depArrayLoc.identifierName || "No identifier"
+                        }`
+                      : event.kind === "AutoDepsDecorations"
+                        ? `React AutoDeps Decorations - ${event.decorations
+                            .filter(dec => dec.identifierName)
+                            .map(dec => dec.identifierName)
+                            .join(", ")}`
+                        : event.kind === "CompileSkip"
+                          ? `React Compile Skip - ${event.reason}`
+                          : event.kind === "CompileDiagnostic"
+                            ? `React Compile Diagnostic - (Category: ${
+                                event.detail.category
+                              }) ${event.detail.reason}${
+                                event.detail.description
+                                  ? `\n${event.detail.description}`
+                                  : ""
+                              }`
+                            : event.kind === "Timing"
+                              ? `React Timing - ${event.measurement}`
+                              : `React Compiler Error - ${event.fnLoc?.identifierName || "unknown location"}`
+                }`
+              );
+            }
+          }
+        }
+      ) as ReactCompilerOptions;
+    }
+
     context.options.babel.plugins ??= [];
     context.options.babel.plugins = addPluginFilter(
       context,
@@ -126,8 +197,8 @@ export default class ReactPlugin<
     context.options.babel.plugins.unshift([
       "@babel/plugin-syntax-jsx",
       {
-        runtime: this.options.jsxRuntime ?? "automatic",
-        importSource: this.options.jsxImportSource ?? "react"
+        runtime: context.options.plugins.react.jsxRuntime ?? "automatic",
+        importSource: context.options.plugins.react.jsxImportSource ?? "react"
       }
     ]);
 
@@ -153,10 +224,37 @@ export default class ReactPlugin<
     );
 
     tsconfigJson.compilerOptions ??= {};
-    tsconfigJson.compilerOptions.jsx ??= "react-jsx";
+    tsconfigJson.compilerOptions.module ??= "esnext";
+
+    tsconfigJson.compilerOptions.jsxImportSource =
+      this.getOptions(context).jsxImportSource;
+    if (tsconfigJson.compilerOptions.jsxImportSource === "react") {
+      tsconfigJson.compilerOptions.jsx ??= "react-jsx";
+    } else {
+      tsconfigJson.compilerOptions.jsx ??= "preserve";
+    }
+
+    tsconfigJson.compilerOptions.lib = [];
+    if (!isMatchFound("dom", tsconfigJson.compilerOptions.lib)) {
+      tsconfigJson.compilerOptions.lib.push("DOM");
+    }
+    if (!isMatchFound("dom.iterable", tsconfigJson.compilerOptions.lib)) {
+      tsconfigJson.compilerOptions.lib.push("DOM.Iterable");
+    }
+    if (!isMatchFound("esnext", tsconfigJson.compilerOptions.lib)) {
+      tsconfigJson.compilerOptions.lib.push("ESNext");
+    }
 
     if (context.tsconfig.options.resolveJsonModule !== true) {
       tsconfigJson.compilerOptions.resolveJsonModule = true;
+    }
+
+    if (context.options.variant === "vite") {
+      tsconfigJson.compilerOptions.types ??= [];
+
+      if (!isMatchFound("vite/client", tsconfigJson.compilerOptions.types)) {
+        tsconfigJson.compilerOptions.types.push("vite/client");
+      }
     }
 
     return writeFile(
@@ -234,9 +332,7 @@ export default class ReactPlugin<
       if (this.getOptions(context).compiler !== false) {
         context.options.babel.plugins.push([
           "babel-plugin-react-compiler",
-          defu(this.getOptions(context).compiler ?? {}, {
-            target: "19"
-          })
+          this.getOptions(context).compiler
         ]);
       }
 
@@ -267,9 +363,7 @@ export default class ReactPlugin<
       babel.plugins ??= [];
       babel.plugins.push([
         "babel-plugin-react-compiler",
-        defu(this.getOptions(context).compiler ?? {}, {
-          target: "19"
-        })
+        this.getOptions(context).compiler
       ]);
     }
 

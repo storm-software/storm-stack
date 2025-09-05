@@ -16,27 +16,13 @@
 
  ------------------------------------------------------------------- */
 
-import { defineConfig } from "@storm-stack/core/define-config";
+import { StormReactConfig } from "@storm-stack/plugin-react/types/config";
 
-export default defineConfig({
-  skipCache: true,
-  plugins: [
-    [
-      "@storm-stack/plugin-date",
-      {
-        type: "date-fns"
-      }
-    ],
-    [
-      "@storm-stack/plugin-react",
-      {
-        config: {
-          types: "./src/types.ts#ExampleReactAppConfig"
-        }
-      }
-    ]
-  ],
-  output: {
-    outputMode: "fs"
-  }
-});
+export interface ExampleReactAppConfig extends StormReactConfig {
+  /**
+   * The API endpoint for the application.
+   *
+   * @defaultValue "https://api.example.com"
+   */
+  API_ENDPOINT: string;
+}
