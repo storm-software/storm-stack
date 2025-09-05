@@ -28,6 +28,7 @@ const config = getTsupConfig({
     "src/renderers/*.ts",
     "src/babel/*.ts"
   ],
+  noExternal: ["@vitejs/plugin-react"],
   skipNodeModulesBundle: true
 }) as Options;
 

@@ -34,8 +34,7 @@ import { StormConfig, config } from "storm:config";
 import * as env from "storm:env";
 import { createStorage } from "storm:storage";
 import { StormLog } from "storm:log";
-import { createContext, useContext } from "react";
-import type { PropsWithChildren } from "react";
+import { createContext, useContext, PropsWithChildren } from "react";
 
 /**
  * The global Storm context for the current application.

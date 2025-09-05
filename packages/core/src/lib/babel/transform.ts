@@ -68,7 +68,7 @@ export async function transform(
       return sourceFile;
     }
 
-    const opts = defu(context.options.babel ?? {}, options ?? {});
+    const opts = defu(context.options.babel ?? {}, options.babel ?? {});
 
     const plugins = resolveBabelPlugins(log, context, sourceFile, opts);
     const presets = resolveBabelPresets(log, context, sourceFile, opts);
@@ -112,7 +112,7 @@ export async function transform(
           filename: sourceFile.id
         },
         resolveBabelInputOptions(context, opts, plugins, presets)
-      ) as Parameters<typeof transformAsync>[1]
+      )
     );
     if (!result?.code) {
       throw new Error(

@@ -151,7 +151,10 @@
   "peerDependencies": {
     "@storm-stack/plugin-config": "*",
     "@storm-stack/plugin-error": "*",
-    "@storm-stack/plugin-log-console": "*"
+    "@storm-stack/plugin-log-console": "*",
+    "babel-plugin-react-compiler": "*",
+    "react": "*",
+    "react-dom": "*"
   },
   "peerDependenciesMeta": {
     "@storm-stack/plugin-config": {
@@ -161,6 +164,15 @@
       "optional": false
     },
     "@storm-stack/plugin-log-console": {
+      "optional": false
+    },
+    "babel-plugin-react-compiler": {
+      "optional": true
+    },
+    "react": {
+      "optional": false
+    },
+    "react-dom": {
       "optional": false
     }
   },

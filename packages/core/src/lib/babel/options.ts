@@ -172,12 +172,12 @@ export function resolveBabelPresets(
  * @param presets - The Babel presets to use.
  * @returns The resolved Babel options.
  */
-export async function resolveBabelInputOptions(
+export function resolveBabelInputOptions(
   context: Context,
   options: Partial<ResolvedBabelOptions> = {},
   plugins: ResolvedBabelPluginItem[] = [],
   presets: ResolvedBabelPluginItem[] = []
-): Promise<BabelInputOptions> {
+): BabelInputOptions {
   return defu(
     {
       plugins: [
@@ -234,11 +234,11 @@ export async function resolveBabelInputOptions(
  * @param options - The options for the transformation.
  * @returns The resolved Babel options.
  */
-export async function resolveBabelOptions(
+export function resolveBabelOptions(
   context: Context,
   log: LogFn = context.log,
   options: Partial<ResolvedBabelOptions> = {}
-): Promise<BabelInputOptions> {
+): BabelInputOptions {
   return resolveBabelInputOptions(
     context,
     options,
