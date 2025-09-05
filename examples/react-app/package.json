@@ -19,8 +19,8 @@
   },
   "devDependencies": {
     "@storm-stack/core": "workspace:*",
-    "@storm-stack/nx": "workspace:*",
-    "@storm-stack/plugin-react": "workspace:*",
+    "@storm-stack/nx": "0.19.2",
+    "@storm-stack/plugin-react": "0.4.0",
     "@types/react": "catalog:",
     "@types/react-dom": "catalog:"
   }

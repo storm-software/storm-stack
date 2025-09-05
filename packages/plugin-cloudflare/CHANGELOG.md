@@ -2,6 +2,14 @@
 
 # Changelog for Storm Stack - Plugin Cloudflare
 
+## [0.26.0](https://github.com/storm-software/storm-stack/releases/tag/plugin-cloudflare%400.26.0) (2025-09-05)
+
+### Features
+
+- **plugin-cloudflare:** Shorten package name and add `@cloudflare/vite-plugin`
+  config
+  ([76f626f0](https://github.com/storm-software/storm-stack/commit/76f626f0))
+
 ## [0.25.1](https://github.com/storm-software/storm-stack/releases/tag/plugin-cloudflare-worker%400.25.1) (2025-09-05)
 
 ### Miscellaneous

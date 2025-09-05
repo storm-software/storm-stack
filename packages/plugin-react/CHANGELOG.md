@@ -2,6 +2,24 @@
 
 # Changelog for Storm Stack - Plugin React
 
+## [0.4.0](https://github.com/storm-software/storm-stack/releases/tag/plugin-react%400.4.0) (2025-09-05)
+
+### Features
+
+- **plugin-react:** Added the `shouldUseOptimizedReact` gate function to
+  `storm:env`
+  ([55d43012](https://github.com/storm-software/storm-stack/commit/55d43012))
+
+### Miscellaneous
+
+- **monorepo:** Update workspace package links
+  ([4198ca0f](https://github.com/storm-software/storm-stack/commit/4198ca0f))
+
+### Updated Dependencies
+
+- Updated devkit to 0.14.2
+- Updated nx to 0.19.2
+
 ## [0.3.0](https://github.com/storm-software/storm-stack/releases/tag/plugin-react%400.3.0) (2025-09-05)
 
 ### Features

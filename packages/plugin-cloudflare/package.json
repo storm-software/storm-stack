@@ -1,6 +1,6 @@
 {
   "name": "@storm-stack/plugin-cloudflare",
-  "version": "0.25.1",
+  "version": "0.26.0",
   "type": "module",
   "description": "A Storm Stack plugin for managing deployments to Cloudflare",
   "repository": {

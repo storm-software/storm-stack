@@ -1,6 +1,6 @@
 {
   "name": "@storm-stack/plugin-node",
-  "version": "0.19.1",
+  "version": "0.19.2",
   "type": "module",
   "description": "A package containing a Storm Stack NodeJs plugin for generating core NodeJs runtime functionality.",
   "repository": {
@@ -171,7 +171,7 @@
     "@babel/types": "catalog:",
     "@storm-software/config-tools": "catalog:",
     "@storm-stack/core": "workspace:*",
-    "@storm-stack/devkit": "workspace:*",
+    "@storm-stack/devkit": "0.14.2",
     "@storm-stack/types": "workspace:*",
     "@stryke/convert": "catalog:",
     "@stryke/json": "catalog:",
@@ -180,7 +180,7 @@
     "@stryke/type-checks": "catalog:"
   },
   "devDependencies": {
-    "@storm-stack/nx": "workspace:*",
+    "@storm-stack/nx": "0.19.2",
     "@types/node": "catalog:",
     "tsup": "catalog:"
   },

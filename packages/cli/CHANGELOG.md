@@ -2,6 +2,26 @@
 
 # Changelog for Storm Stack - CLI
 
+## [0.22.1](https://github.com/storm-software/storm-stack/releases/tag/cli%400.22.1) (2025-09-05)
+
+### Bug Fixes
+
+- **cli:** Resolve issue with `Engine` creation helper
+  ([fd1ec9d6](https://github.com/storm-software/storm-stack/commit/fd1ec9d6))
+
+### Miscellaneous
+
+- **monorepo:** Update workspace package links
+  ([4198ca0f](https://github.com/storm-software/storm-stack/commit/4198ca0f))
+
+### Updated Dependencies
+
+- Updated plugin-log-storage to 0.25.2
+- Updated plugin-log-sentry to 0.28.2
+- Updated plugin-storage-fs to 0.14.2
+- Updated plugin-cli to 0.32.2
+- Updated nx to 0.19.2
+
 ## [0.22.0](https://github.com/storm-software/storm-stack/releases/tag/cli%400.22.0) (2025-09-05)
 
 ### Features
