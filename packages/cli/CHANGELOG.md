@@ -2,6 +2,27 @@
 
 # Changelog for Storm Stack - CLI
 
+## [0.22.0](https://github.com/storm-software/storm-stack/releases/tag/cli%400.22.0) (2025-09-05)
+
+### Features
+
+- **plugin-react:** Include the `@vitejs/plugin-react` plugin by default
+  ([ea931ce4](https://github.com/storm-software/storm-stack/commit/ea931ce4))
+
+### Miscellaneous
+
+- **monorepo:** Update workspace package links
+  ([4c77735d](https://github.com/storm-software/storm-stack/commit/4c77735d))
+
+### Updated Dependencies
+
+- Updated plugin-log-storage to 0.25.1
+- Updated plugin-log-sentry to 0.28.1
+- Updated plugin-storage-fs to 0.14.1
+- Updated plugin-cli to 0.32.1
+- Updated core to 0.39.0
+- Updated nx to 0.19.1
+
 ## [0.21.0](https://github.com/storm-software/storm-stack/releases/tag/cli%400.21.0) (2025-09-05)
 
 ### Features

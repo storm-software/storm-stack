@@ -1,6 +1,6 @@
 {
   "name": "@storm-stack/plugin-react",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "type": "module",
   "description": "A package containing a Storm Stack React plugin for generating core React runtime functionality.",
   "repository": {
@@ -183,8 +183,8 @@
     "@babel/template": "catalog:",
     "@babel/types": "catalog:",
     "@storm-software/config-tools": "catalog:",
-    "@storm-stack/core": "workspace:*",
-    "@storm-stack/devkit": "workspace:*",
+    "@storm-stack/core": "0.39.0",
+    "@storm-stack/devkit": "0.14.1",
     "@storm-stack/types": "workspace:*",
     "@stryke/convert": "catalog:",
     "@stryke/json": "catalog:",
@@ -196,7 +196,7 @@
     "defu": "catalog:"
   },
   "devDependencies": {
-    "@storm-stack/nx": "workspace:*",
+    "@storm-stack/nx": "0.19.1",
     "@stryke/types": "catalog:",
     "@types/node": "catalog:",
     "tsup": "catalog:"

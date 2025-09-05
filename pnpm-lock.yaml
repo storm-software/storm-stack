@@ -789,18 +789,9 @@ importers:
       '@storm-stack/nx':
         specifier: workspace:*
         version: link:../../packages/nx
-      '@storm-stack/plugin-cli':
+      '@storm-stack/plugin-react':
         specifier: workspace:*
-        version: link:../../packages/plugin-cli
-      '@storm-stack/plugin-date':
-        specifier: workspace:*
-        version: link:../../packages/plugin-date
-      '@storm-stack/plugin-log-console':
-        specifier: workspace:*
-        version: link:../../packages/plugin-log-console
-      '@storm-stack/plugin-log-sentry':
-        specifier: workspace:*
-        version: link:../../packages/plugin-log-sentry
+        version: link:../../packages/plugin-react
       '@types/react':
         specifier: 'catalog:'
         version: 19.1.12
@@ -1843,6 +1834,12 @@ importers:
       defu:
         specifier: 'catalog:'
         version: 6.1.4
+      react:
+        specifier: '*'
+        version: 19.1.1
+      react-dom:
+        specifier: '*'
+        version: 19.1.1(react@19.1.1)
     devDependencies:
       '@storm-stack/nx':
         specifier: workspace:*
@@ -5233,6 +5230,7 @@ packages:
 
   '@ls-lint/ls-lint@2.3.1':
     resolution: {integrity: sha512-vPe6IDByQnQRTxcAYjTxrmga/tSIui50VBFTB5KIJWY3OOFmxE2VtymjeSEfQfiMbhZV/ZPAqYy2lt8pZFQ0Rw==}
+    cpu: [x64, arm64, s390x, ppc64le]
     os: [darwin, linux, win32]
     hasBin: true
 
@@ -12119,8 +12117,8 @@ packages:
   lunr@2.3.9:
     resolution: {integrity: sha512-zTU3DaZaF3Rt9rhN3uBMGQD3dD2/vFQqnvZCDv4dl5iOzq2IZQqTxu90r4E5J+nP70J3ilqVCrbho2eWaeW8Ow==}
 
-  luxon@3.7.1:
-    resolution: {integrity: sha512-RkRWjA926cTvz5rAb1BqyWkKbbjzCGchDUIKMCUvNi17j6f6j8uHGDV82Aqcqtzd+icoYpELmG3ksgGiFNNcNg==}
+  luxon@3.7.2:
+    resolution: {integrity: sha512-vtEhXh/gNjI9Yg1u4jX/0YVPMvxzHuGgCm6tC5kZyb08yjGWGnqAjGJvcXbqQR2P3MyMEFnRbpcdFS6PBcLqew==}
     engines: {node: '>=12'}
 
   lz-string@1.5.0:
@@ -14121,6 +14119,11 @@ packages:
     peerDependencies:
       react: 17.0.2
 
+  react-dom@19.1.1:
+    resolution: {integrity: sha512-Dlq/5LAZgF0Gaz6yiqZCf6VCcZs1ghAJyrsu84Q/GT0gV+mCxbfmKNoGRKBYMJ8IEdGPqu49YWXD02GCknEDkw==}
+    peerDependencies:
+      react: ^19.1.1
+
   react-dom@19.2.0-canary-4123f6b7-20250826:
     resolution: {integrity: sha512-Gv8T+FU0adpNy1J2e+MVgnlIA8sk++KhozD9d1tdqEW0tq/M13R99t7/1E4VqMdVdE6xiBNhlVzIkXrJurRZyg==}
     peerDependencies:
@@ -14156,6 +14159,10 @@ packages:
 
   react@17.0.2:
     resolution: {integrity: sha512-gnhPt75i/dq/z3/6q/0asP78D0u592D5L1pd7M8P+dck6Fu/jJeL6iVVK23fptSUZj8Vjf++7wXA8UNclGQcbA==}
+    engines: {node: '>=0.10.0'}
+
+  react@19.1.1:
+    resolution: {integrity: sha512-w8nqGImo45dmMIfljjMwOGtbmC/mk4CMYhWIicdSflH91J9TyCyczcPFXJzrZ/ZXcgGRFeP6BU0BEJTw6tZdfQ==}
     engines: {node: '>=0.10.0'}
 
   react@19.2.0-canary-4123f6b7-20250826:
@@ -14519,6 +14526,9 @@ packages:
 
   scheduler@0.20.2:
     resolution: {integrity: sha512-2eWfGgAqqWFGqtdMmcL5zCMK1U8KlXv8SQFGglL3CEtd0aDVDWgeF/YoCmvln55m5zSk3J/20hTaSBeSObsQDQ==}
+
+  scheduler@0.26.0:
+    resolution: {integrity: sha512-NlHwttCI/l5gCPR3D1nNXtWABUmBwvZpEQiD4IXSbIDq8BzLIK/7Ir5gTFSGZDUu37K5cMNp0hFtzO38sC7gWA==}
 
   scheduler@0.27.0-canary-4123f6b7-20250826:
     resolution: {integrity: sha512-QCGT+2Vxx9vcMFFtHgjGy8+AHptwBWv2G0eOesZIs2JSQt8LPMjvD88keLpckpSYKdC7FBVv046P6zgU8zzN8Q==}
@@ -16174,8 +16184,8 @@ packages:
     engines: {node: '>= 10.13.0'}
     hasBin: true
 
-  webpack-dev-middleware@7.4.2:
-    resolution: {integrity: sha512-xOO8n6eggxnwYpy1NlzUKpvrjfJTvae5/D6WOK0S2LSo7vjmo5gCM1DbLUmFqrMTJP+W/0YZNctm7jasWvLuBA==}
+  webpack-dev-middleware@7.4.3:
+    resolution: {integrity: sha512-5kA/PzpZzDz5mNOkcNLmU1UdjGeSSxd7rt1akWpI70jMNHLASiBPRaQZn0hgyhvhawfIwSnnLfDABIxL3ueyFg==}
     engines: {node: '>= 18.12.0'}
     peerDependencies:
       webpack: ^5.0.0
@@ -25144,7 +25154,7 @@ snapshots:
 
   cron-parser@4.9.0:
     dependencies:
-      luxon: 3.7.1
+      luxon: 3.7.2
 
   cross-inspect@1.0.1:
     dependencies:
@@ -29496,7 +29506,7 @@ snapshots:
 
   lunr@2.3.9: {}
 
-  luxon@3.7.1: {}
+  luxon@3.7.2: {}
 
   lz-string@1.5.0: {}
 
@@ -32246,6 +32256,11 @@ snapshots:
       react: 17.0.2
       scheduler: 0.20.2
 
+  react-dom@19.1.1(react@19.1.1):
+    dependencies:
+      react: 19.1.1
+      scheduler: 0.26.0
+
   react-dom@19.2.0-canary-4123f6b7-20250826(react@19.2.0-canary-4123f6b7-20250826):
     dependencies:
       react: 19.2.0-canary-4123f6b7-20250826
@@ -32279,6 +32294,8 @@ snapshots:
     dependencies:
       loose-envify: 1.4.0
       object-assign: 4.1.1
+
+  react@19.1.1: {}
 
   react@19.2.0-canary-4123f6b7-20250826: {}
 
@@ -32794,6 +32811,8 @@ snapshots:
     dependencies:
       loose-envify: 1.4.0
       object-assign: 4.1.1
+
+  scheduler@0.26.0: {}
 
   scheduler@0.27.0-canary-4123f6b7-20250826: {}
 
@@ -34834,11 +34853,11 @@ snapshots:
       - bufferutil
       - utf-8-validate
 
-  webpack-dev-middleware@7.4.2(webpack@5.101.3(@swc/core@1.13.5(@swc/helpers@0.5.17))(esbuild@0.25.9)):
+  webpack-dev-middleware@7.4.3(webpack@5.101.3(@swc/core@1.13.5(@swc/helpers@0.5.17))(esbuild@0.25.9)):
     dependencies:
       colorette: 2.0.20
       memfs: 4.38.2
-      mime-types: 2.1.35
+      mime-types: 3.0.1
       on-finished: 2.4.1
       range-parser: 1.2.1
       schema-utils: 4.3.2
@@ -34873,7 +34892,7 @@ snapshots:
       serve-index: 1.9.1
       sockjs: 0.3.24
       spdy: 4.0.2
-      webpack-dev-middleware: 7.4.2(webpack@5.101.3(@swc/core@1.13.5(@swc/helpers@0.5.17))(esbuild@0.25.9))
+      webpack-dev-middleware: 7.4.3(webpack@5.101.3(@swc/core@1.13.5(@swc/helpers@0.5.17))(esbuild@0.25.9))
       ws: 8.18.3
     optionalDependencies:
       webpack: 5.101.3(@swc/core@1.13.5(@swc/helpers@0.5.17))(esbuild@0.25.9)

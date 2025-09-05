@@ -2,6 +2,17 @@
 
 # Changelog for Storm Stack - Core
 
+## [0.39.0](https://github.com/storm-software/storm-stack/releases/tag/core%400.39.0) (2025-09-05)
+
+### Features
+
+- **plugin-react:** Include the `@vitejs/plugin-react` plugin by default
+  ([ea931ce4](https://github.com/storm-software/storm-stack/commit/ea931ce4))
+- **core:** Added `babel` options resolver utilities and `vite` hook types
+  ([5f4026af](https://github.com/storm-software/storm-stack/commit/5f4026af))
+- **core:** Invoke `engine` hooks from `vite` plugin hooks
+  ([77bc3218](https://github.com/storm-software/storm-stack/commit/77bc3218))
+
 ## [0.38.0](https://github.com/storm-software/storm-stack/releases/tag/core%400.38.0) (2025-09-05)
 
 ### Features
