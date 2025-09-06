@@ -158,7 +158,8 @@ function isNonNamespacedImport(
   return (
     importDeclPath
       .get("specifiers")
-      .every(specifier => specifier.isImportSpecifier()) &&
+      .filter(Boolean)
+      .every(specifier => specifier?.isImportSpecifier()) &&
     importDeclPath.node.importKind !== "type" &&
     importDeclPath.node.importKind !== "typeof"
   );

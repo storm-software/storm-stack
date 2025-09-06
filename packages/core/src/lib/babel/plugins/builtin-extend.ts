@@ -120,7 +120,7 @@ export const BuiltinExtendPlugin = declare<
 
         const superClass = path.get("superClass");
         if (
-          !superClass.node ||
+          !superClass?.node ||
           !globals.some(name => superClass.isIdentifier({ name }))
         ) {
           return;

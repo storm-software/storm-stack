@@ -102,11 +102,11 @@ const importVisitors = {
     }
 
     const calleePath = nodePath.get("callee");
-
     if (
-      TRANSFORM_FUNCTIONS.some(pattern =>
-        matchesPattern(state, calleePath, pattern)
-      ) ||
+      (calleePath &&
+        TRANSFORM_FUNCTIONS.some(pattern =>
+          matchesPattern(state, calleePath, pattern)
+        )) ||
       isImportCall(nodePath)
     ) {
       state.moduleResolverVisited.add(nodePath);
@@ -123,12 +123,16 @@ const importVisitors = {
     >,
     state: ModuleResolverPluginPass
   ) => {
-    if (state.moduleResolverVisited.has(nodePath)) {
+    if (
+      !nodePath ||
+      !nodePath.get("source") ||
+      state.moduleResolverVisited.has(nodePath)
+    ) {
       return;
     }
 
     state.moduleResolverVisited.add(nodePath);
-    resolveModulePath(nodePath.get("source"), state);
+    resolveModulePath(nodePath.get("source")!, state);
   }
 };
 

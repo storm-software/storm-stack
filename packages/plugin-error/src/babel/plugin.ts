@@ -175,7 +175,7 @@ export default declareBabel<
         pass: BabelPluginPass<BabelPluginOptions, ErrorBabelPluginState>
       ) {
         if (
-          ERROR_CLASSES.some(name => path.get("callee").isIdentifier({ name }))
+          ERROR_CLASSES.some(name => path.get("callee")?.isIdentifier({ name }))
         ) {
           if (path.node.arguments.length > 0 && path.node.arguments[0]) {
             const errorMessage = extractErrorMessage(path.node.arguments[0]);
@@ -219,7 +219,7 @@ export default declareBabel<
         pass: BabelPluginPass<BabelPluginOptions, ErrorBabelPluginState>
       ) {
         if (
-          ERROR_CLASSES.some(name => path.get("callee").isIdentifier({ name }))
+          ERROR_CLASSES.some(name => path.get("callee")?.isIdentifier({ name }))
         ) {
           if (path.node.arguments.length > 0 && path.node.arguments[0]) {
             const errorMessage = extractErrorMessage(path.node.arguments[0]);

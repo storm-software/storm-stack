@@ -181,42 +181,51 @@ export default declareBabel<
         pass: ConfigBabelPluginPass
       ) {
         if (
-          path.get("object").get("property").isIdentifier({ name: "config" }) &&
-          path.get("object").get("object").isIdentifier({ name: "$storm" }) &&
-          path.get("property").isIdentifier()
+          path
+            .get("object")
+            ?.get("property")
+            ?.isIdentifier({ name: "config" }) &&
+          path.get("object")?.get("object")?.isIdentifier({ name: "$storm" }) &&
+          path.get("property")?.isIdentifier()
         ) {
           // $storm.config.CONFIG_NAME
 
-          const identifier = path.get("property").node as t.Identifier;
+          const identifier = path.get("property")?.node as t.Identifier;
           const value = extractConfig(identifier, pass, true);
           if (value !== undefined) {
             path.replaceWithSourceString(value);
           }
         } else if (
-          path.get("object").get("property").isIdentifier({ name: "config" }) &&
           path
             .get("object")
+            ?.get("property")
+            ?.isIdentifier({ name: "config" }) &&
+          path
             .get("object")
-            .isCallExpression({
+            ?.get("object")
+            ?.isCallExpression({
               callee: { name: "useStorm", type: "Identifier" }
             }) &&
-          path.get("property").isIdentifier()
+          path.get("property")?.isIdentifier()
         ) {
           // useStorm().config.CONFIG_NAME
 
-          const identifier = path.get("property").node as t.Identifier;
+          const identifier = path.get("property")?.node as t.Identifier;
           const value = extractConfig(identifier, pass, false);
           if (value !== undefined) {
             path.replaceWithSourceString(value);
           }
         } else if (
-          path.get("object").get("property").isIdentifier({ name: "env" }) &&
-          path.get("object").get("object").isIdentifier({ name: "process" }) &&
-          path.get("property").isIdentifier()
+          path.get("object")?.get("property")?.isIdentifier({ name: "env" }) &&
+          path
+            .get("object")
+            ?.get("object")
+            ?.isIdentifier({ name: "process" }) &&
+          path.get("property")?.isIdentifier()
         ) {
           // process.env.CONFIG_NAME
 
-          const identifier = path.get("property").node as t.Identifier;
+          const identifier = path.get("property")?.node as t.Identifier;
           if (!identifier.name) {
             return;
           }
@@ -229,13 +238,13 @@ export default declareBabel<
           //   }${value !== undefined ? ` || ${value})` : ""}`
           // );
         } else if (
-          path.get("object").get("property").isIdentifier({ name: "env" }) &&
-          path.get("object").get("object").isMetaProperty() &&
-          path.get("property").isIdentifier()
+          path.get("object")?.get("property")?.isIdentifier({ name: "env" }) &&
+          path.get("object")?.get("object")?.isMetaProperty() &&
+          path.get("property")?.isIdentifier()
         ) {
           // import.meta.env.CONFIG_NAME
 
-          const identifier = path.get("property").node as t.Identifier;
+          const identifier = path.get("property")?.node as t.Identifier;
           if (!identifier.name) {
             return;
           }
