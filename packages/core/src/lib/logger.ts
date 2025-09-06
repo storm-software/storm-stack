@@ -22,18 +22,24 @@ import { getColor } from "@storm-software/config-tools/utilities/colors";
 import { noop } from "@stryke/helpers/noop";
 import { titleCase } from "@stryke/string-format/title-case";
 import chalk from "chalk";
-import type { LogFn, ResolvedOptions, UserConfig } from "../types";
+import type { LogFn, WorkspaceConfig } from "../types";
 
+export interface CreateLogOptions {
+  logLevel?: LogLevelLabel;
+  customLogger?: LogFn;
+  colors?: WorkspaceConfig["colors"];
+}
+
+/**
+ * Create a logging function with a specific name and options.
+ *
+ * @param name - The name of the logging function.
+ * @param options - The options to configure the logging function.
+ * @returns A logging function.
+ */
 export const createLog = (
   name: string | null,
-  options: Partial<
-    | ResolvedOptions
-    | UserConfig
-    | {
-        logLevel: LogLevelLabel;
-        customLogger: LogFn;
-      }
-  > = {}
+  options: CreateLogOptions = {}
 ): LogFn => {
   const logLevel = options.logLevel || LogLevelLabel.INFO;
   if (logLevel === LogLevelLabel.SILENT) {
