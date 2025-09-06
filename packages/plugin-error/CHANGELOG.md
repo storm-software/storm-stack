@@ -2,6 +2,22 @@
 
 # Changelog for Storm Stack - Plugin Error
 
+## [0.6.3](https://github.com/storm-software/storm-stack/releases/tag/plugin-error%400.6.3) (2025-09-06)
+
+### Bug Fixes
+
+- **core:** Resolve typing issues as a result of `@babel/core` updates
+  ([3f6e127d](https://github.com/storm-software/storm-stack/commit/3f6e127d))
+
+### Miscellaneous
+
+- **monorepo:** Update workspace package links
+  ([68c5ee21](https://github.com/storm-software/storm-stack/commit/68c5ee21))
+
+### Updated Dependencies
+
+- Updated core to 0.39.1
+
 ## [0.6.2](https://github.com/storm-software/storm-stack/releases/tag/plugin-error%400.6.2) (2025-09-05)
 
 ### Miscellaneous

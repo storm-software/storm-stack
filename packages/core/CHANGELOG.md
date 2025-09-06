@@ -2,6 +2,13 @@
 
 # Changelog for Storm Stack - Core
 
+## [0.39.1](https://github.com/storm-software/storm-stack/releases/tag/core%400.39.1) (2025-09-06)
+
+### Bug Fixes
+
+- **core:** Resolve typing issues as a result of `@babel/core` updates
+  ([3f6e127d](https://github.com/storm-software/storm-stack/commit/3f6e127d))
+
 ## [0.39.0](https://github.com/storm-software/storm-stack/releases/tag/core%400.39.0) (2025-09-05)
 
 ### Features

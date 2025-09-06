@@ -2,6 +2,17 @@
 
 # Changelog for Storm Stack - Plugin React
 
+## [0.4.1](https://github.com/storm-software/storm-stack/releases/tag/plugin-react%400.4.1) (2025-09-06)
+
+### Miscellaneous
+
+- **monorepo:** Update workspace package links
+  ([68c5ee21](https://github.com/storm-software/storm-stack/commit/68c5ee21))
+
+### Updated Dependencies
+
+- Updated core to 0.39.1
+
 ## [0.4.0](https://github.com/storm-software/storm-stack/releases/tag/plugin-react%400.4.0) (2025-09-05)
 
 ### Features

@@ -1,6 +1,6 @@
 {
   "name": "@storm-stack/plugin-date",
-  "version": "0.5.2",
+  "version": "0.5.3",
   "type": "module",
   "description": "A package containing a Storm Stack plugin for injecting static .env configuration values to the code so that they're accessible at runtime.",
   "repository": {
@@ -171,7 +171,7 @@
   },
   "dependencies": {
     "@storm-software/config-tools": "catalog:",
-    "@storm-stack/core": "workspace:*",
+    "@storm-stack/core": "0.39.1",
     "@storm-stack/devkit": "workspace:*",
     "@stryke/capnp": "catalog:",
     "@stryke/env": "catalog:",

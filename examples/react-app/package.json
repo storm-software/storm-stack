@@ -18,9 +18,9 @@
     "vite": "catalog:"
   },
   "devDependencies": {
-    "@storm-stack/core": "workspace:*",
+    "@storm-stack/core": "0.39.1",
     "@storm-stack/nx": "workspace:*",
-    "@storm-stack/plugin-react": "workspace:*",
+    "@storm-stack/plugin-react": "0.4.1",
     "@types/react": "catalog:",
     "@types/react-dom": "catalog:"
   }

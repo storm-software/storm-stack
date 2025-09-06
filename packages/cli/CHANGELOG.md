@@ -2,6 +2,26 @@
 
 # Changelog for Storm Stack - CLI
 
+## [0.22.2](https://github.com/storm-software/storm-stack/releases/tag/cli%400.22.2) (2025-09-06)
+
+### Bug Fixes
+
+- **core:** Resolve typing issues as a result of `@babel/core` updates
+  ([3f6e127d](https://github.com/storm-software/storm-stack/commit/3f6e127d))
+
+### Miscellaneous
+
+- **monorepo:** Update workspace package links
+  ([68c5ee21](https://github.com/storm-software/storm-stack/commit/68c5ee21))
+
+### Updated Dependencies
+
+- Updated plugin-log-storage to 0.25.3
+- Updated plugin-log-sentry to 0.28.3
+- Updated plugin-storage-fs to 0.14.3
+- Updated plugin-cli to 0.32.3
+- Updated core to 0.39.1
+
 ## [0.22.1](https://github.com/storm-software/storm-stack/releases/tag/cli%400.22.1) (2025-09-05)
 
 ### Bug Fixes
