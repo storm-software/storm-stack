@@ -147,7 +147,7 @@
     "@babel/helper-module-imports": "catalog:",
     "@storm-software/config": "catalog:",
     "@storm-software/config-tools": "catalog:",
-    "@storm-stack/core": "0.39.1",
+    "@storm-stack/core": "workspace:*",
     "@storm-stack/devkit": "workspace:*",
     "@stryke/json": "catalog:",
     "@stryke/path": "catalog:",

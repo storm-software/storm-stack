@@ -165,7 +165,7 @@
     "@babel/core": "catalog:",
     "@babel/types": "catalog:",
     "@storm-software/config-tools": "catalog:",
-    "@storm-stack/core": "0.39.1",
+    "@storm-stack/core": "workspace:*",
     "@storm-stack/devkit": "workspace:*",
     "@stryke/capnp": "catalog:",
     "@stryke/env": "catalog:",

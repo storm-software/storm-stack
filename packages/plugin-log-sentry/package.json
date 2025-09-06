@@ -94,7 +94,7 @@
     }
   },
   "dependencies": {
-    "@storm-stack/core": "0.39.1",
+    "@storm-stack/core": "workspace:*",
     "@storm-stack/devkit": "workspace:*",
     "@stryke/json": "catalog:"
   },
