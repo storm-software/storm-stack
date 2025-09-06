@@ -2,6 +2,15 @@
 
 # Changelog for Storm Stack - Core
 
+## [0.39.2](https://github.com/storm-software/storm-stack/releases/tag/core%400.39.2) (2025-09-06)
+
+### Miscellaneous
+
+- **core:** Update the base Storm-Ops packages
+  ([b6d07674](https://github.com/storm-software/storm-stack/commit/b6d07674))
+- **core:** Use `addImport` in babel plugins
+  ([980835e9](https://github.com/storm-software/storm-stack/commit/980835e9))
+
 ## [0.39.1](https://github.com/storm-software/storm-stack/releases/tag/core%400.39.1) (2025-09-06)
 
 ### Bug Fixes

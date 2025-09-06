@@ -2,6 +2,18 @@
 
 # Changelog for Storm Stack - Plugin CLI
 
+## [0.32.4](https://github.com/storm-software/storm-stack/releases/tag/plugin-cli%400.32.4) (2025-09-06)
+
+### Miscellaneous
+
+- **monorepo:** Update workspace package links
+  ([3ca09be7](https://github.com/storm-software/storm-stack/commit/3ca09be7))
+
+### Updated Dependencies
+
+- Updated devkit to 0.14.3
+- Updated core to 0.39.2
+
 ## [0.32.3](https://github.com/storm-software/storm-stack/releases/tag/plugin-cli%400.32.3) (2025-09-06)
 
 ### Miscellaneous

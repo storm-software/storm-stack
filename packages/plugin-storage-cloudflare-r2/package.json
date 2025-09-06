@@ -1,6 +1,6 @@
 {
   "name": "@storm-stack/plugin-storage-cloudflare-r2",
-  "version": "0.12.3",
+  "version": "0.12.4",
   "type": "module",
   "description": "A package containing a Storm Stack storage adapter to write to Cloudflare R2",
   "repository": {
@@ -78,14 +78,14 @@
   "dependencies": {
     "@ltd/j-toml": "catalog:",
     "@storm-software/config-tools": "catalog:",
-    "@storm-stack/core": "workspace:*",
-    "@storm-stack/devkit": "workspace:*",
+    "@storm-stack/core": "0.39.2",
+    "@storm-stack/devkit": "0.14.3",
     "@stryke/fs": "catalog:",
     "@stryke/path": "catalog:",
     "unstorage": "catalog:"
   },
   "devDependencies": {
-    "@storm-stack/nx": "workspace:*",
+    "@storm-stack/nx": "0.19.3",
     "@types/node": "catalog:",
     "tsup": "catalog:"
   },

@@ -2,6 +2,21 @@
 
 # Changelog for Storm Stack - Plugin Error
 
+## [0.6.4](https://github.com/storm-software/storm-stack/releases/tag/plugin-error%400.6.4) (2025-09-06)
+
+### Miscellaneous
+
+- **monorepo:** Update workspace package links
+  ([3ca09be7](https://github.com/storm-software/storm-stack/commit/3ca09be7))
+- **core:** Use `addImport` in babel plugins
+  ([980835e9](https://github.com/storm-software/storm-stack/commit/980835e9))
+
+### Updated Dependencies
+
+- Updated devkit to 0.14.3
+- Updated core to 0.39.2
+- Updated nx to 0.19.3
+
 ## [0.6.3](https://github.com/storm-software/storm-stack/releases/tag/plugin-error%400.6.3) (2025-09-06)
 
 ### Bug Fixes
