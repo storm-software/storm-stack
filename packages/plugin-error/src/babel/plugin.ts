@@ -20,7 +20,7 @@ import { File, NodePath } from "@babel/core";
 import generate from "@babel/generator";
 import * as t from "@babel/types";
 import { LogLevelLabel } from "@storm-software/config-tools/types";
-import { getImport, listImports } from "@storm-stack/core/lib/babel/module";
+import { addImport } from "@storm-stack/core/lib/babel/module";
 import {
   BabelPluginOptions,
   BabelPluginPass,
@@ -82,12 +82,6 @@ export default declareBabel<
   ErrorPluginContext,
   ErrorBabelPluginState
 >("error", ({ log }) => {
-  function requiresImport(
-    pass: BabelPluginPass<BabelPluginOptions, ErrorBabelPluginState>
-  ): boolean {
-    return !listImports(pass.file.ast).includes("storm:error");
-  }
-
   function extractErrorMessage(
     node: t.Expression | t.SpreadElement | t.ArgumentPlaceholder
   ): ExtractedErrorMessage | undefined {
@@ -197,19 +191,14 @@ export default declareBabel<
                 type: errorType
               });
 
-              if (requiresImport(pass)) {
-                log(
-                  LogLevelLabel.TRACE,
-                  `Adding import for storm:error module.`
-                );
-
-                (
-                  path.scope.getProgramParent().path as NodePath<t.Program>
-                ).unshiftContainer(
-                  "body",
-                  getImport("storm:error", "StormError")
-                );
-              }
+              log(LogLevelLabel.TRACE, `Adding import for storm:error module.`);
+              addImport(
+                path.scope.getProgramParent().path as NodePath<t.Program>,
+                {
+                  module: "storm:error",
+                  imported: "StormError"
+                }
+              );
             }
           }
         }
@@ -241,34 +230,25 @@ export default declareBabel<
                 type: errorType
               });
 
-              if (requiresImport(pass)) {
-                log(
-                  LogLevelLabel.TRACE,
-                  `Adding import for storm:error module.`
-                );
-
-                (
-                  path.scope.getProgramParent().path as NodePath<t.Program>
-                ).unshiftContainer(
-                  "body",
-                  getImport("storm:error", "StormError")
-                );
-              }
+              log(LogLevelLabel.TRACE, `Adding import for storm:error module.`);
+              addImport(
+                path.scope.getProgramParent().path as NodePath<t.Program>,
+                {
+                  module: "storm:error",
+                  imported: "StormError"
+                }
+              );
             }
           }
         }
       },
-      ReferencedIdentifier(
-        path: NodePath<t.Identifier>,
-        pass: BabelPluginPass<BabelPluginOptions, ErrorBabelPluginState>
-      ) {
-        if (
-          path.isReferencedIdentifier({ name: "StormError" }) &&
-          !requiresImport(pass)
-        ) {
-          (
-            path.scope.getProgramParent().path as NodePath<t.Program>
-          ).unshiftContainer("body", getImport("storm:error", "StormError"));
+      ReferencedIdentifier(path: NodePath<t.Identifier>) {
+        if (path.isReferencedIdentifier({ name: "StormError" })) {
+          log(LogLevelLabel.TRACE, `Adding import for storm:error module.`);
+          addImport(path.scope.getProgramParent().path as NodePath<t.Program>, {
+            module: "storm:error",
+            imported: "StormError"
+          });
         }
       }
     },

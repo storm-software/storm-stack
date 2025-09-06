@@ -142,7 +142,7 @@ export type BabelInputOptions = Omit<
  * It captures the details of an import statement, including the local name used in the module, the source module from which it is imported, and the original name of the export in the source module.
  */
 export interface ImportSpecifier {
-  name: string;
+  name?: string;
   module: string;
   imported: string;
 }

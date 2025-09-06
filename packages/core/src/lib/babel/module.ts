@@ -196,7 +196,7 @@ export function addImportsToProgram(
       t.importDeclaration(
         [
           t.importSpecifier(
-            t.identifier(specifier.name),
+            t.identifier(specifier.name || specifier.imported),
             t.identifier(specifier.imported)
           )
         ],
