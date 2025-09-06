@@ -2392,7 +2392,7 @@ declare module "storm:config" {
      * The version of the application.
      *
      * @title APP VERSION
-     * @defaultValue 0.22.0
+     * @defaultValue 0.22.1
      * @readonly
      */
     readonly APP_VERSION: string;
@@ -2457,7 +2457,7 @@ declare module "storm:config" {
      * The unique identifier for the build.
      *
      * @title BUILD Identifier
-     * @defaultValue 48f54257-f75d-494e-88c1-786eb1f5017e
+     * @defaultValue 87ac49a7-be4b-48b8-9bb0-09e6b3a3ec27
      * @readonly
      */
     readonly BUILD_ID: string;
@@ -2465,7 +2465,7 @@ declare module "storm:config" {
      * The timestamp the build was ran at.
      *
      * @title BUILD TIMESTAMP
-     * @defaultValue 2025-09-05T19:33:39.634Z
+     * @defaultValue 2025-09-06T11:40:38.902Z
      * @readonly
      */
     readonly BUILD_TIMESTAMP: string;
@@ -2698,7 +2698,7 @@ declare module "storm:config" {
      * The unique identifier for the release.
      *
      * @title RELEASE Identifier
-     * @defaultValue f54257f7-5d49-4ec8-8178-6eb1f5017ea7
+     * @defaultValue ac49a7be-4b48-489b-b009-e6b3a3ec2736
      * @readonly
      */
     readonly RELEASE_ID: string;
@@ -2706,7 +2706,7 @@ declare module "storm:config" {
      * The tag for the release. This is generally in the format of "\<APP_NAME\>\@\<APP_VERSION\>".
      *
      * @title RELEASE TAG
-     * @defaultValue storm-stack@0.22.0
+     * @defaultValue storm-stack@0.22.1
      * @readonly
      */
     readonly RELEASE_TAG: string;

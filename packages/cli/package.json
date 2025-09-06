@@ -32,11 +32,11 @@
     "unstorage": "catalog:"
   },
   "devDependencies": {
-    "@storm-stack/nx": "0.19.2",
-    "@storm-stack/plugin-cli": "0.32.2",
-    "@storm-stack/plugin-log-sentry": "0.28.2",
-    "@storm-stack/plugin-log-storage": "0.25.2",
-    "@storm-stack/plugin-storage-fs": "0.14.2",
+    "@storm-stack/nx": "workspace:*",
+    "@storm-stack/plugin-cli": "workspace:*",
+    "@storm-stack/plugin-log-sentry": "workspace:*",
+    "@storm-stack/plugin-log-storage": "workspace:*",
+    "@storm-stack/plugin-storage-fs": "workspace:*",
     "@storm-stack/types": "workspace:*",
     "@types/node": "catalog:"
   },
