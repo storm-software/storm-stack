@@ -51,6 +51,8 @@
           "pnpm copyfiles --up=4 \"./packages/core/src/new/files/**/*\" dist/packages/core/files",
           "pnpm copyfiles --up=3 \"./packages/core/dist/**/*\" dist/packages/core/dist",
           "pnpm copyfiles --up=4 \"./packages/core/dist/deepkit/**/*\" dist/packages/core/deepkit",
+          "pnpm copyfiles --up=5 \"./packages/types/dist/cjs/src/**/*.js\" \"./packages/types/dist/cjs/src/**/*.ts\" dist/packages/core/runtime-types/cjs",
+          "pnpm copyfiles --up=5 \"./packages/types/dist/esm/src/**/*.js\" \"./packages/types/dist/esm/src/**/*.ts\" dist/packages/core/runtime-types/esm",
           "pnpm copyfiles --up=4 \"./packages/core/dist/schemas/**/*\" dist/packages/core/schemas"
         ]
       }
@@ -59,5 +61,6 @@
       "executor": "@storm-software/workspace-tools:npm-publish"
     }
   },
-  "tags": ["platform:node"]
+  "tags": ["platform:node"],
+  "implicitDependencies": ["types"]
 }
