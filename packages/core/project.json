@@ -20,7 +20,7 @@
     "generate-runtime-types": {
       "cache": true,
       "inputs": ["{workspaceRoot}/packages/types/dist"],
-      "outputs": ["{projectRoot}/runtime-types"],
+      "outputs": ["{projectRoot}/dist/runtime-types"],
       "executor": "nx:run-commands",
       "dependsOn": ["clean", "^build"],
       "options": {
