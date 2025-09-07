@@ -2034,6 +2034,21 @@ declare module "storm:config" {
    */
   export interface StormConfigBase extends StormConfigInterface {
     /**
+     * ARGV
+     *
+     * @title ARGV
+     * @domain cli
+     */
+    ARGV?: Array<string>;
+    /**
+     * The inverse of the no-banner option.
+     *
+     * @title BANNER
+     * @domain cli
+     * @defaultValue true
+     */
+    BANNER?: boolean;
+    /**
      * The Storm Stack application's cached data directory.
      *
      * @title Cache Directory
@@ -2047,6 +2062,13 @@ declare module "storm:config" {
      * @defaultValue false
      */
     CI: boolean;
+    /**
+     * The configuration file to append the completion script to.
+     *
+     * @title CONFIG
+     * @domain cli
+     */
+    CONFIG?: string | true;
     /**
      * The Storm Stack application's configuration data directory.
      *
@@ -2133,12 +2155,28 @@ declare module "storm:config" {
      */
     FORCE_HYPERLINK: boolean | number;
     /**
+     * Show help information.
+     *
+     * @title HELP
+     * @domain cli
+     * @defaultValue false
+     */
+    HELP?: boolean;
+    /**
      * Indicates if error data should be included.
      *
      * @title INCLUDE ERROR DATA
      * @defaultValue false
      */
     INCLUDE_ERROR_DATA: boolean;
+    /**
+     * The inverse of the no-interactive option.
+     *
+     * @title INTERACTIVE
+     * @domain cli
+     * @defaultValue true
+     */
+    INTERACTIVE?: boolean;
     /**
      * The Storm Stack application's logging directory.
      *
@@ -2168,12 +2206,46 @@ declare module "storm:config" {
      */
     MODE: "development" | "staging" | "production";
     /**
+     * The name of the library.
+     *
+     * @title NAME
+     * @domain cli
+     * @defaultValue storm-stack
+     */
+    NAME?: string;
+    /**
+     * Hide the banner displayed while running the CLI application (will be set to true if running in a CI pipeline).
+     *
+     * @title NO BANNER
+     * @domain cli
+     * @defaultValue false
+     */
+    NO_BANNER?: boolean;
+    /**
      * An indicator that specifies the current runtime is a no color environment.
      *
      * @title NO COLOR
      * @defaultValue false
      */
     NO_COLOR: boolean;
+    /**
+     * Disable interactive mode (will be set to true if running in a CI pipeline).
+     *
+     * @title NO INTERACTIVE
+     * @alias NO_INTERACTIVE
+     * @domain cli
+     * @defaultValue false
+     */
+    NO_INTERACT?: boolean;
+    /**
+     * Disable interactive mode (will be set to true if running in a CI pipeline).
+     *
+     * @title NO INTERACTIVE
+     * @alias NO_INTERACT
+     * @domain cli
+     * @defaultValue false
+     */
+    NO_INTERACTIVE?: boolean;
     /**
      * The mode in which the application is running.
      *
@@ -2208,12 +2280,42 @@ declare module "storm:config" {
     */
     OUTPUT_MODE?: "memory" | "fs";
     /**
+     * The name of the library.
+     *
+     * @title PACKAGE NAME
+     * @domain cli
+     */
+    PACKAGE_NAME?: string;
+    /**
      * The platform for which the application was built.
      *
      * @title PLATFORM
      * @defaultValue node
      */
     PLATFORM: "node" | "neutral" | "browser";
+    /**
+     * The root directory of the Storm Stack project.
+     *
+     * @title ROOT
+     * @alias ROOT
+     * @domain cli
+     */
+    PROJECT?: string;
+    /**
+     * The root directory of the Storm Stack project.
+     *
+     * @title ROOT
+     * @alias PROJECT
+     * @domain cli
+     */
+    ROOT?: string;
+    /**
+     * The path to write the completion script to.
+     *
+     * @title SCRIPT
+     * @domain cli
+     */
+    SCRIPT?: string | true;
     /**
      * The DSN for Sentry
      *
@@ -2241,6 +2343,22 @@ declare module "storm:config" {
      * @defaultValue false
      */
     TEST: boolean;
+    /**
+     * Enable verbose output.
+     *
+     * @title VERBOSE
+     * @domain cli
+     * @defaultValue false
+     */
+    VERBOSE?: boolean;
+    /**
+     * Show the version of the application.
+     *
+     * @title VERSION
+     * @domain cli
+     * @defaultValue false
+     */
+    VERSION?: boolean;
     /**
      * The appcircle build ID. This value is set by certain CI/CD systems.
      *
@@ -2274,7 +2392,7 @@ declare module "storm:config" {
      * The version of the application.
      *
      * @title APP VERSION
-     * @defaultValue 0.23.0
+     * @defaultValue 0.24.0
      * @readonly
      */
     readonly APP_VERSION: string;
@@ -2339,7 +2457,7 @@ declare module "storm:config" {
      * The unique identifier for the build.
      *
      * @title BUILD Identifier
-     * @defaultValue 99c24970-29e4-43f4-90b4-0d66deaee458
+     * @defaultValue e180dbbe-abad-47db-a0d6-ee194f15848f
      * @readonly
      */
     readonly BUILD_ID: string;
@@ -2347,7 +2465,7 @@ declare module "storm:config" {
      * The timestamp the build was ran at.
      *
      * @title BUILD TIMESTAMP
-     * @defaultValue 2025-09-07T04:46:30.025Z
+     * @defaultValue 2025-09-07T06:07:38.308Z
      * @readonly
      */
     readonly BUILD_TIMESTAMP: string;
@@ -2580,7 +2698,7 @@ declare module "storm:config" {
      * The unique identifier for the release.
      *
      * @title RELEASE Identifier
-     * @defaultValue c2497029-e463-4490-b40d-66deaee458b3
+     * @defaultValue 80dbbeab-ad57-4b60-96ee-194f15848f88
      * @readonly
      */
     readonly RELEASE_ID: string;
@@ -2588,7 +2706,7 @@ declare module "storm:config" {
      * The tag for the release. This is generally in the format of "\<APP_NAME\>\@\<APP_VERSION\>".
      *
      * @title RELEASE TAG
-     * @defaultValue storm-stack@0.23.0
+     * @defaultValue storm-stack@0.24.0
      * @readonly
      */
     readonly RELEASE_TAG: string;

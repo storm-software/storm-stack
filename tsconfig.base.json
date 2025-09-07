@@ -12,7 +12,9 @@
       "@storm-stack/cli/*": ["packages/cli/src/*"],
       "@storm-stack/core": ["packages/core/src/index.ts"],
       "@storm-stack/core/*": ["packages/core/src/*"],
-      "@storm-stack/core/runtime-types/*": ["packages/core/runtime-types/*"],
+      "@storm-stack/core/runtime-types/*": [
+        "packages/core/dist/runtime-types/*"
+      ],
       "@storm-stack/devkit": ["packages/devkit/src/index.ts"],
       "@storm-stack/devkit/*": ["packages/devkit/src/*"],
       "@storm-stack/examples-cli-app": ["examples/cli-app/src/index.ts"],

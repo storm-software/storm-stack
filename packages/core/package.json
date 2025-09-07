@@ -126,58 +126,58 @@
     },
     "./runtime-types/*": {
       "import": {
-        "types": "./runtime-types/esm/shared/*.d.ts",
-        "default": "./runtime-types/esm/shared/*.js"
+        "types": "./dist/runtime-types/esm/shared/*.d.ts",
+        "default": "./dist/runtime-types/esm/shared/*.js"
       },
       "require": {
-        "types": "./runtime-types/cjs/shared/*.d.ts",
-        "default": "./runtime-types/cjs/shared/*.js"
+        "types": "./dist/runtime-types/cjs/shared/*.d.ts",
+        "default": "./dist/runtime-types/cjs/shared/*.js"
       },
       "default": {
-        "types": "./runtime-types/esm/shared/*.d.ts",
-        "default": "./runtime-types/esm/shared/*.js"
+        "types": "./dist/runtime-types/esm/shared/*.d.ts",
+        "default": "./dist/runtime-types/esm/shared/*.js"
       }
     },
     "./runtime-types/shared/*": {
       "import": {
-        "types": "./runtime-types/esm/shared/*.d.ts",
-        "default": "./runtime-types/esm/shared/*.js"
+        "types": "./dist/runtime-types/esm/shared/*.d.ts",
+        "default": "./dist/runtime-types/esm/shared/*.js"
       },
       "require": {
-        "types": "./runtime-types/cjs/shared/*.d.ts",
-        "default": "./runtime-types/cjs/shared/*.js"
+        "types": "./dist/runtime-types/cjs/shared/*.d.ts",
+        "default": "./dist/runtime-types/cjs/shared/*.js"
       },
       "default": {
-        "types": "./runtime-types/esm/shared/*.d.ts",
-        "default": "./runtime-types/esm/shared/*.js"
+        "types": "./dist/runtime-types/esm/shared/*.d.ts",
+        "default": "./dist/runtime-types/esm/shared/*.js"
       }
     },
     "./runtime-types/browser/*": {
       "import": {
-        "types": "./runtime-types/esm/browser/*.d.ts",
-        "default": "./runtime-types/esm/browser/*.js"
+        "types": "./dist/runtime-types/esm/browser/*.d.ts",
+        "default": "./dist/runtime-types/esm/browser/*.js"
       },
       "require": {
-        "types": "./runtime-types/cjs/browser/*.d.ts",
-        "default": "./runtime-types/cjs/browser/*.js"
+        "types": "./dist/runtime-types/cjs/browser/*.d.ts",
+        "default": "./dist/runtime-types/cjs/browser/*.js"
       },
       "default": {
-        "types": "./runtime-types/esm/browser/*.d.ts",
-        "default": "./runtime-types/esm/browser/*.js"
+        "types": "./dist/runtime-types/esm/browser/*.d.ts",
+        "default": "./dist/runtime-types/esm/browser/*.js"
       }
     },
     "./runtime-types/node/*": {
       "import": {
-        "types": "./runtime-types/esm/node/*.d.ts",
-        "default": "./runtime-types/esm/node/*.js"
+        "types": "./dist/runtime-types/esm/node/*.d.ts",
+        "default": "./dist/runtime-types/esm/node/*.js"
       },
       "require": {
-        "types": "./runtime-types/cjs/node/*.d.ts",
-        "default": "./runtime-types/cjs/node/*.js"
+        "types": "./dist/runtime-types/cjs/node/*.d.ts",
+        "default": "./dist/runtime-types/cjs/node/*.js"
       },
       "default": {
-        "types": "./runtime-types/esm/node/*.d.ts",
-        "default": "./runtime-types/esm/node/*.js"
+        "types": "./dist/runtime-types/esm/node/*.d.ts",
+        "default": "./dist/runtime-types/esm/node/*.js"
       }
     },
     "./base": {
