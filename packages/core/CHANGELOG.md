@@ -2,6 +2,18 @@
 
 # Changelog for Storm Stack - Core
 
+## [0.41.1](https://github.com/storm-software/storm-stack/releases/tag/core%400.41.1) (2025-09-07)
+
+### Bug Fixes
+
+- **core:** Resolve issue with missing `runtime-types`
+  ([c09d9ef8](https://github.com/storm-software/storm-stack/commit/c09d9ef8))
+
+### Miscellaneous
+
+- **core:** Improved cache input specifications
+  ([e3ecfd08](https://github.com/storm-software/storm-stack/commit/e3ecfd08))
+
 ## [0.41.0](https://github.com/storm-software/storm-stack/releases/tag/core%400.41.0) (2025-09-07)
 
 ### Features

@@ -2,6 +2,29 @@
 
 # Changelog for Storm Stack - CLI
 
+## [0.24.1](https://github.com/storm-software/storm-stack/releases/tag/cli%400.24.1) (2025-09-07)
+
+### Bug Fixes
+
+- **core:** Resolve issue with missing `runtime-types`
+  ([c09d9ef8](https://github.com/storm-software/storm-stack/commit/c09d9ef8))
+
+### Miscellaneous
+
+- **core:** Improved cache input specifications
+  ([e3ecfd08](https://github.com/storm-software/storm-stack/commit/e3ecfd08))
+- **monorepo:** Update workspace package links
+  ([767bffe9](https://github.com/storm-software/storm-stack/commit/767bffe9))
+
+### Updated Dependencies
+
+- Updated plugin-log-storage to 0.26.1
+- Updated plugin-log-sentry to 0.29.1
+- Updated plugin-storage-fs to 0.15.1
+- Updated plugin-cli to 0.33.1
+- Updated core to 0.41.1
+- Updated nx to 0.19.5
+
 ## [0.24.0](https://github.com/storm-software/storm-stack/releases/tag/cli%400.24.0) (2025-09-07)
 
 ### Features

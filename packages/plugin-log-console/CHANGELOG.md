@@ -2,6 +2,19 @@
 
 # Changelog for Storm Stack - Plugin Log Console
 
+## [0.23.1](https://github.com/storm-software/storm-stack/releases/tag/plugin-log-console%400.23.1) (2025-09-07)
+
+### Miscellaneous
+
+- **monorepo:** Update workspace package links
+  ([767bffe9](https://github.com/storm-software/storm-stack/commit/767bffe9))
+
+### Updated Dependencies
+
+- Updated devkit to 0.15.1
+- Updated core to 0.41.1
+- Updated nx to 0.19.5
+
 ## [0.23.0](https://github.com/storm-software/storm-stack/releases/tag/plugin-log-console%400.23.0) (2025-09-07)
 
 ### Features
