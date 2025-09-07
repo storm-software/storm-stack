@@ -44,7 +44,7 @@ import {
   StormDateInterface,
   DateFormats,
   TimeUnit
-} from "@storm-stack/types/shared/date";
+} from "@storm-stack/core/runtime-types/shared/date";
 
 defaultDayjs.extend(customParseFormatPlugin);
 defaultDayjs.extend(localizedFormatPlugin);

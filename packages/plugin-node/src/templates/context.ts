@@ -29,11 +29,11 @@ export function ContextModule(_context: Context) {
 
 ${getFileHeader()}
 
-import { StormNodeEnv } from "@storm-stack/types/node/env";
-import { HandlerFunction } from "@storm-stack/types/node/app";
-import { StormStorageInterface } from "@storm-stack/types/shared/storage";
-import { StormLogInterface } from "@storm-stack/types/shared/log";
-import { StormContextInterface } from "@storm-stack/types/shared/context";
+import { StormNodeEnv } from "@storm-stack/core/runtime-types/node/env";
+import { HandlerFunction } from "@storm-stack/core/runtime-types/node/app";
+import { StormStorageInterface } from "@storm-stack/core/runtime-types/shared/storage";
+import { StormLogInterface } from "@storm-stack/core/runtime-types/shared/log";
+import { StormContextInterface } from "@storm-stack/core/runtime-types/shared/context";
 import { AsyncLocalStorage } from "node:async_hooks";
 import type {
   UseContext,

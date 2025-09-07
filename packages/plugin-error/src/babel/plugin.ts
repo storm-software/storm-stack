@@ -21,13 +21,13 @@ import generate from "@babel/generator";
 import * as t from "@babel/types";
 import { LogLevelLabel } from "@storm-software/config-tools/types";
 import { addImport } from "@storm-stack/core/lib/babel/module";
+import { ErrorType } from "@storm-stack/core/runtime-types/shared/error";
 import {
   BabelPluginOptions,
   BabelPluginPass,
   BabelPluginState
 } from "@storm-stack/core/types/babel";
 import { declareBabel } from "@storm-stack/devkit/babel/declare-babel";
-import { ErrorType } from "@storm-stack/types/shared/error";
 import { ErrorPluginContext } from "../types";
 
 const ERROR_CLASSES = [

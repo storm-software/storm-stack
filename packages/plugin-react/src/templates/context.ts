@@ -29,7 +29,7 @@ export function ContextModule(_context: ReactPluginContext) {
 
 ${getFileHeader()}
 
-import { StormContextInterface } from "@storm-stack/types/shared/context";
+import { StormContextInterface } from "@storm-stack/core/runtime-types/shared/context";
 import { StormConfig, config } from "storm:config";
 import * as env from "storm:env";
 import { createStorage } from "storm:storage";

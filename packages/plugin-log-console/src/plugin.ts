@@ -32,7 +32,7 @@ export default class LogConsolePlugin<
   protected override writeAdapter(context: TContext) {
     return `${getFileHeader()}
 
-import { LogLevel, LogRecord, LogAdapter } from "@storm-stack/types/shared/log";
+import { LogLevel, LogRecord, LogAdapter } from "@storm-stack/core/runtime-types/shared/log";
 
 /**
  * The severity level abbreviations.

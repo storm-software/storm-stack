@@ -29,7 +29,7 @@ export function ResponseModule(_context: Context) {
 
 ${getFileHeader()}
 
-import { StormResponseInterface } from "@storm-stack/types/browser/response";
+import { StormResponseInterface } from "@storm-stack/core/runtime-types/browser/response";
 import { isStormError, StormError } from "storm:error";
 import { useStorm } from "storm:context";
 

@@ -40,7 +40,7 @@ import {
   StormDateInterface,
   DateFormats,
   TimeUnit
-} from "@storm-stack/types/shared/date";
+} from "@storm-stack/core/runtime-types/shared/date";
 
 type Moment = defaultMoment.Moment;
 

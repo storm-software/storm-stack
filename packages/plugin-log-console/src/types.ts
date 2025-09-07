@@ -16,12 +16,12 @@
 
  ------------------------------------------------------------------- */
 
+import type { LogRecord } from "@storm-stack/core/runtime-types/shared/log";
 import {
   LogPluginContext,
   LogPluginOptions,
   LogPluginResolvedOptions
 } from "@storm-stack/devkit/types/plugins";
-import type { LogRecord } from "@storm-stack/types/shared/log";
 
 /**
  * A console formatter is a function that accepts a log record and returns an array of arguments to pass to {@link console.log}.

@@ -16,13 +16,13 @@
 
  ------------------------------------------------------------------- */
 
+import { LogLevel } from "@storm-stack/core/runtime-types/shared/log";
 import {
   ResolvedEntryTypeDefinition,
   ResolvedOptions
 } from "@storm-stack/core/types/build";
 import { Context, ReflectionRecord } from "@storm-stack/core/types/context";
 import { PluginBaseOptions } from "@storm-stack/core/types/plugin";
-import { LogLevel } from "@storm-stack/types/shared/log";
 
 export interface LogPluginOptions extends PluginBaseOptions {
   logLevel?: LogLevel;

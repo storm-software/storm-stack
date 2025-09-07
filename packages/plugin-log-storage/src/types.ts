@@ -16,16 +16,16 @@
 
  ------------------------------------------------------------------- */
 
+import type {
+  FormattedValues,
+  LogLevel,
+  LogRecord
+} from "@storm-stack/core/runtime-types/shared/log";
 import {
   LogPluginContext,
   LogPluginOptions,
   LogPluginResolvedOptions
 } from "@storm-stack/devkit/types/plugins";
-import type {
-  FormattedValues,
-  LogLevel,
-  LogRecord
-} from "@storm-stack/types/shared/log";
 
 /**
  * A text formatter is a function that accepts a log record and returns a string.

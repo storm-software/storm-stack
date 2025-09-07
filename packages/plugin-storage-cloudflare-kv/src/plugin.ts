@@ -63,7 +63,7 @@ export default class StorageCloudflareKVPlugin<
     if (this.getOptions(context).binding) {
       return `${getFileHeader()}
 
-import type { StorageAdapter } from "@storm-stack/types/shared/storage";
+import type { StorageAdapter } from "@storm-stack/core/runtime-types/shared/storage";
 import cloudflareKVBindingDriver from "unstorage/drivers/cloudflare-kv-binding";
 import { env } from "cloudflare:workers";
 
@@ -93,7 +93,7 @@ export default createAdapter;
     } else {
       return `${getFileHeader()}
 
-import type { StorageAdapter } from "@storm-stack/types/shared/storage";
+import type { StorageAdapter } from "@storm-stack/core/runtime-types/shared/storage";
 import cloudflareKVHTTPDriver from "unstorage/drivers/cloudflare-kv-http";
 import { StormError } from "storm:error";
 

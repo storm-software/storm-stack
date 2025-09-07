@@ -16,11 +16,11 @@
 
  ------------------------------------------------------------------- */
 
+import { StormEnvPathType } from "@storm-stack/core/runtime-types/node/env";
 import {
   StoragePluginContext,
   StoragePluginOptions
 } from "@storm-stack/devkit/types/plugins";
-import { StormEnvPathType } from "@storm-stack/types/node/env";
 import { FSStorageOptions } from "unstorage/drivers/fs-lite";
 
 export type StorageFileSystemPluginOptions = FSStorageOptions &

@@ -44,7 +44,7 @@ export default class LogStoragePlugin<
   protected override writeAdapter(context: TContext) {
     return `${getFileHeader()}
 
-import { LogRecord, LogAdapter } from "@storm-stack/types/shared/log";
+import { LogRecord, LogAdapter } from "@storm-stack/core/runtime-types/shared/log";
 import { StorageValue } from "unstorage";
 import {
   TextFormatter,
@@ -54,7 +54,7 @@ import {
   FormattedValues,
   LogLevel,
   LogRecord
-} from "@storm-stack/types/shared/log";
+} from "@storm-stack/core/runtime-types/shared/log";
 import util from "node:util";
 
 /**

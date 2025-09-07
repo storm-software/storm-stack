@@ -23,13 +23,13 @@ import type {
 import type { OTLPExporterNodeConfigBase } from "@opentelemetry/otlp-exporter-base";
 import { OTLPGRPCExporterConfigNode } from "@opentelemetry/otlp-grpc-exporter-base/build/src/types";
 import type { LogRecordProcessor } from "@opentelemetry/sdk-logs";
+import { StormConfigInterface } from "@storm-stack/core/runtime-types/shared/config";
 import {
   LogPluginContext,
   LogPluginOptions,
   LogPluginResolvedOptions
 } from "@storm-stack/devkit/types/plugins";
 import { ConfigPluginResolvedOptions } from "@storm-stack/plugin-config/types";
-import { StormConfigInterface } from "@storm-stack/types/shared/config";
 
 /**
  * The OpenTelemetry logger provider.

@@ -36,7 +36,7 @@ export function RequestModule(_context: Context) {
 ${getFileHeader()}
 
 import { uniqueId } from "storm:id";
-import { StormRequestInterface } from "@storm-stack/types/browser/request";
+import { StormRequestInterface } from "@storm-stack/core/runtime-types/browser/request";
 
 /**
  * A base request class used by the Storm Stack runtime.

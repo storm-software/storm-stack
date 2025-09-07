@@ -126,16 +126,16 @@
     },
     "./runtime-types/*": {
       "import": {
-        "types": "./runtime-types/esm/*.d.ts",
-        "default": "./runtime-types/esm/*.js"
+        "types": "./runtime-types/esm/shared/*.d.ts",
+        "default": "./runtime-types/esm/shared/*.js"
       },
       "require": {
-        "types": "./runtime-types/cjs/*.d.ts",
-        "default": "./runtime-types/cjs/*.js"
+        "types": "./runtime-types/cjs/shared/*.d.ts",
+        "default": "./runtime-types/cjs/shared/*.js"
       },
       "default": {
-        "types": "./runtime-types/esm/*.d.ts",
-        "default": "./runtime-types/esm/*.js"
+        "types": "./runtime-types/esm/shared/*.d.ts",
+        "default": "./runtime-types/esm/shared/*.js"
       }
     },
     "./runtime-types/shared/*": {

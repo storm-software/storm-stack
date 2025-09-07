@@ -99,7 +99,7 @@ ${getFileHeader()}
 import {
   StormNodeEnv,
   StormEnvPaths,
-} from "@storm-stack/types/node/env";
+} from "@storm-stack/core/runtime-types/node/env";
 import process from "node:process";
 import os from "node:os";
 import tty from "node:tty";

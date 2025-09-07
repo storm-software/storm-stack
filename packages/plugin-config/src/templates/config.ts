@@ -107,7 +107,7 @@ import {
   TypeProperty,
   TypePropertySignature
 } from "@storm-stack/core/deepkit/type";
-import { StormConfigInterface } from "@storm-stack/types/config";
+import { StormConfigInterface } from "@storm-stack/core/runtime-types/config";
 
 ${await ConfigTypeDefinition(context, reflection)}
 

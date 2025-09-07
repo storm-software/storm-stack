@@ -29,7 +29,7 @@ export function EventModule(_context: Context) {
 
 ${getFileHeader()}
 
-import { StormEventInterface } from "@storm-stack/types/node/event";
+import { StormEventInterface } from "@storm-stack/core/runtime-types/node/event";
 import { uniqueId } from "storm:id";
 import { useStorm } from "storm:context";
 

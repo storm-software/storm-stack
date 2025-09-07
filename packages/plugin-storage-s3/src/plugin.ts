@@ -36,7 +36,7 @@ export default class StorageS3Plugin<
   protected override writeStorage(context: TContext) {
     return `${getFileHeader()}
 
-import type { StorageAdapter } from "@storm-stack/types/shared/storage";
+import type { StorageAdapter } from "@storm-stack/core/runtime-types/shared/storage";
 import s3Driver from "unstorage/drivers/s3";
 import { StormError } from "storm:error";
 

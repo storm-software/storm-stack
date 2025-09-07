@@ -24,7 +24,7 @@ import type {
   PluginPass
 } from "@babel/core";
 import type * as t from "@babel/types";
-import { ErrorType } from "@storm-stack/types/shared/error";
+import { ErrorType } from "@storm-stack/core/runtime-types/shared/error";
 import { CompilerOptions } from "./compiler";
 import { LogFn } from "./config";
 import { Context } from "./context";

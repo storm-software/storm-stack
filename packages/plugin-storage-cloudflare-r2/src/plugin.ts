@@ -68,7 +68,7 @@ export default class StorageCloudflareR2Plugin<
     if (this.getOptions(context).binding) {
       return `${getFileHeader()}
 
-import type { StorageAdapter } from "@storm-stack/types/shared/storage";
+import type { StorageAdapter } from "@storm-stack/core/runtime-types/shared/storage";
 import cloudflareR2BindingDriver from "unstorage/drivers/cloudflare-r2-binding";
 import { env } from "cloudflare:workers";
 
@@ -98,7 +98,7 @@ export default createAdapter;
     } else {
       return `${getFileHeader()}
 
-import type { StorageAdapter } from "@storm-stack/types/shared/storage";
+import type { StorageAdapter } from "@storm-stack/core/runtime-types/shared/storage";
 import s3Driver from "unstorage/drivers/s3";
 import { StormError } from "storm:error";
 

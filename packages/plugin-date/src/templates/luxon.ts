@@ -40,7 +40,7 @@ import {
   StormDateInterface,
   DateFormats,
   TimeUnit
-} from "@storm-stack/types/shared/date";
+} from "@storm-stack/core/runtime-types/shared/date";
 
 export const formats: DateFormats = {
   dayOfMonth: "d",

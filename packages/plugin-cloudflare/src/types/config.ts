@@ -16,7 +16,7 @@
 
  ------------------------------------------------------------------- */
 
-import { StormConfigInterface } from "@storm-stack/types/shared/config";
+import { StormConfigInterface } from "@storm-stack/core/runtime-types/shared/config";
 
 /**
  * Configuration options for the Storm Cloudflare Worker plugin.

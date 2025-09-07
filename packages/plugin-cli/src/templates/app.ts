@@ -37,7 +37,7 @@ export function AppModule(context: CLIPluginContext) {
 
   return `${getFileHeader()}
 
-import type { HandlerFunction } from "@storm-stack/types/node/app";
+import type { HandlerFunction } from "@storm-stack/core/runtime-types/node/app";
 import { StormResponse } from "storm:response";
 import { StormRequest } from "storm:request";
 import { format, formats } from "storm:date";
