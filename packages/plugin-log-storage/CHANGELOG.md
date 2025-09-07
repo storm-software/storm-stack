@@ -2,6 +2,18 @@
 
 # Changelog for Storm Stack - Plugin Log Storage
 
+## [0.26.0](https://github.com/storm-software/storm-stack/releases/tag/plugin-log-storage%400.26.0) (2025-09-07)
+
+### Features
+
+- **core:** Added `runtime-types` imports to plugin packages
+  ([8fd39a86](https://github.com/storm-software/storm-stack/commit/8fd39a86))
+
+### Updated Dependencies
+
+- Updated devkit to 0.15.0
+- Updated core to 0.41.0
+
 ## [0.25.5](https://github.com/storm-software/storm-stack/releases/tag/plugin-log-storage%400.25.5) (2025-09-07)
 
 ### Miscellaneous

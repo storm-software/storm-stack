@@ -2,6 +2,17 @@
 
 # Changelog for Storm Stack - Plugin Cloudflare
 
+## [0.27.0](https://github.com/storm-software/storm-stack/releases/tag/plugin-cloudflare%400.27.0) (2025-09-07)
+
+### Features
+
+- **core:** Added `runtime-types` imports to plugin packages
+  ([8fd39a86](https://github.com/storm-software/storm-stack/commit/8fd39a86))
+
+### Updated Dependencies
+
+- Updated core to 0.41.0
+
 ## [0.26.2](https://github.com/storm-software/storm-stack/releases/tag/plugin-cloudflare%400.26.2) (2025-09-07)
 
 ### Miscellaneous

@@ -2,6 +2,17 @@
 
 # Changelog for Storm Stack - Devkit
 
+## [0.15.0](https://github.com/storm-software/storm-stack/releases/tag/devkit%400.15.0) (2025-09-07)
+
+### Features
+
+- **core:** Added `runtime-types` imports to plugin packages
+  ([8fd39a86](https://github.com/storm-software/storm-stack/commit/8fd39a86))
+
+### Updated Dependencies
+
+- Updated core to 0.41.0
+
 ## [0.14.4](https://github.com/storm-software/storm-stack/releases/tag/devkit%400.14.4) (2025-09-07)
 
 ### Miscellaneous

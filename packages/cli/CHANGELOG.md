@@ -2,6 +2,21 @@
 
 # Changelog for Storm Stack - CLI
 
+## [0.24.0](https://github.com/storm-software/storm-stack/releases/tag/cli%400.24.0) (2025-09-07)
+
+### Features
+
+- **core:** Added `runtime-types` imports to plugin packages
+  ([8fd39a86](https://github.com/storm-software/storm-stack/commit/8fd39a86))
+
+### Updated Dependencies
+
+- Updated plugin-log-storage to 0.26.0
+- Updated plugin-log-sentry to 0.29.0
+- Updated plugin-storage-fs to 0.15.0
+- Updated plugin-cli to 0.33.0
+- Updated core to 0.41.0
+
 ## [0.23.0](https://github.com/storm-software/storm-stack/releases/tag/cli%400.23.0) (2025-09-07)
 
 ### Features

@@ -2,6 +2,18 @@
 
 # Changelog for Storm Stack - Plugin Storage Fs
 
+## [0.15.0](https://github.com/storm-software/storm-stack/releases/tag/plugin-storage-fs%400.15.0) (2025-09-07)
+
+### Features
+
+- **core:** Added `runtime-types` imports to plugin packages
+  ([8fd39a86](https://github.com/storm-software/storm-stack/commit/8fd39a86))
+
+### Updated Dependencies
+
+- Updated devkit to 0.15.0
+- Updated core to 0.41.0
+
 ## [0.14.5](https://github.com/storm-software/storm-stack/releases/tag/plugin-storage-fs%400.14.5) (2025-09-07)
 
 ### Miscellaneous

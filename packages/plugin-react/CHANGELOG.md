@@ -2,6 +2,18 @@
 
 # Changelog for Storm Stack - Plugin React
 
+## [0.5.0](https://github.com/storm-software/storm-stack/releases/tag/plugin-react%400.5.0) (2025-09-07)
+
+### Features
+
+- **core:** Added `runtime-types` imports to plugin packages
+  ([8fd39a86](https://github.com/storm-software/storm-stack/commit/8fd39a86))
+
+### Updated Dependencies
+
+- Updated devkit to 0.15.0
+- Updated core to 0.41.0
+
 ## [0.4.3](https://github.com/storm-software/storm-stack/releases/tag/plugin-react%400.4.3) (2025-09-07)
 
 ### Miscellaneous

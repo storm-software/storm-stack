@@ -2,6 +2,13 @@
 
 # Changelog for Storm Stack - Core
 
+## [0.41.0](https://github.com/storm-software/storm-stack/releases/tag/core%400.41.0) (2025-09-07)
+
+### Features
+
+- **core:** Added `runtime-types` imports to plugin packages
+  ([8fd39a86](https://github.com/storm-software/storm-stack/commit/8fd39a86))
+
 ## [0.40.0](https://github.com/storm-software/storm-stack/releases/tag/core%400.40.0) (2025-09-07)
 
 ### Features
