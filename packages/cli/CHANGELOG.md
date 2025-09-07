@@ -2,6 +2,27 @@
 
 # Changelog for Storm Stack - CLI
 
+## [0.23.0](https://github.com/storm-software/storm-stack/releases/tag/cli%400.23.0) (2025-09-07)
+
+### Features
+
+- **core:** Included `runtime-types` bytecode exports
+  ([770a1afb](https://github.com/storm-software/storm-stack/commit/770a1afb))
+
+### Miscellaneous
+
+- **monorepo:** Update workspace package links
+  ([2cf545ef](https://github.com/storm-software/storm-stack/commit/2cf545ef))
+
+### Updated Dependencies
+
+- Updated plugin-log-storage to 0.25.5
+- Updated plugin-log-sentry to 0.28.5
+- Updated plugin-storage-fs to 0.14.5
+- Updated plugin-cli to 0.32.5
+- Updated core to 0.40.0
+- Updated nx to 0.19.4
+
 ## [0.22.3](https://github.com/storm-software/storm-stack/releases/tag/cli%400.22.3) (2025-09-06)
 
 ### Miscellaneous

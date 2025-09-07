@@ -2,6 +2,19 @@
 
 # Changelog for Storm Stack - Plugin Storage Cloudflare R2
 
+## [0.12.5](https://github.com/storm-software/storm-stack/releases/tag/plugin-storage-cloudflare-r2%400.12.5) (2025-09-07)
+
+### Miscellaneous
+
+- **monorepo:** Update workspace package links
+  ([2cf545ef](https://github.com/storm-software/storm-stack/commit/2cf545ef))
+
+### Updated Dependencies
+
+- Updated devkit to 0.14.4
+- Updated core to 0.40.0
+- Updated nx to 0.19.4
+
 ## [0.12.4](https://github.com/storm-software/storm-stack/releases/tag/plugin-storage-cloudflare-r2%400.12.4) (2025-09-06)
 
 ### Miscellaneous

@@ -1,6 +1,6 @@
 {
   "name": "@storm-stack/plugin-cloudflare",
-  "version": "0.26.1",
+  "version": "0.26.2",
   "type": "module",
   "description": "A Storm Stack plugin for managing deployments to Cloudflare",
   "repository": {
@@ -89,7 +89,7 @@
     "@cloudflare/vite-plugin": "catalog:",
     "@ltd/j-toml": "catalog:",
     "@storm-software/config-tools": "catalog:",
-    "@storm-stack/core": "workspace:*",
+    "@storm-stack/core": "0.40.0",
     "@storm-stack/types": "workspace:*",
     "@stryke/fs": "catalog:",
     "@stryke/json": "catalog:",

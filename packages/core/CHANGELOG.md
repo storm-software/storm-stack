@@ -2,6 +2,13 @@
 
 # Changelog for Storm Stack - Core
 
+## [0.40.0](https://github.com/storm-software/storm-stack/releases/tag/core%400.40.0) (2025-09-07)
+
+### Features
+
+- **core:** Included `runtime-types` bytecode exports
+  ([770a1afb](https://github.com/storm-software/storm-stack/commit/770a1afb))
+
 ## [0.39.2](https://github.com/storm-software/storm-stack/releases/tag/core%400.39.2) (2025-09-06)
 
 ### Miscellaneous
