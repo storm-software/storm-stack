@@ -225,7 +225,7 @@
     "@storm-software/config-tools": "catalog:",
     "@storm-software/esbuild": "catalog:",
     "@storm-software/unbuild": "catalog:",
-    "@storm-stack/core": "0.41.0",
+    "@storm-stack/core": "workspace:*",
     "@storm-stack/types": "workspace:*",
     "@stryke/convert": "catalog:",
     "@stryke/helpers": "catalog:",

@@ -171,8 +171,8 @@
   },
   "dependencies": {
     "@storm-software/config-tools": "catalog:",
-    "@storm-stack/core": "0.41.0",
-    "@storm-stack/devkit": "0.15.0",
+    "@storm-stack/core": "workspace:*",
+    "@storm-stack/devkit": "workspace:*",
     "@stryke/capnp": "catalog:",
     "@stryke/env": "catalog:",
     "@stryke/fs": "catalog:",
