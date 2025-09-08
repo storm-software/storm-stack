@@ -27,7 +27,6 @@ export default defineConfig({
   plugins: [
     new StormStackCLIPlugin({
       title: {
-        text: "Storm Stack",
         font: "tiny",
         colors: ["cyan"],
         gradient: false

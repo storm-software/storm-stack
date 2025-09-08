@@ -16,11 +16,6 @@
 
  ------------------------------------------------------------------- */
 
-import { getUniqueBy } from "@stryke/helpers/get-unique";
-import { StormJSON } from "@stryke/json/storm-json";
-import { isNull } from "@stryke/type-checks/is-null";
-import { isString } from "@stryke/type-checks/is-string";
-import { isUndefined } from "@stryke/type-checks/is-undefined";
 import {
   ReflectionKind,
   ReflectionParameter,
@@ -28,7 +23,12 @@ import {
   Type,
   TypeNumber,
   TypeString
-} from "../../deepkit/type";
+} from "@storm-stack/core/deepkit/type";
+import { getUniqueBy } from "@stryke/helpers/get-unique";
+import { StormJSON } from "@stryke/json/storm-json";
+import { isNull } from "@stryke/type-checks/is-null";
+import { isString } from "@stryke/type-checks/is-string";
+import { isUndefined } from "@stryke/type-checks/is-undefined";
 
 /**
  * Converts any {@link ReflectionProperty} or {@link ReflectionParameter}'s value to string representation.

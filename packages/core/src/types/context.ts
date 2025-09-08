@@ -16,7 +16,7 @@
 
  ------------------------------------------------------------------- */
 
-import { ReflectionClass } from "@deepkit/type";
+import { ReflectionClass } from "@storm-stack/core/deepkit/type";
 import { LogLevel } from "@storm-stack/core/runtime-types/shared/log";
 import { EnvPaths } from "@stryke/env/get-env-paths";
 import { PackageJson } from "@stryke/types/package-json";

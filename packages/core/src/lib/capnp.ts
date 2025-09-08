@@ -42,7 +42,7 @@ import {
   SerializedTypeUnion,
   SimpleSerializedType,
   TagsReflection
-} from "@deepkit/type";
+} from "@storm-stack/core/deepkit/type";
 import { List } from "@stryke/capnp";
 import { isInteger, isSetObject, isUndefined } from "@stryke/type-checks";
 import {

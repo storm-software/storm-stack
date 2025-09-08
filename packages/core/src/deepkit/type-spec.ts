@@ -16,6 +16,6 @@
 
  ------------------------------------------------------------------- */
 
-// Re-exporting Deepkit modules
+// Re-exported Deepkit - Type Spec module
 
 export * from "@deepkit/type-spec";

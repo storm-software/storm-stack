@@ -16,10 +16,10 @@
 
  ------------------------------------------------------------------- */
 
+import type { Type } from "@storm-stack/core/deepkit/type";
+import { reflect } from "@storm-stack/core/deepkit/type";
 import type { TypeDefinition } from "@stryke/types/configuration";
 import defu from "defu";
-import type { Type } from "../../deepkit/type";
-import { reflect } from "../../deepkit/type";
 import type { Context } from "../../types/context";
 import { BundleOptions, esbuild } from "../esbuild/build";
 import { resolvePath } from "../utilities/resolve-path";

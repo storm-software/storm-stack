@@ -16,6 +16,6 @@
 
  ------------------------------------------------------------------- */
 
-// Re-exported Deepkit - Type module
+// Re-exported Deepkit - Type Compiler module
 
-export * from "@deepkit/type";
+export * from "@deepkit/type-compiler";

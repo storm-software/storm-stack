@@ -20,7 +20,7 @@ import {
   Cache,
   DeclarationTransformer,
   ReflectionTransformer
-} from "@deepkit/type-compiler";
+} from "@storm-stack/core/deepkit/type-compiler";
 import ts from "typescript";
 import { TranspilerOptions } from "../../types/compiler";
 import { Context } from "../../types/context";

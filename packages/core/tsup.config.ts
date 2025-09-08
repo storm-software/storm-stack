@@ -32,8 +32,13 @@ const config = getTsupConfig([
     ],
     outDir: "dist",
     clean: false,
-    sourcemap: true,
-    noExternal: ["memfs", "@deepkit/type-compiler"],
+    external: [
+      "@storm-stack/core/deepkit/core",
+      "@storm-stack/core/deepkit/type-compiler",
+      "@storm-stack/core/deepkit/type-spec",
+      "@storm-stack/core/deepkit/type"
+    ],
+    noExternal: ["memfs"],
     skipNodeModulesBundle: true
   },
   {
@@ -54,17 +59,35 @@ const config = getTsupConfig([
     ],
     outDir: "dist/lib",
     clean: false,
-    noExternal: ["@deepkit/type-compiler"],
-    skipNodeModulesBundle: true
+    skipNodeModulesBundle: true,
+    external: [
+      "@storm-stack/core/deepkit/core",
+      "@storm-stack/core/deepkit/type-compiler",
+      "@storm-stack/core/deepkit/type-spec",
+      "@storm-stack/core/deepkit/type"
+    ]
   },
   {
-    name: "core-deepkit",
-    entry: ["src/deepkit/*.ts"],
+    name: "core-deepkit-libs",
+    entry: [
+      "src/deepkit/type.ts",
+      "src/deepkit/type-spec.ts",
+      "src/deepkit/core.ts"
+    ],
     outDir: "dist/deepkit",
     platform: "neutral",
     target: "esnext",
     clean: false,
     noExternal: ["@deepkit/core", "@deepkit/type", "@deepkit/type-spec"]
+  },
+  {
+    name: "core-deepkit-compiler",
+    entry: ["src/deepkit/type-compiler.ts"],
+    outDir: "dist/deepkit",
+    platform: "node",
+    target: "esnext",
+    clean: false,
+    noExternal: ["@deepkit/type-compiler"]
   }
 ]);
 
