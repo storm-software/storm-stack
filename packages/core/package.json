@@ -1,6 +1,6 @@
 {
   "name": "@storm-stack/core",
-  "version": "0.41.1",
+  "version": "0.42.0",
   "type": "module",
   "description": "A build toolkit and runtime used by Storm Software in TypeScript applications",
   "repository": {

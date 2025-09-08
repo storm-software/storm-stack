@@ -2,6 +2,23 @@
 
 # Changelog for Storm Stack - Plugin CLI
 
+## [0.34.0](https://github.com/storm-software/storm-stack/releases/tag/plugin-cli%400.34.0) (2025-09-08)
+
+### Features
+
+- **core:** Allow providing plugin instances in `storm.config.ts` files
+  ([bc706393](https://github.com/storm-software/storm-stack/commit/bc706393))
+
+### Miscellaneous
+
+- **monorepo:** Update workspace package links
+  ([52612e26](https://github.com/storm-software/storm-stack/commit/52612e26))
+
+### Updated Dependencies
+
+- Updated devkit to 0.15.2
+- Updated core to 0.42.0
+
 ## [0.33.1](https://github.com/storm-software/storm-stack/releases/tag/plugin-cli%400.33.1) (2025-09-07)
 
 ### Miscellaneous

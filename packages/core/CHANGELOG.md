@@ -2,6 +2,13 @@
 
 # Changelog for Storm Stack - Core
 
+## [0.42.0](https://github.com/storm-software/storm-stack/releases/tag/core%400.42.0) (2025-09-08)
+
+### Features
+
+- **core:** Allow providing plugin instances in `storm.config.ts` files
+  ([bc706393](https://github.com/storm-software/storm-stack/commit/bc706393))
+
 ## [0.41.1](https://github.com/storm-software/storm-stack/releases/tag/core%400.41.1) (2025-09-07)
 
 ### Bug Fixes
