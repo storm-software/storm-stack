@@ -37,11 +37,8 @@ import {
   getConfigReflectionsPath,
   writeConfigReflection
 } from "../helpers/persistence";
-import {
-  ConfigBabelPluginPass,
-  ConfigBabelPluginState,
-  ConfigPluginContext
-} from "../types/plugin";
+import { ConfigBabelPluginPass, ConfigBabelPluginState } from "../types/babel";
+import { ConfigPluginContext } from "../types/plugin";
 
 /*
  * The Storm Stack - Configuration Babel Plugin

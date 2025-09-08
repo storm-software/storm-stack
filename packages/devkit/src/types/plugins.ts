@@ -19,7 +19,8 @@
 import { LogLevel } from "@storm-stack/core/runtime-types/shared/log";
 import {
   ResolvedEntryTypeDefinition,
-  ResolvedOptions
+  ResolvedOptions,
+  TsupResolvedOptions
 } from "@storm-stack/core/types/build";
 import { Context, ReflectionRecord } from "@storm-stack/core/types/context";
 import { PluginBaseOptions } from "@storm-stack/core/types/plugin";
@@ -61,3 +62,19 @@ export type StoragePluginContext<
   TReflections,
   TEntry
 >;
+
+export interface PluginPluginOptions extends PluginBaseOptions {
+  templates?: string;
+}
+
+export interface PluginPluginResolvedOptions<
+  TOptions extends PluginPluginOptions = PluginPluginOptions
+> extends TsupResolvedOptions<TOptions> {
+  plugin: TOptions;
+}
+
+export type PluginPluginContext<
+  TOptions extends PluginPluginResolvedOptions = PluginPluginResolvedOptions,
+  TReflections extends { [P in keyof unknown]: ReflectionRecord } = object,
+  TEntry extends ResolvedEntryTypeDefinition = ResolvedEntryTypeDefinition
+> = Context<TOptions, TReflections, TEntry>;

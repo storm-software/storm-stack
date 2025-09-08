@@ -70,14 +70,14 @@ export async function decodeKey(encoded: string): Promise<CryptoKey> {
   );
 }
 
-export async function symmetricEncrypt(data: string) {
+export async function encrypt(data: string) {
 	const chacha = managedNonce(xchacha20poly1305)(
     new Uint8Array(hexToBytes($storm.config.ENCRYPTION_KEY))
   );
 	return bytesToHex(chacha.encrypt(encoder.encode(data)));
 };
 
-export async function symmetricDecrypt(data: string) {
+export async function decrypt(data: string) {
   const chacha = managedNonce(xchacha20poly1305)(
     new Uint8Array(hexToBytes($storm.config.ENCRYPTION_KEY))
   );

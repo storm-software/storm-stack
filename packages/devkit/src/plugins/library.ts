@@ -27,10 +27,10 @@ import {
 } from "@storm-stack/core/types/plugin";
 
 /**
- * Plugin for building the Storm Stack library package.
+ * Plugin for building Storm Stack library packages.
  *
  * @remarks
- * This plugin provides the functionality to build the Storm Stack library package using Unbuild. It extends the BasePlugin class and adds hooks for the build process.
+ * This plugin provides the functionality to build Storm Stack library packages using Unbuild. It extends the {@link Plugin} class and adds hooks for the build process.
  */
 export default class LibraryPlugin<
   TContext extends Context = Context,
