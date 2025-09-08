@@ -32,9 +32,7 @@ ${getFileHeader()}
 import { serialize } from "@storm-stack/core/deepkit/type";
 import { xchacha20poly1305 } from "@noble/ciphers/chacha";
 import { bytesToHex, hexToBytes, utf8ToBytes } from "@noble/ciphers/utils";
-import { randomBytes } from '@noble/ciphers/utils.js';
 import { managedNonce } from "@noble/ciphers/webcrypto";
-import { hexToBytes } from '@noble/ciphers/utils.js';
 
 const encoder = new TextEncoder();
 const decoder = new TextDecoder();
@@ -53,7 +51,6 @@ export async function encodeKey(key = $storm.config.ENCRYPTION_KEY) {
 	return encodeBase64(new Uint8Array(await crypto.subtle.exportKey("raw", key)));
 }
 
-
 /**
  * Decodes a base64 string into bytes and then imports the key.
  *
@@ -70,6 +67,12 @@ export async function decodeKey(encoded: string): Promise<CryptoKey> {
   );
 }
 
+/**
+ * Encrypts data using the [XChaCha20-Poly1305 algorithm](https://en.wikipedia.org/wiki/ChaCha20-Poly1305).
+ *
+ * @param data - The plaintext data to encrypt.
+ * @returns A promise that resolves to the encrypted data as a hexadecimal string.
+ */
 export async function encrypt(data: string) {
 	const chacha = managedNonce(xchacha20poly1305)(
     new Uint8Array(hexToBytes($storm.config.ENCRYPTION_KEY))
@@ -77,6 +80,11 @@ export async function encrypt(data: string) {
 	return bytesToHex(chacha.encrypt(encoder.encode(data)));
 };
 
+/** Decrypts data using the [XChaCha20-Poly1305 algorithm](https://en.wikipedia.org/wiki/ChaCha20-Poly1305).
+ *
+ * @param data - The encrypted data as a hexadecimal string.
+ * @returns A promise that resolves to the decrypted plaintext data.
+ */
 export async function decrypt(data: string) {
   const chacha = managedNonce(xchacha20poly1305)(
     new Uint8Array(hexToBytes($storm.config.ENCRYPTION_KEY))
