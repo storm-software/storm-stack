@@ -2,6 +2,26 @@
 
 # Changelog for Storm Stack - Plugin React
 
+## [0.5.3](https://github.com/storm-software/storm-stack/releases/tag/plugin-react%400.5.3) (2025-09-08)
+
+### Bug Fixes
+
+- **core:** Resolve issue with type imports
+  ([61d9c59c](https://github.com/storm-software/storm-stack/commit/61d9c59c))
+
+### Miscellaneous
+
+- **tools-config:** Update configuration helper to `defineTsupConfig`
+  ([f3a1fd18](https://github.com/storm-software/storm-stack/commit/f3a1fd18))
+- **monorepo:** Update workspace package links
+  ([c19b06fb](https://github.com/storm-software/storm-stack/commit/c19b06fb))
+
+### Updated Dependencies
+
+- Updated devkit to 0.16.0
+- Updated core to 0.43.0
+- Updated nx to 0.20.0
+
 ## [0.5.2](https://github.com/storm-software/storm-stack/releases/tag/plugin-react%400.5.2) (2025-09-08)
 
 ### Miscellaneous

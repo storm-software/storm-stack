@@ -2,6 +2,35 @@
 
 # Changelog for Storm Stack - Devkit
 
+## [0.16.0](https://github.com/storm-software/storm-stack/releases/tag/devkit%400.16.0) (2025-09-08)
+
+### Features
+
+- **devkit:** Update `PluginPlugin` to ensure tsconfig properties are correct
+  ([7daf744e](https://github.com/storm-software/storm-stack/commit/7daf744e))
+- **devkit:** Added the `PluginPlugin` to improve plugin DX
+  ([3a8a7bb8](https://github.com/storm-software/storm-stack/commit/3a8a7bb8))
+
+### Bug Fixes
+
+- **devkit:** Resolve issues with duplicate imports
+  ([f61a81da](https://github.com/storm-software/storm-stack/commit/f61a81da))
+- **core:** Resolve issue with type imports
+  ([61d9c59c](https://github.com/storm-software/storm-stack/commit/61d9c59c))
+
+### Miscellaneous
+
+- **devkit:** Add `alloy-js` framework packages as peer dependencies
+  ([2283e617](https://github.com/storm-software/storm-stack/commit/2283e617))
+- **tools-config:** Update configuration helper to `defineTsupConfig`
+  ([f3a1fd18](https://github.com/storm-software/storm-stack/commit/f3a1fd18))
+- **monorepo:** Update workspace package links
+  ([c19b06fb](https://github.com/storm-software/storm-stack/commit/c19b06fb))
+
+### Updated Dependencies
+
+- Updated core to 0.43.0
+
 ## [0.15.2](https://github.com/storm-software/storm-stack/releases/tag/devkit%400.15.2) (2025-09-08)
 
 ### Miscellaneous

@@ -2,6 +2,36 @@
 
 # Changelog for Storm Stack - CLI
 
+## [0.26.0](https://github.com/storm-software/storm-stack/releases/tag/cli%400.26.0) (2025-09-08)
+
+### Features
+
+- **plugin-config:** Added `types` exports to package
+  ([c67ad368](https://github.com/storm-software/storm-stack/commit/c67ad368))
+
+### Bug Fixes
+
+- **core:** Update build packages and resolve issue with bundling
+  ([c4ba0fd7](https://github.com/storm-software/storm-stack/commit/c4ba0fd7))
+- **core:** Resolve issue with type imports
+  ([61d9c59c](https://github.com/storm-software/storm-stack/commit/61d9c59c))
+- **core:** Import via `@storm-stack/core/deepkit` to treat as external bundle
+  ([bc154950](https://github.com/storm-software/storm-stack/commit/bc154950))
+
+### Miscellaneous
+
+- **monorepo:** Update workspace package links
+  ([c19b06fb](https://github.com/storm-software/storm-stack/commit/c19b06fb))
+
+### Updated Dependencies
+
+- Updated plugin-log-storage to 0.26.3
+- Updated plugin-log-sentry to 0.30.1
+- Updated plugin-storage-fs to 0.15.3
+- Updated plugin-cli to 0.35.0
+- Updated core to 0.43.0
+- Updated nx to 0.20.0
+
 ## [0.25.0](https://github.com/storm-software/storm-stack/releases/tag/cli%400.25.0) (2025-09-08)
 
 ### Features

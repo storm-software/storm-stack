@@ -2,6 +2,21 @@
 
 # Changelog for Storm Stack - Plugin Storage Cloudflare Kv
 
+## [0.15.3](https://github.com/storm-software/storm-stack/releases/tag/plugin-storage-cloudflare-kv%400.15.3) (2025-09-08)
+
+### Miscellaneous
+
+- **tools-config:** Update configuration helper to `defineTsupConfig`
+  ([f3a1fd18](https://github.com/storm-software/storm-stack/commit/f3a1fd18))
+- **monorepo:** Update workspace package links
+  ([c19b06fb](https://github.com/storm-software/storm-stack/commit/c19b06fb))
+
+### Updated Dependencies
+
+- Updated devkit to 0.16.0
+- Updated core to 0.43.0
+- Updated nx to 0.20.0
+
 ## [0.15.2](https://github.com/storm-software/storm-stack/releases/tag/plugin-storage-cloudflare-kv%400.15.2) (2025-09-08)
 
 ### Miscellaneous

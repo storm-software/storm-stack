@@ -2,6 +2,13 @@
 
 # Changelog for Storm Stack - ESLint Config
 
+## [0.15.1](https://github.com/storm-software/storm-stack/releases/tag/eslint-config%400.15.1) (2025-09-08)
+
+### Miscellaneous
+
+- **tools-config:** Update configuration helper to `defineTsupConfig`
+  ([f3a1fd18](https://github.com/storm-software/storm-stack/commit/f3a1fd18))
+
 ## [0.15.0](https://github.com/storm-software/storm-stack/releases/tag/eslint-config%400.15.0) (2025-09-04)
 
 ### Features

@@ -2,6 +2,27 @@
 
 # Changelog for Storm Stack - Core
 
+## [0.43.0](https://github.com/storm-software/storm-stack/releases/tag/core%400.43.0) (2025-09-08)
+
+### Features
+
+- **devkit:** Update `PluginPlugin` to ensure tsconfig properties are correct
+  ([7daf744e](https://github.com/storm-software/storm-stack/commit/7daf744e))
+
+### Bug Fixes
+
+- **core:** Update build packages and resolve issue with bundling
+  ([c4ba0fd7](https://github.com/storm-software/storm-stack/commit/c4ba0fd7))
+- **core:** Resolve issue with type imports
+  ([61d9c59c](https://github.com/storm-software/storm-stack/commit/61d9c59c))
+- **core:** Import via `@storm-stack/core/deepkit` to treat as external bundle
+  ([bc154950](https://github.com/storm-software/storm-stack/commit/bc154950))
+
+### Miscellaneous
+
+- **tools-config:** Update configuration helper to `defineTsupConfig`
+  ([f3a1fd18](https://github.com/storm-software/storm-stack/commit/f3a1fd18))
+
 ## [0.42.0](https://github.com/storm-software/storm-stack/releases/tag/core%400.42.0) (2025-09-08)
 
 ### Features

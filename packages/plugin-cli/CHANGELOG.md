@@ -2,6 +2,25 @@
 
 # Changelog for Storm Stack - Plugin CLI
 
+## [0.35.0](https://github.com/storm-software/storm-stack/releases/tag/plugin-cli%400.35.0) (2025-09-08)
+
+### Features
+
+- **nx:** Added logic to skip non storm-stack projects in plugin
+  ([129da444](https://github.com/storm-software/storm-stack/commit/129da444))
+
+### Miscellaneous
+
+- **tools-config:** Update configuration helper to `defineTsupConfig`
+  ([f3a1fd18](https://github.com/storm-software/storm-stack/commit/f3a1fd18))
+- **monorepo:** Update workspace package links
+  ([c19b06fb](https://github.com/storm-software/storm-stack/commit/c19b06fb))
+
+### Updated Dependencies
+
+- Updated devkit to 0.16.0
+- Updated core to 0.43.0
+
 ## [0.34.0](https://github.com/storm-software/storm-stack/releases/tag/plugin-cli%400.34.0) (2025-09-08)
 
 ### Features

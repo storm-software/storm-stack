@@ -2,6 +2,13 @@
 
 # Changelog for Storm Stack - Types
 
+## [0.19.1](https://github.com/storm-software/storm-stack/releases/tag/types%400.19.1) (2025-09-08)
+
+### Bug Fixes
+
+- **core:** Resolve issue with type imports
+  ([61d9c59c](https://github.com/storm-software/storm-stack/commit/61d9c59c))
+
 ## [0.19.0](https://github.com/storm-software/storm-stack/releases/tag/types%400.19.0) (2025-09-04)
 
 ### Features

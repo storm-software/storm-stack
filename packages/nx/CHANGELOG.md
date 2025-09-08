@@ -2,6 +2,29 @@
 
 # Changelog for Storm Stack - Nx
 
+## [0.20.0](https://github.com/storm-software/storm-stack/releases/tag/nx%400.20.0) (2025-09-08)
+
+### Features
+
+- **nx:** Added logic to skip non storm-stack projects in plugin
+  ([129da444](https://github.com/storm-software/storm-stack/commit/129da444))
+
+### Bug Fixes
+
+- **nx:** Resolve issue with invalid imports in plugin
+  ([db2058d0](https://github.com/storm-software/storm-stack/commit/db2058d0))
+
+### Miscellaneous
+
+- **tools-config:** Update configuration helper to `defineTsupConfig`
+  ([f3a1fd18](https://github.com/storm-software/storm-stack/commit/f3a1fd18))
+- **monorepo:** Update workspace package links
+  ([c19b06fb](https://github.com/storm-software/storm-stack/commit/c19b06fb))
+
+### Updated Dependencies
+
+- Updated core to 0.43.0
+
 ## [0.19.6](https://github.com/storm-software/storm-stack/releases/tag/nx%400.19.6) (2025-09-08)
 
 ### Miscellaneous

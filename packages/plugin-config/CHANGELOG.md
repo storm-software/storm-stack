@@ -2,6 +2,33 @@
 
 # Changelog for Storm Stack - Plugin Config
 
+## [0.8.0](https://github.com/storm-software/storm-stack/releases/tag/plugin-config%400.8.0) (2025-09-08)
+
+### Features
+
+- **devkit:** Added the `PluginPlugin` to improve plugin DX
+  ([3a8a7bb8](https://github.com/storm-software/storm-stack/commit/3a8a7bb8))
+- **plugin-config:** Added `types` exports to package
+  ([c67ad368](https://github.com/storm-software/storm-stack/commit/c67ad368))
+
+### Bug Fixes
+
+- **core:** Resolve issue with type imports
+  ([61d9c59c](https://github.com/storm-software/storm-stack/commit/61d9c59c))
+
+### Miscellaneous
+
+- **tools-config:** Update configuration helper to `defineTsupConfig`
+  ([f3a1fd18](https://github.com/storm-software/storm-stack/commit/f3a1fd18))
+- **monorepo:** Update workspace package links
+  ([c19b06fb](https://github.com/storm-software/storm-stack/commit/c19b06fb))
+
+### Updated Dependencies
+
+- Updated devkit to 0.16.0
+- Updated core to 0.43.0
+- Updated nx to 0.20.0
+
 ## [0.7.0](https://github.com/storm-software/storm-stack/releases/tag/plugin-config%400.7.0) (2025-09-08)
 
 ### Features
