@@ -38,7 +38,7 @@ const defaultOptions: TsupOptions = {
   shims: true
 };
 
-export function getTsupConfig(options: TsupOptions | TsupOptions[]) {
+export function defineTsupConfig(options: TsupOptions | TsupOptions[]) {
   return Array.isArray(options)
     ? defineConfig(
         options.map(option => ({

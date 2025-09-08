@@ -16,9 +16,9 @@
 
  ------------------------------------------------------------------- */
 
-import { getTsupConfig } from "@storm-stack/tools-config/tsup.shared";
+import { defineTsupConfig } from "@storm-stack/tools-config/tsup.shared";
 
-const config = getTsupConfig({
+const config = defineTsupConfig({
   name: "eslint-config",
   entryPoints: ["src/*.ts"],
   format: ["esm"],

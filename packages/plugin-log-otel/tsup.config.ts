@@ -16,9 +16,9 @@
 
  ------------------------------------------------------------------- */
 
-import { getTsupConfig } from "@storm-stack/tools-config/tsup.shared";
+import { defineTsupConfig } from "@storm-stack/tools-config/tsup.shared";
 
-const config = getTsupConfig({
+const config = defineTsupConfig({
   name: "plugin-log-otel",
   entry: ["src/index.ts", "src/plugin.ts", "src/types.ts"]
 });

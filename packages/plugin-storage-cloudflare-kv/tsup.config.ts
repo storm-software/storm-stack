@@ -16,9 +16,9 @@
 
  ------------------------------------------------------------------- */
 
-import { getTsupConfig } from "@storm-stack/tools-config/tsup.shared";
+import { defineTsupConfig } from "@storm-stack/tools-config/tsup.shared";
 
-const config = getTsupConfig({
+const config = defineTsupConfig({
   name: "plugin-storage-cloudflare-kv",
   entry: ["src/*.ts"],
   skipNodeModulesBundle: true,
