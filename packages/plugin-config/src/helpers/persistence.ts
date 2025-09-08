@@ -33,7 +33,7 @@ import { isEmptyObject } from "@stryke/type-checks/is-empty-object";
 import type { TypeDefinition } from "@stryke/types/configuration";
 import { Buffer } from "node:buffer";
 import { existsSync } from "node:fs";
-import { ConfigPluginContext } from "../types";
+import { ConfigPluginContext } from "../types/plugin";
 import { createConfigParamsReflection } from "./reflect";
 
 export function getConfigDefaultTypeDefinition(

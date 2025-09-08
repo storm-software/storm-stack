@@ -18,7 +18,7 @@
 
 import { generateCapnp } from "@storm-stack/devkit/templates/helpers/capnp";
 import { readConfigTypeReflection } from "../helpers/persistence";
-import { ConfigPluginContext } from "../types";
+import { ConfigPluginContext } from "../types/plugin";
 
 /**
  * Generates the configuration schema for the Config plugin.

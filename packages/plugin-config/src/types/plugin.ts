@@ -25,11 +25,6 @@ import {
   ResolvedEntryTypeDefinition,
   ResolvedOptions
 } from "@storm-stack/core/types";
-import {
-  BabelPluginOptions,
-  BabelPluginPass,
-  BabelPluginState
-} from "@storm-stack/core/types/babel";
 import { Context, Reflection } from "@storm-stack/core/types/context";
 import { PluginBaseOptions } from "@storm-stack/core/types/plugin";
 import type { DotenvParseOutput } from "@stryke/env/types";
@@ -155,10 +150,3 @@ export type ConfigPluginContext<
     ConfigPluginReflectionRecord = ConfigPluginReflectionRecord,
   TEntry extends ResolvedEntryTypeDefinition = ResolvedEntryTypeDefinition
 > = Context<TOptions, TReflections, TEntry>;
-
-export type ConfigBabelPluginState = BabelPluginState<BabelPluginOptions>;
-
-export type ConfigBabelPluginPass = BabelPluginPass<
-  BabelPluginOptions,
-  ConfigBabelPluginState
->;

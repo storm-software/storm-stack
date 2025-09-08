@@ -28,7 +28,7 @@ import { reflectType } from "@storm-stack/core/lib/deepkit";
 import { StormConfigInterface } from "@storm-stack/core/runtime-types/shared/config";
 import { joinPaths } from "@stryke/path/join-paths";
 import { titleCase } from "@stryke/string-format/title-case";
-import { ConfigPluginContext } from "../types";
+import { ConfigPluginContext } from "../types/plugin";
 import {
   getConfigDefaultTypeDefinition,
   readConfigTypeReflection

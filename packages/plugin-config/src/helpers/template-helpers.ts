@@ -18,7 +18,7 @@
 
 import { ReflectionClass } from "@storm-stack/core/deepkit/type";
 import { titleCase } from "@stryke/string-format/title-case";
-import { ConfigPluginContext } from "../types";
+import { ConfigPluginContext } from "../types/plugin";
 import { readConfigTypeReflection } from "./persistence";
 
 /**

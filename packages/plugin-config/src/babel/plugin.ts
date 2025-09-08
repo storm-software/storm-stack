@@ -41,7 +41,7 @@ import {
   ConfigBabelPluginPass,
   ConfigBabelPluginState,
   ConfigPluginContext
-} from "../types";
+} from "../types/plugin";
 
 /*
  * The Storm Stack - Configuration Babel Plugin

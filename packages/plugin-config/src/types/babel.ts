@@ -16,19 +16,15 @@
 
  ------------------------------------------------------------------- */
 
-import { getTsupConfig } from "@storm-stack/tools-config/tsup.shared";
+import {
+  BabelPluginOptions,
+  BabelPluginPass,
+  BabelPluginState
+} from "@storm-stack/core/types/babel";
 
-const config = getTsupConfig({
-  name: "plugin-config",
-  entry: [
-    "src/index.ts",
-    "src/plugin.ts",
-    "src/types/*.ts",
-    "src/helpers/*.ts",
-    "src/templates/*.ts",
-    "src/babel/*.ts"
-  ],
-  skipNodeModulesBundle: true
-});
+export type ConfigBabelPluginState = BabelPluginState<BabelPluginOptions>;
 
-export default config;
+export type ConfigBabelPluginPass = BabelPluginPass<
+  BabelPluginOptions,
+  ConfigBabelPluginState
+>;

@@ -29,7 +29,7 @@ import { isSetString } from "@stryke/type-checks/is-set-string";
 import type { PackageJson } from "@stryke/types/package-json";
 import { loadConfig } from "c12";
 import defu from "defu";
-import { ConfigPluginContext, ConfigPluginOptions } from "../types";
+import { ConfigPluginContext, ConfigPluginOptions } from "../types/plugin";
 import { removeEnvPrefix } from "./source-file-env";
 
 async function loadEnvFiles<TEnv extends DotenvParseOutput = DotenvParseOutput>(

@@ -16,19 +16,5 @@
 
  ------------------------------------------------------------------- */
 
-import { getTsupConfig } from "@storm-stack/tools-config/tsup.shared";
-
-const config = getTsupConfig({
-  name: "plugin-config",
-  entry: [
-    "src/index.ts",
-    "src/plugin.ts",
-    "src/types/*.ts",
-    "src/helpers/*.ts",
-    "src/templates/*.ts",
-    "src/babel/*.ts"
-  ],
-  skipNodeModulesBundle: true
-});
-
-export default config;
+export * from "./babel";
+export * from "./plugin";

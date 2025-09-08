@@ -59,7 +59,7 @@ import {
   ConfigPluginOptions,
   ConfigPluginReflectionRecord,
   ResolvedConfigPluginOptions
-} from "./types";
+} from "./types/plugin";
 
 /**
  * Storm Stack - Config plugin.

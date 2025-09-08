@@ -29,7 +29,7 @@ import {
 import { titleCase } from "@stryke/string-format/title-case";
 import { loadConfigFromContext } from "../helpers/load";
 import { createTemplateReflection } from "../helpers/template-helpers";
-import { ConfigPluginContext } from "../types";
+import { ConfigPluginContext } from "../types/plugin";
 
 /**
  * Generates the configuration typescript definition for the Storm Stack project.
