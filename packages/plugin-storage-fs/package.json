@@ -69,7 +69,6 @@
     "unstorage": "catalog:"
   },
   "devDependencies": {
-    "@storm-stack/types": "workspace:*",
     "@types/node": "catalog:",
     "tsup": "catalog:"
   },

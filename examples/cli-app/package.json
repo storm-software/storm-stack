@@ -13,12 +13,11 @@
     "examples-cli": "dist/examples-cli.mjs"
   },
   "dependencies": {
-    "@storm-stack/types": "workspace:*",
+    "@storm-stack/core": "workspace:*",
     "date-fns": "catalog:",
     "unstorage": "catalog:"
   },
   "devDependencies": {
-    "@storm-stack/core": "workspace:*",
     "@storm-stack/nx": "workspace:*",
     "@storm-stack/plugin-cli": "workspace:*",
     "@storm-stack/plugin-date": "workspace:*",

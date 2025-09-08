@@ -185,7 +185,6 @@
     "@storm-software/config-tools": "catalog:",
     "@storm-stack/core": "workspace:*",
     "@storm-stack/devkit": "workspace:*",
-    "@storm-stack/types": "workspace:*",
     "@stryke/convert": "catalog:",
     "@stryke/json": "catalog:",
     "@stryke/path": "catalog:",

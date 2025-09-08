@@ -907,7 +907,6 @@
     "@storm-software/config": "catalog:",
     "@storm-software/config-tools": "catalog:",
     "@storm-software/esbuild": "catalog:",
-    "@storm-stack/types": "workspace:*",
     "@stryke/capnp": "catalog:",
     "@stryke/convert": "catalog:",
     "@stryke/env": "catalog:",

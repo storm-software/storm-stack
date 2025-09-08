@@ -25,6 +25,7 @@ import { replacePath } from "@stryke/path/replace";
 import { resolvePackage } from "@stryke/path/resolve";
 import { TsConfigJson } from "@stryke/types/tsconfig";
 import defu from "defu";
+import { existsSync } from "node:fs";
 import {
   createCompilerHost,
   createProgram,
@@ -238,16 +239,29 @@ declare module "${context.vfs.resolveId(sourceFile.fileName)}" {
     );
   }
 
-  const mainEntryPointFilePath = process.env.STORM_STACK_LOCAL
-    ? joinPaths(context.options.workspaceRoot, "dist/packages/types")
-    : await resolvePackage("@storm-stack/types");
-  if (!mainEntryPointFilePath) {
-    throw new Error("Could not resolve @storm-stack/types package location.");
+  const corePackagePath = await resolvePackage("@storm-stack/core");
+  if (!corePackagePath || !existsSync(corePackagePath)) {
+    throw new Error(
+      `Could not resolve @storm-stack/core package location: ${corePackagePath} does not exist.`
+    );
+  }
+
+  const mainEntryPointFilePath = joinPaths(
+    corePackagePath,
+    "dist",
+    "runtime-types",
+    "esm",
+    "index.d.ts"
+  );
+  if (!existsSync(mainEntryPointFilePath)) {
+    throw new Error(
+      `Could not resolve @storm-stack/core/runtime-types package location: ${mainEntryPointFilePath} does not exist.`
+    );
   }
 
   context.log(
     LogLevelLabel.TRACE,
-    `Running API Extractor on the @storm-stack/types package at ${mainEntryPointFilePath}.`
+    `Running API Extractor on @storm-stack/core/runtime-types package at ${mainEntryPointFilePath}.`
   );
 
   const untrimmedFilePath = joinPaths(
@@ -258,10 +272,7 @@ declare module "${context.vfs.resolveId(sourceFile.fileName)}" {
   const extractorResult: ExtractorResult = Extractor.invoke(
     ExtractorConfig.prepare({
       configObject: {
-        mainEntryPointFilePath: joinPaths(
-          mainEntryPointFilePath,
-          "dist/esm/src/index.d.ts"
-        ),
+        mainEntryPointFilePath,
         apiReport: {
           enabled: false,
 
@@ -308,7 +319,7 @@ declare module "${context.vfs.resolveId(sourceFile.fileName)}" {
     throw new Error(
       `API Extractor completed with ${extractorResult.errorCount} errors and ${
         extractorResult.warningCount
-      } warnings when processing @storm-stack/types package.`
+      } warnings when processing @storm-stack/core/runtime-types package.`
     );
   }
 
@@ -320,10 +331,6 @@ declare module "${context.vfs.resolveId(sourceFile.fileName)}" {
   const sourceFile = getSourceFile(
     context.runtimeDtsFilePath,
     `${getFileHeader(null, false)}
-
-// This file is an augmentation to the built-in StormContext interface
-// Thus cannot contain any top-level imports
-// <https://www.typescriptlang.org/docs/handbook/declaration-merging.html#module-augmentation>
 
 ${(await context.vfs.readFile(untrimmedFilePath))!
   .replace(/\s*export.*__Ω.*;/g, "")

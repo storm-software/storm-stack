@@ -37,7 +37,6 @@
     "@storm-stack/plugin-log-sentry": "workspace:*",
     "@storm-stack/plugin-log-storage": "workspace:*",
     "@storm-stack/plugin-storage-fs": "workspace:*",
-    "@storm-stack/types": "workspace:*",
     "@types/node": "catalog:"
   },
   "publishConfig": {

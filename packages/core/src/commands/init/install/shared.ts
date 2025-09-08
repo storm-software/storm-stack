@@ -27,7 +27,7 @@ import { PluginPackageDependencies } from "../../../types/plugin";
  */
 export function getSharedDeps(context: Context): PluginPackageDependencies {
   context.packageDeps ??= {};
-  context.packageDeps["@storm-stack/types"] = { type: "devDependency" };
+  context.packageDeps["@storm-stack/core"] = { type: "dependency" };
 
   if (context.options.projectType === "application") {
     context.packageDeps.unstorage = { type: "dependency" };

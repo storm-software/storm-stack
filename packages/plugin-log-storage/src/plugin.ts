@@ -49,7 +49,7 @@ import { StorageValue } from "unstorage";
 import {
   TextFormatter,
   TextFormatterOptions
-} from "@storm-stack/plugin-log-storage/types";
+} from "@storm-stack/plugin-log-storage/types/formatter";
 import {
   FormattedValues,
   LogLevel,

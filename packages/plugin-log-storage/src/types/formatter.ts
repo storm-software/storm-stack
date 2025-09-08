@@ -21,11 +21,6 @@ import type {
   LogLevel,
   LogRecord
 } from "@storm-stack/core/runtime-types/shared/log";
-import {
-  LogPluginContext,
-  LogPluginOptions,
-  LogPluginResolvedOptions
-} from "@storm-stack/devkit/types/plugins";
 
 /**
  * A text formatter is a function that accepts a log record and returns a string.
@@ -133,28 +128,3 @@ export interface TextFormatterOptions {
    */
   format?: (values: FormattedValues) => string;
 }
-
-export type LogStoragePluginOptions = Omit<LogPluginOptions, "namespace"> & {
-  /**
-   * Whether to use the file system storage driver.
-   *
-   * @defaultValue true
-   */
-  useFileSystem?: boolean;
-
-  /**
-   * The storage ID to use for the log storage.
-   *
-   * @defaultValue "logs"
-   */
-  namespace?: string;
-};
-
-export type LogStoragePluginResolvedOptions = LogPluginResolvedOptions<
-  Required<LogStoragePluginOptions>
->;
-
-export type LogStoragePluginContext<
-  TOptions extends
-    LogStoragePluginResolvedOptions = LogStoragePluginResolvedOptions
-> = LogPluginContext<TOptions>;

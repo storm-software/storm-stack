@@ -70,17 +70,17 @@ export interface StormContext extends StormContextInterface {
   /**
    * Environment/runtime specific application data.
    */
-  env: import("@storm-stack/types/node/env").StormNodeEnv;
+  env: import("@storm-stack/core/runtime-types/node/env").StormNodeEnv;
 
   /**
    * The root application logger for the Storm Stack application.
    */
-  log: import("@storm-stack/types/shared/log").StormLogInterface;
+  log: import("@storm-stack/core/runtime-types/shared/log").StormLogInterface;
 
   /**
    * The {@link StormStorageInterface} instance used by the Storm Stack application.
    */
-  storage: import("@storm-stack/types/shared/storage").StormStorageInterface;
+  storage: import("@storm-stack/core/runtime-types/shared/storage").StormStorageInterface;
 
   /**
    * The configuration parameters for the Storm application.

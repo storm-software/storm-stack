@@ -16,7 +16,7 @@
 
  ------------------------------------------------------------------- */
 
-import { StormSentryLogConfig } from "@storm-stack/plugin-log-sentry/types";
+import { StormSentryLogConfig } from "@storm-stack/plugin-log-sentry/types/config";
 
 /**
  * The request for the example CLI application.

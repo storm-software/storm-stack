@@ -90,7 +90,6 @@
     "@ltd/j-toml": "catalog:",
     "@storm-software/config-tools": "catalog:",
     "@storm-stack/core": "workspace:*",
-    "@storm-stack/types": "workspace:*",
     "@stryke/fs": "catalog:",
     "@stryke/json": "catalog:",
     "@stryke/path": "catalog:",

@@ -16,7 +16,7 @@
 
  ------------------------------------------------------------------- */
 
-import { StormSentryLogConfig } from "@storm-stack/plugin-log-sentry/types";
+import { StormSentryLogConfig } from "@storm-stack/plugin-log-sentry/types/config";
 
 export interface StormStackCLIConfig extends StormSentryLogConfig {
   /**

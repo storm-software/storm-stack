@@ -24,20 +24,7 @@ import {
 import {
   ConfigPluginReflectionRecord,
   ConfigPluginResolvedOptions
-} from "@storm-stack/plugin-config/types";
-
-/**
- * Configuration options for the Sentry logging plugin.
- */
-export interface StormSentryLogConfig {
-  /**
-   * The DSN for Sentry
-   *
-   * @remarks
-   * This is used to send logs to Sentry.
-   */
-  SENTRY_DSN: string;
-}
+} from "@storm-stack/plugin-config/types/plugin";
 
 export interface LogSentryPluginOptions extends LogPluginOptions {
   /**

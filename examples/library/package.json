@@ -10,13 +10,12 @@
   },
   "private": true,
   "dependencies": {
-    "@storm-stack/types": "workspace:*",
+    "@storm-stack/core": "workspace:*",
     "@stryke/json": "catalog:",
     "@stryke/type-checks": "catalog:",
     "@stryke/url": "catalog:"
   },
   "devDependencies": {
-    "@storm-stack/core": "workspace:*",
     "@storm-stack/devkit": "workspace:*",
     "@storm-stack/nx": "workspace:*",
     "@stryke/types": "catalog:"

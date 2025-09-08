@@ -20,7 +20,8 @@ import { defineTsupConfig } from "@storm-stack/tools-config/tsup.shared";
 
 const config = defineTsupConfig({
   name: "plugin-log-sentry",
-  entry: ["src/index.ts", "src/plugin.ts", "src/types.ts"]
+  entry: ["src/index.ts", "src/plugin.ts", "src/types/*.ts"],
+  skipNodeModulesBundle: true
 });
 
 export default config;

@@ -24,7 +24,7 @@ import {
   TypeClass,
   TypeObjectLiteral
 } from "@storm-stack/core/deepkit/type";
-import { reflectType } from "@storm-stack/core/lib/deepkit";
+import { reflectType } from "@storm-stack/core/lib/deepkit/reflect-type";
 import { StormConfigInterface } from "@storm-stack/core/runtime-types/shared/config";
 import { joinPaths } from "@stryke/path/join-paths";
 import { titleCase } from "@stryke/string-format/title-case";
