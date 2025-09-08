@@ -46,6 +46,15 @@ catalog:
   "@sentry/core": ^9.15.0
   "@sentry/node": ^9.15.0
   "@sentry/types": ^9.15.0
+  "@storm-stack/core": 0.41.1
+  "@storm-stack/devkit": 0.15.1
+  "@storm-stack/nx": 0.19.5
+  "@storm-stack/plugin-cli": 0.33.1
+  "@storm-stack/plugin-date": 0.6.1
+  "@storm-stack/plugin-log-console": 0.23.1
+  "@storm-stack/plugin-log-sentry": 0.29.1
+  "@storm-stack/plugin-log-storage": 0.26.1
+  "@storm-stack/plugin-storage-fs": 0.15.1
   "@taplo/cli": ^0.7.0
   "@types/eslint": ^9.6.1
   "@types/eslint__js": ^8.42.3
