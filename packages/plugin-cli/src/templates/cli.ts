@@ -170,7 +170,7 @@ export function CLIModule(context: CLIPluginContext) {
         ? titleCase(context.options.plugins.cli.title)
         : context.options.plugins.cli.title.text
           ? titleCase(context.options.plugins.cli.title.text)
-          : titleCase(context.options.name),
+          : appTitle,
       defu(
         isSetObject(context.options.plugins.cli.title)
           ? context.options.plugins.cli.title

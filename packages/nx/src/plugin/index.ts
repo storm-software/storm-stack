@@ -29,8 +29,6 @@ import {
   addProjectTag,
   setDefaultProjectTags
 } from "@storm-software/workspace-tools/utils/project-tags";
-import { loadUserConfigFile } from "@storm-stack/core/lib/config";
-import { PROJECT_ROOT_HASH_LENGTH } from "@storm-stack/core/lib/context";
 import { getEnvPaths } from "@stryke/env/get-env-paths";
 import { readJsonFileSync } from "@stryke/fs/json";
 import { hash } from "@stryke/hash/hash";
@@ -46,6 +44,8 @@ import { readNxJson } from "nx/src/config/nx-json.js";
 import type { ProjectConfiguration } from "nx/src/config/workspace-json-project-json.js";
 import type { PackageJson as PackageJsonNx } from "nx/src/utils/package-json.js";
 import { readTargetsFromPackageJson } from "nx/src/utils/package-json.js";
+import { loadUserConfigFile } from "../../../core/src/lib/config";
+import { PROJECT_ROOT_HASH_LENGTH } from "../../../core/src/lib/context";
 import { CONFIG_INPUTS } from "../helpers/constants";
 
 /* eslint-disable no-console */
@@ -110,6 +110,14 @@ export const createNodesV2: CreateNodesV2<StormStackNxPluginOptions> = [
             joinPaths(projectRoot, "package.json")
           );
 
+          if (!userConfig.configFile && !packageJson.storm) {
+            console.debug(
+              `[${name}]: Skipping ${projectRoot} - no Storm Stack configuration found for project in root directory.`
+            );
+
+            return {};
+          }
+
           const projectConfig = getProjectConfigFromProjectRoot(
             projectRoot,
             packageJson
@@ -135,75 +143,6 @@ export const createNodesV2: CreateNodesV2<StormStackNxPluginOptions> = [
               projectRoot,
               context.workspaceRoot
             );
-
-          // const namedInputs = getNamedInputs(projectRoot, context);
-          // const tsConfig = retrieveTsConfigFromCache(
-          //   configFilePath,
-          //   context.workspaceRoot
-          // );
-
-          // let internalProjectReferences: Record<string, ParsedTsconfigData>;
-          // // Typecheck target
-          // if (
-          //   basename(configFilePath) === "tsconfig.json" &&
-          //   options.typecheck &&
-          //   tsConfig.raw?.nx?.addTypecheckTarget !== false
-          // ) {
-          //   internalProjectReferences = resolveInternalProjectReferences(
-          //     tsConfig,
-          //     context.workspaceRoot,
-          //     projectRoot
-          //   );
-          //   const externalProjectReferences =
-          //     resolveShallowExternalProjectReferences(
-          //       tsConfig,
-          //       context.workspaceRoot,
-          //       projectRoot
-          //     );
-          //   const targetName = options.typecheck.targetName;
-          //   if (!targets[targetName]) {
-          //     let command = `tsc --build --emitDeclarationOnly${
-          //       options.verboseOutput ? " --verbose" : ""
-          //     }`;
-          //     if (
-          //       tsConfig.options.noEmit ||
-          //       Object.values(internalProjectReferences).some(
-          //         ref => ref.options.noEmit
-          //       ) ||
-          //       Object.values(externalProjectReferences).some(
-          //         ref => ref.options.noEmit
-          //       )
-          //     ) {
-          //       // `tsc --build` does not work with `noEmit: true`
-          //       command = `echo "The 'typecheck' target is disabled because one or more project references set 'noEmit: true' in their tsconfig. Remove this property to resolve this issue."`;
-          //     }
-
-          //     const dependsOn: string[] = [`^${targetName}`];
-          //     if (options.build && targets[options.build.targetName]) {
-          //       // we already processed and have a build target
-          //       dependsOn.unshift(options.build.targetName);
-          //     } else if (options.build) {
-          //       // check if the project will have a build target
-          //       const buildConfigPath = joinPaths(
-          //         projectRoot,
-          //         options.build.configName
-          //       );
-          //       if (
-          //         context.configFiles.includes(buildConfigPath) &&
-          //         isValidPackageJsonBuildConfig(
-          //           retrieveTsConfigFromCache(
-          //             buildConfigPath,
-          //             context.workspaceRoot
-          //           ),
-          //           context.workspaceRoot,
-          //           projectRoot
-          //         )
-          //       ) {
-          //         dependsOn.unshift(options.build.targetName);
-          //       }
-          //     }
-          //   }
-          // }
 
           targets.clean = {
             dependsOn: ["^clean"],
