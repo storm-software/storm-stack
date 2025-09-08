@@ -74,6 +74,7 @@ export function resolveTsupOptions(
       skipNodeModulesBundle: context.options.skipNodeModulesBundle
     },
     {
+      name: context.options.name,
       globalName: override.globalName,
       minify: context.options.mode !== "development",
       metafile: context.options.mode === "development",

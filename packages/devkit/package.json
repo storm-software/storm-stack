@@ -228,6 +228,7 @@
     "@storm-stack/core": "workspace:*",
     "@storm-stack/types": "workspace:*",
     "@stryke/convert": "catalog:",
+    "@stryke/fs": "catalog:",
     "@stryke/helpers": "catalog:",
     "@stryke/json": "catalog:",
     "@stryke/path": "catalog:",

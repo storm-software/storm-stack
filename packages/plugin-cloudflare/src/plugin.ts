@@ -367,7 +367,7 @@ export default class CloudflarePlugin<
 
     return writeFile(
       this.log,
-      context.options.tsconfig,
+      tsconfigFilePath,
       StormJSON.stringify(tsconfigJson)
     );
   }

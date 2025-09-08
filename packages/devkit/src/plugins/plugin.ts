@@ -19,8 +19,16 @@
 import { LogLevelLabel } from "@storm-software/config-tools/types";
 import { Plugin } from "@storm-stack/core/base/plugin";
 import { tsup } from "@storm-stack/core/lib/tsup";
+import {
+  getTsconfigFilePath,
+  isMatchFound
+} from "@storm-stack/core/lib/typescript/tsconfig";
+import { writeFile } from "@storm-stack/core/lib/utilities/write-file";
 import { EngineHooks } from "@storm-stack/core/types/build";
 import { PluginOptions } from "@storm-stack/core/types/plugin";
+import { readJsonFile } from "@stryke/fs/json";
+import { StormJSON } from "@stryke/json/storm-json";
+import { TsConfigJson } from "@stryke/types/tsconfig";
 import { PluginPluginContext, PluginPluginOptions } from "../types/plugins";
 
 /**
@@ -68,7 +76,11 @@ export default class PluginPlugin<
       `Initializing the Config plugin options for the Storm Stack project.`
     );
 
+    context.packageDeps["@storm-stack/core"] = { type: "dependency" };
+
     context.options.platform = "node";
+    context.options.skipNodeModulesBundle = true;
+    context.options.external = ["@storm-stack/core"];
 
     context.options.build ??= {};
     context.options.build.target = "node22";
@@ -79,6 +91,31 @@ export default class PluginPlugin<
     context.options.build.keepNames = true;
     context.options.build.dts = true;
     context.options.build.shims = true;
+  }
+
+  protected async initTsconfig(context: TContext) {
+    const tsconfigFilePath = getTsconfigFilePath(
+      context.options.projectRoot,
+      context.options.tsconfig
+    );
+
+    const tsconfigJson = await readJsonFile<TsConfigJson>(tsconfigFilePath);
+
+    tsconfigJson.compilerOptions ??= {};
+
+    tsconfigJson.compilerOptions.module ??= "ESNext";
+    tsconfigJson.compilerOptions.moduleResolution ??= "Bundler";
+
+    tsconfigJson.compilerOptions.types ??= [];
+    if (!isMatchFound("node", tsconfigJson.compilerOptions.types)) {
+      tsconfigJson.compilerOptions.types.push("node");
+    }
+
+    return writeFile(
+      this.log,
+      tsconfigFilePath,
+      StormJSON.stringify(tsconfigJson)
+    );
   }
 
   /**
