@@ -18,6 +18,7 @@
 
 export * from "./cache";
 export * from "./file-header";
+export * from "./plugin-helpers";
 export * from "./resolve-path";
 export * from "./source-file";
 export * from "./source-map";

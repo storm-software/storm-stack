@@ -38,6 +38,7 @@ import type {
   PluginOptions,
   PluginPackageDependencies
 } from "../types/plugin";
+import { __STORM_STACK_IS_PLUGIN__ } from "../types/plugin";
 
 /**
  * The base class for all plugins
@@ -68,19 +69,16 @@ export abstract class Plugin<
   public options: PluginOptions<TOptions>;
 
   /**
+   * A property to identify the object as a Storm Stack Plugin.
+   */
+  public get [__STORM_STACK_IS_PLUGIN__](): true {
+    return true;
+  }
+
+  /**
    * A list of dependencies that are required for the plugin to work. These dependencies will be installed when Storm Stack CLI is run.
    */
   protected packageDeps: PluginPackageDependencies = {};
-
-  /**
-   * A property to override the plugin's {@link name} field.
-   *
-   * @remarks
-   * This is useful for plugins that need to have a different name than the default one derived from the class name.
-   */
-  protected get overrideName(): string | undefined {
-    return undefined;
-  }
 
   /**
    * The name of the plugin
@@ -123,16 +121,6 @@ export abstract class Plugin<
   }
 
   /**
-   * A list of primary keys for the plugin's options.
-   *
-   * @remarks
-   * This is used to identify when a two instances of the plugin are the same and can be de-duplicated.
-   */
-  protected get primaryKeyFields(): string[] {
-    return this.#primaryKeyFields ?? [];
-  }
-
-  /**
    * The identifier for the plugin used in the {@link isSame} method
    *
    * @remarks
@@ -144,6 +132,26 @@ export abstract class Plugin<
         this.isSingleton ? "" : `-${this.primaryKeys.join("-")}`
       }`
     );
+  }
+
+  /**
+   * A property to override the plugin's {@link name} field.
+   *
+   * @remarks
+   * This is useful for plugins that need to have a different name than the default one derived from the class name.
+   */
+  protected get overrideName(): string | undefined {
+    return undefined;
+  }
+
+  /**
+   * A list of primary keys for the plugin's options.
+   *
+   * @remarks
+   * This is used to identify when a two instances of the plugin are the same and can be de-duplicated.
+   */
+  protected get primaryKeyFields(): string[] {
+    return this.#primaryKeyFields ?? [];
   }
 
   /**

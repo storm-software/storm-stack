@@ -168,7 +168,9 @@ export function CLIModule(context: CLIPluginContext) {
     const result = render(
       isSetString(context.options.plugins.cli.title)
         ? titleCase(context.options.plugins.cli.title)
-        : titleCase(context.options.plugins.cli.title.text),
+        : context.options.plugins.cli.title.text
+          ? titleCase(context.options.plugins.cli.title.text)
+          : titleCase(context.options.name),
       defu(
         isSetObject(context.options.plugins.cli.title)
           ? context.options.plugins.cli.title

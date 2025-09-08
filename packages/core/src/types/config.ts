@@ -39,6 +39,7 @@ import type {
 import type { Configuration as ExternalWebpackOptions } from "webpack";
 import { BabelPluginItem } from "./babel";
 import { Context } from "./context";
+import { PluginInterface } from "./plugin";
 import { TSConfig } from "./tsconfig";
 
 export type LogFn = (type: LogLevelLabel, ...args: string[]) => void;
@@ -76,7 +77,10 @@ export interface PluginConfigObject<
  */
 export type PluginConfig<
   TProps extends Record<string, any> = Record<string, any>
-> = PluginConfigTuple<TProps> | PluginConfigObject<TProps>;
+> =
+  | PluginConfigTuple<TProps>
+  | PluginConfigObject<TProps>
+  | PluginInterface<Context, TProps>;
 
 export type ESBuildConfig = Omit<
   ExternalESBuildOptions,

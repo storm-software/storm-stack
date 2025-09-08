@@ -2093,7 +2093,7 @@ declare module "storm:config" {
      * Indicates if the application is running in debug mode.
      *
      * @title DEBUG
-     * @defaultValue false
+     * @defaultValue true
      */
     DEBUG: boolean;
     /**
@@ -2327,7 +2327,7 @@ declare module "storm:config" {
      * Indicates if error stack traces should be captured.
      *
      * @title STACKTRACE
-     * @defaultValue false
+     * @defaultValue true
      */
     STACKTRACE: boolean;
     /**
@@ -2392,7 +2392,7 @@ declare module "storm:config" {
      * The version of the application.
      *
      * @title APP VERSION
-     * @defaultValue 0.24.0
+     * @defaultValue 0.24.1
      * @readonly
      */
     readonly APP_VERSION: string;
@@ -2457,7 +2457,7 @@ declare module "storm:config" {
      * The unique identifier for the build.
      *
      * @title BUILD Identifier
-     * @defaultValue 1e94f0fb-a456-47d0-a8f9-46679d107617
+     * @defaultValue fa7e66d8-427e-437d-beaa-357ae9c8bf9f
      * @readonly
      */
     readonly BUILD_ID: string;
@@ -2465,7 +2465,7 @@ declare module "storm:config" {
      * The timestamp the build was ran at.
      *
      * @title BUILD TIMESTAMP
-     * @defaultValue 2025-09-07T06:31:50.642Z
+     * @defaultValue 2025-09-08T01:06:06.622Z
      * @readonly
      */
     readonly BUILD_TIMESTAMP: string;
@@ -2698,7 +2698,7 @@ declare module "storm:config" {
      * The unique identifier for the release.
      *
      * @title RELEASE Identifier
-     * @defaultValue 94f0fba4-5677-40a8-b946-679d10761799
+     * @defaultValue 7e66d842-7e93-4dfe-aa35-7ae9c8bf9fcf
      * @readonly
      */
     readonly RELEASE_ID: string;
@@ -2706,7 +2706,7 @@ declare module "storm:config" {
      * The tag for the release. This is generally in the format of "\<APP_NAME\>\@\<APP_VERSION\>".
      *
      * @title RELEASE TAG
-     * @defaultValue storm-stack@0.24.0
+     * @defaultValue storm-stack@0.24.1
      * @readonly
      */
     readonly RELEASE_TAG: string;

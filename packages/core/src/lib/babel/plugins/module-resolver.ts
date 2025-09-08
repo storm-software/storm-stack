@@ -132,7 +132,7 @@ const importVisitors = {
     }
 
     state.moduleResolverVisited.add(nodePath);
-    resolveModulePath(nodePath.get("source"), state);
+    resolveModulePath(nodePath.get("source")!, state);
   }
 };
 

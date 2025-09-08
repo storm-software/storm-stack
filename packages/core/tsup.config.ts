@@ -32,6 +32,7 @@ const config = getTsupConfig([
     ],
     outDir: "dist",
     clean: false,
+    sourcemap: true,
     noExternal: ["memfs", "@deepkit/type-compiler"],
     skipNodeModulesBundle: true
   },

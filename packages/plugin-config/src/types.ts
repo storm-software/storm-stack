@@ -17,6 +17,11 @@
  ------------------------------------------------------------------- */
 
 import {
+  InlineRuntimeType,
+  ReflectionClass
+} from "@storm-stack/core/deepkit/type";
+import { StormConfigInterface } from "@storm-stack/core/runtime-types/esm/shared";
+import {
   ResolvedEntryTypeDefinition,
   ResolvedOptions
 } from "@storm-stack/core/types";
@@ -34,7 +39,7 @@ import {
   TypeDefinitionParameter
 } from "@stryke/types/configuration";
 
-export type ConfigPluginOptions = DotenvConfiguration &
+export type ConfigPluginOptions = Omit<DotenvConfiguration, "types"> &
   PluginBaseOptions & {
     /**
      * A path to the type definition for the expected env configuration parameters. This value can include both a path to the typescript file and the name of the type definition to use separated by a `":"` or `"#"` character. For example: `"./src/types/env.ts#ConfigConfiguration"`.
@@ -42,7 +47,9 @@ export type ConfigPluginOptions = DotenvConfiguration &
      * @remarks
      * If a value is not provided for this option, the plugin will attempt to infer the type definition from the `storm.config.types.variables` object in the project's `package.json` file.
      */
-    types?: TypeDefinitionParameter;
+    types?:
+      | TypeDefinitionParameter
+      | InlineRuntimeType<ReflectionClass<StormConfigInterface>>;
 
     /**
      * A path to the type definition for the expected env secret parameters. This value can include both a path to the typescript file and the name of the type definition to use separated by a `":"` or `"#"` character. For example: `"./src/types/env.ts#ConfigSecrets"`.
@@ -87,7 +94,9 @@ export type ResolvedConfigPluginOptions = Required<
    * @remarks
    * This value is parsed from the {@link ConfigPluginOptions.types} option.
    */
-  types: TypeDefinition;
+  types:
+    | TypeDefinition
+    | InlineRuntimeType<ReflectionClass<StormConfigInterface>>;
 
   /**
    * The type definition for the expected env secret parameters

@@ -19,7 +19,7 @@
 import type { MaybePromise } from "@stryke/types/base";
 import { Range } from "semver";
 import type { EngineHooks } from "./build";
-import type { BuildVariant, LogFn, PluginConfig, ProjectType } from "./config";
+import type { LogFn, PluginConfig } from "./config";
 import { Context } from "./context";
 
 export type RendererFunction = (
@@ -82,26 +82,23 @@ export type PluginOptions<
   log?: LogFn;
 };
 
-export interface BuilderId {
-  /**
-   * The variant of the build process.
-   */
-  variant: BuildVariant;
+// eslint-disable-next-line ts/naming-convention
+export const __STORM_STACK_IS_PLUGIN__ = "__storm_stack_is_plugin__";
 
-  /**
-   * The project type for the build process.
-   */
-  projectType?: ProjectType;
-}
-
+/**
+ * A configuration object used to define a Storm Stack plugin.
+ *
+ * @remarks
+ * This is used to define a plugin that can be loaded by the {@link Engine}.
+ */
 export interface PluginInterface<
   TContext extends Context = Context,
   TOptions extends PluginBaseOptions = PluginBaseOptions
 > {
   /**
-   * The builder ID for the plugin (if specified)
+   * A property to identify the object as a Storm Stack Plugin.
    */
-  builderId?: BuilderId;
+  [__STORM_STACK_IS_PLUGIN__]: true;
 
   /**
    * The name of the plugin

@@ -16,40 +16,33 @@
 
  ------------------------------------------------------------------- */
 
-import { defineConfig } from "@storm-stack/core/define-config";
+import StormStackCLIPlugin from "@storm-stack/plugin-cli/plugin";
+import StormStackLogSentryPlugin from "@storm-stack/plugin-log-sentry/plugin";
+import StormStackLogStoragePlugin from "@storm-stack/plugin-log-storage/plugin";
+import { defineConfig } from "../core/src/define-config";
 
 export default defineConfig({
   name: "Storm Stack",
   skipCache: true,
-  mode: "development",
   plugins: [
-    [
-      "@storm-stack/plugin-cli",
-      {
-        title: {
-          text: "Storm Stack",
-          font: "tiny",
-          colors: ["cyan"],
-          gradient: false
-        },
-        bin: ["storm", "storm-stack"],
-        config: {
-          types: "./src/types.ts#StormStackCLIConfig"
-        }
+    new StormStackCLIPlugin({
+      title: {
+        text: "Storm Stack",
+        font: "tiny",
+        colors: ["cyan"],
+        gradient: false
+      },
+      bin: ["storm", "storm-stack"],
+      config: {
+        types: "./src/types.ts#StormStackCLIConfig"
       }
-    ],
-    [
-      "@storm-stack/plugin-log-storage",
-      {
-        logLevel: "info"
-      }
-    ],
-    [
-      "@storm-stack/plugin-log-sentry",
-      {
-        logLevel: "error"
-      }
-    ]
+    }),
+    new StormStackLogStoragePlugin({
+      logLevel: "info"
+    }),
+    new StormStackLogSentryPlugin({
+      logLevel: "error"
+    })
   ],
   external: ["@storm-stack/core"],
   output: {

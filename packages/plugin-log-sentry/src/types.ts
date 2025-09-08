@@ -46,7 +46,7 @@ export interface LogSentryPluginOptions extends LogPluginOptions {
    * @remarks
    * If not provided, the plugin will try to read the `SENTRY_DSN` environment variable.
    */
-  dsn: string;
+  dsn?: string;
 
   /**
    * Whether notification messages will be sent to Sentry.

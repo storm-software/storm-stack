@@ -42,7 +42,7 @@ export interface CLITitleOptions {
    * @remarks
    * This will be displayed in a large font in the CLI banner. If left undefined, the title will default to the value in {@link Context.options.name}. If set to `false`, the title will not be displayed.
    */
-  text: string;
+  text?: string;
 
   /**
    * The font to use for the application title in the banner of the CLI.
@@ -76,7 +76,7 @@ export interface CLITitleOptions {
    *
    * @defaultValue "tiny"
    */
-  font:
+  font?:
     | "block"
     | "slick"
     | "tiny"
@@ -95,7 +95,7 @@ export interface CLITitleOptions {
    *
    * @defaultValue "center"
    */
-  align: "left" | "center" | "right";
+  align?: "left" | "center" | "right";
 
   /**
    * The colors to use for the banner title text.

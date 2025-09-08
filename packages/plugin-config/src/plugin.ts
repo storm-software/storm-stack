@@ -19,6 +19,7 @@
 import { LogLevelLabel } from "@storm-software/config-tools/types";
 import { Plugin } from "@storm-stack/core/base/plugin";
 import {
+  isType,
   ReflectionClass,
   ReflectionKind,
   stringifyType
@@ -34,7 +35,11 @@ import { existsSync } from "@stryke/path/exists";
 import { joinPaths } from "@stryke/path/join-paths";
 import { constantCase } from "@stryke/string-format/constant-case";
 import { isObject } from "@stryke/type-checks/is-object";
-import { TypeDefinition } from "@stryke/types/configuration";
+import { isSetString } from "@stryke/type-checks/is-set-string";
+import {
+  TypeDefinition,
+  TypeDefinitionParameter
+} from "@stryke/types/configuration";
 import defu from "defu";
 import BabelPlugin from "./babel/plugin";
 import { loadEnv } from "./helpers/load";
@@ -147,13 +152,16 @@ export default class ConfigPlugin<
           };
     }
 
-    if (typeDefinition.types) {
+    if (
+      isSetString(typeDefinition.types) ||
+      isSetString((typeDefinition.types as TypeDefinition)?.file)
+    ) {
       context.options.plugins.config.types ??=
         {} as ResolvedConfigPluginOptions["types"];
       context.options.plugins.config.types = parseTypeDefinition(
-        typeDefinition.types
+        typeDefinition.types as TypeDefinitionParameter
       ) as ResolvedConfigPluginOptions["types"];
-    } else {
+    } else if (!isType(typeDefinition.types)) {
       this.log(
         LogLevelLabel.WARN,
         "The `config.types` configuration parameter was not provided. Please ensure this is expected."
@@ -243,16 +251,20 @@ export default class ConfigPlugin<
         );
       }
     } else {
-      context.reflections.config.types.params = await reflectConfigParams(
-        context,
-        context.options.plugins.config.types?.file
-          ? joinPaths(
-              context.options.projectRoot,
-              context.options.plugins.config.types.file
-            )
-          : undefined,
-        context.options.plugins.config.types.name
-      );
+      context.reflections.config.types.params = isType(
+        context.options.plugins.config.types
+      )
+        ? ReflectionClass.from(context.options.plugins.config.types)
+        : await reflectConfigParams(
+            context,
+            (context.options.plugins.config.types as TypeDefinition)?.file
+              ? joinPaths(
+                  context.options.projectRoot,
+                  (context.options.plugins.config.types as TypeDefinition)?.file
+                )
+              : undefined,
+            (context.options.plugins.config.types as TypeDefinition).name
+          );
       if (!context.reflections.config.types.params) {
         throw new Error(
           "Failed to find the configuration reflection in the context."

@@ -24,6 +24,7 @@ import { camelCase } from "@stryke/string-format/camel-case";
 import { isError } from "@stryke/type-checks/is-error";
 import { isNumber } from "@stryke/type-checks/is-number";
 import { isSetObject } from "@stryke/type-checks/is-set-object";
+import { isSetString } from "@stryke/type-checks/is-set-string";
 import chalk from "chalk";
 import defu from "defu";
 import { createHooks } from "hookable";
@@ -36,6 +37,10 @@ import { lint } from "../commands/lint";
 import { _new } from "../commands/new";
 import { prepare } from "../commands/prepare";
 import { createContext, getChecksum, getPersistedMeta } from "../lib/context";
+import {
+  isPluginConfigObject,
+  isPluginInstance
+} from "../lib/utilities/plugin-helpers";
 import type {
   BuildInlineConfig,
   CleanInlineConfig,
@@ -373,113 +378,113 @@ export class Engine<TOptions extends ResolvedOptions = ResolvedOptions> {
   private async initPlugin(
     plugin: string | PluginConfig
   ): Promise<Plugin | null> {
-    const pluginConfig: PluginConfigTuple =
-      typeof plugin === "string"
+    if (
+      !plugin ||
+      (!isSetString(plugin) &&
+        !Array.isArray(plugin) &&
+        !isPluginConfigObject(plugin) &&
+        !isPluginInstance(plugin))
+    ) {
+      throw new Error(
+        `Invalid plugin specified in the configuration - ${JSON.stringify(plugin)}. Please ensure the value is a plugin name, an object with the \`plugin\` and \`props\` properties, or an instance of \`Plugin\`.`
+      );
+    }
+
+    let pluginInstance!: Plugin;
+    if (isPluginInstance(plugin)) {
+      pluginInstance = plugin;
+
+      pluginInstance.options ??= {};
+      pluginInstance.options.log ??= this.#context.log;
+    } else {
+      const pluginConfig: PluginConfigTuple = isSetString(plugin)
         ? [plugin, {}]
         : Array.isArray(plugin)
           ? plugin
           : [plugin.plugin, plugin.props];
 
-    let installPath = pluginConfig[0];
-    if (
-      installPath.startsWith("@") &&
-      installPath.split("/").filter(Boolean).length > 2
-    ) {
-      const splits = installPath.split("/").filter(Boolean);
-      installPath = `${splits[0]}/${splits[1]}`;
-    }
-
-    const isInstalled = isPackageExists(installPath, {
-      paths: [
-        this.#context.options.workspaceConfig.workspaceRoot,
-        this.#context.options.projectRoot
-      ]
-    });
-    if (!isInstalled && this.#context.options.skipInstalls !== true) {
-      this.#context.log(
-        LogLevelLabel.WARN,
-        `The plugin package "${installPath}" is not installed. It will be installed automatically.`
-      );
-
-      const result = await install(installPath, {
-        cwd: this.#context.options.projectRoot
-      });
-      if (isNumber(result.exitCode) && result.exitCode > 0) {
-        this.#context.log(LogLevelLabel.ERROR, result.stderr);
-        throw new Error(
-          `An error occurred while installing the build plugin package "${installPath}" `
-        );
+      let installPath = pluginConfig[0];
+      if (
+        installPath.startsWith("@") &&
+        installPath.split("/").filter(Boolean).length > 2
+      ) {
+        const splits = installPath.split("/").filter(Boolean);
+        installPath = `${splits[0]}/${splits[1]}`;
       }
-    }
 
-    let pluginInstance!: Plugin;
-    try {
-      // First check if the package has a "plugin" subdirectory - @scope/package/plugin
-      const module = await this.#context.resolver.import<{
-        plugin?: new (config: any) => Plugin;
-        default: new (config: any) => Plugin;
-      }>(
-        this.#context.resolver.esmResolve(joinPaths(pluginConfig[0], "plugin"))
-      );
-
-      const PluginConstructor = module.plugin ?? module.default;
-      pluginInstance = new PluginConstructor({
-        ...(pluginConfig[1] ?? {}),
-        log: this.#context.log
+      const isInstalled = isPackageExists(installPath, {
+        paths: [
+          this.#context.options.workspaceConfig.workspaceRoot,
+          this.#context.options.projectRoot
+        ]
       });
-    } catch (error) {
+      if (!isInstalled && this.#context.options.skipInstalls !== true) {
+        this.#context.log(
+          LogLevelLabel.WARN,
+          `The plugin package "${installPath}" is not installed. It will be installed automatically.`
+        );
+
+        const result = await install(installPath, {
+          cwd: this.#context.options.projectRoot
+        });
+        if (isNumber(result.exitCode) && result.exitCode > 0) {
+          this.#context.log(LogLevelLabel.ERROR, result.stderr);
+          throw new Error(
+            `An error occurred while installing the build plugin package "${installPath}" `
+          );
+        }
+      }
+
       try {
+        // First check if the package has a "plugin" subdirectory - @scope/package/plugin
         const module = await this.#context.resolver.import<{
           plugin?: new (config: any) => Plugin;
           default: new (config: any) => Plugin;
-        }>(this.#context.resolver.esmResolve(pluginConfig[0]));
+        }>(
+          this.#context.resolver.esmResolve(
+            joinPaths(pluginConfig[0], "plugin")
+          )
+        );
 
         const PluginConstructor = module.plugin ?? module.default;
         pluginInstance = new PluginConstructor({
           ...(pluginConfig[1] ?? {}),
           log: this.#context.log
         });
-      } catch {
-        if (!isInstalled) {
-          throw new Error(
-            `The plugin package "${pluginConfig[0]}" is not installed. Please install the package using the command: "npm install ${pluginConfig[0]} --save-dev"`
-          );
-        } else {
-          throw new Error(
-            `An error occurred while importing the build plugin package "${pluginConfig[0]}":
+      } catch (error) {
+        try {
+          const module = await this.#context.resolver.import<{
+            plugin?: new (config: any) => Plugin;
+            default: new (config: any) => Plugin;
+          }>(this.#context.resolver.esmResolve(pluginConfig[0]));
+
+          const PluginConstructor = module.plugin ?? module.default;
+          pluginInstance = new PluginConstructor({
+            ...(pluginConfig[1] ?? {}),
+            log: this.#context.log
+          });
+        } catch {
+          if (!isInstalled) {
+            throw new Error(
+              `The plugin package "${pluginConfig[0]}" is not installed. Please install the package using the command: "npm install ${pluginConfig[0]} --save-dev"`
+            );
+          } else {
+            throw new Error(
+              `An error occurred while importing the build plugin package "${pluginConfig[0]}":
 ${isError(error) ? error.message : String(error)}
 
 Note: Please ensure the plugin package's default export is a class that extends \`Plugin\` with a constructor that excepts a single arguments of type \`PluginOptions\`.`
-          );
+            );
+          }
         }
       }
     }
 
-    if (!pluginInstance) {
+    if (!isPluginInstance(pluginInstance)) {
       throw new Error(
-        `The plugin package "${pluginConfig[0]}" does not export a valid module.`
+        `The plugin option ${JSON.stringify(plugin)} does not export a valid module.`
       );
     }
-
-    if (!pluginInstance.name) {
-      throw new Error(
-        `The module in the build plugin package "${pluginConfig[0]}" must export a \`name\` string value.`
-      );
-    }
-
-    if (!pluginInstance.identifier) {
-      throw new Error(
-        `The module in the build plugin package "${pluginConfig[0]}" must export a \`identifier\` string value.`
-      );
-    }
-
-    if (!pluginInstance.addHooks) {
-      throw new Error(
-        `The module in the build plugin package "${pluginConfig[0]}" must export a \`addHooks\` function value.`
-      );
-    }
-
-    pluginInstance.options ??= pluginConfig[1] ?? {};
 
     this.#context.options.plugins[pluginInstance.identifier] = defu(
       pluginInstance.options ?? {},
