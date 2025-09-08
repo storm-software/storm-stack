@@ -16767,13 +16767,13 @@ snapshots:
     dependencies:
       '@ampproject/remapping': 2.3.0
       '@babel/code-frame': 8.0.0-beta.2
-      '@babel/generator': 8.0.0-beta.1
+      '@babel/generator': 8.0.0-beta.2
       '@babel/helper-compilation-targets': 8.0.0-beta.2
       '@babel/helpers': 8.0.0-beta.2
-      '@babel/parser': 8.0.0-beta.1
-      '@babel/template': 8.0.0-beta.1
-      '@babel/traverse': 8.0.0-beta.1
-      '@babel/types': 8.0.0-beta.1
+      '@babel/parser': 8.0.0-beta.2
+      '@babel/template': 8.0.0-beta.2
+      '@babel/traverse': 8.0.0-beta.2
+      '@babel/types': 8.0.0-beta.2
       '@types/gensync': 1.0.4
       convert-source-map: 2.0.0
       debug: 4.4.1
@@ -30322,7 +30322,7 @@ snapshots:
       micromark-util-character: 2.1.1
       micromark-util-sanitize-uri: 2.0.1
       micromark-util-symbol: 2.0.1
-      micromark-util-types: 2.0.2
+      micromark-util-types: 2.0.1
 
   micromark-extension-gfm-footnote@1.1.2:
     dependencies:
@@ -30338,13 +30338,13 @@ snapshots:
   micromark-extension-gfm-footnote@2.1.0:
     dependencies:
       devlop: 1.1.0
-      micromark-core-commonmark: 2.0.3
+      micromark-core-commonmark: 2.0.2
       micromark-factory-space: 2.0.1
       micromark-util-character: 2.1.1
       micromark-util-normalize-identifier: 2.0.1
       micromark-util-sanitize-uri: 2.0.1
       micromark-util-symbol: 2.0.1
-      micromark-util-types: 2.0.2
+      micromark-util-types: 2.0.1
 
   micromark-extension-gfm-strikethrough@0.6.5:
     dependencies:
@@ -30572,7 +30572,7 @@ snapshots:
   micromark-factory-space@2.0.1:
     dependencies:
       micromark-util-character: 2.1.1
-      micromark-util-types: 2.0.2
+      micromark-util-types: 2.0.1
 
   micromark-factory-title@1.1.0:
     dependencies:
@@ -30630,7 +30630,7 @@ snapshots:
     dependencies:
       micromark-util-character: 2.1.1
       micromark-util-symbol: 2.0.1
-      micromark-util-types: 2.0.2
+      micromark-util-types: 2.0.1
 
   micromark-util-combine-extensions@1.1.0:
     dependencies:
@@ -30696,7 +30696,7 @@ snapshots:
 
   micromark-util-resolve-all@2.0.1:
     dependencies:
-      micromark-util-types: 2.0.2
+      micromark-util-types: 2.0.1
 
   micromark-util-sanitize-uri@1.2.0:
     dependencies:
@@ -30722,7 +30722,7 @@ snapshots:
       devlop: 1.1.0
       micromark-util-chunked: 2.0.1
       micromark-util-symbol: 2.0.1
-      micromark-util-types: 2.0.2
+      micromark-util-types: 2.0.1
 
   micromark-util-symbol@1.1.0: {}
 
