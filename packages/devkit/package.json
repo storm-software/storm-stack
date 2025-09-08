@@ -217,9 +217,19 @@
     "storm-software",
     "devkit"
   ],
+  "peerDependencies": {
+    "@alloy-js/core": "^0.20.0",
+    "@alloy-js/typescript": "^0.20.0"
+  },
+  "peerDependenciesMeta": {
+    "@alloy-js/core": {
+      "optional": true
+    },
+    "@alloy-js/typescript": {
+      "optional": true
+    }
+  },
   "dependencies": {
-    "@alloy-js/core": "catalog:",
-    "@alloy-js/typescript": "catalog:",
     "@babel/core": "catalog:",
     "@babel/helper-plugin-utils": "catalog:",
     "@storm-software/config-tools": "catalog:",
@@ -240,6 +250,8 @@
     "jiti": "catalog:"
   },
   "devDependencies": {
+    "@alloy-js/core": "catalog:",
+    "@alloy-js/typescript": "catalog:",
     "@types/node": "catalog:",
     "tsup": "catalog:"
   },
