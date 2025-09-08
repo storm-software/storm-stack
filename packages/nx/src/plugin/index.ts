@@ -29,6 +29,8 @@ import {
   addProjectTag,
   setDefaultProjectTags
 } from "@storm-software/workspace-tools/utils/project-tags";
+import { loadUserConfigFile } from "@storm-stack/core/lib/config";
+import { PROJECT_ROOT_HASH_LENGTH } from "@storm-stack/core/lib/context";
 import { getEnvPaths } from "@stryke/env/get-env-paths";
 import { readJsonFileSync } from "@stryke/fs/json";
 import { hash } from "@stryke/hash/hash";
@@ -44,8 +46,6 @@ import { readNxJson } from "nx/src/config/nx-json.js";
 import type { ProjectConfiguration } from "nx/src/config/workspace-json-project-json.js";
 import type { PackageJson as PackageJsonNx } from "nx/src/utils/package-json.js";
 import { readTargetsFromPackageJson } from "nx/src/utils/package-json.js";
-import { loadUserConfigFile } from "../../../core/src/lib/config";
-import { PROJECT_ROOT_HASH_LENGTH } from "../../../core/src/lib/context";
 import { CONFIG_INPUTS } from "../helpers/constants";
 
 /* eslint-disable no-console */
