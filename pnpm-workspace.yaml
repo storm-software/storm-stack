@@ -5,18 +5,18 @@ packages:
 catalog:
   "@alloy-js/core": ^0.17.0
   "@alloy-js/typescript": ^0.17.0
-  "@babel/core": 8.0.0-beta.1
-  "@babel/generator": 8.0.0-beta.1
-  "@babel/helper-module-imports": 8.0.0-beta.1
-  "@babel/helper-plugin-utils": 8.0.0-beta.1
-  "@babel/parser": 8.0.0-beta.1
-  "@babel/plugin-syntax-typescript": 8.0.0-beta.1
-  "@babel/plugin-syntax-jsx": 8.0.0-beta.1
-  "@babel/preset-typescript": 8.0.0-beta.1
-  "@babel/preset-react": 8.0.0-beta.1
-  "@babel/template": 8.0.0-beta.1
-  "@babel/traverse": 8.0.0-beta.1
-  "@babel/types": 8.0.0-beta.1
+  "@babel/core": 8.0.0-beta.2
+  "@babel/generator": 8.0.0-beta.2
+  "@babel/helper-module-imports": 8.0.0-beta.2
+  "@babel/helper-plugin-utils": 8.0.0-beta.2
+  "@babel/parser": 8.0.0-beta.2
+  "@babel/plugin-syntax-typescript": 8.0.0-beta.2
+  "@babel/plugin-syntax-jsx": 8.0.0-beta.2
+  "@babel/preset-typescript": 8.0.0-beta.2
+  "@babel/preset-react": 8.0.0-beta.2
+  "@babel/template": 8.0.0-beta.2
+  "@babel/traverse": 8.0.0-beta.2
+  "@babel/types": 8.0.0-beta.2
   "@biomejs/biome": ^1.9.4
   "@clack/prompts": ^0.10.1
   "@cloudflare/unenv-preset": 2.3.1
@@ -33,8 +33,15 @@ catalog:
   "@microsoft/api-extractor": ^7.52.8
   "@microsoft/tsdoc": ^0.15.1
   "@microsoft/tsdoc-config": ^0.17.1
-  "@nuxt/kit": ^3.17.1
-  "@nuxt/schema": ^3.17.1
+  "@rspack/cli": "^1.3.8"
+  "@rspack/core": "^1.3.8"
+  "astro": "^5.13.5"
+  "rolldown": "^1.0.0-beta.35"
+  "rollup": "^4.50.1"
+  "vite": "^7.1.5"
+  "webpack": "^5.101.3"
+  "@nuxt/kit": "^4.1.1"
+  "@nuxt/schema": "^4.1.1"
   "@opentelemetry/api-logs": ^0.200.0
   "@opentelemetry/exporter-logs-otlp-grpc": ^0.200.0
   "@opentelemetry/exporter-logs-otlp-http": ^0.200.0
@@ -46,15 +53,6 @@ catalog:
   "@sentry/core": ^9.15.0
   "@sentry/node": ^9.15.0
   "@sentry/types": ^9.15.0
-  "@storm-stack/core": 0.41.1
-  "@storm-stack/devkit": 0.15.1
-  "@storm-stack/nx": 0.19.5
-  "@storm-stack/plugin-cli": 0.33.1
-  "@storm-stack/plugin-date": 0.6.1
-  "@storm-stack/plugin-log-console": 0.23.1
-  "@storm-stack/plugin-log-sentry": 0.29.1
-  "@storm-stack/plugin-log-storage": 0.26.1
-  "@storm-stack/plugin-storage-fs": 0.15.1
   "@taplo/cli": ^0.7.0
   "@types/eslint": ^9.6.1
   "@types/eslint__js": ^8.42.3
@@ -159,17 +157,15 @@ catalog:
   typedoc-plugin-frontmatter: ^1.3.0
   typedoc-plugin-markdown: 4.0.0-next.20
   esbuild: ^0.25.9
-  rollup: ^4.40.1
-  rolldown: ^1.0.0-beta.8
   unbuild: ^3.5.0
   unenv: npm:unenv-nightly
   unimport: ^4.2.0
+  unplugin: "^2.3.10"
   unionfs: ^4.5.4
   unstorage: ^1.16.0
   untyped: 1.5.2
   uqr: ^0.1.2
   verdaccio: 6.1.2
-  vite: ^6.3.4
   defu: ^6.1.4
   jiti: ^2.4.2
   wrangler: ^4.19.1

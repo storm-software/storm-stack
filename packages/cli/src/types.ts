@@ -18,6 +18,9 @@
 
 import { StormSentryLogConfig } from "@storm-stack/plugin-log-sentry/types/config";
 
+/**
+ * Configuration options for the Storm Stack CLI.
+ */
 export interface StormStackCLIConfig extends StormSentryLogConfig {
   /**
    * The mode used for outputting results.
