@@ -33,7 +33,7 @@ export default defineConfig({
       },
       bin: ["storm", "storm-stack"],
       env: {
-        types: "./src/types.ts#StormStackCLIEnv"
+        types: "./src/types/env.ts#StormStackCLIEnv"
       }
     }),
     new StormStackLogStoragePlugin({
