@@ -17,8 +17,8 @@
  ------------------------------------------------------------------- */
 
 import { LogLevelLabel } from "@storm-software/config-tools/types";
+import { existsSync } from "@stryke/fs/exists";
 import { createDirectory, removeDirectory } from "@stryke/fs/helpers";
-import { existsSync } from "@stryke/path/exists";
 import { joinPaths } from "@stryke/path/join-paths";
 import { initTypedoc } from "../../../lib/typedoc/init";
 import type { EngineHooks } from "../../../types/build";

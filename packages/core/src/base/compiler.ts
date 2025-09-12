@@ -17,11 +17,11 @@
  ------------------------------------------------------------------- */
 
 import { LogLevelLabel } from "@storm-software/config-tools/types";
+import { existsSync } from "@stryke/fs/exists";
 import { createDirectorySync } from "@stryke/fs/helpers";
-import { existsSync } from "@stryke/path/exists";
+import { resolvePackage } from "@stryke/fs/resolve";
 import { isParentPath } from "@stryke/path/is-parent-path";
 import { joinPaths } from "@stryke/path/join-paths";
-import { resolvePackage } from "@stryke/path/resolve";
 import type MagicString from "magic-string";
 import { transform } from "../lib/babel/transform";
 import { extendLog } from "../lib/logger";
@@ -39,10 +39,12 @@ import {
 import { LogFn } from "../types/config";
 import { Context } from "../types/context";
 
-export class Compiler implements CompilerInterface {
+export class Compiler<TContext extends Context = Context>
+  implements CompilerInterface<TContext>
+{
   #cache: WeakMap<SourceFile, string> = new WeakMap();
 
-  #options: CompilerOptions;
+  #options: CompilerOptions<TContext>;
 
   #corePath: string | undefined;
 
@@ -62,7 +64,7 @@ export class Compiler implements CompilerInterface {
    * @param context - The compiler context.
    * @param options - The compiler options.
    */
-  constructor(context: Context, options: CompilerOptions = {}) {
+  constructor(context: TContext, options: CompilerOptions<TContext> = {}) {
     this.log = extendLog(context.log, "compiler");
     this.#options = options;
 
@@ -82,7 +84,7 @@ export class Compiler implements CompilerInterface {
    * @returns The transpiled module.
    */
   public async transform(
-    context: Context,
+    context: TContext,
     fileName: string,
     code: string | MagicString,
     options: CompilerOptions = {}
@@ -168,7 +170,7 @@ export class Compiler implements CompilerInterface {
    * @returns The transpiled module.
    */
   public async transpile(
-    context: Context,
+    context: TContext,
     id: string,
     code: string | MagicString,
     options: TranspilerOptions = {}
@@ -199,7 +201,7 @@ export class Compiler implements CompilerInterface {
    * @returns The compiled source code and source map.
    */
   public async compile(
-    context: Context,
+    context: TContext,
     id: string,
     code: string | MagicString,
     options: CompilerOptions = {}
@@ -247,7 +249,7 @@ export class Compiler implements CompilerInterface {
     return generateSourceMap(sourceFile.id, sourceFile.code, transpiled);
   }
 
-  protected async getCache(context: Context, sourceFile: SourceFile) {
+  protected async getCache(context: TContext, sourceFile: SourceFile) {
     let cache = this.#cache.get(sourceFile);
     if (cache) {
       return cache;
@@ -266,7 +268,7 @@ export class Compiler implements CompilerInterface {
   }
 
   protected async setCache(
-    context: Context,
+    context: TContext,
     sourceFile: SourceFile,
     transpiled?: string
   ) {
@@ -284,7 +286,7 @@ export class Compiler implements CompilerInterface {
   }
 
   protected async shouldSkip(
-    context: Context,
+    context: TContext,
     id: string,
     code: string | MagicString
   ): Promise<boolean> {

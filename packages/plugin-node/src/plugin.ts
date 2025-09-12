@@ -26,12 +26,12 @@ import { PluginOptions } from "@storm-stack/core/types/plugin";
 import { IdModule } from "@storm-stack/devkit/templates/id";
 import { LogModule } from "@storm-stack/devkit/templates/log";
 import { StorageModule } from "@storm-stack/devkit/templates/storage";
-import { readConfigTypeReflection } from "@storm-stack/plugin-config/helpers/persistence";
+import { readEnvTypeReflection } from "@storm-stack/plugin-env/helpers/persistence";
 import { joinPaths } from "@stryke/path/join-paths";
 import BabelPlugin from "./babel/plugin";
 import { ContextModule } from "./templates/context";
-import { EnvModule } from "./templates/env";
 import { EventModule } from "./templates/event";
+import { MetaModule } from "./templates/meta";
 import { RequestModule } from "./templates/request";
 import { ResponseModule } from "./templates/response";
 import { NodePluginContext, NodePluginOptions } from "./types/plugin";
@@ -52,7 +52,10 @@ export default class NodePlugin<
     super(options);
 
     this.dependencies = [
-      ["@storm-stack/plugin-config", this.options.config],
+      [
+        "@storm-stack/plugin-env",
+        { environmentConfig: "process.env", ...(this.options.env ?? {}) }
+      ],
       ["@storm-stack/plugin-error", this.options.error],
       [
         "@storm-stack/plugin-log-console",
@@ -136,7 +139,7 @@ export default class NodePlugin<
       context.vfs.writeRuntimeFile(
         "id",
         joinPaths(context.runtimePath, "id.ts"),
-        IdModule(context)
+        IdModule()
       ),
       context.vfs.writeRuntimeFile(
         "log",
@@ -154,9 +157,9 @@ export default class NodePlugin<
         ContextModule(context)
       ),
       context.vfs.writeRuntimeFile(
-        "env",
-        joinPaths(context.runtimePath, "env.ts"),
-        EnvModule(context)
+        "meta",
+        joinPaths(context.runtimePath, "meta.ts"),
+        MetaModule(context)
       ),
       context.vfs.writeRuntimeFile(
         "event",
@@ -189,9 +192,9 @@ export default class NodePlugin<
       `Completing final preparations for the Storm Stack projects type definitions.`
     );
 
-    const configReflection = await readConfigTypeReflection(context, "params");
-    if (!configReflection) {
-      throw new Error("Could not read config reflection.");
+    const envReflection = await readEnvTypeReflection(context, "env");
+    if (!envReflection) {
+      throw new Error("Could not read environment configuration reflection.");
     }
 
     sourceFile.code.append(`

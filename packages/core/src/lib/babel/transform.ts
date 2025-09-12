@@ -18,9 +18,9 @@
 
 import { transformAsync } from "@babel/core";
 import { LogLevelLabel } from "@storm-software/config-tools/types";
+import { resolvePackage } from "@stryke/fs/resolve";
 import { isParentPath } from "@stryke/path/is-parent-path";
 import { joinPaths } from "@stryke/path/join-paths";
-import { resolvePackage } from "@stryke/path/resolve";
 import { isFunction } from "@stryke/type-checks/is-function";
 import { isSetString } from "@stryke/type-checks/is-set-string";
 import { defu } from "defu";
@@ -148,16 +148,16 @@ export async function transform(
     context.log(
       LogLevelLabel.ERROR,
       `Error during Babel transformation: ${
-        error?.message
-          ? isSetString(error.message)
-            ? error.message.length > 5000
-              ? `${(error.message as string).slice(0, 5000)}... ${(
-                  error.message as string
-                ).slice(-100)}`
-              : error.message
-            : error.message
+        (error as Error)?.message
+          ? isSetString((error as Error).message)
+            ? (error as Error).message.length > 5000
+              ? `${(error as Error).message.slice(0, 5000)}... ${(
+                  error as Error
+                ).message.slice(-100)}`
+              : (error as Error).message
+            : (error as Error).message
           : "Unknown error"
-      }\n${error?.stack ? `\nStack trace:\n${error.stack}\n` : ""}`
+      }\n${(error as Error)?.stack ? `\nStack trace:\n${(error as Error).stack}\n` : ""}`
     );
 
     throw new Error(`Babel transformation failed for ${source.id}`);

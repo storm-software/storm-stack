@@ -101,7 +101,7 @@ export async function init<TContext extends Context = Context>(
     return sourceFile;
   };
 
-  context.compiler = new Compiler(context, {
+  context.compiler = new Compiler<any>(context, {
     onPreTransform: handlePreTransform,
     onPostTransform: handlePostTransform
   });

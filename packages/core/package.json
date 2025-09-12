@@ -945,6 +945,7 @@
     "@microsoft/tsdoc": "catalog:",
     "@storm-software/testing-tools": "catalog:",
     "@stryke/types": "catalog:",
+    "@types/diff-match-patch": "catalog:",
     "@types/node": "catalog:",
     "@types/semver": "catalog:",
     "eslint": "catalog:",

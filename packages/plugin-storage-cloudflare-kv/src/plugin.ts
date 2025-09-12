@@ -22,8 +22,9 @@ import { getFileHeader } from "@storm-stack/core/lib/utilities/file-header";
 import type { EngineHooks } from "@storm-stack/core/types";
 import type { PluginOptions } from "@storm-stack/core/types/plugin";
 import StoragePlugin from "@storm-stack/devkit/plugins/storage";
-import { readFile } from "@stryke/fs";
-import { existsSync, joinPaths } from "@stryke/path";
+import { existsSync } from "@stryke/fs/exists";
+import { readFile } from "@stryke/fs/read-file";
+import { joinPaths } from "@stryke/path/join-paths";
 import {
   StorageCloudflareKVPluginContext,
   StorageCloudflareKVPluginOptions
@@ -43,7 +44,7 @@ export default class StorageCloudflareKVPlugin<
 
     this.options.minTTL ??= 60;
 
-    this.dependencies = [["@storm-stack/plugin-config", options.config ?? {}]];
+    this.dependencies = [["@storm-stack/plugin-env", options.env ?? {}]];
   }
 
   /**
@@ -105,11 +106,11 @@ import { StormError } from "storm:error";
  * @returns The Cloudflare KV {@link StorageAdapter | storage adapter}.
  */
 function createAdapter(): StorageAdapter {
-  const accountId = $storm.config.CLOUDFLARE_ACCOUNT_ID;
-  const apiToken = $storm.config.CLOUDFLARE_API_TOKEN;
-  const email = $storm.config.CLOUDFLARE_EMAIL;
-  const apiKey = $storm.config.CLOUDFLARE_API_KEY;
-  const userServiceKey = $storm.config.CLOUDFLARE_USER_SERVICE_KEY;
+  const accountId = $storm.env.CLOUDFLARE_ACCOUNT_ID;
+  const apiToken = $storm.env.CLOUDFLARE_API_TOKEN;
+  const email = $storm.env.CLOUDFLARE_EMAIL;
+  const apiKey = $storm.env.CLOUDFLARE_API_KEY;
+  const userServiceKey = $storm.env.CLOUDFLARE_USER_SERVICE_KEY;
 
   if (!accountId) {
     throw new StormError({

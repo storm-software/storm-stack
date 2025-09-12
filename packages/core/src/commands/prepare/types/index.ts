@@ -19,10 +19,10 @@
 import type { ExtractorResult } from "@microsoft/api-extractor";
 import { Extractor, ExtractorConfig } from "@microsoft/api-extractor";
 import { LogLevelLabel } from "@storm-software/config-tools/types";
+import { resolvePackage } from "@stryke/fs/resolve";
 import { relativePath } from "@stryke/path/file-path-fns";
 import { joinPaths } from "@stryke/path/join-paths";
 import { replacePath } from "@stryke/path/replace";
-import { resolvePackage } from "@stryke/path/resolve";
 import { TsConfigJson } from "@stryke/types/tsconfig";
 import defu from "defu";
 import { existsSync } from "node:fs";

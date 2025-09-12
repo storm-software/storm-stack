@@ -20,9 +20,9 @@ import { ResolvedOptions } from "@storm-stack/core/types/build";
 import { Context } from "@storm-stack/core/types/context";
 import { PluginBaseOptions } from "@storm-stack/core/types/plugin";
 import {
-  ConfigPluginOptions,
-  ResolvedConfigPluginOptions
-} from "@storm-stack/plugin-config/types";
+  EnvPluginOptions,
+  ResolvedEnvPluginOptions
+} from "@storm-stack/plugin-env/types";
 
 export type DateLibraryType = "date-fns" | "dayjs" | "luxon" | "moment";
 
@@ -42,9 +42,9 @@ export interface DatePluginOptions extends PluginBaseOptions {
   type?: DateLibraryType;
 
   /**
-   * Options for the config plugin.
+   * Options for the env plugin.
    */
-  config?: ConfigPluginOptions;
+  env?: EnvPluginOptions;
 }
 
 export type ResolvedDatePluginOptions = Required<
@@ -53,7 +53,7 @@ export type ResolvedDatePluginOptions = Required<
 
 export interface DatePluginResolvedOptions {
   date: Required<Omit<DatePluginOptions, "config">>;
-  config: ResolvedConfigPluginOptions;
+  env: ResolvedEnvPluginOptions;
 }
 
 export type DatePluginContext<

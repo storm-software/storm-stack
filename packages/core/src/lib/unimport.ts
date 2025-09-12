@@ -17,10 +17,12 @@
  ------------------------------------------------------------------- */
 
 import { LogLevelLabel } from "@storm-software/config-tools/types";
+import { existsSync } from "@stryke/fs/exists";
 import { createDirectory } from "@stryke/fs/helpers";
 import { throttle } from "@stryke/helpers/throttle";
 import { StormJSON } from "@stryke/json/storm-json";
-import { existsSync, findFilePath, joinPaths } from "@stryke/path/index";
+import { findFilePath } from "@stryke/path/file-path-fns";
+import { joinPaths } from "@stryke/path/join-paths";
 import { isSetString } from "@stryke/type-checks/is-set-string";
 import {
   createUnimport as createUnimportExternal,

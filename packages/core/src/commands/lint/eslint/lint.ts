@@ -17,12 +17,12 @@
  ------------------------------------------------------------------- */
 
 import { LogLevelLabel } from "@storm-software/config-tools/types";
+import { isDirectory } from "@stryke/fs/is-file";
 import { isPackageExists } from "@stryke/fs/package-fns";
 import { readFile } from "@stryke/fs/read-file";
 import { parseVersion } from "@stryke/fs/semver-fns";
 import { findFileName } from "@stryke/path/file-path-fns";
 import { getParentPath } from "@stryke/path/get-parent-path";
-import { isDirectory } from "@stryke/path/is-file";
 import { joinPaths } from "@stryke/path/join-paths";
 import { isError } from "@stryke/type-checks/is-error";
 import type { ESLint as FlatESLint } from "eslint";
@@ -326,7 +326,9 @@ const lint = async (
     const formattedResult = await formatResults(
       context.options.projectRoot,
       results,
-      selectedFormatter?.format?.bind(selectedFormatter)
+      selectedFormatter?.format?.bind(selectedFormatter) as Parameters<
+        typeof formatResults
+      >[2]
     );
     const lintEnd = process.hrtime(lintStart);
     const totalWarnings = results.reduce(
@@ -358,7 +360,9 @@ const lint = async (
       log(
         LogLevelLabel.ERROR,
         `ESLint: ${
-          isError(err) && err.message ? err.message.replace(/\n/g, " ") : err
+          isError(err) && err.message
+            ? err.message.replace(/\n/g, " ")
+            : String(err)
         }`
       );
       return null;

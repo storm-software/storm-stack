@@ -17,11 +17,11 @@
  ------------------------------------------------------------------- */
 
 import { getWorkspaceConfig } from "@storm-software/config-tools/get-config";
-import { existsSync } from "@stryke/path/exists";
+import { existsSync } from "@stryke/fs/exists";
 import {
   getProjectRoot,
   getWorkspaceRoot
-} from "@stryke/path/get-workspace-root";
+} from "@stryke/fs/get-workspace-root";
 import { joinPaths } from "@stryke/path/join-paths";
 import { isFunction } from "@stryke/type-checks/is-function";
 import { isSetObject } from "@stryke/type-checks/is-set-object";

@@ -30,7 +30,7 @@ export default defineConfig({
     [
       "@storm-stack/plugin-react",
       {
-        config: {
+        env: {
           types: "./src/types.ts#ExampleReactAppConfig"
         }
       }

@@ -66,4 +66,9 @@ export interface StormRequestInterface<
    * The data associated with the request.
    */
   readonly data: TData;
+
+  /**
+   * The headers associated with the request.
+   */
+  readonly headers: Record<string, any>;
 }

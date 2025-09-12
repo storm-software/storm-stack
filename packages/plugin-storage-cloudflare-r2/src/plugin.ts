@@ -22,8 +22,9 @@ import { getFileHeader } from "@storm-stack/core/lib/utilities/file-header";
 import type { EngineHooks } from "@storm-stack/core/types";
 import type { PluginOptions } from "@storm-stack/core/types/plugin";
 import StoragePlugin from "@storm-stack/devkit/plugins/storage";
-import { readFile } from "@stryke/fs";
-import { existsSync, joinPaths } from "@stryke/path";
+import { existsSync } from "@stryke/fs/exists";
+import { readFile } from "@stryke/fs/read-file";
+import { joinPaths } from "@stryke/path/join-paths";
 import {
   StorageCloudflareR2PluginContext,
   StorageCloudflareR2PluginOptions
@@ -110,24 +111,20 @@ import { StormError } from "storm:error";
  * @returns The Cloudflare R2 {@link StorageAdapter | storage adapter}.
  */
 function createAdapter(): StorageAdapter {
-  const accountId = $storm.config.CLOUDFLARE_ACCOUNT_ID;
-  const accessKeyId = $storm.config.CLOUDFLARE_R2_ACCESS_KEY_ID;
-  const secretAccessKey = $storm.config.CLOUDFLARE_R2_SECRET_ACCESS_KEY;
-
-  if (!accountId) {
+  if (!$storm.env.CLOUDFLARE_ACCOUNT_ID) {
     throw new StormError({
       type: "general", code: 13, params: ["Cloudflare R2 storage"]
     });
   }
 
-  if (!accessKeyId && !secretAccessKey) {
+  if (!$storm.env.CLOUDFLARE_R2_ACCESS_KEY_ID && !$storm.env.CLOUDFLARE_R2_SECRET_ACCESS_KEY) {
     throw new StormError({ type: "general", code: 15 });
   }
 
   const adapter = s3Driver({
-    accessKeyId,
-    secretAccessKey,
-    endpoint: \`https://\${accountId}.r2.cloudflarestorage.com\`,
+    accessKeyId: $storm.env.CLOUDFLARE_R2_ACCESS_KEY_ID,
+    secretAccessKey: $storm.env.CLOUDFLARE_R2_SECRET_ACCESS_KEY,
+    endpoint: \`https://\${$storm.env.CLOUDFLARE_ACCOUNT_ID}.r2.cloudflarestorage.com\`,
     bucket: "${this.getOptions(context).namespace}",
     region: "auto",
   }) as StorageAdapter;

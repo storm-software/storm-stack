@@ -32,7 +32,7 @@ import { existsSync } from "node:fs";
 import {
   CLICommandReflectionProperties,
   CLIPluginContext
-} from "../types/config";
+} from "../types/plugin";
 
 export function getCommandReflectionsPath(context: CLIPluginContext): string {
   return joinPaths(getReflectionsPath(context), "cli");

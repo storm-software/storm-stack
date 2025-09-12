@@ -34,13 +34,13 @@ import { BabelPluginBuilder, DeclareBabelPluginReturn } from "../types/babel";
 export function declareBabel<
   TOptions extends BabelPluginOptions = BabelPluginOptions,
   TContext extends Context = Context,
-  TState = unknown
+  TState = any
 >(
   name: string,
-  builder: BabelPluginBuilder<TOptions, TContext, TState>
-): DeclareBabelPluginReturn<TOptions, TContext, TState> {
+  builder: BabelPluginBuilder<TOptions, TContext>
+): DeclareBabelPluginReturn<TOptions, TContext> {
   const plugin = (context: TContext) => {
-    return declare<TOptions, TOptions>((api, options, dirname) => {
+    return declare<TState, TOptions>((api, options, dirname) => {
       api.cache.using(() => context.meta.checksum);
       api.assertVersion("^8.0.0-0");
 

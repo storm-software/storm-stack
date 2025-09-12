@@ -55,6 +55,11 @@ export class StormRequest<
   public readonly timestamp = Date.now();
 
   /**
+   * The headers associated with the request.
+   */
+  public readonly headers: Record<string, any> = {};
+
+  /**
    * The request data.
    */
   readonly data: TData;

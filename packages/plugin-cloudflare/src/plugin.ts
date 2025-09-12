@@ -35,12 +35,12 @@ import type {
 import { TsupOptions } from "@storm-stack/core/types/config";
 import type { PluginOptions } from "@storm-stack/core/types/plugin";
 import { executePackage } from "@stryke/cli/execute";
+import { existsSync } from "@stryke/fs/exists";
 import { createDirectory, removeDirectory } from "@stryke/fs/helpers";
 import { readJsonFile } from "@stryke/fs/json";
 import { readFile } from "@stryke/fs/read-file";
 import { removeFile } from "@stryke/fs/remove-file";
 import { StormJSON } from "@stryke/json/storm-json";
-import { existsSync } from "@stryke/path/exists";
 import {
   findFileExtension,
   findFileName,
@@ -61,6 +61,7 @@ import {
   CLOUDFLARE_TYPES_DECLARATION,
   DEFAULT_CONDITIONS
 } from "./helpers";
+import { EnvModule } from "./templates/env";
 import {
   CloudflarePluginContext,
   CloudflarePluginOptions
@@ -81,6 +82,8 @@ export default class CloudflarePlugin<
   public constructor(options: PluginOptions<TOptions>) {
     super(options);
 
+    this.dependencies = [["@storm-stack/plugin-env", this.options.env ?? {}]];
+
     const { env } = defineEnv({
       presets: [cloudflareEnv]
     });
@@ -96,18 +99,18 @@ export default class CloudflarePlugin<
     super.addHooks(hooks);
 
     hooks.addHooks({
-      "clean:complete": this.#clean.bind(this),
-      "init:options": this.#initOptions.bind(this),
-      "init:tsconfig": this.#initTsconfig.bind(this),
-      "prepare:begin": this.#prepareDirectories.bind(this),
-      "prepare:config": this.#prepareConfig.bind(this),
-      "prepare:runtime": this.#prepareRuntime.bind(this),
-      "prepare:entry": this.#prepareEntry.bind(this),
-      "vite:config": this.#viteConfig.bind(this)
+      "clean:complete": this.clean.bind(this),
+      "init:options": this.initOptions.bind(this),
+      "init:tsconfig": this.initTsconfig.bind(this),
+      "prepare:begin": this.prepareDirectories.bind(this),
+      "prepare:config": this.prepareConfig.bind(this),
+      "prepare:runtime": this.prepareRuntime.bind(this),
+      "prepare:entry": this.prepareEntry.bind(this),
+      "vite:config": this.viteConfig.bind(this)
     });
   }
 
-  async #clean(context: TContext) {
+  async clean(context: TContext) {
     this.log(
       LogLevelLabel.TRACE,
       `Clean Cloudflare specific artifacts the Storm Stack project.`
@@ -129,7 +132,7 @@ export default class CloudflarePlugin<
     }
   }
 
-  async #initOptions(context: TContext) {
+  async initOptions(context: TContext) {
     this.log(
       LogLevelLabel.TRACE,
       `Resolving Storm Stack context for the project.`
@@ -280,7 +283,7 @@ export default class CloudflarePlugin<
     }
   }
 
-  async #initTsconfig(context: TContext) {
+  async initTsconfig(context: TContext) {
     const tsconfigFilePath = getTsconfigFilePath(
       context.options.projectRoot,
       context.options.tsconfig
@@ -372,7 +375,7 @@ export default class CloudflarePlugin<
     );
   }
 
-  async #prepareDirectories(context: TContext) {
+  async prepareDirectories(context: TContext) {
     this.log(
       LogLevelLabel.TRACE,
       `Preparing the Storm Stack directories for the Cloudflare Worker project.`
@@ -389,7 +392,7 @@ export default class CloudflarePlugin<
     }
   }
 
-  async #prepareConfig(context: TContext) {
+  async prepareConfig(context: TContext) {
     if (context.options.projectType === "application") {
       this.log(LogLevelLabel.TRACE, "Preparing the wrangler deployment file");
 
@@ -464,18 +467,24 @@ compatibility_flags = [ "nodejs_als" ]
   }
 
   /**
-   * Prepares the runtime artifacts for the Storm Stack project.
+   * Prepares the runtime environment for the Storm Stack Environment plugin.
    *
-   * @param _context - The Storm Stack context
+   * @param context - The build context.
    */
-  async #prepareRuntime(_context: TContext) {
+  protected async prepareRuntime(context: TContext) {
     this.log(
       LogLevelLabel.TRACE,
-      `Preparing the runtime artifacts for the Storm Stack project.`
+      `Preparing the Cloudflare runtime artifacts for the Storm Stack project.`
+    );
+
+    await context.vfs.writeRuntimeFile(
+      "env",
+      joinPaths(context.runtimePath, "env.ts"),
+      await EnvModule(context)
     );
   }
 
-  async #prepareEntry(context: TContext) {
+  async prepareEntry(context: TContext) {
     await Promise.all(
       context.entry.map(async entry => {
         this.log(
@@ -533,7 +542,7 @@ export default {
    * @param context - The current build context.
    * @param params - The Vite config hook parameters.
    */
-  async #viteConfig(context: TContext, params: ViteConfigHookParams) {
+  async viteConfig(context: TContext, params: ViteConfigHookParams) {
     if (this.getOptions(context).cloudflareVitePlugin !== false) {
       params.config.plugins ??= [];
       params.config.plugins.push(

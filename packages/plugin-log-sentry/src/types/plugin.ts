@@ -22,9 +22,9 @@ import {
   LogPluginResolvedOptions
 } from "@storm-stack/devkit/types/plugins";
 import {
-  ConfigPluginReflectionRecord,
-  ConfigPluginResolvedOptions
-} from "@storm-stack/plugin-config/types/plugin";
+  EnvPluginReflectionRecord,
+  EnvPluginResolvedOptions
+} from "@storm-stack/plugin-env/types/plugin";
 
 export interface LogSentryPluginOptions extends LogPluginOptions {
   /**
@@ -49,9 +49,9 @@ export interface LogSentryPluginOptions extends LogPluginOptions {
 export type LogSentryPluginResolvedOptions = LogPluginResolvedOptions<
   Required<LogSentryPluginOptions>
 > &
-  ConfigPluginResolvedOptions;
+  EnvPluginResolvedOptions;
 
 export type LogSentryPluginContext<
   TOptions extends
     LogSentryPluginResolvedOptions = LogSentryPluginResolvedOptions
-> = LogPluginContext<TOptions, ConfigPluginReflectionRecord>;
+> = LogPluginContext<TOptions, EnvPluginReflectionRecord>;

@@ -16,6 +16,7 @@
 
  ------------------------------------------------------------------- */
 
+import { FlatESLint } from "eslint/use-at-your-own-risk";
 import path from "node:path";
 
 export enum MessageSeverity {
@@ -108,7 +109,10 @@ function formatMessage(
 export async function formatResults(
   baseDir: string,
   results: LintResult[],
-  format?: (r: LintResult[]) => string | Promise<string>
+  format?: (
+    results: LintResult[],
+    resultsMeta?: FlatESLint.ResultsMeta
+  ) => string | Promise<string>
 ): Promise<{
   output: string;
   outputWithMessages: string;

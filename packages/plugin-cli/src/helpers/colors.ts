@@ -18,7 +18,7 @@
 
 import { getColors as getColorsBase } from "@storm-software/config-tools/utilities/colors";
 import { Colors } from "@storm-software/config/types";
-import { CLIPluginContext } from "../types/config";
+import { CLIPluginContext } from "../types/plugin";
 
 /**
  * Gets the color configuration for the CLI plugin.

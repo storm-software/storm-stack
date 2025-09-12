@@ -73,7 +73,8 @@ export interface TranspilerOptions {
   reflectionLevel?: ReflectionLevel;
 }
 
-export interface CompilerOptions extends TranspilerOptions {
+export interface CompilerOptions<TContext extends Context = Context>
+  extends TranspilerOptions {
   /**
    * Skip the cache.
    *
@@ -89,7 +90,7 @@ export interface CompilerOptions extends TranspilerOptions {
    * @returns The transformed source file
    */
   onPreTransform?: (
-    context: Context,
+    context: TContext,
     source: SourceFile
   ) => MaybePromise<SourceFile>;
 
@@ -101,7 +102,7 @@ export interface CompilerOptions extends TranspilerOptions {
    * @returns The transformed source file
    */
   onPostTransform?: (
-    context: Context,
+    context: TContext,
     source: SourceFile
   ) => MaybePromise<SourceFile>;
 
@@ -133,7 +134,7 @@ export interface CompilerOptions extends TranspilerOptions {
   babel?: Partial<ResolvedBabelOptions>;
 }
 
-export interface CompilerInterface {
+export interface CompilerInterface<TContext extends Context = Context> {
   /**
    * Get the result of the compiler.
    *
@@ -153,7 +154,7 @@ export interface CompilerInterface {
    * @returns The transpiled module.
    */
   transpile: (
-    context: Context,
+    context: TContext,
     id: string,
     code: string | MagicString,
     options?: TranspilerOptions
@@ -169,7 +170,7 @@ export interface CompilerInterface {
    * @returns The transpiled module.
    */
   transform: (
-    context: Context,
+    context: TContext,
     id: string,
     code: string | MagicString,
     options?: CompilerOptions
@@ -185,7 +186,7 @@ export interface CompilerInterface {
    * @returns The compiled source code
    */
   compile: (
-    context: Context,
+    context: TContext,
     id: string,
     code: string | MagicString,
     options?: CompilerOptions

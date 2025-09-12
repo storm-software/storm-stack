@@ -16,7 +16,9 @@
 
  ------------------------------------------------------------------- */
 
-import { isAbsolutePath } from "@stryke/path/is-file";
+/* eslint-disable ts/no-unsafe-call */
+
+import { isAbsolutePath } from "@stryke/path/is-type";
 import { joinPaths } from "@stryke/path/join-paths";
 import { isFunction } from "@stryke/type-checks/is-function";
 import fs, { PathOrFileDescriptor } from "node:fs";
@@ -75,32 +77,36 @@ export function cloneFS(originalFS: typeof fs) {
   };
 
   for (const method of FS_METHODS) {
-    if (originalFS[method]) {
-      clonedFS[method] = originalFS[method];
+    if ((originalFS as any)[method]) {
+      (clonedFS as any)[method] = (originalFS as any)[method];
     }
   }
 
   originalFS.promises ??= {} as (typeof fs)["promises"];
   for (const method of FS_PROMISE_METHODS) {
-    if (originalFS.promises[method]) {
+    if ((originalFS.promises as any)[method]) {
       clonedFS.promises ??= {} as (typeof fs)["promises"];
-      clonedFS.promises[method] = originalFS.promises[method];
-      clonedFS[method] = originalFS.promises[method];
+      (clonedFS.promises as any)[method] = (originalFS.promises as any)[method];
+      (clonedFS as any)[method] = (originalFS.promises as any)[method];
     }
   }
 
   for (const prop in clonedFS) {
-    if (isFunction(clonedFS[prop])) {
-      clonedFS[prop] = clonedFS[prop].bind(originalFS);
-      if (isFunction(clonedFS.promises[prop])) {
-        clonedFS.promises[prop] = clonedFS.promises[prop].bind(originalFS);
+    if (isFunction((clonedFS as any)[prop])) {
+      (clonedFS as any)[prop] = (clonedFS as any)[prop].bind(originalFS);
+      if (isFunction((clonedFS.promises as any)[prop])) {
+        (clonedFS.promises as any)[prop] = (clonedFS.promises as any)[
+          prop
+        ].bind(originalFS);
       }
     }
   }
 
   for (const prop in clonedFS.promises) {
-    if (isFunction(clonedFS.promises[prop])) {
-      clonedFS.promises[prop] = clonedFS.promises[prop].bind(originalFS);
+    if (isFunction((clonedFS.promises as any)[prop])) {
+      (clonedFS.promises as any)[prop] = (clonedFS.promises as any)[prop].bind(
+        originalFS
+      );
     }
   }
 
@@ -120,39 +126,86 @@ export function patchFS(
 ): () => void {
   const clonedFS = cloneFS(originalFS);
 
-  originalFS.mkdirSync = vfs.mkdirSync.bind(vfs);
-  originalFS.mkdir = vfs.mkdir.bind(vfs);
-  originalFS.promises.mkdir = vfs.mkdir.bind(vfs);
+  (originalFS as any).mkdirSync = (file: PathOrFileDescriptor, options?: any) =>
+    (vfs.mkdirSync as any)(toFilePath(file), options);
+  (originalFS as any).mkdir = (
+    file: PathOrFileDescriptor,
+    options?: any,
+    callback?: any
+  ) => (vfs.mkdir as any)(toFilePath(file), options, callback);
+  (originalFS.promises as any).mkdir = async (
+    file: PathOrFileDescriptor,
+    options?: any
+  ) => (vfs.mkdir as any)(toFilePath(file), options);
 
   // originalFS.rmdirSync = vfs.rmdirSync.bind(vfs);
-  originalFS.unlinkSync = vfs.unlinkSync.bind(vfs);
+  originalFS.unlinkSync = (file: PathOrFileDescriptor) =>
+    (vfs.unlinkSync as any)(toFilePath(file));
   // originalFS.rmdir = vfs.rmdir.bind(vfs);
   // originalFS.promises.rmdir = vfs.rmdir.bind(vfs);
-  originalFS.promises.rm = vfs.rm.bind(vfs);
-  originalFS.promises.unlink = vfs.unlink.bind(vfs);
+  // Wrap promise methods to accept PathLike and forward string to VFS implementation
+  originalFS.promises.rm = (async (file: PathOrFileDescriptor, options?: any) =>
+    vfs.rm(toFilePath(file), options)) as unknown as (
+    file: PathOrFileDescriptor,
+    options?: any
+  ) => Promise<void>;
+  originalFS.promises.unlink = (async (file: PathOrFileDescriptor) =>
+    vfs.unlink(toFilePath(file))) as unknown as (
+    file: PathOrFileDescriptor
+  ) => Promise<void>;
 
-  originalFS.existsSync = vfs.existsSync.bind(vfs);
-  originalFS.realpathSync = vfs.realpathSync.bind(vfs);
+  originalFS.existsSync = (file: PathOrFileDescriptor) =>
+    vfs.existsSync(toFilePath(file));
+  Object.defineProperty(originalFS, "realpathSync", {
+    value: (file: PathOrFileDescriptor, options?: fs.EncodingOption) =>
+      (vfs.realpathSync as any)(toFilePath(file), options)
+  });
 
-  originalFS.writeFileSync = vfs.writeFileSync.bind(vfs);
-  originalFS.promises.writeFile = vfs.writeFile.bind(vfs);
-  originalFS.readFileSync = vfs.readFileSync.bind(vfs);
-  originalFS.promises.readFile = vfs.readFile.bind(vfs);
+  originalFS.writeFileSync = (
+    file: PathOrFileDescriptor,
+    data: any,
+    options?: any
+  ) => (vfs.writeFileSync as any)(toFilePath(file), data, options);
+  originalFS.promises.writeFile = (async (
+    file: PathOrFileDescriptor,
+    data: any,
+    options?: any
+  ) =>
+    (vfs.writeFile as any)(
+      toFilePath(file as any),
+      data,
+      options
+    )) as unknown as typeof originalFS.promises.writeFile;
+  originalFS.readFileSync = (file: PathOrFileDescriptor, options?: any) =>
+    (vfs.readFileSync as any)(toFilePath(file), options);
+  originalFS.promises.readFile = ((file: PathOrFileDescriptor, options?: any) =>
+    (vfs.readFile as any)(
+      toFilePath(file),
+      options
+    )) as unknown as typeof originalFS.promises.readFile;
 
-  originalFS.readdirSync = vfs.readdirSync.bind(vfs);
-  originalFS.promises.readdir = vfs.readdir.bind(vfs);
+  originalFS.readdirSync = (file: PathOrFileDescriptor, options?: any) =>
+    (vfs.readdirSync as any)(toFilePath(file), options);
+  originalFS.promises.readdir = (file: PathOrFileDescriptor, options?: any) =>
+    (vfs.readdir as any)(toFilePath(file), options);
 
   Object.defineProperty(originalFS, "statSync", {
-    value: vfs.statSync.bind(vfs)
+    value: (file: PathOrFileDescriptor, options?: any) =>
+      (vfs.statSync as any)(toFilePath(file), options)
   });
-  originalFS.stat = vfs.statSync.bind(vfs);
-  originalFS.promises.stat = vfs.stat.bind(vfs);
+  (originalFS as any).stat = (file: PathOrFileDescriptor, options?: any) =>
+    (vfs.statSync as any)(toFilePath(file), options);
+  originalFS.promises.stat = (file: PathOrFileDescriptor, options?: any) =>
+    (vfs.stat as any)(toFilePath(file), options);
 
   Object.defineProperty(originalFS, "lstatSync", {
-    value: vfs.lstatSync.bind(vfs)
+    value: (file: PathOrFileDescriptor, options?: any) =>
+      (vfs.lstatSync as any)(toFilePath(file), options)
   });
-  originalFS.lstat = vfs.lstatSync.bind(vfs);
-  originalFS.promises.lstat = vfs.lstat.bind(vfs);
+  (originalFS as any).lstat = (file: PathOrFileDescriptor, options?: any) =>
+    (vfs.lstatSync as any)(toFilePath(file), options);
+  originalFS.promises.lstat = (file: PathOrFileDescriptor, options?: any) =>
+    (vfs.lstat as any)(toFilePath(file), options);
 
   return () => {
     originalFS.mkdirSync = clonedFS.mkdirSync;
@@ -180,13 +233,13 @@ export function patchFS(
     Object.defineProperty(originalFS, "statSync", {
       value: clonedFS.statSync
     });
-    originalFS.stat = clonedFS.stat;
+    (originalFS as any).stat = clonedFS.stat;
     originalFS.promises.stat = clonedFS.promises.stat;
 
     Object.defineProperty(originalFS, "lstatSync", {
       value: clonedFS.lstatSync
     });
-    originalFS.lstat = clonedFS.lstat;
+    (originalFS as any).lstat = clonedFS.lstat;
     originalFS.promises.lstat = clonedFS.promises.lstat;
   };
 }

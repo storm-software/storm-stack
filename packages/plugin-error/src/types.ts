@@ -20,9 +20,9 @@ import { ResolvedOptions } from "@storm-stack/core/types/build";
 import { Context } from "@storm-stack/core/types/context";
 import { PluginBaseOptions } from "@storm-stack/core/types/plugin";
 import {
-  ConfigPluginOptions,
-  ConfigPluginResolvedOptions
-} from "@storm-stack/plugin-config/types";
+  EnvPluginOptions,
+  EnvPluginResolvedOptions
+} from "@storm-stack/plugin-env/types";
 
 export interface ErrorPluginOptions extends PluginBaseOptions {
   /**
@@ -41,15 +41,15 @@ export interface ErrorPluginOptions extends PluginBaseOptions {
   url?: string;
 
   /**
-   * Options for the config plugin.
+   * Options for the environment configuration plugin.
    */
-  config?: ConfigPluginOptions;
+  env?: EnvPluginOptions;
 }
 
 export interface ErrorPluginResolvedOptions {
-  error: Required<Omit<ErrorPluginOptions, "config" | "url">> &
+  error: Required<Omit<ErrorPluginOptions, "env" | "url">> &
     Pick<ErrorPluginOptions, "url">;
-  config: ConfigPluginResolvedOptions["config"];
+  env: EnvPluginResolvedOptions["env"];
 }
 
 export type ErrorPluginContext = Context<

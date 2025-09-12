@@ -29,7 +29,7 @@ export function ContextModule(_context: Context) {
 
 ${getFileHeader()}
 
-import { StormNodeEnv } from "@storm-stack/core/runtime-types/node/env";
+import { StormNodeMeta } from "@storm-stack/core/runtime-types/node/meta";
 import { HandlerFunction } from "@storm-stack/core/runtime-types/node/app";
 import { StormStorageInterface } from "@storm-stack/core/runtime-types/shared/storage";
 import { StormLogInterface } from "@storm-stack/core/runtime-types/shared/log";
@@ -42,8 +42,8 @@ import type {
   OnAsyncRestore,
   OnAsyncLeave
 } from "@storm-stack/plugin-node/types/context";
-import { createConfig, StormConfig } from "storm:config";
-import { createEnv } from "storm:env";
+import { env, StormEnv } from "storm:env";
+import { createMeta } from "storm:meta";
 import { createStorage } from "storm:storage";
 import { createStormError, StormError, isError } from "storm:error";
 import { StormLog } from "storm:log";
@@ -58,19 +58,9 @@ import { StormResponse } from "storm:response";
  */
 export interface StormContext extends StormContextInterface {
   /**
-   * The context metadata.
-   */
-  meta: Record<string, any>;
-
-  /**
    * The request object for the current Storm Stack application.
    */
   request: StormRequest;
-
-  /**
-   * Environment/runtime specific application data.
-   */
-  env: import("@storm-stack/core/runtime-types/node/env").StormNodeEnv;
 
   /**
    * The root application logger for the Storm Stack application.
@@ -83,9 +73,14 @@ export interface StormContext extends StormContextInterface {
   storage: import("@storm-stack/core/runtime-types/shared/storage").StormStorageInterface;
 
   /**
-   * The configuration parameters for the Storm application.
+   * The environment variables for the Storm application.
    */
-  config: StormConfig & Record<string, any>;
+  env: StormEnv & Record<string, any>;
+
+  /**
+   * Environment/runtime specific application data.
+   */
+  meta: import("@storm-stack/core/runtime-types/node/meta").StormNodeMeta;
 
   /**
    * A set of disposable resources to clean up when the context is no longer needed.
@@ -273,11 +268,10 @@ export function withContext<
     const request = new StormRequest<TInput>(input);
 
     const context = {
-      meta: {} as Record<string, any>,
       storage: {} as StormStorageInterface,
       log: {} as StormLogInterface,
-      env: {} as StormNodeEnv,
-      config: {} as StormConfig,
+      meta: {} as StormNodeMeta,
+      env,
       request,
       disposables: new Set<Disposable>(),
       asyncDisposables: new Set<AsyncDisposable>(),
@@ -299,9 +293,7 @@ export function withContext<
       context,
       async () => {
         try {
-          context.config = await createConfig();
-          context.env = createEnv();
-
+          context.meta = await createMeta();
           context.storage = createStorage();
           context.asyncDisposables.add(context.storage);
 

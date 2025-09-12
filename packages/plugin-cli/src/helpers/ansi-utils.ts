@@ -19,7 +19,7 @@
 import { getColors } from "@storm-software/config-tools/utilities/colors";
 import { MultiThemeColors } from "@storm-software/config/types";
 import { upperCaseFirst } from "@stryke/string-format/upper-case-first";
-import { CLIPluginContext } from "../types/config";
+import { CLIPluginContext } from "../types/plugin";
 
 const ANSI_BACKGROUND_OFFSET = 10;
 

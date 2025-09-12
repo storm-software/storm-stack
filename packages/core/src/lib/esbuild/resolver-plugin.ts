@@ -17,7 +17,7 @@
  ------------------------------------------------------------------- */
 
 import { tsconfigPathsToRegExp } from "bundle-require";
-import type { Plugin } from "esbuild";
+import type { OnResolveArgs, Plugin } from "esbuild";
 import type { ResolvedOptions } from "../../types/build";
 import type { Context } from "../../types/context";
 import { handleResolveId } from "../unplugin/resolve-id";
@@ -40,7 +40,7 @@ export const resolverPlugin = (
         ? tsconfigPathsToRegExp(context.tsconfig.options.paths ?? [])
         : [];
 
-      const handle = async args => {
+      const handle = async (args: OnResolveArgs) => {
         const result = await handleResolveId(
           context,
           {

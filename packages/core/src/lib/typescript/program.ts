@@ -18,9 +18,9 @@
 
 import { listFiles } from "@stryke/fs/list-files";
 import { readFile } from "@stryke/fs/read-file";
+import { resolvePackage } from "@stryke/fs/resolve";
 import { findFileName } from "@stryke/path/file-path-fns";
 import { joinPaths } from "@stryke/path/join-paths";
-import { resolvePackage } from "@stryke/path/resolve";
 import defu from "defu";
 import { minimatch } from "minimatch";
 import ts, { CompilerOptions } from "typescript";
@@ -163,9 +163,9 @@ export async function createVirtualProgram(
     writeFile(fileName: string, data: string): void {
       context.vfs.writeFileSync(fileName, data);
     },
-    resolvePath: fileName => {
+    resolvePath: (fileName: string): string => {
       if (context.vfs.existsSync(fileName)) {
-        return context.vfs.resolvePath(fileName);
+        return context.vfs.resolvePath(fileName) as string;
       }
 
       return ts.sys.resolvePath(fileName);
@@ -201,40 +201,6 @@ export async function createVirtualProgram(
       return undefined;
     }
   } as ts.CompilerHost;
-
-  // const host = {
-  //   ...ts.sys,
-  //   getCanonicalFileName: fileName => fileName,
-  //   getDefaultLibFileName: () =>
-  //     `/${ts.getDefaultLibFileName(compilerOptions)}`,
-  //   // getDefaultLibLocation: () => '/',
-  //   getNewLine: () => ts.sys.newLine,
-  //   getSourceFile: (fileName, languageVersionOrOptions) => {
-  //     if (context.vfs.existsSync(fileName)) {
-  //       return ts.createSourceFile(
-  //         fileName,
-  //         context.vfs.readFileSync(fileName)!,
-  //         languageVersionOrOptions ??
-  //           compilerOptions.target ??
-  //           getDefaultCompilerOptions().target!,
-  //         false
-  //       );
-  //     }
-
-  //     const sourceFile = ts.createSourceFile(
-  //       fileName,
-  //       ts.sys.readFile(fileName)!,
-  //       languageVersionOrOptions ??
-  //         compilerOptions.target ??
-  //         getDefaultCompilerOptions().target!,
-  //       false
-  //     );
-  //     context.vfs.writeFileSync(fileName, sourceFile.text);
-
-  //     return sourceFile;
-  //   },
-  //   useCaseSensitiveFileNames: () => ts.sys.useCaseSensitiveFileNames
-  // };
 
   return ts.createProgram(rootNames, options, host);
 }

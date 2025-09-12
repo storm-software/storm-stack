@@ -16,6 +16,7 @@
 
  ------------------------------------------------------------------- */
 
+import { isUndefined } from "@storm-stack/core/deepkit/core";
 import { ReflectionClass, stringifyType } from "@storm-stack/core/deepkit/type";
 import { stringifyValue } from "@storm-stack/core/lib/deepkit/utilities";
 import { camelCase } from "@stryke/string-format/camel-case";
@@ -130,8 +131,7 @@ ${item
   .join("\n")}`
       : ""
   }${
-    typeof item.getDefaultValue() !== "undefined" &&
-    item.getDefaultValue() !== ""
+    !isUndefined(item.getDefaultValue()) && item.getDefaultValue() !== ""
       ? `
   * @defaultValue ${item.getDefaultValue()}`
       : ""
@@ -152,9 +152,23 @@ ${item
       : ""
   }
   */
-    ${item.isReadonly() ? "readonly " : ""}${item.getNameAsString()}${item.isOptional() ? "?" : ""}: ${stringifyType(
-      item.getType()
-    )}`
+    ${item.isReadonly() ? "readonly " : ""}${item.getNameAsString()}${
+      isUndefined(
+        (options.defaultValues as Record<string, any>)?.[item.getNameAsString()]
+      ) &&
+      isUndefined(item.getDefaultValue()) &&
+      !item
+        .getAlias()
+        .some(
+          alias =>
+            !isUndefined(
+              (options.defaultValues as Record<string, any>)?.[alias]
+            )
+        ) &&
+      item.isOptional()
+        ? "?"
+        : ""
+    }: ${stringifyType(item.getType())}`
     )
     .join(", \n")}
 }
@@ -167,7 +181,14 @@ export interface GenerateTypeScriptObjectOptions<T> {
   defaultValues?: Partial<T>;
 }
 
-export function generateTypeScriptObject<T>(
+/**
+ * Generates a TypeScript object for the given reflection class.
+ *
+ * @param reflection - The reflection class to generate the object for.
+ * @param options - Options for generating the object.
+ * @returns A string containing the TypeScript object definition.
+ */
+export function generateTypeScriptObject<T extends Record<string, any>>(
   reflection: ReflectionClass<T>,
   options: GenerateTypeScriptObjectOptions<T> = {}
 ) {
@@ -190,7 +211,7 @@ export const ${camelCase(options.overrideName || reflection.getName())}${
   } = {
   ${reflection
     .getProperties()
-    .filter(item => !item.isIgnored() && item.hasDefault())
+    .filter(item => !item.isIgnored() && !isUndefined(item.getDefaultValue()))
     .sort((a, b) =>
       (a.isReadonly() && b.isReadonly()) || (!a.isReadonly() && !b.isReadonly())
         ? a.getNameAsString().localeCompare(b.getNameAsString())
@@ -253,7 +274,17 @@ export const ${camelCase(options.overrideName || reflection.getName())}${
   ${item.getNameAsString()}: ${stringifyValue(
     item.getType(),
     options.defaultValues?.[item.getNameAsString()] ??
-      (item.hasDefault() ? item.getDefaultValue() : undefined)
+      item.getAlias().reduce((ret, alias) => {
+        if (
+          isUndefined(ret) &&
+          !isUndefined((options.defaultValues as Record<string, any>)?.[alias])
+        ) {
+          return (options.defaultValues as Record<string, any>)?.[alias];
+        }
+
+        return ret;
+      }, undefined) ??
+      item.getDefaultValue()
   )}`
     )
     .join(", \n")}

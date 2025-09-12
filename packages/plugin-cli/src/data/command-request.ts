@@ -39,7 +39,7 @@ import {
   extractCommandFunctionRequest,
   extractCommandFunctionRequestData
 } from "../helpers/utilities";
-import { CLIPluginContext, CLIPluginOptions } from "../types/config";
+import { CLIPluginContext, CLIPluginOptions } from "../types/plugin";
 import { CommandEntryTypeDefinition } from "../types/reflection";
 
 export interface CommandRequestArg {
@@ -268,12 +268,12 @@ export class CommandRequest {
             prop.getNameAsString().toLowerCase() !== "help" &&
             prop.getNameAsString().toLowerCase() !== "version" &&
             !prop.isIgnored() &&
-            !context.reflections.config.types.params.hasProperty(
+            !context.reflections.env.types.env.hasProperty(
               constantCase(prop.getNameAsString())
             )
         )
         .forEach(prop => {
-          context.reflections.config.types.params.addProperty({
+          context.reflections.env.types.env.addProperty({
             ...prop,
             name: constantCase(prop.getNameAsString()),
             default:
@@ -448,7 +448,7 @@ export class CommandRequest {
       }
 
       if (
-        !this.context.reflections.config.types.params.hasProperty(
+        !this.context.reflections.env.types.env.hasProperty(
           constantCase(arg.name)
         )
       ) {
@@ -462,7 +462,7 @@ export class CommandRequest {
         }
 
         if (!arg.ignore) {
-          this.context.reflections.config.types.params.addProperty({
+          this.context.reflections.env.types.env.addProperty({
             ...arg,
             optional: arg.optional !== false ? true : undefined,
             name: constantCase(arg.name),

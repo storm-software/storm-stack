@@ -63,15 +63,23 @@ export type StoragePluginContext<
   TEntry
 >;
 
-export interface PluginPluginOptions extends PluginBaseOptions {
+export interface AlloyOptions {
   templates?: string;
 }
 
-export interface PluginPluginResolvedOptions<
-  TOptions extends PluginPluginOptions = PluginPluginOptions
-> extends TsupResolvedOptions<TOptions> {
-  plugin: TOptions;
+export interface PluginPluginOptions extends PluginBaseOptions {
+  /**
+   * The options applied to the [Alloy framework](https://alloy-framework.github.io/alloy/) for processing templates.
+   *
+   * @remarks
+   * If set to `false`, the Alloy processing step will be skipped. By default, this is set to `undefined`, which enables Alloy with its default settings.
+   */
+  alloy?: AlloyOptions | false;
 }
+
+export type PluginPluginResolvedOptions<
+  TOptions extends PluginPluginOptions = PluginPluginOptions
+> = TsupResolvedOptions<{ plugin: TOptions }>;
 
 export type PluginPluginContext<
   TOptions extends PluginPluginResolvedOptions = PluginPluginResolvedOptions,

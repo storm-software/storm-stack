@@ -17,7 +17,7 @@
  ------------------------------------------------------------------- */
 
 import { getFileHeader } from "@storm-stack/core/lib/utilities/file-header";
-import { Context } from "@storm-stack/core/types";
+import { Context } from "@storm-stack/core/types/context";
 
 export function ResponseModule(_context: Context) {
   return `
@@ -52,15 +52,14 @@ export class StormResponse<
   ): StormResponse<TData> {
     return new StormResponse(
       useStorm().request.id,
-      useStorm().meta,
       data
     );
   }
 
   /**
-   * The response meta.
+   * The request headers.
    */
-  public readonly meta: Record<string, any>;
+  public readonly headers: Record<string, any> = {};
 
   /**
    * The response data.
@@ -93,11 +92,9 @@ export class StormResponse<
    */
   public constructor(
     requestId: string,
-    meta: Record<string, any>,
     data: TData
   ) {
     this.requestId = requestId;
-    this.meta = meta;
     this.data = data;
   }
 }

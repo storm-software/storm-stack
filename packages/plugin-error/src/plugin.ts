@@ -22,7 +22,7 @@ import { Plugin } from "@storm-stack/core/base/plugin";
 import { addPluginFilter } from "@storm-stack/core/lib/babel/helpers";
 import type { EngineHooks } from "@storm-stack/core/types/build";
 import { PluginOptions } from "@storm-stack/core/types/plugin";
-import { isAbsolutePath } from "@stryke/path/is-file";
+import { isAbsolutePath } from "@stryke/path/is-type";
 import { joinPaths } from "@stryke/path/join-paths";
 import StormErrorBabelPlugin from "./babel/plugin";
 import { ErrorModule } from "./templates/error";
@@ -47,7 +47,7 @@ export default class ErrorPlugin<
   public constructor(options: PluginOptions<TOptions>) {
     super(options);
 
-    this.dependencies = [["@storm-stack/plugin-config", options.config ?? {}]];
+    this.dependencies = [["@storm-stack/plugin-env", options.env ?? {}]];
 
     this.packageDeps = {};
   }

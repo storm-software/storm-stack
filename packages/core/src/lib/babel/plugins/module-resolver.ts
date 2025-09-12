@@ -16,7 +16,7 @@
 
  ------------------------------------------------------------------- */
 
-import { NodePath, PluginAPI, PluginPass } from "@babel/core";
+import { NodePath, PluginAPI, PluginPass, Visitor } from "@babel/core";
 import { declare } from "@babel/helper-plugin-utils";
 import * as t from "@babel/types";
 import { BabelPluginOptions } from "../../../types/babel";
@@ -134,7 +134,7 @@ const importVisitors = {
     state.moduleResolverVisited.add(nodePath);
     resolveModulePath(nodePath.get("source")!, state);
   }
-};
+} as Visitor<ModuleResolverPluginPass>;
 
 export function ModuleResolverPlugin(context: Context) {
   return declare(function builder(api: PluginAPI) {

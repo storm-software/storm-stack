@@ -24,9 +24,9 @@ import { ResolvedOptions } from "@storm-stack/core/types/build";
 import type { Context } from "@storm-stack/core/types/context";
 import { PluginBaseOptions } from "@storm-stack/core/types/plugin";
 import {
-  ConfigPluginOptions,
-  ConfigPluginReflectionRecord
-} from "@storm-stack/plugin-config/types";
+  EnvPluginOptions,
+  EnvPluginReflectionRecord
+} from "@storm-stack/plugin-env/types";
 import type {
   ErrorPluginOptions,
   ErrorPluginResolvedOptions
@@ -38,14 +38,14 @@ import {
 
 export interface NodePluginOptions extends PluginBaseOptions {
   /**
-   * Options for the config plugin.
+   * Options for the env plugin.
    */
-  config?: ConfigPluginOptions;
+  env?: EnvPluginOptions;
 
   /**
    * Options for the error plugin.
    */
-  error?: Omit<ErrorPluginOptions, "config">;
+  error?: Omit<ErrorPluginOptions, "env">;
 
   /**
    * Options for the console log plugin.
@@ -59,6 +59,6 @@ export interface NodePluginResolvedOptions
 
 export type NodePluginContext<
   TOptions extends NodePluginResolvedOptions = NodePluginResolvedOptions
-> = Context<ResolvedOptions<TOptions>, ConfigPluginReflectionRecord>;
+> = Context<ResolvedOptions<TOptions>, EnvPluginReflectionRecord>;
 
 export type NodeBabelPluginState = BabelPluginState<BabelPluginOptions>;

@@ -48,12 +48,12 @@ import { StormError } from "storm:error";
  * @returns The S3 {@link StorageAdapter | storage adapter}.
  */
 function createAdapter(): StorageAdapter {
-  const accessKey = $storm.config.AWS_ACCESS_KEY_ID;
-  const secretAccessKey = $storm.config.AWS_SECRET_ACCESS_KEY;
+  const accessKey = $storm.env.AWS_ACCESS_KEY_ID;
+  const secretAccessKey = $storm.env.AWS_SECRET_ACCESS_KEY;
   const region = ${
     this.getOptions(context).region
       ? `"${this.getOptions(context).region}"`
-      : "$storm.config.AWS_REGION"
+      : "$storm.env.AWS_REGION"
   };
 
   if (!accessKey && !secretAccessKey) {

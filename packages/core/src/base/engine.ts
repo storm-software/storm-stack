@@ -79,7 +79,7 @@ export class Engine<TOptions extends ResolvedOptions = ResolvedOptions> {
   /**
    * The plugins provided in the options
    */
-  #plugins: Plugin<Context<TOptions>>[] = [];
+  #plugins: Plugin<any>[] = [];
 
   /**
    * The Storm Stack context

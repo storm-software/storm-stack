@@ -52,15 +52,14 @@ export class StormResponse<
   ): StormResponse<TData> {
     return new StormResponse(
       useStorm().request.id,
-      useStorm().meta,
       data
     );
   }
 
   /**
-   * The response meta.
+   * The headers associated with the response.
    */
-  public readonly meta: Record<string, any>;
+  public readonly headers: Record<string, any> = {};
 
   /**
    * The response data.
@@ -88,16 +87,14 @@ export class StormResponse<
    * Create a new response.
    *
    * @param requestId - The request identifier.
-   * @param meta - The current context's metadata.
+   * @param headers - The headers associated with the response.
    * @param data - The response data
    */
   public constructor(
     requestId: string,
-    meta: Record<string, any>,
     data: TData
   ) {
     this.requestId = requestId;
-    this.meta = meta;
     this.data = data;
   }
 }

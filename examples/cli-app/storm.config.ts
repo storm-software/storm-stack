@@ -33,8 +33,8 @@ export default defineConfig({
       "@storm-stack/plugin-cli",
       {
         bin: "examples-cli",
-        config: {
-          types: "./src/types.ts#StormCLIAppConfig"
+        env: {
+          types: "./src/types.ts#StormCLIAppEnv"
         }
       }
     ],

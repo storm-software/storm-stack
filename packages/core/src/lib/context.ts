@@ -18,19 +18,19 @@
 
 import { LogLevelLabel } from "@storm-software/config-tools/types";
 import { getEnvPaths } from "@stryke/env/get-env-paths";
+import { existsSync } from "@stryke/fs/exists";
+import {
+  getProjectRoot,
+  getWorkspaceRoot,
+  relativeToWorkspaceRoot
+} from "@stryke/fs/get-workspace-root";
 import { readJsonFile } from "@stryke/fs/json";
 import { listFiles } from "@stryke/fs/list-files";
 import { removeFile } from "@stryke/fs/remove-file";
+import { resolvePackage } from "@stryke/fs/resolve";
 import { hash } from "@stryke/hash/hash";
 import { hashDirectory } from "@stryke/hash/hash-files";
-import { existsSync } from "@stryke/path/exists";
-import { relativeToWorkspaceRoot } from "@stryke/path/file-path-fns";
-import {
-  getProjectRoot,
-  getWorkspaceRoot
-} from "@stryke/path/get-workspace-root";
 import { joinPaths } from "@stryke/path/join-paths";
-import { resolvePackage } from "@stryke/path/resolve";
 import { kebabCase } from "@stryke/string-format/kebab-case";
 import { PackageJson } from "@stryke/types/package-json";
 import { uuid } from "@stryke/unique-id/uuid";

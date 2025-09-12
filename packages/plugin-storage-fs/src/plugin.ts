@@ -55,8 +55,8 @@ function createAdapter(): StorageAdapter {
   const adapter = fsLiteDriver({ base: ${
     this.getOptions(context).envPath
       ? this.getOptions(context).base
-        ? `join($storm.env.paths.${this.getOptions(context).envPath}, "${this.getOptions(context).base}")`
-        : `$storm.env.paths.${this.getOptions(context).envPath}`
+        ? `join($storm.meta.paths.${this.getOptions(context).envPath}, "${this.getOptions(context).base}")`
+        : `$storm.meta.paths.${this.getOptions(context).envPath}`
       : this.getOptions(context).base
         ? `"${this.getOptions(context).base}"`
         : "undefined"

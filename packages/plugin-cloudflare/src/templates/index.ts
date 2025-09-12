@@ -16,28 +16,4 @@
 
  ------------------------------------------------------------------- */
 
-import { getWorkspaceConfig } from "@storm-software/config-tools/get-config";
-import { Engine } from "@storm-stack/core/base/engine";
-import type {
-  InlineConfig,
-  WorkspaceConfig
-} from "@storm-stack/core/types/config";
-
-/**
- * Creates a new instance of the Engine with the provided inline configuration and workspace configuration.
- *
- * @param inlineConfig - The inline config to initialize the Engine.
- * @returns A promise that resolves to the initialized Engine instance.
- */
-export async function createEngine(
-  inlineConfig: InlineConfig,
-  workspaceConfig?: WorkspaceConfig
-): Promise<Engine> {
-  const engine = new Engine(
-    inlineConfig,
-    workspaceConfig ?? (await getWorkspaceConfig())
-  );
-  await engine.init(inlineConfig);
-
-  return engine;
-}
+export * from "./env";

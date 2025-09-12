@@ -36,7 +36,7 @@ export default class LogSentryPlugin<
   public constructor(options: PluginOptions<LogSentryPluginOptions>) {
     super(options);
 
-    this.dependencies = [["@storm-stack/plugin-config", options ?? {}]];
+    this.dependencies = [["@storm-stack/plugin-env", options ?? {}]];
   }
 
   /**
@@ -60,7 +60,7 @@ export default class LogSentryPlugin<
    * @param context - The context to initialize.
    */
   async #initOptions(context: TContext) {
-    context.options.plugins.config.parsed.SENTRY_DSN ||=
+    context.options.plugins.env.parsed.SENTRY_DSN ||=
       this.getOptions(context).dsn;
   }
 
@@ -171,17 +171,17 @@ function getParameterizedString(record: LogRecord): ParameterizedString {
  */
 function createAdapter(): LogAdapter {
   Sentry.init({
-    dsn: $storm.config.SENTRY_DSN,
-    environment: $storm.env.mode,
-    release: $storm.config.RELEASE_TAG,
-    debug: $storm.env.isDebug,
+    dsn: $storm.env.SENTRY_DSN,
+    environment: $storm.meta.mode,
+    release: $storm.env.RELEASE_TAG,
+    debug: $storm.meta.isDebug,
     enabled: ${
       this.getOptions(context).enabled === true ||
       context.options.mode !== "development"
         ? "true"
         : "false"
     },
-    attachStacktrace: $storm.config.STACKTRACE,
+    attachStacktrace: $storm.env.STACKTRACE,
     sendClientReports: true,
     sendDefaultPii: true
   });

@@ -32,7 +32,19 @@ export function transpilerPlugin(
   context: Context,
   options: CompilerOptions = {}
 ): Plugin {
-  const handleLoad = async args => {
+  interface HandleLoadArgs {
+    path?: string;
+    pluginData?: unknown;
+  }
+
+  interface HandleLoadResult {
+    contents?: string;
+    pluginData?: unknown;
+  }
+
+  const handleLoad = async (
+    args: HandleLoadArgs
+  ): Promise<HandleLoadResult | undefined> => {
     if (args.path) {
       const resolvedPath = context.vfs.resolvePath(args.path);
       if (resolvedPath) {

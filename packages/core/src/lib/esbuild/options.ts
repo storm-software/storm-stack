@@ -20,10 +20,10 @@ import { findFileExtension } from "@stryke/path/file-path-fns";
 import { replacePath } from "@stryke/path/replace";
 import { isString } from "@stryke/type-checks/is-string";
 import defu from "defu";
-import { BundleOptions } from ".";
 import type { ResolvedEntryTypeDefinition } from "../../types/build";
 import { ESBuildConfig, ESBuildOptions, TsupConfig } from "../../types/config";
 import { Context } from "../../types/context";
+import { BundleOptions } from "./build";
 
 /**
  * Resolves the entry options for esbuild.

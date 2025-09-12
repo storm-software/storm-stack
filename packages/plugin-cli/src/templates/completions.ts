@@ -20,7 +20,7 @@ import { getFileHeader } from "@storm-stack/core/lib/utilities/file-header";
 import { kebabCase } from "@stryke/string-format/kebab-case";
 import { titleCase } from "@stryke/string-format/title-case";
 import { isSetString } from "@stryke/type-checks/is-set-string";
-import { CLIPluginContext, CLIPluginOptions } from "../types/config";
+import { CLIPluginContext, CLIPluginOptions } from "../types/plugin";
 
 export function writeCompletionsBash(
   context: CLIPluginContext,

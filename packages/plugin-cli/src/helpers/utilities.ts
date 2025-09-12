@@ -34,7 +34,7 @@ import { isString } from "@stryke/type-checks/is-string";
 import { TypeDefinition } from "@stryke/types/configuration";
 import defu from "defu";
 import { CommandRequestArg } from "../data/command-request";
-import { CLIPluginContext, CLIPluginOptions } from "../types/config";
+import { CLIPluginContext, CLIPluginOptions } from "../types/plugin";
 import { CommandTree, CommandTreeBranch } from "../types/reflection";
 
 /**

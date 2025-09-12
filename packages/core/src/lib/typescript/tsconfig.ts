@@ -16,8 +16,9 @@
 
  ------------------------------------------------------------------- */
 
+import { existsSync } from "@stryke/fs/exists";
 import { readJsonFileSync } from "@stryke/fs/json";
-import { existsSync, joinPaths } from "@stryke/path";
+import { joinPaths } from "@stryke/path/join-paths";
 import { replacePath } from "@stryke/path/replace";
 import { FilterPattern } from "@stryke/types/file";
 import defu from "defu";

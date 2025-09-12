@@ -18,8 +18,8 @@
 
 import { LogLevelLabel } from "@storm-software/config-tools/types";
 import { listFiles } from "@stryke/fs/list-files";
+import { resolvePackage } from "@stryke/fs/resolve";
 import { joinPaths } from "@stryke/path/join-paths";
-import { resolvePackage } from "@stryke/path/resolve";
 import * as Handlebars from "handlebars";
 import { writeFile } from "../../../lib/utilities/write-file";
 import type { EngineHooks } from "../../../types/build";

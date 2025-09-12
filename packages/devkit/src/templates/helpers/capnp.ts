@@ -470,13 +470,13 @@ export function generateCapnpEnumSchema(
 
           return ret;
         }, {}),
-        values: getCapnpUnionTypes(type)
-          .filter(
+        values: (
+          getCapnpUnionTypes(type).filter(
             type =>
               type.kind === ReflectionKind.literal &&
               (isString(type.literal) || isNumber(type.literal))
-          )
-          .map((type: TypeLiteral) => type.literal as string | number)
+          ) as TypeLiteral[]
+        ).map(type => type.literal as string | number)
       },
       name
     );
@@ -514,7 +514,13 @@ ${
   }`;
 }
 
-export function generateCapnpPrimitive(type: Type) {
+/**
+ * Generates a string representation of Cap'n Proto primitive types from a Deepkit Type.
+ *
+ * @param type - The Deepkit Type to convert.
+ * @returns A string representation of the Cap'n Proto primitive type.
+ */
+export function generateCapnpPrimitive(type: Type): string {
   return type.kind === ReflectionKind.never ||
     type.kind === ReflectionKind.void ||
     type.kind === ReflectionKind.null ||

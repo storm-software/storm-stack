@@ -48,7 +48,7 @@ export default class DatePlugin<
     super(options);
 
     this.packageDeps = {};
-    this.dependencies = [["@storm-stack/plugin-config", options.config]];
+    this.dependencies = [["@storm-stack/plugin-env", options.env]];
   }
 
   /**

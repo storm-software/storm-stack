@@ -33,23 +33,32 @@ import { NodePluginContext } from "../types/plugin";
 export default declareBabel(
   "node",
   (_: BabelPluginBuilderParams<BabelPluginOptions, NodePluginContext>) => {
-    // function requiresImport(
-    //   pass: BabelPluginPass<BabelPluginOptions, NodeBabelPluginState>
-    // ): boolean {
-    //   return !listImports(pass.file.ast).includes("storm:context");
-    // }
-
     return {
       visitor: {
         Identifier(path: NodePath<t.Identifier>) {
+          // Check if the identifier is "$storm" but not "$storm.env"
           if (path.node.name === "$storm") {
-            path.replaceWith(t.callExpression(t.identifier("useStorm"), []));
+            if (
+              t.isMemberExpression(path.parentPath.node) &&
+              t.isIdentifier(path.parentPath.node.property) &&
+              path.parentPath.node.property.name === "env"
+            ) {
+              path.replaceWith(t.identifier("env"));
 
-            addImport(path, {
-              module: "storm:context",
-              name: "useStorm",
-              imported: "useStorm"
-            });
+              addImport(path, {
+                module: "storm:env",
+                name: "env",
+                imported: "env"
+              });
+            } else {
+              path.replaceWith(t.callExpression(t.identifier("useStorm"), []));
+
+              addImport(path, {
+                module: "storm:context",
+                name: "useStorm",
+                imported: "useStorm"
+              });
+            }
           }
         }
       }

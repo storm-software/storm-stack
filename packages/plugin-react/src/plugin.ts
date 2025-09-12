@@ -31,7 +31,6 @@ import { PluginOptions } from "@storm-stack/core/types/plugin";
 import { IdModule } from "@storm-stack/devkit/templates/id";
 import { LogModule } from "@storm-stack/devkit/templates/log";
 import { StorageModule } from "@storm-stack/devkit/templates/storage";
-import { ConfigModule } from "@storm-stack/plugin-config/templates/config";
 import { readJsonFile } from "@stryke/fs/json";
 import { StormJSON } from "@stryke/json";
 import { joinPaths } from "@stryke/path/join-paths";
@@ -44,7 +43,7 @@ import {
 import defu from "defu";
 import BabelPlugin from "./babel/plugin";
 import { ContextModule } from "./templates/context";
-import { EnvModule } from "./templates/env";
+import { MetaModule } from "./templates/meta";
 import { RequestModule } from "./templates/request";
 import { ResponseModule } from "./templates/response";
 import { ReactPluginContext, ReactPluginOptions } from "./types/plugin";
@@ -65,7 +64,10 @@ export default class ReactPlugin<
     super(options);
 
     this.dependencies = [
-      ["@storm-stack/plugin-config", this.options.config ?? {}],
+      [
+        "@storm-stack/plugin-env",
+        { environmentConfig: "import.meta.env", ...(this.options.env ?? {}) }
+      ],
       ["@storm-stack/plugin-error", this.options.error ?? {}],
       [
         "@storm-stack/plugin-log-console",
@@ -135,7 +137,7 @@ export default class ReactPlugin<
           target: "19",
           compilationMode: "infer",
           gating: {
-            source: "storm:env",
+            source: "storm:meta",
             importSpecifierName: "shouldUseOptimizedReact"
           },
           enableReanimatedCheck: true,
@@ -279,12 +281,7 @@ export default class ReactPlugin<
       context.vfs.writeRuntimeFile(
         "id",
         joinPaths(context.runtimePath, "id.ts"),
-        IdModule(context)
-      ),
-      context.vfs.writeRuntimeFile(
-        "config",
-        joinPaths(context.runtimePath, "config.ts"),
-        await ConfigModule(context, "import.meta.env")
+        IdModule()
       ),
       context.vfs.writeRuntimeFile(
         "log",
@@ -297,9 +294,9 @@ export default class ReactPlugin<
         StorageModule(context)
       ),
       context.vfs.writeRuntimeFile(
-        "env",
-        joinPaths(context.runtimePath, "env.ts"),
-        EnvModule(context)
+        "meta",
+        joinPaths(context.runtimePath, "meta.ts"),
+        MetaModule(context)
       ),
       context.vfs.writeRuntimeFile(
         "context",

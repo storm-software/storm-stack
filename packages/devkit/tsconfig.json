@@ -1,9 +1,12 @@
 {
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
+    "jsx": "preserve",
+    "jsxImportSource": "@alloy-js/core",
+    "lib": ["DOM", "ESNext"],
     "rootDir": "../..",
     "types": ["node"],
-    "strict": false,
+    "strict": true,
     "outDir": "../../dist/out-tsc"
   },
   "include": ["src/**/*.ts", "tsup.config.ts"],

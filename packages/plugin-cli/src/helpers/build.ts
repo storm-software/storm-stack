@@ -22,7 +22,7 @@ import { unbuild } from "@storm-stack/core/lib/unbuild/build";
 import { LogFn } from "@storm-stack/core/types/config";
 import { chmodX } from "@stryke/fs/chmod-x";
 import { joinPaths } from "@stryke/path/join-paths";
-import { CLIPluginContext } from "../types/config";
+import { CLIPluginContext } from "../types/plugin";
 
 /**
  * ink attempts to import react-devtools-core in an ESM-unfriendly way:

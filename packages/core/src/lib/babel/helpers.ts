@@ -57,13 +57,19 @@ export function isDuplicatePlugin(
   return !!(
     getPluginName(plugin) &&
     plugins.some(
-      existing => getPluginName(existing[0]) === getPluginName(plugin)
+      existing =>
+        Array.isArray(existing) &&
+        getPluginName(existing[0]) === getPluginName(plugin)
     )
   );
 }
 
+interface SourceFile {
+  id: string;
+}
+
 export function filterPluginByRuntimeId(context: Context, runtimeId: string) {
-  return sourceFile =>
+  return (sourceFile: SourceFile): boolean =>
     !context.vfs.isMatchingRuntimeId(runtimeId, sourceFile.id);
 }
 

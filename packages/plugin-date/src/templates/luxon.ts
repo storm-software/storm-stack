@@ -74,7 +74,7 @@ export const formats: DateFormats = {
   year: "yyyy",
 };
 
-export let locale = $storm.config.DEFAULT_LOCALE;
+export let locale = $storm.env.DEFAULT_LOCALE;
 
 export const type = "luxon";
 

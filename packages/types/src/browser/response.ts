@@ -34,9 +34,9 @@ export interface StormResponseInterface<
   requestId: string;
 
   /**
-   * The response meta.
+   * The response headers.
    */
-  meta: Record<string, any>;
+  headers: Record<string, any>;
 
   /**
    * The data of the response.

@@ -1,9 +1,10 @@
 {
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
+    "lib": ["ESNext"],
     "rootDir": "../..",
     "types": ["node"],
-    "strict": false,
+    "strict": true,
     "outDir": "../../dist/out-tsc"
   },
   "include": ["src/**/*.ts", "tsup.config.ts", "tsup.schemas.ts"],

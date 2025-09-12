@@ -23,10 +23,11 @@ import { isMatchFound } from "@storm-stack/core/lib/typescript/tsconfig";
 import { writeFile } from "@storm-stack/core/lib/utilities/write-file";
 import type { InferBuildOptions, LogFn } from "@storm-stack/core/types/config";
 import { toArray } from "@stryke/convert/to-array";
+import { existsSync } from "@stryke/fs/exists";
+import { isDirectory } from "@stryke/fs/is-file";
 import { readJsonFile } from "@stryke/fs/json";
 import { listFiles } from "@stryke/fs/list-files";
 import { StormJSON } from "@stryke/json/storm-json";
-import { existsSync } from "@stryke/path/exists";
 import {
   findFileExtension,
   findFileName,
@@ -34,7 +35,6 @@ import {
   findFolderName
 } from "@stryke/path/file-path-fns";
 import { resolveParentPath } from "@stryke/path/get-parent-path";
-import { isDirectory } from "@stryke/path/is-file";
 import { joinPaths } from "@stryke/path/join-paths";
 import { constantCase } from "@stryke/string-format/constant-case";
 import { kebabCase } from "@stryke/string-format/kebab-case";
@@ -48,7 +48,7 @@ import type {
   CLIPluginContext,
   CLIPluginOptions,
   CLIPluginResolvedOptions
-} from "../types/config";
+} from "../types/plugin";
 import {
   getCommandReflectionsPath,
   readAllCommandsReflection
@@ -93,7 +93,7 @@ export async function initOptions(
     DEFAULT_COLOR_CONFIG.dark
   ) as SingleThemeColors;
 
-  context.options.plugins.config.prefix = toArray(options.bin)
+  context.options.plugins.env.prefix = toArray(options.bin)
     .reduce(
       (ret, bin) => {
         const prefix = constantCase(bin);
@@ -102,7 +102,7 @@ export async function initOptions(
         }
         return ret;
       },
-      toArray(context.options.plugins.config.prefix ?? [])
+      toArray(context.options.plugins.env.prefix ?? [])
     )
     .filter(Boolean);
 }

@@ -16,8 +16,8 @@
 
  ------------------------------------------------------------------- */
 
+import { resolvePackage } from "@stryke/fs/resolve";
 import { joinPaths } from "@stryke/path/join-paths";
-import { resolvePackage } from "@stryke/path/resolve";
 import type { Context } from "../../types/context";
 
 /**

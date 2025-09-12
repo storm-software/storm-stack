@@ -38,7 +38,7 @@ import {
   writeCompletionsBash,
   writeCompletionsZsh
 } from "../templates/completions";
-import type { CLIPluginContext } from "../types/config";
+import type { CLIPluginContext } from "../types/plugin";
 import type { CommandTree, CommandTreeBranch } from "../types/reflection";
 import {
   LARGE_CONSOLE_WIDTH,
@@ -426,20 +426,20 @@ async function handler(request: StormRequest<${request.type.getName()}>) {
   });
 
   if (args["version"] || args["v"]) {
-    console.log($storm.env.version);
+    console.log($storm.meta.version);
   } else {
-    const isVerbose = args["verbose"] ?? Boolean($storm.config.VERBOSE);
+    const isVerbose = args["verbose"] ?? Boolean($storm.env.VERBOSE);
     ${
       context.options.plugins.cli.interactive !== "never"
         ? `const isPromptEnabled = ((args["interactive"] !== false &&
       args["no-interactive"] !== true) &&
-      Boolean($storm.config.INTERACTIVE)) &&
-      $storm.env.isInteractive &&
-      !$storm.env.isMinimal;`
+      Boolean($storm.env.INTERACTIVE)) &&
+      $storm.meta.isInteractive &&
+      !$storm.meta.isMinimal;`
         : ""
     }
 
-    if (args["no-banner"] !== true && !$storm.env.isMinimal) {
+    if (args["no-banner"] !== true && !$storm.meta.isMinimal) {
       console.log(renderBanner("${command.title} Command", "${command.description}"));
       console.log("");
     }
@@ -481,10 +481,10 @@ async function handler(request: StormRequest<${request.type.getName()}>) {
         )
         .map(arg => {
           return `
-          if (args["${arg.name}"] === undefined && $storm.config.${constantCase(arg.name)}) {
-            args["${arg.name}"] = $storm.config.${constantCase(arg.name)};
+          if (args["${arg.name}"] === undefined && $storm.env.${constantCase(arg.name)}) {
+            args["${arg.name}"] = $storm.env.${constantCase(arg.name)};
             if (isVerbose) {
-              console.log(colors.dim(\` > Setting the ${arg.name} option to \${$storm.config.${constantCase(
+              console.log(colors.dim(\` > Setting the ${arg.name} option to \${$storm.env.${constantCase(
                 arg.name
               )}} (via the ${constantCase(
                 cmd.root.name
@@ -950,9 +950,9 @@ async function handler(request: StormRequest<${request.type.getName()}>) {
   });
 
   if (args["version"] || args["v"]) {
-    console.log($storm.env.version);
+    console.log($storm.meta.version);
   } else {
-    if (args["no-banner"] !== true && !$storm.env.isMinimal) {
+    if (args["no-banner"] !== true && !$storm.meta.isMinimal) {
       console.log(renderBanner("${command.title} Commands", "${
         command.description
       }"));
@@ -1165,7 +1165,7 @@ ${
     const response = await fetch("https://registry.npmjs.org/${context.packageJson.name || context.options.name}/latest");
 
     const latestVersion = (await response.json()).version;
-    if ($storm.env.version === latestVersion) {
+    if ($storm.meta.version === latestVersion) {
       return;
     }
 
@@ -1178,7 +1178,7 @@ ${
       appTitle.toLowerCase().startsWith("y")
         ? "An"
         : "A"
-    } ${appTitle} update is available! \${colors.red($storm.env.version)} 🢂 \${colors.green(latestVersion)}\`)}
+    } ${appTitle} update is available! \${colors.red($storm.meta.version)} 🢂 \${colors.green(latestVersion)}\`)}
 
     Release Notes: \${link("${
       repository
@@ -1210,7 +1210,7 @@ ${
 }
 
   if (request.data.args.includes("--version") || request.data.args.includes("-v")) {
-    console.log($storm.env.version);
+    console.log($storm.meta.version);
   } else {
     let command = "";
     if (request.data.args.length > 2 && request.data.args[2]) {
@@ -1236,7 +1236,7 @@ ${
       console.log("");
     }
 
-    if (!$storm.env.isMinimal) {
+    if (!$storm.meta.isMinimal) {
       console.log(renderBanner("Help Information", "Display usage details, commands, and support information for the ${
         appTitle
       } application"));
@@ -1299,15 +1299,15 @@ export async function addCommandArgReflections(
   for (const arg of request.args) {
     let name = constantCase(arg.name);
     if (name) {
-      const aliasProperties = context.reflections.config.params
+      const aliasProperties = context.reflections.env.env
         ?.getProperties()
         .filter(prop => prop.getAlias().length > 0);
 
-      const prefix = context.options.plugins.config.prefix.find(
+      const prefix = context.options.plugins.env.prefix.find(
         pre =>
           name &&
           name.startsWith(pre) &&
-          (context.reflections.config.params?.hasProperty(
+          (context.reflections.env.env?.hasProperty(
             name.replace(`${pre}_`, "")
           ) ??
             aliasProperties?.some(prop =>
@@ -1319,10 +1319,10 @@ export async function addCommandArgReflections(
       }
 
       if (
-        !context.reflections.config.params?.hasProperty(name) &&
+        !context.reflections.env.env?.hasProperty(name) &&
         !aliasProperties?.some(prop => prop.getAlias().includes(name))
       ) {
-        context.reflections.config.params?.addProperty({
+        context.reflections.env.env?.addProperty({
           name,
           optional: true,
           description: arg.type.getDescription(),

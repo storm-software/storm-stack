@@ -18,12 +18,12 @@
 
 import { LogLevelLabel } from "@storm-software/config-tools/types";
 import { Plugin } from "@storm-stack/core/base/plugin";
-import type { EngineHooks } from "@storm-stack/core/types";
+import type { EngineHooks } from "@storm-stack/core/types/build";
 import { PluginOptions } from "@storm-stack/core/types/plugin";
 import {
-  readConfigTypeReflection,
-  writeConfigTypeReflection
-} from "@storm-stack/plugin-config/helpers/persistence";
+  readEnvTypeReflection,
+  writeEnvTypeReflection
+} from "@storm-stack/plugin-env/helpers/persistence";
 import { joinPaths } from "@stryke/path/join-paths";
 import {
   buildApplication,
@@ -45,7 +45,7 @@ import {
 import { reflectCommandTree } from "./helpers/reflect-command";
 import { AppModule } from "./templates/app";
 import { CLIModule } from "./templates/cli";
-import type { CLIPluginContext, CLIPluginOptions } from "./types/config";
+import type { CLIPluginContext, CLIPluginOptions } from "./types/plugin";
 
 /**
  * The CLI Plugin for Storm Stack projects.
@@ -215,13 +215,13 @@ export default class CLIPlugin<
         `Writing the CLI application entry points.`
       );
 
-      context.reflections.config.types.params = await readConfigTypeReflection(
+      context.reflections.env.types.env = await readEnvTypeReflection(
         context,
-        "params"
+        "env"
       );
 
       const originalNumberOfProperties =
-        context.reflections.config.types.params?.getProperties().length || 0;
+        context.reflections.env.types.env?.getProperties().length || 0;
 
       for (const command of Object.values(commandTree.children)) {
         await addCommandArgReflections(context, command);
@@ -230,16 +230,12 @@ export default class CLIPlugin<
       this.log(
         LogLevelLabel.TRACE,
         `Adding ${
-          (context.reflections.config.params?.getProperties().length || 0) -
+          (context.reflections.env.env?.getProperties().length || 0) -
           originalNumberOfProperties
         } config properties for the CLI commands.`
       );
 
-      await writeConfigTypeReflection(
-        context,
-        context.reflections.config.params,
-        "params"
-      );
+      await writeEnvTypeReflection(context, context.reflections.env.env, "env");
 
       await prepareEntry(this.log, context, commandTree);
     }

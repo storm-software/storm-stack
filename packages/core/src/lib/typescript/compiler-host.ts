@@ -17,9 +17,9 @@
  ------------------------------------------------------------------- */
 
 import { LogLevelLabel } from "@storm-software/config-tools/types";
+import { resolvePackage } from "@stryke/fs/resolve";
 import { joinPaths } from "@stryke/path/join-paths";
 import { replacePath } from "@stryke/path/replace";
-import { resolvePackage } from "@stryke/path/resolve";
 import { isFunction } from "@stryke/type-checks/is-function";
 import { TsConfigJson } from "@stryke/types/tsconfig";
 import defu from "defu";

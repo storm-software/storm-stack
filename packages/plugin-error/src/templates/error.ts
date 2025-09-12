@@ -438,7 +438,7 @@ export function createStormError(
    * A URL to a page that displays the error message details
    */
   public get url(): string {
-    const url = new URL($storm.config.ERROR_URL!);
+    const url = new URL($storm.env.ERROR_URL!);
 
     url.pathname = (url.pathname ? url.pathname.replace(/\\/*$/, "") : "") + \`/\${this.type.toLowerCase().replaceAll("_", "-")}/\${String(this.code)}\`;
     if (this.params.length > 0) {
@@ -462,7 +462,7 @@ export function createStormError(
    * @param includeData - Whether to include the data in the error message
    * @returns The display error message string
    */
-  public toDisplay(includeData = $storm.config.INCLUDE_ERROR_DATA): string {
+  public toDisplay(includeData = $storm.env.INCLUDE_ERROR_DATA): string {
     return \`\${this.name && this.name !== this.constructor.name ? (this.code ? \`\${this.name} \` : this.name) : ""}\${
       this.code
         ? this.code && this.name
@@ -495,8 +495,8 @@ Inner Error:
   * @returns The error message and stack trace string
   */
   public override toString(
-    stacktrace = $storm.config.STACKTRACE,
-    includeData = $storm.config.INCLUDE_ERROR_DATA
+    stacktrace = $storm.env.STACKTRACE,
+    includeData = $storm.env.INCLUDE_ERROR_DATA
   ): string {
     return \`\${this.toDisplay(includeData)}\${stacktrace ? \`\\n\\nStack Trace:\\n\${this.stack}\` : ""}\`;
   }

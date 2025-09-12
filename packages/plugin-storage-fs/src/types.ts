@@ -16,7 +16,7 @@
 
  ------------------------------------------------------------------- */
 
-import { StormEnvPathType } from "@storm-stack/core/runtime-types/node/env";
+import { StormEnvPathType } from "@storm-stack/core/runtime-types/node/meta";
 import {
   StoragePluginContext,
   StoragePluginOptions

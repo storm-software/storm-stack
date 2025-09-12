@@ -38,7 +38,7 @@ import {
   MIN_MESSAGE_WIDTH
 } from "../helpers/constants";
 import { extractAuthor } from "../helpers/utilities";
-import type { CFontResultObject, CLIPluginContext } from "../types/config";
+import type { CFontResultObject, CLIPluginContext } from "../types/plugin";
 
 export function CLIModule(context: CLIPluginContext) {
   let appTitle = titleCase(
@@ -287,15 +287,15 @@ export const colors: Record<ColorName, (text: string | number) => string> = {
         `
   ${style}(text: string | number) {
     try {
-      if (!$storm.env.isColorSupported || !$storm.env.supportsColor.stdout) {
+      if (!$storm.meta.isColorSupported || !$storm.meta.supportsColor.stdout) {
         return String(text);
       }
 
-      if ($storm.env.supportsColor.stdout === 1) {
+      if ($storm.meta.supportsColor.stdout === 1) {
         return applyAnsi(text, "${styles.ansi16[style].open}", "${
           styles.ansi16[style].close
         }");
-      } else if ($storm.env.supportsColor.stdout === 2) {
+      } else if ($storm.meta.supportsColor.stdout === 2) {
         return applyAnsi(text, "${styles.ansi256[style].open}", "${
           styles.ansi256[style].close
         }");
@@ -540,11 +540,11 @@ function isHyperlinkSupported(
 
   if (Boolean(process.env.NETLIFY)) {
     return true;
-  } else if (!$storm.env.isColorSupported || $storm.env.hasTTY) {
+  } else if (!$storm.meta.isColorSupported || $storm.meta.hasTTY) {
     return false;
   } else if (Boolean(process.env.WT_SESSION)) {
     return true;
-  } else if ($storm.env.isWindows || $storm.env.isMinimal || Boolean(process.env.TEAMCITY_VERSION)) {
+  } else if ($storm.meta.isWindows || $storm.meta.isMinimal || Boolean(process.env.TEAMCITY_VERSION)) {
     return false;
   } else if (Boolean(process.env.TERM_PROGRAM)) {
     const version = parseVersion(process.env.TERM_PROGRAM_VERSION);
@@ -618,7 +618,7 @@ export function link(
   ) {
     return options.fallback
       ? options.fallback(url, text)
-      : $storm.env.isColorSupported
+      : $storm.meta.isColorSupported
         ? \`\${text && text !== url ? \`\${text} at \` : ""}\${colors.underline(
             options.color !== false
               ? getColor(options.color || "link")(url)
@@ -819,7 +819,7 @@ export function renderFooter(): string {
         : ""
     }
 
-  if ($storm.env.isUnicodeSupported) {
+  if ($storm.meta.isUnicodeSupported) {
     const qrCodeLines = \`${renderUnicodeCompact(
       (author?.url || homepage || docs || support || contact || repository)!
     )}\`.split("\\n");

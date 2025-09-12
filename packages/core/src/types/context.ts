@@ -269,7 +269,7 @@ export interface Context<
   /**
    * The project root directory
    */
-  compiler: CompilerInterface;
+  compiler: CompilerInterface<Context<any, TReflections, TEntry>>;
 
   /**
    * The runtime configuration for the Storm Stack project

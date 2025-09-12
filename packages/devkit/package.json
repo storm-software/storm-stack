@@ -207,6 +207,20 @@
         "types": "./dist/templates/helpers/*.d.ts",
         "default": "./dist/templates/helpers/*.js"
       }
+    },
+    "./templates/components/*": {
+      "import": {
+        "types": "./dist/templates/components/*.d.ts",
+        "default": "./dist/templates/components/*.js"
+      },
+      "require": {
+        "types": "./dist/templates/components/*.d.cts",
+        "default": "./dist/templates/components/*.cjs"
+      },
+      "default": {
+        "types": "./dist/templates/components/*.d.ts",
+        "default": "./dist/templates/components/*.js"
+      }
     }
   },
   "files": [
@@ -235,7 +249,7 @@
     "@storm-software/config-tools": "catalog:",
     "@storm-software/esbuild": "catalog:",
     "@storm-software/unbuild": "catalog:",
-    "@storm-stack/core": "0.43.0",
+    "@storm-stack/core": "workspace:*",
     "@stryke/convert": "catalog:",
     "@stryke/fs": "catalog:",
     "@stryke/helpers": "catalog:",

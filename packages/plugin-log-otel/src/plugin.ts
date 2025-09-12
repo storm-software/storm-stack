@@ -25,7 +25,7 @@ import { StormJSON } from "@stryke/json/storm-json";
 import {
   LogOpenTelemetryPluginContext,
   LogOpenTelemetryPluginOptions
-} from "./types";
+} from "./types/plugin";
 
 /**
  * A Storm Stack plugin for OpenTelemetry logging.
@@ -262,7 +262,7 @@ const inspect: (value: unknown) => string =
  */
 function createAdapter(): LogAdapter {
   const SERVICE_NAME =
-    ${this.getOptions(context).serviceName} || $storm.config.OTEL_SERVICE_NAME || $storm.env.name;
+    ${this.getOptions(context).serviceName} || $storm.env.OTEL_SERVICE_NAME || $storm.meta.name;
 
   const resource = resourceFromAttributes({
     [ATTR_SERVICE_NAME]: SERVICE_NAME
@@ -283,7 +283,7 @@ function createAdapter(): LogAdapter {
 
   const logger = loggerProvider.getLogger(
     SERVICE_NAME,
-    $storm.env.version
+    $storm.meta.version
   );
 
   const adapter = (record: LogRecord) => {

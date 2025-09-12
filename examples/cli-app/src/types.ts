@@ -16,7 +16,7 @@
 
  ------------------------------------------------------------------- */
 
-import { StormSentryLogConfig } from "@storm-stack/plugin-log-sentry/types/config";
+import { StormSentryLogEnv } from "@storm-stack/plugin-log-sentry/types/env";
 
 /**
  * The request for the example CLI application.
@@ -81,4 +81,4 @@ export interface AddPageRequest {
   file: string;
 }
 
-export interface StormCLIAppConfig extends StormSentryLogConfig {}
+export interface StormCLIAppEnv extends StormSentryLogEnv {}

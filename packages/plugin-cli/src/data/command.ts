@@ -29,7 +29,7 @@ import { TypeDefinition } from "@stryke/types/configuration";
 import { writeCommandReflection } from "../helpers/persistence";
 import { findCommandName } from "../helpers/reflect-command";
 import { getAppTitle, reflectRequestBaseType } from "../helpers/utilities";
-import { CLIPluginContext } from "../types/config";
+import { CLIPluginContext } from "../types/plugin";
 import {
   CommandEntryTypeDefinition,
   CommandRelations

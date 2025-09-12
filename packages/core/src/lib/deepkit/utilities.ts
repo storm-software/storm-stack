@@ -50,7 +50,7 @@ export function stringifyDefaultValue(
  * @param value - The value to stringify.
  * @returns A string representation of the value.
  */
-export function stringifyStringValue(value): string {
+export function stringifyStringValue(value?: any): string {
   return `"${String(value).replaceAll('"', '\\"')}"`;
 }
 

@@ -19,11 +19,11 @@
 import { LogLevelLabel } from "@storm-software/config-tools/types";
 import type { ResolvedEntryTypeDefinition } from "@storm-stack/core/types/build";
 import type { LogFn } from "@storm-stack/core/types/config";
-import { writeConfigTypeReflection } from "@storm-stack/plugin-config/helpers/persistence";
+import { writeEnvTypeReflection } from "@storm-stack/plugin-env/helpers/persistence";
 import { findFolderName } from "@stryke/path/file-path-fns";
 import { resolveParentPath } from "@stryke/path/get-parent-path";
 import { Command } from "../data/command";
-import type { CLIPluginContext } from "../types/config";
+import type { CLIPluginContext } from "../types/plugin";
 import {
   CommandRelations,
   CommandTree,
@@ -182,10 +182,10 @@ export async function reflectCommandTree(
     addCommand(tree, reflections[commandId]!);
   }
 
-  await writeConfigTypeReflection(
+  await writeEnvTypeReflection(
     context,
-    context.reflections.config.types.params,
-    "params"
+    context.reflections.env.types.env,
+    "env"
   );
 
   return tree;

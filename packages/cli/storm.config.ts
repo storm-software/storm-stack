@@ -32,8 +32,8 @@ export default defineConfig({
         gradient: false
       },
       bin: ["storm", "storm-stack"],
-      config: {
-        types: "./src/types.ts#StormStackCLIConfig"
+      env: {
+        types: "./src/types.ts#StormStackCLIEnv"
       }
     }),
     new StormStackLogStoragePlugin({

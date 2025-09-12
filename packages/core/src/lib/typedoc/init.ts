@@ -48,11 +48,11 @@ const objectToFrontmatter = (object: Record<string, any> = {}) =>
     .join("\n");
 
 const onRendererPageEnd =
-  frontmatterObject => (event: PageEvent<{ name: string }>) => {
+  (frontmatterObject?: Record<string, any>) =>
+  (event: PageEvent<{ name: string }>) => {
     if (!event.contents) {
       return;
     } else if (/README\.md$/.test(event.url)) {
-      // eslint-disable-next-line ts/no-unsafe-call
       event.preventDefault();
       return;
     }
@@ -99,12 +99,16 @@ interface ReflectionGroupInput {
   children: Reflection[];
 }
 
-const buildNavigationFromProjectReflection = (baseUrl = "", project) => {
+const buildNavigationFromProjectReflection = (
+  baseUrl = "",
+  project: { groups: ReflectionGroupInput[] }
+) => {
   const baseUrlWithoutTrailingSlash = baseUrl.replace(/\/$/gm, "");
   const result: Navigation = { type: "flat" };
 
-  const isGroupOfModules = group => group.title === "Modules";
-  const reflectionToNavItem = reflection => {
+  const isGroupOfModules = (group: ReflectionGroupInput) =>
+    group.title === "Modules";
+  const reflectionToNavItem = (reflection: { name: any; url: any }) => {
     return {
       title: reflection.name,
       url: `${baseUrlWithoutTrailingSlash}/${reflection.url}`.replace(
@@ -270,7 +274,10 @@ export const initTypedoc = async (
 
     await app.generateDocs(project, outputFolder || outputPath);
   };
-  const generateNavigationJSON = async (project, outputFolder = outputPath) => {
+  const generateNavigationJSON = async (
+    project: any,
+    outputFolder = outputPath
+  ) => {
     const navigation = buildNavigationFromProjectReflection(baseUrl, project);
 
     await writeFile(

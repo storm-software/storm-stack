@@ -17,15 +17,13 @@
  ------------------------------------------------------------------- */
 
 import { getFileHeader } from "@storm-stack/core/lib/utilities/file-header";
-import { Context } from "@storm-stack/core/types/context";
 
 /**
  * The ID module provides a set of utilities for generating unique identifiers.
  *
- * @param _context - The context of the Storm Stack runtime, which includes configurations and utilities.
  * @returns A string representing the ID module code.
  */
-export function IdModule(_context: Context) {
+export function IdModule() {
   return `
 /**
  * The ID module provides a set of utilities for generating unique identifiers.

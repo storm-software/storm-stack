@@ -40,19 +40,19 @@ export interface BabelPluginBuilderParams<
 export type BabelPluginBuilder<
   TOptions extends BabelPluginOptions = BabelPluginOptions,
   TContext extends Context = Context,
-  TState = unknown
+  TState = any
 > = (
   params: BabelPluginBuilderParams<TOptions, TContext>
-) => PluginObject<TOptions & BabelPluginPass<TOptions, TState>>;
+) => PluginObject<TState & BabelPluginPass<TOptions>>;
 
 export type DeclareReturn<
   TOptions extends BabelPluginOptions = BabelPluginOptions,
-  TState = unknown
+  TState = any
 > = PluginObject<TOptions & BabelPluginPass<TOptions, TState>>;
 
 export type DeclareBabelPluginReturn<
   TOptions extends BabelPluginOptions = BabelPluginOptions,
   TContext extends Context = Context,
-  TState = unknown
+  TState = any
 > = Omit<BabelPlugin<TOptions, TContext, TState>, "_name"> &
   Required<Pick<BabelPlugin<TOptions, TContext, TState>, "_name">>;

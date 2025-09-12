@@ -18,14 +18,23 @@
 
 import { PluginConfig } from "@cloudflare/vite-plugin";
 import {
-  Context,
-  ReflectionRecord,
   ResolvedEntryTypeDefinition,
   ResolvedOptions
 } from "@storm-stack/core/types";
 import { PluginBaseOptions } from "@storm-stack/core/types/plugin";
+import {
+  EnvPluginContext,
+  EnvPluginOptions,
+  EnvPluginReflectionRecord,
+  EnvPluginResolvedOptions
+} from "@storm-stack/plugin-env/types/plugin";
 
 export type CloudflarePluginOptions = PluginBaseOptions & {
+  /**
+   * Configuration options for the Environment Configuration plugin.
+   */
+  env?: Omit<EnvPluginOptions, "environmentConfig">;
+
   /**
    * The Cloudflare account ID.
    */
@@ -51,14 +60,14 @@ export type CloudflarePluginOptions = PluginBaseOptions & {
   cloudflareVitePlugin?: PluginConfig | false;
 };
 
-export interface CloudflarePluginResolvedOptions {
-  cloudflare: Required<CloudflarePluginOptions>;
+export interface CloudflarePluginResolvedOptions
+  extends EnvPluginResolvedOptions {
+  cloudflare: Required<Omit<CloudflarePluginOptions, "env">>;
 }
 
 export type CloudflarePluginContext<
   TOptions extends
     ResolvedOptions<CloudflarePluginResolvedOptions> = ResolvedOptions<CloudflarePluginResolvedOptions>,
-  // eslint-disable-next-line ts/no-empty-object-type
-  TReflections extends { [P in keyof unknown]: ReflectionRecord } = {},
+  TReflections extends EnvPluginReflectionRecord = EnvPluginReflectionRecord,
   TEntry extends ResolvedEntryTypeDefinition = ResolvedEntryTypeDefinition
-> = Context<TOptions, TReflections, TEntry>;
+> = EnvPluginContext<TOptions, TReflections, TEntry>;

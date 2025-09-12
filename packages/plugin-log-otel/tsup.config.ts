@@ -20,7 +20,7 @@ import { defineTsupConfig } from "@storm-stack/tools-config/tsup.shared";
 
 const config = defineTsupConfig({
   name: "plugin-log-otel",
-  entry: ["src/index.ts", "src/plugin.ts", "src/types.ts"]
+  entry: ["src/index.ts", "src/plugin.ts", "src/types/*.ts"]
 });
 
 export default config;

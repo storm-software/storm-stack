@@ -17,8 +17,8 @@
  ------------------------------------------------------------------- */
 
 import { LogLevelLabel } from "@storm-software/config-tools/types";
+import { existsSync } from "@stryke/fs/exists";
 import { createDirectory } from "@stryke/fs/helpers";
-import { existsSync } from "@stryke/path/exists";
 import { writeMetaFile } from "../../lib/context";
 import { getParsedTypeScriptConfig } from "../../lib/typescript/tsconfig";
 import type { EngineHooks } from "../../types/build";

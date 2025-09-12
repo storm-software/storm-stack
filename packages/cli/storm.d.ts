@@ -370,7 +370,565 @@ type StorageAdapter = Driver & AsyncDisposable;
 type StorageAdapterFactory = () => StorageAdapter;
 
 /**
- * The base configuration used by Storm Stack applications
+ * The global Storm Stack application context. This object contains information related to the current process's execution.
+ *
+ * @remarks
+ * The Storm Stack application context object is injected into the global scope of the application. It can be accessed using `$storm` or `useStorm()` in the application code.
+ */
+interface StormContextInterface {
+  /**
+   * The root application logger for the Storm Stack application.
+   */
+  log: StormLogInterface;
+  /**
+   * The {@link StormStorageInterface} instance used by the Storm Stack application.
+   */
+  storage: StormStorageInterface;
+  /**
+   * Runtime specific application metadata.
+   */
+  meta: StormMeta;
+  /**
+   * The environment configuration parameters for the Storm application.
+   */
+  env: StormEnvInterface;
+  /**
+   * The secrets configuration parameters for the Storm application.
+   */
+  [key: string]: any;
+}
+
+/**
+ * Interface for date utility functions used in the Storm Stack.
+ *
+ * @typeParam TDate - The date object type used by the underlying date library.
+ * @typeParam TLocale - The locale type used by the underlying date library.
+ *
+ * @remarks
+ * This interface defines a contract for date manipulation and formatting utilities, abstracting over different date libraries (such as [Moment.js](https://momentjs.com/), [Day.js](https://day.js.org/), etc.). It provides methods for creating, parsing, comparing, and formatting dates, as well as manipulating date components and handling localization.
+ */
+interface StormDateInterface<TDate, TLocale> {
+  /**
+   * The set of date formats supported by the utility.
+   */
+  formats: DateFormats<any>;
+  /**
+   * The current locale object, if available.
+   */
+  locale?: TLocale;
+  /**
+   * The [Moment.js](https://momentjs.com/) instance, if using [Moment.js](https://momentjs.com/) as the underlying library.
+   */
+  moment?: any;
+  /**
+   * The [Day.js](https://day.js.org/) instance, if using [Day.js](https://day.js.org/) as the underlying library.
+   */
+  dayjs?: any;
+  /**
+   * Name of the currently used date library.
+   */
+  type: string;
+  /**
+   * Create a new `Date` object with the underlying library.
+   *
+   * @remarks
+   * This method supports some of the standard input sources like ISO strings so you can pass the string directly as `date("2024-01-10T14:30:00Z")`, and javascript `Date` objects `date(new Date())`. If `null` is passed `null` will be returned.
+   *
+   * @param value - The value to create a date object from. Can be a string, number, or JavaScript Date object.
+   * @returns A date object of type `TDate` or `null` if the input is `null`.
+   */
+  createDate: <
+    TArg = undefined,
+    TResultingDate = TArg extends null
+      ? null
+      : TArg extends undefined
+        ? TDate
+        : TDate | null
+  >(
+    value?: TArg
+  ) => TResultingDate;
+  /**
+   * Creates a date object from a JavaScript Date object.
+   *
+   * @remarks
+   * This method is used to create a date object from a JavaScript Date object. It is useful for converting JavaScript Date objects to the date library's date objects.
+   */
+  toJsDate: (value: TDate) => Date;
+  /**
+   * Creates a date object from an ISO string.
+   *
+   * @remarks
+   * This method is used to create a date object from an ISO string. It is useful for parsing dates from strings.
+   */
+  parseISO: (isString: string) => TDate;
+  /**
+   * Converts a date object to an ISO string.
+   *
+   * @remarks
+   * This method is used to convert a date object to an ISO string. It is useful for serializing dates to strings.
+   */
+  toISO: (value: TDate) => string;
+  /**
+   * Creates a date object from a string using the specified format.
+   *
+   * @remarks
+   * This method is used to create a date object from a string using the specified format. It is useful for parsing dates from strings with custom formats.
+   */
+  parse: (value: string, format: string) => TDate | null;
+  /**
+   * Returns the current locale code.
+   *
+   * @returns The current locale code.
+   */
+  getCurrentLocaleCode: () => string;
+  /**
+   * Returns an indicator if the current locale is using a 12-hour cycle.
+   *
+   * @returns `true` if the current locale is using a 12-hour cycle, otherwise `false`.
+   */
+  is12HourCycleInCurrentLocale: () => boolean;
+  /**
+   * Returns user readable format (taking into account localized format tokens), useful to render helper text for input (e.g. placeholder). If helper can not be created and for [Luxon](https://moment.github.io/luxon/#/) always returns empty string.
+   *
+   * @param format - The format string to use.
+   * @returns The user readable format string.
+   */
+  getFormatHelperText: (format: string) => string;
+  /**
+   * Checks if the value is null.
+   *
+   * @param value - The value to check.
+   * @returns `true` if the value is null, otherwise `false`.
+   */
+  isNull: (value: TDate | null) => boolean;
+  /**
+   * Checks if the value is valid.
+   *
+   * @param value - The value to check.
+   * @returns `true` if the value is valid, otherwise `false`.
+   */
+  isValid: (value: any) => boolean;
+  /**
+   * Returns the difference between two dates.
+   *
+   * @param value - The first date to compare.
+   * @param comparing - The second date to compare.
+   * @param unit - The unit of time to use for the comparison.
+   * @returns The difference between the two dates in the specified unit.
+   */
+  getDiff: (value: TDate, comparing: TDate | string, unit?: TimeUnit) => number;
+  /**
+   * Checks if two values are equal.
+   *
+   * @param value - The first value to compare.
+   * @param comparing - The second value to compare.
+   * @returns `true` if the two values are equal, otherwise `false`.
+   */
+  isEqual: (value: any, comparing: any) => boolean;
+  /**
+   * Checks if two dates are the same day.
+   *
+   * @param value - The first date to compare.
+   * @param comparing - The second date to compare.
+   * @returns `true` if the two dates are the same day, otherwise `false`.
+   */
+  isSameDay: (value: TDate, comparing: TDate) => boolean;
+  /**
+   * Checks if two dates are the same month.
+   *
+   * @param value - The first date to compare.
+   * @param comparing - The second date to compare.
+   * @returns `true` if the two dates are the same month, otherwise `false`.
+   */
+  isSameMonth: (value: TDate, comparing: TDate) => boolean;
+  /**
+   * Checks if two dates are the same year.
+   *
+   * @param value - The first date to compare.
+   * @param comparing - The second date to compare.
+   * @returns `true` if the two dates are the same year, otherwise `false`.
+   */
+  isSameYear: (value: TDate, comparing: TDate) => boolean;
+  /**
+   * Checks if two dates are the same hour.
+   *
+   * @param value - The first date to compare.
+   * @param comparing - The second date to compare.
+   * @returns `true` if the two dates are the same hour, otherwise `false`.
+   */
+  isSameHour: (value: TDate, comparing: TDate) => boolean;
+  /**
+   * Checks if two dates are after each other.
+   *
+   * @param value - The first date to compare.
+   * @param comparing - The second date to compare.
+   * @returns `true` if the first date is after the second date, otherwise `false`.
+   */
+  isAfter: (value: TDate, comparing: TDate) => boolean;
+  /**
+   * Checks if two dates are after each other on the same day.
+   *
+   * @param value - The first date to compare.
+   * @param comparing - The second date to compare.
+   * @returns `true` if the first date is after the second date on the same day, otherwise `false`.
+   */
+  isAfterDay: (value: TDate, comparing: TDate) => boolean;
+  /**
+   * Checks if two dates are after each other on the same month.
+   *
+   * @param value - The first date to compare.
+   * @param comparing - The second date to compare.
+   * @returns `true` if the first date is after the second date on the same month, otherwise `false`.
+   */
+  isAfterMonth: (value: TDate, comparing: TDate) => boolean;
+  /**
+   * Checks if two dates are after each other on the same year.
+   *
+   * @param value - The first date to compare.
+   * @param comparing - The second date to compare.
+   * @returns `true` if the first date is after the second date on the same year, otherwise `false`.
+   */
+  isAfterYear: (value: TDate, comparing: TDate) => boolean;
+  /**
+   * Checks if two dates are before each other.
+   *
+   * @param value - The first date to compare.
+   * @param comparing - The second date to compare.
+   * @returns `true` if the first date is before the second date, otherwise `false`.
+   */
+  isBefore: (value: TDate, comparing: TDate) => boolean;
+  /**
+   * Checks if two dates are before each other on the same day.
+   *
+   * @param value - The first date to compare.
+   * @param comparing - The second date to compare.
+   * @returns `true` if the first date is before the second date on the same day, otherwise `false`.
+   */
+  isBeforeDay: (value: TDate, comparing: TDate) => boolean;
+  /**
+   * Checks if two dates are before each other on the same month.
+   *
+   * @param value - The first date to compare.
+   * @param comparing - The second date to compare.
+   * @returns `true` if the first date is before the second date on the same month, otherwise `false`.
+   */
+  isBeforeMonth: (value: TDate, comparing: TDate) => boolean;
+  /**
+   * Checks if two dates are before each other on the same year.
+   *
+   * @param value - The first date to compare.
+   * @param comparing - The second date to compare.
+   * @returns `true` if the first date is before the second date on the same year, otherwise `false`.
+   */
+  isBeforeYear: (value: TDate, comparing: TDate) => boolean;
+  /**
+   * Checks if a date is within a specific range.
+   *
+   * @param value - The date to check.
+   * @param range - The range to check against.
+   * @returns `true` if the date is within the range, otherwise `false`.
+   */
+  isWithinRange: (value: TDate, range: [TDate, TDate]) => boolean;
+  /**
+   * Gets the start of the year for a given date.
+   *
+   * @param value - The date to get the start of the year for.
+   * @returns The start of the year for the given date.
+   */
+  startOfYear: (value: TDate) => TDate;
+  /**
+   * Gets the end of the year for a given date.
+   *
+   * @param value - The date to get the end of the year for.
+   * @returns The end of the year for the given date.
+   */
+  endOfYear: (value: TDate) => TDate;
+  /**
+   * Gets the start of the month for a given date.
+   *
+   * @param value - The date to get the start of the month for.
+   * @returns The start of the month for the given date.
+   */
+  startOfMonth: (value: TDate) => TDate;
+  /**
+   * Gets the end of the month for a given date.
+   *
+   * @param value - The date to get the end of the month for.
+   * @returns The end of the month for the given date.
+   */
+  endOfMonth: (value: TDate) => TDate;
+  /**
+   * Gets the start of the week for a given date.
+   *
+   * @param value - The date to get the start of the week for.
+   * @returns The start of the week for the given date.
+   */
+  startOfWeek: (value: TDate) => TDate;
+  /**
+   * Gets the end of the week for a given date.
+   *
+   * @param value - The date to get the end of the week for.
+   * @returns The end of the week for the given date.
+   */
+  endOfWeek: (value: TDate) => TDate;
+  /**
+   * Adds a specified number of seconds to a date.
+   *
+   * @param value - The date to add seconds to.
+   * @param count - The number of seconds to add.
+   * @returns The new date with the seconds added.
+   */
+  addSeconds: (value: TDate, count: number) => TDate;
+  /**
+   * Adds a specified number of minutes to a date.
+   *
+   * @param value - The date to add minutes to.
+   * @param count - The number of minutes to add.
+   * @returns The new date with the minutes added.
+   */
+  addMinutes: (value: TDate, count: number) => TDate;
+  /**
+   * Adds a specified number of hours to a date.
+   *
+   * @param value - The date to add hours to.
+   * @param count - The number of hours to add.
+   * @returns The new date with the hours added.
+   */
+  addHours: (value: TDate, count: number) => TDate;
+  /**
+   * Adds a specified number of days to a date.
+   *
+   * @param value - The date to add days to.
+   * @param count - The number of days to add.
+   * @returns The new date with the days added.
+   */
+  addDays: (value: TDate, count: number) => TDate;
+  /**
+   * Adds a specified number of weeks to a date.
+   *
+   * @param value - The date to add weeks to.
+   * @param count - The number of weeks to add.
+   * @returns The new date with the weeks added.
+   */
+  addWeeks: (value: TDate, count: number) => TDate;
+  /**
+   * Adds a specified number of months to a date.
+   *
+   * @param value - The date to add months to.
+   * @param count - The number of months to add.
+   * @returns The new date with the months added.
+   */
+  addMonths: (value: TDate, count: number) => TDate;
+  /**
+   * Adds a specified number of years to a date.
+   *
+   * @param value - The date to add years to.
+   * @param count - The number of years to add.
+   * @returns The new date with the years added.
+   */
+  addYears: (value: TDate, count: number) => TDate;
+  /**
+   * Gets the start of the day for a given date.
+   *
+   * @param value - The date to get the start of the day for.
+   * @returns The start of the day for the given date.
+   */
+  startOfDay: (value: TDate) => TDate;
+  /**
+   * Gets the end of the day for a given date.
+   *
+   * @param value - The date to get the end of the day for.
+   * @returns The end of the day for the given date.
+   */
+  endOfDay: (value: TDate) => TDate;
+  /**
+   * Formats a date using a predefined format key.
+   *
+   * @param value - The date to format.
+   * @param formatKey - The key of the format to use.
+   * @returns The formatted date string.
+   */
+  format: (value: TDate, formatKey: keyof DateFormats) => string;
+  /**
+   * Formats a date using a custom format string.
+   *
+   * @param value - The date to format.
+   * @param formatString - The format string to use.
+   * @returns The formatted date string.
+   */
+  formatByString: (value: TDate, formatString: string) => string;
+  /**
+   * Formats a number as a string, possibly applying localization.
+   *
+   * @param numberToFormat - The number string to format.
+   * @returns The formatted number string.
+   */
+  formatNumber: (numberToFormat: string) => string;
+  /**
+   * Gets the hours component of a date.
+   *
+   * @param value - The date to extract hours from.
+   * @returns The hours component.
+   */
+  getHours: (value: TDate) => number;
+  /**
+   * Sets the hours component of a date.
+   *
+   * @param value - The date to set hours on.
+   * @param count - The hours value to set.
+   * @returns The new date with the hours set.
+   */
+  setHours: (value: TDate, count: number) => TDate;
+  /**
+   * Gets the minutes component of a date.
+   *
+   * @param value - The date to extract minutes from.
+   * @returns The minutes component.
+   */
+  getMinutes: (value: TDate) => number;
+  /**
+   * Sets the minutes component of a date.
+   *
+   * @param value - The date to set minutes on.
+   * @param count - The minutes value to set.
+   * @returns The new date with the minutes set.
+   */
+  setMinutes: (value: TDate, count: number) => TDate;
+  /**
+   * Gets the seconds component of a date.
+   *
+   * @param value - The date to extract seconds from.
+   * @returns The seconds component.
+   */
+  getSeconds: (value: TDate) => number;
+  /**
+   * Sets the seconds component of a date.
+   *
+   * @param value - The date to set seconds on.
+   * @param count - The seconds value to set.
+   * @returns The new date with the seconds set.
+   */
+  setSeconds: (value: TDate, count: number) => TDate;
+  /**
+   * Gets the day of the month from a date.
+   *
+   * @param value - The date to extract the day from.
+   * @returns The day of the month.
+   */
+  getDate: (value: TDate) => number;
+  /**
+   * Sets the day of the month on a date.
+   *
+   * @param value - The date to set the day on.
+   * @param count - The day of the month to set.
+   * @returns The new date with the day set.
+   */
+  setDate: (value: TDate, count: number) => TDate;
+  /**
+   * Gets the week number for a given date.
+   *
+   * @param value - The date to get the week number for.
+   * @returns The week number.
+   */
+  getWeek: (value: TDate) => number;
+  /**
+   * Gets the month component of a date (0-based).
+   *
+   * @param value - The date to extract the month from.
+   * @returns The month component (0 = January, 11 = December).
+   */
+  getMonth: (value: TDate) => number;
+  /**
+   * Gets the number of days in the month for a given date.
+   *
+   * @param value - The date to get the number of days in the month for.
+   * @returns The number of days in the month.
+   */
+  getDaysInMonth: (value: TDate) => number;
+  /**
+   * Sets the month component of a date (0-based).
+   *
+   * @param value - The date to set the month on.
+   * @param count - The month to set (0 = January, 11 = December).
+   * @returns The new date with the month set.
+   */
+  setMonth: (value: TDate, count: number) => TDate;
+  /**
+   * Gets the date representing the next month.
+   *
+   * @param value - The date to get the next month for.
+   * @returns The date in the next month.
+   */
+  getNextMonth: (value: TDate) => TDate;
+  /**
+   * Gets the date representing the previous month.
+   *
+   * @param value - The date to get the previous month for.
+   * @returns The date in the previous month.
+   */
+  getPreviousMonth: (value: TDate) => TDate;
+  /**
+   * Gets an array of dates representing each month in the year of the given date.
+   *
+   * @param value - The date to get the month array for.
+   * @returns An array of dates, one for each month.
+   */
+  getMonthArray: (value: TDate) => TDate[];
+  /**
+   * Gets the year component of a date.
+   *
+   * @param value - The date to extract the year from.
+   * @returns The year component.
+   */
+  getYear: (value: TDate) => number;
+  /**
+   * Sets the year component of a date.
+   *
+   * @param value - The date to set the year on.
+   * @param count - The year to set.
+   * @returns The new date with the year set.
+   */
+  setYear: (value: TDate, count: number) => TDate;
+  /**
+   * Merges the date part of one date with the time part of another date.
+   *
+   * @param date - The date to take the date part from.
+   * @param time - The date to take the time part from.
+   * @returns The merged date and time.
+   */
+  mergeDateAndTime: (date: TDate, time: TDate) => TDate;
+  /**
+   * Gets the names of the weekdays in the current locale.
+   *
+   * @returns An array of weekday names.
+   */
+  getWeekdays: () => string[];
+  /**
+   * Gets a 2D array representing the weeks in the month of the given date.
+   *
+   * @param date - The date to get the week array for.
+   * @returns A 2D array of dates, grouped by week.
+   */
+  getWeekArray: (date: TDate) => TDate[][];
+  /**
+   * Gets an array of dates representing the range of years between two dates.
+   *
+   * @param start - The start date of the range.
+   * @param end - The end date of the range.
+   * @returns An array of dates, one for each year in the range.
+   */
+  getYearRange: (start: TDate, end: TDate) => TDate[];
+  /**
+   * Gets the localized string for "am" or "pm".
+   *
+   * @param meridiem - Either "am" or "pm".
+   * @returns The localized meridiem string.
+   */
+  getMeridiemText: (meridiem: "am" | "pm") => string;
+}
+
+/**
+ * The base environment configuration used by Storm Stack applications
  *
  * @remarks
  * This interface is used to define the environment variables, configuration options, and runtime settings used by Storm Stack applications. It is used to provide type safety, autocompletion, and default values for the environment variables. The comments of each variable are used to provide documentation descriptions when running the \`storm docs\` command.
@@ -380,7 +938,7 @@ type StorageAdapterFactory = () => StorageAdapter;
  *
  * @showCategories
  */
-interface StormConfigInterface {
+interface StormEnvInterface {
   /**
    * An indicator that specifies the application is running in the local Storm Stack development environment.
    *
@@ -388,7 +946,7 @@ interface StormConfigInterface {
    * @readonly
    * @category node
    */
-  readonly STORM_STACK_LOCAL?: boolean;
+  readonly STORM_STACK_LOCAL: boolean;
   /**
    * The name of the application.
    *
@@ -1149,617 +1707,6 @@ interface StormConfigInterface {
 }
 
 /**
- * The global Storm Stack application context. This object contains information related to the current process's execution.
- *
- * @remarks
- * The Storm Stack application context object is injected into the global scope of the application. It can be accessed using `$storm` or `useStorm()` in the application code.
- */
-interface StormContextInterface {
-  /**
-   * The context metadata.
-   *
-   * @remarks
-   * This metadata can be used to store information about the current request, user, or any other relevant data. It is mutable and can be changed during the request lifecycle.
-   */
-  meta: Record<string, any>;
-  /**
-   * Environment/runtime specific application data.
-   */
-  env: StormEnv;
-  /**
-   * The root application logger for the Storm Stack application.
-   */
-  log: StormLogInterface;
-  /**
-   * The {@link StormStorageInterface} instance used by the Storm Stack application.
-   */
-  storage: StormStorageInterface;
-  /**
-   * The configuration parameters for the Storm application.
-   */
-  config: StormConfigInterface;
-  [key: string]: any;
-}
-
-/**
- * Interface for date utility functions used in the Storm Stack.
- *
- * @typeParam TDate - The date object type used by the underlying date library.
- * @typeParam TLocale - The locale type used by the underlying date library.
- *
- * @remarks
- * This interface defines a contract for date manipulation and formatting utilities, abstracting over different date libraries (such as [Moment.js](https://momentjs.com/), [Day.js](https://day.js.org/), etc.). It provides methods for creating, parsing, comparing, and formatting dates, as well as manipulating date components and handling localization.
- */
-interface StormDateInterface<TDate, TLocale> {
-  /**
-   * The set of date formats supported by the utility.
-   */
-  formats: DateFormats<any>;
-  /**
-   * The current locale object, if available.
-   */
-  locale?: TLocale;
-  /**
-   * The [Moment.js](https://momentjs.com/) instance, if using [Moment.js](https://momentjs.com/) as the underlying library.
-   */
-  moment?: any;
-  /**
-   * The [Day.js](https://day.js.org/) instance, if using [Day.js](https://day.js.org/) as the underlying library.
-   */
-  dayjs?: any;
-  /**
-   * Name of the currently used date library.
-   */
-  type: string;
-  /**
-   * Create a new `Date` object with the underlying library.
-   *
-   * @remarks
-   * This method supports some of the standard input sources like ISO strings so you can pass the string directly as `date("2024-01-10T14:30:00Z")`, and javascript `Date` objects `date(new Date())`. If `null` is passed `null` will be returned.
-   *
-   * @param value - The value to create a date object from. Can be a string, number, or JavaScript Date object.
-   * @returns A date object of type `TDate` or `null` if the input is `null`.
-   */
-  createDate: <
-    TArg = undefined,
-    TResultingDate = TArg extends null
-      ? null
-      : TArg extends undefined
-        ? TDate
-        : TDate | null
-  >(
-    value?: TArg
-  ) => TResultingDate;
-  /**
-   * Creates a date object from a JavaScript Date object.
-   *
-   * @remarks
-   * This method is used to create a date object from a JavaScript Date object. It is useful for converting JavaScript Date objects to the date library's date objects.
-   */
-  toJsDate: (value: TDate) => Date;
-  /**
-   * Creates a date object from an ISO string.
-   *
-   * @remarks
-   * This method is used to create a date object from an ISO string. It is useful for parsing dates from strings.
-   */
-  parseISO: (isString: string) => TDate;
-  /**
-   * Converts a date object to an ISO string.
-   *
-   * @remarks
-   * This method is used to convert a date object to an ISO string. It is useful for serializing dates to strings.
-   */
-  toISO: (value: TDate) => string;
-  /**
-   * Creates a date object from a string using the specified format.
-   *
-   * @remarks
-   * This method is used to create a date object from a string using the specified format. It is useful for parsing dates from strings with custom formats.
-   */
-  parse: (value: string, format: string) => TDate | null;
-  /**
-   * Returns the current locale code.
-   *
-   * @returns The current locale code.
-   */
-  getCurrentLocaleCode: () => string;
-  /**
-   * Returns an indicator if the current locale is using a 12-hour cycle.
-   *
-   * @returns `true` if the current locale is using a 12-hour cycle, otherwise `false`.
-   */
-  is12HourCycleInCurrentLocale: () => boolean;
-  /**
-   * Returns user readable format (taking into account localized format tokens), useful to render helper text for input (e.g. placeholder). If helper can not be created and for [Luxon](https://moment.github.io/luxon/#/) always returns empty string.
-   *
-   * @param format - The format string to use.
-   * @returns The user readable format string.
-   */
-  getFormatHelperText: (format: string) => string;
-  /**
-   * Checks if the value is null.
-   *
-   * @param value - The value to check.
-   * @returns `true` if the value is null, otherwise `false`.
-   */
-  isNull: (value: TDate | null) => boolean;
-  /**
-   * Checks if the value is valid.
-   *
-   * @param value - The value to check.
-   * @returns `true` if the value is valid, otherwise `false`.
-   */
-  isValid: (value: any) => boolean;
-  /**
-   * Returns the difference between two dates.
-   *
-   * @param value - The first date to compare.
-   * @param comparing - The second date to compare.
-   * @param unit - The unit of time to use for the comparison.
-   * @returns The difference between the two dates in the specified unit.
-   */
-  getDiff: (value: TDate, comparing: TDate | string, unit?: TimeUnit) => number;
-  /**
-   * Checks if two values are equal.
-   *
-   * @param value - The first value to compare.
-   * @param comparing - The second value to compare.
-   * @returns `true` if the two values are equal, otherwise `false`.
-   */
-  isEqual: (value: any, comparing: any) => boolean;
-  /**
-   * Checks if two dates are the same day.
-   *
-   * @param value - The first date to compare.
-   * @param comparing - The second date to compare.
-   * @returns `true` if the two dates are the same day, otherwise `false`.
-   */
-  isSameDay: (value: TDate, comparing: TDate) => boolean;
-  /**
-   * Checks if two dates are the same month.
-   *
-   * @param value - The first date to compare.
-   * @param comparing - The second date to compare.
-   * @returns `true` if the two dates are the same month, otherwise `false`.
-   */
-  isSameMonth: (value: TDate, comparing: TDate) => boolean;
-  /**
-   * Checks if two dates are the same year.
-   *
-   * @param value - The first date to compare.
-   * @param comparing - The second date to compare.
-   * @returns `true` if the two dates are the same year, otherwise `false`.
-   */
-  isSameYear: (value: TDate, comparing: TDate) => boolean;
-  /**
-   * Checks if two dates are the same hour.
-   *
-   * @param value - The first date to compare.
-   * @param comparing - The second date to compare.
-   * @returns `true` if the two dates are the same hour, otherwise `false`.
-   */
-  isSameHour: (value: TDate, comparing: TDate) => boolean;
-  /**
-   * Checks if two dates are after each other.
-   *
-   * @param value - The first date to compare.
-   * @param comparing - The second date to compare.
-   * @returns `true` if the first date is after the second date, otherwise `false`.
-   */
-  isAfter: (value: TDate, comparing: TDate) => boolean;
-  /**
-   * Checks if two dates are after each other on the same day.
-   *
-   * @param value - The first date to compare.
-   * @param comparing - The second date to compare.
-   * @returns `true` if the first date is after the second date on the same day, otherwise `false`.
-   */
-  isAfterDay: (value: TDate, comparing: TDate) => boolean;
-  /**
-   * Checks if two dates are after each other on the same month.
-   *
-   * @param value - The first date to compare.
-   * @param comparing - The second date to compare.
-   * @returns `true` if the first date is after the second date on the same month, otherwise `false`.
-   */
-  isAfterMonth: (value: TDate, comparing: TDate) => boolean;
-  /**
-   * Checks if two dates are after each other on the same year.
-   *
-   * @param value - The first date to compare.
-   * @param comparing - The second date to compare.
-   * @returns `true` if the first date is after the second date on the same year, otherwise `false`.
-   */
-  isAfterYear: (value: TDate, comparing: TDate) => boolean;
-  /**
-   * Checks if two dates are before each other.
-   *
-   * @param value - The first date to compare.
-   * @param comparing - The second date to compare.
-   * @returns `true` if the first date is before the second date, otherwise `false`.
-   */
-  isBefore: (value: TDate, comparing: TDate) => boolean;
-  /**
-   * Checks if two dates are before each other on the same day.
-   *
-   * @param value - The first date to compare.
-   * @param comparing - The second date to compare.
-   * @returns `true` if the first date is before the second date on the same day, otherwise `false`.
-   */
-  isBeforeDay: (value: TDate, comparing: TDate) => boolean;
-  /**
-   * Checks if two dates are before each other on the same month.
-   *
-   * @param value - The first date to compare.
-   * @param comparing - The second date to compare.
-   * @returns `true` if the first date is before the second date on the same month, otherwise `false`.
-   */
-  isBeforeMonth: (value: TDate, comparing: TDate) => boolean;
-  /**
-   * Checks if two dates are before each other on the same year.
-   *
-   * @param value - The first date to compare.
-   * @param comparing - The second date to compare.
-   * @returns `true` if the first date is before the second date on the same year, otherwise `false`.
-   */
-  isBeforeYear: (value: TDate, comparing: TDate) => boolean;
-  /**
-   * Checks if a date is within a specific range.
-   *
-   * @param value - The date to check.
-   * @param range - The range to check against.
-   * @returns `true` if the date is within the range, otherwise `false`.
-   */
-  isWithinRange: (value: TDate, range: [TDate, TDate]) => boolean;
-  /**
-   * Gets the start of the year for a given date.
-   *
-   * @param value - The date to get the start of the year for.
-   * @returns The start of the year for the given date.
-   */
-  startOfYear: (value: TDate) => TDate;
-  /**
-   * Gets the end of the year for a given date.
-   *
-   * @param value - The date to get the end of the year for.
-   * @returns The end of the year for the given date.
-   */
-  endOfYear: (value: TDate) => TDate;
-  /**
-   * Gets the start of the month for a given date.
-   *
-   * @param value - The date to get the start of the month for.
-   * @returns The start of the month for the given date.
-   */
-  startOfMonth: (value: TDate) => TDate;
-  /**
-   * Gets the end of the month for a given date.
-   *
-   * @param value - The date to get the end of the month for.
-   * @returns The end of the month for the given date.
-   */
-  endOfMonth: (value: TDate) => TDate;
-  /**
-   * Gets the start of the week for a given date.
-   *
-   * @param value - The date to get the start of the week for.
-   * @returns The start of the week for the given date.
-   */
-  startOfWeek: (value: TDate) => TDate;
-  /**
-   * Gets the end of the week for a given date.
-   *
-   * @param value - The date to get the end of the week for.
-   * @returns The end of the week for the given date.
-   */
-  endOfWeek: (value: TDate) => TDate;
-  /**
-   * Adds a specified number of seconds to a date.
-   *
-   * @param value - The date to add seconds to.
-   * @param count - The number of seconds to add.
-   * @returns The new date with the seconds added.
-   */
-  addSeconds: (value: TDate, count: number) => TDate;
-  /**
-   * Adds a specified number of minutes to a date.
-   *
-   * @param value - The date to add minutes to.
-   * @param count - The number of minutes to add.
-   * @returns The new date with the minutes added.
-   */
-  addMinutes: (value: TDate, count: number) => TDate;
-  /**
-   * Adds a specified number of hours to a date.
-   *
-   * @param value - The date to add hours to.
-   * @param count - The number of hours to add.
-   * @returns The new date with the hours added.
-   */
-  addHours: (value: TDate, count: number) => TDate;
-  /**
-   * Adds a specified number of days to a date.
-   *
-   * @param value - The date to add days to.
-   * @param count - The number of days to add.
-   * @returns The new date with the days added.
-   */
-  addDays: (value: TDate, count: number) => TDate;
-  /**
-   * Adds a specified number of weeks to a date.
-   *
-   * @param value - The date to add weeks to.
-   * @param count - The number of weeks to add.
-   * @returns The new date with the weeks added.
-   */
-  addWeeks: (value: TDate, count: number) => TDate;
-  /**
-   * Adds a specified number of months to a date.
-   *
-   * @param value - The date to add months to.
-   * @param count - The number of months to add.
-   * @returns The new date with the months added.
-   */
-  addMonths: (value: TDate, count: number) => TDate;
-  /**
-   * Adds a specified number of years to a date.
-   *
-   * @param value - The date to add years to.
-   * @param count - The number of years to add.
-   * @returns The new date with the years added.
-   */
-  addYears: (value: TDate, count: number) => TDate;
-  /**
-   * Gets the start of the day for a given date.
-   *
-   * @param value - The date to get the start of the day for.
-   * @returns The start of the day for the given date.
-   */
-  startOfDay: (value: TDate) => TDate;
-  /**
-   * Gets the end of the day for a given date.
-   *
-   * @param value - The date to get the end of the day for.
-   * @returns The end of the day for the given date.
-   */
-  endOfDay: (value: TDate) => TDate;
-  /**
-   * Formats a date using a predefined format key.
-   *
-   * @param value - The date to format.
-   * @param formatKey - The key of the format to use.
-   * @returns The formatted date string.
-   */
-  format: (value: TDate, formatKey: keyof DateFormats) => string;
-  /**
-   * Formats a date using a custom format string.
-   *
-   * @param value - The date to format.
-   * @param formatString - The format string to use.
-   * @returns The formatted date string.
-   */
-  formatByString: (value: TDate, formatString: string) => string;
-  /**
-   * Formats a number as a string, possibly applying localization.
-   *
-   * @param numberToFormat - The number string to format.
-   * @returns The formatted number string.
-   */
-  formatNumber: (numberToFormat: string) => string;
-  /**
-   * Gets the hours component of a date.
-   *
-   * @param value - The date to extract hours from.
-   * @returns The hours component.
-   */
-  getHours: (value: TDate) => number;
-  /**
-   * Sets the hours component of a date.
-   *
-   * @param value - The date to set hours on.
-   * @param count - The hours value to set.
-   * @returns The new date with the hours set.
-   */
-  setHours: (value: TDate, count: number) => TDate;
-  /**
-   * Gets the minutes component of a date.
-   *
-   * @param value - The date to extract minutes from.
-   * @returns The minutes component.
-   */
-  getMinutes: (value: TDate) => number;
-  /**
-   * Sets the minutes component of a date.
-   *
-   * @param value - The date to set minutes on.
-   * @param count - The minutes value to set.
-   * @returns The new date with the minutes set.
-   */
-  setMinutes: (value: TDate, count: number) => TDate;
-  /**
-   * Gets the seconds component of a date.
-   *
-   * @param value - The date to extract seconds from.
-   * @returns The seconds component.
-   */
-  getSeconds: (value: TDate) => number;
-  /**
-   * Sets the seconds component of a date.
-   *
-   * @param value - The date to set seconds on.
-   * @param count - The seconds value to set.
-   * @returns The new date with the seconds set.
-   */
-  setSeconds: (value: TDate, count: number) => TDate;
-  /**
-   * Gets the day of the month from a date.
-   *
-   * @param value - The date to extract the day from.
-   * @returns The day of the month.
-   */
-  getDate: (value: TDate) => number;
-  /**
-   * Sets the day of the month on a date.
-   *
-   * @param value - The date to set the day on.
-   * @param count - The day of the month to set.
-   * @returns The new date with the day set.
-   */
-  setDate: (value: TDate, count: number) => TDate;
-  /**
-   * Gets the week number for a given date.
-   *
-   * @param value - The date to get the week number for.
-   * @returns The week number.
-   */
-  getWeek: (value: TDate) => number;
-  /**
-   * Gets the month component of a date (0-based).
-   *
-   * @param value - The date to extract the month from.
-   * @returns The month component (0 = January, 11 = December).
-   */
-  getMonth: (value: TDate) => number;
-  /**
-   * Gets the number of days in the month for a given date.
-   *
-   * @param value - The date to get the number of days in the month for.
-   * @returns The number of days in the month.
-   */
-  getDaysInMonth: (value: TDate) => number;
-  /**
-   * Sets the month component of a date (0-based).
-   *
-   * @param value - The date to set the month on.
-   * @param count - The month to set (0 = January, 11 = December).
-   * @returns The new date with the month set.
-   */
-  setMonth: (value: TDate, count: number) => TDate;
-  /**
-   * Gets the date representing the next month.
-   *
-   * @param value - The date to get the next month for.
-   * @returns The date in the next month.
-   */
-  getNextMonth: (value: TDate) => TDate;
-  /**
-   * Gets the date representing the previous month.
-   *
-   * @param value - The date to get the previous month for.
-   * @returns The date in the previous month.
-   */
-  getPreviousMonth: (value: TDate) => TDate;
-  /**
-   * Gets an array of dates representing each month in the year of the given date.
-   *
-   * @param value - The date to get the month array for.
-   * @returns An array of dates, one for each month.
-   */
-  getMonthArray: (value: TDate) => TDate[];
-  /**
-   * Gets the year component of a date.
-   *
-   * @param value - The date to extract the year from.
-   * @returns The year component.
-   */
-  getYear: (value: TDate) => number;
-  /**
-   * Sets the year component of a date.
-   *
-   * @param value - The date to set the year on.
-   * @param count - The year to set.
-   * @returns The new date with the year set.
-   */
-  setYear: (value: TDate, count: number) => TDate;
-  /**
-   * Merges the date part of one date with the time part of another date.
-   *
-   * @param date - The date to take the date part from.
-   * @param time - The date to take the time part from.
-   * @returns The merged date and time.
-   */
-  mergeDateAndTime: (date: TDate, time: TDate) => TDate;
-  /**
-   * Gets the names of the weekdays in the current locale.
-   *
-   * @returns An array of weekday names.
-   */
-  getWeekdays: () => string[];
-  /**
-   * Gets a 2D array representing the weeks in the month of the given date.
-   *
-   * @param date - The date to get the week array for.
-   * @returns A 2D array of dates, grouped by week.
-   */
-  getWeekArray: (date: TDate) => TDate[][];
-  /**
-   * Gets an array of dates representing the range of years between two dates.
-   *
-   * @param start - The start date of the range.
-   * @param end - The end date of the range.
-   * @returns An array of dates, one for each year in the range.
-   */
-  getYearRange: (start: TDate, end: TDate) => TDate[];
-  /**
-   * Gets the localized string for "am" or "pm".
-   *
-   * @param meridiem - Either "am" or "pm".
-   * @returns The localized meridiem string.
-   */
-  getMeridiemText: (meridiem: "am" | "pm") => string;
-}
-
-interface StormEnv {
-  /**
-   * The name of the Storm application.
-   */
-  readonly name: string;
-  /**
-   * The version of the Storm application.
-   */
-  readonly version: string;
-  /**
-   * The default locale for the application.
-   */
-  readonly defaultLocale: string;
-  /**
-   * The default timezone for the application.
-   */
-  readonly defaultTimezone: string;
-  /**
-   * The current runtime mode to determine the behavior of the application in different environments.
-   *
-   * @remarks
-   * The `mode` is typically set based on the deployment environment and can affect configuration, logging, and feature flags. Valid values for the `mode` are:
-   * - `"development"`: Used for local development and testing.
-   * - `"staging"`: Used for staging environments that closely mirror production.
-   * - `"production"`: Used for live production environments.
-   */
-  readonly mode: "development" | "staging" | "production";
-  /**
-   * A boolean indicator specifying if running in production mode.
-   */
-  readonly isProduction: boolean;
-  /**
-   * A boolean indicator specifying if running in staging mode.
-   */
-  readonly isStaging: boolean;
-  /**
-   * A boolean indicator specifying if running in development mode.
-   */
-  readonly isDevelopment: boolean;
-  /**
-   * A boolean indicator specifying if running in debug mode (typically development with debug enabled).
-   */
-  readonly isDebug: boolean;
-  /**
-   * A boolean indicator specifying if running in test mode or under test conditions.
-   */
-  readonly isTest: boolean;
-}
-
-/**
  * The Storm Error interface.
  */
 interface StormErrorInterface extends Error {
@@ -1985,6 +1932,73 @@ interface StormLogInterface {
     ((callback: LogCallback) => void);
 }
 
+interface StormMeta {
+  /**
+   * The name of the Storm application.
+   */
+  readonly name: string;
+  /**
+   * The version of the Storm application.
+   */
+  readonly version: string;
+  /**
+   * The default locale for the application.
+   */
+  readonly defaultLocale: string;
+  /**
+   * The default timezone for the application.
+   */
+  readonly defaultTimezone: string;
+  /**
+   * The current runtime mode to determine the behavior of the application in different environments.
+   *
+   * @remarks
+   * The `mode` is typically set based on the deployment environment and can affect configuration, logging, and feature flags. Valid values for the `mode` are:
+   * - `"development"`: Used for local development and testing.
+   * - `"staging"`: Used for staging environments that closely mirror production.
+   * - `"production"`: Used for live production environments.
+   */
+  readonly mode: "development" | "staging" | "production";
+  /**
+   * A boolean indicator specifying if running in production mode.
+   */
+  readonly isProduction: boolean;
+  /**
+   * A boolean indicator specifying if running in staging mode.
+   */
+  readonly isStaging: boolean;
+  /**
+   * A boolean indicator specifying if running in development mode.
+   */
+  readonly isDevelopment: boolean;
+  /**
+   * A boolean indicator specifying if running in debug mode (typically development with debug enabled).
+   */
+  readonly isDebug: boolean;
+  /**
+   * A boolean indicator specifying if running in test mode or under test conditions.
+   */
+  readonly isTest: boolean;
+}
+
+/**
+ * The base secrets configuration used by Storm Stack applications
+ *
+ * @remarks
+ * This interface is used to define the secret configuration options used by Storm Stack applications. It is used to provide type safety, autocompletion, and default values for the environment variables. The comments of each variable are used to provide documentation descriptions when running the \`storm docs\` command. Since these are secrets, no default values should be provided and the values should be kept confidential (excluded from the client).
+ */
+interface StormSecretsInterface {
+  /**
+   * The secret key used for encryption and decryption.
+   *
+   * @remarks
+   * This variable is used to provide a secret key for encryption and decryption of sensitive data. It is important that this value is kept confidential and not exposed in client-side code or public repositories.
+   *
+   * @title Encryption Key
+   */
+  ENCRYPTION_KEY: string;
+}
+
 /**
  * The Storm Storage Interface extends the [Unstorage](https://unstorage.unjs.io/) Storage interface with additional functionality specific to the Storm Stack.
  *
@@ -2016,19 +2030,19 @@ type TimeUnit =
 
 type WarningMessageDetails = MessageDetails<"warning">;
 
-declare module "storm:config" {
+declare module "storm:env" {
   /**
-   * The Storm Stack configuration module provides an interface to define configuration parameters.
+   * The Storm Stack environment configuration module provides an interface to define environment configuration parameters.
    *
-   * @module storm:config
+   * @module storm:env
    */
 
   /**
-   * Interface for Storm Config Base.
+   * Interface for Storm Env Base.
    *
    * @title Object
    */
-  export interface StormConfigBase extends StormConfigInterface {
+  export interface StormEnvBase extends StormEnvInterface {
     /**
      * ARGV
      *
@@ -2043,7 +2057,7 @@ declare module "storm:config" {
      * @domain cli
      * @defaultValue true
      */
-    BANNER?: boolean;
+    BANNER: boolean;
     /**
      * The Storm Stack application's cached data directory.
      *
@@ -2112,7 +2126,7 @@ declare module "storm:config" {
      * @title Devenv RUNTIME
      * @defaultValue /run/user/1001/devenv-a024b62
      */
-    DEVENV_RUNTIME?: string;
+    DEVENV_RUNTIME: string;
     /**
      * The environment the application is running in. This value will be populated with the value of `MODE` if not provided.
      *
@@ -2157,7 +2171,7 @@ declare module "storm:config" {
      * @domain cli
      * @defaultValue false
      */
-    HELP?: boolean;
+    HELP: boolean;
     /**
      * Indicates if error data should be included.
      *
@@ -2172,7 +2186,7 @@ declare module "storm:config" {
      * @domain cli
      * @defaultValue true
      */
-    INTERACTIVE?: boolean;
+    INTERACTIVE: boolean;
     /**
      * The Storm Stack application's logging directory.
      *
@@ -2185,7 +2199,7 @@ declare module "storm:config" {
      * @title LOG LEVEL
      * @defaultValue info
      */
-    LOG_LEVEL?: "debug" | "info" | "warning" | "error" | "fatal" | null;
+    LOG_LEVEL: "debug" | "info" | "warning" | "error" | "fatal" | null;
     /**
      * An indicator that specifies the current runtime is a minimal environment.
      *
@@ -2208,7 +2222,7 @@ declare module "storm:config" {
      * @domain cli
      * @defaultValue storm-stack
      */
-    NAME?: string;
+    NAME: string;
     /**
      * Hide the banner displayed while running the CLI application (will be set to true if running in a CI pipeline).
      *
@@ -2216,7 +2230,7 @@ declare module "storm:config" {
      * @domain cli
      * @defaultValue false
      */
-    NO_BANNER?: boolean;
+    NO_BANNER: boolean;
     /**
      * An indicator that specifies the current runtime is a no color environment.
      *
@@ -2232,7 +2246,7 @@ declare module "storm:config" {
      * @domain cli
      * @defaultValue false
      */
-    NO_INTERACT?: boolean;
+    NO_INTERACT: boolean;
     /**
      * Disable interactive mode (will be set to true if running in a CI pipeline).
      *
@@ -2241,7 +2255,7 @@ declare module "storm:config" {
      * @domain cli
      * @defaultValue false
      */
-    NO_INTERACTIVE?: boolean;
+    NO_INTERACTIVE: boolean;
     /**
      * The mode in which the application is running.
      *
@@ -2274,7 +2288,7 @@ declare module "storm:config" {
     * @title OUTPUT MODE
     * @defaultValue memory
     */
-    OUTPUT_MODE?: "memory" | "fs";
+    OUTPUT_MODE: "memory" | "fs";
     /**
      * The name of the library.
      *
@@ -2346,7 +2360,7 @@ declare module "storm:config" {
      * @domain cli
      * @defaultValue false
      */
-    VERBOSE?: boolean;
+    VERBOSE: boolean;
     /**
      * Show the version of the application.
      *
@@ -2354,7 +2368,7 @@ declare module "storm:config" {
      * @domain cli
      * @defaultValue false
      */
-    VERSION?: boolean;
+    VERSION: boolean;
     /**
      * The appcircle build ID. This value is set by certain CI/CD systems.
      *
@@ -2388,7 +2402,7 @@ declare module "storm:config" {
      * The version of the application.
      *
      * @title APP VERSION
-     * @defaultValue 0.25.0
+     * @defaultValue 0.26.0
      * @readonly
      */
     readonly APP_VERSION: string;
@@ -2453,7 +2467,7 @@ declare module "storm:config" {
      * The unique identifier for the build.
      *
      * @title BUILD Identifier
-     * @defaultValue 3c1e3903-8e6a-40f8-bd98-b7e691e1aecb
+     * @defaultValue 6de78879-3564-44aa-8adc-109dc5ab0212
      * @readonly
      */
     readonly BUILD_ID: string;
@@ -2461,7 +2475,7 @@ declare module "storm:config" {
      * The timestamp the build was ran at.
      *
      * @title BUILD TIMESTAMP
-     * @defaultValue 2025-09-08T09:35:19.958Z
+     * @defaultValue 2025-09-12T05:20:04.003Z
      * @readonly
      */
     readonly BUILD_TIMESTAMP: string;
@@ -2535,7 +2549,7 @@ declare module "storm:config" {
      * @defaultValue truecolor
      * @readonly
      */
-    readonly COLORTERM?: string;
+    readonly COLORTERM: string;
     /**
      * The ConEmu task name. This variable is set by certain terminal emulators.
      *
@@ -2694,7 +2708,7 @@ declare module "storm:config" {
      * The unique identifier for the release.
      *
      * @title RELEASE Identifier
-     * @defaultValue 1e39038e-6a20-487d-98b7-e691e1aecb3c
+     * @defaultValue e7887935-6454-4aca-9c10-9dc5ab021285
      * @readonly
      */
     readonly RELEASE_ID: string;
@@ -2702,7 +2716,7 @@ declare module "storm:config" {
      * The tag for the release. This is generally in the format of "\<APP_NAME\>\@\<APP_VERSION\>".
      *
      * @title RELEASE TAG
-     * @defaultValue storm-stack@0.25.0
+     * @defaultValue storm-stack@0.26.0
      * @readonly
      */
     readonly RELEASE_TAG: string;
@@ -2759,9 +2773,10 @@ declare module "storm:config" {
      * An indicator that specifies the application is running in the local Storm Stack development environment.
      *
      * @title STORM STACK LOCAL
+     * @defaultValue false
      * @readonly
      */
-    readonly STORM_STACK_LOCAL?: boolean;
+    readonly STORM_STACK_LOCAL: boolean;
     /**
      * An indicator used to skip version checks for installed packages.
      *
@@ -2797,7 +2812,7 @@ declare module "storm:config" {
      * @defaultValue xterm-256color
      * @readonly
      */
-    readonly TERM?: string;
+    readonly TERM: string;
     /**
      * The terminal program name. This variable is set by certain terminal emulators.
      *
@@ -2896,7 +2911,7 @@ declare module "storm:config" {
      * @defaultValue /run/user/1001
      * @readonly
      */
-    readonly XDG_RUNTIME_DIR?: string;
+    readonly XDG_RUNTIME_DIR: string;
     /**
      * A variable that specifies the state directory on Linux systems using the XDG base directory specification.
      *
@@ -2905,84 +2920,72 @@ declare module "storm:config" {
      */
     readonly XDG_STATE_HOME?: string;
   }
-  export type StormConfig = {
-    [Key in keyof StormConfigBase as
+  export type StormEnv = {
+    [Key in keyof StormEnvBase as
       | Key
       | `VITE_${Key}`
       | `ONE_${Key}`
-      | `STORM_PUBLIC_${Key}`
       | `STORM_${Key}`
-      | `STORM_STACK_PUBLIC_${Key}`
       | `STORM_STACK_${Key}`
-      | `NEXT_PUBLIC_${Key}`]: StormConfigBase[Key];
+      | `NEXT_${Key}`
+      | `VERCEL_${Key}`]: StormEnvBase[Key];
   };
   /**
-   * The initial configuration state for the Storm Stack project..
+   * The initial environment configuration state for the Storm Stack project..
    */
-  export const initialConfig: StormConfigBase;
+  export const initialEnv: StormEnvBase;
   /**
-   * The configuration serializer for the Storm Stack application.
+   * The environment configuration serializer for the Storm Stack application.
    *
    * @see https://deepkit.io/docs/serialization/serializers
    * @see https://github.com/marcj/untitled-code/blob/master/packages/type/src/serializer.ts#L1918
    *
    * @remarks
-   * This serializer is used to serialize and deserialize the Storm Stack configuration.
+   * This serializer is used to serialize and deserialize the Storm Stack environment configuration.
    */
-  export class ConfigSerializer extends Serializer {
+  export class EnvSerializer extends Serializer {
     constructor();
   }
   /**
-   * A {@link ConfigSerializer | configuration serializer} instance for the Storm Stack application.
-   *
-   * @see https://deepkit.io/docs/serialization/serializers
-   * @see https://github.com/marcj/untitled-code/blob/master/packages/type/src/serializer.ts#L1918
-   *
-   * @remarks
-   * This serializer is used to serialize and deserialize the Storm Stack configuration.
-   */
-  export const configSerializer: ConfigSerializer;
-  /**
-   * Serialize a configuration object to JSON data objects (not a JSON string).
+   * Serialize a environment configuration object to JSON data objects (not a JSON string).
    *
    * The resulting JSON object can be stringified using JSON.stringify().
    *
    * ```typescript
-   * const json = deserialize(config);
+   * const json = serializeEnv(env);
    * ```
    *
    * @throws ValidationError when serialization or validation fails.
    */
-  export const serializeConfig: import("@deepkit/type").SerializeFunction<StormConfigBase>;
+  export const serializeEnv: import("@deepkit/type").SerializeFunction<StormEnvBase>;
   /**
-   * Deserialize a configuration object from JSON data objects to JavaScript objects, without running any validators.
+   * Deserialize a environment configuration object from JSON data objects to JavaScript objects, without running any validators.
    *
    * Types that are already correct will be used as-is.
    *
    * ```typescript
-   * const config = deserialize(json);
+   * const env = deserializeEnv(json);
    * ```
    *
    * @throws ValidationError when deserialization fails.
    */
-  export const deserializeConfig: import("@deepkit/type").SerializeFunction<
+  export const deserializeEnv: import("@deepkit/type").SerializeFunction<
     any,
-    StormConfigBase
+    StormEnvBase
   >;
   /**
-   * Initializes the Storm Stack configuration module.
+   * Initializes the Storm Stack environment configuration module.
    *
    * @remarks
-   * This function initializes the Storm Stack configuration object.
+   * This function initializes the Storm Stack environment configuration object.
    *
    * @param environmentConfig - The dynamic/runtime configuration - this could include the current environment variables or any other environment-specific settings provided by the runtime.
    * @returns The initialized Storm Stack configuration object.
    */
-  export function createConfig(
-    environmentConfig?: Partial<StormConfig>
-  ): StormConfig;
-  export type StormConfigBase = any[];
-  export type StormConfig = any[];
+  export function createEnv(environmentConfig?: Partial<StormEnv>): StormEnv;
+  export const env: StormEnv;
+  export type StormEnvBase = any[];
+  export type StormEnv = any[];
 }
 
 declare module "storm:error" {
@@ -3206,11 +3209,11 @@ declare module "storm:id" {
   export function uniqueId(prefix?: string, size?: number | undefined): string;
 }
 
-declare module "storm:env" {
+declare module "storm:meta" {
   /**
-   * This module provides the runtime environment information for the Storm Stack application.
+   * This module provides the runtime metadata information for the Storm Stack application.
    *
-   * @module storm:env
+   * @module storm:meta
    */
 
   /**
@@ -3227,7 +3230,7 @@ declare module "storm:env" {
    * Options for getting the color support level.
    */
   export type GetColorSupportLevelOptions = {
-    streamIsTTY?: boolean;
+    isTTY?: boolean;
     sniffFlags?: boolean;
   };
   /**
@@ -3238,7 +3241,9 @@ declare module "storm:env" {
    * @returns The color support level (0 = no color, 1 = basic, 2 = 256 colors, 3 = true color).
    */
   export function getColorSupportLevel(
-    stream: any,
+    stream: NodeJS.WriteStream & {
+      fd: 1 | 2;
+    },
     options?: GetColorSupportLevelOptions
   ):
     | false
@@ -3252,11 +3257,11 @@ declare module "storm:env" {
         has16m: boolean;
       };
   /**
-   * Generate a list of variables that describe the current application's runtime environment.
+   * Generate a list of variables that describe the current application's runtime metadata.
    *
-   * @returns An object containing the runtime environment details.
+   * @returns An object containing the runtime metadata details.
    */
-  export function createEnv(): StormNodeEnv;
+  export function createMeta(): StormNodeMeta;
   export type GetColorSupportLevelOptions = any[];
 }
 
@@ -3278,6 +3283,10 @@ declare module "storm:request" {
      * The request identifier.
      */
     readonly id: string;
+    /**
+     * The headers associated with the request.
+     */
+    readonly headers: Record<string, any>;
     /**
      * The request created timestamp.
      */
@@ -3324,9 +3333,9 @@ declare module "storm:response" {
      */
     static create<TData>(data: TData): StormResponse<TData>;
     /**
-     * The response meta.
+     * The request headers.
      */
-    readonly meta: Record<string, any>;
+    readonly headers: Record<string, any>;
     /**
      * The response data.
      */
@@ -3350,7 +3359,7 @@ declare module "storm:response" {
      * @param meta - The current context's metadata.
      * @param data - The response data
      */
-    constructor(requestId: string, meta: Record<string, any>, data: TData);
+    constructor(requestId: string, data: TData);
   }
 }
 
@@ -3397,17 +3406,9 @@ declare module "storm:context" {
    */
   export interface StormContext extends StormContextInterface {
     /**
-     * The context metadata.
-     */
-    meta: Record<string, any>;
-    /**
      * The request object for the current Storm Stack application.
      */
     request: StormRequest;
-    /**
-     * Environment/runtime specific application data.
-     */
-    env: import("@storm-stack/core/runtime-types/node/env").StormNodeEnv;
     /**
      * The root application logger for the Storm Stack application.
      */
@@ -3417,9 +3418,13 @@ declare module "storm:context" {
      */
     storage: import("@storm-stack/core/runtime-types/shared/storage").StormStorageInterface;
     /**
-     * The configuration parameters for the Storm application.
+     * The environment variables for the Storm application.
      */
-    config: StormConfig & Record<string, any>;
+    env: StormEnv & Record<string, any>;
+    /**
+     * Environment/runtime specific application data.
+     */
+    meta: import("@storm-stack/core/runtime-types/node/meta").StormNodeMeta;
     /**
      * A set of disposable resources to clean up when the context is no longer needed.
      */

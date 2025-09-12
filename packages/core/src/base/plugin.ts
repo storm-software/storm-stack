@@ -196,7 +196,7 @@ export abstract class Plugin<
    * @param plugin - The plugin to compare with.
    * @returns `true` if the plugins are the same, `false` otherwise.
    */
-  public isSame(plugin: PluginInterface): boolean {
+  public isSame(plugin: PluginInterface<TContext, TOptions>): boolean {
     return (
       this.identifier === plugin.identifier ||
       (this.name === plugin.name && this.isSingleton && plugin.isSingleton)

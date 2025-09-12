@@ -50,6 +50,11 @@ export class StormRequest<
   public readonly id = uniqueId();
 
   /**
+   * The headers associated with the request.
+   */
+  public readonly headers: Record<string, any> = {};
+
+  /**
    * The request created timestamp.
    */
   public readonly timestamp = Date.now();

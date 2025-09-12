@@ -29,68 +29,139 @@ export function CryptoModule(_context: Context): string {
 
 ${getFileHeader()}
 
-import { serialize } from "@storm-stack/core/deepkit/type";
-import { xchacha20poly1305 } from "@noble/ciphers/chacha";
-import { bytesToHex, hexToBytes, utf8ToBytes } from "@noble/ciphers/utils";
-import { managedNonce } from "@noble/ciphers/webcrypto";
+import { Buffer } from "node:buffer";
+import type { BinaryLike, KeyObject } from "node:crypto";
+import {
+  createCipheriv,
+  createDecipheriv,
+  createSecretKey,
+  pbkdf2Sync,
+  randomBytes
+} from "node:crypto";
 
-const encoder = new TextEncoder();
-const decoder = new TextDecoder();
+// Background:
+// https://security.stackexchange.com/questions/184305/why-would-i-ever-use-aes-256-cbc-if-aes-256-gcm-is-more-secure
 
-export function generateSecretHash = () => {
-	return randomBytes(32).toString("hex");
-};
+const CIPHER_ALGORITHM = "chacha20-poly1305";
+const CIPHER_KEY_LENGTH = 32; // https://stackoverflow.com/a/28307668/4397028
+const CIPHER_IV_LENGTH = 16; // https://stackoverflow.com/a/28307668/4397028
+const CIPHER_TAG_LENGTH = 16;
+const CIPHER_SALT_LENGTH = 64;
+
+const PBKDF2_ITERATIONS = 100_000; // https://support.1password.com/pbkdf2/
 
 /**
- * Encodes a CryptoKey to base64 string, so that it can be embedded in JSON / JavaScript
+ * Creates and returns a new key object containing a secret key for symmetric encryption or \`Hmac\`.
  *
- * @param key - The CryptoKey to encode, defaults to the encryption key from the config
- * @returns A base64 encoded string representation of the CryptoKey
+ * @param key - The key to use when creating the \`KeyObject\`.
+ * @returns The new \`KeyObject\`.
  */
-export async function encodeKey(key = $storm.config.ENCRYPTION_KEY) {
-	return encodeBase64(new Uint8Array(await crypto.subtle.exportKey("raw", key)));
+export function createSecret(key: NodeJS.ArrayBufferView): KeyObject;
+
+/**
+ * Creates and returns a new key object containing a secret key for symmetric encryption or \`Hmac\`.
+ *
+ * @param key - The key to use. If \`key\` is a \`Buffer\`, \`TypedArray\`, or \`DataView\`, the \`encoding\` argument is ignored.
+ * @param encoding - The \`encoding\` of the \`key\` string. Must be one of \`'utf8'\`, \`'utf16le'\`, \`'latin1'\`, or \`'base64'\`. Default is \`'utf8'\`.
+ * @returns The new \`KeyObject\`.
+ */
+export function createSecret(key: string, encoding: BufferEncoding): KeyObject;
+
+/**
+ * Creates and returns a new key object containing a secret key for symmetric encryption or \`Hmac\`.
+ *
+ * @param key - The key to use. If \`key\` is a \`Buffer\`, \`TypedArray\`, or \`DataView\`, the \`encoding\` argument is ignored.
+ * @param encoding - The \`encoding\` of the \`key\` string. Must be one of \`'utf8'\`, \`'utf16le'\`, \`'latin1'\`, or \`'base64'\`. Default is \`'utf8'\`.
+ * @returns The new \`KeyObject\`.
+ */
+export function createSecret(
+  key: string | NodeJS.ArrayBufferView,
+  encoding?: BufferEncoding
+): KeyObject {
+  return typeof key === "string"
+    ? createSecretKey(key, encoding!)
+    : createSecretKey(key);
 }
 
 /**
- * Decodes a base64 string into bytes and then imports the key.
+ * Symmetrically encrypts data using the [ChaCha20-Poly1305](https://en.wikipedia.org/wiki/ChaCha20-Poly1305) cipher.
  *
- * @param encoded - The base64 encoded string representation of the CryptoKey
- * @returns A promise that resolves to a CryptoKey object.
+ * @see https://en.wikipedia.org/wiki/ChaCha20-Poly1305
+ *
+ * @param secret - The secret key used for encryption.
+ * @param plaintext - The data to encrypt.
+ * @returns The encrypted data.
  */
-export async function decodeKey(encoded: string): Promise<CryptoKey> {
-	return crypto.subtle.importKey(
-    "raw",
-    decodeBase64(encoded),
-    "AES-GCM",
-    true,
-    ["encrypt", "decrypt"]
+export function encrypt(secret: BinaryLike, plaintext: string): string {
+  // https://nodejs.org/api/crypto.html#crypto_crypto_pbkdf2sync_password_salt_iterations_keylen_digest
+  const key = pbkdf2Sync(
+    secret,
+    randomBytes(CIPHER_SALT_LENGTH),
+    PBKDF2_ITERATIONS,
+    CIPHER_KEY_LENGTH,
+    "sha512"
   );
+
+  const cipher = createCipheriv(CIPHER_ALGORITHM, key, randomBytes(CIPHER_IV_LENGTH));
+  const encrypted = Buffer.concat([
+    cipher.update(
+      plaintext,
+      "utf8"
+    ),
+    cipher.final()
+  ]);
+
+  // https://nodejs.org/api/crypto.html#crypto_cipher_getauthtag
+  const tag = cipher.getAuthTag();
+
+  return Buffer.concat([
+    // Data as required by: https://nodejs.org/api/crypto.html#crypto_crypto_createcipheriv_algorithm_key_iv_options
+    salt, // Salt for Key: https://nodejs.org/api/crypto.html#crypto_crypto_pbkdf2sync_password_salt_iterations_keylen_digest
+    iv, // IV: https://nodejs.org/api/crypto.html#crypto_class_decipher
+    tag, // Tag: https://nodejs.org/api/crypto.html#crypto_decipher_setauthtag_buffer
+    encrypted
+  ]).toString("hex");
 }
 
 /**
- * Encrypts data using the [XChaCha20-Poly1305 algorithm](https://en.wikipedia.org/wiki/ChaCha20-Poly1305).
+ * Symmetrically decrypts data using the [ChaCha20-Poly1305](https://en.wikipedia.org/wiki/ChaCha20-Poly1305) cipher.
  *
- * @param data - The plaintext data to encrypt.
- * @returns A promise that resolves to the encrypted data as a hexadecimal string.
+ * @see https://en.wikipedia.org/wiki/ChaCha20-Poly1305
+ *
+ * @param secret - The secret key used for decryption.
+ * @param encrypted - The encrypted data to decrypt.
+ * @returns The decrypted data.
  */
-export async function encrypt(data: string) {
-	const chacha = managedNonce(xchacha20poly1305)(
-    new Uint8Array(hexToBytes($storm.config.ENCRYPTION_KEY))
-  );
-	return bytesToHex(chacha.encrypt(encoder.encode(data)));
-};
+export function decrypt(secret: BinaryLike, encrypted: string): string {
+  const buffer = Buffer.from(encrypted, "hex");
 
-/** Decrypts data using the [XChaCha20-Poly1305 algorithm](https://en.wikipedia.org/wiki/ChaCha20-Poly1305).
- *
- * @param data - The encrypted data as a hexadecimal string.
- * @returns A promise that resolves to the decrypted plaintext data.
- */
-export async function decrypt(data: string) {
-  const chacha = managedNonce(xchacha20poly1305)(
-    new Uint8Array(hexToBytes($storm.config.ENCRYPTION_KEY))
+  // https://nodejs.org/api/crypto.html#crypto_crypto_pbkdf2sync_password_salt_iterations_keylen_digest
+  const key = pbkdf2Sync(
+    secret,
+    buffer.slice(0, CIPHER_SALT_LENGTH),
+    PBKDF2_ITERATIONS,
+    CIPHER_KEY_LENGTH,
+    "sha512"
   );
-	return decoder.decode(chacha.decrypt(hexToBytes(data)));
-};
+
+  const decipher = createDecipheriv(
+    CIPHER_ALGORITHM,
+    key,
+    buffer.slice(
+      CIPHER_SALT_LENGTH,
+      CIPHER_SALT_LENGTH + CIPHER_IV_LENGTH
+    )
+  );
+  decipher.setAuthTag(buffer.slice(
+    CIPHER_SALT_LENGTH + CIPHER_IV_LENGTH,
+    CIPHER_SALT_LENGTH + CIPHER_IV_LENGTH + CIPHER_TAG_LENGTH
+  ));
+
+  // eslint-disable-next-line ts/restrict-plus-operands
+  return decipher.update(buffer.slice(
+    CIPHER_SALT_LENGTH + CIPHER_IV_LENGTH + CIPHER_TAG_LENGTH
+  )) + decipher.final("utf8");
+}
 
 
 `;

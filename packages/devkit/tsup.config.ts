@@ -24,7 +24,9 @@ const config = defineTsupConfig({
     "src/index.ts",
     "src/types/**/*.ts",
     "src/helpers/**/*.ts",
-    "src/templates/**/*.ts",
+    "src/templates/*.ts",
+    "src/templates/helpers/*.ts",
+    "src/templates/components/*.ts",
     "src/plugins/*.ts",
     "src/babel/*.ts"
   ],

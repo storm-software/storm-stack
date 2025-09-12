@@ -16,12 +16,12 @@
 
  ------------------------------------------------------------------- */
 
-import { StormSentryLogConfig } from "@storm-stack/plugin-log-sentry/types/config";
+import { StormSentryLogEnv } from "@storm-stack/plugin-log-sentry/types/env";
 
 /**
  * Configuration options for the Storm Stack CLI.
  */
-export interface StormStackCLIConfig extends StormSentryLogConfig {
+export interface StormStackCLIEnv extends StormSentryLogEnv {
   /**
    * The mode used for outputting results.
    * - `memory`: Generated source code is stored in a virtual file system to reduce boilerplate.

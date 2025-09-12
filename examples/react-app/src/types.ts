@@ -16,9 +16,9 @@
 
  ------------------------------------------------------------------- */
 
-import { StormReactConfig } from "@storm-stack/plugin-react/types/config";
+import { StormReactEnv } from "@storm-stack/plugin-react/types/env";
 
-export interface ExampleReactAppConfig extends StormReactConfig {
+export interface ExampleReactAppConfig extends StormReactEnv {
   /**
    * The API endpoint for the application.
    *

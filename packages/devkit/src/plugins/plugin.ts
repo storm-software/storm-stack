@@ -82,6 +82,13 @@ export default class PluginPlugin<
     context.options.skipNodeModulesBundle = true;
     context.options.external = ["@storm-stack/core"];
 
+    if (context.options.plugins.plugin.alloy !== false) {
+      context.packageDeps["@alloy-js/core"] = { type: "dependency" };
+      context.packageDeps["@alloy-js/typescript"] = { type: "dependency" };
+
+      context.options.external.push("@alloy-js/core", "@alloy-js/typescript");
+    }
+
     context.options.build ??= {};
     context.options.build.target = "node22";
     context.options.build.format = ["cjs", "esm"];
@@ -109,6 +116,24 @@ export default class PluginPlugin<
     tsconfigJson.compilerOptions.types ??= [];
     if (!isMatchFound("node", tsconfigJson.compilerOptions.types)) {
       tsconfigJson.compilerOptions.types.push("node");
+    }
+
+    if (context.options.plugins.plugin.alloy !== false) {
+      tsconfigJson.compilerOptions.jsx ??= "preserve";
+      tsconfigJson.compilerOptions.jsxImportSource ??= "@alloy-js/core";
+
+      if (
+        !isMatchFound(
+          "@alloy-js/core/testing/matchers",
+          tsconfigJson.compilerOptions.types
+        )
+      ) {
+        tsconfigJson.compilerOptions.types.push(
+          "@alloy-js/core/testing/matchers"
+        );
+      }
+
+      tsconfigJson.compilerOptions.lib ??= ["DOM", "ESNext"];
     }
 
     return writeFile(

@@ -28,7 +28,6 @@ import {
 } from "@storm-stack/core/types/config";
 import { isError } from "@stryke/type-checks/is-error";
 import defu from "defu";
-import { createEngine } from "../helpers/create-engine";
 import { StormStackBaseExecutorSchema } from "./base-executor.schema";
 
 export type StormStackExecutorContext<
@@ -111,7 +110,7 @@ export function withStormStackExecutor<
         options
       ) as InlineConfig;
 
-      const engine = await createEngine(inlineConfig, workspaceConfig);
+      const engine = await Engine.create(inlineConfig);
 
       try {
         return await Promise.resolve(
@@ -131,7 +130,9 @@ export function withStormStackExecutor<
         );
       } catch (error) {
         writeError(
-          `An error occurred while executing the Storm Stack ${command} command executor: ${
+          `An error occurred while executing the Storm Stack ${
+            command
+          } command executor: ${
             isError(error)
               ? `${error.message}
 

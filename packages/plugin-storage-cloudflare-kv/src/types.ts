@@ -20,7 +20,7 @@ import {
   StoragePluginContext,
   StoragePluginOptions
 } from "@storm-stack/devkit/types/plugins";
-import { ConfigPluginOptions } from "@storm-stack/plugin-config/types";
+import { EnvPluginOptions } from "@storm-stack/plugin-env/types";
 import { KVOptions } from "unstorage/drivers/cloudflare-kv-binding";
 import { KVHTTPOptions } from "unstorage/drivers/cloudflare-kv-http";
 
@@ -45,9 +45,9 @@ export type StorageCloudflareKVPluginOptions = StoragePluginOptions &
     minTTL: number;
 
     /**
-     * The options provided to the \`\@storm-stack/plugin-config\` plugin.
+     * The options provided to the \`\@storm-stack/plugin-env\` plugin.
      */
-    config?: ConfigPluginOptions;
+    env?: EnvPluginOptions;
   } & Omit<KVHTTPOptions, "namespaceId" | "minTTL">;
 
 export type StorageCloudflareKVPluginContext<

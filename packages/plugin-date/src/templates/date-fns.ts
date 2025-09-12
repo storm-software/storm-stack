@@ -79,10 +79,10 @@ import { isValid as dateFnsIsValid } from "date-fns/isValid";
 import { isWithinInterval } from "date-fns/isWithinInterval";
 import { Locale } from "date-fns/locale";
 import { ${
-    context.options.plugins.config.parsed.DEFAULT_LOCALE?.replaceAll("-", "") ||
+    context.options.plugins.env.parsed.DEFAULT_LOCALE?.replaceAll("-", "") ||
     "enUS"
   } as defaultLocale } from "date-fns/locale/${
-    context.options.plugins.config.parsed.DEFAULT_LOCALE || "en-US"
+    context.options.plugins.env.parsed.DEFAULT_LOCALE || "en-US"
   }";
 import { parse as dateFnsParse } from "date-fns/parse";
 import { parseISO as dateFnsParseISO } from "date-fns/parseISO";
@@ -213,7 +213,7 @@ export function toISO(value: Date) {
 }
 
 export function getCurrentLocaleCode() {
-  return locale?.code || $storm.config.DEFAULT_LOCALE;
+  return locale?.code || $storm.env.DEFAULT_LOCALE;
 }
 
 export function addSeconds(value: Date, count: number) {

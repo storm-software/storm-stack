@@ -21,7 +21,7 @@ import { kebabCase } from "@stryke/string-format/kebab-case";
 import { titleCase } from "@stryke/string-format/title-case";
 import { isObject } from "@stryke/type-checks/is-object";
 import { isSetString } from "@stryke/type-checks/is-set-string";
-import type { CLIPluginContext } from "../types/config";
+import type { CLIPluginContext } from "../types/plugin";
 
 const CRASH_REPORT_DIVIDER_LENGTH = 42;
 
@@ -78,7 +78,7 @@ Additional details about this issue can be found in the crash report.\`);
 
           console.log("");
           console.log(\`\${colors.gray("A crash report was generated locally on your file system: ")}
-\${link(\`file://\${join($storm.env.paths.log, "crash-reports", \`${kebabCase(
+\${link(\`file://\${join($storm.meta.paths.log, "crash-reports", \`${kebabCase(
     context.options.name
   )}-\${request.id}.log\`)}\`)}
 
@@ -114,13 +114,13 @@ Additional details about this issue can be found in the crash report.\`);
         if (exception) {
           const error = isStormError(exception) ? exception : createStormError(exception);
           $storm.log.fatal(error, {
-            name: $storm.env.name,
-            version: $storm.env.version,
+            name: $storm.meta.name,
+            version: $storm.meta.version,
             checksum: "${context.meta.checksum}",
-            build: $storm.env.buildId,
-            release: $storm.env.releaseId,
-            tag: $storm.env.releaseTag,
-            mode: $storm.env.mode,
+            build: $storm.meta.buildId,
+            release: $storm.meta.releaseId,
+            tag: $storm.meta.releaseTag,
+            mode: $storm.meta.mode,
             os: JSON.stringify({ type: os.type(), release: os.release(), platform: os.platform() }, null, 1),
           });
 
@@ -130,15 +130,15 @@ Additional details about this issue can be found in the crash report.\`);
 
 ${"-".repeat((CRASH_REPORT_DIVIDER_LENGTH - (title.length + 17)) / 2)} ${`${title} - Crash Report`}${"-".repeat((CRASH_REPORT_DIVIDER_LENGTH - (title.length + 17)) / 2)}
 
-Application Name: \${$storm.env.name}
-Application Version: \${$storm.env.version}
+Application Name: \${$storm.meta.name}
+Application Version: \${$storm.meta.version}
 Checksum: ${context.meta.checksum}
 Crash Time: \${format(new Date(), "systemDateTime")}
 Request ID: \${request.id}
-Build: \${$storm.env.buildId}
-Release: \${$storm.env.releaseId}
-Tag: \${$storm.env.releaseTag}
-Mode: \${$storm.env.mode}
+Build: \${$storm.meta.buildId}
+Release: \${$storm.meta.releaseId}
+Tag: \${$storm.meta.releaseTag}
+Mode: \${$storm.meta.mode}
 Operating System: \${os.type()} \${os.release()} (\${os.platform()})
 
 -------------- Error Details -------------

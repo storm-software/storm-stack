@@ -18,10 +18,11 @@
 
 import { LogLevelLabel } from "@storm-software/config-tools/types";
 import { bufferToString } from "@stryke/convert/buffer-to-string";
+import { toArray } from "@stryke/convert/to-array";
 import { hash } from "@stryke/hash/hash";
 import { findFilePath } from "@stryke/path/file-path-fns";
-import { isAbsolutePath } from "@stryke/path/is-file";
 import { isParentPath } from "@stryke/path/is-parent-path";
+import { isAbsolutePath } from "@stryke/path/is-type";
 import { joinPaths } from "@stryke/path/join-paths";
 import { prettyBytes } from "@stryke/string-format/pretty-bytes";
 import { isBuffer } from "@stryke/type-checks/is-buffer";
@@ -29,6 +30,7 @@ import { isFunction } from "@stryke/type-checks/is-function";
 import { isSetString } from "@stryke/type-checks/is-set-string";
 import defu from "defu";
 import { Volume } from "memfs";
+import { Blob } from "node:buffer";
 import fs, {
   ObjectEncodingOptions,
   PathLike,
@@ -792,7 +794,9 @@ export class VirtualFileSystem implements VirtualFileSystemInterface {
 
     this.#log(
       LogLevelLabel.TRACE,
-      `Writing ${filePath} file to virtual file system (size: ${prettyBytes(new Blob([data]).size)})`
+      `Writing ${filePath} file to virtual file system (size: ${prettyBytes(
+        new Blob(toArray(data)).size
+      )})`
     );
 
     this.#cachedFS.set(filePath, data.toString());
@@ -826,7 +830,9 @@ export class VirtualFileSystem implements VirtualFileSystemInterface {
 
     this.#log(
       LogLevelLabel.TRACE,
-      `Writing ${filePath} file to virtual file system (size: ${prettyBytes(new Blob([data]).size)})`
+      `Writing ${filePath} file to virtual file system (size: ${prettyBytes(
+        new Blob(toArray(data)).size
+      )})`
     );
 
     this.#cachedFS.set(filePath, data.toString());
@@ -878,7 +884,7 @@ export class VirtualFileSystem implements VirtualFileSystemInterface {
     this.#log(
       LogLevelLabel.DEBUG,
       `Writing runtime file ${absolutePath} (size: ${prettyBytes(
-        new Blob([data]).size
+        new Blob(toArray(data)).size
       )}) to ${
         this.resolveOutputMode(absolutePath, _options) === "fs"
           ? "disk"
@@ -923,7 +929,7 @@ export class VirtualFileSystem implements VirtualFileSystemInterface {
     this.#log(
       LogLevelLabel.DEBUG,
       `Writing entry file ${absolutePath} (size: ${prettyBytes(
-        new Blob([data]).size
+        new Blob(toArray(data)).size
       )}) to ${
         this.resolveOutputMode(absolutePath, _options) === "fs"
           ? "disk"
