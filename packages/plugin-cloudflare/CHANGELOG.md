@@ -2,6 +2,23 @@
 
 # Changelog for Storm Stack - Plugin Cloudflare
 
+## [0.29.0](https://github.com/storm-software/storm-stack/releases/tag/plugin-cloudflare%400.29.0) (2025-09-12)
+
+### Features
+
+- **plugin-env:** Rename package to `@storm-stack/plugin-env` and use `env`
+  names
+  ([34744b1b](https://github.com/storm-software/storm-stack/commit/34744b1b))
+
+### Bug Fixes
+
+- **core:** Update packages to use `type-check` pre-build task
+  ([4aba858d](https://github.com/storm-software/storm-stack/commit/4aba858d))
+
+### Updated Dependencies
+
+- Updated core to 0.44.0
+
 ## [0.28.0](https://github.com/storm-software/storm-stack/releases/tag/plugin-cloudflare%400.28.0) (2025-09-08)
 
 ### Features

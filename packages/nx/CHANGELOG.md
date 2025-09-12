@@ -2,6 +2,17 @@
 
 # Changelog for Storm Stack - Nx
 
+## [0.20.1](https://github.com/storm-software/storm-stack/releases/tag/nx%400.20.1) (2025-09-12)
+
+### Bug Fixes
+
+- **core:** Update packages to use `type-check` pre-build task
+  ([4aba858d](https://github.com/storm-software/storm-stack/commit/4aba858d))
+
+### Updated Dependencies
+
+- Updated core to 0.44.0
+
 ## [0.20.0](https://github.com/storm-software/storm-stack/releases/tag/nx%400.20.0) (2025-09-08)
 
 ### Features

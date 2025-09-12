@@ -2,6 +2,19 @@
 
 # Changelog for Storm Stack - Plugin Log Console
 
+## [0.23.4](https://github.com/storm-software/storm-stack/releases/tag/plugin-log-console%400.23.4) (2025-09-12)
+
+### Bug Fixes
+
+- **core:** Update packages to use `type-check` pre-build task
+  ([4aba858d](https://github.com/storm-software/storm-stack/commit/4aba858d))
+
+### Updated Dependencies
+
+- Updated devkit to 0.17.0
+- Updated core to 0.44.0
+- Updated nx to 0.20.1
+
 ## [0.23.3](https://github.com/storm-software/storm-stack/releases/tag/plugin-log-console%400.23.3) (2025-09-08)
 
 ### Miscellaneous

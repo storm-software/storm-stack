@@ -2,6 +2,25 @@
 
 # Changelog for Storm Stack - Plugin Date
 
+## [0.7.0](https://github.com/storm-software/storm-stack/releases/tag/plugin-date%400.7.0) (2025-09-12)
+
+### Features
+
+- **plugin-env:** Rename package to `@storm-stack/plugin-env` and use `env`
+  names
+  ([34744b1b](https://github.com/storm-software/storm-stack/commit/34744b1b))
+
+### Bug Fixes
+
+- **core:** Update packages to use `type-check` pre-build task
+  ([4aba858d](https://github.com/storm-software/storm-stack/commit/4aba858d))
+
+### Updated Dependencies
+
+- Updated devkit to 0.17.0
+- Updated core to 0.44.0
+- Updated nx to 0.20.1
+
 ## [0.6.3](https://github.com/storm-software/storm-stack/releases/tag/plugin-date%400.6.3) (2025-09-08)
 
 ### Miscellaneous

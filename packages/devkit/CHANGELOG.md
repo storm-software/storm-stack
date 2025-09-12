@@ -2,6 +2,22 @@
 
 # Changelog for Storm Stack - Devkit
 
+## [0.17.0](https://github.com/storm-software/storm-stack/releases/tag/devkit%400.17.0) (2025-09-12)
+
+### Features
+
+- **devkit:** Added the `AlloyPlugin` and initial `alloy-js` components
+  ([bc1a90a5](https://github.com/storm-software/storm-stack/commit/bc1a90a5))
+
+### Bug Fixes
+
+- **core:** Update packages to use `type-check` pre-build task
+  ([4aba858d](https://github.com/storm-software/storm-stack/commit/4aba858d))
+
+### Updated Dependencies
+
+- Updated core to 0.44.0
+
 ## [0.16.0](https://github.com/storm-software/storm-stack/releases/tag/devkit%400.16.0) (2025-09-08)
 
 ### Features

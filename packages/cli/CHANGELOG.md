@@ -2,6 +2,32 @@
 
 # Changelog for Storm Stack - CLI
 
+## [0.27.0](https://github.com/storm-software/storm-stack/releases/tag/cli%400.27.0) (2025-09-12)
+
+### Features
+
+- **devkit:** Added the `AlloyPlugin` and initial `alloy-js` components
+  ([bc1a90a5](https://github.com/storm-software/storm-stack/commit/bc1a90a5))
+
+### Bug Fixes
+
+- **core:** Update packages to use `type-check` pre-build task
+  ([4aba858d](https://github.com/storm-software/storm-stack/commit/4aba858d))
+
+### Miscellaneous
+
+- **cli:** Create separate `types` directory in package
+  ([8b85c307](https://github.com/storm-software/storm-stack/commit/8b85c307))
+
+### Updated Dependencies
+
+- Updated plugin-log-storage to 0.26.4
+- Updated plugin-log-sentry to 0.31.0
+- Updated plugin-storage-fs to 0.15.4
+- Updated plugin-cli to 0.36.0
+- Updated core to 0.44.0
+- Updated nx to 0.20.1
+
 ## [0.26.0](https://github.com/storm-software/storm-stack/releases/tag/cli%400.26.0) (2025-09-08)
 
 ### Features

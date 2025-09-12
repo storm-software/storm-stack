@@ -2,6 +2,27 @@
 
 # Changelog for Storm Stack - Plugin React
 
+## [0.6.0](https://github.com/storm-software/storm-stack/releases/tag/plugin-react%400.6.0) (2025-09-12)
+
+### Features
+
+- **devkit:** Added the `AlloyPlugin` and initial `alloy-js` components
+  ([bc1a90a5](https://github.com/storm-software/storm-stack/commit/bc1a90a5))
+- **plugin-env:** Rename package to `@storm-stack/plugin-env` and use `env`
+  names
+  ([34744b1b](https://github.com/storm-software/storm-stack/commit/34744b1b))
+
+### Bug Fixes
+
+- **core:** Update packages to use `type-check` pre-build task
+  ([4aba858d](https://github.com/storm-software/storm-stack/commit/4aba858d))
+
+### Updated Dependencies
+
+- Updated devkit to 0.17.0
+- Updated core to 0.44.0
+- Updated nx to 0.20.1
+
 ## [0.5.3](https://github.com/storm-software/storm-stack/releases/tag/plugin-react%400.5.3) (2025-09-08)
 
 ### Bug Fixes

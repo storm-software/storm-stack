@@ -2,6 +2,18 @@
 
 # Changelog for Storm Stack - Plugin Log Storage
 
+## [0.26.4](https://github.com/storm-software/storm-stack/releases/tag/plugin-log-storage%400.26.4) (2025-09-12)
+
+### Bug Fixes
+
+- **core:** Update packages to use `type-check` pre-build task
+  ([4aba858d](https://github.com/storm-software/storm-stack/commit/4aba858d))
+
+### Updated Dependencies
+
+- Updated devkit to 0.17.0
+- Updated core to 0.44.0
+
 ## [0.26.3](https://github.com/storm-software/storm-stack/releases/tag/plugin-log-storage%400.26.3) (2025-09-08)
 
 ### Bug Fixes

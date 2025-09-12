@@ -1,5 +1,25 @@
 ![Storm Software's logo banner](https://public.storm-cdn.com/brand-banner.png)
 
+# Changelog for Storm Stack - Plugin Env
+
+## [0.9.0](https://github.com/storm-software/storm-stack/releases/tag/plugin-env%400.9.0) (2025-09-12)
+
+### Features
+
+- **devkit:** Added the `AlloyPlugin` and initial `alloy-js` components
+  ([bc1a90a5](https://github.com/storm-software/storm-stack/commit/bc1a90a5))
+- **plugin-env:** Rename package to `@storm-stack/plugin-env` and use `env`
+  names
+  ([34744b1b](https://github.com/storm-software/storm-stack/commit/34744b1b))
+
+### Updated Dependencies
+
+- Updated devkit to 0.17.0
+- Updated core to 0.44.0
+- Updated nx to 0.20.1
+
+![Storm Software's logo banner](https://public.storm-cdn.com/brand-banner.png)
+
 # Changelog for Storm Stack - Plugin Config
 
 ## [0.8.0](https://github.com/storm-software/storm-stack/releases/tag/plugin-config%400.8.0) (2025-09-08)

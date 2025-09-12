@@ -2,6 +2,18 @@
 
 # Changelog for Storm Stack - Core
 
+## [0.44.0](https://github.com/storm-software/storm-stack/releases/tag/core%400.44.0) (2025-09-12)
+
+### Features
+
+- **devkit:** Added the `AlloyPlugin` and initial `alloy-js` components
+  ([bc1a90a5](https://github.com/storm-software/storm-stack/commit/bc1a90a5))
+
+### Bug Fixes
+
+- **core:** Update packages to use `type-check` pre-build task
+  ([4aba858d](https://github.com/storm-software/storm-stack/commit/4aba858d))
+
 ## [0.43.0](https://github.com/storm-software/storm-stack/releases/tag/core%400.43.0) (2025-09-08)
 
 ### Features
