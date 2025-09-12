@@ -16,11 +16,17 @@
 
  ------------------------------------------------------------------- */
 
-export * from "./context.js";
-export * from "./date.js";
-export * from "./env.js";
-export * from "./error.js";
-export * from "./log.js";
-export * from "./message.js";
-export * from "./meta.js";
-export * from "./storage.js";
+import { StormEnvInterface } from "@storm-stack/core/runtime-types/shared/env";
+
+/**
+ * Configuration options for the OpenTelemetry logging plugin.
+ */
+export interface StormOpenTelemetryLogEnv extends StormEnvInterface {
+  /**
+   * The name of the OpenTelemetry service to use.
+   *
+   * @remarks
+   * If not provided, the service name is taken from the `APP_NAME` environment variable.
+   */
+  OTEL_SERVICE_NAME?: string;
+}

@@ -35,10 +35,10 @@
         "packages/plugin-cloudflare/src/index.ts"
       ],
       "@storm-stack/plugin-cloudflare/*": ["packages/plugin-cloudflare/src/*"],
-      "@storm-stack/plugin-config": ["packages/plugin-config/src/index.ts"],
-      "@storm-stack/plugin-config/*": ["packages/plugin-config/src/*"],
       "@storm-stack/plugin-date": ["packages/plugin-date/src/index.ts"],
       "@storm-stack/plugin-date/*": ["packages/plugin-date/src/*"],
+      "@storm-stack/plugin-env": ["packages/plugin-env/src/index.ts"],
+      "@storm-stack/plugin-env/*": ["packages/plugin-env/src/*"],
       "@storm-stack/plugin-error": ["packages/plugin-error/src/index.ts"],
       "@storm-stack/plugin-error/*": ["packages/plugin-error/src/*"],
       "@storm-stack/plugin-log-console": [

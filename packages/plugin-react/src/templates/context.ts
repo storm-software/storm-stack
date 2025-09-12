@@ -30,8 +30,8 @@ export function ContextModule(_context: ReactPluginContext) {
 ${getFileHeader()}
 
 import { StormContextInterface } from "@storm-stack/core/runtime-types/shared/context";
-import { StormConfig, config } from "storm:config";
-import * as env from "storm:env";
+import { StormEnv, env } from "storm:env";
+import * as meta from "storm:meta";
 import { createStorage } from "storm:storage";
 import { StormLog } from "storm:log";
 import { createContext, useContext, PropsWithChildren } from "react";
@@ -44,19 +44,18 @@ import { createContext, useContext, PropsWithChildren } from "react";
  */
 export interface StormContext extends StormContextInterface {
   /**
-   * The configuration parameters for the Storm application.
+   * The environment configuration for the Storm application.
    */
-  config: StormConfig;
+  env: StormEnv;
 }
 
 const log = new StormLog();
 const initialValues: StormContext = {
-  meta: {},
+  meta,
   env,
-  config,
   log: log.with({
-      name: env.name,
-      version: env.version
+      name: meta.name,
+      version: meta.version
     }),
   storage: createStorage()
 };

@@ -134,10 +134,10 @@
     "storm-stack-plugin"
   ],
   "peerDependencies": {
-    "@storm-stack/plugin-config": "*"
+    "@storm-stack/plugin-env": "*"
   },
   "peerDependenciesMeta": {
-    "@storm-stack/plugin-config": {
+    "@storm-stack/plugin-env": {
       "optional": false
     }
   },
@@ -147,14 +147,14 @@
     "@babel/helper-module-imports": "catalog:",
     "@storm-software/config": "catalog:",
     "@storm-software/config-tools": "catalog:",
-    "@storm-stack/core": "0.43.0",
-    "@storm-stack/devkit": "0.16.0",
+    "@storm-stack/core": "workspace:*",
+    "@storm-stack/devkit": "workspace:*",
     "@stryke/json": "catalog:",
     "@stryke/path": "catalog:",
     "@stryke/string-format": "catalog:"
   },
   "devDependencies": {
-    "@storm-stack/nx": "0.20.0",
+    "@storm-stack/nx": "workspace:*",
     "@types/node": "catalog:",
     "tsup": "catalog:"
   },

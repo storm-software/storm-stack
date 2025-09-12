@@ -16,11 +16,19 @@
 
  ------------------------------------------------------------------- */
 
-export * from "./context.js";
-export * from "./date.js";
-export * from "./env.js";
-export * from "./error.js";
-export * from "./log.js";
-export * from "./message.js";
-export * from "./meta.js";
-export * from "./storage.js";
+import { defineTsupConfig } from "@storm-stack/tools-config/tsup.shared";
+
+const config = defineTsupConfig({
+  name: "plugin-env",
+  entry: [
+    "src/index.ts",
+    "src/plugin.ts",
+    "src/types/*.ts",
+    "src/helpers/*.ts",
+    "src/templates/*.ts",
+    "src/babel/*.ts"
+  ],
+  skipNodeModulesBundle: true
+});
+
+export default config;

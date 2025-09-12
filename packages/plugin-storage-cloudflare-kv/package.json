@@ -64,25 +64,29 @@
     "storm-stack-storage-plugin"
   ],
   "peerDependencies": {
-    "@storm-stack/plugin-config": "*"
+    "@storm-stack/plugin-cloudflare": "*",
+    "@storm-stack/plugin-env": "*"
   },
   "peerDependenciesMeta": {
-    "@storm-stack/plugin-config": {
+    "@storm-stack/plugin-cloudflare": {
+      "optional": false
+    },
+    "@storm-stack/plugin-env": {
       "optional": false
     }
   },
   "dependencies": {
     "@ltd/j-toml": "catalog:",
     "@storm-software/config-tools": "catalog:",
-    "@storm-stack/core": "0.43.0",
-    "@storm-stack/devkit": "0.16.0",
+    "@storm-stack/core": "workspace:*",
+    "@storm-stack/devkit": "workspace:*",
     "@stryke/fs": "catalog:",
     "@stryke/json": "catalog:",
     "@stryke/path": "catalog:",
     "unstorage": "catalog:"
   },
   "devDependencies": {
-    "@storm-stack/nx": "0.20.0",
+    "@storm-stack/nx": "workspace:*",
     "@stryke/types": "catalog:",
     "@types/node": "catalog:",
     "tsup": "catalog:"

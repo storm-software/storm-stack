@@ -55,16 +55,30 @@
     },
     "./types": {
       "import": {
-        "types": "./dist/types.d.ts",
-        "default": "./dist/types.js"
+        "types": "./dist/types/index.d.ts",
+        "default": "./dist/types/index.js"
       },
       "require": {
-        "types": "./dist/types.d.cts",
-        "default": "./dist/types.cjs"
+        "types": "./dist/types/index.d.cts",
+        "default": "./dist/types/index.cjs"
       },
       "default": {
-        "types": "./dist/types.d.ts",
-        "default": "./dist/types.js"
+        "types": "./dist/types/index.d.ts",
+        "default": "./dist/types/index.js"
+      }
+    },
+    "./types/*": {
+      "import": {
+        "types": "./dist/types/*.d.ts",
+        "default": "./dist/types/*.js"
+      },
+      "require": {
+        "types": "./dist/types/*.d.cts",
+        "default": "./dist/types/*.cjs"
+      },
+      "default": {
+        "types": "./dist/types/*.d.ts",
+        "default": "./dist/types/*.js"
       }
     }
   },
@@ -106,15 +120,15 @@
     }
   },
   "dependencies": {
-    "@storm-stack/core": "0.43.0",
-    "@storm-stack/devkit": "0.16.0",
-    "@storm-stack/plugin-config": "0.8.0",
+    "@storm-stack/core": "workspace:*",
+    "@storm-stack/devkit": "workspace:*",
+    "@storm-stack/plugin-env": "workspace:*",
     "@stryke/json": "catalog:"
   },
   "devDependencies": {
     "@opentelemetry/otlp-exporter-base": "catalog:",
     "@opentelemetry/otlp-grpc-exporter-base": "catalog:",
-    "@storm-stack/nx": "0.20.0",
+    "@storm-stack/nx": "workspace:*",
     "@types/node": "catalog:",
     "tsup": "catalog:"
   },

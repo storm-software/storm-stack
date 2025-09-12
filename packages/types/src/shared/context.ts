@@ -17,9 +17,9 @@
  ------------------------------------------------------------------- */
 
 import { StormStorageInterface } from "../shared";
-import { StormConfigInterface } from "../shared/config";
 import { StormLogInterface } from "../shared/log";
-import { StormEnv } from "./env";
+import { StormEnvInterface } from "./env";
+import { StormMeta } from "./meta";
 
 /**
  * The global Storm Stack application context. This object contains information related to the current process's execution.
@@ -28,19 +28,6 @@ import { StormEnv } from "./env";
  * The Storm Stack application context object is injected into the global scope of the application. It can be accessed using `$storm` or `useStorm()` in the application code.
  */
 export interface StormContextInterface {
-  /**
-   * The context metadata.
-   *
-   * @remarks
-   * This metadata can be used to store information about the current request, user, or any other relevant data. It is mutable and can be changed during the request lifecycle.
-   */
-  meta: Record<string, any>;
-
-  /**
-   * Environment/runtime specific application data.
-   */
-  env: StormEnv;
-
   /**
    * The root application logger for the Storm Stack application.
    */
@@ -52,9 +39,19 @@ export interface StormContextInterface {
   storage: StormStorageInterface;
 
   /**
-   * The configuration parameters for the Storm application.
+   * Runtime specific application metadata.
    */
-  config: StormConfigInterface;
+  meta: StormMeta;
+
+  /**
+   * The environment configuration parameters for the Storm application.
+   */
+  env: StormEnvInterface;
+
+  /**
+   * The secrets configuration parameters for the Storm application.
+   */
+  // secrets: StormSecretsInterface;
 
   [key: string]: any;
 }

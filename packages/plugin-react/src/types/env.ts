@@ -16,11 +16,16 @@
 
  ------------------------------------------------------------------- */
 
-export * from "./context.js";
-export * from "./date.js";
-export * from "./env.js";
-export * from "./error.js";
-export * from "./log.js";
-export * from "./message.js";
-export * from "./meta.js";
-export * from "./storage.js";
+import { StormEnvInterface } from "@storm-stack/core/runtime-types/shared/env";
+
+/**
+ * Configuration options for the Storm React plugin.
+ */
+export interface StormReactEnv extends StormEnvInterface {
+  /**
+   * A gating indicator to determine if the optimized [React compiler](https://react.dev/reference/react-compiler) source code should be used.
+   *
+   * @see https://react.dev/reference/react-compiler/gating
+   */
+  DISABLE_REACT_COMPILER: boolean;
+}

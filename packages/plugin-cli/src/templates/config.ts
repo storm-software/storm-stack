@@ -17,7 +17,7 @@
  ------------------------------------------------------------------- */
 
 import { getFileHeader } from "@storm-stack/core/lib";
-import { CLIPluginContext } from "../types/config";
+import { CLIPluginContext } from "../types/plugin";
 
 export function writeConfigGet(_context: CLIPluginContext) {
   return `${getFileHeader()}
@@ -25,7 +25,7 @@ export function writeConfigGet(_context: CLIPluginContext) {
 import { deserialize } from "@storm-stack/core/deepkit/type";
 import { colors } from "storm:cli";
 import { StormRequest } from "storm:request";
-import { StormConfig } from "storm:config";
+import { StormEnv } from "storm:env";
 
 export interface ConfigGetRequest {
   /**
@@ -40,13 +40,13 @@ export interface ConfigGetRequest {
  * @param request - The request object containing the configuration name to retrieve.
  */
 async function handler(request: StormRequest<ConfigGetRequest>) {
-  const configFile = await $storm.storage.getItem(\`config:config.json\`);
+  const configFile = await $storm.storage.getItem(\`config:env.json\`);
   if (configFile === undefined) {
     console.error(\` \${colors.red("✘")}  \${colors.white(\`Configuration file was not found\`)}\`);
     return;
   }
 
-  const config = deserialize<StormConfig>(configFile);
+  const config = deserialize<StormEnv>(configFile);
   if (config?.[request.data.name] === undefined) {
     console.error(\` \${colors.red("✘")}  \${colors.white(\`Variable Name \\\`\${request.data.name}\\\` not found\`)}\`);
     return;
@@ -66,7 +66,7 @@ export function writeConfigSet(_context: CLIPluginContext) {
 import { deserialize, serialize } from "@storm-stack/core/deepkit/type";
 import { colors } from "storm:cli";
 import { StormRequest } from "storm:request";
-import { StormConfig } from "storm:config";
+import { StormEnv } from "storm:env";
 
 export interface ConfigSetRequest {
   /**
@@ -86,16 +86,16 @@ export interface ConfigSetRequest {
  * @param request - The request object containing the config key and value to set.
  */
 async function handler(request: StormRequest<ConfigSetRequest>) {
-  const configFile = await $storm.storage.getItem(\`config:config.json\`);
+  const configFile = await $storm.storage.getItem(\`config:env.json\`);
   if (configFile === undefined) {
     console.error(\` \${colors.red("✘")}  \${colors.white(\`Configuration file was not found\`)}\`);
     return;
   }
 
-  const config = deserialize<StormConfig>(configFile);
+  const config = deserialize<StormEnv>(configFile);
   config[request.data.name] = request.data.value;
 
-  await $storm.storage.setItem(\`config:config.json\`, serialize<StormConfig>(config));
+  await $storm.storage.setItem(\`config:env.json\`, serialize<StormEnv>(config));
 
   console.log("");
   console.log(colors.dim(\` > \\\`\${request.data.name}\\\` configuration set to \${request.data.value}\`));
@@ -113,7 +113,7 @@ export function writeConfigList(_context: CLIPluginContext) {
 import { deserialize } from "@storm-stack/core/deepkit/type";
 import { colors } from "storm:cli";
 import { StormRequest } from "storm:request";
-import { StormConfig } from "storm:config";
+import { StormEnv } from "storm:env";
 
 export interface ConfigListRequest {}
 
@@ -123,13 +123,13 @@ export interface ConfigListRequest {}
  * @param request - The request object containing the config key to retrieve.
  */
 async function handler(request: StormRequest<ConfigListRequest>) {
-  const configFile = await $storm.storage.getItem(\`config:config.json\`);
+  const configFile = await $storm.storage.getItem(\`config:env.json\`);
   if (configFile === undefined) {
     console.error(\` \${colors.red("✘")}  \${colors.white(\`Configuration file was not found\`)}\`);
     return;
   }
 
-  const config = deserialize<StormConfig>(configFile);
+  const config = deserialize<StormEnv>(configFile);
   console.log(\`\${Object.keys(config).map(key => \`\${colors.bold(key)}: \${config[key]}\`).join("\\n")}\`);
 }
 
@@ -144,7 +144,7 @@ export function writeConfigDelete(_context: CLIPluginContext) {
 import { deserialize, serialize } from "@storm-stack/core/deepkit/type";
 import { colors } from "storm:cli";
 import { StormRequest } from "storm:request";
-import { StormConfig } from "storm:config";
+import { StormEnv } from "storm:env";
 
 export interface ConfigDeleteRequest {
   /**
@@ -159,16 +159,16 @@ export interface ConfigDeleteRequest {
  * @param request - The request object containing the configuration name to delete.
  */
 async function handler(request: StormRequest<ConfigDeleteRequest>) {
-  const configFile = await $storm.storage.getItem(\`config:config.json\`);
+  const configFile = await $storm.storage.getItem(\`config:env.json\`);
   if (configFile === undefined) {
     console.error(\` \${colors.red("✘")}  \${colors.white(\`Configuration file was not found\`)}\`);
     return;
   }
 
-  const config = deserialize<StormConfig>(configFile);
+  const config = deserialize<StormEnv>(configFile);
 
   delete config[request.data.name];
-  await $storm.storage.setItem(\`config:config.json\`, serialize<StormConfig>(config));
+  await $storm.storage.setItem(\`config:env.json\`, serialize<StormEnv>(config));
 
   console.log("");
   console.log(colors.dim(\` > \\\`\${request.data.name}\\\` configuration deleted\`));

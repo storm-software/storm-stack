@@ -149,7 +149,7 @@
     "storm-stack-log-plugin"
   ],
   "peerDependencies": {
-    "@storm-stack/plugin-config": "*",
+    "@storm-stack/plugin-env": "*",
     "@storm-stack/plugin-error": "*",
     "@storm-stack/plugin-log-console": "*",
     "babel-plugin-react-compiler": "*",
@@ -157,7 +157,7 @@
     "react-dom": "*"
   },
   "peerDependenciesMeta": {
-    "@storm-stack/plugin-config": {
+    "@storm-stack/plugin-env": {
       "optional": false
     },
     "@storm-stack/plugin-error": {
@@ -183,8 +183,8 @@
     "@babel/template": "catalog:",
     "@babel/types": "catalog:",
     "@storm-software/config-tools": "catalog:",
-    "@storm-stack/core": "0.43.0",
-    "@storm-stack/devkit": "0.16.0",
+    "@storm-stack/core": "workspace:*",
+    "@storm-stack/devkit": "workspace:*",
     "@stryke/convert": "catalog:",
     "@stryke/json": "catalog:",
     "@stryke/path": "catalog:",
@@ -195,7 +195,7 @@
     "defu": "catalog:"
   },
   "devDependencies": {
-    "@storm-stack/nx": "0.20.0",
+    "@storm-stack/nx": "workspace:*",
     "@stryke/types": "catalog:",
     "@types/node": "catalog:",
     "tsup": "catalog:"

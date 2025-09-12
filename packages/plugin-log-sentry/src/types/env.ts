@@ -16,11 +16,17 @@
 
  ------------------------------------------------------------------- */
 
-export * from "./context.js";
-export * from "./date.js";
-export * from "./env.js";
-export * from "./error.js";
-export * from "./log.js";
-export * from "./message.js";
-export * from "./meta.js";
-export * from "./storage.js";
+import { StormEnvInterface } from "@storm-stack/core/runtime-types/shared/env";
+
+/**
+ * Configuration options for the Sentry logging plugin.
+ */
+export interface StormSentryLogEnv extends StormEnvInterface {
+  /**
+   * The DSN for Sentry
+   *
+   * @remarks
+   * This is used to send logs to Sentry.
+   */
+  SENTRY_DSN: string;
+}

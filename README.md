@@ -53,7 +53,7 @@ The Storm Stack monorepo contains the [Storm Stack engine](https://www.npmjs.com
     - [@storm-stack/core](#storm-stackcore)
     - [@storm-stack/cli](#storm-stackcli)
   - [Plugins](#plugins)
-    - [@storm-stack/plugin-config](#storm-stackplugin-config)
+    - [@storm-stack/plugin-env](#storm-stackplugin-env)
     - [@storm-stack/plugin-date](#storm-stackplugin-date)
     - [@storm-stack/plugin-node](#storm-stackplugin-node)
     - [@storm-stack/plugin-cloudflare-worker](#storm-stackplugin-cloudflare-worker)
@@ -78,7 +78,7 @@ The Storm Stack monorepo contains the [Storm Stack engine](https://www.npmjs.com
   - [Running End-to-End Tests](#running-end-to-end-tests)
   - [Understand your workspace](#understand-your-workspace)
 - [☁ Nx Cloud](#-nx-cloud)
-  - [Distributed Computation Caching & Distributed Task Execution](#distributed-computation-caching--distributed-task-execution)
+  - [Distributed Computation Caching \& Distributed Task Execution](#distributed-computation-caching--distributed-task-execution)
 - [Roadmap](#roadmap)
 - [Contributing](#contributing)
   - [Pull Requests](#pull-requests)
@@ -135,17 +135,17 @@ The following features are included in the package:
 
 The following Storm Stack plugin packages are included in this repository:
 
-### [@storm-stack/plugin-config](https://www.npmjs.com/package/@storm-stack/plugin-config)
+### [@storm-stack/plugin-env](https://www.npmjs.com/package/@storm-stack/plugin-env)
 
-A plugin to generate TypeScript definitions, apply static parameter values, and encourage best practices for managing configuration in Storm Stack applications.
+A plugin to generate TypeScript definitions, apply static parameter values, and encourage best practices for managing environment configuration in Storm Stack applications.
 
 The plugin provides a set of utilities for working with configuration files, including:
 
 - TypeScript definition generation for configuration schemas.
-- `$storm.config.<parameter>` object is used to apply static configuration parameter values at build time with automatic type generation for improved type safety.
-- Logic to determine all used configuration parameters so that they can be validated and documented later.
+- `$storm.env.<parameter>` object is used to apply static configuration values at build time with automatic type generation for improved type safety.
+- Logic to determine all used environment configurations so that they can be validated and documented later.
 - Best practice recommendations for organizing and managing configuration.
-- The `storm:config` builtin runtime module, which contains the `StormConfig` type definition and related utilities for working with configuration parameters at runtime.
+- The `storm:env` builtin runtime module, which contains the `StormEnv` type definition and related utilities for working with configuration parameters at runtime.
 
 ### [@storm-stack/plugin-date](https://www.npmjs.com/package/@storm-stack/plugin-date)
 

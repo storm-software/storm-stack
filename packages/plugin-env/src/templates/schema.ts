@@ -16,11 +16,21 @@
 
  ------------------------------------------------------------------- */
 
-export * from "./context.js";
-export * from "./date.js";
-export * from "./env.js";
-export * from "./error.js";
-export * from "./log.js";
-export * from "./message.js";
-export * from "./meta.js";
-export * from "./storage.js";
+import { generateCapnp } from "@storm-stack/devkit/templates/helpers/capnp";
+import { readEnvTypeReflection } from "../helpers/persistence";
+import { EnvPluginContext } from "../types/plugin";
+
+/**
+ * Generates the configuration schema for the Config plugin.
+ *
+ * @param context - The context of the Config plugin.
+ * @returns The generated configuration schema.
+ */
+export async function generateSchema(context: EnvPluginContext) {
+  const reflection = await readEnvTypeReflection(context);
+  if (!reflection) {
+    throw new Error("No schema reflection found in context.");
+  }
+
+  return generateCapnp(context, reflection, { name: "EnvSchema" });
+}
