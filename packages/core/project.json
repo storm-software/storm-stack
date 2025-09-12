@@ -67,7 +67,8 @@
           "pnpm copyfiles --up=3 \"./packages/core/dist/**/*\" dist/packages/core/dist",
           "pnpm copyfiles --up=4 \"./packages/core/dist/deepkit/**/*\" dist/packages/core/deepkit",
           "pnpm copyfiles --up=2 packages/core/dist/runtime-types dist/packages/core/dist/runtime-types",
-          "pnpm copyfiles --up=4 \"./packages/core/dist/schemas/**/*\" dist/packages/core"
+          "pnpm copyfiles --up=4 \"./packages/core/dist/schemas/**/*\" dist/packages/core",
+          "pnpm copyfiles --up=3 \"./packages/core/bin/**/*\" dist/packages/core"
         ]
       }
     },

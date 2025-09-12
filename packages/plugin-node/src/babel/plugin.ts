@@ -18,9 +18,9 @@
 
 import { NodePath } from "@babel/core";
 import * as t from "@babel/types";
-import { addImport } from "@storm-stack/core/lib/babel/module";
 import { BabelPluginOptions } from "@storm-stack/core/types/babel";
 import { declareBabel } from "@storm-stack/devkit/babel/declare-babel";
+import { addImport } from "@storm-stack/devkit/babel/helpers/module-helpers";
 import { BabelPluginBuilderParams } from "@storm-stack/devkit/types";
 import { NodePluginContext } from "../types/plugin";
 

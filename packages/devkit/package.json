@@ -166,6 +166,20 @@
         "default": "./dist/babel/*.js"
       }
     },
+    "./babel/helpers/*": {
+      "import": {
+        "types": "./dist/babel/helpers/*.d.ts",
+        "default": "./dist/babel/helpers/*.js"
+      },
+      "require": {
+        "types": "./dist/babel/helpers/*.d.cts",
+        "default": "./dist/babel/helpers/*.cjs"
+      },
+      "default": {
+        "types": "./dist/babel/helpers/*.d.ts",
+        "default": "./dist/babel/helpers/*.js"
+      }
+    },
     "./templates": {
       "import": {
         "types": "./dist/templates/index.d.ts",
@@ -192,6 +206,20 @@
       "default": {
         "types": "./dist/templates/*.d.ts",
         "default": "./dist/templates/*.js"
+      }
+    },
+    "./templates/types/*": {
+      "import": {
+        "types": "./dist/templates/types/*.d.ts",
+        "default": "./dist/templates/types/*.js"
+      },
+      "require": {
+        "types": "./dist/templates/types/*.d.cts",
+        "default": "./dist/templates/types/*.cjs"
+      },
+      "default": {
+        "types": "./dist/templates/types/*.d.ts",
+        "default": "./dist/templates/types/*.js"
       }
     },
     "./templates/helpers/*": {

@@ -16,8 +16,10 @@
 
  ------------------------------------------------------------------- */
 
+export * from "./components";
 export * from "./crypto";
 export * from "./helpers";
 export * from "./id";
 export * from "./log";
 export * from "./storage";
+export * from "./types";

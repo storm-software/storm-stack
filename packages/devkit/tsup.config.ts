@@ -25,10 +25,12 @@ const config = defineTsupConfig({
     "src/types/**/*.ts",
     "src/helpers/**/*.ts",
     "src/templates/*.ts",
+    "src/templates/types/*.ts",
     "src/templates/helpers/*.ts",
     "src/templates/components/*.ts",
     "src/plugins/*.ts",
-    "src/babel/*.ts"
+    "src/babel/*.ts",
+    "src/babel/helpers/*.ts"
   ],
   skipNodeModulesBundle: true
 });

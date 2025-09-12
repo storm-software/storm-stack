@@ -240,7 +240,7 @@ export const initTypedoc = async (
     {
       ...typedocConfig,
       ...markdownPluginConfig,
-      gitRevision: context.options.branch || "main",
+      gitRevision: context.options.workspaceConfig.branch || "main",
       tsconfig: context.tsconfig.tsconfigFilePath,
       exclude: context.tsconfig.tsconfigJson.exclude?.filter(
         Boolean

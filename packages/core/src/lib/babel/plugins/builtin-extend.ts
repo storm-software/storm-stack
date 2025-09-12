@@ -20,7 +20,7 @@ import { NodePath, PluginAPI, PluginPass } from "@babel/core";
 import { declare } from "@babel/helper-plugin-utils";
 import template from "@babel/template";
 import * as t from "@babel/types";
-import { toArray } from "@stryke/convert";
+import { toArray } from "@stryke/convert/to-array";
 import { BabelPluginOptions } from "../../../types/babel";
 
 /**

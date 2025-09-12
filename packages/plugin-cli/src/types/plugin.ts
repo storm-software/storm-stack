@@ -213,6 +213,26 @@ export interface CLIPluginOptions extends NodePluginOptions {
   author?: WorkspaceConfig["organization"];
 
   /**
+   * The author/organization contact URL for the CLI application
+   */
+  contact?: WorkspaceConfig["contact"];
+
+  /**
+   * The support URL for the CLI application
+   */
+  support?: WorkspaceConfig["support"];
+
+  /**
+   * The documentation URL for the CLI application
+   */
+  docs?: WorkspaceConfig["docs"];
+
+  /**
+   * The homepage URL for the CLI application
+   */
+  homepage?: WorkspaceConfig["homepage"];
+
+  /**
    * The colors to use for the CLI application.
    */
   colors?: SingleThemeColors;
@@ -224,10 +244,7 @@ export interface CLIPluginOptions extends NodePluginOptions {
 }
 
 export interface CLIPluginResolvedOptions extends NodePluginResolvedOptions {
-  cli: Required<
-    Omit<CLIPluginOptions, "config" | "error" | "logs" | "author">
-  > &
-    Pick<CLIPluginOptions, "author">;
+  cli: Required<Omit<CLIPluginOptions, "config" | "error" | "logs">>;
 }
 
 export interface CLICommandReflectionProperties {

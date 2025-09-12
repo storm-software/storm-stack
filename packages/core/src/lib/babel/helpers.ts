@@ -16,9 +16,12 @@
 
  ------------------------------------------------------------------- */
 
+import { ParseResult } from "@babel/parser";
+import * as t from "@babel/types";
 import { isFunction } from "@stryke/type-checks/is-function";
 import { isObject } from "@stryke/type-checks/is-object";
 import { isSetString } from "@stryke/type-checks/is-set-string";
+import { isString } from "@stryke/type-checks/is-string";
 import {
   BabelPlugin,
   BabelPluginItem,
@@ -26,6 +29,65 @@ import {
 } from "../../types/babel";
 import { CompilerOptions } from "../../types/compiler";
 import { Context } from "../../types/context";
+import { parseAst } from "./ast";
+
+/**
+ * Finds an export in the given Babel AST program by its key.
+ *
+ * @param ast - The parsed Babel AST result containing the program body.
+ * @param key - The name of the export to find (e.g., "default" or a named export).
+ * @returns The declaration of the export if found, otherwise undefined.
+ */
+export function findExport(ast: ParseResult<t.File>, key: string) {
+  const type =
+    key === "default" ? "ExportDefaultDeclaration" : "ExportNamedDeclaration";
+
+  for (const node of ast.program.body) {
+    if (node.type === type) {
+      if (key === "default") {
+        return node.declaration;
+      }
+      if (node.declaration && "declarations" in node.declaration) {
+        const declaration = node.declaration.declarations[0];
+        if (
+          declaration &&
+          "name" in declaration.id &&
+          declaration.id.name === key
+        ) {
+          return declaration.init as any;
+        }
+      }
+    }
+  }
+}
+
+/**
+ * Lists all exports from the given Babel AST program.
+ *
+ * @param codeOrAst - The parsed Babel AST result containing the program body.
+ * @returns An array of export names, including "default" for default exports.
+ */
+export function listExports(codeOrAst: ParseResult<t.File> | string) {
+  const ast = isString(codeOrAst) ? parseAst(codeOrAst) : codeOrAst;
+
+  return ast.program.body
+    .flatMap(i => {
+      if (i.type === "ExportDefaultDeclaration") {
+        return ["default"];
+      }
+      if (
+        i.type === "ExportNamedDeclaration" &&
+        i.declaration &&
+        "declarations" in i.declaration
+      ) {
+        return i.declaration.declarations.map(d =>
+          "name" in d.id ? d.id.name : ""
+        );
+      }
+      return [];
+    })
+    .filter(Boolean);
+}
 
 /**
  * Get the name of the Babel plugin.

@@ -19,7 +19,6 @@
 import { LogLevelLabel } from "@storm-software/config-tools/types";
 import { Plugin } from "@storm-stack/core/base/plugin";
 import {
-  isType,
   ReflectionClass,
   ReflectionKind,
   stringifyType
@@ -32,14 +31,10 @@ import { toArray } from "@stryke/convert/to-array";
 import { ENV_PREFIXES } from "@stryke/env/types";
 import { existsSync } from "@stryke/fs/exists";
 import { createDirectory } from "@stryke/fs/helpers";
+import { isParentPath } from "@stryke/path/is-parent-path";
 import { joinPaths } from "@stryke/path/join-paths";
 import { constantCase } from "@stryke/string-format/constant-case";
-import { isObject } from "@stryke/type-checks/is-object";
-import { isSetString } from "@stryke/type-checks/is-set-string";
-import {
-  TypeDefinition,
-  TypeDefinitionParameter
-} from "@stryke/types/configuration";
+import { TypeDefinitionParameter } from "@stryke/types/configuration";
 import defu from "defu";
 import BabelPlugin from "./babel/plugin";
 import { loadEnv } from "./helpers/load";
@@ -47,6 +42,7 @@ import {
   getEnvDefaultTypeDefinition,
   getEnvReflectionsPath,
   getEnvTypeReflectionsPath,
+  getSecretsDefaultTypeDefinition,
   readEnvReflection,
   readEnvTypeReflection,
   readSecretsReflection,
@@ -132,51 +128,32 @@ export default class EnvPlugin<
       }
     );
 
-    let typeDefinition = {
-      types: `${getEnvDefaultTypeDefinition(context).file}#${
-        getEnvDefaultTypeDefinition(context).name
-      }`
-    } as Pick<EnvPluginOptions, "types" | "secrets">;
-    if (!context.options.plugins.env.types) {
-      this.log(
-        LogLevelLabel.WARN,
-        "No environment variable type definitions were provided in the `env.types` configuration."
-      );
-    } else {
-      typeDefinition = isObject(context.options.plugins.env.types)
-        ? {
-            types: context.options.plugins.env.types
-          }
-        : {
-            types: `${String(context.options.plugins.env.types)}#Env`,
-            secrets: `${String(context.options.plugins.env.types)}#Secrets`
-          };
-    }
-
-    if (
-      isSetString(typeDefinition.types) ||
-      isSetString((typeDefinition.types as TypeDefinition)?.file)
-    ) {
-      context.options.plugins.env.types ??=
-        {} as ResolvedEnvPluginOptions["types"];
+    if (context.options.plugins.env.types) {
       context.options.plugins.env.types = parseTypeDefinition(
-        typeDefinition.types as TypeDefinitionParameter
+        context.options.plugins.env.types as TypeDefinitionParameter
       ) as ResolvedEnvPluginOptions["types"];
-    } else if (!isType(typeDefinition.types)) {
+    } else {
       this.log(
         LogLevelLabel.WARN,
         "The `env.types` configuration parameter was not provided. Please ensure this is expected."
       );
+
+      context.options.plugins.env.types = parseTypeDefinition(
+        `${getEnvDefaultTypeDefinition(context).file}#${
+          getEnvDefaultTypeDefinition(context).name
+        }`
+      ) as ResolvedEnvPluginOptions["types"];
     }
 
-    if (
-      isSetString(typeDefinition.secrets) ||
-      isSetString((typeDefinition.secrets as TypeDefinition)?.file)
-    ) {
-      context.options.plugins.env.secrets ??=
-        {} as ResolvedEnvPluginOptions["secrets"];
+    if (context.options.plugins.env.secrets) {
       context.options.plugins.env.secrets = parseTypeDefinition(
-        typeDefinition.secrets as TypeDefinitionParameter
+        context.options.plugins.env.secrets as TypeDefinitionParameter
+      ) as ResolvedEnvPluginOptions["secrets"];
+    } else {
+      context.options.plugins.env.secrets = parseTypeDefinition(
+        `${getSecretsDefaultTypeDefinition(context).file}#${
+          getSecretsDefaultTypeDefinition(context).name
+        }`
       ) as ResolvedEnvPluginOptions["secrets"];
     }
 
@@ -235,54 +212,70 @@ export default class EnvPlugin<
         context.reflections.env.env = await readEnvReflection(context);
       }
 
-      context.reflections.env.types.secrets = await readEnvTypeReflection(
-        context,
-        "secrets"
-      );
+      if (existsSync(getEnvTypeReflectionsPath(context, "secrets"))) {
+        context.reflections.env.types.secrets = await readEnvTypeReflection(
+          context,
+          "secrets"
+        );
+      }
 
       if (existsSync(getEnvReflectionsPath(context, "secrets"))) {
         context.reflections.env.secrets = await readSecretsReflection(context);
       }
     } else {
-      context.reflections.env.types.env = isType(
-        context.options.plugins.env.types
-      )
-        ? ReflectionClass.from(context.options.plugins.env.types)
-        : await reflectEnv(
-            context,
-            (context.options.plugins.env.types as TypeDefinition)?.file
-              ? joinPaths(
-                  context.options.projectRoot,
-                  (context.options.plugins.env.types as TypeDefinition)?.file
-                )
-              : undefined,
-            (context.options.plugins.env.types as TypeDefinition)?.name
-          );
+      context.reflections.env.types.env = await reflectEnv(
+        context,
+        context.options.plugins.env.types?.file
+          ? isParentPath(
+              context.options.plugins.env.types?.file,
+              context.options.workspaceConfig.workspaceRoot
+            )
+            ? context.options.plugins.env.types?.file
+            : joinPaths(
+                context.options.projectRoot,
+                context.options.plugins.env.types?.file
+              )
+          : undefined,
+        context.options.plugins.env.types?.name
+      );
       if (!context.reflections.env.types.env) {
         throw new Error(
-          "Failed to find the configuration reflection in the context."
+          "Failed to find the environment configuration type reflection in the context."
         );
       }
 
-      context.reflections.env.types.secrets = isType(
-        context.options.plugins.env.secrets
-      )
-        ? ReflectionClass.from(context.options.plugins.env.secrets)
-        : await reflectSecrets(
-            context,
-            (context.options.plugins.env.secrets as TypeDefinition)?.file
-              ? joinPaths(
-                  context.options.projectRoot,
-                  (context.options.plugins.env.secrets as TypeDefinition)?.file
-                )
-              : undefined,
-            (context.options.plugins.env.secrets as TypeDefinition)?.name
-          );
+      await writeEnvTypeReflection(
+        context,
+        context.reflections.env.types.env,
+        "env"
+      );
+
+      context.reflections.env.types.secrets = await reflectSecrets(
+        context,
+        context.options.plugins.env.secrets?.file
+          ? isParentPath(
+              context.options.plugins.env.secrets?.file,
+              context.options.workspaceConfig.workspaceRoot
+            )
+            ? context.options.plugins.env.secrets?.file
+            : joinPaths(
+                context.options.projectRoot,
+                context.options.plugins.env.secrets?.file
+              )
+          : undefined,
+        context.options.plugins.env.secrets?.name
+      );
       if (!context.reflections.env.types.secrets) {
         throw new Error(
-          "Failed to find the secrets configuration reflection in the context."
+          "Failed to find the secrets configuration type reflection in the context."
         );
       }
+
+      await writeEnvTypeReflection(
+        context,
+        context.reflections.env.types.secrets,
+        "secrets"
+      );
 
       this.log(
         LogLevelLabel.TRACE,
@@ -322,12 +315,6 @@ export default class EnvPlugin<
             .setDefaultValue(value);
         }
       });
-
-      await writeEnvTypeReflection(
-        context,
-        context.reflections.env.types.env,
-        "env"
-      );
 
       context.reflections.env.env = new ReflectionClass(
         {

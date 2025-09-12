@@ -28,6 +28,7 @@ const config = defineTsupConfig({
     "src/templates/*.ts",
     "src/babel/*.ts"
   ],
+  sourcemap: true,
   skipNodeModulesBundle: true
 });
 

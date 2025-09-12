@@ -32,7 +32,7 @@ import {
 import type { SourceFile } from "../types/compiler";
 import { Context, UnimportContext } from "../types/context";
 import { parseAst } from "./babel/ast";
-import { listExports } from "./babel/module";
+import { listExports } from "./babel/helpers";
 import { writeFile } from "./utilities/write-file";
 
 let lastImportsDump: string | undefined;
@@ -71,7 +71,7 @@ export function createUnimport(context: Context): UnimportContext {
         );
 
         const importNames = listExports(parseAst(contents)).filter(
-          importName =>
+          (importName: string) =>
             !presets.some(
               preset =>
                 (preset as InlinePreset)?.imports &&

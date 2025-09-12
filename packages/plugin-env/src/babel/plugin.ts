@@ -25,12 +25,12 @@ import {
   ReflectionKind,
   resolveClassType
 } from "@storm-stack/core/deepkit/type";
-import { addImport } from "@storm-stack/core/lib/babel/module";
 import { convertFromCapnp } from "@storm-stack/core/lib/capnp";
 import { stringifyDefaultValue } from "@storm-stack/core/lib/deepkit/utilities";
 import { SerializedTypes as CapnpSerializedTypes } from "@storm-stack/core/schemas/reflection";
 import { BabelPluginOptions } from "@storm-stack/core/types/babel";
 import { declareBabel } from "@storm-stack/devkit/babel/declare-babel";
+import { addImport } from "@storm-stack/devkit/babel/helpers/module-helpers";
 import * as capnp from "@stryke/capnp";
 import { readFileBuffer } from "@stryke/fs/buffer";
 import { existsSync } from "node:fs";
@@ -131,11 +131,11 @@ export default declareBabel<
         }
       } else {
         throw new Error(
-          `The "${name}" environment variable is not defined in the dotenv type definition, but is used in the source code file ${
+          `The "${name}" environment variable is not defined in the \`env\` type definition, but is used in the source code file ${
             pass.filename ? pass.filename : "unknown"
           }.
 
-          The following variable names are defined in the dotenv type definition: \n${context.reflections.env.types.env
+          The following environment configuration names are defined in the \`env\` type definition: \n${context.reflections.env.types.env
             ?.getPropertyNames()
             .sort((a, b) => String(a).localeCompare(String(b)))
             .map(
@@ -183,7 +183,7 @@ export default declareBabel<
           // $storm.env.CONFIG_NAME
 
           const identifier = path.get("property")?.node as t.Identifier;
-          extractEnv(identifier, pass, true);
+          extractEnv(identifier, pass, false);
 
           path.replaceWithSourceString(`env.${identifier.name}`);
           addImport(path, {
@@ -247,13 +247,14 @@ export default declareBabel<
             return;
           }
 
-          const value = extractEnv(identifier, pass, false);
+          extractEnv(identifier, pass, false);
 
-          path.replaceWithSourceString(
-            `${value !== undefined ? "(" : ""}$storm.env.${
-              identifier.name
-            }${value !== undefined ? ` || ${value})` : ""}`
-          );
+          path.replaceWithSourceString(`env.${identifier.name}`);
+          addImport(path, {
+            module: "storm:env",
+            name: "env",
+            imported: "env"
+          });
         }
       }
     },

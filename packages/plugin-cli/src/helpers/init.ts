@@ -81,7 +81,44 @@ export async function initOptions(
   context.options.plugins.cli.minNodeVersion ??= options.minNodeVersion ?? 20;
   context.options.plugins.cli.interactive ??= options.interactive ?? true;
   context.options.plugins.cli.title ??= options.title!;
-  context.options.plugins.cli.author ??= options.author;
+  context.options.plugins.cli.author = defu(
+    (isString(context.options.plugins.cli.author)
+      ? {
+          name: context.options.plugins.cli.author
+        }
+      : context.options.plugins.cli.author) ?? {},
+    (isString(options.author)
+      ? {
+          name: options.author
+        }
+      : options.author) ?? {},
+    (isString(context.options.workspaceConfig.organization)
+      ? {
+          name: context.options.workspaceConfig.organization
+        }
+      : context.options.workspaceConfig.organization) ?? {}
+  );
+  context.options.plugins.cli.contact =
+    context.options.plugins.cli.contact ||
+    context.options.workspaceConfig.contact ||
+    context.options.plugins.cli.author.url ||
+    context.options.workspaceConfig.repository ||
+    context.options.plugins.cli.author.name ||
+    "";
+  context.options.plugins.cli.support =
+    context.options.plugins.cli.support ||
+    context.options.workspaceConfig.support ||
+    context.options.plugins.cli.contact;
+  context.options.plugins.cli.homepage = (context.options.plugins.cli
+    .homepage ||
+    context.options.workspaceConfig.homepage ||
+    context.options.plugins.cli.author.url ||
+    context.options.workspaceConfig.repository)!;
+  context.options.plugins.cli.docs =
+    context.options.plugins.cli.docs ||
+    context.options.workspaceConfig.docs ||
+    context.options.plugins.cli.homepage;
+
   context.options.plugins.cli.colors = defu(
     (isSetObject(options.colors?.dark)
       ? options.colors.dark

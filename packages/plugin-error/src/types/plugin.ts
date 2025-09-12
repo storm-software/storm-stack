@@ -46,10 +46,9 @@ export interface ErrorPluginOptions extends PluginBaseOptions {
   env?: EnvPluginOptions;
 }
 
-export interface ErrorPluginResolvedOptions {
+export interface ErrorPluginResolvedOptions extends EnvPluginResolvedOptions {
   error: Required<Omit<ErrorPluginOptions, "env" | "url">> &
     Pick<ErrorPluginOptions, "url">;
-  env: EnvPluginResolvedOptions["env"];
 }
 
 export type ErrorPluginContext = Context<

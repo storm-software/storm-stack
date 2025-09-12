@@ -19,9 +19,9 @@
 import { NodePath } from "@babel/core";
 import { ParseResult } from "@babel/parser";
 import * as t from "@babel/types";
+import { ImportSpecifier } from "@storm-stack/core/types/babel";
 import { isString } from "@stryke/type-checks/is-string";
-import { ImportSpecifier } from "../../types/babel";
-import { parseAst } from "./ast";
+import { parseAst } from "./ast-utils";
 
 /**
  * Finds an export in the given Babel AST program by its key.

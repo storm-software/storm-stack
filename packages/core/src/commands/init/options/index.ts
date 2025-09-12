@@ -30,7 +30,7 @@ export async function initOptions(context: Context, hooks: EngineHooks) {
 
   if (context.packageJson) {
     if (context.options.command === "new") {
-      context.options.repository ??=
+      context.options.workspaceConfig.repository ??=
         typeof context.packageJson.repository === "string"
           ? context.packageJson.repository
           : context.packageJson.repository?.url;
@@ -40,7 +40,7 @@ export async function initOptions(context: Context, hooks: EngineHooks) {
       }
 
       context.options.description ??= context.packageJson?.description;
-      context.options.repository ??=
+      context.options.workspaceConfig.repository ??=
         typeof context.packageJson?.repository === "string"
           ? context.packageJson.repository
           : context.packageJson?.repository?.url;

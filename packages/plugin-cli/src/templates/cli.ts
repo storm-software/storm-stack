@@ -64,7 +64,7 @@ export function CLIModule(context: CLIPluginContext) {
     author.name = titleCase(author.name);
   }
 
-  let homepage = context.options.homepage;
+  let homepage = context.options.plugins.cli.homepage;
   if (!homepage) {
     if (context.packageJson?.homepage) {
       homepage = context.packageJson.homepage;
@@ -83,14 +83,14 @@ export function CLIModule(context: CLIPluginContext) {
     }
   }
 
-  let support = context.options.support;
+  let support = context.options.plugins.cli.support;
   if (!support) {
     if (isObject(context.packageJson?.bugs) && context.packageJson?.bugs?.url) {
       support = context.packageJson.bugs.url;
     }
   }
 
-  let contact = context.options.contact;
+  let contact = context.options.plugins.cli.contact;
   if (!contact) {
     if (
       isObject(context.packageJson?.author) &&
@@ -107,14 +107,14 @@ export function CLIModule(context: CLIPluginContext) {
     }
   }
 
-  let docs = context.options.docs;
+  let docs = context.options.plugins.cli.docs;
   if (!docs) {
     if (context.packageJson?.docs) {
       docs = context.packageJson.docs;
     }
   }
 
-  let repository = context.options.repository;
+  let repository = context.options.workspaceConfig.repository;
   if (!repository) {
     if (context.packageJson?.repository) {
       repository = isString(context.packageJson.repository)
@@ -742,12 +742,12 @@ export function renderFooter(): string {
   let supportRow = ${
     support || contact || repository
       ? `\`You can reach out to the ${titleCase(
-          context.options?.organization &&
-            (isSetString(context.options.organization) ||
-              context.options.organization.name)
-            ? isSetString(context.options.organization)
-              ? context.options.organization
-              : context.options.organization.name
+          context.options.workspaceConfig?.organization &&
+            (isSetString(context.options.workspaceConfig.organization) ||
+              context.options.workspaceConfig.organization.name)
+            ? isSetString(context.options.workspaceConfig.organization)
+              ? context.options.workspaceConfig.organization
+              : context.options.workspaceConfig.organization.name
             : context.options.name
         )} - Support team via \${link("${support || contact || repository}", "${
           support || contact

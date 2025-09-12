@@ -16,8 +16,29 @@
 
  ------------------------------------------------------------------- */
 
-export * from "./ast";
-export * from "./helpers";
-export * from "./options";
-export * from "./plugins";
-export * from "./transform";
+import { StormEnvInterface } from "@storm-stack/core/runtime-types/shared/env";
+
+/**
+ * Configuration options for the Storm Error plugin.
+ */
+export interface StormErrorEnv extends StormEnvInterface {
+  /**
+   * Indicates if error stack traces should be captured.
+   */
+  STACKTRACE: boolean;
+
+  /**
+   * Indicates if error data should be included.
+   */
+  INCLUDE_ERROR_DATA: boolean;
+
+  /**
+   * A web page to lookup error messages and display additional information given an error code.
+   *
+   * @remarks
+   * This variable is used to provide a URL to a page that can be used to look up error messages given an error code. This is used to provide a more user-friendly error message to the user.
+   *
+   * @title Error Details URL
+   */
+  ERROR_URL: string;
+}

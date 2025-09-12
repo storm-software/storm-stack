@@ -30,7 +30,7 @@ import {
   ErrorPluginContext,
   ErrorPluginOptions,
   ErrorPluginResolvedOptions
-} from "./types";
+} from "./types/plugin";
 
 /**
  * Storm Stack - Error plugin.
@@ -107,6 +107,10 @@ export default class ErrorPlugin<
       codesFile: context.options.plugins.error.codesFile,
       url: context.options.plugins.error.url
     };
+
+    context.options.plugins.env.parsed ??= {};
+    context.options.plugins.env.parsed.ERROR_URL ||=
+      context.options.plugins.error.url;
   }
 
   /**

@@ -20,7 +20,6 @@ import { File, NodePath } from "@babel/core";
 import generate from "@babel/generator";
 import * as t from "@babel/types";
 import { LogLevelLabel } from "@storm-software/config-tools/types";
-import { addImport } from "@storm-stack/core/lib/babel/module";
 import { ErrorType } from "@storm-stack/core/runtime-types/shared/error";
 import {
   BabelPluginOptions,
@@ -28,7 +27,8 @@ import {
   BabelPluginState
 } from "@storm-stack/core/types/babel";
 import { declareBabel } from "@storm-stack/devkit/babel/declare-babel";
-import { ErrorPluginContext } from "../types";
+import { addImport } from "@storm-stack/devkit/babel/helpers/module-helpers";
+import { ErrorPluginContext } from "../types/plugin";
 
 const ERROR_CLASSES = [
   "Error",

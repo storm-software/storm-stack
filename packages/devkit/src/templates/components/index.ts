@@ -16,8 +16,6 @@
 
  ------------------------------------------------------------------- */
 
-export * from "./ast";
-export * from "./helpers";
-export * from "./options";
-export * from "./plugins";
-export * from "./transform";
+export * from "./SingleLineComment";
+export * from "./TypescriptFile";
+export * from "./TypescriptFileHeader";

@@ -211,7 +211,26 @@ export const ${camelCase(options.overrideName || reflection.getName())}${
   } = {
   ${reflection
     .getProperties()
-    .filter(item => !item.isIgnored() && !isUndefined(item.getDefaultValue()))
+    .filter(
+      item =>
+        !item.isIgnored() &&
+        !isUndefined(
+          options.defaultValues?.[item.getNameAsString()] ??
+            item.getAlias().reduce((ret, alias) => {
+              if (
+                isUndefined(ret) &&
+                !isUndefined(
+                  (options.defaultValues as Record<string, any>)?.[alias]
+                )
+              ) {
+                return (options.defaultValues as Record<string, any>)?.[alias];
+              }
+
+              return ret;
+            }, undefined) ??
+            item.getDefaultValue()
+        )
+    )
     .sort((a, b) =>
       (a.isReadonly() && b.isReadonly()) || (!a.isReadonly() && !b.isReadonly())
         ? a.getNameAsString().localeCompare(b.getNameAsString())

@@ -17,10 +17,6 @@
  ------------------------------------------------------------------- */
 
 import {
-  InlineRuntimeType,
-  ReflectionClass
-} from "@storm-stack/core/deepkit/type";
-import {
   StormEnvInterface,
   StormSecretsInterface
 } from "@storm-stack/core/runtime-types/shared/env";
@@ -47,9 +43,7 @@ export type EnvPluginOptions = Omit<DotenvConfiguration, "types"> &
      * @remarks
      * If a value is not provided for this option, the plugin will attempt to infer the type definition from the `storm.config.types.variables` object in the project's `package.json` file.
      */
-    types?:
-      | TypeDefinitionParameter
-      | InlineRuntimeType<ReflectionClass<StormEnvInterface>>;
+    types?: TypeDefinitionParameter;
 
     /**
      * A path to the type definition for the expected env secret parameters. This value can include both a path to the typescript file and the name of the type definition to use separated by a `":"` or `"#"` character. For example: `"./src/types/env.ts#ConfigSecrets"`.
@@ -57,9 +51,7 @@ export type EnvPluginOptions = Omit<DotenvConfiguration, "types"> &
      * @remarks
      * If a value is not provided for this option, the plugin will attempt to infer the type definition from the `storm.config.types.secrets` object in the project's `package.json` file.
      */
-    secrets?:
-      | TypeDefinitionParameter
-      | InlineRuntimeType<ReflectionClass<StormSecretsInterface>>;
+    secrets?: TypeDefinitionParameter;
 
     /**
      * An additional prefix (or list of additional prefixes) to apply to the environment variables
@@ -96,7 +88,7 @@ export type ResolvedEnvPluginOptions = Required<
    * @remarks
    * This value is parsed from the {@link EnvPluginOptions.types} option.
    */
-  types: TypeDefinition | InlineRuntimeType<ReflectionClass<StormEnvInterface>>;
+  types: TypeDefinition;
 
   /**
    * The type definition for the expected env secret parameters
@@ -104,9 +96,7 @@ export type ResolvedEnvPluginOptions = Required<
    * @remarks
    * This value is parsed from the {@link EnvPluginOptions.secrets} option.
    */
-  secrets:
-    | TypeDefinition
-    | InlineRuntimeType<ReflectionClass<StormSecretsInterface>>;
+  secrets: TypeDefinition;
 
   /**
    * Should the plugin inject the env variables in the source code with their values?

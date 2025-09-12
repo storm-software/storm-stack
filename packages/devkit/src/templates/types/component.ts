@@ -16,8 +16,16 @@
 
  ------------------------------------------------------------------- */
 
-export * from "./ast";
-export * from "./helpers";
-export * from "./options";
-export * from "./plugins";
-export * from "./transform";
+import { Children } from "@alloy-js/core/jsx-runtime";
+
+/** A type that represents the props of a component that can have children.
+ */
+export interface ComponentProps {
+  children?: Children;
+}
+
+/**
+ * A type that requires the `children` prop in a component.
+ */
+export type ComponentPropsWithChildren = Omit<ComponentProps, "children"> &
+  Required<Pick<ComponentProps, "children">>;

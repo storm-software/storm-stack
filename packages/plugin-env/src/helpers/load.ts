@@ -102,7 +102,10 @@ export function loadEnvFromContext(
     {
       APP_NAME: kebabCase(
         context.options.name ||
-          context.packageJson.name?.replace(`/${context.options.namespace}`, "")
+          context.packageJson.name?.replace(
+            `/${context.options.workspaceConfig.namespace}`,
+            ""
+          )
       ),
       APP_VERSION: context.packageJson.version,
       BUILD_ID: context.meta.buildId,
@@ -110,13 +113,13 @@ export function loadEnvFromContext(
       BUILD_CHECKSUM: context.meta.checksum,
       RELEASE_ID: context.meta.releaseId,
       RELEASE_TAG: `${kebabCase(context.options.name)}@${context.packageJson.version}`,
-      DEFAULT_LOCALE: context.options.locale,
-      DEFAULT_TIMEZONE: context.options.timezone,
+      DEFAULT_LOCALE: context.options.workspaceConfig.locale,
+      DEFAULT_TIMEZONE: context.options.workspaceConfig.timezone,
       LOG_LEVEL: context.options.logLevel,
-      ERROR_URL: context.options.error?.url,
-      ORGANIZATION: isSetString(context.options.organization)
-        ? context.options.organization
-        : context.options.organization?.name,
+      ERROR_URL: context.options.workspaceConfig.error?.url,
+      ORGANIZATION: isSetString(context.options.workspaceConfig.organization)
+        ? context.options.workspaceConfig.organization
+        : context.options.workspaceConfig.organization?.name,
       PLATFORM: context.options.platform,
       MODE: context.options.mode,
       DEBUG: context.options.mode === "development",

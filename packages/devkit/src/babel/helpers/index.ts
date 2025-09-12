@@ -16,8 +16,5 @@
 
  ------------------------------------------------------------------- */
 
-export * from "./ast";
-export * from "./helpers";
-export * from "./options";
-export * from "./plugins";
-export * from "./transform";
+export * from "./ast-utils";
+export * from "./module-helpers";

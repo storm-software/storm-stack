@@ -21,7 +21,6 @@ import { declare } from "@babel/helper-plugin-utils";
 import * as t from "@babel/types";
 import { BabelPluginOptions } from "../../../types/babel";
 import { Context } from "../../../types/context";
-import { isImportCall } from "../module";
 
 type ModuleResolverPluginPass = PluginPass<BabelPluginOptions> & {
   context: Context;
@@ -107,7 +106,7 @@ const importVisitors = {
         TRANSFORM_FUNCTIONS.some(pattern =>
           matchesPattern(state, calleePath, pattern)
         )) ||
-      isImportCall(nodePath)
+      t.isImport(nodePath.node.callee)
     ) {
       state.moduleResolverVisited.add(nodePath);
       resolveModulePath(

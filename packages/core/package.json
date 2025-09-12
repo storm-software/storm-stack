@@ -841,6 +841,10 @@
     "webpack",
     "astro"
   ],
+  "scripts": {
+    "install": "rm -rf node_modules/typescript || exit 0",
+    "postinstall": "node ./bin/post-install || exit 0"
+  },
   "peerDependencies": {
     "@nuxt/kit": "^4.1.1",
     "@nuxt/schema": "^4.1.1",

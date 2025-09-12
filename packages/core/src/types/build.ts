@@ -99,8 +99,7 @@ export type ResolvedBabelOptions = Omit<BabelConfig, "plugins" | "presets"> &
 export type BaseResolvedOptions<
   TUserConfig extends UserConfig = UserConfig,
   TPluginsOptions extends Record<string, any> = Record<string, any>
-> = Omit<WorkspaceConfig, "logLevel" | "variant" | "name"> &
-  Required<Pick<WorkspaceConfig, "workspaceRoot" | "colors">> &
+> = Required<Pick<WorkspaceConfig, "workspaceRoot">> &
   Omit<
     TUserConfig,
     | "name"

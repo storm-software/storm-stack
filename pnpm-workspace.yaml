@@ -3,8 +3,8 @@ packages:
   - packages/*
   - examples/*
 catalog:
-  "@alloy-js/core": ^0.17.0
-  "@alloy-js/typescript": ^0.17.0
+  "@alloy-js/core": ^0.20.0
+  "@alloy-js/typescript": ^0.20.0
   "@babel/core": 8.0.0-beta.2
   "@babel/generator": 8.0.0-beta.2
   "@babel/helper-module-imports": 8.0.0-beta.2

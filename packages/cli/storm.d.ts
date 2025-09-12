@@ -2044,21 +2044,6 @@ declare module "storm:env" {
    */
   export interface StormEnvBase extends StormEnvInterface {
     /**
-     * ARGV
-     *
-     * @title ARGV
-     * @domain cli
-     */
-    ARGV?: Array<string>;
-    /**
-     * The inverse of the no-banner option.
-     *
-     * @title BANNER
-     * @domain cli
-     * @defaultValue true
-     */
-    BANNER: boolean;
-    /**
      * The Storm Stack application's cached data directory.
      *
      * @title Cache Directory
@@ -2072,13 +2057,6 @@ declare module "storm:env" {
      * @defaultValue false
      */
     CI: boolean;
-    /**
-     * The configuration file to append the completion script to.
-     *
-     * @title CONFIG
-     * @domain cli
-     */
-    CONFIG?: string | true;
     /**
      * The Storm Stack application's configuration data directory.
      *
@@ -2110,7 +2088,7 @@ declare module "storm:env" {
      * The default locale to be used in the application.
      *
      * @title DEFAULT LOCALE
-     * @defaultValue en-US
+     * @defaultValue en_US
      */
     DEFAULT_LOCALE: string;
     /**
@@ -2124,7 +2102,6 @@ declare module "storm:env" {
      * A variable that specifies the [Devenv](https://devenv.sh/) runtime directory.
      *
      * @title Devenv RUNTIME
-     * @defaultValue /run/user/1001/devenv-a024b62
      */
     DEVENV_RUNTIME: string;
     /**
@@ -2132,7 +2109,7 @@ declare module "storm:env" {
      *
      * @title ENVIRONMENT
      * @alias ENVIRONMENT
-     * @defaultValue cli
+     * @defaultValue production
      */
     ENV: string;
     /**
@@ -2140,21 +2117,20 @@ declare module "storm:env" {
      *
      * @title ENVIRONMENT
      * @alias ENV
-     * @defaultValue cli
+     * @defaultValue production
      */
     ENVIRONMENT: string;
     /**
      * A web page to lookup error messages and display additional information given an error code.
      *
      * @title Error Details URL
-     * @defaultValue https://developer.stormsoftware.com/static/errors
      */
     ERROR_URL: string;
     /**
      * An indicator that specifies the current runtime is a force color environment.
      *
      * @title FORCE COLOR
-     * @defaultValue true
+     * @defaultValue false
      */
     FORCE_COLOR: boolean | number;
     /**
@@ -2165,28 +2141,12 @@ declare module "storm:env" {
      */
     FORCE_HYPERLINK: boolean | number;
     /**
-     * Show help information.
-     *
-     * @title HELP
-     * @domain cli
-     * @defaultValue false
-     */
-    HELP: boolean;
-    /**
      * Indicates if error data should be included.
      *
      * @title INCLUDE ERROR DATA
      * @defaultValue false
      */
     INCLUDE_ERROR_DATA: boolean;
-    /**
-     * The inverse of the no-interactive option.
-     *
-     * @title INTERACTIVE
-     * @domain cli
-     * @defaultValue true
-     */
-    INTERACTIVE: boolean;
     /**
      * The Storm Stack application's logging directory.
      *
@@ -2212,25 +2172,9 @@ declare module "storm:env" {
      *
      * @title MODE
      * @alias NODE_ENV
-     * @defaultValue development
+     * @defaultValue production
      */
     MODE: "development" | "staging" | "production";
-    /**
-     * The name of the library.
-     *
-     * @title NAME
-     * @domain cli
-     * @defaultValue storm-stack
-     */
-    NAME: string;
-    /**
-     * Hide the banner displayed while running the CLI application (will be set to true if running in a CI pipeline).
-     *
-     * @title NO BANNER
-     * @domain cli
-     * @defaultValue false
-     */
-    NO_BANNER: boolean;
     /**
      * An indicator that specifies the current runtime is a no color environment.
      *
@@ -2239,29 +2183,11 @@ declare module "storm:env" {
      */
     NO_COLOR: boolean;
     /**
-     * Disable interactive mode (will be set to true if running in a CI pipeline).
-     *
-     * @title NO INTERACTIVE
-     * @alias NO_INTERACTIVE
-     * @domain cli
-     * @defaultValue false
-     */
-    NO_INTERACT: boolean;
-    /**
-     * Disable interactive mode (will be set to true if running in a CI pipeline).
-     *
-     * @title NO INTERACTIVE
-     * @alias NO_INTERACT
-     * @domain cli
-     * @defaultValue false
-     */
-    NO_INTERACTIVE: boolean;
-    /**
      * The mode in which the application is running.
      *
      * @title MODE
      * @alias MODE
-     * @defaultValue development
+     * @defaultValue production
      */
     NODE_ENV: "development" | "staging" | "production";
     /**
@@ -2269,7 +2195,6 @@ declare module "storm:env" {
      *
      * @title ORGANIZATION
      * @alias ORGANIZATION
-     * @defaultValue storm-software
      */
     ORG: string;
     /**
@@ -2277,7 +2202,6 @@ declare module "storm:env" {
      *
      * @title ORGANIZATION
      * @alias ORG
-     * @defaultValue storm-software
      */
     ORGANIZATION: string;
     /**
@@ -2290,47 +2214,16 @@ declare module "storm:env" {
     */
     OUTPUT_MODE: "memory" | "fs";
     /**
-     * The name of the library.
-     *
-     * @title PACKAGE NAME
-     * @domain cli
-     */
-    PACKAGE_NAME?: string;
-    /**
      * The platform for which the application was built.
      *
      * @title PLATFORM
-     * @defaultValue node
+     * @defaultValue neutral
      */
     PLATFORM: "node" | "neutral" | "browser";
-    /**
-     * The root directory of the Storm Stack project.
-     *
-     * @title ROOT
-     * @alias ROOT
-     * @domain cli
-     */
-    PROJECT?: string;
-    /**
-     * The root directory of the Storm Stack project.
-     *
-     * @title ROOT
-     * @alias PROJECT
-     * @domain cli
-     */
-    ROOT?: string;
-    /**
-     * The path to write the completion script to.
-     *
-     * @title SCRIPT
-     * @domain cli
-     */
-    SCRIPT?: string | true;
     /**
      * The DSN for Sentry
      *
      * @title SENTRY Data Source Name
-     * @defaultValue https://422613d2ab720f78a55b0a668d900535@o4506752415301632.ingest.us.sentry.io/4509857043709952
      */
     SENTRY_DSN: string;
     /**
@@ -2353,22 +2246,6 @@ declare module "storm:env" {
      * @defaultValue false
      */
     TEST: boolean;
-    /**
-     * Enable verbose output.
-     *
-     * @title VERBOSE
-     * @domain cli
-     * @defaultValue false
-     */
-    VERBOSE: boolean;
-    /**
-     * Show the version of the application.
-     *
-     * @title VERSION
-     * @domain cli
-     * @defaultValue false
-     */
-    VERSION: boolean;
     /**
      * The appcircle build ID. This value is set by certain CI/CD systems.
      *
@@ -2394,7 +2271,6 @@ declare module "storm:env" {
      * The name of the application.
      *
      * @title APP NAME
-     * @defaultValue storm-stack
      * @readonly
      */
     readonly APP_NAME: string;
@@ -2402,7 +2278,7 @@ declare module "storm:env" {
      * The version of the application.
      *
      * @title APP VERSION
-     * @defaultValue 0.26.0
+     * @defaultValue 1.0.0
      * @readonly
      */
     readonly APP_VERSION: string;
@@ -2459,7 +2335,6 @@ declare module "storm:env" {
      * A checksum hash created during the build.
      *
      * @title BUILD CHECKSUM
-     * @defaultValue RBNvo1WzZ4oRRq0W9-hknpT7T8If536D
      * @readonly
      */
     readonly BUILD_CHECKSUM: string;
@@ -2467,7 +2342,6 @@ declare module "storm:env" {
      * The unique identifier for the build.
      *
      * @title BUILD Identifier
-     * @defaultValue 288e2946-fce7-49ef-a6ac-009884d90916
      * @readonly
      */
     readonly BUILD_ID: string;
@@ -2475,7 +2349,6 @@ declare module "storm:env" {
      * The timestamp the build was ran at.
      *
      * @title BUILD TIMESTAMP
-     * @defaultValue 2025-09-12T05:46:32.034Z
      * @readonly
      */
     readonly BUILD_TIMESTAMP: string;
@@ -2546,7 +2419,6 @@ declare module "storm:env" {
      * The color terminal type. This variable is set by certain terminal emulators.
      *
      * @title COLORTERM
-     * @defaultValue truecolor
      * @readonly
      */
     readonly COLORTERM: string;
@@ -2708,7 +2580,6 @@ declare module "storm:env" {
      * The unique identifier for the release.
      *
      * @title RELEASE Identifier
-     * @defaultValue 8e2946fc-e7e9-4fa6-ac00-9884d90916e9
      * @readonly
      */
     readonly RELEASE_ID: string;
@@ -2716,7 +2587,6 @@ declare module "storm:env" {
      * The tag for the release. This is generally in the format of "\<APP_NAME\>\@\<APP_VERSION\>".
      *
      * @title RELEASE TAG
-     * @defaultValue storm-stack@0.26.0
      * @readonly
      */
     readonly RELEASE_TAG: string;
@@ -2809,7 +2679,6 @@ declare module "storm:env" {
      * The terminal type. This variable is set by certain CI/CD systems.
      *
      * @title TERM
-     * @defaultValue xterm-256color
      * @readonly
      */
     readonly TERM: string;
@@ -2908,7 +2777,6 @@ declare module "storm:env" {
      * A variable that specifies the runtime directory on Linux systems using the XDG base directory specification.
      *
      * @title Cross-Desktop Group RUNTIME DIR
-     * @defaultValue /run/user/1001
      * @readonly
      */
     readonly XDG_RUNTIME_DIR: string;

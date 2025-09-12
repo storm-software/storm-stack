@@ -16,6 +16,8 @@
 
  ------------------------------------------------------------------- */
 
+import type { GeneratorOptions, GeneratorResult } from "@babel/generator";
+import _generate from "@babel/generator";
 import type { ParseResult, ParserOptions } from "@babel/parser";
 import { parse } from "@babel/parser";
 import type * as t from "@babel/types";
@@ -39,3 +41,25 @@ export function parseAst(
     ...opts
   });
 }
+
+let generate = _generate;
+if ("default" in generate) {
+  generate = generate.default as typeof generate;
+}
+
+export type GenerateFromAstOptions = GeneratorOptions &
+  Required<Pick<GeneratorOptions, "sourceFileName" | "filename">>;
+
+export function generateFromAst(
+  ast: t.Node,
+  opts?: GenerateFromAstOptions
+): GeneratorResult {
+  return generate(
+    ast,
+    opts
+      ? { importAttributesKeyword: "with", sourceMaps: true, ...opts }
+      : undefined
+  );
+}
+
+export type { GeneratorResult } from "@babel/generator";

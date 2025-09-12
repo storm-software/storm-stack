@@ -24,13 +24,13 @@ import { ReactPluginContext } from "../types/plugin";
 export function MetaModule(context: ReactPluginContext) {
   const name = kebabCase(context.options.name).trim().replace(/\s+/g, "");
   const organization =
-    context.options?.organization &&
-    (isSetString(context.options?.organization) ||
-      context.options?.organization?.name)
+    context.options?.workspaceConfig?.organization &&
+    (isSetString(context.options?.workspaceConfig?.organization) ||
+      context.options?.workspaceConfig?.organization?.name)
       ? kebabCase(
-          isSetString(context.options?.organization)
-            ? context.options.organization
-            : context.options?.organization?.name
+          isSetString(context.options?.workspaceConfig?.organization)
+            ? context.options.workspaceConfig.organization
+            : context.options.workspaceConfig?.organization?.name
         )
           ?.trim()
           .replace(/\s+/g, "")

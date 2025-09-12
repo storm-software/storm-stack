@@ -38,9 +38,9 @@ export function resolveUnbuildOptions(
     {
       projectName: context.options.name,
       name: context.options.name,
-      orgName: isObject(context.options.organization)
-        ? context.options.organization.name
-        : context.options.organization,
+      orgName: isObject(context.options.workspaceConfig.organization)
+        ? context.options.workspaceConfig.organization.name
+        : context.options.workspaceConfig.organization,
       projectRoot: context.options.projectRoot,
       outputPath: context.options.output.outputPath || "dist",
       platform: context.options.platform,

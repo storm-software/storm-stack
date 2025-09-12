@@ -29,6 +29,7 @@ import {
   StormEnvInterface,
   StormSecretsInterface
 } from "@storm-stack/core/runtime-types/shared/env";
+import { isParentPath } from "@stryke/path/is-parent-path";
 import { joinPaths } from "@stryke/path/join-paths";
 import { titleCase } from "@stryke/string-format/title-case";
 import { EnvPluginContext } from "../types/plugin";
@@ -218,7 +219,9 @@ export async function reflectEnv(
     const configType = await reflectType(
       context,
       {
-        file: joinPaths(context.options.workspaceConfig.workspaceRoot, file),
+        file: !isParentPath(file, context.options.workspaceConfig.workspaceRoot)
+          ? joinPaths(context.options.workspaceConfig.workspaceRoot, file)
+          : file,
         name
       },
       {
@@ -275,7 +278,9 @@ export async function reflectSecrets(
     const configType = await reflectType(
       context,
       {
-        file: joinPaths(context.options.workspaceConfig.workspaceRoot, file),
+        file: !isParentPath(file, context.options.workspaceConfig.workspaceRoot)
+          ? joinPaths(context.options.workspaceConfig.workspaceRoot, file)
+          : file,
         name
       },
       {

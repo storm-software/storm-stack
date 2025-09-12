@@ -18,3 +18,4 @@
 
 export * from "./capnp";
 export * from "./typescript";
+export * from "./write-output";
