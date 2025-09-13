@@ -88,15 +88,6 @@ const config = defineTsupConfig([
     target: "esnext",
     clean: false,
     noExternal: ["@deepkit/type-compiler"]
-  },
-  {
-    name: "core-scripts",
-    entry: ["scripts/post-install.ts"],
-    outDir: "bin",
-    platform: "node",
-    target: "node22",
-    clean: true,
-    noExternal: ["@storm-stack/core/deepkit/type-compiler"]
   }
 ]);
 
