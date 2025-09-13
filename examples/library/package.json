@@ -10,14 +10,14 @@
   },
   "private": true,
   "dependencies": {
-    "@storm-stack/core": "0.44.1",
+    "@storm-stack/core": "workspace:*",
     "@stryke/json": "catalog:",
     "@stryke/type-checks": "catalog:",
     "@stryke/url": "catalog:"
   },
   "devDependencies": {
-    "@storm-stack/devkit": "0.17.1",
-    "@storm-stack/nx": "0.20.2",
+    "@storm-stack/devkit": "workspace:*",
+    "@storm-stack/nx": "workspace:*",
     "@stryke/types": "catalog:"
   },
   "storm": {
