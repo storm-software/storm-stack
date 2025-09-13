@@ -1,0 +1,11 @@
+{
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "extends": "@storm-stack/tsconfig/base.json",
+  "display": "Storm Stack - Plugin Configuration",
+  "compilerOptions": {
+    "jsx": "preserve",
+    "jsxImportSource": "@alloy-js/core",
+    "lib": ["DOM", "ESNext"],
+    "types": ["node", "@alloy-js/core/testing/matchers"]
+  }
+}

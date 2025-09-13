@@ -193,6 +193,7 @@ overrides:
   "@storm-stack/devkit": workspace:*
   "@storm-stack/biome": workspace:*
   "@storm-stack/tsdoc": workspace:*
+  "@storm-stack/tsconfig": workspace:*
   "@storm-stack/plugin-date": workspace:*
   "@storm-stack/plugin-env": workspace:*
   "@storm-stack/plugin-error": workspace:*

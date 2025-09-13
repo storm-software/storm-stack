@@ -1,0 +1,12 @@
+{
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "extends": "@storm-stack/tsconfig/base.json",
+  "display": "Storm Stack - Recommended Configuration",
+  "compilerOptions": {
+    "verbatimModuleSyntax": false,
+    "strict": true,
+    "noPropertyAccessFromIndexSignature": false
+  },
+  "reflection": true,
+  "reflectionLevel": "minimal"
+}

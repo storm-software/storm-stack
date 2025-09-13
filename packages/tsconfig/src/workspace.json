@@ -1,0 +1,12 @@
+{
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "extends": "@storm-stack/tsconfig/base.json",
+  "display": "Storm Stack - Workspace Configuration",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "rootDir": ".",
+    "verbatimModuleSyntax": false,
+    "strict": true,
+    "noPropertyAccessFromIndexSignature": false
+  }
+}

@@ -90,6 +90,7 @@
       "@storm-stack/tools-scripts/*": ["tools/scripts/src/*"],
       "@storm-stack/tsdoc": ["packages/tsdoc/src/index.ts"],
       "@storm-stack/tsdoc/*": ["packages/tsdoc/src/*"],
+      "@storm-stack/tsconfig/*": ["packages/tsconfig/src/*"],
       "@storm-stack/types": ["packages/types/src/index.ts"],
       "@storm-stack/types/*": ["packages/types/src/*"],
       "eslint-config-storm-stack": ["packages/eslint-config/src/index.ts"],

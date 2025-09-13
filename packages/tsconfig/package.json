@@ -1,0 +1,73 @@
+{
+  "name": "@storm-stack/biome",
+  "version": "0.1.6",
+  "type": "module",
+  "description": "A shared Biome configuration containing globals used in Storm Stack projects.",
+  "repository": {
+    "type": "github",
+    "url": "https://github.com/storm-software/storm-stack.git",
+    "directory": "packages/biome"
+  },
+  "homepage": "https://stormsoftware.com",
+  "bugs": {
+    "url": "https://stormsoftware.com/support",
+    "email": "support@stormsoftware.com"
+  },
+  "author": {
+    "name": "Storm Software",
+    "email": "contact@stormsoftware.com",
+    "url": "https://stormsoftware.com"
+  },
+  "maintainers": [
+    {
+      "name": "Storm Software",
+      "email": "contact@stormsoftware.com",
+      "url": "https://stormsoftware.com"
+    }
+  ],
+  "contributors": [
+    {
+      "name": "Storm Software",
+      "email": "contact@stormsoftware.com",
+      "url": "https://stormsoftware.com"
+    }
+  ],
+  "funding": {
+    "type": "github",
+    "url": "https://github.com/sponsors/storm-software"
+  },
+  "license": "Apache-2.0",
+  "private": false,
+  "exports": {
+    "./package.json": "./package.json",
+    "./base.json": "./configs/base.json",
+    "./plugin.json": "./configs/plugin.json",
+    "./workspace.json": "./configs/workspace.json",
+    "./recommended.json": "./configs/recommended.json",
+    "./strict.json": "./configs/strict.json"
+  },
+  "files": [
+    "configs/**/*"
+  ],
+  "keywords": [
+    "storm-stack",
+    "storm-software",
+    "typescript",
+    "tsconfig"
+  ],
+  "peerDependencies": {
+    "@storm-software/tsconfig": ">=0.43.15"
+  },
+  "peerDependenciesMeta": {
+    "@storm-software/tsconfig": {
+      "optional": false
+    }
+  },
+  "devDependencies": {
+    "@storm-software/tsconfig": "catalog:"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "sideEffects": false
+}
