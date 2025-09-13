@@ -40,14 +40,18 @@
   "private": false,
   "exports": {
     "./package.json": "./package.json",
-    "./base.json": "./configs/base.json",
-    "./plugin.json": "./configs/plugin.json",
-    "./workspace.json": "./configs/workspace.json",
-    "./recommended.json": "./configs/recommended.json",
-    "./strict.json": "./configs/strict.json"
+    "./base.json": "./base.json",
+    "./plugin.json": "./plugin.json",
+    "./workspace.json": "./workspace.json",
+    "./recommended.json": "./recommended.json",
+    "./strict.json": "./strict.json"
   },
   "files": [
-    "configs/**/*"
+    "./base.json",
+    "./plugin.json",
+    "./workspace.json",
+    "./recommended.json",
+    "./strict.json"
   ],
   "keywords": [
     "storm-stack",

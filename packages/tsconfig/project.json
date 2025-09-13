@@ -10,7 +10,7 @@
         "commands": [
           "pnpm copyfiles LICENSE dist/packages/tsconfig",
           "pnpm copyfiles --up=2 ./packages/tsconfig/*.md ./packages/tsconfig/package.json dist/packages/tsconfig",
-          "pnpm copyfiles --up=3 ./packages/tsconfig/src/*.json dist/packages/tsconfig/configs"
+          "pnpm copyfiles --up=3 ./packages/tsconfig/src/*.json dist/packages/tsconfig"
         ]
       }
     },
