@@ -2,6 +2,16 @@
 
 # Changelog for Storm Stack - Core
 
+## [0.44.1](https://github.com/storm-software/storm-stack/releases/tag/core%400.44.1) (2025-09-13)
+
+### Bug Fixes
+
+- **core:** Remove previous `scripts` build configuration
+  ([f450693b](https://github.com/storm-software/storm-stack/commit/f450693b))
+- **core:** Resolve issue with `dist` folder and `schema`/`scripts` build
+  artifacts
+  ([d5eaf2f2](https://github.com/storm-software/storm-stack/commit/d5eaf2f2))
+
 ## [0.44.0](https://github.com/storm-software/storm-stack/releases/tag/core%400.44.0) (2025-09-12)
 
 ### Features
