@@ -40,12 +40,12 @@
   "private": false,
   "exports": {
     "./package.json": "./package.json",
-    "./config/base.json": "./config/base.json",
-    "./config/recommended.json": "./config/recommended.json"
+    "./base.json": "./base.json",
+    "./recommended.json": "./recommended.json"
   },
   "files": [
-    "config/**/*",
-    "dist/**/*"
+    "./base.json",
+    "./recommended.json"
   ],
   "keywords": [
     "storm-stack",
@@ -57,7 +57,8 @@
   "peerDependencies": {
     "@microsoft/api-extractor": ">=7.52.0",
     "@microsoft/tsdoc": ">=0.15.0",
-    "@microsoft/tsdoc-config": ">=0.17.0"
+    "@microsoft/tsdoc-config": ">=0.17.0",
+    "@storm-software/tsdoc": "*"
   },
   "peerDependenciesMeta": {
     "@microsoft/api-extractor": {
@@ -68,12 +69,13 @@
     },
     "@microsoft/tsdoc-config": {
       "optional": true
+    },
+    "@storm-software/tsdoc": {
+      "optional": false
     }
   },
-  "dependencies": {
-    "@storm-software/tsdoc": "catalog:"
-  },
   "devDependencies": {
+    "@storm-software/tsdoc": "catalog:",
     "@types/node": "catalog:",
     "tsup": "catalog:"
   },

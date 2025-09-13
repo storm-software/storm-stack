@@ -10,7 +10,7 @@
         "commands": [
           "pnpm copyfiles LICENSE dist/packages/tsdoc",
           "pnpm copyfiles --up=2 ./packages/tsdoc/*.md ./packages/tsdoc/package.json dist/packages/tsdoc",
-          "pnpm copyfiles --up=3 ./packages/tsdoc/src/* dist/packages/tsdoc/config"
+          "pnpm copyfiles --up=3 ./packages/tsdoc/src/* dist/packages/tsdoc"
         ]
       }
     },
