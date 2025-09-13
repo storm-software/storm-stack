@@ -2,6 +2,13 @@
 
 # Changelog for Storm Stack - Tsconfig
 
+## [0.3.0](https://github.com/storm-software/storm-stack/releases/tag/tsconfig%400.3.0) (2025-09-13)
+
+### Features
+
+- **tsconfig:** Added `tsconfig` config files to root build directory
+  ([5a264c5e](https://github.com/storm-software/storm-stack/commit/5a264c5e))
+
 ## [0.2.0](https://github.com/storm-software/storm-stack/releases/tag/tsconfig%400.2.0) (2025-09-13)
 
 ### Features

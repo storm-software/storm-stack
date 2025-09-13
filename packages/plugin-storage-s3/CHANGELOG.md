@@ -2,6 +2,18 @@
 
 # Changelog for Storm Stack - Plugin Storage S3
 
+## [0.15.2](https://github.com/storm-software/storm-stack/releases/tag/plugin-storage-s3%400.15.2) (2025-09-13)
+
+### Miscellaneous
+
+- **monorepo:** Update workspace package links
+  ([b8a93cff](https://github.com/storm-software/storm-stack/commit/b8a93cff))
+
+### Updated Dependencies
+
+- Updated devkit to 0.17.2
+- Updated nx to 0.20.3
+
 ## [0.15.1](https://github.com/storm-software/storm-stack/releases/tag/plugin-storage-s3%400.15.1) (2025-09-13)
 
 ### Miscellaneous

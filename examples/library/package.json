@@ -16,8 +16,8 @@
     "@stryke/url": "catalog:"
   },
   "devDependencies": {
-    "@storm-stack/devkit": "workspace:*",
-    "@storm-stack/nx": "workspace:*",
+    "@storm-stack/devkit": "0.17.2",
+    "@storm-stack/nx": "0.20.3",
     "@stryke/types": "catalog:"
   },
   "storm": {
