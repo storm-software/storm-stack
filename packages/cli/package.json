@@ -24,7 +24,7 @@
     "@sentry/core": "catalog:",
     "@sentry/node": "catalog:",
     "@storm-software/config-tools": "catalog:",
-    "@storm-stack/core": "0.44.0",
+    "@storm-stack/core": "workspace:*",
     "@stryke/fs": "catalog:",
     "date-fns": "catalog:",
     "defu": "catalog:",
@@ -32,11 +32,11 @@
     "unstorage": "catalog:"
   },
   "devDependencies": {
-    "@storm-stack/nx": "0.20.1",
-    "@storm-stack/plugin-cli": "0.36.0",
-    "@storm-stack/plugin-log-sentry": "0.31.0",
-    "@storm-stack/plugin-log-storage": "0.26.4",
-    "@storm-stack/plugin-storage-fs": "0.15.4",
+    "@storm-stack/nx": "workspace:*",
+    "@storm-stack/plugin-cli": "workspace:*",
+    "@storm-stack/plugin-log-sentry": "workspace:*",
+    "@storm-stack/plugin-log-storage": "workspace:*",
+    "@storm-stack/plugin-storage-fs": "workspace:*",
     "@types/node": "catalog:"
   },
   "publishConfig": {
