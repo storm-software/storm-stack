@@ -17,7 +17,9 @@
  ------------------------------------------------------------------- */
 
 import { getStormConfig } from "@storm-software/eslint";
+import type { OptionsConfig as BaseOptionsConfig } from "@storm-software/eslint/types";
 import { OptionsTypescript } from "@storm-software/eslint/types";
+import { isSetObject } from "@stryke/type-checks/is-set-object";
 import defu from "defu";
 import type { Linter } from "eslint";
 import type { Awaitable, FlatConfigComposer } from "eslint-flat-config-utils";
@@ -56,8 +58,11 @@ export async function getConfig(
     configs.push(...config);
   }
 
+  const tsdoc = options["tsdoc"];
+  delete options["tsdoc"];
+
   return getStormConfig(
-    defu(options ?? {}, {
+    defu((options as Omit<BaseOptionsConfig, "tsdoc">) ?? {}, {
       typescript: {
         override: {
           "ts/consistent-type-imports": [
@@ -70,11 +75,19 @@ export async function getConfig(
           ]
         }
       } as OptionsTypescript,
-      tsdoc: {
-        configFile: "@storm-stack/tsdoc/config/recommended.json"
-      },
+      tsdoc:
+        tsdoc === false
+          ? false
+          : isSetObject(tsdoc)
+            ? tsdoc
+            : {
+                configFile: `@storm-stack/tsdoc/${tsdoc || "recommended"}.json`
+              },
       globals
     }),
     ...(userConfigs as any[])
   ).append(configs);
 }
+
+export const defineConfig = getConfig;
+export default getConfig;

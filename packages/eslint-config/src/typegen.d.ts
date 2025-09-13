@@ -1481,6 +1481,46 @@ export interface RuleOptions {
    */
   'spaced-comment'?: Linter.RuleEntry<SpacedComment>
   /**
+   * disallow `event.preventDefault` calls inside of async functions
+   * @see https://docs.stormsoftware.com/projects/storm-stack/eslint/plugin/rules/async-prevent-default.md
+   */
+  'storm-stack/async-prevent-default'?: Linter.RuleEntry<[]>
+  /**
+   * Error messages should exist in a JSON file that's shared across the workspace when using Storm Stack
+   * @see https://docs.stormsoftware.com/projects/storm-stack/eslint/plugin/rules/format-error-codes.md
+   */
+  'storm-stack/format-error-codes'?: Linter.RuleEntry<StormStackFormatErrorCodes>
+  /**
+   * Newline after if
+   * @see https://docs.stormsoftware.com/projects/storm-stack/eslint/plugin/rules/if-newline.md
+   */
+  'storm-stack/if-newline'?: Linter.RuleEntry<[]>
+  /**
+   * disallow implicit global variables
+   * @see https://docs.stormsoftware.com/projects/storm-stack/eslint/plugin/rules/no-implicit-globals.md
+   */
+  'storm-stack/no-implicit-globals'?: Linter.RuleEntry<[]>
+  /**
+   * Prefer usage of `StormError` class when using Storm Stack
+   * @see https://docs.stormsoftware.com/projects/storm-stack/eslint/plugin/rules/storm-errors-only.md
+   */
+  'storm-stack/storm-errors-only'?: Linter.RuleEntry<[]>
+  /**
+   * Prefer usage of `StormJSON` class when using Storm Stack
+   * @see https://docs.stormsoftware.com/projects/storm-stack/eslint/plugin/rules/storm-json-only.md
+   */
+  'storm-stack/storm-json-only'?: Linter.RuleEntry<[]>
+  /**
+   * Prefer usage of `StormURL` class when using Storm Stack
+   * @see https://docs.stormsoftware.com/projects/storm-stack/eslint/plugin/rules/storm-urls-only.md
+   */
+  'storm-stack/storm-urls-only'?: Linter.RuleEntry<[]>
+  /**
+   * Enforce top-level functions to be declared with function keyword
+   * @see https://docs.stormsoftware.com/projects/storm-stack/eslint/plugin/rules/top-level-function.md
+   */
+  'storm-stack/top-level-functions'?: Linter.RuleEntry<[]>
+  /**
    * Require or disallow strict mode directives
    * @see https://eslint.org/docs/latest/rules/strict
    */
@@ -3001,6 +3041,11 @@ type SpacedComment = []|[("always" | "never")]|[("always" | "never"), {
     markers?: string[]
     balanced?: boolean
   }
+}]
+// ----- storm-stack/format-error-codes -----
+type StormStackFormatErrorCodes = []|[{
+  
+  codesFile?: string
 }]
 // ----- strict -----
 type Strict = []|[("never" | "global" | "function" | "safe")]

@@ -5,7 +5,7 @@
  This code was released as part of the Storm Stack project. Storm Stack
  is maintained by Storm Software under the Apache-2.0 license, and is
  free for commercial and private use. For more information, please visit
- our licensing page at https://stormsoftware.com/license.
+ our licensing page at https://stormsoftware.com/licenses/projects/storm-stack.
 
  Website:                  https://stormsoftware.com
  Repository:               https://github.com/storm-software/storm-stack
@@ -16,4 +16,4 @@
 
  ------------------------------------------------------------------- */
 
-export * as pluginStormStack from "eslint-plugin-storm-stack";
+export { default as pluginStormStack } from "eslint-plugin-storm-stack";

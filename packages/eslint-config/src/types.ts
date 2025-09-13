@@ -62,9 +62,9 @@ export interface OptionsStormStack extends OptionsFiles, OptionsOverrides {
 /**
  * Additional ESLint configuration options.
  */
-export interface OptionsConfig extends BaseOptionsConfig {
+export interface OptionsConfig extends Omit<BaseOptionsConfig, "tsdoc"> {
   /**
-   * Enable storm-stack rules.
+   * Configure the `storm-stack` linting rules.
    *
    * Requires installing:
    * - `eslint-plugin-storm-stack`
@@ -77,4 +77,14 @@ export interface OptionsConfig extends BaseOptionsConfig {
     | "recommended"
     | "strict"
     | OptionsStormStack;
+
+  /**
+   * Configure the TSDoc linting rules.
+   *
+   * @remarks
+   * Requires installing `@storm-stack/tsdoc`
+   *
+   * @defaultValue "recommended"
+   */
+  "tsdoc"?: boolean | "base" | "recommended" | { configFile?: string };
 }
