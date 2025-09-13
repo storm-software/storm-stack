@@ -844,13 +844,13 @@
     "postinstall": "node ./scripts/post-install.cjs || exit 0"
   },
   "peerDependencies": {
-    "@nuxt/kit": "^4.1.1",
-    "@nuxt/schema": "^4.1.1",
-    "@rspack/cli": "^1.3.8",
-    "@rspack/core": "^1.3.8",
+    "@nuxt/kit": "^4.1.2",
+    "@nuxt/schema": "^4.1.2",
+    "@rspack/cli": "^1.5.3",
+    "@rspack/core": "^1.5.3",
     "@storm-software/tsdoc": "*",
-    "astro": "^5.13.5",
-    "rolldown": "^1.0.0-beta.35",
+    "astro": "^5.13.7",
+    "rolldown": "^1.0.0-beta.37",
     "rollup": "^4.50.1",
     "vite": "^7.1.5",
     "webpack": "^5.101.3"
