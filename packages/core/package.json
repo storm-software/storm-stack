@@ -698,8 +698,6 @@
         "default": "./schemas/*.js"
       }
     },
-    "./workers/config-reflection": "./workers/config-reflection.cjs",
-    "./workers/error-message": "./workers/error-message.cjs",
     "./files/common/*": "./dist/files/common/*",
     "./files/library/*": "./dist/files/library/*",
     "./files/application/*": "./dist/files/application/*",
@@ -821,7 +819,7 @@
   "files": [
     "dist/**/*",
     "schemas/*",
-    "workers/*"
+    "scripts/*"
   ],
   "keywords": [
     "storm-stack",
@@ -843,7 +841,7 @@
   ],
   "scripts": {
     "install": "rm -rf node_modules/typescript || exit 0",
-    "postinstall": "node ./bin/post-install || exit 0"
+    "postinstall": "node ./scripts/post-install.cjs || exit 0"
   },
   "peerDependencies": {
     "@nuxt/kit": "^4.1.1",

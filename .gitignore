@@ -13,8 +13,16 @@ out
 # \!examples/**/.storm
 
 # build
-packages/core/bin
+packages/core/scripts/*.cjs
+packages/core/scripts/*.js
+
+packages/core/schemas/*.js
+packages/core/schemas/*.cjs
+packages/core/schemas/*.d.ts
+packages/core/schemas/*.d.cts
+
 packages/core/runtime-types
+
 examples/**/storm.d.ts
 
 # dependencies

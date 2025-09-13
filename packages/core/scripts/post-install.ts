@@ -27,13 +27,14 @@ import {
   writeDebug,
   writeError,
   writeFatal,
+  writeInfo,
   writeSuccess
 } from "@storm-software/config-tools/logger";
 import { existsSync } from "node:fs";
 import { readFile, writeFile } from "node:fs/promises";
 import { dirname, join, relative } from "node:path";
 
-const to = process.argv[2] || process.cwd();
+const currentWorkingDir = process.argv[2] || process.cwd();
 
 function getPatchId(id: string): string {
   return `deepkit_type_patch_${id}`;
@@ -47,9 +48,9 @@ function getCode(deepkitDistPath: string, varName: string, id: string): string {
     var typeTransformer;
 
     try {
-        typeTransformer = require('@storm-stack/core/deepkit/type-compiler');
+      typeTransformer = require("@storm-stack/core/deepkit/type-compiler");
     } catch (error) {
-        typeTransformer = require(${JSON.stringify(deepkitDistPath)});
+      typeTransformer = require(${JSON.stringify(deepkitDistPath)});
     }
 
     if (typeTransformer) {
@@ -63,7 +64,7 @@ function getCode(deepkitDistPath: string, varName: string, id: string): string {
 
       let alreadyPatched = false;
       for (let fn of ${varName}.before) {
-        if (fn && fn.name === 'deepkitTransformer') {
+        if (fn && fn.name === "deepkitTransformer") {
           alreadyPatched = true;
         }
       }
@@ -82,12 +83,12 @@ function getCode(deepkitDistPath: string, varName: string, id: string): string {
         }
       }
     }
-  } catch (e) {
+  } catch {
     // Do nothing
   }
 
   //${getPatchId(id)}-end
-    `;
+`;
 }
 
 function isPatched(code: string, id: string) {
@@ -111,7 +112,7 @@ function patchGetTransformers(deepkitDistPath: string, code: string): string {
 // The post install is not critical, to avoid any chance that it may hang
 // we will kill this process after 30 seconds.
 const postinstallTimeout = setTimeout(() => {
-  writeError("storm-stack@post-install: Timeout reached.");
+  writeError("storm-stack@post-install: Timeout reached.", { logLevel: "all" });
   process.exit(0);
 }, 30_000);
 
@@ -119,8 +120,15 @@ const postinstallTimeout = setTimeout(() => {
 (async () => {
   const start = new Date();
   try {
+    writeInfo(
+      "storm-stack@post-install: Patching TypeScript package with Deepkit transformer",
+      {
+        logLevel: "all"
+      }
+    );
+
     const typeScriptPath = dirname(
-      require.resolve("typescript", { paths: [join(to, "..")] })
+      require.resolve("typescript", { paths: [join(currentWorkingDir, "..")] })
     );
     const deepkitDistPath = relative(typeScriptPath, __dirname);
 
@@ -144,17 +152,20 @@ const postinstallTimeout = setTimeout(() => {
       await writeFile(file, content);
 
       writeSuccess(
-        `storm-stack@post-install: Injected Deepkit TypeScript transformer at ${file}`
+        `storm-stack@post-install: Injected Deepkit TypeScript transformer at ${file}`,
+        { logLevel: "all" }
       );
     }
   } catch (e) {
     writeError(
-      `storm-stack@post-install: Exception occurred - ${(e as Error)?.message}`
+      `storm-stack@post-install: Exception occurred - ${(e as Error)?.message}`,
+      { logLevel: "all" }
     );
   } finally {
     const end = new Date();
     writeDebug(
-      `storm-stack@post-install: Process took ${end.getTime() - start.getTime()}ms`
+      `storm-stack@post-install: Process took ${end.getTime() - start.getTime()}ms`,
+      { logLevel: "all" }
     );
 
     clearTimeout(postinstallTimeout);
@@ -164,14 +175,16 @@ const postinstallTimeout = setTimeout(() => {
 
 process.on("uncaughtException", e => {
   writeFatal(
-    `storm-stack@post-install: Uncaught Exception occurred - ${e.message}`
+    `storm-stack@post-install: Uncaught Exception occurred - ${e.message}`,
+    { logLevel: "all" }
   );
   process.exit(0);
 });
 
 process.on("unhandledRejection", e => {
   writeFatal(
-    `storm-stack@post-install: Unhandled Rejection occurred - ${(e as Error)?.message}`
+    `storm-stack@post-install: Unhandled Rejection occurred - ${(e as Error)?.message}`,
+    { logLevel: "all" }
   );
   process.exit(0);
 });

@@ -90,7 +90,7 @@ const config = defineTsupConfig([
     noExternal: ["@deepkit/type-compiler"]
   },
   {
-    name: "core-bin",
+    name: "core-scripts",
     entry: ["scripts/post-install.ts"],
     outDir: "bin",
     platform: "node",
