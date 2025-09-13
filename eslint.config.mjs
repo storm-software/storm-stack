@@ -16,11 +16,11 @@
 
  ------------------------------------------------------------------- */
 
-import { getStormConfig } from "@storm-software/eslint";
+import { defineConfig } from "@storm-software/eslint";
 
 Error.stackTraceLimit = Number.POSITIVE_INFINITY;
 
-export default getStormConfig({
+export default defineConfig({
   name: "storm-stack",
   typescript: {
     typeImports: "off"

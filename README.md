@@ -65,10 +65,11 @@ The Storm Stack monorepo contains the [Storm Stack engine](https://www.npmjs.com
   - [Development Tools](#development-tools)
     - [@storm-stack/devkit](#storm-stackdevkit)
     - [@storm-stack/nx](#storm-stacknx)
-    - [@storm-stack/eslint-plugin](#storm-stackeslint-plugin)
-    - [@storm-stack/eslint-config](#storm-stackeslint-config)
+    - [eslint-plugin-storm-stack](#eslint-plugin-storm-stack)
+    - [eslint-config-storm-stack](#eslint-config-storm-stack)
     - [@storm-stack/biome](#storm-stackbiome)
     - [@storm-stack/tsdoc](#storm-stacktsdoc)
+    - [@storm-stack/tsconfig](#storm-stacktsconfig)
 - [Environment Configuration Help](#environment-configuration-help)
 - [Local Development](#local-development)
   - [Build](#build)
@@ -78,7 +79,7 @@ The Storm Stack monorepo contains the [Storm Stack engine](https://www.npmjs.com
   - [Running End-to-End Tests](#running-end-to-end-tests)
   - [Understand your workspace](#understand-your-workspace)
 - [☁ Nx Cloud](#-nx-cloud)
-  - [Distributed Computation Caching & Distributed Task Execution](#distributed-computation-caching--distributed-task-execution)
+  - [Distributed Computation Caching \& Distributed Task Execution](#distributed-computation-caching--distributed-task-execution)
 - [Roadmap](#roadmap)
 - [Contributing](#contributing)
   - [Pull Requests](#pull-requests)
@@ -248,7 +249,7 @@ The following features are included in the package:
 - Nx generators and executors tailored for Storm Stack workflows.
 - Enhanced project graph visualization and dependency management.
 
-### [@storm-stack/eslint-plugin](https://www.npmjs.com/package/@storm-stack/eslint-plugin)
+### [eslint-plugin-storm-stack](https://www.npmjs.com/package/eslint-plugin-storm-stack)
 
 An [ESLint](https://eslint.org/) plugin to enforce code quality and best practices in Storm Stack projects.
 
@@ -257,7 +258,7 @@ The following features are included in the package:
 - Custom ESLint rules for Storm Stack conventions.
 - Integration with shared configuration for consistency across packages.
 
-### [@storm-stack/eslint-config](https://www.npmjs.com/package/@storm-stack/eslint-config)
+### [eslint-config-storm-stack](https://www.npmjs.com/package/eslint-config-storm-stack)
 
 A shared [ESLint](https://eslint.org/) configuration for Storm Stack repositories.
 
@@ -283,6 +284,15 @@ The following features are included in the package:
 
 - Pre-configured TSDoc settings for consistent documentation.
 - Inclusion of required tags and rules for Storm Stack development.
+
+### [@storm-stack/tsconfig](https://www.npmjs.com/package/@storm-stack/tsconfig)
+
+A shared [TypeScript](https://www.typescriptlang.org/) configuration for Storm Stack projects.
+
+The following features are included in the package:
+
+- Pre-configured TypeScript settings for consistent development.
+- Inclusion of required compiler options and rules for Storm Stack development.
 
 <br />
 <div align="center">

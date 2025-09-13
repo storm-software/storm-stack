@@ -2218,8 +2218,9 @@ declare module "storm:env" {
      *
      * @title NAME
      * @domain cli
+     * @defaultValue storm-stack
      */
-    NAME?: string;
+    NAME: string;
     /**
      * Hide the banner displayed while running the CLI application (will be set to true if running in a CI pipeline).
      *
