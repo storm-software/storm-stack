@@ -171,7 +171,7 @@
     "@babel/types": "catalog:",
     "@storm-software/config-tools": "catalog:",
     "@storm-stack/core": "workspace:*",
-    "@storm-stack/devkit": "0.17.2",
+    "@storm-stack/devkit": "workspace:*",
     "@stryke/convert": "catalog:",
     "@stryke/json": "catalog:",
     "@stryke/path": "catalog:",
@@ -179,7 +179,7 @@
     "@stryke/type-checks": "catalog:"
   },
   "devDependencies": {
-    "@storm-stack/nx": "0.20.3",
+    "@storm-stack/nx": "workspace:*",
     "@types/node": "catalog:",
     "tsup": "catalog:"
   },
