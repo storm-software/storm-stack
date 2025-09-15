@@ -2,6 +2,22 @@
 
 # Changelog for Storm Stack - Devkit
 
+## [0.19.0](https://github.com/storm-software/storm-stack/releases/tag/devkit%400.19.0) (2025-09-15)
+
+### Features
+
+- **devkit:** Added template components for reuse in `RenderPlugin` plugins
+  ([62b872ff](https://github.com/storm-software/storm-stack/commit/62b872ff))
+
+### Miscellaneous
+
+- **devkit:** Added logic to check for null render results
+  ([c2784d5b](https://github.com/storm-software/storm-stack/commit/c2784d5b))
+
+### Updated Dependencies
+
+- Updated core to 0.45.0
+
 ## [0.18.0](https://github.com/storm-software/storm-stack/releases/tag/devkit%400.18.0) (2025-09-15)
 
 ### Features

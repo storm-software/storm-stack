@@ -1,6 +1,6 @@
 {
   "name": "@storm-stack/plugin-error",
-  "version": "0.8.2",
+  "version": "0.8.3",
   "type": "module",
   "description": "A package containing a Storm Stack base plugin for managing error messages through an external JSON file.",
   "repository": {
@@ -161,8 +161,8 @@
     "@babel/helper-module-imports": "catalog:",
     "@storm-software/config": "catalog:",
     "@storm-software/config-tools": "catalog:",
-    "@storm-stack/core": "workspace:*",
-    "@storm-stack/devkit": "workspace:*",
+    "@storm-stack/core": "0.45.0",
+    "@storm-stack/devkit": "0.19.0",
     "@stryke/json": "catalog:",
     "@stryke/path": "catalog:",
     "@stryke/string-format": "catalog:"

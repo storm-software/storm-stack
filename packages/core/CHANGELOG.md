@@ -2,6 +2,13 @@
 
 # Changelog for Storm Stack - Core
 
+## [0.45.0](https://github.com/storm-software/storm-stack/releases/tag/core%400.45.0) (2025-09-15)
+
+### Features
+
+- **devkit:** Added template components for reuse in `RenderPlugin` plugins
+  ([62b872ff](https://github.com/storm-software/storm-stack/commit/62b872ff))
+
 ## [0.44.1](https://github.com/storm-software/storm-stack/releases/tag/core%400.44.1) (2025-09-13)
 
 ### Bug Fixes

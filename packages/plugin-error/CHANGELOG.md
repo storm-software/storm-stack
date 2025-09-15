@@ -2,6 +2,18 @@
 
 # Changelog for Storm Stack - Plugin Error
 
+## [0.8.3](https://github.com/storm-software/storm-stack/releases/tag/plugin-error%400.8.3) (2025-09-15)
+
+### Miscellaneous
+
+- **monorepo:** Update workspace package links
+  ([6fc041ad](https://github.com/storm-software/storm-stack/commit/6fc041ad))
+
+### Updated Dependencies
+
+- Updated devkit to 0.19.0
+- Updated core to 0.45.0
+
 ## [0.8.2](https://github.com/storm-software/storm-stack/releases/tag/plugin-error%400.8.2) (2025-09-13)
 
 ### Miscellaneous
