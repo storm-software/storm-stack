@@ -1,6 +1,6 @@
 {
   "name": "@storm-stack/devkit",
-  "version": "0.17.2",
+  "version": "0.18.0",
   "type": "module",
   "description": "A collection of tools and utilities for developing Storm Stack plugins and presets.",
   "repository": {
