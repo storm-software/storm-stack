@@ -2,6 +2,18 @@
 
 # Changelog for Storm Stack - Devkit
 
+## [0.18.0](https://github.com/storm-software/storm-stack/releases/tag/devkit%400.18.0) (2025-09-15)
+
+### Features
+
+- **devkit:** Updated name to `RendererPlugin` and resolved type-check issues
+  ([f3eb2705](https://github.com/storm-software/storm-stack/commit/f3eb2705))
+- **devkit:** Added the `useStormStack` hook to access the current context in
+  template components
+  ([f55ffb1b](https://github.com/storm-software/storm-stack/commit/f55ffb1b))
+- **devkit:** Added the `declareVite` plugin helper factory
+  ([0618eab3](https://github.com/storm-software/storm-stack/commit/0618eab3))
+
 ## [0.17.2](https://github.com/storm-software/storm-stack/releases/tag/devkit%400.17.2) (2025-09-13)
 
 ### Miscellaneous

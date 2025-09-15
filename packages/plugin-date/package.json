@@ -172,7 +172,7 @@
   "dependencies": {
     "@storm-software/config-tools": "catalog:",
     "@storm-stack/core": "workspace:*",
-    "@storm-stack/devkit": "0.17.2",
+    "@storm-stack/devkit": "0.18.0",
     "@stryke/capnp": "catalog:",
     "@stryke/env": "catalog:",
     "@stryke/fs": "catalog:",
@@ -182,7 +182,7 @@
     "@stryke/types": "catalog:"
   },
   "devDependencies": {
-    "@storm-stack/nx": "0.20.3",
+    "@storm-stack/nx": "workspace:*",
     "@types/node": "catalog:",
     "tsup": "catalog:"
   },
