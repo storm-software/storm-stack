@@ -491,7 +491,7 @@ export interface EngineHookFunctions<TContext extends Context = Context> {
     context: TContext,
     sourceFile: SourceFile
   ) => MaybePromise<void>;
-  "prepare:deploy": (context: TContext) => MaybePromise<void>;
+  "prepare:output": (context: TContext) => MaybePromise<void>;
   "prepare:complete": (context: TContext) => MaybePromise<void>;
 
   // Lint - Hooks used during the linting process

@@ -41,6 +41,7 @@ import { BabelPluginItem } from "./babel";
 import { Context } from "./context";
 import { PluginInterface } from "./plugin";
 import { TSConfig } from "./tsconfig";
+import { OutputModeType } from "./vfs";
 
 export type LogFn = (type: LogLevelLabel, ...args: string[]) => void;
 
@@ -194,7 +195,7 @@ export interface OutputConfig {
    *
    * @defaultValue "memory"
    */
-  outputMode?: "memory" | "fs";
+  outputMode?: OutputModeType;
 
   /**
    * The path of the generated runtime declaration file relative to the workspace root.

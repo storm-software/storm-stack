@@ -17,6 +17,8 @@
  ------------------------------------------------------------------- */
 
 export * from "./Output";
+export * from "./RuntimeFile";
 export * from "./SingleLineComment";
+export * from "./SourceFile";
 export * from "./TypescriptFile";
 export * from "./TypescriptFileHeader";

@@ -24,8 +24,8 @@ import { getParsedTypeScriptConfig } from "../../lib/typescript/tsconfig";
 import type { EngineHooks } from "../../types/build";
 import type { Context } from "../../types/context";
 import { prepareConfig } from "./config";
-import { prepareDeploy } from "./deploy";
 import { prepareEntry } from "./entry";
+import { prepareOutput } from "./output";
 import { prepareRuntime } from "./runtime";
 import { prepareTypes } from "./types";
 
@@ -76,7 +76,7 @@ export async function prepare<TContext extends Context = Context>(
     await prepareEntry(context, hooks);
   }
 
-  await prepareDeploy(context, hooks);
+  await prepareOutput(context, hooks);
 
   // Re-resolve the tsconfig to ensure it is up to date
   context.tsconfig = getParsedTypeScriptConfig(

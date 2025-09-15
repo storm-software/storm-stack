@@ -40,13 +40,13 @@ import type { Context } from "../../../types/context";
  * @param hooks - The engine hooks to call during preparation.
  * @returns A promise that resolves when the preparation is complete.
  */
-export async function prepareDeploy(context: Context, hooks: EngineHooks) {
+export async function prepareOutput(context: Context, hooks: EngineHooks) {
   context.log(
     LogLevelLabel.TRACE,
-    `Initializing the deployment configuration for the Storm Stack project.`
+    `Initializing the output configuration for the Storm Stack project.`
   );
 
-  await hooks.callHook("prepare:deploy", context).catch((error: Error) => {
+  await hooks.callHook("prepare:output", context).catch((error: Error) => {
     context.log(
       LogLevelLabel.ERROR,
       `An error occurred while initializing the deployment configuration for the Storm Stack project: ${error.message} \n${error.stack ?? ""}`

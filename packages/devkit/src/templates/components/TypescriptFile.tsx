@@ -18,28 +18,29 @@
 
 import type { Children } from "@alloy-js/core";
 import {
-  ComponentContext,
-  createNamedContext,
-  useContext
+  getContext,
+  Scope,
+  Show,
+  SourceDirectoryContext,
+  splitProps,
+  useContext,
+  useScope
 } from "@alloy-js/core";
 import {
-  SourceFile as BaseSourceFile,
-  SourceFileContext as BaseSourceFileContext,
-  SourceFileProps as BaseSourceFileProps
+  getSourceDirectoryData,
+  ImportStatements,
+  TSModuleScope
 } from "@alloy-js/typescript";
+import { joinPaths } from "@stryke/path/join-paths";
 import { ComponentProps } from "../../types/templates";
+import { TypescriptFileContext } from "../context/typescript-file";
+import { SourceFile, SourceFileProps } from "./SourceFile";
 import { TypescriptFileHeader } from "./TypescriptFileHeader";
 
-export const SourceFileContext: ComponentContext<BaseSourceFileContext> =
-  createNamedContext("@storm-stack/devkit SourceFile");
-
-export function useSourceFile() {
-  return useContext(SourceFileContext)!;
-}
-
-export interface SourceFileProps extends BaseSourceFileProps, ComponentProps {
-  header?: Children;
-}
+export type TypescriptFileProps = Omit<SourceFileProps, "filetype"> &
+  ComponentProps & {
+    header?: Children;
+  };
 
 /**
  * A base component representing a Storm Stack generated Typescript source file.
@@ -47,12 +48,41 @@ export interface SourceFileProps extends BaseSourceFileProps, ComponentProps {
  * @param props - The properties for the source file.
  * @returns The rendered source file component.
  */
-export function TypescriptFile(props: SourceFileProps) {
-  const { header, children } = props;
+export function TypescriptFile(props: TypescriptFileProps) {
+  const [{ outputMode }, rest] = splitProps(props, ["outputMode"]);
+
+  const directoryContext = useContext(SourceDirectoryContext)!;
+  const sdData = getSourceDirectoryData(directoryContext);
+
+  const parent = useScope();
+  const scope = new TSModuleScope(
+    joinPaths(directoryContext.path, props.path),
+    parent
+  );
+  sdData.modules.add(scope);
+
+  const nodeContext = getContext()!;
+  nodeContext.meta ??= {};
+  nodeContext.meta.output = {
+    outputMode
+  };
 
   return (
-    <BaseSourceFile {...props} header={header || <TypescriptFileHeader />}>
-      {children}
-    </BaseSourceFile>
+    <SourceFile
+      header={<TypescriptFileHeader />}
+      {...rest}
+      filetype="typescript">
+      <Show when={scope.importedModules.size > 0}>
+        <ImportStatements records={scope.importedModules} />
+        <hbr />
+        <hbr />
+      </Show>
+      <TypescriptFileContext.Provider
+        value={{
+          scope
+        }}>
+        <Scope value={scope}>{rest.children}</Scope>
+      </TypescriptFileContext.Provider>
+    </SourceFile>
   );
 }

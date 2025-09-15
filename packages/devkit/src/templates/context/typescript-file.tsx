@@ -16,8 +16,20 @@
 
  ------------------------------------------------------------------- */
 
-export { default as LibraryPlugin } from "./library";
-export { default as LogPlugin } from "./log";
-export { default as PluginPlugin } from "./plugin";
-export { default as RenderPlugin } from "./render";
-export { default as StoragePlugin } from "./storage";
+import {
+  ComponentContext,
+  createNamedContext,
+  useContext
+} from "@alloy-js/core";
+import { TSModuleScope } from "@alloy-js/typescript";
+
+export interface TypescriptFileContextInterface {
+  scope: TSModuleScope;
+}
+
+export const TypescriptFileContext: ComponentContext<TypescriptFileContextInterface> =
+  createNamedContext("Storm Stack - Typescript");
+
+export function useTypescriptFile() {
+  return useContext(TypescriptFileContext)!;
+}
