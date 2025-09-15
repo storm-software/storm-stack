@@ -16,7 +16,4 @@
 
  ------------------------------------------------------------------- */
 
-export * from "./babel";
-export * from "./plugins";
-export * from "./templates";
-export * from "./vite";
+export * from "./context";

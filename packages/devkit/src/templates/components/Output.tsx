@@ -16,7 +16,30 @@
 
  ------------------------------------------------------------------- */
 
-export * from "./babel";
-export * from "./plugins";
-export * from "./templates";
-export * from "./vite";
+import {
+  Output as CoreOutput,
+  OutputProps as CoreOutputProps,
+  splitProps
+} from "@alloy-js/core";
+import type { Context } from "@storm-stack/core/types/context";
+import { Context as TemplatesContext } from "../context/context";
+
+export interface OutputProps extends CoreOutputProps {
+  /**
+   * The current Storm Stack process context.
+   */
+  context: Context;
+}
+
+/**
+ * Output component for rendering the Storm Stack plugin's output files via templates.
+ */
+export function Output(props: OutputProps) {
+  const [{ context }, rest] = splitProps(props, ["context"]);
+
+  return (
+    <TemplatesContext.Provider value={context}>
+      <CoreOutput {...rest} />
+    </TemplatesContext.Provider>
+  );
+}

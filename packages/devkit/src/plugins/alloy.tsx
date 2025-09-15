@@ -34,6 +34,7 @@ import {
 import { joinPaths } from "@stryke/path/join-paths";
 import { kebabCase } from "@stryke/string-format/kebab-case";
 import { MaybePromise } from "@stryke/types/base";
+import { Output } from "../templates/components/Output";
 
 /**
  * A base Storm Stack Plugin for using [Alloy Framework](https://alloy-framework.github.io/alloy/) to render runtime modules.
@@ -96,7 +97,7 @@ export default abstract class AlloyPlugin<
 
     await this.writeRuntimeDirectory(
       context,
-      render(rendered, {
+      render(<Output context={context}>{rendered}</Output>, {
         printWidth: 120
       })
     );
