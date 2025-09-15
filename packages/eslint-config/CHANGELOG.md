@@ -2,6 +2,17 @@
 
 # Changelog for Storm Stack - ESLint Config
 
+## [0.16.0](https://github.com/storm-software/storm-stack/releases/tag/eslint-config%400.16.0) (2025-09-13)
+
+### Features
+
+- **eslint-config:** Added the `tsdoc` config type options to preset
+  ([21ce9fba](https://github.com/storm-software/storm-stack/commit/21ce9fba))
+
+### Updated Dependencies
+
+- Updated tsdoc to 0.4.0
+
 ## [0.15.1](https://github.com/storm-software/storm-stack/releases/tag/eslint-config%400.15.1) (2025-09-08)
 
 ### Miscellaneous

@@ -2,6 +2,13 @@
 
 # Changelog for Storm Stack - Devkit
 
+## [0.17.2](https://github.com/storm-software/storm-stack/releases/tag/devkit%400.17.2) (2025-09-13)
+
+### Miscellaneous
+
+- **monorepo:** Update workspace package links
+  ([b8a93cff](https://github.com/storm-software/storm-stack/commit/b8a93cff))
+
 ## [0.17.1](https://github.com/storm-software/storm-stack/releases/tag/devkit%400.17.1) (2025-09-13)
 
 ### Miscellaneous

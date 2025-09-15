@@ -2,6 +2,25 @@
 
 # Changelog for Storm Stack - CLI
 
+## [0.27.2](https://github.com/storm-software/storm-stack/releases/tag/cli%400.27.2) (2025-09-13)
+
+### Miscellaneous
+
+- **monorepo:** Update `pnpm-lock.yaml` file
+  ([a76eb52a](https://github.com/storm-software/storm-stack/commit/a76eb52a))
+- **monorepo:** Added recursive workspace updates to script
+  ([7c8d59bb](https://github.com/storm-software/storm-stack/commit/7c8d59bb))
+- **monorepo:** Update workspace package links
+  ([b8a93cff](https://github.com/storm-software/storm-stack/commit/b8a93cff))
+
+### Updated Dependencies
+
+- Updated plugin-log-storage to 0.26.6
+- Updated plugin-log-sentry to 0.31.2
+- Updated plugin-storage-fs to 0.15.6
+- Updated plugin-cli to 0.36.2
+- Updated nx to 0.20.3
+
 ## [0.27.1](https://github.com/storm-software/storm-stack/releases/tag/cli%400.27.1) (2025-09-13)
 
 ### Bug Fixes

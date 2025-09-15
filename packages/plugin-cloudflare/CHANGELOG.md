@@ -2,6 +2,13 @@
 
 # Changelog for Storm Stack - Plugin Cloudflare
 
+## [0.29.2](https://github.com/storm-software/storm-stack/releases/tag/plugin-cloudflare%400.29.2) (2025-09-13)
+
+### Miscellaneous
+
+- **monorepo:** Update workspace package links
+  ([b8a93cff](https://github.com/storm-software/storm-stack/commit/b8a93cff))
+
 ## [0.29.1](https://github.com/storm-software/storm-stack/releases/tag/plugin-cloudflare%400.29.1) (2025-09-13)
 
 ### Miscellaneous
