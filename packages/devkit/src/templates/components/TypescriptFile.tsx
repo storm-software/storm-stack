@@ -27,7 +27,7 @@ import {
   SourceFileContext as BaseSourceFileContext,
   SourceFileProps as BaseSourceFileProps
 } from "@alloy-js/typescript";
-import { ComponentProps } from "../types/component";
+import { ComponentProps } from "../../types/templates";
 import { TypescriptFileHeader } from "./TypescriptFileHeader";
 
 export const SourceFileContext: ComponentContext<BaseSourceFileContext> =

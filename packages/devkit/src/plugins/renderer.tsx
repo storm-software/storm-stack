@@ -20,7 +20,6 @@ import { OutputDirectory, render } from "@alloy-js/core";
 import { Children } from "@alloy-js/core/jsx-runtime";
 import { LogLevelLabel } from "@storm-software/config-tools/types";
 import { Plugin } from "@storm-stack/core/base/plugin";
-
 import {
   EngineHooks,
   ResolvedEntryTypeDefinition,
@@ -39,7 +38,7 @@ import { Output } from "../templates/components/Output";
 /**
  * A base Storm Stack Plugin for using [Alloy Framework](https://alloy-framework.github.io/alloy/) to render runtime modules.
  */
-export default abstract class AlloyPlugin<
+export default abstract class RendererPlugin<
   TContext extends Context<
     ResolvedOptions,
     { [P in keyof unknown]: ReflectionRecord },

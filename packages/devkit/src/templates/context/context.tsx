@@ -17,17 +17,14 @@
  ------------------------------------------------------------------- */
 
 import type { ComponentContext } from "@alloy-js/core";
-import {
-  createNamedContext,
-  useContext as useContextExternal
-} from "@alloy-js/core";
-import type { Context as BaseContext } from "@storm-stack/core/types/context";
+import { createNamedContext, useContext } from "@alloy-js/core";
+import type { Context as StormStackContext } from "@storm-stack/core/types/context";
 
 /**
  * The Storm Stack context used in template rendering.
  */
-export const Context: ComponentContext<BaseContext> =
-  createNamedContext<BaseContext>("storm-stack");
+export const Context: ComponentContext<StormStackContext> =
+  createNamedContext<StormStackContext>("storm-stack");
 
 /**
  * Hook to access the Storm Stack Context.
@@ -35,11 +32,11 @@ export const Context: ComponentContext<BaseContext> =
  * @returns The Context.
  */
 export function useStormStack() {
-  const context = useContextExternal<BaseContext>(Context)!;
+  const context = useContext<StormStackContext>(Context)!;
 
   if (!context) {
     throw new Error(
-      "Storm Stack - Context is not set. Make sure the component is wrapped in a `Output` component from `@storm-stack/devkit`."
+      "Storm Stack - Context is not set. Make sure this component is wrapped in a `Output` component or being rendered by the `RenderPlugin` from `@storm-stack/devkit`."
     );
   }
 

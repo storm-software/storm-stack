@@ -17,7 +17,7 @@
  ------------------------------------------------------------------- */
 
 import { Prose } from "@alloy-js/core";
-import { ComponentPropsWithChildren } from "../types/component";
+import { ComponentPropsWithChildren } from "../../types/templates";
 
 export type SingleLineCommentVariant =
   | "double-slash"

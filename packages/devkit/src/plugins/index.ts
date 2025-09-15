@@ -16,8 +16,8 @@
 
  ------------------------------------------------------------------- */
 
-export { default as AlloyPlugin } from "./alloy";
 export { default as LibraryPlugin } from "./library";
 export { default as LogPlugin } from "./log";
 export { default as PluginPlugin } from "./plugin";
+export { default as RendererPlugin } from "./renderer";
 export { default as StoragePlugin } from "./storage";

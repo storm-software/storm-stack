@@ -21,3 +21,4 @@ export * from "./helpers";
 export * from "./plugins";
 export * from "./templates";
 export * from "./types";
+export * from "./vite";

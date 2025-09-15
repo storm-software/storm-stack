@@ -17,7 +17,7 @@
  ------------------------------------------------------------------- */
 
 import { Show } from "@alloy-js/core";
-import { ComponentProps } from "../types/component";
+import { ComponentProps } from "../../types/templates";
 import { SingleLineComment } from "./SingleLineComment";
 
 export interface TypescriptFileHeaderProps extends ComponentProps {
