@@ -157,18 +157,19 @@ export default abstract class RenderPlugin<
       `Preparing the entry modules for the Storm Stack project.`
     );
 
-    const result = await renderAsync(
-      context,
-      <OutputEntry context={context}>
-        {await Promise.resolve(this.renderEntry(context))}
-      </OutputEntry>,
-      {
-        mode: "entry",
-        printWidth: 120
-      }
-    );
+    const rendered = await Promise.resolve(this.renderEntry(context));
+    if (rendered) {
+      const result = await renderAsync(
+        context,
+        <OutputEntry context={context}>{rendered}</OutputEntry>,
+        {
+          mode: "entry",
+          printWidth: 120
+        }
+      );
 
-    await this.writeEntryDirectory(context, result.output);
+      await this.writeEntryDirectory(context, result.output);
+    }
   }
 
   /**
@@ -183,18 +184,19 @@ export default abstract class RenderPlugin<
       `Preparing the output modules for the Storm Stack project.`
     );
 
-    const result = await renderAsync(
-      context,
-      <Output context={context}>
-        {await Promise.resolve(this.renderOutput(context))}
-      </Output>,
-      {
-        mode: "output",
-        printWidth: 120
-      }
-    );
+    const rendered = await Promise.resolve(this.renderOutput(context));
+    if (rendered) {
+      const result = await renderAsync(
+        context,
+        <Output context={context}>{rendered}</Output>,
+        {
+          mode: "output",
+          printWidth: 120
+        }
+      );
 
-    await this.writeOutputDirectory(context, result.output);
+      await this.writeOutputDirectory(context, result.output);
+    }
   }
 
   /**
