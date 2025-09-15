@@ -16,6 +16,4 @@
 
  ------------------------------------------------------------------- */
 
-export * from "./babel";
-export * from "./plugins";
-export * from "./vite";
+export * from "./declare-vite";
