@@ -27,9 +27,9 @@ export interface StormStackCLIEnv extends StormSentryLogEnv {
    * - `memory`: Generated source code is stored in a virtual file system to reduce boilerplate.
    * - `fs`: Outputs generated results to the local file system.
    *
-   * @defaultValue "memory"
+   * @defaultValue "virtual"
    */
-  OUTPUT_MODE?: "memory" | "fs";
+  OUTPUT_MODE?: "virtual" | "fs";
 
   /**
    * An indicator used to skip version checks for installed packages.

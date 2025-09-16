@@ -58,8 +58,8 @@ export async function getConfig(
     configs.push(...config);
   }
 
-  const tsdoc = options["tsdoc"];
-  delete options["tsdoc"];
+  const tsdoc = options.tsdoc;
+  delete options.tsdoc;
 
   return getStormConfig(
     defu((options as Omit<BaseOptionsConfig, "tsdoc">) ?? {}, {
