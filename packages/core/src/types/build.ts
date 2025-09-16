@@ -103,11 +103,9 @@ export type BaseResolvedOptions<
   Omit<
     TUserConfig,
     | "name"
-    | "templates"
     | "mode"
     | "environment"
     | "name"
-    | "templates"
     | "mode"
     | "environment"
     | "platform"
@@ -126,7 +124,6 @@ export type BaseResolvedOptions<
     Pick<
       TUserConfig,
       | "name"
-      | "templates"
       | "mode"
       | "environment"
       | "platform"
@@ -161,19 +158,9 @@ export type BaseResolvedOptions<
     variant: NonUndefined<TUserConfig["variant"]>;
 
     /**
-     * The type of project being built.
-     */
-    projectType: NonUndefined<TUserConfig["type"]>;
-
-    /**
      * The root directory of the workspace
      */
     workspaceRoot: NonUndefined<WorkspaceConfig["workspaceRoot"]>;
-
-    /**
-     * The root directory of the project.
-     */
-    projectRoot: NonUndefined<TUserConfig["root"]>;
 
     /**
      * The root directory of the project's source code
@@ -181,6 +168,16 @@ export type BaseResolvedOptions<
      * @defaultValue "\{projectRoot\}/src"
      */
     sourceRoot: NonUndefined<TUserConfig["sourceRoot"]>;
+
+    /**
+     * The root directory of the project.
+     */
+    projectRoot: NonUndefined<TUserConfig["root"]>;
+
+    /**
+     * The type of project being built.
+     */
+    projectType: NonUndefined<TUserConfig["type"]>;
 
     /**
      * The Babel configuration options to use for the build process

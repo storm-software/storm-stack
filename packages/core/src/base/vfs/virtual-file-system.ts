@@ -878,7 +878,7 @@ export class VirtualFileSystem implements VirtualFileSystemInterface {
 
     const _options = defu(isSetString(options) ? {} : (options ?? {}), {
       encoding: isSetString(options) ? options : "utf8",
-      outputMode: "memory"
+      outputMode: "virtual"
     }) as WriteFileOptions;
 
     this.#log(
@@ -923,7 +923,7 @@ export class VirtualFileSystem implements VirtualFileSystemInterface {
 
     const _options = defu(isSetString(options) ? {} : (options ?? {}), {
       encoding: isSetString(options) ? options : "utf8",
-      outputMode: "memory"
+      outputMode: "virtual"
     }) as WriteFileOptions;
 
     this.#log(
@@ -1473,7 +1473,7 @@ export class VirtualFileSystem implements VirtualFileSystemInterface {
     options: ResolveFSOptions = {}
   ): IFS {
     const outputMode = this.resolveOutputMode(pathOrUrl, options);
-    if (outputMode === "memory") {
+    if (outputMode === "virtual") {
       return this.#virtualFS as any;
     } else if (outputMode === "fs") {
       return this.#fs;
@@ -1494,11 +1494,11 @@ export class VirtualFileSystem implements VirtualFileSystemInterface {
     options: ResolveFSOptions = {}
   ): OutputModeType | null {
     if (
-      options.outputMode === "memory" &&
+      options.outputMode === "virtual" &&
       this.#context.options.output.outputMode !== "fs" &&
       isParentPath(toFilePath(pathOrUrl), this.#context.artifactsPath)
     ) {
-      return "memory";
+      return "virtual";
     } else if (
       options.outputMode === "fs" ||
       this.#context.options.output.outputMode === "fs" ||

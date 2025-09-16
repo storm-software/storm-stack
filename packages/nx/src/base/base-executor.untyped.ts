@@ -52,21 +52,28 @@ export default defineUntypedSchema({
       description: "Skip installing dependencies during prepare stage"
     }
   },
+  skipCache: {
+    $schema: {
+      title: "Skip Cache",
+      type: "boolean",
+      description:
+        "Skip the caching mechanism during the build process (if required)"
+    }
+  },
   logLevel: {
     $schema: {
       title: "Log Level",
       type: "string",
       description: "The log level to use for the build process",
       enum: [
-        "error",
-        "success",
-        "silent",
         "fatal",
+        "error",
         "warn",
+        "success",
         "info",
         "debug",
         "trace",
-        "all"
+        "silent"
       ]
     }
   }

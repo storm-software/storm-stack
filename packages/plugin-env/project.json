@@ -4,8 +4,54 @@
   "projectType": "library",
   "sourceRoot": "packages/plugin-env/src",
   "targets": {
+    "clean": {
+      "executor": "@storm-stack/nx:clean"
+    },
+    "prepare": {
+      "cache": true,
+      "inputs": ["typescript", "^production"],
+      "outputs": ["{projectRoot}/.storm"],
+      "dependsOn": ["^build"],
+      "executor": "@storm-stack/nx:prepare",
+      "defaultConfiguration": "production",
+      "configurations": {
+        "production": {
+          "mode": "production"
+        },
+        "staging": {
+          "mode": "staging"
+        },
+        "development": {
+          "mode": "development",
+          "skipCache": true,
+          "logLevel": "trace"
+        }
+      }
+    },
+    "build": {
+      "cache": true,
+      "inputs": ["typescript", "^production"],
+      "outputs": ["{options.outputPath}"],
+      "executor": "@storm-stack/nx:build",
+      "dependsOn": ["prepare"],
+      "defaultConfiguration": "production",
+      "configurations": {
+        "production": {
+          "mode": "production"
+        },
+        "staging": {
+          "mode": "staging"
+        },
+        "development": {
+          "mode": "development",
+          "skipCache": true,
+          "logLevel": "trace"
+        }
+      }
+    },
     "nx-release-publish": {
       "executor": "@storm-software/workspace-tools:npm-publish"
     }
-  }
+  },
+  "implicitDependencies": ["nx"]
 }

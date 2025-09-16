@@ -16,6 +16,7 @@
 
  ------------------------------------------------------------------- */
 
+import { formatLogMessage } from "@storm-software/config-tools/logger/console";
 import { LogLevelLabel } from "@storm-software/config-tools/types";
 import { joinPaths } from "@stryke/path/join-paths";
 import { defaultEnvironmentName } from "../../../lib/config";
@@ -107,6 +108,6 @@ export async function initOptions(context: Context, hooks: EngineHooks) {
 
   context.log(
     LogLevelLabel.TRACE,
-    "Initialized the processing options for the Storm Stack project."
+    `Initialized the processing options for the Storm Stack project: \n\n${formatLogMessage(context.options)}`
   );
 }

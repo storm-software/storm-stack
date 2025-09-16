@@ -37,28 +37,27 @@
       "description": "Skip installing dependencies during prepare stage",
       "id": "#skipInstalls"
     },
-    "logLevel": {
-      "title": "Log Level",
-      "type": "string",
-      "description": "The log level to use for the build process",
-      "enum": [
-        "error",
-        "success",
-        "silent",
-        "fatal",
-        "warn",
-        "info",
-        "debug",
-        "trace",
-        "all"
-      ],
-      "id": "#logLevel"
-    },
     "skipCache": {
       "title": "Skip Cache",
       "type": "boolean",
       "description": "Skip the cache when building",
       "id": "#skipCache"
+    },
+    "logLevel": {
+      "title": "Log Level",
+      "type": "string",
+      "description": "The log level to use for the build process",
+      "enum": [
+        "fatal",
+        "error",
+        "warn",
+        "success",
+        "info",
+        "debug",
+        "trace",
+        "silent"
+      ],
+      "id": "#logLevel"
     },
     "clean": {
       "title": "Clean",

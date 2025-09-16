@@ -44,22 +44,22 @@ export interface StormStackPrepareExecutorSchema {
  skipInstalls?: boolean,
 
  /**
-  * Log Level
-  * 
-  * The log level to use for the build process
-  * 
-  * 
-  * @enum error,success,silent,fatal,warn,info,debug,trace,all
- */
- logLevel?: string,
-
- /**
   * Skip Cache
   * 
   * Skip the cache when building
   * 
  */
  skipCache?: boolean,
+
+ /**
+  * Log Level
+  * 
+  * The log level to use for the build process
+  * 
+  * 
+  * @enum fatal,error,warn,success,info,debug,trace,silent
+ */
+ logLevel?: string,
 
  /**
   * Clean

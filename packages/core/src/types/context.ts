@@ -222,11 +222,6 @@ export interface Context<
   cachePath: string;
 
   /**
-   * The runtime file generation template files discovered
-   */
-  templates: string[];
-
-  /**
    * The Storm Stack environment paths
    */
   envPaths: EnvPaths;

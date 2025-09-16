@@ -16,11 +16,10 @@
 
  ------------------------------------------------------------------- */
 
+import type { OutputProps as OutputPropsExternal } from "@alloy-js/core";
 import {
   Output as OutputExternal,
-  OutputProps as OutputPropsExternal,
-  Ref,
-  ref,
+  shallowReactive,
   splitProps
 } from "@alloy-js/core";
 import type { Context } from "@storm-stack/core/types/context";
@@ -41,10 +40,10 @@ export function Output(props: OutputProps) {
     "context",
     "basePath"
   ]);
-  const contextRef = ref(context);
+  const contextRef = shallowReactive(context);
 
   return (
-    <StormStackContext.Provider value={contextRef as Ref<Context>}>
+    <StormStackContext.Provider value={contextRef}>
       <OutputExternal
         {...rest}
         basePath={basePath || context.options.workspaceRoot}
@@ -59,24 +58,16 @@ export type OutputRuntimeProps = Omit<OutputProps, "basePath">;
  * Output component for rendering the Storm Stack plugin's runtime files via templates.
  */
 export function OutputRuntime(props: OutputRuntimeProps) {
-  return (
-    <Output
-      {...props}
-      context={props.context}
-      basePath={props.context.runtimePath}
-    />
-  );
+  const [{ context }, rest] = splitProps(props, ["context"]);
+
+  return <Output {...rest} context={context} basePath={context.runtimePath} />;
 }
 
 /**
  * Output component for rendering the Storm Stack plugin's entry files via templates.
  */
 export function OutputEntry(props: OutputRuntimeProps) {
-  return (
-    <Output
-      {...props}
-      context={props.context}
-      basePath={props.context.entryPath}
-    />
-  );
+  const [{ context }, rest] = splitProps(props, ["context"]);
+
+  return <Output {...rest} context={context} basePath={context.entryPath} />;
 }

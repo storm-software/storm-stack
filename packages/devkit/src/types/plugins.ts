@@ -63,22 +63,43 @@ export type StoragePluginContext<
   TEntry
 >;
 
-export interface AlloyOptions {
-  templates?: string;
+export interface PluginRenderOptions {
+  /**
+   * The files/directories that contain the plugin's templates for rendering.
+   *
+   * @remarks
+   * This can be a single directory or an array of directories. The directories will be searched in order for template files.
+   *
+   * @defaultValue "\{sourceRoot\}/templates/**\/*.\{ts,tsx\}"
+   */
+  templates?: string | string[];
 }
 
 export interface PluginPluginOptions extends PluginBaseOptions {
   /**
-   * The options applied to the [Alloy framework](https://alloy-framework.github.io/alloy/) for processing templates.
+   * The options applied to the [Alloy framework](https://alloy-framework.github.io/alloy/) for rendering templates.
    *
    * @remarks
-   * If set to `false`, the Alloy processing step will be skipped. By default, this is set to `undefined`, which enables Alloy with its default settings.
+   * If set to `false`, the Alloy processing step will be skipped. If set to `true`, the Alloy processing step will be enabled with its default settings.
+   *
+   * @defaultValue false
    */
-  alloy?: AlloyOptions | false;
+  render?: PluginRenderOptions | boolean;
+}
+
+export interface ResolvedPluginRenderOptions {
+  /**
+   * The files that contain the plugin's templates for rendering.
+   */
+  templates: string[];
+}
+
+export interface ResolvedPluginPluginOptions {
+  render?: ResolvedPluginRenderOptions;
 }
 
 export type PluginPluginResolvedOptions<
-  TOptions extends PluginPluginOptions = PluginPluginOptions
+  TOptions extends ResolvedPluginPluginOptions = ResolvedPluginPluginOptions
 > = TsupResolvedOptions<{ plugin: TOptions }>;
 
 export type PluginPluginContext<

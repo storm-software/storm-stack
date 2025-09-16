@@ -42,15 +42,6 @@ The build mode
 Skip installing dependencies during prepare stage
 
 
-## `logLevel`
-- **Type**: `string`
-
-> Log Level
-
-
-The log level to use for the build process
-
-
 ## `skipCache`
 - **Type**: `boolean`
 
@@ -58,6 +49,15 @@ The log level to use for the build process
 
 
 Skip the cache when building
+
+
+## `logLevel`
+- **Type**: `string`
+
+> Log Level
+
+
+The log level to use for the build process
 
 
 ## `clean`

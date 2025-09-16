@@ -44,22 +44,22 @@ export interface StormStackBuildExecutorSchema {
  skipInstalls?: boolean,
 
  /**
-  * Log Level
-  * 
-  * The log level to use for the build process
-  * 
-  * 
-  * @enum error,success,silent,fatal,warn,info,debug,trace,all
- */
- logLevel?: string,
-
- /**
   * Skip Cache
   * 
   * Skip the cache when building
   * 
  */
  skipCache?: boolean,
+
+ /**
+  * Log Level
+  * 
+  * The log level to use for the build process
+  * 
+  * 
+  * @enum fatal,error,warn,success,info,debug,trace,silent
+ */
+ logLevel?: string,
 
  /**
   * Clean
@@ -70,22 +70,20 @@ export interface StormStackBuildExecutorSchema {
  clean?: boolean,
 
  /**
-  * Entry File
+  * Entry Path(s)
   * 
-  * The entry file or files to build
+  * The entry path(s) for the package
   * 
-  * @default "{sourceRoot}/index.ts"
   * 
-  * @format path
+  * @oneOf [object Object],[object Object]
  */
- entry: string,
+ entry?: any,
 
  /**
   * Skip Lint
   * 
   * Skip the linting process ran prior to the build (if required)
   * 
-  * @default false
  */
  skipLint?: boolean,
 }

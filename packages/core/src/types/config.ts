@@ -193,7 +193,7 @@ export interface OutputConfig {
   /**
    * The format of the output files
    *
-   * @defaultValue "memory"
+   * @defaultValue "virtual"
    */
   outputMode?: OutputModeType;
 
@@ -330,16 +330,6 @@ export interface CommonUserConfig {
    * @defaultValue "\{root\}/src"
    */
   sourceRoot?: string;
-
-  /**
-   * A directory containing override templates used for generating the runtime files.
-   *
-   * @remarks
-   * This option is useful for specifying custom templates for the generated runtime files.
-   *
-   * @defaultValue "\{root\}/templates"
-   */
-  templates?: string;
 
   /**
    * The log level to use for the Storm Stack processes.

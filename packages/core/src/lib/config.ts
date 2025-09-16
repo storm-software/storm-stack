@@ -208,7 +208,6 @@ export async function resolveConfig<
       mode: "production",
       projectType: "application",
       logLevel: "info",
-      templates: joinPaths(resolvedProjectRoot, "templates"),
       isSsrBuild: false,
       isPreview: false,
       babel: {
@@ -231,7 +230,7 @@ export async function resolveConfig<
         resolvedProjectRoot === workspaceConfig.workspaceRoot
           ? "dist"
           : joinPaths("dist", resolvedProjectRoot),
-      outputMode: "memory",
+      outputMode: "virtual",
       assets: [
         {
           input: resolvedProjectRoot,

@@ -17,11 +17,8 @@
  ------------------------------------------------------------------- */
 
 import { LogLevelLabel } from "@storm-software/config-tools/types";
-import { parseTypeDefinition } from "@stryke/convert/parse-type-definition";
-import { isSetString } from "@stryke/type-checks/is-set-string";
 import type { EngineHooks } from "../../../types/build";
 import { Context } from "../../../types/context";
-import { resolveEntry } from "./resolve";
 
 /**
  * Initializes the entry points for the Storm Stack project.
@@ -35,27 +32,6 @@ export async function initEntry(context: Context, hooks: EngineHooks) {
     `Initializing the entry points for the Storm Stack project.`
   );
 
-  if (context.options.projectType === "application" && context.options.entry) {
-    if (isSetString(context.options.entry)) {
-      context.entry = [
-        {
-          ...resolveEntry(context, context.options.entry),
-          input: parseTypeDefinition(context.options.entry)!
-        }
-      ];
-    } else if (
-      Array.isArray(context.options.entry) &&
-      context.options.entry.filter(Boolean).length > 0
-    ) {
-      context.entry = context.options.entry
-        .map(entry => ({
-          ...resolveEntry(context, entry),
-          input: parseTypeDefinition(entry)!
-        }))
-        .filter(Boolean);
-    }
-  }
-
   await hooks.callHook("init:entry", context).catch((error: Error) => {
     context.log(
       LogLevelLabel.ERROR,
@@ -67,4 +43,18 @@ export async function initEntry(context: Context, hooks: EngineHooks) {
       { cause: error }
     );
   });
+
+  context.log(
+    LogLevelLabel.DEBUG,
+    `Storm Stack has initialized ${context.entry.length} entry point(s) for the ${
+      context.options.name
+    } project: \n${context.entry
+      .map(
+        entry =>
+          `- ${entry.input.file || entry.file}${
+            entry.output ? ` -> ${entry.output}` : ""
+          }`
+      )
+      .join(" \n")}`
+  );
 }

@@ -16,20 +16,26 @@
 
  ------------------------------------------------------------------- */
 
-import { defineTsupConfig } from "@storm-stack/tools-config/tsup.shared";
+import { defineConfig } from "@storm-stack/core/define-config";
+import StormStackPluginPlugin from "@storm-stack/devkit/plugins/plugin";
 
-const config = defineTsupConfig({
-  name: "plugin-env",
+export default defineConfig({
   entry: [
     "src/index.ts",
     "src/plugin.ts",
+    "src/templates/*.ts",
     "src/types/*.ts",
     "src/helpers/*.ts",
-    "src/templates/*.ts",
     "src/babel/*.ts"
   ],
-  sourcemap: true,
-  skipNodeModulesBundle: true
+  plugins: [
+    new StormStackPluginPlugin({
+      // render: {
+      //   templates: "src/templates"
+      // }
+    })
+  ],
+  output: {
+    outputMode: "fs"
+  }
 });
-
-export default config;

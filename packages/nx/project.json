@@ -31,7 +31,7 @@
       "inputs": ["typescript", "^production"],
       "outputs": ["{projectRoot}/dist", "{workspaceRoot}/dist/packages/nx"],
       "executor": "nx:run-commands",
-      "dependsOn": ["build-base", "build-untyped"],
+      "dependsOn": ["build-base", "build-untyped", "type-check"],
       "options": {
         "commands": [
           "pnpm copyfiles LICENSE dist/packages/nx",

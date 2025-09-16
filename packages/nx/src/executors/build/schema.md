@@ -42,15 +42,6 @@ The build mode
 Skip installing dependencies during prepare stage
 
 
-## `logLevel`
-- **Type**: `string`
-
-> Log Level
-
-
-The log level to use for the build process
-
-
 ## `skipCache`
 - **Type**: `boolean`
 
@@ -58,6 +49,15 @@ The log level to use for the build process
 
 
 Skip the cache when building
+
+
+## `logLevel`
+- **Type**: `string`
+
+> Log Level
+
+
+The log level to use for the build process
 
 
 ## `clean`
@@ -70,18 +70,17 @@ Automatically clean the project's output artifacts (if required)
 
 
 ## `entry`
-- **Type**: `string`
-- **Default**: `"{sourceRoot}/index.ts"`
+- **Type**: `any`
+- **Default**: `{}`
 
-> Entry File
+> Entry Path(s)
 
 
-The entry file or files to build
+The entry path(s) for the package
 
 
 ## `skipLint`
 - **Type**: `boolean`
-- **Default**: `false`
 
 > Skip Lint
 

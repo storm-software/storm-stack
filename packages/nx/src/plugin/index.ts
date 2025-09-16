@@ -175,6 +175,7 @@ export const createNodesV2: CreateNodesV2<StormStackNxPluginOptions> = [
             executor: "@storm-stack/nx:prepare",
             defaultConfiguration: "production",
             options: {
+              entry: userConfig.entry || "{sourceRoot}/index.ts",
               projectType: projectConfig.projectType || userConfig.type,
               tsconfig,
               skipInstalls: userConfig.skipInstalls,
@@ -248,6 +249,7 @@ export const createNodesV2: CreateNodesV2<StormStackNxPluginOptions> = [
             executor: "@storm-stack/nx:lint",
             defaultConfiguration: "production",
             options: {
+              entry: userConfig.entry || "{sourceRoot}/index.ts",
               projectType: projectConfig.projectType || userConfig.type,
               tsconfig,
               skipInstalls: userConfig.skipInstalls,
@@ -278,6 +280,7 @@ export const createNodesV2: CreateNodesV2<StormStackNxPluginOptions> = [
             executor: "@storm-stack/nx:docs",
             defaultConfiguration: "production",
             options: {
+              entry: userConfig.entry || "{sourceRoot}/index.ts",
               projectType: projectConfig.projectType || userConfig.type,
               tsconfig,
               skipInstalls: userConfig.skipInstalls,

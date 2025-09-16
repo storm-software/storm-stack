@@ -30,6 +30,8 @@ import { removeFile } from "@stryke/fs/remove-file";
 import { resolvePackage } from "@stryke/fs/resolve";
 import { hash } from "@stryke/hash/hash";
 import { hashDirectory } from "@stryke/hash/hash-files";
+import { getUnique } from "@stryke/helpers/get-unique";
+import { hasFileExtension } from "@stryke/path/file-path-fns";
 import { joinPaths } from "@stryke/path/join-paths";
 import { kebabCase } from "@stryke/string-format/kebab-case";
 import { PackageJson } from "@stryke/types/package-json";
@@ -77,13 +79,48 @@ export function getPrefixedProjectRootHash(
     : combined;
 }
 
-export async function discoverTemplates(path: string): Promise<string[]> {
-  const result = await Promise.all([
-    listFiles(joinPaths(path, "**/*.ts")),
-    listFiles(joinPaths(path, "**/*.tsx"))
-  ]);
+async function discoverTemplatePath(path: string): Promise<string[]> {
+  return (
+    await Promise.all([
+      Promise.resolve(/.tsx?$/.test(path) && !path.includes("*") && path),
+      Promise.resolve(!hasFileExtension(path) && joinPaths(path, ".ts")),
+      Promise.resolve(!hasFileExtension(path) && joinPaths(path, ".tsx")),
+      Promise.resolve(
+        !hasFileExtension(path) && listFiles(joinPaths(path, "**/*.ts"))
+      ),
+      Promise.resolve(
+        !hasFileExtension(path) && listFiles(joinPaths(path, "**/*.tsx"))
+      )
+    ])
+  )
+    .flat()
+    .filter(Boolean) as string[];
+}
 
-  return result.flat();
+export async function discoverTemplates(
+  context: Context,
+  paths: string[] = []
+): Promise<string[]> {
+  return getUnique(
+    (
+      await Promise.all([
+        ...paths.map(discoverTemplatePath),
+        discoverTemplatePath(joinPaths(context.options.sourceRoot, "plugin")),
+        discoverTemplatePath(joinPaths(context.envPaths.config, "templates")),
+        discoverTemplatePath(
+          joinPaths(context.options.projectRoot, "templates")
+        )
+      ])
+    )
+      .flat()
+      .reduce((ret, path) => {
+        if (existsSync(path)) {
+          ret.push(path);
+        }
+
+        return ret;
+      }, [] as string[])
+  );
 }
 
 export async function getChecksum(path: string): Promise<string> {
@@ -220,6 +257,7 @@ export async function createContext<
       >[1]
     ),
     meta,
+    entry: [],
     envPaths,
     artifactsPath,
     runtimePath,
@@ -228,7 +266,6 @@ export async function createContext<
     runtimeDtsFilePath: joinPaths(projectRoot, "storm.d.ts"),
     dataPath: joinPaths(envPaths.data, "projects", meta.projectRootHash),
     cachePath: envPaths.cache,
-    templates: [],
     projectJson,
     packageJson,
     runtime: {
@@ -265,14 +302,6 @@ export async function createContext<
   );
 
   context.persistedMeta = await getPersistedMeta(context);
-
-  context.templates = (
-    await Promise.all([
-      discoverTemplates(context.options.templates),
-      discoverTemplates(joinPaths(context.envPaths.config, "templates")),
-      discoverTemplates(joinPaths(projectRoot, "templates"))
-    ])
-  ).flat();
 
   context.runtimeDtsFilePath = context.options.output.dts
     ? context.options.output.dts.startsWith(context.options.workspaceRoot)

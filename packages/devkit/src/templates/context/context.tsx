@@ -16,15 +16,15 @@
 
  ------------------------------------------------------------------- */
 
-import type { ComponentContext, Ref } from "@alloy-js/core";
+import type { ComponentContext, ShallowReactive } from "@alloy-js/core";
 import { createNamedContext, useContext } from "@alloy-js/core";
 import type { Context as BaseContext } from "@storm-stack/core/types/context";
 
 /**
  * The Storm Stack context used in template rendering.
  */
-export const StormStackContext: ComponentContext<Ref<BaseContext>> =
-  createNamedContext<Ref<BaseContext>>("Storm Stack - Context");
+export const StormStackContext: ComponentContext<ShallowReactive<BaseContext>> =
+  createNamedContext<ShallowReactive<BaseContext>>("Storm Stack - Context");
 
 /**
  * Hook to access the Storm Stack Context.
@@ -32,7 +32,7 @@ export const StormStackContext: ComponentContext<Ref<BaseContext>> =
  * @returns The Context.
  */
 export function useStormStack() {
-  const context = useContext<Ref<BaseContext>>(StormStackContext)!;
+  const context = useContext<ShallowReactive<BaseContext>>(StormStackContext)!;
 
   if (!context) {
     throw new Error(

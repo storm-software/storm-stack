@@ -2,9 +2,7 @@
   "id": "#",
   "title": "Storm Stack Build Executor",
   "description": "A type definition for the Storm Stack - Build executor schema",
-  "required": [
-    "entry"
-  ],
+  "required": [],
   "properties": {
     "outputPath": {
       "title": "Output Path",
@@ -39,28 +37,27 @@
       "description": "Skip installing dependencies during prepare stage",
       "id": "#skipInstalls"
     },
-    "logLevel": {
-      "title": "Log Level",
-      "type": "string",
-      "description": "The log level to use for the build process",
-      "enum": [
-        "error",
-        "success",
-        "silent",
-        "fatal",
-        "warn",
-        "info",
-        "debug",
-        "trace",
-        "all"
-      ],
-      "id": "#logLevel"
-    },
     "skipCache": {
       "title": "Skip Cache",
       "type": "boolean",
       "description": "Skip the cache when building",
       "id": "#skipCache"
+    },
+    "logLevel": {
+      "title": "Log Level",
+      "type": "string",
+      "description": "The log level to use for the build process",
+      "enum": [
+        "fatal",
+        "error",
+        "warn",
+        "success",
+        "info",
+        "debug",
+        "trace",
+        "silent"
+      ],
+      "id": "#logLevel"
     },
     "clean": {
       "title": "Clean",
@@ -69,26 +66,34 @@
       "id": "#clean"
     },
     "entry": {
-      "title": "Entry File",
-      "type": "string",
-      "format": "path",
-      "description": "The entry file or files to build",
+      "title": "Entry Path(s)",
+      "description": "The entry path(s) for the package",
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      ],
       "id": "#entry",
-      "default": "{sourceRoot}/index.ts"
+      "type": "any",
+      "default": {}
     },
     "skipLint": {
       "title": "Skip Lint",
       "type": "boolean",
       "description": "Skip the linting process ran prior to the build (if required)",
-      "id": "#skipLint",
-      "default": false
+      "id": "#skipLint"
     }
   },
   "type": "object",
   "default": {
     "outputPath": "dist/{projectRoot}",
     "tsconfig": "{projectRoot}/tsconfig.json",
-    "entry": "{sourceRoot}/index.ts",
-    "skipLint": false
+    "entry": {}
   }
 }

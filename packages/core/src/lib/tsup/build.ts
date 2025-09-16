@@ -17,6 +17,9 @@
  ------------------------------------------------------------------- */
 
 import { build } from "@storm-software/esbuild/build";
+import { ESBuildOptions } from "@storm-software/esbuild/types";
+import { isParentPath } from "@stryke/path/is-parent-path";
+import { joinPaths } from "@stryke/path/join-paths";
 import { isFunction } from "@stryke/type-checks/is-function";
 import defu from "defu";
 import { BuildOptions } from "esbuild";
@@ -37,15 +40,25 @@ export async function tsup(
   context: Context,
   override: Partial<TsupOptions> = {}
 ) {
-  const opts = defu(
+  const options = defu(
+    resolveTsupOptions(context, override),
     {
-      entry: resolveTsupEntryOptions(context, context.entry)
+      entry: Object.fromEntries(
+        Object.entries(resolveTsupEntryOptions(context, context.entry)).map(
+          ([key, value]) => [
+            key,
+            isParentPath(value, context.options.projectRoot)
+              ? value
+              : joinPaths(context.options.projectRoot, value)
+          ]
+        )
+      )
     },
-    resolveTsupOptions(context, override)
-  ) as TsupOptions;
+    context.options.variant === "tsup" ? context.options.override : {}
+  ) as ESBuildOptions;
 
-  await build({
-    ...defu(
+  await build(
+    defu(
       {
         config: false,
         clean: true,
@@ -55,8 +68,8 @@ export async function tsup(
             format: Format;
           }
         ) {
-          if (isFunction(opts.esbuildOptions)) {
-            opts.esbuildOptions(buildOptions, ctx);
+          if (isFunction(options.esbuildOptions)) {
+            options.esbuildOptions(buildOptions, ctx);
           }
 
           buildOptions.alias = defu(
@@ -65,19 +78,11 @@ export async function tsup(
           );
         },
         esbuildPlugins: [
-          resolverPlugin(context, {
-            external: override.external ?? context.options.external,
-            noExternal: override.noExternal ?? context.options.noExternal,
-            skipNodeModulesBundle:
-              override.skipNodeModulesBundle ??
-              context.options.skipNodeModulesBundle
-          }),
+          resolverPlugin(context, options),
           compilerPlugin(context)
         ]
       },
-      opts
-    ),
-    projectRoot: context.options.projectRoot,
-    ...(context.options.variant === "tsup" ? context.options.override : {})
-  });
+      options
+    )
+  );
 }

@@ -26,16 +26,14 @@ export default defineUntypedSchema({
     title: "Storm Stack Build Executor",
     description:
       "A type definition for the Storm Stack - Build executor schema",
-    required: ["entry"]
+    required: []
   },
   entry: {
     $schema: {
-      title: "Entry File",
-      type: "string",
-      format: "path",
-      description: "The entry file or files to build"
-    },
-    $default: "{sourceRoot}/index.ts"
+      title: "Entry Path(s)",
+      description: "The entry path(s) for the package",
+      oneOf: [{ type: "string" }, { type: "array", items: { type: "string" } }]
+    }
   },
   skipLint: {
     $schema: {
@@ -43,7 +41,6 @@ export default defineUntypedSchema({
       type: "boolean",
       description:
         "Skip the linting process ran prior to the build (if required)"
-    },
-    $default: false
+    }
   }
 });

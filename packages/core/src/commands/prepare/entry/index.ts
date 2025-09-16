@@ -33,17 +33,19 @@ import type { Context } from "../../../types/context";
 export async function prepareEntry(context: Context, hooks: EngineHooks) {
   context.log(
     LogLevelLabel.TRACE,
-    `Initializing the reflection data for the Storm Stack project.`
+    "Preparing the entry modules for the Storm Stack project."
   );
 
   await hooks.callHook("prepare:entry", context).catch((error: Error) => {
     context.log(
       LogLevelLabel.ERROR,
-      `An error occurred while initializing the reflection data for the Storm Stack project: ${error.message} \n${error.stack ?? ""}`
+      `An error occurred while preparing the entry modules for the Storm Stack project: ${
+        error.message
+      } \n${error.stack ?? ""}`
     );
 
     throw new Error(
-      "An error occurred while initializing the reflection data for the Storm Stack project",
+      "An error occurred while preparing the entry modules for the Storm Stack project",
       { cause: error }
     );
   });

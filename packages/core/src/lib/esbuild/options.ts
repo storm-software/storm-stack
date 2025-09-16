@@ -23,6 +23,7 @@ import defu from "defu";
 import type { ResolvedEntryTypeDefinition } from "../../types/build";
 import { ESBuildConfig, ESBuildOptions, TsupConfig } from "../../types/config";
 import { Context } from "../../types/context";
+import { resolveEntryInputFile, resolveEntryOutput } from "../entry";
 import { BundleOptions } from "./build";
 
 /**
@@ -34,7 +35,7 @@ import { BundleOptions } from "./build";
  */
 export function resolveEsbuildEntryOptions(
   context: Context,
-  entryPoints: ResolvedEntryTypeDefinition[] | string[]
+  entryPoints: ResolvedEntryTypeDefinition[] | string[] = []
 ): ESBuildOptions["entryPoints"] {
   return entryPoints.reduce(
     (ret, entry) => {
@@ -49,20 +50,8 @@ export function resolveEsbuildEntryOptions(
           context.options.sourceRoot || context.options.projectRoot
         );
       } else {
-        ret[
-          entry.output ||
-            replacePath(
-              entry.input.file,
-              context.options.sourceRoot || context.options.projectRoot
-            ).replace(findFileExtension(entry.input.file) || "", "") ||
-            replacePath(
-              entry.file,
-              context.options.sourceRoot || context.options.projectRoot
-            ).replace(findFileExtension(entry.file) || "", "")
-        ] = replacePath(
-          entry.file,
-          context.options.sourceRoot || context.options.projectRoot
-        );
+        ret[entry.output || resolveEntryOutput(context, entry.input || entry)] =
+          resolveEntryInputFile(context, entry.input || entry);
       }
 
       return ret;

@@ -93,19 +93,23 @@ export function withStormStackExecutor<
 
       const inlineConfig = defu(
         {
+          command,
           root: context.projectsConfigurations.projects[context.projectName]!
             .root,
+          type: context.projectsConfigurations.projects[context.projectName]!
+            .projectType,
           sourceRoot:
             context.projectsConfigurations.projects[context.projectName]!
               .sourceRoot,
+          tsconfig: options.tsconfig,
+          logLevel: options.logLevel,
+          mode: options.mode,
+          skipCache: options.skipCache,
           output: {
             outputPath:
               context.projectsConfigurations.projects[context.projectName]!
                 .targets?.build?.options?.outputPath
-          },
-          type: context.projectsConfigurations.projects[context.projectName]!
-            .projectType,
-          command
+          }
         },
         options
       ) as InlineConfig;

@@ -72,7 +72,7 @@ export interface VirtualRuntimeFile extends VirtualFile {
   id: string;
 }
 
-export type OutputModeType = "fs" | "memory";
+export type OutputModeType = "fs" | "virtual";
 
 export interface ResolveFSOptions {
   outputMode?: OutputModeType;

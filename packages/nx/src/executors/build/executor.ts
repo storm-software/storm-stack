@@ -20,7 +20,6 @@ import { PromiseExecutor } from "@nx/devkit";
 import { BaseExecutorResult } from "@storm-software/workspace-tools/types";
 import { Engine } from "@storm-stack/core/base/engine";
 import { BuildInlineConfig } from "@storm-stack/core/types";
-import { joinPaths } from "@stryke/path/join-paths";
 import defu from "defu";
 import {
   StormStackExecutorContext,
@@ -38,12 +37,10 @@ export async function executorFn(
         entry: context.options.entry,
         clean: context.options.clean,
         skipCache: context.options.skipCache,
-        skipLint: context.options.skipLint
+        skipLint: context.options.skipLint,
+        mode: context.options.mode
       },
-      context.inlineConfig,
-      {
-        entry: joinPaths(context.root, "index.ts")
-      }
+      context.inlineConfig
     ) as BuildInlineConfig
   );
 

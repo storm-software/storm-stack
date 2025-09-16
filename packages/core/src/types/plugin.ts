@@ -63,11 +63,6 @@ export interface PluginBaseOptions {
    * A list of packages that are required by the generated output of the plugin.
    */
   packageDeps?: PluginPackageDependencies;
-
-  // /**
-  //  * An object containing custom renderers that can override the default renderers used by the plugin.
-  //  */
-  // renderers?: Record<string, RendererFunction>;
 }
 
 export type PluginOptions<
