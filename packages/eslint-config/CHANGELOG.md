@@ -2,6 +2,19 @@
 
 # Changelog for Storm Stack - ESLint Config
 
+## [0.16.2](https://github.com/storm-software/storm-stack/releases/tag/eslint-config%400.16.2) (2025-09-16)
+
+### Miscellaneous
+
+- **monorepo:** Format workspace source files
+  ([ea3f761f](https://github.com/storm-software/storm-stack/commit/ea3f761f))
+- **monorepo:** Update workspace package dependencies
+  ([e235de7f](https://github.com/storm-software/storm-stack/commit/e235de7f))
+
+### Updated Dependencies
+
+- Updated tsdoc to 0.5.0
+
 ## [0.16.1](https://github.com/storm-software/storm-stack/releases/tag/eslint-config%400.16.1) (2025-09-15)
 
 ### Miscellaneous

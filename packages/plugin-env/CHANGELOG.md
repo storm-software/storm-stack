@@ -2,6 +2,19 @@
 
 # Changelog for Storm Stack - Plugin Env
 
+## [0.10.0](https://github.com/storm-software/storm-stack/releases/tag/plugin-env%400.10.0) (2025-09-16)
+
+### Features
+
+- **devkit:** Major improvements to `Plugin` development experience
+  ([ed7281f7](https://github.com/storm-software/storm-stack/commit/ed7281f7))
+
+### Updated Dependencies
+
+- Updated devkit to 0.20.0
+- Updated core to 0.46.0
+- Updated nx to 0.21.0
+
 ## [0.9.3](https://github.com/storm-software/storm-stack/releases/tag/plugin-env%400.9.3) (2025-09-15)
 
 ### Miscellaneous

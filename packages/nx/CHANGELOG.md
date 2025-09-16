@@ -2,6 +2,17 @@
 
 # Changelog for Storm Stack - Nx
 
+## [0.21.0](https://github.com/storm-software/storm-stack/releases/tag/nx%400.21.0) (2025-09-16)
+
+### Features
+
+- **devkit:** Major improvements to `Plugin` development experience
+  ([ed7281f7](https://github.com/storm-software/storm-stack/commit/ed7281f7))
+
+### Updated Dependencies
+
+- Updated core to 0.46.0
+
 ## [0.20.3](https://github.com/storm-software/storm-stack/releases/tag/nx%400.20.3) (2025-09-13)
 
 ### Miscellaneous

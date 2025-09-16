@@ -2,6 +2,13 @@
 
 # Changelog for Storm Stack - Tsdoc
 
+## [0.5.0](https://github.com/storm-software/storm-stack/releases/tag/tsdoc%400.5.0) (2025-09-16)
+
+### Features
+
+- **tsdoc:** Added the `core.json` TSDoc configuration file
+  ([bb9daad5](https://github.com/storm-software/storm-stack/commit/bb9daad5))
+
 ## [0.4.0](https://github.com/storm-software/storm-stack/releases/tag/tsdoc%400.4.0) (2025-09-13)
 
 ### Features

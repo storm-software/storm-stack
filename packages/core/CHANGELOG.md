@@ -2,6 +2,13 @@
 
 # Changelog for Storm Stack - Core
 
+## [0.46.0](https://github.com/storm-software/storm-stack/releases/tag/core%400.46.0) (2025-09-16)
+
+### Features
+
+- **devkit:** Major improvements to `Plugin` development experience
+  ([ed7281f7](https://github.com/storm-software/storm-stack/commit/ed7281f7))
+
 ## [0.45.0](https://github.com/storm-software/storm-stack/releases/tag/core%400.45.0) (2025-09-15)
 
 ### Features

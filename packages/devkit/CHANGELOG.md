@@ -2,6 +2,17 @@
 
 # Changelog for Storm Stack - Devkit
 
+## [0.20.0](https://github.com/storm-software/storm-stack/releases/tag/devkit%400.20.0) (2025-09-16)
+
+### Features
+
+- **devkit:** Major improvements to `Plugin` development experience
+  ([ed7281f7](https://github.com/storm-software/storm-stack/commit/ed7281f7))
+
+### Updated Dependencies
+
+- Updated core to 0.46.0
+
 ## [0.19.0](https://github.com/storm-software/storm-stack/releases/tag/devkit%400.19.0) (2025-09-15)
 
 ### Features
