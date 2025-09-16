@@ -23,7 +23,6 @@ import StormStackLogStoragePlugin from "@storm-stack/plugin-log-storage/plugin";
 
 export default defineConfig({
   name: "Storm Stack",
-  skipCache: true,
   plugins: [
     new StormStackCLIPlugin({
       title: {

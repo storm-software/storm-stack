@@ -2044,21 +2044,6 @@ declare module "storm:env" {
    */
   export interface StormEnvBase extends StormEnvInterface {
     /**
-     * ARGV
-     *
-     * @title ARGV
-     * @domain cli
-     */
-    ARGV?: Array<string>;
-    /**
-     * The inverse of the no-banner option.
-     *
-     * @title BANNER
-     * @domain cli
-     * @defaultValue true
-     */
-    BANNER: boolean;
-    /**
      * The Storm Stack application's cached data directory.
      *
      * @title Cache Directory
@@ -2072,13 +2057,6 @@ declare module "storm:env" {
      * @defaultValue false
      */
     CI: boolean;
-    /**
-     * The configuration file to append the completion script to.
-     *
-     * @title CONFIG
-     * @domain cli
-     */
-    CONFIG?: string | true;
     /**
      * The Storm Stack application's configuration data directory.
      *
@@ -2163,28 +2141,12 @@ declare module "storm:env" {
      */
     FORCE_HYPERLINK: boolean | number;
     /**
-     * Show help information.
-     *
-     * @title HELP
-     * @domain cli
-     * @defaultValue false
-     */
-    HELP: boolean;
-    /**
      * Indicates if error data should be included.
      *
      * @title INCLUDE ERROR DATA
      * @defaultValue false
      */
     INCLUDE_ERROR_DATA: boolean;
-    /**
-     * The inverse of the no-interactive option.
-     *
-     * @title INTERACTIVE
-     * @domain cli
-     * @defaultValue true
-     */
-    INTERACTIVE: boolean;
     /**
      * The Storm Stack application's logging directory.
      *
@@ -2214,45 +2176,12 @@ declare module "storm:env" {
      */
     MODE: "development" | "staging" | "production";
     /**
-     * The name of the library.
-     *
-     * @title NAME
-     * @domain cli
-     */
-    NAME?: string;
-    /**
-     * Hide the banner displayed while running the CLI application (will be set to true if running in a CI pipeline).
-     *
-     * @title NO BANNER
-     * @domain cli
-     * @defaultValue false
-     */
-    NO_BANNER: boolean;
-    /**
      * An indicator that specifies the current runtime is a no color environment.
      *
      * @title NO COLOR
      * @defaultValue false
      */
     NO_COLOR: boolean;
-    /**
-     * Disable interactive mode (will be set to true if running in a CI pipeline).
-     *
-     * @title NO INTERACTIVE
-     * @alias NO_INTERACTIVE
-     * @domain cli
-     * @defaultValue false
-     */
-    NO_INTERACT: boolean;
-    /**
-     * Disable interactive mode (will be set to true if running in a CI pipeline).
-     *
-     * @title NO INTERACTIVE
-     * @alias NO_INTERACT
-     * @domain cli
-     * @defaultValue false
-     */
-    NO_INTERACTIVE: boolean;
     /**
      * The mode in which the application is running.
      *
@@ -2285,42 +2214,12 @@ declare module "storm:env" {
     */
     OUTPUT_MODE: "virtual" | "fs";
     /**
-     * The name of the library.
-     *
-     * @title PACKAGE NAME
-     * @domain cli
-     */
-    PACKAGE_NAME?: string;
-    /**
      * The platform for which the application was built.
      *
      * @title PLATFORM
      * @defaultValue neutral
      */
     PLATFORM: "node" | "neutral" | "browser";
-    /**
-     * The root directory of the Storm Stack project.
-     *
-     * @title ROOT
-     * @alias ROOT
-     * @domain cli
-     */
-    PROJECT?: string;
-    /**
-     * The root directory of the Storm Stack project.
-     *
-     * @title ROOT
-     * @alias PROJECT
-     * @domain cli
-     */
-    ROOT?: string;
-    /**
-     * The path to write the completion script to.
-     *
-     * @title SCRIPT
-     * @domain cli
-     */
-    SCRIPT?: string | true;
     /**
      * The DSN for Sentry
      *
@@ -2347,22 +2246,6 @@ declare module "storm:env" {
      * @defaultValue false
      */
     TEST: boolean;
-    /**
-     * Enable verbose output.
-     *
-     * @title VERBOSE
-     * @domain cli
-     * @defaultValue false
-     */
-    VERBOSE: boolean;
-    /**
-     * Show the version of the application.
-     *
-     * @title VERSION
-     * @domain cli
-     * @defaultValue false
-     */
-    VERSION: boolean;
     /**
      * The appcircle build ID. This value is set by certain CI/CD systems.
      *
