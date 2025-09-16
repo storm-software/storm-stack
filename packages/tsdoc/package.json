@@ -41,10 +41,12 @@
   "exports": {
     "./package.json": "./package.json",
     "./base.json": "./base.json",
+    "./core.json": "./core.json",
     "./recommended.json": "./recommended.json"
   },
   "files": [
     "./base.json",
+    "./core.json",
     "./recommended.json"
   ],
   "keywords": [
