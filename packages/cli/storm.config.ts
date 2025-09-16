@@ -16,10 +16,10 @@
 
  ------------------------------------------------------------------- */
 
+import { defineConfig } from "@storm-stack/core/define-config";
 import StormStackCLIPlugin from "@storm-stack/plugin-cli/plugin";
 import StormStackLogSentryPlugin from "@storm-stack/plugin-log-sentry/plugin";
 import StormStackLogStoragePlugin from "@storm-stack/plugin-log-storage/plugin";
-import { defineConfig } from "../core/src/define-config";
 
 export default defineConfig({
   name: "Storm Stack",

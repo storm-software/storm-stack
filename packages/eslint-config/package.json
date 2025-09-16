@@ -105,6 +105,7 @@
     "@storm-software/eslint": "catalog:",
     "@storm-stack/tsdoc": "workspace:*",
     "@stryke/fs": "catalog:",
+    "@stryke/type-checks": "catalog:",
     "defu": "catalog:",
     "eslint-flat-config-utils": "catalog:",
     "eslint-plugin-storm-stack": "workspace:*"

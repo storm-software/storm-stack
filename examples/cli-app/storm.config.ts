@@ -19,9 +19,7 @@
 import { defineConfig } from "@storm-stack/core/define-config";
 
 export default defineConfig({
-  name: "Storm Stack",
-  skipCache: true,
-  skipInstalls: true,
+  name: "Example CLI",
   plugins: [
     [
       "@storm-stack/plugin-date",

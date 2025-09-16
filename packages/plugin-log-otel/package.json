@@ -120,9 +120,9 @@
     }
   },
   "dependencies": {
-    "@storm-stack/core": "0.45.0",
-    "@storm-stack/devkit": "0.19.0",
-    "@storm-stack/plugin-env": "0.9.3",
+    "@storm-stack/core": "workspace:*",
+    "@storm-stack/devkit": "workspace:*",
+    "@storm-stack/plugin-env": "workspace:*",
     "@stryke/json": "catalog:"
   },
   "devDependencies": {

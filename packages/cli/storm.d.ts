@@ -2218,9 +2218,8 @@ declare module "storm:env" {
      *
      * @title NAME
      * @domain cli
-     * @defaultValue storm-stack
      */
-    NAME: string;
+    NAME?: string;
     /**
      * Hide the banner displayed while running the CLI application (will be set to true if running in a CI pipeline).
      *
@@ -2282,9 +2281,9 @@ declare module "storm:env" {
     - `fs`: Outputs generated results to the local file system.
     *
     * @title OUTPUT MODE
-    * @defaultValue memory
+    * @defaultValue virtual
     */
-    OUTPUT_MODE: "memory" | "fs";
+    OUTPUT_MODE: "virtual" | "fs";
     /**
      * The name of the library.
      *
