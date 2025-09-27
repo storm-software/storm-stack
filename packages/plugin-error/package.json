@@ -137,6 +137,34 @@
         "types": "./dist/templates/*.d.ts",
         "default": "./dist/templates/*.js"
       }
+    },
+    "./babel": {
+      "import": {
+        "types": "./dist/babel/index.d.ts",
+        "default": "./dist/babel/index.js"
+      },
+      "require": {
+        "types": "./dist/babel/index.d.cts",
+        "default": "./dist/babel/index.cjs"
+      },
+      "default": {
+        "types": "./dist/babel/index.d.ts",
+        "default": "./dist/babel/index.js"
+      }
+    },
+    "./babel/*": {
+      "import": {
+        "types": "./dist/babel/*.d.ts",
+        "default": "./dist/babel/*.js"
+      },
+      "require": {
+        "types": "./dist/babel/*.d.cts",
+        "default": "./dist/babel/*.cjs"
+      },
+      "default": {
+        "types": "./dist/babel/*.d.ts",
+        "default": "./dist/babel/*.js"
+      }
     }
   },
   "files": [
@@ -161,14 +189,14 @@
     "@babel/helper-module-imports": "catalog:",
     "@storm-software/config": "catalog:",
     "@storm-software/config-tools": "catalog:",
-    "@storm-stack/core": "0.46.0",
-    "@storm-stack/devkit": "0.20.0",
+    "@storm-stack/core": "workspace:*",
+    "@storm-stack/devkit": "workspace:*",
     "@stryke/json": "catalog:",
     "@stryke/path": "catalog:",
     "@stryke/string-format": "catalog:"
   },
   "devDependencies": {
-    "@storm-stack/nx": "0.21.0",
+    "@storm-stack/nx": "workspace:*",
     "@types/node": "catalog:",
     "tsup": "catalog:"
   },

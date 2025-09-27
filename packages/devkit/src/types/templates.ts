@@ -16,22 +16,17 @@
 
  ------------------------------------------------------------------- */
 
-import {
-  ContentOutputFile as ExternalContentOutputFile,
-  CopyOutputFile as ExternalCopyOutputFile,
-  OutputDirectory as ExternalOutputDirectory,
-  OutputFileBase as ExternalOutputFileBase,
-  PrintTreeOptions
-} from "@alloy-js/core";
-import { Children } from "@alloy-js/core/jsx-runtime";
-import { SourceFileContext } from "@alloy-js/typescript";
-import { OutputModeType } from "@storm-stack/core/types/vfs";
+import type { Context } from "@alloy-js/core";
+import type { Children } from "@alloy-js/core/jsx-runtime";
+import type { SourceFileContext } from "@alloy-js/typescript";
+import type { ResolvedEntryTypeDefinition } from "@storm-stack/core/types/build";
+import type { OutputModeType } from "@storm-stack/core/types/vfs";
 
-export type RenderOptions = PrintTreeOptions & {
-  mode?: "runtime" | "entry" | string;
-};
+export interface CopyOutputFile {
+  kind: "file";
+  path: string;
+  sourcePath: string;
 
-export interface OutputFileBase extends ExternalOutputFileBase {
   /**
    * The format of the output files
    *
@@ -41,61 +36,72 @@ export interface OutputFileBase extends ExternalOutputFileBase {
   outputMode?: OutputModeType;
 }
 
-export interface CopyOutputFile
-  extends ExternalCopyOutputFile,
-    OutputFileBase {}
-
-export interface ContentOutputFile
-  extends ExternalContentOutputFile,
-    OutputFileBase {
+export interface WriteOutputFile {
+  kind: "file" | "entry" | "builtin";
+  path: string;
   contents: string;
   filetype: string;
+
+  /**
+   * The format of the output files
+   *
+   * @remarks
+   * If not specified, the output mode will be determined by the provided \`output.outputMode\` value.
+   */
+  outputMode?: OutputModeType;
 }
 
-export type OutputFile = ContentOutputFile | CopyOutputFile;
+export type OutputFile =
+  | (WriteOutputFile & { kind: "file" })
+  | (WriteOutputFile & {
+      kind: "entry";
+      typeDefinition?: ResolvedEntryTypeDefinition;
+    })
+  | (WriteOutputFile & { kind: "builtin"; id: string })
+  | CopyOutputFile;
 
-export interface OutputDirectory extends ExternalOutputDirectory {
+export interface OutputDirectory {
+  kind: "directory";
+  path: string;
   contents: (OutputDirectory | OutputFile)[];
 }
 
-export interface RuntimeOutputFile extends ContentOutputFile {
+export interface RenderEntryContext {
+  typeDefinition: ResolvedEntryTypeDefinition;
+}
+
+export interface RenderBuiltinContext {
   id: string;
 }
 
-export interface RuntimeOutputDirectory extends OutputDirectory {
-  contents: (RuntimeOutputDirectory | RuntimeOutputFile)[];
+export interface RenderOutputContext {
+  outputMode?: OutputModeType;
 }
 
-export interface RenderOutput<
-  TRenderOptions extends RenderOptions = RenderOptions
-> {
-  /**
-   * The rendered runtime modules.
-   *
-   * @remarks
-   * The modules rendered in the `runtime` directory are intended to be built-in modules that can be imported by user code from `"storm:<id>"`.
-   */
-  runtime: RuntimeOutputDirectory;
+export interface CopyFileOutputContext {
+  path?: string;
+  sourcePath?: string;
+}
 
-  /**
-   * The rendered entry modules.
-   *
-   * @remarks
-   * The modules rendered in the `entry` directory are intended to be the main entry points for the application, such as `index.ts` or `main.ts`.
-   */
-  entry: TRenderOptions["mode"] extends "runtime" ? null : OutputDirectory;
+export interface RenderContext extends Context {
+  meta?: {
+    copyFile?: CopyFileOutputContext;
 
-  /**
-   * The rendered output files.
-   *
-   * @remarks
-   * The output files include any additional files that are not part of the runtime or entry modules, such as configuration files, assets, or documentation. These files will have their paths resolved by the workspace root.
-   */
-  output: TRenderOptions["mode"] extends "runtime"
-    ? null
-    : TRenderOptions["mode"] extends "entry"
-      ? null
-      : OutputDirectory;
+    /**
+     * The current context for the built-in module.
+     */
+    builtin?: RenderBuiltinContext;
+
+    /**
+     * The current context for the application entrypoint file being rendered.
+     */
+    entry?: RenderEntryContext;
+
+    /**
+     * The current context for output rendering.
+     */
+    output?: RenderOutputContext;
+  } & Record<string, any>;
 }
 
 /**
@@ -111,9 +117,51 @@ export interface ComponentProps {
 export type ComponentPropsWithChildren = Omit<ComponentProps, "children"> &
   Required<Pick<ComponentProps, "children">>;
 
-export interface RuntimeSourceFileContext extends SourceFileContext {
+export interface BuiltinSourceFileContext extends SourceFileContext {
   /**
    * The runtime module identifier.
    */
   id: string;
+}
+
+export interface ReflectionOverrideInterface<T> {
+  name?: string | Children;
+  type?: string | Children;
+  extends?: string | false;
+  defaultValue?: Partial<T>;
+}
+
+export interface TypescriptFileImportItem {
+  name: string;
+  default?: boolean;
+  alias?: string;
+  type?: boolean;
+}
+
+export type TypescriptFileImports = Record<
+  string,
+  null | Array<TypescriptFileImportItem | string>
+>;
+
+export interface SourceFileHeaderProps extends ComponentProps {
+  /**
+   * If true, disables the ESLint directive at the top of the file.
+   *
+   * @defaultValue true
+   */
+  disableEslint?: boolean;
+
+  /**
+   * If true, disables the Biome directive at the top of the file.
+   *
+   * @defaultValue true
+   */
+  disableBiome?: boolean;
+
+  /**
+   * If true, disables the Prettier directive at the top of the file.
+   *
+   * @defaultValue false
+   */
+  disablePrettier?: boolean;
 }

@@ -18,7 +18,7 @@
 
 import { getFileHeader } from "@storm-stack/core/lib/utilities/file-header";
 import type { PluginOptions } from "@storm-stack/core/types/plugin";
-import StoragePlugin from "@storm-stack/devkit/plugins/storage";
+import { StoragePlugin } from "@storm-stack/devkit/plugins/storage";
 import {
   StorageFileSystemPluginContext,
   StorageFileSystemPluginOptions

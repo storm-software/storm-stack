@@ -1,11 +1,18 @@
 {
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
-    "rootDir": "../../..",
-    "types": ["node"],
-    "strict": false,
-    "outDir": "../../dist/out-tsc"
+    "jsx": "preserve",
+    "jsxImportSource": "@alloy-js/core",
+    "lib": ["esnext", "DOM"],
+    "rootDir": "../..",
+    "module": "esnext",
+    "moduleResolution": "Bundler",
+    "types": ["node", "@alloy-js/core/testing/matchers"],
+    "strict": true,
+    "outDir": "../../dist/out-tsc",
+    "isolatedModules": true
   },
-  "include": ["src/**/*.ts", "bin/**/*.ts", "tsup.config.ts"],
-  "exclude": ["jest.config.ts", "src/**/*.spec.ts", "src/**/*.test.ts"]
+  "include": ["src/**/*.ts", "src/**/*.tsx", "storm.config.ts"],
+  "exclude": ["jest.config.ts", "src/**/*.spec.ts", "src/**/*.test.ts"],
+  "reflection": true
 }

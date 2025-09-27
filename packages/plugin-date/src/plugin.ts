@@ -61,7 +61,7 @@ export default class DatePlugin<
 
     hooks.addHooks({
       "init:options": this.initOptions.bind(this),
-      "prepare:runtime": this.prepareRuntime.bind(this)
+      "prepare:builtins": this.prepareBuiltins.bind(this)
     });
   }
 
@@ -112,7 +112,7 @@ export default class DatePlugin<
    *
    * @param context - The context to initialize.
    */
-  protected async prepareRuntime(context: TContext) {
+  protected async prepareBuiltins(context: TContext) {
     this.log(
       LogLevelLabel.TRACE,
       `Preparing the date runtime artifacts for the Storm Stack project.`
@@ -136,9 +136,9 @@ export default class DatePlugin<
         break;
     }
 
-    await context.vfs.writeRuntimeFile(
+    await context.vfs.writeBuiltinFile(
       "date",
-      joinPaths(context.runtimePath, "date.ts"),
+      joinPaths(context.builtinsPath, "date.ts"),
       await Promise.resolve(dateTemplate(context))
     );
   }

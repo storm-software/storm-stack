@@ -17,5 +17,6 @@
  ------------------------------------------------------------------- */
 
 export * from "./capnp";
-export * from "./create-runtime";
+export * from "./create-builtin";
+export * from "./refkey";
 export * from "./typescript";

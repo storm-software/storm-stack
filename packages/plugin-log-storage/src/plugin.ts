@@ -18,7 +18,7 @@
 
 import { getFileHeader } from "@storm-stack/core/lib/utilities/file-header";
 import type { PluginOptions } from "@storm-stack/core/types/plugin";
-import LogPlugin from "@storm-stack/devkit/plugins/log";
+import { LogPlugin } from "@storm-stack/devkit/plugins/log";
 import { LogStoragePluginContext, LogStoragePluginOptions } from "./types";
 
 export default class LogStoragePlugin<

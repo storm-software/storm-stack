@@ -29,12 +29,12 @@ import {
   addProjectTag,
   setDefaultProjectTags
 } from "@storm-software/workspace-tools/utils/project-tags";
-import { loadUserConfigFile } from "@storm-stack/core/lib/config";
-import { PROJECT_ROOT_HASH_LENGTH } from "@storm-stack/core/lib/context";
+import { PROJECT_ROOT_HASH_LENGTH } from "@storm-stack/core/base/context";
+import { loadUserConfigFile } from "@storm-stack/core/base/options";
 import { getEnvPaths } from "@stryke/env/get-env-paths";
 import { existsSync } from "@stryke/fs/exists";
 import { readJsonFileSync } from "@stryke/fs/json";
-import { hash } from "@stryke/hash/hash";
+import { murmurhash } from "@stryke/hash/murmurhash";
 import { joinPaths } from "@stryke/path/join-paths";
 import { kebabCase } from "@stryke/string-format/kebab-case";
 import { isError } from "@stryke/type-checks/is-error";
@@ -91,7 +91,7 @@ export const createNodesV2: CreateNodesV2<StormStackNxPluginOptions> = [
           const cacheDir = joinPaths(
             envPaths.cache,
             "projects",
-            hash(joinPaths(contextV2.workspaceRoot, projectRoot), {
+            murmurhash(joinPaths(contextV2.workspaceRoot, projectRoot), {
               maxLength: PROJECT_ROOT_HASH_LENGTH
             })
           );
@@ -157,8 +157,8 @@ export const createNodesV2: CreateNodesV2<StormStackNxPluginOptions> = [
               production: {
                 mode: "production"
               },
-              staging: {
-                mode: "staging"
+              test: {
+                mode: "test"
               },
               development: {
                 mode: "development",
@@ -185,8 +185,8 @@ export const createNodesV2: CreateNodesV2<StormStackNxPluginOptions> = [
               production: {
                 mode: "production"
               },
-              staging: {
-                mode: "staging"
+              test: {
+                mode: "test"
               },
               development: {
                 mode: "development",
@@ -228,8 +228,8 @@ export const createNodesV2: CreateNodesV2<StormStackNxPluginOptions> = [
               production: {
                 mode: "production"
               },
-              staging: {
-                mode: "staging"
+              test: {
+                mode: "test"
               },
               development: {
                 mode: "development",
@@ -259,8 +259,8 @@ export const createNodesV2: CreateNodesV2<StormStackNxPluginOptions> = [
               production: {
                 mode: "production"
               },
-              staging: {
-                mode: "staging"
+              test: {
+                mode: "test"
               },
               development: {
                 mode: "development",
@@ -290,8 +290,8 @@ export const createNodesV2: CreateNodesV2<StormStackNxPluginOptions> = [
               production: {
                 mode: "production"
               },
-              staging: {
-                mode: "staging"
+              test: {
+                mode: "test"
               },
               development: {
                 mode: "development",

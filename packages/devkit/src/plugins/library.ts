@@ -32,7 +32,7 @@ import {
  * @remarks
  * This plugin provides the functionality to build Storm Stack library packages using Unbuild. It extends the {@link Plugin} class and adds hooks for the build process.
  */
-export default class LibraryPlugin<
+export class LibraryPlugin<
   TContext extends Context = Context,
   TOptions extends PluginBaseOptions = PluginBaseOptions
 > extends Plugin<TContext, TOptions> {

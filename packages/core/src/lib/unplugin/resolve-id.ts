@@ -150,9 +150,9 @@ export async function handleResolveId(
 
       if (
         match(args.id, options.noExternal) ||
-        context.vfs.isRuntimeFile(args.id) ||
+        context.vfs.isBuiltinFile(args.id) ||
         (args.importer &&
-          context.vfs.isRuntimeFile(args.id, {
+          context.vfs.isBuiltinFile(args.id, {
             paths: [args.importer]
           }))
       ) {

@@ -16,9 +16,16 @@
 
  ------------------------------------------------------------------- */
 
-export * from "./Output";
-export * from "./RuntimeFile";
-export * from "./SingleLineComment";
-export * from "./SourceFile";
-export * from "./TypescriptFile";
-export * from "./TypescriptFileHeader";
+export * from "./builtin-file";
+export * from "./entry-file";
+export * from "./markdown-file";
+export * from "./markdown-table";
+export * from "./output";
+export * from "./record-expression";
+export * from "./single-line-comment";
+export * from "./source-file";
+export * from "./tsdoc";
+export * from "./tsdoc-reflection";
+export * from "./typescript-file";
+export * from "./typescript-interface";
+export * from "./typescript-object";

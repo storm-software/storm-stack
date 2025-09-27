@@ -25,6 +25,7 @@ import chalk from "chalk";
 import type { LogFn, WorkspaceConfig } from "../types";
 
 export interface CreateLogOptions {
+  name?: string;
   logLevel?: LogLevelLabel;
   customLogger?: LogFn;
   colors?: WorkspaceConfig["colors"];
@@ -58,7 +59,9 @@ export const createLog = (
       `${chalk.bold.hex(
         getColor("brand", options as Parameters<typeof getColor>[1])
       )(
-        `storm-stack${name ? `:${name}` : ""} ${chalk.gray("> ")}`
+        `storm-stack${name ? `:${name}` : ""}${
+          options.name ? ` ${chalk.gray("> ")}${options.name}` : ""
+        } ${chalk.gray("> ")}`
       )}${args.join(" ")} `.trim()
     );
 };

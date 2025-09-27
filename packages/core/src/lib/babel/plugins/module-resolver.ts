@@ -16,20 +16,19 @@
 
  ------------------------------------------------------------------- */
 
-import { NodePath, PluginAPI, PluginPass, Visitor } from "@babel/core";
-import { declare } from "@babel/helper-plugin-utils";
+import { NodePath, PluginPass, Visitor } from "@babel/core";
+import { BabelAPI, declare } from "@babel/helper-plugin-utils";
 import * as t from "@babel/types";
-import { BabelPluginOptions } from "../../../types/babel";
 import { Context } from "../../../types/context";
 
-type ModuleResolverPluginPass = PluginPass<BabelPluginOptions> & {
+type ModuleResolverPluginPass = PluginPass & {
   context: Context;
   moduleResolverVisited: Set<any>;
-  api: PluginAPI;
+  api: BabelAPI;
 };
 
 function resolveModulePath(
-  nodePath: NodePath<t.StringLiteral>,
+  nodePath: NodePath<t.StringLiteral | null | undefined>,
   state: ModuleResolverPluginPass
 ) {
   if (!t.isStringLiteral(nodePath.node)) {
@@ -131,12 +130,12 @@ const importVisitors = {
     }
 
     state.moduleResolverVisited.add(nodePath);
-    resolveModulePath(nodePath.get("source")!, state);
+    resolveModulePath(nodePath.get("source"), state);
   }
 } as Visitor<ModuleResolverPluginPass>;
 
 export function ModuleResolverPlugin(context: Context) {
-  return declare(function builder(api: PluginAPI) {
+  return declare(function builder(api: BabelAPI) {
     let moduleResolverVisited = new Set();
 
     return {
@@ -153,10 +152,7 @@ export function ModuleResolverPlugin(context: Context) {
 
       visitor: {
         Program: {
-          enter(
-            programPath: NodePath<t.Program>,
-            state: PluginPass<BabelPluginOptions>
-          ) {
+          enter(programPath: NodePath<t.Program>, state: PluginPass) {
             programPath.traverse(importVisitors, {
               ...state,
               context,

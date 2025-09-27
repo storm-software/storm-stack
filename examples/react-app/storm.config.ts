@@ -17,24 +17,20 @@
  ------------------------------------------------------------------- */
 
 import { defineConfig } from "@storm-stack/core/define-config";
+import DatePlugin from "@storm-stack/plugin-date/plugin";
+import ReactPlugin from "@storm-stack/plugin-react/plugin";
 
 export default defineConfig({
   skipCache: true,
   plugins: [
-    [
-      "@storm-stack/plugin-date",
-      {
-        type: "date-fns"
+    new ReactPlugin({
+      env: {
+        types: "./src/types.ts#ExampleReactAppConfig"
       }
-    ],
-    [
-      "@storm-stack/plugin-react",
-      {
-        env: {
-          types: "./src/types.ts#ExampleReactAppConfig"
-        }
-      }
-    ]
+    }),
+    new DatePlugin({
+      type: "date-fns"
+    })
   ],
   output: {
     outputMode: "fs"

@@ -31,7 +31,7 @@ export interface StormStackPrepareExecutorSchema {
   * The build mode
   * 
   * 
-  * @enum development,staging,production
+  * @enum development,test,production
  */
  mode?: string,
 

@@ -10,7 +10,7 @@
   },
   "private": true,
   "dependencies": {
-    "@storm-stack/core": "0.46.0",
+    "@storm-stack/core": "workspace:*",
     "date-fns": "catalog:",
     "react": "catalog:",
     "react-dom": "catalog:",
@@ -18,8 +18,8 @@
     "vite": "catalog:"
   },
   "devDependencies": {
-    "@storm-stack/nx": "0.21.0",
-    "@storm-stack/plugin-react": "0.6.4",
+    "@storm-stack/nx": "workspace:*",
+    "@storm-stack/plugin-react": "workspace:*",
     "@types/react": "catalog:",
     "@types/react-dom": "catalog:"
   }

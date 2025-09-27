@@ -154,7 +154,7 @@ ${error.stack}`
       skipReadingConfig: false,
       hooks: {
         applyDefaultOptions: (options: Partial<TExecutorSchema>) => {
-          if (options.mode !== "development" && options.mode !== "staging") {
+          if (options.mode !== "development" && options.mode !== "test") {
             options.mode = "production";
           }
 

@@ -139,7 +139,7 @@ The following executor options are available:
 | --------- | ------ | ------------- | --------- | 
 | outputPath      | `string`    | The output path for the build     | "dist/{projectRoot}"     | 
  | tsconfig      | `string`    | The path to the tsconfig file     | "{projectRoot}/tsconfig.json"     | 
- | mode      | "development" \| "staging" \| "production"     | The build mode     |     | 
+ | mode      | "development" \| "test" \| "production"     | The build mode     |     | 
  | skipInstalls      | `boolean`    | Skip installing dependencies during prepare stage     |     | 
  | logLevel      | "error" \| "success" \| "silent" \| "fatal" \| "warn" \| "info" \| "debug" \| "trace" \| "all"     | The log level to use for the build process     |     | 
 
@@ -168,7 +168,7 @@ The following executor options are available:
 | --------- | ------ | ------------- | --------- | 
 | outputPath      | `string`    | The output path for the build     | "dist/{projectRoot}"     | 
  | tsconfig      | `string`    | The path to the tsconfig file     | "{projectRoot}/tsconfig.json"     | 
- | mode      | "development" \| "staging" \| "production"     | The build mode     |     | 
+ | mode      | "development" \| "test" \| "production"     | The build mode     |     | 
  | skipInstalls      | `boolean`    | Skip installing dependencies during prepare stage     |     | 
  | logLevel      | "error" \| "success" \| "silent" \| "fatal" \| "warn" \| "info" \| "debug" \| "trace" \| "all"     | The log level to use for the build process     |     | 
  | skipCache      | `boolean`    | Skip the cache when building     |     | 
@@ -199,7 +199,7 @@ The following executor options are available:
 | --------- | ------ | ------------- | --------- | 
 | outputPath      | `string`    | The output path for the build     | "dist/{projectRoot}"     | 
  | tsconfig      | `string`    | The path to the tsconfig file     | "{projectRoot}/tsconfig.json"     | 
- | mode      | "development" \| "staging" \| "production"     | The build mode     |     | 
+ | mode      | "development" \| "test" \| "production"     | The build mode     |     | 
  | skipInstalls      | `boolean`    | Skip installing dependencies during prepare stage     |     | 
  | logLevel      | "error" \| "success" \| "silent" \| "fatal" \| "warn" \| "info" \| "debug" \| "trace" \| "all"     | The log level to use for the build process     |     | 
  | skipCache      | `boolean`    | Skip the cache when building     |     | 
@@ -230,7 +230,7 @@ The following executor options are available:
 | --------- | ------ | ------------- | --------- | 
 | outputPath      | `string`    | The output path for the build     | "dist/{projectRoot}"     | 
  | tsconfig      | `string`    | The path to the tsconfig file     | "{projectRoot}/tsconfig.json"     | 
- | mode      | "development" \| "staging" \| "production"     | The build mode     |     | 
+ | mode      | "development" \| "test" \| "production"     | The build mode     |     | 
  | skipInstalls      | `boolean`    | Skip installing dependencies during prepare stage     |     | 
  | logLevel      | "error" \| "success" \| "silent" \| "fatal" \| "warn" \| "info" \| "debug" \| "trace" \| "all"     | The log level to use for the build process     |     | 
  | skipCache      | `boolean`    | Skip the cache when building     |     | 
@@ -265,7 +265,7 @@ The following executor options are available:
 | --------- | ------ | ------------- | --------- | 
 | outputPath      | `string`    | The output path for the build     | "dist/{projectRoot}"     | 
  | tsconfig      | `string`    | The path to the tsconfig file     | "{projectRoot}/tsconfig.json"     | 
- | mode      | "development" \| "staging" \| "production"     | The build mode     |     | 
+ | mode      | "development" \| "test" \| "production"     | The build mode     |     | 
  | skipInstalls      | `boolean`    | Skip installing dependencies during prepare stage     |     | 
  | logLevel      | "error" \| "success" \| "silent" \| "fatal" \| "warn" \| "info" \| "debug" \| "trace" \| "all"     | The log level to use for the build process     |     | 
  | skipCache      | `boolean`    | Skip the cache when building     |     | 

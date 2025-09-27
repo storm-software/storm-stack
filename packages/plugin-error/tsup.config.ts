@@ -16,10 +16,10 @@
 
  ------------------------------------------------------------------- */
 
-import { defineTsupConfig } from "@storm-stack/tools-config/tsup.shared";
+import { definePluginTsupConfig } from "@storm-stack/tools-config/tsup.plugin";
 import type { Options } from "tsup";
 
-const config = defineTsupConfig({
+const config = definePluginTsupConfig({
   name: "plugin-error",
   entry: [
     "src/index.ts",

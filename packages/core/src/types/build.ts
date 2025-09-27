@@ -457,14 +457,19 @@ export interface ViteHandleHotUpdateHookParams {
   result?: ModuleNode[] | null;
 }
 
+/**
+ * The functions available for each Storm Stack plugin to hook into the engine.
+ */
 export interface EngineHookFunctions<TContext extends Context = Context> {
-  // New - Hooks used during the creation of a new project
+  // --- New - Hooks used during the creation of a new project ---
+
   "new:begin": (context: TContext) => MaybePromise<void>;
   "new:library": (context: TContext) => MaybePromise<void>;
   "new:application": (context: TContext) => MaybePromise<void>;
   "new:complete": (context: TContext) => MaybePromise<void>;
 
-  // Init - Hooks used during the initialization of the Storm Stack engine
+  // --- Init - Hooks used during the initialization of the Storm Stack engine ---
+
   "init:begin": (context: TContext) => MaybePromise<void>;
   "init:options": (context: TContext) => MaybePromise<void>;
   "init:install": (context: TContext) => MaybePromise<void>;
@@ -473,31 +478,34 @@ export interface EngineHookFunctions<TContext extends Context = Context> {
   "init:reflections": (context: TContext) => MaybePromise<void>;
   "init:complete": (context: TContext) => MaybePromise<void>;
 
-  // Clean - Hooks used during the cleaning of the Storm Stack project
+  // --- Clean - Hooks used during the cleaning of the Storm Stack project ---
+
   "clean:begin": (context: TContext) => MaybePromise<void>;
   "clean:output": (context: TContext) => MaybePromise<void>;
   "clean:docs": (context: TContext) => MaybePromise<void>;
   "clean:complete": (context: TContext) => MaybePromise<void>;
 
-  // Prepare - Hooks used during the preparation of the Storm Stack artifacts
+  // --- Prepare - Hooks used during the preparation of the Storm Stack artifacts ---
+
   "prepare:begin": (context: TContext) => MaybePromise<void>;
   "prepare:config": (context: TContext) => MaybePromise<void>;
-  "prepare:runtime": (context: TContext) => MaybePromise<void>;
-  "prepare:entry": (context: TContext) => MaybePromise<void>;
+  "prepare:builtins": (context: TContext) => MaybePromise<void>;
   "prepare:types": (
     context: TContext,
     sourceFile: SourceFile
   ) => MaybePromise<void>;
-  "prepare:output": (context: TContext) => MaybePromise<void>;
+  "prepare:generate": (context: TContext) => MaybePromise<void>;
   "prepare:complete": (context: TContext) => MaybePromise<void>;
 
-  // Lint - Hooks used during the linting process
+  // --- Lint - Hooks used during the linting process ---
+
   "lint:begin": (context: TContext) => MaybePromise<void>;
   "lint:types": (context: TContext) => MaybePromise<void>;
   "lint:eslint": (context: TContext) => MaybePromise<void>;
   "lint:complete": (context: TContext) => MaybePromise<void>;
 
-  // Build - Hooks used during the build process of the Storm Stack project
+  // --- Build - Hooks used during the build process of the Storm Stack project ---
+
   "build:begin": (context: TContext) => MaybePromise<void>;
   "build:pre-transform": (
     context: TContext,
@@ -515,51 +523,113 @@ export interface EngineHookFunctions<TContext extends Context = Context> {
   "build:application": (context: TContext) => MaybePromise<void>;
   "build:complete": (context: TContext) => MaybePromise<void>;
 
-  // Docs - Hooks used during the documentation generation process
+  // --- Docs - Hooks used during the documentation generation process ---
+
   "docs:begin": (context: TContext) => MaybePromise<void>;
   "docs:api-reference": (context: TContext) => MaybePromise<void>;
   "docs:complete": (context: TContext) => MaybePromise<void>;
 
-  // Finalize - Hooks used during the finalization of the Storm Stack project
+  // --- Finalize - Hooks used during the finalization of the Storm Stack project ---
+
   "finalize:begin": (context: TContext) => MaybePromise<void>;
   "finalize:complete": (context: TContext) => MaybePromise<void>;
 
-  // Vite - Hooks used during the Vite process
+  // --- Vite - Hooks used during the Vite process ---
+
+  /**
+   * A hook that allows modifying the Vite configuration before it is finalized.
+   *
+   * @see https://vitejs.dev/guide/api-plugin#config
+   */
   "vite:config": (
     context: TContext,
     params: ViteConfigHookParams
   ) => MaybePromise<void>;
+
+  /**
+   * A hook that is called after the Vite configuration has been resolved.
+   *
+   * @see https://vitejs.dev/guide/api-plugin#configresolved
+   */
   "vite:configResolved": (
     context: TContext,
     params: ViteConfigResolvedHookParams
   ) => MaybePromise<void>;
+
+  /**
+   * A hook that allows configuring the Vite development server.
+   *
+   * @see https://vitejs.dev/guide/api-plugin#configureserver
+   */
   "vite:configureServer": (
     context: TContext,
     params: ViteConfigureServerHookParams
   ) => MaybePromise<void>;
+
+  /**
+   * A hook that allows configuring the Vite preview server.
+   *
+   * @see https://vitejs.dev/guide/api-plugin#configurepreviewserver
+   */
   "vite:configurePreviewServer": (
     context: TContext,
     params: ViteConfigurePreviewServerHookParams
   ) => MaybePromise<void>;
+
+  /**
+   * A hook that allows transforming the `index.html` file during the Vite build process.
+   *
+   * @see https://vitejs.dev/guide/api-plugin#transformindexhtml
+   */
   "vite:transformIndexHtml": (
     context: TContext,
     params: ViteTransformIndexHtmlHookParams
   ) => MaybePromise<void>;
+
+  /**
+   * A hook that allows handling hot module updates during the Vite development process.
+   *
+   * @see https://vitejs.dev/guide/api-plugin#handlehotupdate
+   */
   "vite:handleHotUpdate": (
     context: TContext,
     params: ViteHandleHotUpdateHookParams
   ) => MaybePromise<void>;
 
-  // ESBuild - Hooks used during the ESBuild process
+  // --- ESBuild - Hooks used during the ESBuild process ---
+
+  /**
+   * A hook that is called when the ESBuild process is set up.
+   *
+   * @see https://esbuild.github.io/api/#build
+   */
   "esbuild:setup": (
     context: TContext,
     params: { build: PluginBuild }
   ) => MaybePromise<void>;
+
+  /**
+   * A hook that allows modifying the ESBuild configuration before it is finalized.
+   *
+   * @see https://esbuild.github.io/api/#build
+   */
   "esbuild:config": (context: TContext, options: BuildOptions) => void;
+
+  /**
+   * A hook that allows configuring the ESBuild development server.
+   *
+   * @see https://esbuild.github.io/api/#serve
+   */
   "esbuild:configureServer": (
     context: TContext,
     params: { server: ViteDevServer }
   ) => MaybePromise<void>;
+
+  /**
+   * A hook that allows modifying the loading of files during the ESBuild process.
+   *
+   * @see https://esbuild.github.io/api/#loader
+   */
   "esbuild:loader": (
     context: TContext,
     params: {

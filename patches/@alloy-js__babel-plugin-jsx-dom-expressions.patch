@@ -1,0 +1,40 @@
+diff --git a/index.d.ts b/index.d.ts
+new file mode 100644
+index 0000000000000000000000000000000000000000..baf51a4fc62bf0c717221942444da58d4ab0b794
+--- /dev/null
++++ b/index.d.ts
+@@ -0,0 +1,22 @@
++/* -------------------------------------------------------------------
++
++                  ⚡ Storm Software - Storm Stack
++
++ This code was released as part of the Storm Stack project. Storm Stack
++ is maintained by Storm Software under the Apache-2.0 license, and is
++ free for commercial and private use. For more information, please visit
++ our licensing page at https://stormsoftware.com/licenses/projects/storm-stack.
++
++ Website:                  https://stormsoftware.com
++ Repository:               https://github.com/storm-software/storm-stack
++ Documentation:            https://docs.stormsoftware.com/projects/storm-stack
++ Contact:                  https://stormsoftware.com/contact
++
++ SPDX-License-Identifier:  Apache-2.0
++
++ ------------------------------------------------------------------- */
++
++declare module "@alloy-js/babel-plugin-jsx-dom-expressions" {
++  const plugin: () => any;
++  export default plugin;
++}
+diff --git a/package.json b/package.json
+index fa5e5eb5a071fe674267485d1fcc668f4c31bc78..5e125857d7f60a19c1e9bd0567519663e5a8cbfb 100644
+--- a/package.json
++++ b/package.json
+@@ -10,6 +10,7 @@
+   },
+   "readmeFilename": "README.md",
+   "main": "index.js",
++  "types": "index.d.ts",
+   "sideEffects": false,
+   "dependencies": {
+     "@babel/helper-module-imports": "7.27.1",

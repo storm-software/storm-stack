@@ -53,6 +53,10 @@ import type { CLIPluginContext, CLIPluginOptions } from "./types/plugin";
 export default class CLIPlugin<
   TContext extends CLIPluginContext = CLIPluginContext
 > extends Plugin<TContext, CLIPluginOptions> {
+  public override get displayName(): string {
+    return "CLI Plugin";
+  }
+
   public constructor(options: PluginOptions<CLIPluginOptions>) {
     super(options);
 
@@ -84,8 +88,8 @@ export default class CLIPlugin<
       "init:install": this.initInstall.bind(this),
       "init:entry": this.initEntry.bind(this),
       "init:reflections": this.initReflections.bind(this),
-      "prepare:entry": this.prepareEntry.bind(this),
-      "prepare:runtime": this.prepareRuntime.bind(this),
+      "prepare:builtins": this.prepareBuiltins.bind(this),
+      "prepare:generate": this.prepareGenerate.bind(this),
       "build:library": this.buildLibrary.bind(this),
       "build:application": this.buildApplication.bind(this),
       "build:complete": this.buildComplete.bind(this)
@@ -169,7 +173,7 @@ export default class CLIPlugin<
    *
    * @param context - The context to prepare the runtime with.
    */
-  protected async prepareRuntime(context: TContext) {
+  protected async prepareBuiltins(context: TContext) {
     if (context.options.projectType === "application") {
       this.log(
         LogLevelLabel.TRACE,
@@ -177,14 +181,14 @@ export default class CLIPlugin<
       );
 
       await Promise.all([
-        context.vfs.writeRuntimeFile(
+        context.vfs.writeBuiltinFile(
           "app",
-          joinPaths(context.runtimePath, "app.ts"),
+          joinPaths(context.builtinsPath, "app.ts"),
           AppModule(context)
         ),
-        context.vfs.writeRuntimeFile(
+        context.vfs.writeBuiltinFile(
           "cli",
-          joinPaths(context.runtimePath, "cli.ts"),
+          joinPaths(context.builtinsPath, "cli.ts"),
           CLIModule(context)
         )
       ]);
@@ -196,7 +200,7 @@ export default class CLIPlugin<
    *
    * @param context - The context to prepare the entry point with.
    */
-  protected async prepareEntry(context: TContext) {
+  protected async prepareGenerate(context: TContext) {
     if (context.options.projectType === "application") {
       this.log(
         LogLevelLabel.TRACE,

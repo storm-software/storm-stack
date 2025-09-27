@@ -16,20 +16,19 @@
 
  ------------------------------------------------------------------- */
 
-import { defineTsupConfig } from "@storm-stack/tools-config/tsup.shared";
+import { definePluginTsupConfig } from "@storm-stack/tools-config/tsup.plugin";
 import type { Options } from "tsup";
 
-const config = defineTsupConfig({
+const config = definePluginTsupConfig({
   name: "plugin-react",
   entry: [
     "src/index.ts",
     "src/plugin.ts",
     "src/types/*.ts",
-    "src/renderers/*.ts",
+    "src/templates/*.ts",
     "src/babel/*.ts"
   ],
-  noExternal: ["@vitejs/plugin-react"],
-  skipNodeModulesBundle: true
+  noExternal: ["@vitejs/plugin-react"]
 }) as Options;
 
 export default config;

@@ -17,7 +17,7 @@
  ------------------------------------------------------------------- */
 
 import { getGradient } from "@storm-software/config-tools/utilities/colors";
-import { getFileHeader } from "@storm-stack/core/lib";
+import { getFileHeader } from "@storm-stack/core/lib/utilities/file-header";
 import { stripAnsi } from "@stryke/cli/utils/strip-ansi";
 import { titleCase } from "@stryke/string-format/title-case";
 import { isObject } from "@stryke/type-checks/is-object";

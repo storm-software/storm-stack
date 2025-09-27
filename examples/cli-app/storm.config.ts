@@ -17,31 +17,26 @@
  ------------------------------------------------------------------- */
 
 import { defineConfig } from "@storm-stack/core/define-config";
+import CLIPlugin from "@storm-stack/plugin-cli/plugin";
+import DatePlugin from "@storm-stack/plugin-date/plugin";
+import LogSentryPlugin from "@storm-stack/plugin-log-sentry/plugin";
 
 export default defineConfig({
   name: "Example CLI",
+  skipCache: true,
   plugins: [
-    [
-      "@storm-stack/plugin-date",
-      {
-        type: "date-fns"
+    new CLIPlugin({
+      bin: "examples-cli",
+      env: {
+        types: "./src/types.ts#StormCLIAppEnv"
       }
-    ],
-    [
-      "@storm-stack/plugin-cli",
-      {
-        bin: "examples-cli",
-        env: {
-          types: "./src/types.ts#StormCLIAppEnv"
-        }
-      }
-    ],
-    [
-      "@storm-stack/plugin-log-sentry",
-      {
-        logLevel: "error"
-      }
-    ]
+    }),
+    new DatePlugin({
+      type: "date-fns"
+    }),
+    new LogSentryPlugin({
+      logLevel: "error"
+    })
   ],
   output: {
     outputMode: "fs"

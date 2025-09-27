@@ -24,7 +24,7 @@ import {
 } from "@storm-stack/core/types/build";
 import { Context } from "@storm-stack/core/types/context";
 import chalk from "chalk";
-import { VitePluginBuilder, VitePluginBuilderReturn } from "../types/vite";
+import { VitePlugin, VitePluginBuilder } from "../types/vite";
 
 /**
  * Declare a Vite plugin using the provided builder function.
@@ -44,9 +44,7 @@ export function declareVite<
 >(
   name: string,
   builder: VitePluginBuilder<TOptions, TContext>
-): (
-  options: TOptions
-) => (context: TContext) => VitePluginBuilderReturn<TOptions> {
+): (options: TOptions) => (context: TContext) => VitePlugin {
   return (options: TOptions) => (context: TContext) => {
     const log = extendLog(context.log, name);
     log(

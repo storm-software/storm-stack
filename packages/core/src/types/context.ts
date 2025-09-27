@@ -119,12 +119,16 @@ export interface MetaInfo {
   /**
    * A mapping of runtime ids to their corresponding file paths
    */
-  runtimeIdMap: Record<string, string>;
+  builtinIdMap: Record<string, string>;
 
   /**
    * A mapping of virtual file paths to their corresponding file contents
    */
   virtualFiles: Record<string, string | null>;
+}
+
+export interface Resolver extends Jiti {
+  plugin: Jiti;
 }
 
 export type UnimportContext = Omit<Unimport, "injectImports"> & {
@@ -192,9 +196,9 @@ export interface Context<
   artifactsPath: string;
 
   /**
-   * The path to the Storm Stack runtime directory
+   * The path to the Storm Stack builtin runtime modules directory
    */
-  runtimePath: string;
+  builtinsPath: string;
 
   /**
    * The path to the Storm Stack entry modules directory
@@ -259,7 +263,7 @@ export interface Context<
   /**
    * The Jiti module resolver
    */
-  resolver: Jiti;
+  resolver: Resolver;
 
   /**
    * The project root directory
@@ -286,6 +290,6 @@ export interface Context<
 }
 
 export interface SerializedVirtualFileSystem {
-  runtimeIdMap: Record<string, string>;
+  builtinIdMap: Record<string, string>;
   virtualFiles: DirectoryJSON<string | null>;
 }

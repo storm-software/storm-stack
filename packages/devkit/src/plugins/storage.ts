@@ -32,7 +32,7 @@ import { StoragePluginContext, StoragePluginOptions } from "../types/plugins";
  * @remarks
  * This class provides the foundation for creating storage plugins in Storm Stack. It handles the initialization of the plugin's context and prepares the runtime for storage artifacts. Derived classes must implement the `writeStorage` method to define how the storage should be written.
  */
-export default abstract class StoragePlugin<
+export abstract class StoragePlugin<
   TContext extends StoragePluginContext = StoragePluginContext,
   TOptions extends StoragePluginOptions = StoragePluginOptions
 > extends Plugin<TContext, TOptions> {
@@ -72,7 +72,7 @@ export default abstract class StoragePlugin<
 
     hooks.addHooks({
       "init:complete": this.#initComplete.bind(this),
-      "prepare:runtime": this.#prepareRuntime.bind(this)
+      "prepare:builtins": this.#prepareBuiltins.bind(this)
     });
   }
 
@@ -83,7 +83,7 @@ export default abstract class StoragePlugin<
    */
   protected abstract writeStorage(context: TContext): MaybePromise<string>;
 
-  async #prepareRuntime(context: TContext) {
+  async #prepareBuiltins(context: TContext) {
     this.log(LogLevelLabel.TRACE, `Prepare the Storm Stack storage artifact.`);
 
     if (context.options.projectType === "application") {
@@ -96,10 +96,10 @@ export default abstract class StoragePlugin<
         );
       }
 
-      await context.vfs.writeRuntimeFile(
+      await context.vfs.writeBuiltinFile(
         `storage/${kebabCase(this.identifier)}`,
         joinPaths(
-          context.runtimePath,
+          context.builtinsPath,
           "storage",
           `${kebabCase(this.identifier)}.ts`
         ),

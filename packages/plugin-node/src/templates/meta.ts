@@ -35,13 +35,12 @@ import { NodePluginContext } from "../types/plugin";
  *
  * - `hasTTY`: Indicates if the current process has a TTY (interactive terminal) available.
  * - `isCI`: True if the application is running in a Continuous Integration (CI) environment.
- * - `mode`: The current runtime mode, such as "development", "staging", or "production".
+ * - `mode`: The current runtime mode, such as "development", "test", or "production".
  * - `environment`: The environment name as specified in the plugin context.
  * - `isProduction`: True if running in production mode.
- * - `isStaging`: True if running in staging mode.
+ * - `isTest`: True if running in test mode or under test conditions.
  * - `isDevelopment`: True if running in development mode.
  * - `isDebug`: True if running in debug mode (typically development with debug enabled).
- * - `isTest`: True if running in test mode or under test conditions.
  * - `isMinimal`: True if running in a minimal environment (e.g., CI, test, or no TTY).
  * - `isWindows`: True if the runtime platform is Windows.
  * - `isLinux`: True if the runtime platform is Linux.
@@ -327,23 +326,24 @@ export function createMeta(): StormNodeMeta {
    * @remarks
    * The \`mode\` is determined by the \`MODE\` environment variable, or falls back to the \`NEXT_PUBLIC_VERCEL_ENV\`, \`NODE_ENV\`, or defaults to \`production\`. While the value can potentially be any string, Storm Software generally only allows a value in the following list:
    * - \`production\`
-   * - \`staging\`
+   * - \`test\`
    * - \`development\`
    */
   const mode = String($storm.env.MODE) ||
     "production";
 
-  /** Detect if the application is running in production mode */
+  /** Detect if the application is running in "production" mode */
   const isProduction = ["prd", "prod", "production"].includes(
     mode.toLowerCase()
   );
 
-  /** Detect if the application is running in staging mode */
-  const isStaging = ["stg", "stage", "staging"].includes(
-    mode.toLowerCase()
+  /** Detect if the application is running in "test" mode */
+  const isTest = Boolean(
+    ["tst", "test", "testing", "stg", "stage", "staging"].includes(mode.toLowerCase()) ||
+    $storm.env.TEST
   );
 
-  /** Detect if the application is running in development mode */
+  /** Detect if the application is running in "development" mode */
   const isDevelopment = ["dev", "development"].includes(
     mode.toLowerCase()
   );
@@ -352,13 +352,6 @@ export function createMeta(): StormNodeMeta {
   const isDebug = Boolean(
     isDevelopment && $storm.env.DEBUG
   );
-
-  /** Detect if the application is running in test mode */
-  const isTest =
-    Boolean(
-      ["tst", "test", "testing"].includes(mode.toLowerCase()) ||
-      $storm.env.TEST
-    );
 
   /** Detect if MINIMAL environment variable is set, running in CI or test or TTY is unavailable */
   const isMinimal = Boolean(
@@ -536,13 +529,12 @@ export function createMeta(): StormNodeMeta {
   return {
     hasTTY,
     isCI,
-    mode: isDevelopment ? "development" : isStaging ? "staging" : "production",
+    mode: isDevelopment ? "development" : isTest ? "test" : "production",
     environment: "${context.options.environment}",
     isProduction,
-    isStaging,
+    isTest,
     isDevelopment,
     isDebug,
-    isTest,
     isMinimal,
     isWindows,
     isLinux,

@@ -97,10 +97,14 @@ function isPatched(code: string, id: string) {
 
 function patchGetTransformers(deepkitDistPath: string, code: string): string {
   const id = "patchGetTransformers";
-  if (isPatched(code, id)) return "";
+  if (isPatched(code, id)) {
+    return "";
+  }
 
   const find = /function getTransformers\([^)]+\)\s*\{/;
-  if (!code.match(find)) return "";
+  if (!code.match(find)) {
+    return "";
+  }
 
   code = code.replace(find, substring => {
     return `${substring}\n    ${getCode(deepkitDistPath, "customTransformers", id)}`;

@@ -29,7 +29,7 @@ import { readJsonFile } from "@stryke/fs/json";
 import { listFiles } from "@stryke/fs/list-files";
 import { StormJSON } from "@stryke/json/storm-json";
 import {
-  findFileExtension,
+  findFileExtensionSafe,
   findFileName,
   findFilePath,
   findFolderName
@@ -114,6 +114,16 @@ export async function initOptions(
     context.options.workspaceConfig.homepage ||
     context.options.plugins.cli.author.url ||
     context.options.workspaceConfig.repository)!;
+  context.options.plugins.cli.repository =
+    context.options.plugins.cli.repository ||
+    context.options.workspaceConfig.repository ||
+    (isString(context.packageJson.repository)
+      ? context.packageJson.repository
+      : context.packageJson.repository?.url) ||
+    context.options.plugins.cli.author.url ||
+    context.options.workspaceConfig.repository ||
+    context.options.plugins.cli.author.name ||
+    "";
   context.options.plugins.cli.docs =
     context.options.plugins.cli.docs ||
     context.options.workspaceConfig.docs ||
@@ -223,7 +233,7 @@ export async function initEntry(log: LogFn, context: CLIPluginContext) {
         const filePath = file.replace(commandsDir, "").replaceAll(/^\/+/g, "");
         ret[
           filePath
-            .replace(findFileExtension(filePath) || "", "")
+            .replace(`.${findFileExtensionSafe(filePath)}`, "")
             .replaceAll("/", "-")
         ] = filePath;
         return ret;
@@ -367,10 +377,9 @@ export async function initEntry(log: LogFn, context: CLIPluginContext) {
       if (findFileName(entryFile) !== "index.ts") {
         entryFile = joinPaths(
           findFilePath(entryFile),
-          findFileName(entryFile).replace(
-            findFileExtension(entryFile) || "",
-            ""
-          ),
+          findFileName(entryFile, {
+            withExtension: false
+          }),
           "index.ts"
         );
       }

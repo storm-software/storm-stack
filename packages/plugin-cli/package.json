@@ -39,6 +39,34 @@
         "default": "./dist/index.js"
       }
     },
+    "./templates": {
+      "import": {
+        "types": "./dist/templates/index.d.ts",
+        "default": "./dist/templates/index.js"
+      },
+      "require": {
+        "types": "./dist/templates/index.d.cts",
+        "default": "./dist/templates/index.cjs"
+      },
+      "default": {
+        "types": "./dist/templates/index.d.ts",
+        "default": "./dist/templates/index.js"
+      }
+    },
+    "./templates/*": {
+      "import": {
+        "types": "./dist/templates/*/index.d.ts",
+        "default": "./dist/templates/*/index.js"
+      },
+      "require": {
+        "types": "./dist/templates/*/index.d.cts",
+        "default": "./dist/templates/*/index.cjs"
+      },
+      "default": {
+        "types": "./dist/templates/*/index.d.ts",
+        "default": "./dist/templates/*/index.js"
+      }
+    },
     "./plugin": {
       "import": {
         "types": "./dist/plugin.d.ts",
@@ -51,6 +79,62 @@
       "default": {
         "types": "./dist/plugin.d.ts",
         "default": "./dist/plugin.js"
+      }
+    },
+    "./helpers": {
+      "import": {
+        "types": "./dist/helpers/index.d.ts",
+        "default": "./dist/helpers/index.js"
+      },
+      "require": {
+        "types": "./dist/helpers/index.d.cts",
+        "default": "./dist/helpers/index.cjs"
+      },
+      "default": {
+        "types": "./dist/helpers/index.d.ts",
+        "default": "./dist/helpers/index.js"
+      }
+    },
+    "./helpers/*": {
+      "import": {
+        "types": "./dist/helpers/*/index.d.ts",
+        "default": "./dist/helpers/*/index.js"
+      },
+      "require": {
+        "types": "./dist/helpers/*/index.d.cts",
+        "default": "./dist/helpers/*/index.cjs"
+      },
+      "default": {
+        "types": "./dist/helpers/*/index.d.ts",
+        "default": "./dist/helpers/*/index.js"
+      }
+    },
+    "./data": {
+      "import": {
+        "types": "./dist/data/index.d.ts",
+        "default": "./dist/data/index.js"
+      },
+      "require": {
+        "types": "./dist/data/index.d.cts",
+        "default": "./dist/data/index.cjs"
+      },
+      "default": {
+        "types": "./dist/data/index.d.ts",
+        "default": "./dist/data/index.js"
+      }
+    },
+    "./data/*": {
+      "import": {
+        "types": "./dist/data/*/index.d.ts",
+        "default": "./dist/data/*/index.js"
+      },
+      "require": {
+        "types": "./dist/data/*/index.d.cts",
+        "default": "./dist/data/*/index.cjs"
+      },
+      "default": {
+        "types": "./dist/data/*/index.d.ts",
+        "default": "./dist/data/*/index.js"
       }
     }
   },
@@ -79,8 +163,8 @@
   "dependencies": {
     "@storm-software/config": "catalog:",
     "@storm-software/config-tools": "catalog:",
-    "@storm-stack/core": "0.46.0",
-    "@storm-stack/devkit": "0.20.0",
+    "@storm-stack/core": "workspace:*",
+    "@storm-stack/devkit": "workspace:*",
     "@stryke/capnp": "catalog:",
     "@stryke/cli": "catalog:",
     "@stryke/convert": "catalog:",

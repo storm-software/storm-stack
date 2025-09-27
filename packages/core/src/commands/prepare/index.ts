@@ -19,14 +19,13 @@
 import { LogLevelLabel } from "@storm-software/config-tools/types";
 import { existsSync } from "@stryke/fs/exists";
 import { createDirectory } from "@stryke/fs/helpers";
-import { writeMetaFile } from "../../lib/context";
+import { writeMetaFile } from "../../base/context";
 import { getParsedTypeScriptConfig } from "../../lib/typescript/tsconfig";
 import type { EngineHooks } from "../../types/build";
 import type { Context } from "../../types/context";
+import { prepareBuiltins } from "./builtins";
 import { prepareConfig } from "./config";
-import { prepareEntry } from "./entry";
-import { prepareOutput } from "./output";
-import { prepareRuntime } from "./runtime";
+import { prepareGenerate } from "./generate";
 import { prepareTypes } from "./types";
 
 /**
@@ -65,18 +64,14 @@ export async function prepare<TContext extends Context = Context>(
   await prepareConfig(context, hooks);
 
   if (context.options.projectType === "application") {
-    await prepareRuntime(context, hooks);
+    await prepareBuiltins(context, hooks);
   }
 
   if (context.options.output.dts !== false) {
     await prepareTypes(context, hooks);
   }
 
-  if (context.options.projectType === "application") {
-    await prepareEntry(context, hooks);
-  }
-
-  await prepareOutput(context, hooks);
+  await prepareGenerate(context, hooks);
 
   // Re-resolve the tsconfig to ensure it is up to date
   context.tsconfig = getParsedTypeScriptConfig(

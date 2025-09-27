@@ -62,7 +62,7 @@ export function createUnimport(context: Context): UnimportContext {
 
   async function refreshRuntimeImports() {
     const presets = [] as Preset[];
-    for (const id of context.vfs.runtimeIdMap.keys()) {
+    for (const id of context.vfs.builtinIdMap.keys()) {
       const contents = await context.vfs.readFile(id);
       if (contents) {
         context.log(
@@ -96,7 +96,7 @@ export function createUnimport(context: Context): UnimportContext {
     unimport = createUnimportExternal({
       ...DEFAULT_UNIMPORT_CONFIG,
       presets,
-      virtualImports: Array.from(context.vfs.runtimeIdMap.keys())
+      virtualImports: Array.from(context.vfs.builtinIdMap.keys())
     });
     await unimport.init();
   }

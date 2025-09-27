@@ -9,81 +9,6 @@
     "directory": "packages/plugin-cloudflare"
   },
   "private": false,
-  "exports": {
-    "./package.json": "./package.json",
-    ".": {
-      "import": {
-        "types": "./dist/index.d.ts",
-        "default": "./dist/index.js"
-      },
-      "require": {
-        "types": "./dist/index.d.cts",
-        "default": "./dist/index.cjs"
-      },
-      "default": {
-        "types": "./dist/index.d.ts",
-        "default": "./dist/index.js"
-      }
-    },
-    "./index": {
-      "import": {
-        "types": "./dist/index.d.ts",
-        "default": "./dist/index.js"
-      },
-      "require": {
-        "types": "./dist/index.d.cts",
-        "default": "./dist/index.cjs"
-      },
-      "default": {
-        "types": "./dist/index.d.ts",
-        "default": "./dist/index.js"
-      }
-    },
-    "./plugin": {
-      "import": {
-        "types": "./dist/plugin.d.ts",
-        "default": "./dist/plugin.js"
-      },
-      "require": {
-        "types": "./dist/plugin.d.cts",
-        "default": "./dist/plugin.cjs"
-      },
-      "default": {
-        "types": "./dist/plugin.d.ts",
-        "default": "./dist/plugin.js"
-      }
-    },
-    "./types": {
-      "import": {
-        "types": "./dist/types/index.d.ts",
-        "default": "./dist/types/index.js"
-      },
-      "require": {
-        "types": "./dist/types/index.d.cts",
-        "default": "./dist/types/index.cjs"
-      },
-      "default": {
-        "types": "./dist/types/index.d.ts",
-        "default": "./dist/types/index.js"
-      }
-    },
-    "./types/*": {
-      "import": {
-        "types": "./dist/types/*.d.ts",
-        "default": "./dist/types/*.js"
-      },
-      "require": {
-        "types": "./dist/types/*.d.cts",
-        "default": "./dist/types/*.cjs"
-      },
-      "default": {
-        "types": "./dist/types/*.d.ts",
-        "default": "./dist/types/*.js"
-      }
-    }
-  },
-  "types": "dist/index.d.ts",
-  "typings": "dist/index.d.ts",
   "peerDependencies": {
     "@storm-stack/plugin-env": "*"
   },
@@ -93,11 +18,14 @@
     }
   },
   "dependencies": {
+    "@alloy-js/core": "catalog:",
+    "@alloy-js/typescript": "catalog:",
     "@cloudflare/unenv-preset": "catalog:",
     "@cloudflare/vite-plugin": "catalog:",
     "@ltd/j-toml": "catalog:",
     "@storm-software/config-tools": "catalog:",
-    "@storm-stack/core": "0.46.0",
+    "@storm-stack/core": "workspace:*",
+    "@storm-stack/devkit": "workspace:*",
     "@stryke/fs": "catalog:",
     "@stryke/json": "catalog:",
     "@stryke/path": "catalog:",
@@ -105,6 +33,10 @@
     "unenv": "catalog:"
   },
   "devDependencies": {
+    "@alloy-js/babel-preset": "catalog:",
+    "@babel/preset-typescript": "catalog:",
+    "@storm-stack/nx": "workspace:*",
+    "@storm-stack/plugin-env": "workspace:*",
     "@stryke/types": "catalog:",
     "tsup": "catalog:"
   },

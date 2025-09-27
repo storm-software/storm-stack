@@ -62,7 +62,7 @@ export interface VirtualFile {
   contents: string;
 }
 
-export interface VirtualRuntimeFile extends VirtualFile {
+export interface VirtualBuiltinFile extends VirtualFile {
   /**
    * The unique identifier for the virtual file.
    *
@@ -102,7 +102,7 @@ export interface ResolvePathOptions extends ResolveFSOptions {
 
 export type WriteFileOptions = FsWriteFileOptions & ResolveFSOptions;
 
-export interface WriteRuntimeFileOptions extends ResolveFSOptions {
+export interface WriteBuiltinFileOptions extends ResolveFSOptions {
   skipFormat?: boolean;
 }
 
@@ -111,26 +111,26 @@ export interface VirtualFileSystemInterface {
   [__VFS_REVERT__]: () => void;
 
   /**
-   * The underlying runtime Ids.
+   * The underlying builtin module Ids.
    */
-  runtimeIdMap: Map<string, string>;
+  builtinIdMap: Map<string, string>;
 
   /**
-   * Checks if a path or ID corresponds to a runtime file.
+   * Checks if a path or ID corresponds to a builtin file.
    *
-   * @param id - The id of the runtime file to check against.
+   * @param id - The id of the builtin file to check against.
    * @param pathOrId - The path or id of the file to check.
-   * @returns Whether the path or ID corresponds to a runtime file.
+   * @returns Whether the path or ID corresponds to a builtin file.
    */
-  isMatchingRuntimeId: (id: string, pathOrId: string) => boolean;
+  isMatchingBuiltinId: (id: string, pathOrId: string) => boolean;
 
   /**
-   * Checks if a provided string is a valid runtime ID (does not need to already be created in the file system).
+   * Checks if a provided string is a valid builtin ID (does not need to already be created in the file system).
    *
    * @param id - The ID to check.
-   * @returns Whether the ID is a valid runtime ID.
+   * @returns Whether the ID is a valid builtin ID.
    */
-  isValidRuntimeId: (id: string) => boolean;
+  isValidBuiltinId: (id: string) => boolean;
 
   /**
    * Check if a path or ID corresponds to a virtual file.
@@ -152,14 +152,14 @@ export interface VirtualFileSystemInterface {
   isTsconfigPath: (pathOrId: string) => boolean;
 
   /**
-   * Checks if a given path or ID corresponds to a runtime file.
+   * Checks if a given path or ID corresponds to a builtin module file.
    */
-  isRuntimeFile: (pathOrID: string, options?: ResolvePathOptions) => boolean;
+  isBuiltinFile: (pathOrID: string, options?: ResolvePathOptions) => boolean;
 
   /**
-   * Returns a list of runtime files in the virtual file system.
+   * Returns a list of builtin module files in the virtual file system.
    */
-  listRuntimeFiles: () => Promise<VirtualRuntimeFile[]>;
+  listBuiltinFiles: () => Promise<VirtualBuiltinFile[]>;
 
   /**
    * Checks if a file exists in the virtual file system (VFS).
@@ -396,18 +396,18 @@ export interface VirtualFileSystemInterface {
   ) => void;
 
   /**
-   * Adds a runtime file to the virtual file system.
+   * Adds a builtin module file to the virtual file system.
    *
-   * @param id - The unique identifier for the runtime file.
-   * @param path - The path to the runtime file.
-   * @param contents - The contents of the runtime file.
-   * @param options - Optional parameters for writing the runtime file.
+   * @param id - The unique identifier for the builtin module file.
+   * @param path - The path to the builtin module file.
+   * @param contents - The contents of the builtin module file.
+   * @param options - Optional parameters for writing the builtin module file.
    */
-  writeRuntimeFile: (
+  writeBuiltinFile: (
     id: string,
     path: string,
     contents: string,
-    options?: { skipFormat?: boolean }
+    options?: WriteBuiltinFileOptions
   ) => Promise<void>;
 
   /**
@@ -420,7 +420,7 @@ export interface VirtualFileSystemInterface {
   writeEntryFile: (
     name: string,
     contents: string,
-    options?: { skipFormat?: boolean }
+    options?: WriteBuiltinFileOptions
   ) => Promise<void>;
 
   /**
@@ -458,11 +458,11 @@ export interface VirtualFileSystemInterface {
   realpathSync: (pathOrId: string) => string;
 
   /**
-   * Resolves a path or ID to a runtime file id in the virtual file system.
+   * Resolves a path or ID to a builtin module file id in the virtual file system.
    *
    * @param pathOrId - The path or id of the file to resolve.
    * @param paths - Optional array of paths to search for the file.
-   * @returns The resolved id of the runtime file if it exists, otherwise false.
+   * @returns The resolved id of the builtin module file if it exists, otherwise false.
    */
   resolveId: (pathOrId: string) => string | false;
 

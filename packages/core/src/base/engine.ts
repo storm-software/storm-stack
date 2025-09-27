@@ -36,7 +36,6 @@ import { init } from "../commands/init";
 import { lint } from "../commands/lint";
 import { _new } from "../commands/new";
 import { prepare } from "../commands/prepare";
-import { createContext, getChecksum, getPersistedMeta } from "../lib/context";
 import {
   isPluginConfigObject,
   isPluginInstance
@@ -55,6 +54,7 @@ import type {
   ResolvedOptions
 } from "../types";
 import { PluginConfig } from "../types/config";
+import { createContext, getChecksum, getPersistedMeta } from "./context";
 import type { Plugin } from "./plugin";
 
 /**
@@ -437,11 +437,11 @@ export class Engine<TOptions extends ResolvedOptions = ResolvedOptions> {
 
       try {
         // First check if the package has a "plugin" subdirectory - @scope/package/plugin
-        const module = await this.#context.resolver.import<{
+        const module = await this.#context.resolver.plugin.import<{
           plugin?: new (config: any) => Plugin;
           default: new (config: any) => Plugin;
         }>(
-          this.#context.resolver.esmResolve(
+          this.#context.resolver.plugin.esmResolve(
             joinPaths(pluginConfig[0], "plugin")
           )
         );
@@ -453,10 +453,10 @@ export class Engine<TOptions extends ResolvedOptions = ResolvedOptions> {
         });
       } catch (error) {
         try {
-          const module = await this.#context.resolver.import<{
+          const module = await this.#context.resolver.plugin.import<{
             plugin?: new (config: any) => Plugin;
             default: new (config: any) => Plugin;
-          }>(this.#context.resolver.esmResolve(pluginConfig[0]));
+          }>(this.#context.resolver.plugin.esmResolve(pluginConfig[0]));
 
           const PluginConstructor = module.plugin ?? module.default;
           pluginInstance = new PluginConstructor({

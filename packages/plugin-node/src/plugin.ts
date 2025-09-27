@@ -54,7 +54,7 @@ export default class NodePlugin<
     this.dependencies = [
       [
         "@storm-stack/plugin-env",
-        { environmentConfig: "process.env", ...(this.options.env ?? {}) }
+        { defaultConfig: "process.env", ...(this.options.env ?? {}) }
       ],
       ["@storm-stack/plugin-error", this.options.error],
       [
@@ -76,7 +76,7 @@ export default class NodePlugin<
 
     hooks.addHooks({
       "init:options": this.initOptions.bind(this),
-      "prepare:runtime": this.prepareRuntime.bind(this),
+      "prepare:builtins": this.prepareBuiltins.bind(this),
       "prepare:types": this.prepareTypes.bind(this)
     });
   }
@@ -118,7 +118,7 @@ export default class NodePlugin<
     context.options.babel.plugins = addPluginFilter(
       context,
       context.options.babel.plugins,
-      sourceFile => !context.vfs.isMatchingRuntimeId("context", sourceFile.id),
+      sourceFile => !context.vfs.isMatchingBuiltinId("context", sourceFile.id),
       "error"
     );
     context.options.babel.plugins.push(BabelPlugin);
@@ -129,51 +129,51 @@ export default class NodePlugin<
    *
    * @param context - The context to initialize.
    */
-  protected async prepareRuntime(context: TContext) {
+  protected async prepareBuiltins(context: TContext) {
     this.log(
       LogLevelLabel.TRACE,
       `Preparing the NodeJs runtime artifacts for the Storm Stack project.`
     );
 
     const promises = [
-      context.vfs.writeRuntimeFile(
+      context.vfs.writeBuiltinFile(
         "id",
-        joinPaths(context.runtimePath, "id.ts"),
+        joinPaths(context.builtinsPath, "id.ts"),
         IdModule()
       ),
-      context.vfs.writeRuntimeFile(
+      context.vfs.writeBuiltinFile(
         "log",
-        joinPaths(context.runtimePath, "log.ts"),
+        joinPaths(context.builtinsPath, "log.ts"),
         LogModule(context)
       ),
-      context.vfs.writeRuntimeFile(
+      context.vfs.writeBuiltinFile(
         "storage",
-        joinPaths(context.runtimePath, "storage.ts"),
+        joinPaths(context.builtinsPath, "storage.ts"),
         StorageModule(context)
       ),
-      context.vfs.writeRuntimeFile(
+      context.vfs.writeBuiltinFile(
         "context",
-        joinPaths(context.runtimePath, "context.ts"),
+        joinPaths(context.builtinsPath, "context.ts"),
         ContextModule(context)
       ),
-      context.vfs.writeRuntimeFile(
+      context.vfs.writeBuiltinFile(
         "meta",
-        joinPaths(context.runtimePath, "meta.ts"),
+        joinPaths(context.builtinsPath, "meta.ts"),
         MetaModule(context)
       ),
-      context.vfs.writeRuntimeFile(
+      context.vfs.writeBuiltinFile(
         "event",
-        joinPaths(context.runtimePath, "event.ts"),
+        joinPaths(context.builtinsPath, "event.ts"),
         EventModule(context)
       ),
-      context.vfs.writeRuntimeFile(
+      context.vfs.writeBuiltinFile(
         "request",
-        joinPaths(context.runtimePath, "request.ts"),
+        joinPaths(context.builtinsPath, "request.ts"),
         RequestModule(context)
       ),
-      context.vfs.writeRuntimeFile(
+      context.vfs.writeBuiltinFile(
         "response",
-        joinPaths(context.runtimePath, "response.ts"),
+        joinPaths(context.builtinsPath, "response.ts"),
         ResponseModule(context)
       )
     ];

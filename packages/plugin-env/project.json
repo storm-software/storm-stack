@@ -18,13 +18,13 @@
         "production": {
           "mode": "production"
         },
-        "staging": {
-          "mode": "staging"
+        "test": {
+          "mode": "test"
         },
         "development": {
           "mode": "development",
           "skipCache": true,
-          "logLevel": "trace"
+          "logLevel": "debug"
         }
       }
     },
@@ -39,13 +39,13 @@
         "production": {
           "mode": "production"
         },
-        "staging": {
-          "mode": "staging"
+        "test": {
+          "mode": "test"
         },
         "development": {
           "mode": "development",
           "skipCache": true,
-          "logLevel": "trace"
+          "logLevel": "debug"
         }
       }
     },

@@ -12,4 +12,4 @@ ports:
 env:
   STORM_NAME: storm-stack
   STORM_ORG: storm-software
-  STORM_ENV: staging
+  STORM_ENV: test

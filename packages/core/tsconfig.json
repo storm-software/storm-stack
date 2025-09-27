@@ -3,13 +3,14 @@
   "compilerOptions": {
     "lib": ["ESNext"],
     "rootDir": "../..",
-    "types": ["node"],
-    "strict": true,
+    "types": ["node", "./types/babel-ambient.d.ts"],
+    "strict": false,
     "outDir": "../../dist/out-tsc"
   },
   "include": [
     "src/**/*.ts",
     "scripts/**/*.ts",
+    "types/**/*.d.ts",
     "tsup.config.ts",
     "tsup.scripts.ts",
     "tsup.schemas.ts"

@@ -50,9 +50,9 @@ export function resolveTsupOptions(
 ): TsupOptions {
   return defu(
     {
-      alias: context.vfs.runtimeIdMap.keys().reduce(
+      alias: context.vfs.builtinIdMap.keys().reduce(
         (ret, id) => {
-          const path = context.vfs.runtimeIdMap.get(id);
+          const path = context.vfs.builtinIdMap.get(id);
           if (path) {
             ret[id] = path;
           }
@@ -90,10 +90,9 @@ export function resolveTsupOptions(
       platform: context.options.platform,
       projectRoot: context.options.projectRoot,
       sourceRoot: context.options.sourceRoot,
-      outdir: context.options.output.outputPath,
       tsconfig: context.tsconfig.tsconfigFilePath,
       tsconfigRaw: context.tsconfig.tsconfigJson,
-      noExternal: Array.from(context.vfs.runtimeIdMap.keys())
+      noExternal: Array.from(context.vfs.builtinIdMap.keys())
     },
     context.options.variant === "tsup" ||
       (context.options.variant === "standalone" &&
@@ -107,6 +106,7 @@ export function resolveTsupOptions(
             ? "\n//  ⚡  Built with Storm Stack \n"
             : " "
       },
+      distDir: "dist",
       platform: "neutral",
       format: "esm",
       minify: true,

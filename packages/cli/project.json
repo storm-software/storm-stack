@@ -23,8 +23,8 @@
         "production": {
           "mode": "production"
         },
-        "staging": {
-          "mode": "staging"
+        "test": {
+          "mode": "test"
         },
         "development": {
           "mode": "development",
@@ -47,8 +47,8 @@
         "production": {
           "mode": "production"
         },
-        "staging": {
-          "mode": "staging"
+        "test": {
+          "mode": "test"
         },
         "development": {
           "mode": "development",
@@ -78,8 +78,8 @@
         "production": {
           "mode": "production"
         },
-        "staging": {
-          "mode": "staging"
+        "test": {
+          "mode": "test"
         },
         "development": {
           "mode": "development",

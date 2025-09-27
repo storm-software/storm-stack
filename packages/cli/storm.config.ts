@@ -17,14 +17,15 @@
  ------------------------------------------------------------------- */
 
 import { defineConfig } from "@storm-stack/core/define-config";
-import StormStackCLIPlugin from "@storm-stack/plugin-cli/plugin";
-import StormStackLogSentryPlugin from "@storm-stack/plugin-log-sentry/plugin";
-import StormStackLogStoragePlugin from "@storm-stack/plugin-log-storage/plugin";
+import CLIPlugin from "@storm-stack/plugin-cli/plugin";
+import LogSentryPlugin from "@storm-stack/plugin-log-sentry/plugin";
+import LogStoragePlugin from "@storm-stack/plugin-log-storage/plugin";
 
 export default defineConfig({
   name: "Storm Stack",
+  skipCache: true,
   plugins: [
-    new StormStackCLIPlugin({
+    new CLIPlugin({
       title: {
         font: "tiny",
         colors: ["cyan"],
@@ -35,15 +36,12 @@ export default defineConfig({
         types: "./src/types/env.ts#StormStackCLIEnv"
       }
     }),
-    new StormStackLogStoragePlugin({
+    new LogStoragePlugin({
       logLevel: "info"
     }),
-    new StormStackLogSentryPlugin({
+    new LogSentryPlugin({
       logLevel: "error"
     })
   ],
-  external: ["@storm-stack/core"],
-  output: {
-    outputMode: "fs"
-  }
+  external: ["@storm-stack/core"]
 });

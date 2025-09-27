@@ -63,12 +63,45 @@
         "cwd": "{projectRoot}"
       }
     },
+    "build-runtime-types": {
+      "cache": true,
+      "inputs": [
+        "{projectRoot}/dist/runtime-types/esm",
+        "{projectRoot}/dist/runtime-types/cjs"
+      ],
+      "outputs": [
+        "{projectRoot}/dist/runtime-types/shared.d.ts",
+        "{projectRoot}/dist/runtime-types/node.d.ts",
+        "{projectRoot}/dist/runtime-types/browser.d.ts"
+      ],
+      "executor": "nx:run-commands",
+      "dependsOn": ["generate-runtime-types", "build-scripts"],
+      "options": {
+        "command": "node ./scripts/build-runtime-types.cjs || exit 0",
+        "cwd": "{projectRoot}"
+      }
+    },
+    "build-babel-types": {
+      "cache": true,
+      "inputs": ["{projectRoot}/types/babel-types.d.ts"],
+      "outputs": ["{projectRoot}/dist/babel-types.d.ts"],
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "pnpm copyfiles --up=3 ./packages/core/types/babel-types.d.ts packages/core/dist"
+      }
+    },
     "build": {
       "cache": true,
       "inputs": ["{projectRoot}/dist"],
       "outputs": ["{workspaceRoot}/dist/{projectRoot}"],
       "executor": "nx:run-commands",
-      "dependsOn": ["build-base", "build-scripts", "build-schemas"],
+      "dependsOn": [
+        "build-base",
+        "build-scripts",
+        "build-schemas",
+        "build-runtime-types",
+        "build-babel-types"
+      ],
       "options": {
         "commands": [
           "pnpm copyfiles LICENSE dist/packages/core",

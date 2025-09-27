@@ -107,12 +107,12 @@ export function extractAuthor(
     }
   }
 
-  if (context.options.organization) {
-    if (isString(context.options.organization) && !author?.name) {
+  if (context.options.plugins.cli.author) {
+    if (isString(context.options.plugins.cli.author) && !author?.name) {
       author ??= {} as OrganizationConfig;
-      author.name = context.options.organization;
+      author.name = context.options.plugins.cli.author;
     } else {
-      author = defu(author ?? {}, context.options.organization);
+      author = defu(author ?? {}, context.options.plugins.cli.author);
     }
   }
 
@@ -294,7 +294,7 @@ export function getRequestBaseTypeDefinition(
   context: CLIPluginContext
 ): TypeDefinition {
   return {
-    file: joinPaths(context.runtimePath, "request.ts"),
+    file: joinPaths(context.builtinsPath, "request.ts"),
     name: "StormRequest"
   };
 }

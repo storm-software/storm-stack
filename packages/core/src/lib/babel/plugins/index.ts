@@ -17,4 +17,9 @@
  ------------------------------------------------------------------- */
 
 export * from "./builtin-extend";
+export * from "./import-meta-env";
+export * from "./import-meta-paths";
+export * from "./import-meta-resolve";
 export * from "./module-resolver";
+export * from "./transform-module";
+export * from "./transform-typescript-metadata";

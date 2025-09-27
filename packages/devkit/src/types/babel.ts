@@ -16,7 +16,8 @@
 
  ------------------------------------------------------------------- */
 
-import type { PluginAPI, PluginObject } from "@babel/core";
+import { PluginObj } from "@babel/core";
+import { BabelAPI } from "@babel/helper-plugin-utils";
 import {
   BabelPlugin,
   BabelPluginOptions,
@@ -31,7 +32,7 @@ export interface BabelPluginBuilderParams<
 > {
   name: string;
   log: LogFn;
-  api: PluginAPI;
+  api: BabelAPI;
   options: TOptions;
   context: TContext;
   dirname: string;
@@ -43,12 +44,12 @@ export type BabelPluginBuilder<
   TState = any
 > = (
   params: BabelPluginBuilderParams<TOptions, TContext>
-) => PluginObject<TState & BabelPluginPass<TOptions>>;
+) => PluginObj<TState & BabelPluginPass<TOptions>>;
 
 export type DeclareReturn<
   TOptions extends BabelPluginOptions = BabelPluginOptions,
   TState = any
-> = PluginObject<TOptions & BabelPluginPass<TOptions, TState>>;
+> = PluginObj<TOptions & BabelPluginPass<TOptions, TState>>;
 
 export type DeclareBabelPluginReturn<
   TOptions extends BabelPluginOptions = BabelPluginOptions,

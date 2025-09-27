@@ -28,7 +28,9 @@ import { CompilerOptions, SourceFile } from "../../types/compiler";
 import { LogFn } from "../../types/config";
 import { Context } from "../../types/context";
 import { getMagicString, getString } from "../utilities/source-file";
+import { getPluginName } from "./helpers";
 import {
+  applyBabelDefaults,
   resolveBabelInputOptions,
   resolveBabelPlugins,
   resolveBabelPresets
@@ -68,10 +70,23 @@ export async function transform(
       return sourceFile;
     }
 
-    const opts = defu(context.options.babel ?? {}, options.babel ?? {});
+    const resolvedOptions = applyBabelDefaults(
+      sourceFile,
+      defu(context.options.babel ?? {}, options.babel ?? {})
+    );
 
-    const plugins = resolveBabelPlugins(log, context, sourceFile, opts);
-    const presets = resolveBabelPresets(log, context, sourceFile, opts);
+    const plugins = resolveBabelPlugins(
+      log,
+      context,
+      sourceFile,
+      resolvedOptions
+    );
+    const presets = resolveBabelPresets(
+      log,
+      context,
+      sourceFile,
+      resolvedOptions
+    );
 
     if (
       (!plugins && !presets) ||
@@ -103,27 +118,47 @@ export async function transform(
       );
     }
 
-    log(LogLevelLabel.TRACE, `Transforming ${sourceFile.id} with Babel`);
+    const transformOptions = defu(
+      {
+        filename: sourceFile.id
+      },
+      resolveBabelInputOptions(context, resolvedOptions, plugins, presets)
+    );
+
+    log(
+      LogLevelLabel.DEBUG,
+      `Running Babel transforms for ${source.id} with the following configuration: \n${JSON.stringify(
+        {
+          options: {
+            ...transformOptions,
+            plugins: "N/A",
+            presets: "N/A"
+          },
+          plugins: transformOptions.plugins?.map(plugin =>
+            isSetString(getPluginName(plugin))
+              ? getPluginName(plugin)
+              : "<unknown>"
+          ),
+          presets: transformOptions.presets?.map(preset =>
+            isSetString(getPluginName(preset))
+              ? getPluginName(preset)
+              : "<unknown>"
+          )
+        },
+        null,
+        2
+      )}`
+    );
 
     const result = await transformAsync(
       getString(sourceFile.code),
-      defu(
-        {
-          filename: sourceFile.id
-        },
-        resolveBabelInputOptions(context, opts, plugins, presets)
-      )
+      transformOptions
     );
     if (!result?.code) {
       throw new Error(
         `BabelPluginStormStack failed to compile ${sourceFile.id}`
       );
     }
-
-    log(
-      LogLevelLabel.TRACE,
-      `Completed Babel transformations of ${sourceFile.id}`
-    );
 
     sourceFile.code = getMagicString(result.code);
 

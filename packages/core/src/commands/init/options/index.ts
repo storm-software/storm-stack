@@ -19,7 +19,8 @@
 import { formatLogMessage } from "@storm-software/config-tools/logger/console";
 import { LogLevelLabel } from "@storm-software/config-tools/types";
 import { joinPaths } from "@stryke/path/join-paths";
-import { defaultEnvironmentName } from "../../../lib/config";
+import { isString } from "@stryke/type-checks/is-string";
+import { defaultEnvironmentName } from "../../../base/options";
 import type { EngineHooks } from "../../../types/build";
 import { Context } from "../../../types/context";
 
@@ -31,10 +32,11 @@ export async function initOptions(context: Context, hooks: EngineHooks) {
 
   if (context.packageJson) {
     if (context.options.command === "new") {
-      context.options.workspaceConfig.repository ??=
-        typeof context.packageJson.repository === "string"
-          ? context.packageJson.repository
-          : context.packageJson.repository?.url;
+      context.options.workspaceConfig.repository ??= isString(
+        context.packageJson.repository
+      )
+        ? context.packageJson.repository
+        : context.packageJson.repository?.url;
     } else {
       if (context.packageJson?.name) {
         context.options.name ??= context.packageJson?.name;

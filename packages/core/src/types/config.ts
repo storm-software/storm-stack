@@ -30,7 +30,10 @@ import type { TypeDefinitionParameter } from "@stryke/types/configuration";
 import { ConfigLayer, ResolvedConfig } from "c12";
 import type { BuildOptions as ExternalESBuildOptions } from "esbuild";
 import type { RolldownOptions as ExternalRolldownOptions } from "rolldown";
-import type { RollupOptions as ExternalRollupOptions } from "rollup";
+import type {
+  RollupOptions as ExternalRollupOptions,
+  OutputOptions as ExternalRollupOutputOptions
+} from "rollup";
 import type { UnpluginContextMeta } from "unplugin";
 import type {
   InlineConfig as ExternalViteInlineConfig,
@@ -115,7 +118,13 @@ export type RspackConfig = Omit<
 >;
 export type RspackOptions = ExternalRspackOptions;
 
-export type RollupConfig = ExternalRollupOptions;
+export type RollupOutputConfig = Omit<ExternalRollupOutputOptions, "dir">;
+export type RollupConfig = Omit<
+  ExternalRollupOptions,
+  "entry" | "external" | "input" | "output" | "logLevel"
+> & {
+  output: RollupOutputConfig | RollupOutputConfig[];
+};
 export type RollupOptions = ExternalRollupOptions;
 
 export type RolldownConfig = ExternalRolldownOptions;
@@ -355,7 +364,7 @@ export interface CommonUserConfig {
    *
    * @defaultValue "production"
    */
-  mode?: "development" | "staging" | "production";
+  mode?: "development" | "test" | "production";
 
   /**
    * The environment name for which the project is being built.

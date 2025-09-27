@@ -333,3 +333,32 @@ export async function writeEnvReflection(
     }
   );
 }
+
+/**
+ * Writes the environment reflection data to the file system.
+ *
+ * @param context - The plugin context.
+ * @param reflection - The reflection data to write.
+ * @param name - The name of the reflection (either "env" or "secrets").
+ */
+export function writeEnvReflectionSync(
+  context: EnvPluginContext,
+  reflection: ReflectionClass<any>,
+  name: EnvType = "env"
+) {
+  const serialized = reflection.serializeType();
+
+  const message = new capnp.Message();
+  const root = message.initRoot(SerializedTypes);
+
+  convertToCapnp(serialized, root._initTypes(serialized.length));
+
+  context.vfs.writeFileSync(
+    getEnvReflectionsPath(context, name),
+    Buffer.from(message.toArrayBuffer()),
+    {
+      encoding: "binary",
+      outputMode: "fs"
+    }
+  );
+}

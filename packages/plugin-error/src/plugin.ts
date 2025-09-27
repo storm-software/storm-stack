@@ -62,7 +62,7 @@ export default class ErrorPlugin<
 
     hooks.addHooks({
       "init:options": this.initOptions.bind(this),
-      "prepare:runtime": this.prepareRuntime.bind(this)
+      "prepare:builtins": this.prepareBuiltins.bind(this)
     });
   }
 
@@ -85,7 +85,7 @@ export default class ErrorPlugin<
       addPluginFilter(
         context,
         StormErrorBabelPlugin,
-        sourceFile => !context.vfs.isMatchingRuntimeId("error", sourceFile.id)
+        sourceFile => !context.vfs.isMatchingBuiltinId("error", sourceFile.id)
       )
     );
 
@@ -118,15 +118,15 @@ export default class ErrorPlugin<
    *
    * @param context - The context to initialize.
    */
-  protected async prepareRuntime(context: TContext) {
+  protected async prepareBuiltins(context: TContext) {
     this.log(
       LogLevelLabel.TRACE,
       `Preparing the StormError runtime artifacts for the Storm Stack project.`
     );
 
-    await context.vfs.writeRuntimeFile(
+    await context.vfs.writeBuiltinFile(
       "error",
-      joinPaths(context.runtimePath, "error.ts"),
+      joinPaths(context.builtinsPath, "error.ts"),
       ErrorModule(context)
     );
   }

@@ -21,7 +21,6 @@ import { ReflectionKind, stringifyType } from "@storm-stack/core/deepkit/type";
 import { getFileHeader } from "@storm-stack/core/lib/utilities/file-header";
 import type { LogFn } from "@storm-stack/core/types/config";
 import {
-  findFileExtension,
   findFileName,
   findFilePath,
   relativePath
@@ -177,10 +176,9 @@ import ${command.input.name ? `{ ${command.input.name} as handle }` : "handle"} 
         findFilePath(command.file),
         findFilePath(command.input.file)
       ),
-      findFileName(command.input.file).replace(
-        findFileExtension(command.input.file) || "",
-        ""
-      )
+      findFileName(command.input.file, {
+        withExtension: false
+      })
     )}";
 import { colors, showError } from "storm:cli";${
       request.import
@@ -295,10 +293,9 @@ import ${
         findFilePath(command.file),
         findFilePath(command.input.file)
       ),
-      findFileName(command.input.file).replace(
-        findFileExtension(command.input.file) || "",
-        ""
-      )
+      findFileName(command.input.file, {
+        withExtension: false
+      })
     )}";
 import { StormRequest } from "storm:request";
 import { createStormError } from "storm:error";
@@ -772,10 +769,7 @@ import ${command.input.name ? `{ ${command.input.name} as handle }` : "handle"} 
         findFilePath(command.file),
         findFilePath(command.input.file)
       ),
-      findFileName(command.input.file).replace(
-        findFileExtension(command.input.file) || "",
-        ""
-      )
+      findFileName(command.input.file, { withExtension: false })
     )}";
 import { StormRequest } from "storm:request";
 import { CLIRequestData, colors, renderBanner, renderFooter, parseArgs, showError } from "storm:cli";${
@@ -1080,10 +1074,10 @@ export async function prepareEntry(
     }
   }
 
-  let repository = context.options.repository;
+  let repository = context.options.plugins.cli.repository;
   if (!repository) {
-    if (context.options.repository) {
-      repository = context.options.repository;
+    if (context.options.plugins.cli.repository) {
+      repository = context.options.plugins.cli.repository;
     } else if (context.packageJson?.repository) {
       repository = isString(context.packageJson.repository)
         ? context.packageJson.repository
@@ -1184,7 +1178,8 @@ ${
       repository
         ? repository.replace(/\.git$/, "").replace(/^git:/, "")
         : `https://github.com/${author?.name || "storm-software"}/${
-            context.options.namespace ||
+            context.options.plugins.cli.namespace ||
+            context.options.workspaceConfig.namespace ||
             context.options.name ||
             context.packageJson.name
           }/releases/tag/${

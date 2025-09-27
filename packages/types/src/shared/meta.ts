@@ -43,10 +43,10 @@ export interface StormMeta {
    * @remarks
    * The `mode` is typically set based on the deployment environment and can affect configuration, logging, and feature flags. Valid values for the `mode` are:
    * - `"development"`: Used for local development and testing.
-   * - `"staging"`: Used for staging environments that closely mirror production.
+   * - `"test"`: Used for test runners/staging environments that closely mirror production.
    * - `"production"`: Used for live production environments.
    */
-  readonly mode: "development" | "staging" | "production";
+  readonly mode: "development" | "test" | "production";
 
   /**
    * A boolean indicator specifying if running in production mode.
@@ -54,9 +54,9 @@ export interface StormMeta {
   readonly isProduction: boolean;
 
   /**
-   * A boolean indicator specifying if running in staging mode.
+   * A boolean indicator specifying if running in test mode or under test conditions.
    */
-  readonly isStaging: boolean;
+  readonly isTest: boolean;
 
   /**
    * A boolean indicator specifying if running in development mode.
@@ -67,9 +67,4 @@ export interface StormMeta {
    * A boolean indicator specifying if running in debug mode (typically development with debug enabled).
    */
   readonly isDebug: boolean;
-
-  /**
-   * A boolean indicator specifying if running in test mode or under test conditions.
-   */
-  readonly isTest: boolean;
 }

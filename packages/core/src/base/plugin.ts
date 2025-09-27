@@ -99,6 +99,16 @@ export abstract class Plugin<
   }
 
   /**
+   * The display name of the plugin used in logs and other output.
+   *
+   * @remarks
+   * This is a human friendly version of the plugin name used in logs and other output.
+   */
+  public get displayName(): string {
+    return `${titleCase(this.name)} Plugin`;
+  }
+
+  /**
    * The primary keys for the plugin's options.
    *
    * @remarks
@@ -160,8 +170,8 @@ export abstract class Plugin<
   protected get log(): LogFn {
     if (!this.#log) {
       this.#log = this.options.log
-        ? extendLog(this.options.log, `${titleCase(this.name)} Plugin`)
-        : createLog(`${titleCase(this.name)} Plugin`);
+        ? extendLog(this.options.log, this.displayName)
+        : createLog(this.displayName);
     }
 
     return this.#log;

@@ -33,13 +33,7 @@ export interface VitePluginBuilderParams<
   context: TContext;
 }
 
-export type VitePluginBuilderReturn<
-  TOptions extends Record<string, any> = Record<string, any>
-> = (options: TOptions) => VitePlugin;
-
 export type VitePluginBuilder<
   TOptions extends Record<string, any> = Record<string, any>,
   TContext extends Context<ViteResolvedOptions> = Context<ViteResolvedOptions>
-> = (
-  params: VitePluginBuilderParams<TOptions, TContext>
-) => VitePluginBuilderReturn<TOptions>;
+> = (params: VitePluginBuilderParams<TOptions, TContext>) => VitePlugin;

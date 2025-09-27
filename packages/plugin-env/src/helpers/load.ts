@@ -127,12 +127,13 @@ export function loadEnvFromContext(
       ENVIRONMENT: context.options.environment
     },
     isSetObject(context.reflections?.env?.types?.env)
-      ? context.reflections.env.types.env
-          ?.getProperties()
-          .reduce((ret, prop) => {
+      ? context.reflections.env.types.env?.getProperties().reduce(
+          (ret, prop) => {
             ret[prop.name] = parsed[prop.name] ?? prop.getDefaultValue();
             return ret;
-          }, {})
+          },
+          {} as Record<string, any>
+        )
       : {}
   );
 }

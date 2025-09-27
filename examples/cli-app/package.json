@@ -13,15 +13,15 @@
     "examples-cli": "dist/examples-cli.mjs"
   },
   "dependencies": {
-    "@storm-stack/core": "0.46.0",
+    "@storm-stack/core": "workspace:*",
     "date-fns": "catalog:",
     "unstorage": "catalog:"
   },
   "devDependencies": {
-    "@storm-stack/nx": "0.21.0",
-    "@storm-stack/plugin-cli": "0.37.0",
-    "@storm-stack/plugin-date": "0.8.0",
-    "@storm-stack/plugin-log-console": "0.23.8",
-    "@storm-stack/plugin-log-sentry": "0.31.4"
+    "@storm-stack/nx": "workspace:*",
+    "@storm-stack/plugin-cli": "workspace:*",
+    "@storm-stack/plugin-date": "workspace:*",
+    "@storm-stack/plugin-log-console": "workspace:*",
+    "@storm-stack/plugin-log-sentry": "workspace:*"
   }
 }

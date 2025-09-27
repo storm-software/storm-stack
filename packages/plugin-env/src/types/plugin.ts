@@ -70,13 +70,6 @@ export type EnvPluginOptions = Omit<DotenvConfiguration, "types"> &
      * @defaultValue false
      */
     inject?: boolean;
-
-    /**
-     * The environment config template string to provide as the default parameter of `createConfig` in `storm:config`
-     *
-     * @defaultValue `process.env`
-     */
-    environmentConfig?: string;
   };
 
 export type ResolvedEnvPluginOptions = Required<
@@ -121,6 +114,8 @@ export type ResolvedEnvPluginOptions = Required<
    * This value is the result of loading the .env configuration file found in the project root directory and merging it with the values provided at {@link EnvPluginOptions.values}
    */
   parsed: DotenvParseOutput;
+
+  defaultConfig: string;
 };
 
 export interface EnvPluginResolvedOptions {

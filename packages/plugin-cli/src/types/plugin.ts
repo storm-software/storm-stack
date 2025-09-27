@@ -223,6 +223,11 @@ export interface CLIPluginOptions extends NodePluginOptions {
   support?: WorkspaceConfig["support"];
 
   /**
+   * The repository URL for the CLI application
+   */
+  repository?: WorkspaceConfig["repository"];
+
+  /**
    * The documentation URL for the CLI application
    */
   docs?: WorkspaceConfig["docs"];
@@ -231,6 +236,11 @@ export interface CLIPluginOptions extends NodePluginOptions {
    * The homepage URL for the CLI application
    */
   homepage?: WorkspaceConfig["homepage"];
+
+  /**
+   * The namespace of the repository to use for in the release notes
+   */
+  namespace?: WorkspaceConfig["namespace"];
 
   /**
    * The colors to use for the CLI application.

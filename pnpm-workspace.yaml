@@ -3,20 +3,35 @@ packages:
   - packages/*
   - examples/*
 catalog:
+  "@alloy-js/babel-plugin": ^0.2.1
+  "@alloy-js/babel-plugin-jsx-dom-expressions": ^0.39.1
+  "@alloy-js/babel-preset": ^0.2.1
+  "@alloy-js/cli": ^0.20.0
   "@alloy-js/core": ^0.20.0
+  "@alloy-js/json": ^0.20.0
+  "@alloy-js/markdown": ^0.20.0
+  "@alloy-js/rollup-plugin": ^0.1.0
   "@alloy-js/typescript": ^0.20.0
-  "@babel/core": 8.0.0-beta.2
-  "@babel/generator": 8.0.0-beta.2
-  "@babel/helper-module-imports": 8.0.0-beta.2
-  "@babel/helper-plugin-utils": 8.0.0-beta.2
-  "@babel/parser": 8.0.0-beta.2
-  "@babel/plugin-syntax-typescript": 8.0.0-beta.2
-  "@babel/plugin-syntax-jsx": 8.0.0-beta.2
-  "@babel/preset-typescript": 8.0.0-beta.2
-  "@babel/preset-react": 8.0.0-beta.2
-  "@babel/template": 8.0.0-beta.2
-  "@babel/traverse": 8.0.0-beta.2
-  "@babel/types": 8.0.0-beta.2
+  "@babel/core": ^7.28.4
+  "@babel/generator": ^7.28.3
+  "@babel/helper-module-imports": ^7.27.1
+  "@babel/helper-module-transforms": ^7.28.3
+  "@babel/helper-plugin-utils": ^7.27.1
+  "@babel/helper-simple-access": ^7.27.1
+  "@babel/parser": ^7.28.4
+  "@babel/plugin-proposal-decorators": ^7.28.0
+  "@babel/plugin-syntax-class-properties": ^7.12.13
+  "@babel/plugin-syntax-import-assertions": ^7.27.1
+  "@babel/plugin-syntax-typescript": ^7.27.1
+  "@babel/plugin-syntax-jsx": ^7.27.1
+  "@babel/plugin-transform-export-namespace-from": ^7.27.1
+  "@babel/plugin-transform-react-jsx": ^7.27.1
+  "@babel/plugin-transform-typescript": ^7.28.0
+  "@babel/preset-typescript": ^7.27.1
+  "@babel/preset-react": ^7.28.4
+  "@babel/template": ^7.27.2
+  "@babel/traverse": ^7.28.4
+  "@babel/types": ^7.28.4
   "@biomejs/biome": ^1.9.4
   "@clack/prompts": ^0.10.1
   "@cloudflare/unenv-preset": 2.3.1
@@ -33,16 +48,33 @@ catalog:
   "@microsoft/api-extractor": ^7.52.8
   "@microsoft/tsdoc": ^0.15.1
   "@microsoft/tsdoc-config": ^0.17.1
+  "@rollup/plugin-babel": ^6.0.4
+  "@rollup/plugin-commonjs": ^28.0.6
+  "@rollup/plugin-node-resolve": ^16.0.1
   "@rspack/cli": ^1.3.8
   "@rspack/core": ^1.3.8
+  "@types/babel__core": ^7.20.5
+  "@types/babel__helper-module-imports": ^7.18.3
+  "@types/babel__helper-plugin-utils": ^7.10.3
+  "@types/babel__template": ^7.4.4
+  "@types/babel__traverse": ^7.28.0
   "@vue/reactivity": ^3.5.21
-  "astro": ^5.13.5
-  "rolldown": ^1.0.0-beta.35
-  "rollup": "^4.50.1"
-  "vite": "^7.1.5"
-  "webpack": "^5.101.3"
-  "@nuxt/kit": "^4.1.1"
-  "@nuxt/schema": "^4.1.1"
+  astro: ^5.13.5
+  babel-plugin-parameter-decorator: ^1.0.16
+  conventional-changelog-storm-software: latest
+  esbuild-plugin-babel: ^0.2.3
+  esbuild-plugin-tsc: ^0.5.0
+  rolldown: ^1.0.0-beta.35
+  rollup: ^4.50.1
+  rollup-plugin-json: ^4.0.0
+  rollup-plugin-node-builtins: ^2.1.2
+  rollup-plugin-node-globals: ^1.4.0
+  rollup-plugin-ts-paths: ^1.0.5
+  rollup-plugin-typescript2: ^0.36.0
+  vite: ^7.1.5
+  webpack: ^5.101.3
+  "@nuxt/kit": ^4.1.1
+  "@nuxt/schema": ^4.1.1
   "@opentelemetry/api-logs": ^0.200.0
   "@opentelemetry/exporter-logs-otlp-grpc": ^0.200.0
   "@opentelemetry/exporter-logs-otlp-http": ^0.200.0
@@ -62,13 +94,14 @@ catalog:
   "@types/react-dom": npm:@types/react-dom@ts5.9
   "@types/node": ^22.15.3
   "@types/diff-match-patch": ^1.0.36
-  "@nx/devkit": 21.4.1
-  "@nx/eslint-plugin": 21.4.1
-  "@nx/jest": 21.4.1
-  "@nx/js": 21.4.1
-  "@nx/plugin": 21.4.1
-  "@nx/react": 21.4.1
-  "@nx/workspace": 21.4.1
+  "@nx/devkit": 21.5.3
+  "@nx/esbuild": 21.5.3
+  "@nx/eslint-plugin": 21.5.3
+  "@nx/jest": 21.5.3
+  "@nx/js": 21.5.3
+  "@nx/plugin": 21.5.3
+  "@nx/react": 21.5.3
+  "@nx/workspace": 21.5.3
   "@storm-software/build-tools": latest
   "@storm-software/config": latest
   "@storm-software/config-tools": latest
@@ -88,19 +121,19 @@ catalog:
   "@storm-software/workspace-tools": latest
   "@stryke/env": ^0.18.4
   "@stryke/fs": ^0.28.0
-  "@stryke/helpers": ^0.8.0
-  "@stryke/http": ^0.8.5
+  "@stryke/helpers": ^0.9.0
+  "@stryke/http": ^0.10.0
   "@stryke/unique-id": ^0.3.3
   "@stryke/url": ^0.2.4
   "@stryke/json": ^0.9.3
-  "@stryke/path": ^0.13.1
+  "@stryke/path": ^0.15.2
   "@stryke/types": ^0.8.9
-  "@stryke/hash": ^0.11.0
-  "@stryke/string-format": ^0.10.0
-  "@stryke/convert": ^0.3.2
-  "@stryke/type-checks": ^0.3.9
+  "@stryke/hash": ^0.12.0
+  "@stryke/string-format": ^0.11.0
+  "@stryke/convert": ^0.6.0
+  "@stryke/type-checks": ^0.3.10
   "@stryke/cli": ^0.12.3
-  "@stryke/capnp": 0.11.4
+  "@stryke/capnp": ^0.11.12
   "@swc-node/register": ^1.10.10
   "@swc/core": ^1.11.22
   "@swc/wasm": ^1.11.24
@@ -137,8 +170,8 @@ catalog:
   memfs: ^4.17.2
   minimatch: ^10.0.3
   nanotar: ^0.2.0
-  prettier: 3.6.2
-  nx: 21.4.1
+  prettier: ^3.6.2
+  nx: 21.5.3
   jest: 30.0.5
   jest-environment-jsdom: 30.0.5
   jest-environment-node: 30.0.5
@@ -163,14 +196,14 @@ catalog:
   unbuild: ^3.5.0
   unenv: npm:unenv-nightly
   unimport: ^4.2.0
-  unplugin: "^2.3.10"
+  unplugin: ^2.3.10
   unionfs: ^4.5.4
   unstorage: ^1.16.0
   untyped: 1.5.2
   uqr: ^0.1.2
   verdaccio: 6.1.2
   defu: ^6.1.4
-  jiti: ^2.4.2
+  jiti: ^2.6.0
   wrangler: ^4.19.1
   zx: ^8.5.3
 linkWorkspacePackages: true
@@ -237,4 +270,6 @@ patchedDependencies:
   "@deepkit/type-compiler": patches/@deepkit__type-compiler.patch
   "@deepkit/type-spec": patches/@deepkit__type-spec.patch
   "@deepkit/core": patches/@deepkit__core.patch
+  "@alloy-js/babel-plugin-jsx-dom-expressions": patches/@alloy-js__babel-plugin-jsx-dom-expressions.patch
+  "@alloy-js/core": patches/@alloy-js__core.patch
 preferWorkspacePackages: true

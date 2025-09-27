@@ -38,7 +38,6 @@ const config = defineTsupConfig([
       "@storm-stack/core/deepkit/type-spec",
       "@storm-stack/core/deepkit/type"
     ],
-    noExternal: ["memfs"],
     skipNodeModulesBundle: true
   },
   {
@@ -46,8 +45,10 @@ const config = defineTsupConfig([
     entry: [
       "src/lib/*.ts",
       "src/lib/babel/*.ts",
+      "src/lib/babel/plugins/*.ts",
       "src/lib/deepkit/*.ts",
       "src/lib/esbuild/*.ts",
+      "src/lib/rollup/*.ts",
       "src/lib/tsup/*.ts",
       "src/lib/typedoc/*.ts",
       "src/lib/typedoc/helpers/*.ts",

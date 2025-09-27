@@ -17,4 +17,5 @@
  ------------------------------------------------------------------- */
 
 export * from "./context";
-export * from "./typescript-file";
+export * from "./markdown-table";
+export * from "./reflection";

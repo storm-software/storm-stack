@@ -19,7 +19,7 @@
 import { LogLevelLabel } from "@storm-software/config-tools/types";
 import { bufferToString } from "@stryke/convert/buffer-to-string";
 import { toArray } from "@stryke/convert/to-array";
-import { hash } from "@stryke/hash/hash";
+import { murmurhash } from "@stryke/hash/murmurhash";
 import { findFilePath } from "@stryke/path/file-path-fns";
 import { isParentPath } from "@stryke/path/is-parent-path";
 import { isAbsolutePath } from "@stryke/path/is-type";
@@ -54,10 +54,10 @@ import {
   OutputModeType,
   ResolveFSOptions,
   ResolvePathOptions,
+  VirtualBuiltinFile,
   VirtualFileSystemInterface,
-  VirtualRuntimeFile,
-  WriteFileOptions,
-  WriteRuntimeFileOptions
+  WriteBuiltinFileOptions,
+  WriteFileOptions
 } from "../../types/vfs";
 import { checkVariants, cloneFS, patchFS, toFilePath } from "./helpers";
 
@@ -107,7 +107,7 @@ export class VirtualFileSystem implements VirtualFileSystemInterface {
   /**
    * The internal map of virtual files.
    */
-  #runtimeIdMap: Map<string, string> = new Map<string, string>();
+  #builtinIdMap: Map<string, string> = new Map<string, string>();
 
   /**
    * A map of virtual file paths to their underlying file content.
@@ -197,8 +197,8 @@ export class VirtualFileSystem implements VirtualFileSystemInterface {
   constructor(context: Context, serialized?: SerializedVirtualFileSystem) {
     this.#context = context;
     this.#cachedFS = new Map();
-    this.#runtimeIdMap = new Map(
-      Object.entries(serialized?.runtimeIdMap ?? {})
+    this.#builtinIdMap = new Map(
+      Object.entries(serialized?.builtinIdMap ?? {})
     );
 
     if (!this.#fs.existsSync(this.#context.dataPath)) {
@@ -248,8 +248,8 @@ export class VirtualFileSystem implements VirtualFileSystemInterface {
         });
       }
 
-      if (!this.#virtualFS.existsSync(this.#context.runtimePath)) {
-        this.#virtualFS.mkdirSync(this.#context.runtimePath, {
+      if (!this.#virtualFS.existsSync(this.#context.builtinsPath)) {
+        this.#virtualFS.mkdirSync(this.#context.builtinsPath, {
           recursive: true
         });
       }
@@ -267,15 +267,15 @@ export class VirtualFileSystem implements VirtualFileSystemInterface {
       }
 
       this.#unifiedFS = this.#unifiedFS.use(this.#virtualFS as any);
-    } else {
+    } else if (this.#context.options.projectType === "application") {
       if (!this.#fs.existsSync(this.#context.artifactsPath)) {
         this.#fs.mkdirSync(this.#context.artifactsPath, {
           recursive: true
         });
       }
 
-      if (!this.#fs.existsSync(this.#context.runtimePath)) {
-        this.#fs.mkdirSync(this.#context.runtimePath, {
+      if (!this.#fs.existsSync(this.#context.builtinsPath)) {
+        this.#fs.mkdirSync(this.#context.builtinsPath, {
           recursive: true
         });
       }
@@ -321,8 +321,8 @@ export class VirtualFileSystem implements VirtualFileSystemInterface {
    *
    * @returns A Map where the keys are runtime file IDs (strings) and the values are their corresponding paths (strings).
    */
-  public get runtimeIdMap(): Map<string, string> {
-    return this.#runtimeIdMap;
+  public get builtinIdMap(): Map<string, string> {
+    return this.#builtinIdMap;
   }
 
   /**
@@ -331,7 +331,7 @@ export class VirtualFileSystem implements VirtualFileSystemInterface {
    * @returns An array of formatted runtime IDs.
    */
   public get runtimeIds(): string[] {
-    return Array.from(this.runtimeIdMap.keys()).map(id =>
+    return Array.from(this.builtinIdMap.keys()).map(id =>
       this.formatRuntimeId(id)
     );
   }
@@ -343,11 +343,11 @@ export class VirtualFileSystem implements VirtualFileSystemInterface {
    * @param options - Options for resolving the path, such as paths to check.
    * @returns `true` if the path or ID corresponds to a runtime file, otherwise `false`.
    */
-  public isRuntimeFile(
+  public isBuiltinFile(
     pathOrId: string,
     options?: ResolvePathOptions
   ): boolean {
-    return !!this.runtimeIdMap
+    return !!this.builtinIdMap
       .values()
       .find(
         path =>
@@ -361,7 +361,7 @@ export class VirtualFileSystem implements VirtualFileSystemInterface {
    * @param id - The ID to check.
    * @returns Whether the ID is a valid runtime ID.
    */
-  public isValidRuntimeId(id: string): boolean {
+  public isValidBuiltinId(id: string): boolean {
     return id.startsWith(RUNTIME_PREFIX);
   }
 
@@ -389,7 +389,7 @@ export class VirtualFileSystem implements VirtualFileSystemInterface {
     }
 
     // Check if the resolved path is a runtime file
-    if (this.runtimeIdMap.values().find(path => path === resolvedPath)) {
+    if (this.builtinIdMap.values().find(path => path === resolvedPath)) {
       return true;
     }
 
@@ -420,18 +420,18 @@ export class VirtualFileSystem implements VirtualFileSystemInterface {
    * @param pathOrId - The path or ID to check.
    * @returns `true` if the ID corresponds to the path or ID of a runtime file, otherwise `false`.
    */
-  public isMatchingRuntimeId(id: string, pathOrId: string): boolean {
+  public isMatchingBuiltinId(id: string, pathOrId: string): boolean {
     const resolvedPath = this.resolvePath(pathOrId);
     const resolvedId = this.resolveId(pathOrId);
 
     return !!(
-      this.isRuntimeFile(pathOrId) &&
+      this.isBuiltinFile(pathOrId) &&
       ((resolvedPath &&
-        (resolvedPath === this.runtimeIdMap.get(id) ||
-          resolvedPath === this.runtimeIdMap.get(this.formatRuntimeId(id)))) ||
+        (resolvedPath === this.builtinIdMap.get(id) ||
+          resolvedPath === this.builtinIdMap.get(this.formatRuntimeId(id)))) ||
         (resolvedId &&
-          (resolvedId === this.runtimeIdMap.get(id) ||
-            resolvedId === this.runtimeIdMap.get(this.formatRuntimeId(id)))))
+          (resolvedId === this.builtinIdMap.get(id) ||
+            resolvedId === this.builtinIdMap.get(this.formatRuntimeId(id)))))
     );
   }
 
@@ -440,9 +440,9 @@ export class VirtualFileSystem implements VirtualFileSystemInterface {
    *
    * @returns A promise that resolves to an array of runtime files.
    */
-  public async listRuntimeFiles(): Promise<VirtualRuntimeFile[]> {
-    const runtimeFiles: VirtualRuntimeFile[] = [];
-    for (const [id, path] of this.runtimeIdMap.entries()) {
+  public async listBuiltinFiles(): Promise<VirtualBuiltinFile[]> {
+    const runtimeFiles: VirtualBuiltinFile[] = [];
+    for (const [id, path] of this.builtinIdMap.entries()) {
       const contents = await this.readFile(path);
       if (contents) {
         runtimeFiles.push({
@@ -857,16 +857,16 @@ export class VirtualFileSystem implements VirtualFileSystemInterface {
    * @param options - Optional parameters for writing the runtime file.
    * @returns A promise that resolves when the file is written.
    */
-  public async writeRuntimeFile(
+  public async writeBuiltinFile(
     id: string,
     path: PathLike,
     contents: string,
-    options: WriteRuntimeFileOptions = {}
+    options: WriteBuiltinFileOptions = {}
   ): Promise<void> {
     const formattedId = this.formatRuntimeId(id);
     const absolutePath = this.formatAbsoluteFilePath(toFilePath(path));
 
-    this.runtimeIdMap.set(formattedId, absolutePath);
+    this.builtinIdMap.set(formattedId, absolutePath);
 
     let data = contents;
     if (!options.skipFormat) {
@@ -905,7 +905,7 @@ export class VirtualFileSystem implements VirtualFileSystemInterface {
   public async writeEntryFile(
     name: string,
     contents: string,
-    options: WriteRuntimeFileOptions = {}
+    options: WriteBuiltinFileOptions = {}
   ): Promise<void> {
     const absolutePath = this.formatAbsoluteFilePath(
       isAbsolutePath(toFilePath(name))
@@ -933,7 +933,7 @@ export class VirtualFileSystem implements VirtualFileSystemInterface {
       )}) to ${
         this.resolveOutputMode(absolutePath, _options) === "fs"
           ? "disk"
-          : "memory"
+          : "virtual memory"
       }`
     );
 
@@ -951,7 +951,7 @@ export class VirtualFileSystem implements VirtualFileSystemInterface {
   public async writeFileToDisk(
     path: PathLike,
     contents: string,
-    options: WriteRuntimeFileOptions = {}
+    options: WriteBuiltinFileOptions = {}
   ): Promise<void> {
     const absolutePath = this.formatAbsoluteFilePath(toFilePath(path));
 
@@ -1006,7 +1006,7 @@ export class VirtualFileSystem implements VirtualFileSystemInterface {
     const formattedPath = this.formatAbsoluteFilePath(toFilePath(path));
 
     return (
-      this.isValidRuntimeId(formattedPath) ||
+      this.isValidBuiltinId(formattedPath) ||
       (this.#virtualFS.existsSync(formattedPath) &&
         this.#virtualFS.lstatSync(formattedPath).isFile()) ||
       (this.#fs.existsSync(formattedPath) &&
@@ -1045,7 +1045,7 @@ export class VirtualFileSystem implements VirtualFileSystemInterface {
     const formattedPath = this.formatAbsoluteFilePath(toFilePath(path));
 
     return (
-      this.isValidRuntimeId(formattedPath) ||
+      this.isValidBuiltinId(formattedPath) ||
       this.#virtualFS.existsSync(formattedPath) ||
       this.#fs.existsSync(formattedPath) ||
       this.resolveFS(path).existsSync(formattedPath)
@@ -1126,16 +1126,16 @@ export class VirtualFileSystem implements VirtualFileSystemInterface {
    * @returns The resolved id of the runtime file if it exists, otherwise false.
    */
   public resolveId(pathOrId: PathLike): string | false {
-    if (this.runtimeIdMap.has(this.formatRuntimeId(toFilePath(pathOrId)))) {
+    if (this.builtinIdMap.has(this.formatRuntimeId(toFilePath(pathOrId)))) {
       return this.formatRuntimeId(toFilePath(pathOrId));
     }
 
     const filePath = this.resolvePath(toFilePath(pathOrId));
     if (filePath) {
       return (
-        this.runtimeIdMap
+        this.builtinIdMap
           .keys()
-          .find(id => this.runtimeIdMap.get(id) === filePath) || false
+          .find(id => this.builtinIdMap.get(id) === filePath) || false
       );
     }
 
@@ -1242,7 +1242,7 @@ export class VirtualFileSystem implements VirtualFileSystemInterface {
 
     const resolverKey = `${formattedPath}${
       options.withExtension ? "-ext" : ""
-    }${options.paths ? `-${hash(options.paths)}` : ""}${
+    }${options.paths ? `-${murmurhash(options.paths)}` : ""}${
       options.type ? `-${options.type}` : ""
     }`;
     if (this.#cachedResolver.has(resolverKey)) {
@@ -1252,8 +1252,8 @@ export class VirtualFileSystem implements VirtualFileSystemInterface {
     }
 
     let result: string | undefined | false = false;
-    if (this.isValidRuntimeId(formattedPath)) {
-      result = this.runtimeIdMap.get(this.formatRuntimeId(formattedPath));
+    if (this.isValidBuiltinId(formattedPath)) {
+      result = this.builtinIdMap.get(this.formatRuntimeId(formattedPath));
     } else {
       result = this.resolvePathName(formattedPath, options);
     }

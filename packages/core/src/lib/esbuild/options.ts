@@ -16,7 +16,7 @@
 
  ------------------------------------------------------------------- */
 
-import { findFileExtension } from "@stryke/path/file-path-fns";
+import { findFileExtensionSafe } from "@stryke/path/file-path-fns";
 import { replacePath } from "@stryke/path/replace";
 import { isString } from "@stryke/type-checks/is-string";
 import defu from "defu";
@@ -44,7 +44,7 @@ export function resolveEsbuildEntryOptions(
           replacePath(
             entry,
             context.options.sourceRoot || context.options.projectRoot
-          ).replace(findFileExtension(entry) || "", "")
+          ).replace(`.${findFileExtensionSafe(entry)}`, "")
         ] = replacePath(
           entry,
           context.options.sourceRoot || context.options.projectRoot
@@ -79,9 +79,9 @@ export function resolveESBuildOptions(
       sourcemap: false
     },
     {
-      alias: context.vfs.runtimeIdMap.keys().reduce(
+      alias: context.vfs.builtinIdMap.keys().reduce(
         (ret, id) => {
-          const path = context.vfs.runtimeIdMap.get(id);
+          const path = context.vfs.builtinIdMap.get(id);
           if (path) {
             ret[id] = path;
           }

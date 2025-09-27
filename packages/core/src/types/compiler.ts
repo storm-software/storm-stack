@@ -73,8 +73,7 @@ export interface TranspilerOptions {
   reflectionLevel?: ReflectionLevel;
 }
 
-export interface CompilerOptions<TContext extends Context = Context>
-  extends TranspilerOptions {
+export interface CompilerOptions<TContext = any> extends TranspilerOptions {
   /**
    * Skip the cache.
    *

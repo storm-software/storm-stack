@@ -20,7 +20,7 @@ import { LogLevelLabel } from "@storm-software/config-tools/types";
 import { getFileHeader } from "@storm-stack/core/lib/utilities";
 import type { EngineHooks } from "@storm-stack/core/types";
 import type { PluginOptions } from "@storm-stack/core/types/plugin";
-import LogPlugin from "@storm-stack/devkit/plugins/log";
+import { LogPlugin } from "@storm-stack/devkit/plugins/log";
 import { StormJSON } from "@stryke/json/storm-json";
 import {
   LogOpenTelemetryPluginContext,

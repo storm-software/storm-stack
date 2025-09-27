@@ -4,27 +4,54 @@
   "projectType": "library",
   "sourceRoot": "packages/plugin-cloudflare/src",
   "targets": {
-    "build-base": {
-      "executor": "nx:run-commands",
-      "dependsOn": ["clean", "^build"],
-      "options": {
-        "command": "tsup-node --config=tsup.config.ts",
-        "cwd": "{projectRoot}"
+    "clean": {
+      "executor": "@storm-stack/nx:clean"
+    },
+    "prepare": {
+      "cache": true,
+      "inputs": ["typescript", "^production"],
+      "outputs": ["{projectRoot}/.storm"],
+      "dependsOn": ["^build"],
+      "executor": "@storm-stack/nx:prepare",
+      "defaultConfiguration": "production",
+      "configurations": {
+        "production": {
+          "mode": "production"
+        },
+        "test": {
+          "mode": "test"
+        },
+        "development": {
+          "mode": "development",
+          "skipCache": true,
+          "logLevel": "debug"
+        }
       }
     },
     "build": {
-      "executor": "nx:run-commands",
-      "dependsOn": ["build-base"],
-      "options": {
-        "commands": [
-          "pnpm copyfiles LICENSE dist/packages/plugin-cloudflare",
-          "pnpm copyfiles --up=2 ./packages/plugin-cloudflare/*.md ./packages/plugin-cloudflare/package.json dist/packages/plugin-cloudflare",
-          "pnpm copyfiles --up=3 \"./packages/plugin-cloudflare/dist/**/*\" dist/packages/plugin-cloudflare/dist"
-        ]
+      "cache": true,
+      "inputs": ["typescript", "^production"],
+      "outputs": ["{options.outputPath}"],
+      "executor": "@storm-stack/nx:build",
+      "dependsOn": ["prepare"],
+      "defaultConfiguration": "production",
+      "configurations": {
+        "production": {
+          "mode": "production"
+        },
+        "test": {
+          "mode": "test"
+        },
+        "development": {
+          "mode": "development",
+          "skipCache": true,
+          "logLevel": "debug"
+        }
       }
     },
     "nx-release-publish": {
       "executor": "@storm-software/workspace-tools:npm-publish"
     }
-  }
+  },
+  "implicitDependencies": ["nx"]
 }

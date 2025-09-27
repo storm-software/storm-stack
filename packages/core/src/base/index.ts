@@ -17,6 +17,9 @@
  ------------------------------------------------------------------- */
 
 export * from "./compiler";
+export * from "./context";
 export * from "./engine";
+export * from "./options";
 export * from "./plugin";
+export * from "./resolver";
 export * from "./vfs/virtual-file-system";

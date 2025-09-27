@@ -17,12 +17,14 @@
  ------------------------------------------------------------------- */
 
 import { LogLevelLabel } from "@storm-software/config-tools/types";
+import { findFileExtension } from "@stryke/path/file-path-fns";
 import { isFunction } from "@stryke/type-checks/is-function";
 import chalk from "chalk";
 import defu from "defu";
 import {
   BabelInputOptions,
   BabelPlugin,
+  BabelPluginItem,
   ResolvedBabelPluginItem
 } from "../../types/babel";
 import { ResolvedBabelOptions } from "../../types/build";
@@ -178,20 +180,17 @@ export function resolveBabelInputOptions(
   plugins: ResolvedBabelPluginItem[] = [],
   presets: ResolvedBabelPluginItem[] = []
 ): BabelInputOptions {
-  return defu(
+  const resolved = defu(
     {
-      plugins: [
-        "@babel/plugin-syntax-typescript",
-        ...plugins.map(plugin => {
-          return [
-            plugin[0],
-            defu(plugin.length > 1 && plugin[1] ? plugin[1] : {}, {
-              options
-            }),
-            (plugin[0] as BabelPlugin)?.name
-          ];
-        })
-      ],
+      plugins: plugins.map(plugin => {
+        return [
+          plugin[0],
+          defu(plugin.length > 1 && plugin[1] ? plugin[1] : {}, {
+            options
+          }),
+          (plugin[0] as BabelPlugin)?.name
+        ];
+      }),
       presets: presets.map(preset => {
         return [
           preset[0],
@@ -224,25 +223,88 @@ export function resolveBabelInputOptions(
       }
     }
   ) as ResolvedBabelOptions;
+
+  resolved.plugins = resolved.plugins?.filter(Boolean);
+  resolved.presets = resolved.presets?.filter(Boolean);
+
+  return resolved;
 }
 
 /**
  * Resolves the options for [Babel](https://babeljs.io/).
  *
- * @param context - The context for the transformation.
+ * @param sourceFile - The source file to transform.
+ * @param options - The options for the transformation.
+ * @returns The resolved Babel options.
+ */
+export function applyBabelDefaults(
+  sourceFile?: SourceFile,
+  options: Partial<ResolvedBabelOptions> = {}
+): ResolvedBabelOptions {
+  const plugins = [] as BabelPluginItem[];
+  const presets = [] as BabelPluginItem[];
+  if (
+    sourceFile &&
+    (findFileExtension(sourceFile.id) === "ts" ||
+      findFileExtension(sourceFile.id) === "tsx") &&
+    !options.presets?.some(
+      preset => getPluginName(preset) === "@babel/preset-typescript"
+    ) &&
+    !options.plugins?.some(
+      plugin =>
+        getPluginName(plugin) === "@babel/plugin-syntax-typescript" ||
+        getPluginName(plugin) === "@babel/plugin-transform-typescript"
+    )
+  ) {
+    plugins.push("@babel/plugin-syntax-typescript");
+  }
+
+  if (
+    sourceFile &&
+    (findFileExtension(sourceFile.id) === "jsx" ||
+      findFileExtension(sourceFile.id) === "tsx") &&
+    !options.presets?.some(
+      preset =>
+        getPluginName(preset) === "@babel/preset-react" ||
+        getPluginName(preset) === "@alloy-js/babel-preset"
+    ) &&
+    !options.plugins?.some(
+      plugin =>
+        getPluginName(plugin) === "@babel/plugin-syntax-jsx" ||
+        getPluginName(plugin) === "@babel/plugin-transform-jsx"
+    )
+  ) {
+    plugins.push("@babel/plugin-syntax-jsx");
+  }
+
+  return {
+    ...options,
+    plugins: plugins.concat(options.plugins ?? []),
+    presets: presets.concat(options.presets ?? [])
+  };
+}
+
+/**
+ * Resolves the options for [Babel](https://babeljs.io/).
+ *
  * @param log - The logging function to use.
+ * @param context - The context for the transformation.
+ * @param sourceFile - The source file to transform.
  * @param options - The options for the transformation.
  * @returns The resolved Babel options.
  */
 export function resolveBabelOptions(
+  log: LogFn,
   context: Context,
-  log: LogFn = context.log,
+  sourceFile?: SourceFile,
   options: Partial<ResolvedBabelOptions> = {}
 ): BabelInputOptions {
+  const resolvedOptions = applyBabelDefaults(sourceFile, options);
+
   return resolveBabelInputOptions(
     context,
-    options,
-    resolveBabelPlugins(log, context, undefined, options),
-    resolveBabelPresets(log, context, undefined, options)
+    resolvedOptions,
+    resolveBabelPlugins(log, context, sourceFile, resolvedOptions),
+    resolveBabelPresets(log, context, sourceFile, resolvedOptions)
   );
 }

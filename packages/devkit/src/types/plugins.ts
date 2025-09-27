@@ -16,6 +16,7 @@
 
  ------------------------------------------------------------------- */
 
+import { PrintTreeOptions } from "@alloy-js/core";
 import { LogLevel } from "@storm-stack/core/runtime-types/shared/log";
 import {
   ResolvedEntryTypeDefinition,
@@ -92,11 +93,26 @@ export interface ResolvedPluginRenderOptions {
    * The files that contain the plugin's templates for rendering.
    */
   templates: string[];
+
+  /**
+   * If true, generates Markdown output files.
+   *
+   * @defaultValue false
+   */
+  generatesMarkdown?: boolean;
+
+  /** If true, generates JSON output files.
+   *
+   * @defaultValue false
+   */
+  generatesJson?: boolean;
 }
 
 export interface ResolvedPluginPluginOptions {
   render?: ResolvedPluginRenderOptions;
 }
+
+export type RenderPluginOptions = PluginBaseOptions & Partial<PrintTreeOptions>;
 
 export type PluginPluginResolvedOptions<
   TOptions extends ResolvedPluginPluginOptions = ResolvedPluginPluginOptions

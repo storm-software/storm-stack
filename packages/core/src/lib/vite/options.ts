@@ -36,9 +36,9 @@ export function resolveViteOptions<TContext extends Context = Context>(
   return defu(
     {
       resolve: {
-        alias: context.vfs.runtimeIdMap.keys().reduce(
+        alias: context.vfs.builtinIdMap.keys().reduce(
           (ret, id) => {
-            const path = context.vfs.runtimeIdMap.get(id);
+            const path = context.vfs.builtinIdMap.get(id);
             if (path) {
               ret[id] = path;
             }
@@ -73,7 +73,7 @@ export function resolveViteOptions<TContext extends Context = Context>(
       assetsInclude: context.options.output.assets,
       logLevel: context.options.logLevel,
       envDir: context.options.projectRoot,
-      noExternal: Array.from(context.vfs.runtimeIdMap.keys())
+      noExternal: Array.from(context.vfs.builtinIdMap.keys())
     } as ViteOptions,
     context.options.variant === "vite" ? context.options.build : {},
     {

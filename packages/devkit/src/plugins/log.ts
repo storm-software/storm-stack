@@ -32,7 +32,7 @@ import { LogPluginContext, LogPluginOptions } from "../types/plugins";
  * @remarks
  * This class provides the foundation for creating logging plugins in Storm Stack. It handles the initialization of the plugin's context and prepares the runtime for logging adapters. Derived classes must implement the `writeAdapter` method to define how the logging adapter should be.
  */
-export default abstract class LogPlugin<
+export abstract class LogPlugin<
   TContext extends LogPluginContext = LogPluginContext,
   TOptions extends LogPluginOptions = LogPluginOptions
 > extends Plugin<TContext, TOptions> {
@@ -78,7 +78,7 @@ export default abstract class LogPlugin<
 
     hooks.addHooks({
       "init:complete": this.#initComplete.bind(this),
-      "prepare:runtime": this.#prepareRuntime.bind(this)
+      "prepare:builtins": this.#prepareBuiltins.bind(this)
     });
   }
 
@@ -89,7 +89,7 @@ export default abstract class LogPlugin<
    */
   protected abstract writeAdapter(context: TContext): MaybePromise<string>;
 
-  async #prepareRuntime(context: TContext) {
+  async #prepareBuiltins(context: TContext) {
     this.log(LogLevelLabel.TRACE, `Prepare the Storm Stack logging project.`);
 
     if (context.options.projectType === "application") {
@@ -99,10 +99,10 @@ export default abstract class LogPlugin<
         );
       }
 
-      await context.vfs.writeRuntimeFile(
+      await context.vfs.writeBuiltinFile(
         `log/${kebabCase(this.identifier)}`,
         joinPaths(
-          context.runtimePath,
+          context.builtinsPath,
           "log",
           `${kebabCase(this.identifier)}.ts`
         ),

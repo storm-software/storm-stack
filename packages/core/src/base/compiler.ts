@@ -119,23 +119,20 @@ export class Compiler<TContext extends Context = Context>
     }
 
     if (!options.skipAllTransforms) {
+      this.log(LogLevelLabel.TRACE, `Running transforms for ${source.id}`);
       if (
         context.unimport &&
         !options.skipTransformUnimport &&
-        !context.vfs.isRuntimeFile(fileName)
+        !context.vfs.isBuiltinFile(fileName)
       ) {
         source = await context.unimport.injectImports(source);
       }
 
+      source = await transform(this.log, context, source, options);
       this.log(
         LogLevelLabel.TRACE,
-        `Running transforms for ${source.id} with options: ${JSON.stringify(
-          options
-        )}`
+        `Completed transformations for ${source.id}`
       );
-
-      source = await transform(this.log, context, source, options);
-      this.log(LogLevelLabel.TRACE, `Transformed: ${source.id}`);
     }
 
     if (this.#options.onPostTransform) {

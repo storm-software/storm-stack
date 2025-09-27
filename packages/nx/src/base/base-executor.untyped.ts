@@ -42,7 +42,7 @@ export default defineUntypedSchema({
       title: "Mode",
       type: "string",
       description: "The build mode",
-      enum: ["development", "staging", "production"]
+      enum: ["development", "test", "production"]
     }
   },
   skipInstalls: {

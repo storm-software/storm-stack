@@ -42,6 +42,7 @@ export async function tsup(
 ) {
   const options = defu(
     resolveTsupOptions(context, override),
+    context.options.variant === "tsup" ? context.options.override : {},
     {
       entry: Object.fromEntries(
         Object.entries(resolveTsupEntryOptions(context, context.entry)).map(
@@ -53,8 +54,7 @@ export async function tsup(
           ]
         )
       )
-    },
-    context.options.variant === "tsup" ? context.options.override : {}
+    }
   ) as ESBuildOptions;
 
   await build(
@@ -74,7 +74,7 @@ export async function tsup(
 
           buildOptions.alias = defu(
             buildOptions.alias ?? {},
-            Object.fromEntries(context.vfs.runtimeIdMap.entries())
+            Object.fromEntries(context.vfs.builtinIdMap.entries())
           );
         },
         esbuildPlugins: [

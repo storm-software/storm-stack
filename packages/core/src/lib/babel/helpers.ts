@@ -132,7 +132,7 @@ interface SourceFile {
 
 export function filterPluginByRuntimeId(context: Context, runtimeId: string) {
   return (sourceFile: SourceFile): boolean =>
-    !context.vfs.isMatchingRuntimeId(runtimeId, sourceFile.id);
+    !context.vfs.isMatchingBuiltinId(runtimeId, sourceFile.id);
 }
 
 /**

@@ -18,6 +18,13 @@
 
 /* eslint-disable unused-imports/no-unused-vars */
 
+import {
+  flushJobsAsync,
+  getContextForRenderNode,
+  isPrintHook,
+  RenderedTextTree,
+  renderTree
+} from "@alloy-js/core";
 import { Children } from "@alloy-js/core/jsx-runtime";
 import { LogLevelLabel } from "@storm-software/config-tools/types";
 import { Plugin } from "@storm-stack/core/base/plugin";
@@ -27,23 +34,44 @@ import {
   ResolvedOptions
 } from "@storm-stack/core/types/build";
 import { Context, ReflectionRecord } from "@storm-stack/core/types/context";
-import {
-  PluginBaseOptions,
-  PluginOptions
-} from "@storm-stack/core/types/plugin";
-import { MaybePromise } from "@stryke/types/base";
-import {
-  Output,
-  OutputEntry,
-  OutputRuntime
-} from "../templates/components/Output";
-import { renderAsync } from "../templates/helpers/render";
-import { OutputDirectory, RuntimeOutputDirectory } from "../types/templates";
+import { PluginOptions } from "@storm-stack/core/types/plugin";
+import { isParentPath } from "@stryke/path/is-parent-path";
+import { replacePath } from "@stryke/path/replace";
+import { isSetString } from "@stryke/type-checks/is-set-string";
+import { Doc } from "prettier";
+import { printer } from "prettier/doc.js";
+import { Output } from "../templates/components/output";
+import { RenderPluginOptions } from "../types/plugins";
+import { OutputDirectory, OutputFile, RenderContext } from "../types/templates";
+
+export interface PrintTreeOptions {
+  /**
+   * The number of characters the printer will wrap on. Defaults to 100
+   * characters.
+   */
+  printWidth?: number;
+
+  /**
+   * Whether to use tabs instead of spaces for indentation. Defaults to false.
+   */
+  useTabs?: boolean;
+
+  /**
+   * The number of spaces to use for indentation. Defaults to 2 spaces.
+   */
+  tabWidth?: number;
+
+  /**
+   * If files should end with a final new line.
+   * @default true
+   */
+  insertFinalNewLine?: boolean;
+}
 
 /**
  * A base Storm Stack Plugin for using [Alloy Framework](https://alloy-framework.github.io/alloy/) to render runtime modules.
  */
-export default abstract class RenderPlugin<
+export abstract class RenderPlugin<
   TContext extends Context<
     ResolvedOptions,
     { [P in keyof unknown]: ReflectionRecord },
@@ -53,7 +81,7 @@ export default abstract class RenderPlugin<
     { [P in keyof unknown]: ReflectionRecord },
     ResolvedEntryTypeDefinition
   >,
-  TOptions extends PluginBaseOptions = PluginBaseOptions
+  TOptions extends RenderPluginOptions = RenderPluginOptions
 > extends Plugin<TContext, TOptions> {
   /**
    * The constructor for the plugin
@@ -73,35 +101,21 @@ export default abstract class RenderPlugin<
     super.addHooks(hooks);
 
     hooks.addHooks({
-      "prepare:runtime": this.prepareRuntime.bind(this),
-      "prepare:entry": this.prepareEntry.bind(this),
-      "prepare:output": this.prepareOutput.bind(this)
+      "prepare:builtins": this.prepareBuiltins.bind(this),
+      "prepare:generate": this.prepareGenerate.bind(this)
     });
   }
 
   /**
-   * Renders the runtime modules using Alloy.
+   * Renders the builtin runtime modules using Alloy.
    *
    * @remarks
-   * The child class is expected to override this function and return the templates used to generate the runtime modules
+   * The child class is expected to override this function and return the templates used to generate the builtin runtime modules
    *
    * @param context - The context of the current build.
-   * @returns The rendered runtime modules as JSX children.
+   * @returns The rendered builtin runtime modules as JSX children.
    */
-  protected renderRuntime(context: TContext): MaybePromise<Children> {
-    return null;
-  }
-
-  /**
-   * Renders the entry modules using Alloy.
-   *
-   * @remarks
-   * The child class is expected to override this function and return the templates used to generate the entry modules
-   *
-   * @param context - The context of the current build.
-   * @returns The rendered entry module(s) as JSX children.
-   */
-  protected renderEntry(context: TContext): MaybePromise<Children> {
+  protected renderBuiltins(context: TContext): Children {
     return null;
   }
 
@@ -114,35 +128,34 @@ export default abstract class RenderPlugin<
    * @param context - The context of the current build.
    * @returns The rendered output module(s) as JSX children.
    */
-  protected renderOutput(context: TContext): MaybePromise<Children> {
+  protected render(context: TContext): Children {
     return null;
   }
 
   /**
-   * Prepares the runtime modules for the Storm Stack project.
+   * Prepares the built-in runtime modules for the Storm Stack project.
    *
    * @param context - The context of the current build.
    * @returns A promise that resolves when the preparation is complete.
    */
-  private async prepareRuntime(context: TContext) {
+  private async prepareBuiltins(context: TContext) {
     this.log(
       LogLevelLabel.TRACE,
-      `Preparing the runtime modules for the Storm Stack project.`
+      `Preparing the built-in runtime modules for the Storm Stack project.`
     );
 
-    const rendered = await Promise.resolve(this.renderRuntime(context));
-    if (rendered) {
-      const result = await renderAsync(
-        context,
-        <OutputRuntime context={context}>{rendered}</OutputRuntime>,
-        {
-          mode: "runtime",
-          printWidth: 120
-        }
-      );
+    const tree = renderTree(
+      <Output
+        context={context}
+        basePath={replacePath(
+          context.builtinsPath,
+          context.options.workspaceRoot
+        )}>
+        {this.renderBuiltins(context)}
+      </Output>
+    );
 
-      await this.writeRuntimeDirectory(context, result.runtime);
-    }
+    return this.#writeTree(context, tree);
   }
 
   /**
@@ -151,119 +164,261 @@ export default abstract class RenderPlugin<
    * @param context - The context of the current build.
    * @returns A promise that resolves when the preparation is complete.
    */
-  private async prepareEntry(context: TContext) {
+  private async prepareGenerate(context: TContext) {
     this.log(
       LogLevelLabel.TRACE,
       `Preparing the entry modules for the Storm Stack project.`
     );
 
-    const rendered = await Promise.resolve(this.renderEntry(context));
-    if (rendered) {
-      const result = await renderAsync(
-        context,
-        <OutputEntry context={context}>{rendered}</OutputEntry>,
-        {
-          mode: "entry",
-          printWidth: 120
-        }
-      );
-
-      await this.writeEntryDirectory(context, result.output);
-    }
-  }
-
-  /**
-   * Prepares the output modules for the Storm Stack project.
-   *
-   * @param context - The context of the current build.
-   * @returns A promise that resolves when the preparation is complete.
-   */
-  private async prepareOutput(context: TContext) {
-    this.log(
-      LogLevelLabel.TRACE,
-      `Preparing the output modules for the Storm Stack project.`
+    const tree = renderTree(
+      <Output context={context} basePath={context.options.workspaceRoot}>
+        {this.render(context)}
+      </Output>
     );
 
-    const rendered = await Promise.resolve(this.renderOutput(context));
-    if (rendered) {
-      const result = await renderAsync(
-        context,
-        <Output context={context}>{rendered}</Output>,
-        {
-          mode: "output",
-          printWidth: 120
-        }
-      );
-
-      await this.writeOutputDirectory(context, result.output);
-    }
+    return this.#writeTree(context, tree);
   }
 
   /**
-   * Writes the rendered runtime directory to the virtual file system.
+   * Writes the rendered output files to the virtual file system.
    *
    * @param context - The context of the current build.
-   * @param dir - The rendered runtime directory.
+   * @param tree - The rendered output files.
    */
-  private async writeRuntimeDirectory(
-    context: TContext,
-    dir: RuntimeOutputDirectory
-  ) {
-    for (const sub of dir.contents) {
-      if ("contents" in sub) {
-        if (Array.isArray(sub.contents)) {
-          await this.writeRuntimeDirectory(
-            context,
-            sub as RuntimeOutputDirectory
+  async #writeTree(context: TContext, tree: RenderedTextTree) {
+    await flushJobsAsync();
+
+    let result!: OutputDirectory;
+    const generateOutput = async (
+      currentDirectory: OutputDirectory | undefined,
+      root: RenderedTextTree
+    ) => {
+      if (!Array.isArray(root)) {
+        return;
+      }
+
+      const recurse = async (cwd: OutputDirectory | undefined) => {
+        for (const child of root) {
+          await generateOutput(cwd, child as RenderedTextTree);
+        }
+      };
+
+      const renderContext = getContextForRenderNode(root) as
+        | RenderContext
+        | undefined;
+      if (!renderContext) {
+        return recurse(currentDirectory);
+      }
+
+      if (renderContext.meta?.directory) {
+        const directory: OutputDirectory = {
+          kind: "directory",
+          path: renderContext.meta.directory.path,
+          contents: []
+        };
+
+        if (currentDirectory) {
+          currentDirectory.contents.push(directory);
+        } else {
+          result = directory;
+        }
+
+        await recurse(directory);
+      } else if (renderContext.meta?.sourceFile) {
+        if (!currentDirectory) {
+          // This shouldn't happen if you're using the Output component.
+          throw new Error(
+            "Source file doesn't have parent directory. Make sure you have used the Output component."
           );
-        } else if (sub.kind === "file") {
-          await context.vfs.writeRuntimeFile(sub.id, sub.path, sub.contents);
         }
-      } else {
-        // TODO: support copy file
-      }
-    }
-  }
 
-  /**
-   * Writes the rendered runtime directory to the virtual file system.
-   *
-   * @param context - The context of the current build.
-   * @param dir - The rendered entry directory.
-   */
-  private async writeEntryDirectory(context: TContext, dir: OutputDirectory) {
-    for (const sub of dir.contents) {
-      if ("contents" in sub) {
-        if (Array.isArray(sub.contents)) {
-          await this.writeEntryDirectory(context, sub as OutputDirectory);
-        } else if (sub.kind === "file") {
-          await context.vfs.writeEntryFile(sub.path, sub.contents);
+        let outputFile!: OutputFile;
+        if (renderContext.meta?.builtin) {
+          if (!renderContext.meta.builtin.id) {
+            throw new Error(
+              "Built-in runtime module doesn't have an ID. Make sure you have used the `<BuiltinFile />` component."
+            );
+          }
+
+          this.log(
+            LogLevelLabel.TRACE,
+            `Rendering built-in runtime module with ID: ${renderContext.meta.builtin.id}`
+          );
+
+          outputFile = {
+            kind: "builtin",
+            id: renderContext.meta.builtin.id,
+            path: replacePath(
+              renderContext.meta.sourceFile.path,
+              context.builtinsPath
+            ),
+            filetype: renderContext.meta.sourceFile.filetype,
+            outputMode: renderContext.meta.output?.outputMode,
+            contents: await this.#printTree(context, root)
+          };
+        } else if (
+          renderContext.meta?.entry ||
+          isParentPath(context.entryPath, renderContext.meta.sourceFile.path)
+        ) {
+          this.log(
+            LogLevelLabel.TRACE,
+            `Rendering entry module at path: ${renderContext.meta.sourceFile.path}`
+          );
+
+          outputFile = {
+            kind: "entry",
+            typeDefinition: renderContext.meta.entry?.typeDefinition,
+            path: renderContext.meta.sourceFile.path,
+            filetype: renderContext.meta.sourceFile.filetype,
+            outputMode: renderContext.meta.output?.outputMode,
+            contents: await this.#printTree(context, root)
+          };
+        } else {
+          this.log(
+            LogLevelLabel.TRACE,
+            `Rendering source file at path: ${renderContext.meta.sourceFile.path}`
+          );
+
+          outputFile = {
+            kind: "file",
+            path: renderContext.meta.sourceFile.path,
+            filetype: renderContext.meta.sourceFile.filetype,
+            outputMode: renderContext.meta.output?.outputMode,
+            contents: await this.#printTree(context, root)
+          };
         }
-      } else {
-        // TODO: support copy file
-      }
-    }
-  }
 
-  /**
-   * Writes the rendered directory to the virtual file system.
-   *
-   * @param context - The context of the current build.
-   * @param dir - The rendered directory.
-   */
-  private async writeOutputDirectory(context: TContext, dir: OutputDirectory) {
-    for (const sub of dir.contents) {
-      if ("contents" in sub) {
-        if (Array.isArray(sub.contents)) {
-          await this.writeOutputDirectory(context, sub as OutputDirectory);
-        } else if (sub.kind === "file") {
-          await context.vfs.writeFile(sub.path, sub.contents, {
-            outputMode: sub.outputMode
+        currentDirectory.contents.push(outputFile);
+      } else if (renderContext.meta?.copyFile) {
+        if (!currentDirectory) {
+          // This shouldn't happen if you're using the Output component.
+          throw new Error(
+            "Copy file doesn't have parent directory. Make sure you have used the Output component."
+          );
+        }
+
+        this.log(
+          LogLevelLabel.TRACE,
+          `Processing copy file operation from "${
+            renderContext.meta.copyFile.sourcePath
+          }" to "${renderContext.meta.copyFile.path}"`
+        );
+
+        if (!renderContext.meta.copyFile.sourcePath) {
+          throw new Error(
+            "Copy file doesn't have a source path. Make sure you have provided a `sourcePath` property to the `meta.copyFile` context."
+          );
+        }
+
+        if (!renderContext.meta.copyFile.path) {
+          throw new Error(
+            "Copy file doesn't have a destination path. Make sure you have provided a `path` property to the `meta.copyFile` context."
+          );
+        }
+
+        currentDirectory.contents.push({
+          kind: "file",
+          path: renderContext.meta.copyFile.path,
+          sourcePath: renderContext.meta.copyFile.sourcePath,
+          outputMode: renderContext.meta.output?.outputMode
+        });
+      } else {
+        await recurse(currentDirectory);
+      }
+    };
+
+    await generateOutput(undefined, tree);
+
+    const writeOutput = async (context: TContext, output: OutputDirectory) => {
+      for (const sub of output.contents) {
+        if (sub.kind === "directory") {
+          await writeOutput(context, sub);
+        } else if (sub.kind === "builtin") {
+          await context.vfs.writeBuiltinFile(
+            sub.id,
+            replacePath(sub.path, context.builtinsPath),
+            sub.contents,
+            {
+              outputMode: sub.outputMode,
+              skipFormat: true
+            }
+          );
+        } else if (sub.kind === "entry") {
+          await context.vfs.writeEntryFile(sub.path, sub.contents, {
+            outputMode: sub.outputMode,
+            skipFormat: true
           });
+        } else if (sub.kind === "file") {
+          if ("sourcePath" in sub && sub.sourcePath) {
+            if (!context.vfs.existsSync(sub.sourcePath)) {
+              throw new Error(
+                `Source file "${sub.sourcePath}" for copy operation does not exist.`
+              );
+            }
+
+            const source = await context.vfs.readFile(sub.sourcePath);
+            if (!isSetString(source)) {
+              throw new Error(
+                `Source file "${sub.sourcePath}" for copy operation is empty.`
+              );
+            }
+
+            await context.vfs.writeFile(sub.path, source, {
+              outputMode: sub.outputMode
+            });
+          } else if ("contents" in sub && isSetString(sub.contents)) {
+            await context.vfs.writeFile(sub.path, sub.contents, {
+              outputMode: sub.outputMode
+            });
+          } else {
+            throw new Error(
+              `Unexpected output extracted from the render tree: \n\n${JSON.stringify(sub, null, 2)}`
+            );
+          }
         }
+      }
+    };
+
+    await writeOutput(context, result);
+  }
+
+  #printTree = async (context: TContext, tree: RenderedTextTree) => {
+    const options = {
+      printWidth: this.getOptions(context).printWidth ?? 160,
+      tabWidth: this.getOptions(context).tabWidth ?? 2,
+      useTabs: this.getOptions(context).useTabs ?? false,
+      insertFinalNewLine: this.getOptions(context).insertFinalNewLine ?? true
+    };
+
+    await flushJobsAsync();
+
+    const result = printer.printDocToString(
+      this.#printTreeWorker(tree),
+      options as printer.Options
+    ).formatted;
+
+    return options.insertFinalNewLine && !result.endsWith("\n")
+      ? `${result}\n`
+      : result;
+  };
+
+  #printTreeWorker = (tree: RenderedTextTree): Doc => {
+    const doc: Doc = [];
+    for (const node of tree) {
+      if (typeof node === "string") {
+        const normalizedNode = node
+          .split(/\r?\n/)
+          .flatMap((line, index, array) =>
+            index < array.length - 1 ? [line] : [line]
+          );
+        doc.push(normalizedNode);
+      } else if (isPrintHook(node)) {
+        doc.push(node.print!(node.subtree, this.#printTreeWorker));
       } else {
-        // TODO: support copy file
+        doc.push(this.#printTreeWorker(node));
       }
     }
-  }
+
+    return doc;
+  };
 }

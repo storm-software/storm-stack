@@ -16,6 +16,7 @@
 
  ------------------------------------------------------------------- */
 
+import babelJSXSyntaxPlugin from "@babel/plugin-syntax-jsx";
 import { LogLevelLabel } from "@storm-software/config-tools/types";
 import { Plugin } from "@storm-stack/core/base/plugin";
 import { addPluginFilter } from "@storm-stack/core/lib/babel/helpers";
@@ -27,12 +28,14 @@ import type {
   EngineHooks,
   ViteConfigHookParams
 } from "@storm-stack/core/types/build";
+import { SourceFile } from "@storm-stack/core/types/compiler";
 import { PluginOptions } from "@storm-stack/core/types/plugin";
 import { IdModule } from "@storm-stack/devkit/templates/id";
 import { LogModule } from "@storm-stack/devkit/templates/log";
 import { StorageModule } from "@storm-stack/devkit/templates/storage";
 import { readJsonFile } from "@stryke/fs/json";
 import { StormJSON } from "@stryke/json";
+import { findFileExtensionSafe } from "@stryke/path/file-path-fns";
 import { joinPaths } from "@stryke/path/join-paths";
 import { TsConfigJson } from "@stryke/types/tsconfig";
 import viteReactPlugin, { BabelOptions } from "@vitejs/plugin-react";
@@ -41,7 +44,7 @@ import {
   PluginOptions as ReactCompilerOptions
 } from "babel-plugin-react-compiler";
 import defu from "defu";
-import BabelPlugin from "./babel/plugin";
+import babelPlugin from "./babel/plugin";
 import { ContextModule } from "./templates/context";
 import { MetaModule } from "./templates/meta";
 import { RequestModule } from "./templates/request";
@@ -66,7 +69,7 @@ export default class ReactPlugin<
     this.dependencies = [
       [
         "@storm-stack/plugin-env",
-        { environmentConfig: "import.meta.env", ...(this.options.env ?? {}) }
+        { defaultConfig: "import.meta.env", ...(this.options.env ?? {}) }
       ],
       ["@storm-stack/plugin-error", this.options.error ?? {}],
       [
@@ -88,7 +91,7 @@ export default class ReactPlugin<
 
     hooks.addHooks({
       "init:options": this.initOptions.bind(this),
-      "prepare:runtime": this.prepareRuntime.bind(this),
+      "prepare:builtins": this.prepareBuiltins.bind(this),
       "build:application": this.buildApplication.bind(this),
       "vite:config": this.viteConfig.bind(this)
     });
@@ -189,18 +192,24 @@ export default class ReactPlugin<
     }
 
     context.options.babel.plugins ??= [];
+
     context.options.babel.plugins = addPluginFilter(
       context,
       context.options.babel.plugins,
-      sourceFile => !context.vfs.isMatchingRuntimeId("context", sourceFile.id),
+      sourceFile => !context.vfs.isMatchingBuiltinId("context", sourceFile.id),
       "error"
     );
-    context.options.babel.plugins.push(BabelPlugin);
+
+    context.options.babel.plugins.push(babelPlugin);
     context.options.babel.plugins.unshift([
-      "@babel/plugin-syntax-jsx",
+      babelJSXSyntaxPlugin,
       {
         runtime: context.options.plugins.react.jsxRuntime ?? "automatic",
         importSource: context.options.plugins.react.jsxImportSource ?? "react"
+      },
+      {
+        filter: (sourceFile: SourceFile) =>
+          findFileExtensionSafe(sourceFile.id) === "tsx"
       }
     ]);
 
@@ -271,46 +280,46 @@ export default class ReactPlugin<
    *
    * @param context - The context to initialize.
    */
-  protected async prepareRuntime(context: TContext) {
+  protected async prepareBuiltins(context: TContext) {
     this.log(
       LogLevelLabel.TRACE,
       `Preparing the React runtime artifacts for the Storm Stack project.`
     );
 
     const promises = [
-      context.vfs.writeRuntimeFile(
+      context.vfs.writeBuiltinFile(
         "id",
-        joinPaths(context.runtimePath, "id.ts"),
+        joinPaths(context.builtinsPath, "id.ts"),
         IdModule()
       ),
-      context.vfs.writeRuntimeFile(
+      context.vfs.writeBuiltinFile(
         "log",
-        joinPaths(context.runtimePath, "log.ts"),
+        joinPaths(context.builtinsPath, "log.ts"),
         LogModule(context)
       ),
-      context.vfs.writeRuntimeFile(
+      context.vfs.writeBuiltinFile(
         "storage",
-        joinPaths(context.runtimePath, "storage.ts"),
+        joinPaths(context.builtinsPath, "storage.ts"),
         StorageModule(context)
       ),
-      context.vfs.writeRuntimeFile(
+      context.vfs.writeBuiltinFile(
         "meta",
-        joinPaths(context.runtimePath, "meta.ts"),
+        joinPaths(context.builtinsPath, "meta.ts"),
         MetaModule(context)
       ),
-      context.vfs.writeRuntimeFile(
+      context.vfs.writeBuiltinFile(
         "context",
-        joinPaths(context.runtimePath, "context.tsx"),
+        joinPaths(context.builtinsPath, "context.tsx"),
         ContextModule(context)
       ),
-      context.vfs.writeRuntimeFile(
+      context.vfs.writeBuiltinFile(
         "request",
-        joinPaths(context.runtimePath, "request.ts"),
+        joinPaths(context.builtinsPath, "request.ts"),
         RequestModule(context)
       ),
-      context.vfs.writeRuntimeFile(
+      context.vfs.writeBuiltinFile(
         "response",
-        joinPaths(context.runtimePath, "response.ts"),
+        joinPaths(context.builtinsPath, "response.ts"),
         ResponseModule(context)
       )
     ];
@@ -325,7 +334,7 @@ export default class ReactPlugin<
         `Building the React application for the Storm Stack project.`
       );
 
-      const babel = resolveBabelOptions(context, this.log) as BabelOptions;
+      const babel = resolveBabelOptions(this.log, context) as BabelOptions;
       if (this.getOptions(context).compiler !== false) {
         context.options.babel.plugins.push([
           "babel-plugin-react-compiler",
@@ -355,7 +364,7 @@ export default class ReactPlugin<
   protected async viteConfig(context: TContext, params: ViteConfigHookParams) {
     params.config.plugins ??= [];
 
-    const babel = resolveBabelOptions(context, this.log) as BabelOptions;
+    const babel = resolveBabelOptions(this.log, context) as BabelOptions;
     if (this.getOptions(context).compiler !== false) {
       babel.plugins ??= [];
       babel.plugins.push([

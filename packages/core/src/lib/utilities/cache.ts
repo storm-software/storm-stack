@@ -22,7 +22,7 @@ import { createDirectory } from "@stryke/fs/helpers";
 import { readFile } from "@stryke/fs/read-file";
 import { removeFile } from "@stryke/fs/remove-file";
 import { writeFile } from "@stryke/fs/write-file";
-import { hash } from "@stryke/hash";
+import { murmurhash } from "@stryke/hash/murmurhash";
 import { findFileName } from "@stryke/path/file-path-fns";
 import { joinPaths } from "@stryke/path/join-paths";
 import type MagicString from "magic-string";
@@ -37,7 +37,7 @@ import { getString } from "./source-file";
  * @returns The source key.
  */
 function getCacheHashKey(id: string, code: string | MagicString): string {
-  return hash(
+  return murmurhash(
     {
       id,
       code: getString(code)

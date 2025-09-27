@@ -18,8 +18,8 @@
 
 import { parseTypeDefinition } from "@stryke/convert/parse-type-definition";
 import { listFiles } from "@stryke/fs/list-files";
-import { hash } from "@stryke/hash/hash";
-import { findFileExtension } from "@stryke/path/file-path-fns";
+import { murmurhash } from "@stryke/hash/murmurhash";
+import { findFileExtensionSafe } from "@stryke/path/file-path-fns";
 import { joinPaths } from "@stryke/path/join-paths";
 import { replacePath } from "@stryke/path/replace";
 import type {
@@ -54,16 +54,20 @@ export function resolveEntryOutput(
   typeDefinition: TypeDefinition
 ): string {
   return joinPaths(
-    context.options.output.outputPath,
-    "dist",
     replacePath(
       replacePath(
-        typeDefinition.file,
-        joinPaths(context.options.workspaceRoot, context.options.sourceRoot)
+        replacePath(
+          replacePath(
+            typeDefinition.file,
+            joinPaths(context.options.workspaceRoot, context.options.sourceRoot)
+          ),
+          joinPaths(context.options.workspaceRoot, context.options.projectRoot)
+        ),
+        context.options.sourceRoot
       ),
-      joinPaths(context.options.workspaceRoot, context.options.projectRoot)
+      context.options.projectRoot
     )
-  ).replace(findFileExtension(typeDefinition.file) || "", "");
+  ).replace(`.${findFileExtensionSafe(typeDefinition.file)}`, "");
 }
 
 export function resolveEntry(
@@ -109,7 +113,12 @@ export function resolveVirtualEntry(
   const resolved = resolveEntry(context, parsed);
   const file = joinPaths(
     context.artifactsPath,
-    `entry-${hash({ file: resolved.file, name: resolved.name }, { maxLength: 24 }).replaceAll("-", "0").replaceAll("_", "1")}.ts`
+    `entry-${murmurhash(
+      { file: resolved.file, name: resolved.name },
+      { maxLength: 24 }
+    )
+      .replaceAll("-", "0")
+      .replaceAll("_", "1")}.ts`
   );
 
   return {

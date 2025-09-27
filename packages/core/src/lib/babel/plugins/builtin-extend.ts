@@ -16,8 +16,8 @@
 
  ------------------------------------------------------------------- */
 
-import { NodePath, PluginAPI, PluginPass } from "@babel/core";
-import { declare } from "@babel/helper-plugin-utils";
+import { NodePath } from "@babel/core";
+import { BabelAPI, declare } from "@babel/helper-plugin-utils";
 import template from "@babel/template";
 import * as t from "@babel/types";
 import { toArray } from "@stryke/convert/to-array";
@@ -105,48 +105,51 @@ type BuiltinExtendPluginOptions = BabelPluginOptions & {
   approximate?: boolean;
 };
 
-export const BuiltinExtendPlugin = declare<
-  PluginPass<BuiltinExtendPluginOptions>,
-  BuiltinExtendPluginOptions
->((api: PluginAPI, options: BuiltinExtendPluginOptions) => {
-  return {
-    name: "storm-stack:builtin-extend",
-    visitor: {
-      Class(path: NodePath<t.ClassDeclaration | t.ClassExpression>) {
-        const globals = toArray<string>(options.globals);
-        if (!globals.includes("Error")) {
-          globals.push("Error");
+export const BuiltinExtendPlugin = declare<BuiltinExtendPluginOptions>(
+  (api: BabelAPI, options: BuiltinExtendPluginOptions) => {
+    return {
+      name: "storm-stack:builtin-extend",
+      visitor: {
+        Class(path: NodePath<t.ClassDeclaration | t.ClassExpression>) {
+          const globals = toArray<string>(options.globals);
+          if (!globals.includes("Error")) {
+            globals.push("Error");
+          }
+
+          const superClass = path.get("superClass");
+          if (
+            !superClass?.node ||
+            !globals.some(name => superClass.isIdentifier({ name }))
+          ) {
+            return;
+          }
+
+          if (
+            path.scope.hasBinding((superClass.node as t.Identifier)?.name, {
+              noGlobals: true
+            })
+          ) {
+            return;
+          }
+
+          const name = path.scope.generateUidIdentifier(
+            "stormExtendableBuiltin"
+          );
+
+          const helper = (
+            (this.opts as BuiltinExtendPluginOptions).approximate
+              ? buildHelperApproximate
+              : buildHelper
+          )({
+            HELPER: name
+          });
+          (
+            path.scope.getProgramParent().path as NodePath<t.Program>
+          ).unshiftContainer("body", helper);
+
+          superClass.replaceWith(t.callExpression(name, [superClass.node]));
         }
-
-        const superClass = path.get("superClass");
-        if (
-          !superClass?.node ||
-          !globals.some(name => superClass.isIdentifier({ name }))
-        ) {
-          return;
-        }
-
-        if (
-          path.scope.hasBinding((superClass.node as t.Identifier)?.name, {
-            noGlobals: true
-          })
-        ) {
-          return;
-        }
-
-        const name = path.scope.generateUidIdentifier("stormExtendableBuiltin");
-
-        const helper = (
-          this.opts.approximate ? buildHelperApproximate : buildHelper
-        )({
-          HELPER: name
-        });
-        (
-          path.scope.getProgramParent().path as NodePath<t.Program>
-        ).unshiftContainer("body", helper);
-
-        superClass.replaceWith(t.callExpression(name, [superClass.node]));
       }
-    }
-  };
-});
+    };
+  }
+);

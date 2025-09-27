@@ -16,13 +16,19 @@
 
  ------------------------------------------------------------------- */
 
-import { defineTsupConfig } from "@storm-stack/tools-config/tsup.shared";
+import { definePluginTsupConfig } from "@storm-stack/tools-config/tsup.plugin";
 import type { Options } from "tsup";
 
-const config = defineTsupConfig({
+const config = definePluginTsupConfig({
   name: "plugin-cli",
-  entry: ["src/index.ts", "src/plugin.ts"],
-  skipNodeModulesBundle: true,
+  entry: [
+    "src/index.ts",
+    "src/plugin.ts",
+    "src/types/*.ts",
+    "src/helpers/*.ts",
+    "src/data/*.ts",
+    "src/templates/*.ts"
+  ],
   noExternal: ["uqr"]
 }) as Options;
 

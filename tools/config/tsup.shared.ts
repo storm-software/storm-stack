@@ -22,8 +22,8 @@ import { defineConfig } from "tsup";
 export type TsupOptions = Partial<Options> &
   Pick<Options, "name" | "entryPoints">;
 
-const defaultOptions: TsupOptions = {
-  target: "node22",
+export const defaultOptions: TsupOptions = {
+  target: "esnext",
   outDir: "dist",
   format: ["cjs", "esm"],
   bundle: true,
@@ -35,8 +35,9 @@ const defaultOptions: TsupOptions = {
   platform: "node",
   tsconfig: "./tsconfig.json",
   dts: true,
-  shims: true
-};
+  shims: true,
+  silent: true
+} as const;
 
 export function defineTsupConfig(options: TsupOptions | TsupOptions[]) {
   return Array.isArray(options)

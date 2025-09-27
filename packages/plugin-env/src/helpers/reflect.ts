@@ -68,57 +68,57 @@ export interface CreateEnvReflectionOptions {
 }
 
 export class StormBaseEnv implements StormEnvInterface {
-  STORM_STACK_LOCAL: boolean;
+  STORM_STACK_LOCAL: boolean = false;
 
-  APP_NAME: string;
+  APP_NAME!: string;
 
-  APP_VERSION: string;
+  APP_VERSION!: string;
 
-  BUILD_ID: string;
+  BUILD_ID!: string;
 
-  BUILD_TIMESTAMP: string;
+  BUILD_TIMESTAMP!: string;
 
-  BUILD_CHECKSUM: string;
+  BUILD_CHECKSUM!: string;
 
-  RELEASE_ID: string;
+  RELEASE_ID!: string;
 
-  RELEASE_TAG: string;
+  RELEASE_TAG!: string;
 
-  ORGANIZATION: string;
+  ORGANIZATION!: string;
 
-  PLATFORM: "node" | "browser" | "neutral";
+  PLATFORM: "node" | "browser" | "neutral" = "neutral";
 
-  MODE: "development" | "staging" | "production";
+  MODE: "development" | "test" | "production" = "development";
 
-  ENVIRONMENT: string;
+  ENVIRONMENT!: string;
 
-  DEBUG: boolean;
+  DEBUG: boolean = false;
 
-  TEST: boolean;
+  TEST: boolean = false;
 
-  MINIMAL: boolean;
+  MINIMAL: boolean = false;
 
-  NO_COLOR: boolean;
+  NO_COLOR: boolean = false;
 
-  FORCE_COLOR: number | boolean;
+  FORCE_COLOR: number | boolean = false;
 
-  FORCE_HYPERLINK: number | boolean;
+  FORCE_HYPERLINK: number | boolean = false;
 
-  STACKTRACE: boolean;
+  STACKTRACE: boolean = false;
 
-  INCLUDE_ERROR_DATA: boolean;
+  INCLUDE_ERROR_DATA: boolean = false;
 
-  ERROR_URL: string;
+  ERROR_URL!: string;
 
-  DEFAULT_TIMEZONE: string;
+  DEFAULT_TIMEZONE!: string;
 
-  DEFAULT_LOCALE: string;
+  DEFAULT_LOCALE!: string;
 
-  CI: boolean;
+  CI: boolean = false;
 }
 
 export class StormBaseSecrets implements StormSecretsInterface {
-  ENCRYPTION_KEY: string;
+  ENCRYPTION_KEY!: string;
 }
 
 export function createEnvReflection(

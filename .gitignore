@@ -10,6 +10,7 @@ tmp
 out
 .nx
 **/.storm
+**/*.tsbuildinfo
 # \!examples/**/.storm
 
 # build

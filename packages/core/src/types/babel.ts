@@ -17,12 +17,12 @@
  ------------------------------------------------------------------- */
 
 import type {
-  InputOptions,
   NodePath,
-  PluginAPI,
-  PluginObject,
-  PluginPass
+  PluginObj,
+  PluginPass,
+  TransformOptions
 } from "@babel/core";
+import { BabelAPI } from "@babel/helper-plugin-utils";
 import type * as t from "@babel/types";
 import { ErrorType } from "@storm-stack/core/runtime-types/shared/error";
 import { CompilerOptions } from "./compiler";
@@ -67,7 +67,7 @@ export interface BabelPluginState<
 export type BabelPluginPass<
   TOptions extends BabelPluginOptions = BabelPluginOptions,
   TState = unknown
-> = PluginPass<TOptions> & TState;
+> = PluginPass & TState;
 
 export type BabelPlugin<
   TOptions extends BabelPluginOptions = BabelPluginOptions,
@@ -78,11 +78,11 @@ export type BabelPlugin<
 ) => (options: {
   name: string;
   log: LogFn;
-  api: PluginAPI;
+  api: BabelAPI;
   options: TOptions;
   context: TContext;
   dirname: string;
-}) => PluginObject<TOptions & BabelPluginPass<TOptions, TState>>) & {
+}) => PluginObj<TOptions & BabelPluginPass<TOptions, TState>>) & {
   _name?: string;
 };
 
@@ -92,7 +92,7 @@ export type BabelPluginTarget<
   TState = unknown
 > =
   | BabelPlugin<TOptions, TContext, TState>
-  | PluginObject<BabelPluginPass<TOptions, TState>>
+  | PluginObj<BabelPluginPass<TOptions, TState>>
   | string
   | object;
 
@@ -125,7 +125,7 @@ export type ResolvedBabelPluginItem<
 ];
 
 export type BabelInputOptions = Omit<
-  InputOptions & Required<Pick<InputOptions, "presets" | "plugins">>,
+  TransformOptions & Required<Pick<TransformOptions, "presets" | "plugins">>,
   "filename" | "root" | "sourceFileName" | "sourceMaps" | "inputSourceMap"
 >;
 

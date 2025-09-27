@@ -127,7 +127,7 @@ export interface StormEnvInterface {
    *
    * @category neutral
    */
-  MODE: "development" | "staging" | "production";
+  MODE: "development" | "test" | "production";
 
   /**
    * The environment the application is running in. This value will be populated with the value of `MODE` if not provided.

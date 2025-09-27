@@ -45,7 +45,7 @@ export function removeEnvPrefix<TEnv extends DotenvParseOutput | string>(
   return Object.keys(env).reduce((ret, key) => {
     const name = removeEnvPrefix(key);
     if (name) {
-      ret[name] = env[key];
+      (ret as DotenvParseOutput)[name] = env[key];
     }
 
     return ret;

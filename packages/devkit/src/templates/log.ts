@@ -261,7 +261,7 @@ export class StormLog implements StormLogInterface {
    *
    * @defaultValue "info"
    */
-  public lowestLogLevel: LogLevel | null = $storm.env.LOG_LEVEL;
+  public lowestLogLevel: LogLevel | null = $storm.env.LOG_LEVEL ?? "info";
 
   /**
    * Create a new StormLog instance.

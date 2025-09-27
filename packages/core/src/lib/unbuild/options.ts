@@ -44,7 +44,7 @@ export function resolveUnbuildOptions(
       projectRoot: context.options.projectRoot,
       outputPath: context.options.output.outputPath || "dist",
       platform: context.options.platform,
-      external: context.vfs.runtimeIdMap.keys().reduce((ret, id) => {
+      external: context.vfs.builtinIdMap.keys().reduce((ret, id) => {
         if (!ret.includes(id)) {
           ret.push(id);
         }

@@ -51,22 +51,23 @@ ${getFileHeader()}
  * @remarks
  * The \`mode\` is determined by the \`MODE\` environment variable, or falls back to the \`NEXT_PUBLIC_VERCEL_ENV\`, \`NODE_ENV\`, or defaults to \`production\`. While the value can potentially be any string, Storm Software generally only allows a value in the following list:
  * - \`production\`
- * - \`staging\`
+ * - \`test\`
  * - \`development\`
  */
-export const mode = "${context.options.mode}" as "production" | "staging" | "development";
+export const mode = "${context.options.mode}" as "production" | "test" | "development";
 
-/** Detect if the application is running in production mode */
+/** Detect if the application is running in "production" mode */
 export const isProduction = ["prd", "prod", "production"].includes(
   mode.toLowerCase()
 );
 
-/** Detect if the application is running in staging mode */
-export const isStaging = ["stg", "stage", "staging"].includes(
-  mode.toLowerCase()
+/** Detect if the application is running in "test" mode */
+export const isTest = Boolean(
+  ["tst", "test", "testing", "stg", "stage", "staging"].includes(mode.toLowerCase()) ||
+  $storm.env.TEST
 );
 
-/** Detect if the application is running in development mode */
+/** Detect if the application is running in "development" mode */
 export const isDevelopment = ["dev", "development"].includes(
   mode.toLowerCase()
 );
@@ -74,12 +75,6 @@ export const isDevelopment = ["dev", "development"].includes(
 /** Detect if the application is running in debug mode */
 export const isDebug = Boolean(
   isDevelopment && $storm.env.DEBUG
-);
-
-/** Detect if the application is running in test mode */
-export const isTest = Boolean(
-  ["tst", "test", "testing"].includes(mode.toLowerCase()) ||
-  $storm.env.TEST
 );
 
 /** Determine if the application is running on the server */

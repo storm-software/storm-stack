@@ -1,0 +1,45 @@
+diff --git a/dist/src/index.d.ts b/dist/src/index.d.ts
+index d76b8576c633eae3a4484bbe9bbe4297b7367953..f658de22f5f0c628b7b3cfac86ccca3a9e076461 100644
+--- a/dist/src/index.d.ts
++++ b/dist/src/index.d.ts
+@@ -13,6 +13,7 @@ export * from "./render.js";
+ export * from "./resource.js";
+ export * from "./runtime/component.js";
+ export * from "./runtime/intrinsic.js";
++export * from "./scheduler.js";
+ export * from "./stc.js";
+ export * from "./sti.js";
+ export * from "./symbols/index.js";
+diff --git a/dist/src/index.js b/dist/src/index.js
+index 85a73047a955d5608f6eadf0ff21c38086d31d45..7232e8beda8fb80b15688d1bae40bc2ee7d51306 100644
+--- a/dist/src/index.js
++++ b/dist/src/index.js
+@@ -13,6 +13,7 @@ export * from "./render.js";
+ export * from "./resource.js";
+ export * from "./runtime/component.js";
+ export * from "./runtime/intrinsic.js";
++export * from "./scheduler.js";
+ export * from "./stc.js";
+ export * from "./sti.js";
+ export * from "./symbols/index.js";
+diff --git a/src/index.ts b/src/index.ts
+index cbce05bb87ae983cb573ef34fc7fc51ea7fe7929..a082abafb725fd2dc535f3c337c694f78bfdb3b1 100644
+--- a/src/index.ts
++++ b/src/index.ts
+@@ -20,7 +20,7 @@ export {
+   type ShallowReactive,
+   type ShallowRef,
+   type ToRef,
+-  type ToRefs,
++  type ToRefs
+ } from "@vue/reactivity";
+ export * from "./binder.js";
+ export * from "./code.js";
+@@ -36,6 +36,7 @@ export * from "./render.js";
+ export * from "./resource.js";
+ export * from "./runtime/component.js";
+ export * from "./runtime/intrinsic.js";
++export * from "./scheduler.js";
+ export * from "./stc.js";
+ export * from "./sti.js";
+ export * from "./symbols/index.js";

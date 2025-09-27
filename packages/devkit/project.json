@@ -4,6 +4,32 @@
   "projectType": "library",
   "sourceRoot": "packages/devkit/src",
   "targets": {
+    "build-base": {
+      "cache": false,
+      "inputs": ["typescript", "^production"],
+      "outputs": ["{projectRoot}/dist"],
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "rollup --config=rollup.config.js",
+        "cwd": "{projectRoot}"
+      }
+    },
+    "build": {
+      "cache": false,
+      "inputs": ["{projectRoot}/dist"],
+      "outputs": ["{workspaceRoot}/dist/{projectRoot}"],
+      "executor": "nx:run-commands",
+      "dependsOn": ["build-base"],
+      "options": {
+        "commands": [
+          "pnpm copyfiles LICENSE dist/packages/devkit",
+          "pnpm copyfiles --up=2 ./packages/devkit/*.md ./packages/devkit/package.json dist/packages/devkit",
+          "pnpm copyfiles --up=3 \"./packages/devkit/dist/src/**/*.js\" \"./packages/devkit/dist/src/**/*.cjs\" dist/packages/devkit/dist",
+          "pnpm copyfiles --up=5 \"./packages/devkit/dist/node_modules/.pnpm/**/*.js\" \"./packages/devkit/dist/node_modules/.pnpm/**/*.cjs\" dist/packages/devkit/dist/node_modules/.pnpm",
+          "pnpm copyfiles --up=5 \"./packages/devkit/dist/packages/devkit/**/*.d.ts\" dist/packages/devkit/dist"
+        ]
+      }
+    },
     "nx-release-publish": {
       "executor": "@storm-software/workspace-tools:npm-publish"
     }

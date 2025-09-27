@@ -17,25 +17,22 @@
  ------------------------------------------------------------------- */
 
 import { defineConfig } from "@storm-stack/core/define-config";
-import StormStackPluginPlugin from "@storm-stack/devkit/plugins/plugin";
+import { PluginPlugin } from "@storm-stack/devkit/plugins/plugin";
 
 export default defineConfig({
+  skipCache: true,
   entry: [
     "src/index.ts",
     "src/plugin.ts",
-    "src/templates/*.ts",
     "src/types/*.ts",
     "src/helpers/*.ts",
     "src/babel/*.ts"
   ],
   plugins: [
-    new StormStackPluginPlugin({
-      // render: {
-      //   templates: "src/templates"
-      // }
+    new PluginPlugin({
+      render: {
+        templates: "src/templates"
+      }
     })
-  ],
-  output: {
-    outputMode: "fs"
-  }
+  ]
 });

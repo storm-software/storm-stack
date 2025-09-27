@@ -16,7 +16,7 @@
 
  ------------------------------------------------------------------- */
 
-import { StormError } from "../.storm/runtime/error";
+import { StormError } from "storm:error";
 
 export function getCity(request: StormRequest<ExampleRequest>) {
   const request = request.data;

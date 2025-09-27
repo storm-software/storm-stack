@@ -18,8 +18,6 @@
 
 export * from "./babel";
 export * from "./capnp";
-export * from "./config";
-export * from "./context";
 export * from "./deepkit";
 export * from "./entry";
 export * from "./esbuild";

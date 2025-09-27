@@ -3,9 +3,21 @@
   "extends": "@storm-stack/tsconfig/base.json",
   "display": "Storm Stack - Plugin Configuration",
   "compilerOptions": {
+    "incremental": true,
+    "composite": true,
+    "target": "es2022",
     "jsx": "preserve",
     "jsxImportSource": "@alloy-js/core",
-    "lib": ["DOM", "ESNext"],
-    "types": ["node", "@alloy-js/core/testing/matchers"]
+    "lib": ["es2023", "DOM"],
+    "rootDir": "../..",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "strict": true,
+    "declaration": true,
+    "declarationMap": true,
+    "outDir": "../../dist/out-tsc",
+    "sourceMap": true,
+    "isolatedModules": true,
+    "skipLibCheck": true
   }
 }

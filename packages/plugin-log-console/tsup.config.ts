@@ -16,9 +16,9 @@
 
  ------------------------------------------------------------------- */
 
-import { defineTsupConfig } from "@storm-stack/tools-config/tsup.shared";
+import { definePluginTsupConfig } from "@storm-stack/tools-config/tsup.plugin";
 
-const config = defineTsupConfig({
+const config = definePluginTsupConfig({
   name: "plugin-log-console",
   entry: ["src/index.ts", "src/plugin.ts"]
 });

@@ -18,15 +18,26 @@
 
 import { defineTsupConfig } from "@storm-stack/tools-config/tsup.shared";
 
-const config = defineTsupConfig({
-  name: "core-scripts",
-  entry: ["scripts/post-install.ts"],
-  outDir: "scripts",
-  target: "node20",
-  format: ["cjs"],
-  dts: false,
-  clean: false,
-  noExternal: ["@storm-stack/core/deepkit/type-compiler"]
-});
+const config = defineTsupConfig([
+  {
+    name: "core-scripts-post-install",
+    entry: ["scripts/post-install.ts"],
+    outDir: "scripts",
+    target: "node20",
+    format: ["cjs"],
+    dts: false,
+    clean: false,
+    noExternal: ["@storm-stack/core/deepkit/type-compiler"]
+  },
+  {
+    name: "core-scripts-build-runtime-types",
+    entry: ["scripts/build-runtime-types.ts"],
+    outDir: "scripts",
+    target: "node20",
+    format: ["cjs"],
+    dts: false,
+    clean: false
+  }
+]);
 
 export default config;
