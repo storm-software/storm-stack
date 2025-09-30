@@ -71,7 +71,7 @@ export interface PrintTreeOptions {
 /**
  * A base Storm Stack Plugin for using [Alloy Framework](https://alloy-framework.github.io/alloy/) to render runtime modules.
  */
-export abstract class RenderPlugin<
+abstract class RenderPlugin<
   TContext extends Context<
     ResolvedOptions,
     { [P in keyof unknown]: ReflectionRecord },
@@ -340,13 +340,13 @@ export abstract class RenderPlugin<
             sub.contents,
             {
               outputMode: sub.outputMode,
-              skipFormat: true
+              skipFormat: false
             }
           );
         } else if (sub.kind === "entry") {
           await context.vfs.writeEntryFile(sub.path, sub.contents, {
             outputMode: sub.outputMode,
-            skipFormat: true
+            skipFormat: false
           });
         } else if (sub.kind === "file") {
           if ("sourcePath" in sub && sub.sourcePath) {
@@ -422,3 +422,5 @@ export abstract class RenderPlugin<
     return doc;
   };
 }
+
+export default RenderPlugin;

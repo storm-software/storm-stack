@@ -125,19 +125,19 @@ try {
       }
 
       if (filter === "all") {
-        // proc =
-        //   $`pnpm nx run-many --target=build --projects="examples-*" --configuration=${configuration} --outputStyle=dynamic-legacy --parallel=5`.timeout(
-        //     `${8 * 60}s`
-        //   );
-        // proc.stdout.on("data", data => {
-        //   echo`${data}`;
-        // });
-        // result = await proc;
-        // if (!result.ok) {
-        //   throw new Error(
-        //     `An error occurred while building the monorepo's examples in ${configuration} mode: \n\n${result.message}\n`
-        //   );
-        // }
+        proc =
+          $`pnpm nx run-many --target=build --projects="examples-*" --configuration=${configuration} --outputStyle=dynamic-legacy --parallel=5`.timeout(
+            `${8 * 60}s`
+          );
+        proc.stdout.on("data", data => {
+          echo`${data}`;
+        });
+        result = await proc;
+        if (!result.ok) {
+          throw new Error(
+            `An error occurred while building the monorepo's examples in ${configuration} mode: \n\n${result.message}\n`
+          );
+        }
 
         proc =
           $`pnpm nx run-many --target=build --exclude="@storm-stack/monorepo,examples-*" --configuration=${configuration} --outputStyle=dynamic-legacy --parallel=5`.timeout(

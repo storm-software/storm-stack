@@ -16,7 +16,6 @@
 
  ------------------------------------------------------------------- */
 
-import babelJSXSyntaxPlugin from "@babel/plugin-syntax-jsx";
 import { LogLevelLabel } from "@storm-software/config-tools/types";
 import { Plugin } from "@storm-stack/core/base/plugin";
 import { addPluginFilter } from "@storm-stack/core/lib/babel/helpers";
@@ -24,18 +23,18 @@ import { resolveBabelOptions } from "@storm-stack/core/lib/babel/options";
 import { isMatchFound } from "@storm-stack/core/lib/typescript/tsconfig";
 import { writeFile } from "@storm-stack/core/lib/utilities/write-file";
 import { vite } from "@storm-stack/core/lib/vite/build";
+import { SourceFile } from "@storm-stack/core/types";
 import type {
   EngineHooks,
   ViteConfigHookParams
 } from "@storm-stack/core/types/build";
-import { SourceFile } from "@storm-stack/core/types/compiler";
 import { PluginOptions } from "@storm-stack/core/types/plugin";
 import { IdModule } from "@storm-stack/devkit/templates/id";
 import { LogModule } from "@storm-stack/devkit/templates/log";
 import { StorageModule } from "@storm-stack/devkit/templates/storage";
 import { readJsonFile } from "@stryke/fs/json";
 import { StormJSON } from "@stryke/json";
-import { findFileExtensionSafe } from "@stryke/path/file-path-fns";
+import { findFileExtension } from "@stryke/path/file-path-fns";
 import { joinPaths } from "@stryke/path/join-paths";
 import { TsConfigJson } from "@stryke/types/tsconfig";
 import viteReactPlugin, { BabelOptions } from "@vitejs/plugin-react";
@@ -111,8 +110,14 @@ export default class ReactPlugin<
       `Initializing the React plugin options for the Storm Stack project.`
     );
 
-    this.packageDeps.react = { type: "dependency", version: "^19.1.1" };
-    this.packageDeps["react-dom"] = { type: "dependency", version: "^19.1.1" };
+    this.packageDeps.react = {
+      type: "dependency",
+      version: "^19.2.0-canary-4123f6b7-20250826"
+    };
+    this.packageDeps["react-dom"] = {
+      type: "dependency",
+      version: "^19.2.0-canary-4123f6b7-20250826"
+    };
     this.packageDeps["@types/react"] = {
       type: "devDependency",
       version: "^19.1.9"
@@ -202,14 +207,14 @@ export default class ReactPlugin<
 
     context.options.babel.plugins.push(babelPlugin);
     context.options.babel.plugins.unshift([
-      babelJSXSyntaxPlugin,
+      "@babel/plugin-syntax-jsx",
       {
         runtime: context.options.plugins.react.jsxRuntime ?? "automatic",
         importSource: context.options.plugins.react.jsxImportSource ?? "react"
       },
       {
         filter: (sourceFile: SourceFile) =>
-          findFileExtensionSafe(sourceFile.id) === "tsx"
+          findFileExtension(sourceFile.id) === "tsx"
       }
     ]);
 

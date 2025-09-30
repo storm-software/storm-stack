@@ -143,12 +143,13 @@
     "dist/**/*"
   ],
   "keywords": [
+    "react",
     "storm-stack",
     "storm-software",
-    "storm-stack-plugin",
-    "storm-stack-log-plugin"
+    "storm-stack-plugin"
   ],
   "peerDependencies": {
+    "@babel/plugin-syntax-jsx": "^7.27.1",
     "@storm-stack/plugin-env": "*",
     "@storm-stack/plugin-error": "*",
     "@storm-stack/plugin-log-console": "*",
@@ -157,6 +158,9 @@
     "react-dom": "*"
   },
   "peerDependenciesMeta": {
+    "@babel/plugin-syntax-jsx": {
+      "optional": false
+    },
     "@storm-stack/plugin-env": {
       "optional": false
     },
@@ -179,7 +183,6 @@
   "dependencies": {
     "@babel/core": "catalog:",
     "@babel/helper-module-imports": "catalog:",
-    "@babel/plugin-syntax-jsx": "catalog:",
     "@babel/template": "catalog:",
     "@babel/types": "catalog:",
     "@storm-software/config-tools": "catalog:",

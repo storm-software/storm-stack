@@ -256,7 +256,10 @@ export function applyBabelDefaults(
         getPluginName(plugin) === "@babel/plugin-transform-typescript"
     )
   ) {
-    plugins.push("@babel/plugin-syntax-typescript");
+    plugins.push([
+      "@babel/plugin-syntax-typescript",
+      { isTSX: findFileExtension(sourceFile.id) === "tsx" }
+    ]);
   }
 
   if (
