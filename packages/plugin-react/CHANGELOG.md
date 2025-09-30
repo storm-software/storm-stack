@@ -2,6 +2,24 @@
 
 # Changelog for Storm Stack - Plugin React
 
+## [0.7.0](https://github.com/storm-software/storm-stack/releases/tag/plugin-react%400.7.0) (2025-09-30)
+
+### Features
+
+- **core:** Update plugins to support `alloy-js` template rendering
+  ([d7656e40](https://github.com/storm-software/storm-stack/commit/d7656e40))
+
+### Bug Fixes
+
+- **plugin-react:** Resolve issue running babel transforms on tsx files
+  ([028aec49](https://github.com/storm-software/storm-stack/commit/028aec49))
+
+### Updated Dependencies
+
+- Updated devkit to 0.21.0
+- Updated core to 0.47.0
+- Updated nx to 0.22.0
+
 ## [0.6.4](https://github.com/storm-software/storm-stack/releases/tag/plugin-react%400.6.4) (2025-09-16)
 
 ### Miscellaneous

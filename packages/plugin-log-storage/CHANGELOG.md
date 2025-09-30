@@ -2,6 +2,23 @@
 
 # Changelog for Storm Stack - Plugin Log Storage
 
+## [0.27.0](https://github.com/storm-software/storm-stack/releases/tag/plugin-log-storage%400.27.0) (2025-09-30)
+
+### Features
+
+- **core:** Update plugins to support `alloy-js` template rendering
+  ([d7656e40](https://github.com/storm-software/storm-stack/commit/d7656e40))
+
+### Bug Fixes
+
+- **core:** Resolve issue loading `devkit` plugins
+  ([5f94d5c0](https://github.com/storm-software/storm-stack/commit/5f94d5c0))
+
+### Updated Dependencies
+
+- Updated devkit to 0.21.0
+- Updated core to 0.47.0
+
 ## [0.26.8](https://github.com/storm-software/storm-stack/releases/tag/plugin-log-storage%400.26.8) (2025-09-16)
 
 ### Miscellaneous

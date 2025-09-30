@@ -2,6 +2,18 @@
 
 # Changelog for Storm Stack - Plugin CLI
 
+## [0.38.0](https://github.com/storm-software/storm-stack/releases/tag/plugin-cli%400.38.0) (2025-09-30)
+
+### Features
+
+- **core:** Update plugins to support `alloy-js` template rendering
+  ([d7656e40](https://github.com/storm-software/storm-stack/commit/d7656e40))
+
+### Updated Dependencies
+
+- Updated devkit to 0.21.0
+- Updated core to 0.47.0
+
 ## [0.37.0](https://github.com/storm-software/storm-stack/releases/tag/plugin-cli%400.37.0) (2025-09-16)
 
 ### Features

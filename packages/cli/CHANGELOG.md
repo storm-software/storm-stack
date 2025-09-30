@@ -2,6 +2,28 @@
 
 # Changelog for Storm Stack - CLI
 
+## [0.28.0](https://github.com/storm-software/storm-stack/releases/tag/cli%400.28.0) (2025-09-30)
+
+### Features
+
+- **core:** Update plugins to support `alloy-js` template rendering
+  ([d7656e40](https://github.com/storm-software/storm-stack/commit/d7656e40))
+
+### Bug Fixes
+
+- **plugin-env:** Resolve issue applying typescript object templates
+  ([b18f8c25](https://github.com/storm-software/storm-stack/commit/b18f8c25))
+
+### Updated Dependencies
+
+- Updated plugin-log-storage to 0.27.0
+- Updated plugin-log-sentry to 0.32.0
+- Updated plugin-storage-fs to 0.16.0
+- Updated plugin-cli to 0.38.0
+- Updated plugin-env to 0.11.0
+- Updated core to 0.47.0
+- Updated nx to 0.22.0
+
 ## [0.27.4](https://github.com/storm-software/storm-stack/releases/tag/cli%400.27.4) (2025-09-16)
 
 ### Miscellaneous

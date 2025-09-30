@@ -2,6 +2,20 @@
 
 # Changelog for Storm Stack - Core
 
+## [0.47.0](https://github.com/storm-software/storm-stack/releases/tag/core%400.47.0) (2025-09-30)
+
+### Features
+
+- **core:** Update plugins to support `alloy-js` template rendering
+  ([d7656e40](https://github.com/storm-software/storm-stack/commit/d7656e40))
+
+### Bug Fixes
+
+- **plugin-react:** Resolve issue running babel transforms on tsx files
+  ([028aec49](https://github.com/storm-software/storm-stack/commit/028aec49))
+- **plugin-env:** Resolve issue applying typescript object templates
+  ([b18f8c25](https://github.com/storm-software/storm-stack/commit/b18f8c25))
+
 ## [0.46.0](https://github.com/storm-software/storm-stack/releases/tag/core%400.46.0) (2025-09-16)
 
 ### Features

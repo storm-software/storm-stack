@@ -2,6 +2,13 @@
 
 # Changelog for Storm Stack - Types
 
+## [0.21.0](https://github.com/storm-software/storm-stack/releases/tag/types%400.21.0) (2025-09-30)
+
+### Features
+
+- **core:** Update plugins to support `alloy-js` template rendering
+  ([d7656e40](https://github.com/storm-software/storm-stack/commit/d7656e40))
+
 ## [0.20.0](https://github.com/storm-software/storm-stack/releases/tag/types%400.20.0) (2025-09-12)
 
 ### Features

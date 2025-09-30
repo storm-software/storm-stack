@@ -2,6 +2,13 @@
 
 # Changelog for Storm Stack - ESLint Config
 
+## [0.17.0](https://github.com/storm-software/storm-stack/releases/tag/eslint-config%400.17.0) (2025-09-30)
+
+### Features
+
+- **core:** Update plugins to support `alloy-js` template rendering
+  ([d7656e40](https://github.com/storm-software/storm-stack/commit/d7656e40))
+
 ## [0.16.2](https://github.com/storm-software/storm-stack/releases/tag/eslint-config%400.16.2) (2025-09-16)
 
 ### Miscellaneous

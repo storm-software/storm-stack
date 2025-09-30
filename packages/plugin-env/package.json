@@ -1,6 +1,6 @@
 {
   "name": "@storm-stack/plugin-env",
-  "version": "0.10.0",
+  "version": "0.11.0",
   "type": "module",
   "description": "A package containing a Storm Stack plugin for injecting static .env configuration values to the code so that they're accessible at runtime.",
   "repository": {
@@ -52,8 +52,8 @@
     "@babel/core": "catalog:",
     "@babel/types": "catalog:",
     "@storm-software/config-tools": "catalog:",
-    "@storm-stack/core": "workspace:*",
-    "@storm-stack/devkit": "workspace:*",
+    "@storm-stack/core": "0.47.0",
+    "@storm-stack/devkit": "0.21.0",
     "@stryke/capnp": "catalog:",
     "@stryke/env": "catalog:",
     "@stryke/fs": "catalog:",
@@ -65,7 +65,7 @@
   "devDependencies": {
     "@alloy-js/babel-preset": "catalog:",
     "@babel/preset-typescript": "catalog:",
-    "@storm-stack/nx": "workspace:*",
+    "@storm-stack/nx": "0.22.0",
     "@types/node": "catalog:",
     "tsup": "catalog:",
     "typescript": "^5.9.2"
