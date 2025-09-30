@@ -2,6 +2,23 @@
 
 # Changelog for Storm Stack - Devkit
 
+## [0.22.0](https://github.com/storm-software/storm-stack/releases/tag/devkit%400.22.0) (2025-09-30)
+
+### Features
+
+- **devkit:** Update `PluginPluginOptions` to reduce fields and remove unneeded
+  data
+  ([c72706b0](https://github.com/storm-software/storm-stack/commit/c72706b0))
+
+### Miscellaneous
+
+- **monorepo:** Update workspace package links
+  ([b42a5c31](https://github.com/storm-software/storm-stack/commit/b42a5c31))
+
+### Updated Dependencies
+
+- Updated core to 0.48.0
+
 ## [0.21.0](https://github.com/storm-software/storm-stack/releases/tag/devkit%400.21.0) (2025-09-30)
 
 ### Features

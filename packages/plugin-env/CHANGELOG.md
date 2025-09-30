@@ -2,6 +2,25 @@
 
 # Changelog for Storm Stack - Plugin Env
 
+## [0.12.0](https://github.com/storm-software/storm-stack/releases/tag/plugin-env%400.12.0) (2025-09-30)
+
+### Features
+
+- **devkit:** Update `PluginPluginOptions` to reduce fields and remove unneeded
+  data
+  ([c72706b0](https://github.com/storm-software/storm-stack/commit/c72706b0))
+
+### Miscellaneous
+
+- **monorepo:** Update workspace package links
+  ([b42a5c31](https://github.com/storm-software/storm-stack/commit/b42a5c31))
+
+### Updated Dependencies
+
+- Updated devkit to 0.22.0
+- Updated core to 0.48.0
+- Updated nx to 0.22.1
+
 ## [0.11.0](https://github.com/storm-software/storm-stack/releases/tag/plugin-env%400.11.0) (2025-09-30)
 
 ### Features

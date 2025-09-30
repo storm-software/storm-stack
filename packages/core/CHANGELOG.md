@@ -2,6 +2,18 @@
 
 # Changelog for Storm Stack - Core
 
+## [0.48.0](https://github.com/storm-software/storm-stack/releases/tag/core%400.48.0) (2025-09-30)
+
+### Features
+
+- **core:** Added the `rolldown` build library module
+  ([a7b36470](https://github.com/storm-software/storm-stack/commit/a7b36470))
+
+### Miscellaneous
+
+- **monorepo:** Update workspace package links
+  ([b42a5c31](https://github.com/storm-software/storm-stack/commit/b42a5c31))
+
 ## [0.47.0](https://github.com/storm-software/storm-stack/releases/tag/core%400.47.0) (2025-09-30)
 
 ### Features
