@@ -344,7 +344,7 @@
     "@storm-software/config-tools": "catalog:",
     "@storm-software/esbuild": "catalog:",
     "@storm-software/unbuild": "catalog:",
-    "@storm-stack/core": "0.47.0",
+    "@storm-stack/core": "workspace:*",
     "@stryke/convert": "catalog:",
     "@stryke/fs": "catalog:",
     "@stryke/helpers": "catalog:",
@@ -370,9 +370,6 @@
     "@types/babel__helper-plugin-utils": "catalog:",
     "@types/node": "catalog:",
     "rollup": "catalog:",
-    "rollup-plugin-json": "catalog:",
-    "rollup-plugin-node-builtins": "catalog:",
-    "rollup-plugin-node-globals": "catalog:",
     "rollup-plugin-ts-paths": "catalog:",
     "rollup-plugin-typescript2": "catalog:",
     "tsup": "catalog:"

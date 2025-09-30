@@ -119,7 +119,7 @@ declare module "storm:env" {
     /**
      * The environment the application is running in. This value will be populated with the value of `MODE` if not provided.
      *
-     * @title ENVIRONMENT
+     * @title Environment
      * @alias ENVIRONMENT
      *
      *
@@ -234,7 +234,7 @@ declare module "storm:env" {
     /**
      * Disable interactive mode (will be set to true if running in a CI pipeline).
      *
-     * @title NO INTERACTIVE
+     * @title No Interactive
      * @alias NO_INTERACTIVE
      * @domain cli
      *
@@ -253,7 +253,7 @@ declare module "storm:env" {
     /**
      * The mode in which the application is running.
      *
-     * @title MODE
+     * @title Mode
      * @alias MODE
      *
      *
@@ -262,7 +262,7 @@ declare module "storm:env" {
     /**
      * The name of the organization that maintains the application.
      *
-     * @title ORGANIZATION
+     * @title Organization
      * @alias ORGANIZATION
      *
      *
@@ -301,7 +301,7 @@ declare module "storm:env" {
     /**
      * The root directory of the Storm Stack project.
      *
-     * @title ROOT
+     * @title Root
      * @alias ROOT
      * @domain cli
      *

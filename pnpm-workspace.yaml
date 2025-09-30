@@ -48,6 +48,7 @@ catalog:
   "@microsoft/api-extractor": ^7.52.8
   "@microsoft/tsdoc": ^0.15.1
   "@microsoft/tsdoc-config": ^0.17.1
+  "@rollup/plugin-alias": ^5.1.1
   "@rollup/plugin-babel": ^6.0.4
   "@rollup/plugin-commonjs": ^28.0.6
   "@rollup/plugin-node-resolve": ^16.0.1
@@ -66,9 +67,6 @@ catalog:
   esbuild-plugin-tsc: ^0.5.0
   rolldown: ^1.0.0-beta.35
   rollup: ^4.50.1
-  rollup-plugin-json: ^4.0.0
-  rollup-plugin-node-builtins: ^2.1.2
-  rollup-plugin-node-globals: ^1.4.0
   rollup-plugin-ts-paths: ^1.0.5
   rollup-plugin-typescript2: ^0.36.0
   vite: ^7.1.5
@@ -119,17 +117,17 @@ catalog:
   "@storm-software/tsconfig": latest
   "@storm-software/tsdoc": latest
   "@storm-software/workspace-tools": latest
-  "@stryke/env": ^0.18.4
-  "@stryke/fs": ^0.28.0
+  "@stryke/env": ^0.18.13
+  "@stryke/fs": ^0.28.6
   "@stryke/helpers": ^0.9.0
   "@stryke/http": ^0.10.0
-  "@stryke/unique-id": ^0.3.3
+  "@stryke/unique-id": ^0.3.5
   "@stryke/url": ^0.2.4
   "@stryke/json": ^0.9.3
   "@stryke/path": ^0.15.2
-  "@stryke/types": ^0.8.9
+  "@stryke/types": ^0.9.0
   "@stryke/hash": ^0.12.0
-  "@stryke/string-format": ^0.11.0
+  "@stryke/string-format": ^0.12.0
   "@stryke/convert": ^0.6.0
   "@stryke/type-checks": ^0.3.10
   "@stryke/cli": ^0.12.3
@@ -273,9 +271,7 @@ patchedDependencies:
   "@alloy-js/babel-plugin-jsx-dom-expressions": patches/@alloy-js__babel-plugin-jsx-dom-expressions.patch
   "@alloy-js/core": patches/@alloy-js__core.patch
 preferWorkspacePackages: true
-
-# To reduce the risk of installing compromised packages.
-minimumReleaseAge: 1440 # 1 day
+minimumReleaseAge: 1440
 minimumReleaseAgeExclude:
   - "@storm-software/*"
   - "@stryke/*"

@@ -186,8 +186,8 @@
     "@babel/template": "catalog:",
     "@babel/types": "catalog:",
     "@storm-software/config-tools": "catalog:",
-    "@storm-stack/core": "0.47.0",
-    "@storm-stack/devkit": "0.21.0",
+    "@storm-stack/core": "workspace:*",
+    "@storm-stack/devkit": "workspace:*",
     "@stryke/convert": "catalog:",
     "@stryke/json": "catalog:",
     "@stryke/path": "catalog:",
@@ -198,7 +198,7 @@
     "defu": "catalog:"
   },
   "devDependencies": {
-    "@storm-stack/nx": "0.22.0",
+    "@storm-stack/nx": "workspace:*",
     "@stryke/types": "catalog:",
     "@types/node": "catalog:",
     "tsup": "catalog:"

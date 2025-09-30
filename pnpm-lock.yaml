@@ -180,6 +180,9 @@ catalogs:
     '@opentelemetry/semantic-conventions':
       specifier: ^1.32.0
       version: 1.36.0
+    '@rollup/plugin-alias':
+      specifier: ^5.1.1
+      version: 5.1.1
     '@rollup/plugin-babel':
       specifier: ^6.0.4
       version: 6.0.4
@@ -256,11 +259,11 @@ catalogs:
       specifier: ^0.6.0
       version: 0.6.0
     '@stryke/env':
-      specifier: ^0.18.4
-      version: 0.18.4
+      specifier: ^0.18.13
+      version: 0.18.13
     '@stryke/fs':
-      specifier: ^0.28.0
-      version: 0.28.0
+      specifier: ^0.28.6
+      version: 0.28.6
     '@stryke/hash':
       specifier: ^0.12.0
       version: 0.12.0
@@ -274,17 +277,17 @@ catalogs:
       specifier: ^0.15.2
       version: 0.15.2
     '@stryke/string-format':
-      specifier: ^0.11.0
-      version: 0.11.0
+      specifier: ^0.12.0
+      version: 0.12.0
     '@stryke/type-checks':
       specifier: ^0.3.10
       version: 0.3.10
     '@stryke/types':
-      specifier: ^0.8.9
-      version: 0.8.9
+      specifier: ^0.9.0
+      version: 0.9.0
     '@stryke/unique-id':
-      specifier: ^0.3.3
-      version: 0.3.4
+      specifier: ^0.3.5
+      version: 0.3.5
     '@stryke/url':
       specifier: ^0.2.4
       version: 0.2.4
@@ -480,15 +483,6 @@ catalogs:
     rollup:
       specifier: ^4.50.1
       version: 4.52.2
-    rollup-plugin-json:
-      specifier: ^4.0.0
-      version: 4.0.0
-    rollup-plugin-node-builtins:
-      specifier: ^2.1.2
-      version: 2.1.2
-    rollup-plugin-node-globals:
-      specifier: ^1.4.0
-      version: 1.4.0
     rollup-plugin-ts-paths:
       specifier: ^1.0.5
       version: 1.0.5
@@ -828,7 +822,7 @@ importers:
         version: 0.3.10
       '@stryke/url':
         specifier: 'catalog:'
-        version: 0.2.4
+        version: 0.2.4(magicast@0.3.5)
       unenv:
         specifier: 'catalog:'
         version: unenv-nightly@2.0.0-20250821-220643-3b90d65
@@ -847,7 +841,7 @@ importers:
         version: link:../../packages/plugin-log-console
       '@stryke/types':
         specifier: 'catalog:'
-        version: 0.8.9
+        version: 0.9.0
       '@types/node':
         specifier: 'catalog:'
         version: 22.18.0
@@ -868,7 +862,7 @@ importers:
         version: 0.3.10
       '@stryke/url':
         specifier: 'catalog:'
-        version: 0.2.4
+        version: 0.2.4(magicast@0.3.5)
     devDependencies:
       '@storm-stack/devkit':
         specifier: workspace:*
@@ -878,7 +872,7 @@ importers:
         version: link:../../packages/nx
       '@stryke/types':
         specifier: 'catalog:'
-        version: 0.8.9
+        version: 0.9.0
 
   examples/react-app:
     dependencies:
@@ -939,7 +933,7 @@ importers:
         version: link:../core
       '@stryke/fs':
         specifier: 'catalog:'
-        version: 0.28.0(magicast@0.3.5)(nx@21.6.2(@swc-node/register@1.11.1(@swc/core@1.13.5(@swc/helpers@0.5.17))(@swc/types@0.1.25)(typescript@5.9.2))(@swc/core@1.13.5(@swc/helpers@0.5.17)))
+        version: 0.28.6(magicast@0.3.5)(nx@21.6.2(@swc-node/register@1.11.1(@swc/core@1.13.5(@swc/helpers@0.5.17))(@swc/types@0.1.25)(typescript@5.9.2))(@swc/core@1.13.5(@swc/helpers@0.5.17)))
       date-fns:
         specifier: 'catalog:'
         version: 4.1.0
@@ -1058,6 +1052,9 @@ importers:
       '@nuxt/schema':
         specifier: ^4.1.1
         version: 4.1.2
+      '@rollup/plugin-alias':
+        specifier: 'catalog:'
+        version: 5.1.1(rollup@4.52.3)
       '@rollup/plugin-babel':
         specifier: 'catalog:'
         version: 6.0.4(@babel/core@7.28.4)(@types/babel__core@7.20.5)(rollup@4.52.3)
@@ -1093,10 +1090,10 @@ importers:
         version: 0.6.0
       '@stryke/env':
         specifier: 'catalog:'
-        version: 0.18.4(magicast@0.3.5)(nx@21.6.2(@swc-node/register@1.11.1(@swc/core@1.13.5(@swc/helpers@0.5.17))(@swc/types@0.1.25)(typescript@5.9.2))(@swc/core@1.13.5(@swc/helpers@0.5.17)))
+        version: 0.18.13(magicast@0.3.5)(nx@21.6.2(@swc-node/register@1.11.1(@swc/core@1.13.5(@swc/helpers@0.5.17))(@swc/types@0.1.25)(typescript@5.9.2))(@swc/core@1.13.5(@swc/helpers@0.5.17)))
       '@stryke/fs':
         specifier: 'catalog:'
-        version: 0.28.0(magicast@0.3.5)(nx@21.6.2(@swc-node/register@1.11.1(@swc/core@1.13.5(@swc/helpers@0.5.17))(@swc/types@0.1.25)(typescript@5.9.2))(@swc/core@1.13.5(@swc/helpers@0.5.17)))
+        version: 0.28.6(magicast@0.3.5)(nx@21.6.2(@swc-node/register@1.11.1(@swc/core@1.13.5(@swc/helpers@0.5.17))(@swc/types@0.1.25)(typescript@5.9.2))(@swc/core@1.13.5(@swc/helpers@0.5.17)))
       '@stryke/hash':
         specifier: 'catalog:'
         version: 0.12.0(magicast@0.3.5)(nx@21.6.2(@swc-node/register@1.11.1(@swc/core@1.13.5(@swc/helpers@0.5.17))(@swc/types@0.1.25)(typescript@5.9.2))(@swc/core@1.13.5(@swc/helpers@0.5.17)))
@@ -1111,13 +1108,13 @@ importers:
         version: 0.15.2
       '@stryke/string-format':
         specifier: 'catalog:'
-        version: 0.11.0
+        version: 0.12.0
       '@stryke/type-checks':
         specifier: 'catalog:'
         version: 0.3.10
       '@stryke/unique-id':
         specifier: 'catalog:'
-        version: 0.3.4(magicast@0.3.5)(nx@21.6.2(@swc-node/register@1.11.1(@swc/core@1.13.5(@swc/helpers@0.5.17))(@swc/types@0.1.25)(typescript@5.9.2))(@swc/core@1.13.5(@swc/helpers@0.5.17)))
+        version: 0.3.5(magicast@0.3.5)(nx@21.6.2(@swc-node/register@1.11.1(@swc/core@1.13.5(@swc/helpers@0.5.17))(@swc/types@0.1.25)(typescript@5.9.2))(@swc/core@1.13.5(@swc/helpers@0.5.17)))
       astro:
         specifier: ^5.13.5
         version: 5.14.1(@types/node@22.18.0)(aws4fetch@1.0.20)(jiti@2.6.0)(rollup@4.52.3)(terser@5.44.0)(tsx@4.20.5)(typescript@5.9.2)(yaml@2.8.1)
@@ -1167,10 +1164,10 @@ importers:
         specifier: 'catalog:'
         version: 3.6.2
       rolldown:
-        specifier: ^1.0.0-beta.35
+        specifier: ^1.0.0-beta.41
         version: 1.0.0-beta.41
       rollup:
-        specifier: ^4.50.1
+        specifier: ^4.52.3
         version: 4.52.3
       rollup-plugin-typescript2:
         specifier: 'catalog:'
@@ -1220,7 +1217,7 @@ importers:
         version: 1.118.8(@nx/jest@21.5.3(@babel/traverse@7.28.4)(@swc-node/register@1.11.1(@swc/core@1.13.5(@swc/helpers@0.5.17))(@swc/types@0.1.25)(typescript@5.9.2))(@swc/core@1.13.5(@swc/helpers@0.5.17))(@types/node@22.18.0)(babel-plugin-macros@3.1.0)(nx@21.6.2(@swc-node/register@1.11.1(@swc/core@1.13.5(@swc/helpers@0.5.17))(@swc/types@0.1.25)(typescript@5.9.2))(@swc/core@1.13.5(@swc/helpers@0.5.17)))(ts-node@10.9.2(@swc/core@1.13.5(@swc/helpers@0.5.17))(@types/node@22.18.0)(typescript@5.9.2))(typescript@5.9.2)(verdaccio@6.1.2(typanion@3.14.0)))(jest@30.0.5(@types/node@22.18.0)(babel-plugin-macros@3.1.0)(ts-node@10.9.2(@swc/core@1.13.5(@swc/helpers@0.5.17))(@types/node@22.18.0)(typescript@5.9.2)))
       '@stryke/types':
         specifier: 'catalog:'
-        version: 0.8.9
+        version: 0.9.0
       '@types/babel__core':
         specifier: 'catalog:'
         version: 7.20.5
@@ -1313,7 +1310,7 @@ importers:
         version: 0.6.0
       '@stryke/fs':
         specifier: 'catalog:'
-        version: 0.28.0(magicast@0.3.5)(nx@21.6.2(@swc-node/register@1.11.1(@swc/core@1.7.26(@swc/helpers@0.5.17))(@swc/types@0.1.25)(typescript@5.9.2))(@swc/core@1.7.26(@swc/helpers@0.5.17)))
+        version: 0.28.6(magicast@0.3.5)(nx@21.6.2(@swc-node/register@1.11.1(@swc/core@1.7.26(@swc/helpers@0.5.17))(@swc/types@0.1.25)(typescript@5.9.2))(@swc/core@1.7.26(@swc/helpers@0.5.17)))
       '@stryke/helpers':
         specifier: 'catalog:'
         version: 0.9.0
@@ -1325,13 +1322,13 @@ importers:
         version: 0.15.2
       '@stryke/string-format':
         specifier: 'catalog:'
-        version: 0.11.0
+        version: 0.12.0
       '@stryke/type-checks':
         specifier: 'catalog:'
         version: 0.3.10
       '@stryke/unique-id':
         specifier: 'catalog:'
-        version: 0.3.4(magicast@0.3.5)(nx@21.6.2(@swc-node/register@1.11.1(@swc/core@1.7.26(@swc/helpers@0.5.17))(@swc/types@0.1.25)(typescript@5.9.2))(@swc/core@1.7.26(@swc/helpers@0.5.17)))
+        version: 0.3.5(magicast@0.3.5)(nx@21.6.2(@swc-node/register@1.11.1(@swc/core@1.7.26(@swc/helpers@0.5.17))(@swc/types@0.1.25)(typescript@5.9.2))(@swc/core@1.7.26(@swc/helpers@0.5.17)))
       '@vue/reactivity':
         specifier: 'catalog:'
         version: 3.5.21
@@ -1378,15 +1375,6 @@ importers:
       rollup:
         specifier: 'catalog:'
         version: 4.52.2
-      rollup-plugin-json:
-        specifier: 'catalog:'
-        version: 4.0.0
-      rollup-plugin-node-builtins:
-        specifier: 'catalog:'
-        version: 2.1.2
-      rollup-plugin-node-globals:
-        specifier: 'catalog:'
-        version: 1.4.0
       rollup-plugin-ts-paths:
         specifier: 'catalog:'
         version: 1.0.5
@@ -1410,7 +1398,7 @@ importers:
         version: link:../tsdoc
       '@stryke/fs':
         specifier: 'catalog:'
-        version: 0.28.0(magicast@0.3.5)(nx@21.6.2(@swc-node/register@1.11.1(@swc/core@1.13.5(@swc/helpers@0.5.17))(@swc/types@0.1.25)(typescript@5.9.2))(@swc/core@1.13.5(@swc/helpers@0.5.17)))
+        version: 0.28.6(magicast@0.3.5)(nx@21.6.2(@swc-node/register@1.11.1(@swc/core@1.13.5(@swc/helpers@0.5.17))(@swc/types@0.1.25)(typescript@5.9.2))(@swc/core@1.13.5(@swc/helpers@0.5.17)))
       '@stryke/type-checks':
         specifier: 'catalog:'
         version: 0.3.10
@@ -1450,7 +1438,7 @@ importers:
         version: 1.3.2(eslint@9.34.0(jiti@2.6.0))
       '@stryke/fs':
         specifier: 'catalog:'
-        version: 0.28.0(magicast@0.3.5)(nx@21.6.2(@swc-node/register@1.11.1(@swc/core@1.13.5(@swc/helpers@0.5.17))(@swc/types@0.1.25)(typescript@5.9.2))(@swc/core@1.13.5(@swc/helpers@0.5.17)))
+        version: 0.28.6(magicast@0.3.5)(nx@21.6.2(@swc-node/register@1.11.1(@swc/core@1.13.5(@swc/helpers@0.5.17))(@swc/types@0.1.25)(typescript@5.9.2))(@swc/core@1.13.5(@swc/helpers@0.5.17)))
       '@stryke/helpers':
         specifier: 'catalog:'
         version: 0.9.0
@@ -1481,7 +1469,7 @@ importers:
         version: 0.7.1(eslint@9.34.0(jiti@2.6.0))
       '@storm-software/eslint':
         specifier: 'catalog:'
-        version: 0.168.14(504a7d25bdcc568fec0a5f29362ac710)
+        version: 0.168.14(8b45e5b471ded45eec4fc58511eb27c0)
       '@types/eslint':
         specifier: 'catalog:'
         version: 9.6.1
@@ -1538,7 +1526,7 @@ importers:
         version: link:../core
       '@stryke/fs':
         specifier: 'catalog:'
-        version: 0.28.0(magicast@0.3.5)(nx@21.5.3(@swc-node/register@1.11.1(@swc/core@1.7.26(@swc/helpers@0.5.17))(@swc/types@0.1.25)(typescript@5.9.2))(@swc/core@1.7.26(@swc/helpers@0.5.17)))
+        version: 0.28.6(magicast@0.3.5)(nx@21.5.3(@swc-node/register@1.11.1(@swc/core@1.7.26(@swc/helpers@0.5.17))(@swc/types@0.1.25)(typescript@5.9.2))(@swc/core@1.7.26(@swc/helpers@0.5.17)))
       '@stryke/hash':
         specifier: 'catalog:'
         version: 0.12.0(magicast@0.3.5)(nx@21.5.3(@swc-node/register@1.11.1(@swc/core@1.7.26(@swc/helpers@0.5.17))(@swc/types@0.1.25)(typescript@5.9.2))(@swc/core@1.7.26(@swc/helpers@0.5.17)))
@@ -1547,7 +1535,7 @@ importers:
         version: 0.15.2
       '@stryke/string-format':
         specifier: 'catalog:'
-        version: 0.11.0
+        version: 0.12.0
       '@stryke/type-checks':
         specifier: 'catalog:'
         version: 0.3.10
@@ -1620,7 +1608,7 @@ importers:
         version: 0.6.0
       '@stryke/fs':
         specifier: 'catalog:'
-        version: 0.28.0(magicast@0.3.5)(nx@21.5.3(@swc-node/register@1.11.1(@swc/core@1.13.5(@swc/helpers@0.5.17))(@swc/types@0.1.25)(typescript@5.9.2))(@swc/core@1.13.5(@swc/helpers@0.5.17)))
+        version: 0.28.6(magicast@0.3.5)(nx@21.5.3(@swc-node/register@1.11.1(@swc/core@1.13.5(@swc/helpers@0.5.17))(@swc/types@0.1.25)(typescript@5.9.2))(@swc/core@1.13.5(@swc/helpers@0.5.17)))
       '@stryke/helpers':
         specifier: 'catalog:'
         version: 0.9.0
@@ -1632,7 +1620,7 @@ importers:
         version: 0.15.2
       '@stryke/string-format':
         specifier: 'catalog:'
-        version: 0.11.0
+        version: 0.12.0
       '@stryke/type-checks':
         specifier: 'catalog:'
         version: 0.3.10
@@ -1651,7 +1639,7 @@ importers:
     devDependencies:
       '@stryke/types':
         specifier: 'catalog:'
-        version: 0.8.9
+        version: 0.9.0
       tsup:
         specifier: 'catalog:'
         version: 8.4.0(@microsoft/api-extractor@7.52.13(@types/node@22.18.0))(@swc/core@1.13.5(@swc/helpers@0.5.17))(jiti@2.6.0)(postcss@8.5.6)(tsx@4.20.5)(typescript@5.9.2)(yaml@2.8.1)
@@ -1684,7 +1672,7 @@ importers:
         version: link:../devkit
       '@stryke/fs':
         specifier: 'catalog:'
-        version: 0.28.0(magicast@0.3.5)(nx@21.6.2(@swc-node/register@1.11.1(@swc/core@1.13.5(@swc/helpers@0.5.17))(@swc/types@0.1.25)(typescript@5.9.2))(@swc/core@1.13.5(@swc/helpers@0.5.17)))
+        version: 0.28.6(magicast@0.3.5)(nx@21.6.2(@swc-node/register@1.11.1(@swc/core@1.13.5(@swc/helpers@0.5.17))(@swc/types@0.1.25)(typescript@5.9.2))(@swc/core@1.13.5(@swc/helpers@0.5.17)))
       '@stryke/json':
         specifier: 'catalog:'
         version: 0.9.3
@@ -1712,7 +1700,7 @@ importers:
         version: link:../plugin-env
       '@stryke/types':
         specifier: 'catalog:'
-        version: 0.8.9
+        version: 0.9.0
       tsup:
         specifier: 'catalog:'
         version: 8.4.0(@microsoft/api-extractor@7.52.13(@types/node@22.18.0))(@swc/core@1.13.5(@swc/helpers@0.5.17))(jiti@2.6.0)(postcss@8.5.6)(tsx@4.20.5)(typescript@5.9.2)(yaml@2.8.1)
@@ -1736,22 +1724,22 @@ importers:
         version: 0.11.12(magicast@0.3.5)(nx@21.6.2(@swc-node/register@1.11.1(@swc/core@1.13.5(@swc/helpers@0.5.17))(@swc/types@0.1.25)(typescript@5.9.2))(@swc/core@1.13.5(@swc/helpers@0.5.17)))(typescript@5.9.2)
       '@stryke/env':
         specifier: 'catalog:'
-        version: 0.18.4(magicast@0.3.5)(nx@21.6.2(@swc-node/register@1.11.1(@swc/core@1.13.5(@swc/helpers@0.5.17))(@swc/types@0.1.25)(typescript@5.9.2))(@swc/core@1.13.5(@swc/helpers@0.5.17)))
+        version: 0.18.13(magicast@0.3.5)(nx@21.6.2(@swc-node/register@1.11.1(@swc/core@1.13.5(@swc/helpers@0.5.17))(@swc/types@0.1.25)(typescript@5.9.2))(@swc/core@1.13.5(@swc/helpers@0.5.17)))
       '@stryke/fs':
         specifier: 'catalog:'
-        version: 0.28.0(magicast@0.3.5)(nx@21.6.2(@swc-node/register@1.11.1(@swc/core@1.13.5(@swc/helpers@0.5.17))(@swc/types@0.1.25)(typescript@5.9.2))(@swc/core@1.13.5(@swc/helpers@0.5.17)))
+        version: 0.28.6(magicast@0.3.5)(nx@21.6.2(@swc-node/register@1.11.1(@swc/core@1.13.5(@swc/helpers@0.5.17))(@swc/types@0.1.25)(typescript@5.9.2))(@swc/core@1.13.5(@swc/helpers@0.5.17)))
       '@stryke/json':
         specifier: 'catalog:'
         version: 0.9.3
       '@stryke/string-format':
         specifier: 'catalog:'
-        version: 0.11.0
+        version: 0.12.0
       '@stryke/type-checks':
         specifier: 'catalog:'
         version: 0.3.10
       '@stryke/types':
         specifier: 'catalog:'
-        version: 0.8.9
+        version: 0.9.0
     devDependencies:
       '@storm-stack/nx':
         specifier: workspace:*
@@ -1791,22 +1779,22 @@ importers:
         version: 0.11.12(magicast@0.3.5)(nx@21.6.2(@swc-node/register@1.11.1(@swc/core@1.13.5(@swc/helpers@0.5.17))(@swc/types@0.1.25)(typescript@5.9.2))(@swc/core@1.13.5(@swc/helpers@0.5.17)))(typescript@5.9.2)
       '@stryke/env':
         specifier: 'catalog:'
-        version: 0.18.4(magicast@0.3.5)(nx@21.6.2(@swc-node/register@1.11.1(@swc/core@1.13.5(@swc/helpers@0.5.17))(@swc/types@0.1.25)(typescript@5.9.2))(@swc/core@1.13.5(@swc/helpers@0.5.17)))
+        version: 0.18.13(magicast@0.3.5)(nx@21.6.2(@swc-node/register@1.11.1(@swc/core@1.13.5(@swc/helpers@0.5.17))(@swc/types@0.1.25)(typescript@5.9.2))(@swc/core@1.13.5(@swc/helpers@0.5.17)))
       '@stryke/fs':
         specifier: 'catalog:'
-        version: 0.28.0(magicast@0.3.5)(nx@21.6.2(@swc-node/register@1.11.1(@swc/core@1.13.5(@swc/helpers@0.5.17))(@swc/types@0.1.25)(typescript@5.9.2))(@swc/core@1.13.5(@swc/helpers@0.5.17)))
+        version: 0.28.6(magicast@0.3.5)(nx@21.6.2(@swc-node/register@1.11.1(@swc/core@1.13.5(@swc/helpers@0.5.17))(@swc/types@0.1.25)(typescript@5.9.2))(@swc/core@1.13.5(@swc/helpers@0.5.17)))
       '@stryke/json':
         specifier: 'catalog:'
         version: 0.9.3
       '@stryke/string-format':
         specifier: 'catalog:'
-        version: 0.11.0
+        version: 0.12.0
       '@stryke/type-checks':
         specifier: 'catalog:'
         version: 0.3.10
       '@stryke/types':
         specifier: 'catalog:'
-        version: 0.8.9
+        version: 0.9.0
     devDependencies:
       '@alloy-js/babel-preset':
         specifier: 'catalog:'
@@ -1861,7 +1849,7 @@ importers:
         version: 0.15.2
       '@stryke/string-format':
         specifier: 'catalog:'
-        version: 0.11.0
+        version: 0.12.0
     devDependencies:
       '@storm-stack/nx':
         specifier: workspace:*
@@ -2040,7 +2028,7 @@ importers:
         version: 0.15.2
       '@stryke/string-format':
         specifier: 'catalog:'
-        version: 0.11.0
+        version: 0.12.0
       '@stryke/type-checks':
         specifier: 'catalog:'
         version: 0.3.10
@@ -2101,7 +2089,7 @@ importers:
         version: 0.15.2
       '@stryke/string-format':
         specifier: 'catalog:'
-        version: 0.11.0
+        version: 0.12.0
       '@stryke/type-checks':
         specifier: 'catalog:'
         version: 0.3.10
@@ -2126,7 +2114,7 @@ importers:
         version: link:../nx
       '@stryke/types':
         specifier: 'catalog:'
-        version: 0.8.9
+        version: 0.9.0
       '@types/node':
         specifier: 'catalog:'
         version: 22.18.0
@@ -2156,7 +2144,7 @@ importers:
         version: link:../plugin-env
       '@stryke/fs':
         specifier: 'catalog:'
-        version: 0.28.0(magicast@0.3.5)(nx@21.6.2(@swc-node/register@1.11.1(@swc/core@1.13.5(@swc/helpers@0.5.17))(@swc/types@0.1.25)(typescript@5.9.2))(@swc/core@1.13.5(@swc/helpers@0.5.17)))
+        version: 0.28.6(magicast@0.3.5)(nx@21.6.2(@swc-node/register@1.11.1(@swc/core@1.13.5(@swc/helpers@0.5.17))(@swc/types@0.1.25)(typescript@5.9.2))(@swc/core@1.13.5(@swc/helpers@0.5.17)))
       '@stryke/json':
         specifier: 'catalog:'
         version: 0.9.3
@@ -2172,7 +2160,7 @@ importers:
         version: link:../nx
       '@stryke/types':
         specifier: 'catalog:'
-        version: 0.8.9
+        version: 0.9.0
       '@types/node':
         specifier: 'catalog:'
         version: 22.18.0
@@ -2202,7 +2190,7 @@ importers:
         version: link:../plugin-env
       '@stryke/fs':
         specifier: 'catalog:'
-        version: 0.28.0(magicast@0.3.5)(nx@21.6.2(@swc-node/register@1.11.1(@swc/core@1.13.5(@swc/helpers@0.5.17))(@swc/types@0.1.25)(typescript@5.9.2))(@swc/core@1.13.5(@swc/helpers@0.5.17)))
+        version: 0.28.6(magicast@0.3.5)(nx@21.6.2(@swc-node/register@1.11.1(@swc/core@1.13.5(@swc/helpers@0.5.17))(@swc/types@0.1.25)(typescript@5.9.2))(@swc/core@1.13.5(@swc/helpers@0.5.17)))
       '@stryke/path':
         specifier: 'catalog:'
         version: 0.15.2
@@ -2261,7 +2249,7 @@ importers:
         version: link:../plugin-env
       '@stryke/fs':
         specifier: 'catalog:'
-        version: 0.28.0(magicast@0.3.5)(nx@21.6.2(@swc-node/register@1.11.1(@swc/core@1.13.5(@swc/helpers@0.5.17))(@swc/types@0.1.25)(typescript@5.9.2))(@swc/core@1.13.5(@swc/helpers@0.5.17)))
+        version: 0.28.6(magicast@0.3.5)(nx@21.6.2(@swc-node/register@1.11.1(@swc/core@1.13.5(@swc/helpers@0.5.17))(@swc/types@0.1.25)(typescript@5.9.2))(@swc/core@1.13.5(@swc/helpers@0.5.17)))
       '@stryke/path':
         specifier: 'catalog:'
         version: 0.15.2
@@ -2347,7 +2335,7 @@ importers:
         version: 21.5.3(nx@21.5.3(@swc-node/register@1.11.1(@swc/core@1.7.26(@swc/helpers@0.5.17))(@swc/types@0.1.25)(typescript@5.9.2))(@swc/core@1.7.26(@swc/helpers@0.5.17)))
       '@stryke/types':
         specifier: 'catalog:'
-        version: 0.8.9
+        version: 0.9.0
       '@types/node':
         specifier: 'catalog:'
         version: 22.18.0
@@ -5485,7 +5473,6 @@ packages:
 
   '@ls-lint/ls-lint@2.3.1':
     resolution: {integrity: sha512-vPe6IDByQnQRTxcAYjTxrmga/tSIui50VBFTB5KIJWY3OOFmxE2VtymjeSEfQfiMbhZV/ZPAqYy2lt8pZFQ0Rw==}
-    cpu: [x64, arm64, s390x, ppc64le]
     os: [darwin, linux, win32]
     hasBin: true
 
@@ -7437,16 +7424,8 @@ packages:
   '@stryke/env@0.15.16':
     resolution: {integrity: sha512-muoUWGzD6nhs8l6PKRLg3x6rWFFnB1D7fh8j9SBi3SpMLuB+UXNLNgxc5DwcXhqF6C2qrJSf18n9G8N569jp/Q==}
 
-  '@stryke/env@0.18.4':
-    resolution: {integrity: sha512-GF2LqGHOHVf+UzBSYWxnb84i0dcdbUZ21Chzeua6EZS+gwsKU26wzcn3NiV5IzQ7EFcgbcWmSHlbYJ9hj6KPAA==}
-
-  '@stryke/fs@0.22.9':
-    resolution: {integrity: sha512-+P1t51VFgdNRHavzrqQS6iChcKZ4NQxDKOoHF2zXbk5etF+ziNZbp2zRoHKPvgOTzy3ou9uBYW1M1NXvoDjuQA==}
-    peerDependencies:
-      nx: 21.3.10
-    peerDependenciesMeta:
-      nx:
-        optional: true
+  '@stryke/env@0.18.13':
+    resolution: {integrity: sha512-rZ4nhflm7y+fP0D7/+rxi/jr/Qu8wRazs1mfOVBzF4U9Clt7Ngoxx4fd5W8mmLQ9Z2/xleF3Lhn5QU5SKuuFgA==}
 
   '@stryke/fs@0.23.4':
     resolution: {integrity: sha512-X1hZbzA3vH0Afulh7JotNplG1EYxEL6BCWq0LuIA0qR2PLiJvda9bPplHc6r6E5pPa8OB/K3n5D5ChrqLfOBWg==}
@@ -7456,8 +7435,8 @@ packages:
       nx:
         optional: true
 
-  '@stryke/fs@0.28.0':
-    resolution: {integrity: sha512-/AuFwga7jPPqscsFr4ceNvxqkBBgupjueMsDkUMjnqiHgqlY5b6KxhSHuBDsR1Zdo2QjFuENCUpRSK2yUifiwg==}
+  '@stryke/fs@0.25.0':
+    resolution: {integrity: sha512-aXgHrrPVUTgqEBdzpsnz6Yxq6yG6jbYWWNkR+J2Fw0A0wQbn0Y4CfRZ6/yJqmiY7iLSjDMEn/aNHExx/M/navw==}
     peerDependencies:
       nx: ^21.4.1
     peerDependenciesMeta:
@@ -7472,8 +7451,8 @@ packages:
       nx:
         optional: true
 
-  '@stryke/hash@0.10.0':
-    resolution: {integrity: sha512-OPcI/MBSG/zUOq8QbfJaFIrpKgtw6Y7Lb6E/aottlCG8uFbhvu2Ytlyn0GTrvQoKMLkKGWgvh5x71YbvEQ72Xg==}
+  '@stryke/hash@0.11.0':
+    resolution: {integrity: sha512-jxOch5NFO+QCxquGXygVqBmup+oAGp4ZNZ4+JDNX0HzJyeQ15QOY22MPxVUDxawhM8t68Mu5xPxos+NiXLwirQ==}
 
   '@stryke/hash@0.12.0':
     resolution: {integrity: sha512-yFaq4HXBTwDGN3EJKqHlnMg+BlKIo4llKsywmViW1FHrLlpHkgb5Idrb4IyEWB9VP9XqDOoM3u85T14TYDglgw==}
@@ -7493,9 +7472,6 @@ packages:
   '@stryke/path@0.12.5':
     resolution: {integrity: sha512-x1xOKne0y2WJ+EwcXmhivWiLvPHypkbpc+hPyO0ZNdny3SR4Gae9MHiuth5Pdh1+8j/1oyvp0t9E2xPrO/m9uw==}
 
-  '@stryke/path@0.13.1':
-    resolution: {integrity: sha512-DNK0h53c9p62n/IdVrUP8++VMt2SnA5qopnFNyBBgbzy4Di6VmeIn0AGFavoYn0CfrPPavB2Eedzo25GIfU1nA==}
-
   '@stryke/path@0.15.2':
     resolution: {integrity: sha512-Dl6EVbnnj1nojtpnBbqil2XDmJTMe1pnIRUTJu3ky5voym9zTFpUvtKNPP/38w1Y5uL82A2dMwJdHQwYJSSNBQ==}
 
@@ -7504,6 +7480,9 @@ packages:
 
   '@stryke/string-format@0.11.0':
     resolution: {integrity: sha512-pUBVz3KInTpEL73tmj2JY1WttnaK+8IAHcD4TIKE5UsEFoUyf+OCJUugASYQjTxb0TuQQkSTNi+i6zMqll0fWw==}
+
+  '@stryke/string-format@0.12.0':
+    resolution: {integrity: sha512-xpzAfVMuZHBMTb7TlKRUWnAOZykhDF71EES59YJrQfUOToVaBco3RKe5PxkDHvhy5S9KMyxRnOXTkteQtfabow==}
 
   '@stryke/string-format@0.5.3':
     resolution: {integrity: sha512-BcLS5CCaLjTeMQcahMqET5y274tugSyo4HuS+AKsoJBxVNlkoL1Rlj5NklTG08ZCu9LZ414zM6bzHjKEyM6LPQ==}
@@ -7520,8 +7499,8 @@ packages:
   '@stryke/types@0.9.0':
     resolution: {integrity: sha512-xUW81074lKGwpmB5yvBATzZUE0+fvSQlfVYGbII2rVUtS7iuSm9kQZsN2x3r/RmfylZbAnQvSpr+/7doB38BKQ==}
 
-  '@stryke/unique-id@0.3.4':
-    resolution: {integrity: sha512-vFLAoMZf7BJtP/bYwpg/b4WwZPaelrwfSJP1+kbkbuaP32JZWRs6krwhD3PCL1Tw5REsY+Zjcm28R1+xC+qt9g==}
+  '@stryke/unique-id@0.3.5':
+    resolution: {integrity: sha512-cYZA9cavu1blLVx+9UuHQEziszv96zjgVL8Ekw7T+euYunsbF9B3S5tKvvTL/+1COnh0OWg1cooQRWwraaEJww==}
 
   '@stryke/url@0.2.4':
     resolution: {integrity: sha512-SGVEYBpr8Rb5TZgbq7IUDZIqdg+cIyiFupIGSL5fSw+4Rz759Ua13og+IMG8rDdnrO7YTXmom4Hnrpx2+q4+JA==}
@@ -8498,10 +8477,6 @@ packages:
     resolution: {integrity: sha512-h8lQ8tacZYnR3vNQTgibj+tODHI5/+l06Au2Pcriv/Gmet0eaj4TwWH41sO9wnHDiQsEj19q0drzdWdeAHtweg==}
     engines: {node: '>=6.5'}
 
-  abstract-leveldown@0.12.4:
-    resolution: {integrity: sha512-TOod9d5RDExo6STLMGa+04HGkl+TlMfbDnTyN93/ETJ9DpQ0DaYLqcMZlbXvdc4W3vVo1Qrl+WhSp8zvDsJ+jA==}
-    deprecated: Superseded by abstract-level (https://github.com/Level/community#faq)
-
   accepts@1.3.8:
     resolution: {integrity: sha512-PYAthTa2m2VKxuvSD3DPC/Gy+U+sOA1LAuT8mkmRuvw+NACSaeXEQ+NHcVF7rONl6qcaxV3Uuemwawk+7+SJLw==}
     engines: {node: '>= 0.6'}
@@ -8529,11 +8504,6 @@ packages:
   acorn-walk@8.3.4:
     resolution: {integrity: sha512-ueEepnujpqee2o5aIYnvHU6C0A42MNdsIDeqy5BydrkuC5R1ZuUFnm27EeFJGoEHJQgn3uleRvmTXaJgfXbt4g==}
     engines: {node: '>=0.4.0'}
-
-  acorn@5.7.4:
-    resolution: {integrity: sha512-1D++VG7BhrtvQpNbBzovKNc1FLGGEE/oGe7b9xJm/RFHMBeUaUGpluV9RLjZa47YFdPcDAenEYuq9pQPcMdLJg==}
-    engines: {node: '>=0.4.0'}
-    hasBin: true
 
   acorn@8.14.0:
     resolution: {integrity: sha512-cl669nCJTZBsL97OF4kUQm5g5hC2uihk0NxY3WENAC0TYdILVkAyHymAntgxGkl7K+t0cXIrH5siy5S4XkFycA==}
@@ -9017,9 +8987,6 @@ packages:
   birpc@2.6.1:
     resolution: {integrity: sha512-LPnFhlDpdSH6FJhJyn4M0kFO7vtQ5iPw24FnG0y21q09xC7e8+1LeR31S1MAIrDAHp4m7aas4bEkTDTvMAtebQ==}
 
-  bl@0.8.2:
-    resolution: {integrity: sha512-pfqikmByp+lifZCS0p6j6KreV6kNU6Apzpm2nKOk+94cZb/jvle55+JxWiByUQ0Wo/+XnDXEy5MxxKMb6r0VIw==}
-
   bl@4.1.0:
     resolution: {integrity: sha512-1W07cM9gS6DcLperZfFSj+bWLtaPGSOHWhPiGzXmvVJbRLdG82sH/Kn8EtW1VqWVA54AKf2h5k5BbnIbwF3h6w==}
 
@@ -9077,9 +9044,6 @@ packages:
   browserify-des@1.0.2:
     resolution: {integrity: sha512-BioO1xf3hFwz4kc6iBhI3ieDFompMhrMlnDFC4/0/vd5MokpuAc3R+LYbwTA9A5Yc9pq9UYPqffKpW2ObuwX5A==}
 
-  browserify-fs@1.0.0:
-    resolution: {integrity: sha512-8LqHRPuAEKvyTX34R6tsw4bO2ro6j9DmlYBhiYWHRM26Zv2cBw1fJOU0NeUQ0RkXkPn/PFBjhA0dm4AgaBurTg==}
-
   browserify-rsa@4.1.1:
     resolution: {integrity: sha512-YBjSAiTqM04ZVei6sXighu679a3SqWORA3qZTEqZImnlkDIFtKc6pNutpjyZ8RJTjQtuYfeetkxM11GwoYXMIQ==}
     engines: {node: '>= 0.10'}
@@ -9118,9 +9082,6 @@ packages:
 
   buffer-equal-constant-time@1.0.1:
     resolution: {integrity: sha512-zRpUiDwd/xk6ADqPMATG8vc9VPrkck7T07OIx0gnjmJAnHnTVXNQG3vfvWNuiZIkwu9KrKdA1iJKfsfTVxE6NA==}
-
-  buffer-es6@4.9.3:
-    resolution: {integrity: sha512-Ibt+oXxhmeYJSsCkODPqNpPmyegefiD8rfutH1NYGhMZQhSp95Rz7haemgnJ6dxa6LT+JLLbtgOMORRluwKktw==}
 
   buffer-from@1.1.2:
     resolution: {integrity: sha512-E+XQCRwSbaaiChtv6k6Dwgc+bx+Bs6vuKJHHl5kox/BaKbhiXzqQOwK4cO22yElGp2OCmjwVhT3HmxgyPGnJfQ==}
@@ -9412,9 +9373,6 @@ packages:
     resolution: {integrity: sha512-BSeNnyus75C4//NQ9gQt1/csTXyo/8Sb+afLAkzAptFuMsod9HFokGNudZpi/oQV73hnVK+sR+5PVRMd+Dr7YQ==}
     engines: {node: '>=12'}
 
-  clone@0.1.19:
-    resolution: {integrity: sha512-IO78I0y6JcSpEPHzK4obKdsL7E7oLdRVDVOLwr2Hkbjsb+Eoz0dxW6tef0WizoKu0gLC4oZSZuEF4U2K6w1WQw==}
-
   clone@1.0.4:
     resolution: {integrity: sha512-JQHZ2QMW6l3aH/j6xCqQThY/9OH4D/9ls34cgkUBiEeocRTU04tHfKPBsUK1PqZCUQM7GiA0IIXJSuXHI64Kbg==}
     engines: {node: '>=0.8'}
@@ -9572,10 +9530,6 @@ packages:
 
   concat-map@0.0.1:
     resolution: {integrity: sha512-/Srv4dswyQNBfohGpz9o6Yb3Gz3SrUDqBH5rTuhGR7ahtlbYKnVxw2bCFMRljaA7EXHaXZ8wsHdodFvbkhKmqg==}
-
-  concat-stream@1.6.2:
-    resolution: {integrity: sha512-27HBghJxjiZtIk3Ycvn/4kbJk/1uZuJFfuPEns6LaEvpvG1f0hTea8lilrouyo9mVc2GWdcEZ8OLoGmSADlrCw==}
-    engines: {'0': node >= 0.8}
 
   concat-stream@2.0.0:
     resolution: {integrity: sha512-MWufYdFw53ccGjCA+Ol7XJYpAlW6/prSMzuPOTRnJGcGzuhLn4Scrz7qf6o8bROZ514ltazcIFJZevcfbo0x7A==}
@@ -9753,10 +9707,6 @@ packages:
 
   crypto-browserify@3.12.0:
     resolution: {integrity: sha512-fz4spIh+znjO2VjL+IdhEpRJ3YN6sMzITSBijk6FK2UvTqruSQW+/cCZTSNsMiZNvUeq0CqurF+dAbyiGOY6Wg==}
-
-  crypto-browserify@3.12.1:
-    resolution: {integrity: sha512-r4ESw/IlusD17lgQi1O20Fa3qNnsckR126TdUuBgAu7GBYSIPvdNyONd3Zrxh0xCwA4+6w/TDArBPsMvhur+KQ==}
-    engines: {node: '>= 0.10'}
 
   cspell-config-lib@8.19.4:
     resolution: {integrity: sha512-LtFNZEWVrnpjiTNgEDsVN05UqhhJ1iA0HnTv4jsascPehlaUYVoyucgNbFeRs6UMaClJnqR0qT9lnPX+KO1OLg==}
@@ -10016,10 +9966,6 @@ packages:
 
   defaults@1.0.4:
     resolution: {integrity: sha512-eFuaLoy/Rxalv2kr+lqMlUnrDWV+3j4pljOIJgLIhI058IQfWJ7vXhyEIHu+HtC738klGALYxOKDO0bQP3tg8A==}
-
-  deferred-leveldown@0.2.0:
-    resolution: {integrity: sha512-+WCbb4+ez/SZ77Sdy1iadagFiVzMB89IKOBhglgnUkVxOxRWmmFsz8UDSNWh4Rhq+3wr/vMFlYj+rdEwWUDdng==}
-    deprecated: Superseded by abstract-level (https://github.com/Level/community#faq)
 
   define-data-property@1.1.4:
     resolution: {integrity: sha512-rBMvIzlpA8v6E+SJZoo++HAYqsLrkg7MSfIinMPFhmkorw7X+dOXVJQs+QT69zGkzMyfDnIMN2Wid1+NbL3T+A==}
@@ -10351,10 +10297,6 @@ packages:
 
   err-code@2.0.3:
     resolution: {integrity: sha512-2bmlRpNKBxT/CRmPOlyISQpNj+qSeYvcym/uT0Jx2bMOlKLtSy1ZmLuVxSEKKyor/N5yhvp/ZiG1oE3DEYMSFA==}
-
-  errno@0.1.8:
-    resolution: {integrity: sha512-dJ6oBr5SQ1VSd9qkk7ByRgb/1SH4JZjCHSW/mr63/QcXO9zLVxvJ6Oy13nio03rxpSnVDDjFor75SjVeZWPW/A==}
-    hasBin: true
 
   error-ex@1.3.4:
     resolution: {integrity: sha512-sqQamAnR14VgCr1A618A3sGrygcpK+HEbenA/HiEAkkUwcZIIB/tgWqHFxWgOyDh4nB4JCRimh79dR5Ywc9MDQ==}
@@ -10880,9 +10822,6 @@ packages:
   estree-util-visit@2.0.0:
     resolution: {integrity: sha512-m5KgiH85xAhhW8Wta0vShLcUvOsh3LLPI2YVwcbio1l7E09NTLL1EyMZFM1OyWowoH0skScNbhOPl4kcBgzTww==}
 
-  estree-walker@0.5.2:
-    resolution: {integrity: sha512-XpCnW/AE10ws/kDAs37cngSkvgIR8aN3G0MS85m7dUpuK2EREo9VJ00uvw6Dg/hXEpfsE1I1TvJOJr+Z+TL+ig==}
-
   estree-walker@0.6.1:
     resolution: {integrity: sha512-SqmZANLWS0mnatqbSfRP5g8OXZC12Fgg1IwNtLsyHDzJizORW4khDfjPqJZsemPWBB2uqykUah5YpQ6epsqC/w==}
 
@@ -11155,9 +11094,6 @@ packages:
     resolution: {integrity: sha512-dKx12eRCVIzqCxFGplyFKJMPvLEWgmNtUrpTiJIR5u97zEhRG8ySrtboPHZXx7daLxQVrl643cTzbab2tkQjxg==}
     engines: {node: '>= 0.4'}
 
-  foreach@2.0.6:
-    resolution: {integrity: sha512-k6GAGDyqLe9JaebCsFCoudPPWfihKu8pylYXRlqP1J7ms39iPoTtk2fviNglIeQEwdh0bQeKJ01ZPyuyQvKzwg==}
-
   foreground-child@3.3.1:
     resolution: {integrity: sha512-gIXjKqtFuWEgzFRJA9WCQeSJLZDjgJUOMCMzxtvFq/37KojM1BFGufqsCy0r4qSQmYLsZYMeyRqzIWOMup03sw==}
     engines: {node: '>=14'}
@@ -11241,9 +11177,6 @@ packages:
 
   functions-have-names@1.2.3:
     resolution: {integrity: sha512-xckBUXyTIqT97tq2x2AMb+g163b5JFysYk0x4qxNFwbfQkmNZoiRHb6sPzI9/QV33WeuvVYBUIiD4NzNIyqaRQ==}
-
-  fwd-stream@1.0.4:
-    resolution: {integrity: sha512-q2qaK2B38W07wfPSQDKMiKOD5Nzv2XyuvQlrmh1q0pxyHNanKHq8lwQ6n9zHucAwA5EbzRJKEgds2orn88rYTg==}
 
   generator-function@2.0.0:
     resolution: {integrity: sha512-xPypGGincdfyl/AiSGa7GjXLkvld9V7GjZlowup9SHIJnQnHLFiLODCd/DqKOp0PBagbHJ68r1KJI9Mut7m4sA==}
@@ -11750,9 +11683,6 @@ packages:
     peerDependencies:
       postcss: '>=8.4.47'
 
-  idb-wrapper@1.7.2:
-    resolution: {integrity: sha512-zfNREywMuf0NzDo9mVsL0yegjsirJxHpKHvWcyRozIqQy89g0a3U+oBPOCN4cc0oCiOuYgZHimzaW/R46G1Mpg==}
-
   identity-obj-proxy@3.0.0:
     resolution: {integrity: sha512-00n6YnVHKrinT9t0d9+5yZC6UBNJANpYEQvL2LlX6Ab9lnmxzIRcEmTPuyGScvl1+jKuCICX1Z0Ab1pPKKdikA==}
     engines: {node: '>=4'}
@@ -12048,9 +11978,6 @@ packages:
     resolution: {integrity: sha512-drqDG3cbczxxEJRoOXcOjtdp1J/lyp1mNn0xaznRs8+muBhgQcrnbspox5X5fOw0HnMnbfDzvnEMEtqDEJEo8w==}
     engines: {node: '>=8'}
 
-  is-object@0.1.2:
-    resolution: {integrity: sha512-GkfZZlIZtpkFrqyAXPQSRBMsaHAw+CgoKe2HXAkjd/sfoI9+hS8PT4wg2rJxdQyUKr7N2vHJbg7/jQtE5l5vBQ==}
-
   is-plain-obj@2.1.0:
     resolution: {integrity: sha512-YWnfyRwxL/+SsrWYfOpUtz5b3YD+nyfkHvjbcanzk8zgyO4ASD67uVMRt8k5bM4lLMDnXfriRhOpemw+NfT1eA==}
     engines: {node: '>=8'}
@@ -12154,9 +12081,6 @@ packages:
     resolution: {integrity: sha512-UcVfVfaK4Sc4m7X3dUSoHoozQGBEFeDC+zVo06t98xe8CzHSZZBekNXH+tu0NalHolcJ/QAGqS46Hef7QXBIMw==}
     engines: {node: '>=16'}
 
-  is@0.2.7:
-    resolution: {integrity: sha512-ajQCouIvkcSnl2iRdK70Jug9mohIHVX9uKpoWnl115ov0R5mzBvRrXxrnHbsA+8AdwCwc/sfw7HXmd4I5EJBdQ==}
-
   isarray@0.0.1:
     resolution: {integrity: sha512-D2S+3GLxWH+uhrNEcoh/fnmYeP8E8/zHl644d/jdA0g2uyXvy3sb0qxotE+ne0LtccHknQzWwZEzhak7oJ0COQ==}
 
@@ -12168,9 +12092,6 @@ packages:
 
   isarray@2.0.5:
     resolution: {integrity: sha512-xHjhDr3cNBK0BzdUJSPXZntQUx/mwMS5Rw4A7lPJ90XGAO6ISP/ePDNuo0vhqOZU+UD5JoodwCAAoZQd3FeAKw==}
-
-  isbuffer@0.0.0:
-    resolution: {integrity: sha512-xU+NoHp+YtKQkaM2HsQchYn0sltxMxew0HavMfHbjnucBoTSGbw745tL+Z7QBANleWM1eEQMenEpi174mIeS4g==}
 
   isexe@2.0.0:
     resolution: {integrity: sha512-RHxMLp9lnKHGHRng9QFhRCMbYAcVpn69smSGcq3f36xjgVVWThj4qqLbTLlq7Ssj8B+fIQ1EuCEGI2lKsyQeIw==}
@@ -12728,35 +12649,6 @@ packages:
     resolution: {integrity: sha512-huMg+mGp6wHPjkaLdchuOvxVRMzvz6OVdhivatiH2Qn47O5Zm46jwzbVPYIanX6N/8ZTjGLBxv8tZ0KYmKt/Jg==}
     hasBin: true
 
-  level-blobs@0.1.7:
-    resolution: {integrity: sha512-n0iYYCGozLd36m/Pzm206+brIgXP8mxPZazZ6ZvgKr+8YwOZ8/PPpYC5zMUu2qFygRN8RO6WC/HH3XWMW7RMVg==}
-
-  level-filesystem@1.2.0:
-    resolution: {integrity: sha512-PhXDuCNYpngpxp3jwMT9AYBMgOvB6zxj3DeuIywNKmZqFj2djj9XfT2XDVslfqmo0Ip79cAd3SBy3FsfOZPJ1g==}
-
-  level-fix-range@1.0.2:
-    resolution: {integrity: sha512-9llaVn6uqBiSlBP+wKiIEoBa01FwEISFgHSZiyec2S0KpyLUkGR4afW/FCZ/X8y+QJvzS0u4PGOlZDdh1/1avQ==}
-
-  level-fix-range@2.0.0:
-    resolution: {integrity: sha512-WrLfGWgwWbYPrHsYzJau+5+te89dUbENBg3/lsxOs4p2tYOhCHjbgXxBAj4DFqp3k/XBwitcRXoCh8RoCogASA==}
-
-  level-hooks@4.5.0:
-    resolution: {integrity: sha512-fxLNny/vL/G4PnkLhWsbHnEaRi+A/k8r5EH/M77npZwYL62RHi2fV0S824z3QdpAk6VTgisJwIRywzBHLK4ZVA==}
-
-  level-js@2.2.4:
-    resolution: {integrity: sha512-lZtjt4ZwHE00UMC1vAb271p9qzg8vKlnDeXfIesH3zL0KxhHRDjClQLGLWhyR0nK4XARnd4wc/9eD1ffd4PshQ==}
-    deprecated: Superseded by browser-level (https://github.com/Level/community#faq)
-
-  level-peek@1.0.6:
-    resolution: {integrity: sha512-TKEzH5TxROTjQxWMczt9sizVgnmJ4F3hotBI48xCTYvOKd/4gA/uY0XjKkhJFo6BMic8Tqjf6jFMLWeg3MAbqQ==}
-
-  level-sublevel@5.2.3:
-    resolution: {integrity: sha512-tO8jrFp+QZYrxx/Gnmjawuh1UBiifpvKNAcm4KCogesWr1Nm2+ckARitf+Oo7xg4OHqMW76eAqQ204BoIlscjA==}
-
-  levelup@0.18.6:
-    resolution: {integrity: sha512-uB0auyRqIVXx+hrpIUtol4VAPhLRcnxcOsd2i2m6rbFIDarO5dnrupLOStYYpEcu8ZT087Z9HEuYw1wjr6RL6Q==}
-    deprecated: Superseded by abstract-level (https://github.com/Level/community#faq)
-
   leven@3.1.0:
     resolution: {integrity: sha512-qsda+H8jTaUaN/x5vzW2rzc+8Rw4TAQ/4KjB46IwK5VH+IlVeeeje/EoZRpiXvIqjFgK84QffqPztGI3VBLG1A==}
     engines: {node: '>=6'}
@@ -12938,9 +12830,6 @@ packages:
     resolution: {integrity: sha512-jumlc0BIUrS3qJGgIkWZsyfAM7NCWiBcCDhnd+3NNM5KbBmLTgHVfWBcg6W+rLUsIpzpERPsvwUP7CckAQSOoA==}
     engines: {node: '>=12'}
 
-  ltgt@2.2.1:
-    resolution: {integrity: sha512-AI2r85+4MquTw9ZYqabu4nMwy9Oftlfa/e/52t9IjtfG+mGBbTNdAoZ3RQKLHR6r0wQnwZnPIEh/Ya6XTWAKNA==}
-
   lunr@2.3.9:
     resolution: {integrity: sha512-zTU3DaZaF3Rt9rhN3uBMGQD3dD2/vFQqnvZCDv4dl5iOzq2IZQqTxu90r4E5J+nP70J3ilqVCrbho2eWaeW8Ow==}
 
@@ -12951,9 +12840,6 @@ packages:
   lz-string@1.5.0:
     resolution: {integrity: sha512-h5bgJWpxJNswbU7qCrV0tIKQCaS3blPDrqKWx+QxzuzL1zGUzij9XCWLrSLsJPu5t+eWA/ycetzYAO5IOMcWAQ==}
     hasBin: true
-
-  magic-string@0.22.5:
-    resolution: {integrity: sha512-oreip9rJZkzvA8Qzk9HFs8fZGF/u7H/gtrE8EN6RjKJ9kh2HlC+yQ2QezifqTZfGyiuAV0dRv5a+y/8gBb1m9w==}
 
   magic-string@0.30.18:
     resolution: {integrity: sha512-yi8swmWbO17qHhwIBNeeZxTceJMeBvWJaId6dyvTSOwTipqeHhMhOrz6513r1sOKnpvQ7zkhlG8tPrpilwTxHQ==}
@@ -13733,13 +13619,6 @@ packages:
     resolution: {integrity: sha512-F8cZ+KfGlSGi09lJT7/Nd6KJZ9ygtvYC0/UYYLI9nmQKLMnydpB9yvbv9K1uSkEu7FU9vYPmVwLg328tX+ot3Q==}
     engines: {node: '>= 0.4'}
 
-  object-keys@0.2.0:
-    resolution: {integrity: sha512-XODjdR2pBh/1qrjPcbSeSgEtKbYo7LqYNq64/TPuCf7j9SfDD3i21yatKoIy39yIWNvVM59iutfQQpCv1RfFzA==}
-    deprecated: Please update to the latest object-keys
-
-  object-keys@0.4.0:
-    resolution: {integrity: sha512-ncrLw+X55z7bkl5PnUvHwFK9FcGuFYo9gtjws2XtSzL+aZ8tm830P60WJ0dSmFVaSalWieW5MD7kEdnXda9yJw==}
-
   object-keys@1.1.1:
     resolution: {integrity: sha512-NuAESUOUMrlIXOfHKzD6bpPu3tYt3xvjNdRIQ+FeT0lNb4K8WR70CaDxhuNguS2XG+GjkyMwOzsN5ZktImfhLA==}
     engines: {node: '>= 0.4'}
@@ -13762,9 +13641,6 @@ packages:
 
   obuf@1.1.2:
     resolution: {integrity: sha512-PX1wu0AmAdPqOL1mWhqmlOd8kOIZQwGZw6rh7uby9fTc5lhaOWFLX3I6R1hrF9k3zUY40e6igsLGkDXK92LJNg==}
-
-  octal@1.0.0:
-    resolution: {integrity: sha512-nnda7W8d+A3vEIY+UrDQzzboPf1vhs4JYVhff5CDkq9QNoZY7Xrxeo/htox37j9dZf7yNHevZzqtejWgy1vCqQ==}
 
   ofetch@1.4.1:
     resolution: {integrity: sha512-QZj2DfGplQAr2oj9KzceK9Hwz6Whxazmn85yYeVuS3u9XTMOGMRx0kO95MQ+vLsj/S/NwBDMMLU5hpxvI6Tklw==}
@@ -14668,9 +14544,6 @@ packages:
     resolution: {integrity: sha512-g8+OnU/L2v+wyiVK+D5fA34J7EH8jZ8DDlvwhRCMxmMj7UCBvxiO1mGeN+36JXIKF4zevU4kRBd8lVgG9vLelA==}
     engines: {node: ^14.17.0 || ^16.13.0 || >=18.0.0}
 
-  process-es6@0.11.6:
-    resolution: {integrity: sha512-GYBRQtL4v3wgigq10Pv58jmTbFXlIiTbSfgnNqZLY0ldUPqy1rRxDI5fCjoCpnM6TqmHQI8ydzTBXW86OYc0gA==}
-
   process-nextick-args@2.0.1:
     resolution: {integrity: sha512-3ouUOpQhtgrbOa17J7+uxOTpITYWaGP7/AhoR3+A+/1e9skrzelGi/dXzEYyvbxubEF6Wn2ypscTKiKJFFn1ag==}
 
@@ -14729,12 +14602,6 @@ packages:
 
   proxy-from-env@1.1.0:
     resolution: {integrity: sha512-D+zkORCbA9f1tdWRK0RaCR3GPv50cMxcrz4X8k5LTSUD1Dkw47mKJEZQNunItRTkWwgtaUSo1RVFRIG9ZXiFYg==}
-
-  prr@0.0.0:
-    resolution: {integrity: sha512-LmUECmrW7RVj6mDWKjTXfKug7TFGdiz9P18HMcO4RHL+RW7MCOGNvpj5j47Rnp6ne6r4fZ2VzyUWEpKbg+tsjQ==}
-
-  prr@1.0.1:
-    resolution: {integrity: sha512-yPw4Sng1gWghHQWj0B3ZggWUm4qVbPwPFcRG8KyxiU7J2OHFSoEHKS+EZ3fv5l1t9CyCiop6l/ZYeWbrgoQejw==}
 
   public-encrypt@4.0.3:
     resolution: {integrity: sha512-zVpa8oKZSz5bTMTFClc1fQOnyyEzpl5ozpi1B5YcvBrdohMjH2rfsBtyXcuNuwjsDIXmBYlF2N5FlJYhR29t8Q==}
@@ -14888,9 +14755,6 @@ packages:
 
   readable-stream@1.0.34:
     resolution: {integrity: sha512-ok1qVCJuRkNmvebYikljxJA/UEsKwLl2nI1OmaqAu4/UE+h0wKCHok4XkL/gvi39OacXvw59RJUOFUkDib2rHg==}
-
-  readable-stream@1.1.14:
-    resolution: {integrity: sha512-+MeVjFf4L44XUkhM1eYbD8fyEsxcV81pqMSR5gblfcLCHfZvbrqy4/qYHE+/R5HoBUT11WV5O08Cr1n3YXkWVQ==}
 
   readable-stream@2.3.8:
     resolution: {integrity: sha512-8p0AUk4XODgIewSi0l8Epjs+EVnWiK7NoDIEGU0HhE7+ZyY8D1IMY7odu5lRrFXGg71L15KG8QrPmum45RTtdA==}
@@ -15167,16 +15031,6 @@ packages:
       rollup: ^3.29.4 || ^4
       typescript: ^4.5 || ^5.0
 
-  rollup-plugin-json@4.0.0:
-    resolution: {integrity: sha512-hgb8N7Cgfw5SZAkb3jf0QXii6QX/FOkiIq2M7BAQIEydjHvTyxXHQiIzZaTFgx1GK0cRCHOCBHIyEkkLdWKxow==}
-    deprecated: This module has been deprecated and is no longer maintained. Please use @rollup/plugin-json.
-
-  rollup-plugin-node-builtins@2.1.2:
-    resolution: {integrity: sha512-bxdnJw8jIivr2yEyt8IZSGqZkygIJOGAWypXvHXnwKAbUcN4Q/dGTx7K0oAJryC/m6aq6tKutltSeXtuogU6sw==}
-
-  rollup-plugin-node-globals@1.4.0:
-    resolution: {integrity: sha512-xRkB+W/m1KLIzPUmG0ofvR+CPNcvuCuNdjVBVS7ALKSxr3EDhnzNceGkGi1m8MToSli13AzKFYH4ie9w3I5L3g==}
-
   rollup-plugin-postcss@4.0.2:
     resolution: {integrity: sha512-05EaY6zvZdmvPUDi3uCcAQoESDcYnv8ogJJQRp6V5kZ6J6P7uAVJlrTZcaaA20wTH527YTnKfkAoPxWI/jPp4w==}
     engines: {node: '>=10'}
@@ -15310,10 +15164,6 @@ packages:
   selfsigned@2.4.1:
     resolution: {integrity: sha512-th5B4L2U+eGLq1TVh7zNRGBapioSORUeymIydxgFpwww9d2qyKvtuPU2jJuHvYAwwqi2Y596QBL3eEqcPEYL8Q==}
     engines: {node: '>=10'}
-
-  semver@2.3.2:
-    resolution: {integrity: sha512-abLdIKCosKfpnmhS52NCTjO4RiLspDfsn37prjzGrp9im5DPJOgh82Os92vtwGh6XdQryKI/7SREZnV+aqiXrA==}
-    hasBin: true
 
   semver@6.3.1:
     resolution: {integrity: sha512-BR7VvDCVHO+q2xBEWskxS6DJE1qRnb7DxzUrogb71CWoSficBxYsiAGd+Kl0mmq/MprG9yArRkyrQxTO6XjMzA==}
@@ -15703,9 +15553,6 @@ packages:
   string-length@4.0.2:
     resolution: {integrity: sha512-+l6rNN5fYHNhZZy41RXsYptCjA2Igmq4EG7kZAYFQI1E1VTXarr6ZPXBg6eq7Y6eK4FEhY6AJlyuFIb/v/S0VQ==}
     engines: {node: '>=10'}
-
-  string-range@1.2.2:
-    resolution: {integrity: sha512-tYft6IFi8SjplJpxCUxyqisD3b+R2CSkomrtJYCkvuf1KuCAWgz7YXt4O0jip7efpfCemwHEzTEAO8EuOYgh3w==}
 
   string-ts@2.2.1:
     resolution: {integrity: sha512-Q2u0gko67PLLhbte5HmPfdOjNvUKbKQM+mCNQae6jE91DmoFHY6HH9GcdqCeNx87DZ2KKjiFxmA0R/42OneGWw==}
@@ -16313,9 +16160,6 @@ packages:
   typed-array-length@1.0.7:
     resolution: {integrity: sha512-3KS2b+kL7fsuk/eJZ7EQdnEmQoaho/r6KUef7hxvltNA5DR8NAUM+8wJMbJyZ4G9/7i3v5zPBIMN5aybAh2/Jg==}
     engines: {node: '>= 0.4'}
-
-  typedarray-to-buffer@1.0.4:
-    resolution: {integrity: sha512-vjMKrfSoUDN8/Vnqitw2FmstOfuJ73G6CrSEKnf11A6RmasVxHqfeBcnTb6RsL4pTMuV5Zsv9IiHRphMZyckUw==}
 
   typedarray@0.0.6:
     resolution: {integrity: sha512-/aCDEGatGvZ2BIk+HmLf4ifCJFwvKFNb9/JeZPMulfgFracn9QFcAf5GO8B/mweUjSoblS5In0cWhqpfs/5PQA==}
@@ -16935,9 +16779,6 @@ packages:
       jsdom:
         optional: true
 
-  vlq@0.2.3:
-    resolution: {integrity: sha512-DRibZL6DsNhIgYQ+wNdWDL2SL3bKPlVrRiBqV5yuMm++op8W4kGFtaQfCs4KEJn0wBZcHVHJ3eoywX8983k1ow==}
-
   vm-browserify@1.1.2:
     resolution: {integrity: sha512-2ham8XPWTONajOR0ohOKOHXkm3+gaBmGut3SRuu75xLd/RRaY6vqgh8NBYYk7+RW3u5AtzPQZG8F10LHkl0lAQ==}
 
@@ -17228,22 +17069,6 @@ packages:
   xmlhttprequest-ssl@1.6.3:
     resolution: {integrity: sha512-3XfeQE/wNkvrIktn2Kf0869fC0BN6UpydVasGIeSm2B1Llihf7/0UfZM+eCkOw3P7bP4+qPgqhm7ZoxuJtFU0Q==}
     engines: {node: '>=0.4.0'}
-
-  xtend@2.0.6:
-    resolution: {integrity: sha512-fOZg4ECOlrMl+A6Msr7EIFcON1L26mb4NY5rurSkOex/TWhazOrg6eXD/B0XkuiYcYhQDWLXzQxLMVJ7LXwokg==}
-    engines: {node: '>=0.4'}
-
-  xtend@2.1.2:
-    resolution: {integrity: sha512-vMNKzr2rHP9Dp/e1NQFnLQlwlhp9L/LfvnsVdHxN1f+uggyVI3i08uD14GPvCToPkdsRfyPqIyYGmIk58V98ZQ==}
-    engines: {node: '>=0.4'}
-
-  xtend@2.2.0:
-    resolution: {integrity: sha512-SLt5uylT+4aoXxXuwtQp5ZnMMzhDb1Xkg4pEqc00WUJCQifPfV9Ub1VrNhp9kXkrjZD2I2Hl8WnjP37jzZLPZw==}
-    engines: {node: '>=0.4'}
-
-  xtend@3.0.0:
-    resolution: {integrity: sha512-sp/sT9OALMjRW1fKDlPeuSZlDQpkqReA0pyJukniWbTGoEKefHxhGJynE3PNhUMlcM8qWIjPwecwCw4LArS5Eg==}
-    engines: {node: '>=0.4'}
 
   xtend@4.0.2:
     resolution: {integrity: sha512-LKYU1iAXJXUgAXn9URjiu+MWhyUXHsvfp7mcuYm9dSUKK0/CjtrUwFAxD82/mCWbtLsGjFIad0wIsod4zrTAEQ==}
@@ -22811,9 +22636,9 @@ snapshots:
 
   '@rolldown/pluginutils@1.0.0-beta.41': {}
 
-  '@rollup/plugin-alias@5.1.1(rollup@4.52.2)':
+  '@rollup/plugin-alias@5.1.1(rollup@4.52.3)':
     optionalDependencies:
-      rollup: 4.52.2
+      rollup: 4.52.3
 
   '@rollup/plugin-babel@6.0.4(@babel/core@7.28.4)(@types/babel__core@7.20.5)(rollup@4.52.2)':
     dependencies:
@@ -22860,18 +22685,24 @@ snapshots:
     optionalDependencies:
       rollup: 4.52.2
 
+  '@rollup/plugin-commonjs@28.0.6(rollup@4.52.3)':
+    dependencies:
+      '@rollup/pluginutils': 5.3.0(rollup@4.52.3)
+      commondir: 1.0.1
+      estree-walker: 2.0.2
+      fdir: 6.5.0(picomatch@4.0.3)
+      is-reference: 1.2.1
+      magic-string: 0.30.19
+      picomatch: 4.0.3
+    optionalDependencies:
+      rollup: 4.52.3
+
   '@rollup/plugin-image@3.0.3(rollup@4.52.3)':
     dependencies:
       '@rollup/pluginutils': 5.3.0(rollup@4.52.3)
       mini-svg-data-uri: 1.4.4
     optionalDependencies:
       rollup: 4.52.3
-
-  '@rollup/plugin-json@6.1.0(rollup@4.52.2)':
-    dependencies:
-      '@rollup/pluginutils': 5.3.0(rollup@4.52.2)
-    optionalDependencies:
-      rollup: 4.52.2
 
   '@rollup/plugin-json@6.1.0(rollup@4.52.3)':
     dependencies:
@@ -22909,12 +22740,12 @@ snapshots:
     optionalDependencies:
       rollup: 4.52.3
 
-  '@rollup/plugin-replace@6.0.2(rollup@4.52.2)':
+  '@rollup/plugin-replace@6.0.2(rollup@4.52.3)':
     dependencies:
-      '@rollup/pluginutils': 5.3.0(rollup@4.52.2)
+      '@rollup/pluginutils': 5.3.0(rollup@4.52.3)
       magic-string: 0.30.19
     optionalDependencies:
-      rollup: 4.52.2
+      rollup: 4.52.3
 
   '@rollup/plugin-typescript@12.1.4(rollup@4.52.3)(tslib@2.8.1)(typescript@5.9.2)':
     dependencies:
@@ -23593,93 +23424,6 @@ snapshots:
       - verdaccio
       - yaml
 
-  '@storm-software/eslint@0.168.14(504a7d25bdcc568fec0a5f29362ac710)':
-    dependencies:
-      '@antfu/install-pkg': 1.1.0
-      '@clack/prompts': 0.10.1
-      '@cspell/eslint-plugin': 8.19.4(eslint@9.34.0(jiti@2.6.0))
-      '@eslint-react/eslint-plugin': 1.52.6(eslint@9.34.0(jiti@2.6.0))(ts-api-utils@2.1.0(typescript@5.9.2))(typescript@5.9.2)
-      '@eslint/eslintrc': 3.3.1
-      '@eslint/markdown': 6.6.0
-      '@graphql-eslint/eslint-plugin': 4.4.0(@types/node@22.18.0)(crossws@0.3.5)(eslint@9.34.0(jiti@2.6.0))(graphql@16.11.0)(typescript@5.9.2)
-      '@next/eslint-plugin-next': 15.5.2
-      '@nx/eslint': 21.5.3(@babel/traverse@7.28.4)(@swc-node/register@1.11.1(@swc/core@1.13.5(@swc/helpers@0.5.17))(@swc/types@0.1.25)(typescript@5.9.2))(@swc/core@1.13.5(@swc/helpers@0.5.17))(@zkochan/js-yaml@0.0.7)(eslint@9.34.0(jiti@2.6.0))(nx@21.6.2(@swc-node/register@1.11.1(@swc/core@1.13.5(@swc/helpers@0.5.17))(@swc/types@0.1.25)(typescript@5.9.2))(@swc/core@1.13.5(@swc/helpers@0.5.17)))(verdaccio@6.1.2(typanion@3.14.0))
-      '@nx/eslint-plugin': 21.6.2(@babel/traverse@7.28.4)(@swc-node/register@1.11.1(@swc/core@1.13.5(@swc/helpers@0.5.17))(@swc/types@0.1.25)(typescript@5.9.2))(@swc/core@1.13.5(@swc/helpers@0.5.17))(@typescript-eslint/parser@8.45.0(eslint@9.34.0(jiti@2.6.0))(typescript@5.9.2))(eslint-config-prettier@10.1.8(eslint@9.34.0(jiti@2.6.0)))(eslint@9.34.0(jiti@2.6.0))(nx@21.6.2(@swc-node/register@1.11.1(@swc/core@1.13.5(@swc/helpers@0.5.17))(@swc/types@0.1.25)(typescript@5.9.2))(@swc/core@1.13.5(@swc/helpers@0.5.17)))(typescript@5.9.2)(verdaccio@6.1.2(typanion@3.14.0))
-      '@prettier/plugin-xml': 3.4.2(prettier@3.6.2)
-      '@storm-software/config': 1.133.4
-      '@storm-software/config-tools': 1.187.9(magicast@0.3.5)
-      '@storm-software/tsdoc': 0.12.8(@microsoft/api-extractor@7.52.13(@types/node@22.18.0))(@microsoft/tsdoc-config@0.17.1)(@microsoft/tsdoc@0.15.1)
-      '@stylistic/eslint-plugin': 4.4.1(eslint@9.34.0(jiti@2.6.0))(typescript@5.9.2)
-      '@typescript-eslint/eslint-plugin': 8.45.0(@typescript-eslint/parser@8.45.0(eslint@9.34.0(jiti@2.6.0))(typescript@5.9.2))(eslint@9.34.0(jiti@2.6.0))(typescript@5.9.2)
-      '@typescript-eslint/parser': 8.45.0(eslint@9.34.0(jiti@2.6.0))(typescript@5.9.2)
-      '@typescript-eslint/utils': 8.45.0(eslint@9.34.0(jiti@2.6.0))(typescript@5.9.2)
-      '@unocss/eslint-plugin': 66.4.2(eslint@9.34.0(jiti@2.6.0))(typescript@5.9.2)
-      '@vitest/eslint-plugin': 1.3.13(eslint@9.34.0(jiti@2.6.0))(typescript@5.9.2)(vitest@3.2.4(@types/debug@4.1.12)(@types/node@22.18.0)(jiti@2.6.0)(jsdom@26.1.0)(terser@5.44.0)(tsx@4.20.5)(yaml@2.8.1))
-      astro-eslint-parser: 1.2.2
-      chalk: 4.1.2
-      defu: 6.1.4
-      eslint: 9.34.0(jiti@2.6.0)
-      eslint-config-flat-gitignore: 2.1.0(eslint@9.34.0(jiti@2.6.0))
-      eslint-config-prettier: 10.1.8(eslint@9.34.0(jiti@2.6.0))
-      eslint-flat-config-utils: 2.1.4
-      eslint-merge-processors: 2.0.0(eslint@9.34.0(jiti@2.6.0))
-      eslint-plugin-astro: 1.3.1(eslint@9.34.0(jiti@2.6.0))
-      eslint-plugin-format: 1.0.1(eslint@9.34.0(jiti@2.6.0))
-      eslint-plugin-import-x: 4.16.1(@typescript-eslint/utils@8.45.0(eslint@9.34.0(jiti@2.6.0))(typescript@5.9.2))(eslint@9.34.0(jiti@2.6.0))
-      eslint-plugin-import-zod: 1.2.0(@typescript-eslint/utils@8.41.0(eslint@9.34.0(jiti@2.6.0))(typescript@5.9.2))(eslint@9.34.0(jiti@2.6.0))
-      eslint-plugin-jsdoc: 50.8.0(eslint@9.34.0(jiti@2.6.0))
-      eslint-plugin-json: 4.0.1
-      eslint-plugin-jsonc: 2.20.1(eslint@9.34.0(jiti@2.6.0))
-      eslint-plugin-jsx-a11y: 6.10.2(eslint@9.34.0(jiti@2.6.0))
-      eslint-plugin-markdown: 5.1.0(eslint@9.34.0(jiti@2.6.0))
-      eslint-plugin-markdownlint: 0.6.0(eslint@9.34.0(jiti@2.6.0))
-      eslint-plugin-mdx: 3.6.2(eslint@9.34.0(jiti@2.6.0))
-      eslint-plugin-n: 17.23.1(eslint@9.34.0(jiti@2.6.0))(typescript@5.9.2)
-      eslint-plugin-no-only-tests: 3.3.0
-      eslint-plugin-no-secrets: 2.2.1(eslint@9.34.0(jiti@2.6.0))
-      eslint-plugin-paths: 1.1.0
-      eslint-plugin-perfectionist: 4.15.0(eslint@9.34.0(jiti@2.6.0))(typescript@5.9.2)
-      eslint-plugin-pnpm: 0.3.0(eslint@9.34.0(jiti@2.6.0))
-      eslint-plugin-prettier: 5.5.4(@types/eslint@9.6.1)(eslint-config-prettier@10.1.8(eslint@9.34.0(jiti@2.6.0)))(eslint@9.34.0(jiti@2.6.0))(prettier@3.6.2)
-      eslint-plugin-react-compiler: 19.0.0-beta-21e868a-20250216(eslint@9.34.0(jiti@2.6.0))
-      eslint-plugin-react-hooks: 5.2.0(eslint@9.34.0(jiti@2.6.0))
-      eslint-plugin-react-native: 5.0.0(eslint@9.34.0(jiti@2.6.0))
-      eslint-plugin-react-refresh: 0.4.20(eslint@9.34.0(jiti@2.6.0))
-      eslint-plugin-regexp: 2.10.0(eslint@9.34.0(jiti@2.6.0))
-      eslint-plugin-relay: 1.8.3
-      eslint-plugin-storybook: 0.11.6(eslint@9.34.0(jiti@2.6.0))(typescript@5.9.2)
-      eslint-plugin-toml: 0.12.0(eslint@9.34.0(jiti@2.6.0))
-      eslint-plugin-tsdoc: 0.4.0
-      eslint-plugin-unicorn: 57.0.0(eslint@9.34.0(jiti@2.6.0))
-      eslint-plugin-unused-imports: 4.2.0(@typescript-eslint/eslint-plugin@8.45.0(@typescript-eslint/parser@8.45.0(eslint@9.34.0(jiti@2.6.0))(typescript@5.9.2))(eslint@9.34.0(jiti@2.6.0))(typescript@5.9.2))(eslint@9.34.0(jiti@2.6.0))
-      eslint-plugin-yml: 1.18.0(eslint@9.34.0(jiti@2.6.0))
-      globals: 16.4.0
-      graphql: 16.11.0
-      jsonc-eslint-parser: 2.4.1
-      local-pkg: 1.1.2
-      parse-gitignore: 2.0.0
-      prettier-plugin-astro: 0.14.1
-      toml-eslint-parser: 0.10.0
-      yaml-eslint-parser: 1.3.0
-      zod: 4.1.11
-    transitivePeerDependencies:
-      - '@babel/traverse'
-      - '@eslint/json'
-      - '@swc-node/register'
-      - '@swc/core'
-      - '@types/eslint'
-      - bluebird
-      - debug
-      - eslint-import-resolver-node
-      - magicast
-      - nx
-      - prettier
-      - remark-lint-file-extension
-      - supports-color
-      - typescript
-      - verdaccio
-      - vitest
-
   '@storm-software/eslint@0.168.14(54b8982f31be24e49dc4ce638f8b12b2)':
     dependencies:
       '@antfu/install-pkg': 1.1.0
@@ -23801,6 +23545,93 @@ snapshots:
       eslint-plugin-format: 1.0.1(eslint@9.34.0(jiti@2.6.0))
       eslint-plugin-import-x: 4.16.1(@typescript-eslint/utils@8.45.0(eslint@9.34.0(jiti@2.6.0))(typescript@5.9.2))(eslint@9.34.0(jiti@2.6.0))
       eslint-plugin-import-zod: 1.2.0(@typescript-eslint/utils@8.45.0(eslint@9.34.0(jiti@2.6.0))(typescript@5.9.2))(eslint@9.34.0(jiti@2.6.0))
+      eslint-plugin-jsdoc: 50.8.0(eslint@9.34.0(jiti@2.6.0))
+      eslint-plugin-json: 4.0.1
+      eslint-plugin-jsonc: 2.20.1(eslint@9.34.0(jiti@2.6.0))
+      eslint-plugin-jsx-a11y: 6.10.2(eslint@9.34.0(jiti@2.6.0))
+      eslint-plugin-markdown: 5.1.0(eslint@9.34.0(jiti@2.6.0))
+      eslint-plugin-markdownlint: 0.6.0(eslint@9.34.0(jiti@2.6.0))
+      eslint-plugin-mdx: 3.6.2(eslint@9.34.0(jiti@2.6.0))
+      eslint-plugin-n: 17.23.1(eslint@9.34.0(jiti@2.6.0))(typescript@5.9.2)
+      eslint-plugin-no-only-tests: 3.3.0
+      eslint-plugin-no-secrets: 2.2.1(eslint@9.34.0(jiti@2.6.0))
+      eslint-plugin-paths: 1.1.0
+      eslint-plugin-perfectionist: 4.15.0(eslint@9.34.0(jiti@2.6.0))(typescript@5.9.2)
+      eslint-plugin-pnpm: 0.3.0(eslint@9.34.0(jiti@2.6.0))
+      eslint-plugin-prettier: 5.5.4(@types/eslint@9.6.1)(eslint-config-prettier@10.1.8(eslint@9.34.0(jiti@2.6.0)))(eslint@9.34.0(jiti@2.6.0))(prettier@3.6.2)
+      eslint-plugin-react-compiler: 19.0.0-beta-21e868a-20250216(eslint@9.34.0(jiti@2.6.0))
+      eslint-plugin-react-hooks: 5.2.0(eslint@9.34.0(jiti@2.6.0))
+      eslint-plugin-react-native: 5.0.0(eslint@9.34.0(jiti@2.6.0))
+      eslint-plugin-react-refresh: 0.4.20(eslint@9.34.0(jiti@2.6.0))
+      eslint-plugin-regexp: 2.10.0(eslint@9.34.0(jiti@2.6.0))
+      eslint-plugin-relay: 1.8.3
+      eslint-plugin-storybook: 0.11.6(eslint@9.34.0(jiti@2.6.0))(typescript@5.9.2)
+      eslint-plugin-toml: 0.12.0(eslint@9.34.0(jiti@2.6.0))
+      eslint-plugin-tsdoc: 0.4.0
+      eslint-plugin-unicorn: 57.0.0(eslint@9.34.0(jiti@2.6.0))
+      eslint-plugin-unused-imports: 4.2.0(@typescript-eslint/eslint-plugin@8.45.0(@typescript-eslint/parser@8.45.0(eslint@9.34.0(jiti@2.6.0))(typescript@5.9.2))(eslint@9.34.0(jiti@2.6.0))(typescript@5.9.2))(eslint@9.34.0(jiti@2.6.0))
+      eslint-plugin-yml: 1.18.0(eslint@9.34.0(jiti@2.6.0))
+      globals: 16.4.0
+      graphql: 16.11.0
+      jsonc-eslint-parser: 2.4.1
+      local-pkg: 1.1.2
+      parse-gitignore: 2.0.0
+      prettier-plugin-astro: 0.14.1
+      toml-eslint-parser: 0.10.0
+      yaml-eslint-parser: 1.3.0
+      zod: 4.1.11
+    transitivePeerDependencies:
+      - '@babel/traverse'
+      - '@eslint/json'
+      - '@swc-node/register'
+      - '@swc/core'
+      - '@types/eslint'
+      - bluebird
+      - debug
+      - eslint-import-resolver-node
+      - magicast
+      - nx
+      - prettier
+      - remark-lint-file-extension
+      - supports-color
+      - typescript
+      - verdaccio
+      - vitest
+
+  '@storm-software/eslint@0.168.14(8b45e5b471ded45eec4fc58511eb27c0)':
+    dependencies:
+      '@antfu/install-pkg': 1.1.0
+      '@clack/prompts': 0.10.1
+      '@cspell/eslint-plugin': 8.19.4(eslint@9.34.0(jiti@2.6.0))
+      '@eslint-react/eslint-plugin': 1.52.6(eslint@9.34.0(jiti@2.6.0))(ts-api-utils@2.1.0(typescript@5.9.2))(typescript@5.9.2)
+      '@eslint/eslintrc': 3.3.1
+      '@eslint/markdown': 6.6.0
+      '@graphql-eslint/eslint-plugin': 4.4.0(@types/node@22.18.0)(crossws@0.3.5)(eslint@9.34.0(jiti@2.6.0))(graphql@16.11.0)(typescript@5.9.2)
+      '@next/eslint-plugin-next': 15.5.2
+      '@nx/eslint': 21.5.3(@babel/traverse@7.28.4)(@swc-node/register@1.11.1(@swc/core@1.13.5(@swc/helpers@0.5.17))(@swc/types@0.1.25)(typescript@5.9.2))(@swc/core@1.13.5(@swc/helpers@0.5.17))(@zkochan/js-yaml@0.0.7)(eslint@9.34.0(jiti@2.6.0))(nx@21.6.2(@swc-node/register@1.11.1(@swc/core@1.13.5(@swc/helpers@0.5.17))(@swc/types@0.1.25)(typescript@5.9.2))(@swc/core@1.13.5(@swc/helpers@0.5.17)))(verdaccio@6.1.2(typanion@3.14.0))
+      '@nx/eslint-plugin': 21.6.2(@babel/traverse@7.28.4)(@swc-node/register@1.11.1(@swc/core@1.13.5(@swc/helpers@0.5.17))(@swc/types@0.1.25)(typescript@5.9.2))(@swc/core@1.13.5(@swc/helpers@0.5.17))(@typescript-eslint/parser@8.45.0(eslint@9.34.0(jiti@2.6.0))(typescript@5.9.2))(eslint-config-prettier@10.1.8(eslint@9.34.0(jiti@2.6.0)))(eslint@9.34.0(jiti@2.6.0))(nx@21.6.2(@swc-node/register@1.11.1(@swc/core@1.13.5(@swc/helpers@0.5.17))(@swc/types@0.1.25)(typescript@5.9.2))(@swc/core@1.13.5(@swc/helpers@0.5.17)))(typescript@5.9.2)(verdaccio@6.1.2(typanion@3.14.0))
+      '@prettier/plugin-xml': 3.4.2(prettier@3.6.2)
+      '@storm-software/config': 1.133.4
+      '@storm-software/config-tools': 1.187.9(magicast@0.3.5)
+      '@storm-software/tsdoc': 0.12.8(@microsoft/api-extractor@7.52.13(@types/node@22.18.0))(@microsoft/tsdoc-config@0.17.1)(@microsoft/tsdoc@0.15.1)
+      '@stylistic/eslint-plugin': 4.4.1(eslint@9.34.0(jiti@2.6.0))(typescript@5.9.2)
+      '@typescript-eslint/eslint-plugin': 8.45.0(@typescript-eslint/parser@8.45.0(eslint@9.34.0(jiti@2.6.0))(typescript@5.9.2))(eslint@9.34.0(jiti@2.6.0))(typescript@5.9.2)
+      '@typescript-eslint/parser': 8.45.0(eslint@9.34.0(jiti@2.6.0))(typescript@5.9.2)
+      '@typescript-eslint/utils': 8.45.0(eslint@9.34.0(jiti@2.6.0))(typescript@5.9.2)
+      '@unocss/eslint-plugin': 66.4.2(eslint@9.34.0(jiti@2.6.0))(typescript@5.9.2)
+      '@vitest/eslint-plugin': 1.3.13(eslint@9.34.0(jiti@2.6.0))(typescript@5.9.2)(vitest@3.2.4(@types/debug@4.1.12)(@types/node@22.18.0)(jiti@2.6.0)(jsdom@26.1.0)(terser@5.44.0)(tsx@4.20.5)(yaml@2.8.1))
+      astro-eslint-parser: 1.2.2
+      chalk: 4.1.2
+      defu: 6.1.4
+      eslint: 9.34.0(jiti@2.6.0)
+      eslint-config-flat-gitignore: 2.1.0(eslint@9.34.0(jiti@2.6.0))
+      eslint-config-prettier: 10.1.8(eslint@9.34.0(jiti@2.6.0))
+      eslint-flat-config-utils: 2.1.4
+      eslint-merge-processors: 2.0.0(eslint@9.34.0(jiti@2.6.0))
+      eslint-plugin-astro: 1.3.1(eslint@9.34.0(jiti@2.6.0))
+      eslint-plugin-format: 1.0.1(eslint@9.34.0(jiti@2.6.0))
+      eslint-plugin-import-x: 4.16.1(@typescript-eslint/utils@8.45.0(eslint@9.34.0(jiti@2.6.0))(typescript@5.9.2))(eslint@9.34.0(jiti@2.6.0))
+      eslint-plugin-import-zod: 1.2.0(@typescript-eslint/utils@8.41.0(eslint@9.34.0(jiti@2.6.0))(typescript@5.9.2))(eslint@9.34.0(jiti@2.6.0))
       eslint-plugin-jsdoc: 50.8.0(eslint@9.34.0(jiti@2.6.0))
       eslint-plugin-json: 4.0.1
       eslint-plugin-jsonc: 2.20.1(eslint@9.34.0(jiti@2.6.0))
@@ -24329,59 +24160,17 @@ snapshots:
       - magicast
       - nx
 
-  '@stryke/env@0.18.4(magicast@0.3.5)(nx@21.6.2(@swc-node/register@1.11.1(@swc/core@1.13.5(@swc/helpers@0.5.17))(@swc/types@0.1.25)(typescript@5.9.2))(@swc/core@1.13.5(@swc/helpers@0.5.17)))':
+  '@stryke/env@0.18.13(magicast@0.3.5)(nx@21.6.2(@swc-node/register@1.11.1(@swc/core@1.13.5(@swc/helpers@0.5.17))(@swc/types@0.1.25)(typescript@5.9.2))(@swc/core@1.13.5(@swc/helpers@0.5.17)))':
     dependencies:
       '@dotenvx/dotenvx': 1.35.0
-      '@stryke/convert': 0.3.2
-      '@stryke/fs': 0.28.0(magicast@0.3.5)(nx@21.6.2(@swc-node/register@1.11.1(@swc/core@1.13.5(@swc/helpers@0.5.17))(@swc/types@0.1.25)(typescript@5.9.2))(@swc/core@1.13.5(@swc/helpers@0.5.17)))
-      '@stryke/path': 0.13.1
-      '@stryke/string-format': 0.10.0
+      '@stryke/convert': 0.6.0
+      '@stryke/fs': 0.28.6(magicast@0.3.5)(nx@21.6.2(@swc-node/register@1.11.1(@swc/core@1.13.5(@swc/helpers@0.5.17))(@swc/types@0.1.25)(typescript@5.9.2))(@swc/core@1.13.5(@swc/helpers@0.5.17)))
+      '@stryke/path': 0.15.2
+      '@stryke/string-format': 0.11.0
       defu: 6.1.4
     transitivePeerDependencies:
       - magicast
       - nx
-
-  '@stryke/fs@0.22.9(magicast@0.3.5)(nx@21.6.2(@swc-node/register@1.11.1(@swc/core@1.13.5(@swc/helpers@0.5.17))(@swc/types@0.1.25)(typescript@5.9.2))(@swc/core@1.13.5(@swc/helpers@0.5.17)))':
-    dependencies:
-      '@antfu/install-pkg': 1.1.0
-      '@ltd/j-toml': 1.38.0
-      '@stryke/convert': 0.3.2
-      '@stryke/json': 0.9.3
-      '@stryke/path': 0.12.5(magicast@0.3.5)
-      '@stryke/type-checks': 0.3.10
-      '@stryke/types': 0.8.9
-      '@zkochan/js-yaml': 0.0.7
-      chalk: 5.6.0
-      defu: 6.1.4
-      glob: 11.0.3
-      mlly: 1.7.4
-      nanotar: 0.2.0
-      semver: 7.7.1
-    optionalDependencies:
-      nx: 21.6.2(@swc-node/register@1.11.1(@swc/core@1.13.5(@swc/helpers@0.5.17))(@swc/types@0.1.25)(typescript@5.9.2))(@swc/core@1.13.5(@swc/helpers@0.5.17))
-    transitivePeerDependencies:
-      - magicast
-
-  '@stryke/fs@0.22.9(magicast@0.3.5)(nx@21.6.2(@swc-node/register@1.11.1(@swc/core@1.7.26(@swc/helpers@0.5.17))(@swc/types@0.1.25)(typescript@5.9.2))(@swc/core@1.7.26(@swc/helpers@0.5.17)))':
-    dependencies:
-      '@antfu/install-pkg': 1.1.0
-      '@ltd/j-toml': 1.38.0
-      '@stryke/convert': 0.3.2
-      '@stryke/json': 0.9.3
-      '@stryke/path': 0.12.5(magicast@0.3.5)
-      '@stryke/type-checks': 0.3.10
-      '@stryke/types': 0.8.9
-      '@zkochan/js-yaml': 0.0.7
-      chalk: 5.6.0
-      defu: 6.1.4
-      glob: 11.0.3
-      mlly: 1.7.4
-      nanotar: 0.2.0
-      semver: 7.7.1
-    optionalDependencies:
-      nx: 21.6.2(@swc-node/register@1.11.1(@swc/core@1.7.26(@swc/helpers@0.5.17))(@swc/types@0.1.25)(typescript@5.9.2))(@swc/core@1.7.26(@swc/helpers@0.5.17))
-    transitivePeerDependencies:
-      - magicast
 
   '@stryke/fs@0.23.4(magicast@0.3.5)(nx@21.5.3(@swc-node/register@1.11.1(@swc/core@1.13.5(@swc/helpers@0.5.17))(@swc/types@0.1.25)(typescript@5.9.2))(@swc/core@1.13.5(@swc/helpers@0.5.17)))':
     dependencies:
@@ -24404,65 +24193,18 @@ snapshots:
     transitivePeerDependencies:
       - magicast
 
-  '@stryke/fs@0.28.0(magicast@0.3.5)(nx@21.5.3(@swc-node/register@1.11.1(@swc/core@1.13.5(@swc/helpers@0.5.17))(@swc/types@0.1.25)(typescript@5.9.2))(@swc/core@1.13.5(@swc/helpers@0.5.17)))':
+  '@stryke/fs@0.25.0(magicast@0.3.5)(nx@21.6.2(@swc-node/register@1.11.1(@swc/core@1.13.5(@swc/helpers@0.5.17))(@swc/types@0.1.25)(typescript@5.9.2))(@swc/core@1.13.5(@swc/helpers@0.5.17)))':
     dependencies:
       '@antfu/install-pkg': 1.1.0
       '@ltd/j-toml': 1.38.0
-      '@storm-software/config-tools': 1.187.9(magicast@0.3.5)
       '@stryke/convert': 0.3.2
       '@stryke/json': 0.9.3
-      '@stryke/path': 0.13.1
+      '@stryke/path': 0.12.5(magicast@0.3.5)
       '@stryke/string-format': 0.10.0
       '@stryke/type-checks': 0.3.10
       '@stryke/types': 0.8.9
       '@zkochan/js-yaml': 0.0.7
-      chalk: 5.6.2
-      defu: 6.1.4
-      glob: 11.0.3
-      mlly: 1.7.4
-      nanotar: 0.2.0
-      semver: 7.7.1
-    optionalDependencies:
-      nx: 21.5.3(@swc-node/register@1.11.1(@swc/core@1.13.5(@swc/helpers@0.5.17))(@swc/types@0.1.25)(typescript@5.9.2))(@swc/core@1.13.5(@swc/helpers@0.5.17))
-    transitivePeerDependencies:
-      - magicast
-
-  '@stryke/fs@0.28.0(magicast@0.3.5)(nx@21.5.3(@swc-node/register@1.11.1(@swc/core@1.7.26(@swc/helpers@0.5.17))(@swc/types@0.1.25)(typescript@5.9.2))(@swc/core@1.7.26(@swc/helpers@0.5.17)))':
-    dependencies:
-      '@antfu/install-pkg': 1.1.0
-      '@ltd/j-toml': 1.38.0
-      '@storm-software/config-tools': 1.187.9(magicast@0.3.5)
-      '@stryke/convert': 0.3.2
-      '@stryke/json': 0.9.3
-      '@stryke/path': 0.13.1
-      '@stryke/string-format': 0.10.0
-      '@stryke/type-checks': 0.3.10
-      '@stryke/types': 0.8.9
-      '@zkochan/js-yaml': 0.0.7
-      chalk: 5.6.2
-      defu: 6.1.4
-      glob: 11.0.3
-      mlly: 1.7.4
-      nanotar: 0.2.0
-      semver: 7.7.1
-    optionalDependencies:
-      nx: 21.5.3(@swc-node/register@1.11.1(@swc/core@1.7.26(@swc/helpers@0.5.17))(@swc/types@0.1.25)(typescript@5.9.2))(@swc/core@1.7.26(@swc/helpers@0.5.17))
-    transitivePeerDependencies:
-      - magicast
-
-  '@stryke/fs@0.28.0(magicast@0.3.5)(nx@21.6.2(@swc-node/register@1.11.1(@swc/core@1.13.5(@swc/helpers@0.5.17))(@swc/types@0.1.25)(typescript@5.9.2))(@swc/core@1.13.5(@swc/helpers@0.5.17)))':
-    dependencies:
-      '@antfu/install-pkg': 1.1.0
-      '@ltd/j-toml': 1.38.0
-      '@storm-software/config-tools': 1.187.9(magicast@0.3.5)
-      '@stryke/convert': 0.3.2
-      '@stryke/json': 0.9.3
-      '@stryke/path': 0.13.1
-      '@stryke/string-format': 0.10.0
-      '@stryke/type-checks': 0.3.10
-      '@stryke/types': 0.8.9
-      '@zkochan/js-yaml': 0.0.7
-      chalk: 5.6.2
+      chalk: 5.6.0
       defu: 6.1.4
       glob: 11.0.3
       mlly: 1.7.4
@@ -24473,19 +24215,18 @@ snapshots:
     transitivePeerDependencies:
       - magicast
 
-  '@stryke/fs@0.28.0(magicast@0.3.5)(nx@21.6.2(@swc-node/register@1.11.1(@swc/core@1.7.26(@swc/helpers@0.5.17))(@swc/types@0.1.25)(typescript@5.9.2))(@swc/core@1.7.26(@swc/helpers@0.5.17)))':
+  '@stryke/fs@0.25.0(magicast@0.3.5)(nx@21.6.2(@swc-node/register@1.11.1(@swc/core@1.7.26(@swc/helpers@0.5.17))(@swc/types@0.1.25)(typescript@5.9.2))(@swc/core@1.7.26(@swc/helpers@0.5.17)))':
     dependencies:
       '@antfu/install-pkg': 1.1.0
       '@ltd/j-toml': 1.38.0
-      '@storm-software/config-tools': 1.187.9(magicast@0.3.5)
       '@stryke/convert': 0.3.2
       '@stryke/json': 0.9.3
-      '@stryke/path': 0.13.1
+      '@stryke/path': 0.12.5(magicast@0.3.5)
       '@stryke/string-format': 0.10.0
       '@stryke/type-checks': 0.3.10
       '@stryke/types': 0.8.9
       '@zkochan/js-yaml': 0.0.7
-      chalk: 5.6.2
+      chalk: 5.6.0
       defu: 6.1.4
       glob: 11.0.3
       mlly: 1.7.4
@@ -24507,7 +24248,7 @@ snapshots:
       '@stryke/string-format': 0.11.0
       '@stryke/type-checks': 0.3.10
       '@stryke/types': 0.9.0
-      chalk: 5.6.0
+      chalk: 5.6.2
       defu: 6.1.4
       glob: 11.0.3
       mlly: 1.7.4
@@ -24530,7 +24271,7 @@ snapshots:
       '@stryke/string-format': 0.11.0
       '@stryke/type-checks': 0.3.10
       '@stryke/types': 0.9.0
-      chalk: 5.6.0
+      chalk: 5.6.2
       defu: 6.1.4
       glob: 11.0.3
       mlly: 1.7.4
@@ -24553,7 +24294,7 @@ snapshots:
       '@stryke/string-format': 0.11.0
       '@stryke/type-checks': 0.3.10
       '@stryke/types': 0.9.0
-      chalk: 5.6.0
+      chalk: 5.6.2
       defu: 6.1.4
       glob: 11.0.3
       mlly: 1.7.4
@@ -24565,18 +24306,41 @@ snapshots:
     transitivePeerDependencies:
       - magicast
 
-  '@stryke/hash@0.10.0(magicast@0.3.5)(nx@21.6.2(@swc-node/register@1.11.1(@swc/core@1.13.5(@swc/helpers@0.5.17))(@swc/types@0.1.25)(typescript@5.9.2))(@swc/core@1.13.5(@swc/helpers@0.5.17)))':
+  '@stryke/fs@0.28.6(magicast@0.3.5)(nx@21.6.2(@swc-node/register@1.11.1(@swc/core@1.7.26(@swc/helpers@0.5.17))(@swc/types@0.1.25)(typescript@5.9.2))(@swc/core@1.7.26(@swc/helpers@0.5.17)))':
     dependencies:
-      '@stryke/fs': 0.22.9(magicast@0.3.5)(nx@21.6.2(@swc-node/register@1.11.1(@swc/core@1.13.5(@swc/helpers@0.5.17))(@swc/types@0.1.25)(typescript@5.9.2))(@swc/core@1.13.5(@swc/helpers@0.5.17)))
+      '@antfu/install-pkg': 1.1.0
+      '@ltd/j-toml': 1.38.0
+      '@storm-software/config-tools': 1.187.9(magicast@0.3.5)
+      '@stryke/convert': 0.6.0
+      '@stryke/json': 0.9.3
+      '@stryke/path': 0.15.2
+      '@stryke/string-format': 0.11.0
+      '@stryke/type-checks': 0.3.10
+      '@stryke/types': 0.9.0
+      chalk: 5.6.2
+      defu: 6.1.4
+      glob: 11.0.3
+      mlly: 1.7.4
+      nanotar: 0.2.0
+      semver: 7.7.1
+      yaml: 2.8.1
+    optionalDependencies:
+      nx: 21.6.2(@swc-node/register@1.11.1(@swc/core@1.7.26(@swc/helpers@0.5.17))(@swc/types@0.1.25)(typescript@5.9.2))(@swc/core@1.7.26(@swc/helpers@0.5.17))
+    transitivePeerDependencies:
+      - magicast
+
+  '@stryke/hash@0.11.0(magicast@0.3.5)(nx@21.6.2(@swc-node/register@1.11.1(@swc/core@1.13.5(@swc/helpers@0.5.17))(@swc/types@0.1.25)(typescript@5.9.2))(@swc/core@1.13.5(@swc/helpers@0.5.17)))':
+    dependencies:
+      '@stryke/fs': 0.25.0(magicast@0.3.5)(nx@21.6.2(@swc-node/register@1.11.1(@swc/core@1.13.5(@swc/helpers@0.5.17))(@swc/types@0.1.25)(typescript@5.9.2))(@swc/core@1.13.5(@swc/helpers@0.5.17)))
       js-xxhash: 4.0.0
       ohash: 2.0.11
     transitivePeerDependencies:
       - magicast
       - nx
 
-  '@stryke/hash@0.10.0(magicast@0.3.5)(nx@21.6.2(@swc-node/register@1.11.1(@swc/core@1.7.26(@swc/helpers@0.5.17))(@swc/types@0.1.25)(typescript@5.9.2))(@swc/core@1.7.26(@swc/helpers@0.5.17)))':
+  '@stryke/hash@0.11.0(magicast@0.3.5)(nx@21.6.2(@swc-node/register@1.11.1(@swc/core@1.7.26(@swc/helpers@0.5.17))(@swc/types@0.1.25)(typescript@5.9.2))(@swc/core@1.7.26(@swc/helpers@0.5.17)))':
     dependencies:
-      '@stryke/fs': 0.22.9(magicast@0.3.5)(nx@21.6.2(@swc-node/register@1.11.1(@swc/core@1.7.26(@swc/helpers@0.5.17))(@swc/types@0.1.25)(typescript@5.9.2))(@swc/core@1.7.26(@swc/helpers@0.5.17)))
+      '@stryke/fs': 0.25.0(magicast@0.3.5)(nx@21.6.2(@swc-node/register@1.11.1(@swc/core@1.7.26(@swc/helpers@0.5.17))(@swc/types@0.1.25)(typescript@5.9.2))(@swc/core@1.7.26(@swc/helpers@0.5.17)))
       js-xxhash: 4.0.0
       ohash: 2.0.11
     transitivePeerDependencies:
@@ -24636,8 +24400,6 @@ snapshots:
     transitivePeerDependencies:
       - magicast
 
-  '@stryke/path@0.13.1': {}
-
   '@stryke/path@0.15.2': {}
 
   '@stryke/string-format@0.10.0':
@@ -24649,6 +24411,11 @@ snapshots:
     dependencies:
       '@stryke/helpers': 0.8.1
       '@stryke/types': 0.8.9
+
+  '@stryke/string-format@0.12.0':
+    dependencies:
+      '@stryke/helpers': 0.9.0
+      '@stryke/types': 0.9.0
 
   '@stryke/string-format@0.5.3':
     dependencies:
@@ -24668,21 +24435,21 @@ snapshots:
 
   '@stryke/types@0.9.0': {}
 
-  '@stryke/unique-id@0.3.4(magicast@0.3.5)(nx@21.6.2(@swc-node/register@1.11.1(@swc/core@1.13.5(@swc/helpers@0.5.17))(@swc/types@0.1.25)(typescript@5.9.2))(@swc/core@1.13.5(@swc/helpers@0.5.17)))':
+  '@stryke/unique-id@0.3.5(magicast@0.3.5)(nx@21.6.2(@swc-node/register@1.11.1(@swc/core@1.13.5(@swc/helpers@0.5.17))(@swc/types@0.1.25)(typescript@5.9.2))(@swc/core@1.13.5(@swc/helpers@0.5.17)))':
     dependencies:
-      '@stryke/hash': 0.10.0(magicast@0.3.5)(nx@21.6.2(@swc-node/register@1.11.1(@swc/core@1.13.5(@swc/helpers@0.5.17))(@swc/types@0.1.25)(typescript@5.9.2))(@swc/core@1.13.5(@swc/helpers@0.5.17)))
+      '@stryke/hash': 0.11.0(magicast@0.3.5)(nx@21.6.2(@swc-node/register@1.11.1(@swc/core@1.13.5(@swc/helpers@0.5.17))(@swc/types@0.1.25)(typescript@5.9.2))(@swc/core@1.13.5(@swc/helpers@0.5.17)))
     transitivePeerDependencies:
       - magicast
       - nx
 
-  '@stryke/unique-id@0.3.4(magicast@0.3.5)(nx@21.6.2(@swc-node/register@1.11.1(@swc/core@1.7.26(@swc/helpers@0.5.17))(@swc/types@0.1.25)(typescript@5.9.2))(@swc/core@1.7.26(@swc/helpers@0.5.17)))':
+  '@stryke/unique-id@0.3.5(magicast@0.3.5)(nx@21.6.2(@swc-node/register@1.11.1(@swc/core@1.7.26(@swc/helpers@0.5.17))(@swc/types@0.1.25)(typescript@5.9.2))(@swc/core@1.7.26(@swc/helpers@0.5.17)))':
     dependencies:
-      '@stryke/hash': 0.10.0(magicast@0.3.5)(nx@21.6.2(@swc-node/register@1.11.1(@swc/core@1.7.26(@swc/helpers@0.5.17))(@swc/types@0.1.25)(typescript@5.9.2))(@swc/core@1.7.26(@swc/helpers@0.5.17)))
+      '@stryke/hash': 0.11.0(magicast@0.3.5)(nx@21.6.2(@swc-node/register@1.11.1(@swc/core@1.7.26(@swc/helpers@0.5.17))(@swc/types@0.1.25)(typescript@5.9.2))(@swc/core@1.7.26(@swc/helpers@0.5.17)))
     transitivePeerDependencies:
       - magicast
       - nx
 
-  '@stryke/url@0.2.4':
+  '@stryke/url@0.2.4(magicast@0.3.5)':
     dependencies:
       '@stryke/json': 0.9.3
       '@stryke/path': 0.12.5(magicast@0.3.5)
@@ -25870,10 +25637,6 @@ snapshots:
     dependencies:
       event-target-shim: 5.0.1
 
-  abstract-leveldown@0.12.4:
-    dependencies:
-      xtend: 3.0.0
-
   accepts@1.3.8:
     dependencies:
       mime-types: 2.1.35
@@ -25896,8 +25659,6 @@ snapshots:
   acorn-walk@8.3.4:
     dependencies:
       acorn: 8.15.0
-
-  acorn@5.7.4: {}
 
   acorn@8.14.0: {}
 
@@ -26506,10 +26267,6 @@ snapshots:
 
   birpc@2.6.1: {}
 
-  bl@0.8.2:
-    dependencies:
-      readable-stream: 1.0.34
-
   bl@4.1.0:
     dependencies:
       buffer: 5.7.1
@@ -26602,12 +26359,6 @@ snapshots:
       inherits: 2.0.4
       safe-buffer: 5.2.1
 
-  browserify-fs@1.0.0:
-    dependencies:
-      level-filesystem: 1.2.0
-      level-js: 2.2.4
-      levelup: 0.18.6
-
   browserify-rsa@4.1.1:
     dependencies:
       bn.js: 5.2.2
@@ -26661,8 +26412,6 @@ snapshots:
   btoa@1.2.1: {}
 
   buffer-equal-constant-time@1.0.1: {}
-
-  buffer-es6@4.9.3: {}
 
   buffer-from@1.1.2: {}
 
@@ -26976,8 +26725,6 @@ snapshots:
       strip-ansi: 6.0.1
       wrap-ansi: 7.0.0
 
-  clone@0.1.19: {}
-
   clone@1.0.4: {}
 
   clone@2.1.2: {}
@@ -27112,13 +26859,6 @@ snapshots:
       - supports-color
 
   concat-map@0.0.1: {}
-
-  concat-stream@1.6.2:
-    dependencies:
-      buffer-from: 1.1.2
-      inherits: 2.0.4
-      readable-stream: 2.3.8
-      typedarray: 0.0.6
 
   concat-stream@2.0.0:
     dependencies:
@@ -27317,21 +27057,6 @@ snapshots:
       create-hash: 1.2.0
       create-hmac: 1.1.7
       diffie-hellman: 5.0.3
-      inherits: 2.0.4
-      pbkdf2: 3.1.5
-      public-encrypt: 4.0.3
-      randombytes: 2.1.0
-      randomfill: 1.0.4
-
-  crypto-browserify@3.12.1:
-    dependencies:
-      browserify-cipher: 1.0.1
-      browserify-sign: 4.2.5
-      create-ecdh: 4.0.4
-      create-hash: 1.2.0
-      create-hmac: 1.1.7
-      diffie-hellman: 5.0.3
-      hash-base: 3.0.5
       inherits: 2.0.4
       pbkdf2: 3.1.5
       public-encrypt: 4.0.3
@@ -27688,10 +27413,6 @@ snapshots:
     dependencies:
       clone: 1.0.4
 
-  deferred-leveldown@0.2.0:
-    dependencies:
-      abstract-leveldown: 0.12.4
-
   define-data-property@1.1.4:
     dependencies:
       es-define-property: 1.0.1
@@ -28024,10 +27745,6 @@ snapshots:
   envinfo@7.14.0: {}
 
   err-code@2.0.3: {}
-
-  errno@0.1.8:
-    dependencies:
-      prr: 1.0.1
 
   error-ex@1.3.4:
     dependencies:
@@ -28937,8 +28654,6 @@ snapshots:
       '@types/estree-jsx': 1.0.5
       '@types/unist': 3.0.3
 
-  estree-walker@0.5.2: {}
-
   estree-walker@0.6.1: {}
 
   estree-walker@2.0.2: {}
@@ -29236,7 +28951,7 @@ snapshots:
     dependencies:
       magic-string: 0.30.19
       mlly: 1.8.0
-      rollup: 4.52.2
+      rollup: 4.52.3
 
   flat-cache@4.0.1:
     dependencies:
@@ -29278,8 +28993,6 @@ snapshots:
   for-each@0.3.5:
     dependencies:
       is-callable: 1.2.7
-
-  foreach@2.0.6: {}
 
   foreground-child@3.3.1:
     dependencies:
@@ -29370,10 +29083,6 @@ snapshots:
       is-callable: 1.2.7
 
   functions-have-names@1.2.3: {}
-
-  fwd-stream@1.0.4:
-    dependencies:
-      readable-stream: 1.0.34
 
   generator-function@2.0.0: {}
 
@@ -30041,8 +29750,6 @@ snapshots:
     dependencies:
       postcss: 8.5.6
 
-  idb-wrapper@1.7.2: {}
-
   identity-obj-proxy@3.0.0:
     dependencies:
       harmony-reflect: 1.6.2
@@ -30326,8 +30033,6 @@ snapshots:
 
   is-obj@2.0.0: {}
 
-  is-object@0.1.2: {}
-
   is-plain-obj@2.1.0: {}
 
   is-plain-obj@3.0.0: {}
@@ -30411,8 +30116,6 @@ snapshots:
     dependencies:
       is-inside-container: 1.0.0
 
-  is@0.2.7: {}
-
   isarray@0.0.1: {}
 
   isarray@1.0.0: {}
@@ -30420,8 +30123,6 @@ snapshots:
   isarray@2.0.1: {}
 
   isarray@2.0.5: {}
-
-  isbuffer@0.0.0: {}
 
   isexe@2.0.0: {}
 
@@ -31500,64 +31201,6 @@ snapshots:
       lefthook-windows-arm64: 1.12.3
       lefthook-windows-x64: 1.12.3
 
-  level-blobs@0.1.7:
-    dependencies:
-      level-peek: 1.0.6
-      once: 1.4.0
-      readable-stream: 1.1.14
-
-  level-filesystem@1.2.0:
-    dependencies:
-      concat-stream: 1.6.2
-      errno: 0.1.8
-      fwd-stream: 1.0.4
-      level-blobs: 0.1.7
-      level-peek: 1.0.6
-      level-sublevel: 5.2.3
-      octal: 1.0.0
-      once: 1.4.0
-      xtend: 2.2.0
-
-  level-fix-range@1.0.2: {}
-
-  level-fix-range@2.0.0:
-    dependencies:
-      clone: 0.1.19
-
-  level-hooks@4.5.0:
-    dependencies:
-      string-range: 1.2.2
-
-  level-js@2.2.4:
-    dependencies:
-      abstract-leveldown: 0.12.4
-      idb-wrapper: 1.7.2
-      isbuffer: 0.0.0
-      ltgt: 2.2.1
-      typedarray-to-buffer: 1.0.4
-      xtend: 2.1.2
-
-  level-peek@1.0.6:
-    dependencies:
-      level-fix-range: 1.0.2
-
-  level-sublevel@5.2.3:
-    dependencies:
-      level-fix-range: 2.0.0
-      level-hooks: 4.5.0
-      string-range: 1.2.2
-      xtend: 2.0.6
-
-  levelup@0.18.6:
-    dependencies:
-      bl: 0.8.2
-      deferred-leveldown: 0.2.0
-      errno: 0.1.8
-      prr: 0.0.0
-      readable-stream: 1.0.34
-      semver: 2.3.2
-      xtend: 3.0.0
-
   leven@3.1.0: {}
 
   levn@0.4.1:
@@ -31727,17 +31370,11 @@ snapshots:
 
   lru-cache@7.18.3: {}
 
-  ltgt@2.2.1: {}
-
   lunr@2.3.9: {}
 
   luxon@3.7.2: {}
 
   lz-string@1.5.0: {}
-
-  magic-string@0.22.5:
-    dependencies:
-      vlq: 0.2.3
 
   magic-string@0.30.18:
     dependencies:
@@ -32205,18 +31842,18 @@ snapshots:
       micromark-util-character: 2.1.1
       micromark-util-sanitize-uri: 2.0.1
       micromark-util-symbol: 2.0.1
-      micromark-util-types: 2.0.2
+      micromark-util-types: 2.0.1
 
   micromark-extension-gfm-footnote@2.1.0:
     dependencies:
       devlop: 1.1.0
-      micromark-core-commonmark: 2.0.3
+      micromark-core-commonmark: 2.0.2
       micromark-factory-space: 2.0.1
       micromark-util-character: 2.1.1
       micromark-util-normalize-identifier: 2.0.1
       micromark-util-sanitize-uri: 2.0.1
       micromark-util-symbol: 2.0.1
-      micromark-util-types: 2.0.2
+      micromark-util-types: 2.0.1
 
   micromark-extension-gfm-strikethrough@0.6.5:
     dependencies:
@@ -32386,7 +32023,7 @@ snapshots:
   micromark-factory-space@2.0.1:
     dependencies:
       micromark-util-character: 2.1.1
-      micromark-util-types: 2.0.2
+      micromark-util-types: 2.0.1
 
   micromark-factory-title@2.0.1:
     dependencies:
@@ -32415,7 +32052,7 @@ snapshots:
     dependencies:
       micromark-util-character: 2.1.1
       micromark-util-symbol: 2.0.1
-      micromark-util-types: 2.0.2
+      micromark-util-types: 2.0.1
 
   micromark-util-combine-extensions@2.0.1:
     dependencies:
@@ -32453,7 +32090,7 @@ snapshots:
 
   micromark-util-resolve-all@2.0.1:
     dependencies:
-      micromark-util-types: 2.0.2
+      micromark-util-types: 2.0.1
 
   micromark-util-sanitize-uri@2.0.1:
     dependencies:
@@ -32466,7 +32103,7 @@ snapshots:
       devlop: 1.1.0
       micromark-util-chunked: 2.0.1
       micromark-util-symbol: 2.0.1
-      micromark-util-types: 2.0.2
+      micromark-util-types: 2.0.1
 
   micromark-util-symbol@2.0.1: {}
 
@@ -33168,14 +32805,6 @@ snapshots:
       call-bind: 1.0.8
       define-properties: 1.2.1
 
-  object-keys@0.2.0:
-    dependencies:
-      foreach: 2.0.6
-      indexof: 0.0.1
-      is: 0.2.7
-
-  object-keys@0.4.0: {}
-
   object-keys@1.1.1: {}
 
   object-treeify@1.1.33: {}
@@ -33204,8 +32833,6 @@ snapshots:
       es-object-atoms: 1.1.1
 
   obuf@1.1.2: {}
-
-  octal@1.0.0: {}
 
   ofetch@1.4.1:
     dependencies:
@@ -34113,8 +33740,6 @@ snapshots:
 
   proc-log@4.2.0: {}
 
-  process-es6@0.11.6: {}
-
   process-nextick-args@2.0.1: {}
 
   process-warning@1.0.0: {}
@@ -34176,10 +33801,6 @@ snapshots:
       ipaddr.js: 1.9.1
 
   proxy-from-env@1.1.0: {}
-
-  prr@0.0.0: {}
-
-  prr@1.0.1: {}
 
   public-encrypt@4.0.3:
     dependencies:
@@ -34341,13 +33962,6 @@ snapshots:
       unicorn-magic: 0.1.0
 
   readable-stream@1.0.34:
-    dependencies:
-      core-util-is: 1.0.3
-      inherits: 2.0.4
-      isarray: 0.0.1
-      string_decoder: 0.10.31
-
-  readable-stream@1.1.14:
     dependencies:
       core-util-is: 1.0.3
       inherits: 2.0.4
@@ -34724,33 +34338,13 @@ snapshots:
       globby: 10.0.1
       is-plain-object: 3.0.1
 
-  rollup-plugin-dts@6.2.3(rollup@4.52.2)(typescript@5.9.2):
+  rollup-plugin-dts@6.2.3(rollup@4.52.3)(typescript@5.9.2):
     dependencies:
       magic-string: 0.30.19
-      rollup: 4.52.2
+      rollup: 4.52.3
       typescript: 5.9.2
     optionalDependencies:
       '@babel/code-frame': 7.27.1
-
-  rollup-plugin-json@4.0.0:
-    dependencies:
-      rollup-pluginutils: 2.8.2
-
-  rollup-plugin-node-builtins@2.1.2:
-    dependencies:
-      browserify-fs: 1.0.0
-      buffer-es6: 4.9.3
-      crypto-browserify: 3.12.1
-      process-es6: 0.11.6
-
-  rollup-plugin-node-globals@1.4.0:
-    dependencies:
-      acorn: 5.7.4
-      buffer-es6: 4.9.3
-      estree-walker: 0.5.2
-      magic-string: 0.22.5
-      process-es6: 0.11.6
-      rollup-pluginutils: 2.8.2
 
   rollup-plugin-postcss@4.0.2(postcss@8.5.6)(ts-node@10.9.2(@swc/core@1.13.5(@swc/helpers@0.5.17))(@types/node@22.18.0)(typescript@5.9.2)):
     dependencies:
@@ -34963,8 +34557,6 @@ snapshots:
     dependencies:
       '@types/node-forge': 1.3.14
       node-forge: 1.3.1
-
-  semver@2.3.2: {}
 
   semver@6.3.1: {}
 
@@ -35501,8 +35093,6 @@ snapshots:
     dependencies:
       char-regex: 1.0.2
       strip-ansi: 6.0.1
-
-  string-range@1.2.2: {}
 
   string-ts@2.2.1: {}
 
@@ -36216,8 +35806,6 @@ snapshots:
       possible-typed-array-names: 1.1.0
       reflect.getprototypeof: 1.0.10
 
-  typedarray-to-buffer@1.0.4: {}
-
   typedarray@0.0.6: {}
 
   typedoc-plugin-frontmatter@1.3.0(typedoc-plugin-markdown@4.0.0-next.20(typedoc@0.25.12(typescript@5.9.2))):
@@ -36275,12 +35863,12 @@ snapshots:
 
   unbuild@3.6.1(typescript@5.9.2):
     dependencies:
-      '@rollup/plugin-alias': 5.1.1(rollup@4.52.2)
-      '@rollup/plugin-commonjs': 28.0.6(rollup@4.52.2)
-      '@rollup/plugin-json': 6.1.0(rollup@4.52.2)
-      '@rollup/plugin-node-resolve': 16.0.1(rollup@4.52.2)
-      '@rollup/plugin-replace': 6.0.2(rollup@4.52.2)
-      '@rollup/pluginutils': 5.3.0(rollup@4.52.2)
+      '@rollup/plugin-alias': 5.1.1(rollup@4.52.3)
+      '@rollup/plugin-commonjs': 28.0.6(rollup@4.52.3)
+      '@rollup/plugin-json': 6.1.0(rollup@4.52.3)
+      '@rollup/plugin-node-resolve': 16.0.1(rollup@4.52.3)
+      '@rollup/plugin-replace': 6.0.2(rollup@4.52.3)
+      '@rollup/pluginutils': 5.3.0(rollup@4.52.3)
       citty: 0.1.6
       consola: 3.4.2
       defu: 6.1.4
@@ -36294,8 +35882,8 @@ snapshots:
       pathe: 2.0.3
       pkg-types: 2.3.0
       pretty-bytes: 7.1.0
-      rollup: 4.52.2
-      rollup-plugin-dts: 6.2.3(rollup@4.52.2)(typescript@5.9.2)
+      rollup: 4.52.3
+      rollup-plugin-dts: 6.2.3(rollup@4.52.3)(typescript@5.9.2)
       scule: 1.3.0
       tinyglobby: 0.2.15
       untyped: 2.0.0
@@ -36937,8 +36525,6 @@ snapshots:
       - tsx
       - yaml
 
-  vlq@0.2.3: {}
-
   vm-browserify@1.1.2: {}
 
   vscode-json-languageservice@4.2.1:
@@ -37329,19 +36915,6 @@ snapshots:
   xmlchars@2.2.0: {}
 
   xmlhttprequest-ssl@1.6.3: {}
-
-  xtend@2.0.6:
-    dependencies:
-      is-object: 0.1.2
-      object-keys: 0.2.0
-
-  xtend@2.1.2:
-    dependencies:
-      object-keys: 0.4.0
-
-  xtend@2.2.0: {}
-
-  xtend@3.0.0: {}
 
   xtend@4.0.2: {}
 
