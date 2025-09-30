@@ -273,3 +273,10 @@ patchedDependencies:
   "@alloy-js/babel-plugin-jsx-dom-expressions": patches/@alloy-js__babel-plugin-jsx-dom-expressions.patch
   "@alloy-js/core": patches/@alloy-js__core.patch
 preferWorkspacePackages: true
+
+# To reduce the risk of installing compromised packages.
+minimumReleaseAge: 1440 # 1 day
+minimumReleaseAgeExclude:
+  - "@storm-software/*"
+  - "@stryke/*"
+  - "@storm-stack/*"

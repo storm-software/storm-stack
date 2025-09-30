@@ -23,7 +23,7 @@ declare module "storm:env" {
    */
   export interface StormEnvBase extends StormEnvInterface {
     /**
-     * Interface property definition for ARGV
+     *
      *
      * @domain cli
      *
@@ -31,7 +31,7 @@ declare module "storm:env" {
      */
     ARGV?: Array<string>;
     /**
-     * Interface property definition for BANNER
+     * The inverse of the no-banner option.
      *
      * @domain cli
      *
@@ -39,7 +39,7 @@ declare module "storm:env" {
      */
     BANNER?: boolean;
     /**
-     * Interface property definition for CACHE_DIR
+     * The Storm Stack application's cached data directory.
      *
      * @title Cache Directory
      *
@@ -47,7 +47,7 @@ declare module "storm:env" {
      */
     CACHE_DIR?: string;
     /**
-     * Interface property definition for CI
+     * An indicator that specifies the current runtime is a continuous integration environment.
      *
      * @title Continuous Integration
      * @alias CONTINUOUS_INTEGRATION
@@ -56,7 +56,7 @@ declare module "storm:env" {
      */
     CI: boolean;
     /**
-     * Interface property definition for CONFIG
+     * The configuration file to append the completion script to.
      *
      * @domain cli
      *
@@ -64,7 +64,7 @@ declare module "storm:env" {
      */
     CONFIG?: string | true;
     /**
-     * Interface property definition for CONFIG_DIR
+     * The Storm Stack application's configuration data directory.
      *
      * @title Configuration Directory
      *
@@ -72,7 +72,7 @@ declare module "storm:env" {
      */
     CONFIG_DIR?: string;
     /**
-     * Interface property definition for CONTINUOUS_INTEGRATION
+     * An indicator that specifies the current runtime is a continuous integration environment.
      *
      * @title Continuous Integration
      * @alias CI
@@ -81,7 +81,7 @@ declare module "storm:env" {
      */
     CONTINUOUS_INTEGRATION: boolean;
     /**
-     * Interface property definition for DATA_DIR
+     * The Storm Stack application's runtime data directory.
      *
      * @title Data Directory
      *
@@ -89,35 +89,35 @@ declare module "storm:env" {
      */
     DATA_DIR?: string;
     /**
-     * Interface property definition for DEBUG
+     * Indicates if the application is running in debug mode.
      *
      *
      *
      */
     DEBUG: boolean;
     /**
-     * Interface property definition for DEFAULT_LOCALE
+     * The default locale to be used in the application.
      *
      *
      *
      */
     DEFAULT_LOCALE: string;
     /**
-     * Interface property definition for DEFAULT_TIMEZONE
+     * The default timezone for the application.
      *
      *
      *
      */
     DEFAULT_TIMEZONE: string;
     /**
-     * Interface property definition for DEVENV_RUNTIME
+     * A variable that specifies the [Devenv](https://devenv.sh/) runtime directory.
      *
      *
      *
      */
     DEVENV_RUNTIME?: string;
     /**
-     * Interface property definition for ENV
+     * The environment the application is running in. This value will be populated with the value of `MODE` if not provided.
      *
      * @title ENVIRONMENT
      * @alias ENVIRONMENT
@@ -126,7 +126,7 @@ declare module "storm:env" {
      */
     ENV: string;
     /**
-     * Interface property definition for ENVIRONMENT
+     * The environment the application is running in. This value will be populated with the value of `MODE` if not provided.
      *
      * @alias ENV
      *
@@ -134,7 +134,7 @@ declare module "storm:env" {
      */
     ENVIRONMENT: string;
     /**
-     * Interface property definition for ERROR_URL
+     * A web page to lookup error messages and display additional information given an error code.
      *
      * @title Error Details URL
      *
@@ -142,21 +142,21 @@ declare module "storm:env" {
      */
     ERROR_URL: string;
     /**
-     * Interface property definition for FORCE_COLOR
+     * An indicator that specifies the current runtime is a force color environment.
      *
      *
      *
      */
     FORCE_COLOR: boolean | number;
     /**
-     * Interface property definition for FORCE_HYPERLINK
+     * An indicator that specifies the current runtime should force hyperlinks in terminal output.
      *
      *
      *
      */
     FORCE_HYPERLINK: boolean | number;
     /**
-     * Interface property definition for HELP
+     * Show help information.
      *
      * @domain cli
      *
@@ -164,14 +164,14 @@ declare module "storm:env" {
      */
     HELP?: boolean;
     /**
-     * Interface property definition for INCLUDE_ERROR_DATA
+     * Indicates if error data should be included.
      *
      *
      *
      */
     INCLUDE_ERROR_DATA: boolean;
     /**
-     * Interface property definition for INTERACTIVE
+     * The inverse of the no-interactive option.
      *
      * @domain cli
      *
@@ -179,7 +179,7 @@ declare module "storm:env" {
      */
     INTERACTIVE?: boolean;
     /**
-     * Interface property definition for LOG_DIR
+     * The Storm Stack application's logging directory.
      *
      * @title Log Directory
      *
@@ -187,21 +187,21 @@ declare module "storm:env" {
      */
     LOG_DIR?: string;
     /**
-     * Interface property definition for LOG_LEVEL
+     * The default lowest log level to accept. If `null`, the logger will reject all records. This value only applies if `lowestLogLevel` is not provided to the `logs` configuration.
      *
      *
      *
      */
     LOG_LEVEL?: "debug" | "info" | "warning" | "error" | "fatal" | null;
     /**
-     * Interface property definition for MINIMAL
+     * An indicator that specifies the current runtime is a minimal environment.
      *
      *
      *
      */
     MINIMAL: boolean;
     /**
-     * Interface property definition for MODE
+     * The mode in which the application is running.
      *
      * @alias NODE_ENV
      *
@@ -209,7 +209,7 @@ declare module "storm:env" {
      */
     MODE: "development" | "test" | "production";
     /**
-     * Interface property definition for NAME
+     * The name of the library.
      *
      * @domain cli
      *
@@ -217,7 +217,7 @@ declare module "storm:env" {
      */
     NAME?: string;
     /**
-     * Interface property definition for NO_BANNER
+     * Hide the banner displayed while running the CLI application (will be set to true if running in a CI pipeline).
      *
      * @domain cli
      *
@@ -225,14 +225,14 @@ declare module "storm:env" {
      */
     NO_BANNER?: boolean;
     /**
-     * Interface property definition for NO_COLOR
+     * An indicator that specifies the current runtime is a no color environment.
      *
      *
      *
      */
     NO_COLOR: boolean;
     /**
-     * Interface property definition for NO_INTERACT
+     * Disable interactive mode (will be set to true if running in a CI pipeline).
      *
      * @title NO INTERACTIVE
      * @alias NO_INTERACTIVE
@@ -242,7 +242,7 @@ declare module "storm:env" {
      */
     NO_INTERACT?: boolean;
     /**
-     * Interface property definition for NO_INTERACTIVE
+     * Disable interactive mode (will be set to true if running in a CI pipeline).
      *
      * @alias NO_INTERACT
      * @domain cli
@@ -251,7 +251,7 @@ declare module "storm:env" {
      */
     NO_INTERACTIVE?: boolean;
     /**
-     * Interface property definition for NODE_ENV
+     * The mode in which the application is running.
      *
      * @title MODE
      * @alias MODE
@@ -260,7 +260,7 @@ declare module "storm:env" {
      */
     NODE_ENV: "development" | "test" | "production";
     /**
-     * Interface property definition for ORG
+     * The name of the organization that maintains the application.
      *
      * @title ORGANIZATION
      * @alias ORGANIZATION
@@ -269,7 +269,7 @@ declare module "storm:env" {
      */
     ORG: string;
     /**
-     * Interface property definition for ORGANIZATION
+     * The name of the organization that maintains the application.
      *
      * @alias ORG
      *
@@ -277,14 +277,14 @@ declare module "storm:env" {
      */
     ORGANIZATION: string;
     /**
-     * Interface property definition for OUTPUT_MODE
+     * The mode used for outputting results.- `memory`: Generated source code is stored in a virtual file system to reduce boilerplate.- `fs`: Outputs generated results to the local file system.
      *
      *
      *
      */
     OUTPUT_MODE?: "virtual" | "fs";
     /**
-     * Interface property definition for PACKAGE_NAME
+     * The name of the library.
      *
      * @domain cli
      *
@@ -292,14 +292,14 @@ declare module "storm:env" {
      */
     PACKAGE_NAME?: string;
     /**
-     * Interface property definition for PLATFORM
+     * The platform for which the application was built.
      *
      *
      *
      */
     PLATFORM: "node" | "neutral" | "browser";
     /**
-     * Interface property definition for PROJECT
+     * The root directory of the Storm Stack project.
      *
      * @title ROOT
      * @alias ROOT
@@ -309,7 +309,7 @@ declare module "storm:env" {
      */
     PROJECT?: string;
     /**
-     * Interface property definition for ROOT
+     * The root directory of the Storm Stack project.
      *
      * @alias PROJECT
      * @domain cli
@@ -318,7 +318,7 @@ declare module "storm:env" {
      */
     ROOT?: string;
     /**
-     * Interface property definition for SCRIPT
+     * The path to write the completion script to.
      *
      * @domain cli
      *
@@ -326,21 +326,21 @@ declare module "storm:env" {
      */
     SCRIPT?: string | true;
     /**
-     * Interface property definition for SENTRY_DSN
+     * The DSN for Sentry
      *
      *
      *
      */
     SENTRY_DSN: string;
     /**
-     * Interface property definition for STACKTRACE
+     * Indicates if error stack traces should be captured.
      *
      *
      *
      */
     STACKTRACE: boolean;
     /**
-     * Interface property definition for TEMP_DIR
+     * The Storm Stack application's temporary data directory.
      *
      * @title Temporary Directory
      *
@@ -348,14 +348,14 @@ declare module "storm:env" {
      */
     TEMP_DIR?: string;
     /**
-     * Interface property definition for TEST
+     * An indicator that specifies the current runtime is a test environment.
      *
      *
      *
      */
     TEST: boolean;
     /**
-     * Interface property definition for VERBOSE
+     * Enable verbose output.
      *
      * @domain cli
      *
@@ -363,7 +363,7 @@ declare module "storm:env" {
      */
     VERBOSE?: boolean;
     /**
-     * Interface property definition for VERSION
+     * Show the version of the application.
      *
      * @domain cli
      *
@@ -371,7 +371,7 @@ declare module "storm:env" {
      */
     VERSION?: boolean;
     /**
-     * Interface property definition for AC_APPCIRCLE
+     * The appcircle build ID. This value is set by certain CI/CD systems.
      *
      * @readonly
      *
@@ -379,7 +379,7 @@ declare module "storm:env" {
      */
     readonly AC_APPCIRCLE?: string;
     /**
-     * Interface property definition for AGENT_NAME
+     * The name of the agent running the application. This variable is set by certain CI/CD systems.
      *
      * @readonly
      *
@@ -387,7 +387,7 @@ declare module "storm:env" {
      */
     readonly AGENT_NAME?: string;
     /**
-     * Interface property definition for AGOLA_GIT_REF
+     * The agola git reference. This value is set by certain CI/CD systems.
      *
      * @readonly
      *
@@ -395,7 +395,7 @@ declare module "storm:env" {
      */
     readonly AGOLA_GIT_REF?: string;
     /**
-     * Interface property definition for APP_NAME
+     * The name of the application.
      *
      * @readonly
      *
@@ -403,7 +403,7 @@ declare module "storm:env" {
      */
     readonly APP_NAME: string;
     /**
-     * Interface property definition for APP_VERSION
+     * The version of the application.
      *
      * @readonly
      *
@@ -411,7 +411,7 @@ declare module "storm:env" {
      */
     readonly APP_VERSION: string;
     /**
-     * Interface property definition for APPCENTER_BUILD_ID
+     * The appcenter build ID. This value is set by certain CI/CD systems.
      *
      * @readonly
      *
@@ -419,7 +419,7 @@ declare module "storm:env" {
      */
     readonly APPCENTER_BUILD_ID?: string;
     /**
-     * Interface property definition for APPDATA
+     * A variable that specifies the application data directory on Windows.
      *
      * @readonly
      *
@@ -427,7 +427,7 @@ declare module "storm:env" {
      */
     readonly APPDATA?: string;
     /**
-     * Interface property definition for APPVEYOR
+     * The appveyor build ID. This value is set by certain CI/CD systems.
      *
      * @readonly
      *
@@ -435,7 +435,7 @@ declare module "storm:env" {
      */
     readonly APPVEYOR?: string;
     /**
-     * Interface property definition for bamboo_planKey
+     * The bamboo plan key. This value is set by certain CI/CD systems.
      *
      * @readonly
      *
@@ -443,7 +443,7 @@ declare module "storm:env" {
      */
     readonly bamboo_planKey?: string;
     /**
-     * Interface property definition for BITBUCKET_COMMIT
+     * The bitbucket commit. This value is set by certain CI/CD systems.
      *
      * @readonly
      *
@@ -451,7 +451,7 @@ declare module "storm:env" {
      */
     readonly BITBUCKET_COMMIT?: string;
     /**
-     * Interface property definition for BITRISE_IO
+     * The bitrise build ID. This value is set by certain CI/CD systems.
      *
      * @readonly
      *
@@ -459,7 +459,7 @@ declare module "storm:env" {
      */
     readonly BITRISE_IO?: string;
     /**
-     * Interface property definition for BUDDY_WORKSPACE_ID
+     * The buddy workspace ID. This value is set by certain CI/CD systems.
      *
      * @readonly
      *
@@ -467,7 +467,7 @@ declare module "storm:env" {
      */
     readonly BUDDY_WORKSPACE_ID?: string;
     /**
-     * Interface property definition for BUILD_CHECKSUM
+     * A checksum hash created during the build.
      *
      * @readonly
      *
@@ -475,7 +475,7 @@ declare module "storm:env" {
      */
     readonly BUILD_CHECKSUM: string;
     /**
-     * Interface property definition for BUILD_ID
+     * The unique identifier for the build.
      *
      * @readonly
      *
@@ -483,7 +483,7 @@ declare module "storm:env" {
      */
     readonly BUILD_ID: string;
     /**
-     * Interface property definition for BUILD_TIMESTAMP
+     * The timestamp the build was ran at.
      *
      * @readonly
      *
@@ -491,7 +491,7 @@ declare module "storm:env" {
      */
     readonly BUILD_TIMESTAMP: string;
     /**
-     * Interface property definition for BUILDER_OUTPUT
+     * The builder output build ID. This value is set by certain CI/CD systems.
      *
      * @readonly
      *
@@ -499,7 +499,7 @@ declare module "storm:env" {
      */
     readonly BUILDER_OUTPUT?: string;
     /**
-     * Interface property definition for BUILDKITE
+     * The buildkite build ID. This value is set by certain CI/CD systems.
      *
      * @readonly
      *
@@ -507,7 +507,7 @@ declare module "storm:env" {
      */
     readonly BUILDKITE?: string;
     /**
-     * Interface property definition for CF_BUILD_ID
+     * The cf build ID. This value is set by certain CI/CD systems.
      *
      * @readonly
      *
@@ -515,7 +515,7 @@ declare module "storm:env" {
      */
     readonly CF_BUILD_ID?: string;
     /**
-     * Interface property definition for CI_NAME
+     * The ci name. This value is set by certain CI/CD systems.
      *
      * @readonly
      *
@@ -523,7 +523,7 @@ declare module "storm:env" {
      */
     readonly CI_NAME?: string;
     /**
-     * Interface property definition for CI_XCODE_PROJECT
+     * The xcode project build ID. This value is set by certain CI/CD systems.
      *
      * @readonly
      *
@@ -531,7 +531,7 @@ declare module "storm:env" {
      */
     readonly CI_XCODE_PROJECT?: string;
     /**
-     * Interface property definition for CIRCLECI
+     * The circleci build ID. This value is set by certain CI/CD systems.
      *
      * @readonly
      *
@@ -539,7 +539,7 @@ declare module "storm:env" {
      */
     readonly CIRCLECI?: string;
     /**
-     * Interface property definition for CIRRUS_CI
+     * The cirrus-ci build ID. This value is set by certain CI/CD systems.
      *
      * @readonly
      *
@@ -547,7 +547,7 @@ declare module "storm:env" {
      */
     readonly CIRRUS_CI?: string;
     /**
-     * Interface property definition for CM_BUILD_ID
+     * The cm build ID. This value is set by certain CI/CD systems.
      *
      * @readonly
      *
@@ -555,7 +555,7 @@ declare module "storm:env" {
      */
     readonly CM_BUILD_ID?: string;
     /**
-     * Interface property definition for CODEBUILD
+     * The codebuild build ID. This value is set by certain CI/CD systems.
      *
      * @readonly
      *
@@ -563,7 +563,7 @@ declare module "storm:env" {
      */
     readonly CODEBUILD?: string;
     /**
-     * Interface property definition for COLORTERM
+     * The color terminal type. This variable is set by certain terminal emulators.
      *
      * @readonly
      *
@@ -571,7 +571,7 @@ declare module "storm:env" {
      */
     readonly COLORTERM?: string;
     /**
-     * Interface property definition for ConEmuTask
+     * The ConEmu task name. This variable is set by certain terminal emulators.
      *
      * @readonly
      *
@@ -579,7 +579,7 @@ declare module "storm:env" {
      */
     readonly ConEmuTask?: string;
     /**
-     * Interface property definition for CURSOR_TRACE_ID
+     * The cursor trace ID. This variable is set by certain terminal emulators.
      *
      * @readonly
      *
@@ -587,7 +587,7 @@ declare module "storm:env" {
      */
     readonly CURSOR_TRACE_ID?: string;
     /**
-     * Interface property definition for DRONE
+     * The drone build ID. This value is set by certain CI/CD systems.
      *
      * @readonly
      *
@@ -595,7 +595,7 @@ declare module "storm:env" {
      */
     readonly DRONE?: string;
     /**
-     * Interface property definition for DSARI
+     * The dsari build ID. This value is set by certain CI/CD systems.
      *
      * @readonly
      *
@@ -603,7 +603,7 @@ declare module "storm:env" {
      */
     readonly DSARI?: string;
     /**
-     * Interface property definition for EARTHLY_CI
+     * The earthly build ID. This value is set by certain CI/CD systems.
      *
      * @readonly
      *
@@ -611,7 +611,7 @@ declare module "storm:env" {
      */
     readonly EARTHLY_CI?: string;
     /**
-     * Interface property definition for EAS_BUILD
+     * The eas build ID. This value is set by certain CI/CD systems.
      *
      * @readonly
      *
@@ -619,7 +619,7 @@ declare module "storm:env" {
      */
     readonly EAS_BUILD?: string;
     /**
-     * Interface property definition for GERRIT_PROJECT
+     * The gerrit project. This value is set by certain CI/CD systems.
      *
      * @readonly
      *
@@ -627,7 +627,7 @@ declare module "storm:env" {
      */
     readonly GERRIT_PROJECT?: string;
     /**
-     * Interface property definition for GITEA_ACTIONS
+     * The gitea actions build ID. This value is set by certain CI/CD systems.
      *
      * @readonly
      *
@@ -635,7 +635,7 @@ declare module "storm:env" {
      */
     readonly GITEA_ACTIONS?: string;
     /**
-     * Interface property definition for GITHUB_ACTIONS
+     * The github actions build ID. This value is set by certain CI/CD systems.
      *
      * @readonly
      *
@@ -643,7 +643,7 @@ declare module "storm:env" {
      */
     readonly GITHUB_ACTIONS?: string;
     /**
-     * Interface property definition for GITLAB_CI
+     * The gitlab ci build ID. This value is set by certain CI/CD systems.
      *
      * @readonly
      *
@@ -651,7 +651,7 @@ declare module "storm:env" {
      */
     readonly GITLAB_CI?: string;
     /**
-     * Interface property definition for GOCD
+     * The go cd build ID. This value is set by certain CI/CD systems.
      *
      * @readonly
      *
@@ -659,7 +659,7 @@ declare module "storm:env" {
      */
     readonly GOCD?: string;
     /**
-     * Interface property definition for HARNESS_BUILD_ID
+     * The harness build ID. This value is set by certain CI/CD systems.
      *
      * @readonly
      *
@@ -667,7 +667,7 @@ declare module "storm:env" {
      */
     readonly HARNESS_BUILD_ID?: string;
     /**
-     * Interface property definition for HUDSON
+     * The hudson build ID. This value is set by certain CI/CD systems.
      *
      * @readonly
      *
@@ -675,7 +675,7 @@ declare module "storm:env" {
      */
     readonly HUDSON?: string;
     /**
-     * Interface property definition for JENKINS_URL
+     * The jenkins url. This value is set by certain CI/CD systems.
      *
      * @readonly
      *
@@ -683,7 +683,7 @@ declare module "storm:env" {
      */
     readonly JENKINS_URL?: string;
     /**
-     * Interface property definition for LAYERCI
+     * The layerci build ID. This value is set by certain CI/CD systems.
      *
      * @readonly
      *
@@ -691,7 +691,7 @@ declare module "storm:env" {
      */
     readonly LAYERCI?: string;
     /**
-     * Interface property definition for LOCALAPPDATA
+     * A variable that specifies the current user's local application data directory on Windows.
      *
      * @readonly
      *
@@ -699,7 +699,7 @@ declare module "storm:env" {
      */
     readonly LOCALAPPDATA?: string;
     /**
-     * Interface property definition for MAGNUM
+     * The magnum build ID. This value is set by certain CI/CD systems.
      *
      * @readonly
      *
@@ -707,7 +707,7 @@ declare module "storm:env" {
      */
     readonly MAGNUM?: string;
     /**
-     * Interface property definition for NETLIFY
+     * The netlify build ID. This value is set by certain CI/CD systems.
      *
      * @readonly
      *
@@ -715,7 +715,7 @@ declare module "storm:env" {
      */
     readonly NETLIFY?: string;
     /**
-     * Interface property definition for NEVERCODE
+     * The nevercode build ID. This value is set by certain CI/CD systems.
      *
      * @readonly
      *
@@ -723,7 +723,7 @@ declare module "storm:env" {
      */
     readonly NEVERCODE?: string;
     /**
-     * Interface property definition for NOW_BUILDER
+     * The now builder build ID. This value is set by certain CI/CD systems.
      *
      * @readonly
      *
@@ -731,7 +731,7 @@ declare module "storm:env" {
      */
     readonly NOW_BUILDER?: string;
     /**
-     * Interface property definition for PROW_JOB_ID
+     * The prow job ID. This value is set by certain CI/CD systems.
      *
      * @readonly
      *
@@ -739,7 +739,7 @@ declare module "storm:env" {
      */
     readonly PROW_JOB_ID?: string;
     /**
-     * Interface property definition for RELEASE_BUILD_ID
+     * The release build ID. This value is set by certain CI/CD systems.
      *
      * @readonly
      *
@@ -747,7 +747,7 @@ declare module "storm:env" {
      */
     readonly RELEASE_BUILD_ID?: string;
     /**
-     * Interface property definition for RELEASE_ID
+     * The unique identifier for the release.
      *
      * @readonly
      *
@@ -755,7 +755,7 @@ declare module "storm:env" {
      */
     readonly RELEASE_ID: string;
     /**
-     * Interface property definition for RELEASE_TAG
+     * The tag for the release. This is generally in the format of "\<APP_NAME\>\@\<APP_VERSION\>".
      *
      * @readonly
      *
@@ -763,7 +763,7 @@ declare module "storm:env" {
      */
     readonly RELEASE_TAG: string;
     /**
-     * Interface property definition for RENDER
+     * The render build ID. This value is set by certain CI/CD systems.
      *
      * @readonly
      *
@@ -771,7 +771,7 @@ declare module "storm:env" {
      */
     readonly RENDER?: string;
     /**
-     * Interface property definition for RUN_ID
+     * The unique identifier for the current run. This value is set by certain CI/CD systems.
      *
      * @readonly
      *
@@ -779,7 +779,7 @@ declare module "storm:env" {
      */
     readonly RUN_ID?: string;
     /**
-     * Interface property definition for SAILCI
+     * The sailci build ID. This value is set by certain CI/CD systems.
      *
      * @readonly
      *
@@ -787,7 +787,7 @@ declare module "storm:env" {
      */
     readonly SAILCI?: string;
     /**
-     * Interface property definition for SCREWDRIVER
+     * The screwdriver build ID. This value is set by certain CI/CD systems.
      *
      * @readonly
      *
@@ -795,7 +795,7 @@ declare module "storm:env" {
      */
     readonly SCREWDRIVER?: string;
     /**
-     * Interface property definition for SEMAPHORE
+     * The semaphore build ID. This value is set by certain CI/CD systems.
      *
      * @readonly
      *
@@ -803,7 +803,7 @@ declare module "storm:env" {
      */
     readonly SEMAPHORE?: string;
     /**
-     * Interface property definition for SOURCEHUT
+     * The sourcehut build ID. This value is set by certain CI/CD systems.
      *
      * @readonly
      *
@@ -811,7 +811,7 @@ declare module "storm:env" {
      */
     readonly SOURCEHUT?: string;
     /**
-     * Interface property definition for SPACESHIP_CI
+     * The spaceship build ID. This value is set by certain CI/CD systems.
      *
      * @readonly
      *
@@ -819,7 +819,7 @@ declare module "storm:env" {
      */
     readonly SPACESHIP_CI?: string;
     /**
-     * Interface property definition for STORM_STACK_LOCAL
+     * An indicator that specifies the application is running in the local Storm Stack development environment.
      *
      * @readonly
      *
@@ -827,7 +827,7 @@ declare module "storm:env" {
      */
     readonly STORM_STACK_LOCAL: boolean;
     /**
-     * Interface property definition for STORM_STACK_SKIP_VERSION_CHECK
+     * An indicator used to skip version checks for installed packages.
      *
      * @readonly
      *
@@ -835,7 +835,7 @@ declare module "storm:env" {
      */
     readonly STORM_STACK_SKIP_VERSION_CHECK?: boolean;
     /**
-     * Interface property definition for STRIDER
+     * The strider build ID. This value is set by certain CI/CD systems.
      *
      * @readonly
      *
@@ -843,7 +843,7 @@ declare module "storm:env" {
      */
     readonly STRIDER?: string;
     /**
-     * Interface property definition for TASK_ID
+     * The task ID. This value is set by certain CI/CD systems.
      *
      * @readonly
      *
@@ -851,7 +851,7 @@ declare module "storm:env" {
      */
     readonly TASK_ID?: string;
     /**
-     * Interface property definition for TEAMCITY_VERSION
+     * The teamcity version. This value is set by certain CI/CD systems.
      *
      * @readonly
      *
@@ -859,7 +859,7 @@ declare module "storm:env" {
      */
     readonly TEAMCITY_VERSION?: string;
     /**
-     * Interface property definition for TERM
+     * The terminal type. This variable is set by certain CI/CD systems.
      *
      * @readonly
      *
@@ -867,7 +867,7 @@ declare module "storm:env" {
      */
     readonly TERM?: string;
     /**
-     * Interface property definition for TERM_PROGRAM
+     * The terminal program name. This variable is set by certain terminal emulators.
      *
      * @readonly
      *
@@ -875,7 +875,7 @@ declare module "storm:env" {
      */
     readonly TERM_PROGRAM?: string;
     /**
-     * Interface property definition for TERM_PROGRAM_VERSION
+     * The terminal program version. This variable is set by certain terminal emulators.
      *
      * @readonly
      *
@@ -883,7 +883,7 @@ declare module "storm:env" {
      */
     readonly TERM_PROGRAM_VERSION?: string;
     /**
-     * Interface property definition for TERMINAL_EMULATOR
+     * The terminal emulator name. This variable is set by certain terminal emulators.
      *
      * @readonly
      *
@@ -891,7 +891,7 @@ declare module "storm:env" {
      */
     readonly TERMINAL_EMULATOR?: string;
     /**
-     * Interface property definition for TERMINUS_SUBLIME
+     * An indicator that specifies the current terminal is running Terminus Sublime. This variable is set by certain terminal emulators.
      *
      * @readonly
      *
@@ -899,7 +899,7 @@ declare module "storm:env" {
      */
     readonly TERMINUS_SUBLIME?: boolean;
     /**
-     * Interface property definition for TF_BUILD
+     * The task force build ID. This value is set by certain CI/CD systems.
      *
      * @readonly
      *
@@ -907,7 +907,7 @@ declare module "storm:env" {
      */
     readonly TF_BUILD?: string;
     /**
-     * Interface property definition for TRAVIS
+     * The travis build ID. This value is set by certain CI/CD systems.
      *
      * @readonly
      *
@@ -915,7 +915,7 @@ declare module "storm:env" {
      */
     readonly TRAVIS?: string;
     /**
-     * Interface property definition for VELA
+     * The vela build ID. This value is set by certain CI/CD systems.
      *
      * @readonly
      *
@@ -923,7 +923,7 @@ declare module "storm:env" {
      */
     readonly VELA?: string;
     /**
-     * Interface property definition for VTE_VERSION
+     * The VTE version. This variable is set by certain terminal emulators.
      *
      * @readonly
      *
@@ -931,7 +931,7 @@ declare module "storm:env" {
      */
     readonly VTE_VERSION?: string;
     /**
-     * Interface property definition for WT_SESSION
+     * The terminal emulator session ID. This variable is set by certain terminal emulators.
      *
      * @readonly
      *
@@ -939,7 +939,7 @@ declare module "storm:env" {
      */
     readonly WT_SESSION?: string;
     /**
-     * Interface property definition for XCS
+     * The xcode server build ID. This value is set by certain CI/CD systems.
      *
      * @readonly
      *
@@ -947,7 +947,7 @@ declare module "storm:env" {
      */
     readonly XCS?: string;
     /**
-     * Interface property definition for XDG_CACHE_HOME
+     * A variable that specifies the cache path in the home directory on Linux systems using the XDG base directory specification.
      *
      * @readonly
      *
@@ -955,7 +955,7 @@ declare module "storm:env" {
      */
     readonly XDG_CACHE_HOME?: string;
     /**
-     * Interface property definition for XDG_CONFIG_HOME
+     * A variable that specifies the configuration path in the home directory on Linux systems using the XDG base directory specification.
      *
      * @readonly
      *
@@ -963,7 +963,7 @@ declare module "storm:env" {
      */
     readonly XDG_CONFIG_HOME?: string;
     /**
-     * Interface property definition for XDG_DATA_HOME
+     * A variable that specifies the data path in the home directory on Linux systems using the XDG base directory specification.
      *
      * @readonly
      *
@@ -971,7 +971,7 @@ declare module "storm:env" {
      */
     readonly XDG_DATA_HOME?: string;
     /**
-     * Interface property definition for XDG_RUNTIME_DIR
+     * A variable that specifies the runtime directory on Linux systems using the XDG base directory specification.
      *
      * @readonly
      *
@@ -979,7 +979,7 @@ declare module "storm:env" {
      */
     readonly XDG_RUNTIME_DIR?: string;
     /**
-     * Interface property definition for XDG_STATE_HOME
+     * A variable that specifies the state directory on Linux systems using the XDG base directory specification.
      *
      * @readonly
      *
@@ -1000,11 +1000,11 @@ declare module "storm:env" {
   /**
    * The initial environment configuration state for the Storm Stack project.
    *
-   * @title Initial Env
+   * @title Object
    *
    *
    */
-  export const initialEnv: Partial<StormEnvInterface>;
+  export const initialEnv: Partial<StormEnvBase>;
   /**
    * The environment configuration serializer for the Storm Stack application.
    *

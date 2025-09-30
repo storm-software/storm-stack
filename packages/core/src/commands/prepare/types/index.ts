@@ -85,31 +85,6 @@ export async function prepareTypes(context: Context, hooks: EngineHooks) {
       })
   );
 
-  // const builtinFiles = [];
-  // for (const file of (await context.vfs.listBuiltinFiles()).filter(
-  //   file => !context.vfs.isMatchingBuiltinId("index", file.id)
-  // )) {
-  //   file.contents = await context.compiler.transform(
-  //     context,
-  //     file.path,
-  //     file.contents,
-  //     {
-  //       skipTransformUnimport: true,
-  //       babel: {
-  //         plugins: [ModuleResolverPlugin, ...context.options.babel.plugins]
-  //       }
-  //     }
-  //   );
-
-  //   context.log(
-  //     LogLevelLabel.TRACE,
-  //     `Writing transformed built-in runtime file ${file.id}.`
-  //   );
-
-  //   await context.vfs.writeBuiltinFile(file.id, file.path, file.contents);
-  //   builtinFiles.push(file.path);
-  // }
-
   const typescriptPath = await resolvePackage("typescript");
   if (!typescriptPath) {
     throw new Error(
@@ -133,40 +108,6 @@ export async function prepareTypes(context: Context, hooks: EngineHooks) {
     LogLevelLabel.TRACE,
     "Parsing TypeScript configuration for the Storm Stack project."
   );
-
-  //   const sourceFileDts = getSourceFile(
-  //     context.runtimeDtsFilePath,
-  //     `/// <reference types="@storm-stack/core/${
-  //       context.options.platform === "browser"
-  //         ? "browser"
-  //         : context.options.platform === "node"
-  //           ? "node"
-  //           : "shared"
-  //     }" />
-
-  // ${getFileHeader(null, false)}
-
-  // `
-  //   );
-
-  //   await hooks
-  //     .callHook("prepare:types", context, sourceFileDts)
-  //     .catch((error: Error) => {
-  //       context.log(
-  //         LogLevelLabel.ERROR,
-  //         `An error occurred while preparing the TypeScript definitions for the Storm Stack project: ${error.message} \n${error.stack ?? ""}`
-  //       );
-
-  //       throw new Error(
-  //         "An error occurred while preparing the TypeScript definitions for the Storm Stack project",
-  //         { cause: error }
-  //       );
-  //     });
-
-  //   await context.vfs.writeFileToDisk(
-  //     sourceFileDts.id,
-  //     getString(sourceFileDts.code)
-  //   );
 
   const resolvedTsconfig = getParsedTypeScriptConfig(
     context.options.workspaceRoot,
@@ -269,90 +210,6 @@ declare module "${context.vfs.resolveId(sourceFile.fileName)}" {
       }`
     );
   }
-
-  // const corePackagePath = await resolvePackage("@storm-stack/core");
-  // if (!corePackagePath || !existsSync(corePackagePath)) {
-  //   throw new Error(
-  //     `Could not resolve @storm-stack/core package location: ${corePackagePath} does not exist.`
-  //   );
-  // }
-
-  // const mainEntryPointFilePath = joinPaths(
-  //   corePackagePath,
-  //   "dist",
-  //   "runtime-types",
-  //   "esm",
-  //   "index.d.ts"
-  // );
-  // if (!existsSync(mainEntryPointFilePath)) {
-  //   throw new Error(
-  //     `Could not resolve @storm-stack/core/runtime-types package location: ${mainEntryPointFilePath} does not exist.`
-  //   );
-  // }
-
-  // context.log(
-  //   LogLevelLabel.TRACE,
-  //   `Running API Extractor on @storm-stack/core/runtime-types package at ${mainEntryPointFilePath}.`
-  // );
-
-  // const untrimmedFilePath = joinPaths(
-  //   context.dtsPath,
-  //   `${context.meta.projectRootHash}.d.ts`
-  // );
-
-  // const extractorResult: ExtractorResult = Extractor.invoke(
-  //   ExtractorConfig.prepare({
-  //     configObject: {
-  //       mainEntryPointFilePath,
-  //       apiReport: {
-  //         enabled: false,
-
-  //         // `reportFileName` is not been used. It's just to fit the requirement of API Extractor.
-  //         reportFileName: "report.api.md"
-  //       },
-  //       docModel: { enabled: false },
-  //       dtsRollup: {
-  //         enabled: true,
-  //         untrimmedFilePath
-  //       },
-  //       tsdocMetadata: { enabled: false },
-  //       compiler: {
-  //         tsconfigFilePath: relativePath(
-  //           joinPaths(
-  //             context.options.workspaceRoot,
-  //             context.options.projectRoot
-  //           ),
-  //           joinPaths(
-  //             context.options.workspaceRoot,
-  //             context.tsconfig.tsconfigFilePath
-  //           )
-  //         )
-  //       },
-  //       projectFolder: joinPaths(
-  //         context.options.workspaceRoot,
-  //         context.options.projectRoot
-  //       ),
-  //       newlineKind: "lf"
-  //     },
-  //     configObjectFullPath: undefined,
-  //     packageJsonFullPath: joinPaths(
-  //       context.options.workspaceRoot,
-  //       context.options.projectRoot,
-  //       "package.json"
-  //     )
-  //   }),
-  //   {
-  //     localBuild: true,
-  //     showVerboseMessages: true
-  //   }
-  // );
-  // if (!extractorResult.succeeded) {
-  //   throw new Error(
-  //     `API Extractor completed with ${extractorResult.errorCount} errors and ${
-  //       extractorResult.warningCount
-  //     } warnings when processing @storm-stack/core/runtime-types package.`
-  //   );
-  // }
 
   context.log(
     LogLevelLabel.TRACE,

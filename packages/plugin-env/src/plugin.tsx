@@ -90,6 +90,7 @@ export default class EnvPlugin<
     hooks.addHooks({
       "init:options": this.initOptions.bind(this),
       "init:reflections": this.initReflections.bind(this),
+      "build:complete": this.buildComplete.bind(this),
       "docs:api-reference": this.docsApiReference.bind(this),
       "vite:config": this.viteConfig.bind(this)
     });
@@ -449,6 +450,16 @@ ${reflection
   .join("\n")}
 `
     );
+  }
+
+  protected async buildComplete(context: TContext) {
+    const reflectionPath = getEnvReflectionsPath(context, "env");
+    this.log(
+      LogLevelLabel.TRACE,
+      `Writing env reflection types to ${reflectionPath}.`
+    );
+
+    await writeEnvReflection(context, context.reflections.env.env, "env");
   }
 
   protected viteConfig(context: TContext, params: ViteConfigHookParams) {

@@ -16,20 +16,33 @@
 
  ------------------------------------------------------------------- */
 
-import { code, computed, For, splitProps } from "@alloy-js/core";
 import {
+  computed,
+  Declaration as CoreDeclaration,
+  createSymbolSlot,
+  For,
+  Name,
+  Show,
+  splitProps
+} from "@alloy-js/core";
+import {
+  createValueSymbol,
   ObjectExpression,
   ObjectProperty,
-  VarDeclaration,
+  TSSymbolFlags,
+  TypeRefContext,
+  useTSNamePolicy,
   VarDeclarationProps
 } from "@alloy-js/typescript";
 import {
   ReflectionClass,
   ReflectionProperty
 } from "@storm-stack/core/deepkit/type";
+import { stringifyDefaultValue } from "@storm-stack/core/lib/deepkit/utilities";
 import { camelCase } from "@stryke/string-format/camel-case";
 import { pascalCase } from "@stryke/string-format/pascal-case";
 import { isUndefined } from "@stryke/type-checks/is-undefined";
+import { ComputedRef } from "@vue/reactivity";
 import { ComponentProps } from "../../types/templates";
 import {
   ReflectionClassContext,
@@ -43,8 +56,8 @@ import {
 export interface TypescriptObjectProps<
   T extends Record<string, any> = Record<string, any>
 > extends VarDeclarationProps {
-  reflection: ReflectionClass<T>;
-  defaultValue?: Partial<T>;
+  reflection?: ComputedRef<ReflectionClass<T>>;
+  defaultValue?: ComputedRef<Partial<T> | undefined>;
 }
 
 export interface TypescriptObjectPropertyProps extends ComponentProps {
@@ -57,29 +70,34 @@ export interface TypescriptObjectPropertyProps extends ComponentProps {
 export function TypescriptObject<
   T extends Record<string, any> = Record<string, any>
 >(props: TypescriptObjectProps<T>) {
-  const [{ name, type, reflection, defaultValue }, rest] = splitProps(props, [
-    "name",
-    "type",
-    "reflection",
-    "defaultValue"
-  ]);
+  if (!props.reflection?.value) {
+    return null;
+  }
 
-  const objectName = computed(() => camelCase(name || reflection.getName()));
-  const objectType = computed(() => type || pascalCase(reflection.getName()));
+  const objectName = computed(() =>
+    camelCase(props.name || props.reflection!.value.getName())
+  );
+  const objectType = computed(
+    () => props.type || pascalCase(props.reflection!.value.getName())
+  );
   const properties = computed(() =>
-    reflection
-      .getProperties()
+    props
+      .reflection!.value.getProperties()
       .filter(
         item =>
           !item.isIgnored() &&
           !isUndefined(
-            defaultValue?.[item.getNameAsString()] ??
+            props.defaultValue?.value?.[item.getNameAsString()] ??
               item.getAlias().reduce((ret, alias) => {
                 if (
                   isUndefined(ret) &&
-                  !isUndefined((defaultValue as Record<string, any>)?.[alias])
+                  !isUndefined(
+                    (props.defaultValue as Record<string, any>)?.value?.[alias]
+                  )
                 ) {
-                  return (defaultValue as Record<string, any>)?.[alias];
+                  return (props.defaultValue as Record<string, any>)?.value?.[
+                    alias
+                  ];
                 }
 
                 return ret;
@@ -97,32 +115,64 @@ export function TypescriptObject<
       )
   );
 
+  const TypeSymbolSlot = createSymbolSlot();
+  const ValueTypeSymbolSlot = createSymbolSlot();
+  const sym = createValueSymbol(props.name, {
+    refkeys: props.refkey,
+    default: props.default,
+    export: props.export,
+    metadata: props.metadata,
+    tsFlags: props.nullish ? TSSymbolFlags.Nullish : TSSymbolFlags.None,
+    type: props.type ? TypeSymbolSlot.firstSymbol : undefined,
+    namePolicy: useTSNamePolicy().for("variable")
+  });
+
+  if (!props.type) {
+    ValueTypeSymbolSlot.moveMembersTo(sym);
+  }
+
+  const keyword = props.var ? "var" : props.let ? "let" : "const";
+  const type = props.type ? (
+    <TypeRefContext>
+      : <TypeSymbolSlot>{props.type}</TypeSymbolSlot>
+    </TypeRefContext>
+  ) : undefined;
+
   return (
-    <ReflectionClassContext.Provider
-      value={{
-        reflection,
-        override: {
-          name: objectName.value,
-          type: objectType.value,
-          defaultValue
-        }
-      }}>
-      <TSDocReflectionClass
-        heading={code`${objectName.value} object instance`}
-      />
-      <VarDeclaration
-        name={objectName.value}
-        type={objectType.value}
-        const={true}
-        {...rest}>
-        <ObjectExpression>
-          <For each={properties.value} comma={true} doubleHardline={true}>
-            {prop => <TypescriptObjectProperty property={prop} />}
-          </For>
-        </ObjectExpression>
-      </VarDeclaration>
-      <hbr />
-    </ReflectionClassContext.Provider>
+    <Show when={!!props.reflection.value}>
+      <ReflectionClassContext.Provider
+        value={{
+          reflection: props.reflection.value as ReflectionClass<any>,
+          override: {
+            name: objectName.value,
+            type: objectType.value,
+            defaultValue: props.defaultValue?.value
+          }
+        }}>
+        <Show when={!!objectName.value && !!objectType.value}>
+          <TSDocReflectionClass />
+          <CoreDeclaration symbol={sym}>
+            {props.export ? "export " : ""}
+            {props.default ? "default " : ""}
+            {keyword} <Name />
+            {type} ={" "}
+            <ValueTypeSymbolSlot>
+              {props.initializer ?? props.children ?? (
+                <ObjectExpression>
+                  <For
+                    each={properties.value ?? []}
+                    comma={true}
+                    doubleHardline={true}>
+                    {prop => <TypescriptObjectProperty property={prop} />}
+                  </For>
+                </ObjectExpression>
+              )}
+            </ValueTypeSymbolSlot>
+          </CoreDeclaration>
+        </Show>
+        <hbr />
+      </ReflectionClassContext.Provider>
+    </Show>
   );
 }
 
@@ -134,10 +184,11 @@ export function TypescriptObjectProperty(props: TypescriptObjectPropertyProps) {
 
   return (
     <ReflectionPropertyContext.Provider value={property}>
-      <TSDocReflectionProperty
-        heading={`${property.getNameAsString()} object property`}
+      <TSDocReflectionProperty />
+      <ObjectProperty
+        name={property.getNameAsString()}
+        value={stringifyDefaultValue(property)}
       />
-      <ObjectProperty name={property.getNameAsString()} />
       <hbr />
     </ReflectionPropertyContext.Provider>
   );

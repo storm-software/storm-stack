@@ -38,7 +38,7 @@ import type {
   PluginOptions,
   PluginPackageDependencies
 } from "../types/plugin";
-import { __STORM_STACK_IS_PLUGIN__ } from "../types/plugin";
+import { __STORM_STACK_PLUGIN_BRAND__ } from "../types/plugin";
 
 /**
  * The base class for all plugins
@@ -71,7 +71,7 @@ export abstract class Plugin<
   /**
    * A property to identify the object as a Storm Stack Plugin.
    */
-  public get [__STORM_STACK_IS_PLUGIN__](): true {
+  public get [__STORM_STACK_PLUGIN_BRAND__](): true {
     return true;
   }
 

@@ -78,7 +78,7 @@ export type PluginOptions<
 };
 
 // eslint-disable-next-line ts/naming-convention
-export const __STORM_STACK_IS_PLUGIN__ = "__storm_stack_is_plugin__";
+export const __STORM_STACK_PLUGIN_BRAND__ = "__storm_stack_plugin_brand__";
 
 /**
  * A configuration object used to define a Storm Stack plugin.
@@ -93,7 +93,7 @@ export interface PluginInterface<
   /**
    * A property to identify the object as a Storm Stack Plugin.
    */
-  [__STORM_STACK_IS_PLUGIN__]: true;
+  [__STORM_STACK_PLUGIN_BRAND__]: true;
 
   /**
    * The name of the plugin

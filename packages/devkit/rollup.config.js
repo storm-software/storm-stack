@@ -17,7 +17,6 @@
  ------------------------------------------------------------------- */
 
 import alloyPlugin from "@alloy-js/rollup-plugin";
-// import { getBabelInputPlugin } from "@rollup/plugin-babel";
 import commonjs from "@rollup/plugin-commonjs";
 import resolve from "@rollup/plugin-node-resolve";
 import { globSync } from "glob";
@@ -69,19 +68,6 @@ export default [
         tsconfig: "./tsconfig.json"
       }),
       alloyPlugin(),
-      // getBabelInputPlugin({
-      //   caller: {
-      //     supportsStaticESM: true,
-      //     isModern: true
-      //   },
-      //   cwd: fileURLToPath(new URL("/", import.meta.url)),
-      //   babelrc: false,
-      //   extensions: [".js", ".jsx", ".ts", ".tsx"],
-      //   babelHelpers: "bundled",
-      //   skipPreflightCheck: true,
-      //   exclude: /node_modules/,
-      //   presets: [alloyPreset]
-      // }),
       resolve({
         moduleDirectories: ["node_modules"],
         preferBuiltins: true
@@ -110,19 +96,6 @@ export default [
         tsconfig: "./tsconfig.json"
       }),
       alloyPlugin(),
-      // getBabelInputPlugin({
-      //   caller: {
-      //     supportsStaticESM: true,
-      //     isModern: true
-      //   },
-      //   cwd: fileURLToPath(new URL("/", import.meta.url)),
-      //   babelrc: false,
-      //   extensions: [".js", ".jsx", ".ts", ".tsx"],
-      //   babelHelpers: "bundled",
-      //   skipPreflightCheck: true,
-      //   exclude: /node_modules/,
-      //   presets: [alloyPreset]
-      // }),
       resolve({
         moduleDirectories: ["node_modules"],
         preferBuiltins: true

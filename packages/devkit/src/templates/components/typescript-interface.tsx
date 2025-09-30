@@ -84,9 +84,7 @@ export function TypeScriptInterface<
       value={{
         reflection
       }}>
-      <TSDocReflectionClass
-        heading={`Interface definition for ${interfaceName.value}`}
-      />
+      <TSDocReflectionClass />
       <InterfaceDeclaration export={true} name={interfaceName.value} {...rest}>
         <For each={properties} doubleHardline={true} semicolon={true}>
           {prop => <TypescriptInterfaceProperty property={prop} />}
@@ -106,9 +104,7 @@ export function TypescriptInterfaceProperty(
 
   return (
     <ReflectionPropertyContext.Provider value={property}>
-      <TSDocReflectionProperty
-        heading={`Interface property definition for ${property.getNameAsString()}`}
-      />
+      <TSDocReflectionProperty />
       <InterfaceMember
         name={property.getNameAsString()}
         readonly={property.isReadonly()}

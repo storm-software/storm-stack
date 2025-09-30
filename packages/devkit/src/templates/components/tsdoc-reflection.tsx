@@ -25,7 +25,9 @@ import {
   splitProps
 } from "@alloy-js/core";
 import { titleCase } from "@stryke/string-format/title-case";
+import { isSetString } from "@stryke/type-checks/is-set-string";
 import { isString } from "@stryke/type-checks/is-string";
+import { isUndefined } from "@stryke/type-checks/is-undefined";
 import {
   useReflectionClass,
   useReflectionMethod,
@@ -43,9 +45,6 @@ export function TSDocReflectionClass<
 
   const reflectionClass = useReflectionClass<T>();
 
-  const description = computed(() =>
-    reflectionClass.reflection.getDescription()
-  );
   const title = computed(
     () =>
       reflectionClass.reflection.getTitle() ||
@@ -59,18 +58,34 @@ export function TSDocReflectionClass<
   const ignore = computed(() => reflectionClass.reflection.isIgnored());
   const hidden = computed(() => reflectionClass.reflection.isHidden());
 
+  if (!reflectionClass.reflection.getName()) {
+    return null;
+  }
+
   return (
-    <TSDoc {...rest} heading={description.value}>
-      <TSDocAttributesTags
-        title={title.value}
-        alias={alias.value}
-        domain={domain.value}
-        permission={permission.value}
-        readonly={readonly.value}
-        internal={internal.value}
-        ignore={ignore.value}
-        hidden={hidden.value}
-      />
+    <TSDoc {...rest} heading={reflectionClass.reflection.getDescription()}>
+      <Show
+        when={
+          isSetString(title.value) ||
+          (!isUndefined(alias.value) && alias.value.length > 0) ||
+          (!isUndefined(permission.value) && permission.value.length > 0) ||
+          isSetString(domain.value) ||
+          !isUndefined(readonly.value) ||
+          !isUndefined(internal.value) ||
+          !isUndefined(ignore.value) ||
+          !isUndefined(hidden.value)
+        }>
+        <TSDocAttributesTags
+          title={title.value}
+          alias={alias.value}
+          domain={domain.value}
+          permission={permission.value}
+          readonly={readonly.value}
+          internal={internal.value}
+          ignore={ignore.value}
+          hidden={hidden.value}
+        />
+      </Show>
       <Show
         when={Boolean(children) && childrenArray(() => children).length > 0}>
         <List>{childrenArray(() => children)}</List>

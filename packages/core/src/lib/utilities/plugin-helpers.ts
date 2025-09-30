@@ -20,7 +20,7 @@ import { isSetObject } from "@stryke/type-checks/is-set-object";
 import { isSetString } from "@stryke/type-checks/is-set-string";
 import { Plugin } from "../../base/plugin";
 import { PluginConfigObject } from "../../types/config";
-import { __STORM_STACK_IS_PLUGIN__ } from "../../types/plugin";
+import { __STORM_STACK_PLUGIN_BRAND__ } from "../../types/plugin";
 
 /**
  * Type guard to check if an object is a Plugin
@@ -31,8 +31,8 @@ import { __STORM_STACK_IS_PLUGIN__ } from "../../types/plugin";
 export function isPluginInstance(plugin: unknown): plugin is Plugin {
   return (
     isSetObject(plugin) &&
-    __STORM_STACK_IS_PLUGIN__ in plugin &&
-    (plugin as Plugin)[__STORM_STACK_IS_PLUGIN__] === true
+    __STORM_STACK_PLUGIN_BRAND__ in plugin &&
+    (plugin as Plugin)[__STORM_STACK_PLUGIN_BRAND__] === true
   );
 }
 

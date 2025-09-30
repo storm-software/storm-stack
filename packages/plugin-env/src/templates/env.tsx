@@ -275,6 +275,10 @@ export function EnvBuiltin(props: EnvBuiltinProps) {
 
   const context = useStorm<EnvPluginContext>();
 
+  const defaultValue = computed(
+    () => context && loadEnvFromContext(context.value, process.env)
+  );
+
   const reflection = createResource(async () => {
     if (!context?.value) {
       return new ReflectionClass({
@@ -313,6 +317,20 @@ export function EnvBuiltin(props: EnvBuiltinProps) {
       });
     });
 
+    result.getProperties().forEach(prop => {
+      prop.setDefaultValue(
+        (defaultValue.value as Record<string, any>)?.[prop.getNameAsString()] ??
+          prop
+            .getAlias()
+            .reduce(
+              (ret, alias) =>
+                ret ?? (defaultValue.value as Record<string, any>)?.[alias],
+              undefined
+            ) ??
+          prop.getDefaultValue()
+      );
+    });
+
     return result;
   });
 
@@ -327,14 +345,9 @@ export function EnvBuiltin(props: EnvBuiltinProps) {
       },
       reflection.data ?? undefined
     );
-    result.name = "initialEnv";
 
     return result;
   });
-
-  const defaultValue = computed(
-    () => context && loadEnvFromContext(context.value, process.env)
-  );
 
   const reflectionGetProperties = computed(
     () =>
@@ -392,9 +405,9 @@ export function EnvBuiltin(props: EnvBuiltinProps) {
 
       <TypescriptObject
         name="initialEnv"
-        type="Partial<StormEnvInterface>"
-        defaultValue={defaultValue.value}
-        reflection={envInstance.value}
+        type="Partial<StormEnvBase>"
+        defaultValue={defaultValue}
+        reflection={envInstance}
         export={true}
         const={true}
       />

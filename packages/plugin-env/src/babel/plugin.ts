@@ -34,10 +34,7 @@ import { addImport } from "@storm-stack/devkit/babel/helpers/module-helpers";
 import * as capnp from "@stryke/capnp";
 import { readFileBufferSync } from "@stryke/fs/buffer";
 import { existsSync } from "node:fs";
-import {
-  getEnvReflectionsPath,
-  writeEnvReflectionSync
-} from "../helpers/persistence";
+import { getEnvReflectionsPath } from "../helpers/persistence";
 import { EnvBabelPluginPass } from "../types/babel";
 import { EnvPluginContext } from "../types/plugin";
 
@@ -337,20 +334,6 @@ export default declareBabel<BabelPluginOptions, EnvPluginContext>(
               tags: property.getTags()
             } as Parameters<typeof persistedEnv.addProperty>[0]);
           });
-
-        if (
-          context.reflections.env.env.getProperties().length > 0 &&
-          context.reflections.env.env.getProperties().length !==
-            persistedEnv.getProperties().length &&
-          context.reflections.env.env
-        ) {
-          log(
-            LogLevelLabel.TRACE,
-            `Writing env reflection types to ${reflectionPath}.`
-          );
-
-          writeEnvReflectionSync(context, context.reflections.env.env, "env");
-        }
       }
     };
   }
