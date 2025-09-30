@@ -16,19 +16,20 @@
 
  ------------------------------------------------------------------- */
 
-export * from "./babel";
-export * from "./capnp";
-export * from "./deepkit";
-export * from "./entry";
-export * from "./esbuild";
-export * from "./logger";
-export * from "./rolldown";
-export * from "./rollup";
-export * from "./tsup";
-export * from "./typedoc";
-export * from "./typescript";
-export * from "./unbuild";
-export * from "./unimport";
-export * from "./unplugin";
-export * from "./utilities";
-export * from "./vite";
+import { build } from "rolldown";
+import { RolldownOptions } from "../../types/config";
+import { Context } from "../../types/context";
+import { resolveRolldownOptions } from "./options";
+
+/**
+ * Build the project using [rolldown](https://rolldown.rs)
+ *
+ * @param context - The context of the build
+ * @param options - The override options for the build
+ */
+export async function rolldown(
+  context: Context,
+  options: Partial<RolldownOptions> = {}
+) {
+  await build(resolveRolldownOptions(context, options));
+}

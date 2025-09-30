@@ -127,7 +127,10 @@ export type RollupConfig = Omit<
 };
 export type RollupOptions = ExternalRollupOptions;
 
-export type RolldownConfig = ExternalRolldownOptions;
+export type RolldownConfig = Omit<
+  ExternalRolldownOptions,
+  "input" | "external" | "tsconfig" | "logLevel"
+>;
 export type RolldownOptions = ExternalRolldownOptions;
 
 export type TsupConfig = Partial<

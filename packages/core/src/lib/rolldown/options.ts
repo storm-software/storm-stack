@@ -16,7 +16,6 @@
 
  ------------------------------------------------------------------- */
 
-import alias from "@rollup/plugin-alias";
 import {
   getBabelInputPlugin,
   RollupBabelInputPluginOptions
@@ -28,104 +27,25 @@ import { isFunction } from "@stryke/type-checks/is-function";
 import { isString } from "@stryke/type-checks/is-string";
 import defu from "defu";
 import { globSync } from "node:fs";
+import { BuildOptions } from "rolldown";
+import { aliasPlugin } from "rolldown/experimental";
 import typescriptPlugin from "rollup-plugin-typescript2";
-import { RollupOptions, ViteOptions } from "../../types/config";
+import { RolldownOptions, ViteOptions } from "../../types/config";
 import { Context } from "../../types/context";
-import { dtsBundlePlugin } from "./dts-bundle-plugin";
+import { dtsBundlePlugin } from "../rollup/dts-bundle-plugin";
 
 /**
- * Resolves the options for [rollup](https://rollupjs.org).
+ * Resolves the options for [rolldown](https://rolldown.rs).
  *
  * @param context - The build context.
  * @param override - The user-defined options.
  * @returns The resolved options.
  */
-export function resolveRollupOptions<TContext extends Context = Context>(
+export function resolveRolldownOptions<TContext extends Context = Context>(
   context: TContext,
-  override: Partial<RollupOptions> = {}
-): RollupOptions {
-  // cache?: boolean | RollupCache | undefined;
-  // context?: string | undefined;
-  // experimentalCacheExpiry?: number | undefined;
-  // experimentalLogSideEffects?: boolean | undefined;
-  // external?: ExternalOption | undefined;
-  // fs?: RollupFsModule | undefined;
-  // input?: InputOption | undefined;
-  // jsx?: false | JsxPreset | JsxOptions | undefined;
-  // logLevel?: LogLevelOption | undefined;
-  // makeAbsoluteExternalsRelative?: boolean | 'ifRelativeSource' | undefined;
-  // maxParallelFileOps?: number | undefined;
-  // moduleContext?: ((id: string) => string | NullValue) | Record<string, string> | undefined;
-  // onLog?: LogHandlerWithDefault | undefined;
-  // onwarn?: WarningHandlerWithDefault | undefined;
-  // perf?: boolean | undefined;
-  // plugins?: InputPluginOption | undefined;
-  // preserveEntrySignatures?: PreserveEntrySignaturesOption | undefined;
-  // preserveSymlinks?: boolean | undefined;
-  // shimMissingExports?: boolean | undefined;
-  // strictDeprecations?: boolean | undefined;
-  // treeshake?: boolean | TreeshakingPreset | TreeshakingOptions | undefined;
-  // watch?: WatcherOptions | false | undefined;
-
-  // Output
-  //  amd?: AmdOptions | undefined;
-  //   assetFileNames?: string | ((chunkInfo: PreRenderedAsset) => string) | undefined;
-  //   banner?: string | AddonFunction | undefined;
-  //   chunkFileNames?: string | ((chunkInfo: PreRenderedChunk) => string) | undefined;
-  //   compact?: boolean | undefined;
-  //   // only required for bundle.write
-  //   dir?: string | undefined;
-  //   dynamicImportInCjs?: boolean | undefined;
-  //   entryFileNames?: string | ((chunkInfo: PreRenderedChunk) => string) | undefined;
-  //   esModule?: boolean | 'if-default-prop' | undefined;
-  //   experimentalMinChunkSize?: number | undefined;
-  //   exports?: 'default' | 'named' | 'none' | 'auto' | undefined;
-  //   extend?: boolean | undefined;
-  //   /** @deprecated Use "externalImportAttributes" instead. */
-  //   externalImportAssertions?: boolean | undefined;
-  //   externalImportAttributes?: boolean | undefined;
-  //   externalLiveBindings?: boolean | undefined;
-  //   // only required for bundle.write
-  //   file?: string | undefined;
-  //   footer?: string | AddonFunction | undefined;
-  //   format?: ModuleFormat | undefined;
-  //   freeze?: boolean | undefined;
-  //   generatedCode?: GeneratedCodePreset | GeneratedCodeOptions | undefined;
-  //   globals?: GlobalsOption | undefined;
-  //   hashCharacters?: HashCharacters | undefined;
-  //   hoistTransitiveImports?: boolean | undefined;
-  //   importAttributesKey?: ImportAttributesKey | undefined;
-  //   indent?: string | boolean | undefined;
-  //   inlineDynamicImports?: boolean | undefined;
-  //   interop?: InteropType | GetInterop | undefined;
-  //   intro?: string | AddonFunction | undefined;
-  //   manualChunks?: ManualChunksOption | undefined;
-  //   minifyInternalExports?: boolean | undefined;
-  //   name?: string | undefined;
-  //   noConflict?: boolean | undefined;
-  //   /** @deprecated This will be the new default in Rollup 5. */
-  //   onlyExplicitManualChunks?: boolean | undefined;
-  //   outro?: string | AddonFunction | undefined;
-  //   paths?: OptionsPaths | undefined;
-  //   plugins?: OutputPluginOption | undefined;
-  //   preserveModules?: boolean | undefined;
-  //   preserveModulesRoot?: string | undefined;
-  //   reexportProtoFromExternal?: boolean | undefined;
-  //   sanitizeFileName?: boolean | ((fileName: string) => string) | undefined;
-  //   sourcemap?: boolean | 'inline' | 'hidden' | undefined;
-  //   sourcemapBaseUrl?: string | undefined;
-  //   sourcemapExcludeSources?: boolean | undefined;
-  //   sourcemapFile?: string | undefined;
-  //   sourcemapFileNames?: string | ((chunkInfo: PreRenderedChunk) => string) | undefined;
-  //   sourcemapIgnoreList?: boolean | SourcemapIgnoreListOption | undefined;
-  //   sourcemapPathTransform?: SourcemapPathTransformOption | undefined;
-  //   sourcemapDebugIds?: boolean | undefined;
-  //   strict?: boolean | undefined;
-  //   systemNullSetters?: boolean | undefined;
-  //   validate?: boolean | undefined;
-  //   virtualDirname?: string | undefined;
-
-  const result = defu(
+  override: Partial<RolldownOptions> = {}
+): BuildOptions {
+  const merged = defu(
     {
       input: globSync(
         toArray(context.options.entry).map(entry =>
@@ -144,7 +64,7 @@ export function resolveRollupOptions<TContext extends Context = Context>(
               ? context.options.override.external
               : id =>
                   toArray(
-                    (context.options.override as Partial<RollupOptions>)
+                    (context.options.override as Partial<RolldownOptions>)
                       .external
                   ).includes(id)
             : context.options.variant === "vite" &&
@@ -163,7 +83,7 @@ export function resolveRollupOptions<TContext extends Context = Context>(
                   ? context.options.external
                   : id =>
                       toArray(
-                        (context.options.build as RollupOptions).external
+                        (context.options.build as RolldownOptions).external
                       ).includes(id)
                 : context.options.variant === "vite" &&
                     context.options.build.build?.rollupOptions?.external
@@ -209,7 +129,7 @@ export function resolveRollupOptions<TContext extends Context = Context>(
           check: false,
           tsconfig: context.tsconfig.tsconfigFilePath
         }),
-        alias({
+        aliasPlugin({
           entries: context.vfs.builtinIdMap.keys().reduce(
             (ret, id) => {
               if (!ret.find(e => e.find === id)) {
@@ -246,40 +166,53 @@ export function resolveRollupOptions<TContext extends Context = Context>(
       ]
     },
     override,
-    context.options.variant === "rollup" ? context.options.override : {},
+    context.options.variant === "rolldown" ||
+      context.options.variant === "rollup"
+      ? context.options.override
+      : {},
     context.options.variant === "vite"
       ? context.options.override.build?.rollupOptions
       : {},
     {
+      resolve: {
+        alias: Object.fromEntries(context.vfs.builtinIdMap.entries())
+      },
+      platform: context.options.platform,
+      tsconfig: context.tsconfig.tsconfigFilePath,
+      minify: context.options.mode === "production",
       cache: !context.options.skipCache
-        ? joinPaths(context.cachePath, "rollup")
+        ? joinPaths(context.cachePath, "rolldown")
         : false,
       output: {
         dir: context.options.output.outputPath,
         sourcemap: context.options.mode === "development"
       },
       logLevel: context.options.logLevel
-    } as RollupOptions,
-    context.options.variant === "rollup" ? context.options.build : {},
+    } as RolldownOptions,
+    context.options.variant === "rolldown" ||
+      context.options.variant === "rollup"
+      ? context.options.build
+      : {},
     context.options.variant === "vite"
       ? context.options.build.build?.rollupOptions
       : {},
     {
+      jsx: "automatic",
       logLevel: "silent",
+      keepNames: true,
+      treeshake: true,
       output: [
         {
           format: "es",
-          entryFileNames: "[name].js",
           preserveModules: true
         },
         {
           format: "cjs",
-          entryFileNames: "[name].cjs",
           preserveModules: true
         }
-      ] as RollupOptions["output"]
+      ]
     }
-  ) as RollupOptions;
+  ) as BuildOptions;
 
-  return result;
+  return merged;
 }

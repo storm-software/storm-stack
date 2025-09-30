@@ -49,6 +49,7 @@ const config = defineTsupConfig([
       "src/lib/deepkit/*.ts",
       "src/lib/esbuild/*.ts",
       "src/lib/rollup/*.ts",
+      "src/lib/rolldown/*.ts",
       "src/lib/tsup/*.ts",
       "src/lib/typedoc/*.ts",
       "src/lib/typedoc/helpers/*.ts",

@@ -52,7 +52,7 @@ export async function prepareTypes(context: Context, hooks: EngineHooks) {
     `Preparing the TypeScript definitions for the Storm Stack project.`
   );
 
-  await context.vfs.rm(context.runtimeDtsFilePath);
+  // await context.vfs.rm(context.runtimeDtsFilePath);
 
   context.log(
     LogLevelLabel.TRACE,
