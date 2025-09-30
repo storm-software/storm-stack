@@ -34,7 +34,7 @@ export function AppModule(context: CLIPluginContext) {
     }
   }
 
-  const title = titleCase(context.options.name);
+  const title = titleCase(context.options.name.replace(/-?cli$/i, ""));
 
   return `${getFileHeader()}
 
@@ -128,7 +128,11 @@ Additional details about this issue can be found in the crash report.\`);
             context.options.name
           )}_\${format(new Date(), "filePathDateTime")}.log\`, \`
 
-${"-".repeat((CRASH_REPORT_DIVIDER_LENGTH - (title.length + 17)) / 2)} ${`${title} - Crash Report`}${"-".repeat((CRASH_REPORT_DIVIDER_LENGTH - (title.length + 17)) / 2)}
+${"-".repeat(
+  Math.max((CRASH_REPORT_DIVIDER_LENGTH - (title.length + 17)) / 2, 3)
+)} ${`${title} - Crash Report`}${"-".repeat(
+    Math.max((CRASH_REPORT_DIVIDER_LENGTH - (title.length + 17)) / 2, 3)
+  )}
 
 Application Name: \${$storm.meta.name}
 Application Version: \${$storm.meta.version}

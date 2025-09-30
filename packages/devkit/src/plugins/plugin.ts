@@ -21,7 +21,6 @@ import * as jsxDomExpressionsPlugin from "@alloy-js/babel-plugin-jsx-dom-express
 import syntaxJSXPlugin from "@babel/plugin-syntax-jsx";
 import typescriptPlugin from "@babel/plugin-transform-typescript";
 import { LogLevelLabel } from "@storm-software/config-tools/types";
-import { discoverTemplates } from "@storm-stack/core/base/context";
 import { Plugin } from "@storm-stack/core/base/plugin";
 import { resolveEntries } from "@storm-stack/core/lib/entry";
 import { tsup } from "@storm-stack/core/lib/tsup/build";
@@ -39,7 +38,6 @@ import { PluginOptions } from "@storm-stack/core/types/plugin";
 import { toArray } from "@stryke/convert/to-array";
 import { readJsonFile } from "@stryke/fs/json";
 import { listFiles } from "@stryke/fs/list-files";
-import { getUnique } from "@stryke/helpers/get-unique";
 import { StormJSON } from "@stryke/json/storm-json";
 import {
   findFileExtension,
@@ -163,7 +161,7 @@ class PluginPlugin<
       `Initializing the Config plugin options for the Storm Stack project.`
     );
 
-    context.options.entry ??= [];
+    context.options.entry ??= ["src/**/*.ts", "src/**/*.tsx"];
     if (!Array.isArray(context.options.entry)) {
       context.options.entry = toArray(context.options.entry);
     }
@@ -253,38 +251,19 @@ class PluginPlugin<
       if (!context.options.external.includes("@alloy-js/typescript")) {
         context.options.external.push("@alloy-js/typescript");
       }
-      if (context.options.plugins.plugin.render.generatesMarkdown) {
-        if (!context.options.external.includes("@alloy-js/markdown")) {
-          context.options.external.push("@alloy-js/markdown");
+
+      if (isSetObject(context.options.plugins.plugin.render)) {
+        if (context.options.plugins.plugin.render.generatesMarkdown) {
+          if (!context.options.external.includes("@alloy-js/markdown")) {
+            context.options.external.push("@alloy-js/markdown");
+          }
+        }
+        if (context.options.plugins.plugin.render.generatesJson) {
+          if (!context.options.external.includes("@alloy-js/json")) {
+            context.options.external.push("@alloy-js/json");
+          }
         }
       }
-      if (context.options.plugins.plugin.render.generatesJson) {
-        if (!context.options.external.includes("@alloy-js/json")) {
-          context.options.external.push("@alloy-js/json");
-        }
-      }
-
-      context.options.plugins.plugin.render = defu(
-        isSetObject(context.options.plugins.plugin.render)
-          ? context.options.plugins.plugin.render
-          : {},
-        {
-          templates: []
-        }
-      );
-
-      context.options.plugins.plugin.render.templates = await discoverTemplates(
-        context,
-        toArray(
-          context.options.plugins.plugin.render?.templates ||
-            joinPaths(context.options.sourceRoot, "templates")
-        )
-      );
-      context.options.entry = getUnique(
-        toArray(context.options.entry ?? []).concat(
-          context.options.plugins.plugin.render.templates
-        )
-      );
 
       context.packageDeps["@babel/preset-typescript"] = {
         type: "devDependency"
@@ -300,17 +279,19 @@ class PluginPlugin<
         version: "^0.20.0"
       };
 
-      if (context.options.plugins.plugin.render.generatesMarkdown) {
-        context.packageDeps["@alloy-js/markdown"] = {
-          type: "dependency",
-          version: "^0.20.0"
-        };
-      }
-      if (context.options.plugins.plugin.render.generatesJson) {
-        context.packageDeps["@alloy-js/json"] = {
-          type: "dependency",
-          version: "^0.20.0"
-        };
+      if (isSetObject(context.options.plugins.plugin.render)) {
+        if (context.options.plugins.plugin.render.generatesMarkdown) {
+          context.packageDeps["@alloy-js/markdown"] = {
+            type: "dependency",
+            version: "^0.20.0"
+          };
+        }
+        if (context.options.plugins.plugin.render.generatesJson) {
+          context.packageDeps["@alloy-js/json"] = {
+            type: "dependency",
+            version: "^0.20.0"
+          };
+        }
       }
 
       context.options.babel = defu(context.options.babel ?? {}, {

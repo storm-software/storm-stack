@@ -90,11 +90,6 @@ export interface PluginPluginOptions extends PluginBaseOptions {
 
 export interface ResolvedPluginRenderOptions {
   /**
-   * The files that contain the plugin's templates for rendering.
-   */
-  templates: string[];
-
-  /**
    * If true, generates Markdown output files.
    *
    * @defaultValue false
@@ -109,7 +104,7 @@ export interface ResolvedPluginRenderOptions {
 }
 
 export interface ResolvedPluginPluginOptions {
-  render?: ResolvedPluginRenderOptions;
+  render?: true | ResolvedPluginRenderOptions;
 }
 
 export type RenderPluginOptions = PluginBaseOptions & Partial<PrintTreeOptions>;

@@ -21,18 +21,10 @@ import PluginPlugin from "@storm-stack/devkit/plugins/plugin";
 
 export default defineConfig({
   skipCache: true,
-  entry: [
-    "src/index.ts",
-    "src/plugin.ts",
-    "src/types/*.ts",
-    "src/helpers/*.ts",
-    "src/babel/*.ts"
-  ],
+  entry: ["src/**/*.ts", "src/**/*.tsx"],
   plugins: [
     new PluginPlugin({
-      render: {
-        templates: "src/templates"
-      }
+      render: true
     })
   ]
 });
