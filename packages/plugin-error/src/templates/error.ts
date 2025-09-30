@@ -207,7 +207,7 @@ export function createStormError(
    *
    * @internal
    */
-  __proto__: Error;
+  __proto__!: Error;
 
   /**
   * The stack trace

@@ -33,7 +33,7 @@ import type {
 } from "@storm-stack/core/types/build";
 import { TsupOptions } from "@storm-stack/core/types/config";
 import type { PluginOptions } from "@storm-stack/core/types/plugin";
-import { RenderPlugin } from "@storm-stack/devkit/plugins/render";
+import RenderPlugin from "@storm-stack/devkit/plugins/render";
 import { TypescriptFile } from "@storm-stack/devkit/templates/components/typescript-file";
 import { TypescriptFileImports } from "@storm-stack/devkit/types/templates";
 import { executePackage } from "@stryke/cli/execute";

@@ -17,7 +17,7 @@
  ------------------------------------------------------------------- */
 
 import { defineConfig } from "@storm-stack/core/define-config";
-import { PluginPlugin } from "@storm-stack/devkit/plugins/plugin";
+import PluginPlugin from "@storm-stack/devkit/plugins/plugin";
 
 export default defineConfig({
   skipCache: true,

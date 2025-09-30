@@ -32,7 +32,7 @@ import { LogPluginContext, LogPluginOptions } from "../types/plugins";
  * @remarks
  * This class provides the foundation for creating logging plugins in Storm Stack. It handles the initialization of the plugin's context and prepares the runtime for logging adapters. Derived classes must implement the `writeAdapter` method to define how the logging adapter should be.
  */
-export abstract class LogPlugin<
+abstract class LogPlugin<
   TContext extends LogPluginContext = LogPluginContext,
   TOptions extends LogPluginOptions = LogPluginOptions
 > extends Plugin<TContext, TOptions> {
@@ -130,3 +130,5 @@ export abstract class LogPlugin<
     }
   }
 }
+
+export default LogPlugin;

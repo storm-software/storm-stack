@@ -21,7 +21,7 @@ import { LogLevelLabel } from "@storm-software/config-tools/types";
 import { getFileHeader } from "@storm-stack/core/lib/utilities/file-header";
 import type { EngineHooks } from "@storm-stack/core/types";
 import type { PluginOptions } from "@storm-stack/core/types/plugin";
-import { StoragePlugin } from "@storm-stack/devkit/plugins/storage";
+import StoragePlugin from "@storm-stack/devkit/plugins/storage";
 import { existsSync } from "@stryke/fs/exists";
 import { readFile } from "@stryke/fs/read-file";
 import { joinPaths } from "@stryke/path/join-paths";

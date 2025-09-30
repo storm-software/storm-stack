@@ -57,7 +57,7 @@ import { PluginPluginContext, PluginPluginOptions } from "../types/plugins";
 /**
  * Plugin for building Storm Stack plugin packages.
  */
-export class PluginPlugin<
+class PluginPlugin<
   TContext extends PluginPluginContext = PluginPluginContext,
   TOptions extends PluginPluginOptions = PluginPluginOptions
 > extends Plugin<TContext, TOptions> {
@@ -412,3 +412,5 @@ export class PluginPlugin<
     );
   }
 }
+
+export default PluginPlugin;

@@ -32,7 +32,7 @@ import { StoragePluginContext, StoragePluginOptions } from "../types/plugins";
  * @remarks
  * This class provides the foundation for creating storage plugins in Storm Stack. It handles the initialization of the plugin's context and prepares the runtime for storage artifacts. Derived classes must implement the `writeStorage` method to define how the storage should be written.
  */
-export abstract class StoragePlugin<
+abstract class StoragePlugin<
   TContext extends StoragePluginContext = StoragePluginContext,
   TOptions extends StoragePluginOptions = StoragePluginOptions
 > extends Plugin<TContext, TOptions> {
@@ -124,3 +124,5 @@ export abstract class StoragePlugin<
     }
   }
 }
+
+export default StoragePlugin;

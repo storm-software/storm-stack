@@ -16,8 +16,8 @@
 
  ------------------------------------------------------------------- */
 
-export * from "./library";
-export * from "./log";
-export * from "./plugin";
-export * from "./render";
-export * from "./storage";
+export { default as LibraryPlugin } from "./library";
+export { default as LogPlugin } from "./log";
+export { default as PluginPlugin } from "./plugin";
+export { default as RenderPlugin } from "./render";
+export { default as StoragePlugin } from "./storage";

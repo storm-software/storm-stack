@@ -28,7 +28,7 @@ import type {
   ViteConfigHookParams
 } from "@storm-stack/core/types/build";
 import { PluginOptions } from "@storm-stack/core/types/plugin";
-import { RenderPlugin } from "@storm-stack/devkit/plugins/render";
+import RenderPlugin from "@storm-stack/devkit/plugins/render";
 import { parseTypeDefinition } from "@stryke/convert/parse-type-definition";
 import { toArray } from "@stryke/convert/to-array";
 import { ENV_PREFIXES } from "@stryke/env/types";
