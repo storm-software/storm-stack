@@ -60,7 +60,7 @@
     "tsconfig"
   ],
   "peerDependencies": {
-    "@storm-software/tsconfig": ">=0.43.15"
+    "@storm-software/tsconfig": ">=0.47.38"
   },
   "peerDependenciesMeta": {
     "@storm-software/tsconfig": {
