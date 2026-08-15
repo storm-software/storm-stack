@@ -70,7 +70,7 @@ catalog:
   rollup-plugin-ts-paths: ^1.0.5
   rollup-plugin-typescript2: ^0.36.0
   vite: ^7.1.5
-  webpack: ^5.101.3
+  webpack: ^5.104.1
   "@nuxt/kit": ^4.1.1
   "@nuxt/schema": ^4.1.1
   "@opentelemetry/api-logs": ^0.200.0
@@ -276,3 +276,5 @@ minimumReleaseAgeExclude:
   - "@storm-software/*"
   - "@stryke/*"
   - "@storm-stack/*"
+  # Renovate security update: webpack@5.104.1
+  - webpack@5.104.1
