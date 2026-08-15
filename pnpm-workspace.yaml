@@ -255,7 +255,7 @@ overrides:
   got: ">=14.4.2"
   ip: ">=2.0.1"
   loader-utils: ">=3.3.1"
-  markdown-it: ">=14.1.0"
+  markdown-it: ">=14.1.1"
   node-fetch: ">=3.3.2"
   nth-check: ">=2.1.1"
   parse-path: ">=7.0.0"
@@ -276,3 +276,5 @@ minimumReleaseAgeExclude:
   - "@storm-software/*"
   - "@stryke/*"
   - "@storm-stack/*"
+  # Renovate security update: markdown-it@14.1.1
+  - markdown-it@14.1.1
