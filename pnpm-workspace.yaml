@@ -276,3 +276,5 @@ minimumReleaseAgeExclude:
   - "@storm-software/*"
   - "@stryke/*"
   - "@storm-stack/*"
+  # Renovate security update: vite@7.1.11
+  - vite@7.1.11
