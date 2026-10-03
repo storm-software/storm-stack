@@ -149,7 +149,7 @@
     "storm-stack-plugin"
   ],
   "peerDependencies": {
-    "@babel/plugin-syntax-jsx": "^7.27.1",
+    "@babel/plugin-syntax-jsx": "^7.29.7",
     "@storm-stack/plugin-env": "*",
     "@storm-stack/plugin-error": "*",
     "@storm-stack/plugin-log-console": "*",
