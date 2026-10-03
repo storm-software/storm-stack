@@ -276,3 +276,5 @@ minimumReleaseAgeExclude:
   - "@storm-software/*"
   - "@stryke/*"
   - "@storm-stack/*"
+  # Renovate security update: @babel/core@7.29.6
+  - "@babel/core@7.29.6"
