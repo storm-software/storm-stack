@@ -260,7 +260,7 @@ overrides:
   nth-check: ">=2.1.1"
   parse-path: ">=7.0.0"
   parse-url: ">=9.2.0"
-  postcss: ">=8.4.47"
+  postcss: ">=8.5.28"
   shell-quote: ">=1.8.1"
   simple-git: ">=3.27.0"
 patchedDependencies:
@@ -276,3 +276,5 @@ minimumReleaseAgeExclude:
   - "@storm-software/*"
   - "@stryke/*"
   - "@storm-stack/*"
+  # Renovate security update: postcss@8.5.28
+  - postcss@8.5.28
