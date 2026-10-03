@@ -276,3 +276,5 @@ minimumReleaseAgeExclude:
   - "@storm-software/*"
   - "@stryke/*"
   - "@storm-stack/*"
+  # Renovate security update: defu@6.1.5
+  - defu@6.1.5
