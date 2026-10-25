@@ -251,7 +251,7 @@ overrides:
   eslint-config-storm-stack: workspace:*
   eslint-plugin-storm-stack: workspace:*
   debug: ">=4.3.7"
-  follow-redirects: ">=1.15.9"
+  follow-redirects: ">=1.16.1"
   got: ">=14.4.2"
   ip: ">=2.0.1"
   loader-utils: ">=3.3.1"
@@ -276,3 +276,5 @@ minimumReleaseAgeExclude:
   - "@storm-software/*"
   - "@stryke/*"
   - "@storm-stack/*"
+  # Renovate security update: follow-redirects@1.16.1
+  - follow-redirects@1.16.1
