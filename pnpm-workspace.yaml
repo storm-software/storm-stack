@@ -261,7 +261,7 @@ overrides:
   parse-path: ">=7.0.0"
   parse-url: ">=9.2.0"
   postcss: ">=8.4.47"
-  shell-quote: ">=1.8.1"
+  shell-quote: ">=1.12.0"
   simple-git: ">=3.27.0"
 patchedDependencies:
   "@deepkit/type": patches/@deepkit__type.patch
@@ -276,3 +276,5 @@ minimumReleaseAgeExclude:
   - "@storm-software/*"
   - "@stryke/*"
   - "@storm-stack/*"
+  # Renovate security update: shell-quote@1.12.0
+  - shell-quote@1.12.0
